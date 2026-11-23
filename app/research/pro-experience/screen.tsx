@@ -115,7 +115,9 @@ export function ProExperienceDetail({ id }: { id: string }) {
         <Link className={styles.go} href="/research/account?upgrade=1" prefetch={false}>{ja ? "PROではじめる" : "Start with PRO"}</Link>
         {sample && <p className={styles.startNote}>{ja ? "PROなら好きな銘柄で使えます" : "With PRO, use it with any stock you like"}</p>}
       </div>}
-      {next && <div className={styles.nextRow}><span>{ja ? "次の機能" : "Next feature"}</span><Link className={styles.next} href={`/research/pro-experience/${next.id}`}>{inLanguage(next.name, lang)} ›</Link></div>}
+      {/* Owner, Nov 23: back to the tour on the left, the next feature on the right, on one line (the last feature leads to the first). */}
+      <div className={styles.nextRow}><BackToList ja={ja} />
+        {next && <Link className={styles.next} href={`/research/pro-experience/${next.id}`} aria-label={`${ja ? "次の機能" : "Next feature"}: ${inLanguage(next.name, lang)}`}>{inLanguage(next.name, lang)} ›</Link>}</div>
     </div>
   </ResearchToolShell>;
 }

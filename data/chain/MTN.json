@@ -1,0 +1,318 @@
+{
+  "root": {
+    "ticker": "MTN",
+    "name": "ベイル・リゾーツ",
+    "cik": 812011,
+    "name_en": "Vail Resorts"
+  },
+  "rows": [
+    {
+      "ja": "買収したリゾート",
+      "en": "Acquired resorts",
+      "above": true
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in the 10-K)"
+    }
+  ],
+  "rivals": [
+    "IKON Pass",
+    "Aspen Snowmass"
+  ],
+  "companies": [
+    {
+      "id": "CransMontana",
+      "ticker": "Crans-Montana",
+      "name": "クラン・モンタナ",
+      "name_en": "Crans-Montana",
+      "sub": "スキー場(スイス)",
+      "sub_en": "Ski resort (Switzerland)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2024年5月に取得した欧州のスキー場",
+          "text_en": "European ski resort acquired in May 2024",
+          "source": {
+            "label": "Vail Resorts 10-K(2026年7月期)",
+            "label_en": "Vail Resorts 10-K (FY ended Jul 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/812011/000081201126000049/mtn-20260731.htm",
+            "level": "official",
+            "date": "2026-09-28",
+            "quote": "We acquired Crans-Montana and Andermatt-Sedrun in May 2024 and August 2022, respectively."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Andermatt",
+      "ticker": "Andermatt-Sedrun",
+      "name": "アンデルマット・セドルン",
+      "name_en": "Andermatt-Sedrun",
+      "sub": "スキー場(スイス)",
+      "sub_en": "Ski resort (Switzerland)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2022年8月に取得した欧州のスキー場",
+          "text_en": "European ski resort acquired in August 2022",
+          "source": {
+            "label": "Vail Resorts 10-K(2026年7月期)",
+            "label_en": "Vail Resorts 10-K (FY ended Jul 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/812011/000081201126000049/mtn-20260731.htm",
+            "level": "official",
+            "date": "2026-09-28",
+            "quote": "We acquired Crans-Montana and Andermatt-Sedrun in May 2024 and August 2022, respectively."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SevenSprings",
+      "ticker": "Seven Springs",
+      "name": "セブン・スプリングス",
+      "name_en": "Seven Springs Resorts",
+      "sub": "スキー場(ペンシルベニア)",
+      "sub_en": "Ski areas (Pennsylvania)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ペンシルベニアの3スキー場を2021年12月に取得",
+          "text_en": "Acquired three Pennsylvania ski areas in December 2021",
+          "source": {
+            "label": "Vail Resorts 10-K(2026年7月期)",
+            "label_en": "Vail Resorts 10-K (FY ended Jul 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/812011/000081201126000049/mtn-20260731.htm",
+            "level": "official",
+            "date": "2026-09-28",
+            "quote": "In December 2021, we acquired Seven Springs Mountain Resort, Hidden Valley Resort and Laurel Mountain Ski Area in Pennsylvania"
+          }
+        }
+      ]
+    },
+    {
+      "id": "IKON Pass",
+      "ticker": "IKON Pass",
+      "name": "イコン・パス",
+      "name_en": "IKON Pass",
+      "sub": "複数リゾート共通パス",
+      "sub_en": "Multi-resort pass",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "エピック・パスと競合する共通シーズン券",
+          "text_en": "Multi-resort pass competing with its pass products",
+          "source": {
+            "label": "Vail Resorts 10-K(2026年7月期)",
+            "label_en": "Vail Resorts 10-K (FY ended Jul 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/812011/000081201126000049/mtn-20260731.htm",
+            "level": "official",
+            "date": "2026-09-28",
+            "quote": "Our pass products compete with other single and multi-resort frequency pass products in North America, including the IKON Pass, the Indy Pass, the Mountain Collective Pass and various regional and local pass products."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Indy Pass",
+      "ticker": "Indy Pass",
+      "name": "インディ・パス",
+      "name_en": "Indy Pass",
+      "sub": "複数リゾート共通パス",
+      "sub_en": "Multi-resort pass",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "共通シーズン券の競合",
+          "text_en": "Competing multi-resort pass",
+          "source": {
+            "label": "Vail Resorts 10-K(2026年7月期)",
+            "label_en": "Vail Resorts 10-K (FY ended Jul 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/812011/000081201126000049/mtn-20260731.htm",
+            "level": "official",
+            "date": "2026-09-28",
+            "quote": "Our pass products compete with other single and multi-resort frequency pass products in North America, including the IKON Pass, the Indy Pass, the Mountain Collective Pass and various regional and local pass products."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Aspen Snowmass",
+      "ticker": "Aspen Snowmass",
+      "name": "アスペン・スノーマス",
+      "name_en": "Aspen Snowmass",
+      "sub": "スキーリゾート",
+      "sub_en": "Ski resort",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主要な目的地型リゾートの競合",
+          "text_en": "Competing major destination resort",
+          "source": {
+            "label": "Vail Resorts 10-K(2026年7月期)",
+            "label_en": "Vail Resorts 10-K (FY ended Jul 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/812011/000081201126000049/mtn-20260731.htm",
+            "level": "official",
+            "date": "2026-09-28",
+            "quote": "Our resorts compete with other major destination mountain resorts, including, among others, Aspen Snowmass, Deer Valley, Jackson Hole, Copper Mountain, Steamboat, Winter Park, Snowbird, Palisades Tahoe, Killington, Mammoth, St. Moritz and Zermatt"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Jackson Hole",
+      "ticker": "Jackson Hole",
+      "name": "ジャクソンホール",
+      "name_en": "Jackson Hole",
+      "sub": "スキーリゾート",
+      "sub_en": "Ski resort",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主要な目的地型リゾートの競合",
+          "text_en": "Competing major destination resort",
+          "source": {
+            "label": "Vail Resorts 10-K(2026年7月期)",
+            "label_en": "Vail Resorts 10-K (FY ended Jul 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/812011/000081201126000049/mtn-20260731.htm",
+            "level": "official",
+            "date": "2026-09-28",
+            "quote": "Our resorts compete with other major destination mountain resorts, including, among others, Aspen Snowmass, Deer Valley, Jackson Hole, Copper Mountain, Steamboat, Winter Park, Snowbird, Palisades Tahoe, Killington, Mammoth, St. Moritz and Zermatt"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Killington",
+      "ticker": "Killington",
+      "name": "キリントン",
+      "name_en": "Killington",
+      "sub": "スキーリゾート",
+      "sub_en": "Ski resort",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主要な目的地型リゾートの競合",
+          "text_en": "Competing major destination resort",
+          "source": {
+            "label": "Vail Resorts 10-K(2026年7月期)",
+            "label_en": "Vail Resorts 10-K (FY ended Jul 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/812011/000081201126000049/mtn-20260731.htm",
+            "level": "official",
+            "date": "2026-09-28",
+            "quote": "Our resorts compete with other major destination mountain resorts, including, among others, Aspen Snowmass, Deer Valley, Jackson Hole, Copper Mountain, Steamboat, Winter Park, Snowbird, Palisades Tahoe, Killington, Mammoth, St. Moritz and Zermatt"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Zermatt",
+      "ticker": "Zermatt",
+      "name": "ツェルマット",
+      "name_en": "Zermatt",
+      "sub": "スキーリゾート(スイス)",
+      "sub_en": "Ski resort (Switzerland)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主要な目的地型リゾートの競合",
+          "text_en": "Competing major destination resort",
+          "source": {
+            "label": "Vail Resorts 10-K(2026年7月期)",
+            "label_en": "Vail Resorts 10-K (FY ended Jul 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/812011/000081201126000049/mtn-20260731.htm",
+            "level": "official",
+            "date": "2026-09-28",
+            "quote": "Our resorts compete with other major destination mountain resorts, including, among others, Aspen Snowmass, Deer Valley, Jackson Hole, Copper Mountain, Steamboat, Winter Park, Snowbird, Palisades Tahoe, Killington, Mammoth, St. Moritz and Zermatt"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MAR",
+      "ticker": "MAR",
+      "name": "マリオット",
+      "name_en": "Marriott International",
+      "sub": "ホテル",
+      "sub_en": "Hotels",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "リゾートホテル事業の競合ブランド",
+          "text_en": "Competing chain for its resort hotels",
+          "source": {
+            "label": "Vail Resorts 10-K(2026年7月期)",
+            "label_en": "Vail Resorts 10-K (FY ended Jul 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/812011/000081201126000049/mtn-20260731.htm",
+            "level": "official",
+            "date": "2026-09-28",
+            "quote": "facilities owned or managed by national and international chains, including such brands as Four Seasons, Hilton, Hyatt, Marriott, Ritz-Carlton and Westin."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HLT",
+      "ticker": "HLT",
+      "name": "ヒルトン",
+      "name_en": "Hilton",
+      "sub": "ホテル",
+      "sub_en": "Hotels",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "リゾートホテル事業の競合ブランド",
+          "text_en": "Competing chain for its resort hotels",
+          "source": {
+            "label": "Vail Resorts 10-K(2026年7月期)",
+            "label_en": "Vail Resorts 10-K (FY ended Jul 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/812011/000081201126000049/mtn-20260731.htm",
+            "level": "official",
+            "date": "2026-09-28",
+            "quote": "facilities owned or managed by national and international chains, including such brands as Four Seasons, Hilton, Hyatt, Marriott, Ritz-Carlton and Westin."
+          }
+        }
+      ]
+    },
+    {
+      "id": "H",
+      "ticker": "H",
+      "name": "ハイアット",
+      "name_en": "Hyatt Hotels",
+      "sub": "ホテル",
+      "sub_en": "Hotels",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "リゾートホテル事業の競合ブランド",
+          "text_en": "Competing chain for its resort hotels",
+          "source": {
+            "label": "Vail Resorts 10-K(2026年7月期)",
+            "label_en": "Vail Resorts 10-K (FY ended Jul 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/812011/000081201126000049/mtn-20260731.htm",
+            "level": "official",
+            "date": "2026-09-28",
+            "quote": "facilities owned or managed by national and international chains, including such brands as Four Seasons, Hilton, Hyatt, Marriott, Ritz-Carlton and Westin."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

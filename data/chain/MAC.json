@@ -1,0 +1,262 @@
+{
+  "root": {
+    "ticker": "MAC",
+    "name": "メイスリッチ",
+    "cik": 912242,
+    "name_en": "Macerich"
+  },
+  "rows": [
+    {
+      "ja": "上位テナント(家賃比率)",
+      "en": "Largest tenants (share of rents)"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "DKS",
+      "ticker": "DKS",
+      "name": "ディックス・スポーティング・グッズ",
+      "name_en": "Dick's Sporting Goods",
+      "sub": "スポーツ用品店",
+      "sub_en": "Sporting goods retail",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大のテナントで家賃の4.0%(フット・ロッカー等含む67店)",
+          "text_en": "Largest tenant at 4.0% of rents, 67 locations including Foot Locker",
+          "source": {
+            "label": "Macerich 10-K(2025年度)",
+            "label_en": "Macerich 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/912242/000091224226000016/mac-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Dick's Sporting Goods, Inc. Champs Sports, Dick's House of Sport, Dick's Sporting Goods, fly zone by Kids Foot Locker, Foot Locker, Going Going Gone!, House of Hoops by Foot Locker, Kids Foot Locker, Moosejaw 67 4.0 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "VSCO",
+      "ticker": "VSCO",
+      "name": "ヴィクトリアズ・シークレット",
+      "name_en": "Victoria's Secret",
+      "sub": "下着・衣料",
+      "sub_en": "Lingerie",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "家賃の2.2%(37店)",
+          "text_en": "2.2% of rents, 37 locations",
+          "source": {
+            "label": "Macerich 10-K(2025年度)",
+            "label_en": "Macerich 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/912242/000091224226000016/mac-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Victoria's Secret & Co. Pink, Victoria's Secret 37 2.2 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SIG",
+      "ticker": "SIG",
+      "name": "シグネット・ジュエラーズ",
+      "name_en": "Signet Jewelers",
+      "sub": "宝飾品",
+      "sub_en": "Jewelry",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "家賃の1.9%(82店)",
+          "text_en": "1.9% of rents, 82 locations",
+          "source": {
+            "label": "Macerich 10-K(2025年度)",
+            "label_en": "Macerich 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/912242/000091224226000016/mac-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Signet Jewelers Limited Banter by Piercing Pagoda, Blue Nile, Jared, Kay Jewelers, Kay Jewelers Outlet, Zales, Zales Outlet 82 1.9 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ANF",
+      "ticker": "ANF",
+      "name": "アバクロンビー&フィッチ",
+      "name_en": "Abercrombie & Fitch",
+      "sub": "衣料",
+      "sub_en": "Apparel",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "家賃の1.8%(46店)",
+          "text_en": "1.8% of rents, 46 locations",
+          "source": {
+            "label": "Macerich 10-K(2025年度)",
+            "label_en": "Macerich 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/912242/000091224226000016/mac-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Abercrombie & Fitch Co. Abercrombie & Fitch, Abercrombie kids, Hollister Co. 46 1.8 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GAP",
+      "ticker": "GAP",
+      "name": "ギャップ",
+      "name_en": "Gap Inc.",
+      "sub": "衣料",
+      "sub_en": "Apparel",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "家賃の1.7%(36店)",
+          "text_en": "1.7% of rents, 36 locations",
+          "source": {
+            "label": "Macerich 10-K(2025年度)",
+            "label_en": "Macerich 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/912242/000091224226000016/mac-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "The Gap, Inc. Athleta, Banana Republic, Banana Republic Factory Store, Gap, Gap Kids, Gap Factory Store, Old Navy, Old Navy Outlet 36 1.7 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "LVMH",
+      "ticker": "LVMH",
+      "name": "LVMH",
+      "name_en": "LVMH",
+      "sub": "高級ブランド(仏)",
+      "sub_en": "Luxury goods (France)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "家賃の1.6%(セフォラ・ティファニー等28店)",
+          "text_en": "1.6% of rents, 28 locations including Sephora and Tiffany",
+          "source": {
+            "label": "Macerich 10-K(2025年度)",
+            "label_en": "Macerich 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/912242/000091224226000016/mac-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "LVMH, Inc. Bulgari, Dior, Louis Vuitton, Marc Jacobs, Sephora, Tiffany & Co. 28 1.6 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Primark",
+      "ticker": "Primark",
+      "name": "プライマーク",
+      "name_en": "Primark",
+      "sub": "衣料(英)",
+      "sub_en": "Apparel (UK)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "家賃の1.6%(7店)",
+          "text_en": "1.6% of rents, 7 locations",
+          "source": {
+            "label": "Macerich 10-K(2025年度)",
+            "label_en": "Macerich 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/912242/000091224226000016/mac-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Primark US Corp Primark 7 1.6 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AEO",
+      "ticker": "AEO",
+      "name": "アメリカン・イーグル・アウトフィッターズ",
+      "name_en": "American Eagle Outfitters",
+      "sub": "衣料",
+      "sub_en": "Apparel",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "家賃の1.5%(40店)",
+          "text_en": "1.5% of rents, 40 locations",
+          "source": {
+            "label": "Macerich 10-K(2025年度)",
+            "label_en": "Macerich 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/912242/000091224226000016/mac-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "AE Outfitters Retail Co. Aerie, Offline by Aerie, American Eagle Outfitters 40 1.5 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "HM",
+      "ticker": "H&M",
+      "name": "H&M",
+      "name_en": "H&M",
+      "sub": "衣料(スウェーデン)",
+      "sub_en": "Apparel (Sweden)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "家賃の1.5%(21店)",
+          "text_en": "1.5% of rents, 21 locations",
+          "source": {
+            "label": "Macerich 10-K(2025年度)",
+            "label_en": "Macerich 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/912242/000091224226000016/mac-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "H & M Hennes & Mauritz L.P. H&M 21 1.5 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Zara",
+      "ticker": "Zara",
+      "name": "ZARA",
+      "name_en": "Zara USA",
+      "sub": "衣料",
+      "sub_en": "Apparel",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "家賃の1.5%(7店)",
+          "text_en": "1.5% of rents, 7 locations",
+          "source": {
+            "label": "Macerich 10-K(2025年度)",
+            "label_en": "Macerich 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/912242/000091224226000016/mac-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Zara USA, Inc. Zara 7 1.5 %"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

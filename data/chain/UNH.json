@@ -1,0 +1,324 @@
+{
+  "root": {
+    "ticker": "UNH",
+    "name": "ユナイテッドヘルス",
+    "cik": 731766,
+    "name_en": "UnitedHealth"
+  },
+  "rows": [
+    {
+      "ja": "買収・事業の売買",
+      "en": "Acquisitions & divestitures",
+      "above": true
+    },
+    {
+      "ja": "Change Healthcareなどの利用企業",
+      "en": "Users of Change Healthcare & other services"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "MOH",
+    "CLOV",
+    "HQY",
+    "OPCH"
+  ],
+  "companies": [
+    {
+      "id": "AMED",
+      "ticker": "Amedisys",
+      "name": "アメディシス",
+      "name_en": "Amedisys",
+      "sub": "在宅医療・ホスピス",
+      "sub_en": "Home health & hospice",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "UnitedHealthの子会社と合併し、完全子会社になる合併契約を2023年に締結",
+          "text_en": "Signed a 2023 merger agreement to become a wholly owned subsidiary of UnitedHealth",
+          "source": {
+            "label": "Amedisys 10-K(2024年度)",
+            "label_en": "Amedisys 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/896262/000089626225000018/amed-20241231.htm",
+            "level": "official",
+            "date": "2025-02-27",
+            "quote": "pursuant to which Merger Sub will merge with and into Amedisys (the \"Merger\") with Amedisys continuing as the surviving corporation and becoming a wholly owned subsidiary of UnitedHealth Group."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PNTG",
+      "ticker": "PNTG",
+      "name": "ペナント・グループ",
+      "name_en": "Pennant Group",
+      "sub": "在宅医療・介護",
+      "sub_en": "Home health & senior living",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年10月、UnitedHealthとAmedisysが手放した事業の一部をPennantが買収(移行サービス契約も締結)",
+          "text_en": "Pennant bought certain operations of UnitedHealth and Amedisys in October 2025, with a transition services agreement",
+          "source": {
+            "label": "Pennant Group 10-Q(2026年第3四半期)",
+            "label_en": "Pennant Group 10-Q (Q3 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1766400/000176640026000071/pntg-20260930.htm",
+            "level": "official",
+            "date": "2026-11-04",
+            "quote": "On October 1, 2025, the Company acquired certain operations of UnitedHealth, Amedisys, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DVA",
+      "ticker": "DVA",
+      "name": "ダヴィータ",
+      "name_en": "DaVita",
+      "sub": "透析",
+      "sub_en": "Dialysis",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2019年に医療グループ(DMG)をUnitedHealth傘下のOptumに売却",
+          "text_en": "Sold its DaVita Medical Group business to UnitedHealth's Optum in 2019",
+          "source": {
+            "label": "DaVita 10-K(2025年度)",
+            "label_en": "DaVita 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/927066/000092706626000012/dva-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "On June 19, 2019 , the Company completed the sale of its prior DMG business to Optum."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BVS",
+      "ticker": "BVS",
+      "name": "バイオベンタス",
+      "name_en": "Bioventus",
+      "sub": "整形外科医療機器",
+      "sub_en": "Orthopedic devices",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "UnitedHealth傘下のChange Healthcareを、保険請求の仲介に使っている",
+          "text_en": "Uses UnitedHealth's Change Healthcare as an intermediary for insurance claims",
+          "source": {
+            "label": "Bioventus 10-K(2024年度)",
+            "label_en": "Bioventus 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1665988/000162828025011831/bvs-20241231.htm",
+            "level": "official",
+            "date": "2025-03-11",
+            "quote": "Change Healthcare, a subsidiary of UnitedHealth Group that acts as an intermediary for processing certain of our claims for reimbursement related to our EXOGEN device to commercial payers"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MOH",
+      "ticker": "MOH",
+      "name": "モリーナ・ヘルスケア",
+      "name_en": "Molina Healthcare",
+      "sub": "医療保険(メディケイド)",
+      "sub_en": "Health insurance (Medicaid)",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Molinaが10-Kで、メディケイドの主な競合としてUnitedHealthを挙げる",
+          "text_en": "Molina names UnitedHealth among its main Medicaid managed care competitors",
+          "source": {
+            "label": "Molina Healthcare 10-K(2025年度)",
+            "label_en": "Molina Healthcare 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1179929/000117992926000005/moh-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "Our primary competitors in the Medicaid managed care industry include Centene Corporation, CVS Health Corporation, Elevance Health, Inc., UnitedHealth Group Inc., and large not-for-profit healthcare organizations."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CLOV",
+      "ticker": "CLOV",
+      "name": "クローバー・ヘルス",
+      "name_en": "Clover Health",
+      "sub": "医療保険(メディケア)",
+      "sub_en": "Health insurance (Medicare)",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Clover Healthが10-Kで、競合の全国大手保険会社としてUnitedHealthを挙げる",
+          "text_en": "Clover Health names UnitedHealth among the large national insurers it competes with",
+          "source": {
+            "label": "Clover Health 10-K(2024年度)",
+            "label_en": "Clover Health 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1801170/000180117025000052/clov-20241231.htm",
+            "level": "official",
+            "date": "2025-03-03",
+            "quote": "Our competitors include large, national insurers, such as UnitedHealth, Aetna, Humana, Cigna, Centene, and Elevance Health"
+          }
+        }
+      ]
+    },
+    {
+      "id": "HQY",
+      "ticker": "HQY",
+      "name": "ヘルスエクイティ",
+      "name_en": "HealthEquity",
+      "sub": "医療貯蓄口座(HSA)",
+      "sub_en": "Health savings accounts",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "HealthEquityが10-Kで、直接の競合としてUnitedHealthのOptumを挙げる",
+          "text_en": "HealthEquity names UnitedHealth's Optum among its direct competitors",
+          "source": {
+            "label": "HealthEquity 10-K(2026年度)",
+            "label_en": "HealthEquity 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1428336/000142833626000010/hqy-20260131.htm",
+            "level": "official",
+            "date": "2026-03-17",
+            "quote": "healthcare service companies such as UnitedHealth Group's Optum and Webster Bank"
+          }
+        }
+      ]
+    },
+    {
+      "id": "OPCH",
+      "ticker": "OPCH",
+      "name": "オプション・ケア・ヘルス",
+      "name_en": "Option Care Health",
+      "sub": "在宅点滴",
+      "sub_en": "Home infusion",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Option Careが10-Kで、在宅点滴の競合としてOptum Infusion Pharmacyを挙げる",
+          "text_en": "Option Care names Optum Infusion Pharmacy among its home infusion competitors",
+          "source": {
+            "label": "Option Care Health 10-K(2024年度)",
+            "label_en": "Option Care Health 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1014739/000101473925000012/bios-20241231.htm",
+            "level": "official",
+            "date": "2025-02-26",
+            "quote": "The Company's competitors within the home infusion market include Optum Infusion Pharmacy (a unit of the United Healthcare Insurance Company)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "TBRG",
+      "ticker": "TBRG",
+      "name": "トゥルーブリッジ",
+      "name_en": "TruBridge",
+      "sub": "医療ITサービス",
+      "sub_en": "Healthcare IT services",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "TruBridgeが10-Kで、医療コーディング製品の主な競合としてOptumを挙げる",
+          "text_en": "TruBridge names Optum as a primary competitor for its encoder products",
+          "source": {
+            "label": "TruBridge 10-K(2025年度)",
+            "label_en": "TruBridge 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1169445/000116944526000006/tbrg-20251231.htm",
+            "level": "official",
+            "date": "2026-03-31",
+            "quote": "The primary competitors for our encoder solutions include Solventum and Optum."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SSNC",
+      "ticker": "SSNC",
+      "name": "SS&Cテクノロジーズ",
+      "name_en": "SS&C Technologies",
+      "sub": "金融・医療ソフトウェア",
+      "sub_en": "Financial & healthcare software",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "SS&Cが10-Kで、薬剤給付管理サービスの競合としてOptumRxを挙げる",
+          "text_en": "SS&C names UnitedHealth's OptumRx among competing pharmacy-benefit vendors",
+          "source": {
+            "label": "SS&C Technologies 10-K(2024年度)",
+            "label_en": "SS&C Technologies 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1402436/000095017025030421/ssnc-20241231.htm",
+            "level": "official",
+            "date": "2025-03-03",
+            "quote": "We compete with other third-party vendors such as Evernorth Express Scripts/Cigna, CVS Caremark, UnitedHealth/OptumRx and companies that perform their services in-house"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ASTH",
+      "ticker": "ASTH",
+      "name": "アストラナ・ヘルス",
+      "name_en": "Astrana Health",
+      "sub": "医療グループ",
+      "sub_en": "Physician groups",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Astranaが10-Kで、ロサンゼルス地域の競合としてOptumを挙げる",
+          "text_en": "Astrana names Optum among its competitors in greater Los Angeles",
+          "source": {
+            "label": "Astrana Health 10-K(2024年度)",
+            "label_en": "Astrana Health 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1083446/000095017025039122/asth-20241231.htm",
+            "level": "official",
+            "date": "2025-03-14",
+            "quote": "In the greater Los Angeles area, such competitors include Regal Medical Group and Lakeside Medical Group, which are part of Heritage Provider Network (\"Heritage\"), as well as Optum, a subsidiary of UnitedHealth Group."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NEUE",
+      "ticker": "NEUE",
+      "name": "ニューヘルス",
+      "name_en": "NeueHealth",
+      "sub": "医療サービス",
+      "sub_en": "Care delivery",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "NeueHealthが10-Kで、競合としてOptumHealthを挙げる",
+          "text_en": "NeueHealth names OptumHealth among its competitors",
+          "source": {
+            "label": "NeueHealth 10-K(2024年度)",
+            "label_en": "NeueHealth 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1671284/000167128425000004/neue-20241231.htm",
+            "level": "official",
+            "date": "2025-03-21",
+            "quote": "These competitors include companies such as Agilon Health, ChenMed, One Medical, OptumHealth, and VillageMD."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

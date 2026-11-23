@@ -1,0 +1,223 @@
+{
+  "root": {
+    "ticker": "NSP",
+    "name": "インスペリティ",
+    "cik": 1000753,
+    "name_en": "Insperity"
+  },
+  "rows": [
+    {
+      "ja": "提携",
+      "en": "Partners",
+      "above": true
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in the 10-K)"
+    }
+  ],
+  "rivals": [
+    "ADP",
+    "PAYX",
+    "TNET"
+  ],
+  "companies": [
+    {
+      "id": "WDAY",
+      "ticker": "WDAY",
+      "name": "ワークデイ",
+      "name_en": "Workday",
+      "sub": "人事・財務ソフト",
+      "sub_en": "HR & finance software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "新サービスHR Scaleを戦略提携で共同開発",
+          "text_en": "Jointly developed the HR Scale offering through a strategic partnership",
+          "source": {
+            "label": "Insperity 10-K(2025年度)",
+            "label_en": "Insperity 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1000753/000100075326000011/nsp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Insperity's HR Scale solution is our newest service offering that we jointly developed through our strategic partnership with Workday, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PGATour",
+      "ticker": "PGA Tour",
+      "name": "PGAツアー",
+      "name_en": "PGA Tour",
+      "sub": "プロゴルフ",
+      "sub_en": "Pro golf tour",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "シニアツアー大会の冠スポンサー契約",
+          "text_en": "Title sponsor agreement for a PGA Tour Champions event",
+          "source": {
+            "label": "Insperity 10-K(2025年度)",
+            "label_en": "Insperity 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1000753/000100075326000011/nsp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "We have an agreement with the PGA Tour Champions to be the title sponsor of the Insperity Invitational"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ADP",
+      "ticker": "ADP",
+      "name": "ADP",
+      "name_en": "Automatic Data Processing",
+      "sub": "給与計算・人事",
+      "sub_en": "Payroll & HR",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "最大級の全国的な競合(PEO部門)",
+          "text_en": "Among its largest national competitors (PEO division)",
+          "source": {
+            "label": "Insperity 10-K(2025年度)",
+            "label_en": "Insperity 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1000753/000100075326000011/nsp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Our largest national competitors include the PEO divisions of large business services companies such as Automatic Data Processing, Inc. and Paychex, Inc., and other national PEOs, such as TriNet Group, Inc, Vensure, and Rippling."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PAYX",
+      "ticker": "PAYX",
+      "name": "ペイチェックス",
+      "name_en": "Paychex",
+      "sub": "給与計算・人事",
+      "sub_en": "Payroll & HR",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "最大級の全国的な競合(PEO部門)",
+          "text_en": "Among its largest national competitors (PEO division)",
+          "source": {
+            "label": "Insperity 10-K(2025年度)",
+            "label_en": "Insperity 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1000753/000100075326000011/nsp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Our largest national competitors include the PEO divisions of large business services companies such as Automatic Data Processing, Inc. and Paychex, Inc., and other national PEOs, such as TriNet Group, Inc, Vensure, and Rippling."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TNET",
+      "ticker": "TNET",
+      "name": "トライネット",
+      "name_en": "TriNet Group",
+      "sub": "PEO",
+      "sub_en": "PEO",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "大手PEOの競合にインスペリティを挙げる",
+          "text_en": "Names Insperity among large PEO competitors",
+          "source": {
+            "label": "TriNet 10-K(2025年度)",
+            "label_en": "TriNet 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/937098/000093709826000010/tnet-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Our PEO service competitors include large PEOs such as the TotalSource unit of Automatic Data Processing, Inc., the PEO operations of Paychex, Inc. and Insperity, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BBSI",
+      "ticker": "BBSI",
+      "name": "バレット・ビジネス・サービシズ",
+      "name_en": "Barrett Business Services",
+      "sub": "PEO・人材",
+      "sub_en": "PEO & staffing",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "共同雇用(PEO)の競合にインスペリティを挙げる",
+          "text_en": "Names Insperity among co-employment competitors",
+          "source": {
+            "label": "Barrett Business Services 10-K(2025年度)",
+            "label_en": "Barrett Business Services 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/902791/000119312526072255/bbsi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "companies that are focused on co-employment, such as Insperity, Inc., and TriNet Group, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Vensure",
+      "ticker": "Vensure",
+      "name": "ベンシュア",
+      "name_en": "Vensure",
+      "sub": "PEO",
+      "sub_en": "PEO",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "全国的なPEOの競合",
+          "text_en": "National PEO competitor",
+          "source": {
+            "label": "Insperity 10-K(2025年度)",
+            "label_en": "Insperity 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1000753/000100075326000011/nsp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Our largest national competitors include the PEO divisions of large business services companies such as Automatic Data Processing, Inc. and Paychex, Inc., and other national PEOs, such as TriNet Group, Inc, Vensure, and Rippling."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Rippling",
+      "ticker": "Rippling",
+      "name": "リップリング",
+      "name_en": "Rippling",
+      "sub": "人事ソフト・PEO",
+      "sub_en": "HR software & PEO",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "全国的なPEOの競合",
+          "text_en": "National PEO competitor",
+          "source": {
+            "label": "Insperity 10-K(2025年度)",
+            "label_en": "Insperity 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1000753/000100075326000011/nsp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Our largest national competitors include the PEO divisions of large business services companies such as Automatic Data Processing, Inc. and Paychex, Inc., and other national PEOs, such as TriNet Group, Inc, Vensure, and Rippling."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

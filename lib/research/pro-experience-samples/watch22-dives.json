@@ -1,5 +1,5 @@
 {
- "_source": "Hand-written for the PRO feature tour (owner, Nov 16: the 22-stock sample must show the earnings deep dive). Shown by the real app/research/companies/earnings-dive.tsx. All figures, texts and dates are fictional sample values on the sample's own timeline (as of 2035/03/12 09:00 JST); they are not real data.",
+ "_source": "Hand-written for the PRO feature tour (owner, Nov 16: the 22-stock sample must show the earnings deep dive). Shown by the real app/research/companies/earnings-dive.tsx. All figures, texts and dates are fictional sample values on the sample's own timeline (as of 2035/03/12 09:00 JST); they are not real data. The price card and the live news monitor above each dive (owner, Nov 23) are made up too, shown by the real app/research/price/quote-card.tsx (QuoteCardView) and app/research/companies/company-activity.tsx (sample mode); the next earnings dates are the only dates after the sample moment, because they lie ahead by nature.",
  "fictional": true,
  "dives": [
   {
@@ -235,7 +235,97 @@
      "end": "2034-10-26",
      "value": 108400
     }
-   ]
+   ],
+   "top": {
+    "quote": {
+     "ticker": "NVDA",
+     "name": "NVIDIA",
+     "exchange": "NASDAQ",
+     "price": 182.4,
+     "change": 2.86,
+     "percentChange": 1.59,
+     "currency": "USD",
+     "asOf": "2035-03-09T21:00:00Z",
+     "session": "closed",
+     "open": 180.1,
+     "high": 183.25,
+     "low": 179.32,
+     "previousClose": 179.54,
+     "volume": 168400000,
+     "week52Low": 121.6,
+     "week52High": 196.8,
+     "extended": {
+      "price": 183.1,
+      "percentChange": 0.38,
+      "asOf": "2035-03-10T00:58:00Z",
+      "session": "post"
+     },
+     "delayed": false,
+     "source": "twelve-data"
+    },
+    "facts": {
+     "eps": 4.12,
+     "marketCap": 4450000000000,
+     "dividendYield": 0.02,
+     "nextEarnings": "2035-05-27"
+    },
+    "news": [
+     {
+      "id": "sample-nvda-1",
+      "title": "NVIDIA announced the dates of its annual developer conference, where it plans to present new data center products.",
+      "url": "https://techphase.app/research/pro-experience/watch-22",
+      "publisher": "Tech Phase sample",
+      "tickers": [
+       "NVDA"
+      ],
+      "publishedAt": "2035-03-11T22:30:00Z",
+      "observedAt": "2035-03-11T22:31:40Z",
+      "approvedAt": "2035-03-11T22:31:40Z",
+      "summaryJa": "NVIDIAが年次の開発者会議の日程を発表。新しいデータセンター向け製品の説明を予定。",
+      "summaryEn": "NVIDIA announced the dates of its annual developer conference, where it plans to present new data center products.",
+      "impactJa": "会議では、次の世代の製品と出荷時期が話題になりそうです。",
+      "impactEn": "Next-generation products and their shipping schedule are likely to be the focus.",
+      "impactLabel": "neutral",
+      "confidence": "high"
+     },
+     {
+      "id": "sample-nvda-2",
+      "title": "A major cloud company said it added a computing service that runs on NVIDIA's new GPUs.",
+      "url": "https://techphase.app/research/pro-experience/watch-22",
+      "publisher": "Tech Phase sample",
+      "tickers": [
+       "NVDA"
+      ],
+      "publishedAt": "2035-03-10T13:05:00Z",
+      "observedAt": "2035-03-10T13:06:12Z",
+      "approvedAt": "2035-03-10T13:06:12Z",
+      "summaryJa": "大手クラウド企業が、NVIDIAの新型GPUを使う計算サービスを追加したと発表。",
+      "summaryEn": "A major cloud company said it added a computing service that runs on NVIDIA's new GPUs.",
+      "impactJa": "データセンター向けの需要が続いていることを示す材料です。",
+      "impactEn": "A sign that data center demand is holding up.",
+      "impactLabel": "positive",
+      "confidence": "high"
+     },
+     {
+      "id": "sample-nvda-3",
+      "title": "NVIDIA kept its quarterly dividend at $0.01 a share.",
+      "url": "https://techphase.app/research/pro-experience/watch-22",
+      "publisher": "Tech Phase sample",
+      "tickers": [
+       "NVDA"
+      ],
+      "publishedAt": "2035-03-06T21:15:00Z",
+      "observedAt": "2035-03-06T21:16:30Z",
+      "approvedAt": "2035-03-06T21:16:30Z",
+      "summaryJa": "NVIDIAが四半期配当を1株0.01ドルで据え置くと発表。",
+      "summaryEn": "NVIDIA kept its quarterly dividend at $0.01 a share.",
+      "impactJa": "配当は小さく、株価への影響は限られそうです。",
+      "impactEn": "The dividend is small, so the effect on the stock is likely limited.",
+      "impactLabel": "neutral",
+      "confidence": "high"
+     }
+    ]
+   }
   },
   {
    "ticker": "AMD",
@@ -479,7 +569,97 @@
      "end": "2034-09-27",
      "value": 11920
     }
-   ]
+   ],
+   "top": {
+    "quote": {
+     "ticker": "AMD",
+     "name": "AMD",
+     "exchange": "NASDAQ",
+     "price": 214.35,
+     "change": -1.92,
+     "percentChange": -0.89,
+     "currency": "USD",
+     "asOf": "2035-03-09T21:00:00Z",
+     "session": "closed",
+     "open": 216.4,
+     "high": 217.1,
+     "low": 212.8,
+     "previousClose": 216.27,
+     "volume": 41200000,
+     "week52Low": 142.3,
+     "week52High": 238.5,
+     "extended": {
+      "price": 214.9,
+      "percentChange": 0.26,
+      "asOf": "2035-03-10T00:55:00Z",
+      "session": "post"
+     },
+     "delayed": false,
+     "source": "twelve-data"
+    },
+    "facts": {
+     "eps": 3.05,
+     "marketCap": 347000000000,
+     "dividendYield": null,
+     "nextEarnings": "2035-05-05"
+    },
+    "news": [
+     {
+      "id": "sample-amd-1",
+      "title": "AMD said it has started shipping its new data center GPU.",
+      "url": "https://techphase.app/research/pro-experience/watch-22",
+      "publisher": "Tech Phase sample",
+      "tickers": [
+       "AMD"
+      ],
+      "publishedAt": "2035-03-11T20:10:00Z",
+      "observedAt": "2035-03-11T20:11:05Z",
+      "approvedAt": "2035-03-11T20:11:05Z",
+      "summaryJa": "AMDが新しいデータセンター向けGPUの出荷を始めたと発表。",
+      "summaryEn": "AMD said it has started shipping its new data center GPU.",
+      "impactJa": "出荷が売上にどう表れるかは、次の決算で確認できます。",
+      "impactEn": "The next earnings report will show how the shipments turn into sales.",
+      "impactLabel": "positive",
+      "confidence": "high"
+     },
+     {
+      "id": "sample-amd-2",
+      "title": "AMD introduced new PC processors, with laptops using them due this spring.",
+      "url": "https://techphase.app/research/pro-experience/watch-22",
+      "publisher": "Tech Phase sample",
+      "tickers": [
+       "AMD"
+      ],
+      "publishedAt": "2035-03-10T14:00:00Z",
+      "observedAt": "2035-03-10T14:01:20Z",
+      "approvedAt": "2035-03-10T14:01:20Z",
+      "summaryJa": "AMDがPC向けの新しいプロセッサーを発表。春から搭載製品が出る予定。",
+      "summaryEn": "AMD introduced new PC processors, with laptops using them due this spring.",
+      "impactJa": "PC向けは売上の一部で、影響は限られそうです。",
+      "impactEn": "PCs are one part of sales, so the effect is likely limited.",
+      "impactLabel": "neutral",
+      "confidence": "high"
+     },
+     {
+      "id": "sample-amd-3",
+      "title": "AMD announced an investor event where it plans to lay out its medium-term targets.",
+      "url": "https://techphase.app/research/pro-experience/watch-22",
+      "publisher": "Tech Phase sample",
+      "tickers": [
+       "AMD"
+      ],
+      "publishedAt": "2035-03-05T21:30:00Z",
+      "observedAt": "2035-03-05T21:31:45Z",
+      "approvedAt": "2035-03-05T21:31:45Z",
+      "summaryJa": "AMDが投資家向け説明会の開催を発表。中期の目標を説明する予定。",
+      "summaryEn": "AMD announced an investor event where it plans to lay out its medium-term targets.",
+      "impactJa": "目標の数字が、市場の期待と比べてどうかが注目点です。",
+      "impactEn": "How the targets compare with market expectations is the point to watch.",
+      "impactLabel": "neutral",
+      "confidence": "high"
+     }
+    ]
+   }
   }
  ]
 }

@@ -474,6 +474,36 @@ class EdgarCurrentFeed:
 EDGAR_CURRENT = EdgarCurrentFeed()
 
 
+class SourcePace:
+    """Last request time and last parsed candidates (in memory) per non-SEC discovery URL with its own ``minPollSeconds``."""
+
+    def __init__(self, clock=None):
+        self.clock = clock or time.monotonic
+        self.lock = threading.Lock()
+        self.last_poll = {}
+        self.candidates = {}
+
+    def poll_due(self, url, interval):
+        with self.lock:
+            return self.clock() - self.last_poll.get(url, float("-inf")) >= interval
+
+    def polled(self, url):
+        with self.lock:
+            self.last_poll[url] = self.clock()
+
+    def remember(self, url, candidates):
+        with self.lock:
+            self.candidates[url] = dict(candidates)
+
+    def remembered(self, url):
+        with self.lock:
+            found = self.candidates.get(url)
+            return dict(found) if found is not None else None
+
+
+SOURCE_PACE = SourcePace()
+
+
 def submissions_cik(url):
     match = re.fullmatch(r"https://data\.sec\.gov/submissions/CIK(\d{10})\.json", str(url))
     return int(match.group(1)) if match else None
@@ -1703,6 +1733,8 @@ def news_json_links(body, ticker, source):
         if not canonical:
             continue
         title = pick(item, source.get("titleKey", "displayName"))
+        if isinstance(title, list) and len(title) == 1:
+            title = title[0]  # Sandisk's site search returns each field as a one-element list.
         title = " ".join(unescape(title).split())[:300] if isinstance(title, str) and title.strip() else None
         published = pick(item, source["dateKey"]) if source.get("dateKey") else None
         published_on = published[:10] if isinstance(published, str) and re.match(r"\d{4}-\d{2}-\d{2}(?:T|$)", published) else None
@@ -4012,6 +4044,14 @@ def collect_discovery(ticker, transport=fetch, automatic=False, cached_sources=N
                     chain_failures.append("sec-paused")
                     return None, {}, chain_failures
                 SEC_ACCESS.polled(source["url"])
+            elif automatic and source.get("minPollSeconds"):
+                # A company site's own listing that the fast lane reaches beside SEC (Sandisk's newsroom search, which sends no
+                # validators) is asked no more often than its configured pace; in between, its last parsed candidates stand in.
+                remembered = SOURCE_PACE.remembered(source["url"])
+                if remembered is not None and not SOURCE_PACE.poll_due(source["url"], source["minPollSeconds"]):
+                    cache_metrics["notModifiedResponses"] += 1
+                    return source, remembered, chain_failures
+                SOURCE_PACE.polled(source["url"])
             try:
                 if persistent_transport:
                     cached = source_cache.get(source["url"])
@@ -4056,6 +4096,8 @@ def collect_discovery(ticker, transport=fetch, automatic=False, cached_sources=N
                             "lastModified": state["lastModified"],
                             "candidates": state["candidates"],
                         }
+                if automatic and source.get("minPollSeconds"):
+                    SOURCE_PACE.remember(source["url"], discovered)
                 return source, discovered, chain_failures
             except Exception as exc:
                 discovery_failure_diagnostic(ticker, exc, "source")

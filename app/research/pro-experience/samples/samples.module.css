@@ -75,3 +75,7 @@
 .cardHead{display:flex;align-items:center;gap:10px;margin:0 0 14px;font-size:12.5px;line-height:1.4}
 .cardHead b{padding:3px 10px;border-radius:999px;background:#c6d0dc;color:#0b111c;font-weight:700}
 .cardHead span{color:#9aa7b7}
+/* クジラの足あと's gold line under the rows, the same as トレジャーハント's note (owner, Nov 23). */
+.sampleNote{margin:4px 0 0;padding:12px 0;border-top:1px solid var(--line);color:var(--gold);font-size:14px;font-weight:600;text-align:center}
+/* 監視22銘柄: the real page's price card and news monitor above the deep dive (owner, Nov 23). */
+.watchTop{margin:14px 0 0}
