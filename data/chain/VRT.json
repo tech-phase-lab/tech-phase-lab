@@ -361,6 +361,98 @@
           }
         }
       ]
+    },
+    {
+      "id": "Huawei",
+      "ticker": "Huawei",
+      "name": "Huawei",
+      "sub": "通信機器・電源",
+      "sub_en": "Telecom & power equipment",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "世界規模の大手競合の一社としてVertivが挙げる",
+          "text_en": "Named by Vertiv among its large global competitors",
+          "source": {
+            "label": "Vertiv 10-K(2025年度)",
+            "label_en": "Vertiv 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1674101/000167410126000008/vrt-20251231.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "large-scale global competitors (e.g., Schneider Electric, S.E., Eaton Corporation Plc, Legrand SA, and Huawei Investment & Holding Co., Ltd.)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Stulz",
+      "ticker": "Stulz",
+      "name": "Stulz",
+      "sub": "空調・冷却",
+      "sub_en": "Cooling",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "特定分野の競合の一社としてVertivが挙げる",
+          "text_en": "Named by Vertiv among its niche competitors",
+          "source": {
+            "label": "Vertiv 10-K(2025年度)",
+            "label_en": "Vertiv 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1674101/000167410126000008/vrt-20251231.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "niche players (e.g., Delta Electronics, Inc., Stulz GmbH, Johnson Controls International PLC, and Socomec Holding SA)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Socomec",
+      "ticker": "Socomec",
+      "name": "Socomec",
+      "sub": "電源機器",
+      "sub_en": "Power equipment",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "特定分野の競合の一社としてVertivが挙げる",
+          "text_en": "Named by Vertiv among its niche competitors",
+          "source": {
+            "label": "Vertiv 10-K(2025年度)",
+            "label_en": "Vertiv 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1674101/000167410126000008/vrt-20251231.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "niche players (e.g., Delta Electronics, Inc., Stulz GmbH, Johnson Controls International PLC, and Socomec Holding SA)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MOD",
+      "ticker": "MOD",
+      "name": "Modine",
+      "sub": "冷却装置",
+      "sub_en": "Thermal management",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Modineが社内契約で、競合の一社としてVertivを挙げる",
+          "text_en": "Modine lists Vertiv among competitors in an agreement filed with its 10-Q",
+          "source": {
+            "label": "Modine 10-Q添付の契約書(2026年6月期)",
+            "label_en": "Modine 10-Q exhibit (quarter ended Jun 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/67347/000110465926088569/mod-20260630xex10d1.htm",
+            "level": "official",
+            "date": "2026-07-30",
+            "quote": "Participant and Company agree that \"Competitor\" includes, but is not limited to, Trane, Johnson Controls, Vertiv, Stulz, Nvent, Schneider Electric, Daikin, Munters, Carrier, AON / BASX, Eaton, and Kelvion"
+          }
+        }
+      ]
     }
   ],
   "far": [],

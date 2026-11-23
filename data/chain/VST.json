@@ -17,9 +17,15 @@
     {
       "ja": "出資・提携",
       "en": "Investments & partnerships"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
     }
   ],
-  "rivals": [],
+  "rivals": [
+    "VIASP"
+  ],
   "companies": [
     {
       "id": "AEP",
@@ -167,6 +173,75 @@
             "quote": "KKR Helix C L.P. (the Helix Fund), an open-ended investment fund managed by affiliates of KKR & Co. Inc. (KKR)",
             "note": "最大10億ドルの約束で、初回5億ドルと追加5億ドルです。",
             "note_en": "Up to $1B: $500M initial plus $500M subject to conditions."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Cogentrix",
+      "ticker": "Cogentrix",
+      "name": "Cogentrix Energy",
+      "sub": "ガス火力発電",
+      "sub_en": "Gas-fired power",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Cogentrix Energyを買収(ガス火力10か所・約5,500MW)",
+          "text_en": "Acquired Cogentrix Energy, adding 10 gas plants of about 5,500MW",
+          "source": {
+            "label": "Vistra 10-Q(2026年第3四半期)",
+            "label_en": "Vistra 10-Q (Q3 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1692819/000169281926000025/vistra-20260930.htm",
+            "level": "official",
+            "date": "2026-10-30",
+            "quote": "On October 30, 2026, Vistra acquired Cogentrix Energy (Cogentrix and, such acquisition, the Cogentrix Acquisition)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Lotus",
+      "ticker": "Lotus",
+      "name": "Lotus Infrastructure Partners",
+      "sub": "インフラ投資",
+      "sub_en": "Infrastructure investor",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Lotus傘下のガス火力7か所(2,600MW)を買収",
+          "text_en": "Bought seven gas plants (2,600MW) from Lotus",
+          "source": {
+            "label": "Vistra 10-Q(2026年第3四半期)",
+            "label_en": "Vistra 10-Q (Q3 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1692819/000169281926000025/vistra-20260930.htm",
+            "level": "official",
+            "date": "2025-10-22",
+            "quote": "On October 22, 2025, pursuant to a purchase and sale agreement dated May 15, 2025, Vistra Operations acquired 100 % of the membership interests of certain subsidiaries of Lotus (Lotus Acquisition)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "VIASP",
+      "ticker": "VIASP",
+      "name": "Via Renewables",
+      "sub": "電力・ガス小売",
+      "sub_en": "Retail power & gas",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Via Renewablesが10-Kで、電力小売の競合としてVistraを挙げる",
+          "text_en": "Via Renewables names Vistra among its electricity retail competitors",
+          "source": {
+            "label": "Via Renewables 10-K(2025年度)",
+            "label_en": "Via Renewables 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1606268/000160626826000013/spke-20251231.htm",
+            "level": "official",
+            "date": "2026-03-05",
+            "quote": "In the electricity sector, these competitors include larger, well-capitalized energy retailers such as Calpine Energy Solutions, LLC, Constellation Corporation, NRG Energy, Inc. and Vistra Corp."
           }
         }
       ]
