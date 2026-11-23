@@ -1,0 +1,277 @@
+{
+  "root": {
+    "ticker": "G",
+    "name": "ジェンパクト",
+    "cik": 1398659,
+    "name_en": "Genpact"
+  },
+  "rows": [
+    {
+      "ja": "起源・提携",
+      "en": "Origin & partners",
+      "above": true
+    },
+    {
+      "ja": "業務受託先(顧客)",
+      "en": "Outsourcing clients"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "ACN",
+    "CTSH",
+    "EXLS",
+    "INFY",
+    "WIT"
+  ],
+  "companies": [
+    {
+      "id": "GE",
+      "ticker": "GE",
+      "name": "GE(ゼネラル・エレクトリック)",
+      "name_en": "General Electric",
+      "sub": "産業(現GEエアロスペース)",
+      "sub_en": "Industrial (now GE Aerospace)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "GEのグローバル業務拠点として25年以上前に発足",
+          "text_en": "Founded more than 25 years ago as GE's global capability center",
+          "source": {
+            "label": "Genpact 10-K(2025年度)",
+            "label_en": "Genpact 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1398659/000139865926000004/g-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Genpact was established more than 25 years ago as the global capability center for the General Electric Company (\"GE\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BL",
+      "ticker": "BL",
+      "name": "ブラックライン",
+      "name_en": "BlackLine",
+      "sub": "会計クラウド",
+      "sub_en": "Accounting software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "導入支援を担うBPOパートナーにジェンパクト",
+          "text_en": "Uses Genpact as a business process outsourcing partner for delivery",
+          "source": {
+            "label": "BlackLine 10-K(2024年度)",
+            "label_en": "BlackLine 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1666134/000166613425000003/bl-20241231.htm",
+            "level": "official",
+            "date": "2025-02-21",
+            "quote": "business process outsourcers such as Cognizant, Genpact and IBM to supplement delivery and implementation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AHL",
+      "ticker": "AHL",
+      "name": "アスペン・インシュアランス",
+      "name_en": "Aspen Insurance",
+      "sub": "損害保険・再保険",
+      "sub_en": "Specialty insurance",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "インドの拠点から業務プロセスを受託",
+          "text_en": "Outsources operations to Genpact's center in Gurugram, India",
+          "source": {
+            "label": "Aspen Insurance 20-F(2025年度)",
+            "label_en": "Aspen Insurance 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1267395/000126739526000007/ahl-20251231.htm",
+            "level": "official",
+            "date": "2026-03-30",
+            "quote": "Pursuant to the agreement, Genpact will provide us with a range of operational business processes, primarily from their offshore service center in Gurugram, India"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ACN",
+      "ticker": "ACN",
+      "name": "アクセンチュア",
+      "name_en": "Accenture",
+      "sub": "コンサル・IT",
+      "sub_en": "Consulting & IT",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "最も近い競合として比較対象に",
+          "text_en": "Named among its closest reporting competitors",
+          "source": {
+            "label": "Genpact 10-K(2025年度)",
+            "label_en": "Genpact 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1398659/000139865926000004/g-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "The selected peer group for the period presented is comprised of six companies that we believe are our closest reporting issuer competitors: Accenture plc, Cognizant Technology Solutions Corp., ExlService Holdings, Inc., Infosys Technologies Limited, Wipro Technologies Limited, and WNS (Holdings) Limited."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CTSH",
+      "ticker": "CTSH",
+      "name": "コグニザント",
+      "name_en": "Cognizant",
+      "sub": "ITサービス",
+      "sub_en": "IT services",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "直接の競合にジェンパクトを挙げる",
+          "text_en": "Names Genpact among direct competitors",
+          "source": {
+            "label": "Cognizant 10-K(2025年度)",
+            "label_en": "Cognizant 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1058290/000105829026000008/ctsh-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Our direct competitors include, among others, Accenture, Atos, Capgemini, CGI, Deloitte Digital, DXC Technology, EPAM Systems, Genpact"
+          }
+        }
+      ]
+    },
+    {
+      "id": "EXLS",
+      "ticker": "EXLS",
+      "name": "EXL",
+      "name_en": "EXL",
+      "sub": "データ・業務受託",
+      "sub_en": "Data & operations",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ジェンパクトとWNSを最も近い競合とする",
+          "text_en": "Names Genpact and WNS as its closest reporting competitors",
+          "source": {
+            "label": "EXL 10-K(2024年度)",
+            "label_en": "EXL 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1297989/000129798925000002/exls-20241231.htm",
+            "level": "official",
+            "date": "2025-02-25",
+            "quote": "Our peer group of companies is comprised of two companies that we believe are our closest reporting issuer competitors: Genpact Limited and WNS (Holdings) Limited."
+          }
+        }
+      ]
+    },
+    {
+      "id": "INFY",
+      "ticker": "INFY",
+      "name": "インフォシス",
+      "name_en": "Infosys",
+      "sub": "ITサービス(印)",
+      "sub_en": "IT services (India)",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "最も近い競合として比較対象に",
+          "text_en": "Named among its closest reporting competitors",
+          "source": {
+            "label": "Genpact 10-K(2025年度)",
+            "label_en": "Genpact 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1398659/000139865926000004/g-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "The selected peer group for the period presented is comprised of six companies that we believe are our closest reporting issuer competitors: Accenture plc, Cognizant Technology Solutions Corp., ExlService Holdings, Inc., Infosys Technologies Limited, Wipro Technologies Limited, and WNS (Holdings) Limited."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WIT",
+      "ticker": "WIT",
+      "name": "ウィプロ",
+      "name_en": "Wipro",
+      "sub": "ITサービス(印)",
+      "sub_en": "IT services (India)",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "最も近い競合として比較対象に",
+          "text_en": "Named among its closest reporting competitors",
+          "source": {
+            "label": "Genpact 10-K(2025年度)",
+            "label_en": "Genpact 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1398659/000139865926000004/g-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "The selected peer group for the period presented is comprised of six companies that we believe are our closest reporting issuer competitors: Accenture plc, Cognizant Technology Solutions Corp., ExlService Holdings, Inc., Infosys Technologies Limited, Wipro Technologies Limited, and WNS (Holdings) Limited."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TTEC",
+      "ticker": "TTEC",
+      "name": "TTEC",
+      "name_en": "TTEC",
+      "sub": "顧客対応受託",
+      "sub_en": "Customer experience outsourcing",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "顧客対応サービスの競合にジェンパクトを挙げる",
+          "text_en": "Names Genpact among customer experience competitors",
+          "source": {
+            "label": "TTEC 10-K(2025年度)",
+            "label_en": "TTEC 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1013880/000110465926020532/ttec-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Concentrix, TaskUs, Intouch CX, Conduent, Genpact, Alorica, Ibex and EXL"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GLOB",
+      "ticker": "GLOB",
+      "name": "グロバント",
+      "name_en": "Globant",
+      "sub": "デジタル開発",
+      "sub_en": "Digital engineering",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合するITサービス会社にジェンパクトを挙げる",
+          "text_en": "Names Genpact among competing technology service providers",
+          "source": {
+            "label": "Globant 20-F(2025年度)",
+            "label_en": "Globant 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1557860/000162828026012910/glob-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Deloitte Digital, DXC Technology, Endava, EPAM Systems, Inc., Genpact, GlobalLogic"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

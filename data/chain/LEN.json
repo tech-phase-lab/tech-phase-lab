@@ -1,0 +1,249 @@
+{
+  "root": {
+    "ticker": "LEN",
+    "name": "レナー",
+    "cik": 920760,
+    "name_en": "Lennar"
+  },
+  "rows": [
+    {
+      "ja": "土地の供給元",
+      "en": "Land suppliers",
+      "above": true
+    },
+    {
+      "ja": "分離・出資・買収",
+      "en": "Spin-offs, stakes & acquisitions"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "Landsea"
+  ],
+  "companies": [
+    {
+      "id": "VHI",
+      "ticker": "VHI",
+      "name": "バルハイ",
+      "name_en": "Valhi",
+      "sub": "化学・不動産開発",
+      "sub_en": "Chemicals & real estate",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "不動産部門の宅地販売の12%がレナー向け",
+          "text_en": "Lennar Homes took 12% of its real estate segment land sales",
+          "source": {
+            "label": "Valhi 10-K(2025年度)",
+            "label_en": "Valhi 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/59255/000110465926025847/vhl-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-03-10",
+            "quote": "DR Horton - 34%, Richmond American Homes - 12% and Lennar Homes - 12%"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PCYO",
+      "ticker": "PCYO",
+      "name": "ピュア・サイクル",
+      "name_en": "Pure Cycle",
+      "sub": "水道・宅地開発",
+      "sub_en": "Water & land development",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "開発区画の宅地をレナーに売却する契約",
+          "text_en": "Contract to sell developed lots to Lennar Colorado",
+          "source": {
+            "label": "Pure Cycle 10-K(2025年8月期)",
+            "label_en": "Pure Cycle 10-K (FY ended Aug 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/276720/000110465925110312/pcyo-20250831x10k.htm",
+            "level": "official",
+            "date": "2025-11-12",
+            "quote": "Contract for Purchase and Sale of Real Estate, dated February 19, 2021, by and between PCY Holdings, LLC and Lennar Colorado, LLC"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MRP",
+      "ticker": "MRP",
+      "name": "ミルローズ・プロパティーズ",
+      "name_en": "Millrose Properties",
+      "sub": "宅地バンキング",
+      "sub_en": "Homesite option purchase",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "レナーが宅地の購入オプションを行使して事業が成り立つ",
+          "text_en": "Depends on Lennar regularly exercising its homesite purchase options",
+          "source": {
+            "label": "Millrose Properties 10-K(2024年度)",
+            "label_en": "Millrose Properties 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2017206/000119312525068773/d931976d10k.htm",
+            "level": "official",
+            "date": "2025-03-31",
+            "quote": "expectations that Lennar will fully perform on all its obligations pursuant to the Lennar Agreements (and that there will be regular and timely exercises of its Purchase Options)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "FPH",
+      "ticker": "FPH",
+      "name": "ファイブ・ポイント",
+      "name_en": "Five Point Holdings",
+      "sub": "大規模宅地開発",
+      "sub_en": "Master-planned communities",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "レナーが約40%を持つ筆頭株主",
+          "text_en": "Lennar owns about 40% and is its largest equity owner",
+          "source": {
+            "label": "Five Point 10-K(2025年度)",
+            "label_en": "Five Point 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1574197/000157419726000005/fph-20251231.htm",
+            "level": "official",
+            "date": "2026-03-06",
+            "quote": "Lennar is our largest equity owner and will be engaging in transactions with us and may compete with us."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Rausch",
+      "ticker": "Rausch Coleman Homes",
+      "name": "ラウシュ・コールマン・ホームズ",
+      "name_en": "Rausch Coleman Homes",
+      "sub": "住宅建設",
+      "sub_en": "Homebuilding",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年2月に買収(土地はミルローズが取得)",
+          "text_en": "Acquired in February 2025 (Millrose took the land assets)",
+          "source": {
+            "label": "Lennar 10-K(2025年11月期)",
+            "label_en": "Lennar 10-K (FY ended Nov 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/920760/000162828026003870/len-20251130.htm",
+            "level": "official",
+            "date": "2026-01-28",
+            "quote": "We acquired Rausch's homebuilding operations while Millrose acquired Rausch's land assets and we have options on the land."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TPG",
+      "ticker": "TPG",
+      "name": "TPG",
+      "name_en": "TPG",
+      "sub": "投資会社",
+      "sub_en": "Private equity",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "賃貸住宅事業クアテラをTPGに売却",
+          "text_en": "Bought Lennar's Quarterra multifamily business",
+          "source": {
+            "label": "Lennar 10-K(2025年11月期)",
+            "label_en": "Lennar 10-K (FY ended Nov 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/920760/000162828026003870/len-20251130.htm",
+            "level": "official",
+            "date": "2026-01-28",
+            "quote": "The sale of Quarterra to TPG did not have a material impact on our consolidated financial statements."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HIPO",
+      "ticker": "HIPO",
+      "name": "ヒッポ",
+      "name_en": "Hippo",
+      "sub": "住宅保険",
+      "sub_en": "Home insurance",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "関連当事者のレナーに同意料800万ドルを支払い",
+          "text_en": "Paid related party Lennar $8 million for its consent to a sale",
+          "source": {
+            "label": "Hippo 10-K(2025年度)",
+            "label_en": "Hippo 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1828105/000182810526000008/hippo-20251231.htm",
+            "level": "official",
+            "date": "2026-03-05",
+            "quote": "the Company (i) paid Lennar $ 8 million in consideration for Lennar's required consent to the Westwood Sale"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BWIN",
+      "ticker": "BWIN",
+      "name": "ボールドウィン・インシュアランス",
+      "name_en": "Baldwin Insurance Group",
+      "sub": "保険仲介",
+      "sub_en": "Insurance brokerage",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "レナーと保険代理店の合弁(レナー80%)",
+          "text_en": "Joint venture insurance agency with Lennar (Lennar holds 80%)",
+          "source": {
+            "label": "Baldwin Insurance Group 10-K(2025年度)",
+            "label_en": "Baldwin Insurance Group 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1781755/000178175526000018/bwin-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "a joint venture formed between Hippo and Lennar Title Group, LLC (\"Lennar\"), which holds 100 % of the Class B membership interest (representing an 80% total interest)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Landsea",
+      "ticker": "Landsea Homes",
+      "name": "ランドシー・ホームズ",
+      "name_en": "Landsea Homes",
+      "sub": "住宅建設",
+      "sub_en": "Homebuilding",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "直接競合する全国大手にレナーを挙げる",
+          "text_en": "Names Lennar among major national builders it competes with directly",
+          "source": {
+            "label": "Landsea Homes 10-K(2024年度)",
+            "label_en": "Landsea Homes 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1721386/000172138625000008/lsea-20241231.htm",
+            "level": "official",
+            "date": "2025-02-27",
+            "quote": "we compete directly with major national builders such as KB Home, Lennar Corporation, Tri Pointe Homes, Inc., PulteGroup, Inc., and D.R."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,347 @@
+{
+  "root": {
+    "ticker": "MAT",
+    "name": "マテル",
+    "cik": 63276,
+    "name_en": "Mattel"
+  },
+  "rows": [
+    {
+      "ja": "キャラクター・IPの許諾元(上流)",
+      "en": "Character & IP licensors (upstream)",
+      "above": true
+    },
+    {
+      "ja": "提携・取引",
+      "en": "Partners & dealings"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "HAS",
+    "JAKK",
+    "BBW"
+  ],
+  "companies": [
+    {
+      "id": "DIS",
+      "ticker": "DIS",
+      "name": "ウォルト・ディズニー",
+      "name_en": "Walt Disney",
+      "sub": "娯楽・メディア",
+      "sub_en": "Entertainment & media",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ディズニー・プリンセスやアナと雪の女王の人形を許諾生産",
+          "text_en": "Licensed doll partnership for Disney Princess and Frozen",
+          "source": {
+            "label": "Mattel 10-K(2025年度)",
+            "label_en": "Mattel 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/63276/000162828026010716/mat-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "Mattel continues to build upon its strong licensed doll partnerships with Disney for the Disney Princess and Disney Frozen product lines"
+          }
+        }
+      ]
+    },
+    {
+      "id": "NFLX",
+      "ticker": "NFLX",
+      "name": "ネットフリックス",
+      "name_en": "Netflix",
+      "sub": "動画配信",
+      "sub_en": "Streaming",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "「KPop Demon Hunters」の人形を2026年春に発売",
+          "text_en": "Launching KPop Demon Hunters dolls for Netflix in spring 2026",
+          "source": {
+            "label": "Mattel 10-K(2025年度)",
+            "label_en": "Mattel 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/63276/000162828026010716/mat-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "expects to launch its KPop Demon Hunters dolls line for Netflix in Spring of 2026."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CMCSA",
+      "ticker": "CMCSA",
+      "name": "コムキャスト(NBCユニバーサル)",
+      "name_en": "Comcast (NBCUniversal)",
+      "sub": "メディア",
+      "sub_en": "Media",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "「ジュラシック・ワールド」の玩具を許諾生産",
+          "text_en": "Licensed Jurassic World toys",
+          "source": {
+            "label": "Mattel 10-K(2025年度)",
+            "label_en": "Mattel 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/63276/000162828026010716/mat-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "Jurassic World ( NBCUniversal ), Minecraft ( Microsoft ), WWE , Toy Story (Disney Pixar)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "マイクロソフト",
+      "name_en": "Microsoft",
+      "sub": "ソフトウェア・ゲーム",
+      "sub_en": "Software & games",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "「マインクラフト」の玩具を許諾生産",
+          "text_en": "Licensed Minecraft toys",
+          "source": {
+            "label": "Mattel 10-K(2025年度)",
+            "label_en": "Mattel 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/63276/000162828026010716/mat-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "Jurassic World ( NBCUniversal ), Minecraft ( Microsoft ), WWE , Toy Story (Disney Pixar)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "TKO",
+      "ticker": "TKO",
+      "name": "TKOグループ",
+      "name_en": "TKO Group",
+      "sub": "格闘技・プロレス",
+      "sub_en": "Sports entertainment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "WWEの全世界独占玩具ライセンシー",
+          "text_en": "Exclusive global toy licensee for WWE",
+          "source": {
+            "label": "TKO Group 10-K(2024年度)",
+            "label_en": "TKO Group 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1973266/000095017025027778/tko-20241231.htm",
+            "level": "official",
+            "date": "2025-02-26",
+            "quote": "WWE also has a multi-year licensing agreement with Mattel, Inc., its exclusive toy licensee, covering all global territories"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン(アマゾンMGMスタジオ)",
+      "name_en": "Amazon (Amazon MGM Studios)",
+      "sub": "EC・映像",
+      "sub_en": "E-commerce & studios",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "実写映画「マスターズ・オブ・ユニバース」を共同で公開(2026年夏)",
+          "text_en": "Co-releasing the Masters of the Universe film (summer 2026)",
+          "source": {
+            "label": "Mattel 10-K(2025年度)",
+            "label_en": "Mattel 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/63276/000162828026010716/mat-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "Mattel's own worldwide theatrical release of Masters of the Universe with Amazon MGM Studios scheduled for Summer 2026"
+          }
+        }
+      ]
+    },
+    {
+      "id": "TOON",
+      "ticker": "TOON",
+      "name": "カートゥーン・スタジオ",
+      "name_en": "Kartoon Studios",
+      "sub": "子ども向けコンテンツ",
+      "sub_en": "Kids content",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "顧客の一社にマテル",
+          "text_en": "Names Mattel among its customers",
+          "source": {
+            "label": "Kartoon Studios 10-K(2024年度)",
+            "label_en": "Kartoon Studios 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1355848/000168316825002049/kartoon_i10k-123124.htm",
+            "level": "official",
+            "date": "2025-03-31",
+            "quote": "companies such as Comcast, Netflix, Sony, YouTube, Mattel, Target"
+          }
+        }
+      ]
+    },
+    {
+      "id": "KDOZF",
+      "ticker": "KDOZF",
+      "name": "キドズ",
+      "name_en": "Kidoz",
+      "sub": "子ども向けモバイル広告",
+      "sub_en": "Kids mobile advertising",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "マテルなど大手ブランドの広告配信を担う",
+          "text_en": "Runs mobile ad campaigns for brands including Mattel",
+          "source": {
+            "label": "Kidoz 20-F(2024年度)",
+            "label_en": "Kidoz 20-F (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1318482/000164117225006049/form20-f.htm",
+            "level": "official",
+            "date": "2025-04-25",
+            "quote": "Kidoz has become the trusted partner of the world's largest brands, including Mattel, Lego, and Disney"
+          }
+        }
+      ]
+    },
+    {
+      "id": "HAS",
+      "ticker": "HAS",
+      "name": "ハズブロ",
+      "name_en": "Hasbro",
+      "sub": "玩具",
+      "sub_en": "Toys",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "北米の大手競合",
+          "text_en": "Large toy competitor in North America",
+          "source": {
+            "label": "Mattel 10-K(2025年度)",
+            "label_en": "Mattel 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/63276/000162828026010716/mat-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "The North America segment competes with several large toy companies, including Hasbro, LEGO, The Pokémon Company, and Spin Master"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SpinMaster",
+      "ticker": "Spin Master",
+      "name": "スピン・マスター",
+      "name_en": "Spin Master",
+      "sub": "玩具(加)",
+      "sub_en": "Toys (Canada)",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "北米の大手競合",
+          "text_en": "Large toy competitor in North America",
+          "source": {
+            "label": "Mattel 10-K(2025年度)",
+            "label_en": "Mattel 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/63276/000162828026010716/mat-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "The North America segment competes with several large toy companies, including Hasbro, LEGO, The Pokémon Company, and Spin Master"
+          }
+        }
+      ]
+    },
+    {
+      "id": "LEGO",
+      "ticker": "LEGO",
+      "name": "レゴ",
+      "name_en": "LEGO",
+      "sub": "玩具(デンマーク、非上場)",
+      "sub_en": "Toys (Denmark, private)",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "北米の大手競合",
+          "text_en": "Large toy competitor in North America",
+          "source": {
+            "label": "Mattel 10-K(2025年度)",
+            "label_en": "Mattel 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/63276/000162828026010716/mat-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "The North America segment competes with several large toy companies, including Hasbro, LEGO, The Pokémon Company, and Spin Master"
+          }
+        }
+      ]
+    },
+    {
+      "id": "JAKK",
+      "ticker": "JAKK",
+      "name": "ジャックス・パシフィック",
+      "name_en": "JAKKS Pacific",
+      "sub": "玩具",
+      "sub_en": "Toys",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "多くの製品分野でマテルと直接競合",
+          "text_en": "Competes directly with Mattel in many product lines",
+          "source": {
+            "label": "JAKKS Pacific 10-K(2024年度)",
+            "label_en": "JAKKS Pacific 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1009829/000118518525000170/jakk10k123124.htm",
+            "level": "official",
+            "date": "2025-03-06",
+            "quote": "In many of our product lines we compete directly against one or both of two of the toy industry's most dominant companies, Mattel® and Hasbro®."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BBW",
+      "ticker": "BBW",
+      "name": "ビルド・ア・ベア",
+      "name_en": "Build-A-Bear Workshop",
+      "sub": "ぬいぐるみ小売",
+      "sub_en": "Plush retail",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ぬいぐるみ等で間接的に競合",
+          "text_en": "Competes indirectly in plush and children's toys",
+          "source": {
+            "label": "Build-A-Bear 10-K(2025年1月期)",
+            "label_en": "Build-A-Bear 10-K (FY ended Jan 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1113809/000143774925012234/bbw20241216_10k.htm",
+            "level": "official",
+            "date": "2025-04-17",
+            "quote": "we compete indirectly with a number of companies that sell plush products or premium children's toys, including, but not limited to, Ty, Mattel, Hasbro, and Lego."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

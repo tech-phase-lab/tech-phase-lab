@@ -1,0 +1,251 @@
+{
+  "root": {
+    "ticker": "HII",
+    "name": "ハンティントン・インガルス",
+    "cik": 1501585,
+    "name_en": "Huntington Ingalls Industries"
+  },
+  "rows": [
+    {
+      "ja": "供給元・下請(上流)",
+      "en": "Suppliers & subcontractors (upstream)",
+      "above": true
+    },
+    {
+      "ja": "共同建造・合弁",
+      "en": "Teaming & joint ventures"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "BWXT",
+    "J",
+    "AMTM"
+  ],
+  "companies": [
+    {
+      "id": "LDOS",
+      "ticker": "LDOS",
+      "name": "レイドス",
+      "name_en": "Leidos",
+      "sub": "防衛IT・電子",
+      "sub_en": "Defense IT & electronics",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "電子戦機器で3億5000万ドルの下請契約をHIIから受注",
+          "text_en": "Won a $350 million electronic warfare subcontract from HII",
+          "source": {
+            "label": "Leidos 8-K(2025年8月)",
+            "label_en": "Leidos 8-K (Aug 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1336920/000133692025000031/ldos070425q2pressreleaseex.htm",
+            "level": "official",
+            "date": "2025-08-05",
+            "quote": "Leidos was awarded a new $350 million indefinite delivery indefinite quantity (IDIQ) subcontract by Huntington Ingalls Industries (HII)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AGX",
+      "ticker": "AGX",
+      "name": "アーガン",
+      "name_en": "Argan",
+      "sub": "電力建設",
+      "sub_en": "Power construction",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "子会社LTIの最大顧客がHIIのニューポート・ニューズ造船所",
+          "text_en": "Its LTI unit's largest customer is HII's Newport News Shipbuilding",
+          "source": {
+            "label": "Argan 10-K(2024年1月期)",
+            "label_en": "Argan 10-K (FY ended Jan 2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/100591/000155837024004979/agx-20240131x10k.htm",
+            "level": "official",
+            "date": "2024-04-11",
+            "quote": "The largest customer of LTI is Newport News Shipbuilding, a division of Huntington Ingalls Industries, to which it has been providing services since 1995."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMSC",
+      "ticker": "AMSC",
+      "name": "アメリカン・スーパーコンダクター",
+      "name_en": "American Superconductor",
+      "sub": "電力機器",
+      "sub_en": "Power equipment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "顧客にHIIの造船部門を挙げる",
+          "text_en": "Names HII shipbuilding among its customers",
+          "source": {
+            "label": "American Superconductor 10-K(2025年3月期)",
+            "label_en": "American Superconductor 10-K (FY ended Mar 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/880807/000143774925017986/amsc20250331_10k.htm",
+            "level": "official",
+            "date": "2025-05-21",
+            "quote": "We have served over 100 customers in the grid market since our inception, including Commonwealth Edison, Huntington Ingalls Shipbuilding"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ELMT",
+      "ticker": "ELMT",
+      "name": "エルメット",
+      "name_en": "Elmet Group",
+      "sub": "金属部品",
+      "sub_en": "Metal components",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "HIIとエレクトリック・ボートの2次・3次下請の能力拡大資金を受ける",
+          "text_en": "Receives funds to expand capacity as a tier-two/three supplier to HII and Electric Boat",
+          "source": {
+            "label": "Elmet Group S-1/A 添付契約(2026年4月)",
+            "label_en": "Elmet Group S-1/A exhibit (Apr 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2101698/000121390026043190/ea027036005ex10-28.htm",
+            "level": "official",
+            "date": "2026-04-14",
+            "quote": "the Funds are to be used to expand the capabilities of the second and third tier contractors (individually, the \"Seller\") of Electric Boat Corporation and Huntington Ingalls Incorporated"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ONDS",
+      "ticker": "ONDS",
+      "name": "オンダス",
+      "name_en": "Ondas",
+      "sub": "ドローン・通信",
+      "sub_en": "Drones & networks",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "HIIを新たな元請パートナーに迎える(2026年)",
+          "text_en": "Onboarded HII as a new prime partner (2026)",
+          "source": {
+            "label": "Ondas 8-K(2026年8月)",
+            "label_en": "Ondas 8-K (Aug 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1646188/000119312526347973/onds-ex99_1.htm",
+            "level": "official",
+            "date": "2026-08-13",
+            "quote": "Onboarded with new prime partner Huntington Ingalls Industries, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GD",
+      "ticker": "GD",
+      "name": "ゼネラル・ダイナミクス",
+      "name_en": "General Dynamics",
+      "sub": "防衛・造船",
+      "sub_en": "Defense & shipbuilding",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "傘下エレクトリック・ボートとバージニア級潜水艦を分担建造",
+          "text_en": "Builds Virginia class submarines with its Electric Boat unit under a teaming agreement",
+          "source": {
+            "label": "HII 10-K(2025年度)",
+            "label_en": "HII 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1501585/000150158526000006/hii-20251231.htm",
+            "level": "official",
+            "date": "2026-02-05",
+            "quote": "We have a teaming agreement with Electric Boat Corporation (\"Electric Boat\"), a division of General Dynamics Corporation (\"General Dynamics\"), to build Virginia class (SSN 774) fast attack nuclear submarines."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BWXT",
+      "ticker": "BWXT",
+      "name": "BWXテクノロジーズ",
+      "name_en": "BWX Technologies",
+      "sub": "原子力部品",
+      "sub_en": "Nuclear components",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "政府施設運営での競合。ロスアラモスの浄化事業ではHII子会社と合弁",
+          "text_en": "Competitor for government site operations; joint venture with an HII unit at Los Alamos",
+          "source": {
+            "label": "BWX Technologies 10-K(2025年度)",
+            "label_en": "BWX Technologies 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1486957/000148695726000007/bwxt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "Newport News Nuclear BWXT - Los Alamos, LLC, a limited liability company formed by Stoller Newport News Nuclear, Inc., a subsidiary of Huntington Ingalls Industries, Inc.'s Technical Solutions division, and BWXT"
+          }
+        }
+      ]
+    },
+    {
+      "id": "J",
+      "ticker": "J",
+      "name": "ジェイコブス",
+      "name_en": "Jacobs",
+      "sub": "エンジニアリング",
+      "sub_en": "Engineering",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "米エネルギー分野で常に競合",
+          "text_en": "Regular competitor in its U.S. energy segment",
+          "source": {
+            "label": "Jacobs 8-K(2024年9月)",
+            "label_en": "Jacobs 8-K (Sep 2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/52988/000119312524221430/d871925dex991.htm",
+            "level": "official",
+            "date": "2024-09-18",
+            "quote": "Specifically in our U.S. energy segment, we regularly compete with BWX Technologies, Fluor, Honeywell, Huntington Ingalls, Bechtel and Westinghouse Electric."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMTM",
+      "ticker": "AMTM",
+      "name": "アメンタム",
+      "name_en": "Amentum",
+      "sub": "政府向けエンジニアリング",
+      "sub_en": "Government engineering",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "環境事業の競合にHIIを挙げる",
+          "text_en": "Names HII among competitors in its environmental business",
+          "source": {
+            "label": "Amentum 10-K(2025年9月期)",
+            "label_en": "Amentum 10-K (FY ended Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2011286/000162828025053993/amtm-20251003.htm",
+            "level": "official",
+            "date": "2025-11-25",
+            "quote": "Competitors for our global environmental business include AtkinsRealis, Bechtel Global Corporation, BWX Technologies Inc., Honeywell International Inc., Huntington Ingalls Industries, Inc."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

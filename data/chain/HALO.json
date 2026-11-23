@@ -1,0 +1,393 @@
+{
+  "root": {
+    "ticker": "HALO",
+    "name": "ハロザイム・セラピューティクス",
+    "cik": 1159036,
+    "name_en": "Halozyme Therapeutics"
+  },
+  "rows": [
+    {
+      "ja": "ENHANZE提携先(ロイヤルティ源)",
+      "en": "ENHANZE partners (royalty sources)"
+    },
+    {
+      "ja": "買収・係争",
+      "en": "Acquisitions & disputes"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in the 10-K)"
+    }
+  ],
+  "rivals": [
+    "AMPH",
+    "WST"
+  ],
+  "companies": [
+    {
+      "id": "Roche",
+      "ticker": "Roche",
+      "name": "ロシュ",
+      "name_en": "Roche",
+      "sub": "製薬(スイス)",
+      "sub_en": "Pharmaceuticals (Switzerland)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "5製品でロイヤルティ(ハーセプチンSC・フェスゴなど)",
+          "text_en": "Pays royalties on five products incl. Herceptin SC and Phesgo",
+          "source": {
+            "label": "Halozyme 10-K(2025年度)",
+            "label_en": "Halozyme 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1159036/000115903626000024/halo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "We currently earn royalties from the sales of ten commercial products including sales of five commercial products from the Roche collaboration, two commercial products from the Janssen collaboration and one commercial product from each of the Takeda, argenx and BMS collaborations."
+          }
+        }
+      ]
+    },
+    {
+      "id": "JNJ",
+      "ticker": "JNJ",
+      "name": "ジョンソン・エンド・ジョンソン",
+      "name_en": "Johnson & Johnson (Janssen)",
+      "sub": "製薬",
+      "sub_en": "Pharmaceuticals",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ヤンセンの2製品でロイヤルティ",
+          "text_en": "Pays royalties on two Janssen products",
+          "source": {
+            "label": "Halozyme 10-K(2025年度)",
+            "label_en": "Halozyme 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1159036/000115903626000024/halo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "We currently earn royalties from the sales of ten commercial products including sales of five commercial products from the Roche collaboration, two commercial products from the Janssen collaboration and one commercial product from each of the Takeda, argenx and BMS collaborations."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TAK",
+      "ticker": "TAK",
+      "name": "武田薬品工業",
+      "name_en": "Takeda",
+      "sub": "製薬",
+      "sub_en": "Pharmaceuticals",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "1製品でロイヤルティ",
+          "text_en": "Pays royalties on one product",
+          "source": {
+            "label": "Halozyme 10-K(2025年度)",
+            "label_en": "Halozyme 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1159036/000115903626000024/halo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "We currently earn royalties from the sales of ten commercial products including sales of five commercial products from the Roche collaboration, two commercial products from the Janssen collaboration and one commercial product from each of the Takeda, argenx and BMS collaborations."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BMY",
+      "ticker": "BMY",
+      "name": "ブリストル・マイヤーズ スクイブ",
+      "name_en": "Bristol-Myers Squibb",
+      "sub": "製薬",
+      "sub_en": "Pharmaceuticals",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "1製品でロイヤルティ",
+          "text_en": "Pays royalties on one product",
+          "source": {
+            "label": "Halozyme 10-K(2025年度)",
+            "label_en": "Halozyme 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1159036/000115903626000024/halo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "We currently earn royalties from the sales of ten commercial products including sales of five commercial products from the Roche collaboration, two commercial products from the Janssen collaboration and one commercial product from each of the Takeda, argenx and BMS collaborations."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ARGX",
+      "ticker": "ARGX",
+      "name": "アルジェニクス",
+      "name_en": "argenx",
+      "sub": "免疫疾患薬(蘭)",
+      "sub_en": "Immunology drugs (Netherlands)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "FcRn標的薬でENHANZEの独占ライセンスを導入",
+          "text_en": "Holds an exclusive ENHANZE license for FcRn-targeted products",
+          "source": {
+            "label": "argenx 20-F(2024年度)",
+            "label_en": "argenx 20-F (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1697862/000169786225000024/argx-20241231.htm",
+            "level": "official",
+            "date": "2025-03-20",
+            "quote": "Our Exclusive License with Halozyme for ENHANZE ® In February 2019, we entered into an in-license agreement with Halozyme"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PFE",
+      "ticker": "PFE",
+      "name": "ファイザー",
+      "name_en": "Pfizer",
+      "sub": "製薬",
+      "sub_en": "Pharmaceuticals",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ENHANZEの提携・ライセンス先",
+          "text_en": "ENHANZE collaboration and license partner",
+          "source": {
+            "label": "Halozyme 10-K(2025年度)",
+            "label_en": "Halozyme 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1159036/000115903626000024/halo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "We currently have ENHANZE collaborations and licensing agreements with F. Hoffmann-La Roche, Ltd. and Hoffmann-La Roche, Inc. (\"Roche\"), Takeda Pharmaceuticals International AG and Baxalta US Inc. (\"Takeda\"), Pfizer Inc. (\"Pfizer\"), Janssen Biotech, Inc. (\"Janssen\"), AbbVie, Inc. (\"AbbVie\"), Eli Lilly and Company (\"Lilly\"), Bristol-Myers Squibb Company (\"BMS\"), argenx BVBA (\"argenx\")"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ABBV",
+      "ticker": "ABBV",
+      "name": "アッヴィ",
+      "name_en": "AbbVie",
+      "sub": "製薬",
+      "sub_en": "Pharmaceuticals",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ENHANZEの提携・ライセンス先",
+          "text_en": "ENHANZE collaboration and license partner",
+          "source": {
+            "label": "Halozyme 10-K(2025年度)",
+            "label_en": "Halozyme 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1159036/000115903626000024/halo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "We currently have ENHANZE collaborations and licensing agreements with F. Hoffmann-La Roche, Ltd. and Hoffmann-La Roche, Inc. (\"Roche\"), Takeda Pharmaceuticals International AG and Baxalta US Inc. (\"Takeda\"), Pfizer Inc. (\"Pfizer\"), Janssen Biotech, Inc. (\"Janssen\"), AbbVie, Inc. (\"AbbVie\"), Eli Lilly and Company (\"Lilly\"), Bristol-Myers Squibb Company (\"BMS\"), argenx BVBA (\"argenx\")"
+          }
+        }
+      ]
+    },
+    {
+      "id": "LLY",
+      "ticker": "LLY",
+      "name": "イーライリリー",
+      "name_en": "Eli Lilly",
+      "sub": "製薬",
+      "sub_en": "Pharmaceuticals",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ENHANZEとHyperconの提携先",
+          "text_en": "Partner for ENHANZE and Hypercon",
+          "source": {
+            "label": "Halozyme 10-K(2025年度)",
+            "label_en": "Halozyme 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1159036/000115903626000024/halo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "We currently have ENHANZE collaborations and licensing agreements with F. Hoffmann-La Roche, Ltd. and Hoffmann-La Roche, Inc. (\"Roche\"), Takeda Pharmaceuticals International AG and Baxalta US Inc. (\"Takeda\"), Pfizer Inc. (\"Pfizer\"), Janssen Biotech, Inc. (\"Janssen\"), AbbVie, Inc. (\"AbbVie\"), Eli Lilly and Company (\"Lilly\"), Bristol-Myers Squibb Company (\"BMS\"), argenx BVBA (\"argenx\")"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ABOS",
+      "ticker": "ABOS",
+      "name": "アキュメン・ファーマシューティカルズ",
+      "name_en": "Acumen Pharmaceuticals",
+      "sub": "アルツハイマー病薬",
+      "sub_en": "Alzheimer's drugs",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "皮下注製剤の開発でENHANZEの非独占ライセンス",
+          "text_en": "Non-exclusive ENHANZE license for a subcutaneous formulation",
+          "source": {
+            "label": "Acumen 10-K(2025年度)",
+            "label_en": "Acumen 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1576885/000162828026021413/abos-20251231.htm",
+            "level": "official",
+            "date": "2026-03-26",
+            "quote": "On November 5, 2023, the Company entered into a non-exclusive collaboration and license agreement, or the Halozyme License Agreement, with Halozyme."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SKYE",
+      "ticker": "SKYE",
+      "name": "スカイ・バイオサイエンス",
+      "name_en": "Skye Bioscience",
+      "sub": "肥満症薬",
+      "sub_en": "Obesity drugs",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2025年12月にENHANZEの非独占ライセンス",
+          "text_en": "Non-exclusive ENHANZE license signed December 2025",
+          "source": {
+            "label": "Skye Bioscience 10-K(2025年度)",
+            "label_en": "Skye Bioscience 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1516551/000162828026016394/skye-20251231.htm",
+            "level": "official",
+            "date": "2026-03-10",
+            "quote": "In December 2025, the Company entered into a Non-exclusive Global Collaboration and License Agreement (the \"Halozyme License Agreement\") with Halozyme, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Elektrofi",
+      "ticker": "Elektrofi",
+      "name": "エレクトロフィ",
+      "name_en": "Elektrofi",
+      "sub": "高濃度製剤技術",
+      "sub_en": "High-concentration formulation",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年11月に買収(Hypercon技術)",
+          "text_en": "Acquired in November 2025 for its Hypercon technology",
+          "source": {
+            "label": "Halozyme 10-K(2025年度)",
+            "label_en": "Halozyme 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1159036/000115903626000024/halo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "On November 18, 2025, we acquired all outstanding equity interests of Elektrofi, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SurfBio",
+      "ticker": "Surf Bio",
+      "name": "サーフ・バイオ",
+      "name_en": "Surf Bio",
+      "sub": "薬物送達技術",
+      "sub_en": "Drug delivery technology",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年12月に買収",
+          "text_en": "Acquired in December 2025",
+          "source": {
+            "label": "Halozyme 10-K(2025年度)",
+            "label_en": "Halozyme 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1159036/000115903626000024/halo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "On December 22, 2025, we acquired all outstanding equity interests of Surf Bio, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MRK",
+      "ticker": "MRK",
+      "name": "メルク",
+      "name_en": "Merck & Co.",
+      "sub": "製薬",
+      "sub_en": "Pharmaceuticals",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "独裁判所がキイトルーダ皮下注の販売差し止め仮処分を認める",
+          "text_en": "German court granted Halozyme an injunction against Merck's Keytruda SC",
+          "source": {
+            "label": "Halozyme 10-K(2025年度)",
+            "label_en": "Halozyme 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1159036/000115903626000024/halo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "a German court had granted our request for a preliminary injunction ordering Merck Sharp & Dohme Corp. (\"Merck\") to refrain from distributing and offering Keytruda SC in Germany."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMPH",
+      "ticker": "AMPH",
+      "name": "アンファスター",
+      "name_en": "Amphastar Pharmaceuticals",
+      "sub": "注射剤",
+      "sub_en": "Injectable drugs",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Hylenexの競合製品Amphadaseを持つ",
+          "text_en": "Its Amphadase competes with Hylenex",
+          "source": {
+            "label": "Halozyme 10-K(2025年度)",
+            "label_en": "Halozyme 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1159036/000115903626000024/halo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "The competitors for Hylenex recombinant include Amphastar Pharmaceuticals, Inc.'s product, Amphadase ® , a bovine (bull) hyaluronidase."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WST",
+      "ticker": "WST",
+      "name": "ウエスト・ファーマシューティカル",
+      "name_en": "West Pharmaceutical Services",
+      "sub": "注射容器・機器",
+      "sub_en": "Injectable containment & devices",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "自己注射器の受託設計で競合",
+          "text_en": "Competitor in contract auto-injector design",
+          "source": {
+            "label": "Halozyme 10-K(2025年度)",
+            "label_en": "Halozyme 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1159036/000115903626000024/halo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Our competitors also include third party contract medical device design and development companies such as Scandinavian Health Ltd., Ypsomed AG, West Pharmaceutical and Owen Mumford Ltd."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
