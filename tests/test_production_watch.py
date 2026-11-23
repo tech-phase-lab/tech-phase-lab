@@ -9,7 +9,6 @@ from pathlib import Path
 from unittest import mock
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts/research"))
-import daily_checks  # noqa: E402
 import production_watch as watch  # noqa: E402
 
 NOW = datetime(2026, 11, 20, 6, 0, tzinfo=timezone.utc)
@@ -107,26 +106,7 @@ class ProductionWatchTests(unittest.TestCase):
         self.assertTrue(out.getvalue().startswith("DISABLED"))
 
 
-class DailyChecksTests(unittest.TestCase):
-    def test_runs_both_and_fails_when_either_fails(self):
-        calls = []
-        def ok():
-            calls.append("ok")
-            return 0
-        def bad():
-            calls.append("bad")
-            return 1
-        def boom():
-            calls.append("boom")
-            raise RuntimeError(SECRET)
-        self.assertEqual(daily_checks.main((("a", ok), ("b", ok))), 0)
-        self.assertEqual(daily_checks.main((("a", bad), ("b", ok))), 1)
-        out = io.StringIO()
-        with redirect_stdout(out):
-            self.assertEqual(daily_checks.main((("a", boom), ("b", ok))), 1)
-        self.assertEqual(calls, ["ok", "ok", "bad", "ok", "boom", "ok"])
-        self.assertNotIn("secret", out.getvalue())
-        self.assertEqual(json.loads(out.getvalue()), {"check": "a", "ok": False, "error": "RuntimeError"})
+# daily_checks.py (report instead of crash, Nov 23) is tested in test_cron_report.py.
 
 
 if __name__ == "__main__":

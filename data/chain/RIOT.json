@@ -1,0 +1,324 @@
+{
+  "root": {
+    "ticker": "RIOT",
+    "name": "ライオット・プラットフォームズ",
+    "cik": 1167419,
+    "name_en": "Riot Platforms"
+  },
+  "rows": [
+    {
+      "ja": "供給元・保管",
+      "en": "Suppliers & custodians",
+      "above": true
+    },
+    {
+      "ja": "顧客・買収",
+      "en": "Customers & acquisitions"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "APLD",
+    "IREN",
+    "HIVE",
+    "ARBK"
+  ],
+  "companies": [
+    {
+      "id": "MicroBT",
+      "ticker": "MicroBT",
+      "name": "マイクロBT",
+      "name_en": "MicroBT",
+      "sub": "マイニング機器",
+      "sub_en": "Mining hardware",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "最新の液浸型マイニング機を長期で調達する基本契約(累計約7.8億ドル分を発注)",
+          "text_en": "Long-term master agreement for immersion miners; about $779.5 million ordered to date",
+          "source": {
+            "label": "Riot Platforms 10-K(2025年度)",
+            "label_en": "Riot Platforms 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1167419/000110465926022322/riot-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "Through December 31, 2025, we executed purchase orders under the Master Agreement to acquire miners with a total hash rate of 49.2 EH/s, for a total purchase price of approximately $779.5 million."
+          }
+        }
+      ]
+    },
+    {
+      "id": "COIN",
+      "ticker": "COIN",
+      "name": "コインベース",
+      "name_en": "Coinbase",
+      "sub": "暗号資産の保管",
+      "sub_en": "Crypto custody",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "保有ビットコインの保管を委託する2社のうちの一社",
+          "text_en": "One of two custodians holding its bitcoin",
+          "source": {
+            "label": "Riot Platforms 10-K(2025年度)",
+            "label_en": "Riot Platforms 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1167419/000110465926022322/riot-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "Our bitcoin is held in cold storage wallets by well-known U.S.-based third-party digital asset-focused custodians, NYDIG Trust Company LLC (\"NYDIG\") and Coinbase, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NYDIG",
+      "ticker": "NYDIG",
+      "name": "NYDIG",
+      "name_en": "NYDIG",
+      "sub": "暗号資産の保管",
+      "sub_en": "Crypto custody",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "保有ビットコインの保管を委託する2社のうちの一社",
+          "text_en": "One of two custodians holding its bitcoin",
+          "source": {
+            "label": "Riot Platforms 10-K(2025年度)",
+            "label_en": "Riot Platforms 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1167419/000110465926022322/riot-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "Our bitcoin is held in cold storage wallets by well-known U.S.-based third-party digital asset-focused custodians, NYDIG Trust Company LLC (\"NYDIG\")"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMD",
+      "ticker": "AMD",
+      "name": "AMD",
+      "name_en": "AMD",
+      "sub": "半導体",
+      "sub_en": "Semiconductors",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "テキサス州ロックデールの拠点で25MW(最大追加75MW)を10年間貸すデータセンター契約(2026年1月)",
+          "text_en": "January 2026 ten-year data center lease for 25 MW at Rockdale, with options for 75 MW more",
+          "source": {
+            "label": "Riot Platforms 10-K(2025年度)",
+            "label_en": "Riot Platforms 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1167419/000110465926022322/riot-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "in January 2026, we announced the execution of a long-term data center lease agreement (the \"AMD Lease\") with Advanced Micro Devices, Inc. (\"AMD\"), to initially provide 25 MW of critical IT load capacity at the Rockdale Facility."
+          }
+        }
+      ]
+    },
+    {
+      "id": "E4A",
+      "ticker": "E4A Solutions",
+      "name": "E4Aソリューションズ",
+      "name_en": "E4A Solutions",
+      "sub": "電気設計",
+      "sub_en": "Electrical engineering",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "電力・データセンター向けの電気設計会社を2024年12月に買収",
+          "text_en": "Acquired the electrical engineering firm serving energy developers and data centers in December 2024",
+          "source": {
+            "label": "Riot Platforms 10-K(2025年度)",
+            "label_en": "Riot Platforms 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1167419/000110465926022322/riot-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "In December 2024, we acquired E4A Solutions, a leading provider of electrical engineering services to a diverse customer base of energy developers and data center operators (the \"E4A Solutions Acquisition\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BlockMining",
+      "ticker": "Block Mining",
+      "name": "ブロック・マイニング",
+      "name_en": "Block Mining",
+      "sub": "ビットコイン採掘",
+      "sub_en": "Bitcoin mining",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ケンタッキー州のビットコイン採掘会社を2024年に買収",
+          "text_en": "Acquired the Kentucky bitcoin miner in 2024",
+          "source": {
+            "label": "Riot Platforms 10-K(2025年度)",
+            "label_en": "Riot Platforms 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1167419/000110465926022322/riot-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "In 2024, we acquired Block Mining in the Commonwealth of Kentucky, which also maintains a favorable regulatory environment for bitcoin mining."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BITF",
+      "ticker": "BITF",
+      "name": "ビットファームズ",
+      "name_en": "Bitfarms",
+      "sub": "ビットコイン採掘",
+      "sub_en": "Bitcoin mining",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "大株主だったRiotとBitfarmsが2024年9月に和解契約を結んだ",
+          "text_en": "Riot, a large shareholder, signed a settlement agreement with Bitfarms in September 2024",
+          "source": {
+            "label": "Bitfarms 年次情報書(40-F添付、2024年度)",
+            "label_en": "Bitfarms annual information form (40-F exhibit, FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1812477/000121390025026575/ea023426801ex99-1_bitfarms.htm",
+            "level": "official",
+            "date": "2025-04-01",
+            "quote": "A Settlement Agreement dated September 23, 2024 was entered by the Company and Riot Platforms, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "APLD",
+      "ticker": "APLD",
+      "name": "アプライド・デジタル",
+      "name_en": "Applied Digital",
+      "sub": "AIデータセンター",
+      "sub_en": "AI data centers",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Applied Digitalが10-Kで、データセンター・ホスティング事業の競合としてRiotを挙げる",
+          "text_en": "Applied Digital names Riot as a competitor in data center hosting",
+          "source": {
+            "label": "Applied Digital 10-K(2025年5月期)",
+            "label_en": "Applied Digital 10-K (FY ended May 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1144879/000114487925000021/apld-20250531.htm",
+            "level": "official",
+            "date": "2025-07-30",
+            "quote": "Specifically, within our Data Center Hosting Business, we compete against Bitdeer Technologies Group and Riot Platforms, amongst other private operators."
+          }
+        }
+      ]
+    },
+    {
+      "id": "IREN",
+      "ticker": "IREN",
+      "name": "アイレン",
+      "name_en": "IREN",
+      "sub": "ビットコイン採掘・AIクラウド",
+      "sub_en": "Bitcoin mining & AI cloud",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "IRENが10-Kで、ビットコイン採掘の競合の一社としてRiotを挙げる",
+          "text_en": "IREN names Riot among public bitcoin-mining competitors",
+          "source": {
+            "label": "IREN 10-K(2025年6月期)",
+            "label_en": "IREN 10-K (FY ended Jun 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1878848/000187884825000063/iren-20250630.htm",
+            "level": "official",
+            "date": "2025-08-28",
+            "quote": "Several public companies (traded in the U.S. and internationally) compete with us in Bitcoin Mining, including Bitdeer Technologies Group, Bitfarms Ltd., Cipher Mining Inc., CleanSpark, Inc., Core Scientific Inc., Hut 8 Corp., MARA Holdings, Inc., Riot Platforms, Inc. and TeraWulf Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HIVE",
+      "ticker": "HIVE",
+      "name": "HIVEデジタル",
+      "name_en": "HIVE Digital Technologies",
+      "sub": "マイニング・AI基盤",
+      "sub_en": "Mining & AI infrastructure",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "HIVEが10-Kで、競合する上場企業の一社としてRiotを挙げる",
+          "text_en": "HIVE names Riot among public companies it competes with",
+          "source": {
+            "label": "HIVE Digital 10-K(2026年3月期)",
+            "label_en": "HIVE Digital 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1720424/000106299326002973/form10k.htm",
+            "level": "official",
+            "date": "2026-06-02",
+            "quote": "We compete with multiple public companies, including Bitdeer Technologies Group, Keel Infrastructure Corp., Cipher Digital Inc., CleanSpark, Inc., Core Scientific Inc., Hut 8 Corp., MARA Holdings, Inc., Riot Platforms, Inc. and TeraWulf Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ARBK",
+      "ticker": "ARBK",
+      "name": "アルゴ・ブロックチェーン",
+      "name_en": "Argo Blockchain",
+      "sub": "ビットコイン採掘",
+      "sub_en": "Bitcoin mining",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Argoが20-Fで、競合となりうる上場企業の一社としてRiotを挙げる",
+          "text_en": "Argo Blockchain names Riot among public companies that may compete with it",
+          "source": {
+            "label": "Argo Blockchain 20-F(2024年度)",
+            "label_en": "Argo Blockchain 20-F (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1841675/000110465925049311/arbk-20241231x20f.htm",
+            "level": "official",
+            "date": "2025-05-15",
+            "quote": "Several public companies (traded in the United States and internationally), including but not limited to the following, may be considered to compete with us: Bit Digital, Inc., Bitdeer Technologies Group, Bitfarms Technologies Ltd., Cipher Mining, CleanSpark Inc., Core Scientific, Inc., DMG Blockchain Solutions Inc., HIVE Blockchain Technologies Ltd, Hut 8 Mining Corp, Iris Energy Company, Marathon Digital Holdings, Inc., Northern Data AG, Riot Platforms Inc., Stronghold Digital Mining, and TeraWulf Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SLNH",
+      "ticker": "SLNH",
+      "name": "ソルナ",
+      "name_en": "Soluna Holdings",
+      "sub": "データセンター",
+      "sub_en": "Data centers",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Solunaが10-Kで、競合しうる上場マイニング会社の筆頭にRiotを挙げる",
+          "text_en": "Soluna lists Riot first among public bitcoin miners it may compete with",
+          "source": {
+            "label": "Soluna 10-K(2024年度)",
+            "label_en": "Soluna 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/64463/000164117225001756/form10-k.htm",
+            "level": "official",
+            "date": "2025-03-31",
+            "quote": "We may compete with the following publicly traded Bitcoin mining companies: Riot Platforms, Marathon Digital Holdings, Core Scientific, Cipher Mining, Hut 8 Mining, Hive Blockchain Technologies, Bitfarms, Bitdeer Technologies Group, Cleanspark, IREN, Bit Digital, TeraWulf, and Greenidge Generation Holdings."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

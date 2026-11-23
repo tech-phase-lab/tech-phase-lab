@@ -5160,6 +5160,8 @@ def collect_source(row, transport=fetch):
     from article_document import ARTICLE_TYPES, validate as validate_article_document
     declared_encoding = None
     article = article_url(row["url"], row["ticker"]) is not None
+    # The address actually requested: the article's own, or its configured mirror on an approved host.
+    fetched_url = body_mirror_url(row["url"], row["ticker"]) or row["url"]
     stale_document_type = article and row["content_type"] is not None and row["content_type"] not in ARTICLE_TYPES
     if getattr(transport, "supports_persistent_validators", False):
         missing_extracted_evidence = (
@@ -5185,7 +5187,7 @@ def collect_source(row, transport=fetch):
             }
         )
         response = transport(
-            body_mirror_url(row["url"], row["ticker"]) or row["url"], row["ticker"], validators=validators,
+            fetched_url, row["ticker"], validators=validators,
             include_metadata=True,
         )
         if response["notModified"]:
@@ -5199,7 +5201,7 @@ def collect_source(row, transport=fetch):
         declared_encoding = response.get("charset")
         response_etag, response_last_modified = response["etag"], response["lastModified"]
     else:
-        content, content_type = transport(body_mirror_url(row["url"], row["ticker"]) or row["url"], row["ticker"])
+        content, content_type = transport(fetched_url, row["ticker"])
         response_etag = response_last_modified = None
     if article and content_type not in ARTICLE_TYPES:
         raise ValueError("article-response-not-document")
@@ -5207,9 +5209,12 @@ def collect_source(row, transport=fetch):
     if article and content_type == "text/html":
         if is_verification_html(content):
             raise ValueError("Source returned an error or verification page")
+        # A mirrored page may name its own address as canonical (GlobeNewswire's rss host for Coherent); the mirror rule derives
+        # that address from the article's own path on an approved host, so either address identifies the same release.
         document_identity = validate_article_document(
             decode_html_document(content, declared_encoding), row["url"],
             None if urlsplit(row["url"]).hostname == "www.sec.gov" else row["title"],
+            mirror=fetched_url if fetched_url != row["url"] else None,
         )
     extracted = extract_text(content, content_type, declared_encoding)
     is_sec_html = content_type == "text/html" and urlsplit(row["url"]).hostname == "www.sec.gov"

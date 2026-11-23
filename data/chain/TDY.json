@@ -1,0 +1,400 @@
+{
+  "root": {
+    "ticker": "TDY",
+    "name": "テレダイン・テクノロジーズ",
+    "cik": 1094285,
+    "name_en": "Teledyne Technologies"
+  },
+  "rows": [
+    {
+      "ja": "供給元(上流)",
+      "en": "Suppliers (upstream)",
+      "above": true
+    },
+    {
+      "ja": "顧客(部品・受託製造)",
+      "en": "Customers (components & foundry)"
+    },
+    {
+      "ja": "買収・提携",
+      "en": "Acquisitions & partners"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "AVAV",
+    "GRMN",
+    "XYL",
+    "MIR"
+  ],
+  "companies": [
+    {
+      "id": "AMPX",
+      "ticker": "AMPX",
+      "name": "アンプリウス",
+      "name_en": "Amprius Technologies",
+      "sub": "高性能電池",
+      "sub_en": "High-energy batteries",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Ampriusが、電池の長年の顧客・パートナーとしてTeledyne FLIRを挙げる",
+          "text_en": "Amprius lists Teledyne FLIR among long-time battery customers and partners",
+          "source": {
+            "label": "Amprius 10-K(2024年度)",
+            "label_en": "Amprius 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1899287/000189928725000012/ampx-20241231.htm",
+            "level": "official",
+            "date": "2025-03-20",
+            "quote": "Our batteries and their performance specifications have been tested and validated for application by various customers, including our longtime partners such as AALTO Airbus, AeroVironment, BAE Systems, Kraus Hamdani Aerospace, Teledyne FLIR and the U.S."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MOB",
+      "ticker": "MOB",
+      "name": "モビリコム",
+      "name_en": "Mobilicom",
+      "sub": "ドローン通信",
+      "sub_en": "Drone communications",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Mobilicomが、提携先・顧客の一社としてTeledyne FLIRを挙げる",
+          "text_en": "Mobilicom lists Teledyne FLIR among its partners and customers",
+          "source": {
+            "label": "Mobilicom 20-F(2025年度)",
+            "label_en": "Mobilicom 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1898643/000121390026032915/ea0281668-20f_mobilicom.htm",
+            "level": "official",
+            "date": "2026-03-23",
+            "quote": "Our partners and customers include Israel Aerospace Industries, Airbus, Teledyne-Flir, Rafael Technologies, ST Engineering, the Israeli Ministry of Defense, or MOD, U.S."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SITM",
+      "ticker": "SITM",
+      "name": "サイタイム",
+      "name_en": "SiTime",
+      "sub": "MEMSタイミング",
+      "sub_en": "MEMS timing",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "SiTimeのMEMS製品の主要な製造委託先(ファウンドリ)の一社",
+          "text_en": "One of SiTime's primary foundries for its MEMS timing devices",
+          "source": {
+            "label": "SiTime 10-K(2025年度)",
+            "label_en": "SiTime 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1451809/000145180926000012/sitm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "and Teledyne Digital Imaging Inc. (\"Teledyne\") in Canada as our primary foundries and suppliers for our MEMS timing devices and analog mixed-signal circuit ICs."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BNGO",
+      "ticker": "BNGO",
+      "name": "バイオナノ・ジェノミクス",
+      "name_en": "Bionano Genomics",
+      "sub": "ゲノム解析",
+      "sub_en": "Genome analysis",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Teledyne MEMSがBionanoに部品を供給する契約",
+          "text_en": "Supply agreement under which Teledyne MEMS sells to Bionano",
+          "source": {
+            "label": "Bionano 10-K添付の供給契約",
+            "label_en": "Bionano supply agreement (10-K exhibit)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1411690/000141169026000007/bngo-ex10_18.htm",
+            "level": "official",
+            "date": "2026-03-23",
+            "quote": "by and between Teledyne MEMS , a business unit of Teledyne Digital Imaging, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BRKR",
+      "ticker": "BRKR",
+      "name": "ブルカー",
+      "name_en": "Bruker",
+      "sub": "分析機器",
+      "sub_en": "Scientific instruments",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Brukerの一部門が赤外線検出器を単独の供給元としてTeledyneから購入",
+          "text_en": "A Bruker unit buys focal plane array detectors from Teledyne as its single supplier",
+          "source": {
+            "label": "Bruker 10-K(2024年度)",
+            "label_en": "Bruker 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1109354/000095017025030897/brkr-20241231.htm",
+            "level": "official",
+            "date": "2025-03-03",
+            "quote": "it purchases focal plane array detectors from a single supplier, Teledyne Scientific & Imaging."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Qioptiq",
+      "ticker": "Qioptiq",
+      "name": "キオプティック",
+      "name_en": "Qioptiq",
+      "sub": "光学・防衛電子",
+      "sub_en": "Optics & defense electronics",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "光学システムと防衛電子の事業(Qioptiq)を2025年2月に買収",
+          "text_en": "Acquired the Qioptiq optical systems and advanced electronics businesses in February 2025",
+          "source": {
+            "label": "Teledyne 10-K(2025年度)",
+            "label_en": "Teledyne 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1094285/000109428526000017/tdy-20251228.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "the Optical Systems and Advanced Electronics Systems (\"Qioptiq\") businesses, which were acquired on February 3, 2025"
+          }
+        }
+      ]
+    },
+    {
+      "id": "OPTT",
+      "ticker": "OPTT",
+      "name": "オーシャン・パワー・テクノロジーズ",
+      "name_en": "Ocean Power Technologies",
+      "sub": "海洋無人機・波力",
+      "sub_en": "Ocean drones & wave power",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Teledyne MarineとOEM契約を結び、センサーを自社の無人海洋機器に組み込む",
+          "text_en": "OEM agreement to integrate Teledyne Marine sensors into its autonomous platforms",
+          "source": {
+            "label": "Ocean Power Technologies 10-K(2025年4月期)",
+            "label_en": "Ocean Power Technologies 10-K (FY ended Apr 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1378140/000164117225020888/form10-k.htm",
+            "level": "official",
+            "date": "2025-07-24",
+            "quote": "In June 2024, we executed an Original Equipment Manufacturer (OEM) agreement with Teledyne Marine."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AVAV",
+      "ticker": "AVAV",
+      "name": "エアロバイロメント",
+      "name_en": "AeroVironment",
+      "sub": "無人機",
+      "sub_en": "Drones",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "AeroVironmentが10-Kで、無人機の主な競合の一社としてTeledyneを挙げる",
+          "text_en": "AeroVironment names Teledyne among its principal UAS competitors",
+          "source": {
+            "label": "AeroVironment 10-K(2026年4月期)",
+            "label_en": "AeroVironment 10-K (FY ended Apr 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1368622/000110465926078906/avav-20260430x10k.htm",
+            "level": "official",
+            "date": "2026-06-29",
+            "quote": "Our current principal competitors include Elbit Systems Ltd., Quantum-Systems, Inc., Redwire Corporation, Teledyne Technologies, Inc., Sierra Nevada Corporation, Lockheed Martin Corporation, The Boeing Company, Textron, Inc., Shield AI, Inc., Northrop Grumman Corporation, Griffon Aerospace, Inc., L3Harris Technologies, Inc., Anduril Industries, Inc., Airbus SE and Israeli Aircraft Industries."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GRMN",
+      "ticker": "GRMN",
+      "name": "ガーミン",
+      "name_en": "Garmin",
+      "sub": "航法機器",
+      "sub_en": "Navigation devices",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Garminが10-Kで、船舶向け製品の主な競合としてRaymarine(Teledyne)を挙げる",
+          "text_en": "Garmin names Raymarine (Teledyne) among principal marine competitors",
+          "source": {
+            "label": "Garmin 10-K(2024年度)",
+            "label_en": "Garmin 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1121788/000095017025022760/grmn-20241228.htm",
+            "level": "official",
+            "date": "2025-02-19",
+            "quote": "For marine products, Garmin believes that its principal competitors are Furuno, Johnson Outdoors, Navico (Brunswick), and Raymarine (Teledyne)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "XYL",
+      "ticker": "XYL",
+      "name": "ザイレム",
+      "name_en": "Xylem",
+      "sub": "水処理・計測",
+      "sub_en": "Water technology",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Xylemが10-Kで、計測・制御部門の主な競合の一社としてTeledyneを挙げる",
+          "text_en": "Xylem names Teledyne among key competitors in measurement and control",
+          "source": {
+            "label": "Xylem 10-K(2024年度)",
+            "label_en": "Xylem 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1524472/000152447225000013/xyl-20241231.htm",
+            "level": "official",
+            "date": "2025-03-03",
+            "quote": "Our key competitors in the Measurement and Control Solutions segment include Badger Meter, Echologics (Mueller Water Products), Hach (Veralto Corporation), Itron, Kamstrup, Landis+Gyr, Neptune (Roper), and Teledyne."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MIR",
+      "ticker": "MIR",
+      "name": "ミリオン・テクノロジーズ",
+      "name_en": "Mirion Technologies",
+      "sub": "放射線計測",
+      "sub_en": "Radiation detection",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Mirionが10-Kで、原子力・安全分野の主な競合としてFLIR(Teledyne)を挙げる",
+          "text_en": "Mirion names FLIR (Teledyne) among primary nuclear and safety competitors",
+          "source": {
+            "label": "Mirion 10-K(2025年度)",
+            "label_en": "Mirion 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1809987/000162828026009869/mir-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Nuclear & Safety: Thermo Fisher Scientific, Curtiss-Wright, Ortec (Ametek), FLIR (Teledyne), Ludlum, Fuji Electric, Caen System, Fluke (Fortive), Berthold Technologies and Framatome"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RAL",
+      "ticker": "RAL",
+      "name": "ラリアント",
+      "name_en": "Ralliant",
+      "sub": "計測機器",
+      "sub_en": "Test & measurement",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Ralliantが10-Kで、計測部門の主な競合の一社としてTeledyneを挙げる",
+          "text_en": "Ralliant names Teledyne among main test and measurement competitors",
+          "source": {
+            "label": "Ralliant 10-K(2025年度)",
+            "label_en": "Ralliant 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2041385/000204138526000023/ral-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "In the Company's Test and Measurement segment, its main competitors include Keysight Technologies, Rohde & Schwarz, Ametek, and Teledyne Technologies, among others."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MASS",
+      "ticker": "MASS",
+      "name": "908デバイセズ",
+      "name_en": "908 Devices",
+      "sub": "小型分析装置",
+      "sub_en": "Portable analyzers",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "908 Devicesが10-Kで、大手競合の一社としてTeledyneを挙げる",
+          "text_en": "908 Devices names Teledyne among large competitors",
+          "source": {
+            "label": "908 Devices 10-K(2025年度)",
+            "label_en": "908 Devices 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1555279/000110465926024877/mass-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-03-09",
+            "quote": "We face substantial competition from very large and experienced enterprises, both public and privately held, including Agilent Technologies, Bruker Corporation, Inficon, Teledyne, Thermo Fisher Scientific and Rigaku."
+          }
+        }
+      ]
+    },
+    {
+      "id": "VREX",
+      "ticker": "VREX",
+      "name": "バレックス・イメージング",
+      "name_en": "Varex Imaging",
+      "sub": "X線部品",
+      "sub_en": "X-ray components",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Varexが10-Kで、産業用X線検出器の競合の一社としてTeledyneを挙げる",
+          "text_en": "Varex names Teledyne among competing industrial detector suppliers",
+          "source": {
+            "label": "Varex Imaging 10-K(2025年9月期)",
+            "label_en": "Varex Imaging 10-K (FY ended Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1681622/000168162225000108/var-20251003.htm",
+            "level": "official",
+            "date": "2025-11-18",
+            "quote": "In the low-energy sector of our Industrial segment, we compete with other OEM suppliers, such as iRay, Teledyne, and Comet AG"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AIRO",
+      "ticker": "AIRO",
+      "name": "AIROグループ",
+      "name_en": "AIRO Group",
+      "sub": "ドローン・航空",
+      "sub_en": "Drones & aviation",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "AIROが10-Kで、小型無人機の主な競合の一社としてTeledyneを挙げる",
+          "text_en": "AIRO names Teledyne among principal small-drone competitors",
+          "source": {
+            "label": "AIRO Group 10-K(2025年度)",
+            "label_en": "AIRO Group 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1927958/000149315226014116/form10-k.htm",
+            "level": "official",
+            "date": "2026-03-31",
+            "quote": "Our current principal sUAS competitors include Elbit Systems Ltd., Teledyne Technologies, Inc., L3 Technologies, Inc., and Lockheed Martin Corporation."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

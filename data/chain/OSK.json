@@ -1,0 +1,296 @@
+{
+  "root": {
+    "ticker": "OSK",
+    "name": "オシュコシュ",
+    "cik": 775158,
+    "name_en": "Oshkosh"
+  },
+  "rows": [
+    {
+      "ja": "買収・売却",
+      "en": "Acquisitions & sellers",
+      "above": true
+    },
+    {
+      "ja": "競合(10-K等に記載)",
+      "en": "Competitors (named in 10-Ks)"
+    }
+  ],
+  "rivals": [
+    "TEX",
+    "REVG",
+    "FSS",
+    "GD"
+  ],
+  "companies": [
+    {
+      "id": "JBTM",
+      "ticker": "JBTM",
+      "name": "JBTマレル",
+      "name_en": "JBT Marel",
+      "sub": "食品機械",
+      "sub_en": "Food processing equipment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "空港地上支援機器のAeroTechを2023年にオシュコシュへ約8億ドルで売却",
+          "text_en": "Sold its AeroTech airport equipment unit to Oshkosh in 2023 for $804.6 million",
+          "source": {
+            "label": "Oshkosh 10-K(2025年度)",
+            "label_en": "Oshkosh 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/775158/000119312526054061/osk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "In August 2023, the Company acquired AeroTech from JBT Corporation for $804.6 million."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AUSA",
+      "ticker": "AUSA",
+      "name": "AUSA",
+      "name_en": "AUSA",
+      "sub": "小型建機(スペイン)",
+      "sub_en": "Compact equipment (Spain)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2024年9月に買収(ホイールダンパー・テレハンドラー)",
+          "text_en": "Acquired in September 2024: wheeled dumpers and telehandlers",
+          "source": {
+            "label": "Oshkosh 10-K(2025年度)",
+            "label_en": "Oshkosh 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/775158/000119312526054061/osk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "In September 2024, the Company acquired AUSA, a privately held Spanish manufacturer of wheeled dumpers, rough terrain forklifts and telehandlers, for $114.5 million."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Hinowa",
+      "ticker": "Hinowa",
+      "name": "ヒノワ",
+      "name_en": "Hinowa",
+      "sub": "クローラー式高所作業車(伊)",
+      "sub_en": "Crawler booms (Italy)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2023年1月に買収",
+          "text_en": "Acquired in January 2023",
+          "source": {
+            "label": "Oshkosh 10-K(2025年度)",
+            "label_en": "Oshkosh 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/775158/000119312526054061/osk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "In January 2023, the Company acquired Hinowa, an Italian manufacturer of compact crawler booms and tracked equipment, for $186.8 million."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TEX",
+      "ticker": "TEX",
+      "name": "テレックス",
+      "name_en": "Terex",
+      "sub": "高所作業車・建機",
+      "sub_en": "Aerial work platforms & machinery",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "高所作業車(ジーニー)とごみ収集車(ESG)で競合",
+          "text_en": "Competes with Terex's Genie aerial platforms and ESG refuse trucks",
+          "source": {
+            "label": "Oshkosh 10-K(2025年度)",
+            "label_en": "Oshkosh 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/775158/000119312526054061/osk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "competition for sales of aerial work platform equipment includes Genie Industries, Inc. (a subsidiary of Terex Corporation), Skyjack Inc. (a subsidiary of Linamar Corporation), Haulotte Group"
+          }
+        }
+      ]
+    },
+    {
+      "id": "REVG",
+      "ticker": "REVG",
+      "name": "REVグループ",
+      "name_en": "REV Group",
+      "sub": "消防車・特殊車両",
+      "sub_en": "Fire trucks & specialty vehicles",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "消防車ピアースの競合としてREVを挙げ、REVもピアースを競合に挙げる",
+          "text_en": "Names REV Group as a fire-truck rival; REV names Oshkosh's Pierce in return",
+          "source": {
+            "label": "REV Group 10-K(2025年10月期)",
+            "label_en": "REV Group 10-K (FY ended Oct 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1687221/000119312525313470/revg-20251031.htm",
+            "level": "official",
+            "date": "2025-12-10",
+            "quote": "In the Specialty Vehicles segment, our competition includes Pierce Manufacturing (Oshkosh Corp.), Rosenbauer International, Demers Braun Crestline, FWD Seagrave"
+          }
+        }
+      ]
+    },
+    {
+      "id": "FSS",
+      "ticker": "FSS",
+      "name": "フェデラル・シグナル",
+      "name_en": "Federal Signal",
+      "sub": "特殊車両",
+      "sub_en": "Specialty vehicles",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ごみ収集車の競合に子会社ニューウェイを挙げる",
+          "text_en": "Names Federal Signal's New Way Trucks among refuse vehicle competitors",
+          "source": {
+            "label": "Oshkosh 10-K(2025年度)",
+            "label_en": "Oshkosh 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/775158/000119312526054061/osk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Competitors in the refuse and recycling collection vehicles market include Environmental Solutions Group (a subsidiary of Terex Corporation), New Way Trucks (a subsidiary of Federal Signal)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GD",
+      "ticker": "GD",
+      "name": "ゼネラル・ダイナミクス",
+      "name_en": "General Dynamics",
+      "sub": "防衛",
+      "sub_en": "Defense",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "防衛車両の競合にGDなどを挙げる",
+          "text_en": "Names General Dynamics among Oshkosh Defense competitors",
+          "source": {
+            "label": "Oshkosh 10-K(2025年度)",
+            "label_en": "Oshkosh 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/775158/000119312526054061/osk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Competition for Oshkosh Defense includes AM General LLC (a subsidiary of KPS Capital Partners, LP), American Rheinmetall Vehicles, BAE Systems plc, General Dynamics Corporation, GM Defense LLC, Mack Defense LLC and ND Defense LLC"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GM",
+      "ticker": "GM",
+      "name": "ゼネラル・モーターズ",
+      "name_en": "General Motors",
+      "sub": "自動車",
+      "sub_en": "Autos",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "防衛車両の競合に子会社GMディフェンス",
+          "text_en": "Names GM Defense among Oshkosh Defense competitors",
+          "source": {
+            "label": "Oshkosh 10-K(2025年度)",
+            "label_en": "Oshkosh 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/775158/000119312526054061/osk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "BAE Systems plc, General Dynamics Corporation, GM Defense LLC, Mack Defense LLC"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BAE",
+      "ticker": "BAE Systems",
+      "name": "BAEシステムズ",
+      "name_en": "BAE Systems",
+      "sub": "防衛(英)",
+      "sub_en": "Defense (UK)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "防衛車両の競合にBAEを挙げる",
+          "text_en": "Names BAE Systems among Oshkosh Defense competitors",
+          "source": {
+            "label": "Oshkosh 10-K(2025年度)",
+            "label_en": "Oshkosh 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/775158/000119312526054061/osk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "American Rheinmetall Vehicles, BAE Systems plc, General Dynamics Corporation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Linamar",
+      "ticker": "Linamar",
+      "name": "リナマー",
+      "name_en": "Linamar",
+      "sub": "自動車部品・高所作業車(加)",
+      "sub_en": "Auto parts & aerial platforms (Canada)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "高所作業車の競合に子会社スカイジャックを挙げる",
+          "text_en": "Names Linamar's Skyjack among aerial work platform competitors",
+          "source": {
+            "label": "Oshkosh 10-K(2025年度)",
+            "label_en": "Oshkosh 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/775158/000119312526054061/osk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Skyjack Inc. (a subsidiary of Linamar Corporation), Haulotte Group, Xuzhou Construction Machinery Group Co., Ltd. (XCMG)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Palfinger",
+      "ticker": "Palfinger",
+      "name": "パルフィンガー",
+      "name_en": "Palfinger",
+      "sub": "クレーン(墺)",
+      "sub_en": "Cranes (Austria)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "トラック搭載クレーンの主な競合",
+          "text_en": "Main competitor in truck-mounted cranes",
+          "source": {
+            "label": "Oshkosh 10-K(2025年度)",
+            "label_en": "Oshkosh 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/775158/000119312526054061/osk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Competition in truck-mounted cranes comes primarily from European companies including Palfinger AG, Cargotec Corporation and Fassi Group SpA."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

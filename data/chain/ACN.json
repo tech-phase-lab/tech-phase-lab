@@ -1,0 +1,440 @@
+{
+  "root": {
+    "ticker": "ACN",
+    "name": "アクセンチュア",
+    "cik": 1467373,
+    "name_en": "Accenture"
+  },
+  "rows": [
+    {
+      "ja": "ソフト提携先(導入を担う)",
+      "en": "Software partners (Accenture implements)",
+      "above": true
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "IBM",
+    "GDYN",
+    "NSIT",
+    "TTEC"
+  ],
+  "companies": [
+    {
+      "id": "SAIL",
+      "ticker": "SAIL",
+      "name": "セイルポイント",
+      "name_en": "SailPoint",
+      "sub": "ID管理",
+      "sub_en": "Identity security",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "SailPointが、導入・販売で組むシステム開発会社の一社としてアクセンチュアを挙げる",
+          "text_en": "SailPoint names Accenture among systems integrators it partners with",
+          "source": {
+            "label": "SailPoint 10-K(2026年1月期)",
+            "label_en": "SailPoint 10-K (FY ended Jan 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2030781/000203078126000003/sail-20260131.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "We partner with many large and global system integrators including Accenture, Capgemini, Deloitte, KPMG, and PwC, as well as many regional system integrators."
+          }
+        }
+      ]
+    },
+    {
+      "id": "APPN",
+      "ticker": "APPN",
+      "name": "アピアン",
+      "name_en": "Appian",
+      "sub": "ローコード基盤",
+      "sub_en": "Low-code platform",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Appianが、導入・販売で組むシステム開発会社の一社としてアクセンチュアを挙げる",
+          "text_en": "Appian names Accenture among systems integrators it partners with",
+          "source": {
+            "label": "Appian 10-K(2025年度)",
+            "label_en": "Appian 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1441683/000144168326000013/appn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "We have a number of strategic partnerships with companies, including Accenture, Capgemini, Deloitte, Indra Group, KPMG, and PwC."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NCNO",
+      "ticker": "NCNO",
+      "name": "エヌシーノ",
+      "name_en": "nCino",
+      "sub": "銀行向けクラウド",
+      "sub_en": "Banking cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "nCinoが、導入・販売で組むシステム開発会社の一社としてアクセンチュアを挙げる",
+          "text_en": "nCino names Accenture among systems integrators it partners with",
+          "source": {
+            "label": "nCino 10-K(2025年1月期)",
+            "label_en": "nCino 10-K (FY ended Jan 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1902733/000190273325000026/ncno-20250131.htm",
+            "level": "official",
+            "date": "2025-04-01",
+            "quote": "These partners (including Accenture, Deloitte, PwC, and West Monroe Partners, among others) assist in prospecting, marketing, co-selling, product evaluation/feedback and implementation of our solutions"
+          }
+        }
+      ]
+    },
+    {
+      "id": "DT",
+      "ticker": "DT",
+      "name": "ダイナトレース",
+      "name_en": "Dynatrace",
+      "sub": "監視ソフト",
+      "sub_en": "Observability software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Dynatraceが、導入・販売で組むシステム開発会社の一社としてアクセンチュアを挙げる",
+          "text_en": "Dynatrace names Accenture among systems integrators it partners with",
+          "source": {
+            "label": "Dynatrace 10-K(2025年3月期)",
+            "label_en": "Dynatrace 10-K (FY ended Mar 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1773383/000177338325000065/dt-20250331.htm",
+            "level": "official",
+            "date": "2025-05-22",
+            "quote": "We work closely with a number of strategic GSIs, including Accenture, Atos, Deloitte, DXC, and Kyndryl, to help customers digitally transform their businesses and reduce cloud complexity."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MDB",
+      "ticker": "MDB",
+      "name": "モンゴDB",
+      "name_en": "MongoDB",
+      "sub": "データベース",
+      "sub_en": "Database",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "MongoDBが、導入・販売で組むシステム開発会社の一社としてアクセンチュアを挙げる",
+          "text_en": "MongoDB names Accenture among systems integrators it partners with",
+          "source": {
+            "label": "MongoDB 10-K(2025年1月期)",
+            "label_en": "MongoDB 10-K (FY ended Jan 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1441816/000144181625000057/mdb-20250131.htm",
+            "level": "official",
+            "date": "2025-03-21",
+            "quote": "We have also expanded our existing partnerships with independent software vendors and global systems integrators including IBM, Accenture, Infosys, Capgemini, Confluent, HCL, Wipro, Cognizant, Deloitte and Tata Consultancy Services."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CFLT",
+      "ticker": "CFLT",
+      "name": "コンフルエント",
+      "name_en": "Confluent",
+      "sub": "データ配信基盤",
+      "sub_en": "Data streaming",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Confluentが、導入・販売で組むシステム開発会社の一社としてアクセンチュアを挙げる",
+          "text_en": "Confluent names Accenture among systems integrators it partners with",
+          "source": {
+            "label": "Confluent 10-K(2024年度)",
+            "label_en": "Confluent 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1699838/000095017025022369/cflt-20241231.htm",
+            "level": "official",
+            "date": "2025-02-18",
+            "quote": "Our partners include Amazon Web Services ( \"AWS\") , Microsoft, Google Cloud, Accenture, Infosys, Alibaba, Elastic, MongoDB, and SAP."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PEGA",
+      "ticker": "PEGA",
+      "name": "ペガシステムズ",
+      "name_en": "Pegasystems",
+      "sub": "業務自動化ソフト",
+      "sub_en": "Workflow software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Pegasystemsが、導入・販売で組むシステム開発会社の一社としてアクセンチュアを挙げる",
+          "text_en": "Pegasystems names Accenture among systems integrators it partners with",
+          "source": {
+            "label": "Pegasystems 10-K(2024年度)",
+            "label_en": "Pegasystems 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1013857/000101385725000024/pega-20241231.htm",
+            "level": "official",
+            "date": "2025-02-12",
+            "quote": "Pega's largest partners include Aaseya, Accenture, Areteans, Capgemini, Coforge, Cognizant Technology Solutions, Evonsys Inc, Ernst & Young, HCL Tech, Infosys, LTIMindtree, Tata Consultancy Services, and Virtusa."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BL",
+      "ticker": "BL",
+      "name": "ブラックライン",
+      "name_en": "BlackLine",
+      "sub": "会計ソフト",
+      "sub_en": "Accounting software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "BlackLineが、導入・販売で組むシステム開発会社の一社としてアクセンチュアを挙げる",
+          "text_en": "BlackLine names Accenture among systems integrators it partners with",
+          "source": {
+            "label": "BlackLine 10-K(2025年度)",
+            "label_en": "BlackLine 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1666134/000162828026011915/bl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our direct sales force leverages relationships with technology vendors, such as Workday, SAP, and Microsoft, professional services firms, such as Accenture, Deloitte, and Ernst & Young"
+          }
+        }
+      ]
+    },
+    {
+      "id": "OS",
+      "ticker": "OS",
+      "name": "ワンストリーム",
+      "name_en": "OneStream",
+      "sub": "財務計画ソフト",
+      "sub_en": "Financial planning software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "OneStreamが、導入・販売で組むシステム開発会社の一社としてアクセンチュアを挙げる",
+          "text_en": "OneStream names Accenture among systems integrators it partners with",
+          "source": {
+            "label": "OneStream 10-K(2025年度)",
+            "label_en": "OneStream 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1889956/000119312526076771/ck0001889956-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "We also collaborate with global strategic consulting firms and global systems integrators, such as Accenture, IBM, KPMG and PwC, which introduce our platform to their clients as part of large-scale digital transformation projects"
+          }
+        }
+      ]
+    },
+    {
+      "id": "IBM",
+      "ticker": "IBM",
+      "name": "IBM",
+      "name_en": "IBM",
+      "sub": "ITサービス",
+      "sub_en": "IT services",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "IBMが10-Kで、コンサルティングの世界的な競合の筆頭にアクセンチュアを挙げる",
+          "text_en": "IBM names Accenture first among global consulting competitors",
+          "source": {
+            "label": "IBM 10-K(2025年度)",
+            "label_en": "IBM 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/51143/000005114326000010/ibm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Our competitors include global firms such as Accenture, Capgemini, India-based service providers, management consulting firms, the consulting practices of public accounting firms, engineering service providers, and niche specialists."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GDYN",
+      "ticker": "GDYN",
+      "name": "グリッド・ダイナミクス",
+      "name_en": "Grid Dynamics",
+      "sub": "デジタル変革支援",
+      "sub_en": "Digital engineering services",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Grid Dynamicsが10-Kで、主な競合の筆頭にアクセンチュアを挙げる",
+          "text_en": "Grid Dynamics names Accenture first among its primary competitors",
+          "source": {
+            "label": "Grid Dynamics 10-K(2024年度)",
+            "label_en": "Grid Dynamics 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1743725/000162828025008723/gdyn-20241231.htm",
+            "level": "official",
+            "date": "2025-02-27",
+            "quote": "Our primary competitors include global consulting and traditional IT service providers such as Accenture plc, Capgemini SE, Cognizant Technology Solutions Corporation, Infosys Technologies, Wipro"
+          }
+        }
+      ]
+    },
+    {
+      "id": "NSIT",
+      "ticker": "NSIT",
+      "name": "インサイト・エンタープライゼズ",
+      "name_en": "Insight Enterprises",
+      "sub": "IT販売・サービス",
+      "sub_en": "IT solutions",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Insightが10-Kで、競合するシステム開発会社の筆頭にアクセンチュアを挙げる",
+          "text_en": "Insight names Accenture first among competing systems integrators",
+          "source": {
+            "label": "Insight Enterprises 10-K(2025年度)",
+            "label_en": "Insight Enterprises 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/932696/000093269626000007/nsit-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Systems integrators and digital consultants such as Accenture, Capgemini, Atos, HCL Technologies, Tata Consultancy Services and Infosys"
+          }
+        }
+      ]
+    },
+    {
+      "id": "TTEC",
+      "ticker": "TTEC",
+      "name": "TTEC",
+      "name_en": "TTEC Holdings",
+      "sub": "顧客対応の外部委託",
+      "sub_en": "Customer experience services",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "TTECが10-Kで、デジタル部門の主な競合の一社としてアクセンチュアを挙げる",
+          "text_en": "TTEC names Accenture among the main competitors of TTEC Digital",
+          "source": {
+            "label": "TTEC 10-K(2025年度)",
+            "label_en": "TTEC 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1013880/000110465926020532/ttec-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "For TTEC Digital, our main competitors include global systems integration firms, niche and large-scale technology consulting service providers, and technology companies whose solutions we integrate, deploy and maintain for clients, including Deloitte, Accenture, Infosys, Cognizant, Hitachi Data Systems, Slalom, Globant, TechMahindra, and ConvergeOne, among others."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RMNI",
+      "ticker": "RMNI",
+      "name": "リミニ・ストリート",
+      "name_en": "Rimini Street",
+      "sub": "ソフト保守",
+      "sub_en": "Software support",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Rimini Streetが10-Kで、主な競合の筆頭にアクセンチュアを挙げる",
+          "text_en": "Rimini Street names Accenture first among its primary competitors",
+          "source": {
+            "label": "Rimini Street 10-K(2025年度)",
+            "label_en": "Rimini Street 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1635282/000163528226000014/rmni-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "We believe our primary competitors for our Rimini Manage , Rimini Consult and Rimini Watch solutions are systems integrators and consulting firms globally, including, but not limited to, Accenture, IBM, Wipro, Cap Gemini and DXC."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CSGS",
+      "ticker": "CSGS",
+      "name": "CSGシステムズ",
+      "name_en": "CSG Systems",
+      "sub": "通信向けソフト",
+      "sub_en": "Telecom software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "CSGが10-Kで、競合するシステム開発会社としてアクセンチュアを挙げる",
+          "text_en": "CSG names Accenture among competing systems integrators",
+          "source": {
+            "label": "CSG Systems 10-K(2024年度)",
+            "label_en": "CSG Systems 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1005757/000095017025023962/csgs-20241231.htm",
+            "level": "official",
+            "date": "2025-02-20",
+            "quote": "systems integrators (i.e., Accenture, Tech Mahindra)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "OLO",
+      "ticker": "OLO",
+      "name": "オロ",
+      "name_en": "Olo",
+      "sub": "飲食店向けソフト",
+      "sub_en": "Restaurant software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Oloが10-Kで、独自開発を請け負う競合としてアクセンチュアを挙げる",
+          "text_en": "Olo names Accenture among firms it competes with for custom software",
+          "source": {
+            "label": "Olo 10-K(2024年度)",
+            "label_en": "Olo 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1431695/000143169525000010/olo-20241231.htm",
+            "level": "official",
+            "date": "2025-02-25",
+            "quote": "we primarily compete with firms such as Accenture PLC, Boston Consulting Group, Inc., Deloitte Touche Tohmatsu Limited, and various development agencies;"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MMS",
+      "ticker": "MMS",
+      "name": "マキシマス",
+      "name_en": "Maximus",
+      "sub": "行政サービス",
+      "sub_en": "Government services",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Maximusが10-Kで、連邦政府事業の競合の一社としてアクセンチュアを挙げる",
+          "text_en": "Maximus names Accenture among competitors in its federal segment",
+          "source": {
+            "label": "Maximus 10-K(2025年9月期)",
+            "label_en": "Maximus 10-K (FY ended Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1032220/000103222025000053/mms-20250930.htm",
+            "level": "official",
+            "date": "2025-11-20",
+            "quote": "Federal Services Segment are General Dynamics Information Technology, Deloitte, Leidos, IBM, Accenture, Booz Allen Hamilton, and other federal contractors."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

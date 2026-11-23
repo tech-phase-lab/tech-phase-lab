@@ -1,0 +1,347 @@
+{
+  "root": {
+    "ticker": "NBIX",
+    "name": "ニューロクライン・バイオサイエンシズ",
+    "cik": 914475,
+    "name_en": "Neurocrine Biosciences"
+  },
+  "rows": [
+    {
+      "ja": "導入元(ライセンス)",
+      "en": "In-licensed from",
+      "above": true
+    },
+    {
+      "ja": "提携・販売・買収",
+      "en": "Partners, marketers & deals"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in filings)"
+    }
+  ],
+  "rivals": [
+    "TEVA",
+    "LBRX",
+    "ATAI"
+  ],
+  "companies": [
+    {
+      "id": "TAK",
+      "ticker": "TAK",
+      "name": "武田薬品工業",
+      "name_en": "Takeda",
+      "sub": "製薬",
+      "sub_en": "Pharmaceuticals",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "うつ病薬候補オサバンパトールなど精神科化合物を武田から導入",
+          "text_en": "In-licensed osavampator and other psychiatry compounds from Takeda",
+          "source": {
+            "label": "Neurocrine 10-K(2025年度)",
+            "label_en": "Neurocrine 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/914475/000091447526000007/nbix-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Osavampator was in-licensed from Takeda Pharmaceutical Company Limited (Takeda) in 2020, and we have exclusive worldwide rights to develop and commercialize osavampator, except in Japan, where Takeda has exclusive development and commercialization rights."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Nxera",
+      "ticker": "Nxera",
+      "name": "ネクセラファーマ",
+      "name_en": "Nxera Pharma",
+      "sub": "創薬",
+      "sub_en": "Drug discovery",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "統合失調症薬候補ディレクリジンをネクセラから導入",
+          "text_en": "In-licensed the schizophrenia candidate direclidine from Nxera",
+          "source": {
+            "label": "Neurocrine 10-K(2025年度)",
+            "label_en": "Neurocrine 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/914475/000091447526000007/nbix-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Direclidine was in-licensed from Nxera Pharma UK Limited (Nxera) in 2021, and we retain global rights."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SNY",
+      "ticker": "SNY",
+      "name": "サノフィ",
+      "name_en": "Sanofi",
+      "sub": "製薬",
+      "sub_en": "Pharmaceuticals",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "CAH治療薬クレネシティの成分をサノフィから取得",
+          "text_en": "Acquired global rights to CRF-1 antagonists, including crinecerfont, from Sanofi",
+          "source": {
+            "label": "Neurocrine 10-K(2025年度)",
+            "label_en": "Neurocrine 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/914475/000091447526000007/nbix-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "In 2014, we entered into a license agreement with Sanofi, pursuant to which we acquired the global rights to develop and commercialize certain corticotropin-releasing factor type 1 (CRF-1) receptor antagonists, including crinecerfont."
+          }
+        }
+      ]
+    },
+    {
+      "id": "XENE",
+      "ticker": "XENE",
+      "name": "ゼノン・ファーマシューティカルズ",
+      "name_en": "Xenon Pharmaceuticals",
+      "sub": "てんかん治療薬",
+      "sub_en": "Epilepsy drugs",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "てんかん治療で提携し、候補薬NBI-921355を導入",
+          "text_en": "Epilepsy collaboration; NBI-921355 was in-licensed from Xenon",
+          "source": {
+            "label": "Xenon 10-K(2024年度)",
+            "label_en": "Xenon 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1582313/000095017025029149/xene-20241231.htm",
+            "level": "official",
+            "date": "2025-02-27",
+            "quote": "Our Partnered Program with Neurocrine Biosciences In December 2019, we entered into a license and collaboration agreement with Neurocrine Biosciences to develop treatments for epilepsy."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MAZE",
+      "ticker": "MAZE",
+      "name": "メイズ・セラピューティクス",
+      "name_en": "Maze Therapeutics",
+      "sub": "遺伝学創薬",
+      "sub_en": "Genetics-based drug discovery",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ATXN2を狙う研究プログラムを独占ライセンス",
+          "text_en": "Granted Neurocrine an exclusive worldwide license to its ATXN2 research program",
+          "source": {
+            "label": "Maze Therapeutics 10-K(2025年度)",
+            "label_en": "Maze Therapeutics 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1842295/000119312526122778/maze-20251231.htm",
+            "level": "official",
+            "date": "2026-03-25",
+            "quote": "In May 2024, the Company entered into an exclusive license agreement with Neurocrine Biosciences, Inc., or Neurocrine, pursuant to which the Company granted Neurocrine an exclusive worldwide license to a discovery research program targeting ATXN2"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ABBV",
+      "ticker": "ABBV",
+      "name": "アッヴィ",
+      "name_en": "AbbVie",
+      "sub": "製薬",
+      "sub_en": "Pharmaceuticals",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "子宮内膜症薬エラゴリクスをアッヴィが製造・販売し、ロイヤルティを受け取る",
+          "text_en": "AbbVie makes and sells elagolix; Neurocrine earns royalties",
+          "source": {
+            "label": "Neurocrine 10-K(2025年度)",
+            "label_en": "Neurocrine 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/914475/000091447526000007/nbix-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "For example, we depend on AbbVie for the manufacture and commercialization of ORILISSA and ORIAHNN and for the continued development of elagolix."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Tanabe",
+      "ticker": "Tanabe",
+      "name": "田辺ファーマ",
+      "name_en": "Tanabe Pharma",
+      "sub": "製薬",
+      "sub_en": "Pharmaceuticals",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "日本などアジアでバルベナジンを販売(旧・田辺三菱製薬)",
+          "text_en": "Markets valbenazine in Japan and other Asian markets",
+          "source": {
+            "label": "Neurocrine 10-K(2025年度)",
+            "label_en": "Neurocrine 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/914475/000091447526000007/nbix-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "INGREZZA is marketed as DYSVAL ® (valbenazine) in Japan and REMLEAS ® (valbenazine) in other select Asian markets, where Tanabe Pharma Corporation (formerly Mitsubishi Tanabe Pharma Corporation) retains commercialization rights."
+          }
+        }
+      ]
+    },
+    {
+      "id": "VYGR",
+      "ticker": "VYGR",
+      "name": "ボイジャー・セラピューティクス",
+      "name_en": "Voyager Therapeutics",
+      "sub": "遺伝子治療",
+      "sub_en": "Gene therapy",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "遺伝子治療で提携、ニューロクラインは2023年に出資",
+          "text_en": "Gene therapy collaboration; Neurocrine made an equity investment in 2023",
+          "source": {
+            "label": "Voyager 10-K(2024年度)",
+            "label_en": "Voyager 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1640266/000155837025002703/vygr-20241231x10k.htm",
+            "level": "official",
+            "date": "2025-03-11",
+            "quote": "We have entered into agreements with collaboration partners and licensees including Neurocrine, Novartis, and Alexion to provide access our TRACER Capsids for the development and commercialization of AAV gene therapy candidates in specified indications."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SLNO",
+      "ticker": "SLNO",
+      "name": "ソレノ・セラピューティクス",
+      "name_en": "Soleno Therapeutics",
+      "sub": "希少疾患薬",
+      "sub_en": "Rare-disease drugs",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2026年4月、ニューロクラインによる買収契約を締結",
+          "text_en": "Agreed in April 2026 to be acquired by Neurocrine",
+          "source": {
+            "label": "Soleno 10-K/A(2025年度)",
+            "label_en": "Soleno 10-K/A (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1484565/000119312526197594/slno-20251231.htm",
+            "level": "official",
+            "date": "2026-04-30",
+            "quote": "On April 5, 2026, we entered into an Agreement and Plan of Merger (the Merger Agreement) with Neurocrine Biosciences, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TEVA",
+      "ticker": "TEVA",
+      "name": "テバ",
+      "name_en": "Teva Pharmaceutical",
+      "sub": "製薬",
+      "sub_en": "Pharmaceuticals",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "遅発性ジスキネジア薬INGREZZAはテバのAUSTEDOと競合",
+          "text_en": "INGREZZA competes with Teva's AUSTEDO",
+          "source": {
+            "label": "Neurocrine 10-K(2025年度)",
+            "label_en": "Neurocrine 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/914475/000091447526000007/nbix-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "INGREZZA competes with AUSTEDO (deutetrabenazine), marketed by Teva Pharmaceuticals Industries, for the treatment of TD in adults and chorea associated with Huntington's disease."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LBRX",
+      "ticker": "LBRX",
+      "name": "LBファーマシューティカルズ",
+      "name_en": "LB Pharmaceuticals",
+      "sub": "統合失調症薬",
+      "sub_en": "Schizophrenia drugs",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "統合失調症薬の開発競合にニューロクラインを挙げる",
+          "text_en": "Names Neurocrine among companies developing schizophrenia treatments",
+          "source": {
+            "label": "LB Pharmaceuticals 10-K(2025年度)",
+            "label_en": "LB Pharmaceuticals 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1691082/000119312526126368/lbrx-20251231.htm",
+            "level": "official",
+            "date": "2026-03-26",
+            "quote": "We are also aware of several companies developing compounds for the treatment of schizophrenia, including Alto Neuroscience Inc., Minerva Neurosciences, Inc., MapLight Therapeutics, Inc., Neurocrine Biosciences, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ATAI",
+      "ticker": "ATAI",
+      "name": "アタイベックリー",
+      "name_en": "AtaiBeckley",
+      "sub": "うつ病薬",
+      "sub_en": "Depression drugs",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "うつ病分野の競合にニューロクラインを挙げる",
+          "text_en": "Names Neurocrine among competitors in depression",
+          "source": {
+            "label": "AtaiBeckley 10-K(2025年度)",
+            "label_en": "AtaiBeckley 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2081043/000119312526096926/atai-20251231.htm",
+            "level": "official",
+            "date": "2026-03-06",
+            "quote": "We face competition across our programs in depression, including from Axsome Therapeutics, GH Research, The Janssen Pharmaceutical Companies of Johnson & Johnson, Helus Pharma, Neumora Therapeutics, Alto Neuroscience, Neurocrine Biosciences"
+          }
+        }
+      ]
+    },
+    {
+      "id": "LRMR",
+      "ticker": "LRMR",
+      "name": "ラリマー・セラピューティクス",
+      "name_en": "Larimar Therapeutics",
+      "sub": "フリードライヒ失調症",
+      "sub_en": "Friedreich's ataxia",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "フリードライヒ失調症の開発競合にニューロクライン/ボイジャーを挙げる",
+          "text_en": "Names Neurocrine/Voyager among other developers of Friedreich's ataxia treatments",
+          "source": {
+            "label": "Larimar 10-K(2024年度)",
+            "label_en": "Larimar 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1374690/000095017025043925/lrmr-20241231.htm",
+            "level": "official",
+            "date": "2025-03-24",
+            "quote": "Other competitors currently developing therapeutics to treat FA include, but are not limited to Design Therapeutics, Lexeo Therapeutics, Neurocrine Biosciences/Voyager Therapeutics and PTC Therapeutics (\"PTC\")."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

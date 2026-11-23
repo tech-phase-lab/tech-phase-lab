@@ -26,6 +26,7 @@ import monitor
 import off_hours
 import brief_generator
 import incident_delivery
+import cron_report
 import persistence
 import signals
 import price_target_reconciliation
@@ -149,6 +150,11 @@ WIRE_REFRESH_MAX_AGE = 60
 LIVE_REFRESH_INTERVAL = 15
 LIVE_MAX_AGE = 45
 LIVE_IDLE_SECONDS = 600
+# Nov 23: a full /live read after a quiet spell waited for a multi-second build and the site fell back to its bundled
+# September snapshot. The full payload is kept warm in the background (at most this old) and a full read is answered
+# from the newest build up to LIVE_STALE_SERVE_SECONDS old while the background step rebuilds it.
+LIVE_WARM_SECONDS = 300
+LIVE_STALE_SERVE_SECONDS = 900
 LIVE_SLOW_BUILD_SECONDS = 5
 
 
@@ -2520,7 +2526,7 @@ class AutomaticMonitor:
         if not freshness:
             self.live_full_requested_at = arrived
         latest = self.newest_live_state if freshness else (lambda: self.live_cache)
-        max_age = self.live_max_age()
+        max_age = self.live_max_age() if freshness else max(self.live_max_age(), LIVE_STALE_SERVE_SECONDS)
         cached = latest()
         if not (cached and arrived - cached[0] <= max_age):
             with self.live_lock:
@@ -2548,8 +2554,15 @@ class AutomaticMonitor:
         payload when the intake dashboard (or a full /live reader) asked, otherwise only the operating state."""
         now = time.monotonic()
         if now - self.live_requested_at > LIVE_IDLE_SECONDS:
-            return False
+            # Nobody asked lately: keep only the full payload warm, at a slow pace, so the next full read never waits.
+            if self.live_cache and now - self.live_cache[0] < LIVE_WARM_SECONDS:
+                return False
+            with self.live_lock:
+                self.build_live(full=True)
+            return True
         full = now - getattr(self, "live_full_requested_at", self.live_requested_at) <= LIVE_IDLE_SECONDS
+        if not full and (not self.live_cache or now - self.live_cache[0] >= LIVE_WARM_SECONDS):
+            full = True
         cached = self.live_cache if full else self.newest_live_state()
         if cached and now - cached[0] < self.live_refresh_interval():
             return False
@@ -4327,6 +4340,25 @@ class Handler(BaseHTTPRequestHandler):
                 self.send_json(400, {"ok": False, "error": web_push.refusal_reason(exc)})
             except Exception as exc:
                 print(json.dumps({"event": "resolute-push-failed", "error": type(exc).__name__}), flush=True)
+                self.send_json(503, {"ok": False})
+            return
+        if path == "/internal/cron-report":
+            # Nov 23 (owner): daily cron checks report here instead of crashing; the incident alerts reach the owner once.
+            if not cron_report.server_enabled():
+                self.send_json(404, {"ok": False, "error": "not-found"})
+                return
+            if not cron_report.token_ok(self.headers.get("Authorization", "")):
+                self.send_json(401, {"ok": False, "error": "unauthorized"})
+                return
+            try:
+                payload = self.read_json(2048)
+                with self.app.db_lock, monitor.connect(self.app.db_path) as db:
+                    transition = cron_report.record(db, payload, monitor)
+                self.send_json(200, {"ok": True, "transition": transition})
+            except ValueError:
+                self.send_json(400, {"ok": False, "error": "invalid-report"})
+            except Exception as exc:
+                print(json.dumps({"event": "cron-report-failed", "error": type(exc).__name__}), flush=True)
                 self.send_json(503, {"ok": False})
             return
         if path == "/inbox/upload":
