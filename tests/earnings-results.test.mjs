@@ -1,6 +1,16 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { earningsResults, isEarningsRelated } from '../lib/research/earnings-results.ts';
+import { earningsResults, isEarningsRelated, isLateCopy } from '../lib/research/earnings-results.ts';
+
+test('Nov 23 (LRCX): a results release first seen weeks after its own date is not a released result', () => {
+  const lam = (publishedOn, observedAt) => ({ id: 'l', title: 'Lam Research Reports Financial Results for the Quarter Ended September 27, 2026',
+    url: 'https://investor.lamresearch.com/content/dam/newsroom/press_release_pdfs/2026-10-21-x.pdf', publisher: 'Lam Research',
+    tickers: ['LRCX'], observedAt, publishedOn });
+  assert.deepEqual(earningsResults([lam('2026-10-21', '2026-11-22T16:49:00Z')], []), []);
+  assert.equal(earningsResults([lam('2026-10-21', '2026-10-21T20:05:00Z')], []).length, 1);
+  assert.equal(earningsResults([lam(undefined, '2026-11-22T16:49:00Z')], []).length, 1);
+  assert.equal(isLateCopy({ publishedOn: '2026-11-22', observedAt: '2026-11-23T11:00:00Z' }), false);
+});
 
 const brief = { id: '5', researchId: 'x-result-5', kind: 'earnings', ticker: 'TSM', period: 'Q3 2026',
   titleJa: 'TSM Q3 2026決算：売上高NT$989.9B', titleEn: 'TSM Q3 2026 earnings: Revenue NT$989.9B',

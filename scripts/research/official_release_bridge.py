@@ -11,6 +11,7 @@ from urllib.parse import urlsplit
 
 import monitor
 import news_policy
+import release_freshness
 
 PREFIX = 'primary-ir-'
 VERTIV_DATELINE_LIMIT = 12000
@@ -372,6 +373,9 @@ def sync(db, reference):
             observed = datetime.fromisoformat(row['detected_at'].replace('Z', '+00:00'))
             if ((published and not reference - timedelta(days=7) <= published <= reference)
                     or not reference - timedelta(days=7) <= observed <= reference):
+                continue
+            # Nov 23 (LRCX): a release with no feed date whose own address is dated weeks ago is an old release found again.
+            if not published and release_freshness.is_stale(reference, url=row['url'], max_age=timedelta(days=7)):
                 continue
         except (KeyError, ValueError, TypeError):
             continue

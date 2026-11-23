@@ -4258,6 +4258,15 @@ def save_discovery(db, ticker, result, links):
     return sorted(set(links) - before)
 
 
+def verified_discovery_sources(db):
+    """(ticker, source address) pairs that have completed a verified discovery at least once. A source address not in this set
+    is read for the first time: what it lists then is the baseline, never new releases (Nov 23)."""
+    return {(row[0], row[1]) for row in db.execute(
+        """SELECT DISTINCT ticker,index_url FROM discovery_runs
+           WHERE index_url IS NOT NULL AND (status IN ('ok','fallback')
+             OR (status='degraded' AND route IS NOT NULL AND route!='none'))""")}
+
+
 def add_release_events(db, ticker, urls):
     """Record newly observed URLs once; baseline imports should not call this."""
     detected_at = now()
