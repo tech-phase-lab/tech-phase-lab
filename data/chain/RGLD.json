@@ -1,0 +1,315 @@
+{
+  "root": {
+    "ticker": "RGLD",
+    "name": "ロイヤル・ゴールド",
+    "cik": 85535,
+    "name_en": "Royal Gold"
+  },
+  "rows": [
+    {
+      "ja": "買収・合弁",
+      "en": "Acquisitions & joint venture",
+      "above": true
+    },
+    {
+      "ja": "ストリーム・ロイヤルティ契約の鉱山会社",
+      "en": "Miners with stream & royalty agreements"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "Sandstorm",
+      "ticker": "Sandstorm Gold",
+      "name": "サンドストーム・ゴールド",
+      "name_en": "Sandstorm Gold",
+      "sub": "ストリーム・ロイヤルティ",
+      "sub_en": "Streams & royalties",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Horizon Copperと合わせ、約41.5億ドルで全株を取得",
+          "text_en": "Acquired all shares, together with Horizon Copper, for about $4.15 billion",
+          "source": {
+            "label": "Royal Gold 10-K(2025年度)",
+            "label_en": "Royal Gold 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/85535/000008553526000008/rgld-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "We acquired all the issued and outstanding common shares of Sandstorm Gold Ltd. and Horizon Copper Corp for $4.148 billion."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Horizon",
+      "ticker": "Horizon Copper",
+      "name": "ホライゾン・カッパー",
+      "name_en": "Horizon Copper",
+      "sub": "銅の権益",
+      "sub_en": "Copper interests",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Sandstormと合わせ、約41.5億ドルで全株を取得",
+          "text_en": "Acquired all shares, together with Sandstorm Gold, for about $4.15 billion",
+          "source": {
+            "label": "Royal Gold 10-K(2025年度)",
+            "label_en": "Royal Gold 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/85535/000008553526000008/rgld-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "We acquired all the issued and outstanding common shares of Sandstorm Gold Ltd. and Horizon Copper Corp for $4.148 billion."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SSRM",
+      "ticker": "SSRM",
+      "name": "SSRマイニング",
+      "name_en": "SSR Mining",
+      "sub": "金鉱山",
+      "sub_en": "Gold mining",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "トルコのHod Maden計画の共同出資者(Royal Goldが30%を保有)",
+          "text_en": "Partner in the Hod Maden project in Turkey, where Royal Gold holds 30%",
+          "source": {
+            "label": "SSR Mining 10-Q(2026年第3四半期)",
+            "label_en": "SSR Mining 10-Q (Q3 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/921638/000092163826000088/ssrm-20260930.htm",
+            "level": "official",
+            "date": "2026-11-03",
+            "quote": "Royal Gold, Inc., a partner in the Project, holds a fixed price call right to acquire 2.0 % of the NSR for $ 160.0 million"
+          }
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "ticker": "B",
+      "name": "バリック",
+      "name_en": "Barrick",
+      "sub": "金・銅鉱山",
+      "sub_en": "Gold & copper mining",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ドミニカのPueblo Viejo鉱山の金・銀ストリーム取引を2015年にRoyal Goldと締結",
+          "text_en": "Closed a gold and silver streaming deal on Pueblo Viejo with Royal Gold in 2015",
+          "source": {
+            "label": "Barrick 年次報告(2025年度、40-F添付)",
+            "label_en": "Barrick annual report (FY2025, 40-F exhibit)",
+            "url": "https://www.sec.gov/Archives/edgar/data/756894/000119312526079253/d833573dex993.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Pueblo Viejo Gold and Silver Streaming Agreement On September 29, 2015, we closed a gold and silver streaming transaction with Royal Gold, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SLSR",
+      "ticker": "SLSR",
+      "name": "ソラリス・リソーシズ",
+      "name_en": "Solaris Resources",
+      "sub": "銅の探鉱(エクアドル)",
+      "sub_en": "Copper exploration (Ecuador)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Warintza計画の金ストリームとロイヤルティを2億ドルでRoyal Goldが取得",
+          "text_en": "Royal Gold bought a gold stream and royalty on its Warintza project for $200 million",
+          "source": {
+            "label": "Royal Gold 10-K(2025年度)",
+            "label_en": "Royal Gold 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/85535/000008553526000008/rgld-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "We acquired a gold stream and net smelter return royalty for total cash consideration of $200.0 million on the Warintza project located in Southeastern Ecuador."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AG",
+      "ticker": "AG",
+      "name": "ファースト・マジェスティック",
+      "name_en": "First Majestic Silver",
+      "sub": "銀鉱山",
+      "sub_en": "Silver mining",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Royal Goldと鉱物の購入(ストリーム)契約を結ぶ",
+          "text_en": "Has a purchase (streaming) agreement with Royal Gold",
+          "source": {
+            "label": "First Majestic 年次情報書(2025年度)",
+            "label_en": "First Majestic annual information form (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1308648/000106299326001765/exhibit99-1.htm",
+            "level": "official",
+            "date": "2026-03-31",
+            "quote": "First Majestic is party to a purchase (streaming) agreement with Royal Gold Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ERO",
+      "ticker": "ERO",
+      "name": "エロ・カッパー",
+      "name_en": "Ero Copper",
+      "sub": "銅・金鉱山(ブラジル)",
+      "sub_en": "Copper & gold (Brazil)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "NX Gold鉱山の貴金属購入契約をRoyal Goldの子会社と締結",
+          "text_en": "Signed a precious metals purchase agreement on NX Gold with a Royal Gold subsidiary",
+          "source": {
+            "label": "Ero Copper 年次情報書(2024年度)",
+            "label_en": "Ero Copper annual information form (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1853860/000162828025010994/a991-2024aif.htm",
+            "level": "official",
+            "date": "2025-03-06",
+            "quote": "the Company entered into a Precious Metals Purchase Agreement (the \" NX Gold Stream Agreement \") with RGLD Gold AG (\" RG AG \"), a wholly owned subsidiary of Royal Gold, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AAUC",
+      "ticker": "AAUC",
+      "name": "アライド・ゴールド",
+      "name_en": "Allied Gold",
+      "sub": "金鉱山(アフリカ)",
+      "sub_en": "Gold mining (Africa)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Bonikro鉱山の金ストリームを現在Royal Goldが保有",
+          "text_en": "Royal Gold now holds the gold stream on its Bonikro mine",
+          "source": {
+            "label": "Allied Gold 年次情報書(2025年度)",
+            "label_en": "Allied Gold annual information form (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1993344/000162828026022512/a991-alliedx2026aif.htm",
+            "level": "official",
+            "date": "2026-04-01",
+            "quote": "Bonikro has a gold streaming agreement (the \" Bonikro Stream \") entered into on October 7, 2019 to sell to OMF Fund III (Mg) Ltd (currently held by Royal Gold, Inc.)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "NGD",
+      "ticker": "NGD",
+      "name": "ニュー・ゴールド",
+      "name_en": "New Gold",
+      "sub": "金・銅鉱山",
+      "sub_en": "Gold & copper mining",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2015年にRoyal Goldの子会社と1.75億ドルのストリーム契約を結んだ",
+          "text_en": "Entered a $175 million streaming agreement with a Royal Gold subsidiary in 2015",
+          "source": {
+            "label": "New Gold 年次情報書(2024年度)",
+            "label_en": "New Gold annual information form (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/800166/000080016625000005/annualinformationformv2.htm",
+            "level": "official",
+            "date": "2025-02-24",
+            "quote": "In July 2015, New Gold entered into a $175 million streaming agreement with Royal Gold A.G. a wholly owned subsidiary of Royal Gold Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MUX",
+      "ticker": "MUX",
+      "name": "マキューエン",
+      "name_en": "McEwen",
+      "sub": "金・銀鉱山",
+      "sub_en": "Gold & silver mining",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Sandstormが持っていたストリーム契約が2025年10月にRoyal Goldへ移った",
+          "text_en": "Sandstorm transferred its streaming agreement with McEwen to Royal Gold in October 2025",
+          "source": {
+            "label": "McEwen 2026年第3四半期資料(8-K添付)",
+            "label_en": "McEwen Q3 2026 exhibit (8-K)",
+            "url": "https://www.sec.gov/Archives/edgar/data/314203/000110465926124571/mux-ex99d1.htm",
+            "level": "official",
+            "date": "2026-11-09",
+            "quote": "On October 20, 2025, Sandstorm transferred its interest in the streaming agreement to Royal Gold Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MAKO",
+      "ticker": "MAKO",
+      "name": "マコ・マイニング",
+      "name_en": "Mako Mining",
+      "sub": "金鉱山",
+      "sub_en": "Gold mining",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "契約に基づき、Royal Goldが対象鉱区の生産に3%のロイヤルティを受け取る",
+          "text_en": "Royal Gold receives a 3% NSR royalty on production from the covered claims",
+          "source": {
+            "label": "Mako Mining 年次報告(2025年度)",
+            "label_en": "Mako Mining annual report (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1784930/000106299326002209/exhibit99-1.htm",
+            "level": "official",
+            "date": "2026-04-29",
+            "quote": "Pursuant to the MinQuest Agreement, Royal Gold will receive: a 3% net smelter return (\" NSR \") royalty"
+          }
+        }
+      ]
+    },
+    {
+      "id": "IAUX",
+      "ticker": "IAUX",
+      "name": "i-80ゴールド",
+      "name_en": "i-80 Gold",
+      "sub": "金鉱山(ネバダ)",
+      "sub_en": "Gold mining (Nevada)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Granite Creekの鉱区にRoyal Goldのロイヤルティが付いている",
+          "text_en": "Its Granite Creek claims are subject to the Royal Gold Royalty",
+          "source": {
+            "label": "i-80 Gold 10-K(2024年度)",
+            "label_en": "i-80 Gold 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1853962/000162828025015753/iaux-20241231.htm",
+            "level": "official",
+            "date": "2025-04-01",
+            "quote": "are subject to the Royal Gold Royalty, the Cordilleran Royalty and the PMC Royalty"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

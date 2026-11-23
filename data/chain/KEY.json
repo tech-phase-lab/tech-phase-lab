@@ -1,0 +1,249 @@
+{
+  "root": {
+    "ticker": "KEY",
+    "name": "キーコープ",
+    "cik": 91576,
+    "name_en": "KeyCorp"
+  },
+  "rows": [
+    {
+      "ja": "大株主",
+      "en": "Major shareholder",
+      "above": true
+    },
+    {
+      "ja": "融資先(相手の資料に記載)",
+      "en": "Borrowers (named in their filings)"
+    },
+    {
+      "ja": "預金市場の競合(相手の資料に記載)",
+      "en": "Deposit-market competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "MTB"
+  ],
+  "companies": [
+    {
+      "id": "BNS",
+      "ticker": "BNS",
+      "name": "スコシアバンク",
+      "name_en": "Scotiabank",
+      "sub": "銀行(カナダ)",
+      "sub_en": "Bank (Canada)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "キーコープに大きな出資をする大株主(The Bank of Nova Scotia)",
+          "text_en": "Holds a significant equity interest in KeyCorp",
+          "source": {
+            "label": "KeyCorp 10-K(2025年度)",
+            "label_en": "KeyCorp 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/91576/000162828026010546/key-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "the potential impact of Scotiabank's significant equity interest in our business;"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CTO",
+      "ticker": "CTO",
+      "name": "CTOリアルティ・グロース",
+      "name_en": "CTO Realty Growth",
+      "sub": "REIT",
+      "sub_en": "REIT",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "キーバンクが融資契約の事務代理人",
+          "text_en": "KeyBank is administrative agent on its credit agreement",
+          "source": {
+            "label": "CTO Realty Growth 10-K添付の融資契約",
+            "label_en": "CTO Realty Growth credit agreement (10-K exhibit)",
+            "url": "https://www.sec.gov/Archives/edgar/data/23795/000155837025001229/cto-20241231xex10d38.htm",
+            "level": "official",
+            "date": "2025-02-20",
+            "quote": "the several financial institutions from time to time party to this Agreement, as Lenders, and KeyBank National Association, as Administrative Agent"
+          }
+        }
+      ]
+    },
+    {
+      "id": "NSA",
+      "ticker": "NSA",
+      "name": "ナショナル・ストレージ・アフィリエイツ",
+      "name_en": "National Storage Affiliates",
+      "sub": "貸倉庫REIT",
+      "sub_en": "Self-storage REIT",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "キーバンクを中心とする融資契約を2025年に改定",
+          "text_en": "Amended its KeyBank-led credit agreement in 2025",
+          "source": {
+            "label": "National Storage Affiliates 10-K添付の融資契約変更",
+            "label_en": "National Storage Affiliates credit agreement amendment (10-K exhibit)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1618563/000162828026012248/exhibit107-secondamendme.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Second Amendment to Third Amended and Restated Credit Agreement - KeyBank (NSA 2025)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SSST",
+      "ticker": "SSST",
+      "name": "スマートストップ・セルフストレージ",
+      "name_en": "SmartStop Self Storage REIT",
+      "sub": "貸倉庫REIT",
+      "sub_en": "Self-storage REIT",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "キーバンクが融資枠を8,500万ドルに増額",
+          "text_en": "KeyBank raised its revolving commitment to $85 million",
+          "source": {
+            "label": "SmartStop Self Storage REIT 10-K添付の融資契約",
+            "label_en": "SmartStop Self Storage REIT credit agreement (10-K exhibit)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1585389/000095017025037896/ck0001585389-ex10_35.htm",
+            "level": "official",
+            "date": "2025-03-12",
+            "quote": "KeyBank, National Association is increasing the amount of its Revolving Commitment to Eighty-Five Million and 00/100 Dollars ($85,000,000.00)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RWAY",
+      "ticker": "RWAY",
+      "name": "ランウェイ・グロース・ファイナンス",
+      "name_en": "Runway Growth Finance",
+      "sub": "ベンチャー融資BDC",
+      "sub_en": "Venture lending BDC",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "キーバンクが融資契約の事務代理人",
+          "text_en": "KeyBank is administrative agent on its credit agreement",
+          "source": {
+            "label": "Runway Growth Finance 10-K/A(2024年度)",
+            "label_en": "Runway Growth Finance 10-K/A (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1653384/000110465925028778/tm2510347d1_10ka.htm",
+            "level": "official",
+            "date": "2025-03-27",
+            "quote": "Credit Agreement, dated as of May 31, 2019, by and among the Company, as borrower, KeyBank National Association, as administrative agent and syndication agent"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MDV",
+      "ticker": "MDV",
+      "name": "モディブ・インダストリアル",
+      "name_en": "Modiv Industrial",
+      "sub": "産業用REIT",
+      "sub_en": "Industrial REIT",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "キーバンクが融資契約の代理人",
+          "text_en": "KeyBank is agent on its credit agreement",
+          "source": {
+            "label": "Modiv Industrial 10-K添付の融資契約",
+            "label_en": "Modiv Industrial credit agreement (10-K exhibit)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1645873/000164587325000027/modivreit-20241231xexh109x.htm",
+            "level": "official",
+            "date": "2025-03-04",
+            "quote": "KEYBANK NATIONAL ASSOCIATION (\" KeyBank \"), individually and as Agent for itself and the other Lenders from time to time a party to the Credit Agreement"
+          }
+        }
+      ]
+    },
+    {
+      "id": "INRE",
+      "ticker": "INRE",
+      "name": "インランド・リアルエステート・インカム・トラスト",
+      "name_en": "Inland Real Estate Income Trust",
+      "sub": "REIT",
+      "sub_en": "REIT",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "キーバンクからの借入の手形を2025年11月に改定",
+          "text_en": "Amended and restated its note to KeyBank in November 2025",
+          "source": {
+            "label": "Inland Real Estate Income Trust 10-K添付の手形",
+            "label_en": "Inland Real Estate Income Trust note (10-K exhibit)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1528985/000152898526000002/ireit-ex10_13.htm",
+            "level": "official",
+            "date": "2026-03-11",
+            "quote": "promises to pay to the order of KeyBank National Association (the \"Lender\") the aggregate unpaid principal amount of all Loans made by the Lender to the Borrower"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MTB",
+      "ticker": "MTB",
+      "name": "M&Tバンク",
+      "name_en": "M&T Bank",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Lake Shore Bancorpの資料で、ニューヨーク州エリー郡の預金シェア首位(キーコープは2位)",
+          "text_en": "In Lake Shore Bancorp's filing, the deposit leader in Erie County, NY, with KeyCorp second",
+          "source": {
+            "label": "Lake Shore Bancorp S-1添付資料(2025年3月)",
+            "label_en": "Lake Shore Bancorp S-1 exhibit (Mar 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2059653/000119312525054880/d923476dex993.htm",
+            "level": "official",
+            "date": "2025-03-14",
+            "quote": "Erie County M&T Bank Corp (NY) 64.29 % KeyCorp (OH) 10.32 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "LSBK",
+      "ticker": "LSBK",
+      "name": "レイク・ショア・バンコープ",
+      "name_en": "Lake Shore Bancorp",
+      "sub": "地方銀行",
+      "sub_en": "Community bank",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "チョトークア郡の預金市場の競合としてキーコープを挙げる",
+          "text_en": "Lists KeyCorp among deposit competitors in Chautauqua County, NY",
+          "source": {
+            "label": "Lake Shore Bancorp S-1添付資料(2025年3月)",
+            "label_en": "Lake Shore Bancorp S-1 exhibit (Mar 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2059653/000119312525054880/d923476dex993.htm",
+            "level": "official",
+            "date": "2025-03-14",
+            "quote": "Lake Shore Bancorp (NY) 15.23 % 3 out of 8 KeyCorp (OH) 15.17 %"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,249 @@
+{
+  "root": {
+    "ticker": "BAC",
+    "name": "バンク・オブ・アメリカ",
+    "cik": 70858,
+    "name_en": "Bank of America"
+  },
+  "rows": [
+    {
+      "ja": "清算・決済サービスの顧客",
+      "en": "Clearing clients",
+      "above": true
+    },
+    {
+      "ja": "融資の顧客(相手の資料に記載)",
+      "en": "Lending clients (named in their filings)"
+    },
+    {
+      "ja": "預金市場の競合(相手の資料に記載)",
+      "en": "Deposit-market competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "CFG"
+  ],
+  "companies": [
+    {
+      "id": "CBOE",
+      "ticker": "CBOE",
+      "name": "Cboeグローバル・マーケッツ",
+      "name_en": "Cboe Global Markets",
+      "sub": "取引所",
+      "sub_en": "Exchanges",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "BofA証券がCboe傘下BIDS Tradingの株式取引の唯一の清算会社",
+          "text_en": "BofA Securities is the sole clearing provider for equities on Cboe's BIDS Trading",
+          "source": {
+            "label": "Cboe 10-K(2025年度)",
+            "label_en": "Cboe 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1374310/000162828026010013/cboe-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "BofA Securities, Inc. (\"BOA\") is the sole provider of clearing on all equities transactions occurring on BIDS Trading."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CPAY",
+      "ticker": "CPAY",
+      "name": "コーペイ",
+      "name_en": "Corpay",
+      "sub": "法人決済",
+      "sub_en": "Corporate payments",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "101.5億ドルの融資契約の事務代理人",
+          "text_en": "Administrative agent on its $10.15 billion credit agreement",
+          "source": {
+            "label": "Corpay 10-K(2025年度)",
+            "label_en": "Corpay 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1175454/000117545426000018/flt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "are parties to a $10.15 billion Credit Agreement (the \"Credit Agreement\"), with Bank of America, N.A., as administrative agent, swing line lender and letter of credit issuer"
+          }
+        }
+      ]
+    },
+    {
+      "id": "LUMN",
+      "ticker": "LUMN",
+      "name": "ルーメン・テクノロジーズ",
+      "name_en": "Lumen Technologies",
+      "sub": "通信",
+      "sub_en": "Telecom",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "優先融資契約の事務代理人・担保代理人",
+          "text_en": "Administrative and collateral agent on its superpriority credit agreement",
+          "source": {
+            "label": "Lumen 10-K(2025年度)",
+            "label_en": "Lumen 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/18926/000001892626000014/lumn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Superpriority Revolving/Term A Credit Agreement, dated as of March 22, 2024, among Lumen Technologies, Inc., as borrower, the lenders and issuing banks party thereto and Bank of America, N.A., as administrative agent and collateral agent."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ABG",
+      "ticker": "ABG",
+      "name": "アズベリー・オートモーティブ",
+      "name_en": "Asbury Automotive",
+      "sub": "自動車ディーラー",
+      "sub_en": "Auto dealers",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "6.9億ドルの不動産担保融資の事務代理人",
+          "text_en": "Administrative agent on its $689.7 million real estate term loan",
+          "source": {
+            "label": "Asbury Automotive 10-K(2025年度)",
+            "label_en": "Asbury Automotive 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1144980/000114498026000051/abg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "On December 17, 2021, we entered into a real estate term loan credit agreement with Bank of America, N.A., as administrative agent and the other lenders party thereto"
+          }
+        }
+      ]
+    },
+    {
+      "id": "KBH",
+      "ticker": "KBH",
+      "name": "KBホーム",
+      "name_en": "KB Home",
+      "sub": "住宅建設",
+      "sub_en": "Homebuilding",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "融資契約(2025年11月)の事務代理人",
+          "text_en": "Administrative agent on its November 2025 credit agreement",
+          "source": {
+            "label": "KB Home 10-K添付資料",
+            "label_en": "KB Home 10-K exhibit",
+            "url": "https://www.sec.gov/Archives/edgar/data/795266/000079526626000017/kbh-113025x10kexhibit1024.htm",
+            "level": "official",
+            "date": "2026-01-23",
+            "quote": "Reference is hereby made to the Credit Agreement, dated as of November 12, 2025, among KB Home, a Delaware corporation (the \" Borrower \"), the Banks from time to time party thereto, and Bank of America, N.A., as administrative agent"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MASI",
+      "ticker": "MASI",
+      "name": "マシモ",
+      "name_en": "Masimo",
+      "sub": "医療機器",
+      "sub_en": "Medical devices",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "融資契約(2025年12月)の事務代理人",
+          "text_en": "Administrative agent on its December 2025 credit agreement",
+          "source": {
+            "label": "Masimo 10-K添付資料",
+            "label_en": "Masimo 10-K exhibit",
+            "url": "https://www.sec.gov/Archives/edgar/data/937556/000093755626000017/masi-20260103x10kxexx1030.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Reference is hereby made to the Credit Agreement dated as of December 1, 2025 (as amended, restated, amended and restated, supplemented or otherwise modified from time to time, the \" Credit Agreement \"), among Masimo Corporation, Bank of America, N.A., as administrative agent"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AB",
+      "ticker": "AB",
+      "name": "アライアンス・バーンスタイン",
+      "name_en": "AllianceBernstein",
+      "sub": "資産運用",
+      "sub_en": "Asset management",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "融資枠契約の事務代理人",
+          "text_en": "Administrative agent on its revolving credit agreement",
+          "source": {
+            "label": "AllianceBernstein Holding 10-K添付資料",
+            "label_en": "AllianceBernstein Holding 10-K exhibit",
+            "url": "https://www.sec.gov/Archives/edgar/data/825313/000082531326000020/abex10112025alliancebernst.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "the lenders parties thereto and Bank of America, N.A., as administrative agent, are parties to that certain Amended and Restated Revolving Credit Agreement"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GIS",
+      "ticker": "GIS",
+      "name": "ゼネラル・ミルズ",
+      "name_en": "General Mills",
+      "sub": "食品",
+      "sub_en": "Packaged foods",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "融資契約の事務代理人",
+          "text_en": "Administrative agent on its credit agreement",
+          "source": {
+            "label": "General Mills 10-K添付資料",
+            "label_en": "General Mills 10-K exhibit",
+            "url": "https://www.sec.gov/Archives/edgar/data/40704/000162828026046466/exhibit1033531.htm",
+            "level": "official",
+            "date": "2026-07-01",
+            "quote": "(the \" Company \"), the several lenders party thereto (the \" Banks \") and Bank of America, N.A., as administrative agent (the \" Administrative Agent \")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CFG",
+      "ticker": "CFG",
+      "name": "シチズンズ・ファイナンシャル",
+      "name_en": "Citizens Financial Group",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Avidiaの資料で、マサチューセッツ州ミドルセックス郡の預金シェア1位(シチズンズは2位)",
+          "text_en": "In Avidia Bancorp's filing, the deposit leader in Middlesex County, MA, ahead of Citizens",
+          "source": {
+            "label": "Avidia Bancorp S-1添付資料(2025年3月)",
+            "label_en": "Avidia Bancorp S-1 exhibit (Mar 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2058758/000119312525054732/d923214dex993.htm",
+            "level": "official",
+            "date": "2025-03-14",
+            "quote": "Middlesex County, MA Bank of America Corporation (NC) 20.91 % Citizens Financial Group Inc. (RI) 10.31 %"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

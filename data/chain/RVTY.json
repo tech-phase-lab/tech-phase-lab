@@ -1,0 +1,228 @@
+{
+  "root": {
+    "ticker": "RVTY",
+    "name": "レビティ",
+    "cik": 31791,
+    "name_en": "Revvity"
+  },
+  "rows": [
+    {
+      "ja": "買収・技術ライセンス",
+      "en": "Acquisitions & technology licenses",
+      "above": true
+    },
+    {
+      "ja": "顧客",
+      "en": "Customers"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "WAT",
+    "QDEL",
+    "COO",
+    "SDGR"
+  ],
+  "companies": [
+    {
+      "id": "ACD",
+      "ticker": "ACD/Labs",
+      "name": "アドバンスト・ケミストリー・デベロップメント",
+      "name_en": "Advanced Chemistry Development",
+      "sub": "化学ソフトウェア",
+      "sub_en": "Chemistry software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年度末後に買収を完了",
+          "text_en": "Completed the acquisition after fiscal 2025",
+          "source": {
+            "label": "Revvity 10-K(2025年度)",
+            "label_en": "Revvity 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/31791/000003179126000012/revv-20251228.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Subsequent to fiscal year 2025, the Company completed its acquisition of Advanced Chemistry Development Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AKYA",
+      "ticker": "Akoya",
+      "name": "アコヤ・バイオサイエンシズ",
+      "name_en": "Akoya Biosciences",
+      "sub": "空間生物学",
+      "sub_en": "Spatial biology",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Revvity(旧PerkinElmer)から定量病理の技術を取得し、ライセンス・ロイヤルティ契約を結んだ(Akoyaは後にQuanterixと統合)",
+          "text_en": "Bought quantitative pathology technology from Revvity (formerly PerkinElmer) under a license and royalty agreement; Akoya later combined with Quanterix",
+          "source": {
+            "label": "Akoya Biosciences 10-K(2024年度)",
+            "label_en": "Akoya Biosciences 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1711933/000155837025003124/akya-20241231x10k.htm",
+            "level": "official",
+            "date": "2025-03-17",
+            "quote": "(\"PKI\"), subsequently known as Revvity, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GOVX",
+      "ticker": "GOVX",
+      "name": "ジオバックス",
+      "name_en": "GeoVax",
+      "sub": "ワクチン開発",
+      "sub_en": "Vaccine development",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "臨床試験の細胞性免疫の測定をRevvityに委託",
+          "text_en": "Works with Revvity for cellular immunogenicity assays in its clinical trial",
+          "source": {
+            "label": "GeoVax の発表(8-K添付)",
+            "label_en": "GeoVax release (8-K exhibit)",
+            "url": "https://www.sec.gov/Archives/edgar/data/832489/000143774924024867/ex_706760.htm",
+            "level": "official",
+            "date": "2024-08-06",
+            "quote": "GeoVax will work with Adaptive Biotechnologies to conduct T-cell receptor (TCR) beta chain immunosequencing and with Revvity for all other cellular immunogenicity assays."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WAT",
+      "ticker": "WAT",
+      "name": "ウォーターズ",
+      "name_en": "Waters",
+      "sub": "分析機器",
+      "sub_en": "Analytical instruments",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Watersが10-Kで、サービス市場の主な競合としてRevvityを挙げる",
+          "text_en": "Waters names Revvity among its principal service-market competitors",
+          "source": {
+            "label": "Waters 10-K(2025年度)",
+            "label_en": "Waters 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1000697/000119312526062604/d778470d10k.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "The Company's principal competitors in the service market include Revvity, Inc., Agilent Technologies, Inc. and Thermo Fisher Scientific Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "QDEL",
+      "ticker": "QDEL",
+      "name": "クイデルオルソ",
+      "name_en": "QuidelOrtho",
+      "sub": "診断薬",
+      "sub_en": "Diagnostics",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "QuidelOrthoが10-Kで、主な競合としてRevvityを挙げる",
+          "text_en": "QuidelOrtho names Revvity among its principal competitors",
+          "source": {
+            "label": "QuidelOrtho 10-K(2025年度)",
+            "label_en": "QuidelOrtho 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1906324/000190632426000008/qdel-20251228.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Some of our principal competitors include, among others, Abbott Laboratories, bioMérieux, Bio-Rad, Danaher, Diasorin, Hologic, Qiagen, Revvity"
+          }
+        }
+      ]
+    },
+    {
+      "id": "COO",
+      "ticker": "COO",
+      "name": "クーパー・カンパニーズ",
+      "name_en": "Cooper Companies",
+      "sub": "コンタクトレンズ・女性医療",
+      "sub_en": "Contact lenses & women's health",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Cooperが10-Kで、臍帯血(幹細胞)保管の主な競合としてRevvityのViaCordを挙げる",
+          "text_en": "Cooper names Revvity's ViaCord as its primary US competitor in stem cell storage",
+          "source": {
+            "label": "Cooper Companies 10-K(2024年度)",
+            "label_en": "Cooper Companies 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/711404/000071140424000074/coo-20241031.htm",
+            "level": "official",
+            "date": "2024-12-06",
+            "quote": "In the stem cell storage field, we compete primarily with ViaCord, a division of Revvity, in the United States"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SDGR",
+      "ticker": "SDGR",
+      "name": "シュレーディンガー",
+      "name_en": "Schrödinger",
+      "sub": "創薬ソフトウェア",
+      "sub_en": "Drug discovery software",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Schrödingerが10-Kで、ライフサイエンス向け業務ソフトの競合としてRevvityを挙げる",
+          "text_en": "Schrödinger names Revvity among enterprise life-science software competitors",
+          "source": {
+            "label": "Schrödinger 10-K(2025年度)",
+            "label_en": "Schrödinger 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1490978/000149097826000010/sdgr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "in enterprise software for the life sciences, such as BIOVIA, Certara USA, Inc., Chemaxon, Revvity, Inc. and Dotmatics, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HBIO",
+      "ticker": "HBIO",
+      "name": "ハーバード・バイオサイエンス",
+      "name_en": "Harvard Bioscience",
+      "sub": "研究用機器",
+      "sub_en": "Research instruments",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Harvard Bioscienceが10-Kで、競合の一社としてRevvityを挙げる",
+          "text_en": "Harvard Bioscience names Revvity among its competitors",
+          "source": {
+            "label": "Harvard Bioscience 10-K(2025年度)",
+            "label_en": "Harvard Bioscience 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1123494/000117184326001548/hbio20251231_10k.htm",
+            "level": "official",
+            "date": "2026-03-13",
+            "quote": "Lonza Group Ltd., Revvity, Inc. (f/k/a PerkinElmer, Inc.), Thermo Fisher Scientific, Inc., TSE Systems and Waters Corporation."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

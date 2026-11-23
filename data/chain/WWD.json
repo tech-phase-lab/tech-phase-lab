@@ -1,0 +1,348 @@
+{
+  "root": {
+    "ticker": "WWD",
+    "name": "ウッドワード",
+    "cik": 108312,
+    "name_en": "Woodward"
+  },
+  "rows": [
+    {
+      "ja": "買収・合弁",
+      "en": "Acquisitions & joint venture",
+      "above": true
+    },
+    {
+      "ja": "顧客(航空機・エンジン・発電)",
+      "en": "Customers (aircraft, engines & power)"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "PH",
+    "HON",
+    "RTX",
+    "MOG.A"
+  ],
+  "companies": [
+    {
+      "id": "Safran",
+      "ticker": "Safran",
+      "name": "サフラン",
+      "name_en": "Safran",
+      "sub": "航空機部品(仏)",
+      "sub_en": "Aerospace (France)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "サフランの電動アクチュエーター事業を買収",
+          "text_en": "Acquired Safran's electromechanical actuation business",
+          "source": {
+            "label": "Woodward 10-K(2026年度)",
+            "label_en": "Woodward 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/108312/000119312526468267/wwd-20260930.htm",
+            "level": "official",
+            "date": "2026-11-19",
+            "quote": "In addition, Woodward acquired Safran's electromechanical actuation business and Valve Research & Manufacturing Company."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GE",
+      "ticker": "GE",
+      "name": "GEエアロスペース",
+      "name_en": "GE Aerospace",
+      "sub": "航空機エンジン",
+      "sub_en": "Jet engines",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "燃料系などの合弁の相手(2024年4月以降はGE Aerospaceが当事者)",
+          "text_en": "Joint venture partner; GE Aerospace has acted for GE in the JV since April 2024",
+          "source": {
+            "label": "Woodward 10-K(2026年度)",
+            "label_en": "Woodward 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/108312/000119312526468267/wwd-20260930.htm",
+            "level": "official",
+            "date": "2026-11-19",
+            "quote": "For purposes of the JV, GE has been acting through GE Aerospace since April 2024."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Airbus",
+      "ticker": "Airbus",
+      "name": "エアバス",
+      "name_en": "Airbus",
+      "sub": "航空機",
+      "sub_en": "Aircraft",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "エアバス向けの新製品で、将来の受注での立場を強めた",
+          "text_en": "New product offerings with Airbus strengthen its position for future wins",
+          "source": {
+            "label": "Woodward 10-K(2026年度)",
+            "label_en": "Woodward 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/108312/000119312526468267/wwd-20260930.htm",
+            "level": "official",
+            "date": "2026-11-19",
+            "quote": "These new product offerings with Airbus strengthen Woodward's position for future product wins."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CAT",
+      "ticker": "CAT",
+      "name": "キャタピラー",
+      "name_en": "Caterpillar",
+      "sub": "建機・エンジン",
+      "sub_en": "Machinery & engines",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "エンジン制御などの顧客(同種の製品を自社で作る力もある)",
+          "text_en": "Customer for engine controls that also has in-house capabilities for similar products",
+          "source": {
+            "label": "Woodward 10-K(2026年度)",
+            "label_en": "Woodward 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/108312/000119312526468267/wwd-20260930.htm",
+            "level": "official",
+            "date": "2026-11-19",
+            "quote": "OEM customers with internal capabilities for similar products include Caterpillar, Cummins, GE Vernova, Rolls-Royce Power Systems, and Wärtsilä."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CMI",
+      "ticker": "CMI",
+      "name": "カミンズ",
+      "name_en": "Cummins",
+      "sub": "エンジン",
+      "sub_en": "Engines",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "エンジン制御などの顧客(同種の製品を自社で作る力もある)",
+          "text_en": "Customer for engine controls that also has in-house capabilities for similar products",
+          "source": {
+            "label": "Woodward 10-K(2026年度)",
+            "label_en": "Woodward 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/108312/000119312526468267/wwd-20260930.htm",
+            "level": "official",
+            "date": "2026-11-19",
+            "quote": "OEM customers with internal capabilities for similar products include Caterpillar, Cummins, GE Vernova, Rolls-Royce Power Systems, and Wärtsilä."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GEV",
+      "ticker": "GEV",
+      "name": "GEベルノバ",
+      "name_en": "GE Vernova",
+      "sub": "発電機器",
+      "sub_en": "Power equipment",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ガスタービン向け部品などの顧客(同種の製品を自社で作る力もある)",
+          "text_en": "Customer for power equipment components that also has in-house capabilities",
+          "source": {
+            "label": "Woodward 10-K(2026年度)",
+            "label_en": "Woodward 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/108312/000119312526468267/wwd-20260930.htm",
+            "level": "official",
+            "date": "2026-11-19",
+            "quote": "OEM customers with internal capabilities for similar products include Caterpillar, Cummins, GE Vernova, Rolls-Royce Power Systems, and Wärtsilä."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AIR",
+      "ticker": "AIR",
+      "name": "AAR",
+      "name_en": "AAR",
+      "sub": "航空機部品の流通・整備",
+      "sub_en": "Aviation parts & services",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "AARがWoodwardなどOEMの新品・中古部品の販売代理店契約を獲得",
+          "text_en": "AAR won distribution and supply agreements for new and used parts from OEMs including Woodward",
+          "source": {
+            "label": "AAR 10-K(2024年度)",
+            "label_en": "AAR 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1750/000110465924080890/air-20240531x10k.htm",
+            "level": "official",
+            "date": "2024-07-19",
+            "quote": "we were awarded distribution and supply agreements for both new parts and USM across multiple OEMs including Woodward, MTU Maintenance, Ontic, and Cebu Pacific."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PH",
+      "ticker": "PH",
+      "name": "パーカー・ハネフィン",
+      "name_en": "Parker-Hannifin",
+      "sub": "油圧・航空機部品",
+      "sub_en": "Motion control & aerospace",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "互いに航空機部品の競合として名前を挙げる(Parkerは顧客でもある)",
+          "text_en": "Each names the other as an aerospace competitor; Parker is also a customer",
+          "source": {
+            "label": "Parker-Hannifin 10-K(2025年度)",
+            "label_en": "Parker-Hannifin 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/76334/000007633425000035/ph-20250630.htm",
+            "level": "official",
+            "date": "2025-08-22",
+            "quote": "primary global competitors for these products include Crane Co., Eaton Corporation plc, Honeywell International, Inc., Moog Inc., RTX Corporation, Safran S.A., Senior plc, Triumph Group, Inc., and Woodward, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HON",
+      "ticker": "HON",
+      "name": "ハネウェル",
+      "name_en": "Honeywell",
+      "sub": "航空宇宙・産業",
+      "sub_en": "Aerospace & industrial",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Woodwardが航空分野の競合として挙げる(顧客でもある)",
+          "text_en": "Woodward names Honeywell as an aerospace competitor that is also a customer",
+          "source": {
+            "label": "Woodward 10-K(2026年度)",
+            "label_en": "Woodward 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/108312/000119312526468267/wwd-20260930.htm",
+            "level": "official",
+            "date": "2026-11-19",
+            "quote": "Our competitors in aerospace include divisions of Eaton, Honeywell, Moog, Parker Hannifin, and RTX Corporation."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RTX",
+      "ticker": "RTX",
+      "name": "RTX",
+      "name_en": "RTX",
+      "sub": "航空宇宙・防衛",
+      "sub_en": "Aerospace & defense",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Woodwardが航空分野の競合として挙げる(顧客でもある)",
+          "text_en": "Woodward names RTX as an aerospace competitor that is also a customer",
+          "source": {
+            "label": "Woodward 10-K(2026年度)",
+            "label_en": "Woodward 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/108312/000119312526468267/wwd-20260930.htm",
+            "level": "official",
+            "date": "2026-11-19",
+            "quote": "Our competitors in aerospace include divisions of Eaton, Honeywell, Moog, Parker Hannifin, and RTX Corporation."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MOG.A",
+      "ticker": "MOG.A",
+      "name": "ムーグ",
+      "name_en": "Moog",
+      "sub": "航空機の操縦系",
+      "sub_en": "Flight controls",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Woodwardが航空分野の競合として挙げる",
+          "text_en": "Woodward names Moog as an aerospace competitor",
+          "source": {
+            "label": "Woodward 10-K(2026年度)",
+            "label_en": "Woodward 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/108312/000119312526468267/wwd-20260930.htm",
+            "level": "official",
+            "date": "2026-11-19",
+            "quote": "Our competitors in aerospace include divisions of Eaton, Honeywell, Moog, Parker Hannifin, and RTX Corporation."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ETN",
+      "ticker": "ETN",
+      "name": "イートン",
+      "name_en": "Eaton",
+      "sub": "電力・航空機部品",
+      "sub_en": "Electrical & aerospace",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Woodwardが航空分野の競合として挙げる",
+          "text_en": "Woodward names Eaton as an aerospace competitor",
+          "source": {
+            "label": "Woodward 10-K(2026年度)",
+            "label_en": "Woodward 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/108312/000119312526468267/wwd-20260930.htm",
+            "level": "official",
+            "date": "2026-11-19",
+            "quote": "Our competitors in aerospace include divisions of Eaton, Honeywell, Moog, Parker Hannifin, and RTX Corporation."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GNRC",
+      "ticker": "GNRC",
+      "name": "ジェネラック",
+      "name_en": "Generac",
+      "sub": "発電機",
+      "sub_en": "Generators",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Generacが10-Kで、業務用発電製品の競合としてWoodwardを挙げる",
+          "text_en": "Generac names Woodward among competitors for its commercial and industrial products",
+          "source": {
+            "label": "Generac 10-K(2024年度)",
+            "label_en": "Generac 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1474735/000143774925004353/gnrc20241231_10k.htm",
+            "level": "official",
+            "date": "2025-02-19",
+            "quote": "C&I products - Competitors include Caterpillar, Cummins, Rehlko (formerly known as Kohler Power), IGSA, AKSA, MultiQuip, Wacker, Doosan, Atlas Copco, Himoinsa, FG Wilson, Woodward"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

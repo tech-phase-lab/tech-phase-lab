@@ -1,0 +1,227 @@
+{
+  "root": {
+    "ticker": "WY",
+    "name": "ウェアーハウザー",
+    "cik": 106535,
+    "name_en": "Weyerhaeuser"
+  },
+  "rows": [
+    {
+      "ja": "土地の利用・提携先",
+      "en": "Land use & partners",
+      "above": true
+    },
+    {
+      "ja": "木材製品の顧客(相手の資料に記載)",
+      "en": "Wood products customers (named in their filings)"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "BCC",
+    "RYN",
+    "MERC"
+  ],
+  "companies": [
+    {
+      "id": "Aymium",
+      "ticker": "Aymium",
+      "name": "エイミウム",
+      "name_en": "Aymium",
+      "sub": "バイオカーボン",
+      "sub_en": "Biocarbon",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年12月、Aymiumとの提携で新事業(バイオカーボン)を始めた",
+          "text_en": "Launched a new business in December 2025 through a partnership with Aymium",
+          "source": {
+            "label": "Weyerhaeuser 投資家向け資料(2026年11月、8-K添付)",
+            "label_en": "Weyerhaeuser investor materials (Nov 2026, 8-K exhibit)",
+            "url": "https://www.sec.gov/Archives/edgar/data/106535/000010653526000013/wy-ex99_1.htm",
+            "level": "official",
+            "date": "2026-11-12",
+            "quote": "Launched new business in December 2025 through partnership with Aymium."
+          }
+        }
+      ]
+    },
+    {
+      "id": "REA",
+      "ticker": "REA",
+      "name": "レア・アース・アメリカズ",
+      "name_en": "Rare Earths Americas",
+      "sub": "レアアース探鉱",
+      "sub_en": "Rare earth exploration",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ジョージア州にあるWeyerhaeuserの土地の採掘リース(Weyerhaeuser Lease)を2026年8月に引き継いだ",
+          "text_en": "Took over a mining lease on Weyerhaeuser land in Georgia (the Weyerhaeuser Lease) in August 2026",
+          "source": {
+            "label": "Rare Earths Americas 10-Q(2026年第3四半期)",
+            "label_en": "Rare Earths Americas 10-Q (Q3 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2095743/000119312526455611/rea-20260930.htm",
+            "level": "official",
+            "date": "2026-11-10",
+            "quote": "The Weyerhaeuser Lease is a mining lease effective October 1, 2020, located in Harris and Talbot Counties, Georgia."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BLDR",
+      "ticker": "BLDR",
+      "name": "ビルダーズ・ファーストソース",
+      "name_en": "Builders FirstSource",
+      "sub": "建材の流通",
+      "sub_en": "Building materials distribution",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Builders FirstSourceが10-Kで、最大級の仕入先の一社としてWeyerhaeuserを挙げる",
+          "text_en": "Builders FirstSource names Weyerhaeuser among its largest suppliers",
+          "source": {
+            "label": "Builders FirstSource 10-K(2024年度)",
+            "label_en": "Builders FirstSource 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1316835/000095017025023953/bldr-20241231.htm",
+            "level": "official",
+            "date": "2025-02-20",
+            "quote": "Our largest suppliers are national companies such as Boise Cascade Company, Weyerhaeuser Company, West Fraser Timber Co."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BXC",
+      "ticker": "BXC",
+      "name": "ブルーリンクス",
+      "name_en": "BlueLinx",
+      "sub": "建材の卸売",
+      "sub_en": "Building products wholesale",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "BlueLinxが10-Kで、仕入先の大手メーカーの一社としてWeyerhaeuserを挙げる",
+          "text_en": "BlueLinx lists Weyerhaeuser among its leading manufacturer suppliers",
+          "source": {
+            "label": "BlueLinx 10-K(2024年度)",
+            "label_en": "BlueLinx 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1301787/000130178725000012/bxc-20241228.htm",
+            "level": "official",
+            "date": "2025-02-18",
+            "quote": "Our suppliers include some of the leading manufacturers in the industry, such as Allura, Arauco, Fiberon, Georgia-Pacific, Huber Engineered Woods, Louisiana-Pacific, Oldcastle APG, Ply Gem, Roseburg, Royal and Weyerhaeuser."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BCC",
+      "ticker": "BCC",
+      "name": "ボイシ・カスケード",
+      "name_en": "Boise Cascade",
+      "sub": "木材製品・建材流通",
+      "sub_en": "Wood products & distribution",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Boise Cascadeが10-Kで、エンジニアードウッドの主な競合としてWeyerhaeuserを挙げる(仕入先でもある)",
+          "text_en": "Boise Cascade names Weyerhaeuser among major engineered wood competitors",
+          "source": {
+            "label": "Boise Cascade 10-K(2024年度)",
+            "label_en": "Boise Cascade 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1328581/000132858125000010/bcc-20241231.htm",
+            "level": "official",
+            "date": "2025-02-20",
+            "quote": "In EWP, we compete against several major North American EWP producers, such as Weyerhaeuser Company, Pacific Woodtech Corporation, and Roseburg Forest Products"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RYN",
+      "ticker": "RYN",
+      "name": "レイオニア",
+      "name_en": "Rayonier",
+      "sub": "森林REIT",
+      "sub_en": "Timberland REIT",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Rayonierが10-Kで、南部の森林事業の主な競合としてWeyerhaeuserを挙げる",
+          "text_en": "Rayonier names Weyerhaeuser as a major competitor in Southern timber",
+          "source": {
+            "label": "Rayonier 10-K(2025年度)",
+            "label_en": "Rayonier 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/52827/000005282726000036/ryn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "Segment Competitors Southern Timber Weyerhaeuser Company"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MERC",
+      "ticker": "MERC",
+      "name": "マーサー・インターナショナル",
+      "name_en": "Mercer International",
+      "sub": "パルプ・木材",
+      "sub_en": "Pulp & lumber",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Mercerが10-Kで、木材事業の主な競合としてWeyerhaeuserを挙げる",
+          "text_en": "Mercer names Weyerhaeuser among its key competitors in solid wood",
+          "source": {
+            "label": "Mercer International 10-K(2025年度)",
+            "label_en": "Mercer International 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1333274/000119312526048855/merc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Our key competitors in the segment currently include West Fraser, Canfor, Interfor, Domtar, Weyerhaeuser, Binderholz, Stora Enso and Ilim."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Arauco",
+      "ticker": "Arauco",
+      "name": "アラウコ",
+      "name_en": "Arauco",
+      "sub": "林産品(チリ)",
+      "sub_en": "Forest products (Chile)",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Araucoが年次報告で、MDF市場の主な競合としてWeyerhaeuserを挙げる",
+          "text_en": "Arauco names Weyerhaeuser among its main MDF competitors",
+          "source": {
+            "label": "Arauco 10-K(2024年度)",
+            "label_en": "Arauco 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1004156/000157587225000261/cik0001004156-20241231.htm",
+            "level": "official",
+            "date": "2025-03-27",
+            "quote": "Roseburg Forest Products Co., West Fraser and Weyerhaeuser, among others."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,266 @@
+{
+  "root": {
+    "ticker": "AG",
+    "name": "ファースト・マジェスティック・シルバー",
+    "cik": 1308648,
+    "name_en": "First Majestic Silver"
+  },
+  "rows": [
+    {
+      "ja": "ストリーム・ロイヤルティの受取先",
+      "en": "Stream & royalty holders",
+      "above": true
+    },
+    {
+      "ja": "買収・共同事業",
+      "en": "Acquisitions & joint ventures"
+    },
+    {
+      "ja": "売却先・ストリームの取得先",
+      "en": "Asset buyers & stream counterparties"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "SIND"
+  ],
+  "companies": [
+    {
+      "id": "WPM",
+      "ticker": "WPM",
+      "name": "ウィートン・プレシャス・メタルズ",
+      "name_en": "Wheaton Precious Metals",
+      "sub": "ストリーム",
+      "sub_en": "Streams",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "サンディマス鉱山の金の25%をWheatonが買い取る契約(Primero買収時に結び直した)",
+          "text_en": "Wheaton buys 25% of San Dimas gold under an agreement reset when First Majestic bought Primero",
+          "source": {
+            "label": "Wheaton Precious Metals 年次情報書(40-F添付、2023年度)",
+            "label_en": "Wheaton Precious Metals annual information form (40-F exhibit, FY2023)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1323404/000119312524080810/d741247dex991.htm",
+            "level": "official",
+            "date": "2024-03-28",
+            "quote": "In connection with First Majestic Silver Corp.'s (\"First Majestic\") acquisition of all the issued and outstanding common shares of Primero (the \"Acquisition\"), on May 10, 2018, the Company terminated the San Dimas SPA and entered into a new precious metal purchase agreement with First Majestic (the \"San Dimas PMPA\")"
+          }
+        }
+      ]
+    },
+    {
+      "id": "OR",
+      "ticker": "OR",
+      "name": "OR(旧オシスコ)ロイヤルティーズ",
+      "name_en": "OR Royalties (Osisko Gold Royalties)",
+      "sub": "ロイヤルティ",
+      "sub_en": "Royalties",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "エルミタニョ鉱山に2%のロイヤルティを持つ",
+          "text_en": "Holds a 2% royalty on the Ermitaño mine",
+          "source": {
+            "label": "Osisko Gold Royalties 年次報告(40-F添付、2024年度)",
+            "label_en": "Osisko Gold Royalties annual report (40-F exhibit, FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1627272/000106299325006504/exhibit99-3.htm",
+            "level": "official",
+            "date": "2025-03-28",
+            "quote": "Osisko holds a 2% NSR royalty on the Ermitaño underground gold and silver mine (\"Ermitaño\") operated by First Majestic Silver Corp."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Gatos",
+      "ticker": "Gatos Silver",
+      "name": "ゲイトス・シルバー",
+      "name_en": "Gatos Silver",
+      "sub": "銀鉱山",
+      "sub_en": "Silver mining",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ロス・ガトス銀山の70%を持つGatosを株式交換で買収(2025年1月完了)",
+          "text_en": "Acquired Gatos, owner of 70% of the Los Gatos silver mine, in an all-share deal closed January 2025",
+          "source": {
+            "label": "First Majestic 年次情報書(40-F添付、2025年度)",
+            "label_en": "First Majestic annual information form (40-F exhibit, FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1308648/000106299326001765/exhibit99-1.htm",
+            "level": "official",
+            "date": "2026-03-31",
+            "quote": "On January 16, 2025, the Company announced the completion of the Gatos Transaction."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Dowa",
+      "ticker": "Dowa",
+      "name": "DOWAホールディングス",
+      "name_en": "Dowa",
+      "sub": "非鉄金属(日本)",
+      "sub_en": "Non-ferrous metals (Japan)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ロス・ガトス合弁の30%を持つ合弁相手",
+          "text_en": "Joint venture partner holding 30% of Los Gatos",
+          "source": {
+            "label": "First Majestic 年次情報書(40-F添付、2025年度)",
+            "label_en": "First Majestic annual information form (40-F exhibit, FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1308648/000106299326001765/exhibit99-1.htm",
+            "level": "official",
+            "date": "2026-03-31",
+            "quote": "The Amended Agreements did not affect the ownership interests of Gatos and Dowa in the Los Gatos Joint Venture, being 70% and 30% respectively."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Primero",
+      "ticker": "Primero Mining",
+      "name": "プリメロ・マイニング",
+      "name_en": "Primero Mining",
+      "sub": "金銀鉱山",
+      "sub_en": "Gold & silver mining",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "サンディマス鉱山を持つPrimeroを買収",
+          "text_en": "Acquired Primero, owner of the San Dimas mine",
+          "source": {
+            "label": "Wheaton Precious Metals 年次情報書(40-F添付、2023年度)",
+            "label_en": "Wheaton Precious Metals annual information form (40-F exhibit, FY2023)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1323404/000119312524080810/d741247dex991.htm",
+            "level": "official",
+            "date": "2024-03-28",
+            "quote": "In connection with First Majestic Silver Corp.'s (\"First Majestic\") acquisition of all the issued and outstanding common shares of Primero (the \"Acquisition\")"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SierraMadre",
+      "ticker": "Sierra Madre Gold and Silver",
+      "name": "シエラ・マドレ・ゴールド&シルバー",
+      "name_en": "Sierra Madre Gold and Silver",
+      "sub": "銀鉱山",
+      "sub_en": "Silver mining",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "デル・トロ銀山の売却で合意(2025年12月)",
+          "text_en": "Agreed in December 2025 to sell it the Del Toro mine",
+          "source": {
+            "label": "First Majestic 年次情報書(40-F添付、2025年度)",
+            "label_en": "First Majestic annual information form (40-F exhibit, FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1308648/000106299326001765/exhibit99-1.htm",
+            "level": "official",
+            "date": "2026-03-31",
+            "quote": "On December 17, 2025, the Company entered into a share purchase agreement to sell the subsidiary that owns the Del Toro Silver Mine to Sierra Madre Gold and Silver Ltd."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "ラ・ギタラ銀山を3,500万ドル相当(株式)で売却(2023年3月)",
+          "text_en": "Sold it the La Guitarra mine for $35 million in shares (March 2023)",
+          "source": {
+            "label": "First Majestic 年次情報書(40-F添付、2025年度)",
+            "label_en": "First Majestic annual information form (40-F exhibit, FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1308648/000106299326001765/exhibit99-1.htm",
+            "level": "official",
+            "date": "2026-03-31",
+            "quote": "On March 29, 2023, the Company completed the sale of all of the shares of La Guitarra Compañia Minera, S.A. de C.V., its wholly-owned subsidiary which owns the La Guitarra Silver Mine located in the Temascaltepec mining district, Mexico State, to Sierra Madre Gold & Silver Ltd."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FFMGF",
+      "ticker": "FFMGF",
+      "name": "ファースト・マイニング・ゴールド",
+      "name_en": "First Mining Gold",
+      "sub": "金開発",
+      "sub_en": "Gold development",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "スプリングポール計画の銀の50%を買う権利(ストリーム)を持つ",
+          "text_en": "Holds a stream on 50% of payable silver from the Springpole project",
+          "source": {
+            "label": "First Majestic 年次情報書(40-F添付、2025年度)",
+            "label_en": "First Majestic annual information form (40-F exhibit, FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1308648/000106299326001765/exhibit99-1.htm",
+            "level": "official",
+            "date": "2026-03-31",
+            "quote": "the Company signed an amendment agreement (the \" Amended Springpole Stream Agreement \") to the Springpole Stream Agreement (as defined in the section in this AIF entitled \" Risk Factors - Operational Risks - The Springpole Stream Agreement \") among the Company, Gold Canyon Resources Inc. and First Mining Gold Corp."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MTA",
+      "ticker": "MTA",
+      "name": "メタラ・ロイヤルティ&ストリーミング",
+      "name_en": "Metalla Royalty & Streaming",
+      "sub": "ロイヤルティ",
+      "sub_en": "Royalties",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "保有していたロイヤルティ8件をMetallaに売却(2022年12月)",
+          "text_en": "Sold a portfolio of eight royalties to Metalla in December 2022",
+          "source": {
+            "label": "Metalla 40-F添付資料(2023年度)",
+            "label_en": "Metalla 40-F exhibit (FY2023)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1722606/000106299324007364/exhibit99-2.htm",
+            "level": "official",
+            "date": "2024-03-28",
+            "quote": "In December 2022, the Company acquired a portfolio of eight royalties from First Majestic Silver Corp."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SIND",
+      "ticker": "SIND",
+      "name": "シンダ",
+      "name_en": "Sinda",
+      "sub": "銀探鉱(メキシコ)",
+      "sub_en": "Silver exploration (Mexico)",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "SindaがS-1で、メキシコで資金調達を競う銀鉱山会社としてFirst Majesticを挙げる",
+          "text_en": "Sinda names First Majestic among silver miners in Mexico it competes with for financing",
+          "source": {
+            "label": "Sinda S-1(2026年7月)",
+            "label_en": "Sinda S-1 (Jul 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2096861/000114036126029787/ny20077487x1_s1.htm",
+            "level": "official",
+            "date": "2026-07-28",
+            "quote": "We compete in efforts to obtain financing to explore and develop the Sinda Property with other silver exploration and mining companies operating in Mexico, such as Fresnillo plc (LSE: FRES), First Majestic Silver Corp."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

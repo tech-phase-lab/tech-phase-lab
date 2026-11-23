@@ -1,0 +1,223 @@
+{
+  "root": {
+    "ticker": "ARES",
+    "name": "アレス・マネジメント",
+    "cik": 1176948,
+    "name_en": "Ares Management"
+  },
+  "rows": [
+    {
+      "ja": "運用を受託する上場ビークル",
+      "en": "Listed vehicles it manages",
+      "above": true
+    },
+    {
+      "ja": "買収・提携",
+      "en": "Acquisitions & partnerships"
+    },
+    {
+      "ja": "融資・出資先",
+      "en": "Credit & equity investments"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "ARCC",
+      "ticker": "ARCC",
+      "name": "エイリス・キャピタル",
+      "name_en": "Ares Capital",
+      "sub": "BDC(中堅企業融資)",
+      "sub_en": "BDC (middle-market lending)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Aresの子会社が運用を受託する上場BDC",
+          "text_en": "Listed BDC externally managed by an Ares subsidiary",
+          "source": {
+            "label": "Ares Capital 10-K(2025年度)",
+            "label_en": "Ares Capital 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1287750/000128775026000006/arcc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-04",
+            "quote": "We are externally managed by Ares Capital Management LLC (\"Ares Capital Management\" or our \"investment adviser\"), a subsidiary of Ares Management Corporation (\"Ares Management\" or \"Ares\"), a publicly traded, leading global alternative investment manager, pursuant to our investment advisory and management agreement."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ACRE",
+      "ticker": "ACRE",
+      "name": "エイリス・コマーシャル・リアルエステート",
+      "name_en": "Ares Commercial Real Estate",
+      "sub": "不動産融資REIT",
+      "sub_en": "Mortgage REIT",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Aresの子会社が運用を受託する不動産融資REIT",
+          "text_en": "Commercial real estate lender managed by an Ares subsidiary",
+          "source": {
+            "label": "Ares Commercial Real Estate 10-K(2025年度)",
+            "label_en": "Ares Commercial Real Estate 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1529377/000162828026006635/acre-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "We are externally managed by Ares Commercial Real Estate Management LLC (\"ACREM\" or our \"Manager\"), a subsidiary of Ares Management Corporation (NYSE: ARES) (\"Ares Management\")"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GLP",
+      "ticker": "GLP Capital Partners",
+      "name": "GLPキャピタル・パートナーズ",
+      "name_en": "GLP Capital Partners",
+      "sub": "物流不動産の運用",
+      "sub_en": "Logistics real estate manager",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "中華圏を除くGLPの国際事業を2025年3月に買収",
+          "text_en": "Acquired GLP Capital Partners' international business (excluding Greater China) in March 2025",
+          "source": {
+            "label": "Ares Management 10-K(2025年度)",
+            "label_en": "Ares Management 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1176948/000162828026011413/ares-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "On March 1, 2025, we completed the acquisition of the international business of GLP Capital Partners Limited and certain of its affiliates, excluding its operations in Greater China (\"GCP International\")"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Whitestone",
+      "ticker": "Whitestone REIT",
+      "name": "ホワイトストーンREIT",
+      "name_en": "Whitestone REIT",
+      "sub": "商業施設REIT",
+      "sub_en": "Retail REIT",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Aresの子会社が2026年7月に合併で買収",
+          "text_en": "Acquired by an Ares subsidiary through a merger in July 2026",
+          "source": {
+            "label": "Pillarstone Capital REIT 10-K(2025年度)",
+            "label_en": "Pillarstone Capital REIT 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/928953/000143774926032293/pscr20251231_10k.htm",
+            "level": "official",
+            "date": "2026-10-07",
+            "quote": "In July 2026, a subsidiary of Ares Management Corporation acquired Whitestone REIT in a merger transaction, constituting a Change of Control under the Contribution Agreement."
+          }
+        }
+      ]
+    },
+    {
+      "id": "VINP",
+      "ticker": "VINP",
+      "name": "ヴィンチ・コンパス",
+      "name_en": "Vinci Compass Investments",
+      "sub": "資産運用(中南米)",
+      "sub_en": "Asset management (Latin America)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "中南米での成長を加速する戦略提携(2023年10月)",
+          "text_en": "Strategic partnership to accelerate its Latin American platform (October 2023)",
+          "source": {
+            "label": "Vinci Compass 20-F(2025年度)",
+            "label_en": "Vinci Compass 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1826286/000119312526164057/d79123d20f.htm",
+            "level": "official",
+            "date": "2026-04-20",
+            "quote": "On October 10, 2023, we announced that Ares Management Corporation, or Ares, agreed to form a strategic partnership to accelerate the growth of Vinci Compass' platform in Latin America and to collaborate with the distribution, product development and other business opportunities."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AORT",
+      "ticker": "AORT",
+      "name": "アーティビオン",
+      "name_en": "Artivion",
+      "sub": "医療機器(心臓血管)",
+      "sub_en": "Medical devices (cardiac)",
+      "row": 2,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Aresのクレジットファンドが3.5億ドルの融資枠を提供",
+          "text_en": "Ares credit funds provide a $350 million credit facility",
+          "source": {
+            "label": "Artivion 10-K(2025年度)",
+            "label_en": "Artivion 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/784199/000162828026009046/aort-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "On January 18, 2024 we entered into a credit and guaranty agreement with Ares Management Credit funds for $ 350.0 million of senior secured, interest-only, credit facilities"
+          }
+        }
+      ]
+    },
+    {
+      "id": "FIP",
+      "ticker": "FIP",
+      "name": "FTAIインフラストラクチャー",
+      "name_en": "FTAI Infrastructure",
+      "sub": "インフラ",
+      "sub_en": "Infrastructure",
+      "row": 2,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Aresがワラントを行使して株式を取得し、ワラント契約を改定(2025年2月)",
+          "text_en": "Ares exercised warrants for shares and amended its warrant agreement in February 2025",
+          "source": {
+            "label": "FTAI Infrastructure 10-K(2024年度)",
+            "label_en": "FTAI Infrastructure 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1899883/000189988325000007/ftai-20241231.htm",
+            "level": "official",
+            "date": "2025-03-13",
+            "quote": "On February 26, 2025, the Company and Ares Management LLC (\"Ares\") amended and restated the warrant agreement, initially dated as of August 1, 2022."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HOS",
+      "ticker": "Hornbeck Offshore",
+      "name": "ホーンベック・オフショア",
+      "name_en": "Hornbeck Offshore",
+      "sub": "海洋支援船",
+      "sub_en": "Offshore vessels",
+      "row": 2,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Aresのファンドが大株主として保有",
+          "text_en": "Held by Ares funds as a major shareholder",
+          "source": {
+            "label": "Hornbeck Offshore S-1/A(2025年11月)",
+            "label_en": "Hornbeck Offshore S-1/A (Nov 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1131227/000119312525283200/d65571ds1a.htm",
+            "level": "official",
+            "date": "2025-11-14",
+            "quote": "Ares Management is the sole member of Ares Holdco LLC, which is the general partner of Ares Management Holdings L.P., which is the sole member of Ares Management LLC, which is (x) the general partner of ASSF Operating Manager IV, L.P., which is the manager of each of the Ares SSF Holders"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
