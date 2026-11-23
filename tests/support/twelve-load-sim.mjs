@@ -1,6 +1,6 @@
 /** The 1,000-member load simulation for lib/research/twelve-budget.ts (tests/twelve-budget.test.mjs): a provider that counts the key's
  * credits per minute and refuses past the plan, several server instances sharing one store and one meter, the Railway monitor's jobs. */
-import { CEILING, PLAN_CREDITS_PER_MINUTE, MAX_QUOTES_PER_REQUEST, MAX_SPARKLINES_PER_REQUEST, STALE_LIMIT_MS, createGovernor, createReader } from "../../lib/research/twelve-budget.ts";
+import { CEILING, EMERGENCY_BURST, EMERGENCY_PER_MINUTE, PLAN_CREDITS_PER_MINUTE, MAX_QUOTES_PER_REQUEST, MAX_SPARKLINES_PER_REQUEST, STALE_LIMIT_MS, createAllocatorModel, createGovernor, createLeaseGovernor, createReader } from "../../lib/research/twelve-budget.ts";
 
 export const T0 = Date.parse("2026-11-23T15:00:00Z"); // a Monday, 10:00 in New York (regular session)
 export function clockAt(t) { const c = { t, now: () => c.t, advance: ms => { c.t += ms; } }; return c; }
@@ -31,8 +31,10 @@ function provider(clock) {
 }
 
 /** One simulated run: `members` concurrent members for `minutes`, spread over `instances` server instances, plus the Railway monitor.
- *  legacy: the design before this change (per-instance memory, no budget, no shared copy, a stock's facts always from the provider). */
-export async function simulate({ legacy = false, members = 1000, minutes = 4, instances = 4, universe = 1500, seed = 7 } = {}) {
+ *  legacy: the design before this change (per-instance memory, no budget, no shared copy, a stock's facts always from the provider).
+ *  mode: "allocator" (every instance asks the monitor's allocator, scripts/research/twelve_allocator.py), "allocator-down" (the monitor
+ *  cannot be reached: the emergency allowance only), "meter" (each instance decides from the shared meter alone). */
+export async function simulate({ legacy = false, mode = "allocator", members = 1000, minutes = 4, instances = 4, universe = 1500, seed = 7 } = {}) {
   const clock = clockAt(T0 - 30_000), random = rng(seed), pick = zipf(universe, 1.1, random);
   const p = provider(clock);
   const shared = memoryStore();
@@ -44,9 +46,15 @@ export async function simulate({ legacy = false, members = 1000, minutes = 4, in
   }
   const meterSlots = new Map();
   const sharedMeter = async () => { const slot = Math.floor(clock.now() / 5_000); if (!meterSlots.has(slot)) { p.charge(1, "meter"); meterSlots.set(slot, { used: p.usage(), at: clock.now() }); } return meterSlots.get(slot); };
+  const central = !legacy && mode !== "meter";
+  const alloc = createAllocatorModel({ now: clock.now, readMeter: () => { p.charge(1, "meter"); return p.usage(); } });
   const servers = Array.from({ length: instances }, () => {
     const own = memoryStore(); // legacy: each instance's own memory only
-    return { reader: createReader(legacy ? own : shared, clock.now), governor: createGovernor({ now: clock.now, readMeter: sharedMeter }) };
+    const governor = central
+      ? createLeaseGovernor({ now: clock.now, lease: async (cost, tier) => mode === "allocator-down" ? null : alloc.grant(cost, tier),
+        fallback: createGovernor({ now: clock.now, readMeter: sharedMeter, perMinute: EMERGENCY_PER_MINUTE, burst: EMERGENCY_BURST, unknownPerMinute: EMERGENCY_PER_MINUTE, maxCost: EMERGENCY_BURST }) })
+      : createGovernor({ now: clock.now, readMeter: sharedMeter });
+    return { reader: createReader(legacy ? own : shared, clock.now), governor };
   });
   const stats = { lookups: 0, served: 0, fresh: 0, errors: 0, alertPasses: 0, alertSkipped: 0, maxAgeMs: 0 };
   const spend = async (server, cost, tier) => {
@@ -80,11 +88,13 @@ export async function simulate({ legacy = false, members = 1000, minutes = 4, in
     clock.t = T0 - 30_000 + second * 1000;
     // The Railway monitor: background jobs (comparison warm 255 at the start of each minute, value check 2 a second, ownership) stop at
     // their ceiling; price alerts (100 symbols) every five minutes at the critical tier.
-    const used = p.usage(), s = second % 60;
-    if (s === 1 && used + 255 <= 460) p.charge(255, "monitor");
-    if (used + 2 <= CEILING.background) p.charge(2, "monitor");
-    if (s === 30 && used + 20 <= CEILING.background) p.charge(20, "monitor");
-    if (second % 60 === 40) { stats.alertPasses++; if (p.usage() + 100 <= CEILING.critical) p.charge(100, "alerts"); else stats.alertSkipped++; }
+    // With the allocator, the monitor's jobs decide from its view and report what they send; the daily comparison job asks it too.
+    const s = second % 60, usage = () => central ? alloc.usage(0) : p.usage();
+    const job = (cost, ceiling, who) => { const used = usage(); if (used === null || used + cost > ceiling) return false; if (central) alloc.record(cost); return p.charge(cost, who); };
+    if (s === 1) { if (central ? alloc.grant(255, "warm") : p.usage() + 255 <= CEILING.warm) p.charge(255, "monitor"); }
+    job(2, CEILING.background, "monitor");
+    if (s === 30) job(20, CEILING.background, "monitor");
+    if (second % 60 === 40) { stats.alertPasses++; if (!job(100, CEILING.critical, "alerts")) stats.alertSkipped++; }
     const jobs = [];
     for (let m = 0; m < members; m++) {
       const server = servers[Math.floor(random() * instances)];

@@ -3,10 +3,15 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { stripTypeScriptTypes } from "node:module";
 import { createBatcher } from "../lib/portfolio/quote-batcher.ts";
+import { createReader } from "../lib/research/twelve-budget.ts";
+import { memoryStore } from "./support/twelve-load-sim.mjs";
+const freshReader = () => { globalThis.__reader = createReader(memoryStore(), () => Date.now()); };
 
 const load = async (path, replacements) => {
   let source = readFileSync(new URL(path, import.meta.url), "utf8").replace('import "server-only";', "")
-    .replace(/import \{ providerLimited, reserveCredits \}[^;]*;/, "const reserveCredits = async () => {}, providerLimited = () => {};");
+    .replace(/import \{ providerLimited, reserveCredits, sharedReader \}[^;]*;/, "const reserveCredits = async () => {}, providerLimited = () => {}; const sharedReader = globalThis.__reader;")
+    .replace(/import \{ providerLimited, reserveCredits \}[^;]*;/, "const reserveCredits = async () => {}, providerLimited = () => {};")
+    .replace(/import type \{ ReadSpec \}[^;]*;/, "");
   for (const [from, to] of replacements) source = source.replace(from, to);
   return import("data:text/javascript;base64," + Buffer.from(stripTypeScriptTypes(source)).toString("base64"));
 };
@@ -35,7 +40,7 @@ test("batcher: keys asked together go out as one request, a missing key is null,
 });
 
 test("portfolio quotes: a different mix of holdings never re-reads a ticker another reader already loaded", async () => {
-  globalThis.__cacheStore = new Map();
+  globalThis.__cacheStore = new Map(); freshReader();
   process.env.TWELVE_DATA_API_KEY = "test";
   const calls = fakeProvider();
   const { loadQuotes } = await load("../lib/portfolio/quotes.ts", [
@@ -59,7 +64,7 @@ test("portfolio quotes: a different mix of holdings never re-reads a ticker anot
 });
 
 test("portfolio quotes: unknown symbols are omitted; a failed read fails the answer and is not cached", async () => {
-  globalThis.__cacheStore = new Map();
+  globalThis.__cacheStore = new Map(); freshReader();
   process.env.TWELVE_DATA_API_KEY = "test";
   let calls = fakeProvider();
   const { loadQuotes } = await load("../lib/portfolio/quotes.ts", [
@@ -79,7 +84,7 @@ globalThis.__createBatcher = createBatcher;
 globalThis.__parse = parse;
 
 test("watchlist weekly returns: different lists share each ticker's reading", async () => {
-  globalThis.__cacheStore = new Map();
+  globalThis.__cacheStore = new Map(); freshReader();
   process.env.TWELVE_DATA_API_KEY = "test";
   const calls = fakeProvider();
   const { loadReturnsFor } = await load("../lib/research/theme-prices.ts", [
@@ -96,4 +101,24 @@ test("watchlist weekly returns: different lists share each ticker's reading", as
   const fetched = calls.flat();
   assert.deepEqual(fetched.sort(), ["AVGO", "MU", "NVDA"]);
   assert.equal(c.asOf, "2026-11-12");
+});
+
+test("portfolio quotes: a read that is refused or fails shows the last good close with its own date instead of an error", async () => {
+  globalThis.__cacheStore = new Map(); freshReader();
+  process.env.TWELVE_DATA_API_KEY = "test";
+  fakeProvider();
+  const { loadQuotes } = await load("../lib/portfolio/quotes.ts", [
+    [/import \{ parseTimeSeries \}[^;]*;/, "const parseTimeSeries = globalThis.__parse;"],
+    [/import \{ createBatcher \}[^;]*;/, "const createBatcher = globalThis.__createBatcher;"],
+  ]);
+  const first = await loadQuotes(["MU"]);
+  assert.deepEqual(first.stale, []);
+  const realNow = Date.now;
+  try {
+    Date.now = () => realNow() + 20 * 60_000; // the ten-minute copy has expired
+    fakeProvider(["MU"]);                     // and the provider refuses
+    const later = await loadQuotes(["MU"]);
+    assert.equal(later.quotes.MU.close, 10); assert.equal(later.quotes.MU.asOf, "2026-11-12");
+    assert.deepEqual(later.stale, ["MU"]);
+  } finally { Date.now = realNow; }
 });

@@ -1,7 +1,7 @@
 import "server-only";
 import { AsyncLocalStorage } from "node:async_hooks";
 import { unstable_cache } from "next/cache";
-import { createGovernor, createReader, creditCost, type Entry, type SlotStore, type Tier } from "./twelve-budget.ts";
+import { EMERGENCY_BURST, EMERGENCY_PER_MINUTE, createGovernor, createLeaseGovernor, createReader, creditCost, type Entry, type SlotStore, type Tier } from "./twelve-budget.ts";
 import { parseUsage } from "./quote-refresh-gate.ts";
 
 /** The website's one door to Twelve Data for what members open (price screens, a stock's page, the portfolio, theme ranking). Every call
@@ -30,12 +30,35 @@ const meterCallback = async (slot: number) => { void slot; const m = await readU
 meterCallback.toString = () => "twelve-meter-v1";
 const sharedMeter = unstable_cache(meterCallback, ["twelve-meter-v1"], { revalidate: 60 });
 
-export const governor = createGovernor({
+/** The monitor's allocator (scripts/research/twelve_allocator.py, POST /twelve/lease) with the site's existing monitor address and server
+ * token (RESEARCH_MONITOR_URL / RESEARCH_MONITOR_TOKEN). null: not configured or not reachable. */
+async function lease(cost: number, tier: Tier): Promise<boolean | null> {
+  const base = process.env.RESEARCH_MONITOR_URL, token = process.env.RESEARCH_MONITOR_TOKEN;
+  if (!base || !token) return null;
+  try {
+    const url = new URL(base);
+    if (url.username || url.password || (url.protocol !== "https:" && !(process.env.NODE_ENV !== "production" && ["localhost", "127.0.0.1"].includes(url.hostname)))) return null;
+    url.pathname = `${url.pathname.replace(/\/$/, "")}/twelve/lease`; url.search = ""; url.hash = "";
+    const response = await fetch(url, { method: "POST", headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" }, body: JSON.stringify({ cost, tier }), cache: "no-store", signal: AbortSignal.timeout(1_500) });
+    if (!response.ok) return null;
+    const body = await response.json().catch(() => null) as { ok?: unknown; granted?: unknown } | null;
+    return body?.ok === true ? body.granted === true : null;
+  } catch { return null; }
+}
+/** Only when the allocator cannot be reached: a tiny allowance per instance, one or two symbols at a time, under the shared meter. */
+const emergency = createGovernor({
   readMeter: async () => {
     try { return await sharedMeter(Math.floor(Date.now() / METER_SLOT_MS)); }
-    catch { return null; } // unreadable (not stored): an unknown meter limits this instance to its small allowance
+    catch { return null; } // unreadable (not stored): an unknown meter limits this instance further
   },
+  perMinute: EMERGENCY_PER_MINUTE, burst: EMERGENCY_BURST, unknownPerMinute: EMERGENCY_PER_MINUTE, maxCost: EMERGENCY_BURST,
 });
+export const governor = createLeaseGovernor({ lease, fallback: emergency });
+
+/** The provider's count for this minute from the shared reading, or null. */
+export async function sharedMeterUsage(): Promise<number | null> {
+  try { return (await sharedMeter(Math.floor(Date.now() / METER_SLOT_MS))).used; } catch { return null; }
+}
 
 /** Throws TwelveBudgetError unless the credits may be spent now under `tier`. */
 export async function reserveCredits(cost: number, tier: Tier = "user") {

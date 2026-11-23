@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { CEILING, PLAN_CREDITS_PER_MINUTE, STALE_LIMIT_MS, createGovernor, createReader, creditCost, quoteSlotMs, barSlotMs, stocksTrading } from "../lib/research/twelve-budget.ts";
+import { ALLOCATOR_RETRY_MS, CEILING, PLAN_CREDITS_PER_MINUTE, STALE_LIMIT_MS, createGovernor, createLeaseGovernor, createReader, creditCost, quoteSlotMs, barSlotMs, stocksTrading } from "../lib/research/twelve-budget.ts";
 import { T0, clockAt, memoryStore, simulate } from "./support/twelve-load-sim.mjs";
 
 
@@ -15,7 +15,11 @@ test("credit costs: batched quotes and series cost one credit per symbol; fundam
 });
 
 test("tiers: background yields first, then members' pages; price alerts keep room above both, all inside the plan", () => {
-  assert.ok(CEILING.fast < CEILING.background && CEILING.background < CEILING.user && CEILING.user < CEILING.critical && CEILING.critical <= PLAN_CREDITS_PER_MINUTE);
+  assert.ok(CEILING.fast < CEILING.background && CEILING.background < CEILING.warm && CEILING.warm < CEILING.user && CEILING.user < CEILING.critical && CEILING.critical <= PLAN_CREDITS_PER_MINUTE);
+  // The monitor's allocator uses the same table.
+  const allocator = readFileSync(new URL("../scripts/research/twelve_allocator.py", import.meta.url), "utf8");
+  const table = Object.fromEntries([...(/^CEILING = \{([^}]*)\}/m.exec(allocator)[1]).matchAll(/'(\w+)': (\d+)/g)].map(m => [m[1], Number(m[2])]));
+  assert.deepEqual(table, { ...CEILING });
   assert.ok(CEILING.user + 100 <= CEILING.critical); // a 100-symbol alert pass fits above a full minute of page views
   // The monitor's own ceilings follow the same order (the Python constants are read from source).
   const py = name => Number(new RegExp(`^${name} = (\\d+)`, "m").exec(readFileSync(new URL(`../scripts/research/${name === "TWELVE_MAX_USED" ? "ownership_data" : name === "OWN_PER_MINUTE" ? "value_check" : "price_alerts"}.py`, import.meta.url), "utf8"))[1]);
@@ -147,10 +151,38 @@ test("reader: many symbols go out in chunks, at most maxFetch per request, never
 });
 
 
+test("lease governor: the allocator's answer decides; unreachable, the tiny emergency allowance decides and the allocator is asked again later", async () => {
+  const clock = clockAt(T0);
+  let reachable = false, asked = 0;
+  const fallback = createGovernor({ now: clock.now, readMeter: async () => ({ used: 0, at: clock.now() }), perMinute: 4, burst: 2, maxCost: 2 });
+  const g = createLeaseGovernor({ now: clock.now, fallback, lease: async () => { asked++; return reachable ? false : null; } });
+  assert.equal(await g.acquire(1, "user"), true);   // unreachable: the emergency allowance
+  assert.equal(await g.acquire(12, "user"), false); // never a whole batch in an emergency
+  assert.equal(await g.acquire(1, "user"), true);
+  assert.equal(await g.acquire(1, "user"), false);  // two a time at most
+  assert.equal(asked, 1);                           // not asked again for ten seconds
+  reachable = true; clock.advance(ALLOCATOR_RETRY_MS);
+  assert.equal(await g.acquire(1, "user"), false);  // reachable again: its refusal stands
+  assert.equal(asked, 2);
+});
+
+test("load: 1,000 members over 120 server instances: every credit goes through the monitor's allocator, the minute never passes 600, price alerts always run", { timeout: 240_000 }, async () => {
+  const run = await simulate({ instances: 120, minutes: 3, seed: 5 });
+  assert.equal(run.refused, 0); assert.ok(run.peak <= CEILING.critical, `peak ${run.peak}`);
+  assert.equal(run.alertSkipped, 0); assert.equal(run.errors, 0); assert.equal(run.served, run.lookups);
+  console.log(`120 instances: peak ${run.peak}/min, per minute ${run.minutes.join(",")}, fresh ${(100 * run.fresh / run.lookups).toFixed(1)}%`);
+});
+
+test("load: the monitor cannot be reached: 120 instances on their emergency allowance stay inside the plan and every screen still gets a price", { timeout: 240_000 }, async () => {
+  const run = await simulate({ instances: 120, minutes: 3, seed: 5, mode: "allocator-down" });
+  assert.equal(run.refused, 0); assert.ok(run.peak <= CEILING.critical, `peak ${run.peak}`);
+  assert.equal(run.alertSkipped, 0); assert.equal(run.errors, 0); assert.equal(run.served, run.lookups);
+});
+
 test("load: 1,000 members at once (500 watchlists polled every 15 s, 500 browsing 5 pages a minute) never pass the plan, price alerts always run, every screen gets a price", { timeout: 120_000 }, async () => {
   const run = await simulate();
   assert.equal(run.refused, 0, `refused ${run.refused}`);
-  assert.ok(run.peak <= PLAN_CREDITS_PER_MINUTE, `peak ${run.peak}`);
+  assert.ok(run.peak <= CEILING.critical, `peak ${run.peak}`);
   assert.equal(run.alertSkipped, 0);
   assert.equal(run.errors, 0);
   assert.equal(run.served, run.lookups, "every lookup is answered, fresh or with the last good copy");
@@ -158,10 +190,10 @@ test("load: 1,000 members at once (500 watchlists polled every 15 s, 500 browsin
   console.log(`new design: peak ${run.peak}/min, per minute ${run.minutes.join(",")}, fresh ${(100 * run.fresh / run.lookups).toFixed(1)}%, oldest copy ${(run.maxAgeMs / 60_000).toFixed(0)} min`);
 });
 
-test("load: the owner's example (200 active members, 5 pages a minute each) stays inside the plan even spread over sixteen server instances", { timeout: 120_000 }, async () => {
-  const run = await simulate({ members: 200, instances: 16, minutes: 3, seed: 9 });
+test("load: the owner's example (200 active members, 5 pages a minute each) stays inside the plan even spread over 150 server instances", { timeout: 120_000 }, async () => {
+  const run = await simulate({ members: 200, instances: 150, minutes: 3, seed: 9 });
   console.log(`example: peak ${run.peak}, refused ${run.refused}, minutes ${run.minutes.join(",")}, alerts skipped ${run.alertSkipped}, site ${run.site}`);
-  assert.equal(run.refused, 0); assert.ok(run.peak <= PLAN_CREDITS_PER_MINUTE, `peak ${run.peak}`); assert.equal(run.alertSkipped, 0); assert.equal(run.errors, 0);
+  assert.equal(run.refused, 0); assert.ok(run.peak <= CEILING.critical, `peak ${run.peak}`); assert.equal(run.alertSkipped, 0); assert.equal(run.errors, 0);
 });
 
 test("load: the design before this change passes the plan under the same traffic (the failure the owner saw)", { timeout: 120_000 }, async () => {

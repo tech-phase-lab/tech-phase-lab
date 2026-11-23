@@ -33,6 +33,7 @@ import urllib.request
 from datetime import datetime, timedelta, timezone
 from zoneinfo import ZoneInfo
 
+import twelve_allocator
 import web_push
 
 ET = ZoneInfo('America/New_York')
@@ -120,6 +121,10 @@ def member_alerts(db):
 # ---- Twelve Data ------------------------------------------------------------------
 
 def _get(path, params, env=None, timeout=20):
+    answered = twelve_allocator.intercept(path, params)  # inside the monitor: the allocator's view of the minute
+    if answered is not None:
+        return answered
+    twelve_allocator.spent(path, params)  # counted before it is sent
     env = os.environ if env is None else env
     base = (env.get('TWELVE_DATA_BASE_URL') or 'https://api.twelvedata.com').rstrip('/')
     query = dict(params)

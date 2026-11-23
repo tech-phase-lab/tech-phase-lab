@@ -63,6 +63,7 @@ import dart_watch
 import earnings_announce
 import earnings_history
 import value_check
+import twelve_allocator
 import official_research
 import deep_analysis
 import llm_cost
@@ -4364,6 +4365,23 @@ class Handler(BaseHTTPRequestHandler):
             self.send_json(403, {"ok": False, "error": "read-only"})
             return
         path = urlsplit(self.path).path
+        if path == "/twelve/lease":
+            # The website's instances ask here for each Twelve Data call's credits (twelve_allocator.py). The site's server token only.
+            if not os.environ.get("RESEARCH_API_TOKEN") or not self.authorized():
+                self.send_json(401, {"ok": False})
+                return
+            allocator = twelve_allocator.installed()
+            if allocator is None:
+                self.send_json(503, {"ok": False, "error": "allocator-off"})
+                return
+            try:
+                payload = self.read_json(1024)
+                granted = allocator.grant(payload.get("cost"), payload.get("tier"))
+            except Exception:
+                self.send_json(400, {"ok": False})
+                return
+            self.send_json(200, {"ok": True, "granted": granted})
+            return
         if path == "/internal/resolute/push":
             # Nov 17 (owner): RESOLUTE's sender asks for its ③/④ notice to reach the member's phones (web_push.resolute_push). Its own
             # token only; RESOLUTE has already checked the member's rights and settings in its database. Counts only in the answer.
@@ -4648,6 +4666,9 @@ def main():
     # (owner, Oct 10). RESEARCH_SEMANTIC_NEWS=1 restores the old behavior.
     general_source_news.SEMANTIC_ASSESSMENT_ENABLED = os.environ.get("RESEARCH_SEMANTIC_NEWS", "") == "1"
     app = AutomaticMonitor(db_path, snapshot_path)
+    # The single Twelve Data credit allocator for the website's instances and this monitor's own jobs (twelve_allocator.py).
+    if os.environ.get("TWELVE_DATA_API_KEY", "").strip():
+        twelve_allocator.install()
     streaming = os.environ.get("RESEARCH_STREAM_ENABLED", "true").lower() == "true"
     server = ThreadingHTTPServer(("127.0.0.1", 0) if streaming else (host, port), Handler)
     server.app = app

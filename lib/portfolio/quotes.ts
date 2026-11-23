@@ -1,9 +1,9 @@
 import "server-only";
-import { unstable_cache } from "next/cache";
 import { parseTimeSeries } from "../research/theme-prices.ts";
 import type { Quote } from "./calc.ts";
 import { createBatcher } from "./quote-batcher.ts";
-import { providerLimited, reserveCredits } from "../research/twelve-gateway";
+import { providerLimited, reserveCredits, sharedReader } from "../research/twelve-gateway";
+import type { ReadSpec } from "../research/twelve-budget.ts";
 
 /** Latest closing prices and the USD/JPY rate for the portfolio. Twelve Data key stays in the environment; nothing is invented without it. */
 const BASE = () => process.env.TWELVE_DATA_BASE_URL || "https://api.twelvedata.com";
@@ -33,28 +33,35 @@ const readMany = async (tickers: string[]): Promise<Map<string, Quote>> => {
 // Only tickers that missed the cache reach this; the ones that miss together go out as one request.
 const fetchQuote = createBatcher<Quote>(readMany);
 
-/** Ten-minute cache per ticker, shared by every reader whatever else they hold; a failed fetch is never cached (a symbol the provider
- * does not know is cached as null, as the whole answer used to be). */
-const oneQuote = (ticker: string) => unstable_cache(async (): Promise<Quote | null> => fetchQuote(ticker), ["portfolio-quote-v1", ticker], { revalidate: 600 })();
+/** Ten-minute copy per ticker, shared by every reader and instance whatever else they hold (lib/research/twelve-budget.ts); a symbol the
+ * provider does not know is kept as null. A read the plan's minute has no room for (or that fails) shows the last good close, with its own
+ * date, for up to a week (owner, Nov 23); only a ticker never read before fails the answer. */
+const PORTFOLIO: ReadSpec = { name: "portfolio-quote-v2", slotMs: 600_000, staleMs: 7 * 86_400_000 };
+async function oneQuote(ticker: string) {
+  const got = await sharedReader.read<Quote | null>(PORTFOLIO, ticker, () => fetchQuote(ticker));
+  if (!got) throw new Error("unavailable");
+  return got;
+}
 
-const loadUsdJpy = () => unstable_cache(async (): Promise<number> => {
-  const key = process.env.TWELVE_DATA_API_KEY;
-  if (!key) throw new Error("not-configured");
-  const fx = (await series(["USD/JPY"], key))[0];
-  if (!fx || !(fx.closes[0] > 50 && fx.closes[0] < 400)) throw new Error("fx-unusable");
-  return fx.closes[0];
-}, ["portfolio-usdjpy-v1"], { revalidate: 600 })();
+async function loadUsdJpy(): Promise<number | null> {
+  const got = await sharedReader.read<number>(PORTFOLIO, "USD/JPY", async () => {
+    const key = process.env.TWELVE_DATA_API_KEY;
+    if (!key) throw new Error("not-configured");
+    const fx = (await series(["USD/JPY"], key))[0];
+    if (!fx || !(fx.closes[0] > 50 && fx.closes[0] < 400)) throw new Error("fx-unusable");
+    return fx.closes[0];
+  });
+  return got?.value ?? null; // the yen value is simply not shown
+}
 
-/** Latest closes per ticker plus USD/JPY. One failed read fails the answer, as before; a symbol with no data is simply absent. */
-export async function loadQuotes(tickers: string[]): Promise<{ quotes: Record<string, Quote>; usdJpy: number | null; asOf: string | null }> {
+/** Latest closes per ticker plus USD/JPY; `stale` lists the tickers shown with an earlier close (each quote keeps its own `asOf`). A symbol
+ * with no data is simply absent; the answer fails only when a ticker has never been read and cannot be read now. */
+export async function loadQuotes(tickers: string[]): Promise<{ quotes: Record<string, Quote>; usdJpy: number | null; asOf: string | null; stale: string[] }> {
   if (!process.env.TWELVE_DATA_API_KEY) throw new Error("not-configured");
   const sorted = [...new Set(tickers)].sort();
-  const [found, usdJpy] = await Promise.all([
-    Promise.all(sorted.map(oneQuote)),
-    loadUsdJpy().catch(() => null), // the yen value is simply not shown
-  ]);
-  const quotes: Record<string, Quote> = {};
-  found.forEach((quote, index) => { if (quote) quotes[sorted[index]] = quote; });
+  const [found, usdJpy] = await Promise.all([Promise.all(sorted.map(oneQuote)), loadUsdJpy().catch(() => null)]);
+  const quotes: Record<string, Quote> = {}, stale: string[] = [];
+  found.forEach((got, index) => { if (got.value) { quotes[sorted[index]] = got.value; if (!got.fresh) stale.push(sorted[index]); } });
   const asOf = Object.values(quotes).map(q => q.asOf).sort().at(-1) ?? null;
-  return { quotes, usdJpy, asOf };
+  return { quotes, usdJpy, asOf, stale };
 }

@@ -9,13 +9,17 @@
  * Tiers (the minute's total usage, everyone included, plus the call must stay at or under the tier's ceiling):
  *   critical 600  the monitor's price alerts (a member's notice must not be starved by page views: 480 + its 100 symbols fit, with room for the meter's lag)
  *   user     480  a member's page: quotes, charts, a stock's facts, the comparison's one-credit series
- *   background 450 the monitor's value check and ownership, the comparison's background fills (400) and daily job (460): they yield first
+ *   warm     460  the comparison's daily job (lib/research/comparison-warm.ts)
+ *   background 450 the monitor's value check and ownership, the comparison's background fills (400): they yield first
  *   fast     200  the optional 15-second quote refresh, taken only on a quiet minute
+ * Strict (owner, Nov 23): every website instance asks the Railway monitor for each call's credits (scripts/research/twelve_allocator.py,
+ * POST /twelve/lease); the monitor is the one place that sees every credit, whatever the number of instances. Only when it cannot be
+ * reached does an instance fall back to a tiny emergency allowance under the shared meter (createLeaseGovernor).
  * Every user-facing read goes through a shared cache (one provider read per symbol and time slot for everyone), and when a read is refused
  * the last good copy is shown with its own time instead of an error. */
 
 export const PLAN_CREDITS_PER_MINUTE = 610;
-export const CEILING = { critical: 600, user: 480, background: 450, fast: 200 } as const;
+export const CEILING = { critical: 600, user: 480, warm: 460, background: 450, fast: 200 } as const;
 export type Tier = keyof typeof CEILING;
 /** Each server instance's own cap on what it sends, whatever the meter says. The meter is a few seconds old and other instances spend
  * meanwhile, so an instance (1) adds the rate at which everyone else spent between its last two readings, and (2) takes at most SHARE of
@@ -52,8 +56,8 @@ export type Governor = {
 const minuteOf = (t: number) => Math.floor(t / 60_000);
 
 export function createGovernor({ readMeter, now = Date.now, perMinute = INSTANCE_PER_MINUTE, burst = INSTANCE_BURST,
-  unknownPerMinute = UNKNOWN_METER_PER_MINUTE, meterMaxAgeMs = METER_MAX_AGE_MS }: {
-  readMeter: () => Promise<Meter | null>; now?: () => number; perMinute?: number; burst?: number; unknownPerMinute?: number; meterMaxAgeMs?: number;
+  unknownPerMinute = UNKNOWN_METER_PER_MINUTE, meterMaxAgeMs = METER_MAX_AGE_MS, maxCost = Infinity }: {
+  readMeter: () => Promise<Meter | null>; now?: () => number; perMinute?: number; burst?: number; unknownPerMinute?: number; meterMaxAgeMs?: number; maxCost?: number;
 }): Governor {
   let tokens = burst, unknownTokens = Math.min(burst, unknownPerMinute), refilledAt = now();
   let meter: (Meter & { checkedAt: number }) | null = null;
@@ -102,6 +106,7 @@ export function createGovernor({ readMeter, now = Date.now, perMinute = INSTANCE
   return {
     async acquire(cost, tier) {
       if (cost <= 0) return true;
+      if (cost > maxCost) return false;
       if (now() < blockedUntil && tier !== "critical") return false;
       await ensureMeter();
       refill();
@@ -122,6 +127,55 @@ export function createGovernor({ readMeter, now = Date.now, perMinute = INSTANCE
     limited() { blockedUntil = (minuteOf(now()) + 1) * 60_000 + 1_000; },
     record(cost) { if (cost > 0) spends.push({ at: now(), cost }); },
     estimate,
+  };
+}
+
+/** When the monitor's allocator cannot be reached: an instance sends at most this much a minute, one or two symbols at a time, and only
+ * while the shared meter leaves room. The site shows its last good copies meanwhile. */
+export const EMERGENCY_PER_MINUTE = 4;
+export const EMERGENCY_BURST = 2;
+export const ALLOCATOR_RETRY_MS = 10_000;
+/** lease: asks the central allocator; true / false is its answer, null means it could not be reached (then the emergency fallback
+ * decides, and the allocator is asked again after ALLOCATOR_RETRY_MS). */
+export function createLeaseGovernor({ lease, fallback, now = Date.now }: {
+  lease: (cost: number, tier: Tier) => Promise<boolean | null>; fallback: Governor; now?: () => number;
+}): Governor {
+  let downUntil = 0, blockedUntil = 0;
+  return {
+    async acquire(cost, tier) {
+      if (cost <= 0) return true;
+      if (now() < blockedUntil && tier !== "critical") return false;
+      if (now() >= downUntil) {
+        const answer = await lease(cost, tier).catch(() => null);
+        if (answer !== null) return answer;
+        downUntil = now() + ALLOCATOR_RETRY_MS;
+      }
+      return fallback.acquire(cost, tier);
+    },
+    limited() { blockedUntil = (minuteOf(now()) + 1) * 60_000 + 1_000; fallback.limited(); },
+    record(cost) { fallback.record(cost); },
+    estimate: () => fallback.estimate(),
+  };
+}
+
+/** The allocator's rule, the same as scripts/research/twelve_allocator.py (used by the load simulation): usage = the meter (read at most
+ * every 3 s) + every credit granted or spent since 2 s before that reading (for the monitor's own jobs: since the reading); all or
+ * nothing under the tier's ceiling. */
+export function createAllocatorModel({ readMeter, now }: { readMeter: () => number | null; now: () => number }) {
+  let meter: { used: number | null; at: number } | null = null;
+  let events: { at: number; cost: number }[] = [];
+  const usage = (overlapMs = 2_000) => {
+    const t = now(), start = minuteOf(t) * 60_000;
+    events = events.filter(e => e.at >= start);
+    if (!meter || t - meter.at >= 3_000 || minuteOf(meter.at) !== minuteOf(t)) { meter = { used: readMeter(), at: now() }; if (meter.used !== null) events.push({ at: meter.at, cost: 1 }); }
+    if (meter.used === null) return null;
+    const same = minuteOf(meter.at) === minuteOf(t), since = same ? Math.max(meter.at - overlapMs, start) : start;
+    return (same ? meter.used : 0) + events.reduce((sum, e) => e.at >= since ? sum + e.cost : sum, 0);
+  };
+  return {
+    usage,
+    grant(cost: number, tier: Tier) { const used = usage(); if (used === null || used + cost > CEILING[tier]) return false; events.push({ at: now(), cost }); return true; },
+    record(cost: number) { events.push({ at: now(), cost }); },
   };
 }
 
