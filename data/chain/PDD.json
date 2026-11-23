@@ -1,0 +1,299 @@
+{
+  "root": {
+    "ticker": "PDD",
+    "name": "PDDホールディングス(Temu)",
+    "cik": 1737806,
+    "name_en": "PDD Holdings (Temu)"
+  },
+  "rows": [
+    {
+      "ja": "株主・決済などの供給元",
+      "en": "Shareholders, payments & suppliers",
+      "above": true
+    },
+    {
+      "ja": "出店企業・物流",
+      "en": "Sellers & logistics"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "Shein",
+    "JMIA",
+    "HEPS"
+  ],
+  "companies": [
+    {
+      "id": "Tencent",
+      "ticker": "Tencent",
+      "name": "テンセント",
+      "name_en": "Tencent",
+      "sub": "SNS・ゲーム",
+      "sub_en": "Social media & games",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "主要株主(13.8%)で、WeixinやQQなどで事業の様々な面で協業",
+          "text_en": "A principal shareholder (13.8%) that it works with across its business, including Weixin and QQ",
+          "source": {
+            "label": "PDD Holdings 20-F(2025年度)",
+            "label_en": "PDD Holdings 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1737806/000110465926050727/pdd-20251231x20f.htm",
+            "level": "official",
+            "date": "2026-04-29",
+            "quote": "We collaborate with Tencent, one of our principal shareholders and the owner of Weixin and QQ, with respect to various aspects of our business."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DLO",
+      "ticker": "DLO",
+      "name": "ディーローカル",
+      "name_en": "dLocal",
+      "sub": "新興国決済",
+      "sub_en": "Emerging-market payments",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "dLocalの決済サービスを使う世界の加盟店の一社としてTemuが挙がる",
+          "text_en": "dLocal lists Temu among global merchants using its payment services",
+          "source": {
+            "label": "dLocal 20-F(2024年度)",
+            "label_en": "dLocal 20-F (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1846832/000095017025058197/dlo-20241231.htm",
+            "level": "official",
+            "date": "2025-04-24",
+            "quote": "over 700 global merchants, including brand names such as Shein, Didi, Payoneer, Temu, Google, Facebook, Rappi, Deel, Uber, SpaceX, Worldpay and Spotify"
+          }
+        }
+      ]
+    },
+    {
+      "id": "XYZ",
+      "ticker": "XYZ",
+      "name": "ブロック",
+      "name_en": "Block",
+      "sub": "決済",
+      "sub_en": "Payments",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Cash App Payが使える加盟店の例としてTemuが挙がる",
+          "text_en": "Block lists Temu among merchants accepting Cash App Pay",
+          "source": {
+            "label": "Block 10-K(2024年度)",
+            "label_en": "Block 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1512673/000162828025007376/sq-20241231.htm",
+            "level": "official",
+            "date": "2025-02-24",
+            "quote": "Cash App Pay allows customers to seamlessly pay with a Cash App account at participating merchants like DoorDash, Lyft, Google Play Store, Temu, and many more, including thousands of Square sellers."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BTOC",
+      "ticker": "BTOC",
+      "name": "アームロジ",
+      "name_en": "Armlogi",
+      "sub": "米国倉庫・物流",
+      "sub_en": "US warehousing & logistics",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Armlogiが物流の顧客区分としてTemu向けを拡大",
+          "text_en": "Armlogi expanded its Temu customer segment",
+          "source": {
+            "label": "Armlogi 10-K(2026年6月期)",
+            "label_en": "Armlogi 10-K (FY ended Jun 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1972529/000121390026103636/ea0306339-10k_armlogi.htm",
+            "level": "official",
+            "date": "2026-09-28",
+            "quote": "The Temu and TikTok customer segments were also expanded between the fiscal year ended June 30, 2025 and the fiscal year ended June 30, 2026."
+          }
+        }
+      ]
+    },
+    {
+      "id": "IPW",
+      "ticker": "IPW",
+      "name": "アイパワー",
+      "name_en": "iPower",
+      "sub": "園芸用品のネット販売",
+      "sub_en": "Online hydroponics supplies",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "iPowerが販売チャネルの一つとしてTemuを使う",
+          "text_en": "iPower sells through Temu as one of its channels",
+          "source": {
+            "label": "iPower 10-K(2025年6月期)",
+            "label_en": "iPower 10-K (FY ended Jun 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1830072/000168316825007480/ipower_i10k-063025.htm",
+            "level": "official",
+            "date": "2025-10-09",
+            "quote": "Our sales channels currently include Amazon Vendor, Amazon 3P, Walmart.com, Tiktok, Temu, and other marketplaces as well as our e-commerce websites such as simpledeluxe.com and more."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Shein",
+      "ticker": "Shein",
+      "name": "シーイン",
+      "name_en": "Shein",
+      "sub": "ネット通販",
+      "sub_en": "E-commerce",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "知的財産や不正競争をめぐって互いに提訴し合う競合",
+          "text_en": "A rival with which it is in cross-lawsuits over IP and unfair competition",
+          "source": {
+            "label": "PDD Holdings 20-F(2025年度)",
+            "label_en": "PDD Holdings 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1737806/000110465926050727/pdd-20251231x20f.htm",
+            "level": "official",
+            "date": "2026-04-29",
+            "quote": "In December 2023, to protect Temu's intellectual property and defend Temu against further harm from unfair competitive practices, Temu filed a complaint in the United States District Court for the District of Columbia against SHEIN."
+          }
+        }
+      ]
+    },
+    {
+      "id": "JMIA",
+      "ticker": "JMIA",
+      "name": "ジュミア",
+      "name_en": "Jumia",
+      "sub": "ネット通販(アフリカ)",
+      "sub_en": "E-commerce (Africa)",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Jumiaが20-Fで、ナイジェリアの競合としてTemuを挙げる",
+          "text_en": "Jumia names Temu as a current competitor in Nigeria",
+          "source": {
+            "label": "Jumia 20-F(2025年度)",
+            "label_en": "Jumia 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1756708/000175670826000015/jmia-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Current competitors, such as Amazon and Noon in Egypt, and Temu and Konga in Nigeria, may seek to intensify their investments in those markets and also expand their businesses in new markets."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BYON",
+      "ticker": "BYON",
+      "name": "ビヨンド(Overstock)",
+      "name_en": "Beyond (Overstock)",
+      "sub": "家具のネット通販",
+      "sub_en": "Online home goods",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Beyondが10-Kで、競合するネット通販の一社としてTemuを挙げる",
+          "text_en": "Beyond names Temu among competing online retailers",
+          "source": {
+            "label": "Beyond 10-K(2024年度)",
+            "label_en": "Beyond 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1130713/000113071325000024/byon-20241231.htm",
+            "level": "official",
+            "date": "2025-02-25",
+            "quote": "online retailers with or without discount departments, including Amazon.com, AliExpress (part of the Alibaba Group), eBay, Temu, and Rakuten.com;"
+          }
+        }
+      ]
+    },
+    {
+      "id": "HEPS",
+      "ticker": "HEPS",
+      "name": "ヘプシブラダ",
+      "name_en": "Hepsiburada",
+      "sub": "ネット通販(トルコ)",
+      "sub_en": "E-commerce (Turkey)",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Hepsiburadaが20-Fで、トルコの主な競合として新たにTemuを挙げる",
+          "text_en": "Hepsiburada names Temu among its main Turkish competitors",
+          "source": {
+            "label": "Hepsiburada 20-F(2024年度)",
+            "label_en": "Hepsiburada 20-F (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1850235/000110465925041729/heps-20241231x20f.htm",
+            "level": "official",
+            "date": "2025-04-30",
+            "quote": "Hepsiburada's main e-commerce competitors in Türkiye include Trendyol, Amazon, N11 and more recently, Temu."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TLYS",
+      "ticker": "TLYS",
+      "name": "ティリーズ",
+      "name_en": "Tilly's",
+      "sub": "衣料品小売",
+      "sub_en": "Apparel retail",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Tilly'sが10-Kで、競合するネット小売の一社としてTemuを挙げる",
+          "text_en": "Tilly's names Temu among online retailers it competes with",
+          "source": {
+            "label": "Tilly's 10-K(2024年度)",
+            "label_en": "Tilly's 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1524025/000162828025017352/tlys-20250201.htm",
+            "level": "official",
+            "date": "2025-04-10",
+            "quote": "In addition, we compete with independent specialty shops, department stores, off-price retailers, online marketplaces such as Amazon, online retailers such as Shein, Revolve, Temu, and Fashion Nova"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RCT",
+      "ticker": "RCT",
+      "name": "レッドクラウド",
+      "name_en": "RedCloud",
+      "sub": "B2B取引基盤",
+      "sub_en": "B2B commerce platform",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "RedCloudが20-Fで、大手の間接的な競合としてTemuを挙げる",
+          "text_en": "RedCloud names Temu among large indirect competitors",
+          "source": {
+            "label": "RedCloud 20-F(2024年度)",
+            "label_en": "RedCloud 20-F (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2027360/000164117225011298/form20-f.htm",
+            "level": "official",
+            "date": "2025-05-16",
+            "quote": "Additionally, there are a number of large indirect competitors that specialize in online commerce or derive a substantial portion of their revenues from online commerce, such as, Shein and Temu."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

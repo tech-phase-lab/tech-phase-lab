@@ -1,0 +1,326 @@
+{
+  "root": {
+    "ticker": "MARA",
+    "name": "MARAホールディングス",
+    "cik": 1507605,
+    "name_en": "MARA Holdings"
+  },
+  "rows": [
+    {
+      "ja": "出資・調達先",
+      "en": "Investments & suppliers",
+      "above": true
+    },
+    {
+      "ja": "提携・買収・拠点",
+      "en": "Partners, acquisitions & sites"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "CLSK",
+    "IREN",
+    "CIFR",
+    "BTBT"
+  ],
+  "companies": [
+    {
+      "id": "Auradine",
+      "ticker": "Auradine",
+      "name": "オーラダイン",
+      "name_en": "Auradine",
+      "sub": "マイニング機器",
+      "sub_en": "Mining hardware",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "マイニング機器メーカーAuradineの優先株に出資(2025年末の簿価8,540万ドル)",
+          "text_en": "Holds Auradine preferred stock, carried at $85.4 million at end-2025",
+          "source": {
+            "label": "MARA 10-K(2025年度)",
+            "label_en": "MARA 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1507605/000150760526000007/mara-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "As of December 31, 2025, the total carrying amount of the Company's investment in Auradine, Inc. (\"Auradine\") preferred stock was $ 85.4 million."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MPLX",
+      "ticker": "MPLX",
+      "name": "MPLX",
+      "name_en": "MPLX",
+      "sub": "天然ガス・パイプライン",
+      "sub_en": "Natural gas pipelines",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "安い天然ガスと電力を確保するため、MPLXと意向書を結んだ",
+          "text_en": "Letter of intent with MPLX for lower-cost natural gas and power capacity",
+          "source": {
+            "label": "MARA 10-K(2025年度)",
+            "label_en": "MARA 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1507605/000150760526000007/mara-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "We announced a letter of intent with MPLX LP aimed at expanding our access to lower-cost natural gas and scalable power capacity to support potential power generation and compute infrastructure development.",
+            "note": "意向書の段階です。",
+            "note_en": "At the letter-of-intent stage."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Exaion",
+      "ticker": "Exaion",
+      "name": "エクサイオン",
+      "name_en": "Exaion",
+      "sub": "AIクラウド(仏)",
+      "sub_en": "AI cloud (France)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "仏EDF傘下のHPC・AIクラウド会社の支配持分を2026年2月に取得",
+          "text_en": "Took a controlling stake in the French HPC and AI cloud company, an EDF Pulse Ventures subsidiary, in February 2026",
+          "source": {
+            "label": "MARA 10-K(2025年度)",
+            "label_en": "MARA 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1507605/000150760526000007/mara-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "On February 20, 2026, the Company completed the acquisition of a controlling interest in Exaion, a subsidiary of EDF Pulse Ventures, pursuant to the investment agreement entered into on August 11, 2025, for a $ 174.5 million cash consideration, subject to customary working capital adjustments."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Starwood",
+      "ticker": "Starwood Digital Ventures",
+      "name": "スターウッド・デジタル・ベンチャーズ",
+      "name_en": "Starwood Digital Ventures",
+      "sub": "データセンター開発",
+      "sub_en": "Data center development",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "自社の電力付き用地でAI・HPC施設を共同で開発・運営する戦略契約",
+          "text_en": "Strategic agreement to jointly develop, finance and operate AI and HPC facilities on its powered sites",
+          "source": {
+            "label": "MARA 10-K(2025年度)",
+            "label_en": "MARA 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1507605/000150760526000007/mara-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "Under the Strategic Agreement, MARA and Starwood will jointly develop, finance and operate AI and HPC infrastructure on select power-rich sites within our existing portfolio."
+          }
+        }
+      ]
+    },
+    {
+      "id": "OnePower",
+      "ticker": "One Power",
+      "name": "ワン・パワー",
+      "name_en": "One Power",
+      "sub": "電力・用地",
+      "sub_en": "Power & sites",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "オハイオ州フィンドレーの拠点で150MWを15年間借りる契約",
+          "text_en": "Leases 150 MW for 15 years at the Findlay Megawatt Hub in Ohio",
+          "source": {
+            "label": "One Power S-1(2025年1月)",
+            "label_en": "One Power S-1 (Jan 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2039139/000162828025002278/onepowercompany-sx1a.htm",
+            "level": "official",
+            "date": "2025-01-23",
+            "quote": "A portion of the Findlay Megawatt Hub is currently leased to MARA Holdings, Inc., who has contracted for 150 MW at the site for a term of 15 years."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HUT",
+      "ticker": "HUT",
+      "name": "ハット8",
+      "name_en": "Hut 8",
+      "sub": "マイニング・データセンター",
+      "sub_en": "Mining & data centers",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Hut 8はMARAの拠点の運営を受託していた(前年度にMARAから解約金1,350万ドル)",
+          "text_en": "Hut 8 ran MARA sites under a managed services deal and received a $13.5 million termination fee from MARA",
+          "source": {
+            "label": "Hut 8 10-K(2025年度)",
+            "label_en": "Hut 8 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1964789/000110465926019392/hut-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "the $13.5 million in contract termination fees received from MARA Holdings in the prior year period"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CLSK",
+      "ticker": "CLSK",
+      "name": "クリーンスパーク",
+      "name_en": "CleanSpark",
+      "sub": "ビットコイン採掘",
+      "sub_en": "Bitcoin mining",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "CleanSparkが10-Kで、北米の主な競合としてMARAを挙げる",
+          "text_en": "CleanSpark names MARA among its major North American competitors",
+          "source": {
+            "label": "CleanSpark 10-K(2025年9月期)",
+            "label_en": "CleanSpark 10-K (FY ended Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/827876/000119312525297510/clsk-20250930.htm",
+            "level": "official",
+            "date": "2025-11-25",
+            "quote": "Within North America, our major competitors include: • MARA Holdings, Inc.;"
+          }
+        }
+      ]
+    },
+    {
+      "id": "IREN",
+      "ticker": "IREN",
+      "name": "アイレン",
+      "name_en": "IREN",
+      "sub": "ビットコイン採掘・AIクラウド",
+      "sub_en": "Bitcoin mining & AI cloud",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "IRENが10-Kで、ビットコイン採掘の競合の一社としてMARAを挙げる",
+          "text_en": "IREN names MARA among public bitcoin-mining competitors",
+          "source": {
+            "label": "IREN 10-K(2025年6月期)",
+            "label_en": "IREN 10-K (FY ended Jun 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1878848/000187884825000063/iren-20250630.htm",
+            "level": "official",
+            "date": "2025-08-28",
+            "quote": "Several public companies (traded in the U.S. and internationally) compete with us in Bitcoin Mining, including Bitdeer Technologies Group, Bitfarms Ltd., Cipher Mining Inc., CleanSpark, Inc., Core Scientific Inc., Hut 8 Corp., MARA Holdings, Inc., Riot Platforms, Inc. and TeraWulf Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CIFR",
+      "ticker": "CIFR",
+      "name": "サイファー・マイニング",
+      "name_en": "Cipher Mining",
+      "sub": "ビットコイン採掘",
+      "sub_en": "Bitcoin mining",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Cipherが10-Kで、競合となりうる上場企業としてMARAを挙げる",
+          "text_en": "Cipher Mining names MARA among public companies that may compete with it",
+          "source": {
+            "label": "Cipher Mining 10-K(2024年度)",
+            "label_en": "Cipher Mining 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1819989/000181998925000005/cifr-20241231.htm",
+            "level": "official",
+            "date": "2025-02-25",
+            "quote": "Several public companies (traded in the United States and internationally), such as the following, may be considered to compete with us: • MARA Holdings, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BTBT",
+      "ticker": "BTBT",
+      "name": "ビット・デジタル",
+      "name_en": "Bit Digital",
+      "sub": "マイニング・AI基盤",
+      "sub_en": "Mining & AI infrastructure",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Bit Digitalが10-Kで、ビットコイン採掘の主な競合としてMARAを挙げる",
+          "text_en": "Bit Digital names MARA among its main bitcoin-mining competitors",
+          "source": {
+            "label": "Bit Digital 10-K(2025年度)",
+            "label_en": "Bit Digital 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1710350/000121390026035544/ea0279621-10k_bitdigit.htm",
+            "level": "official",
+            "date": "2026-03-27",
+            "quote": "In Bitcoin mining our main competitors are MARA Holdings, Riot Platform and CleanSpark."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HIVE",
+      "ticker": "HIVE",
+      "name": "HIVEデジタル",
+      "name_en": "HIVE Digital Technologies",
+      "sub": "マイニング・AI基盤",
+      "sub_en": "Mining & AI infrastructure",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "HIVEが10-Kで、競合する上場企業の一社としてMARAを挙げる",
+          "text_en": "HIVE names MARA among public companies it competes with",
+          "source": {
+            "label": "HIVE Digital 10-K(2026年3月期)",
+            "label_en": "HIVE Digital 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1720424/000106299326002973/form10k.htm",
+            "level": "official",
+            "date": "2026-06-02",
+            "quote": "We compete with multiple public companies, including Bitdeer Technologies Group, Keel Infrastructure Corp., Cipher Digital Inc., CleanSpark, Inc., Core Scientific Inc., Hut 8 Corp., MARA Holdings, Inc., Riot Platforms, Inc. and TeraWulf Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "APLD",
+      "ticker": "APLD",
+      "name": "アプライド・デジタル",
+      "name_en": "Applied Digital",
+      "sub": "AIデータセンター",
+      "sub_en": "AI data centers",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Applied Digitalが10-Kで、HPC基盤に進出した競合の一社としてMARAを挙げる",
+          "text_en": "Applied Digital names MARA among former blockchain hosts now competing in HPC infrastructure",
+          "source": {
+            "label": "Applied Digital 10-K(2026年5月期)",
+            "label_en": "Applied Digital 10-K (FY ended May 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1144879/000114487926000048/apld-20260531.htm",
+            "level": "official",
+            "date": "2026-07-29",
+            "quote": "other power-advantaged developers, including companies that have expanded from blockchain hosting into HPC infrastructure, such as IREN Limited, Cipher Digital Inc., TeraWulf Inc., Hut 8 Corp., Riot Platforms, Inc., CleanSpark, Inc., HIVE Digital Technologies Ltd., Core Scientific, Inc., Bitdeer Technologies Group, Galaxy Digital Inc., Fermi Inc., Keel Infrastructure Corp, and MARA Holdings, Inc."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,247 @@
+{
+  "root": {
+    "ticker": "D",
+    "name": "ドミニオン・エナジー",
+    "cik": 715957,
+    "name_en": "Dominion Energy"
+  },
+  "rows": [
+    {
+      "ja": "供給元(上流)",
+      "en": "Suppliers (upstream)",
+      "above": true
+    },
+    {
+      "ja": "共同事業・提携",
+      "en": "Joint projects & partners"
+    },
+    {
+      "ja": "事業の売却先",
+      "en": "Buyers of its businesses"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "WMB",
+      "ticker": "WMB",
+      "name": "ウィリアムズ",
+      "name_en": "Williams",
+      "sub": "ガス・パイプライン",
+      "sub_en": "Gas pipelines",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Williams傘下のTranscoパイプラインの最大の顧客(2024年に売上の約7%)",
+          "text_en": "The largest customer of Williams' Transco pipeline, about 7% of its 2024 revenue",
+          "source": {
+            "label": "Williams 10-K(2024年度)",
+            "label_en": "Williams 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/107263/000010726325000031/wmb-20241231.htm",
+            "level": "official",
+            "date": "2025-02-25",
+            "quote": "For the year ended December 31, 2024, Transco's largest customer was Dominion Energy, Inc., which accounted for approximately 7 percent of its operating revenue"
+          }
+        }
+      ]
+    },
+    {
+      "id": "INR",
+      "ticker": "INR",
+      "name": "インフィニティ・ナチュラル・リソーシズ",
+      "name_en": "Infinity Natural Resources",
+      "sub": "天然ガス開発",
+      "sub_en": "Natural gas E&P",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ドミニオンの子会社とユーティカ層の探鉱・開発のファームアウト契約",
+          "text_en": "Exploration and farm-out agreements with a Dominion subsidiary in the Utica shale",
+          "source": {
+            "label": "Infinity Natural Resources 10-K(2025年度)",
+            "label_en": "Infinity Natural Resources 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2029118/000202911826000014/inr-20251231.htm",
+            "level": "official",
+            "date": "2026-03-10",
+            "quote": "On March 2, 2018, INR Holdings entered into an Exploration and Development Agreement and Farm Out Agreement (collectively, the \"South Bend Utica Development Agreements\") with Dominion Energy Transmission, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Stonepeak",
+      "ticker": "Stonepeak",
+      "name": "ストーンピーク",
+      "name_en": "Stonepeak",
+      "sub": "インフラ投資",
+      "sub_en": "Infrastructure investor",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "米国最大級の洋上風力(CVOW)の持分50%を2024年10月に売却した共同出資者",
+          "text_en": "Bought a 50% stake in the CVOW offshore wind project in October 2024 and co-funds construction",
+          "source": {
+            "label": "Dominion Energy 10-K(2025年度)",
+            "label_en": "Dominion Energy 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/715957/000119312526063120/d-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "In October 2024, Virginia Power completed the sale of a 50% noncontrolling interest in the CVOW Commercial Project to Stonepeak through the formation of OSWP."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SanteeCooper",
+      "ticker": "Santee Cooper",
+      "name": "サンティー・クーパー",
+      "name_en": "Santee Cooper",
+      "sub": "電力(州営)",
+      "sub_en": "Power (state-owned)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "サマー原発を共同保有し、約2.2GWのガス火力の共同建設も申請",
+          "text_en": "Co-owns the Summer nuclear plant and applied to jointly build a 2.2 GW gas plant",
+          "source": {
+            "label": "Dominion Energy 10-K(2025年度)",
+            "label_en": "Dominion Energy 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/715957/000119312526063120/d-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "In December 2025, DESC, along with Santee Cooper, requested approval for the joint construction and operation of a combined cycle electric generating plant and associated facilities with a net capacity of approximately 2.2 GW."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AEP",
+      "ticker": "AEP",
+      "name": "アメリカン・エレクトリック・パワー",
+      "name_en": "American Electric Power",
+      "sub": "電力",
+      "sub_en": "Utility",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "AEP系・FirstEnergyと送電会社Valley Linkを共同で設立",
+          "text_en": "Formed the Valley Link transmission venture with AEP's Transource and FirstEnergy",
+          "source": {
+            "label": "AEP 10-K(2025年度)",
+            "label_en": "AEP 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/4904/000000490426000013/aep-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "In 2024, Transource Energy and affiliates of Dominion Energy and FirstEnergy formed Valley Link Transmission, LLC to participate in PJM's 2024 Regional Transmission Expansion Plan competitive process."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FE",
+      "ticker": "FE",
+      "name": "ファーストエナジー",
+      "name_en": "FirstEnergy",
+      "sub": "電力",
+      "sub_en": "Utility",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "AEP系・FirstEnergyと送電会社Valley Linkを共同で設立",
+          "text_en": "Formed the Valley Link transmission venture with AEP's Transource and FirstEnergy",
+          "source": {
+            "label": "AEP 10-K(2025年度)",
+            "label_en": "AEP 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/4904/000000490426000013/aep-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "In 2024, Transource Energy and affiliates of Dominion Energy and FirstEnergy formed Valley Link Transmission, LLC to participate in PJM's 2024 Regional Transmission Expansion Plan competitive process."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DUK",
+      "ticker": "DUK",
+      "name": "デューク・エナジー",
+      "name_en": "Duke Energy",
+      "sub": "電力",
+      "sub_en": "Utility",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "共同で進めたアトランティック・コースト・パイプライン計画を2020年に中止",
+          "text_en": "Jointly cancelled the Atlantic Coast Pipeline project in 2020",
+          "source": {
+            "label": "Dominion Energy 10-K(2025年度)",
+            "label_en": "Dominion Energy 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/715957/000119312526063120/d-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "In July 2020, as a result of the continued permitting delays, growing legal uncertainties and the need to incur significant capital expenditures to maintain project timing before such uncertainties could be resolved, Dominion Energy and Duke Energy announced the cancellation of the Atlantic Coast Pipeline Project."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ENB",
+      "ticker": "ENB",
+      "name": "エンブリッジ",
+      "name_en": "Enbridge",
+      "sub": "パイプライン・ガス配給",
+      "sub_en": "Pipelines & gas utilities",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "オハイオ州などのガス配給事業3社を2024年にEnbridgeへ売却(East Ohioは43億ドル)",
+          "text_en": "Sold three gas utilities to Enbridge in 2024, East Ohio for $4.3 billion",
+          "source": {
+            "label": "Dominion Energy 10-K(2025年度)",
+            "label_en": "Dominion Energy 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/715957/000119312526063120/d-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "In March 2024, Dominion Energy completed the East Ohio Transaction with Enbridge for $4.3 billion in cash consideration and the assumption by Enbridge of approximately $2.3 billion of related long-term debt."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BRK.B",
+      "ticker": "BRK.B",
+      "name": "バークシャー・ハザウェイ・エナジー",
+      "name_en": "Berkshire Hathaway Energy",
+      "sub": "エネルギー",
+      "sub_en": "Energy",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "LNG基地コーブポイントの持分50%を2023年にBerkshire Hathaway Energyへ売却",
+          "text_en": "Sold its 50% stake in the Cove Point LNG terminal to Berkshire Hathaway Energy in 2023",
+          "source": {
+            "label": "Berkshire Hathaway Energy 10-K(2024年度)",
+            "label_en": "Berkshire Hathaway Energy 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1081316/000108131625000004/bhe-20241231.htm",
+            "level": "official",
+            "date": "2025-02-24",
+            "quote": "On September 1, 2023, BHE and Eastern MLP Holding Company II, LLC (\"the Buyer\"), an indirect wholly owned subsidiary of BHE, completed the acquisition of DECP Holdings, Inc.'s (the \"Seller\"), an indirect wholly owned subsidiary of Dominion Energy, Inc., 50 % limited partner interests in Cove Point LNG, LP (\"Cove Point\") (\"The Transaction\")."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
