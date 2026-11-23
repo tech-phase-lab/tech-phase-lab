@@ -1,0 +1,319 @@
+{
+  "root": {
+    "ticker": "BX",
+    "name": "ブラックストーン",
+    "cik": 1393818,
+    "name_en": "Blackstone"
+  },
+  "rows": [
+    {
+      "ja": "運用を受託する先・提携",
+      "en": "Managed vehicles & partners",
+      "above": true
+    },
+    {
+      "ja": "ライフサイエンス資金の提供先",
+      "en": "Life sciences funding"
+    },
+    {
+      "ja": "融資・出資先",
+      "en": "Loans & equity stakes"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "BXMT",
+      "ticker": "BXMT",
+      "name": "ブラックストーン・モーゲージ・トラスト",
+      "name_en": "Blackstone Mortgage Trust",
+      "sub": "不動産融資REIT",
+      "sub_en": "Mortgage REIT",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Blackstoneの関連会社が運用する不動産融資REIT",
+          "text_en": "Commercial mortgage REIT managed by a Blackstone affiliate",
+          "source": {
+            "label": "Blackstone Mortgage Trust 10-K(2024年度)",
+            "label_en": "Blackstone Mortgage Trust 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1061630/000106163025000024/bxmt-20241231.htm",
+            "level": "official",
+            "date": "2025-02-12",
+            "quote": "We have and in the future likely will compete with or enter into transactions with existing and future private and public investment vehicles established and/or managed by Blackstone or its affiliates"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CRBG",
+      "ticker": "CRBG",
+      "name": "コアブリッジ・ファイナンシャル",
+      "name_en": "Corebridge Financial",
+      "sub": "生命保険・年金",
+      "sub_en": "Life & retirement",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "少数株主で、資産運用の長期パートナーシップを結ぶ",
+          "text_en": "Minority shareholder with a long-term asset management partnership",
+          "source": {
+            "label": "Blackstone Private Equity Strategies Fund 10-K(2025年度)",
+            "label_en": "Blackstone Private Equity Strategies Fund 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1930054/000119312526106084/d71061d10k.htm",
+            "level": "official",
+            "date": "2026-03-13",
+            "quote": "In addition, Blackstone owns a minority equity interest in the insurance companies formerly comprising American International Group Inc.'s life and retirement business, now known as Corebridge"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AIG",
+      "ticker": "AIG",
+      "name": "AIG",
+      "name_en": "American International Group",
+      "sub": "保険",
+      "sub_en": "Insurance",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "AIG・Amwinsと3社でロイズのシンジケート2479を設立",
+          "text_en": "Formed Lloyd's Syndicate 2479 with AIG and Amwins",
+          "source": {
+            "label": "AIG 10-K(2025年度)",
+            "label_en": "AIG 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/5272/000000527226000023/aig-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Announced a strategic collaboration with Amwins Group, Inc. and Blackstone Inc. to form Lloyd's Syndicate 2479, providing capacity for portfolio solutions."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CQP",
+      "ticker": "CQP",
+      "name": "シェニエール・エナジー・パートナーズ",
+      "name_en": "Cheniere Energy Partners",
+      "sub": "LNG",
+      "sub_en": "LNG",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "CQPの持分をBrookfieldと共に保有し、取締役を指名",
+          "text_en": "Holds part of CQP alongside Brookfield and appoints directors",
+          "source": {
+            "label": "Cheniere 10-K(2025年度)",
+            "label_en": "Cheniere 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/3570/000000357026000005/lng-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "The remaining 49.4 % non-controlling limited partner interest in CQP is held by affiliates of Blackstone Inc. and Brookfield Asset Management, Inc. as well as the public."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MDT",
+      "ticker": "MDT",
+      "name": "メドトロニック(ミニメド)",
+      "name_en": "Medtronic (MiniMed)",
+      "sub": "医療機器",
+      "sub_en": "Medical devices",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "糖尿病製品の開発費をBlackstoneが拠出する共同開発契約",
+          "text_en": "Co-development agreements under which Blackstone funds diabetes product development",
+          "source": {
+            "label": "MiniMed Group 10-K(2026年4月期)",
+            "label_en": "MiniMed Group 10-K (FY ended Apr 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2062583/000162828026045915/mdt-20260424.htm",
+            "level": "official",
+            "date": "2026-06-29",
+            "quote": "Blackstone Co-Development Agreements Medtronic is party to certain arrangements with affiliates of Blackstone Life Sciences Advisors L.L.C."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ALNY",
+      "ticker": "ALNY",
+      "name": "アルナイラム",
+      "name_en": "Alnylam",
+      "sub": "RNA医薬",
+      "sub_en": "RNAi therapeutics",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大20億ドルの資金提供(Leqvioのロイヤルティ50%を取得)",
+          "text_en": "Up to $2 billion of financing, including buying 50% of Leqvio royalties",
+          "source": {
+            "label": "Alnylam 10-K(2024年度)",
+            "label_en": "Alnylam 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1178670/000117867025000026/alny-20241231.htm",
+            "level": "official",
+            "date": "2025-02-13",
+            "quote": "In connection with the collaboration, Blackstone agreed to provide us up to $2.00 billion in financing"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AUTL",
+      "ticker": "AUTL",
+      "name": "オートラス",
+      "name_en": "Autolus Therapeutics",
+      "sub": "細胞治療",
+      "sub_en": "Cell therapy",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "がん細胞治療薬の開発・販売に1.5億ドルを拠出(全額支払い済み)",
+          "text_en": "Funded $150 million for its CAR-T therapy (fully paid)",
+          "source": {
+            "label": "Autolus 10-K(2025年度)",
+            "label_en": "Autolus 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1730463/000173046326000038/autl-20251231.htm",
+            "level": "official",
+            "date": "2026-03-27",
+            "quote": "As of December 31, 2024, Blackstone has paid us the full $150 million under the terms of the Blackstone Collaboration Agreement"
+          }
+        }
+      ]
+    },
+    {
+      "id": "STRO",
+      "ticker": "STRO",
+      "name": "ストロ・バイオファーマ",
+      "name_en": "Sutro Biopharma",
+      "sub": "バイオ",
+      "sub_en": "Biotech",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Vaxcyteのワクチンに関するロイヤルティの一部を買い取った(2023年6月)",
+          "text_en": "Bought part of its royalty on Vaxcyte vaccines (June 2023)",
+          "source": {
+            "label": "Sutro Biopharma 10-K(2024年度)",
+            "label_en": "Sutro Biopharma 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1382101/000095017025038884/stro-20241231.htm",
+            "level": "official",
+            "date": "2025-03-13",
+            "quote": "In June 2023, we entered into a purchase and sale agreement with Blackstone, or the Blackstone Agreement, to sell to Blackstone a revenue interest in our 4% royalty on potential future sales of Vaxcyte's products"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GRTX",
+      "ticker": "GRTX",
+      "name": "ガレラ・セラピューティクス",
+      "name_en": "Galera Therapeutics",
+      "sub": "バイオ",
+      "sub_en": "Biotech",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "臨床試験の節目に応じて最大8,000万ドルを払うロイヤルティ契約",
+          "text_en": "Royalty agreement paying up to $80 million on clinical milestones",
+          "source": {
+            "label": "Galera Therapeutics 10-K(2024年度)",
+            "label_en": "Galera Therapeutics 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1563577/000095017025047798/grtx-20241231.htm",
+            "level": "official",
+            "date": "2025-03-31",
+            "quote": "Pursuant to the Royalty Agreement, Blackstone agreed to pay us, in the aggregate, up to $80.0 million (the Royalty Purchase Price), in four tranches of $20.0 million each upon the achievement of specified clinical milestones in our ROMAN trial."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AXSM",
+      "ticker": "AXSM",
+      "name": "アクサム・セラピューティクス",
+      "name_en": "Axsome Therapeutics",
+      "sub": "神経疾患の医薬品",
+      "sub_en": "CNS pharma",
+      "row": 2,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Blackstoneのクレジット部門などと融資契約(2025年5月)",
+          "text_en": "Term loan agreement with Blackstone credit and life sciences units (May 2025)",
+          "source": {
+            "label": "Axsome 10-K(2025年度)",
+            "label_en": "Axsome 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1579428/000119312526064267/axsm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "On May 8, 2025 (the \"Closing Date\"), we entered into a loan agreement (the \"Blackstone Loan Agreement\") with Blackstone Alternative Credit Advisors LP and Blackstone Life Sciences Advisors L.L.C."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PSFE",
+      "ticker": "PSFE",
+      "name": "ペイセーフ",
+      "name_en": "Paysafe",
+      "sub": "決済",
+      "sub_en": "Payments",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2017年にCVCと共同でPaysafeを約40億ドルで買収した投資家",
+          "text_en": "Bought Paysafe with CVC in 2017 for about $4 billion",
+          "source": {
+            "label": "Paysafe 20-F(2024年度)",
+            "label_en": "Paysafe 20-F (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1833835/000095017025032340/psfe-20241231.htm",
+            "level": "official",
+            "date": "2025-03-04",
+            "quote": "In December 2017, a consortium led by CVC Capital Partners and Blackstone agreed to acquire Paysafe for approximately a $4 billion U.S. dollar equity value"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BMBL",
+      "ticker": "BMBL",
+      "name": "バンブル",
+      "name_en": "Bumble",
+      "sub": "マッチングアプリ",
+      "sub_en": "Dating apps",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Blackstoneのファンドが過半を取得して設立された経緯がある",
+          "text_en": "Formed when Blackstone funds bought a majority stake",
+          "source": {
+            "label": "Bumble 10-K(2024年度)",
+            "label_en": "Bumble 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1830043/000095017025030151/bmbl-20241231.htm",
+            "level": "official",
+            "date": "2025-02-28",
+            "quote": "was formed primarily as a vehicle to finance the acquisition (the \"Sponsor Acquisition\") of a majority stake in Worldwide Vision Limited by a group of investment funds managed by Blackstone Inc."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

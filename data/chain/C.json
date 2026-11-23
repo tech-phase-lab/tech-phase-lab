@@ -1,0 +1,219 @@
+{
+  "root": {
+    "ticker": "C",
+    "name": "シティグループ",
+    "cik": 831001,
+    "name_en": "Citigroup"
+  },
+  "rows": [
+    {
+      "ja": "提携・カード",
+      "en": "Partnerships & co-brand cards",
+      "above": true
+    },
+    {
+      "ja": "融資・引受の顧客(相手の資料に記載)",
+      "en": "Lending & underwriting clients (named in their filings)"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "AAL",
+      "ticker": "AAL",
+      "name": "アメリカン航空",
+      "name_en": "American Airlines",
+      "sub": "航空",
+      "sub_en": "Airline",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2026年からAAdvantage提携カードの米国での独占発行会社",
+          "text_en": "Exclusive US issuer of the AAdvantage co-branded card from 2026",
+          "source": {
+            "label": "American Airlines 10-K(2025年度)",
+            "label_en": "American Airlines 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/6201/000000620126000014/aal-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Starting in 2026, Citibank N.A. (Citi) became the exclusive issuer of the AAdvantage co-branded credit card portfolio in the U.S."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BCH",
+      "ticker": "BCH",
+      "name": "バンコ・デ・チリ",
+      "name_en": "Banco de Chile",
+      "sub": "銀行(チリ)",
+      "sub_en": "Bank (Chile)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "チリのシティバンクとの合併を機に戦略提携(商標ライセンスなどの契約)",
+          "text_en": "Strategic partnership with Citigroup since merging with Citibank Chile, with trademark and other agreements",
+          "source": {
+            "label": "Banco de Chile 20-F(2025年度)",
+            "label_en": "Banco de Chile 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1161125/000121390026050243/ea0283244-20f_bancode.htm",
+            "level": "official",
+            "date": "2026-04-30",
+            "quote": "In 2008, we enhanced our value offerings by entering into a strategic partnership with Citigroup Inc., as a result of our merger with Citibank Chile."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SNX",
+      "ticker": "SNX",
+      "name": "TDシネックス",
+      "name_en": "TD SYNNEX",
+      "sub": "IT流通",
+      "sub_en": "IT distribution",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "シティバンクが無担保の融資枠契約の代理人",
+          "text_en": "Citibank is agent on its senior unsecured revolving credit agreement",
+          "source": {
+            "label": "TD SYNNEX 10-K(2025年11月期)",
+            "label_en": "TD SYNNEX 10-K (FY ended Nov 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1177394/000162828026003598/snx-20251130.htm",
+            "level": "official",
+            "date": "2026-01-27",
+            "quote": "The Company is party to an amended and restated credit agreement, dated as of April 16, 2024 (as amended, the \"TD SYNNEX Credit Agreement\") with the lenders party thereto and Citibank, N.A., as agent"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SAIC",
+      "ticker": "SAIC",
+      "name": "サイエンス・アプリケーションズ(SAIC)",
+      "name_en": "Science Applications International",
+      "sub": "政府ITサービス",
+      "sub_en": "Government IT services",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "シティバンクが融資契約の事務代理人・担保代理人",
+          "text_en": "Citibank is administrative and collateral agent on its credit agreement",
+          "source": {
+            "label": "SAIC 10-K(2026年1月期)",
+            "label_en": "SAIC 10-K (FY ended Jan 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1571123/000157112326000029/saic-20260130.htm",
+            "level": "official",
+            "date": "2026-03-16",
+            "quote": "Second Amendment to the Third Amended and Restated Credit Agreement, dated March 13, 2020, by and among Science Applications International Corporation, Citibank, N.A., as administrative agent and collateral agent"
+          }
+        }
+      ]
+    },
+    {
+      "id": "DAN",
+      "ticker": "DAN",
+      "name": "ダナ",
+      "name_en": "Dana",
+      "sub": "自動車部品",
+      "sub_en": "Auto parts",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "シティバンクが融資枠契約の事務代理人",
+          "text_en": "Citibank is administrative agent on its revolving credit agreement",
+          "source": {
+            "label": "Dana 10-K(2025年度)",
+            "label_en": "Dana 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/26780/000143774926006076/dan20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Revolving Credit and Guaranty Agreement, dated as of June 9, 2016, among Dana Incorporated, as borrower, the guarantors party thereto, Citibank, N.A., as administrative agent and collateral agent"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MGNI",
+      "ticker": "MGNI",
+      "name": "マグナイト",
+      "name_en": "Magnite",
+      "sub": "広告技術",
+      "sub_en": "Ad tech",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "シティバンクが融資枠の事務代理人(定期融資はモルガン・スタンレー)",
+          "text_en": "Citibank is revolving facility agent (term loan agent is Morgan Stanley)",
+          "source": {
+            "label": "Magnite 10-K(2025年度)",
+            "label_en": "Magnite 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1595974/000159597426000007/mgni-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "entered into a new credit agreement with Morgan Stanley Senior Funding, Inc., as term facility administrative agent, Citibank, N.A., as revolving facility administrative agent and collateral agent"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CVNA",
+      "ticker": "CVNA",
+      "name": "カーバナ",
+      "name_en": "Carvana",
+      "sub": "中古車ネット販売",
+      "sub_en": "Online used cars",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "株式の随時売出し(ATM)の販売代理人",
+          "text_en": "Sales agent for its at-the-market equity program",
+          "source": {
+            "label": "Carvana 10-K(2024年度)",
+            "label_en": "Carvana 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1690820/000169082025000074/cvna-20241231.htm",
+            "level": "official",
+            "date": "2025-02-19",
+            "quote": "At-the-Market Offering On July 19, 2023, the Company entered into a distribution agreement with Citigroup Global Markets Inc. and Moelis & Company LLC to establish an ATM Program"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RXRX",
+      "ticker": "RXRX",
+      "name": "リカージョン",
+      "name_en": "Recursion Pharmaceuticals",
+      "sub": "AI創薬",
+      "sub_en": "AI drug discovery",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "株式売出しの販売契約をシティと締結(2025年2月)",
+          "text_en": "Signed a share sales agreement with Citi in February 2025",
+          "source": {
+            "label": "Recursion 10-K(2024年度)",
+            "label_en": "Recursion 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1601830/000160183025000035/rxrx-20241231.htm",
+            "level": "official",
+            "date": "2025-02-28",
+            "quote": "Also, in February 2025, we entered into a Sales Agreement (the \"Citi Sales Agreement\") with Citigroup Capital Markets Inc."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

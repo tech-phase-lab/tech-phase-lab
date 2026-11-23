@@ -1,0 +1,274 @@
+{
+  "root": {
+    "ticker": "ELV",
+    "name": "エレバンス・ヘルス",
+    "cik": 1156039,
+    "name_en": "Elevance Health"
+  },
+  "rows": [
+    {
+      "ja": "サービス・検査の供給元(上流)",
+      "en": "Service & test suppliers (upstream)",
+      "above": true
+    },
+    {
+      "ja": "買収・合弁・取引",
+      "en": "Acquisitions, JVs & deals"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "MOH",
+    "CLOV"
+  ],
+  "companies": [
+    {
+      "id": "SERA",
+      "ticker": "SERA",
+      "name": "セラ・プログノスティクス",
+      "name_en": "Sera Prognostics",
+      "sub": "妊娠検査",
+      "sub_en": "Pregnancy diagnostics",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "早産リスク検査を大量に購入する複数年契約",
+          "text_en": "Multi-year contract to buy a substantial number of its preterm birth tests",
+          "source": {
+            "label": "Sera Prognostics 10-K(2024年度)",
+            "label_en": "Sera Prognostics 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1534969/000095017025042017/sera-20241231.htm",
+            "level": "official",
+            "date": "2025-03-19",
+            "quote": "we have a multi-year contract with Elevance Health, one of the largest U.S. health benefits companies, under which Elevance Health agreed to purchase a substantial number of PreTRM tests"
+          }
+        }
+      ]
+    },
+    {
+      "id": "HNGE",
+      "ticker": "HNGE",
+      "name": "ヒンジ・ヘルス",
+      "name_en": "Hinge Health",
+      "sub": "デジタル理学療法",
+      "sub_en": "Digital physical therapy",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Hingeの売上の大きな割合を占める契約経路の一つ",
+          "text_en": "One of the client channels behind a large share of Hinge Health's revenue",
+          "source": {
+            "label": "Hinge Health 10-K(2025年度)",
+            "label_en": "Hinge Health 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1673743/000162828026013808/hnge-20251231.htm",
+            "level": "official",
+            "date": "2026-03-03",
+            "quote": "client contracts through (i) Health Care Service Corporation (\"HCSC\") accounted for 17.5% and 17.1% of our revenue, respectively, (ii) Elevance Health, Inc., formerly known as Anthem, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GOCO",
+      "ticker": "GOCO",
+      "name": "ゴーヘルス",
+      "name_en": "GoHealth",
+      "sub": "保険販売プラットフォーム",
+      "sub_en": "Insurance marketplace",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "GoHealthの主な医療保険のパートナーの一社",
+          "text_en": "One of GoHealth's primary health plan partners",
+          "source": {
+            "label": "GoHealth 10-K(2025年度)",
+            "label_en": "GoHealth 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1808220/000162828026022454/goco-20251231.htm",
+            "level": "official",
+            "date": "2026-03-31",
+            "quote": "For the twelve months ended December 31, 2025, 2024, and 2023, the primary health plan partners that we served were United, Humana, Elevance, Aetna and Centene."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CareBridge",
+      "ticker": "CareBridge",
+      "name": "ケアブリッジ",
+      "name_en": "CareBridge",
+      "sub": "在宅ケア管理",
+      "sub_en": "Home-based care management",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "在宅・地域ケアを管理するCareBridgeを2024年12月に買収",
+          "text_en": "Acquired CareBridge, which manages home and community-based care, in December 2024",
+          "source": {
+            "label": "Elevance Health 10-K(2025年度)",
+            "label_en": "Elevance Health 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1156039/000115603926000013/elv-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "On December 10, 2024, we completed our acquisition of RSV QOZB LTSS, Inc. and certain affiliated entities (d/b/a CareBridge), a value-based healthcare company that manages home and community-based services"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Centers",
+      "ticker": "Centers Plan for Healthy Living",
+      "name": "センターズ・プラン",
+      "name_en": "Centers Plan for Healthy Living",
+      "sub": "医療保険(NY)",
+      "sub_en": "Health plan (New York)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2024年12月に買収",
+          "text_en": "Acquired in December 2024",
+          "source": {
+            "label": "Elevance Health 10-K(2025年度)",
+            "label_en": "Elevance Health 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1156039/000115603926000013/elv-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "On December 31, 2024, we completed our acquisition of Centers Plan for Healthy Living LLC and Centers for Specialty Care Group IPA, LLC (\"Centers\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "KR",
+      "ticker": "KR",
+      "name": "クローガー",
+      "name_en": "Kroger",
+      "sub": "スーパー",
+      "sub_en": "Grocery",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Krogerの専門薬局事業を4.64億ドルで買収(2024年10月)",
+          "text_en": "Bought Kroger's specialty pharmacy business for $464 million (October 2024)",
+          "source": {
+            "label": "Kroger 10-K(2024年度)",
+            "label_en": "Kroger 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/56873/000155837025004267/kr-20250201x10k.htm",
+            "level": "official",
+            "date": "2025-04-01",
+            "quote": "On October 4, 2024, we completed the sale of our Kroger Specialty Pharmacy business to Elevance Health for $464 million."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMWL",
+      "ticker": "AMWL",
+      "name": "アメリカン・ウェル",
+      "name_en": "American Well",
+      "sub": "遠隔医療",
+      "sub_en": "Telehealth",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2012年に関連会社と合弁を設立",
+          "text_en": "Formed a joint venture with an Elevance affiliate in 2012",
+          "source": {
+            "label": "American Well 10-K(2025年度)",
+            "label_en": "American Well 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1393584/000119312526048776/amwl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "In 2012, we entered into a joint venture with an affiliate of Elevance Health, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CI",
+      "ticker": "CI",
+      "name": "シグナ(エクスプレス・スクリプツ)",
+      "name_en": "Cigna (Express Scripts)",
+      "sub": "医療保険・PBM",
+      "sub_en": "Health insurance & PBM",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "旧PBM委託先。価格見直しをめぐり訴訟",
+          "text_en": "Former PBM provider; Elevance sued Express Scripts over pricing reviews",
+          "source": {
+            "label": "Cigna 10-K(2024年度)",
+            "label_en": "Cigna 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1739940/000173994025000009/ci-20241231.htm",
+            "level": "official",
+            "date": "2025-02-27",
+            "quote": "(\"Elevance\") filed a lawsuit in the United States District Court for the Southern District of New York alleging various breach of contract claims against Express Scripts"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MOH",
+      "ticker": "MOH",
+      "name": "モリーナ・ヘルスケア",
+      "name_en": "Molina Healthcare",
+      "sub": "メディケイド保険",
+      "sub_en": "Medicaid health plans",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Molinaが10-Kで、メディケイドの主な競合の一社として挙げる",
+          "text_en": "Molina names Elevance among primary Medicaid competitors",
+          "source": {
+            "label": "Molina Healthcare 10-K(2024年度)",
+            "label_en": "Molina Healthcare 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1179929/000117992925000023/moh-20241231.htm",
+            "level": "official",
+            "date": "2025-02-11",
+            "quote": "Our primary competitors in the Medicaid managed care industry include Centene Corporation, CVS Health Corporation, Elevance Health, Inc., UnitedHealth Group Inc., and large not-for-profit healthcare organizations."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CLOV",
+      "ticker": "CLOV",
+      "name": "クローバー・ヘルス",
+      "name_en": "Clover Health",
+      "sub": "メディケア保険",
+      "sub_en": "Medicare Advantage",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Cloverが10-Kで、メディケア・アドバンテージの全国大手の競合の一社として挙げる",
+          "text_en": "Clover names Elevance among large national Medicare Advantage competitors",
+          "source": {
+            "label": "Clover Health 10-K(2025年度)",
+            "label_en": "Clover Health 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1801170/000180117026000057/clov-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our competitors generally include large, national insurers, such as United Health, Aetna, Humana, Centene, and Elevance Health that provide MA plans"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

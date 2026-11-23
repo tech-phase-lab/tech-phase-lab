@@ -1,0 +1,323 @@
+{
+  "root": {
+    "ticker": "ABT",
+    "name": "アボット・ラボラトリーズ",
+    "cik": 1800,
+    "name_en": "Abbott Laboratories"
+  },
+  "rows": [
+    {
+      "ja": "供給元(上流)",
+      "en": "Suppliers (upstream)",
+      "above": true
+    },
+    {
+      "ja": "買収・出資・分離",
+      "en": "Acquisitions, stakes & spin-off"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "DXCM",
+    "NVRO",
+    "AORT"
+  ],
+  "companies": [
+    {
+      "id": "NVEC",
+      "ticker": "NVEC",
+      "name": "NVE",
+      "name_en": "NVE Corporation",
+      "sub": "磁気センサー",
+      "sub_en": "Spintronic sensors",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "NVEの大口顧客で、2027年末までの供給パートナー契約を結ぶ",
+          "text_en": "A major NVE customer under a supplier partnering agreement through 2027",
+          "source": {
+            "label": "NVE 10-K(2026年3月期)",
+            "label_en": "NVE 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/724910/000137647426000348/nvec-20260331_10k.htm",
+            "level": "official",
+            "date": "2026-05-06",
+            "quote": "We have agreements with certain customers, including a Supplier Partnering Agreement, as amended, with Abbott Laboratories, which expires December 31, 2027."
+          }
+        }
+      ]
+    },
+    {
+      "id": "EXAS",
+      "ticker": "EXAS",
+      "name": "イグザクト・サイエンシズ",
+      "name_en": "Exact Sciences",
+      "sub": "がん検査",
+      "sub_en": "Cancer diagnostics",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "大腸がん検査のExact Sciencesを買収する合併契約(2025年11月)",
+          "text_en": "Merger agreement to acquire Exact Sciences (November 2025)",
+          "source": {
+            "label": "Exact Sciences 10-K(2025年度)",
+            "label_en": "Exact Sciences 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1124140/000112414026000011/exas-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "On November 19, 2025, we entered into an Agreement and Plan of Merger (the \"Merger Agreement\") with Abbott Laboratories (\"Abbott\")"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CSI",
+      "ticker": "Cardiovascular Systems",
+      "name": "カーディオバスキュラー・システムズ",
+      "name_en": "Cardiovascular Systems",
+      "sub": "血管治療機器",
+      "sub_en": "Vascular devices",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2023年4月に買収",
+          "text_en": "Acquired in April 2023",
+          "source": {
+            "label": "Abbott 10-K(2025年度)",
+            "label_en": "Abbott 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1800/000162828026010185/abt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "On April 27, 2023, Abbott completed the acquisition of Cardiovascular Systems, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Bigfoot",
+      "ticker": "Bigfoot Biomedical",
+      "name": "ビッグフット・バイオメディカル",
+      "name_en": "Bigfoot Biomedical",
+      "sub": "糖尿病管理",
+      "sub_en": "Diabetes management",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "糖尿病管理のつながる仕組みを強化するため2023年9月に買収",
+          "text_en": "Acquired in September 2023 to build connected diabetes solutions",
+          "source": {
+            "label": "Abbott 10-K(2025年度)",
+            "label_en": "Abbott 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1800/000162828026010185/abt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "On September 22, 2023, Abbott completed the acquisition of Bigfoot, which furthers Abbott's efforts to develop connected solutions for making diabetes management more personal and precise."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SENS",
+      "ticker": "SENS",
+      "name": "センセオニクス",
+      "name_en": "Senseonics",
+      "sub": "埋め込み型血糖センサー",
+      "sub_en": "Implantable glucose sensors",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "増資に合わせてアボットが株式を引き受けた",
+          "text_en": "Abbott bought shares alongside Senseonics' public offering",
+          "source": {
+            "label": "Senseonics 10-K(2025年度)",
+            "label_en": "Senseonics 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1616543/000110465926022298/sens-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "The Company also entered into a securities purchase agreement with Abbott Laboratories (\"Abbott\") pursuant to which the Company agreed to issue and sell 2,026,963 shares of its common stock substantially concurrently with the Public Offering"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ABBV",
+      "ticker": "ABBV",
+      "name": "アッヴィ",
+      "name_en": "AbbVie",
+      "sub": "医薬品",
+      "sub_en": "Pharma",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "アボットから分離した医薬品会社(分離契約が続く)",
+          "text_en": "Pharma business separated from Abbott, under an ongoing separation agreement",
+          "source": {
+            "label": "AbbVie 10-K(2024年度)",
+            "label_en": "AbbVie 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1551152/000155115225000020/abbv-20241231.htm",
+            "level": "official",
+            "date": "2025-02-14",
+            "quote": "Subject to certain exceptions specified in the separation agreement by and between Abbott Laboratories (Abbott) and AbbVie"
+          }
+        }
+      ]
+    },
+    {
+      "id": "DXCM",
+      "ticker": "DXCM",
+      "name": "デクスコム",
+      "name_en": "DexCom",
+      "sub": "持続血糖測定",
+      "sub_en": "Continuous glucose monitoring",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "DexComが10-Kで、CGMの直接の競合としてアボットの糖尿病部門を挙げる",
+          "text_en": "DexCom names Abbott's Diabetes Care division as its direct CGM competitor",
+          "source": {
+            "label": "DexCom 10-K(2025年度)",
+            "label_en": "DexCom 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1093557/000109355726000027/dxcm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "In selling our current CGM systems, we compete directly with the Diabetes Care division of Abbott Laboratories;"
+          }
+        }
+      ]
+    },
+    {
+      "id": "NVRO",
+      "ticker": "NVRO",
+      "name": "ネブロ",
+      "name_en": "Nevro",
+      "sub": "脊髄刺激",
+      "sub_en": "Spinal cord stimulation",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Nevroが10-Kで、主な競合としてMedtronic・Boston Scientificと並べてアボットを挙げる",
+          "text_en": "Nevro names Abbott among its major competitors with Medtronic and Boston Scientific",
+          "source": {
+            "label": "Nevro 10-K(2024年度)",
+            "label_en": "Nevro 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1444380/000144438025000024/nvro-20241231.htm",
+            "level": "official",
+            "date": "2025-03-04",
+            "quote": "Currently, our major competitors are Medtronic, Boston Scientific and Abbott Laboratories, who have obtained regulatory approval for SCS systems."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AORT",
+      "ticker": "AORT",
+      "name": "アーティビオン",
+      "name_en": "Artivion",
+      "sub": "心臓弁",
+      "sub_en": "Heart valves",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Artivionが10-Kで、機械弁の主な競合としてアボットを挙げる",
+          "text_en": "Artivion names Abbott a main competitor in mechanical heart valves",
+          "source": {
+            "label": "Artivion 10-K(2024年度)",
+            "label_en": "Artivion 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/784199/000078419925000029/aort-20241231.htm",
+            "level": "official",
+            "date": "2025-02-28",
+            "quote": "On-X heart valves compete primarily with mechanical valves from Abbott Laboratories, Medtronic, plc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "EMI",
+      "ticker": "Encore Medical",
+      "name": "アンコール・メディカル",
+      "name_en": "Encore Medical",
+      "sub": "心臓閉鎖デバイス",
+      "sub_en": "Heart closure devices",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Encore MedicalがS-1で、PFO閉鎖デバイスの主な競合としてアボットを挙げる",
+          "text_en": "Encore Medical names Abbott a primary competitor for PFO devices",
+          "source": {
+            "label": "Encore Medical S-1/A(2025年12月)",
+            "label_en": "Encore Medical S-1/A (Dec 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1838003/000110465925125214/tm2525595-3_s1.htm",
+            "level": "official",
+            "date": "2025-12-30",
+            "quote": "Two of our primary competitors in the U.S. for PFO products are Abbott Laboratories and W.L."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NSPR",
+      "ticker": "NSPR",
+      "name": "インスパイアMD",
+      "name_en": "InspireMD",
+      "sub": "頸動脈ステント",
+      "sub_en": "Carotid stents",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "InspireMDが10-Kで、頸動脈治療の大手競合の一社としてアボットを挙げる",
+          "text_en": "InspireMD names Abbott among large competitors in carotid stenting",
+          "source": {
+            "label": "InspireMD 10-K(2024年度)",
+            "label_en": "InspireMD 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1433607/000149315225009909/form10-k.htm",
+            "level": "official",
+            "date": "2025-03-12",
+            "quote": "the manufacturers of products used in connection with CAS procedures include a number of large companies, such as Abbott Laboratories, Boston Scientific Corporation, Medtronic, Cordis Corporation and Terumo Medical Corporation."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GCTK",
+      "ticker": "GCTK",
+      "name": "グルコトラック",
+      "name_en": "Glucotrack",
+      "sub": "血糖モニター",
+      "sub_en": "Glucose monitoring",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Glucotrackが10-Kで、競合となる医療機器会社としてアボットを挙げる",
+          "text_en": "Glucotrack names Abbott among device companies it expects to compete with",
+          "source": {
+            "label": "Glucotrack 10-K(2025年度)",
+            "label_en": "Glucotrack 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1506983/000149315226013656/form10-k.htm",
+            "level": "official",
+            "date": "2026-03-30",
+            "quote": "Some of the medical device companies that we expect to compete with include Abbott Laboratories, DexCom, Medtronic, and Senseonics."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
