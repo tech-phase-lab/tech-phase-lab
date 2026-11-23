@@ -1,0 +1,247 @@
+{
+  "root": {
+    "ticker": "BIO",
+    "name": "バイオ・ラッド・ラボラトリーズ",
+    "cik": 12208,
+    "name_en": "Bio-Rad Laboratories"
+  },
+  "rows": [
+    {
+      "ja": "出資先・提携・ライセンス",
+      "en": "Investee, partners & licenses"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "QDEL",
+    "CTKB",
+    "QTRX",
+    "MXCT"
+  ],
+  "companies": [
+    {
+      "id": "SRT",
+      "ticker": "Sartorius",
+      "name": "ザルトリウス",
+      "name_en": "Sartorius",
+      "sub": "バイオ製造機器(独)",
+      "sub_en": "Bioprocess (Germany)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "普通株の約38%・優先株の28%を保有(時価56.7億ドル)",
+          "text_en": "Owns about 38% of its ordinary and 28% of its preference shares ($5.67 billion)",
+          "source": {
+            "label": "Bio-Rad 10-K(2025年度)",
+            "label_en": "Bio-Rad 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/12208/000001220826000010/bio-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "representing approximately 38% of the outstanding ordinary shares (excluding treasury shares) and 28% of the preference shares of Sartorius."
+          }
+        }
+      ]
+    },
+    {
+      "id": "IMDX",
+      "ticker": "IMDX",
+      "name": "インサイト・モレキュラー・ダイアグノスティクス",
+      "name_en": "Insight Molecular Diagnostics",
+      "sub": "移植検査",
+      "sub_en": "Transplant diagnostics",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Bio-RadのddPCRで移植検査キットを共同開発する世界的提携",
+          "text_en": "Global partnership to develop transplant kits on Bio-Rad ddPCR",
+          "source": {
+            "label": "Insight Molecular Diagnostics 10-K(2025年度)",
+            "label_en": "Insight Molecular Diagnostics 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1642380/000164238026000004/imdx-20251231.htm",
+            "level": "official",
+            "date": "2026-03-26",
+            "quote": "we have entered into a global strategic partnership agreement with Bio-Rad to collaborate in the development and the commercialization of kitted transplant products for clinical use"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BDSX",
+      "ticker": "BDSX",
+      "name": "バイオデシックス",
+      "name_en": "Biodesix",
+      "sub": "がん診断",
+      "sub_en": "Cancer diagnostics",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Bio-RadのddPCR検査の開発・承認申請を担う提携を拡大(2025年10月)",
+          "text_en": "Expanded partnership to develop and validate Bio-Rad ddPCR assays (October 2025)",
+          "source": {
+            "label": "Biodesix 10-K(2025年度)",
+            "label_en": "Biodesix 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1439725/000119312526076547/bdsx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "The first assay to be validated under the agreement include Bio-Rad's ddPLEX ESR1 Mutation Detection Assay."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TXG",
+      "ticker": "TXG",
+      "name": "10xジェノミクス",
+      "name_en": "10x Genomics",
+      "sub": "単一細胞解析",
+      "sub_en": "Single-cell analysis",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "特許紛争を和解し、相互ライセンスを結ぶ(2021年)",
+          "text_en": "Settled patent disputes with a cross license (2021)",
+          "source": {
+            "label": "10x Genomics 10-K(2024年度)",
+            "label_en": "10x Genomics 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1770787/000177078725000013/txg-20241231.htm",
+            "level": "official",
+            "date": "2025-02-13",
+            "quote": "In July 2021, the Company entered into a global settlement and patent cross license agreement with Bio-Rad Laboratories, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "QDEL",
+      "ticker": "QDEL",
+      "name": "クイデルオルソ",
+      "name_en": "QuidelOrtho",
+      "sub": "診断薬",
+      "sub_en": "Diagnostics",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "QuidelOrthoが10-Kで、主な競合の一社として挙げる",
+          "text_en": "QuidelOrtho names Bio-Rad among principal competitors",
+          "source": {
+            "label": "QuidelOrtho 10-K(2025年度)",
+            "label_en": "QuidelOrtho 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1906324/000190632426000008/qdel-20251228.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Some of our principal competitors include, among others, Abbott Laboratories, bioMérieux, Bio-Rad"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CTKB",
+      "ticker": "CTKB",
+      "name": "サイテック・バイオサイエンシズ",
+      "name_en": "Cytek Biosciences",
+      "sub": "フローサイトメトリー",
+      "sub_en": "Flow cytometry",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Cytekが10-Kで、直接の競合として挙げる",
+          "text_en": "Cytek names Bio-Rad among direct competitors",
+          "source": {
+            "label": "Cytek Biosciences 10-K(2025年度)",
+            "label_en": "Cytek Biosciences 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1831915/000162828026012352/ctkb-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our direct competitors include Agilent Technologies, Beckman Coulter (Danaher Corporation), Bio-Rad Laboratories"
+          }
+        }
+      ]
+    },
+    {
+      "id": "QTRX",
+      "ticker": "QTRX",
+      "name": "クアンテリクス",
+      "name_en": "Quanterix",
+      "sub": "タンパク質測定",
+      "sub_en": "Protein detection",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Quanterixが10-Kで、タンパク質測定の競合として挙げる",
+          "text_en": "Quanterix names Bio-Rad among protein measurement competitors",
+          "source": {
+            "label": "Quanterix 10-K(2025年度)",
+            "label_en": "Quanterix 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1503274/000150327426000013/qtrx-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "Companies such as Bio-Techne, MesoScale Discovery, SEER, Bio-Rad Laboratories"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MXCT",
+      "ticker": "MXCT",
+      "name": "マックスサイト",
+      "name_en": "MaxCyte",
+      "sub": "細胞エンジニアリング",
+      "sub_en": "Cell engineering",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "MaxCyteが10-Kで、主な競合の一社として挙げる",
+          "text_en": "MaxCyte names Bio-Rad among its main competitors",
+          "source": {
+            "label": "MaxCyte 10-K(2024年度)",
+            "label_en": "MaxCyte 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1287098/000155837025002721/mxct-20241231x10k.htm",
+            "level": "official",
+            "date": "2025-03-11",
+            "quote": "We primarily compete against products marketed by Lonza Group AG, Thermo Fisher Scientific Inc.(NYSE: TMO), Miltenyi Biotec, Bio-Rad Laboratories, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HBIO",
+      "ticker": "HBIO",
+      "name": "ハーバード・バイオサイエンス",
+      "name_en": "Harvard Bioscience",
+      "sub": "研究機器",
+      "sub_en": "Research instruments",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Harvard Bioscienceが10-Kで、競合の一社として挙げる",
+          "text_en": "Harvard Bioscience names Bio-Rad among competitors",
+          "source": {
+            "label": "Harvard Bioscience 10-K(2025年度)",
+            "label_en": "Harvard Bioscience 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1123494/000117184326001548/hbio20251231_10k.htm",
+            "level": "official",
+            "date": "2026-03-13",
+            "quote": "Becton, Dickinson and Company, Bio-Rad Laboratories, Inc., Danaher Corporation"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

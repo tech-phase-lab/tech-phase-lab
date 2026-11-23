@@ -1,0 +1,271 @@
+{
+  "root": {
+    "ticker": "BRKR",
+    "name": "ブルカー",
+    "cik": 1109354,
+    "name_en": "Bruker"
+  },
+  "rows": [
+    {
+      "ja": "提携・ライセンス・訴訟",
+      "en": "Partners, licenses & litigation"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "A",
+    "CAMT",
+    "MASS",
+    "AKYA"
+  ],
+  "companies": [
+    {
+      "id": "TXG",
+      "ticker": "TXG",
+      "name": "10xジェノミクス",
+      "name_en": "10x Genomics",
+      "sub": "単一細胞解析",
+      "sub_en": "Single-cell analysis",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "全訴訟を和解しライセンス契約を締結(2025年5月)",
+          "text_en": "Settled all litigation with license agreements (May 2025)",
+          "source": {
+            "label": "10x Genomics 10-K(2025年度)",
+            "label_en": "10x Genomics 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1770787/000162828026007822/txg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "In May 2025, we entered into a settlement agreement and license agreements with Bruker Corporation (\"Bruker\") resolving all outstanding litigation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ABCL",
+      "ticker": "ABCL",
+      "name": "アブセレラ・バイオロジクス",
+      "name_en": "AbCellera Biologics",
+      "sub": "抗体創薬",
+      "sub_en": "Antibody discovery",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "単一細胞スクリーニングの特許訴訟で争う(Beacon装置)",
+          "text_en": "In patent litigation with Bruker over single-cell screening (Beacon platform)",
+          "source": {
+            "label": "AbCellera 10-K(2024年度)",
+            "label_en": "AbCellera 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1703057/000162828025008689/abcl-20241231.htm",
+            "level": "official",
+            "date": "2025-02-27",
+            "quote": "In the event that Bruker were to prevail in the litigation against us"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AXDX",
+      "ticker": "AXDX",
+      "name": "アクセラレート・ダイアグノスティクス",
+      "name_en": "Accelerate Diagnostics",
+      "sub": "微生物検査",
+      "sub_en": "Microbiology diagnostics",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "BrukerのMALDI Biotyperと組み合わせる協業・品質契約(2023年11月)",
+          "text_en": "Collaboration to validate its system with Bruker's MALDI Biotyper (November 2023)",
+          "source": {
+            "label": "Accelerate Diagnostics 10-K(2024年度)",
+            "label_en": "Accelerate Diagnostics 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/727207/000162828025014205/axdx-20241231.htm",
+            "level": "official",
+            "date": "2025-03-21",
+            "quote": "In November 2023, we announced a collaboration and quality agreement with Bruker, the provider of the MALDI Biotyper MALDI-TOF system for microbial identification"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ATI",
+      "ticker": "ATI",
+      "name": "ATI",
+      "name_en": "ATI",
+      "sub": "特殊金属",
+      "sub_en": "Specialty metals",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "超電導線材の共同技術開発契約をBruker子会社と結ぶ",
+          "text_en": "Joint superconductor development agreement with a Bruker unit",
+          "source": {
+            "label": "ATI 10-K(2024年度)",
+            "label_en": "ATI 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1018963/000162828025007092/ati-20241229.htm",
+            "level": "official",
+            "date": "2025-02-21",
+            "quote": "We have a joint technology development agreement with Bruker Energy & Supercon Technologies to advance state-of-the-art niobium-based superconductors"
+          }
+        }
+      ]
+    },
+    {
+      "id": "A",
+      "ticker": "A",
+      "name": "アジレント・テクノロジー",
+      "name_en": "Agilent Technologies",
+      "sub": "分析機器",
+      "sub_en": "Analytical instruments",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Agilentが10-Kで、ライフサイエンス・診断の主な競合として挙げる",
+          "text_en": "Agilent names Bruker among principal life sciences competitors",
+          "source": {
+            "label": "Agilent 10-K(2025年10月期)",
+            "label_en": "Agilent 10-K (FY ended Oct 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1090872/000109087225000087/a-20251031.htm",
+            "level": "official",
+            "date": "2025-12-22",
+            "quote": "Avecia, a division of Nitto Denko, Bruker, Inc., Leica Biosystems, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CAMT",
+      "ticker": "CAMT",
+      "name": "カムテック",
+      "name_en": "Camtek",
+      "sub": "半導体検査",
+      "sub_en": "Semiconductor inspection",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Camtekが20-Fで、主な競合の一社として挙げる",
+          "text_en": "Camtek names Bruker among its main competitors",
+          "source": {
+            "label": "Camtek 20-F(2024年度)",
+            "label_en": "Camtek 20-F (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1109138/000117891325000945/zk2532834.htm",
+            "level": "official",
+            "date": "2025-03-19",
+            "quote": "Our main competitors are Onto Innovations, Skyverse, ATI Electronics Pty Ltd., Cheng Mei Instrument Technology Co., ASTI Holding Limited, Toray Industries Inc., Nova, Bruker"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MASS",
+      "ticker": "MASS",
+      "name": "908デバイシズ",
+      "name_en": "908 Devices",
+      "sub": "小型質量分析",
+      "sub_en": "Handheld mass spec",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "908 Devicesが10-Kで、大手の競合として挙げる",
+          "text_en": "908 Devices names Bruker among large competitors",
+          "source": {
+            "label": "908 Devices 10-K(2025年度)",
+            "label_en": "908 Devices 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1555279/000110465926024877/mass-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-03-09",
+            "quote": "including Agilent Technologies, Bruker Corporation, Inficon, Teledyne, Thermo Fisher Scientific and Rigaku"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AKYA",
+      "ticker": "AKYA",
+      "name": "アコヤ・バイオサイエンシズ",
+      "name_en": "Akoya Biosciences",
+      "sub": "空間生物学",
+      "sub_en": "Spatial biology",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Akoyaが10-Kで、空間生物学の競合として挙げる",
+          "text_en": "Akoya names Bruker among spatial biology competitors",
+          "source": {
+            "label": "Akoya Biosciences 10-K(2024年度)",
+            "label_en": "Akoya Biosciences 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1711933/000155837025003124/akya-20241231x10k.htm",
+            "level": "official",
+            "date": "2025-03-17",
+            "quote": "Potential competitors within our space include 10x Genomics, Vizgen, BioTechne, Bruker, Miltenyi Biotec, and Standard BioTools, among others."
+          }
+        }
+      ]
+    },
+    {
+      "id": "OABI",
+      "ticker": "OABI",
+      "name": "オムニAb",
+      "name_en": "OmniAb",
+      "sub": "抗体創薬",
+      "sub_en": "Antibody discovery",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "OmniAbが10-Kで、単一細胞スクリーニングの競合として挙げる",
+          "text_en": "OmniAb names Bruker among single-cell screening competitors",
+          "source": {
+            "label": "OmniAb 10-K(2025年度)",
+            "label_en": "OmniAb 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1846253/000184625326000009/ck0001846253-20251231.htm",
+            "level": "official",
+            "date": "2026-03-04",
+            "quote": "such as AbCellera Biologics Inc., Bruker Corporation, DPBIO, Inc., Sartorius AG"
+          }
+        }
+      ]
+    },
+    {
+      "id": "QTRX",
+      "ticker": "QTRX",
+      "name": "クアンテリクス",
+      "name_en": "Quanterix",
+      "sub": "タンパク質測定",
+      "sub_en": "Protein detection",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Quanterixが10-Kで、空間解析の競合として挙げる",
+          "text_en": "Quanterix names Bruker among spatial competitors",
+          "source": {
+            "label": "Quanterix 10-K(2025年度)",
+            "label_en": "Quanterix 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1503274/000150327426000013/qtrx-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "These companies include 10x Genomics, Vizgen, Bio-Techne, Bruker, Miltenyi Biotec, and Standard BioTools"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,247 @@
+{
+  "root": {
+    "ticker": "DXC",
+    "name": "DXCテクノロジー",
+    "cik": 1688568,
+    "name_en": "DXC Technology"
+  },
+  "rows": [
+    {
+      "ja": "起源・顧客・提携",
+      "en": "Origin, clients & partners"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "CTSH",
+    "GLOB",
+    "RXT",
+    "GWRE"
+  ],
+  "companies": [
+    {
+      "id": "HPE",
+      "ticker": "HPE",
+      "name": "ヒューレット・パッカード・エンタープライズ",
+      "name_en": "Hewlett Packard Enterprise",
+      "sub": "IT機器",
+      "sub_en": "IT infrastructure",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "HPEの旧エンタープライズ・サービス事業と統合してDXCが誕生。税務契約を結ぶ",
+          "text_en": "DXC was formed from HPE's former Enterprise Services business; tax matters agreement",
+          "source": {
+            "label": "HPE 10-K(2025年10月期)",
+            "label_en": "HPE 10-K (FY ended Oct 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1645590/000164559025000130/hpe-20251031.htm",
+            "level": "official",
+            "date": "2025-12-18",
+            "quote": "In connection with the Everett Transaction and the Seattle Transaction, the Company entered into a Tax Matters Agreement with DXC and Micro Focus respectively"
+          }
+        }
+      ]
+    },
+    {
+      "id": "KOF",
+      "ticker": "KOF",
+      "name": "コカ・コーラFEMSA",
+      "name_en": "Coca-Cola FEMSA",
+      "sub": "飲料ボトラー(メキシコ)",
+      "sub_en": "Bottler (Mexico)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2015年から全地域のITサービスをDXCに委託",
+          "text_en": "Has used DXC for technology services across its territories since 2015",
+          "source": {
+            "label": "Coca-Cola FEMSA 20-F(2025年度)",
+            "label_en": "Coca-Cola FEMSA 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/910631/000162828026025313/kof-20251231.htm",
+            "level": "official",
+            "date": "2026-04-16",
+            "quote": "Since July 2015, we have entered into certain agreements with DXC Technology (formerly Hewlett Packard) for the provision of various technology services across all of our territories."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMOD",
+      "ticker": "AMOD",
+      "name": "アルファ・モーダス",
+      "name_en": "Alpha Modus",
+      "sub": "小売AI",
+      "sub_en": "Retail AI",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "システム統合・大規模導入でDXCと提携",
+          "text_en": "Deployment agreement with DXC for integration and rollout",
+          "source": {
+            "label": "Alpha Modus 10-K(2025年度)",
+            "label_en": "Alpha Modus 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1862463/000149315226014230/form10-k.htm",
+            "level": "official",
+            "date": "2026-03-31",
+            "quote": "Alpha Modus entered into a strategic enterprise deployment agreement with DXC Technology"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BNZI",
+      "ticker": "BNZI",
+      "name": "バンザイ・インターナショナル",
+      "name_en": "Banzai International",
+      "sub": "マーケティングSaaS",
+      "sub_en": "Marketing SaaS",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "動画サービスOpenReelの企業顧客の一社としてDXCを挙げる",
+          "text_en": "Names DXC among OpenReel enterprise customers",
+          "source": {
+            "label": "Banzai International 10-K(2025年度)",
+            "label_en": "Banzai International 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1826011/000119312526134714/bnzi-20251231.htm",
+            "level": "official",
+            "date": "2026-03-31",
+            "quote": "OpenReel's enterprise customer base includes global organizations, such as Bristol Myers Squibb, Ingram Micro, DXC Technology"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CTSH",
+      "ticker": "CTSH",
+      "name": "コグニザント",
+      "name_en": "Cognizant",
+      "sub": "ITサービス",
+      "sub_en": "IT services",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Cognizantが10-Kで、直接の競合の一社として挙げる",
+          "text_en": "Cognizant names DXC among direct competitors",
+          "source": {
+            "label": "Cognizant 10-K(2025年度)",
+            "label_en": "Cognizant 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1058290/000105829026000008/ctsh-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Capgemini, CGI, Deloitte Digital, DXC Technology, EPAM Systems"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GLOB",
+      "ticker": "GLOB",
+      "name": "グロバント",
+      "name_en": "Globant",
+      "sub": "ITサービス",
+      "sub_en": "IT services",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Globantが20-Fで、競合の一社として挙げる",
+          "text_en": "Globant names DXC among competitors",
+          "source": {
+            "label": "Globant 20-F(2025年度)",
+            "label_en": "Globant 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1557860/000162828026012910/glob-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Deloitte Digital, DXC Technology, Endava, EPAM Systems, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RXT",
+      "ticker": "RXT",
+      "name": "ラックスペース・テクノロジー",
+      "name_en": "Rackspace Technology",
+      "sub": "クラウド運用",
+      "sub_en": "Managed cloud",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Rackspaceが10-Kで、従来型SIの競合として挙げる",
+          "text_en": "Rackspace names DXC among traditional systems integrators",
+          "source": {
+            "label": "Rackspace 10-K(2024年度)",
+            "label_en": "Rackspace 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1810019/000181001925000043/rxt-20241231.htm",
+            "level": "official",
+            "date": "2025-03-21",
+            "quote": "such as Accenture, Atos, Capgemini, Cognizant, Deloitte, DXC Technology and Kyndryl"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GWRE",
+      "ticker": "GWRE",
+      "name": "ガイドワイヤ・ソフトウェア",
+      "name_en": "Guidewire Software",
+      "sub": "損保向けソフト",
+      "sub_en": "P&C insurance software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Guidewireが10-Kで、損保ソフトの競合として挙げる",
+          "text_en": "Guidewire names DXC among P&C insurance software competitors",
+          "source": {
+            "label": "Guidewire 10-K(2026年7月期)",
+            "label_en": "Guidewire 10-K (FY ended Jul 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1528396/000152839626000046/gwre-20260731.htm",
+            "level": "official",
+            "date": "2026-09-11",
+            "quote": "P&C insurance software vendors such as Duck Creek, Majesco, Origami Risk, Sapiens, and DXC Technology"
+          }
+        }
+      ]
+    },
+    {
+      "id": "IPM",
+      "ticker": "IPM",
+      "name": "インテリジェント・プロテクション・マネジメント",
+      "name_en": "Intelligent Protection Management",
+      "sub": "マネージドIT",
+      "sub_en": "Managed IT",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "IPMが10-Kで、主な競合の一社として挙げる",
+          "text_en": "IPM names DXC among principal competitors",
+          "source": {
+            "label": "Intelligent Protection Management 10-K(2024年度)",
+            "label_en": "Intelligent Protection Management 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1355839/000101376225001600/ea0233784-10k_intelligent.htm",
+            "level": "official",
+            "date": "2025-03-24",
+            "quote": "All Covered, Flexential, DXC Technology Company, Logicalis Group"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

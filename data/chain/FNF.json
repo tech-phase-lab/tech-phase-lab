@@ -1,0 +1,236 @@
+{
+  "root": {
+    "ticker": "FNF",
+    "name": "フィデリティ・ナショナル・ファイナンシャル",
+    "cik": 1331875,
+    "name_en": "Fidelity National Financial"
+  },
+  "rows": [
+    {
+      "ja": "子会社・関連会社・投資先",
+      "en": "Subsidiary, affiliates & investees"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "FAF",
+    "STC",
+    "ESNT",
+    "STLY"
+  ],
+  "companies": [
+    {
+      "id": "FG",
+      "ticker": "FG",
+      "name": "F&Gアニュイティーズ&ライフ",
+      "name_en": "F&G Annuities & Life",
+      "sub": "年金・生保",
+      "sub_en": "Annuities & life insurance",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "約70%を保有する子会社(2025年末に約12%を株主へ分配)",
+          "text_en": "Majority-owned (about 70%) after a further 12% distribution at end-2025",
+          "source": {
+            "label": "FNF 10-K(2025年度)",
+            "label_en": "FNF 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1331875/000133187526000026/fnf-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "As a result of the 2025 F&G Distribution, we own approximately 70% of the common stock of F&G."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "分離・コーポレートサービス契約を結ぶ",
+          "text_en": "Bound by separation and corporate services agreements",
+          "source": {
+            "label": "F&G Annuities & Life 10-K(2024年度)",
+            "label_en": "F&G Annuities & Life 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1934850/000193485025000015/fg-20241231.htm",
+            "level": "official",
+            "date": "2025-02-28",
+            "quote": "Separation and Distribution Agreement, dated as of November 30, 2022, between Fidelity National Financial, Inc. and F&G Annuities & Life, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PSFE",
+      "ticker": "PSFE",
+      "name": "ペイセーフ",
+      "name_en": "Paysafe",
+      "sub": "決済",
+      "sub_en": "Payments",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "PaysafeがFNFとCannaeから自社株約400万株を買い戻した(2025年11月)",
+          "text_en": "Paysafe bought back about 4 million shares from FNF and Cannae (November 2025)",
+          "source": {
+            "label": "Paysafe 20-F(2025年度)",
+            "label_en": "Paysafe 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1833835/000119312526088095/psfe-20251231.htm",
+            "level": "official",
+            "date": "2026-03-03",
+            "quote": "On November 24, 2025, we entered into privately negotiated agreements with Cannae and Fidelity National Financial, Inc. to repurchase approximately 4 million of our common shares."
+          }
+        }
+      ]
+    },
+    {
+      "id": "JENA",
+      "ticker": "JENA",
+      "name": "ジェナ・アクイジションII",
+      "name_en": "Jena Acquisition II",
+      "sub": "SPAC",
+      "sub_en": "SPAC",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "過去の案件でFNFが資金の全額引受けに参加したと記載",
+          "text_en": "Cites a past deal in which FNF helped fully backstop the funding",
+          "source": {
+            "label": "Jena Acquisition II S-1/A",
+            "label_en": "Jena Acquisition II S-1/A",
+            "url": "https://www.sec.gov/Archives/edgar/data/2060337/000121390025044851/ea0236275-05.htm",
+            "level": "official",
+            "date": "2025-05-16",
+            "quote": "Funds advised by Blackstone Tactical Opportunities, funds advised by GSO Capital Partners LP and Fidelity National Financial (NYSE: FNF) provided a full backstop to ensure certainty of funding."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CNNE",
+      "ticker": "CNNE",
+      "name": "カナエ・ホールディングス",
+      "name_en": "Cannae Holdings",
+      "sub": "投資会社",
+      "sub_en": "Holding company",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "FNFがCannaeに最大1億ドルの融資枠を提供(2017年から)",
+          "text_en": "FNF has lent to Cannae under a revolver of up to $100 million since 2017",
+          "source": {
+            "label": "Cannae Holdings 10-K(2025年度)",
+            "label_en": "Cannae Holdings 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1704720/000170472026000045/cnne-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "FNF Revolver On November 17, 2017, Fidelity National Financial (\"FNF\") issued to Cannae a revolver note in aggregate principal amount of up to $ 100.0 million."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FAF",
+      "ticker": "FAF",
+      "name": "ファースト・アメリカン・ファイナンシャル",
+      "name_en": "First American Financial",
+      "sub": "権原保険",
+      "sub_en": "Title insurance",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "First Americanが10-Kで、全国的な主要競合の筆頭に挙げる",
+          "text_en": "First American lists FNF first among major nationwide competitors",
+          "source": {
+            "label": "First American 10-K(2025年度)",
+            "label_en": "First American 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1472787/000119312526055516/faf-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Our major nationwide competitors in our principal markets include Fidelity National Financial, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "STC",
+      "ticker": "STC",
+      "name": "スチュワート・インフォメーション・サービシズ",
+      "name_en": "Stewart Information Services",
+      "sub": "権原保険",
+      "sub_en": "Title insurance",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Stewartが10-Kで、最大の競合の筆頭に挙げる",
+          "text_en": "Stewart lists FNF first among its largest competitors",
+          "source": {
+            "label": "Stewart Information Services 10-K(2025年度)",
+            "label_en": "Stewart Information Services 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/94344/000009434426000007/stc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our largest competitors are Fidelity National Financial, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ESNT",
+      "ticker": "ESNT",
+      "name": "エッセント・グループ",
+      "name_en": "Essent Group",
+      "sub": "住宅ローン保険",
+      "sub_en": "Mortgage insurance",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Essentが10-Kで、権原保険の競合の筆頭に挙げる",
+          "text_en": "Essent lists FNF first among title insurance competitors",
+          "source": {
+            "label": "Essent Group 10-K(2025年度)",
+            "label_en": "Essent Group 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1448893/000144889326000009/esnt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Competitors in the title insurance and settlement services industry include Fidelity National Financial, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "STLY",
+      "ticker": "STLY",
+      "name": "HGホールディングス",
+      "name_en": "HG Holdings",
+      "sub": "権原保険",
+      "sub_en": "Title insurance",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "HG Holdingsが10-Kで、大手権原保険会社の筆頭に挙げる",
+          "text_en": "HG Holdings lists FNF first among major title underwriters",
+          "source": {
+            "label": "HG Holdings 10-K(2024年度)",
+            "label_en": "HG Holdings 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/797465/000143774925009465/stly20241231_10k.htm",
+            "level": "official",
+            "date": "2025-03-27",
+            "quote": "competitors include major title underwriters such as Fidelity National Financial, Inc."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

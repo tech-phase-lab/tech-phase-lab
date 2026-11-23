@@ -1,0 +1,223 @@
+{
+  "root": {
+    "ticker": "ATR",
+    "name": "アプターグループ",
+    "cik": 896622,
+    "name_en": "AptarGroup"
+  },
+  "rows": [
+    {
+      "ja": "顧客・取引・紛争",
+      "en": "Customers, deals & disputes"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "WST",
+    "SLGN",
+    "AMCR",
+    "TRS"
+  ],
+  "companies": [
+    {
+      "id": "IPAR",
+      "ticker": "IPAR",
+      "name": "インターパルファム",
+      "name_en": "Interparfums",
+      "sub": "香水",
+      "sub_en": "Fragrances",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "香水のポンプの調達先の一社としてAptarを挙げる",
+          "text_en": "Names Aptar among its fragrance pump suppliers",
+          "source": {
+            "label": "Interparfums 10-K(2024年度)",
+            "label_en": "Interparfums 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/822663/000175392625000424/ipar-20241231.htm",
+            "level": "official",
+            "date": "2025-03-11",
+            "quote": "Pumps (Silgan Dispensing Systems Thomaston Corp, Aptar, Rexam)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SWKH",
+      "ticker": "SWKH",
+      "name": "SWKホールディングス",
+      "name_en": "SWK Holdings",
+      "sub": "医療金融",
+      "sub_en": "Healthcare finance",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "子会社MOD3の資産をAptarに売却(2025年7月)",
+          "text_en": "Sold its MOD3 unit's assets to Aptar (July 2025)",
+          "source": {
+            "label": "SWK Holdings 10-K(2025年度)",
+            "label_en": "SWK Holdings 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1089907/000108990726000004/swkh-20251231.htm",
+            "level": "official",
+            "date": "2026-03-20",
+            "quote": "On July 15, 2025, the Company, MOD3, and Aptar closed the asset purchase agreement (the \"Purchase Agreement\") for the sale and assignment of the assets to Aptar"
+          }
+        }
+      ]
+    },
+    {
+      "id": "NSRX",
+      "ticker": "NSRX",
+      "name": "ナサス・ファーマ",
+      "name_en": "Nasus Pharma",
+      "sub": "点鼻薬",
+      "sub_en": "Nasal drugs",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Aptarとのサービス契約を和解のうえ解約(2025年10月)",
+          "text_en": "Ended its services agreement with Aptar in a settlement (October 2025)",
+          "source": {
+            "label": "Nasus Pharma 20-F(2025年度)",
+            "label_en": "Nasus Pharma 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2029039/000149315226012559/form20-f.htm",
+            "level": "official",
+            "date": "2026-03-25",
+            "quote": "On October 6, 2025, we entered into a Termination and Settlement Agreement, or the Termination Agreement, with Aptar"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SPRY",
+      "ticker": "SPRY",
+      "name": "ARSファーマシューティカルズ",
+      "name_en": "ARS Pharmaceuticals",
+      "sub": "点鼻アドレナリン",
+      "sub_en": "Nasal epinephrine",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Aptarから訴訟を起こされる(2025年3月)",
+          "text_en": "Sued by Aptar (March 2025)",
+          "source": {
+            "label": "ARS Pharmaceuticals 10-K(2025年度)",
+            "label_en": "ARS Pharmaceuticals 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1671858/000119312526097478/spry-20251231.htm",
+            "level": "official",
+            "date": "2026-03-09",
+            "quote": "on March 25, 2025, AptarGroup, Inc. and Aptar France SAS (collectively, \"Aptar\") filed a suit against us"
+          }
+        }
+      ]
+    },
+    {
+      "id": "WST",
+      "ticker": "WST",
+      "name": "ウエスト・ファーマシューティカル",
+      "name_en": "West Pharmaceutical Services",
+      "sub": "医薬品包装",
+      "sub_en": "Drug packaging",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Westが10-Kで、競合の一社として挙げる",
+          "text_en": "West names Aptar among competitors",
+          "source": {
+            "label": "West Pharmaceutical 10-K(2025年度)",
+            "label_en": "West Pharmaceutical 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/105770/000010577026000010/wst-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "we compete with several companies, such as Datwyler and Aptar, across our Proprietary Products product lines."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SLGN",
+      "ticker": "SLGN",
+      "name": "シルガン・ホールディングス",
+      "name_en": "Silgan Holdings",
+      "sub": "容器・キャップ",
+      "sub_en": "Containers & closures",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Silganが10-Kで、キャップ事業の主な競合として挙げる",
+          "text_en": "Silgan names Aptar among closures competitors",
+          "source": {
+            "label": "Silgan 10-K(2025年度)",
+            "label_en": "Silgan 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/849869/000162828026012202/slgn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our dispensing and specialty closures business competes primarily with Amcor plc, AptarGroup, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMCR",
+      "ticker": "AMCR",
+      "name": "アムコア",
+      "name_en": "Amcor",
+      "sub": "包装",
+      "sub_en": "Packaging",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Amcorが10-Kで、競合の一社として挙げる",
+          "text_en": "Amcor names Aptar among competitors",
+          "source": {
+            "label": "Amcor 10-K(2026年6月期)",
+            "label_en": "Amcor 10-K (FY ended Jun 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1748790/000174879026000022/amcr-20260630.htm",
+            "level": "official",
+            "date": "2026-08-14",
+            "quote": "Competitors include 3M, AptarGroup, Inc., Avery Dennison Corporation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "TRS",
+      "ticker": "TRS",
+      "name": "トライマス",
+      "name_en": "TriMas",
+      "sub": "包装部品",
+      "sub_en": "Packaging components",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "TriMasが10-Kで、競合の筆頭に挙げる",
+          "text_en": "TriMas lists Aptar first among competitors",
+          "source": {
+            "label": "TriMas 10-K(2024年度)",
+            "label_en": "TriMas 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/842633/000084263325000015/trs-20241231.htm",
+            "level": "official",
+            "date": "2025-02-27",
+            "quote": "our competitors include Aptar, Bericap"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

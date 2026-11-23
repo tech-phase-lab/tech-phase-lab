@@ -1,0 +1,264 @@
+{
+  "root": {
+    "ticker": "BWXT",
+    "name": "BWXテクノロジーズ",
+    "cik": 1486957,
+    "name_en": "BWX Technologies"
+  },
+  "rows": [
+    {
+      "ja": "供給元",
+      "en": "Suppliers",
+      "above": true
+    },
+    {
+      "ja": "合弁・買収・分離",
+      "en": "Joint ventures, acquisitions & spin-off"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "LNTH",
+    "STDN",
+    "FLR"
+  ],
+  "companies": [
+    {
+      "id": "CDRE",
+      "ticker": "CDRE",
+      "name": "カドレ・ホールディングス",
+      "name_en": "Cadre Holdings",
+      "sub": "安全装備・原子力機器",
+      "sub_en": "Safety & nuclear equipment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "主な顧客の一社としてBWXTを挙げる",
+          "text_en": "Names BWXT among select customers",
+          "source": {
+            "label": "Cadre Holdings 10-K(2025年度)",
+            "label_en": "Cadre Holdings 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1860543/000110465926025862/cdre-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-03-10",
+            "quote": "Select customers include the DoE, LANL, BWXT and Veolia."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PESI",
+      "ticker": "PESI",
+      "name": "パーマフィックス",
+      "name_en": "Perma-Fix Environmental",
+      "sub": "放射性廃棄物処理",
+      "sub_en": "Nuclear waste services",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "BWXTチームの一員としてウェストバレーの除染を受注",
+          "text_en": "Member of the BWXT team on the West Valley cleanup contract",
+          "source": {
+            "label": "Perma-Fix 10-K(2024年度)",
+            "label_en": "Perma-Fix 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/891532/000149315225010161/form10-k.htm",
+            "level": "official",
+            "date": "2025-03-13",
+            "quote": "Department of Energy (\"DOE\") had awarded BWXT and its team, of which we are a member, the contract for the cleanup operations at the West Valley Development Project in West Valley, NY."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Kinectrics",
+      "ticker": "Kinectrics",
+      "name": "キネクトリクス",
+      "name_en": "Kinectrics",
+      "sub": "原子力技術サービス(加)",
+      "sub_en": "Nuclear services (Canada)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Kinectricsを買収(2025年5月)",
+          "text_en": "Acquired Kinectrics (May 2025)",
+          "source": {
+            "label": "BWXT 10-K(2025年度)",
+            "label_en": "BWXT 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1486957/000148695726000007/bwxt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "On May 20, 2025, we completed the acquisition Kinectrics Holdings, Inc., the parent company of Kinectrics, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HII",
+      "ticker": "HII",
+      "name": "ハンティントン・インガルス",
+      "name_en": "Huntington Ingalls Industries",
+      "sub": "造船(原子力艦)",
+      "sub_en": "Shipbuilding",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ロスアラモスの廃棄物処理合弁N3Bを共同運営",
+          "text_en": "Runs the N3B Los Alamos cleanup venture together",
+          "source": {
+            "label": "BWXT 10-K(2025年度)",
+            "label_en": "BWXT 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1486957/000148695726000007/bwxt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "Newport News Nuclear BWXT - Los Alamos, LLC, a limited liability company formed by Stoller Newport News Nuclear, Inc., a subsidiary of Huntington Ingalls Industries, Inc.'s Technical Solutions division, and BWXT Technical Services Group, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMTM",
+      "ticker": "AMTM",
+      "name": "アメンタム",
+      "name_en": "Amentum",
+      "sub": "政府向け技術サービス",
+      "sub_en": "Government technical services",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "カナダ国立研究所の運営会社を共同で組む",
+          "text_en": "Partner in the company that runs Canada's national nuclear laboratory",
+          "source": {
+            "label": "BWXT 10-K(2025年度)",
+            "label_en": "BWXT 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1486957/000148695726000007/bwxt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "is a company formed by BWXT Government Group, Kinectrics, Inc., and Amentum Environment & Energy, Inc. to manage and operate the Canadian National Laboratory."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BW",
+      "ticker": "BW",
+      "name": "バブコック&ウィルコックス",
+      "name_en": "Babcock & Wilcox",
+      "sub": "ボイラー",
+      "sub_en": "Boilers",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2015年にBWXTから分離した旧子会社。分離契約で相互補償",
+          "text_en": "Spun off from BWXT in 2015; cross-indemnities under the separation agreement",
+          "source": {
+            "label": "Babcock & Wilcox 10-K(2025年度)",
+            "label_en": "Babcock & Wilcox 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1630805/000163080526000018/bw-20251231.htm",
+            "level": "official",
+            "date": "2026-03-16",
+            "quote": "In connection with our separation from BWXT, BWXT has agreed to indemnify us"
+          }
+        }
+      ]
+    },
+    {
+      "id": "FLR",
+      "ticker": "FLR",
+      "name": "フルアー",
+      "name_en": "Fluor",
+      "sub": "EPC",
+      "sub_en": "Engineering & construction",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "サバンナリバーの廃液処理合弁の仲間",
+          "text_en": "Partner in the Savannah River liquid waste venture",
+          "source": {
+            "label": "BWXT 10-K/A(2024年度)",
+            "label_en": "BWXT 10-K/A (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1486957/000148695725000015/bwxt-20241231.htm",
+            "level": "official",
+            "date": "2025-03-19",
+            "quote": "Savannah River Mission Completion, LLC, a limited liability company formed by BWXT TSG, Amentum Environment & Energy, Inc. and Fluor Federal Services, Inc."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "Fluorが10-Kで、米国の競合の一社として挙げる",
+          "text_en": "Fluor names BWXT among US competitors",
+          "source": {
+            "label": "Fluor 10-K(2025年度)",
+            "label_en": "Fluor 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1124198/000112419826000007/flr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Burns & McDonnell, BWXT Technologies, Inc., EMCOR Group, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LNTH",
+      "ticker": "LNTH",
+      "name": "ランセウス",
+      "name_en": "Lantheus",
+      "sub": "放射性医薬品",
+      "sub_en": "Radiopharmaceuticals",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Lantheusが10-Kで、潜在的な競合としてBWXT Medicalを挙げる",
+          "text_en": "Lantheus names BWXT Medical as a potential competitor",
+          "source": {
+            "label": "Lantheus 10-K(2024年度)",
+            "label_en": "Lantheus 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1521036/000162828025007970/lnth-20241231.htm",
+            "level": "official",
+            "date": "2025-02-26",
+            "quote": "Jubilant Radiopharma, and potentially BWXT Medical."
+          }
+        }
+      ]
+    },
+    {
+      "id": "STDN",
+      "ticker": "STDN",
+      "name": "スタンダード・ニュークリア",
+      "name_en": "Standard Nuclear",
+      "sub": "原子炉燃料",
+      "sub_en": "Reactor fuel",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Standard Nuclearが、TRISO燃料工場を計画する競合としてBWXTを挙げる",
+          "text_en": "Standard Nuclear names BWXT as a planned TRISO fuel competitor",
+          "source": {
+            "label": "Standard Nuclear S-1/A",
+            "label_en": "Standard Nuclear S-1/A",
+            "url": "https://www.sec.gov/Archives/edgar/data/2086716/000121390026075742/ea0276071-11.htm",
+            "level": "official",
+            "date": "2026-07-07",
+            "quote": "while both BWXT and certain other prospective competitors have announced plans to establish dedicated TRISO fuel manufacturing facilities"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

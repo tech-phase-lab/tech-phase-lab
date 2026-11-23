@@ -1,0 +1,260 @@
+{
+  "root": {
+    "ticker": "FLS",
+    "name": "フローサーブ",
+    "cik": 30625,
+    "name_en": "Flowserve"
+  },
+  "rows": [
+    {
+      "ja": "買収・破談した合併",
+      "en": "Acquisitions & terminated merger"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "EMR",
+    "BKR",
+    "IR",
+    "ITT"
+  ],
+  "companies": [
+    {
+      "id": "GTLS",
+      "ticker": "GTLS",
+      "name": "チャート・インダストリーズ",
+      "name_en": "Chart Industries",
+      "sub": "ガス処理機器",
+      "sub_en": "Gas process equipment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Chartとの合併契約(2025年6月)を7月に解約",
+          "text_en": "Merger agreement with Chart (June 2025) was terminated in July",
+          "source": {
+            "label": "Chart Industries 10-K(2025年度)",
+            "label_en": "Chart Industries 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/892553/000089255326000027/gtls-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "On July 28, 2025, Chart, Flowserve, First Merger Sub and Second Merger Sub, entered into a Termination Agreement pursuant to Section 9.01(a) of the Flowserve Merger Agreement"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MOGAS",
+      "ticker": "MOGAS",
+      "name": "モーガス",
+      "name_en": "MOGAS Industries",
+      "sub": "高圧バルブ",
+      "sub_en": "Severe-service valves",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "MOGASを3.059億ドルで買収(2024年)",
+          "text_en": "Acquired MOGAS for $305.9 million (2024)",
+          "source": {
+            "label": "Flowserve 10-K(2025年度)",
+            "label_en": "Flowserve 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/30625/000003062526000003/fls-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "the $305.9 million payment for the acquisition of MOGAS in 2024"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Greenray",
+      "ticker": "Greenray",
+      "name": "グリーンレイ",
+      "name_en": "Greenray",
+      "sub": "産業機器",
+      "sub_en": "Industrial equipment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Greenrayを6590万ドルで買収(2025年)",
+          "text_en": "Acquired Greenray for $65.9 million (2025)",
+          "source": {
+            "label": "Flowserve 10-K(2025年度)",
+            "label_en": "Flowserve 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/30625/000003062526000003/fls-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "partially offset by the $65.9 million payment for the Greenray acquisition."
+          }
+        }
+      ]
+    },
+    {
+      "id": "EMR",
+      "ticker": "EMR",
+      "name": "エマソン・エレクトリック",
+      "name_en": "Emerson Electric",
+      "sub": "産業オートメーション",
+      "sub_en": "Industrial automation",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Flowserveが10-Kで、バルブの最大級の競合の筆頭に挙げる",
+          "text_en": "Flowserve lists Emerson first among its largest valve competitors",
+          "source": {
+            "label": "Flowserve 10-K(2025年度)",
+            "label_en": "Flowserve 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/30625/000003062526000003/fls-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Some of the largest valve industry competitors include Emerson Electric Co., Cameron International Corp. (a Schlumberger company), Baker Hughes, Rotork plc, Valmet, IMI Plc and Crane Co."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BKR",
+      "ticker": "BKR",
+      "name": "ベーカー・ヒューズ",
+      "name_en": "Baker Hughes",
+      "sub": "エネルギー機器",
+      "sub_en": "Energy technology",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Baker Hughesが10-Kで、主な競合の一社として挙げる(Flowserveもバルブの競合に挙げる)",
+          "text_en": "Baker Hughes names Flowserve among main competitors (and vice versa for valves)",
+          "source": {
+            "label": "Baker Hughes 10-K(2025年度)",
+            "label_en": "Baker Hughes 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1701605/000170160526000007/bkr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-05",
+            "quote": "IET main competitors include Siemens Energy, Solar (a Caterpillar company), Mitsubishi Heavy Industry, Sulzer, Flowserve, and Emerson."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Chartの合併解約に伴う違約金など2.58億ドルをFlowserveに支払った",
+          "text_en": "Paid Flowserve $258 million in termination fees on Chart's behalf",
+          "source": {
+            "label": "Baker Hughes 10-K(2025年度)",
+            "label_en": "Baker Hughes 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1701605/000170160526000007/bkr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-05",
+            "quote": "we paid $258 million for the termination fee and the reimbursement of certain expenses on behalf of Chart to Flowserve Corporation (\"Flowserve\")"
+          }
+        }
+      ]
+    },
+    {
+      "id": "IR",
+      "ticker": "IR",
+      "name": "インガソール・ランド",
+      "name_en": "Ingersoll Rand",
+      "sub": "圧縮機・ポンプ",
+      "sub_en": "Compressors & pumps",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Ingersoll Randが10-Kで、主な競合の一社として挙げる",
+          "text_en": "Ingersoll Rand names Flowserve among principal competitors",
+          "source": {
+            "label": "Ingersoll Rand 10-K(2025年度)",
+            "label_en": "Ingersoll Rand 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1699150/000162828026008617/iri-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Our principal competitors in sales of compression, vacuum and blower products include Atlas Copco, Flowserve, IDEX Corporation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ITT",
+      "ticker": "ITT",
+      "name": "ITT",
+      "name_en": "ITT",
+      "sub": "ポンプ・部品",
+      "sub_en": "Pumps & components",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Flowserveが10-Kで、ポンプの最大級の競合として挙げる",
+          "text_en": "Flowserve names ITT among its largest pump competitors",
+          "source": {
+            "label": "Flowserve 10-K(2025年度)",
+            "label_en": "Flowserve 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/30625/000003062526000003/fls-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Some of our largest industry competitors include: Sulzer Pumps; Ebara Corp.; Eagle Burgmann, which is a joint venture of two traditional global seal manufacturers; John Crane Inc., a unit of Smiths Group Plc; Weir Group Plc.; ITT Industries; and KSB SE & Co. KGaA."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Sulzer",
+      "ticker": "Sulzer",
+      "name": "スルザー",
+      "name_en": "Sulzer",
+      "sub": "ポンプ(スイス)",
+      "sub_en": "Pumps (Switzerland)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Flowserveが10-Kで、ポンプの最大級の競合の筆頭に挙げる",
+          "text_en": "Flowserve lists Sulzer first among its largest pump competitors",
+          "source": {
+            "label": "Flowserve 10-K(2025年度)",
+            "label_en": "Flowserve 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/30625/000003062526000003/fls-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Some of our largest industry competitors include: Sulzer Pumps; Ebara Corp."
+          }
+        }
+      ]
+    },
+    {
+      "id": "6361",
+      "ticker": "6361",
+      "name": "荏原製作所",
+      "name_en": "Ebara",
+      "sub": "ポンプ",
+      "sub_en": "Pumps",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Flowserveが10-Kで、ポンプの最大級の競合として挙げる",
+          "text_en": "Flowserve names Ebara among its largest pump competitors",
+          "source": {
+            "label": "Flowserve 10-K(2025年度)",
+            "label_en": "Flowserve 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/30625/000003062526000003/fls-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Some of our largest industry competitors include: Sulzer Pumps; Ebara Corp."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

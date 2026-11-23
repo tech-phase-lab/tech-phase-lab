@@ -1,0 +1,275 @@
+{
+  "root": {
+    "ticker": "CNH",
+    "name": "CNHインダストリアル",
+    "cik": 1567094,
+    "name_en": "CNH Industrial"
+  },
+  "rows": [
+    {
+      "ja": "部品の供給元(相手の資料に記載)",
+      "en": "Component suppliers (named in their filings)",
+      "above": true
+    },
+    {
+      "ja": "ディーラー・提携・買収",
+      "en": "Dealer, partner & acquisitions"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "DE",
+    "CAT",
+    "AGCO"
+  ],
+  "companies": [
+    {
+      "id": "TWI",
+      "ticker": "TWI",
+      "name": "タイタン・インターナショナル",
+      "name_en": "Titan International",
+      "sub": "農機用ホイール・タイヤ",
+      "sub_en": "Off-highway wheels & tires",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "主要顧客の一社としてCNHを挙げる",
+          "text_en": "Names CNH among its key customers",
+          "source": {
+            "label": "Titan International 10-K(2025年度)",
+            "label_en": "Titan International 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/899751/000089975126000007/twi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Customers including AGCO Corporation, Caterpillar Inc., CNH Global N.V., Deere & Company"
+          }
+        }
+      ]
+    },
+    {
+      "id": "OTTR",
+      "ticker": "OTTR",
+      "name": "オッターテイル",
+      "name_en": "Otter Tail",
+      "sub": "電力・製造",
+      "sub_en": "Utility & manufacturing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "製造部門の顧客の一社としてCNHを挙げる",
+          "text_en": "Its manufacturing arm names CNH among customers",
+          "source": {
+            "label": "Otter Tail 10-K(2025年度)",
+            "label_en": "Otter Tail 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1466593/000146659326000008/ottr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "including Caterpillar Inc., CNH Industrial N.V., Cummins Inc., Deere & Company"
+          }
+        }
+      ]
+    },
+    {
+      "id": "TITN",
+      "ticker": "TITN",
+      "name": "タイタン・マシナリー",
+      "name_en": "Titan Machinery",
+      "sub": "農機ディーラー",
+      "sub_en": "Equipment dealer",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "CNHのブランド(Case IH、New Hollandなど)を販売する大手ディーラー",
+          "text_en": "Large dealer of CNH brands such as Case IH and New Holland",
+          "source": {
+            "label": "Titan Machinery 10-K(2026年1月期)",
+            "label_en": "Titan Machinery 10-K (FY ended Jan 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1409171/000162828026022376/titn-20260131.htm",
+            "level": "official",
+            "date": "2026-03-31",
+            "quote": "Suppliers CNH-Case IH Agriculture, Case Construction, New Holland Agriculture, New Holland Construction and Steyr"
+          }
+        }
+      ]
+    },
+    {
+      "id": "IVCO",
+      "ticker": "Iveco",
+      "name": "イベコ・グループ",
+      "name_en": "Iveco Group",
+      "sub": "商用車(伊)",
+      "sub_en": "Commercial vehicles (Italy)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "旧グループ会社。欧州で互いに販売金融を支え合う",
+          "text_en": "Former group company; the two support each other's dealer financing",
+          "source": {
+            "label": "CNH 10-K(2025年度)",
+            "label_en": "CNH 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1567094/000156709426000006/cnhi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "The European Financial Services operations are supported by the Iveco Group's Financial Services segment."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Raven",
+      "ticker": "Raven",
+      "name": "レイブン・インダストリーズ",
+      "name_en": "Raven Industries",
+      "sub": "精密農業技術",
+      "sub_en": "Precision ag technology",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "精密農業のRavenを買収(2021年)",
+          "text_en": "Acquired Raven for precision agriculture (2021)",
+          "source": {
+            "label": "CNH 10-K(2025年度)",
+            "label_en": "CNH 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1567094/000156709426000006/cnhi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "In 2021, we acquired Raven Industries, Inc., (\"Raven\") enhancing our precision agriculture and automation expertise."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Hemisphere",
+      "ticker": "Hemisphere",
+      "name": "ヘミスフィアGNSS",
+      "name_en": "Hemisphere GNSS",
+      "sub": "高精度測位",
+      "sub_en": "Precision GNSS",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "高精度測位のHemisphereを買収(2023年)",
+          "text_en": "Acquired Hemisphere GNSS (2023)",
+          "source": {
+            "label": "CNH 10-K(2025年度)",
+            "label_en": "CNH 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1567094/000156709426000006/cnhi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "In 2023, we acquired Hemisphere GNSS (\"Hemisphere\")"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Sampierana",
+      "ticker": "Sampierana",
+      "name": "サンピエラーナ",
+      "name_en": "Sampierana",
+      "sub": "小型ショベル(伊)",
+      "sub_en": "Mini excavators (Italy)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "小型ショベルの製造会社を買収(2021年)",
+          "text_en": "Acquired the mini and midi excavator maker (2021)",
+          "source": {
+            "label": "CNH 10-K(2025年度)",
+            "label_en": "CNH 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1567094/000156709426000006/cnhi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "In 2021, we completed the acquisition of Sampierana S.p.A."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DE",
+      "ticker": "DE",
+      "name": "ディア",
+      "name_en": "Deere",
+      "sub": "農機・建機",
+      "sub_en": "Ag & construction equipment",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Deereが10-Kで、農業機械の世界的な競合として挙げる",
+          "text_en": "Deere names CNH among global agriculture competitors",
+          "source": {
+            "label": "Deere 10-K(2025年10月期)",
+            "label_en": "Deere 10-K (FY ended Oct 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/315189/000110465925122321/de-20251102x10k.htm",
+            "level": "official",
+            "date": "2025-12-18",
+            "quote": "The competitive environment for the agriculture and turf operations includes some global competitors, such as AGCO Corporation, CLAAS KGaA mbH, CNH Industrial N.V."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CAT",
+      "ticker": "CAT",
+      "name": "キャタピラー",
+      "name_en": "Caterpillar",
+      "sub": "建機",
+      "sub_en": "Construction equipment",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Caterpillarが10-Kで、世界の競合としてCASEを挙げる",
+          "text_en": "Caterpillar names CASE (CNH) among global competitors",
+          "source": {
+            "label": "Caterpillar 10-K(2025年度)",
+            "label_en": "Caterpillar 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/18230/000001823026000008/cat-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Examples of global competitors include CASE (part of CNH Industrial N.V.)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AGCO",
+      "ticker": "AGCO",
+      "name": "AGCO",
+      "name_en": "AGCO",
+      "sub": "農機",
+      "sub_en": "Agricultural equipment",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "AGCOが10-Kで、世界の2大競合の一社として挙げる",
+          "text_en": "AGCO names CNH one of its two principal worldwide competitors",
+          "source": {
+            "label": "AGCO 10-K(2024年度)",
+            "label_en": "AGCO 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/880266/000088026625000011/agco-20241231.htm",
+            "level": "official",
+            "date": "2025-02-24",
+            "quote": "Our two principal competitors on a worldwide basis are Deere & Company and CNH Industrial N.V."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

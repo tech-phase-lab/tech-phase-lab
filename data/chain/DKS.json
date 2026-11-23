@@ -1,0 +1,225 @@
+{
+  "root": {
+    "ticker": "DKS",
+    "name": "ディックス・スポーティング・グッズ",
+    "cik": 1089063,
+    "name_en": "Dick's Sporting Goods"
+  },
+  "rows": [
+    {
+      "ja": "仕入先",
+      "en": "Suppliers",
+      "above": true
+    },
+    {
+      "ja": "買収・提携・家主",
+      "en": "Acquisition, partner & landlords"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "BKE"
+  ],
+  "companies": [
+    {
+      "id": "NKE",
+      "ticker": "NKE",
+      "name": "ナイキ",
+      "name_en": "Nike",
+      "sub": "スポーツ用品",
+      "sub_en": "Athletic apparel & footwear",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "最大の仕入先(商品仕入れの約31%)",
+          "text_en": "Its largest vendor (about 31% of merchandise purchases)",
+          "source": {
+            "label": "Dick's Sporting Goods 10-K(2026年1月期)",
+            "label_en": "Dick's Sporting Goods 10-K (FY ended Jan 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1089063/000108906326000007/dks-20260131.htm",
+            "level": "official",
+            "date": "2026-03-27",
+            "quote": "with Nike, our largest vendor, representing approximately 31% of our consolidated merchandise purchases within the DICK'S and Foot Locker Businesses."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FL",
+      "ticker": "Foot Locker",
+      "name": "フット・ロッカー",
+      "name_en": "Foot Locker",
+      "sub": "スニーカー小売",
+      "sub_en": "Athletic footwear retail",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Foot Lockerを買収(2025年9月完了)",
+          "text_en": "Acquired Foot Locker (completed September 2025)",
+          "source": {
+            "label": "Dick's Sporting Goods 10-K(2026年1月期)",
+            "label_en": "Dick's Sporting Goods 10-K (FY ended Jan 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1089063/000108906326000007/dks-20260131.htm",
+            "level": "official",
+            "date": "2026-03-27",
+            "quote": "On September 8, 2025, we completed the acquisition of Foot Locker, a leading footwear and apparel retailer"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SYF",
+      "ticker": "SYF",
+      "name": "シンクロニー・フィナンシャル",
+      "name_en": "Synchrony Financial",
+      "sub": "カード",
+      "sub_en": "Credit cards",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "提携クレジットカードのパートナー",
+          "text_en": "Its co-brand credit card partner",
+          "source": {
+            "label": "Synchrony 10-K(2024年度)",
+            "label_en": "Synchrony 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1601712/000160171225000044/syf-20241231.htm",
+            "level": "official",
+            "date": "2025-02-07",
+            "quote": "Our Lifestyle sales platform partners include a wide range of key retailers in the apparel, specialty retail, outdoor, music and luxury industry, such as American Eagle, Dick's Sporting Goods"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MAC",
+      "ticker": "MAC",
+      "name": "メイスリッチ",
+      "name_en": "Macerich",
+      "sub": "ショッピングモールREIT",
+      "sub_en": "Mall REIT",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大のテナント(67店舗、賃料の4.0%)",
+          "text_en": "Its largest tenant (67 locations, 4.0% of rents)",
+          "source": {
+            "label": "Macerich 10-K(2025年度)",
+            "label_en": "Macerich 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/912242/000091224226000016/mac-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "% of Total Rents Dick's Sporting Goods, Inc. Champs Sports, Dick's House of Sport, Dick's Sporting Goods, fly zone by Kids Foot Locker, Foot Locker, Going Going Gone!, House of Hoops by Foot Locker, Kids Foot Locker, Moosejaw 67 4.0 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SPG",
+      "ticker": "SPG",
+      "name": "サイモン・プロパティ・グループ",
+      "name_en": "Simon Property Group",
+      "sub": "ショッピングモールREIT",
+      "sub_en": "Mall REIT",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Brea Mallなどのテナント",
+          "text_en": "Tenant at malls such as Brea Mall",
+          "source": {
+            "label": "Simon Property Group 10-K(2025年度)",
+            "label_en": "Simon Property Group 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1063761/000110465926019419/spg-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Nordstrom, Macy's (8), JCPenney, Life Time (6), Dick's Sporting Goods (6)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CBL",
+      "ticker": "CBL",
+      "name": "CBL&アソシエイツ",
+      "name_en": "CBL & Associates",
+      "sub": "ショッピングモールREIT",
+      "sub_en": "Mall REIT",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "旧Searsの区画を取得し再開発へ",
+          "text_en": "Acquired a former Sears lease from it for redevelopment",
+          "source": {
+            "label": "CBL & Associates 10-K(2024年度)",
+            "label_en": "CBL & Associates 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/910612/000095017025030677/cbl-20241231.htm",
+            "level": "official",
+            "date": "2025-03-03",
+            "quote": "Includes a former Sears lease acquired by Dick's Sporting Goods, Inc. for future redevelopment."
+          }
+        }
+      ]
+    },
+    {
+      "id": "UE",
+      "ticker": "UE",
+      "name": "アーバン・エッジ・プロパティーズ",
+      "name_en": "Urban Edge Properties",
+      "sub": "商業施設REIT",
+      "sub_en": "Shopping center REIT",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Sunrise Mallの主要テナント",
+          "text_en": "A major tenant at its Sunrise Mall",
+          "source": {
+            "label": "Urban Edge Properties 10-K(2024年度)",
+            "label_en": "Urban Edge Properties 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1611547/000161154725000018/ue-20241231.htm",
+            "level": "official",
+            "date": "2025-02-12",
+            "quote": "Sunrise Mall (4)(5)(6) 1,228,000 25.6% 7.35 Macy's, Dick's Sporting Goods"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BKE",
+      "ticker": "BKE",
+      "name": "バックル",
+      "name_en": "Buckle",
+      "sub": "衣料小売",
+      "sub_en": "Apparel retail",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Buckleが10-Kで、紳士服の主な競合として挙げる",
+          "text_en": "Buckle names Dick's among its main menswear competitors",
+          "source": {
+            "label": "Buckle 10-K(2025年1月期)",
+            "label_en": "Buckle 10-K (FY ended Jan 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/885245/000088524525000052/bke-20250201.htm",
+            "level": "official",
+            "date": "2025-04-02",
+            "quote": "In the men's merchandise area, the Company competes primarily with specialty retailers such as Abercrombie & Fitch, American Eagle Outfitters, Boot Barn, Dick's Sporting Goods"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

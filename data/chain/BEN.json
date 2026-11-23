@@ -1,0 +1,248 @@
+{
+  "root": {
+    "ticker": "BEN",
+    "name": "フランクリン・リソーシズ",
+    "cik": 38777,
+    "name_en": "Franklin Resources (Franklin Templeton)"
+  },
+  "rows": [
+    {
+      "ja": "運用を受託する上場ビークル・提携",
+      "en": "Managed listed vehicles & partners"
+    },
+    {
+      "ja": "買収・取引",
+      "en": "Acquisitions & deals"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "VOYA"
+  ],
+  "companies": [
+    {
+      "id": "FBRT",
+      "ticker": "FBRT",
+      "name": "フランクリンBSPリアルティ・トラスト",
+      "name_en": "Franklin BSP Realty Trust",
+      "sub": "不動産融資REIT",
+      "sub_en": "Mortgage REIT",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Franklin Templeton子会社が運用を受託",
+          "text_en": "Managed by a Franklin Templeton subsidiary",
+          "source": {
+            "label": "Franklin BSP Realty Trust 10-K(2024年度)",
+            "label_en": "Franklin BSP Realty Trust 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1562528/000156252825000013/bsprt-20241231.htm",
+            "level": "official",
+            "date": "2025-02-26",
+            "quote": "We have no employees and rely on the Advisor, a wholly-owned subsidiary of Franklin Templeton, to manage our day-to-day operations pursuant to the Advisory Agreement."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FRBP",
+      "ticker": "FRBP",
+      "name": "フランクリンBSPキャピタル",
+      "name_en": "Franklin BSP Capital",
+      "sub": "BDC(融資)",
+      "sub_en": "Business development company",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Franklin Templeton子会社が運用を受託",
+          "text_en": "Managed by a Franklin Templeton subsidiary",
+          "source": {
+            "label": "Franklin BSP Capital 10-K(2024年度)",
+            "label_en": "Franklin BSP Capital 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1825248/000182524825000004/fbcc-20241231.htm",
+            "level": "official",
+            "date": "2025-03-14",
+            "quote": "We have no employees and rely on the Adviser, a wholly-owned subsidiary of Franklin Templeton, to manage our day-to-day operations"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ETOR",
+      "ticker": "ETOR",
+      "name": "イートロ",
+      "name_en": "eToro",
+      "sub": "投資アプリ",
+      "sub_en": "Trading platform",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Franklin Templetonと組んでターゲットデート型ポートフォリオを開始(2025年)",
+          "text_en": "Launched target-date portfolios with Franklin Templeton (2025)",
+          "source": {
+            "label": "eToro 20-F(2025年度)",
+            "label_en": "eToro 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1493318/000121390026022034/ea0278371-20f_etoro.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "In 2025, we launched six portfolios in partnership with Franklin Templeton to help users invest via target-date strategies."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Empower",
+      "ticker": "Empower",
+      "name": "エンパワー",
+      "name_en": "Empower",
+      "sub": "退職年金",
+      "sub_en": "Retirement services",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "プライベート資産の取り組みで協業する運用会社の一社",
+          "text_en": "One of the asset managers in its private markets initiative",
+          "source": {
+            "label": "Empower Annuity Insurance S-1",
+            "label_en": "Empower Annuity Insurance S-1",
+            "url": "https://www.sec.gov/Archives/edgar/data/744455/000074445526000013/a2026-sx1groupxfinalfiling.htm",
+            "level": "official",
+            "date": "2026-04-23",
+            "quote": "The initiative was launched in collaboration with asset managers including Apollo, Franklin Templeton, Goldman Sachs"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BNY",
+      "ticker": "BNY",
+      "name": "BNY",
+      "name_en": "BNY",
+      "sub": "カストディ・事務",
+      "sub_en": "Custody & fund services",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Franklin Templetonの暗号資産ETFの事務・記録を受託",
+          "text_en": "Fund administrator for the Franklin Templeton crypto ETF",
+          "source": {
+            "label": "Franklin Templeton Digital Holdings Trust 10-K",
+            "label_en": "Franklin Templeton Digital Holdings Trust 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1992870/000114036126026744/ef20070486_10k.htm",
+            "level": "official",
+            "date": "2026-06-29",
+            "quote": "BNY Mellon Asset Servicing keeps the operational records of the Trust and prepares and files certain regulatory filings on behalf of the Trust."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Putnam",
+      "ticker": "Putnam",
+      "name": "パトナム",
+      "name_en": "Putnam Investments",
+      "sub": "資産運用",
+      "sub_en": "Asset management",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "運用会社Putnamを買収(2024年1月)",
+          "text_en": "Acquired Putnam (January 2024)",
+          "source": {
+            "label": "Franklin Resources 10-K(2026年9月期)",
+            "label_en": "Franklin Resources 10-K (FY ended Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/38777/000003877726000289/ben-20260930.htm",
+            "level": "official",
+            "date": "2026-11-09",
+            "quote": "(xii) the Putnam global investment firm in January 2024"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Apera",
+      "ticker": "Apera",
+      "name": "アペラ",
+      "name_en": "Apera Asset Management",
+      "sub": "私募クレジット(欧州)",
+      "sub_en": "Private credit (Europe)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "欧州の私募クレジット運用会社を買収(2025年10月)",
+          "text_en": "Acquired the pan-European private credit firm (October 2025)",
+          "source": {
+            "label": "Franklin Resources 10-K(2026年9月期)",
+            "label_en": "Franklin Resources 10-K (FY ended Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/38777/000003877726000289/ben-20260930.htm",
+            "level": "official",
+            "date": "2026-11-09",
+            "quote": "On October 1, 2025, we acquired Apera Asset Management (\"Apera\"), a pan-European private credit firm."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Encina",
+      "ticker": "Encina",
+      "name": "エンシナ・レンダー・ファイナンス",
+      "name_en": "Encina Lender Finance",
+      "sub": "資産担保融資",
+      "sub_en": "Asset-based lending",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "子会社BSPがEncinaと取引し、約4.8億ドルの融資枠を取得(2026年10月)",
+          "text_en": "Its BSP unit bought about $480 million of Encina commitments (October 2026)",
+          "source": {
+            "label": "Franklin Resources 10-K(2026年9月期)",
+            "label_en": "Franklin Resources 10-K (FY ended Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/38777/000003877726000289/ben-20260930.htm",
+            "level": "official",
+            "date": "2026-11-09",
+            "quote": "completed a transaction with Encina Lender Finance (Encina) that expands BSP's asset-backed finance platform."
+          }
+        }
+      ]
+    },
+    {
+      "id": "VOYA",
+      "ticker": "VOYA",
+      "name": "ボヤ・ファイナンシャル",
+      "name_en": "Voya Financial",
+      "sub": "保険・資産運用",
+      "sub_en": "Insurance & asset management",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Voyaが10-Kで、主な競合の一社として挙げる",
+          "text_en": "Voya names Franklin Templeton among its principal competitors",
+          "source": {
+            "label": "Voya Financial 10-K(2024年度)",
+            "label_en": "Voya Financial 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1535929/000153592925000017/voya-20241231.htm",
+            "level": "official",
+            "date": "2025-02-21",
+            "quote": "Invesco, T. Rowe Price, Franklin Templeton, Janus Henderson and Virtus Investment Partners."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
