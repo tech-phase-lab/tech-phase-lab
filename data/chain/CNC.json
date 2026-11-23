@@ -1,0 +1,226 @@
+{
+  "root": {
+    "ticker": "CNC",
+    "name": "センティーン",
+    "cik": 1071739,
+    "name_en": "Centene"
+  },
+  "rows": [
+    {
+      "ja": "委託先・提携先(相手の資料に記載)",
+      "en": "Service partners (named in their filings)",
+      "above": true
+    },
+    {
+      "ja": "事業売却・その他の取引",
+      "en": "Divestitures & other dealings"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "MOH",
+    "CLOV"
+  ],
+  "companies": [
+    {
+      "id": "CI",
+      "ticker": "CI",
+      "name": "シグナ・グループ",
+      "name_en": "Cigna Group",
+      "sub": "医療保険・PBM",
+      "sub_en": "Health insurance & PBM",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "傘下Express Scriptsが薬剤給付管理を複数年で受託(2024年1月から)",
+          "text_en": "Its Express Scripts unit manages Centene's pharmacy benefits under a multi-year deal from January 2024",
+          "source": {
+            "label": "Cigna 10-K(2024年度)",
+            "label_en": "Cigna 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1739940/000173994025000009/ci-20241231.htm",
+            "level": "official",
+            "date": "2025-02-27",
+            "quote": "Express Scripts and Centene Corporation (\"Centene\") have a multi-year agreement, which began January 1, 2024, to manage pharmacy benefit services"
+          }
+        }
+      ]
+    },
+    {
+      "id": "EVH",
+      "ticker": "EVH",
+      "name": "エボレント・ヘルス",
+      "name_en": "Evolent Health",
+      "sub": "専門医療の給付管理",
+      "sub_en": "Specialty care management",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "NIA買収などを通じてCenteneとの提携が拡大",
+          "text_en": "Its partnership with Centene grew through the NIA acquisition and other work",
+          "source": {
+            "label": "Evolent Health 10-K(2025年度)",
+            "label_en": "Evolent Health 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1628908/000162890826000015/evh-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "In addition, our partnership with Centene has grown, both as a result of the NIA acquisition and from other partnership opportunities."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GOCO",
+      "ticker": "GOCO",
+      "name": "ゴーヘルス",
+      "name_en": "GoHealth",
+      "sub": "保険販売",
+      "sub_en": "Insurance brokerage",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "主要な保険会社パートナーの一社(売上の7.6%、2025年)",
+          "text_en": "A main health plan partner (7.6% of revenue in 2025)",
+          "source": {
+            "label": "GoHealth 10-K(2025年度)",
+            "label_en": "GoHealth 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1808220/000162828026022454/goco-20251231.htm",
+            "level": "official",
+            "date": "2026-03-31",
+            "quote": "the primary health plan partners that we served were United, Humana, Elevance, Aetna and Centene."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PIII",
+      "ticker": "PIII",
+      "name": "P3ヘルス・パートナーズ",
+      "name_en": "P3 Health Partners",
+      "sub": "医療提供",
+      "sub_en": "Care provider",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "主要な支払者(保険会社)の一社としてCenteneを挙げる",
+          "text_en": "Names Centene among its key payors",
+          "source": {
+            "label": "P3 Health Partners 10-K(2024年度)",
+            "label_en": "P3 Health Partners 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1832511/000162828025015305/piii-20241231.htm",
+            "level": "official",
+            "date": "2025-03-28",
+            "quote": "in particular with key payors such as Centene Corporation, Atrio Health Plans, United Healthcare and Aetna"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ASTH",
+      "ticker": "ASTH",
+      "name": "アストラナ・ヘルス",
+      "name_en": "Astrana Health",
+      "sub": "医療提供",
+      "sub_en": "Care provider",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Centene傘下の事業を買う契約にCenteneも当事者として参加(2024年7月)",
+          "text_en": "Bought businesses under an agreement to which Centene was also a party (July 2024)",
+          "source": {
+            "label": "Astrana Health 10-K(2024年度)",
+            "label_en": "Astrana Health 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1083446/000095017025039122/asth-20241231.htm",
+            "level": "official",
+            "date": "2025-03-14",
+            "quote": "and solely with respect to certain sections of the Purchase Agreement, Centene Corporation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "INDV",
+      "ticker": "INDV",
+      "name": "インディビオ",
+      "name_en": "Indivior",
+      "sub": "医薬品",
+      "sub_en": "Pharmaceuticals",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "反トラスト訴訟でCenteneなどに4000万ドルを払う和解(2024年11月)",
+          "text_en": "Settled antitrust claims with Centene and Humana for $40 million (November 2024)",
+          "source": {
+            "label": "Indivior 10-K(2024年度)",
+            "label_en": "Indivior 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1625297/000162529725000016/indv-20241231.htm",
+            "level": "official",
+            "date": "2025-03-03",
+            "quote": "Under the agreement, Indivior Inc. and Indivior Solutions Inc. will pay a total of $ 40 million to the Humana and Centene companies."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MOH",
+      "ticker": "MOH",
+      "name": "モリナ・ヘルスケア",
+      "name_en": "Molina Healthcare",
+      "sub": "医療保険(メディケイド)",
+      "sub_en": "Health insurance (Medicaid)",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Molinaが10-Kで、メディケイドとマーケットプレイスの主な競合として挙げる",
+          "text_en": "Molina names Centene its primary low-income Marketplace competitor",
+          "source": {
+            "label": "Molina Healthcare 10-K(2024年度)",
+            "label_en": "Molina Healthcare 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1179929/000117992925000023/moh-20241231.htm",
+            "level": "official",
+            "date": "2025-02-11",
+            "quote": "Our primary competitor for low-income Marketplace membership is Centene Corporation."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CLOV",
+      "ticker": "CLOV",
+      "name": "クローバー・ヘルス",
+      "name_en": "Clover Health",
+      "sub": "医療保険(MA)",
+      "sub_en": "Medicare Advantage",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Cloverが10-Kで、メディケア・アドバンテージの大手競合として挙げる",
+          "text_en": "Clover names Centene among large Medicare Advantage competitors",
+          "source": {
+            "label": "Clover Health 10-K(2025年度)",
+            "label_en": "Clover Health 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1801170/000180117026000057/clov-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our competitors generally include large, national insurers, such as United Health, Aetna, Humana, Centene, and Elevance Health"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

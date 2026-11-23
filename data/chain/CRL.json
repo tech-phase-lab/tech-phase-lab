@@ -1,0 +1,243 @@
+{
+  "root": {
+    "ticker": "CRL",
+    "name": "チャールズ・リバー・ラボラトリーズ",
+    "cik": 1100682,
+    "name_en": "Charles River Laboratories"
+  },
+  "rows": [
+    {
+      "ja": "供給元・買収(上流)",
+      "en": "Suppliers & acquisitions (upstream)",
+      "above": true
+    },
+    {
+      "ja": "受託の顧客(相手の資料に記載)",
+      "en": "Service clients (named in their filings)"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "HBIO",
+      "ticker": "HBIO",
+      "name": "ハーバード・バイオサイエンス",
+      "name_en": "Harvard Bioscience",
+      "sub": "研究用機器",
+      "sub_en": "Lab instruments",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "研究受託(CRO)の顧客の一社として挙げる",
+          "text_en": "Lists Charles River among its CRO customers",
+          "source": {
+            "label": "Harvard Bioscience 10-K(2025年度)",
+            "label_en": "Harvard Bioscience 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1123494/000117184326001548/hbio20251231_10k.htm",
+            "level": "official",
+            "date": "2026-03-13",
+            "quote": "Our CRO customers include Charles River Laboratories, Labcorp and Wuxi AppTec."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Noveprim",
+      "ticker": "Noveprim",
+      "name": "ノベプリム",
+      "name_en": "Noveprim Group",
+      "sub": "実験用霊長類の供給(モーリシャス)",
+      "sub_en": "Research primate supplier (Mauritius)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "実験用霊長類の主要な供給会社の持分を90%に引き上げ(2023年11月)",
+          "text_en": "Raised its stake in a leading research primate supplier to 90% (November 2023)",
+          "source": {
+            "label": "Charles River 10-K(2025年度)",
+            "label_en": "Charles River 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1100682/000110068226000022/crl-20251227.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "On November 30, 2023, we completed our acquisition of an additional 41% equity interest of Noveprim Group (Noveprim), a leading supplier of NHPs located in Mauritius, resulting in a 90% controlling interest."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SAMDI",
+      "ticker": "SAMDI Tech",
+      "name": "SAMDIテック",
+      "name_en": "SAMDI Tech",
+      "sub": "創薬スクリーニング",
+      "sub_en": "Drug discovery screening",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "高速スクリーニングのSAMDIを2023年1月に買収",
+          "text_en": "Acquired high-throughput screening company SAMDI in January 2023",
+          "source": {
+            "label": "Charles River 10-K(2025年度)",
+            "label_en": "Charles River 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1100682/000110068226000022/crl-20251227.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "On January 27, 2023, we acquired SAMDI Tech, Inc., (SAMDI), a leading provider of high-quality, label-free high-throughput screening (HTS) solutions for drug discovery research."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CBIO",
+      "ticker": "CBIO",
+      "name": "クレセント・バイオファーマ",
+      "name_en": "Crescent Biopharma",
+      "sub": "バイオ",
+      "sub_en": "Biotech",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "研究受託の基本契約(2024年12月)",
+          "text_en": "Master services agreement for research services (December 2024)",
+          "source": {
+            "label": "Crescent Biopharma 10-K(2025年度)",
+            "label_en": "Crescent Biopharma 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1253689/000162828026011983/cbio-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "On December 6, 2024, we entered into a master services agreement (the \"Charles River MSA\") with Charles River Laboratories, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ATRA",
+      "ticker": "ATRA",
+      "name": "アタラ・バイオセラピューティクス",
+      "name_en": "Atara Biotherapeutics",
+      "sub": "細胞治療",
+      "sub_en": "Cell therapy",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "細胞治療薬の商用製造を委託(契約は終了に向け縮小)",
+          "text_en": "Commercial manufacturing services agreement, now being wound down",
+          "source": {
+            "label": "Atara Biotherapeutics 10-K(2024年度)",
+            "label_en": "Atara Biotherapeutics 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1604464/000095017025035507/atra-20241231.htm",
+            "level": "official",
+            "date": "2025-03-07",
+            "quote": "We also worked with Charles River Laboratories (CRL) pursuant to a Commercial Manufacturing Services Agreement (CRL MSA) that we entered into in December 2019."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BICX",
+      "ticker": "BICX",
+      "name": "バイオコーRx",
+      "name_en": "BioCorRx",
+      "sub": "依存症治療",
+      "sub_en": "Addiction treatment",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "研究受託の基本契約(2019年5月)",
+          "text_en": "Master services agreement (May 2019)",
+          "source": {
+            "label": "BioCorRx 10-K(2024年度)",
+            "label_en": "BioCorRx 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1443863/000147793225002219/bicx_10k.htm",
+            "level": "official",
+            "date": "2025-03-31",
+            "quote": "On May 24, 2019, the Company entered into a Master Services Agreement (the \"MSA\") with Charles River Laboratories, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CDT",
+      "ticker": "CDT",
+      "name": "コンジット・ファーマシューティカルズ",
+      "name_en": "Conduit Pharmaceuticals",
+      "sub": "創薬",
+      "sub_en": "Drug development",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "研究受託の基本契約(2025年2月)",
+          "text_en": "Master service agreement (February 2025)",
+          "source": {
+            "label": "Conduit Pharmaceuticals 10-K(2024年度)",
+            "label_en": "Conduit Pharmaceuticals 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1896212/000164117225001246/form10-k.htm",
+            "level": "official",
+            "date": "2025-03-28",
+            "quote": "Master Service Agreement - Conduit and Charles River Laboratories On February 7, 2025, Conduit and Charles River Laboratories (\"Charles River\")"
+          }
+        }
+      ]
+    },
+    {
+      "id": "FBLG",
+      "ticker": "FBLG",
+      "name": "ファイブロバイオロジクス",
+      "name_en": "FibroBiologics",
+      "sub": "細胞治療",
+      "sub_en": "Cell therapy",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "研究受託の基本契約(2024年9月)",
+          "text_en": "Master services agreement (September 2024)",
+          "source": {
+            "label": "FibroBiologics 10-K(2024年度)",
+            "label_en": "FibroBiologics 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1958777/000164117225001691/form10-k.htm",
+            "level": "official",
+            "date": "2025-03-31",
+            "quote": "Master Services Agreement, effective September 19, 2024, between FibroBiologics, Inc. and Charles River Laboratories, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TNFA",
+      "ticker": "TNFA",
+      "name": "TNFファーマシューティカルズ",
+      "name_en": "TNF Pharmaceuticals",
+      "sub": "創薬",
+      "sub_en": "Drug development",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "安全性試験を実施",
+          "text_en": "Ran a safety study for the company",
+          "source": {
+            "label": "TNF Pharmaceuticals 10-K(2024年度)",
+            "label_en": "TNF Pharmaceuticals 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1321834/000164117225003814/form10-k.htm",
+            "level": "official",
+            "date": "2025-04-11",
+            "quote": "Additionally, the Company together with h Charles River Laboratories has conducted a study titled \"A 13 Week Electroencephalogram Safety Study of MYMD-1 by Oral Gavage Administration in Beagle Dog.\""
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

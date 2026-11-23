@@ -1,0 +1,276 @@
+{
+  "root": {
+    "ticker": "EFX",
+    "name": "エキファックス",
+    "cik": 33185,
+    "name_en": "Equifax"
+  },
+  "rows": [
+    {
+      "ja": "提携・委託先",
+      "en": "Partners & providers",
+      "above": true
+    },
+    {
+      "ja": "買収",
+      "en": "Acquisitions"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "TRU",
+    "DNB",
+    "GEN",
+    "CRMZ"
+  ],
+  "companies": [
+    {
+      "id": "FICO",
+      "ticker": "FICO",
+      "name": "フェア・アイザック",
+      "name_en": "Fair Isaac (FICO)",
+      "sub": "信用スコア",
+      "sub_en": "Credit scoring",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "FICOスコアを販売する提携先。3大信用情報機関でFICO売上の51%",
+          "text_en": "Distributes FICO scores; the three bureaus are 51% of FICO revenue",
+          "source": {
+            "label": "Fair Isaac 10-K(2025年9月期)",
+            "label_en": "Fair Isaac 10-K (FY ended Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/814547/000081454725000030/fico-20250930.htm",
+            "level": "official",
+            "date": "2025-11-07",
+            "quote": "During fiscal 2025, 2024 and 2023, revenues generated from our agreements with Experian, TransUnion and Equifax collectively accounted for 51%, 45% and 41% of our total revenues, respectively."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GOOGL",
+      "ticker": "GOOGL",
+      "name": "グーグル",
+      "name_en": "Google",
+      "sub": "クラウド",
+      "sub_en": "Cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "クラウドサービスを購入し、ネットワーク・セキュリティの一部を委託",
+          "text_en": "Buys Google cloud services and outsources parts of its network and security",
+          "source": {
+            "label": "Equifax 10-K(2025年度)",
+            "label_en": "Equifax 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/33185/000003318526000010/efx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Under our agreement with Google, we have agreed to purchase cloud platform services and cloud marketplace software and we have outsourced certain areas of our network and security infrastructure."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NU",
+      "ticker": "NU",
+      "name": "ヌー・ホールディングス",
+      "name_en": "Nu Holdings",
+      "sub": "デジタル銀行(ブラジル)",
+      "sub_en": "Digital bank (Brazil)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Equifax傘下Boa Vistaの分析を自社の与信実績の説明に使う",
+          "text_en": "Cites Equifax Boa Vista analysis of its credit performance",
+          "source": {
+            "label": "Nu Holdings 20-F(2024年度)",
+            "label_en": "Nu Holdings 20-F (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1691493/000129281425001517/nuform20f_2024.htm",
+            "level": "official",
+            "date": "2025-04-16",
+            "quote": "based on Equifax | Boa Vista analysis."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BVS",
+      "ticker": "Boa Vista",
+      "name": "ボア・ビスタ(BVS)",
+      "name_en": "Boa Vista Servicos",
+      "sub": "信用情報(ブラジル)",
+      "sub_en": "Credit bureau (Brazil)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ブラジルの信用情報会社を約8.7億ドルで完全子会社化(2023年8月)",
+          "text_en": "Bought the rest of the Brazilian credit bureau for about $870 million (August 2023)",
+          "source": {
+            "label": "Equifax 10-K(2025年度)",
+            "label_en": "Equifax 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/33185/000003318526000010/efx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "On August 7, 2023, we acquired the remaining interest of our investment in BVS, a consumer and commercial credit information company in Brazil"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Appriss",
+      "ticker": "Appriss Insights",
+      "name": "アプリス・インサイツ",
+      "name_en": "Appriss Insights",
+      "sub": "犯罪・身元情報",
+      "sub_en": "Criminal & identity data",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "身元調査データ会社を買収(社債の調達資金を充当)",
+          "text_en": "Acquired the background data company, funded in part by notes",
+          "source": {
+            "label": "Equifax 10-K(2025年度)",
+            "label_en": "Equifax 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/33185/000003318526000010/efx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "including the Company's acquisition of Appriss Insights."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FICB",
+      "ticker": "Food Industry Credit Bureau",
+      "name": "フード・インダストリー・クレジット・ビューロー",
+      "name_en": "The Food Industry Credit Bureau",
+      "sub": "業界信用情報",
+      "sub_en": "Industry credit bureau",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2023年に買収(国際部門)",
+          "text_en": "Acquired in 2023 (International segment)",
+          "source": {
+            "label": "Equifax 10-K(2025年度)",
+            "label_en": "Equifax 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/33185/000003318526000010/efx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "During 2023, we acquired The Food Industry Credit Bureau and BVS within the International operating segment."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TRU",
+      "ticker": "TRU",
+      "name": "トランスユニオン",
+      "name_en": "TransUnion",
+      "sub": "信用情報",
+      "sub_en": "Credit bureau",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "TransUnionが10-Kで、競合の筆頭に挙げる",
+          "text_en": "TransUnion names Equifax first among its competitors",
+          "source": {
+            "label": "TransUnion 10-K(2024年度)",
+            "label_en": "TransUnion 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1552033/000155203325000015/tru-20241231.htm",
+            "level": "official",
+            "date": "2025-02-13",
+            "quote": "In our International segment, we generally compete with Equifax and Experian directly or indirectly through their subsidiaries or investments."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DNB",
+      "ticker": "DNB",
+      "name": "ダン・アンド・ブラッドストリート",
+      "name_en": "Dun & Bradstreet",
+      "sub": "企業信用情報",
+      "sub_en": "Business credit data",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "D&Bが10-Kで、北米の主な競合として挙げる",
+          "text_en": "D&B names Equifax among its main North American competitors",
+          "source": {
+            "label": "Dun & Bradstreet 10-K(2024年度)",
+            "label_en": "Dun & Bradstreet 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1799208/000179920825000012/dnb-20241231.htm",
+            "level": "official",
+            "date": "2025-02-21",
+            "quote": "Experian and Creditsafe in Europe and Experian and Equifax in North America."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GEN",
+      "ticker": "GEN",
+      "name": "ジェン・デジタル",
+      "name_en": "Gen Digital",
+      "sub": "個人向けセキュリティ",
+      "sub_en": "Consumer security",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Gen Digitalが10-Kで、個人情報保護の主な競合の筆頭に挙げる",
+          "text_en": "Gen Digital lists Equifax first among identity protection competitors",
+          "source": {
+            "label": "Gen Digital 10-K(2025年3月期)",
+            "label_en": "Gen Digital 10-K (FY ended Mar 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/849399/000084939925000033/gen-20250328.htm",
+            "level": "official",
+            "date": "2025-05-15",
+            "quote": "Our principal competitors in this segment include credit bureaus such as Equifax, Experian and TransUnion"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CRMZ",
+      "ticker": "CRMZ",
+      "name": "クレジットリスクモニター",
+      "name_en": "CreditRiskMonitor",
+      "sub": "企業信用分析",
+      "sub_en": "Business credit analytics",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "CreditRiskMonitorが10-Kで、企業信用情報の競合として挙げる",
+          "text_en": "CreditRiskMonitor names Equifax's commercial credit offerings as competition",
+          "source": {
+            "label": "CreditRiskMonitor 10-K(2025年度)",
+            "label_en": "CreditRiskMonitor 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/315958/000114036126010883/ef20060689_10k.htm",
+            "level": "official",
+            "date": "2026-03-24",
+            "quote": "notably the commercial credit offerings of Experian plc and Equifax Inc."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

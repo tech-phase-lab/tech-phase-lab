@@ -1,0 +1,267 @@
+{
+  "root": {
+    "ticker": "CARR",
+    "name": "キヤリア・グローバル",
+    "cik": 1783180,
+    "name_en": "Carrier Global"
+  },
+  "rows": [
+    {
+      "ja": "部品の供給元(上流)",
+      "en": "Component suppliers (upstream)",
+      "above": true
+    },
+    {
+      "ja": "販売合弁・流通",
+      "en": "Distribution joint ventures"
+    },
+    {
+      "ja": "買収・分離・売却",
+      "en": "Acquisitions, spin-offs & divestitures"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "AAON",
+    "GCDT"
+  ],
+  "companies": [
+    {
+      "id": "UEIC",
+      "ticker": "UEIC",
+      "name": "ユニバーサル・エレクトロニクス",
+      "name_en": "Universal Electronics",
+      "sub": "リモコン・制御機器",
+      "sub_en": "Controls & remotes",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "空調分野の顧客の一社としてキヤリアを挙げる",
+          "text_en": "Lists Carrier among its climate control customers",
+          "source": {
+            "label": "Universal Electronics 10-K(2025年度)",
+            "label_en": "Universal Electronics 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/101984/000010198426000039/ueic-20251231.htm",
+            "level": "official",
+            "date": "2026-03-12",
+            "quote": "In climate control, Daikin Industries Ltd., Fujitsu General, Mitsubishi Electric, LG HVAC and Carrier Global Corporation are customers that represent top market share leaders in the global HVAC industry."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WSO",
+      "ticker": "WSO",
+      "name": "ワッツコ",
+      "name_en": "Watsco",
+      "sub": "空調機器の卸",
+      "sub_en": "HVAC distribution",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Watscoの仕入れの62%がキヤリア製品",
+          "text_en": "62% of Watsco's purchases come from Carrier",
+          "source": {
+            "label": "Watsco 10-K(2025年度)",
+            "label_en": "Watsco 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/105016/000119312526082486/wso-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "The Company's top ten suppliers accounted for 85% of our purchases, including 62% from Carrier and 8% from Rheem."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "販売合弁Carrier Enterpriseを共同で運営",
+          "text_en": "Runs the Carrier Enterprise distribution joint ventures with Carrier",
+          "source": {
+            "label": "Carrier 10-K(2025年度)",
+            "label_en": "Carrier 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1783180/000178318026000008/carr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-05",
+            "quote": "We sell our products and services through certain key distributor, joint venture and similar relationships, including the Carrier Enterprise joint ventures with Watsco, Inc., AHI-Carrier FZC, a United Arab Emirates-based joint venture and various joint ventures with members of the Midea Group."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Midea",
+      "ticker": "Midea",
+      "name": "美的集団(ミデア)",
+      "name_en": "Midea Group",
+      "sub": "家電・空調(中国)",
+      "sub_en": "Appliances & HVAC (China)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "複数の合弁を通じて製品を販売",
+          "text_en": "Sells through various joint ventures with Midea Group members",
+          "source": {
+            "label": "Carrier 10-K(2025年度)",
+            "label_en": "Carrier 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1783180/000178318026000008/carr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-05",
+            "quote": "We sell our products and services through certain key distributor, joint venture and similar relationships, including the Carrier Enterprise joint ventures with Watsco, Inc., AHI-Carrier FZC, a United Arab Emirates-based joint venture and various joint ventures with members of the Midea Group."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Viessmann",
+      "ticker": "Viessmann",
+      "name": "ヴィースマン",
+      "name_en": "Viessmann",
+      "sub": "暖房機器(独)",
+      "sub_en": "Heating (Germany)",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "空調事業(VCS)を142億ドルで買収し、対価の一部として株式を発行",
+          "text_en": "Bought its climate solutions business for $14.2 billion, partly paid in Carrier shares",
+          "source": {
+            "label": "Carrier 10-K(2025年度)",
+            "label_en": "Carrier 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1783180/000178318026000008/carr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-05",
+            "quote": "On January 2, 2024, the Company completed the acquisition of the VCS Business from Viessmann for total consideration of $ 14.2 billion."
+          }
+        }
+      ]
+    },
+    {
+      "id": "OTIS",
+      "ticker": "OTIS",
+      "name": "オーチス",
+      "name_en": "Otis Worldwide",
+      "sub": "エレベーター",
+      "sub_en": "Elevators",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "旧親会社UTCからの分離時に結んだ分離契約・税務契約の当事者",
+          "text_en": "Party with Carrier to the separation and tax agreements from the UTC split",
+          "source": {
+            "label": "Otis 10-K(2024年度)",
+            "label_en": "Otis 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1781335/000178133525000010/otis-20241231.htm",
+            "level": "official",
+            "date": "2025-02-04",
+            "quote": "The Separation, as further described in Note 1, \"Business Overview\", was completed pursuant to a Separation and Distribution Agreement (\"Separation Agreement\") and other agreements with our former parent, UTC, and Carrier Global Corporation (\"Carrier\")"
+          }
+        }
+      ]
+    },
+    {
+      "id": "APG",
+      "ticker": "APG",
+      "name": "APIグループ",
+      "name_en": "APi Group",
+      "sub": "防火・安全サービス",
+      "sub_en": "Safety services",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "防火・セキュリティ事業(Chubb Fire & Security)をAPiに売却",
+          "text_en": "Sold its Chubb Fire & Security business to APi Group",
+          "source": {
+            "label": "Carrier 10-K(2024年度)",
+            "label_en": "Carrier 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1783180/000178318025000008/carr-20241231.htm",
+            "level": "official",
+            "date": "2025-02-11",
+            "quote": "On July 26, 2021, the Company entered into a stock purchase agreement to sell its Chubb Fire and Security business (\"Chubb\") to APi Group Corporation (\"APi\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AIRJ",
+      "ticker": "AIRJ",
+      "name": "エアジュール・テクノロジーズ",
+      "name_en": "AirJoule Technologies",
+      "sub": "空気から水をつくる装置",
+      "sub_en": "Atmospheric water technology",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "商用化で提携(GE Vernovaと並ぶ)",
+          "text_en": "Commercial partner, alongside GE Vernova",
+          "source": {
+            "label": "AirJoule Technologies 10-K(2025年度)",
+            "label_en": "AirJoule Technologies 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1855474/000119312526133335/airj-20251231.htm",
+            "level": "official",
+            "date": "2026-03-31",
+            "quote": "(NYSE: GEV) and our commercial partnerships with Carrier Global Corporation (NYSE: CARR) and TenX Investment in Energy Enterprises & Management Co."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AAON",
+      "ticker": "AAON",
+      "name": "AAON",
+      "name_en": "AAON",
+      "sub": "空調機器",
+      "sub_en": "HVAC equipment",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "AAONが10-Kで、主な競合の一社として挙げる",
+          "text_en": "AAON names Carrier among its primary competitors",
+          "source": {
+            "label": "AAON 10-K(2024年度)",
+            "label_en": "AAON 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/824142/000082414225000039/aaon-20241231.htm",
+            "level": "official",
+            "date": "2025-02-27",
+            "quote": "Our AAON branded products primarily compete with Lennox (Lennox International, Inc.), Trane (Trane Technologies plc), York International (Johnson Controls International PLC), Carrier (Carrier Global Corporation), and Daikin"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GCDT",
+      "ticker": "GCDT",
+      "name": "グリーン・サークル・デカーボナイズ",
+      "name_en": "Green Circle Decarbonize Technology",
+      "sub": "冷凍機の省エネ",
+      "sub_en": "Chiller efficiency",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "チラー分野で間接的に競合する大手として挙げる",
+          "text_en": "Names Carrier among conventional chiller suppliers it competes with indirectly",
+          "source": {
+            "label": "Green Circle Decarbonize Technology 20-F",
+            "label_en": "Green Circle Decarbonize Technology 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1926293/000149315226038530/form20-f.htm",
+            "level": "official",
+            "date": "2026-08-14",
+            "quote": "We also compete indirectly with other conventional chiller plant suppliers and energy saving companies, including but not limited to Carrier Global Corporation, Johnson Controls International Plc., and Mitsubishi Heavy Industries Group."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

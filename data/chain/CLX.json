@@ -1,0 +1,251 @@
+{
+  "root": {
+    "ticker": "CLX",
+    "name": "クロロックス",
+    "cik": 21076,
+    "name_en": "Clorox"
+  },
+  "rows": [
+    {
+      "ja": "供給元・ライセンス先",
+      "en": "Suppliers & licensees",
+      "above": true
+    },
+    {
+      "ja": "顧客・買収・合弁",
+      "en": "Customers, acquisitions & JV"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "CHD",
+    "HNST",
+    "HAIN"
+  ],
+  "companies": [
+    {
+      "id": "ODC",
+      "ticker": "ODC",
+      "name": "オイル・ドライ",
+      "name_en": "Oil-Dri",
+      "sub": "猫砂・吸着剤",
+      "sub_en": "Cat litter & sorbents",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Fresh Stepの粗粒の猫砂を独占的に供給する長期契約",
+          "text_en": "Long-term exclusive supply agreement for Fresh Step coarse cat litter",
+          "source": {
+            "label": "Oil-Dri 10-K(2025年7月期)",
+            "label_en": "Oil-Dri 10-K (FY ended Jul 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/74046/000162828025044686/odc-20250731.htm",
+            "level": "official",
+            "date": "2025-10-09",
+            "quote": "This long-term supply agreement with Clorox grants us the exclusive right to supply Clorox's requirements for Fresh Step coarse cat litter up to certain levels."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HBB",
+      "ticker": "HBB",
+      "name": "ハミルトン・ビーチ",
+      "name_en": "Hamilton Beach Brands",
+      "sub": "小型家電",
+      "sub_en": "Small appliances",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Cloroxブランドの家電を複数年のライセンスで販売",
+          "text_en": "Sells Clorox-branded home appliances under a multiyear license",
+          "source": {
+            "label": "Hamilton Beach Brands 10-K(2024年度)",
+            "label_en": "Hamilton Beach Brands 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1709164/000170916425000008/hbb-20241231.htm",
+            "level": "official",
+            "date": "2025-02-26",
+            "quote": "we participate in the premium market through multiyear licensing agreements to market and distribute CHI ® premium garment care products, Clorox TM home appliances"
+          }
+        }
+      ]
+    },
+    {
+      "id": "WMT",
+      "ticker": "WMT",
+      "name": "ウォルマート",
+      "name_en": "Walmart",
+      "sub": "小売",
+      "sub_en": "Retail",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "売上の26%を占める最大の顧客(2026年6月期)",
+          "text_en": "Its largest customer, 26% of net sales (FY ended June 2026)",
+          "source": {
+            "label": "Clorox 10-K(2026年6月期)",
+            "label_en": "Clorox 10-K (FY ended Jun 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/21076/000002107626000034/clx-20260630.htm",
+            "level": "official",
+            "date": "2026-08-07",
+            "quote": "Net sales to the Company's largest customer, Walmart Stores, Inc. and its affiliates, were 26%, 27% and 25% of consolidated net sales for the fiscal years ended June 30, 2026, 2025 and 2024, respectively"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GOJO",
+      "ticker": "GOJO",
+      "name": "ゴージョー(ピュレル)",
+      "name_en": "GOJO (Purell)",
+      "sub": "衛生用品",
+      "sub_en": "Hygiene products",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "手指消毒剤Purellのメーカーを2026年4月に買収",
+          "text_en": "Acquired GOJO, maker of Purell, in April 2026",
+          "source": {
+            "label": "Clorox 10-K(2026年6月期)",
+            "label_en": "Clorox 10-K (FY ended Jun 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/21076/000002107626000034/clx-20260630.htm",
+            "level": "official",
+            "date": "2026-08-07",
+            "quote": "In April 2026, the Company completed the acquisition of GOJO, expanding its product portfolio to include the Purell® brand and GOJO's health and hygiene solutions."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PG",
+      "ticker": "PG",
+      "name": "プロクター・アンド・ギャンブル",
+      "name_en": "Procter & Gamble",
+      "sub": "日用品",
+      "sub_en": "Consumer products",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Gladの合弁が2026年1月に終了し、P&Gの持分を4.76億ドルで買い取った",
+          "text_en": "Bought out P&G's minority stake in the Glad joint venture for $476 million when it expired in January 2026",
+          "source": {
+            "label": "P&G 10-K(2026年6月期)",
+            "label_en": "P&G 10-K (FY ended Jun 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/80424/000008042426000103/pg-20260630.htm",
+            "level": "official",
+            "date": "2026-08-04",
+            "quote": "Under the terms of the agreement, Clorox purchased the Company's minority interest in the venture at fair market value for $476 million."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CHD",
+      "ticker": "CHD",
+      "name": "チャーチ&ドワイト",
+      "name_en": "Church & Dwight",
+      "sub": "日用品",
+      "sub_en": "Consumer products",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Church & Dwightが10-Kで、消費者製品の競合の一社として挙げる",
+          "text_en": "Church & Dwight names Clorox among competitors",
+          "source": {
+            "label": "Church & Dwight 10-K(2024年度)",
+            "label_en": "Church & Dwight 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/313927/000095017025019801/chd-20241231.htm",
+            "level": "official",
+            "date": "2025-02-13",
+            "quote": "Our competitors in the Consumer Domestic and Consumer International segments include, among others, Procter & Gamble Company (\"P&G\"), The Clorox Company"
+          }
+        }
+      ]
+    },
+    {
+      "id": "HNST",
+      "ticker": "HNST",
+      "name": "オネスト・カンパニー",
+      "name_en": "Honest Company",
+      "sub": "自然派日用品",
+      "sub_en": "Clean personal care",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Honestが10-Kで、スキンケアの競合として挙げる(Burt's Beesの親会社)",
+          "text_en": "Honest names Clorox (parent of Burt's Bees) among skin and personal care competitors",
+          "source": {
+            "label": "Honest Company 10-K(2025年度)",
+            "label_en": "Honest Company 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1530979/000162828026011634/hnst-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Select competitors of our skin and personal care products include Kimberly-Clark Corporation (pending acquiror of Kenvue Inc.), The Clorox Company (parent company of Burt's Bees, Inc.)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "HAIN",
+      "ticker": "HAIN",
+      "name": "ヘイン・セレスティアル",
+      "name_en": "Hain Celestial",
+      "sub": "自然派食品・日用品",
+      "sub_en": "Natural foods & personal care",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Hainが10-Kで、パーソナルケアの大手競合の筆頭に挙げる",
+          "text_en": "Hain lists Clorox first among large personal care competitors",
+          "source": {
+            "label": "Hain Celestial 10-K(2025年6月期)",
+            "label_en": "Hain Celestial 10-K (FY ended Jun 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/910406/000119312525203534/hain-20250630.htm",
+            "level": "official",
+            "date": "2025-09-15",
+            "quote": "Large conventional personal care products companies with whom we compete include, but are not limited to, The Clorox Company"
+          }
+        }
+      ]
+    },
+    {
+      "id": "TOMZ",
+      "ticker": "TOMZ",
+      "name": "TOMIエンバイロメンタル",
+      "name_en": "TOMI Environmental Solutions",
+      "sub": "除菌装置",
+      "sub_en": "Disinfection systems",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "TOMIが10-Kで、除菌分野の競合の一社として挙げる",
+          "text_en": "TOMI names Clorox among disinfection competitors",
+          "source": {
+            "label": "TOMI Environmental Solutions 10-K(2024年度)",
+            "label_en": "TOMI Environmental Solutions 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/314227/000165495425004233/tomz_10k.htm",
+            "level": "official",
+            "date": "2025-04-14",
+            "quote": "The competition includes remediators and disinfection/decontamination companies such as Steris, Bioquell (Eco-lab) and Clorox"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
