@@ -163,3 +163,9 @@ test("the list follows the owner's mockup (Nov 16): heading like other pages wit
     assert.doesNotMatch(body, /#e3c47e|#e2c27a|#c9a55a|#d9b56a/, rule);
   }
 });
+
+test("a feature with a sample shows no one-line summary under it (owner, Nov 23)", async () => {
+  const { readFile } = await import("node:fs/promises");
+  const screen = await readFile(new URL("../app/research/pro-experience/screen.tsx", import.meta.url), "utf8");
+  assert.match(screen, /\{before && !sample && <p className=\{styles\.text\}>\{before\}<\/p>\}/);
+});
