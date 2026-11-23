@@ -191,21 +191,37 @@ class OnePushPerEvent(unittest.TestCase):
         return sent
 
     def test_crwd_announced_line_and_figures_are_one_alert(self):
+        # Nov 23 (owner): the announced line waits for the figures; the one alert is the one with the figures.
         line = self.item('CRWD', 'Latest', 'ir-announce-1', '2026-11-23T11:07:15+00:00')
-        self.assertEqual(len(self.deliver([line], self.now)), 1)
-        figures = {**self.item('CRWD', 'Q3 FY2027', 'ir-flash-1', '2026-11-23T11:07:38+00:00'), 'titleJa': 'CRWD Q3 FY2027決算：売上高$1.4B'}
-        self.assertEqual(self.deliver([figures], self.now + 21), [])
+        self.assertEqual(self.deliver([line], self.now), [])
+        figures = {**self.item('CRWD', 'Q3 FY2027', 'ir-flash-1', '2026-11-23T11:07:38+00:00'), 'titleJa': 'CRWD Q3 FY2027決算：売上高$1.4B',
+                   'facts': [{'key': 'revenue', 'ja': '売上高', 'en': 'Revenue', 'value': '$1.582B', 'comparisons': {'yearAgo': '$1.297B'}},
+                             {'key': 'adjusted-eps', 'ja': '調整後EPS', 'en': 'Adjusted EPS', 'value': '$0.34'},
+                             {'key': 'guidance-revenue', 'ja': '会社予想 売上高（Q4 FY27）', 'en': 'Guidance revenue (Q4 FY27)', 'value': '$1.6152B-$1.6252B'}]}
+        sent = self.deliver([line, figures], self.now + 21)
+        self.assertEqual([p['body'] for p in sent], ['CRWD Q3 FY2027決算：売上高$1.58B（+22%）、調整後EPS$0.34、次期売上予想$1.62B〜$1.63B'])
+        # the held line never follows, even after its wait
+        self.assertEqual(self.deliver([line, figures], self.now + 700), [])
+        self.assertEqual(self.deliver([line], self.now + 700), [])
+
+    def test_announced_line_alone_goes_out_once_after_ten_minutes(self):
+        line = self.item('CRWD', 'Latest', 'ir-announce-1', '2026-11-23T11:07:15+00:00')
+        self.assertEqual(self.deliver([line], self.now + 300), [])
+        sent = self.deliver([line], self.now + 600)
+        self.assertEqual([p['body'] for p in sent], ['CRWD 決算を発表しました'])
+        self.assertEqual(self.deliver([line], self.now + 660), [])
 
     def test_cohr_three_quarters_in_one_poll_are_one_alert(self):
         at = '2026-11-23T11:07:10+00:00'
         items = [self.item('COHR', p, 'ir-announce-' + str(n), at) for n, p in enumerate(('Q1 2027', 'Q4 2026', 'Q3 2026'))]
-        self.assertEqual(len(self.deliver(items, self.now)), 1)
+        self.assertEqual(len(self.deliver(items, self.now + 600)), 1)
 
     def test_the_next_quarter_alerts_again(self):
-        self.assertEqual(len(self.deliver([self.item('CRWD', 'Latest', 'ir-announce-1', '2026-11-23T11:07:15+00:00')], self.now)), 1)
+        self.assertEqual(len(self.deliver([self.item('CRWD', 'Latest', 'ir-announce-1', '2026-11-23T11:07:15+00:00')], self.now + 600)), 1)
         later = self.now + 90 * 86400
         at = datetime.fromtimestamp(later - 5, timezone.utc).isoformat()
-        self.assertEqual(len(self.deliver([self.item('CRWD', 'Q4 FY2027', 'ir-flash-2', at)], later)), 1)
+        figures = {**self.item('CRWD', 'Q4 FY2027', 'ir-flash-2', at), 'facts': [{'key': 'revenue', 'ja': '売上高', 'en': 'Revenue', 'value': '$1.7B'}]}
+        self.assertEqual(len(self.deliver([figures], later)), 1)
 
 
 class Cleanup(Database):

@@ -2,7 +2,7 @@ import type { ResearchEvent } from './data';
 import providers from './providers.json' with { type: 'json' };
 import { deduplicateResearchEvents } from './deduplicate-events.ts';
 
-export type ResultComparisons = { forecast?: string; previous?: string; previousRevisedFrom?: string; yearAgo?: string };
+export type ResultComparisons = { forecast?: string; previous?: string; previousRevisedFrom?: string; yearAgo?: string; growth?: string };
 export type ResultFact = { key:string; ja:string; en:string; value:string; comparisons?:ResultComparisons };
 export type ResultBrief = {
   id:string; researchId:string; kind:'earnings'|'economic'; ticker:string; period:string;
@@ -35,14 +35,14 @@ export function parseResultBriefs(value: unknown, max = 20): ResultBrief[] {
     if(!/^\d+$/.test(id)||!(post||issuer)||!['earnings','economic'].includes(kind)||!/^([A-Z][A-Z0-9.-]{0,9})$/.test(ticker)
       ||url.search||url.hash||url.username||url.password) throw Error('Invalid result source');
     const date=(name:string)=>{const v=field(name,50);if(!/T.*(Z|[+-]\d\d:\d\d)$/.test(v)||!Number.isFinite(Date.parse(v)))throw Error('Invalid result date');return v;};
-    if(!Array.isArray(r.facts)||r.facts.length>8||(!r.facts.length&&!announced))throw Error('Invalid result facts');
+    if(!Array.isArray(r.facts)||r.facts.length>16||(!r.facts.length&&!announced))throw Error('Invalid result facts');
     const facts=r.facts.map(f=>{
       if(!f||typeof f!=='object')throw Error('Invalid fact');
       const o=f as Record<string,unknown>;
       for(const k of ['key','ja','en','value'])if(typeof o[k]!=='string'||!(o[k] as string).trim()||(o[k] as string).length>80)throw Error('Invalid fact');
       // Oct 11: U.S. inflation keeps its index, core and basis; ASML (€),
       // TSMC (NT$) and SK hynix (₩) keep the currency they reported in.
-      if(!/^(?:guidance-)?(?:revenue|eps|gross-margin|operating-cash-flow|net-income|operating-income|operating-margin|adjusted-ebitda|adjusted-net-income|adjusted-eps|capex|actual|nonfarm-payrolls|unemployment-rate|hourly-earnings-mom|hourly-earnings-yoy)$|^(?:core-)?(?:cpi|ppi|pce)-(?:mom|yoy)$/.test(o.key as string)
+      if(!/^(?:guidance-(?:fy-)?)?(?:revenue|eps|gross-margin|operating-cash-flow|free-cash-flow|arr|data-center-revenue|net-income|operating-income|operating-margin|adjusted-ebitda|adjusted-net-income|adjusted-eps|capex|actual|nonfarm-payrolls|unemployment-rate|hourly-earnings-mom|hourly-earnings-yoy)$|^(?:core-)?(?:cpi|ppi|pce)-(?:mom|yoy)$/.test(o.key as string)
         ||!/^(?:\$|€|NT\$|₩)?[-+]?\d+(?:\.\d+)?[BMKT%]?(?: ± (?:\$|€|NT\$|₩)?\d+(?:\.\d+)?[BMKT%]?|-(?:\$|€|NT\$|₩)?\d+(?:\.\d+)?[BMKT%]?)?$/i.test(o.value as string))throw Error('Invalid fact value');
       const comparisons: ResultComparisons = {};
       // Optional detail is isolated from the already validated actual. It is
@@ -62,6 +62,9 @@ export function parseResultBriefs(value: unknown, max = 20): ResultBrief[] {
         const year = (o.comparisons as Record<string, unknown>).yearAgo;
         if (typeof year === 'string' && year.length <= 80 && /^(?:\$|€|NT\$|₩)?[-+]?\d+(?:\.\d+)?[BMKT%]?$/i.test(year)
           && (/[BMKT%]$/i.exec(year)?.[0].toUpperCase() ?? '') === (/[BMKT%]$/i.exec(o.value as string)?.[0].toUpperCase() ?? '')) comparisons.yearAgo = year;
+        // A growth rate the release itself states ("ARR grew 25% year-over-year"), kept as printed (Nov 23).
+        const growth = (o.comparisons as Record<string, unknown>).growth;
+        if (typeof growth === 'string' && /^[+-]\d{1,4}(?:\.\d)?%$/.test(growth)) comparisons.growth = growth;
       }
       return {key:o.key as string,ja:o.ja as string,en:o.en as string,value:o.value as string,
         ...(Object.keys(comparisons).length ? {comparisons} : {})};

@@ -37,14 +37,30 @@
 @keyframes calendarWait{50%{opacity:.55}}
 @media(prefers-reduced-motion:reduce){.waiting{animation:none}}
 
-.xPost { display: grid; gap: 8px; margin-top: 12px; }
+.xPost { display: grid; gap: 8px; margin-top: 4px; }
+.xPost[open] { padding-bottom: 4px; }
 .xPost pre { margin: 0; padding: 10px 12px; white-space: pre-wrap; overflow-wrap: anywhere; font: inherit; font-size: 0.9rem; line-height: 1.6; border: 1px solid var(--line, #d8dee6); border-radius: 8px; }
 .xPost button { justify-self: start; min-height: 40px; padding: 0 14px; border-radius: 8px; border: 1px solid var(--line, #d8dee6); background: transparent; color: inherit; font: inherit; cursor: pointer; }
 .xPost button[aria-pressed="true"] { font-weight: 700; border-color: currentColor; }
 .xPost [role="group"] { display: flex; gap: 8px; }
 .xPost small { opacity: 0.75; }
 
-.reaction { display: grid; gap: 4px; margin-top: 12px; font-size: 0.9rem; }
-.reaction ul { margin: 0; padding-left: 1.2em; }
-.reaction p { margin: 0; }
-.reaction small { opacity: 0.75; }
+/* Results card (owner, Nov 23): one compact table, the price move in one line, no per-card provider lines. */
+.resultTable { width: 100%; border-collapse: collapse; margin: 2px 0 8px; font-size: 12px; line-height: 1.45; color: var(--text, #e8eef2); font-variant-numeric: tabular-nums; }
+.resultTable th, .resultTable td { padding: 5px 6px 5px 0; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+.resultTable thead th { color: var(--muted); font-weight: 400; font-size: 11px; }
+.resultTable tbody th { font-weight: 400; color: var(--muted); }
+.resultTable td { white-space: nowrap; }
+.resultTable td:nth-child(2) { font-weight: 600; }
+.resultTable [data-tone="up"] { color: var(--mint); }
+.resultTable [data-tone="down"] { color: #ff8a80; }
+.resultTable .guidance th[scope="colgroup"] { padding-top: 10px; color: var(--mint); font-size: 11px; font-weight: 600; }
+.resultTable .guidance td { white-space: normal; }
+.reaction { display: flex; flex-wrap: wrap; gap: 4px 12px; margin: 0 0 8px; font-size: 12px; color: var(--muted); }
+.reaction b { font-weight: 600; }
+.reaction [data-tone="up"] { color: var(--mint); }
+.reaction [data-tone="down"] { color: #ff8a80; }
+.xPost > summary { cursor: pointer; min-height: 36px; display: flex; align-items: center; color: var(--mint); list-style: none; }
+.xPost > summary::-webkit-details-marker { display: none; }
+.credit { margin: 6px 0 0; font-size: 11px; color: var(--muted); }
+@media(max-width:600px){ .resultTable { font-size: 11.5px; } .resultTable th, .resultTable td { padding-right: 4px; } }

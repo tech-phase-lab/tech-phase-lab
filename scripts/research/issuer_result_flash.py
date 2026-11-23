@@ -1891,7 +1891,8 @@ def build(ticker, url, parsed, observed_at, publisher=None):
     number = str(int(key[:12], 16))
     # comparisons.yearAgo is the same quarter one year earlier, read from the table's prior-year column (same format as value).
     facts = [{'key': f[0], 'ja': (f[3] if len(f) > 3 else LABELS[f[0]])[0], 'en': (f[3] if len(f) > 3 else LABELS[f[0]])[1], 'value': f[1],
-              **({'comparisons': {'yearAgo': f[2]}} if f[2] else {})} for f in parsed['facts']]
+              **({'comparisons': {**({'yearAgo': f[2]} if f[2] else {}), **({'growth': f[4]} if len(f) > 4 and f[4] else {})}}
+                 if f[2] or (len(f) > 4 and f[4]) else {})} for f in parsed['facts']]
     first = facts[:2]
     period = parsed['period']
     return key, {
@@ -1997,7 +1998,8 @@ def run_once(path, reference=None, fetch=None, fetch_pdf=None):
             started = time.monotonic()
             try:
                 text = body if body is not None else nebius_pdf_text(url, fetch, fetch_pdf or (fetch if fetch is not monitor.fetch else None))
-                parsed = parse_with_sentences(ticker, text, url)
+                import release_extras  # imported here: it reads this module's formats
+                parsed = release_extras.supplement(text, parse_with_sentences(ticker, text, url))
             except Exception as exc:
                 code = str(exc) if isinstance(exc, ValueError) and re.fullmatch(r'[a-z0-9-]{1,40}', str(exc)) else type(exc).__name__
                 STATUS[url] = {'ticker': ticker, 'state': 'unreadable', 'reason': code, 'at': stamp()}
