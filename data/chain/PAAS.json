@@ -1,0 +1,247 @@
+{
+  "root": {
+    "ticker": "PAAS",
+    "name": "パンアメリカン・シルバー",
+    "cik": 771992,
+    "name_en": "Pan American Silver"
+  },
+  "rows": [
+    {
+      "ja": "ストリームの受取先",
+      "en": "Stream holders",
+      "above": true
+    },
+    {
+      "ja": "買収・共同事業",
+      "en": "Acquisitions & joint ventures"
+    },
+    {
+      "ja": "資産の売却先・買収の相手",
+      "en": "Asset buyers & deal counterparts"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "RGLD",
+      "ticker": "RGLD",
+      "name": "ロイヤル・ゴールド(旧サンドストーム)",
+      "name_en": "Royal Gold (formerly Sandstorm)",
+      "sub": "ストリーム・ロイヤルティ",
+      "sub_en": "Streams & royalties",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "セロモロ鉱山の銀の一部をストリーム契約で引き渡す(Yamanaから継承)",
+          "text_en": "Delivers part of Cerro Moro silver under a stream inherited from Yamana",
+          "source": {
+            "label": "Pan American Silver 年次情報書(10-K添付、2025年度)",
+            "label_en": "Pan American Silver annual information form (10-K exhibit, FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/771992/000077199226000019/aif-2025ye.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Additionally, the Company inherited a silver stream arrangement between Yamana and Sandstorm Gold Ltd. (\"Sandstorm\", now Royal Gold Inc.) whereby Yamana agreed to deliver 20% of the silver produced at certain defined Cerro Moro properties to Sandstorm"
+          }
+        }
+      ]
+    },
+    {
+      "id": "TFPM",
+      "ticker": "TFPM",
+      "name": "トリプル・フラッグ",
+      "name_en": "Triple Flag Precious Metals",
+      "sub": "ストリーム・ロイヤルティ",
+      "sub_en": "Streams & royalties",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ラ・コロラダの金をストリーム契約でTriple Flagに販売",
+          "text_en": "Sells La Colorada gold to Triple Flag under a stream",
+          "source": {
+            "label": "Pan American Silver 年次情報書(10-K添付、2025年度)",
+            "label_en": "Pan American Silver annual information form (10-K exhibit, FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/771992/000077199226000019/aif-2025ye.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "except for the gold produced from La Colorada, which is sold to Maverix Metals Inc. (\"Maverix\", who was later acquired by Triple Flag Precious Metals Corp. (\"Triple Flag\"))"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MAG",
+      "ticker": "MAG Silver",
+      "name": "MAGシルバー",
+      "name_en": "MAG Silver",
+      "sub": "銀鉱山",
+      "sub_en": "Silver mining",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年9月に約5億ドルの現金と株式で買収",
+          "text_en": "Acquired in September 2025 for $500 million in cash plus shares",
+          "source": {
+            "label": "Pan American Silver 年次情報書(10-K添付、2025年度)",
+            "label_en": "Pan American Silver annual information form (10-K exhibit, FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/771992/000077199226000019/aif-2025ye.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "outstanding common shares of MAG on September 4, 2025, pursuant to a plan of arrangement for an aggregate of $500 million in cash and approximately 60.2 million Common Shares of Pan American (the \"MAG Acquisition\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Fresnillo",
+      "ticker": "Fresnillo",
+      "name": "フレスニーヨ",
+      "name_en": "Fresnillo",
+      "sub": "銀鉱山(メキシコ)",
+      "sub_en": "Silver mining (Mexico)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "フアニシピオ銀山の運営者で56%を保有する合弁相手(パンアメリカン44%)",
+          "text_en": "Operator and 56% owner of the Juanicipio silver mine; Pan American holds 44%",
+          "source": {
+            "label": "Pan American Silver 年次情報書(10-K添付、2025年度)",
+            "label_en": "Pan American Silver annual information form (10-K exhibit, FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/771992/000077199226000019/aif-2025ye.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "The MAG Acquisition added a 44% joint venture interest in the large-scale, high-grade Juanicipio silver mine in Zacatecas, Mexico, operated by Fresnillo plc (\"Fresnillo\") as the 56% joint venture interest owner"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Tahoe",
+      "ticker": "Tahoe Resources",
+      "name": "タホ・リソーシズ",
+      "name_en": "Tahoe Resources",
+      "sub": "銀・金鉱山",
+      "sub_en": "Silver & gold mining",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2019年2月に買収(株主に条件付き権利CVRを発行)",
+          "text_en": "Acquired in February 2019, issuing contingent value rights",
+          "source": {
+            "label": "Pan American Silver 年次情報書(10-K添付、2025年度)",
+            "label_en": "Pan American Silver annual information form (10-K exhibit, FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/771992/000077199226000019/aif-2025ye.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "In February 2019, Pan American acquired Tahoe Resources Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Yamana",
+      "ticker": "Yamana Gold",
+      "name": "ヤマナ・ゴールド",
+      "name_en": "Yamana Gold",
+      "sub": "金鉱山",
+      "sub_en": "Gold mining",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2023年3月に全株を取得(カナダ資産はアグニコへ)",
+          "text_en": "Acquired all shares in March 2023 (Canadian assets went to Agnico Eagle)",
+          "source": {
+            "label": "Pan American Silver 年次情報書(10-K添付、2025年度)",
+            "label_en": "Pan American Silver annual information form (10-K exhibit, FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/771992/000077199226000019/aif-2025ye.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "The Tahoe Acquisition in February 2019, the acquisition of all of the issued and outstanding shares of Yamana in March 2023 (the \"Yamana Acquisition\"), and the MAG Acquisition in September 2025 contributed significantly to our production of gold and silver."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AEM",
+      "ticker": "AEM",
+      "name": "アグニコ・イーグル",
+      "name_en": "Agnico Eagle Mines",
+      "sub": "金鉱山",
+      "sub_en": "Gold mining",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Yamanaの買収を分担(アグニコがカナダ資産を取得)",
+          "text_en": "Split the Yamana takeover, with Agnico Eagle taking the Canadian assets",
+          "source": {
+            "label": "Gold Fields 20-F(2024年度)",
+            "label_en": "Gold Fields 20-F (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1172724/000117272425000010/gfi-20241231.htm",
+            "level": "official",
+            "date": "2025-03-27",
+            "quote": "As a result of Yamana entering into an arrangement agreement with Pan American Silver Corp and Agnico Eagle Mines Limited, Gold Fields terminated the agreement in respect of the proposed acquisition of Yamana."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GFI",
+      "ticker": "GFI",
+      "name": "ゴールド・フィールズ",
+      "name_en": "Gold Fields",
+      "sub": "金鉱山",
+      "sub_en": "Gold mining",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Gold FieldsはYamana買収を目指したが、パンアメリカンとアグニコの合意を受けて撤退",
+          "text_en": "Gold Fields dropped its Yamana bid after Yamana agreed terms with Pan American and Agnico Eagle",
+          "source": {
+            "label": "Gold Fields 20-F(2024年度)",
+            "label_en": "Gold Fields 20-F (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1172724/000117272425000010/gfi-20241231.htm",
+            "level": "official",
+            "date": "2025-03-27",
+            "quote": "As a result of Yamana entering into an arrangement agreement with Pan American Silver Corp and Agnico Eagle Mines Limited, Gold Fields terminated the agreement in respect of the proposed acquisition of Yamana."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Glencore",
+      "ticker": "Glencore",
+      "name": "グレンコア",
+      "name_en": "Glencore",
+      "sub": "資源・商社",
+      "sub_en": "Mining & trading",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "アルゼンチンのMARA計画のパンアメリカン持分56.25%を取得することで合意(2023年7月)",
+          "text_en": "Agreed in July 2023 to buy Pan American's 56.25% stake in the MARA project in Argentina",
+          "source": {
+            "label": "Sandstorm Gold 年次情報書(40-F添付、2024年度)",
+            "label_en": "Sandstorm Gold annual information form (40-F exhibit, FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1434614/000162828025015698/a991annualinformationformf.htm",
+            "level": "official",
+            "date": "2025-03-31",
+            "quote": "On July 31, 2023, Glencore International AG announced that they had reached an agreement with Pan American Silver, to acquire Pan American Silver's 56.25% stake in the project."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
