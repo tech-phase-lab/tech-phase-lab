@@ -1,0 +1,374 @@
+{
+  "root": {
+    "ticker": "NEE",
+    "name": "ネクステラ・エナジー",
+    "cik": 753308,
+    "name_en": "NextEra Energy"
+  },
+  "rows": [
+    {
+      "ja": "設備・燃料の供給元(上流)",
+      "en": "Equipment, fuel & services (upstream)",
+      "above": true
+    },
+    {
+      "ja": "電力・環境価値の購入先(下流)",
+      "en": "Power & credit buyers (downstream)"
+    },
+    {
+      "ja": "共同事業・資産取引",
+      "en": "Joint projects & asset deals"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "AMRC",
+    "SMXT"
+  ],
+  "companies": [
+    {
+      "id": "JKS",
+      "ticker": "JKS",
+      "name": "ジンコソーラー",
+      "name_en": "JinkoSolar",
+      "sub": "太陽光パネル(中)",
+      "sub_en": "Solar modules (China)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "高効率パネル最大2,750MWの供給契約(2018年)",
+          "text_en": "Agreed to supply up to 2,750 MW of high-efficiency modules (2018)",
+          "source": {
+            "label": "JinkoSolar 20-F(2024年度)",
+            "label_en": "JinkoSolar 20-F (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1481513/000141057825000970/jks-20241231x20f.htm",
+            "level": "official",
+            "date": "2025-04-29",
+            "quote": "Under the Master Agreement, as amended in March 2018, we agreed to supply NextEra up to 2,750 MW of high-efficiency solar modules over four years."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PWR",
+      "ticker": "PWR",
+      "name": "クアンタ・サービシズ",
+      "name_en": "Quanta Services",
+      "sub": "電力インフラ工事",
+      "sub_en": "Utility infrastructure services",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "代表的な顧客にネクステラを挙げる",
+          "text_en": "Names NextEra among representative customers",
+          "source": {
+            "label": "Quanta Services 10-K(2025年度)",
+            "label_en": "Quanta Services 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1050915/000105091526000006/pwr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "CenterPoint Energy, Inc. l NextEra Energy, Inc. l Comcast Corporation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CRK",
+      "ticker": "CRK",
+      "name": "コムストック・リソーシズ",
+      "name_en": "Comstock Resources",
+      "sub": "天然ガス",
+      "sub_en": "Natural gas",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "データセンター向け発電の燃料ガスを供給する提携",
+          "text_en": "Partners to supply gas for new data center power generation",
+          "source": {
+            "label": "Comstock Resources 10-K(2025年度)",
+            "label_en": "Comstock Resources 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/23194/000119312526059001/crk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "We are partnering with NextEra Energy Resources, LLC (\"NextEra\") to provide natural gas for new power generation in Western Haynesville to support hyperscaler data center development"
+          }
+        }
+      ]
+    },
+    {
+      "id": "OPAL",
+      "ticker": "OPAL",
+      "name": "オーパル・フューエルズ",
+      "name_en": "OPAL Fuels",
+      "sub": "再生可能天然ガス",
+      "sub_en": "Renewable natural gas",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "環境価値(RIN等)の90%をネクステラが独占購入",
+          "text_en": "NextEra buys 90% of its environmental attributes exclusively",
+          "source": {
+            "label": "OPAL Fuels 10-K(2025年度)",
+            "label_en": "OPAL Fuels 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1842279/000162828026017908/wdq-20251231.htm",
+            "level": "official",
+            "date": "2026-03-16",
+            "quote": "we signed a purchase and sale agreement with NextEra providing for the exclusive purchase by NextEra of 90% of our Environmental Attributes"
+          }
+        }
+      ]
+    },
+    {
+      "id": "POR",
+      "ticker": "POR",
+      "name": "ポートランド・ゼネラル・エレクトリック",
+      "name_en": "Portland General Electric",
+      "sub": "電力",
+      "sub_en": "Electric utility",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "オレゴン州で太陽光240MW・蓄電池125MWを共同建設",
+          "text_en": "Building a 240 MW solar and 125 MW storage project together in Oregon",
+          "source": {
+            "label": "Portland General Electric 10-K(2025年度)",
+            "label_en": "Portland General Electric 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/784977/000119312526052750/por-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Wheatridge Expansion-PGE and NextEra Energy, Inc. entered into agreements to construct a 240 MW solar facility and a 125 MW BESS facility"
+          }
+        }
+      ]
+    },
+    {
+      "id": "OGE",
+      "ticker": "OGE",
+      "name": "OGEエナジー",
+      "name_en": "OGE Energy",
+      "sub": "電力",
+      "sub_en": "Electric utility",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ネクステラの風力発電から20年契約で電力購入",
+          "text_en": "Buys wind power from NextEra under a 20-year contract",
+          "source": {
+            "label": "OGE Energy 10-K(2024年度)",
+            "label_en": "OGE Energy 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1021635/000095017025022560/oge-20241231.htm",
+            "level": "official",
+            "date": "2025-02-19",
+            "quote": "NextEra Energy Blackwell, OK 20 years 2032 60.0"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GOOGL",
+      "ticker": "GOOGL",
+      "name": "アルファベット(グーグル)",
+      "name_en": "Alphabet (Google)",
+      "sub": "IT・クラウド",
+      "sub_en": "Internet & cloud",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "デュアン・アーノルド原発の再稼働でグーグルと合意",
+          "text_en": "Agreements with Google to restart the Duane Arnold nuclear plant",
+          "source": {
+            "label": "Cameco 40-F 添付MD&A(2025年度)",
+            "label_en": "Cameco 40-F MD&A exhibit (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1009001/000119312526116229/d34605dex993.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "In October, NextEra Energy announced two key agreements with Google to boost US nuclear capacity, including restarting Iowa's Duane Arnold plant"
+          }
+        }
+      ]
+    },
+    {
+      "id": "XIFR",
+      "ticker": "XIFR",
+      "name": "XPLRインフラストラクチャー",
+      "name_en": "XPLR Infrastructure",
+      "sub": "再エネ資産保有",
+      "sub_en": "Renewable asset owner",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "旧ネクステラ・エナジー・パートナーズ(関連会社)",
+          "text_en": "Formerly NextEra Energy Partners, an affiliate",
+          "source": {
+            "label": "NextEra Energy 10-K(2025年度)",
+            "label_en": "NextEra Energy 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/753308/000075330826000015/nee-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "XPLR XPLR Infrastructure, LP (formerly known as NextEra Energy Partners, LP)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "EQT",
+      "ticker": "EQT",
+      "name": "EQT",
+      "name_en": "EQT",
+      "sub": "天然ガス",
+      "sub_en": "Natural gas",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "マウンテン・バレー・パイプラインの共同出資者",
+          "text_en": "Co-owner of the Mountain Valley Pipeline",
+          "source": {
+            "label": "EQT 10-K(2025年度)",
+            "label_en": "EQT 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/33213/000003321326000018/eqt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "MVP A's members consisted of the Midstream Joint Venture and affiliates of each of NextEra Energy, Inc. (NextEra), Con Edison Gas Pipeline and Storage, LLC (ConEd)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "KMI",
+      "ticker": "KMI",
+      "name": "キンダー・モルガン",
+      "name_en": "Kinder Morgan",
+      "sub": "パイプライン",
+      "sub_en": "Pipelines",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ネクステラ系からテキサスのパイプラインを18億ドルで買収(2023年)",
+          "text_en": "Bought STX Midstream from NextEra Energy Partners for $1.8 billion (2023)",
+          "source": {
+            "label": "Kinder Morgan 10-K(2024年度)",
+            "label_en": "Kinder Morgan 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1506307/000150630725000008/kmi-20241231.htm",
+            "level": "official",
+            "date": "2025-02-13",
+            "quote": "we completed the acquisition of STX Midstream from NextEra Energy Partners for a purchase price of $ 1,829 million"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SO",
+      "ticker": "SO",
+      "name": "サザン・カンパニー",
+      "name_en": "Southern Company",
+      "sub": "電力",
+      "sub_en": "Electric utility",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2019年にガルフ・パワーをネクステラに売却",
+          "text_en": "Sold Gulf Power to NextEra in 2019",
+          "source": {
+            "label": "Southern Company 10-K(2024年度)",
+            "label_en": "Southern Company 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/92122/000009212225000018/so-20241231.htm",
+            "level": "official",
+            "date": "2025-02-20",
+            "quote": "In conjunction with Southern Company's 2019 sale of Gulf Power, Mississippi Power and NextEra Energy, Inc. agreed to negotiate a mutually acceptable revised operating agreement for Plant Daniel."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HydroOne",
+      "ticker": "Hydro One",
+      "name": "ハイドロ・ワン",
+      "name_en": "Hydro One",
+      "sub": "送電(加オンタリオ州)",
+      "sub_en": "Transmission (Ontario)",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "東西連系線の共同所有者(ネクステラ系が約48%)",
+          "text_en": "Co-owner of the East-West Tie Line with NextEra (about 48%)",
+          "source": {
+            "label": "Hydro One 40-F 添付MD&A(2024年度)",
+            "label_en": "Hydro One 40-F MD&A exhibit (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1114445/000111444525000007/a2024yehoimda.htm",
+            "level": "official",
+            "date": "2025-02-20",
+            "quote": "the Bamkushwada Limited Partnership, a consortium of six First Nations, and affiliates of NextEra Energy Canada, LP who own approximately 4% and 48%, respectively."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMRC",
+      "ticker": "AMRC",
+      "name": "アメレスコ",
+      "name_en": "Ameresco",
+      "sub": "省エネ・再エネ事業",
+      "sub_en": "Energy efficiency & renewables",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "太陽光・蓄電池の主な競合",
+          "text_en": "Principal competitor in solar PV and battery storage",
+          "source": {
+            "label": "Ameresco 10-K(2025年度)",
+            "label_en": "Ameresco 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1488139/000162828026013574/amrc_20251231x10-k.htm",
+            "level": "official",
+            "date": "2026-03-03",
+            "quote": "In the Solar PV and Battery Storage market our principal competitors include NextEra Energy, Inc., Engie SA, Invenergy"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SMXT",
+      "ticker": "SMXT",
+      "name": "ソーラーマックス",
+      "name_en": "SolarMax Technology",
+      "sub": "太陽光・蓄電池",
+      "sub_en": "Solar & storage",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "蓄電池システムの大手競合",
+          "text_en": "Major competitor in battery storage systems",
+          "source": {
+            "label": "SolarMax 10-K(2025年度)",
+            "label_en": "SolarMax 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1519472/000164033426000651/solarmax_10k.htm",
+            "level": "official",
+            "date": "2026-04-06",
+            "quote": "With respect to BESS systems, we compete and operate alongside established industry leaders such as Sungrow, Tesla, and NextEra Energy."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

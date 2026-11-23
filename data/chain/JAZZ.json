@@ -1,0 +1,296 @@
+{
+  "root": {
+    "ticker": "JAZZ",
+    "name": "ジャズ・ファーマシューティカルズ",
+    "cik": 1232524,
+    "name_en": "Jazz Pharmaceuticals"
+  },
+  "rows": [
+    {
+      "ja": "買収・導入",
+      "en": "Acquisitions & in-licensing",
+      "above": true
+    },
+    {
+      "ja": "競合(各社の資料に記載)",
+      "en": "Competitors (named in filings)"
+    }
+  ],
+  "rivals": [
+    "ALKS",
+    "AXSM",
+    "HRMY",
+    "AMRX"
+  ],
+  "companies": [
+    {
+      "id": "GW",
+      "ticker": "GW Pharmaceuticals",
+      "name": "GWファーマシューティカルズ",
+      "name_en": "GW Pharmaceuticals",
+      "sub": "カンナビノイド薬(英)",
+      "sub_en": "Cannabinoid drugs (UK)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2021年5月に買収し、てんかん薬エピディオレックスを獲得",
+          "text_en": "Acquired in May 2021, adding the epilepsy drug Epidiolex",
+          "source": {
+            "label": "Jazz 10-K(2025年度)",
+            "label_en": "Jazz 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1232524/000123252426000013/jazz-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "We acquired Epidiolex (Epidyolex outside the U.S.) in May 2021 as part of our GW Acquisition"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ZYME",
+      "ticker": "ZYME",
+      "name": "ザイムワークス",
+      "name_en": "Zymeworks",
+      "sub": "抗体医薬",
+      "sub_en": "Antibody drugs",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "HER2二重特異性抗体ジイヘラの独占開発・販売権を導入",
+          "text_en": "In-licensed exclusive rights to the HER2 bispecific Ziihera (zanidatamab)",
+          "source": {
+            "label": "Jazz 10-K(2025年度)",
+            "label_en": "Jazz 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1232524/000123252426000013/jazz-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "We acquired our exclusive development and commercialization rights to Ziihera in 2022 through an exclusive licensing and collaboration agreement with a subsidiary of Zymeworks"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Chimerix",
+      "ticker": "Chimerix",
+      "name": "キメリクス",
+      "name_en": "Chimerix",
+      "sub": "がん治療薬",
+      "sub_en": "Oncology drugs",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年4月に約9.4億ドルで買収し、Modeysoを獲得",
+          "text_en": "Acquired in April 2025 for $944.2 million, adding Modeyso",
+          "source": {
+            "label": "Jazz 10-K(2025年度)",
+            "label_en": "Jazz 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1232524/000123252426000013/jazz-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "In April 2025, we acquired the entire issued share capital of Chimerix at a price of $ 8.55 per share, payable in cash at closing, representing a total cash consideration of $ 944.2 million"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Werewolf",
+      "ticker": "Werewolf",
+      "name": "ウェアウルフ・セラピューティクス",
+      "name_en": "Werewolf Therapeutics",
+      "sub": "がん免疫薬",
+      "sub_en": "Immuno-oncology",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "JZP898(WTX-613)の世界独占ライセンスを導入",
+          "text_en": "In-licensed worldwide rights to JZP898 (WTX-613)",
+          "source": {
+            "label": "Jazz 10-K(2025年度)",
+            "label_en": "Jazz 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1232524/000123252426000013/jazz-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "We acquired rights to JZP898 from Werewolf in 2022 under an exclusive, worldwide, royalty-bearing license"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Redx",
+      "ticker": "Redx",
+      "name": "レッドエックス",
+      "name_en": "Redx Pharma",
+      "sub": "創薬(英)",
+      "sub_en": "Drug discovery (UK)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "共同研究と資産譲受でJZP815の権利を取得",
+          "text_en": "Acquired JZP815 rights through a collaboration and asset purchase",
+          "source": {
+            "label": "Jazz 10-K(2025年度)",
+            "label_en": "Jazz 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1232524/000123252426000013/jazz-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Through a collaboration agreement and an asset purchase agreement with Redx in 2019, we acquired a portfolio of U.S. and ex-U.S. patents and patent applications, including rights relating to compositions and methods of using JZP815."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PharmaMar",
+      "ticker": "PharmaMar",
+      "name": "ファーママー",
+      "name_en": "PharmaMar",
+      "sub": "抗がん剤(西)",
+      "sub_en": "Cancer drugs (Spain)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "小細胞肺がん薬ゼプゼルカの米国権利の導入元",
+          "text_en": "Licensor of U.S. rights to the lung cancer drug Zepzelca",
+          "source": {
+            "label": "Jazz 10-K(2025年度)",
+            "label_en": "Jazz 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1232524/000123252426000013/jazz-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Our exclusive U.S. development and commercialization rights to Zepzelca were acquired through an exclusive license agreement we entered into with PharmaMar in December 2019."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ALKS",
+      "ticker": "ALKS",
+      "name": "アルカームス",
+      "name_en": "Alkermes",
+      "sub": "中枢神経薬",
+      "sub_en": "CNS drugs",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "アバデル買収で得たLumryzがXywav・Xyremと競合",
+          "text_en": "Its Lumryz, gained with Avadel, competes with Xywav and Xyrem",
+          "source": {
+            "label": "Jazz 10-K(2025年度)",
+            "label_en": "Jazz 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1232524/000123252426000013/jazz-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Xywav and Xyrem face competition from Alkermes' Lumryz (acquired through its acquisition of Avadel)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AXSM",
+      "ticker": "AXSM",
+      "name": "アクサム・セラピューティクス",
+      "name_en": "Axsome Therapeutics",
+      "sub": "中枢神経薬",
+      "sub_en": "CNS drugs",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "2022年にジャズから取得したSunosiが競合",
+          "text_en": "Sunosi, bought from Jazz in 2022, competes with its oxybates",
+          "source": {
+            "label": "Jazz 10-K(2025年度)",
+            "label_en": "Jazz 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1232524/000123252426000013/jazz-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Xywav and Xyrem face competition from Sunosi, which we sold to Axsome in 2022."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HRMY",
+      "ticker": "HRMY",
+      "name": "ハーモニー・バイオサイエンシズ",
+      "name_en": "Harmony Biosciences",
+      "sub": "睡眠障害薬",
+      "sub_en": "Sleep disorder drugs",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "WAKIXの競合としてジャズのXyremを挙げる",
+          "text_en": "Names Jazz's Xyrem among WAKIX competitors",
+          "source": {
+            "label": "Harmony 10-K(2025年度)",
+            "label_en": "Harmony 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1802665/000110465926018859/hrmy-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Jazz Pharmaceuticals' Xyrem (sodium oxybate) is an FDA-approved product for the treatment of cataplexy or EDS in patients 7 years of age and older with narcolepsy."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMRX",
+      "ticker": "AMRX",
+      "name": "アムニール",
+      "name_en": "Amneal Pharmaceuticals",
+      "sub": "後発医薬品",
+      "sub_en": "Generic drugs",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "2025年9月に高ナトリウム・オキシベートの後発品が承認",
+          "text_en": "Its generic high-sodium oxybate was approved in September 2025",
+          "source": {
+            "label": "Jazz 10-K(2025年度)",
+            "label_en": "Jazz 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1232524/000123252426000013/jazz-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "including a generic version of high-sodium oxybate from Amneal approved in September 2025"
+          }
+        }
+      ]
+    },
+    {
+      "id": "UCB",
+      "ticker": "UCB",
+      "name": "UCB",
+      "name_en": "UCB",
+      "sub": "製薬(ベルギー)",
+      "sub_en": "Pharmaceuticals (Belgium)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ゾジェニクスを買収し希少てんかんで競合",
+          "text_en": "Acquired Zogenix and competes in rare epilepsies",
+          "source": {
+            "label": "Jazz 10-K(2025年度)",
+            "label_en": "Jazz 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1232524/000123252426000013/jazz-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "In March 2022, UCB S.A. announced that it had completed its acquisition of Zogenix."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

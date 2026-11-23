@@ -1,0 +1,275 @@
+{
+  "root": {
+    "ticker": "KR",
+    "name": "クローガー",
+    "cik": 56873,
+    "name_en": "Kroger"
+  },
+  "rows": [
+    {
+      "ja": "供給元(上流)",
+      "en": "Suppliers (upstream)",
+      "above": true
+    },
+    {
+      "ja": "提携・合併交渉",
+      "en": "Partners & merger talks"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "COST",
+    "IMKTA",
+    "DIT"
+  ],
+  "companies": [
+    {
+      "id": "COKE",
+      "ticker": "COKE",
+      "name": "コカ・コーラ・コンソリデーテッド",
+      "name_en": "Coca-Cola Consolidated",
+      "sub": "飲料ボトラー",
+      "sub_en": "Beverage bottler",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ウォルマートとクローガーが最大の顧客(小売向け販売数量の約36%)",
+          "text_en": "Walmart and Kroger are its largest customers, about 36% of retail bottle/can volume",
+          "source": {
+            "label": "Coca-Cola Consolidated 10-K(2024年度)",
+            "label_en": "Coca-Cola Consolidated 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/317540/000031754025000025/coke-20241231.htm",
+            "level": "official",
+            "date": "2025-02-20",
+            "quote": "The Company's largest customers, Walmart Inc. and The Kroger Co., accounted for approximately 36% of the Company's 2024 total bottle/can sales volume to retail customers"
+          }
+        }
+      ]
+    },
+    {
+      "id": "VITL",
+      "ticker": "VITL",
+      "name": "バイタル・ファームズ",
+      "name_en": "Vital Farms",
+      "sub": "鶏卵・乳製品",
+      "sub_en": "Eggs & butter",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "主要な小売顧客の一社にクローガー",
+          "text_en": "Names Kroger among key retail customers",
+          "source": {
+            "label": "Vital Farms 10-K(2024年度)",
+            "label_en": "Vital Farms 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1579733/000095017025028365/vitl-20241229.htm",
+            "level": "official",
+            "date": "2025-02-27",
+            "quote": "We have reached a broad set of consumers through a variety of retail partners, including Albertsons, Kroger, Publix, Whole Foods, Sprouts Farmers Market"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Suja",
+      "ticker": "Suja Life",
+      "name": "スージャ・ライフ",
+      "name_en": "Suja Life",
+      "sub": "コールドプレス飲料",
+      "sub_en": "Cold-pressed beverages",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "クローガーとの協業を取引先との関係の代表例に挙げる",
+          "text_en": "Cites its partnership with Kroger as a model customer relationship",
+          "source": {
+            "label": "Suja Life S-1(2026年4月)",
+            "label_en": "Suja Life S-1 (Apr 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1934114/000110465926041905/tm2530822-6_s1.htm",
+            "level": "official",
+            "date": "2026-04-10",
+            "quote": "Our partnership with Kroger is one of many examples that showcases our ability to evolve well beyond a traditional supplier dynamic into a deep-rooted, collaborative partnership"
+          }
+        }
+      ]
+    },
+    {
+      "id": "LOCL",
+      "ticker": "LOCL",
+      "name": "ローカル・バウンティ",
+      "name_en": "Local Bounti",
+      "sub": "屋内栽培野菜",
+      "sub_en": "Indoor-grown produce",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "主要な小売顧客の一社にクローガー",
+          "text_en": "Names Kroger among its blue-chip retail customers",
+          "source": {
+            "label": "Local Bounti 10-K(2024年度)",
+            "label_en": "Local Bounti 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1840780/000184078025000009/locl-20241231.htm",
+            "level": "official",
+            "date": "2025-03-31",
+            "quote": "primarily through direct relationships with blue-chip retail customers, including Albertsons, Sam's Club, Kroger, Target, Walmart"
+          }
+        }
+      ]
+    },
+    {
+      "id": "EDBL",
+      "ticker": "EDBL",
+      "name": "エディブル・ガーデン",
+      "name_en": "Edible Garden",
+      "sub": "ハーブ・野菜",
+      "sub_en": "Herbs & produce",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "販売先のスーパーにクローガー",
+          "text_en": "Sells its herbs through Kroger among other supermarkets",
+          "source": {
+            "label": "Edible Garden 10-K(2025年度)",
+            "label_en": "Edible Garden 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1809750/000147793226001867/edbl_10k.htm",
+            "level": "official",
+            "date": "2026-03-31",
+            "quote": "Our herb product portfolio is sold through our supermarket partners including Walmart, Target, Meijer, Hannaford, Ahold/Delhaize, Kroger"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ACI",
+      "ticker": "ACI",
+      "name": "アルバートソンズ",
+      "name_en": "Albertsons",
+      "sub": "スーパー",
+      "sub_en": "Grocery",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "合併契約は解消され、違約金6億ドルをめぐりクローガーを提訴",
+          "text_en": "Merger agreement terminated; Albertsons is suing Kroger over the $600 million termination fee",
+          "source": {
+            "label": "Albertsons 10-K(2025年2月期)",
+            "label_en": "Albertsons 10-K (FY ended Feb 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1646972/000164697225000052/aci-20250222.htm",
+            "level": "official",
+            "date": "2025-04-21",
+            "quote": "resulting in ongoing costs that we may be required to pay in connection with the lawsuit against Kroger, or our inability to collect the $600 million termination fee from Kroger"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GDRX",
+      "ticker": "GDRX",
+      "name": "グッドRx",
+      "name_en": "GoodRx",
+      "sub": "処方薬割引",
+      "sub_en": "Prescription savings",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "クローガーの薬局向け会員割引プログラムで提携していた",
+          "text_en": "Previously partnered with Kroger on a paid savings program",
+          "source": {
+            "label": "GoodRx 10-K(2024年度)",
+            "label_en": "GoodRx 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1809519/000180951925000040/gdrx-20241231.htm",
+            "level": "official",
+            "date": "2025-02-27",
+            "quote": "For example, we previously partnered with Kroger, one of the largest retail pharmacies in the United States, to offer Kroger Savings to their consumers for an annual fee"
+          }
+        }
+      ]
+    },
+    {
+      "id": "COST",
+      "ticker": "COST",
+      "name": "コストコ",
+      "name_en": "Costco",
+      "sub": "会員制量販店",
+      "sub_en": "Warehouse clubs",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "米国の主な総合小売の競合にクローガーを挙げる",
+          "text_en": "Names Kroger among significant U.S. general merchandise competitors",
+          "source": {
+            "label": "Costco 10-K(2025年8月期)",
+            "label_en": "Costco 10-K (FY ended Aug 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/909832/000090983225000101/cost-20250831.htm",
+            "level": "official",
+            "date": "2025-10-08",
+            "quote": "Walmart, Target, Kroger, and Amazon are among our significant general merchandise retail competitors in the U.S."
+          }
+        }
+      ]
+    },
+    {
+      "id": "IMKTA",
+      "ticker": "IMKTA",
+      "name": "イングルズ・マーケッツ",
+      "name_en": "Ingles Markets",
+      "sub": "スーパー",
+      "sub_en": "Grocery",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合にクローガーと傘下ハリス・ティーターを挙げる",
+          "text_en": "Names Kroger and its Harris Teeter among principal competitors",
+          "source": {
+            "label": "Ingles Markets 10-K(2025年9月期)",
+            "label_en": "Ingles Markets 10-K (FY ended Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/50493/000005049325000019/imkt-20250927x10k.htm",
+            "level": "official",
+            "date": "2025-11-26",
+            "quote": "Harris Teeter (owned by The Kroger Co.), The Kroger Co."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DIT",
+      "ticker": "DIT",
+      "name": "アムコン・ディストリビューティング",
+      "name_en": "AMCON Distributing",
+      "sub": "卸・健康食品店",
+      "sub_en": "Wholesale & health food retail",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "自然食品で競合する大手スーパーにクローガーを挙げる",
+          "text_en": "Names Kroger among supermarkets competing in natural and organic products",
+          "source": {
+            "label": "AMCON Distributing 10-K(2025年9月期)",
+            "label_en": "AMCON Distributing 10-K (FY ended Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/928465/000110465925108504/dit-20250930x10k.htm",
+            "level": "official",
+            "date": "2025-11-07",
+            "quote": "Conventional supermarkets and mass market outlets such as Kroger, Albertsons, Walmart, Trader Joe's and Costco have also significantly increased their offerings of organic and natural products"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
