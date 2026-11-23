@@ -1,0 +1,299 @@
+{
+  "root": {
+    "ticker": "ORA",
+    "name": "オーマット・テクノロジーズ",
+    "cik": 1296445,
+    "name_en": "Ormat Technologies"
+  },
+  "rows": [
+    {
+      "ja": "資産の買収元",
+      "en": "Asset sellers",
+      "above": true
+    },
+    {
+      "ja": "電力の販売先(電力会社)",
+      "en": "Power buyers (utilities)"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in the 10-K)"
+    }
+  ],
+  "rivals": [
+    "MHI",
+    "Fuji Electric",
+    "Toshiba"
+  ],
+  "companies": [
+    {
+      "id": "Cyrq",
+      "ticker": "Cyrq Energy",
+      "name": "サーク・エナジー",
+      "name_en": "Cyrq Energy",
+      "sub": "地熱発電",
+      "sub_en": "Geothermal power",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ブルーマウンテン地熱発電所(20MW)を2025年に取得",
+          "text_en": "Bought 20MW from the Blue Mountain geothermal plant in 2025",
+          "source": {
+            "label": "Ormat 10-K(2025年度)",
+            "label_en": "Ormat 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1296445/000129644526000006/ora-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "we acquired an additional 20MW from the Blue Mountain geothermal plant after closing a transaction with Cyrq Energy in June 2025"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Innergex",
+      "ticker": "Innergex",
+      "name": "イナジェックス",
+      "name_en": "Innergex Renewable Energy",
+      "sub": "再エネ発電(加)",
+      "sub_en": "Renewable power (Canada)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ハワイの太陽光+蓄電所を2026年1月に取得",
+          "text_en": "Bought a Hawaii solar-plus-storage plant in January 2026",
+          "source": {
+            "label": "Ormat 10-K(2025年度)",
+            "label_en": "Ormat 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1296445/000129644526000006/ora-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "another 30MW from a solar PV plant connected to a battery energy storage system in Hawaii, purchased from Innergex Renewable Energy Inc. in January 2026."
+          }
+        }
+      ]
+    },
+    {
+      "id": "EGPNA",
+      "ticker": "EGPNA",
+      "name": "エネル・グリーンパワー北米",
+      "name_en": "Enel Green Power North America",
+      "sub": "再エネ発電",
+      "sub_en": "Renewable power",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "地熱・太陽光資産をまとめて2024年に取得",
+          "text_en": "Acquired a geothermal and solar portfolio in January 2024",
+          "source": {
+            "label": "Ormat 10-K(2025年度)",
+            "label_en": "Ormat 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1296445/000129644526000006/ora-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "In January 2024, the Company completed the acquisition of a portfolio of geothermal and solar assets from EGPNA"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ENIC",
+      "ticker": "ENIC",
+      "name": "エネル・チリ",
+      "name_en": "Enel Chile",
+      "sub": "電力(チリ)",
+      "sub_en": "Power (Chile)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "チリ子会社が契約違反でエネル系を仲裁に提起",
+          "text_en": "Ormat Chile filed an arbitration claim against Enel Green Power Chile",
+          "source": {
+            "label": "Enel Chile 20-F(2025年度)",
+            "label_en": "Enel Chile 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1659939/000110465926050251/enic-20251231x20f.htm",
+            "level": "official",
+            "date": "2026-04-28",
+            "quote": "On July 21, 2025, Ormat Chile SpA filed an arbitration claim"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SCPPA",
+      "ticker": "SCPPA",
+      "name": "南カリフォルニア公営電力庁",
+      "name_en": "Southern California Public Power Authority",
+      "sub": "公営電力",
+      "sub_en": "Public power agency",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大の販売先で売上の17.8%",
+          "text_en": "Largest customer at 17.8% of revenue",
+          "source": {
+            "label": "Ormat 10-K(2025年度)",
+            "label_en": "Ormat 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1296445/000129644526000006/ora-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "SCPPA (U.S.) 17.8% NV Energy (U.S.) 13.8% KPLC (Kenya) 11.9%"
+          }
+        }
+      ]
+    },
+    {
+      "id": "NVEnergy",
+      "ticker": "NV Energy",
+      "name": "NVエナジー",
+      "name_en": "NV Energy",
+      "sub": "電力会社(ネバダ)",
+      "sub_en": "Utility (Nevada)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "売上の13.8%",
+          "text_en": "13.8% of revenue",
+          "source": {
+            "label": "Ormat 10-K(2025年度)",
+            "label_en": "Ormat 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1296445/000129644526000006/ora-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "SCPPA (U.S.) 17.8% NV Energy (U.S.) 13.8% KPLC (Kenya) 11.9%"
+          }
+        }
+      ]
+    },
+    {
+      "id": "KPLC",
+      "ticker": "KPLC",
+      "name": "ケニア電力",
+      "name_en": "Kenya Power and Lighting",
+      "sub": "電力会社(ケニア)",
+      "sub_en": "Utility (Kenya)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "売上の11.9%",
+          "text_en": "11.9% of revenue",
+          "source": {
+            "label": "Ormat 10-K(2025年度)",
+            "label_en": "Ormat 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1296445/000129644526000006/ora-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "SCPPA (U.S.) 17.8% NV Energy (U.S.) 13.8% KPLC (Kenya) 11.9%"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MHI",
+      "ticker": "MHI",
+      "name": "三菱重工業",
+      "name_en": "Mitsubishi Heavy Industries",
+      "sub": "発電機器",
+      "sub_en": "Power equipment",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "蒸気タービンの主な競合",
+          "text_en": "Main steam turbine competitor",
+          "source": {
+            "label": "Ormat 10-K(2025年度)",
+            "label_en": "Ormat 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1296445/000129644526000006/ora-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our main steam turbine competitors are industrial steam turbine manufacturers such as Mitsubishi Heavy Industries, Fuji Electric Co., Ltd. and Toshiba Corporation of Japan, GE/Nuovo Pignone and Ansaldo Energia of Italy."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Fuji Electric",
+      "ticker": "Fuji Electric",
+      "name": "富士電機",
+      "name_en": "Fuji Electric",
+      "sub": "発電機器",
+      "sub_en": "Power equipment",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "蒸気タービンの主な競合",
+          "text_en": "Main steam turbine competitor",
+          "source": {
+            "label": "Ormat 10-K(2025年度)",
+            "label_en": "Ormat 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1296445/000129644526000006/ora-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our main steam turbine competitors are industrial steam turbine manufacturers such as Mitsubishi Heavy Industries, Fuji Electric Co., Ltd. and Toshiba Corporation of Japan, GE/Nuovo Pignone and Ansaldo Energia of Italy."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Toshiba",
+      "ticker": "Toshiba",
+      "name": "東芝",
+      "name_en": "Toshiba",
+      "sub": "発電機器",
+      "sub_en": "Power equipment",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "蒸気タービンの主な競合",
+          "text_en": "Main steam turbine competitor",
+          "source": {
+            "label": "Ormat 10-K(2025年度)",
+            "label_en": "Ormat 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1296445/000129644526000006/ora-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our main steam turbine competitors are industrial steam turbine manufacturers such as Mitsubishi Heavy Industries, Fuji Electric Co., Ltd. and Toshiba Corporation of Japan, GE/Nuovo Pignone and Ansaldo Energia of Italy."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CVX",
+      "ticker": "CVX",
+      "name": "シェブロン",
+      "name_en": "Chevron",
+      "sub": "石油・地熱",
+      "sub_en": "Oil & geothermal",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "インドネシアの入札でプルタミナと組み競合",
+          "text_en": "Competed with Ormat in an Indonesian tender with Pertamina",
+          "source": {
+            "label": "Ormat 10-K(2025年度)",
+            "label_en": "Ormat 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1296445/000129644526000006/ora-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "In Indonesia, Ormat faces competition from companies such as Kaishan, PT Pertamina Geothermal Energy, PT Star Energy, and, in a recent tender, Chevron (in partnership with Pertamina)."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

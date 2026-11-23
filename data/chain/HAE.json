@@ -1,0 +1,296 @@
+{
+  "root": {
+    "ticker": "HAE",
+    "name": "ヘモネティクス",
+    "cik": 313143,
+    "name_en": "Haemonetics"
+  },
+  "rows": [
+    {
+      "ja": "買収",
+      "en": "Acquisitions",
+      "above": true
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in the 10-K)"
+    }
+  ],
+  "rivals": [
+    "ABT",
+    "BSX",
+    "TFX",
+    "Terumo"
+  ],
+  "companies": [
+    {
+      "id": "Vivasure",
+      "ticker": "Vivasure",
+      "name": "ビバシュア",
+      "name_en": "Vivasure Medical",
+      "sub": "血管閉鎖デバイス",
+      "sub_en": "Vessel closure devices",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "大口径血管閉鎖のビバシュアを2026年1月に約1.6億ドルで買収",
+          "text_en": "Acquired Vivasure, maker of a large-bore closure system, in January 2026 for $164.4 million",
+          "source": {
+            "label": "Haemonetics 10-K(2026年3月期)",
+            "label_en": "Haemonetics 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/313143/000031314326000050/hae-20260328.htm",
+            "level": "official",
+            "date": "2026-05-20",
+            "quote": "On January 9, 2026, we acquired all of the outstanding equity interests of Vivasure for a net purchase price of $164.4 million."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Attune",
+      "ticker": "Attune Medical",
+      "name": "アチューン・メディカル",
+      "name_en": "Attune Medical",
+      "sub": "食道温度管理",
+      "sub_en": "Esophageal temperature management",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2024年4月に約1.76億ドルで買収",
+          "text_en": "Acquired in April 2024 for $176.2 million",
+          "source": {
+            "label": "Haemonetics 10-K(2026年3月期)",
+            "label_en": "Haemonetics 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/313143/000031314326000050/hae-20260328.htm",
+            "level": "official",
+            "date": "2026-05-20",
+            "quote": "On April 1, 2024, the Company completed its acquisition of Attune Medical for a net purchase price of $ 176.2 million"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Terumo",
+      "ticker": "Terumo",
+      "name": "テルモ",
+      "name_en": "Terumo",
+      "sub": "医療機器",
+      "sub_en": "Medical devices",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "成分採血装置と血管閉鎖の競合(テルモBCT)",
+          "text_en": "Competitor in apheresis and vascular closure (Terumo BCT)",
+          "source": {
+            "label": "Haemonetics 10-K(2026年3月期)",
+            "label_en": "Haemonetics 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/313143/000031314326000050/hae-20260328.htm",
+            "level": "official",
+            "date": "2026-05-20",
+            "quote": "Our MCS brand apheresis equipment competes not only against manual whole blood collections but also with products from Terumo BCT and Fresenius."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Fresenius",
+      "ticker": "Fresenius",
+      "name": "フレゼニウス",
+      "name_en": "Fresenius",
+      "sub": "医療機器・透析(独)",
+      "sub_en": "Medical devices & dialysis (Germany)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "成分採血装置の競合",
+          "text_en": "Competitor in apheresis equipment",
+          "source": {
+            "label": "Haemonetics 10-K(2026年3月期)",
+            "label_en": "Haemonetics 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/313143/000031314326000050/hae-20260328.htm",
+            "level": "official",
+            "date": "2026-05-20",
+            "quote": "Our MCS brand apheresis equipment competes not only against manual whole blood collections but also with products from Terumo BCT and Fresenius."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ABT",
+      "ticker": "ABT",
+      "name": "アボット",
+      "name_en": "Abbott Laboratories",
+      "sub": "医療機器",
+      "sub_en": "Medical devices",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "血管閉鎖と冠動脈生理検査の競合",
+          "text_en": "Competitor in vascular closure and coronary physiology",
+          "source": {
+            "label": "Haemonetics 10-K(2026年3月期)",
+            "label_en": "Haemonetics 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/313143/000031314326000050/hae-20260328.htm",
+            "level": "official",
+            "date": "2026-05-20",
+            "quote": "Our main competitors in vascular access closure include Terumo BCT, Abbott Laboratories, Cordis, and Teleflex"
+          }
+        }
+      ]
+    },
+    {
+      "id": "TFX",
+      "ticker": "TFX",
+      "name": "テレフレックス",
+      "name_en": "Teleflex",
+      "sub": "医療機器",
+      "sub_en": "Medical devices",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "血管閉鎖の主な競合",
+          "text_en": "Main competitor in vascular closure",
+          "source": {
+            "label": "Haemonetics 10-K(2026年3月期)",
+            "label_en": "Haemonetics 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/313143/000031314326000050/hae-20260328.htm",
+            "level": "official",
+            "date": "2026-05-20",
+            "quote": "Our main competitors in vascular access closure include Terumo BCT, Abbott Laboratories, Cordis, and Teleflex"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Cordis",
+      "ticker": "Cordis",
+      "name": "コーディス",
+      "name_en": "Cordis",
+      "sub": "血管治療機器",
+      "sub_en": "Vascular devices",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "血管閉鎖の主な競合",
+          "text_en": "Main competitor in vascular closure",
+          "source": {
+            "label": "Haemonetics 10-K(2026年3月期)",
+            "label_en": "Haemonetics 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/313143/000031314326000050/hae-20260328.htm",
+            "level": "official",
+            "date": "2026-05-20",
+            "quote": "Our main competitors in vascular access closure include Terumo BCT, Abbott Laboratories, Cordis, and Teleflex"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BSX",
+      "ticker": "BSX",
+      "name": "ボストン・サイエンティフィック",
+      "name_en": "Boston Scientific",
+      "sub": "医療機器",
+      "sub_en": "Medical devices",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "冠動脈生理検査の競合",
+          "text_en": "Competitor in coronary physiology",
+          "source": {
+            "label": "Haemonetics 10-K(2026年3月期)",
+            "label_en": "Haemonetics 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/313143/000031314326000050/hae-20260328.htm",
+            "level": "official",
+            "date": "2026-05-20",
+            "quote": "Competitors such as Abbott Laboratories, Boston Scientific, and Philips pose challenges and opportunities in the coronary physiology segment"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PHG",
+      "ticker": "PHG",
+      "name": "フィリップス",
+      "name_en": "Philips",
+      "sub": "医療機器(蘭)",
+      "sub_en": "Health technology (Netherlands)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "冠動脈生理検査の競合",
+          "text_en": "Competitor in coronary physiology",
+          "source": {
+            "label": "Haemonetics 10-K(2026年3月期)",
+            "label_en": "Haemonetics 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/313143/000031314326000050/hae-20260328.htm",
+            "level": "official",
+            "date": "2026-05-20",
+            "quote": "Competitors such as Abbott Laboratories, Boston Scientific, and Philips pose challenges and opportunities in the coronary physiology segment"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Sysmex",
+      "ticker": "Sysmex",
+      "name": "シスメックス",
+      "name_en": "Sysmex",
+      "sub": "検体検査",
+      "sub_en": "Diagnostics",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "凝固検査で競合",
+          "text_en": "Competitor in coagulation testing",
+          "source": {
+            "label": "Haemonetics 10-K(2026年3月期)",
+            "label_en": "Haemonetics 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/313143/000031314326000050/hae-20260328.htm",
+            "level": "official",
+            "date": "2026-05-20",
+            "quote": "Competition includes routine coagulation tests, such as prothrombin time, partial thromboplastin time and platelet count marketed by various manufacturers, such as Werfen, Diagnostica Stago SAS and Sysmex."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Werfen",
+      "ticker": "Werfen",
+      "name": "ワーフェン",
+      "name_en": "Werfen",
+      "sub": "検体検査(西)",
+      "sub_en": "Diagnostics (Spain)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "凝固検査で競合",
+          "text_en": "Competitor in coagulation testing",
+          "source": {
+            "label": "Haemonetics 10-K(2026年3月期)",
+            "label_en": "Haemonetics 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/313143/000031314326000050/hae-20260328.htm",
+            "level": "official",
+            "date": "2026-05-20",
+            "quote": "Competition includes routine coagulation tests, such as prothrombin time, partial thromboplastin time and platelet count marketed by various manufacturers, such as Werfen, Diagnostica Stago SAS and Sysmex."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

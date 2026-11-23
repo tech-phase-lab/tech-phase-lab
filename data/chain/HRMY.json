@@ -1,0 +1,223 @@
+{
+  "root": {
+    "ticker": "HRMY",
+    "name": "ハーモニー・バイオサイエンシズ",
+    "cik": 1802665,
+    "name_en": "Harmony Biosciences"
+  },
+  "rows": [
+    {
+      "ja": "導入・買収",
+      "en": "In-licensing & acquisitions",
+      "above": true
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in the 10-K)"
+    }
+  ],
+  "rivals": [
+    "JAZZ",
+    "AXSM",
+    "TAK"
+  ],
+  "companies": [
+    {
+      "id": "Bioprojet",
+      "ticker": "Bioprojet",
+      "name": "ビオプロジェ",
+      "name_en": "Bioprojet",
+      "sub": "製薬(仏)",
+      "sub_en": "Pharmaceuticals (France)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "主力薬WAKIX(ピトリサント)の独占販売権の導入元",
+          "text_en": "Licensed it the exclusive rights to pitolisant, sold as WAKIX",
+          "source": {
+            "label": "Harmony 10-K(2025年度)",
+            "label_en": "Harmony 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1802665/000110465926018859/hrmy-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "In July 2017, we entered into a License Agreement (as amended, the \"2017 LCA\") with Bioprojet Société Civile de Recherche (\"Bioprojet\") whereby we acquired the exclusive right to commercialize the pharmaceutical compound pitolisant."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Zynerba",
+      "ticker": "Zynerba",
+      "name": "ザイナーバ",
+      "name_en": "Zynerba Pharmaceuticals",
+      "sub": "カンナビジオール製剤",
+      "sub_en": "Cannabidiol gel",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2023年10月に買収し、ZYN002の権利を取得",
+          "text_en": "Acquired in October 2023, adding ZYN002",
+          "source": {
+            "label": "Harmony 10-K(2025年度)",
+            "label_en": "Harmony 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1802665/000110465926018859/hrmy-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "In October 2023, we acquired Zynerba Pharmaceuticals, Inc. (\"Zynerba\"), adding global rights to develop, manufacture and commercialize ZYN002"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ConSynance",
+      "ticker": "ConSynance",
+      "name": "コンシナンス",
+      "name_en": "ConSynance Therapeutics",
+      "sub": "創薬",
+      "sub_en": "Drug discovery",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "候補薬HBS-102を取得し、中華圏の権利は同社に戻す",
+          "text_en": "Bought HBS-102 from it and granted back Greater China rights",
+          "source": {
+            "label": "Harmony 10-K(2025年度)",
+            "label_en": "Harmony 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1802665/000110465926018859/hrmy-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "We acquired full development and commercialization rights for HBS-102 globally, but we have provided an indication-limited grant-back license to ConSynance for the development and commercialization of the Compound in Greater China."
+          }
+        }
+      ]
+    },
+    {
+      "id": "JAZZ",
+      "ticker": "JAZZ",
+      "name": "ジャズ・ファーマシューティカルズ",
+      "name_en": "Jazz Pharmaceuticals",
+      "sub": "睡眠障害薬",
+      "sub_en": "Sleep disorder drugs",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ナルコレプシー薬Xyremで競合",
+          "text_en": "Competes through its narcolepsy drug Xyrem",
+          "source": {
+            "label": "Harmony 10-K(2025年度)",
+            "label_en": "Harmony 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1802665/000110465926018859/hrmy-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Jazz Pharmaceuticals' Xyrem (sodium oxybate) is an FDA-approved product for the treatment of cataplexy or EDS in patients 7 years of age and older with narcolepsy."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AXSM",
+      "ticker": "AXSM",
+      "name": "アクサム・セラピューティクス",
+      "name_en": "Axsome Therapeutics",
+      "sub": "中枢神経薬",
+      "sub_en": "CNS drugs",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Sunosiと開発中のAXS-12で競合",
+          "text_en": "Competes through Sunosi and the candidate AXS-12",
+          "source": {
+            "label": "Harmony 10-K(2025年度)",
+            "label_en": "Harmony 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1802665/000110465926018859/hrmy-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Axsome's Sunosi (solriamfetol) was approved by the FDA in March 2019 and launched in July 2019."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Suven",
+      "ticker": "Suven",
+      "name": "スベン・ライフサイエンシズ",
+      "name_en": "Suven Life Sciences",
+      "sub": "創薬(印)",
+      "sub_en": "Drug discovery (India)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "開発中の競合候補薬",
+          "text_en": "Developing a potential competing product",
+          "source": {
+            "label": "Harmony 10-K(2025年度)",
+            "label_en": "Harmony 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1802665/000110465926018859/hrmy-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Other potential future competitive products are currently in development, including Axsome Therapeutics' AXS-12 (reboxetine) product candidate, Suven Life Sciences' SUVN-G3031 H3 inverse agonist product candidate, NLS Pharmaceutics mazindol ER product candidate and orexin 2 receptor agonist product candidates from Takeda"
+          }
+        }
+      ]
+    },
+    {
+      "id": "NLSP",
+      "ticker": "NLSP",
+      "name": "NLSファーマシューティクス",
+      "name_en": "NLS Pharmaceutics",
+      "sub": "中枢神経薬(スイス)",
+      "sub_en": "CNS drugs (Switzerland)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "開発中の競合候補薬",
+          "text_en": "Developing a potential competing product",
+          "source": {
+            "label": "Harmony 10-K(2025年度)",
+            "label_en": "Harmony 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1802665/000110465926018859/hrmy-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Other potential future competitive products are currently in development, including Axsome Therapeutics' AXS-12 (reboxetine) product candidate, Suven Life Sciences' SUVN-G3031 H3 inverse agonist product candidate, NLS Pharmaceutics mazindol ER product candidate and orexin 2 receptor agonist product candidates from Takeda"
+          }
+        }
+      ]
+    },
+    {
+      "id": "TAK",
+      "ticker": "TAK",
+      "name": "武田薬品工業",
+      "name_en": "Takeda",
+      "sub": "製薬",
+      "sub_en": "Pharmaceuticals",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "オレキシン2受容体作動薬を開発中",
+          "text_en": "Developing orexin 2 receptor agonists",
+          "source": {
+            "label": "Harmony 10-K(2025年度)",
+            "label_en": "Harmony 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1802665/000110465926018859/hrmy-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Other potential future competitive products are currently in development, including Axsome Therapeutics' AXS-12 (reboxetine) product candidate, Suven Life Sciences' SUVN-G3031 H3 inverse agonist product candidate, NLS Pharmaceutics mazindol ER product candidate and orexin 2 receptor agonist product candidates from Takeda"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

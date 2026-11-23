@@ -1,0 +1,272 @@
+{
+  "root": {
+    "ticker": "JBTM",
+    "name": "JBTマレル",
+    "cik": 1433660,
+    "name_en": "JBT Marel"
+  },
+  "rows": [
+    {
+      "ja": "買収・売却",
+      "en": "Acquisitions & divestitures",
+      "above": true
+    },
+    {
+      "ja": "競合(10-K等に記載)",
+      "en": "Competitors (named in 10-Ks)"
+    }
+  ],
+  "rivals": [
+    "MIDD",
+    "MTD",
+    "GEA",
+    "Krones"
+  ],
+  "companies": [
+    {
+      "id": "Marel",
+      "ticker": "Marel",
+      "name": "マレル",
+      "name_en": "Marel",
+      "sub": "食品加工機械(アイスランド)",
+      "sub_en": "Food processing equipment (Iceland)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年1月に買収し、JBTマレルに",
+          "text_en": "Acquired in January 2025, forming JBT Marel",
+          "source": {
+            "label": "JBT Marel 10-K(2025年度)",
+            "label_en": "JBT Marel 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1433660/000143366026000053/jbt-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "On January 2, 2025, we completed the acquisition of Marel hf."
+          }
+        }
+      ]
+    },
+    {
+      "id": "OSK",
+      "ticker": "OSK",
+      "name": "オシュコシュ",
+      "name_en": "Oshkosh",
+      "sub": "特殊車両",
+      "sub_en": "Specialty vehicles",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "空港機器事業AeroTechをオシュコシュに売却(2023年)",
+          "text_en": "Sold its AeroTech airport equipment business to Oshkosh in 2023",
+          "source": {
+            "label": "JBT Marel 10-K(2024年度)",
+            "label_en": "JBT Marel 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1433660/000143366025000009/jbt-20241231.htm",
+            "level": "official",
+            "date": "2025-02-28",
+            "quote": "This sale was completed pursuant to the Stock and Asset Purchase Agreement, dated May 26, 2023, to sell AeroTech to Oshkosh Corporation."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MIDD",
+      "ticker": "MIDD",
+      "name": "ミドルビー",
+      "name_en": "Middleby",
+      "sub": "厨房・食品加工機械",
+      "sub_en": "Kitchen & food processing equipment",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "食品加工機械の主な競合にJBTマレルを挙げる",
+          "text_en": "Names JBT Marel among major food processing equipment competitors",
+          "source": {
+            "label": "Middleby 10-K(2024年度)",
+            "label_en": "Middleby 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/769520/000076952025000009/midd-20241228.htm",
+            "level": "official",
+            "date": "2025-02-26",
+            "quote": "Major competitors to the Food Processing Equipment Group include AMF Bakery Systems, Duravant, The GEA Group, JBT Marel Corporation, ProMach and Provisur."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MTD",
+      "ticker": "MTD",
+      "name": "メトラー・トレド",
+      "name_en": "Mettler-Toledo",
+      "sub": "計量・検査機器",
+      "sub_en": "Weighing & inspection",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主要な競合の一社",
+          "text_en": "Named among its major competitors",
+          "source": {
+            "label": "JBT Marel 10-K(2025年度)",
+            "label_en": "JBT Marel 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1433660/000143366026000053/jbt-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "JBT Marel's major competitors include, but are not limited to, Advanced Equipment Inc.; Alit SRL; Allpax Products, Inc.; Atlas Pacific Engineering Company, Inc.; Baader GmbH & Co. KG; Barry-Wehmiller Companies, Inc.; Brown International Corp.; Bühler Group; DSI Dantech A/S; Duravant LLC; Elettric 80 S.p.a. Italia; Ferrum; Fortifi Food Processing Solutions; FPS Process Foods Solutions; GEA Group AG; Heinen Freezing GmbH & Co. KG; Jarvis Products Corporation; Krones; METALQUIMIA, S.A.; Mettler-Toledo International, Inc.; Meyn Food Processing Technology B.V.; Middleby Corporation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GEA",
+      "ticker": "GEA",
+      "name": "GEAグループ",
+      "name_en": "GEA Group",
+      "sub": "食品・プロセス機械(独)",
+      "sub_en": "Food & process machinery (Germany)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主要な競合の一社",
+          "text_en": "Named among its major competitors",
+          "source": {
+            "label": "JBT Marel 10-K(2025年度)",
+            "label_en": "JBT Marel 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1433660/000143366026000053/jbt-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "JBT Marel's major competitors include, but are not limited to, Advanced Equipment Inc.; Alit SRL; Allpax Products, Inc.; Atlas Pacific Engineering Company, Inc.; Baader GmbH & Co. KG; Barry-Wehmiller Companies, Inc.; Brown International Corp.; Bühler Group; DSI Dantech A/S; Duravant LLC; Elettric 80 S.p.a. Italia; Ferrum; Fortifi Food Processing Solutions; FPS Process Foods Solutions; GEA Group AG; Heinen Freezing GmbH & Co. KG; Jarvis Products Corporation; Krones; METALQUIMIA, S.A.; Mettler-Toledo International, Inc.; Meyn Food Processing Technology B.V.; Middleby Corporation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Krones",
+      "ticker": "Krones",
+      "name": "クロネス",
+      "name_en": "Krones",
+      "sub": "飲料充填機(独)",
+      "sub_en": "Bottling machinery (Germany)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主要な競合の一社",
+          "text_en": "Named among its major competitors",
+          "source": {
+            "label": "JBT Marel 10-K(2025年度)",
+            "label_en": "JBT Marel 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1433660/000143366026000053/jbt-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "JBT Marel's major competitors include, but are not limited to, Advanced Equipment Inc.; Alit SRL; Allpax Products, Inc.; Atlas Pacific Engineering Company, Inc.; Baader GmbH & Co. KG; Barry-Wehmiller Companies, Inc.; Brown International Corp.; Bühler Group; DSI Dantech A/S; Duravant LLC; Elettric 80 S.p.a. Italia; Ferrum; Fortifi Food Processing Solutions; FPS Process Foods Solutions; GEA Group AG; Heinen Freezing GmbH & Co. KG; Jarvis Products Corporation; Krones; METALQUIMIA, S.A.; Mettler-Toledo International, Inc.; Meyn Food Processing Technology B.V.; Middleby Corporation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Buhler",
+      "ticker": "Bühler",
+      "name": "ビューラー",
+      "name_en": "Bühler Group",
+      "sub": "食品加工機械(スイス)",
+      "sub_en": "Food processing equipment (Switzerland)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主要な競合の一社",
+          "text_en": "Named among its major competitors",
+          "source": {
+            "label": "JBT Marel 10-K(2025年度)",
+            "label_en": "JBT Marel 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1433660/000143366026000053/jbt-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "JBT Marel's major competitors include, but are not limited to, Advanced Equipment Inc.; Alit SRL; Allpax Products, Inc.; Atlas Pacific Engineering Company, Inc.; Baader GmbH & Co. KG; Barry-Wehmiller Companies, Inc.; Brown International Corp.; Bühler Group; DSI Dantech A/S; Duravant LLC; Elettric 80 S.p.a. Italia; Ferrum; Fortifi Food Processing Solutions; FPS Process Foods Solutions; GEA Group AG; Heinen Freezing GmbH & Co. KG; Jarvis Products Corporation; Krones; METALQUIMIA, S.A.; Mettler-Toledo International, Inc.; Meyn Food Processing Technology B.V.; Middleby Corporation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Baader",
+      "ticker": "Baader",
+      "name": "バーダー",
+      "name_en": "Baader",
+      "sub": "魚・食肉加工機械(独)",
+      "sub_en": "Fish & meat processing (Germany)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主要な競合の一社",
+          "text_en": "Named among its major competitors",
+          "source": {
+            "label": "JBT Marel 10-K(2025年度)",
+            "label_en": "JBT Marel 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1433660/000143366026000053/jbt-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "JBT Marel's major competitors include, but are not limited to, Advanced Equipment Inc.; Alit SRL; Allpax Products, Inc.; Atlas Pacific Engineering Company, Inc.; Baader GmbH & Co. KG; Barry-Wehmiller Companies, Inc.; Brown International Corp.; Bühler Group; DSI Dantech A/S; Duravant LLC; Elettric 80 S.p.a. Italia; Ferrum; Fortifi Food Processing Solutions; FPS Process Foods Solutions; GEA Group AG; Heinen Freezing GmbH & Co. KG; Jarvis Products Corporation; Krones; METALQUIMIA, S.A.; Mettler-Toledo International, Inc.; Meyn Food Processing Technology B.V.; Middleby Corporation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BarryWehmiller",
+      "ticker": "Barry-Wehmiller",
+      "name": "バリー・ウェーミラー",
+      "name_en": "Barry-Wehmiller",
+      "sub": "包装機械",
+      "sub_en": "Packaging machinery",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主要な競合の一社",
+          "text_en": "Named among its major competitors",
+          "source": {
+            "label": "JBT Marel 10-K(2025年度)",
+            "label_en": "JBT Marel 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1433660/000143366026000053/jbt-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "JBT Marel's major competitors include, but are not limited to, Advanced Equipment Inc.; Alit SRL; Allpax Products, Inc.; Atlas Pacific Engineering Company, Inc.; Baader GmbH & Co. KG; Barry-Wehmiller Companies, Inc.; Brown International Corp.; Bühler Group; DSI Dantech A/S; Duravant LLC; Elettric 80 S.p.a. Italia; Ferrum; Fortifi Food Processing Solutions; FPS Process Foods Solutions; GEA Group AG; Heinen Freezing GmbH & Co. KG; Jarvis Products Corporation; Krones; METALQUIMIA, S.A.; Mettler-Toledo International, Inc.; Meyn Food Processing Technology B.V.; Middleby Corporation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Duravant",
+      "ticker": "Duravant",
+      "name": "デュラバント",
+      "name_en": "Duravant",
+      "sub": "食品・包装機械",
+      "sub_en": "Food & packaging machinery",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主要な競合の一社",
+          "text_en": "Named among its major competitors",
+          "source": {
+            "label": "JBT Marel 10-K(2025年度)",
+            "label_en": "JBT Marel 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1433660/000143366026000053/jbt-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "JBT Marel's major competitors include, but are not limited to, Advanced Equipment Inc.; Alit SRL; Allpax Products, Inc.; Atlas Pacific Engineering Company, Inc.; Baader GmbH & Co. KG; Barry-Wehmiller Companies, Inc.; Brown International Corp.; Bühler Group; DSI Dantech A/S; Duravant LLC; Elettric 80 S.p.a. Italia; Ferrum; Fortifi Food Processing Solutions; FPS Process Foods Solutions; GEA Group AG; Heinen Freezing GmbH & Co. KG; Jarvis Products Corporation; Krones; METALQUIMIA, S.A.; Mettler-Toledo International, Inc.; Meyn Food Processing Technology B.V.; Middleby Corporation"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
