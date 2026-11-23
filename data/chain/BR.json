@@ -1,0 +1,272 @@
+{
+  "root": {
+    "ticker": "BR",
+    "name": "ブロードリッジ・ファイナンシャル・ソリューションズ",
+    "cik": 1383312,
+    "name_en": "Broadridge Financial Solutions"
+  },
+  "rows": [
+    {
+      "ja": "買収(2026年6月期)",
+      "en": "Acquisitions (FY ended Jun 2026)"
+    },
+    {
+      "ja": "顧客(相手の資料に記載)",
+      "en": "Clients (named in their filings)"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "CWAN"
+  ],
+  "companies": [
+    {
+      "id": "CQG",
+      "ticker": "CQG",
+      "name": "CQG",
+      "name_en": "CQG",
+      "sub": "先物の執行管理システム",
+      "sub_en": "Futures execution management",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "先物・オプション向け執行管理システムの会社を買収(2026年4月)",
+          "text_en": "Acquired the futures and options execution management provider (April 2026)",
+          "source": {
+            "label": "Broadridge 10-K(2026年6月期)",
+            "label_en": "Broadridge 10-K (FY ended Jun 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1383312/000162828026052243/br-20260630.htm",
+            "level": "official",
+            "date": "2026-08-04",
+            "quote": "In April 2026, the Company acquired CQG, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Acolin",
+      "ticker": "Acolin",
+      "name": "アコリン",
+      "name_en": "Acolin",
+      "sub": "ファンド販売支援(欧州)",
+      "sub_en": "Fund distribution services (Europe)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "欧州の越境ファンド販売・規制対応会社を買収(2026年1月)",
+          "text_en": "Acquired the European cross-border fund distribution provider (January 2026)",
+          "source": {
+            "label": "Broadridge 10-K(2026年6月期)",
+            "label_en": "Broadridge 10-K (FY ended Jun 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1383312/000162828026052243/br-20260630.htm",
+            "level": "official",
+            "date": "2026-08-04",
+            "quote": "In January 2026, we acquired Acolin Group Holdco Limited (\"Acolin\"), a European provider of cross-border fund distribution and regulatory services"
+          }
+        }
+      ]
+    },
+    {
+      "id": "iJoin",
+      "ticker": "iJoin",
+      "name": "アイジョイン",
+      "name_en": "iJoin (LDI-MAP)",
+      "sub": "退職年金テック",
+      "sub_en": "Retirement plan technology",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "退職年金プランの加入支援技術の会社を買収(2025年9月)",
+          "text_en": "Acquired the retirement plan onboarding technology provider (September 2025)",
+          "source": {
+            "label": "Broadridge 10-K(2026年6月期)",
+            "label_en": "Broadridge 10-K (FY ended Jun 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1383312/000162828026052243/br-20260630.htm",
+            "level": "official",
+            "date": "2026-08-04",
+            "quote": "In September 2025, the Company acquired all of the ownership interests of LDI-MAP, LLC (\"iJoin\")"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Signal",
+      "ticker": "Signal",
+      "name": "シグナル・エージェンシー",
+      "name_en": "Signal Agency",
+      "sub": "顧客コミュニケーション(英)",
+      "sub_en": "Customer communications (UK)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "英国のデジタル顧客コミュニケーション会社を買収(2025年8月)",
+          "text_en": "Acquired the UK digital customer communications firm (August 2025)",
+          "source": {
+            "label": "Broadridge 10-K(2026年6月期)",
+            "label_en": "Broadridge 10-K (FY ended Jun 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1383312/000162828026052243/br-20260630.htm",
+            "level": "official",
+            "date": "2026-08-04",
+            "quote": "In August 2025, we acquired Signal Agency Limited (\"Signal\")"
+          }
+        }
+      ]
+    },
+    {
+      "id": "EdwardJones",
+      "ticker": "Edward Jones",
+      "name": "エドワード・ジョーンズ",
+      "name_en": "Edward Jones",
+      "sub": "証券(個人向け)",
+      "sub_en": "Retail brokerage",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "口座の会計・記録管理の主要委託先がBroadridge",
+          "text_en": "Relies on Broadridge as primary vendor for client account record-keeping",
+          "source": {
+            "label": "Jones Financial(Edward Jones)10-K(2025年度)",
+            "label_en": "Jones Financial (Edward Jones) 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/815917/000119312526105798/ck0000815917-20251231.htm",
+            "level": "official",
+            "date": "2026-03-13",
+            "quote": "The Partnership is also particularly dependent on Broadridge, which acts as the Partnership's primary vendor for providing accounting and record-keeping for client accounts in both the U.S. and Canada."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SIEB",
+      "ticker": "SIEB",
+      "name": "シーバート・ファイナンシャル",
+      "name_en": "Siebert Financial",
+      "sub": "証券",
+      "sub_en": "Brokerage",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Broadridgeの証券処理サービスと最低約120万ドルの契約",
+          "text_en": "Has a securities processing service agreement with Broadridge (about $1.2 million minimum)",
+          "source": {
+            "label": "Siebert Financial 10-K/A(2024年度)",
+            "label_en": "Siebert Financial 10-K/A (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/65596/000121390025026597/ea0236430-10ka1_siebert.htm",
+            "level": "official",
+            "date": "2025-04-01",
+            "quote": "In June 2023, we entered into an amendment to its service agreement with Broadridge Securities Processing Solutions, LLC with a total minimum expense of approximately $1.2 million for this arrangement."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BLKB",
+      "ticker": "BLKB",
+      "name": "ブラックボード",
+      "name_en": "Blackbaud",
+      "sub": "非営利向けソフト",
+      "sub_en": "Nonprofit software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ライツプランの代理人をBroadridgeに変更(2024年1月)",
+          "text_en": "Made Broadridge its rights agent (January 2024)",
+          "source": {
+            "label": "Blackbaud 10-K(2024年度)",
+            "label_en": "Blackbaud 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1280058/000128005825000010/blkb-20241231.htm",
+            "level": "official",
+            "date": "2025-02-21",
+            "quote": "On January 26, 2024, the Company amended the Rights Agreement to substitute Broadridge Corporate Issuer Solutions, LLC as the new rights agent under the Rights Agreement."
+          }
+        }
+      ]
+    },
+    {
+      "id": "IZEA",
+      "ticker": "IZEA",
+      "name": "アイジア・ワールドワイド",
+      "name_en": "IZEA Worldwide",
+      "sub": "インフルエンサー広告",
+      "sub_en": "Influencer marketing",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ライツプランの代理人(2024年5月)",
+          "text_en": "Uses Broadridge as rights agent (May 2024)",
+          "source": {
+            "label": "IZEA Worldwide 10-K(2024年度)",
+            "label_en": "IZEA Worldwide 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1495231/000149523125000050/izea-20241231.htm",
+            "level": "official",
+            "date": "2025-03-27",
+            "quote": "between the Company and Broadridge Corporate Issuer Solutions, LLC, as rights agent (the \"Rights Agent\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BRN",
+      "ticker": "BRN",
+      "name": "バーンウェル・インダストリーズ",
+      "name_en": "Barnwell Industries",
+      "sub": "石油ガス",
+      "sub_en": "Oil & gas",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ライツプランの代理人(2025年1月)",
+          "text_en": "Uses Broadridge as rights agent (January 2025)",
+          "source": {
+            "label": "Barnwell Industries 10-K(2025年9月期)",
+            "label_en": "Barnwell Industries 10-K (FY ended Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/10048/000162828025058738/brn-20250930.htm",
+            "level": "official",
+            "date": "2025-12-23",
+            "quote": "by and between the Company and Broadridge Corporate Issuer Solutions, LLC, as rights agent"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CWAN",
+      "ticker": "CWAN",
+      "name": "クリアウォーター・アナリティクス",
+      "name_en": "Clearwater Analytics",
+      "sub": "投資会計ソフト",
+      "sub_en": "Investment accounting software",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Clearwaterが10-Kで、主な競合の一社として挙げる",
+          "text_en": "Clearwater names Broadridge among its principal competitors",
+          "source": {
+            "label": "Clearwater Analytics 10-K(2025年度)",
+            "label_en": "Clearwater Analytics 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1866368/000186636826000011/cwan-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "FIS's iWorks, Broadridge, Bloomberg AIM, LayerOne, Coremont and Northern Trust."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

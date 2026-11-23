@@ -1,0 +1,299 @@
+{
+  "root": {
+    "ticker": "NUE",
+    "name": "ニューコア",
+    "cik": 73309,
+    "name_en": "Nucor"
+  },
+  "rows": [
+    {
+      "ja": "顧客(鋼材の供給先)",
+      "en": "Customers (steel buyers)"
+    },
+    {
+      "ja": "買収・取引",
+      "en": "Acquisitions & deals"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "GGB",
+    "SIM",
+    "MTUS",
+    "IIIN"
+  ],
+  "companies": [
+    {
+      "id": "TS",
+      "ticker": "TS",
+      "name": "テナリス",
+      "name_en": "Tenaris",
+      "sub": "鋼管",
+      "sub_en": "Steel pipe",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "米国の溶接管工場の主要な鋼材供給元がニューコア",
+          "text_en": "Nucor Steel is the principal U.S. supplier of steel coils to its welded pipe mills",
+          "source": {
+            "label": "Tenaris 20-F(2025年度)",
+            "label_en": "Tenaris 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1190723/000155485526000490/ts-20251231.htm",
+            "level": "official",
+            "date": "2026-03-31",
+            "quote": "For our welded pipe operations in the United States, a significant part of our requirements for steel coils is supplied by Nucor Steel, which is our principal supplier in the United States."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ATKR",
+      "ticker": "ATKR",
+      "name": "アトコア",
+      "name_en": "Atkore",
+      "sub": "電線管",
+      "sub_en": "Conduit",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "鋼材の主な仕入先の一社であり、電気部門の競合でもある",
+          "text_en": "Nucor is a primary steel supplier and an Electrical segment competitor",
+          "source": {
+            "label": "Atkore 10-K(2025年9月期)",
+            "label_en": "Atkore 10-K (FY ended Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1666138/000162828025054049/atkr-20250930.htm",
+            "level": "official",
+            "date": "2025-11-26",
+            "quote": "Our primary suppliers of steel are Cleveland-Cliffs, Steel Dynamics and Nucor"
+          }
+        }
+      ]
+    },
+    {
+      "id": "NWPX",
+      "ticker": "NWPX",
+      "name": "ノースウエスト・パイプ",
+      "name_en": "Northwest Pipe",
+      "sub": "水道管",
+      "sub_en": "Water pipe",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "鋼材の仕入先にニューコアを挙げる",
+          "text_en": "Names Nucor among its steel suppliers",
+          "source": {
+            "label": "Northwest Pipe 10-K(2024年度)",
+            "label_en": "Northwest Pipe 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1001385/000143774925005465/nwpx20241231_10k.htm",
+            "level": "official",
+            "date": "2025-02-27",
+            "quote": "Our suppliers include Steel Dynamics, Inc., ArcelorMittal, Nucor Corporation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SouthwestData",
+      "ticker": "Southwest Data Products",
+      "name": "サウスウエスト・データ・プロダクツ",
+      "name_en": "Southwest Data Products",
+      "sub": "データセンター用ラック",
+      "sub_en": "Data center racking",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2024年4月に買収しデータセンター向けを強化",
+          "text_en": "Acquired in April 2024 to serve the data center market",
+          "source": {
+            "label": "Nucor 10-K(2025年度)",
+            "label_en": "Nucor 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/73309/000119312526071575/nue-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "In April 2024 we acquired Southwest Data Products, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "VALE",
+      "ticker": "VALE",
+      "name": "ヴァーレ",
+      "name_en": "Vale",
+      "sub": "鉄鉱石(伯)",
+      "sub_en": "Iron ore (Brazil)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "カリフォルニア・スチールの50%持分をニューコアに売却",
+          "text_en": "Sold its 50% stake in California Steel Industries to Nucor",
+          "source": {
+            "label": "Vale 20-F(2024年度)",
+            "label_en": "Vale 20-F (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/917851/000129281425001137/valeform20f_2024.htm",
+            "level": "official",
+            "date": "2025-03-28",
+            "quote": "In December 2021, the Company entered into a binding agreement with Nucor Corporation (\"Nucor\") for the sale of its 50 % interest in CSI"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AZZ",
+      "ticker": "AZZ",
+      "name": "AZZ",
+      "name_en": "AZZ",
+      "sub": "金属塗装",
+      "sub_en": "Metal coatings",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "買収前の子会社が工場をニューコアに売却し、補償をめぐり係争",
+          "text_en": "A pre-acquisition unit sold a plant to Nucor; Nucor sued for indemnification",
+          "source": {
+            "label": "AZZ 10-K(2026年2月期)",
+            "label_en": "AZZ 10-K (FY ended Feb 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/8947/000000894726000068/azz-20260228.htm",
+            "level": "official",
+            "date": "2026-04-22",
+            "quote": "Nucor subsequently filed a lawsuit against Precoat Metals for indemnification for breach of environmental representations and warranties made in the 2020 Agreement."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GGB",
+      "ticker": "GGB",
+      "name": "ゲルダウ",
+      "name_en": "Gerdau",
+      "sub": "鉄鋼(伯)",
+      "sub_en": "Steel (Brazil)",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合にニューコアを挙げる",
+          "text_en": "Names Nucor among its principal competitors",
+          "source": {
+            "label": "Gerdau 20-F(2025年度)",
+            "label_en": "Gerdau 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1073404/000110465926027678/ggb-20251231x20f.htm",
+            "level": "official",
+            "date": "2026-03-13",
+            "quote": "The Company's principal competitors include Commercial Metals Company (CMC), Nucor Corporation, and Steel Dynamics Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SIM",
+      "ticker": "SIM",
+      "name": "グルポ・シメック",
+      "name_en": "Grupo Simec",
+      "sub": "鉄鋼(墨)",
+      "sub_en": "Steel (Mexico)",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "米国市場の主な競合にニューコアを挙げる",
+          "text_en": "Names Nucor among principal U.S. competitors",
+          "source": {
+            "label": "Grupo Simec 20-F(2025年度)",
+            "label_en": "Grupo Simec 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/887153/000121390026083889/ea0299895-20f_grupo.htm",
+            "level": "official",
+            "date": "2026-07-31",
+            "quote": "Our principal competitors in the U.S. market, depending on the product, included Nucor Corporation, Charter Steel, Steel Dynamics"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MTUS",
+      "ticker": "MTUS",
+      "name": "メタラス",
+      "name_en": "Metallus",
+      "sub": "特殊棒鋼",
+      "sub_en": "Special bar steel",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "9インチ以下の棒鋼の主な競合",
+          "text_en": "Principal competitor for bars up to 9 inches",
+          "source": {
+            "label": "Metallus 10-K(2025年度)",
+            "label_en": "Metallus 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1598428/000119312526061042/mtus-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "For bar products up to 9-inch in diameter, domestic producers Steel Dynamics, Inc. and Nucor Corporation (in some cases up to 10-inch) are our principal competitors."
+          }
+        }
+      ]
+    },
+    {
+      "id": "IIIN",
+      "ticker": "IIIN",
+      "name": "インスティール",
+      "name_en": "Insteel Industries",
+      "sub": "コンクリート補強材",
+      "sub_en": "Concrete reinforcing",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "線材から一貫生産する競合としてニューコアを挙げる",
+          "text_en": "Names Nucor among vertically integrated competitors",
+          "source": {
+            "label": "Insteel 10-K(2026年9月期)",
+            "label_en": "Insteel 10-K (FY ended Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/764401/000143774926033862/iiin20261003_10k.htm",
+            "level": "official",
+            "date": "2026-10-29",
+            "quote": "Some of our competitors, such as Wire Mesh Corporation, Nucor Corporation and Oklahoma Steel and Wire, are vertically integrated companies"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Cornerstone",
+      "ticker": "Cornerstone Building Brands",
+      "name": "コーナーストーン・ビルディング・ブランズ",
+      "name_en": "Cornerstone Building Brands",
+      "sub": "金属建材",
+      "sub_en": "Metal building products",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "金属建材の競合にニューコアを挙げる",
+          "text_en": "Names Nucor among competitors in metal building systems",
+          "source": {
+            "label": "Cornerstone Building Brands 10-K(2024年度)",
+            "label_en": "Cornerstone Building Brands 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/883902/000088390225000004/cnr-20241231.htm",
+            "level": "official",
+            "date": "2025-03-14",
+            "quote": "We compete with a number of other manufacturers of metal components and engineered building systems for the building industry, which mainly include Nucor, BlueScope, McElroy, Metal Sales and Central States."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

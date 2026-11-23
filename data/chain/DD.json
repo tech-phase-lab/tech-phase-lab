@@ -1,0 +1,273 @@
+{
+  "root": {
+    "ticker": "DD",
+    "name": "デュポン",
+    "cik": 1666700,
+    "name_en": "DuPont de Nemours"
+  },
+  "rows": [
+    {
+      "ja": "分離した会社",
+      "en": "Spin-offs & former units",
+      "above": true
+    },
+    {
+      "ja": "買収・事業の売却先",
+      "en": "Acquisitions & buyers of its businesses"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "APT"
+  ],
+  "companies": [
+    {
+      "id": "Q",
+      "ticker": "Q",
+      "name": "クニティ・エレクトロニクス",
+      "name_en": "Qnity Electronics",
+      "sub": "半導体材料",
+      "sub_en": "Semiconductor materials",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "電子材料事業を分離した会社。移行サービス契約を結ぶ",
+          "text_en": "Its spun-off electronics business, under transition services agreements",
+          "source": {
+            "label": "Qnity Electronics 10-K(2025年度)",
+            "label_en": "Qnity Electronics 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2058873/000205887326000010/q-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "DuPont does not provide us with assistance other than the transition and other services described in the Transition Services Agreements."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CC",
+      "ticker": "CC",
+      "name": "ケマーズ",
+      "name_en": "Chemours",
+      "sub": "化学(フッ素)",
+      "sub_en": "Chemicals (fluoroproducts)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "PFAS関連の保険金をめぐり覚書を締結(2025年8月)",
+          "text_en": "Signed a PFAS insurance proceeds MOU in August 2025",
+          "source": {
+            "label": "Chemours 10-K(2025年度)",
+            "label_en": "Chemours 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1627223/000119312526065201/cc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "In August 2025, we, EID and the DuPont Indemnitees entered into a PFAS Insurance Proceeds Memorandum of Understanding (\"PFAS Insurance MOU\")"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CTVA",
+      "ticker": "CTVA",
+      "name": "コルテバ",
+      "name_en": "Corteva",
+      "sub": "農業(種子・農薬)",
+      "sub_en": "Agriculture",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "分離契約に基づき、訴訟・環境などの費用を分担",
+          "text_en": "Shares litigation and environmental costs with it under separation agreements",
+          "source": {
+            "label": "Corteva 10-K(2025年度)",
+            "label_en": "Corteva 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1755672/000175567226000004/ctva-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "The company, pursuant to the respective Separation Agreements, is entitled to cost sharing and indemnification from The Chemours Company (\"Chemours\"), Dow and DuPont"
+          }
+        }
+      ]
+    },
+    {
+      "id": "IFF",
+      "ticker": "IFF",
+      "name": "インターナショナル・フレーバー&フレグランス",
+      "name_en": "IFF",
+      "sub": "香料・食品原料",
+      "sub_en": "Flavors & ingredients",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "栄養・バイオ事業(N&B)をIFFと統合し、税務契約を結ぶ",
+          "text_en": "Combined its Nutrition & Biosciences business with IFF under a tax matters agreement",
+          "source": {
+            "label": "IFF 10-K(2024年度)",
+            "label_en": "IFF 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/51253/000005125325000013/iff-20241231.htm",
+            "level": "official",
+            "date": "2025-02-28",
+            "quote": "Under the Tax Matters Agreement, we and N&B will be required to indemnify DuPont for any taxes resulting from a Spinco Tainting Act."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CE",
+      "ticker": "CE",
+      "name": "セラニーズ",
+      "name_en": "Celanese",
+      "sub": "化学",
+      "sub_en": "Chemicals",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "高機能樹脂事業(M&M)をCelaneseに売却(2022年)",
+          "text_en": "Sold its Mobility & Materials business to Celanese (2022)",
+          "source": {
+            "label": "Celanese 10-K(2024年度)",
+            "label_en": "Celanese 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1306830/000130683025000027/ce-20241231.htm",
+            "level": "official",
+            "date": "2025-02-21",
+            "quote": "pursuant to a definitive transaction agreement entered into in February 2022 by us, DuPont and an affiliate of DuPont (the \"M&M Acquisition\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ROG",
+      "ticker": "ROG",
+      "name": "ロジャース",
+      "name_en": "Rogers",
+      "sub": "先端材料",
+      "sub_en": "Engineered materials",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Rogersの買収を目指したが中国の承認が得られず、2022年に合併契約を解除",
+          "text_en": "Agreed to buy Rogers but terminated the deal in 2022 without Chinese approval",
+          "source": {
+            "label": "Rogers 10-K(2024年度)",
+            "label_en": "Rogers 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/84748/000008474825000026/rog-20241231.htm",
+            "level": "official",
+            "date": "2025-02-26",
+            "quote": "As of November 1, 2022, the parties had not received regulatory approval from State Administration for Market Regulation of China and on that date, DuPont de Nemours, Inc. issued a notice of termination of the merger agreement."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Sinochem",
+      "ticker": "Sinochem RO Memtech",
+      "name": "中化(寧波)潤沃膜科技",
+      "name_en": "Sinochem (Ningbo) RO Memtech",
+      "sub": "水処理膜(中国)",
+      "sub_en": "Water membranes (China)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "逆浸透膜メーカーを2025年10月に買収",
+          "text_en": "Acquired the reverse osmosis membrane maker in October 2025",
+          "source": {
+            "label": "DuPont 10-K(2025年度)",
+            "label_en": "DuPont 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1666700/000166670026000013/dd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "On October 10, 2025, the Company completed the acquisition of Sinochem (Ningbo) RO Memtech Co., Ltd."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Donatelle",
+      "ticker": "Donatelle",
+      "name": "ドナテル",
+      "name_en": "Donatelle Plastics",
+      "sub": "医療用部品",
+      "sub_en": "Medical components",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "医療用部品メーカーを3.65億ドルで買収(2024年7月)",
+          "text_en": "Acquired the medical device components maker for $365 million (July 2024)",
+          "source": {
+            "label": "DuPont 10-K(2025年度)",
+            "label_en": "DuPont 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1666700/000166670026000013/dd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "On July 28, 2024, DuPont completed the acquisition of Donatelle Plastics, LLC (\"Donatelle\"), for a net purchase price of $365 million"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Spectrum",
+      "ticker": "Spectrum Plastics",
+      "name": "スペクトラム・プラスチックス",
+      "name_en": "Spectrum Plastics Group",
+      "sub": "医療用部品",
+      "sub_en": "Medical components",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "AEA InvestorsからSpectrumを買収(2023年8月)",
+          "text_en": "Acquired Spectrum from AEA Investors (August 2023)",
+          "source": {
+            "label": "DuPont 10-K(2025年度)",
+            "label_en": "DuPont 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1666700/000166670026000013/dd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "On August 1, 2023, the Company completed the acquisition of Spectrum Plastics Group (\"Spectrum\") from AEA Investors."
+          }
+        }
+      ]
+    },
+    {
+      "id": "APT",
+      "ticker": "APT",
+      "name": "アルファ・プロ・テック",
+      "name_en": "Alpha Pro Tech",
+      "sub": "防護服・建材",
+      "sub_en": "Protective apparel & building products",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Alpha Pro Techが10-Kで、住宅用防水シートの主な競合として挙げる",
+          "text_en": "Alpha Pro Tech names DuPont a major housewrap competitor",
+          "source": {
+            "label": "Alpha Pro Tech 10-K(2024年度)",
+            "label_en": "Alpha Pro Tech 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/884269/000143774925007218/apt20241231_10k.htm",
+            "level": "official",
+            "date": "2025-03-12",
+            "quote": "Our major competitors in the construction supply weatherization market are DuPont and Berry Global for housewrap and Owens Corning and GAF for synthetic roof underlayment."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

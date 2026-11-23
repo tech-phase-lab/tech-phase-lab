@@ -1,0 +1,167 @@
+{
+  "root": {
+    "ticker": "PRGS",
+    "name": "プログレス・ソフトウェア",
+    "cik": 876167,
+    "name_en": "Progress Software"
+  },
+  "rows": [
+    {
+      "ja": "買収した会社・事業",
+      "en": "Acquired companies & products",
+      "above": true
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "Ipswitch",
+      "ticker": "Ipswitch",
+      "name": "イプスウィッチ",
+      "name_en": "Ipswitch",
+      "sub": "ファイル転送・ネットワーク監視",
+      "sub_en": "File transfer & network monitoring",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2019年4月に買収",
+          "text_en": "Acquired in April 2019",
+          "source": {
+            "label": "Progress Software 10-K(2025年度)",
+            "label_en": "Progress Software 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/876167/000087616726000008/prgs-20251130.htm",
+            "level": "official",
+            "date": "2026-01-20",
+            "quote": "In April 2019, we acquired Ipswitch; in October 2020, we acquired Chef Software; in November 2021, we acquired Kemp Technologies; in February 2023, we acquired MarkLogic; in October 2024, we acquired ShareFile; and in June 2025, we acquired Nuclia."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Chef",
+      "ticker": "Chef",
+      "name": "シェフ・ソフトウェア",
+      "name_en": "Chef Software",
+      "sub": "IT運用の自動化",
+      "sub_en": "Infrastructure automation",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2020年10月に買収",
+          "text_en": "Acquired in October 2020",
+          "source": {
+            "label": "Progress Software 10-K(2025年度)",
+            "label_en": "Progress Software 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/876167/000087616726000008/prgs-20251130.htm",
+            "level": "official",
+            "date": "2026-01-20",
+            "quote": "In April 2019, we acquired Ipswitch; in October 2020, we acquired Chef Software; in November 2021, we acquired Kemp Technologies; in February 2023, we acquired MarkLogic; in October 2024, we acquired ShareFile; and in June 2025, we acquired Nuclia."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Kemp",
+      "ticker": "Kemp",
+      "name": "ケンプ・テクノロジーズ",
+      "name_en": "Kemp Technologies",
+      "sub": "負荷分散",
+      "sub_en": "Load balancing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2021年11月に買収",
+          "text_en": "Acquired in November 2021",
+          "source": {
+            "label": "Progress Software 10-K(2025年度)",
+            "label_en": "Progress Software 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/876167/000087616726000008/prgs-20251130.htm",
+            "level": "official",
+            "date": "2026-01-20",
+            "quote": "In April 2019, we acquired Ipswitch; in October 2020, we acquired Chef Software; in November 2021, we acquired Kemp Technologies; in February 2023, we acquired MarkLogic; in October 2024, we acquired ShareFile; and in June 2025, we acquired Nuclia."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MarkLogic",
+      "ticker": "MarkLogic",
+      "name": "マークロジック",
+      "name_en": "MarkLogic",
+      "sub": "データベース",
+      "sub_en": "Database",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2023年2月に買収",
+          "text_en": "Acquired in February 2023",
+          "source": {
+            "label": "Progress Software 10-K(2025年度)",
+            "label_en": "Progress Software 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/876167/000087616726000008/prgs-20251130.htm",
+            "level": "official",
+            "date": "2026-01-20",
+            "quote": "In April 2019, we acquired Ipswitch; in October 2020, we acquired Chef Software; in November 2021, we acquired Kemp Technologies; in February 2023, we acquired MarkLogic; in October 2024, we acquired ShareFile; and in June 2025, we acquired Nuclia."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ShareFile",
+      "ticker": "ShareFile",
+      "name": "シェアファイル",
+      "name_en": "ShareFile",
+      "sub": "ファイル共有",
+      "sub_en": "File sharing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2024年10月に買収",
+          "text_en": "Acquired in October 2024",
+          "source": {
+            "label": "Progress Software 10-K(2025年度)",
+            "label_en": "Progress Software 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/876167/000087616726000008/prgs-20251130.htm",
+            "level": "official",
+            "date": "2026-01-20",
+            "quote": "In April 2019, we acquired Ipswitch; in October 2020, we acquired Chef Software; in November 2021, we acquired Kemp Technologies; in February 2023, we acquired MarkLogic; in October 2024, we acquired ShareFile; and in June 2025, we acquired Nuclia."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Nuclia",
+      "ticker": "Nuclia",
+      "name": "ヌクリア",
+      "name_en": "Nuclia",
+      "sub": "AI検索",
+      "sub_en": "AI search",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年6月に買収",
+          "text_en": "Acquired in June 2025",
+          "source": {
+            "label": "Progress Software 10-K(2025年度)",
+            "label_en": "Progress Software 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/876167/000087616726000008/prgs-20251130.htm",
+            "level": "official",
+            "date": "2026-01-20",
+            "quote": "In April 2019, we acquired Ipswitch; in October 2020, we acquired Chef Software; in November 2021, we acquired Kemp Technologies; in February 2023, we acquired MarkLogic; in October 2024, we acquired ShareFile; and in June 2025, we acquired Nuclia."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

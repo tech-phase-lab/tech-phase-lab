@@ -1,0 +1,396 @@
+{
+  "root": {
+    "ticker": "GNTX",
+    "name": "ジェンテックス",
+    "cik": 355811,
+    "name_en": "Gentex"
+  },
+  "rows": [
+    {
+      "ja": "買収・提携",
+      "en": "Acquisitions & partners",
+      "above": true
+    },
+    {
+      "ja": "ミラー・電子モジュールの納入先(下流)",
+      "en": "Mirror & electronics customers (downstream)"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "MGA",
+    "APTV",
+    "GAUZ",
+    "CAPC"
+  ],
+  "companies": [
+    {
+      "id": "VOXX",
+      "ticker": "VOXX",
+      "name": "VOXXインターナショナル",
+      "name_en": "VOXX International",
+      "sub": "車載・家電",
+      "sub_en": "Auto & consumer electronics",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年4月に残りの株式を取得し完全子会社化",
+          "text_en": "Remaining shares acquired in April 2025, making it a wholly owned subsidiary",
+          "source": {
+            "label": "Gentex 10-K(2025年度)",
+            "label_en": "Gentex 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/355811/000035581126000010/gntx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "On April 1, 2025, the Company acquired all of the issued and outstanding shares of VOXX common stock not already owned by the Company for a purchase price of $7.50 per share"
+          }
+        }
+      ]
+    },
+    {
+      "id": "eSight",
+      "ticker": "eSight",
+      "name": "イーサイト",
+      "name_en": "eSight",
+      "sub": "視覚補助メガネ",
+      "sub_en": "Low-vision smart glasses",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2023年に技術資産を取得",
+          "text_en": "Acquired its technology assets in 2023",
+          "source": {
+            "label": "Gentex 10-K(2025年度)",
+            "label_en": "Gentex 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/355811/000035581126000010/gntx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "In 2023, the Company acquired certain technology assets from eSight Corporation (\"eSight ® \")"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Solace",
+      "ticker": "Solace Power",
+      "name": "ソレース・パワー",
+      "name_en": "Solace Power",
+      "sub": "ワイヤレス給電",
+      "sub_en": "Wireless power",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ワイヤレス給電技術で提携(2024年1月)",
+          "text_en": "Partnership on wireless power technology (January 2024)",
+          "source": {
+            "label": "Gentex 10-K(2025年度)",
+            "label_en": "Gentex 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/355811/000035581126000010/gntx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "In January 2024, the Company announced a partnership, in the ordinary course of business, with Solace Power, an innovative wireless power transfer technology company."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TM",
+      "ticker": "TM",
+      "name": "トヨタ自動車",
+      "name_en": "Toyota",
+      "sub": "自動車",
+      "sub_en": "Autos",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ミラー・電子モジュールの納入先",
+          "text_en": "Buys its mirrors and electronic modules",
+          "source": {
+            "label": "Gentex 10-K(2025年度)",
+            "label_en": "Gentex 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/355811/000035581126000010/gntx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Tesla, TOGG Inc., Toyota Motor Company, Volkswagen Group"
+          }
+        }
+      ]
+    },
+    {
+      "id": "VWAGY",
+      "ticker": "VWAGY",
+      "name": "フォルクスワーゲン",
+      "name_en": "Volkswagen Group",
+      "sub": "自動車(独)",
+      "sub_en": "Autos (Germany)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ミラー・電子モジュールの納入先",
+          "text_en": "Buys its mirrors and electronic modules",
+          "source": {
+            "label": "Gentex 10-K(2025年度)",
+            "label_en": "Gentex 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/355811/000035581126000010/gntx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Tesla, TOGG Inc., Toyota Motor Company, Volkswagen Group"
+          }
+        }
+      ]
+    },
+    {
+      "id": "TSLA",
+      "ticker": "TSLA",
+      "name": "テスラ",
+      "name_en": "Tesla",
+      "sub": "電気自動車",
+      "sub_en": "Electric vehicles",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ミラー・電子モジュールの納入先",
+          "text_en": "Buys its mirrors and electronic modules",
+          "source": {
+            "label": "Gentex 10-K(2025年度)",
+            "label_en": "Gentex 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/355811/000035581126000010/gntx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Tesla, TOGG Inc., Toyota Motor Company, Volkswagen Group"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GM",
+      "ticker": "GM",
+      "name": "ゼネラル・モーターズ",
+      "name_en": "General Motors",
+      "sub": "自動車",
+      "sub_en": "Autos",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ミラー・電子モジュールの納入先",
+          "text_en": "Buys its mirrors and electronic modules",
+          "source": {
+            "label": "Gentex 10-K(2025年度)",
+            "label_en": "Gentex 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/355811/000035581126000010/gntx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Ford Motor Co., Geely/Volvo, General Motors"
+          }
+        }
+      ]
+    },
+    {
+      "id": "F",
+      "ticker": "F",
+      "name": "フォード",
+      "name_en": "Ford",
+      "sub": "自動車",
+      "sub_en": "Autos",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ミラー・電子モジュールの納入先",
+          "text_en": "Buys its mirrors and electronic modules",
+          "source": {
+            "label": "Gentex 10-K(2025年度)",
+            "label_en": "Gentex 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/355811/000035581126000010/gntx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Ford Motor Co., Geely/Volvo, General Motors"
+          }
+        }
+      ]
+    },
+    {
+      "id": "STLA",
+      "ticker": "STLA",
+      "name": "ステランティス",
+      "name_en": "Stellantis",
+      "sub": "自動車",
+      "sub_en": "Autos",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ミラー・電子モジュールの納入先",
+          "text_en": "Buys its mirrors and electronic modules",
+          "source": {
+            "label": "Gentex 10-K(2025年度)",
+            "label_en": "Gentex 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/355811/000035581126000010/gntx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Rivian Automotive, Ryco Motorsport, Stellantis, Subaru"
+          }
+        }
+      ]
+    },
+    {
+      "id": "HMC",
+      "ticker": "HMC",
+      "name": "ホンダ",
+      "name_en": "Honda",
+      "sub": "自動車",
+      "sub_en": "Autos",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ミラー・電子モジュールの納入先",
+          "text_en": "Buys its mirrors and electronic modules",
+          "source": {
+            "label": "Gentex 10-K(2025年度)",
+            "label_en": "Gentex 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/355811/000035581126000010/gntx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "General Motors, Harley Davidson, Honda Motor Co., Hyundai/Kia"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RIVN",
+      "ticker": "RIVN",
+      "name": "リヴィアン",
+      "name_en": "Rivian",
+      "sub": "電気自動車",
+      "sub_en": "Electric vehicles",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ミラー・電子モジュールの納入先",
+          "text_en": "Buys its mirrors and electronic modules",
+          "source": {
+            "label": "Gentex 10-K(2025年度)",
+            "label_en": "Gentex 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/355811/000035581126000010/gntx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Rivian Automotive, Ryco Motorsport, Stellantis, Subaru"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MGA",
+      "ticker": "MGA",
+      "name": "マグナ",
+      "name_en": "Magna International",
+      "sub": "自動車部品",
+      "sub_en": "Auto parts",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ミラー製品の主な競合にジェンテックスを挙げる",
+          "text_en": "Names Gentex among key competitors in mirrors",
+          "source": {
+            "label": "Magna 40-F 年次情報(2025年度)",
+            "label_en": "Magna 40-F Annual Information Form (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/749098/000119312526128771/d20215dex991.htm",
+            "level": "official",
+            "date": "2026-03-27",
+            "quote": "Gentex Corporation • SMR Automotive • ADAC Automotive"
+          }
+        }
+      ]
+    },
+    {
+      "id": "APTV",
+      "ticker": "APTV",
+      "name": "アプティブ",
+      "name_en": "Aptiv",
+      "sub": "車載電子",
+      "sub_en": "Auto electronics",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "先進安全・UX部門の主な競合",
+          "text_en": "Key competitor in its Advanced Safety and User Experience segment",
+          "source": {
+            "label": "Aptiv 10-K(2025年度)",
+            "label_en": "Aptiv 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1521332/000152133226000009/aptv-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "Advanced Safety and User Experience • Bosch Group • Aumovio Se • Denso Corporation • Gentex Corporation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GAUZ",
+      "ticker": "GAUZ",
+      "name": "ゴージー",
+      "name_en": "Gauzy",
+      "sub": "調光ガラス",
+      "sub_en": "Light-control glass",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "調光技術でジェンテックスなどと競合",
+          "text_en": "Competes with suppliers such as Gentex in light control",
+          "source": {
+            "label": "Gauzy 20-F(2024年度)",
+            "label_en": "Gauzy 20-F (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1781446/000121390025022437/ea0233167-20f_gauzy.htm",
+            "level": "official",
+            "date": "2025-03-11",
+            "quote": "a select group of chemicals suppliers who range from large traditional companies such as Merck and Gentex"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CAPC",
+      "ticker": "CAPC",
+      "name": "キャップストーン",
+      "name_en": "Capstone Companies",
+      "sub": "スマートミラー",
+      "sub_en": "Smart mirrors",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合にジェンテックスを挙げる",
+          "text_en": "Names Gentex among competitors",
+          "source": {
+            "label": "Capstone Companies 10-K(2024年度)",
+            "label_en": "Capstone Companies 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/814926/000190359625000126/capc_10k.htm",
+            "level": "official",
+            "date": "2025-03-17",
+            "quote": "Competitors include Gentex Corporation, Seura Solutions, Inc., Magna International, Inc, Amazon and Samsung Electronics Co."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

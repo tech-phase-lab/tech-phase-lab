@@ -1,0 +1,151 @@
+{
+  "root": {
+    "ticker": "WYNN",
+    "name": "ウィン・リゾーツ",
+    "cik": 1174922,
+    "name_en": "Wynn Resorts"
+  },
+  "rows": [
+    {
+      "ja": "マカオの競合(カジノ運営権を持つ6社)",
+      "en": "Macau competitors (the six concessionaires)",
+      "above": true
+    },
+    {
+      "ja": "米国の競合",
+      "en": "US competitors"
+    }
+  ],
+  "rivals": [
+    "LVS",
+    "MLCO",
+    "MGM"
+  ],
+  "companies": [
+    {
+      "id": "LVS",
+      "ticker": "LVS",
+      "name": "ラスベガス・サンズ",
+      "name_en": "Las Vegas Sands",
+      "sub": "カジノリゾート",
+      "sub_en": "Casino resorts",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Las Vegas Sandsが10-Kで、マカオの他の運営権者としてWynnの子会社を挙げる",
+          "text_en": "Las Vegas Sands names Wynn's Macau subsidiary among the other concessionaires",
+          "source": {
+            "label": "Las Vegas Sands 10-K(2025年度)",
+            "label_en": "Las Vegas Sands 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1300514/000130051426000013/lvs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "The other concessionaires are SJM Resorts, S.A., Wynn Resorts (Macau), S.A., Galaxy Casino, S.A., MGM Grand Paradise, S.A. and Melco Resorts (Macau), S.A."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MLCO",
+      "ticker": "MLCO",
+      "name": "メルコ・リゾーツ",
+      "name_en": "Melco Resorts",
+      "sub": "カジノリゾート",
+      "sub_en": "Casino resorts",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Melcoが年次報告で、マカオの競合の運営権者としてWynn Macauを挙げる",
+          "text_en": "Melco names Wynn Macau among the Macau concessionaires it competes with",
+          "source": {
+            "label": "Melco Resorts 20-F(2025年度)",
+            "label_en": "Melco Resorts 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1381640/000119312526105023/d55680d20f.htm",
+            "level": "official",
+            "date": "2026-03-13",
+            "quote": "Wynn Macau, a subsidiary of Wynn Resorts Ltd.;"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Galaxy",
+      "ticker": "Galaxy Entertainment",
+      "name": "ギャラクシー・エンターテインメント",
+      "name_en": "Galaxy Entertainment",
+      "sub": "カジノ(マカオ)",
+      "sub_en": "Casinos (Macau)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Wynnが10-Kで、マカオでカジノを運営できる他社として挙げる",
+          "text_en": "Wynn names it among the other companies permitted to run casinos in Macau",
+          "source": {
+            "label": "Wynn Resorts 10-K(2025年度)",
+            "label_en": "Wynn Resorts 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1174922/000117492226000013/wynn-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "In addition to Wynn Resorts (Macau) S.A. (\"Wynn Macau SA\"), SJM Resorts, S.A. (\"SJM\"), Galaxy Casino, S.A. (\"Galaxy\"), Venetian Macau, S.A. (\"Venetian Macau\"), Melco Resorts (Macau) Limited (\"Melco\"), and MGM Grand Paradise Limited (\"MGM Macau\") are permitted to operate casinos in Macau"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SJM",
+      "ticker": "SJM",
+      "name": "SJMホールディングス",
+      "name_en": "SJM Holdings",
+      "sub": "カジノ(マカオ)",
+      "sub_en": "Casinos (Macau)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Wynnが10-Kで、マカオでカジノを運営できる他社として挙げる",
+          "text_en": "Wynn names it among the other companies permitted to run casinos in Macau",
+          "source": {
+            "label": "Wynn Resorts 10-K(2025年度)",
+            "label_en": "Wynn Resorts 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1174922/000117492226000013/wynn-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "In addition to Wynn Resorts (Macau) S.A. (\"Wynn Macau SA\"), SJM Resorts, S.A. (\"SJM\"), Galaxy Casino, S.A. (\"Galaxy\"), Venetian Macau, S.A. (\"Venetian Macau\"), Melco Resorts (Macau) Limited (\"Melco\"), and MGM Grand Paradise Limited (\"MGM Macau\") are permitted to operate casinos in Macau"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MGM",
+      "ticker": "MGM",
+      "name": "MGMリゾーツ",
+      "name_en": "MGM Resorts",
+      "sub": "カジノリゾート",
+      "sub_en": "Casino resorts",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Wynnが10-Kで、マカオの運営権者として、またボストンでの競合(MGM Springfield)として挙げる",
+          "text_en": "Wynn names MGM as a Macau concessionaire and, via MGM Springfield, a Boston-area competitor",
+          "source": {
+            "label": "Wynn Resorts 10-K(2025年度)",
+            "label_en": "Wynn Resorts 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1174922/000117492226000013/wynn-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "Encore Boston Harbor competes with both commercial and Native American casinos located in the northeastern U.S., including two Native American casinos in Connecticut, two casinos in Rhode Island, and MGM Springfield in Massachusetts."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
