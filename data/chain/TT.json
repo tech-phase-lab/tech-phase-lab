@@ -1,0 +1,228 @@
+{
+  "root": {
+    "ticker": "TT",
+    "name": "トレイン・テクノロジーズ",
+    "cik": 1466258,
+    "name_en": "Trane Technologies"
+  },
+  "rows": [
+    {
+      "ja": "買収",
+      "en": "Acquisitions",
+      "above": true
+    },
+    {
+      "ja": "顧客・取引先(相手の資料に記載)",
+      "en": "Customers (named in their filings)"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "LII",
+    "JCI",
+    "AAON",
+    "EME"
+  ],
+  "companies": [
+    {
+      "id": "BrainBox",
+      "ticker": "BrainBox AI",
+      "name": "ブレインボックスAI",
+      "name_en": "BrainBox AI",
+      "sub": "AIによる空調の最適化",
+      "sub_en": "AI for HVAC optimization",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年1月に買収(AIで空調を最適化するビル管理基盤)",
+          "text_en": "Acquired in January 2025: an AI building management platform for HVAC optimization",
+          "source": {
+            "label": "Trane Technologies 10-K(2025年度)",
+            "label_en": "Trane Technologies 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1466258/000162828026005731/tt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-05",
+            "quote": "On January 2, 2025, we completed the acquisition of BrainBox AI Inc., a building management platform for HVAC optimization, using advanced AI technologies."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FIX",
+      "ticker": "FIX",
+      "name": "コンフォート・システムズUSA",
+      "name_en": "Comfort Systems USA",
+      "sub": "設備工事",
+      "sub_en": "Mechanical contracting",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Comfort Systemsが10-Kで、商業ビル設備の主要機器メーカー(チラー等)としてTraneを挙げる",
+          "text_en": "Comfort Systems names Trane among the primary makers of major components (chillers and rooftop units) it installs",
+          "source": {
+            "label": "Comfort Systems USA 10-K(2025年度)",
+            "label_en": "Comfort Systems USA 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1035983/000110465926017530/fix-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "The primary manufacturers of the major components in a commercial MEP system are: Trane, Carrier, York, Daikin (chillers and roof top units)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GTX",
+      "ticker": "GTX",
+      "name": "ギャレット・モーション",
+      "name_en": "Garrett Motion",
+      "sub": "ターボチャージャー",
+      "sub_en": "Turbochargers",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Trane Technologiesから随時、商品やサービスを購入",
+          "text_en": "Occasionally buys goods and services from Trane Technologies",
+          "source": {
+            "label": "Garrett Motion 10-K(2025年度)",
+            "label_en": "Garrett Motion 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1735707/000173570726000009/gtx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Related Party Transactions We contract with Trane Technologies (\"Trane\") for the occasional purchase of goods and services."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LII",
+      "ticker": "LII",
+      "name": "レノックス",
+      "name_en": "Lennox",
+      "sub": "空調機器",
+      "sub_en": "HVAC equipment",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Lennoxが10-Kで、家庭用冷暖房の競合としてTrane Technologiesを挙げる",
+          "text_en": "Lennox names Trane Technologies among its home comfort heating and cooling competitors",
+          "source": {
+            "label": "Lennox 10-K(2025年度)",
+            "label_en": "Lennox 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1069202/000106920226000028/lii-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Trane Technologies plc (Trane, American Standard, Ameristar, Oxbox, RunTru)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "JCI",
+      "ticker": "JCI",
+      "name": "ジョンソン・コントロールズ",
+      "name_en": "Johnson Controls",
+      "sub": "ビル設備・空調",
+      "sub_en": "Building systems & HVAC",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Johnson Controlsが10-Kで、大手の競合としてTrane Technologiesを挙げる",
+          "text_en": "Johnson Controls names Trane Technologies among its larger competitors",
+          "source": {
+            "label": "Johnson Controls 10-K(2026年度)",
+            "label_en": "Johnson Controls 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/833444/000083344426000108/jci-20260930.htm",
+            "level": "official",
+            "date": "2026-11-12",
+            "quote": "Larger competitors include API Group; Carrier Global Corporation; Daikin Industries, Ltd; Honeywell International, Inc.; Schneider Electric SA; Siemens Smart Infrastructure, an operating group of Siemens AG; Trane Technologies plc; and Vertiv Holdings Co."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AAON",
+      "ticker": "AAON",
+      "name": "AAON",
+      "name_en": "AAON",
+      "sub": "空調機器",
+      "sub_en": "HVAC equipment",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "AAONが10-Kで、主な競合としてTraneを挙げる",
+          "text_en": "AAON names Trane among its primary competitors",
+          "source": {
+            "label": "AAON 10-K(2025年度)",
+            "label_en": "AAON 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/824142/000082414226000005/aaon-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "The Company's comfort cooling products primarily compete with Lennox (Lennox International, Inc.), Trane (Trane Technologies plc)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "EME",
+      "ticker": "EME",
+      "name": "エムコー",
+      "name_en": "EMCOR",
+      "sub": "設備工事・ビルサービス",
+      "sub_en": "Mechanical & building services",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "EMCORが10-Kで、設備サービスの競合としてTrane Technologiesを挙げる",
+          "text_en": "EMCOR names Trane Technologies among competitors of its mechanical services division",
+          "source": {
+            "label": "EMCOR 10-K(2025年度)",
+            "label_en": "EMCOR 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/105634/000010563426000025/eme-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Within our mechanical services division, we compete with entities such as APi Group Corporation, Comfort Systems USA, Inc., and Service Logic LLC, as well as Carrier Global Corporation and Trane Technologies plc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MAIR",
+      "ticker": "MAIR",
+      "name": "マディソン・エア・ソリューションズ",
+      "name_en": "Madison Air Solutions",
+      "sub": "空調・換気機器",
+      "sub_en": "Air handling & ventilation",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Madison Airが上場届出書で、空気処理装置の主な競合としてTrane Technologiesを挙げる",
+          "text_en": "Madison Air names Trane Technologies among significant competitors in air handling",
+          "source": {
+            "label": "Madison Air Solutions 上場届出書(S-1)",
+            "label_en": "Madison Air Solutions registration statement (S-1)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2098430/000119312526098829/ck0002098430-20260309.htm",
+            "level": "official",
+            "date": "2026-03-09",
+            "quote": "Air Handling : AAON, Inc., Haakon Industries, Evapco, Inc., Innovent, Exyte Holding Gmbh and Trane Technologies plc"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
