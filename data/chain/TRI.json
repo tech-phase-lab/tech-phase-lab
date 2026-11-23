@@ -1,0 +1,408 @@
+{
+  "root": {
+    "ticker": "TRI",
+    "name": "トムソン・ロイター",
+    "cik": 1075124,
+    "name_en": "Thomson Reuters"
+  },
+  "rows": [
+    {
+      "ja": "株主・供給元",
+      "en": "Shareholders & suppliers",
+      "above": true
+    },
+    {
+      "ja": "配信先・買収",
+      "en": "Distribution & acquisitions"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "RELX",
+    "WKL",
+    "INTU"
+  ],
+  "companies": [
+    {
+      "id": "Woodbridge",
+      "ticker": "Woodbridge",
+      "name": "ウッドブリッジ",
+      "name_en": "The Woodbridge Company",
+      "sub": "持株会社",
+      "sub_en": "Holding company",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "トムソン家の持株会社で、支配株主",
+          "text_en": "The Thomson family holding company and controlling shareholder",
+          "source": {
+            "label": "Thomson Reuters 年次報告書(40-F添付、2025年度)",
+            "label_en": "Thomson Reuters annual report (40-F exhibit, FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1075124/000119312526094222/tri-ex99_1.htm",
+            "level": "official",
+            "date": "2026-03-05",
+            "quote": "Woodbridge The Woodbridge Company Limited, our principal and controlling shareholder"
+          }
+        }
+      ]
+    },
+    {
+      "id": "DCBO",
+      "ticker": "DCBO",
+      "name": "ドセボ",
+      "name_en": "Docebo",
+      "sub": "学習管理ソフト",
+      "sub_en": "Learning software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Doceboが主要顧客の一社としてトムソン・ロイターを挙げる",
+          "text_en": "Docebo names Thomson Reuters among its customers",
+          "source": {
+            "label": "Docebo 年次情報書(40-F、2025年度)",
+            "label_en": "Docebo annual information form (40-F, FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1829959/000162828026012566/doceboaif2025finalv2.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our customers are diversified across various industries including technology and media (Thomson Reuters Corporation, HP Inc., and Google)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "LSEG",
+      "ticker": "LSEG",
+      "name": "ロンドン証券取引所グループ",
+      "name_en": "London Stock Exchange Group",
+      "sub": "金融データ・取引所",
+      "sub_en": "Financial data & exchanges",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ロイターのニュースは金融機関向けにLSEGの製品経由でのみ配信。保有していたLSEG株は売却済み",
+          "text_en": "Reuters news reaches financial firms only through LSEG products; its LSEG stake has been sold",
+          "source": {
+            "label": "Thomson Reuters 年次報告書(40-F添付、2025年度)",
+            "label_en": "Thomson Reuters annual report (40-F exhibit, FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1075124/000119312526094222/tri-ex99_1.htm",
+            "level": "official",
+            "date": "2026-03-05",
+            "quote": "Reuters Supplies business, financial and global news and data to the world's media organizations, professionals and news consumers through Reuters News Agency, Reuters.com, Reuters Events, Thomson Reuters products and to financial firms exclusively via LSEG products."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SafeSend",
+      "ticker": "SafeSend",
+      "name": "セーフセンド",
+      "name_en": "SafeSend",
+      "sub": "税務ソフト",
+      "sub_en": "Tax software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "税務申告書の最終工程を自動化するSafeSendを2025年1月に買収",
+          "text_en": "Acquired tax-return automation provider SafeSend in January 2025",
+          "source": {
+            "label": "Thomson Reuters 年次報告書(40-F添付、2025年度)",
+            "label_en": "Thomson Reuters annual report (40-F exhibit, FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1075124/000119312526094222/tri-ex99_1.htm",
+            "level": "official",
+            "date": "2026-03-05",
+            "quote": "In January 2025, we acquired SafeSend, a United States-based cloud-native provider of technology for tax and accounting professionals."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AdditiveAI",
+      "ticker": "Additive AI",
+      "name": "アディティブAI",
+      "name_en": "Additive AI",
+      "sub": "税務AI",
+      "sub_en": "Tax AI",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "税務書類の処理をAIで自動化する新興企業を2025年9月に買収",
+          "text_en": "Acquired the AI tax-document startup in September 2025",
+          "source": {
+            "label": "Thomson Reuters 年次報告書(40-F添付、2025年度)",
+            "label_en": "Thomson Reuters annual report (40-F exhibit, FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1075124/000119312526094222/tri-ex99_1.htm",
+            "level": "official",
+            "date": "2026-03-05",
+            "quote": "In September 2025, we acquired Additive AI, a San Francisco‐based startup, founded in 2023, that uses cutting‐edge AI to automate tax document processing for tax and accounting professionals."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TimeBase",
+      "ticker": "TimeBase",
+      "name": "タイムベース",
+      "name_en": "TimeBase",
+      "sub": "法令情報(豪州)",
+      "sub_en": "Legislative data (Australia)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "豪州の法令情報サービスを2025年7月に買収",
+          "text_en": "Acquired the Australian legislative information provider in July 2025",
+          "source": {
+            "label": "Thomson Reuters 年次報告書(40-F添付、2025年度)",
+            "label_en": "Thomson Reuters annual report (40-F exhibit, FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1075124/000119312526094222/tri-ex99_1.htm",
+            "level": "official",
+            "date": "2026-03-05",
+            "quote": "In July 2025, we acquired TimeBase, a leading provider of Australian legislative information, offering a comprehensive platform for legal professionals to find, search, track and understand legislation."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Noetica",
+      "ticker": "Noetica",
+      "name": "ノエティカ",
+      "name_en": "Noetica",
+      "sub": "M&A取引データAI",
+      "sub_en": "Deal data AI",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "取引データを分析するAI新興企業を2026年2月に買収",
+          "text_en": "Acquired the AI deal-data startup in February 2026",
+          "source": {
+            "label": "Thomson Reuters 年次報告書(40-F添付、2025年度)",
+            "label_en": "Thomson Reuters annual report (40-F exhibit, FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1075124/000119312526094222/tri-ex99_1.htm",
+            "level": "official",
+            "date": "2026-03-05",
+            "quote": "More recently, in February 2026, we acquired Noetica, Inc., a New York-based AI-native start-up that transforms transaction-deal data into structured market intelligence for deal professionals."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RELX",
+      "ticker": "RELX",
+      "name": "RELX(レクシスネクシス)",
+      "name_en": "RELX (LexisNexis)",
+      "sub": "法律・情報サービス",
+      "sub_en": "Legal & information services",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "法律分野の主な世界的競合(LexisNexis)。RELX側も米法律市場の主な競合にWestlawを挙げる",
+          "text_en": "Its main global legal competitor (LexisNexis); RELX in turn names Westlaw a principal US legal competitor",
+          "source": {
+            "label": "Thomson Reuters 年次報告書(40-F添付、2025年度)",
+            "label_en": "Thomson Reuters annual report (40-F exhibit, FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1075124/000119312526094222/tri-ex99_1.htm",
+            "level": "official",
+            "date": "2026-03-05",
+            "quote": "Legal Professionals' primary global competitors are LexisNexis (which is owned by RELX Group) and Wolters Kluwer."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "RELXが年次報告書で、米法律市場の主な競合としてWestlaw(トムソン・ロイター)を挙げる",
+          "text_en": "RELX names Westlaw (Thomson Reuters) a principal US legal-market competitor",
+          "source": {
+            "label": "RELX 年次報告書(20-F添付、2025年度)",
+            "label_en": "RELX annual report (20-F exhibit, FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/929869/000110465926017277/relx-20251231xex15d2.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Principal competitors for LexisNexis in US legal markets are Westlaw (Thomson Reuters), CCH (Wolters Kluwer), and Bloomberg."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WKL",
+      "ticker": "WKL",
+      "name": "ウォルターズ・クルワー",
+      "name_en": "Wolters Kluwer",
+      "sub": "法律・税務情報",
+      "sub_en": "Legal & tax information",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "法律・企業・税務の各分野の主な競合",
+          "text_en": "A primary competitor in legal, corporate and tax",
+          "source": {
+            "label": "Thomson Reuters 年次報告書(40-F添付、2025年度)",
+            "label_en": "Thomson Reuters annual report (40-F exhibit, FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1075124/000119312526094222/tri-ex99_1.htm",
+            "level": "official",
+            "date": "2026-03-05",
+            "quote": "Tax, Audit & Accounting Professionals' competitors include Wolters Kluwer's CCH business, Bloomberg Industry Group, Intuit, Drake Software, and CaseWare, as well as emerging technology startups serving the profession."
+          }
+        }
+      ]
+    },
+    {
+      "id": "INTU",
+      "ticker": "INTU",
+      "name": "インテュイット",
+      "name_en": "Intuit",
+      "sub": "税務・会計ソフト",
+      "sub_en": "Tax & accounting software",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "税務・会計の専門家向け分野の競合",
+          "text_en": "A competitor in software for tax and accounting professionals",
+          "source": {
+            "label": "Thomson Reuters 年次報告書(40-F添付、2025年度)",
+            "label_en": "Thomson Reuters annual report (40-F exhibit, FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1075124/000119312526094222/tri-ex99_1.htm",
+            "level": "official",
+            "date": "2026-03-05",
+            "quote": "Tax, Audit & Accounting Professionals' competitors include Wolters Kluwer's CCH business, Bloomberg Industry Group, Intuit, Drake Software, and CaseWare, as well as emerging technology startups serving the profession."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Bloomberg",
+      "ticker": "Bloomberg",
+      "name": "ブルームバーグ",
+      "name_en": "Bloomberg",
+      "sub": "金融情報・報道",
+      "sub_en": "Financial data & news",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ロイターと企業向け事業の主な競合",
+          "text_en": "A primary competitor of Reuters and of its corporate business",
+          "source": {
+            "label": "Thomson Reuters 年次報告書(40-F添付、2025年度)",
+            "label_en": "Thomson Reuters annual report (40-F exhibit, FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1075124/000119312526094222/tri-ex99_1.htm",
+            "level": "official",
+            "date": "2026-03-05",
+            "quote": "Reuters' primary global competitors include Bloomberg, the Associated Press, Agence France-Presse and Getty."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LAW",
+      "ticker": "LAW",
+      "name": "CSディスコ",
+      "name_en": "CS Disco",
+      "sub": "法務AIソフト",
+      "sub_en": "Legal AI software",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "CS Discoが10-Kで、競合の一社としてトムソン・ロイターを挙げる",
+          "text_en": "CS Disco names Thomson Reuters among its competitors",
+          "source": {
+            "label": "CS Disco 10-K(2025年度)",
+            "label_en": "CS Disco 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1625641/000162564126000044/law-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Competitors in this category include Nuix Limited, Open Text Corporation, Relativity ODA LLC, or Relativity, RELX PLC and Thomson Reuters Corporation, as well as many other smaller software companies."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NOTE",
+      "ticker": "NOTE",
+      "name": "フィスカルノート",
+      "name_en": "FiscalNote",
+      "sub": "政策情報",
+      "sub_en": "Policy intelligence",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "FiscalNoteが10-Kで、競合となりうる情報サービス会社としてトムソン・ロイターを挙げる",
+          "text_en": "FiscalNote names Thomson Reuters among traditional information-service competitors",
+          "source": {
+            "label": "FiscalNote 10-K(2025年度)",
+            "label_en": "FiscalNote 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1823466/000119312526120769/note-20251231.htm",
+            "level": "official",
+            "date": "2026-03-24",
+            "quote": "Our competitors may include traditional information services companies such as Thomson Reuters, Bloomberg, and S&P, LexisNexis"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RDVT",
+      "ticker": "RDVT",
+      "name": "レッド・バイオレット",
+      "name_en": "Red Violet",
+      "sub": "データ分析",
+      "sub_en": "Data analytics",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Red Violetが10-Kで、データ分析の主な競合の一社としてトムソン・ロイターを挙げる",
+          "text_en": "Red Violet names Thomson Reuters among principal data and analytics competitors",
+          "source": {
+            "label": "Red Violet 10-K(2024年度)",
+            "label_en": "Red Violet 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1720116/000095017025029184/rdvt-20241231.htm",
+            "level": "official",
+            "date": "2025-02-27",
+            "quote": "Our principal competitors in the data and analytics sector include RELX Group (LexisNexis), TransUnion, and Thomson Reuters."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TYL",
+      "ticker": "TYL",
+      "name": "タイラー・テクノロジーズ",
+      "name_en": "Tyler Technologies",
+      "sub": "行政向けソフト",
+      "sub_en": "Public-sector software",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Tylerが10-Kで、競合する全国規模の企業の一社としてトムソン・ロイターを挙げる",
+          "text_en": "Tyler names Thomson Reuters among national firms it competes with",
+          "source": {
+            "label": "Tyler Technologies 10-K(2025年度)",
+            "label_en": "Tyler Technologies 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/860731/000086073126000016/tyl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "We also compete with national firms, some of which have greater financial and technical resources than we do, including Oracle Corporation, Infor, SAP AG, Workday, Inc., CentralSquare Technologies, Thomson Reuters Corporation, Motorola Solutions, Inc., Axon Enterprise, Inc., and Constellation Software, Inc."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

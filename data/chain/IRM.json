@@ -1,0 +1,298 @@
+{
+  "root": {
+    "ticker": "IRM",
+    "name": "アイアン・マウンテン",
+    "cik": 1020569,
+    "name_en": "Iron Mountain"
+  },
+  "rows": [
+    {
+      "ja": "買収・合弁",
+      "en": "Acquisitions & joint ventures",
+      "above": true
+    },
+    {
+      "ja": "顧客・利用企業",
+      "en": "Customers & tenants"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "INLX",
+    "WYFI"
+  ],
+  "companies": [
+    {
+      "id": "ITRenew",
+      "ticker": "ITRenew",
+      "name": "ITリニュー",
+      "name_en": "ITRenew",
+      "sub": "IT機器の再生・売却",
+      "sub_en": "IT asset lifecycle",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "IT機器の回収・再販(ALM)事業を広げるため、2022年に約80%を取得",
+          "text_en": "Acquired about 80% in 2022 to expand its IT asset lifecycle (ALM) business",
+          "source": {
+            "label": "Iron Mountain 10-K(2025年度)",
+            "label_en": "Iron Mountain 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1020569/000102056926000013/irm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "On January 25, 2022, in order to expand our ALM operations, we acquired an approximately 80 % interest in ITRenew (the \"ITRenew Transaction\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Regency",
+      "ticker": "Regency Technologies",
+      "name": "リージェンシー・テクノロジーズ",
+      "name_en": "Regency Technologies",
+      "sub": "IT資産の処分",
+      "sub_en": "IT asset disposition",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ALM事業の拡大のため、2024年1月に全株を取得",
+          "text_en": "Acquired in full in January 2024 to expand the ALM business",
+          "source": {
+            "label": "Iron Mountain 10-K(2025年度)",
+            "label_en": "Iron Mountain 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1020569/000102056926000013/irm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "On January 3, 2024, in order to expand our ALM business, we acquired 100 % of RSR Partners, LLC (doing business as Regency Technologies), an IT asset disposition services provider with operations throughout the United States"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AGC",
+      "ticker": "AGC Equity Partners",
+      "name": "AGCエクイティ・パートナーズ",
+      "name_en": "AGC Equity Partners",
+      "sub": "投資会社",
+      "sub_en": "Investment firm",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "フランクフルトのデータセンターの合弁相手(アイアン・マウンテンの持分20%)",
+          "text_en": "Partner in the Frankfurt data center joint venture, in which Iron Mountain holds 20%",
+          "source": {
+            "label": "Iron Mountain 10-K(2025年度)",
+            "label_en": "Iron Mountain 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1020569/000102056926000013/irm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Joint venture with AGC Equity Partners (the \"Frankfurt JV\") $ 85,156 20.00 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Clutter",
+      "ticker": "Clutter",
+      "name": "クラッター",
+      "name_en": "Clutter",
+      "sub": "個人向け保管",
+      "sub_en": "Consumer storage",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "合弁を組んだ後、2023年6月に支配持分を取得",
+          "text_en": "Formed a joint venture, then took a controlling interest in June 2023",
+          "source": {
+            "label": "Iron Mountain 10-K(2025年度)",
+            "label_en": "Iron Mountain 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1020569/000102056926000013/irm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "In June 2023, we acquired a controlling interest in the Clutter JV and terminated the Clutter Agreement."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Recall",
+      "ticker": "Recall Holdings",
+      "name": "リコール・ホールディングス",
+      "name_en": "Recall Holdings",
+      "sub": "文書保管(豪州)",
+      "sub_en": "Records management (Australia)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "買収した文書保管会社(保有物件の一部はこの買収による)",
+          "text_en": "Records management company it acquired; some owned properties came with the deal",
+          "source": {
+            "label": "Iron Mountain 10-K(2025年度)",
+            "label_en": "Iron Mountain 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1020569/000102056926000013/irm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Property was acquired in connection with our acquisition of Recall Holdings Limited."
+          }
+        }
+      ]
+    },
+    {
+      "id": "IODC",
+      "ticker": "IO Data Centers",
+      "name": "IOデータセンターズ",
+      "name_en": "IO Data Centers",
+      "sub": "データセンター",
+      "sub_en": "Data centers",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "買収したデータセンター会社(保有物件の一部はこの買収による)",
+          "text_en": "Data center company it acquired; some owned properties came with the deal",
+          "source": {
+            "label": "Iron Mountain 10-K(2025年度)",
+            "label_en": "Iron Mountain 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1020569/000102056926000013/irm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Property was acquired in connection with our acquisition of IO Data Centers, LLC."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WebWerks",
+      "ticker": "Web Werks",
+      "name": "ウェブワークス",
+      "name_en": "Web Werks",
+      "sub": "データセンター(インド)",
+      "sub_en": "Data centers (India)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "インドのデータセンター合弁を買収",
+          "text_en": "Acquired the Web Werks data center joint venture in India",
+          "source": {
+            "label": "Iron Mountain 10-K(2025年度)",
+            "label_en": "Iron Mountain 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1020569/000102056926000013/irm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Property was acquired in connection with our acquisition of the Web Werks JV."
+          }
+        }
+      ]
+    },
+    {
+      "id": "XData",
+      "ticker": "XData Properties",
+      "name": "XDataプロパティーズ",
+      "name_en": "XData Properties",
+      "sub": "データセンター(スペイン)",
+      "sub_en": "Data centers (Spain)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "買収した会社(保有物件の一部はこの買収による)",
+          "text_en": "Company it acquired; some owned properties came with the deal",
+          "source": {
+            "label": "Iron Mountain 10-K(2025年度)",
+            "label_en": "Iron Mountain 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1020569/000102056926000013/irm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Property was acquired in connection with our acquisition of XData Properties, S.L.U."
+          }
+        }
+      ]
+    },
+    {
+      "id": "IPM",
+      "ticker": "IPM",
+      "name": "インテリジェント・プロテクション・マネジメント",
+      "name_en": "Intelligent Protection Management",
+      "sub": "クラウド運用",
+      "sub_en": "Managed cloud services",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "アイアン・マウンテンのニュージャージー州エジソンのデータセンターを利用契約で使い、クラウドを提供",
+          "text_en": "Licenses space at Iron Mountain's Edison, New Jersey data center to run its private cloud",
+          "source": {
+            "label": "Intelligent Protection Management 10-K(2025年度)",
+            "label_en": "Intelligent Protection Management 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1355839/000121390026029095/ea0277611-10k_intelligent.htm",
+            "level": "official",
+            "date": "2026-03-17",
+            "quote": "We are party to license agreements with Aligned Data Centers (Phoenix) PropCo, LLC and Iron Mountain Data Centers LLC with respect to the Data Centers located in Phoenix, Arizona, and Edison, New Jersey, respectively, through which we offer our secure private cloud hosting services."
+          }
+        }
+      ]
+    },
+    {
+      "id": "INLX",
+      "ticker": "INLX",
+      "name": "インテリネティクス",
+      "name_en": "Intellinetics",
+      "sub": "文書管理",
+      "sub_en": "Document services",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Intellineticsが10-Kで、文書サービスの大手競合としてアイアン・マウンテンを挙げる",
+          "text_en": "Intellinetics names Iron Mountain among larger competitors of its document services",
+          "source": {
+            "label": "Intellinetics 10-K(2025年度)",
+            "label_en": "Intellinetics 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1081745/000149315226013568/form10-k.htm",
+            "level": "official",
+            "date": "2026-03-30",
+            "quote": "We believe the competitors of our Document Services segment vary from local niche entities to larger entities, including Iron Mountain."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WYFI",
+      "ticker": "WYFI",
+      "name": "ホワイトファイバー",
+      "name_en": "WhiteFiber",
+      "sub": "AIデータセンター",
+      "sub_en": "AI data centers",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "WhiteFiberが10-Kで、競合するデータセンター事業者の一社としてアイアン・マウンテンを挙げる",
+          "text_en": "WhiteFiber names Iron Mountain among data center providers it competes with",
+          "source": {
+            "label": "WhiteFiber 10-K(2025年度)",
+            "label_en": "WhiteFiber 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2042022/000121390026034341/ea0278305-10k_white.htm",
+            "level": "official",
+            "date": "2026-03-26",
+            "quote": "We compete with several prominent data center providers, including Digital Realty, Equinix, Inc., NTT, Cyrus One, Inc., STACK Infrastructure, Inc., Aligned Data Centers, LLC, Iron Mountain and various private operators in the U.S."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

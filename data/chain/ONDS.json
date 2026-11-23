@@ -1,0 +1,346 @@
+{
+  "root": {
+    "ticker": "ONDS",
+    "name": "オンダス・ホールディングス",
+    "cik": 1646188,
+    "name_en": "Ondas Holdings"
+  },
+  "rows": [
+    {
+      "ja": "買収した会社",
+      "en": "Acquired companies",
+      "above": true
+    },
+    {
+      "ja": "提携・出資先",
+      "en": "Partners & investments"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "ESLT",
+    "FBDT"
+  ],
+  "companies": [
+    {
+      "id": "Sentrycs",
+      "ticker": "Sentrycs",
+      "name": "セントリクス",
+      "name_en": "Sentrycs",
+      "sub": "対ドローン(イスラエル)",
+      "sub_en": "Counter-drone (Israel)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "対ドローン技術のイスラエル企業を2025年11月に買収",
+          "text_en": "Acquired the Israeli counter-drone company in November 2025",
+          "source": {
+            "label": "Ondas 10-K(2025年度)",
+            "label_en": "Ondas 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1646188/000121390026035981/ea0282911-10k_ondas.htm",
+            "level": "official",
+            "date": "2026-03-30",
+            "quote": "On November 17, 2025, the Company completed the acquisition of Sentry CS Ltd., (\"Sentrycs\")"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RoboTeam",
+      "ticker": "Robo-Team",
+      "name": "ロボチーム",
+      "name_en": "Robo-Team",
+      "sub": "無人地上車両",
+      "sub_en": "Unmanned ground vehicles",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "無人地上ロボットのRobo-Teamを2025年12月に買収",
+          "text_en": "Acquired unmanned ground robot maker Robo-Team in December 2025",
+          "source": {
+            "label": "Ondas 10-K(2025年度)",
+            "label_en": "Ondas 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1646188/000121390026035981/ea0282911-10k_ondas.htm",
+            "level": "official",
+            "date": "2026-03-30",
+            "quote": "On December 17, 2025, the Company completed the acquisition of Robo-Team Holdings Ltd."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Apeiro",
+      "ticker": "Apeiro Motion",
+      "name": "アペイロ・モーション",
+      "name_en": "Apeiro Motion",
+      "sub": "モーター・駆動",
+      "sub_en": "Motion systems",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年8月に買収",
+          "text_en": "Acquired in August 2025",
+          "source": {
+            "label": "Ondas 10-K(2025年度)",
+            "label_en": "Ondas 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1646188/000121390026035981/ea0282911-10k_ondas.htm",
+            "level": "official",
+            "date": "2026-03-30",
+            "quote": "On August 31, 2025, the Company completed the acquisition of Apeiro Motion Ltd."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SPO",
+      "ticker": "Smart Precision Optics",
+      "name": "スマート・プレシジョン・オプティクス",
+      "name_en": "Smart Precision Optics",
+      "sub": "光学機器",
+      "sub_en": "Optics",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年10月に買収",
+          "text_en": "Acquired in October 2025",
+          "source": {
+            "label": "Ondas 10-K(2025年度)",
+            "label_en": "Ondas 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1646188/000121390026035981/ea0282911-10k_ondas.htm",
+            "level": "official",
+            "date": "2026-03-30",
+            "quote": "On October 3, 2025, the Company completed the acquisition of Smart Precision Optics S.P.O ltd."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Insight",
+      "ticker": "Insight Intelligent Sensors",
+      "name": "インサイト・インテリジェント・センサーズ",
+      "name_en": "Insight Intelligent Sensors",
+      "sub": "センサー",
+      "sub_en": "Sensors",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年10月に51%を取得",
+          "text_en": "Took a 51% controlling stake in October 2025",
+          "source": {
+            "label": "Ondas 10-K(2025年度)",
+            "label_en": "Ondas 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1646188/000121390026035981/ea0282911-10k_ondas.htm",
+            "level": "official",
+            "date": "2026-03-30",
+            "quote": "On October 27, 2025, the Company completed the acquisition of a controlling interest of 51 % in Insight"
+          }
+        }
+      ]
+    },
+    {
+      "id": "4M",
+      "ticker": "4M Defense",
+      "name": "4Mディフェンス",
+      "name_en": "4M Defense",
+      "sub": "防衛(地雷除去)",
+      "sub_en": "Defense",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年10月に支配持分を取得",
+          "text_en": "Took a controlling interest in October 2025",
+          "source": {
+            "label": "Ondas 10-K(2025年度)",
+            "label_en": "Ondas 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1646188/000121390026035981/ea0282911-10k_ondas.htm",
+            "level": "official",
+            "date": "2026-03-30",
+            "quote": "On October 29, 2025, the Company completed the acquisition of a controlling interest in 4M Defense Ltd."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PLTR",
+      "ticker": "PLTR",
+      "name": "パランティア",
+      "name_en": "Palantir",
+      "sub": "データ分析",
+      "sub_en": "Data analytics",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Palantir・World Viewと3社で戦略提携(2026年3月)",
+          "text_en": "Three-way strategic partnership with Palantir and World View (March 2026)",
+          "source": {
+            "label": "Ondas 10-K(2025年度)",
+            "label_en": "Ondas 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1646188/000121390026035981/ea0282911-10k_ondas.htm",
+            "level": "official",
+            "date": "2026-03-30",
+            "quote": "On March 12, 2026, the Company entered a strategic partnership between Palantir, the Company and World View."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WorldView",
+      "ticker": "World View",
+      "name": "ワールド・ビュー",
+      "name_en": "World View",
+      "sub": "成層圏気球",
+      "sub_en": "Stratospheric balloons",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Palantir・World Viewと3社で戦略提携(2026年3月)",
+          "text_en": "Three-way strategic partnership with Palantir and World View (March 2026)",
+          "source": {
+            "label": "Ondas 10-K(2025年度)",
+            "label_en": "Ondas 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1646188/000121390026035981/ea0282911-10k_ondas.htm",
+            "level": "official",
+            "date": "2026-03-30",
+            "quote": "On March 12, 2026, the Company entered a strategic partnership between Palantir, the Company and World View."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LPTH",
+      "ticker": "LPTH",
+      "name": "ライトパス・テクノロジーズ",
+      "name_en": "LightPath Technologies",
+      "sub": "赤外線光学",
+      "sub_en": "Infrared optics",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Unusual Machinesと共にLightPathの株式を引き受けた(2025年9月)",
+          "text_en": "Bought LightPath shares in a private placement alongside Unusual Machines (September 2025)",
+          "source": {
+            "label": "LightPath 10-K(2025年6月期)",
+            "label_en": "LightPath 10-K (FY ended Jun 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/889971/000165495425011130/lpth_10k.htm",
+            "level": "official",
+            "date": "2025-09-26",
+            "quote": "pursuant to which the Private Placement Buyers agreed to purchase from the Company an aggregate of 1,600,000 shares of Class A Common Stock (the \"Private Placement Securities\") at a purchase price of $ 5.00 per share (the \"Private Placement\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SPAI",
+      "ticker": "SPAI",
+      "name": "セーフ・プロ・グループ",
+      "name_en": "Safe Pro Group",
+      "sub": "ドローン画像AI",
+      "sub_en": "Drone imaging AI",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Safe Proの出資者で、ドローン関連企業との取引をつないだ",
+          "text_en": "An investor in Safe Pro that introduced it to drone industry vendors",
+          "source": {
+            "label": "Safe Pro Group 10-K(2025年度)",
+            "label_en": "Safe Pro Group 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2011208/000149315226014181/form10-k.htm",
+            "level": "official",
+            "date": "2026-03-31",
+            "quote": "with select drone industry vendors introduced through its most recent investors such as Ondas Holdings Inc. and Unusual Machines Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "KOPN",
+      "ticker": "KOPN",
+      "name": "コピン",
+      "name_en": "Kopin",
+      "sub": "マイクロディスプレイ",
+      "sub_en": "Microdisplays",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Kopinが、米国の防衛企業との新たな提携先としてOndasを挙げる",
+          "text_en": "Kopin names Ondas among new partnerships with US defense contractors",
+          "source": {
+            "label": "Kopin 10-K(2025年度)",
+            "label_en": "Kopin 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/771266/000149315226016338/form10-k.htm",
+            "level": "official",
+            "date": "2026-04-13",
+            "quote": "Further financing developments included several new partnerships with major defense contractors in the US such as Ondas and Unusual Machines, and in Europe including Theon International."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ESLT",
+      "ticker": "ESLT",
+      "name": "エルビット・システムズ",
+      "name_en": "Elbit Systems",
+      "sub": "防衛(イスラエル)",
+      "sub_en": "Defense (Israel)",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Elbitが20-Fで、防衛テックの競合の一社としてOndasを挙げる",
+          "text_en": "Elbit names Ondas among deep-tech and defense-tech competitors",
+          "source": {
+            "label": "Elbit Systems 20-F(2025年度)",
+            "label_en": "Elbit Systems 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1027664/000102766426000005/eslt-20251231.htm",
+            "level": "official",
+            "date": "2026-03-17",
+            "quote": "We compete with companies that are active in the deep-tech / defense-tech field, such as Anduril Industries, Palantir Technologies, Shield AI, Helsing, Kela AI Systems and Ondas."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FBDT",
+      "ticker": "FBDT",
+      "name": "ファースト・ブリーチ",
+      "name_en": "First Breach",
+      "sub": "弾薬・ドローン",
+      "sub_en": "Ammunition & drones",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "First BreachがS-1で、主な競合の一社としてOndasを挙げる",
+          "text_en": "First Breach names Ondas among its primary competitors",
+          "source": {
+            "label": "First Breach S-1(2026年9月)",
+            "label_en": "First Breach S-1 (Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1892704/000149315226041268/forms-1.htm",
+            "level": "official",
+            "date": "2026-09-02",
+            "quote": "Our primary competitors include the Winchester Ammunition division of Olin Corporation, Hornady Manufacturing Company, PMC Ammunition, Federal Premium Ammunition, Skydio, BRINC Drones Inc., and Ondas Holdings Inc."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
