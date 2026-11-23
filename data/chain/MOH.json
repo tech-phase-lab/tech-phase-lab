@@ -1,0 +1,290 @@
+{
+  "root": {
+    "ticker": "MOH",
+    "name": "モリーナ・ヘルスケア",
+    "cik": 1179929,
+    "name_en": "Molina Healthcare"
+  },
+  "rows": [
+    {
+      "ja": "委託先・買収",
+      "en": "Service partners & acquisitions",
+      "above": true
+    },
+    {
+      "ja": "訴訟・和解",
+      "en": "Litigation & settlements"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in the 10-K)"
+    }
+  ],
+  "rivals": [
+    "CNC",
+    "ELV",
+    "UNH",
+    "CVS",
+    "HUM"
+  ],
+  "companies": [
+    {
+      "id": "EVH",
+      "ticker": "EVH",
+      "name": "エボレント・ヘルス",
+      "name_en": "Evolent Health",
+      "sub": "専門医療の管理サービス",
+      "sub_en": "Specialty care management",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "モリーナが売上の13.7%を占める大口取引先",
+          "text_en": "Molina accounted for 13.7% of its revenue",
+          "source": {
+            "label": "Evolent Health 10-K(2024年度)",
+            "label_en": "Evolent Health 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1628908/000162890825000020/evh-20241231.htm",
+            "level": "official",
+            "date": "2025-02-21",
+            "quote": "Florida Blue Medicare, Inc. 12.9% 10.4% 11.5% Humana Insurance Company 19.3% 12.0% * Molina Healthcare, Inc. 13.7%"
+          }
+        },
+        {
+          "type": "tie",
+          "text": "ケンタッキー州メディケイド契約をモリーナへ譲渡(2020年)",
+          "text_en": "Transferred its Kentucky Medicaid contract to Molina in 2020",
+          "source": {
+            "label": "Evolent Health 10-Q(2025年9月期)",
+            "label_en": "Evolent Health 10-Q (Sep 2025 quarter)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1628908/000162890825000133/evh-20250930.htm",
+            "level": "official",
+            "date": "2025-11-07",
+            "quote": "On September 1, 2020, EVH Passport and Molina consummated the transactions contemplated by the Molina APA (the \"Molina Closing\") and the Passport Medicaid Contract was novated to Molina."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ConnectiCare",
+      "ticker": "ConnectiCare",
+      "name": "コネクティケア",
+      "name_en": "ConnectiCare",
+      "sub": "医療保険(コネチカット州)",
+      "sub_en": "Health plan (Connecticut)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年2月に3億5000万ドルで買収",
+          "text_en": "Acquired in February 2025 for $350 million",
+          "source": {
+            "label": "Molina Healthcare 10-K(2025年度)",
+            "label_en": "Molina Healthcare 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1179929/000117992926000005/moh-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "Effective February 1, 2025, we closed on our acquisition of 100 % of the issued and outstanding capital stock of ConnectiCare Holding Company, Inc. (\"ConnectiCare\") for $ 350 million in cash."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NEUE",
+      "ticker": "NEUE",
+      "name": "ニューヘルス",
+      "name_en": "NeueHealth",
+      "sub": "医療サービス",
+      "sub_en": "Value-based care",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "旧ブライト・ヘルスとしてモリーナと株式譲渡契約を締結",
+          "text_en": "Party, as former Bright Health, to a stock purchase agreement with Molina",
+          "source": {
+            "label": "NeueHealth 8-K(2024年6月)",
+            "label_en": "NeueHealth 8-K (Jun 2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1671284/000167128424000046/bhg-20240621.htm",
+            "level": "official",
+            "date": "2024-06-24",
+            "quote": "Amendment to Stock Purchase Agreement, dated December 13, 2023 (the \"Amended Stock Purchase Agreement\"), between, among others, the Company and Molina Healthcare, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "INDV",
+      "ticker": "INDV",
+      "name": "インディビオール",
+      "name_en": "Indivior",
+      "sub": "依存症治療薬",
+      "sub_en": "Addiction treatment drugs",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "モリーナなど保険会社との独禁法訴訟で和解(2024年7月)",
+          "text_en": "Settled antitrust litigation with insurers including Molina (July 2024)",
+          "source": {
+            "label": "Indivior 6-K(2024年7月)",
+            "label_en": "Indivior 6-K (Jul 2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1625297/000165495424008724/a5882v-1.htm",
+            "level": "official",
+            "date": "2024-07-09",
+            "quote": "Indivior Inc. and Indivior Solutions Inc. reached an agreement via mediation with Blue Cross Blue Shield of Massachusetts, Inc., Health Care Service Corp., Blue Cross and Blue Shield of Florida, Inc., Molina Healthcare, Inc., Aetna, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "JAZZ",
+      "ticker": "JAZZ",
+      "name": "ジャズ・ファーマシューティカルズ",
+      "name_en": "Jazz Pharmaceuticals",
+      "sub": "製薬",
+      "sub_en": "Pharmaceuticals",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "オキシベート訴訟の原告(モリーナ等)と2025年8月に和解",
+          "text_en": "Settled with opt-out plaintiffs including Molina in August 2025",
+          "source": {
+            "label": "Jazz Pharmaceuticals 10-K(2025年度)",
+            "label_en": "Jazz Pharmaceuticals 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1232524/000123252426000013/jazz-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Federal Opt-Out Plaintiffs Humana Inc., Health Care Services Corporation, Molina Healthcare Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CNC",
+      "ticker": "CNC",
+      "name": "センティーン",
+      "name_en": "Centene",
+      "sub": "医療保険",
+      "sub_en": "Health insurance",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "メディケイドの主な競合",
+          "text_en": "Primary Medicaid competitor",
+          "source": {
+            "label": "Molina Healthcare 10-K(2025年度)",
+            "label_en": "Molina Healthcare 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1179929/000117992926000005/moh-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "Our primary competitors in the Medicaid managed care industry include Centene Corporation, CVS Health Corporation, Elevance Health, Inc., UnitedHealth Group Inc., and large not-for-profit healthcare organizations."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ELV",
+      "ticker": "ELV",
+      "name": "エレバンス・ヘルス",
+      "name_en": "Elevance Health",
+      "sub": "医療保険",
+      "sub_en": "Health insurance",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "メディケイドの主な競合",
+          "text_en": "Primary Medicaid competitor",
+          "source": {
+            "label": "Molina Healthcare 10-K(2025年度)",
+            "label_en": "Molina Healthcare 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1179929/000117992926000005/moh-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "Our primary competitors in the Medicaid managed care industry include Centene Corporation, CVS Health Corporation, Elevance Health, Inc., UnitedHealth Group Inc., and large not-for-profit healthcare organizations."
+          }
+        }
+      ]
+    },
+    {
+      "id": "UNH",
+      "ticker": "UNH",
+      "name": "ユナイテッドヘルス",
+      "name_en": "UnitedHealth Group",
+      "sub": "医療保険",
+      "sub_en": "Health insurance",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "メディケイドの主な競合",
+          "text_en": "Primary Medicaid competitor",
+          "source": {
+            "label": "Molina Healthcare 10-K(2025年度)",
+            "label_en": "Molina Healthcare 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1179929/000117992926000005/moh-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "Our primary competitors in the Medicaid managed care industry include Centene Corporation, CVS Health Corporation, Elevance Health, Inc., UnitedHealth Group Inc., and large not-for-profit healthcare organizations."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CVS",
+      "ticker": "CVS",
+      "name": "CVSヘルス",
+      "name_en": "CVS Health",
+      "sub": "医療保険・薬局",
+      "sub_en": "Health insurance & pharmacy",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "メディケイドの主な競合",
+          "text_en": "Primary Medicaid competitor",
+          "source": {
+            "label": "Molina Healthcare 10-K(2025年度)",
+            "label_en": "Molina Healthcare 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1179929/000117992926000005/moh-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "Our primary competitors in the Medicaid managed care industry include Centene Corporation, CVS Health Corporation, Elevance Health, Inc., UnitedHealth Group Inc., and large not-for-profit healthcare organizations."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HUM",
+      "ticker": "HUM",
+      "name": "ヒューマナ",
+      "name_en": "Humana",
+      "sub": "医療保険",
+      "sub_en": "Health insurance",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "メディケアの大手競合",
+          "text_en": "Large Medicare competitor",
+          "source": {
+            "label": "Molina Healthcare 10-K(2025年度)",
+            "label_en": "Molina Healthcare 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1179929/000117992926000005/moh-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "The Medicare market is highly competitive across the country, with large competitors, such as CVS Health Corporation, Humana, Inc., and UnitedHealth Group Inc."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

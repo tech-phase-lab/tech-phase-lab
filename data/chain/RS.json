@@ -1,0 +1,143 @@
+{
+  "root": {
+    "ticker": "RS",
+    "name": "リライアンス",
+    "cik": 861884,
+    "name_en": "Reliance"
+  },
+  "rows": [
+    {
+      "ja": "買収した金属加工・流通会社",
+      "en": "Acquired metals service companies",
+      "above": true
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "Cooksey",
+      "ticker": "Cooksey Iron & Metal",
+      "name": "クックシー・アイアン&メタル",
+      "name_en": "Cooksey Iron & Metal",
+      "sub": "鋼材の流通",
+      "sub_en": "Steel service center",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2024年2月に買収",
+          "text_en": "Acquired in February 2024",
+          "source": {
+            "label": "Reliance 10-K(2025年度)",
+            "label_en": "Reliance 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/861884/000110465926020651/rs-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "we acquired (i) Cooksey Iron & Metal Company on February 1, 2024; (ii) American Alloy Steel, Inc. on April 1, 2024; (iii) Mid-West Materials, Inc. on April 1, 2024; and (iv) certain assets of the FerrouSouth division of Ferragon Corporation on August 16, 2024."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AmericanAlloy",
+      "ticker": "American Alloy Steel",
+      "name": "アメリカン・アロイ・スチール",
+      "name_en": "American Alloy Steel",
+      "sub": "特殊鋼の流通",
+      "sub_en": "Specialty steel distribution",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2024年4月に買収",
+          "text_en": "Acquired in April 2024",
+          "source": {
+            "label": "Reliance 10-K(2025年度)",
+            "label_en": "Reliance 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/861884/000110465926020651/rs-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "we acquired (i) Cooksey Iron & Metal Company on February 1, 2024; (ii) American Alloy Steel, Inc. on April 1, 2024; (iii) Mid-West Materials, Inc. on April 1, 2024; and (iv) certain assets of the FerrouSouth division of Ferragon Corporation on August 16, 2024."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MidWest",
+      "ticker": "Mid-West Materials",
+      "name": "ミッドウエスト・マテリアルズ",
+      "name_en": "Mid-West Materials",
+      "sub": "鋼板の流通",
+      "sub_en": "Flat-rolled steel distribution",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2024年4月に買収",
+          "text_en": "Acquired in April 2024",
+          "source": {
+            "label": "Reliance 10-K(2025年度)",
+            "label_en": "Reliance 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/861884/000110465926020651/rs-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "we acquired (i) Cooksey Iron & Metal Company on February 1, 2024; (ii) American Alloy Steel, Inc. on April 1, 2024; (iii) Mid-West Materials, Inc. on April 1, 2024; and (iv) certain assets of the FerrouSouth division of Ferragon Corporation on August 16, 2024."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Ferragon",
+      "ticker": "Ferragon",
+      "name": "フェラゴン",
+      "name_en": "Ferragon",
+      "sub": "鋼材の加工・流通",
+      "sub_en": "Steel processing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2024年8月にFerrouSouth部門の資産の一部を取得",
+          "text_en": "Bought certain assets of its FerrouSouth division in August 2024",
+          "source": {
+            "label": "Reliance 10-K(2025年度)",
+            "label_en": "Reliance 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/861884/000110465926020651/rs-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "we acquired (i) Cooksey Iron & Metal Company on February 1, 2024; (ii) American Alloy Steel, Inc. on April 1, 2024; (iii) Mid-West Materials, Inc. on April 1, 2024; and (iv) certain assets of the FerrouSouth division of Ferragon Corporation on August 16, 2024."
+          }
+        }
+      ]
+    },
+    {
+      "id": "EMJ",
+      "ticker": "EMJ",
+      "name": "EMJ(アール・M・ヨルゲンセン)",
+      "name_en": "Earle M. Jorgensen (EMJ)",
+      "sub": "金属の流通",
+      "sub_en": "Metals distribution",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2006年に買収した完全子会社(旧製造事業の環境浄化を継続)",
+          "text_en": "Wholly owned subsidiary acquired in 2006; Reliance handles cleanup of its former manufacturing sites",
+          "source": {
+            "label": "Reliance 10-K(2025年度)",
+            "label_en": "Reliance 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/861884/000110465926020651/rs-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "In addition, we are currently involved with an environmental remediation project related to activities at former manufacturing operations of EMJ, our wholly owned subsidiary, that were sold many years prior to our acquisition of EMJ in 2006."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,147 @@
+{
+  "root": {
+    "ticker": "PPL",
+    "name": "PPL",
+    "cik": 922224,
+    "name_en": "PPL"
+  },
+  "rows": [
+    {
+      "ja": "買収・合弁",
+      "en": "Acquisition & joint venture",
+      "above": true
+    },
+    {
+      "ja": "発電・原子力の提携先",
+      "en": "Generation & nuclear partners"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "NGG",
+      "ticker": "NGG",
+      "name": "ナショナル・グリッド",
+      "name_en": "National Grid",
+      "sub": "電力・ガス(英米)",
+      "sub_en": "Utility (UK/US)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2022年5月、ロードアイランドの電力・ガス会社Narragansett ElectricをNational GridからPPLが買収",
+          "text_en": "PPL bought Narragansett Electric (Rhode Island Energy) from National Grid in May 2022",
+          "source": {
+            "label": "PPL 10-K(2025年度)",
+            "label_en": "PPL 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/922224/000092222426000008/ppl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "On May 25, 2022, PPL Rhode Island Holdings acquired 100% of the outstanding shares of common stock of Narragansett Electric from National Grid U.S., a subsidiary of National Grid plc (the Acquisition)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BX",
+      "ticker": "BX",
+      "name": "ブラックストーン",
+      "name_en": "Blackstone",
+      "sub": "投資会社(インフラ)",
+      "sub_en": "Investment firm (infrastructure)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "データセンター向け発電の合弁を組む(PPL 51%、Blackstone Infrastructure 49%)",
+          "text_en": "Joint venture for data center power generation (PPL 51%, Blackstone Infrastructure 49%)",
+          "source": {
+            "label": "PPL 10-K(2025年度)",
+            "label_en": "PPL 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/922224/000092222426000008/ppl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "PPL owns 51% of the joint venture interest and Blackstone Infrastructure owns 49%."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TLN",
+      "ticker": "TLN",
+      "name": "タレン・エナジー",
+      "name_en": "Talen Energy",
+      "sub": "発電",
+      "sub_en": "Power generation",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "PPLの送配電子会社・PJMとTalenの3者で、原子力発電所の接続契約の変更を申請(FERCが2024年に却下)",
+          "text_en": "Talen, PJM and a PPL subsidiary sought an amended interconnection agreement for its nuclear plant (FERC denied it in 2024)",
+          "source": {
+            "label": "Talen Energy 10-K(2025年度)",
+            "label_en": "Talen Energy 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1622536/000162253626000017/tln-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "the FERC issued an order denying an Amended Interconnection Service Agreement (the \"ISA Amendment\") between PJM, a subsidiary of PPL Corporation, and Susquehanna"
+          }
+        }
+      ]
+    },
+    {
+      "id": "XE",
+      "ticker": "X-energy",
+      "name": "Xエナジー",
+      "name_en": "X-energy",
+      "sub": "小型原子炉(SMR)",
+      "sub_en": "Small modular reactors",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "PPL傘下のLG&E・KUと、ケンタッキー州でのSMR導入を検討する協力",
+          "text_en": "Collaborating with PPL's LG&E and KU to explore Xe-100 SMRs in Kentucky",
+          "source": {
+            "label": "X-energy の発表(8-K添付)",
+            "label_en": "X-energy release (8-K exhibit)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2088896/000119312526256369/xe-ex99_1.htm",
+            "level": "official",
+            "date": "2026-06-04",
+            "quote": "Announced a collaboration with LG&E and KU, subsidiaries of PPL Corporation, to explore deploying Xe-100 SMRs in Kentucky"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ONEN",
+      "ticker": "ONEN",
+      "name": "ONEニュークリア・エナジー",
+      "name_en": "ONE Nuclear Energy",
+      "sub": "原子力開発",
+      "sub_en": "Nuclear development",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "開発計画の提携先の一社がPPL",
+          "text_en": "PPL is one of the partners in its project",
+          "source": {
+            "label": "ONE Nuclear Energy の発表(8-K添付)",
+            "label_en": "ONE Nuclear Energy release (8-K exhibit)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1846416/000149315226053556/ex99-1.htm",
+            "level": "official",
+            "date": "2026-11-20",
+            "quote": "The project is partnered with Siemens Energy, Jingoli Power, PPL Corporation and Prysmian Group."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

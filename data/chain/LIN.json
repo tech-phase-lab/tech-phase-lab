@@ -1,0 +1,250 @@
+{
+  "root": {
+    "ticker": "LIN",
+    "name": "リンデ",
+    "cik": 1707925,
+    "name_en": "Linde"
+  },
+  "rows": [
+    {
+      "ja": "顧客(産業ガスの供給先)",
+      "en": "Customers (industrial gas supply)"
+    },
+    {
+      "ja": "買収・係争",
+      "en": "Acquisitions & disputes"
+    },
+    {
+      "ja": "競合(各社の10-Kに記載)",
+      "en": "Competitors (named in 10-Ks)"
+    }
+  ],
+  "rivals": [
+    "APD",
+    "Air Liquide",
+    "Messer"
+  ],
+  "companies": [
+    {
+      "id": "CF",
+      "ticker": "CF",
+      "name": "CFインダストリーズ",
+      "name_en": "CF Industries",
+      "sub": "窒素肥料・アンモニア",
+      "sub_en": "Nitrogen & ammonia",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ブルーポイント合弁の空気分離装置をリンデ子会社が建設・保有・運営",
+          "text_en": "A Linde subsidiary will build, own and operate the air separation unit at the Blue Point JV",
+          "source": {
+            "label": "CF Industries 10-K(2025年度)",
+            "label_en": "CF Industries 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1324404/000132440426000007/cf-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "In June 2025, the Blue Point joint venture executed agreements, including a long-term supply agreement, with a subsidiary of Linde plc for them to design, construct, own, operate and maintain an air separation unit (ASU)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ASTL",
+      "ticker": "ASTL",
+      "name": "アルゴマ・スチール",
+      "name_en": "Algoma Steel",
+      "sub": "鉄鋼(加)",
+      "sub_en": "Steel (Canada)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "酸素をリンデ・カナダから供給(2026年半ばまでの契約)",
+          "text_en": "Oxygen supplied by Linde Canada under a contract to mid-2026",
+          "source": {
+            "label": "Algoma Steel 年次情報書(2025年度)",
+            "label_en": "Algoma Steel Annual Information Form (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1860805/000119312526102628/d92446dex991.htm",
+            "level": "official",
+            "date": "2026-03-12",
+            "quote": "Oxygen is supplied by Linde Canada Inc. through a supply agreement that extends to mid-2026."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HUN",
+      "ticker": "HUN",
+      "name": "ハンツマン",
+      "name_en": "Huntsman",
+      "sub": "化学",
+      "sub_en": "Chemicals",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "産業ガス供給元のプラクスエア/リンデとの訴訟でハンツマンが勝訴",
+          "text_en": "Won a long-running lawsuit against Praxair/Linde, a gas supplier to its Geismar site",
+          "source": {
+            "label": "Huntsman 10-K(2024年度)",
+            "label_en": "Huntsman 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1307954/000143774925004205/hun20241231_10k.htm",
+            "level": "official",
+            "date": "2025-02-18",
+            "quote": "our long-running court battle against Praxair/Linde, one of the industrial gas suppliers to our Geismar, Louisiana MDI manufacturing site"
+          }
+        }
+      ]
+    },
+    {
+      "id": "nexAir",
+      "ticker": "nexAir",
+      "name": "ネクスエア",
+      "name_en": "nexAir",
+      "sub": "ガス販売・溶接材",
+      "sub_en": "Gas distribution & welding supply",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2023年1月に買収(以前は23%出資)",
+          "text_en": "Acquired in January 2023 after holding 23%",
+          "source": {
+            "label": "Linde 10-K(2025年度)",
+            "label_en": "Linde 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1707925/000162828026011430/lin-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "On January 5, 2023, Linde completed the acquisition of nexAir, LLC, a gas distribution and welding supply company in the United States"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ET",
+      "ticker": "ET",
+      "name": "エナジー・トランスファー",
+      "name_en": "Energy Transfer",
+      "sub": "パイプライン",
+      "sub_en": "Pipelines",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "リンデ・エンジニアリングが子会社クレストウッドを契約違反で提訴",
+          "text_en": "Linde Engineering sued its Crestwood unit for breach of contract",
+          "source": {
+            "label": "Energy Transfer 10-K(2025年度)",
+            "label_en": "Energy Transfer 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1276187/000127618726000013/et-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Crestwood Midstream Partners, LP - Linde Litigation On December 23, 2019, Linde Engineering North America Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "APD",
+      "ticker": "APD",
+      "name": "エア・プロダクツ",
+      "name_en": "Air Products",
+      "sub": "産業ガス",
+      "sub_en": "Industrial gases",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "世界3大競合の一社としてリンデを挙げる",
+          "text_en": "Names Linde among three global industrial gas competitors",
+          "source": {
+            "label": "Air Products 10-K(2026年9月期)",
+            "label_en": "Air Products 10-K (FY ended Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2969/000000296926000050/apd-20260930.htm",
+            "level": "official",
+            "date": "2026-11-19",
+            "quote": "Each of the regional industrial gases segments competes against three global industrial gas companies: Air Liquide S.A., Linde plc, and Messer Group GmbH, as well as regional competitors."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Air Liquide",
+      "ticker": "Air Liquide",
+      "name": "エア・リキード",
+      "name_en": "Air Liquide",
+      "sub": "産業ガス(仏)",
+      "sub_en": "Industrial gases (France)",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "産業ガスの世界的な競合",
+          "text_en": "Global industrial gas competitor",
+          "source": {
+            "label": "Linde 10-K(2025年度)",
+            "label_en": "Linde 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1707925/000162828026011430/lin-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Competitors in the industrial gases industry include global and regional companies such as L'Air Liquide S.A., Air Products and Chemicals, Inc., Messer Group GmbH, Mitsubishi Chemical Holdings Corporation (through Taiyo Nippon Sanso Corporation)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Messer",
+      "ticker": "Messer",
+      "name": "メッサー",
+      "name_en": "Messer Group",
+      "sub": "産業ガス(独)",
+      "sub_en": "Industrial gases (Germany)",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "産業ガスの世界的な競合",
+          "text_en": "Global industrial gas competitor",
+          "source": {
+            "label": "Linde 10-K(2025年度)",
+            "label_en": "Linde 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1707925/000162828026011430/lin-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Competitors in the industrial gases industry include global and regional companies such as L'Air Liquide S.A., Air Products and Chemicals, Inc., Messer Group GmbH, Mitsubishi Chemical Holdings Corporation (through Taiyo Nippon Sanso Corporation)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "TNSC",
+      "ticker": "Nippon Sanso",
+      "name": "日本酸素ホールディングス",
+      "name_en": "Nippon Sanso Holdings",
+      "sub": "産業ガス",
+      "sub_en": "Industrial gases",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "大陽日酸を通じた競合(三菱ケミカル系)",
+          "text_en": "Competes through Taiyo Nippon Sanso (Mitsubishi Chemical group)",
+          "source": {
+            "label": "Linde 10-K(2025年度)",
+            "label_en": "Linde 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1707925/000162828026011430/lin-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Competitors in the industrial gases industry include global and regional companies such as L'Air Liquide S.A., Air Products and Chemicals, Inc., Messer Group GmbH, Mitsubishi Chemical Holdings Corporation (through Taiyo Nippon Sanso Corporation)"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

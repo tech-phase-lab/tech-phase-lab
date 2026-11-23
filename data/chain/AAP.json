@@ -1,0 +1,251 @@
+{
+  "root": {
+    "ticker": "AAP",
+    "name": "アドバンス・オート・パーツ",
+    "cik": 1158449,
+    "name_en": "Advance Auto Parts"
+  },
+  "rows": [
+    {
+      "ja": "部品の仕入先(相手の資料に記載)",
+      "en": "Parts suppliers (named in their filings)",
+      "above": true
+    },
+    {
+      "ja": "買収・売却・家主",
+      "en": "Acquisition, divestiture & landlords"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "ORLY",
+    "GPC",
+    "PRTS"
+  ],
+  "companies": [
+    {
+      "id": "MPAA",
+      "ticker": "MPAA",
+      "name": "モーターカー・パーツ・オブ・アメリカ",
+      "name_en": "Motorcar Parts of America",
+      "sub": "再生部品",
+      "sub_en": "Remanufactured parts",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "大手チェーンの一社としてAdvance Auto Partsに部品を販売",
+          "text_en": "Sells hard parts to Advance Auto Parts among the largest chains",
+          "source": {
+            "label": "Motorcar Parts of America 10-K(2026年3月期)",
+            "label_en": "Motorcar Parts of America 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/918251/000114036126024463/ef20070436_10k.htm",
+            "level": "official",
+            "date": "2026-06-08",
+            "quote": "We sell our hard parts products to the largest automotive chains, including Advance Auto Parts, AutoZone, Genuine Parts (NAPA), and O'Reilly Auto Parts"
+          }
+        }
+      ]
+    },
+    {
+      "id": "LBRA",
+      "ticker": "LBRA",
+      "name": "1847ホールディングス",
+      "name_en": "1847 Holdings",
+      "sub": "持株会社(部品など)",
+      "sub_en": "Holding company",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "顧客の一社としてAdvance Auto Partsを挙げる",
+          "text_en": "Names Advance Auto Parts among its customers",
+          "source": {
+            "label": "1847 Holdings 10-K(2025年度)",
+            "label_en": "1847 Holdings 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1599407/000121390026036917/ea0282883-10k_1847hold.htm",
+            "level": "official",
+            "date": "2026-03-31",
+            "quote": "We have a diverse customer base, including Amazon, AutoZone, Advance Auto Parts, CarQuest"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Worldpac",
+      "ticker": "Worldpac",
+      "name": "ワールドパック",
+      "name_en": "Worldpac",
+      "sub": "輸入車部品の卸",
+      "sub_en": "Import parts wholesale",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Worldpac事業を約14.4億ドルで売却(2024年11月)",
+          "text_en": "Sold the Worldpac business for about $1.44 billion (November 2024)",
+          "source": {
+            "label": "Advance Auto Parts 10-K(2025年度)",
+            "label_en": "Advance Auto Parts 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1158449/000119312526051305/aap-20260103.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "On November 1, 2024, the Company completed the sale of the Worldpac business for net proceeds of approximately $1.44 billion"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GPI",
+      "ticker": "General Parts",
+      "name": "ジェネラル・パーツ・インターナショナル",
+      "name_en": "General Parts International",
+      "sub": "部品卸(Carquest)",
+      "sub_en": "Parts distribution (Carquest)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "CarquestとWorldpacを運営していた会社を買収(2014年)",
+          "text_en": "Acquired the operator of Carquest and Worldpac (2014)",
+          "source": {
+            "label": "Advance Auto Parts 10-K(2025年度)",
+            "label_en": "Advance Auto Parts 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1158449/000119312526051305/aap-20260103.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "In 2014, the Company acquired General Parts International, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FVR",
+      "ticker": "FVR",
+      "name": "フロントビューREIT",
+      "name_en": "FrontView REIT",
+      "sub": "ネットリースREIT",
+      "sub_en": "Net lease REIT",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "上位20のテナント(7物件、賃料の1.36%)",
+          "text_en": "A top-20 tenant (7 properties, 1.36% of rent)",
+          "source": {
+            "label": "FrontView REIT 10-K(2025年度)",
+            "label_en": "FrontView REIT 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1988494/000119312526072181/fvr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "20 Advance Auto Parts 7 1.36 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AEI25",
+      "ticker": "AEI Fund 25",
+      "name": "AEIインカム&グロース・ファンド25",
+      "name_en": "AEI Income & Growth Fund 25",
+      "sub": "不動産ファンド",
+      "sub_en": "Real estate fund",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "インディアナポリス店の賃貸を10年延長(2035年まで)",
+          "text_en": "Extended its Indianapolis store lease for 10 years (to 2035)",
+          "source": {
+            "label": "AEI Income & Growth Fund 25 10-K(2024年度)",
+            "label_en": "AEI Income & Growth Fund 25 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1185198/000102345825000011/aei25-20241231.htm",
+            "level": "official",
+            "date": "2025-03-28",
+            "quote": "In August 2024, the Company entered into an agreement with the tenant of Advance Auto in Indianapolis, Indiana to extend the lease term to 10 years"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ORLY",
+      "ticker": "ORLY",
+      "name": "オライリー・オートモーティブ",
+      "name_en": "O'Reilly Automotive",
+      "sub": "自動車部品小売",
+      "sub_en": "Auto parts retail",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "O'Reillyが10-Kで、全国チェーンの主な競合として挙げる",
+          "text_en": "O'Reilly names Advance Auto Parts among national chain competitors",
+          "source": {
+            "label": "O'Reilly 10-K(2025年度)",
+            "label_en": "O'Reilly 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/898173/000089817326000009/orly-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "National retail and wholesale automotive parts chains (such as AutoZone, Inc., Advance Auto Parts, CARQUEST, and NAPA)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GPC",
+      "ticker": "GPC",
+      "name": "ジェニュイン・パーツ",
+      "name_en": "Genuine Parts",
+      "sub": "自動車・産業部品",
+      "sub_en": "Auto & industrial parts",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Genuine Partsが10-Kで、北米の主な競合として挙げる",
+          "text_en": "Genuine Parts names Advance Auto Parts among key North American competitors",
+          "source": {
+            "label": "Genuine Parts 10-K(2025年度)",
+            "label_en": "Genuine Parts 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/40987/000004098726000003/gpc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Key competitors in North America include AutoZone, Inc., O'Reilly Auto Parts, Inc., Advance Auto Parts, Inc., and LKQ Corporation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PRTS",
+      "ticker": "PRTS",
+      "name": "カーパーツ・ドットコム",
+      "name_en": "CarParts.com",
+      "sub": "自動車部品EC",
+      "sub_en": "Online auto parts",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "CarParts.comが10-Kで、全国チェーンの競合の筆頭に挙げる",
+          "text_en": "CarParts.com lists Advance Auto Parts first among national chain competitors",
+          "source": {
+            "label": "CarParts.com 10-K(2024年度)",
+            "label_en": "CarParts.com 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1378950/000137895025000036/prts-20241228x10k.htm",
+            "level": "official",
+            "date": "2025-03-26",
+            "quote": "national auto parts retailers such as Advance Auto Parts, AutoZone, Napa Auto Parts, CarQuest, O'Reilly Automotive and Pep Boys"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

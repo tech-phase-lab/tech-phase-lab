@@ -1,0 +1,275 @@
+{
+  "root": {
+    "ticker": "IP",
+    "name": "インターナショナル・ペーパー",
+    "cik": 51434,
+    "name_en": "International Paper"
+  },
+  "rows": [
+    {
+      "ja": "買収・売却・分離",
+      "en": "Acquisitions, divestitures & spin-offs",
+      "above": true
+    },
+    {
+      "ja": "提携・取引",
+      "en": "Partners & dealings"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "PKG",
+    "AMCR",
+    "RYAM"
+  ],
+  "companies": [
+    {
+      "id": "DSSmith",
+      "ticker": "DS Smith",
+      "name": "DSスミス",
+      "name_en": "DS Smith",
+      "sub": "段ボール包装(英)",
+      "sub_en": "Corrugated packaging (UK)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年1月に99億ドルで買収",
+          "text_en": "Acquired in January 2025 for $9.9 billion",
+          "source": {
+            "label": "International Paper 10-K(2025年度)",
+            "label_en": "International Paper 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/51434/000005143426000055/ip-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "The Company completed the acquisition of DS Smith for $9.9 billion on January 31, 2025."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AIP",
+      "ticker": "American Industrial Partners",
+      "name": "アメリカン・インダストリアル・パートナーズ",
+      "name_en": "American Industrial Partners",
+      "sub": "投資会社",
+      "sub_en": "Private equity",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "パルプ事業(GCF)を15億ドルで売却(2026年1月完了)",
+          "text_en": "Bought the Global Cellulose Fibers business for $1.5 billion (closed January 2026)",
+          "source": {
+            "label": "International Paper 10-K(2025年度)",
+            "label_en": "International Paper 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/51434/000005143426000055/ip-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Sold our Global Cellulose Fibers business for $1.5 billion to American Industrial Partners (completed January 2026)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SLVM",
+      "ticker": "SLVM",
+      "name": "シルバモ",
+      "name_en": "Sylvamo",
+      "sub": "印刷用紙",
+      "sub_en": "Uncoated paper",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2021年にインターナショナル・ペーパーから分離独立",
+          "text_en": "Spun off from International Paper in 2021",
+          "source": {
+            "label": "Sylvamo 10-K(2025年度)",
+            "label_en": "Sylvamo 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1856485/000185648526000008/syl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "We would share liability in this matter with our former parent, International Paper, pursuant to a tax matters agreement entered into in connection with our spin-off from International Paper in 2021"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SUZ",
+      "ticker": "SUZ",
+      "name": "スザノ",
+      "name_en": "Suzano",
+      "sub": "パルプ(伯)",
+      "sub_en": "Pulp (Brazil)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2007年に工場・森林資産をインターナショナル・ペーパーと交換",
+          "text_en": "Swapped industrial and forestry assets with International Paper in 2007",
+          "source": {
+            "label": "Suzano 20-F(2025年度)",
+            "label_en": "Suzano 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/909327/000090932726000045/suz-20251231.htm",
+            "level": "official",
+            "date": "2026-03-24",
+            "quote": "when we executed an agreement with International Paper regarding a swap of industrial and forestry assets."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GPK",
+      "ticker": "GPK",
+      "name": "グラフィック・パッケージング",
+      "name_en": "Graphic Packaging",
+      "sub": "紙器包装",
+      "sub_en": "Paperboard packaging",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "旧合弁の持分をめぐりインターナショナル・ペーパーと同意・権利放棄契約",
+          "text_en": "Consent and waiver agreements with International Paper over the former joint venture",
+          "source": {
+            "label": "Graphic Packaging 10-K(2024年度)",
+            "label_en": "Graphic Packaging 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1408075/000140807525000007/gpk-20241231.htm",
+            "level": "official",
+            "date": "2025-02-12",
+            "quote": "Consent and Waiver Agreement dated as of February 16, 2021 by and among Graphic Packaging International Partners, LLC, Graphic Packaging Holding Company, GPI Holding III, LLC and International Paper Company."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SLB",
+      "ticker": "SLB",
+      "name": "SLB",
+      "name_en": "SLB",
+      "sub": "油田サービス",
+      "sub_en": "Oilfield services",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ミシシッピ州のCO2回収・貯留事業で協業",
+          "text_en": "Partners on a carbon capture project in Mississippi",
+          "source": {
+            "label": "SLB 8-K(2024年10月)",
+            "label_en": "SLB 8-K (Oct 2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/87347/000119312524239201/d837842dex99.htm",
+            "level": "official",
+            "date": "2024-10-18",
+            "quote": "The projects are undertaken in partnership with TDA Research for the Wyoming project and with RTI International, International Paper, and Amazon, for the Mississippi project."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SW",
+      "ticker": "SW",
+      "name": "スマーフィット・ウエストロック",
+      "name_en": "Smurfit Westrock",
+      "sub": "紙・段ボール",
+      "sub_en": "Paper packaging",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "相互に売買があり、ウエストロック側に買掛金・売掛金の両方を持つ",
+          "text_en": "Trades both ways with International Paper; WestRock entities hold receivables from and payables to it",
+          "source": {
+            "label": "Smurfit Westrock 10-K 添付 債権売買契約(2024年度)",
+            "label_en": "Smurfit Westrock 10-K receivables agreement exhibit (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2005951/000200595125000005/exh_105xrpaexecuted.htm",
+            "level": "official",
+            "date": "2025-03-07",
+            "quote": "the Sellers will only sell, and the Purchaser will only purchase, Eligible Receivables due from International Paper Obligors to the extent, if any, that the aggregate Face Amount of such Eligible Receivables exceeds the aggregate outstanding principal amount of the accounts payable by the WestRock Entities"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PKG",
+      "ticker": "PKG",
+      "name": "パッケージング・コーポレーション・オブ・アメリカ",
+      "name_en": "Packaging Corp of America",
+      "sub": "段ボール",
+      "sub_en": "Containerboard",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "全米規模の主な競合にインターナショナル・ペーパーを挙げる",
+          "text_en": "Names International Paper among its primary national competitors",
+          "source": {
+            "label": "Packaging Corp of America 10-K(2024年度)",
+            "label_en": "Packaging Corp of America 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/75677/000095017025028533/pkg-20241231.htm",
+            "level": "official",
+            "date": "2025-02-27",
+            "quote": "On a national level, our primary competitors are International Paper, Smurfit WestRock, and Georgia-Pacific LLC."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMCR",
+      "ticker": "AMCR",
+      "name": "アムコア",
+      "name_en": "Amcor",
+      "sub": "包装",
+      "sub_en": "Packaging",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "包装の競合にインターナショナル・ペーパーを挙げる",
+          "text_en": "Names International Paper among packaging competitors",
+          "source": {
+            "label": "Amcor 10-K(2026年6月期)",
+            "label_en": "Amcor 10-K (FY ended Jun 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1748790/000174879026000022/amcr-20260630.htm",
+            "level": "official",
+            "date": "2026-08-14",
+            "quote": "Huhtamaki Oyj, International Paper Company, O-I Glass, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RYAM",
+      "ticker": "RYAM",
+      "name": "レイヨニア・アドバンスト・マテリアルズ",
+      "name_en": "Rayonier Advanced Materials",
+      "sub": "セルロース",
+      "sub_en": "Cellulose",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "フラッフパルプの主な競合",
+          "text_en": "Major competitor in commodity fluff pulp",
+          "source": {
+            "label": "Rayonier Advanced Materials 10-K(2024年度)",
+            "label_en": "Rayonier Advanced Materials 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1597672/000159767225000008/ryam-20241231.htm",
+            "level": "official",
+            "date": "2025-03-06",
+            "quote": "Our major competitors in commodity fluff include International Paper, GP Cellulose, Domtar, Klabin and Stora Enso."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

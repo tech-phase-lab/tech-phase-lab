@@ -156,6 +156,11 @@ def connect(path):
     db.execute('''CREATE TABLE IF NOT EXISTS push_device_preferences (
       device_id TEXT PRIMARY KEY, targets INTEGER NOT NULL, earnings INTEGER NOT NULL,
       news INTEGER NOT NULL, news_tickers TEXT NOT NULL)''')
+    # Nov 23: one earnings event is one phone alert, whatever lane or source found it and whatever quarter label it carried
+    # (CRWD: the "announced" line Q0 and the figures Q3 20 seconds later; COHR: three quarters from one new feed in one poll).
+    db.execute('''CREATE TABLE IF NOT EXISTS push_earnings_events (
+      device_id TEXT NOT NULL, ticker TEXT NOT NULL, attempted_at REAL NOT NULL, event_key TEXT NOT NULL,
+      PRIMARY KEY(device_id,ticker,attempted_at))''')
     notice_schema(db)
     return db
 
@@ -1043,6 +1048,9 @@ SKIPS = {}
 _LOGGED_SKIPS = set()
 RELEASE_SKIPS = {}  # (ticker, quarter) -> {reason: count} since start; only for the one-line push-result log
 QUIET_SKIP_REASONS = frozenset({'published-not-fresh', 'already-delivered', 'invalid-item'})
+# One company's results are one event for this long (the calendar's SAME_EVENT_MS): a second earnings alert for the same company
+# inside it is never sent, whichever lane, source or quarter label it came with (Nov 23).
+EARNINGS_EVENT_SECONDS = 36 * 3600
 
 
 # Nov 20 (owner: "the latest MRVL price-target notice did not arrive"): skips were logged for earnings flashes only, so a price-target
@@ -1226,6 +1234,11 @@ def deliver(db, items, transport=send, now=None, monotonic_now=time.monotonic,
             if db.execute('SELECT 1 FROM push_deliveries WHERE device_id=? AND event_key=?', (device['id'], key)).fetchone():
                 skip(item, 'already-delivered', device['id'])
                 continue
+            if item.get('kind') == 'earnings' and db.execute(
+                    'SELECT 1 FROM push_earnings_events WHERE device_id=? AND ticker=? AND attempted_at>=?',
+                    (device['id'], item['ticker'], now - EARNINGS_EVENT_SECONDS)).fetchone():
+                skip(item, 'same-earnings-event', device['id'])
+                continue
             if device['owner_id'] and verified_until is None:
                 try:
                     verified_until = entitlement(device['owner_id'])
@@ -1248,6 +1261,9 @@ def deliver(db, items, transport=send, now=None, monotonic_now=time.monotonic,
                 claim = db.execute('''INSERT OR IGNORE INTO push_deliveries
                     (device_id,event_key,status,attempted_at,observed_at) VALUES(?,?,?,?,?)''',
                     (device['id'], key, 'uncertain', attempted_at, observed)).rowcount
+                if claim and item.get('kind') == 'earnings':
+                    db.execute('INSERT OR IGNORE INTO push_earnings_events(device_id,ticker,attempted_at,event_key) VALUES(?,?,?,?)',
+                               (device['id'], item['ticker'], attempted_at, key))
             if not claim:
                 continue
             # A later device may start after the poll's reference timestamp.

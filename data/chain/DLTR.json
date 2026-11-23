@@ -1,0 +1,225 @@
+{
+  "root": {
+    "ticker": "DLTR",
+    "name": "ダラー・ツリー",
+    "cik": 935703,
+    "name_en": "Dollar Tree"
+  },
+  "rows": [
+    {
+      "ja": "仕入先(相手の資料に記載)",
+      "en": "Suppliers (named in their filings)",
+      "above": true
+    },
+    {
+      "ja": "店舗の家主(REIT)",
+      "en": "Store landlords (REITs)"
+    },
+    {
+      "ja": "売却した事業・競合",
+      "en": "Divested business & competitors"
+    }
+  ],
+  "rivals": [
+    "DG"
+  ],
+  "companies": [
+    {
+      "id": "TR",
+      "ticker": "TR",
+      "name": "トッツィー・ロール",
+      "name_en": "Tootsie Roll Industries",
+      "sub": "菓子",
+      "sub_en": "Confectionery",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "主要顧客としてWalmartと並んでダラー・ツリーを挙げる",
+          "text_en": "Names Dollar Tree, with Walmart, as a key customer",
+          "source": {
+            "label": "Tootsie Roll 10-K(2025年度)",
+            "label_en": "Tootsie Roll 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/98677/000110465926021621/tr-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Net product sales revenues from McLane, which includes these Wal-Mart and Dollar Tree sales as well as sales and deliveries to other Company customers"
+          }
+        }
+      ]
+    },
+    {
+      "id": "YHGJ",
+      "ticker": "YHGJ",
+      "name": "ユンホン・グリーンCTI",
+      "name_en": "Yunhong Green CTI",
+      "sub": "風船",
+      "sub_en": "Balloons",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "風船売上の47%がダラー・ツリー向け",
+          "text_en": "Dollar Tree is 47% of its balloon sales",
+          "source": {
+            "label": "Yunhong Green CTI 10-K(2024年度)",
+            "label_en": "Yunhong Green CTI 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1042187/000164117225004622/form10-k.htm",
+            "level": "official",
+            "date": "2025-04-15",
+            "quote": "Dollar Tree Stores Balloons $ 8,574,000 47 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "FVR",
+      "ticker": "FVR",
+      "name": "フロントビューREIT",
+      "name_en": "FrontView REIT",
+      "sub": "ネットリースREIT",
+      "sub_en": "Net lease REIT",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大のテナント(14物件、賃料の3.5%)",
+          "text_en": "Its largest tenant brand (14 properties, 3.5% of rent)",
+          "source": {
+            "label": "FrontView REIT 10-K(2025年度)",
+            "label_en": "FrontView REIT 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1988494/000119312526072181/fvr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Our largest tenant brand is Dollar Tree, which leased 14 properties that in the aggregate represent approximately 3.5% of our ABR as of December 31, 2025."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ADC",
+      "ticker": "ADC",
+      "name": "アグリー・リアルティ",
+      "name_en": "Agree Realty",
+      "sub": "ネットリースREIT",
+      "sub_en": "Net lease REIT",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "主要テナントの一つ(賃料の1.6%)",
+          "text_en": "A top tenant (1.6% of base rent)",
+          "source": {
+            "label": "Agree Realty 10-K(2025年度)",
+            "label_en": "Agree Realty 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/917251/000091725126000013/adc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "Genuine Parts Company (NAPA Auto Parts) 12,172 1.7 % Dollar Tree 12,045 1.6 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BRST",
+      "ticker": "BRST",
+      "name": "ブロード・ストリート・リアルティ",
+      "name_en": "Broad Street Realty",
+      "sub": "商業施設REIT",
+      "sub_en": "Shopping center REIT",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Avondale商業施設の核テナント(賃料の24.2%)",
+          "text_en": "Anchor tenant of its Avondale center (24.2% of rent)",
+          "source": {
+            "label": "Broad Street Realty 10-K(2024年度)",
+            "label_en": "Broad Street Realty 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/764897/000095017025046840/brst-20241231.htm",
+            "level": "official",
+            "date": "2025-03-28",
+            "quote": "The anchor tenant, Dollar Tree, represents approximately 24.2% of Avondale's total annualized base rent as of December 31, 2024 and its lease expires in May 2027."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GIPR",
+      "ticker": "GIPR",
+      "name": "ジェネレーション・インカム・プロパティーズ",
+      "name_en": "Generation Income Properties",
+      "sub": "ネットリースREIT",
+      "sub_en": "Net lease REIT",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ジョージア州モロー店のテナント",
+          "text_en": "Tenant of its Morrow, Georgia property",
+          "source": {
+            "label": "Generation Income Properties 10-K(2025年度)",
+            "label_en": "Generation Income Properties 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1651721/000119312526135022/gipr-20251231.htm",
+            "level": "official",
+            "date": "2026-04-01",
+            "quote": "except for Dollar Tree in Morrow, Georgia which had 2-months free rent in Q3 2025"
+          }
+        }
+      ]
+    },
+    {
+      "id": "FamilyDollar",
+      "ticker": "Family Dollar",
+      "name": "ファミリー・ダラー",
+      "name_en": "Family Dollar",
+      "sub": "ディスカウント店",
+      "sub_en": "Discount stores",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ファミリー・ダラー事業を1959 Holdingsに売却(2025年7月)",
+          "text_en": "Sold the Family Dollar business to 1959 Holdings (July 2025)",
+          "source": {
+            "label": "Dollar Tree 10-K(2026年1月期)",
+            "label_en": "Dollar Tree 10-K (FY ended Jan 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/935703/000093570326000025/dltr-20260131.htm",
+            "level": "official",
+            "date": "2026-03-16",
+            "quote": "On July 5, 2025, we completed our previously announced sale of the Family Dollar business to 1959 Holdings, LLC."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DG",
+      "ticker": "DG",
+      "name": "ダラー・ジェネラル",
+      "name_en": "Dollar General",
+      "sub": "ディスカウント店",
+      "sub_en": "Discount stores",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Dollar Generalが10-Kで、直接の競合として挙げる",
+          "text_en": "Dollar General names Dollar Tree as a direct competitor",
+          "source": {
+            "label": "Dollar General 10-K(2025年1月期)",
+            "label_en": "Dollar General 10-K (FY ended Jan 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/29534/000155837025003413/dg-20250131x10k.htm",
+            "level": "official",
+            "date": "2025-03-21",
+            "quote": "Our direct competitors include Family Dollar, Dollar Tree, and various local, independent operators"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

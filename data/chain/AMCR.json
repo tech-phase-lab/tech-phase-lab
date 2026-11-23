@@ -1,0 +1,228 @@
+{
+  "root": {
+    "ticker": "AMCR",
+    "name": "アムコア",
+    "cik": 1748790,
+    "name_en": "Amcor"
+  },
+  "rows": [
+    {
+      "ja": "アルミ材の供給元(相手の資料に記載)",
+      "en": "Aluminum suppliers (named in their filings)",
+      "above": true
+    },
+    {
+      "ja": "買収",
+      "en": "Acquisitions"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "SLGN",
+    "OI",
+    "TRS",
+    "AKO-B"
+  ],
+  "companies": [
+    {
+      "id": "CSTM",
+      "ticker": "CSTM",
+      "name": "コンステリウム",
+      "name_en": "Constellium",
+      "sub": "アルミ圧延",
+      "sub_en": "Aluminum products",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "包装材の顧客の一社としてAmcorを挙げる",
+          "text_en": "Names Amcor among its packaging customers",
+          "source": {
+            "label": "Constellium 10-K(2024年度)",
+            "label_en": "Constellium 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1563411/000156341125000005/cstm-20241231.htm",
+            "level": "official",
+            "date": "2025-02-28",
+            "quote": "Our packaging customers include AB InBev, Amcor Ltd., Ardagh Metal Packaging S.A., Ball Corporation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Novelis",
+      "ticker": "Novelis",
+      "name": "ノベリス",
+      "name_en": "Novelis",
+      "sub": "アルミ圧延",
+      "sub_en": "Aluminum rolling",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "主要顧客の一社としてAmcorを挙げる",
+          "text_en": "Names Amcor among its major customers",
+          "source": {
+            "label": "Novelis 10-K(2025年3月期)",
+            "label_en": "Novelis 10-K (FY ended Mar 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1304280/000130428025000023/nvl-20250331.htm",
+            "level": "official",
+            "date": "2025-05-12",
+            "quote": "Our major customers include: Beverage Packaging Specialties Anheuser-Busch InBev Amcor Ardagh Group"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Berry",
+      "ticker": "Berry Global",
+      "name": "ベリー・グローバル",
+      "name_en": "Berry Global",
+      "sub": "プラスチック包装",
+      "sub_en": "Plastic packaging",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Berry Globalと合併(2025年4月完了)",
+          "text_en": "Completed its merger with Berry Global in April 2025",
+          "source": {
+            "label": "Amcor 10-K(2026年6月期)",
+            "label_en": "Amcor 10-K (FY ended Jun 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1748790/000174879026000022/amcr-20260630.htm",
+            "level": "official",
+            "date": "2026-08-14",
+            "quote": "On April 30, 2025, the Company completed its acquisition (the \"Merger\") of Berry Global Group, Inc (\"Berry\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Bemis",
+      "ticker": "Bemis",
+      "name": "ベミス",
+      "name_en": "Bemis Company",
+      "sub": "軟包装",
+      "sub_en": "Flexible packaging",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "軟包装大手のBemisを買収",
+          "text_en": "Acquired the flexible packaging maker Bemis",
+          "source": {
+            "label": "Oshkosh 10-K(2025年度)",
+            "label_en": "Oshkosh 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/775158/000119312526054061/osk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Bemis Company, Inc. (which was subsequently acquired by Amcor plc), a global supplier of flexible packaging"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SLGN",
+      "ticker": "SLGN",
+      "name": "シルガン・ホールディングス",
+      "name_en": "Silgan Holdings",
+      "sub": "容器・キャップ",
+      "sub_en": "Containers & closures",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Silganが10-Kで、キャップ事業の主な競合の筆頭に挙げる",
+          "text_en": "Silgan lists Amcor first among closures competitors",
+          "source": {
+            "label": "Silgan 10-K(2025年度)",
+            "label_en": "Silgan 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/849869/000162828026012202/slgn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our dispensing and specialty closures business competes primarily with Amcor plc, AptarGroup, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "OI",
+      "ticker": "OI",
+      "name": "O-Iグラス",
+      "name_en": "O-I Glass",
+      "sub": "ガラス瓶",
+      "sub_en": "Glass containers",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "O-Iが10-Kで、プラスチック容器の主な競合の筆頭に挙げる",
+          "text_en": "O-I lists Amcor first among plastic container competitors",
+          "source": {
+            "label": "O-I Glass 10-K(2025年度)",
+            "label_en": "O-I Glass 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/812074/000110465926014319/oi-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "The principal competitors producing plastic containers include Amcor, Plastipak Packaging, Inc. and Silgan Holdings Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TRS",
+      "ticker": "TRS",
+      "name": "トライマス",
+      "name_en": "TriMas",
+      "sub": "包装部品",
+      "sub_en": "Packaging components",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "TriMasが10-Kで、競合のBerry Global(Amcorに統合予定)を挙げる",
+          "text_en": "TriMas names Berry Global (soon part of Amcor) among competitors",
+          "source": {
+            "label": "TriMas 10-K(2024年度)",
+            "label_en": "TriMas 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/842633/000084263325000015/trs-20241231.htm",
+            "level": "official",
+            "date": "2025-02-27",
+            "quote": "Berry Global (soon to be part of Amcor)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AKO-B",
+      "ticker": "AKO-B",
+      "name": "エンボテジャドーラ・アンディナ",
+      "name_en": "Embotelladora Andina",
+      "sub": "飲料ボトラー(チリ)",
+      "sub_en": "Bottler (Chile)",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "アンディナが20-Fで、アルゼンチンの主な競合(ペットボトル)として挙げる",
+          "text_en": "Andina names Amcor as a principal competitor in Argentina",
+          "source": {
+            "label": "Embotelladora Andina 20-F(2024年度)",
+            "label_en": "Embotelladora Andina 20-F (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/925261/000141057825000473/akoa-20241231x20f.htm",
+            "level": "official",
+            "date": "2025-03-26",
+            "quote": "In Argentina, we compete principally with Alpla S.A. and Amcor."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

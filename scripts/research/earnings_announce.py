@@ -18,6 +18,7 @@ from datetime import datetime, timedelta, timezone
 from urllib.parse import urlsplit
 
 import monitor
+import release_freshness
 import release_watch
 
 WINDOW = timedelta(days=3)
@@ -122,7 +123,8 @@ def run_once(path, reference=None):
     with monitor.connect(path) as db:
         schema(db)
         started = time.monotonic()
-        rows = db.execute('''SELECT s.url,s.ticker,s.title,s.sec_form,s.sec_acceptance_datetime,s.sha256,COALESCE(e.detected_at,s.discovered_at) AS detected
+        rows = db.execute('''SELECT s.url,s.ticker,s.title,s.sec_form,s.sec_acceptance_datetime,s.sha256,s.published_on,
+              e.detected_at AS event_at,COALESCE(e.detected_at,s.discovered_at) AS detected
             FROM sources s LEFT JOIN release_events e ON e.url=s.url
             WHERE s.title IS NOT NULL AND s.status NOT IN ('held','rejected')
               AND julianday(COALESCE(e.detected_at,s.discovered_at))>=julianday(?)''', (cutoff,)).fetchall()
@@ -130,6 +132,13 @@ def run_once(path, reference=None):
             if row['ticker'] not in monitor.PROVIDERS or not official(row['ticker'], row['url']):
                 continue
             if not is_announceable(db, row, reference):
+                continue
+            # Nov 23: a company page the monitor only baselined (first fetch of a new source route) has no release event; its
+            # first-seen time is not the release time. Only an SEC filing, whose acceptance time is checked above, may go without one.
+            if row['event_at'] is None and urlsplit(row['url']).hostname not in SEC_HOSTS:
+                continue
+            # The release's own dates (feed date, SEC acceptance, the date in its address) older than 36 hours: history, not news.
+            if release_freshness.row_is_stale(row, reference):
                 continue
             observed = instant(row['detected'])
             if observed is None or observed > reference:
@@ -140,11 +149,24 @@ def run_once(path, reference=None):
             table = PRELIMINARY_RESULTS.search(text)
             period = period_of(row['title']) or period_of(text[table.start():table.end() + 120] if table else text[:600]) or 'Latest'
             key = hashlib.sha256('\0'.join([row['ticker'], row['url']]).encode()).hexdigest()
+            if period_already_announced(db, row['ticker'], row['url'], period, observed):
+                continue
             with db:
                 added += db.execute('INSERT OR IGNORE INTO earnings_announcements VALUES(?,?,?,?,?,?,?)',
                     (key, row['ticker'], row['url'], period, observed.isoformat(timespec='milliseconds'),
                      datetime.now(timezone.utc).isoformat(timespec='milliseconds'), round((time.monotonic() - started) * 1000))).rowcount
     return added
+
+
+def period_already_announced(db, ticker, url, period, observed):
+    """The same company and quarter was announced from another address more than 36 hours earlier: this copy is the old release
+    found again on a new route (COHR Q1 2027 on GlobeNewswire, Nov 23), not a new result. A copy inside 36 hours is the same night's
+    release on a second route; it is stored (the phone alert is still one per company and event, see the push delivery)."""
+    if not re.match(r'Q[1-4] 20\d\d$', period or ''):
+        return False
+    earlier = (observed - release_freshness.MAX_AGE).isoformat()
+    return db.execute('SELECT 1 FROM earnings_announcements WHERE ticker=? AND period=? AND url<>? '
+                      'AND julianday(observed_at)<julianday(?) LIMIT 1', (ticker, period, url, earlier)).fetchone() is not None
 
 
 def public_feed(db, cutoff, until=None):

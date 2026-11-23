@@ -542,6 +542,24 @@ def discovery_has_verified_route(result):
     return result.get("status") in {"ok", "fallback"}
 
 
+def release_events_allowed(baseline_ready, ticker, result, inserted, verified_sources, cached_sources=()):
+    """May the URLs this discovery result added become release events (alerts, drafts, earnings lines)?
+
+    Not before the job's first verified result (the database baseline), and not from the first verified result of a source address
+    the ticker never read before: a changed or added route lists releases that already exist (Nov 23: COHR's GlobeNewswire feed
+    put three past quarters on phones; LRCX's IR-top PDFs brought October's results back). Records the address as read.
+    An address already read counts as known when a completed run named it or its last good response is cached (a supplemental SEC
+    route that only becomes the named route when the company feed fails was read every cycle before, so its new filings alert)."""
+    source_url = result.get("sourceUrl")
+    first_from_source = (discovery_has_verified_route(result) and (ticker, source_url) not in verified_sources
+                         and source_url not in (cached_sources or ()))
+    if first_from_source:
+        verified_sources.add((ticker, source_url))
+        if inserted:
+            print(json.dumps({"event": "discovery-source-baseline", "ticker": ticker, "baselined": len(inserted)}), flush=True)
+    return bool(baseline_ready) and not first_from_source
+
+
 def discovery_requires_backoff(result):
     """Back off only total discovery failures, not a supplemental-route outage."""
     return result.get("status") == "degraded" and not discovery_has_verified_route(result)
@@ -3418,6 +3436,9 @@ class AutomaticMonitor:
                          OR (status='degraded' AND route IS NOT NULL AND route!='none')
                        )""" + scope_clause + " LIMIT 1", params,
                 ).fetchone() is not None
+            # Nov 23: a ticker's first verified result from a source address it never read before (a changed or added route:
+            # COHR's GlobeNewswire feed, LRCX's IR-top PDFs) lists releases that already exist. They are baselined, never alerted.
+            verified_sources = monitor.verified_discovery_sources(db)
             if not monitor.SEC_ACCESS.state()["userAgentConfigured"]:
                 # Never log the value itself; only that SEC requests are withheld.
                 print(json.dumps({"event": "sec-user-agent-missing",
@@ -3502,6 +3523,7 @@ class AutomaticMonitor:
                     result_cache_metrics = result.pop("_cacheMetrics", {})
                     for metric in cache_metrics:
                         cache_metrics[metric] += int(result_cache_metrics.get(metric, 0))
+                    previous_cache = discovery_caches[ticker] or {}
                     cache_changed = source_cache != discovery_caches[ticker]
                     signature = discovery_signature(result, links)
                     new_urls = set(links) - known[ticker]
@@ -3510,7 +3532,8 @@ class AutomaticMonitor:
                         known[ticker].update(inserted)
                         if inserted:
                             new_source_seen = True
-                        if baseline_ready[job]:
+                        if release_events_allowed(baseline_ready[job], ticker, result, inserted, verified_sources,
+                                                  cached_sources=previous_cache):
                             events = monitor.add_release_events(db, ticker, inserted)
                             if self.auto_drafts_enabled:
                                 for url in events:

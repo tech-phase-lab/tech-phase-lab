@@ -1,0 +1,510 @@
+{
+  "root": {
+    "ticker": "KKR",
+    "name": "KKR",
+    "cik": 1404912,
+    "name_en": "KKR & Co."
+  },
+  "rows": [
+    {
+      "ja": "投資先(KKRが主要株主)",
+      "en": "Portfolio companies (KKR as major holder)"
+    },
+    {
+      "ja": "提携・資金提供",
+      "en": "Partnerships & financing"
+    },
+    {
+      "ja": "KKRが運用する上場ビークル",
+      "en": "Listed vehicles managed by KKR"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "OS",
+      "ticker": "OS",
+      "name": "ワンストリーム",
+      "name_en": "OneStream",
+      "sub": "企業向け財務ソフト",
+      "sub_en": "Corporate finance software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "KKRが取締役の過半数の指名権を持つ主要株主",
+          "text_en": "KKR is the major holder with board nomination rights",
+          "source": {
+            "label": "OneStream 10-K(2025年度)",
+            "label_en": "OneStream 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1889956/000119312526076771/ck0001889956-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "our stockholders' agreement with KKR Dream Holdings LLC provides that so long as KKR and its affiliates own (1) at least 40% of our outstanding common stock, KKR will have the right to nominate a majority of our board of directors"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Wella",
+      "ticker": "Wella",
+      "name": "ウエラ",
+      "name_en": "Wella",
+      "sub": "ヘアケア",
+      "sub_en": "Hair care",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "KKRが支配株主として上場を申請(2026年8月)",
+          "text_en": "Filed for IPO with KKR as controlling holder (August 2026)",
+          "source": {
+            "label": "Wella S-1(2026年8月)",
+            "label_en": "Wella S-1 (Aug 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2125056/000162828026059572/wellaoperations-sx1.htm",
+            "level": "official",
+            "date": "2026-08-31",
+            "quote": "So long as the KKR Stockholders and the affiliated KKR Funds continue to own a significant amount of our voting power, even if such amount is less than 50%, the KKR Stockholders will continue to be able to strongly influence or effectively control our decisions"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BTSG",
+      "ticker": "BTSG",
+      "name": "ブライトスプリング・ヘルス",
+      "name_en": "BrightSpring Health Services",
+      "sub": "在宅医療・薬局",
+      "sub_en": "Home health & pharmacy",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "KKRが取締役指名権を持つ主要株主",
+          "text_en": "KKR is a major holder with board nomination rights",
+          "source": {
+            "label": "BrightSpring 10-K(2024年度)",
+            "label_en": "BrightSpring 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1865782/000095017025034196/btsg-20241231.htm",
+            "level": "official",
+            "date": "2025-03-06",
+            "quote": "KKR Stockholder has the right to nominate individuals to our board of directors under the existing stockholders agreement."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BV",
+      "ticker": "BV",
+      "name": "ブライトビュー",
+      "name_en": "BrightView",
+      "sub": "造園サービス",
+      "sub_en": "Commercial landscaping",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2013年のKKRによる買収で現在の体制に",
+          "text_en": "Taken over by KKR in 2013 (the KKR Acquisition)",
+          "source": {
+            "label": "BrightView 10-K(2026年9月期)",
+            "label_en": "BrightView 10-K (FY ended Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1734713/000119312526455474/bv-20260930.htm",
+            "level": "official",
+            "date": "2026-11-10",
+            "quote": "In connection with the KKR Acquisition, the Company and a group of financial institutions entered into a credit agreement (the \"Credit Agreement\") dated December 18, 2013 ."
+          }
+        }
+      ]
+    },
+    {
+      "id": "APP",
+      "ticker": "APP",
+      "name": "アップラビン",
+      "name_en": "AppLovin",
+      "sub": "モバイル広告",
+      "sub_en": "Mobile advertising",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "KKR系ファンドが議決権契約の当事者",
+          "text_en": "KKR Denali is a party to its Class B voting agreement",
+          "source": {
+            "label": "AppLovin 10-K(2024年度)",
+            "label_en": "AppLovin 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1751008/000175100825000018/app-20241231.htm",
+            "level": "official",
+            "date": "2025-02-27",
+            "quote": "will be voted as determined by two of Adam Foroughi, Herald Chen, and KKR Denali Holdings L.P.(\"KKR Denali\")"
+          }
+        }
+      ]
+    },
+    {
+      "id": "NIQ",
+      "ticker": "NIQ",
+      "name": "NIQ",
+      "name_en": "NIQ Global Intelligence",
+      "sub": "消費者データ",
+      "sub_en": "Consumer intelligence",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "KKRが取締役指名権を持つ主要株主の一社",
+          "text_en": "KKR is a principal shareholder with board nomination rights",
+          "source": {
+            "label": "NIQ S-1(2025年6月)",
+            "label_en": "NIQ S-1 (Jun 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2054696/000119312525151230/d893022ds1.htm",
+            "level": "official",
+            "date": "2025-06-27",
+            "quote": "we will enter into a shareholders' agreement with the Advent Shareholder, the KKR Shareholder and NIM (our \"Principal Shareholders\") that will provide KKR and NIM with nomination rights"
+          }
+        }
+      ]
+    },
+    {
+      "id": "COTY",
+      "ticker": "COTY",
+      "name": "コティ",
+      "name_en": "Coty",
+      "sub": "化粧品",
+      "sub_en": "Beauty",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ウエラ事業をKKRに売却し、上場時の追加分配権を保有",
+          "text_en": "Sold the Wella business to KKR and keeps rights to future proceeds",
+          "source": {
+            "label": "Coty 10-K(2026年6月期)",
+            "label_en": "Coty 10-K (FY ended Jun 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1024305/000102430526000048/coty-20260630.htm",
+            "level": "official",
+            "date": "2026-08-20",
+            "quote": "a right to future proceeds from a subsequent sale or initial public offering of Wella, after KKR achieves a preferred return (the \"Wella Distribution Rights\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HSIC",
+      "ticker": "HSIC",
+      "name": "ヘンリー・シャイン",
+      "name_en": "Henry Schein",
+      "sub": "歯科・医療用品流通",
+      "sub_en": "Dental & medical distribution",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "KKRと戦略的パートナーシップ契約",
+          "text_en": "Strategic Partnership Agreement with KKR",
+          "source": {
+            "label": "Henry Schein 10-K(2025年度)",
+            "label_en": "Henry Schein 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1000228/000100022826000013/hsic-20251227.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Our business could be affected by the Strategic Partnership Agreement with KKR."
+          }
+        }
+      ]
+    },
+    {
+      "id": "KDP",
+      "ticker": "KDP",
+      "name": "キューリグ・ドクターペッパー",
+      "name_en": "Keurig Dr Pepper",
+      "sub": "飲料",
+      "sub_en": "Beverages",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "KKRとアポロから優先株出資を受ける契約(2025年10月)",
+          "text_en": "Preferred investment from KKR and Apollo (October 2025)",
+          "source": {
+            "label": "Keurig Dr Pepper 10-K(2025年度)",
+            "label_en": "Keurig Dr Pepper 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1418135/000141813526000016/kdp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "On October 27, 2025, we entered into the Preferred Investment Agreement with the KKR Investor and the Apollo Investor."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HOG",
+      "ticker": "HOG",
+      "name": "ハーレーダビッドソン",
+      "name_en": "Harley-Davidson",
+      "sub": "二輪車",
+      "sub_en": "Motorcycles",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "金融子会社がKKRとPIMCOに融資債権の一部を売却",
+          "text_en": "Its finance arm sold part of its loan portfolio to KKR and PIMCO",
+          "source": {
+            "label": "Harley-Davidson 10-K(2025年度)",
+            "label_en": "Harley-Davidson 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/793952/000079395226000011/hog-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "The Company may not realize the desired benefits from the strategic transaction between HDFS and its strategic partners, KKR and PIMCO."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HASI",
+      "ticker": "HASI",
+      "name": "HAサステナブル・インフラ",
+      "name_en": "HA Sustainable Infrastructure Capital",
+      "sub": "気候インフラ投資",
+      "sub_en": "Climate infrastructure investment",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "気候関連投資で各10億ドルを拠出する合弁CCH1",
+          "text_en": "CCH1 partnership with $1 billion committed by each side",
+          "source": {
+            "label": "HASI 10-K(2025年度)",
+            "label_en": "HASI 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1561894/000156189426000007/hasi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "in 2024 we entered into a strategic partnership with KKR called CCH1, under which we each had committed at inception to invest $1 billion in eligible projects"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SRE",
+      "ticker": "SRE",
+      "name": "センプラ",
+      "name_en": "Sempra",
+      "sub": "電力・ガス・LNG",
+      "sub_en": "Utilities & LNG",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "インフラ子会社にKKR系が20%出資",
+          "text_en": "KKR Pinnacle holds 20% of Sempra Infrastructure Partners",
+          "source": {
+            "label": "Sempra 10-K(2025年度)",
+            "label_en": "Sempra 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1032208/000103220826000010/sre-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "At December 31, 2025, Sempra, KKR Pinnacle and ADIA each hold a 70%, 20%, and 10% interest, respectively, in SI Partners."
+          }
+        }
+      ]
+    },
+    {
+      "id": "KPTI",
+      "ticker": "KPTI",
+      "name": "カリオファーム",
+      "name_en": "Karyopharm Therapeutics",
+      "sub": "がん治療薬",
+      "sub_en": "Oncology drugs",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "KKR系とレベニュー・インタレスト契約(収益連動の資金調達)",
+          "text_en": "Revenue interest financing now held by a KKR affiliate",
+          "source": {
+            "label": "Karyopharm 10-K(2025年度)",
+            "label_en": "Karyopharm 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1503802/000119312526049397/kpti-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Our Amended Revenue Interest Agreement with KKR contains various covenants and other provisions"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BOX",
+      "ticker": "BOX",
+      "name": "ボックス",
+      "name_en": "Box",
+      "sub": "クラウドストレージ",
+      "sub_en": "Cloud content management",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "KKR系が優先株に出資し取締役候補1名の指名権",
+          "text_en": "KKR invested and can designate one board nominee",
+          "source": {
+            "label": "Box 10-K(2025年1月期)",
+            "label_en": "Box 10-K (FY ended Jan 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1372612/000095017025036261/box-20250131.htm",
+            "level": "official",
+            "date": "2025-03-10",
+            "quote": "KKR has the right to designate one candidate for nomination for election to our Board of Directors"
+          }
+        }
+      ]
+    },
+    {
+      "id": "USFD",
+      "ticker": "USFD",
+      "name": "USフーズ",
+      "name_en": "US Foods",
+      "sub": "外食向け食品卸",
+      "sub_en": "Foodservice distribution",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2020年にKKR系へ優先株を発行",
+          "text_en": "Issued Series A preferred stock to KKR in 2020",
+          "source": {
+            "label": "US Foods 10-K(2024年度)",
+            "label_en": "US Foods 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1665918/000166591825000017/usfd-20241228.htm",
+            "level": "official",
+            "date": "2025-02-13",
+            "quote": "the Company issued and sold 500,000 shares of the Company's Series A Preferred Stock, par value $ 0.01 per share, to KKR Fresh Aggregator L.P."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SECZ",
+      "ticker": "SECZ",
+      "name": "セキュリタイズ",
+      "name_en": "Securitize",
+      "sub": "資産トークン化",
+      "sub_en": "Asset tokenization",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "トークン化商品の提携運用会社にKKR",
+          "text_en": "Lists KKR among asset managers it tokenizes funds for",
+          "source": {
+            "label": "Securitize S-1(2026年7月)",
+            "label_en": "Securitize S-1 (Jul 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2094496/000162828026051182/secz-20260731.htm",
+            "level": "official",
+            "date": "2026-07-31",
+            "quote": "through partnerships with leading asset managers, including Apollo, BlackRock, BNY, Hamilton Lane, KKR, and VanEck."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CapitalGroup",
+      "ticker": "Capital Group",
+      "name": "キャピタル・グループ",
+      "name_en": "Capital Group",
+      "sub": "資産運用(非上場)",
+      "sub_en": "Asset management (private)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "公募・私募融合の債券ファンドで戦略提携",
+          "text_en": "Strategic partnership on public-private fixed income funds",
+          "source": {
+            "label": "KKR 10-K(2025年度)",
+            "label_en": "KKR 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1404912/000140491226000007/kkr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "We also have a strategic partnership with Capital Group, a privately owned U.S. investment management firm"
+          }
+        }
+      ]
+    },
+    {
+      "id": "FSK",
+      "ticker": "FSK",
+      "name": "FS KKRキャピタル",
+      "name_en": "FS KKR Capital",
+      "sub": "事業開発会社(BDC)",
+      "sub_en": "Business development company",
+      "row": 2,
+      "relations": [
+        {
+          "type": "down",
+          "text": "KKRクレジットが運用に参画するBDC",
+          "text_en": "BDC co-advised with KKR Credit",
+          "source": {
+            "label": "FS KKR Capital 10-K(2024年度)",
+            "label_en": "FS KKR Capital 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1422183/000162828025008175/fsk-20241231.htm",
+            "level": "official",
+            "date": "2025-02-26",
+            "quote": "KKR Credit is a subsidiary of KKR & Co., a leading global investment firm"
+          }
+        }
+      ]
+    },
+    {
+      "id": "KREF",
+      "ticker": "KREF",
+      "name": "KKRリアルエステート・ファイナンス",
+      "name_en": "KKR Real Estate Finance Trust",
+      "sub": "商業不動産融資REIT",
+      "sub_en": "Commercial mortgage REIT",
+      "row": 2,
+      "relations": [
+        {
+          "type": "down",
+          "text": "KKR傘下の運用会社が外部運用",
+          "text_en": "Externally managed by a KKR affiliate",
+          "source": {
+            "label": "KKR Real Estate Finance Trust 10-K(2025年度)",
+            "label_en": "KKR Real Estate Finance Trust 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1631596/000162828026005092/kref-20251231.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "We may not find a suitable replacement for the Manager if the Management Agreement is terminated, or if key personnel leave the employment of KKR"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CRGY",
+      "ticker": "CRGY",
+      "name": "クレセント・エナジー",
+      "name_en": "Crescent Energy",
+      "sub": "石油・ガス",
+      "sub_en": "Oil & gas",
+      "row": 2,
+      "relations": [
+        {
+          "type": "down",
+          "text": "KKR系の運用会社と経営委託契約",
+          "text_en": "Management agreement with a KKR-affiliated manager",
+          "source": {
+            "label": "Crescent Energy 10-K(2024年度)",
+            "label_en": "Crescent Energy 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1866175/000186617525000024/crgy-20241231.htm",
+            "level": "official",
+            "date": "2025-02-26",
+            "quote": "Our Relationship with the KKR Group We are a party to a Management Agreement that engages the Manager to provide certain management and investment advisory services to us"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
