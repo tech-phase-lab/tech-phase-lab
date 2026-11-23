@@ -5,6 +5,8 @@ import { after } from "next/server";
 import { parseUsage, shareInflight } from "./twelve-credit-gate";
 import { providerSymbol } from "./provider-symbol";
 import { BACKGROUND_CEILING, COST, USER_SERIES_CEILING, daySlot, hasRoom, hourSlot, weekSlot } from "./twelve-warm-plan";
+import { reserveCredits, sharedMeterUsage } from "./twelve-gateway";
+import type { Tier } from "./twelve-budget.ts";
 
 /** The comparison's shared store of provider data (statistics, price series, statements), kept in the Next.js data cache that every
  * instance reads. Each entry is keyed by ticker and time slot (day, hour or week), so a reader looks at the current and the previous slot and
@@ -21,9 +23,10 @@ const BASE = () => process.env.TWELVE_DATA_BASE_URL || "https://api.twelvedata.c
 export const providerConfigured = () => !!process.env.TWELVE_DATA_API_KEY;
 
 class CacheMiss extends Error { constructor() { super("cache-miss"); } }
-const mode = new AsyncLocalStorage<{ fetch: true }>();
-/** Runs `read` with permission to call the provider on a cache miss (the entry is then stored for everyone). */
-export const fetching = <T>(read: () => Promise<T>) => mode.run({ fetch: true }, read);
+const mode = new AsyncLocalStorage<{ fetch: true; tier: Tier }>();
+/** Runs `read` with permission to call the provider on a cache miss (the entry is then stored for everyone). Each call's credits are
+ * granted by the central allocator under `tier` (lib/research/twelve-gateway.ts); a refusal is a miss, never a failure of the symbol. */
+export const fetching = <T>(read: () => Promise<T>, tier: Tier = "background") => mode.run({ fetch: true, tier }, read);
 
 /** unstable_cache keys on the callback's source text, which a new build can change (minified names); a fixed text keeps the shared entries
  * across deployments. A change of shape needs a new name (v2, ...). */
@@ -41,6 +44,8 @@ function sharedCache<T>(name: string, revalidateSeconds: number, read: (ticker: 
 export async function providerCall(path: string, params: Record<string, string>, timeoutMs = 10_000): Promise<unknown | null> {
   const key = process.env.TWELVE_DATA_API_KEY;
   if (!key) return null;
+  const cost = path === "statistics" ? COST.statistics : path === "income_statement" || path === "cash_flow" ? COST.statements / 2 : COST.series;
+  try { await reserveCredits(cost, mode.getStore()?.tier ?? "background"); } catch { throw new ProviderLimited(); }
   const url = new URL(`${BASE()}/${path}`);
   for (const [k, v] of Object.entries(params)) url.searchParams.set(k, v);
   url.searchParams.set("apikey", key);
@@ -56,7 +61,7 @@ export async function providerCall(path: string, params: Record<string, string>,
     return body;
   } catch { console.warn(`twelve-data ${path} ${params.symbol} failed`); return null; }
   finally {
-    spent(path === "statistics" ? COST.statistics : path === "income_statement" || path === "cash_flow" ? COST.statements / 2 : COST.series);
+    spent(cost);
     if (limited) { if (meter) meter.used = Math.max(meter.used ?? 0, USER_SERIES_CEILING); else meter = { at: Date.now(), used: USER_SERIES_CEILING }; }
   }
 }
@@ -90,8 +95,8 @@ async function peek<T>(store: (ticker: string, slot: number) => Promise<T>, tick
   return null;
 }
 const running = new Map<string, Promise<unknown>>();
-async function fill<T>(name: string, store: (ticker: string, slot: number) => Promise<T>, ticker: string, slot: number): Promise<T | null> {
-  try { return await shareInflight(running, `${name}:${ticker}:${slot}`, () => fetching(() => store(ticker, slot))) as T; }
+async function fill<T>(name: string, store: (ticker: string, slot: number) => Promise<T>, ticker: string, slot: number, tier: Tier = "background"): Promise<T | null> {
+  try { return await shareInflight(running, `${name}:${ticker}:${slot}`, () => fetching(() => store(ticker, slot), tier)) as T; }
   catch (error) { if (!(error instanceof ProviderLimited)) failedRecently.set(`${name}:${ticker}`, Date.now()); return null; }
 }
 /** A symbol the provider could not serve is not asked again by this instance for six hours (the background job still tries daily). */
@@ -107,14 +112,10 @@ export async function minuteUsage(maxAgeMs = 10_000): Promise<number | null> {
   // Companies of one comparison ask together: they share one read.
   return shareInflight(meterReads, "usage", readMeter);
 }
+// The meter is the site's shared reading (one read per four seconds for every instance), not one read per instance.
 async function readMeter(): Promise<number | null> {
-  const key = process.env.TWELVE_DATA_API_KEY;
-  let used: number | null = null;
-  if (key) try {
-    const response = await fetch(`${BASE()}/api_usage?apikey=${encodeURIComponent(key)}`, { cache: "no-store", signal: AbortSignal.timeout(2_000) });
-    if (response.ok) used = parseUsage(await response.json().catch(() => null));
-  } catch { /* unknown */ }
-  meter = { at: Date.now(), used: used === null ? null : used + COST.usage };
+  const used = await sharedMeterUsage().catch(() => null);
+  meter = { at: Date.now(), used };
   return meter.used;
 }
 
@@ -141,7 +142,7 @@ export async function userSeries(ticker: string, now = Date.now()): Promise<Seri
   const today = await peek(seriesDay, ticker, [d]);
   if (today) return today;
   if (providerConfigured() && !recentlyFailed("series", ticker) && hasRoom(await minuteUsage(), COST.series, USER_SERIES_CEILING, true)) {
-    const fresh = await fill("series", seriesHour, ticker, h);
+    const fresh = await fill("series", seriesHour, ticker, h, "user");
     if (fresh) return fresh;
   }
   return peek(seriesDay, ticker, [d - 1]);
@@ -168,9 +169,9 @@ export function backgroundFill(ticker: string, wants: { statistics?: boolean; st
 }
 
 // ---- what the background job writes (it checks the meter itself) ----
-export const warmStatistics = (ticker: string, now = Date.now()) => fill("statistics", statisticsDay, ticker, daySlot(now));
-export const warmSeries = (ticker: string, now = Date.now()) => fill("series-day", seriesDay, ticker, daySlot(now));
-export const warmStatements = (ticker: string, now = Date.now()) => fill("statements", statementsWeek, ticker, weekSlot(now));
+export const warmStatistics = (ticker: string, now = Date.now()) => fill("statistics", statisticsDay, ticker, daySlot(now), "warm");
+export const warmSeries = (ticker: string, now = Date.now()) => fill("series-day", seriesDay, ticker, daySlot(now), "warm");
+export const warmStatements = (ticker: string, now = Date.now()) => fill("statements", statementsWeek, ticker, weekSlot(now), "warm");
 /** True when this slot already holds the entry (a repeated call in the same minute costs nothing). */
 export const hasStatisticsToday = async (ticker: string, now = Date.now()) => !!await peek(statisticsDay, ticker, [daySlot(now)]);
 export const hasSeriesToday = async (ticker: string, now = Date.now()) => !!await peek(seriesDay, ticker, [daySlot(now)]);
@@ -181,6 +182,6 @@ export function weeklyNote<T>(name: string, compute: (ticker: string) => Promise
   const store = sharedCache(name, 21 * 86400, compute);
   return {
     read: (ticker: string, now = Date.now()) => peek(store, ticker, [weekSlot(now), weekSlot(now) - 1]),
-    write: (ticker: string, now = Date.now()) => fill(name, store, ticker, weekSlot(now)),
+    write: (ticker: string, now = Date.now()) => fill(name, store, ticker, weekSlot(now), "warm"),
   };
 }

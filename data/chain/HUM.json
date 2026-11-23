@@ -1,0 +1,250 @@
+{
+  "root": {
+    "ticker": "HUM",
+    "name": "ヒューマナ",
+    "cik": 49071,
+    "name_en": "Humana"
+  },
+  "rows": [
+    {
+      "ja": "委託先・販売代理(上流)",
+      "en": "Service vendors & brokers (upstream)",
+      "above": true
+    },
+    {
+      "ja": "提携・係争",
+      "en": "Partners & disputes"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "CLOV",
+    "ALHC"
+  ],
+  "companies": [
+    {
+      "id": "EVH",
+      "ticker": "EVH",
+      "name": "エボレント・ヘルス",
+      "name_en": "Evolent Health",
+      "sub": "専門医療の管理サービス",
+      "sub_en": "Specialty care management",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "最大の取引先がヒューマナで売上の19.3%",
+          "text_en": "Humana is its largest partner at 19.3% of revenue",
+          "source": {
+            "label": "Evolent Health 10-K(2024年度)",
+            "label_en": "Evolent Health 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1628908/000162890825000020/evh-20241231.htm",
+            "level": "official",
+            "date": "2025-02-21",
+            "quote": "Our four largest partners in terms of revenue, Humana Insurance Company, Molina Healthcare, Inc. (\"Molina\"), Florida Blue and Cook County Health and Hospitals System comprised 19.3%"
+          }
+        }
+      ]
+    },
+    {
+      "id": "EHTH",
+      "ticker": "EHTH",
+      "name": "eヘルス",
+      "name_en": "eHealth",
+      "sub": "保険オンライン販売",
+      "sub_en": "Online insurance brokerage",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "手数料債権の28%がヒューマナ向け",
+          "text_en": "Humana makes up 28% of its commissions receivable",
+          "source": {
+            "label": "eHealth 10-K(2024年度)",
+            "label_en": "eHealth 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1333493/000133349325000027/ehth-20241231.htm",
+            "level": "official",
+            "date": "2025-02-27",
+            "quote": "Humana 28 % 27 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SLQT",
+      "ticker": "SLQT",
+      "name": "セレクトクオート",
+      "name_en": "SelectQuote",
+      "sub": "保険販売代理",
+      "sub_en": "Insurance brokerage",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "シニア向けの主要保険会社パートナーにヒューマナ",
+          "text_en": "Humana is one of its primary senior insurance carrier partners",
+          "source": {
+            "label": "SelectQuote 10-K(2026年6月期)",
+            "label_en": "SelectQuote 10-K (FY ended Jun 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1794783/000179478326000057/slqt-20260630.htm",
+            "level": "official",
+            "date": "2026-08-25",
+            "quote": "During our most recent fiscal years, our primary insurance carrier partners were United Healthcare (\"UHC\"), Humana, Aetna, and WellCare in Senior;"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PSTV",
+      "ticker": "PSTV",
+      "name": "プラス・セラピューティクス",
+      "name_en": "Plus Therapeutics",
+      "sub": "がん診断・治療",
+      "sub_en": "Cancer diagnostics",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "脳脊髄液検査CNSideでヒューマナと全国契約(2025年10月)",
+          "text_en": "National agreement with Humana for the CNSide test (October 2025)",
+          "source": {
+            "label": "Plus Therapeutics 10-K(2025年度)",
+            "label_en": "Plus Therapeutics 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1095981/000119312526104258/pstv-20251231.htm",
+            "level": "official",
+            "date": "2026-03-12",
+            "quote": "CNSide Diagnostics has signed national agreements to provide the CNSide Test with UnitedHealthcare Insurance Company and Humana, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WCAS",
+      "ticker": "WCAS",
+      "name": "ウェルシュ・カーソン",
+      "name_en": "Welsh, Carson, Anderson & Stowe",
+      "sub": "投資会社",
+      "sub_en": "Private equity",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "高齢者向けプライマリケア施設の開発・運営で戦略提携",
+          "text_en": "Strategic partnership to build and run senior-focused primary care centers",
+          "source": {
+            "label": "Humana 10-K(2025年度)",
+            "label_en": "Humana 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/49071/000004907126000009/hum-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "The CenterWell segment also includes our strategic partnerships with Welsh, Carson, Anderson & Stowe, or WCAS, to develop and operate senior-focused, payor-agnostic, primary care centers"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BHC",
+      "ticker": "BHC",
+      "name": "ボシュ・ヘルス",
+      "name_en": "Bausch Health",
+      "sub": "製薬",
+      "sub_en": "Pharmaceuticals",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ヒューマナの州法上の請求を和解で解決(2024年)",
+          "text_en": "Settled Humana's state-law claims in 2024",
+          "source": {
+            "label": "Bausch Health 10-K(2024年度)",
+            "label_en": "Bausch Health 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/885590/000088559025000007/bhc-20241231.htm",
+            "level": "official",
+            "date": "2025-02-20",
+            "quote": "executed a final settlement agreement to resolve Humana's (direct and indirect) and HCSC's (indirect) state law claims."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CLOV",
+      "ticker": "CLOV",
+      "name": "クローバー・ヘルス",
+      "name_en": "Clover Health",
+      "sub": "メディケア保険",
+      "sub_en": "Medicare Advantage",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "大手の競合にヒューマナを挙げる",
+          "text_en": "Names Humana among large national insurer competitors",
+          "source": {
+            "label": "Clover Health 10-K(2025年度)",
+            "label_en": "Clover Health 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1801170/000180117026000057/clov-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our competitors generally include large, national insurers, such as United Health, Aetna, Humana, Centene, and Elevance Health that provide MA plans"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GOCO",
+      "ticker": "GOCO",
+      "name": "ゴーヘルス",
+      "name_en": "GoHealth",
+      "sub": "保険オンライン販売",
+      "sub_en": "Online insurance brokerage",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ヒューマナが売上の26.5%を占める",
+          "text_en": "Humana accounted for 26.5% of its revenue",
+          "source": {
+            "label": "GoHealth 10-K(2025年度)",
+            "label_en": "GoHealth 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1808220/000162828026022454/goco-20251231.htm",
+            "level": "official",
+            "date": "2026-03-31",
+            "quote": "United 38.9 % 28.3 % 20.0 % Humana 26.5 % 25.1 % 28.0 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ALHC",
+      "ticker": "ALHC",
+      "name": "アライメント・ヘルスケア",
+      "name_en": "Alignment Healthcare",
+      "sub": "メディケア保険",
+      "sub_en": "Medicare Advantage",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "大手の全国保険会社の競合にヒューマナを挙げる",
+          "text_en": "Names Humana among large national insurers it competes with",
+          "source": {
+            "label": "Alignment Healthcare 10-K(2025年度)",
+            "label_en": "Alignment Healthcare 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1832466/000162828026012545/alhc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "particularly national insurers such as United Health, Aetna, Humana and Cigna, have been in business longer"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

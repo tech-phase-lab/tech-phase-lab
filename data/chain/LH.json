@@ -1,0 +1,223 @@
+{
+  "root": {
+    "ticker": "LH",
+    "name": "ラボコープ",
+    "cik": 920148,
+    "name_en": "Labcorp"
+  },
+  "rows": [
+    {
+      "ja": "分離・買収・ライセンス",
+      "en": "Spin-off, acquisitions & licenses",
+      "above": true
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "NTRA",
+    "BLLN",
+    "MDXH"
+  ],
+  "companies": [
+    {
+      "id": "HBIO",
+      "ticker": "HBIO",
+      "name": "ハーバード・バイオサイエンス",
+      "name_en": "Harvard Bioscience",
+      "sub": "研究用機器",
+      "sub_en": "Research instruments",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "CRO顧客の一社にラボコープを挙げる",
+          "text_en": "Names Labcorp among its CRO customers",
+          "source": {
+            "label": "Harvard Bioscience 10-K(2025年度)",
+            "label_en": "Harvard Bioscience 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1123494/000117184326001548/hbio20251231_10k.htm",
+            "level": "official",
+            "date": "2026-03-13",
+            "quote": "Our CRO customers include Charles River Laboratories, Labcorp and Wuxi AppTec."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FTRE",
+      "ticker": "FTRE",
+      "name": "フォートレア",
+      "name_en": "Fortrea",
+      "sub": "医薬品開発受託(CRO)",
+      "sub_en": "Contract research (CRO)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2023年にラボコープの臨床開発事業から分離・独立",
+          "text_en": "Spun off from Labcorp's CRO business in 2023",
+          "source": {
+            "label": "Fortrea 10-K(2024年度)",
+            "label_en": "Fortrea 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1965040/000196504025000015/ftre-20241231.htm",
+            "level": "official",
+            "date": "2025-03-03",
+            "quote": "Pursuant to the Separation and Distribution Agreement, Labcorp agreed to spin-off its CRO business into Fortrea, a standalone, publicly traded company."
+          }
+        }
+      ]
+    },
+    {
+      "id": "OPK",
+      "ticker": "OPK",
+      "name": "オプコ・ヘルス",
+      "name_en": "OPKO Health",
+      "sub": "診断・医薬",
+      "sub_en": "Diagnostics & pharma",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "傘下バイオリファレンスの検査事業をラボコープに2度売却",
+          "text_en": "Sold BioReference testing assets to Labcorp in 2024 and 2025",
+          "source": {
+            "label": "OPKO Health 10-K(2025年度)",
+            "label_en": "OPKO Health 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/944809/000119312526076596/opk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "On September 15, 2025, we consummated the sale of certain assets of BioReference to Labcorp (the \"Oncology Transaction\")"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GNFT",
+      "ticker": "GNFT",
+      "name": "ジェンフィット",
+      "name_en": "Genfit",
+      "sub": "肝疾患薬・診断(仏)",
+      "sub_en": "Liver disease drugs & diagnostics (France)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "肝疾患診断技術NIS4をラボコープにライセンス",
+          "text_en": "Licenses its NIS4 liver diagnostic technology to Labcorp",
+          "source": {
+            "label": "Genfit 20-F(2024年度)",
+            "label_en": "Genfit 20-F (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1757064/000175706425000004/gnft-20241231.htm",
+            "level": "official",
+            "date": "2025-04-29",
+            "quote": "Our NIS4® technology and its improvements are licensed to two partners, both to Labcorp to allow them to deploy an LDT powered by NIS4® technology"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ONCO",
+      "ticker": "ONCO",
+      "name": "オンコネティクス",
+      "name_en": "Onconetix",
+      "sub": "前立腺がん診断",
+      "sub_en": "Prostate cancer diagnostics",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "前立腺がん検査Proclarixの米国独占権をラボコープに供与",
+          "text_en": "Granted Labcorp exclusive U.S. rights to the Proclarix test",
+          "source": {
+            "label": "Onconetix S-1(2026年4月)",
+            "label_en": "Onconetix S-1 (Apr 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1782107/000121390026048535/ea0287904-s1_onconetix.htm",
+            "level": "official",
+            "date": "2026-04-28",
+            "quote": "the development and commercialization of Proclarix in the United States is being pursued by Labcorp, pursuant to an exclusive license agreement"
+          }
+        }
+      ]
+    },
+    {
+      "id": "NTRA",
+      "ticker": "NTRA",
+      "name": "ナテラ",
+      "name_en": "Natera",
+      "sub": "遺伝子検査",
+      "sub_en": "Genetic testing",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "出生前検査(NIPT)の競合にラボコープを挙げる",
+          "text_en": "Names Labcorp among NIPT competitors",
+          "source": {
+            "label": "Natera 10-K(2024年度)",
+            "label_en": "Natera 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1604821/000155837025001869/ntra-20241231x10k.htm",
+            "level": "official",
+            "date": "2025-02-28",
+            "quote": "Our competitors in the NIPT space include Laboratory Corporation of America Holdings, or Labcorp;"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BLLN",
+      "ticker": "BLLN",
+      "name": "ビリオントゥワン",
+      "name_en": "BillionToOne",
+      "sub": "出生前・がん検査",
+      "sub_en": "Prenatal & oncology testing",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "出生前検査の主な競合にラボコープを挙げる",
+          "text_en": "Names Labcorp among its main prenatal competitors",
+          "source": {
+            "label": "BillionToOne 10-K(2025年度)",
+            "label_en": "BillionToOne 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2070849/000207084926000017/blln-20251231.htm",
+            "level": "official",
+            "date": "2026-03-11",
+            "quote": "In the prenatal market, our main competitors offering NIPTs include Illumina, through its subsidiary Verinata, Laboratory Corporation of America Holdings (Labcorp)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MDXH",
+      "ticker": "MDXH",
+      "name": "MDxヘルス",
+      "name_en": "MDxHealth",
+      "sub": "前立腺がん検査",
+      "sub_en": "Prostate cancer testing",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ラボコープの4Kscore検査が自社検査と競合",
+          "text_en": "Labcorp's 4Kscore test competes with its Confirm mdx test",
+          "source": {
+            "label": "MDxHealth 20-F(2025年度)",
+            "label_en": "MDxHealth 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1872529/000121390026039540/ea0283903-20f_mdxhealth.htm",
+            "level": "official",
+            "date": "2026-04-03",
+            "quote": "The 4Kscore test, offered by Labcorp, and the MPS2 test offered by Lynx Dx, each competes with the Confirm mdx test."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

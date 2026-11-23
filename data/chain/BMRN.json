@@ -1,0 +1,275 @@
+{
+  "root": {
+    "ticker": "BMRN",
+    "name": "バイオマリン・ファーマシューティカル",
+    "cik": 1048477,
+    "name_en": "BioMarin Pharmaceutical"
+  },
+  "rows": [
+    {
+      "ja": "買収",
+      "en": "Acquisitions"
+    },
+    {
+      "ja": "ライセンス・提携",
+      "en": "Licenses & collaborations"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "BBIO",
+    "ASND",
+    "AGIO",
+    "PHAR"
+  ],
+  "companies": [
+    {
+      "id": "FOLD",
+      "ticker": "FOLD",
+      "name": "アミカス・セラピューティクス",
+      "name_en": "Amicus Therapeutics",
+      "sub": "希少疾患薬",
+      "sub_en": "Rare disease drugs",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Amicusを約48億ドルで買収する契約(2025年12月)",
+          "text_en": "Agreed to buy Amicus for about $4.8 billion (December 2025)",
+          "source": {
+            "label": "BioMarin 10-K(2025年度)",
+            "label_en": "BioMarin 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1048477/000104847726000004/bmrn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "In December 2025, we entered into a definitive agreement to acquire Amicus Therapeutics, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Inozyme",
+      "ticker": "Inozyme",
+      "name": "イノザイム・ファーマ",
+      "name_en": "Inozyme Pharma",
+      "sub": "希少疾患薬",
+      "sub_en": "Rare disease drugs",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Inozymeを買収(2025年7月)",
+          "text_en": "Acquired Inozyme (July 2025)",
+          "source": {
+            "label": "BioMarin 10-K(2025年度)",
+            "label_en": "BioMarin 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1048477/000104847726000004/bmrn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "In July 2025, we completed the acquisition of Inozyme Pharma, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SRPT",
+      "ticker": "SRPT",
+      "name": "サレプタ・セラピューティクス",
+      "name_en": "Sarepta Therapeutics",
+      "sub": "遺伝子治療",
+      "sub_en": "Gene therapy",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "エクソンスキッピングの特許ライセンス(2021年改定)",
+          "text_en": "Patent license on exon skipping (amended 2021)",
+          "source": {
+            "label": "Sarepta 10-K(2024年度)",
+            "label_en": "Sarepta 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/873303/000095017025029973/srpt-20241231.htm",
+            "level": "official",
+            "date": "2025-02-28",
+            "quote": "the BioMarin Parties exercised their rights to convert the exclusive license under the Licensed Patents"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SPRB",
+      "ticker": "SPRB",
+      "name": "スプルース・バイオサイエンシズ",
+      "name_en": "Spruce Biosciences",
+      "sub": "希少疾患薬",
+      "sub_en": "Rare disease drugs",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "BioMarinとの独占ライセンス契約を取得",
+          "text_en": "Holds an exclusive license agreement with BioMarin",
+          "source": {
+            "label": "Spruce Biosciences 10-K(2025年度)",
+            "label_en": "Spruce Biosciences 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1683553/000119312526097558/sprb-20251231.htm",
+            "level": "official",
+            "date": "2026-03-09",
+            "quote": "License Agreement with BioMarin Pharmaceutical, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CAMP",
+      "ticker": "CAMP",
+      "name": "キャンプ4セラピューティクス",
+      "name_en": "Camp4 Therapeutics",
+      "sub": "RNA創薬",
+      "sub_en": "RNA drug discovery",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "BioMarinと協業・ライセンス契約(2024年9月)",
+          "text_en": "Collaboration and license agreement with BioMarin (September 2024)",
+          "source": {
+            "label": "Camp4 Therapeutics 10-K(2024年度)",
+            "label_en": "Camp4 Therapeutics 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1736730/000173673025000022/camp-20241231.htm",
+            "level": "official",
+            "date": "2025-03-27",
+            "quote": "In September 2024, we entered into a Collaboration and License Agreement (the \"BioMarin Agreement\") with BioMarin Pharmaceutical Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CPRX",
+      "ticker": "CPRX",
+      "name": "カタリスト・ファーマシューティカルズ",
+      "name_en": "Catalyst Pharmaceuticals",
+      "sub": "希少疾患薬",
+      "sub_en": "Rare disease drugs",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "FIRDAPSEの北米権利をBioMarinからライセンス(2012年)",
+          "text_en": "Licensed North American FIRDAPSE rights from BioMarin (2012)",
+          "source": {
+            "label": "Catalyst Pharmaceuticals 10-K(2025年度)",
+            "label_en": "Catalyst Pharmaceuticals 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1369568/000119312526071525/cprx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "On October 26, 2012, we licensed the exclusive North American rights to FIRDAPSE® pursuant to a License Agreement"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BBIO",
+      "ticker": "BBIO",
+      "name": "ブリッジバイオ・ファーマ",
+      "name_en": "BridgeBio Pharma",
+      "sub": "希少疾患薬",
+      "sub_en": "Rare disease drugs",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "BridgeBioが、軟骨無形成症でBioMarinのVoxzogoと競合すると記載",
+          "text_en": "BridgeBio expects to compete with BioMarin's Voxzogo in achondroplasia",
+          "source": {
+            "label": "BridgeBio 10-K(2024年度)",
+            "label_en": "BridgeBio 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1743881/000095017025024119/bbio-20241231.htm",
+            "level": "official",
+            "date": "2025-02-20",
+            "quote": "If approved, infigratinib would face competition from BioMarin's Voxzogo (vosoritide)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ASND",
+      "ticker": "ASND",
+      "name": "アセンディス・ファーマ",
+      "name_en": "Ascendis Pharma",
+      "sub": "内分泌疾患薬",
+      "sub_en": "Endocrine drugs",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "欧州特許訴訟が却下され、BioMarinが費用の一部を負担(2025年12月)",
+          "text_en": "A European patent case ended with BioMarin reimbursing some legal costs (December 2025)",
+          "source": {
+            "label": "Ascendis Pharma 20-F(2025年度)",
+            "label_en": "Ascendis Pharma 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1612042/000119312526046590/asnd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "which included an agreement for BioMarin to reimburse Ascendis for certain legal expenses related to the case."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AGIO",
+      "ticker": "AGIO",
+      "name": "アジオス・ファーマシューティカルズ",
+      "name_en": "Agios Pharmaceuticals",
+      "sub": "希少血液疾患",
+      "sub_en": "Rare blood disorders",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Agiosが10-Kで、競合の筆頭に挙げる",
+          "text_en": "Agios lists BioMarin first among its competitors",
+          "source": {
+            "label": "Agios 10-K(2024年度)",
+            "label_en": "Agios 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1439222/000143922225000009/agio-20241231.htm",
+            "level": "official",
+            "date": "2025-02-13",
+            "quote": "Our competitors include but are not limited to: BioMarin Pharmaceutical, Inc., or BioMarin"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PHAR",
+      "ticker": "PHAR",
+      "name": "ファーミング・グループ",
+      "name_en": "Pharming Group",
+      "sub": "希少疾患薬(蘭)",
+      "sub_en": "Rare disease drugs (Netherlands)",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Pharmingが20-Fで、遺伝性血管性浮腫の競合として挙げる",
+          "text_en": "Pharming names BioMarin among HAE competitors",
+          "source": {
+            "label": "Pharming 20-F(2024年度)",
+            "label_en": "Pharming 20-F (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1828316/000182831625000017/pharm-20241231.htm",
+            "level": "official",
+            "date": "2025-04-03",
+            "quote": "including, but not limited to, BioCryst, BioMarin, CSL Behring"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

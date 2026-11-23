@@ -1,0 +1,372 @@
+{
+  "root": {
+    "ticker": "LEA",
+    "name": "リア",
+    "cik": 842162,
+    "name_en": "Lear Corporation"
+  },
+  "rows": [
+    {
+      "ja": "提携",
+      "en": "Partners",
+      "above": true
+    },
+    {
+      "ja": "主要顧客(自動車メーカー)",
+      "en": "Key customers: automakers"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in the 10-K)"
+    }
+  ],
+  "rivals": [
+    "ADNT",
+    "MGA",
+    "APTV",
+    "TEL"
+  ],
+  "companies": [
+    {
+      "id": "PLTR",
+      "ticker": "PLTR",
+      "name": "パランティア",
+      "name_en": "Palantir Technologies",
+      "sub": "データ分析・AI",
+      "sub_en": "Data analytics & AI",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "自動化・AI導入の戦略パートナー",
+          "text_en": "Strategic partner for automation and AI",
+          "source": {
+            "label": "Lear 10-K(2025年度)",
+            "label_en": "Lear 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/842162/000084216226000011/lear-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "We are leveraging our internal capabilities through strategic partnerships (e.g., Palantir Technologies, Inc. (\"Palantir\")) and acquisitions to rapidly develop and deploy automation and AI solutions."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GM",
+      "ticker": "GM",
+      "name": "ゼネラル・モーターズ",
+      "name_en": "General Motors",
+      "sub": "自動車",
+      "sub_en": "Autos",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大の顧客で2025年の売上の22%",
+          "text_en": "Largest customer at 22% of 2025 net sales",
+          "source": {
+            "label": "Lear 10-K(2025年度)",
+            "label_en": "Lear 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/842162/000084216226000011/lear-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "In 2025, General Motors, one of the largest automotive and light truck manufacturers in the world, accounted for 22% of our net sales. In addition, Ford accounted for 12%, Mercedes-Benz and Volkswagen each accounted for 10% and Stellantis accounted for 9% of our 2025 net sales."
+          }
+        }
+      ]
+    },
+    {
+      "id": "F",
+      "ticker": "F",
+      "name": "フォード",
+      "name_en": "Ford",
+      "sub": "自動車",
+      "sub_en": "Autos",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2025年の売上の12%",
+          "text_en": "12% of 2025 net sales",
+          "source": {
+            "label": "Lear 10-K(2025年度)",
+            "label_en": "Lear 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/842162/000084216226000011/lear-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "In 2025, General Motors, one of the largest automotive and light truck manufacturers in the world, accounted for 22% of our net sales. In addition, Ford accounted for 12%, Mercedes-Benz and Volkswagen each accounted for 10% and Stellantis accounted for 9% of our 2025 net sales."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MBG",
+      "ticker": "Mercedes-Benz",
+      "name": "メルセデス・ベンツ",
+      "name_en": "Mercedes-Benz",
+      "sub": "自動車(独)",
+      "sub_en": "Autos (Germany)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2025年の売上の10%",
+          "text_en": "10% of 2025 net sales",
+          "source": {
+            "label": "Lear 10-K(2025年度)",
+            "label_en": "Lear 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/842162/000084216226000011/lear-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "In 2025, General Motors, one of the largest automotive and light truck manufacturers in the world, accounted for 22% of our net sales. In addition, Ford accounted for 12%, Mercedes-Benz and Volkswagen each accounted for 10% and Stellantis accounted for 9% of our 2025 net sales."
+          }
+        }
+      ]
+    },
+    {
+      "id": "VOW",
+      "ticker": "Volkswagen",
+      "name": "フォルクスワーゲン",
+      "name_en": "Volkswagen",
+      "sub": "自動車(独)",
+      "sub_en": "Autos (Germany)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2025年の売上の10%",
+          "text_en": "10% of 2025 net sales",
+          "source": {
+            "label": "Lear 10-K(2025年度)",
+            "label_en": "Lear 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/842162/000084216226000011/lear-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "In 2025, General Motors, one of the largest automotive and light truck manufacturers in the world, accounted for 22% of our net sales. In addition, Ford accounted for 12%, Mercedes-Benz and Volkswagen each accounted for 10% and Stellantis accounted for 9% of our 2025 net sales."
+          }
+        }
+      ]
+    },
+    {
+      "id": "STLA",
+      "ticker": "STLA",
+      "name": "ステランティス",
+      "name_en": "Stellantis",
+      "sub": "自動車",
+      "sub_en": "Autos",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2025年の売上の9%",
+          "text_en": "9% of 2025 net sales",
+          "source": {
+            "label": "Lear 10-K(2025年度)",
+            "label_en": "Lear 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/842162/000084216226000011/lear-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "In 2025, General Motors, one of the largest automotive and light truck manufacturers in the world, accounted for 22% of our net sales. In addition, Ford accounted for 12%, Mercedes-Benz and Volkswagen each accounted for 10% and Stellantis accounted for 9% of our 2025 net sales."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BMW",
+      "ticker": "BMW",
+      "name": "BMW",
+      "name_en": "BMW",
+      "sub": "自動車(独)",
+      "sub_en": "Autos (Germany)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "シート部門の上位5顧客の一社",
+          "text_en": "One of the top five Seating customers",
+          "source": {
+            "label": "Lear 10-K(2025年度)",
+            "label_en": "Lear 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/842162/000084216226000011/lear-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "The top five customers of our Seating segment are: General Motors, Mercedes-Benz, Stellantis, Volkswagen and BMW."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ADNT",
+      "ticker": "ADNT",
+      "name": "アディエント",
+      "name_en": "Adient",
+      "sub": "自動車シート",
+      "sub_en": "Auto seating",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "シート部門の主な競合",
+          "text_en": "Key competitor in seating",
+          "source": {
+            "label": "Lear 10-K(2025年度)",
+            "label_en": "Lear 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/842162/000084216226000011/lear-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Key competitors in the Seating segment globally include Adient plc, Forvia SE, Magna International Inc., Ningbo Jifeng Auto Parts Co., Ltd. / Grammer AG, Toyota Boshoku Corporation, TS Tech Co., Ltd. and Yanfeng Automotive Systems Co., Ltd."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MGA",
+      "ticker": "MGA",
+      "name": "マグナ",
+      "name_en": "Magna International",
+      "sub": "自動車部品(加)",
+      "sub_en": "Auto parts (Canada)",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "シート部門の主な競合",
+          "text_en": "Key competitor in seating",
+          "source": {
+            "label": "Lear 10-K(2025年度)",
+            "label_en": "Lear 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/842162/000084216226000011/lear-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Key competitors in the Seating segment globally include Adient plc, Forvia SE, Magna International Inc., Ningbo Jifeng Auto Parts Co., Ltd. / Grammer AG, Toyota Boshoku Corporation, TS Tech Co., Ltd. and Yanfeng Automotive Systems Co., Ltd."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Forvia",
+      "ticker": "Forvia",
+      "name": "フォルヴィア",
+      "name_en": "Forvia",
+      "sub": "自動車部品(仏)",
+      "sub_en": "Auto parts (France)",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "シート部門の主な競合",
+          "text_en": "Key competitor in seating",
+          "source": {
+            "label": "Lear 10-K(2025年度)",
+            "label_en": "Lear 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/842162/000084216226000011/lear-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Key competitors in the Seating segment globally include Adient plc, Forvia SE, Magna International Inc., Ningbo Jifeng Auto Parts Co., Ltd. / Grammer AG, Toyota Boshoku Corporation, TS Tech Co., Ltd. and Yanfeng Automotive Systems Co., Ltd."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ToyotaBoshoku",
+      "ticker": "Toyota Boshoku",
+      "name": "トヨタ紡織",
+      "name_en": "Toyota Boshoku",
+      "sub": "自動車シート",
+      "sub_en": "Auto seating",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "シート部門の主な競合",
+          "text_en": "Key competitor in seating",
+          "source": {
+            "label": "Lear 10-K(2025年度)",
+            "label_en": "Lear 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/842162/000084216226000011/lear-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Key competitors in the Seating segment globally include Adient plc, Forvia SE, Magna International Inc., Ningbo Jifeng Auto Parts Co., Ltd. / Grammer AG, Toyota Boshoku Corporation, TS Tech Co., Ltd. and Yanfeng Automotive Systems Co., Ltd."
+          }
+        }
+      ]
+    },
+    {
+      "id": "APTV",
+      "ticker": "APTV",
+      "name": "アプティブ",
+      "name_en": "Aptiv",
+      "sub": "電装・ワイヤーハーネス",
+      "sub_en": "Wiring & electronics",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "配電・接続システムの主な競合",
+          "text_en": "Key competitor in electrical distribution",
+          "source": {
+            "label": "Lear 10-K(2025年度)",
+            "label_en": "Lear 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/842162/000084216226000011/lear-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Key competitors in electrical distribution and connection systems include Aptiv PLC, Leoni AG, Molex Incorporated (a subsidiary of Koch Industries Inc.), Sumitomo Corporation, TE Connectivity and Yazaki Corporation."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TEL",
+      "ticker": "TEL",
+      "name": "TEコネクティビティ",
+      "name_en": "TE Connectivity",
+      "sub": "コネクタ",
+      "sub_en": "Connectors",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "配電・接続システムの主な競合",
+          "text_en": "Key competitor in electrical distribution",
+          "source": {
+            "label": "Lear 10-K(2025年度)",
+            "label_en": "Lear 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/842162/000084216226000011/lear-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Key competitors in electrical distribution and connection systems include Aptiv PLC, Leoni AG, Molex Incorporated (a subsidiary of Koch Industries Inc.), Sumitomo Corporation, TE Connectivity and Yazaki Corporation."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Yazaki",
+      "ticker": "Yazaki",
+      "name": "矢崎総業",
+      "name_en": "Yazaki",
+      "sub": "ワイヤーハーネス",
+      "sub_en": "Wiring harnesses",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "配電・接続システムの主な競合",
+          "text_en": "Key competitor in electrical distribution",
+          "source": {
+            "label": "Lear 10-K(2025年度)",
+            "label_en": "Lear 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/842162/000084216226000011/lear-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Key competitors in electrical distribution and connection systems include Aptiv PLC, Leoni AG, Molex Incorporated (a subsidiary of Koch Industries Inc.), Sumitomo Corporation, TE Connectivity and Yazaki Corporation."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

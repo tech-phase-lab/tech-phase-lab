@@ -1,0 +1,252 @@
+{
+  "root": {
+    "ticker": "GPK",
+    "name": "グラフィック・パッケージング",
+    "cik": 1408075,
+    "name_en": "Graphic Packaging"
+  },
+  "rows": [
+    {
+      "ja": "供給元(上流)",
+      "en": "Suppliers (upstream)",
+      "above": true
+    },
+    {
+      "ja": "買収・売却",
+      "en": "Acquisitions & divestitures"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "SW",
+    "AMCR",
+    "RYAM",
+    "DSS"
+  ],
+  "companies": [
+    {
+      "id": "UNFL",
+      "ticker": "UNFL",
+      "name": "ユニフォイル",
+      "name_en": "Unifoil",
+      "sub": "金属化紙",
+      "sub_en": "Metallized paper",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "主要顧客の一社がグラフィック・パッケージング",
+          "text_en": "Lists Graphic Packaging International among its key customers",
+          "source": {
+            "label": "Unifoil S-1/A(2024年5月)",
+            "label_en": "Unifoil S-1/A (May 2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1965671/000121390024040119/ea0205112-01.htm",
+            "level": "official",
+            "date": "2024-05-06",
+            "quote": "Colgate-Palmolive Graphic Packaging International Liquor / Oral Care 1 .0 % 5.7 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CLW",
+      "ticker": "CLW",
+      "name": "クリアウォーター・ペーパー",
+      "name_en": "Clearwater Paper",
+      "sub": "板紙",
+      "sub_en": "Paperboard",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "オーガスタの板紙工場を7億1100万ドルで売却(2024年5月)。板紙では競合",
+          "text_en": "Bought the Augusta paperboard mill for $711 million (May 2024); also a paperboard competitor",
+          "source": {
+            "label": "Graphic Packaging 10-K(2025年度)",
+            "label_en": "Graphic Packaging 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1408075/000140807526000009/gpk-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "In May 2024, the Company completed the sale of its Augusta, Georgia bleached paperboard manufacturing facility (the \"Augusta Divestiture\") to Clearwater Paper Corporation for a total consideration of $711 million."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GEF",
+      "ticker": "GEF",
+      "name": "グライフ",
+      "name_en": "Greif",
+      "sub": "工業用包装",
+      "sub_en": "Industrial packaging",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "再生板紙工場タマ・ペーパーボードを買収(2023年1月)",
+          "text_en": "Bought the Tama Paperboard mill from Greif (January 2023)",
+          "source": {
+            "label": "Graphic Packaging 10-K(2025年度)",
+            "label_en": "Graphic Packaging 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1408075/000140807526000009/gpk-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "In January 2023, the Company completed the acquisition of Tama Paperboard, LLC (\"Tama\"), a recycled paperboard manufacturing facility located in Tama, Iowa, from Greif Packaging LLC for approximately $100 million."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Bell",
+      "ticker": "Bell Incorporated",
+      "name": "ベル",
+      "name_en": "Bell Incorporated",
+      "sub": "紙器包装",
+      "sub_en": "Folding cartons",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2023年9月に2億6200万ドルで買収",
+          "text_en": "Acquired in September 2023 for $262 million",
+          "source": {
+            "label": "Graphic Packaging 10-K(2025年度)",
+            "label_en": "Graphic Packaging 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1408075/000140807526000009/gpk-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "In September 2023, the Company completed the acquisition of Bell Incorporated (\"Bell\") for $262 million"
+          }
+        }
+      ]
+    },
+    {
+      "id": "IP",
+      "ticker": "IP",
+      "name": "インターナショナル・ペーパー",
+      "name_en": "International Paper",
+      "sub": "紙・段ボール",
+      "sub_en": "Paper & packaging",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2018年に紙器包装事業を統合する取引契約",
+          "text_en": "2017 transaction agreement combining its consumer packaging business with Graphic Packaging",
+          "source": {
+            "label": "International Paper 10-K(2024年度)",
+            "label_en": "International Paper 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/51434/000005143425000013/ip-20241231.htm",
+            "level": "official",
+            "date": "2025-02-21",
+            "quote": "Transaction Agreement, dated October 23, 2017, by and among the Company, Graphic Packaging Holding Company, Gazelle Newco LLC and Graphic Packaging International, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SW",
+      "ticker": "SW",
+      "name": "スマーフィット・ウエストロック",
+      "name_en": "Smurfit Westrock",
+      "sub": "紙・段ボール",
+      "sub_en": "Paper packaging",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "板紙包装で最大の競合",
+          "text_en": "Largest competitor in paperboard packaging",
+          "source": {
+            "label": "Graphic Packaging 10-K(2025年度)",
+            "label_en": "Graphic Packaging 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1408075/000140807526000009/gpk-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "Smurfit WestRock plc is the Company's largest competitor within paperboard packaging."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMCR",
+      "ticker": "AMCR",
+      "name": "アムコア",
+      "name_en": "Amcor",
+      "sub": "包装",
+      "sub_en": "Packaging",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "包装の競合にグラフィック・パッケージングを挙げる",
+          "text_en": "Names Graphic Packaging among packaging competitors",
+          "source": {
+            "label": "Amcor 10-K(2026年6月期)",
+            "label_en": "Amcor 10-K (FY ended Jun 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1748790/000174879026000022/amcr-20260630.htm",
+            "level": "official",
+            "date": "2026-08-14",
+            "quote": "Crown Holdings, Inc., Graphic Packaging International, Inc., Huhtamaki Oyj"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RYAM",
+      "ticker": "RYAM",
+      "name": "レイヨニア・アドバンスト・マテリアルズ",
+      "name_en": "Rayonier Advanced Materials",
+      "sub": "セルロース・板紙",
+      "sub_en": "Cellulose & paperboard",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "板紙の主な競合",
+          "text_en": "Major paperboard competitor",
+          "source": {
+            "label": "Rayonier Advanced Materials 10-K(2025年度)",
+            "label_en": "Rayonier Advanced Materials 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1597672/000159767226000010/ryam-20251231.htm",
+            "level": "official",
+            "date": "2026-03-05",
+            "quote": "Our major paperboard competitors include Smurfit Westrock, Graphic Packaging, Clearwater Paper, Sappi"
+          }
+        }
+      ]
+    },
+    {
+      "id": "DSS",
+      "ticker": "DSS",
+      "name": "DSS",
+      "name_en": "DSS",
+      "sub": "包装・印刷",
+      "sub_en": "Packaging & printing",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "消費財向け包装の大手競合",
+          "text_en": "Major player in consumer-goods packaging",
+          "source": {
+            "label": "DSS 10-K(2024年度)",
+            "label_en": "DSS 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/771999/000164117225001576/form10-k.htm",
+            "level": "official",
+            "date": "2025-03-31",
+            "quote": "with major players including prominent integrated paper companies such as WestRock Company and Graphic Packaging Holding Company."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

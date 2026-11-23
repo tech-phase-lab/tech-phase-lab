@@ -1,0 +1,224 @@
+{
+  "root": {
+    "ticker": "TTEK",
+    "name": "テトラ・テック",
+    "cik": 831641,
+    "name_en": "Tetra Tech"
+  },
+  "rows": [
+    {
+      "ja": "買収",
+      "en": "Acquisitions",
+      "above": true
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "ACM",
+    "J",
+    "MEG",
+    "ICFI"
+  ],
+  "companies": [
+    {
+      "id": "Halvik",
+      "ticker": "Halvik",
+      "name": "ハルヴィク",
+      "name_en": "Halvik",
+      "sub": "連邦政府向けIT",
+      "sub_en": "Federal IT services",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2026年度に買収(バージニア州)",
+          "text_en": "Acquired in fiscal 2026 (Virginia)",
+          "source": {
+            "label": "Tetra Tech 10-K(2026年度)",
+            "label_en": "Tetra Tech 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/831641/000083164126000024/ttek-20260927.htm",
+            "level": "official",
+            "date": "2026-11-19",
+            "quote": "In fiscal 2026, we acquired Halvik Corp (\"Halvik\") headquartered in Vienna, Virginia."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CAW",
+      "ticker": "Carron + Walsh",
+      "name": "キャロン・ウォルシュ",
+      "name_en": "Carron + Walsh",
+      "sub": "建設コンサル(アイルランド)",
+      "sub_en": "Engineering consulting (Ireland)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年度に買収(アイルランド)",
+          "text_en": "Acquired in fiscal 2025 (Ireland)",
+          "source": {
+            "label": "Tetra Tech 10-K(2026年度)",
+            "label_en": "Tetra Tech 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/831641/000083164126000024/ttek-20260927.htm",
+            "level": "official",
+            "date": "2026-11-19",
+            "quote": "In fiscal 2025, we acquired Carron + Walsh (\"CAW\"), based in the Republic of Ireland."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ACM",
+      "ticker": "ACM",
+      "name": "エイコム",
+      "name_en": "AECOM",
+      "sub": "インフラ設計・コンサル",
+      "sub_en": "Infrastructure consulting",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Tetra Techが10-Kで、主な競合として挙げる",
+          "text_en": "Tetra Tech names it among its principal competitors",
+          "source": {
+            "label": "Tetra Tech 10-K(2026年度)",
+            "label_en": "Tetra Tech 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/831641/000083164126000024/ttek-20260927.htm",
+            "level": "official",
+            "date": "2026-11-19",
+            "quote": "We believe that our principal competitors include the following firms, in alphabetical order: AECOM; Arcadis NV; AtkinsRéalis; Black & Veatch Corporation; Booz Allen Hamilton; Brown & Caldwell; Carollo Engineers, Inc.; CDM Smith Inc.; Exponent, Inc.; GHD; ICF International, Inc.; Jacobs Solutions, Inc.; Leidos, Inc.; SAIC; Stantec Inc.; Weston Solutions, Inc.; and WSP Global Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "J",
+      "ticker": "J",
+      "name": "ジェイコブス",
+      "name_en": "Jacobs",
+      "sub": "建設コンサル・エンジニアリング",
+      "sub_en": "Engineering & consulting",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "互いに主な競合として名前を挙げる",
+          "text_en": "Each names the other as a principal competitor",
+          "source": {
+            "label": "Jacobs 10-K(2025年度)",
+            "label_en": "Jacobs 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/52988/000162828025053316/jec-20250926.htm",
+            "level": "official",
+            "date": "2025-11-20",
+            "quote": "AECOM, Tetra Tech, WSP, Arcadis, Bechtel, Arup"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MEG",
+      "ticker": "MEG",
+      "name": "モントローズ・エンバイロメンタル",
+      "name_en": "Montrose Environmental",
+      "sub": "環境サービス",
+      "sub_en": "Environmental services",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Montroseが10-Kで、浄化・再利用事業の競合としてTetra Techを挙げる",
+          "text_en": "Montrose names Tetra Tech among competitors of its remediation and reuse segment",
+          "source": {
+            "label": "Montrose Environmental 10-K(2024年度)",
+            "label_en": "Montrose Environmental 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1643615/000095017025030806/meg-20241231.htm",
+            "level": "official",
+            "date": "2025-03-03",
+            "quote": "Our Remediation and Reuse segment competitors include the environmental divisions or remediation segments of Tetra Tech, AECOM, Xylem, Veolia"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ICFI",
+      "ticker": "ICFI",
+      "name": "ICFインターナショナル",
+      "name_en": "ICF International",
+      "sub": "政府向けコンサル",
+      "sub_en": "Government consulting",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Tetra Techが10-Kで、主な競合として挙げる",
+          "text_en": "Tetra Tech names it among its principal competitors",
+          "source": {
+            "label": "Tetra Tech 10-K(2026年度)",
+            "label_en": "Tetra Tech 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/831641/000083164126000024/ttek-20260927.htm",
+            "level": "official",
+            "date": "2026-11-19",
+            "quote": "We believe that our principal competitors include the following firms, in alphabetical order: AECOM; Arcadis NV; AtkinsRéalis; Black & Veatch Corporation; Booz Allen Hamilton; Brown & Caldwell; Carollo Engineers, Inc.; CDM Smith Inc.; Exponent, Inc.; GHD; ICF International, Inc.; Jacobs Solutions, Inc.; Leidos, Inc.; SAIC; Stantec Inc.; Weston Solutions, Inc.; and WSP Global Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "STN",
+      "ticker": "STN",
+      "name": "スタンテック",
+      "name_en": "Stantec",
+      "sub": "設計・コンサル(カナダ)",
+      "sub_en": "Engineering & design (Canada)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Tetra Techが10-Kで、主な競合として挙げる",
+          "text_en": "Tetra Tech names it among its principal competitors",
+          "source": {
+            "label": "Tetra Tech 10-K(2026年度)",
+            "label_en": "Tetra Tech 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/831641/000083164126000024/ttek-20260927.htm",
+            "level": "official",
+            "date": "2026-11-19",
+            "quote": "We believe that our principal competitors include the following firms, in alphabetical order: AECOM; Arcadis NV; AtkinsRéalis; Black & Veatch Corporation; Booz Allen Hamilton; Brown & Caldwell; Carollo Engineers, Inc.; CDM Smith Inc.; Exponent, Inc.; GHD; ICF International, Inc.; Jacobs Solutions, Inc.; Leidos, Inc.; SAIC; Stantec Inc.; Weston Solutions, Inc.; and WSP Global Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WSP",
+      "ticker": "WSP",
+      "name": "WSPグローバル",
+      "name_en": "WSP Global",
+      "sub": "設計・コンサル(カナダ)",
+      "sub_en": "Engineering consulting (Canada)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Tetra Techが10-Kで、主な競合として挙げる",
+          "text_en": "Tetra Tech names it among its principal competitors",
+          "source": {
+            "label": "Tetra Tech 10-K(2026年度)",
+            "label_en": "Tetra Tech 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/831641/000083164126000024/ttek-20260927.htm",
+            "level": "official",
+            "date": "2026-11-19",
+            "quote": "We believe that our principal competitors include the following firms, in alphabetical order: AECOM; Arcadis NV; AtkinsRéalis; Black & Veatch Corporation; Booz Allen Hamilton; Brown & Caldwell; Carollo Engineers, Inc.; CDM Smith Inc.; Exponent, Inc.; GHD; ICF International, Inc.; Jacobs Solutions, Inc.; Leidos, Inc.; SAIC; Stantec Inc.; Weston Solutions, Inc.; and WSP Global Inc."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,223 @@
+{
+  "root": {
+    "ticker": "MEDP",
+    "name": "メドペース",
+    "cik": 1668397,
+    "name_en": "Medpace"
+  },
+  "rows": [
+    {
+      "ja": "治験の委託元(顧客)",
+      "en": "Trial sponsors (customers)"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in the 10-K)"
+    }
+  ],
+  "rivals": [
+    "IQV",
+    "ICLR",
+    "FTRE",
+    "TMO"
+  ],
+  "companies": [
+    {
+      "id": "CORT",
+      "ticker": "CORT",
+      "name": "コーセプト・セラピューティクス",
+      "name_en": "Corcept Therapeutics",
+      "sub": "内分泌・がん治療薬",
+      "sub_en": "Endocrine & oncology drugs",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "MONARCH試験の運営をメドペースに委託",
+          "text_en": "Uses Medpace to run its MONARCH trial",
+          "source": {
+            "label": "Corcept 10-K(2024年度)",
+            "label_en": "Corcept 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1088856/000162828025008167/cort-20241231.htm",
+            "level": "official",
+            "date": "2025-02-26",
+            "quote": "Medpace Research is helping us conduct our MONARCH trial."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AGEN",
+      "ticker": "AGEN",
+      "name": "アジェナス",
+      "name_en": "Agenus",
+      "sub": "がん免疫薬",
+      "sub_en": "Immuno-oncology",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "基本業務委託契約に基づく支払いでメドペースと合意(2025年1月)",
+          "text_en": "Payment agreement with Medpace under its master services agreement (January 2025)",
+          "source": {
+            "label": "Agenus 10-K(2025年度)",
+            "label_en": "Agenus 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1098972/000119312526108632/agen-20251231.htm",
+            "level": "official",
+            "date": "2026-03-16",
+            "quote": "pursuant to which we agreed with Medpace to certain matters related to payments due to Medpace by us under a master services agreement with Medpace dated June 8, 2022."
+          }
+        }
+      ]
+    },
+    {
+      "id": "XCUR",
+      "ticker": "XCUR",
+      "name": "エキシキュア",
+      "name_en": "Exicure",
+      "sub": "バイオ医薬",
+      "sub_en": "Biotech",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "治験費用の52%がメドペース向け",
+          "text_en": "52% of its clinical trial expenses go to Medpace",
+          "source": {
+            "label": "Exicure S-1(2025年7月)",
+            "label_en": "Exicure S-1 (Jul 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1698530/000169853025000062/exicure-formsx1x71125.htm",
+            "level": "official",
+            "date": "2025-07-11",
+            "quote": "52% of clinical trial expenses are related to services provided by Medpace, Inc. (\"Medpace\"), a contract research organization (\"CRO\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "APLM",
+      "ticker": "APLM",
+      "name": "アポロミクス",
+      "name_en": "Apollomics",
+      "sub": "がん治療薬",
+      "sub_en": "Oncology drugs",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "未払い報酬をめぐりメドペースと係争中",
+          "text_en": "In litigation with Medpace over allegedly unpaid service fees",
+          "source": {
+            "label": "Apollomics 20-F(2025年度)",
+            "label_en": "Apollomics 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1944885/000119312526177357/aplm-20251231.htm",
+            "level": "official",
+            "date": "2026-04-24",
+            "quote": "we are currently engaged in active litigation with Medpace, Inc., a clinical research organization, which sued us for allegedly unpaid service fees."
+          }
+        }
+      ]
+    },
+    {
+      "id": "IQV",
+      "ticker": "IQV",
+      "name": "IQVIA",
+      "name_en": "IQVIA",
+      "sub": "CRO・医療データ",
+      "sub_en": "CRO & health data",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主要なCRO競合",
+          "text_en": "Major CRO competitor",
+          "source": {
+            "label": "Medpace 10-K(2025年度)",
+            "label_en": "Medpace 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1668397/000166839726000006/medp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "Our major CRO competitors include IQVIA Holdings Inc., ICON plc, PPD, Inc. (now part of Thermo Fisher Scientific Inc.), Fortrea, Inc., and numerous specialty and regional CROs."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ICLR",
+      "ticker": "ICLR",
+      "name": "アイコン",
+      "name_en": "ICON",
+      "sub": "CRO(アイルランド)",
+      "sub_en": "CRO (Ireland)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主要なCRO競合",
+          "text_en": "Major CRO competitor",
+          "source": {
+            "label": "Medpace 10-K(2025年度)",
+            "label_en": "Medpace 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1668397/000166839726000006/medp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "Our major CRO competitors include IQVIA Holdings Inc., ICON plc, PPD, Inc. (now part of Thermo Fisher Scientific Inc.), Fortrea, Inc., and numerous specialty and regional CROs."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FTRE",
+      "ticker": "FTRE",
+      "name": "フォートレア",
+      "name_en": "Fortrea",
+      "sub": "CRO",
+      "sub_en": "CRO",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主要なCRO競合",
+          "text_en": "Major CRO competitor",
+          "source": {
+            "label": "Medpace 10-K(2025年度)",
+            "label_en": "Medpace 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1668397/000166839726000006/medp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "Our major CRO competitors include IQVIA Holdings Inc., ICON plc, PPD, Inc. (now part of Thermo Fisher Scientific Inc.), Fortrea, Inc., and numerous specialty and regional CROs."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TMO",
+      "ticker": "TMO",
+      "name": "サーモフィッシャー(PPD)",
+      "name_en": "Thermo Fisher (PPD)",
+      "sub": "研究機器・CRO",
+      "sub_en": "Life science tools & CRO",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "傘下PPDが主要なCRO競合",
+          "text_en": "Its PPD unit is a major CRO competitor",
+          "source": {
+            "label": "Medpace 10-K(2025年度)",
+            "label_en": "Medpace 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1668397/000166839726000006/medp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "Our major CRO competitors include IQVIA Holdings Inc., ICON plc, PPD, Inc. (now part of Thermo Fisher Scientific Inc.), Fortrea, Inc., and numerous specialty and regional CROs."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

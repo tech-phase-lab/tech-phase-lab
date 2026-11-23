@@ -1,0 +1,276 @@
+{
+  "root": {
+    "ticker": "CCK",
+    "name": "クラウン・ホールディングス",
+    "cik": 1219601,
+    "name_en": "Crown Holdings"
+  },
+  "rows": [
+    {
+      "ja": "アルミ材の供給元(相手の資料に記載)",
+      "en": "Aluminum suppliers (named in their filings)",
+      "above": true
+    },
+    {
+      "ja": "顧客・出資の売却",
+      "en": "Customers & divested stake"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "BALL",
+    "AMBP",
+    "SLGN",
+    "OI"
+  ],
+  "companies": [
+    {
+      "id": "CSTM",
+      "ticker": "CSTM",
+      "name": "コンステリウム",
+      "name_en": "Constellium",
+      "sub": "アルミ圧延",
+      "sub_en": "Aluminum products",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "包装材の顧客の一社としてCrownを挙げる",
+          "text_en": "Names Crown among its packaging customers",
+          "source": {
+            "label": "Constellium 10-K(2024年度)",
+            "label_en": "Constellium 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1563411/000156341125000005/cstm-20241231.htm",
+            "level": "official",
+            "date": "2025-02-28",
+            "quote": "Can-Pack S.A., Crown Holdings, Inc., and Molson Coors Beverage Company USA LL"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Novelis",
+      "ticker": "Novelis",
+      "name": "ノベリス",
+      "name_en": "Novelis",
+      "sub": "アルミ圧延",
+      "sub_en": "Aluminum rolling",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "主要顧客の一社としてCrownを挙げる",
+          "text_en": "Names Crown among its major customers",
+          "source": {
+            "label": "Novelis 10-K(2025年3月期)",
+            "label_en": "Novelis 10-K (FY ended Mar 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1304280/000130428025000023/nvl-20250331.htm",
+            "level": "official",
+            "date": "2025-05-12",
+            "quote": "Constantia Teich GmbH Crown Holdings"
+          }
+        }
+      ]
+    },
+    {
+      "id": "KO",
+      "ticker": "KO",
+      "name": "コカ・コーラ",
+      "name_en": "Coca-Cola",
+      "sub": "飲料",
+      "sub_en": "Beverages",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "飲料缶の主な販売先(ボトラーにも供給)",
+          "text_en": "A main beverage can customer, along with its bottlers",
+          "source": {
+            "label": "Crown Holdings 10-K(2025年度)",
+            "label_en": "Crown Holdings 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1219601/000162828026012904/cck-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "In addition to sales to Coca-Cola and Pepsi-Cola, the Company also supplies independent licensees of Coca-Cola and Pepsi-Cola."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PEP",
+      "ticker": "PEP",
+      "name": "ペプシコ",
+      "name_en": "PepsiCo",
+      "sub": "飲料・食品",
+      "sub_en": "Beverages & snacks",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "飲料缶の主な販売先(ボトラーにも供給)",
+          "text_en": "A main beverage can customer, along with its bottlers",
+          "source": {
+            "label": "Crown Holdings 10-K(2025年度)",
+            "label_en": "Crown Holdings 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1219601/000162828026012904/cck-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "In addition to sales to Coca-Cola and Pepsi-Cola, the Company also supplies independent licensees of Coca-Cola and Pepsi-Cola."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Eviosys",
+      "ticker": "Eviosys",
+      "name": "エビオシス",
+      "name_en": "Eviosys",
+      "sub": "食品缶(欧州)",
+      "sub_en": "Food cans (Europe)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "約20%を持っていた欧州の食品缶会社がKPSにより売却され、2.75億ドルの利益(2024年12月)",
+          "text_en": "Its roughly 20% stake went with KPS's sale of Eviosys, for a $275 million gain (December 2024)",
+          "source": {
+            "label": "Crown Holdings 10-K(2025年度)",
+            "label_en": "Crown Holdings 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1219601/000162828026012904/cck-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "In December 2024, KPS Capital Partners LP completed the sale of Eviosys, including the Company's approximate 20 % ownership share."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BALL",
+      "ticker": "BALL",
+      "name": "ボール",
+      "name_en": "Ball Corporation",
+      "sub": "飲料缶",
+      "sub_en": "Beverage cans",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Crownが10-Kで、競合の一社として挙げる",
+          "text_en": "Crown names Ball among its competitors",
+          "source": {
+            "label": "Crown Holdings 10-K(2025年度)",
+            "label_en": "Crown Holdings 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1219601/000162828026012904/cck-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "The Company's competitors include, but are not limited to, Ardagh Metal Packaging, Ball Corporation, Baosteel Packaging, Can-Pack S.A., Metal Container Corporation, Silgan Holdings Inc., Sonoco, and Trivium Packaging."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMBP",
+      "ticker": "AMBP",
+      "name": "アーダー・メタル・パッケージング",
+      "name_en": "Ardagh Metal Packaging",
+      "sub": "飲料缶",
+      "sub_en": "Beverage cans",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Ardaghが20-Fで、飲料缶の主な競合として挙げる",
+          "text_en": "Ardagh names Crown among principal beverage can competitors",
+          "source": {
+            "label": "Ardagh Metal Packaging 20-F(2025年度)",
+            "label_en": "Ardagh Metal Packaging 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1845097/000110465926024068/ambp-20251231x20f.htm",
+            "level": "official",
+            "date": "2026-03-05",
+            "quote": "Our principal competitors in metal beverage packaging include Ball Corporation, Crown Holdings, and CANPACK."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SLGN",
+      "ticker": "SLGN",
+      "name": "シルガン・ホールディングス",
+      "name_en": "Silgan Holdings",
+      "sub": "容器・キャップ",
+      "sub_en": "Containers & closures",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Crownが10-Kで、競合の一社として挙げる",
+          "text_en": "Crown names Silgan among its competitors",
+          "source": {
+            "label": "Crown Holdings 10-K(2025年度)",
+            "label_en": "Crown Holdings 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1219601/000162828026012904/cck-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Metal Container Corporation, Silgan Holdings Inc., Sonoco, and Trivium Packaging."
+          }
+        }
+      ]
+    },
+    {
+      "id": "OI",
+      "ticker": "OI",
+      "name": "O-Iグラス",
+      "name_en": "O-I Glass",
+      "sub": "ガラス瓶",
+      "sub_en": "Glass containers",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "O-Iが10-Kで、金属容器の主な競合として挙げる",
+          "text_en": "O-I names Crown among principal metal container competitors",
+          "source": {
+            "label": "O-I Glass 10-K(2025年度)",
+            "label_en": "O-I Glass 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/812074/000110465926014319/oi-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "The principal competitors producing metal containers include Ardagh Group, Ball Corporation, Crown Holdings, Inc., CANPACK and Silgan Holdings Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMCR",
+      "ticker": "AMCR",
+      "name": "アムコア",
+      "name_en": "Amcor",
+      "sub": "包装",
+      "sub_en": "Packaging",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Amcorが10-Kで、競合の一社として挙げる",
+          "text_en": "Amcor names Crown among its competitors",
+          "source": {
+            "label": "Amcor 10-K(2026年6月期)",
+            "label_en": "Amcor 10-K (FY ended Jun 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1748790/000174879026000022/amcr-20260630.htm",
+            "level": "official",
+            "date": "2026-08-14",
+            "quote": "Avery Dennison Corporation, Ball Corporation, Crown Holdings, Inc."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

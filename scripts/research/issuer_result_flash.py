@@ -25,6 +25,7 @@ from decimal import Decimal, InvalidOperation
 from urllib.parse import urlsplit
 
 import monitor
+import release_freshness
 import result_fallback
 
 VERSION = 'issuer-flash-v1'
@@ -1917,12 +1918,35 @@ def due(url, detected, now):
     return True
 
 
+SEC_HOSTS = {'www.sec.gov', 'data.sec.gov'}
+
+
+def new_release(row, reference):
+    """Nov 23: a release found by a new source route's first fetch (baselined: no release event) or one whose own dates are more
+    than 36 hours old is history, never a results flash. An SEC filing may go without an event; its acceptance time decides."""
+    if row['event_at'] is None and urlsplit(row['url']).hostname not in SEC_HOSTS:
+        return False
+    if row['event_at'] is None and row['sec_acceptance_datetime'] is None:
+        return False
+    return not release_freshness.row_is_stale(row, reference)
+
+
+def period_already_published(db, ticker, url, period, observed):
+    """The same company and period was published from another address more than 36 hours earlier: an old release found again."""
+    earlier = (observed - release_freshness.MAX_AGE).isoformat()
+    return db.execute('SELECT 1 FROM issuer_result_publications WHERE ticker=? AND period=? AND url<>? '
+                      'AND julianday(observed_at)<julianday(?) LIMIT 1', (ticker, period, url, earlier)).fetchone() is not None
+
+
 def candidates(db, reference):
     cutoff = (reference - WINDOW).isoformat()
-    for row in db.execute('''SELECT s.url,s.ticker,COALESCE(e.detected_at,s.discovered_at) AS detected
+    for row in db.execute('''SELECT s.url,s.ticker,s.published_on,s.sec_acceptance_datetime,e.detected_at AS event_at,
+          COALESCE(e.detected_at,s.discovered_at) AS detected
         FROM sources s LEFT JOIN release_events e ON e.url=s.url
         WHERE s.ticker='NBIS' AND s.status NOT IN ('held','rejected')
           AND julianday(COALESCE(e.detected_at,s.discovered_at))>=julianday(?)''', (cutoff,)):
+        if not new_release(row, reference):
+            continue
         parts = urlsplit(row['url'])
         if (parts.scheme == 'https' and parts.hostname == 'nebius.com' and not parts.query
                 and NEBIUS_RESULTS_PATH.match(parts.path) and SOURCE_URL['NBIS'].match(row['url'])):
@@ -1934,11 +1958,14 @@ def candidates(db, reference):
     markers = {t: p['marker'] for t, p in PROFILES.items() if p.get('marker')}
     # sentence-only companies (no table parser): any stored release whose first lines name a quarter's results
     markers.update({t: None for t, p in PROFILES.items() if p.get('sentences-only') or p.get('results-head')})
-    for row in db.execute('SELECT s.url,s.ticker,s.sha256,COALESCE(e.detected_at,s.discovered_at) AS detected '
+    for row in db.execute('SELECT s.url,s.ticker,s.sha256,s.published_on,s.sec_acceptance_datetime,e.detected_at AS event_at,'
+                          'COALESCE(e.detected_at,s.discovered_at) AS detected '
                           'FROM sources s LEFT JOIN release_events e ON e.url=s.url '
                           "WHERE s.ticker IN (%s) AND s.status NOT IN ('held','rejected') "
                           'AND julianday(COALESCE(e.detected_at,s.discovered_at))>=julianday(?)' % ','.join('?' for _ in markers),
                           (*markers, cutoff)).fetchall():
+        if not new_release(row, reference):
+            continue
         parts = urlsplit(row['url'])
         if (parts.scheme != 'https' or parts.query or parts.fragment or parts.username
                 or parts.hostname not in monitor.HOSTS.get(row['ticker'], set()) or len(row['url']) > 240):
@@ -1982,6 +2009,8 @@ def run_once(path, reference=None, fetch=None, fetch_pdf=None):
             if given is not None and given < observed:
                 observed = given  # a late filing of results given out earlier keeps their own date
             key, payload = build(ticker, url, parsed, stamp(observed))
+            if key not in existing and period_already_published(db, ticker, url, parsed['period'], observed):
+                continue
             old = existing.get(key)
             if old and json.loads(old['payload'])['facts'] == payload['facts'] \
                     and json.loads(old['payload']).get('publishedAt') == payload['publishedAt']:

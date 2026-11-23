@@ -1,0 +1,176 @@
+{
+  "root": {
+    "ticker": "SAIC",
+    "name": "サイエンス・アプリケーションズ・インターナショナル",
+    "cik": 1571123,
+    "name_en": "Science Applications International"
+  },
+  "rows": [
+    {
+      "ja": "買収・提携",
+      "en": "Acquisitions & partners",
+      "above": true
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "LDOS",
+    "AMTM",
+    "VVX",
+    "ICFI"
+  ],
+  "companies": [
+    {
+      "id": "SilverEdge",
+      "ticker": "SilverEdge",
+      "name": "シルバーエッジ",
+      "name_en": "SilverEdge Government Solutions",
+      "sub": "政府向け技術ソリューション",
+      "sub_en": "Government technology solutions",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年10月に買収",
+          "text_en": "Acquired in October 2025",
+          "source": {
+            "label": "SAIC 10-K(2026年度)",
+            "label_en": "SAIC 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1571123/000157112326000029/saic-20260130.htm",
+            "level": "official",
+            "date": "2026-03-16",
+            "quote": "On October 15, 2025, we acquired SilverEdge Government Solutions, an innovative provider of mission-driven technology solutions and products."
+          }
+        }
+      ]
+    },
+    {
+      "id": "INFQ",
+      "ticker": "INFQ",
+      "name": "インフレクション",
+      "name_en": "Infleqtion",
+      "sub": "量子技術",
+      "sub_en": "Quantum technology",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年6月、SAICと政府市場向けの販売提携を発表",
+          "text_en": "Announced a go-to-market partnership with SAIC in June 2025",
+          "source": {
+            "label": "Infleqtion 10-Q(2026年第1四半期)",
+            "label_en": "Infleqtion 10-Q (Q1 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2007825/000119312526227206/d131935d10q.htm",
+            "level": "official",
+            "date": "2026-05-15",
+            "quote": "In June 2025, we announced a new go-to-market partnership with SAIC"
+          }
+        }
+      ]
+    },
+    {
+      "id": "LDOS",
+      "ticker": "LDOS",
+      "name": "レイドス",
+      "name_en": "Leidos",
+      "sub": "防衛・政府IT",
+      "sub_en": "Defense & government IT",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Leidosが10-Kで、主な競合の一社としてSAICを挙げる",
+          "text_en": "Leidos names SAIC among its principal competitors",
+          "source": {
+            "label": "Leidos 10-K(2025年度)",
+            "label_en": "Leidos 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1336920/000133692026000030/ldos-20260102.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Optum, Parsons Corporation, Peraton Inc., RTX Corporation and SAIC."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMTM",
+      "ticker": "AMTM",
+      "name": "アメンタム",
+      "name_en": "Amentum",
+      "sub": "政府向けエンジニアリング",
+      "sub_en": "Government engineering services",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Amentumが10-Kで、主な競合としてSAICを挙げる",
+          "text_en": "Amentum names SAIC among its primary competitors",
+          "source": {
+            "label": "Amentum 10-K(2025年度)",
+            "label_en": "Amentum 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2011286/000162828025053993/amtm-20251003.htm",
+            "level": "official",
+            "date": "2025-11-25",
+            "quote": "Peraton Corporation, Science Applications International Corporation and V2X, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "VVX",
+      "ticker": "VVX",
+      "name": "V2X",
+      "name_en": "V2X",
+      "sub": "政府向けサービス",
+      "sub_en": "Government services",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "V2Xが10-Kで、主な競合としてSAICを挙げる",
+          "text_en": "V2X names SAIC among its principal competitors",
+          "source": {
+            "label": "V2X 10-K(2025年度)",
+            "label_en": "V2X 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1601548/000160154826000015/vec-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "divisions of Leidos Holdings, Inc., Science Applications International Corp."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ICFI",
+      "ticker": "ICFI",
+      "name": "ICFインターナショナル",
+      "name_en": "ICF International",
+      "sub": "政府向けコンサル",
+      "sub_en": "Government consulting",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ICFが10-Kで、主な競合の一社としてSAICを挙げる",
+          "text_en": "ICF names SAIC among its principal competitors",
+          "source": {
+            "label": "ICF International 10-K(2025年度)",
+            "label_en": "ICF International 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1362004/000119312526082536/icfi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "PA Consulting Group; Science Applications International Corporation;"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,272 @@
+{
+  "root": {
+    "ticker": "LNTH",
+    "name": "ランセウス",
+    "cik": 1521036,
+    "name_en": "Lantheus Holdings"
+  },
+  "rows": [
+    {
+      "ja": "買収・導入",
+      "en": "Acquisitions & in-licensing",
+      "above": true
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in the 10-K)"
+    }
+  ],
+  "rivals": [
+    "NVS",
+    "LLY",
+    "GEHC",
+    "Telix"
+  ],
+  "companies": [
+    {
+      "id": "LifeMolecular",
+      "ticker": "Life Molecular",
+      "name": "ライフ・モレキュラー・イメージング",
+      "name_en": "Life Molecular Imaging",
+      "sub": "PET診断薬(独)",
+      "sub_en": "PET imaging agents (Germany)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "アルツハイマー病PET薬Neuraceqを持つ独社を2025年7月に買収",
+          "text_en": "Acquired the Berlin-based owner of the Alzheimer PET agent Neuraceq in July 2025",
+          "source": {
+            "label": "Lantheus 10-K(2025年度)",
+            "label_en": "Lantheus 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1521036/000119312526073498/lnth-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "On July 21, 2025, we acquired Life Molecular, pursuant to the terms of the Sale and Purchase Agreement with Life Medical Group Limited (\"Life Medical\") and Life Healthcare Group Holdings Limited"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Evergreen",
+      "ticker": "Evergreen",
+      "name": "エバーグリーン・セラノスティクス",
+      "name_en": "Evergreen Theragnostics",
+      "sub": "放射性医薬品の受託製造",
+      "sub_en": "Radiopharmaceutical CDMO",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年4月に合併で買収",
+          "text_en": "Acquired by merger in April 2025",
+          "source": {
+            "label": "Lantheus 10-K(2025年度)",
+            "label_en": "Lantheus 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1521036/000119312526073498/lnth-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "On April 1, 2025, we acquired all the issued and outstanding shares of Evergreen by means of a statutory merger"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Meilleur",
+      "ticker": "Meilleur",
+      "name": "メイユール",
+      "name_en": "Meilleur Technologies",
+      "sub": "アルツハイマー診断薬",
+      "sub_en": "Alzheimer imaging agent",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "PET薬候補NAV-4694を持つ同社を2024年に買収",
+          "text_en": "Acquired in 2024 with the PET candidate NAV-4694",
+          "source": {
+            "label": "Lantheus 10-K(2025年度)",
+            "label_en": "Lantheus 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1521036/000119312526073498/lnth-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "On June 18, 2024, we acquired Meilleur, including its asset NAV-4694, an investigational late-stage F-18-labeled PET imaging agent"
+          }
+        }
+      ]
+    },
+    {
+      "id": "POINT",
+      "ticker": "POINT",
+      "name": "ポイント・バイオファーマ",
+      "name_en": "POINT Biopharma",
+      "sub": "放射性治療薬",
+      "sub_en": "Radioligand therapy",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "PNT2003の世界的な独占権の導入元",
+          "text_en": "Licensed it worldwide rights to co-develop PNT2003",
+          "source": {
+            "label": "Lantheus 10-K(2025年度)",
+            "label_en": "Lantheus 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1521036/000119312526073498/lnth-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "strategic collaborations with POINT Biopharma Global Inc. (\"POINT\"), in which we were granted a license to exclusive worldwide rights"
+          }
+        }
+      ]
+    },
+    {
+      "id": "NVS",
+      "ticker": "NVS",
+      "name": "ノバルティス",
+      "name_en": "Novartis",
+      "sub": "製薬",
+      "sub_en": "Pharmaceuticals",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "前立腺がんPET薬PYLARIFYなどの主な競合",
+          "text_en": "Principal competitor for PYLARIFY and other products",
+          "source": {
+            "label": "Lantheus 10-K(2025年度)",
+            "label_en": "Lantheus 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1521036/000119312526073498/lnth-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "For PYLARIFY, our principal competitors are currently Telix Pharmaceuticals Limited, Blue Earth Diagnostics Ltd., a subsidiary of Bracco and Novartis AG, as well as other non-PSMA PET imaging agents"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Telix",
+      "ticker": "Telix",
+      "name": "テリックス",
+      "name_en": "Telix Pharmaceuticals",
+      "sub": "放射性医薬品(豪)",
+      "sub_en": "Radiopharmaceuticals (Australia)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "PYLARIFYの主な競合",
+          "text_en": "Principal competitor for PYLARIFY",
+          "source": {
+            "label": "Lantheus 10-K(2025年度)",
+            "label_en": "Lantheus 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1521036/000119312526073498/lnth-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "For PYLARIFY, our principal competitors are currently Telix Pharmaceuticals Limited, Blue Earth Diagnostics Ltd., a subsidiary of Bracco and Novartis AG, as well as other non-PSMA PET imaging agents"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Bracco",
+      "ticker": "Bracco",
+      "name": "ブラッコ",
+      "name_en": "Bracco",
+      "sub": "造影剤(伊)",
+      "sub_en": "Contrast agents (Italy)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "PYLARIFYと超音波造影剤DEFINITYの競合",
+          "text_en": "Competitor for PYLARIFY and DEFINITY",
+          "source": {
+            "label": "Lantheus 10-K(2025年度)",
+            "label_en": "Lantheus 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1521036/000119312526073498/lnth-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "For PYLARIFY, our principal competitors are currently Telix Pharmaceuticals Limited, Blue Earth Diagnostics Ltd., a subsidiary of Bracco and Novartis AG, as well as other non-PSMA PET imaging agents"
+          }
+        }
+      ]
+    },
+    {
+      "id": "LLY",
+      "ticker": "LLY",
+      "name": "イーライリリー",
+      "name_en": "Eli Lilly",
+      "sub": "製薬",
+      "sub_en": "Pharmaceuticals",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "アルツハイマー病PET薬Neuraceqの競合",
+          "text_en": "Competitor for its Alzheimer PET agent Neuraceq",
+          "source": {
+            "label": "Lantheus 10-K(2025年度)",
+            "label_en": "Lantheus 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1521036/000119312526073498/lnth-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "For Neuraceq, our competitors currently include Lilly and GE Healthcare."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GEHC",
+      "ticker": "GEHC",
+      "name": "GEヘルスケア",
+      "name_en": "GE HealthCare",
+      "sub": "医療画像",
+      "sub_en": "Medical imaging",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "NeuraceqとDEFINITYの競合",
+          "text_en": "Competitor for Neuraceq and DEFINITY",
+          "source": {
+            "label": "Lantheus 10-K(2025年度)",
+            "label_en": "Lantheus 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1521036/000119312526073498/lnth-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "For DEFINITY, our competitors currently include GE Healthcare and Bracco"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Curium",
+      "ticker": "Curium",
+      "name": "キュリウム",
+      "name_en": "Curium",
+      "sub": "放射性医薬品(仏)",
+      "sub_en": "Radiopharmaceuticals (France)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "開発品LNTH-2501の競合になりうる",
+          "text_en": "Possible competitor for LNTH-2501",
+          "source": {
+            "label": "Lantheus 10-K(2025年度)",
+            "label_en": "Lantheus 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1521036/000119312526073498/lnth-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "For LNTH-2501, our principal competitors may include Curium and Novartis AG."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

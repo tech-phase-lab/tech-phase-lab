@@ -1,0 +1,267 @@
+{
+  "root": {
+    "ticker": "ITGR",
+    "name": "インテジャー・ホールディングス",
+    "cik": 1114483,
+    "name_en": "Integer Holdings"
+  },
+  "rows": [
+    {
+      "ja": "買収",
+      "en": "Acquisitions",
+      "above": true
+    },
+    {
+      "ja": "顧客(医療機器メーカー)",
+      "en": "Customers: medical device makers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "Biocoat",
+      "ticker": "Biocoat",
+      "name": "バイオコート",
+      "name_en": "Biocoat",
+      "sub": "医療用コーティング",
+      "sub_en": "Medical coatings",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年12月に資産を買収",
+          "text_en": "Acquired certain assets in December 2025",
+          "source": {
+            "label": "Integer 10-K(2025年度)",
+            "label_en": "Integer 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1114483/000111448326000003/gb-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "On December 4, 2025, we acquired certain assets of Biocoat Incorporated (\"Biocoat\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "VSi",
+      "ticker": "VSi Parylene",
+      "name": "VSiパリレン",
+      "name_en": "VSi Parylene",
+      "sub": "医療用コーティング",
+      "sub_en": "Medical coatings",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年2月に事業を買収",
+          "text_en": "Acquired the business in February 2025",
+          "source": {
+            "label": "Integer 10-K(2025年度)",
+            "label_en": "Integer 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1114483/000111448326000003/gb-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "On February 28, 2025, we acquired substantially all of the assets and assumed certain liabilities of Vertical Solutions, Inc., d/b/a VSi Parylene (\"VSi\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Precision",
+      "ticker": "Precision Coating",
+      "name": "プレシジョン・コーティング",
+      "name_en": "Precision Coating",
+      "sub": "医療用コーティング",
+      "sub_en": "Medical coatings",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年1月に事業を買収",
+          "text_en": "Acquired the business in January 2025",
+          "source": {
+            "label": "Integer 10-K(2025年度)",
+            "label_en": "Integer 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1114483/000111448326000003/gb-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "On January 7, 2025, we acquired substantially all of the assets and assumed certain liabilities of certain subsidiaries of Katahdin Industries, Inc., including its main operating subsidiary, Precision Coating LLC"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Pulse",
+      "ticker": "Pulse Technologies",
+      "name": "パルス・テクノロジーズ",
+      "name_en": "Pulse Technologies",
+      "sub": "精密部品",
+      "sub_en": "Precision components",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2024年1月に全株式を取得",
+          "text_en": "Acquired all shares in January 2024",
+          "source": {
+            "label": "Integer 10-K(2025年度)",
+            "label_en": "Integer 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1114483/000111448326000003/gb-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "On January 5, 2024, we acquired 100% of the outstanding capital stock of Pulse Technologies, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ABT",
+      "ticker": "ABT",
+      "name": "アボット",
+      "name_en": "Abbott Laboratories",
+      "sub": "医療機器",
+      "sub_en": "Medical devices",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "売上の10%超を占める3大顧客の一社",
+          "text_en": "One of three customers each over 10% of sales",
+          "source": {
+            "label": "Integer 10-K(2025年度)",
+            "label_en": "Integer 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1114483/000111448326000003/gb-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "During 2025, three of our customers, Abbott Laboratories, Boston Scientific and Medtronic were each in excess of 10% of total sales and collectively accounted for 49% of our total sales."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BSX",
+      "ticker": "BSX",
+      "name": "ボストン・サイエンティフィック",
+      "name_en": "Boston Scientific",
+      "sub": "医療機器",
+      "sub_en": "Medical devices",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "売上の10%超を占める3大顧客の一社",
+          "text_en": "One of three customers each over 10% of sales",
+          "source": {
+            "label": "Integer 10-K(2025年度)",
+            "label_en": "Integer 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1114483/000111448326000003/gb-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "During 2025, three of our customers, Abbott Laboratories, Boston Scientific and Medtronic were each in excess of 10% of total sales and collectively accounted for 49% of our total sales."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MDT",
+      "ticker": "MDT",
+      "name": "メドトロニック",
+      "name_en": "Medtronic",
+      "sub": "医療機器",
+      "sub_en": "Medical devices",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "売上の10%超を占める3大顧客の一社",
+          "text_en": "One of three customers each over 10% of sales",
+          "source": {
+            "label": "Integer 10-K(2025年度)",
+            "label_en": "Integer 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1114483/000111448326000003/gb-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "During 2025, three of our customers, Abbott Laboratories, Boston Scientific and Medtronic were each in excess of 10% of total sales and collectively accounted for 49% of our total sales."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NVRO",
+      "ticker": "NVRO",
+      "name": "ネブロ",
+      "name_en": "Nevro",
+      "sub": "脊髄刺激装置",
+      "sub_en": "Spinal cord stimulators",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "インテジャーから埋込型電源の供給を受け、2025年6月以降は部品のみに",
+          "text_en": "Integer supplied its IPGs; after June 2025 only certain components",
+          "source": {
+            "label": "Nevro 10-K(2024年度)",
+            "label_en": "Nevro 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1444380/000144438025000024/nvro-20241231.htm",
+            "level": "official",
+            "date": "2025-03-04",
+            "quote": "In July 2024, we amended the supply agreement with CCC pursuant to which Integer Holdings Corporation (Integer) will no longer supply us with IPGs after June 2025"
+          }
+        }
+      ]
+    },
+    {
+      "id": "NPCE",
+      "ticker": "NPCE",
+      "name": "ニューロペース",
+      "name_en": "NeuroPace",
+      "sub": "てんかん治療機器",
+      "sub_en": "Epilepsy devices",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "回路基板や電池などの単一供給元にインテジャー",
+          "text_en": "Integer is a single-source supplier of key components",
+          "source": {
+            "label": "NeuroPace 10-K(2024年度)",
+            "label_en": "NeuroPace 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1528287/000152828725000007/npce-20241231.htm",
+            "level": "official",
+            "date": "2025-03-04",
+            "quote": "Micro Systems Technologies Management AG and Integer Holdings Corporation (formally known as Greatbatch Ltd) are single-source suppliers of several key components of our products"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AVR",
+      "ticker": "AVR",
+      "name": "アンテリス・テクノロジーズ",
+      "name_en": "Anteris Technologies",
+      "sub": "心臓弁",
+      "sub_en": "Heart valves",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "単一供給元のアラン(インテジャーが買収)と供給契約",
+          "text_en": "Supply agreement with Aran, a single-source supplier later acquired by Integer",
+          "source": {
+            "label": "Anteris Technologies 10-K(2024年度)",
+            "label_en": "Anteris Technologies 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2011514/000114036125008455/ef20043984_10k.htm",
+            "level": "official",
+            "date": "2025-03-12",
+            "quote": "with Aran Biomedical Teoranta (\"Aran\") (subsequently acquired by Integer Holdings Corporation)"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

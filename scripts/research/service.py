@@ -63,6 +63,7 @@ import dart_watch
 import earnings_announce
 import earnings_history
 import value_check
+import twelve_allocator
 import official_research
 import deep_analysis
 import llm_cost
@@ -72,6 +73,7 @@ import official_research_diagnostics
 import official_research_detail
 import watch_earnings
 import mu_earnings_measurement
+import official_channel_probe
 import comparison_warm
 import radar_refresh
 import web_push
@@ -541,6 +543,24 @@ def discovery_has_verified_route(result):
     return result.get("status") in {"ok", "fallback"}
 
 
+def release_events_allowed(baseline_ready, ticker, result, inserted, verified_sources, cached_sources=()):
+    """May the URLs this discovery result added become release events (alerts, drafts, earnings lines)?
+
+    Not before the job's first verified result (the database baseline), and not from the first verified result of a source address
+    the ticker never read before: a changed or added route lists releases that already exist (Nov 23: COHR's GlobeNewswire feed
+    put three past quarters on phones; LRCX's IR-top PDFs brought October's results back). Records the address as read.
+    An address already read counts as known when a completed run named it or its last good response is cached (a supplemental SEC
+    route that only becomes the named route when the company feed fails was read every cycle before, so its new filings alert)."""
+    source_url = result.get("sourceUrl")
+    first_from_source = (discovery_has_verified_route(result) and (ticker, source_url) not in verified_sources
+                         and source_url not in (cached_sources or ()))
+    if first_from_source:
+        verified_sources.add((ticker, source_url))
+        if inserted:
+            print(json.dumps({"event": "discovery-source-baseline", "ticker": ticker, "baselined": len(inserted)}), flush=True)
+    return bool(baseline_ready) and not first_from_source
+
+
 def discovery_requires_backoff(result):
     """Back off only total discovery failures, not a supplemental-route outage."""
     return result.get("status") == "degraded" and not discovery_has_verified_route(result)
@@ -890,6 +910,8 @@ class AutomaticMonitor:
         self.deep_analysis_thread = threading.Thread(target=self.run_deep_analysis, name="deep-analysis", daemon=True)
         self.watch_earnings_thread = threading.Thread(target=self.run_watch_earnings, name="watch-earnings", daemon=True)
         self.mu_measurement_thread = threading.Thread(target=self.run_mu_measurement, name="mu-earnings-measurement", daemon=True)
+        self.channel_probe = official_channel_probe.Probe()
+        self.channel_probe_thread = threading.Thread(target=self.run_channel_probe, name="official-channel-probe", daemon=True)
         self.comparison_warm_thread = threading.Thread(target=self.run_comparison_warm, name="comparison-warm-clock", daemon=True)
         self.radar_refresh_thread = threading.Thread(target=self.run_radar_refresh, name="radar-refresh-clock", daemon=True)
         self.weekly_thread = threading.Thread(target=self.run_weekly, name="weekly-auto-draft-clock", daemon=True)
@@ -1209,6 +1231,18 @@ class AutomaticMonitor:
                 print("weekly-auto-draft-unavailable", flush=True)
             self.stop_event.wait(60)
 
+    def run_channel_probe(self):
+        """Opt-in reachability probe for official earnings channels (OFFICIAL_CHANNEL_PROBE_ENABLED=true); status codes only."""
+        while not self.stop_event.is_set():
+            if official_channel_probe.enabled():
+                try:
+                    self.channel_probe.run_once()
+                except Exception:
+                    print("official-channel-probe-unavailable", flush=True)
+                self.stop_event.wait(official_channel_probe.interval_seconds())
+            else:
+                self.stop_event.wait(300)
+
     def run_mu_measurement(self):
         while not self.stop_event.is_set():
             try:
@@ -1324,19 +1358,23 @@ class AutomaticMonitor:
         if not self.web_push_enabled:
             return
         while not self.stop_event.is_set():
+            wait = price_alerts.CHECK_SECONDS
             if price_alerts.enabled():
                 try:
                     db = web_push.connect(self.db_path)
                     try:
-                        price_alerts.run_once(db)
+                        result = price_alerts.run_once(db)
                     finally:
                         db.close()
+                    # A minute with no room for the pass is tried again in the next minute, not five minutes later.
+                    if isinstance(result, dict) and result.get("status") == "credits-busy":
+                        wait = price_alerts.BUSY_RETRY_SECONDS
                     price_alerts.STATUS["lastError"] = None
                 except Exception as error:
                     # The class only: a Twelve Data message can carry the URL and the key.
                     price_alerts.STATUS["lastError"] = type(error).__name__
                     print(json.dumps({"event": "price-alerts-failed", "error": type(error).__name__}), flush=True)
-            self.stop_event.wait(price_alerts.CHECK_SECONDS)
+            self.stop_event.wait(wait)
 
     def value_check_path(self):
         # Its own file next to the monitor database: five years of closes stay out of the main database and its backups
@@ -1513,6 +1551,7 @@ class AutomaticMonitor:
         self.official_research_thread.start()
         self.deep_analysis_thread.start()
         self.mu_measurement_thread.start()
+        self.channel_probe_thread.start()
         self.comparison_warm_thread.start()
         self.radar_refresh_thread.start()
         self.weekly_thread.start()
@@ -1552,6 +1591,7 @@ class AutomaticMonitor:
         self.official_research_thread.join(timeout=45)
         self.deep_analysis_thread.join(timeout=45)
         self.mu_measurement_thread.join(timeout=45)
+        self.channel_probe_thread.join(timeout=20)
         self.comparison_warm_thread.join(timeout=60)
         self.radar_refresh_thread.join(timeout=90)
         self.watch_earnings_thread.join(timeout=10)
@@ -2440,6 +2480,7 @@ class AutomaticMonitor:
             state["bodyHostProbes"] = monitor.body_host_probe_summary(db)
             state["secEvidence"] = monitor.sec_evidence_summary(db, PRIORITY_SEC_TICKERS)
             state["muEarningsMeasurement"] = mu_earnings_measurement.diagnostics(db)
+            state["officialChannelProbe"] = self.channel_probe.diagnostics()
             state["signalIntake"] = signals.operational_summary(db)
             state["signalIntake"]["xIntake"] = signals.x_operational_summary(db)
             if self.x_stream_requested:
@@ -3344,7 +3385,31 @@ class AutomaticMonitor:
                 print(("research-monitor-restarting " + type(exc).__name__ + " " + failure_detail(exc)).rstrip(), flush=True)
                 self.stop_event.wait(min(30, 2 ** min(failures, 5)))
 
+    def run_false_earnings_cleanup(self, env=None):
+        """Nov 23 (owner-approved): remove the false COHR/LRCX earnings rows once, at start, before any discovery runs.
+        Runs only when FALSE_EARNINGS_CLEANUP=apply and CLEANUP_CONFIRM names the tickers; writes a backup next to the
+        database and a marker so it never runs twice. Any failure is logged and the monitor carries on."""
+        env = os.environ if env is None else env
+        if env.get("FALSE_EARNINGS_CLEANUP") != "apply" or not env.get("CLEANUP_CONFIRM"):
+            return None
+        marker = Path(self.db_path).with_name("false-earnings-cleanup.done")
+        if marker.exists():
+            return None
+        backup = Path(self.db_path).with_name("false-earnings-cleanup-backup.json")
+        try:
+            import false_earnings_cleanup
+            with self.db_lock:
+                code = false_earnings_cleanup.main(["--db", str(self.db_path), "--tickers", env["CLEANUP_CONFIRM"],
+                                                    "--apply", "--backup", str(backup)])
+            marker.write_text(utc_now())
+            print(json.dumps({"event": "false-earnings-cleanup", "code": code, "tickers": env["CLEANUP_CONFIRM"]}), flush=True)
+            return code
+        except (Exception, SystemExit) as exc:
+            print(json.dumps({"event": "false-earnings-cleanup-failed", "error": type(exc).__name__}), flush=True)
+            return None
+
     def run(self):
+        self.run_false_earnings_cleanup()
         jobs = discovery_jobs(self.tickers)
         independent_tickers = {ticker for ticker, phase in jobs.values() if phase == "primary"}
 
@@ -3396,6 +3461,9 @@ class AutomaticMonitor:
                          OR (status='degraded' AND route IS NOT NULL AND route!='none')
                        )""" + scope_clause + " LIMIT 1", params,
                 ).fetchone() is not None
+            # Nov 23: a ticker's first verified result from a source address it never read before (a changed or added route:
+            # COHR's GlobeNewswire feed, LRCX's IR-top PDFs) lists releases that already exist. They are baselined, never alerted.
+            verified_sources = monitor.verified_discovery_sources(db)
             if not monitor.SEC_ACCESS.state()["userAgentConfigured"]:
                 # Never log the value itself; only that SEC requests are withheld.
                 print(json.dumps({"event": "sec-user-agent-missing",
@@ -3480,6 +3548,7 @@ class AutomaticMonitor:
                     result_cache_metrics = result.pop("_cacheMetrics", {})
                     for metric in cache_metrics:
                         cache_metrics[metric] += int(result_cache_metrics.get(metric, 0))
+                    previous_cache = discovery_caches[ticker] or {}
                     cache_changed = source_cache != discovery_caches[ticker]
                     signature = discovery_signature(result, links)
                     new_urls = set(links) - known[ticker]
@@ -3488,7 +3557,8 @@ class AutomaticMonitor:
                         known[ticker].update(inserted)
                         if inserted:
                             new_source_seen = True
-                        if baseline_ready[job]:
+                        if release_events_allowed(baseline_ready[job], ticker, result, inserted, verified_sources,
+                                                  cached_sources=previous_cache):
                             events = monitor.add_release_events(db, ticker, inserted)
                             if self.auto_drafts_enabled:
                                 for url in events:
@@ -4319,6 +4389,23 @@ class Handler(BaseHTTPRequestHandler):
             self.send_json(403, {"ok": False, "error": "read-only"})
             return
         path = urlsplit(self.path).path
+        if path == "/twelve/lease":
+            # The website's instances ask here for each Twelve Data call's credits (twelve_allocator.py). The site's server token only.
+            if not os.environ.get("RESEARCH_API_TOKEN") or not self.authorized():
+                self.send_json(401, {"ok": False})
+                return
+            allocator = twelve_allocator.installed()
+            if allocator is None:
+                self.send_json(503, {"ok": False, "error": "allocator-off"})
+                return
+            try:
+                payload = self.read_json(1024)
+                granted = allocator.grant(payload.get("cost"), payload.get("tier"))
+            except Exception:
+                self.send_json(400, {"ok": False})
+                return
+            self.send_json(200, {"ok": True, "granted": granted})
+            return
         if path == "/internal/resolute/push":
             # Nov 17 (owner): RESOLUTE's sender asks for its ③/④ notice to reach the member's phones (web_push.resolute_push). Its own
             # token only; RESOLUTE has already checked the member's rights and settings in its database. Counts only in the answer.
@@ -4603,6 +4690,9 @@ def main():
     # (owner, Oct 10). RESEARCH_SEMANTIC_NEWS=1 restores the old behavior.
     general_source_news.SEMANTIC_ASSESSMENT_ENABLED = os.environ.get("RESEARCH_SEMANTIC_NEWS", "") == "1"
     app = AutomaticMonitor(db_path, snapshot_path)
+    # The single Twelve Data credit allocator for the website's instances and this monitor's own jobs (twelve_allocator.py).
+    if os.environ.get("TWELVE_DATA_API_KEY", "").strip():
+        twelve_allocator.install()
     streaming = os.environ.get("RESEARCH_STREAM_ENABLED", "true").lower() == "true"
     server = ThreadingHTTPServer(("127.0.0.1", 0) if streaming else (host, port), Handler)
     server.app = app

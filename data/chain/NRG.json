@@ -1,0 +1,225 @@
+{
+  "root": {
+    "ticker": "NRG",
+    "name": "NRGエナジー",
+    "cik": 1013871,
+    "name_en": "NRG Energy"
+  },
+  "rows": [
+    {
+      "ja": "送配電(電力の託送元)",
+      "en": "Transmission & distribution utilities",
+      "above": true
+    },
+    {
+      "ja": "買収・分離",
+      "en": "Acquisitions & former units"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "VIASP"
+  ],
+  "companies": [
+    {
+      "id": "Oncor",
+      "ticker": "Oncor",
+      "name": "オンコー",
+      "name_en": "Oncor Electric Delivery",
+      "sub": "送配電(テキサス)",
+      "sub_en": "Transmission & distribution (Texas)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "NRGの小売子会社がビストラと並ぶ最大顧客",
+          "text_en": "NRG's retail units are one of its two largest customers, alongside Vistra",
+          "source": {
+            "label": "Oncor 10-K(2025年度)",
+            "label_en": "Oncor 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1193311/000119331126000007/c311-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Revenues from REP subsidiaries of Vistra and NRG Energy, Inc., our two largest customers, collectively represented 25% and 21%, respectively, of our total operating revenues for the year ended December 31, 2025"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AEP",
+      "ticker": "AEP",
+      "name": "アメリカン・エレクトリック・パワー",
+      "name_en": "American Electric Power",
+      "sub": "電力",
+      "sub_en": "Electric utility",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "テキサス送配電子会社の重要顧客(TXUと合計で売上の40%)",
+          "text_en": "A significant customer of AEP Texas (with TXU, 40% of revenue)",
+          "source": {
+            "label": "AEP 10-K(2024年度)",
+            "label_en": "AEP 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/4904/000000490425000027/aep-20241231.htm",
+            "level": "official",
+            "date": "2025-02-13",
+            "quote": "Significant Customers of AEP Texas: NRG Energy and TXU Energy 2024 2023 2022 Percentage of Total Revenues 40 % 41 % 45 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "LSPower",
+      "ticker": "LS Power",
+      "name": "LSパワー",
+      "name_en": "LS Power",
+      "sub": "発電投資会社",
+      "sub_en": "Power generation investor",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ガス火力など18発電所を取得し発電容量が倍増(2026年1月)",
+          "text_en": "Bought 18 gas-fired and dual fuel plants, doubling capacity (January 2026)",
+          "source": {
+            "label": "NRG Energy 10-K(2025年度)",
+            "label_en": "NRG Energy 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1013871/000101387126000004/nrg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "On January 30, 2026, NRG completed the acquisition of the LSP Portfolio from LS Power, pursuant to the Purchase Agreement dated as of May 12, 2025. The acquisition doubles NRG's generation capacity"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Vivint",
+      "ticker": "Vivint",
+      "name": "ビビント",
+      "name_en": "Vivint",
+      "sub": "スマートホーム",
+      "sub_en": "Smart home",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2023年3月に買収",
+          "text_en": "Acquired in March 2023",
+          "source": {
+            "label": "NRG Energy 10-K(2025年度)",
+            "label_en": "NRG Energy 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1013871/000101387126000004/nrg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "On March 10, 2023, the Company completed the acquisition of Vivint Smart Home, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Rockland",
+      "ticker": "Rockland Capital",
+      "name": "ロックランド・キャピタル",
+      "name_en": "Rockland Capital",
+      "sub": "発電投資会社",
+      "sub_en": "Power generation investor",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "テキサスの発電所群を取得",
+          "text_en": "Bought its Texas generation portfolio",
+          "source": {
+            "label": "NRG Energy 10-K(2025年度)",
+            "label_en": "NRG Energy 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1013871/000101387126000004/nrg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Texas Generation Portfolio The acquisition of a portfolio of power generation facilities and other assets from Rockland Capital, LLC"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CWEN",
+      "ticker": "CWEN",
+      "name": "クリアウェイ・エナジー",
+      "name_en": "Clearway Energy",
+      "sub": "再エネ発電",
+      "sub_en": "Renewable generation",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "旧NRGイールド(2018年に経営移管契約)",
+          "text_en": "Formerly NRG Yield; transition services agreement in 2018",
+          "source": {
+            "label": "Clearway Energy 10-K(2024年度)",
+            "label_en": "Clearway Energy 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1567683/000156768325000007/cwen-20241231.htm",
+            "level": "official",
+            "date": "2025-02-25",
+            "quote": "Transition Services Agreement, dated August 31, 2018, by and between NRG Yield, Inc. and NRG Energy, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CEG",
+      "ticker": "CEG",
+      "name": "コンステレーション・エナジー",
+      "name_en": "Constellation Energy",
+      "sub": "発電・小売",
+      "sub_en": "Generation & retail",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "STP原発の持分取得をめぐる訴訟でNRGらと和解(2024年5月)",
+          "text_en": "Settled litigation with NRG and others over its STP nuclear stake purchase (May 2024)",
+          "source": {
+            "label": "Constellation Energy 10-K(2025年度)",
+            "label_en": "Constellation Energy 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1868275/000186827526000032/ceg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "In May 2024, we executed a settlement agreement with all parties (CPS/City of San Antonio, Austin, and NRG Energy, Inc.), resolving all litigation involving our purchase of the ownership interest in STP."
+          }
+        }
+      ]
+    },
+    {
+      "id": "VIASP",
+      "ticker": "VIASP",
+      "name": "ヴィア・リニューアブルズ",
+      "name_en": "Via Renewables",
+      "sub": "電力・ガス小売",
+      "sub_en": "Energy retail",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "電力小売の競合にNRGを挙げる",
+          "text_en": "Names NRG among electricity retail competitors",
+          "source": {
+            "label": "Via Renewables 10-K(2024年度)",
+            "label_en": "Via Renewables 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1606268/000160626825000006/spke-20241231.htm",
+            "level": "official",
+            "date": "2025-03-06",
+            "quote": "In the electricity sector, these competitors include larger, well-capitalized energy retailers such as Calpine Energy Solutions, LLC, Constellation Corporation, NRG Energy, Inc. and Vistra Corp."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

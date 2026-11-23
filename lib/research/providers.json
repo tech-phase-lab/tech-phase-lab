@@ -119,6 +119,18 @@
         "format": "rss",
         "label": "SEC 8-K"
       }
+    ],
+    "supplementalSources": [
+      {
+        "url": "https://www.sandisk.com/tools/api/globalsearchquery?q=%2A&locale=en-us&fl=title%2Curl%2CdocumentType%2CdocumentTypeDate&fq=documentType%3APress+Release&from=0&rows=15&sort=documentTypeDate",
+        "format": "news-json",
+        "label": "Sandisk newsroom search",
+        "itemsKey": "docs",
+        "urlKey": "url",
+        "titleKey": "title",
+        "dateKey": "documentTypeDate",
+        "minPollSeconds": 15
+      }
     ]
   },
   {
@@ -354,6 +366,28 @@
     "format": "html",
     "requestTimeoutSeconds": 15,
     "pollSeconds": 3,
+    "parallelSources": [
+      {
+        "url": "https://mops.twse.com.tw/mops/api/t05st01",
+        "format": "mops-material-json",
+        "label": "MOPS material information",
+        "twseCompanyCode": "2330",
+        "requestJson": {
+          "companyId": "2330",
+          "year": "{rocYear}",
+          "month": "all",
+          "firstDay": "",
+          "lastDay": ""
+        },
+        "allowEmpty": true,
+        "minPollSeconds": 300,
+        "windowPollSeconds": 10,
+        "pollWindows": [
+          {"utcOffsetHours": 8, "months": [1, 4, 7, 10], "days": [8, 24], "hours": [13, 19]},
+          {"utcOffsetHours": 8, "days": [1, 12], "hours": [13, 19]}
+        ]
+      }
+    ],
     "fallbackSources": [
       {
         "url": "https://openapi.twse.com.tw/v1/opendata/t187ap04_L",
@@ -382,6 +416,7 @@
     ],
     "allowedHosts": [
       "pr.tsmc.com",
+      "mops.twse.com.tw",
       "openapi.twse.com.tw",
       "data.sec.gov",
       "www.sec.gov"

@@ -1,0 +1,224 @@
+{
+  "root": {
+    "ticker": "CBOE",
+    "name": "Cboeグローバル・マーケッツ",
+    "cik": 1374310,
+    "name_en": "Cboe Global Markets"
+  },
+  "rows": [
+    {
+      "ja": "指数ライセンス・清算(上流)",
+      "en": "Index licensors & clearing (upstream)",
+      "above": true
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "NDAQ",
+    "ICE",
+    "CME",
+    "MIAX"
+  ],
+  "companies": [
+    {
+      "id": "SPGI",
+      "ticker": "SPGI",
+      "name": "S&Pグローバル(S&Pダウ・ジョーンズ指数)",
+      "name_en": "S&P Global (S&P Dow Jones Indices)",
+      "sub": "指数",
+      "sub_en": "Indices",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "SPXオプションなどの指数ライセンス元",
+          "text_en": "Index licensor behind products such as SPX options",
+          "source": {
+            "label": "Cboe 10-K(2025年度)",
+            "label_en": "Cboe 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1374310/000162828026010013/cboe-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "our strategic relationships and license agreements with index providers, including S&P Dow Jones Indices (\"S&P\") and the Frank Russell Company and FTSE International Limited (together \"FTSE Russell\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LSEG",
+      "ticker": "LSEG",
+      "name": "LSEG(FTSEラッセル)",
+      "name_en": "LSEG (FTSE Russell)",
+      "sub": "指数",
+      "sub_en": "Indices",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ラッセル指数などのライセンス元",
+          "text_en": "Licensor of Russell and FTSE indices",
+          "source": {
+            "label": "Cboe 10-K(2025年度)",
+            "label_en": "Cboe 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1374310/000162828026010013/cboe-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "our strategic relationships and license agreements with index providers, including S&P Dow Jones Indices (\"S&P\") and the Frank Russell Company and FTSE International Limited (together \"FTSE Russell\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "OCC",
+      "ticker": "OCC",
+      "name": "オプションズ・クリアリング・コーポレーション(OCC)",
+      "name_en": "The Options Clearing Corporation",
+      "sub": "清算機関",
+      "sub_en": "Clearing house",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "米国のすべてのオプション取引所の唯一の清算機関",
+          "text_en": "Sole clearing provider for all its US options exchanges",
+          "source": {
+            "label": "Cboe 10-K(2025年度)",
+            "label_en": "Cboe 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1374310/000162828026010013/cboe-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Routing and Clearing OCC is the sole provider of clearing on all of our U.S. options exchanges."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BAC",
+      "ticker": "BAC",
+      "name": "バンク・オブ・アメリカ(BofA証券)",
+      "name_en": "Bank of America (BofA Securities)",
+      "sub": "銀行・証券",
+      "sub_en": "Bank & securities",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "BIDS Tradingの株式取引の唯一の清算会社",
+          "text_en": "Sole clearing provider for equities trades on BIDS Trading",
+          "source": {
+            "label": "Cboe 10-K(2025年度)",
+            "label_en": "Cboe 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1374310/000162828026010013/cboe-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "BofA Securities, Inc. (\"BOA\") is the sole provider of clearing on all equities transactions occurring on BIDS Trading."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NDAQ",
+      "ticker": "NDAQ",
+      "name": "ナスダック",
+      "name_en": "Nasdaq",
+      "sub": "取引所",
+      "sub_en": "Exchanges",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Nasdaqが10-Kで、オプション・株式市場の競合として挙げる",
+          "text_en": "Nasdaq names Cboe as a competitor in options and cash equities",
+          "source": {
+            "label": "Nasdaq 10-K(2025年度)",
+            "label_en": "Nasdaq 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1120193/000162828026007703/ndaq-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "In the U.S., our options markets compete with exchanges operated by Cboe Global Markets, Inc., or CBOE , Miami International Holdings, Inc., or MIAX, Intercontinental Exchange , Inc., or ICE, Members Exchange, or MEMX, and BOX Options Market."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ICE",
+      "ticker": "ICE",
+      "name": "インターコンチネンタル取引所",
+      "name_en": "Intercontinental Exchange",
+      "sub": "取引所",
+      "sub_en": "Exchanges",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ICEが10-Kで、株式オプションの主な競合として挙げる",
+          "text_en": "ICE names Cboe a principal equity options competitor",
+          "source": {
+            "label": "ICE 10-K(2025年度)",
+            "label_en": "ICE 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1571949/000157194926000004/ice-20251231.htm",
+            "level": "official",
+            "date": "2026-02-05",
+            "quote": "NYSE Arca Options and NYSE American Options face considerable competition in the equity options markets; their principal U.S. competitors are Nasdaq, Inc., or Nasdaq, and Cboe Global Markets, Inc., or Cboe."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CME",
+      "ticker": "CME",
+      "name": "CMEグループ",
+      "name_en": "CME Group",
+      "sub": "先物取引所",
+      "sub_en": "Futures exchanges",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "CMEが10-Kで、デリバティブ清算の競合の一つにCboe Clearを挙げる",
+          "text_en": "CME names Cboe Clear among derivatives clearing competitors",
+          "source": {
+            "label": "CME Group 10-K(2025年度)",
+            "label_en": "CME Group 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1156375/000115637526000009/cme-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our competitors in the derivatives clearing services space include, among others, companies such as ICE, LCH Group, OCC, Cboe Clear, DTCC, HKEX, Japan Securities Clearing Corporation, LME Clear and Eurex Clearing."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MIAX",
+      "ticker": "MIAX",
+      "name": "マイアミ・インターナショナル(MIAX)",
+      "name_en": "Miami International Holdings",
+      "sub": "取引所",
+      "sub_en": "Exchanges",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "MIAXが10-Kで、株式オプション・現物株の競合として挙げる",
+          "text_en": "MIAX names Cboe as a competitor in options and cash equities",
+          "source": {
+            "label": "MIAX 10-K(2025年度)",
+            "label_en": "MIAX 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1438472/000143847226000023/miax-20251231.htm",
+            "level": "official",
+            "date": "2026-03-06",
+            "quote": "We compete in the U.S. listed cash equity securities market against exchanges owned by Cboe, Nasdaq, ICE, IEX, MEMX, LTSE, 24X Exchange LLC, other regional exchanges and several ATSs."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

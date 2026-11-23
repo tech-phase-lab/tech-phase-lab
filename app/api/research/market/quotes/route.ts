@@ -6,7 +6,8 @@ const headers = { "Cache-Control": "public, s-maxage=30, stale-while-revalidate=
 const fastHeaders = { "Cache-Control": "public, s-maxage=10, stale-while-revalidate=5" };
 /** Quotes for up to 100 tickers (the watchlist and the cards). `history=1` adds the day's 5-minute closes for the sparklines.
  * `fast=1` (the watchlist and a stock's page, polled every 15 seconds): a quote older than 15 seconds is read again while the plan's minute
- * leaves room (lib/research/quote-refresh-gate.ts), otherwise it is kept a minute as before. `X-Quote-Refresh` says which (15s / 60s). */
+ * leaves room (lib/research/quote-refresh-gate.ts), otherwise it is kept a minute as before. `X-Quote-Refresh` says which (15s / 60s).
+ * A quote the plan's minute had no room for is the last good copy (its own time is in `asOf`); `X-Quote-Stale` counts them. */
 export async function GET(request: Request) {
   if (!marketDataConfigured()) return Response.json({ ok: false, error: "not-configured" }, { status: 503, headers: { "Cache-Control": "no-store" } });
   const params = new URL(request.url).searchParams;
@@ -14,8 +15,8 @@ export async function GET(request: Request) {
   if (!tickers.length || tickers.length > 100 || tickers.some(t => !TICKER_RE.test(t))) return Response.json({ ok: false, error: "bad-tickers" }, { status: 400, headers: { "Cache-Control": "no-store" } });
   try {
     const fast = params.get("fast") === "1";
-    const { quotes, fast: granted } = await loadMarketQuotesWithRefresh(tickers, { fast });
+    const { quotes, fast: granted, stale } = await loadMarketQuotesWithRefresh(tickers, { fast });
     const history = params.get("history") === "1" ? await loadIntraday(Object.values(quotes).slice(0, 30)) : {};
-    return Response.json({ ok: true, quotes: Object.fromEntries(Object.values(quotes).map(q => [q.ticker, { ...toFavoriteQuote(q, history[q.ticker]), name: q.name, exchange: q.exchange, open: q.open, high: q.high, low: q.low, previousClose: q.previousClose, volume: q.volume, week52Low: q.week52Low, week52High: q.week52High }])) }, { headers: { ...(fast ? fastHeaders : headers), "X-Quote-Refresh": granted ? "15s" : "60s" } });
+    return Response.json({ ok: true, quotes: Object.fromEntries(Object.values(quotes).map(q => [q.ticker, { ...toFavoriteQuote(q, history[q.ticker]), name: q.name, exchange: q.exchange, open: q.open, high: q.high, low: q.low, previousClose: q.previousClose, volume: q.volume, week52Low: q.week52Low, week52High: q.week52High }])) }, { headers: { ...(fast ? fastHeaders : headers), "X-Quote-Refresh": granted ? "15s" : "60s", "X-Quote-Stale": String(stale) } });
   } catch { return Response.json({ ok: false, error: "unavailable" }, { status: 503, headers: { "Cache-Control": "no-store" } }); }
 }
