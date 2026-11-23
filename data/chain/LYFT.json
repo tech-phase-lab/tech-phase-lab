@@ -1,0 +1,285 @@
+{
+  "root": {
+    "ticker": "LYFT",
+    "name": "リフト",
+    "cik": 1759509,
+    "name_en": "Lyft"
+  },
+  "rows": [
+    {
+      "ja": "提携・買収",
+      "en": "Partners & acquisitions",
+      "above": true
+    },
+    {
+      "ja": "競合(各社の資料に記載)",
+      "en": "Competitors (named in filings)"
+    }
+  ],
+  "rivals": [
+    "UBER",
+    "Bolt",
+    "VIA",
+    "AIRO"
+  ],
+  "companies": [
+    {
+      "id": "Freenow",
+      "ticker": "Freenow",
+      "name": "フリーナウ",
+      "name_en": "Freenow",
+      "sub": "タクシー配車(欧州)",
+      "sub_en": "Taxi app (Europe)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "欧州のタクシー配車アプリを2025年7月に約2.35億ドルで買収",
+          "text_en": "Acquired the European taxi app in July 2025 for about $235 million",
+          "source": {
+            "label": "Lyft 10-K(2025年度)",
+            "label_en": "Lyft 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1759509/000162828026006960/lyft-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "On July 31, 2025, the Company completed the acquisition of 100 % of the outstanding equity of Intelligent Apps GmbH (d/b/a Freenow), a European multimodal application with a taxi offering at its core"
+          }
+        }
+      ]
+    },
+    {
+      "id": "TBR",
+      "ticker": "TBR",
+      "name": "TBRグローバル・ショーファーリング",
+      "name_en": "TBR Global Chauffeuring",
+      "sub": "高級ハイヤー",
+      "sub_en": "Premium chauffeur service",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年10月に高級ハイヤー会社を買収",
+          "text_en": "Acquired the premium chauffeur company in October 2025",
+          "source": {
+            "label": "Lyft 10-K(2025年度)",
+            "label_en": "Lyft 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1759509/000162828026006960/lyft-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "On October 14, 2025, we completed the acquisition of TBR, a global premium ground transportation and chauffeur service company"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MBLY",
+      "ticker": "MBLY",
+      "name": "モービルアイ",
+      "name_en": "Mobileye",
+      "sub": "自動運転技術",
+      "sub_en": "Autonomous driving tech",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "自動運転車の需要側顧客の一社としてリフトを公表",
+          "text_en": "Names Lyft among announced demand-side customers for its self-driving systems",
+          "source": {
+            "label": "Mobileye 10-K(2024年度)",
+            "label_en": "Mobileye 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1910139/000141057825000127/mbly-20241228x10k.htm",
+            "level": "official",
+            "date": "2025-02-13",
+            "quote": "with announced demand-side customers including Deutsche Bahn, Beep, Holo / Ruter, Lyft and others."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WGRX",
+      "ticker": "WGRX",
+      "name": "ウェルジスティクス・ヘルス",
+      "name_en": "Wellgistics Health",
+      "sub": "薬局・医薬品配送",
+      "sub_en": "Pharmacy & drug delivery",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "処方薬配送でリフトと提携",
+          "text_en": "Uses Lyft as a ride-sharing partner for prescription delivery",
+          "source": {
+            "label": "Wellgistics Health 10-K(2024年度)",
+            "label_en": "Wellgistics Health 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2030763/000164117225000612/form10-k.htm",
+            "level": "official",
+            "date": "2025-03-25",
+            "quote": "third-party relationships with Wellgistics Health's national and regional ride- sharing partners (i.e., Lyft and Roadie) for prescription delivery"
+          }
+        }
+      ]
+    },
+    {
+      "id": "UBER",
+      "ticker": "UBER",
+      "name": "ウーバー",
+      "name_en": "Uber Technologies",
+      "sub": "配車・宅配",
+      "sub_en": "Ride-hailing & delivery",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "リフトは米国・カナダの主な競合をウーバーとし、ウーバーもリフトを競合に挙げる",
+          "text_en": "Lyft calls Uber its main ridesharing competitor; Uber lists Lyft among its rivals",
+          "source": {
+            "label": "Lyft 10-K(2025年度)",
+            "label_en": "Lyft 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1759509/000162828026006960/lyft-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Our main ridesharing competitor in the U.S. and Canada is Uber, and in Europe, our main competitors for app-based intermediation services for taxi and private hire vehicles are Uber and Bolt"
+          }
+        },
+        {
+          "type": "rival",
+          "text": "ウーバーも競合の一社にリフトを挙げる",
+          "text_en": "Uber names Lyft among ridesharing companies it competes with",
+          "source": {
+            "label": "Uber 10-K(2024年度)",
+            "label_en": "Uber 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1543151/000154315125000008/uber-20241231.htm",
+            "level": "official",
+            "date": "2025-02-14",
+            "quote": "We also compete with other ridesharing companies for Drivers and Riders, including Bolt, Didi, Grab, Lyft, and Ola."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Bolt",
+      "ticker": "Bolt",
+      "name": "ボルト",
+      "name_en": "Bolt",
+      "sub": "配車(欧州)",
+      "sub_en": "Ride-hailing (Europe)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "欧州での主な競合にボルトを挙げる",
+          "text_en": "Names Bolt as a main competitor in Europe",
+          "source": {
+            "label": "Lyft 10-K(2025年度)",
+            "label_en": "Lyft 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1759509/000162828026006960/lyft-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "in Europe, our main competitors for app-based intermediation services for taxi and private hire vehicles are Uber and Bolt"
+          }
+        }
+      ]
+    },
+    {
+      "id": "VIA",
+      "ticker": "VIA",
+      "name": "ヴィア・トランスポーテーション",
+      "name_en": "Via Transportation",
+      "sub": "公共交通ソフト",
+      "sub_en": "Transit software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "大手移動サービスの競合にリフトを挙げる",
+          "text_en": "Names Lyft among large mobility companies it competes with",
+          "source": {
+            "label": "Via Transportation 10-K(2025年度)",
+            "label_en": "Via Transportation 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1603015/000160301526000008/via-20251231.htm",
+            "level": "official",
+            "date": "2026-03-06",
+            "quote": "large technology and mobility 25 Table of Contents companies (such as Siemens Mobility, Mobileye (Moovit), Uber, Lyft, and Verizon)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MGTE",
+      "ticker": "MGTE",
+      "name": "マーブルゲート・キャピタル",
+      "name_en": "Marblegate Capital",
+      "sub": "NYタクシー",
+      "sub_en": "NYC taxi medallions",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "タクシーはウーバー・リフトとの激しい競争に直面",
+          "text_en": "Says taxis face significant competition from Uber and Lyft",
+          "source": {
+            "label": "Marblegate Capital 10-K(2025年度)",
+            "label_en": "Marblegate Capital 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1965052/000119312526125186/ck0001965052-20251231.htm",
+            "level": "official",
+            "date": "2026-03-26",
+            "quote": "Taxis face significant competition from ridesharing companies such as Uber and Lyft, public transportation, personal vehicle ownership, and other for-hire vehicles"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AIRO",
+      "ticker": "AIRO",
+      "name": "AIROグループ",
+      "name_en": "AIRO Group",
+      "sub": "ドローン・航空移動",
+      "sub_en": "Drones & air mobility",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "地上交通のリフトとも間接的に競合",
+          "text_en": "Competes indirectly with ground transport providers including Lyft",
+          "source": {
+            "label": "AIRO Group 10-K(2025年度)",
+            "label_en": "AIRO Group 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1927958/000149315226014116/form10-k.htm",
+            "level": "official",
+            "date": "2026-03-31",
+            "quote": "as well as ground-based transportation providers, including Uber Technologies, Inc. and Lyft, Inc., to the extent our offerings overlap with certain passenger or logistics use cases."
+          }
+        }
+      ]
+    },
+    {
+      "id": "EVOY",
+      "ticker": "EVOY",
+      "name": "エンボイ・テクノロジーズ",
+      "name_en": "Envoy Technologies",
+      "sub": "カーシェア",
+      "sub_en": "Car sharing",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合にウーバー・リフトなど配車サービスを挙げる",
+          "text_en": "Names Uber and Lyft among its competitors",
+          "source": {
+            "label": "Envoy Technologies S-1/A(2025年5月)",
+            "label_en": "Envoy Technologies S-1/A (May 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1804468/000164117225007966/forms-1a.htm",
+            "level": "official",
+            "date": "2025-05-01",
+            "quote": "car ride and limousine services like Uber and Lyft, traditional asset-heavy rental car companies such as Hertz and Avis Budget"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

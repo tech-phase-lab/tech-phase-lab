@@ -1,0 +1,519 @@
+{
+  "root": {
+    "ticker": "GD",
+    "name": "ゼネラル・ダイナミクス",
+    "cik": 40533,
+    "name_en": "General Dynamics"
+  },
+  "rows": [
+    {
+      "ja": "供給元(上流)",
+      "en": "Suppliers (upstream)",
+      "above": true
+    },
+    {
+      "ja": "提携・協業",
+      "en": "Partners & teaming"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "LMT",
+    "NOC",
+    "BA",
+    "HII",
+    "LHX"
+  ],
+  "companies": [
+    {
+      "id": "HXL",
+      "ticker": "HXL",
+      "name": "ヘクセル",
+      "name_en": "Hexcel",
+      "sub": "炭素繊維複合材",
+      "sub_en": "Carbon-fiber composites",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "複合材料事業の主要顧客の一社にGDが入る",
+          "text_en": "Lists General Dynamics among key customers of its composite materials segment",
+          "source": {
+            "label": "Hexcel 10-K(2025年度)",
+            "label_en": "Hexcel 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/717605/000119312526046377/hxl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "COMPOSITE MATERIALS KEY CUSTOMERS Aernnova Daher Lockheed Martin Airbus Dassault Nordam Albany International Embraer Northrop Grumman Blue Origin FACC RTX The Boeing Company General Dynamics"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MRCY",
+      "ticker": "MRCY",
+      "name": "マーキュリー・システムズ",
+      "name_en": "Mercury Systems",
+      "sub": "防衛用電子処理",
+      "sub_en": "Defense processing electronics",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "主要顧客の一社にGDを挙げる",
+          "text_en": "Names General Dynamics among its top customers",
+          "source": {
+            "label": "Mercury Systems 10-K(2025年6月期)",
+            "label_en": "Mercury Systems 10-K (FY ended Jun 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1049521/000104952125000024/mrcy-20250627.htm",
+            "level": "official",
+            "date": "2025-08-11",
+            "quote": "Our top customers include Airbus, BAE Systems, Boeing, General Atomics, General Dynamics, L3Harris Technologies, Leonardo, Lockheed Martin Corporation, Northrop Grumman Corporation, RTX Corporation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "DCO",
+      "ticker": "DCO",
+      "name": "ダコモン",
+      "name_en": "Ducommun",
+      "sub": "航空機構造・電子部品",
+      "sub_en": "Aerostructures & electronics",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "売上上位10社の顧客にGDが入る",
+          "text_en": "Counts General Dynamics among its top ten customers",
+          "source": {
+            "label": "Ducommun 10-K(2024年度)",
+            "label_en": "Ducommun 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/30305/000162828025008401/dco-20241231.htm",
+            "level": "official",
+            "date": "2025-02-27",
+            "quote": "Net revenues from our top ten customers, including The Boeing Company (\"Boeing\"), General Dynamics Corporation (\"GD\"), Lockheed Martin Corporation (\"Lockheed\"), Northrop Grumman Corporation (\"Northrop\"), RTX Corporation (\"RTX\")"
+          }
+        }
+      ]
+    },
+    {
+      "id": "IRDM",
+      "ticker": "IRDM",
+      "name": "イリジウム",
+      "name_en": "Iridium Communications",
+      "sub": "衛星通信",
+      "sub_en": "Satellite communications",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "宇宙開発庁の契約でGDミッション・システムズの下請けを務める",
+          "text_en": "Works as a subcontractor to General Dynamics Mission Systems on a Space Development Agency contract",
+          "source": {
+            "label": "Iridium 10-K(2025年度)",
+            "label_en": "Iridium 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1418819/000141881926000009/irdm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "We also provide engineering and support services to the U.S. government under a contract awarded by the Space Development Agency (SDA) in May 2022 to General Dynamics Mission Systems, with Iridium as a subcontractor, which we refer to as the SDA contract."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GSIT",
+      "ticker": "GSIT",
+      "name": "GSIテクノロジー",
+      "name_en": "GSI Technology",
+      "sub": "SRAM半導体",
+      "sub_en": "SRAM chips",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "SRAM製品を年50万ドル超購入した顧客の一社にGD",
+          "text_en": "Lists General Dynamics among OEM customers buying over $500,000 of its SRAM products",
+          "source": {
+            "label": "GSI Technology 10-K(2026年3月期)",
+            "label_en": "GSI Technology 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1126741/000110465926070962/gsit-20260331x10k.htm",
+            "level": "official",
+            "date": "2026-06-05",
+            "quote": "BAE Systems Cadence Design Systems General Dynamics IBM KYEC Nokia"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BETA",
+      "ticker": "BETA",
+      "name": "ベータ・テクノロジーズ",
+      "name_en": "BETA Technologies",
+      "sub": "電動推進",
+      "sub_en": "Electric propulsion",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "DARPA計画でGDアプライド・フィジカル・サイエンシズ向けに推進技術を納める",
+          "text_en": "Delivers defense propulsion technology to General Dynamics Applied Physical Sciences under a DARPA program subcontract",
+          "source": {
+            "label": "BETA Technologies 10-K(2025年度)",
+            "label_en": "BETA Technologies 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1784570/000162828026015838/bta-20251231.htm",
+            "level": "official",
+            "date": "2026-03-09",
+            "quote": "As an example, we have a subcontract with General Dynamics Applied Physical Sciences, manufacturing and delivering defense propulsion technologies and associated engineering services in support of a DARPA program focused on developing advanced propulsion for undersea vehicles."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CAE",
+      "ticker": "CAE",
+      "name": "CAE",
+      "name_en": "CAE",
+      "sub": "訓練・シミュレーター",
+      "sub_en": "Training & simulators",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "GDインフォメーション・テクノロジーから飛行訓練支援の契約を受注",
+          "text_en": "Won a General Dynamics Information Technology contract for flight school training support",
+          "source": {
+            "label": "CAE 年次情報書(2026年3月期)",
+            "label_en": "CAE Annual Information Form (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1173382/000117338226000026/caeaif2026.htm",
+            "level": "official",
+            "date": "2026-06-22",
+            "quote": "On May 30, 2023, we announced the award of a contract from General Dynamics Information Technology to support Flight School Training Support Services at Fort Novosel (formerly Fort Rucker), Alabama."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Telesat",
+      "ticker": "Telesat",
+      "name": "テレサット",
+      "name_en": "Telesat",
+      "sub": "衛星通信(加)",
+      "sub_en": "Satellite operator (Canada)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "元請けのGDミッション・システムズと実証・研究の契約を持つ",
+          "text_en": "Has contracts with prime contractor General Dynamics Mission Systems for demonstrations and studies",
+          "source": {
+            "label": "Telesat 20-F(2024年度)",
+            "label_en": "Telesat 20-F (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1845840/000101376225002971/ea0229780-01.htm",
+            "level": "official",
+            "date": "2025-03-27",
+            "quote": "We also have contracts in place with prime contractors L3 Harris and General Dynamics Mission Systems for demonstrations and studies with Air Force Research Labs and NASA."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HII",
+      "ticker": "HII",
+      "name": "ハンティントン・インガルス",
+      "name_en": "Huntington Ingalls Industries",
+      "sub": "艦艇建造",
+      "sub_en": "Shipbuilding",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "GD傘下のエレクトリック・ボートと組み、バージニア級原潜を建造",
+          "text_en": "Builds Virginia-class submarines under a teaming agreement with GD's Electric Boat",
+          "source": {
+            "label": "HII 10-K(2025年度)",
+            "label_en": "HII 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1501585/000150158526000006/hii-20251231.htm",
+            "level": "official",
+            "date": "2026-02-05",
+            "quote": "We have a teaming agreement with Electric Boat Corporation (\"Electric Boat\"), a division of General Dynamics Corporation (\"General Dynamics\"), to build Virginia class (SSN 774) fast attack nuclear submarines."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "造船事業では主にGDと競合すると記載",
+          "text_en": "Says its shipbuilding segments compete primarily with General Dynamics",
+          "source": {
+            "label": "HII 10-K(2025年度)",
+            "label_en": "HII 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1501585/000150158526000006/hii-20251231.htm",
+            "level": "official",
+            "date": "2026-02-05",
+            "quote": "Our Newport News and Ingalls segments compete primarily with General Dynamics and, in the case of certain non-nuclear shipbuilding programs, smaller shipyards."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LMT",
+      "ticker": "LMT",
+      "name": "ロッキード・マーチン",
+      "name_en": "Lockheed Martin",
+      "sub": "防衛・航空宇宙",
+      "sub_en": "Defense & aerospace",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "固体ロケットモーターの生産でGDと戦略的チーム契約",
+          "text_en": "Strategic teaming agreement with General Dynamics to produce solid rocket motors",
+          "source": {
+            "label": "Lockheed Martin 10-K(2024年度)",
+            "label_en": "Lockheed Martin 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/936468/000093646825000009/lmt-20241231.htm",
+            "level": "official",
+            "date": "2025-01-28",
+            "quote": "such as our recently announced strategic teaming agreement with General Dynamics to produce solid rocket motors, enhancing security and resilience in a critical domestic supply chain."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "主な競合の一社にGDを挙げる",
+          "text_en": "Names General Dynamics among its primary competitors",
+          "source": {
+            "label": "Lockheed Martin 10-K(2025年度)",
+            "label_en": "Lockheed Martin 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/936468/000162828026004195/lmt-20251231.htm",
+            "level": "official",
+            "date": "2026-01-29",
+            "quote": "The Boeing Company, General Dynamics, L3Harris Technologies, Northrop Grumman, and RTX Corporation are some of our primary competitors."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NOC",
+      "ticker": "NOC",
+      "name": "ノースロップ・グラマン",
+      "name_en": "Northrop Grumman",
+      "sub": "防衛・宇宙",
+      "sub_en": "Defense & space",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合する企業の一社にGDを挙げる",
+          "text_en": "Names General Dynamics among the companies it competes with",
+          "source": {
+            "label": "Northrop Grumman 10-K(2025年度)",
+            "label_en": "Northrop Grumman 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1133421/000113342126000003/noc-20251231.htm",
+            "level": "official",
+            "date": "2026-01-27",
+            "quote": "We compete with many companies in the defense, intelligence and federal civil markets, including The Boeing Company, General Dynamics Corporation, L3Harris Technologies, Inc., Lockheed Martin Corporation, and RTX Corporation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BA",
+      "ticker": "BA",
+      "name": "ボーイング",
+      "name_en": "Boeing",
+      "sub": "航空機・防衛",
+      "sub_en": "Aircraft & defense",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "防衛部門の主な競合にGDを挙げる",
+          "text_en": "Says its defense business competes primarily with General Dynamics and others",
+          "source": {
+            "label": "Boeing 10-K(2025年度)",
+            "label_en": "Boeing 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/12927/000162828026004357/ba-20251231.htm",
+            "level": "official",
+            "date": "2026-01-30",
+            "quote": "BDS faces strong competition primarily from General Dynamics Corporation, Lockheed Martin Corporation, Northrop Grumman Corporation, RTX Corporation and SpaceX."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LHX",
+      "ticker": "LHX",
+      "name": "L3ハリス",
+      "name_en": "L3Harris Technologies",
+      "sub": "防衛電子",
+      "sub_en": "Defense electronics",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合する大手防衛企業の一社にGDを挙げる",
+          "text_en": "Names General Dynamics among the large defense companies it competes against",
+          "source": {
+            "label": "L3Harris 10-K(2025年度)",
+            "label_en": "L3Harris 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/202058/000020205826000015/hrs-20260102.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "We compete domestically and internationally against large defense companies; principally BAE Systems, Boeing, General Dynamics, Lockheed Martin, Northrop Grumman, RTX, Thales and non-traditional defense contractors"
+          }
+        }
+      ]
+    },
+    {
+      "id": "OSK",
+      "ticker": "OSK",
+      "name": "オシュコシュ",
+      "name_en": "Oshkosh",
+      "sub": "軍用車両",
+      "sub_en": "Military vehicles",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "軍用車両の競合にGDを挙げる",
+          "text_en": "Names General Dynamics among competitors of Oshkosh Defense",
+          "source": {
+            "label": "Oshkosh 10-K(2025年度)",
+            "label_en": "Oshkosh 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/775158/000119312526054061/osk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Competition for Oshkosh Defense includes AM General LLC (a subsidiary of KPS Capital Partners, LP), American Rheinmetall Vehicles, BAE Systems plc, General Dynamics Corporation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "LDOS",
+      "ticker": "LDOS",
+      "name": "レイドス",
+      "name_en": "Leidos",
+      "sub": "政府向けIT",
+      "sub_en": "Government IT services",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合の一社にGDを挙げる",
+          "text_en": "Names General Dynamics among its principal competitors",
+          "source": {
+            "label": "Leidos 10-K(2025年度)",
+            "label_en": "Leidos 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1336920/000133692026000030/ldos-20260102.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Our principal competitors currently include the following companies: Accenture Federal Services LLC, Amentum Services Inc., KBR, Inc., BAE Systems, Booz Allen Hamilton Inc., CACI International Inc., Deloitte, General Dynamics Corporation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SAIC",
+      "ticker": "SAIC",
+      "name": "SAIC",
+      "name_en": "Science Applications International",
+      "sub": "政府向けIT",
+      "sub_en": "Government IT services",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ITサービスも手がける大手防衛企業の競合としてGDを挙げる",
+          "text_en": "Names General Dynamics among large defense contractors that compete in IT services",
+          "source": {
+            "label": "SAIC 10-K(2026年1月期)",
+            "label_en": "SAIC 10-K (FY ended Jan 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1571123/000157112326000029/saic-20260130.htm",
+            "level": "official",
+            "date": "2026-03-16",
+            "quote": "which include companies such as General Dynamics Corporation, Lockheed Martin Corporation, Northrop Grumman Corporation, and RTX Corporation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MMS",
+      "ticker": "MMS",
+      "name": "マキシマス",
+      "name_en": "Maximus",
+      "sub": "政府向けサービス",
+      "sub_en": "Government services",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "連邦政府向け事業の競合にGDインフォメーション・テクノロジーを挙げる",
+          "text_en": "Names General Dynamics Information Technology among competitors of its federal services segment",
+          "source": {
+            "label": "Maximus 10-K(2025年9月期)",
+            "label_en": "Maximus 10-K (FY ended Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1032220/000103222025000053/mms-20250930.htm",
+            "level": "official",
+            "date": "2025-11-20",
+            "quote": "Federal Services Segment are General Dynamics Information Technology, Deloitte, Leidos, IBM, Accenture, Booz Allen Hamilton, and other federal contractors."
+          }
+        }
+      ]
+    },
+    {
+      "id": "VSAT",
+      "ticker": "VSAT",
+      "name": "ヴィアサット",
+      "name_en": "Viasat",
+      "sub": "衛星通信",
+      "sub_en": "Satellite communications",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "防衛向け通信機器の競合にGDを挙げる",
+          "text_en": "Names General Dynamics among competitors in defense communications equipment",
+          "source": {
+            "label": "Viasat 10-K(2025年3月期)",
+            "label_en": "Viasat 10-K (FY ended Mar 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/797721/000095017025077138/vsat-20250331.htm",
+            "level": "official",
+            "date": "2025-05-27",
+            "quote": "including: CPI Antenna Systems Division, Comtech, EchoStar (Hughes Network Systems), General Dynamics, Gilat, iDirect Technologies, L3Harris"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ESLT",
+      "ticker": "ESLT",
+      "name": "エルビット・システムズ",
+      "name_en": "Elbit Systems",
+      "sub": "防衛電子(イスラエル)",
+      "sub_en": "Defense electronics (Israel)",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合にGDの部門・子会社を挙げる",
+          "text_en": "Names divisions and subsidiaries of General Dynamics among its main competitors",
+          "source": {
+            "label": "Elbit Systems 20-F(2024年度)",
+            "label_en": "Elbit Systems 20-F (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1027664/000162828025013971/eslt-20241231.htm",
+            "level": "official",
+            "date": "2025-03-20",
+            "quote": "Our main competitors include divisions and subsidiaries of Northrop Grumman, Raytheon, General Dynamics, BAE Systems, L3Harris"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
