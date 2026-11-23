@@ -128,7 +128,7 @@ def inspect(document, body_class=None):
     return parsed
 
 
-def validate(document, url, title=None, *, publisher_template=False):
+def validate(document, url, title=None, *, publisher_template=False, mirror=None):
     # Even an HTTP 200 text/html can contain an XML feed or service error. Do
     # not transform its nodes into apparently successful article evidence.
     if re.search(r'^\s*(?:<\?xml[^>]*>\s*)?<(?:rss|feed|error|errorresponse|listbucketresult)\b',
@@ -145,7 +145,10 @@ def validate(document, url, title=None, *, publisher_template=False):
             or parsed.first_tag in {'rss', 'feed', 'error', 'errorresponse', 'listbucketresult'}):
         raise ValueError('article-response-not-document')
     expected = identity(url)
-    if not expected or any(identity(urljoin(url, candidate)) != expected for candidate in parsed.canonicals):
+    # A page fetched from the article's configured mirror (monitor bodyMirrors) may name either address: GlobeNewswire's
+    # rss host gives its own address as canonical and the www article as og:url. Nothing else is accepted.
+    accepted = {expected, identity(mirror)} if mirror else {expected}
+    if not expected or any(identity(urljoin(url, candidate)) not in accepted for candidate in parsed.canonicals):
         raise ValueError('article-response-identity-mismatch')
     expected_title = normalized_title(title or '')
     if expected_title and publisher_template and expected[1] in PUBLISHER_HEADINGS:
