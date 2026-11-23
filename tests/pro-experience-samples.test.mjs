@@ -33,7 +33,7 @@ test("the tour's samples never ask the network: no fetch, no API address, no Nex
   for (const name of sampleFiles) {
     const source = read(`${SAMPLES}${name}`);
     for (const banned of [/\bfetch\s*\(/, /\/api\//, /XMLHttpRequest|EventSource|WebSocket|sendBeacon/, /from "next\/link"/,
-      /GatedChainMap|useThemeData|useWatchEarnings|QuoteCard|CompanyActivity|useFreshCompanies|PortfolioScreen|ComparisonScreen|RadarScreen/])
+      /GatedChainMap|useThemeData|useWatchEarnings|\bQuoteCard\b|<CompanyActivity(?![^>]*\bsample=\{)|useFreshCompanies|PortfolioScreen|ComparisonScreen|RadarScreen/])
       assert.doesNotMatch(source, banned, `${name}: ${banned}`);
     // Data comes only from the committed sample files.
     for (const [, from] of source.matchAll(/from "(@\/lib\/[^"]+)"/g))
@@ -44,6 +44,11 @@ test("the tour's samples never ask the network: no fetch, no API address, no Nex
     assert.ok(typeof file._source === "string" && file._source.length > 20, `${name} says where its numbers came from`);
   }
   // The real components the samples reuse read nothing in sample mode.
+  const activity = read("../app/research/companies/company-activity.tsx");
+  assert.equal((activity.match(/useEffect\(\(\) => \{\n(?:    \/\/[^\n]*\n)*    if \(!live\) return;/g) ?? []).length, 2, "news monitor: neither poller starts in a sample");
+  assert.match(activity, /\{live && <DeepAnalysisPanel /);
+  assert.match(activity, /if \(live\) markSeen\(ticker\)/);
+  assert.match(read("../app/research/price/quote-card.tsx"), /const open = link && <Link/);
   assert.match(read("../app/research/companies/company-directory.tsx"), /const fresh=useFreshCompanies\(lang,!onOpen\);/);
   assert.match(read("../app/research/companies/use-fresh-companies.ts"), /useEffect\(\(\) => \{\n    if \(!enabled\) return;/);
   assert.match(read("../app/research/themes/parts.tsx"), /onSelect\s*\? <button type="button"/);
@@ -202,6 +207,8 @@ test("dates inside the samples belong to the made-up timeline: nothing after 203
   const OWN_DATES = new Set(["treasure-hunt.json", "whale-tracks.json"]);
   const sampleMoment = Date.parse("2035-03-12T00:00:00.000Z"); // 2035/03/12 09:00 in Japan
   assert.equal(compareNow, sampleMoment);
+  // A next earnings date lies ahead of the sample moment by nature (the 監視22銘柄 price card, owner Nov 23).
+  const AHEAD = new Set(["nextEarnings"]);
   const NOT_SHOWN = new Set(["url", "sourceUrl", "quarterSourceUrl", "href", "accession", "sourceRevision", "_source"]);
   for (const name of SAMPLE_FILES) {
     const file = JSON.parse(read(`${SAMPLE_DIR}${name}`));
@@ -212,7 +219,7 @@ test("dates inside the samples belong to the made-up timeline: nothing after 203
       if (typeof value !== "string" || NOT_SHOWN.has(key)) return;
       for (const [date] of value.matchAll(/\b20\d\d-\d\d-\d\d(T[\d:.]+Z)?/g)) {
         const at = Date.parse(date);
-        assert.ok(at <= (OWN_DATES.has(name) ? Date.parse("2035-12-31T23:59:59Z") : sampleMoment) && at >= Date.parse("2030-01-01"), `${name} ${key}: ${date}`);
+        assert.ok(at <= (OWN_DATES.has(name) || AHEAD.has(key) ? Date.parse("2035-12-31T23:59:59Z") : sampleMoment) && at >= Date.parse("2030-01-01"), `${name} ${key}: ${date}`);
       }
       assert.doesNotMatch(value, /(?<![\d,.$])202\d(?![\d,])/, `${name} ${key}: ${value.slice(0, 80)}`);
     };
@@ -220,4 +227,13 @@ test("dates inside the samples belong to the made-up timeline: nothing after 203
   }
   assert.equal(JSON.parse(read(`${SAMPLE_DIR}themes.json`)).asOf, "2035-03-09");
   assert.equal(portfolioMarket.asOf, "2035-03-09");
+});
+
+test("PRO Weekly sample: the big line breaks right before 「次の見通し」 (owner, Nov 23), kept red; the English line breaks after the comma", () => {
+  const desk = JSON.parse(read("../lib/research/pro-experience-samples/desk.json"));
+  const lines = [];
+  const walk = value => { if (Array.isArray(value)) value.forEach(walk); else if (value && typeof value === "object") { if (value.type === "highlight") lines.push(value.text); Object.values(value).forEach(walk); } };
+  walk(desk);
+  assert.deepEqual(lines, ["数字が良くても、株価は\n[red]次の見通し[/red]で動きます。", "Even with good numbers,\nthe stock moves on the [red]next outlook[/red]."]);
+  assert.match(read("../app/research/weekly/issues.tsx"), /part\.text\.split\("\\n"\)\.map\(\(line, at\) => <Fragment key=\{at\}>\{at > 0 && <br \/>\}\{format\(line\)\}<\/Fragment>\)/);
 });

@@ -1,0 +1,486 @@
+{
+  "root": {
+    "ticker": "KRC",
+    "name": "キルロイ・リアルティ",
+    "cik": 1025996,
+    "name_en": "Kilroy Realty"
+  },
+  "rows": [
+    {
+      "ja": "上位テナント(IT・ネット)",
+      "en": "Top tenants: tech & internet"
+    },
+    {
+      "ja": "上位テナント(バイオ・メディア)",
+      "en": "Top tenants: biotech & media"
+    },
+    {
+      "ja": "その他のテナント(相手の資料に記載)",
+      "en": "Other tenants (named in their filings)"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "Stripe",
+      "ticker": "Stripe",
+      "name": "ストライプ",
+      "name_en": "Stripe",
+      "sub": "決済",
+      "sub_en": "Payments",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "年間賃料で第3位のテナント(4.3%)",
+          "text_en": "Third-largest tenant at 4.3% of annualized base rent",
+          "source": {
+            "label": "Kilroy Realty 10-K(2025年度)",
+            "label_en": "Kilroy Realty 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1025996/000162828026007051/krc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "3 Stripe, Inc. San Francisco Bay Area 33,110 425,687 4.3%"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ADBE",
+      "ticker": "ADBE",
+      "name": "アドビ",
+      "name_en": "Adobe",
+      "sub": "ソフトウェア",
+      "sub_en": "Software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "第4位のテナント(3.7%)",
+          "text_en": "Fourth-largest tenant at 3.7%",
+          "source": {
+            "label": "Kilroy Realty 10-K(2025年度)",
+            "label_en": "Kilroy Realty 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1025996/000162828026007051/krc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "4 Adobe Systems, Inc. San Francisco Bay Area / Seattle 27,897 537,799 3.7%"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CRM",
+      "ticker": "CRM",
+      "name": "セールスフォース",
+      "name_en": "Salesforce",
+      "sub": "ソフトウェア",
+      "sub_en": "Software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "第5位のテナント(3.2%)",
+          "text_en": "Fifth-largest tenant at 3.2%",
+          "source": {
+            "label": "Kilroy Realty 10-K(2025年度)",
+            "label_en": "Kilroy Realty 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1025996/000162828026007051/krc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "5 Salesforce, Inc. San Francisco Bay Area / Seattle 24,706 472,988 3.2%"
+          }
+        }
+      ]
+    },
+    {
+      "id": "OKTA",
+      "ticker": "OKTA",
+      "name": "オクタ",
+      "name_en": "Okta",
+      "sub": "認証ソフト",
+      "sub_en": "Identity software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "第6位のテナント(3.2%)",
+          "text_en": "Sixth-largest tenant at 3.2%",
+          "source": {
+            "label": "Kilroy Realty 10-K(2025年度)",
+            "label_en": "Kilroy Realty 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1025996/000162828026007051/krc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "6 Okta, Inc. San Francisco Bay Area 24,206 293,001 3.2%"
+          }
+        }
+      ]
+    },
+    {
+      "id": "DASH",
+      "ticker": "DASH",
+      "name": "ドアダッシュ",
+      "name_en": "DoorDash",
+      "sub": "宅配プラットフォーム",
+      "sub_en": "Delivery platform",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "第7位のテナント(3.1%)",
+          "text_en": "Seventh-largest tenant at 3.1%",
+          "source": {
+            "label": "Kilroy Realty 10-K(2025年度)",
+            "label_en": "Kilroy Realty 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1025996/000162828026007051/krc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "7 DoorDash, Inc. San Francisco Bay Area 23,842 236,759 3.1%"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BOX",
+      "ticker": "BOX",
+      "name": "ボックス",
+      "name_en": "Box",
+      "sub": "クラウドストレージ",
+      "sub_en": "Cloud content",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "第10位のテナント(2.2%)",
+          "text_en": "Tenth-largest tenant at 2.2%",
+          "source": {
+            "label": "Kilroy Realty 10-K(2025年度)",
+            "label_en": "Kilroy Realty 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1025996/000162828026007051/krc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "10 Box, Inc. San Francisco Bay Area 16,853 287,680 2.2%"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SNPS",
+      "ticker": "SNPS",
+      "name": "シノプシス",
+      "name_en": "Synopsys",
+      "sub": "半導体設計ソフト",
+      "sub_en": "Chip design software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "第13位のテナント(2.0%)",
+          "text_en": "13th-largest tenant at 2.0%",
+          "source": {
+            "label": "Kilroy Realty 10-K(2025年度)",
+            "label_en": "Kilroy Realty 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1025996/000162828026007051/krc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "13 Synopsys, Inc. San Francisco Bay Area 15,492 342,891 2.0%"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン",
+      "name_en": "Amazon",
+      "sub": "EC・クラウド",
+      "sub_en": "E-commerce & cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "第18位のテナント(1.7%)",
+          "text_en": "18th-largest tenant at 1.7%",
+          "source": {
+            "label": "Kilroy Realty 10-K(2025年度)",
+            "label_en": "Kilroy Realty 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1025996/000162828026007051/krc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "18 Amazon.com Seattle 12,921 284,307 1.7%"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Cruise",
+      "ticker": "Cruise",
+      "name": "クルーズ",
+      "name_en": "Cruise LLC",
+      "sub": "自動運転",
+      "sub_en": "Autonomous vehicles",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "第2位のテナント(4.6%)",
+          "text_en": "Second-largest tenant at 4.6%",
+          "source": {
+            "label": "Kilroy Realty 10-K(2025年度)",
+            "label_en": "Kilroy Realty 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1025996/000162828026007051/krc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "2 Cruise LLC San Francisco Bay Area 35,449 374,618 4.6%"
+          }
+        }
+      ]
+    },
+    {
+      "id": "NFLX",
+      "ticker": "NFLX",
+      "name": "ネットフリックス",
+      "name_en": "Netflix",
+      "sub": "動画配信",
+      "sub_en": "Streaming",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "第8位のテナント(2.9%)",
+          "text_en": "Eighth-largest tenant at 2.9%",
+          "source": {
+            "label": "Kilroy Realty 10-K(2025年度)",
+            "label_en": "Kilroy Realty 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1025996/000162828026007051/krc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "8 Netflix, Inc. Los Angeles 21,854 361,388 2.9%"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CYTK",
+      "ticker": "CYTK",
+      "name": "サイトキネティクス",
+      "name_en": "Cytokinetics",
+      "sub": "バイオ医薬",
+      "sub_en": "Biotech",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "第9位のテナント(2.4%)",
+          "text_en": "Ninth-largest tenant at 2.4%",
+          "source": {
+            "label": "Kilroy Realty 10-K(2025年度)",
+            "label_en": "Kilroy Realty 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1025996/000162828026007051/krc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "9 Cytokinetics, Inc. San Francisco Bay Area 18,167 234,892 2.4%"
+          }
+        }
+      ]
+    },
+    {
+      "id": "TNDM",
+      "ticker": "TNDM",
+      "name": "タンデム・ダイアベティス・ケア",
+      "name_en": "Tandem Diabetes Care",
+      "sub": "インスリンポンプ",
+      "sub_en": "Insulin pumps",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "第12位のテナント(2.1%)",
+          "text_en": "12th-largest tenant at 2.1%",
+          "source": {
+            "label": "Kilroy Realty 10-K(2025年度)",
+            "label_en": "Kilroy Realty 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1025996/000162828026007051/krc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "12 Tandem Diabetes Care, Inc. San Diego 15,884 181,949 2.1%"
+          }
+        }
+      ]
+    },
+    {
+      "id": "NBIX",
+      "ticker": "NBIX",
+      "name": "ニューロクライン",
+      "name_en": "Neurocrine Biosciences",
+      "sub": "バイオ医薬",
+      "sub_en": "Biotech",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "第14位のテナント(1.9%)",
+          "text_en": "14th-largest tenant at 1.9%",
+          "source": {
+            "label": "Kilroy Realty 10-K(2025年度)",
+            "label_en": "Kilroy Realty 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1025996/000162828026007051/krc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "14 Neurocrine Biosciences, Inc. San Diego 14,397 273,021 1.9%"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SONY",
+      "ticker": "SONY",
+      "name": "ソニーグループ",
+      "name_en": "Sony Group",
+      "sub": "エンタメ・エレクトロニクス",
+      "sub_en": "Entertainment & electronics",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "第17位のテナント(1.8%)",
+          "text_en": "17th-largest tenant at 1.8%",
+          "source": {
+            "label": "Kilroy Realty 10-K(2025年度)",
+            "label_en": "Kilroy Realty 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1025996/000162828026007051/krc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "17 Sony Group Corporation San Francisco Bay Area / Los Angeles 13,382 131,642 1.8%"
+          }
+        }
+      ]
+    },
+    {
+      "id": "NKTR",
+      "ticker": "NKTR",
+      "name": "ネクター・セラピューティクス",
+      "name_en": "Nektar Therapeutics",
+      "sub": "バイオ医薬",
+      "sub_en": "Biotech",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "第19位のテナント(1.6%)",
+          "text_en": "19th-largest tenant at 1.6%",
+          "source": {
+            "label": "Kilroy Realty 10-K(2025年度)",
+            "label_en": "Kilroy Realty 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1025996/000162828026007051/krc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "19 Nektar Therapeutics, Inc. San Francisco Bay Area 12,297 135,974 1.6%"
+          }
+        }
+      ]
+    },
+    {
+      "id": "DXCM",
+      "ticker": "DXCM",
+      "name": "デクスコム",
+      "name_en": "Dexcom",
+      "sub": "血糖測定",
+      "sub_en": "Glucose monitoring",
+      "row": 2,
+      "relations": [
+        {
+          "type": "down",
+          "text": "キルロイとオフィス賃貸契約",
+          "text_en": "Has an office lease with Kilroy Realty",
+          "source": {
+            "label": "Dexcom 10-K(2025年度)",
+            "label_en": "Dexcom 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1093557/000109355726000027/dxcm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Office Lease Agreement, dated March 31, 2006, between DexCom, Inc. and Kilroy Realty, L.P."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ACAD",
+      "ticker": "ACAD",
+      "name": "アカディア・ファーマシューティカルズ",
+      "name_en": "Acadia Pharmaceuticals",
+      "sub": "中枢神経薬",
+      "sub_en": "CNS drugs",
+      "row": 2,
+      "relations": [
+        {
+          "type": "down",
+          "text": "キルロイと賃貸契約",
+          "text_en": "Has a lease agreement with Kilroy Realty",
+          "source": {
+            "label": "Acadia Pharmaceuticals 10-K(2024年度)",
+            "label_en": "Acadia Pharmaceuticals 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1070494/000095017025029253/acad-20241231.htm",
+            "level": "official",
+            "date": "2025-02-27",
+            "quote": "Lease Agreement, effective October 4, 2018, by and between the Registrant and Kilroy Realty, L.P."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TVTX",
+      "ticker": "TVTX",
+      "name": "トラベール・セラピューティクス",
+      "name_en": "Travere Therapeutics",
+      "sub": "希少疾患薬",
+      "sub_en": "Rare-disease drugs",
+      "row": 2,
+      "relations": [
+        {
+          "type": "down",
+          "text": "キルロイとオフィス賃貸契約",
+          "text_en": "Has an office lease with Kilroy Realty",
+          "source": {
+            "label": "Travere Therapeutics 10-K(2025年度)",
+            "label_en": "Travere Therapeutics 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1438533/000143853326000014/tvtx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Office Lease, effective April 12, 2019, between the Company and Kilroy Realty, L.P."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMN",
+      "ticker": "AMN",
+      "name": "AMNヘルスケア",
+      "name_en": "AMN Healthcare",
+      "sub": "医療人材",
+      "sub_en": "Healthcare staffing",
+      "row": 2,
+      "relations": [
+        {
+          "type": "down",
+          "text": "キルロイとオフィス賃貸契約",
+          "text_en": "Has an office lease with Kilroy Realty",
+          "source": {
+            "label": "AMN Healthcare 10-K(2025年度)",
+            "label_en": "AMN Healthcare 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1142750/000162828026009918/amn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Office Lease, dated as of April 2, 2002, between Kilroy Realty, L.P. and AMN Healthcare, Inc."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

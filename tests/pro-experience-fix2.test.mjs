@@ -131,9 +131,10 @@ test("Stock Comparison: a finger that moves (a scroll) chooses nothing; a touch 
   } finally { await done(); }
 });
 
-test("Stock Comparison: 「PROならすべての銘柄で比較できます」 sits right under the replacement rule, 12.5px mint; the chips have no disabled path", () => {
+test("Stock Comparison: 「PROは全銘柄対応。3銘柄まで同時に比較できます。」 sits right under the replacement rule, 12.5px mint; the chips have no disabled path", () => {
   const ui = read(`${SAMPLES}compare.tsx`);
-  const rule = ui.indexOf("3つ目を選ぶと、①が外れて入れ替わります"), pro = ui.indexOf("PROならすべての銘柄で比較できます");
+  const rule = ui.indexOf("3つ目を選ぶと、①が外れて入れ替わります"), pro = ui.indexOf("PROは全銘柄対応。3銘柄まで同時に比較できます。");
+  assert.ok(ui.includes('"PRO covers every stock. Compare up to three at once."') && !ui.includes("PROならすべての銘柄で比較できます"));
   assert.ok(rule > 0 && pro > rule && pro < ui.indexOf("もう1つ選ぶと"), "under the rule, above the result");
   assert.match(ui, /<p className=\{styles\.pickPro\}>/);
   assert.doesNotMatch(ui, /disabled/);
@@ -148,6 +149,8 @@ const Watch22 = load(`${SAMPLES}watch-22.tsx`, {
   "@/lib/research/pro-experience-samples/watch22-dives.json": { default: JSON.parse(read("../lib/research/pro-experience-samples/watch22-dives.json")) },
   "@/lib/research/pro-experience-samples/watch22.json": { default: JSON.parse(read("../lib/research/pro-experience-samples/watch22.json")) },
   "../../companies/earnings-dive": { default: ({ ticker }) => h("section", { "data-dive": ticker }, `決算の深掘り ${ticker}`) },
+  "../../companies/company-activity": { default: ({ ticker, sample }) => h("section", { "data-monitor": ticker, "data-items": sample?.items.length, "data-checked": sample?.checkedAt }) },
+  "../../price/quote-card": { QuoteCardView: ({ ticker, quote, link }) => h("section", { "data-quote": ticker, "data-price": quote.price, "data-link": String(link) }) },
 }).default;
 test("22 tracked stocks: only NVDA and AMD are buttons; 「一覧 ▾」 opens the other 20 as plain text, 「閉じる ▴」 closes it", async () => {
   const { container, done } = await mount(h(Watch22, { lang: "ja" }));
@@ -161,6 +164,11 @@ test("22 tracked stocks: only NVDA and AMD are buttons; 「一覧 ▾」 opens t
     assert.equal(amd.getAttribute("aria-pressed"), "true");
     assert.equal(nvda.getAttribute("aria-pressed"), "false");
     assert.equal(container.querySelector("[data-dive]").dataset.dive, "AMD");
+    // Owner, Nov 23: the real page's price card and news monitor sit above the deep dive, for the picked stock, in sample mode.
+    const quote = container.querySelector("[data-quote]"), monitor = container.querySelector("[data-monitor]");
+    assert.deepEqual([quote.dataset.quote, quote.dataset.link, monitor.dataset.monitor, monitor.dataset.checked], ["AMD", "false", "AMD", "2035-03-12T00:00:00.000Z"]);
+    assert.ok(Number(quote.dataset.price) > 0 && Number(monitor.dataset.items) >= 3);
+    assert.ok(quote.compareDocumentPosition(container.querySelector("[data-dive]")) & 4, "above the deep dive");
     assert.match(container.textContent, /PROなら22銘柄すべて見られます/);
     assert.equal(container.querySelector("ul"), null, "closed at first");
     assert.equal(toggle.getAttribute("aria-expanded"), "false");

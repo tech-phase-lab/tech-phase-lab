@@ -1,0 +1,219 @@
+{
+  "root": {
+    "ticker": "PCG",
+    "name": "PG&E",
+    "cik": 1004980,
+    "name_en": "PG&E"
+  },
+  "rows": [
+    {
+      "ja": "電力の調達先・保守の委託先",
+      "en": "Power suppliers & contractors",
+      "above": true
+    },
+    {
+      "ja": "送電・蓄電池の提携先",
+      "en": "Grid & battery partners"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "Davey",
+      "ticker": "Davey Tree",
+      "name": "デイビー・ツリー",
+      "name_en": "Davey Tree",
+      "sub": "樹木管理(送電線周り)",
+      "sub_en": "Tree care & vegetation management",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "PG&Eが最大の顧客で、2024年の売上の約9%(約1.62億ドル)",
+          "text_en": "PG&E is its largest customer, about 9% (some $162 million) of 2024 revenue",
+          "source": {
+            "label": "Davey Tree 10-K(2024年度)",
+            "label_en": "Davey Tree 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/277638/000027763825000007/davey-20241231.htm",
+            "level": "official",
+            "date": "2025-03-10",
+            "quote": "During 2024, we had revenues of approximately $162 million, or approximately 9% of total revenues, from Pacific Gas & Electric Company (\"PG&E\"), our largest customer."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CEG",
+      "ticker": "CEG",
+      "name": "コンステレーション・エナジー",
+      "name_en": "Constellation Energy",
+      "sub": "発電",
+      "sub_en": "Power generation",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Pastoriaの蓄電池設備が、PG&Eとの15年の電力購入契約で支えられている",
+          "text_en": "Its Pastoria Power Bank is backed by a 15-year power purchase agreement with PG&E",
+          "source": {
+            "label": "Constellation Energy 10-Q(2026年第1四半期)",
+            "label_en": "Constellation Energy 10-Q (Q1 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1868275/000186827526000067/ceg-20260331.htm",
+            "level": "official",
+            "date": "2026-05-11",
+            "quote": "The Pastoria Power Bank is contracted and supported by a 15-year power purchase agreement with Pacific Gas and Electric Company."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CRC",
+      "ticker": "CRC",
+      "name": "カリフォルニア・リソーシズ",
+      "name_en": "California Resources",
+      "sub": "石油・ガス・発電",
+      "sub_en": "Oil, gas & power",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "自社の発電所で余った電力を、PG&Eに電力売買契約で販売(2026年11月まで)",
+          "text_en": "Sells surplus output from one of its power plants to PG&E under a contract running to November 2026",
+          "source": {
+            "label": "California Resources 10-K(2025年度)",
+            "label_en": "California Resources 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1609253/000160925326000051/crc-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "The electrical output of one of these plants that is not used in our operations is sold to a California investor-owned utility, Pacific Gas and Electric under a power purchase and sales agreement that expires in November 2026."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HASI",
+      "ticker": "HASI",
+      "name": "HASI",
+      "name_en": "HA Sustainable Infrastructure Capital",
+      "sub": "再エネ投資",
+      "sub_en": "Clean energy investment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "出資するDaggettの再エネ事業が、PG&Eとの電力購入契約で供給力(RA)を固定価格で販売",
+          "text_en": "Its Daggett renewable project sells resource adequacy to PG&E at fixed prices under PPAs",
+          "source": {
+            "label": "HASI 10-K添付(Daggett Renewable 財務諸表)",
+            "label_en": "HASI 10-K exhibit (Daggett Renewable financial statements)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1561894/000156189425000041/ex991-daggettrenewableho.htm",
+            "level": "official",
+            "date": "2025-03-28",
+            "quote": "The Company's PPAs with Pacific Gas and Electric Company provide for the sale of resource adequacy sold at a fixed price as defined in the agreements."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NRG",
+      "ticker": "NRG",
+      "name": "NRGエナジー",
+      "name_en": "NRG Energy",
+      "sub": "電力",
+      "sub_en": "Power",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "NRGが持分を持つ太陽熱発電(Ivanpah)の電力契約について、PG&Eが解約合意の承認をCPUCに申請",
+          "text_en": "PG&E sought CPUC approval to terminate contracts with solar projects in which NRG holds interests (Ivanpah)",
+          "source": {
+            "label": "NRG Energy 10-K(2025年度)",
+            "label_en": "NRG Energy 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1013871/000101387126000004/nrg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "PG&E filed an advice letter to the CPUC seeking approval of a termination agreement between the utility and Solar Partners II, LLC and Solar Partners VIII, LLC, which include NRG's ownership interests."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Citizens",
+      "ticker": "Citizens Energy",
+      "name": "シチズンズ・エナジー",
+      "name_en": "Citizens Energy",
+      "sub": "送電への投資",
+      "sub_en": "Transmission investment",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "PG&Eが送電設備の権利の一部をCitizens Energyに貸し出す契約を2025年1月に改定",
+          "text_en": "Amended an agreement in January 2025 to lease entitlements to certain transmission assets to Citizens Energy",
+          "source": {
+            "label": "PG&E 10-K(2025年度)",
+            "label_en": "PG&E 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1004980/000100498026000009/pcg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "On January 29, 2025, the Utility entered into an amended and restated agreement with Citizens Energy Corporation (\"Citizens\") pursuant to which the Utility may lease to Citizens entitlements to certain transmission assets."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Puget",
+      "ticker": "Puget Energy",
+      "name": "ピュージェット・エナジー",
+      "name_en": "Puget Energy",
+      "sub": "電力会社(ワシントン州)",
+      "sub_en": "Utility (Washington)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "傘下のPSEが、PG&Eと300MWの季節間の供給力交換契約を結ぶ",
+          "text_en": "Its PSE has a 300 MW seasonal capacity exchange with PG&E",
+          "source": {
+            "label": "Puget Energy 10-K(2024年度)",
+            "label_en": "Puget Energy 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1085392/000108539225000009/psd-20241231.htm",
+            "level": "official",
+            "date": "2025-02-21",
+            "quote": "PSE also has an agreement with Pacific Gas & Electric Company (PG&E) for 300 MW of seasonal capacity exchange."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RUN",
+      "ticker": "RUN",
+      "name": "サンラン",
+      "name_en": "Sunrun",
+      "sub": "住宅用太陽光・蓄電池",
+      "sub_en": "Residential solar & storage",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "家庭用蓄電池でPG&Eの配電網の負荷を軽くし、設備増強を先送りできるようにする",
+          "text_en": "Uses home batteries to relieve PG&E's grid and help it defer distribution upgrades",
+          "source": {
+            "label": "Sunrun 2025年第4四半期決算発表",
+            "label_en": "Sunrun Q4 2025 results release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1469367/000162828026012266/q4258-kexhibit991.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "The goal of the precise, location-specific load relief is to help PG&E avoid or defer distribution upgrades while generating net savings for all utility customers."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
