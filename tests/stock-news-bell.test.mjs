@@ -30,5 +30,6 @@ test("the bell in 監視22銘柄 is wired (no longer 準備中) and saves throug
   assert.match(bell, /href="\/research#tech-phase-pro"/, "FREE: leads to PRO");
   assert.match(bell, /href="\/research\/notifications"/, "no device yet: leads to the notification page");
   // `full` is PRO, the owner account or the owner role (AGENTS.md: the owner can always use every feature).
-  assert.match(activity, /const full = memberPlan === "pro" \|\| ownerAccount \|\| ownerRole;/);
+  // A PRO feature tour sample (fixed made-up items) is drawn as PRO sees it (owner, Nov 23).
+  assert.match(activity, /const full = !!sample \|\| memberPlan === "pro" \|\| ownerAccount \|\| ownerRole;/);
 });
