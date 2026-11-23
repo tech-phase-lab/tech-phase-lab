@@ -42,6 +42,15 @@ export function isEarningsRelated(item: OfficialUpdate): boolean {
   return item.tickers.length === 1 && RESULTS.test(item.title);
 }
 
+/** Nov 23 (LRCX): a release whose own date is more than 36 hours before the monitor first saw it is an old release found again on a
+ * new source route, not a result released now. A date can be as late as 23:59 at UTC-12 of that day. */
+const DATE_SLACK_MS = 36 * 3_600_000;
+export function isLateCopy(item: Pick<OfficialUpdate, "publishedOn" | "observedAt">): boolean {
+  const day = item.publishedOn && /^\d{4}-\d{2}-\d{2}$/.test(item.publishedOn) ? Date.parse(`${item.publishedOn}T00:00:00Z`) : NaN;
+  const observed = Date.parse(item.observedAt);
+  return Number.isFinite(day) && Number.isFinite(observed) && observed - (day + DATE_SLACK_MS) > SAME_EVENT_MS;
+}
+
 /** Released earnings for the calendar (owner, Oct 11): numeric flashes from
  * source posts and the companies' own results releases, newest first.
  * Oct 14: several postings of one result are merged into a single row. */
@@ -61,6 +70,7 @@ export function earningsResults(updates: OfficialUpdate[] = [], briefs: ResultBr
     const ticker = item.tickers[0];
     const at = item.publishedAt ?? item.observedAt;
     if (!ticker || item.tickers.length !== 1 || !RESULTS.test(item.title) || NOT_RESULTS.test(item.title) || !at) continue;
+    if (isLateCopy(item)) continue;
     rows.push({ id: `release-${item.id}`, ticker, releasedAt: at, kind: "release",
       title: { ja: `${displayName(ticker)} 決算発表`, en: `${displayName(ticker)} earnings release` },
       result: { ja: item.translationJa ?? null, en: item.title }, sourceUrl: item.url, sourceName: item.publisher,

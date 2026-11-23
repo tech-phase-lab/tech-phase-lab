@@ -1264,6 +1264,7 @@ class IntakeTests(unittest.TestCase):
                     1
                     + len(provider.get("fallbackSources", []))
                     + len(provider.get("supplementalSources", []))
+                    + len(provider.get("parallelSources", []))
                 )
                 self.assertEqual(result["status"], "fallback")
                 self.assertEqual(result["sourceFormat"], "rss")
@@ -1314,17 +1315,21 @@ class IntakeTests(unittest.TestCase):
                 return press_body, "text/html"
             if url == provider["supplementalSources"][0]["url"]:
                 return sec_body, "application/json"
+            if url == provider["parallelSources"][0]["url"]:
+                return b'{"code":406,"message":"no data","result":null}', "application/json"
             raise AssertionError(f"unexpected URL: {url}")
 
-        result, links = m.collect_discovery("TSM", transport, automatic=True)
+        with patch.object(m, "SOURCE_PACE", m.SourcePace()):
+            result, links = m.collect_discovery("TSM", transport, automatic=True)
         self.assertEqual(result["status"], "ok")
         self.assertEqual(result["route"], "primary+supplemental")
         self.assertEqual(result["sourceFormat"], "html+sec-json")
-        self.assertEqual(result["sourcesChecked"], 2)
-        self.assertEqual(result["sourcesConfigured"], 4)
+        # MOPS (Nov 23) is collected beside both chains every cycle.
+        self.assertEqual(result["sourcesChecked"], 3)
+        self.assertEqual(result["sourcesConfigured"], 5)
         self.assertEqual(len(links), 2)
         self.assertEqual(requested, [
-            provider["indexUrl"], provider["supplementalSources"][0]["url"],
+            provider["indexUrl"], provider["parallelSources"][0]["url"], provider["supplementalSources"][0]["url"],
         ])
 
     def test_sec_submissions_json_filters_form_and_builds_official_document_url(self):
