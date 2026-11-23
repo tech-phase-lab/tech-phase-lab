@@ -1,0 +1,252 @@
+{
+  "root": {
+    "ticker": "ECL",
+    "name": "エコラボ",
+    "cik": 31462,
+    "name_en": "Ecolab"
+  },
+  "rows": [
+    {
+      "ja": "供給元",
+      "en": "Suppliers",
+      "above": true
+    },
+    {
+      "ja": "買収・事業売却",
+      "en": "Acquisitions & divestitures"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "XYL",
+    "STE",
+    "ROL",
+    "RTO"
+  ],
+  "companies": [
+    {
+      "id": "RGEN",
+      "ticker": "RGEN",
+      "name": "レプリゲン",
+      "name_en": "Repligen",
+      "sub": "バイオ製造機器",
+      "sub_en": "Bioprocessing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Purolite樹脂事業向けにプロテインAリガンドを長期契約で供給してきた",
+          "text_en": "Has supplied Protein A ligands to its Purolite resin business under long-term agreements",
+          "source": {
+            "label": "Repligen 10-K(2024年度)",
+            "label_en": "Repligen 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/730272/000095017025038999/rgen-20241231.htm",
+            "level": "official",
+            "date": "2025-03-14",
+            "quote": "Historically, we manufactured multiple forms of Protein A ligands under long-term supply agreements with major life sciences companies including Cytiva (a standalone operating company owned by Danaher Corporation), MilliporeSigma and Ecolab Life Sciences (\"Ecolab\") for their Purolite (\"Purolite\") resin business."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Ovivo",
+      "ticker": "Ovivo Electronics",
+      "name": "オビボ(電子部門)",
+      "name_en": "Ovivo Electronics",
+      "sub": "半導体向け超純水",
+      "sub_en": "Ultrapure water for chips",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Ovivoの電子部門を16億ドルで買収(2025年12月)",
+          "text_en": "Acquired Ovivo's electronics business for $1.6 billion (December 2025)",
+          "source": {
+            "label": "Ecolab 10-K(2025年度)",
+            "label_en": "Ecolab 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/31462/000110465926018357/ecl-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "On December 16, 2025, we acquired Ovivo's electronics business (\"Ovivo Electronics\") for total consideration of $1.6 billion in cash."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MDLN",
+      "ticker": "MDLN",
+      "name": "メドライン",
+      "name_en": "Medline",
+      "sub": "医療用品",
+      "sub_en": "Medical supplies",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "手術用品事業(Microtek)を9.05億ドルでMedlineに売却(2024年8月)",
+          "text_en": "Sold its Microtek surgical business to Medline for $905 million (August 2024)",
+          "source": {
+            "label": "Medline 10-K(2025年度)",
+            "label_en": "Medline 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2046386/000204638626000009/mdln-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "On August 1, 2024, the Company acquired all of the outstanding shares of the global surgical solutions business of Ecolab (the \"Microtek\" business) pursuant to a share purchase agreement for $ 905 million cash consideration."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CHX",
+      "ticker": "ChampionX",
+      "name": "チャンピオンX",
+      "name_en": "ChampionX",
+      "sub": "油田化学品",
+      "sub_en": "Oilfield chemicals",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "化学品事業(Chemical Technologies)を分離・統合した会社。製品の相互供給契約を結んでいた",
+          "text_en": "Took over its Chemical Technologies business and had a cross supply agreement with it",
+          "source": {
+            "label": "ChampionX 10-K(2024年度)",
+            "label_en": "ChampionX 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1723089/000172308925000025/championx-20241231.htm",
+            "level": "official",
+            "date": "2025-02-05",
+            "quote": "Revenue for the consolidated entity decreased $124.3 million, or 3%, in 2024 compared to the prior year primarily due to a decline in revenues in Latin America along with the expected decline in revenue derived from the Cross Supply and Product Transfer Agreement with Ecolab."
+          }
+        }
+      ]
+    },
+    {
+      "id": "XYL",
+      "ticker": "XYL",
+      "name": "ザイレム",
+      "name_en": "Xylem",
+      "sub": "水処理機器",
+      "sub_en": "Water technology",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Xylemが10-Kで、水処理サービスの主な競合の筆頭に挙げる",
+          "text_en": "Xylem lists Ecolab first among key water services competitors",
+          "source": {
+            "label": "Xylem 10-K(2024年度)",
+            "label_en": "Xylem 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1524472/000152447225000013/xyl-20241231.htm",
+            "level": "official",
+            "date": "2025-03-03",
+            "quote": "Our key competitors in the Water Solutions and Services segment include Ecolab, MPW Industrial Services, Ovivo, Sunbelt Rentals and United Rentals."
+          }
+        }
+      ]
+    },
+    {
+      "id": "STE",
+      "ticker": "STE",
+      "name": "ステリス",
+      "name_en": "STERIS",
+      "sub": "滅菌・感染予防",
+      "sub_en": "Infection prevention",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "STERISが10-Kで、競合の一社として挙げる",
+          "text_en": "STERIS names Ecolab among competitors",
+          "source": {
+            "label": "STERIS 10-K(2026年3月期)",
+            "label_en": "STERIS 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1757898/000162828026039136/ste-20260331.htm",
+            "level": "official",
+            "date": "2026-05-29",
+            "quote": "Competitors include Belimed, Contec, Ecolab, Fedegari, Getinge, and Stilmas."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ROL",
+      "ticker": "ROL",
+      "name": "ロリンズ",
+      "name_en": "Rollins",
+      "sub": "害虫駆除",
+      "sub_en": "Pest control",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Rollinsが10-Kで、主な競合の一社として挙げる",
+          "text_en": "Rollins names Ecolab among major competitors",
+          "source": {
+            "label": "Rollins 10-K(2025年度)",
+            "label_en": "Rollins 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/84839/000008483926000008/rol-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Our major competitors include Rentokil, Ecolab, Anticimex, and numerous other regional and local companies."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RTO",
+      "ticker": "RTO",
+      "name": "レントキル・イニシャル",
+      "name_en": "Rentokil Initial",
+      "sub": "害虫駆除・衛生(英)",
+      "sub_en": "Pest control & hygiene (UK)",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Rentokilが20-F添付資料で、衛生サービスの競合として挙げる",
+          "text_en": "Rentokil names Ecolab among hygiene services competitors",
+          "source": {
+            "label": "Rentokil Initial 20-F添付資料(2024年度)",
+            "label_en": "Rentokil Initial 20-F exhibit (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/930157/000110465925027944/rto-20241231xex15d1.htm",
+            "level": "official",
+            "date": "2025-03-26",
+            "quote": "Citron Hygiene Canada Limited, and Ecolab Inc. in hygiene services"
+          }
+        }
+      ]
+    },
+    {
+      "id": "TOMZ",
+      "ticker": "TOMZ",
+      "name": "TOMIエンバイロメンタル",
+      "name_en": "TOMI Environmental Solutions",
+      "sub": "除菌装置",
+      "sub_en": "Disinfection systems",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "TOMIが10-Kで、過酸化水素系の競合として挙げる(Bioquellの親会社)",
+          "text_en": "TOMI names Ecolab (owner of Bioquell) among hydrogen peroxide competitors",
+          "source": {
+            "label": "TOMI Environmental Solutions 10-K(2025年度)",
+            "label_en": "TOMI Environmental Solutions 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/314227/000165495426003091/tomz_10k.htm",
+            "level": "official",
+            "date": "2026-03-31",
+            "quote": "Comparable competitors include companies marketing hydrogen peroxide-based products, such as Steris Corporation, Bioquell (owned by Ecolab), and The Clorox Company"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

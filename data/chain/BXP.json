@@ -1,0 +1,266 @@
+{
+  "root": {
+    "ticker": "BXP",
+    "name": "BXP(ボストン・プロパティーズ)",
+    "cik": 1037540,
+    "name_en": "BXP"
+  },
+  "rows": [
+    {
+      "ja": "大口テナント(10-Kの上位顧客)",
+      "en": "Largest clients (named in its 10-K)"
+    },
+    {
+      "ja": "その他のテナント・運営委託",
+      "en": "Other tenants & hotel manager"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "CRM",
+      "ticker": "CRM",
+      "name": "セールスフォース",
+      "name_en": "Salesforce",
+      "sub": "業務ソフト",
+      "sub_en": "Enterprise software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "床面積で最大のテナント(ポートフォリオの2.13%)",
+          "text_en": "Its largest client by square feet (2.13% of the portfolio)",
+          "source": {
+            "label": "BXP 10-K(2025年度)",
+            "label_en": "BXP 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1037540/000103754026000006/bxp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Top 20 Clients by Square Feet Our 20 largest clients by square feet as of December 31, 2025 were as follows: Client Square Feet (1) % of In-Service Portfolio (1) 1. Salesforce 891,231 2.13 % 2. Google 836,110 2.00 % 3. Fannie Mae 710,121 1.70 % 4. Akamai Technologies 658,578 1.58 % 5. Snap 607,287 1.45 % 6. Microsoft 599,200 1.43 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GOOGL",
+      "ticker": "GOOGL",
+      "name": "グーグル",
+      "name_en": "Google",
+      "sub": "ネット",
+      "sub_en": "Internet",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "床面積で2番目のテナント(2.00%)",
+          "text_en": "Second-largest client by square feet (2.00%)",
+          "source": {
+            "label": "BXP 10-K(2025年度)",
+            "label_en": "BXP 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1037540/000103754026000006/bxp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Top 20 Clients by Square Feet Our 20 largest clients by square feet as of December 31, 2025 were as follows: Client Square Feet (1) % of In-Service Portfolio (1) 1. Salesforce 891,231 2.13 % 2. Google 836,110 2.00 % 3. Fannie Mae 710,121 1.70 % 4. Akamai Technologies 658,578 1.58 % 5. Snap 607,287 1.45 % 6. Microsoft 599,200 1.43 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "FNMA",
+      "ticker": "FNMA",
+      "name": "ファニーメイ",
+      "name_en": "Fannie Mae",
+      "sub": "住宅金融",
+      "sub_en": "Mortgage finance",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "床面積で3番目のテナント(1.70%)",
+          "text_en": "Third-largest client by square feet (1.70%)",
+          "source": {
+            "label": "BXP 10-K(2025年度)",
+            "label_en": "BXP 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1037540/000103754026000006/bxp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Top 20 Clients by Square Feet Our 20 largest clients by square feet as of December 31, 2025 were as follows: Client Square Feet (1) % of In-Service Portfolio (1) 1. Salesforce 891,231 2.13 % 2. Google 836,110 2.00 % 3. Fannie Mae 710,121 1.70 % 4. Akamai Technologies 658,578 1.58 % 5. Snap 607,287 1.45 % 6. Microsoft 599,200 1.43 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AKAM",
+      "ticker": "AKAM",
+      "name": "アカマイ・テクノロジーズ",
+      "name_en": "Akamai Technologies",
+      "sub": "ネットワーク・クラウド",
+      "sub_en": "Edge cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "床面積で4番目のテナント(1.58%)",
+          "text_en": "Fourth-largest client by square feet (1.58%)",
+          "source": {
+            "label": "BXP 10-K(2025年度)",
+            "label_en": "BXP 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1037540/000103754026000006/bxp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Top 20 Clients by Square Feet Our 20 largest clients by square feet as of December 31, 2025 were as follows: Client Square Feet (1) % of In-Service Portfolio (1) 1. Salesforce 891,231 2.13 % 2. Google 836,110 2.00 % 3. Fannie Mae 710,121 1.70 % 4. Akamai Technologies 658,578 1.58 % 5. Snap 607,287 1.45 % 6. Microsoft 599,200 1.43 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SNAP",
+      "ticker": "SNAP",
+      "name": "スナップ",
+      "name_en": "Snap",
+      "sub": "SNS",
+      "sub_en": "Social media",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "床面積で5番目のテナント(1.45%)",
+          "text_en": "Fifth-largest client by square feet (1.45%)",
+          "source": {
+            "label": "BXP 10-K(2025年度)",
+            "label_en": "BXP 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1037540/000103754026000006/bxp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Top 20 Clients by Square Feet Our 20 largest clients by square feet as of December 31, 2025 were as follows: Client Square Feet (1) % of In-Service Portfolio (1) 1. Salesforce 891,231 2.13 % 2. Google 836,110 2.00 % 3. Fannie Mae 710,121 1.70 % 4. Akamai Technologies 658,578 1.58 % 5. Snap 607,287 1.45 % 6. Microsoft 599,200 1.43 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "マイクロソフト",
+      "name_en": "Microsoft",
+      "sub": "ソフト・クラウド",
+      "sub_en": "Software & cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "床面積で6番目のテナント(1.43%)",
+          "text_en": "Sixth-largest client by square feet (1.43%)",
+          "source": {
+            "label": "BXP 10-K(2025年度)",
+            "label_en": "BXP 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1037540/000103754026000006/bxp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Top 20 Clients by Square Feet Our 20 largest clients by square feet as of December 31, 2025 were as follows: Client Square Feet (1) % of In-Service Portfolio (1) 1. Salesforce 891,231 2.13 % 2. Google 836,110 2.00 % 3. Fannie Mae 710,121 1.70 % 4. Akamai Technologies 658,578 1.58 % 5. Snap 607,287 1.45 % 6. Microsoft 599,200 1.43 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BIIB",
+      "ticker": "BIIB",
+      "name": "バイオジェン",
+      "name_en": "Biogen",
+      "sub": "バイオ医薬品",
+      "sub_en": "Biotech",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "床面積で9番目のテナント(1.01%)",
+          "text_en": "Ninth-largest client by square feet (1.01%)",
+          "source": {
+            "label": "BXP 10-K(2025年度)",
+            "label_en": "BXP 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1037540/000103754026000006/bxp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "7. Ropes & Gray 522,173 1.25 % 8. Kirkland & Ellis 511,174 1.22 % 9. Biogen 423,664 1.01 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MAR",
+      "ticker": "MAR",
+      "name": "マリオット・インターナショナル",
+      "name_en": "Marriott International",
+      "sub": "ホテル",
+      "sub_en": "Hotels",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "保有ホテルの運営会社",
+          "text_en": "Manages its one hotel property",
+          "source": {
+            "label": "BXP 10-K(2025年度)",
+            "label_en": "BXP 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1037540/000103754026000006/bxp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "our hotel property competes for guests with other hotels, some of which may have greater marketing and financial resources than are available to us and to the manager of our one hotel, Marriott International, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NPCE",
+      "ticker": "NPCE",
+      "name": "ニューロペース",
+      "name_en": "NeuroPace",
+      "sub": "医療機器",
+      "sub_en": "Medical devices",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "BXPの研究施設を賃借(賃貸借変更契約)",
+          "text_en": "Leases space from BXP under a lease modification agreement",
+          "source": {
+            "label": "NeuroPace 10-K(2024年度)",
+            "label_en": "NeuroPace 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1528287/000152828725000007/npce-20241231.htm",
+            "level": "official",
+            "date": "2025-03-04",
+            "quote": "Lease Modification Agreement, dated April 30, 2020, by and between the Company and BXP Research Park LP (f/k/a BP MV Research Park LLC)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "KLRA",
+      "ticker": "KLRA",
+      "name": "カイレラ・セラピューティクス",
+      "name_en": "Kailera Therapeutics",
+      "sub": "バイオ(肥満症)",
+      "sub_en": "Biotech (obesity)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "BXPのニューヨークの物件を賃借",
+          "text_en": "Leases space in a BXP New York property",
+          "source": {
+            "label": "Kailera Therapeutics S-1添付の賃貸借契約",
+            "label_en": "Kailera Therapeutics lease (S-1 exhibit)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2096997/000119312526128952/d113532dex1011.htm",
+            "level": "official",
+            "date": "2026-03-27",
+            "quote": "LANDLORD: BP THIRD AVENUE LLC, a Delaware limited liability company By: BOSTON PROPERTIES LIMITED PARTNERSHIP, a Delaware limited partnership, its sole member By: BXP, INC."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

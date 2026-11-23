@@ -1,0 +1,198 @@
+{
+  "root": {
+    "ticker": "CRH",
+    "name": "CRH",
+    "cik": 849395,
+    "name_en": "CRH"
+  },
+  "rows": [
+    {
+      "ja": "買収・事業売却",
+      "en": "Acquisitions & divestitures"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "CX",
+    "AMRZ",
+    "KNF"
+  ],
+  "companies": [
+    {
+      "id": "EcoMaterial",
+      "ticker": "Eco Material Technologies",
+      "name": "エコ・マテリアル・テクノロジーズ",
+      "name_en": "Eco Material Technologies",
+      "sub": "セメント代替材",
+      "sub_en": "Supplementary cementitious materials",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "北米最大のセメント代替材メーカーを21億ドルで買収(2025年9月)",
+          "text_en": "Acquired North America's leading SCM supplier for $2.1 billion (September 2025)",
+          "source": {
+            "label": "CRH 10-K(2025年度)",
+            "label_en": "CRH 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/849395/000162828026009043/crh-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Our largest acquisition in 2025 was in our Americas Materials Solutions segment where we acquired Eco Material, a leading supplier of SCMs in North America, for a total consideration of $2.1 billion."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Adbri",
+      "ticker": "Adbri",
+      "name": "アドブリ",
+      "name_en": "Adbri",
+      "sub": "建材(豪)",
+      "sub_en": "Building materials (Australia)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2024年に買収した豪州の建材会社",
+          "text_en": "Australian building materials company acquired in 2024",
+          "source": {
+            "label": "CRH 10-K(2025年度)",
+            "label_en": "CRH 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/849395/000162828026009043/crh-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "During 2024, the Company completed the acquisition of 38 other companies in addition to Hunter and Adbri."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Hunter",
+      "ticker": "Hunter",
+      "name": "ハンター",
+      "name_en": "Hunter",
+      "sub": "建材",
+      "sub_en": "Building materials",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2024年に買収した会社の一つ(Adbriと並ぶ主要案件)",
+          "text_en": "One of its main 2024 acquisitions, alongside Adbri",
+          "source": {
+            "label": "CRH 10-K(2025年度)",
+            "label_en": "CRH 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/849395/000162828026009043/crh-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "During 2024, the Company completed the acquisition of 38 other companies in addition to Hunter and Adbri."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MLM",
+      "ticker": "MLM",
+      "name": "マーティン・マリエッタ",
+      "name_en": "Martin Marietta Materials",
+      "sub": "骨材",
+      "sub_en": "Aggregates",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "CRHとの事業・資産の売買契約(2023年11月)",
+          "text_en": "Equity and asset purchase agreement with CRH (November 2023)",
+          "source": {
+            "label": "Martin Marietta 10-K(2024年度)",
+            "label_en": "Martin Marietta 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/916076/000095017025024770/mlm-20241231.htm",
+            "level": "official",
+            "date": "2025-02-21",
+            "quote": "Equity and Asset Purchase Agreement, dated as of November 20, 2023, among Martin Marietta Materials, Inc., CRH Americas Materials, Inc. and CRH plc"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CX",
+      "ticker": "CX",
+      "name": "セメックス",
+      "name_en": "Cemex",
+      "sub": "セメント(メキシコ)",
+      "sub_en": "Cement (Mexico)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Cemexが20-Fで、米国の主な競合の一社として挙げる",
+          "text_en": "Cemex names CRH among principal US competitors",
+          "source": {
+            "label": "Cemex 20-F(2025年度)",
+            "label_en": "Cemex 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1076378/000119312526177605/d120395d20f.htm",
+            "level": "official",
+            "date": "2026-04-24",
+            "quote": "As of December 31, 2025, our principal competitors in the United States were Holcim, CRH plc, Buzzi-Unicem SpA, Quikrete Holdings Inc., and Heidelberg Materials AG (\" Heidelberg \")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMRZ",
+      "ticker": "AMRZ",
+      "name": "アムライズ",
+      "name_en": "Amrize",
+      "sub": "セメント・建材(北米)",
+      "sub_en": "Cement & building materials",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Amrizeが10-Kで、米国の主な競合の一社として挙げる",
+          "text_en": "Amrize names CRH among principal US competitors",
+          "source": {
+            "label": "Amrize 10-K(2025年度)",
+            "label_en": "Amrize 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2035989/000203598926000017/holcim-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Our principal competitors in the United States are Cemex, Buzzi-Unicem, Heidelberg Materials and CRH, as well as numerous local and regional players."
+          }
+        }
+      ]
+    },
+    {
+      "id": "KNF",
+      "ticker": "KNF",
+      "name": "ナイフ・リバー",
+      "name_en": "Knife River",
+      "sub": "骨材・舗装",
+      "sub_en": "Aggregates & paving",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Knife Riverが10-Kで、大手の競合の一社として挙げる",
+          "text_en": "Knife River names CRH among large public aggregates competitors",
+          "source": {
+            "label": "Knife River 10-K(2024年度)",
+            "label_en": "Knife River 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1955520/000195552025000010/knf-20241231.htm",
+            "level": "official",
+            "date": "2025-02-21",
+            "quote": "we also face competition in some markets from large, publicly traded United States aggregates producers, including Cemex S.A.B. de C.V., CRH plc, Eagle Materials, Inc., Granite Construction, Inc."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

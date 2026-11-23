@@ -1,0 +1,312 @@
+{
+  "root": {
+    "ticker": "AA",
+    "name": "アルコア",
+    "cik": 1675149,
+    "name_en": "Alcoa"
+  },
+  "rows": [
+    {
+      "ja": "電力・合弁パートナー",
+      "en": "Power & joint venture partners",
+      "above": true
+    },
+    {
+      "ja": "旧グループ・取引先",
+      "en": "Former group & counterparties"
+    },
+    {
+      "ja": "競合(アルコアの10-Kに記載)",
+      "en": "Competitors (named in its 10-K)"
+    }
+  ],
+  "rivals": [
+    "RIO",
+    "CENX",
+    "NHY"
+  ],
+  "companies": [
+    {
+      "id": "RIO",
+      "ticker": "RIO",
+      "name": "リオ・ティント",
+      "name_en": "Rio Tinto",
+      "sub": "資源",
+      "sub_en": "Mining",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "無炭素製錬技術の合弁ELYSISを折半出資(各48.235%)",
+          "text_en": "Equal partner (48.235% each) in the ELYSIS zero-carbon smelting venture",
+          "source": {
+            "label": "Alcoa 10-K(2025年度)",
+            "label_en": "Alcoa 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1675149/000119312526077167/aa-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "ELYSIS ELYSIS ® Limited Partnership (ELYSIS) is between wholly-owned subsidiaries of Alcoa (48.235%) and Rio Tinto Alcan Inc."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "アルコアが10-Kで、アルミナ・地金の競合として挙げる",
+          "text_en": "Alcoa names Rio Tinto among alumina and aluminum competitors",
+          "source": {
+            "label": "Alcoa 10-K(2025年度)",
+            "label_en": "Alcoa 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1675149/000119312526077167/aa-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "We compete with commodity traders, a growing number of refineries in Asia (especially in China and Indonesia), and other alumina producers, such as South32, Rio Tinto, and Glencore."
+          }
+        }
+      ]
+    },
+    {
+      "id": "S32",
+      "ticker": "South32",
+      "name": "サウス32",
+      "name_en": "South32",
+      "sub": "資源(豪)",
+      "sub_en": "Mining (Australia)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ブラジルのAlumar製錬所を共同保有(South32が40%)",
+          "text_en": "Co-owns the Alumar smelter in Brazil (South32 holds 40%)",
+          "source": {
+            "label": "Alcoa 10-K(2025年度)",
+            "label_en": "Alcoa 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1675149/000119312526077167/aa-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "The smelter and casthouse are owned by Alcoa Alumínio (60%) and South32 (40%)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Maaden",
+      "ticker": "Ma'aden",
+      "name": "マアデン",
+      "name_en": "Ma'aden",
+      "sub": "資源(サウジ)",
+      "sub_en": "Mining (Saudi Arabia)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "サウジ合弁の持分25.1%をMa'aden株と引き換えに売却(2025年7月)",
+          "text_en": "Sold its 25.1% Saudi joint venture stake to Ma'aden for shares (July 2025)",
+          "source": {
+            "label": "Alcoa 10-K(2025年度)",
+            "label_en": "Alcoa 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1675149/000119312526077167/aa-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "In July 2025, Alcoa completed the sale of its full ownership interest of 25.1% in the Saudi Arabia joint venture, to Saudi Arabian Mining Company (Ma'aden)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Trento",
+      "ticker": "Trento EQT",
+      "name": "トレント・エクイティ",
+      "name_en": "Trento Equity Holdings",
+      "sub": "投資会社(スペイン)",
+      "sub_en": "Investor (Spain)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "スペインのSan Ciprián工場を支える合弁(アルコア75%)",
+          "text_en": "Joint venture to keep the San Ciprián complex in Spain running (Alcoa 75%)",
+          "source": {
+            "label": "Alcoa 10-K(2025年度)",
+            "label_en": "Alcoa 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1675149/000119312526077167/aa-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "On March 31, 2025, Alcoa and Trento Equity Holdings, S.L.U. (Trento EQT), formerly known as IGNIS Equity Holdings, SL, entered into a joint venture agreement"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Landsvirkjun",
+      "ticker": "Landsvirkjun",
+      "name": "ランズヴィルクユン",
+      "name_en": "Landsvirkjun",
+      "sub": "電力(アイスランド)",
+      "sub_en": "Power (Iceland)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "アイスランドの製錬所に水力電力を40年契約で供給",
+          "text_en": "Supplies hydroelectric power to its Iceland smelter under a 40-year contract",
+          "source": {
+            "label": "Alcoa 10-K(2025年度)",
+            "label_en": "Alcoa 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1675149/000119312526077167/aa-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Iceland Landsvirkjun, the Icelandic national power company, supplies competitively priced electricity from a hydroelectric facility to the smelter under a 40-year power contract"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Alumina",
+      "ticker": "Alumina Limited",
+      "name": "アルミナ・リミテッド",
+      "name_en": "Alumina Limited",
+      "sub": "AWAC合弁の相手(豪)",
+      "sub_en": "AWAC partner (Australia)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "AWAC合弁の40%を持っていたAlumina社を2024年8月に買収",
+          "text_en": "Acquired Alumina Limited, its 40% AWAC partner, in August 2024",
+          "source": {
+            "label": "Alcoa 10-K(2025年度)",
+            "label_en": "Alcoa 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1675149/000119312526077167/aa-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Alumina Limited Acquisition On August 1, 2024, Alcoa completed the acquisition of all of the ordinary shares of Alumina Limited"
+          }
+        }
+      ]
+    },
+    {
+      "id": "HWM",
+      "ticker": "HWM",
+      "name": "ハウメット・エアロスペース",
+      "name_en": "Howmet Aerospace",
+      "sub": "航空機部品",
+      "sub_en": "Aerospace components",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "旧アルコアから分かれた会社。「Alcoa」商標をホイールに使う独占ライセンスを持つ",
+          "text_en": "Split from the former Alcoa; exclusive licensee of the Alcoa name for wheels",
+          "source": {
+            "label": "Howmet Aerospace 10-K(2025年度)",
+            "label_en": "Howmet Aerospace 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/4281/000000428126000012/hwm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "pursuant to a Trademark License Agreement, is the exclusive licensee of the \"Alcoa\" name and logo for use with the wheels, hubs, and related products that we manufacture."
+          }
+        }
+      ]
+    },
+    {
+      "id": "KALU",
+      "ticker": "KALU",
+      "name": "カイザー・アルミナム",
+      "name_en": "Kaiser Aluminum",
+      "sub": "アルミ圧延",
+      "sub_en": "Aluminum rolling",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Warrick圧延工場の独立に向け、アルコアが電力インフラ整備費を負担",
+          "text_en": "Alcoa pays for power infrastructure to make Kaiser's Warrick mill self-sufficient",
+          "source": {
+            "label": "Kaiser Aluminum 10-K(2024年度)",
+            "label_en": "Kaiser Aluminum 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/811596/000095017025024313/kalu-20241231.htm",
+            "level": "official",
+            "date": "2025-02-20",
+            "quote": "Alcoa has agreed to pay for the development of infrastructure necessary for Warrick to obtain electricity from a third-party power supplier"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BTDR",
+      "ticker": "BTDR",
+      "name": "ビットディア",
+      "name_en": "Bitdeer Technologies",
+      "sub": "ビットコイン採掘",
+      "sub_en": "Bitcoin mining",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "テキサス州Rockdaleのアルコア旧工場用地をデータセンターとして賃借",
+          "text_en": "Leases its Rockdale, Texas datacenter site from Alcoa",
+          "source": {
+            "label": "Bitdeer 20-F(2025年度)",
+            "label_en": "Bitdeer 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1899123/000121390026049770/ea0282628-20f_bitdeer.htm",
+            "level": "official",
+            "date": "2026-04-30",
+            "quote": "Lease Agreement for the Datacenter in Rockdale, Texas In June 2018, Dory Creek, LLC, our subsidiary, entered into the Lease Agreement with Alcoa USA Corp."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CENX",
+      "ticker": "CENX",
+      "name": "センチュリー・アルミナム",
+      "name_en": "Century Aluminum",
+      "sub": "アルミ製錬",
+      "sub_en": "Aluminum smelting",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "アルコアが10-Kで、地金の競合として挙げる",
+          "text_en": "Alcoa names Century among aluminum competitors",
+          "source": {
+            "label": "Alcoa 10-K(2025年度)",
+            "label_en": "Alcoa 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1675149/000119312526077167/aa-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "aluminum producers, such as Emirates Global Aluminum, Norsk Hydro ASA, Rio Tinto, Century Aluminum, and Vedanta Aluminum Ltd."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NHY",
+      "ticker": "Norsk Hydro",
+      "name": "ノルスク・ハイドロ",
+      "name_en": "Norsk Hydro",
+      "sub": "アルミ(ノルウェー)",
+      "sub_en": "Aluminum (Norway)",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "アルコアが10-Kで、地金の競合として挙げる",
+          "text_en": "Alcoa names Norsk Hydro among aluminum competitors",
+          "source": {
+            "label": "Alcoa 10-K(2025年度)",
+            "label_en": "Alcoa 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1675149/000119312526077167/aa-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "aluminum producers, such as Emirates Global Aluminum, Norsk Hydro ASA, Rio Tinto, Century Aluminum, and Vedanta Aluminum Ltd."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
