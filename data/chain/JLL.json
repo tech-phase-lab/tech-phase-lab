@@ -1,0 +1,224 @@
+{
+  "root": {
+    "ticker": "JLL",
+    "name": "ジョーンズ・ラング・ラサール",
+    "cik": 1037976,
+    "name_en": "Jones Lang LaSalle"
+  },
+  "rows": [
+    {
+      "ja": "運用・提携",
+      "en": "Managed funds & partners",
+      "above": true
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "CWK",
+    "NMRK",
+    "MMI",
+    "EME"
+  ],
+  "companies": [
+    {
+      "id": "JLLIPT",
+      "ticker": "JLL IPT",
+      "name": "JLLインカム・プロパティ・トラスト",
+      "name_en": "JLL Income Property Trust",
+      "sub": "非上場REIT",
+      "sub_en": "Non-traded REIT",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "JLL子会社ラサールが外部運用会社として運用するREIT",
+          "text_en": "A REIT externally advised by LaSalle, a JLL subsidiary",
+          "source": {
+            "label": "JLL Income Property Trust 10-K(2024年度)",
+            "label_en": "JLL Income Property Trust 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1314152/000131415225000031/jllipt-20241231.htm",
+            "level": "official",
+            "date": "2025-03-14",
+            "quote": "We are managed by our Advisor, LaSalle, a subsidiary of our Sponsor, JLL (NYSE: JLL)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CWK",
+      "ticker": "CWK",
+      "name": "クッシュマン&ウェイクフィールド",
+      "name_en": "Cushman & Wakefield",
+      "sub": "商業不動産サービス",
+      "sub_en": "Commercial real estate services",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主要な競合としてJLLを挙げる",
+          "text_en": "Names JLL among its current primary competitors",
+          "source": {
+            "label": "Cushman & Wakefield 10-K(2024年度)",
+            "label_en": "Cushman & Wakefield 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1628369/000162836925000005/cwk-20241231.htm",
+            "level": "official",
+            "date": "2025-02-21",
+            "quote": "Our industry peer group is comprised of four global commercial real estate services companies publicly traded in the United States, representing our current primary competitors: Jones Lang LaSalle Incorporated (NYSE: JLL)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "NMRK",
+      "ticker": "NMRK",
+      "name": "ニューマーク",
+      "name_en": "Newmark Group",
+      "sub": "商業不動産サービス",
+      "sub_en": "Commercial real estate services",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "同様の事業を持つ大手競合にJLLを挙げる",
+          "text_en": "Names JLL among large multinational firms it competes with",
+          "source": {
+            "label": "Newmark 10-K(2024年度)",
+            "label_en": "Newmark 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1690680/000162828025009332/nmrk-20241231.htm",
+            "level": "official",
+            "date": "2025-03-03",
+            "quote": "We also compete with other large multi-national firms that have similar or overlapping service competencies to ours, including CBRE Group, Inc., Colliers International Group Inc., Cushman & Wakefield PLC, Jones Lang LaSalle Incorporated, and Savills plc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MMI",
+      "ticker": "MMI",
+      "name": "マーカス&ミリチャップ",
+      "name_en": "Marcus & Millichap",
+      "sub": "不動産仲介",
+      "sub_en": "Real estate brokerage",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合とみなす同業グループにJLLを含める",
+          "text_en": "Includes JLL in a peer group representing its primary competitors",
+          "source": {
+            "label": "Marcus & Millichap 10-K(2025年度)",
+            "label_en": "Marcus & Millichap 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1578732/000162828026012419/mmi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "The industry peer group is comprised of the following publicly-traded real estate services companies: CBRE, Colliers, Cushman, JLL, and Newmark (collectively \"Peer Group\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "EME",
+      "ticker": "EME",
+      "name": "EMCOR",
+      "name_en": "EMCOR Group",
+      "sub": "設備工事・ビル管理",
+      "sub_en": "Building services",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ビル管理サービスでJLLなど大手と競合",
+          "text_en": "Names JLL among large corporations in the building services field",
+          "source": {
+            "label": "EMCOR 10-K(2024年度)",
+            "label_en": "EMCOR 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/105634/000010563425000015/eme-20241231.htm",
+            "level": "official",
+            "date": "2025-02-26",
+            "quote": "a number of large corporations such as Amentum Services, Inc., IAP Worldwide Services, Inc., Fluor Corporation, Cushman & Wakefield plc, CBRE Group, Inc., Jones Lang LaSalle Incorporated, Sodexo, Inc., Aramark, and ABM Industries Incorporated are engaged in this field"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MMCP",
+      "ticker": "MMCP",
+      "name": "マグ・マイル・キャピタル",
+      "name_en": "Mag Mile Capital",
+      "sub": "不動産金融仲介",
+      "sub_en": "Real estate finance brokerage",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合にJLLを挙げる",
+          "text_en": "Names JLL among its primary competitors",
+          "source": {
+            "label": "Mag Mile Capital S-1(2025年2月)",
+            "label_en": "Mag Mile Capital S-1 (Feb 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1879293/000149315225005459/forms-1.htm",
+            "level": "official",
+            "date": "2025-02-07",
+            "quote": "Among our primary competitors are large national and global firms, such as Jones Lang LaSalle Incorporated (JLL), Cushman & Wakefield plc, Colliers International Group Inc., Savills plc, and Newmark Group Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LRHC",
+      "ticker": "LRHC",
+      "name": "ラ・ローザ・ホールディングス",
+      "name_en": "La Rosa Holdings",
+      "sub": "不動産仲介",
+      "sub_en": "Real estate brokerage",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "物件管理でJLLなど大手と競合",
+          "text_en": "Names JLL among major property managers it competes with",
+          "source": {
+            "label": "La Rosa Holdings S-1/A(2025年6月)",
+            "label_en": "La Rosa Holdings S-1/A (Jun 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1879403/000121390025050886/ea0244156-s1a1_larosa.htm",
+            "level": "official",
+            "date": "2025-06-03",
+            "quote": "In the property management arena, we compete against independent local property management companies and the major national and international commercial real estate property managers, such as Jones Lang LaSalle and Cushman & Wakefield plc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "UOKA",
+      "ticker": "UOKA",
+      "name": "MDJM",
+      "name_en": "MDJM",
+      "sub": "不動産サービス(英・中)",
+      "sub_en": "Real estate services (UK/China)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "英国事業はJLLなど大手と競合",
+          "text_en": "Its UK business competes with major global firms such as JLL",
+          "source": {
+            "label": "MDJM 20-F(2025年度)",
+            "label_en": "MDJM 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1741534/000110465926038521/mdjh-20251231x20f.htm",
+            "level": "official",
+            "date": "2026-04-01",
+            "quote": "The UK Market Mansions competes both with the five major global real estate companies with accumulated experiences and qualifications, such as Jones Lang LaSalle and Savills"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

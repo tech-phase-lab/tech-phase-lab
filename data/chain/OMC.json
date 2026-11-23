@@ -1,0 +1,300 @@
+{
+  "root": {
+    "ticker": "OMC",
+    "name": "オムニコム",
+    "cik": 29989,
+    "name_en": "Omnicom Group"
+  },
+  "rows": [
+    {
+      "ja": "供給元(上流)",
+      "en": "Suppliers (upstream)",
+      "above": true
+    },
+    {
+      "ja": "買収・顧客",
+      "en": "Acquisitions & clients"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "WPP",
+    "STGW",
+    "CINT",
+    "APPS"
+  ],
+  "companies": [
+    {
+      "id": "NTSK",
+      "ticker": "NTSK",
+      "name": "ネットスコープ",
+      "name_en": "Netskope",
+      "sub": "クラウドセキュリティ",
+      "sub_en": "Cloud security",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "代表的な顧客の一社にオムニコムを挙げる",
+          "text_en": "Lists Omnicom in a representative sampling of its customers",
+          "source": {
+            "label": "Netskope S-1(2025年8月)",
+            "label_en": "Netskope S-1 (Aug 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2063196/000095017025110855/ck0002063196-20250822.htm",
+            "level": "official",
+            "date": "2025-08-22",
+            "quote": "The following is a representative sampling of our customers: AMETEK Exclusive Networks Omnicom"
+          }
+        }
+      ]
+    },
+    {
+      "id": "IPG",
+      "ticker": "IPG",
+      "name": "インターパブリック",
+      "name_en": "Interpublic Group",
+      "sub": "広告代理店",
+      "sub_en": "Advertising agencies",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年にオムニコムが買収(BBDOと並ぶMcCannなどが傘下に)",
+          "text_en": "Acquired by Omnicom in 2025, bringing McCann, UM, Weber Shandwick and others",
+          "source": {
+            "label": "Omnicom 10-K(2025年度)",
+            "label_en": "Omnicom 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/29989/000002998926000006/omc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "The Company acquired The Interpublic Group of Companies, Inc. during 2025"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Ascential",
+      "ticker": "Ascential",
+      "name": "アセンシャル",
+      "name_en": "Ascential",
+      "sub": "デジタルコマース",
+      "sub_en": "Digital commerce",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "傘下のデジタルコマース事業フライホイールを約8億4,500万ドルで買収",
+          "text_en": "Omnicom bought its Flywheel digital commerce business for about $845 million",
+          "source": {
+            "label": "Omnicom 10-K(2025年度)",
+            "label_en": "Omnicom 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/29989/000002998926000006/omc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "On January 2, 2024, we acquired Flywheel Digital, the digital commerce business of Ascential plc, for a net cash purchase price of approximately $ 845 million."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ACHV",
+      "ticker": "ACHV",
+      "name": "アチーブ・ライフサイエンシズ",
+      "name_en": "Achieve Life Sciences",
+      "sub": "禁煙治療薬",
+      "sub_en": "Smoking-cessation drug",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "禁煙薬の米国発売に向けオムニコムと統合エージェンシー提携",
+          "text_en": "Partnered with Omnicom as integrated agency for the U.S. launch of its smoking-cessation drug",
+          "source": {
+            "label": "Achieve Life Sciences 10-K(2025年度)",
+            "label_en": "Achieve Life Sciences 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/949858/000119312526120690/achv-20251231.htm",
+            "level": "official",
+            "date": "2026-03-24",
+            "quote": "Furthermore, we have entered into a partnership with Omnicom to support the commercial launch of cytisinicline in the United States"
+          }
+        }
+      ]
+    },
+    {
+      "id": "WPP",
+      "ticker": "WPP",
+      "name": "WPP",
+      "name_en": "WPP",
+      "sub": "広告代理店(英)",
+      "sub_en": "Advertising agencies (UK)",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "直接の同業としてオムニコムなどと成長率を比べる",
+          "text_en": "Measures its growth against direct sector peers including Omnicom",
+          "source": {
+            "label": "WPP 20-F 添付資料(2025年度)",
+            "label_en": "WPP 20-F exhibit (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/806968/000162828026019643/exhibit158-aracompensati.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "relative to that of our direct sector peers (Dentsu, Havas, Omnicom, Publicis)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "STGW",
+      "ticker": "STGW",
+      "name": "スタッグウェル",
+      "name_en": "Stagwell",
+      "sub": "広告代理店",
+      "sub_en": "Advertising agencies",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "大手広告持株会社の競合にオムニコムを挙げる",
+          "text_en": "Names Omnicom among large global holding companies it competes with",
+          "source": {
+            "label": "Stagwell 10-K(2025年度)",
+            "label_en": "Stagwell 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/876883/000087688326000010/stgw-20251231.htm",
+            "level": "official",
+            "date": "2026-03-13",
+            "quote": "Stagwell's Brands compete for business and talent with the operating subsidiaries of large global holding companies such as Omnicom Group Inc., WPP plc, Publicis Groupe SA, Dentsu Inc. and Havas SA"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CINT",
+      "ticker": "CINT",
+      "name": "CI&T",
+      "name_en": "CI&T",
+      "sub": "デジタル変革支援",
+      "sub_en": "Digital transformation services",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合の一社にオムニコムを挙げる",
+          "text_en": "Names Omnicom among its other competitors",
+          "source": {
+            "label": "CI&T 20-F(2025年度)",
+            "label_en": "CI&T 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1868995/000155485526000248/cint-20251231.htm",
+            "level": "official",
+            "date": "2026-03-11",
+            "quote": "other competitors include digital agencies and consulting companies, such as Deloitte Digital, McKinsey & Company, Omnicom Group Inc., Publicis Sapient, NTT Data and WPP plc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "APPS",
+      "ticker": "APPS",
+      "name": "デジタル・タービン",
+      "name_en": "Digital Turbine",
+      "sub": "モバイル広告",
+      "sub_en": "Mobile advertising",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "メディア配信の競合にオムニコムを挙げる",
+          "text_en": "Names Omnicom among competitors of its media distribution platform",
+          "source": {
+            "label": "Digital Turbine 10-K(2026年3月期)",
+            "label_en": "Digital Turbine 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/317788/000162828026038115/apps-20260331.htm",
+            "level": "official",
+            "date": "2026-05-26",
+            "quote": "such as: Facebook, Snapchat, Unity Software (ironSource), WPP, Omnicom, Criteo, QuinStreet"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ATUS",
+      "ticker": "ATUS",
+      "name": "アルティスUSA",
+      "name_en": "Altice USA",
+      "sub": "ケーブルTV",
+      "sub_en": "Cable TV",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "広告収入の競合として広告代理店のオムニコムを挙げる",
+          "text_en": "Names advertising agencies such as Omnicom among competitors for ad revenue",
+          "source": {
+            "label": "Altice USA 10-K(2024年度)",
+            "label_en": "Altice USA 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1702780/000162828025005486/atus-20241231.htm",
+            "level": "official",
+            "date": "2025-02-13",
+            "quote": "advertising agencies (such as Omnicom Group), measurement platforms, and digital advertising platforms."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SMWB",
+      "ticker": "SMWB",
+      "name": "シミラーウェブ",
+      "name_en": "Similarweb",
+      "sub": "デジタル市場データ",
+      "sub_en": "Digital market data",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "広告代理店の競合にオムニコムを挙げる",
+          "text_en": "Names Omnicom among media buying and advertising agencies it competes with",
+          "source": {
+            "label": "Similarweb 20-F(2024年度)",
+            "label_en": "Similarweb 20-F (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1842731/000184273125000013/smwb-20241231.htm",
+            "level": "official",
+            "date": "2025-02-27",
+            "quote": "media buying and advertising agencies such as WPP plc, Omnicom Group"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SPTY",
+      "ticker": "SPTY",
+      "name": "スペシフィシティ",
+      "name_en": "Specificity",
+      "sub": "デジタル広告",
+      "sub_en": "Digital marketing",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "大手広告持株会社の競合にオムニコムを挙げる",
+          "text_en": "Names Omnicom among large holding companies it competes with",
+          "source": {
+            "label": "Specificity S-1(2025年10月)",
+            "label_en": "Specificity S-1 (Oct 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1840102/000152013825000306/spec-10102025_s1.htm",
+            "level": "official",
+            "date": "2025-10-14",
+            "quote": "We compete for business and talent with the operating subsidiaries of large global holding companies such as Omnicom Group Inc., Interpublic Group of Companies, Inc., WPP plc, Publicis Groupe SA, Dentsu Inc. and Havas SA"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

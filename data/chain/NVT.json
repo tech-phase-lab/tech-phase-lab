@@ -1,0 +1,224 @@
+{
+  "root": {
+    "ticker": "NVT",
+    "name": "エヌベント・エレクトリック",
+    "cik": 1720635,
+    "name_en": "nVent Electric"
+  },
+  "rows": [
+    {
+      "ja": "買収・売却",
+      "en": "Acquisitions & divestitures",
+      "above": true
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "THR",
+    "ATKR",
+    "FPS",
+    "ABB"
+  ],
+  "companies": [
+    {
+      "id": "AZZ",
+      "ticker": "AZZ",
+      "name": "AZZ",
+      "name_en": "AZZ",
+      "sub": "亜鉛めっき・金属塗装",
+      "sub_en": "Galvanizing & coatings",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "出資先AVAILの電気製品事業(配電盤・バスダクト)をnVentが約9.75億ドルで買収",
+          "text_en": "nVent bought the electrical products businesses of AVAIL, in which AZZ held a stake, for about $975 million",
+          "source": {
+            "label": "AZZ 10-K(2025年2月期)",
+            "label_en": "AZZ 10-K (FY ended Feb 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/8947/000000894725000046/azz-20250228.htm",
+            "level": "official",
+            "date": "2025-04-21",
+            "quote": "entered into a definitive agreement to sell the electrical enclosures, switchgear, and bus systems businesses (the \"Electrical Products Group\") of AVAIL to nVent Electric plc (\"nVent\"), for a purchase price of $ 975"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BBU",
+      "ticker": "BBU",
+      "name": "ブルックフィールド・ビジネス・パートナーズ",
+      "name_en": "Brookfield Business Partners",
+      "sub": "事業投資",
+      "sub_en": "Business investments",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "nVentの熱管理事業(現Chemelex)を買収",
+          "text_en": "Acquired nVent's thermal management business, now Chemelex",
+          "source": {
+            "label": "Brookfield Business Partners 発表(2025年4月)",
+            "label_en": "Brookfield Business Partners release (Apr 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1654795/000110465925035196/tm2512349d1_ex99-1.htm",
+            "level": "official",
+            "date": "2025-04-16",
+            "quote": "completed the acquisition of the Thermal Management Business of nVent Electric plc (the \"company\" or \"Chemelex\")"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ECM",
+      "ticker": "ECM",
+      "name": "ECMインダストリーズ",
+      "name_en": "ECM Industries",
+      "sub": "電気接続製品",
+      "sub_en": "Electrical connection products",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2023年に約11億ドルで買収",
+          "text_en": "Acquired in 2023 for about $1.1 billion",
+          "source": {
+            "label": "nVent 10-K(2025年度)",
+            "label_en": "nVent 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1720635/000162828026008608/nvt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "On May 18, 2023, as part of our Electrical Connections reporting segment, we completed the acquisition of ECM Investors, LLC, the parent of ECM Industries, LLC (\"ECM Industries\"), for approximately $1.1 billion in cash."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Trachte",
+      "ticker": "Trachte",
+      "name": "トラクテ",
+      "name_en": "Trachte",
+      "sub": "制御盤用筐体",
+      "sub_en": "Control building enclosures",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2024年に約7億ドルで買収",
+          "text_en": "Acquired in 2024 for about $0.7 billion",
+          "source": {
+            "label": "nVent 10-K(2025年度)",
+            "label_en": "nVent 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1720635/000162828026008608/nvt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "On July 16, 2024, we completed the acquisition of Trachte, LLC (\"Trachte\") as part of our Systems Protection reporting segment, for approximately $0.7 billion in cash."
+          }
+        }
+      ]
+    },
+    {
+      "id": "THR",
+      "ticker": "THR",
+      "name": "サーモン",
+      "name_en": "Thermon",
+      "sub": "産業用ヒーター",
+      "sub_en": "Industrial heat tracing",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "最大の競合をnVentの熱管理部門と記載(現在は売却済み)",
+          "text_en": "Called nVent's thermal management segment its most significant competitor (since sold)",
+          "source": {
+            "label": "Thermon 10-K(2024年3月期)",
+            "label_en": "Thermon 10-K (FY ended Mar 2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1489096/000148909624000099/thr-20240331.htm",
+            "level": "official",
+            "date": "2024-05-29",
+            "quote": "Our most significant competitor is the thermal management segment of nVent Electric plc (NYSE: NVT)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FPS",
+      "ticker": "FPS",
+      "name": "フォージェント・パワー・ソリューションズ",
+      "name_en": "Forgent Power Solutions",
+      "sub": "配電機器",
+      "sub_en": "Power distribution equipment",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "産業向け市場でnVentと競合",
+          "text_en": "Competes with nVent in the industrial market",
+          "source": {
+            "label": "Forgent Power Solutions 10-K(2026年6月期)",
+            "label_en": "Forgent Power Solutions 10-K (FY ended Jun 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2080126/000208012626000035/fps-20260630.htm",
+            "level": "official",
+            "date": "2026-09-15",
+            "quote": "In the Industrial market, we compete with nVent Electric plc;"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ATKR",
+      "ticker": "ATKR",
+      "name": "アトコア",
+      "name_en": "Atkore",
+      "sub": "電線管・ケーブル",
+      "sub_en": "Conduit & cable",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "安全・インフラ分野の競合にnVentを挙げる",
+          "text_en": "Names nVent among competitors in safety and infrastructure",
+          "source": {
+            "label": "Atkore 10-K(2024年9月期)",
+            "label_en": "Atkore 10-K (FY ended Sep 2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1666138/000166613824000164/atkr-20240930.htm",
+            "level": "official",
+            "date": "2024-11-21",
+            "quote": "Safety & Infrastructure : Zekelman Industries, Inc., Eaton Corporation plc, ABB Ltd., Hubbell Incorporated, nVent Electric plc., and Haydon Corporation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ABB",
+      "ticker": "ABB",
+      "name": "ABB",
+      "name_en": "ABB",
+      "sub": "電機(スイス)",
+      "sub_en": "Electrical equipment (Switzerland)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "電化事業の主な競合にnVentを挙げる",
+          "text_en": "Names nVent among principal competitors of its Electrification business",
+          "source": {
+            "label": "ABB 20-F(2023年度)",
+            "label_en": "ABB 20-F (FY2023)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1091587/000110465924026633/abb20231231.htm",
+            "level": "official",
+            "date": "2024-02-23",
+            "quote": "The Electrification Business area's principal competitors vary by product group and include Atkore, Chint, Eaton, Hager, Hubbell, Legrand, LS Electric, Mitsubishi Electric, nVent, Panasonic, Schneider Electric, Siemens and Vertiv."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
