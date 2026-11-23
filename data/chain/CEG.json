@@ -17,9 +17,15 @@
     {
       "ja": "共同保有・関連会社",
       "en": "Co-owners & affiliates"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
     }
   ],
-  "rivals": [],
+  "rivals": [
+    "VIASP"
+  ],
   "companies": [
     {
       "id": "MSFT",
@@ -161,6 +167,77 @@
             "quote": "except for Wyman, which is operated by the principal owner, NextEra Energy Resources LLC, a subsidiary of NextEra Energy, Inc.",
             "note": "小規模な石油・ガス資産で、この文では持分割合は書かれていません。",
             "note_en": "A small oil/gas asset; this sentence does not state the ownership percentage."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Calpine",
+      "ticker": "Calpine",
+      "name": "Calpine",
+      "sub": "ガス火力・地熱発電",
+      "sub_en": "Gas & geothermal power",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2026年1月にCalpineを買収(現金と株式)",
+          "text_en": "Acquired Calpine in a cash-and-stock deal in January 2026",
+          "source": {
+            "label": "Constellation 10-Q(2026年第3四半期)",
+            "label_en": "Constellation 10-Q (Q3 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1868275/000186827526000119/ceg-20260930.htm",
+            "level": "official",
+            "date": "2026-01-07",
+            "quote": "On January 7, 2026 (the Acquisition Date), we acquired all of the outstanding equity interests in Calpine in a cash and stock transaction"
+          }
+        }
+      ]
+    },
+    {
+      "id": "LSPower",
+      "ticker": "LS Power",
+      "name": "LS Power",
+      "sub": "発電・インフラ投資",
+      "sub_en": "Power & infrastructure investor",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "買収承認の条件として、PJMの発電所5か所を総額50億ドルでLS Powerに売却する契約",
+          "text_en": "Agreed to sell five PJM plants to LS Power for $5.0B, a divestiture required for the Calpine deal",
+          "source": {
+            "label": "Constellation 10-Q(2026年第3四半期)",
+            "label_en": "Constellation 10-Q (Q3 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1868275/000186827526000119/ceg-20260930.htm",
+            "level": "official",
+            "date": "2026-03",
+            "quote": "In March 2026, we entered into an agreement with LS Power whereby we will sell five generation assets in PJM to LS Power, which comprise approximately 4.4 GW of predominantly natural gas-fired generation capacity located in Delaware and Pennsylvania, for aggregate consideration of $ 5.0 billion before closing adjustments.",
+            "note": "売却は年内の完了予定で、まだ完了していません。",
+            "note_en": "The sale is expected to close by year-end and has not closed yet."
+          }
+        }
+      ]
+    },
+    {
+      "id": "VIASP",
+      "ticker": "VIASP",
+      "name": "Via Renewables",
+      "sub": "電力・ガス小売",
+      "sub_en": "Retail power & gas",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Via Renewablesが10-Kで、電力小売の競合としてConstellationを挙げる",
+          "text_en": "Via Renewables names Constellation among its electricity retail competitors",
+          "source": {
+            "label": "Via Renewables 10-K(2025年度)",
+            "label_en": "Via Renewables 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1606268/000160626826000013/spke-20251231.htm",
+            "level": "official",
+            "date": "2026-03-05",
+            "quote": "In the electricity sector, these competitors include larger, well-capitalized energy retailers such as Calpine Energy Solutions, LLC, Constellation Corporation, NRG Energy, Inc. and Vistra Corp."
           }
         }
       ]
