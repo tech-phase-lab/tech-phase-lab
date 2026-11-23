@@ -12,7 +12,7 @@ import * as valueLib from "../lib/research/value-check.ts";
 import * as whaleLib from "../lib/research/whale-moves.ts";
 import * as samplesLib from "../lib/research/pro-experience-samples.ts";
 import { TREASURE_NOTE, treasureHuntSample } from "../lib/research/pro-experience-sample-treasure.ts";
-import { whaleTracksSample } from "../lib/research/pro-experience-sample-whales.ts";
+import { WHALE_NOTE, whaleTracksSample } from "../lib/research/pro-experience-sample-whales.ts";
 import { proFeatures } from "../lib/research/pro-experience.ts";
 import { PRO_ONLY_FEATURES } from "../lib/research/pro-features.ts";
 import { OWNER_ACCOUNT_ID, PRODUCTION_OWNER_ACCOUNT_ID } from "../lib/membership/entitlements.ts";
@@ -197,7 +197,7 @@ const whaleScreen = load("../app/research/whales/screen.tsx", { ...shared, "@/li
 const Frame = load("../app/research/pro-experience/samples/frame.tsx", { "@/lib/research/pro-experience-samples": samplesLib }).default;
 const cardHead = load("../app/research/pro-experience/samples/card-head.tsx", { "@/lib/research/pro-experience-samples": samplesLib });
 const sampleStubs = { "../../stock-row-link": rowLink, "../../treasure-hunt/screen": treasureScreen, "../../whales/screen": whaleScreen, "./card-head": cardHead,
-  "@/lib/research/pro-experience-sample-treasure": { treasureHuntSample, TREASURE_NOTE }, "@/lib/research/pro-experience-sample-whales": { whaleTracksSample } };
+  "@/lib/research/pro-experience-sample-treasure": { treasureHuntSample, TREASURE_NOTE }, "@/lib/research/pro-experience-sample-whales": { whaleTracksSample, WHALE_NOTE } };
 const TreasureSample = load("../app/research/pro-experience/samples/treasure-hunt.tsx", sampleStubs).default;
 const WhaleSample = load("../app/research/pro-experience/samples/whale-tracks.tsx", sampleStubs).default;
 
@@ -282,6 +282,7 @@ test("Whale Tracks sample: four tabs of five, every sort button reorders, the da
     assert.match(panel(), ja ? /AAPL ?4\/18・新しい枠を発表 ?1,100億ドル/ : /AAPL ?Apr 18 · New authorization ?\$110B/);
     assert.match(panel(), ja ? /NVDA ?1〜3月・買い戻した金額 ?142億ドル/ : /NVDA ?Jan–Mar · Repurchased ?\$14B/);
     assert.equal(c.querySelectorAll("[class~=goldCard]").length, 2);
+    assert.equal(c.querySelector("[class~=sampleNote]").textContent, ja ? "※実際は約150銘柄のデータを見られます" : "*The full version covers about 150 stocks");
     assert.equal(c.querySelectorAll("a[href]").length, 0);
     const before = navigations;
     await click(c.querySelector("[data-pro-only]"));
@@ -299,4 +300,17 @@ test("the PRO pages themselves are unchanged: stocks link to their pages, すべ
   await ui.done();
   const frame = read("../app/research/pro-experience/samples/frame.tsx");
   assert.match(frame, /\{!CARD_HEAD_FEATURES\.includes\(feature\) && <div className=\{styles\.sampleHead\}>/);
+});
+
+test("Whale Tracks trial page: the gold note replaces the summary line under the sample; 約150 matches the ownership universe", async () => {
+  assert.deepEqual(WHALE_NOTE, { ja: "※実際は約150銘柄のデータを見られます", en: "*The full version covers about 150 stocks" });
+  const whale = proFeatures.find(f => f.id === "whale-tracks");
+  assert.deepEqual(whale.textBeforeImage, { ja: "", en: "" });
+  assert.deepEqual(whale.summary, { ja: "機関・空売り・自社株買いの裏側", en: "Funds, shorts & buybacks" }, "the list row keeps its summary");
+  const { spawnSync } = await import("node:child_process");
+  const out = spawnSync("python3", ["-c", "import ownership_data as o; print(len(o.universe()))"], { cwd: new URL("../scripts/research/", import.meta.url), encoding: "utf8" });
+  const count = Number(out.stdout.trim());
+  assert.ok(count >= 125 && count < 175, `about 150 stocks, got ${count}`);
+  const css = read("../app/research/pro-experience/samples/samples.module.css");
+  assert.match(css, /\.sampleNote\{[^}]*color:var\(--gold\)[^}]*font-size:14px/);
 });

@@ -1,0 +1,247 @@
+{
+  "root": {
+    "ticker": "XYL",
+    "name": "ザイレム",
+    "cik": 1524472,
+    "name_en": "Xylem"
+  },
+  "rows": [
+    {
+      "ja": "買収・出資",
+      "en": "Acquisitions & stakes",
+      "above": true
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "MWA",
+    "ITRI",
+    "BMI"
+  ],
+  "companies": [
+    {
+      "id": "Evoqua",
+      "ticker": "Evoqua",
+      "name": "エヴォクア",
+      "name_en": "Evoqua Water Technologies",
+      "sub": "水処理",
+      "sub_en": "Water treatment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "買収した水処理会社(統合を進めた)",
+          "text_en": "Water treatment company it acquired and integrated",
+          "source": {
+            "label": "Xylem 10-K(2025年度)",
+            "label_en": "Xylem 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1524472/000152447226000012/xyl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "The charges incurred primarily related to strengthening our competitive positioning and the integration of Evoqua Water Technologies Corp."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Idrica",
+      "ticker": "Idrica",
+      "name": "イドリカ",
+      "name_en": "Idrica",
+      "sub": "水道のデータ基盤",
+      "sub_en": "Water data platform",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2023年4月に25.1%を出資した戦略的合弁",
+          "text_en": "Took a 25.1% stake in April 2023 as a strategic joint venture",
+          "source": {
+            "label": "Xylem 10-K(2025年度)",
+            "label_en": "Xylem 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1524472/000152447226000012/xyl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "On April 26, 2023, we acquired a 25.1 % equity interest in Global Omnium Idrica S.L."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ROP",
+      "ticker": "ROP",
+      "name": "ローパー・テクノロジーズ",
+      "name_en": "Roper Technologies",
+      "sub": "産業ソフトウェア",
+      "sub_en": "Vertical software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Roperが出資するIndicorが、ポンプ事業(Cornell Pump・Roper Pump)を約14.6億ドルでXylemに売却する契約を締結",
+          "text_en": "Indicor, in which Roper holds a stake, agreed to sell its Cornell Pump and Roper Pump businesses to Xylem for about $1.46 billion",
+          "source": {
+            "label": "Roper Technologies 10-Q(2026年第3四半期)",
+            "label_en": "Roper Technologies 10-Q (Q3 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/882835/000088283526000047/rop-20260930.htm",
+            "level": "official",
+            "date": "2026-11-02",
+            "quote": "On August 10, 2026, Indicor entered into a definitive agreement to divest its flow controls businesses, Cornell Pump and Roper Pump (\"Indicor Flow Controls\"), to Xylem Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MWA",
+      "ticker": "MWA",
+      "name": "ミューラー・ウォーター・プロダクツ",
+      "name_en": "Mueller Water Products",
+      "sub": "水道インフラ機器",
+      "sub_en": "Water infrastructure products",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Muellerが10-Kで、補修市場の主な競合としてXylemを挙げる",
+          "text_en": "Mueller names Xylem among its primary competitors in the repair market",
+          "source": {
+            "label": "Mueller Water Products 10-K(2026年度)",
+            "label_en": "Mueller Water Products 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1350593/000135059326000050/mwa-20260930.htm",
+            "level": "official",
+            "date": "2026-11-18",
+            "quote": "Our primary competitors in the repair market are Romac Industries, Xylem Inc., Viking Johnson, AVK Group, JCM Industries, and Georg Fischer Ltd."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ITRI",
+      "ticker": "ITRI",
+      "name": "アイトロン",
+      "name_en": "Itron",
+      "sub": "スマートメーター",
+      "sub_en": "Smart meters",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Itronが10-Kで、主な競合としてXylemを挙げる",
+          "text_en": "Itron names Xylem among its primary competitors",
+          "source": {
+            "label": "Itron 10-K(2024年度)",
+            "label_en": "Itron 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/780571/000078057125000007/itri-20241231.htm",
+            "level": "official",
+            "date": "2025-02-25",
+            "quote": "Our primary competitors include LM Ericsson Telephone Company, Landis+Gyr, Advanced Energy Industries, and Xylem, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BMI",
+      "ticker": "BMI",
+      "name": "バジャー・メーター",
+      "name_en": "Badger Meter",
+      "sub": "水道メーター",
+      "sub_en": "Water meters",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Badger Meterが10-Kで、競合製品を持つ企業としてXylem傘下のSensusを挙げる",
+          "text_en": "Badger Meter names Xylem's Sensus among companies with competing offerings",
+          "source": {
+            "label": "Badger Meter 10-K(2024年度)",
+            "label_en": "Badger Meter 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/9092/000095017025020889/bmi-20241231.htm",
+            "level": "official",
+            "date": "2025-02-14",
+            "quote": "organizations such as Sensus (Xylem Inc.), Neptune (Roper Technologies), Hach (Veralto), Itron, Aclara (Hubbel), Mueller Water, Kamstrup and others have select elements of competitive hardware"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MEG",
+      "ticker": "MEG",
+      "name": "モントローズ・エンバイロメンタル",
+      "name_en": "Montrose Environmental",
+      "sub": "環境サービス",
+      "sub_en": "Environmental services",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Montroseが10-Kで、浄化・再利用事業の競合としてXylemを挙げる",
+          "text_en": "Montrose names Xylem among competitors of its remediation and reuse segment",
+          "source": {
+            "label": "Montrose Environmental 10-K(2024年度)",
+            "label_en": "Montrose Environmental 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1643615/000095017025030806/meg-20241231.htm",
+            "level": "official",
+            "date": "2025-03-03",
+            "quote": "Our Remediation and Reuse segment competitors include the environmental divisions or remediation segments of Tetra Tech, AECOM, Xylem, Veolia, Mead & Hunt"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BLGO",
+      "ticker": "BLGO",
+      "name": "バイオラルゴ",
+      "name_en": "BioLargo",
+      "sub": "水処理技術",
+      "sub_en": "Water treatment tech",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "BioLargoが10-Kで、自社の処理システムの競合メーカーとしてXylemを挙げる",
+          "text_en": "BioLargo names Xylem among makers of systems its AEC technology competes with",
+          "source": {
+            "label": "BioLargo 10-K(2025年度)",
+            "label_en": "BioLargo 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/880242/000143774926006926/blgo20251231_10k.htm",
+            "level": "official",
+            "date": "2026-03-04",
+            "quote": "Our AEC system competes against granular activated carbon, ion-exchange and reverse osmosis systems made by companies such as Veolia, AECOM, Xylem and Pentair."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FELE",
+      "ticker": "FELE",
+      "name": "フランクリン・エレクトリック",
+      "name_en": "Franklin Electric",
+      "sub": "ポンプ・水関連機器",
+      "sub_en": "Pumps & water systems",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Franklin Electricの契約書で、「直接の競合」の一社としてXylemを定義",
+          "text_en": "A Franklin Electric agreement defines Xylem as one of its direct competitors",
+          "source": {
+            "label": "Franklin Electric 10-Q添付契約(2025年第1四半期)",
+            "label_en": "Franklin Electric 10-Q exhibit agreement (Q1 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/38725/000003872525000084/a2025q1form10qex102.htm",
+            "level": "official",
+            "date": "2025-05-01",
+            "quote": "\"Direct Competitor\" is defined as, and expressly limited to any of the following, including their affiliates and assigns: Lorentz, Pentair, Grundfos, Xylem"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

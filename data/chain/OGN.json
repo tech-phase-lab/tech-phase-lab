@@ -1,0 +1,238 @@
+{
+  "root": {
+    "ticker": "OGN",
+    "name": "オルガノン",
+    "cik": 1821825,
+    "name_en": "Organon"
+  },
+  "rows": [
+    {
+      "ja": "導入元・提携先",
+      "en": "Licensors & partners"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "MRK",
+      "ticker": "MRK",
+      "name": "メルク",
+      "name_en": "Merck & Co.",
+      "sub": "製薬(旧親会社)",
+      "sub_en": "Pharmaceuticals (former parent)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "避妊インプラント技術の用途拡大でライセンス契約",
+          "text_en": "License agreement expanding fields for the Nexplanon technology",
+          "source": {
+            "label": "Organon 10-K(2025年度)",
+            "label_en": "Organon 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1821825/000162828026011125/ogn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "We are also party to a separate licensing agreement with Merck that provides a limited expansion of the fields for which we may use the underlying technology of Nexplanon / Implanon NXT beyond contraception"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SamsungBioepis",
+      "ticker": "Samsung Bioepis",
+      "name": "サムスン・バイオエピス",
+      "name_en": "Samsung Bioepis",
+      "sub": "バイオシミラー(韓)",
+      "sub_en": "Biosimilars (Korea)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "複数のバイオシミラーを共同開発・販売",
+          "text_en": "Develops and commercializes multiple biosimilars with Organon",
+          "source": {
+            "label": "Organon 10-K(2025年度)",
+            "label_en": "Organon 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1821825/000162828026011125/ogn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "We are party to an agreement with Samsung Bioepis (the \"Samsung Bioepis Agreement\") to develop and commercialize multiple pre-specified biosimilar candidates"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Henlius",
+      "ticker": "Henlius",
+      "name": "復宏漢霖",
+      "name_en": "Shanghai Henlius Biotech",
+      "sub": "バイオシミラー(中)",
+      "sub_en": "Biosimilars (China)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "パージェタ・プラリア後続品候補の世界販売権を導入",
+          "text_en": "In-licensed worldwide rights (ex-China) to HLX11 and HLX14 biosimilars",
+          "source": {
+            "label": "Organon 10-K(2025年度)",
+            "label_en": "Organon 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1821825/000162828026011125/ogn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "we are party to a license agreement with Henlius, whereby we have worldwide commercialization rights, in countries except for China (including Hong Kong, Macau and Taiwan) for biosimilar candidates HLX11 referencing Perjeta , and HLX14, referencing Prolia/Xgeva ."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BIIB",
+      "ticker": "BIIB",
+      "name": "バイオジェン",
+      "name_en": "Biogen",
+      "sub": "バイオ医薬",
+      "sub_en": "Biotech",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "トシリズマブ後続品Tofidenceを取得し5,100万ドルを支払い",
+          "text_en": "Paid $51 million upfront for Tofidence",
+          "source": {
+            "label": "Organon 10-K(2025年度)",
+            "label_en": "Organon 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1821825/000162828026011125/ogn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Under the terms of the agreement with Biogen, we paid an upfront payment of $51 million in July 2025"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BioThera",
+      "ticker": "Bio-Thera",
+      "name": "百奥泰",
+      "name_en": "Bio-Thera Solutions",
+      "sub": "バイオ医薬(中)",
+      "sub_en": "Biopharma (China)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Tofidenceの開発元。売上連動のロイヤルティを支払う",
+          "text_en": "Developer of Tofidence; Organon owes tiered royalties",
+          "source": {
+            "label": "Organon 10-K(2025年度)",
+            "label_en": "Organon 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1821825/000162828026011125/ogn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "tiered annual net sales milestone payments of up to $45 million from a previous in-license arrangement with Bio-Thera Solutions Ltd., the product developer for Tofidence"
+          }
+        }
+      ]
+    },
+    {
+      "id": "LLY",
+      "ticker": "LLY",
+      "name": "イーライリリー",
+      "name_en": "Eli Lilly",
+      "sub": "製薬",
+      "sub_en": "Pharmaceuticals",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "片頭痛薬エムガルティの販売契約",
+          "text_en": "Distribution agreement for the migraine drug Emgality",
+          "source": {
+            "label": "Organon 10-K(2025年度)",
+            "label_en": "Organon 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1821825/000162828026011125/ogn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "We are party to a distribution agreement with Eli Lilly (\"Lilly\") for Emgality"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Genentech",
+      "ticker": "Genentech",
+      "name": "ジェネンテック",
+      "name_en": "Genentech",
+      "sub": "バイオ医薬",
+      "sub_en": "Biotech",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "和解・ライセンス契約でHLX11を2028年後半に米国発売予定",
+          "text_en": "Settlement and license lets Organon launch HLX11 in the U.S. in late 2028",
+          "source": {
+            "label": "Organon 10-K(2025年度)",
+            "label_en": "Organon 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1821825/000162828026011125/ogn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "In accordance with a settlement and license agreement with Genentech, Inc. and related parties (\"Genentech\") that grants license rights under Genentech's intellectual property to commercialize HLX11"
+          }
+        }
+      ]
+    },
+    {
+      "id": "DARE",
+      "ticker": "DARE",
+      "name": "ダレ・バイオサイエンシズ",
+      "name_en": "Daré Bioscience",
+      "sub": "女性医療",
+      "sub_en": "Women's health",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "細菌性膣症薬Xaciatoの導入元",
+          "text_en": "Licensor of the bacterial vaginosis drug Xaciato",
+          "source": {
+            "label": "Organon 10-K(2025年度)",
+            "label_en": "Organon 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1821825/000162828026011125/ogn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "which is licensed through an agreement with Daré Biosciences."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Cirqle",
+      "ticker": "Cirqle",
+      "name": "サークル・バイオメディカル",
+      "name_en": "Cirqle Biomedical",
+      "sub": "避妊薬開発",
+      "sub_en": "Contraceptive R&D",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "非ホルモン避妊薬の研究提携と独占ライセンス",
+          "text_en": "Research collaboration and exclusive license for a contraceptive candidate",
+          "source": {
+            "label": "Organon 10-K(2025年度)",
+            "label_en": "Organon 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1821825/000162828026011125/ogn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "On July 27, 2022, we entered into a research collaboration and exclusive license agreement with Cirqle Biomedical (\"Cirqle\")"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,243 @@
+{
+  "root": {
+    "ticker": "OSW",
+    "name": "ワンスパワールド",
+    "cik": 1758488,
+    "name_en": "OneSpaWorld"
+  },
+  "rows": [
+    {
+      "ja": "供給元",
+      "en": "Suppliers",
+      "above": true
+    },
+    {
+      "ja": "クルーズ会社(運営先)",
+      "en": "Cruise line partners"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "ELEMIS",
+      "ticker": "ELEMIS",
+      "name": "エレミス",
+      "name_en": "ELEMIS",
+      "sub": "スキンケア(英)",
+      "sub_en": "Skincare (UK)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "スキンケア製品の独占供給契約(残り約5年)",
+          "text_en": "Exclusive supply agreement for skincare products, about five years remaining",
+          "source": {
+            "label": "OneSpaWorld 10-K(2025年度)",
+            "label_en": "OneSpaWorld 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1758488/000119312526062456/osw-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "We have an exclusive supply agreement with ELEMIS with a remaining term of approximately five years as of December 31, 2025"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CCL",
+      "ticker": "CCL",
+      "name": "カーニバル",
+      "name_en": "Carnival",
+      "sub": "クルーズ",
+      "sub_en": "Cruises",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "カーニバル、プリンセス、ホーランド・アメリカの船上スパを運営",
+          "text_en": "Runs spas on Carnival, Princess and Holland America ships",
+          "source": {
+            "label": "OneSpaWorld 10-K(2025年度)",
+            "label_en": "OneSpaWorld 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1758488/000119312526062456/osw-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "Our cruise line relationships average over 20 years and encompass substantially all of the major global cruise lines, including Carnival Cruise Line, Royal Caribbean Cruises, Princess Cruises, Norwegian Cruise Line, Celebrity Cruises, and Holland America, among many others, as well as recent additions to the industry, such as Virgin Voyages."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RCL",
+      "ticker": "RCL",
+      "name": "ロイヤル・カリビアン",
+      "name_en": "Royal Caribbean",
+      "sub": "クルーズ",
+      "sub_en": "Cruises",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ロイヤル・カリビアンとセレブリティの契約を更新・延長",
+          "text_en": "Renewed and extended agreements with Royal Caribbean and Celebrity",
+          "source": {
+            "label": "OneSpaWorld 10-K(2025年度)",
+            "label_en": "OneSpaWorld 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1758488/000119312526062456/osw-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "Since August 2021, we have renewed and extended agreements with existing cruise line partners, including Azamara, Norwegian Cruise Line, for all ships across their three brands, Royal Caribbean Cruises, and Celebrity Cruises."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NCLH",
+      "ticker": "NCLH",
+      "name": "ノルウェージャン・クルーズライン",
+      "name_en": "Norwegian Cruise Line",
+      "sub": "クルーズ",
+      "sub_en": "Cruises",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "3ブランド全船の契約を更新・延長",
+          "text_en": "Renewed agreements covering all ships across its three brands",
+          "source": {
+            "label": "OneSpaWorld 10-K(2025年度)",
+            "label_en": "OneSpaWorld 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1758488/000119312526062456/osw-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "Since August 2021, we have renewed and extended agreements with existing cruise line partners, including Azamara, Norwegian Cruise Line, for all ships across their three brands"
+          }
+        }
+      ]
+    },
+    {
+      "id": "VirginVoyages",
+      "ticker": "Virgin Voyages",
+      "name": "ヴァージン・ボヤージュ",
+      "name_en": "Virgin Voyages",
+      "sub": "クルーズ",
+      "sub_en": "Cruises",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "新興クルーズ会社の取引先",
+          "text_en": "Newer cruise line partner",
+          "source": {
+            "label": "OneSpaWorld 10-K(2025年度)",
+            "label_en": "OneSpaWorld 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1758488/000119312526062456/osw-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "Our cruise line relationships average over 20 years and encompass substantially all of the major global cruise lines, including Carnival Cruise Line, Royal Caribbean Cruises, Princess Cruises, Norwegian Cruise Line, Celebrity Cruises, and Holland America, among many others, as well as recent additions to the industry, such as Virgin Voyages."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Azamara",
+      "ticker": "Azamara",
+      "name": "アザマラ",
+      "name_en": "Azamara",
+      "sub": "クルーズ",
+      "sub_en": "Cruises",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "契約を更新・延長",
+          "text_en": "Renewed and extended its agreement",
+          "source": {
+            "label": "OneSpaWorld 10-K(2025年度)",
+            "label_en": "OneSpaWorld 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1758488/000119312526062456/osw-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "Since August 2021, we have renewed and extended agreements with existing cruise line partners, including Azamara"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Adora",
+      "ticker": "Adora Cruises",
+      "name": "アドラ・クルーズ",
+      "name_en": "Adora Cruises",
+      "sub": "クルーズ(中)",
+      "sub_en": "Cruises (China)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "新たに契約したクルーズ会社",
+          "text_en": "New cruise line partner",
+          "source": {
+            "label": "OneSpaWorld 10-K(2025年度)",
+            "label_en": "OneSpaWorld 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1758488/000119312526062456/osw-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "we have entered into agreements with new cruise line partners, including Adora Cruises, Aroya Cruises, Crystal Cruises, and Mitsui Ocean Cruises."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Crystal",
+      "ticker": "Crystal Cruises",
+      "name": "クリスタル・クルーズ",
+      "name_en": "Crystal Cruises",
+      "sub": "クルーズ",
+      "sub_en": "Cruises",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "新たに契約したクルーズ会社",
+          "text_en": "New cruise line partner",
+          "source": {
+            "label": "OneSpaWorld 10-K(2025年度)",
+            "label_en": "OneSpaWorld 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1758488/000119312526062456/osw-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "we have entered into agreements with new cruise line partners, including Adora Cruises, Aroya Cruises, Crystal Cruises, and Mitsui Ocean Cruises."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MitsuiOcean",
+      "ticker": "Mitsui Ocean Cruises",
+      "name": "三井オーシャンクルーズ",
+      "name_en": "Mitsui Ocean Cruises",
+      "sub": "クルーズ",
+      "sub_en": "Cruises",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "新たに契約したクルーズ会社",
+          "text_en": "New cruise line partner",
+          "source": {
+            "label": "OneSpaWorld 10-K(2025年度)",
+            "label_en": "OneSpaWorld 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1758488/000119312526062456/osw-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "we have entered into agreements with new cruise line partners, including Adora Cruises, Aroya Cruises, Crystal Cruises, and Mitsui Ocean Cruises."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,199 @@
+{
+  "root": {
+    "ticker": "WSM",
+    "name": "ウィリアムズ・ソノマ",
+    "cik": 719955,
+    "name_en": "Williams-Sonoma"
+  },
+  "rows": [
+    {
+      "ja": "仕入先・買収・物流拠点の貸主",
+      "en": "Suppliers, acquisitions & DC landlord",
+      "above": true
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "W",
+    "ARHS",
+    "MLKN"
+  ],
+  "companies": [
+    {
+      "id": "LCUT",
+      "ticker": "LCUT",
+      "name": "ライフタイム・ブランズ",
+      "name_en": "Lifetime Brands",
+      "sub": "キッチン用品",
+      "sub_en": "Kitchenware",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Lifetime Brandsの製品の販売先(専門店)の一社がWilliams Sonoma",
+          "text_en": "Williams Sonoma is one of the specialty stores that sell Lifetime Brands products",
+          "source": {
+            "label": "Lifetime Brands 10-K(2025年度)",
+            "label_en": "Lifetime Brands 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/874396/000087439626000008/lcut-20251231.htm",
+            "level": "official",
+            "date": "2026-03-12",
+            "quote": "specialty stores (such as Williams Sonoma and Dunelm)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Dormify",
+      "ticker": "Dormify",
+      "name": "ドーミファイ",
+      "name_en": "Dormify",
+      "sub": "寮・小部屋向けインテリア",
+      "sub_en": "Dorm & small-space decor",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年に知的財産を取得し、新ブランドとして立ち上げ中",
+          "text_en": "Acquired its intellectual property in 2025 and is launching it as a new brand",
+          "source": {
+            "label": "Williams-Sonoma 10-K(2025年度)",
+            "label_en": "Williams-Sonoma 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/719955/000071995526000059/wsm-20260201.htm",
+            "level": "official",
+            "date": "2026-03-26",
+            "quote": "For example, in 2025, we acquired the intellectual property of Dormify and are in the process of launching it as a new brand."
+          }
+        }
+      ]
+    },
+    {
+      "id": "JLLIPT",
+      "ticker": "JLL Income Property Trust",
+      "name": "JLLインカム・プロパティ・トラスト",
+      "name_en": "JLL Income Property Trust",
+      "sub": "不動産投資",
+      "sub_en": "Real estate investment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Williams-Sonomaに物流センター2か所(トーントン、ウエスト・フェニックス)を賃貸する主要テナント",
+          "text_en": "Leases two distribution centers (Taunton and West Phoenix) to Williams-Sonoma, a top tenant",
+          "source": {
+            "label": "JLL Income Property Trust 10-K(2025年度)",
+            "label_en": "JLL Income Property Trust 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1314152/000131415226000030/jllipt-20251231.htm",
+            "level": "official",
+            "date": "2026-03-26",
+            "quote": "Williams-Sonoma Taunton Distribution Center and West Phoenix Distribution Center Home Products Retailer"
+          }
+        }
+      ]
+    },
+    {
+      "id": "W",
+      "ticker": "W",
+      "name": "ウェイフェア",
+      "name_en": "Wayfair",
+      "sub": "家具のネット通販",
+      "sub_en": "Online furniture",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Wayfairが10-Kで、競合の専門小売としてWilliams Sonomaを挙げる",
+          "text_en": "Wayfair names Williams Sonoma among competing specialty retailers",
+          "source": {
+            "label": "Wayfair 10-K(2025年度)",
+            "label_en": "Wayfair 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1616707/000161670726000027/w-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Room & Board, Serena & Lily, TJX Companies and Williams Sonoma;"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ARHS",
+      "ticker": "ARHS",
+      "name": "アーハウス",
+      "name_en": "Arhaus",
+      "sub": "高級家具",
+      "sub_en": "Premium furniture",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Arhausが10-Kで、競合の家具小売としてWilliams Sonomaを挙げる",
+          "text_en": "Arhaus names Williams Sonoma among competing home furnishing retailers",
+          "source": {
+            "label": "Arhaus 10-K(2025年度)",
+            "label_en": "Arhaus 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1875444/000187544426000010/arhs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "We also compete with national and regional home furnishing retailers and department showrooms, including RH, Room & Board, Serena and Lily, Williams Sonoma and Crate & Barrel."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MLKN",
+      "ticker": "MLKN",
+      "name": "ミラーノール",
+      "name_en": "MillerKnoll",
+      "sub": "家具",
+      "sub_en": "Furniture",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "MillerKnollが10-Kで、競合としてWilliams-Sonomaを挙げる",
+          "text_en": "MillerKnoll names Williams-Sonoma among its competitors",
+          "source": {
+            "label": "MillerKnoll 10-K(2026年度)",
+            "label_en": "MillerKnoll 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/66382/000006638226000092/mlkn-20260530.htm",
+            "level": "official",
+            "date": "2026-07-20",
+            "quote": "These competitors include companies such as Arhaus, Inc., Crate & Barrel Holdings, Inc., RH, Room & Board, Inc., Wayfair Inc., and Williams-Sonoma, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "KIRK",
+      "ticker": "KIRK",
+      "name": "カークランズ",
+      "name_en": "Kirkland's",
+      "sub": "インテリア雑貨",
+      "sub_en": "Home decor",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Kirkland'sが10-Kで、主な競合としてWilliams-Sonomaを挙げる",
+          "text_en": "Kirkland's names Williams-Sonoma among its main competitors",
+          "source": {
+            "label": "Kirkland's 10-K(2024年度)",
+            "label_en": "Kirkland's 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1056285/000095017025062753/kirk-20250201.htm",
+            "level": "official",
+            "date": "2025-05-02",
+            "quote": "Some of our main competitors include HomeGoods, HomeSense, Walmart, World Market, Crate & Barrel, Williams-Sonoma, Inc."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

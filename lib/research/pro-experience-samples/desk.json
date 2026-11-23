@@ -110,7 +110,7 @@
     {
      "type": "highlight",
      "section": "market",
-     "text": "数字が良くても、株価は[red]次の見通し[/red]で動きます。"
+     "text": "数字が良くても、株価は\n[red]次の見通し[/red]で動きます。"
     },
     {
      "type": "schedule",
@@ -178,7 +178,7 @@
     {
      "type": "highlight",
      "section": "market",
-     "text": "Even with good numbers, the stock moves on the [red]next outlook[/red]."
+     "text": "Even with good numbers,\nthe stock moves on the [red]next outlook[/red]."
     },
     {
      "type": "schedule",

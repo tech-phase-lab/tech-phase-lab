@@ -168,3 +168,16 @@ test('the repeated "competes with <root>" sentence is not drawn on rival cards, 
   const text = specific.companies.flatMap(company => company.relations).find(relation => relation.type === 'rival' && relation.text !== `${specific.root.name}と競合する`).text;
   assert.ok(renderToStaticMarkup(createElement(StockChainMap, { data: specific, lang: 'ja' })).includes(text.replace(/&/g, '&amp;')));
 });
+
+test('the PRO tour sample leaves out 「05 競合は？」 and numbers the map heading 05; the stock page keeps 05 rivals and 06 map', () => {
+  const nvda = chain.chainDataFor('NVDA');
+  for (const lang of ['ja', 'en']) {
+    const rivals = lang === 'ja' ? '競合は？' : 'Who competes with it?', map = lang === 'ja' ? 'どこと繋がる？' : 'Who does it work with?';
+    const page = renderToStaticMarkup(createElement(StockChainMap, { data: nvda, lang }));
+    assert.ok(page.includes(`<span>05</span>${rivals}`) && page.includes(`<span>06</span>${map}`));
+    const sample = renderToStaticMarkup(createElement(StockChainMap, { data: nvda, lang, sample: true }));
+    assert.ok(!sample.includes(rivals) && sample.includes(`<span>05</span>${map}`) && !sample.includes('<span>06</span>'));
+  }
+  const ui = readFileSync(new URL('../app/research/pro-experience/samples/relation-map.tsx', import.meta.url), 'utf8');
+  assert.match(ui, /<StockChainMap [^>]*\bsample \/>/);
+});

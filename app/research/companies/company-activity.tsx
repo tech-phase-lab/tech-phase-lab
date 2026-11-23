@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState, useId } from "react";
 import type { Language } from "@/lib/research/data";
-import { availableNewsPayload, type GeneralNewsFeed } from "@/lib/research/general-news";
+import { availableNewsPayload, type GeneralNewsFeed, type GeneralNewsItem } from "@/lib/research/general-news";
 import { officialNewsDisplay, shownInLanguage } from "@/lib/research/news-presentation";
 import { analystNewsDisplay } from "@/lib/research/analyst-news";
 import { officialTime } from "@/lib/research/news-time";
@@ -38,16 +38,19 @@ function timeCell(row: Row, lang: Language) {
 
 // Reads the existing public feed only; collection, translation and publication
 // rules remain owned by the news pipeline. This is a recent window, not history.
-export default function CompanyActivity({ ticker, lang }: { ticker: string; lang: Language }) {
-  const [data, setData] = useState<GeneralNewsFeed | null>(null);
+/** `sample` (the PRO feature tour's 監視22銘柄): saved made-up items at a fixed time, shown as PRO sees them. Nothing is fetched, no
+ * deep-analysis panel or bell is drawn, and the visitor's real "seen" marks for the stock are left alone. */
+export type ActivitySample = { items: GeneralNewsItem[]; checkedAt: string };
+export default function CompanyActivity({ ticker, lang, sample }: { ticker: string; lang: Language; sample?: ActivitySample }) {
+  const [data, setData] = useState<GeneralNewsFeed | null>(sample ? { ok: true, enabled: true, items: sample.items } : null);
   // Until PRO (or the owner) is confirmed this panel is the FREE version: 30 minutes behind, the latest five, headlines only.
   const memberPlan = useMemberDisplay();
   const ownerAccount = useOwnerAccount();
   const ownerRole = useResearchOwner();
-  const full = memberPlan === "pro" || ownerAccount || ownerRole;
+  const full = !!sample || memberPlan === "pro" || ownerAccount || ownerRole;
   const [failed, setFailed] = useState(false);
   const [attempt, setAttempt] = useState(0);
-  const [checkedAt, setCheckedAt] = useState<string | null>(null);
+  const [checkedAt, setCheckedAt] = useState<string | null>(sample?.checkedAt ?? null);
   const ja = lang === "ja";
   const [open, setOpen] = useState(false);
   // NEW marks and the blinking dot/badge follow two rules: an item that appeared
@@ -62,7 +65,9 @@ export default function CompanyActivity({ ticker, lang }: { ticker: string; lang
   const wireTracker = useRef(createWatchTracker());
   const bodyId = useId();
   const markFresh = (ids: string[]) => { if (ids.length) setUnread(previous => new Set([...previous, ...ids])); };
+  const live = !sample;
   useEffect(() => {
+    if (!live) return;
     const poller = createNewsPoller({
       push: true,
       load: async signal => {
@@ -84,11 +89,12 @@ export default function CompanyActivity({ ticker, lang }: { ticker: string; lang
     poller.start(0);
     const stop = observePageActivity(() => { setPaused(false); poller.resume(); }, () => { setPaused(true); poller.pause(); });
     return () => { stop(); poller.stop(); };
-  }, [attempt, ticker]);
+  }, [attempt, ticker, live]);
   const [wire, setWire] = useState<CompanyWireItem[]>([]);
   useEffect(() => {
     // Wire headlines are a separate, lower-trust lane: a failure here never
     // affects the verified list.
+    if (!live) return;
     let alive = true, timer: ReturnType<typeof setInterval> | undefined;
     const load = async () => {
       try {
@@ -103,7 +109,7 @@ export default function CompanyActivity({ ticker, lang }: { ticker: string; lang
     const stop = observePageActivity(() => { void load(); timer ??= setInterval(load, 60_000); }, () => { clearInterval(timer); timer = undefined; });
     void load(); timer = setInterval(load, 60_000);
     return () => { alive = false; clearInterval(timer); stop(); };
-  }, [ticker]);
+  }, [ticker, live]);
   const clockNow = checkedAt ? Date.parse(checkedAt) : Date.now();
   const wireLabel = (item: CompanyWireItem) => `${item.origin === "wire" ? (ja ? "企業・配信会社" : "Company / wire") : item.origin === "third-party" ? (ja ? "第三者" : "Third party") : (ja ? "発信元不明" : "Source unknown")}${item.publisher ? ` · ${item.publisher}` : ""}`;
   const wireRows = wire.filter(item => !ja || item.titleJa);
@@ -128,7 +134,7 @@ export default function CompanyActivity({ ticker, lang }: { ticker: string; lang
   const hasFresh = freshCount > 0 && !open;
   const status = hasFresh ? (ja ? "新着あり" : "New") : failed ? (ja ? "再接続中" : "Reconnecting") : paused ? (ja ? "一時停止" : "Paused") : data ? (ja ? "自動更新" : "Auto-updating") : (ja ? "接続中" : "Connecting");
   const toggle = () => {
-    if (!open) { setAcknowledged(new Set(marked)); markSeen(ticker); }                          // opening: blink and badge go
+    if (!open) { setAcknowledged(new Set(marked)); if (live) markSeen(ticker); }                          // opening: blink and badge go
     else { setDismissed(previous => new Set([...previous, ...marked])); setUnread(new Set()); } // closing: NEW marks go
     setOpen(!open);
   };
@@ -144,7 +150,7 @@ export default function CompanyActivity({ ticker, lang }: { ticker: string; lang
         : <NewsStory lang={lang} label={row.label ?? ""} title={row.title} body={row.body} publication={detected(row, ja)}/>}
     </div>
   </article>;
-  return <><DeepAnalysisPanel lang={lang} ticker={ticker} kind="earnings" />
+  return <>{live && <DeepAnalysisPanel lang={lang} ticker={ticker} kind="earnings" />}
   <section className={`${styles.rt} ${open ? styles.open : ""} ${hasFresh ? styles.fresh : ""}`} aria-label={ja?'銘柄監視':'Company monitor'}>
     <h2 className={styles.rtTitle}><button type="button" className={styles.head} aria-expanded={open} aria-controls={bodyId} onClick={toggle}>
       <span className={styles.ttl}><svg className={styles.chev} viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M7 4l6 6-6 6"/></svg>{full ? (ja ? 'リアルタイム監視' : 'Live news') : (ja ? 'ニュース監視' : 'News monitor')}{!full && <small className={styles.delayTag}>{ja ? '30分遅れ' : '30-minute delay'}</small>}</span>
@@ -162,7 +168,7 @@ export default function CompanyActivity({ ticker, lang }: { ticker: string; lang
       {!!wireRows.length && <p className={styles.fine}>{ja ? "「企業・配信会社」「第三者」の表示がある記事は見出しのみで、本文は確認していません。見出しを押すと元の記事へ移動します。" : "Items labelled company / wire or third party are headlines only; article text is not checked. Headlines open the original."}</p>}
       <div className={styles.rule}/>
       <div className={styles.foot}>
-        <StockNewsBell ticker={ticker} ja={ja} full={full} />
+        {live ? <StockNewsBell ticker={ticker} ja={ja} full={full} /> : <span />}
         <span>{checkedAt ? `${ja ? "更新" : "Updated"} ${clock(checkedAt, lang)} ${zoneLabel(lang)}` : ""}</span>
       </div>
       {data && <p className={styles.fine}>{ja ? "配信済み情報を自動確認。未取得の情報・全期間の履歴は含みません。" : "Auto-checking published updates; excludes uncollected information and older history."}</p>}

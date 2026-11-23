@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { Fragment, useEffect, useRef, useState, type ReactNode } from "react";
 import Link from "next/link";
 import ResearchToolShell from "../research-tool-shell";
 import { useResearchLanguage } from "../use-research-language";
@@ -160,7 +160,8 @@ export function IssueView({ issue, lang = "ja", format = plain }: { issue: Issue
       const title = part.section && part.section !== numbered[index - 1]?.part.section ? SECTION_TITLES[part.section] : undefined;
       const group = title && part.type !== "highlight" ? <h2 className={styles.group}>{title[ja ? 0 : 1]}</h2> : null;
       return <div key={index} className={styles.slot}>{group}{part.type === "highlight"
-        ? <blockquote className={styles.highlight}>{format(part.text)}</blockquote>
+        // A "\n" in the big line is an explicit break (owner, Nov 23: 「数字が良くても、株価は」⏎「次の見通しで動きます。」).
+        ? <blockquote className={styles.highlight}>{part.text.split("\n").map((line, at) => <Fragment key={at}>{at > 0 && <br />}{format(line)}</Fragment>)}</blockquote>
         : <section className={styles.part}><h3><span>{label}</span>{part.heading}</h3><Body part={part} ja={ja} format={format} /></section>}</div>;
     })}
     {issue.sources.length > 0 && <details className={styles.sources}><summary>{ja ? "出典" : "Sources"}</summary><ul>{issue.sources.map((source, index) => <li key={index}><a href={source.url} target="_blank" rel="noopener noreferrer">{source.title}</a></li>)}</ul></details>}

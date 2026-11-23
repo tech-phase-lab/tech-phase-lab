@@ -58,7 +58,7 @@ export default function CompareSample({ lang }: { lang: "ja" | "en" }) {
       })}
     </div>
     <p className={styles.pickRule}>{ja ? "3つ目を選ぶと、①が外れて入れ替わります" : "Choosing a third stock replaces ①"}</p>
-    <p className={styles.pickPro}>{ja ? "PROならすべての銘柄で比較できます" : "With PRO, compare any stocks"}</p>
+    <p className={styles.pickPro}>{ja ? "PROは全銘柄対応。3銘柄まで同時に比較できます。" : "PRO covers every stock. Compare up to three at once."}</p>
     {!result || !assessment ? <p className={styles.waiting}>{ja ? "もう1つ選ぶと、結果が開きます。" : "Choose one more to see the result."}</p>
       : <div className={`${compareStyles.results} ${compareStyles.resultView} ${styles.compareResult}`}>
         <VerdictHeading title={assessment.title} leader={assessment.leader} companies={result.companies} lang={lang} now={now} />

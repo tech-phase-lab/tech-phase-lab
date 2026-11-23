@@ -1,0 +1,219 @@
+{
+  "root": {
+    "ticker": "HZO",
+    "name": "マリンマックス",
+    "cik": 1057060,
+    "name_en": "MarineMax"
+  },
+  "rows": [
+    {
+      "ja": "仕入先(ボートメーカー)",
+      "en": "Suppliers (boat makers)",
+      "above": true
+    },
+    {
+      "ja": "買収・提携",
+      "en": "Acquisitions & partners"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "BC",
+      "ticker": "BC",
+      "name": "ブランズウィック",
+      "name_en": "Brunswick",
+      "sub": "ボート・マリン製品",
+      "sub_en": "Boats & marine products",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "シーレイ・ボストンホエラーなど新艇販売が売上の約20%",
+          "text_en": "New Brunswick boats, incl. Sea Ray and Boston Whaler, are about 20% of revenue",
+          "source": {
+            "label": "MarineMax 10-K(2026年9月期)",
+            "label_en": "MarineMax 10-K (FY ended Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1057060/000119312526463429/hzo-20260930.htm",
+            "level": "official",
+            "date": "2026-11-16",
+            "quote": "Sales of new Brunswick boats accounted for approximately 20% of our revenue in fiscal 2026."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Azimut",
+      "ticker": "Azimut",
+      "name": "アジムット",
+      "name_en": "Azimut-Benetti",
+      "sub": "ヨット(伊)",
+      "sub_en": "Yachts (Italy)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "新艇販売が売上の約6%",
+          "text_en": "New Azimut boats and yachts are about 6% of revenue",
+          "source": {
+            "label": "MarineMax 10-K(2026年9月期)",
+            "label_en": "MarineMax 10-K (FY ended Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1057060/000119312526463429/hzo-20260930.htm",
+            "level": "official",
+            "date": "2026-11-16",
+            "quote": "Sales of new Azimut boats and yachts accounted for approximately 6% of our revenue in fiscal 2026."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WilliamsJet",
+      "ticker": "Williams Jet Tenders",
+      "name": "ウィリアムズ・ジェット・テンダーズ",
+      "name_en": "Williams Jet Tenders",
+      "sub": "ジェットテンダー(英)",
+      "sub_en": "Jet tenders (UK)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "買収した販売子会社がウィリアムズ製品を販売",
+          "text_en": "Its acquired Williams unit distributes Williams Jet Tenders boats",
+          "source": {
+            "label": "MarineMax 10-K(2026年9月期)",
+            "label_en": "MarineMax 10-K (FY ended Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1057060/000119312526463429/hzo-20260930.htm",
+            "level": "official",
+            "date": "2026-11-16",
+            "quote": "In March 2024, we acquired Williams Tenders USA (\"Williams\"), a premier distributor and retailer for UK-based Williams Jet Tenders Ltd."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AGY",
+      "ticker": "AGY",
+      "name": "アタランタ・ゴールデン・ヨット",
+      "name_en": "Atalanta Golden Yachts",
+      "sub": "ヨットチャーター運営(希)",
+      "sub_en": "Yacht charter management (Greece)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2023年10月に買収",
+          "text_en": "Acquired in October 2023",
+          "source": {
+            "label": "MarineMax 10-K(2026年9月期)",
+            "label_en": "MarineMax 10-K (FY ended Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1057060/000119312526463429/hzo-20260930.htm",
+            "level": "official",
+            "date": "2026-11-16",
+            "quote": "In October 2023, we acquired Atalanta Golden Yachts (\"AGY\"), a luxury charter management agency based in Athens, Greece."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NativeMarine",
+      "ticker": "Native Marine",
+      "name": "ネイティブ・マリン",
+      "name_en": "Native Marine",
+      "sub": "ボート販売",
+      "sub_en": "Boat dealer",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2024年3月に買収",
+          "text_en": "Acquired in March 2024",
+          "source": {
+            "label": "MarineMax 10-K(2026年9月期)",
+            "label_en": "MarineMax 10-K (FY ended Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1057060/000119312526463429/hzo-20260930.htm",
+            "level": "official",
+            "date": "2026-11-16",
+            "quote": "In March 2024, we also acquired Native Marine, a boat dealer based in Islamorada, Florida."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ShelterBay",
+      "ticker": "Shelter Bay Marina",
+      "name": "シェルター・ベイ・マリーナ",
+      "name_en": "Shelter Bay Marina",
+      "sub": "マリーナ",
+      "sub_en": "Marina",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年3月に買収",
+          "text_en": "Acquired in March 2025",
+          "source": {
+            "label": "MarineMax 10-K(2026年9月期)",
+            "label_en": "MarineMax 10-K (FY ended Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1057060/000119312526463429/hzo-20260930.htm",
+            "level": "official",
+            "date": "2026-11-16",
+            "quote": "In March 2025, we acquired Shelter Bay Marina in Marathon, Florida."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TreasureIsland",
+      "ticker": "Treasure Island Marina",
+      "name": "トレジャー・アイランド・マリーナ",
+      "name_en": "Treasure Island Marina",
+      "sub": "マリーナ",
+      "sub_en": "Marina",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年1月に整備・部品部門を買収",
+          "text_en": "Acquired its service and parts departments in January 2025",
+          "source": {
+            "label": "MarineMax 10-K(2026年9月期)",
+            "label_en": "MarineMax 10-K (FY ended Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1057060/000119312526463429/hzo-20260930.htm",
+            "level": "official",
+            "date": "2026-11-16",
+            "quote": "In January 2025, we acquired the service and parts departments of Treasure Island Marina in the Florida Panhandle."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NextBoat",
+      "ticker": "NextBoat",
+      "name": "ネクストボート",
+      "name_en": "NextBoat",
+      "sub": "中古艇取引",
+      "sub_en": "Pre-owned boat marketplace",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "中古艇取引・融資・保険で戦略提携(2026年6月)",
+          "text_en": "Strategic partnership on pre-owned vessels, financing and insurance (June 2026)",
+          "source": {
+            "label": "MarineMax 10-K(2026年9月期)",
+            "label_en": "MarineMax 10-K (FY ended Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1057060/000119312526463429/hzo-20260930.htm",
+            "level": "official",
+            "date": "2026-11-16",
+            "quote": "In June 2026, we also entered into a strategic partnership with NextBoat Inc. relating to pre-owned vessel transactions, financing, insurance, and related services."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

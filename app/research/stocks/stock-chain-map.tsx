@@ -53,7 +53,8 @@ function Card({ company, lang, root, anchor = true }: { company: ChainCompany; l
   </div>;
 }
 
-export function StockChainMap({ data, lang }: { data: ChainMapData; lang: "ja" | "en" }) {
+/** `sample`: the PRO feature tour leaves out the rival chips (the map shows them) and numbers the map heading 05; the stock page is unchanged. */
+export function StockChainMap({ data, lang, sample = false }: { data: ChainMapData; lang: "ja" | "en"; sample?: boolean }) {
   const ja = lang === "ja";
   const t = (jaText: string, enText: string) => ja ? jaText : enText;
   const [sel, setSel] = useState<string | null>(null);
@@ -143,11 +144,11 @@ export function StockChainMap({ data, lang }: { data: ChainMapData; lang: "ja" |
     .map(({ row, index }) => <section className={styles.row} key={index}><h4>{ja ? row.ja : row.en}</h4><div className={styles.chips}>{rowChips(index)}</div></section>);
 
   return <section className={styles.chain} aria-label={t("企業の連鎖マップ", "Company relationships")}>
-    {data.rivals.length > 0 && <div className={styles.rivals}>
+    {!sample && data.rivals.length > 0 && <div className={styles.rivals}>
       <h3><span>05</span>{t("競合は？", "Who competes with it?")}</h3>
       <div>{data.rivals.map(id => <span key={id}>{byId.get(id)?.ticker ?? id}</span>)}</div>
     </div>}
-    <h3 className={styles.mapHeading}><span>06</span>{t("どこと繋がる？", "Who does it work with?")}</h3>
+    <h3 className={styles.mapHeading}><span>{sample ? "05" : "06"}</span>{t("どこと繋がる？", "Who does it work with?")}</h3>
     <div className={styles.card}>
       <div className={styles.head}>
         <h3>{t("企業の連鎖マップ", "Company relationships")}</h3>

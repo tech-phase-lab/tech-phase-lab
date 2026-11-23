@@ -1,0 +1,262 @@
+{
+  "root": {
+    "ticker": "IVT",
+    "name": "インベントラスト・プロパティーズ",
+    "cik": 1307748,
+    "name_en": "InvenTrust Properties"
+  },
+  "rows": [
+    {
+      "ja": "上位テナント(年間基本賃料)",
+      "en": "Top tenants (annualized base rent)"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "KR",
+      "ticker": "KR",
+      "name": "クローガー",
+      "name_en": "Kroger",
+      "sub": "スーパー",
+      "sub_en": "Grocery",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大のテナントで基本賃料の3.6%(ハリス・ティーター含む13件)",
+          "text_en": "Largest tenant at 3.6% of base rent, 13 leases incl. Harris Teeter",
+          "source": {
+            "label": "InvenTrust 10-K(2025年度)",
+            "label_en": "InvenTrust 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1307748/000130774826000045/ivtp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Kroger Kroger 7 / Kroger Fuel 1 / Harris Teeter 5 13 $ 8,079 3.6 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Publix",
+      "ticker": "Publix",
+      "name": "パブリックス",
+      "name_en": "Publix Super Markets",
+      "sub": "スーパー",
+      "sub_en": "Grocery",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "基本賃料の3.2%(16件)",
+          "text_en": "3.2% of base rent, 16 leases",
+          "source": {
+            "label": "InvenTrust 10-K(2025年度)",
+            "label_en": "InvenTrust 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1307748/000130774826000045/ivtp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Publix Super Markets, Inc. Publix 13 / Publix Liquor 3 16 7,323 3.2 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "TJX",
+      "ticker": "TJX",
+      "name": "TJX",
+      "name_en": "TJX Companies",
+      "sub": "オフプライス衣料",
+      "sub_en": "Off-price apparel",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "基本賃料の2.4%(マーシャルズ等16件)",
+          "text_en": "2.4% of base rent, 16 leases incl. Marshalls",
+          "source": {
+            "label": "InvenTrust 10-K(2025年度)",
+            "label_en": "InvenTrust 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1307748/000130774826000045/ivtp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "TJX Companies Marshalls 8 / HomeGoods 5 / TJ Maxx 3 16 5,465 2.4 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン",
+      "name_en": "Amazon",
+      "sub": "EC(ホールフーズ)",
+      "sub_en": "E-commerce (Whole Foods)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ホールフーズが基本賃料の2.2%(8件)",
+          "text_en": "Whole Foods makes up 2.2% of base rent, 8 leases",
+          "source": {
+            "label": "InvenTrust 10-K(2025年度)",
+            "label_en": "InvenTrust 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1307748/000130774826000045/ivtp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Amazon, Inc. Whole Foods Market 8 5,023 2.2 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ACI",
+      "ticker": "ACI",
+      "name": "アルバートソンズ",
+      "name_en": "Albertsons",
+      "sub": "スーパー",
+      "sub_en": "Grocery",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "基本賃料の2.0%(6件)",
+          "text_en": "2.0% of base rent, 6 leases",
+          "source": {
+            "label": "InvenTrust 10-K(2025年度)",
+            "label_en": "InvenTrust 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1307748/000130774826000045/ivtp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Albertsons Tom Thumb 2 / Market Street 2 / Safeway 1 /Albertsons 1 6 4,400 2.0 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "HEB",
+      "ticker": "H.E.B.",
+      "name": "H-E-B",
+      "name_en": "H-E-B",
+      "sub": "スーパー(テキサス)",
+      "sub_en": "Grocery (Texas)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "基本賃料の1.9%(5件)",
+          "text_en": "1.9% of base rent, 5 leases",
+          "source": {
+            "label": "InvenTrust 10-K(2025年度)",
+            "label_en": "InvenTrust 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1307748/000130774826000045/ivtp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "H.E.B. H.E.B. 4 / H.E.B. Staff Office 1 5 4,292 1.9 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "APO",
+      "ticker": "APO",
+      "name": "アポロ・グローバル",
+      "name_en": "Apollo Global Management",
+      "sub": "投資会社(マイケルズ)",
+      "sub_en": "Investment firm (Michaels)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "傘下のマイケルズが基本賃料の1.3%(9件)",
+          "text_en": "Its Michaels stores make up 1.3% of base rent, 9 leases",
+          "source": {
+            "label": "InvenTrust 10-K(2025年度)",
+            "label_en": "InvenTrust 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1307748/000130774826000045/ivtp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Apollo Global Management, Inc. Michaels 9 9 2,927 1.3 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "TraderJoes",
+      "ticker": "Trader Joe's",
+      "name": "トレーダー・ジョーズ",
+      "name_en": "Trader Joe's",
+      "sub": "スーパー",
+      "sub_en": "Grocery",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "基本賃料の1.2%(7件)",
+          "text_en": "1.2% of base rent, 7 leases",
+          "source": {
+            "label": "InvenTrust 10-K(2025年度)",
+            "label_en": "InvenTrust 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1307748/000130774826000045/ivtp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Trader Joe's 7 2,752 1.2 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Wegmans",
+      "ticker": "Wegmans",
+      "name": "ウェグマンズ",
+      "name_en": "Wegmans",
+      "sub": "スーパー",
+      "sub_en": "Grocery",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "基本賃料の1.1%(2件)",
+          "text_en": "1.1% of base rent, 2 leases",
+          "source": {
+            "label": "InvenTrust 10-K(2025年度)",
+            "label_en": "InvenTrust 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1307748/000130774826000045/ivtp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Wegmans 2 2,450 1.1 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ROST",
+      "ticker": "ROST",
+      "name": "ロス・ストアーズ",
+      "name_en": "Ross Stores",
+      "sub": "オフプライス衣料",
+      "sub_en": "Off-price apparel",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "基本賃料の1.0%(6件)",
+          "text_en": "1.0% of base rent, 6 leases",
+          "source": {
+            "label": "InvenTrust 10-K(2025年度)",
+            "label_en": "InvenTrust 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1307748/000130774826000045/ivtp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Ross Dress For Less Ross Dress for Less 5 / dd's Discounts 1 6 2,193 1.0 %"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

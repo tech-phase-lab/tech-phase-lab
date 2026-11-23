@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { whaleTracksSample as data } from "@/lib/research/pro-experience-sample-whales";
+import { WHALE_NOTE, whaleTracksSample as data } from "@/lib/research/pro-experience-sample-whales";
 import { StaysInSample } from "../../stock-row-link";
 import { FIRST_SORTS, WhalePanel, WhaleTabBar, WhaleTracksSheet } from "../../whales/screen";
 import CardHead from "./card-head";
@@ -9,7 +9,7 @@ import styles from "./samples.module.css";
 type Tab = keyof typeof FIRST_SORTS;
 
 /** クジラの足あと at one fixed moment (owner's mockup 02, Nov 22), drawn by the PRO page's own parts: all four tabs, five rows each, and
- * their sort buttons work; the as-of lines carry the made-up year. A stock stays in the sample (the frame's 「PROで使えます」). */
+ * their sort buttons work; the as-of lines carry the made-up year. A gold note under the rows says how many stocks the real page covers (owner, Nov 23). A stock stays in the sample (the frame's 「PROで使えます」). */
 export default function WhaleTracksSample({ lang }: { lang: "ja" | "en" }) {
   const ja = lang === "ja";
   const [tab, setTab] = useState<Tab>("institutions");
@@ -19,6 +19,7 @@ export default function WhaleTracksSample({ lang }: { lang: "ja" | "en" }) {
       <WhaleTracksSheet ja={ja} top={<CardHead lang={lang} />}>
         <WhaleTabBar tab={tab} onChange={setTab} ja={ja} />
         <WhalePanel data={data} tab={tab} sort={sorts[tab]} onSort={sort => setSorts(current => ({ ...current, [tab]: sort }))} ja={ja} withYear />
+        <p className={styles.sampleNote}>{WHALE_NOTE[lang]}</p>
       </WhaleTracksSheet>
     </div>
   </StaysInSample.Provider>;

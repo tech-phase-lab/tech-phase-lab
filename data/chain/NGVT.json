@@ -1,0 +1,270 @@
+{
+  "root": {
+    "ticker": "NGVT",
+    "name": "インジェビティ",
+    "cik": 1653477,
+    "name_en": "Ingevity"
+  },
+  "rows": [
+    {
+      "ja": "主要顧客",
+      "en": "Largest customers"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in the 10-K)"
+    }
+  ],
+  "rivals": [
+    "Kuraray",
+    "Daicel",
+    "BASF"
+  ],
+  "companies": [
+    {
+      "id": "Ergon",
+      "ticker": "Ergon",
+      "name": "アーゴン",
+      "name_en": "Ergon",
+      "sub": "アスファルト・石油製品",
+      "sub_en": "Asphalt & petroleum products",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大級の顧客",
+          "text_en": "One of its largest customers",
+          "source": {
+            "label": "Ingevity 10-K(2025年度)",
+            "label_en": "Ingevity 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1653477/000165347726000014/ngvt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our largest customers include Ergon, Inc., Idaho Asphalt Supply Inc., The Heritage Group, and Syngenta."
+          }
+        }
+      ]
+    },
+    {
+      "id": "IdahoAsphalt",
+      "ticker": "Idaho Asphalt Supply",
+      "name": "アイダホ・アスファルト・サプライ",
+      "name_en": "Idaho Asphalt Supply",
+      "sub": "アスファルト",
+      "sub_en": "Asphalt",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大級の顧客",
+          "text_en": "One of its largest customers",
+          "source": {
+            "label": "Ingevity 10-K(2025年度)",
+            "label_en": "Ingevity 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1653477/000165347726000014/ngvt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our largest customers include Ergon, Inc., Idaho Asphalt Supply Inc., The Heritage Group, and Syngenta."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Heritage",
+      "ticker": "The Heritage Group",
+      "name": "ヘリテージ・グループ",
+      "name_en": "The Heritage Group",
+      "sub": "道路建設資材",
+      "sub_en": "Road construction materials",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大級の顧客",
+          "text_en": "One of its largest customers",
+          "source": {
+            "label": "Ingevity 10-K(2025年度)",
+            "label_en": "Ingevity 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1653477/000165347726000014/ngvt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our largest customers include Ergon, Inc., Idaho Asphalt Supply Inc., The Heritage Group, and Syngenta."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Syngenta",
+      "ticker": "Syngenta",
+      "name": "シンジェンタ",
+      "name_en": "Syngenta",
+      "sub": "農薬",
+      "sub_en": "Crop protection",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大級の顧客",
+          "text_en": "One of its largest customers",
+          "source": {
+            "label": "Ingevity 10-K(2025年度)",
+            "label_en": "Ingevity 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1653477/000165347726000014/ngvt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our largest customers include Ergon, Inc., Idaho Asphalt Supply Inc., The Heritage Group, and Syngenta."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TRP",
+      "ticker": "TRP Group",
+      "name": "TRPグループ",
+      "name_en": "TRP Group",
+      "sub": "化学品",
+      "sub_en": "Chemicals",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "別事業の最大級の顧客",
+          "text_en": "One of the largest customers of another segment",
+          "source": {
+            "label": "Ingevity 10-K(2025年度)",
+            "label_en": "Ingevity 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1653477/000165347726000014/ngvt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our largest customers include TRP Group, and Frontline."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Frontline",
+      "ticker": "Frontline",
+      "name": "フロントライン",
+      "name_en": "Frontline",
+      "sub": "化学品",
+      "sub_en": "Chemicals",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "別事業の最大級の顧客",
+          "text_en": "One of the largest customers of another segment",
+          "source": {
+            "label": "Ingevity 10-K(2025年度)",
+            "label_en": "Ingevity 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1653477/000165347726000014/ngvt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our largest customers include TRP Group, and Frontline."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Kuraray",
+      "ticker": "Kuraray",
+      "name": "クラレ",
+      "name_en": "Kuraray",
+      "sub": "化学・活性炭",
+      "sub_en": "Chemicals & activated carbon",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "活性炭の競合",
+          "text_en": "Competitor in activated carbon",
+          "source": {
+            "label": "Ingevity 10-K(2025年度)",
+            "label_en": "Ingevity 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1653477/000165347726000014/ngvt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our competitors include Norit, Kuraray Co., Ltd., domestic U.S. manufacturers and distributors of imported products, and Chinese manufacturers."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Norit",
+      "ticker": "Norit",
+      "name": "ノリット",
+      "name_en": "Norit",
+      "sub": "活性炭",
+      "sub_en": "Activated carbon",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "活性炭の競合",
+          "text_en": "Competitor in activated carbon",
+          "source": {
+            "label": "Ingevity 10-K(2025年度)",
+            "label_en": "Ingevity 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1653477/000165347726000014/ngvt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our competitors include Norit, Kuraray Co., Ltd."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Daicel",
+      "ticker": "Daicel",
+      "name": "ダイセル",
+      "name_en": "Daicel",
+      "sub": "化学",
+      "sub_en": "Chemicals",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "カプロラクトンの主な競合",
+          "text_en": "Primary caprolactone competitor",
+          "source": {
+            "label": "Ingevity 10-K(2025年度)",
+            "label_en": "Ingevity 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1653477/000165347726000014/ngvt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our primary caprolactone competitors are Daicel Corporation, Hunan Juren Chemical Hitechnology, and BASF SE, but we also face competition from other competing materials."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BASF",
+      "ticker": "BASF",
+      "name": "BASF",
+      "name_en": "BASF",
+      "sub": "化学(独)",
+      "sub_en": "Chemicals (Germany)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "カプロラクトンの主な競合",
+          "text_en": "Primary caprolactone competitor",
+          "source": {
+            "label": "Ingevity 10-K(2025年度)",
+            "label_en": "Ingevity 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1653477/000165347726000014/ngvt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our primary caprolactone competitors are Daicel Corporation, Hunan Juren Chemical Hitechnology, and BASF SE, but we also face competition from other competing materials."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,248 @@
+{
+  "root": {
+    "ticker": "NXT",
+    "name": "ネクストトラッカー(ネクストパワー)",
+    "cik": 1852131,
+    "name_en": "Nextracker (Nextpower)"
+  },
+  "rows": [
+    {
+      "ja": "旧親会社・買収",
+      "en": "Former parent & acquisitions",
+      "above": true
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in the 10-K)"
+    }
+  ],
+  "rivals": [
+    "ARRY",
+    "SHLS",
+    "Arctech",
+    "Trina"
+  ],
+  "companies": [
+    {
+      "id": "FLEX",
+      "ticker": "FLEX",
+      "name": "フレックス",
+      "name_en": "Flex",
+      "sub": "電子機器受託製造",
+      "sub_en": "Electronics manufacturing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "旧親会社。税務受取契約の支払先にフレックス系が残る",
+          "text_en": "Former parent; a Flex affiliate remains a party to the tax receivable agreement",
+          "source": {
+            "label": "Nextpower 10-K(2026年3月期)",
+            "label_en": "Nextpower 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1852131/000185213126000017/nxt-20260331.htm",
+            "level": "official",
+            "date": "2026-05-19",
+            "quote": "Yuma and Yuma Sub assigned their respective rights under the Tax Receivable Agreement to an entity that remains an affiliate of Flex Ltd. (\"Flex\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ARRY",
+      "ticker": "ARRY",
+      "name": "アレイ・テクノロジーズ",
+      "name_en": "Array Technologies",
+      "sub": "太陽光追尾架台",
+      "sub_en": "Solar trackers",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "追尾架台の主な競合にネクストパワーを挙げる",
+          "text_en": "Names Nextpower among its principal tracker competitors",
+          "source": {
+            "label": "Array Technologies 10-K(2025年度)",
+            "label_en": "Array Technologies 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1820721/000182072126000008/arry-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Our principal tracker competitors include Nextpower Inc. (f/k/a Nextracker, Inc.), PV Hardware and GameChange Solar."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SHLS",
+      "ticker": "SHLS",
+      "name": "ショールズ",
+      "name_en": "Shoals Technologies",
+      "sub": "太陽光配線部材",
+      "sub_en": "Solar electrical balance of system",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ベンテック買収で配線部材の競合になったネクストパワーを挙げる",
+          "text_en": "Names Nextpower, via its Bentek acquisition, among principal competitors",
+          "source": {
+            "label": "Shoals 10-K(2025年度)",
+            "label_en": "Shoals 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1831651/000183165126000021/shls-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Our principal competitors include Construction Innovation, Hikam America, Inc., Nextpower Inc. (via acquisition of Bentek)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "FTCI",
+      "ticker": "FTCI",
+      "name": "FTCソーラー",
+      "name_en": "FTC Solar",
+      "sub": "太陽光追尾架台",
+      "sub_en": "Solar trackers",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "直接の競合にネクストパワーを挙げる",
+          "text_en": "Names Nextpower among its direct tracker competitors",
+          "source": {
+            "label": "FTC Solar 10-K(2025年度)",
+            "label_en": "FTC Solar 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1828161/000119312526120372/ftci-20251231.htm",
+            "level": "official",
+            "date": "2026-03-24",
+            "quote": "Our direct tracker competitors include Array Technologies, Inc., GameChange Solar, Nextpower Inc. and PVH."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Bentek",
+      "ticker": "Bentek",
+      "name": "ベンテック",
+      "name_en": "Bentek",
+      "sub": "太陽光配線部材",
+      "sub_en": "Solar electrical balance of system",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ネクストパワーが買収した配線部材メーカー",
+          "text_en": "Electrical BOS maker acquired by Nextpower",
+          "source": {
+            "label": "Shoals 10-K(2025年度)",
+            "label_en": "Shoals 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1831651/000183165126000021/shls-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Nextpower Inc. (via acquisition of Bentek)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Arctech",
+      "ticker": "Arctech",
+      "name": "アークテック・ソーラー",
+      "name_en": "Arctech Solar",
+      "sub": "太陽光追尾架台(中)",
+      "sub_en": "Solar trackers (China)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合",
+          "text_en": "Principal competitor",
+          "source": {
+            "label": "Nextpower 10-K(2026年3月期)",
+            "label_en": "Nextpower 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1852131/000185213126000017/nxt-20260331.htm",
+            "level": "official",
+            "date": "2026-05-19",
+            "quote": "Our principal competitors are Arctech Solar, Array Technologies, GameChange Solar, PV Hardware, Shoals Technologies Group and TrinaSolar Co., Ltd."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Trina",
+      "ticker": "Trina",
+      "name": "トリナ・ソーラー",
+      "name_en": "Trina Solar",
+      "sub": "太陽光パネル・架台(中)",
+      "sub_en": "Solar modules & trackers (China)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合",
+          "text_en": "Principal competitor",
+          "source": {
+            "label": "Nextpower 10-K(2026年3月期)",
+            "label_en": "Nextpower 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1852131/000185213126000017/nxt-20260331.htm",
+            "level": "official",
+            "date": "2026-05-19",
+            "quote": "Our principal competitors are Arctech Solar, Array Technologies, GameChange Solar, PV Hardware, Shoals Technologies Group and TrinaSolar Co., Ltd."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GameChange",
+      "ticker": "GameChange Solar",
+      "name": "ゲームチェンジ・ソーラー",
+      "name_en": "GameChange Solar",
+      "sub": "太陽光架台",
+      "sub_en": "Solar racking",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合",
+          "text_en": "Principal competitor",
+          "source": {
+            "label": "Nextpower 10-K(2026年3月期)",
+            "label_en": "Nextpower 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1852131/000185213126000017/nxt-20260331.htm",
+            "level": "official",
+            "date": "2026-05-19",
+            "quote": "Our principal competitors are Arctech Solar, Array Technologies, GameChange Solar, PV Hardware, Shoals Technologies Group and TrinaSolar Co., Ltd."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PVHardware",
+      "ticker": "PV Hardware",
+      "name": "PVハードウェア",
+      "name_en": "PV Hardware",
+      "sub": "太陽光追尾架台(西)",
+      "sub_en": "Solar trackers (Spain)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合",
+          "text_en": "Principal competitor",
+          "source": {
+            "label": "Nextpower 10-K(2026年3月期)",
+            "label_en": "Nextpower 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1852131/000185213126000017/nxt-20260331.htm",
+            "level": "official",
+            "date": "2026-05-19",
+            "quote": "Our principal competitors are Arctech Solar, Array Technologies, GameChange Solar, PV Hardware, Shoals Technologies Group and TrinaSolar Co., Ltd."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

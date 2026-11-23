@@ -1,12 +1,19 @@
 "use client";
-import { useId, useState } from "react";
+import { useId, useState, type ComponentProps } from "react";
 import type { DiveHistory, WatchEarnings } from "@/lib/research/watch-earnings";
 import list from "@/lib/research/pro-experience-samples/watch22.json";
 import sample from "@/lib/research/pro-experience-samples/watch22-dives.json";
 import EarningsDive from "../../companies/earnings-dive";
+import CompanyActivity, { type ActivitySample } from "../../companies/company-activity";
+import { QuoteCardView } from "../../price/quote-card";
+import type { CardQuote } from "../../price/use-market";
 import styles from "./samples.module.css";
 
-type SampleDive = { ticker: string; name: string; live: WatchEarnings; history: DiveHistory[] };
+/** `top`: the upper half of the real stock page (owner, Nov 23): the price card and the live news monitor, from saved made-up data. */
+type SampleTop = { quote: CardQuote; facts: NonNullable<ComponentProps<typeof QuoteCardView>["facts"]>; news: ActivitySample["items"] };
+type SampleDive = { ticker: string; name: string; live: WatchEarnings; history: DiveHistory[]; top: SampleTop };
+/** The moment the sample's monitor last "checked": the frame's 2035/03/12 09:00 in Japan. */
+const CHECKED_AT = "2035-03-12T00:00:00.000Z";
 const companies = list.companies as { ticker: string; name: string }[];
 const dives = sample.dives as unknown as SampleDive[];
 /** The 20 stocks without a sample deep dive, in the list's order: shown as plain text only. */
@@ -14,7 +21,9 @@ export const OTHER_TICKERS = companies.map(company => company.ticker).filter(tic
 
 /** What the 22 tracked stocks offer is the earnings deep dive (owner, Nov 16: 「一覧だけでは意味がない。決算深掘りをきちんと見せて」), drawn by
  * the real EarningsDive from saved made-up data. Only NVDA and AMD, the two with a deep dive, are buttons (owner's mockups 01/02, Nov 16);
- * 「一覧 ▾」 shows the other 20 tickers as plain text that cannot be tapped, and 「閉じる ▴」 hides them again. */
+ * 「一覧 ▾」 shows the other 20 tickers as plain text that cannot be tapped, and 「閉じる ▴」 hides them again. Above the deep dive sit the
+ * real page's price card and live news monitor (owner, Nov 23), drawn by the same components in sample mode: nothing is fetched and the
+ * card does not open the detail page. */
 export default function Watch22Sample({ lang }: { lang: "ja" | "en" }) {
   const ja = lang === "ja";
   const listId = useId();
@@ -22,7 +31,7 @@ export default function Watch22Sample({ lang }: { lang: "ja" | "en" }) {
   const [listOpen, setListOpen] = useState(false);
   const dive = dives.find(item => item.ticker === open) ?? dives[0];
   return <div className={styles.watch}>
-    <p className={styles.pickLabel}>{ja ? "決算の深掘りを読む銘柄を選ぶ" : "Pick a stock to read its earnings deep dive"}</p>
+    <p className={styles.pickLabel}>{ja ? "銘柄を選ぶ" : "Pick a stock"}</p>
     <div className={styles.diveChoice} role="group" aria-label={ja ? "決算の深掘りを読む銘柄" : "Stocks with a deep dive"}>
       {dives.map(item => <button key={item.ticker} type="button" className={styles.diveChip} aria-pressed={item.ticker === open}
         onClick={() => setOpen(item.ticker)}>{item.ticker}</button>)}
@@ -36,6 +45,10 @@ export default function Watch22Sample({ lang }: { lang: "ja" | "en" }) {
     {listOpen && <ul id={listId} className={styles.otherList} aria-label={ja ? "そのほかの監視銘柄" : "The other tracked stocks"}>
       {OTHER_TICKERS.map(ticker => <li key={ticker}>{ticker}</li>)}
     </ul>}
+    <div className={styles.watchTop}>
+      <QuoteCardView key={`quote-${dive.ticker}`} ticker={dive.ticker} variant="gauge" from="watch" name={dive.name} quote={dive.top.quote} facts={dive.top.facts} link={false} />
+      <CompanyActivity key={`news-${dive.ticker}`} ticker={dive.ticker} lang={lang} sample={{ items: dive.top.news, checkedAt: CHECKED_AT }} />
+    </div>
     <div className={styles.dive}>
       <EarningsDive key={dive.ticker} lang={lang} name={dive.name} ticker={dive.ticker} live={dive.live} unlocked history={dive.history} failed={false} />
     </div>

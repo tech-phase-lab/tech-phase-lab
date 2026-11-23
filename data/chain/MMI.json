@@ -1,0 +1,224 @@
+{
+  "root": {
+    "ticker": "MMI",
+    "name": "マーカス&ミリチャップ",
+    "cik": 1578732,
+    "name_en": "Marcus & Millichap"
+  },
+  "rows": [
+    {
+      "ja": "提携・融資",
+      "en": "Alliances & lenders",
+      "above": true
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in the 10-K)"
+    }
+  ],
+  "rivals": [
+    "CBRE",
+    "JLL",
+    "CWK",
+    "NMRK"
+  ],
+  "companies": [
+    {
+      "id": "MTB",
+      "ticker": "MTB",
+      "name": "M&Tバンク",
+      "name_en": "M&T Bank",
+      "sub": "銀行(M&Tリアルティ・キャピタル)",
+      "sub_en": "Bank (M&T Realty Capital)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "M&Tリアルティ・キャピタルと戦略提携し、融資案件を紹介",
+          "text_en": "Strategic alliance with M&T Realty Capital to refer loan opportunities",
+          "source": {
+            "label": "Marcus & Millichap 10-K(2025年度)",
+            "label_en": "Marcus & Millichap 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1578732/000162828026012419/mmi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "in connection with the Strategic Alliance with M&T Realty Capital Corporation (\"MTRCC\"), has agreed to provide loan opportunities"
+          }
+        }
+      ]
+    },
+    {
+      "id": "FNMA",
+      "ticker": "FNMA",
+      "name": "ファニーメイ",
+      "name_en": "Fannie Mae",
+      "sub": "住宅金融公社",
+      "sub_en": "Government-sponsored mortgage agency",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "提携経由の融資はファニーメイに売却され、損失の一部を補償しうる",
+          "text_en": "Loans via the alliance are sold to Fannie Mae; MMI may indemnify part of the losses",
+          "source": {
+            "label": "Marcus & Millichap 10-K(2025年度)",
+            "label_en": "Marcus & Millichap 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1578732/000162828026012419/mmi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "For certain loans originated through the Strategic Alliance with MTRCC, the Company may agree, at its option, to indemnify MTRCC for a portion of MTRCC's obligations for loans sold to the Federal National Mortgage Association (\"Fannie Mae\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WFC",
+      "ticker": "WFC",
+      "name": "ウェルズ・ファーゴ",
+      "name_en": "Wells Fargo",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "1,000万ドルの融資枠を提供",
+          "text_en": "Provides a $10 million revolving credit facility",
+          "source": {
+            "label": "Marcus & Millichap 10-K(2025年度)",
+            "label_en": "Marcus & Millichap 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1578732/000162828026012419/mmi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "We have a credit agreement with Wells Fargo Bank, National Association (as amended, the \"Credit Agreement\") which provides for a $10 million principal amount senior secured revolving credit facility"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CBRE",
+      "ticker": "CBRE",
+      "name": "CBRE",
+      "name_en": "CBRE Group",
+      "sub": "商業不動産サービス",
+      "sub_en": "Commercial real estate services",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合とみなす同業グループ",
+          "text_en": "Peer group representing its primary competitors",
+          "source": {
+            "label": "Marcus & Millichap 10-K(2025年度)",
+            "label_en": "Marcus & Millichap 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1578732/000162828026012419/mmi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "The industry peer group is comprised of the following publicly-traded real estate services companies: CBRE, Colliers, Cushman, JLL, and Newmark (collectively \"Peer Group\"). We selected our Peer Group based on companies that represent our primary competitors"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CIGI",
+      "ticker": "CIGI",
+      "name": "コリアーズ",
+      "name_en": "Colliers International",
+      "sub": "商業不動産サービス(加)",
+      "sub_en": "Commercial real estate services (Canada)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合とみなす同業グループ",
+          "text_en": "Peer group representing its primary competitors",
+          "source": {
+            "label": "Marcus & Millichap 10-K(2025年度)",
+            "label_en": "Marcus & Millichap 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1578732/000162828026012419/mmi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "The industry peer group is comprised of the following publicly-traded real estate services companies: CBRE, Colliers, Cushman, JLL, and Newmark (collectively \"Peer Group\"). We selected our Peer Group based on companies that represent our primary competitors"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CWK",
+      "ticker": "CWK",
+      "name": "クッシュマン&ウェイクフィールド",
+      "name_en": "Cushman & Wakefield",
+      "sub": "商業不動産サービス",
+      "sub_en": "Commercial real estate services",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合とみなす同業グループ",
+          "text_en": "Peer group representing its primary competitors",
+          "source": {
+            "label": "Marcus & Millichap 10-K(2025年度)",
+            "label_en": "Marcus & Millichap 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1578732/000162828026012419/mmi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "The industry peer group is comprised of the following publicly-traded real estate services companies: CBRE, Colliers, Cushman, JLL, and Newmark (collectively \"Peer Group\"). We selected our Peer Group based on companies that represent our primary competitors"
+          }
+        }
+      ]
+    },
+    {
+      "id": "JLL",
+      "ticker": "JLL",
+      "name": "ジョーンズ・ラング・ラサール",
+      "name_en": "Jones Lang LaSalle",
+      "sub": "商業不動産サービス",
+      "sub_en": "Commercial real estate services",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合とみなす同業グループ",
+          "text_en": "Peer group representing its primary competitors",
+          "source": {
+            "label": "Marcus & Millichap 10-K(2025年度)",
+            "label_en": "Marcus & Millichap 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1578732/000162828026012419/mmi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "The industry peer group is comprised of the following publicly-traded real estate services companies: CBRE, Colliers, Cushman, JLL, and Newmark (collectively \"Peer Group\"). We selected our Peer Group based on companies that represent our primary competitors"
+          }
+        }
+      ]
+    },
+    {
+      "id": "NMRK",
+      "ticker": "NMRK",
+      "name": "ニューマーク",
+      "name_en": "Newmark Group",
+      "sub": "商業不動産サービス",
+      "sub_en": "Commercial real estate services",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合とみなす同業グループ",
+          "text_en": "Peer group representing its primary competitors",
+          "source": {
+            "label": "Marcus & Millichap 10-K(2025年度)",
+            "label_en": "Marcus & Millichap 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1578732/000162828026012419/mmi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "The industry peer group is comprised of the following publicly-traded real estate services companies: CBRE, Colliers, Cushman, JLL, and Newmark (collectively \"Peer Group\"). We selected our Peer Group based on companies that represent our primary competitors"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

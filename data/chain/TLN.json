@@ -1,0 +1,247 @@
+{
+  "root": {
+    "ticker": "TLN",
+    "name": "タレン・エナジー",
+    "cik": 1622536,
+    "name_en": "Talen Energy"
+  },
+  "rows": [
+    {
+      "ja": "買収した発電所・取引先",
+      "en": "Acquired plants & sellers",
+      "above": true
+    },
+    {
+      "ja": "電力の顧客",
+      "en": "Power customers"
+    },
+    {
+      "ja": "提携・共同提案",
+      "en": "Partners & joint proposals"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "ECP",
+      "ticker": "ECP",
+      "name": "エナジー・キャピタル・パートナーズ",
+      "name_en": "Energy Capital Partners",
+      "sub": "投資会社",
+      "sub_en": "Investment firm",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "オハイオ州・インディアナ州のガス火力3か所(Cornerstone)を同社の関連会社から買収予定",
+          "text_en": "Agreed to buy three gas plants in Ohio and Indiana (the Cornerstone deal) from its affiliates",
+          "source": {
+            "label": "Talen Energy 10-K(2025年度)",
+            "label_en": "Talen Energy 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1622536/000162253626000017/tln-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our pending acquisition of the 875 MW Waterford Energy Center and 456 MW Darby Generating Station in Ohio and the 1,120 MW Lawrenceburg Power Plant in Indiana from Energy Capital Partners."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Freedom",
+      "ticker": "Moxie Freedom",
+      "name": "モキシー・フリーダム",
+      "name_en": "Moxie Freedom",
+      "sub": "ガス火力発電所",
+      "sub_en": "Gas power plant",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ペンシルベニア州のフリーダム発電所の保有会社を2025年11月に全持分取得",
+          "text_en": "Bought all interests in the owner of the Freedom plant in Pennsylvania in November 2025",
+          "source": {
+            "label": "Talen Energy 8-K(2025年11月、買収完了)",
+            "label_en": "Talen Energy 8-K (Nov 2025, acquisitions closed)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1622536/000162253625000037/tln-20251125.htm",
+            "level": "official",
+            "date": "2025-11-25",
+            "quote": "acquired all of the issued and outstanding membership interests in (i) Moxie Freedom LLC, a Delaware limited liability company"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Guernsey",
+      "ticker": "Guernsey Power",
+      "name": "ガーンジー・パワー",
+      "name_en": "Guernsey Power",
+      "sub": "ガス火力発電所",
+      "sub_en": "Gas power plant",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "オハイオ州のガーンジー発電所の保有会社を2025年11月に全持分取得",
+          "text_en": "Bought all interests in the owner of the Guernsey plant in Ohio in November 2025",
+          "source": {
+            "label": "Talen Energy 8-K(2025年11月、買収完了)",
+            "label_en": "Talen Energy 8-K (Nov 2025, acquisitions closed)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1622536/000162253625000037/tln-20251125.htm",
+            "level": "official",
+            "date": "2025-11-25",
+            "quote": "(ii) Guernsey Power Holdings, LLC, a Delaware limited liability company"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン",
+      "name_en": "Amazon",
+      "sub": "クラウド(AWS)",
+      "sub_en": "Cloud (AWS)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "AWSとの電力購入契約(PPA)で、データセンター向けに原子力の無炭素電力を大量に供給",
+          "text_en": "Supplies large volumes of carbon-free nuclear power to AWS data centers under the AWS PPA",
+          "source": {
+            "label": "Talen Energy 10-K(2025年度)",
+            "label_en": "Talen Energy 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1622536/000162253626000017/tln-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our AWS PPA is an example of how we are powering the future in partnership with data center and artificial intelligence enterprises and, in the case of the AWS PPA, doing so with large volumes of clean, carbon-free energy."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PPL",
+      "ticker": "PPL",
+      "name": "PPL",
+      "name_en": "PPL",
+      "sub": "電力会社(送配電)",
+      "sub_en": "Utility (grid)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Talen、PJM、PPL Electric Utilitiesの3者で、原子力発電所からデータセンターへの追加送電を認める契約変更を申請(FERCが2024年に却下)",
+          "text_en": "Talen, PJM and PPL Electric Utilities sought an amended agreement to send more nuclear power to an adjacent data center (FERC rejected it in 2024)",
+          "source": {
+            "label": "PSEG 10-Q(2024年第3四半期)",
+            "label_en": "PSEG 10-Q (Q3 2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/788784/000095017024120749/peg-20240930.htm",
+            "level": "official",
+            "date": "2024-11-04",
+            "quote": "On November 1, 2024, FERC issued an order rejecting an amended agreement between Talen Energy (Talen), PJM and PPL Electric Utilities that would have permitted Talen to withdraw incremental power from one of its nuclear units beyond previous approvals to provide power to an adjacent data center."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WULF",
+      "ticker": "WULF",
+      "name": "テラウルフ",
+      "name_en": "TeraWulf",
+      "sub": "ビットコイン採掘・AIデータセンター",
+      "sub_en": "Bitcoin mining & AI data centers",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "合弁のビットコイン採掘施設(Nautilus)の持分25%をTeraWulfからTalenが買い取った",
+          "text_en": "Talen bought TeraWulf's 25% stake in their Nautilus bitcoin-mining joint venture",
+          "source": {
+            "label": "TeraWulf の発表(8-K添付)",
+            "label_en": "TeraWulf press release (8-K exhibit)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1083301/000095014224002511/eh240539927_ex9901.htm",
+            "level": "official",
+            "date": "2024-10-03",
+            "quote": "today announced it has completed the sale of its 25% equity interest in the Nautilus Cryptomine joint venture (\"Nautilus\") to its partner, a subsidiary of Talen Energy Corporation (\"Talen\")"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CEG",
+      "ticker": "CEG",
+      "name": "コンステレーション・エナジー",
+      "name_en": "Constellation Energy",
+      "sub": "発電(原子力)",
+      "sub_en": "Power generation (nuclear)",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Talenは、Constellation、Calpine、Amazon、Microsoft、Googleと共に、大口電力需要の接続方法について共同提案をPJMに出した",
+          "text_en": "Talen filed a joint proposal on large-load additions in PJM together with Constellation, Calpine, Amazon, Microsoft and Google",
+          "source": {
+            "label": "Talen Energy 10-K(2025年度)",
+            "label_en": "Talen Energy 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1622536/000162253626000017/tln-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "The Company was an active participant in the CIFP process and submitted a joint proposal amongst itself, Constellation, Calpine, Amazon, Microsoft, and Google representing the group's collective views on the best approach to large load additions."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "マイクロソフト",
+      "name_en": "Microsoft",
+      "sub": "クラウド・AI",
+      "sub_en": "Cloud & AI",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Talenは、Constellation、Calpine、Amazon、Microsoft、Googleと共に、大口電力需要の接続方法について共同提案をPJMに出した",
+          "text_en": "Talen filed a joint proposal on large-load additions in PJM together with Constellation, Calpine, Amazon, Microsoft and Google",
+          "source": {
+            "label": "Talen Energy 10-K(2025年度)",
+            "label_en": "Talen Energy 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1622536/000162253626000017/tln-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "The Company was an active participant in the CIFP process and submitted a joint proposal amongst itself, Constellation, Calpine, Amazon, Microsoft, and Google representing the group's collective views on the best approach to large load additions."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GOOGL",
+      "ticker": "GOOGL",
+      "name": "アルファベット(グーグル)",
+      "name_en": "Alphabet (Google)",
+      "sub": "クラウド・AI",
+      "sub_en": "Cloud & AI",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Talenは、Constellation、Calpine、Amazon、Microsoft、Googleと共に、大口電力需要の接続方法について共同提案をPJMに出した",
+          "text_en": "Talen filed a joint proposal on large-load additions in PJM together with Constellation, Calpine, Amazon, Microsoft and Google",
+          "source": {
+            "label": "Talen Energy 10-K(2025年度)",
+            "label_en": "Talen Energy 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1622536/000162253626000017/tln-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "The Company was an active participant in the CIFP process and submitted a joint proposal amongst itself, Constellation, Calpine, Amazon, Microsoft, and Google representing the group's collective views on the best approach to large load additions."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
