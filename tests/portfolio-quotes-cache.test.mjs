@@ -5,7 +5,8 @@ import { stripTypeScriptTypes } from "node:module";
 import { createBatcher } from "../lib/portfolio/quote-batcher.ts";
 
 const load = async (path, replacements) => {
-  let source = readFileSync(new URL(path, import.meta.url), "utf8").replace('import "server-only";', "");
+  let source = readFileSync(new URL(path, import.meta.url), "utf8").replace('import "server-only";', "")
+    .replace(/import \{ providerLimited, reserveCredits \}[^;]*;/, "const reserveCredits = async () => {}, providerLimited = () => {};");
   for (const [from, to] of replacements) source = source.replace(from, to);
   return import("data:text/javascript;base64," + Buffer.from(stripTypeScriptTypes(source)).toString("base64"));
 };

@@ -3,6 +3,7 @@ import { unstable_cache } from "next/cache";
 import { parseTimeSeries } from "../research/theme-prices.ts";
 import type { Quote } from "./calc.ts";
 import { createBatcher } from "./quote-batcher.ts";
+import { providerLimited, reserveCredits } from "../research/twelve-gateway";
 
 /** Latest closing prices and the USD/JPY rate for the portfolio. Twelve Data key stays in the environment; nothing is invented without it. */
 const BASE = () => process.env.TWELVE_DATA_BASE_URL || "https://api.twelvedata.com";
@@ -15,7 +16,9 @@ async function series(symbols: string[], key: string) {
   url.searchParams.set("interval", "1day");
   url.searchParams.set("outputsize", "3");
   url.searchParams.set("apikey", key);
+  await reserveCredits(symbols.length); // one credit per symbol, inside the site's share of the plan's minute
   const response = await fetch(url, { cache: "no-store", signal: AbortSignal.timeout(12_000) });
+  if (response.status === 429) providerLimited();
   if (!response.ok) throw new Error(`Twelve Data ${response.status}`);
   const body = await response.json() as Record<string, unknown>;
   // A single symbol comes back unwrapped; wrap it so one parser handles both.

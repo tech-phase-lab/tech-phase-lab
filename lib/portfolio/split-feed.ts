@@ -1,6 +1,7 @@
 import "server-only";
 import { unstable_cache } from "next/cache";
 import { etDay, knownThroughDay, mergeSplits, parseTwelveSplits, type StockSplit } from "@/lib/research/stock-splits";
+import { providerLimited, reserveCredits } from "@/lib/research/twelve-gateway";
 
 /** Stock splits of the tickers a reader holds: Twelve Data /splits (whole history, 20 credits a call) with the manual list
  * (lib/research/stock-splits.json) laid over it. Kept per ticker in the shared data cache for the ET day (readers share one call per ticker a
@@ -13,7 +14,9 @@ const one = (ticker: string) => unstable_cache(async (): Promise<{ splits: Stock
   if (!key) throw new Error("not-configured");
   const url = new URL(`${BASE()}/splits`);
   url.searchParams.set("symbol", ticker); url.searchParams.set("range", "full"); url.searchParams.set("apikey", key);
+  await reserveCredits(20); // inside the site's share of the plan's minute; a refusal is a failed read (not cached, the lots are left alone)
   const response = await fetch(url, { cache: "no-store", signal: AbortSignal.timeout(12_000) });
+  if (response.status === 429) providerLimited();
   if (!response.ok) throw new Error(`splits ${response.status}`);
   return { splits: parseTwelveSplits(await response.json(), ticker), at: Date.now() };
 }, ["portfolio-splits-v4", ticker, etDay()], { revalidate: 12 * 3600 })();

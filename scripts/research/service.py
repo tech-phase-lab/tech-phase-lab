@@ -1339,19 +1339,23 @@ class AutomaticMonitor:
         if not self.web_push_enabled:
             return
         while not self.stop_event.is_set():
+            wait = price_alerts.CHECK_SECONDS
             if price_alerts.enabled():
                 try:
                     db = web_push.connect(self.db_path)
                     try:
-                        price_alerts.run_once(db)
+                        result = price_alerts.run_once(db)
                     finally:
                         db.close()
+                    # A minute with no room for the pass is tried again in the next minute, not five minutes later.
+                    if isinstance(result, dict) and result.get("status") == "credits-busy":
+                        wait = price_alerts.BUSY_RETRY_SECONDS
                     price_alerts.STATUS["lastError"] = None
                 except Exception as error:
                     # The class only: a Twelve Data message can carry the URL and the key.
                     price_alerts.STATUS["lastError"] = type(error).__name__
                     print(json.dumps({"event": "price-alerts-failed", "error": type(error).__name__}), flush=True)
-            self.stop_event.wait(price_alerts.CHECK_SECONDS)
+            self.stop_event.wait(wait)
 
     def value_check_path(self):
         # Its own file next to the monitor database: five years of closes stay out of the main database and its backups
