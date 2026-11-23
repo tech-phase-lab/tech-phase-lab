@@ -1,0 +1,150 @@
+{
+  "root": {
+    "ticker": "UHS",
+    "name": "ユニバーサル・ヘルス・サービシズ",
+    "cik": 352915,
+    "name_en": "Universal Health Services"
+  },
+  "rows": [
+    {
+      "ja": "買収・出資・関連REIT",
+      "en": "Acquisitions, stakes & affiliated REIT",
+      "above": true
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "ACHC",
+    "THC"
+  ],
+  "companies": [
+    {
+      "id": "TALK",
+      "ticker": "TALK",
+      "name": "トークスペース",
+      "name_en": "Talkspace",
+      "sub": "オンライン心理療法",
+      "sub_en": "Online therapy",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2026年8月に買収を完了",
+          "text_en": "Completed the acquisition in August 2026",
+          "source": {
+            "label": "UHS の発表(Talkspace買収完了、8-K添付)",
+            "label_en": "UHS release (Talkspace acquisition closed, 8-K exhibit)",
+            "url": "https://www.sec.gov/Archives/edgar/data/352915/000119312526354078/uhs-ex99_1.htm",
+            "level": "official",
+            "date": "2026-08-17",
+            "quote": "(NYSE: UHS) today announced the successful completion of its acquisition of Talkspace, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PINC",
+      "ticker": "PINC",
+      "name": "プレミア",
+      "name_en": "Premier",
+      "sub": "病院の共同購買",
+      "sub_en": "Healthcare group purchasing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "少数持分を保有していたが、2025年11月のPatient Square CapitalによるPremier買収に伴い売却",
+          "text_en": "Held a minority stake, sold when Patient Square Capital acquired Premier in November 2025",
+          "source": {
+            "label": "Universal Health Services 10-K(2025年度)",
+            "label_en": "Universal Health Services 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/352915/000119312526071676/uhs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Pursuant to an agreement and plan of merger providing for the acquisition of Premier by Patient Square Capital, our minority ownership interest in Premier was sold in November, 2025."
+          }
+        }
+      ]
+    },
+    {
+      "id": "UHT",
+      "ticker": "UHT",
+      "name": "ユニバーサル・ヘルス・リアルティ",
+      "name_en": "Universal Health Realty Income Trust",
+      "sub": "医療不動産REIT",
+      "sub_en": "Healthcare REIT",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "UHSの子会社が運用顧問を務め、施設の売買契約もある関連REIT",
+          "text_en": "Affiliated REIT advised by a UHS subsidiary, with asset purchase and sale agreements with UHS",
+          "source": {
+            "label": "Universal Health Realty Income Trust 10-K(2025年度)",
+            "label_en": "Universal Health Realty Income Trust 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/798783/000119312526071594/uht-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "our officers and other personnel are all employees of the Advisor (UHS of Delaware, Inc., a wholly-owned subsidiary of Universal Health Services, Inc)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ACHC",
+      "ticker": "ACHC",
+      "name": "アカディア・ヘルスケア",
+      "name_en": "Acadia Healthcare",
+      "sub": "行動医療(精神科)",
+      "sub_en": "Behavioral health",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Acadiaが10-Kで、買収案件の主な競合としてUHSを挙げる",
+          "text_en": "Acadia names UHS among its principal competitors for acquisitions",
+          "source": {
+            "label": "Acadia Healthcare 10-K(2025年度)",
+            "label_en": "Acadia Healthcare 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1520697/000119312526078266/achc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our principal competitors for acquisitions have included UHS and private equity firms."
+          }
+        }
+      ]
+    },
+    {
+      "id": "THC",
+      "ticker": "THC",
+      "name": "テネット・ヘルスケア",
+      "name_en": "Tenet Healthcare",
+      "sub": "病院・外来手術",
+      "sub_en": "Hospitals & surgery centers",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Tenetの役員契約で、退任後に就業を禁じる競合先の一社としてUHSを挙げる",
+          "text_en": "A Tenet executive agreement lists UHS among restricted competitor entities",
+          "source": {
+            "label": "Tenet Healthcare 役員雇用契約(8-K添付)",
+            "label_en": "Tenet Healthcare executive employment agreement (8-K exhibit)",
+            "url": "https://www.sec.gov/Archives/edgar/data/70318/000007031825000003/ex101amendedandrestatedemp.htm",
+            "level": "official",
+            "date": "2025-01-24",
+            "quote": "HCA Healthcare, Inc., Community Health Systems, Inc., Universal Health Services, Inc., Surgery Partners, Inc., or any of their respective affiliates or successors in interest (the \" Restricted Entities \")"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

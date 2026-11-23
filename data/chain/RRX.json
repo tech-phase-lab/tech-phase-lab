@@ -1,0 +1,151 @@
+{
+  "root": {
+    "ticker": "RRX",
+    "name": "リーガル・レックスノード",
+    "cik": 82811,
+    "name_en": "Regal Rexnord"
+  },
+  "rows": [
+    {
+      "ja": "買収・合併",
+      "en": "Acquisitions & mergers",
+      "above": true
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "CMCO",
+    "ALNT",
+    "RBC"
+  ],
+  "companies": [
+    {
+      "id": "Altra",
+      "ticker": "Altra",
+      "name": "アルトラ・インダストリアル・モーション",
+      "name_en": "Altra Industrial Motion",
+      "sub": "動力伝達部品",
+      "sub_en": "Power transmission products",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2023年に51億ドルで買収",
+          "text_en": "Acquired in 2023 for $5.1 billion",
+          "source": {
+            "label": "Regal Rexnord 10-K(2025年度)",
+            "label_en": "Regal Rexnord 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/82811/000008281126000054/rbc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "The total purchase price for the acquisition of Altra was $5.1 billion."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ZWS",
+      "ticker": "ZWS",
+      "name": "ズーン・エルケイ",
+      "name_en": "Zurn Elkay",
+      "sub": "水回り製品",
+      "sub_en": "Water solutions",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2021年に旧RexnordのPMC事業と合併(Zurnは分離後のRexnordの水回り事業)。税務面の補償義務が残る",
+          "text_en": "Merged with Rexnord's Process & Motion Control business in 2021; Zurn is the remaining water business, with tax indemnities between them",
+          "source": {
+            "label": "Regal Rexnord 10-K(2025年度)",
+            "label_en": "Regal Rexnord 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/82811/000008281126000054/rbc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "If this occurs and Land is required to indemnify Zurn, this indemnification obligation could be substantial"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CMCO",
+      "ticker": "CMCO",
+      "name": "コロンバス・マッキノン",
+      "name_en": "Columbus McKinnon",
+      "sub": "荷役・搬送機器",
+      "sub_en": "Material handling",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Columbus McKinnonが10-Kで、競合のNookを持つAltraがRegal Rexnordに買収されたと記載",
+          "text_en": "Columbus McKinnon names Altra's Nook, now part of Regal Rexnord, as a major competitor",
+          "source": {
+            "label": "Columbus McKinnon 10-K(2026年度)",
+            "label_en": "Columbus McKinnon 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1005229/000100522926000022/cmco-20260331.htm",
+            "level": "official",
+            "date": "2026-06-08",
+            "quote": "Major competitors for actuators and rotary unions are Deublin, Joyce-Dayton, and Nook Industries, a division of Altra Industrial Motion Corp., which was acquired by Regal Rexnord."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ALNT",
+      "ticker": "ALNT",
+      "name": "アリエント",
+      "name_en": "Allient",
+      "sub": "モーター・制御",
+      "sub_en": "Motion control",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Allientが10-Kで、競合の一社としてRegal Rexnordを挙げる",
+          "text_en": "Allient names Regal Rexnord among its competitors",
+          "source": {
+            "label": "Allient 10-K(2025年度)",
+            "label_en": "Allient 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/46129/000110465926024123/alnt-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-03-05",
+            "quote": "Our competitors include Ametek, Inc., Parker Hannifin Corporation, Regal Rexnord, and other smaller competitors."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RBC",
+      "ticker": "RBC",
+      "name": "RBCベアリングス",
+      "name_en": "RBC Bearings",
+      "sub": "軸受",
+      "sub_en": "Bearings",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "RBC Bearingsが10-Kで、主な競合としてRegal Rexnordを挙げる",
+          "text_en": "RBC Bearings names Regal Rexnord among its principal competitors",
+          "source": {
+            "label": "RBC Bearings 10-K(2026年度)",
+            "label_en": "RBC Bearings 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1324948/000121390026057626/ea0288814-10k_rbcbear.htm",
+            "level": "official",
+            "date": "2026-05-15",
+            "quote": "Our principal competitors include SKF, New Hampshire Ball Bearings, Regal Rexnord, NORD and Timken"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

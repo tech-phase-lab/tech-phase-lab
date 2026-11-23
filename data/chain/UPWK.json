@@ -1,0 +1,203 @@
+{
+  "root": {
+    "ticker": "UPWK",
+    "name": "アップワーク",
+    "cik": 1627475,
+    "name_en": "Upwork"
+  },
+  "rows": [
+    {
+      "ja": "買収",
+      "en": "Acquisitions",
+      "above": true
+    },
+    {
+      "ja": "人材サービスの競合",
+      "en": "Staffing competitors"
+    },
+    {
+      "ja": "ネット仲介の競合",
+      "en": "Online marketplace competitors"
+    }
+  ],
+  "rivals": [
+    "RHI",
+    "FVRR",
+    "IZEA"
+  ],
+  "companies": [
+    {
+      "id": "WorkMotion",
+      "ticker": "WorkMotion",
+      "name": "ワークモーション",
+      "name_en": "WorkMotion",
+      "sub": "海外雇用代行(EOR)",
+      "sub_en": "Employer of record",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "傘下のLiftedが2026年に買収",
+          "text_en": "Acquired by its Lifted unit in 2026",
+          "source": {
+            "label": "Upwork 2026年第3四半期決算発表",
+            "label_en": "Upwork Q3 2026 results release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1627475/000162747526000053/upwork3q26-pressrelease_3q.htm",
+            "level": "official",
+            "date": "2026-11-02",
+            "quote": "in connection with the WorkMotion Software GmbH acquisition."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Adecco",
+      "ticker": "Adecco",
+      "name": "アデコ",
+      "name_en": "Adecco",
+      "sub": "人材派遣(スイス)",
+      "sub_en": "Staffing (Switzerland)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Upworkが10-Kで、主な競合として挙げる",
+          "text_en": "Upwork names it among its main competitors",
+          "source": {
+            "label": "Upwork 10-K(2025年度)",
+            "label_en": "Upwork 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1627475/000162747526000012/upwk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "traditional contingent workforce and staffing service providers and other outsourcing providers, such as The Adecco Group, Randstad, Recruit, Allegis Group, and Robert Half International;"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Randstad",
+      "ticker": "Randstad",
+      "name": "ランスタッド",
+      "name_en": "Randstad",
+      "sub": "人材派遣(オランダ)",
+      "sub_en": "Staffing (Netherlands)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Upworkが10-Kで、主な競合として挙げる",
+          "text_en": "Upwork names it among its main competitors",
+          "source": {
+            "label": "Upwork 10-K(2025年度)",
+            "label_en": "Upwork 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1627475/000162747526000012/upwk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "traditional contingent workforce and staffing service providers and other outsourcing providers, such as The Adecco Group, Randstad, Recruit, Allegis Group, and Robert Half International;"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Recruit",
+      "ticker": "Recruit",
+      "name": "リクルート",
+      "name_en": "Recruit Holdings",
+      "sub": "人材・求人(日本)",
+      "sub_en": "HR & job search (Japan)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Upworkが10-Kで、主な競合として挙げる",
+          "text_en": "Upwork names it among its main competitors",
+          "source": {
+            "label": "Upwork 10-K(2025年度)",
+            "label_en": "Upwork 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1627475/000162747526000012/upwk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "traditional contingent workforce and staffing service providers and other outsourcing providers, such as The Adecco Group, Randstad, Recruit, Allegis Group, and Robert Half International;"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RHI",
+      "ticker": "RHI",
+      "name": "ロバート・ハーフ",
+      "name_en": "Robert Half",
+      "sub": "専門人材サービス",
+      "sub_en": "Professional staffing",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Upworkが10-Kで、主な競合として挙げる",
+          "text_en": "Upwork names it among its main competitors",
+          "source": {
+            "label": "Upwork 10-K(2025年度)",
+            "label_en": "Upwork 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1627475/000162747526000012/upwk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "traditional contingent workforce and staffing service providers and other outsourcing providers, such as The Adecco Group, Randstad, Recruit, Allegis Group, and Robert Half International;"
+          }
+        }
+      ]
+    },
+    {
+      "id": "FVRR",
+      "ticker": "FVRR",
+      "name": "ファイバー",
+      "name_en": "Fiverr",
+      "sub": "フリーランス仲介",
+      "sub_en": "Freelance marketplace",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Upworkが10-Kで、主な競合として挙げる",
+          "text_en": "Upwork names it among its main competitors",
+          "source": {
+            "label": "Upwork 10-K(2025年度)",
+            "label_en": "Upwork 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1627475/000162747526000012/upwk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "online freelancer platforms that serve either a diverse range of skill categories, such as Fiverr, Guru, and Freelancer.com, or specific skill categories;"
+          }
+        }
+      ]
+    },
+    {
+      "id": "IZEA",
+      "ticker": "IZEA",
+      "name": "IZEAワールドワイド",
+      "name_en": "IZEA Worldwide",
+      "sub": "インフルエンサー・マーケティング",
+      "sub_en": "Influencer marketing",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "IZEAが10-Kで、クリエイター分野の競合としてUpworkを挙げる",
+          "text_en": "IZEA names Upwork as a competitor in the creator economy",
+          "source": {
+            "label": "IZEA Worldwide 10-K(2024年度)",
+            "label_en": "IZEA Worldwide 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1495231/000149523125000050/izea-20241231.htm",
+            "level": "official",
+            "date": "2025-03-27",
+            "quote": "We also face competition in the creator economy from companies such as Fiverr and Upwork."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

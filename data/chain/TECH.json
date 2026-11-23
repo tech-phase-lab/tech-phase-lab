@@ -1,0 +1,178 @@
+{
+  "root": {
+    "ticker": "TECH",
+    "name": "バイオテクネ",
+    "cik": 842023,
+    "name_en": "Bio-Techne"
+  },
+  "rows": [
+    {
+      "ja": "販売提携・買収",
+      "en": "Distribution & acquisition",
+      "above": true
+    },
+    {
+      "ja": "顧客・共同開発先(相手の資料に記載)",
+      "en": "Customers & partners (named in their filings)"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "QTRX",
+    "BLLN"
+  ],
+  "companies": [
+    {
+      "id": "TMO",
+      "ticker": "TMO",
+      "name": "サーモフィッシャー・サイエンティフィック",
+      "name_en": "Thermo Fisher Scientific",
+      "sub": "研究機器・試薬",
+      "sub_en": "Life science tools",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Bio-Techneの製品を販売代理店契約で扱う",
+          "text_en": "Distributes Bio-Techne products under a distribution agreement",
+          "source": {
+            "label": "Bio-Techne 10-K(2026年度)",
+            "label_en": "Bio-Techne 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/842023/000110465926100322/tech-20260630x10k.htm",
+            "level": "official",
+            "date": "2026-08-24",
+            "quote": "We sell our products directly to customers who are primarily located in North America, Europe and China, as well as through a distribution agreement with Thermo Fisher Scientific."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Asuragen",
+      "ticker": "Asuragen",
+      "name": "アスラジェン",
+      "name_en": "Asuragen",
+      "sub": "分子診断",
+      "sub_en": "Molecular diagnostics",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2021年4月にBio-Techneが買収",
+          "text_en": "Acquired by Bio-Techne in April 2021",
+          "source": {
+            "label": "Wave Life Sciences 10-K(2025年度)",
+            "label_en": "Wave Life Sciences 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1631574/000119312526073472/wve-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Asuragen In November 2019, we entered into an agreement with Asuragen (which was acquired by Bio-Techne Corporation in April 2021)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "WVE",
+      "ticker": "WVE",
+      "name": "ウェーブ・ライフ・サイエンシズ",
+      "name_en": "Wave Life Sciences",
+      "sub": "核酸医薬",
+      "sub_en": "Oligonucleotide drugs",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Bio-Techne傘下のAsuragenと、診断法の開発・商業化で契約",
+          "text_en": "Has an agreement with Bio-Techne's Asuragen to develop and commercialize a diagnostic",
+          "source": {
+            "label": "Wave Life Sciences 10-K(2025年度)",
+            "label_en": "Wave Life Sciences 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1631574/000119312526073472/wve-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Asuragen In November 2019, we entered into an agreement with Asuragen (which was acquired by Bio-Techne Corporation in April 2021), a molecular diagnostics company, for the development and potential commercialization of"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ASPE",
+      "ticker": "ASPE",
+      "name": "アスペン・ニューロサイエンス",
+      "name_en": "Aspen Neuroscience",
+      "sub": "細胞治療(パーキンソン病)",
+      "sub_en": "Cell therapy (Parkinson's)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "細胞培養試薬の調達先の一社がBio-Techne",
+          "text_en": "Buys cell culture reagents from vendors including Bio-Techne",
+          "source": {
+            "label": "Aspen Neuroscience 上場届出書(S-1)",
+            "label_en": "Aspen Neuroscience registration statement (S-1)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2124080/000119312526419104/na-20261009.htm",
+            "level": "official",
+            "date": "2026-10-09",
+            "quote": "While we procure a number of cell culture reagents from multiple vendors, including Bio-Techne, Thermo Fisher, StemCell Technologies, Akron Biotech and ClearPoint Neuro"
+          }
+        }
+      ]
+    },
+    {
+      "id": "QTRX",
+      "ticker": "QTRX",
+      "name": "クアンテリクス",
+      "name_en": "Quanterix",
+      "sub": "超高感度タンパク測定",
+      "sub_en": "Ultra-sensitive protein detection",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Quanterixが10-Kで、タンパク測定の競合としてBio-Techneを挙げる",
+          "text_en": "Quanterix names Bio-Techne among competitors in protein measurement",
+          "source": {
+            "label": "Quanterix 10-K(2025年度)",
+            "label_en": "Quanterix 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1503274/000150327426000013/qtrx-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "Companies such as Bio-Techne, MesoScale Discovery, SEER, Bio-Rad Laboratories, Alamar, Spear Bio, and others, have products for protein measurements in biofluids that compete in certain segments of the market"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BLLN",
+      "ticker": "BLLN",
+      "name": "ビリオントゥワン",
+      "name_en": "BillionToOne",
+      "sub": "遺伝子検査",
+      "sub_en": "Genetic testing",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "BillionToOneが上場届出書で、がん検査市場の競合の一社としてBio-Techneを挙げる",
+          "text_en": "BillionToOne lists Bio-Techne among competitors in its oncology testing estimate",
+          "source": {
+            "label": "BillionToOne 上場届出書(S-1/A)",
+            "label_en": "BillionToOne registration statement (S-1/A)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2070849/000119312525242632/d903739ds1a.htm",
+            "level": "official",
+            "date": "2025-10-17",
+            "quote": "The competitors included in this estimate are: Bio-Techne, Ltd., Caris, Exact Sciences Corp., Foundation Medicine, Inc., Guardant, Natera and NeoGenomics Laboratories, Inc."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
