@@ -1,0 +1,225 @@
+{
+  "root": {
+    "ticker": "BWA",
+    "name": "ボルグワーナー",
+    "cik": 908255,
+    "name_en": "BorgWarner"
+  },
+  "rows": [
+    {
+      "ja": "主要顧客",
+      "en": "Major customers"
+    },
+    {
+      "ja": "分離・取引",
+      "en": "Spin-off & partners"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "MGA",
+    "CMI"
+  ],
+  "companies": [
+    {
+      "id": "VWAGY",
+      "ticker": "VWAGY",
+      "name": "フォルクスワーゲン",
+      "name_en": "Volkswagen",
+      "sub": "自動車",
+      "sub_en": "Automaker",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大の顧客(売上の約13%)",
+          "text_en": "Its largest customer (about 13% of sales)",
+          "source": {
+            "label": "BorgWarner 10-K(2025年度)",
+            "label_en": "BorgWarner 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/908255/000090825526000011/bwa-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Our worldwide sales in 2025 to Volkswagen and Ford constituted approximately 13% and 12% of our 2025 consolidated net sales, respectively."
+          }
+        }
+      ]
+    },
+    {
+      "id": "F",
+      "ticker": "F",
+      "name": "フォード",
+      "name_en": "Ford",
+      "sub": "自動車",
+      "sub_en": "Automaker",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2番目の顧客(売上の約12%)",
+          "text_en": "Second-largest customer (about 12% of sales)",
+          "source": {
+            "label": "BorgWarner 10-K(2025年度)",
+            "label_en": "BorgWarner 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/908255/000090825526000011/bwa-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Our worldwide sales in 2025 to Volkswagen and Ford constituted approximately 13% and 12% of our 2025 consolidated net sales, respectively."
+          }
+        }
+      ]
+    },
+    {
+      "id": "STLA",
+      "ticker": "STLA",
+      "name": "ステランティス",
+      "name_en": "Stellantis",
+      "sub": "自動車",
+      "sub_en": "Automaker",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "北米の3大顧客の一社",
+          "text_en": "One of its three primary North American customers",
+          "source": {
+            "label": "BorgWarner 10-K(2025年度)",
+            "label_en": "BorgWarner 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/908255/000090825526000011/bwa-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "All three of our primary North American customers, Ford, Stellantis, and General Motors"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GM",
+      "ticker": "GM",
+      "name": "ゼネラル・モーターズ",
+      "name_en": "General Motors",
+      "sub": "自動車",
+      "sub_en": "Automaker",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "北米の3大顧客の一社",
+          "text_en": "One of its three primary North American customers",
+          "source": {
+            "label": "BorgWarner 10-K(2025年度)",
+            "label_en": "BorgWarner 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/908255/000090825526000011/bwa-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "All three of our primary North American customers, Ford, Stellantis, and General Motors"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PHIN",
+      "ticker": "PHIN",
+      "name": "フィニア",
+      "name_en": "PHINIA",
+      "sub": "燃料系・補修部品",
+      "sub_en": "Fuel systems & aftermarket",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "分離した会社。分離契約などで関係が続く",
+          "text_en": "Spun off from BorgWarner; bound by separation agreements",
+          "source": {
+            "label": "BorgWarner 10-K(2025年度)",
+            "label_en": "BorgWarner 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/908255/000090825526000011/bwa-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "In connection with the spin-off, we entered into a separation and distribution agreement and related agreements with PHINIA"
+          }
+        }
+      ]
+    },
+    {
+      "id": "REE",
+      "ticker": "REE",
+      "name": "REEオートモーティブ",
+      "name_en": "REE Automotive",
+      "sub": "EVプラットフォーム",
+      "sub_en": "EV platforms",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "REEの将来売上の一部はBorgWarnerによる部品購入に依存",
+          "text_en": "Some future REE revenue depends on BorgWarner buying components",
+          "source": {
+            "label": "REE Automotive 20-F(2025年度)",
+            "label_en": "REE Automotive 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1843588/000162828026035308/ree-20251231.htm",
+            "level": "official",
+            "date": "2026-05-15",
+            "quote": "Certain of our future revenues depend on BorgWarner's purchase of automotive components from our suppliers"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MGA",
+      "ticker": "MGA",
+      "name": "マグナ・インターナショナル",
+      "name_en": "Magna International",
+      "sub": "自動車部品",
+      "sub_en": "Auto parts",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Magnaが年次情報で、主な競合として挙げる",
+          "text_en": "Magna names BorgWarner among key competitors",
+          "source": {
+            "label": "Magna 年次情報(40-F添付)",
+            "label_en": "Magna annual information form (40-F exhibit)",
+            "url": "https://www.sec.gov/Archives/edgar/data/749098/000119312526128771/d20215dex991.htm",
+            "level": "official",
+            "date": "2026-03-27",
+            "quote": "Key Competitors • Aisin Group • Blue Nexus • BorgWarner"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CMI",
+      "ticker": "CMI",
+      "name": "カミンズ",
+      "name_en": "Cummins",
+      "sub": "エンジン・電動化",
+      "sub_en": "Engines & electrification",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Cumminsが10-Kで、主な競合の一社として挙げる",
+          "text_en": "Cummins names BorgWarner among its primary competitors",
+          "source": {
+            "label": "Cummins 10-K(2025年度)",
+            "label_en": "Cummins 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/26172/000002617226000009/cmi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "Our primary competitors include Daimler, PACCAR, Traton, BYD Company Limited, Dana Incorporated and BorgWarner Inc."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

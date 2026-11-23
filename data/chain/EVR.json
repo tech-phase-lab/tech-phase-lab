@@ -1,0 +1,220 @@
+{
+  "root": {
+    "ticker": "EVR",
+    "name": "エバーコア",
+    "cik": 1360901,
+    "name_en": "Evercore"
+  },
+  "rows": [
+    {
+      "ja": "資金調達を担った顧客(相手の資料に記載)",
+      "en": "Capital raising clients (named in their filings)"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "MC"
+  ],
+  "companies": [
+    {
+      "id": "SVRA",
+      "ticker": "SVRA",
+      "name": "サバラ",
+      "name_en": "Savara",
+      "sub": "希少肺疾患薬",
+      "sub_en": "Rare lung disease drugs",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Evercoreを販売代理人とする株式売出し契約(2021年)",
+          "text_en": "Equity sales agreement with Evercore as sales agent (2021)",
+          "source": {
+            "label": "Savara 10-K(2024年度)",
+            "label_en": "Savara 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1160308/000095017025045731/svra-20241231.htm",
+            "level": "official",
+            "date": "2025-03-27",
+            "quote": "On July 6, 2021, the Company entered into a Common Stock Sales Agreement with Evercore Group L.L.C."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RRGB",
+      "ticker": "RRGB",
+      "name": "レッドロビン",
+      "name_en": "Red Robin Gourmet Burgers",
+      "sub": "外食",
+      "sub_en": "Restaurants",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Evercoreと時価発行(ATM)の販売契約(2025年11月)",
+          "text_en": "At-the-market distribution agreement with Evercore (November 2025)",
+          "source": {
+            "label": "Red Robin 10-K(2025年度)",
+            "label_en": "Red Robin 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1171759/000162828026011733/rrgb-20251228.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "On November 10, 2025, the Company entered into a distribution agreement (the \"Distribution Agreement\") with Evercore Group L.L.C."
+          }
+        }
+      ]
+    },
+    {
+      "id": "KRMN",
+      "ticker": "KRMN",
+      "name": "カーマン・ホールディングス",
+      "name_en": "Karman Holdings",
+      "sub": "防衛・宇宙部品",
+      "sub_en": "Defense & space systems",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "IPOの引受を担ったCitiとEvercoreがロックアップを一部解除",
+          "text_en": "Citi and Evercore, its IPO underwriters, granted a lock-up waiver",
+          "source": {
+            "label": "Karman Holdings S-1",
+            "label_en": "Karman Holdings S-1",
+            "url": "https://www.sec.gov/Archives/edgar/data/2040127/000119312525161868/d20420ds1.htm",
+            "level": "official",
+            "date": "2025-07-21",
+            "quote": "Citigroup Global Markets Inc. and Evercore Group L.L.C. have provided a limited waiver of certain of the lock-up agreements entered into in connection with our IPO"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MLYS",
+      "ticker": "MLYS",
+      "name": "ミネラリス・セラピューティクス",
+      "name_en": "Mineralys Therapeutics",
+      "sub": "高血圧治療薬",
+      "sub_en": "Hypertension drugs",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "公募増資の引受契約(2025年9月)",
+          "text_en": "Underwriting agreement for its public offering (September 2025)",
+          "source": {
+            "label": "Mineralys Therapeutics 10-K(2025年度)",
+            "label_en": "Mineralys Therapeutics 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1933414/000193341426000056/mlys-20251231.htm",
+            "level": "official",
+            "date": "2026-03-12",
+            "quote": "On September 2, 2025, we entered into an underwriting agreement with BofA Securities, Inc., Evercore Group L.L.C. and Goldman Sachs & Co."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FHTX",
+      "ticker": "FHTX",
+      "name": "フォグホーン・セラピューティクス",
+      "name_en": "Foghorn Therapeutics",
+      "sub": "がん創薬",
+      "sub_en": "Cancer drug discovery",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "株式発行の引受契約(2024年5月)",
+          "text_en": "Underwriting agreement for a share sale (May 2024)",
+          "source": {
+            "label": "Foghorn Therapeutics 10-K(2024年度)",
+            "label_en": "Foghorn Therapeutics 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1822462/000162828025010933/fhtx-20241231.htm",
+            "level": "official",
+            "date": "2025-03-06",
+            "quote": "In May 2024, the Company entered into an underwriting agreement with Jefferies LLC, TD Securities (USA) LLC and Evercore Group LLC"
+          }
+        }
+      ]
+    },
+    {
+      "id": "QSI",
+      "ticker": "QSI",
+      "name": "クアンタムSi",
+      "name_en": "Quantum-Si",
+      "sub": "タンパク質解析",
+      "sub_en": "Protein sequencing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Evercore経由の時価発行(ATM)契約を2024年12月に解約",
+          "text_en": "Ended its at-the-market program with Evercore (December 2024)",
+          "source": {
+            "label": "Quantum-Si 10-K(2024年度)",
+            "label_en": "Quantum-Si 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1816431/000181643125000014/qsi-20241231.htm",
+            "level": "official",
+            "date": "2025-03-03",
+            "quote": "The Equity Distribution Agreement previously established an \"at-the-market\" offering program through which we had the right to sell, from time to time, through Evercore"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BNTC",
+      "ticker": "BNTC",
+      "name": "ベニテック・バイオファーマ",
+      "name_en": "Benitec Biopharma",
+      "sub": "遺伝子治療",
+      "sub_en": "Gene therapy",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "私募の募集代理人の一社",
+          "text_en": "One of the placement agents on its private placement",
+          "source": {
+            "label": "Benitec Biopharma 10-K(2026年6月期)",
+            "label_en": "Benitec Biopharma 10-K (FY ended Jun 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1808898/000119312526390570/bntc-20260630.htm",
+            "level": "official",
+            "date": "2026-09-14",
+            "quote": "we entered into a Placement Agency Agreement with Leerink Partners, TD Securities and Evercore ISI"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MC",
+      "ticker": "MC",
+      "name": "モーリス",
+      "name_en": "Moelis",
+      "sub": "投資銀行",
+      "sub_en": "Investment bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Moelisが10-Kで、独立系投資銀行の競合の筆頭に挙げる",
+          "text_en": "Moelis lists Evercore first among independent investment bank competitors",
+          "source": {
+            "label": "Moelis 10-K(2025年度)",
+            "label_en": "Moelis 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1596967/000119312526076747/mc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "as well as independent investment banking firms such as Evercore Partners Inc., Houlihan Lokey, Inc., Lazard Ltd, Perella Weinberg Partners, PJT Partners, Inc."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,148 @@
+{
+  "root": {
+    "ticker": "DCI",
+    "name": "ドナルドソン",
+    "cik": 29644,
+    "name_en": "Donaldson"
+  },
+  "rows": [
+    {
+      "ja": "合弁・出資・買収",
+      "en": "Joint ventures, stakes & acquisitions"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "PH"
+  ],
+  "companies": [
+    {
+      "id": "CAT",
+      "ticker": "CAT",
+      "name": "キャタピラー",
+      "name_en": "Caterpillar",
+      "sub": "建設機械",
+      "sub_en": "Construction machinery",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "1986年に合弁AFSIを設立。Caterpillarの機械向けフィルターを製造",
+          "text_en": "Formed the AFSI joint venture in 1986, which makes filters for Caterpillar machinery",
+          "source": {
+            "label": "Donaldson 10-K(2026年7月期)",
+            "label_en": "Donaldson 10-K (FY ended Jul 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/29644/000002964426000085/dci-20260731.htm",
+            "level": "official",
+            "date": "2026-09-25",
+            "quote": "The Company has an unconsolidated joint venture, Advanced Filtration Systems Inc. (AFSI), established by the Company and Caterpillar Inc. (Caterpillar) in 1986."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FiltrationGroup",
+      "ticker": "Filtration Group",
+      "name": "フィルトレーション・グループ",
+      "name_en": "Filtration Group",
+      "sub": "ろ過装置",
+      "sub_en": "Filtration",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "航空機燃料用フィルターのFacet事業を買収(2026年7月期)",
+          "text_en": "Acquired its Facet Filtration business (FY ended Jul 2026)",
+          "source": {
+            "label": "Donaldson 10-K(2026年7月期)",
+            "label_en": "Donaldson 10-K (FY ended Jul 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/29644/000002964426000085/dci-20260731.htm",
+            "level": "official",
+            "date": "2026-09-25",
+            "quote": "During fiscal 2026, the Company acquired Filtration Group's Facet Filtration business (Facet)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Medica",
+      "ticker": "Medica",
+      "name": "メディカ",
+      "name_en": "Medica S.p.A.",
+      "sub": "医療機器(イタリア)",
+      "sub_en": "Medical devices (Italy)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "少数株主として出資",
+          "text_en": "Holds a non-controlling interest",
+          "source": {
+            "label": "Donaldson 10-K(2026年7月期)",
+            "label_en": "Donaldson 10-K (FY ended Jul 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/29644/000002964426000085/dci-20260731.htm",
+            "level": "official",
+            "date": "2026-09-25",
+            "quote": "as well as a non-controlling interest in Medica S.p.A. (Medica), all of which are considered related parties."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PTPJM",
+      "ticker": "PT Panata Jaya Mandiri",
+      "name": "パナタ・ジャヤ・マンディリ",
+      "name_en": "PT Panata Jaya Mandiri",
+      "sub": "フィルター(インドネシア)",
+      "sub_en": "Filters (Indonesia)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "インドネシアの合弁会社",
+          "text_en": "Indonesian joint venture",
+          "source": {
+            "label": "Donaldson 10-K(2026年7月期)",
+            "label_en": "Donaldson 10-K (FY ended Jul 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/29644/000002964426000085/dci-20260731.htm",
+            "level": "official",
+            "date": "2026-09-25",
+            "quote": "The Company is party to joint ventures with Advanced Filtration Systems Inc. (AFSI) and PT Panata Jaya Mandiri (PTPJM)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PH",
+      "ticker": "PH",
+      "name": "パーカー・ハネフィン",
+      "name_en": "Parker-Hannifin",
+      "sub": "モーション制御・ろ過",
+      "sub_en": "Motion control & filtration",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Parkerが10-Kで、世界的な主な競合として挙げる",
+          "text_en": "Parker names Donaldson among its primary global competitors",
+          "source": {
+            "label": "Parker-Hannifin 10-K(2025年6月期)",
+            "label_en": "Parker-Hannifin 10-K (FY ended Jun 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/76334/000007633425000035/ph-20250630.htm",
+            "level": "official",
+            "date": "2025-08-22",
+            "quote": "our primary global competitors include Bosch Rexroth AG, Danaher Corporation, Danfoss A/S, Donaldson Company, Inc."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

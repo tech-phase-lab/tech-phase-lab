@@ -1,0 +1,250 @@
+{
+  "root": {
+    "ticker": "CAR",
+    "name": "エイビス・バジェット・グループ",
+    "cik": 723612,
+    "name_en": "Avis Budget Group"
+  },
+  "rows": [
+    {
+      "ja": "車両の調達先・提携",
+      "en": "Vehicle suppliers & partners",
+      "above": true
+    },
+    {
+      "ja": "旧グループ・取引先",
+      "en": "Former group & counterparties"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "HTZ",
+    "UHAL"
+  ],
+  "companies": [
+    {
+      "id": "TM",
+      "ticker": "TM",
+      "name": "トヨタ自動車",
+      "name_en": "Toyota",
+      "sub": "自動車",
+      "sub_en": "Automaker",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "車両の主な調達先の筆頭(2025年)",
+          "text_en": "First among the vehicle brands it mainly bought in 2025",
+          "source": {
+            "label": "Avis Budget 10-K(2025年度)",
+            "label_en": "Avis Budget 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/723612/000072361226000012/car-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "In 2025, we primarily purchased from the following vehicle brands: Toyota, Chevrolet, Ford, Mazda, Kia, Jeep, Hyundai, Volkswagen, Nissan and Renault."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GM",
+      "ticker": "GM",
+      "name": "ゼネラル・モーターズ",
+      "name_en": "General Motors (Chevrolet)",
+      "sub": "自動車",
+      "sub_en": "Automaker",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "車両の主な調達先(シボレー)",
+          "text_en": "A main vehicle supplier (Chevrolet)",
+          "source": {
+            "label": "Avis Budget 10-K(2025年度)",
+            "label_en": "Avis Budget 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/723612/000072361226000012/car-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "In 2025, we primarily purchased from the following vehicle brands: Toyota, Chevrolet, Ford"
+          }
+        }
+      ]
+    },
+    {
+      "id": "F",
+      "ticker": "F",
+      "name": "フォード",
+      "name_en": "Ford",
+      "sub": "自動車",
+      "sub_en": "Automaker",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "車両の主な調達先",
+          "text_en": "A main vehicle supplier",
+          "source": {
+            "label": "Avis Budget 10-K(2025年度)",
+            "label_en": "Avis Budget 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/723612/000072361226000012/car-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "In 2025, we primarily purchased from the following vehicle brands: Toyota, Chevrolet, Ford"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Waymo",
+      "ticker": "Waymo",
+      "name": "ウェイモ",
+      "name_en": "Waymo",
+      "sub": "自動運転",
+      "sub_en": "Autonomous driving",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ダラスでの自動運転配車を支える複数年の提携(2025年)",
+          "text_en": "Multi-year partnership supporting autonomous ride-hailing in Dallas (2025)",
+          "source": {
+            "label": "Avis Budget 10-K(2025年度)",
+            "label_en": "Avis Budget 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/723612/000072361226000012/car-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "in 2025 we announced a multi-year partnership with Waymo to support autonomous ride-hailing operations in Dallas."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SRS",
+      "ticker": "SRS",
+      "name": "SRSインベストメント",
+      "name_en": "SRS Investment Management",
+      "sub": "投資会社",
+      "sub_en": "Investment firm",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "最大株主。関連会社が子会社AMVの約65%を保有",
+          "text_en": "Largest shareholder; an affiliate holds about 65% of AMV",
+          "source": {
+            "label": "Avis Budget 10-K(2025年度)",
+            "label_en": "Avis Budget 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/723612/000072361226000012/car-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "SRS Mobility Ventures, LLC is an affiliate of our largest shareholder, SRS Investment Management, LLC."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TNL",
+      "ticker": "TNL",
+      "name": "トラベル+レジャー",
+      "name_en": "Travel + Leisure",
+      "sub": "タイムシェア",
+      "sub_en": "Vacation ownership",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "旧Cendantグループの兄弟会社。分離・税務分担契約を結ぶ",
+          "text_en": "Former Cendant sibling under separation and tax sharing agreements",
+          "source": {
+            "label": "Travel + Leisure 10-K(2024年度)",
+            "label_en": "Travel + Leisure 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1361658/000136165825000012/tnl-20241231.htm",
+            "level": "official",
+            "date": "2025-02-19",
+            "quote": "Under the separation agreement and the tax sharing agreement that we executed with Cendant Corporation (now Avis Budget Group, Inc., \"ABG\")"
+          }
+        }
+      ]
+    },
+    {
+      "id": "VRRM",
+      "ticker": "VRRM",
+      "name": "ヴェラ・モビリティ",
+      "name_en": "Verra Mobility",
+      "sub": "有料道路決済",
+      "sub_en": "Tolling services",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "商用サービス部門の主要顧客の一社",
+          "text_en": "A key customer of its Commercial Services segment",
+          "source": {
+            "label": "Verra Mobility 10-K(2024年度)",
+            "label_en": "Verra Mobility 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1682745/000095017025029180/vrrm-20241231.htm",
+            "level": "official",
+            "date": "2025-02-27",
+            "quote": "our Commercial Services segment is dependent on certain key customers, such as Avis Budget Group, Inc., Enterprise Mobility and The Hertz Corporation."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HTZ",
+      "ticker": "HTZ",
+      "name": "ハーツ",
+      "name_en": "Hertz",
+      "sub": "レンタカー",
+      "sub_en": "Car rental",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Hertzが10-Kで、主な競合の筆頭に挙げる",
+          "text_en": "Hertz lists Avis Budget first among principal competitors",
+          "source": {
+            "label": "Hertz 10-K(2024年度)",
+            "label_en": "Hertz 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1657853/000165785325000015/htz-20241231.htm",
+            "level": "official",
+            "date": "2025-02-18",
+            "quote": "Our principal vehicle rental industry competitors are Avis Budget Group, Inc., which currently operates the Avis, Budget, ZipCar and Payless brands"
+          }
+        }
+      ]
+    },
+    {
+      "id": "UHAL",
+      "ticker": "UHAL",
+      "name": "ユーホール",
+      "name_en": "U-Haul Holding",
+      "sub": "引越しトラック",
+      "sub_en": "Moving equipment rental",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "U-Haulが10-Kで、全国的な主要競合として挙げる(Budget Truck)",
+          "text_en": "U-Haul names Avis Budget among major national competitors",
+          "source": {
+            "label": "U-Haul Holding 10-K(2025年3月期)",
+            "label_en": "U-Haul Holding 10-K (FY ended Mar 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/4457/000095017025078451/uhal-20250331.htm",
+            "level": "official",
+            "date": "2025-05-29",
+            "quote": "Our major national competitors in both the in-town and one-way moving equipment rental market include Avis Budget Group, Inc. and Penske Truck Leasing."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

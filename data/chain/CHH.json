@@ -1,0 +1,177 @@
+{
+  "root": {
+    "ticker": "CHH",
+    "name": "チョイス・ホテルズ・インターナショナル",
+    "cik": 1046311,
+    "name_en": "Choice Hotels International"
+  },
+  "rows": [
+    {
+      "ja": "提携・買収提案",
+      "en": "Alliance & takeover bid"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in its 10-K)"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "MAR",
+    "HLT"
+  ],
+  "companies": [
+    {
+      "id": "HGV",
+      "ticker": "HGV",
+      "name": "ヒルトン・グランド・バケーションズ",
+      "name_en": "Hilton Grand Vacations",
+      "sub": "タイムシェア",
+      "sub_en": "Vacation ownership",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Bluegreen買収で、Choiceとの独占的な戦略提携を引き継いだ",
+          "text_en": "Took over an exclusive strategic relationship with Choice through the Bluegreen deal",
+          "source": {
+            "label": "Hilton Grand Vacations 10-K(2024年度)",
+            "label_en": "Hilton Grand Vacations 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1674168/000162828025009254/hgv-20241231.htm",
+            "level": "official",
+            "date": "2025-03-03",
+            "quote": "We also assumed an exclusive strategic relationship with Choice Hotels that involves several areas of its business, including a sales and marketing alliance"
+          }
+        }
+      ]
+    },
+    {
+      "id": "WH",
+      "ticker": "WH",
+      "name": "ウィンダム・ホテルズ&リゾーツ",
+      "name_en": "Wyndham Hotels & Resorts",
+      "sub": "ホテルチェーン",
+      "sub_en": "Hotel franchisor",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2023年に買収を目指し、関連して1.124億ドルの株式を取得",
+          "text_en": "Pursued an acquisition in 2023, buying $112.4 million of equity securities",
+          "source": {
+            "label": "Choice Hotels 10-K(2025年度)",
+            "label_en": "Choice Hotels 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1046311/000104631126000008/chh-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "the Company purchased $112.4 million of equity securities in conjunction with the Wyndham acquisition pursuit"
+          }
+        }
+      ]
+    },
+    {
+      "id": "IHG",
+      "ticker": "IHG",
+      "name": "IHGホテルズ&リゾーツ",
+      "name_en": "IHG Hotels & Resorts",
+      "sub": "ホテルチェーン(英国)",
+      "sub_en": "Hotel franchisor (UK)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Holiday Inn・Holiday Inn Expressが主な競合ブランド",
+          "text_en": "Its Holiday Inn and Holiday Inn Express are principal competitor brands",
+          "source": {
+            "label": "Choice Hotels 10-K(2025年度)",
+            "label_en": "Choice Hotels 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1046311/000104631126000008/chh-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "The principal competitor brands include Hampton by Hilton, Holiday Inn Express, and Fairfield by Marriott."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BestWestern",
+      "ticker": "Best Western",
+      "name": "ベストウェスタン",
+      "name_en": "Best Western",
+      "sub": "ホテルチェーン",
+      "sub_en": "Hotel brand",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Best Westernが主な競合ブランド",
+          "text_en": "Best Western is a principal competitor brand",
+          "source": {
+            "label": "Choice Hotels 10-K(2025年度)",
+            "label_en": "Choice Hotels 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1046311/000104631126000008/chh-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "The principal competitor brands include Best Western and Wingate."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MAR",
+      "ticker": "MAR",
+      "name": "マリオット・インターナショナル",
+      "name_en": "Marriott International",
+      "sub": "ホテルチェーン",
+      "sub_en": "Hotel company",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Marriottが10-Kで、競合の一社として挙げる",
+          "text_en": "Marriott names Choice Hotels among competitors",
+          "source": {
+            "label": "Marriott 10-K(2024年度)",
+            "label_en": "Marriott 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828025004818/mar-20241231.htm",
+            "level": "official",
+            "date": "2025-02-11",
+            "quote": "including Hilton, IHG Hotels & Resorts, Hyatt, Wyndham Hotels & Resorts, Accor, Choice Hotels, Best Western Hotels & Resorts, and others."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HLT",
+      "ticker": "HLT",
+      "name": "ヒルトン",
+      "name_en": "Hilton",
+      "sub": "ホテルチェーン",
+      "sub_en": "Hotel company",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Hiltonが10-Kで、世界的な主な競合として挙げる",
+          "text_en": "Hilton names Choice Hotels among its primary global competitors",
+          "source": {
+            "label": "Hilton 10-K(2025年度)",
+            "label_en": "Hilton 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1585689/000158568926000007/hlt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "our primary competitors are Accor S.A., Choice Hotels International, Hyatt Hotels Corporation, Intercontinental Hotel Group, Marriott International and Wyndham Hotels & Resorts."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
