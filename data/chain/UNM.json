@@ -1,0 +1,151 @@
+{
+  "root": {
+    "ticker": "UNM",
+    "name": "ユナム",
+    "cik": 5513,
+    "name_en": "Unum"
+  },
+  "rows": [
+    {
+      "ja": "再保険の引受先",
+      "en": "Reinsurers",
+      "above": true
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "VOYA",
+    "CNO",
+    "HMN"
+  ],
+  "companies": [
+    {
+      "id": "FortitudeRe",
+      "ticker": "Fortitude Re",
+      "name": "フォーティチュード・リー",
+      "name_en": "Fortitude Re",
+      "sub": "再保険",
+      "sub_en": "Reinsurance",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年7月、長期介護保険の一部をFortitude Reに出再する取引を完了",
+          "text_en": "Closed a reinsurance deal ceding part of its long-term care book to Fortitude Re in July 2025",
+          "source": {
+            "label": "Unum 10-K(2025年度)",
+            "label_en": "Unum 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/5513/000000551326000008/unm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "In February 2025, Unum America entered into a master transaction agreement with Fortitude Re, resulting in the execution of a coinsurance agreement (reinsurance agreement) in July 2025."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Commonwealth",
+      "ticker": "Commonwealth Annuity",
+      "name": "コモンウェルス・アニュイティ",
+      "name_en": "Commonwealth Annuity and Life",
+      "sub": "生命保険・再保険",
+      "sub_en": "Life insurance & reinsurance",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "個人向け就業不能保険の旧契約の大半を、2020〜21年にCommonwealthへ再保険で移した",
+          "text_en": "Moved most of its closed block individual disability business to Commonwealth through reinsurance in 2020-21",
+          "source": {
+            "label": "Unum 10-K(2025年度)",
+            "label_en": "Unum 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/5513/000000551326000008/unm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "We exited a substantial portion of our Closed Block individual disability product line through two phases of a coinsurance and modified coinsurance reinsurance transaction with Commonwealth Annuity and Life Insurance Company (Commonwealth) that were executed in December 2020 and March 2021."
+          }
+        }
+      ]
+    },
+    {
+      "id": "VOYA",
+      "ticker": "VOYA",
+      "name": "ボヤ・ファイナンシャル",
+      "name_en": "Voya Financial",
+      "sub": "退職・職域保険",
+      "sub_en": "Retirement & workplace benefits",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Voyaが10-Kで、補完給付(職域保険)市場の競合としてUnumを挙げる",
+          "text_en": "Voya names Unum as a competitor in supplemental benefits",
+          "source": {
+            "label": "Voya Financial 10-K(2025年度)",
+            "label_en": "Voya Financial 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1535929/000153592926000043/voya-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Supplemental Benefits Market is growing rapidly. Competitive drivers are price, claim servicing and product innovation. Cigna Aetna Aflac MetLife Unum"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CNO",
+      "ticker": "CNO",
+      "name": "CNOファイナンシャル",
+      "name_en": "CNO Financial",
+      "sub": "生命・医療保険",
+      "sub_en": "Life & health insurance",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "CNOが10-Kで、職域向け補完医療保険の主な競合としてUnumの子会社を挙げる",
+          "text_en": "CNO names Unum subsidiaries among main competitors for worksite supplemental health",
+          "source": {
+            "label": "CNO Financial 10-K(2025年度)",
+            "label_en": "CNO Financial 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1224608/000122460826000017/cno-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Our main competitors for supplemental health products sold through our Worksite Division include AFLAC, subsidiaries of Unum, MetLife, Chubb/Combined, and Voya."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HMN",
+      "ticker": "HMN",
+      "name": "ホレス・マン",
+      "name_en": "Horace Mann",
+      "sub": "教職員向け保険",
+      "sub_en": "Insurance for educators",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Horace Mannが10-Kで、従業員向け給付保険の競合としてUnum傘下のColonialを挙げる",
+          "text_en": "Horace Mann names Unum's Colonial among competitors in employee benefit products",
+          "source": {
+            "label": "Horace Mann 10-K(2024年度)",
+            "label_en": "Horace Mann 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/850141/000162828025008838/hmn-20241231.htm",
+            "level": "official",
+            "date": "2025-02-28",
+            "quote": "including Aflac, American Fidelity, Colonial (a subsidiary of Unum)"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

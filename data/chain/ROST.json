@@ -1,0 +1,154 @@
+{
+  "root": {
+    "ticker": "ROST",
+    "name": "ロス・ストアーズ",
+    "cik": 745732,
+    "name_en": "Ross Stores"
+  },
+  "rows": [
+    {
+      "ja": "仕入先",
+      "en": "Suppliers",
+      "above": true
+    },
+    {
+      "ja": "店舗の貸主(商業施設REIT)",
+      "en": "Store landlords (shopping center REITs)"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "KSS",
+    "CTRN"
+  ],
+  "companies": [
+    {
+      "id": "LCUT",
+      "ticker": "LCUT",
+      "name": "ライフタイム・ブランズ",
+      "name_en": "Lifetime Brands",
+      "sub": "キッチン用品",
+      "sub_en": "Kitchenware",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Lifetime Brandsの販売先(オフプライス小売)の一社がRoss Stores",
+          "text_en": "Ross Stores is one of the off-price retailers that sell Lifetime Brands products",
+          "source": {
+            "label": "Lifetime Brands 10-K(2024年度)",
+            "label_en": "Lifetime Brands 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/874396/000162828025012650/lcut-20241231.htm",
+            "level": "official",
+            "date": "2025-03-13",
+            "quote": "off-price retailers (such as TJX Companies and Ross Stores)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "KIM",
+      "ticker": "KIM",
+      "name": "キムコ・リアルティ",
+      "name_en": "Kimco Realty",
+      "sub": "商業施設REIT",
+      "sub_en": "Shopping center REIT",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Ross Storesが上位5テナントの一社(年間基本賃料の1.8%)",
+          "text_en": "Ross Stores is one of its five largest tenants, 1.8% of annualized base rent",
+          "source": {
+            "label": "Kimco Realty 10-Q(2025年第1四半期)",
+            "label_en": "Kimco Realty 10-Q (Q1 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/879101/000095017025062383/kim-20250331.htm",
+            "level": "official",
+            "date": "2025-05-02",
+            "quote": "At March 31, 2025, the Company's five largest tenants were The TJX Companies, Ross Stores, The Home Depot, Burlington Stores, Inc. and Amazon/Whole Foods"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BRX",
+      "ticker": "BRX",
+      "name": "ブリックスモア",
+      "name_en": "Brixmor Property",
+      "sub": "商業施設REIT",
+      "sub_en": "Shopping center REIT",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "主なテナントの一社としてRoss Storesを挙げる",
+          "text_en": "Names Ross Stores among its retailer tenants",
+          "source": {
+            "label": "Brixmor の発表(8-K添付)",
+            "label_en": "Brixmor release (8-K exhibit)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1581068/000158106825000036/brx-20251015ex991.htm",
+            "level": "official",
+            "date": "2025-10-16",
+            "quote": "Brixmor is a proud real estate partner to over 5,000 retailers including The TJX Companies, The Kroger Co., Publix Super Markets and Ross Stores."
+          }
+        }
+      ]
+    },
+    {
+      "id": "KSS",
+      "ticker": "KSS",
+      "name": "コールズ",
+      "name_en": "Kohl's",
+      "sub": "百貨店",
+      "sub_en": "Department stores",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Kohl'sの役員契約で、競合先の一社としてRoss Storesを定義",
+          "text_en": "A Kohl's executive agreement defines Ross Stores as a competitor",
+          "source": {
+            "label": "Kohl's 役員契約(8-K/A添付)",
+            "label_en": "Kohl's executive agreement (8-K/A exhibit)",
+            "url": "https://www.sec.gov/Archives/edgar/data/885639/000119312525123246/d920675dex101.htm",
+            "level": "official",
+            "date": "2025-05-20",
+            "quote": "The term \"Competitor\" means Amazon.com, Inc., Belk, Inc., Burlington Stores, Inc., Dillard's, Inc., J.C. Penney Company, Inc., Macy's, Inc., Nordstrom Co., Old Navy, Inc., Ross Stores, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CTRN",
+      "ticker": "CTRN",
+      "name": "シティ・トレンズ",
+      "name_en": "Citi Trends",
+      "sub": "衣料のディスカウント小売",
+      "sub_en": "Value apparel retail",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Citi Trendsの役員契約で、競合先の一社としてRoss Storesを定義",
+          "text_en": "A Citi Trends executive agreement defines Ross Stores as a competitor",
+          "source": {
+            "label": "Citi Trends 役員契約(10-Q添付)",
+            "label_en": "Citi Trends executive agreement (10-Q exhibit)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1318484/000155837024012737/ctrn-20240803xex10d5.htm",
+            "level": "official",
+            "date": "2024-09-11",
+            "quote": "Cato, TJX (including without limitation TJMAXX and Marshalls), Burlington Stores, Gabe's/Rugged Wearhouse, and Ross Stores."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

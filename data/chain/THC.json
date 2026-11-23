@@ -1,0 +1,177 @@
+{
+  "root": {
+    "ticker": "THC",
+    "name": "テネット・ヘルスケア",
+    "cik": 70318,
+    "name_en": "Tenet Healthcare"
+  },
+  "rows": [
+    {
+      "ja": "合弁・共同出資の病院グループ",
+      "en": "Joint venture & co-owner health systems",
+      "above": true
+    },
+    {
+      "ja": "施設の貸主(医療REIT)",
+      "en": "Facility landlords (healthcare REITs)"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "SGRY"
+  ],
+  "companies": [
+    {
+      "id": "CommonSpirit",
+      "ticker": "CommonSpirit Health",
+      "name": "コモンスピリット・ヘルス",
+      "name_en": "CommonSpirit Health",
+      "sub": "非営利の病院グループ",
+      "sub_en": "Nonprofit health system",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Tenet傘下の収益管理会社Conifer Health Solutionsの23.8%を保有",
+          "text_en": "Owns 23.8% of Tenet's Conifer Health Solutions",
+          "source": {
+            "label": "Tenet Healthcare 10-K(2025年度)",
+            "label_en": "Tenet Healthcare 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/70318/000007031826000012/thc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "At December 31, 2025, we owned 76.2% of Conifer Health Solutions, and CommonSpirit Health held a 23.8% ownership position."
+          }
+        }
+      ]
+    },
+    {
+      "id": "JohnMuir",
+      "ticker": "John Muir Health",
+      "name": "ジョン・ミューア・ヘルス",
+      "name_en": "John Muir Health",
+      "sub": "非営利の病院グループ",
+      "sub_en": "Nonprofit health system",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "サンフランシスコ湾岸地域で病院の合弁を組む(Tenet 51%、John Muir 49%)",
+          "text_en": "Joint venture partner in a San Francisco Bay Area hospital (Tenet 51%, John Muir 49%)",
+          "source": {
+            "label": "Tenet Healthcare 10-K(2025年度)",
+            "label_en": "Tenet Healthcare 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/70318/000007031826000012/thc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "(5) Owned by a limited liability company formed as part of a joint venture with John Muir Health, a not‐for‐profit health system in the San Francisco Bay area; a Tenet subsidiary owned a 51% interest in the entity at December 31, 2025, and John Muir Health owned a 49% interest."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BSW",
+      "ticker": "Baylor Scott & White",
+      "name": "ベイラー・スコット&ホワイト",
+      "name_en": "Baylor Scott & White Health",
+      "sub": "非営利の病院グループ(テキサス)",
+      "sub_en": "Nonprofit health system (Texas)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Tenet傘下のUSPIと外来手術センターの合弁(Lonestar Endoscopy)を組む",
+          "text_en": "Runs an ambulatory surgery center joint venture (Lonestar Endoscopy) with Tenet's USPI",
+          "source": {
+            "label": "Sila Realty Trust の発表(8-K添付)",
+            "label_en": "Sila Realty Trust release (8-K exhibit)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1567925/000156792525000080/silarealtytrustinc-compa.htm",
+            "level": "official",
+            "date": "2025-09-08",
+            "quote": "The ASC is leased to Lonestar Endoscopy, a joint venture between Baylor Scott & White Health (Moody's: Aa2), the largest not-for-profit healthcare system in Texas, and USPI, a subsidiary of Tenet Healthcare Corporation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SILA",
+      "ticker": "Sila Realty Trust",
+      "name": "シラ・リアルティ・トラスト",
+      "name_en": "Sila Realty Trust",
+      "sub": "医療不動産REIT",
+      "sub_en": "Healthcare REIT",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "USPIとBaylor Scott & Whiteの合弁に外来手術センターを賃貸",
+          "text_en": "Leases a surgery center to the USPI-Baylor Scott & White joint venture",
+          "source": {
+            "label": "Sila Realty Trust の発表(8-K添付)",
+            "label_en": "Sila Realty Trust release (8-K exhibit)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1567925/000156792525000080/silarealtytrustinc-compa.htm",
+            "level": "official",
+            "date": "2025-09-08",
+            "quote": "The ASC is leased to Lonestar Endoscopy, a joint venture between Baylor Scott & White Health (Moody's: Aa2), the largest not-for-profit healthcare system in Texas, and USPI, a subsidiary of Tenet Healthcare Corporation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CHCT",
+      "ticker": "CHCT",
+      "name": "コミュニティ・ヘルスケア・トラスト",
+      "name_en": "Community Healthcare Trust",
+      "sub": "医療不動産REIT",
+      "sub_en": "Healthcare REIT",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "テナントの一社がTenet Healthcare",
+          "text_en": "Tenet Healthcare is one of its tenants",
+          "source": {
+            "label": "Community Healthcare Trust 10-K(2025年度)",
+            "label_en": "Community Healthcare Trust 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1631569/000163156926000012/chct-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Our tenants include many nationally recognized healthcare providers, such as Adventist HealthCare, Inc., Hospital Corporation of America, Fresenius Medical Care AG & Co, Davita, Inc., Tenet Healthcare Corporation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SGRY",
+      "ticker": "SGRY",
+      "name": "サージェリー・パートナーズ",
+      "name_en": "Surgery Partners",
+      "sub": "外来手術センター",
+      "sub_en": "Surgical facilities",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Surgery Partnersが10-Kで、手術施設を運営する大手の一社としてTenetを挙げる",
+          "text_en": "Surgery Partners names Tenet among large national companies operating surgical facilities",
+          "source": {
+            "label": "Surgery Partners 10-K(2025年度)",
+            "label_en": "Surgery Partners 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1638833/000163883326000008/sgry-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "Several large national companies own and/or manage surgical facilities, in some cases in connection with other lines of business with which we do not compete, including HCA Healthcare, Inc., AMSURG Corp., Tenet Healthcare Corporation and Optum, Inc."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

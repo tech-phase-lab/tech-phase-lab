@@ -1,0 +1,187 @@
+{
+  "root": {
+    "ticker": "XRAY",
+    "name": "デンツプライ・シロナ",
+    "cik": 818479,
+    "name_en": "Dentsply Sirona"
+  },
+  "rows": [
+    {
+      "ja": "販売代理店(大口顧客)",
+      "en": "Distributors (major customers)",
+      "above": true
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "HSIC",
+    "SOLV"
+  ],
+  "companies": [
+    {
+      "id": "HSIC",
+      "ticker": "HSIC",
+      "name": "ヘンリー・シャイン",
+      "name_en": "Henry Schein",
+      "sub": "歯科・医療用品の流通",
+      "sub_en": "Dental & medical distribution",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "売上の13%(2025年)を占める最大の顧客(販売代理店)",
+          "text_en": "Largest customer and distributor, 13% of 2025 net sales",
+          "source": {
+            "label": "Dentsply Sirona 10-K(2025年度)",
+            "label_en": "Dentsply Sirona 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/818479/000081847926000075/xray-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Henry Schein, Inc. 13 %"
+          }
+        },
+        {
+          "type": "rival",
+          "text": "Henry Scheinが10-Kで、インプラントの主な競合としてDentsply Sironaを挙げる",
+          "text_en": "Henry Schein names Dentsply Sirona among its primary global dental implant competitors",
+          "source": {
+            "label": "Henry Schein 10-K(2025年度)",
+            "label_en": "Henry Schein 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1000228/000100022826000013/hsic-20251227.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Within Global Specialty Products, our primary global competitors include Straumann, Envista, Zimvie, and Dentsply Sirona for dental implants."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Patterson",
+      "ticker": "Patterson Companies",
+      "name": "パターソン・カンパニーズ",
+      "name_en": "Patterson Companies",
+      "sub": "歯科用品の流通",
+      "sub_en": "Dental distribution",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "売上の10%以上を占めた大口顧客(販売代理店)",
+          "text_en": "A distributor that has accounted for 10% or more of net sales",
+          "source": {
+            "label": "Dentsply Sirona 10-K(2025年度)",
+            "label_en": "Dentsply Sirona 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/818479/000081847926000075/xray-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Customers that accounted for 10% or more of net sales or accounts receivable for the year ended December 31, 2023 were as follows: 2023 % of net sales % of accounts receivable Henry Schein, Inc. 14 % 11 % Patterson Companies, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SOLV",
+      "ticker": "SOLV",
+      "name": "ソルベンタム",
+      "name_en": "Solventum",
+      "sub": "医療・口腔ケア製品",
+      "sub_en": "Healthcare & oral care",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Solventumが10-Kで、口腔ケア市場の主な競合としてDentsply Sironaを挙げる",
+          "text_en": "Solventum names Dentsply Sirona among its principal oral care competitors",
+          "source": {
+            "label": "Solventum 10-K(2024年度)",
+            "label_en": "Solventum 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1964738/000196473825000019/solv-20241231.htm",
+            "level": "official",
+            "date": "2025-02-28",
+            "quote": "Principal multinational competitors within the oral care market include Dentsply Sirona, Envista, and Straumann"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ZimVie",
+      "ticker": "ZimVie",
+      "name": "ジムヴィ",
+      "name_en": "ZimVie",
+      "sub": "歯科インプラント",
+      "sub_en": "Dental implants",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ZimVieが10-Kで、主な競合としてDentsply Sironaを挙げる",
+          "text_en": "ZimVie names Dentsply Sirona among its primary competitors",
+          "source": {
+            "label": "ZimVie 10-K(2024年度)",
+            "label_en": "ZimVie 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1876588/000095017025027757/zimv-20241231.htm",
+            "level": "official",
+            "date": "2025-02-26",
+            "quote": "We compete primarily with The Straumann Group, Dentsply Sirona Inc., Nobel Biocare Services AG (part of Envista Holdings Corporation), Henry Schein, Inc. and Geistlich Pharma AG."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Dror",
+      "ticker": "Dror Ortho-Design",
+      "name": "ドロール・オルソ・デザイン",
+      "name_en": "Dror Ortho-Design",
+      "sub": "マウスピース矯正",
+      "sub_en": "Clear aligners",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Drorが10-Kで、マウスピース矯正の大手競合としてDentsply Sironaを挙げる",
+          "text_en": "Dror names Dentsply Sirona among the large aligner companies it expects to compete with",
+          "source": {
+            "label": "Dror Ortho-Design 10-K(2025年度)",
+            "label_en": "Dror Ortho-Design 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1282980/000121390026021201/ea0278430-10k_drorortho.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "We expect to compete with a handful of large aligner companies including Align Technologies, Dentsply Sirona"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MLSS",
+      "ticker": "MLSS",
+      "name": "マイルストーン・サイエンティフィック",
+      "name_en": "Milestone Scientific",
+      "sub": "歯科用麻酔器",
+      "sub_en": "Dental anesthetic delivery",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Milestoneが10-Kで、歯科用麻酔注入器の競合製品としてDentsply Sironaの製品を挙げる",
+          "text_en": "Milestone names a Dentsply Sirona syringe among competing dental anesthesia systems",
+          "source": {
+            "label": "Milestone Scientific 10-K(2025年度)",
+            "label_en": "Milestone Scientific 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/855683/000149315226014117/form10-k.htm",
+            "level": "official",
+            "date": "2026-03-31",
+            "quote": "and the Comfort Control Syringe by Dentsply Sirona."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
