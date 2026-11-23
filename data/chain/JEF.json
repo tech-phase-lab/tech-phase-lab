@@ -1,0 +1,274 @@
+{
+  "root": {
+    "ticker": "JEF",
+    "name": "ジェフリーズ",
+    "cik": 96223,
+    "name_en": "Jefferies Financial Group"
+  },
+  "rows": [
+    {
+      "ja": "提携・投資先",
+      "en": "Alliance & holdings",
+      "above": true
+    },
+    {
+      "ja": "顧客(資金調達の代理人など)",
+      "en": "Clients (sales agent and more)"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "HLI",
+    "SF"
+  ],
+  "companies": [
+    {
+      "id": "SMFG",
+      "ticker": "SMFG",
+      "name": "三井住友フィナンシャルグループ",
+      "name_en": "Sumitomo Mitsui Financial Group",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2021年からの戦略提携を2025年9月に拡大し、日本で株式事業の合弁を計画",
+          "text_en": "Strategic alliance since 2021, expanded in September 2025 with a planned equities joint venture in Japan",
+          "source": {
+            "label": "Jefferies 10-K(2025年11月期)",
+            "label_en": "Jefferies 10-K (FY ended Nov 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/96223/000009622326000009/jef-20251130.htm",
+            "level": "official",
+            "date": "2026-01-28",
+            "quote": "In July 2021, we entered into a strategic alliance with Sumitomo Mitsui Financial Group, Inc. (\"SMFG\"), Sumitomo Mitsui Banking Corporation (\"SMBC\") and SMBC Nikko Securities Inc. (together referred to as \"SMBC Group\") to collaborate on corporate and investment banking business opportunities."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Stratos",
+      "ticker": "Stratos",
+      "name": "ストラトス",
+      "name_en": "Stratos Group International",
+      "sub": "投資先(旧マーチャントバンキング)",
+      "sub_en": "Legacy merchant banking holding",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "旧マーチャントバンキング投資先を2023年に連結子会社化",
+          "text_en": "Legacy merchant banking investment consolidated as a subsidiary in 2023",
+          "source": {
+            "label": "Jefferies 10-K(2025年11月期)",
+            "label_en": "Jefferies 10-K (FY ended Nov 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/96223/000009622326000009/jef-20251130.htm",
+            "level": "official",
+            "date": "2026-01-28",
+            "quote": "During the fourth quarter of 2023 , we acquired Stratos Group International (\"Stratos\") and OpNet S.p.A. (\"OpNet\"), investments in our legacy merchant banking portfolio which became consolidated subsidiaries."
+          }
+        }
+      ]
+    },
+    {
+      "id": "OpNet",
+      "ticker": "OpNet",
+      "name": "オープネット",
+      "name_en": "OpNet",
+      "sub": "通信(伊)",
+      "sub_en": "Telecom (Italy)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2023年に連結子会社化、2024年に卸事業をWind Treへ売却",
+          "text_en": "Consolidated in 2023; sold its wholesale assets to Wind Tre in 2024",
+          "source": {
+            "label": "Jefferies 10-K(2025年11月期)",
+            "label_en": "Jefferies 10-K (FY ended Nov 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/96223/000009622326000009/jef-20251130.htm",
+            "level": "official",
+            "date": "2026-01-28",
+            "quote": "In August 2024, OpNet sold substantially all of its wholesale operating assets to Wind Tre S.p.A., a subsidiary of CK Hutchison Group Telecom Holdings"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SCI",
+      "ticker": "Senior Credit Investments",
+      "name": "シニア・クレジット・インベストメンツ",
+      "name_en": "Senior Credit Investments",
+      "sub": "私募クレジットファンド",
+      "sub_en": "Private credit fund",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ジェフリーズ系の運用会社が助言し、案件調達でジェフリーズの基盤を使う",
+          "text_en": "Advised by a Jefferies affiliate and sources deals through the Jefferies platform",
+          "source": {
+            "label": "Senior Credit Investments 10-K(2024年度)",
+            "label_en": "Senior Credit Investments 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1959568/000095017025044443/ck0001959568-20241231.htm",
+            "level": "official",
+            "date": "2025-03-25",
+            "quote": "Our origination of new investment opportunities is differentiated by our Investment Adviser's affiliation with Jefferies Financial Group and its U.S. investment banking subsidiary, Jefferies."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ATYR",
+      "ticker": "ATYR",
+      "name": "エーティア・ファーマ",
+      "name_en": "aTyr Pharma",
+      "sub": "バイオ医薬",
+      "sub_en": "Biotech",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ジェフリーズを代理人とする市場売出し(ATM)を設定",
+          "text_en": "Set up an at-the-market offering program with Jefferies as agent",
+          "source": {
+            "label": "aTyr Pharma 10-K(2024年度)",
+            "label_en": "aTyr Pharma 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1339970/000095017025038888/atyr-20241231.htm",
+            "level": "official",
+            "date": "2025-03-13",
+            "quote": "In April 2022, we entered into an Open Market Sale Agreement SM with Jefferies LLC (Jefferies) implementing an \"at-the-market\" offering program, (the Jefferies ATM Offering Program)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "VERU",
+      "ticker": "VERU",
+      "name": "ヴェルー",
+      "name_en": "Veru",
+      "sub": "バイオ医薬",
+      "sub_en": "Biotech",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ジェフリーズを販売代理人とする株式売出し契約(2024年に終了)",
+          "text_en": "Had an at-the-market sales agreement with Jefferies, ended in 2024",
+          "source": {
+            "label": "Veru 10-K(2025年9月期)",
+            "label_en": "Veru 10-K (FY ended Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/863894/000143774925038089/veru20250930_10k.htm",
+            "level": "official",
+            "date": "2025-12-17",
+            "quote": "On May 12, 2023, the Company entered into an Open Market Sale Agreement SM (the \"Jefferies Sales Agreement\") with Jefferies LLC (\"Jefferies\"), as sales agent"
+          }
+        }
+      ]
+    },
+    {
+      "id": "VANI",
+      "ticker": "VANI",
+      "name": "ビバニ・メディカル",
+      "name_en": "Vivani Medical",
+      "sub": "医療機器",
+      "sub_en": "Medical devices",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ジェフリーズと株式売出し契約",
+          "text_en": "Signed an at-the-market sales agreement with Jefferies",
+          "source": {
+            "label": "Vivani Medical 10-K(2024年度)",
+            "label_en": "Vivani Medical 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1266806/000175392625000527/vani-20241231.htm",
+            "level": "official",
+            "date": "2025-03-31",
+            "quote": "On April 22, 2024, the Company entered into an Open Market Sale Agreement SM (the \"Sales Agreement\") with Jefferies LLC (\"Jefferies\")"
+          }
+        }
+      ]
+    },
+    {
+      "id": "WindTre",
+      "ticker": "Wind Tre",
+      "name": "ウインドトレ",
+      "name_en": "Wind Tre",
+      "sub": "通信(伊)",
+      "sub_en": "Telecom (Italy)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "子会社オープネットの卸事業を買収",
+          "text_en": "Bought the wholesale operating assets of Jefferies' OpNet",
+          "source": {
+            "label": "Jefferies 10-K(2025年11月期)",
+            "label_en": "Jefferies 10-K (FY ended Nov 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/96223/000009622326000009/jef-20251130.htm",
+            "level": "official",
+            "date": "2026-01-28",
+            "quote": "OpNet sold substantially all of its wholesale operating assets to Wind Tre S.p.A."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HLI",
+      "ticker": "HLI",
+      "name": "フーリハン・ローキー",
+      "name_en": "Houlihan Lokey",
+      "sub": "投資銀行(M&A助言)",
+      "sub_en": "Investment banking (advisory)",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "企業金融部門の主な競合にジェフリーズを挙げる",
+          "text_en": "Names Jefferies among primary competitors of its corporate finance practice",
+          "source": {
+            "label": "Houlihan Lokey 10-K(2025年3月期)",
+            "label_en": "Houlihan Lokey 10-K (FY ended Mar 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1302215/000130221525000024/hli-20250331.htm",
+            "level": "official",
+            "date": "2025-05-15",
+            "quote": "for our CF practice, Jefferies Financial Group Inc., Lazard, Inc., Lincoln International LLC, Moelis & Company"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SF",
+      "ticker": "SF",
+      "name": "スティーフェル",
+      "name_en": "Stifel Financial",
+      "sub": "証券・投資銀行",
+      "sub_en": "Brokerage & investment banking",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合する企業の一社にジェフリーズを挙げる",
+          "text_en": "Lists Jefferies among firms that compete with it",
+          "source": {
+            "label": "Stifel 10-K(2025年度)",
+            "label_en": "Stifel 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/720672/000119312526067130/sf-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Ameriprise Financial, Inc. Jefferies Financial Group Inc. Piper Sandler Companies Evercore Inc. Lazard Ltd."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

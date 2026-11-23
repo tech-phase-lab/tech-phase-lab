@@ -1,0 +1,266 @@
+{
+  "root": {
+    "ticker": "LGND",
+    "name": "リガンド・ファーマシューティカルズ",
+    "cik": 886163,
+    "name_en": "Ligand Pharmaceuticals"
+  },
+  "rows": [
+    {
+      "ja": "ロイヤルティ源(製品を販売する製薬会社)",
+      "en": "Royalty payers (marketers)"
+    },
+    {
+      "ja": "出資・買収・権利取得",
+      "en": "Investments, acquisitions & rights"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "MRK",
+      "ticker": "MRK",
+      "name": "メルク",
+      "name_en": "Merck & Co.",
+      "sub": "製薬",
+      "sub_en": "Pharmaceuticals",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "COPD薬オーツベイアの売上の3%のロイヤルティを受け取る",
+          "text_en": "Earns a 3% royalty on Merck's COPD drug Ohtuvayre",
+          "source": {
+            "label": "Ligand 10-K(2025年度)",
+            "label_en": "Ligand 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/886163/000088616326000006/lgnd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "We acquired a royalty on Merck's Ohtuvayre (ensifentrine) through our acquisition of Vernalis in 2018"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SNY",
+      "ticker": "SNY",
+      "name": "サノフィ",
+      "name_en": "Sanofi",
+      "sub": "製薬",
+      "sub_en": "Pharmaceuticals",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "1型糖尿病薬Tzieldの売上に1%未満のロイヤルティ",
+          "text_en": "Earns a sub-1% royalty on Sanofi's Tzield",
+          "source": {
+            "label": "Ligand 10-K(2025年度)",
+            "label_en": "Ligand 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/886163/000088616326000006/lgnd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "We acquired a royalty of less than 1% on net sales of Tzield through our acquisition of Tolerance Therapeutics (\"Tolerance\") in the fourth quarter of 2023."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PVLA",
+      "ticker": "PVLA",
+      "name": "パルヴェラ",
+      "name_en": "Palvella Therapeutics",
+      "sub": "皮膚疾患薬",
+      "sub_en": "Dermatology drugs",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "外用薬Qtorinラパマイシンの経済的権利を保有",
+          "text_en": "Holds economic rights to its topical Qtorin rapamycin",
+          "source": {
+            "label": "Ligand 10-K(2025年度)",
+            "label_en": "Ligand 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/886163/000088616326000006/lgnd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "We acquired economic rights to QtorinTM 3.9% rapamycin anhydrous gel (Qtorin rapamycin, formerly PTX-022) from Palvella in December 2018."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Adalvo",
+      "ticker": "Alvogen/Adalvo",
+      "name": "アルボジェン/アダルボ",
+      "name_en": "Alvogen / Adalvo",
+      "sub": "後発医薬品",
+      "sub_en": "Generic drugs",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "テリパラチド注射剤の権利(ペフェネクス買収で取得)",
+          "text_en": "Rights to its teriparatide injection product, from the Pfenex deal",
+          "source": {
+            "label": "Ligand 10-K(2025年度)",
+            "label_en": "Ligand 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/886163/000088616326000006/lgnd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Teriparatide Injection Product (PF708) (Alvogen/Adalvo) We acquired rights to the teriparatide injection product with the acquisition of Pfenex in October 2020."
+          }
+        }
+      ]
+    },
+    {
+      "id": "VRNA",
+      "ticker": "VRNA",
+      "name": "ベローナ・ファーマ",
+      "name_en": "Verona Pharma",
+      "sub": "呼吸器薬",
+      "sub_en": "Respiratory drugs",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "リガンド(旧ヴェルナリス)からオーツベイアの元となる権利を導入",
+          "text_en": "Licensed the rights behind Ohtuvayre from Ligand (formerly Vernalis)",
+          "source": {
+            "label": "Verona Pharma 10-K(2024年度)",
+            "label_en": "Verona Pharma 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1657312/000165731225000010/vrna-20241231.htm",
+            "level": "official",
+            "date": "2025-02-27",
+            "quote": "License agreement with Ligand (formerly Vernalis) In February 2005, Rhinopharma Limited (\"Rhinopharma\") entered into an assignment and license agreement"
+          }
+        }
+      ]
+    },
+    {
+      "id": "OBIO",
+      "ticker": "OBIO",
+      "name": "オーケストラ・バイオメド",
+      "name_en": "Orchestra BioMed",
+      "sub": "循環器医療機器",
+      "sub_en": "Cardiology devices",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "後期の循環器プログラムに2,500万ドルを出資",
+          "text_en": "Invested $25 million in its late-stage cardiology programs",
+          "source": {
+            "label": "Ligand 10-K(2025年度)",
+            "label_en": "Ligand 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/886163/000088616326000006/lgnd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "we invested $25 million in strategic capital to fund Orchestra BioMed Holdings, Inc.'s (\"Orchestra\" or \"Orchestra Biomed\") late-stage partnered cardiology programs"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AGEN",
+      "ticker": "AGEN",
+      "name": "アジェナス",
+      "name_en": "Agenus",
+      "sub": "がん免疫薬",
+      "sub_en": "Immuno-oncology",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "がん免疫薬Bot/Balの売上に対する合成ロイヤルティを取得(2025年に全額減損)",
+          "text_en": "Bought a synthetic royalty on Bot/Bal; fully impaired in 2025",
+          "source": {
+            "label": "Ligand 10-K(2025年度)",
+            "label_en": "Ligand 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/886163/000088616326000006/lgnd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "we acquired a synthetic royalty on future global net sales of Agenus' novel immuno-oncology botensilimab in combination with balstilimab (\"Bot/Bal\") program"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Apeiron",
+      "ticker": "Apeiron",
+      "name": "アペイロン",
+      "name_en": "Apeiron Biologics",
+      "sub": "希少がん薬",
+      "sub_en": "Rare cancer drugs",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "神経芽腫薬Qarzibaのロイヤルティを持つ同社を2024年に買収",
+          "text_en": "Acquired in 2024 with royalty rights to Qarziba",
+          "source": {
+            "label": "Ligand 10-K(2025年度)",
+            "label_en": "Ligand 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/886163/000088616326000006/lgnd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "On July 15, 2024, we acquired all the outstanding shares of Biologics AG (\"Apeiron\"), including the royalty rights to Qarziba (dinutuximab beta) for the treatment of high-risk neuroblastoma"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Arecor",
+      "ticker": "Arecor",
+      "name": "アレコア",
+      "name_en": "Arecor Therapeutics",
+      "sub": "製剤技術(英)",
+      "sub_en": "Formulation technology (UK)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年9月に700万ドルで経済的権利を取得",
+          "text_en": "Bought economic rights for $7 million in September 2025",
+          "source": {
+            "label": "Ligand 10-K(2025年度)",
+            "label_en": "Ligand 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/886163/000088616326000006/lgnd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "On September 24, 2025, we invested $ 7 million to purchase economic rights from Arecor Limited (\"Arecor\")"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PTHS",
+      "ticker": "PTHS",
+      "name": "ペルトス・セラピューティクス",
+      "name_en": "Pelthos Therapeutics",
+      "sub": "皮膚疾患薬",
+      "sub_en": "Dermatology drugs",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年7月の取引で株式・優先株を保有",
+          "text_en": "Holds Pelthos common and preferred stock from a July 2025 transaction",
+          "source": {
+            "label": "Ligand 10-K(2025年度)",
+            "label_en": "Ligand 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/886163/000088616326000006/lgnd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "attributable to the fair value changes of the shares of Pelthos common stock and Pelthos Series A convertible preferred stock"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
