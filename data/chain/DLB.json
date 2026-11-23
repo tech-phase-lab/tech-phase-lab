@@ -1,0 +1,221 @@
+{
+  "root": {
+    "ticker": "DLB",
+    "name": "ドルビーラボラトリーズ",
+    "cik": 1308547,
+    "name_en": "Dolby Laboratories"
+  },
+  "rows": [
+    {
+      "ja": "顧客・提携・出資",
+      "en": "Customers, partners & stake"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "XPER",
+    "PXLW"
+  ],
+  "companies": [
+    {
+      "id": "005930",
+      "ticker": "005930",
+      "name": "サムスン電子",
+      "name_en": "Samsung Electronics",
+      "sub": "電子機器",
+      "sub_en": "Electronics",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "重要な顧客である一方、一部の技術で競合",
+          "text_en": "A significant customer whose own technologies compete with some of Dolby's",
+          "source": {
+            "label": "Dolby 10-K(2026年9月期)",
+            "label_en": "Dolby 10-K (FY ended Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1308547/000130854726000017/dlb-20260925.htm",
+            "level": "official",
+            "date": "2026-11-17",
+            "quote": "For example, Samsung is a significant customer, but some of its technologies are competitive with some of our consumer and cinema technologies."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AAPL",
+      "ticker": "AAPL",
+      "name": "アップル",
+      "name_en": "Apple",
+      "sub": "IT機器・配信",
+      "sub_en": "Devices & streaming",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "F1の2026年シーズンをDolby Vision・Atmosで配信",
+          "text_en": "Streams the 2026 Formula One season in Dolby Vision and Atmos",
+          "source": {
+            "label": "Dolby 10-K(2026年9月期)",
+            "label_en": "Dolby 10-K (FY ended Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1308547/000130854726000017/dlb-20260925.htm",
+            "level": "official",
+            "date": "2026-11-17",
+            "quote": "Apple is currently streaming the 2026 Formula One season in Dolby Vision and Dolby Atmos for the first time."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン",
+      "name_en": "Amazon",
+      "sub": "EC・配信",
+      "sub_en": "E-commerce & streaming",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Prime Videoの広告付きプランにDolby Visionを追加",
+          "text_en": "Added Dolby Vision to its ad-supported Prime Video tier",
+          "source": {
+            "label": "Dolby 10-K(2026年9月期)",
+            "label_en": "Dolby 10-K (FY ended Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1308547/000130854726000017/dlb-20260925.htm",
+            "level": "official",
+            "date": "2026-11-17",
+            "quote": "Additionally, Amazon Prime Video recently announced that it has added support for Dolby Vision to its ad-supported tier."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMC",
+      "ticker": "AMC",
+      "name": "AMCエンターテインメント",
+      "name_en": "AMC Entertainment",
+      "sub": "映画館",
+      "sub_en": "Movie theaters",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "高級上映方式Dolby Cinemaで提携",
+          "text_en": "Partners on the premium Dolby Cinema format",
+          "source": {
+            "label": "AMC Entertainment 10-K(2025年度)",
+            "label_en": "AMC Entertainment 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1411579/000141157926000016/amc-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "we are committed to investing in and expanding our offerings of the best sight and sound experiences through a combination of our partnerships with IMAX ® and Dolby CinemaTM"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MITQ",
+      "ticker": "MITQ",
+      "name": "ムービング・イメージ・テクノロジーズ",
+      "name_en": "Moving iMage Technologies",
+      "sub": "映画館機器",
+      "sub_en": "Cinema equipment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "米州でDolby製品の販売代理店契約を結ぶ",
+          "text_en": "Distribution and master reseller agreements for Dolby products in the Americas",
+          "source": {
+            "label": "Moving iMage Technologies 10-K(2026年6月期)",
+            "label_en": "Moving iMage Technologies 10-K (FY ended Jun 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1770236/000143774926031299/mitq20260630_10k.htm",
+            "level": "official",
+            "date": "2026-09-28",
+            "quote": "the Company has distribution and Master Reseller agreements for the Americas with world class manufacturers Sharp-NEC, Barco, Dolby, GDC and Christie."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AccessAdvance",
+      "ticker": "Access Advance",
+      "name": "アクセス・アドバンス",
+      "name_en": "Access Advance",
+      "sub": "特許プール",
+      "sub_en": "Patent pool",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "特許プールの運営会社に少数出資",
+          "text_en": "Holds a minority stake in the patent pool administrator",
+          "source": {
+            "label": "Dolby 10-K(2026年9月期)",
+            "label_en": "Dolby 10-K (FY ended Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1308547/000130854726000017/dlb-20260925.htm",
+            "level": "official",
+            "date": "2026-11-17",
+            "quote": "We hold a minority ownership interest in Access Advance."
+          }
+        }
+      ]
+    },
+    {
+      "id": "XPER",
+      "ticker": "XPER",
+      "name": "エクスペリ",
+      "name_en": "Xperi",
+      "sub": "音響・映像技術",
+      "sub_en": "Audio & video technology",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Xperiが10-Kで、主な競合と記載",
+          "text_en": "Xperi names Dolby its primary competitor",
+          "source": {
+            "label": "Xperi 10-K(2025年度)",
+            "label_en": "Xperi 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1788999/000119312526076849/xper-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our primary competitor is Dolby Laboratories, which develops and markets, among other things, high-definition audio products and services."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PXLW",
+      "ticker": "PXLW",
+      "name": "ピクセルワークス",
+      "name_en": "Pixelworks",
+      "sub": "映像処理チップ",
+      "sub_en": "Video processing chips",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Pixelworksが10-Kで、競合の一社として挙げる",
+          "text_en": "Pixelworks names Dolby among competitors",
+          "source": {
+            "label": "Pixelworks 10-K(2024年度)",
+            "label_en": "Pixelworks 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1040161/000104016125000010/pxlw-20241231.htm",
+            "level": "official",
+            "date": "2025-03-13",
+            "quote": "Actions Microelectronics Co., Ltd., ARM Holdings PLC, Dolby Laboratories, Inc."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

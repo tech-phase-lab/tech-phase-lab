@@ -1,0 +1,170 @@
+{
+  "root": {
+    "ticker": "CE",
+    "name": "セラニーズ",
+    "cik": 1306830,
+    "name_en": "Celanese"
+  },
+  "rows": [
+    {
+      "ja": "合弁の相手",
+      "en": "Joint venture partners"
+    },
+    {
+      "ja": "買収・供給先",
+      "en": "Acquisition & supply customer"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "8031",
+      "ticker": "8031",
+      "name": "三井物産",
+      "name_en": "Mitsui & Co.",
+      "sub": "総合商社",
+      "sub_en": "Trading house",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "テキサスのメタノール合弁Fairwayを50%ずつ保有",
+          "text_en": "Equal partner in the Fairway methanol joint venture in Texas",
+          "source": {
+            "label": "Celanese 10-K(2025年度)",
+            "label_en": "Celanese 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1306830/000130683026000031/ce-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "We have a joint venture, Fairway Methanol LLC (\"Fairway\"), with Mitsui, in which we own a 50% interest"
+          }
+        }
+      ]
+    },
+    {
+      "id": "4182",
+      "ticker": "4182",
+      "name": "三菱ガス化学",
+      "name_en": "Mitsubishi Gas Chemical",
+      "sub": "化学",
+      "sub_en": "Chemicals",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "韓国のKorea Engineering Plastics(セラニーズ50%)に40%出資",
+          "text_en": "Owns 40% of Korea Engineering Plastics, 50% held by Celanese",
+          "source": {
+            "label": "Celanese 10-K(2025年度)",
+            "label_en": "Celanese 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1306830/000130683026000031/ce-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Korea Engineering Plastics Co., Ltd. South Korea 50 % Mitsubishi Gas Chemical Company, Inc. (40%); Mitsubishi Corporation (10%)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Kureha",
+      "ticker": "Kureha",
+      "name": "クレハ",
+      "name_en": "Kureha",
+      "sub": "化学",
+      "sub_en": "Chemicals",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "PPS樹脂の合弁Fortron Industriesの相手",
+          "text_en": "Partner in the Fortron Industries PPS resin joint venture",
+          "source": {
+            "label": "Celanese 10-K(2025年度)",
+            "label_en": "Celanese 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1306830/000130683026000031/ce-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "This venture combines our sales, marketing, distribution, compounding and manufacturing expertise with the PPS polymer technology expertise of Kureha America Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SABIC",
+      "ticker": "SABIC",
+      "name": "サビック",
+      "name_en": "SABIC",
+      "sub": "化学(サウジ)",
+      "sub_en": "Chemicals (Saudi Arabia)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "サウジの持分法関連会社Ibn Sinaの製品販売を担当",
+          "text_en": "Markets all products of the Saudi affiliate Ibn Sina",
+          "source": {
+            "label": "Celanese 10-K(2025年度)",
+            "label_en": "Celanese 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1306830/000130683026000031/ce-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Saudi Basic Industries Corporation (\"SABIC\") is responsible for all product marketing."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DD",
+      "ticker": "DD",
+      "name": "デュポン",
+      "name_en": "DuPont",
+      "sub": "化学",
+      "sub_en": "Chemicals",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "DuPontのモビリティ&マテリアルズ事業の大半を110億ドルで買収(2022年11月)",
+          "text_en": "Bought most of DuPont's Mobility & Materials business for $11 billion (November 2022)",
+          "source": {
+            "label": "DuPont 10-K(2024年度)",
+            "label_en": "DuPont 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1666700/000166670025000005/dd-20241231.htm",
+            "level": "official",
+            "date": "2025-02-14",
+            "quote": "On November 1, 2022, DuPont and Celanese completed the M&M Divestiture and DuPont received cash proceeds of $11 billion"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GKOS",
+      "ticker": "GKOS",
+      "name": "グローコス",
+      "name_en": "Glaukos",
+      "sub": "眼科医療機器",
+      "sub_en": "Ophthalmic devices",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "原材料の供給契約を結ぶ(2023年3月)",
+          "text_en": "Supplies it raw materials under a sales agreement (March 2023)",
+          "source": {
+            "label": "Glaukos 10-K(2024年度)",
+            "label_en": "Glaukos 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1192448/000155837025001402/gkos-20241231x10k.htm",
+            "level": "official",
+            "date": "2025-02-25",
+            "quote": "Effective March 17, 2023, we entered into a sales agreement (Sales Agreement) with Celanese Canada ULC (Celanese) under which Celanese will make available and supply us certain raw materials"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

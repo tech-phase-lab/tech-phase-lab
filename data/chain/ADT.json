@@ -1,0 +1,171 @@
+{
+  "root": {
+    "ticker": "ADT",
+    "name": "ADT",
+    "cik": 1703056,
+    "name_en": "ADT"
+  },
+  "rows": [
+    {
+      "ja": "機器・ソフトの供給元",
+      "en": "Device & software suppliers",
+      "above": true
+    },
+    {
+      "ja": "出資者・提携先",
+      "en": "Investors & partners"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "ALRM",
+      "ticker": "ALRM",
+      "name": "アラーム・ドットコム",
+      "name_en": "Alarm.com",
+      "sub": "防犯クラウド",
+      "sub_en": "Security cloud platform",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ADTはAlarm.com売上の15〜20%を占める大口顧客",
+          "text_en": "ADT is 15-20% of Alarm.com revenue",
+          "source": {
+            "label": "Alarm.com 10-K(2024年度)",
+            "label_en": "Alarm.com 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1459200/000145920025000004/alrm-20241231.htm",
+            "level": "official",
+            "date": "2025-02-20",
+            "quote": "ADT LLC, or ADT, represented greater than 15% but not more than 20% of our revenue in each of 2022, 2023 and 2024."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GOOGL",
+      "ticker": "GOOGL",
+      "name": "グーグル",
+      "name_en": "Google",
+      "sub": "ネット・機器",
+      "sub_en": "Internet & devices",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Google機器の供給・販売契約(2030年まで)",
+          "text_en": "Supplies Google devices under an agreement running to 2030",
+          "source": {
+            "label": "ADT 10-K(2025年度)",
+            "label_en": "ADT 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1703056/000170305626000022/adt-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "On July 31, 2020, we entered into a Master Supply, Distribution, and Marketing Agreement with Google (as amended, the \"Google Commercial Agreement\") with an initial term expiring on November 15, 2030."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ARLO",
+      "ticker": "ARLO",
+      "name": "アーロ・テクノロジーズ",
+      "name_en": "Arlo Technologies",
+      "sub": "防犯カメラ",
+      "sub_en": "Security cameras",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ADTの顧客基盤を活かす提携契約(2025年6月)",
+          "text_en": "Partnership to tap ADT's customer base (June 2025)",
+          "source": {
+            "label": "Arlo Technologies 10-K(2025年度)",
+            "label_en": "Arlo Technologies 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1736946/000173694626000031/arlo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "In June 2025, we entered into a partnership agreement with ADT, one of the largest security companies in North America."
+          }
+        }
+      ]
+    },
+    {
+      "id": "StateFarm",
+      "ticker": "State Farm",
+      "name": "ステート・ファーム",
+      "name_en": "State Farm",
+      "sub": "保険",
+      "sub_en": "Insurance",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "開発協力契約が2025年10月に満了し、基金残高を返済",
+          "text_en": "Development agreement expired in October 2025; ADT repaid the fund balance",
+          "source": {
+            "label": "ADT 10-K(2025年度)",
+            "label_en": "ADT 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1703056/000170305626000022/adt-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "On October 24, 2025, we repaid to State Farm substantially all of the balance of the Opportunity Fund held by us."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LYFT",
+      "ticker": "LYFT",
+      "name": "リフト",
+      "name_en": "Lyft",
+      "sub": "ライドシェア",
+      "sub_en": "Ride-hailing",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "アプリ内の緊急通報をADTと提供",
+          "text_en": "Offers in-app Emergency Help with ADT",
+          "source": {
+            "label": "Lyft 10-K(2024年度)",
+            "label_en": "Lyft 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1759509/000175950925000025/lyft-20241231.htm",
+            "level": "official",
+            "date": "2025-02-14",
+            "quote": "We have a dedicated safety response team, Emergency Help with ADT, Inc. (\"ADT\")"
+          }
+        }
+      ]
+    },
+    {
+      "id": "JCI",
+      "ticker": "JCI",
+      "name": "ジョンソン・コントロールズ",
+      "name_en": "Johnson Controls",
+      "sub": "ビル設備",
+      "sub_en": "Building technologies",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "米国・カナダ以外ではADT商標をJohnson Controlsが第三者にライセンス",
+          "text_en": "Johnson Controls licenses the ADT trademarks to third parties outside the US and Canada",
+          "source": {
+            "label": "ADT 10-K(2025年度)",
+            "label_en": "ADT 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1703056/000170305626000022/adt-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "In certain instances, such trademarks are licensed in certain territories outside the U.S. and Canada by Johnson Controls to certain third parties."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

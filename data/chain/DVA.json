@@ -1,0 +1,216 @@
+{
+  "root": {
+    "ticker": "DVA",
+    "name": "ダヴィータ",
+    "cik": 927066,
+    "name_en": "DaVita"
+  },
+  "rows": [
+    {
+      "ja": "医薬品・機器の供給元",
+      "en": "Drug & device suppliers",
+      "above": true
+    },
+    {
+      "ja": "合弁・株主",
+      "en": "Joint venture & shareholder"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "FMS"
+  ],
+  "companies": [
+    {
+      "id": "RMTI",
+      "ticker": "RMTI",
+      "name": "ロックウェル・メディカル",
+      "name_en": "Rockwell Medical",
+      "sub": "透析液",
+      "sub_en": "Dialysis concentrates",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "透析液の製品購入契約をDaVitaと改定(2025年12月)",
+          "text_en": "Amended its product purchase agreement with DaVita (December 2025)",
+          "source": {
+            "label": "Rockwell Medical 10-K(2025年度)",
+            "label_en": "Rockwell Medical 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1041024/000162828026021186/rmti-20251231.htm",
+            "level": "official",
+            "date": "2026-03-26",
+            "quote": "In December 2025, we amended our Amended and Restated Product Purchase Agreement (the \"Amended Agreement\") dated September 18, 2023 with DaVita, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AKBA",
+      "ticker": "AKBA",
+      "name": "アケビア・セラピューティクス",
+      "name_en": "Akebia Therapeutics",
+      "sub": "腎臓病薬",
+      "sub_en": "Kidney disease drugs",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "売掛金の25%がDaVita向け(2025年末)",
+          "text_en": "DaVita was 25% of its receivables at end of 2025",
+          "source": {
+            "label": "Akebia Therapeutics 10-K(2025年度)",
+            "label_en": "Akebia Therapeutics 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1517022/000151702226000020/akba-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "DaVita, Inc. 25 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "NUWE",
+      "ticker": "NUWE",
+      "name": "ヌウェリス",
+      "name_en": "Nuwellis",
+      "sub": "医療機器",
+      "sub_en": "Medical devices",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "供給・協業契約の一環でDaVitaに新株予約権を発行",
+          "text_en": "Issued DaVita warrants under a supply and collaboration agreement",
+          "source": {
+            "label": "Nuwellis S-1/A",
+            "label_en": "Nuwellis S-1/A",
+            "url": "https://www.sec.gov/Archives/edgar/data/1506492/000114036126023964/ny20073226x3_s1a.htm",
+            "level": "official",
+            "date": "2026-06-04",
+            "quote": "pursuant to the terms of a Supply and Collaboration Agreement, to purchase up to an aggregate of 877 shares of common stock"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MDT",
+      "ticker": "MDT",
+      "name": "メドトロニック",
+      "name_en": "Medtronic",
+      "sub": "医療機器",
+      "sub_en": "Medical devices",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "腎臓医療機器の合弁Mozarcを50%ずつ保有",
+          "text_en": "Owns the Mozarc kidney device venture 50/50 with DaVita",
+          "source": {
+            "label": "DaVita 10-K(2025年度)",
+            "label_en": "DaVita 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/927066/000092706626000012/dva-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Medtronic, Inc. holds the other 50 % voting equity interest."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BRK.B",
+      "ticker": "BRK.B",
+      "name": "バークシャー・ハサウェイ",
+      "name_en": "Berkshire Hathaway",
+      "sub": "複合企業",
+      "sub_en": "Conglomerate",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "大株主。自社株買いに合わせて株を買い戻す契約を結ぶ",
+          "text_en": "Major holder with a share repurchase agreement",
+          "source": {
+            "label": "DaVita 10-K(2025年度)",
+            "label_en": "DaVita 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/927066/000092706626000012/dva-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "On April 30, 2024 , the Company entered into an agreement (the share repurchase agreement) with Berkshire Hathaway Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FMS",
+      "ticker": "FMS",
+      "name": "フレゼニウス・メディカルケア",
+      "name_en": "Fresenius Medical Care",
+      "sub": "透析(独)",
+      "sub_en": "Dialysis (Germany)",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "DaVitaが10-Kで最大の競合と記載。2025年にブラジル事業を買収",
+          "text_en": "DaVita calls it its largest competitor; bought its Brazil operations in 2025",
+          "source": {
+            "label": "DaVita 10-K(2025年度)",
+            "label_en": "DaVita 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/927066/000092706626000012/dva-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Some competitors, including our largest competitor, Fresenius Medical Care, also manufacture their own supplies and equipment"
+          }
+        },
+        {
+          "type": "tie",
+          "text": "ブラジルの透析事業を買収(2025年8月)",
+          "text_en": "Acquired its dialysis operations in Brazil (August 2025)",
+          "source": {
+            "label": "DaVita 10-K(2025年度)",
+            "label_en": "DaVita 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/927066/000092706626000012/dva-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Effective August 1, 2025, the Company acquired the dialysis operations of Fresenius Medical Care AG and its affiliates in Brazil"
+          }
+        },
+        {
+          "type": "rival",
+          "text": "Freseniusが20-Fで、透析サービスの最大級の競合の筆頭に挙げる",
+          "text_en": "Fresenius lists DaVita first among its largest dialysis competitors",
+          "source": {
+            "label": "Fresenius Medical Care 20-F(2025年度)",
+            "label_en": "Fresenius Medical Care 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1333141/000110465926019005/fms-20251231x20f.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Our largest competitors in the dialysis services industry include DaVita, Inc., Diaverum AB"
+          }
+        },
+        {
+          "type": "up",
+          "text": "最大の競合であると同時に、透析用品・機器の最大級の仕入先",
+          "text_en": "Its largest competitor is also one of its largest dialysis supply vendors",
+          "source": {
+            "label": "DaVita 10-K(2024年度)",
+            "label_en": "DaVita 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/927066/000092706625000012/dva-20241231.htm",
+            "level": "official",
+            "date": "2025-02-13",
+            "quote": "Additionally, FMC is one of our largest suppliers of dialysis products and equipment."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

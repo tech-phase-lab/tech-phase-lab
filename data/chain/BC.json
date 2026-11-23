@@ -1,0 +1,199 @@
+{
+  "root": {
+    "ticker": "BC",
+    "name": "ブランズウィック",
+    "cik": 14930,
+    "name_en": "Brunswick"
+  },
+  "rows": [
+    {
+      "ja": "顧客・合弁",
+      "en": "Customers & joint ventures"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "GRMN",
+    "JOUT",
+    "MCFT",
+    "XPON"
+  ],
+  "companies": [
+    {
+      "id": "HZO",
+      "ticker": "HZO",
+      "name": "マリンマックス",
+      "name_en": "MarineMax",
+      "sub": "ボート販売",
+      "sub_en": "Boat retail",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ボート部門の最大のディーラー。Sea RayとBoston Whalerを独占的に販売",
+          "text_en": "Largest boat dealer; exclusive Sea Ray and Boston Whaler dealer in most of its markets",
+          "source": {
+            "label": "MarineMax 10-K(2025年9月期)",
+            "label_en": "MarineMax 10-K (FY ended Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1057060/000119312525284680/hzo-20250930.htm",
+            "level": "official",
+            "date": "2025-11-17",
+            "quote": "We have agreements with Brunswick covering Sea Ray products and Boston Whaler products and are the exclusive dealer of Sea Ray and Boston Whaler boats in almost all of our geographic markets."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WRMG",
+      "ticker": "White River Marine",
+      "name": "ホワイトリバー・マリン・グループ",
+      "name_en": "White River Marine Group",
+      "sub": "ボート製造",
+      "sub_en": "Boat builder",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "エンジン・電子機器部門の主要顧客",
+          "text_en": "A key customer of its Propulsion and Navico segments",
+          "source": {
+            "label": "Brunswick 10-K(2025年度)",
+            "label_en": "Brunswick 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/14930/000001493026000027/bcorp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "including White River Marine Group, LLC for the Propulsion and Navico Group segments and MarineMax, Inc. for the Boat segment."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Tohatsu",
+      "ticker": "Tohatsu",
+      "name": "トーハツ",
+      "name_en": "Tohatsu Marine",
+      "sub": "船外機",
+      "sub_en": "Outboard engines",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "共同出資・共同経営する会社",
+          "text_en": "A jointly owned company",
+          "source": {
+            "label": "Brunswick 10-K(2025年度)",
+            "label_en": "Brunswick 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/14930/000001493026000027/bcorp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "We share ownership and management responsibilities with jointly owned companies such as BAC and Tohatsu Marine Corporation."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GRMN",
+      "ticker": "GRMN",
+      "name": "ガーミン",
+      "name_en": "Garmin",
+      "sub": "GPS・電子機器",
+      "sub_en": "GPS & electronics",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Garminが10-Kで、船舶向け製品の主な競合として挙げる(Navico)",
+          "text_en": "Garmin names Brunswick's Navico among principal marine competitors",
+          "source": {
+            "label": "Garmin 10-K(2024年度)",
+            "label_en": "Garmin 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1121788/000095017025022760/grmn-20241228.htm",
+            "level": "official",
+            "date": "2025-02-19",
+            "quote": "Garmin believes that its principal competitors are Furuno, Johnson Outdoors, Navico (Brunswick), and Raymarine (Teledyne)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "JOUT",
+      "ticker": "JOUT",
+      "name": "ジョンソン・アウトドアーズ",
+      "name_en": "Johnson Outdoors",
+      "sub": "アウトドア用品",
+      "sub_en": "Outdoor equipment",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Johnson Outdoorsが10-Kで、大手の競合として挙げる",
+          "text_en": "Johnson Outdoors names Brunswick among large competitors",
+          "source": {
+            "label": "Johnson Outdoors 10-K(2025年9月期)",
+            "label_en": "Johnson Outdoors 10-K (FY ended Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/788329/000114036125045348/jout-20251003.htm",
+            "level": "official",
+            "date": "2025-12-12",
+            "quote": "We compete with several large domestic and foreign companies such as Brunswick, Garmin, and Aqua Lung"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MCFT",
+      "ticker": "MCFT",
+      "name": "マスタークラフト・ボート",
+      "name_en": "MasterCraft Boat",
+      "sub": "ボート製造",
+      "sub_en": "Boat builder",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "MasterCraftが10-Kで、大手の競合の筆頭に挙げる",
+          "text_en": "MasterCraft lists Brunswick first among large competitors",
+          "source": {
+            "label": "MasterCraft 10-K(2026年6月期)",
+            "label_en": "MasterCraft 10-K (FY ended Jun 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1638290/000119312526387432/mcft-20260630.htm",
+            "level": "official",
+            "date": "2026-09-10",
+            "quote": "we face competition from large national and regional manufacturers such as Brunswick Corporation, Malibu Boats, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "XPON",
+      "ticker": "XPON",
+      "name": "エクスピオン360",
+      "name_en": "Expion360",
+      "sub": "リチウム電池",
+      "sub_en": "Lithium batteries",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Expion360が10-Kで、Brunswick傘下Relionを競合に挙げる",
+          "text_en": "Expion360 names Brunswick-owned Relion as a competitor",
+          "source": {
+            "label": "Expion360 10-K(2025年度)",
+            "label_en": "Expion360 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1894954/000190359626000075/xpon_10k.htm",
+            "level": "official",
+            "date": "2026-03-17",
+            "quote": "Relion (which was acquired by Brunswick Corporation in September 2021)"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
