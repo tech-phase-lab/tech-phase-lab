@@ -1,0 +1,299 @@
+{
+  "root": {
+    "ticker": "UTHR",
+    "name": "ユナイテッド・セラピューティクス",
+    "cik": 1082554,
+    "name_en": "United Therapeutics"
+  },
+  "rows": [
+    {
+      "ja": "製造委託・技術の提供元",
+      "en": "Manufacturers & technology licensors",
+      "above": true
+    },
+    {
+      "ja": "買収・販売権・顧客",
+      "en": "Acquisitions, product rights & customers"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "LQDA",
+    "GOSS",
+    "TCRT"
+  ],
+  "companies": [
+    {
+      "id": "MNKD",
+      "ticker": "MNKD",
+      "name": "マンカインド",
+      "name_en": "MannKind",
+      "sub": "吸入薬",
+      "sub_en": "Inhaled therapies",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "吸入薬Tyvaso DPIの製造をMannKindに全面的に委託(供給契約)",
+          "text_en": "Relies entirely on MannKind to manufacture Tyvaso DPI under a supply agreement",
+          "source": {
+            "label": "United Therapeutics 10-K(2025年度)",
+            "label_en": "United Therapeutics 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1082554/000108255426000006/uthr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "We currently rely entirely on MannKind to manufacture Tyvaso DPI finished drug product and inhalers."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DEKA",
+      "ticker": "DEKA",
+      "name": "デカ・リサーチ",
+      "name_en": "DEKA Research & Development",
+      "sub": "医療機器開発",
+      "sub_en": "Medical device R&D",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "皮下注射ポンプRemunityをDEKAと共同開発し、DEKAの関連会社が製造・供給",
+          "text_en": "Co-developed the Remunity pump with DEKA, whose affiliate manufactures and supplies it",
+          "source": {
+            "label": "United Therapeutics 10-K(2025年度)",
+            "label_en": "United Therapeutics 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1082554/000108255426000006/uthr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "In November 2019, we entered into a supply agreement with an affiliate of DEKA to manufacture and supply the Remunity Pump to us."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SUPN",
+      "ticker": "SUPN",
+      "name": "スーパーナス",
+      "name_en": "Supernus",
+      "sub": "中枢神経系の医薬品",
+      "sub_en": "CNS drugs",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "自社の製剤技術の利用権を与え、Orenitramの開発に使われた",
+          "text_en": "Licensed its drug-delivery technology, used in developing Orenitram for United Therapeutics",
+          "source": {
+            "label": "Supernus 10-K(2024年度)",
+            "label_en": "Supernus 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1356576/000135657625000017/supn-20241231.htm",
+            "level": "official",
+            "date": "2025-02-25",
+            "quote": "Orenitram (developed for United Therapeutics Corporation); and Namzaric (developed for Allergan plc)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LLY",
+      "ticker": "LLY",
+      "name": "イーライリリー",
+      "name_en": "Eli Lilly",
+      "sub": "医薬品",
+      "sub_en": "Pharmaceuticals",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "肺動脈性肺高血圧症向けAdcircaの米国販売権をリリーから取得(価格はリリーが設定)",
+          "text_en": "Acquired US rights to Adcirca for PAH from Lilly in 2008; Lilly sets its prices",
+          "source": {
+            "label": "United Therapeutics 10-K(2025年度)",
+            "label_en": "United Therapeutics 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1082554/000108255426000006/uthr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "We acquired the commercial rights to Adcirca for the treatment of PAH in the United States from Lilly in 2008."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Miromatrix",
+      "ticker": "Miromatrix",
+      "name": "ミロマトリックス",
+      "name_en": "Miromatrix Medical",
+      "sub": "再生医療(臓器)",
+      "sub_en": "Regenerative medicine (organs)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2023年12月に買収",
+          "text_en": "Acquired in December 2023",
+          "source": {
+            "label": "United Therapeutics 10-K(2025年度)",
+            "label_en": "United Therapeutics 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1082554/000108255426000006/uthr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "In December 2023, we acquired Miromatrix Medical Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "IVIVA",
+      "ticker": "IVIVA",
+      "name": "IVIVAメディカル",
+      "name_en": "IVIVA Medical",
+      "sub": "再生医療(腎臓)",
+      "sub_en": "Regenerative medicine (kidney)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2023年10月に買収",
+          "text_en": "Acquired in October 2023",
+          "source": {
+            "label": "United Therapeutics 10-K(2025年度)",
+            "label_en": "United Therapeutics 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1082554/000108255426000006/uthr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "In October 2023, we completed the acquisition of IVIVA Medical, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BETA",
+      "ticker": "BETA",
+      "name": "ベータ・テクノロジーズ",
+      "name_en": "BETA Technologies",
+      "sub": "電動航空機",
+      "sub_en": "Electric aircraft",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "臓器輸送などに使う電動航空機の民間顧客の一社がUnited Therapeutics",
+          "text_en": "United Therapeutics is one of its civil aircraft customers",
+          "source": {
+            "label": "BETA Technologies 10-K(2025年度)",
+            "label_en": "BETA Technologies 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1784570/000162828026015838/bta-20251231.htm",
+            "level": "official",
+            "date": "2026-03-09",
+            "quote": "Our current civil aircraft customers include UPS, United Therapeutics, Air New Zealand, Bristow and Metro Air Services."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LQDA",
+      "ticker": "LQDA",
+      "name": "リクイディア",
+      "name_en": "Liquidia",
+      "sub": "肺高血圧症の治療薬",
+      "sub_en": "Pulmonary hypertension drugs",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Liquidiaが10-Kで、自社のトレプロスチニル注射剤の主な競合としてUnited TherapeuticsのRemodulinを挙げる",
+          "text_en": "Liquidia names United Therapeutics' Remodulin as the main competition for its treprostinil injection",
+          "source": {
+            "label": "Liquidia 10-K(2025年度)",
+            "label_en": "Liquidia 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1819576/000110465926023804/lqda-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-03-05",
+            "quote": "Our Treprostinil Injection product to treat PAH faces competition primarily from the continued use of the branded Remodulin sold by United Therapeutics"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GOSS",
+      "ticker": "GOSS",
+      "name": "ゴサマー・バイオ",
+      "name_en": "Gossamer Bio",
+      "sub": "肺高血圧症の新薬",
+      "sub_en": "Pulmonary hypertension drugs",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Gossamerが10-Kで、PH-ILDの競合としてUnited TherapeuticsのTyvasoを挙げる",
+          "text_en": "Gossamer names United Therapeutics' Tyvaso as competition in PH-ILD",
+          "source": {
+            "label": "Gossamer Bio 10-K(2025年度)",
+            "label_en": "Gossamer Bio 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1728117/000172811726000017/goss-20251231.htm",
+            "level": "official",
+            "date": "2026-03-17",
+            "quote": "We expect to face competition from Tyvaso (United Therapeutics) and Yutrepia (Liquidia) within the PH-ILD indication"
+          }
+        }
+      ]
+    },
+    {
+      "id": "TCRT",
+      "ticker": "TCRT",
+      "name": "アラウノス・セラピューティクス",
+      "name_en": "Alaunos Therapeutics",
+      "sub": "新薬開発",
+      "sub_en": "Drug development",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Alaunosが、承認されれば競合する肺動脈性肺高血圧症の治療薬の会社としてUnited Therapeuticsを挙げる",
+          "text_en": "Alaunos names United Therapeutics among PAH therapy makers its candidates would compete with",
+          "source": {
+            "label": "Alaunos Therapeutics 10-Q(2026年第3四半期)",
+            "label_en": "Alaunos Therapeutics 10-Q (Q3 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1107421/000119312526463638/tcrt-20260930.htm",
+            "level": "official",
+            "date": "2026-11-16",
+            "quote": "our product candidates would compete with approved therapies across the endothelin, nitric oxide and prostacyclin pathways, marketed by companies including United Therapeutics"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PRTCY",
+      "ticker": "PRTCY",
+      "name": "ピュアテック・ヘルス",
+      "name_en": "PureTech Health",
+      "sub": "新薬開発",
+      "sub_en": "Drug development",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "PureTechが年次報告で、競合しうる開発品としてUnited Therapeuticsのトレプロスチニルを挙げる",
+          "text_en": "PureTech names United Therapeutics' treprostinil among potentially competing candidates",
+          "source": {
+            "label": "PureTech Health 20-F(2025年度)",
+            "label_en": "PureTech Health 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1782999/000162828026028200/ptv-20251231.htm",
+            "level": "official",
+            "date": "2026-04-29",
+            "quote": "United Therapeutics' treprostinil in Phase 3 clinical trials"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

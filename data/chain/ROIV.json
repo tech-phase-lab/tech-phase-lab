@@ -1,0 +1,243 @@
+{
+  "root": {
+    "ticker": "ROIV",
+    "name": "ロイバント・サイエンシズ",
+    "cik": 1635088,
+    "name_en": "Roivant Sciences"
+  },
+  "rows": [
+    {
+      "ja": "導入した薬・技術の提供元",
+      "en": "Licensors of drugs & technology",
+      "above": true
+    },
+    {
+      "ja": "子会社・事業の売却先・研究提携",
+      "en": "Buyers of its units & research partners"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "PFE",
+      "ticker": "PFE",
+      "name": "ファイザー",
+      "name_en": "Pfizer",
+      "sub": "医薬品",
+      "sub_en": "Pharmaceuticals",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "子会社Priovantが2021年にファイザーと薬のライセンス・共同開発契約を結ぶ(Telavantも共同で設立)",
+          "text_en": "Its subsidiary Priovant signed a license and collaboration agreement with Pfizer in 2021; the two also formed Telavant together",
+          "source": {
+            "label": "Roivant Sciences 10-K(2026年度)",
+            "label_en": "Roivant Sciences 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1635088/000163508826000061/roiv-20260331.htm",
+            "level": "official",
+            "date": "2026-05-20",
+            "quote": "In September 2021, our subsidiary Priovant Therapeutics, Inc. (\"Priovant\") entered into a license and collaboration agreement with Pfizer"
+          }
+        }
+      ]
+    },
+    {
+      "id": "HanAll",
+      "ticker": "HanAll",
+      "name": "ハンオール・バイオファーマ",
+      "name_en": "HanAll Biopharma",
+      "sub": "医薬品(韓国)",
+      "sub_en": "Pharmaceuticals (Korea)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "子会社Immunovantの中核の抗体薬(IMVT-1402など)の権利をHanAllからライセンス",
+          "text_en": "Its subsidiary Immunovant licenses the core rights to IMVT-1402 and batoclimab from HanAll",
+          "source": {
+            "label": "Roivant Sciences 10-K(2026年度)",
+            "label_en": "Roivant Sciences 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1635088/000163508826000061/roiv-20260331.htm",
+            "level": "official",
+            "date": "2026-05-20",
+            "quote": "Immunovant License Agreement with HanAll Biopharma Co., Ltd."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Bayer",
+      "ticker": "Bayer",
+      "name": "バイエル",
+      "name_en": "Bayer",
+      "sub": "医薬品・農業(独)",
+      "sub_en": "Pharma & crop science (Germany)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "子会社Pulmovantがバイエルと薬のライセンス契約を結ぶ",
+          "text_en": "Its subsidiary Pulmovant has a license agreement with Bayer",
+          "source": {
+            "label": "Roivant Sciences 10-K(2026年度)",
+            "label_en": "Roivant Sciences 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1635088/000163508826000061/roiv-20260331.htm",
+            "level": "official",
+            "date": "2026-05-20",
+            "quote": "(\"Pulmovant\") entered into a license agreement (the \"Bayer-Pulmovant License Agreement\") with Bayer Aktiengesellschaft (\"Bayer\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ABUS",
+      "ticker": "ABUS",
+      "name": "アーバタス・バイオファーマ",
+      "name_en": "Arbutus Biopharma",
+      "sub": "核酸医薬・脂質ナノ粒子",
+      "sub_en": "RNA & lipid nanoparticles",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "子会社Genevantが、脂質ナノ粒子(LNP)の特許をArbutusから独占ライセンス(共同で特許訴訟も)",
+          "text_en": "Its Genevant exclusively licenses lipid nanoparticle patents from Arbutus; they also litigate together",
+          "source": {
+            "label": "Roivant Sciences 10-K(2026年度)",
+            "label_en": "Roivant Sciences 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1635088/000163508826000061/roiv-20260331.htm",
+            "level": "official",
+            "date": "2026-05-20",
+            "quote": "exclusively licensed from Arbutus Biopharma Corp. (\"Arbutus\")"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Roche",
+      "ticker": "Roche",
+      "name": "ロシュ",
+      "name_en": "Roche",
+      "sub": "医薬品(スイス)",
+      "sub_en": "Pharmaceuticals (Switzerland)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2023年、子会社Telavant(潰瘍性大腸炎などの抗体薬)の全持分をロシュに売却",
+          "text_en": "Sold its entire stake in Telavant, developer of an anti-TL1A antibody, to Roche in 2023",
+          "source": {
+            "label": "Roivant Sciences 10-K(2026年度)",
+            "label_en": "Roivant Sciences 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1635088/000163508826000061/roiv-20260331.htm",
+            "level": "official",
+            "date": "2026-05-20",
+            "quote": "ity interest in its majority-owned subsidiary Telavant to Roche Holdings, Inc. (\"Roche\")"
+          }
+        }
+      ]
+    },
+    {
+      "id": "OGN",
+      "ticker": "OGN",
+      "name": "オルガノン",
+      "name_en": "Organon",
+      "sub": "医薬品",
+      "sub_en": "Pharmaceuticals",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2024年10月、子会社Dermavant(皮膚薬VTAMA)の全持分をオルガノンに売却",
+          "text_en": "Sold its entire stake in Dermavant (maker of VTAMA) to Organon in October 2024",
+          "source": {
+            "label": "Roivant Sciences 10-K(2026年度)",
+            "label_en": "Roivant Sciences 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1635088/000163508826000061/roiv-20260331.htm",
+            "level": "official",
+            "date": "2026-05-20",
+            "quote": "in October 2024 we completed the sale of our entire equity interest in our majority-owned subsidiary Dermavant Sciences Ltd. to Organon & Co."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Sumitomo",
+      "ticker": "Sumitomo Pharma",
+      "name": "住友ファーマ",
+      "name_en": "Sumitomo Pharma",
+      "sub": "医薬品(日本)",
+      "sub_en": "Pharmaceuticals (Japan)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "大株主だった住友ファーマから約6.48億ドルで自社株を買い戻した",
+          "text_en": "Bought back about $648 million of its shares from former major holder Sumitomo Pharma",
+          "source": {
+            "label": "Roivant Sciences 10-K(2026年度)",
+            "label_en": "Roivant Sciences 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1635088/000163508826000061/roiv-20260331.htm",
+            "level": "official",
+            "date": "2026-05-20",
+            "quote": "including 71,251,083 shares repurchased from Sumitomo Pharma Co., Ltd. at $9.10 per share for approximately $648.4 million."
+          }
+        }
+      ]
+    },
+    {
+      "id": "EDIT",
+      "ticker": "EDIT",
+      "name": "エディタス・メディシン",
+      "name_en": "Editas Medicine",
+      "sub": "ゲノム編集",
+      "sub_en": "Gene editing",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ロイバント傘下の技術(脂質ナノ粒子)の共同研究先の一社",
+          "text_en": "One of the current collaboration partners for Roivant's delivery technology",
+          "source": {
+            "label": "Roivant Sciences 10-K(2026年度)",
+            "label_en": "Roivant Sciences 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1635088/000163508826000061/roiv-20260331.htm",
+            "level": "official",
+            "date": "2026-05-20",
+            "quote": "Some current collaboration partners include Editas Medicine, Epitopea, Mammoth Biotechnologies and Repair Biotechnologies."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Mammoth",
+      "ticker": "Mammoth",
+      "name": "マンモス",
+      "name_en": "Mammoth Biotechnologies",
+      "sub": "ゲノム編集",
+      "sub_en": "Gene editing",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ロイバント傘下の技術(脂質ナノ粒子)の共同研究先の一社",
+          "text_en": "One of the current collaboration partners for Roivant's delivery technology",
+          "source": {
+            "label": "Roivant Sciences 10-K(2026年度)",
+            "label_en": "Roivant Sciences 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1635088/000163508826000061/roiv-20260331.htm",
+            "level": "official",
+            "date": "2026-05-20",
+            "quote": "Some current collaboration partners include Editas Medicine, Epitopea, Mammoth Biotechnologies and Repair Biotechnologies."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
