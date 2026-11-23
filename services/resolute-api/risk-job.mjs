@@ -162,11 +162,12 @@ async function callModel(input,instructions,pool,now,fetcher){
 export function rejectedLog(candidate,reason,log=console.log){log(JSON.stringify({event:'RESOLUTE_RISK_SUMMARY_WITHHELD',articleId:candidate.id,reason:GENERATION_REJECTIONS.includes(reason)?reason:'shape'}));}
 export function bannedLog(candidate,codes,log=console.log){log(JSON.stringify({event:'RESOLUTE_RISK_SUMMARY_WITHHELD',articleId:candidate.id,reason:'banned-wording',codes}));}
 /** Machine check: banned wording → one rewrite; still present → not published, logged only. */
-export async function generate(candidate,pool,now,fetcher,{log=console.log}={}){
+/** `why.reason` (optional out-parameter) tells the caller why a null was returned: a GENERATION_REJECTIONS code or 'banned-wording'. */
+export async function generate(candidate,pool,now,fetcher,{log=console.log,why={}}={}){
  if(!process.env.RESOLUTE_OPENAI_API_KEY)throw Error('MODEL_NOT_CONFIGURED');
  const dates=publicationDates(candidate.publishedAt);
  const input=JSON.stringify({title:candidate.title,body:candidate.body,source:candidate.source,publishedAt:candidate.publishedAt,publishedDateTokyo:dates.tokyo,publishedDateNewYork:dates.newYork});
- const why={};
+ delete why.reason;
  let article=validateGeneration(await callModel(input,SUMMARY_INSTRUCTIONS,pool,now,fetcher),candidate,why);
  if(!article){rejectedLog(candidate,why.reason,log);return null;}
  let codes=summaryIssues(article.ja,article.en);
@@ -175,7 +176,7 @@ export async function generate(candidate,pool,now,fetcher,{log=console.log}={}){
  article=validateGeneration(await callModel(retry,SUMMARY_INSTRUCTIONS+' REWRITE: the previous summary used banned wording (codes listed). Rewrite it with facts only and none of the banned expressions.',pool,now,fetcher),candidate);
  codes=article?summaryIssues(article.ja,article.en):['invalid-rewrite'];
  if(article&&!codes.length)return article;
- bannedLog(candidate,codes,log);return null;
+ why.reason='banned-wording';bannedLog(candidate,codes,log);return null;
 }
 
 export async function collect(pool,feed,now=new Date()){

@@ -10,7 +10,8 @@ PDF), runs the same parser the monitor uses and prints **one line of JSON**:
 - `passed` / `total`: companies whose release was read with three or more figures that passed the cross-checks (the acceptance criterion).
 - `failing`: companies that do not pass yet (no parser, or no route). They show only "決算を発表しました" with the official link on the site.
 - `regressions`: companies that **have a parser** (`issuer_result_flash.PROFILES`) but failed today — e.g. the company changed its release layout. When this is
-  not empty the run exits with status 1, so the cron run is shown as **failed** in Railway (that is the alert).
+  not empty the check fails. Since Nov 23 the daily cron (`daily_checks.py`) sends that result to the monitor's incident alerts
+  (`cron_report.py`, see docs/PRODUCTION-WATCH.md) and exits 0; it exits 1 only when a check raised or the failure could not be reported.
 - It prints only true/false, counts and ticker symbols. It never prints figures, release text or any environment value, and it writes nothing (no database, no files).
 
 Code: `scripts/research/earnings_selfcheck.py` (uses `earnings_backtest.check_company`); image: `services/earnings-selfcheck/Dockerfile` (same Python and the same

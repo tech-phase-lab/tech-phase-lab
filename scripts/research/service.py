@@ -26,6 +26,7 @@ import monitor
 import off_hours
 import brief_generator
 import incident_delivery
+import cron_report
 import persistence
 import signals
 import price_target_reconciliation
@@ -4339,6 +4340,25 @@ class Handler(BaseHTTPRequestHandler):
                 self.send_json(400, {"ok": False, "error": web_push.refusal_reason(exc)})
             except Exception as exc:
                 print(json.dumps({"event": "resolute-push-failed", "error": type(exc).__name__}), flush=True)
+                self.send_json(503, {"ok": False})
+            return
+        if path == "/internal/cron-report":
+            # Nov 23 (owner): daily cron checks report here instead of crashing; the incident alerts reach the owner once.
+            if not cron_report.server_enabled():
+                self.send_json(404, {"ok": False, "error": "not-found"})
+                return
+            if not cron_report.token_ok(self.headers.get("Authorization", "")):
+                self.send_json(401, {"ok": False, "error": "unauthorized"})
+                return
+            try:
+                payload = self.read_json(2048)
+                with self.app.db_lock, monitor.connect(self.app.db_path) as db:
+                    transition = cron_report.record(db, payload, monitor)
+                self.send_json(200, {"ok": True, "transition": transition})
+            except ValueError:
+                self.send_json(400, {"ok": False, "error": "invalid-report"})
+            except Exception as exc:
+                print(json.dumps({"event": "cron-report-failed", "error": type(exc).__name__}), flush=True)
                 self.send_json(503, {"ok": False})
             return
         if path == "/inbox/upload":
