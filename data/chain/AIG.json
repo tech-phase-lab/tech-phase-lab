@@ -1,0 +1,327 @@
+{
+  "root": {
+    "ticker": "AIG",
+    "name": "AIG(アメリカン・インターナショナル・グループ)",
+    "cik": 5272,
+    "name_en": "American International Group"
+  },
+  "rows": [
+    {
+      "ja": "運用・資本の提携先",
+      "en": "Asset management & capital partners",
+      "above": true
+    },
+    {
+      "ja": "事業の売買・分離",
+      "en": "Business deals & spin-off"
+    },
+    {
+      "ja": "顧客・融資先",
+      "en": "Clients & borrowers"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "KNSL",
+    "BOW",
+    "GBLI"
+  ],
+  "companies": [
+    {
+      "id": "CVC",
+      "ticker": "CVC",
+      "name": "CVCキャピタル・パートナーズ",
+      "name_en": "CVC Capital Partners",
+      "sub": "投資会社",
+      "sub_en": "Investment firm",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "CVCの運用口座と新ファンドに最大15億ドルを拠出する戦略提携(2026年1月)",
+          "text_en": "Strategic partnership (January 2026) committing up to $1.5 billion to CVC accounts and a new fund",
+          "source": {
+            "label": "AIG 10-K(2025年度)",
+            "label_en": "AIG 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/5272/000000527226000023/aig-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "On January 19, 2026, AIG announced a strategic partnership with CVC Capital Partners plc (CVC) to establish large-scale managed accounts (SMAs) across CVC's credit strategies"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BX",
+      "ticker": "BX",
+      "name": "ブラックストーン",
+      "name_en": "Blackstone",
+      "sub": "投資会社",
+      "sub_en": "Investment firm",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Amwinsと3社でロイズのシンジケート2479を設立",
+          "text_en": "Formed Lloyd's Syndicate 2479 together with Amwins",
+          "source": {
+            "label": "AIG 10-K(2025年度)",
+            "label_en": "AIG 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/5272/000000527226000023/aig-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Announced a strategic collaboration with Amwins Group, Inc. and Blackstone Inc. to form Lloyd's Syndicate 2479, providing capacity for portfolio solutions."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Amwins",
+      "ticker": "Amwins",
+      "name": "エイムウィンズ",
+      "name_en": "Amwins Group",
+      "sub": "保険卸",
+      "sub_en": "Insurance wholesale",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Blackstoneと3社でロイズのシンジケート2479を設立",
+          "text_en": "Formed Lloyd's Syndicate 2479 together with Blackstone",
+          "source": {
+            "label": "AIG 10-K(2025年度)",
+            "label_en": "AIG 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/5272/000000527226000023/aig-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Announced a strategic collaboration with Amwins Group, Inc. and Blackstone Inc. to form Lloyd's Syndicate 2479, providing capacity for portfolio solutions."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CRBG",
+      "ticker": "CRBG",
+      "name": "コアブリッジ・ファイナンシャル",
+      "name_en": "Corebridge Financial",
+      "sub": "生命保険・年金",
+      "sub_en": "Life & retirement",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "AIGの生命保険・年金事業を分離した会社(税務などの契約を結ぶ)",
+          "text_en": "Its former life and retirement business, spun off under tax and other agreements",
+          "source": {
+            "label": "Corebridge Financial 10-K/A(2025年度)",
+            "label_en": "Corebridge Financial 10-K/A (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1889539/000188953926000097/crbg-20251231.htm",
+            "level": "official",
+            "date": "2026-04-22",
+            "quote": "Tax Matters Agreement, dated as of September 14, 2022, between Corebridge Financial, Inc. and American International Group"
+          }
+        }
+      ]
+    },
+    {
+      "id": "EG",
+      "ticker": "EG",
+      "name": "エベレスト・グループ",
+      "name_en": "Everest Group",
+      "sub": "再保険",
+      "sub_en": "Reinsurance",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Everestの商業保険の一部の更新権をAIGが買い取る契約(2025年10月)",
+          "text_en": "Agreed in October 2025 to buy renewal rights for some Everest commercial retail lines",
+          "source": {
+            "label": "Everest Group 10-K(2025年度)",
+            "label_en": "Everest Group 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1095073/000109507326000006/eg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "On October 26, 2025, the Company entered into an agreement with American International Group, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RNR",
+      "ticker": "RNR",
+      "name": "ルネサンスRe",
+      "name_en": "RenaissanceRe",
+      "sub": "再保険",
+      "sub_en": "Reinsurance",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "再保険子会社ValidusをRenaissanceReに売却(2023年11月)",
+          "text_en": "Sold its Validus reinsurance business to RenaissanceRe (November 2023)",
+          "source": {
+            "label": "RenaissanceRe 10-K(2024年度)",
+            "label_en": "RenaissanceRe 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/913144/000091314425000009/rnr-20241231.htm",
+            "level": "official",
+            "date": "2025-02-12",
+            "quote": "On November 1, 2023, we completed the Validus Acquisition in accordance with the Stock Purchase Agreement dated May 22, 2023 between RenaissanceRe Holdings Ltd. and American International Group, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TBI",
+      "ticker": "TBI",
+      "name": "トゥルーブルー",
+      "name_en": "TrueBlue",
+      "sub": "人材派遣",
+      "sub_en": "Staffing",
+      "row": 2,
+      "relations": [
+        {
+          "type": "down",
+          "text": "労災保険の担保を管理する信託をAIG・BNYメロンと設定",
+          "text_en": "Set up a trust with AIG and BNY Mellon holding its workers' compensation collateral",
+          "source": {
+            "label": "TrueBlue 10-K(2025年度)",
+            "label_en": "TrueBlue 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/768899/000076889926000009/tbi-20251228.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "We have an agreement with American International Group, Inc. and the Bank of New York Mellon Corporation creating a trust (\"Trust\"), which holds the majority of our collateral obligations under existing workers' compensation insurance policies."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GTJ",
+      "ticker": "GTJ REIT",
+      "name": "GTJ REIT",
+      "name_en": "GTJ REIT",
+      "sub": "不動産",
+      "sub_en": "Real estate",
+      "row": 2,
+      "relations": [
+        {
+          "type": "down",
+          "text": "AIGの運用会社から2.25億ドルの不動産担保融資を受ける",
+          "text_en": "Borrowed $225 million in secured loans from AIG Asset Management",
+          "source": {
+            "label": "GTJ REIT 10-K(2024年度)",
+            "label_en": "GTJ REIT 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1368757/000095017025042607/gttj-20241231.htm",
+            "level": "official",
+            "date": "2025-03-20",
+            "quote": "The American International Group 2022 Loan Agreement provides for secured loans in the aggregate principal amount of $ 225.0 million"
+          }
+        }
+      ]
+    },
+    {
+      "id": "KNSL",
+      "ticker": "KNSL",
+      "name": "キンセール・キャピタル",
+      "name_en": "Kinsale Capital",
+      "sub": "特殊保険",
+      "sub_en": "Specialty insurance",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Kinsaleが10-Kで、E&S保険の主な競合の筆頭にAIGを挙げる",
+          "text_en": "Kinsale lists AIG first among its primary E&S competitors",
+          "source": {
+            "label": "Kinsale Capital 10-K(2024年度)",
+            "label_en": "Kinsale Capital 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1669162/000166916225000010/knsl-20241231.htm",
+            "level": "official",
+            "date": "2025-02-21",
+            "quote": "Today, our primary competitors in the E&S sector inc lude American International Group, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BOW",
+      "ticker": "BOW",
+      "name": "ボウヘッド・スペシャルティ",
+      "name_en": "Bowhead Specialty",
+      "sub": "特殊保険",
+      "sub_en": "Specialty insurance",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Bowheadが10-Kで、主な競合の筆頭にAIGを挙げる",
+          "text_en": "Bowhead lists AIG first among notable competitors",
+          "source": {
+            "label": "Bowhead Specialty 10-K(2025年度)",
+            "label_en": "Bowhead Specialty 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2002473/000162828026011089/bow-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Some of our notable competitors include American International Group, Inc., Arch Capital Group Ltd., AXA S.A."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GBLI",
+      "ticker": "GBLI",
+      "name": "グローバル・インデムニティ",
+      "name_en": "Global Indemnity",
+      "sub": "特殊保険",
+      "sub_en": "Specialty insurance",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Global Indemnityが10-Kで、競合の一社としてAIGを挙げる",
+          "text_en": "Global Indemnity names AIG among specialty insurance competitors",
+          "source": {
+            "label": "Global Indemnity 10-K(2025年度)",
+            "label_en": "Global Indemnity 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1494904/000119312526100467/gbli-20251231.htm",
+            "level": "official",
+            "date": "2026-03-10",
+            "quote": "In particular, the Company competes against insurance subsidiaries of groups in the specialty insurance market, including American International Group"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CoreSpecialty",
+      "ticker": "Core Specialty",
+      "name": "コア・スペシャルティ",
+      "name_en": "Core Specialty Insurance",
+      "sub": "特殊保険",
+      "sub_en": "Specialty insurance",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Core SpecialtyがS-1で、世界的な競合の筆頭にAIGを挙げる",
+          "text_en": "Core Specialty lists AIG first among global competitors",
+          "source": {
+            "label": "Core Specialty Insurance S-1(2026年11月)",
+            "label_en": "Core Specialty Insurance S-1 (Nov 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1834261/000162828026074231/corespecialtyinsurancehold.htm",
+            "level": "official",
+            "date": "2026-11-16",
+            "quote": "Some of our notable competitors include both globally active insurance companies, such as: American International Group, Inc.;"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

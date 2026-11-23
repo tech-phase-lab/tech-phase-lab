@@ -1,0 +1,227 @@
+{
+  "root": {
+    "ticker": "CL",
+    "name": "コルゲート・パーモリーブ",
+    "cik": 21665,
+    "name_en": "Colgate-Palmolive"
+  },
+  "rows": [
+    {
+      "ja": "供給元(上流)",
+      "en": "Suppliers (upstream)",
+      "above": true
+    },
+    {
+      "ja": "顧客・買収",
+      "en": "Customers & acquisitions"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "CHD",
+    "KVUE",
+    "HAIN"
+  ],
+  "companies": [
+    {
+      "id": "SLGN",
+      "ticker": "SLGN",
+      "name": "シルガン",
+      "name_en": "Silgan Holdings",
+      "sub": "容器・キャップ",
+      "sub_en": "Packaging & closures",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ディスペンサー・特殊キャップ事業の最大級の顧客の一社",
+          "text_en": "One of the largest customers of its dispensing and specialty closures business",
+          "source": {
+            "label": "Silgan 10-K(2024年度)",
+            "label_en": "Silgan 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/849869/000084986925000029/slgn-20241231.htm",
+            "level": "official",
+            "date": "2025-02-27",
+            "quote": "Our largest customers of our dispensing and specialty closures business include Campbell, The Coca-Cola Company, Colgate-Palmolive Company"
+          }
+        }
+      ]
+    },
+    {
+      "id": "NTSK",
+      "ticker": "NTSK",
+      "name": "ネットスコープ",
+      "name_en": "Netskope",
+      "sub": "クラウドセキュリティ",
+      "sub_en": "Cloud security",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "コルゲートのネットワークセキュリティ部門と組んでセキュリティ製品を導入",
+          "text_en": "Deployed its security products with Colgate-Palmolive's network security team",
+          "source": {
+            "label": "Netskope S-1(2025年8月)",
+            "label_en": "Netskope S-1 (Aug 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2063196/000095017025110855/ck0002063196-20250822.htm",
+            "level": "official",
+            "date": "2025-08-22",
+            "quote": "Netskope Solution To address these challenges, Netskope partnered with Colgate-Palmolive's network security and R&D team to deploy Netskope's SSE package of products."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PERI",
+      "ticker": "PERI",
+      "name": "ペリオン・ネットワーク",
+      "name_en": "Perion Network",
+      "sub": "広告技術",
+      "sub_en": "Ad tech",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Perionの広告基盤を使う大手ブランドの一社",
+          "text_en": "One of the large brands using Perion's advertising platform",
+          "source": {
+            "label": "Perion Network 20-F(2024年度)",
+            "label_en": "Perion Network 20-F (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1338940/000117891325001021/zk2532820.htm",
+            "level": "official",
+            "date": "2025-03-25",
+            "quote": "This platform is used by many of the world's largest brands, agencies, media owners, and partners including Uber, Colgate, Lego"
+          }
+        }
+      ]
+    },
+    {
+      "id": "WMT",
+      "ticker": "WMT",
+      "name": "ウォルマート",
+      "name_en": "Walmart",
+      "sub": "小売",
+      "sub_en": "Retail",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "売上の約11%を占める最大の顧客(2025年)",
+          "text_en": "Its largest customer, about 11% of 2025 net sales",
+          "source": {
+            "label": "Colgate-Palmolive 10-K(2025年度)",
+            "label_en": "Colgate-Palmolive 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/21665/000002166526000006/cl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "Our sales to Walmart, Inc. and its affiliates represented approximately 11% of our Net sales in 2025."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Prime100",
+      "ticker": "Prime100",
+      "name": "プライム100(Care TopCo)",
+      "name_en": "Prime100 (Care TopCo)",
+      "sub": "ペットフード(豪)",
+      "sub_en": "Pet food (Australia)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "豪州の生鮮ペットフードPrime100の親会社を約3億ドルで買収(2025年4月)",
+          "text_en": "Bought the owner of Australian fresh pet food brand Prime100 for about $301 million (April 2025)",
+          "source": {
+            "label": "Colgate-Palmolive 10-K(2025年度)",
+            "label_en": "Colgate-Palmolive 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/21665/000002166526000006/cl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "On April 30, 2025, we acquired Care TopCo Pty Ltd, the owner of the Prime100 pet food business, for cash consideration of AU $471 (approximately $301)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CHD",
+      "ticker": "CHD",
+      "name": "チャーチ&ドワイト",
+      "name_en": "Church & Dwight",
+      "sub": "日用品",
+      "sub_en": "Consumer products",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Church & Dwightが10-Kで、消費者製品の競合の一社として挙げる",
+          "text_en": "Church & Dwight names Colgate-Palmolive among competitors",
+          "source": {
+            "label": "Church & Dwight 10-K(2024年度)",
+            "label_en": "Church & Dwight 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/313927/000095017025019801/chd-20241231.htm",
+            "level": "official",
+            "date": "2025-02-13",
+            "quote": "Our competitors in the Consumer Domestic and Consumer International segments include, among others, Procter & Gamble Company (\"P&G\"), The Clorox Company, Colgate-Palmolive Company"
+          }
+        }
+      ]
+    },
+    {
+      "id": "KVUE",
+      "ticker": "KVUE",
+      "name": "ケンビュー",
+      "name_en": "Kenvue",
+      "sub": "消費者向け医療品",
+      "sub_en": "Consumer health",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Kenvueが10-Kで、競合の一社として挙げる",
+          "text_en": "Kenvue names Colgate-Palmolive among competitors",
+          "source": {
+            "label": "Kenvue 10-K(2024年度)",
+            "label_en": "Kenvue 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1944048/000194404825000033/kvue-20241229.htm",
+            "level": "official",
+            "date": "2025-02-24",
+            "quote": "Church & Dwight, Colgate-Palmolive, Kimberly Clark, Procter & Gamble, Unilever, and private-label brands"
+          }
+        }
+      ]
+    },
+    {
+      "id": "HAIN",
+      "ticker": "HAIN",
+      "name": "ヘイン・セレスティアル",
+      "name_en": "Hain Celestial",
+      "sub": "自然派食品・日用品",
+      "sub_en": "Natural foods & personal care",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Hainが10-Kで、パーソナルケアの大手競合の一社として挙げる",
+          "text_en": "Hain names Colgate-Palmolive among large personal care competitors",
+          "source": {
+            "label": "Hain Celestial 10-K(2025年6月期)",
+            "label_en": "Hain Celestial 10-K (FY ended Jun 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/910406/000119312525203534/hain-20250630.htm",
+            "level": "official",
+            "date": "2025-09-15",
+            "quote": "Large conventional personal care products companies with whom we compete include, but are not limited to, The Clorox Company, Colgate-Palmolive Company, Johnson & Johnson, The Procter & Gamble Company"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
