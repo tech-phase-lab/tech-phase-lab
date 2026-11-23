@@ -1,4 +1,4 @@
-import type { ResultBrief } from "./market-results";
+import type { ResultBrief, ResultFact } from "./market-results";
 import type { OfficialUpdate } from "./general-news";
 
 export type EarningsResult = {
@@ -6,6 +6,8 @@ export type EarningsResult = {
   title: { ja: string; en: string }; result: { ja: string | null; en: string }; sourceUrl: string; sourceName: string;
   /** Verified figures from result flashes, one line each. */
   facts: { ja: string; en: string }[];
+  /** The same figures with their keys and comparisons, for the results table (one per key, the first source's). */
+  figures: ResultFact[];
   /** The company release's own text, when the monitor read it. */
   body: { ja: string | null; en: string | null };
   /** Every source behind this one result, oldest first. */
@@ -62,6 +64,7 @@ export function earningsResults(updates: OfficialUpdate[] = [], briefs: ResultBr
       title: { ja: `${displayName(brief.ticker)} 決算速報（${brief.period}）`, en: `${displayName(brief.ticker)} ${brief.period} earnings flash` },
       result: { ja: withName(brief.titleJa, brief.ticker), en: withName(brief.titleEn, brief.ticker) }, sourceUrl: brief.url, sourceName: brief.publisher,
       facts: orderedFacts(brief.facts).map(fact => ({ ja: `${fact.ja} ${fact.value}`, en: `${fact.en} ${fact.value}` })),
+      figures: orderedFacts(brief.facts),
       body: { ja: null, en: null }, sources: [{ name: brief.publisher, url: brief.url }],
       // ir-flash- / ir-fallback-: read from the issuer's own results table or release; x-result-: a third-party flash post.
       factsFrom: !brief.facts.length ? null : brief.researchId.startsWith("ir-") ? "issuer" : "post" });
@@ -74,7 +77,7 @@ export function earningsResults(updates: OfficialUpdate[] = [], briefs: ResultBr
     rows.push({ id: `release-${item.id}`, ticker, releasedAt: at, kind: "release",
       title: { ja: `${displayName(ticker)} 決算発表`, en: `${displayName(ticker)} earnings release` },
       result: { ja: item.translationJa ?? null, en: item.title }, sourceUrl: item.url, sourceName: item.publisher,
-      facts: [], body: { ja: item.bodyJa?.trim() || null, en: item.bodyEn?.trim() || null }, sources: [{ name: item.publisher, url: item.url }], factsFrom: null });
+      facts: [], figures: [], body: { ja: item.bodyJa?.trim() || null, en: item.bodyEn?.trim() || null }, sources: [{ name: item.publisher, url: item.url }], factsFrom: null });
   }
   rows.sort((a, b) => Date.parse(a.releasedAt) - Date.parse(b.releasedAt));
   const events: EarningsResult[][] = [];
@@ -93,6 +96,9 @@ export function earningsResults(updates: OfficialUpdate[] = [], briefs: ResultBr
       // Figures come from the flash; the release supplies the official wording.
       result: flash && !release?.result.ja ? flash.result : release ? { ja: flash?.result.ja ?? release.result.ja, en: flash?.result.en ?? release.result.en } : first.result,
       facts: group.flatMap(row => row.facts).filter(fact => !seen.has(fact.en) && seen.add(fact.en)),
+      // issuer figures before a third-party post's, one per key
+      figures: group.toSorted((a, b) => Number(a.factsFrom !== "issuer") - Number(b.factsFrom !== "issuer")).flatMap(row => row.figures)
+        .filter((fact, index, all) => all.findIndex(other => other.key === fact.key) === index),
       // A third-party post's figures in the group make the note say so; figures only from the issuer say they are the issuer's.
       factsFrom: group.some(row => row.factsFrom === "post") ? "post" as const : group.some(row => row.factsFrom === "issuer") ? "issuer" as const : null,
       body: group.find(row => row.body.ja || row.body.en)?.body ?? { ja: null, en: null },

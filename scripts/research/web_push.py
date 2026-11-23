@@ -862,8 +862,85 @@ def normalize_result(item):
         observed_timestamp = observed.timestamp()
     except (OverflowError, OSError, ValueError):
         return None
-    return {'kind': 'earnings', 'ticker': ticker, 'quarter': 'Q' + quarter[1], 'titles': {k: v.strip() for k, v in titles.items()},
-            'published': published, 'observed_timestamp': observed_timestamp}
+    titles = {k: v.strip() for k, v in titles.items()}
+    figures = figure_titles(ticker, item.get('period'), facts)
+    if figures:
+        titles = figures
+    return {'kind': 'earnings', 'ticker': ticker, 'quarter': 'Q' + quarter[1], 'titles': titles,
+            'published': published, 'observed_timestamp': observed_timestamp,
+            # the company's results page exists but no figure was read yet (「決算を発表しました」): held, see deliver()
+            'announce': isinstance(facts, list) and not facts}
+
+
+# Nov 23 (owner: "unusable"): one alert per earnings event, the one with the figures, written the same way for every company:
+# 「CRWD Q3 FY2027決算：売上高$1.58B（+22%）、調整後EPS$0.34、次期売上予想$1.52B〜$1.53B」. Only the brief's own figures.
+_AMOUNT = re.compile(r'^\$(-?\d+(?:\.\d+)?)([BM]?)$')
+
+
+def _compact(value):
+    """'$1.470897B' -> '$1.47B', '$115.8B' -> '$115.8B', '$0.31' -> '$0.31'; None for anything else (another currency, a range)."""
+    m = _AMOUNT.match(value or '')
+    if not m:
+        return None
+    number = float(m[1])
+    if not m[2]:
+        return f'${number:.2f}'
+    digits = 2 if abs(number) < 10 else 1 if abs(number) < 1000 else 0
+    text = f'{number:.{digits}f}'
+    if '.' in text:
+        text = text.rstrip('0').rstrip('.')
+    return f'${text}{m[2]}'
+
+
+def _growth(fact):
+    comparisons = fact.get('comparisons') if isinstance(fact.get('comparisons'), dict) else {}
+    stated = comparisons.get('growth')
+    if isinstance(stated, str) and re.fullmatch(r'[+-]\d+(?:\.\d+)?%', stated):
+        return stated
+    now, before = _AMOUNT.match(str(fact.get('value', ''))), _AMOUNT.match(str(comparisons.get('yearAgo', '')))
+    if not now or not before or now[2] != before[2]:
+        return None
+    a, b = float(now[1]), float(before[1])
+    if b <= 0 or a < 0:
+        return None
+    return f'{round((a / b - 1) * 100):+d}%'
+
+
+def _guidance(value):
+    parts = (value or '').split('-$')
+    if len(parts) == 2:
+        lo, hi = _compact(parts[0]), _compact('$' + parts[1])
+        return f'{lo}〜{hi}' if lo and hi else None
+    band = re.fullmatch(r'(\$[\d.]+[BM]) ± (\d+(?:\.\d+)?%)', value or '')
+    if band and _compact(band[1]):
+        return f'{_compact(band[1])}±{band[2]}'
+    return _compact(value)
+
+
+def figure_titles(ticker, period, facts):
+    """The alert text from the figures, or None when the brief has no revenue or EPS it can write."""
+    if not isinstance(facts, list):
+        return None
+    by_key = {f.get('key'): f for f in facts if isinstance(f, dict) and isinstance(f.get('value'), str)}
+    ja, en = [], []
+    revenue = by_key.get('revenue')
+    if revenue and _compact(revenue['value']):
+        growth = _growth(revenue)
+        ja.append(f"売上高{_compact(revenue['value'])}" + (f'（{growth}）' if growth else ''))
+        en.append(f"revenue {_compact(revenue['value'])}" + (f' ({growth} y/y)' if growth else ''))
+    eps_key = 'adjusted-eps' if 'adjusted-eps' in by_key else 'eps' if 'eps' in by_key else None
+    if eps_key and _compact(by_key[eps_key]['value']):
+        ja.append(('調整後EPS' if eps_key == 'adjusted-eps' else 'EPS') + _compact(by_key[eps_key]['value']))
+        en.append(('adj. EPS ' if eps_key == 'adjusted-eps' else 'EPS ') + _compact(by_key[eps_key]['value']))
+    if not ja:
+        return None
+    outlook = by_key.get('guidance-revenue')
+    if outlook and _guidance(outlook['value']):
+        ja.append(f"次期売上予想{_guidance(outlook['value'])}")
+        en.append(f"next-quarter revenue guide {_guidance(outlook['value']).replace('〜', '–')}")
+    name = DISPLAY_NAME.get(ticker, ticker)
+    label = str(period or '').strip()
+    return {'ja': f"{name} {label}決算：" + '、'.join(ja), 'en': f"{name} {label} results: " + ', '.join(en)}
 
 
 def normalize_news(item):
@@ -1047,7 +1124,10 @@ SKIPS = {}
 
 _LOGGED_SKIPS = set()
 RELEASE_SKIPS = {}  # (ticker, quarter) -> {reason: count} since start; only for the one-line push-result log
-QUIET_SKIP_REASONS = frozenset({'published-not-fresh', 'already-delivered', 'invalid-item'})
+QUIET_SKIP_REASONS = frozenset({'published-not-fresh', 'already-delivered', 'invalid-item', 'waiting-for-figures'})
+# Nov 23 (owner): the 「決算を発表しました」 line (no figures yet) is not an alert of its own. It waits this long for the figures; when they
+# come, the alert with the figures is the only one. When they do not, this one alert goes out then (headline and link).
+ANNOUNCE_HOLD_SECONDS = 600
 # One company's results are one event for this long (the calendar's SAME_EVENT_MS): a second earnings alert for the same company
 # inside it is never sent, whichever lane, source or quarter label it came with (Nov 23).
 EARNINGS_EVENT_SECONDS = 36 * 3600
@@ -1197,6 +1277,8 @@ def deliver(db, items, transport=send, now=None, monotonic_now=time.monotonic,
     attempted = accepted = uncertain = quiet_sent = 0
     sent = {}  # (ticker, quarter) -> {status: count} for earnings flashes attempted in this call
     target_sent = {}  # target_change -> {status: count} for price-target notices attempted in this call
+    figures = [one for one in (normalize_event(raw) for raw in items)
+               if one is not None and one.get('kind') == 'earnings' and not one.get('announce')]
     for device in db.execute('SELECT * FROM push_devices WHERE active=1').fetchall():
         if not device['owner_id'] and os.environ.get('WEB_PUSH_ALLOW_PILOT', '').lower() != 'true':
             for raw_item in items:
@@ -1210,8 +1292,18 @@ def deliver(db, items, transport=send, now=None, monotonic_now=time.monotonic,
                 skip(raw_item if isinstance(raw_item, dict) else {}, 'invalid-item')
                 continue
             observed = item['observed_timestamp']
+            hold = 0
+            if item.get('kind') == 'earnings' and item.get('announce'):
+                if any(other['ticker'] == item['ticker'] and abs(other['observed_timestamp'] - observed) <= EARNINGS_EVENT_SECONDS
+                       for other in figures):
+                    skip(item, 'figures-preferred', device['id'])
+                    continue
+                if now - observed < ANNOUNCE_HOLD_SECONDS:
+                    skip(item, 'waiting-for-figures', device['id'])
+                    continue
+                hold = ANNOUNCE_HOLD_SECONDS
             # Late discoveries belong in history, never in a fresh-news push.
-            if not 0 <= now - item['published'].timestamp() <= 900:
+            if not 0 <= now - item['published'].timestamp() <= 900 + hold:
                 # A price-target post found only now, more than 15 minutes after it was posted, is named apart from the backlog
                 # (which every poll passes over) so that it is logged.
                 late = target_change(item) is not None and 0 <= now - observed <= 300
@@ -1225,7 +1317,7 @@ def deliver(db, items, transport=send, now=None, monotonic_now=time.monotonic,
             if observed <= device['since']:
                 skip(item, 'seen-before-registration', device['id'])
                 continue
-            if not 0 <= now - observed <= 300:
+            if not 0 <= now - observed <= 300 + hold:
                 skip(item, 'observed-not-fresh', device['id'])
                 continue
             key = event_key(item)

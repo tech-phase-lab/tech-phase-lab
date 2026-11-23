@@ -16,6 +16,8 @@ import DeepAnalysisPanel from "../deep-analysis-panel";
 import { useOwnerAccount, useOwnerMode } from "../member-display-provider";
 import XPostCopyButton from "./x-post-copy-button";
 import EarningsReaction from "./earnings-reaction";
+import EarningsResultTable from "./earnings-result-table";
+import { headline } from "@/lib/research/earnings-table";
 import { japaneseMoney } from "@/lib/research/money-ja";
 
 function ResultList({ rows, lang }: { rows: ReactNode[]; lang: "ja" | "en" }) {
@@ -95,24 +97,33 @@ export default function EconomicResultsPanel({ lang, zone, period, kind = "all",
   const earningsSection = !!earnings.length && <section className={styles.section} aria-label={ja ? "決算の結果" : "Earnings results"}>
     <h2>{ja ? "決算の結果" : "Earnings results"}</h2>
     <ResultList key={`${lang}:${zone}:${period}:${kind}`} lang={lang} rows={earnings.map(row => {
-      const label = <>{time(row.releasedAt)}<span className={calendarStyles.eventName}>{ja ? noBreakUnits(japaneseMoney(row.title[lang])) : row.title[lang]}<small>{ja ? noBreakUnits(japaneseMoney(row.result.ja ?? "")) : row.result.en}</small></span></>;
+      // The collapsed line names the key figures in one notation (owner, Nov 23); a row without figures keeps the release's title.
+      const summary = headline(row.figures, lang);
+      const label = <>{time(row.releasedAt)}<span className={calendarStyles.eventName}>{ja ? noBreakUnits(japaneseMoney(row.title[lang])) : row.title[lang]}<small>{summary ? (ja ? noBreakUnits(summary) : summary) : ja ? noBreakUnits(japaneseMoney(row.result.ja ?? "")) : row.result.en}</small></span></>;
       const links = row.sources.filter(source => !source.url.startsWith("https://x.com/")).map(source => <a key={source.url} href={source.url} target="_blank" rel="noreferrer">{source.name} ↗</a>);
       const text = ja ? (row.body.ja && japaneseMoney(row.body.ja)) : row.body.en;
       // A row opens only when there is something more to read; "the company's
       // own release" alone is not a reason to expand (owner, Oct 14).
-      if (!row.facts.length && !text) return <li key={row.id}><div className={calendarStyles.plainRow}>{label}<span className={calendarStyles.rowLinks}>{links}</span></div></li>;
+      if (!row.figures.length && !row.facts.length && !text) return <li key={row.id}><div className={calendarStyles.plainRow}>{label}<span className={calendarStyles.rowLinks}>{links}</span></div></li>;
       return <li key={row.id}><details>
         <summary>{label}<span className={calendarStyles.expand} aria-hidden="true">＋</span></summary>
         <div className={calendarStyles.eventDetails}>
-          {!!row.facts.length && <ul className={calendarStyles.facts}>{row.facts.map(fact => <li key={fact.en}>{ja ? japaneseMoney(fact.ja) : fact.en}</li>)}</ul>}
-          {row.kind === "flash" && (() => { const brief = briefs.find(b => b.kind === "earnings" && b.ticker === row.ticker && row.sources.some(source => source.url === b.url)); return brief ? <><EarningsReaction ticker={brief.ticker} releasedAt={brief.publishedAt} lang={lang} />{ownerAccount && <XPostCopyButton brief={brief} lang={lang} />}</> : null; })()}
-          {row.factsFrom === "post" && <p>{ja ? "決算速報の投稿から数値を読み取りました。会社の決算資料で確認してください。" : "Figures read from a results flash post; confirm against the company release."}</p>}
-          {row.factsFrom === "issuer" && <p>{ja ? "会社の決算資料から数値を読み取りました。" : "Figures read from the company release."}</p>}
-          {!!text && <p>{text.length > 500 ? `${text.slice(0, 500).replace(/[^。.!?！？]*$/, "").trim() || text.slice(0, 500)}…` : text}</p>}
+          {!!row.figures.length && (() => {
+            // one table of the figures (項目 / 実績 / 前年比 / 市場予想との差, then the guidance) and the price move in one line (owner, Nov 23)
+            const brief = briefs.find(b => b.kind === "earnings" && b.ticker === row.ticker && !!b.facts.length && row.sources.some(source => source.url === b.url));
+            return <>
+              <EarningsResultTable ticker={row.ticker} releasedAt={row.releasedAt} facts={row.figures} lang={lang}
+                xPost={consensus => brief ? <>{ownerAccount && <XPostCopyButton brief={brief} lang={lang} consensus={consensus} />}</> : null} />
+              <EarningsReaction ticker={row.ticker} releasedAt={row.releasedAt} lang={lang} />
+            </>;
+          })()}
+          {row.factsFrom === "post" && <p>{ja ? "数値は速報投稿によるもので、会社資料では未確認です。" : "Figures from a results flash post, not yet checked against the company release."}</p>}
+          {!row.figures.length && !!text && <p>{text.length > 500 ? `${text.slice(0, 500).replace(/[^。.!?！？]*$/, "").trim() || text.slice(0, 500)}…` : text}</p>}
           {links}
         </div>
       </details></li>;
     })} />
+    <p className={calendarStyles.credit}>{ja ? "数値：各社の決算資料（SEC提出書類・IR） 株価・市場予想：Twelve Data" : "Figures: each company's release (SEC filing or IR). Prices and consensus: Twelve Data"}</p>
   </section>;
   if (kind === "earnings") return <>{earningsSection || null}</>;
   return <>{earningsSection || null}<DeepAnalysisPanel lang={lang} kind="indicator" />

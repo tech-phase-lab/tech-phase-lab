@@ -95,8 +95,9 @@ test('the row note says where the figures were read', () => {
   const post = { ...issuer, id: '5', researchId: 'x-result-5', url: 'https://x.com/wallstengine/status/5', publisher: 'Wall St Engine' };
   assert.equal(earningsResults([], [post])[0].factsFrom, 'post');
   const panel = source('app/research/calendar/economic-results-panel.tsx');
-  assert.match(panel, /row\.factsFrom === "post" && <p>\{ja \? "決算速報の投稿から数値を読み取りました。/);
-  assert.match(panel, /row\.factsFrom === "issuer" && <p>\{ja \? "会社の決算資料から数値を読み取りました。"/);
+  // a third-party post still says so; the issuer's own figures need no filler line (owner, Nov 23)
+  assert.match(panel, /row\.factsFrom === "post" && <p>\{ja \? "数値は速報投稿によるもので、会社資料では未確認です。"/);
+  assert.doesNotMatch(panel, /会社の決算資料から数値を読み取りました/);
 });
 
 test('the calendar reads stored results by month and lists their months', () => {
