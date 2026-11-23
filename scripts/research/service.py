@@ -3380,7 +3380,31 @@ class AutomaticMonitor:
                 print(("research-monitor-restarting " + type(exc).__name__ + " " + failure_detail(exc)).rstrip(), flush=True)
                 self.stop_event.wait(min(30, 2 ** min(failures, 5)))
 
+    def run_false_earnings_cleanup(self, env=None):
+        """Nov 23 (owner-approved): remove the false COHR/LRCX earnings rows once, at start, before any discovery runs.
+        Runs only when FALSE_EARNINGS_CLEANUP=apply and CLEANUP_CONFIRM names the tickers; writes a backup next to the
+        database and a marker so it never runs twice. Any failure is logged and the monitor carries on."""
+        env = os.environ if env is None else env
+        if env.get("FALSE_EARNINGS_CLEANUP") != "apply" or not env.get("CLEANUP_CONFIRM"):
+            return None
+        marker = Path(self.db_path).with_name("false-earnings-cleanup.done")
+        if marker.exists():
+            return None
+        backup = Path(self.db_path).with_name("false-earnings-cleanup-backup.json")
+        try:
+            import false_earnings_cleanup
+            with self.db_lock:
+                code = false_earnings_cleanup.main(["--db", str(self.db_path), "--tickers", env["CLEANUP_CONFIRM"],
+                                                    "--apply", "--backup", str(backup)])
+            marker.write_text(utc_now())
+            print(json.dumps({"event": "false-earnings-cleanup", "code": code, "tickers": env["CLEANUP_CONFIRM"]}), flush=True)
+            return code
+        except (Exception, SystemExit) as exc:
+            print(json.dumps({"event": "false-earnings-cleanup-failed", "error": type(exc).__name__}), flush=True)
+            return None
+
     def run(self):
+        self.run_false_earnings_cleanup()
         jobs = discovery_jobs(self.tickers)
         independent_tickers = {ticker for ticker, phase in jobs.values() if phase == "primary"}
 
