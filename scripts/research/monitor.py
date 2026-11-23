@@ -14,6 +14,7 @@ import sqlite3
 import subprocess
 import sys
 import re
+import urllib.robotparser
 import xml.etree.ElementTree as ET
 from urllib.parse import parse_qs, urlencode, urljoin, urlsplit, urlunsplit
 from urllib.error import HTTPError, URLError
@@ -474,6 +475,20 @@ class EdgarCurrentFeed:
 EDGAR_CURRENT = EdgarCurrentFeed()
 
 
+def source_poll_seconds(source, moment=None):
+    """``minPollSeconds``, or ``windowPollSeconds`` inside one of ``pollWindows`` (local calendar windows: ``utcOffsetHours``,
+    optional ``months``, inclusive ``days`` [first, last] and ``hours`` [from, to) ), e.g. TSMC's results and monthly-revenue days."""
+    moment = moment or datetime.now(timezone.utc)
+    for window in source.get("pollWindows", []):
+        local = moment.astimezone(timezone(timedelta(hours=window.get("utcOffsetHours", 0))))
+        first_day, last_day = window.get("days", [1, 31])
+        start_hour, end_hour = window.get("hours", [0, 24])
+        if ((not window.get("months") or local.month in window["months"]) and first_day <= local.day <= last_day
+                and start_hour <= local.hour < end_hour):
+            return source.get("windowPollSeconds", source["minPollSeconds"])
+    return source["minPollSeconds"]
+
+
 class SourcePace:
     """Last request time and last parsed candidates (in memory) per non-SEC discovery URL with its own ``minPollSeconds``."""
 
@@ -799,10 +814,116 @@ def automated_access_prohibited(ticker, url):
     return PROVIDERS.get(ticker, {}).get("automatedAccess") == "prohibited" and not is_sec_url(url)
 
 
+MOPS_HOST = "mops.twse.com.tw"
+MOPS_DETAIL_PATH = "/mops/api/t05st01_detail"
+MOPS_DETAIL_KEYS = ("companyId", "marketKind", "enterDate", "serialNumber")
+TAIPEI = timezone(timedelta(hours=8))
+# Hosts whose robots.txt is read (and obeyed) before any request; MOPS is new to the monitor (Nov 23).
+ROBOTS_CHECKED_HOSTS = {MOPS_HOST}
+_ROBOTS = {}
+_ROBOTS_LOCK = threading.Lock()
+ROBOTS_TTL_SECONDS = 6 * 3600
+
+
+def robots_allows(url, transport=None, clock=time.monotonic):
+    """RFC 9309 for the hosts in ROBOTS_CHECKED_HOSTS: rules that were read are obeyed; a robots.txt answered with 4xx
+    publishes no rules; one that could not be reached (5xx, network) allows nothing until it is read again."""
+    parts = urlsplit(url)
+    if parts.hostname not in ROBOTS_CHECKED_HOSTS:
+        return True
+    with _ROBOTS_LOCK:
+        cached = _ROBOTS.get(parts.hostname)
+    if cached is None or clock() - cached[0] > ROBOTS_TTL_SECONDS:
+        parser = urllib.robotparser.RobotFileParser()
+        try:
+            if transport is not None:
+                status, text = transport(f"https://{parts.hostname}/robots.txt")
+            else:
+                request = Request(f"https://{parts.hostname}/robots.txt", headers={"User-Agent": request_user_agent()})
+                try:
+                    with build_opener(NoRedirects()).open(request, timeout=10) as response:
+                        status, text = response.status, response.read(512 * 1024).decode("utf-8", "replace")
+                except HTTPError as exc:
+                    status, text = exc.code, ""
+            if 200 <= status < 300:
+                parser.parse(text.splitlines())
+            elif 400 <= status < 500:
+                parser.parse([])
+            else:
+                parser.disallow_all = True
+        except Exception:
+            parser.disallow_all = True
+        cached = (clock(), parser)
+        with _ROBOTS_LOCK:
+            _ROBOTS[parts.hostname] = cached
+    return cached[1].can_fetch(request_user_agent(), url)
+
+
+def taipei_roc_year(moment=None):
+    moment = (moment or datetime.now(timezone.utc)).astimezone(TAIPEI)
+    return moment.year - 1911
+
+
+def request_json(source, moment=None):
+    """The configured JSON body with "{rocYear}" replaced by the current Taiwan (ROC) year, e.g. MOPS t05st01's "year"."""
+    body = source.get("requestJson")
+    if body is None:
+        return None
+    year = str(taipei_roc_year(moment))
+    return {key: (value.replace("{rocYear}", year) if isinstance(value, str) else value) for key, value in body.items()}
+
+
+def mops_detail_request(url):
+    """(POST address, JSON body) for one MOPS announcement identity URL, else None. The identity keeps the announcement's own
+    t05st01_detail parameters in its query; MOPS answers the same parameters as a JSON POST."""
+    parts = urlsplit(url)
+    if parts.hostname != MOPS_HOST or parts.path != MOPS_DETAIL_PATH:
+        return None
+    query = parse_qs(parts.query, keep_blank_values=True)
+    if set(query) != set(MOPS_DETAIL_KEYS) or any(len(values) != 1 for values in query.values()):
+        return None
+    return f"https://{MOPS_HOST}{MOPS_DETAIL_PATH}", {key: query[key][0] for key in MOPS_DETAIL_KEYS}
+
+
+def mops_rows(data, source_name):
+    """(column names, rows) of one MOPS reply: {"code": 200, "result": {"titles": [{"main": ...}], "data": [[...]]}}.
+    Code 406 (no matching data) is an empty table; any other code is an error."""
+    if not isinstance(data, dict):
+        raise ValueError("Invalid MOPS structure")
+    code = str(data.get("code"))
+    if code == "406":
+        return [], []
+    if code != "200" or not isinstance(data.get("result"), dict):
+        raise ValueError("MOPS answered an error code")
+    result = data["result"]
+    names = [str(node.get("main", "")).strip() for node in result.get("titles") or [] if isinstance(node, dict)]
+    rows = result.get("data") or []
+    if not isinstance(rows, list) or any(not isinstance(row, list) or len(row) != len(names) for row in rows):
+        raise ValueError(f"Invalid MOPS {source_name} rows")
+    return names, rows
+
+
+def mops_detail_text(content):
+    """Readable text of one MOPS announcement (t05st01_detail), or None when the JSON is not that shape."""
+    try:
+        names, rows = mops_rows(json.loads(content), "detail")
+    except (ValueError, TypeError):
+        return None
+    if not rows or "說明" not in names or "主旨" not in names:
+        return None
+    row = dict(zip(names, rows[0]))
+    lines = [f"{name}: {' '.join(str(row[name]).split())}" for name in
+             ("發言日期", "發言時間", "發言人", "發言人職稱", "主旨", "符合條款", "事實發生日") if name in row]
+    explanation = "\n".join(line.strip() for line in str(row["說明"]).splitlines() if line.strip())
+    return "\n".join([*lines, f"說明: {explanation}"])[:MAX_EXTRACTED_CHARS]
+
+
 def fetch(url, ticker, validators=None, include_metadata=False):
     if automated_access_prohibited(ticker, url):
         raise ValueError("automated-access-prohibited")
     url = safe_url(url, ticker)
+    if not robots_allows(url):
+        raise ValueError("robots-disallowed")
     cached = cached_fetch(url)
     conditional = dict(validators or {})
     force_unconditional = bool(conditional.pop("force_unconditional", False))
@@ -819,10 +940,14 @@ def fetch(url, ticker, validators=None, include_metadata=False):
                    else "application/json,application/rss+xml,application/atom+xml,text/html,application/pdf"),
     }
     source = source_configuration(url, ticker)
-    request_body = source.get("requestJson")
+    request_body = request_json(source)
+    request_url = url
+    detail = mops_detail_request(url)
+    if detail is not None:
+        request_url, request_body = detail
     data = None
     if request_body is not None:
-        data = json.dumps(request_body, separators=(",", ":")).encode()
+        data = json.dumps(request_body, separators=(",", ":"), ensure_ascii=False).encode()
         headers["Content-Type"] = "application/json"
     etag = http_validator(conditional.get("etag"))
     last_modified = http_validator(conditional.get("last_modified"))
@@ -830,7 +955,7 @@ def fetch(url, ticker, validators=None, include_metadata=False):
         headers["If-None-Match"] = etag
     if last_modified:
         headers["If-Modified-Since"] = last_modified
-    req = Request(url, headers=headers, data=data, method="POST" if data is not None else "GET")
+    req = Request(request_url, headers=headers, data=data, method="POST" if data is not None else "GET")
     timeout = PROVIDERS[ticker].get("requestTimeoutSeconds", 20) if url == INDEXES[ticker] else 20
     timeout = environment_seconds("RESEARCH_REQUEST_TIMEOUT_SECONDS", timeout, 1, timeout)
     try:
@@ -1569,6 +1694,9 @@ def extract_text(content, content_type, declared_encoding=None):
             raise ValueError("XML declarations with entities are not supported")
         return "\n".join(" ".join(text.split()) for text in ET.fromstring(content).itertext() if text.strip())[:MAX_EXTRACTED_CHARS]
     if content_type == "application/json":
+        mops = mops_detail_text(content)
+        if mops is not None:
+            return mops
         return json.dumps(json.loads(content), ensure_ascii=False, separators=(",", ":"))[:MAX_EXTRACTED_CHARS]
     return ""
 
@@ -1760,6 +1888,37 @@ def roc_date(value):
     year = int(value[:3]) + 1911
     parsed = datetime.strptime(f"{year:04d}{value[3:]}", "%Y%m%d")
     return parsed.strftime("%Y-%m-%d")
+
+
+def mops_material_links(body, ticker, source):
+    """One company's MOPS material announcements (t05st01): each row links to its own official announcement (t05st01_detail),
+    whose full text the body fetch reads. Only the listed company's rows with a valid detail link are kept."""
+    company_code = source.get("twseCompanyCode")
+    if not re.fullmatch(r"\d{4,6}", company_code or ""):
+        raise ValueError("Invalid TWSE company code")
+    names, rows = mops_rows(json.loads(body), "t05st01")
+    if rows and not {"公司代號", "發言日期", "發言時間", "主旨", "詳細資料"} <= set(names):
+        raise ValueError("MOPS t05st01 columns changed")
+    links = {}
+    for values in rows:
+        row = dict(zip(names, values))
+        detail = row.get("詳細資料")
+        if str(row.get("公司代號", "")).strip() != company_code or not isinstance(detail, dict):
+            continue
+        parameters = detail.get("parameters")
+        if detail.get("apiName") != "t05st01_detail" or not isinstance(parameters, dict):
+            continue
+        query = {key: str(parameters.get(key, "")).strip() for key in MOPS_DETAIL_KEYS}
+        if (query["companyId"] != company_code or not re.fullmatch(r"sii|otc|rotc|pub", query["marketKind"])
+                or not re.fullmatch(r"\d{7}", query["enterDate"]) or not re.fullmatch(r"\d{1,4}", query["serialNumber"])):
+            continue
+        spoken = re.fullmatch(r"(\d{2,3})/(\d{2})/(\d{2})", str(row.get("發言日期", "")).strip())
+        subject = " ".join(str(row.get("主旨", "")).split())[:300]
+        if not spoken or not subject:
+            continue
+        url = safe_url(f"https://{MOPS_HOST}{MOPS_DETAIL_PATH}?" + urlencode(query), ticker)
+        links[url] = {"title": subject, "publishedOn": roc_date(spoken.group(1).zfill(3) + spoken.group(2) + spoken.group(3))}
+    return links
 
 
 def twse_material_links(body, ticker, source):
@@ -3764,6 +3923,9 @@ def monitoring_sources(ticker, automatic=False, scope=None):
     supplemental = [
         {**source, "route": "supplemental" if index == 0 else "supplemental-fallback"}
         for index, source in enumerate(provider.get("supplementalSources", []))
+    ] + [
+        # Collected on their own every cycle, beside both chains (TSMC's MOPS announcements, Nov 23).
+        {**source, "route": "supplemental-parallel"} for source in provider.get("parallelSources", [])
     ]
     if scope not in (None, "primary", "supplemental"):
         raise ValueError("Unknown discovery source scope")
@@ -3791,6 +3953,10 @@ def discover_links(body, kind, ticker, source):
         if kind != "application/json":
             raise ValueError("TWSE material-information source is not JSON")
         return twse_material_links(body, ticker, source)
+    if source["format"] == "mops-material-json":
+        if kind != "application/json":
+            raise ValueError("MOPS material-information source is not JSON")
+        return mops_material_links(body, ticker, source)
     if kind != "text/html":
         raise ValueError("Index is not HTML")
     parser = Links(source["url"], ticker)
@@ -3864,6 +4030,12 @@ def valid_discovery_candidate_url(url, ticker):
     if canonical != url:
         return False
     candidate_parts = urlsplit(url)
+    detail = mops_detail_request(url)
+    if detail is not None:
+        code = next((s.get("twseCompanyCode") for s in monitoring_sources(ticker) if s.get("format") == "mops-material-json"), None)
+        body = detail[1]
+        return bool(code and body["companyId"] == code and re.fullmatch(r"sii|otc|rotc|pub", body["marketKind"])
+                    and re.fullmatch(r"\d{7}", body["enterDate"]) and re.fullmatch(r"\d{1,4}", body["serialNumber"]))
     for source in monitoring_sources(ticker):
         if source.get("format") != "twse-material-json":
             continue
@@ -4001,7 +4173,8 @@ def collect_discovery(ticker, transport=fetch, automatic=False, cached_sources=N
     """Fetch and parse candidates without mutating storage."""
     sources = monitoring_sources(ticker, automatic=automatic, scope=source_scope)
     primary_sources = [source for source in sources if not source["route"].startswith("supplemental")]
-    supplemental_sources = [source for source in sources if source["route"].startswith("supplemental")]
+    supplemental_sources = [source for source in sources if source["route"] in {"supplemental", "supplemental-fallback"}]
+    parallel_sources = [source for source in sources if source["route"] == "supplemental-parallel"]
     failures, links, attempts = [], {}, 0
     persistent_transport = (
         cached_sources is not None
@@ -4048,7 +4221,7 @@ def collect_discovery(ticker, transport=fetch, automatic=False, cached_sources=N
                 # A company site's own listing that the fast lane reaches beside SEC (Sandisk's newsroom search, which sends no
                 # validators) is asked no more often than its configured pace; in between, its last parsed candidates stand in.
                 remembered = SOURCE_PACE.remembered(source["url"])
-                if remembered is not None and not SOURCE_PACE.poll_due(source["url"], source["minPollSeconds"]):
+                if remembered is not None and not SOURCE_PACE.poll_due(source["url"], source_poll_seconds(source)):
                     cache_metrics["notModifiedResponses"] += 1
                     return source, remembered, chain_failures
                 SOURCE_PACE.polled(source["url"])
@@ -4107,6 +4280,12 @@ def collect_discovery(ticker, transport=fetch, automatic=False, cached_sources=N
     primary_source, primary_links, primary_failures = collect_first(primary_sources)
     failures.extend(primary_failures)
     links.update(primary_links)
+    if automatic or source_scope == "supplemental":
+        for parallel in parallel_sources:
+            _, parallel_links, parallel_failures = collect_first([parallel])
+            failures.extend(parallel_failures)
+            for url, candidate in parallel_links.items():
+                links.setdefault(url, candidate)
     supplemental_source, supplemental_links, supplemental_failures = None, {}, []
     # Interactive/manual discovery retains the legacy failover behavior. The
     # always-on monitor additionally collects this independent first-party route
