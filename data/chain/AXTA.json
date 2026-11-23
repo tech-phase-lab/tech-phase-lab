@@ -1,0 +1,177 @@
+{
+  "root": {
+    "ticker": "AXTA",
+    "name": "アクサルタ・コーティング・システムズ",
+    "cik": 1616862,
+    "name_en": "Axalta Coating Systems"
+  },
+  "rows": [
+    {
+      "ja": "合併・買収",
+      "en": "Merger & acquisitions"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in its 10-K)"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "PPG",
+    "RPM"
+  ],
+  "companies": [
+    {
+      "id": "AkzoNobel",
+      "ticker": "AkzoNobel",
+      "name": "アクゾノーベル",
+      "name_en": "AkzoNobel",
+      "sub": "塗料(オランダ)",
+      "sub_en": "Paints & coatings (Netherlands)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年11月に経営統合の合併契約を締結",
+          "text_en": "Signed a merger agreement to combine in November 2025",
+          "source": {
+            "label": "Axalta 10-K(2025年度)",
+            "label_en": "Axalta 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1616862/000162828026008008/axta-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "During November 2025, we entered into a Merger Agreement (the \"Merger Agreement\") with Akzo Nobel N.V."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CoverFlexx",
+      "ticker": "CoverFlexx",
+      "name": "カバーフレックス",
+      "name_en": "The CoverFlexx Group",
+      "sub": "補修用塗料",
+      "sub_en": "Refinish coatings",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "CoverFlexxを買収(2024年7月)",
+          "text_en": "Acquired The CoverFlexx Group (July 2024)",
+          "source": {
+            "label": "Axalta 10-K(2025年度)",
+            "label_en": "Axalta 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1616862/000162828026008008/axta-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "the acquisition of The CoverFlexx Group completed in July 2024"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SHW",
+      "ticker": "SHW",
+      "name": "シャーウィン・ウィリアムズ",
+      "name_en": "Sherwin-Williams",
+      "sub": "塗料",
+      "sub_en": "Paints & coatings",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "補修用・工業用塗料の主な競合",
+          "text_en": "A primary competitor in refinish and industrial coatings",
+          "source": {
+            "label": "Axalta 10-K(2025年度)",
+            "label_en": "Axalta 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1616862/000162828026008008/axta-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Our primary competitors in the refinish end-market include AkzoNobel, BASF, PPG and Sherwin Williams"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BAS",
+      "ticker": "BASF",
+      "name": "BASF",
+      "name_en": "BASF",
+      "sub": "化学(ドイツ)",
+      "sub_en": "Chemicals (Germany)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "補修用塗料の主な競合",
+          "text_en": "A primary competitor in refinish coatings",
+          "source": {
+            "label": "Axalta 10-K(2025年度)",
+            "label_en": "Axalta 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1616862/000162828026008008/axta-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Our primary competitors in the refinish end-market include AkzoNobel, BASF, PPG and Sherwin Williams"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PPG",
+      "ticker": "PPG",
+      "name": "PPGインダストリーズ",
+      "name_en": "PPG Industries",
+      "sub": "塗料",
+      "sub_en": "Paints & coatings",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "PPGが10-Kで世界的な競合として挙げる。Axaltaも10-KでPPGを主な競合とする",
+          "text_en": "PPG lists Axalta as a global competitor; Axalta names PPG a primary competitor too",
+          "source": {
+            "label": "PPG 10-K(2025年度)",
+            "label_en": "PPG 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/79879/000007987926000046/ppg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Global Competitors Akzo Nobel N.V., Axalta Coating Systems Ltd., BASF Corporation, Kansai Paints, Nippon Paint and The Sherwin-Williams Company"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RPM",
+      "ticker": "RPM",
+      "name": "RPMインターナショナル",
+      "name_en": "RPM International",
+      "sub": "特殊塗料",
+      "sub_en": "Specialty coatings",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "RPMが10-Kで、競合の一社として挙げる",
+          "text_en": "RPM names Axalta among companies competing in its markets",
+          "source": {
+            "label": "RPM International 10-K(2026年5月期)",
+            "label_en": "RPM International 10-K (FY ended May 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/110621/000119312526312142/rpm-20260531.htm",
+            "level": "official",
+            "date": "2026-07-22",
+            "quote": "Some companies that compete in our markets include Akzo Nobel, Axalta Coating Systems Ltd., Carlisle Companies Inc."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

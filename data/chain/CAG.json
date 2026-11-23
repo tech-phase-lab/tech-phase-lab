@@ -1,0 +1,252 @@
+{
+  "root": {
+    "ticker": "CAG",
+    "name": "コナグラ・ブランズ",
+    "cik": 23217,
+    "name_en": "Conagra Brands"
+  },
+  "rows": [
+    {
+      "ja": "容器の供給元",
+      "en": "Packaging suppliers",
+      "above": true
+    },
+    {
+      "ja": "合弁・事業の売却先",
+      "en": "Joint venture & buyers of its businesses"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "PEP",
+    "SFD",
+    "HAIN",
+    "HLF"
+  ],
+  "companies": [
+    {
+      "id": "SLGN",
+      "ticker": "SLGN",
+      "name": "シルガン・ホールディングス",
+      "name_en": "Silgan Holdings",
+      "sub": "容器",
+      "sub_en": "Containers",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "金属容器・特注容器の最大級の顧客の一社としてConagraを挙げる",
+          "text_en": "Names Conagra among its largest container customers",
+          "source": {
+            "label": "Silgan 10-K(2025年度)",
+            "label_en": "Silgan 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/849869/000162828026012202/slgn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our largest customers for our custom containers business include Badia Spices Inc., Berlin Packaging LLC, Conagra Brands, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CHS",
+      "ticker": "CHS",
+      "name": "CHS",
+      "name_en": "CHS",
+      "sub": "農業協同組合",
+      "sub_en": "Agricultural cooperative",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Cargillと3社で合弁契約を締結(2013年)",
+          "text_en": "Joint venture agreement with CHS and Cargill (2013)",
+          "source": {
+            "label": "CHS 10-K/A(2024年8月期)",
+            "label_en": "CHS 10-K/A (FY ended Aug 2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/823277/000082327725000010/chscp-20240831.htm",
+            "level": "official",
+            "date": "2025-03-03",
+            "quote": "Joint venture agreement among CHS Inc., Cargill, Incorporated and Conagra Foods, Inc., dated March 4, 2013."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Cargill",
+      "ticker": "Cargill",
+      "name": "カーギル",
+      "name_en": "Cargill",
+      "sub": "穀物・食品",
+      "sub_en": "Agribusiness",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "CHSと3社で合弁契約を結ぶ(2013年)",
+          "text_en": "Joint venture partner with CHS (2013 agreement)",
+          "source": {
+            "label": "CHS 10-K/A(2024年8月期)",
+            "label_en": "CHS 10-K/A (FY ended Aug 2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/823277/000082327725000010/chscp-20240831.htm",
+            "level": "official",
+            "date": "2025-03-03",
+            "quote": "Joint venture agreement among CHS Inc., Cargill, Incorporated and Conagra Foods, Inc., dated March 4, 2013."
+          }
+        }
+      ]
+    },
+    {
+      "id": "THS",
+      "ticker": "THS",
+      "name": "ツリーハウス・フーズ",
+      "name_en": "TreeHouse Foods",
+      "sub": "PB食品",
+      "sub_en": "Private label foods",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Conagraのプライベートブランド事業を買収(2016年)",
+          "text_en": "Bought Conagra's Private Brands business (2016)",
+          "source": {
+            "label": "TreeHouse Foods 10-K(2024年度)",
+            "label_en": "TreeHouse Foods 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1320695/000132069525000007/ths-20241231.htm",
+            "level": "official",
+            "date": "2025-02-14",
+            "quote": "In 2016, TreeHouse purchased the Private Brands business from ConAgra Foods (currently known as Conagra Brands)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "UTZ",
+      "ticker": "UTZ",
+      "name": "ウッツ・ブランズ",
+      "name_en": "Utz Brands",
+      "sub": "スナック",
+      "sub_en": "Snacks",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Conagraからスナックブランドと工場を買収(2019年)",
+          "text_en": "Bought snack brands and a plant from Conagra (2019)",
+          "source": {
+            "label": "Utz Brands 10-K添付資料(2024年度)",
+            "label_en": "Utz Brands 10-K exhibit (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1739566/000173956625000053/a20250124utzbrandscodeofco.htm",
+            "level": "official",
+            "date": "2025-02-20",
+            "quote": "In October 2019, Utz acquired Tim's Cascade, Snyder of Berlin, Hawaiian Brand from Conagra Snacks"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PEP",
+      "ticker": "PEP",
+      "name": "ペプシコ",
+      "name_en": "PepsiCo",
+      "sub": "飲料・食品",
+      "sub_en": "Beverages & snacks",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "PepsiCoが10-Kで、食品の競合の一社として挙げる",
+          "text_en": "PepsiCo names Conagra among food competitors",
+          "source": {
+            "label": "PepsiCo 10-K(2024年度)",
+            "label_en": "PepsiCo 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/77476/000007747625000007/pep-20241228.htm",
+            "level": "official",
+            "date": "2025-02-04",
+            "quote": "Other beverage and convenient food competitors include, but are not limited to, The Campbell's Company, Conagra Brands, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SFD",
+      "ticker": "SFD",
+      "name": "スミスフィールド・フーズ",
+      "name_en": "Smithfield Foods",
+      "sub": "豚肉・加工肉",
+      "sub_en": "Pork & packaged meats",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Smithfieldが10-Kで、大手食品の競合の一社として挙げる",
+          "text_en": "Smithfield names Conagra among large packaged food competitors",
+          "source": {
+            "label": "Smithfield Foods 10-K(2025年度)",
+            "label_en": "Smithfield Foods 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/91388/000009138826000014/smf-20251228.htm",
+            "level": "official",
+            "date": "2026-03-24",
+            "quote": "Competing large, multi-brand consumer packaged food companies include Tyson Foods, Hormel Foods, Kraft Heinz, Pilgrims Pride, Maple Leaf Foods, Premium Brands and Conagra."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HAIN",
+      "ticker": "HAIN",
+      "name": "ヘイン・セレスティアル",
+      "name_en": "Hain Celestial",
+      "sub": "自然派食品",
+      "sub_en": "Natural foods",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Hainが10-Kで、大手食品の競合の一社として挙げる",
+          "text_en": "Hain names Conagra among large conventional food competitors",
+          "source": {
+            "label": "Hain Celestial 10-K(2024年6月期)",
+            "label_en": "Hain Celestial 10-K (FY ended Jun 2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/910406/000095017024100992/hain-20240630.htm",
+            "level": "official",
+            "date": "2024-08-27",
+            "quote": "Large conventional packaged foods competitors include Campbell Soup Company, Conagra Brands, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HLF",
+      "ticker": "HLF",
+      "name": "ハーバライフ",
+      "name_en": "Herbalife",
+      "sub": "栄養食品",
+      "sub_en": "Nutrition",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Herbalifeが10-Kで、競合の一社として挙げる",
+          "text_en": "Herbalife names Conagra among competitors",
+          "source": {
+            "label": "Herbalife 10-K(2024年度)",
+            "label_en": "Herbalife 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1180262/000095017025023207/hlf-20241231.htm",
+            "level": "official",
+            "date": "2025-02-19",
+            "quote": "Our competitors include companies such as BellRing Brands, Inc., Conagra Brands, Inc., The Hain Celestial Group, Inc."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -18,11 +18,14 @@ function span(text: string): { lo: number; hi: number } | null {
   const v = parseAmount(text); return v === null ? null : { lo: v, hi: v };
 }
 const trim = (n: number, digits = 2) => String(Number(n.toFixed(digits)));
-/** USD amount in the Japanese 億ドル notation: 3,661,000,000 -> "36.61億ドル" (1億ドル = 1e8). Under 1e7: plain dollars. */
+/** USD amount in Japanese units: 3,661,000,000 -> "36.61億ドル" (1億ドル = 1e8); under 1億ドル in 万 (24,900,000 -> "2,490万ドル"),
+ * the same units as the results table (owner, Nov 23: 「純損益2,490万ドル」 next to 「純利益0.25億ドル」 for one figure). */
 export function oku(usd: number): string {
   const v = Math.abs(usd) / 1e8;
+  if (v < 1) return `${Math.round(Math.abs(usd) / 1e4).toLocaleString("en-US")}万ドル`;
   return `${v >= 1000 ? Math.round(v).toLocaleString("en-US") : trim(v)}億ドル`;
 }
+const range = (lo: number, hi: number) => lo === hi ? oku(lo) : oku(lo).replace(/(億|万)ドル$/, "") + "〜" + oku(hi);
 const dollars = (n: number) => `${trim(n)}ドル`;
 
 /** ○ above the forecast, △ in line (within ±1%), ✕ below. A figure without a forecast has no mark (owner, Nov 18: never from the year-ago
@@ -46,17 +49,20 @@ function growth(value: number, previousText: string | undefined): number | null 
 }
 const signed = (pct: number) => `${pct >= 0 ? "+" : "-"}${Math.abs(Math.round(pct)).toLocaleString("en-US")}％`;
 const ORDER = ["revenue", "eps", "adjusted-eps", "net-income", "operating-income"];
+const SECONDARY = new Set(["gross-margin", "operating-margin", "adjusted-net-income", "adjusted-ebitda", "operating-cash-flow", "free-cash-flow", "capex", "guidance-fy-adjusted-eps"]);
 const rank = (key: string) => key.startsWith("guidance-") || key === "capex-guidance" ? 100 : ORDER.includes(key) ? ORDER.indexOf(key) : 50;
 
 function line(fact: ResultFact, consensus: EpsConsensus | null, mode: XPostMode): { mark: Mark | null; text: string } | null {
   if (fact.key.startsWith("guidance-") || fact.key === "capex-guidance") {
+    const perShare = /^\$(-?[\d.]+)(?:-\$(-?[\d.]+))?$/.exec(fact.value);
+    if (fact.key.includes("eps") && perShare) return { mark: null, text: `${fact.ja}${perShare[2] ? `${perShare[1]}〜${perShare[2]}` : perShare[1]}ドル` };
     const now = span(fact.value);
     if (!now) return /^(?:NT\$|€|₩)[\d.]/.test(fact.value) ? { mark: null, text: `${fact.ja}${fact.value}` } : null;
-    const text = `${fact.ja}${now.lo === now.hi ? oku(now.lo) : `${trim(now.lo / 1e8)}〜${trim(now.hi / 1e8)}億ドル`}`;
+    const text = `${fact.ja}${range(now.lo, now.hi)}`;
     const priorText = (fact.comparisons as { priorGuidance?: string } | undefined)?.priorGuidance;
     const prior = priorText ? span(priorText) : null;
     if (!prior) return { mark: null, text };
-    const priorWords = prior.lo === prior.hi ? oku(prior.lo) : `${trim(prior.lo / 1e8)}〜${trim(prior.hi / 1e8)}億ドル`;
+    const priorWords = range(prior.lo, prior.hi);
     const capex = fact.key === "capex-guidance";
     const dir = now.lo > prior.hi ? (capex ? "を上回る" : "を上方修正") : now.hi < prior.lo ? (capex ? "を下回る" : "を下方修正") : now.lo === prior.lo && now.hi === prior.hi ? "から据え置き" : "";
     return { mark: null, text: dir ? `${text}（従来予想${priorWords}${dir}）` : text };
@@ -64,21 +70,24 @@ function line(fact: ResultFact, consensus: EpsConsensus | null, mode: XPostMode)
   const v = parseAmount(fact.value);
   // a figure in another currency (NT$, €, ₩) or unit is written as the issuer printed it
   if (v === null) return /^(?:NT\$|€|₩)-?[\d.]/.test(fact.value) ? { mark: null, text: `${fact.ja}${fact.value}` } : null;
+  const stated = (fact.comparisons as { growth?: string } | undefined)?.growth;
   const g = growth(v, yearAgoOf(fact));
-  const yoy = g === null ? "" : `前年比${signed(g)}`;
+  const yoy = stated && /^[+-]\d/.test(stated) ? `前年比${stated.replace("%", "％")}` : g === null ? "" : `前年比${signed(g)}`;
   if (fact.key === "eps") {
     const parts = [mode === "consensus" && consensus ? `予想${dollars(consensus.estimate)}` : "", yoy].filter(Boolean);
     return { mark: consensus ? forecastMark(v, consensus.estimate) : null, text: `${fact.ja}${dollars(v)}${parts.length ? `（${parts.join("、")}）` : ""}` };
   }
   if (fact.key === "adjusted-eps") return { mark: null, text: `${fact.ja}${dollars(v)}${yoy ? `（${yoy}）` : ""}` };
-  const name = fact.key === "net-income" ? (v < 0 ? "純損失" : "純利益") : fact.key === "operating-income" ? (v < 0 ? "営業損失" : "営業利益") : fact.ja;
+  const name = fact.key === "net-income" ? (v < 0 ? "純損失" : "純利益") : fact.key === "operating-income" ? (v < 0 ? "営業損失" : "営業利益")
+    : fact.key === "adjusted-net-income" ? (v < 0 ? "調整後純損失" : "調整後純利益") : fact.ja;
   return { mark: null, text: `${name}${oku(v)}${yoy ? `（${yoy}）` : ""}` };
 }
 
 /** The X post text, built only from the brief's own figures (and the consensus when attached): one figure per line, the same order
  * for every company. Returns null when no figure can be written. */
 export function buildXPost(brief: Pick<ResultBrief, "ticker" | "period" | "facts">, consensus: EpsConsensus | null, mode: XPostMode): string | null {
-  const facts = brief.facts.map((fact, index) => ({ fact, index })).sort((a, b) => rank(a.fact.key) - rank(b.fact.key) || a.index - b.index).map(item => item.fact);
+  // the short form keeps the figures a reader needs first (revenue, EPS, the result, the key business figure, the guidance)
+  const facts = brief.facts.filter(fact => mode !== "short" || !SECONDARY.has(fact.key)).map((fact, index) => ({ fact, index })).sort((a, b) => rank(a.fact.key) - rank(b.fact.key) || a.index - b.index).map(item => item.fact);
   const rows = facts.map(f => line(f, consensus, mode)).filter((r): r is { mark: Mark | null; text: string } => r !== null);
   if (!rows.length) return null;
   const body = rows.map(r => `${r.mark ?? ""}${r.text}`).join("\n");

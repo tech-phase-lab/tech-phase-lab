@@ -1,0 +1,225 @@
+{
+  "root": {
+    "ticker": "DY",
+    "name": "ダイコム・インダストリーズ",
+    "cik": 67215,
+    "name_en": "Dycom Industries"
+  },
+  "rows": [
+    {
+      "ja": "主要顧客(通信会社)",
+      "en": "Major customers (telecom carriers)"
+    },
+    {
+      "ja": "買収",
+      "en": "Acquisitions"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "PRIM",
+    "ECG"
+  ],
+  "companies": [
+    {
+      "id": "T",
+      "ticker": "T",
+      "name": "AT&T",
+      "name_en": "AT&T",
+      "sub": "通信",
+      "sub_en": "Telecom",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大の顧客(売上の25.4%)",
+          "text_en": "Its largest customer (25.4% of revenue)",
+          "source": {
+            "label": "Dycom 10-K(2026年1月期)",
+            "label_en": "Dycom 10-K (FY ended Jan 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/67215/000006721526000008/dy-20260131.htm",
+            "level": "official",
+            "date": "2026-03-09",
+            "quote": "During fiscal 2026, we derived approximately 25.4% of our total contract revenues from AT&T Inc., 14.0% from Verizon Communications, Inc. and 10.8% from Lumen Technologies Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "VZ",
+      "ticker": "VZ",
+      "name": "ベライゾン",
+      "name_en": "Verizon",
+      "sub": "通信",
+      "sub_en": "Telecom",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2番目の顧客(売上の14.0%、Frontierを含む)",
+          "text_en": "Second-largest customer (14.0%, including Frontier)",
+          "source": {
+            "label": "Dycom 10-K(2026年1月期)",
+            "label_en": "Dycom 10-K (FY ended Jan 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/67215/000006721526000008/dy-20260131.htm",
+            "level": "official",
+            "date": "2026-03-09",
+            "quote": "During fiscal 2026, we derived approximately 25.4% of our total contract revenues from AT&T Inc., 14.0% from Verizon Communications, Inc. and 10.8% from Lumen Technologies Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LUMN",
+      "ticker": "LUMN",
+      "name": "ルーメン・テクノロジーズ",
+      "name_en": "Lumen Technologies",
+      "sub": "通信",
+      "sub_en": "Telecom",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "3番目の顧客(売上の10.8%)",
+          "text_en": "Third-largest customer (10.8%)",
+          "source": {
+            "label": "Dycom 10-K(2026年1月期)",
+            "label_en": "Dycom 10-K (FY ended Jan 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/67215/000006721526000008/dy-20260131.htm",
+            "level": "official",
+            "date": "2026-03-09",
+            "quote": "During fiscal 2026, we derived approximately 25.4% of our total contract revenues from AT&T Inc., 14.0% from Verizon Communications, Inc. and 10.8% from Lumen Technologies Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CMCSA",
+      "ticker": "CMCSA",
+      "name": "コムキャスト",
+      "name_en": "Comcast",
+      "sub": "ケーブル・メディア",
+      "sub_en": "Cable & media",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "主要顧客の一社(売上の7.4%)",
+          "text_en": "A major customer (7.4% of revenue)",
+          "source": {
+            "label": "Dycom 10-K(2026年1月期)",
+            "label_en": "Dycom 10-K (FY ended Jan 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/67215/000006721526000008/dy-20260131.htm",
+            "level": "official",
+            "date": "2026-03-09",
+            "quote": "Comcast Corporation 7.4% 8.5% 10.7%"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PowerSolutions",
+      "ticker": "Power Solutions",
+      "name": "パワー・ソリューションズ",
+      "name_en": "Power Solutions",
+      "sub": "データセンター電気工事",
+      "sub_en": "Data center electrical",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "データセンター向け電気設備のPower Solutionsを買収(2026年1月期第4四半期)",
+          "text_en": "Acquired Power Solutions, a data center electrical contractor (Q4 FY2026)",
+          "source": {
+            "label": "Dycom 10-K(2026年1月期)",
+            "label_en": "Dycom 10-K (FY ended Jan 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/67215/000006721526000008/dy-20260131.htm",
+            "level": "official",
+            "date": "2026-03-09",
+            "quote": "with the acquisition of Power Solutions, LLC (\"Power Solutions\") in the fourth quarter of fiscal 2026, we provide comprehensive building infrastructure solutions"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Bigham",
+      "ticker": "Bigham",
+      "name": "ビガム・ケーブル・コンストラクション",
+      "name_en": "Bigham Cable Construction",
+      "sub": "通信工事",
+      "sub_en": "Telecom construction",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Bighamを1.312億ドルで買収(2023年8月)",
+          "text_en": "Acquired Bigham for $131.2 million (August 2023)",
+          "source": {
+            "label": "Dycom 10-K(2026年1月期)",
+            "label_en": "Dycom 10-K (FY ended Jan 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/67215/000006721526000008/dy-20260131.htm",
+            "level": "official",
+            "date": "2026-03-09",
+            "quote": "During August 2023, we acquired Bigham Cable Construction, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PRIM",
+      "ticker": "PRIM",
+      "name": "プリモリス・サービシズ",
+      "name_en": "Primoris Services",
+      "sub": "インフラ工事",
+      "sub_en": "Infrastructure contractor",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Primorisが10-Kで、公益分野の競合として挙げる",
+          "text_en": "Primoris names Dycom among utility market competitors",
+          "source": {
+            "label": "Primoris 10-K(2025年度)",
+            "label_en": "Primoris 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1361538/000110465926018677/prim-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "competitors in our utilities markets include Quanta Services, Inc., Dycom Industries, MYR Group, and MasTec, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ECG",
+      "ticker": "ECG",
+      "name": "エベラス・コンストラクション",
+      "name_en": "Everus Construction",
+      "sub": "電気・機械工事",
+      "sub_en": "Electrical & mechanical contractor",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Everusが株式報酬契約で、主な競合の一社として挙げる",
+          "text_en": "Everus names Dycom among its primary competitors",
+          "source": {
+            "label": "Everus Construction 10-K添付の株式報酬契約",
+            "label_en": "Everus Construction award agreement (10-K exhibit)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2015845/000201584526000010/a2025q4ex1023-ecgxuse.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Primoris Services Corporation, Dycom Industries, Inc., MYR Group Inc."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,173 @@
+{
+  "root": {
+    "ticker": "CW",
+    "name": "カーチス・ライト",
+    "cik": 26324,
+    "name_en": "Curtiss-Wright"
+  },
+  "rows": [
+    {
+      "ja": "主要顧客・提携",
+      "en": "Major customers & partners"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "TTMI",
+    "MIR"
+  ],
+  "companies": [
+    {
+      "id": "USNavy",
+      "ticker": "U.S. Navy",
+      "name": "米海軍",
+      "name_en": "U.S. Navy",
+      "sub": "国防",
+      "sub_en": "Defense",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "バージニア級・コロンビア級潜水艦とフォード級空母向けに機器を供給",
+          "text_en": "Supplies equipment for Virginia- and Columbia-class submarines and Ford-class carriers",
+          "source": {
+            "label": "Curtiss-Wright 10-K(2025年度)",
+            "label_en": "Curtiss-Wright 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/26324/000162828026007587/cw-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "primarily to the U.S. Navy, most notably supporting the Virginia-class and Columbia-class submarine programs, as well as the Ford-class aircraft carrier program."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BA",
+      "ticker": "BA",
+      "name": "ボーイング",
+      "name_en": "Boeing",
+      "sub": "航空機",
+      "sub_en": "Aircraft",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "民間航空機分野の主要顧客",
+          "text_en": "A primary customer in commercial aerospace",
+          "source": {
+            "label": "Curtiss-Wright 10-K(2025年度)",
+            "label_en": "Curtiss-Wright 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/26324/000162828026007587/cw-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "highly dependent on new aircraft production from our primary customers, Boeing and Airbus."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Airbus",
+      "ticker": "Airbus",
+      "name": "エアバス",
+      "name_en": "Airbus",
+      "sub": "航空機(欧州)",
+      "sub_en": "Aircraft (Europe)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "民間航空機分野の主要顧客",
+          "text_en": "A primary customer in commercial aerospace",
+          "source": {
+            "label": "Curtiss-Wright 10-K(2025年度)",
+            "label_en": "Curtiss-Wright 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/26324/000162828026007587/cw-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "highly dependent on new aircraft production from our primary customers, Boeing and Airbus."
+          }
+        }
+      ]
+    },
+    {
+      "id": "X-energy",
+      "ticker": "X-energy",
+      "name": "エックス・エナジー",
+      "name_en": "X-energy",
+      "sub": "小型原子炉",
+      "sub_en": "Small modular reactors",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Xe-100の優先的な戦略サプライヤーに選定。出資もしている",
+          "text_en": "Selected as a preferred strategic supplier for the Xe-100, and an equity investor",
+          "source": {
+            "label": "X-energy S-1(2026年3月)",
+            "label_en": "X-energy S-1 (Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2088896/000110465926032794/tm2527015-8_drsa.htm",
+            "level": "official",
+            "date": "2026-03-20",
+            "quote": "Curtiss-Wright was selected as a preferred strategic supplier to X-energy for the ARDP and subsequent Xe-100 projects in the U.S. Curtiss-Wright is an equity investor in X-energy."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TTMI",
+      "ticker": "TTMI",
+      "name": "TTMテクノロジーズ",
+      "name_en": "TTM Technologies",
+      "sub": "電子部品",
+      "sub_en": "Electronic components",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "TTMが10-Kで、航空宇宙・防衛部門の主な競合として挙げる",
+          "text_en": "TTM names Curtiss-Wright among principal A&D competitors",
+          "source": {
+            "label": "TTM Technologies 10-K(2025年度)",
+            "label_en": "TTM Technologies 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1116942/000119312526051976/ttmi-20251229.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Our principal competitors for our A&D segment include BAE Systems plc, Curtiss-Wright Corporation, Leonardo DRS, Inc., Mercury Systems, Inc., and Sanmina Corporation."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MIR",
+      "ticker": "MIR",
+      "name": "ミリオン・テクノロジーズ",
+      "name_en": "Mirion Technologies",
+      "sub": "放射線計測",
+      "sub_en": "Radiation measurement",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Mirionが10-Kで、原子力・安全部門の主な競合として挙げる",
+          "text_en": "Mirion names Curtiss-Wright among primary Nuclear & Safety competitors",
+          "source": {
+            "label": "Mirion Technologies 10-K(2025年度)",
+            "label_en": "Mirion Technologies 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1809987/000162828026009869/mir-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Nuclear & Safety: Thermo Fisher Scientific, Curtiss-Wright"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

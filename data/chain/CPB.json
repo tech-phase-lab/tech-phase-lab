@@ -1,0 +1,203 @@
+{
+  "root": {
+    "ticker": "CPB",
+    "name": "キャンベルズ",
+    "cik": 16732,
+    "name_en": "The Campbell's Company"
+  },
+  "rows": [
+    {
+      "ja": "容器の供給元",
+      "en": "Packaging suppliers",
+      "above": true
+    },
+    {
+      "ja": "顧客・買収",
+      "en": "Customers & acquisitions"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "PEP",
+    "FLO",
+    "HAIN"
+  ],
+  "companies": [
+    {
+      "id": "SLGN",
+      "ticker": "SLGN",
+      "name": "シルガン・ホールディングス",
+      "name_en": "Silgan Holdings",
+      "sub": "容器",
+      "sub_en": "Containers",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "金属容器の最大級の顧客の一社としてCampbellを挙げる",
+          "text_en": "Names Campbell among its largest metal container customers",
+          "source": {
+            "label": "Silgan 10-K(2025年度)",
+            "label_en": "Silgan 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/849869/000162828026012202/slgn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our largest customers for these products include Austria Pet Food GmbH, Campbell, Conagra Brands, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WMT",
+      "ticker": "WMT",
+      "name": "ウォルマート",
+      "name_en": "Walmart",
+      "sub": "小売",
+      "sub_en": "Retail",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大の顧客(売上の約22%)",
+          "text_en": "Its largest customer (about 22% of sales)",
+          "source": {
+            "label": "Campbell's 10-K(2026年7月期)",
+            "label_en": "Campbell's 10-K (FY ended Jul 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/16732/000001673226000026/cpb-20260802.htm",
+            "level": "official",
+            "date": "2026-09-24",
+            "quote": "Our largest customer, Walmart Inc. and its affiliates, accounted for approximately 22 % of our consolidated net sales in 2026"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Sovos",
+      "ticker": "Sovos Brands",
+      "name": "ソボス・ブランズ",
+      "name_en": "Sovos Brands",
+      "sub": "食品(Rao's)",
+      "sub_en": "Foods (Rao's)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Sovos Brandsを買収(2024年3月)",
+          "text_en": "Acquired Sovos Brands (March 2024)",
+          "source": {
+            "label": "Campbell's 10-K(2026年7月期)",
+            "label_en": "Campbell's 10-K (FY ended Jul 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/16732/000001673226000026/cpb-20260802.htm",
+            "level": "official",
+            "date": "2026-09-24",
+            "quote": "On March 12, 2024, we completed the acquisition of Sovos Brands, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LaRegina",
+      "ticker": "La Regina",
+      "name": "ラ・レジーナ",
+      "name_en": "La Regina",
+      "sub": "トマトソース(伊)",
+      "sub_en": "Tomato sauce (Italy)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "残り49%を1.46億ドルで取得(2026年5月)",
+          "text_en": "Bought the remaining 49% for $146 million (May 2026)",
+          "source": {
+            "label": "Campbell's 10-K(2026年7月期)",
+            "label_en": "Campbell's 10-K (FY ended Jul 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/16732/000001673226000026/cpb-20260802.htm",
+            "level": "official",
+            "date": "2026-09-24",
+            "quote": "On May 4, 2026, we acquired the 49% interests in La Regina for $146 million in cash."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PEP",
+      "ticker": "PEP",
+      "name": "ペプシコ",
+      "name_en": "PepsiCo",
+      "sub": "飲料・食品",
+      "sub_en": "Beverages & snacks",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "PepsiCoが10-Kで、食品の競合の筆頭に挙げる",
+          "text_en": "PepsiCo lists Campbell's first among other food competitors",
+          "source": {
+            "label": "PepsiCo 10-K(2024年度)",
+            "label_en": "PepsiCo 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/77476/000007747625000007/pep-20241228.htm",
+            "level": "official",
+            "date": "2025-02-04",
+            "quote": "Other beverage and convenient food competitors include, but are not limited to, The Campbell's Company"
+          }
+        }
+      ]
+    },
+    {
+      "id": "FLO",
+      "ticker": "FLO",
+      "name": "フラワーズ・フーズ",
+      "name_en": "Flowers Foods",
+      "sub": "パン",
+      "sub_en": "Bakery",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Flowersが10-Kで、パン市場の主要な競合として挙げる(Pepperidge Farm)",
+          "text_en": "Flowers names Campbell's Pepperidge Farm a major bread competitor",
+          "source": {
+            "label": "Flowers Foods 10-K(2024年度)",
+            "label_en": "Flowers Foods 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1128928/000095017025022243/flo-20241228.htm",
+            "level": "official",
+            "date": "2025-02-18",
+            "quote": "consists of Bimbo Bakeries USA (BBU), Flowers Foods, and The Campbell's Company, under the Pepperidge Farm brand"
+          }
+        }
+      ]
+    },
+    {
+      "id": "HAIN",
+      "ticker": "HAIN",
+      "name": "ヘイン・セレスティアル",
+      "name_en": "Hain Celestial",
+      "sub": "自然派食品",
+      "sub_en": "Natural foods",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Hainが10-Kで、大手食品の競合の筆頭に挙げる",
+          "text_en": "Hain lists Campbell first among large conventional food competitors",
+          "source": {
+            "label": "Hain Celestial 10-K(2024年6月期)",
+            "label_en": "Hain Celestial 10-K (FY ended Jun 2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/910406/000095017024100992/hain-20240630.htm",
+            "level": "official",
+            "date": "2024-08-27",
+            "quote": "Large conventional packaged foods competitors include Campbell Soup Company"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

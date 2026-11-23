@@ -1,0 +1,201 @@
+{
+  "root": {
+    "ticker": "ENS",
+    "name": "エナシス",
+    "cik": 1289308,
+    "name_en": "EnerSys"
+  },
+  "rows": [
+    {
+      "ja": "買収",
+      "en": "Acquisitions"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in its 10-K)"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "ELVA",
+    "FLUX"
+  ],
+  "companies": [
+    {
+      "id": "Bren-Tronics",
+      "ticker": "Bren-Tronics",
+      "name": "ブレン・トロニクス",
+      "name_en": "Bren-Tronics Defense",
+      "sub": "防衛用電池",
+      "sub_en": "Defense batteries",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "防衛向け電池のBren-Tronicsを2.064億ドルで買収(2024年7月)",
+          "text_en": "Acquired Bren-Tronics Defense for $206.4 million (July 2024)",
+          "source": {
+            "label": "EnerSys 10-K(2026年3月期)",
+            "label_en": "EnerSys 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1289308/000162828026036900/ens-20260331.htm",
+            "level": "official",
+            "date": "2026-05-20",
+            "quote": "On July 26, 2024, the Company completed the acquisition of all of the equity of Bren-Tronics Defense LLC for $206.4 million in cash consideration"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Invensys",
+      "ticker": "Invensys",
+      "name": "インベンシス",
+      "name_en": "Invensys",
+      "sub": "産業機器(英国)",
+      "sub_en": "Industrial (UK)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Invensysのエネルギー貯蔵部門から産業用電池事業を買収(2002年)",
+          "text_en": "Acquired the reserve and motive power business of Invensys's Energy Storage Group (2002)",
+          "source": {
+            "label": "EnerSys 10-K(2026年3月期)",
+            "label_en": "EnerSys 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1289308/000162828026036900/ens-20260331.htm",
+            "level": "official",
+            "date": "2026-05-20",
+            "quote": "In March 2002, we acquired the reserve power and motive power business of the Energy Storage Group of Invensys plc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "EastPenn",
+      "ticker": "East Penn",
+      "name": "イースト・ペン",
+      "name_en": "East Penn Manufacturing",
+      "sub": "鉛蓄電池",
+      "sub_en": "Lead-acid batteries",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "AGM電池の主要な競合",
+          "text_en": "A major competitor in AGM batteries",
+          "source": {
+            "label": "EnerSys 10-K(2026年3月期)",
+            "label_en": "EnerSys 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1289308/000162828026036900/ens-20260331.htm",
+            "level": "official",
+            "date": "2026-05-20",
+            "quote": "Our major competitors in AGM technology are Clarios, East Penn Manufacturing, Exide Technologies (Stryten), Fiamm, C&D Technologies, Inc., Banner and Atlas."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Clarios",
+      "ticker": "Clarios",
+      "name": "クラリオス",
+      "name_en": "Clarios",
+      "sub": "自動車用電池",
+      "sub_en": "Automotive batteries",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "AGM電池の主要な競合",
+          "text_en": "A major competitor in AGM batteries",
+          "source": {
+            "label": "EnerSys 10-K(2026年3月期)",
+            "label_en": "EnerSys 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1289308/000162828026036900/ens-20260331.htm",
+            "level": "official",
+            "date": "2026-05-20",
+            "quote": "Our major competitors in AGM technology are Clarios, East Penn Manufacturing"
+          }
+        }
+      ]
+    },
+    {
+      "id": "EaglePicher",
+      "ticker": "EaglePicher",
+      "name": "イーグルピッチャー",
+      "name_en": "EaglePicher",
+      "sub": "特殊電池",
+      "sub_en": "Specialty batteries",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "航空宇宙・防衛向けの主な競合",
+          "text_en": "A main competitor in aerospace and defense markets",
+          "source": {
+            "label": "EnerSys 10-K(2026年3月期)",
+            "label_en": "EnerSys 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1289308/000162828026036900/ens-20260331.htm",
+            "level": "official",
+            "date": "2026-05-20",
+            "quote": "In the Aerospace and Defense specialized markets our main competitors are EaglePicher and SAFT."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ELVA",
+      "ticker": "ELVA",
+      "name": "エレクトロバヤ",
+      "name_en": "Electrovaya",
+      "sub": "リチウムイオン電池",
+      "sub_en": "Lithium-ion batteries",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Electrovayaが年次情報で、鉛・リチウムの両分野の競合として挙げる",
+          "text_en": "Electrovaya names EnerSys as a competitor in lead-acid and lithium-ion",
+          "source": {
+            "label": "Electrovaya 40-F 年次情報(2025年)",
+            "label_en": "Electrovaya 40-F annual information (2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1844450/000175392625001917/g085039_ex99-1.htm",
+            "level": "official",
+            "date": "2025-12-19",
+            "quote": "Our lead acid battery competitors include EnerSys, East Penn Manufacturing Company and Exide Technologies Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FLUX",
+      "ticker": "FLUX",
+      "name": "フラックス・パワー",
+      "name_en": "Flux Power",
+      "sub": "フォークリフト用電池",
+      "sub_en": "Forklift batteries",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Flux Powerが10-Kで、リチウムイオン分野の競合として挙げる",
+          "text_en": "Flux Power names EnerSys among lithium-ion competitors",
+          "source": {
+            "label": "Flux Power 10-K(2026年6月期)",
+            "label_en": "Flux Power 10-K (FY ended Jun 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1083743/000149315226039471/form10-k.htm",
+            "level": "official",
+            "date": "2026-08-20",
+            "quote": "Our competitors offering lithium-ion solutions include Electrovaya, EnerSys, Ethium by EControls, Green Cubes Technology and Stromcore Energy."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

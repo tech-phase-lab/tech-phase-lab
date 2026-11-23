@@ -46,7 +46,9 @@ test('stored analyses are shown with the same rule: no Japanese text carries bil
 
 test('the calendar shows the same Japanese units', () => {
   const panel = readFileSync(new URL('../app/research/calendar/economic-results-panel.tsx', import.meta.url), 'utf8');
-  assert.match(panel, /japaneseMoney\(fact\.ja\)/);
+  // the figures are a table now (earnings-table.ts: 億ドル from 1億, 万ドル below)
+  assert.match(panel, /<EarningsResultTable /);
+  assert.match(readFileSync(new URL('../lib/research/earnings-table.ts', import.meta.url), 'utf8'), /export function moneyJa/);
   assert.match(panel, /japaneseMoney\(row\.result\.ja/);
   assert.match(panel, /japaneseMoney\(row\.body\.ja\)/);
 });
