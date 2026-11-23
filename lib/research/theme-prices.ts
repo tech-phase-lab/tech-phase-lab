@@ -2,6 +2,7 @@ import "server-only";
 import { unstable_cache } from "next/cache";
 import { GROUPS, tickersOf, type GroupFilter, type GroupId } from "./theme-definitions.ts";
 import { createBatcher } from "../portfolio/quote-batcher.ts";
+import { providerLimited, reserveCredits } from "./twelve-gateway";
 import { stockReturns, type CloseSeries, type StockReturns } from "./theme-ranking.ts";
 
 /** Server-side Twelve Data collector for the Theme Ranking. The key lives only in the environment
@@ -37,17 +38,17 @@ async function fetchChunk(symbols: string[], key: string): Promise<CloseSeries[]
   url.searchParams.set("interval", "1day");
   url.searchParams.set("outputsize", String(HISTORY));
   url.searchParams.set("apikey", key);
-  // A per-minute credit limit answers 429; one patient retry keeps a busy minute from emptying the screen.
-  for (let attempt = 0; ; attempt++) {
-    const response = await fetch(url, { cache: "no-store", signal: AbortSignal.timeout(20_000) });
-    if (response.status === 429 && attempt === 0) { await new Promise(resolve => setTimeout(resolve, 20_000)); continue; }
-    if (!response.ok) throw new Error(`Twelve Data ${response.status}`);
-    const body = await response.json();
-    if (body && typeof body === "object" && (body as { code?: unknown }).code === 429 && attempt === 0) { await new Promise(resolve => setTimeout(resolve, 20_000)); continue; }
-    if (body && typeof body === "object" && (body as { status?: unknown }).status === "error") throw new Error(`Twelve Data ${String((body as { code?: unknown }).code)} ${String((body as { message?: unknown }).message).slice(0, 120)}`);
-    // One symbol comes back unwrapped (no per-symbol key); wrap it so a lone ticker in a chunk is read like the others.
-    return parseTimeSeries(symbols.length === 1 && body && typeof body === "object" && "values" in body ? { [symbols[0]]: body } : body, symbols);
-  }
+  // The site's share of the plan's minute (lib/research/twelve-budget.ts): a refused or rate-limited chunk fails like any other and is not
+  // cached; it is never retried (a retry spends the credits again). The cache below keeps the last reading for everyone.
+  await reserveCredits(symbols.length);
+  const response = await fetch(url, { cache: "no-store", signal: AbortSignal.timeout(20_000) });
+  if (response.status === 429) { providerLimited(); throw new Error("Twelve Data 429"); }
+  if (!response.ok) throw new Error(`Twelve Data ${response.status}`);
+  const body = await response.json();
+  if (body && typeof body === "object" && (body as { code?: unknown }).code === 429) { providerLimited(); throw new Error("Twelve Data 429"); }
+  if (body && typeof body === "object" && (body as { status?: unknown }).status === "error") throw new Error(`Twelve Data ${String((body as { code?: unknown }).code)} ${String((body as { message?: unknown }).message).slice(0, 120)}`);
+  // One symbol comes back unwrapped (no per-symbol key); wrap it so a lone ticker in a chunk is read like the others.
+  return parseTimeSeries(symbols.length === 1 && body && typeof body === "object" && "values" in body ? { [symbols[0]]: body } : body, symbols);
 }
 
 export type GroupReturns = { stocks: StockReturns[]; asOf: string; fetchedAt: number };

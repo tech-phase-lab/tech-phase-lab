@@ -18,7 +18,7 @@ export const WARM_CEILING = 460;
 /** A read started after a user's comparison missed the cache (in the background, after the answer was sent): only with this much room. */
 export const BACKGROUND_CEILING = 400;
 /** A user's one-credit price series: only while the minute is under this. */
-export const USER_SERIES_CEILING = 560;
+export const USER_SERIES_CEILING = 480; // = the site's user tier (lib/research/twelve-budget.ts CEILING.user)
 export const MINUTES_PER_DAY = 1440;
 
 const DAY = 86_400_000;

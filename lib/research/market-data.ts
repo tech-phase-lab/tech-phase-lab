@@ -2,86 +2,51 @@ import "server-only";
 import { unstable_cache } from "next/cache";
 import { calendarEvents, dateOnlyEarnings } from "./calendar";
 import { shapePeriod, periodSeries, isIntradayPeriod, type BoardPeriod } from "./market-board-periods.ts";
-import { FAST_REFRESH_BUDGET, creditWindow, fitsBudget, parseUsage, quotesToRead } from "./quote-refresh-gate.ts";
+import { FAST_QUOTE_TTL_MS } from "./quote-refresh-gate.ts";
+import { MAX_QUOTES_PER_REQUEST, MAX_SPARKLINES_PER_REQUEST, STALE_LIMIT_MS, barSlotMs, quoteSlotMs, type ReadSpec, type Tier } from "./twelve-budget.ts";
+import { isBudgetError, sharedReader, twelveCall } from "./twelve-gateway";
+import { cachedStatistics } from "./twelve-store";
 import { easternToIso, chartSpec, nextEarningsFromSite, parseBars, parseNextEarnings, parseQuote, parseQuotes, parseStatistics, splitBars, type Bar, type ChartRange, type MarketFacts, type MarketQuote } from "./market-quote";
 
-/** Server-side Twelve Data reads for the price screens. The key (TWELVE_DATA_API_KEY) never leaves the server. */
+/** Server-side Twelve Data reads for the price screens. The key (TWELVE_DATA_API_KEY) never leaves the server.
+ * Owner, Nov 23: members opening 銘柄比較 and stock pages had used up the plan's minute before. Every read now goes through the shared reader
+ * (lib/research/twelve-budget.ts): one provider read per symbol and time slot for every instance and member, a governed call that is never
+ * retried, and the last good copy (with its own time) when the minute has no room. A page's cost no longer grows with the number of members. */
 // The quote is asked with the default (daily) interval: with interval=1min the change, high, low, previous close and volume all describe the LAST MINUTE
 // (owner, Nov 11: SPY -0.007%, MU volume 2,238). prepost=true adds the pre-market / after-hours fields and a fresh last_quote_at.
-const BASE = () => process.env.TWELVE_DATA_BASE_URL || "https://api.twelvedata.com";
 export const marketDataConfigured = () => !!process.env.TWELVE_DATA_API_KEY;
-const TTL = 60_000;
 
-async function call(path: string, params: Record<string, string>): Promise<unknown> {
-  const key = process.env.TWELVE_DATA_API_KEY;
-  if (!key) throw new Error("not-configured");
-  const url = new URL(`${BASE()}/${path}`);
-  for (const [k, v] of Object.entries(params)) url.searchParams.set(k, v);
-  url.searchParams.set("apikey", key);
-  for (let attempt = 0; attempt < 3; attempt++) {
-    spent.record(creditCost(path, params));
-    const response = await fetch(url, { cache: "no-store", signal: AbortSignal.timeout(12_000) });
-    if (response.status === 429 && attempt < 2) { await new Promise(r => setTimeout(r, 4000 * (attempt + 1))); continue; }
-    if (!response.ok) { const text = await response.text().catch(() => ""); throw new Error(`twelve-data ${path} ${response.status} ${text.replace(/apikey=[^&"\s]*/gi, "").slice(0, 140)}`); }
-    const body = await response.json() as { status?: unknown; code?: unknown; message?: unknown };
-    if (body?.status === "error") throw new Error(`twelve-data ${path} ${String(body.code)} ${String(body.message).slice(0, 120)}`);
-    return body;
-  }
-  throw new Error(`twelve-data ${path} rate-limited`);
+const call = (path: string, params: Record<string, string>, tier: Tier = "user") => twelveCall(path, params, { tier });
+const quoteSpec = (now: number): ReadSpec => ({ name: "md-quote-v1", slotMs: quoteSlotMs("AAPL", now), staleMs: STALE_LIMIT_MS });
+
+async function fetchQuotes(group: string[], tier: Tier = "user"): Promise<Map<string, MarketQuote | null>> {
+  const parsed = parseQuotes(await call("quote", { symbol: group.join(","), prepost: "true" }, tier), group);
+  return new Map(group.map(t => [t, parsed[t] ?? null]));
 }
 
-// This process's spending (a floor for the minute's usage) and the provider's own meter, read at most every ten seconds (one credit a read).
-const spent = creditWindow();
-const creditCost = (path: string, params: Record<string, string>) => path === "statistics" ? 50 : path === "earnings" ? 20 : path === "quote" ? (params.symbol ?? "").split(",").length : 1;
-let usageMemo: { at: number; used: number | null; localAt: number } | null = null;
-async function minuteUsage(): Promise<number> {
-  if (!usageMemo || Date.now() - usageMemo.at >= 10_000) {
-    let used: number | null = null;
-    const key = process.env.TWELVE_DATA_API_KEY;
-    try {
-      spent.record(1);
-      const response = await fetch(`${BASE()}/api_usage?apikey=${encodeURIComponent(key ?? "")}`, { cache: "no-store", signal: AbortSignal.timeout(5_000) });
-      if (response.ok) used = parseUsage(await response.json().catch(() => null));
-    } catch { /* the local count stands in */ }
-    usageMemo = { at: Date.now(), used, localAt: spent.total() };
-  }
-  const local = spent.total();
-  return usageMemo.used === null ? local : Math.max(local, usageMemo.used + Math.max(0, local - usageMemo.localAt));
-}
-
-// One-minute memory cache per ticker (and in-flight sharing), so a busy minute costs each symbol one request.
-// `fast` (the watchlist and a stock's page): a quote older than 15 seconds is read again when the minute's usage leaves room for it (quote-refresh-gate.ts).
-const quoteMemory = new Map<string, { at: number; quote: MarketQuote | null }>();
-const pending = new Map<string, Promise<void>>();
 export async function loadMarketQuotes(tickers: string[], options: { fast?: boolean } = {}): Promise<Record<string, MarketQuote>> {
   return (await loadMarketQuotesWithRefresh(tickers, options)).quotes;
 }
-/** As loadMarketQuotes, and says whether the 15-second refresh was granted (`fast`), for the response header. */
-export async function loadMarketQuotesWithRefresh(tickers: string[], { fast = false }: { fast?: boolean } = {}): Promise<{ quotes: Record<string, MarketQuote>; fast: boolean }> {
-  const wanted = [...new Set(tickers)];
-  const now = Date.now();
-  const ages = Object.fromEntries(wanted.map(t => [t, now - (quoteMemory.get(t)?.at ?? -Infinity)]));
-  let plan = quotesToRead(ages, fast, () => true);
-  if (plan.read.length > quotesToRead(ages, false, () => false).read.length) {
-    const used = await minuteUsage();
-    plan = quotesToRead(ages, true, extra => fitsBudget(used, extra, FAST_REFRESH_BUDGET));
-  }
-  const stale = plan.read, granted = plan.fast;
-  for (let i = 0; i < stale.length; i += 12) {
-    const group = stale.slice(i, i + 12), id = group.join(",");
-    let job = pending.get(id);
-    if (!job) {
-      job = call("quote", { symbol: id, prepost: "true" }).then(raw => {
-        const parsed = parseQuotes(raw, group);
-        for (const t of group) quoteMemory.set(t, { at: Date.now(), quote: parsed[t] ?? null });
-      }).finally(() => pending.delete(id));
-      pending.set(id, job);
+/** Quotes from the shared one-minute copy (fifteen minutes while stocks do not trade). At most MAX_QUOTES_PER_REQUEST symbols are read from
+ * the provider for one request, never-read and oldest first; the others keep their last good copy, whose own time the screen shows.
+ * `fast` (the watchlist and a stock's page): a copy older than 15 seconds is read again only on a quiet minute (the "fast" tier, 200). */
+export async function loadMarketQuotesWithRefresh(tickers: string[], { fast = false }: { fast?: boolean } = {}): Promise<{ quotes: Record<string, MarketQuote>; fast: boolean; stale: number }> {
+  const spec = quoteSpec(Date.now());
+  const got = await sharedReader.readMany<MarketQuote>(spec, tickers, group => fetchQuotes(group), { maxFetch: MAX_QUOTES_PER_REQUEST });
+  let granted = fast;
+  if (fast) {
+    const older = Object.keys(got).filter(t => got[t].fresh && got[t].value && Date.now() - got[t].at >= FAST_QUOTE_TTL_MS).slice(0, 12);
+    if (older.length) {
+      try {
+        const values = await fetchQuotes(older, "fast"), at = Date.now();
+        for (const t of older) { const quote = values.get(t); if (quote) { got[t] = { value: quote, at, fresh: true }; await sharedReader.save(spec, t, { value: quote, at }); } }
+      } catch { granted = false; }
     }
-    try { await job; } catch (error) { console.warn(`market quotes ${id}: ${error instanceof Error ? error.message : "failed"}`); }
   }
   const out: Record<string, MarketQuote> = {};
-  for (const t of wanted) { const hit = quoteMemory.get(t)?.quote; if (hit) out[t] = hit; }
-  return { quotes: out, fast: granted };
+  let stale = 0;
+  for (const t of new Set(tickers)) { const hit = got[t]; if (hit?.value) { out[t] = hit.value; if (!hit.fresh) stale++; } }
+  return { quotes: out, fast: granted, stale };
 }
 
 type Variant = Record<string, string>;
@@ -102,27 +67,28 @@ export const MARKET_SYMBOLS: Record<string, Market> = {
 };
 export const isMarketChartSymbol = (symbol: string) => Object.hasOwn(MARKET_SYMBOLS, symbol);
 
-const resolved = new Map<string, { variant: Variant; quote: MarketQuote; at: number } | null>();
-const QUOTE_TTL = 60_000;
-/** The first way of asking that answers (the answer is kept a minute; a refusal twenty seconds). */
-async function resolveMarket(id: string, ttl = QUOTE_TTL): Promise<{ symbol: string; extra: Variant; quote: MarketQuote | null }> {
-  const entry = MARKET_SYMBOLS[id];
-  const hit = resolved.get(id);
-  if (hit === null) throw new Error(`unresolved ${id}`);
-  if (hit && hit.at + ttl > Date.now()) { const { symbol = id, ...extra } = hit.variant; return { symbol, extra, quote: hit.quote }; }
+type Board = { variant: Variant; quote: MarketQuote };
+const resolvedVariant = new Map<string, Variant>();
+const unresolved = new Map<string, number>();
+/** The first way of asking that answers. A symbol no way could serve is not asked again for twenty seconds (short: a rate-limit blip must not
+ * hide a symbol for minutes); a refused minute is not a failure of the symbol and stops the attempts at once. */
+async function resolveFresh(id: string): Promise<Board> {
+  if ((unresolved.get(id) ?? 0) > Date.now()) throw new Error(`unresolved ${id}`);
+  const entry = MARKET_SYMBOLS[id], known = resolvedVariant.get(id);
   const tried: string[] = [];
-  const attempt = async (variant: Variant): Promise<{ symbol: string; extra: Variant; quote: MarketQuote | null } | null> => {
+  let refused = false;
+  const attempt = async (variant: Variant): Promise<Board | null> => {
     const { symbol = id, ...extra } = variant;
     try {
       const quote = parseQuote(await call("quote", { symbol, ...extra, prepost: "true" }), symbol);
       if (!quote) throw new Error("no quote");
-      resolved.set(id, { variant, quote, at: Date.now() });
-      return { symbol, extra, quote };
-    } catch (error) { tried.push(`${JSON.stringify(variant)}: ${error instanceof Error ? error.message : "failed"}`); return null; }
+      resolvedVariant.set(id, variant);
+      return { variant, quote };
+    } catch (error) { if (isBudgetError(error)) refused = true; tried.push(`${JSON.stringify(variant)}: ${error instanceof Error ? error.message : "failed"}`); return null; }
   };
-  const order = hit ? [hit.variant, ...entry.variants.filter(v => v !== hit.variant)] : entry.variants;
-  for (const variant of order) { const got = await attempt(variant); if (got) return got; }
-  if (entry.search) {
+  const order = known ? [known, ...entry.variants.filter(v => v !== known)] : entry.variants;
+  for (const variant of order) { if (refused) break; const got = await attempt(variant); if (got) return got; }
+  if (entry.search && !refused) {
     try {
       const body = await call("symbol_search", { symbol: entry.search, outputsize: "10" }) as { data?: { symbol?: unknown; instrument_name?: unknown; exchange?: unknown; instrument_type?: unknown }[] };
       const list = (Array.isArray(body?.data) ? body.data : []).filter(item => typeof item.symbol === "string");
@@ -130,66 +96,52 @@ async function resolveMarket(id: string, ttl = QUOTE_TTL): Promise<{ symbol: str
       for (const item of list.slice(0, 4)) { const got = await attempt({ symbol: String(item.symbol), ...(typeof item.exchange === "string" && item.exchange ? { exchange: item.exchange } : {}) }); if (got) return got; }
     } catch (error) { tried.push(`symbol search: ${error instanceof Error ? error.message : "failed"}`); }
   }
-  console.warn(`market symbol ${id} could not be resolved. ${tried.join(" | ")}`);
-  resolved.set(id, null); setTimeout(() => resolved.delete(id), 20_000); // short: a rate-limit blip must not hide a symbol for minutes
+  if (!refused) { console.warn(`market symbol ${id} could not be resolved. ${tried.join(" | ")}`); unresolved.set(id, Date.now() + 20_000); }
   throw new Error(`unresolved ${id}`);
 }
+/** `fast` (the three index cards and the chart being looked at) keeps a quote 15 seconds; everything else on the board a minute. */
+const boardSpec = (fast: boolean): ReadSpec => ({ name: "md-board-v1", slotMs: fast ? 15_000 : 60_000, staleMs: STALE_LIMIT_MS });
+async function boardEntry(id: string, fast: boolean): Promise<Board | null> {
+  const got = await sharedReader.read<Board>(boardSpec(fast), id, () => resolveFresh(id));
+  if (got) resolvedVariant.set(id, got.value.variant);
+  return got?.value ?? null;
+}
+async function marketTarget(id: string): Promise<{ symbol: string; extra: Variant }> {
+  const variant = resolvedVariant.get(id) ?? (await boardEntry(id, false))?.variant;
+  if (!variant) throw new Error(`unresolved ${id}`);
+  const { symbol = id, ...extra } = variant;
+  return { symbol, extra };
+}
 
-const barMemory = new Map<string, { at: number; all: Bar[] }>();
 /** Pre-market / after-hours bars exist only for U.S. stocks and ETFs. For a currency pair, crypto or metal (board ids "USD/JPY", "BTC/USD", "XCU/USD"…) the provider
  * refuses intraday series that ask for them ("Pre/post data is available only for 1min interval"), which left the board's 5- and 15-minute charts
  * empty for every non-stock symbol (owner, Nov 14). Those symbols trade around the clock and are asked without it. */
 export function intradayParams(symbol: string, interval: string): { prepost?: "true" } {
   return (interval === "5min" || interval === "15min" || interval === "30min") && !symbol.includes("/") ? { prepost: "true" } : {};
 }
-/** Every bar fetched for a range (the drawn ones and the ones before them). Pre-market and after-hours bars are included for 1D / 1W. */
-async function readAll(ticker: string, range: ChartRange): Promise<Bar[]> {
-  const memoryKey = `${ticker}:${range}`, hit = barMemory.get(memoryKey);
-  const spec = chartSpec(range), intraday = spec.interval === "5min" || spec.interval === "30min";
-  if (hit && hit.at + (intraday ? TTL : 5 * TTL) > Date.now()) return hit.all;
-  const entry = MARKET_SYMBOLS[ticker];
-  const base = { interval: spec.interval, outputsize: String(spec.size), order: "desc" };
-  try {
-    let raw: unknown;
-    if (entry) {
-      const target = await resolveMarket(ticker);
-      raw = await call("time_series", { symbol: target.symbol, ...base, ...(intraday ? intradayParams(ticker, spec.interval) : {}), ...target.extra });
-    } else raw = await call("time_series", { symbol: ticker, ...base, ...(intraday ? intradayParams(ticker, spec.interval) : {}) });
-    const all = parseBars(raw);
-    barMemory.set(memoryKey, { at: Date.now(), all });
-    return all;
-  } catch (error) {
-    if (hit && hit.all.length) return hit.all; // the provider blinked: show the last good bars instead of an empty chart
-    throw error;
-  }
-}
-/** Board charts keep their own memory, so the 15-second refresh of the 5 / 15 / 60 / 180-minute candles never touches the watchlist's (60 seconds).
- * The daily and weekly series change by one candle a day: the candle body is kept 60 seconds, the live price comes from the quote. */
-const FAST_BAR_TTL = 15_000, SLOW_BAR_TTL = 60_000;
-const periodMemory = new Map<string, { at: number; all: Bar[] }>();
-async function readSeries(ticker: string, interval: string, size: number, ttl: number): Promise<Bar[]> {
-  const memoryKey = `${ticker}|${interval}|${size}`, hit = periodMemory.get(memoryKey);
-  if (hit && hit.at + ttl > Date.now()) return hit.all;
-  const base = { interval, outputsize: String(size), order: "desc" };
-  try {
-    const target = MARKET_SYMBOLS[ticker] ? await resolveMarket(ticker) : null;
-    const all = parseBars(target ? await call("time_series", { symbol: target.symbol, ...base, ...intradayParams(ticker, interval), ...target.extra })
+/** One bar series from the shared copy of its slot (one provider credit for everyone), else the last good copy. `fetch` false: copies only. */
+async function bars(ticker: string, interval: string, size: number, { slotMs, fetch = true }: { slotMs?: number; fetch?: boolean } = {}): Promise<Bar[]> {
+  const spec: ReadSpec = { name: "md-bars-v1", slotMs: slotMs ?? barSlotMs(ticker, interval, Date.now()), staleMs: STALE_LIMIT_MS };
+  const got = await sharedReader.read<Bar[]>(spec, `${ticker}|${interval}|${size}`, fetch ? async () => {
+    const base = { interval, outputsize: String(size), order: "desc" };
+    const target = MARKET_SYMBOLS[ticker] ? await marketTarget(ticker) : null;
+    return parseBars(target ? await call("time_series", { symbol: target.symbol, ...base, ...intradayParams(ticker, interval), ...target.extra })
       : await call("time_series", { symbol: ticker, ...base, ...intradayParams(ticker, interval) }));
-    periodMemory.set(memoryKey, { at: Date.now(), all });
-    return all;
-  } catch (error) {
-    if (hit && hit.all.length) return hit.all; // the provider blinked: show the last good bars instead of an empty chart
-    throw error;
-  }
+  } : null);
+  if (!got) throw new Error("bars-unavailable");
+  return got.value;
 }
-/** The bars of one board period (see market-board-periods.ts) and the bars before them. */
+/** Every bar fetched for a range (the drawn ones and the ones before them). Pre-market and after-hours bars are included for 1D / 1W. */
+const readAll = (ticker: string, range: ChartRange, options?: { slotMs?: number; fetch?: boolean }) => { const spec = chartSpec(range); return bars(ticker, spec.interval, spec.size, options); };
+/** The bars of one board period (see market-board-periods.ts) and the bars before them. Intraday candles are shared a minute (the live price
+ * comes from the quote), daily and longer at least ten minutes. */
 export async function loadPeriodSet(ticker: string, period: BoardPeriod): Promise<{ bars: Bar[]; before: Bar[] }> {
   const series = periodSeries(period);
-  return shapePeriod(period, await readSeries(ticker, series.interval, series.size, isIntradayPeriod(period) ? FAST_BAR_TTL : SLOW_BAR_TTL));
+  return shapePeriod(period, await bars(ticker, series.interval, series.size, isIntradayPeriod(period) ? {} : { slotMs: Math.max(10 * 60_000, barSlotMs(ticker, series.interval, Date.now())) }));
 }
 
-/** About five years of daily closes for a stock page's period change (1W … 5Y, YTD); kept 30 minutes (one credit a read). */
-export async function loadDailyCloses(ticker: string): Promise<Bar[]> { return readSeries(ticker, "1day", 1300, 30 * 60_000); }
+/** About five years of daily closes for a stock page's period change (1W … 5Y, YTD); shared 30 minutes (one credit a read). */
+export async function loadDailyCloses(ticker: string): Promise<Bar[]> { return bars(ticker, "1day", 1300, { slotMs: 30 * 60_000 }); }
 
 /** The drawn bars of a range plus the bars before them (for the moving averages). */
 export async function loadBarSet(ticker: string, range: ChartRange): Promise<{ bars: Bar[]; before: Bar[] }> { return splitBars(await readAll(ticker, range), range); }
@@ -197,44 +149,60 @@ export async function loadBars(ticker: string, range: ChartRange): Promise<Bar[]
 
 const easternDay = new Intl.DateTimeFormat("en-CA", { timeZone: "America/New_York", year: "numeric", month: "2-digit", day: "2-digit" });
 /** The 5-minute bars each watchlist row's chart needs: those of the day its price belongs to (the regular session's day, and the day of the pre-market /
- * after-hours price when that is a different day: before the open, the new day has only a few pre-market bars). Owner, Nov 11: charts vanished at 5am ET. */
+ * after-hours price when that is a different day: before the open, the new day has only a few pre-market bars). Owner, Nov 11: charts vanished at 5am ET.
+ * A sparkline is shared five minutes (one new 5-minute bar at most); one request reads at most MAX_SPARKLINES_PER_REQUEST of them from the provider. */
 export async function loadIntraday(quotes: MarketQuote[]): Promise<Record<string, Bar[]>> {
   const out: Record<string, Bar[]> = {};
+  let allowance = MAX_SPARKLINES_PER_REQUEST;
   await Promise.all(quotes.map(async q => {
     try {
       const days = new Set([easternDay.format(Date.parse(q.asOf)), ...(q.extended ? [easternDay.format(Date.parse(q.extended.asOf))] : [])]);
-      out[q.ticker] = (await readAll(q.ticker, "1d")).filter(bar => { const iso = easternToIso(bar.at); return iso !== "" && days.has(easternDay.format(Date.parse(iso))); });
+      const all = await readAll(q.ticker, "1d", { slotMs: 5 * 60_000, fetch: allowance-- > 0 });
+      out[q.ticker] = all.filter(bar => { const iso = easternToIso(bar.at); return iso !== "" && days.has(easternDay.format(Date.parse(iso))); });
     } catch { out[q.ticker] = []; }
   }));
   return out;
 }
 
+class FactsRefused extends Error { constructor() { super("facts-refused"); } }
+/** Statistics: the comparison's daily copy of every US-listed company first (no credit); the provider (50 credits) only for one it lacks. */
+async function statisticsFor(ticker: string): Promise<unknown> {
+  const stored = await cachedStatistics(ticker).catch(() => null);
+  if (stored) return stored.payload;
+  return call("statistics", { symbol: ticker });
+}
+const factsRunning = new Map<string, Promise<MarketFacts>>();
 const facts = (ticker: string) => unstable_cache(async (): Promise<MarketFacts> => {
-  const [stats, earnings] = await Promise.allSettled([call("statistics", { symbol: ticker }), call("earnings", { symbol: ticker, period: "next" })]);
-  const parsed = stats.status === "fulfilled" ? parseStatistics(stats.value, ticker) : null;
   const today = new Date().toISOString().slice(0, 10);
   const own = nextEarningsFromSite(ticker, [...calendarEvents, ...dateOnlyEarnings], today);
-  const provider = earnings.status === "fulfilled" ? parseNextEarnings(earnings.value, today) : null;
+  // The provider's earnings date (20 credits) only when the site's own calendar has none.
+  const [stats, earnings] = await Promise.allSettled([statisticsFor(ticker), own ? Promise.resolve(null) : call("earnings", { symbol: ticker, period: "next" })]);
+  // A refused read is never stored for six hours: the next request (or the comparison's daily job) fills it.
+  if ((stats.status === "rejected" && isBudgetError(stats.reason)) || (earnings.status === "rejected" && isBudgetError(earnings.reason))) throw new FactsRefused();
+  const parsed = stats.status === "fulfilled" ? parseStatistics(stats.value, ticker) : null;
+  const provider = earnings.status === "fulfilled" && earnings.value ? parseNextEarnings(earnings.value, today) : null;
   if (!parsed && stats.status === "rejected" && earnings.status === "rejected") throw new Error("facts-unavailable");
   return { eps: parsed?.eps ?? null, marketCap: parsed?.marketCap ?? null, dividendYield: parsed?.dividendYield ?? null, nextEarnings: own ?? provider };
 }, ["market-facts-v1", ticker], { revalidate: 6 * 3600 })();
-/** EPS, market cap, dividend yield and the next earnings date. The site's own calendar wins over the provider's. A failed read is never cached. */
+/** EPS, market cap, dividend yield and the next earnings date. The site's own calendar wins over the provider's. A failed or refused read is
+ * never cached; members asking for the same company at once share one read. */
 export async function loadMarketFacts(ticker: string): Promise<MarketFacts> {
-  try { return await facts(ticker); } catch { return { eps: null, marketCap: null, dividendYield: null, nextEarnings: nextEarningsFromSite(ticker, [...calendarEvents, ...dateOnlyEarnings], new Date().toISOString().slice(0, 10)) }; }
+  try {
+    let job = factsRunning.get(ticker);
+    if (!job) { job = facts(ticker).finally(() => factsRunning.delete(ticker)); factsRunning.set(ticker, job); }
+    return await job;
+  } catch { return { eps: null, marketCap: null, dividendYield: null, nextEarnings: nextEarningsFromSite(ticker, [...calendarEvents, ...dateOnlyEarnings], new Date().toISOString().slice(0, 10)) }; }
 }
 
 /** Owner, Nov 11: the index symbols (DJI / NDX / SPX) answered with other securities on this plan (a $21 and a $0.1 quote), so the
  * panel reads the three ETFs that track them. The percentage is the ETF's and the column says so; never mix in an unchecked symbol. */
 /** The price board: one quote per requested symbol (those that cannot be read are simply absent, and logged). */
 export type BoardQuote = { id: string; price: number; change: number | null; percentChange: number | null; currency: string; asOf: string; marketOpen: boolean; extended: MarketQuote["extended"]; high: number | null; low: number | null; open: number | null; volume: number | null };
-/** `fast` (the three index cards and the chart being looked at) keeps a quote 15 seconds; everything else on the board keeps it a minute, as before. */
 export async function loadBoard(ids: string[], fast = false): Promise<BoardQuote[]> {
   const out: BoardQuote[] = [];
   await Promise.all(ids.filter(isMarketChartSymbol).map(async id => {
-    try {
-      const { quote } = await resolveMarket(id, fast ? 15_000 : QUOTE_TTL);
-      if (quote) out.push({ id, price: quote.price, change: quote.change, percentChange: quote.percentChange, currency: quote.currency, asOf: quote.asOf, marketOpen: quote.marketOpen, extended: quote.extended, high: quote.high, low: quote.low, open: quote.open, volume: quote.volume });
-    } catch { /* logged by resolveMarket */ }
+    const quote = (await boardEntry(id, fast))?.quote;
+    if (quote) out.push({ id, price: quote.price, change: quote.change, percentChange: quote.percentChange, currency: quote.currency, asOf: quote.asOf, marketOpen: quote.marketOpen, extended: quote.extended, high: quote.high, low: quote.low, open: quote.open, volume: quote.volume });
   }));
   return ids.flatMap(id => out.filter(item => item.id === id));
 }
