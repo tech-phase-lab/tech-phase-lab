@@ -1,0 +1,251 @@
+{
+  "root": {
+    "ticker": "STLD",
+    "name": "スチール・ダイナミクス",
+    "cik": 1022671,
+    "name_en": "Steel Dynamics"
+  },
+  "rows": [
+    {
+      "ja": "買収・共同提案",
+      "en": "Acquisitions & joint proposal",
+      "above": true
+    },
+    {
+      "ja": "鋼材の顧客(相手の資料に記載)",
+      "en": "Steel customers (named in their filings)"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "MTUS",
+    "GGB",
+    "SIM"
+  ],
+  "companies": [
+    {
+      "id": "NPS",
+      "ticker": "New Process Steel",
+      "name": "ニュー・プロセス・スチール",
+      "name_en": "New Process Steel",
+      "sub": "鋼材の加工・流通",
+      "sub_en": "Steel processing & distribution",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "持分45%を持っていた鋼材加工会社の残り55%を2025年12月に取得",
+          "text_en": "Bought the remaining 55% of the steel processor in December 2025",
+          "source": {
+            "label": "Steel Dynamics 10-K(2025年度)",
+            "label_en": "Steel Dynamics 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1022671/000110465926021395/stld-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "We completed the acquisition of the remaining 55% interest in New Process Steel, L.P."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SGH",
+      "ticker": "SGH",
+      "name": "SGH",
+      "name_en": "SGH",
+      "sub": "複合企業(豪州)",
+      "sub_en": "Conglomerate (Australia)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "SGHとSteel Dynamicsが共同で、BlueScope Steelの全株取得を提案(成立は未定)",
+          "text_en": "SGH and Steel Dynamics jointly proposed for SGH to acquire all of BlueScope Steel (no certainty of a deal)",
+          "source": {
+            "label": "SGH・Steel Dynamics 共同発表(8-K添付)",
+            "label_en": "SGH and Steel Dynamics joint announcement (8-K exhibit)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1022671/000110465926000833/tm261963d1_ex99-1.htm",
+            "level": "official",
+            "date": "2026-01-06",
+            "quote": "for SGH to acquire 100% of BlueScope Steel Ltd (ASX:BSL) by way of a scheme of arrangement (the Proposal)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BSL",
+      "ticker": "BSL",
+      "name": "ブルースコープ・スチール",
+      "name_en": "BlueScope Steel",
+      "sub": "鉄鋼(豪州・北米)",
+      "sub_en": "Steel (Australia & North America)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "SGHとSteel Dynamicsが共同で買収を提案した相手(協議は継続中)",
+          "text_en": "Target of the joint SGH-Steel Dynamics acquisition proposal; talks ongoing",
+          "source": {
+            "label": "SGH・Steel Dynamics 共同発表(8-K添付)",
+            "label_en": "SGH and Steel Dynamics joint announcement (8-K exhibit)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1022671/000110465926000833/tm261963d1_ex99-1.htm",
+            "level": "official",
+            "date": "2026-01-06",
+            "quote": "Discussions with BSL in relation to the Proposal remain incomplete and ongoing."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NWPX",
+      "ticker": "NWPX",
+      "name": "ノースウエスト・パイプ",
+      "name_en": "Northwest Pipe",
+      "sub": "水道管",
+      "sub_en": "Water pipe",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Northwest Pipeが10-Kで、鋼材の仕入先の一社としてSteel Dynamicsを挙げる",
+          "text_en": "Northwest Pipe lists Steel Dynamics among its steel suppliers",
+          "source": {
+            "label": "Northwest Pipe 10-K(2025年度)",
+            "label_en": "Northwest Pipe 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1001385/000143774926005861/nwpx20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our suppliers include Steel Dynamics, Inc., Nucor Corporation, SSAB, North Star BlueScope Steel, United States Steel Corporation, and JSW Steel USA."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ATKR",
+      "ticker": "ATKR",
+      "name": "アトコア",
+      "name_en": "Atkore",
+      "sub": "電線管・配管",
+      "sub_en": "Conduit & pipe",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Atkoreが10-Kで、鋼材の主な仕入先の一社としてSteel Dynamicsを挙げる",
+          "text_en": "Atkore names Steel Dynamics among its primary steel suppliers",
+          "source": {
+            "label": "Atkore 10-K(2025年度)",
+            "label_en": "Atkore 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1666138/000162828025054049/atkr-20250930.htm",
+            "level": "official",
+            "date": "2025-11-26",
+            "quote": "Our primary suppliers of steel are Cleveland-Cliffs, Steel Dynamics and Nucor"
+          }
+        }
+      ]
+    },
+    {
+      "id": "FRD",
+      "ticker": "FRD",
+      "name": "フリードマン・インダストリーズ",
+      "name_en": "Friedman Industries",
+      "sub": "鋼材加工",
+      "sub_en": "Steel processing",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Steel Dynamicsのテキサス州シントン製鉄所の敷地を99年契約で借り、加工拠点を構える",
+          "text_en": "Runs a processing facility on land leased for 99 years at Steel Dynamics' Sinton, Texas mill campus",
+          "source": {
+            "label": "Friedman Industries 10-K(2024年度)",
+            "label_en": "Friedman Industries 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/39092/000143774924019948/ex_630917.htm",
+            "level": "official",
+            "date": "2024-06-11",
+            "quote": "The new facility is on the campus of Steel Dynamics, Inc.'s (\"SDI\") new flat roll steel mill in Sinton, Texas"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MTUS",
+      "ticker": "MTUS",
+      "name": "メタラス",
+      "name_en": "Metallus",
+      "sub": "特殊鋼棒鋼",
+      "sub_en": "Special bar steel",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Metallusが10-Kで、棒鋼の主な競合としてSteel Dynamicsを挙げる",
+          "text_en": "Metallus names Steel Dynamics among its principal competitors in bar products",
+          "source": {
+            "label": "Metallus 10-K(2025年度)",
+            "label_en": "Metallus 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1598428/000119312526061042/mtus-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "For bar products up to 9-inch in diameter, domestic producers Steel Dynamics, Inc. and Nucor Corporation (in some cases up to 10-inch) are our principal competitors."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GGB",
+      "ticker": "GGB",
+      "name": "ゲルダウ",
+      "name_en": "Gerdau",
+      "sub": "鉄鋼(ブラジル・北米)",
+      "sub_en": "Steel (Brazil & North America)",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Gerdauが年次報告で、主な競合としてSteel Dynamicsを挙げる",
+          "text_en": "Gerdau names Steel Dynamics among its principal competitors",
+          "source": {
+            "label": "Gerdau 20-F(2025年度)",
+            "label_en": "Gerdau 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1073404/000110465926027678/ggb-20251231x20f.htm",
+            "level": "official",
+            "date": "2026-03-13",
+            "quote": "The Company's principal competitors include Commercial Metals Company (CMC), Nucor Corporation, and Steel Dynamics Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SIM",
+      "ticker": "SIM",
+      "name": "グルポ・シメック",
+      "name_en": "Grupo Simec",
+      "sub": "特殊鋼(メキシコ)",
+      "sub_en": "Special steel (Mexico)",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Grupo Simecが年次報告で、米国の主な競合としてSteel Dynamicsを挙げる",
+          "text_en": "Grupo Simec names Steel Dynamics among its principal US competitors",
+          "source": {
+            "label": "Grupo Simec 20-F(2024年度)",
+            "label_en": "Grupo Simec 20-F (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/887153/000121390024099265/ea0217239-20f_grupo.htm",
+            "level": "official",
+            "date": "2024-11-18",
+            "quote": "We believe our principal competitors in the United States, depending on the product, include Nucor, Corporation, Charter Steel, Steel Dynamics"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

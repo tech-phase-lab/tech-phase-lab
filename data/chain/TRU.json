@@ -1,0 +1,251 @@
+{
+  "root": {
+    "ticker": "TRU",
+    "name": "トランスユニオン",
+    "cik": 1552033,
+    "name_en": "TransUnion"
+  },
+  "rows": [
+    {
+      "ja": "スコアの提供元・買収・出資",
+      "en": "Score provider, acquisitions & stakes",
+      "above": true
+    },
+    {
+      "ja": "信用情報の利用企業",
+      "en": "Credit data customers & partners"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "GEN",
+    "RDVT",
+    "RBBN"
+  ],
+  "companies": [
+    {
+      "id": "FICO",
+      "ticker": "FICO",
+      "name": "フェア・アイザック(FICO)",
+      "name_en": "Fair Isaac (FICO)",
+      "sub": "信用スコア",
+      "sub_en": "Credit scores",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "FICOの売上の51%(2025年度)が、Experian・TransUnion・Equifaxとの契約から",
+          "text_en": "Agreements with Experian, TransUnion and Equifax made up 51% of FICO's fiscal 2025 revenue",
+          "source": {
+            "label": "FICO 10-K(2025年度)",
+            "label_en": "FICO 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/814547/000081454725000030/fico-20250930.htm",
+            "level": "official",
+            "date": "2025-11-07",
+            "quote": "During fiscal 2025, 2024 and 2023, revenues generated from our agreements with Experian, TransUnion and Equifax collectively accounted for 51%, 45% and 41% of our total revenues, respectively."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Callcredit",
+      "ticker": "Callcredit",
+      "name": "コールクレジット",
+      "name_en": "Callcredit",
+      "sub": "信用情報機関(英国)",
+      "sub_en": "Credit bureau (UK)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2018年6月に英国2位の信用情報機関を買収し、英国市場に参入",
+          "text_en": "Acquired the UK's second-largest consumer credit bureau in June 2018",
+          "source": {
+            "label": "TransUnion 10-K(2025年度)",
+            "label_en": "TransUnion 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1552033/000155203326000012/tru-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "In June 2018, we entered the world's second largest credit market, the U.K., when we acquired Callcredit, the second largest consumer credit bureau in the U.K."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Monevo",
+      "ticker": "Monevo",
+      "name": "モネボ",
+      "name_en": "Monevo",
+      "sub": "ローン比較の基盤",
+      "sub_en": "Loan comparison platform",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2021年10月に30%を出資",
+          "text_en": "Took a 30% stake in October 2021",
+          "source": {
+            "label": "TransUnion 10-K(2025年度)",
+            "label_en": "TransUnion 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1552033/000155203326000012/tru-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "In October 2021, we acquired a 30 % equity interest in Monevo Limited (\"Monevo\"), which we accounted for as a Cost Method Investment."
+          }
+        }
+      ]
+    },
+    {
+      "id": "UPST",
+      "ticker": "UPST",
+      "name": "アップスタート",
+      "name_en": "Upstart",
+      "sub": "AI融資",
+      "sub_en": "AI lending",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "借り手のデータの多くをTransUnionなどの信用情報機関から取得",
+          "text_en": "Gets much of its borrower data from credit agencies such as TransUnion",
+          "source": {
+            "label": "Upstart 10-K(2024年度)",
+            "label_en": "Upstart 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1647639/000164763925000018/upst-20241231.htm",
+            "level": "official",
+            "date": "2025-02-14",
+            "quote": "we obtain borrowers' data from national consumer reporting agencies, such as TransUnion, and rely on their services in order to process loan applications for our lending partners."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LIFE",
+      "ticker": "LIFE",
+      "name": "エトス",
+      "name_en": "Ethos Technologies",
+      "sub": "オンライン生命保険",
+      "sub_en": "Online life insurance",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "審査に使う外部データの提供元の一社がTransUnion",
+          "text_en": "TransUnion is one of its third-party data vendors",
+          "source": {
+            "label": "Ethos Technologies 10-Q(2026年第1四半期)",
+            "label_en": "Ethos Technologies 10-Q (Q1 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1788451/000119312526214620/life-20260331.htm",
+            "level": "official",
+            "date": "2026-05-08",
+            "quote": "Third-party vendors of such information include, among others, Milliman, TransUnion and MIB Group."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MNY",
+      "ticker": "MNY",
+      "name": "マネーヒーロー",
+      "name_en": "MoneyHero",
+      "sub": "金融商品の比較サイト(アジア)",
+      "sub_en": "Financial comparison (Asia)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "TransUnionと組み、会員に信用情報レポートを無料で提供",
+          "text_en": "Partners with TransUnion to give members free credit reports",
+          "source": {
+            "label": "MoneyHero 20-F(2025年度)",
+            "label_en": "MoneyHero 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1974044/000121390026049733/ea0287136-20f_moneyhero.htm",
+            "level": "official",
+            "date": "2026-04-30",
+            "quote": "For the credit report feature available on the MoneyHero Credit Hero Club (\"CreditHero\") in partnership with TransUnion Limited (\"TransUnion\"), we offer registered users access to credit reports provided by TransUnion through CreditHero free of charge."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GEN",
+      "ticker": "GEN",
+      "name": "ジェン・デジタル",
+      "name_en": "Gen Digital",
+      "sub": "個人向けセキュリティ",
+      "sub_en": "Consumer cybersecurity",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Gen Digitalが10-Kで、ID保護の主な競合としてTransUnionを挙げる",
+          "text_en": "Gen Digital names TransUnion among its principal identity protection competitors",
+          "source": {
+            "label": "Gen Digital 10-K(2026年度)",
+            "label_en": "Gen Digital 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/849399/000084939926000017/gen-20260403.htm",
+            "level": "official",
+            "date": "2026-05-21",
+            "quote": "Our principal competitors in this segment include credit bureaus such as Equifax, Experian and TransUnion"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RDVT",
+      "ticker": "RDVT",
+      "name": "レッド・バイオレット",
+      "name_en": "Red Violet",
+      "sub": "データ分析",
+      "sub_en": "Data analytics",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Red Violetが10-Kで、データ分析分野の主な競合としてTransUnionを挙げる",
+          "text_en": "Red Violet names TransUnion among its principal data and analytics competitors",
+          "source": {
+            "label": "Red Violet 10-K(2024年度)",
+            "label_en": "Red Violet 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1720116/000095017025029184/rdvt-20241231.htm",
+            "level": "official",
+            "date": "2025-02-27",
+            "quote": "Our principal competitors in the data and analytics sector include RELX Group (LexisNexis), TransUnion, and Thomson Reuters."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RBBN",
+      "ticker": "RBBN",
+      "name": "リボン・コミュニケーションズ",
+      "name_en": "Ribbon Communications",
+      "sub": "通信ソフトウェア",
+      "sub_en": "Telecom software",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Ribbonが10-Kで、シェアを奪う競合の一社としてTransUnionを挙げる",
+          "text_en": "Ribbon names TransUnion among competitors it aims to win share from",
+          "source": {
+            "label": "Ribbon Communications 10-K(2025年度)",
+            "label_en": "Ribbon Communications 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1708055/000170805526000012/rbbn-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "TransUnion, Alianza (acquired Metaswitch assets), First Orion Corp., SecureLogix, TransNexus"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
