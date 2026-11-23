@@ -1,0 +1,219 @@
+{
+  "root": {
+    "ticker": "MS",
+    "name": "モルガン・スタンレー",
+    "cik": 895421,
+    "name_en": "Morgan Stanley"
+  },
+  "rows": [
+    {
+      "ja": "合弁・提携",
+      "en": "Joint ventures & alliances",
+      "above": true
+    },
+    {
+      "ja": "融資の顧客(相手の資料に記載)",
+      "en": "Lending clients (named in their filings)"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "MUFG",
+      "ticker": "MUFG",
+      "name": "三菱UFJフィナンシャル・グループ",
+      "name_en": "Mitsubishi UFJ Financial Group",
+      "sub": "銀行(日本)",
+      "sub_en": "Bank (Japan)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "日本で投資銀行・証券事業を合弁(三菱UFJモルガン・スタンレー証券など)",
+          "text_en": "Joint venture in Japan combining their investment banking and securities businesses",
+          "source": {
+            "label": "Morgan Stanley 10-K(2025年度)",
+            "label_en": "Morgan Stanley 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/895421/000089542126000086/ms-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "The Firm and Mitsubishi UFJ Financial Group, Inc. (\"MUFG\") formed a joint venture in Japan comprising their respective investment banking and securities businesses"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BTSG",
+      "ticker": "BTSG",
+      "name": "ブライトスプリング・ヘルス",
+      "name_en": "BrightSpring Health Services",
+      "sub": "在宅医療・薬局",
+      "sub_en": "Home health & pharmacy",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "モルガン・スタンレーが第1順位融資契約の事務代理人",
+          "text_en": "Morgan Stanley is administrative agent on its first lien credit agreement",
+          "source": {
+            "label": "BrightSpring Health 10-K(2025年度)",
+            "label_en": "BrightSpring Health 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1865782/000119312526079454/btsg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "On March 5, 2019, the Company entered into the First Lien Credit Agreement with Morgan Stanley Senior Funding, Inc., as the Administrative Agent and Collateral Agent."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GOGO",
+      "ticker": "GOGO",
+      "name": "ゴーゴー",
+      "name_en": "Gogo",
+      "sub": "機内通信",
+      "sub_en": "In-flight connectivity",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "7.25億ドルの定期融資の事務代理人",
+          "text_en": "Administrative agent on its $725 million term loan",
+          "source": {
+            "label": "Gogo 10-K(2025年度)",
+            "label_en": "Gogo 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1537054/000119312526082487/gogo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "GIH entered into the 2021 Credit Agreement with Gogo, the lenders and issuing banks party thereto and Morgan Stanley Senior Funding, Inc., as administrative agent"
+          }
+        }
+      ]
+    },
+    {
+      "id": "KREF",
+      "ticker": "KREF",
+      "name": "KKRリアルエステート・ファイナンス",
+      "name_en": "KKR Real Estate Finance Trust",
+      "sub": "不動産融資REIT",
+      "sub_en": "Mortgage REIT",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "融資枠(6.6億ドルに増額)の管理者",
+          "text_en": "Administers its revolver, upsized to $660 million",
+          "source": {
+            "label": "KKR Real Estate Finance 10-K(2025年度)",
+            "label_en": "KKR Real Estate Finance 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1631596/000162828026005092/kref-20251231.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "In March 2025, we upsized our Revolver, administered by Morgan Stanley Senior Funding, Inc., to $660.0 million"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ALGM",
+      "ticker": "ALGM",
+      "name": "アレグロ・マイクロシステムズ",
+      "name_en": "Allegro MicroSystems",
+      "sub": "半導体",
+      "sub_en": "Semiconductors",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "融資枠契約の事務代理人・融資行",
+          "text_en": "Administrative agent and lender on its revolving facility",
+          "source": {
+            "label": "Allegro MicroSystems 10-K(2026年3月期)",
+            "label_en": "Allegro MicroSystems 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/866291/000119312526233537/algm-20260327.htm",
+            "level": "official",
+            "date": "2026-05-21",
+            "quote": "Morgan Stanley Senior Funding, Inc., as administrative agent, collateral agent, a letter of credit issuer and a lender"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PRMB",
+      "ticker": "PRMB",
+      "name": "プリモ・ブランズ",
+      "name_en": "Primo Brands",
+      "sub": "飲料水",
+      "sub_en": "Bottled water",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "子会社の定期融資の事務代理人",
+          "text_en": "Administrative agent on its subsidiaries' term loans",
+          "source": {
+            "label": "Primo Brands 10-K(2025年度)",
+            "label_en": "Primo Brands 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2042694/000162828026012779/prmb-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "entered into a Term Loan Agreement (as subsequently amended, the \"Amended Credit Agreement\" and such term loans thereunder, the \"Term Loans\") on March 31, 2021 with a group of lenders and Morgan Stanley Senior Funding, Inc., as administrative and collateral"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MGNI",
+      "ticker": "MGNI",
+      "name": "マグナイト",
+      "name_en": "Magnite",
+      "sub": "広告技術",
+      "sub_en": "Ad tech",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "3.65億ドルの定期融資の事務代理人",
+          "text_en": "Term loan administrative agent on its $365 million loan",
+          "source": {
+            "label": "Magnite 10-K(2025年度)",
+            "label_en": "Magnite 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1595974/000159597426000007/mgni-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "entered into a new credit agreement with Morgan Stanley Senior Funding, Inc., as term facility administrative agent"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GBTG",
+      "ticker": "GBTG",
+      "name": "アメックスGBT(グローバル・ビジネス・トラベル)",
+      "name_en": "Global Business Travel Group",
+      "sub": "出張管理",
+      "sub_en": "Business travel",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "融資契約の事務代理人・担保代理人",
+          "text_en": "Administrative and collateral agent on its credit agreement",
+          "source": {
+            "label": "Global Business Travel Group 10-K(2025年度)",
+            "label_en": "Global Business Travel Group 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1820872/000162828026015817/gbtg-20251231.htm",
+            "level": "official",
+            "date": "2026-03-09",
+            "quote": "entered into an amendment (\"Amendment No. 1\") to the A&R Credit Agreement, with Morgan Stanley Senior Funding, Inc., as administrative agent and as collateral agent"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

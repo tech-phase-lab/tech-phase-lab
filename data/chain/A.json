@@ -1,0 +1,339 @@
+{
+  "root": {
+    "ticker": "A",
+    "name": "アジレント・テクノロジー",
+    "cik": 1090872,
+    "name_en": "Agilent Technologies"
+  },
+  "rows": [
+    {
+      "ja": "顧客・提携",
+      "en": "Customers & partners"
+    },
+    {
+      "ja": "買収・分離",
+      "en": "Acquisitions & spin-off"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in its 10-K)"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "TMO",
+    "WAT",
+    "DHR"
+  ],
+  "companies": [
+    {
+      "id": "ALNY",
+      "ticker": "ALNY",
+      "name": "アルナイラム",
+      "name_en": "Alnylam",
+      "sub": "RNA医薬",
+      "sub_en": "RNAi therapeutics",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Alnylamの原薬の一定割合を製造受託",
+          "text_en": "Manufactures a specified share of Alnylam's active pharmaceutical ingredients",
+          "source": {
+            "label": "Alnylam 10-K(2024年度)",
+            "label_en": "Alnylam 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1178670/000117867025000026/alny-20241231.htm",
+            "level": "official",
+            "date": "2025-02-13",
+            "quote": "In 2015, we amended our manufacturing services agreement with Agilent Technologies, Inc., or Agilent, to provide for Agilent to supply, subject to any conflicting obligations under our third-party agreements, a specified percentage of the active pharmaceutical ingredients"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AKYA",
+      "ticker": "AKYA",
+      "name": "アコヤ・バイオサイエンシズ",
+      "name_en": "Akoya Biosciences",
+      "sub": "空間生物学",
+      "sub_en": "Spatial biology",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "多重免疫染色の開発パートナー",
+          "text_en": "Partner developing multiplex immunohistochemistry",
+          "source": {
+            "label": "Akoya Biosciences 10-K(2024年度)",
+            "label_en": "Akoya Biosciences 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1711933/000155837025003124/akya-20241231x10k.htm",
+            "level": "official",
+            "date": "2025-03-17",
+            "quote": "Agilent Technologies is a partner to develop multiplex-immunohistochemistry ( \" mIHC \" ) diagnostic solutions for tissue analysis"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BIOVECTRA",
+      "ticker": "BIOVECTRA",
+      "name": "バイオベクトラ",
+      "name_en": "BIOVECTRA",
+      "sub": "医薬品受託製造",
+      "sub_en": "Contract drug manufacturing",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "受託製造のBIOVECTRAを9.15億ドルで買収(2024年9月)",
+          "text_en": "Acquired contract manufacturer BIOVECTRA for $915 million (September 2024)",
+          "source": {
+            "label": "Agilent 10-K(2025年10月期)",
+            "label_en": "Agilent 10-K (FY ended Oct 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1090872/000109087225000087/a-20251031.htm",
+            "level": "official",
+            "date": "2025-12-22",
+            "quote": "On September 20, 2024, we acquired 100 percent of the stock of BIOVECTRA for total consideration of $ 915 million in cash."
+          }
+        }
+      ]
+    },
+    {
+      "id": "KEYS",
+      "ticker": "KEYS",
+      "name": "キーサイト・テクノロジーズ",
+      "name_en": "Keysight Technologies",
+      "sub": "電子計測",
+      "sub_en": "Electronic measurement",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2014年にアジレントから分離した計測機器会社",
+          "text_en": "Electronic measurement company separated from Agilent in 2014",
+          "source": {
+            "label": "Keysight 10-K(2025年10月期)",
+            "label_en": "Keysight 10-K (FY ended Oct 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1601046/000160104625000127/keys-20251031.htm",
+            "level": "official",
+            "date": "2025-12-17",
+            "quote": "Agilent has assigned its rights and obligations under this agreement to Keysight in respect to facilities transferred to Keysight in our separation from Agilent on November 1, 2014 (the \"Separation\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DHR",
+      "ticker": "DHR",
+      "name": "ダナハー",
+      "name_en": "Danaher",
+      "sub": "ライフサイエンス機器",
+      "sub_en": "Life science tools",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "10-Kで応用市場の主な競合として挙げる",
+          "text_en": "Named in its 10-K as a principal applied-markets competitor",
+          "source": {
+            "label": "Agilent 10-K(2025年10月期)",
+            "label_en": "Agilent 10-K (FY ended Oct 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1090872/000109087225000087/a-20251031.htm",
+            "level": "official",
+            "date": "2025-12-22",
+            "quote": "Our principal competitors in the applied markets arena include: Danaher Corporation, PerkinElmer Inc., Shimadzu Corporation, Thermo Fisher Scientific Inc. and Waters Corporation."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TMO",
+      "ticker": "TMO",
+      "name": "サーモフィッシャー",
+      "name_en": "Thermo Fisher Scientific",
+      "sub": "ライフサイエンス機器",
+      "sub_en": "Life science tools",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "10-Kで応用市場の主な競合として挙げる",
+          "text_en": "Named in its 10-K as a principal applied-markets competitor",
+          "source": {
+            "label": "Agilent 10-K(2025年10月期)",
+            "label_en": "Agilent 10-K (FY ended Oct 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1090872/000109087225000087/a-20251031.htm",
+            "level": "official",
+            "date": "2025-12-22",
+            "quote": "Our principal competitors in the applied markets arena include: Danaher Corporation, PerkinElmer Inc., Shimadzu Corporation, Thermo Fisher Scientific Inc. and Waters Corporation."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WAT",
+      "ticker": "WAT",
+      "name": "ウォーターズ",
+      "name_en": "Waters",
+      "sub": "分析機器",
+      "sub_en": "Analytical instruments",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "10-Kで応用市場の主な競合として挙げる",
+          "text_en": "Named in its 10-K as a principal applied-markets competitor",
+          "source": {
+            "label": "Agilent 10-K(2025年10月期)",
+            "label_en": "Agilent 10-K (FY ended Oct 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1090872/000109087225000087/a-20251031.htm",
+            "level": "official",
+            "date": "2025-12-22",
+            "quote": "Our principal competitors in the applied markets arena include: Danaher Corporation, PerkinElmer Inc., Shimadzu Corporation, Thermo Fisher Scientific Inc. and Waters Corporation."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "Waters側も主な競合の筆頭にアジレントを挙げる",
+          "text_en": "Waters in turn lists Agilent first among principal competitors",
+          "source": {
+            "label": "Waters 10-K(2024年度)",
+            "label_en": "Waters 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1000697/000119312525034579/d791800d10k.htm",
+            "level": "official",
+            "date": "2025-02-25",
+            "quote": "In the markets served by Waters, the Company's principal competitors include: Agilent Technologies, Inc., Shimadzu Corporation, Bruker Corporation, Danaher Corporation and Thermo Fisher Scientific Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Shimadzu",
+      "ticker": "Shimadzu",
+      "name": "島津製作所",
+      "name_en": "Shimadzu",
+      "sub": "分析機器(日本)",
+      "sub_en": "Analytical instruments (Japan)",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "10-Kで応用市場の主な競合として挙げる",
+          "text_en": "Named in its 10-K as a principal applied-markets competitor",
+          "source": {
+            "label": "Agilent 10-K(2025年10月期)",
+            "label_en": "Agilent 10-K (FY ended Oct 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1090872/000109087225000087/a-20251031.htm",
+            "level": "official",
+            "date": "2025-12-22",
+            "quote": "Our principal competitors in the applied markets arena include: Danaher Corporation, PerkinElmer Inc., Shimadzu Corporation, Thermo Fisher Scientific Inc. and Waters Corporation."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RVTY",
+      "ticker": "RVTY",
+      "name": "レビティ(旧パーキンエルマー)",
+      "name_en": "Revvity (formerly PerkinElmer)",
+      "sub": "ライフサイエンス機器",
+      "sub_en": "Life science tools",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "10-Kで応用市場の主な競合として挙げる",
+          "text_en": "Named in its 10-K as a principal applied-markets competitor",
+          "source": {
+            "label": "Agilent 10-K(2025年10月期)",
+            "label_en": "Agilent 10-K (FY ended Oct 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1090872/000109087225000087/a-20251031.htm",
+            "level": "official",
+            "date": "2025-12-22",
+            "quote": "Our principal competitors in the applied markets arena include: Danaher Corporation, PerkinElmer Inc., Shimadzu Corporation, Thermo Fisher Scientific Inc. and Waters Corporation."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CTKB",
+      "ticker": "CTKB",
+      "name": "サイテック・バイオサイエンシズ",
+      "name_en": "Cytek Biosciences",
+      "sub": "フローサイトメトリー",
+      "sub_en": "Flow cytometry",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Cytekが10-Kで、直接の競合の筆頭に挙げる",
+          "text_en": "Cytek lists Agilent first among direct competitors",
+          "source": {
+            "label": "Cytek Biosciences 10-K(2025年度)",
+            "label_en": "Cytek Biosciences 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1831915/000162828026012352/ctkb-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our direct competitors include Agilent Technologies, Beckman Coulter (Danaher Corporation), Bio-Rad Laboratories, Standard BioTools, Miltenyi Biotec, Sony Biotechnology (Sony Corporation), Thermo Fisher Scientific and Waters Corporation."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CDXS",
+      "ticker": "CDXS",
+      "name": "コデクシス",
+      "name_en": "Codexis",
+      "sub": "酵素・RNA製造",
+      "sub_en": "Enzymes & RNA manufacturing",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Codexisが10-Kで、RNA製造の主な競合として挙げる",
+          "text_en": "Codexis names Agilent a primary competitor in RNA manufacturing",
+          "source": {
+            "label": "Codexis 10-K(2025年度)",
+            "label_en": "Codexis 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1200375/000120037526000006/cdxs-20251231.htm",
+            "level": "official",
+            "date": "2026-03-11",
+            "quote": "Primary competitors in this space include CDMOs, such as Agilent Technologies, which has made significant capital investment to expand their RNA manufacturing capabilities using phosphoramidite chemistry."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SOPH",
+      "ticker": "SOPH",
+      "name": "ソフィア・ジェネティクス",
+      "name_en": "SOPHiA GENETICS",
+      "sub": "ゲノム解析ソフト",
+      "sub_en": "Genomics software",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "SOPHiAが20-Fで、ゲノム解析ソフトの競合の一社として挙げる",
+          "text_en": "SOPHiA names Agilent among genomics analytics software competitors",
+          "source": {
+            "label": "SOPHiA GENETICS 20-F(2024年度)",
+            "label_en": "SOPHiA GENETICS 20-F (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1840706/000184070625000009/soph-20241231.htm",
+            "level": "official",
+            "date": "2025-03-04",
+            "quote": "We also face competition from companies that have developed software analytics platforms for genomics data, such as Agilent, Fabric Genomics, Illumina, Qiagen Digital Insights, Velsera Inc., Congenica Ltd and Thermo Fisher."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

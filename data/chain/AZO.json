@@ -1,0 +1,223 @@
+{
+  "root": {
+    "ticker": "AZO",
+    "name": "オートゾーン",
+    "cik": 866787,
+    "name_en": "AutoZone"
+  },
+  "rows": [
+    {
+      "ja": "部品の供給元(上流)",
+      "en": "Parts suppliers (upstream)",
+      "above": true
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "ORLY",
+    "AAP",
+    "GPC"
+  ],
+  "companies": [
+    {
+      "id": "SMP",
+      "ticker": "SMP",
+      "name": "スタンダード・モーター・プロダクツ",
+      "name_en": "Standard Motor Products",
+      "sub": "自動車補修部品",
+      "sub_en": "Aftermarket auto parts",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "SMPの売上の18.8%がオートゾーン向け(2024年)",
+          "text_en": "18.8% of Standard Motor Products' 2024 sales went to AutoZone",
+          "source": {
+            "label": "Standard Motor Products 10-K(2024年度)",
+            "label_en": "Standard Motor Products 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/93389/000009338925000012/smp-20241231.htm",
+            "level": "official",
+            "date": "2025-02-28",
+            "quote": "During 2024 , O'Reilly Auto Parts, AutoZone and NAPA accounted for 28.4 % , 18.8 % and 13.5 % of our consolidated net sales, respectively."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MPAA",
+      "ticker": "MPAA",
+      "name": "モーターカー・パーツ・オブ・アメリカ",
+      "name_en": "Motorcar Parts of America",
+      "sub": "再生部品",
+      "sub_en": "Remanufactured parts",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "部品を大手チェーンの一社としてオートゾーンに販売",
+          "text_en": "Sells hard parts to large chains including AutoZone",
+          "source": {
+            "label": "Motorcar Parts of America 10-K(2026年3月期)",
+            "label_en": "Motorcar Parts of America 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/918251/000114036126024463/ef20070436_10k.htm",
+            "level": "official",
+            "date": "2026-06-08",
+            "quote": "We sell our hard parts products to the largest automotive chains, including Advance Auto Parts, AutoZone, Genuine Parts (NAPA), and O'Reilly Auto Parts"
+          }
+        }
+      ]
+    },
+    {
+      "id": "LBRA",
+      "ticker": "LBRA",
+      "name": "1847ホールディングス",
+      "name_en": "1847 Holdings",
+      "sub": "複合企業(部品等)",
+      "sub_en": "Holding company (parts & more)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "顧客の一社としてオートゾーンを挙げる",
+          "text_en": "Lists AutoZone among its customers",
+          "source": {
+            "label": "1847 Holdings 10-K(2025年度)",
+            "label_en": "1847 Holdings 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1599407/000121390026036917/ea0282883-10k_1847hold.htm",
+            "level": "official",
+            "date": "2026-03-31",
+            "quote": "We have a diverse customer base, including Amazon, AutoZone, Advance Auto Parts, CarQuest, Aries, das, Grainger, and FleetFarm."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FirstBrands",
+      "ticker": "First Brands",
+      "name": "ファースト・ブランズ",
+      "name_en": "First Brands Group",
+      "sub": "自動車補修部品(経営破綻)",
+      "sub_en": "Aftermarket parts (bankrupt)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "経営破綻した部品メーカーFirst Brandsの売掛先の一社(Jefferiesの開示)",
+          "text_en": "Named among retailers owing receivables to bankrupt parts maker First Brands (Jefferies disclosure)",
+          "source": {
+            "label": "Jefferies 10-Q(2026年2月期)",
+            "label_en": "Jefferies 10-Q (quarter ended Feb 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/96223/000009622326000017/jef-20260228.htm",
+            "level": "official",
+            "date": "2026-04-07",
+            "quote": "the Point Bonita portfolio had approximately $715 million in purported receivables due from retailers, including Walmart, AutoZone, NAPA, O'Reilly Auto Parts, and Advanced Auto Parts, with First Brands, as the servicer"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ORLY",
+      "ticker": "ORLY",
+      "name": "オライリー・オートモーティブ",
+      "name_en": "O'Reilly Automotive",
+      "sub": "自動車部品小売",
+      "sub_en": "Auto parts retail",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "O'Reillyが10-Kで、全国チェーンの主な競合の筆頭に挙げる",
+          "text_en": "O'Reilly lists AutoZone first among national chains it competes with",
+          "source": {
+            "label": "O'Reilly Automotive 10-K(2025年度)",
+            "label_en": "O'Reilly Automotive 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/898173/000089817326000009/orly-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "National retail and wholesale automotive parts chains (such as AutoZone, Inc., Advance Auto Parts, CARQUEST, and NAPA)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AAP",
+      "ticker": "AAP",
+      "name": "アドバンス・オート・パーツ",
+      "name_en": "Advance Auto Parts",
+      "sub": "自動車部品小売",
+      "sub_en": "Auto parts retail",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Advanceが10-Kで、主な競合の筆頭に挙げる",
+          "text_en": "Advance lists AutoZone first among primary competitors",
+          "source": {
+            "label": "Advance Auto Parts 10-K(2025年度)",
+            "label_en": "Advance Auto Parts 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1158449/000119312526051305/aap-20260103.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "The Company's primary competitors are (i) both national and regional chains of automotive parts stores, including AutoZone, Inc., NAPA, O'Reilly Automotive, Inc. and Auto Plus"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GPC",
+      "ticker": "GPC",
+      "name": "ジェニュイン・パーツ(NAPA)",
+      "name_en": "Genuine Parts (NAPA)",
+      "sub": "自動車部品流通",
+      "sub_en": "Auto parts distribution",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Genuine Partsが10-Kで、北米の主な競合の筆頭に挙げる",
+          "text_en": "Genuine Parts lists AutoZone first among key North American competitors",
+          "source": {
+            "label": "Genuine Parts 10-K(2025年度)",
+            "label_en": "Genuine Parts 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/40987/000004098726000003/gpc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Key competitors in North America include AutoZone, Inc., O'Reilly Auto Parts, Inc., Advance Auto Parts, Inc., and LKQ Corporation, among others."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PRTS",
+      "ticker": "PRTS",
+      "name": "カーパーツ・ドットコム",
+      "name_en": "CarParts.com",
+      "sub": "自動車部品のネット販売",
+      "sub_en": "Online auto parts",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "CarParts.comが10-Kで、全国チェーンの競合の一社として挙げる",
+          "text_en": "CarParts.com names AutoZone among national auto parts retailers it competes with",
+          "source": {
+            "label": "CarParts.com 10-K(2024年度)",
+            "label_en": "CarParts.com 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1378950/000137895025000036/prts-20241228x10k.htm",
+            "level": "official",
+            "date": "2025-03-26",
+            "quote": "national auto parts retailers such as Advance Auto Parts, AutoZone, Napa Auto Parts, CarQuest, O'Reilly Automotive and Pep Boys;"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

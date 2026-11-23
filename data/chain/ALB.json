@@ -1,0 +1,388 @@
+{
+  "root": {
+    "ticker": "ALB",
+    "name": "アルベマール",
+    "cik": 915913,
+    "name_en": "Albemarle"
+  },
+  "rows": [
+    {
+      "ja": "鉱山の合弁・鉱業権",
+      "en": "Mine joint ventures & mining rights",
+      "above": true
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in its 10-K)"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    },
+    {
+      "ja": "その他の関係",
+      "en": "Other ties"
+    }
+  ],
+  "rivals": [
+    "SQM",
+    "RIO",
+    "ICL"
+  ],
+  "companies": [
+    {
+      "id": "MIN",
+      "ticker": "MIN",
+      "name": "ミネラル・リソーシズ",
+      "name_en": "Mineral Resources",
+      "sub": "鉱業(豪)",
+      "sub_en": "Mining (Australia)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "豪ウォジナのリチウム鉱山の合弁MARBLの相手(アルベマール60%で取得)",
+          "text_en": "Partner in the MARBL joint venture over the Wodgina lithium mine (Albemarle took 60%)",
+          "source": {
+            "label": "Albemarle 10-K(2025年度)",
+            "label_en": "Albemarle 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/915913/000091591326000018/alb-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "On October 31, 2019, we completed the acquisition of a 60% interest in this hard rock lithium mine project and formed an unincorporated joint venture with MRL, named MARBL."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CORFO",
+      "ticker": "CORFO",
+      "name": "CORFO(チリ経済開発公社)",
+      "name_en": "CORFO",
+      "sub": "チリ政府機関",
+      "sub_en": "Chilean government agency",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "アタカマ塩湖のリチウム採掘をSQMと同じくCORFOとのリース契約で行う",
+          "text_en": "Extracts Atacama lithium under a lease agreement with CORFO, as SQM does",
+          "source": {
+            "label": "SQM 20-F(2025年度)",
+            "label_en": "SQM 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/909037/000090903726000023/sqm-20251231.htm",
+            "level": "official",
+            "date": "2026-04-22",
+            "quote": "SQM and Albemarle have a lease agreement with Corfo to extract and produce lithium from brines stored in the Salar de Atacama deposit."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SQM",
+      "ticker": "SQM",
+      "name": "SQM",
+      "name_en": "SQM",
+      "sub": "リチウム・化学(チリ)",
+      "sub_en": "Lithium & chemicals (Chile)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "10-Kでリチウム化合物の主な競合として挙げる",
+          "text_en": "Named in its 10-K as a major lithium compounds competitor",
+          "source": {
+            "label": "Albemarle 10-K(2025年度)",
+            "label_en": "Albemarle 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/915913/000091591326000018/alb-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Major competitors in lithium compounds include Sociedad Quimica y Minera de Chile S.A., Sichuan Tianqi Lithium, Jiangxi Ganfeng Lithium, Rio Tinto plc, Pilbara Minerals, Tesla and a large number of additional Chinese companies."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Tianqi",
+      "ticker": "Tianqi Lithium",
+      "name": "天斉リチウム",
+      "name_en": "Tianqi Lithium",
+      "sub": "リチウム(中国)",
+      "sub_en": "Lithium (China)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "10-Kでリチウム化合物の主な競合として挙げる",
+          "text_en": "Named in its 10-K as a major lithium compounds competitor",
+          "source": {
+            "label": "Albemarle 10-K(2025年度)",
+            "label_en": "Albemarle 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/915913/000091591326000018/alb-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Major competitors in lithium compounds include Sociedad Quimica y Minera de Chile S.A., Sichuan Tianqi Lithium, Jiangxi Ganfeng Lithium, Rio Tinto plc, Pilbara Minerals, Tesla and a large number of additional Chinese companies."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Ganfeng",
+      "ticker": "Ganfeng Lithium",
+      "name": "贛鋒リチウム",
+      "name_en": "Ganfeng Lithium",
+      "sub": "リチウム(中国)",
+      "sub_en": "Lithium (China)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "10-Kでリチウム化合物の主な競合として挙げる",
+          "text_en": "Named in its 10-K as a major lithium compounds competitor",
+          "source": {
+            "label": "Albemarle 10-K(2025年度)",
+            "label_en": "Albemarle 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/915913/000091591326000018/alb-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Major competitors in lithium compounds include Sociedad Quimica y Minera de Chile S.A., Sichuan Tianqi Lithium, Jiangxi Ganfeng Lithium, Rio Tinto plc, Pilbara Minerals, Tesla and a large number of additional Chinese companies."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RIO",
+      "ticker": "RIO",
+      "name": "リオ・ティント",
+      "name_en": "Rio Tinto",
+      "sub": "資源大手",
+      "sub_en": "Diversified mining",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "リチウムと臭素の両方で10-Kに挙がる競合",
+          "text_en": "Named in its 10-K as a competitor in both lithium and bromine",
+          "source": {
+            "label": "Albemarle 10-K(2025年度)",
+            "label_en": "Albemarle 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/915913/000091591326000018/alb-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Major competitors in lithium compounds include Sociedad Quimica y Minera de Chile S.A., Sichuan Tianqi Lithium, Jiangxi Ganfeng Lithium, Rio Tinto plc, Pilbara Minerals, Tesla and a large number of additional Chinese companies."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PLS",
+      "ticker": "PLS",
+      "name": "ピルバラ・ミネラルズ",
+      "name_en": "Pilbara Minerals",
+      "sub": "リチウム鉱山(豪)",
+      "sub_en": "Lithium mining (Australia)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "10-Kでリチウム化合物の主な競合として挙げる",
+          "text_en": "Named in its 10-K as a major lithium compounds competitor",
+          "source": {
+            "label": "Albemarle 10-K(2025年度)",
+            "label_en": "Albemarle 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/915913/000091591326000018/alb-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Major competitors in lithium compounds include Sociedad Quimica y Minera de Chile S.A., Sichuan Tianqi Lithium, Jiangxi Ganfeng Lithium, Rio Tinto plc, Pilbara Minerals, Tesla and a large number of additional Chinese companies."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Lanxess",
+      "ticker": "Lanxess",
+      "name": "ランクセス",
+      "name_en": "Lanxess",
+      "sub": "特殊化学(独)",
+      "sub_en": "Specialty chemicals (Germany)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "10-Kで臭素の最も重要な競合として挙げる",
+          "text_en": "Named in its 10-K as a most significant bromine competitor",
+          "source": {
+            "label": "Albemarle 10-K(2025年度)",
+            "label_en": "Albemarle 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/915913/000091591326000018/alb-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Our most significant competitors are Lanxess AG, Israel Chemicals Ltd and Rio Tinto, as well as producers in India and China."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ICL",
+      "ticker": "ICL",
+      "name": "ICLグループ",
+      "name_en": "ICL Group",
+      "sub": "特殊化学(イスラエル)",
+      "sub_en": "Specialty chemicals (Israel)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "10-Kで臭素の最も重要な競合として挙げる",
+          "text_en": "Named in its 10-K as a most significant bromine competitor",
+          "source": {
+            "label": "Albemarle 10-K(2025年度)",
+            "label_en": "Albemarle 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/915913/000091591326000018/alb-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Our most significant competitors are Lanxess AG, Israel Chemicals Ltd and Rio Tinto, as well as producers in India and China."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "ICL側も、臭素の2大競合の一社としてアルベマールを挙げる",
+          "text_en": "ICL in turn names Albemarle one of its two main bromine competitors",
+          "source": {
+            "label": "ICL 20-F(2024年度)",
+            "label_en": "ICL 20-F (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/941221/000117891325000821/zk2532797.htm",
+            "level": "official",
+            "date": "2025-03-13",
+            "quote": "Based on internal estimates, in 2024 ICL and its two main competitors, Albemarle and Lanxess, accounted for the majority of worldwide production of bromine."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ALTM",
+      "ticker": "ALTM",
+      "name": "アルカディウム・リチウム",
+      "name_en": "Arcadium Lithium",
+      "sub": "リチウム",
+      "sub_en": "Lithium",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Arcadiumが10-Kで、高機能リチウム化合物の主な競合としてアルベマールを挙げる",
+          "text_en": "Arcadium names Albemarle a primary competitor in performance lithium compounds",
+          "source": {
+            "label": "Arcadium Lithium 10-K(2024年度)",
+            "label_en": "Arcadium Lithium 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1977303/000197730325000006/lthm-20241231.htm",
+            "level": "official",
+            "date": "2025-02-27",
+            "quote": "Our primary competitors for performance lithium compounds are Albemarle Corporation and Ganfeng Lithium."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ECVT",
+      "ticker": "ECVT",
+      "name": "エコビスト",
+      "name_en": "Ecovyst",
+      "sub": "触媒・特殊化学",
+      "sub_en": "Catalysts & specialty chemicals",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Ecovystが10-Kで、触媒分野の競合の一社としてアルベマールを挙げる",
+          "text_en": "Ecovyst names Albemarle among catalyst competitors",
+          "source": {
+            "label": "Ecovyst 10-K(2024年度)",
+            "label_en": "Ecovyst 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1708035/000170803525000070/ecvt-20241231.htm",
+            "level": "official",
+            "date": "2025-02-28",
+            "quote": "Our Advanced Materials & Catalysts segment primarily competes with other global producers in the petrochemicals and refining industries such as Grace, BASF, UOP, and Albemarle"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ELVR",
+      "ticker": "ELVR",
+      "name": "エレブラ・リチウム",
+      "name_en": "Elevra Lithium",
+      "sub": "リチウム鉱山",
+      "sub_en": "Lithium mining",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Elevraが20-Fで、主要なリチウム生産者の競合の筆頭にアルベマールを挙げる",
+          "text_en": "Elevra lists Albemarle first among major lithium producers it competes with",
+          "source": {
+            "label": "Elevra Lithium 20-F(2025年6月期)",
+            "label_en": "Elevra Lithium 20-F (FY ended Jun 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1739016/000114036125040022/ef20057501_20f.htm",
+            "level": "official",
+            "date": "2025-10-31",
+            "quote": "Elevra competes against several major lithium producers, including: Albemarle Corporation, Sigma Lithium Corporation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SIGA",
+      "ticker": "SIGA",
+      "name": "SIGAテクノロジーズ",
+      "name_en": "SIGA Technologies",
+      "sub": "医薬品",
+      "sub_en": "Pharma",
+      "row": 3,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "天然痘治療薬の原薬製造をアルベマール時代から委託(現在はGrace)",
+          "text_en": "Has had API manufacturing agreements since 2011 with Albemarle's former unit, now Grace",
+          "source": {
+            "label": "SIGA Technologies 10-K(2025年度)",
+            "label_en": "SIGA Technologies 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1010086/000143774926007557/siga20251231_10k.htm",
+            "level": "official",
+            "date": "2026-03-10",
+            "quote": "SIGA has had manufacturing agreements with Grace and a predecessor owner (Albemarle) since 2011."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NEU",
+      "ticker": "NEU",
+      "name": "ニューマーケット",
+      "name_en": "NewMarket",
+      "sub": "燃料添加剤",
+      "sub_en": "Fuel additives",
+      "row": 3,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "アルベマールは旧事業の一部で、訴訟費用の回収で和解契約がある",
+          "text_en": "Albemarle is a former operation of NewMarket, with a settlement agreement on cost recovery",
+          "source": {
+            "label": "NewMarket 10-K(2024年度)",
+            "label_en": "NewMarket 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1282637/000128263725000004/neu-20241231.htm",
+            "level": "official",
+            "date": "2025-02-14",
+            "quote": "Certain of these costs are recoverable through the settlement agreements with The Travelers Indemnity Company and with Albemarle Corporation."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
