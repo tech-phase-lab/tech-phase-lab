@@ -13,6 +13,8 @@ import re
 from urllib.parse import urlsplit, urlunsplit
 from urllib.request import Request, urlopen
 
+import cron_report
+
 
 class DeliveryUnavailable(RuntimeError):
     """Delivery is disabled or not safely configured."""
@@ -155,6 +157,9 @@ def push_message(claim):
     news = news_message(claim, code)
     if news:
         return news
+    cron = cron_report.push_message(claim)
+    if cron:
+        return cron
     title, body = PUSH_TEXT.get(claim.get("errorCode"),("監視で異常を検知しました", "詳しくは監視の状態を確認してください。"))
     if claim["transition"] == "resolved":
         return {"title": "✅ 復旧しました", "body": "監視の異常が解消しました。", "tag": "incident-" + claim["key"], "url": "/research"}

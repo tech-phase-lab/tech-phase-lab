@@ -35,16 +35,24 @@ def run(check=None, watch=None, gap=None):
             'generatedAt': datetime.now(timezone.utc).isoformat(timespec='seconds')}
 
 
-def main():
+def check():
+    """Run and print the one line. None when disabled, otherwise the fixed names of what failed ([] when it passed)."""
     if os.environ.get('EARNINGS_SELFCHECK') != 'true':
         print('DISABLED: set EARNINGS_SELFCHECK=true to run the earnings self-check')
-        return 0
+        return None
     agent = os.environ.get('RESEARCH_USER_AGENT', '').strip()
     if agent:
         backtest.UA = agent
     summary = run()
     print(json.dumps(summary, separators=(',', ':')))
-    return 0 if summary['ok'] else 1
+    if summary['ok']:
+        return []
+    return [name for name, bad in (('regressions', summary['regressions']), ('gaps', summary['gaps']),
+                                   ('site-unreadable', not summary['siteChecked'])) if bad] or ['failed']
+
+
+def main():
+    return 1 if check() else 0
 
 
 if __name__ == '__main__':

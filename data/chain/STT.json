@@ -1,0 +1,226 @@
+{
+  "root": {
+    "ticker": "STT",
+    "name": "ステート・ストリート",
+    "cik": 93751,
+    "name_en": "State Street"
+  },
+  "rows": [
+    {
+      "ja": "提携先",
+      "en": "Partners",
+      "above": true
+    },
+    {
+      "ja": "資産管理・事務の顧客(相手の資料に記載)",
+      "en": "Custody & administration clients (named in their filings)"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "SSNC",
+    "SEIC"
+  ],
+  "companies": [
+    {
+      "id": "APO",
+      "ticker": "APO",
+      "name": "アポロ",
+      "name_en": "Apollo",
+      "sub": "オルタナティブ運用",
+      "sub_en": "Alternative asset management",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Apolloの子会社が、State Street Global Advisorsの運用ファンドに売る証券の確定買い気配を提供する取り決め",
+          "text_en": "An Apollo unit agreed to provide firm bids for securities sold to funds managed by State Street Global Advisors",
+          "source": {
+            "label": "Apollo 10-K(2025年度)",
+            "label_en": "Apollo 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1858681/000185868126000013/apo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "AGS has entered into an arrangement with certain funds managed by State Street Global Advisors (\"SSG\") to provide firm bids for certain securities sold to SSG managed funds."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CARS",
+      "ticker": "Carlyle Credit Solutions",
+      "name": "カーライル・クレジット・ソリューションズ",
+      "name_en": "Carlyle Credit Solutions",
+      "sub": "私募融資ファンド(BDC)",
+      "sub_en": "Private credit fund (BDC)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "State Streetが事務代行と資産保管(カストディ)を担う",
+          "text_en": "State Street provides sub-administration and serves as its custodian",
+          "source": {
+            "label": "Carlyle Credit Solutions 10-K(2024年度)",
+            "label_en": "Carlyle Credit Solutions 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1702510/000170251025000023/cars-20241231.htm",
+            "level": "official",
+            "date": "2025-03-13",
+            "quote": "State Street also serves as our custodian."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Silver",
+      "ticker": "Silver Capital Holdings",
+      "name": "シルバー・キャピタル",
+      "name_en": "Silver Capital Holdings",
+      "sub": "私募融資ファンド(BDC)",
+      "sub_en": "Private credit fund (BDC)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "State Streetが会計などの事務を担う管理会社",
+          "text_en": "State Street is its administrator for accounting and administrative services",
+          "source": {
+            "label": "Silver Capital Holdings 10-K(2025年度)",
+            "label_en": "Silver Capital Holdings 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1674760/000119312526088636/ck0001674760-20251231.htm",
+            "level": "official",
+            "date": "2026-03-03",
+            "quote": "with State Street Bank and Trust Company (in such capacity, the \"Administrator\"), the administrator is responsible for providing various accounting and administrative services"
+          }
+        }
+      ]
+    },
+    {
+      "id": "WestBay",
+      "ticker": "West Bay BDC",
+      "name": "ウエスト・ベイBDC",
+      "name_en": "West Bay BDC",
+      "sub": "私募融資ファンド(BDC)",
+      "sub_en": "Private credit fund (BDC)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "State Streetが会計などの事務を担う管理会社",
+          "text_en": "State Street is its administrator for accounting and administrative services",
+          "source": {
+            "label": "West Bay BDC 10-K(2024年度)",
+            "label_en": "West Bay BDC 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2020354/000095017025032212/ck0002020354-20241231.htm",
+            "level": "official",
+            "date": "2025-03-04",
+            "quote": "Pursuant to our administration agreement (the \"Administration Agreement\") with State Street Bank and Trust Company (our \"Administrator\"), our Administrator is responsible for providing various accounting and administrative services to us."
+          }
+        }
+      ]
+    },
+    {
+      "id": "OTF",
+      "ticker": "OTF",
+      "name": "ブルー・アウル・テクノロジー・ファイナンス",
+      "name_en": "Blue Owl Technology Finance",
+      "sub": "テック企業向け融資(BDC)",
+      "sub_en": "Tech lending (BDC)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "融資枠の書類保管役をState Streetに切り替えた",
+          "text_en": "Replaced its credit facility's document custodian with State Street",
+          "source": {
+            "label": "Blue Owl Technology Finance 10-K(2025年度)",
+            "label_en": "Blue Owl Technology Finance 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1747777/000174777726000012/ortf-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "replace Alter Domus (US) LLC as document custodian with State Street Bank and Trust Compa"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ABCRE",
+      "ticker": "AB CRE Private Debt",
+      "name": "AB商業不動産私募デット・ファンド",
+      "name_en": "AB Commercial Real Estate Private Debt Fund",
+      "sub": "不動産融資ファンド",
+      "sub_en": "Real estate debt fund",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "State Streetから回転信用枠の融資を受ける",
+          "text_en": "Has a revolving credit facility from State Street",
+          "source": {
+            "label": "AB Commercial Real Estate Private Debt Fund 10-K(2024年度)",
+            "label_en": "AB Commercial Real Estate Private Debt Fund 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1876255/000095017025045464/ck0001876255-20241231.htm",
+            "level": "official",
+            "date": "2025-03-26",
+            "quote": "On December 14, 2021, the Company entered into a credit agreement (the \"State Street Credit Agreement\") to establish a revolving credit facility (the \"State Street Credit Facility\") with State Street Bank and Trust Compan"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SSNC",
+      "ticker": "SSNC",
+      "name": "SS&Cテクノロジーズ",
+      "name_en": "SS&C Technologies",
+      "sub": "金融ソフトウェア・事務代行",
+      "sub_en": "Financial software & fund admin",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "SS&Cが10-Kで、主な競合の大手カストディ銀行としてState Streetを挙げる",
+          "text_en": "SS&C names State Street among the large custodian banks it competes with",
+          "source": {
+            "label": "SS&C Technologies 10-K(2024年度)",
+            "label_en": "SS&C Technologies 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1402436/000095017025030421/ssnc-20241231.htm",
+            "level": "official",
+            "date": "2025-03-03",
+            "quote": "Major competitors in this market include large custodian banks, such as State Street, BNY Mellon, Northern Trust and CITCO Group."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SEIC",
+      "ticker": "SEIC",
+      "name": "SEIインベストメンツ",
+      "name_en": "SEI Investments",
+      "sub": "資産運用・事務代行",
+      "sub_en": "Asset management & fund services",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "SEIが10-Kで、競合の一社としてState Streetを挙げる",
+          "text_en": "SEI names State Street among its competitors",
+          "source": {
+            "label": "SEI Investments 10-K(2025年度)",
+            "label_en": "SEI Investments 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/350894/000035089426000013/seic-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "They include SS&C Technologies, State Street, BNY Mellon, Northern Trust, and Citco."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

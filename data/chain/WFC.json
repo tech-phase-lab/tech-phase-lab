@@ -1,0 +1,250 @@
+{
+  "root": {
+    "ticker": "WFC",
+    "name": "ウェルズ・ファーゴ",
+    "cik": 72971,
+    "name_en": "Wells Fargo"
+  },
+  "rows": [
+    {
+      "ja": "事業の売却先・提携先",
+      "en": "Business buyers & partners",
+      "above": true
+    },
+    {
+      "ja": "融資先(相手の資料に記載)",
+      "en": "Borrowers (named in their filings)"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "SYF",
+    "UBS"
+  ],
+  "companies": [
+    {
+      "id": "GATX",
+      "ticker": "GATX",
+      "name": "GATX",
+      "name_en": "GATX",
+      "sub": "貨車リース",
+      "sub_en": "Railcar leasing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2026年1月、ウェルズ・ファーゴの貨車リース事業(約10万1千両)を合弁経由で42億ドルで取得",
+          "text_en": "Closed the purchase of Wells Fargo's rail operating lease portfolio (about 101,000 railcars) through a joint venture in January 2026",
+          "source": {
+            "label": "GATX 10-K(2025年度)",
+            "label_en": "GATX 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/40211/000004021126000018/gmt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "On January 1, 2026, we closed on the acquisition of Wells Fargo's rail operating lease portfolio."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BIP",
+      "ticker": "BIP",
+      "name": "ブルックフィールド・インフラストラクチャー",
+      "name_en": "Brookfield Infrastructure",
+      "sub": "インフラ投資",
+      "sub_en": "Infrastructure investment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "GATXと組んだ合弁を通じて、ウェルズ・ファーゴの貨車約10万1千両を取得",
+          "text_en": "Bought about 101,000 railcars from Wells Fargo through a joint venture with GATX",
+          "source": {
+            "label": "GATX 8-K/A(2026年3月、鉄道車両の取得)",
+            "label_en": "GATX 8-K/A (Mar 2026, railcar acquisition)",
+            "url": "https://www.sec.gov/Archives/edgar/data/40211/000004021126000024/exhibit992-gatxunauditedpr.htm",
+            "level": "official",
+            "date": "2026-03-03",
+            "quote": "acquired approximately 101,000 railcars from Wells Fargo Bank, N.A., a national banking association, and its affiliates (\"Wells Fargo\"), for $4.2 billion through a newly formed joint venture with Brookfield Infrastructure Partners L.P. and its institutional partners"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Overland",
+      "ticker": "Overland Advantage",
+      "name": "オーバーランド・アドバンテージ",
+      "name_en": "Overland Advantage",
+      "sub": "中堅企業向け融資ファンド",
+      "sub_en": "Middle-market lending fund",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ウェルズ・ファーゴの中堅企業の取引先から投資案件の紹介を受ける契約を持つ",
+          "text_en": "Has a sourcing arrangement that gives it access to deals from Wells Fargo's middle-market corporate clients",
+          "source": {
+            "label": "Overland Advantage 10-K(2024年度)",
+            "label_en": "Overland Advantage 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1965934/000095017025045206/ck0001965934-20241231.htm",
+            "level": "official",
+            "date": "2025-03-26",
+            "quote": "The Advisor believes that the Wells Fargo Sourcing Arrangement provides a competitive advantage to the Advisor and access for the Company to potential investment opportunities originating from Wells Fargo's middle market corporate clients."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SITM",
+      "ticker": "SITM",
+      "name": "サイタイム",
+      "name_en": "SiTime",
+      "sub": "タイミング半導体",
+      "sub_en": "Timing chips",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "買収資金の一部として、ウェルズ・ファーゴが最大9億ドルのつなぎ融資を約束",
+          "text_en": "Wells Fargo committed up to $900 million of bridge financing for part of an acquisition",
+          "source": {
+            "label": "SiTime 10-Q(2026年第1四半期)",
+            "label_en": "SiTime 10-Q (Q1 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1451809/000145180926000041/sitm-20260331.htm",
+            "level": "official",
+            "date": "2026-05-07",
+            "quote": "pursuant to which Wells Fargo has committed to provide us with debt financing to fund a portion of the Cash Consideration in an aggregate principal amount of up to $ 900.0 million"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BOOT",
+      "ticker": "BOOT",
+      "name": "ブート・バーン",
+      "name_en": "Boot Barn",
+      "sub": "ウエスタン衣料小売",
+      "sub_en": "Western wear retail",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ウェルズ・ファーゴとの回転信用枠を持つ",
+          "text_en": "Has a revolving credit facility with Wells Fargo",
+          "source": {
+            "label": "Boot Barn 10-K(2026年度)",
+            "label_en": "Boot Barn 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1610250/000110465926061346/boot-20260328x10k.htm",
+            "level": "official",
+            "date": "2026-05-14",
+            "quote": "Failure to comply with any of these covenants could result in a default under the Wells Fargo Revolver and under other agreements containing cross-default provisions."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ABG",
+      "ticker": "ABG",
+      "name": "アズベリー・オートモーティブ",
+      "name_en": "Asbury Automotive",
+      "sub": "自動車ディーラー",
+      "sub_en": "Auto dealerships",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2025年7月、ウェルズ・ファーゴの不動産担保融資で5.465億ドルを借り入れ",
+          "text_en": "Borrowed $546.5 million under a Wells Fargo real estate term loan in July 2025",
+          "source": {
+            "label": "Asbury Automotive 10-K(2025年度)",
+            "label_en": "Asbury Automotive 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1144980/000114498026000051/abg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "2025 Wells Fargo Real Estate Facility -On July 21, 2025, certain subsidiaries of the Company borrowed $546.5 million"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RNGR",
+      "ticker": "RNGR",
+      "name": "レンジャー・エナジー・サービシズ",
+      "name_en": "Ranger Energy Services",
+      "sub": "油井サービス",
+      "sub_en": "Oilfield services",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ウェルズ・ファーゴと最大7,500万ドルの担保付き信用枠の契約を結ぶ",
+          "text_en": "Has a secured credit facility of up to $75 million with Wells Fargo",
+          "source": {
+            "label": "Ranger Energy Services 10-K(2025年度)",
+            "label_en": "Ranger Energy Services 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1699039/000162828026015248/rngr-20251231.htm",
+            "level": "official",
+            "date": "2026-03-05",
+            "quote": "On May 31, 2023, we entered into a Credit Agreement with Wells Fargo Bank, N.A., which provides a secured, revolving credit facility"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SYF",
+      "ticker": "SYF",
+      "name": "シンクロニー",
+      "name_en": "Synchrony",
+      "sub": "カード・消費者金融",
+      "sub_en": "Cards & consumer finance",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Synchronyが10-Kで、提携先獲得の主な競合としてウェルズ・ファーゴを挙げる",
+          "text_en": "Synchrony names Wells Fargo among its primary competitors for partners",
+          "source": {
+            "label": "Synchrony 10-K(2025年度)",
+            "label_en": "Synchrony 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1601712/000160171226000006/syf-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "Our primary competitors for partners include major financial institutions such as American Express, Bread Financial, Capital One/Discover, JPMorgan Chase, Citibank, TD Bank and Wells Fargo"
+          }
+        }
+      ]
+    },
+    {
+      "id": "UBS",
+      "ticker": "UBS",
+      "name": "UBS",
+      "name_en": "UBS",
+      "sub": "銀行・資産運用",
+      "sub_en": "Bank & wealth management",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "UBSが年次報告で、米州で強い主な競合の一社としてウェルズ・ファーゴを挙げる",
+          "text_en": "UBS names Wells Fargo among its main competitors with a strong position in the Americas",
+          "source": {
+            "label": "UBS 20-F(2025年度)",
+            "label_en": "UBS 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1610520/000161052026000023/ubs-20251231.htm",
+            "level": "official",
+            "date": "2026-03-09",
+            "quote": "competitors with a strong position in the Americas but with more limited global footprints, such as Morgan Stanley, JPMorgan Chase, Bank of America and Wells Fargo"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

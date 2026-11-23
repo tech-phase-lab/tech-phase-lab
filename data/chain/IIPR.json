@@ -1,0 +1,262 @@
+{
+  "root": {
+    "ticker": "IIPR",
+    "name": "イノベーティブ・インダストリアル・プロパティーズ",
+    "cik": 1677576,
+    "name_en": "Innovative Industrial Properties"
+  },
+  "rows": [
+    {
+      "ja": "上位テナント(大麻事業者)",
+      "en": "Top tenants (cannabis operators)"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "AAWH",
+      "ticker": "AAWH",
+      "name": "アセンド・ウェルネス",
+      "name_en": "Ascend Wellness Holdings",
+      "sub": "大麻事業",
+      "sub_en": "Cannabis operator",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大の投資先テナントで回収賃料の13%(4物件)",
+          "text_en": "Largest tenant: 13% of rent collected, 4 properties",
+          "source": {
+            "label": "IIPR 10-K(2025年度)",
+            "label_en": "IIPR 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1677576/000167757626000001/iipr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Ascend Wellness Holdings, Inc. (\"Ascend\") 4 $ 214,050 $ 31,137 13 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PharmaCann",
+      "ticker": "PharmaCann",
+      "name": "ファーマキャン",
+      "name_en": "PharmaCann",
+      "sub": "大麻事業",
+      "sub_en": "Cannabis operator",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "7物件を賃貸(回収賃料の4%)",
+          "text_en": "Leases 7 properties; 4% of rent collected",
+          "source": {
+            "label": "IIPR 10-K(2025年度)",
+            "label_en": "IIPR 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1677576/000167757626000001/iipr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "PharmaCann Inc. (\"PharmaCann\") 7 185,058 7,395 4"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GTBIF",
+      "ticker": "GTBIF",
+      "name": "グリーン・サム・インダストリーズ",
+      "name_en": "Green Thumb Industries",
+      "sub": "大麻事業",
+      "sub_en": "Cannabis operator",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "回収賃料の10%(3物件)",
+          "text_en": "10% of rent collected, 3 properties",
+          "source": {
+            "label": "IIPR 10-K(2025年度)",
+            "label_en": "IIPR 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1677576/000167757626000001/iipr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Green Thumb Industries, Inc (\"Green Thumb\") 3 176,800 22,589 10"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CURLF",
+      "ticker": "CURLF",
+      "name": "キュラリーフ",
+      "name_en": "Curaleaf",
+      "sub": "大麻事業",
+      "sub_en": "Cannabis operator",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "回収賃料の9%(8物件)",
+          "text_en": "9% of rent collected, 8 properties",
+          "source": {
+            "label": "IIPR 10-K(2025年度)",
+            "label_en": "IIPR 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1677576/000167757626000001/iipr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Curaleaf Holdings, Inc (\"Curaleaf\") 8 175,047 20,719 9"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CBSTF",
+      "ticker": "CBSTF",
+      "name": "カンナビスト",
+      "name_en": "The Cannabist Company",
+      "sub": "大麻事業",
+      "sub_en": "Cannabis operator",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "回収賃料の8%(21物件)",
+          "text_en": "8% of rent collected, 21 properties",
+          "source": {
+            "label": "IIPR 10-K(2025年度)",
+            "label_en": "IIPR 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1677576/000167757626000001/iipr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "The Cannabist Company 21 147,834 18,341 8"
+          }
+        }
+      ]
+    },
+    {
+      "id": "TCNNF",
+      "ticker": "TCNNF",
+      "name": "トゥルリーブ",
+      "name_en": "Trulieve",
+      "sub": "大麻事業",
+      "sub_en": "Cannabis operator",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "回収賃料の9%(6物件)",
+          "text_en": "9% of rent collected, 6 properties",
+          "source": {
+            "label": "IIPR 10-K(2025年度)",
+            "label_en": "IIPR 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1677576/000167757626000001/iipr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Trulieve, Inc. (\"Trulieve\") 6 146,503 19,704 9"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CRLBF",
+      "ticker": "CRLBF",
+      "name": "クレスコ・ラブズ",
+      "name_en": "Cresco Labs",
+      "sub": "大麻事業",
+      "sub_en": "Cannabis operator",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "回収賃料の7%(5物件)",
+          "text_en": "7% of rent collected, 5 properties",
+          "source": {
+            "label": "IIPR 10-K(2025年度)",
+            "label_en": "IIPR 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1677576/000167757626000001/iipr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Cresco Labs Inc. (\"Cresco\") 5 120,845 16,897 7"
+          }
+        }
+      ]
+    },
+    {
+      "id": "4Front",
+      "ticker": "4Front",
+      "name": "4フロント・ベンチャーズ",
+      "name_en": "4Front Ventures",
+      "sub": "大麻事業",
+      "sub_en": "Cannabis operator",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "4物件を賃貸(回収賃料は1%)",
+          "text_en": "Leases 4 properties; 1% of rent collected",
+          "source": {
+            "label": "IIPR 10-K(2025年度)",
+            "label_en": "IIPR 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1677576/000167757626000001/iipr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "4Front Ventures Corp. (\"4Front\") (4) 4 120,684 1,750 1"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Parallel",
+      "ticker": "Parallel",
+      "name": "パラレル",
+      "name_en": "Parallel (SH Parent)",
+      "sub": "大麻事業",
+      "sub_en": "Cannabis operator",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "回収賃料の7%(2物件)",
+          "text_en": "7% of rent collected, 2 properties",
+          "source": {
+            "label": "IIPR 10-K(2025年度)",
+            "label_en": "IIPR 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1677576/000167757626000001/iipr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "SH Parent, Inc. (\"Parallel\") 2 107,900 16,136 7"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Holistic",
+      "ticker": "Holistic",
+      "name": "ホリスティック・インダストリーズ",
+      "name_en": "Holistic Industries",
+      "sub": "大麻事業",
+      "sub_en": "Cannabis operator",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "回収賃料の7%(4物件)",
+          "text_en": "7% of rent collected, 4 properties",
+          "source": {
+            "label": "IIPR 10-K(2025年度)",
+            "label_en": "IIPR 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1677576/000167757626000001/iipr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Holistic Industries, Inc (\"Holistic\") 4 107,650 17,050 7"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

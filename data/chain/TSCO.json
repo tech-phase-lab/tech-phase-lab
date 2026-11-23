@@ -1,0 +1,223 @@
+{
+  "root": {
+    "ticker": "TSCO",
+    "name": "トラクター・サプライ",
+    "cik": 916365,
+    "name_en": "Tractor Supply"
+  },
+  "rows": [
+    {
+      "ja": "仕入先(Tractor Supplyでの販売を記載)",
+      "en": "Suppliers (sold at Tractor Supply)",
+      "above": true
+    },
+    {
+      "ja": "買収・カード提携",
+      "en": "Acquisitions & card partner"
+    },
+    {
+      "ja": "店舗の貸主(不動産)",
+      "en": "Store landlords (real estate)"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "YETI",
+      "ticker": "YETI",
+      "name": "イエティ",
+      "name_en": "YETI",
+      "sub": "アウトドア用品",
+      "sub_en": "Outdoor products",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "YETIの全米の専門小売の販売先の一社がTractor Supply",
+          "text_en": "Tractor Supply is one of YETI's national specialty retailers",
+          "source": {
+            "label": "YETI 10-K(2025年度)",
+            "label_en": "YETI 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1670592/000167059226000013/yeti-20260103.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our national and regional specialty retailers in the United States include Dick's Sporting Goods, REI, Academy Sports + Outdoors, Bass Pro Shops, Ace Hardware, Scheels, and Tractor Supply Company."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HLMN",
+      "ticker": "HLMN",
+      "name": "ヒルマン・ソリューションズ",
+      "name_en": "Hillman Solutions",
+      "sub": "金物・小物部品",
+      "sub_en": "Hardware & fasteners",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Hillmanの全国チェーンの販売先の一社がTractor Supply",
+          "text_en": "Tractor Supply is one of Hillman's national accounts",
+          "source": {
+            "label": "Hillman Solutions 10-K(2025年度)",
+            "label_en": "Hillman Solutions 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1822492/000182249226000019/hlmn-20251227.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "We sell our products to national accounts such as Home Depot, Lowe's, Tractor Supply, Walmart, Menard's, PETCO, and PetSmart."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MAMO",
+      "ticker": "MAMO",
+      "name": "マッシモ・グループ",
+      "name_en": "Massimo Group",
+      "sub": "UTV・ボート",
+      "sub_en": "UTVs & boats",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Tractor Supplyの店舗でUTV(多用途四輪車)を販売する大きな提携",
+          "text_en": "Has a significant in-store UTV retail partnership with Tractor Supply",
+          "source": {
+            "label": "Massimo Group 10-K(2025年度)",
+            "label_en": "Massimo Group 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1952853/000149315226013862/form10-k.htm",
+            "level": "official",
+            "date": "2026-03-31",
+            "quote": "We have a significant in-store UTV retail partnership with Tractor Supply Co."
+          }
+        }
+      ]
+    },
+    {
+      "id": "XPON",
+      "ticker": "XPON",
+      "name": "エクスピオン360",
+      "name_en": "Expion360",
+      "sub": "リチウム電池",
+      "sub_en": "Lithium batteries",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Tractor Supplyのネット通販で自社の電池を販売する提携",
+          "text_en": "Partnered with Tractor Supply to sell its batteries online",
+          "source": {
+            "label": "Expion360 2024年第2四半期決算発表",
+            "label_en": "Expion360 Q2 2024 results release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1894954/000190359624000503/ex99_1.htm",
+            "level": "official",
+            "date": "2024-08-14",
+            "quote": "a new e-commerce retail partnership with Tractor Supply, the largest rural lifestyle retailer in the United States, to offer Expion360 products online for shipment to customers in 49 states."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Allivet",
+      "ticker": "Allivet",
+      "name": "アリベット",
+      "name_en": "Allivet",
+      "sub": "ペット薬のネット薬局",
+      "sub_en": "Online pet pharmacy",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2024年12月に買収",
+          "text_en": "Acquired in December 2024",
+          "source": {
+            "label": "Tractor Supply 10-K(2025年度)",
+            "label_en": "Tractor Supply 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/916365/000091636526000014/tsco-20251227.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "On December 30, 2024, the Company completed its acquisition of Allivet, an online pet pharmacy."
+          }
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "ticker": "C",
+      "name": "シティグループ",
+      "name_en": "Citigroup",
+      "sub": "銀行・カード",
+      "sub_en": "Bank & cards",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Citi Cardsとの契約で、Tractor Supplyの顧客に個人・法人向けクレジットを提供",
+          "text_en": "Provides consumer and business credit to Tractor Supply customers through Citi Cards",
+          "source": {
+            "label": "Tractor Supply 10-K(2025年度)",
+            "label_en": "Tractor Supply 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/916365/000091636526000014/tsco-20251227.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Under an agreement with Citi Cards, a division of Citigroup, consumer and business credit is extended directly to customers by Citigroup."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BNL",
+      "ticker": "BNL",
+      "name": "ブロードストーン・ネット・リース",
+      "name_en": "Broadstone Net Lease",
+      "sub": "ネットリースREIT",
+      "sub_en": "Net lease REIT",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Tractor Supplyが上位テナントの一社(23物件)",
+          "text_en": "Tractor Supply is among its top tenants (23 properties)",
+          "source": {
+            "label": "Broadstone Net Lease 10-K(2025年度)",
+            "label_en": "Broadstone Net Lease 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1424182/000142418226000012/bnl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Tractor Supply Company General Merchandise 23 6,525 1.5 % 462 1.1 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GIPR",
+      "ticker": "GIPR",
+      "name": "ジェネレーション・インカム・プロパティーズ",
+      "name_en": "Generation Income Properties",
+      "sub": "ネットリースREIT",
+      "sub_en": "Net lease REIT",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ノースカロライナ州の物件をTractor Supplyに長期で賃貸",
+          "text_en": "Leases a North Carolina property to Tractor Supply",
+          "source": {
+            "label": "Generation Income Properties 10-K(2025年度)",
+            "label_en": "Generation Income Properties 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1651721/000119312526135022/gipr-20251231.htm",
+            "level": "official",
+            "date": "2026-04-01",
+            "quote": "Kernersville, North Carolina; and Sanford, Florida and are leased to Dollar General, Tractor Supply Company, and Zaxby's, respectively."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

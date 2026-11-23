@@ -1,0 +1,456 @@
+{
+  "root": {
+    "ticker": "HD",
+    "name": "ホーム・デポ",
+    "cik": 354950,
+    "name_en": "The Home Depot"
+  },
+  "rows": [
+    {
+      "ja": "供給元(上流)",
+      "en": "Suppliers (upstream)",
+      "above": true
+    },
+    {
+      "ja": "買収・顧客",
+      "en": "Acquisitions & customers"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "BLDR",
+    "LESL",
+    "SITE"
+  ],
+  "companies": [
+    {
+      "id": "MAS",
+      "ticker": "MAS",
+      "name": "マスコ",
+      "name_en": "Masco",
+      "sub": "塗料・水栓",
+      "sub_en": "Paint & plumbing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "塗料BEHRはホーム・デポで販売され、同社が最大の顧客",
+          "text_en": "Its BEHR paint is sold through The Home Depot, its largest customer",
+          "source": {
+            "label": "Masco 10-K(2025年度)",
+            "label_en": "Masco 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/62996/000006299626000005/mas-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "Our BEHR products are sold through The Home Depot, our largest customer overall, as well as this segment's largest customer."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SMG",
+      "ticker": "SMG",
+      "name": "スコッツ・ミラクルグロー",
+      "name_en": "Scotts Miracle-Gro",
+      "sub": "園芸用品",
+      "sub_en": "Lawn & garden",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ホーム・デポとロウズの2社で売上の52%",
+          "text_en": "The Home Depot and Lowe's together made up 52% of its fiscal 2025 sales",
+          "source": {
+            "label": "Scotts Miracle-Gro 10-K(2025年9月期)",
+            "label_en": "Scotts Miracle-Gro 10-K (FY ended Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/825542/000082554225000022/smg-20250930.htm",
+            "level": "official",
+            "date": "2025-11-25",
+            "quote": "Our top two retail customers, The Home Depot and Lowe's, together accounted for 52% of our fiscal 2025 net sales"
+          }
+        }
+      ]
+    },
+    {
+      "id": "JELD",
+      "ticker": "JELD",
+      "name": "ジェルドウェン",
+      "name_en": "JELD-WEN",
+      "sub": "ドア・窓",
+      "sub_en": "Doors & windows",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ホーム・デポが連結売上の約17%を占める",
+          "text_en": "The Home Depot made up about 17% of its consolidated revenue",
+          "source": {
+            "label": "JELD-WEN 10-K(2025年度)",
+            "label_en": "JELD-WEN 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1674335/000167433526000043/jeld-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "The Home Depot, a customer of our North America segment, represented approximately 17%, 16%, and 15% of our consolidated net revenues during the years ended December 31, 2025, 2024, and 2023, respectively."
+          }
+        }
+      ]
+    },
+    {
+      "id": "UFPI",
+      "ticker": "UFPI",
+      "name": "UFPインダストリーズ",
+      "name_en": "UFP Industries",
+      "sub": "木材製品",
+      "sub_en": "Wood products",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ホーム・デポが売上の約17%を占める最大級の顧客",
+          "text_en": "The Home Depot accounted for about 17% of its net sales",
+          "source": {
+            "label": "UFP Industries 10-K(2025年度)",
+            "label_en": "UFP Industries 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/912767/000110465926019567/ufpi-20251227x10k.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Two customers, The Home Depot and Lowes, accounted for approximately 17 % and 11 %, respectively, of our total net sales in fiscal 2025"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CENT",
+      "ticker": "CENT",
+      "name": "セントラル・ガーデン&ペット",
+      "name_en": "Central Garden & Pet",
+      "sub": "園芸・ペット用品",
+      "sub_en": "Garden & pet supplies",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ホーム・デポが第2位の顧客で売上の約16%",
+          "text_en": "The Home Depot is its second-largest customer at about 16% of sales",
+          "source": {
+            "label": "Central Garden & Pet 10-K(2025年9月期)",
+            "label_en": "Central Garden & Pet 10-K (FY ended Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/887733/000088773325000041/cent-20250927.htm",
+            "level": "official",
+            "date": "2025-11-26",
+            "quote": "Home Depot, our second largest customer, represented approximately 16% of total net sales in fiscal 2025 and 17% in fiscal 2024."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GFF",
+      "ticker": "GFF",
+      "name": "グリフォン",
+      "name_en": "Griffon",
+      "sub": "ガレージドア",
+      "sub_en": "Garage doors",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "子会社クロペイがホーム・デポにガレージドアを独占供給",
+          "text_en": "Its Clopay unit is the exclusive garage door supplier to Home Depot",
+          "source": {
+            "label": "Griffon 10-K(2025年9月期)",
+            "label_en": "Griffon 10-K (FY ended Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/50725/000162828025053242/gff-20250930.htm",
+            "level": "official",
+            "date": "2025-11-19",
+            "quote": "Clopay is currently the exclusive supplier of residential and commercial garage doors to Home Depot and Menards locations throughout North America, and has maintained long-standing relationships with Home Depot for 40 years"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMWD",
+      "ticker": "AMWD",
+      "name": "アメリカン・ウッドマーク",
+      "name_en": "American Woodmark",
+      "sub": "キッチン収納",
+      "sub_en": "Kitchen cabinets",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ホーム・デポ・ロウズと長期的な戦略関係で製品を流通",
+          "text_en": "Distributes through long-term strategic relationships with Home Depot and Lowe's",
+          "source": {
+            "label": "American Woodmark 10-K(2025年4月期)",
+            "label_en": "American Woodmark 10-K (FY ended Apr 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/794619/000079461925000061/amwd-20250430.htm",
+            "level": "official",
+            "date": "2025-06-25",
+            "quote": "our strategy has been to develop long-term strategic relationships with both Home Depot and Lowe's to distribute our products."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MBC",
+      "ticker": "MBC",
+      "name": "マスターブランド",
+      "name_en": "MasterBrand",
+      "sub": "キッチン収納",
+      "sub_en": "Kitchen cabinets",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ホーム・デポが売上の10%超を占める顧客",
+          "text_en": "The Home Depot accounted for more than 10% of its net sales",
+          "source": {
+            "label": "MasterBrand 10-K(2025年度)",
+            "label_en": "MasterBrand 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1941365/000194136526000006/mbc-20251228.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Net sales to two of the Company's customers, Lowe's and Home Depot, each accounted for greater than 10 percent of the Company's net sales in 2025, 2024 and 2023."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HLMN",
+      "ticker": "HLMN",
+      "name": "ヒルマン・ソリューションズ",
+      "name_en": "Hillman Solutions",
+      "sub": "金物・ハードウェア",
+      "sub_en": "Hardware",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ホーム・デポが最大の顧客で売上の22.1%",
+          "text_en": "Home Depot was its largest customer at 22.1% of revenue",
+          "source": {
+            "label": "Hillman Solutions 10-K(2024年度)",
+            "label_en": "Hillman Solutions 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1822492/000182249225000050/hlmn-20241228.htm",
+            "level": "official",
+            "date": "2025-02-20",
+            "quote": "For the year ended December 28, 2024, Home Depot was the single largest customer, representing approximately $325.7 million or 22.1% of our total revenues"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BCC",
+      "ticker": "BCC",
+      "name": "ボイシ・カスケード",
+      "name_en": "Boise Cascade",
+      "sub": "木材・建材",
+      "sub_en": "Wood & building materials",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "最大の顧客にホーム・デポを挙げる",
+          "text_en": "Names Home Depot among its largest customers",
+          "source": {
+            "label": "Boise Cascade 10-K(2024年度)",
+            "label_en": "Boise Cascade 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1328581/000132858125000010/bcc-20241231.htm",
+            "level": "official",
+            "date": "2025-02-20",
+            "quote": "with Builders FirstSource and Home Depot being our largest customers."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RPM",
+      "ticker": "RPM",
+      "name": "RPMインターナショナル",
+      "name_en": "RPM International",
+      "sub": "塗料・補修材",
+      "sub_en": "Coatings & sealants",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "消費者向け部門の主要顧客にホーム・デポ",
+          "text_en": "Lists The Home Depot among key customers of its consumer segment",
+          "source": {
+            "label": "RPM International 10-K(2025年5月期)",
+            "label_en": "RPM International 10-K (FY ended May 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/110621/000095017025098313/rpm-20250531.htm",
+            "level": "official",
+            "date": "2025-07-24",
+            "quote": "For example, our key customers in the Consumer reportable segment include Ace Hardware, Amazon, Do It Best, Hardlines Distribution, The Home Depot, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AWI",
+      "ticker": "AWI",
+      "name": "アームストロング・ワールド",
+      "name_en": "Armstrong World Industries",
+      "sub": "天井材",
+      "sub_en": "Ceiling systems",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "最大級の販売代理店顧客GMSがホーム・デポに買収された",
+          "text_en": "One of its largest distributor customers, GMS, was acquired by The Home Depot",
+          "source": {
+            "label": "Armstrong World Industries 10-K(2025年度)",
+            "label_en": "Armstrong World Industries 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/7431/000119312526065183/awi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "In September 2025, GMS, Inc., one of our largest distributor customers, was acquired by The Home Depot, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SRS",
+      "ticker": "SRS",
+      "name": "SRSディストリビューション",
+      "name_en": "SRS Distribution",
+      "sub": "専門建材の卸",
+      "sub_en": "Specialty building products distribution",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "屋根材などの専門業者向け卸のSRSを2024年に買収",
+          "text_en": "Acquired SRS, a residential specialty trade distributor, in fiscal 2024",
+          "source": {
+            "label": "Home Depot 10-K(2025年度)",
+            "label_en": "Home Depot 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/354950/000162828026019436/hd-20260201.htm",
+            "level": "official",
+            "date": "2026-03-18",
+            "quote": "In fiscal 2024, we acquired SRS, a leading residential specialty trade distribution company"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GMS",
+      "ticker": "GMS",
+      "name": "GMS",
+      "name_en": "GMS",
+      "sub": "内装建材の卸",
+      "sub_en": "Interior building products distribution",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "傘下のSRSが2025年9月に内装建材卸のGMSを買収",
+          "text_en": "SRS completed the acquisition of GMS, a specialty building products distributor, in September 2025",
+          "source": {
+            "label": "Home Depot 10-K(2025年度)",
+            "label_en": "Home Depot 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/354950/000162828026019436/hd-20260201.htm",
+            "level": "official",
+            "date": "2026-03-18",
+            "quote": "On September 4, 2025, SRS completed the acquisition of GMS, a leading distributor of specialty building products, including drywall, ceilings, steel framing and other complementary construction products"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SITE",
+      "ticker": "SITE",
+      "name": "サイトワン",
+      "name_en": "SiteOne Landscape Supply",
+      "sub": "造園資材の卸",
+      "sub_en": "Landscape supply distribution",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大級の顧客の一社にホーム・デポを挙げる",
+          "text_en": "Names The Home Depot among its largest customers",
+          "source": {
+            "label": "SiteOne 10-K(2024年度)",
+            "label_en": "SiteOne 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1650729/000165072925000004/site-20241229.htm",
+            "level": "official",
+            "date": "2025-02-20",
+            "quote": "Some of our largest customers include BrightView, Weed Man, Aptive Environmental, Heartland, Yellowstone Landscape, The Home Depot, Sperber, and Davey Tree."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "上位の競合にホーム・デポ子会社のヘリテージを挙げる",
+          "text_en": "Names Heritage Landscape Supply, a Home Depot subsidiary, among its largest competitors",
+          "source": {
+            "label": "SiteOne 10-K(2024年度)",
+            "label_en": "SiteOne 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1650729/000165072925000004/site-20241229.htm",
+            "level": "official",
+            "date": "2025-02-20",
+            "quote": "We believe our top nine largest competitors include Heritage Landscape Supply Group (a subsidiary of The Home Depot)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BLDR",
+      "ticker": "BLDR",
+      "name": "ビルダーズ・ファーストソース",
+      "name_en": "Builders FirstSource",
+      "sub": "建材(プロ向け)",
+      "sub_en": "Building materials for pros",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "SRS・GMS買収でプロ向け市場のシェアを狙う競合と記載",
+          "text_en": "Says Home Depot is repositioning to gain Pro share through SRS and GMS",
+          "source": {
+            "label": "Builders FirstSource 10-K(2025年度)",
+            "label_en": "Builders FirstSource 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1316835/000119312526054643/bldr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "The Home Depot, Inc., through its acquisitions of SRS Distribution Inc. and GMS Inc., and Lowe's Companies Inc., through its acquisition of Foundation Building Materials, continue to reposition themselves to gain market share in the Pro Segment."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LESL",
+      "ticker": "LESL",
+      "name": "レスリーズ",
+      "name_en": "Leslie's",
+      "sub": "プール用品",
+      "sub_en": "Pool supplies",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "季節商品でホーム・デポと競合",
+          "text_en": "Says home improvement retailers such as Home Depot compete with it seasonally",
+          "source": {
+            "label": "Leslie's 10-K(2025年9月期)",
+            "label_en": "Leslie's 10-K (FY ended Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1821806/000119312525323811/lesl-20251004.htm",
+            "level": "official",
+            "date": "2025-12-18",
+            "quote": "National home improvement and retailers, such as Home Depot, Lowe's, and local and regional hardware stores, typically compete with us mainly on a seasonal basis during the spring and summer months"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -4,6 +4,7 @@ import importlib.util
 from pathlib import Path
 import sys
 import tempfile
+import time
 import unittest
 from unittest.mock import patch
 from zoneinfo import ZoneInfo
@@ -152,7 +153,8 @@ class ServiceTests(unittest.TestCase):
             self.assertEqual((answer["ok"], answer["mode"]), (True, "automatic"))
             self.assertNotIn("snapshot", answer)
             self.assertIn("lastCycleAgeSeconds", answer["monitor"])
-            # The background step only rebuilds the state while no full reader asked.
+            # The background step only rebuilds the state while no full reader asked (and the full payload is warm).
+            self.app.live_cache = (time.monotonic() - 200, {"ok": True, "mode": "automatic", "monitor": {}, "snapshot": {}})
             self.app.live_full_requested_at -= service.LIVE_IDLE_SECONDS + 1
             self.app.live_state_cache = (self.app.live_state_cache[0] - 120, self.app.live_state_cache[1])
             self.assertTrue(self.app.refresh_live())

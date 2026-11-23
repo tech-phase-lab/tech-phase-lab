@@ -3,8 +3,9 @@
 Requests the public production pages' APIs on techphase.app and the research monitor's /health once, and checks their content,
 not only the status: non-empty answers, fresh timestamps, no snapshot fallback or diagnostic error mode, and response times.
 It prints ONE line of JSON of true/false values, counts, HTTP statuses and milliseconds (never titles, URLs, figures or any
-environment value) and exits 1 when any check fails, so the cron run shows as failed in Railway. It writes nothing and sends no
-credential: every request is the same anonymous GET a visitor's browser makes.
+environment value). Run on its own it exits 1 when any check fails; in the daily cron (daily_checks.py, Nov 23) the result goes to
+the monitor's incident alerts instead and the run exits 0. It writes nothing and sends no credential: every request is the same
+anonymous GET a visitor's browser makes.
 
     PRODUCTION_WATCH=true python3 scripts/research/production_watch.py
 
@@ -16,15 +17,18 @@ import json
 import os
 import sys
 import time
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
+from zoneinfo import ZoneInfo
 
 SITE = "https://techphase.app"
 MONITOR = "https://research-monitor-staging-research-staging.up.railway.app"
 USER_AGENT = "TechPhaseProductionWatch/1.0"
 MAX_BYTES = 6_000_000
 HOUR = 3600
+ET = ZoneInfo("America/New_York")
+NEWS_TRADING_HOURS = 72
 
 
 def enabled(env=None):
@@ -87,14 +91,43 @@ def check_company_wire(data, now):
             "items": len(items), "newestAgeSeconds": age}
 
 
-def check_news(data, now):
+def market_holidays():
+    """NYSE holidays (the calendar the price alerts use); empty if it cannot be loaded, so only weekends are skipped."""
+    try:
+        import price_alerts
+        return price_alerts.HOLIDAYS
+    except Exception:
+        return frozenset()
+
+
+def trading_day_seconds(start, end, holidays=None):
+    """Seconds between two instants that fall on U.S. trading days (New York weekdays that are not NYSE holidays)."""
+    holidays = market_holidays() if holidays is None else holidays
+    if start >= end:
+        return 0
+    start, end = start.astimezone(ET), end.astimezone(ET)
+    total, day = 0.0, start.date()
+    while day <= end.date():
+        if day.weekday() < 5 and day.isoformat() not in holidays:
+            begin = datetime(day.year, day.month, day.day, tzinfo=ET)
+            finish = begin + timedelta(days=1)
+            total += max(0.0, (min(finish, end) - max(begin, start)).total_seconds())
+        day += timedelta(days=1)
+    return round(total)
+
+
+def check_news(data, now, holidays=None):
     """Home news list: the public (FREE) view of /api/research/news."""
     lists = ("items", "officialUpdates", "analystUpdates", "marketUpdates", "resultBriefs")
     entries = [entry for key in lists for entry in (data.get(key) or []) if isinstance(entry, dict)]
-    age = newest_age_seconds([entry.get("observedAt") or entry.get("publishedAt") for entry in entries], now)
-    # Weekends and holidays have no economic releases or results: four days covers a long weekend.
-    return {"valid": data.get("ok") is True and len(entries) >= 1 and fresh(age, 96 * HOUR),
-            "entries": len(entries), "newestAgeSeconds": age}
+    times = [t for t in (parse_time(entry.get("observedAt") or entry.get("publishedAt")) for entry in entries) if t is not None]
+    age = round((now - max(times)).total_seconds()) if times else None
+    # Nov 23 (owner): weekends and NYSE holidays have no economic releases or results, so only trading-day time counts.
+    # The newest entry may be up to three trading days old (a Wednesday-evening entry still passes on Sunday night).
+    trading_age = trading_day_seconds(max(times), now, holidays) if times else None
+    return {"valid": data.get("ok") is True and len(entries) >= 1 and age is not None and age >= -300
+                     and trading_age <= NEWS_TRADING_HOURS * HOUR,
+            "entries": len(entries), "newestAgeSeconds": age, "tradingAgeSeconds": trading_age}
 
 
 def check_live(data, now):
@@ -183,15 +216,20 @@ def run(fetch=None, now=None, site=SITE, monitor=MONITOR):
             "generatedAt": datetime.now(timezone.utc).isoformat(timespec="seconds")}
 
 
-def main():
+def check():
+    """Run and print the one line. None when disabled, otherwise the names of the failed checks ([] when all passed)."""
     if not enabled():
         print("DISABLED: set PRODUCTION_WATCH=true (or EARNINGS_SELFCHECK=true) to run the production watch")
-        return 0
+        return None
     site = os.environ.get("PRODUCTION_WATCH_SITE_URL", "").strip().rstrip("/") or SITE
     monitor = os.environ.get("PRODUCTION_WATCH_MONITOR_URL", "").strip().rstrip("/") or MONITOR
     summary = run(site=site, monitor=monitor)
     print(json.dumps({"check": "production-watch", **summary}, separators=(",", ":")), flush=True)
-    return 0 if summary["ok"] else 1
+    return list(summary["failed"])
+
+
+def main():
+    return 1 if check() else 0
 
 
 if __name__ == "__main__":

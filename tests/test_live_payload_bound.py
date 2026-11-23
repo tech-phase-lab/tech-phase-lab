@@ -162,7 +162,12 @@ class LivePayloadBoundTests(unittest.TestCase):
             self.assertGreater(stale["monitor"]["lastCycleAgeSeconds"], 3000)
             self.assertIn("monitor-stale", stale["monitor"]["health"]["issues"])
             # An old build is replaced before it is served.
+            # A build up to LIVE_STALE_SERVE_SECONDS old is served at once (the background step rebuilds it) ...
             app.live_cache = (time.monotonic() - service.LIVE_MAX_AGE - 1, app.live_cache[1])
+            app.live_payload()
+            self.assertEqual(build.call_count, 1)
+            # ... an older one is replaced before it is served.
+            app.live_cache = (time.monotonic() - service.LIVE_STALE_SERVE_SECONDS - 1, app.live_cache[1])
             app.live_payload()
             self.assertEqual(build.call_count, 2)
             # The refresher rebuilds only while someone has asked recently.
@@ -170,6 +175,11 @@ class LivePayloadBoundTests(unittest.TestCase):
             self.assertTrue(app.refresh_live())
             app.live_requested_at = time.monotonic() - service.LIVE_IDLE_SECONDS - 1
             app.live_cache = (time.monotonic() - service.LIVE_REFRESH_INTERVAL - 1, app.live_cache[1])
+            self.assertFalse(app.refresh_live())
+            # With nobody asking, the full payload is still kept warm at a slow pace.
+            app.live_cache = (time.monotonic() - service.LIVE_WARM_SECONDS - 1, app.live_cache[1])
+            self.assertTrue(app.refresh_live())
+            self.assertEqual(build.call_count, 4)
             self.assertFalse(app.refresh_live())
 
 

@@ -1,0 +1,469 @@
+{
+  "root": {
+    "ticker": "HAL",
+    "name": "ハリバートン",
+    "cik": 45012,
+    "name_en": "Halliburton"
+  },
+  "rows": [
+    {
+      "ja": "供給元(上流)",
+      "en": "Suppliers (upstream)",
+      "above": true
+    },
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "BKR",
+    "WFRD",
+    "LBRT",
+    "PUMP",
+    "RES"
+  ],
+  "companies": [
+    {
+      "id": "OMSE",
+      "ticker": "OMSE",
+      "name": "OMSエナジー・テクノロジーズ",
+      "name_en": "OMS Energy Technologies",
+      "sub": "油井用部材",
+      "sub_en": "Oilfield components",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ハリバートンが売上の7%を占める顧客で、基本購入契約を結ぶ",
+          "text_en": "Halliburton accounted for 7% of its revenue and buys under a master purchase agreement",
+          "source": {
+            "label": "OMS Energy Technologies 20-F(2025年3月期)",
+            "label_en": "OMS Energy Technologies 20-F (FY ended Mar 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2012219/000095017025098559/omse-20250331.htm",
+            "level": "official",
+            "date": "2025-07-25",
+            "quote": "For the period from April 1, 2023 through March 31, 2024, ARAMCO and Halliburton accounted for 61% and 7% of our revenue respectively."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RBC",
+      "ticker": "RBC",
+      "name": "RBCベアリングス",
+      "name_en": "RBC Bearings",
+      "sub": "ベアリング",
+      "sub_en": "Bearings",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "産業部門の最大級の顧客の一社にハリバートン",
+          "text_en": "Names Halliburton among its largest industrial customers",
+          "source": {
+            "label": "RBC Bearings 10-K(2025年3月期)",
+            "label_en": "RBC Bearings 10-K (FY ended Mar 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1324948/000121390025044893/ea0241667-10k_rbcbear.htm",
+            "level": "official",
+            "date": "2025-05-16",
+            "quote": "Our largest industrial customers include Caterpillar, Komatsu and Halliburton"
+          }
+        }
+      ]
+    },
+    {
+      "id": "DTI",
+      "ticker": "DTI",
+      "name": "ドリリング・ツールズ・インターナショナル",
+      "name_en": "Drilling Tools International",
+      "sub": "掘削工具レンタル",
+      "sub_en": "Drilling tool rental",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "顧客の油田サービス大手の一社にハリバートン",
+          "text_en": "Lists Halliburton among the diversified oilfield service customers that made up about 48% of revenue",
+          "source": {
+            "label": "Drilling Tools International 10-K(2025年度)",
+            "label_en": "Drilling Tools International 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1884516/000119312526095973/dti-20251231.htm",
+            "level": "official",
+            "date": "2026-03-06",
+            "quote": "Our customer base is comprised of: (i) diversified OSCs, which account for approximately 48% of 2025 revenue, including but not limited to Baker Hughes Company, Halliburton Company, Phoenix Energy, and SLB"
+          }
+        }
+      ]
+    },
+    {
+      "id": "VoltaGrid",
+      "ticker": "VoltaGrid",
+      "name": "ボルタグリッド",
+      "name_en": "VoltaGrid",
+      "sub": "分散型ガス発電",
+      "sub_en": "Modular gas power",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "データセンター向けに400MWのガス発電設備で戦略協業",
+          "text_en": "Strategic collaboration with VoltaGrid on 400 MW of modular gas power for data centers",
+          "source": {
+            "label": "Halliburton 10-K(2025年度)",
+            "label_en": "Halliburton 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/45012/000004501226000015/hal-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "This growth includes our strategic collaboration with VoltaGrid, for which we have secured manufacturing capacity for 400 megawatts of modular natural gas power systems for delivery in 2028 to support the development of data centers in the Eastern Hemisphere."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FTI",
+      "ticker": "FTI",
+      "name": "テクニップFMC",
+      "name_en": "TechnipFMC",
+      "sub": "海底生産システム",
+      "sub_en": "Subsea systems",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "全電動の坑井や海底介入などで技術提携",
+          "text_en": "Technology alliance on all-electric wells, subsea interventions and more",
+          "source": {
+            "label": "TechnipFMC 10-K(2025年度)",
+            "label_en": "TechnipFMC 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1681459/000168145926000010/fti-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "We have a technology alliance with Halliburton focused on the development of innovative technologies for use in all-electric wells, subsea interventions, subsea fiber optics, and carbon transportation and storage."
+          }
+        }
+      ]
+    },
+    {
+      "id": "VTLE",
+      "ticker": "VTLE",
+      "name": "バイタル・エナジー",
+      "name_en": "Vital Energy",
+      "sub": "石油・ガス開発",
+      "sub_en": "Oil & gas producer",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "電動フラクチャリング部隊をハリバートンからリース",
+          "text_en": "Leases an electric fracturing crew and services from Halliburton",
+          "source": {
+            "label": "Vital Energy 10-K(2024年度)",
+            "label_en": "Vital Energy 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1528129/000152812925000045/vtle-20241231.htm",
+            "level": "official",
+            "date": "2025-02-24",
+            "quote": "The Company has a lease agreement with Halliburton, which became effective during the first quarter of 2023 and extends through 2025, to provide an electric fracture stimulation crew and the related services."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DeepIsolation",
+      "ticker": "Deep Isolation",
+      "name": "ディープ・アイソレーション",
+      "name_en": "Deep Isolation Nuclear",
+      "sub": "核廃棄物の地層処分",
+      "sub_en": "Nuclear waste disposal",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ハリバートンと基本サービス契約を締結(2026年1月)",
+          "text_en": "Signed a master services agreement with Halliburton in January 2026",
+          "source": {
+            "label": "Deep Isolation Nuclear S-1/A(2026年4月)",
+            "label_en": "Deep Isolation Nuclear S-1/A (Apr 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1918080/000121390026040521/ea0280146-s1a4_deep.htm",
+            "level": "official",
+            "date": "2026-04-06",
+            "quote": "On January 28, 2026, Deep Isolation US LLC, a wholly owned subsidiary of Deep Isolation entered into a Master Services Agreement (the \"MSA\") with Halliburton Energy Services, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TTI",
+      "ticker": "TTI",
+      "name": "テトラ・テクノロジーズ",
+      "name_en": "TETRA Technologies",
+      "sub": "坑井試験・化学品",
+      "sub_en": "Well testing & chemicals",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "海外の生産試験では競合しつつ、ハリバートンの顧客向けに下請けも行う",
+          "text_en": "Competes with Halliburton in international production testing but also subcontracts for its customers",
+          "source": {
+            "label": "TETRA Technologies 10-K(2025年度)",
+            "label_en": "TETRA Technologies 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/844965/000084496526000015/tti-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Halliburton and Schlumberger are competitors in the international production testing markets we serve although we provide these services to their customers on a subcontract basis from time to time."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BKR",
+      "ticker": "BKR",
+      "name": "ベーカー・ヒューズ",
+      "name_en": "Baker Hughes",
+      "sub": "油田サービス",
+      "sub_en": "Oilfield services",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "油田サービス部門の競合にハリバートンを挙げる",
+          "text_en": "Names Halliburton among competitors of its oilfield services segment",
+          "source": {
+            "label": "Baker Hughes 10-K(2025年度)",
+            "label_en": "Baker Hughes 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1701605/000170160526000007/bkr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-05",
+            "quote": "OFSE competitors include SLB, Halliburton, NOV, Weatherford, and TechnipFMC."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WFRD",
+      "ticker": "WFRD",
+      "name": "ウェザーフォード",
+      "name_en": "Weatherford International",
+      "sub": "油田サービス",
+      "sub_en": "Oilfield services",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合にハリバートンを挙げる",
+          "text_en": "Names Halliburton among its principal competitors",
+          "source": {
+            "label": "Weatherford 10-K(2025年度)",
+            "label_en": "Weatherford 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1603923/000160392326000014/wfrd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-04",
+            "quote": "Our principal competitors include SLB, Halliburton, Baker Hughes and Expro Group Holdings."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LBRT",
+      "ticker": "LBRT",
+      "name": "リバティ・エナジー",
+      "name_en": "Liberty Energy",
+      "sub": "水圧破砕",
+      "sub_en": "Hydraulic fracturing",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "水圧破砕サービスでハリバートンと競合",
+          "text_en": "Its fracturing services compete with large integrated companies such as Halliburton",
+          "source": {
+            "label": "Liberty Energy 10-K(2025年度)",
+            "label_en": "Liberty Energy 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1694028/000169402826000006/lbrt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-02",
+            "quote": "Our hydraulic fracturing services compete with large, integrated companies such as Halliburton Company as well as other companies including Patterson-UTI Energy Inc. and ProFrac Holding Corp."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PUMP",
+      "ticker": "PUMP",
+      "name": "プロペトロ",
+      "name_en": "ProPetro",
+      "sub": "水圧破砕",
+      "sub_en": "Hydraulic fracturing",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合にハリバートンを挙げる",
+          "text_en": "Names Halliburton among its major competitors",
+          "source": {
+            "label": "ProPetro 10-K(2024年度)",
+            "label_en": "ProPetro 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1680247/000168024725000030/pump-20241231.htm",
+            "level": "official",
+            "date": "2025-02-20",
+            "quote": "Our competitors include many large and small energy service companies, including Halliburton Company, Liberty Energy Inc., Patterson-UTI Energy Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RES",
+      "ticker": "RES",
+      "name": "RPC",
+      "name_en": "RPC",
+      "sub": "油田サービス",
+      "sub_en": "Oilfield services",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "業界の世界的大手の競合としてハリバートンを挙げる",
+          "text_en": "Names Halliburton among dominant global competitors",
+          "source": {
+            "label": "RPC 10-K(2024年度)",
+            "label_en": "RPC 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/742278/000155837025001922/res-20241231x10k.htm",
+            "level": "official",
+            "date": "2025-02-28",
+            "quote": "The oil and gas services industry includes dominant global competitors including, among others, Halliburton Company, Baker Hughes Company, and Schlumberger Ltd."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ACDC",
+      "ticker": "ACDC",
+      "name": "プロフラック",
+      "name_en": "ProFrac Holding",
+      "sub": "水圧破砕",
+      "sub_en": "Hydraulic fracturing",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "刺激(フラクチャリング)サービスの競合にハリバートン",
+          "text_en": "Names Halliburton among competitors of its stimulation services",
+          "source": {
+            "label": "ProFrac 10-K(2024年度)",
+            "label_en": "ProFrac 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1881487/000095017025036251/acdc-20241231.htm",
+            "level": "official",
+            "date": "2025-03-10",
+            "quote": "Our Stimulation Services competitors include Halliburton Company, Liberty Energy Inc., ProPetro Holding Corp., and Patterson-UTI Energy, Inc., among others."
+          }
+        }
+      ]
+    },
+    {
+      "id": "KLXE",
+      "ticker": "KLXE",
+      "name": "KLXエナジー・サービシズ",
+      "name_en": "KLX Energy Services",
+      "sub": "油田サービス",
+      "sub_en": "Oilfield services",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合にハリバートンを挙げる",
+          "text_en": "Names Halliburton among its major competitors",
+          "source": {
+            "label": "KLX Energy Services 10-K(2025年度)",
+            "label_en": "KLX Energy Services 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1738827/000173882726000013/klxe-20251231.htm",
+            "level": "official",
+            "date": "2026-03-12",
+            "quote": "Our major competitors include Schlumberger, Halliburton, Baker Hughes, Patterson-UTI Energy, Liberty Oilfield Services, RPC, ProPetro Holding Corp."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NBR",
+      "ticker": "NBR",
+      "name": "ネイバーズ",
+      "name_en": "Nabors Industries",
+      "sub": "掘削",
+      "sub_en": "Drilling",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "掘削ソリューション部門の競合にハリバートンを挙げる",
+          "text_en": "Says its Drilling Solutions segment competes with services from Halliburton and others",
+          "source": {
+            "label": "Nabors 10-K(2025年度)",
+            "label_en": "Nabors 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1163739/000110465926014997/nbr-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Our Drilling Solutions segment competes with services provided by NOV Inc., Pason Systems Inc., Baker Hughes Co., Halliburton Co., SLB N.V."
+          }
+        }
+      ]
+    },
+    {
+      "id": "INVX",
+      "ticker": "INVX",
+      "name": "イノベックス",
+      "name_en": "Innovex International",
+      "sub": "坑井用製品",
+      "sub_en": "Well products",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "製品分野全体の主な競合にハリバートンを挙げる",
+          "text_en": "Names Halliburton among major competitors across its product lines",
+          "source": {
+            "label": "Innovex 10-K(2025年度)",
+            "label_en": "Innovex 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1042893/000119312526067228/invx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Our major competitors across our product lines include Baker Hughes, Halliburton, Schlumberger, TechnipFMC, Weatherford International, Aker Solutions, and NOV."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NCSM",
+      "ticker": "NCSM",
+      "name": "NCSマルチステージ",
+      "name_en": "NCS Multistage",
+      "sub": "坑井仕上げ",
+      "sub_en": "Well completions",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "仕上げ製品・サービスの競合にハリバートンを挙げる",
+          "text_en": "Names Halliburton among competitors for its completion products and services",
+          "source": {
+            "label": "NCS Multistage 10-K(2025年度)",
+            "label_en": "NCS Multistage 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1692427/000143774926007065/ncsm20251231_10k.htm",
+            "level": "official",
+            "date": "2026-03-05",
+            "quote": "Our major competitors for our completion products and services include Baker Hughes Company (\"Baker Hughes\"), Core Laboratories Inc., DMC Global Inc., Forum Energy Technologies, Inc., Halliburton Company"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

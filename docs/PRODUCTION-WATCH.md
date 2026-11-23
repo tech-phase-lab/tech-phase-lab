@@ -8,7 +8,7 @@
 | 名前 | 対象 | 合格条件 | 応答時間の上限 |
 |---|---|---|---|
 | `homeBand` | `/api/research/company-wire`（ホーム上部のLIVE帯） | `ok`、見出し10件以上・全件にタイトル、最新が12時間以内 | 5秒 |
-| `news` | `/api/research/news`（ホームのニュース一覧・FREE表示） | `ok`、1件以上、最新が96時間以内（週末・祝日を考慮） | 5秒 |
+| `news` | `/api/research/news`（ホームのニュース一覧・FREE表示） | `ok`、1件以上、最新が米国の取引日の時間で72時間以内（土日・NYSE休場日は数えない。11/23変更、旧: 96時間） | 5秒 |
 | `live` | `/api/research/live`（運営用の取得状況画面） | `mode:"automatic"`、`error`/`diagnosticReason`なし（＝保存済みスナップショットへのフォールバックでない）、資料100件以上、スナップショット生成10分以内、最終巡回10分以内 | 8秒 |
 | `freshness` | `/api/research/freshness`（全ページの遅延表示） | `status:"ok"`、最終巡回10分以内 | 8秒 |
 | `earningsResults` | `/api/research/earnings-results?month=recent`（カレンダーの決算結果） | `ok`、`complete:true`（保存版から）、1件以上で数値つきが1件以上、最新が30日以内 | 5秒 |
@@ -21,14 +21,24 @@
 {"check":"production-watch","ok":false,"failed":["live","freshness"],"checks":{"live":{"status":200,"ms":8596,"fast":false,"valid":false,"automatic":false,"fallback":true,...},...},"generatedAt":"..."}
 ```
 
-1つでも不合格なら終了コード1で終わり、Railway のcron実行が **failed** と表示されます（それが通知）。
+1つでも不合格なら、毎日のcron（`daily_checks.py`）は結果を監視サービスの障害通知に送り（`cron_report.py`、下の「通知」）、終了コード0で終わります（11/23変更。以前は終了コード1でRailwayの「deployment crashed」メールが通知代わりでした）。
 
 ## どう動くか（新しいサービスは不要）
 
 既存の `earnings-selfcheck` cronサービス（Railway、`research-staging` 環境、毎日 `30 22 * * *` UTC = 07:30 JST）の同じコンテナで動きます。
 `services/earnings-selfcheck/Dockerfile` の起動コマンドを `scripts/research/daily_checks.py` に変え、これが
 決算セルフチェック（`earnings_selfcheck.py`、従来どおりの1行）と本番点検（`production_watch.py`、上の1行）を順に実行します。
-片方が例外で止まっても、もう片方は実行されます。どちらかが失敗なら終了コード1です。
+片方が例外で止まっても、もう片方は実行されます。
+
+## 通知（11/23から）
+
+不合格は監視サービスの `POST /internal/cron-report` に送られ、障害（`cron:production-watch` / `cron:earnings-selfcheck`、critical）として
+記録されます。オーナーへの通知は既存の障害通知（Web Push またはwebhook）で、開いたとき1回・合格に戻ったとき1回です。
+
+- 必要な変数（本番設定の変更なのでオーナーの承認が必要）: 監視サービスに `RESEARCH_CRON_REPORT_TOKEN`（32文字以上）、
+  earnings-selfcheck に同じ値の `RESEARCH_CRON_REPORT_TOKEN` と `RESEARCH_CRON_REPORT_URL`（監視サービスの https のベースURL）。
+- 終了コード1になるのは、点検自体が動けなかったとき（例外）か、不合格を通知に送れなかったとき（変数が未設定・監視に届かない）だけ。
+  変数が入るまでは、不合格の日は従来どおり終了コード1（メール）になり、黙って消えることはありません。
 
 - 有効化: サービスにすでにある `EARNINGS_SELFCHECK=true` で本番点検も有効になります。Railway・Vercel の設定変更は不要です。
 - 本番点検だけ止める: `PRODUCTION_WATCH=false`（変数の追加は本番設定の変更なので、オーナーの承認が必要）。

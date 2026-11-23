@@ -17,9 +17,18 @@
     {
       "ja": "銀行・融資の取りまとめ",
       "en": "Banks & arrangers"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
     }
   ],
-  "rivals": [],
+  "rivals": [
+    "CHYM",
+    "MQ",
+    "QTWO",
+    "EVTC"
+  ],
   "companies": [
     {
       "id": "BLK",
@@ -295,6 +304,129 @@
             "quote": "Goldman Sachs was the structuring agent and joint lead bookrunner with Bank of America.",
             "note": "1回の取引です。",
             "note_en": "A single transaction."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DAVE",
+      "ticker": "DAVE",
+      "name": "Dave",
+      "sub": "フィンテック",
+      "sub_en": "Fintech",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "SoFi傘下のGalileoが、Daveの口座・カードの取引処理を担う複数年契約",
+          "text_en": "Multi-year agreement under which SoFi’s Galileo processes transactions for Dave’s accounts and cards",
+          "source": {
+            "label": "Dave 10-K(2025年度)",
+            "label_en": "Dave 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1841408/000119312526085370/dave-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "Under this agreement, Galileo processes all transactions for ExtraCash, Dave Checking accounts, and Dave Debit Cards, and handles corresponding payments, adjustments, and settlement.",
+            "note": "GalileoはSoFiの子会社です。",
+            "note_en": "Galileo is a SoFi subsidiary."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CHYM",
+      "ticker": "CHYM",
+      "name": "Chime",
+      "sub": "フィンテック",
+      "sub_en": "Fintech",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Chimeが10-Kで、競合するネット専業の金融機関としてSoFiを挙げる",
+          "text_en": "Chime names SoFi among online-only financial institutions it competes with",
+          "source": {
+            "label": "Chime 10-K(2025年度)",
+            "label_en": "Chime 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1795586/000179558626000013/chym-20251231.htm",
+            "level": "official",
+            "date": "2026-03-06",
+            "quote": "We also compete with online-only financial institutions, such as Ally, Discover, and SoFi"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MQ",
+      "ticker": "MQ",
+      "name": "Marqeta",
+      "sub": "カード発行基盤",
+      "sub_en": "Card issuing platform",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Marqetaが10-Kで、API型の競合としてSoFi傘下のGalileoを挙げる",
+          "text_en": "Marqeta names SoFi’s Galileo among modern API-based competitors",
+          "source": {
+            "label": "Marqeta 10-K(2025年度)",
+            "label_en": "Marqeta 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1522540/000152254026000017/mq-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "modern API-based providers, such as Galileo, i2c, and Visa DPS",
+            "note": "GalileoはSoFiの子会社です。",
+            "note_en": "Galileo is a SoFi subsidiary."
+          }
+        }
+      ]
+    },
+    {
+      "id": "QTWO",
+      "ticker": "QTWO",
+      "name": "Q2 Holdings",
+      "sub": "銀行向けソフト",
+      "sub_en": "Banking software",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Q2が10-Kで、組み込み金融の主な競合としてSoFi傘下のGalileoを挙げる",
+          "text_en": "Q2 names SoFi’s Galileo as a primary competitor in embedded finance",
+          "source": {
+            "label": "Q2 Holdings 10-K(2025年度)",
+            "label_en": "Q2 Holdings 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1410384/000141038426000006/qtwo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "With respect to our Helix solution, we primarily compete with Galileo Financial Technologies, Marqeta and Green Dot in the BaaS and embedded finance markets",
+            "note": "GalileoはSoFiの子会社です。",
+            "note_en": "Galileo is a SoFi subsidiary."
+          }
+        }
+      ]
+    },
+    {
+      "id": "EVTC",
+      "ticker": "EVTC",
+      "name": "Evertec",
+      "sub": "決済処理",
+      "sub_en": "Payment processing",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Evertecが10-Kで、カード処理の競合としてSoFi傘下のGalileoを挙げる",
+          "text_en": "Evertec names SoFi’s Galileo among its card-processing competitors",
+          "source": {
+            "label": "Evertec 10-K(2025年度)",
+            "label_en": "Evertec 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1559865/000155986526000012/evtc-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "In payment services, we compete with several other third-party card processors, debit networks, and financial technology providers, including Tecnocom Telecomunicaciones y Energía, S.A., Galileo Financial Technologies, LLC, Marqeta, Inc.",
+            "note": "GalileoはSoFiの子会社です。",
+            "note_en": "Galileo is a SoFi subsidiary."
           }
         }
       ]

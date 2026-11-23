@@ -1,0 +1,295 @@
+{
+  "root": {
+    "ticker": "AEM",
+    "name": "アグニコ・イーグル・マインズ",
+    "cik": 2809,
+    "name_en": "Agnico Eagle Mines"
+  },
+  "rows": [
+    {
+      "ja": "ロイヤルティの受取先",
+      "en": "Royalty holders",
+      "above": true
+    },
+    {
+      "ja": "合併・買収・共同事業",
+      "en": "Mergers, acquisitions & joint ventures"
+    },
+    {
+      "ja": "出資先",
+      "en": "Equity stakes"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "RGLD",
+      "ticker": "RGLD",
+      "name": "ロイヤル・ゴールド",
+      "name_en": "Royal Gold",
+      "sub": "ロイヤルティ",
+      "sub_en": "Royalties",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ブスケ鉱区に2%のロイヤルティを持ち、2025年に1,360万加ドルを受け取った",
+          "text_en": "Holds a 2% royalty on Bousquet and received C$13.6 million in 2025",
+          "source": {
+            "label": "Agnico Eagle 年次情報書(40-F添付、2025年度)",
+            "label_en": "Agnico Eagle annual information form (40-F exhibit, FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2809/000110465926032153/aem-20251231xex99d1.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "The Bousquet property is subject to a 2% NSR royalty in favour of Royal Gold Inc. - in 2025, C$13.6 million in royalties were paid to Royal Gold Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "OR",
+      "ticker": "OR",
+      "name": "OR(旧オシスコ)ロイヤルティーズ",
+      "name_en": "OR Royalties (Osisko Gold Royalties)",
+      "sub": "ロイヤルティ",
+      "sub_en": "Royalties",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "主力のカナディアン・マラルティック鉱山の大半に5%のロイヤルティを持つ",
+          "text_en": "Holds a 5% royalty on most of the Canadian Malartic mine",
+          "source": {
+            "label": "Agnico Eagle 年次情報書(40-F添付、2025年度)",
+            "label_en": "Agnico Eagle annual information form (40-F exhibit, FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2809/000110465926032153/aem-20251231xex99d1.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "Most of the mining claims that make up the Canadian Malartic mine are subject to a 5% NSR royalty in favour of Osisko Gold Royalties Ltd."
+          }
+        }
+      ]
+    },
+    {
+      "id": "KirklandLake",
+      "ticker": "Kirkland Lake Gold",
+      "name": "カークランド・レイク・ゴールド",
+      "name_en": "Kirkland Lake Gold",
+      "sub": "金鉱山",
+      "sub_en": "Gold mining",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "合併した金鉱山会社(2024年1月に法人を一本化)",
+          "text_en": "Merged gold miner, amalgamated into the company on January 1, 2024",
+          "source": {
+            "label": "Agnico Eagle 年次情報書(40-F添付、2025年度)",
+            "label_en": "Agnico Eagle annual information form (40-F exhibit, FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2809/000110465926032153/aem-20251231xex99d1.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "On January 1, 2024, the Company amalgamated with Kirkland Lake Gold Ltd."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PAAS",
+      "ticker": "PAAS",
+      "name": "パンアメリカン・シルバー",
+      "name_en": "Pan American Silver",
+      "sub": "銀・金鉱山",
+      "sub_en": "Silver & gold mining",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Yamanaの買収を分担し、Pan Americanが本体、アグニコがカナダ資産を取得(2023年3月)",
+          "text_en": "Split the Yamana takeover in 2023: Pan American bought the company, Agnico its Canadian assets",
+          "source": {
+            "label": "Agnico Eagle 年次情報書(40-F添付、2025年度)",
+            "label_en": "Agnico Eagle annual information form (40-F exhibit, FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2809/000110465926032153/aem-20251231xex99d1.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "(\"Yamana\") entered into an arrangement agreement pursuant to which Pan American would acquire all the issued and outstanding common shares of Yamana and Yamana would sell the subsidiaries and partnerships that held Yamana's interest in its Canadian assets to the Company"
+          }
+        }
+      ]
+    },
+    {
+      "id": "TECK",
+      "ticker": "TECK",
+      "name": "テック・リソーシズ",
+      "name_en": "Teck Resources",
+      "sub": "資源大手",
+      "sub_en": "Diversified mining",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "メキシコのサンニコラス銅・亜鉛計画を50:50の合弁で開発",
+          "text_en": "50/50 joint venture developing the San Nicolás copper-zinc project in Mexico",
+          "source": {
+            "label": "Agnico Eagle 年次情報書(40-F添付、2025年度)",
+            "label_en": "Agnico Eagle annual information form (40-F exhibit, FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2809/000110465926032153/aem-20251231xex99d1.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "On September 16, 2022, the Company and Teck Resources Limited (\"Teck\") entered into an agreement to form a 50/50 joint venture for the San Nicolás copper-zinc development project located in Zacatecas, Mexico."
+          }
+        }
+      ]
+    },
+    {
+      "id": "O3",
+      "ticker": "O3 Mining",
+      "name": "O3マイニング",
+      "name_en": "O3 Mining",
+      "sub": "金探鉱",
+      "sub_en": "Gold exploration",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "マラルティック隣接のMarban鉱区を持つO3 Miningを2025年に買収",
+          "text_en": "Acquired O3 Mining, owner of the Marban property next to Malartic, in 2025",
+          "source": {
+            "label": "Agnico Eagle 年次情報書(40-F添付、2025年度)",
+            "label_en": "Agnico Eagle annual information form (40-F exhibit, FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2809/000110465926032153/aem-20251231xex99d1.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "In the first quarter of 2025, the Company completed the acquisition of O3 Mining Inc., which owned (among other things), the Marban property which is located immediately northeast of Canadian Malartic."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GFI",
+      "ticker": "GFI",
+      "name": "ゴールド・フィールズ",
+      "name_en": "Gold Fields",
+      "sub": "金鉱山",
+      "sub_en": "Gold mining",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Gold FieldsはYamana買収を目指したが、アグニコとPan Americanの合意を受けて撤退",
+          "text_en": "Gold Fields dropped its Yamana bid after Yamana agreed terms with Agnico Eagle and Pan American",
+          "source": {
+            "label": "Gold Fields 20-F(2024年度)",
+            "label_en": "Gold Fields 20-F (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1172724/000117272425000010/gfi-20241231.htm",
+            "level": "official",
+            "date": "2025-03-27",
+            "quote": "As a result of Yamana entering into an arrangement agreement with Pan American Silver Corp and Agnico Eagle Mines Limited, Gold Fields terminated the agreement in respect of the proposed acquisition of Yamana."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Goldsky",
+      "ticker": "Goldsky Resources",
+      "name": "ゴールドスカイ・リソーシズ",
+      "name_en": "Goldsky Resources",
+      "sub": "探鉱(スウェーデン)",
+      "sub_en": "Exploration (Sweden)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "スウェーデンのBarsele計画の合弁相手(アグニコ55%)",
+          "text_en": "Partner in the Barsele project in Sweden (Agnico 55%)",
+          "source": {
+            "label": "Agnico Eagle 年次情報書(40-F添付、2025年度)",
+            "label_en": "Agnico Eagle annual information form (40-F exhibit, FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2809/000110465926032153/aem-20251231xex99d1.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "In Sweden, exploration activities were conducted at the Barsele project, a joint venture in which the Company currently owns a 55% interest with the remaining held by Goldsky Resources Corp."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CNL",
+      "ticker": "CNL",
+      "name": "コレクティブ・マイニング",
+      "name_en": "Collective Mining",
+      "sub": "金探鉱(コロンビア)",
+      "sub_en": "Gold exploration (Colombia)",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年3月の増資引受でアグニコの持分は約14.9%に",
+          "text_en": "Agnico's stake rose to about 14.9% after a March 2025 placement",
+          "source": {
+            "label": "Collective Mining 40-F添付資料(2025年度)",
+            "label_en": "Collective Mining 40-F exhibit (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1953575/000121390026037056/ea028049401ex99-3.htm",
+            "level": "official",
+            "date": "2026-03-31",
+            "quote": "On closing of the March 2025 Private Placement and following exercise of the Warrants, Agnico Eagle's ownership interest in the Shares increased to approximately 14.9%."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PPTA",
+      "ticker": "PPTA",
+      "name": "パーペチュア・リソーシズ",
+      "name_en": "Perpetua Resources",
+      "sub": "金・アンチモン開発",
+      "sub_en": "Gold & antimony development",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年10月にJPMorganと共に第三者割当増資を引き受けた",
+          "text_en": "Subscribed to a private placement alongside JPMorgan in October 2025",
+          "source": {
+            "label": "Perpetua Resources 10-K(2025年度)",
+            "label_en": "Perpetua Resources 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1526243/000110465926037403/ppta-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-03-31",
+            "quote": "On October 27, 2025, the Corporation entered into subscription agreements with Agnico Eagle Mines Limited (\"Agnico Eagle\") and JPMorgan Chase Funding Inc., an affiliate of JPMorgan Chase & Co."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ORLA",
+      "ticker": "ORLA",
+      "name": "オーラ・マイニング",
+      "name_en": "Orla Mining",
+      "sub": "金鉱山",
+      "sub_en": "Gold mining",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Newmontと共に投資家権利契約を結び、取締役指名権などを持つ",
+          "text_en": "Holds investor rights (including board nominees) alongside Newmont",
+          "source": {
+            "label": "Orla Mining 年次情報書(40-F添付、2024年度)",
+            "label_en": "Orla Mining annual information form (40-F exhibit, FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1680056/000141057825000372/orla-20241231xex99d1.htm",
+            "level": "official",
+            "date": "2025-03-19",
+            "quote": "In addition, Newmont and Agnico Eagle are each a party to an investor rights agreement with the Company, which, among other things, provides each with certain pro rata rights to maintain their equity interest in the Company and rights to Board appointees."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

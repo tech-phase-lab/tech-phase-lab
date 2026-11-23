@@ -73,14 +73,14 @@ test('the map shows suppliers first, no range buttons, a card per company with s
 
 const BATCH = {
   NFLX: [15, 19], LRCX: [22, 24], TSLA: [20, 22], IBM: [29, 42], META: [33, 37],
-  BE: [7, 10], SKHY: [14, 16], GEV: [19, 20], MSFT: [24, 29], KLAC: [9, 11],
+  BE: [13, 16], SKHY: [14, 16], GEV: [19, 20], MSFT: [24, 29], KLAC: [9, 11],
   SNDK: [9, 17], AMD: [24, 33], ANET: [17, 23], ARM: [31, 32], LITE: [11, 16],
   INTC: [16, 20], QCOM: [17, 21], GOOGL: [21, 24], AAPL: [25, 26], AMZN: [21, 25],
-  VRT: [13, 15], PLTR: [24, 25], CEG: [6, 6], AAOI: [13, 13], NBIS: [14, 15],
+  VRT: [17, 19], PLTR: [24, 25], CEG: [9, 9], AAOI: [13, 13], NBIS: [14, 15],
   APH: [11, 13], NOW: [26, 30], STX: [14, 16], ALAB: [32, 35], IONQ: [18, 22],
-  SOFI: [10, 12], CRWV: [36, 42], IREN: [15, 23], COHR: [10, 12], AMAT: [12, 14],
+  SOFI: [15, 17], CRWV: [36, 42], IREN: [15, 23], COHR: [10, 12], AMAT: [12, 14],
   PANW: [39, 46], SNOW: [16, 27], DELL: [14, 19], MRVL: [39, 52], CRM: [26, 34], AVGO: [23, 26], CRDO: [15, 19], CRWD: [19, 25], ORCL: [27, 41],
-  VST: [6, 6], ADBE: [24, 24], MU: [10, 12], ASML: [11, 14], TSM: [26, 30],
+  VST: [9, 9], ADBE: [24, 24], MU: [10, 12], ASML: [11, 14], TSM: [26, 30],
 };
 
 test('the earnings-ordered companies use the same format with an official source on every relation', () => {
@@ -119,8 +119,12 @@ test('a map without suppliers, rivals or two-step links leaves those parts out, 
   const html = renderToStaticMarkup(createElement(StockChainMap, { data: be, lang: 'ja' }));
   assert.ok(!html.includes('供給元(上流)'), 'an empty supplier row is not drawn');
   assert.ok(html.indexOf('AIデータセンター・IT企業') > html.indexOf('BE</b>'));
-  assert.ok(html.includes('7社 · 10の関係') && !html.includes('さらに先の関係') && !html.includes('競合は？'));
-  const plain = renderToStaticMarkup(createElement(StockChainMap, { data: be, lang: 'en' }));
+  assert.ok(html.includes('13社 · 16の関係') && !html.includes('さらに先の関係'));
+  // OXY has an empty supplier row and no rivals: the rivals parts are left out.
+  const oxy = chain.chainDataFor('OXY');
+  const oxyHtml = renderToStaticMarkup(createElement(StockChainMap, { data: oxy, lang: 'ja' }));
+  assert.ok(!oxyHtml.includes('さらに先の関係') && !oxyHtml.includes('競合は？'));
+  const plain = renderToStaticMarkup(createElement(StockChainMap, { data: oxy, lang: 'en' }));
   assert.ok(!plain.includes('Who competes with it?') && !plain.includes('Related connections') && !plain.includes('Competitors'));
   const metaHtml = renderToStaticMarkup(createElement(StockChainMap, { data: meta, lang: 'en' }));
   assert.ok(metaHtml.indexOf('Power') < metaHtml.indexOf('META</b>') && metaHtml.indexOf('META</b>') < metaHtml.indexOf('Glasses, social'));
@@ -163,4 +167,17 @@ test('the repeated "competes with <root>" sentence is not drawn on rival cards, 
   const specific = chain.chainDataFor('CRDO');
   const text = specific.companies.flatMap(company => company.relations).find(relation => relation.type === 'rival' && relation.text !== `${specific.root.name}と競合する`).text;
   assert.ok(renderToStaticMarkup(createElement(StockChainMap, { data: specific, lang: 'ja' })).includes(text.replace(/&/g, '&amp;')));
+});
+
+test('the PRO tour sample leaves out 「05 競合は？」 and numbers the map heading 05; the stock page keeps 05 rivals and 06 map', () => {
+  const nvda = chain.chainDataFor('NVDA');
+  for (const lang of ['ja', 'en']) {
+    const rivals = lang === 'ja' ? '競合は？' : 'Who competes with it?', map = lang === 'ja' ? 'どこと繋がる？' : 'Who does it work with?';
+    const page = renderToStaticMarkup(createElement(StockChainMap, { data: nvda, lang }));
+    assert.ok(page.includes(`<span>05</span>${rivals}`) && page.includes(`<span>06</span>${map}`));
+    const sample = renderToStaticMarkup(createElement(StockChainMap, { data: nvda, lang, sample: true }));
+    assert.ok(!sample.includes(rivals) && sample.includes(`<span>05</span>${map}`) && !sample.includes('<span>06</span>'));
+  }
+  const ui = readFileSync(new URL('../app/research/pro-experience/samples/relation-map.tsx', import.meta.url), 'utf8');
+  assert.match(ui, /<StockChainMap [^>]*\bsample \/>/);
 });

@@ -1,8 +1,9 @@
 "use client";
+import { useState } from "react";
 import Link from "next/link";
 import StockLogo from "../watchlist/stock-logo";
 import { useFacts, useNumbersHidden, useQuotes, shortName, type CardQuote } from "./use-market";
-import { compact, dateJa, plain, rangePosition, signedBoth, signedMoney, signedPercent } from "@/lib/research/market-quote";
+import { compact, dateJa, type MarketFacts, plain, rangePosition, signedBoth, signedMoney, signedPercent } from "@/lib/research/market-quote";
 import { useResearchLanguage } from "../use-research-language";
 import StarButton from "./star-button";
 import { displayClock, zoneLabel } from "@/lib/research/display-time";
@@ -66,12 +67,23 @@ const eps = (value: number | null | undefined) => value == null ? "—" : value 
 /** The price card. `gauge` (today's range + 52-week range, eye button) is for the watched-22 pages; `dial` (position in the 52-week range, no eye
  * button) is for the stock search. Pressing the card opens the full detail page. Sizes follow the design's E sheet. */
 export default function QuoteCard({ ticker, variant, from, name, star = false }: { ticker: string; variant: "gauge" | "dial"; from: DetailOrigin; name?: string; star?: boolean }) {
-  const [lang] = useResearchLanguage();
-  const ja = lang === "ja";
   const { data, failed, loaded } = useQuotes([ticker]);
   const facts = useFacts(ticker).data;
-  const [hidden, setHidden] = useNumbersHidden();
-  const quote = data?.[ticker];
+  return <QuoteCardView ticker={ticker} variant={variant} from={from} name={name} star={star} quote={data?.[ticker]} facts={facts} loaded={loaded} failed={failed} />;
+}
+
+/** The card itself, from a quote already in hand. The PRO feature tour's 監視22銘柄 sample passes saved made-up figures and `link={false}`
+ * (a sample never leaves for the detail page); the live card above passes what it fetched. */
+export function QuoteCardView({ ticker, variant, from, name, star = false, quote, facts, loaded = true, failed = false, link = true }: {
+  ticker: string; variant: "gauge" | "dial"; from: DetailOrigin; name?: string; star?: boolean;
+  quote: CardQuote | undefined; facts: MarketFacts | null | undefined; loaded?: boolean; failed?: boolean; link?: boolean;
+}) {
+  const [lang] = useResearchLanguage();
+  const ja = lang === "ja";
+  const [sharedHidden, setSharedHidden] = useNumbersHidden();
+  // In a sample the eye only hides this card: the visitor's real setting for the 22 stocks is left alone.
+  const [sampleHidden, setSampleHidden] = useState(false);
+  const [hidden, setHidden] = link ? [sharedHidden, setSharedHidden] : [sampleHidden, setSampleHidden];
   // Watched-22 cards carry their own short English names; search results arrive with the SEC's upper-case registrant name, so the provider's name comes first there.
   const title = shortName(variant === "dial" ? (quote?.name ?? name ?? ticker) : (name ?? quote?.name ?? ticker));
   const frame = variant === "gauge" ? styles.gaugeCard : styles.dialCard;
@@ -82,7 +94,7 @@ export default function QuoteCard({ ticker, variant, from, name, star = false }:
   const hide = variant === "gauge" && hidden;
   const tone = toneOf(quote.percentChange);
   const arrow = tone === "up" ? "▲" : tone === "down" ? "▼" : "–";
-  const open = <Link className={styles.open} href={detailHref(ticker, from)} aria-label={ja ? `${title}（${ticker}）の詳細を開く` : `Open ${title} (${ticker}) details`} />;
+  const open = link && <Link className={styles.open} href={detailHref(ticker, from)} aria-label={ja ? `${title}（${ticker}）の詳細を開く` : `Open ${title} (${ticker}) details`} />;
   const eye = star ? <StarButton ticker={ticker} name={title} /> : variant === "gauge" && <Eye hidden={hidden} onToggle={() => setHidden(!hidden)} label={hidden ? (ja ? "数字を表示する" : "Show numbers") : (ja ? "数字を隠す" : "Hide numbers")} />;
   if (hide) return <><section className={`${styles.card} ${styles.hiddenCard}`} aria-label={`${title} ${ticker}`}>{open}
     <div className={styles.head}><Tile ticker={ticker} /><div className={styles.who}><h3 className={styles.name}>{title}</h3></div>{eye}</div>

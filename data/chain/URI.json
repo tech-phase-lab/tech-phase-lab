@@ -1,0 +1,227 @@
+{
+  "root": {
+    "ticker": "URI",
+    "name": "ユナイテッド・レンタルズ",
+    "cik": 1067701,
+    "name_en": "United Rentals"
+  },
+  "rows": [
+    {
+      "ja": "買収",
+      "en": "Acquisitions",
+      "above": true
+    },
+    {
+      "ja": "顧客",
+      "en": "Customers"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "SUNB",
+    "HRI",
+    "WSC"
+  ],
+  "companies": [
+    {
+      "id": "Yak",
+      "ticker": "Yak",
+      "name": "ヤク",
+      "name_en": "Yak",
+      "sub": "仮設マット・アクセス",
+      "sub_en": "Matting & site access",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2024年3月に、仮設マットのYak Access・Yak Matなど(総称Yak)を買収",
+          "text_en": "Acquired Yak Access, Yak Mat and New South Access & Environmental Solutions (\"Yak\") in March 2024",
+          "source": {
+            "label": "United Rentals 10-K(2025年度)",
+            "label_en": "United Rentals 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1067701/000106770126000007/uri-20251231.htm",
+            "level": "official",
+            "date": "2026-01-28",
+            "quote": "In March 2024, we completed the acquisition of Yak Access, LLC, Yak Mat, LLC and New South Access & Environmental Solutions, LLC (collectively, \"Yak\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HE",
+      "ticker": "H&E",
+      "name": "H&Eイクイップメント",
+      "name_en": "H&E Equipment Services",
+      "sub": "建機レンタル",
+      "sub_en": "Equipment rental",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年1月にH&Eの買収合意を発表したが、合意は解消された(解約に伴う受取額を計上)",
+          "text_en": "Announced a merger agreement to buy H&E in January 2025; the deal was later terminated and United Rentals booked a termination benefit",
+          "source": {
+            "label": "United Rentals 10-K(2025年度)",
+            "label_en": "United Rentals 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1067701/000106770126000007/uri-20251231.htm",
+            "level": "official",
+            "date": "2026-01-28",
+            "quote": "(6) In January 2025, we announced that we had signed a merger agreement to acquire H&E."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NOA",
+      "ticker": "NOA",
+      "name": "ノース・アメリカン・コンストラクション",
+      "name_en": "North American Construction",
+      "sub": "鉱山・土木工事",
+      "sub_en": "Mining & heavy civil construction",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "North American Constructionが、20年超の補助機材レンタルの取引先としてUnited Rentalsを挙げる",
+          "text_en": "North American Construction lists United Rentals as a supplier of support equipment rentals for over 20 years",
+          "source": {
+            "label": "North American Construction 年次報告(2025年度、40-F添付)",
+            "label_en": "North American Construction annual report (FY2025, 40-F exhibit)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1368519/000136851926000005/noaex99212-31x2025.htm",
+            "level": "official",
+            "date": "2026-03-12",
+            "quote": "United Rentals (over 20 years), a supplier of support equipment rentals;"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SUNB",
+      "ticker": "SUNB",
+      "name": "サンベルト・レンタルズ",
+      "name_en": "Sunbelt Rentals",
+      "sub": "建機レンタル",
+      "sub_en": "Equipment rental",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Sunbelt Rentalsが10-Kで、北米最大級の全国規模の競合としてUnited Rentalsを挙げる",
+          "text_en": "Sunbelt Rentals names United Rentals among its largest national competitors in North America",
+          "source": {
+            "label": "Sunbelt Rentals 10-K(2026年度)",
+            "label_en": "Sunbelt Rentals 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2083785/000162828026044888/snblt-20260430.htm",
+            "level": "official",
+            "date": "2026-06-23",
+            "quote": "In North America, our largest national competitors include United Rentals, Herc Rentals and EquipmentShare."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HRI",
+      "ticker": "HRI",
+      "name": "ハーク",
+      "name_en": "Herc",
+      "sub": "建機レンタル",
+      "sub_en": "Equipment rental",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Hercが10-Kで、全国規模の競合としてUnited Rentalsを挙げる",
+          "text_en": "Herc names United Rentals among the large national companies it competes with",
+          "source": {
+            "label": "Herc 10-K(2024年度)",
+            "label_en": "Herc 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1364479/000136447925000007/hri-20241231.htm",
+            "level": "official",
+            "date": "2025-02-13",
+            "quote": "Our competitors in the equipment rental industry range from other large national companies (United Rentals, Inc., Ashtead Group plc's Sunbelt Rentals brand and H&E Equipment Services, Inc.)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "WSC",
+      "ticker": "WSC",
+      "name": "ウィルスコット",
+      "name_en": "WillScot",
+      "sub": "仮設オフィス・コンテナのレンタル",
+      "sub_en": "Modular space & storage rental",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "WillScotが10-Kで、主な競合の一社としてUnited Rentalsを挙げる",
+          "text_en": "WillScot names United Rentals among its significant competitors",
+          "source": {
+            "label": "WillScot 10-K(2024年度)",
+            "label_en": "WillScot 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1647088/000164708825000009/wsc-20241231.htm",
+            "level": "official",
+            "date": "2025-02-20",
+            "quote": "Significant competitors include McGrath RentCorp, United Rentals, ATCO Structures & Logistics, and Satellite Shelters."
+          }
+        }
+      ]
+    },
+    {
+      "id": "XYL",
+      "ticker": "XYL",
+      "name": "ザイレム",
+      "name_en": "Xylem",
+      "sub": "水処理機器",
+      "sub_en": "Water technology",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Xylemが10-Kで、水関連サービスの主な競合としてUnited Rentalsを挙げる",
+          "text_en": "Xylem names United Rentals among key competitors in water solutions and services",
+          "source": {
+            "label": "Xylem 10-K(2024年度)",
+            "label_en": "Xylem 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1524472/000152447225000013/xyl-20241231.htm",
+            "level": "official",
+            "date": "2025-03-03",
+            "quote": "Our key competitors in the Water Solutions and Services segment include Ecolab, MPW Industrial Services, Ovivo, Sunbelt Rentals and United Rentals."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NPKI",
+      "ticker": "NPKI",
+      "name": "NPKインターナショナル",
+      "name_en": "NPK International",
+      "sub": "複合材マットのレンタル",
+      "sub_en": "Composite matting rental",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "NPKが10-Kで、マットのレンタル市場で最大の競合としてUnited Rentalsを挙げる",
+          "text_en": "NPK names United Rentals as the largest competitor in the mat rental market",
+          "source": {
+            "label": "NPK International 10-K(2025年度)",
+            "label_en": "NPK International 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/71829/000007182926000009/nr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "United Rentals is the largest competitor in the rental market, primarily using wood mats."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
