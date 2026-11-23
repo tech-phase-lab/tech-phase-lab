@@ -1,0 +1,289 @@
+{
+  "root": {
+    "ticker": "FTI",
+    "name": "テクニップFMC",
+    "cik": 1681459,
+    "name_en": "TechnipFMC"
+  },
+  "rows": [
+    {
+      "ja": "提携・分離",
+      "en": "Alliance & spin-off",
+      "above": true
+    },
+    {
+      "ja": "海底設備の受注先(顧客)",
+      "en": "Subsea project clients"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "BKR",
+    "HLX",
+    "WHD",
+    "INVX"
+  ],
+  "companies": [
+    {
+      "id": "HAL",
+      "ticker": "HAL",
+      "name": "ハリバートン",
+      "name_en": "Halliburton",
+      "sub": "油田サービス",
+      "sub_en": "Oilfield services",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "全電動坑井・海底介入などの技術提携",
+          "text_en": "Technology alliance on all-electric wells and subsea interventions",
+          "source": {
+            "label": "TechnipFMC 10-K(2025年度)",
+            "label_en": "TechnipFMC 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1681459/000168145926000010/fti-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "We have a technology alliance with Halliburton focused on the development of innovative technologies for use in all-electric wells, subsea interventions"
+          }
+        }
+      ]
+    },
+    {
+      "id": "TE",
+      "ticker": "Technip Energies",
+      "name": "テクニップ・エナジーズ",
+      "name_en": "Technip Energies",
+      "sub": "エンジニアリング(仏)",
+      "sub_en": "Engineering (France)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "下流事業を分離・独立(2021年2月)",
+          "text_en": "Spun off its downstream business (February 2021)",
+          "source": {
+            "label": "TechnipFMC 10-K(2025年度)",
+            "label_en": "TechnipFMC 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1681459/000168145926000010/fti-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "On February 16, 2021, we completed the separation of the Technip Energies business segment."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PBR",
+      "ticker": "PBR",
+      "name": "ペトロブラス",
+      "name_en": "Petrobras",
+      "sub": "石油(ブラジル)",
+      "sub_en": "Oil (Brazil)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "CO2再圧入を海底で行うMero 3 HISEP案件を受注",
+          "text_en": "Executing the Mero 3 HISEP subsea CO2 project for it",
+          "source": {
+            "label": "TechnipFMC 10-K(2025年度)",
+            "label_en": "TechnipFMC 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1681459/000168145926000010/fti-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "we are executing multiple first-of-its-kind project awards, including the Mero 3 HISEP® project for Petrobras offshore Brazil."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TTE",
+      "ticker": "TTE",
+      "name": "トタルエナジーズ",
+      "name_en": "TotalEnergies",
+      "sub": "石油",
+      "sub_en": "Oil & gas",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "スリナム初の海底開発GranMorguの一括契約を受注",
+          "text_en": "Won the iEPCI contract for its GranMorgu project in Suriname",
+          "source": {
+            "label": "TechnipFMC 10-K(2025年度)",
+            "label_en": "TechnipFMC 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1681459/000168145926000010/fti-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "We were awarded an iEPCITM contract for TotalEnergies' GranMorgu project - the first subsea development in Suriname."
+          }
+        }
+      ]
+    },
+    {
+      "id": "EQNR",
+      "ticker": "EQNR",
+      "name": "エクイノール",
+      "name_en": "Equinor",
+      "sub": "石油(ノルウェー)",
+      "sub_en": "Oil (Norway)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Raia・Johan Sverdrup第3期などを受注",
+          "text_en": "Projects include Raia and Johan Sverdrup Phase 3",
+          "source": {
+            "label": "TechnipFMC 10-K(2025年度)",
+            "label_en": "TechnipFMC 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1681459/000168145926000010/fti-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Equinor Raia and Johan Sverdrup Phase 3;"
+          }
+        }
+      ]
+    },
+    {
+      "id": "XOM",
+      "ticker": "XOM",
+      "name": "エクソンモービル",
+      "name_en": "ExxonMobil",
+      "sub": "石油",
+      "sub_en": "Oil & gas",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Whiptail・Hammerheadなどを受注",
+          "text_en": "Projects include Whiptail and Hammerhead",
+          "source": {
+            "label": "TechnipFMC 10-K(2025年度)",
+            "label_en": "TechnipFMC 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1681459/000168145926000010/fti-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "ENI Coral North and ExxonMobil Whiptail and Hammerhead."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BKR",
+      "ticker": "BKR",
+      "name": "ベーカー・ヒューズ",
+      "name_en": "Baker Hughes",
+      "sub": "油田サービス",
+      "sub_en": "Oilfield services",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "TechnipFMCが10-Kで、競合の筆頭に挙げる",
+          "text_en": "TechnipFMC lists Baker Hughes first among its competitors",
+          "source": {
+            "label": "TechnipFMC 10-K(2025年度)",
+            "label_en": "TechnipFMC 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1681459/000168145926000010/fti-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Our competitors include Baker Hughes Company, OneSubsea, Saipem SpA, and Subsea 7 S.A."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "Baker Hughesが10-Kで、油田サービス部門の競合として挙げる",
+          "text_en": "Baker Hughes names TechnipFMC among oilfield services competitors",
+          "source": {
+            "label": "Baker Hughes 10-K(2025年度)",
+            "label_en": "Baker Hughes 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1701605/000170160526000007/bkr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-05",
+            "quote": "OFSE competitors include SLB, Halliburton, NOV, Weatherford, and TechnipFMC."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HLX",
+      "ticker": "HLX",
+      "name": "ヘリックス・エナジー・ソリューションズ",
+      "name_en": "Helix Energy Solutions",
+      "sub": "坑井介入",
+      "sub_en": "Well intervention",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Helixが10-Kで、坑井介入の主な競合として挙げる",
+          "text_en": "Helix names TechnipFMC among principal well intervention competitors",
+          "source": {
+            "label": "Helix Energy Solutions 10-K(2025年度)",
+            "label_en": "Helix Energy Solutions 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/866829/000086682926000008/hlx-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Expro, Oceaneering, TechnipFMC, Trendsetter and Well-Safe Solutions."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WHD",
+      "ticker": "WHD",
+      "name": "カクタス",
+      "name_en": "Cactus",
+      "sub": "坑口装置",
+      "sub_en": "Wellheads",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Cactusが10-Kで、競合として挙げる",
+          "text_en": "Cactus names TechnipFMC as a competitor",
+          "source": {
+            "label": "Cactus 10-K(2024年度)",
+            "label_en": "Cactus 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1699136/000169913625000014/whd-20241231.htm",
+            "level": "official",
+            "date": "2025-02-27",
+            "quote": "We compete with Vault, divisions of SLB and TechnipFMC, and a large number of other companies."
+          }
+        }
+      ]
+    },
+    {
+      "id": "INVX",
+      "ticker": "INVX",
+      "name": "イノベックス・インターナショナル",
+      "name_en": "Innovex International",
+      "sub": "坑井用製品",
+      "sub_en": "Well products",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Innovexが10-Kで、主な競合の一社として挙げる",
+          "text_en": "Innovex names TechnipFMC among major competitors",
+          "source": {
+            "label": "Innovex International 10-K(2025年度)",
+            "label_en": "Innovex International 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1042893/000119312526067228/invx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Our major competitors across our product lines include Baker Hughes, Halliburton, Schlumberger, TechnipFMC"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
