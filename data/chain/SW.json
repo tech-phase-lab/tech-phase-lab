@@ -1,0 +1,224 @@
+{
+  "root": {
+    "ticker": "SW",
+    "name": "スマーフィット・ウエストロック",
+    "cik": 2005951,
+    "name_en": "Smurfit Westrock"
+  },
+  "rows": [
+    {
+      "ja": "統合・分離",
+      "en": "Combination & spin-off",
+      "above": true
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "GPK",
+    "PKG",
+    "AMCR",
+    "CLW"
+  ],
+  "companies": [
+    {
+      "id": "WestRock",
+      "ticker": "WestRock",
+      "name": "ウエストロック",
+      "name_en": "WestRock",
+      "sub": "段ボール・紙器(米)",
+      "sub_en": "Paper packaging (US)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2024年7月にSmurfit KappaとWestRockが統合して誕生",
+          "text_en": "Created by the combination of Smurfit Kappa and WestRock in July 2024",
+          "source": {
+            "label": "Smurfit Westrock 10-K(2025年度)",
+            "label_en": "Smurfit Westrock 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2005951/000162828026012555/smur-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "We closed the Combination between Smurfit Kappa and WestRock on July 5, 2024."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NGVT",
+      "ticker": "NGVT",
+      "name": "インジェヴィティ",
+      "name_en": "Ingevity",
+      "sub": "特殊化学品",
+      "sub_en": "Specialty chemicals",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "旧WestRockから分離・独立した会社(分離・分配契約)",
+          "text_en": "Spun off from the former WestRock under a separation and distribution agreement",
+          "source": {
+            "label": "Ingevity 10-K(2024年度)",
+            "label_en": "Ingevity 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1653477/000165347725000015/ngvt-20241231.htm",
+            "level": "official",
+            "date": "2025-02-19",
+            "quote": "Separation and Distribution Agreement between Ingevity Corporation and WestRock Company"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GPK",
+      "ticker": "GPK",
+      "name": "グラフィック・パッケージング",
+      "name_en": "Graphic Packaging",
+      "sub": "紙器",
+      "sub_en": "Paperboard packaging",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Graphic Packagingが10-Kで、紙器包装の最大の競合としてSmurfit Westrockを挙げる",
+          "text_en": "Graphic Packaging names Smurfit Westrock as its largest paperboard packaging competitor",
+          "source": {
+            "label": "Graphic Packaging 10-K(2025年度)",
+            "label_en": "Graphic Packaging 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1408075/000140807526000009/gpk-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "Smurfit WestRock plc is the Company's largest competitor within paperboard packaging."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PKG",
+      "ticker": "PKG",
+      "name": "パッケージング・コーポレーション・オブ・アメリカ",
+      "name_en": "Packaging Corp of America",
+      "sub": "段ボール",
+      "sub_en": "Corrugated packaging",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "PCAが10-Kで、全国規模の主な競合としてSmurfit Westrockを挙げる",
+          "text_en": "PCA names Smurfit Westrock among its primary national competitors",
+          "source": {
+            "label": "Packaging Corp of America 10-K(2025年度)",
+            "label_en": "Packaging Corp of America 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/75677/000119312526074129/pkg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "On a national level, our primary competitors are International Paper, Smurfit WestRock, Georgia-Pacific LLC, and Pratt Industries."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMCR",
+      "ticker": "AMCR",
+      "name": "アムコア",
+      "name_en": "Amcor",
+      "sub": "包装材",
+      "sub_en": "Packaging",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Amcorが10-Kで、競合の一社としてSmurfit Westrockを挙げる",
+          "text_en": "Amcor names Smurfit Westrock among its competitors",
+          "source": {
+            "label": "Amcor 10-K(2026年度)",
+            "label_en": "Amcor 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1748790/000174879026000022/amcr-20260630.htm",
+            "level": "official",
+            "date": "2026-08-14",
+            "quote": "Packaging Corporation of America, Silgan Holdings Inc., Smurfit WestRock, and Sonoco Products Company"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CLW",
+      "ticker": "CLW",
+      "name": "クリアウォーター・ペーパー",
+      "name_en": "Clearwater Paper",
+      "sub": "板紙",
+      "sub_en": "Paperboard",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Clearwater Paperが10-Kで、競合の一社としてSmurfit Westrockを挙げる",
+          "text_en": "Clearwater Paper names Smurfit Westrock among its competitors",
+          "source": {
+            "label": "Clearwater Paper 10-K(2025年度)",
+            "label_en": "Clearwater Paper 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1441236/000144123626000007/clw-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Our business competes with Smurfit Westrock, Georgia-Pacific, Graphic Packaging, Sappi and other international producers"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RYAM",
+      "ticker": "RYAM",
+      "name": "レイオニア・アドバンスト・マテリアルズ",
+      "name_en": "Rayonier Advanced Materials",
+      "sub": "セルロース・板紙",
+      "sub_en": "Cellulose & paperboard",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "RYAMが10-Kで、板紙の主な競合としてSmurfit Westrockを挙げる",
+          "text_en": "RYAM names Smurfit Westrock among its major paperboard competitors",
+          "source": {
+            "label": "Rayonier Advanced Materials 10-K(2025年度)",
+            "label_en": "Rayonier Advanced Materials 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1597672/000159767226000010/ryam-20251231.htm",
+            "level": "official",
+            "date": "2026-03-05",
+            "quote": "Our major paperboard competitors include Smurfit Westrock, Graphic Packaging, Clearwater Paper, Sappi, Metsa Group, Stora Enso, CMPC and Billerud."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PACK",
+      "ticker": "PACK",
+      "name": "ランパック",
+      "name_en": "Ranpak",
+      "sub": "紙の緩衝材・梱包自動化",
+      "sub_en": "Paper packaging & automation",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Ranpakが10-Kで、倉庫自動化(製函機)分野の競合としてSmurfit Westrockを挙げる",
+          "text_en": "Ranpak names Smurfit Westrock among competitors in warehouse automation box-making",
+          "source": {
+            "label": "Ranpak 10-K(2025年度)",
+            "label_en": "Ranpak 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1712463/000162828026015027/pack-20251231.htm",
+            "level": "official",
+            "date": "2026-03-05",
+            "quote": "our competition also includes specialized providers of box-making and high-volume machinery, such as Packsize International, LLC, CMC Packaging Automation and Smurfit WestRock"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

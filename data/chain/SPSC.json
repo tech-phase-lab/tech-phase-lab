@@ -1,0 +1,199 @@
+{
+  "root": {
+    "ticker": "SPSC",
+    "name": "SPSコマース",
+    "cik": 1092699,
+    "name_en": "SPS Commerce"
+  },
+  "rows": [
+    {
+      "ja": "買収",
+      "en": "Acquisitions",
+      "above": true
+    },
+    {
+      "ja": "販売提携(基幹システムの会社)",
+      "en": "Referral partners (ERP vendors)"
+    },
+    {
+      "ja": "小売の取引網",
+      "en": "Retail network"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "Carbon6",
+      "ticker": "Carbon6",
+      "name": "カーボン6",
+      "name_en": "Carbon6 Technologies",
+      "sub": "EC出店者向けソフト",
+      "sub_en": "Software for online sellers",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年に買収",
+          "text_en": "Acquired in 2025",
+          "source": {
+            "label": "SPS Commerce 10-K(2025年度)",
+            "label_en": "SPS Commerce 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1092699/000109269926000012/spsc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "In 2025, we acquired Carbon6 Technologies Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SupplyPike",
+      "ticker": "SupplyPike",
+      "name": "サプライパイク",
+      "name_en": "SupplyPike",
+      "sub": "小売サプライヤー向け分析",
+      "sub_en": "Retail supplier analytics",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "買収(Carbon6と同様に企業結合として会計処理)",
+          "text_en": "Acquired; accounted for as a business combination like Carbon6",
+          "source": {
+            "label": "SPS Commerce 10-K(2025年度)",
+            "label_en": "SPS Commerce 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1092699/000109269926000012/spsc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Purchase Price Allocation We accounted for each of the Carbon6 and SupplyPike acquisitions as a business combination."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "マイクロソフト",
+      "name_en": "Microsoft",
+      "sub": "ソフトウェア",
+      "sub_en": "Software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "基幹システム(ERP)の販売に合わせてSPSの顧客を紹介するソフト提携先",
+          "text_en": "Software partner whose ERP sales efforts generate sales for SPS",
+          "source": {
+            "label": "SPS Commerce 10-K(2025年度)",
+            "label_en": "SPS Commerce 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1092699/000109269926000012/spsc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "For example, software partners such as Microsoft, NetSuite, Oracle, SAP, Sage, and their business partner communities generate sales for us as part of broader enterprise resource planning, warehouse management system and/or transportation management system sales efforts."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ORCL",
+      "ticker": "ORCL",
+      "name": "オラクル",
+      "name_en": "Oracle",
+      "sub": "ソフトウェア(NetSuite含む)",
+      "sub_en": "Software (incl. NetSuite)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "基幹システム(ERP)の販売に合わせてSPSの顧客を紹介するソフト提携先",
+          "text_en": "Software partner whose ERP sales efforts generate sales for SPS",
+          "source": {
+            "label": "SPS Commerce 10-K(2025年度)",
+            "label_en": "SPS Commerce 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1092699/000109269926000012/spsc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "For example, software partners such as Microsoft, NetSuite, Oracle, SAP, Sage, and their business partner communities generate sales for us as part of broader enterprise resource planning, warehouse management system and/or transportation management system sales efforts."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SAP",
+      "ticker": "SAP",
+      "name": "SAP",
+      "name_en": "SAP",
+      "sub": "業務ソフト(独)",
+      "sub_en": "Enterprise software (Germany)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "基幹システム(ERP)の販売に合わせてSPSの顧客を紹介するソフト提携先",
+          "text_en": "Software partner whose ERP sales efforts generate sales for SPS",
+          "source": {
+            "label": "SPS Commerce 10-K(2025年度)",
+            "label_en": "SPS Commerce 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1092699/000109269926000012/spsc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "For example, software partners such as Microsoft, NetSuite, Oracle, SAP, Sage, and their business partner communities generate sales for us as part of broader enterprise resource planning, warehouse management system and/or transportation management system sales efforts."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Sage",
+      "ticker": "Sage",
+      "name": "セージ",
+      "name_en": "Sage",
+      "sub": "会計ソフト(英)",
+      "sub_en": "Accounting software (UK)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "基幹システム(ERP)の販売に合わせてSPSの顧客を紹介するソフト提携先",
+          "text_en": "Software partner whose ERP sales efforts generate sales for SPS",
+          "source": {
+            "label": "SPS Commerce 10-K(2025年度)",
+            "label_en": "SPS Commerce 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1092699/000109269926000012/spsc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "For example, software partners such as Microsoft, NetSuite, Oracle, SAP, Sage, and their business partner communities generate sales for us as part of broader enterprise resource planning, warehouse management system and/or transportation management system sales efforts."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FIVE",
+      "ticker": "FIVE",
+      "name": "ファイブ・ビロウ",
+      "name_en": "Five Below",
+      "sub": "雑貨小売",
+      "sub_en": "Discount retail",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Five Belowと仕入先の電子データ交換(EDI)はすべてSPS Commerce経由",
+          "text_en": "All EDI data to and from Five Below is processed through SPS Commerce",
+          "source": {
+            "label": "JM Group 年次報告添付(Five Belowの取引条件)",
+            "label_en": "JM Group annual report exhibit (Five Below vendor terms)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2049717/000121390026014380/ea027551401ex4-4_jmgroup.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "All EDI data to or from Five Below is processed through SPS Commerce, a SaaS provider of supply chain solutions."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
