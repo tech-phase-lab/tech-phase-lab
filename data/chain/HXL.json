@@ -1,0 +1,314 @@
+{
+  "root": {
+    "ticker": "HXL",
+    "name": "ヘクセル",
+    "cik": 717605,
+    "name_en": "Hexcel"
+  },
+  "rows": [
+    {
+      "ja": "主要顧客(航空機)",
+      "en": "Key customers: aircraft makers"
+    },
+    {
+      "ja": "主要顧客(防衛・エンジン)",
+      "en": "Key customers: defense & engines"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "Airbus",
+      "ticker": "Airbus",
+      "name": "エアバス",
+      "name_en": "Airbus",
+      "sub": "航空機(欧)",
+      "sub_en": "Aircraft (Europe)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "エアバスと下請けで売上の約39%",
+          "text_en": "Airbus and its subcontractors made up about 39% of 2025 net sales",
+          "source": {
+            "label": "Hexcel 10-K(2025年度)",
+            "label_en": "Hexcel 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/717605/000119312526046377/hxl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Approximately 39%, 40% and 39% of our 2025, 2024 and 2023 net sales, respectively, were to Airbus and its subcontractors."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BA",
+      "ticker": "BA",
+      "name": "ボーイング",
+      "name_en": "Boeing",
+      "sub": "航空機",
+      "sub_en": "Aircraft",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ボーイングと下請けで売上の約13%",
+          "text_en": "Boeing and its subcontractors made up about 13% of 2025 net sales",
+          "source": {
+            "label": "Hexcel 10-K(2025年度)",
+            "label_en": "Hexcel 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/717605/000119312526046377/hxl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Approximately 13%, 15% and 15% of our 2025, 2024 and 2023 net sales, respectively, were to Boeing and its subcontractors."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ERJ",
+      "ticker": "ERJ",
+      "name": "エンブラエル",
+      "name_en": "Embraer",
+      "sub": "航空機(伯)",
+      "sub_en": "Aircraft (Brazil)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "複合材料事業の主要顧客",
+          "text_en": "Key customer of its composite materials segment",
+          "source": {
+            "label": "Hexcel 10-K(2025年度)",
+            "label_en": "Hexcel 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/717605/000119312526046377/hxl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "COMPOSITE MATERIALS KEY CUSTOMERS Aernnova Daher Lockheed Martin Airbus Dassault Nordam Albany International Embraer Northrop Grumman Blue Origin FACC RTX The Boeing Company General Dynamics Safran Bombardier General Electric Syensqo CFAN GKN Toray CTRM Aero Composites Leonardo"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Dassault",
+      "ticker": "Dassault",
+      "name": "ダッソー・アビアシオン",
+      "name_en": "Dassault Aviation",
+      "sub": "航空機(仏)",
+      "sub_en": "Aircraft (France)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "複合材料事業の主要顧客",
+          "text_en": "Key customer of its composite materials segment",
+          "source": {
+            "label": "Hexcel 10-K(2025年度)",
+            "label_en": "Hexcel 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/717605/000119312526046377/hxl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "COMPOSITE MATERIALS KEY CUSTOMERS Aernnova Daher Lockheed Martin Airbus Dassault Nordam Albany International Embraer Northrop Grumman Blue Origin FACC RTX The Boeing Company General Dynamics Safran Bombardier General Electric Syensqo CFAN GKN Toray CTRM Aero Composites Leonardo"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Bombardier",
+      "ticker": "Bombardier",
+      "name": "ボンバルディア",
+      "name_en": "Bombardier",
+      "sub": "ビジネスジェット(加)",
+      "sub_en": "Business jets (Canada)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "複合材料事業の主要顧客",
+          "text_en": "Key customer of its composite materials segment",
+          "source": {
+            "label": "Hexcel 10-K(2025年度)",
+            "label_en": "Hexcel 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/717605/000119312526046377/hxl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "COMPOSITE MATERIALS KEY CUSTOMERS Aernnova Daher Lockheed Martin Airbus Dassault Nordam Albany International Embraer Northrop Grumman Blue Origin FACC RTX The Boeing Company General Dynamics Safran Bombardier General Electric Syensqo CFAN GKN Toray CTRM Aero Composites Leonardo"
+          }
+        }
+      ]
+    },
+    {
+      "id": "TXT",
+      "ticker": "TXT",
+      "name": "テキストロン",
+      "name_en": "Textron",
+      "sub": "航空機・防衛",
+      "sub_en": "Aircraft & defense",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "エンジニアード製品事業の主要顧客",
+          "text_en": "Key customer of its engineered products segment",
+          "source": {
+            "label": "Hexcel 10-K(2025年度)",
+            "label_en": "Hexcel 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/717605/000119312526046377/hxl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "The Boeing Company Amesbury, Massachusetts CTRM Aero Composites Burlington, Washington General Dynamics Casablanca, Morocco General Electric Kent, Washington GKN Pottsville, Pennsylvania Lockheed Martin RTX Textron"
+          }
+        }
+      ]
+    },
+    {
+      "id": "LMT",
+      "ticker": "LMT",
+      "name": "ロッキード・マーチン",
+      "name_en": "Lockheed Martin",
+      "sub": "防衛",
+      "sub_en": "Defense",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "複合材料事業の主要顧客",
+          "text_en": "Key customer of its composite materials segment",
+          "source": {
+            "label": "Hexcel 10-K(2025年度)",
+            "label_en": "Hexcel 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/717605/000119312526046377/hxl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "COMPOSITE MATERIALS KEY CUSTOMERS Aernnova Daher Lockheed Martin Airbus Dassault Nordam Albany International Embraer Northrop Grumman Blue Origin FACC RTX The Boeing Company General Dynamics Safran Bombardier General Electric Syensqo CFAN GKN Toray CTRM Aero Composites Leonardo"
+          }
+        }
+      ]
+    },
+    {
+      "id": "NOC",
+      "ticker": "NOC",
+      "name": "ノースロップ・グラマン",
+      "name_en": "Northrop Grumman",
+      "sub": "防衛",
+      "sub_en": "Defense",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "複合材料事業の主要顧客",
+          "text_en": "Key customer of its composite materials segment",
+          "source": {
+            "label": "Hexcel 10-K(2025年度)",
+            "label_en": "Hexcel 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/717605/000119312526046377/hxl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "COMPOSITE MATERIALS KEY CUSTOMERS Aernnova Daher Lockheed Martin Airbus Dassault Nordam Albany International Embraer Northrop Grumman Blue Origin FACC RTX The Boeing Company General Dynamics Safran Bombardier General Electric Syensqo CFAN GKN Toray CTRM Aero Composites Leonardo"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RTX",
+      "ticker": "RTX",
+      "name": "RTX",
+      "name_en": "RTX",
+      "sub": "航空エンジン・防衛",
+      "sub_en": "Engines & defense",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "複合材料事業の主要顧客",
+          "text_en": "Key customer of its composite materials segment",
+          "source": {
+            "label": "Hexcel 10-K(2025年度)",
+            "label_en": "Hexcel 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/717605/000119312526046377/hxl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "COMPOSITE MATERIALS KEY CUSTOMERS Aernnova Daher Lockheed Martin Airbus Dassault Nordam Albany International Embraer Northrop Grumman Blue Origin FACC RTX The Boeing Company General Dynamics Safran Bombardier General Electric Syensqo CFAN GKN Toray CTRM Aero Composites Leonardo"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GD",
+      "ticker": "GD",
+      "name": "ゼネラル・ダイナミクス",
+      "name_en": "General Dynamics",
+      "sub": "防衛・ビジネスジェット",
+      "sub_en": "Defense & business jets",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "複合材料事業の主要顧客",
+          "text_en": "Key customer of its composite materials segment",
+          "source": {
+            "label": "Hexcel 10-K(2025年度)",
+            "label_en": "Hexcel 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/717605/000119312526046377/hxl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "COMPOSITE MATERIALS KEY CUSTOMERS Aernnova Daher Lockheed Martin Airbus Dassault Nordam Albany International Embraer Northrop Grumman Blue Origin FACC RTX The Boeing Company General Dynamics Safran Bombardier General Electric Syensqo CFAN GKN Toray CTRM Aero Composites Leonardo"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Safran",
+      "ticker": "Safran",
+      "name": "サフラン",
+      "name_en": "Safran",
+      "sub": "航空エンジン(仏)",
+      "sub_en": "Aircraft engines (France)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "複合材料事業の主要顧客",
+          "text_en": "Key customer of its composite materials segment",
+          "source": {
+            "label": "Hexcel 10-K(2025年度)",
+            "label_en": "Hexcel 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/717605/000119312526046377/hxl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "COMPOSITE MATERIALS KEY CUSTOMERS Aernnova Daher Lockheed Martin Airbus Dassault Nordam Albany International Embraer Northrop Grumman Blue Origin FACC RTX The Boeing Company General Dynamics Safran Bombardier General Electric Syensqo CFAN GKN Toray CTRM Aero Composites Leonardo"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GE",
+      "ticker": "GE",
+      "name": "GEエアロスペース",
+      "name_en": "GE Aerospace",
+      "sub": "航空エンジン",
+      "sub_en": "Aircraft engines",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "複合材料事業の主要顧客",
+          "text_en": "Key customer of its composite materials segment",
+          "source": {
+            "label": "Hexcel 10-K(2025年度)",
+            "label_en": "Hexcel 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/717605/000119312526046377/hxl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "COMPOSITE MATERIALS KEY CUSTOMERS Aernnova Daher Lockheed Martin Airbus Dassault Nordam Albany International Embraer Northrop Grumman Blue Origin FACC RTX The Boeing Company General Dynamics Safran Bombardier General Electric Syensqo CFAN GKN Toray CTRM Aero Composites Leonardo"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,224 @@
+{
+  "root": {
+    "ticker": "MTZ",
+    "name": "マステック",
+    "cik": 15615,
+    "name_en": "MasTec"
+  },
+  "rows": [
+    {
+      "ja": "供給元・顧客",
+      "en": "Suppliers & customers",
+      "above": true
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "PRIM",
+    "ECG",
+    "MWH",
+    "ITG"
+  ],
+  "companies": [
+    {
+      "id": "SPT",
+      "ticker": "SPT",
+      "name": "スプラウト・ソーシャル",
+      "name_en": "Sprout Social",
+      "sub": "SNS管理ソフト",
+      "sub_en": "Social media software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "既存顧客で利用を拡大した企業の一社にマステック",
+          "text_en": "Lists MasTec among existing customers that expanded with it",
+          "source": {
+            "label": "Sprout Social 決算発表(2024年4-6月期)",
+            "label_en": "Sprout Social earnings release (Q2 2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1517375/000151737524000097/a2q24earningsreleasefina.htm",
+            "level": "official",
+            "date": "2024-08-01",
+            "quote": "Cintas, Porter Airlines Canada, Heidrick & Struggles International, Bausch & Lomb Americas, Auto Trader, Alterra Mountain, SentinelOne, Oliver Wyman, MasTec"
+          }
+        }
+      ]
+    },
+    {
+      "id": "LICY",
+      "ticker": "LICY",
+      "name": "ライサイクル",
+      "name_en": "Li-Cycle",
+      "sub": "電池リサイクル",
+      "sub_en": "Battery recycling",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ロチェスター拠点の建設工事でマステックが未払い4,870万ドルを求め仲裁",
+          "text_en": "MasTec sought $48.7 million it says is owed for building the Rochester Hub",
+          "source": {
+            "label": "Li-Cycle 10-K(2024年度)",
+            "label_en": "Li-Cycle 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1828811/000182881125000009/licy-20241231.htm",
+            "level": "official",
+            "date": "2025-03-31",
+            "quote": "On April 9, 2024, one of the lienors, MasTec, commenced arbitration proceedings to seek recovery of $48.7 million allegedly due under the construction contract for the Rochester Hub project"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PRIM",
+      "ticker": "PRIM",
+      "name": "プリモリス",
+      "name_en": "Primoris Services",
+      "sub": "インフラ工事",
+      "sub_en": "Infrastructure construction",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "電力会社向け市場の競合にマステックを挙げる",
+          "text_en": "Names MasTec among competitors in its utilities markets",
+          "source": {
+            "label": "Primoris 10-K(2025年度)",
+            "label_en": "Primoris 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1361538/000110465926018677/prim-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "For example, competitors in our utilities markets include Quanta Services, Inc., Dycom Industries, MYR Group, and MasTec, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ECG",
+      "ticker": "ECG",
+      "name": "エヴェラス・コンストラクション",
+      "name_en": "Everus Construction Group",
+      "sub": "電気・設備工事",
+      "sub_en": "Electrical & mechanical construction",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合にマステックを挙げる",
+          "text_en": "Names MasTec among its primary competitors",
+          "source": {
+            "label": "Everus Construction 10-K 添付資料(2025年度)",
+            "label_en": "Everus Construction 10-K exhibit (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2015845/000201584526000010/a2025q4ex1023-ecgxuse.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "The Company regards as its primary, but not exclusive, competitors the following businesses and entities, or individuals: Quanta Services, Inc., EMCOR Group, Inc., MasTec, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MWH",
+      "ticker": "MWH",
+      "name": "SOLVエナジー",
+      "name_en": "SOLV Energy",
+      "sub": "太陽光・蓄電EPC",
+      "sub_en": "Solar & storage EPC",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "全国規模の競合にマステックを挙げる",
+          "text_en": "Names MasTec among its national competitors",
+          "source": {
+            "label": "SOLV Energy 10-K(2025年度)",
+            "label_en": "SOLV Energy 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2065636/000119312526124117/d31834d10k.htm",
+            "level": "official",
+            "date": "2026-03-25",
+            "quote": "Some of our national competitors include Kiewit, MasTec, McCarthy, Mortenson, Quanta Services and Primoris Services."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ITG",
+      "ticker": "ITG",
+      "name": "ITG",
+      "name_en": "ITG",
+      "sub": "通信インフラ工事",
+      "sub_en": "Telecom infrastructure services",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合にマステックを挙げる",
+          "text_en": "Names MasTec among its competitors",
+          "source": {
+            "label": "ITG S-1(2026年6月)",
+            "label_en": "ITG S-1 (Jun 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2110117/000119312526259828/d103576ds1.htm",
+            "level": "official",
+            "date": "2026-06-05",
+            "quote": "Our competitors include Dycom Industries, Inc., MasTec, Inc., Primoris Services Corporation and Quanta Services, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TUSK",
+      "ticker": "TUSK",
+      "name": "マンモス・エナジー",
+      "name_en": "Mammoth Energy Services",
+      "sub": "インフラ・油田サービス",
+      "sub_en": "Infrastructure & oilfield services",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "インフラ事業の主な競合にマステックを挙げる",
+          "text_en": "Names MasTec among major competitors of its infrastructure business",
+          "source": {
+            "label": "Mammoth Energy 10-K(2024年度)",
+            "label_en": "Mammoth Energy 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1679268/000167926825000009/tusk-20241231.htm",
+            "level": "official",
+            "date": "2025-03-07",
+            "quote": "Our major competitors for our infrastructure services business include MYR Group, Inc., Quanta Services, Inc., MasTec, Inc. and EMCOR Group, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CoVolt",
+      "ticker": "CoVolt",
+      "name": "コボルト・パワー",
+      "name_en": "CoVolt Power",
+      "sub": "送配電・発電工事",
+      "sub_en": "Power construction",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "発電・蓄電と高圧送電の競合にマステックを挙げる",
+          "text_en": "Names MasTec among principal competitors in generation, storage and high-voltage transmission",
+          "source": {
+            "label": "CoVolt Power S-1(2026年8月)",
+            "label_en": "CoVolt Power S-1 (Aug 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2131613/000119312526361190/d25482ds1.htm",
+            "level": "official",
+            "date": "2026-08-21",
+            "quote": "Our principal national competitors in high voltage transmission and distribution include Burns & McDonnell, GW, Black & Veatch, MasTec, MYR Group and Quanta Services."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

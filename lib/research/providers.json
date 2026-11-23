@@ -1311,16 +1311,27 @@
     "name": "Coherent",
     "sector": "networking",
     "scope": "earnings",
-    "indexUrl": "https://ir.coherent.com/rss/news-releases.xml",
+    "indexUrl": "https://rss.globenewswire.com/RssFeed/organization/BjWJdSGc9z7QeHAvb_k3Ew==",
     "format": "rss",
     "requestTimeoutSeconds": 15,
+    "pollSeconds": 10,
     "allowedHosts": [
       "data.sec.gov",
       "ir.coherent.com",
+      "rss.globenewswire.com",
       "www.coherent.com",
+      "www.globenewswire.com",
       "www.sec.gov"
     ],
     "articleRules": [
+      {
+        "host": "www.globenewswire.com",
+        "pattern": "^/news-release/\\d{4}/\\d{2}/\\d{2}/\\d+/11543/en/[^/]+\\.html$"
+      },
+      {
+        "host": "rss.globenewswire.com",
+        "pattern": "^/news-release/\\d{4}/\\d{2}/\\d{2}/\\d+/11543/en/[^/]+\\.html$"
+      },
       {
         "host": "ir.coherent.com",
         "pattern": "^/news-releases/news-release-details/.+"
@@ -1334,8 +1345,21 @@
         "pattern": "^/Archives/edgar/data/820318/.+"
       }
     ],
-    "automaticSource": "fallback",
+    "bodyMirrors": [
+      {
+        "host": "www.globenewswire.com",
+        "pattern": "/news-release/(\\d{4}/\\d{2}/\\d{2}/\\d+/11543/en/[^/]+\\.html)",
+        "url": "https://rss.globenewswire.com/news-release/{0}"
+      }
+    ],
     "fallbackSources": [
+      {
+        "url": "https://ir.coherent.com/rss/news-releases.xml",
+        "format": "rss",
+        "label": "Coherent IR feed"
+      }
+    ],
+    "supplementalSources": [
       {
         "url": "https://data.sec.gov/submissions/CIK0000820318.json",
         "format": "sec-json",

@@ -1,0 +1,247 @@
+{
+  "root": {
+    "ticker": "KBR",
+    "name": "KBR",
+    "cik": 1357615,
+    "name_en": "KBR"
+  },
+  "rows": [
+    {
+      "ja": "合弁・買収・顧客",
+      "en": "JVs, acquisitions & clients",
+      "above": true
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "LDOS",
+    "VVX",
+    "FLR"
+  ],
+  "companies": [
+    {
+      "id": "LinQuest",
+      "ticker": "LinQuest",
+      "name": "リンクエスト",
+      "name_en": "LinQuest",
+      "sub": "宇宙・防衛エンジニアリング",
+      "sub_en": "Space & defense engineering",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2024年8月に約7.39億ドルで買収",
+          "text_en": "Acquired in August 2024 for $739 million",
+          "source": {
+            "label": "KBR 10-K(2025年度)",
+            "label_en": "KBR 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1357615/000135761526000051/kbr-20260102.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "On August 30, 2024, we acquired LinQuest for $ 739 million in cash net of cash acquired"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Infrastar",
+      "ticker": "Infrastar",
+      "name": "インフラスター",
+      "name_en": "Infrastar",
+      "sub": "インフラ技術(英)",
+      "sub_en": "Infrastructure engineering (UK)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年5月に買収",
+          "text_en": "Acquired in May 2025",
+          "source": {
+            "label": "KBR 10-K(2025年度)",
+            "label_en": "KBR 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1357615/000135761526000051/kbr-20260102.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "On May 17, 2025, we acquired Infrastar Limited for $ 35 million"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ESLT",
+      "ticker": "ESLT",
+      "name": "エルビット・システムズ",
+      "name_en": "Elbit Systems",
+      "sub": "防衛電子(イスラエル)",
+      "sub_en": "Defense electronics (Israel)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "英軍の航空機運用を担う合弁Affinityを組む",
+          "text_en": "Partner in the Affinity joint venture supporting U.K. military flight training",
+          "source": {
+            "label": "KBR 10-K(2025年度)",
+            "label_en": "KBR 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1357615/000135761526000051/kbr-20260102.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "The Affinity joint venture, with Elbit Systems Ltd., procures, operates and maintains aircraft and aircraft-related assets over an 18-year contract period"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Zachry",
+      "ticker": "Zachry",
+      "name": "ザクリー・グループ",
+      "name_en": "Zachry Group",
+      "sub": "建設・EPC",
+      "sub_en": "Construction & EPC",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ルイジアナ州のLNG施設を設計・調達・建設する合弁KZJV(KBR 45%)",
+          "text_en": "KZJV, 45% owned by KBR, does EPC work for an LNG facility in Plaquemines Parish, Louisiana",
+          "source": {
+            "label": "KBR 10-K(2025年度)",
+            "label_en": "KBR 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1357615/000135761526000051/kbr-20260102.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "KZJV is a joint venture with Zachry Group that performs certain design, engineering, procurement and construction-related services for a LNG facility in Plaquemines Parish, Louisiana."
+          }
+        }
+      ]
+    },
+    {
+      "id": "VG",
+      "ticker": "VG",
+      "name": "ベンチャー・グローバル",
+      "name_en": "Venture Global",
+      "sub": "LNG輸出",
+      "sub_en": "LNG export",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "プラークマインLNGのEPC契約でKBRが親会社保証を負う",
+          "text_en": "KBR provides a parent guarantee under the Plaquemines LNG EPC contracts",
+          "source": {
+            "label": "Venture Global S-1/A(2025年1月)",
+            "label_en": "Venture Global S-1/A (Jan 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2007855/000119312525004922/d146310ds1a.htm",
+            "level": "official",
+            "date": "2025-01-13",
+            "quote": "the KBR, Inc. and Zachry Holdings parent guarantees provide for joint and several liability."
+          }
+        }
+      ]
+    },
+    {
+      "id": "OEP",
+      "ticker": "One Equity Partners",
+      "name": "ワン・エクイティ・パートナーズ",
+      "name_en": "One Equity Partners",
+      "sub": "投資会社",
+      "sub_en": "Private equity",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "保守サービスの合弁ブラウン&ルート・インダストリアル・サービシズを50%ずつ保有",
+          "text_en": "50/50 partner in the Brown & Root Industrial Services joint venture",
+          "source": {
+            "label": "KBR 10-K(2025年度)",
+            "label_en": "KBR 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1357615/000135761526000051/kbr-20260102.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Brown & Root Industrial Services is a joint venture with One Equity Partners and offers maintenance services, turnarounds and small capital projects, primarily in North America, in which we own 50% equity interest."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LDOS",
+      "ticker": "LDOS",
+      "name": "レイドス",
+      "name_en": "Leidos",
+      "sub": "政府向けIT",
+      "sub_en": "Government IT services",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合にKBRを挙げる",
+          "text_en": "Names KBR among its principal competitors",
+          "source": {
+            "label": "Leidos 10-K(2025年度)",
+            "label_en": "Leidos 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1336920/000133692026000030/ldos-20260102.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Our principal competitors currently include the following companies: Accenture Federal Services LLC, Amentum Services Inc., KBR, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "VVX",
+      "ticker": "VVX",
+      "name": "V2X",
+      "name_en": "V2X",
+      "sub": "政府向け運用支援",
+      "sub_en": "Government mission support",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合にKBRを挙げる",
+          "text_en": "Names KBR among its principal competitors",
+          "source": {
+            "label": "V2X 10-K(2025年度)",
+            "label_en": "V2X 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1601548/000160154826000015/vec-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "Our principal competitors include Amentum Holdings, Inc., Valiant Integrated Services, divisions of Leidos Holdings, Inc., Science Applications International Corp., General Dynamics Corporation Technologies Segment., KBR, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FLR",
+      "ticker": "FLR",
+      "name": "フルア",
+      "name_en": "Fluor",
+      "sub": "エンジニアリング・建設",
+      "sub_en": "Engineering & construction",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合する米企業の一社にKBRを挙げる",
+          "text_en": "Names KBR among U.S. companies that compete against it",
+          "source": {
+            "label": "Fluor 10-K(2025年度)",
+            "label_en": "Fluor 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1124198/000112419826000007/flr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "A large number of companies compete against us, including U.S.-based companies such as AECOM, Amentum Services, Inc., Bechtel Group, Inc., Black & Veatch, Burns & McDonnell, BWXT Technologies, Inc., EMCOR Group, Inc., Jacobs Solutions, Inc., KBR, Inc."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
