@@ -1,0 +1,318 @@
+{
+  "root": {
+    "ticker": "MRCY",
+    "name": "マーキュリー・システムズ",
+    "cik": 1049521,
+    "name_en": "Mercury Systems"
+  },
+  "rows": [
+    {
+      "ja": "主要顧客",
+      "en": "Key customers"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "KTOS",
+    "TTMI",
+    "FEIM"
+  ],
+  "companies": [
+    {
+      "id": "RTX",
+      "ticker": "RTX",
+      "name": "RTX",
+      "name_en": "RTX",
+      "sub": "防衛・航空",
+      "sub_en": "Defense & aerospace",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大の顧客で2026年6月期の売上の15%",
+          "text_en": "Its largest customer at 15% of fiscal 2026 revenue",
+          "source": {
+            "label": "Mercury Systems 10-K(2026年6月期)",
+            "label_en": "Mercury Systems 10-K (FY ended Jun 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1049521/000104952126000045/mrcy-20260703.htm",
+            "level": "official",
+            "date": "2026-08-18",
+            "quote": "In fiscal 2026, RTX Corporation accounted for 15% of our total net revenues, Lockheed Martin accounted for 11% of our total net revenues, and Northrop Grumman accounted for 10% of our total net revenues."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LMT",
+      "ticker": "LMT",
+      "name": "ロッキード・マーチン",
+      "name_en": "Lockheed Martin",
+      "sub": "防衛",
+      "sub_en": "Defense",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "売上の11%を占める顧客",
+          "text_en": "Accounted for 11% of fiscal 2026 revenue",
+          "source": {
+            "label": "Mercury Systems 10-K(2026年6月期)",
+            "label_en": "Mercury Systems 10-K (FY ended Jun 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1049521/000104952126000045/mrcy-20260703.htm",
+            "level": "official",
+            "date": "2026-08-18",
+            "quote": "In fiscal 2026, RTX Corporation accounted for 15% of our total net revenues, Lockheed Martin accounted for 11% of our total net revenues"
+          }
+        }
+      ]
+    },
+    {
+      "id": "NOC",
+      "ticker": "NOC",
+      "name": "ノースロップ・グラマン",
+      "name_en": "Northrop Grumman",
+      "sub": "防衛",
+      "sub_en": "Defense",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "売上の10%を占める顧客",
+          "text_en": "Accounted for 10% of fiscal 2026 revenue",
+          "source": {
+            "label": "Mercury Systems 10-K(2026年6月期)",
+            "label_en": "Mercury Systems 10-K (FY ended Jun 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1049521/000104952126000045/mrcy-20260703.htm",
+            "level": "official",
+            "date": "2026-08-18",
+            "quote": "and Northrop Grumman accounted for 10% of our total net revenues."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LHX",
+      "ticker": "LHX",
+      "name": "L3ハリス",
+      "name_en": "L3Harris",
+      "sub": "防衛電子",
+      "sub_en": "Defense electronics",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2024年6月期は売上の12%を占めた顧客",
+          "text_en": "Accounted for 12% of fiscal 2024 revenue",
+          "source": {
+            "label": "Mercury Systems 10-K(2026年6月期)",
+            "label_en": "Mercury Systems 10-K (FY ended Jun 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1049521/000104952126000045/mrcy-20260703.htm",
+            "level": "official",
+            "date": "2026-08-18",
+            "quote": "In fiscal 2024, L3Harris accounted for 12%"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BA",
+      "ticker": "BA",
+      "name": "ボーイング",
+      "name_en": "Boeing",
+      "sub": "航空機・防衛",
+      "sub_en": "Aircraft & defense",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "主要顧客の一社",
+          "text_en": "One of its top customers",
+          "source": {
+            "label": "Mercury Systems 10-K(2025年6月期)",
+            "label_en": "Mercury Systems 10-K (FY ended Jun 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1049521/000104952125000024/mrcy-20250627.htm",
+            "level": "official",
+            "date": "2025-08-11",
+            "quote": "Our top customers include Airbus, BAE Systems, Boeing, General Atomics, General Dynamics, L3Harris Technologies, Leonardo, Lockheed Martin Corporation, Northrop Grumman Corporation, RTX Corporation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GD",
+      "ticker": "GD",
+      "name": "ゼネラル・ダイナミクス",
+      "name_en": "General Dynamics",
+      "sub": "防衛",
+      "sub_en": "Defense",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "主要顧客の一社",
+          "text_en": "One of its top customers",
+          "source": {
+            "label": "Mercury Systems 10-K(2025年6月期)",
+            "label_en": "Mercury Systems 10-K (FY ended Jun 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1049521/000104952125000024/mrcy-20250627.htm",
+            "level": "official",
+            "date": "2025-08-11",
+            "quote": "Our top customers include Airbus, BAE Systems, Boeing, General Atomics, General Dynamics, L3Harris Technologies, Leonardo, Lockheed Martin Corporation, Northrop Grumman Corporation, RTX Corporation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Airbus",
+      "ticker": "Airbus",
+      "name": "エアバス",
+      "name_en": "Airbus",
+      "sub": "航空機(欧)",
+      "sub_en": "Aircraft (Europe)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "主要顧客の一社",
+          "text_en": "One of its top customers",
+          "source": {
+            "label": "Mercury Systems 10-K(2025年6月期)",
+            "label_en": "Mercury Systems 10-K (FY ended Jun 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1049521/000104952125000024/mrcy-20250627.htm",
+            "level": "official",
+            "date": "2025-08-11",
+            "quote": "Our top customers include Airbus, BAE Systems, Boeing, General Atomics, General Dynamics, L3Harris Technologies, Leonardo, Lockheed Martin Corporation, Northrop Grumman Corporation, RTX Corporation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BAE",
+      "ticker": "BAE Systems",
+      "name": "BAEシステムズ",
+      "name_en": "BAE Systems",
+      "sub": "防衛(英)",
+      "sub_en": "Defense (UK)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "主要顧客の一社",
+          "text_en": "One of its top customers",
+          "source": {
+            "label": "Mercury Systems 10-K(2025年6月期)",
+            "label_en": "Mercury Systems 10-K (FY ended Jun 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1049521/000104952125000024/mrcy-20250627.htm",
+            "level": "official",
+            "date": "2025-08-11",
+            "quote": "Our top customers include Airbus, BAE Systems, Boeing, General Atomics, General Dynamics, L3Harris Technologies, Leonardo, Lockheed Martin Corporation, Northrop Grumman Corporation, RTX Corporation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Leonardo",
+      "ticker": "Leonardo",
+      "name": "レオナルド",
+      "name_en": "Leonardo",
+      "sub": "防衛・航空(伊)",
+      "sub_en": "Defense & aerospace (Italy)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "主要顧客の一社",
+          "text_en": "One of its top customers",
+          "source": {
+            "label": "Mercury Systems 10-K(2025年6月期)",
+            "label_en": "Mercury Systems 10-K (FY ended Jun 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1049521/000104952125000024/mrcy-20250627.htm",
+            "level": "official",
+            "date": "2025-08-11",
+            "quote": "Our top customers include Airbus, BAE Systems, Boeing, General Atomics, General Dynamics, L3Harris Technologies, Leonardo, Lockheed Martin Corporation, Northrop Grumman Corporation, RTX Corporation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "KTOS",
+      "ticker": "KTOS",
+      "name": "クラトス",
+      "name_en": "Kratos Defense",
+      "sub": "防衛技術",
+      "sub_en": "Defense technology",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "中堅の競合にマーキュリーを挙げる",
+          "text_en": "Names Mercury among smaller government contractors it competes with",
+          "source": {
+            "label": "Kratos 10-K(2024年度)",
+            "label_en": "Kratos 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1069258/000106925825000008/ktos-20241229.htm",
+            "level": "official",
+            "date": "2025-02-26",
+            "quote": "Tier two competitors include smaller government contractors such as Mercury Systems, Qinetiq, Cobham, CACI, Peraton"
+          }
+        }
+      ]
+    },
+    {
+      "id": "TTMI",
+      "ticker": "TTMI",
+      "name": "TTMテクノロジーズ",
+      "name_en": "TTM Technologies",
+      "sub": "プリント基板・防衛電子",
+      "sub_en": "PCBs & defense electronics",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "防衛部門の主な競合にマーキュリーを挙げる",
+          "text_en": "Names Mercury among principal competitors of its A&D segment",
+          "source": {
+            "label": "TTM Technologies 10-K(2025年度)",
+            "label_en": "TTM Technologies 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1116942/000119312526051976/ttmi-20251229.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Our principal competitors for our A&D segment include BAE Systems plc, Curtiss-Wright Corporation, Leonardo DRS, Inc., Mercury Systems, Inc., and Sanmina Corporation."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FEIM",
+      "ticker": "FEIM",
+      "name": "フリークエンシー・エレクトロニクス",
+      "name_en": "Frequency Electronics",
+      "sub": "精密時刻・電子戦",
+      "sub_en": "Precision timing & EW",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "宇宙以外の製品でマーキュリーと競合",
+          "text_en": "Competes with Mercury in non-space products",
+          "source": {
+            "label": "Frequency Electronics 10-K(2025年4月期)",
+            "label_en": "Frequency Electronics 10-K (FY ended Apr 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/39020/000118518525000806/feim10k043025.htm",
+            "level": "official",
+            "date": "2025-07-18",
+            "quote": "the Company competes with larger domestic companies such as Microchip Technology Incorporated. and Mercury Systems, Inc."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
