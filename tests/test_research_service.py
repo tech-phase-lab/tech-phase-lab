@@ -279,7 +279,8 @@ class ResearchServiceTests(unittest.TestCase):
             # Nov 19: the company-headline refresher. Nov 20: the /live refresher. Nov 21: the price-alert checker.
             # Nov 22: the ownership-data clock (returns at once unless OWNERSHIP_DATA_ENABLED=true).
             # Nov 22: the 割安判別ツール daily run.
-            self.assertEqual(len(observed), 31 + app.translation_workers)
+            # Nov 23: the official-channel reachability probe (idle unless OFFICIAL_CHANNEL_PROBE_ENABLED=true).
+            self.assertEqual(len(observed), 32 + app.translation_workers)
             self.assertTrue(all(observed))
 
     def test_release_watch_alerts_from_the_public_payload_and_reports_in_health(self):

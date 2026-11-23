@@ -1,0 +1,375 @@
+{
+  "root": {
+    "ticker": "NVO",
+    "name": "ノボ・ノルディスク",
+    "cik": 353278,
+    "name_en": "Novo Nordisk"
+  },
+  "rows": [
+    {
+      "ja": "技術・候補薬の導入元(上流)",
+      "en": "In-licensed technology & assets (upstream)",
+      "above": true
+    },
+    {
+      "ja": "支配株主・買収",
+      "en": "Controlling shareholder & acquisitions"
+    },
+    {
+      "ja": "ライセンス先・販売提携",
+      "en": "Licensees & distribution partners"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "LLY",
+    "VKTX",
+    "ALT"
+  ],
+  "companies": [
+    {
+      "id": "OMER",
+      "ticker": "OMER",
+      "name": "オメロス",
+      "name_en": "Omeros",
+      "sub": "バイオ",
+      "sub_en": "Biotech",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "開発品zaltenibartの世界的な開発・販売権をOmerosから取得(2025年11月)",
+          "text_en": "Bought global rights to zaltenibart from Omeros (November 2025)",
+          "source": {
+            "label": "Omeros 10-K(2025年度)",
+            "label_en": "Omeros 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1285819/000143774926010636/omer20251231_10k.htm",
+            "level": "official",
+            "date": "2026-03-31",
+            "quote": "On November 25, 2025, we completed a transaction (the \"Transaction\") pursuant to an Asset Purchase and License Agreement (\"APLA\") between Omeros and Novo Nordisk Healthcare AG (\"Novo Nordisk\"), dated October 10, 2025"
+          }
+        }
+      ]
+    },
+    {
+      "id": "LXRX",
+      "ticker": "LXRX",
+      "name": "レキシコン",
+      "name_en": "Lexicon Pharmaceuticals",
+      "sub": "バイオ",
+      "sub_en": "Biotech",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "肥満症候補LX9851の独占ライセンスをLexiconから取得(2025年3月)",
+          "text_en": "Exclusive license to obesity candidate LX9851 from Lexicon (March 2025)",
+          "source": {
+            "label": "Lexicon 10-K(2025年度)",
+            "label_en": "Lexicon 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1062822/000106282226000050/lxrx-20251231.htm",
+            "level": "official",
+            "date": "2026-03-05",
+            "quote": "We entered into an exclusive license agreement with Novo Nordisk A/S in March 2025"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ASND",
+      "ticker": "ASND",
+      "name": "アセンディス・ファーマ",
+      "name_en": "Ascendis Pharma",
+      "sub": "バイオ(徐放技術)",
+      "sub_en": "Biotech (sustained release)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "代謝・循環器分野でTransCon技術の独占ライセンスを取得(2024年11月)",
+          "text_en": "Exclusive license to Ascendis's TransCon technology for metabolic and cardiovascular disease (November 2024)",
+          "source": {
+            "label": "Ascendis Pharma 20-F(2025年度)",
+            "label_en": "Ascendis Pharma 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1612042/000119312526046590/asnd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Additionally, in November 2024, we announced that we signed a Exclusive License and Development Agreement with Novo Nordisk A/S for the development and commercialization of TransCon Technology-based products in the fields of metabolic and cardiovascular diseases."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SEPN",
+      "ticker": "SEPN",
+      "name": "セプテルナ",
+      "name_en": "Septerna",
+      "sub": "バイオ(低分子)",
+      "sub_en": "Biotech (small molecules)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "代謝疾患で世界的な共同研究・ライセンス契約(2025年5月)",
+          "text_en": "Global collaboration and license agreement in metabolic disease (May 2025)",
+          "source": {
+            "label": "Septerna 10-K(2025年度)",
+            "label_en": "Septerna 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1984086/000119312526098507/sepn-20251231.htm",
+            "level": "official",
+            "date": "2026-03-09",
+            "quote": "On May 13, 2025, we and Novo Nordisk A/S (\"Novo\") entered into a global Collaboration and License Agreement (the \"Collaboration Agreement\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PRTA",
+      "ticker": "PRTA",
+      "name": "プロセナ",
+      "name_en": "Prothena",
+      "sub": "バイオ(神経)",
+      "sub_en": "Biotech (neurology)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Prothenaの提携先の一社で、マイルストンの支払い義務がある",
+          "text_en": "A Prothena collaboration partner owing potential milestones",
+          "source": {
+            "label": "Prothena 10-K(2025年度)",
+            "label_en": "Prothena 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1559053/000155905326000008/prta-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "the timing, receipt, and amount of any capital investments, cost-sharing contributions or reimbursements, milestone payments, or royalties that we might receive under current or potential future collaborations, including any milestone payments pursuant to our agreement with Novo Nordisk;"
+          }
+        }
+      ]
+    },
+    {
+      "id": "NovoHoldings",
+      "ticker": "Novo Holdings",
+      "name": "ノボ・ホールディングス",
+      "name_en": "Novo Holdings",
+      "sub": "財団の投資会社",
+      "sub_en": "Foundation holding company",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ノボ・ノルディスク財団の保有会社で、支配株主",
+          "text_en": "Holding company of the Novo Nordisk Foundation and the controlling shareholder",
+          "source": {
+            "label": "Novo Nordisk 20-F(2025年度)",
+            "label_en": "Novo Nordisk 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/353278/000035327826000012/nvo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-04",
+            "quote": "The Novo Nordisk Foundation (the 'Foundation') owns its shares in Novo Nordisk A/S through Novo Holdings A/S."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Akero",
+      "ticker": "Akero",
+      "name": "アケロ・セラピューティクス",
+      "name_en": "Akero Therapeutics",
+      "sub": "バイオ(MASH)",
+      "sub_en": "Biotech (MASH)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "MASH治療薬を開発するAkeroを2025年12月に買収",
+          "text_en": "Acquired MASH drug developer Akero in December 2025",
+          "source": {
+            "label": "Novo Nordisk 20-F(2025年度)",
+            "label_en": "Novo Nordisk 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/353278/000035327826000012/nvo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-04",
+            "quote": "On 9 December 2025, Novo Nordisk acquired Akero Therapeutics Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "IPHA",
+      "ticker": "IPHA",
+      "name": "イナート・ファーマ",
+      "name_en": "Innate Pharma",
+      "sub": "バイオ(がん免疫)",
+      "sub_en": "Biotech (immuno-oncology)",
+      "row": 2,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Innateはmonalizumabの開発でノボからのライセンスに依存",
+          "text_en": "Innate depends on a license from Novo Nordisk for monalizumab",
+          "source": {
+            "label": "Innate Pharma 20-F(2025年度)",
+            "label_en": "Innate Pharma 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1598599/000159859926000005/inpha-20251231.htm",
+            "level": "official",
+            "date": "2026-04-01",
+            "quote": "For example, Innate depends on its license agreement with Novo Nordisk A/S for the development and commercialization of monalizumab."
+          }
+        }
+      ]
+    },
+    {
+      "id": "VTVT",
+      "ticker": "VTVT",
+      "name": "vTvセラピューティクス",
+      "name_en": "vTv Therapeutics",
+      "sub": "バイオ(糖尿病)",
+      "sub_en": "Biotech (diabetes)",
+      "row": 2,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ノボのグルコキナーゼ活性化薬の知的財産の独占ライセンスを受けている",
+          "text_en": "Holds an exclusive license to Novo Nordisk glucokinase activator IP",
+          "source": {
+            "label": "vTv Therapeutics 10-K(2025年度)",
+            "label_en": "vTv Therapeutics 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1641489/000164148926000010/vtvt-20251231.htm",
+            "level": "official",
+            "date": "2026-03-10",
+            "quote": "In February 2007, we entered into an Agreement Concerning Glucokinase Activator Project with Novo Nordisk A/S (the \"Novo License Agreement\") whereby we obtained an exclusive, worldwide, sublicensable license under certain Novo Nordisk intellectual property rights"
+          }
+        }
+      ]
+    },
+    {
+      "id": "LFMD",
+      "ticker": "LFMD",
+      "name": "ライフMD",
+      "name_en": "LifeMD",
+      "sub": "遠隔医療",
+      "sub_en": "Telehealth",
+      "row": 2,
+      "relations": [
+        {
+          "type": "down",
+          "text": "遠隔診療でウゴービ等の処方を支援する協業(経口薬も2026年1月から提供)",
+          "text_en": "Telehealth collaboration supporting Wegovy prescriptions, including the pill from January 2026",
+          "source": {
+            "label": "LifeMD 10-K(2025年度)",
+            "label_en": "LifeMD 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/948320/000149315226009549/form10-k.htm",
+            "level": "official",
+            "date": "2026-03-10",
+            "quote": "In January 2026, the Company began offering Novo Nordisk's Wegovy® (semaglutide) pill -an oral GLP-1 therapy for chronic weight management and cardiovascular health."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LLY",
+      "ticker": "LLY",
+      "name": "イーライリリー",
+      "name_en": "Eli Lilly",
+      "sub": "医薬品",
+      "sub_en": "Pharma",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "糖尿病・GLP-1市場でノボと並ぶ最大手",
+          "text_en": "With Novo Nordisk, the most significant company in the diabetes and GLP-1 markets",
+          "source": {
+            "label": "Novo Nordisk 20-F(2025年度)",
+            "label_en": "Novo Nordisk 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/353278/000035327826000012/nvo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-04",
+            "quote": "Novo Nordisk and Eli Lilly are the most significant companies in the global GLP-1 market measured by market share."
+          }
+        }
+      ]
+    },
+    {
+      "id": "VKTX",
+      "ticker": "VKTX",
+      "name": "バイキング・セラピューティクス",
+      "name_en": "Viking Therapeutics",
+      "sub": "バイオ(肥満症)",
+      "sub_en": "Biotech (obesity)",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Vikingが10-Kで、肥満症薬VK2735の競合にウゴービ等を挙げる",
+          "text_en": "Viking names Wegovy and other Novo drugs as competition for VK2735",
+          "source": {
+            "label": "Viking Therapeutics 10-K(2025年度)",
+            "label_en": "Viking Therapeutics 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1607678/000119312526046876/vktx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "VK2735, if approved, will compete against therapies that are already approved and marketed for obesity, including Semaglutide (Wegovy®) and liraglutide (Saxenda®) from Novo Nordisk A/S, and tirzepatide (Zepbound®) from Eli Lilly and Company."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ALT",
+      "ticker": "ALT",
+      "name": "アルティミューン",
+      "name_en": "Altimmune",
+      "sub": "バイオ(肝疾患・肥満)",
+      "sub_en": "Biotech (liver & obesity)",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Altimmuneが10-Kで、肥満症の競合としてノボを挙げる",
+          "text_en": "Altimmune names Novo Nordisk as an obesity competitor",
+          "source": {
+            "label": "Altimmune 10-K(2024年度)",
+            "label_en": "Altimmune 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1326190/000132619025000015/alt-20241231x10k.htm",
+            "level": "official",
+            "date": "2025-02-27",
+            "quote": "For obesity, we face competition from companies such as Novo Nordisk, whose GLP-1 agonist, brand named Wegovy, or compound name semaglutide, was approved for weight loss in June 2021"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BMRN",
+      "ticker": "BMRN",
+      "name": "バイオマリン",
+      "name_en": "BioMarin",
+      "sub": "希少疾患",
+      "sub_en": "Rare disease",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "BioMarinが10-Kで、血友病遺伝子治療の競合にノボの製剤を挙げる",
+          "text_en": "BioMarin names Novo Nordisk factor VIII products as competition for its hemophilia gene therapy",
+          "source": {
+            "label": "BioMarin 10-K(2024年度)",
+            "label_en": "BioMarin 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1048477/000104847725000007/bmrn-20241231.htm",
+            "level": "official",
+            "date": "2025-02-24",
+            "quote": "ROCTAVIAN, a gene therapy for the treatment of adults with severe hemophilia A, has potential competition from marketed recombinant factor VIII replacement therapies, including products marketed by Bayer AG, CSL Behring, Novo Nordisk A/S, Pfizer, Inc., Sanofi S.A., and Takeda Pharmaceutical Company Limited"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

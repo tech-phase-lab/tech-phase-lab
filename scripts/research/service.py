@@ -72,6 +72,7 @@ import official_research_diagnostics
 import official_research_detail
 import watch_earnings
 import mu_earnings_measurement
+import official_channel_probe
 import comparison_warm
 import radar_refresh
 import web_push
@@ -890,6 +891,8 @@ class AutomaticMonitor:
         self.deep_analysis_thread = threading.Thread(target=self.run_deep_analysis, name="deep-analysis", daemon=True)
         self.watch_earnings_thread = threading.Thread(target=self.run_watch_earnings, name="watch-earnings", daemon=True)
         self.mu_measurement_thread = threading.Thread(target=self.run_mu_measurement, name="mu-earnings-measurement", daemon=True)
+        self.channel_probe = official_channel_probe.Probe()
+        self.channel_probe_thread = threading.Thread(target=self.run_channel_probe, name="official-channel-probe", daemon=True)
         self.comparison_warm_thread = threading.Thread(target=self.run_comparison_warm, name="comparison-warm-clock", daemon=True)
         self.radar_refresh_thread = threading.Thread(target=self.run_radar_refresh, name="radar-refresh-clock", daemon=True)
         self.weekly_thread = threading.Thread(target=self.run_weekly, name="weekly-auto-draft-clock", daemon=True)
@@ -1209,6 +1212,18 @@ class AutomaticMonitor:
                 print("weekly-auto-draft-unavailable", flush=True)
             self.stop_event.wait(60)
 
+    def run_channel_probe(self):
+        """Opt-in reachability probe for official earnings channels (OFFICIAL_CHANNEL_PROBE_ENABLED=true); status codes only."""
+        while not self.stop_event.is_set():
+            if official_channel_probe.enabled():
+                try:
+                    self.channel_probe.run_once()
+                except Exception:
+                    print("official-channel-probe-unavailable", flush=True)
+                self.stop_event.wait(official_channel_probe.interval_seconds())
+            else:
+                self.stop_event.wait(300)
+
     def run_mu_measurement(self):
         while not self.stop_event.is_set():
             try:
@@ -1513,6 +1528,7 @@ class AutomaticMonitor:
         self.official_research_thread.start()
         self.deep_analysis_thread.start()
         self.mu_measurement_thread.start()
+        self.channel_probe_thread.start()
         self.comparison_warm_thread.start()
         self.radar_refresh_thread.start()
         self.weekly_thread.start()
@@ -1552,6 +1568,7 @@ class AutomaticMonitor:
         self.official_research_thread.join(timeout=45)
         self.deep_analysis_thread.join(timeout=45)
         self.mu_measurement_thread.join(timeout=45)
+        self.channel_probe_thread.join(timeout=20)
         self.comparison_warm_thread.join(timeout=60)
         self.radar_refresh_thread.join(timeout=90)
         self.watch_earnings_thread.join(timeout=10)
@@ -2440,6 +2457,7 @@ class AutomaticMonitor:
             state["bodyHostProbes"] = monitor.body_host_probe_summary(db)
             state["secEvidence"] = monitor.sec_evidence_summary(db, PRIORITY_SEC_TICKERS)
             state["muEarningsMeasurement"] = mu_earnings_measurement.diagnostics(db)
+            state["officialChannelProbe"] = self.channel_probe.diagnostics()
             state["signalIntake"] = signals.operational_summary(db)
             state["signalIntake"]["xIntake"] = signals.x_operational_summary(db)
             if self.x_stream_requested:

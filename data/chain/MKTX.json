@@ -1,0 +1,296 @@
+{
+  "root": {
+    "ticker": "MKTX",
+    "name": "マーケットアクセス",
+    "cik": 1278021,
+    "name_en": "MarketAxess"
+  },
+  "rows": [
+    {
+      "ja": "買収・取引先",
+      "en": "Acquisitions & counterparties",
+      "above": true
+    },
+    {
+      "ja": "競合(10-K等に記載)",
+      "en": "Competitors (named in 10-Ks)"
+    }
+  ],
+  "rivals": [
+    "TW",
+    "ICE",
+    "CME",
+    "BGC"
+  ],
+  "companies": [
+    {
+      "id": "RFQhub",
+      "ticker": "RFQ-hub",
+      "name": "RFQハブ",
+      "name_en": "RFQ-hub",
+      "sub": "ETF・デリバティブ取引基盤",
+      "sub_en": "ETF & derivatives RFQ platform",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年に過半数の株式を取得",
+          "text_en": "Acquired a majority stake in 2025",
+          "source": {
+            "label": "MarketAxess 10-K(2025年度)",
+            "label_en": "MarketAxess 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1278021/000119312526067009/mktx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "In 2025, we completed our acquisition of a majority stake in RFQ-hub Holdings LLC (\"RFQ-hub\")"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Pragma",
+      "ticker": "Pragma",
+      "name": "プラグマ",
+      "name_en": "Pragma",
+      "sub": "アルゴリズム取引",
+      "sub_en": "Algorithmic trading",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2023年に買収し、株式・為替のアルゴ取引に拡大",
+          "text_en": "Acquired in 2023 to add equities and FX algorithmic trading",
+          "source": {
+            "label": "MarketAxess 10-K(2025年度)",
+            "label_en": "MarketAxess 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1278021/000119312526067009/mktx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "In 2023, we acquired Pragma, expanding our automated and algorithmic trading solutions to equities and foreign exchange."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NYSE",
+      "ticker": "NYSE",
+      "name": "ニューヨーク証券取引所",
+      "name_en": "New York Stock Exchange",
+      "sub": "取引所",
+      "sub_en": "Exchange",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "プラグマの執行管理システムPolarisをNYSEに提供",
+          "text_en": "Provides its Polaris execution management service to the New York Stock Exchange",
+          "source": {
+            "label": "MarketAxess 10-K(2025年度)",
+            "label_en": "MarketAxess 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1278021/000119312526067009/mktx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Through our acquisition of Pragma, we provide Polaris, a high-performance execution management service (\"EMS\"), to the New York Stock Exchange and their clients."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BWEN",
+      "ticker": "BWEN",
+      "name": "ブロードウィンド",
+      "name_en": "Broadwind",
+      "sub": "風力・重機加工",
+      "sub_en": "Wind & heavy fabrication",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "製造税額控除をマーケットアクセスに売却する契約",
+          "text_en": "Sells manufacturing tax credits to MarketAxess",
+          "source": {
+            "label": "Broadwind 10-K(2024年度)",
+            "label_en": "Broadwind 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1120370/000143774925006301/bwen20241231_10k.htm",
+            "level": "official",
+            "date": "2025-03-05",
+            "quote": "entered into a Tax Credit Transfer Agreement with MarketAxess Holdings Inc. (the \"Purchaser\"), pursuant to which, for each of 2025 and 2026, BHF agreed to sell to the Purchaser up to $ 15,000 and $ 20,000 respectively, of AMP Credits."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TW",
+      "ticker": "TW",
+      "name": "トレードウェブ",
+      "name_en": "Tradeweb Markets",
+      "sub": "電子債券取引",
+      "sub_en": "Electronic bond trading",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "クレジット・地方債・金利市場の競合",
+          "text_en": "Competitor in credit, municipal and rates markets",
+          "source": {
+            "label": "MarketAxess 10-K(2025年度)",
+            "label_en": "MarketAxess 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1278021/000119312526067009/mktx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "We compete with Tradeweb (indirectly controlled by the London Stock Exchange), Bloomberg, Intercontinental Exchange (Bondpoint, TMC Bonds, Creditex), Trumid, TP ICAP (Liquidnet, Neptune Networks) and others in the credit and municipal markets; and Tradeweb, Bloomberg, CME Group (BrokerTec), BGC Partners (Fenics UST) and others in the rates markets."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ICE",
+      "ticker": "ICE",
+      "name": "インターコンチネンタル取引所",
+      "name_en": "Intercontinental Exchange",
+      "sub": "取引所・データ",
+      "sub_en": "Exchanges & data",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "債券取引とデータ事業の競合",
+          "text_en": "Competitor in bond trading and data",
+          "source": {
+            "label": "MarketAxess 10-K(2025年度)",
+            "label_en": "MarketAxess 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1278021/000119312526067009/mktx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "We compete with Tradeweb (indirectly controlled by the London Stock Exchange), Bloomberg, Intercontinental Exchange (Bondpoint, TMC Bonds, Creditex), Trumid, TP ICAP (Liquidnet, Neptune Networks) and others in the credit and municipal markets; and Tradeweb, Bloomberg, CME Group (BrokerTec), BGC Partners (Fenics UST) and others in the rates markets."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CME",
+      "ticker": "CME",
+      "name": "CMEグループ",
+      "name_en": "CME Group",
+      "sub": "取引所",
+      "sub_en": "Exchanges",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "金利市場の競合(BrokerTec)",
+          "text_en": "Competitor in rates markets through BrokerTec",
+          "source": {
+            "label": "MarketAxess 10-K(2025年度)",
+            "label_en": "MarketAxess 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1278021/000119312526067009/mktx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "We compete with Tradeweb (indirectly controlled by the London Stock Exchange), Bloomberg, Intercontinental Exchange (Bondpoint, TMC Bonds, Creditex), Trumid, TP ICAP (Liquidnet, Neptune Networks) and others in the credit and municipal markets; and Tradeweb, Bloomberg, CME Group (BrokerTec), BGC Partners (Fenics UST) and others in the rates markets."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BGC",
+      "ticker": "BGC",
+      "name": "BGCグループ",
+      "name_en": "BGC Group",
+      "sub": "金融仲介",
+      "sub_en": "Financial brokerage",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "金利市場の競合(Fenics UST)",
+          "text_en": "Competitor in rates markets through Fenics UST",
+          "source": {
+            "label": "MarketAxess 10-K(2025年度)",
+            "label_en": "MarketAxess 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1278021/000119312526067009/mktx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "We compete with Tradeweb (indirectly controlled by the London Stock Exchange), Bloomberg, Intercontinental Exchange (Bondpoint, TMC Bonds, Creditex), Trumid, TP ICAP (Liquidnet, Neptune Networks) and others in the credit and municipal markets; and Tradeweb, Bloomberg, CME Group (BrokerTec), BGC Partners (Fenics UST) and others in the rates markets."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LSEG",
+      "ticker": "LSEG",
+      "name": "ロンドン証券取引所グループ",
+      "name_en": "London Stock Exchange Group",
+      "sub": "取引所・データ(英)",
+      "sub_en": "Exchange & data (UK)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "データ事業と欧州の取引後報告で競合",
+          "text_en": "Competitor in market data and European post-trade services",
+          "source": {
+            "label": "MarketAxess 10-K(2025年度)",
+            "label_en": "MarketAxess 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1278021/000119312526067009/mktx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Our data business competes with several large market data and information providers, such as Bloomberg, the London Stock Exchange (LSEG Data & Analytics), Intercontinental Exchange and S&P Global"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SPGI",
+      "ticker": "SPGI",
+      "name": "S&Pグローバル",
+      "name_en": "S&P Global",
+      "sub": "金融データ",
+      "sub_en": "Financial data",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "データ事業の競合",
+          "text_en": "Competitor for its data business",
+          "source": {
+            "label": "MarketAxess 10-K(2025年度)",
+            "label_en": "MarketAxess 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1278021/000119312526067009/mktx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Our data business competes with several large market data and information providers, such as Bloomberg, the London Stock Exchange (LSEG Data & Analytics), Intercontinental Exchange and S&P Global"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Bloomberg",
+      "ticker": "Bloomberg",
+      "name": "ブルームバーグ",
+      "name_en": "Bloomberg",
+      "sub": "金融データ・取引基盤",
+      "sub_en": "Financial data & trading",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "取引とデータの両方で競合",
+          "text_en": "Competitor in both trading and data",
+          "source": {
+            "label": "MarketAxess 10-K(2025年度)",
+            "label_en": "MarketAxess 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1278021/000119312526067009/mktx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "We compete with Tradeweb (indirectly controlled by the London Stock Exchange), Bloomberg, Intercontinental Exchange (Bondpoint, TMC Bonds, Creditex), Trumid, TP ICAP (Liquidnet, Neptune Networks) and others in the credit and municipal markets; and Tradeweb, Bloomberg, CME Group (BrokerTec), BGC Partners (Fenics UST) and others in the rates markets."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

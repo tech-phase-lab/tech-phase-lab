@@ -1,0 +1,224 @@
+{
+  "root": {
+    "ticker": "GFI",
+    "name": "ゴールド・フィールズ",
+    "cik": 1172724,
+    "name_en": "Gold Fields"
+  },
+  "rows": [
+    {
+      "ja": "買収・共同事業",
+      "en": "Acquisitions & joint ventures"
+    },
+    {
+      "ja": "探鉱の出資先",
+      "en": "Exploration stakes"
+    },
+    {
+      "ja": "買収を競った相手",
+      "en": "Rival bidders"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "OsiskoMining",
+      "ticker": "Osisko Mining",
+      "name": "オシスコ・マイニング",
+      "name_en": "Osisko Mining",
+      "sub": "金開発(カナダ)",
+      "sub_en": "Gold development (Canada)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "カナダのWindfall計画を持つOsisko Miningを2024年10月に全株取得",
+          "text_en": "Acquired all of Osisko Mining, owner of the Windfall project in Canada, in October 2024",
+          "source": {
+            "label": "Gold Fields 20-F(2025年度)",
+            "label_en": "Gold Fields 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1172724/000162828026021904/gfi-20251231.htm",
+            "level": "official",
+            "date": "2026-03-30",
+            "quote": "Following the 100% acquisition of Osisko Mining in October 2024, the project is in advanced pre- development."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GoldRoad",
+      "ticker": "Gold Road Resources",
+      "name": "ゴールド・ロード・リソーシズ",
+      "name_en": "Gold Road Resources",
+      "sub": "金鉱山(豪)",
+      "sub_en": "Gold mining (Australia)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Gold Roadを買収し、豪グルイエール鉱山を100%保有に",
+          "text_en": "Bought Gold Road, consolidating 100% of the Gruyere mine in Australia",
+          "source": {
+            "label": "Gold Fields 20-F(2025年度)",
+            "label_en": "Gold Fields 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1172724/000162828026021904/gfi-20251231.htm",
+            "level": "official",
+            "date": "2026-03-30",
+            "quote": "To fund the acquisition of Gold Road Resources in 2025, the Group entered into a US$2,300m fully underwritten multi-currency syndicated bridge facility"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AU",
+      "ticker": "AU",
+      "name": "アングロゴールド・アシャンティ",
+      "name_en": "AngloGold Ashanti",
+      "sub": "金鉱山",
+      "sub_en": "Gold mining",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ガーナの隣接鉱山(タルクワとイドゥアプリエム)の統合合弁を提案(2025年5月に協議を中断)",
+          "text_en": "Proposed combining the neighboring Tarkwa and Iduapriem mines in Ghana; talks paused in May 2025",
+          "source": {
+            "label": "AngloGold Ashanti 20-F(2025年度)",
+            "label_en": "AngloGold Ashanti 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1973832/000197383226000066/au-20251231.htm",
+            "level": "official",
+            "date": "2026-03-26",
+            "quote": "In March 2023, AngloGold Ashanti and Gold Fields proposed a joint venture to combine their Iduapriem and Tarkwa gold mines in Ghana.",
+            "note": "協議は2025年5月に中断しています。",
+            "note_en": "Talks were paused in May 2025."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Torq",
+      "ticker": "Torq Resources",
+      "name": "トーク・リソーシズ",
+      "name_en": "Torq Resources",
+      "sub": "探鉱(チリ)",
+      "sub_en": "Exploration (Chile)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "探鉱で出資する会社の一社",
+          "text_en": "One of its exploration interests",
+          "source": {
+            "label": "Gold Fields 20-F(2025年度)",
+            "label_en": "Gold Fields 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1172724/000162828026021904/gfi-20251231.htm",
+            "level": "official",
+            "date": "2026-03-30",
+            "quote": "Exploration interests: Torq Resources, Tesoro Gold"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Tesoro",
+      "ticker": "Tesoro Gold",
+      "name": "テソロ・ゴールド",
+      "name_en": "Tesoro Gold",
+      "sub": "探鉱(チリ)",
+      "sub_en": "Exploration (Chile)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "探鉱で出資する会社の一社",
+          "text_en": "One of its exploration interests",
+          "source": {
+            "label": "Gold Fields 20-F(2025年度)",
+            "label_en": "Gold Fields 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1172724/000162828026021904/gfi-20251231.htm",
+            "level": "official",
+            "date": "2026-03-30",
+            "quote": "Exploration interests: Torq Resources, Tesoro Gold"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Yamana",
+      "ticker": "Yamana Gold",
+      "name": "ヤマナ・ゴールド",
+      "name_en": "Yamana Gold",
+      "sub": "金鉱山",
+      "sub_en": "Gold mining",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Yamanaの買収で合意していたが、Yamanaが他社案を選び契約を終了",
+          "text_en": "Had agreed to buy Yamana, then terminated after Yamana accepted a rival deal",
+          "source": {
+            "label": "Gold Fields 20-F(2024年度)",
+            "label_en": "Gold Fields 20-F (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1172724/000117272425000010/gfi-20241231.htm",
+            "level": "official",
+            "date": "2025-03-27",
+            "quote": "As a result of Yamana entering into an arrangement agreement with Pan American Silver Corp and Agnico Eagle Mines Limited, Gold Fields terminated the agreement in respect of the proposed acquisition of Yamana."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PAAS",
+      "ticker": "PAAS",
+      "name": "パンアメリカン・シルバー",
+      "name_en": "Pan American Silver",
+      "sub": "銀・金鉱山",
+      "sub_en": "Silver & gold mining",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Yamana買収でGold Fieldsに競り勝った側(アグニコと共同)",
+          "text_en": "Won Yamana over Gold Fields, together with Agnico Eagle",
+          "source": {
+            "label": "Gold Fields 20-F(2024年度)",
+            "label_en": "Gold Fields 20-F (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1172724/000117272425000010/gfi-20241231.htm",
+            "level": "official",
+            "date": "2025-03-27",
+            "quote": "As a result of Yamana entering into an arrangement agreement with Pan American Silver Corp and Agnico Eagle Mines Limited, Gold Fields terminated the agreement in respect of the proposed acquisition of Yamana."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AEM",
+      "ticker": "AEM",
+      "name": "アグニコ・イーグル",
+      "name_en": "Agnico Eagle Mines",
+      "sub": "金鉱山",
+      "sub_en": "Gold mining",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Yamana買収でGold Fieldsに競り勝った側(Pan Americanと共同)",
+          "text_en": "Won Yamana over Gold Fields, together with Pan American",
+          "source": {
+            "label": "Gold Fields 20-F(2024年度)",
+            "label_en": "Gold Fields 20-F (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1172724/000117272425000010/gfi-20241231.htm",
+            "level": "official",
+            "date": "2025-03-27",
+            "quote": "As a result of Yamana entering into an arrangement agreement with Pan American Silver Corp and Agnico Eagle Mines Limited, Gold Fields terminated the agreement in respect of the proposed acquisition of Yamana."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

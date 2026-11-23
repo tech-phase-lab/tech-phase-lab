@@ -1,0 +1,248 @@
+{
+  "root": {
+    "ticker": "NOV",
+    "name": "NOV",
+    "cik": 1021860,
+    "name_en": "NOV Inc."
+  },
+  "rows": [
+    {
+      "ja": "特許ライセンス先(係争中)",
+      "en": "Patent licensees (in dispute)",
+      "above": true
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "BKR",
+    "FTI",
+    "OIS",
+    "FET"
+  ],
+  "companies": [
+    {
+      "id": "HAL",
+      "ticker": "HAL",
+      "name": "ハリバートン",
+      "name_en": "Halliburton",
+      "sub": "油田サービス",
+      "sub_en": "Oilfield services",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ドリルビット特許のライセンス先。ロイヤルティ未払いでNOVが提訴",
+          "text_en": "Drill-bit patent licensee; NOV sued over unpaid royalties",
+          "source": {
+            "label": "NOV 10-K(2025年度)",
+            "label_en": "NOV 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1021860/000119312526048350/nov-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "On September 29, 2025, and October 7, 2025, in the lawsuits against Halliburton, Ulterra and Varel"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PTEN",
+      "ticker": "PTEN",
+      "name": "パターソンUTI",
+      "name_en": "Patterson-UTI Energy",
+      "sub": "掘削・完成",
+      "sub_en": "Drilling & completions",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "買収した子会社(ウルテラ)がNOVからライセンス違反で訴えられている",
+          "text_en": "Subsidiaries it acquired with Ulterra are defendants in an NOV license claim",
+          "source": {
+            "label": "Patterson-UTI 10-K(2024年度)",
+            "label_en": "Patterson-UTI 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/889900/000088990025000034/pten-20241231.htm",
+            "level": "official",
+            "date": "2025-02-11",
+            "quote": "Certain subsidiaries we acquired in the Ulterra acquisition are defendants in a claim brought by a subsidiary of NOV Inc. alleging breach of a license agreement related to certain patents."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BKR",
+      "ticker": "BKR",
+      "name": "ベーカー・ヒューズ",
+      "name_en": "Baker Hughes",
+      "sub": "油田サービス",
+      "sub_en": "Oilfield services",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "油田サービス部門の競合にNOVを挙げる",
+          "text_en": "Names NOV among competitors of its oilfield services segment",
+          "source": {
+            "label": "Baker Hughes 10-K(2025年度)",
+            "label_en": "Baker Hughes 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1701605/000170160526000007/bkr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-05",
+            "quote": "OFSE competitors include SLB, Halliburton, NOV, Weatherford, and TechnipFMC."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FTI",
+      "ticker": "FTI",
+      "name": "テクニップFMC",
+      "name_en": "TechnipFMC",
+      "sub": "海底生産システム",
+      "sub_en": "Subsea systems",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合にNOVを挙げる",
+          "text_en": "Names NOV among its competitors",
+          "source": {
+            "label": "TechnipFMC 10-K(2024年度)",
+            "label_en": "TechnipFMC 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1681459/000168145925000036/fti-20241231.htm",
+            "level": "official",
+            "date": "2025-02-27",
+            "quote": "Our competitors include Baker Hughes Company, Innovex International, Inc., McDermott International, Inc., NOV Inc., Oceaneering International, Inc., OneSubsea, and Subsea 7 S.A."
+          }
+        }
+      ]
+    },
+    {
+      "id": "OIS",
+      "ticker": "OIS",
+      "name": "オイル・ステーツ",
+      "name_en": "Oil States International",
+      "sub": "油田機器",
+      "sub_en": "Oilfield equipment",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "オフショア部門の主な競合にNOVを挙げる",
+          "text_en": "Names NOV among main competitors in its offshore segment",
+          "source": {
+            "label": "Oil States 10-K(2025年度)",
+            "label_en": "Oil States 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1121484/000112148426000007/ois-20251231.htm",
+            "level": "official",
+            "date": "2026-03-04",
+            "quote": "Our main competitors in this segment include Baker Hughes Company, Hutchinson Group (a subsidiary of Total S.A.), NOV Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FET",
+      "ticker": "FET",
+      "name": "フォーラム・エナジー・テクノロジーズ",
+      "name_en": "Forum Energy Technologies",
+      "sub": "油田機器",
+      "sub_en": "Oilfield equipment",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "重要な競合にNOVを挙げる",
+          "text_en": "Names NOV among its more significant competitors",
+          "source": {
+            "label": "Forum Energy Technologies 10-K(2024年度)",
+            "label_en": "Forum Energy Technologies 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1401257/000140125725000012/fet-20241231.htm",
+            "level": "official",
+            "date": "2025-03-03",
+            "quote": "Some of our more significant competitors include manufacturing companies such as NOV Inc. and Tenaris S.A."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NCSM",
+      "ticker": "NCSM",
+      "name": "NCSマルチステージ",
+      "name_en": "NCS Multistage",
+      "sub": "坑井仕上げ",
+      "sub_en": "Well completions",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "仕上げ製品の主な競合にNOVを挙げる",
+          "text_en": "Names NOV among major competitors for completion products",
+          "source": {
+            "label": "NCS Multistage 10-K(2025年度)",
+            "label_en": "NCS Multistage 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1692427/000143774926007065/ncsm20251231_10k.htm",
+            "level": "official",
+            "date": "2026-03-05",
+            "quote": "Our major competitors for our completion products and services include Baker Hughes Company (\"Baker Hughes\"), Core Laboratories Inc., DMC Global Inc., Forum Energy Technologies, Inc., Halliburton Company, Innovex International, Inc., Nine Energy Service, Inc., NOV Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NBR",
+      "ticker": "NBR",
+      "name": "ネイバーズ",
+      "name_en": "Nabors Industries",
+      "sub": "掘削",
+      "sub_en": "Drilling",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "掘削ソリューション部門の競合にNOVを挙げる",
+          "text_en": "Says its Drilling Solutions segment competes with NOV and others",
+          "source": {
+            "label": "Nabors 10-K(2025年度)",
+            "label_en": "Nabors 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1163739/000110465926014997/nbr-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Our Drilling Solutions segment competes with services provided by NOV Inc., Pason Systems Inc., Baker Hughes Co."
+          }
+        }
+      ]
+    },
+    {
+      "id": "INVX",
+      "ticker": "INVX",
+      "name": "イノベックス",
+      "name_en": "Innovex International",
+      "sub": "坑井用製品",
+      "sub_en": "Well products",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合にNOVを挙げる",
+          "text_en": "Names NOV among major competitors across its product lines",
+          "source": {
+            "label": "Innovex 10-K(2025年度)",
+            "label_en": "Innovex 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1042893/000119312526067228/invx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Our major competitors across our product lines include Baker Hughes, Halliburton, Schlumberger, TechnipFMC, Weatherford International, Aker Solutions, and NOV."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

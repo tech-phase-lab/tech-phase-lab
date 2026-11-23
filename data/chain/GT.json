@@ -1,0 +1,270 @@
+{
+  "root": {
+    "ticker": "GT",
+    "name": "グッドイヤー",
+    "cik": 42582,
+    "name_en": "Goodyear Tire & Rubber"
+  },
+  "rows": [
+    {
+      "ja": "ライセンス・買収",
+      "en": "Licensees & acquisitions",
+      "above": true
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in the 10-K)"
+    }
+  ],
+  "rivals": [
+    "Bridgestone",
+    "Michelin"
+  ],
+  "companies": [
+    {
+      "id": "TWI",
+      "ticker": "TWI",
+      "name": "タイタン・インターナショナル",
+      "name_en": "Titan International",
+      "sub": "農機用タイヤ・ホイール",
+      "sub_en": "Farm tires & wheels",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "グッドイヤー・ブランドの農業用タイヤなどをライセンス生産",
+          "text_en": "Makes farm, ATV and truck tires under the Goodyear brand under license",
+          "source": {
+            "label": "Titan International 10-K(2025年度)",
+            "label_en": "Titan International 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/899751/000089975126000007/twi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "The Company has royalty-bearing trademark license agreements with Goodyear to manufacture and sell certain farm, ATV and truck tires under the Goodyear brand."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Cooper",
+      "ticker": "Cooper Tire",
+      "name": "クーパー・タイヤ",
+      "name_en": "Cooper Tire",
+      "sub": "タイヤ",
+      "sub_en": "Tires",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "買収したクーパー・タイヤのブランド無形資産で減損を計上",
+          "text_en": "Acquired Cooper Tire; took an impairment on its lower-tier brand intangibles",
+          "source": {
+            "label": "Goodyear 10-K(2025年度)",
+            "label_en": "Goodyear 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/42582/000162828026006708/gt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "primarily related to our lower tier indefinite-lived intangible assets related to the acquisition of Cooper Tire as a result of increased competition from lower tier imports in the market."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Bridgestone",
+      "ticker": "Bridgestone",
+      "name": "ブリヂストン",
+      "name_en": "Bridgestone",
+      "sub": "タイヤ",
+      "sub_en": "Tires",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "世界での2大競合の一社",
+          "text_en": "One of its two major worldwide competitors",
+          "source": {
+            "label": "Goodyear 10-K(2025年度)",
+            "label_en": "Goodyear 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/42582/000162828026006708/gt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "On a worldwide basis, we have two major competitors: Bridgestone (based in Japan) and Michelin (based in France). Other significant competitors include Continental, Hankook, Kumho, Pirelli, Sumitomo, Toyo, Yokohama and various regional tire manufacturers."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Michelin",
+      "ticker": "Michelin",
+      "name": "ミシュラン",
+      "name_en": "Michelin",
+      "sub": "タイヤ(仏)",
+      "sub_en": "Tires (France)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "世界での2大競合の一社",
+          "text_en": "One of its two major worldwide competitors",
+          "source": {
+            "label": "Goodyear 10-K(2025年度)",
+            "label_en": "Goodyear 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/42582/000162828026006708/gt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "On a worldwide basis, we have two major competitors: Bridgestone (based in Japan) and Michelin (based in France). Other significant competitors include Continental, Hankook, Kumho, Pirelli, Sumitomo, Toyo, Yokohama and various regional tire manufacturers."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Continental",
+      "ticker": "Continental",
+      "name": "コンチネンタル",
+      "name_en": "Continental",
+      "sub": "タイヤ・自動車部品(独)",
+      "sub_en": "Tires & auto parts (Germany)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "その他の主要な競合",
+          "text_en": "Other significant competitor",
+          "source": {
+            "label": "Goodyear 10-K(2025年度)",
+            "label_en": "Goodyear 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/42582/000162828026006708/gt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "On a worldwide basis, we have two major competitors: Bridgestone (based in Japan) and Michelin (based in France). Other significant competitors include Continental, Hankook, Kumho, Pirelli, Sumitomo, Toyo, Yokohama and various regional tire manufacturers."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Hankook",
+      "ticker": "Hankook",
+      "name": "ハンコック",
+      "name_en": "Hankook",
+      "sub": "タイヤ(韓)",
+      "sub_en": "Tires (Korea)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "その他の主要な競合",
+          "text_en": "Other significant competitor",
+          "source": {
+            "label": "Goodyear 10-K(2025年度)",
+            "label_en": "Goodyear 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/42582/000162828026006708/gt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "On a worldwide basis, we have two major competitors: Bridgestone (based in Japan) and Michelin (based in France). Other significant competitors include Continental, Hankook, Kumho, Pirelli, Sumitomo, Toyo, Yokohama and various regional tire manufacturers."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Pirelli",
+      "ticker": "Pirelli",
+      "name": "ピレリ",
+      "name_en": "Pirelli",
+      "sub": "タイヤ(伊)",
+      "sub_en": "Tires (Italy)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "その他の主要な競合",
+          "text_en": "Other significant competitor",
+          "source": {
+            "label": "Goodyear 10-K(2025年度)",
+            "label_en": "Goodyear 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/42582/000162828026006708/gt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "On a worldwide basis, we have two major competitors: Bridgestone (based in Japan) and Michelin (based in France). Other significant competitors include Continental, Hankook, Kumho, Pirelli, Sumitomo, Toyo, Yokohama and various regional tire manufacturers."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SumitomoRubber",
+      "ticker": "Sumitomo Rubber",
+      "name": "住友ゴム工業",
+      "name_en": "Sumitomo Rubber",
+      "sub": "タイヤ",
+      "sub_en": "Tires",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "その他の主要な競合",
+          "text_en": "Other significant competitor",
+          "source": {
+            "label": "Goodyear 10-K(2025年度)",
+            "label_en": "Goodyear 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/42582/000162828026006708/gt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "On a worldwide basis, we have two major competitors: Bridgestone (based in Japan) and Michelin (based in France). Other significant competitors include Continental, Hankook, Kumho, Pirelli, Sumitomo, Toyo, Yokohama and various regional tire manufacturers."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Toyo",
+      "ticker": "Toyo Tire",
+      "name": "TOYO TIRE",
+      "name_en": "Toyo Tire",
+      "sub": "タイヤ",
+      "sub_en": "Tires",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "その他の主要な競合",
+          "text_en": "Other significant competitor",
+          "source": {
+            "label": "Goodyear 10-K(2025年度)",
+            "label_en": "Goodyear 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/42582/000162828026006708/gt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "On a worldwide basis, we have two major competitors: Bridgestone (based in Japan) and Michelin (based in France). Other significant competitors include Continental, Hankook, Kumho, Pirelli, Sumitomo, Toyo, Yokohama and various regional tire manufacturers."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Yokohama",
+      "ticker": "Yokohama Rubber",
+      "name": "横浜ゴム",
+      "name_en": "Yokohama Rubber",
+      "sub": "タイヤ",
+      "sub_en": "Tires",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "その他の主要な競合",
+          "text_en": "Other significant competitor",
+          "source": {
+            "label": "Goodyear 10-K(2025年度)",
+            "label_en": "Goodyear 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/42582/000162828026006708/gt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "On a worldwide basis, we have two major competitors: Bridgestone (based in Japan) and Michelin (based in France). Other significant competitors include Continental, Hankook, Kumho, Pirelli, Sumitomo, Toyo, Yokohama and various regional tire manufacturers."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

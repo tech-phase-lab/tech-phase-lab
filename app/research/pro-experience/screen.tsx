@@ -104,7 +104,8 @@ export function ProExperienceDetail({ id }: { id: string }) {
       <div className={styles.titleRow}><h1 className={styles.title}>{inLanguage(feature.name, lang)}</h1><ProTag tone="plain" /></div>
       {/* A feature with a sample shows the sample, never a video: the samples read only saved files (no request for real data). */}
       {sample ? <FeatureSample feature={sample} lang={lang} /> : feature.videoUrl && <FeatureVideo feature={feature} lang={lang} />}
-      {before && <p className={styles.text}>{before}</p>}
+      {/* Owner, Nov 23: a sample needs no one-line summary under it (the tour list already has it). */}
+      {before && !sample && <p className={styles.text}>{before}</p>}
       {feature.imageUrl && <figure className={styles.figure}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={feature.imageUrl} alt={ja ? `${feature.name.ja}の画面` : `${feature.name.en || feature.name.ja} screen`} loading="lazy" />
