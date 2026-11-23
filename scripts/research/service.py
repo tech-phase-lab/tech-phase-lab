@@ -149,6 +149,11 @@ WIRE_REFRESH_MAX_AGE = 60
 LIVE_REFRESH_INTERVAL = 15
 LIVE_MAX_AGE = 45
 LIVE_IDLE_SECONDS = 600
+# Nov 23: a full /live read after a quiet spell waited for a multi-second build and the site fell back to its bundled
+# September snapshot. The full payload is kept warm in the background (at most this old) and a full read is answered
+# from the newest build up to LIVE_STALE_SERVE_SECONDS old while the background step rebuilds it.
+LIVE_WARM_SECONDS = 300
+LIVE_STALE_SERVE_SECONDS = 900
 LIVE_SLOW_BUILD_SECONDS = 5
 
 
@@ -2520,7 +2525,7 @@ class AutomaticMonitor:
         if not freshness:
             self.live_full_requested_at = arrived
         latest = self.newest_live_state if freshness else (lambda: self.live_cache)
-        max_age = self.live_max_age()
+        max_age = self.live_max_age() if freshness else max(self.live_max_age(), LIVE_STALE_SERVE_SECONDS)
         cached = latest()
         if not (cached and arrived - cached[0] <= max_age):
             with self.live_lock:
@@ -2548,8 +2553,15 @@ class AutomaticMonitor:
         payload when the intake dashboard (or a full /live reader) asked, otherwise only the operating state."""
         now = time.monotonic()
         if now - self.live_requested_at > LIVE_IDLE_SECONDS:
-            return False
+            # Nobody asked lately: keep only the full payload warm, at a slow pace, so the next full read never waits.
+            if self.live_cache and now - self.live_cache[0] < LIVE_WARM_SECONDS:
+                return False
+            with self.live_lock:
+                self.build_live(full=True)
+            return True
         full = now - getattr(self, "live_full_requested_at", self.live_requested_at) <= LIVE_IDLE_SECONDS
+        if not full and (not self.live_cache or now - self.live_cache[0] >= LIVE_WARM_SECONDS):
+            full = True
         cached = self.live_cache if full else self.newest_live_state()
         if cached and now - cached[0] < self.live_refresh_interval():
             return False
