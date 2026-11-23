@@ -1,0 +1,252 @@
+{
+  "root": {
+    "ticker": "PNR",
+    "name": "ペンテア",
+    "cik": 77360,
+    "name_en": "Pentair"
+  },
+  "rows": [
+    {
+      "ja": "買収・分離",
+      "en": "Acquisitions & spin-off",
+      "above": true
+    },
+    {
+      "ja": "販売先(相手の資料に記載)",
+      "en": "Distributors (named in their filings)"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "XYL",
+    "AOS",
+    "SOLV",
+    "FELE"
+  ],
+  "companies": [
+    {
+      "id": "HydraStop",
+      "ticker": "Hydra-Stop",
+      "name": "ハイドラストップ",
+      "name_en": "Hydra-Stop",
+      "sub": "配管の止水工具",
+      "sub_en": "Pipe line-stopping tools",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年9月に約2.9億ドルで買収",
+          "text_en": "Acquired in September 2025 for about $292 million",
+          "source": {
+            "label": "Pentair 10-K(2025年度)",
+            "label_en": "Pentair 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/77360/000007736026000007/pnr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "On September 17, 2025, as part of our Flow reportable segment, we completed the acquisition of Hydra-Stop, LLC (\"Hydra-Stop\") for $292.1 million in cash"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GF",
+      "ticker": "G & F Manufacturing",
+      "name": "G&Fマニュファクチャリング",
+      "name_en": "G & F Manufacturing",
+      "sub": "プール用部品",
+      "sub_en": "Pool components",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2024年12月に約1.16億ドルで買収(プール事業)",
+          "text_en": "Acquired in December 2024 for about $116 million for its Pool segment",
+          "source": {
+            "label": "Pentair 10-K(2025年度)",
+            "label_en": "Pentair 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/77360/000007736026000007/pnr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "In December 2024, as part of our Pool reportable segment, we completed the acquisition of G & F Manufacturing, LLC (\"G & F Manufacturing\") for $116.0 million in cash, net of cash acquired."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NVT",
+      "ticker": "NVT",
+      "name": "エヌベント",
+      "name_en": "nVent",
+      "sub": "電気設備部品",
+      "sub_en": "Electrical connection & protection",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Pentairから分離・独立した会社(電気接続事業はPentairが2015年に買収したERICOが母体)",
+          "text_en": "Spun off from Pentair; its Electrical Connections business came from ERICO, which Pentair bought in 2015",
+          "source": {
+            "label": "nVent 10-K(2025年度)",
+            "label_en": "nVent 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1720635/000162828026008608/nvt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "In 2015, Pentair acquired ERICO Global Company, a leading global manufacturer of superior engineered electrical and fastening products"
+          }
+        }
+      ]
+    },
+    {
+      "id": "POOL",
+      "ticker": "POOL",
+      "name": "プール・コーポレーション",
+      "name_en": "Pool Corp",
+      "sub": "プール用品の卸売",
+      "sub_en": "Pool supplies distribution",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Pool Corpの最大の仕入先がPentairで、売上原価の約20%(2024年)",
+          "text_en": "Pentair is Pool Corp's largest supplier, about 20% of its 2024 cost of products sold",
+          "source": {
+            "label": "Pool Corp 10-K(2024年度)",
+            "label_en": "Pool Corp 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/945841/000094584125000032/pool-20241231.htm",
+            "level": "official",
+            "date": "2025-02-27",
+            "quote": "Our largest suppliers include Pentair plc, Zodiac Pool Systems, Inc, and Hayward Pool Products, Inc., which accounted for approximately 20%, 12% and 11%, respectively, of the cost of products we sold in 2024."
+          }
+        }
+      ]
+    },
+    {
+      "id": "XYL",
+      "ticker": "XYL",
+      "name": "ザイレム",
+      "name_en": "Xylem",
+      "sub": "水処理機器",
+      "sub_en": "Water technology",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Xylemが10-Kで、ポンプなど給水事業の主な競合としてPentairを挙げる",
+          "text_en": "Xylem names Pentair among key competitors in its Applied Water segment",
+          "source": {
+            "label": "Xylem 10-K(2024年度)",
+            "label_en": "Xylem 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1524472/000152447225000013/xyl-20241231.htm",
+            "level": "official",
+            "date": "2025-03-03",
+            "quote": "Our key competitors in the Applied Water segment include Franklin Electric Co., Inc, Grundfos, Pentair plc, and Wilo SE."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AOS",
+      "ticker": "AOS",
+      "name": "A.O.スミス",
+      "name_en": "A. O. Smith",
+      "sub": "給湯器・浄水器",
+      "sub_en": "Water heaters & treatment",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "A. O. Smithが10-Kで、米国の浄水器の主な競合としてPentairを挙げる",
+          "text_en": "A. O. Smith names Pentair among its principal US water treatment competitors",
+          "source": {
+            "label": "A. O. Smith 10-K(2025年度)",
+            "label_en": "A. O. Smith 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/91142/000009114226000008/aos-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "Our principal water treatment competitors in the U.S. are Culligan, Kinetico, Pentair, Franklin Electric and Ecowater"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SOLV",
+      "ticker": "SOLV",
+      "name": "ソルベンタム",
+      "name_en": "Solventum",
+      "sub": "医療・ろ過製品",
+      "sub_en": "Healthcare & filtration",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Solventumが10-Kで、ろ過製品の世界的な競合としてPentairを挙げる",
+          "text_en": "Solventum names Pentair among established global filtration competitors",
+          "source": {
+            "label": "Solventum 10-K(2024年度)",
+            "label_en": "Solventum 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1964738/000196473825000019/solv-20241231.htm",
+            "level": "official",
+            "date": "2025-02-28",
+            "quote": "Established global filtration competitors such as Danaher, Merck KGaA, Sartorius, Pentair, Repligen, and Entegris"
+          }
+        }
+      ]
+    },
+    {
+      "id": "FELE",
+      "ticker": "FELE",
+      "name": "フランクリン・エレクトリック",
+      "name_en": "Franklin Electric",
+      "sub": "ポンプ・水関連機器",
+      "sub_en": "Pumps & water systems",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Franklin Electricの契約書で、「直接の競合」の一社としてPentairを定義",
+          "text_en": "A Franklin Electric agreement defines Pentair as one of its direct competitors",
+          "source": {
+            "label": "Franklin Electric 10-Q添付契約(2025年第1四半期)",
+            "label_en": "Franklin Electric 10-Q exhibit agreement (Q1 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/38725/000003872525000084/a2025q1form10qex102.htm",
+            "level": "official",
+            "date": "2025-05-01",
+            "quote": "\"Direct Competitor\" is defined as, and expressly limited to any of the following, including their affiliates and assigns: Lorentz, Pentair, Grundfos, Xylem"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BLGO",
+      "ticker": "BLGO",
+      "name": "バイオラルゴ",
+      "name_en": "BioLargo",
+      "sub": "水処理技術",
+      "sub_en": "Water treatment tech",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "BioLargoが10-Kで、自社の処理システムの競合メーカーとしてPentairを挙げる",
+          "text_en": "BioLargo names Pentair among makers of systems its AEC technology competes with",
+          "source": {
+            "label": "BioLargo 10-K(2025年度)",
+            "label_en": "BioLargo 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/880242/000143774926006926/blgo20251231_10k.htm",
+            "level": "official",
+            "date": "2026-03-04",
+            "quote": "Our AEC system competes against granular activated carbon, ion-exchange and reverse osmosis systems made by companies such as Veolia, AECOM, Xylem and Pentair."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

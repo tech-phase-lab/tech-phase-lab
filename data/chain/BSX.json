@@ -1,0 +1,348 @@
+{
+  "root": {
+    "ticker": "BSX",
+    "name": "ボストン・サイエンティフィック",
+    "cik": 885725,
+    "name_en": "Boston Scientific"
+  },
+  "rows": [
+    {
+      "ja": "買収した会社",
+      "en": "Acquisitions",
+      "above": true
+    },
+    {
+      "ja": "販売提携",
+      "en": "Commercial partners"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "NVRO",
+    "PRCT",
+    "MMSI",
+    "OBIO"
+  ],
+  "companies": [
+    {
+      "id": "PEN",
+      "ticker": "PEN",
+      "name": "ペナンブラ",
+      "name_en": "Penumbra",
+      "sub": "血栓除去デバイス",
+      "sub_en": "Thrombectomy devices",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Penumbraを買収する合併契約(2026年1月)",
+          "text_en": "Merger agreement to acquire Penumbra (January 2026)",
+          "source": {
+            "label": "Penumbra 10-K(2025年度)",
+            "label_en": "Penumbra 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1321732/000132173226000007/pen-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "On January 14, 2026, we entered into an Agreement and Plan of Merger (the \"Merger Agreement\") with Boston Scientific Corporation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Axonics",
+      "ticker": "Axonics",
+      "name": "アクソニクス",
+      "name_en": "Axonics",
+      "sub": "排尿障害の神経刺激",
+      "sub_en": "Sacral neuromodulation",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2024年11月に全株を取得",
+          "text_en": "Acquired in November 2024",
+          "source": {
+            "label": "Boston Scientific 10-K(2025年度)",
+            "label_en": "Boston Scientific 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/885725/000088572526000010/bsx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "On November 15, 2024, we completed our acquisition of 100 percent of the outstanding equity of Axonics, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SilkRoad",
+      "ticker": "Silk Road Medical",
+      "name": "シルクロード・メディカル",
+      "name_en": "Silk Road Medical",
+      "sub": "頸動脈治療",
+      "sub_en": "Carotid therapy",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2024年9月に全株を取得",
+          "text_en": "Acquired in September 2024",
+          "source": {
+            "label": "Boston Scientific 10-K(2025年度)",
+            "label_en": "Boston Scientific 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/885725/000088572526000010/bsx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "On September 17, 2024, we completed our acquisition of 100 percent of the outstanding equity of Silk Road Medical, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Bolt",
+      "ticker": "Bolt Medical",
+      "name": "ボルト・メディカル",
+      "name_en": "Bolt Medical",
+      "sub": "血管内治療",
+      "sub_en": "Intravascular lithotripsy",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "残りの株式を取得し完全子会社化(2025年4月)",
+          "text_en": "Bought the remaining shares in April 2025",
+          "source": {
+            "label": "Boston Scientific 10-K(2025年度)",
+            "label_en": "Boston Scientific 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/885725/000088572526000010/bsx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "On April 1, 2025, we completed our acquisition of the remaining shares of Bolt Medical, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Acotec",
+      "ticker": "Acotec",
+      "name": "アコテック",
+      "name_en": "Acotec Scientific",
+      "sub": "血管治療(中国)",
+      "sub_en": "Vascular devices (China)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2023年に過半を取得し連結",
+          "text_en": "Took a majority stake in 2023",
+          "source": {
+            "label": "Boston Scientific 10-K(2025年度)",
+            "label_en": "Boston Scientific 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/885725/000088572526000010/bsx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "In the first quarter of 2023, we acquired a majority stake investment in Acotec Scientific Holdings Limited (Acotec) and have elected to consolidate their financial statements on a one quarter lag."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Nalu",
+      "ticker": "Nalu Medical",
+      "name": "ナル・メディカル",
+      "name_en": "Nalu Medical",
+      "sub": "神経刺激",
+      "sub_en": "Neuromodulation",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2026年1月に全株を取得",
+          "text_en": "Acquired in January 2026",
+          "source": {
+            "label": "Boston Scientific 10-K(2025年度)",
+            "label_en": "Boston Scientific 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/885725/000088572526000010/bsx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "On January 27, 2026, we completed our acquisition of 100 percent of Nalu Medical, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ELUT",
+      "ticker": "ELUT",
+      "name": "エルティア",
+      "name_en": "Elutia",
+      "sub": "生体材料",
+      "sub_en": "Biologics",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Elutiaの製品を販売する商業パートナー",
+          "text_en": "Commercial partner selling Elutia products",
+          "source": {
+            "label": "Elutia 10-K(2024年度)",
+            "label_en": "Elutia 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1708527/000155837025002719/elut-20241231x10k.htm",
+            "level": "official",
+            "date": "2025-03-11",
+            "quote": "EluPro and CanGaroo are sold through both our internal sales force and independent sales agents and our commercial partner, Boston Scientific Corporation (\"Boston Scientific\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "EDAP",
+      "ticker": "EDAP",
+      "name": "EDAP TMS",
+      "name_en": "EDAP TMS",
+      "sub": "泌尿器の治療機器",
+      "sub_en": "Urology devices",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "フランスでボストン・サイエンティフィックのレーザーを独占販売(2024年末で終了)",
+          "text_en": "Distributed its Lumenis lasers in France under an exclusive deal that ended at end-2024",
+          "source": {
+            "label": "EDAP TMS 20-F(2024年度)",
+            "label_en": "EDAP TMS 20-F (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1041934/000155837025003828/edap-20241231x20f.htm",
+            "level": "official",
+            "date": "2025-03-27",
+            "quote": "Our distribution agreement with Boston Scientific expired on December 31, 2024, and was not renewed."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NVRO",
+      "ticker": "NVRO",
+      "name": "ネブロ",
+      "name_en": "Nevro",
+      "sub": "脊髄刺激",
+      "sub_en": "Spinal cord stimulation",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Nevroが10-Kで、主な競合の一社として挙げる",
+          "text_en": "Nevro names it among major competitors",
+          "source": {
+            "label": "Nevro 10-K(2024年度)",
+            "label_en": "Nevro 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1444380/000144438025000024/nvro-20241231.htm",
+            "level": "official",
+            "date": "2025-03-04",
+            "quote": "Currently, our major competitors are Medtronic, Boston Scientific and Abbott Laboratories, who have obtained regulatory approval for SCS systems."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PRCT",
+      "ticker": "PRCT",
+      "name": "プロセプト・バイオロボティクス",
+      "name_en": "PROCEPT BioRobotics",
+      "sub": "前立腺治療ロボット",
+      "sub_en": "BPH robotics",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "PROCEPTが10-Kで、前立腺肥大治療の主な競合として挙げる",
+          "text_en": "PROCEPT names it the primary device competitor in BPH",
+          "source": {
+            "label": "PROCEPT BioRobotics 10-K(2024年度)",
+            "label_en": "PROCEPT BioRobotics 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1588978/000158897825000007/prct-20241231.htm",
+            "level": "official",
+            "date": "2025-02-27",
+            "quote": "Our primary medical device competitors for treating BPH are Boston Scientific Corporation and smaller companies that have single products or a limited range of products."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MMSI",
+      "ticker": "MMSI",
+      "name": "メリット・メディカル",
+      "name_en": "Merit Medical Systems",
+      "sub": "カテーテル関連",
+      "sub_en": "Interventional devices",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Merit Medicalが10-Kで、心臓カテーテル分野の主な競合の一社として挙げる",
+          "text_en": "Merit names it among primary cardiac intervention competitors",
+          "source": {
+            "label": "Merit Medical 10-K(2025年度)",
+            "label_en": "Merit Medical 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/856982/000085698226000008/mmsi-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Our primary competitors in our cardiac intervention market are BD, Teleflex, Medtronic, Abbott Laboratories, Terumo Corporation, Edwards Lifesciences Corporation, Cook Medical, and Boston Scientific."
+          }
+        }
+      ]
+    },
+    {
+      "id": "OBIO",
+      "ticker": "OBIO",
+      "name": "オーケストラ・バイオメッド",
+      "name_en": "Orchestra BioMed",
+      "sub": "心血管デバイス",
+      "sub_en": "Cardiovascular devices",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Orchestra BioMedが10-Kで、心臓カテーテル分野の最も注目すべき競合の筆頭に挙げる",
+          "text_en": "Orchestra BioMed lists it first among notable interventional cardiology competitors",
+          "source": {
+            "label": "Orchestra BioMed 10-K(2024年度)",
+            "label_en": "Orchestra BioMed 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1814114/000155837025004161/obio-20241231x10k.htm",
+            "level": "official",
+            "date": "2025-03-31",
+            "quote": "Regarding Virtue SAB, our most notable competitors in the highly competitive interventional cardiology field include Boston Scientific Corporation, Medtronic plc, Becton Dickinson, Philips N.V., B."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NMTC",
+      "ticker": "NMTC",
+      "name": "ニューロワン",
+      "name_en": "NeuroOne Medical",
+      "sub": "神経用電極",
+      "sub_en": "Neural electrodes",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "NeuroOneが10-Kで、神経の焼灼治療で競合すると挙げる",
+          "text_en": "NeuroOne expects to compete with it in nerve ablation",
+          "source": {
+            "label": "NeuroOne 10-K(2025年9月期)",
+            "label_en": "NeuroOne 10-K (FY ended Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1500198/000121390025122390/ea0268749-10k_neuroone.htm",
+            "level": "official",
+            "date": "2025-12-17",
+            "quote": "In BVNA, we expect to compete with Boston Scientific and Stryker's BVNA Systems."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

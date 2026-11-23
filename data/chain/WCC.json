@@ -1,0 +1,226 @@
+{
+  "root": {
+    "ticker": "WCC",
+    "name": "ウェスコ・インターナショナル",
+    "cik": 929008,
+    "name_en": "Wesco International"
+  },
+  "rows": [
+    {
+      "ja": "合併・買収",
+      "en": "Mergers & acquisitions",
+      "above": true
+    },
+    {
+      "ja": "仕入先(相手の資料に記載)",
+      "en": "Suppliers (named in their filings)"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "SCSC",
+    "GWW"
+  ],
+  "companies": [
+    {
+      "id": "Anixter",
+      "ticker": "Anixter",
+      "name": "アニクスター",
+      "name_en": "Anixter",
+      "sub": "電線・通信機器の流通",
+      "sub_en": "Wire, cable & network distribution",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2020年に合併",
+          "text_en": "Merged with Wesco in 2020",
+          "source": {
+            "label": "Wesco 10-K(2025年度)",
+            "label_en": "Wesco 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/929008/000092900826000008/wcc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "In 2020, we completed our merger with Anixter; in 2022, we completed the acquisition of Rahi Systems; and in 2024 and 2025, we completed several acquisitions, including those of entroCIM, Independent Electric Supply, Ascent and Industrial Software Solutions."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Rahi",
+      "ticker": "Rahi Systems",
+      "name": "ラヒ・システムズ",
+      "name_en": "Rahi Systems",
+      "sub": "データセンター設備",
+      "sub_en": "Data center solutions",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2022年に買収",
+          "text_en": "Acquired in 2022",
+          "source": {
+            "label": "Wesco 10-K(2025年度)",
+            "label_en": "Wesco 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/929008/000092900826000008/wcc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "In 2020, we completed our merger with Anixter; in 2022, we completed the acquisition of Rahi Systems; and in 2024 and 2025, we completed several acquisitions, including those of entroCIM, Independent Electric Supply, Ascent and Industrial Software Solutions."
+          }
+        }
+      ]
+    },
+    {
+      "id": "entroCIM",
+      "ticker": "entroCIM",
+      "name": "エントロCIM",
+      "name_en": "entroCIM",
+      "sub": "ビル管理ソフト",
+      "sub_en": "Building analytics software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2024〜25年の買収先の一社",
+          "text_en": "One of its 2024-25 acquisitions",
+          "source": {
+            "label": "Wesco 10-K(2025年度)",
+            "label_en": "Wesco 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/929008/000092900826000008/wcc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "In 2020, we completed our merger with Anixter; in 2022, we completed the acquisition of Rahi Systems; and in 2024 and 2025, we completed several acquisitions, including those of entroCIM, Independent Electric Supply, Ascent and Industrial Software Solutions."
+          }
+        }
+      ]
+    },
+    {
+      "id": "IES",
+      "ticker": "Independent Electric Supply",
+      "name": "インディペンデント・エレクトリック・サプライ",
+      "name_en": "Independent Electric Supply",
+      "sub": "電材の卸売",
+      "sub_en": "Electrical distribution",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2024〜25年の買収先の一社",
+          "text_en": "One of its 2024-25 acquisitions",
+          "source": {
+            "label": "Wesco 10-K(2025年度)",
+            "label_en": "Wesco 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/929008/000092900826000008/wcc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "In 2020, we completed our merger with Anixter; in 2022, we completed the acquisition of Rahi Systems; and in 2024 and 2025, we completed several acquisitions, including those of entroCIM, Independent Electric Supply, Ascent and Industrial Software Solutions."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Ascent",
+      "ticker": "Ascent",
+      "name": "アセント",
+      "name_en": "Ascent",
+      "sub": "データセンターのサービス",
+      "sub_en": "Data center services",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2024〜25年の買収先の一社",
+          "text_en": "One of its 2024-25 acquisitions",
+          "source": {
+            "label": "Wesco 10-K(2025年度)",
+            "label_en": "Wesco 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/929008/000092900826000008/wcc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "In 2020, we completed our merger with Anixter; in 2022, we completed the acquisition of Rahi Systems; and in 2024 and 2025, we completed several acquisitions, including those of entroCIM, Independent Electric Supply, Ascent and Industrial Software Solutions."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ATKR",
+      "ticker": "ATKR",
+      "name": "アトコア",
+      "name_en": "Atkore",
+      "sub": "電線管・配管",
+      "sub_en": "Conduit & pipe",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Atkoreが10-Kで、顧客の世界的な電材卸の一社としてWescoを挙げる",
+          "text_en": "Atkore names Wesco among the global electrical distributors it sells to",
+          "source": {
+            "label": "Atkore 10-K(2024年度)",
+            "label_en": "Atkore 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1666138/000166613824000164/atkr-20240930.htm",
+            "level": "official",
+            "date": "2024-11-21",
+            "quote": "Our customers include global electrical distributors (such as CED, Graybar Electric Company, Rexel, Sonepar S.A. and Wesco International, Inc.)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SCSC",
+      "ticker": "SCSC",
+      "name": "スキャンソース",
+      "name_en": "ScanSource",
+      "sub": "IT・セキュリティ製品の卸売",
+      "sub_en": "Tech & security distribution",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ScanSourceが10-Kで、セキュリティ製品の専門卸の競合としてWescoを挙げる",
+          "text_en": "ScanSource names Wesco among specialized security distributors it competes with",
+          "source": {
+            "label": "ScanSource 10-K(2024年度)",
+            "label_en": "ScanSource 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/918965/000091896524000029/scsc-20240630.htm",
+            "level": "official",
+            "date": "2024-08-27",
+            "quote": "more specialized security distributors, such as ADI and Wesco."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GWW",
+      "ticker": "GWW",
+      "name": "W.W.グレインジャー",
+      "name_en": "W.W. Grainger",
+      "sub": "産業資材の流通",
+      "sub_en": "Industrial supplies distribution",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Graingerの契約書で、競業する事業者の一社としてWESCOを挙げる",
+          "text_en": "A Grainger agreement lists WESCO among competitive businesses",
+          "source": {
+            "label": "W.W. Grainger 10-Q添付契約(2026年)",
+            "label_en": "W.W. Grainger 10-Q exhibit agreement (2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/277135/000027713526000053/exhibit103.htm",
+            "level": "official",
+            "date": "2026-05-07",
+            "quote": "Uline WESCO Wurth Any affiliates, subsidiaries or joint ventures of the above-referenced entities shall be deemed to meet the definition of Competitive Business."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

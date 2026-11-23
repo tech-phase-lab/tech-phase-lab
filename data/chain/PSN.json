@@ -1,0 +1,202 @@
+{
+  "root": {
+    "ticker": "PSN",
+    "name": "パーソンズ",
+    "cik": 275880,
+    "name_en": "Parsons"
+  },
+  "rows": [
+    {
+      "ja": "買収",
+      "en": "Acquisitions",
+      "above": true
+    },
+    {
+      "ja": "合弁",
+      "en": "Joint ventures"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "J",
+    "AMTM"
+  ],
+  "companies": [
+    {
+      "id": "CTI",
+      "ticker": "CTI",
+      "name": "CTI",
+      "name_en": "CTI",
+      "sub": "連邦政府向けサービス",
+      "sub_en": "Federal services",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年に連邦政府部門で買収",
+          "text_en": "Acquired in 2025 for its Federal Solutions segment",
+          "source": {
+            "label": "Parsons 10-K(2025年度)",
+            "label_en": "Parsons 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/275880/000119312526045495/psn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "In 2025 we acquired one company within Federal Solutions (CTI), and two within Critical Infrastructure (Applied Sciences and TRS Group)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AppliedSciences",
+      "ticker": "Applied Sciences",
+      "name": "アプライド・サイエンシズ",
+      "name_en": "Applied Sciences",
+      "sub": "インフラ技術サービス",
+      "sub_en": "Infrastructure engineering",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年に重要インフラ部門で買収",
+          "text_en": "Acquired in 2025 for its Critical Infrastructure segment",
+          "source": {
+            "label": "Parsons 10-K(2025年度)",
+            "label_en": "Parsons 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/275880/000119312526045495/psn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "In 2025 we acquired one company within Federal Solutions (CTI), and two within Critical Infrastructure (Applied Sciences and TRS Group)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TRS",
+      "ticker": "TRS Group",
+      "name": "TRSグループ",
+      "name_en": "TRS Group",
+      "sub": "環境修復",
+      "sub_en": "Environmental remediation",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年に重要インフラ部門で買収",
+          "text_en": "Acquired in 2025 for its Critical Infrastructure segment",
+          "source": {
+            "label": "Parsons 10-K(2025年度)",
+            "label_en": "Parsons 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/275880/000119312526045495/psn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "In 2025 we acquired one company within Federal Solutions (CTI), and two within Critical Infrastructure (Applied Sciences and TRS Group)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LDOS",
+      "ticker": "LDOS",
+      "name": "レイドス",
+      "name_en": "Leidos",
+      "sub": "防衛・政府IT",
+      "sub_en": "Defense & government IT",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ハンフォード核施設の支援業務の合弁(HMIS)をLeidos・Centerra・Parsonsで組む",
+          "text_en": "Leidos, Centerra and Parsons form the HMIS joint venture for Hanford site mission support",
+          "source": {
+            "label": "Leidos 10-K(2025年度)",
+            "label_en": "Leidos 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1336920/000133692026000030/ldos-20260102.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "We have a 53 % controlling interest in Hanford Mission Integration Solutions, LLC (\"HMIS\"), the legal entity for the follow-on contract to Mission Support Alliance, LLC's (\"MSA\") contract and a joint venture with Centerra Group, LLC and Parsons Government Services, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Centerra",
+      "ticker": "Centerra Group",
+      "name": "センテラ・グループ",
+      "name_en": "Centerra Group",
+      "sub": "警備・施設運営",
+      "sub_en": "Security & site services",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ハンフォード核施設の支援業務の合弁(HMIS)をLeidos・Centerra・Parsonsで組む",
+          "text_en": "Leidos, Centerra and Parsons form the HMIS joint venture for Hanford site mission support",
+          "source": {
+            "label": "Leidos 10-K(2025年度)",
+            "label_en": "Leidos 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1336920/000133692026000030/ldos-20260102.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "We have a 53 % controlling interest in Hanford Mission Integration Solutions, LLC (\"HMIS\"), the legal entity for the follow-on contract to Mission Support Alliance, LLC's (\"MSA\") contract and a joint venture with Centerra Group, LLC and Parsons Government Services, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "J",
+      "ticker": "J",
+      "name": "ジェイコブス",
+      "name_en": "Jacobs",
+      "sub": "建設コンサル・エンジニアリング",
+      "sub_en": "Engineering & consulting",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Jacobsが10-Kで、競合の一社としてParsonsを挙げる",
+          "text_en": "Jacobs names Parsons among its competitors",
+          "source": {
+            "label": "Jacobs 10-K(2025年度)",
+            "label_en": "Jacobs 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/52988/000162828025053316/jec-20250926.htm",
+            "level": "official",
+            "date": "2025-11-20",
+            "quote": "AECOM, Tetra Tech, WSP, Arcadis, Bechtel, Arup, Endava, Exponent, Mott MacDonald, Stantec, Parsons, Accenture"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMTM",
+      "ticker": "AMTM",
+      "name": "アメンタム",
+      "name_en": "Amentum",
+      "sub": "政府向けエンジニアリング",
+      "sub_en": "Government engineering services",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Amentumが10-Kで、主な競合としてParsonsを挙げる",
+          "text_en": "Amentum names Parsons among its primary competitors",
+          "source": {
+            "label": "Amentum 10-K(2025年度)",
+            "label_en": "Amentum 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2011286/000162828025053993/amtm-20251003.htm",
+            "level": "official",
+            "date": "2025-11-25",
+            "quote": "Amentum's primary competitors include Booz Allen Hamilton Inc., CACI International Inc., KBR Inc., Leidos Holdings Inc., ManTech International Corporation, Parsons Corporation"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
