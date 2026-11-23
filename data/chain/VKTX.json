@@ -1,0 +1,299 @@
+{
+  "root": {
+    "ticker": "VKTX",
+    "name": "バイキング・セラピューティクス",
+    "cik": 1607678,
+    "name_en": "Viking Therapeutics"
+  },
+  "rows": [
+    {
+      "ja": "製造委託・ライセンス元(上流)",
+      "en": "Manufacturing & licensor (upstream)",
+      "above": true
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in its 10-K)"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "NVO",
+    "LLY",
+    "AMGN"
+  ],
+  "companies": [
+    {
+      "id": "Corden",
+      "ticker": "CordenPharma",
+      "name": "コーデンファーマ",
+      "name_en": "CordenPharma",
+      "sub": "医薬品の受託製造",
+      "sub_en": "Contract drug manufacturing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "肥満症薬VK2735の原薬と最終製品を複数年供給する製造契約(2025年3月)",
+          "text_en": "Multi-year deal (March 2025) to make VK2735 drug substance and finished product",
+          "source": {
+            "label": "Viking Therapeutics 10-K(2025年度)",
+            "label_en": "Viking Therapeutics 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1607678/000119312526046876/vktx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "In March 2025, we entered into broad, multi-year manufacturing agreements, or the Manufacturing Agreements, with Corden Pharma Colorado, Inc. and its affiliates, or CordenPharma, covering both the active pharmaceutical ingredient, or API, and final finished product supply for VK2735."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LGND",
+      "ticker": "LGND",
+      "name": "リガンド・ファーマシューティカルズ",
+      "name_en": "Ligand Pharmaceuticals",
+      "sub": "創薬・ライセンス",
+      "sub_en": "Drug discovery & licensing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "2014年のライセンス契約で複数の研究開発品の権利をLigandから取得",
+          "text_en": "Licensed several R&D programs from Ligand under a 2014 master license",
+          "source": {
+            "label": "Viking Therapeutics 10-K(2025年度)",
+            "label_en": "Viking Therapeutics 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1607678/000119312526046876/vktx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "In May 2014, we entered into the Master License Agreement, pursuant to which we acquired certain rights to a number of research and development programs from Ligand."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NVO",
+      "ticker": "NVO",
+      "name": "ノボ・ノルディスク",
+      "name_en": "Novo Nordisk",
+      "sub": "医薬品(肥満症)",
+      "sub_en": "Pharma (obesity)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "肥満症で既に販売中の薬(ウゴービ等)と開発中の薬が競合",
+          "text_en": "Its marketed obesity drugs (Wegovy and others) and pipeline compete with VK2735",
+          "source": {
+            "label": "Viking Therapeutics 10-K(2025年度)",
+            "label_en": "Viking Therapeutics 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1607678/000119312526046876/vktx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "VK2735, if approved, will compete against therapies that are already approved and marketed for obesity, including Semaglutide (Wegovy®) and liraglutide (Saxenda®) from Novo Nordisk A/S, and tirzepatide (Zepbound®) from Eli Lilly and Company."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LLY",
+      "ticker": "LLY",
+      "name": "イーライリリー",
+      "name_en": "Eli Lilly",
+      "sub": "医薬品(肥満症)",
+      "sub_en": "Pharma (obesity)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ゼップバウンドや開発中の経口薬などが競合",
+          "text_en": "Zepbound and its late-stage pipeline compete with VK2735",
+          "source": {
+            "label": "Viking Therapeutics 10-K(2025年度)",
+            "label_en": "Viking Therapeutics 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1607678/000119312526046876/vktx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "VK2735, if approved, will compete against therapies that are already approved and marketed for obesity, including Semaglutide (Wegovy®) and liraglutide (Saxenda®) from Novo Nordisk A/S, and tirzepatide (Zepbound®) from Eli Lilly and Company."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMGN",
+      "ticker": "AMGN",
+      "name": "アムジェン",
+      "name_en": "Amgen",
+      "sub": "バイオ医薬品",
+      "sub_en": "Biotech",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "開発後期の肥満症薬MariTideが競合",
+          "text_en": "Its late-stage obesity candidate MariTide competes with VK2735",
+          "source": {
+            "label": "Viking Therapeutics 10-K(2025年度)",
+            "label_en": "Viking Therapeutics 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1607678/000119312526046876/vktx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "We are also aware of several programs targeting obesity that are in the late development stage that will compete against VK2735, if approved, including CagriSema from Novo Nordisk A/S, orforglipron and retatrutide from Eli Lilly and Company, survodutide (BI 456906) from Boehringer Ingelheim International GmbH, and MariTide from Amgen Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BI",
+      "ticker": "Boehringer Ingelheim",
+      "name": "ベーリンガーインゲルハイム",
+      "name_en": "Boehringer Ingelheim",
+      "sub": "医薬品(独)",
+      "sub_en": "Pharma (Germany)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "開発後期の肥満症薬survodutideが競合",
+          "text_en": "Its late-stage obesity candidate survodutide competes with VK2735",
+          "source": {
+            "label": "Viking Therapeutics 10-K(2025年度)",
+            "label_en": "Viking Therapeutics 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1607678/000119312526046876/vktx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "We are also aware of several programs targeting obesity that are in the late development stage that will compete against VK2735, if approved, including CagriSema from Novo Nordisk A/S, orforglipron and retatrutide from Eli Lilly and Company, survodutide (BI 456906) from Boehringer Ingelheim International GmbH, and MariTide from Amgen Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ALT",
+      "ticker": "ALT",
+      "name": "アルティミューン",
+      "name_en": "Altimmune",
+      "sub": "バイオ(肝疾患・肥満)",
+      "sub_en": "Biotech (liver & obesity)",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Altimmuneが10-Kで、MASH治療薬の競合の一社としてVikingを挙げる",
+          "text_en": "Altimmune names Viking among MASH competitors",
+          "source": {
+            "label": "Altimmune 10-K(2024年度)",
+            "label_en": "Altimmune 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1326190/000132619025000015/alt-20241231x10k.htm",
+            "level": "official",
+            "date": "2025-02-27",
+            "quote": "We face competition in MASH from companies such as Madrigal Pharmaceuticals, Terns, Aligos and Viking Therapeutics, which are developing orally administered, thyroid hormone receptor (\"THR\") β-selective agonists;"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MTSR",
+      "ticker": "MTSR",
+      "name": "メッツェラ",
+      "name_en": "Metsera",
+      "sub": "バイオ(肥満症)",
+      "sub_en": "Biotech (obesity)",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Metseraが10-Kで、肥満症の競合の一社としてVikingを挙げる",
+          "text_en": "Metsera names Viking among obesity competitors",
+          "source": {
+            "label": "Metsera 10-K(2024年度)",
+            "label_en": "Metsera 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2040807/000095017025044778/mtsr-20241231.htm",
+            "level": "official",
+            "date": "2025-03-26",
+            "quote": "There are numerous other companies that have commercialized or are developing treatments for obesity and overweight that we will compete with, including Amgen, AstraZeneca, Boehringer Ingelheim, Merck, QL Biopharma, Roche, Structure Therapeutics, Viking Therapeutics and Zealand Pharma."
+          }
+        }
+      ]
+    },
+    {
+      "id": "KLRA",
+      "ticker": "KLRA",
+      "name": "カイレラ・セラピューティクス",
+      "name_en": "Kailera Therapeutics",
+      "sub": "バイオ(肥満症)",
+      "sub_en": "Biotech (obesity)",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "KaileraがS-1で、肥満症の競合の一社としてVikingを挙げる",
+          "text_en": "Kailera names Viking among obesity competitors",
+          "source": {
+            "label": "Kailera Therapeutics S-1/A(2026年4月)",
+            "label_en": "Kailera Therapeutics S-1/A (Apr 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2096997/000119312526151904/d113532ds1a.htm",
+            "level": "official",
+            "date": "2026-04-13",
+            "quote": "There are numerous other companies that have commercialized or are developing treatments for obesity that we will compete with, including Amgen, AstraZeneca, Boehringer Ingelheim, Merck, Pfizer, QL Biopharma, Roche, Structure Therapeutics, Viking Therapeutics and Zealand Pharma."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CRBP",
+      "ticker": "CRBP",
+      "name": "コーバス・ファーマシューティカルズ",
+      "name_en": "Corbus Pharmaceuticals",
+      "sub": "バイオ",
+      "sub_en": "Biotech",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Corbusが10-Kで、経口の減量薬の競合の一社としてVikingを挙げる",
+          "text_en": "Corbus names Viking among competitors developing oral weight-loss drugs",
+          "source": {
+            "label": "Corbus Pharmaceuticals 10-K(2025年度)",
+            "label_en": "Corbus Pharmaceuticals 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1595097/000119312526098530/crbp-20251231.htm",
+            "level": "official",
+            "date": "2026-03-09",
+            "quote": "Additional competitors with different mechanisms of action, but are targeting weight loss by an oral drug include AstraZeneca PLC, Lilly, Novo Nordisk A/S, Structure Therapeutics Inc., and Viking Therapeutics, Inc., among others."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GLMD",
+      "ticker": "GLMD",
+      "name": "ガルメッド",
+      "name_en": "Galmed Pharmaceuticals",
+      "sub": "バイオ(肝疾患)",
+      "sub_en": "Biotech (liver)",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Galmedが20-Fで、主な競合の一社としてVikingを挙げる",
+          "text_en": "Galmed names Viking among main competitors of Aramchol",
+          "source": {
+            "label": "Galmed 20-F(2025年度)",
+            "label_en": "Galmed 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1595353/000149315226014182/form20-f.htm",
+            "level": "official",
+            "date": "2026-03-31",
+            "quote": "Our main competitors of Aramchol include, but are not limited to Novo Nordisk Inc., Madrigal Pharmaceuticals Inc., and Viking Therapeutics among others."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

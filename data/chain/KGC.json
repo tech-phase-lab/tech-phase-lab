@@ -1,0 +1,247 @@
+{
+  "root": {
+    "ticker": "KGC",
+    "name": "キンロス・ゴールド",
+    "cik": 701818,
+    "name_en": "Kinross Gold"
+  },
+  "rows": [
+    {
+      "ja": "ロイヤルティの受取先",
+      "en": "Royalty holders",
+      "above": true
+    },
+    {
+      "ja": "共同事業・買収",
+      "en": "Joint ventures & acquisitions"
+    },
+    {
+      "ja": "鉱山の売却先",
+      "en": "Buyers of its mines"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "FNV",
+      "ticker": "FNV",
+      "name": "フランコ・ネバダ",
+      "name_en": "Franco-Nevada",
+      "sub": "ロイヤルティ",
+      "sub_en": "Royalties",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "モーリタニアのタシアスト鉱山の金生産に2%のロイヤルティを持つ",
+          "text_en": "Holds a 2% life-of-mine royalty on Tasiast gold in Mauritania",
+          "source": {
+            "label": "Kinross 年次情報書(40-F添付、2025年度)",
+            "label_en": "Kinross annual information form (40-F exhibit, FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/701818/000110465926035268/kgc-20251231xex99d1.htm",
+            "level": "official",
+            "date": "2026-03-26",
+            "quote": "Tasiast is also subject to a 2% royalty payable to a subsidiary of Franco-Nevada Corporation on life of mine gold production."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RGLD",
+      "ticker": "RGLD",
+      "name": "ロイヤル・ゴールド(旧サンドストーム)",
+      "name_en": "Royal Gold (formerly Sandstorm)",
+      "sub": "ロイヤルティ",
+      "sub_en": "Royalties",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "チリのロボ・マルテ計画にロイヤルティを持つ",
+          "text_en": "Holds a royalty on the Lobo-Marte project in Chile",
+          "source": {
+            "label": "Sandstorm Gold 年次情報書(40-F添付、2024年度)",
+            "label_en": "Sandstorm Gold annual information form (40-F exhibit, FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1434614/000162828025015698/a991annualinformationformf.htm",
+            "level": "official",
+            "date": "2025-03-31",
+            "quote": "1.75% NSR royalty on 60% of production (i.e. 1.05%) subject to a $40.0 million cap, on the development-stage Lobo-Marte project (\" Lobo-Marte \") located in the Maricunga gold district (Atacama region) of Chile owned by Kinross Gold Corporation (\" Kinross \")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CTGO",
+      "ticker": "CTGO",
+      "name": "コンタンゴORE",
+      "name_en": "Contango ORE",
+      "sub": "金鉱山(アラスカ)",
+      "sub_en": "Gold mining (Alaska)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "アラスカのマンチョ鉱山を持つPeak Gold(キンロス70%)の合弁相手",
+          "text_en": "Joint venture partner in Peak Gold (Kinross 70%), owner of Manh Choh in Alaska",
+          "source": {
+            "label": "Kinross 年次情報書(40-F添付、2025年度)",
+            "label_en": "Kinross annual information form (40-F exhibit, FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/701818/000110465926035268/kgc-20251231xex99d1.htm",
+            "level": "official",
+            "date": "2026-03-26",
+            "quote": "Our joint venture partner Contango ORE, Inc. has the power to appoint and replace the third member of the Management Committee."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GreatBear",
+      "ticker": "Great Bear Resources",
+      "name": "グレート・ベア・リソーシズ",
+      "name_en": "Great Bear Resources",
+      "sub": "金開発(カナダ)",
+      "sub_en": "Gold development (Canada)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "カナダのGreat Bear計画を買収(買収資金の10億ドル借入を2025年に完済)",
+          "text_en": "Bought the Great Bear project in Canada; repaid the $1 billion acquisition loan in 2025",
+          "source": {
+            "label": "Kinross 年次情報書(40-F添付、2025年度)",
+            "label_en": "Kinross annual information form (40-F exhibit, FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/701818/000110465926035268/kgc-20251231xex99d1.htm",
+            "level": "official",
+            "date": "2026-03-26",
+            "quote": "the Company repaid the remaining $200 million, completing repayment of the $1 billion term loan it took out to finance its acquisition of the Great Bear project."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RedBack",
+      "ticker": "Red Back Mining",
+      "name": "レッドバック・マイニング",
+      "name_en": "Red Back Mining",
+      "sub": "金鉱山",
+      "sub_en": "Gold mining",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Red Backの買収でモーリタニアのタシアスト鉱山を取得",
+          "text_en": "Got the Tasiast mine in Mauritania by acquiring Red Back Mining",
+          "source": {
+            "label": "Kinross 年次情報書(40-F添付、2025年度)",
+            "label_en": "Kinross annual information form (40-F exhibit, FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/701818/000110465926035268/kgc-20251231xex99d1.htm",
+            "level": "official",
+            "date": "2026-03-26",
+            "quote": "Kinross acquired TMLSA, including the Tasiast operation and exploitation and exploration permits and lands, through its acquisition of Red Back Mining Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Asante",
+      "ticker": "Asante Gold",
+      "name": "アサンテ・ゴールド",
+      "name_en": "Asante Gold",
+      "sub": "金鉱山(ガーナ)",
+      "sub_en": "Gold mining (Ghana)",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ガーナのチラノ鉱山の90%を2.25億ドルで売却(残金は2025年に株式等で精算)",
+          "text_en": "Sold 90% of the Chirano mine in Ghana for $225 million; the balance was settled in 2025",
+          "source": {
+            "label": "Kinross 年次情報書(40-F添付、2025年度)",
+            "label_en": "Kinross annual information form (40-F exhibit, FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/701818/000110465926035268/kgc-20251231xex99d1.htm",
+            "level": "official",
+            "date": "2026-03-26",
+            "quote": "On August 10, 2022, the Company announced that it had completed the sale of its 90% interest in the Chirano mine in Ghana to Asante Gold Corporation (\" Asante \") for total consideration of $225.0 million in cash and shares."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GROY",
+      "ticker": "GROY",
+      "name": "ゴールド・ロイヤルティ",
+      "name_en": "Gold Royalty",
+      "sub": "ロイヤルティ",
+      "sub_en": "Royalties",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ネバダ州のバルド・マウンテン鉱山にロイヤルティを持つ",
+          "text_en": "Holds royalties on Kinross's Bald Mountain in Nevada",
+          "source": {
+            "label": "Gold Royalty 20-F(2025年度)",
+            "label_en": "Gold Royalty 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1834026/000119312526114767/groy-20251231.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "Bald Mountain JV Kinross Gold Corporation (\" Kinross \") 1.25% NSR Au Nevada, USA Bald Mountain(2) Kinross 2.0% NSR Au Nevada, USA"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ITRG",
+      "ticker": "ITRG",
+      "name": "インテグラ・リソーシズ",
+      "name_en": "Integra Resources",
+      "sub": "金銀開発",
+      "sub_en": "Gold & silver development",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "アイダホ州のDeLamar計画を2017年にキンロスから買い取った",
+          "text_en": "Bought the DeLamar project in Idaho from Kinross in 2017",
+          "source": {
+            "label": "Integra Resources 年次情報書(40-F、2025年度)",
+            "label_en": "Integra Resources annual information form (40-F, FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1722387/000172238726000004/annualinformationform-q425.htm",
+            "level": "official",
+            "date": "2026-03-25",
+            "quote": "All mineral titles and permits are held by the DeLamar Mining Company (\" DMC \"), an indirect, 100% wholly owned subsidiary of Integra that was acquired from Kinross through a stock purchase agreement in 2017."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CMCL",
+      "ticker": "CMCL",
+      "name": "カレドニア・マイニング",
+      "name_en": "Caledonia Mining",
+      "sub": "金鉱山(ジンバブエ)",
+      "sub_en": "Gold mining (Zimbabwe)",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ジンバブエのブランケット鉱山を2006年にキンロスから買い取った",
+          "text_en": "Bought the Blanket mine in Zimbabwe from Kinross in 2006",
+          "source": {
+            "label": "Caledonia Mining 20-F(2025年度)",
+            "label_en": "Caledonia Mining 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/766011/000110465926047739/cmcl-20251231x20f.htm",
+            "level": "official",
+            "date": "2026-04-23",
+            "quote": "The Blanket Mine is currently 64% indirectly owned and operated by Caledonia, which initially completed the purchase of the mine from Kinross on 1 April 2006."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

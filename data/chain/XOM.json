@@ -1,0 +1,325 @@
+{
+  "root": {
+    "ticker": "XOM",
+    "name": "エクソンモービル",
+    "cik": 34088,
+    "name_en": "Exxon Mobil"
+  },
+  "rows": [
+    {
+      "ja": "供給元・サービス(上流)",
+      "en": "Suppliers & services (upstream)",
+      "above": true
+    },
+    {
+      "ja": "子会社・共同事業",
+      "en": "Subsidiaries & joint ventures"
+    },
+    {
+      "ja": "資産の売却先",
+      "en": "Buyers of its assets"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "CLMT"
+  ],
+  "companies": [
+    {
+      "id": "PUMP",
+      "ticker": "PUMP",
+      "name": "プロペトロ",
+      "name_en": "ProPetro",
+      "sub": "水圧破砕サービス",
+      "sub_en": "Frac services",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "子会社XTOに電動の水圧破砕船団2隊でサービスを提供する契約",
+          "text_en": "Provides XTO, an ExxonMobil subsidiary, with two electric frac fleets under contract",
+          "source": {
+            "label": "ProPetro 10-K(2025年度)",
+            "label_en": "ProPetro 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1680247/000168024726000028/pump-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "On April 22, 2024, we entered into a sub-agreement for hydraulic fracturing services with XTO Energy Inc. (\"XTO\"), a wholly owned subsidiary of ExxonMobil"
+          }
+        }
+      ]
+    },
+    {
+      "id": "NE",
+      "ticker": "NE",
+      "name": "ノーブル",
+      "name_en": "Noble Corp",
+      "sub": "海洋掘削",
+      "sub_en": "Offshore drilling",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Nobleの最大の顧客(2024年に売上の22.1%)",
+          "text_en": "Noble's largest customer, 22.1% of its 2024 revenue",
+          "source": {
+            "label": "Noble Corp 10-K(2024年度)",
+            "label_en": "Noble Corp 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1895262/000162828025006184/ne-20241231.htm",
+            "level": "official",
+            "date": "2025-02-19",
+            "quote": "Exxon Mobil Corporation (\"ExxonMobil\") 22.1 % 24.5 % 32.3 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "TALO",
+      "ticker": "TALO",
+      "name": "タロス・エナジー",
+      "name_en": "Talos Energy",
+      "sub": "石油・ガス生産",
+      "sub_en": "Oil & gas production",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Talosの石油・ガス売上の17%がエクソン向け(2024年)",
+          "text_en": "17% of Talos's 2024 oil and gas revenue came from ExxonMobil",
+          "source": {
+            "label": "Talos Energy 10-K(2024年度)",
+            "label_en": "Talos Energy 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1724965/000095017025028223/talo-20241231.htm",
+            "level": "official",
+            "date": "2025-02-27",
+            "quote": "For the year ended December 31, 2024, 48% and 17% of our oil, natural gas and NGL revenues were attributable to Shell Trading (US) Company and Exxon Mobil Corporation, respectively"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GEL",
+      "ticker": "GEL",
+      "name": "ジェネシス・エナジー",
+      "name_en": "Genesis Energy",
+      "sub": "中流(パイプライン)",
+      "sub_en": "Midstream",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Genesisの最大級の顧客の一社",
+          "text_en": "One of Genesis Energy's largest customers",
+          "source": {
+            "label": "Genesis Energy 10-K(2025年度)",
+            "label_en": "Genesis Energy 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1022321/000102232126000008/gel-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Some of our largest customers include Exxon Mobil Corporation, MV Purchasing, BP, Shell, and Phillips 66."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LPG",
+      "ticker": "LPG",
+      "name": "ドリアンLPG",
+      "name_en": "Dorian LPG",
+      "sub": "LPG船",
+      "sub_en": "LPG shipping",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "LPG運搬船の顧客の一社",
+          "text_en": "A customer of its LPG carriers",
+          "source": {
+            "label": "Dorian LPG 10-K(2026年3月期)",
+            "label_en": "Dorian LPG 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1596993/000159699326000025/lpg-20260331x10k.htm",
+            "level": "official",
+            "date": "2026-05-27",
+            "quote": "Our customers, either directly or through the Helios Pool, include or have included global energy companies such as Exxon Mobil Corp., Chevron Corp."
+          }
+        }
+      ]
+    },
+    {
+      "id": "IMO",
+      "ticker": "IMO",
+      "name": "インペリアル・オイル",
+      "name_en": "Imperial Oil",
+      "sub": "石油(カナダ)",
+      "sub_en": "Oil (Canada)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "発行済み株式の約69.6%を保有する子会社",
+          "text_en": "Owns about 69.6% of its shares",
+          "source": {
+            "label": "Imperial Oil 10-K(2025年度)",
+            "label_en": "Imperial Oil 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/49938/000004993826000009/imo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Exxon Mobil Corporation (\"ExxonMobil\") owns approximately 69.6 percent of the outstanding shares of the company."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CNOOC",
+      "ticker": "CNOOC",
+      "name": "中国海洋石油(CNOOC)",
+      "name_en": "CNOOC",
+      "sub": "石油(中国)",
+      "sub_en": "Oil (China)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ガイアナ沖スタブルック鉱区の共同事業者",
+          "text_en": "A partner in the Stabroek Block offshore Guyana",
+          "source": {
+            "label": "Hess 10-K(2024年度)",
+            "label_en": "Hess 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/4447/000162828025008716/hes-20241231.htm",
+            "level": "official",
+            "date": "2025-02-27",
+            "quote": "contained in the operating agreement (the Stabroek JOA) among HGEL and affiliates of Exxon Mobil Corporation (Exxon Mobil) and China National Offshore Oil Corporation (CNOOC)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CVX",
+      "ticker": "CVX",
+      "name": "シェブロン",
+      "name_en": "Chevron",
+      "sub": "石油メジャー",
+      "sub_en": "Oil major",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Hess買収でスタブルック鉱区の共同事業者に。買収時には先買権をめぐり仲裁",
+          "text_en": "Became a Stabroek partner by buying Hess, after arbitration over Exxon's right of first refusal",
+          "source": {
+            "label": "Chevron 10-K(2024年度)",
+            "label_en": "Chevron 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/93410/000009341025000009/cvx-20241231.htm",
+            "level": "official",
+            "date": "2025-02-21",
+            "quote": "The filing of an arbitration relating to the right of first refusal contained in the Stabroek Block operating agreement among Hess Guyana Exploration Limited, a wholly owned subsidiary of Hess, and affiliates of Exxon Mobil Corporation, and China National Offshore Oil Corporation has delayed completion of the transaction."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SOC",
+      "ticker": "SOC",
+      "name": "セーブル・オフショア",
+      "name_en": "Sable Offshore",
+      "sub": "石油生産",
+      "sub_en": "Oil production",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "カリフォルニア沖のサンタイネス油田などをエクソンから買い取る契約",
+          "text_en": "Agreed to buy the Santa Ynez field offshore California from ExxonMobil",
+          "source": {
+            "label": "Sable Offshore 10-K(2024年度)",
+            "label_en": "Sable Offshore 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1831481/000183148125000016/socc-20241231.htm",
+            "level": "official",
+            "date": "2025-03-17",
+            "quote": "pursuant to which Legacy Sable agreed to acquire from EM certain assets constituting the Santa Ynez field in Federal waters offshore California"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CHRD",
+      "ticker": "CHRD",
+      "name": "コード・エナジー",
+      "name_en": "Chord Energy",
+      "sub": "石油・ガス生産",
+      "sub_en": "Oil & gas production",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "子会社XTOからウィリストン盆地の資産を5.5億ドルで取得(2025年9月合意)",
+          "text_en": "Agreed in September 2025 to buy Williston Basin assets from XTO for $550 million",
+          "source": {
+            "label": "Chord Energy 10-K(2025年度)",
+            "label_en": "Chord Energy 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1486159/000148615926000005/chrd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "On September 15, 2025, we entered into a definitive agreement to acquire certain developed and undeveloped oil and gas assets located in the Williston Basin from XTO Energy Inc. and affiliates (collectively, \"XTO\"), subsidiaries of Exxon Mobil Corporation, for total cash consideration of $550.0 million"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PARR",
+      "ticker": "PARR",
+      "name": "パー・パシフィック",
+      "name_en": "Par Pacific",
+      "sub": "石油精製",
+      "sub_en": "Refining",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "モンタナ州の製油所などをエクソンから買い取った契約",
+          "text_en": "Bought Montana refining assets from ExxonMobil",
+          "source": {
+            "label": "Par Pacific 10-K(2025年度)",
+            "label_en": "Par Pacific 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/821483/000082148326000005/parr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Equity and Asset Purchase Agreement dated as of October 20, 2022, by and among Exxon Mobil Corporation, ExxonMobil Oil Corporation and ExxonMobil Pipeline Company, LLC, as sellers, and Par Montana, LLC and Par Montana Holdings, LLC, as purchaser entities"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CLMT",
+      "ticker": "CLMT",
+      "name": "カルメット",
+      "name_en": "Calumet",
+      "sub": "特殊石油製品",
+      "sub_en": "Specialty petroleum products",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Calumetが10-Kで、潤滑油・パラフィンワックスの主な競合としてエクソンを挙げる",
+          "text_en": "Calumet names ExxonMobil a primary competitor in lubricating oils and paraffin waxes",
+          "source": {
+            "label": "Calumet 10-K(2024年度)",
+            "label_en": "Calumet 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2013745/000155837025001961/clmt-20241231x10k.htm",
+            "level": "official",
+            "date": "2025-03-03",
+            "quote": "Our primary competitors in producing paraffinic lubricating oils include Exxon Mobil Corporation, Motiva Enterprises, LLC, Phillips 66, HF Sinclair Corporation and Chevron Corporation."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,409 @@
+{
+  "root": {
+    "ticker": "AAL",
+    "name": "アメリカン航空",
+    "cik": 6201,
+    "name_en": "American Airlines"
+  },
+  "rows": [
+    {
+      "ja": "機材・運航委託(上流)",
+      "en": "Aircraft & regional partners (upstream)",
+      "above": true
+    },
+    {
+      "ja": "提携・出資・カード",
+      "en": "Alliances, stakes & co-brand card"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "DAL",
+    "UAL",
+    "LUV",
+    "JBLU"
+  ],
+  "companies": [
+    {
+      "id": "RJET",
+      "ticker": "RJET",
+      "name": "リパブリック・エアウェイズ",
+      "name_en": "Republic Airways",
+      "sub": "地域航空",
+      "sub_en": "Regional airline",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "50年以上にわたり地域路線の運航を担う提携先",
+          "text_en": "A regional partner for more than 50 years",
+          "source": {
+            "label": "Republic Airways 10-K(2025年度)",
+            "label_en": "Republic Airways 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/810332/000162828026019614/rjet-20251231.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "Republic Airways has maintained a partnership with American Airlines and its predecessors for more than 50 years, which Republic believes is a result of Republic's distinct focus on operational excellence."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HRBR",
+      "ticker": "HRBR",
+      "name": "ハーバー・ダイバーシファイド(エア・ウィスコンシン)",
+      "name_en": "Harbor Diversified (Air Wisconsin)",
+      "sub": "地域航空",
+      "sub_en": "Regional airline",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "子会社エア・ウィスコンシンがアメリカン航空と運航委託契約",
+          "text_en": "Its Air Wisconsin unit flies for American under a capacity purchase agreement",
+          "source": {
+            "label": "Harbor Diversified 10-K(2024年度)",
+            "label_en": "Harbor Diversified 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/899394/000089939426000011/hrbr-20241231.htm",
+            "level": "official",
+            "date": "2026-04-08",
+            "quote": "In August 2022, Air Wisconsin entered into a capacity purchase agreement (the \"American capacity purchase agreement\") with American Airlines, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ERJ",
+      "ticker": "ERJ",
+      "name": "エンブラエル",
+      "name_en": "Embraer",
+      "sub": "航空機",
+      "sub_en": "Aircraft",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "運航中の機数でみたE-Jetの最大級の顧客の一社",
+          "text_en": "One of the largest E-Jet customers by aircraft in service",
+          "source": {
+            "label": "Embraer 20-F(2024年度)",
+            "label_en": "Embraer 20-F (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1355444/000119312525069283/d914513d20f.htm",
+            "level": "official",
+            "date": "2025-04-01",
+            "quote": "As of December 31, 2024, our largest E-Jet customers by number of aircraft in service were SkyWest, Republic, American Airlines, KLM, Mesa, Azul, Tianjn, LOT Polish, Horizon Air and Porter."
+          }
+        }
+      ]
+    },
+    {
+      "id": "EVTL",
+      "ticker": "EVTL",
+      "name": "バーティカル・エアロスペース",
+      "name_en": "Vertical Aerospace",
+      "sub": "電動航空機",
+      "sub_en": "Electric aircraft",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "電動垂直離着陸機の購入に向け前払いを約束",
+          "text_en": "Committed a pre-delivery payment toward buying its eVTOL aircraft",
+          "source": {
+            "label": "Vertical Aerospace 20-F(2024年度)",
+            "label_en": "Vertical Aerospace 20-F (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1867102/000110465925022354/evtl-20241231x20f.htm",
+            "level": "official",
+            "date": "2025-03-11",
+            "quote": "American Airlines has also committed to pay a pre-delivery payment (the \"AA Pre-Delivery Payment\") upon the satisfaction of certain conditions"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ALK",
+      "ticker": "ALK",
+      "name": "アラスカ航空",
+      "name_en": "Alaska Air Group",
+      "sub": "航空",
+      "sub_en": "Airline",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "路線とマイレージで戦略提携",
+          "text_en": "Strategic alliance on routes and loyalty",
+          "source": {
+            "label": "American Airlines 10-K(2025年度)",
+            "label_en": "American Airlines 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/6201/000000620126000014/aal-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "We have also established a strategic alliance with Alaska Airlines relating to certain routes and a strategic alliance relating to the Middle East with Qatar Airways."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Alaska側も、アメリカン航空との関係拡大を挙げる",
+          "text_en": "Alaska also cites an expanded relationship with American",
+          "source": {
+            "label": "Alaska Air Group 10-K(2025年度)",
+            "label_en": "Alaska Air Group 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/766421/000076642126000010/alk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Our airlines are parties to marketing agreements with a number of domestic and international air carriers, or \"partners,\" including an expanded relationship with American Airlines and other one world carriers."
+          }
+        }
+      ]
+    },
+    {
+      "id": "QatarAirways",
+      "ticker": "Qatar Airways",
+      "name": "カタール航空",
+      "name_en": "Qatar Airways",
+      "sub": "航空(カタール)",
+      "sub_en": "Airline (Qatar)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "中東路線で戦略提携",
+          "text_en": "Strategic alliance for the Middle East",
+          "source": {
+            "label": "American Airlines 10-K(2025年度)",
+            "label_en": "American Airlines 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/6201/000000620126000014/aal-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "We have also established a strategic alliance with Alaska Airlines relating to certain routes and a strategic alliance relating to the Middle East with Qatar Airways."
+          }
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "ticker": "C",
+      "name": "シティグループ",
+      "name_en": "Citigroup",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2026年からAAdvantage提携カードの米国での独占発行会社",
+          "text_en": "Exclusive US issuer of the AAdvantage co-branded card from 2026",
+          "source": {
+            "label": "American Airlines 10-K(2025年度)",
+            "label_en": "American Airlines 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/6201/000000620126000014/aal-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Starting in 2026, Citibank N.A. (Citi) became the exclusive issuer of the AAdvantage co-branded credit card portfolio in the U.S."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AZUL",
+      "ticker": "AZUL",
+      "name": "アズール",
+      "name_en": "Azul",
+      "sub": "航空(ブラジル)",
+      "sub_en": "Airline (Brazil)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ユナイテッドと共にAzulへの追加出資契約(最大2億ドル)",
+          "text_en": "Agreed with United to provide up to $200 million more capital to Azul",
+          "source": {
+            "label": "Azul 20-F(2025年度)",
+            "label_en": "Azul 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1432364/000162828026023423/azul-20251231.htm",
+            "level": "official",
+            "date": "2026-04-03",
+            "quote": "The Company also entered into amendments to investment agreements with American Airlines and United Airlines providing for additional capital contributions of up to US$ 200 million"
+          }
+        }
+      ]
+    },
+    {
+      "id": "JetSMART",
+      "ticker": "JetSMART",
+      "name": "ジェットスマート",
+      "name_en": "JetSMART",
+      "sub": "格安航空(南米)",
+      "sub_en": "Low-cost airline (South America)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2022年12月に少数株式を取得",
+          "text_en": "Took a minority stake in December 2022",
+          "source": {
+            "label": "LATAM Airlines 20-F(2025年度)",
+            "label_en": "LATAM Airlines 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1047716/000104771626000046/ltm-20251231.htm",
+            "level": "official",
+            "date": "2026-03-05",
+            "quote": "the American Airlines acquisition of a minority stake in JetSmart in December 2022"
+          }
+        }
+      ]
+    },
+    {
+      "id": "DAL",
+      "ticker": "DAL",
+      "name": "デルタ航空",
+      "name_en": "Delta Air Lines",
+      "sub": "航空",
+      "sub_en": "Airline",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "10-Kで国内線の主な競合として挙げる",
+          "text_en": "Named in its 10-K among domestic competitors",
+          "source": {
+            "label": "American Airlines 10-K(2025年度)",
+            "label_en": "American Airlines 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/6201/000000620126000014/aal-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "we face competing service from other domestic airlines, including major network airlines, low-cost carriers and ultra-low-cost carriers such as Alaska Airlines, Allegiant Air, Delta Air Lines, Frontier Airlines, Hawaiian Airlines, JetBlue Airways, Southwest Airlines, Spirit Airlines and United Airlines"
+          }
+        }
+      ]
+    },
+    {
+      "id": "UAL",
+      "ticker": "UAL",
+      "name": "ユナイテッド航空",
+      "name_en": "United Airlines",
+      "sub": "航空",
+      "sub_en": "Airline",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "10-Kで国内線の主な競合として挙げる",
+          "text_en": "Named in its 10-K among domestic competitors",
+          "source": {
+            "label": "American Airlines 10-K(2025年度)",
+            "label_en": "American Airlines 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/6201/000000620126000014/aal-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "we face competing service from other domestic airlines, including major network airlines, low-cost carriers and ultra-low-cost carriers such as Alaska Airlines, Allegiant Air, Delta Air Lines, Frontier Airlines, Hawaiian Airlines, JetBlue Airways, Southwest Airlines, Spirit Airlines and United Airlines"
+          }
+        }
+      ]
+    },
+    {
+      "id": "LUV",
+      "ticker": "LUV",
+      "name": "サウスウエスト航空",
+      "name_en": "Southwest Airlines",
+      "sub": "航空",
+      "sub_en": "Airline",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "10-Kで国内線の主な競合として挙げる",
+          "text_en": "Named in its 10-K among domestic competitors",
+          "source": {
+            "label": "American Airlines 10-K(2025年度)",
+            "label_en": "American Airlines 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/6201/000000620126000014/aal-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "we face competing service from other domestic airlines, including major network airlines, low-cost carriers and ultra-low-cost carriers such as Alaska Airlines, Allegiant Air, Delta Air Lines, Frontier Airlines, Hawaiian Airlines, JetBlue Airways, Southwest Airlines, Spirit Airlines and United Airlines"
+          }
+        }
+      ]
+    },
+    {
+      "id": "JBLU",
+      "ticker": "JBLU",
+      "name": "ジェットブルー",
+      "name_en": "JetBlue Airways",
+      "sub": "航空",
+      "sub_en": "Airline",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "10-Kで国内線の主な競合として挙げる",
+          "text_en": "Named in its 10-K among domestic competitors",
+          "source": {
+            "label": "American Airlines 10-K(2025年度)",
+            "label_en": "American Airlines 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/6201/000000620126000014/aal-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "we face competing service from other domestic airlines, including major network airlines, low-cost carriers and ultra-low-cost carriers such as Alaska Airlines, Allegiant Air, Delta Air Lines, Frontier Airlines, Hawaiian Airlines, JetBlue Airways, Southwest Airlines, Spirit Airlines and United Airlines"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ULCC",
+      "ticker": "ULCC",
+      "name": "フロンティア航空",
+      "name_en": "Frontier Group",
+      "sub": "格安航空",
+      "sub_en": "Ultra-low-cost airline",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Frontierが10-Kで、国内線の主な競合としてアメリカン航空を挙げる",
+          "text_en": "Frontier names American among its principal domestic competitors",
+          "source": {
+            "label": "Frontier Group 10-K(2024年度)",
+            "label_en": "Frontier Group 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1670076/000167007625000041/fron-20241231.htm",
+            "level": "official",
+            "date": "2025-02-18",
+            "quote": "Our principal competitors on domestic routes are American Airlines, Delta Air Lines, United Airlines and Southwest Airlines"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CPA",
+      "ticker": "CPA",
+      "name": "コパ航空",
+      "name_en": "Copa Holdings",
+      "sub": "航空(パナマ)",
+      "sub_en": "Airline (Panama)",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Copaが20-Fで、競合の一社としてアメリカン航空を挙げる",
+          "text_en": "Copa names American among competing airlines",
+          "source": {
+            "label": "Copa Holdings 20-F(2024年度)",
+            "label_en": "Copa Holdings 20-F (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1345105/000162828025020427/cpa-20241231.htm",
+            "level": "official",
+            "date": "2025-04-29",
+            "quote": "We compete with a number of other airlines that currently serve some of the routes on which we operate, including Avianca, American Airlines, Delta Air Lines, Aeromexico, and LATAM, among others."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
