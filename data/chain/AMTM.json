@@ -1,0 +1,250 @@
+{
+  "root": {
+    "ticker": "AMTM",
+    "name": "アメンタム",
+    "cik": 2011286,
+    "name_en": "Amentum"
+  },
+  "rows": [
+    {
+      "ja": "最大の顧客・成り立ち",
+      "en": "Largest customer & origin"
+    },
+    {
+      "ja": "原子力の提携・顧客",
+      "en": "Nuclear partners & customers"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "LDOS",
+    "VVX",
+    "EME"
+  ],
+  "companies": [
+    {
+      "id": "USGov",
+      "ticker": "U.S. Government",
+      "name": "米連邦政府",
+      "name_en": "U.S. federal government",
+      "sub": "政府",
+      "sub_en": "Government",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "売上の81%を占める最大の顧客",
+          "text_en": "Largest customer, 81% of revenue",
+          "source": {
+            "label": "Amentum 10-K(2025年9月期)",
+            "label_en": "Amentum 10-K (FY ended Oct 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2011286/000162828025053993/amtm-20251003.htm",
+            "level": "official",
+            "date": "2025-11-25",
+            "quote": "The U.S. federal government represented 81% of our revenues for the year ended October 3, 2025"
+          }
+        }
+      ]
+    },
+    {
+      "id": "J",
+      "ticker": "J",
+      "name": "ジェイコブズ",
+      "name_en": "Jacobs Solutions",
+      "sub": "エンジニアリング",
+      "sub_en": "Engineering",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Jacobsの政府向け事業のスピンオフと合併で2024年9月に発足",
+          "text_en": "Formed in September 2024 by merging with a spin-off of Jacobs' government businesses",
+          "source": {
+            "label": "Amentum 10-K(2025年9月期)",
+            "label_en": "Amentum 10-K (FY ended Oct 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2011286/000162828025053993/amtm-20251003.htm",
+            "level": "official",
+            "date": "2025-11-25",
+            "quote": "On September 27, 2024, Amentum was formed through the completion of a merger between the legacy Amentum business and a spin-off of the Jacobs Solutions Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BWXT",
+      "ticker": "BWXT",
+      "name": "BWXテクノロジーズ",
+      "name_en": "BWX Technologies",
+      "sub": "原子力部品",
+      "sub_en": "Nuclear components",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "BWXT・Fluorと合弁を組み、サバンナリバーの放射性廃液処理を受注",
+          "text_en": "Joint venture with BWXT and Fluor that won the Savannah River liquid waste contract",
+          "source": {
+            "label": "BWX Technologies 10-K/A(2024年度)",
+            "label_en": "BWX Technologies 10-K/A (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1486957/000148695725000015/bwxt-20241231.htm",
+            "level": "official",
+            "date": "2025-03-19",
+            "quote": "Savannah River Mission Completion, LLC, a limited liability company formed by BWXT TSG, Amentum Environment & Energy, Inc. and Fluor Federal Services, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FLR",
+      "ticker": "FLR",
+      "name": "フルア",
+      "name_en": "Fluor",
+      "sub": "エンジニアリング",
+      "sub_en": "Engineering",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "サバンナリバーの合弁の相手",
+          "text_en": "Partner in the Savannah River joint venture",
+          "source": {
+            "label": "BWX Technologies 10-K/A(2024年度)",
+            "label_en": "BWX Technologies 10-K/A (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1486957/000148695725000015/bwxt-20241231.htm",
+            "level": "official",
+            "date": "2025-03-19",
+            "quote": "Savannah River Mission Completion, LLC, a limited liability company formed by BWXT TSG, Amentum Environment & Energy, Inc. and Fluor Federal Services, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "OKLO",
+      "ticker": "OKLO",
+      "name": "オクロ",
+      "name_en": "Oklo",
+      "sub": "小型原子炉",
+      "sub_en": "Small modular reactors",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Okloが主要サプライヤーの一社として挙げる",
+          "text_en": "Oklo lists Amentum among key suppliers",
+          "source": {
+            "label": "Oklo 10-K(2025年度)",
+            "label_en": "Oklo 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1849056/000162828026018698/oklo-20251231.htm",
+            "level": "official",
+            "date": "2026-03-17",
+            "quote": "our suppliers, including, but not limited to, Siemens Energy, Inc., Amentum Technology Inc., Kiewit, and Centrus"
+          }
+        }
+      ]
+    },
+    {
+      "id": "LTBR",
+      "ticker": "LTBR",
+      "name": "ライトブリッジ",
+      "name_en": "Lightbridge",
+      "sub": "原子燃料",
+      "sub_en": "Nuclear fuel",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "基本業務委託契約(MSA)を結ぶ(2025年12月)",
+          "text_en": "Signed a master services agreement (December 2025)",
+          "source": {
+            "label": "Lightbridge 10-K(2025年度)",
+            "label_en": "Lightbridge 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1084554/000147793226001076/ltbr_10k.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "In December 2025, the Company entered into a Master Services Agreement (MSA) with Amentum Technology Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LDOS",
+      "ticker": "LDOS",
+      "name": "レイドス",
+      "name_en": "Leidos",
+      "sub": "政府向けIT・技術",
+      "sub_en": "Government IT & technology",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Leidosが10-Kで、主な競合として挙げる",
+          "text_en": "Leidos names Amentum among principal competitors",
+          "source": {
+            "label": "Leidos 10-K(2025年度)",
+            "label_en": "Leidos 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1336920/000133692026000030/ldos-20260102.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Our principal competitors currently include the following companies: Accenture Federal Services LLC, Amentum Services Inc., KBR, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "VVX",
+      "ticker": "VVX",
+      "name": "V2X",
+      "name_en": "V2X",
+      "sub": "政府向けサービス",
+      "sub_en": "Government services",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "V2Xが10-Kで、主な競合の筆頭に挙げる",
+          "text_en": "V2X lists Amentum first among principal competitors",
+          "source": {
+            "label": "V2X 10-K(2025年度)",
+            "label_en": "V2X 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1601548/000160154826000015/vec-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "Our principal competitors include Amentum Holdings, Inc., Valiant Integrated Services"
+          }
+        }
+      ]
+    },
+    {
+      "id": "EME",
+      "ticker": "EME",
+      "name": "エムコー",
+      "name_en": "EMCOR",
+      "sub": "設備工事",
+      "sub_en": "Building services",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "EMCORが10-Kで、ビルサービスの大手競合として挙げる",
+          "text_en": "EMCOR names Amentum among large building services competitors",
+          "source": {
+            "label": "EMCOR 10-K(2024年度)",
+            "label_en": "EMCOR 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/105634/000010563425000015/eme-20241231.htm",
+            "level": "official",
+            "date": "2025-02-26",
+            "quote": "a number of large corporations such as Amentum Services, Inc., IAP Worldwide Services"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

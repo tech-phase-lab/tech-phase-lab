@@ -1,0 +1,152 @@
+{
+  "root": {
+    "ticker": "DINO",
+    "name": "HFシンクレア",
+    "cik": 1915657,
+    "name_en": "HF Sinclair"
+  },
+  "rows": [
+    {
+      "ja": "製油所の買収・合弁・株主",
+      "en": "Refinery purchase, joint venture & shareholder"
+    },
+    {
+      "ja": "燃料の販売先",
+      "en": "Fuel customer"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "CLMT"
+  ],
+  "companies": [
+    {
+      "id": "SHEL",
+      "ticker": "SHEL",
+      "name": "シェル",
+      "name_en": "Shell",
+      "sub": "石油",
+      "sub_en": "Oil & gas",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "シェルの米国子会社からピュージェット・サウンド製油所を買収(2021年11月)",
+          "text_en": "Bought the Puget Sound Refinery from Shell's US unit (November 2021)",
+          "source": {
+            "label": "HF Sinclair 10-K(2025年度)",
+            "label_en": "HF Sinclair 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1915657/000191565726000016/dino-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "HFS Puget Sound acquired the Puget Sound Refinery from Equilon Enterprises LLC dba Shell Oil Products US (\"SOPUS\") on November 1, 2021."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GreenTrail",
+      "ticker": "Green Trail Fuels",
+      "name": "グリーン・トレイル・フューエルズ",
+      "name_en": "Green Trail Fuels",
+      "sub": "燃料小売",
+      "sub_en": "Fuel retail",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "コロラド・ニューメキシコの給油所の合弁(50%)を設立(2026年2月)",
+          "text_en": "Formed a 50% retail fuel joint venture in Colorado and New Mexico (February 2026)",
+          "source": {
+            "label": "HF Sinclair 10-K(2025年度)",
+            "label_en": "HF Sinclair 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1915657/000191565726000016/dino-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "In February 2026, we announced the formation of Green Trail Fuels, LLC, a new joint venture in which we will hold a 50% non-operating economic interest."
+          }
+        }
+      ]
+    },
+    {
+      "id": "REH",
+      "ticker": "REH Advisors",
+      "name": "REHアドバイザーズ",
+      "name_en": "REH Advisors",
+      "sub": "投資会社",
+      "sub_en": "Investment firm",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "自社株の相対買い戻しの相手として承認",
+          "text_en": "Authorized counterparty for privately negotiated share repurchases",
+          "source": {
+            "label": "HF Sinclair 10-K(2025年度)",
+            "label_en": "HF Sinclair 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1915657/000191565726000016/dino-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Privately negotiated repurchases from REH Advisors Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "YSWY",
+      "ticker": "YSWY",
+      "name": "イエスウェイ",
+      "name_en": "Yesway",
+      "sub": "コンビニ",
+      "sub_en": "Convenience stores",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Yeswayが主な燃料の調達先の一社として挙げる",
+          "text_en": "Yesway names HF Sinclair among its main fuel suppliers",
+          "source": {
+            "label": "Yesway S-1/A(2026年4月)",
+            "label_en": "Yesway S-1/A (Apr 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1859836/000110465926042357/tm2527636-9_s1a.htm",
+            "level": "official",
+            "date": "2026-04-13",
+            "quote": "For our fuel supply, we partner with oil refiners, primarily Valero, Alon, and HF Sinclair."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CLMT",
+      "ticker": "CLMT",
+      "name": "キャルメット",
+      "name_en": "Calumet",
+      "sub": "特殊石油製品",
+      "sub_en": "Specialty petroleum products",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Calumetが10-Kで、潤滑油・パラフィンの主な競合として挙げる",
+          "text_en": "Calumet names HF Sinclair among primary lubricant and wax competitors",
+          "source": {
+            "label": "Calumet 10-K(2024年度)",
+            "label_en": "Calumet 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2013745/000155837025001961/clmt-20241231x10k.htm",
+            "level": "official",
+            "date": "2025-03-03",
+            "quote": "Our primary competitors in producing paraffin waxes include Exxon Mobil Corporation, HF Sinclair Corporation, The International Group Inc. and Ergon, Inc."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
