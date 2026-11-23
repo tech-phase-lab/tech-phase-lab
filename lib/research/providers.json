@@ -119,6 +119,18 @@
         "format": "rss",
         "label": "SEC 8-K"
       }
+    ],
+    "supplementalSources": [
+      {
+        "url": "https://www.sandisk.com/tools/api/globalsearchquery?q=%2A&locale=en-us&fl=title%2Curl%2CdocumentType%2CdocumentTypeDate&fq=documentType%3APress+Release&from=0&rows=15&sort=documentTypeDate",
+        "format": "news-json",
+        "label": "Sandisk newsroom search",
+        "itemsKey": "docs",
+        "urlKey": "url",
+        "titleKey": "title",
+        "dateKey": "documentTypeDate",
+        "minPollSeconds": 15
+      }
     ]
   },
   {

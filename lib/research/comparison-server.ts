@@ -47,7 +47,7 @@ const financials = (ticker: string, cik: string) => freshEnough(() => cachedFina
 /** The SEC identifier of a listed company, from the provider list or the SEC's own directory. */
 export async function secCik(ticker: string): Promise<string | null> {
   const provider = providers.find(p => p.ticker === ticker);
-  const cik = provider?.supplementalSources?.find(s => "cik" in s && s.cik)?.cik ?? (await directory()).find(c => c.ticker === ticker)?.cik.toString();
+  const cik = provider?.supplementalSources?.map(s => ("cik" in s ? s.cik : undefined)).find(Boolean) ?? (await directory()).find(c => c.ticker === ticker)?.cik.toString();
   return cik && /^\d{1,10}$/.test(cik) ? cik : null;
 }
 
@@ -105,7 +105,7 @@ async function loadFinancials(ticker: string, wants: { statements: boolean }) {
 async function loadSecFinancials(ticker: string) {
   try {
     const provider = providers.find(p => p.ticker === ticker);
-    let cik: string | undefined = provider?.supplementalSources?.find(s => "cik" in s && s.cik)?.cik;
+    let cik: string | undefined = provider?.supplementalSources?.map(s => ("cik" in s ? s.cik : undefined)).find(Boolean);
     if (!cik) cik = (await directory()).find(c => c.ticker === ticker)?.cik.toString();
     if (!cik || !/^\d{1,10}$/.test(cik)) return emptyFinancials(ticker, "unsupported");
     const data = await financials(ticker, cik);
