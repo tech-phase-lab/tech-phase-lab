@@ -24,6 +24,9 @@ export function selectDailyCandidates(feed,now=new Date(),{moves=null}={}){
   if(seen.has(c.fingerprint)){diagnostics.duplicateHeadline++;return false;}
   seen.add(c.fingerprint);return true;
  });
+ // Every in-window candidate's first close, so the known-move ordering can reach past the newest few stories (Nov 23 fix:
+ // reading only the newest five, all from the weekend, left Friday's stories unordered and every pick was weekend commentary).
+ const sessions=[...new Set(selected.map(c=>candidateSession(c).session).filter(Boolean))];
  if(moves){const known=selected.filter(c=>hasKnownMove(c,moves));diagnostics.knownMove=known.length;selected.splice(0,selected.length,...known,...selected.filter(c=>!known.includes(c)));}
  diagnostics.overDailyLimit=Math.max(0,selected.length-RISK_POLICY.dailyStories);
  const reserve=selected.splice(RISK_POLICY.dailyStories).slice(0,RISK_POLICY.dailyAttempts-RISK_POLICY.dailyStories);
@@ -31,7 +34,7 @@ export function selectDailyCandidates(feed,now=new Date(),{moves=null}={}){
  // Complete = company AND market-wide lanes read, and a full page still reached back past the window start.
  const reached=!diagnostics.reportPossiblyTruncated||(diagnostics.reportOldestPublishedAt!==null&&Date.parse(diagnostics.reportOldestPublishedAt)<=now.getTime()-windowHours(now)*3600000);
  diagnostics.coverageComplete=diagnostics.reportConfigured===true&&diagnostics.reportMarketLane===true&&reached;
- return {selected,reserve,diagnostics};
+ return {selected,reserve,sessions,diagnostics};
 }
 
 /** Trusted worker only, never a browser or customer read path.
@@ -56,7 +59,7 @@ export async function prepareDailyReview({enabled=false,readFeed,selectionPool,b
   if(readMoves){
    market={};
    try{if(publishPool??budgetPool){const f=await fillMarketReactions(publishPool??budgetPool,readMoves,now);market.earlierDaysFilled=f.updated;market.earlierStoriesWaiting=f.waiting;}}catch{market.earlierDays='failed';}
-   try{const sessions=[...new Set([...intake.selected,...intake.reserve].map(c=>candidateSession(c).session).filter(Boolean))];
+   try{const sessions=intake.sessions;
     if(sessions.length)intake=selectDailyCandidates(feed,now,{moves:await readMoves(sessions)});}catch{market.ordering='failed';}
   }
   diagnostics={...intake.diagnostics,...(market?{market}:{})};
@@ -66,11 +69,12 @@ export async function prepareDailyReview({enabled=false,readFeed,selectionPool,b
   stage='generation';
   const quotes=(publishPool??budgetPool)&&readMoves?((await (publishPool??budgetPool).query('SELECT value FROM resolute.risk_quotes')).rows??[]).map(r=>r.value).filter(q=>q?.approved===true):[];
   // A candidate that fails the checks is replaced by the next one in reserve (bounded: dailyAttempts model calls at most).
-  const queue=[...selected];let attempts=0;
+  const queue=[...selected];let attempts=0;const withheld=[];
   while(queue.length&&articles.length<RISK_POLICY.dailyStories){
    const candidate=queue.shift();attempts++;
-   const draft=await summarize(candidate,budgetPool,now,fetcher);
-   if(!draft){if(reserve.length)queue.push(reserve.shift());continue;}
+   const why={};
+   const draft=await summarize(candidate,budgetPool,now,fetcher,{why});
+   if(!draft){withheld.push(why.reason??'unknown');if(reserve.length)queue.push(reserve.shift());continue;}
    const parsed=parseRiskArticle(draft);
    if(parsed.id!==candidate.id||parsed.url!==candidate.url||parsed.publishedAt!==candidate.publishedAt)throw Error('ARTICLE_MISMATCH');
    // Shock Gauge: stars only from the related TP index's move at the first U.S. close after the news (may still be waiting).
@@ -84,16 +88,20 @@ export async function prepareDailyReview({enabled=false,readFeed,selectionPool,b
    refs.push({articleId:result.articleId,articleRevision:result.articleRevision});articles.push(article);
    await selectionPool.query('UPDATE public.resolute_rizel_daily_runs SET selection_refs=$2 WHERE day=$1',[day,JSON.stringify(refs)]);
   }
-  if(selected.length&&!articles.length)throw Error('NO_VERIFIED_OUTPUT');
-  diagnostics.attempts=attempts;
+  // Nothing qualified today (owner, Nov 23): when the model judged every story it was given to be outside the brief
+  // ('not-publishable'), the day is a normal quiet day (「今日は、気にするニュースはありません」), saved as ready and exit 0.
+  // A story that did qualify but failed the copy checks (new number, amount, banned wording) is still a failed day.
+  const noneQualified=selected.length>0&&!articles.length&&withheld.length===attempts&&withheld.every(r=>r==='not-publishable');
+  if(selected.length&&!articles.length&&!noneQualified)throw Error('NO_VERIFIED_OUTPUT');
+  diagnostics.attempts=attempts;if(withheld.length)diagnostics.withheld=countReasons(withheld);
   stage='readback';
   // Publication stays gated (owner switch + approval variable); this only stores what the owner can preview.
-  const stored=articles.length?articles:(diagnostics.coverageComplete&&!selected.length?[]:null);
+  const stored=articles.length?articles:(noneQualified||diagnostics.coverageComplete&&!selected.length?[]:null);
   if(stored)await saveRiskDay(publishPool??budgetPool,day,stored,now);
   await selectionPool.query("UPDATE public.resolute_rizel_daily_runs SET state='ready',finished_at=$2 WHERE day=$1",[day,new Date().toISOString()]);
   const saved=(await selectionPool.query('SELECT state,candidate_count,selection_refs,publication FROM public.resolute_rizel_daily_runs WHERE day=$1',[day])).rows[0];
   if(saved?.state!=='ready'||saved.candidate_count!==selected.length||saved.publication!=='withheld'||!Array.isArray(saved.selection_refs)||saved.selection_refs.length!==refs.length||refs.some((ref,i)=>saved.selection_refs[i]?.articleId!==ref.articleId||saved.selection_refs[i]?.articleRevision!==ref.articleRevision))throw Error('READBACK_MISMATCH');
-  return {state:articles.length?'ready':'no-candidates',day,count:articles.length,rizelSelections:refs.length,waitingForMarket:articles.filter(a=>a.stars===null).length,publication:'withheld',storageVerified:true,diagnostics};
+  return {state:articles.length?'ready':noneQualified?'none-today':'no-candidates',day,count:articles.length,rizelSelections:refs.length,waitingForMarket:articles.filter(a=>a.stars===null).length,publication:'withheld',storageVerified:true,diagnostics};
  }catch(cause){
   await selectionPool.query("UPDATE public.resolute_rizel_daily_runs SET state='failed',finished_at=$2 WHERE day=$1",[day,now.toISOString()]);
   // A real failure is recorded so the app can say "couldn't update" (never "quiet day").
@@ -105,6 +113,10 @@ export async function prepareDailyReview({enabled=false,readFeed,selectionPool,b
   throw error;
  }
 }
+
+const WITHHELD_REASONS=['not-publishable','new-number','japanese-amount','shape','banned-wording'];
+/** Counts per fixed reason code (never text), for the run's log line. */
+function countReasons(reasons){const out={};for(const r of reasons){const k=WITHHELD_REASONS.includes(r)?r:'unknown';out[k]=(out[k]??0)+1;}return out;}
 
 /** The worker's log line and exit code for a failed run. When the source read failed only after every retry ran out (the
  * research monitor restarting or deploying at 07:01 JST), the day is already recorded as failed ("couldn't update", never a quiet
