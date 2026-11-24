@@ -1,0 +1,326 @@
+{
+  "root": {
+    "ticker": "WLK",
+    "name": "ウエストレイク",
+    "cik": 1262823,
+    "name_en": "Westlake"
+  },
+  "rows": [
+    {
+      "ja": "子会社・共同保有・買収",
+      "en": "Subsidiary, co-ownership & acquisitions"
+    },
+    {
+      "ja": "競合(エチレン・樹脂)",
+      "en": "Competitors (ethylene & PE)"
+    },
+    {
+      "ja": "競合(塩素・塩ビ)",
+      "en": "Competitors (chlor-alkali & PVC)"
+    },
+    {
+      "ja": "競合(住宅・インフラ製品)",
+      "en": "Competitors (housing & infrastructure products)"
+    }
+  ],
+  "rivals": [
+    "DOW",
+    "LYB",
+    "OLN"
+  ],
+  "companies": [
+    {
+      "id": "WLKP",
+      "ticker": "WLKP",
+      "name": "ウエストレイク・ケミカル・パートナーズ",
+      "name_en": "Westlake Chemical Partners",
+      "sub": "エチレン",
+      "sub_en": "Ethylene",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "エチレン設備を運営するため2014年に設立した上場パートナーシップ",
+          "text_en": "Listed partnership formed in 2014 to run its ethylene facilities",
+          "source": {
+            "label": "Westlake 10-K(2025年度)",
+            "label_en": "Westlake 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1262823/000126282326000016/wlk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "In 2014, we formed Westlake Chemical Partners LP (\"Westlake Partners\") to operate, acquire and develop ethylene production facilities and related assets."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Lotte",
+      "ticker": "Lotte",
+      "name": "ロッテ",
+      "name_en": "Lotte",
+      "sub": "化学",
+      "sub_en": "Chemicals",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "エチレン工場LACCの持分34.8%をLotteから追加取得(2019年)",
+          "text_en": "Bought an additional 34.8% of the LACC ethylene plant from Lotte (2019)",
+          "source": {
+            "label": "Westlake 10-K(2025年度)",
+            "label_en": "Westlake 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1262823/000126282326000016/wlk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "completed the acquisition of an additional 34.8 % of the membership interests in LACC from Lotte"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Hexion",
+      "ticker": "Hexion",
+      "name": "ヘキシオン",
+      "name_en": "Hexion",
+      "sub": "エポキシ樹脂",
+      "sub_en": "Epoxy resins",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Hexionの世界のエポキシ事業を買収(2022年)",
+          "text_en": "Acquired the global epoxy business of Hexion (2022)",
+          "source": {
+            "label": "Westlake 10-K(2025年度)",
+            "label_en": "Westlake 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1262823/000126282326000016/wlk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "In 2022, we completed the acquisition of the global epoxy business of Hexion Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ACI",
+      "ticker": "ACI/Perplastic",
+      "name": "ACI/パープラスティック",
+      "name_en": "ACI/Perplastic Group",
+      "sub": "樹脂コンパウンド",
+      "sub_en": "Compounding",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ACI/Perplastic Groupの世界のコンパウンド事業を買収(2026年1月)",
+          "text_en": "Acquired the global compounding businesses of the ACI/Perplastic Group (January 2026)",
+          "source": {
+            "label": "Westlake 10-K(2025年度)",
+            "label_en": "Westlake 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1262823/000126282326000016/wlk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "In January 2026, we acquired the global compounding solutions businesses of the ACI/Perplastic Group (collectively, \"ACI\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DOW",
+      "ticker": "DOW",
+      "name": "ダウ",
+      "name_en": "Dow",
+      "sub": "化学",
+      "sub_en": "Chemicals",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "エチレン・ポリエチレンの競合",
+          "text_en": "An ethylene and polyethylene competitor",
+          "source": {
+            "label": "Westlake 10-K(2025年度)",
+            "label_en": "Westlake 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1262823/000126282326000016/wlk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our competitors in the ethylene and PE markets are some of the world's largest chemical companies, including Chevron Phillips Chemical Company, Dow Inc., ExxonMobil Chemical Company, Formosa Plastics Corporation, LyondellBasell Industries, N.V., NOVA Chemicals Corporation and Sasol Limited."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LYB",
+      "ticker": "LYB",
+      "name": "ライオンデルバセル",
+      "name_en": "LyondellBasell",
+      "sub": "化学",
+      "sub_en": "Chemicals",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "エチレン・ポリエチレンの競合",
+          "text_en": "An ethylene and polyethylene competitor",
+          "source": {
+            "label": "Westlake 10-K(2025年度)",
+            "label_en": "Westlake 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1262823/000126282326000016/wlk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our competitors in the ethylene and PE markets are some of the world's largest chemical companies, including Chevron Phillips Chemical Company, Dow Inc., ExxonMobil Chemical Company, Formosa Plastics Corporation, LyondellBasell Industries, N.V., NOVA Chemicals Corporation and Sasol Limited."
+          }
+        }
+      ]
+    },
+    {
+      "id": "XOM",
+      "ticker": "XOM",
+      "name": "エクソンモービル",
+      "name_en": "ExxonMobil",
+      "sub": "石油・化学",
+      "sub_en": "Oil & chemicals",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "エチレン・ポリエチレンの競合",
+          "text_en": "An ethylene and polyethylene competitor",
+          "source": {
+            "label": "Westlake 10-K(2025年度)",
+            "label_en": "Westlake 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1262823/000126282326000016/wlk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our competitors in the ethylene and PE markets are some of the world's largest chemical companies, including Chevron Phillips Chemical Company, Dow Inc., ExxonMobil Chemical Company, Formosa Plastics Corporation, LyondellBasell Industries, N.V., NOVA Chemicals Corporation and Sasol Limited."
+          }
+        }
+      ]
+    },
+    {
+      "id": "OLN",
+      "ticker": "OLN",
+      "name": "オリン",
+      "name_en": "Olin",
+      "sub": "塩素・苛性ソーダ",
+      "sub_en": "Chlor-alkali",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "塩素・塩ビの競合",
+          "text_en": "A chlor-alkali and PVC competitor",
+          "source": {
+            "label": "Westlake 10-K(2025年度)",
+            "label_en": "Westlake 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1262823/000126282326000016/wlk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "We compete in the chlor-alkali and PVC markets with other producers including Formosa Plastics Corporation, INOVYN ChlorVinyls Limited, KEM ONE Group SAS, Olin Corporation, Orbia Advance Corporation, Occidental Chemical Corporation, Shintech, Inc. and VYNOVA Group."
+          }
+        }
+      ]
+    },
+    {
+      "id": "OXY",
+      "ticker": "OXY",
+      "name": "オキシデンタル・ペトロリアム",
+      "name_en": "Occidental (OxyChem)",
+      "sub": "石油・化学",
+      "sub_en": "Oil & chemicals",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "傘下のOccidental Chemicalが塩素・塩ビの競合",
+          "text_en": "Its Occidental Chemical unit is a chlor-alkali and PVC competitor",
+          "source": {
+            "label": "Westlake 10-K(2025年度)",
+            "label_en": "Westlake 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1262823/000126282326000016/wlk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "We compete in the chlor-alkali and PVC markets with other producers including Formosa Plastics Corporation, INOVYN ChlorVinyls Limited, KEM ONE Group SAS, Olin Corporation, Orbia Advance Corporation, Occidental Chemical Corporation, Shintech, Inc. and VYNOVA Group."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Shintech",
+      "ticker": "Shintech",
+      "name": "シンテック",
+      "name_en": "Shintech",
+      "sub": "塩ビ",
+      "sub_en": "PVC",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "塩素・塩ビの競合",
+          "text_en": "A chlor-alkali and PVC competitor",
+          "source": {
+            "label": "Westlake 10-K(2025年度)",
+            "label_en": "Westlake 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1262823/000126282326000016/wlk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "We compete in the chlor-alkali and PVC markets with other producers including Formosa Plastics Corporation, INOVYN ChlorVinyls Limited, KEM ONE Group SAS, Olin Corporation, Orbia Advance Corporation, Occidental Chemical Corporation, Shintech, Inc. and VYNOVA Group."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TREX",
+      "ticker": "TREX",
+      "name": "トレックス",
+      "name_en": "Trex",
+      "sub": "ウッドデッキ材",
+      "sub_en": "Composite decking",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "住宅・インフラ製品の競合",
+          "text_en": "A housing and infrastructure products competitor",
+          "source": {
+            "label": "Westlake 10-K(2025年度)",
+            "label_en": "Westlake 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1262823/000126282326000016/wlk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "JM Eagle Inc., Trex Company, Inc. and James Hardie"
+          }
+        }
+      ]
+    },
+    {
+      "id": "JHX",
+      "ticker": "JHX",
+      "name": "ジェームズ・ハーディー",
+      "name_en": "James Hardie",
+      "sub": "建材",
+      "sub_en": "Building products",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "住宅・インフラ製品の競合",
+          "text_en": "A housing and infrastructure products competitor",
+          "source": {
+            "label": "Westlake 10-K(2025年度)",
+            "label_en": "Westlake 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1262823/000126282326000016/wlk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "JM Eagle Inc., Trex Company, Inc. and James Hardie"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
