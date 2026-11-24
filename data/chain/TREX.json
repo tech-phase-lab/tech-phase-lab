@@ -7,8 +7,8 @@
   },
   "rows": [
     {
-      "ja": "販売先(流通)",
-      "en": "Distributor customer"
+      "ja": "販売先(流通・ホームセンター)",
+      "en": "Customers (distributors & home centers)"
     },
     {
       "ja": "競合(10-Kに記載)",
@@ -47,6 +47,84 @@
             "level": "official",
             "date": "2026-02-24",
             "quote": "In addition, AZEK produces products that compete with another significant supplier to us, Trex."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HD",
+      "ticker": "HD",
+      "name": "ホーム・デポ",
+      "name_en": "The Home Depot",
+      "sub": "ホームセンター",
+      "sub_en": "Home improvement retail",
+      "sub_short": "住宅用品",
+      "sub_short_en": "Home",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Trexから直接仕入れて店頭で販売",
+          "text_en": "Buys directly from Trex to stock its shelves",
+          "source": {
+            "label": "Trex 10-K(2025年度)",
+            "label_en": "Trex 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1069878/000119312526068732/trex-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Home Depot and Lowe's purchase products directly from us for stocking on their shelves."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LOW",
+      "ticker": "LOW",
+      "name": "ロウズ",
+      "name_en": "Lowe's",
+      "sub": "ホームセンター",
+      "sub_en": "Home improvement retail",
+      "sub_short": "小売",
+      "sub_short_en": "Retail",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Trexから直接仕入れて店頭で販売",
+          "text_en": "Buys directly from Trex to stock its shelves",
+          "source": {
+            "label": "Trex 10-K(2025年度)",
+            "label_en": "Trex 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1069878/000119312526068732/trex-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Home Depot and Lowe's purchase products directly from us for stocking on their shelves."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SBP",
+      "ticker": "SBP",
+      "name": "スペシャルティ・ビルディング・プロダクツ",
+      "name_en": "Specialty Building Products",
+      "sub": "建材流通",
+      "sub_en": "Building materials distribution",
+      "sub_short": "建材流通",
+      "sub_short_en": "Building",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Trex専売の長年のデッキ材卸。ミシガン州全域に販売網を拡大",
+          "text_en": "Longtime Trex-exclusive decking distributor, expanding statewide coverage in Michigan",
+          "source": {
+            "label": "Trex 10-K(2025年度)",
+            "label_en": "Trex 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1069878/000119312526068732/trex-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Longtime Trex-exclusive decking distributor SBP will now provide statewide distribution coverage in Michigan."
           }
         }
       ]

@@ -11,8 +11,8 @@
       "en": "Largest customer"
     },
     {
-      "ja": "分離元",
-      "en": "Former parent"
+      "ja": "分離元・合弁",
+      "en": "Former parent & joint venture"
     },
     {
       "ja": "競合(10-Kに記載)",
@@ -73,6 +73,32 @@
             "level": "official",
             "date": "2026-02-11",
             "quote": "On October 15, 2025, the Company entered into a settlement agreement (the \"Settlement Agreement\") with PHINIA, pursuant to which PHINIA agreed to pay the Company $78 million"
+          }
+        }
+      ]
+    },
+    {
+      "id": "DelphiTVS",
+      "ticker": "Delphi-TVS",
+      "name": "デルファイTVSディーゼル・システムズ",
+      "name_en": "Delphi-TVS Diesel Systems",
+      "sub": "ディーゼル燃料系",
+      "sub_en": "Diesel fuel systems",
+      "sub_short": "燃料噴射",
+      "sub_short_en": "Diesel",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "52.5%を持つ非連結の合弁会社",
+          "text_en": "Unconsolidated joint venture in which it owns 52.5%",
+          "source": {
+            "label": "PHINIA 10-K(2025年度)",
+            "label_en": "PHINIA 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1968915/000196891526000023/phin-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "The Company has an investment in one unconsolidated joint venture: Delphi-TVS Diesel Systems Ltd (D-TVS), of which the Company owns 52.5 %."
           }
         }
       ]

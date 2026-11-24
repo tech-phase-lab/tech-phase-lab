@@ -1,0 +1,209 @@
+{
+  "root": {
+    "ticker": "RUSHA",
+    "name": "ラッシュ・エンタープライゼズ",
+    "cik": 1012019,
+    "name_en": "Rush Enterprises"
+  },
+  "rows": [
+    {
+      "ja": "販売する商用車のメーカー",
+      "en": "Commercial vehicle makers it sells",
+      "above": true
+    },
+    {
+      "ja": "在庫金融",
+      "en": "Inventory financing"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "Peterbilt",
+      "ticker": "Peterbilt",
+      "name": "ピータービルト",
+      "name_en": "Peterbilt",
+      "sub": "大型トラック",
+      "sub_en": "Heavy trucks",
+      "sub_short": "トラック",
+      "sub_short_en": "Trucks",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "主力の取扱ブランド。新車販売が売上の約26.1%(2025年)",
+          "text_en": "Core brand; new Peterbilt sales were about 26.1% of 2025 revenue",
+          "source": {
+            "label": "Rush Enterprises 10-K(2025年度)",
+            "label_en": "Rush Enterprises 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1012019/000143774926005424/rusha20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Sales of new Peterbilt commercial vehicles accounted for approximately 26.1% of our total revenues for 2025."
+          }
+        }
+      ]
+    },
+    {
+      "id": "International",
+      "ticker": "International",
+      "name": "インターナショナル",
+      "name_en": "International Motors",
+      "sub": "大型トラック",
+      "sub_en": "Heavy trucks",
+      "sub_short": "トラック",
+      "sub_short_en": "Trucks",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "新車販売が売上の約14.7%(2025年)",
+          "text_en": "New International sales were about 14.7% of 2025 revenue",
+          "source": {
+            "label": "Rush Enterprises 10-K(2025年度)",
+            "label_en": "Rush Enterprises 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1012019/000143774926005424/rusha20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Sales of new International commercial vehicles accounted for approximately 14.7% of our total revenues for 2025."
+          }
+        }
+      ]
+    },
+    {
+      "id": "F",
+      "ticker": "F",
+      "name": "フォード",
+      "name_en": "Ford",
+      "sub": "自動車",
+      "sub_en": "Automobiles",
+      "sub_short": "自動車",
+      "sub_short_en": "Cars",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "販売する商用車のメーカーの一社",
+          "text_en": "One of the commercial vehicle makers it sells",
+          "source": {
+            "label": "Rush Enterprises 10-K(2025年度)",
+            "label_en": "Rush Enterprises 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1012019/000143774926005424/rusha20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Rush Truck Centers primarily sell commercial vehicles manufactured by Peterbilt, International, Hino, Ford, Isuzu, IC Bus, Blue Bird, Blue Arc and Battle Motors."
+          }
+        }
+      ]
+    },
+    {
+      "id": "7205",
+      "ticker": "7205",
+      "name": "日野自動車",
+      "name_en": "Hino Motors",
+      "sub": "トラック",
+      "sub_en": "Trucks",
+      "sub_short": "トラック",
+      "sub_short_en": "Trucks",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "販売する商用車のメーカーの一社",
+          "text_en": "One of the commercial vehicle makers it sells",
+          "source": {
+            "label": "Rush Enterprises 10-K(2025年度)",
+            "label_en": "Rush Enterprises 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1012019/000143774926005424/rusha20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Rush Truck Centers primarily sell commercial vehicles manufactured by Peterbilt, International, Hino, Ford, Isuzu, IC Bus, Blue Bird, Blue Arc and Battle Motors."
+          }
+        }
+      ]
+    },
+    {
+      "id": "7202",
+      "ticker": "7202",
+      "name": "いすゞ自動車",
+      "name_en": "Isuzu Motors",
+      "sub": "トラック",
+      "sub_en": "Trucks",
+      "sub_short": "トラック",
+      "sub_short_en": "Trucks",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "販売する商用車のメーカーの一社",
+          "text_en": "One of the commercial vehicle makers it sells",
+          "source": {
+            "label": "Rush Enterprises 10-K(2025年度)",
+            "label_en": "Rush Enterprises 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1012019/000143774926005424/rusha20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Rush Truck Centers primarily sell commercial vehicles manufactured by Peterbilt, International, Hino, Ford, Isuzu, IC Bus, Blue Bird, Blue Arc and Battle Motors."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BLBD",
+      "ticker": "BLBD",
+      "name": "ブルーバード",
+      "name_en": "Blue Bird",
+      "sub": "スクールバス",
+      "sub_en": "School buses",
+      "sub_short": "バス",
+      "sub_short_en": "Buses",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "販売する商用車のメーカーの一社",
+          "text_en": "One of the commercial vehicle makers it sells",
+          "source": {
+            "label": "Rush Enterprises 10-K(2025年度)",
+            "label_en": "Rush Enterprises 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1012019/000143774926005424/rusha20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Rush Truck Centers primarily sell commercial vehicles manufactured by Peterbilt, International, Hino, Ford, Isuzu, IC Bus, Blue Bird, Blue Arc and Battle Motors."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PCAR",
+      "ticker": "PCAR",
+      "name": "パッカー",
+      "name_en": "PACCAR",
+      "sub": "大型トラック",
+      "sub_en": "Heavy trucks",
+      "sub_short": "トラック",
+      "sub_short_en": "Trucks",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "傘下のPACCAR Leasingと在庫金融契約",
+          "text_en": "Inventory financing agreement with its PACCAR Leasing division",
+          "source": {
+            "label": "Rush Enterprises 10-K(2025年度)",
+            "label_en": "Rush Enterprises 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1012019/000143774926005424/rusha20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "On November 1, 2023, we entered into that certain Second Amended and Restated Inventory Financing and Purchase Money Security Agreement with PACCAR Leasing Company (\"PLC\"), a division of PFC (the \"PLC Agreement\")."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

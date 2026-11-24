@@ -1,0 +1,265 @@
+{
+  "root": {
+    "ticker": "NE",
+    "name": "ノーブル",
+    "cik": 1895262,
+    "name_en": "Noble Corporation"
+  },
+  "rows": [
+    {
+      "ja": "買収・保守契約",
+      "en": "Acquisition & service agreement",
+      "above": true
+    },
+    {
+      "ja": "主要顧客(石油会社)",
+      "en": "Major customers (oil companies)"
+    },
+    {
+      "ja": "リグの売却先",
+      "en": "Rig buyer"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "Diamond",
+      "ticker": "Diamond Offshore",
+      "name": "ダイヤモンド・オフショア",
+      "name_en": "Diamond Offshore Drilling",
+      "sub": "海洋掘削",
+      "sub_en": "Offshore drilling",
+      "sub_short": "海洋掘削",
+      "sub_short_en": "Offshore",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Diamond Offshoreを買収(2024年9月)",
+          "text_en": "Acquired Diamond Offshore (September 2024)",
+          "source": {
+            "label": "Noble 10-K(2025年度)",
+            "label_en": "Noble 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1895262/000189526226000076/ne-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "On September 4, 2024 (the \"Diamond Closing Date\"), Noble completed its acquisition of Diamond."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BKR",
+      "ticker": "BKR",
+      "name": "ベーカー・ヒューズ",
+      "name_en": "Baker Hughes",
+      "sub": "油田サービス",
+      "sub_en": "Oilfield services",
+      "sub_short": "油田",
+      "sub_short_en": "Oilfield",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ドリルシップの噴出防止装置などの保守を10年契約で提供(旧Diamondの契約)",
+          "text_en": "Services blowout preventers on its drillships under a ten-year agreement (from Diamond)",
+          "source": {
+            "label": "Noble 10-K(2025年度)",
+            "label_en": "Noble 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1895262/000189526226000076/ne-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Services Agreement In February 2016, Diamond entered into a ten-year agreement with a subsidiary of Baker Hughes Company (formerly named Baker Hughes, a GE company) to provide services with respect to certain blowout preventer and related well control equipment on our drillships."
+          }
+        }
+      ]
+    },
+    {
+      "id": "XOM",
+      "ticker": "XOM",
+      "name": "エクソンモービル",
+      "name_en": "ExxonMobil",
+      "sub": "石油",
+      "sub_en": "Oil & gas",
+      "sub_short": "石油",
+      "sub_short_en": "Oil & gas",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大の顧客(売上の約19.7%、2025年)",
+          "text_en": "Largest customer (about 19.7% of 2025 revenue)",
+          "source": {
+            "label": "Noble 10-K(2025年度)",
+            "label_en": "Noble 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1895262/000189526226000076/ne-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "ExxonMobil, BP, and Petrobras accounted for approximately 19.7% , 13.2%, and 12.5% respectively, of our consolidated operating revenues for the year ended December 31, 2025"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BP",
+      "ticker": "BP",
+      "name": "BP",
+      "name_en": "BP",
+      "sub": "石油",
+      "sub_en": "Oil & gas",
+      "sub_short": "石油",
+      "sub_short_en": "Oil & gas",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "売上の約13.2%(2025年)",
+          "text_en": "About 13.2% of 2025 revenue",
+          "source": {
+            "label": "Noble 10-K(2025年度)",
+            "label_en": "Noble 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1895262/000189526226000076/ne-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "ExxonMobil, BP, and Petrobras accounted for approximately 19.7% , 13.2%, and 12.5% respectively, of our consolidated operating revenues for the year ended December 31, 2025"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PBR",
+      "ticker": "PBR",
+      "name": "ペトロブラス",
+      "name_en": "Petrobras",
+      "sub": "石油",
+      "sub_en": "Oil & gas",
+      "sub_short": "石油",
+      "sub_short_en": "Oil",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "売上の約12.5%(2025年)",
+          "text_en": "About 12.5% of 2025 revenue",
+          "source": {
+            "label": "Noble 10-K(2025年度)",
+            "label_en": "Noble 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1895262/000189526226000076/ne-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "ExxonMobil, BP, and Petrobras accounted for approximately 19.7% , 13.2%, and 12.5% respectively, of our consolidated operating revenues for the year ended December 31, 2025"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SHEL",
+      "ticker": "SHEL",
+      "name": "シェル",
+      "name_en": "Shell",
+      "sub": "石油",
+      "sub_en": "Oil & gas",
+      "sub_short": "石油",
+      "sub_short_en": "Oil & gas",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "受注残の約19.5%(2025年末)",
+          "text_en": "About 19.5% of contract backlog (end of 2025)",
+          "source": {
+            "label": "Noble 10-K(2025年度)",
+            "label_en": "Noble 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1895262/000189526226000076/ne-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "As of December 31, 2025, ExxonMobil , Shell plc , BP, and TotalEnergies represented approximately 23.7%, 19.5%, 16.2%, and 12.6% of our contract backlog, respectively"
+          }
+        }
+      ]
+    },
+    {
+      "id": "TTE",
+      "ticker": "TTE",
+      "name": "トタルエナジーズ",
+      "name_en": "TotalEnergies",
+      "sub": "石油",
+      "sub_en": "Oil & gas",
+      "sub_short": "石油",
+      "sub_short_en": "Oil major",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "受注残の約12.6%(2025年末)",
+          "text_en": "About 12.6% of contract backlog (end of 2025)",
+          "source": {
+            "label": "Noble 10-K(2025年度)",
+            "label_en": "Noble 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1895262/000189526226000076/ne-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "As of December 31, 2025, ExxonMobil , Shell plc , BP, and TotalEnergies represented approximately 23.7%, 19.5%, 16.2%, and 12.6% of our contract backlog, respectively"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AkerBP",
+      "ticker": "Aker BP",
+      "name": "アーケルBP",
+      "name_en": "Aker BP",
+      "sub": "石油",
+      "sub_en": "Oil & gas",
+      "sub_short": "石油",
+      "sub_short_en": "Oil & gas",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ノルウェー沖の超過酷環境向けジャッキアップ・リグの5年枠組み契約を更新(2022年)",
+          "text_en": "Renewed a five-year framework agreement for harsh-environment jackups offshore Norway (2022)",
+          "source": {
+            "label": "Noble 10-K(2025年度)",
+            "label_en": "Noble 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1895262/000189526226000076/ne-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "In 2022, Noble renewed its five-year Framework Agreement with Aker BP for the provision of ultra-harsh environment jackup rigs, the Noble Integrator and Noble Invincible , for activities in offshore Norway."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BORR",
+      "ticker": "BORR",
+      "name": "ボア・ドリリング",
+      "name_en": "Borr Drilling",
+      "sub": "海洋掘削",
+      "sub_en": "Offshore drilling",
+      "sub_short": "海洋掘削",
+      "sub_short_en": "Offshore",
+      "row": 2,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ジャッキアップ・リグ5基を売却する契約(2025年12月発表)",
+          "text_en": "Agreed to sell five jackup rigs to Borr (announced December 2025)",
+          "source": {
+            "label": "Noble 10-K(2025年度)",
+            "label_en": "Noble 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1895262/000189526226000076/ne-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "In December 2025, we announced that the Company signed definitive agreements to sell six jackup rigs, which includes the sale of five rigs to Borr Drilling Limited"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

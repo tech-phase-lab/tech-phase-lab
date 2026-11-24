@@ -1,0 +1,191 @@
+{
+  "root": {
+    "ticker": "CVLT",
+    "name": "コムヴォールト・システムズ",
+    "cik": 1169561,
+    "name_en": "Commvault Systems"
+  },
+  "rows": [
+    {
+      "ja": "クラウド基盤",
+      "en": "Cloud infrastructure",
+      "above": true
+    },
+    {
+      "ja": "提携・買収",
+      "en": "Partnership & acquisition"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in its 10-K)"
+    }
+  ],
+  "rivals": [
+    "RBRK",
+    "Cohesity",
+    "Veeam"
+  ],
+  "companies": [
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "マイクロソフト",
+      "name_en": "Microsoft",
+      "sub": "ソフトウェア・クラウド",
+      "sub_en": "Software & cloud",
+      "sub_short": "ソフト",
+      "sub_short_en": "Software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Azureなどで一部の製品・サービスを運用",
+          "text_en": "Relies on Microsoft Azure to host or operate some products and services",
+          "source": {
+            "label": "Commvault 10-K(2026年3月期)",
+            "label_en": "Commvault 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1169561/000116956126000017/cvlt-20260331.htm",
+            "level": "official",
+            "date": "2026-05-11",
+            "quote": "We rely on Microsoft's products and services, including Azure, and other third parties to support certain of our products, services, customers, and business operations."
+          }
+        }
+      ]
+    },
+    {
+      "id": "STACKIT",
+      "ticker": "STACKIT",
+      "name": "スタックイット",
+      "name_en": "STACKIT",
+      "sub": "クラウド(欧州)",
+      "sub_en": "Cloud (Europe)",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "欧州の主権クラウド需要に向けた提携を発表",
+          "text_en": "Announced a partnership for European sovereign cloud needs",
+          "source": {
+            "label": "Commvault 8-K(2026年4月、決算発表)",
+            "label_en": "Commvault 8-K (Apr 2026 earnings release)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1169561/000116956126000013/q4fy26pressrelease.htm",
+            "level": "official",
+            "date": "2026-04-28",
+            "quote": "Commvault announced a partnership with STACKIT that is designed to support European customers' sovereign cloud requirements while delivering cyber resilience to enterprise organizations."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Satori",
+      "ticker": "Satori",
+      "name": "サトリ・サイバー",
+      "name_en": "Satori Cyber",
+      "sub": "データ・AIセキュリティ",
+      "sub_en": "Data & AI security",
+      "sub_short": "AI防御",
+      "sub_short_en": "Security",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "データ・AIセキュリティのSatori Cyberを買収(2025年8月)",
+          "text_en": "Acquired data and AI security company Satori Cyber (August 2025)",
+          "source": {
+            "label": "Commvault 10-K(2026年3月期)",
+            "label_en": "Commvault 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1169561/000116956126000017/cvlt-20260331.htm",
+            "level": "official",
+            "date": "2026-05-11",
+            "quote": "On August 28, 2025, we completed the acquisition of 100 % of the shares of Satori Cyber, Ltd."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RBRK",
+      "ticker": "RBRK",
+      "name": "ルーブリック",
+      "name_en": "Rubrik",
+      "sub": "データ保護",
+      "sub_en": "Data protection",
+      "sub_short": "データ",
+      "sub_short_en": "Backup",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合",
+          "text_en": "A primary competitor",
+          "source": {
+            "label": "Commvault 10-K(2026年3月期)",
+            "label_en": "Commvault 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1169561/000116956126000017/cvlt-20260331.htm",
+            "level": "official",
+            "date": "2026-05-11",
+            "quote": "Our primary competitors include Rubrik, Cohesity, and Veeam"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Cohesity",
+      "ticker": "Cohesity",
+      "name": "コヒシティ",
+      "name_en": "Cohesity",
+      "sub": "データ保護",
+      "sub_en": "Data protection",
+      "sub_short": "データ",
+      "sub_short_en": "Backup",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合",
+          "text_en": "A primary competitor",
+          "source": {
+            "label": "Commvault 10-K(2026年3月期)",
+            "label_en": "Commvault 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1169561/000116956126000017/cvlt-20260331.htm",
+            "level": "official",
+            "date": "2026-05-11",
+            "quote": "Our primary competitors include Rubrik, Cohesity, and Veeam"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Veeam",
+      "ticker": "Veeam",
+      "name": "ヴィーム",
+      "name_en": "Veeam",
+      "sub": "データ保護",
+      "sub_en": "Data protection",
+      "sub_short": "データ",
+      "sub_short_en": "Backup",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合",
+          "text_en": "A primary competitor",
+          "source": {
+            "label": "Commvault 10-K(2026年3月期)",
+            "label_en": "Commvault 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1169561/000116956126000017/cvlt-20260331.htm",
+            "level": "official",
+            "date": "2026-05-11",
+            "quote": "Our primary competitors include Rubrik, Cohesity, and Veeam"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
