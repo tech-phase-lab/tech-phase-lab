@@ -1,0 +1,157 @@
+{
+  "root": {
+    "ticker": "AME",
+    "name": "アメテック",
+    "cik": 1037868,
+    "name_en": "AMETEK"
+  },
+  "rows": [
+    {
+      "ja": "ITサービスの仕入れ先(上流)",
+      "en": "IT suppliers (upstream)",
+      "above": true
+    },
+    {
+      "ja": "買収した企業",
+      "en": "Acquired businesses"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "NTSK",
+      "ticker": "NTSK",
+      "name": "ネットスコープ",
+      "name_en": "Netskope",
+      "sub": "クラウドセキュリティ",
+      "sub_en": "Cloud security",
+      "sub_short": "セキュリ",
+      "sub_short_en": "Security",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "NetskopeがS-1で、代表的な顧客の筆頭に挙げる",
+          "text_en": "Netskope lists AMETEK first in a sample of its customers",
+          "source": {
+            "label": "Netskope S-1(2025年)",
+            "label_en": "Netskope S-1 (2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2063196/000095017025113358/ck0002063196-20250908.htm",
+            "level": "official",
+            "date": "2025-09-08",
+            "quote": "The following is a representative sampling of our customers: AMETEK Exclusive Networks Omnicom"
+          }
+        }
+      ]
+    },
+    {
+      "id": "FARO",
+      "ticker": "FARO",
+      "name": "ファロ・テクノロジーズ",
+      "name_en": "FARO Technologies",
+      "sub": "3D計測",
+      "sub_en": "3D measurement",
+      "sub_short": "3D計測",
+      "sub_short_en": "3D scan",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "3D計測のFAROを約10億ドルで買収(2025年7月)",
+          "text_en": "Acquired 3D measurement maker FARO for about $1.0 billion (Jul 2025)",
+          "source": {
+            "label": "AMETEK 10-K(2025年度)",
+            "label_en": "AMETEK 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1037868/000103786826000016/ame-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "the Company completed the acquisition of FARO Technologies, Inc. (\"FARO\") for consideration of $ 1,023.7 million"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Kern",
+      "ticker": "Kern",
+      "name": "ケルン・マイクロテクニク",
+      "name_en": "Kern Microtechnik",
+      "sub": "精密加工機",
+      "sub_en": "Precision machining",
+      "sub_short": "精密加工",
+      "sub_short_en": "CNC",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "精密加工・光学検査のKernを買収(2025年1月)",
+          "text_en": "Acquired precision machining maker Kern (Jan 2025)",
+          "source": {
+            "label": "AMETEK 10-K(2025年度)",
+            "label_en": "AMETEK 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1037868/000103786826000016/ame-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "In January 2025, AMETEK acquired Kern Microtechnik (\"Kern\"), a leading manufacturer of high-precision machining and optical inspection solutions."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Virtek",
+      "ticker": "Virtek",
+      "name": "バーテック・ビジョン",
+      "name_en": "Virtek Vision International",
+      "sub": "レーザー投影",
+      "sub_en": "Laser projection",
+      "sub_short": "レーザー",
+      "sub_short_en": "Lasers",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Virtek Visionを1.2億ドルで買収(2024年)",
+          "text_en": "Acquired Virtek Vision for $117.5 million (2024)",
+          "source": {
+            "label": "AMETEK 10-K(2025年度)",
+            "label_en": "AMETEK 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1037868/000103786826000016/ame-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "In 2024, the Company spent $ 117.5 million in cash, net of cash acquired, to acquire Virtek Vision International"
+          }
+        }
+      ]
+    },
+    {
+      "id": "LKC",
+      "ticker": "LKC",
+      "name": "LKCテクノロジーズ",
+      "name_en": "LKC Technologies",
+      "sub": "眼科診断機器",
+      "sub_en": "Ophthalmic diagnostics",
+      "sub_short": "眼科機器",
+      "sub_short_en": "Eye Dx",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "眼科診断のLKC Technologiesを買収(2026年1月)",
+          "text_en": "Acquired ophthalmic diagnostics maker LKC Technologies (Jan 2026)",
+          "source": {
+            "label": "AMETEK 10-K(2025年度)",
+            "label_en": "AMETEK 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1037868/000103786826000016/ame-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "In January 2026, the Company acquired LKC Technologies, a leading provider of innovative technology to enable effective diagnosis and management of ophthalmic co"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

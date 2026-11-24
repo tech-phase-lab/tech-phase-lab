@@ -1,0 +1,209 @@
+{
+  "root": {
+    "ticker": "PAG",
+    "name": "ペンスキー・オートモーティブ",
+    "cik": 1019849,
+    "name_en": "Penske Automotive Group"
+  },
+  "rows": [
+    {
+      "ja": "車両の仕入れ先(上流)",
+      "en": "Vehicle makers (upstream)",
+      "above": true
+    },
+    {
+      "ja": "出資先・共同出資者",
+      "en": "Holdings & co-owner"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "BMW",
+      "ticker": "BMW",
+      "name": "BMW",
+      "name_en": "BMW",
+      "sub": "高級車",
+      "sub_en": "Luxury cars",
+      "sub_short": "高級車",
+      "sub_short_en": "Luxury",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "BMW/MINIの販売店が自動車販売売上の25%",
+          "text_en": "BMW/MINI dealerships: 25% of dealership revenue",
+          "source": {
+            "label": "Penske Automotive 10-K(2025年度)",
+            "label_en": "Penske Automotive 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1019849/000162828026012830/pag-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "In 2025, revenue generated at our BMW/MINI, Audi/Volkswagen/Porsche/Bentley, Toyota/Lexus, and Mercedes-Benz/Sprinter/smart dealerships represented 25%, 22%, 18%, and 8%, respectively, or 73% in aggregate, of our total automotive dealership revenues."
+          }
+        }
+      ]
+    },
+    {
+      "id": "VWAGY",
+      "ticker": "VWAGY",
+      "name": "フォルクスワーゲン",
+      "name_en": "Volkswagen",
+      "sub": "自動車",
+      "sub_en": "Automaker",
+      "sub_short": "自動車",
+      "sub_short_en": "Autos",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "アウディ・VW・ポルシェ・ベントレーの販売店が22%",
+          "text_en": "Audi/VW/Porsche/Bentley dealerships: 22% of dealership revenue",
+          "source": {
+            "label": "Penske Automotive 10-K(2025年度)",
+            "label_en": "Penske Automotive 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1019849/000162828026012830/pag-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "In 2025, revenue generated at our BMW/MINI, Audi/Volkswagen/Porsche/Bentley, Toyota/Lexus, and Mercedes-Benz/Sprinter/smart dealerships represented 25%, 22%, 18%, and 8%, respectively, or 73% in aggregate, of our total automotive dealership revenues."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TM",
+      "ticker": "TM",
+      "name": "トヨタ自動車",
+      "name_en": "Toyota",
+      "sub": "自動車",
+      "sub_en": "Automaker",
+      "sub_short": "自動車",
+      "sub_short_en": "Cars",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "トヨタ・レクサスの販売店が18%",
+          "text_en": "Toyota/Lexus dealerships: 18% of dealership revenue",
+          "source": {
+            "label": "Penske Automotive 10-K(2025年度)",
+            "label_en": "Penske Automotive 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1019849/000162828026012830/pag-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "In 2025, revenue generated at our BMW/MINI, Audi/Volkswagen/Porsche/Bentley, Toyota/Lexus, and Mercedes-Benz/Sprinter/smart dealerships represented 25%, 22%, 18%, and 8%, respectively, or 73% in aggregate, of our total automotive dealership revenues."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MBG",
+      "ticker": "Mercedes-Benz",
+      "name": "メルセデス・ベンツ",
+      "name_en": "Mercedes-Benz",
+      "sub": "高級車",
+      "sub_en": "Luxury cars",
+      "sub_short": "高級車",
+      "sub_short_en": "Luxury",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "メルセデス・ベンツ等の販売店が8%",
+          "text_en": "Mercedes-Benz/Sprinter/smart dealerships: 8% of dealership revenue",
+          "source": {
+            "label": "Penske Automotive 10-K(2025年度)",
+            "label_en": "Penske Automotive 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1019849/000162828026012830/pag-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "In 2025, revenue generated at our BMW/MINI, Audi/Volkswagen/Porsche/Bentley, Toyota/Lexus, and Mercedes-Benz/Sprinter/smart dealerships represented 25%, 22%, 18%, and 8%, respectively, or 73% in aggregate, of our total automotive dealership revenues."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DTG",
+      "ticker": "Daimler Truck",
+      "name": "ダイムラー・トラック",
+      "name_en": "Daimler Truck",
+      "sub": "トラック",
+      "sub_en": "Trucks",
+      "sub_short": "トラック",
+      "sub_short_en": "Trucks",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "商用トラック販売は主にFreightlinerとWestern Star(ともにダイムラーのブランド)",
+          "text_en": "Its commercial truck dealerships rely mainly on Daimler's Freightliner and Western Star",
+          "source": {
+            "label": "Penske Automotive 10-K(2025年度)",
+            "label_en": "Penske Automotive 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1019849/000162828026012830/pag-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "our retail commercial truck operations rely principally on Freightliner and Western Star trucks (both Daimler brands)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PTL",
+      "ticker": "Penske Truck Leasing",
+      "name": "ペンスキー・トラック・リーシング",
+      "name_en": "Penske Truck Leasing",
+      "sub": "トラックリース",
+      "sub_en": "Truck leasing",
+      "sub_short": "リース",
+      "sub_short_en": "Leasing",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "28.9%を出資(持分法)",
+          "text_en": "Holds a 28.9% stake",
+          "source": {
+            "label": "Penske Automotive 10-K(2025年度)",
+            "label_en": "Penske Automotive 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1019849/000162828026012830/pag-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "We hold a 28.9% ownership interest in Penske Truck Leasing Co., L.P. (\"PTL\"). PTL is owned 41.1% by Penske Corporation, 28.9% by us, and 30.0% by Mitsui & Co., Ltd."
+          }
+        }
+      ]
+    },
+    {
+      "id": "8031",
+      "ticker": "8031",
+      "name": "三井物産",
+      "name_en": "Mitsui & Co.",
+      "sub": "総合商社",
+      "sub_en": "Trading house",
+      "sub_short": "商社",
+      "sub_short_en": "Trading",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Penske Truck Leasingを30.0%保有する共同出資者",
+          "text_en": "Co-owner holding 30.0% of Penske Truck Leasing",
+          "source": {
+            "label": "Penske Automotive 10-K(2025年度)",
+            "label_en": "Penske Automotive 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1019849/000162828026012830/pag-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "We hold a 28.9% ownership interest in Penske Truck Leasing Co., L.P. (\"PTL\"). PTL is owned 41.1% by Penske Corporation, 28.9% by us, and 30.0% by Mitsui & Co., Ltd."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

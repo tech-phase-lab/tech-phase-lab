@@ -1,0 +1,231 @@
+{
+  "root": {
+    "ticker": "AN",
+    "name": "オートネーション",
+    "cik": 350698,
+    "name_en": "AutoNation"
+  },
+  "rows": [
+    {
+      "ja": "新車の仕入れ先(主要8ブランド)",
+      "en": "New-vehicle makers (core brands)",
+      "above": true
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "TM",
+      "ticker": "TM",
+      "name": "トヨタ自動車",
+      "name_en": "Toyota",
+      "sub": "自動車",
+      "sub_en": "Automaker",
+      "sub_short": "自動車",
+      "sub_short_en": "Cars",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "新車販売の約89%を占める主要ブランドのメーカー(レクサス含む)",
+          "text_en": "Maker of core brands that made up about 89% of its new-vehicle sales (incl. Lexus)",
+          "source": {
+            "label": "AutoNation 10-K(2025年度)",
+            "label_en": "AutoNation 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/350698/000162828026007800/an-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "The core brands of new vehicles that we sell, representing approximately 89% of the new vehicles that we sold in 2025, are manufactured by Toyota (including Lexus), Honda, Ford, General Motors, BMW, Mercedes-Benz, Stellantis, and Volkswagen (including Audi and Porsche)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HMC",
+      "ticker": "HMC",
+      "name": "ホンダ",
+      "name_en": "Honda",
+      "sub": "自動車",
+      "sub_en": "Automaker",
+      "sub_short": "自動車",
+      "sub_short_en": "Autos",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "新車販売の約89%を占める主要ブランドのメーカー",
+          "text_en": "Maker of core brands that made up about 89% of its new-vehicle sales",
+          "source": {
+            "label": "AutoNation 10-K(2025年度)",
+            "label_en": "AutoNation 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/350698/000162828026007800/an-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "The core brands of new vehicles that we sell, representing approximately 89% of the new vehicles that we sold in 2025, are manufactured by Toyota (including Lexus), Honda, Ford, General Motors, BMW, Mercedes-Benz, Stellantis, and Volkswagen (including Audi and Porsche)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "F",
+      "ticker": "F",
+      "name": "フォード",
+      "name_en": "Ford",
+      "sub": "自動車",
+      "sub_en": "Automaker",
+      "sub_short": "自動車",
+      "sub_short_en": "Cars",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "新車販売の約89%を占める主要ブランドのメーカー",
+          "text_en": "Maker of core brands that made up about 89% of its new-vehicle sales",
+          "source": {
+            "label": "AutoNation 10-K(2025年度)",
+            "label_en": "AutoNation 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/350698/000162828026007800/an-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "The core brands of new vehicles that we sell, representing approximately 89% of the new vehicles that we sold in 2025, are manufactured by Toyota (including Lexus), Honda, Ford, General Motors, BMW, Mercedes-Benz, Stellantis, and Volkswagen (including Audi and Porsche)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GM",
+      "ticker": "GM",
+      "name": "ゼネラル・モーターズ",
+      "name_en": "General Motors",
+      "sub": "自動車",
+      "sub_en": "Automaker",
+      "sub_short": "自動車",
+      "sub_short_en": "Cars",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "新車販売の約89%を占める主要ブランドのメーカー",
+          "text_en": "Maker of core brands that made up about 89% of its new-vehicle sales",
+          "source": {
+            "label": "AutoNation 10-K(2025年度)",
+            "label_en": "AutoNation 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/350698/000162828026007800/an-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "The core brands of new vehicles that we sell, representing approximately 89% of the new vehicles that we sold in 2025, are manufactured by Toyota (including Lexus), Honda, Ford, General Motors, BMW, Mercedes-Benz, Stellantis, and Volkswagen (including Audi and Porsche)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BMW",
+      "ticker": "BMW",
+      "name": "BMW",
+      "name_en": "BMW",
+      "sub": "高級車",
+      "sub_en": "Luxury cars",
+      "sub_short": "高級車",
+      "sub_short_en": "Luxury",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "新車販売の約89%を占める主要ブランドのメーカー",
+          "text_en": "Maker of core brands that made up about 89% of its new-vehicle sales",
+          "source": {
+            "label": "AutoNation 10-K(2025年度)",
+            "label_en": "AutoNation 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/350698/000162828026007800/an-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "The core brands of new vehicles that we sell, representing approximately 89% of the new vehicles that we sold in 2025, are manufactured by Toyota (including Lexus), Honda, Ford, General Motors, BMW, Mercedes-Benz, Stellantis, and Volkswagen (including Audi and Porsche)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MBG",
+      "ticker": "Mercedes-Benz",
+      "name": "メルセデス・ベンツ",
+      "name_en": "Mercedes-Benz",
+      "sub": "高級車",
+      "sub_en": "Luxury cars",
+      "sub_short": "高級車",
+      "sub_short_en": "Luxury",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "新車販売の約89%を占める主要ブランドのメーカー",
+          "text_en": "Maker of core brands that made up about 89% of its new-vehicle sales",
+          "source": {
+            "label": "AutoNation 10-K(2025年度)",
+            "label_en": "AutoNation 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/350698/000162828026007800/an-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "The core brands of new vehicles that we sell, representing approximately 89% of the new vehicles that we sold in 2025, are manufactured by Toyota (including Lexus), Honda, Ford, General Motors, BMW, Mercedes-Benz, Stellantis, and Volkswagen (including Audi and Porsche)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "STLA",
+      "ticker": "STLA",
+      "name": "ステランティス",
+      "name_en": "Stellantis",
+      "sub": "自動車",
+      "sub_en": "Automaker",
+      "sub_short": "自動車",
+      "sub_short_en": "Cars",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "新車販売の約89%を占める主要ブランドのメーカー",
+          "text_en": "Maker of core brands that made up about 89% of its new-vehicle sales",
+          "source": {
+            "label": "AutoNation 10-K(2025年度)",
+            "label_en": "AutoNation 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/350698/000162828026007800/an-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "The core brands of new vehicles that we sell, representing approximately 89% of the new vehicles that we sold in 2025, are manufactured by Toyota (including Lexus), Honda, Ford, General Motors, BMW, Mercedes-Benz, Stellantis, and Volkswagen (including Audi and Porsche)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "VWAGY",
+      "ticker": "VWAGY",
+      "name": "フォルクスワーゲン",
+      "name_en": "Volkswagen",
+      "sub": "自動車",
+      "sub_en": "Automaker",
+      "sub_short": "自動車",
+      "sub_short_en": "Autos",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "新車販売の約89%を占める主要ブランドのメーカー(アウディ・ポルシェ含む)",
+          "text_en": "Maker of core brands that made up about 89% of its new-vehicle sales (incl. Audi and Porsche)",
+          "source": {
+            "label": "AutoNation 10-K(2025年度)",
+            "label_en": "AutoNation 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/350698/000162828026007800/an-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "The core brands of new vehicles that we sell, representing approximately 89% of the new vehicles that we sold in 2025, are manufactured by Toyota (including Lexus), Honda, Ford, General Motors, BMW, Mercedes-Benz, Stellantis, and Volkswagen (including Audi and Porsche)."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
