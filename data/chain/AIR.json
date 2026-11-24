@@ -1,0 +1,198 @@
+{
+  "root": {
+    "ticker": "AIR",
+    "name": "AAR",
+    "cik": 1750,
+    "name_en": "AAR Corp"
+  },
+  "rows": [
+    {
+      "ja": "買収・事業売却",
+      "en": "Acquisitions & divestiture"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "KTOS",
+    "TATT",
+    "ASLE"
+  ],
+  "companies": [
+    {
+      "id": "HAECO",
+      "ticker": "HAECO Americas",
+      "name": "HAECOアメリカズ",
+      "name_en": "HAECO Americas",
+      "sub": "航空機整備",
+      "sub_en": "Aircraft maintenance",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "北米2位の重整備会社HAECO Americasを7,800万ドルで買収(2025年11月)",
+          "text_en": "Acquired HAECO Americas, North America's No. 2 heavy maintenance provider, for $78.0 million (November 2025)",
+          "source": {
+            "label": "AAR 10-K(2026年5月期)",
+            "label_en": "AAR 10-K (FY ended May 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1750/000110465926085459/air-20260531x10k.htm",
+            "level": "official",
+            "date": "2026-07-22",
+            "quote": "In November 2025, we acquired HAECO Americas for $78.0 million."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ART",
+      "ticker": "ART",
+      "name": "エアクラフト・リコンフィグ・テクノロジーズ",
+      "name_en": "Aircraft Reconfig Technologies",
+      "sub": "機内改修",
+      "sub_en": "Cabin reconfiguration",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ARTを3,600万ドルで買収(2026年4月)",
+          "text_en": "Acquired ART for $36.0 million (April 2026)",
+          "source": {
+            "label": "AAR 10-K(2026年5月期)",
+            "label_en": "AAR 10-K (FY ended May 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1750/000110465926085459/air-20260531x10k.htm",
+            "level": "official",
+            "date": "2026-07-22",
+            "quote": "In April 2026, we acquired Aircraft Reconfig Technologies (\"ART\") for $36.0 million."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Aerostrat",
+      "ticker": "Aerostrat",
+      "name": "エアロストラット",
+      "name_en": "Aerostrat",
+      "sub": "航空ソフトウェア",
+      "sub_en": "Aviation software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Aerostratを買収(2025年8月)",
+          "text_en": "Acquired Aerostrat (August 2025)",
+          "source": {
+            "label": "AAR 10-K(2026年5月期)",
+            "label_en": "AAR 10-K (FY ended May 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1750/000110465926085459/air-20260531x10k.htm",
+            "level": "official",
+            "date": "2026-07-22",
+            "quote": "In August 2025, we acquired Aerostrat Corp."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GATelesis",
+      "ticker": "GA Telesis",
+      "name": "GAテレシス",
+      "name_en": "GA Telesis",
+      "sub": "航空機部品",
+      "sub_en": "Aircraft parts",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "降着装置の整備事業を4,800万ドルで売却(2025年5月期)",
+          "text_en": "Sold its landing gear overhaul business for $48 million (fiscal 2025)",
+          "source": {
+            "label": "AAR 10-K(2026年5月期)",
+            "label_en": "AAR 10-K (FY ended May 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1750/000110465926085459/air-20260531x10k.htm",
+            "level": "official",
+            "date": "2026-07-22",
+            "quote": "In fiscal 2025, we sold our Landing Gear Overhaul (\"LGO\") business to GA Telesis for net proceeds of $48 million"
+          }
+        }
+      ]
+    },
+    {
+      "id": "KTOS",
+      "ticker": "KTOS",
+      "name": "クレイトス・ディフェンス",
+      "name_en": "Kratos Defense",
+      "sub": "防衛技術",
+      "sub_en": "Defense technology",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Kratosが10-Kで、第2層の競合の一社として挙げる",
+          "text_en": "Kratos names AAR among tier-two competitors",
+          "source": {
+            "label": "Kratos 10-K(2024年度)",
+            "label_en": "Kratos 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1069258/000106925825000008/ktos-20241229.htm",
+            "level": "official",
+            "date": "2025-02-26",
+            "quote": "Tier two competitors include smaller government contractors such as Mercury Systems, Qinetiq, Cobham, CACI, Peraton, Linquest (now owned by KBR), Viasat and AAR Corp."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TATT",
+      "ticker": "TATT",
+      "name": "TATテクノロジーズ",
+      "name_en": "TAT Technologies",
+      "sub": "航空機熱交換器",
+      "sub_en": "Aircraft heat transfer",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "TATが年次報告で、熱交換器整備の主な競合として挙げる",
+          "text_en": "TAT names AAR among major heat transfer MRO competitors",
+          "source": {
+            "label": "TAT Technologies 20-F(2025年度)",
+            "label_en": "TAT Technologies 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/808439/000117891326001363/zk2634525.htm",
+            "level": "official",
+            "date": "2026-03-18",
+            "quote": "For heat transfer MRO services, TAT's major competitors are AAR Corp, Honeywell"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ASLE",
+      "ticker": "ASLE",
+      "name": "エアセール",
+      "name_en": "AerSale",
+      "sub": "中古航空機部品",
+      "sub_en": "Used aircraft parts",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "AerSaleが10-Kで、資産管理部門の競合の筆頭に挙げる",
+          "text_en": "AerSale lists AAR first among asset management competitors",
+          "source": {
+            "label": "AerSale 10-K(2024年度)",
+            "label_en": "AerSale 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1754170/000155837025002624/asle-20241231x10k.htm",
+            "level": "official",
+            "date": "2025-03-11",
+            "quote": "Our Asset Management Solutions segment competitors include AAR Corp., AerCap, Delta Air Lines, Inc., GA Telesis, LLC"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
