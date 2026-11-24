@@ -32,6 +32,15 @@ export default function ToolShell({ identityReady=true, home=false, children }: 
  const [normalLocale,setNormalLocale]=useState<DiagnosisLocale>(()=>recall<DiagnosisLocale>("locale")??"ja"), [access,setAccess]=useState<Access>(()=>recall("entitlement")?"allowed":"loading"), [attempt,setAttempt]=useState(0);
  const chooseLocale=(next:DiagnosisLocale)=>{remember("locale",next);setNormalLocale(next);};
  const locale=review?.locale ?? normalLocale, setLocale=review?.setLocale ?? chooseLocale;
+ // A link that names the language (?lang=en / ?lang=ja) opens the page in it and keeps it, like tapping EN/JA (production QA, Nov 24).
+ // Declared before the preferences read below, so the saved preference does not override it.
+ useEffect(()=>{
+  if(reviewing) return;
+  const asked=new URLSearchParams(window.location.search).get("lang");
+  if(asked==="en" || asked==="ja") { remember("locale",asked); setNormalLocale(asked); }
+ },[reviewing]);
+ // The page language follows the language shown.
+ useEffect(()=>{ document.documentElement.lang=locale; },[locale]);
  useEffect(()=>{
   if(!identityReady || reviewing) return;
   const controller=new AbortController();

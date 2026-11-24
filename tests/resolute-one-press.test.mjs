@@ -227,3 +227,38 @@ test('an order stays payable for 60 minutes: time to sign up to PayPal and regis
   const created = await s.engine.create('user_member5', { kind: 'initial', language: 'ja', requestKey: randomUUID(), consentAt: CONSENT });
   assert.equal(Date.parse(created.expiresAt) - NOW, 60 * 60000);
 });
+
+test('PayPal refuses to save the payment method: the member still buys in one press, without automatic renewal', async t => {
+  const s = await setup(t), user = 'user_member6', create = s.paypal.create, lines = [], original = console.error;
+  s.paypal.create = async order => {
+    if (order.auto_renewal_offered) { const e = new PaymentError('PAYPAL_UNAVAILABLE', 503); e.detail = { stage: 'POST /v2/checkout/orders', status: 422, name: 'UNPROCESSABLE_ENTITY', issue: 'PAYEE_NOT_ENABLED_FOR_VAULT' }; throw e; }
+    return create(order);
+  };
+  console.error = line => lines.push(line);
+  let created;
+  try { created = await s.engine.create(user, { kind: 'initial', language: 'ja', requestKey: randomUUID(), consentAt: CONSENT }); }
+  finally { console.error = original; }
+  assert.equal(created.autoRenewal, undefined); assert.ok(created.approvalUrl);
+  assert.equal((await s.store.get(created.orderId)).auto_renewal_offered, false);
+  assert.deepEqual(JSON.parse(lines[0]), { event: 'RESOLUTE_AUTO_RENEWAL_FALLBACK', paypal: { stage: 'POST /v2/checkout/orders', status: 422, name: 'UNPROCESSABLE_ENTITY', issue: 'PAYEE_NOT_ENABLED_FOR_VAULT' } });
+  assert.ok((await s.store.auditList()).some(a => a.code === 'AUTO_RENEWAL_REFUSED_BY_PAYPAL'));
+  s.paypal.approve(created.paypalOrderId);
+  assert.equal((await s.engine.capture(user, { orderId: created.orderId })).state, 'paid');
+  assert.notEqual((await s.renewals.view(user)).state, 'active');
+  // Other failures (PayPal down, auth) are not retried without saving.
+  const t2 = await setup(t);
+  t2.paypal.create = async () => { const e = new PaymentError('PAYPAL_UNAVAILABLE', 503); e.detail = { stage: 'POST /v2/checkout/orders', status: 500 }; throw e; };
+  console.error = () => {};
+  try { await assert.rejects(t2.engine.create('user_member7', { kind: 'initial', language: 'ja', requestKey: randomUUID(), consentAt: CONSENT }), e => e.code === 'PAYPAL_UNAVAILABLE'); }
+  finally { console.error = original; }
+});
+
+test('the saving request and the plain request use different PayPal-Request-Ids', async () => {
+  const calls = [], config = { base: 'https://api-m.paypal.com', clientId: 'id', secret: 'secret', merchantId: MID, webhookId: 'WH', returnUrl: 'https://techphase.app/resolute/checkout' };
+  const api = createPaypal(config, async (url, options) => { calls.push(options); return String(url).endsWith('/token') ? Response.json({ access_token: 'token', expires_in: 300 }) : Response.json({ id: 'ORDER123456' }); });
+  const order = { id: randomUUID(), quote: { kind: 'initial', currency: 'JPY', value: '7980', language: 'ja', sku: 'resolute_v1:initial' } };
+  await api.create({ ...order, auto_renewal_offered: true }); await api.create({ ...order, auto_renewal_offered: false });
+  const [vault, plain] = calls.filter(c => c.headers['PayPal-Request-Id']);
+  assert.equal(vault.headers['PayPal-Request-Id'], `${order.id}:vault`); assert.ok(JSON.parse(vault.body).payment_source.paypal.attributes.vault);
+  assert.equal(plain.headers['PayPal-Request-Id'], order.id); assert.equal(JSON.parse(plain.body).payment_source.paypal.attributes, undefined);
+});

@@ -106,13 +106,15 @@ export function createPaypal(config, fetcher = fetch) {
       // https://developer.paypal.com/docs/checkout/save-payment-methods/during-purchase/orders-api/paypal/
       const vault = order.auto_renewal_offered === true && q.kind === 'initial'
         ? { attributes: { vault: { store_in_vault: 'ON_SUCCESS', usage_type: 'MERCHANT', customer_type: 'CONSUMER' } } } : {};
+      // A separate PayPal-Request-Id for the saving request, so the same order can be sent again without it.
+      const key = order.auto_renewal_offered === true ? `${order.id}:vault` : order.id;
       return call('/v2/checkout/orders', 'POST', { intent: 'CAPTURE', payment_source: { paypal: { ...vault, experience_context: {
         // Opens PayPal on its 「銀行｜カード」 page (card/bank without a PayPal login) instead of the login page.
         // Checked in Sandbox with a JP buyer (owner, Nov 2026).
         shipping_preference: 'NO_SHIPPING', user_action: 'CONTINUE', landing_page: 'GUEST_CHECKOUT',
         return_url: `${returnUrl}?order=${order.id}&lang=${q.language}${order.guest_id ? "&guest=1" : ""}`,
         cancel_url: `${returnUrl}?order=${order.id}&lang=${q.language}${order.guest_id ? "&guest=1" : ""}&cancel=1`
-      } } }, purchase_units: [unit(order, q, amount)] }, order.id);
+      } } }, purchase_units: [unit(order, q, amount)] }, key);
     },
     // Merchant-initiated renewal with the saved PayPal (payer not present). PayPal-Request-Id is the order's own
     // capture key, so a retry after a lost answer returns the same PayPal order instead of charging twice.

@@ -14,6 +14,12 @@ export function savedPaypal(...sources) {
   }
   return null;
 }
+// A definite PayPal refusal of the order request (4xx, including 403 "not permitted"; not 401, timeouts, in-progress or rate limits).
+const savingRefused = e => e instanceof PaymentError && e.code === 'PAYPAL_UNAVAILABLE' && e.detail?.stage === 'POST /v2/checkout/orders' &&
+  Number.isInteger(e.detail.status) && e.detail.status >= 400 && e.detail.status < 500 && ![401, 408, 409, 429].includes(e.detail.status);
+function logRenewalFallback(e) {
+  try { console.error(JSON.stringify({ event:'RESOLUTE_AUTO_RENEWAL_FALLBACK', paypal:e.detail })); } catch { /* logging never changes the answer */ }
+}
 // renewals/autoRenewal: RESOLUTE automatic renewal (renewal-store.mjs). autoRenewal() is the server flag
 // RESOLUTE_AUTO_RENEWAL_ENABLED; while it is off no order asks PayPal to save a payment method. Stopping a plan
 // that already exists stays possible whatever the flag says.
@@ -63,7 +69,17 @@ export function paymentEngine({ store, paypal, merchantId, getUser, now = Date.n
       if(order.state === 'creating') {
         requireSales();
         if(renewals && autoRenewal() && !isGuest(userId) && order.quote.kind === 'initial') order=await renewals.offer(order);
-        const remote=await paypal.create(order);
+        let remote;
+        try { remote=await paypal.create(order); }
+        catch(e) {
+          // PayPal refused the order because of the saving request (e.g. saving not enabled on the live account): the
+          // purchase still goes ahead without automatic renewal (the member is told before the renewal date instead).
+          if(!(order.auto_renewal_offered === true && renewals?.withdraw && savingRefused(e))) throw e;
+          logRenewalFallback(e);
+          try { await store.flag(order,'AUTO_RENEWAL_REFUSED_BY_PAYPAL'); } catch { /* the purchase goes on */ }
+          order=await renewals.withdraw(order);
+          remote=await paypal.create(order);
+        }
         if(!/^[A-Z0-9]{8,32}$/.test(remote.id ?? '')) reject('PAYPAL_UNAVAILABLE',503);
         order=await store.bind(order,remote.id);
         // The approval link from PayPal's own create answer: no second PayPal round trip that could fail the purchase.

@@ -28,6 +28,12 @@ export function renewalStore(pool, store, { environment = 'live' } = {}) {
         AND quote->>'kind'='initial' ${environment === 'live' ? 'AND guest_id IS NULL ' : ''}AND user_id ~ '^user_' RETURNING *`, [order.id]);
       return rows.length ? iso(rows[0]) : order;
     },
+    /** PayPal refused to save the payment method for this order (it is still 'creating'): sell it without renewal. */
+    async withdraw(order) {
+      const { rows } = await pool.query(`UPDATE ${S}.orders SET auto_renewal_offered=false WHERE id=$1 AND state='creating' RETURNING *`, [order.id]);
+      if (!rows.length) reject('PAYMENT_MISMATCH');
+      return iso(rows[0]);
+    },
     /** The member pressed the agree button on a screen that showed the auto-renewal line. */
     async consent(order, now) {
       await pool.query(`UPDATE ${S}.orders SET auto_renewal_consent_at=$2 WHERE id=$1 AND auto_renewal_offered
