@@ -1,0 +1,260 @@
+{
+  "root": {
+    "ticker": "SWK",
+    "name": "スタンレー・ブラック・アンド・デッカー",
+    "cik": 93556,
+    "name_en": "Stanley Black & Decker, Inc."
+  },
+  "rows": [
+    {
+      "ja": "主要顧客・仕入先",
+      "en": "Major customers & suppliers"
+    },
+    {
+      "ja": "取引・提携先",
+      "en": "Deals & partners"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "HD",
+      "ticker": "HD",
+      "name": "ホーム・デポ",
+      "name_en": "The Home Depot",
+      "sub": "住宅用品小売",
+      "sub_en": "Home improvement retail",
+      "sub_short": "住宅用品",
+      "sub_short_en": "Home",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大の販売先(2025年の売上の約15%)",
+          "text_en": "Largest customer (about 15% of 2025 net sales)",
+          "source": {
+            "label": "Stanley Black & Decker 10-K(2025年度)",
+            "label_en": "Stanley Black & Decker 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/93556/000009355626000009/swk-20260103.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "The Home Depot accounted for approximately 15% and 14% of the Company's consolidated net sales in 2025 and 2024, respectively, while Lowe's accounted for approximately 12% and 14% of the Company's consolidated net sales in 2025 and 2024, respectively."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LOW",
+      "ticker": "LOW",
+      "name": "ロウズ",
+      "name_en": "Lowe's",
+      "sub": "住宅用品小売",
+      "sub_en": "Home improvement retail",
+      "sub_short": "小売",
+      "sub_short_en": "Retail",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "主要な販売先(2025年の売上の約12%)",
+          "text_en": "Major customer (about 12% of 2025 net sales)",
+          "source": {
+            "label": "Stanley Black & Decker 10-K(2025年度)",
+            "label_en": "Stanley Black & Decker 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/93556/000009355626000009/swk-20260103.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "The Home Depot accounted for approximately 15% and 14% of the Company's consolidated net sales in 2025 and 2024, respectively, while Lowe's accounted for approximately 12% and 14% of the Company's consolidated net sales in 2025 and 2024, respectively."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AOSL",
+      "ticker": "AOSL",
+      "name": "アルファ・アンド・オメガ・セミコンダクター",
+      "name_en": "Alpha and Omega Semiconductor",
+      "sub": "パワー半導体",
+      "sub_en": "Power semiconductors",
+      "sub_short": "半導体",
+      "sub_short_en": "Power ICs",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "パワー半導体を供給(同社が主要OEM顧客として明記)",
+          "text_en": "Supplies power chips (names SWK as a key OEM customer)",
+          "source": {
+            "label": "Alpha and Omega Semiconductor 10-K(2026年6月期)",
+            "label_en": "Alpha and Omega Semiconductor 10-K (FY ended Jun 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1387467/000162828026059261/aosl-20260630.htm",
+            "level": "official",
+            "date": "2026-08-27",
+            "quote": "Distributors and customers We have established direct relationships with key OEMs, including Dell Inc., Hewlett-Packard Company, Samsung Group, and Stanley Black & Decker, Inc., most of whom we serve through our distributors and ODMs."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HWM",
+      "ticker": "HWM",
+      "name": "ハウメット・エアロスペース",
+      "name_en": "Howmet Aerospace",
+      "sub": "航空部品",
+      "sub_en": "Aerospace parts",
+      "sub_short": "航空部品",
+      "sub_short_en": "Aircraft",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "航空機向けファスナー事業CAMを約18億ドルで売却予定",
+          "text_en": "Agreed to sell its CAM aerospace fastener business for about $1.8 billion",
+          "source": {
+            "label": "Howmet Aerospace 10-K(2025年度)",
+            "label_en": "Howmet Aerospace 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/4281/000000428126000012/hwm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "(\"Stanley Black & Decker\") to acquire Consolidated Aerospace Manufacturing, LLC (\"CAM\"), a wholly owned subsidiary of Stanley Black & Decker, for a cash purchase price of approximately $1.8 billion (the \"Proposed CAM Acquisition\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TransformHoldco",
+      "ticker": "Transform Holdco",
+      "name": "トランスフォーム・ホールドコ(シアーズ)",
+      "name_en": "Transform Holdco (Sears)",
+      "sub": "小売",
+      "sub_en": "Retail",
+      "sub_short": "小売",
+      "sub_short_en": "Retail",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "「クラフツマン」ブランド取得の対価として売上連動の支払い",
+          "text_en": "Pays sales-linked consideration for the Craftsman brand acquisition",
+          "source": {
+            "label": "Stanley Black & Decker 10-K(2025年度)",
+            "label_en": "Stanley Black & Decker 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/93556/000009355626000009/swk-20260103.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "As part of the Craftsman® brand acquisition in March 2017, the Company recorded a contingent consideration liability representing the Company's obligation to make future payments to Transform Holdco, LLC, which operates Sears and Kmart retail locations, of between 2.5 % and 3.5 % on sales of Craftsman products in new Stanley Black & Decker, Inc. channels through March 2032."
+          }
+        }
+      ]
+    },
+    {
+      "id": "McLaren",
+      "ticker": "McLaren F1 Team",
+      "name": "マクラーレンF1チーム",
+      "name_en": "McLaren F1 Team",
+      "sub": "モータースポーツ",
+      "sub_en": "Motorsport",
+      "sub_short": "F1",
+      "sub_short_en": "Racing",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ブランド発信のスポーツ提携先",
+          "text_en": "Sports partner for brand marketing",
+          "source": {
+            "label": "Stanley Black & Decker 10-K(2025年度)",
+            "label_en": "Stanley Black & Decker 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/93556/000009355626000009/swk-20260103.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "The Company is proud to partner with globally-recognized organizations including the McLaren F1 Team, English Premier League, PGA Tour, and NASCAR."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PremierLeague",
+      "ticker": "Premier League",
+      "name": "イングランド・プレミアリーグ",
+      "name_en": "English Premier League",
+      "sub": "サッカー",
+      "sub_en": "Football",
+      "sub_short": "サッカー",
+      "sub_short_en": "Football",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ブランド発信のスポーツ提携先",
+          "text_en": "Sports partner for brand marketing",
+          "source": {
+            "label": "Stanley Black & Decker 10-K(2025年度)",
+            "label_en": "Stanley Black & Decker 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/93556/000009355626000009/swk-20260103.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "The Company is proud to partner with globally-recognized organizations including the McLaren F1 Team, English Premier League, PGA Tour, and NASCAR."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PGATour",
+      "ticker": "PGA Tour",
+      "name": "PGAツアー",
+      "name_en": "PGA Tour",
+      "sub": "ゴルフ",
+      "sub_en": "Golf",
+      "sub_short": "ゴルフ",
+      "sub_short_en": "Golf",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ブランド発信のスポーツ提携先",
+          "text_en": "Sports partner for brand marketing",
+          "source": {
+            "label": "Stanley Black & Decker 10-K(2025年度)",
+            "label_en": "Stanley Black & Decker 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/93556/000009355626000009/swk-20260103.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "The Company is proud to partner with globally-recognized organizations including the McLaren F1 Team, English Premier League, PGA Tour, and NASCAR."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NASCAR",
+      "ticker": "NASCAR",
+      "name": "NASCAR",
+      "name_en": "NASCAR",
+      "sub": "モータースポーツ",
+      "sub_en": "Motorsport",
+      "sub_short": "レース",
+      "sub_short_en": "Racing",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ブランド発信のスポーツ提携先",
+          "text_en": "Sports partner for brand marketing",
+          "source": {
+            "label": "Stanley Black & Decker 10-K(2025年度)",
+            "label_en": "Stanley Black & Decker 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/93556/000009355626000009/swk-20260103.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "The Company is proud to partner with globally-recognized organizations including the McLaren F1 Team, English Premier League, PGA Tour, and NASCAR."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
