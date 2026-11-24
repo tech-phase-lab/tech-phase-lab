@@ -2,6 +2,7 @@ import { randomUUID } from 'node:crypto';
 import { addYear, reject } from './policy.mjs';
 import { sandboxAccess } from './access.mjs';
 import { isGuest } from './guest.mjs';
+export const ORDER_MINUTES = 60;
 const iso = row => row && Object.fromEntries(Object.entries(row).map(([k,v]) => [k,v instanceof Date ? v.toISOString() : v]));
 export function paymentStore(pool, { environment = 'sandbox' } = {}) {
   if (!['sandbox', 'live'].includes(environment)) throw Error('Invalid payment ledger');
@@ -57,8 +58,9 @@ export function paymentStore(pool, { environment = 'sandbox' } = {}) {
         const pending = await db.query(`SELECT count(*)::int AS n FROM ${S}.orders WHERE user_id=$1 AND state IN ('creating','created','capturing') AND expires_at>$2`, [user,new Date(now)]);
         if (pending.rows[0].n >= 3) reject('TOO_MANY_ORDERS', 429);
         const q = await makeQuote(await rights(db,user,now));
+        // 60 minutes (owner, Nov 24): a first-time buyer may sign up to PayPal and register a bank account before paying.
         const { rows } = await db.query(`INSERT INTO ${S}.orders(id,user_id,request_key,capture_key,quote,state,created_at,expires_at)
-          VALUES ($1,$2,$3,$4,$5,'creating',$6,$7) RETURNING *`, [randomUUID(),user,key,randomUUID(),q,new Date(now),new Date(now+15*60000)]);
+          VALUES ($1,$2,$3,$4,$5,'creating',$6,$7) RETURNING *`, [randomUUID(),user,key,randomUUID(),q,new Date(now),new Date(now+ORDER_MINUTES*60000)]);
         if (isGuest(user)) {
           if (environment !== 'live') reject('AUTH_REQUIRED',401);
           await db.query(`UPDATE ${S}.orders SET guest_id=$2 WHERE id=$1`,[rows[0].id,user]);

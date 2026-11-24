@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { redirect } from "next/navigation";
 import Landing from "./landing";
 
 // Public, no sign-in: the address the video descriptions point to. Kept out of search until sales open.
@@ -9,4 +10,8 @@ export const metadata: Metadata = {
  description: "相場が荒れた日に立ち戻る場所を、あなたのスマホに置いておくキットです。",
  robots: { index: false, follow: false },
 };
-export default function Page() { return <Landing />; }
+// ?lang=en (links that carry the display language) opens the English page (production QA, Nov 24).
+export default async function Page({ searchParams }: { searchParams: Promise<Record<string, string | string[] | undefined>> }) {
+ if ((await searchParams).lang === "en") redirect("/resolute/lp/en");
+ return <Landing />;
+}
