@@ -1,0 +1,229 @@
+{
+  "root": {
+    "ticker": "COKE",
+    "name": "コカ・コーラ・コンソリデーテッド",
+    "cik": 317540,
+    "name_en": "Coca-Cola Consolidated"
+  },
+  "rows": [
+    {
+      "ja": "飲料メーカー(製品の供給元)",
+      "en": "Beverage brand owners (suppliers)",
+      "above": true
+    },
+    {
+      "ja": "調達・出資",
+      "en": "Procurement & stakes"
+    },
+    {
+      "ja": "主要顧客",
+      "en": "Major customers"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in its 10-K)"
+    }
+  ],
+  "rivals": [
+    "PEP"
+  ],
+  "companies": [
+    {
+      "id": "KO",
+      "ticker": "KO",
+      "name": "ザ コカ・コーラ カンパニー",
+      "name_en": "The Coca-Cola Company",
+      "sub": "飲料",
+      "sub_en": "Beverages",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "販売数量の約85%がコカ・コーラ社の製品",
+          "text_en": "About 85% of bottle/can volume is Coca-Cola Company products",
+          "source": {
+            "label": "Coca-Cola Consolidated 10-K(2025年度)",
+            "label_en": "Coca-Cola Consolidated 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/317540/000162828026009057/coke-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Approximately 85% of our total bottle/can sales volume to retail customers consists of products of The Coca‐Cola Company"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MNST",
+      "ticker": "MNST",
+      "name": "モンスター・ビバレッジ",
+      "name_en": "Monster Beverage",
+      "sub": "エナジードリンク",
+      "sub_en": "Energy drinks",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "販売代理店契約でMonster製品を流通",
+          "text_en": "Distributes Monster products under distribution agreements",
+          "source": {
+            "label": "Coca-Cola Consolidated 10-K(2025年度)",
+            "label_en": "Coca-Cola Consolidated 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/317540/000162828026009057/coke-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Our distribution agreements with Monster Energy grant us the rights to distribute certain products offered, packaged and/or marketed by Monster Energy."
+          }
+        }
+      ]
+    },
+    {
+      "id": "KDP",
+      "ticker": "KDP",
+      "name": "キューリグ・ドクターペッパー",
+      "name_en": "Keurig Dr Pepper",
+      "sub": "飲料",
+      "sub_en": "Beverages",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Dr Pepperブランドを流通・一部製造",
+          "text_en": "Distributes, and in part makes, Dr Pepper brands",
+          "source": {
+            "label": "Coca-Cola Consolidated 10-K(2025年度)",
+            "label_en": "Coca-Cola Consolidated 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/317540/000162828026009057/coke-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Our distribution agreements with Dr Pepper permit us to distribute Dr Pepper beverage brands, as well as certain post-mix products of Dr Pepper."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CCBSS",
+      "ticker": "CCBSS",
+      "name": "コカ・コーラ・ボトラーズ・セールス&サービス",
+      "name_en": "Coca-Cola Bottlers' Sales & Services",
+      "sub": "共同調達",
+      "sub_en": "Joint procurement",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "濃縮液以外の原材料の大半の調達を交渉",
+          "text_en": "Negotiates procurement of most raw materials other than concentrate",
+          "source": {
+            "label": "Coca-Cola Consolidated 10-K(2025年度)",
+            "label_en": "Coca-Cola Consolidated 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/317540/000162828026009057/coke-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "CCBSS negotiates the procurement for the majority of our raw materials, excluding concentrate"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SouthAtlanticCanners",
+      "ticker": "South Atlantic Canners",
+      "name": "サウス・アトランティック・キャナーズ",
+      "name_en": "South Atlantic Canners",
+      "sub": "缶詰め製造",
+      "sub_en": "Canning",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "株主として出資",
+          "text_en": "A shareholder",
+          "source": {
+            "label": "Coca-Cola Consolidated 10-K(2025年度)",
+            "label_en": "Coca-Cola Consolidated 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/317540/000162828026009057/coke-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "The Company is also a shareholder of South Atlantic Canners, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WMT",
+      "ticker": "WMT",
+      "name": "ウォルマート",
+      "name_en": "Walmart",
+      "sub": "小売",
+      "sub_en": "Retail",
+      "row": 2,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大の顧客(売上の17%)",
+          "text_en": "Largest customer (17% of net sales)",
+          "source": {
+            "label": "Coca-Cola Consolidated 10-K(2025年度)",
+            "label_en": "Coca-Cola Consolidated 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/317540/000162828026009057/coke-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Approximate percent of the Company's total net sales: Walmart Inc. (1) 17 % 17 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "KR",
+      "ticker": "KR",
+      "name": "クローガー",
+      "name_en": "Kroger",
+      "sub": "スーパー",
+      "sub_en": "Grocery",
+      "row": 2,
+      "relations": [
+        {
+          "type": "down",
+          "text": "主要顧客(売上の12%)",
+          "text_en": "Major customer (12% of net sales)",
+          "source": {
+            "label": "Coca-Cola Consolidated 10-K(2025年度)",
+            "label_en": "Coca-Cola Consolidated 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/317540/000162828026009057/coke-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "The Kroger Co. (2) 12 % 12 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PEP",
+      "ticker": "PEP",
+      "name": "ペプシコ",
+      "name_en": "PepsiCo",
+      "sub": "飲料・食品",
+      "sub_en": "Beverages & snacks",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "PepsiCo製品の各地のボトラーが主な競合",
+          "text_en": "Local bottlers of PepsiCo products are principal competitors",
+          "source": {
+            "label": "Coca-Cola Consolidated 10-K(2025年度)",
+            "label_en": "Coca-Cola Consolidated 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/317540/000162828026009057/coke-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Our principal competitors include local bottlers of PepsiCo, Inc. products and, in some regions, local bottlers of Dr Pepper products."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

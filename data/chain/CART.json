@@ -1,0 +1,170 @@
+{
+  "root": {
+    "ticker": "CART",
+    "name": "インスタカート(メープルベア)",
+    "cik": 1579091,
+    "name_en": "Instacart (Maplebear)"
+  },
+  "rows": [
+    {
+      "ja": "小売の提携先",
+      "en": "Retail partners"
+    },
+    {
+      "ja": "配達・広告の提携",
+      "en": "Delivery & ad partners"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "DLTR",
+      "ticker": "DLTR",
+      "name": "ダラー・ツリー",
+      "name_en": "Dollar Tree",
+      "sub": "ディスカウント店",
+      "sub_en": "Discount retail",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "8,400超の店舗から当日配達を提供",
+          "text_en": "Same-day delivery from more than 8,400 Dollar Tree stores",
+          "source": {
+            "label": "Dollar Tree 10-K(2026年1月期)",
+            "label_en": "Dollar Tree 10-K (FY ended Jan 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/935703/000093570326000025/dltr-20260131.htm",
+            "level": "official",
+            "date": "2026-03-16",
+            "quote": "Through a partnership with Instacart, our customers can shop online and receive same-day delivery from more than 8,400 Dollar Tree stores"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ACI",
+      "ticker": "ACI",
+      "name": "アルバートソンズ",
+      "name_en": "Albertsons",
+      "sub": "スーパー",
+      "sub_en": "Grocery",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "宅配の提携先の一社",
+          "text_en": "A delivery partner",
+          "source": {
+            "label": "Albertsons 10-K(2025年2月期)",
+            "label_en": "Albertsons 10-K (FY ended Feb 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1646972/000164697225000052/aci-20250222.htm",
+            "level": "official",
+            "date": "2025-04-21",
+            "quote": "We continue to partner with Instacart, DoorDash and Uber"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SBH",
+      "ticker": "SBH",
+      "name": "サリー・ビューティー",
+      "name_en": "Sally Beauty",
+      "sub": "美容用品",
+      "sub_en": "Beauty supplies",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "デジタル販売の場の一つとして出店",
+          "text_en": "Sells through Instacart as one of its digital marketplaces",
+          "source": {
+            "label": "Sally Beauty 10-K(2025年9月期)",
+            "label_en": "Sally Beauty 10-K (FY ended Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1368458/000119312525280122/sbh-20250930.htm",
+            "level": "official",
+            "date": "2025-11-13",
+            "quote": "we launched digital marketplaces with Walmart.com, Amazon, DoorDash, Uber Eats and Instacart"
+          }
+        }
+      ]
+    },
+    {
+      "id": "UBER",
+      "ticker": "UBER",
+      "name": "ウーバー",
+      "name_en": "Uber",
+      "sub": "配車・宅配",
+      "sub_en": "Ride-hailing & delivery",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Uberのレストラン宅配をInstacart上で提供する提携",
+          "text_en": "Partnership offering Uber restaurant delivery on Instacart",
+          "source": {
+            "label": "Instacart 10-K(2025年度)",
+            "label_en": "Instacart 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1579091/000157909126000018/cart-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "including our partnership with Uber to offer their restaurant delivery services on our platform"
+          }
+        }
+      ]
+    },
+    {
+      "id": "IBTA",
+      "ticker": "IBTA",
+      "name": "アイボッタ",
+      "name_en": "Ibotta",
+      "sub": "デジタル販促",
+      "sub_en": "Digital promotions",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Ibottaが戦略提携先の小売として挙げる",
+          "text_en": "Ibotta names Instacart among strategic retail partners",
+          "source": {
+            "label": "Ibotta 10-K(2024年度)",
+            "label_en": "Ibotta 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1538379/000162828025008240/ibta-20241231.htm",
+            "level": "official",
+            "date": "2025-02-27",
+            "quote": "we formed strategic partnerships with other major retailers, such as Dollar General, Family Dollar, Instacart, and DoorDash."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ROKU",
+      "ticker": "ROKU",
+      "name": "ロク",
+      "name_en": "Roku",
+      "sub": "動画配信機器",
+      "sub_en": "Streaming platform",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "購買につながる広告で提携",
+          "text_en": "Partners on shoppable action ads",
+          "source": {
+            "label": "Roku 10-K(2025年度)",
+            "label_en": "Roku 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1428439/000162828026008114/roku-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Many of our action ads are in partnership with companies such as Walmart, Shopify, and Instacart"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

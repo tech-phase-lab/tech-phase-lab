@@ -1,0 +1,177 @@
+{
+  "root": {
+    "ticker": "CMC",
+    "name": "コマーシャル・メタルズ",
+    "cik": 22444,
+    "name_en": "Commercial Metals"
+  },
+  "rows": [
+    {
+      "ja": "買収・ライセンス",
+      "en": "Acquisitions & license"
+    },
+    {
+      "ja": "販売先",
+      "en": "Customer"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "GGB",
+    "SIM"
+  ],
+  "companies": [
+    {
+      "id": "Foley",
+      "ticker": "Foley Products",
+      "name": "フォーリー・プロダクツ",
+      "name_en": "Foley Products",
+      "sub": "プレキャスト・コンクリート",
+      "sub_en": "Precast concrete",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Foley Productsを買収(2025年12月)",
+          "text_en": "Acquired Foley Products (December 2025)",
+          "source": {
+            "label": "Commercial Metals 10-K(2026年8月期)",
+            "label_en": "Commercial Metals 10-K (FY ended Aug 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/22444/000002244426000065/cmc-20260831.htm",
+            "level": "official",
+            "date": "2026-10-16",
+            "quote": "Foley Products Company, LLC (\"Foley\") and Concrete Pipe & Precast, LLC (\"CP&P\"), which were acquired on December 15, 2025 and December 1, 2025, respectively"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CPP",
+      "ticker": "CP&P",
+      "name": "コンクリート・パイプ&プレキャスト",
+      "name_en": "Concrete Pipe & Precast",
+      "sub": "プレキャスト・コンクリート",
+      "sub_en": "Precast concrete",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Concrete Pipe & Precastを買収(2025年12月)",
+          "text_en": "Acquired Concrete Pipe & Precast (December 2025)",
+          "source": {
+            "label": "Commercial Metals 10-K(2026年8月期)",
+            "label_en": "Commercial Metals 10-K (FY ended Aug 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/22444/000002244426000065/cmc-20260831.htm",
+            "level": "official",
+            "date": "2026-10-16",
+            "quote": "Foley Products Company, LLC (\"Foley\") and Concrete Pipe & Precast, LLC (\"CP&P\"), which were acquired on December 15, 2025 and December 1, 2025, respectively"
+          }
+        }
+      ]
+    },
+    {
+      "id": "InQuik",
+      "ticker": "InQuik",
+      "name": "インクイック",
+      "name_en": "InQuik",
+      "sub": "橋梁システム",
+      "sub_en": "Bridge systems",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ライセンス契約で米国のInQuik橋の正規提供者",
+          "text_en": "Authorized U.S. provider of InQuik Bridges under a license",
+          "source": {
+            "label": "Commercial Metals 10-K(2026年8月期)",
+            "label_en": "Commercial Metals 10-K (FY ended Aug 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/22444/000002244426000065/cmc-20260831.htm",
+            "level": "official",
+            "date": "2026-10-16",
+            "quote": "Through our licensing agreement with InQuik Inc., CMC Bridge Systems is the authorized provider of InQuik Bridges in the U.S."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BCC",
+      "ticker": "BCC",
+      "name": "ボイシ・カスケード",
+      "name_en": "Boise Cascade",
+      "sub": "建材流通",
+      "sub_en": "Building materials distribution",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Boise Cascadeが大手の仕入先の一社として挙げる",
+          "text_en": "Boise Cascade names CMC among large suppliers",
+          "source": {
+            "label": "Boise Cascade 10-K(2025年度)",
+            "label_en": "Boise Cascade 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1328581/000132858126000006/bcc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "such as Canfor, Commercial Metals Company, Hampton Lumber"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GGB",
+      "ticker": "GGB",
+      "name": "ゲルダウ",
+      "name_en": "Gerdau",
+      "sub": "鉄鋼(ブラジル)",
+      "sub_en": "Steel (Brazil)",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Gerdauが年次報告で、北米の主な競合の筆頭に挙げる",
+          "text_en": "Gerdau lists CMC first among principal competitors",
+          "source": {
+            "label": "Gerdau 20-F(2025年度)",
+            "label_en": "Gerdau 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1073404/000110465926027678/ggb-20251231x20f.htm",
+            "level": "official",
+            "date": "2026-03-13",
+            "quote": "The Company's principal competitors include Commercial Metals Company (CMC), Nucor Corporation, and Steel Dynamics Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SIM",
+      "ticker": "SIM",
+      "name": "グルポ・シメック",
+      "name_en": "Grupo Simec",
+      "sub": "鉄鋼(メキシコ)",
+      "sub_en": "Steel (Mexico)",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Simecが年次報告で、米国市場の主な競合として挙げる",
+          "text_en": "Simec names CMC among principal U.S. competitors",
+          "source": {
+            "label": "Grupo Simec 20-F(2025年度)",
+            "label_en": "Grupo Simec 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/887153/000121390026083889/ea0299895-20f_grupo.htm",
+            "level": "official",
+            "date": "2026-07-31",
+            "quote": "included Nucor Corporation, Charter Steel, Steel Dynamics, Cascade Rolling Mills, Commercial Metals Company, Vinton Steel, and Gerdau."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

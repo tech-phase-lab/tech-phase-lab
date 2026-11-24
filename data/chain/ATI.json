@@ -1,0 +1,206 @@
+{
+  "root": {
+    "ticker": "ATI",
+    "name": "ATI",
+    "cik": 1018963,
+    "name_en": "ATI"
+  },
+  "rows": [
+    {
+      "ja": "航空機メーカー(長期供給契約)",
+      "en": "Aircraft makers (long-term supply agreements)"
+    },
+    {
+      "ja": "合弁",
+      "en": "Joint venture"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in its 10-K)"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "BRK",
+    "HWM",
+    "CRS"
+  ],
+  "companies": [
+    {
+      "id": "BA",
+      "ticker": "BA",
+      "name": "ボーイング",
+      "name_en": "Boeing",
+      "sub": "航空機",
+      "sub_en": "Aircraft",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "機体向けチタン製品の長期供給契約",
+          "text_en": "Long-term supply agreement for airframe titanium products",
+          "source": {
+            "label": "ATI 10-K(2025年度)",
+            "label_en": "ATI 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1018963/000162828026010140/ati-20251228.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Our LTAs include a titanium products supply agreement for aircraft airframes and structural components with Boeing."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Airbus",
+      "ticker": "Airbus",
+      "name": "エアバス",
+      "name_en": "Airbus",
+      "sub": "航空機(欧州)",
+      "sub_en": "Aircraft (Europe)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "機体向けチタン製品の長期供給契約",
+          "text_en": "Long-term agreement for airframe titanium products",
+          "source": {
+            "label": "ATI 10-K(2025年度)",
+            "label_en": "ATI 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1018963/000162828026010140/ati-20251228.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "The HPMC segment also includes revenues and profits under our LTA with Airbus for titanium airframe products."
+          }
+        }
+      ]
+    },
+    {
+      "id": "STAL",
+      "ticker": "STAL",
+      "name": "上海STAL精密ステンレス",
+      "name_en": "Shanghai STAL Precision Stainless Steel",
+      "sub": "精密圧延(中国)",
+      "sub_en": "Precision rolled strip (China)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "中国でPRS製品を作る合弁",
+          "text_en": "Joint venture making precision rolled strip in China",
+          "source": {
+            "label": "ATI 10-K(2025年度)",
+            "label_en": "ATI 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1018963/000162828026010140/ati-20251228.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "The results for the Shanghai STAL Precision Stainless Steel Company Limited (STAL) are reported on a one month lag"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BRK",
+      "ticker": "BRK.B",
+      "name": "バークシャー・ハザウェイ(PCC)",
+      "name_en": "Berkshire Hathaway (Precision Castparts)",
+      "sub": "複合企業",
+      "sub_en": "Conglomerate",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "傘下のPrecision Castpartsが高性能材料部門の競合",
+          "text_en": "Competes through its Precision Castparts unit",
+          "source": {
+            "label": "ATI 10-K(2025年度)",
+            "label_en": "ATI 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1018963/000162828026010140/ati-20251228.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Berkshire Hathaway Inc., for nickel-based alloys and superalloys and specialty steel alloys, titanium and titanium-based alloys, and precision forgings through its ownership of Precision Castparts Corporation and subsidiaries; Howmet Aerospace Inc., for titanium and titanium-based alloys; Carpenter Technology Corporation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "HWM",
+      "ticker": "HWM",
+      "name": "ハウメット・エアロスペース",
+      "name_en": "Howmet Aerospace",
+      "sub": "航空機部品",
+      "sub_en": "Aerospace components",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "チタン合金の競合",
+          "text_en": "A titanium alloys competitor",
+          "source": {
+            "label": "ATI 10-K(2025年度)",
+            "label_en": "ATI 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1018963/000162828026010140/ati-20251228.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Berkshire Hathaway Inc., for nickel-based alloys and superalloys and specialty steel alloys, titanium and titanium-based alloys, and precision forgings through its ownership of Precision Castparts Corporation and subsidiaries; Howmet Aerospace Inc., for titanium and titanium-based alloys; Carpenter Technology Corporation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CRS",
+      "ticker": "CRS",
+      "name": "カーペンター・テクノロジー",
+      "name_en": "Carpenter Technology",
+      "sub": "特殊合金",
+      "sub_en": "Specialty alloys",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ニッケル基合金・特殊鋼の競合",
+          "text_en": "A competitor in nickel alloys and specialty steels",
+          "source": {
+            "label": "ATI 10-K(2025年度)",
+            "label_en": "ATI 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1018963/000162828026010140/ati-20251228.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Berkshire Hathaway Inc., for nickel-based alloys and superalloys and specialty steel alloys, titanium and titanium-based alloys, and precision forgings through its ownership of Precision Castparts Corporation and subsidiaries; Howmet Aerospace Inc., for titanium and titanium-based alloys; Carpenter Technology Corporation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Amaero",
+      "ticker": "Amaero",
+      "name": "アマエロ",
+      "name_en": "Amaero",
+      "sub": "金属粉末",
+      "sub_en": "Metal powders",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Amaeroが上場申請書類で、国内の主な競合として挙げる",
+          "text_en": "Amaero names ATI among major domestic competitors",
+          "source": {
+            "label": "Amaero S-1(2026年8月)",
+            "label_en": "Amaero S-1 (Aug 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2141616/000119312526372368/ck0002141616-20260828.htm",
+            "level": "official",
+            "date": "2026-08-28",
+            "quote": "Our major domestic competitors for refractory and titanium alloy powders include ATI Inc., Linde Advanced Material Technologies, Inc., Elmet Technologies, and Carpenter Technology Corporation."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
