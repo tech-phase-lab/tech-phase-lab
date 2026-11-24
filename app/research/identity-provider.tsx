@@ -8,6 +8,11 @@ import { createContext, useCallback, useContext, useRef, type ReactNode } from "
 
 const IdentityRefresh = createContext<(force?: boolean) => Promise<void>>(async () => {});
 export function useIdentityRefresh() { return useContext(IdentityRefresh); }
+const IdentitySignedIn = createContext<boolean | null>(false);
+/** Whether a visitor is signed in: null while the identity SDK is still loading, false when sign-in is not configured.
+ * Member-only APIs (favorites, saved research, deep analysis) are called only when this is true, so a signed-out page
+ * no longer fills the console with 401 answers (production QA, Nov 24). The APIs still verify membership themselves. */
+export function useIdentitySignedIn() { return useContext(IdentitySignedIn); }
 function IdentitySession({ children }: { children: ReactNode }) {
   const { isLoaded, isSignedIn, getToken, sessionId } = useAuth();
   useDiagnosisSessionIdentity(isLoaded,sessionId);
@@ -21,7 +26,7 @@ function IdentitySession({ children }: { children: ReactNode }) {
     pending.current = { sessionId, task };
     try { await task; } finally { if (pending.current?.task === task) pending.current = null; }
   }, [isLoaded, isSignedIn, getToken, sessionId]);
-  return <IdentityRefresh.Provider value={refresh}>{children}</IdentityRefresh.Provider>;
+  return <IdentityRefresh.Provider value={refresh}><IdentitySignedIn.Provider value={isLoaded ? isSignedIn === true : null}>{children}</IdentitySignedIn.Provider></IdentityRefresh.Provider>;
 }
 import { useResearchLanguage } from "./use-research-language";
 

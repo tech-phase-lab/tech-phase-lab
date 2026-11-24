@@ -6,8 +6,8 @@ import "./globals.css";
 export const viewport: Viewport = { width: "device-width", initialScale: 1, maximumScale: 1, userScalable: false };
 
 export const metadata: Metadata = {
-  title: "Tech Phase Research Lab",
-  description: "Real-time market intelligence delivery prototype.",
+  title: "Tech Phase Research",
+  description: "米国ハイテク株の速報、決算、目標株価、資料をまとめて確認できる日本語の米国株リサーチアプリです。",
   // Add to Home Screen: name, icon (180x180, opaque, square: iOS rounds the corners itself) and the web app manifest.
   manifest: "/manifest.webmanifest",
   icons: { icon: [{ url: "/favicon.ico", sizes: "any" }], apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }] },

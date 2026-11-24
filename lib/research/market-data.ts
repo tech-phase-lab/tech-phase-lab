@@ -141,7 +141,17 @@ export async function loadPeriodSet(ticker: string, period: BoardPeriod): Promis
 }
 
 /** About five years of daily closes for a stock page's period change (1W … 5Y, YTD); shared 30 minutes (one credit a read). */
-export async function loadDailyCloses(ticker: string): Promise<Bar[]> { return bars(ticker, "1day", 1300, { slotMs: 30 * 60_000 }); }
+export async function loadDailyCloses(ticker: string): Promise<Bar[]> {
+  try { return await bars(ticker, "1day", 1300, { slotMs: 30 * 60_000 }); }
+  catch (error) {
+    // Production QA, Nov 24: under load the five-year series could not be read and the stock page lost its period change (503). The
+    // one-year daily series of the period buttons, when a copy is already stored, still gives 1W … 1Y and YTD. Copies only: no provider call.
+    const series = periodSeries("1y");
+    const copy = await bars(ticker, series.interval, series.size, { fetch: false, slotMs: Math.max(10 * 60_000, barSlotMs(ticker, series.interval, Date.now())) }).catch(() => null);
+    if (copy?.length) return copy;
+    throw error;
+  }
+}
 
 /** The drawn bars of a range plus the bars before them (for the moving averages). */
 export async function loadBarSet(ticker: string, range: ChartRange): Promise<{ bars: Bar[]; before: Bar[] }> { return splitBars(await readAll(ticker, range), range); }

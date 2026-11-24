@@ -193,6 +193,10 @@ export type SlotStore = {
 /** name: the kind of data; slotMs: how long a copy counts as fresh; staleMs: how old a copy may be when nothing fresher can be had. */
 export type ReadSpec = { name: string; slotMs: number; staleMs: number };
 const COARSE_MS = 3_600_000;
+/** A daily copy as well (production QA, Nov 24): under load, a chart or a stock page's period change that no instance had read in the last two
+ * hours answered 503 although a copy from earlier that day or the day before existed. Kept within staleMs like every other last good copy;
+ * it costs one store write per save and no provider call. */
+const DAILY_MS = 86_400_000;
 /** A fixed offset in [0, slotMs) from the key's text (FNV-1a). */
 function offset(text: string, slotMs: number) { let h = 0x811c9dc5; for (let i = 0; i < text.length; i++) { h ^= text.charCodeAt(i); h = Math.imul(h, 0x01000193) >>> 0; } return h % slotMs; }
 const MEMORY_LIMIT = 20_000;
@@ -221,10 +225,11 @@ export function createReader(store: SlotStore, now: () => number = Date.now) {
     return null;
   }
   async function stale<T>(spec: ReadSpec, key: string): Promise<Entry<T> | null> {
-    const t = now(), s = slotOf(spec, key, t), c = Math.floor(t / COARSE_MS);
+    const t = now(), s = slotOf(spec, key, t), c = Math.floor(t / COARSE_MS), d = Math.floor(t / DAILY_MS);
     const found = [memory.get(id(spec, key)) ?? null, ...await Promise.all([
       quiet(store.peek(slotName(spec), key, s - 1)), quiet(store.peek(slotName(spec), key, s - 2)),
       quiet(store.peek(`${spec.name}~h`, key, c)), quiet(store.peek(`${spec.name}~h`, key, c - 1)),
+      quiet(store.peek(`${spec.name}~d`, key, d)), quiet(store.peek(`${spec.name}~d`, key, d - 1)),
     ])].filter((e): e is Entry<unknown> => !!e && t - e.at <= spec.staleMs).sort((a, b) => b.at - a.at)[0];
     if (found) remember(spec, key, found);
     return (found as Entry<T>) ?? null;
@@ -234,6 +239,7 @@ export function createReader(store: SlotStore, now: () => number = Date.now) {
     await Promise.all([
       quiet(store.put(slotName(spec), key, slotOf(spec, key, entry.at), entry)),
       quiet(store.put(`${spec.name}~h`, key, Math.floor(entry.at / COARSE_MS), entry)),
+      quiet(store.put(`${spec.name}~d`, key, Math.floor(entry.at / DAILY_MS), entry)),
     ]);
   }
   const startFetch = <T>(spec: ReadSpec, key: string, run: () => Promise<Entry<T> | null>) => {

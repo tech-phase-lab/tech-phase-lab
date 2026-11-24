@@ -56,7 +56,7 @@ export default function ProOfferCard({ ja, onSubscribe, href, busy = false, disa
       <span>TECH PHASE PRO</span>
     </div>
     <div className={styles.tabs}>
-      <div className={styles.tabGroup}>{tab(currency === "JPY", t("日本円", "JPY"), () => pick("JPY", null))}{tab(currency === "USD", t("米ドル", "USD"), () => pick("USD", null))}</div>
+      <div className={styles.tabGroup}>{tab(currency === "JPY", t("日本円", "JPY"), () => pick("JPY", null))}{tab(currency === "USD", t("ドル", "USD"), () => pick("USD", null))}</div>
       <div className={styles.tabGroup}>
         {tab(period === "month", t("月額", "Monthly"), () => pick(null, "month"))}
         <span className={styles.yearTab}><span className={styles.bubble} aria-hidden="true">{t("17%OFF", "17% OFF")}<i /></span>{tab(period === "year", t("年額", "Yearly"), () => pick(null, "year"))}</span>

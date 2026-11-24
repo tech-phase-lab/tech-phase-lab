@@ -6,14 +6,19 @@ import type { DeepAnalysis } from "@/lib/research/deep-analysis";
 import { formatDisplay, zoneLabel } from "@/lib/research/display-time";
 import MarketReactionView from "./market-reaction-view";
 import styles from "./deep-analysis-panel.module.css";
+import { useIdentitySignedIn } from "./identity-provider";
 
 type State = { status: "loading" } | { status: "locked" } | { status: "unavailable" } | { status: "ready"; items: DeepAnalysis[] };
 
 /** PRO deep analysis of earnings (by ticker) or U.S. indicators. */
 export default function DeepAnalysisPanel({ lang, ticker, kind }: { lang: Language; ticker?: string; kind: "earnings" | "indicator" }) {
-  const [state, setState] = useState<State>({ status: "loading" });
+  const signedIn = useIdentitySignedIn();
+  const [fetched, setState] = useState<State>({ status: "loading" });
+  // Signed out: the PRO notice, without asking the server (which would only answer 401).
+  const state: State = signedIn === true ? fetched : signedIn === false ? { status: "locked" } : { status: "loading" };
   const ja = lang === "ja";
   useEffect(() => {
+    if (signedIn !== true) return;
     const controller = new AbortController();
     fetch("/api/research/deep-analysis", { cache: "no-store", signal: controller.signal })
       .then(async response => {
@@ -24,7 +29,7 @@ export default function DeepAnalysisPanel({ lang, ticker, kind }: { lang: Langua
       })
       .catch(error => { if (!controller.signal.aborted) { void error; setState({ status: "unavailable" }); } });
     return () => controller.abort();
-  }, []);
+  }, [signedIn]);
   const title = kind === "earnings" ? (ja ? "決算の深掘り分析" : "Earnings deep dive") : (ja ? "経済指標の深掘り分析" : "Indicator deep dive");
   if (state.status === "loading" || state.status === "unavailable") return null;
   if (state.status === "locked") {
