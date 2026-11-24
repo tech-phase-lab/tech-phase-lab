@@ -52,13 +52,14 @@ test('a Japanese amount counts as a source figure only when it is the exact unit
 
 test('stories whose U.S. close is already known come first; the rest wait in reserve within the daily bound',()=>{
  const feed={ok:true,enabled:true,items:[item(1,'2026-10-14T21:30:00Z'),item(2,'2026-10-14T21:20:00Z'),item(3,'2026-10-14T15:00:00Z'),item(4,'2026-10-14T14:00:00Z'),item(5,'2026-10-14T21:10:00Z'),item(6,'2026-10-14T21:00:00Z'),item(7,'2026-10-14T20:50:00Z')]};
- const plain=selectDailyCandidates(feed,now);
+ const limits={stories:3,attempts:5};
+ const plain=selectDailyCandidates(feed,now,{limits});
  assert.deepEqual(plain.selected.map(c=>c.title.slice(-1)),['1','2','5']);
- const ordered=selectDailyCandidates(feed,now,{moves});
+ const ordered=selectDailyCandidates(feed,now,{moves,limits});
  assert.deepEqual(ordered.selected.map(c=>c.title.slice(-1)),['3','4','1']);
  assert.deepEqual(ordered.reserve.map(c=>c.title.slice(-1)),['2','5']);
  assert.equal(ordered.diagnostics.knownMove,2);
- assert.equal(ordered.selected.length+ordered.reserve.length,RISK_POLICY.dailyAttempts);
+ assert.equal(ordered.selected.length+ordered.reserve.length,limits.attempts);
 });
 
 async function setup(){const db=new PGlite();await db.exec('CREATE ROLE resolute_rizel_writer');await db.exec(await readFile(new URL('../db/resolute/013_rizel_daily_review.sql',import.meta.url),'utf8'));return db;}
@@ -85,7 +86,7 @@ test('every candidate failing the checks still fails the day closed, after at mo
  const feed={ok:true,enabled:true,items:[1,2,3,4,5,6,7].map(n=>item(n,`2026-10-14T1${n}:00:00Z`))};
  try{
   await assert.rejects(prepareDailyReview({enabled:true,now,selectionPool:db,readFeed:async()=>feed,summarize:async()=>{calls++;return null;}}),e=>e.message==='PRIVATE_DAILY_REVIEW_FAILED'&&e.code==='NO_VERIFIED_OUTPUT');
-  assert.equal(calls,RISK_POLICY.dailyAttempts);
+  assert.equal(calls,Math.min(feed.items.length,RISK_POLICY.dailyAttempts));
   assert.equal((await db.query('SELECT state FROM resolute_rizel_daily_runs')).rows[0].state,'failed');
  }finally{await db.close();}
 });

@@ -20,8 +20,9 @@ test('every tried story judged not-publishable is a quiet day: saved as ready wi
   const result=await prepareDailyReview({enabled:true,now,selectionPool:db,budgetPool:publishPool,publishPool,readFeed:async()=>seven,
    summarize:async(c,pool,at,fetcher,{why})=>{calls++;why.reason='not-publishable';return null;}});
   assert.equal(result.state,'none-today');assert.equal(result.count,0);assert.equal(result.storageVerified,true);
-  assert.equal(calls,RISK_POLICY.dailyAttempts);
-  assert.deepEqual(result.diagnostics.withheld,{'not-publishable':RISK_POLICY.dailyAttempts});
+  const bound=Math.min(seven.items.length,RISK_POLICY.dailyAttempts);
+  assert.equal(calls,bound);
+  assert.deepEqual(result.diagnostics.withheld,{'not-publishable':bound});
   assert.deepEqual(saved,[{state:'ready',articles:[]}],'the app shows 「今日は、気にするニュースはありません」');
   assert.equal((await db.query('SELECT state FROM resolute_rizel_daily_runs')).rows[0].state,'ready');
  }finally{await db.close();}
