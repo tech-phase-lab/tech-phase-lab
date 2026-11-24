@@ -34,6 +34,8 @@
       "name_en": "Oklo",
       "sub": "小型原子炉",
       "sub_en": "Advanced nuclear",
+      "sub_short": "小型原子炉",
+      "sub_short_en": "Advanced nuclear",
       "row": 0,
       "relations": [
         {
@@ -60,6 +62,8 @@
       "name_en": "RingCentral",
       "sub": "クラウド電話",
       "sub_en": "Cloud communications",
+      "sub_short": "クラウド電話",
+      "sub_short_en": "Cloud comms",
       "row": 1,
       "relations": [
         {
@@ -84,6 +88,8 @@
       "name_en": "Ooma",
       "sub": "クラウド電話",
       "sub_en": "Cloud communications",
+      "sub_short": "クラウド電話",
+      "sub_short_en": "Cloud comms",
       "row": 1,
       "relations": [
         {
@@ -108,6 +114,8 @@
       "name_en": "Wix.com",
       "sub": "ウェブ制作",
       "sub_en": "Website building",
+      "sub_short": "ウェブ制作",
+      "sub_short_en": "Website building",
       "row": 1,
       "relations": [
         {
@@ -132,6 +140,8 @@
       "name_en": "8x8",
       "sub": "クラウド電話",
       "sub_en": "Cloud communications",
+      "sub_short": "クラウド電話",
+      "sub_short_en": "Cloud comms",
       "row": 1,
       "relations": [
         {
@@ -156,6 +166,8 @@
       "name_en": "Fortinet",
       "sub": "セキュリティ",
       "sub_en": "Cybersecurity",
+      "sub_short": "セキュリティ",
+      "sub_short_en": "Cybersecurity",
       "row": 1,
       "relations": [
         {
@@ -180,6 +192,8 @@
       "name_en": "Digital Realty Trust",
       "sub": "データセンター",
       "sub_en": "Data centers",
+      "sub_short": "データセンター",
+      "sub_short_en": "Data centers",
       "row": 2,
       "relations": [
         {
@@ -217,6 +231,8 @@
       "name_en": "NTT",
       "sub": "通信・データセンター",
       "sub_en": "Telecom & data centers",
+      "sub_short": "通信・DC",
+      "sub_short_en": "Telecom",
       "row": 2,
       "relations": [
         {
@@ -241,6 +257,8 @@
       "name_en": "Applied Digital",
       "sub": "AIデータセンター",
       "sub_en": "AI data centers",
+      "sub_short": "AI向けDC",
+      "sub_short_en": "AI data centers",
       "row": 2,
       "relations": [
         {
@@ -265,6 +283,8 @@
       "name_en": "Core Scientific",
       "sub": "AIデータセンター",
       "sub_en": "AI data centers",
+      "sub_short": "AI向けDC",
+      "sub_short_en": "AI data centers",
       "row": 2,
       "relations": [
         {
@@ -289,6 +309,8 @@
       "name_en": "IREN",
       "sub": "AIクラウド・データセンター",
       "sub_en": "AI cloud & data centers",
+      "sub_short": "AIクラウド",
+      "sub_short_en": "AI cloud",
       "row": 2,
       "relations": [
         {
@@ -313,6 +335,8 @@
       "name_en": "Cipher Digital",
       "sub": "AIデータセンター",
       "sub_en": "AI data centers",
+      "sub_short": "AI向けDC",
+      "sub_short_en": "AI data centers",
       "row": 2,
       "relations": [
         {
@@ -337,6 +361,8 @@
       "name_en": "CleanSpark",
       "sub": "ビットコイン採掘・データセンター",
       "sub_en": "Bitcoin mining & data centers",
+      "sub_short": "BTC採掘・DC",
+      "sub_short_en": "Bitcoin mining",
       "row": 2,
       "relations": [
         {
@@ -361,6 +387,8 @@
       "name_en": "WhiteFiber",
       "sub": "AIデータセンター",
       "sub_en": "AI data centers",
+      "sub_short": "AI向けDC",
+      "sub_short_en": "AI data centers",
       "row": 2,
       "relations": [
         {
@@ -385,6 +413,8 @@
       "name_en": "HIVE Digital Technologies",
       "sub": "採掘・AIクラウド",
       "sub_en": "Mining & AI cloud",
+      "sub_short": "採掘",
+      "sub_short_en": "Mining",
       "row": 2,
       "relations": [
         {

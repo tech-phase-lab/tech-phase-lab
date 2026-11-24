@@ -25,6 +25,8 @@
       "name_en": "ELEMIS",
       "sub": "スキンケア(英)",
       "sub_en": "Skincare (UK)",
+      "sub_short": "スキンケア",
+      "sub_short_en": "Skincare",
       "row": 0,
       "relations": [
         {
@@ -49,6 +51,8 @@
       "name_en": "Carnival",
       "sub": "クルーズ",
       "sub_en": "Cruises",
+      "sub_short": "クルーズ",
+      "sub_short_en": "Cruises",
       "row": 1,
       "relations": [
         {
@@ -73,6 +77,8 @@
       "name_en": "Royal Caribbean",
       "sub": "クルーズ",
       "sub_en": "Cruises",
+      "sub_short": "クルーズ",
+      "sub_short_en": "Cruises",
       "row": 1,
       "relations": [
         {
@@ -97,6 +103,8 @@
       "name_en": "Norwegian Cruise Line",
       "sub": "クルーズ",
       "sub_en": "Cruises",
+      "sub_short": "クルーズ",
+      "sub_short_en": "Cruises",
       "row": 1,
       "relations": [
         {
@@ -121,6 +129,8 @@
       "name_en": "Virgin Voyages",
       "sub": "クルーズ",
       "sub_en": "Cruises",
+      "sub_short": "クルーズ",
+      "sub_short_en": "Cruises",
       "row": 1,
       "relations": [
         {
@@ -145,6 +155,8 @@
       "name_en": "Azamara",
       "sub": "クルーズ",
       "sub_en": "Cruises",
+      "sub_short": "クルーズ",
+      "sub_short_en": "Cruises",
       "row": 1,
       "relations": [
         {
@@ -169,6 +181,8 @@
       "name_en": "Adora Cruises",
       "sub": "クルーズ(中)",
       "sub_en": "Cruises (China)",
+      "sub_short": "クルーズ",
+      "sub_short_en": "Cruises",
       "row": 1,
       "relations": [
         {
@@ -193,6 +207,8 @@
       "name_en": "Crystal Cruises",
       "sub": "クルーズ",
       "sub_en": "Cruises",
+      "sub_short": "クルーズ",
+      "sub_short_en": "Cruises",
       "row": 1,
       "relations": [
         {
@@ -217,6 +233,8 @@
       "name_en": "Mitsui Ocean Cruises",
       "sub": "クルーズ",
       "sub_en": "Cruises",
+      "sub_short": "クルーズ",
+      "sub_short_en": "Cruises",
       "row": 1,
       "relations": [
         {

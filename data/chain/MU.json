@@ -32,6 +32,8 @@
       "name": "Lam Research",
       "sub": "製造装置",
       "sub_en": "Equipment",
+      "sub_short": "製造装置",
+      "sub_short_en": "Equipment",
       "row": 0,
       "relations": [
         {
@@ -55,6 +57,8 @@
       "name": "Rambus",
       "sub": "メモリー用チップ・特許",
       "sub_en": "Memory interface chips & IP",
+      "sub_short": "メモリ用チップ",
+      "sub_short_en": "Memory chips",
       "row": 0,
       "relations": [
         {
@@ -91,6 +95,8 @@
       "name": "NVIDIA",
       "sub": "AI半導体",
       "sub_en": "AI chips",
+      "sub_short": "AI半導体",
+      "sub_short_en": "AI chips",
       "row": 1,
       "relations": [
         {
@@ -114,6 +120,8 @@
       "name": "Penguin Solutions",
       "sub": "サーバー・メモリー",
       "sub_en": "Servers & memory",
+      "sub_short": "サーバー",
+      "sub_short_en": "Servers & memory",
       "row": 1,
       "relations": [
         {
@@ -137,6 +145,8 @@
       "name": "Powerchip(PSMC)",
       "sub": "受託製造",
       "sub_en": "Foundry",
+      "sub_short": "受託製造",
+      "sub_short_en": "Foundry",
       "row": 1,
       "relations": [
         {
@@ -160,6 +170,8 @@
       "name": "Samsung Electronics",
       "sub": "メモリー",
       "sub_en": "Memory",
+      "sub_short": "メモリー",
+      "sub_short_en": "Memory",
       "row": 2,
       "relations": [
         {
@@ -183,6 +195,8 @@
       "name": "SK hynix",
       "sub": "メモリー",
       "sub_en": "Memory",
+      "sub_short": "メモリー",
+      "sub_short_en": "Memory",
       "row": 2,
       "relations": [
         {
@@ -206,6 +220,8 @@
       "name": "Kioxia",
       "sub": "NAND",
       "sub_en": "NAND flash",
+      "sub_short": "NAND",
+      "sub_short_en": "NAND flash",
       "row": 2,
       "relations": [
         {
@@ -229,6 +245,8 @@
       "name": "Sandisk",
       "sub": "NAND",
       "sub_en": "NAND flash",
+      "sub_short": "NAND",
+      "sub_short_en": "NAND flash",
       "row": 2,
       "relations": [
         {
@@ -265,6 +283,8 @@
       "name": "Everspin Technologies",
       "sub": "MRAM",
       "sub_en": "MRAM",
+      "sub_short": "MRAM",
+      "sub_short_en": "MRAM",
       "row": 2,
       "relations": [
         {

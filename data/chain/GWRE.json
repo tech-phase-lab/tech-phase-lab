@@ -28,6 +28,8 @@
       "name": "アマゾン・ウェブ・サービス",
       "sub": "クラウド基盤",
       "sub_en": "Cloud infrastructure",
+      "sub_short": "クラウド基盤",
+      "sub_short_en": "Cloud infra",
       "row": 0,
       "relations": [
         {
@@ -52,6 +54,8 @@
       "name": "オクタ",
       "sub": "認証サービス",
       "sub_en": "Identity services",
+      "sub_short": "認証サービス",
+      "sub_short_en": "Identity",
       "row": 0,
       "relations": [
         {
@@ -76,6 +80,8 @@
       "name": "データドッグ",
       "sub": "監視サービス",
       "sub_en": "Monitoring services",
+      "sub_short": "監視サービス",
+      "sub_short_en": "Monitoring",
       "row": 0,
       "relations": [
         {
@@ -100,6 +106,8 @@
       "name": "DXCテクノロジー",
       "sub": "保険ソフト競合",
       "sub_en": "Insurance software rival",
+      "sub_short": "保険ソフト競合",
+      "sub_short_en": "Insurance apps",
       "row": 1,
       "relations": [
         {
@@ -124,6 +132,8 @@
       "name": "エスエーピー",
       "sub": "業務ソフト競合",
       "sub_en": "Enterprise software rival",
+      "sub_short": "業務ソフト競合",
+      "sub_short_en": "Enterprise apps",
       "row": 1,
       "relations": [
         {
@@ -148,6 +158,8 @@
       "name": "セールスフォース",
       "sub": "業務ソフト競合",
       "sub_en": "Enterprise software rival",
+      "sub_short": "業務ソフト競合",
+      "sub_short_en": "Enterprise apps",
       "row": 1,
       "relations": [
         {
@@ -172,6 +184,8 @@
       "name": "サービスナウ",
       "sub": "業務ソフト競合",
       "sub_en": "Enterprise software rival",
+      "sub_short": "業務ソフト競合",
+      "sub_short_en": "Enterprise apps",
       "row": 1,
       "relations": [
         {

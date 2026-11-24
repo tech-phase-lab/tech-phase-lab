@@ -19,6 +19,8 @@
       "name": "アップル",
       "sub": "クレジットカード提携",
       "sub_en": "Credit card partner",
+      "sub_short": "カード提携",
+      "sub_short_en": "Card partner",
       "row": 0,
       "relations": [
         {
@@ -56,6 +58,8 @@
       "name": "T・ロウ・プライス",
       "sub": "資産運用会社",
       "sub_en": "Asset manager",
+      "sub_short": "資産運用会社",
+      "sub_short_en": "Asset manager",
       "row": 0,
       "relations": [
         {
@@ -80,6 +84,8 @@
       "name": "ゼネラル・モーターズ",
       "sub": "自動車・カード提携",
       "sub_en": "Automaker, card partner",
+      "sub_short": "カード提携",
+      "sub_short_en": "Automaker",
       "row": 0,
       "relations": [
         {

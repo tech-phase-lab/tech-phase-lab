@@ -33,6 +33,8 @@
       "name": "Broadcom",
       "sub": "スイッチ用半導体",
       "sub_en": "Switch silicon",
+      "sub_short": "スイッチ半導体",
+      "sub_short_en": "Switch silicon",
       "row": 0,
       "relations": [
         {
@@ -84,6 +86,8 @@
       "name": "Jabil",
       "sub": "製造委託",
       "sub_en": "Contract manufacturing",
+      "sub_short": "製造委託",
+      "sub_short_en": "Contract maker",
       "row": 0,
       "relations": [
         {
@@ -107,6 +111,8 @@
       "name": "Sanmina",
       "sub": "製造委託",
       "sub_en": "Contract manufacturing",
+      "sub_short": "製造委託",
+      "sub_short_en": "Contract maker",
       "row": 0,
       "relations": [
         {
@@ -130,6 +136,8 @@
       "name": "Hon Hai(Foxconn)",
       "sub": "製造委託",
       "sub_en": "Contract manufacturing",
+      "sub_short": "製造委託",
+      "sub_short_en": "Contract maker",
       "row": 0,
       "relations": [
         {
@@ -153,6 +161,8 @@
       "name": "Arm",
       "sub": "半導体設計",
       "sub_en": "Chip design",
+      "sub_short": "半導体設計",
+      "sub_short_en": "Chip design",
       "row": 1,
       "relations": [
         {
@@ -178,6 +188,8 @@
       "name": "AMD",
       "sub": "半導体",
       "sub_en": "Chips",
+      "sub_short": "半導体",
+      "sub_short_en": "Chips",
       "row": 1,
       "relations": [
         {
@@ -203,6 +215,8 @@
       "name": "Meta Platforms",
       "sub": "SNS・AI",
       "sub_en": "Social & AI",
+      "sub_short": "SNS・AI",
+      "sub_short_en": "Social & AI",
       "row": 1,
       "relations": [
         {
@@ -228,6 +242,8 @@
       "name": "Microsoft",
       "sub": "クラウド",
       "sub_en": "Cloud",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 1,
       "relations": [
         {
@@ -253,6 +269,8 @@
       "name": "Cisco",
       "sub": "ネットワーク",
       "sub_en": "Networking",
+      "sub_short": "ネットワーク",
+      "sub_short_en": "Networking",
       "row": 2,
       "relations": [
         {
@@ -289,6 +307,8 @@
       "name": "Dell Technologies",
       "sub": "サーバー・ネットワーク",
       "sub_en": "Servers & networking",
+      "sub_short": "サーバー",
+      "sub_short_en": "Servers",
       "row": 2,
       "relations": [
         {
@@ -312,6 +332,8 @@
       "name": "Extreme Networks",
       "sub": "ネットワーク",
       "sub_en": "Networking",
+      "sub_short": "ネットワーク",
+      "sub_short_en": "Networking",
       "row": 2,
       "relations": [
         {
@@ -348,6 +370,8 @@
       "name": "Hewlett Packard Enterprise",
       "sub": "サーバー・ネットワーク",
       "sub_en": "Servers & networking",
+      "sub_short": "サーバー",
+      "sub_short_en": "Servers",
       "row": 2,
       "relations": [
         {
@@ -384,6 +408,8 @@
       "name": "NVIDIA",
       "sub": "AI半導体・ネットワーク",
       "sub_en": "AI chips & networking",
+      "sub_short": "AI半導体",
+      "sub_short_en": "AI chips",
       "row": 2,
       "relations": [
         {
@@ -420,6 +446,8 @@
       "name": "Keysight",
       "sub": "計測機器",
       "sub_en": "Test & measurement",
+      "sub_short": "計測機器",
+      "sub_short_en": "Test equipment",
       "row": 2,
       "relations": [
         {
@@ -443,6 +471,8 @@
       "name": "NetScout",
       "sub": "ネットワーク監視",
       "sub_en": "Network monitoring",
+      "sub_short": "ネット監視",
+      "sub_short_en": "Net monitoring",
       "row": 2,
       "relations": [
         {
@@ -466,6 +496,8 @@
       "name": "Celestica",
       "sub": "ネットワーク機器",
       "sub_en": "Network hardware",
+      "sub_short": "通信機器",
+      "sub_short_en": "Network hardware",
       "row": 2,
       "relations": [
         {
@@ -489,6 +521,8 @@
       "name": "Qualcomm",
       "sub": "半導体",
       "sub_en": "Semiconductors",
+      "sub_short": "半導体",
+      "sub_short_en": "Semiconductors",
       "row": 1,
       "relations": [
         {

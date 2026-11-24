@@ -31,6 +31,8 @@
       "name_en": "Eli Lilly",
       "sub": "医薬品",
       "sub_en": "Pharmaceuticals",
+      "sub_short": "医薬品",
+      "sub_short_en": "Pharmaceuticals",
       "row": 0,
       "relations": [
         {
@@ -55,6 +57,8 @@
       "name_en": "Bayer",
       "sub": "医薬・農業(ドイツ)",
       "sub_en": "Pharma & crop science (Germany)",
+      "sub_short": "医薬・農業",
+      "sub_short_en": "Pharma",
       "row": 0,
       "relations": [
         {
@@ -79,6 +83,8 @@
       "name_en": "Merck & Co.",
       "sub": "医薬品",
       "sub_en": "Pharmaceuticals",
+      "sub_short": "医薬品",
+      "sub_short_en": "Pharmaceuticals",
       "row": 0,
       "relations": [
         {
@@ -103,6 +109,8 @@
       "name_en": "Cencora",
       "sub": "医薬品卸",
       "sub_en": "Drug distribution",
+      "sub_short": "医薬品卸",
+      "sub_short_en": "Drug wholesale",
       "row": 1,
       "relations": [
         {
@@ -127,6 +135,8 @@
       "name_en": "Tarsus Pharmaceuticals",
       "sub": "眼科薬",
       "sub_en": "Eye care drugs",
+      "sub_short": "眼科薬",
+      "sub_short_en": "Eye care drugs",
       "row": 1,
       "relations": [
         {
@@ -151,6 +161,8 @@
       "name_en": "Pacira BioSciences",
       "sub": "鎮痛薬",
       "sub_en": "Pain management",
+      "sub_short": "鎮痛薬",
+      "sub_short_en": "Pain management",
       "row": 1,
       "relations": [
         {
@@ -175,6 +187,8 @@
       "name_en": "Phibro Animal Health",
       "sub": "動物用医薬品",
       "sub_en": "Animal health",
+      "sub_short": "動物用医薬品",
+      "sub_short_en": "Animal health",
       "row": 2,
       "relations": [
         {
@@ -199,6 +213,8 @@
       "name_en": "ImmuCell",
       "sub": "動物用医薬品",
       "sub_en": "Animal health",
+      "sub_short": "動物用医薬品",
+      "sub_short_en": "Animal health",
       "row": 2,
       "relations": [
         {

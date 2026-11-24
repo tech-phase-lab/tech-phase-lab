@@ -24,6 +24,8 @@
       "name": "アップル",
       "sub": "電子機器メーカー",
       "sub_en": "Consumer electronics",
+      "sub_short": "電子機器",
+      "sub_short_en": "Electronics",
       "row": 0,
       "relations": [
         {
@@ -48,6 +50,8 @@
       "name": "サムスン",
       "sub": "電子機器メーカー",
       "sub_en": "Consumer electronics",
+      "sub_short": "電子機器",
+      "sub_short_en": "Electronics",
       "row": 0,
       "relations": [
         {
@@ -72,6 +76,8 @@
       "name": "エイチピー",
       "sub": "PC・周辺機器",
       "sub_en": "PCs & peripherals",
+      "sub_short": "PC・周辺機器",
+      "sub_short_en": "PCs",
       "row": 0,
       "relations": [
         {
@@ -96,6 +102,8 @@
       "name": "エルジー",
       "sub": "家電メーカー",
       "sub_en": "Appliances & electronics",
+      "sub_short": "家電メーカー",
+      "sub_short_en": "Appliances",
       "row": 0,
       "relations": [
         {
@@ -120,6 +128,8 @@
       "name": "ソニー",
       "sub": "電子機器メーカー",
       "sub_en": "Consumer electronics",
+      "sub_short": "電子機器",
+      "sub_short_en": "Electronics",
       "row": 0,
       "relations": [
         {
@@ -144,6 +154,8 @@
       "name": "ターטル・ビーチ",
       "sub": "ゲーム用ヘッドセット",
       "sub_en": "Gaming headsets",
+      "sub_short": "ゲーム周辺機器",
+      "sub_short_en": "Gaming headsets",
       "row": 0,
       "relations": [
         {
@@ -168,6 +180,8 @@
       "name": "ラブサック",
       "sub": "家具",
       "sub_en": "Furniture",
+      "sub_short": "家具",
+      "sub_short_en": "Furniture",
       "row": 1,
       "relations": [
         {

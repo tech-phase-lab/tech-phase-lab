@@ -34,6 +34,8 @@
       "name": "Oracle",
       "sub": "クラウド",
       "sub_en": "Cloud",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 1,
       "relations": [
         {
@@ -72,6 +74,8 @@
       "name": "Nebius",
       "sub": "AIクラウド",
       "sub_en": "AI cloud",
+      "sub_short": "AIクラウド",
+      "sub_short_en": "AI cloud",
       "row": 1,
       "relations": [
         {
@@ -97,6 +101,8 @@
       "name": "Equinix",
       "sub": "データセンター",
       "sub_en": "Data centers",
+      "sub_short": "データセンター",
+      "sub_short_en": "Data centers",
       "row": 1,
       "relations": [
         {
@@ -120,6 +126,8 @@
       "name": "MiTAC Computing",
       "sub": "AIサーバー製造",
       "sub_en": "AI server maker",
+      "sub_short": "AIサーバー製造",
+      "sub_short_en": "AI server maker",
       "row": 1,
       "relations": [
         {
@@ -143,6 +151,8 @@
       "name": "American Electric Power",
       "sub": "電力会社",
       "sub_en": "Utility",
+      "sub_short": "電力会社",
+      "sub_short_en": "Utility",
       "row": 2,
       "relations": [
         {
@@ -181,6 +191,8 @@
       "name": "Brookfield Asset Management",
       "sub": "投資会社",
       "sub_en": "Investment firm",
+      "sub_short": "投資会社",
+      "sub_short_en": "Investment firm",
       "row": 2,
       "relations": [
         {
@@ -219,6 +231,8 @@
       "name": "SoftBank Group",
       "sub": "投資・通信",
       "sub_en": "Investment & telecom",
+      "sub_short": "投資・通信",
+      "sub_short_en": "Investment",
       "row": 2,
       "relations": [
         {
@@ -244,6 +258,8 @@
       "name": "CoreWeave",
       "sub": "AIクラウド",
       "sub_en": "AI cloud",
+      "sub_short": "AIクラウド",
+      "sub_short_en": "AI cloud",
       "row": 1,
       "relations": [
         {
@@ -267,6 +283,8 @@
       "name": "NTT DATA",
       "sub": "データセンター",
       "sub_en": "Data centers",
+      "sub_short": "データセンター",
+      "sub_short_en": "Data centers",
       "row": 1,
       "relations": [
         {
@@ -290,6 +308,8 @@
       "name": "Quanta Services",
       "sub": "電力インフラ工事",
       "sub_en": "Power infrastructure contractor",
+      "sub_short": "電力工事",
+      "sub_short_en": "Power works",
       "row": 2,
       "relations": [
         {
@@ -313,6 +333,8 @@
       "name": "SK eternix",
       "sub": "エネルギー(韓国)",
       "sub_en": "Energy (Korea)",
+      "sub_short": "エネルギー",
+      "sub_short_en": "Energy",
       "row": 2,
       "relations": [
         {
@@ -336,6 +358,8 @@
       "name": "Hyliion",
       "sub": "発電機",
       "sub_en": "Generators",
+      "sub_short": "発電機",
+      "sub_short_en": "Generators",
       "row": 3,
       "relations": [
         {
@@ -359,6 +383,8 @@
       "name": "Capstone Energy Plus",
       "sub": "分散型発電",
       "sub_en": "Distributed generation",
+      "sub_short": "分散型発電",
+      "sub_short_en": "Onsite power",
       "row": 3,
       "relations": [
         {

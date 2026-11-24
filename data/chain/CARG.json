@@ -28,6 +28,8 @@
       "name": "アマゾン・ウェブ・サービス",
       "sub": "クラウド基盤",
       "sub_en": "Cloud hosting",
+      "sub_short": "クラウド基盤",
+      "sub_short_en": "Cloud hosting",
       "row": 0,
       "relations": [
         {
@@ -52,6 +54,8 @@
       "name": "グーグル",
       "sub": "検索エンジン",
       "sub_en": "Search engine",
+      "sub_short": "検索エンジン",
+      "sub_short_en": "Search engine",
       "row": 0,
       "relations": [
         {
@@ -76,6 +80,8 @@
       "name": "カーズ・ドットコム",
       "sub": "自動車マーケット",
       "sub_en": "Auto marketplace",
+      "sub_short": "車売買サイト",
+      "sub_short_en": "Auto marketplace",
       "row": 1,
       "relations": [
         {
@@ -113,6 +119,8 @@
       "name": "トゥルーカー",
       "sub": "自動車マーケット",
       "sub_en": "Auto marketplace",
+      "sub_short": "車売買サイト",
+      "sub_short_en": "Auto marketplace",
       "row": 1,
       "relations": [
         {
@@ -137,6 +145,8 @@
       "name": "オートトレーダー・ドットコム",
       "sub": "自動車マーケット",
       "sub_en": "Auto marketplace",
+      "sub_short": "車売買サイト",
+      "sub_short_en": "Auto marketplace",
       "row": 1,
       "relations": [
         {
@@ -161,6 +171,8 @@
       "name": "カーバナ",
       "sub": "オンライン中古車販売",
       "sub_en": "Online dealership",
+      "sub_short": "中古車通販",
+      "sub_short_en": "Online cars",
       "row": 1,
       "relations": [
         {

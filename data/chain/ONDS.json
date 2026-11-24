@@ -32,6 +32,8 @@
       "name_en": "Sentrycs",
       "sub": "対ドローン(イスラエル)",
       "sub_en": "Counter-drone (Israel)",
+      "sub_short": "対ドローン",
+      "sub_short_en": "Counter-drone",
       "row": 0,
       "relations": [
         {
@@ -56,6 +58,8 @@
       "name_en": "Robo-Team",
       "sub": "無人地上車両",
       "sub_en": "Unmanned ground vehicles",
+      "sub_short": "無人地上車両",
+      "sub_short_en": "Ground robots",
       "row": 0,
       "relations": [
         {
@@ -80,6 +84,8 @@
       "name_en": "Apeiro Motion",
       "sub": "モーター・駆動",
       "sub_en": "Motion systems",
+      "sub_short": "モーター・駆動",
+      "sub_short_en": "Motion systems",
       "row": 0,
       "relations": [
         {
@@ -104,6 +110,8 @@
       "name_en": "Smart Precision Optics",
       "sub": "光学機器",
       "sub_en": "Optics",
+      "sub_short": "光学機器",
+      "sub_short_en": "Optics",
       "row": 0,
       "relations": [
         {
@@ -128,6 +136,8 @@
       "name_en": "Insight Intelligent Sensors",
       "sub": "センサー",
       "sub_en": "Sensors",
+      "sub_short": "センサー",
+      "sub_short_en": "Sensors",
       "row": 0,
       "relations": [
         {
@@ -152,6 +162,8 @@
       "name_en": "4M Defense",
       "sub": "防衛(地雷除去)",
       "sub_en": "Defense",
+      "sub_short": "防衛",
+      "sub_short_en": "Defense",
       "row": 0,
       "relations": [
         {
@@ -176,6 +188,8 @@
       "name_en": "Palantir",
       "sub": "データ分析",
       "sub_en": "Data analytics",
+      "sub_short": "データ分析",
+      "sub_short_en": "Data analytics",
       "row": 1,
       "relations": [
         {
@@ -200,6 +214,8 @@
       "name_en": "World View",
       "sub": "成層圏気球",
       "sub_en": "Stratospheric balloons",
+      "sub_short": "成層圏気球",
+      "sub_short_en": "Balloons",
       "row": 1,
       "relations": [
         {
@@ -224,6 +240,8 @@
       "name_en": "LightPath Technologies",
       "sub": "赤外線光学",
       "sub_en": "Infrared optics",
+      "sub_short": "赤外線光学",
+      "sub_short_en": "Infrared optics",
       "row": 1,
       "relations": [
         {
@@ -248,6 +266,8 @@
       "name_en": "Safe Pro Group",
       "sub": "ドローン画像AI",
       "sub_en": "Drone imaging AI",
+      "sub_short": "ドローン画像AI",
+      "sub_short_en": "Drone imaging AI",
       "row": 1,
       "relations": [
         {
@@ -272,6 +292,8 @@
       "name_en": "Kopin",
       "sub": "マイクロディスプレイ",
       "sub_en": "Microdisplays",
+      "sub_short": "小型表示装置",
+      "sub_short_en": "Microdisplays",
       "row": 1,
       "relations": [
         {
@@ -296,6 +318,8 @@
       "name_en": "Elbit Systems",
       "sub": "防衛(イスラエル)",
       "sub_en": "Defense (Israel)",
+      "sub_short": "防衛",
+      "sub_short_en": "Defense",
       "row": 2,
       "relations": [
         {
@@ -320,6 +344,8 @@
       "name_en": "First Breach",
       "sub": "弾薬・ドローン",
       "sub_en": "Ammunition & drones",
+      "sub_short": "弾薬・ドローン",
+      "sub_short_en": "Ammunition",
       "row": 2,
       "relations": [
         {

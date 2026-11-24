@@ -22,6 +22,8 @@
       "name": "アプライド マテリアルズ",
       "sub": "半導体製造装置",
       "sub_en": "Semiconductor equipment",
+      "sub_short": "半導体製造装置",
+      "sub_short_en": "Chip equipment",
       "row": 0,
       "relations": [
         {
@@ -46,6 +48,8 @@
       "name": "アイクストロン",
       "sub": "成膜装置",
       "sub_en": "Deposition equipment",
+      "sub_short": "成膜装置",
+      "sub_short_en": "Deposition tools",
       "row": 0,
       "relations": [
         {
@@ -70,6 +74,8 @@
       "name": "キヤノン",
       "sub": "露光・光学機器",
       "sub_en": "Lithography & optics",
+      "sub_short": "露光・光学機器",
+      "sub_short_en": "Lithography",
       "row": 0,
       "relations": [
         {
@@ -94,6 +100,8 @@
       "name": "スクリーン セミコンダクター ソリューションズ",
       "sub": "洗浄装置",
       "sub_en": "Cleaning equipment",
+      "sub_short": "洗浄装置",
+      "sub_short_en": "Cleaning gear",
       "row": 0,
       "relations": [
         {
@@ -118,6 +126,8 @@
       "name": "ズース・マイクロテック",
       "sub": "接合・露光装置",
       "sub_en": "Bonding & exposure",
+      "sub_short": "接合・露光装置",
+      "sub_short_en": "Bonding",
       "row": 0,
       "relations": [
         {

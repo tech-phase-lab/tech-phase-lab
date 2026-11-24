@@ -29,6 +29,8 @@
       "name": "シスコシステムズ",
       "sub": "通信機器",
       "sub_en": "Networking equipment",
+      "sub_short": "通信機器",
+      "sub_short_en": "Network gear",
       "row": 0,
       "relations": [
         {
@@ -53,6 +55,8 @@
       "name": "エヌビディア",
       "sub": "AI半導体",
       "sub_en": "AI semiconductors",
+      "sub_short": "AI半導体",
+      "sub_short_en": "AI chips",
       "row": 0,
       "relations": [
         {
@@ -77,6 +81,8 @@
       "name": "ノキア",
       "sub": "通信機器",
       "sub_en": "Telecom equipment",
+      "sub_short": "通信機器",
+      "sub_short_en": "Telecom gear",
       "row": 0,
       "relations": [
         {
@@ -101,6 +107,8 @@
       "name": "アマゾン",
       "sub": "クラウド・EC",
       "sub_en": "Cloud & e-commerce",
+      "sub_short": "クラウド・EC",
+      "sub_short_en": "Cloud",
       "row": 0,
       "relations": [
         {
@@ -138,6 +146,8 @@
       "name": "ジェイビル",
       "sub": "受託製造",
       "sub_en": "Contract manufacturing",
+      "sub_short": "受託製造",
+      "sub_short_en": "Contract maker",
       "row": 0,
       "relations": [
         {
@@ -162,6 +172,8 @@
       "name": "サンミナ",
       "sub": "受託製造",
       "sub_en": "Contract manufacturing",
+      "sub_short": "受託製造",
+      "sub_short_en": "Contract maker",
       "row": 0,
       "relations": [
         {
@@ -186,6 +198,8 @@
       "name": "セレスティカ",
       "sub": "受託製造",
       "sub_en": "Contract manufacturing",
+      "sub_short": "受託製造",
+      "sub_short_en": "Contract maker",
       "row": 0,
       "relations": [
         {
@@ -210,6 +224,8 @@
       "name": "ベンチマーク・エレクトロニクス",
       "sub": "受託製造",
       "sub_en": "Contract manufacturing",
+      "sub_short": "受託製造",
+      "sub_short_en": "Contract maker",
       "row": 0,
       "relations": [
         {
@@ -234,6 +250,8 @@
       "name": "オースター",
       "sub": "ライダー(センサー)",
       "sub_en": "Lidar sensors",
+      "sub_short": "ライダー",
+      "sub_short_en": "Lidar sensors",
       "row": 1,
       "relations": [
         {

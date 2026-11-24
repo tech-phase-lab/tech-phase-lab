@@ -27,6 +27,8 @@
       "name": "マイクロソフト",
       "sub": "ソフト・クラウド",
       "sub_en": "Software & cloud",
+      "sub_short": "ソフト",
+      "sub_short_en": "Software & cloud",
       "row": 0,
       "relations": [
         {
@@ -50,6 +52,8 @@
       "name": "JPモルガン・チェース",
       "sub": "銀行",
       "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
       "row": 0,
       "relations": [
         {
@@ -76,6 +80,8 @@
       "name": "PNCフィナンシャル・サービシズ",
       "sub": "銀行",
       "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
       "row": 0,
       "relations": [
         {
@@ -102,6 +108,8 @@
       "name": "オクタ",
       "sub": "IDセキュリティ",
       "sub_en": "Identity security",
+      "sub_short": "IDセキュリティ",
+      "sub_short_en": "Identity",
       "row": 0,
       "relations": [
         {
@@ -126,6 +134,8 @@
       "name": "オートマティック・データ・プロセッシング",
       "sub": "給与・人事サービス",
       "sub_en": "Payroll & HR services",
+      "sub_short": "給与",
+      "sub_short_en": "Payroll services",
       "row": 1,
       "relations": [
         {
@@ -150,6 +160,8 @@
       "name": "ペイチェックス",
       "sub": "給与・人事サービス",
       "sub_en": "Payroll & HR services",
+      "sub_short": "給与",
+      "sub_short_en": "Payroll services",
       "row": 1,
       "relations": [
         {
@@ -174,6 +186,8 @@
       "name": "ペイコム・ソフトウェア",
       "sub": "給与・人事ソフト",
       "sub_en": "Payroll & HR software",
+      "sub_short": "給与",
+      "sub_short_en": "Payroll software",
       "row": 1,
       "relations": [
         {

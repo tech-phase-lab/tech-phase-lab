@@ -24,6 +24,8 @@
       "name": "ティルデン・マイニング",
       "sub": "鉄鉱石鉱山",
       "sub_en": "Iron ore mine",
+      "sub_short": "鉄鉱石鉱山",
+      "sub_short_en": "Iron ore mine",
       "row": 0,
       "relations": [
         {
@@ -48,6 +50,8 @@
       "name": "アメリカン・トランスミッション",
       "sub": "送電会社",
       "sub_en": "Transmission company",
+      "sub_short": "送電会社",
+      "sub_short_en": "Transmission",
       "row": 0,
       "relations": [
         {
@@ -72,6 +76,8 @@
       "name": "FPLエナジー・ポイント・ビーチ",
       "sub": "発電事業者",
       "sub_en": "Power generator",
+      "sub_short": "発電事業者",
+      "sub_short_en": "Power generator",
       "row": 1,
       "relations": [
         {
@@ -96,6 +102,8 @@
       "name": "マイクロソフト",
       "sub": "データセンター",
       "sub_en": "Data centers",
+      "sub_short": "データセンター",
+      "sub_short_en": "Data centers",
       "row": 0,
       "relations": [
         {
@@ -120,6 +128,8 @@
       "name": "バンテージ・データセンターズ",
       "sub": "データセンター",
       "sub_en": "Data centers",
+      "sub_short": "データセンター",
+      "sub_short_en": "Data centers",
       "row": 0,
       "relations": [
         {

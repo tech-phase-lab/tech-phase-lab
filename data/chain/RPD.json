@@ -29,6 +29,8 @@
       "name": "マイクロソフト",
       "sub": "ソフト・クラウド",
       "sub_en": "Software & cloud",
+      "sub_short": "ソフト",
+      "sub_short_en": "Software & cloud",
       "row": 0,
       "relations": [
         {
@@ -68,6 +70,8 @@
       "name": "サービスナウ",
       "sub": "業務ワークフロー",
       "sub_en": "Workflow software",
+      "sub_short": "業務フロー",
+      "sub_short_en": "Workflow",
       "row": 0,
       "relations": [
         {
@@ -94,6 +98,8 @@
       "name": "アマゾン",
       "sub": "EC・クラウド",
       "sub_en": "E-commerce & cloud",
+      "sub_short": "EC・クラウド",
+      "sub_short_en": "E-commerce",
       "row": 0,
       "relations": [
         {
@@ -120,6 +126,8 @@
       "name": "グーグル",
       "sub": "検索・クラウド",
       "sub_en": "Search & cloud",
+      "sub_short": "検索・クラウド",
+      "sub_short_en": "Search & cloud",
       "row": 0,
       "relations": [
         {
@@ -146,6 +154,8 @@
       "name": "パロアルトネットワークス",
       "sub": "サイバーセキュリティ",
       "sub_en": "Cybersecurity",
+      "sub_short": "サイバー防御",
+      "sub_short_en": "Cybersecurity",
       "row": 0,
       "relations": [
         {
@@ -172,6 +182,8 @@
       "name": "OpenAI",
       "sub": "生成AI",
       "sub_en": "Generative AI",
+      "sub_short": "生成AI",
+      "sub_short_en": "Generative AI",
       "row": 0,
       "relations": [
         {
@@ -197,6 +209,8 @@
       "name": "JPモルガン・チェース",
       "sub": "銀行",
       "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
       "row": 1,
       "relations": [
         {
@@ -223,6 +237,8 @@
       "name": "クオリス",
       "sub": "脆弱性管理",
       "sub_en": "Vulnerability management",
+      "sub_short": "脆弱性管理",
+      "sub_short_en": "Vuln. mgmt",
       "row": 2,
       "relations": [
         {
@@ -247,6 +263,8 @@
       "name": "テナブル",
       "sub": "脆弱性管理",
       "sub_en": "Vulnerability management",
+      "sub_short": "脆弱性管理",
+      "sub_short_en": "Vuln. mgmt",
       "row": 2,
       "relations": [
         {

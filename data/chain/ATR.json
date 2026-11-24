@@ -29,6 +29,8 @@
       "name_en": "Interparfums",
       "sub": "香水",
       "sub_en": "Fragrances",
+      "sub_short": "香水",
+      "sub_short_en": "Fragrances",
       "row": 0,
       "relations": [
         {
@@ -53,6 +55,8 @@
       "name_en": "SWK Holdings",
       "sub": "医療金融",
       "sub_en": "Healthcare finance",
+      "sub_short": "医療金融",
+      "sub_short_en": "Health finance",
       "row": 0,
       "relations": [
         {
@@ -77,6 +81,8 @@
       "name_en": "Nasus Pharma",
       "sub": "点鼻薬",
       "sub_en": "Nasal drugs",
+      "sub_short": "点鼻薬",
+      "sub_short_en": "Nasal drugs",
       "row": 0,
       "relations": [
         {
@@ -101,6 +107,8 @@
       "name_en": "ARS Pharmaceuticals",
       "sub": "点鼻アドレナリン",
       "sub_en": "Nasal epinephrine",
+      "sub_short": "点鼻薬",
+      "sub_short_en": "Nasal spray",
       "row": 0,
       "relations": [
         {
@@ -125,6 +133,8 @@
       "name_en": "West Pharmaceutical Services",
       "sub": "医薬品包装",
       "sub_en": "Drug packaging",
+      "sub_short": "医薬品包装",
+      "sub_short_en": "Drug packaging",
       "row": 1,
       "relations": [
         {
@@ -149,6 +159,8 @@
       "name_en": "Silgan Holdings",
       "sub": "容器・キャップ",
       "sub_en": "Containers & closures",
+      "sub_short": "容器・キャップ",
+      "sub_short_en": "Containers",
       "row": 1,
       "relations": [
         {
@@ -173,6 +185,8 @@
       "name_en": "Amcor",
       "sub": "包装",
       "sub_en": "Packaging",
+      "sub_short": "包装",
+      "sub_short_en": "Packaging",
       "row": 1,
       "relations": [
         {
@@ -197,6 +211,8 @@
       "name_en": "TriMas",
       "sub": "包装部品",
       "sub_en": "Packaging components",
+      "sub_short": "包装部品",
+      "sub_short_en": "Packaging",
       "row": 1,
       "relations": [
         {

@@ -32,6 +32,8 @@
       "name_en": "Huatai Insurance Group",
       "sub": "保険・資産運用(中国)",
       "sub_en": "Insurance & asset management (China)",
+      "sub_short": "保険・資産運用",
+      "sub_short_en": "Insurance",
       "row": 0,
       "relations": [
         {
@@ -56,6 +58,8 @@
       "name_en": "LMG Insurance",
       "sub": "損害保険(タイ)",
       "sub_en": "P&C insurance (Thailand)",
+      "sub_short": "損害保険",
+      "sub_short_en": "P&C insurance",
       "row": 0,
       "relations": [
         {
@@ -80,6 +84,8 @@
       "name_en": "Liberty Insurance Vietnam",
       "sub": "損害保険(ベトナム)",
       "sub_en": "P&C insurance (Vietnam)",
+      "sub_short": "損害保険",
+      "sub_short_en": "P&C insurance",
       "row": 0,
       "relations": [
         {
@@ -104,6 +110,8 @@
       "name_en": "Aon",
       "sub": "保険仲介",
       "sub_en": "Insurance broker",
+      "sub_short": "保険仲介",
+      "sub_short_en": "Insurance broker",
       "row": 0,
       "relations": [
         {
@@ -128,6 +136,8 @@
       "name_en": "Insperity",
       "sub": "人事・給与アウトソーシング",
       "sub_en": "HR outsourcing",
+      "sub_short": "人事",
+      "sub_short_en": "HR outsourcing",
       "row": 1,
       "relations": [
         {
@@ -152,6 +162,8 @@
       "name_en": "ADP",
       "sub": "給与計算サービス",
       "sub_en": "Payroll services",
+      "sub_short": "給与計算",
+      "sub_short_en": "Payroll services",
       "row": 1,
       "relations": [
         {
@@ -176,6 +188,8 @@
       "name_en": "Bowhead Specialty",
       "sub": "特殊保険",
       "sub_en": "Specialty insurance",
+      "sub_short": "特殊保険",
+      "sub_short_en": "Insurance",
       "row": 2,
       "relations": [
         {
@@ -200,6 +214,8 @@
       "name_en": "Global Indemnity",
       "sub": "特殊保険",
       "sub_en": "Specialty insurance",
+      "sub_short": "特殊保険",
+      "sub_short_en": "Insurance",
       "row": 2,
       "relations": [
         {

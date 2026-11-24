@@ -21,6 +21,8 @@
       "name_en": "Ipswitch",
       "sub": "ファイル転送・ネットワーク監視",
       "sub_en": "File transfer & network monitoring",
+      "sub_short": "ファイル転送",
+      "sub_short_en": "File transfer",
       "row": 0,
       "relations": [
         {
@@ -45,6 +47,8 @@
       "name_en": "Chef Software",
       "sub": "IT運用の自動化",
       "sub_en": "Infrastructure automation",
+      "sub_short": "IT運用の自動化",
+      "sub_short_en": "Infra automation",
       "row": 0,
       "relations": [
         {
@@ -69,6 +73,8 @@
       "name_en": "Kemp Technologies",
       "sub": "負荷分散",
       "sub_en": "Load balancing",
+      "sub_short": "負荷分散",
+      "sub_short_en": "Load balancing",
       "row": 0,
       "relations": [
         {
@@ -93,6 +99,8 @@
       "name_en": "MarkLogic",
       "sub": "データベース",
       "sub_en": "Database",
+      "sub_short": "データベース",
+      "sub_short_en": "Database",
       "row": 0,
       "relations": [
         {
@@ -117,6 +125,8 @@
       "name_en": "ShareFile",
       "sub": "ファイル共有",
       "sub_en": "File sharing",
+      "sub_short": "ファイル共有",
+      "sub_short_en": "File sharing",
       "row": 0,
       "relations": [
         {
@@ -141,6 +151,8 @@
       "name_en": "Nuclia",
       "sub": "AI検索",
       "sub_en": "AI search",
+      "sub_short": "AI検索",
+      "sub_short_en": "AI search",
       "row": 0,
       "relations": [
         {

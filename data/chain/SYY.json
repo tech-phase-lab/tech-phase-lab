@@ -32,6 +32,8 @@
       "name_en": "Post Holdings",
       "sub": "食品メーカー",
       "sub_en": "Packaged foods",
+      "sub_short": "食品メーカー",
+      "sub_short_en": "Packaged foods",
       "row": 0,
       "relations": [
         {
@@ -56,6 +58,8 @@
       "name_en": "Mama's Creations",
       "sub": "調理済み食品",
       "sub_en": "Prepared foods",
+      "sub_short": "調理済み食品",
+      "sub_short_en": "Prepared foods",
       "row": 0,
       "relations": [
         {
@@ -80,6 +84,8 @@
       "name_en": "Aramark",
       "sub": "給食・施設サービス",
       "sub_en": "Food & facilities services",
+      "sub_short": "給食",
+      "sub_short_en": "Food services",
       "row": 1,
       "relations": [
         {
@@ -104,6 +110,8 @@
       "name_en": "GEN Restaurant Group",
       "sub": "韓国式焼肉チェーン",
       "sub_en": "Korean BBQ restaurants",
+      "sub_short": "焼肉チェーン",
+      "sub_short_en": "Korean BBQ",
       "row": 1,
       "relations": [
         {
@@ -128,6 +136,8 @@
       "name_en": "Pinstripes",
       "sub": "飲食・娯楽施設",
       "sub_en": "Dining & entertainment",
+      "sub_short": "飲食・娯楽施設",
+      "sub_short_en": "Dining",
       "row": 1,
       "relations": [
         {
@@ -152,6 +162,8 @@
       "name_en": "Black Rock Coffee Bar",
       "sub": "コーヒーチェーン",
       "sub_en": "Coffee chain",
+      "sub_short": "コーヒー",
+      "sub_short_en": "Coffee chain",
       "row": 1,
       "relations": [
         {
@@ -176,6 +188,8 @@
       "name_en": "ONE Group Hospitality",
       "sub": "レストラン",
       "sub_en": "Restaurants",
+      "sub_short": "レストラン",
+      "sub_short_en": "Restaurants",
       "row": 1,
       "relations": [
         {
@@ -200,6 +214,8 @@
       "name_en": "Farmer Brothers",
       "sub": "業務用コーヒー",
       "sub_en": "Foodservice coffee",
+      "sub_short": "業務用コーヒー",
+      "sub_short_en": "Coffee supply",
       "row": 2,
       "relations": [
         {
@@ -224,6 +240,8 @@
       "name_en": "Global Industry Products",
       "sub": "業務用消耗品の卸",
       "sub_en": "Foodservice supplies",
+      "sub_short": "消耗品卸",
+      "sub_short_en": "Food supplies",
       "row": 2,
       "relations": [
         {

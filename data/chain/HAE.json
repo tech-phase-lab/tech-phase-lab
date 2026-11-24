@@ -30,6 +30,8 @@
       "name_en": "Vivasure Medical",
       "sub": "血管閉鎖デバイス",
       "sub_en": "Vessel closure devices",
+      "sub_short": "血管閉鎖機器",
+      "sub_short_en": "Vessel closure",
       "row": 0,
       "relations": [
         {
@@ -54,6 +56,8 @@
       "name_en": "Attune Medical",
       "sub": "食道温度管理",
       "sub_en": "Esophageal temperature management",
+      "sub_short": "食道温度管理",
+      "sub_short_en": "Esophageal temp",
       "row": 0,
       "relations": [
         {
@@ -78,6 +82,8 @@
       "name_en": "Terumo",
       "sub": "医療機器",
       "sub_en": "Medical devices",
+      "sub_short": "医療機器",
+      "sub_short_en": "Medical devices",
       "row": 1,
       "relations": [
         {
@@ -102,6 +108,8 @@
       "name_en": "Fresenius",
       "sub": "医療機器・透析(独)",
       "sub_en": "Medical devices & dialysis (Germany)",
+      "sub_short": "医療機器・透析",
+      "sub_short_en": "Medical devices",
       "row": 1,
       "relations": [
         {
@@ -126,6 +134,8 @@
       "name_en": "Abbott Laboratories",
       "sub": "医療機器",
       "sub_en": "Medical devices",
+      "sub_short": "医療機器",
+      "sub_short_en": "Medical devices",
       "row": 1,
       "relations": [
         {
@@ -150,6 +160,8 @@
       "name_en": "Teleflex",
       "sub": "医療機器",
       "sub_en": "Medical devices",
+      "sub_short": "医療機器",
+      "sub_short_en": "Medical devices",
       "row": 1,
       "relations": [
         {
@@ -174,6 +186,8 @@
       "name_en": "Cordis",
       "sub": "血管治療機器",
       "sub_en": "Vascular devices",
+      "sub_short": "血管治療機器",
+      "sub_short_en": "Vascular devices",
       "row": 1,
       "relations": [
         {
@@ -198,6 +212,8 @@
       "name_en": "Boston Scientific",
       "sub": "医療機器",
       "sub_en": "Medical devices",
+      "sub_short": "医療機器",
+      "sub_short_en": "Medical devices",
       "row": 1,
       "relations": [
         {
@@ -222,6 +238,8 @@
       "name_en": "Philips",
       "sub": "医療機器(蘭)",
       "sub_en": "Health technology (Netherlands)",
+      "sub_short": "医療機器",
+      "sub_short_en": "Health tech",
       "row": 1,
       "relations": [
         {
@@ -246,6 +264,8 @@
       "name_en": "Sysmex",
       "sub": "検体検査",
       "sub_en": "Diagnostics",
+      "sub_short": "検体検査",
+      "sub_short_en": "Diagnostics",
       "row": 1,
       "relations": [
         {
@@ -270,6 +290,8 @@
       "name_en": "Werfen",
       "sub": "検体検査(西)",
       "sub_en": "Diagnostics (Spain)",
+      "sub_short": "検体検査",
+      "sub_short_en": "Diagnostics",
       "row": 1,
       "relations": [
         {

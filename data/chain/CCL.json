@@ -27,6 +27,8 @@
       "name": "フィンカンティエリ",
       "sub": "造船所",
       "sub_en": "Shipbuilder",
+      "sub_short": "造船所",
+      "sub_short_en": "Shipbuilder",
       "row": 1,
       "relations": [
         {
@@ -51,6 +53,8 @@
       "name": "マイヤー・ヴェルフト",
       "sub": "造船所",
       "sub_en": "Shipbuilder",
+      "sub_short": "造船所",
+      "sub_short_en": "Shipbuilder",
       "row": 1,
       "relations": [
         {
@@ -75,6 +79,8 @@
       "name": "ロイヤル・カリビアン・グループ",
       "sub": "クルーズ大手の競合",
       "sub_en": "Major cruise competitor",
+      "sub_short": "クルーズ",
+      "sub_short_en": "Cruises",
       "row": 0,
       "relations": [
         {
@@ -99,6 +105,8 @@
       "name": "ノルウェージャン・クルーズライン",
       "sub": "クルーズ大手の競合",
       "sub_en": "Major cruise competitor",
+      "sub_short": "クルーズ",
+      "sub_short_en": "Cruises",
       "row": 0,
       "relations": [
         {
@@ -123,6 +131,8 @@
       "name": "MSCクルーズ",
       "sub": "クルーズ大手の競合",
       "sub_en": "Major cruise competitor",
+      "sub_short": "クルーズ",
+      "sub_short_en": "Cruises",
       "row": 0,
       "relations": [
         {

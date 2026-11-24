@@ -30,6 +30,8 @@
       "name": "ブロードコム",
       "sub": "半導体",
       "sub_en": "Semiconductors",
+      "sub_short": "半導体",
+      "sub_short_en": "Semiconductors",
       "row": 0,
       "relations": [
         {
@@ -67,6 +69,8 @@
       "name": "オン・セミコンダクター",
       "sub": "パワー・センシング半導体",
       "sub_en": "Power and sensing semiconductors",
+      "sub_short": "パワー半導体",
+      "sub_short_en": "Power chips",
       "row": 0,
       "relations": [
         {
@@ -104,6 +108,8 @@
       "name": "アルファベット(グーグル)",
       "sub": "インターネット・AI",
       "sub_en": "Internet & AI",
+      "sub_short": "インターネット",
+      "sub_short_en": "Internet & AI",
       "row": 0,
       "relations": [
         {
@@ -139,6 +145,8 @@
       "name": "ウェルズ・ファーゴ",
       "sub": "銀行",
       "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
       "row": 1,
       "relations": [
         {
@@ -178,6 +186,8 @@
       "name": "ヒマックス・テクノロジーズ",
       "sub": "ディスプレイドライバー",
       "sub_en": "Display drivers",
+      "sub_short": "表示用半導体",
+      "sub_short_en": "Display drivers",
       "row": 2,
       "relations": [
         {
@@ -202,6 +212,8 @@
       "name": "シリコン・ラボラトリーズ",
       "sub": "無線IoT半導体",
       "sub_en": "Wireless IoT semiconductors",
+      "sub_short": "無線IoT半導体",
+      "sub_short_en": "IoT chips",
       "row": 2,
       "relations": [
         {

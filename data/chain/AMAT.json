@@ -36,6 +36,8 @@
       "name": "Ultra Clean Holdings",
       "sub": "半導体装置の部品",
       "sub_en": "Equipment subsystems",
+      "sub_short": "装置部品",
+      "sub_short_en": "Tool parts",
       "row": 0,
       "relations": [
         {
@@ -76,6 +78,8 @@
       "name": "Ichor Holdings",
       "sub": "半導体装置の部品",
       "sub_en": "Equipment subsystems",
+      "sub_short": "装置部品",
+      "sub_short_en": "Tool parts",
       "row": 0,
       "relations": [
         {
@@ -101,6 +105,8 @@
       "name": "Atomera",
       "sub": "半導体材料技術",
       "sub_en": "Semiconductor materials tech",
+      "sub_short": "半導体材料技術",
+      "sub_short_en": "Chip materials",
       "row": 1,
       "relations": [
         {
@@ -126,6 +132,8 @@
       "name": "BE Semiconductor Industries",
       "sub": "半導体後工程装置",
       "sub_en": "Back-end equipment",
+      "sub_short": "後工程装置",
+      "sub_short_en": "Back-end tools",
       "row": 2,
       "relations": [
         {
@@ -164,6 +172,8 @@
       "name": "Lam Research",
       "sub": "半導体製造装置",
       "sub_en": "Chip equipment",
+      "sub_short": "半導体製造装置",
+      "sub_short_en": "Chip equipment",
       "row": 3,
       "relations": [
         {
@@ -187,6 +197,8 @@
       "name": "KLA Corporation",
       "sub": "検査・計測装置",
       "sub_en": "Inspection & metrology",
+      "sub_short": "検査・計測装置",
+      "sub_short_en": "Inspection",
       "row": 3,
       "relations": [
         {
@@ -210,6 +222,8 @@
       "name": "ASML Holding",
       "sub": "露光装置",
       "sub_en": "Lithography",
+      "sub_short": "露光装置",
+      "sub_short_en": "Lithography",
       "row": 3,
       "relations": [
         {
@@ -235,6 +249,8 @@
       "name": "Axcelis Technologies",
       "sub": "イオン注入装置",
       "sub_en": "Ion implantation",
+      "sub_short": "イオン注入装置",
+      "sub_short_en": "Ion implantation",
       "row": 3,
       "relations": [
         {
@@ -258,6 +274,8 @@
       "name": "Veeco Instruments",
       "sub": "成膜・エッチング装置",
       "sub_en": "Deposition & etch",
+      "sub_short": "成膜装置",
+      "sub_short_en": "Deposition",
       "row": 3,
       "relations": [
         {
@@ -281,6 +299,8 @@
       "name": "ACM Research",
       "sub": "洗浄・成膜装置",
       "sub_en": "Cleaning & deposition",
+      "sub_short": "洗浄・成膜装置",
+      "sub_short_en": "Cleaning",
       "row": 3,
       "relations": [
         {
@@ -306,6 +326,8 @@
       "name": "PDF Solutions",
       "sub": "製造データ解析ソフト",
       "sub_en": "Manufacturing analytics",
+      "sub_short": "製造データ解析",
+      "sub_short_en": "Factory data",
       "row": 3,
       "relations": [
         {
@@ -331,6 +353,8 @@
       "name": "Nova",
       "sub": "計測装置",
       "sub_en": "Metrology",
+      "sub_short": "計測装置",
+      "sub_short_en": "Metrology",
       "row": 3,
       "relations": [
         {

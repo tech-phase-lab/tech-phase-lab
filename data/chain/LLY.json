@@ -19,6 +19,8 @@
       "name": "ベーリンガーインゲルハイム",
       "sub": "大手製薬",
       "sub_en": "Large pharma",
+      "sub_short": "大手製薬",
+      "sub_short_en": "Large pharma",
       "row": 0,
       "relations": [
         {
@@ -43,6 +45,8 @@
       "name": "ロシュ",
       "sub": "大手製薬",
       "sub_en": "Large pharma",
+      "sub_short": "大手製薬",
+      "sub_short_en": "Large pharma",
       "row": 0,
       "relations": [
         {
@@ -67,6 +71,8 @@
       "name": "アルミラル",
       "sub": "皮膚科製薬",
       "sub_en": "Dermatology pharma",
+      "sub_short": "皮膚科製薬",
+      "sub_short_en": "Dermatology",
       "row": 0,
       "relations": [
         {
@@ -91,6 +97,8 @@
       "name": "中外製薬",
       "sub": "製薬",
       "sub_en": "Pharmaceuticals",
+      "sub_short": "製薬",
+      "sub_short_en": "Pharmaceuticals",
       "row": 0,
       "relations": [
         {
@@ -115,6 +123,8 @@
       "name": "武田薬品工業",
       "sub": "大手製薬",
       "sub_en": "Large pharma",
+      "sub_short": "大手製薬",
+      "sub_short_en": "Large pharma",
       "row": 0,
       "relations": [
         {
@@ -139,6 +149,8 @@
       "name": "マッケソン",
       "sub": "医薬品卸",
       "sub_en": "Drug wholesaler",
+      "sub_short": "医薬品卸",
+      "sub_short_en": "Drug wholesaler",
       "row": 0,
       "relations": [
         {
@@ -163,6 +175,8 @@
       "name": "シンコラ",
       "sub": "医薬品卸",
       "sub_en": "Drug wholesaler",
+      "sub_short": "医薬品卸",
+      "sub_short_en": "Drug wholesaler",
       "row": 0,
       "relations": [
         {
@@ -187,6 +201,8 @@
       "name": "カーディナル・ヘルス",
       "sub": "医薬品卸",
       "sub_en": "Drug wholesaler",
+      "sub_short": "医薬品卸",
+      "sub_short_en": "Drug wholesaler",
       "row": 0,
       "relations": [
         {
@@ -211,6 +227,8 @@
       "name": "インサイト",
       "sub": "医薬品",
       "sub_en": "Pharma",
+      "sub_short": "医薬品",
+      "sub_short_en": "Pharma",
       "row": 0,
       "relations": [
         {

@@ -25,6 +25,8 @@
       "name_en": "Mitsubishi UFJ Financial Group",
       "sub": "銀行(日本)",
       "sub_en": "Bank (Japan)",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
       "row": 0,
       "relations": [
         {
@@ -49,6 +51,8 @@
       "name_en": "BrightSpring Health Services",
       "sub": "在宅医療・薬局",
       "sub_en": "Home health & pharmacy",
+      "sub_short": "在宅医療・薬局",
+      "sub_short_en": "Home health",
       "row": 1,
       "relations": [
         {
@@ -73,6 +77,8 @@
       "name_en": "Gogo",
       "sub": "機内通信",
       "sub_en": "In-flight connectivity",
+      "sub_short": "機内通信",
+      "sub_short_en": "In-flight Wi-Fi",
       "row": 1,
       "relations": [
         {
@@ -97,6 +103,8 @@
       "name_en": "KKR Real Estate Finance Trust",
       "sub": "不動産融資REIT",
       "sub_en": "Mortgage REIT",
+      "sub_short": "融資REIT",
+      "sub_short_en": "Mortgage REIT",
       "row": 1,
       "relations": [
         {
@@ -121,6 +129,8 @@
       "name_en": "Allegro MicroSystems",
       "sub": "半導体",
       "sub_en": "Semiconductors",
+      "sub_short": "半導体",
+      "sub_short_en": "Semiconductors",
       "row": 1,
       "relations": [
         {
@@ -145,6 +155,8 @@
       "name_en": "Primo Brands",
       "sub": "飲料水",
       "sub_en": "Bottled water",
+      "sub_short": "飲料水",
+      "sub_short_en": "Bottled water",
       "row": 1,
       "relations": [
         {
@@ -169,6 +181,8 @@
       "name_en": "Magnite",
       "sub": "広告技術",
       "sub_en": "Ad tech",
+      "sub_short": "広告技術",
+      "sub_short_en": "Ad tech",
       "row": 1,
       "relations": [
         {
@@ -193,6 +207,8 @@
       "name_en": "Global Business Travel Group",
       "sub": "出張管理",
       "sub_en": "Business travel",
+      "sub_short": "出張管理",
+      "sub_short_en": "Business travel",
       "row": 1,
       "relations": [
         {

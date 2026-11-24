@@ -37,6 +37,8 @@
       "name": "Amazon(AWS)",
       "sub": "クラウド(AWS)",
       "sub_en": "Cloud (AWS)",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 0,
       "relations": [
         {
@@ -60,6 +62,8 @@
       "name": "NVIDIA",
       "sub": "AI半導体",
       "sub_en": "AI chips",
+      "sub_short": "AI半導体",
+      "sub_short_en": "AI chips",
       "row": 1,
       "relations": [
         {
@@ -85,6 +89,8 @@
       "name": "Alphabet(Google Cloud)",
       "sub": "クラウド",
       "sub_en": "Cloud",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 1,
       "relations": [
         {
@@ -110,6 +116,8 @@
       "name": "Microsoft",
       "sub": "クラウド",
       "sub_en": "Cloud",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 1,
       "relations": [
         {
@@ -135,6 +143,8 @@
       "name": "IBM",
       "sub": "IT・ソフト",
       "sub_en": "IT & software",
+      "sub_short": "IT・ソフト",
+      "sub_short_en": "IT & software",
       "row": 1,
       "relations": [
         {
@@ -160,6 +170,8 @@
       "name": "Accenture",
       "sub": "ITコンサル",
       "sub_en": "IT consulting",
+      "sub_short": "ITコンサル",
+      "sub_short_en": "IT consulting",
       "row": 2,
       "relations": [
         {
@@ -183,6 +195,8 @@
       "name": "Omnicom",
       "sub": "広告会社",
       "sub_en": "Ad agency",
+      "sub_short": "広告会社",
+      "sub_short_en": "Ad agency",
       "row": 2,
       "relations": [
         {
@@ -208,6 +222,8 @@
       "name": "WPP",
       "sub": "広告会社",
       "sub_en": "Ad agency",
+      "sub_short": "広告会社",
+      "sub_short_en": "Ad agency",
       "row": 2,
       "relations": [
         {
@@ -231,6 +247,8 @@
       "name": "The Home Depot",
       "sub": "小売",
       "sub_en": "Retail",
+      "sub_short": "小売",
+      "sub_short_en": "Retail",
       "row": 2,
       "relations": [
         {
@@ -254,6 +272,8 @@
       "name": "Walt Disney",
       "sub": "エンタメ",
       "sub_en": "Entertainment",
+      "sub_short": "エンタメ",
+      "sub_short_en": "Entertainment",
       "row": 2,
       "relations": [
         {
@@ -279,6 +299,8 @@
       "name": "Autodesk",
       "sub": "設計ソフト",
       "sub_en": "Design software",
+      "sub_short": "設計ソフト",
+      "sub_short_en": "Design software",
       "row": 3,
       "relations": [
         {
@@ -301,6 +323,8 @@
       "name": "Braze",
       "sub": "マーケティング",
       "sub_en": "Marketing",
+      "sub_short": "マーケティング",
+      "sub_short_en": "Marketing",
       "row": 3,
       "relations": [
         {
@@ -323,6 +347,8 @@
       "name": "Dropbox",
       "sub": "ファイル共有・電子署名",
       "sub_en": "File sharing & e-sign",
+      "sub_short": "ファイル共有",
+      "sub_short_en": "File sharing",
       "row": 3,
       "relations": [
         {
@@ -345,6 +371,8 @@
       "name": "DocuSign",
       "sub": "電子署名",
       "sub_en": "E-signature",
+      "sub_short": "電子署名",
+      "sub_short_en": "E-signature",
       "row": 3,
       "relations": [
         {
@@ -367,6 +395,8 @@
       "name": "Getty Images",
       "sub": "画像・素材",
       "sub_en": "Stock imagery",
+      "sub_short": "画像・素材",
+      "sub_short_en": "Stock imagery",
       "row": 3,
       "relations": [
         {
@@ -389,6 +419,8 @@
       "name": "Klaviyo",
       "sub": "マーケティング",
       "sub_en": "Marketing",
+      "sub_short": "マーケティング",
+      "sub_short_en": "Marketing",
       "row": 3,
       "relations": [
         {
@@ -411,6 +443,8 @@
       "name": "Oracle",
       "sub": "クラウド・ソフト",
       "sub_en": "Cloud & software",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud & software",
       "row": 3,
       "relations": [
         {
@@ -433,6 +467,8 @@
       "name": "Shutterstock",
       "sub": "画像・素材",
       "sub_en": "Stock imagery",
+      "sub_short": "画像・素材",
+      "sub_short_en": "Stock imagery",
       "row": 3,
       "relations": [
         {
@@ -455,6 +491,8 @@
       "name": "OpenAI",
       "sub": "AI",
       "sub_en": "AI",
+      "sub_short": "AI",
+      "sub_short_en": "AI",
       "row": 1,
       "relations": [
         {
@@ -478,6 +516,8 @@
       "name": "Figma",
       "sub": "デザインソフト",
       "sub_en": "Design software",
+      "sub_short": "デザインソフト",
+      "sub_short_en": "Design software",
       "row": 1,
       "relations": [
         {
@@ -503,6 +543,8 @@
       "name": "Stagwell",
       "sub": "広告会社",
       "sub_en": "Ad agency",
+      "sub_short": "広告会社",
+      "sub_short_en": "Ad agency",
       "row": 2,
       "relations": [
         {
@@ -528,6 +570,8 @@
       "name": "Publicis Groupe",
       "sub": "広告会社",
       "sub_en": "Ad agency",
+      "sub_short": "広告会社",
+      "sub_short_en": "Ad agency",
       "row": 2,
       "relations": [
         {
@@ -553,6 +597,8 @@
       "name": "電通グループ",
       "sub": "広告会社",
       "sub_en": "Ad agency",
+      "sub_short": "広告会社",
+      "sub_short_en": "Ad agency",
       "row": 2,
       "relations": [
         {
@@ -579,6 +625,8 @@
       "name": "Box",
       "sub": "クラウドストレージ",
       "sub_en": "Cloud storage",
+      "sub_short": "クラウド保存",
+      "sub_short_en": "Cloud storage",
       "row": 1,
       "relations": [
         {

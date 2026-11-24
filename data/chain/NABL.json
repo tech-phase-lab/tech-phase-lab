@@ -19,6 +19,8 @@
       "name": "マイクロソフト",
       "sub": "クラウド・ソフト",
       "sub_en": "Cloud & software",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud & software",
       "row": 0,
       "relations": [
         {
@@ -43,6 +45,8 @@
       "name": "カセヤ",
       "sub": "MSP向け統合管理",
       "sub_en": "MSP management software",
+      "sub_short": "MSP向け管理",
+      "sub_short_en": "MSP software",
       "row": 0,
       "relations": [
         {
@@ -67,6 +71,8 @@
       "name": "コネクトワイズ",
       "sub": "MSP向け統合管理",
       "sub_en": "MSP management software",
+      "sub_short": "MSP向け管理",
+      "sub_short_en": "MSP software",
       "row": 0,
       "relations": [
         {
@@ -91,6 +97,8 @@
       "name": "ニンジャワン",
       "sub": "MSP向け統合管理",
       "sub_en": "MSP management software",
+      "sub_short": "MSP向け管理",
+      "sub_short_en": "MSP software",
       "row": 0,
       "relations": [
         {
@@ -115,6 +123,8 @@
       "name": "アクロニス",
       "sub": "データ保護",
       "sub_en": "Data protection",
+      "sub_short": "データ保護",
+      "sub_short_en": "Data protection",
       "row": 0,
       "relations": [
         {
@@ -139,6 +149,8 @@
       "name": "ヴィーム",
       "sub": "データ保護",
       "sub_en": "Data protection",
+      "sub_short": "データ保護",
+      "sub_short_en": "Data protection",
       "row": 0,
       "relations": [
         {
@@ -163,6 +175,8 @@
       "name": "アークティック・ウルフ",
       "sub": "マネージドセキュリティ",
       "sub_en": "Managed security",
+      "sub_short": "警備運用",
+      "sub_short_en": "Managed security",
       "row": 0,
       "relations": [
         {
@@ -187,6 +201,8 @@
       "name": "ソフォス",
       "sub": "セキュリティ",
       "sub_en": "Cybersecurity",
+      "sub_short": "セキュリティ",
+      "sub_short_en": "Cybersecurity",
       "row": 0,
       "relations": [
         {
@@ -211,6 +227,8 @@
       "name": "チームビューアー",
       "sub": "リモート接続",
       "sub_en": "Remote access",
+      "sub_short": "リモート接続",
+      "sub_short_en": "Remote access",
       "row": 0,
       "relations": [
         {
@@ -235,6 +253,8 @@
       "name": "ログミーイン",
       "sub": "リモート接続",
       "sub_en": "Remote access",
+      "sub_short": "リモート接続",
+      "sub_short_en": "Remote access",
       "row": 0,
       "relations": [
         {

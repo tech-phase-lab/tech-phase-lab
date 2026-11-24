@@ -27,6 +27,8 @@
       "name": "マイクロチップ・テクノロジー",
       "sub": "マイコン・アナログ半導体",
       "sub_en": "Microcontrollers & analog",
+      "sub_short": "マイコン",
+      "sub_short_en": "Microcontrollers",
       "row": 0,
       "relations": [
         {
@@ -51,6 +53,8 @@
       "name": "シリコン・ラボラトリーズ",
       "sub": "無線通信半導体",
       "sub_en": "Wireless semiconductors",
+      "sub_short": "無線通信半導体",
+      "sub_short_en": "Wireless chips",
       "row": 0,
       "relations": [
         {
@@ -88,6 +92,8 @@
       "name": "フォーティネット",
       "sub": "サイバーセキュリティ",
       "sub_en": "Cybersecurity",
+      "sub_short": "サイバー防御",
+      "sub_short_en": "Cybersecurity",
       "row": 0,
       "relations": [
         {
@@ -114,6 +120,8 @@
       "name": "モルガン・スタンレー",
       "sub": "投資銀行",
       "sub_en": "Investment bank",
+      "sub_short": "投資銀行",
+      "sub_short_en": "Investment bank",
       "row": 1,
       "relations": [
         {
@@ -140,6 +148,8 @@
       "name": "Agilysys",
       "sub": "ホスピタリティ向けソフト",
       "sub_en": "Hospitality software",
+      "sub_short": "接客業ソフト",
+      "sub_short_en": "Hotel software",
       "row": 2,
       "relations": [
         {
@@ -164,6 +174,8 @@
       "name": "クラウドストライク",
       "sub": "サイバーセキュリティ",
       "sub_en": "Cybersecurity",
+      "sub_short": "サイバー防御",
+      "sub_short_en": "Cybersecurity",
       "row": 0,
       "relations": [
         {
@@ -188,6 +200,8 @@
       "name": "アカマイ・テクノロジーズ",
       "sub": "CDN・セキュリティ",
       "sub_en": "CDN & security",
+      "sub_short": "CDN",
+      "sub_short_en": "CDN & security",
       "row": 0,
       "relations": [
         {
@@ -212,6 +226,8 @@
       "name": "Littelfuse",
       "sub": "回路保護部品",
       "sub_en": "Circuit protection",
+      "sub_short": "回路保護部品",
+      "sub_short_en": "Circuit protect",
       "row": 0,
       "relations": [
         {
@@ -237,6 +253,8 @@
       "name": "ラティス・セミコンダクター",
       "sub": "プログラマブル半導体",
       "sub_en": "Programmable chips",
+      "sub_short": "FPGA",
+      "sub_short_en": "FPGAs",
       "row": 0,
       "relations": [
         {

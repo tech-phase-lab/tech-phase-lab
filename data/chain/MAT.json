@@ -33,6 +33,8 @@
       "name_en": "Walt Disney",
       "sub": "娯楽・メディア",
       "sub_en": "Entertainment & media",
+      "sub_short": "娯楽・メディア",
+      "sub_short_en": "Entertainment",
       "row": 0,
       "relations": [
         {
@@ -57,6 +59,8 @@
       "name_en": "Netflix",
       "sub": "動画配信",
       "sub_en": "Streaming",
+      "sub_short": "動画配信",
+      "sub_short_en": "Streaming",
       "row": 0,
       "relations": [
         {
@@ -81,6 +85,8 @@
       "name_en": "Comcast (NBCUniversal)",
       "sub": "メディア",
       "sub_en": "Media",
+      "sub_short": "メディア",
+      "sub_short_en": "Media",
       "row": 0,
       "relations": [
         {
@@ -105,6 +111,8 @@
       "name_en": "Microsoft",
       "sub": "ソフトウェア・ゲーム",
       "sub_en": "Software & games",
+      "sub_short": "ソフトウェア",
+      "sub_short_en": "Software & games",
       "row": 0,
       "relations": [
         {
@@ -129,6 +137,8 @@
       "name_en": "TKO Group",
       "sub": "格闘技・プロレス",
       "sub_en": "Sports entertainment",
+      "sub_short": "格闘技",
+      "sub_short_en": "Sports media",
       "row": 0,
       "relations": [
         {
@@ -153,6 +163,8 @@
       "name_en": "Amazon (Amazon MGM Studios)",
       "sub": "EC・映像",
       "sub_en": "E-commerce & studios",
+      "sub_short": "EC・映像",
+      "sub_short_en": "E-commerce",
       "row": 1,
       "relations": [
         {
@@ -177,6 +189,8 @@
       "name_en": "Kartoon Studios",
       "sub": "子ども向けコンテンツ",
       "sub_en": "Kids content",
+      "sub_short": "子ども向け番組",
+      "sub_short_en": "Kids content",
       "row": 1,
       "relations": [
         {
@@ -201,6 +215,8 @@
       "name_en": "Kidoz",
       "sub": "子ども向けモバイル広告",
       "sub_en": "Kids mobile advertising",
+      "sub_short": "子ども向け広告",
+      "sub_short_en": "Kids mobile ads",
       "row": 1,
       "relations": [
         {
@@ -225,6 +241,8 @@
       "name_en": "Hasbro",
       "sub": "玩具",
       "sub_en": "Toys",
+      "sub_short": "玩具",
+      "sub_short_en": "Toys",
       "row": 2,
       "relations": [
         {
@@ -249,6 +267,8 @@
       "name_en": "Spin Master",
       "sub": "玩具(加)",
       "sub_en": "Toys (Canada)",
+      "sub_short": "玩具",
+      "sub_short_en": "Toys",
       "row": 2,
       "relations": [
         {
@@ -273,6 +293,8 @@
       "name_en": "LEGO",
       "sub": "玩具(デンマーク、非上場)",
       "sub_en": "Toys (Denmark, private)",
+      "sub_short": "玩具",
+      "sub_short_en": "Toys",
       "row": 2,
       "relations": [
         {
@@ -297,6 +319,8 @@
       "name_en": "JAKKS Pacific",
       "sub": "玩具",
       "sub_en": "Toys",
+      "sub_short": "玩具",
+      "sub_short_en": "Toys",
       "row": 2,
       "relations": [
         {
@@ -321,6 +345,8 @@
       "name_en": "Build-A-Bear Workshop",
       "sub": "ぬいぐるみ小売",
       "sub_en": "Plush retail",
+      "sub_short": "ぬいぐるみ小売",
+      "sub_short_en": "Plush retail",
       "row": 2,
       "relations": [
         {

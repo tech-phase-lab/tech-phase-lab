@@ -26,6 +26,8 @@
       "name": "モルガン・スタンレー",
       "sub": "投資銀行",
       "sub_en": "Investment bank",
+      "sub_short": "投資銀行",
+      "sub_short_en": "Investment bank",
       "row": 0,
       "relations": [
         {
@@ -65,6 +67,8 @@
       "name": "台湾積体電路製造",
       "sub": "半導体ファウンドリ",
       "sub_en": "Chip foundry",
+      "sub_short": "半導体受託",
+      "sub_short_en": "Chip foundry",
       "row": 1,
       "relations": [
         {
@@ -89,6 +93,8 @@
       "name": "ラム・リサーチ",
       "sub": "半導体製造装置",
       "sub_en": "Chip equipment",
+      "sub_short": "半導体製造装置",
+      "sub_short_en": "Chip equipment",
       "row": 1,
       "relations": [
         {
@@ -115,6 +121,8 @@
       "name": "エレメント・ソリューションズ",
       "sub": "特殊化学品",
       "sub_en": "Specialty chemicals",
+      "sub_short": "特殊化学品",
+      "sub_short_en": "Chemicals",
       "row": 2,
       "relations": [
         {
@@ -141,6 +149,8 @@
       "name": "富士フイルムホールディングス",
       "sub": "画像・素材",
       "sub_en": "Imaging & materials",
+      "sub_short": "画像・素材",
+      "sub_short_en": "Imaging",
       "row": 2,
       "relations": [
         {

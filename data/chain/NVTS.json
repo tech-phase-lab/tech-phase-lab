@@ -32,6 +32,8 @@
       "name": "TSMC",
       "sub": "ファウンドリ",
       "sub_en": "Foundry",
+      "sub_short": "ファウンドリ",
+      "sub_short_en": "Foundry",
       "row": 0,
       "relations": [
         {
@@ -68,6 +70,8 @@
       "name": "GlobalFoundries",
       "sub": "ファウンドリ",
       "sub_en": "Foundry",
+      "sub_short": "ファウンドリ",
+      "sub_short_en": "Foundry",
       "row": 0,
       "relations": [
         {
@@ -104,6 +108,8 @@
       "name": "Powerchip Semiconductor",
       "sub": "ファウンドリ",
       "sub_en": "Foundry",
+      "sub_short": "ファウンドリ",
+      "sub_short_en": "Foundry",
       "row": 0,
       "relations": [
         {
@@ -127,6 +133,8 @@
       "name": "NVIDIA",
       "sub": "AI半導体",
       "sub_en": "AI chips",
+      "sub_short": "AI半導体",
+      "sub_short_en": "AI chips",
       "row": 1,
       "relations": [
         {
@@ -149,6 +157,8 @@
       "name": "Infineon",
       "sub": "パワー半導体",
       "sub_en": "Power semiconductors",
+      "sub_short": "パワー半導体",
+      "sub_short_en": "Power chips",
       "row": 2,
       "relations": [
         {
@@ -172,6 +182,8 @@
       "name": "Power Integrations",
       "sub": "パワー半導体",
       "sub_en": "Power chips",
+      "sub_short": "パワー半導体",
+      "sub_short_en": "Power chips",
       "row": 2,
       "relations": [
         {
@@ -208,6 +220,8 @@
       "name": "onsemi",
       "sub": "パワー半導体",
       "sub_en": "Power semiconductors",
+      "sub_short": "パワー半導体",
+      "sub_short_en": "Power chips",
       "row": 2,
       "relations": [
         {
@@ -231,6 +245,8 @@
       "name": "Texas Instruments",
       "sub": "アナログ半導体",
       "sub_en": "Analog chips",
+      "sub_short": "アナログ半導体",
+      "sub_short_en": "Analog chips",
       "row": 2,
       "relations": [
         {
@@ -254,6 +270,8 @@
       "name": "Wolfspeed",
       "sub": "SiC半導体",
       "sub_en": "SiC semiconductors",
+      "sub_short": "SiC半導体",
+      "sub_short_en": "SiC chips",
       "row": 2,
       "relations": [
         {
@@ -277,6 +295,8 @@
       "name": "STMicroelectronics",
       "sub": "半導体",
       "sub_en": "Semiconductors",
+      "sub_short": "半導体",
+      "sub_short_en": "Semiconductors",
       "row": 2,
       "relations": [
         {
@@ -300,6 +320,8 @@
       "name": "Renesas",
       "sub": "半導体",
       "sub_en": "Semiconductors",
+      "sub_short": "半導体",
+      "sub_short_en": "Semiconductors",
       "row": 2,
       "relations": [
         {

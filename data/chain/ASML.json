@@ -36,6 +36,8 @@
       "name": "Ichor Holdings",
       "sub": "ガス・流体部品",
       "sub_en": "Fluid delivery subsystems",
+      "sub_short": "ガス・流体部品",
+      "sub_short_en": "Fluid systems",
       "row": 0,
       "relations": [
         {
@@ -60,6 +62,8 @@
       "name": "Intel",
       "sub": "半導体",
       "sub_en": "Chips",
+      "sub_short": "半導体",
+      "sub_short_en": "Chips",
       "row": 1,
       "relations": [
         {
@@ -110,6 +114,8 @@
       "name": "SK hynix",
       "sub": "メモリー",
       "sub_en": "Memory",
+      "sub_short": "メモリー",
+      "sub_short_en": "Memory",
       "row": 1,
       "relations": [
         {
@@ -133,6 +139,8 @@
       "name": "TSMC",
       "sub": "受託製造",
       "sub_en": "Foundry",
+      "sub_short": "受託製造",
+      "sub_short_en": "Foundry",
       "row": 1,
       "relations": [
         {
@@ -158,6 +166,8 @@
       "name": "Canon",
       "sub": "露光装置",
       "sub_en": "Lithography",
+      "sub_short": "露光装置",
+      "sub_short_en": "Lithography",
       "row": 2,
       "relations": [
         {
@@ -180,6 +190,8 @@
       "name": "Nikon",
       "sub": "露光装置",
       "sub_en": "Lithography",
+      "sub_short": "露光装置",
+      "sub_short_en": "Lithography",
       "row": 2,
       "relations": [
         {
@@ -202,6 +214,8 @@
       "name": "Applied Materials",
       "sub": "製造装置",
       "sub_en": "Equipment",
+      "sub_short": "製造装置",
+      "sub_short_en": "Equipment",
       "row": 2,
       "relations": [
         {
@@ -226,6 +240,8 @@
       "name": "KLA",
       "sub": "検査・計測装置",
       "sub_en": "Inspection & metrology",
+      "sub_short": "検査・計測装置",
+      "sub_short_en": "Inspection",
       "row": 2,
       "relations": [
         {
@@ -262,6 +278,8 @@
       "name": "Nova",
       "sub": "計測装置",
       "sub_en": "Metrology",
+      "sub_short": "計測装置",
+      "sub_short_en": "Metrology",
       "row": 2,
       "relations": [
         {
@@ -286,6 +304,8 @@
       "name": "Ultra Clean Holdings",
       "sub": "半導体装置の部品",
       "sub_en": "Equipment subsystems",
+      "sub_short": "装置部品",
+      "sub_short_en": "Tool parts",
       "row": 0,
       "relations": [
         {
@@ -311,6 +331,8 @@
       "name": "Koninklijke Philips",
       "sub": "医療機器",
       "sub_en": "Medical devices",
+      "sub_short": "医療機器",
+      "sub_short_en": "Medical devices",
       "row": 3,
       "relations": [
         {

@@ -32,6 +32,8 @@
       "name": "ロケット・ラボ",
       "sub": "ロケット打ち上げ",
       "sub_en": "Launch services",
+      "sub_short": "ロケット",
+      "sub_short_en": "Launch services",
       "row": 0,
       "relations": [
         {
@@ -56,6 +58,8 @@
       "name": "三菱重工業",
       "sub": "重工業",
       "sub_en": "Heavy industry",
+      "sub_short": "重工業",
+      "sub_short_en": "Heavy industry",
       "row": 0,
       "relations": [
         {
@@ -80,6 +84,8 @@
       "name": "グーグル",
       "sub": "ソフト・クラウド",
       "sub_en": "Software & cloud",
+      "sub_short": "ソフト",
+      "sub_short_en": "Software & cloud",
       "row": 1,
       "relations": [
         {
@@ -117,6 +123,8 @@
       "name": "ムーディーズ",
       "sub": "格付け・リスク分析",
       "sub_en": "Ratings & risk analytics",
+      "sub_short": "格付け",
+      "sub_short_en": "Ratings",
       "row": 1,
       "relations": [
         {
@@ -156,6 +164,8 @@
       "name": "テレサット",
       "sub": "衛星通信",
       "sub_en": "Satellite communications",
+      "sub_short": "衛星通信",
+      "sub_short_en": "Satellite comms",
       "row": 1,
       "relations": [
         {
@@ -182,6 +192,8 @@
       "name": "エアバス",
       "sub": "航空宇宙",
       "sub_en": "Aerospace",
+      "sub_short": "航空宇宙",
+      "sub_short_en": "Aerospace",
       "row": 2,
       "relations": [
         {
@@ -206,6 +218,8 @@
       "name": "ブラックスカイ・テクノロジー",
       "sub": "衛星画像",
       "sub_en": "Satellite imagery",
+      "sub_short": "衛星画像",
+      "sub_short_en": "Sat imagery",
       "row": 2,
       "relations": [
         {
@@ -230,6 +244,8 @@
       "name": "インテュイティブ・マシーンズ",
       "sub": "宇宙開発",
       "sub_en": "Space systems",
+      "sub_short": "宇宙開発",
+      "sub_short_en": "Space systems",
       "row": 2,
       "relations": [
         {
@@ -254,6 +270,8 @@
       "name": "サテロジック",
       "sub": "衛星画像",
       "sub_en": "Satellite imagery",
+      "sub_short": "衛星画像",
+      "sub_short_en": "Sat imagery",
       "row": 2,
       "relations": [
         {
@@ -278,6 +296,8 @@
       "name": "スペースX",
       "sub": "ロケット・衛星",
       "sub_en": "Launch & satellites",
+      "sub_short": "ロケット・衛星",
+      "sub_short_en": "Launch",
       "row": 2,
       "relations": [
         {
@@ -304,6 +324,8 @@
       "name": "アマゾン",
       "sub": "クラウド・EC",
       "sub_en": "Cloud & e-commerce",
+      "sub_short": "クラウド・EC",
+      "sub_short_en": "Cloud",
       "row": 2,
       "relations": [
         {

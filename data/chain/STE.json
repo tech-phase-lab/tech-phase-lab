@@ -25,6 +25,8 @@
       "name": "スリーエム",
       "sub": "複合メーカー",
       "sub_en": "Diversified manufacturer",
+      "sub_short": "複合メーカー",
+      "sub_short_en": "Manufacturing",
       "row": 0,
       "relations": [
         {
@@ -49,6 +51,8 @@
       "name": "バクスター",
       "sub": "医療機器",
       "sub_en": "Medical devices",
+      "sub_short": "医療機器",
+      "sub_short_en": "Medical devices",
       "row": 0,
       "relations": [
         {
@@ -73,6 +77,8 @@
       "name": "ボストン・サイエンティフィック",
       "sub": "医療機器",
       "sub_en": "Medical devices",
+      "sub_short": "医療機器",
+      "sub_short_en": "Medical devices",
       "row": 0,
       "relations": [
         {
@@ -97,6 +103,8 @@
       "name": "エコラボ",
       "sub": "衛生・洗浄",
       "sub_en": "Hygiene & cleaning",
+      "sub_short": "衛生・洗浄",
+      "sub_short_en": "Hygiene",
       "row": 0,
       "relations": [
         {
@@ -121,6 +129,8 @@
       "name": "フォーティブ",
       "sub": "産業技術",
       "sub_en": "Industrial technology",
+      "sub_short": "産業技術",
+      "sub_short_en": "Industrial tech",
       "row": 0,
       "relations": [
         {
@@ -145,6 +155,8 @@
       "name": "ストライカー",
       "sub": "医療機器",
       "sub_en": "Medical devices",
+      "sub_short": "医療機器",
+      "sub_short_en": "Medical devices",
       "row": 0,
       "relations": [
         {
@@ -169,6 +181,8 @@
       "name": "ゲティンゲ",
       "sub": "滅菌機器",
       "sub_en": "Sterilization equipment",
+      "sub_short": "滅菌機器",
+      "sub_short_en": "Sterilizers",
       "row": 0,
       "relations": [
         {
@@ -193,6 +207,8 @@
       "name": "オリンパス",
       "sub": "内視鏡・医療",
       "sub_en": "Endoscopy & medical",
+      "sub_short": "内視鏡・医療",
+      "sub_short_en": "Endoscopy",
       "row": 0,
       "relations": [
         {
@@ -217,6 +233,8 @@
       "name": "ソテラ・ヘルス(ステリジェニクス)",
       "sub": "受託滅菌",
       "sub_en": "Contract sterilization",
+      "sub_short": "受託滅菌",
+      "sub_short_en": "Sterilization",
       "row": 0,
       "relations": [
         {

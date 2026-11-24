@@ -31,6 +31,8 @@
       "name": "アーケル・ソリューションズ",
       "sub": "海底設備・エンジニアリング",
       "sub_en": "Subsea & engineering",
+      "sub_short": "海底設備",
+      "sub_short_en": "Subsea",
       "row": 0,
       "relations": [
         {
@@ -55,6 +57,8 @@
       "name": "サブシー7",
       "sub": "海洋工事",
       "sub_en": "Offshore contracting",
+      "sub_short": "海洋工事",
+      "sub_short_en": "Offshore",
       "row": 0,
       "relations": [
         {
@@ -79,6 +83,8 @@
       "name": "アーケル・カーボン・キャプチャー",
       "sub": "炭素回収",
       "sub_en": "Carbon capture",
+      "sub_short": "炭素回収",
+      "sub_short_en": "Carbon capture",
       "row": 0,
       "relations": [
         {
@@ -103,6 +109,8 @@
       "name": "ベーカー・ヒューズ",
       "sub": "油田サービス",
       "sub_en": "Oilfield services",
+      "sub_short": "油田サービス",
+      "sub_short_en": "Oilfield svcs",
       "row": 1,
       "relations": [
         {
@@ -127,6 +135,8 @@
       "name": "ウェザーフォード",
       "sub": "油田サービス",
       "sub_en": "Oilfield services",
+      "sub_short": "油田サービス",
+      "sub_short_en": "Oilfield svcs",
       "row": 1,
       "relations": [
         {
@@ -151,6 +161,8 @@
       "name": "オーマット・テクノロジーズ",
       "sub": "地熱発電",
       "sub_en": "Geothermal power",
+      "sub_short": "地熱発電",
+      "sub_short_en": "Geothermal power",
       "row": 0,
       "relations": [
         {
@@ -175,6 +187,8 @@
       "name": "ヘリックス・エナジー・ソリューションズ",
       "sub": "海洋油田サービス",
       "sub_en": "Offshore well services",
+      "sub_short": "海洋油田",
+      "sub_short_en": "Offshore wells",
       "row": 0,
       "relations": [
         {
@@ -199,6 +213,8 @@
       "name": "ドリリング・ツールズ・インターナショナル",
       "sub": "掘削ツール",
       "sub_en": "Drilling tools",
+      "sub_short": "掘削ツール",
+      "sub_short_en": "Drilling tools",
       "row": 2,
       "relations": [
         {

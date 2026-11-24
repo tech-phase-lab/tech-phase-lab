@@ -31,6 +31,8 @@
       "name": "Shopify",
       "sub": "EC基盤",
       "sub_en": "Commerce platform",
+      "sub_short": "EC基盤",
+      "sub_short_en": "Commerce",
       "row": 0,
       "relations": [
         {
@@ -80,6 +82,8 @@
       "name": "Google",
       "sub": "検索・クラウド",
       "sub_en": "Search & cloud",
+      "sub_short": "検索・クラウド",
+      "sub_short_en": "Search & cloud",
       "row": 1,
       "relations": [
         {
@@ -103,6 +107,8 @@
       "name": "Amazon",
       "sub": "EC・クラウド",
       "sub_en": "E-commerce & cloud",
+      "sub_short": "EC・クラウド",
+      "sub_short_en": "E-commerce",
       "row": 1,
       "relations": [
         {
@@ -126,6 +132,8 @@
       "name": "OpenAI",
       "sub": "生成AI",
       "sub_en": "Generative AI",
+      "sub_short": "生成AI",
+      "sub_short_en": "Generative AI",
       "row": 1,
       "relations": [
         {
@@ -151,6 +159,8 @@
       "name": "Adobe",
       "sub": "クリエイティブソフト",
       "sub_en": "Creative software",
+      "sub_short": "制作ソフト",
+      "sub_short_en": "Creative apps",
       "row": 2,
       "relations": [
         {
@@ -187,6 +197,8 @@
       "name": "Salesforce",
       "sub": "CRM・クラウド",
       "sub_en": "CRM & cloud",
+      "sub_short": "CRM・クラウド",
+      "sub_short_en": "CRM & cloud",
       "row": 2,
       "relations": [
         {
@@ -223,6 +235,8 @@
       "name": "Braze",
       "sub": "マーケティングソフト",
       "sub_en": "Marketing software",
+      "sub_short": "販促ソフト",
+      "sub_short_en": "Marketing tech",
       "row": 2,
       "relations": [
         {

@@ -34,6 +34,8 @@
       "name": "OpenAI",
       "sub": "生成AI",
       "sub_en": "Generative AI",
+      "sub_short": "生成AI",
+      "sub_short_en": "Generative AI",
       "row": 0,
       "relations": [
         {
@@ -59,6 +61,8 @@
       "name": "Anthropic",
       "sub": "生成AI",
       "sub_en": "Generative AI",
+      "sub_short": "生成AI",
+      "sub_short_en": "Generative AI",
       "row": 0,
       "relations": [
         {
@@ -84,6 +88,8 @@
       "name": "Microsoft",
       "sub": "ソフト・クラウド",
       "sub_en": "Software & cloud",
+      "sub_short": "ソフト",
+      "sub_short_en": "Software & cloud",
       "row": 1,
       "relations": [
         {
@@ -120,6 +126,8 @@
       "name": "Google",
       "sub": "ネット・クラウド",
       "sub_en": "Internet & cloud",
+      "sub_short": "ネット",
+      "sub_short_en": "Internet & cloud",
       "row": 1,
       "relations": [
         {
@@ -156,6 +164,8 @@
       "name": "Amazon",
       "sub": "クラウド・EC",
       "sub_en": "Cloud & e-commerce",
+      "sub_short": "クラウド・EC",
+      "sub_short_en": "Cloud",
       "row": 1,
       "relations": [
         {
@@ -181,6 +191,8 @@
       "name": "NVIDIA",
       "sub": "AI半導体",
       "sub_en": "AI chips",
+      "sub_short": "AI半導体",
+      "sub_short_en": "AI chips",
       "row": 1,
       "relations": [
         {
@@ -204,6 +216,8 @@
       "name": "Intel",
       "sub": "半導体",
       "sub_en": "Semiconductors",
+      "sub_short": "半導体",
+      "sub_short_en": "Semiconductors",
       "row": 1,
       "relations": [
         {
@@ -229,6 +243,8 @@
       "name": "SAP",
       "sub": "業務ソフト",
       "sub_en": "Business software",
+      "sub_short": "業務ソフト",
+      "sub_short_en": "Business apps",
       "row": 2,
       "relations": [
         {
@@ -252,6 +268,8 @@
       "name": "Salesforce",
       "sub": "業務ソフト",
       "sub_en": "Business software",
+      "sub_short": "業務ソフト",
+      "sub_short_en": "Business apps",
       "row": 2,
       "relations": [
         {
@@ -275,6 +293,8 @@
       "name": "Veeva Systems",
       "sub": "ライフサイエンス向けソフト",
       "sub_en": "Life sciences software",
+      "sub_short": "生命科学ソフト",
+      "sub_short_en": "Life sci apps",
       "row": 2,
       "relations": [
         {
@@ -298,6 +318,8 @@
       "name": "Snowflake",
       "sub": "データ基盤",
       "sub_en": "Data platform",
+      "sub_short": "データ基盤",
+      "sub_short_en": "Data platform",
       "row": 2,
       "relations": [
         {
@@ -321,6 +343,8 @@
       "name": "SS&Cテクノロジーズ",
       "sub": "金融ソフト",
       "sub_en": "Financial software",
+      "sub_short": "金融ソフト",
+      "sub_short_en": "Finance apps",
       "row": 3,
       "relations": [
         {

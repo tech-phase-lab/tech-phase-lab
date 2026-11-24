@@ -28,6 +28,8 @@
       "name_en": "DuPont de Nemours",
       "sub": "化学・素材",
       "sub_en": "Chemicals & materials",
+      "sub_short": "化学・素材",
+      "sub_short_en": "Chemicals",
       "row": 0,
       "relations": [
         {
@@ -52,6 +54,8 @@
       "name_en": "Corteva",
       "sub": "農業(種子・農薬)",
       "sub_en": "Agriculture",
+      "sub_short": "農業",
+      "sub_short_en": "Agriculture",
       "row": 0,
       "relations": [
         {
@@ -76,6 +80,8 @@
       "name_en": "Qnity Electronics",
       "sub": "半導体材料",
       "sub_en": "Semiconductor materials",
+      "sub_short": "半導体材料",
+      "sub_short_en": "Chip materials",
       "row": 0,
       "relations": [
         {
@@ -100,6 +106,8 @@
       "name_en": "American Water Works",
       "sub": "水道",
       "sub_en": "Water utility",
+      "sub_short": "水道",
+      "sub_short_en": "Water utility",
       "row": 0,
       "relations": [
         {
@@ -124,6 +132,8 @@
       "name_en": "Kronos Worldwide",
       "sub": "酸化チタン",
       "sub_en": "Titanium dioxide",
+      "sub_short": "酸化チタン",
+      "sub_short_en": "Titanium dioxide",
       "row": 1,
       "relations": [
         {
@@ -148,6 +158,8 @@
       "name_en": "Tronox",
       "sub": "酸化チタン",
       "sub_en": "Titanium dioxide",
+      "sub_short": "酸化チタン",
+      "sub_short_en": "Titanium dioxide",
       "row": 1,
       "relations": [
         {
@@ -172,6 +184,8 @@
       "name_en": "Solstice Advanced Materials",
       "sub": "冷媒・特殊材料",
       "sub_en": "Refrigerants & specialty materials",
+      "sub_short": "冷媒・特殊材料",
+      "sub_short_en": "Refrigerants",
       "row": 1,
       "relations": [
         {
@@ -196,6 +210,8 @@
       "name_en": "NL Industries",
       "sub": "持株会社(Kronos株)",
       "sub_en": "Holding company",
+      "sub_short": "持株会社",
+      "sub_short_en": "Holding company",
       "row": 1,
       "relations": [
         {

@@ -34,6 +34,8 @@
       "name_en": "MicroBT",
       "sub": "マイニング機器",
       "sub_en": "Mining hardware",
+      "sub_short": "マイニング機器",
+      "sub_short_en": "Mining hardware",
       "row": 0,
       "relations": [
         {
@@ -58,6 +60,8 @@
       "name_en": "Coinbase",
       "sub": "暗号資産の保管",
       "sub_en": "Crypto custody",
+      "sub_short": "暗号資産の保管",
+      "sub_short_en": "Crypto custody",
       "row": 0,
       "relations": [
         {
@@ -82,6 +86,8 @@
       "name_en": "NYDIG",
       "sub": "暗号資産の保管",
       "sub_en": "Crypto custody",
+      "sub_short": "暗号資産の保管",
+      "sub_short_en": "Crypto custody",
       "row": 0,
       "relations": [
         {
@@ -106,6 +112,8 @@
       "name_en": "AMD",
       "sub": "半導体",
       "sub_en": "Semiconductors",
+      "sub_short": "半導体",
+      "sub_short_en": "Semiconductors",
       "row": 1,
       "relations": [
         {
@@ -130,6 +138,8 @@
       "name_en": "E4A Solutions",
       "sub": "電気設計",
       "sub_en": "Electrical engineering",
+      "sub_short": "電気設計",
+      "sub_short_en": "Electrical eng.",
       "row": 1,
       "relations": [
         {
@@ -154,6 +164,8 @@
       "name_en": "Block Mining",
       "sub": "ビットコイン採掘",
       "sub_en": "Bitcoin mining",
+      "sub_short": "BTC採掘",
+      "sub_short_en": "Bitcoin mining",
       "row": 1,
       "relations": [
         {
@@ -178,6 +190,8 @@
       "name_en": "Bitfarms",
       "sub": "ビットコイン採掘",
       "sub_en": "Bitcoin mining",
+      "sub_short": "BTC採掘",
+      "sub_short_en": "Bitcoin mining",
       "row": 1,
       "relations": [
         {
@@ -202,6 +216,8 @@
       "name_en": "Applied Digital",
       "sub": "AIデータセンター",
       "sub_en": "AI data centers",
+      "sub_short": "AI向けDC",
+      "sub_short_en": "AI data centers",
       "row": 2,
       "relations": [
         {
@@ -226,6 +242,8 @@
       "name_en": "IREN",
       "sub": "ビットコイン採掘・AIクラウド",
       "sub_en": "Bitcoin mining & AI cloud",
+      "sub_short": "BTC採掘・AI",
+      "sub_short_en": "Bitcoin mining",
       "row": 2,
       "relations": [
         {
@@ -250,6 +268,8 @@
       "name_en": "HIVE Digital Technologies",
       "sub": "マイニング・AI基盤",
       "sub_en": "Mining & AI infrastructure",
+      "sub_short": "マイニング",
+      "sub_short_en": "Mining",
       "row": 2,
       "relations": [
         {
@@ -274,6 +294,8 @@
       "name_en": "Argo Blockchain",
       "sub": "ビットコイン採掘",
       "sub_en": "Bitcoin mining",
+      "sub_short": "BTC採掘",
+      "sub_short_en": "Bitcoin mining",
       "row": 2,
       "relations": [
         {
@@ -298,6 +320,8 @@
       "name_en": "Soluna Holdings",
       "sub": "データセンター",
       "sub_en": "Data centers",
+      "sub_short": "データセンター",
+      "sub_short_en": "Data centers",
       "row": 2,
       "relations": [
         {

@@ -20,6 +20,8 @@
       "name_en": "Dick's Sporting Goods",
       "sub": "スポーツ用品店",
       "sub_en": "Sporting goods retail",
+      "sub_short": "スポーツ用品店",
+      "sub_short_en": "Sporting goods",
       "row": 0,
       "relations": [
         {
@@ -44,6 +46,8 @@
       "name_en": "Victoria's Secret",
       "sub": "下着・衣料",
       "sub_en": "Lingerie",
+      "sub_short": "下着・衣料",
+      "sub_short_en": "Lingerie",
       "row": 0,
       "relations": [
         {
@@ -68,6 +72,8 @@
       "name_en": "Signet Jewelers",
       "sub": "宝飾品",
       "sub_en": "Jewelry",
+      "sub_short": "宝飾品",
+      "sub_short_en": "Jewelry",
       "row": 0,
       "relations": [
         {
@@ -92,6 +98,8 @@
       "name_en": "Abercrombie & Fitch",
       "sub": "衣料",
       "sub_en": "Apparel",
+      "sub_short": "衣料",
+      "sub_short_en": "Apparel",
       "row": 0,
       "relations": [
         {
@@ -116,6 +124,8 @@
       "name_en": "Gap Inc.",
       "sub": "衣料",
       "sub_en": "Apparel",
+      "sub_short": "衣料",
+      "sub_short_en": "Apparel",
       "row": 0,
       "relations": [
         {
@@ -140,6 +150,8 @@
       "name_en": "LVMH",
       "sub": "高級ブランド(仏)",
       "sub_en": "Luxury goods (France)",
+      "sub_short": "高級ブランド",
+      "sub_short_en": "Luxury goods",
       "row": 0,
       "relations": [
         {
@@ -164,6 +176,8 @@
       "name_en": "Primark",
       "sub": "衣料(英)",
       "sub_en": "Apparel (UK)",
+      "sub_short": "衣料",
+      "sub_short_en": "Apparel",
       "row": 0,
       "relations": [
         {
@@ -188,6 +202,8 @@
       "name_en": "American Eagle Outfitters",
       "sub": "衣料",
       "sub_en": "Apparel",
+      "sub_short": "衣料",
+      "sub_short_en": "Apparel",
       "row": 0,
       "relations": [
         {
@@ -212,6 +228,8 @@
       "name_en": "H&M",
       "sub": "衣料(スウェーデン)",
       "sub_en": "Apparel (Sweden)",
+      "sub_short": "衣料",
+      "sub_short_en": "Apparel",
       "row": 0,
       "relations": [
         {
@@ -236,6 +254,8 @@
       "name_en": "Zara USA",
       "sub": "衣料",
       "sub_en": "Apparel",
+      "sub_short": "衣料",
+      "sub_short_en": "Apparel",
       "row": 0,
       "relations": [
         {

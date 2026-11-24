@@ -32,6 +32,8 @@
       "name_en": "Toyota",
       "sub": "自動車",
       "sub_en": "Automaker",
+      "sub_short": "自動車",
+      "sub_short_en": "Automaker",
       "row": 0,
       "relations": [
         {
@@ -56,6 +58,8 @@
       "name_en": "General Motors (Chevrolet)",
       "sub": "自動車",
       "sub_en": "Automaker",
+      "sub_short": "自動車",
+      "sub_short_en": "Automaker",
       "row": 0,
       "relations": [
         {
@@ -80,6 +84,8 @@
       "name_en": "Ford",
       "sub": "自動車",
       "sub_en": "Automaker",
+      "sub_short": "自動車",
+      "sub_short_en": "Automaker",
       "row": 0,
       "relations": [
         {
@@ -104,6 +110,8 @@
       "name_en": "Waymo",
       "sub": "自動運転",
       "sub_en": "Autonomous driving",
+      "sub_short": "自動運転",
+      "sub_short_en": "Self-driving",
       "row": 0,
       "relations": [
         {
@@ -128,6 +136,8 @@
       "name_en": "SRS Investment Management",
       "sub": "投資会社",
       "sub_en": "Investment firm",
+      "sub_short": "投資会社",
+      "sub_short_en": "Investment firm",
       "row": 1,
       "relations": [
         {
@@ -152,6 +162,8 @@
       "name_en": "Travel + Leisure",
       "sub": "タイムシェア",
       "sub_en": "Vacation ownership",
+      "sub_short": "タイムシェア",
+      "sub_short_en": "Timeshares",
       "row": 1,
       "relations": [
         {
@@ -176,6 +188,8 @@
       "name_en": "Verra Mobility",
       "sub": "有料道路決済",
       "sub_en": "Tolling services",
+      "sub_short": "有料道路決済",
+      "sub_short_en": "Tolling services",
       "row": 1,
       "relations": [
         {
@@ -200,6 +214,8 @@
       "name_en": "Hertz",
       "sub": "レンタカー",
       "sub_en": "Car rental",
+      "sub_short": "レンタカー",
+      "sub_short_en": "Car rental",
       "row": 2,
       "relations": [
         {
@@ -224,6 +240,8 @@
       "name_en": "U-Haul Holding",
       "sub": "引越しトラック",
       "sub_en": "Moving equipment rental",
+      "sub_short": "引越しトラック",
+      "sub_short_en": "Moving rentals",
       "row": 2,
       "relations": [
         {

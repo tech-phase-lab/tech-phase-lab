@@ -31,6 +31,8 @@
       "name_en": "Bren-Tronics Defense",
       "sub": "防衛用電池",
       "sub_en": "Defense batteries",
+      "sub_short": "防衛用電池",
+      "sub_short_en": "Defense battery",
       "row": 0,
       "relations": [
         {
@@ -55,6 +57,8 @@
       "name_en": "Invensys",
       "sub": "産業機器(英国)",
       "sub_en": "Industrial (UK)",
+      "sub_short": "産業機器",
+      "sub_short_en": "Industrial",
       "row": 0,
       "relations": [
         {
@@ -79,6 +83,8 @@
       "name_en": "East Penn Manufacturing",
       "sub": "鉛蓄電池",
       "sub_en": "Lead-acid batteries",
+      "sub_short": "鉛蓄電池",
+      "sub_short_en": "Lead batteries",
       "row": 1,
       "relations": [
         {
@@ -103,6 +109,8 @@
       "name_en": "Clarios",
       "sub": "自動車用電池",
       "sub_en": "Automotive batteries",
+      "sub_short": "自動車用電池",
+      "sub_short_en": "Car batteries",
       "row": 1,
       "relations": [
         {
@@ -127,6 +135,8 @@
       "name_en": "EaglePicher",
       "sub": "特殊電池",
       "sub_en": "Specialty batteries",
+      "sub_short": "特殊電池",
+      "sub_short_en": "Batteries",
       "row": 1,
       "relations": [
         {
@@ -151,6 +161,8 @@
       "name_en": "Electrovaya",
       "sub": "リチウムイオン電池",
       "sub_en": "Lithium-ion batteries",
+      "sub_short": "電池",
+      "sub_short_en": "Li-ion batteries",
       "row": 2,
       "relations": [
         {
@@ -175,6 +187,8 @@
       "name_en": "Flux Power",
       "sub": "フォークリフト用電池",
       "sub_en": "Forklift batteries",
+      "sub_short": "産業用電池",
+      "sub_short_en": "Forklift battery",
       "row": 2,
       "relations": [
         {

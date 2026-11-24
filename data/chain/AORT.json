@@ -37,6 +37,8 @@
       "name_en": "Endospan",
       "sub": "血管内治療(イスラエル)",
       "sub_en": "Endovascular devices (Israel)",
+      "sub_short": "血管内治療",
+      "sub_short_en": "Vascular devices",
       "row": 0,
       "relations": [
         {
@@ -61,6 +63,8 @@
       "name_en": "Starch Medical",
       "sub": "止血材",
       "sub_en": "Hemostats",
+      "sub_short": "止血材",
+      "sub_short_en": "Hemostats",
       "row": 0,
       "relations": [
         {
@@ -85,6 +89,8 @@
       "name_en": "Ascyrus Medical",
       "sub": "大動脈治療機器",
       "sub_en": "Aortic devices",
+      "sub_short": "大動脈治療機器",
+      "sub_short_en": "Aortic devices",
       "row": 1,
       "relations": [
         {
@@ -109,6 +115,8 @@
       "name_en": "Medtronic",
       "sub": "医療機器",
       "sub_en": "Medical devices",
+      "sub_short": "医療機器",
+      "sub_short_en": "Medical devices",
       "row": 2,
       "relations": [
         {
@@ -133,6 +141,8 @@
       "name_en": "Abbott",
       "sub": "医療機器・医薬",
       "sub_en": "Medical devices & pharma",
+      "sub_short": "医療機器・医薬",
+      "sub_short_en": "Medical devices",
       "row": 2,
       "relations": [
         {
@@ -157,6 +167,8 @@
       "name_en": "Terumo",
       "sub": "医療機器",
       "sub_en": "Medical devices",
+      "sub_short": "医療機器",
+      "sub_short_en": "Medical devices",
       "row": 2,
       "relations": [
         {
@@ -181,6 +193,8 @@
       "name_en": "Edwards Lifesciences",
       "sub": "心臓弁",
       "sub_en": "Heart valves",
+      "sub_short": "心臓弁",
+      "sub_short_en": "Heart valves",
       "row": 3,
       "relations": [
         {

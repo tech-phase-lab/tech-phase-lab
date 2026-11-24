@@ -32,6 +32,8 @@
       "name": "Microsoft",
       "sub": "ソフト・クラウド",
       "sub_en": "Software & cloud",
+      "sub_short": "ソフト",
+      "sub_short_en": "Software & cloud",
       "row": 0,
       "relations": [
         {
@@ -81,6 +83,8 @@
       "name": "ソニーグループ",
       "sub": "ゲーム・エンタメ",
       "sub_en": "Games & entertainment",
+      "sub_short": "ゲーム",
+      "sub_short_en": "Games",
       "row": 0,
       "relations": [
         {
@@ -131,6 +135,8 @@
       "name": "任天堂",
       "sub": "ゲーム機",
       "sub_en": "Game consoles",
+      "sub_short": "ゲーム機",
+      "sub_short_en": "Game consoles",
       "row": 0,
       "relations": [
         {
@@ -168,6 +174,8 @@
       "name": "JPMorgan Chase",
       "sub": "銀行",
       "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
       "row": 1,
       "relations": [
         {
@@ -206,6 +214,8 @@
       "name": "Wells Fargo",
       "sub": "銀行",
       "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
       "row": 1,
       "relations": [
         {
@@ -231,6 +241,8 @@
       "name": "Apple",
       "sub": "ハード・ソフト",
       "sub_en": "Devices & software",
+      "sub_short": "ハード・ソフト",
+      "sub_short_en": "Devices",
       "row": 2,
       "relations": [
         {
@@ -267,6 +279,8 @@
       "name": "Alphabet(Google)",
       "sub": "検索・クラウド",
       "sub_en": "Search & cloud",
+      "sub_short": "検索・クラウド",
+      "sub_short_en": "Search & cloud",
       "row": 2,
       "relations": [
         {
@@ -316,6 +330,8 @@
       "name": "Meta Platforms",
       "sub": "SNS",
       "sub_en": "Social media",
+      "sub_short": "SNS",
+      "sub_short_en": "Social media",
       "row": 2,
       "relations": [
         {
@@ -352,6 +368,8 @@
       "name": "Tencent",
       "sub": "ゲーム・SNS",
       "sub_en": "Games & social",
+      "sub_short": "ゲーム・SNS",
+      "sub_short_en": "Games & social",
       "row": 2,
       "relations": [
         {

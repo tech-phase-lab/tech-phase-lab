@@ -33,6 +33,8 @@
       "name": "Anthropic",
       "sub": "生成AI",
       "sub_en": "Generative AI",
+      "sub_short": "生成AI",
+      "sub_short_en": "Generative AI",
       "row": 0,
       "relations": [
         {
@@ -73,6 +75,8 @@
       "name": "NVIDIA",
       "sub": "AI半導体",
       "sub_en": "AI chips",
+      "sub_short": "AI半導体",
+      "sub_short_en": "AI chips",
       "row": 0,
       "relations": [
         {
@@ -109,6 +113,8 @@
       "name": "Microsoft",
       "sub": "ソフト・クラウド",
       "sub_en": "Software & cloud",
+      "sub_short": "ソフト",
+      "sub_short_en": "Software & cloud",
       "row": 0,
       "relations": [
         {
@@ -134,6 +140,8 @@
       "name": "Airbnb",
       "sub": "旅行プラットフォーム",
       "sub_en": "Travel platform",
+      "sub_short": "旅行予約",
+      "sub_short_en": "Travel platform",
       "row": 1,
       "relations": [
         {
@@ -157,6 +165,8 @@
       "name": "Autodesk",
       "sub": "設計ソフト",
       "sub_en": "Design software",
+      "sub_short": "設計ソフト",
+      "sub_short_en": "Design software",
       "row": 1,
       "relations": [
         {
@@ -180,6 +190,8 @@
       "name": "Adobe",
       "sub": "クリエイティブソフト",
       "sub_en": "Creative software",
+      "sub_short": "制作ソフト",
+      "sub_short_en": "Creative apps",
       "row": 1,
       "relations": [
         {
@@ -203,6 +215,8 @@
       "name": "Comcast",
       "sub": "通信・メディア",
       "sub_en": "Telecom & media",
+      "sub_short": "通信・メディア",
+      "sub_short_en": "Telecom & media",
       "row": 1,
       "relations": [
         {
@@ -226,6 +240,8 @@
       "name": "ホンダ",
       "sub": "自動車",
       "sub_en": "Automobiles",
+      "sub_short": "自動車",
+      "sub_short_en": "Automobiles",
       "row": 1,
       "relations": [
         {
@@ -250,6 +266,8 @@
       "name": "パナソニック ホールディングス",
       "sub": "電機",
       "sub_en": "Electronics",
+      "sub_short": "電機",
+      "sub_short_en": "Electronics",
       "row": 1,
       "relations": [
         {
@@ -274,6 +292,8 @@
       "name": "フィリップス",
       "sub": "ヘルスケア機器",
       "sub_en": "Health technology",
+      "sub_short": "ヘルスケア機器",
+      "sub_short_en": "Health tech",
       "row": 1,
       "relations": [
         {
@@ -298,6 +318,8 @@
       "name": "JPモルガン・チェース",
       "sub": "銀行",
       "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
       "row": 2,
       "relations": [
         {
@@ -337,6 +359,8 @@
       "name": "ネットスカウト",
       "sub": "ネットワーク監視",
       "sub_en": "Network monitoring",
+      "sub_short": "ネット監視",
+      "sub_short_en": "Net monitoring",
       "row": 3,
       "relations": [
         {

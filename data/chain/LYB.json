@@ -19,6 +19,8 @@
       "name": "サソル",
       "sub": "化学・合弁相手",
       "sub_en": "Chemicals, JV partner",
+      "sub_short": "化学・合弁相手",
+      "sub_short_en": "Chemicals",
       "row": 0,
       "relations": [
         {
@@ -56,6 +58,8 @@
       "name": "コベストロ",
       "sub": "高機能素材・合弁相手",
       "sub_en": "Materials, JV partner",
+      "sub_short": "高機能素材",
+      "sub_short_en": "Materials",
       "row": 0,
       "relations": [
         {
@@ -80,6 +84,8 @@
       "name": "ナショナル・ペトロケミカル・インダストリアル",
       "sub": "サウジの石化合弁",
       "sub_en": "Saudi petrochemical JV",
+      "sub_short": "サウジ石化合弁",
+      "sub_short_en": "Saudi chem JV",
       "row": 0,
       "relations": [
         {
@@ -117,6 +123,8 @@
       "name": "アトコア",
       "sub": "電設資材",
       "sub_en": "Electrical products",
+      "sub_short": "電設資材",
+      "sub_short_en": "Electrical parts",
       "row": 0,
       "relations": [
         {

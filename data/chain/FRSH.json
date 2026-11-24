@@ -35,6 +35,8 @@
       "name": "Amazon",
       "sub": "クラウド",
       "sub_en": "Cloud",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 0,
       "relations": [
         {
@@ -70,6 +72,8 @@
       "name": "Seagate",
       "sub": "データストレージ",
       "sub_en": "Data storage",
+      "sub_short": "ストレージ",
+      "sub_short_en": "Data storage",
       "row": 1,
       "relations": [
         {
@@ -93,6 +97,8 @@
       "name": "ソニーグループ",
       "sub": "電機・エンタメ",
       "sub_en": "Electronics & entertainment",
+      "sub_short": "電機・エンタメ",
+      "sub_short_en": "Electronics",
       "row": 1,
       "relations": [
         {
@@ -132,6 +138,8 @@
       "name": "Coherent",
       "sub": "レーザー・光通信",
       "sub_en": "Lasers & photonics",
+      "sub_short": "レーザー",
+      "sub_short_en": "Lasers",
       "row": 1,
       "relations": [
         {
@@ -168,6 +176,8 @@
       "name": "アメリカン・エキスプレス",
       "sub": "決済・金融",
       "sub_en": "Payments & finance",
+      "sub_short": "決済・金融",
+      "sub_short_en": "Payments",
       "row": 1,
       "relations": [
         {
@@ -193,6 +203,8 @@
       "name": "アルファベット",
       "sub": "検索・クラウド",
       "sub_en": "Search & cloud",
+      "sub_short": "検索・クラウド",
+      "sub_short_en": "Search & cloud",
       "row": 2,
       "relations": [
         {
@@ -230,6 +242,8 @@
       "name": "Apple",
       "sub": "家電・ソフト",
       "sub_en": "Consumer devices",
+      "sub_short": "家電・ソフト",
+      "sub_short_en": "Consumer devices",
       "row": 2,
       "relations": [
         {
@@ -253,6 +267,8 @@
       "name": "セールスフォース",
       "sub": "CRM・クラウド",
       "sub_en": "CRM & cloud",
+      "sub_short": "CRM・クラウド",
+      "sub_short_en": "CRM & cloud",
       "row": 3,
       "relations": [
         {
@@ -277,6 +293,8 @@
       "name": "サービスナウ",
       "sub": "ITサービス管理",
       "sub_en": "IT service management",
+      "sub_short": "ITサービス管理",
+      "sub_short_en": "IT service desk",
       "row": 3,
       "relations": [
         {
@@ -301,6 +319,8 @@
       "name": "Microsoft",
       "sub": "ソフト・クラウド",
       "sub_en": "Software & cloud",
+      "sub_short": "ソフト",
+      "sub_short_en": "Software & cloud",
       "row": 3,
       "relations": [
         {

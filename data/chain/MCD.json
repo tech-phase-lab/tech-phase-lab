@@ -31,6 +31,8 @@
       "name_en": "Lamb Weston",
       "sub": "冷凍ポテト",
       "sub_en": "Frozen potatoes",
+      "sub_short": "冷凍ポテト",
+      "sub_short_en": "Frozen potatoes",
       "row": 0,
       "relations": [
         {
@@ -55,6 +57,8 @@
       "name_en": "Graphic Packaging",
       "sub": "紙容器",
       "sub_en": "Paper packaging",
+      "sub_short": "紙容器",
+      "sub_short_en": "Paper packaging",
       "row": 0,
       "relations": [
         {
@@ -79,6 +83,8 @@
       "name_en": "PAR Technology",
       "sub": "飲食店向けソフト",
       "sub_en": "Restaurant software",
+      "sub_short": "飲食店ソフト",
+      "sub_short_en": "Restaurant apps",
       "row": 0,
       "relations": [
         {
@@ -103,6 +109,8 @@
       "name_en": "Arcos Dorados",
       "sub": "フランチャイズ(中南米)",
       "sub_en": "Franchisee (Latin America)",
+      "sub_short": "フランチャイズ",
+      "sub_short_en": "Franchisee",
       "row": 1,
       "relations": [
         {
@@ -127,6 +135,8 @@
       "name_en": "McDonald's Japan",
       "sub": "出資先(日本)",
       "sub_en": "Affiliate (Japan)",
+      "sub_short": "出資先",
+      "sub_short_en": "Affiliate",
       "row": 1,
       "relations": [
         {
@@ -151,6 +161,8 @@
       "name_en": "McDonald's China",
       "sub": "出資先(中国)",
       "sub_en": "Affiliate (China)",
+      "sub_short": "出資先",
+      "sub_short_en": "Affiliate",
       "row": 1,
       "relations": [
         {
@@ -175,6 +187,8 @@
       "name_en": "Krispy Kreme",
       "sub": "ドーナツ",
       "sub_en": "Doughnuts",
+      "sub_short": "ドーナツ",
+      "sub_short_en": "Doughnuts",
       "row": 1,
       "relations": [
         {
@@ -199,6 +213,8 @@
       "name_en": "Sweetgreen",
       "sub": "サラダチェーン",
       "sub_en": "Salad chain",
+      "sub_short": "サラダチェーン",
+      "sub_short_en": "Salad chain",
       "row": 2,
       "relations": [
         {

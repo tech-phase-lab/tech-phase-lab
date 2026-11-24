@@ -33,6 +33,8 @@
       "name_en": "GSK",
       "sub": "製薬(英)",
       "sub_en": "Pharmaceuticals (UK)",
+      "sub_short": "製薬",
+      "sub_short_en": "Pharmaceuticals",
       "row": 0,
       "relations": [
         {
@@ -57,6 +59,8 @@
       "name_en": "Basilea Pharmaceutica",
       "sub": "製薬(スイス)",
       "sub_en": "Pharmaceuticals (Switzerland)",
+      "sub_short": "製薬",
+      "sub_short_en": "Pharmaceuticals",
       "row": 0,
       "relations": [
         {
@@ -81,6 +85,8 @@
       "name_en": "Armata Pharmaceuticals",
       "sub": "ファージ治療",
       "sub_en": "Bacteriophage therapy",
+      "sub_short": "ファージ治療",
+      "sub_short_en": "Phage therapy",
       "row": 0,
       "relations": [
         {
@@ -105,6 +111,8 @@
       "name_en": "Teva",
       "sub": "後発薬",
       "sub_en": "Generics",
+      "sub_short": "後発薬",
+      "sub_short_en": "Generics",
       "row": 1,
       "relations": [
         {
@@ -129,6 +137,8 @@
       "name_en": "Novartis",
       "sub": "製薬(スイス)",
       "sub_en": "Pharmaceuticals (Switzerland)",
+      "sub_short": "製薬",
+      "sub_short_en": "Pharmaceuticals",
       "row": 1,
       "relations": [
         {
@@ -153,6 +163,8 @@
       "name_en": "AstraZeneca",
       "sub": "製薬(英)",
       "sub_en": "Pharmaceuticals (UK)",
+      "sub_short": "製薬",
+      "sub_short_en": "Pharmaceuticals",
       "row": 2,
       "relations": [
         {
@@ -177,6 +189,8 @@
       "name_en": "Boehringer Ingelheim",
       "sub": "製薬(独、非上場)",
       "sub_en": "Pharmaceuticals (Germany, private)",
+      "sub_short": "製薬",
+      "sub_short_en": "Pharmaceuticals",
       "row": 2,
       "relations": [
         {
@@ -201,6 +215,8 @@
       "name_en": "Merck & Co.",
       "sub": "製薬",
       "sub_en": "Pharmaceuticals",
+      "sub_short": "製薬",
+      "sub_short_en": "Pharmaceuticals",
       "row": 2,
       "relations": [
         {

@@ -31,6 +31,8 @@
       "name": "デル・テクノロジーズ",
       "sub": "PC・サーバー",
       "sub_en": "PCs & servers",
+      "sub_short": "PC・サーバー",
+      "sub_short_en": "PCs & servers",
       "row": 0,
       "relations": [
         {
@@ -55,6 +57,8 @@
       "name": "鴻海精密工業",
       "sub": "電子機器受託製造",
       "sub_en": "Electronics manufacturing",
+      "sub_short": "電子機器受託",
+      "sub_short_en": "EMS",
       "row": 0,
       "relations": [
         {
@@ -79,6 +83,8 @@
       "name": "STマイクロエレクトロニクス",
       "sub": "半導体",
       "sub_en": "Semiconductors",
+      "sub_short": "半導体",
+      "sub_short_en": "Semiconductors",
       "row": 1,
       "relations": [
         {
@@ -105,6 +111,8 @@
       "name": "ダイオーズ",
       "sub": "ディスクリート半導体",
       "sub_en": "Discrete semiconductors",
+      "sub_short": "個別半導体",
+      "sub_short_en": "Discrete chips",
       "row": 2,
       "relations": [
         {
@@ -129,6 +137,8 @@
       "name": "onsemi",
       "sub": "パワー半導体",
       "sub_en": "Power semiconductors",
+      "sub_short": "パワー半導体",
+      "sub_short_en": "Power chips",
       "row": 2,
       "relations": [
         {
@@ -152,6 +162,8 @@
       "name": "モノリシック・パワー・システムズ",
       "sub": "パワーIC",
       "sub_en": "Power ICs",
+      "sub_short": "パワーIC",
+      "sub_short_en": "Power ICs",
       "row": 2,
       "relations": [
         {

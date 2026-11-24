@@ -33,6 +33,8 @@
       "name": "NVIDIA",
       "sub": "AI半導体",
       "sub_en": "AI chips",
+      "sub_short": "AI半導体",
+      "sub_short_en": "AI chips",
       "row": 0,
       "relations": [
         {
@@ -71,6 +73,8 @@
       "name": "AMD",
       "sub": "半導体",
       "sub_en": "Chips",
+      "sub_short": "半導体",
+      "sub_short_en": "Chips",
       "row": 0,
       "relations": [
         {
@@ -96,6 +100,8 @@
       "name": "TSMC",
       "sub": "受託製造",
       "sub_en": "Foundry",
+      "sub_short": "受託製造",
+      "sub_short_en": "Foundry",
       "row": 0,
       "relations": [
         {
@@ -121,6 +127,8 @@
       "name": "Intel",
       "sub": "半導体",
       "sub_en": "Chips",
+      "sub_short": "半導体",
+      "sub_short_en": "Chips",
       "row": 0,
       "relations": [
         {
@@ -159,6 +167,8 @@
       "name": "Nebius",
       "sub": "AIクラウド",
       "sub_en": "AI cloud",
+      "sub_short": "AIクラウド",
+      "sub_short_en": "AI cloud",
       "row": 0,
       "relations": [
         {
@@ -184,6 +194,8 @@
       "name": "CoreWeave",
       "sub": "AIクラウド",
       "sub_en": "AI cloud",
+      "sub_short": "AIクラウド",
+      "sub_short_en": "AI cloud",
       "row": 0,
       "relations": [
         {
@@ -207,6 +219,8 @@
       "name": "Constellation Energy",
       "sub": "電力",
       "sub_en": "Power",
+      "sub_short": "電力",
+      "sub_short_en": "Power",
       "row": 0,
       "relations": [
         {
@@ -232,6 +246,8 @@
       "name": "OpenAI",
       "sub": "AI",
       "sub_en": "AI",
+      "sub_short": "AI",
+      "sub_short_en": "AI",
       "row": 1,
       "relations": [
         {
@@ -283,6 +299,8 @@
       "name": "Anthropic",
       "sub": "AI",
       "sub_en": "AI",
+      "sub_short": "AI",
+      "sub_short_en": "AI",
       "row": 1,
       "relations": [
         {
@@ -308,6 +326,8 @@
       "name": "SAP",
       "sub": "業務ソフト",
       "sub_en": "Business software",
+      "sub_short": "業務ソフト",
+      "sub_short_en": "Business apps",
       "row": 1,
       "relations": [
         {
@@ -331,6 +351,8 @@
       "name": "Oracle",
       "sub": "データベース・クラウド",
       "sub_en": "Database & cloud",
+      "sub_short": "データベース",
+      "sub_short_en": "Database & cloud",
       "row": 1,
       "relations": [
         {
@@ -367,6 +389,8 @@
       "name": "Snowflake",
       "sub": "データ基盤",
       "sub_en": "Data platform",
+      "sub_short": "データ基盤",
+      "sub_short_en": "Data platform",
       "row": 2,
       "relations": [
         {
@@ -390,6 +414,8 @@
       "name": "SentinelOne",
       "sub": "セキュリティ",
       "sub_en": "Security",
+      "sub_short": "セキュリティ",
+      "sub_short_en": "Security",
       "row": 2,
       "relations": [
         {
@@ -413,6 +439,8 @@
       "name": "Pegasystems",
       "sub": "業務ソフト",
       "sub_en": "Business software",
+      "sub_short": "業務ソフト",
+      "sub_short_en": "Business apps",
       "row": 2,
       "relations": [
         {
@@ -436,6 +464,8 @@
       "name": "Okta",
       "sub": "認証",
       "sub_en": "Identity",
+      "sub_short": "認証",
+      "sub_short_en": "Identity",
       "row": 2,
       "relations": [
         {
@@ -459,6 +489,8 @@
       "name": "ServiceNow",
       "sub": "業務ソフト",
       "sub_en": "Business software",
+      "sub_short": "業務ソフト",
+      "sub_short_en": "Business apps",
       "row": 2,
       "relations": [
         {
@@ -482,6 +514,8 @@
       "name": "Workday",
       "sub": "業務ソフト",
       "sub_en": "Business software",
+      "sub_short": "業務ソフト",
+      "sub_short_en": "Business apps",
       "row": 2,
       "relations": [
         {
@@ -505,6 +539,8 @@
       "name": "Zoom",
       "sub": "ビデオ会議",
       "sub_en": "Video meetings",
+      "sub_short": "ビデオ会議",
+      "sub_short_en": "Video meetings",
       "row": 2,
       "relations": [
         {
@@ -528,6 +564,8 @@
       "name": "Datadog",
       "sub": "監視ソフト",
       "sub_en": "Observability",
+      "sub_short": "監視ソフト",
+      "sub_short_en": "Observability",
       "row": 2,
       "relations": [
         {
@@ -551,6 +589,8 @@
       "name": "Palo Alto Networks",
       "sub": "セキュリティ",
       "sub_en": "Security",
+      "sub_short": "セキュリティ",
+      "sub_short_en": "Security",
       "row": 2,
       "relations": [
         {
@@ -574,6 +614,8 @@
       "name": "Fortinet",
       "sub": "セキュリティ",
       "sub_en": "Security",
+      "sub_short": "セキュリティ",
+      "sub_short_en": "Security",
       "row": 2,
       "relations": [
         {
@@ -597,6 +639,8 @@
       "name": "MongoDB",
       "sub": "データベース",
       "sub_en": "Database",
+      "sub_short": "データベース",
+      "sub_short_en": "Database",
       "row": 2,
       "relations": [
         {
@@ -620,6 +664,8 @@
       "name": "Box",
       "sub": "ファイル共有",
       "sub_en": "Content cloud",
+      "sub_short": "ファイル共有",
+      "sub_short_en": "Content cloud",
       "row": 2,
       "relations": [
         {
@@ -643,6 +689,8 @@
       "name": "Dropbox",
       "sub": "ファイル共有",
       "sub_en": "File sharing",
+      "sub_short": "ファイル共有",
+      "sub_short_en": "File sharing",
       "row": 2,
       "relations": [
         {

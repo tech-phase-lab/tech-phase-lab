@@ -21,6 +21,8 @@
       "name": "CSXコーポレーション",
       "sub": "鉄道・競合",
       "sub_en": "Railroad rival",
+      "sub_short": "鉄道・競合",
+      "sub_short_en": "Railroad rival",
       "row": 0,
       "relations": [
         {
@@ -71,6 +73,8 @@
       "name": "コンレール",
       "sub": "共同保有の鉄道",
       "sub_en": "Jointly owned rail",
+      "sub_short": "共同保有の鉄道",
+      "sub_short_en": "Shared railway",
       "row": 0,
       "relations": [
         {
@@ -95,6 +99,8 @@
       "name": "TTX社",
       "sub": "貨車プール",
       "sub_en": "Railcar pooling",
+      "sub_short": "貨車プール",
+      "sub_short_en": "Railcar pooling",
       "row": 0,
       "relations": [
         {
@@ -119,6 +125,8 @@
       "name": "ユニオン・パシフィック",
       "sub": "鉄道・合併予定",
       "sub_en": "Railroad, merger",
+      "sub_short": "鉄道・合併予定",
+      "sub_short_en": "Railroad, merger",
       "row": 0,
       "relations": [
         {

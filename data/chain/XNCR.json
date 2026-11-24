@@ -34,6 +34,8 @@
       "name_en": "Johnson & Johnson",
       "sub": "医薬品・医療機器",
       "sub_en": "Pharma & medtech",
+      "sub_short": "医薬品",
+      "sub_short_en": "Pharma & medtech",
       "row": 0,
       "relations": [
         {
@@ -58,6 +60,8 @@
       "name_en": "Alimentiv",
       "sub": "臨床試験受託(CRO)",
       "sub_en": "Contract research (CRO)",
+      "sub_short": "臨床試験受託",
+      "sub_short_en": "CRO",
       "row": 0,
       "relations": [
         {
@@ -82,6 +86,8 @@
       "name_en": "Vir Biotechnology",
       "sub": "感染症の医薬",
       "sub_en": "Infectious disease drugs",
+      "sub_short": "感染症の医薬",
+      "sub_short_en": "Infection drugs",
       "row": 1,
       "relations": [
         {
@@ -106,6 +112,8 @@
       "name_en": "Omeros",
       "sub": "補体系の医薬",
       "sub_en": "Complement-targeting drugs",
+      "sub_short": "補体系の医薬",
+      "sub_short_en": "Complement drugs",
       "row": 1,
       "relations": [
         {
@@ -130,6 +138,8 @@
       "name_en": "Zenas BioPharma",
       "sub": "免疫疾患の医薬",
       "sub_en": "Immunology drugs",
+      "sub_short": "免疫疾患の医薬",
+      "sub_short_en": "Immunology drugs",
       "row": 1,
       "relations": [
         {
@@ -154,6 +164,8 @@
       "name_en": "Incyte",
       "sub": "医薬品",
       "sub_en": "Pharmaceuticals",
+      "sub_short": "医薬品",
+      "sub_short_en": "Pharmaceuticals",
       "row": 1,
       "relations": [
         {
@@ -178,6 +190,8 @@
       "name_en": "Merus",
       "sub": "二重特異性抗体",
       "sub_en": "Bispecific antibodies",
+      "sub_short": "二重特異性抗体",
+      "sub_short_en": "Bispecifics",
       "row": 2,
       "relations": [
         {
@@ -202,6 +216,8 @@
       "name_en": "MacroGenics",
       "sub": "抗体医薬",
       "sub_en": "Antibody drugs",
+      "sub_short": "抗体医薬",
+      "sub_short_en": "Antibody drugs",
       "row": 2,
       "relations": [
         {
@@ -226,6 +242,8 @@
       "name_en": "Janux Therapeutics",
       "sub": "T細胞誘導抗体",
       "sub_en": "T cell engagers",
+      "sub_short": "T細胞誘導抗体",
+      "sub_short_en": "T cell engagers",
       "row": 2,
       "relations": [
         {
@@ -250,6 +268,8 @@
       "name_en": "Nektar Therapeutics",
       "sub": "免疫治療薬",
       "sub_en": "Immunotherapy",
+      "sub_short": "免疫治療薬",
+      "sub_short_en": "Immunotherapy",
       "row": 2,
       "relations": [
         {
@@ -274,6 +294,8 @@
       "name_en": "Blueprint Medicines",
       "sub": "希少疾患・アレルギーの医薬",
       "sub_en": "Rare disease & allergy drugs",
+      "sub_short": "希少疾患",
+      "sub_short_en": "Rare disease",
       "row": 2,
       "relations": [
         {

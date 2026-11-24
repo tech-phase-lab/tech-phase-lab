@@ -32,6 +32,8 @@
       "name_en": "Industrious",
       "sub": "フレキシブルオフィス",
       "sub_en": "Flexible workspace",
+      "sub_short": "シェアオフィス",
+      "sub_short_en": "Coworking",
       "row": 0,
       "relations": [
         {
@@ -56,6 +58,8 @@
       "name_en": "Pearce Services",
       "sub": "デジタル・電力インフラ保守",
       "sub_en": "Digital & power infrastructure services",
+      "sub_short": "インフラ保守",
+      "sub_short_en": "Digital services",
       "row": 0,
       "relations": [
         {
@@ -80,6 +84,8 @@
       "name_en": "Turner & Townsend",
       "sub": "プロジェクト管理",
       "sub_en": "Project management",
+      "sub_short": "工程管理",
+      "sub_short_en": "Project mgmt",
       "row": 0,
       "relations": [
         {
@@ -104,6 +110,8 @@
       "name_en": "Altus Power",
       "sub": "太陽光発電",
       "sub_en": "Solar power",
+      "sub_short": "太陽光発電",
+      "sub_short_en": "Solar power",
       "row": 0,
       "relations": [
         {
@@ -128,6 +136,8 @@
       "name_en": "Praxis Precision Medicines",
       "sub": "バイオ",
       "sub_en": "Biotech",
+      "sub_short": "バイオ",
+      "sub_short_en": "Biotech",
       "row": 1,
       "relations": [
         {
@@ -152,6 +162,8 @@
       "name_en": "Jones Lang LaSalle",
       "sub": "不動産サービス",
       "sub_en": "Real estate services",
+      "sub_short": "不動産サービス",
+      "sub_short_en": "Real estate",
       "row": 2,
       "relations": [
         {
@@ -176,6 +188,8 @@
       "name_en": "Cushman & Wakefield",
       "sub": "不動産サービス",
       "sub_en": "Real estate services",
+      "sub_short": "不動産サービス",
+      "sub_short_en": "Real estate",
       "row": 2,
       "relations": [
         {
@@ -200,6 +214,8 @@
       "name_en": "EMCOR Group",
       "sub": "設備工事・保守",
       "sub_en": "Building services",
+      "sub_short": "設備工事・保守",
+      "sub_short_en": "Building upkeep",
       "row": 2,
       "relations": [
         {

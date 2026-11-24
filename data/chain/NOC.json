@@ -30,6 +30,8 @@
       "name": "ボーイング",
       "sub": "航空宇宙・防衛",
       "sub_en": "Aerospace & defense",
+      "sub_short": "航空宇宙・防衛",
+      "sub_short_en": "Aerospace",
       "row": 0,
       "relations": [
         {
@@ -54,6 +56,8 @@
       "name": "ゼネラル・ダイナミクス",
       "sub": "防衛・航空機",
       "sub_en": "Defense & aircraft",
+      "sub_short": "防衛・航空機",
+      "sub_short_en": "Defense",
       "row": 0,
       "relations": [
         {
@@ -78,6 +82,8 @@
       "name": "L3ハリス・テクノロジーズ",
       "sub": "防衛エレクトロニクス",
       "sub_en": "Defense electronics",
+      "sub_short": "防衛電子機器",
+      "sub_short_en": "Defense tech",
       "row": 0,
       "relations": [
         {
@@ -102,6 +108,8 @@
       "name": "ロッキード・マーチン",
       "sub": "防衛・航空宇宙",
       "sub_en": "Defense & aerospace",
+      "sub_short": "防衛・航空宇宙",
+      "sub_short_en": "Defense",
       "row": 0,
       "relations": [
         {
@@ -126,6 +134,8 @@
       "name": "RTXコーポレーション",
       "sub": "航空宇宙・防衛",
       "sub_en": "Aerospace & defense",
+      "sub_short": "航空宇宙・防衛",
+      "sub_short_en": "Aerospace",
       "row": 0,
       "relations": [
         {
@@ -150,6 +160,8 @@
       "name": "サイプリス・ソリューションズ",
       "sub": "防衛・航空部品",
       "sub_en": "Defense & aerospace components",
+      "sub_short": "防衛・航空部品",
+      "sub_short_en": "Defense",
       "row": 1,
       "relations": [
         {
@@ -174,6 +186,8 @@
       "name": "ファイアフライ・エアロスペース",
       "sub": "ロケット",
       "sub_en": "Launch vehicles",
+      "sub_short": "ロケット",
+      "sub_short_en": "Launch vehicles",
       "row": 0,
       "relations": [
         {

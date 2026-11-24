@@ -36,6 +36,8 @@
       "name": "ペイパル",
       "sub": "決済",
       "sub_en": "Payments",
+      "sub_short": "決済",
+      "sub_short_en": "Payments",
       "row": 0,
       "relations": [
         {
@@ -60,6 +62,8 @@
       "name": "グーグル",
       "sub": "検索・クラウド",
       "sub_en": "Search & cloud",
+      "sub_short": "検索・クラウド",
+      "sub_short_en": "Search & cloud",
       "row": 0,
       "relations": [
         {
@@ -84,6 +88,8 @@
       "name": "クローガー",
       "sub": "スーパーマーケット",
       "sub_en": "Supermarkets",
+      "sub_short": "スーパー",
+      "sub_short_en": "Supermarkets",
       "row": 1,
       "relations": [
         {
@@ -107,6 +113,8 @@
       "name": "JPモルガン・チェース",
       "sub": "銀行",
       "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
       "row": 2,
       "relations": [
         {
@@ -146,6 +154,8 @@
       "name": "ウーバー・テクノロジーズ",
       "sub": "配車・配達",
       "sub_en": "Mobility & delivery",
+      "sub_short": "配車・配達",
+      "sub_short_en": "Mobility",
       "row": 3,
       "relations": [
         {
@@ -183,6 +193,8 @@
       "name": "アマゾン",
       "sub": "EC・クラウド",
       "sub_en": "E-commerce & cloud",
+      "sub_short": "EC・クラウド",
+      "sub_short_en": "E-commerce",
       "row": 3,
       "relations": [
         {
@@ -220,6 +232,8 @@
       "name": "デリバリーヒーロー",
       "sub": "フードデリバリー",
       "sub_en": "Food delivery",
+      "sub_short": "フード宅配",
+      "sub_short_en": "Food delivery",
       "row": 3,
       "relations": [
         {
@@ -244,6 +258,8 @@
       "name": "エル・ポヨ・ロコ",
       "sub": "外食",
       "sub_en": "Restaurants",
+      "sub_short": "外食",
+      "sub_short_en": "Restaurants",
       "row": 1,
       "relations": [
         {

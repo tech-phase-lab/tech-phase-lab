@@ -27,6 +27,8 @@
       "name": "Fox Corporation",
       "sub": "メディア",
       "sub_en": "Media",
+      "sub_short": "メディア",
+      "sub_short_en": "Media",
       "row": 0,
       "relations": [
         {
@@ -65,6 +67,8 @@
       "name": "Shopify",
       "sub": "Eコマース基盤",
       "sub_en": "E-commerce platform",
+      "sub_short": "Eコマース基盤",
+      "sub_short_en": "E-commerce",
       "row": 0,
       "relations": [
         {
@@ -101,6 +105,8 @@
       "name": "Walmart",
       "sub": "小売",
       "sub_en": "Retail",
+      "sub_short": "小売",
+      "sub_short_en": "Retail",
       "row": 0,
       "relations": [
         {
@@ -137,6 +143,8 @@
       "name": "DoorDash",
       "sub": "デリバリー",
       "sub_en": "Delivery",
+      "sub_short": "デリバリー",
+      "sub_short_en": "Delivery",
       "row": 0,
       "relations": [
         {
@@ -160,6 +168,8 @@
       "name": "Spotify",
       "sub": "音楽配信",
       "sub_en": "Music streaming",
+      "sub_short": "音楽配信",
+      "sub_short_en": "Music streaming",
       "row": 0,
       "relations": [
         {
@@ -185,6 +195,8 @@
       "name": "Netflix",
       "sub": "動画配信",
       "sub_en": "Video streaming",
+      "sub_short": "動画配信",
+      "sub_short_en": "Video streaming",
       "row": 0,
       "relations": [
         {
@@ -208,6 +220,8 @@
       "name": "Amazon",
       "sub": "EC・クラウド",
       "sub_en": "E-commerce & cloud",
+      "sub_short": "EC・クラウド",
+      "sub_short_en": "E-commerce",
       "row": 1,
       "relations": [
         {
@@ -244,6 +258,8 @@
       "name": "Apple",
       "sub": "ハード・ソフト",
       "sub_en": "Devices & software",
+      "sub_short": "ハード・ソフト",
+      "sub_short_en": "Devices",
       "row": 1,
       "relations": [
         {
@@ -267,6 +283,8 @@
       "name": "Alphabet(Google)",
       "sub": "検索・クラウド",
       "sub_en": "Search & cloud",
+      "sub_short": "検索・クラウド",
+      "sub_short_en": "Search & cloud",
       "row": 1,
       "relations": [
         {
@@ -290,6 +308,8 @@
       "name": "Comcast",
       "sub": "通信・メディア",
       "sub_en": "Telecom & media",
+      "sub_short": "通信・メディア",
+      "sub_short_en": "Telecom & media",
       "row": 1,
       "relations": [
         {

@@ -32,6 +32,8 @@
       "name": "サンミナ",
       "sub": "部材供給",
       "sub_en": "Materials supplier",
+      "sub_short": "部材供給",
+      "sub_short_en": "Materials",
       "row": 0,
       "relations": [
         {
@@ -56,6 +58,8 @@
       "name": "デクスコム",
       "sub": "連続血糖測定",
       "sub_en": "CGM",
+      "sub_short": "連続血糖測定",
+      "sub_short_en": "CGM",
       "row": 1,
       "relations": [
         {
@@ -80,6 +84,8 @@
       "name": "アボット",
       "sub": "連続血糖測定",
       "sub_en": "CGM",
+      "sub_short": "連続血糖測定",
+      "sub_short_en": "CGM",
       "row": 1,
       "relations": [
         {
@@ -104,6 +110,8 @@
       "name": "グルーコ",
       "sub": "糖尿病データ管理",
       "sub_en": "Diabetes data",
+      "sub_short": "糖尿病データ",
+      "sub_short_en": "Diabetes data",
       "row": 1,
       "relations": [
         {
@@ -128,6 +136,8 @@
       "name": "アムジェン",
       "sub": "バイオ医薬品",
       "sub_en": "Biopharma",
+      "sub_short": "バイオ医薬品",
+      "sub_short_en": "Biopharma",
       "row": 1,
       "relations": [
         {
@@ -152,6 +162,8 @@
       "name": "メドトロニック",
       "sub": "インスリンポンプ",
       "sub_en": "Insulin pumps",
+      "sub_short": "インスリン機器",
+      "sub_short_en": "Insulin pumps",
       "row": 2,
       "relations": [
         {
@@ -176,6 +188,8 @@
       "name": "タンデム・ダイアベティス・ケア",
       "sub": "インスリンポンプ",
       "sub_en": "Insulin pumps",
+      "sub_short": "インスリン機器",
+      "sub_short_en": "Insulin pumps",
       "row": 2,
       "relations": [
         {
@@ -200,6 +214,8 @@
       "name": "ベータ・バイオニクス",
       "sub": "インスリンポンプ",
       "sub_en": "Insulin pumps",
+      "sub_short": "インスリン機器",
+      "sub_short_en": "Insulin pumps",
       "row": 2,
       "relations": [
         {

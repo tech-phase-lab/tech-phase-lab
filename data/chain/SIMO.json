@@ -34,6 +34,8 @@
       "name": "TSMC",
       "sub": "ファウンドリ",
       "sub_en": "Foundry",
+      "sub_short": "ファウンドリ",
+      "sub_short_en": "Foundry",
       "row": 0,
       "relations": [
         {
@@ -70,6 +72,8 @@
       "name": "SMIC",
       "sub": "ファウンドリ",
       "sub_en": "Foundry",
+      "sub_short": "ファウンドリ",
+      "sub_short_en": "Foundry",
       "row": 0,
       "relations": [
         {
@@ -106,6 +110,8 @@
       "name": "Micron",
       "sub": "メモリ",
       "sub_en": "Memory",
+      "sub_short": "メモリ",
+      "sub_short_en": "Memory",
       "row": 1,
       "relations": [
         {
@@ -129,6 +135,8 @@
       "name": "キオクシア",
       "sub": "フラッシュメモリ",
       "sub_en": "Flash memory",
+      "sub_short": "フラッシュ",
+      "sub_short_en": "Flash memory",
       "row": 1,
       "relations": [
         {
@@ -153,6 +161,8 @@
       "name": "SK hynix",
       "sub": "メモリ",
       "sub_en": "Memory",
+      "sub_short": "メモリ",
+      "sub_short_en": "Memory",
       "row": 1,
       "relations": [
         {
@@ -176,6 +186,8 @@
       "name": "MaxLinear",
       "sub": "通信半導体",
       "sub_en": "Communications chips",
+      "sub_short": "通信半導体",
+      "sub_short_en": "Comms chips",
       "row": 2,
       "relations": [
         {
@@ -214,6 +226,8 @@
       "name": "Rambus",
       "sub": "メモリインターフェース・IP",
       "sub_en": "Memory interface & IP",
+      "sub_short": "メモリ用IP",
+      "sub_short_en": "Memory interface",
       "row": 2,
       "relations": [
         {
@@ -239,6 +253,8 @@
       "name": "Microchip Technology",
       "sub": "マイコン・アナログ",
       "sub_en": "Microcontrollers & analog",
+      "sub_short": "マイコン",
+      "sub_short_en": "Microcontrollers",
       "row": 3,
       "relations": [
         {
@@ -275,6 +291,8 @@
       "name": "Phison",
       "sub": "フラッシュコントローラー",
       "sub_en": "Flash controllers",
+      "sub_short": "フラッシュ制御",
+      "sub_short_en": "Flash chips",
       "row": 3,
       "relations": [
         {

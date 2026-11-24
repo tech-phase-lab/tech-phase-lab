@@ -32,6 +32,8 @@
       "name_en": "Vestis",
       "sub": "ユニフォーム",
       "sub_en": "Uniforms",
+      "sub_short": "ユニフォーム",
+      "sub_short_en": "Uniforms",
       "row": 0,
       "relations": [
         {
@@ -56,6 +58,8 @@
       "name_en": "Venu Holding",
       "sub": "野外劇場",
       "sub_en": "Amphitheaters",
+      "sub_short": "野外劇場",
+      "sub_short_en": "Amphitheaters",
       "row": 0,
       "relations": [
         {
@@ -80,6 +84,8 @@
       "name_en": "Compass Group",
       "sub": "給食・施設サービス(英国)",
       "sub_en": "Food & support services (UK)",
+      "sub_short": "給食",
+      "sub_short_en": "Food services",
       "row": 1,
       "relations": [
         {
@@ -104,6 +110,8 @@
       "name_en": "Sodexo",
       "sub": "給食・施設サービス(フランス)",
       "sub_en": "Food & support services (France)",
+      "sub_short": "給食",
+      "sub_short_en": "Food services",
       "row": 1,
       "relations": [
         {
@@ -128,6 +136,8 @@
       "name_en": "Civeo",
       "sub": "宿泊施設サービス",
       "sub_en": "Workforce accommodation",
+      "sub_short": "宿泊サービス",
+      "sub_short_en": "Worker housing",
       "row": 2,
       "relations": [
         {
@@ -152,6 +162,8 @@
       "name_en": "Barnes & Noble Education",
       "sub": "大学書店",
       "sub_en": "Campus bookstores",
+      "sub_short": "大学書店",
+      "sub_short_en": "Campus stores",
       "row": 2,
       "relations": [
         {
@@ -176,6 +188,8 @@
       "name_en": "Vail Resorts",
       "sub": "スキーリゾート",
       "sub_en": "Ski resorts",
+      "sub_short": "スキーリゾート",
+      "sub_short_en": "Ski resorts",
       "row": 2,
       "relations": [
         {

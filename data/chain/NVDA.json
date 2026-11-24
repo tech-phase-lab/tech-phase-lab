@@ -35,6 +35,8 @@
       "name": "TSMC",
       "sub": "台湾積体電路",
       "sub_en": "Taiwan Semiconductor Manufacturing",
+      "sub_short": "台湾積体電路",
+      "sub_short_en": "TSMC",
       "row": 0,
       "relations": [
         {
@@ -57,6 +59,8 @@
       "name": "Micron",
       "sub": "メモリ",
       "sub_en": "Memory",
+      "sub_short": "メモリ",
+      "sub_short_en": "Memory",
       "row": 0,
       "relations": [
         {
@@ -79,6 +83,8 @@
       "name": "SK hynix",
       "sub": "メモリ",
       "sub_en": "Memory",
+      "sub_short": "メモリ",
+      "sub_short_en": "Memory",
       "row": 0,
       "relations": [
         {
@@ -101,6 +107,8 @@
       "name": "Samsung",
       "sub": "サムスン電子",
       "sub_en": "Samsung Electronics",
+      "sub_short": "サムスン電子",
+      "sub_short_en": "Samsung",
       "row": 0,
       "relations": [
         {
@@ -123,6 +131,8 @@
       "name": "Lumentum",
       "sub": "光部品",
       "sub_en": "Optical components",
+      "sub_short": "光部品",
+      "sub_short_en": "Optics",
       "row": 1,
       "relations": [
         {
@@ -146,6 +156,8 @@
       "name": "Coherent",
       "sub": "光部品",
       "sub_en": "Optical components",
+      "sub_short": "光部品",
+      "sub_short_en": "Optics",
       "row": 1,
       "relations": [
         {
@@ -168,6 +180,8 @@
       "name": "Marvell",
       "sub": "カスタムチップ",
       "sub_en": "Custom chips",
+      "sub_short": "カスタムチップ",
+      "sub_short_en": "Custom chips",
       "row": 1,
       "relations": [
         {
@@ -191,6 +205,8 @@
       "name": "Intel",
       "sub": "CPU",
       "sub_en": "CPU",
+      "sub_short": "CPU",
+      "sub_short_en": "CPU",
       "row": 1,
       "relations": [
         {
@@ -225,6 +241,8 @@
       "name": "Dell",
       "sub": "サーバー",
       "sub_en": "Servers",
+      "sub_short": "サーバー",
+      "sub_short_en": "Servers",
       "row": 2,
       "relations": [
         {
@@ -247,6 +265,8 @@
       "name": "Arista",
       "sub": "ネットワーク",
       "sub_en": "Networking",
+      "sub_short": "ネットワーク",
+      "sub_short_en": "Networking",
       "row": 2,
       "relations": [
         {
@@ -270,6 +290,8 @@
       "name": "Cisco",
       "sub": "ネットワーク",
       "sub_en": "Networking",
+      "sub_short": "ネットワーク",
+      "sub_short_en": "Networking",
       "row": 2,
       "relations": [
         {
@@ -293,6 +315,8 @@
       "name": "Broadcom",
       "sub": "通信チップ",
       "sub_en": "Networking chips",
+      "sub_short": "通信チップ",
+      "sub_short_en": "Networking chips",
       "row": 2,
       "relations": [
         {
@@ -316,6 +340,8 @@
       "name": "AMD",
       "sub": "CPU・GPU",
       "sub_en": "CPU & GPU",
+      "sub_short": "CPU・GPU",
+      "sub_short_en": "CPU & GPU",
       "row": 2,
       "relations": [
         {
@@ -338,6 +364,8 @@
       "name": "Microsoft",
       "sub": "クラウド",
       "sub_en": "Cloud",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 3,
       "relations": [
         {
@@ -372,6 +400,8 @@
       "name": "Amazon",
       "sub": "クラウド",
       "sub_en": "Cloud",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 3,
       "relations": [
         {
@@ -406,6 +436,8 @@
       "name": "Oracle",
       "sub": "クラウド",
       "sub_en": "Cloud",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 3,
       "relations": [
         {
@@ -427,6 +459,8 @@
       "name": "Meta",
       "sub": "AI・広告",
       "sub_en": "AI & advertising",
+      "sub_short": "AI・広告",
+      "sub_short_en": "AI & advertising",
       "row": 3,
       "relations": [
         {
@@ -450,6 +484,8 @@
       "name": "CoreWeave",
       "sub": "AI専用クラウド",
       "sub_en": "AI-focused cloud",
+      "sub_short": "AI専用クラウド",
+      "sub_short_en": "AI-focused cloud",
       "row": 3,
       "relations": [
         {
@@ -485,6 +521,8 @@
       "name": "Nebius",
       "sub": "AI専用クラウド",
       "sub_en": "AI-focused cloud",
+      "sub_short": "AI専用クラウド",
+      "sub_short_en": "AI-focused cloud",
       "row": 3,
       "relations": [
         {
@@ -507,6 +545,8 @@
       "name": "Alphabet",
       "sub": "クラウド",
       "sub_en": "Cloud",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 3,
       "relations": [
         {
@@ -530,6 +570,8 @@
       "name": "OpenAI",
       "sub": "AI",
       "sub_en": "AI",
+      "sub_short": "AI",
+      "sub_short_en": "AI",
       "row": 3,
       "relations": [
         {
@@ -570,6 +612,8 @@
       "name": "Anthropic",
       "sub": "AI",
       "sub_en": "AI",
+      "sub_short": "AI",
+      "sub_short_en": "AI",
       "row": 3,
       "relations": [
         {

@@ -32,6 +32,8 @@
       "name": "サムスン電子",
       "sub": "半導体・電子",
       "sub_en": "Semiconductors & electronics",
+      "sub_short": "半導体・電子",
+      "sub_short_en": "Semiconductors",
       "row": 0,
       "relations": [
         {
@@ -69,6 +71,8 @@
       "name": "ASEテクノロジー・ホールディング",
       "sub": "半導体の組立・検査",
       "sub_en": "Semiconductor assembly & test",
+      "sub_short": "半導体の組立",
+      "sub_short_en": "Chip packaging",
       "row": 0,
       "relations": [
         {
@@ -93,6 +97,8 @@
       "name": "クアンタ・コンピュータ",
       "sub": "ODM・サーバー",
       "sub_en": "ODM & servers",
+      "sub_short": "ODM・サーバー",
+      "sub_short_en": "ODM & servers",
       "row": 1,
       "relations": [
         {
@@ -119,6 +125,8 @@
       "name": "零跑汽車",
       "sub": "電気自動車",
       "sub_en": "Electric vehicles",
+      "sub_short": "電気自動車",
+      "sub_short_en": "EVs",
       "row": 1,
       "relations": [
         {
@@ -145,6 +153,8 @@
       "name": "キャップジェミニ",
       "sub": "IT・コンサルティング",
       "sub_en": "IT & consulting",
+      "sub_short": "ITコンサル",
+      "sub_short_en": "IT & consulting",
       "row": 1,
       "relations": [
         {
@@ -169,6 +179,8 @@
       "name": "グーグル(アルファベット)",
       "sub": "クラウド・ネット",
       "sub_en": "Cloud & internet",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud & internet",
       "row": 1,
       "relations": [
         {
@@ -193,6 +205,8 @@
       "name": "マクニカ",
       "sub": "半導体商社",
       "sub_en": "Semiconductor distributor",
+      "sub_short": "半導体商社",
+      "sub_short_en": "Chip distributor",
       "row": 1,
       "relations": [
         {
@@ -219,6 +233,8 @@
       "name": "NVIDIA",
       "sub": "AI半導体",
       "sub_en": "AI chips",
+      "sub_short": "AI半導体",
+      "sub_short_en": "AI chips",
       "row": 2,
       "relations": [
         {
@@ -255,6 +271,8 @@
       "name": "CEVA",
       "sub": "半導体IP",
       "sub_en": "Semiconductor IP",
+      "sub_short": "半導体IP",
+      "sub_short_en": "Semiconductor IP",
       "row": 2,
       "relations": [
         {
@@ -278,6 +296,8 @@
       "name": "モービルアイ",
       "sub": "自動運転チップ",
       "sub_en": "ADAS chips",
+      "sub_short": "自動運転チップ",
+      "sub_short_en": "ADAS chips",
       "row": 2,
       "relations": [
         {

@@ -34,6 +34,8 @@
       "name_en": "Viatris",
       "sub": "医薬品",
       "sub_en": "Pharmaceuticals",
+      "sub_short": "医薬品",
+      "sub_short_en": "Pharmaceuticals",
       "row": 0,
       "relations": [
         {
@@ -58,6 +60,8 @@
       "name_en": "Thermo Fisher Scientific",
       "sub": "受託製造",
       "sub_en": "Contract manufacturing",
+      "sub_short": "受託製造",
+      "sub_short_en": "Contract maker",
       "row": 0,
       "relations": [
         {
@@ -82,6 +86,8 @@
       "name_en": "MyoScience",
       "sub": "冷凍神経ブロック機器",
       "sub_en": "Cryoanalgesia devices",
+      "sub_short": "鎮痛機器",
+      "sub_short_en": "Cryo pain relief",
       "row": 1,
       "relations": [
         {
@@ -106,6 +112,8 @@
       "name_en": "Flexion Therapeutics",
       "sub": "関節痛の医薬",
       "sub_en": "Joint pain drugs",
+      "sub_short": "関節痛の医薬",
+      "sub_short_en": "Joint pain drugs",
       "row": 1,
       "relations": [
         {
@@ -130,6 +138,8 @@
       "name_en": "GQ Bio Therapeutics",
       "sub": "遺伝子治療",
       "sub_en": "Gene therapy",
+      "sub_short": "遺伝子治療",
+      "sub_short_en": "Gene therapy",
       "row": 1,
       "relations": [
         {
@@ -154,6 +164,8 @@
       "name_en": "Kineta",
       "sub": "慢性疼痛の新薬",
       "sub_en": "Chronic pain drugs",
+      "sub_short": "慢性疼痛の新薬",
+      "sub_short_en": "Pain drugs",
       "row": 1,
       "relations": [
         {
@@ -178,6 +190,8 @@
       "name_en": "Anika Therapeutics",
       "sub": "関節治療",
       "sub_en": "Joint preservation",
+      "sub_short": "関節治療",
+      "sub_short_en": "Joint repair",
       "row": 2,
       "relations": [
         {
@@ -202,6 +216,8 @@
       "name_en": "Virpax Pharmaceuticals",
       "sub": "鎮痛薬",
       "sub_en": "Pain drugs",
+      "sub_short": "鎮痛薬",
+      "sub_short_en": "Pain drugs",
       "row": 2,
       "relations": [
         {
@@ -226,6 +242,8 @@
       "name_en": "PRF Technologies",
       "sub": "術後疼痛の新薬",
       "sub_en": "Post-surgical pain drugs",
+      "sub_short": "術後疼痛の新薬",
+      "sub_short_en": "Pain drugs",
       "row": 2,
       "relations": [
         {
@@ -250,6 +268,8 @@
       "name_en": "Contineum Therapeutics",
       "sub": "神経・疼痛の新薬",
       "sub_en": "Neuroscience & pain drugs",
+      "sub_short": "神経疾患薬",
+      "sub_short_en": "Neuroscience",
       "row": 2,
       "relations": [
         {
@@ -274,6 +294,8 @@
       "name_en": "PolyPid",
       "sub": "局所徐放薬",
       "sub_en": "Local drug delivery",
+      "sub_short": "局所徐放薬",
+      "sub_short_en": "Drug delivery",
       "row": 2,
       "relations": [
         {

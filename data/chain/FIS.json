@@ -33,6 +33,8 @@
       "name_en": "Global Payments",
       "sub": "決済",
       "sub_en": "Payments",
+      "sub_short": "決済",
+      "sub_short_en": "Payments",
       "row": 0,
       "relations": [
         {
@@ -70,6 +72,8 @@
       "name_en": "Worldpay",
       "sub": "加盟店決済",
       "sub_en": "Merchant payments",
+      "sub_short": "加盟店決済",
+      "sub_short_en": "Payments",
       "row": 0,
       "relations": [
         {
@@ -94,6 +98,8 @@
       "name_en": "T Stamp",
       "sub": "本人確認AI",
       "sub_en": "AI identity verification",
+      "sub_short": "本人確認AI",
+      "sub_short_en": "AI ID checks",
       "row": 0,
       "relations": [
         {
@@ -118,6 +124,8 @@
       "name_en": "Capital One",
       "sub": "銀行・カード",
       "sub_en": "Banking & cards",
+      "sub_short": "銀行・カード",
+      "sub_short_en": "Banking & cards",
       "row": 1,
       "relations": [
         {
@@ -142,6 +150,8 @@
       "name_en": "Amerant Bancorp",
       "sub": "地方銀行",
       "sub_en": "Regional bank",
+      "sub_short": "地方銀行",
+      "sub_short_en": "Regional bank",
       "row": 1,
       "relations": [
         {
@@ -166,6 +176,8 @@
       "name_en": "Miami International Holdings",
       "sub": "取引所",
       "sub_en": "Exchanges",
+      "sub_short": "取引所",
+      "sub_short_en": "Exchanges",
       "row": 1,
       "relations": [
         {
@@ -190,6 +202,8 @@
       "name_en": "Q2 Holdings",
       "sub": "銀行向けソフト",
       "sub_en": "Digital banking software",
+      "sub_short": "銀行向けソフト",
+      "sub_short_en": "Banking apps",
       "row": 2,
       "relations": [
         {
@@ -214,6 +228,8 @@
       "name_en": "ACI Worldwide",
       "sub": "決済ソフト",
       "sub_en": "Payments software",
+      "sub_short": "決済ソフト",
+      "sub_short_en": "Payments",
       "row": 2,
       "relations": [
         {
@@ -238,6 +254,8 @@
       "name_en": "SS&C Technologies",
       "sub": "金融ソフト",
       "sub_en": "Financial software",
+      "sub_short": "金融ソフト",
+      "sub_short_en": "Finance apps",
       "row": 2,
       "relations": [
         {
@@ -262,6 +280,8 @@
       "name_en": "Clearwater Analytics",
       "sub": "投資会計ソフト",
       "sub_en": "Investment accounting software",
+      "sub_short": "投資会計ソフト",
+      "sub_short_en": "Investment apps",
       "row": 2,
       "relations": [
         {
@@ -286,6 +306,8 @@
       "name_en": "CPI Card Group",
       "sub": "決済カード製造",
       "sub_en": "Payment cards",
+      "sub_short": "決済カード製造",
+      "sub_short_en": "Payment cards",
       "row": 2,
       "relations": [
         {

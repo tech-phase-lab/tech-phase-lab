@@ -31,6 +31,8 @@
       "name_en": "Grupo Mexico",
       "sub": "複合企業(メキシコ)",
       "sub_en": "Conglomerate (Mexico)",
+      "sub_short": "複合企業",
+      "sub_short_en": "Conglomerate",
       "row": 0,
       "relations": [
         {
@@ -55,6 +57,8 @@
       "name_en": "Mexico Generadora de Energia",
       "sub": "発電(グループ会社)",
       "sub_en": "Power (group company)",
+      "sub_short": "発電",
+      "sub_short_en": "Power",
       "row": 0,
       "relations": [
         {
@@ -79,6 +83,8 @@
       "name_en": "Electroperu",
       "sub": "電力(ペルー国営)",
       "sub_en": "Power (Peru, state-owned)",
+      "sub_short": "電力",
+      "sub_short_en": "Power",
       "row": 0,
       "relations": [
         {
@@ -103,6 +109,8 @@
       "name_en": "Kallpa Generacion",
       "sub": "電力(ペルー)",
       "sub_en": "Power (Peru)",
+      "sub_short": "電力",
+      "sub_short_en": "Power",
       "row": 0,
       "relations": [
         {
@@ -127,6 +135,8 @@
       "name_en": "Asarco",
       "sub": "銅(グループ会社)",
       "sub_en": "Copper (group company)",
+      "sub_short": "銅",
+      "sub_short_en": "Copper",
       "row": 0,
       "relations": [
         {
@@ -151,6 +161,8 @@
       "name_en": "Mexico Compania Constructora",
       "sub": "建設(グループ会社)",
       "sub_en": "Construction (group company)",
+      "sub_short": "建設",
+      "sub_short_en": "Construction",
       "row": 0,
       "relations": [
         {
@@ -175,6 +187,8 @@
       "name_en": "Buenaventura",
       "sub": "鉱山(ペルー)",
       "sub_en": "Mining (Peru)",
+      "sub_short": "鉱山",
+      "sub_short_en": "Mining",
       "row": 1,
       "relations": [
         {
@@ -199,6 +213,8 @@
       "name_en": "BHP",
       "sub": "資源大手",
       "sub_en": "Diversified mining",
+      "sub_short": "資源大手",
+      "sub_short_en": "Mining",
       "row": 2,
       "relations": [
         {

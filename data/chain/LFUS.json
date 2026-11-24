@@ -26,6 +26,8 @@
       "name": "イートン",
       "sub": "電気機器",
       "sub_en": "Electrical equipment",
+      "sub_short": "電気機器",
+      "sub_short_en": "Electrical gear",
       "row": 0,
       "relations": [
         {
@@ -50,6 +52,8 @@
       "name": "ティーディーケー",
       "sub": "電子部品",
       "sub_en": "Electronic components",
+      "sub_short": "電子部品",
+      "sub_short_en": "Components",
       "row": 0,
       "relations": [
         {
@@ -74,6 +78,8 @@
       "name": "オン・セミコンダクター",
       "sub": "パワー半導体",
       "sub_en": "Power semiconductors",
+      "sub_short": "パワー半導体",
+      "sub_short_en": "Power chips",
       "row": 0,
       "relations": [
         {
@@ -98,6 +104,8 @@
       "name": "インフィニオン・テクノロジーズ",
       "sub": "パワー半導体",
       "sub_en": "Power semiconductors",
+      "sub_short": "パワー半導体",
+      "sub_short_en": "Power chips",
       "row": 0,
       "relations": [
         {
@@ -122,6 +130,8 @@
       "name": "STマイクロエレクトロニクス",
       "sub": "半導体",
       "sub_en": "Semiconductors",
+      "sub_short": "半導体",
+      "sub_short_en": "Semiconductors",
       "row": 0,
       "relations": [
         {
@@ -146,6 +156,8 @@
       "name": "センテック",
       "sub": "半導体",
       "sub_en": "Semiconductors",
+      "sub_short": "半導体",
+      "sub_short_en": "Semiconductors",
       "row": 0,
       "relations": [
         {
@@ -170,6 +182,8 @@
       "name": "ビシェイ・インターテクノロジー",
       "sub": "受動部品",
       "sub_en": "Passive components",
+      "sub_short": "受動部品",
+      "sub_short_en": "Passives",
       "row": 0,
       "relations": [
         {
@@ -194,6 +208,8 @@
       "name": "アンフェノール",
       "sub": "コネクタ",
       "sub_en": "Connectors",
+      "sub_short": "コネクタ",
+      "sub_short_en": "Connectors",
       "row": 0,
       "relations": [
         {
@@ -218,6 +234,8 @@
       "name": "センサータ・テクノロジーズ",
       "sub": "センサー",
       "sub_en": "Sensors",
+      "sub_short": "センサー",
+      "sub_short_en": "Sensors",
       "row": 0,
       "relations": [
         {
@@ -242,6 +260,8 @@
       "name": "TEコネクティビティ",
       "sub": "コネクタ",
       "sub_en": "Connectors",
+      "sub_short": "コネクタ",
+      "sub_short_en": "Connectors",
       "row": 0,
       "relations": [
         {

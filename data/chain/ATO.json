@@ -20,6 +20,8 @@
       "name": "ARMエナジー・マネジメント",
       "sub": "ガス販売",
       "sub_en": "Gas marketer",
+      "sub_short": "ガス販売",
+      "sub_short_en": "Gas marketer",
       "row": 0,
       "relations": [
         {
@@ -44,6 +46,8 @@
       "name": "コノコフィリップス",
       "sub": "石油・ガス生産",
       "sub_en": "Oil & gas producer",
+      "sub_short": "石油・ガス生産",
+      "sub_short_en": "Oil & gas",
       "row": 0,
       "relations": [
         {
@@ -68,6 +72,8 @@
       "name": "エンリンク・ガス・マーケティング",
       "sub": "ガス販売",
       "sub_en": "Gas marketer",
+      "sub_short": "ガス販売",
+      "sub_short_en": "Gas marketer",
       "row": 0,
       "relations": [
         {
@@ -92,6 +98,8 @@
       "name": "シークエント・エナジー・マネジメント",
       "sub": "ガス販売",
       "sub_en": "Gas marketer",
+      "sub_short": "ガス販売",
+      "sub_short_en": "Gas marketer",
       "row": 0,
       "relations": [
         {
@@ -116,6 +124,8 @@
       "name": "シンメトリー・エナジー・ソリューションズ",
       "sub": "エネルギー販売",
       "sub_en": "Energy marketer",
+      "sub_short": "エネルギー販売",
+      "sub_short_en": "Energy marketer",
       "row": 0,
       "relations": [
         {
@@ -140,6 +150,8 @@
       "name": "ターガ・ガス・マーケティング",
       "sub": "ガス販売",
       "sub_en": "Gas marketer",
+      "sub_short": "ガス販売",
+      "sub_short_en": "Gas marketer",
       "row": 0,
       "relations": [
         {

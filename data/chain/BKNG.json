@@ -22,6 +22,8 @@
       "name": "グーグル(アルファベット)",
       "sub": "検索・地図",
       "sub_en": "Search & maps",
+      "sub_short": "検索・地図",
+      "sub_short_en": "Search & maps",
       "row": 0,
       "relations": [
         {
@@ -59,6 +61,8 @@
       "name": "エアビーアンドビー",
       "sub": "民泊プラットフォーム",
       "sub_en": "Alternative accommodations",
+      "sub_short": "民泊",
+      "sub_short_en": "Home rentals",
       "row": 0,
       "relations": [
         {
@@ -96,6 +100,8 @@
       "name": "エクスペディア",
       "sub": "オンライン旅行会社",
       "sub_en": "Online travel company",
+      "sub_short": "ネット旅行",
+      "sub_short_en": "Online travel",
       "row": 0,
       "relations": [
         {
@@ -120,6 +126,8 @@
       "name": "ヤノルジャ",
       "sub": "宿泊テック(出資先)",
       "sub_en": "Lodging tech (investee)",
+      "sub_short": "宿泊テック",
+      "sub_short_en": "Lodging tech",
       "row": 0,
       "relations": [
         {

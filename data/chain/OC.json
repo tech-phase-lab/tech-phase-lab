@@ -29,6 +29,8 @@
       "name_en": "Masonite",
       "sub": "ドア",
       "sub_en": "Doors",
+      "sub_short": "ドア",
+      "sub_short_en": "Doors",
       "row": 0,
       "relations": [
         {
@@ -53,6 +55,8 @@
       "name_en": "Paroc",
       "sub": "断熱材(欧州)",
       "sub_en": "Insulation (Europe)",
+      "sub_short": "断熱材",
+      "sub_short_en": "Insulation",
       "row": 0,
       "relations": [
         {
@@ -77,6 +81,8 @@
       "name_en": "Installed Building Products",
       "sub": "断熱材施工",
       "sub_en": "Insulation installation",
+      "sub_short": "断熱材施工",
+      "sub_short_en": "Insulation",
       "row": 0,
       "relations": [
         {
@@ -101,6 +107,8 @@
       "name_en": "QXO",
       "sub": "建材卸(屋根材)",
       "sub_en": "Building products distribution",
+      "sub_short": "建材卸",
+      "sub_short_en": "Building supply",
       "row": 0,
       "relations": [
         {
@@ -125,6 +133,8 @@
       "name_en": "Amrize",
       "sub": "建材(屋根・セメント)",
       "sub_en": "Building materials",
+      "sub_short": "建材",
+      "sub_short_en": "Building supply",
       "row": 1,
       "relations": [
         {
@@ -149,6 +159,8 @@
       "name_en": "JELD-WEN",
       "sub": "ドア・窓",
       "sub_en": "Doors & windows",
+      "sub_short": "ドア・窓",
+      "sub_short_en": "Doors & windows",
       "row": 1,
       "relations": [
         {
@@ -173,6 +185,8 @@
       "name_en": "Alpha Pro Tech",
       "sub": "建築用シート",
       "sub_en": "Building wraps",
+      "sub_short": "建築用シート",
+      "sub_short_en": "Building wraps",
       "row": 1,
       "relations": [
         {
@@ -197,6 +211,8 @@
       "name_en": "Basanite",
       "sub": "玄武岩繊維補強材",
       "sub_en": "Basalt fiber rebar",
+      "sub_short": "補強材",
+      "sub_short_en": "Basalt rebar",
       "row": 1,
       "relations": [
         {

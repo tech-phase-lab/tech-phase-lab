@@ -31,6 +31,8 @@
       "name": "テスラ",
       "sub": "EV・蓄電",
       "sub_en": "EVs & energy storage",
+      "sub_short": "EV・蓄電",
+      "sub_short_en": "EVs",
       "row": 0,
       "relations": [
         {
@@ -66,6 +68,8 @@
       "name": "STマイクロエレクトロニクス",
       "sub": "半導体",
       "sub_en": "Semiconductors",
+      "sub_short": "半導体",
+      "sub_short_en": "Semiconductors",
       "row": 0,
       "relations": [
         {
@@ -90,6 +94,8 @@
       "name": "エコースター",
       "sub": "衛星・通信",
       "sub_en": "Satellite & communications",
+      "sub_short": "衛星・通信",
+      "sub_short_en": "Satellites",
       "row": 1,
       "relations": [
         {
@@ -137,6 +143,8 @@
       "name": "ウェルズ・ファーゴ",
       "sub": "銀行",
       "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
       "row": 1,
       "relations": [
         {
@@ -162,6 +170,8 @@
       "name": "ゴールドマン・サックス",
       "sub": "投資銀行",
       "sub_en": "Investment bank",
+      "sub_short": "投資銀行",
+      "sub_short_en": "Investment bank",
       "row": 1,
       "relations": [
         {
@@ -187,6 +197,8 @@
       "name": "ASTスペースモバイル",
       "sub": "衛星直接通信",
       "sub_en": "Direct-to-device satellites",
+      "sub_short": "衛星直接通信",
+      "sub_short_en": "Phone satellites",
       "row": 2,
       "relations": [
         {
@@ -211,6 +223,8 @@
       "name": "アイレン",
       "sub": "AIクラウド",
       "sub_en": "AI cloud",
+      "sub_short": "AIクラウド",
+      "sub_short_en": "AI cloud",
       "row": 2,
       "relations": [
         {
@@ -235,6 +249,8 @@
       "name": "プラネット・ラボ",
       "sub": "地球観測衛星",
       "sub_en": "Earth observation satellites",
+      "sub_short": "地球観測衛星",
+      "sub_short_en": "Earth imaging",
       "row": 2,
       "relations": [
         {

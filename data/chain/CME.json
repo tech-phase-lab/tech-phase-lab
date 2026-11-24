@@ -31,6 +31,8 @@
       "name": "グーグル・クラウド",
       "sub": "クラウド基盤",
       "sub_en": "Cloud platform",
+      "sub_short": "クラウド基盤",
+      "sub_short_en": "Cloud platform",
       "row": 0,
       "relations": [
         {
@@ -55,6 +57,8 @@
       "name": "フラッターのファンデュエル",
       "sub": "予測市場の合弁",
       "sub_en": "Prediction-market JV",
+      "sub_short": "予測市場の合弁",
+      "sub_short_en": "Prediction JV",
       "row": 1,
       "relations": [
         {
@@ -79,6 +83,8 @@
       "name": "S&Pグローバル",
       "sub": "指数・格付け",
       "sub_en": "Indices & ratings",
+      "sub_short": "指数・格付け",
+      "sub_short_en": "Indices",
       "row": 1,
       "relations": [
         {
@@ -116,6 +122,8 @@
       "name": "シンガポール取引所",
       "sub": "取引所",
       "sub_en": "Exchange",
+      "sub_short": "取引所",
+      "sub_short_en": "Exchange",
       "row": 1,
       "relations": [
         {
@@ -140,6 +148,8 @@
       "name": "預託信託決済機構(DTCC)",
       "sub": "清算機関",
       "sub_en": "Clearing",
+      "sub_short": "清算機関",
+      "sub_short_en": "Clearing",
       "row": 1,
       "relations": [
         {
@@ -164,6 +174,8 @@
       "name": "インターコンチネンタル取引所",
       "sub": "取引所",
       "sub_en": "Exchange",
+      "sub_short": "取引所",
+      "sub_short_en": "Exchange",
       "row": 2,
       "relations": [
         {
@@ -201,6 +213,8 @@
       "name": "シーボー・グローバル・マーケッツ",
       "sub": "取引所",
       "sub_en": "Exchange",
+      "sub_short": "取引所",
+      "sub_short_en": "Exchange",
       "row": 2,
       "relations": [
         {

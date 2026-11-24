@@ -28,6 +28,8 @@
       "name_en": "Titan International",
       "sub": "農機用タイヤ・ホイール",
       "sub_en": "Farm tires & wheels",
+      "sub_short": "農機用タイヤ",
+      "sub_short_en": "Farm tires",
       "row": 0,
       "relations": [
         {
@@ -52,6 +54,8 @@
       "name_en": "Cooper Tire",
       "sub": "タイヤ",
       "sub_en": "Tires",
+      "sub_short": "タイヤ",
+      "sub_short_en": "Tires",
       "row": 0,
       "relations": [
         {
@@ -76,6 +80,8 @@
       "name_en": "Bridgestone",
       "sub": "タイヤ",
       "sub_en": "Tires",
+      "sub_short": "タイヤ",
+      "sub_short_en": "Tires",
       "row": 1,
       "relations": [
         {
@@ -100,6 +106,8 @@
       "name_en": "Michelin",
       "sub": "タイヤ(仏)",
       "sub_en": "Tires (France)",
+      "sub_short": "タイヤ",
+      "sub_short_en": "Tires",
       "row": 1,
       "relations": [
         {
@@ -124,6 +132,8 @@
       "name_en": "Continental",
       "sub": "タイヤ・自動車部品(独)",
       "sub_en": "Tires & auto parts (Germany)",
+      "sub_short": "タイヤ",
+      "sub_short_en": "Tires",
       "row": 1,
       "relations": [
         {
@@ -148,6 +158,8 @@
       "name_en": "Hankook",
       "sub": "タイヤ(韓)",
       "sub_en": "Tires (Korea)",
+      "sub_short": "タイヤ",
+      "sub_short_en": "Tires",
       "row": 1,
       "relations": [
         {
@@ -172,6 +184,8 @@
       "name_en": "Pirelli",
       "sub": "タイヤ(伊)",
       "sub_en": "Tires (Italy)",
+      "sub_short": "タイヤ",
+      "sub_short_en": "Tires",
       "row": 1,
       "relations": [
         {
@@ -196,6 +210,8 @@
       "name_en": "Sumitomo Rubber",
       "sub": "タイヤ",
       "sub_en": "Tires",
+      "sub_short": "タイヤ",
+      "sub_short_en": "Tires",
       "row": 1,
       "relations": [
         {
@@ -220,6 +236,8 @@
       "name_en": "Toyo Tire",
       "sub": "タイヤ",
       "sub_en": "Tires",
+      "sub_short": "タイヤ",
+      "sub_short_en": "Tires",
       "row": 1,
       "relations": [
         {
@@ -244,6 +262,8 @@
       "name_en": "Yokohama Rubber",
       "sub": "タイヤ",
       "sub_en": "Tires",
+      "sub_short": "タイヤ",
+      "sub_short_en": "Tires",
       "row": 1,
       "relations": [
         {

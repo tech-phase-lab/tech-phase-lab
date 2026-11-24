@@ -19,6 +19,8 @@
       "name": "シーザーズ・エンターテインメント",
       "sub": "カジノ運営・賃借人",
       "sub_en": "Casino operator, tenant",
+      "sub_short": "カジノ運営",
+      "sub_short_en": "Casino operator",
       "row": 0,
       "relations": [
         {
@@ -56,6 +58,8 @@
       "name": "MGMリゾーツ・インターナショナル",
       "sub": "カジノ運営・賃借人",
       "sub_en": "Casino operator, tenant",
+      "sub_short": "カジノ運営",
+      "sub_short_en": "Casino operator",
       "row": 0,
       "relations": [
         {
@@ -80,6 +84,8 @@
       "name": "ペン・エンターテインメント",
       "sub": "カジノ運営・賃借人",
       "sub_en": "Casino operator, tenant",
+      "sub_short": "カジノ運営",
+      "sub_short_en": "Casino operator",
       "row": 0,
       "relations": [
         {
@@ -104,6 +110,8 @@
       "name": "キャニオン・ランチ",
       "sub": "ウェルネスリゾート",
       "sub_en": "Wellness resorts",
+      "sub_short": "リゾート",
+      "sub_short_en": "Wellness resorts",
       "row": 0,
       "relations": [
         {
@@ -128,6 +136,8 @@
       "name": "キャボット",
       "sub": "ゴルフリゾート",
       "sub_en": "Golf resorts",
+      "sub_short": "ゴルフリゾート",
+      "sub_short_en": "Golf resorts",
       "row": 0,
       "relations": [
         {
@@ -152,6 +162,8 @@
       "name": "ラッキー・ストライク・エンターテインメント",
       "sub": "ボウリング施設",
       "sub_en": "Bowling entertainment centers",
+      "sub_short": "ボウリング施設",
+      "sub_short_en": "Bowling centers",
       "row": 0,
       "relations": [
         {

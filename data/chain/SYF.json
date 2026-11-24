@@ -27,6 +27,8 @@
       "name": "ロウズ",
       "sub": "住宅資材小売",
       "sub_en": "Home improvement retailer",
+      "sub_short": "住宅資材小売",
+      "sub_short_en": "Home improvement",
       "row": 0,
       "relations": [
         {
@@ -51,6 +53,8 @@
       "name": "アマゾン",
       "sub": "ネット通販",
       "sub_en": "Online marketplace",
+      "sub_short": "ネット通販",
+      "sub_short_en": "Marketplace",
       "row": 0,
       "relations": [
         {
@@ -75,6 +79,8 @@
       "name": "ペイパル",
       "sub": "決済サービス",
       "sub_en": "Digital payments",
+      "sub_short": "決済サービス",
+      "sub_short_en": "Digital payments",
       "row": 0,
       "relations": [
         {
@@ -99,6 +105,8 @@
       "name": "TJXカンパニーズ",
       "sub": "オフプライス小売",
       "sub_en": "Off-price retailer",
+      "sub_short": "割安小売",
+      "sub_short_en": "Off-price",
       "row": 0,
       "relations": [
         {
@@ -123,6 +131,8 @@
       "name": "ワンペイ",
       "sub": "ウォルマート決済",
       "sub_en": "Walmart fintech",
+      "sub_short": "Walmart決済",
+      "sub_short_en": "Walmart fintech",
       "row": 0,
       "relations": [
         {
@@ -147,6 +157,8 @@
       "name": "シェブロン",
       "sub": "石油・給油所",
       "sub_en": "Fuel retail",
+      "sub_short": "石油・給油所",
+      "sub_short_en": "Fuel retail",
       "row": 0,
       "relations": [
         {
@@ -171,6 +183,8 @@
       "name": "ベライゾン",
       "sub": "通信",
       "sub_en": "Telecom",
+      "sub_short": "通信",
+      "sub_short_en": "Telecom",
       "row": 0,
       "relations": [
         {
@@ -195,6 +209,8 @@
       "name": "フィサーブ",
       "sub": "決済・口座基盤",
       "sub_en": "Processing & banking platform",
+      "sub_short": "決済・口座基盤",
+      "sub_short_en": "Bank processing",
       "row": 1,
       "relations": [
         {
@@ -219,6 +235,8 @@
       "name": "ブレッド・ファイナンシャル",
       "sub": "カード競合",
       "sub_en": "Card competitor",
+      "sub_short": "カード競合",
+      "sub_short_en": "Card competitor",
       "row": 0,
       "relations": [
         {
@@ -243,6 +261,8 @@
       "name": "アメリカン・エキスプレス",
       "sub": "カード競合",
       "sub_en": "Card competitor",
+      "sub_short": "カード競合",
+      "sub_short_en": "Card competitor",
       "row": 0,
       "relations": [
         {

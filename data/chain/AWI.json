@@ -28,6 +28,8 @@
       "name_en": "Worthington Enterprises",
       "sub": "金属加工",
       "sub_en": "Metal products",
+      "sub_short": "金属加工",
+      "sub_short_en": "Metal products",
       "row": 0,
       "relations": [
         {
@@ -52,6 +54,8 @@
       "name_en": "DIRTT Environmental Solutions",
       "sub": "内装システム",
       "sub_en": "Interior construction systems",
+      "sub_short": "内装システム",
+      "sub_short_en": "Interiors",
       "row": 0,
       "relations": [
         {
@@ -76,6 +80,8 @@
       "name_en": "Lowe's",
       "sub": "ホームセンター・建材流通",
       "sub_en": "Home improvement & building materials",
+      "sub_short": "ホームセンター",
+      "sub_short_en": "Home improvement",
       "row": 1,
       "relations": [
         {
@@ -100,6 +106,8 @@
       "name_en": "The Home Depot",
       "sub": "ホームセンター・建材流通",
       "sub_en": "Home improvement & building materials",
+      "sub_short": "ホームセンター",
+      "sub_short_en": "Home improvement",
       "row": 1,
       "relations": [
         {
@@ -124,6 +132,8 @@
       "name_en": "Geometrik Manufacturing",
       "sub": "木製天井材(カナダ)",
       "sub_en": "Wood ceilings (Canada)",
+      "sub_short": "木製天井材",
+      "sub_short_en": "Wood ceilings",
       "row": 2,
       "relations": [
         {
@@ -148,6 +158,8 @@
       "name_en": "A. Zahner Company",
       "sub": "金属外装",
       "sub_en": "Architectural metal",
+      "sub_short": "金属外装",
+      "sub_short_en": "Building metal",
       "row": 2,
       "relations": [
         {

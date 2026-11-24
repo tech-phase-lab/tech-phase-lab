@@ -28,6 +28,8 @@
       "name_en": "Marsh McLennan",
       "sub": "保険仲介",
       "sub_en": "Insurance brokerage",
+      "sub_short": "保険仲介",
+      "sub_short_en": "Insurance broker",
       "row": 0,
       "relations": [
         {
@@ -52,6 +54,8 @@
       "name_en": "Aon",
       "sub": "保険仲介",
       "sub_en": "Insurance brokerage",
+      "sub_short": "保険仲介",
+      "sub_short_en": "Insurance broker",
       "row": 0,
       "relations": [
         {
@@ -76,6 +80,8 @@
       "name_en": "Munich Re",
       "sub": "再保険(ドイツ)",
       "sub_en": "Reinsurance (Germany)",
+      "sub_short": "再保険",
+      "sub_short_en": "Reinsurance",
       "row": 1,
       "relations": [
         {
@@ -100,6 +106,8 @@
       "name_en": "State National Insurance",
       "sub": "保険",
       "sub_en": "Insurance",
+      "sub_short": "保険",
+      "sub_short_en": "Insurance",
       "row": 1,
       "relations": [
         {
@@ -124,6 +132,8 @@
       "name_en": "MS Transverse Insurance",
       "sub": "保険",
       "sub_en": "Insurance",
+      "sub_short": "保険",
+      "sub_short_en": "Insurance",
       "row": 1,
       "relations": [
         {
@@ -148,6 +158,8 @@
       "name_en": "American International Group",
       "sub": "保険",
       "sub_en": "Insurance",
+      "sub_short": "保険",
+      "sub_short_en": "Insurance",
       "row": 2,
       "relations": [
         {

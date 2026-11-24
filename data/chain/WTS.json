@@ -21,6 +21,8 @@
       "name_en": "Saudi Cast",
       "sub": "衛生配管部材(サウジアラビア)",
       "sub_en": "Sanitary fittings (Saudi Arabia)",
+      "sub_short": "衛生配管部材",
+      "sub_short_en": "Plumbing parts",
       "row": 0,
       "relations": [
         {
@@ -45,6 +47,8 @@
       "name_en": "Superior Boiler",
       "sub": "産業用ボイラー",
       "sub_en": "Industrial boilers",
+      "sub_short": "産業用ボイラー",
+      "sub_short_en": "Boilers",
       "row": 0,
       "relations": [
         {
@@ -69,6 +73,8 @@
       "name_en": "Haws Corporation",
       "sub": "飲用・緊急用給水設備",
       "sub_en": "Drinking & emergency fixtures",
+      "sub_short": "給水設備",
+      "sub_short_en": "Water fixtures",
       "row": 0,
       "relations": [
         {
@@ -93,6 +99,8 @@
       "name_en": "EasyWater (Freije Treatment Systems)",
       "sub": "水処理装置",
       "sub_en": "Water treatment systems",
+      "sub_short": "水処理装置",
+      "sub_short_en": "Water treatment",
       "row": 0,
       "relations": [
         {
@@ -117,6 +125,8 @@
       "name_en": "I-CON Systems",
       "sub": "施設向け節水制御",
       "sub_en": "Water management controls",
+      "sub_short": "節水制御",
+      "sub_short_en": "Water controls",
       "row": 0,
       "relations": [
         {
@@ -141,6 +151,8 @@
       "name_en": "Bradley",
       "sub": "洗面・安全設備",
       "sub_en": "Washroom & safety fixtures",
+      "sub_short": "洗面・安全設備",
+      "sub_short_en": "Washroom",
       "row": 0,
       "relations": [
         {

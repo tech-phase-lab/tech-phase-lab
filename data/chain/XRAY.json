@@ -28,6 +28,8 @@
       "name_en": "Henry Schein",
       "sub": "歯科・医療用品の流通",
       "sub_en": "Dental & medical distribution",
+      "sub_short": "歯科",
+      "sub_short_en": "Dental supply",
       "row": 0,
       "relations": [
         {
@@ -65,6 +67,8 @@
       "name_en": "Patterson Companies",
       "sub": "歯科用品の流通",
       "sub_en": "Dental distribution",
+      "sub_short": "歯科用品の流通",
+      "sub_short_en": "Dental supply",
       "row": 0,
       "relations": [
         {
@@ -89,6 +93,8 @@
       "name_en": "Solventum",
       "sub": "医療・口腔ケア製品",
       "sub_en": "Healthcare & oral care",
+      "sub_short": "医療・口腔ケア",
+      "sub_short_en": "Healthcare",
       "row": 1,
       "relations": [
         {
@@ -113,6 +119,8 @@
       "name_en": "ZimVie",
       "sub": "歯科インプラント",
       "sub_en": "Dental implants",
+      "sub_short": "インプラント",
+      "sub_short_en": "Dental implants",
       "row": 1,
       "relations": [
         {
@@ -137,6 +145,8 @@
       "name_en": "Dror Ortho-Design",
       "sub": "マウスピース矯正",
       "sub_en": "Clear aligners",
+      "sub_short": "歯科矯正",
+      "sub_short_en": "Clear aligners",
       "row": 1,
       "relations": [
         {
@@ -161,6 +171,8 @@
       "name_en": "Milestone Scientific",
       "sub": "歯科用麻酔器",
       "sub_en": "Dental anesthetic delivery",
+      "sub_short": "歯科用麻酔器",
+      "sub_short_en": "Dental devices",
       "row": 1,
       "relations": [
         {

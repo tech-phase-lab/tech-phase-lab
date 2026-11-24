@@ -27,6 +27,8 @@
       "name": "アマゾン",
       "sub": "EC・クラウド",
       "sub_en": "E-commerce & cloud",
+      "sub_short": "EC・クラウド",
+      "sub_short_en": "E-commerce",
       "row": 0,
       "relations": [
         {
@@ -63,6 +65,8 @@
       "name": "Klaviyo",
       "sub": "マーケティング基盤",
       "sub_en": "Marketing platform",
+      "sub_short": "販促基盤",
+      "sub_short_en": "Marketing tech",
       "row": 0,
       "relations": [
         {
@@ -86,6 +90,8 @@
       "name": "Sprout Social",
       "sub": "SNS運用ソフト",
       "sub_en": "Social media software",
+      "sub_short": "SNS運用ソフト",
+      "sub_short_en": "Social media",
       "row": 0,
       "relations": [
         {
@@ -109,6 +115,8 @@
       "name": "レディット",
       "sub": "掲示板・SNS",
       "sub_en": "Social platform",
+      "sub_short": "掲示板・SNS",
+      "sub_short_en": "Social platform",
       "row": 1,
       "relations": [
         {
@@ -133,6 +141,8 @@
       "name": "スナップ",
       "sub": "SNS・カメラ",
       "sub_en": "Social & camera",
+      "sub_short": "SNS・カメラ",
+      "sub_short_en": "Social & camera",
       "row": 1,
       "relations": [
         {
@@ -170,6 +180,8 @@
       "name": "OpenAI",
       "sub": "生成AI",
       "sub_en": "Generative AI",
+      "sub_short": "生成AI",
+      "sub_short_en": "Generative AI",
       "row": 1,
       "relations": [
         {

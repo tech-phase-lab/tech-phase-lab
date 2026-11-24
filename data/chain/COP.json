@@ -19,6 +19,8 @@
       "name": "シェブロン",
       "sub": "総合石油・ガス",
       "sub_en": "Integrated oil & gas",
+      "sub_short": "総合石油・ガス",
+      "sub_short_en": "Integrated oil",
       "row": 0,
       "relations": [
         {
@@ -56,6 +58,8 @@
       "name": "赤道ギニア国営ガス会社(SONAGAS)",
       "sub": "国営ガス会社",
       "sub_en": "State gas company",
+      "sub_short": "国営ガス会社",
+      "sub_short_en": "State gas",
       "row": 0,
       "relations": [
         {
@@ -80,6 +84,8 @@
       "name": "オリジン・エナジー",
       "sub": "豪州エネルギー",
       "sub_en": "Australian energy",
+      "sub_short": "豪州エネルギー",
+      "sub_short_en": "Australia energy",
       "row": 0,
       "relations": [
         {
@@ -104,6 +110,8 @@
       "name": "中国石油化工(シノペック)",
       "sub": "中国の石油化学大手",
       "sub_en": "Chinese energy & chemicals",
+      "sub_short": "中国石化",
+      "sub_short_en": "Chinese energy",
       "row": 0,
       "relations": [
         {
@@ -141,6 +149,8 @@
       "name": "カタールエナジー",
       "sub": "カタール国営エネルギー",
       "sub_en": "Qatar state energy",
+      "sub_short": "カタール国営",
+      "sub_short_en": "Qatar energy",
       "row": 0,
       "relations": [
         {

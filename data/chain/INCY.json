@@ -19,6 +19,8 @@
       "name": "ノバルティス",
       "sub": "ライセンス提携先",
       "sub_en": "Licensing partner",
+      "sub_short": "ライセンス先",
+      "sub_short_en": "Licensing",
       "row": 0,
       "relations": [
         {
@@ -43,6 +45,8 @@
       "name": "イーライリリー",
       "sub": "ライセンス提携先",
       "sub_en": "Licensing partner",
+      "sub_short": "ライセンス先",
+      "sub_short_en": "Licensing",
       "row": 0,
       "relations": [
         {
@@ -67,6 +71,8 @@
       "name": "シンダックス",
       "sub": "導入元",
       "sub_en": "Licensor",
+      "sub_short": "導入元",
+      "sub_short_en": "Licensor",
       "row": 0,
       "relations": [
         {
@@ -104,6 +110,8 @@
       "name": "マクロジェニクス",
       "sub": "導入元",
       "sub_en": "Licensor",
+      "sub_short": "導入元",
+      "sub_short_en": "Licensor",
       "row": 0,
       "relations": [
         {
@@ -141,6 +149,8 @@
       "name": "ゼンコア",
       "sub": "導入元",
       "sub_en": "Licensor",
+      "sub_short": "導入元",
+      "sub_short_en": "Licensor",
       "row": 0,
       "relations": [
         {
@@ -165,6 +175,8 @@
       "name": "メルス",
       "sub": "二重特異性抗体",
       "sub_en": "Bispecific antibodies",
+      "sub_short": "二重特異性抗体",
+      "sub_short_en": "Bispecifics",
       "row": 0,
       "relations": [
         {

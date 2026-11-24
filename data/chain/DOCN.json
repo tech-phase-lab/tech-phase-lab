@@ -32,6 +32,8 @@
       "name": "AMD",
       "sub": "半導体",
       "sub_en": "Semiconductors",
+      "sub_short": "半導体",
+      "sub_short_en": "Semiconductors",
       "row": 0,
       "relations": [
         {
@@ -55,6 +57,8 @@
       "name": "MongoDB",
       "sub": "データベース",
       "sub_en": "Databases",
+      "sub_short": "データベース",
+      "sub_short_en": "Databases",
       "row": 0,
       "relations": [
         {
@@ -78,6 +82,8 @@
       "name": "モルガン・スタンレー",
       "sub": "投資銀行",
       "sub_en": "Investment bank",
+      "sub_short": "投資銀行",
+      "sub_short_en": "Investment bank",
       "row": 1,
       "relations": [
         {
@@ -117,6 +123,8 @@
       "name": "アマゾン",
       "sub": "クラウド・EC",
       "sub_en": "Cloud & e-commerce",
+      "sub_short": "クラウド・EC",
+      "sub_short_en": "Cloud",
       "row": 2,
       "relations": [
         {
@@ -141,6 +149,8 @@
       "name": "マイクロソフト",
       "sub": "ソフト・クラウド",
       "sub_en": "Software & cloud",
+      "sub_short": "ソフト",
+      "sub_short_en": "Software & cloud",
       "row": 2,
       "relations": [
         {
@@ -165,6 +175,8 @@
       "name": "アルファベット",
       "sub": "検索・クラウド",
       "sub_en": "Search & cloud",
+      "sub_short": "検索・クラウド",
+      "sub_short_en": "Search & cloud",
       "row": 2,
       "relations": [
         {
@@ -189,6 +201,8 @@
       "name": "コアウィーブ",
       "sub": "AIクラウド",
       "sub_en": "AI cloud",
+      "sub_short": "AIクラウド",
+      "sub_short_en": "AI cloud",
       "row": 2,
       "relations": [
         {

@@ -24,6 +24,8 @@
       "name": "ロッキード・マーチン",
       "sub": "防衛・航空機メーカー",
       "sub_en": "Defense & aircraft maker",
+      "sub_short": "防衛・航空機",
+      "sub_short_en": "Defense",
       "row": 0,
       "relations": [
         {
@@ -48,6 +50,8 @@
       "name": "ボーイング",
       "sub": "航空機メーカー",
       "sub_en": "Aircraft maker",
+      "sub_short": "航空機メーカー",
+      "sub_short_en": "Aircraft maker",
       "row": 0,
       "relations": [
         {
@@ -72,6 +76,8 @@
       "name": "エアバス",
       "sub": "航空機メーカー",
       "sub_en": "Aircraft maker",
+      "sub_short": "航空機メーカー",
+      "sub_short_en": "Aircraft maker",
       "row": 0,
       "relations": [
         {
@@ -96,6 +102,8 @@
       "name": "MTUエアロ・エンジンズ",
       "sub": "航空エンジン共同事業",
       "sub_en": "Engine collaborator",
+      "sub_short": "航空エンジン",
+      "sub_short_en": "Engines",
       "row": 0,
       "relations": [
         {
@@ -120,6 +128,8 @@
       "name": "日本航空機エンジン協会",
       "sub": "航空エンジン共同事業",
       "sub_en": "Engine collaborator",
+      "sub_short": "航空エンジン",
+      "sub_short_en": "Engines",
       "row": 0,
       "relations": [
         {
@@ -144,6 +154,8 @@
       "name": "GEエアロスペース",
       "sub": "航空エンジン合弁相手",
       "sub_en": "Engine JV partner",
+      "sub_short": "航空エンジン",
+      "sub_short_en": "Engine JV",
       "row": 0,
       "relations": [
         {
@@ -168,6 +180,8 @@
       "name": "タレス",
       "sub": "防衛合弁相手",
       "sub_en": "Defense JV partner",
+      "sub_short": "防衛合弁相手",
+      "sub_short_en": "Defense JV",
       "row": 0,
       "relations": [
         {
@@ -192,6 +206,8 @@
       "name": "ロールス・ロイス",
       "sub": "航空エンジン事業の旧持分",
       "sub_en": "Former engine stakeholder",
+      "sub_short": "航空エンジン",
+      "sub_short_en": "Engines (former)",
       "row": 0,
       "relations": [
         {
@@ -216,6 +232,8 @@
       "name": "デュコモン",
       "sub": "航空機部品",
       "sub_en": "Aerospace parts",
+      "sub_short": "航空機部品",
+      "sub_short_en": "Aerospace parts",
       "row": 1,
       "relations": [
         {

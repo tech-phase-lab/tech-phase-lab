@@ -25,6 +25,8 @@
       "name_en": "Sandstorm Gold",
       "sub": "ストリーム・ロイヤルティ",
       "sub_en": "Streams & royalties",
+      "sub_short": "権益",
+      "sub_short_en": "Streams",
       "row": 0,
       "relations": [
         {
@@ -49,6 +51,8 @@
       "name_en": "Horizon Copper",
       "sub": "銅の権益",
       "sub_en": "Copper interests",
+      "sub_short": "銅の権益",
+      "sub_short_en": "Copper interests",
       "row": 0,
       "relations": [
         {
@@ -73,6 +77,8 @@
       "name_en": "SSR Mining",
       "sub": "金鉱山",
       "sub_en": "Gold mining",
+      "sub_short": "金鉱山",
+      "sub_short_en": "Gold mining",
       "row": 0,
       "relations": [
         {
@@ -97,6 +103,8 @@
       "name_en": "Barrick",
       "sub": "金・銅鉱山",
       "sub_en": "Gold & copper mining",
+      "sub_short": "金・銅鉱山",
+      "sub_short_en": "Gold mining",
       "row": 1,
       "relations": [
         {
@@ -121,6 +129,8 @@
       "name_en": "Solaris Resources",
       "sub": "銅の探鉱(エクアドル)",
       "sub_en": "Copper exploration (Ecuador)",
+      "sub_short": "銅の探鉱",
+      "sub_short_en": "Copper mining",
       "row": 1,
       "relations": [
         {
@@ -145,6 +155,8 @@
       "name_en": "First Majestic Silver",
       "sub": "銀鉱山",
       "sub_en": "Silver mining",
+      "sub_short": "銀鉱山",
+      "sub_short_en": "Silver mining",
       "row": 1,
       "relations": [
         {
@@ -169,6 +181,8 @@
       "name_en": "Ero Copper",
       "sub": "銅・金鉱山(ブラジル)",
       "sub_en": "Copper & gold (Brazil)",
+      "sub_short": "銅・金鉱山",
+      "sub_short_en": "Copper & gold",
       "row": 1,
       "relations": [
         {
@@ -193,6 +207,8 @@
       "name_en": "Allied Gold",
       "sub": "金鉱山(アフリカ)",
       "sub_en": "Gold mining (Africa)",
+      "sub_short": "金鉱山",
+      "sub_short_en": "Gold mining",
       "row": 1,
       "relations": [
         {
@@ -217,6 +233,8 @@
       "name_en": "New Gold",
       "sub": "金・銅鉱山",
       "sub_en": "Gold & copper mining",
+      "sub_short": "金・銅鉱山",
+      "sub_short_en": "Gold mining",
       "row": 1,
       "relations": [
         {
@@ -241,6 +259,8 @@
       "name_en": "McEwen",
       "sub": "金・銀鉱山",
       "sub_en": "Gold & silver mining",
+      "sub_short": "金・銀鉱山",
+      "sub_short_en": "Gold mining",
       "row": 1,
       "relations": [
         {
@@ -265,6 +285,8 @@
       "name_en": "Mako Mining",
       "sub": "金鉱山",
       "sub_en": "Gold mining",
+      "sub_short": "金鉱山",
+      "sub_short_en": "Gold mining",
       "row": 1,
       "relations": [
         {
@@ -289,6 +311,8 @@
       "name_en": "i-80 Gold",
       "sub": "金鉱山(ネバダ)",
       "sub_en": "Gold mining (Nevada)",
+      "sub_short": "金鉱山",
+      "sub_short_en": "Gold mining",
       "row": 1,
       "relations": [
         {

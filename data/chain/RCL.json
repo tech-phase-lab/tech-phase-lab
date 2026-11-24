@@ -29,6 +29,8 @@
       "name": "TUI社",
       "sub": "ドイツの観光会社",
       "sub_en": "German tourism company",
+      "sub_short": "ドイツ観光",
+      "sub_short_en": "German tourism",
       "row": 1,
       "relations": [
         {
@@ -53,6 +55,8 @@
       "name": "シャンティエ・ド・ラトランティック",
       "sub": "造船所",
       "sub_en": "Shipyard",
+      "sub_short": "造船所",
+      "sub_short_en": "Shipyard",
       "row": 0,
       "relations": [
         {
@@ -77,6 +81,8 @@
       "name": "マイヤー・トゥルク",
       "sub": "造船所",
       "sub_en": "Shipyard",
+      "sub_short": "造船所",
+      "sub_short_en": "Shipyard",
       "row": 0,
       "relations": [
         {
@@ -101,6 +107,8 @@
       "name": "フィンカンティエリ",
       "sub": "造船所",
       "sub_en": "Shipyard",
+      "sub_short": "造船所",
+      "sub_short_en": "Shipyard",
       "row": 0,
       "relations": [
         {
@@ -125,6 +133,8 @@
       "name": "スペースX",
       "sub": "衛星通信",
       "sub_en": "Satellite connectivity",
+      "sub_short": "衛星通信",
+      "sub_short_en": "Satellite links",
       "row": 0,
       "relations": [
         {
@@ -149,6 +159,8 @@
       "name": "カーニバル",
       "sub": "クルーズ大手",
       "sub_en": "Cruise operator",
+      "sub_short": "クルーズ大手",
+      "sub_short_en": "Cruise operator",
       "row": 1,
       "relations": [
         {
@@ -186,6 +198,8 @@
       "name": "ノルウェージャン・クルーズ・ライン",
       "sub": "クルーズ大手",
       "sub_en": "Cruise operator",
+      "sub_short": "クルーズ大手",
+      "sub_short_en": "Cruise operator",
       "row": 1,
       "relations": [
         {
@@ -210,6 +224,8 @@
       "name": "ディズニー",
       "sub": "クルーズ競合",
       "sub_en": "Cruise competitor",
+      "sub_short": "クルーズ競合",
+      "sub_short_en": "Cruises",
       "row": 1,
       "relations": [
         {
@@ -234,6 +250,8 @@
       "name": "バイキング",
       "sub": "クルーズ競合",
       "sub_en": "Cruise competitor",
+      "sub_short": "クルーズ競合",
+      "sub_short_en": "Cruises",
       "row": 1,
       "relations": [
         {

@@ -25,6 +25,8 @@
       "name": "クラフト・ハインツ",
       "sub": "知的財産の相互許諾先",
       "sub_en": "IP license counterparty",
+      "sub_short": "特許相互許諾",
+      "sub_short_en": "IP licensing",
       "row": 0,
       "relations": [
         {
@@ -49,6 +51,8 @@
       "name": "キューリグ・ドクターペッパー",
       "sub": "出資先",
       "sub_en": "Equity investee",
+      "sub_short": "出資先",
+      "sub_short_en": "Equity investee",
       "row": 0,
       "relations": [
         {
@@ -73,6 +77,8 @@
       "name": "JDEピーツ",
       "sub": "コーヒー会社・元出資先",
       "sub_en": "Coffee company, former investee",
+      "sub_short": "コーヒー会社",
+      "sub_short_en": "Coffee company",
       "row": 0,
       "relations": [
         {
@@ -97,6 +103,8 @@
       "name": "JABホールディング",
       "sub": "株式の売却先",
       "sub_en": "Share buyer",
+      "sub_short": "株式の売却先",
+      "sub_short_en": "Share buyer",
       "row": 0,
       "relations": [
         {
@@ -121,6 +129,8 @@
       "name": "ペプシコ",
       "sub": "飲料・スナック",
       "sub_en": "Beverages & snacks",
+      "sub_short": "飲料・スナック",
+      "sub_short_en": "Beverages",
       "row": 1,
       "relations": [
         {

@@ -181,3 +181,25 @@ test('the PRO tour sample leaves out 「05 競合は？」 and numbers the map h
   const ui = readFileSync(new URL('../app/research/pro-experience/samples/relation-map.tsx', import.meta.url), 'utf8');
   assert.match(ui, /<StockChainMap [^>]*\bsample \/>/);
 });
+
+// Owner, Nov 24: every map card is the same width and shows its label on one line, so each company has a short label that
+// fits the card (about 7 full-width characters in Japanese; at most 16 characters in English). Latin capitals and digits are
+// wider than half a full-width character in the site font, so they count as 0.75 (narrow letters 0.3, others 0.55).
+const cardWidth = text => [...text].reduce((sum, char) => sum + (/[⺀-｠￠-￯]/.test(char) ? 1 : /[IJijlft.,' ]/.test(char) ? 0.3 : /[A-Z0-9&%@+]/.test(char) ? 0.75 : 0.55), 0);
+test('every company in every map has a short card label that fits one line of the uniform card', () => {
+  for (const ticker of ALL) {
+    for (const company of chain.chainDataFor(ticker).companies) {
+      const where = `${ticker} ${company.id}`;
+      assert.ok(company.sub_short && company.sub_short_en, where);
+      assert.ok(cardWidth(company.sub_short) <= 7.25, `${where}: ${company.sub_short}`);
+      assert.ok(company.sub_short_en.length <= 16 && !hasJapanese(company.sub_short_en), `${where}: ${company.sub_short_en}`);
+      for (const label of [company.sub_short, company.sub_short_en]) assert.ok(!/…|\.\.\./.test(label) && label === label.trim(), `${where}: ${label}`);
+    }
+  }
+  const html = renderToStaticMarkup(createElement(StockChainMap, { data: chain.chainDataFor('SONO'), lang: 'ja' }));
+  assert.match(html, /<small title="PC周辺機器・オーディオ">PC周辺機器<\/small>/);
+  assert.match(html, /<small title="車載ミラー・電子機器">車載電子機器<\/small>/);
+  const css = readFileSync(new URL('../app/research/stocks/stock-chain-map.module.css', import.meta.url), 'utf8');
+  assert.match(css, /\.chips \{ display: grid; grid-template-columns: repeat\(auto-fill, minmax\(var\(--card\), 1fr\)\);/);
+  assert.match(css, /\.chips > \.chip:not\(\.root\) small \{ white-space: nowrap; \}/);
+});

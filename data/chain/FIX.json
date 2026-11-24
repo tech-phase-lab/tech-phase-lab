@@ -28,6 +28,8 @@
       "name_en": "Feyen-Zylstra",
       "sub": "電気工事",
       "sub_en": "Electrical contractor",
+      "sub_short": "電気工事",
+      "sub_short_en": "Electrical work",
       "row": 0,
       "relations": [
         {
@@ -52,6 +54,8 @@
       "name_en": "Meisner Electric",
       "sub": "電気工事",
       "sub_en": "Electrical contractor",
+      "sub_short": "電気工事",
+      "sub_short_en": "Electrical work",
       "row": 0,
       "relations": [
         {
@@ -76,6 +80,8 @@
       "name_en": "Right Way Plumbing & Mechanical",
       "sub": "配管・空調工事",
       "sub_en": "Plumbing & mechanical",
+      "sub_short": "配管・空調工事",
+      "sub_short_en": "Plumbing",
       "row": 0,
       "relations": [
         {
@@ -100,6 +106,8 @@
       "name_en": "Century Contractors",
       "sub": "機械設備工事",
       "sub_en": "Mechanical contractor",
+      "sub_short": "機械設備工事",
+      "sub_short_en": "Mechanical work",
       "row": 0,
       "relations": [
         {
@@ -124,6 +132,8 @@
       "name_en": "EMCOR",
       "sub": "設備工事",
       "sub_en": "Building services",
+      "sub_short": "設備工事",
+      "sub_short_en": "Building upkeep",
       "row": 1,
       "relations": [
         {
@@ -148,6 +158,8 @@
       "name_en": "Legence",
       "sub": "建物設備・省エネ",
       "sub_en": "Building systems & efficiency",
+      "sub_short": "建物設備",
+      "sub_short_en": "Building systems",
       "row": 1,
       "relations": [
         {
@@ -172,6 +184,8 @@
       "name_en": "Everus Construction",
       "sub": "電気・機械工事",
       "sub_en": "Electrical & mechanical contractor",
+      "sub_short": "電気・機械工事",
+      "sub_short_en": "Electrical work",
       "row": 1,
       "relations": [
         {

@@ -21,6 +21,8 @@
       "name": "フィリップス",
       "sub": "医療機器",
       "sub_en": "Medical devices",
+      "sub_short": "医療機器",
+      "sub_short_en": "Medical devices",
       "row": 0,
       "relations": [
         {
@@ -45,6 +47,8 @@
       "name": "フィッシャー&パイケル・ヘルスケア",
       "sub": "呼吸ケア機器",
       "sub_en": "Respiratory devices",
+      "sub_short": "呼吸ケア機器",
+      "sub_short_en": "Breathing aids",
       "row": 0,
       "relations": [
         {
@@ -69,6 +73,8 @@
       "name": "デビルビス・ヘルスケア",
       "sub": "呼吸ケア機器",
       "sub_en": "Respiratory devices",
+      "sub_short": "呼吸ケア機器",
+      "sub_short_en": "Breathing aids",
       "row": 0,
       "relations": [
         {
@@ -93,6 +99,8 @@
       "name": "エイペックス・メディカル",
       "sub": "睡眠機器",
       "sub_en": "Sleep devices",
+      "sub_short": "睡眠機器",
+      "sub_short_en": "Sleep devices",
       "row": 0,
       "relations": [
         {
@@ -117,6 +125,8 @@
       "name": "BMCメディカル",
       "sub": "睡眠機器",
       "sub_en": "Sleep devices",
+      "sub_short": "睡眠機器",
+      "sub_short_en": "Sleep devices",
       "row": 0,
       "relations": [
         {
@@ -141,6 +151,8 @@
       "name": "リアクト・ヘルス",
       "sub": "呼吸ケア機器",
       "sub_en": "Respiratory devices",
+      "sub_short": "呼吸ケア機器",
+      "sub_short_en": "Breathing aids",
       "row": 0,
       "relations": [
         {
@@ -165,6 +177,8 @@
       "name": "インスパイア・メディカル",
       "sub": "睡眠時無呼吸の治療機器",
       "sub_en": "Sleep apnea devices",
+      "sub_short": "睡眠治療機器",
+      "sub_short_en": "Sleep apnea",
       "row": 0,
       "relations": [
         {

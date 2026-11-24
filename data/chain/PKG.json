@@ -27,6 +27,8 @@
       "name": "ODPコーポレーション",
       "sub": "紙製品の顧客",
       "sub_en": "Paper customer",
+      "sub_short": "紙製品の顧客",
+      "sub_short_en": "Paper customer",
       "row": 0,
       "relations": [
         {
@@ -51,6 +53,8 @@
       "name": "インターナショナル・ペーパー",
       "sub": "段ボール",
       "sub_en": "Corrugated",
+      "sub_short": "段ボール",
+      "sub_short_en": "Corrugated",
       "row": 1,
       "relations": [
         {
@@ -75,6 +79,8 @@
       "name": "スマーフィット・ウエストロック",
       "sub": "段ボール",
       "sub_en": "Corrugated",
+      "sub_short": "段ボール",
+      "sub_short_en": "Corrugated",
       "row": 1,
       "relations": [
         {
@@ -99,6 +105,8 @@
       "name": "ジョージア・パシフィック",
       "sub": "段ボール",
       "sub_en": "Corrugated",
+      "sub_short": "段ボール",
+      "sub_short_en": "Corrugated",
       "row": 1,
       "relations": [
         {
@@ -123,6 +131,8 @@
       "name": "プラット・インダストリーズ",
       "sub": "段ボール",
       "sub_en": "Corrugated",
+      "sub_short": "段ボール",
+      "sub_short_en": "Corrugated",
       "row": 1,
       "relations": [
         {
@@ -147,6 +157,8 @@
       "name": "ドムター",
       "sub": "紙",
       "sub_en": "Paper",
+      "sub_short": "紙",
+      "sub_short_en": "Paper",
       "row": 1,
       "relations": [
         {
@@ -171,6 +183,8 @@
       "name": "シルバモ",
       "sub": "紙",
       "sub_en": "Paper",
+      "sub_short": "紙",
+      "sub_short_en": "Paper",
       "row": 1,
       "relations": [
         {

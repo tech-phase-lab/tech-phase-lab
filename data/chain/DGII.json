@@ -19,6 +19,8 @@
       "name": "アロー・エレクトロニクス",
       "sub": "電子部品商社",
       "sub_en": "Electronics distributor",
+      "sub_short": "電子部品商社",
+      "sub_short_en": "Electronics",
       "row": 0,
       "relations": [
         {
@@ -43,6 +45,8 @@
       "name": "アヴネット",
       "sub": "電子部品商社",
       "sub_en": "Electronics distributor",
+      "sub_short": "電子部品商社",
+      "sub_short_en": "Electronics",
       "row": 0,
       "relations": [
         {
@@ -67,6 +71,8 @@
       "name": "デジキー",
       "sub": "電子部品商社",
       "sub_en": "Electronics distributor",
+      "sub_short": "電子部品商社",
+      "sub_short_en": "Electronics",
       "row": 0,
       "relations": [
         {
@@ -91,6 +97,8 @@
       "name": "マウザー・エレクトロニクス",
       "sub": "電子部品商社",
       "sub_en": "Electronics distributor",
+      "sub_short": "電子部品商社",
+      "sub_short_en": "Electronics",
       "row": 0,
       "relations": [
         {
@@ -115,6 +123,8 @@
       "name": "エーティーアンドティー",
       "sub": "通信キャリア",
       "sub_en": "Carrier",
+      "sub_short": "通信キャリア",
+      "sub_short_en": "Carrier",
       "row": 0,
       "relations": [
         {
@@ -139,6 +149,8 @@
       "name": "ベライゾン",
       "sub": "通信キャリア",
       "sub_en": "Carrier",
+      "sub_short": "通信キャリア",
+      "sub_short_en": "Carrier",
       "row": 0,
       "relations": [
         {
@@ -163,6 +175,8 @@
       "name": "Tモバイル",
       "sub": "通信キャリア",
       "sub_en": "Carrier",
+      "sub_short": "通信キャリア",
+      "sub_short_en": "Carrier",
       "row": 0,
       "relations": [
         {
@@ -187,6 +201,8 @@
       "name": "クアルコム",
       "sub": "半導体",
       "sub_en": "Semiconductors",
+      "sub_short": "半導体",
+      "sub_short_en": "Semiconductors",
       "row": 0,
       "relations": [
         {
@@ -211,6 +227,8 @@
       "name": "NXPセミコンダクターズ",
       "sub": "半導体",
       "sub_en": "Semiconductors",
+      "sub_short": "半導体",
+      "sub_short_en": "Semiconductors",
       "row": 0,
       "relations": [
         {
@@ -235,6 +253,8 @@
       "name": "グーグル",
       "sub": "クラウド・ソフト",
       "sub_en": "Cloud & software",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud & software",
       "row": 0,
       "relations": [
         {

@@ -30,6 +30,8 @@
       "name_en": "VSE Corporation",
       "sub": "航空機部品・整備",
       "sub_en": "Aviation parts & MRO",
+      "sub_short": "航空機部品",
+      "sub_short_en": "Aviation parts",
       "row": 0,
       "relations": [
         {
@@ -54,6 +56,8 @@
       "name_en": "Amentum",
       "sub": "政府向けエンジニアリング",
       "sub_en": "Government engineering services",
+      "sub_short": "政府向け技術",
+      "sub_short_en": "Gov engineering",
       "row": 1,
       "relations": [
         {
@@ -78,6 +82,8 @@
       "name_en": "Fluor",
       "sub": "エンジニアリング・建設",
       "sub_en": "Engineering & construction",
+      "sub_short": "設計・建設",
+      "sub_short_en": "Engineering",
       "row": 1,
       "relations": [
         {
@@ -102,6 +108,8 @@
       "name_en": "Leidos",
       "sub": "防衛・政府IT",
       "sub_en": "Defense & government IT",
+      "sub_short": "防衛・政府IT",
+      "sub_short_en": "Defense",
       "row": 1,
       "relations": [
         {
@@ -126,6 +134,8 @@
       "name_en": "Science Applications International",
       "sub": "政府向けIT",
       "sub_en": "Government IT services",
+      "sub_short": "政府向けIT",
+      "sub_short_en": "Government IT",
       "row": 1,
       "relations": [
         {
@@ -150,6 +160,8 @@
       "name_en": "KBR",
       "sub": "政府向けサービス・技術",
       "sub_en": "Government services & technology",
+      "sub_short": "政府サービス",
+      "sub_short_en": "Gov services",
       "row": 1,
       "relations": [
         {
@@ -174,6 +186,8 @@
       "name_en": "General Dynamics",
       "sub": "防衛",
       "sub_en": "Defense",
+      "sub_short": "防衛",
+      "sub_short_en": "Defense",
       "row": 1,
       "relations": [
         {

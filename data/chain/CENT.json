@@ -31,6 +31,8 @@
       "name_en": "Walmart",
       "sub": "小売",
       "sub_en": "Retail",
+      "sub_short": "小売",
+      "sub_short_en": "Retail",
       "row": 0,
       "relations": [
         {
@@ -55,6 +57,8 @@
       "name_en": "The Home Depot",
       "sub": "ホームセンター",
       "sub_en": "Home improvement retail",
+      "sub_short": "ホームセンター",
+      "sub_short_en": "Home improvement",
       "row": 0,
       "relations": [
         {
@@ -79,6 +83,8 @@
       "name_en": "Costco",
       "sub": "会員制量販店",
       "sub_en": "Warehouse clubs",
+      "sub_short": "会員制量販店",
+      "sub_short_en": "Warehouse clubs",
       "row": 0,
       "relations": [
         {
@@ -103,6 +109,8 @@
       "name_en": "Lowe's",
       "sub": "ホームセンター",
       "sub_en": "Home improvement retail",
+      "sub_short": "ホームセンター",
+      "sub_short_en": "Home improvement",
       "row": 0,
       "relations": [
         {
@@ -127,6 +135,8 @@
       "name_en": "Amazon",
       "sub": "EC",
       "sub_en": "E-commerce",
+      "sub_short": "EC",
+      "sub_short_en": "E-commerce",
       "row": 0,
       "relations": [
         {
@@ -151,6 +161,8 @@
       "name_en": "TDBBS",
       "sub": "犬用おやつ",
       "sub_en": "Natural dog chews",
+      "sub_short": "犬用おやつ",
+      "sub_short_en": "Dog chews",
       "row": 1,
       "relations": [
         {
@@ -175,6 +187,8 @@
       "name_en": "Spectrum Brands",
       "sub": "ペット・家庭用品",
       "sub_en": "Pet & home products",
+      "sub_short": "ペット",
+      "sub_short_en": "Pet products",
       "row": 2,
       "relations": [
         {
@@ -199,6 +213,8 @@
       "name_en": "Scotts Miracle-Gro",
       "sub": "園芸用品",
       "sub_en": "Lawn & garden",
+      "sub_short": "園芸用品",
+      "sub_short_en": "Lawn & garden",
       "row": 2,
       "relations": [
         {

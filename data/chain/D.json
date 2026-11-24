@@ -29,6 +29,8 @@
       "name_en": "Williams",
       "sub": "ガス・パイプライン",
       "sub_en": "Gas pipelines",
+      "sub_short": "ガス",
+      "sub_short_en": "Gas pipelines",
       "row": 0,
       "relations": [
         {
@@ -53,6 +55,8 @@
       "name_en": "Infinity Natural Resources",
       "sub": "天然ガス開発",
       "sub_en": "Natural gas E&P",
+      "sub_short": "天然ガス開発",
+      "sub_short_en": "Natural gas E&P",
       "row": 0,
       "relations": [
         {
@@ -77,6 +81,8 @@
       "name_en": "Stonepeak",
       "sub": "インフラ投資",
       "sub_en": "Infrastructure investor",
+      "sub_short": "インフラ投資",
+      "sub_short_en": "Infra investing",
       "row": 1,
       "relations": [
         {
@@ -101,6 +107,8 @@
       "name_en": "Santee Cooper",
       "sub": "電力(州営)",
       "sub_en": "Power (state-owned)",
+      "sub_short": "電力",
+      "sub_short_en": "Power",
       "row": 1,
       "relations": [
         {
@@ -125,6 +133,8 @@
       "name_en": "American Electric Power",
       "sub": "電力",
       "sub_en": "Utility",
+      "sub_short": "電力",
+      "sub_short_en": "Utility",
       "row": 1,
       "relations": [
         {
@@ -149,6 +159,8 @@
       "name_en": "FirstEnergy",
       "sub": "電力",
       "sub_en": "Utility",
+      "sub_short": "電力",
+      "sub_short_en": "Utility",
       "row": 1,
       "relations": [
         {
@@ -173,6 +185,8 @@
       "name_en": "Duke Energy",
       "sub": "電力",
       "sub_en": "Utility",
+      "sub_short": "電力",
+      "sub_short_en": "Utility",
       "row": 1,
       "relations": [
         {
@@ -197,6 +211,8 @@
       "name_en": "Enbridge",
       "sub": "パイプライン・ガス配給",
       "sub_en": "Pipelines & gas utilities",
+      "sub_short": "パイプライン",
+      "sub_short_en": "Pipelines",
       "row": 2,
       "relations": [
         {
@@ -221,6 +237,8 @@
       "name_en": "Berkshire Hathaway Energy",
       "sub": "エネルギー",
       "sub_en": "Energy",
+      "sub_short": "エネルギー",
+      "sub_short_en": "Energy",
       "row": 2,
       "relations": [
         {

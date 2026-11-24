@@ -30,6 +30,8 @@
       "name_en": "Freenow",
       "sub": "タクシー配車(欧州)",
       "sub_en": "Taxi app (Europe)",
+      "sub_short": "タクシー配車",
+      "sub_short_en": "Taxi app",
       "row": 0,
       "relations": [
         {
@@ -54,6 +56,8 @@
       "name_en": "TBR Global Chauffeuring",
       "sub": "高級ハイヤー",
       "sub_en": "Premium chauffeur service",
+      "sub_short": "高級ハイヤー",
+      "sub_short_en": "Chauffeur",
       "row": 0,
       "relations": [
         {
@@ -78,6 +82,8 @@
       "name_en": "Mobileye",
       "sub": "自動運転技術",
       "sub_en": "Autonomous driving tech",
+      "sub_short": "自動運転技術",
+      "sub_short_en": "Self-driving",
       "row": 0,
       "relations": [
         {
@@ -102,6 +108,8 @@
       "name_en": "Wellgistics Health",
       "sub": "薬局・医薬品配送",
       "sub_en": "Pharmacy & drug delivery",
+      "sub_short": "薬局",
+      "sub_short_en": "Pharmacy",
       "row": 0,
       "relations": [
         {
@@ -126,6 +134,8 @@
       "name_en": "Uber Technologies",
       "sub": "配車・宅配",
       "sub_en": "Ride-hailing & delivery",
+      "sub_short": "配車・宅配",
+      "sub_short_en": "Ride-hailing",
       "row": 1,
       "relations": [
         {
@@ -163,6 +173,8 @@
       "name_en": "Bolt",
       "sub": "配車(欧州)",
       "sub_en": "Ride-hailing (Europe)",
+      "sub_short": "配車",
+      "sub_short_en": "Ride-hailing",
       "row": 1,
       "relations": [
         {
@@ -187,6 +199,8 @@
       "name_en": "Via Transportation",
       "sub": "公共交通ソフト",
       "sub_en": "Transit software",
+      "sub_short": "公共交通ソフト",
+      "sub_short_en": "Transit software",
       "row": 1,
       "relations": [
         {
@@ -211,6 +225,8 @@
       "name_en": "Marblegate Capital",
       "sub": "NYタクシー",
       "sub_en": "NYC taxi medallions",
+      "sub_short": "NYタクシー",
+      "sub_short_en": "Taxi medallions",
       "row": 1,
       "relations": [
         {
@@ -235,6 +251,8 @@
       "name_en": "AIRO Group",
       "sub": "ドローン・航空移動",
       "sub_en": "Drones & air mobility",
+      "sub_short": "ドローン",
+      "sub_short_en": "Drones",
       "row": 1,
       "relations": [
         {
@@ -259,6 +277,8 @@
       "name_en": "Envoy Technologies",
       "sub": "カーシェア",
       "sub_en": "Car sharing",
+      "sub_short": "カーシェア",
+      "sub_short_en": "Car sharing",
       "row": 1,
       "relations": [
         {

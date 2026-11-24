@@ -32,6 +32,8 @@
       "name_en": "EFC Gases & Advanced Materials",
       "sub": "特殊ガス",
       "sub_en": "Specialty gases",
+      "sub_short": "特殊ガス",
+      "sub_short_en": "Specialty gases",
       "row": 0,
       "relations": [
         {
@@ -56,6 +58,8 @@
       "name_en": "Micromax",
       "sub": "電子材料",
       "sub_en": "Electronic materials",
+      "sub_short": "電子材料",
+      "sub_short_en": "Materials",
       "row": 0,
       "relations": [
         {
@@ -80,6 +84,8 @@
       "name_en": "Entegris",
       "sub": "半導体材料",
       "sub_en": "Semiconductor materials",
+      "sub_short": "半導体材料",
+      "sub_short_en": "Chip materials",
       "row": 0,
       "relations": [
         {
@@ -104,6 +110,8 @@
       "name_en": "Quaker Houghton",
       "sub": "工業用潤滑剤",
       "sub_en": "Industrial fluids",
+      "sub_short": "工業用潤滑剤",
+      "sub_short_en": "Fluids",
       "row": 1,
       "relations": [
         {
@@ -128,6 +136,8 @@
       "name_en": "Castrol",
       "sub": "潤滑油",
       "sub_en": "Lubricants",
+      "sub_short": "潤滑油",
+      "sub_short_en": "Lubricants",
       "row": 1,
       "relations": [
         {
@@ -152,6 +162,8 @@
       "name_en": "MKS",
       "sub": "半導体装置・化学",
       "sub_en": "Semiconductor equipment & chemistry",
+      "sub_short": "半導体装置",
+      "sub_short_en": "Chip equipment",
       "row": 2,
       "relations": [
         {
@@ -176,6 +188,8 @@
       "name_en": "Qnity Electronics",
       "sub": "電子材料",
       "sub_en": "Electronic materials",
+      "sub_short": "電子材料",
+      "sub_short_en": "Materials",
       "row": 2,
       "relations": [
         {
@@ -200,6 +214,8 @@
       "name_en": "DuPont",
       "sub": "化学",
       "sub_en": "Chemicals",
+      "sub_short": "化学",
+      "sub_short_en": "Chemicals",
       "row": 2,
       "relations": [
         {

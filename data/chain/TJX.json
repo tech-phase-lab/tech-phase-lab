@@ -31,6 +31,8 @@
       "name_en": "Lifetime Brands",
       "sub": "キッチン用品",
       "sub_en": "Kitchenware",
+      "sub_short": "キッチン用品",
+      "sub_short_en": "Kitchenware",
       "row": 0,
       "relations": [
         {
@@ -55,6 +57,8 @@
       "name_en": "Digital Brands Group",
       "sub": "アパレルブランド",
       "sub_en": "Apparel brands",
+      "sub_short": "アパレル",
+      "sub_short_en": "Apparel brands",
       "row": 0,
       "relations": [
         {
@@ -79,6 +83,8 @@
       "name_en": "Synchrony",
       "sub": "カード・消費者金融",
       "sub_en": "Cards & consumer finance",
+      "sub_short": "カード",
+      "sub_short_en": "Cards",
       "row": 1,
       "relations": [
         {
@@ -103,6 +109,8 @@
       "name_en": "Kimco Realty",
       "sub": "商業施設REIT",
       "sub_en": "Shopping center REIT",
+      "sub_short": "商業施設REIT",
+      "sub_short_en": "Mall REIT",
       "row": 1,
       "relations": [
         {
@@ -127,6 +135,8 @@
       "name_en": "Regency Centers",
       "sub": "商業施設REIT",
       "sub_en": "Shopping center REIT",
+      "sub_short": "商業施設REIT",
+      "sub_short_en": "Mall REIT",
       "row": 1,
       "relations": [
         {
@@ -151,6 +161,8 @@
       "name_en": "Brixmor Property",
       "sub": "商業施設REIT",
       "sub_en": "Shopping center REIT",
+      "sub_short": "商業施設REIT",
+      "sub_short_en": "Mall REIT",
       "row": 1,
       "relations": [
         {
@@ -175,6 +187,8 @@
       "name_en": "CBL & Associates",
       "sub": "ショッピングモールREIT",
       "sub_en": "Mall REIT",
+      "sub_short": "モールREIT",
+      "sub_short_en": "Mall REIT",
       "row": 1,
       "relations": [
         {
@@ -199,6 +213,8 @@
       "name_en": "Ross Stores",
       "sub": "オフプライス小売",
       "sub_en": "Off-price retail",
+      "sub_short": "割安小売",
+      "sub_short_en": "Off-price retail",
       "row": 2,
       "relations": [
         {

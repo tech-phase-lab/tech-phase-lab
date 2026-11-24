@@ -27,6 +27,8 @@
       "name_en": "RCM Technologies",
       "sub": "技術・人材サービス",
       "sub_en": "Engineering & staffing services",
+      "sub_short": "技術人材",
+      "sub_short_en": "Engineering",
       "row": 0,
       "relations": [
         {
@@ -51,6 +53,8 @@
       "name_en": "Destination XL Group",
       "sub": "衣料品小売",
       "sub_en": "Apparel retail",
+      "sub_short": "衣料品小売",
+      "sub_short_en": "Apparel retail",
       "row": 0,
       "relations": [
         {
@@ -75,6 +79,8 @@
       "name_en": "Ooma",
       "sub": "クラウド通話",
       "sub_en": "Cloud communications",
+      "sub_short": "クラウド通話",
+      "sub_short_en": "Cloud comms",
       "row": 0,
       "relations": [
         {
@@ -99,6 +105,8 @@
       "name_en": "Safety Insurance Group",
       "sub": "自動車保険",
       "sub_en": "Auto insurance",
+      "sub_short": "自動車保険",
+      "sub_short_en": "Auto insurance",
       "row": 0,
       "relations": [
         {
@@ -123,6 +131,8 @@
       "name_en": "Monro",
       "sub": "自動車整備",
       "sub_en": "Auto service",
+      "sub_short": "自動車整備",
+      "sub_short_en": "Auto service",
       "row": 0,
       "relations": [
         {
@@ -147,6 +157,8 @@
       "name_en": "L.B. Foster",
       "sub": "鉄道・インフラ製品",
       "sub_en": "Rail & infrastructure products",
+      "sub_short": "鉄道",
+      "sub_short_en": "Rail products",
       "row": 0,
       "relations": [
         {
@@ -171,6 +183,8 @@
       "name_en": "SLM (Sallie Mae)",
       "sub": "学生ローン",
       "sub_en": "Student loans",
+      "sub_short": "学生ローン",
+      "sub_short_en": "Student loans",
       "row": 1,
       "relations": [
         {
@@ -195,6 +209,8 @@
       "name_en": "SoFi Technologies",
       "sub": "デジタル金融",
       "sub_en": "Digital finance",
+      "sub_short": "デジタル金融",
+      "sub_short_en": "Digital finance",
       "row": 1,
       "relations": [
         {
@@ -219,6 +235,8 @@
       "name_en": "Bank of America",
       "sub": "銀行",
       "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
       "row": 1,
       "relations": [
         {
@@ -243,6 +261,8 @@
       "name_en": "Rhinebeck Bancorp",
       "sub": "地方銀行",
       "sub_en": "Community bank",
+      "sub_short": "地方銀行",
+      "sub_short_en": "Community bank",
       "row": 1,
       "relations": [
         {

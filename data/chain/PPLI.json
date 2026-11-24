@@ -24,6 +24,8 @@
       "name": "グーグル(アルファベット)",
       "sub": "検索広告",
       "sub_en": "Search ads",
+      "sub_short": "検索広告",
+      "sub_short_en": "Search ads",
       "row": 1,
       "relations": [
         {
@@ -48,6 +50,8 @@
       "name": "アップル",
       "sub": "スマホ・OS",
       "sub_en": "Phones & OS",
+      "sub_short": "スマホ・OS",
+      "sub_short_en": "Phones & OS",
       "row": 0,
       "relations": [
         {
@@ -72,6 +76,8 @@
       "name": "マイクロソフト",
       "sub": "ソフト・クラウド",
       "sub_en": "Software & cloud",
+      "sub_short": "ソフト",
+      "sub_short_en": "Software & cloud",
       "row": 1,
       "relations": [
         {
@@ -96,6 +102,8 @@
       "name": "メタ・プラットフォームズ",
       "sub": "SNS",
       "sub_en": "Social media",
+      "sub_short": "SNS",
+      "sub_short_en": "Social media",
       "row": 0,
       "relations": [
         {
@@ -120,6 +128,8 @@
       "name": "アマゾン",
       "sub": "EC・クラウド",
       "sub_en": "E-commerce & cloud",
+      "sub_short": "EC・クラウド",
+      "sub_short_en": "E-commerce",
       "row": 0,
       "relations": [
         {

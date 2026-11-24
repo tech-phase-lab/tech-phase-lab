@@ -24,6 +24,8 @@
       "name": "オートゾーン",
       "sub": "自動車部品小売",
       "sub_en": "Auto parts retail",
+      "sub_short": "自動車部品小売",
+      "sub_short_en": "Auto parts",
       "row": 0,
       "relations": [
         {
@@ -48,6 +50,8 @@
       "name": "アドバンス・オート・パーツ",
       "sub": "自動車部品小売",
       "sub_en": "Auto parts retail",
+      "sub_short": "自動車部品小売",
+      "sub_short_en": "Auto parts",
       "row": 0,
       "relations": [
         {
@@ -72,6 +76,8 @@
       "name": "ウォルマート",
       "sub": "量販店",
       "sub_en": "Mass merchandiser",
+      "sub_short": "量販店",
+      "sub_short_en": "Mass retail",
       "row": 0,
       "relations": [
         {
@@ -96,6 +102,8 @@
       "name": "アマゾン・ドットコム",
       "sub": "ネット通販",
       "sub_en": "Online retail",
+      "sub_short": "ネット通販",
+      "sub_short_en": "Online retail",
       "row": 0,
       "relations": [
         {

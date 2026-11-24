@@ -34,6 +34,8 @@
       "name": "フレックス",
       "sub": "製造委託先",
       "sub_en": "Contract manufacturer",
+      "sub_short": "製造委託先",
+      "sub_short_en": "Contract maker",
       "row": 0,
       "relations": [
         {
@@ -58,6 +60,8 @@
       "name": "アカマイ・テクノロジーズ",
       "sub": "エッジ・セキュリティ",
       "sub_en": "Edge & security",
+      "sub_short": "エッジ防御",
+      "sub_short_en": "Edge & security",
       "row": 1,
       "relations": [
         {
@@ -82,6 +86,8 @@
       "name": "クラウドフレア",
       "sub": "エッジ・セキュリティ",
       "sub_en": "Edge & security",
+      "sub_short": "エッジ防御",
+      "sub_short_en": "Edge & security",
       "row": 1,
       "relations": [
         {
@@ -106,6 +112,8 @@
       "name": "ファストリー",
       "sub": "エッジ配信",
       "sub_en": "Edge delivery",
+      "sub_short": "エッジ配信",
+      "sub_short_en": "Edge delivery",
       "row": 1,
       "relations": [
         {
@@ -130,6 +138,8 @@
       "name": "ブロードコム",
       "sub": "ネットワーク機器",
       "sub_en": "Networking vendor",
+      "sub_short": "通信機器",
+      "sub_short_en": "Networking",
       "row": 1,
       "relations": [
         {
@@ -154,6 +164,8 @@
       "name": "シスコシステムズ",
       "sub": "ネットワーク機器",
       "sub_en": "Networking vendor",
+      "sub_short": "通信機器",
+      "sub_short_en": "Networking",
       "row": 1,
       "relations": [
         {
@@ -178,6 +190,8 @@
       "name": "フォーティネット",
       "sub": "セキュリティ",
       "sub_en": "Security",
+      "sub_short": "セキュリティ",
+      "sub_short_en": "Security",
       "row": 1,
       "relations": [
         {
@@ -215,6 +229,8 @@
       "name": "パロアルトネットワークス",
       "sub": "セキュリティ",
       "sub_en": "Security",
+      "sub_short": "セキュリティ",
+      "sub_short_en": "Security",
       "row": 1,
       "relations": [
         {
@@ -239,6 +255,8 @@
       "name": "アマゾン・ドット・コム(AWS)",
       "sub": "クラウド",
       "sub_en": "Public cloud",
+      "sub_short": "クラウド",
+      "sub_short_en": "Public cloud",
       "row": 1,
       "relations": [
         {
@@ -276,6 +294,8 @@
       "name": "マイクロソフト(Azure)",
       "sub": "クラウド",
       "sub_en": "Public cloud",
+      "sub_short": "クラウド",
+      "sub_short_en": "Public cloud",
       "row": 1,
       "relations": [
         {
@@ -300,6 +320,8 @@
       "name": "アルファベット(Google Cloud)",
       "sub": "クラウド",
       "sub_en": "Public cloud",
+      "sub_short": "クラウド",
+      "sub_short_en": "Public cloud",
       "row": 1,
       "relations": [
         {
@@ -337,6 +359,8 @@
       "name": "ネットスカウト",
       "sub": "ネットワーク監視",
       "sub_en": "Network monitoring",
+      "sub_short": "ネット監視",
+      "sub_short_en": "Net monitoring",
       "row": 2,
       "relations": [
         {

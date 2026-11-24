@@ -37,6 +37,8 @@
       "name_en": "BIAL-Portela",
       "sub": "医薬品(ポルトガル)",
       "sub_en": "Pharmaceuticals (Portugal)",
+      "sub_short": "医薬品",
+      "sub_short_en": "Pharmaceuticals",
       "row": 0,
       "relations": [
         {
@@ -61,6 +63,8 @@
       "name_en": "Zambon Biotech",
       "sub": "医薬品(スイス)",
       "sub_en": "Pharmaceuticals (Switzerland)",
+      "sub_short": "医薬品",
+      "sub_short_en": "Pharmaceuticals",
       "row": 0,
       "relations": [
         {
@@ -85,6 +89,8 @@
       "name_en": "Jerome Stevens Pharmaceuticals",
       "sub": "医薬品",
       "sub_en": "Pharmaceuticals",
+      "sub_short": "医薬品",
+      "sub_short_en": "Pharmaceuticals",
       "row": 0,
       "relations": [
         {
@@ -109,6 +115,8 @@
       "name_en": "Knight Therapeutics",
       "sub": "医薬品(カナダ)",
       "sub_en": "Pharmaceuticals (Canada)",
+      "sub_short": "医薬品",
+      "sub_short_en": "Pharmaceuticals",
       "row": 0,
       "relations": [
         {
@@ -133,6 +141,8 @@
       "name_en": "Metsera",
       "sub": "肥満症薬",
       "sub_en": "Obesity drugs",
+      "sub_short": "肥満症薬",
+      "sub_short_en": "Obesity drugs",
       "row": 1,
       "relations": [
         {
@@ -157,6 +167,8 @@
       "name_en": "Alkermes",
       "sub": "中枢神経薬",
       "sub_en": "CNS drugs",
+      "sub_short": "中枢神経薬",
+      "sub_short_en": "CNS drugs",
       "row": 2,
       "relations": [
         {
@@ -181,6 +193,8 @@
       "name_en": "TherapeuticsMD",
       "sub": "女性医療",
       "sub_en": "Women's health",
+      "sub_short": "女性医療",
+      "sub_short_en": "Women's health",
       "row": 2,
       "relations": [
         {
@@ -205,6 +219,8 @@
       "name_en": "Cardinal Health",
       "sub": "医薬品卸",
       "sub_en": "Drug distribution",
+      "sub_short": "医薬品卸",
+      "sub_short_en": "Drug wholesale",
       "row": 3,
       "relations": [
         {
@@ -229,6 +245,8 @@
       "name_en": "Cencora",
       "sub": "医薬品卸",
       "sub_en": "Drug distribution",
+      "sub_short": "医薬品卸",
+      "sub_short_en": "Drug wholesale",
       "row": 3,
       "relations": [
         {
@@ -253,6 +271,8 @@
       "name_en": "McKesson",
       "sub": "医薬品卸",
       "sub_en": "Drug distribution",
+      "sub_short": "医薬品卸",
+      "sub_short_en": "Drug wholesale",
       "row": 3,
       "relations": [
         {

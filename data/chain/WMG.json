@@ -19,6 +19,8 @@
       "name": "スポティファイ",
       "sub": "音楽配信",
       "sub_en": "Music streaming",
+      "sub_short": "音楽配信",
+      "sub_short_en": "Music streaming",
       "row": 0,
       "relations": [
         {
@@ -43,6 +45,8 @@
       "name": "アルファベット",
       "sub": "動画・音楽配信",
       "sub_en": "Video & music streaming",
+      "sub_short": "動画・音楽配信",
+      "sub_short_en": "Streaming",
       "row": 0,
       "relations": [
         {
@@ -67,6 +71,8 @@
       "name": "アップル",
       "sub": "音楽配信",
       "sub_en": "Music streaming",
+      "sub_short": "音楽配信",
+      "sub_short_en": "Music streaming",
       "row": 0,
       "relations": [
         {
@@ -91,6 +97,8 @@
       "name": "アマゾン",
       "sub": "音楽配信",
       "sub_en": "Music streaming",
+      "sub_short": "音楽配信",
+      "sub_short_en": "Music streaming",
       "row": 0,
       "relations": [
         {
@@ -115,6 +123,8 @@
       "name": "テンセント・ミュージック・エンターテインメント",
       "sub": "音楽配信",
       "sub_en": "Music streaming",
+      "sub_short": "音楽配信",
+      "sub_short_en": "Music streaming",
       "row": 0,
       "relations": [
         {
@@ -139,6 +149,8 @@
       "name": "ディーザー",
       "sub": "音楽配信",
       "sub_en": "Music streaming",
+      "sub_short": "音楽配信",
+      "sub_short_en": "Music streaming",
       "row": 0,
       "relations": [
         {
@@ -163,6 +175,8 @@
       "name": "ユニバーサル・ミュージック・グループ",
       "sub": "大手レーベル",
       "sub_en": "Major label",
+      "sub_short": "大手レーベル",
+      "sub_short_en": "Major label",
       "row": 0,
       "relations": [
         {
@@ -187,6 +201,8 @@
       "name": "ソニーグループ",
       "sub": "大手レーベル",
       "sub_en": "Major label",
+      "sub_short": "大手レーベル",
+      "sub_short_en": "Major label",
       "row": 0,
       "relations": [
         {

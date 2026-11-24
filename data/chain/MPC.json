@@ -19,6 +19,8 @@
       "name": "ネステ",
       "sub": "再生ディーゼル合弁",
       "sub_en": "Renewable diesel JV",
+      "sub_short": "再生燃料合弁",
+      "sub_short_en": "Biodiesel JV",
       "row": 0,
       "relations": [
         {
@@ -43,6 +45,8 @@
       "name": "アーチャー・ダニエルズ・ミッドランド",
       "sub": "大豆処理の合弁",
       "sub_en": "Soy processing JV",
+      "sub_short": "大豆処理の合弁",
+      "sub_short_en": "Soy JV",
       "row": 0,
       "relations": [
         {
@@ -67,6 +71,8 @@
       "name": "エンブリッジ",
       "sub": "パイプライン合弁",
       "sub_en": "Pipeline JV",
+      "sub_short": "パイプライン",
+      "sub_short_en": "Pipeline JV",
       "row": 0,
       "relations": [
         {
@@ -91,6 +97,8 @@
       "name": "クロスアメリカ・パートナーズ",
       "sub": "燃料卸売",
       "sub_en": "Fuel distribution",
+      "sub_short": "燃料卸売",
+      "sub_short_en": "Fuel supply",
       "row": 0,
       "relations": [
         {

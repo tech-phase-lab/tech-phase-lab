@@ -37,6 +37,8 @@
       "name_en": "ADT",
       "sub": "ホームセキュリティ",
       "sub_en": "Home security",
+      "sub_short": "ホーム警備",
+      "sub_short_en": "Home security",
       "row": 0,
       "relations": [
         {
@@ -61,6 +63,8 @@
       "name_en": "CHeKT",
       "sub": "映像監視",
       "sub_en": "Video monitoring",
+      "sub_short": "映像監視",
+      "sub_short_en": "Video monitoring",
       "row": 1,
       "relations": [
         {
@@ -85,6 +89,8 @@
       "name_en": "Noonlight",
       "sub": "緊急通報",
       "sub_en": "Emergency response",
+      "sub_short": "緊急通報",
+      "sub_short_en": "Emergency svcs",
       "row": 1,
       "relations": [
         {
@@ -109,6 +115,8 @@
       "name_en": "Amazon (Ring)",
       "sub": "EC・家電",
       "sub_en": "E-commerce & devices",
+      "sub_short": "EC・家電",
+      "sub_short_en": "E-commerce",
       "row": 2,
       "relations": [
         {
@@ -133,6 +141,8 @@
       "name_en": "Alphabet (Google Nest)",
       "sub": "IT",
       "sub_en": "Technology",
+      "sub_short": "IT",
+      "sub_short_en": "Technology",
       "row": 2,
       "relations": [
         {
@@ -157,6 +167,8 @@
       "name_en": "Arlo Technologies",
       "sub": "防犯カメラ",
       "sub_en": "Security cameras",
+      "sub_short": "防犯カメラ",
+      "sub_short_en": "Security cameras",
       "row": 2,
       "relations": [
         {
@@ -181,6 +193,8 @@
       "name_en": "SoundThinking",
       "sub": "銃声検知",
       "sub_en": "Gunshot detection",
+      "sub_short": "銃声検知",
+      "sub_short_en": "Gunshot alerts",
       "row": 3,
       "relations": [
         {

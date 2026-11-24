@@ -33,6 +33,8 @@
       "name": "ラム・リサーチ",
       "sub": "半導体製造装置",
       "sub_en": "Semiconductor equipment",
+      "sub_short": "半導体製造装置",
+      "sub_short_en": "Chip equipment",
       "row": 0,
       "relations": [
         {
@@ -57,6 +59,8 @@
       "name": "東京エレクトロン",
       "sub": "半導体製造装置",
       "sub_en": "Semiconductor equipment",
+      "sub_short": "半導体製造装置",
+      "sub_short_en": "Chip equipment",
       "row": 0,
       "relations": [
         {
@@ -81,6 +85,8 @@
       "name": "ラティス・セミコンダクター",
       "sub": "プログラマブル半導体",
       "sub_en": "Programmable chips",
+      "sub_short": "FPGA",
+      "sub_short_en": "FPGAs",
       "row": 1,
       "relations": [
         {
@@ -118,6 +124,8 @@
       "name": "アンバレラ",
       "sub": "画像処理半導体",
       "sub_en": "Vision chips",
+      "sub_short": "画像処理半導体",
+      "sub_short_en": "Vision chips",
       "row": 1,
       "relations": [
         {
@@ -142,6 +150,8 @@
       "name": "クレド・セミコンダクター",
       "sub": "接続用半導体",
       "sub_en": "Connectivity chips",
+      "sub_short": "接続用半導体",
+      "sub_short_en": "Connectivity",
       "row": 1,
       "relations": [
         {
@@ -166,6 +176,8 @@
       "name": "インディ・セミコンダクター",
       "sub": "車載半導体",
       "sub_en": "Automotive chips",
+      "sub_short": "車載半導体",
+      "sub_short_en": "Automotive chips",
       "row": 1,
       "relations": [
         {
@@ -190,6 +202,8 @@
       "name": "マックスリニア",
       "sub": "接続用半導体",
       "sub_en": "Connectivity chips",
+      "sub_short": "接続用半導体",
+      "sub_short_en": "Connectivity",
       "row": 1,
       "relations": [
         {
@@ -214,6 +228,8 @@
       "name": "サイタイム",
       "sub": "タイミング半導体",
       "sub_en": "Timing chips",
+      "sub_short": "タイミングIC",
+      "sub_short_en": "Timing chips",
       "row": 1,
       "relations": [
         {
@@ -238,6 +254,8 @@
       "name": "TSMC",
       "sub": "半導体受託製造",
       "sub_en": "Foundry",
+      "sub_short": "半導体受託製造",
+      "sub_short_en": "Foundry",
       "row": 2,
       "relations": [
         {
@@ -274,6 +292,8 @@
       "name": "アナログ・デバイセズ",
       "sub": "アナログ半導体",
       "sub_en": "Analog chips",
+      "sub_short": "アナログ半導体",
+      "sub_short_en": "Analog chips",
       "row": 2,
       "relations": [
         {
@@ -300,6 +320,8 @@
       "name": "TDK",
       "sub": "電子部品",
       "sub_en": "Electronic components",
+      "sub_short": "電子部品",
+      "sub_short_en": "Components",
       "row": 2,
       "relations": [
         {
@@ -336,6 +358,8 @@
       "name": "NXPセミコンダクターズ",
       "sub": "車載・産業用半導体",
       "sub_en": "Automotive & industrial chips",
+      "sub_short": "車載半導体",
+      "sub_short_en": "Automotive chips",
       "row": 2,
       "relations": [
         {
@@ -362,6 +386,8 @@
       "name": "シーメンス",
       "sub": "電機・ソフトウェア",
       "sub_en": "Industrial & software",
+      "sub_short": "電機",
+      "sub_short_en": "Industrial apps",
       "row": 2,
       "relations": [
         {
@@ -397,6 +423,8 @@
       "name": "アムコー・テクノロジー",
       "sub": "半導体後工程",
       "sub_en": "Packaging & test",
+      "sub_short": "半導体後工程",
+      "sub_short_en": "Packaging & test",
       "row": 3,
       "relations": [
         {

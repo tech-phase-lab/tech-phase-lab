@@ -27,6 +27,8 @@
       "name": "ビル・ホールディングス",
       "sub": "請求・支払ソフト",
       "sub_en": "Billing & payments software",
+      "sub_short": "請求",
+      "sub_short_en": "Billing software",
       "row": 0,
       "relations": [
         {
@@ -64,6 +66,8 @@
       "name": "マイクロソフト",
       "sub": "ソフト・クラウド",
       "sub_en": "Software & cloud",
+      "sub_short": "ソフト",
+      "sub_short_en": "Software & cloud",
       "row": 0,
       "relations": [
         {
@@ -99,6 +103,8 @@
       "name": "ペイパル",
       "sub": "決済",
       "sub_en": "Payments",
+      "sub_short": "決済",
+      "sub_short_en": "Payments",
       "row": 0,
       "relations": [
         {
@@ -123,6 +129,8 @@
       "name": "インテュイット",
       "sub": "会計ソフト",
       "sub_en": "Accounting software",
+      "sub_short": "会計ソフト",
+      "sub_short_en": "Accounting apps",
       "row": 0,
       "relations": [
         {
@@ -149,6 +157,8 @@
       "name": "フィサーブ",
       "sub": "決済・金融ソフト",
       "sub_en": "Payments & fintech",
+      "sub_short": "決済",
+      "sub_short_en": "Payments",
       "row": 0,
       "relations": [
         {
@@ -175,6 +185,8 @@
       "name": "トライネット・グループ",
       "sub": "PEO・人事サービス",
       "sub_en": "PEO & HR services",
+      "sub_short": "人事サービス",
+      "sub_short_en": "PEO services",
       "row": 1,
       "relations": [
         {
@@ -198,6 +210,8 @@
       "name": "ペイコム・ソフトウェア",
       "sub": "給与・人事ソフト",
       "sub_en": "Payroll & HR software",
+      "sub_short": "給与",
+      "sub_short_en": "Payroll software",
       "row": 1,
       "relations": [
         {
@@ -222,6 +236,8 @@
       "name": "ペイロシティ",
       "sub": "給与・人事ソフト",
       "sub_en": "Payroll & HR software",
+      "sub_short": "給与",
+      "sub_short_en": "Payroll software",
       "row": 1,
       "relations": [
         {

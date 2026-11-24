@@ -32,6 +32,8 @@
       "name_en": "Walmart",
       "sub": "小売",
       "sub_en": "Retail",
+      "sub_short": "小売",
+      "sub_short_en": "Retail",
       "row": 0,
       "relations": [
         {
@@ -82,6 +84,8 @@
       "name_en": "Walmart de México",
       "sub": "小売(メキシコ)",
       "sub_en": "Retail (Mexico)",
+      "sub_short": "小売",
+      "sub_short_en": "Retail",
       "row": 0,
       "relations": [
         {
@@ -106,6 +110,8 @@
       "name_en": "Albertsons",
       "sub": "スーパー",
       "sub_en": "Grocery",
+      "sub_short": "スーパー",
+      "sub_short_en": "Grocery",
       "row": 0,
       "relations": [
         {
@@ -130,6 +136,8 @@
       "name_en": "United Natural Foods",
       "sub": "食品卸",
       "sub_en": "Food wholesale",
+      "sub_short": "食品卸",
+      "sub_short_en": "Food wholesale",
       "row": 0,
       "relations": [
         {
@@ -154,6 +162,8 @@
       "name_en": "Target",
       "sub": "小売",
       "sub_en": "Retail",
+      "sub_short": "小売",
+      "sub_short_en": "Retail",
       "row": 0,
       "relations": [
         {
@@ -178,6 +188,8 @@
       "name_en": "SoftBank Group",
       "sub": "投資",
       "sub_en": "Investment",
+      "sub_short": "投資",
+      "sub_short_en": "Investment",
       "row": 1,
       "relations": [
         {
@@ -202,6 +214,8 @@
       "name_en": "Honeywell",
       "sub": "産業機器・自動化",
       "sub_en": "Industrial automation",
+      "sub_short": "産業機器",
+      "sub_short_en": "Automation",
       "row": 2,
       "relations": [
         {
@@ -226,6 +240,8 @@
       "name_en": "KION Group (Dematic)",
       "sub": "物流機器",
       "sub_en": "Logistics equipment",
+      "sub_short": "物流機器",
+      "sub_short_en": "Logistics gear",
       "row": 2,
       "relations": [
         {
@@ -250,6 +266,8 @@
       "name_en": "Ocado Group",
       "sub": "EC物流技術",
       "sub_en": "E-commerce logistics tech",
+      "sub_short": "EC物流技術",
+      "sub_short_en": "E-com logistics",
       "row": 2,
       "relations": [
         {
@@ -274,6 +292,8 @@
       "name_en": "AutoStore",
       "sub": "自動倉庫",
       "sub_en": "Automated storage",
+      "sub_short": "自動倉庫",
+      "sub_short_en": "Auto storage",
       "row": 2,
       "relations": [
         {
@@ -298,6 +318,8 @@
       "name_en": "Geek+",
       "sub": "倉庫ロボット",
       "sub_en": "Warehouse robots",
+      "sub_short": "倉庫ロボット",
+      "sub_short_en": "Warehouse robots",
       "row": 2,
       "relations": [
         {

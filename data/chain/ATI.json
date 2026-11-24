@@ -36,6 +36,8 @@
       "name_en": "Boeing",
       "sub": "航空機",
       "sub_en": "Aircraft",
+      "sub_short": "航空機",
+      "sub_short_en": "Aircraft",
       "row": 0,
       "relations": [
         {
@@ -60,6 +62,8 @@
       "name_en": "Airbus",
       "sub": "航空機(欧州)",
       "sub_en": "Aircraft (Europe)",
+      "sub_short": "航空機",
+      "sub_short_en": "Aircraft",
       "row": 0,
       "relations": [
         {
@@ -84,6 +88,8 @@
       "name_en": "Shanghai STAL Precision Stainless Steel",
       "sub": "精密圧延(中国)",
       "sub_en": "Precision rolled strip (China)",
+      "sub_short": "精密圧延",
+      "sub_short_en": "Rolled strip",
       "row": 1,
       "relations": [
         {
@@ -108,6 +114,8 @@
       "name_en": "Berkshire Hathaway (Precision Castparts)",
       "sub": "複合企業",
       "sub_en": "Conglomerate",
+      "sub_short": "複合企業",
+      "sub_short_en": "Conglomerate",
       "row": 2,
       "relations": [
         {
@@ -132,6 +140,8 @@
       "name_en": "Howmet Aerospace",
       "sub": "航空機部品",
       "sub_en": "Aerospace components",
+      "sub_short": "航空機部品",
+      "sub_short_en": "Aero parts",
       "row": 2,
       "relations": [
         {
@@ -156,6 +166,8 @@
       "name_en": "Carpenter Technology",
       "sub": "特殊合金",
       "sub_en": "Specialty alloys",
+      "sub_short": "特殊合金",
+      "sub_short_en": "Specialty alloys",
       "row": 2,
       "relations": [
         {
@@ -180,6 +192,8 @@
       "name_en": "Amaero",
       "sub": "金属粉末",
       "sub_en": "Metal powders",
+      "sub_short": "金属粉末",
+      "sub_short_en": "Metal powders",
       "row": 3,
       "relations": [
         {

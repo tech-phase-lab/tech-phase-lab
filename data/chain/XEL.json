@@ -24,6 +24,8 @@
       "name": "TUCO社",
       "sub": "石炭の調達",
       "sub_en": "Coal supply",
+      "sub_short": "石炭の調達",
+      "sub_short_en": "Coal supply",
       "row": 0,
       "relations": [
         {
@@ -48,6 +50,8 @@
       "name": "コロラド・インターステート・ガス",
       "sub": "ガスパイプライン",
       "sub_en": "Gas pipeline",
+      "sub_short": "ガス管",
+      "sub_short_en": "Gas pipeline",
       "row": 1,
       "relations": [
         {
@@ -85,6 +89,8 @@
       "name": "グーグル",
       "sub": "データセンター",
       "sub_en": "Data center customer",
+      "sub_short": "データセンター",
+      "sub_short_en": "Data centers",
       "row": 1,
       "relations": [
         {
@@ -109,6 +115,8 @@
       "name": "フリーポート・マクモラン",
       "sub": "銅・金",
       "sub_en": "Copper & gold",
+      "sub_short": "銅・金",
+      "sub_short_en": "Copper & gold",
       "row": 1,
       "relations": [
         {
@@ -133,6 +141,8 @@
       "name": "ゾス",
       "sub": "商用EVトラック",
       "sub_en": "Commercial EV trucks",
+      "sub_short": "EVトラック",
+      "sub_short_en": "EV trucks",
       "row": 0,
       "relations": [
         {

@@ -22,6 +22,8 @@
       "name": "Amazon",
       "sub": "EC・クラウド",
       "sub_en": "E-commerce & cloud",
+      "sub_short": "EC・クラウド",
+      "sub_short_en": "E-commerce",
       "row": 0,
       "relations": [
         {
@@ -58,6 +60,8 @@
       "name": "Apple",
       "sub": "スマホ・OS",
       "sub_en": "Devices & OS",
+      "sub_short": "スマホ・OS",
+      "sub_short_en": "Devices & OS",
       "row": 0,
       "relations": [
         {
@@ -81,6 +85,8 @@
       "name": "Fox Corporation",
       "sub": "放送・メディア",
       "sub_en": "Broadcasting & media",
+      "sub_short": "放送・メディア",
+      "sub_short_en": "Broadcasting",
       "row": 1,
       "relations": [
         {
@@ -117,6 +123,8 @@
       "name": "OpenAI",
       "sub": "生成AI",
       "sub_en": "Generative AI",
+      "sub_short": "生成AI",
+      "sub_short_en": "Generative AI",
       "row": 1,
       "relations": [
         {
@@ -155,6 +163,8 @@
       "name": "アルファベット",
       "sub": "検索・動画・クラウド",
       "sub_en": "Search, video & cloud",
+      "sub_short": "検索",
+      "sub_short_en": "Search, video",
       "row": 0,
       "relations": [
         {
@@ -181,6 +191,8 @@
       "name": "チャーター・コミュニケーションズ",
       "sub": "ケーブル・通信",
       "sub_en": "Cable & telecom",
+      "sub_short": "ケーブル・通信",
+      "sub_short_en": "Cable & telecom",
       "row": 0,
       "relations": [
         {
@@ -220,6 +232,8 @@
       "name": "Fubo",
       "sub": "動画配信",
       "sub_en": "Streaming TV",
+      "sub_short": "動画配信",
+      "sub_short_en": "Streaming TV",
       "row": 1,
       "relations": [
         {

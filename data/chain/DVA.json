@@ -31,6 +31,8 @@
       "name_en": "Rockwell Medical",
       "sub": "透析液",
       "sub_en": "Dialysis concentrates",
+      "sub_short": "透析液",
+      "sub_short_en": "Dialysis",
       "row": 0,
       "relations": [
         {
@@ -55,6 +57,8 @@
       "name_en": "Akebia Therapeutics",
       "sub": "腎臓病薬",
       "sub_en": "Kidney disease drugs",
+      "sub_short": "腎臓病薬",
+      "sub_short_en": "Kidney drugs",
       "row": 0,
       "relations": [
         {
@@ -79,6 +83,8 @@
       "name_en": "Nuwellis",
       "sub": "医療機器",
       "sub_en": "Medical devices",
+      "sub_short": "医療機器",
+      "sub_short_en": "Medical devices",
       "row": 0,
       "relations": [
         {
@@ -103,6 +109,8 @@
       "name_en": "Medtronic",
       "sub": "医療機器",
       "sub_en": "Medical devices",
+      "sub_short": "医療機器",
+      "sub_short_en": "Medical devices",
       "row": 1,
       "relations": [
         {
@@ -127,6 +135,8 @@
       "name_en": "Berkshire Hathaway",
       "sub": "複合企業",
       "sub_en": "Conglomerate",
+      "sub_short": "複合企業",
+      "sub_short_en": "Conglomerate",
       "row": 1,
       "relations": [
         {
@@ -151,6 +161,8 @@
       "name_en": "Fresenius Medical Care",
       "sub": "透析(独)",
       "sub_en": "Dialysis (Germany)",
+      "sub_short": "透析",
+      "sub_short_en": "Dialysis",
       "row": 2,
       "relations": [
         {

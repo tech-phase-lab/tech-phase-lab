@@ -29,6 +29,8 @@
       "name": "アルファベット(Google)",
       "sub": "クラウド",
       "sub_en": "Cloud",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 0,
       "relations": [
         {
@@ -53,6 +55,8 @@
       "name": "ソニーグループ",
       "sub": "エンタメ・電機",
       "sub_en": "Entertainment & electronics",
+      "sub_short": "エンタメ・電機",
+      "sub_short_en": "Entertainment",
       "row": 0,
       "relations": [
         {
@@ -92,6 +96,8 @@
       "name": "OpenAI",
       "sub": "生成AI",
       "sub_en": "Generative AI",
+      "sub_short": "生成AI",
+      "sub_short_en": "Generative AI",
       "row": 1,
       "relations": [
         {
@@ -117,6 +123,8 @@
       "name": "ネットフリックス",
       "sub": "動画配信",
       "sub_en": "Video streaming",
+      "sub_short": "動画配信",
+      "sub_short_en": "Video streaming",
       "row": 1,
       "relations": [
         {
@@ -140,6 +148,8 @@
       "name": "テンセント",
       "sub": "インターネット・ゲーム",
       "sub_en": "Internet & gaming",
+      "sub_short": "インターネット",
+      "sub_short_en": "Internet",
       "row": 1,
       "relations": [
         {
@@ -177,6 +187,8 @@
       "name": "Apple",
       "sub": "スマートフォン・端末",
       "sub_en": "Devices",
+      "sub_short": "スマートフォン",
+      "sub_short_en": "Devices",
       "row": 2,
       "relations": [
         {

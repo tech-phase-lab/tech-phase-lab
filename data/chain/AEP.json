@@ -25,6 +25,8 @@
       "name_en": "Bloom Energy",
       "sub": "燃料電池",
       "sub_en": "Fuel cells",
+      "sub_short": "燃料電池",
+      "sub_short_en": "Fuel cells",
       "row": 0,
       "relations": [
         {
@@ -49,6 +51,8 @@
       "name_en": "Dominion Energy",
       "sub": "電力",
       "sub_en": "Electric utility",
+      "sub_short": "電力",
+      "sub_short_en": "Electric utility",
       "row": 1,
       "relations": [
         {
@@ -73,6 +77,8 @@
       "name_en": "FirstEnergy",
       "sub": "電力",
       "sub_en": "Electric utility",
+      "sub_short": "電力",
+      "sub_short_en": "Electric utility",
       "row": 1,
       "relations": [
         {
@@ -109,6 +115,8 @@
       "name": "センチュリ・ホールディングス",
       "sub": "電力・ガス設備工事",
       "sub_en": "Utility infrastructure services",
+      "sub_short": "電力",
+      "sub_short_en": "Utility works",
       "row": 0,
       "relations": [
         {

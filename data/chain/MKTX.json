@@ -30,6 +30,8 @@
       "name_en": "RFQ-hub",
       "sub": "ETF・デリバティブ取引基盤",
       "sub_en": "ETF & derivatives RFQ platform",
+      "sub_short": "ETF取引基盤",
+      "sub_short_en": "ETF",
       "row": 0,
       "relations": [
         {
@@ -54,6 +56,8 @@
       "name_en": "Pragma",
       "sub": "アルゴリズム取引",
       "sub_en": "Algorithmic trading",
+      "sub_short": "アルゴ取引",
+      "sub_short_en": "Algo trading",
       "row": 0,
       "relations": [
         {
@@ -78,6 +82,8 @@
       "name_en": "New York Stock Exchange",
       "sub": "取引所",
       "sub_en": "Exchange",
+      "sub_short": "取引所",
+      "sub_short_en": "Exchange",
       "row": 0,
       "relations": [
         {
@@ -102,6 +108,8 @@
       "name_en": "Broadwind",
       "sub": "風力・重機加工",
       "sub_en": "Wind & heavy fabrication",
+      "sub_short": "風力・重機加工",
+      "sub_short_en": "Wind towers",
       "row": 0,
       "relations": [
         {
@@ -126,6 +134,8 @@
       "name_en": "Tradeweb Markets",
       "sub": "電子債券取引",
       "sub_en": "Electronic bond trading",
+      "sub_short": "電子債券取引",
+      "sub_short_en": "Bond trading",
       "row": 1,
       "relations": [
         {
@@ -150,6 +160,8 @@
       "name_en": "Intercontinental Exchange",
       "sub": "取引所・データ",
       "sub_en": "Exchanges & data",
+      "sub_short": "取引所・データ",
+      "sub_short_en": "Exchanges & data",
       "row": 1,
       "relations": [
         {
@@ -174,6 +186,8 @@
       "name_en": "CME Group",
       "sub": "取引所",
       "sub_en": "Exchanges",
+      "sub_short": "取引所",
+      "sub_short_en": "Exchanges",
       "row": 1,
       "relations": [
         {
@@ -198,6 +212,8 @@
       "name_en": "BGC Group",
       "sub": "金融仲介",
       "sub_en": "Financial brokerage",
+      "sub_short": "金融仲介",
+      "sub_short_en": "Brokerage",
       "row": 1,
       "relations": [
         {
@@ -222,6 +238,8 @@
       "name_en": "London Stock Exchange Group",
       "sub": "取引所・データ(英)",
       "sub_en": "Exchange & data (UK)",
+      "sub_short": "取引所・データ",
+      "sub_short_en": "Exchange & data",
       "row": 1,
       "relations": [
         {
@@ -246,6 +264,8 @@
       "name_en": "S&P Global",
       "sub": "金融データ",
       "sub_en": "Financial data",
+      "sub_short": "金融データ",
+      "sub_short_en": "Financial data",
       "row": 1,
       "relations": [
         {
@@ -270,6 +290,8 @@
       "name_en": "Bloomberg",
       "sub": "金融データ・取引基盤",
       "sub_en": "Financial data & trading",
+      "sub_short": "金融データ",
+      "sub_short_en": "Financial data",
       "row": 1,
       "relations": [
         {

@@ -25,6 +25,8 @@
       "name": "サザンカリフォルニア・エジソン",
       "sub": "電力会社",
       "sub_en": "Electric utility",
+      "sub_short": "電力会社",
+      "sub_short_en": "Electric utility",
       "row": 0,
       "relations": [
         {
@@ -49,6 +51,8 @@
       "name": "パシフィック・ガス・アンド・エレクトリック",
       "sub": "電力会社",
       "sub_en": "Electric utility",
+      "sub_short": "電力会社",
+      "sub_short_en": "Electric utility",
       "row": 0,
       "relations": [
         {
@@ -73,6 +77,8 @@
       "name": "サンディエゴ・ガス・アンド・エレクトリック",
       "sub": "電力会社",
       "sub_en": "Electric utility",
+      "sub_short": "電力会社",
+      "sub_short_en": "Electric utility",
       "row": 0,
       "relations": [
         {
@@ -97,6 +103,8 @@
       "name": "コネチカット・ライト・アンド・パワー",
       "sub": "電力会社",
       "sub_en": "Electric utility",
+      "sub_short": "電力会社",
+      "sub_short_en": "Electric utility",
       "row": 0,
       "relations": [
         {
@@ -121,6 +129,8 @@
       "name": "アメレスコ",
       "sub": "エネルギー効率・再エネ",
       "sub_en": "Energy efficiency & renewables",
+      "sub_short": "エネルギー効率",
+      "sub_short_en": "Clean energy",
       "row": 1,
       "relations": [
         {

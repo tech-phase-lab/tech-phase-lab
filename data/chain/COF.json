@@ -28,6 +28,8 @@
       "name": "アマゾン・ウェブ・サービス",
       "sub": "クラウド基盤",
       "sub_en": "Cloud infrastructure",
+      "sub_short": "クラウド基盤",
+      "sub_short_en": "Cloud infra",
       "row": 0,
       "relations": [
         {
@@ -52,6 +54,8 @@
       "name": "トータル・システム・サービシズ",
       "sub": "カード処理委託先",
       "sub_en": "Card processing",
+      "sub_short": "カード処理",
+      "sub_short_en": "Card processing",
       "row": 0,
       "relations": [
         {
@@ -76,6 +80,8 @@
       "name": "フィデリティ・インフォメーション・サービシズ",
       "sub": "銀行システム委託先",
       "sub_en": "Banking systems",
+      "sub_short": "銀行システム",
+      "sub_short_en": "Banking systems",
       "row": 0,
       "relations": [
         {
@@ -100,6 +106,8 @@
       "name": "ビザ",
       "sub": "カードネットワーク",
       "sub_en": "Card network",
+      "sub_short": "カード決済網",
+      "sub_short_en": "Card network",
       "row": 1,
       "relations": [
         {
@@ -124,6 +132,8 @@
       "name": "マスターカード",
       "sub": "カードネットワーク",
       "sub_en": "Card network",
+      "sub_short": "カード決済網",
+      "sub_short_en": "Card network",
       "row": 1,
       "relations": [
         {
@@ -148,6 +158,8 @@
       "name": "アメリカン・エキスプレス",
       "sub": "カード発行・ネットワーク",
       "sub_en": "Card issuer & network",
+      "sub_short": "カード発行",
+      "sub_short_en": "Card issuer",
       "row": 1,
       "relations": [
         {
@@ -172,6 +184,8 @@
       "name": "ブレックス",
       "sub": "買収予定の法人カード企業",
       "sub_en": "Acquisition target",
+      "sub_short": "法人カード",
+      "sub_short_en": "Acquisition",
       "row": 1,
       "relations": [
         {

@@ -35,6 +35,8 @@
       "name_en": "Hexcel",
       "sub": "炭素繊維複合材",
       "sub_en": "Carbon-fiber composites",
+      "sub_short": "炭素繊維複合材",
+      "sub_short_en": "Carbon fiber",
       "row": 0,
       "relations": [
         {
@@ -59,6 +61,8 @@
       "name_en": "Mercury Systems",
       "sub": "防衛用電子処理",
       "sub_en": "Defense processing electronics",
+      "sub_short": "防衛用電子処理",
+      "sub_short_en": "Defense tech",
       "row": 0,
       "relations": [
         {
@@ -83,6 +87,8 @@
       "name_en": "Ducommun",
       "sub": "航空機構造・電子部品",
       "sub_en": "Aerostructures & electronics",
+      "sub_short": "航空機構造",
+      "sub_short_en": "Aerostructures",
       "row": 0,
       "relations": [
         {
@@ -107,6 +113,8 @@
       "name_en": "Iridium Communications",
       "sub": "衛星通信",
       "sub_en": "Satellite communications",
+      "sub_short": "衛星通信",
+      "sub_short_en": "Satellite comms",
       "row": 0,
       "relations": [
         {
@@ -131,6 +139,8 @@
       "name_en": "GSI Technology",
       "sub": "SRAM半導体",
       "sub_en": "SRAM chips",
+      "sub_short": "SRAM半導体",
+      "sub_short_en": "SRAM chips",
       "row": 0,
       "relations": [
         {
@@ -155,6 +165,8 @@
       "name_en": "BETA Technologies",
       "sub": "電動推進",
       "sub_en": "Electric propulsion",
+      "sub_short": "電動推進",
+      "sub_short_en": "E-propulsion",
       "row": 0,
       "relations": [
         {
@@ -179,6 +191,8 @@
       "name_en": "CAE",
       "sub": "訓練・シミュレーター",
       "sub_en": "Training & simulators",
+      "sub_short": "訓練",
+      "sub_short_en": "Training",
       "row": 0,
       "relations": [
         {
@@ -203,6 +217,8 @@
       "name_en": "Telesat",
       "sub": "衛星通信(加)",
       "sub_en": "Satellite operator (Canada)",
+      "sub_short": "衛星通信",
+      "sub_short_en": "Satellites",
       "row": 0,
       "relations": [
         {
@@ -227,6 +243,8 @@
       "name_en": "Huntington Ingalls Industries",
       "sub": "艦艇建造",
       "sub_en": "Shipbuilding",
+      "sub_short": "艦艇建造",
+      "sub_short_en": "Shipbuilding",
       "row": 1,
       "relations": [
         {
@@ -264,6 +282,8 @@
       "name_en": "Lockheed Martin",
       "sub": "防衛・航空宇宙",
       "sub_en": "Defense & aerospace",
+      "sub_short": "防衛・航空宇宙",
+      "sub_short_en": "Defense",
       "row": 1,
       "relations": [
         {
@@ -301,6 +321,8 @@
       "name_en": "Northrop Grumman",
       "sub": "防衛・宇宙",
       "sub_en": "Defense & space",
+      "sub_short": "防衛・宇宙",
+      "sub_short_en": "Defense & space",
       "row": 2,
       "relations": [
         {
@@ -325,6 +347,8 @@
       "name_en": "Boeing",
       "sub": "航空機・防衛",
       "sub_en": "Aircraft & defense",
+      "sub_short": "航空機・防衛",
+      "sub_short_en": "Aircraft",
       "row": 2,
       "relations": [
         {
@@ -349,6 +373,8 @@
       "name_en": "L3Harris Technologies",
       "sub": "防衛電子",
       "sub_en": "Defense electronics",
+      "sub_short": "防衛電子",
+      "sub_short_en": "Defense tech",
       "row": 2,
       "relations": [
         {
@@ -373,6 +399,8 @@
       "name_en": "Oshkosh",
       "sub": "軍用車両",
       "sub_en": "Military vehicles",
+      "sub_short": "軍用車両",
+      "sub_short_en": "Military trucks",
       "row": 2,
       "relations": [
         {
@@ -397,6 +425,8 @@
       "name_en": "Leidos",
       "sub": "政府向けIT",
       "sub_en": "Government IT services",
+      "sub_short": "政府向けIT",
+      "sub_short_en": "Government IT",
       "row": 2,
       "relations": [
         {
@@ -421,6 +451,8 @@
       "name_en": "Science Applications International",
       "sub": "政府向けIT",
       "sub_en": "Government IT services",
+      "sub_short": "政府向けIT",
+      "sub_short_en": "Government IT",
       "row": 2,
       "relations": [
         {
@@ -445,6 +477,8 @@
       "name_en": "Maximus",
       "sub": "政府向けサービス",
       "sub_en": "Government services",
+      "sub_short": "政府サービス",
+      "sub_short_en": "Gov services",
       "row": 2,
       "relations": [
         {
@@ -469,6 +503,8 @@
       "name_en": "Viasat",
       "sub": "衛星通信",
       "sub_en": "Satellite communications",
+      "sub_short": "衛星通信",
+      "sub_short_en": "Satellite comms",
       "row": 2,
       "relations": [
         {
@@ -493,6 +529,8 @@
       "name_en": "Elbit Systems",
       "sub": "防衛電子(イスラエル)",
       "sub_en": "Defense electronics (Israel)",
+      "sub_short": "防衛電子",
+      "sub_short_en": "Defense tech",
       "row": 2,
       "relations": [
         {

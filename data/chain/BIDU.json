@@ -27,6 +27,8 @@
       "name": "ウーバー",
       "sub": "配車",
       "sub_en": "Ride-hailing",
+      "sub_short": "配車",
+      "sub_short_en": "Ride-hailing",
       "row": 0,
       "relations": [
         {
@@ -77,6 +79,8 @@
       "name": "アリババ",
       "sub": "EC・クラウド",
       "sub_en": "E-commerce & cloud",
+      "sub_short": "EC・クラウド",
+      "sub_short_en": "E-commerce",
       "row": 1,
       "relations": [
         {
@@ -101,6 +105,8 @@
       "name": "グーグル",
       "sub": "検索・広告",
       "sub_en": "Search & ads",
+      "sub_short": "検索・広告",
+      "sub_short_en": "Search & ads",
       "row": 1,
       "relations": [
         {
@@ -125,6 +131,8 @@
       "name": "テンセント",
       "sub": "インターネット",
       "sub_en": "Internet",
+      "sub_short": "インターネット",
+      "sub_short_en": "Internet",
       "row": 1,
       "relations": [
         {
@@ -151,6 +159,8 @@
       "name": "Lyft",
       "sub": "配車",
       "sub_en": "Ride-hailing",
+      "sub_short": "配車",
+      "sub_short_en": "Ride-hailing",
       "row": 0,
       "relations": [
         {
@@ -187,6 +197,8 @@
       "name": "ドバイ・タクシー",
       "sub": "タクシー・移動サービス",
       "sub_en": "Taxi & mobility",
+      "sub_short": "タクシー",
+      "sub_short_en": "Taxi & mobility",
       "row": 0,
       "relations": [
         {

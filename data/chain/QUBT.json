@@ -25,6 +25,8 @@
       "name": "IBM",
       "sub": "ITサービス・量子",
       "sub_en": "IT services & quantum",
+      "sub_short": "ITサービス",
+      "sub_short_en": "IT services",
       "row": 0,
       "relations": [
         {
@@ -48,6 +50,8 @@
       "name": "アルファベット(Google)",
       "sub": "ネット・クラウド",
       "sub_en": "Internet & cloud",
+      "sub_short": "ネット",
+      "sub_short_en": "Internet & cloud",
       "row": 0,
       "relations": [
         {
@@ -72,6 +76,8 @@
       "name": "マイクロソフト",
       "sub": "ソフト・クラウド",
       "sub_en": "Software & cloud",
+      "sub_short": "ソフト",
+      "sub_short_en": "Software & cloud",
       "row": 0,
       "relations": [
         {
@@ -96,6 +102,8 @@
       "name": "アマゾン",
       "sub": "EC・クラウド",
       "sub_en": "E-commerce & cloud",
+      "sub_short": "EC・クラウド",
+      "sub_short_en": "E-commerce",
       "row": 0,
       "relations": [
         {
@@ -120,6 +128,8 @@
       "name": "IonQ",
       "sub": "量子コンピュータ",
       "sub_en": "Quantum computing",
+      "sub_short": "量子計算機",
+      "sub_short_en": "Quantum",
       "row": 0,
       "relations": [
         {
@@ -143,6 +153,8 @@
       "name": "リゲッティ・コンピューティング",
       "sub": "量子コンピュータ",
       "sub_en": "Quantum computing",
+      "sub_short": "量子計算機",
+      "sub_short_en": "Quantum",
       "row": 0,
       "relations": [
         {
@@ -167,6 +179,8 @@
       "name": "D-Wave Quantum",
       "sub": "量子コンピュータ",
       "sub_en": "Quantum computing",
+      "sub_short": "量子計算機",
+      "sub_short_en": "Quantum",
       "row": 0,
       "relations": [
         {

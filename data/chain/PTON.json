@@ -32,6 +32,8 @@
       "name_en": "Mayville Engineering",
       "sub": "金属部品の受託製造",
       "sub_en": "Contract metal fabrication",
+      "sub_short": "金属部品受託",
+      "sub_short_en": "Metal fab",
       "row": 0,
       "relations": [
         {
@@ -56,6 +58,8 @@
       "name_en": "EchoStar",
       "sub": "衛星通信・有料TV",
       "sub_en": "Satellite & pay TV",
+      "sub_short": "衛星通信",
+      "sub_short_en": "Satellite TV",
       "row": 0,
       "relations": [
         {
@@ -80,6 +84,8 @@
       "name_en": "Reservoir Media",
       "sub": "音楽出版",
       "sub_en": "Music publishing",
+      "sub_short": "音楽出版",
+      "sub_short_en": "Music publishing",
       "row": 1,
       "relations": [
         {
@@ -104,6 +110,8 @@
       "name_en": "Fitell",
       "sub": "フィットネス機器",
       "sub_en": "Fitness equipment",
+      "sub_short": "フィットネス",
+      "sub_short_en": "Fitness gear",
       "row": 2,
       "relations": [
         {
@@ -128,6 +136,8 @@
       "name_en": "Interactive Strength",
       "sub": "スマートジム機器",
       "sub_en": "Connected fitness equipment",
+      "sub_short": "ジム機器",
+      "sub_short_en": "Smart fitness",
       "row": 2,
       "relations": [
         {

@@ -37,6 +37,8 @@
       "name": "TSMC",
       "sub": "受託製造",
       "sub_en": "Foundry",
+      "sub_short": "受託製造",
+      "sub_short_en": "Foundry",
       "row": 0,
       "relations": [
         {
@@ -60,6 +62,8 @@
       "name": "Amkor Technology",
       "sub": "パッケージ・テスト",
       "sub_en": "Packaging & test",
+      "sub_short": "後工程",
+      "sub_short_en": "Packaging & test",
       "row": 0,
       "relations": [
         {
@@ -83,6 +87,8 @@
       "name": "SoftBank Group",
       "sub": "親会社",
       "sub_en": "Parent",
+      "sub_short": "親会社",
+      "sub_short_en": "Parent",
       "row": 1,
       "relations": [
         {
@@ -106,6 +112,8 @@
       "name": "Cadence Design Systems",
       "sub": "半導体設計ツール",
       "sub_en": "Chip design tools",
+      "sub_short": "半導体設計",
+      "sub_short_en": "Chip design",
       "row": 1,
       "relations": [
         {
@@ -142,6 +150,8 @@
       "name": "Qualcomm",
       "sub": "半導体",
       "sub_en": "Chips",
+      "sub_short": "半導体",
+      "sub_short_en": "Chips",
       "row": 2,
       "relations": [
         {
@@ -167,6 +177,8 @@
       "name": "Amazon",
       "sub": "クラウド(AWS)",
       "sub_en": "Cloud (AWS)",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 2,
       "relations": [
         {
@@ -190,6 +202,8 @@
       "name": "Alphabet(Google)",
       "sub": "クラウド",
       "sub_en": "Cloud",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 2,
       "relations": [
         {
@@ -213,6 +227,8 @@
       "name": "Microsoft",
       "sub": "クラウド",
       "sub_en": "Cloud",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 2,
       "relations": [
         {
@@ -236,6 +252,8 @@
       "name": "Meta Platforms",
       "sub": "SNS・AI",
       "sub_en": "Social & AI",
+      "sub_short": "SNS・AI",
+      "sub_short_en": "Social & AI",
       "row": 2,
       "relations": [
         {
@@ -259,6 +277,8 @@
       "name": "Cloudflare",
       "sub": "ネットワーク・セキュリティ",
       "sub_en": "Network & security",
+      "sub_short": "ネットワーク",
+      "sub_short_en": "Network security",
       "row": 2,
       "relations": [
         {
@@ -284,6 +304,8 @@
       "name": "F5",
       "sub": "ネットワーク",
       "sub_en": "Networking",
+      "sub_short": "ネットワーク",
+      "sub_short_en": "Networking",
       "row": 2,
       "relations": [
         {
@@ -309,6 +331,8 @@
       "name": "SAP",
       "sub": "業務ソフト",
       "sub_en": "Business software",
+      "sub_short": "業務ソフト",
+      "sub_short_en": "Business apps",
       "row": 2,
       "relations": [
         {
@@ -334,6 +358,8 @@
       "name": "SK Telecom",
       "sub": "通信",
       "sub_en": "Telecom",
+      "sub_short": "通信",
+      "sub_short_en": "Telecom",
       "row": 2,
       "relations": [
         {
@@ -359,6 +385,8 @@
       "name": "Lenovo",
       "sub": "PC・サーバー",
       "sub_en": "PCs & servers",
+      "sub_short": "PC・サーバー",
+      "sub_short_en": "PCs & servers",
       "row": 3,
       "relations": [
         {
@@ -382,6 +410,8 @@
       "name": "Quanta Computer",
       "sub": "サーバー製造",
       "sub_en": "Server maker",
+      "sub_short": "サーバー製造",
+      "sub_short_en": "Server maker",
       "row": 3,
       "relations": [
         {
@@ -405,6 +435,8 @@
       "name": "Super Micro Computer",
       "sub": "サーバー",
       "sub_en": "Servers",
+      "sub_short": "サーバー",
+      "sub_short_en": "Servers",
       "row": 3,
       "relations": [
         {
@@ -428,6 +460,8 @@
       "name": "NVIDIA",
       "sub": "AI半導体",
       "sub_en": "AI chips",
+      "sub_short": "AI半導体",
+      "sub_short_en": "AI chips",
       "row": 3,
       "relations": [
         {
@@ -451,6 +485,8 @@
       "name": "Broadcom",
       "sub": "半導体",
       "sub_en": "Chips",
+      "sub_short": "半導体",
+      "sub_short_en": "Chips",
       "row": 3,
       "relations": [
         {
@@ -474,6 +510,8 @@
       "name": "CEVA",
       "sub": "半導体IP",
       "sub_en": "Semiconductor IP",
+      "sub_short": "半導体IP",
+      "sub_short_en": "Semiconductor IP",
       "row": 4,
       "relations": [
         {
@@ -497,6 +535,8 @@
       "name": "OpenAI",
       "sub": "AI",
       "sub_en": "AI",
+      "sub_short": "AI",
+      "sub_short_en": "AI",
       "row": 3,
       "relations": [
         {
@@ -522,6 +562,8 @@
       "name": "Marvell Technology",
       "sub": "半導体",
       "sub_en": "Semiconductors",
+      "sub_short": "半導体",
+      "sub_short_en": "Semiconductors",
       "row": 3,
       "relations": [
         {
@@ -545,6 +587,8 @@
       "name": "Samsung Electronics",
       "sub": "メモリー",
       "sub_en": "Memory",
+      "sub_short": "メモリー",
+      "sub_short_en": "Memory",
       "row": 3,
       "relations": [
         {
@@ -568,6 +612,8 @@
       "name": "SK hynix",
       "sub": "メモリー",
       "sub_en": "Memory",
+      "sub_short": "メモリー",
+      "sub_short_en": "Memory",
       "row": 3,
       "relations": [
         {
@@ -591,6 +637,8 @@
       "name": "Micron Technology",
       "sub": "メモリー",
       "sub_en": "Memory",
+      "sub_short": "メモリー",
+      "sub_short_en": "Memory",
       "row": 3,
       "relations": [
         {
@@ -614,6 +662,8 @@
       "name": "Synopsys",
       "sub": "半導体設計ソフト",
       "sub_en": "Chip design software",
+      "sub_short": "半導体設計",
+      "sub_short_en": "Chip design",
       "row": 3,
       "relations": [
         {
@@ -637,6 +687,8 @@
       "name": "Siemens(Siemens EDA)",
       "sub": "半導体設計ソフト",
       "sub_en": "Chip design software",
+      "sub_short": "半導体設計",
+      "sub_short_en": "Chip design",
       "row": 3,
       "relations": [
         {
@@ -660,6 +712,8 @@
       "name": "Arista Networks",
       "sub": "ネットワーク機器",
       "sub_en": "Networking gear",
+      "sub_short": "通信機器",
+      "sub_short_en": "Networking gear",
       "row": 3,
       "relations": [
         {
@@ -685,6 +739,8 @@
       "name": "MediaTek",
       "sub": "半導体",
       "sub_en": "Semiconductors",
+      "sub_short": "半導体",
+      "sub_short_en": "Semiconductors",
       "row": 3,
       "relations": [
         {
@@ -708,6 +764,8 @@
       "name": "Intel",
       "sub": "半導体",
       "sub_en": "Semiconductors",
+      "sub_short": "半導体",
+      "sub_short_en": "Semiconductors",
       "row": 3,
       "relations": [
         {
@@ -733,6 +791,8 @@
       "name": "NXP Semiconductors",
       "sub": "車載半導体",
       "sub_en": "Auto chips",
+      "sub_short": "車載半導体",
+      "sub_short_en": "Auto chips",
       "row": 3,
       "relations": [
         {
@@ -756,6 +816,8 @@
       "name": "Apple",
       "sub": "スマホ・PC",
       "sub_en": "Devices",
+      "sub_short": "スマホ・PC",
+      "sub_short_en": "Devices",
       "row": 1,
       "relations": [
         {

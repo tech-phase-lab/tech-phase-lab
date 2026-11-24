@@ -30,6 +30,8 @@
       "name_en": "Pfizer",
       "sub": "製薬",
       "sub_en": "Pharmaceuticals",
+      "sub_short": "製薬",
+      "sub_short_en": "Pharmaceuticals",
       "row": 0,
       "relations": [
         {
@@ -54,6 +56,8 @@
       "name_en": "Smiths Group",
       "sub": "産業機器(英)",
       "sub_en": "Industrial technology (UK)",
+      "sub_short": "産業機器",
+      "sub_short_en": "Industrial tech",
       "row": 0,
       "relations": [
         {
@@ -78,6 +82,8 @@
       "name_en": "Becton Dickinson",
       "sub": "医療機器",
       "sub_en": "Medical devices",
+      "sub_short": "医療機器",
+      "sub_short_en": "Medical devices",
       "row": 1,
       "relations": [
         {
@@ -102,6 +108,8 @@
       "name_en": "Baxter",
       "sub": "医療機器・輸液",
       "sub_en": "Medical devices & IV",
+      "sub_short": "医療機器・輸液",
+      "sub_short_en": "Medical devices",
       "row": 1,
       "relations": [
         {
@@ -126,6 +134,8 @@
       "name_en": "B. Braun",
       "sub": "医療機器(独)",
       "sub_en": "Medical devices (Germany)",
+      "sub_short": "医療機器",
+      "sub_short_en": "Medical devices",
       "row": 1,
       "relations": [
         {
@@ -150,6 +160,8 @@
       "name_en": "Fresenius",
       "sub": "医療機器・透析(独)",
       "sub_en": "Medical devices & dialysis (Germany)",
+      "sub_short": "医療機器・透析",
+      "sub_short_en": "Medical devices",
       "row": 1,
       "relations": [
         {
@@ -174,6 +186,8 @@
       "name_en": "Moog",
       "sub": "精密機器",
       "sub_en": "Precision controls",
+      "sub_short": "精密機器",
+      "sub_short_en": "Controls",
       "row": 1,
       "relations": [
         {
@@ -198,6 +212,8 @@
       "name_en": "Edwards Lifesciences",
       "sub": "心臓弁・モニタリング",
       "sub_en": "Heart valves & monitoring",
+      "sub_short": "心臓弁",
+      "sub_short_en": "Heart valves",
       "row": 1,
       "relations": [
         {
@@ -222,6 +238,8 @@
       "name_en": "Teleflex",
       "sub": "医療機器",
       "sub_en": "Medical devices",
+      "sub_short": "医療機器",
+      "sub_short_en": "Medical devices",
       "row": 1,
       "relations": [
         {
@@ -246,6 +264,8 @@
       "name_en": "AngioDynamics",
       "sub": "血管治療機器",
       "sub_en": "Vascular devices",
+      "sub_short": "血管治療機器",
+      "sub_short_en": "Vascular devices",
       "row": 1,
       "relations": [
         {

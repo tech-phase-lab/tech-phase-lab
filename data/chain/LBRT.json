@@ -34,6 +34,8 @@
       "name_en": "Caterpillar",
       "sub": "建機・発電機",
       "sub_en": "Machinery & power systems",
+      "sub_short": "建機・発電機",
+      "sub_short_en": "Machinery",
       "row": 0,
       "relations": [
         {
@@ -58,6 +60,8 @@
       "name_en": "JPMorgan Chase",
       "sub": "銀行",
       "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
       "row": 0,
       "relations": [
         {
@@ -82,6 +86,8 @@
       "name_en": "Vantage Data Centers",
       "sub": "データセンター(非上場)",
       "sub_en": "Data centers (private)",
+      "sub_short": "データセンター",
+      "sub_short_en": "Data centers",
       "row": 1,
       "relations": [
         {
@@ -106,6 +112,8 @@
       "name_en": "Tamboran Resources",
       "sub": "天然ガス開発(豪)",
       "sub_en": "Natural gas (Australia)",
+      "sub_short": "天然ガス開発",
+      "sub_short_en": "Natural gas",
       "row": 1,
       "relations": [
         {
@@ -130,6 +138,8 @@
       "name_en": "Fervo Energy",
       "sub": "次世代地熱",
       "sub_en": "Enhanced geothermal",
+      "sub_short": "次世代地熱",
+      "sub_short_en": "Geothermal",
       "row": 1,
       "relations": [
         {
@@ -154,6 +164,8 @@
       "name_en": "Halliburton",
       "sub": "油田サービス",
       "sub_en": "Oilfield services",
+      "sub_short": "油田サービス",
+      "sub_short_en": "Oilfield svcs",
       "row": 2,
       "relations": [
         {
@@ -178,6 +190,8 @@
       "name_en": "Patterson-UTI Energy",
       "sub": "掘削・油田サービス",
       "sub_en": "Drilling & completions",
+      "sub_short": "掘削",
+      "sub_short_en": "Drilling",
       "row": 2,
       "relations": [
         {
@@ -202,6 +216,8 @@
       "name_en": "ProFrac",
       "sub": "水圧破砕",
       "sub_en": "Hydraulic fracturing",
+      "sub_short": "水圧破砕",
+      "sub_short_en": "Fracking",
       "row": 2,
       "relations": [
         {
@@ -226,6 +242,8 @@
       "name_en": "ProPetro",
       "sub": "水圧破砕",
       "sub_en": "Hydraulic fracturing",
+      "sub_short": "水圧破砕",
+      "sub_short_en": "Fracking",
       "row": 2,
       "relations": [
         {
@@ -250,6 +268,8 @@
       "name_en": "RPC",
       "sub": "油田サービス",
       "sub_en": "Oilfield services",
+      "sub_short": "油田サービス",
+      "sub_short_en": "Oilfield svcs",
       "row": 2,
       "relations": [
         {
@@ -274,6 +294,8 @@
       "name_en": "Atlas Energy Solutions",
       "sub": "フラック砂",
       "sub_en": "Frac sand",
+      "sub_short": "フラック砂",
+      "sub_short_en": "Frac sand",
       "row": 2,
       "relations": [
         {

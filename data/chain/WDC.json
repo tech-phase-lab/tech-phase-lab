@@ -32,6 +32,8 @@
       "name": "フォーティネット",
       "sub": "セキュリティ",
       "sub_en": "Security",
+      "sub_short": "セキュリティ",
+      "sub_short_en": "Security",
       "row": 0,
       "relations": [
         {
@@ -56,6 +58,8 @@
       "name": "サンディスク",
       "sub": "フラッシュストレージ",
       "sub_en": "Flash storage",
+      "sub_short": "フラッシュ",
+      "sub_short_en": "Flash storage",
       "row": 1,
       "relations": [
         {
@@ -121,6 +125,8 @@
       "name": "キオクシア",
       "sub": "NANDフラッシュ",
       "sub_en": "NAND flash",
+      "sub_short": "フラッシュ",
+      "sub_short_en": "NAND flash",
       "row": 1,
       "relations": [
         {
@@ -162,6 +168,8 @@
       "name": "ランバス",
       "sub": "メモリ技術",
       "sub_en": "Memory IP",
+      "sub_short": "メモリ技術",
+      "sub_short_en": "Memory IP",
       "row": 1,
       "relations": [
         {
@@ -186,6 +194,8 @@
       "name": "NVIDIA",
       "sub": "AI半導体",
       "sub_en": "AI chips",
+      "sub_short": "AI半導体",
+      "sub_short_en": "AI chips",
       "row": 2,
       "relations": [
         {
@@ -211,6 +221,8 @@
       "name": "ブロードコム",
       "sub": "通信・半導体",
       "sub_en": "Semiconductors",
+      "sub_short": "通信・半導体",
+      "sub_short_en": "Semiconductors",
       "row": 2,
       "relations": [
         {
@@ -237,6 +249,8 @@
       "name": "インテル",
       "sub": "半導体",
       "sub_en": "Semiconductors",
+      "sub_short": "半導体",
+      "sub_short_en": "Semiconductors",
       "row": 2,
       "relations": [
         {
@@ -263,6 +277,8 @@
       "name": "アリスタネットワークス",
       "sub": "ネットワーク機器",
       "sub_en": "Networking",
+      "sub_short": "通信機器",
+      "sub_short_en": "Networking",
       "row": 2,
       "relations": [
         {
@@ -289,6 +305,8 @@
       "name": "シーゲイト・テクノロジー",
       "sub": "HDD",
       "sub_en": "Hard drives",
+      "sub_short": "HDD",
+      "sub_short_en": "Hard drives",
       "row": 3,
       "relations": [
         {

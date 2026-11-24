@@ -32,6 +32,8 @@
       "name": "バンク・オブ・アメリカ",
       "sub": "銀行",
       "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
       "row": 0,
       "relations": [
         {
@@ -71,6 +73,8 @@
       "name": "MKSインスツルメンツ",
       "sub": "レーザー・半導体装置",
       "sub_en": "Lasers & equipment",
+      "sub_short": "レーザー",
+      "sub_short_en": "Lasers",
       "row": 2,
       "relations": [
         {
@@ -95,6 +99,8 @@
       "name": "コヒレント",
       "sub": "レーザー・光学",
       "sub_en": "Lasers & photonics",
+      "sub_short": "レーザー・光学",
+      "sub_short_en": "Lasers",
       "row": 2,
       "relations": [
         {
@@ -119,6 +125,8 @@
       "name": "イリノイ・ツール・ワークス",
       "sub": "産業機器",
       "sub_en": "Industrial equipment",
+      "sub_short": "産業機器",
+      "sub_short_en": "Industrial gear",
       "row": 1,
       "relations": [
         {
@@ -158,6 +166,8 @@
       "name": "ロッキード・マーチン",
       "sub": "防衛",
       "sub_en": "Defense",
+      "sub_short": "防衛",
+      "sub_short_en": "Defense",
       "row": 1,
       "relations": [
         {
@@ -182,6 +192,8 @@
       "name": "ルメンタム",
       "sub": "光通信・レーザー",
       "sub_en": "Photonics & lasers",
+      "sub_short": "光通信",
+      "sub_short_en": "Photonics",
       "row": 2,
       "relations": [
         {
@@ -206,6 +218,8 @@
       "name": "エヌライト",
       "sub": "ファイバーレーザー",
       "sub_en": "Fiber lasers",
+      "sub_short": "レーザー",
+      "sub_short_en": "Fiber lasers",
       "row": 2,
       "relations": [
         {

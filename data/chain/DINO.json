@@ -30,6 +30,8 @@
       "name_en": "Shell",
       "sub": "石油",
       "sub_en": "Oil & gas",
+      "sub_short": "石油",
+      "sub_short_en": "Oil & gas",
       "row": 0,
       "relations": [
         {
@@ -54,6 +56,8 @@
       "name_en": "Green Trail Fuels",
       "sub": "燃料小売",
       "sub_en": "Fuel retail",
+      "sub_short": "燃料小売",
+      "sub_short_en": "Fuel retail",
       "row": 0,
       "relations": [
         {
@@ -78,6 +82,8 @@
       "name_en": "REH Advisors",
       "sub": "投資会社",
       "sub_en": "Investment firm",
+      "sub_short": "投資会社",
+      "sub_short_en": "Investment firm",
       "row": 0,
       "relations": [
         {
@@ -102,6 +108,8 @@
       "name_en": "Yesway",
       "sub": "コンビニ",
       "sub_en": "Convenience stores",
+      "sub_short": "コンビニ",
+      "sub_short_en": "Convenience",
       "row": 1,
       "relations": [
         {
@@ -126,6 +134,8 @@
       "name_en": "Calumet",
       "sub": "特殊石油製品",
       "sub_en": "Specialty petroleum products",
+      "sub_short": "特殊石油製品",
+      "sub_short_en": "Petroleum",
       "row": 2,
       "relations": [
         {

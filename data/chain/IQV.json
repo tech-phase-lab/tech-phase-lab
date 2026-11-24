@@ -22,6 +22,8 @@
       "name": "アクセンチュア",
       "sub": "コンサル・IT",
       "sub_en": "Consulting & IT",
+      "sub_short": "コンサル・IT",
+      "sub_short_en": "Consulting & IT",
       "row": 0,
       "relations": [
         {
@@ -46,6 +48,8 @@
       "name": "コグニザント",
       "sub": "IT サービス",
       "sub_en": "IT services",
+      "sub_short": "IT サービス",
+      "sub_short_en": "IT services",
       "row": 0,
       "relations": [
         {
@@ -70,6 +74,8 @@
       "name": "アイコン",
       "sub": "臨床試験受託",
       "sub_en": "Contract research",
+      "sub_short": "臨床試験受託",
+      "sub_short_en": "CRO",
       "row": 0,
       "relations": [
         {
@@ -94,6 +100,8 @@
       "name": "パレクセル",
       "sub": "臨床試験受託",
       "sub_en": "Contract research",
+      "sub_short": "臨床試験受託",
+      "sub_short_en": "CRO",
       "row": 0,
       "relations": [
         {
@@ -118,6 +126,8 @@
       "name": "サーモフィッシャー(PPD)",
       "sub": "臨床試験受託",
       "sub_en": "Contract research",
+      "sub_short": "臨床試験受託",
+      "sub_short_en": "CRO",
       "row": 0,
       "relations": [
         {
@@ -142,6 +152,8 @@
       "name": "シネオス・ヘルス",
       "sub": "臨床試験受託",
       "sub_en": "Contract research",
+      "sub_short": "臨床試験受託",
+      "sub_short_en": "CRO",
       "row": 0,
       "relations": [
         {
@@ -166,6 +178,8 @@
       "name": "オプタム・インサイト(ユナイテッドヘルス)",
       "sub": "医療情報",
       "sub_en": "Healthcare information",
+      "sub_short": "医療情報",
+      "sub_short_en": "Health data",
       "row": 0,
       "relations": [
         {
@@ -190,6 +204,8 @@
       "name": "ヴィーバ・システムズ",
       "sub": "ライフサイエンスIT",
       "sub_en": "Life sciences software",
+      "sub_short": "生命科学IT",
+      "sub_short_en": "Life sci apps",
       "row": 0,
       "relations": [
         {

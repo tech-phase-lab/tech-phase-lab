@@ -24,6 +24,8 @@
       "name": "ジェイビル",
       "sub": "受託製造",
       "sub_en": "Contract manufacturing",
+      "sub_short": "受託製造",
+      "sub_short_en": "Contract maker",
       "row": 0,
       "relations": [
         {
@@ -48,6 +50,8 @@
       "name": "アップル",
       "sub": "アプリ配信",
       "sub_en": "App distribution",
+      "sub_short": "アプリ配信",
+      "sub_short_en": "App distribution",
       "row": 1,
       "relations": [
         {
@@ -72,6 +76,8 @@
       "name": "グーグル",
       "sub": "アプリ配信",
       "sub_en": "App distribution",
+      "sub_short": "アプリ配信",
+      "sub_short_en": "App distribution",
       "row": 1,
       "relations": [
         {
@@ -96,6 +102,8 @@
       "name": "ハブル・ネットワーク",
       "sub": "衛星通信",
       "sub_en": "Satellite connectivity",
+      "sub_short": "衛星通信",
+      "sub_short_en": "Satellite links",
       "row": 1,
       "relations": [
         {

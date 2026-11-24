@@ -26,6 +26,8 @@
       "name_en": "Caterpillar",
       "sub": "建設機械",
       "sub_en": "Construction machinery",
+      "sub_short": "建設機械",
+      "sub_short_en": "Heavy machinery",
       "row": 0,
       "relations": [
         {
@@ -50,6 +52,8 @@
       "name_en": "Filtration Group",
       "sub": "ろ過装置",
       "sub_en": "Filtration",
+      "sub_short": "ろ過装置",
+      "sub_short_en": "Filtration",
       "row": 0,
       "relations": [
         {
@@ -74,6 +78,8 @@
       "name_en": "Medica S.p.A.",
       "sub": "医療機器(イタリア)",
       "sub_en": "Medical devices (Italy)",
+      "sub_short": "医療機器",
+      "sub_short_en": "Medical devices",
       "row": 0,
       "relations": [
         {
@@ -98,6 +104,8 @@
       "name_en": "PT Panata Jaya Mandiri",
       "sub": "フィルター(インドネシア)",
       "sub_en": "Filters (Indonesia)",
+      "sub_short": "フィルター",
+      "sub_short_en": "Filters",
       "row": 0,
       "relations": [
         {
@@ -122,6 +130,8 @@
       "name_en": "Parker-Hannifin",
       "sub": "モーション制御・ろ過",
       "sub_en": "Motion control & filtration",
+      "sub_short": "モーション制御",
+      "sub_short_en": "Motion control",
       "row": 1,
       "relations": [
         {

@@ -28,6 +28,8 @@
       "name_en": "Orezone Gold",
       "sub": "金(加)",
       "sub_en": "Gold (Canada)",
+      "sub_short": "金",
+      "sub_short_en": "Gold",
       "row": 0,
       "relations": [
         {
@@ -52,6 +54,8 @@
       "name_en": "Franco-Nevada",
       "sub": "ロイヤルティ・ストリーム",
       "sub_en": "Royalties & streams",
+      "sub_short": "ロイヤルティ",
+      "sub_short_en": "Royalties",
       "row": 0,
       "relations": [
         {
@@ -76,6 +80,8 @@
       "name_en": "Wheaton Precious Metals",
       "sub": "ストリーム",
       "sub_en": "Precious metals streams",
+      "sub_short": "ストリーム",
+      "sub_short_en": "Metal streams",
       "row": 0,
       "relations": [
         {
@@ -100,6 +106,8 @@
       "name_en": "Alexco Resource",
       "sub": "銀(ユーコン)",
       "sub_en": "Silver (Yukon)",
+      "sub_short": "銀",
+      "sub_short_en": "Silver",
       "row": 1,
       "relations": [
         {
@@ -124,6 +132,8 @@
       "name_en": "Klondex Mines",
       "sub": "金(ネバダ)",
       "sub_en": "Gold (Nevada)",
+      "sub_short": "金",
+      "sub_short_en": "Gold",
       "row": 1,
       "relations": [
         {
@@ -148,6 +158,8 @@
       "name_en": "Perpetua Resources",
       "sub": "金・アンチモン",
       "sub_en": "Gold & antimony",
+      "sub_short": "金・アンチモン",
+      "sub_short_en": "Gold & antimony",
       "row": 2,
       "relations": [
         {
@@ -172,6 +184,8 @@
       "name_en": "Victoria Gold",
       "sub": "金(ユーコン)",
       "sub_en": "Gold (Yukon)",
+      "sub_short": "金",
+      "sub_short_en": "Gold",
       "row": 2,
       "relations": [
         {

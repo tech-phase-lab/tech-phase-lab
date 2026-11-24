@@ -34,6 +34,8 @@
       "name_en": "Halliburton",
       "sub": "油田サービス",
       "sub_en": "Oilfield services",
+      "sub_short": "油田サービス",
+      "sub_short_en": "Oilfield svcs",
       "row": 0,
       "relations": [
         {
@@ -58,6 +60,8 @@
       "name_en": "Technip Energies",
       "sub": "エンジニアリング(仏)",
       "sub_en": "Engineering (France)",
+      "sub_short": "エンジニア",
+      "sub_short_en": "Engineering",
       "row": 0,
       "relations": [
         {
@@ -82,6 +86,8 @@
       "name_en": "Petrobras",
       "sub": "石油(ブラジル)",
       "sub_en": "Oil (Brazil)",
+      "sub_short": "石油",
+      "sub_short_en": "Oil",
       "row": 1,
       "relations": [
         {
@@ -106,6 +112,8 @@
       "name_en": "TotalEnergies",
       "sub": "石油",
       "sub_en": "Oil & gas",
+      "sub_short": "石油",
+      "sub_short_en": "Oil & gas",
       "row": 1,
       "relations": [
         {
@@ -130,6 +138,8 @@
       "name_en": "Equinor",
       "sub": "石油(ノルウェー)",
       "sub_en": "Oil (Norway)",
+      "sub_short": "石油",
+      "sub_short_en": "Oil",
       "row": 1,
       "relations": [
         {
@@ -154,6 +164,8 @@
       "name_en": "ExxonMobil",
       "sub": "石油",
       "sub_en": "Oil & gas",
+      "sub_short": "石油",
+      "sub_short_en": "Oil & gas",
       "row": 1,
       "relations": [
         {
@@ -178,6 +190,8 @@
       "name_en": "Baker Hughes",
       "sub": "油田サービス",
       "sub_en": "Oilfield services",
+      "sub_short": "油田サービス",
+      "sub_short_en": "Oilfield svcs",
       "row": 2,
       "relations": [
         {
@@ -215,6 +229,8 @@
       "name_en": "Helix Energy Solutions",
       "sub": "坑井介入",
       "sub_en": "Well intervention",
+      "sub_short": "坑井介入",
+      "sub_short_en": "Well services",
       "row": 2,
       "relations": [
         {
@@ -239,6 +255,8 @@
       "name_en": "Cactus",
       "sub": "坑口装置",
       "sub_en": "Wellheads",
+      "sub_short": "坑口装置",
+      "sub_short_en": "Wellheads",
       "row": 2,
       "relations": [
         {
@@ -263,6 +281,8 @@
       "name_en": "Innovex International",
       "sub": "坑井用製品",
       "sub_en": "Well products",
+      "sub_short": "坑井用製品",
+      "sub_short_en": "Well products",
       "row": 2,
       "relations": [
         {

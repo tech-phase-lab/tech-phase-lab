@@ -19,6 +19,8 @@
       "name": "クリスパー・セラピューティクス",
       "sub": "遺伝子編集",
       "sub_en": "Gene editing",
+      "sub_short": "遺伝子編集",
+      "sub_short_en": "Gene editing",
       "row": 0,
       "relations": [
         {
@@ -69,6 +71,8 @@
       "name": "モデルナ",
       "sub": "mRNA医薬",
       "sub_en": "mRNA therapeutics",
+      "sub_short": "mRNA医薬",
+      "sub_short_en": "mRNA drugs",
       "row": 0,
       "relations": [
         {
@@ -106,6 +110,8 @@
       "name": "ロンザ",
       "sub": "受託製造",
       "sub_en": "Contract manufacturing",
+      "sub_short": "受託製造",
+      "sub_short_en": "Contract maker",
       "row": 0,
       "relations": [
         {
@@ -130,6 +136,8 @@
       "name": "ザイ・ラボ",
       "sub": "中国のバイオ薬",
       "sub_en": "China biopharma",
+      "sub_short": "中国のバイオ薬",
+      "sub_short_en": "China biopharma",
       "row": 0,
       "relations": [
         {
@@ -154,6 +162,8 @@
       "name": "小野薬品工業",
       "sub": "日本の製薬",
       "sub_en": "Japan pharma",
+      "sub_short": "日本の製薬",
+      "sub_short_en": "Japan pharma",
       "row": 0,
       "relations": [
         {
@@ -178,6 +188,8 @@
       "name": "エディタス・メディスン",
       "sub": "遺伝子編集",
       "sub_en": "Gene editing",
+      "sub_short": "遺伝子編集",
+      "sub_short_en": "Gene editing",
       "row": 0,
       "relations": [
         {
@@ -202,6 +214,8 @@
       "name": "エントラーダ・セラピューティクス",
       "sub": "創薬提携",
       "sub_en": "Drug collaboration",
+      "sub_short": "創薬提携",
+      "sub_short_en": "Drug partner",
       "row": 0,
       "relations": [
         {

@@ -33,6 +33,8 @@
       "name_en": "Aymium",
       "sub": "バイオカーボン",
       "sub_en": "Biocarbon",
+      "sub_short": "バイオカーボン",
+      "sub_short_en": "Biocarbon",
       "row": 0,
       "relations": [
         {
@@ -57,6 +59,8 @@
       "name_en": "Rare Earths Americas",
       "sub": "レアアース探鉱",
       "sub_en": "Rare earth exploration",
+      "sub_short": "レアアース探鉱",
+      "sub_short_en": "Rare earths",
       "row": 0,
       "relations": [
         {
@@ -81,6 +85,8 @@
       "name_en": "Builders FirstSource",
       "sub": "建材の流通",
       "sub_en": "Building materials distribution",
+      "sub_short": "建材の流通",
+      "sub_short_en": "Building supply",
       "row": 1,
       "relations": [
         {
@@ -105,6 +111,8 @@
       "name_en": "BlueLinx",
       "sub": "建材の卸売",
       "sub_en": "Building products wholesale",
+      "sub_short": "建材の卸売",
+      "sub_short_en": "Building supply",
       "row": 1,
       "relations": [
         {
@@ -129,6 +137,8 @@
       "name_en": "Boise Cascade",
       "sub": "木材製品・建材流通",
       "sub_en": "Wood products & distribution",
+      "sub_short": "木材製品",
+      "sub_short_en": "Wood products",
       "row": 2,
       "relations": [
         {
@@ -153,6 +163,8 @@
       "name_en": "Rayonier",
       "sub": "森林REIT",
       "sub_en": "Timberland REIT",
+      "sub_short": "森林REIT",
+      "sub_short_en": "Timberland REIT",
       "row": 2,
       "relations": [
         {
@@ -177,6 +189,8 @@
       "name_en": "Mercer International",
       "sub": "パルプ・木材",
       "sub_en": "Pulp & lumber",
+      "sub_short": "パルプ・木材",
+      "sub_short_en": "Pulp & lumber",
       "row": 2,
       "relations": [
         {
@@ -201,6 +215,8 @@
       "name_en": "Arauco",
       "sub": "林産品(チリ)",
       "sub_en": "Forest products (Chile)",
+      "sub_short": "林産品",
+      "sub_short_en": "Forest products",
       "row": 2,
       "relations": [
         {

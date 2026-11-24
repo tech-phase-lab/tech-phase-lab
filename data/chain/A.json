@@ -36,6 +36,8 @@
       "name_en": "Alnylam",
       "sub": "RNA医薬",
       "sub_en": "RNAi therapeutics",
+      "sub_short": "RNA医薬",
+      "sub_short_en": "RNAi drugs",
       "row": 0,
       "relations": [
         {
@@ -60,6 +62,8 @@
       "name_en": "Akoya Biosciences",
       "sub": "空間生物学",
       "sub_en": "Spatial biology",
+      "sub_short": "空間生物学",
+      "sub_short_en": "Spatial biology",
       "row": 0,
       "relations": [
         {
@@ -84,6 +88,8 @@
       "name_en": "BIOVECTRA",
       "sub": "医薬品受託製造",
       "sub_en": "Contract drug manufacturing",
+      "sub_short": "医薬品受託製造",
+      "sub_short_en": "Drug CDMO",
       "row": 1,
       "relations": [
         {
@@ -108,6 +114,8 @@
       "name_en": "Keysight Technologies",
       "sub": "電子計測",
       "sub_en": "Electronic measurement",
+      "sub_short": "電子計測",
+      "sub_short_en": "Test equipment",
       "row": 1,
       "relations": [
         {
@@ -132,6 +140,8 @@
       "name_en": "Danaher",
       "sub": "ライフサイエンス機器",
       "sub_en": "Life science tools",
+      "sub_short": "生命科学機器",
+      "sub_short_en": "Lab tools",
       "row": 2,
       "relations": [
         {
@@ -156,6 +166,8 @@
       "name_en": "Thermo Fisher Scientific",
       "sub": "ライフサイエンス機器",
       "sub_en": "Life science tools",
+      "sub_short": "生命科学機器",
+      "sub_short_en": "Lab tools",
       "row": 2,
       "relations": [
         {
@@ -180,6 +192,8 @@
       "name_en": "Waters",
       "sub": "分析機器",
       "sub_en": "Analytical instruments",
+      "sub_short": "分析機器",
+      "sub_short_en": "Lab instruments",
       "row": 2,
       "relations": [
         {
@@ -217,6 +231,8 @@
       "name_en": "Shimadzu",
       "sub": "分析機器(日本)",
       "sub_en": "Analytical instruments (Japan)",
+      "sub_short": "分析機器",
+      "sub_short_en": "Lab instruments",
       "row": 2,
       "relations": [
         {
@@ -241,6 +257,8 @@
       "name_en": "Revvity (formerly PerkinElmer)",
       "sub": "ライフサイエンス機器",
       "sub_en": "Life science tools",
+      "sub_short": "生命科学機器",
+      "sub_short_en": "Lab tools",
       "row": 2,
       "relations": [
         {
@@ -265,6 +283,8 @@
       "name_en": "Cytek Biosciences",
       "sub": "フローサイトメトリー",
       "sub_en": "Flow cytometry",
+      "sub_short": "細胞分析",
+      "sub_short_en": "Flow cytometry",
       "row": 3,
       "relations": [
         {
@@ -289,6 +309,8 @@
       "name_en": "Codexis",
       "sub": "酵素・RNA製造",
       "sub_en": "Enzymes & RNA manufacturing",
+      "sub_short": "酵素・RNA製造",
+      "sub_short_en": "Enzymes",
       "row": 3,
       "relations": [
         {
@@ -313,6 +335,8 @@
       "name_en": "SOPHiA GENETICS",
       "sub": "ゲノム解析ソフト",
       "sub_en": "Genomics software",
+      "sub_short": "ゲノム解析",
+      "sub_short_en": "Genomics apps",
       "row": 3,
       "relations": [
         {

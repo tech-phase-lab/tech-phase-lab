@@ -29,6 +29,8 @@
       "name": "ホーム・デポ",
       "sub": "住宅リフォーム小売",
       "sub_en": "Home improvement retail",
+      "sub_short": "住宅リフォーム",
+      "sub_short_en": "Home improvement",
       "row": 0,
       "relations": [
         {
@@ -53,6 +55,8 @@
       "name": "ファーガソン",
       "sub": "配管資材の卸売",
       "sub_en": "Plumbing distribution",
+      "sub_short": "配管資材の卸売",
+      "sub_short_en": "Plumbing supply",
       "row": 0,
       "relations": [
         {
@@ -77,6 +81,8 @@
       "name": "ロウズ",
       "sub": "住宅リフォーム小売",
       "sub_en": "Home improvement retail",
+      "sub_short": "住宅リフォーム",
+      "sub_short_en": "Home improvement",
       "row": 0,
       "relations": [
         {
@@ -101,6 +107,8 @@
       "name": "フォーチュン・ブランズ・イノベーションズ",
       "sub": "水栓・住宅設備",
       "sub_en": "Faucets & home products",
+      "sub_short": "水栓・住宅設備",
+      "sub_short_en": "Faucets",
       "row": 0,
       "relations": [
         {
@@ -138,6 +146,8 @@
       "name": "スペクトラム・ブランズ・ホールディングス",
       "sub": "水栓・家庭用品",
       "sub_en": "Faucets & household goods",
+      "sub_short": "水栓・家庭用品",
+      "sub_short_en": "Faucets",
       "row": 0,
       "relations": [
         {
@@ -162,6 +172,8 @@
       "name": "ズーン・エルカイ・ウォーター・ソリューションズ",
       "sub": "水まわり製品",
       "sub_en": "Water solutions",
+      "sub_short": "水まわり製品",
+      "sub_short_en": "Water solutions",
       "row": 0,
       "relations": [
         {
@@ -186,6 +198,8 @@
       "name": "シャーウィン・ウィリアムズ",
       "sub": "塗料",
       "sub_en": "Paints & coatings",
+      "sub_short": "塗料",
+      "sub_short_en": "Paints",
       "row": 0,
       "relations": [
         {
@@ -210,6 +224,8 @@
       "name": "RPMインターナショナル",
       "sub": "塗料・防錆材",
       "sub_en": "Coatings & sealants",
+      "sub_short": "塗料・防錆材",
+      "sub_short_en": "Coatings",
       "row": 0,
       "relations": [
         {
@@ -234,6 +250,8 @@
       "name": "FGIインダストリーズ",
       "sub": "水回り製品",
       "sub_en": "Kitchen & bath products",
+      "sub_short": "水回り製品",
+      "sub_short_en": "Kitchen products",
       "row": 1,
       "relations": [
         {

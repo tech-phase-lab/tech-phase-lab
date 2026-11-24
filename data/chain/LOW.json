@@ -24,6 +24,8 @@
       "name": "ファウンデーション・ビルディング・マテリアルズ",
       "sub": "内装建材の卸売",
       "sub_en": "Interior building products distribution",
+      "sub_short": "内装建材の卸売",
+      "sub_short_en": "Interior supply",
       "row": 0,
       "relations": [
         {
@@ -48,6 +50,8 @@
       "name": "アーティザン・デザイン・グループ",
       "sub": "住宅内装の施工",
       "sub_en": "Home interior installation",
+      "sub_short": "住宅内装の施工",
+      "sub_short_en": "Interior install",
       "row": 0,
       "relations": [
         {
@@ -72,6 +76,8 @@
       "name": "シンクロニー銀行",
       "sub": "消費者向け与信",
       "sub_en": "Consumer credit",
+      "sub_short": "消費者向け与信",
+      "sub_short_en": "Consumer credit",
       "row": 0,
       "relations": [
         {
@@ -96,6 +102,8 @@
       "name": "ワールプール",
       "sub": "家電",
       "sub_en": "Home appliances",
+      "sub_short": "家電",
+      "sub_short_en": "Home appliances",
       "row": 1,
       "relations": [
         {
@@ -120,6 +128,8 @@
       "name": "ヒルマン・ソリューションズ",
       "sub": "金物・留め具",
       "sub_en": "Hardware",
+      "sub_short": "金物・留め具",
+      "sub_short_en": "Hardware",
       "row": 1,
       "relations": [
         {
@@ -144,6 +154,8 @@
       "name": "グリフォン",
       "sub": "住宅資材・工具",
       "sub_en": "Home & building products",
+      "sub_short": "住宅資材・工具",
+      "sub_short_en": "Home products",
       "row": 1,
       "relations": [
         {
@@ -168,6 +180,8 @@
       "name": "アームストロング・ワールド",
       "sub": "天井材",
       "sub_en": "Ceiling systems",
+      "sub_short": "天井材",
+      "sub_short_en": "Ceiling systems",
       "row": 1,
       "relations": [
         {

@@ -30,6 +30,8 @@
       "name": "TSMC",
       "sub": "半導体受託製造",
       "sub_en": "Foundry",
+      "sub_short": "半導体受託製造",
+      "sub_short_en": "Foundry",
       "row": 0,
       "relations": [
         {
@@ -70,6 +72,8 @@
       "name": "サムスン電子",
       "sub": "メモリ・半導体",
       "sub_en": "Memory & chips",
+      "sub_short": "メモリ・半導体",
+      "sub_short_en": "Memory & chips",
       "row": 0,
       "relations": [
         {
@@ -96,6 +100,8 @@
       "name": "リガク・ホールディングス",
       "sub": "X線分析装置",
       "sub_en": "X-ray analytical equipment",
+      "sub_short": "X線分析装置",
+      "sub_short_en": "X-ray analysis",
       "row": 1,
       "relations": [
         {
@@ -133,6 +139,8 @@
       "name": "SKハイニックス",
       "sub": "メモリ半導体",
       "sub_en": "Memory chips",
+      "sub_short": "メモリ半導体",
+      "sub_short_en": "Memory chips",
       "row": 0,
       "relations": [
         {
@@ -157,6 +165,8 @@
       "name": "ラム・リサーチ",
       "sub": "半導体製造装置",
       "sub_en": "Chip equipment",
+      "sub_short": "半導体製造装置",
+      "sub_short_en": "Chip equipment",
       "row": 1,
       "relations": [
         {
@@ -183,6 +193,8 @@
       "name": "コーニング",
       "sub": "ガラス・素材",
       "sub_en": "Glass & materials",
+      "sub_short": "ガラス・素材",
+      "sub_short_en": "Glass",
       "row": 1,
       "relations": [
         {
@@ -209,6 +221,8 @@
       "name": "MKSインスツルメンツ",
       "sub": "半導体装置部品",
       "sub_en": "Equipment subsystems",
+      "sub_short": "半導体装置部品",
+      "sub_short_en": "Tool parts",
       "row": 1,
       "relations": [
         {
@@ -235,6 +249,8 @@
       "name": "レゾナック・ホールディングス",
       "sub": "半導体材料",
       "sub_en": "Semiconductor materials",
+      "sub_short": "半導体材料",
+      "sub_short_en": "Chip materials",
       "row": 1,
       "relations": [
         {
@@ -261,6 +277,8 @@
       "name": "KLA",
       "sub": "半導体検査・計測",
       "sub_en": "Process control",
+      "sub_short": "半導体検査",
+      "sub_short_en": "Process control",
       "row": 2,
       "relations": [
         {
@@ -297,6 +315,8 @@
       "name": "Nova",
       "sub": "半導体計測",
       "sub_en": "Metrology",
+      "sub_short": "半導体計測",
+      "sub_short_en": "Metrology",
       "row": 2,
       "relations": [
         {
@@ -333,6 +353,8 @@
       "name": "Camtek",
       "sub": "検査・計測装置",
       "sub_en": "Inspection & metrology",
+      "sub_short": "検査・計測装置",
+      "sub_short_en": "Inspection",
       "row": 2,
       "relations": [
         {

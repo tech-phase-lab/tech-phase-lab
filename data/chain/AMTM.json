@@ -32,6 +32,8 @@
       "name_en": "U.S. federal government",
       "sub": "政府",
       "sub_en": "Government",
+      "sub_short": "政府",
+      "sub_short_en": "Government",
       "row": 0,
       "relations": [
         {
@@ -56,6 +58,8 @@
       "name_en": "Jacobs Solutions",
       "sub": "エンジニアリング",
       "sub_en": "Engineering",
+      "sub_short": "エンジニア",
+      "sub_short_en": "Engineering",
       "row": 0,
       "relations": [
         {
@@ -80,6 +84,8 @@
       "name_en": "BWX Technologies",
       "sub": "原子力部品",
       "sub_en": "Nuclear components",
+      "sub_short": "原子力部品",
+      "sub_short_en": "Nuclear parts",
       "row": 1,
       "relations": [
         {
@@ -104,6 +110,8 @@
       "name_en": "Fluor",
       "sub": "エンジニアリング",
       "sub_en": "Engineering",
+      "sub_short": "エンジニア",
+      "sub_short_en": "Engineering",
       "row": 1,
       "relations": [
         {
@@ -128,6 +136,8 @@
       "name_en": "Oklo",
       "sub": "小型原子炉",
       "sub_en": "Small modular reactors",
+      "sub_short": "小型原子炉",
+      "sub_short_en": "SMRs",
       "row": 1,
       "relations": [
         {
@@ -152,6 +162,8 @@
       "name_en": "Lightbridge",
       "sub": "原子燃料",
       "sub_en": "Nuclear fuel",
+      "sub_short": "原子燃料",
+      "sub_short_en": "Nuclear fuel",
       "row": 1,
       "relations": [
         {
@@ -176,6 +188,8 @@
       "name_en": "Leidos",
       "sub": "政府向けIT・技術",
       "sub_en": "Government IT & technology",
+      "sub_short": "政府向けIT",
+      "sub_short_en": "Government IT",
       "row": 2,
       "relations": [
         {
@@ -200,6 +214,8 @@
       "name_en": "V2X",
       "sub": "政府向けサービス",
       "sub_en": "Government services",
+      "sub_short": "政府サービス",
+      "sub_short_en": "Gov services",
       "row": 2,
       "relations": [
         {
@@ -224,6 +240,8 @@
       "name_en": "EMCOR",
       "sub": "設備工事",
       "sub_en": "Building services",
+      "sub_short": "設備工事",
+      "sub_short_en": "Building upkeep",
       "row": 2,
       "relations": [
         {

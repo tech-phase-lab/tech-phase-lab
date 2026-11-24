@@ -19,6 +19,8 @@
       "name": "ASEテクノロジー・ホールディング",
       "sub": "半導体の組立・テスト",
       "sub_en": "Semiconductor assembly & test",
+      "sub_short": "半導体の組立",
+      "sub_short_en": "Chip packaging",
       "row": 0,
       "relations": [
         {

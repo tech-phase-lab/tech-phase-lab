@@ -19,6 +19,8 @@
       "name": "ドライブタイム・オートモーティブ・グループ",
       "sub": "中古車販売・金融",
       "sub_en": "Used cars & finance",
+      "sub_short": "中古車販売",
+      "sub_short_en": "Used cars",
       "row": 0,
       "relations": [
         {
@@ -56,6 +58,8 @@
       "name": "アライ・ファイナンシャル",
       "sub": "自動車金融",
       "sub_en": "Auto finance",
+      "sub_short": "自動車金融",
+      "sub_short_en": "Auto finance",
       "row": 0,
       "relations": [
         {
@@ -106,6 +110,8 @@
       "name": "シチズンズ・バンク",
       "sub": "銀行・融資",
       "sub_en": "Bank lender",
+      "sub_short": "銀行・融資",
+      "sub_short_en": "Bank lender",
       "row": 0,
       "relations": [
         {
@@ -130,6 +136,8 @@
       "name": "ルート",
       "sub": "ネット保険",
       "sub_en": "Digital insurance",
+      "sub_short": "ネット保険",
+      "sub_short_en": "Insurtech",
       "row": 0,
       "relations": [
         {

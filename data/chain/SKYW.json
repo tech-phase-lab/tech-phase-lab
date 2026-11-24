@@ -32,6 +32,8 @@
       "name_en": "Embraer",
       "sub": "航空機(ブラジル)",
       "sub_en": "Aircraft (Brazil)",
+      "sub_short": "航空機",
+      "sub_short_en": "Aircraft",
       "row": 0,
       "relations": [
         {
@@ -56,6 +58,8 @@
       "name_en": "Eve Holding",
       "sub": "電動垂直離着陸機",
       "sub_en": "eVTOL aircraft",
+      "sub_short": "eVTOL",
+      "sub_short_en": "eVTOL aircraft",
       "row": 0,
       "relations": [
         {
@@ -80,6 +84,8 @@
       "name_en": "United Airlines",
       "sub": "航空",
       "sub_en": "Airline",
+      "sub_short": "航空",
+      "sub_short_en": "Airline",
       "row": 1,
       "relations": [
         {
@@ -104,6 +110,8 @@
       "name_en": "Delta Air Lines",
       "sub": "航空",
       "sub_en": "Airline",
+      "sub_short": "航空",
+      "sub_short_en": "Airline",
       "row": 1,
       "relations": [
         {
@@ -128,6 +136,8 @@
       "name_en": "Alaska Air Group",
       "sub": "航空",
       "sub_en": "Airline",
+      "sub_short": "航空",
+      "sub_short_en": "Airline",
       "row": 1,
       "relations": [
         {
@@ -152,6 +162,8 @@
       "name_en": "Republic Airways",
       "sub": "地域航空",
       "sub_en": "Regional airline",
+      "sub_short": "地域航空",
+      "sub_short_en": "Regional airline",
       "row": 2,
       "relations": [
         {
@@ -176,6 +188,8 @@
       "name_en": "Harbor Diversified",
       "sub": "地域航空(Air Wisconsin)",
       "sub_en": "Regional airline (Air Wisconsin)",
+      "sub_short": "地域航空",
+      "sub_short_en": "Regional airline",
       "row": 2,
       "relations": [
         {

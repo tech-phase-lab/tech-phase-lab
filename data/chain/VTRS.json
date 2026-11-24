@@ -19,6 +19,8 @@
       "name": "センコラ",
       "sub": "医薬品卸",
       "sub_en": "Drug wholesaler",
+      "sub_short": "医薬品卸",
+      "sub_short_en": "Drug wholesaler",
       "row": 0,
       "relations": [
         {
@@ -43,6 +45,8 @@
       "name": "マッケソン",
       "sub": "医薬品卸",
       "sub_en": "Drug wholesaler",
+      "sub_short": "医薬品卸",
+      "sub_short_en": "Drug wholesaler",
       "row": 0,
       "relations": [
         {
@@ -67,6 +71,8 @@
       "name": "カーディナル・ヘルス",
       "sub": "医薬品卸",
       "sub_en": "Drug wholesaler",
+      "sub_short": "医薬品卸",
+      "sub_short_en": "Drug wholesaler",
       "row": 0,
       "relations": [
         {
@@ -91,6 +97,8 @@
       "name": "バイオコン・バイオロジクス",
       "sub": "バイオシミラー",
       "sub_en": "Biosimilars",
+      "sub_short": "バイオシミラー",
+      "sub_short_en": "Biosimilars",
       "row": 0,
       "relations": [
         {
@@ -115,6 +123,8 @@
       "name": "ファイザー",
       "sub": "分離元の製薬大手",
       "sub_en": "Former parent of Upjohn",
+      "sub_short": "製薬大手",
+      "sub_short_en": "Upjohn ex-parent",
       "row": 0,
       "relations": [
         {
@@ -139,6 +149,8 @@
       "name": "レキシコン・ファーマシューティカルズ",
       "sub": "創薬の提携先",
       "sub_en": "Licensing partner",
+      "sub_short": "創薬の提携先",
+      "sub_short_en": "Licensing",
       "row": 0,
       "relations": [
         {
@@ -163,6 +175,8 @@
       "name": "セラバンス・バイオファーマ",
       "sub": "バイオ医薬",
       "sub_en": "Biopharma",
+      "sub_short": "バイオ医薬",
+      "sub_short_en": "Biopharma",
       "row": 0,
       "relations": [
         {

@@ -22,6 +22,8 @@
       "name": "シリコン・ランチ",
       "sub": "太陽光開発・運営",
       "sub_en": "Solar developer & operator",
+      "sub_short": "太陽光開発",
+      "sub_short_en": "Solar developer",
       "row": 0,
       "relations": [
         {
@@ -46,6 +48,8 @@
       "name": "ネクステラ・エナジー",
       "sub": "電力・再エネ",
       "sub_en": "Power & renewables",
+      "sub_short": "電力・再エネ",
+      "sub_short_en": "Power",
       "row": 0,
       "relations": [
         {
@@ -70,6 +74,8 @@
       "name": "BPソーラー・ホールディング",
       "sub": "太陽光開発",
       "sub_en": "Solar developer",
+      "sub_short": "太陽光開発",
+      "sub_short_en": "Solar developer",
       "row": 0,
       "relations": [
         {
@@ -94,6 +100,8 @@
       "name": "ジンコソーラー",
       "sub": "太陽光パネル",
       "sub_en": "Solar modules",
+      "sub_short": "太陽光パネル",
+      "sub_short_en": "Solar modules",
       "row": 0,
       "relations": [
         {
@@ -118,6 +126,8 @@
       "name": "カナディアン・ソーラー",
       "sub": "太陽光パネル",
       "sub_en": "Solar modules",
+      "sub_short": "太陽光パネル",
+      "sub_short_en": "Solar modules",
       "row": 0,
       "relations": [
         {

@@ -37,6 +37,8 @@
       "name": "NVIDIA",
       "sub": "AI半導体",
       "sub_en": "AI chips",
+      "sub_short": "AI半導体",
+      "sub_short_en": "AI chips",
       "row": 0,
       "relations": [
         {
@@ -73,6 +75,8 @@
       "name": "Marvell",
       "sub": "半導体",
       "sub_en": "Chips",
+      "sub_short": "半導体",
+      "sub_short_en": "Chips",
       "row": 0,
       "relations": [
         {
@@ -98,6 +102,8 @@
       "name": "Intel",
       "sub": "半導体",
       "sub_en": "Chips",
+      "sub_short": "半導体",
+      "sub_short_en": "Chips",
       "row": 0,
       "relations": [
         {
@@ -121,6 +127,8 @@
       "name": "AMD",
       "sub": "半導体",
       "sub_en": "Chips",
+      "sub_short": "半導体",
+      "sub_short_en": "Chips",
       "row": 0,
       "relations": [
         {
@@ -146,6 +154,8 @@
       "name": "Rivian",
       "sub": "EV",
       "sub_en": "EVs",
+      "sub_short": "EV",
+      "sub_short_en": "EVs",
       "row": 0,
       "relations": [
         {
@@ -182,6 +192,8 @@
       "name": "Talen Energy",
       "sub": "電力",
       "sub_en": "Power",
+      "sub_short": "電力",
+      "sub_short_en": "Power",
       "row": 0,
       "relations": [
         {
@@ -207,6 +219,8 @@
       "name": "Vistra",
       "sub": "電力",
       "sub_en": "Power",
+      "sub_short": "電力",
+      "sub_short_en": "Power",
       "row": 0,
       "relations": [
         {
@@ -232,6 +246,8 @@
       "name": "Entergy",
       "sub": "電力",
       "sub_en": "Power",
+      "sub_short": "電力",
+      "sub_short_en": "Power",
       "row": 0,
       "relations": [
         {
@@ -255,6 +271,8 @@
       "name": "Anthropic",
       "sub": "AI",
       "sub_en": "AI",
+      "sub_short": "AI",
+      "sub_short_en": "AI",
       "row": 1,
       "relations": [
         {
@@ -306,6 +324,8 @@
       "name": "OpenAI",
       "sub": "AI",
       "sub_en": "AI",
+      "sub_short": "AI",
+      "sub_short_en": "AI",
       "row": 1,
       "relations": [
         {
@@ -329,6 +349,8 @@
       "name": "Meta Platforms",
       "sub": "SNS・AI",
       "sub_en": "Social & AI",
+      "sub_short": "SNS・AI",
+      "sub_short_en": "Social & AI",
       "row": 1,
       "relations": [
         {
@@ -352,6 +374,8 @@
       "name": "Netflix",
       "sub": "動画配信",
       "sub_en": "Streaming",
+      "sub_short": "動画配信",
+      "sub_short_en": "Streaming",
       "row": 1,
       "relations": [
         {
@@ -375,6 +399,8 @@
       "name": "Palantir",
       "sub": "データ分析",
       "sub_en": "Data analytics",
+      "sub_short": "データ分析",
+      "sub_short_en": "Data analytics",
       "row": 1,
       "relations": [
         {
@@ -398,6 +424,8 @@
       "name": "Dominion Energy",
       "sub": "電力",
       "sub_en": "Power",
+      "sub_short": "電力",
+      "sub_short_en": "Power",
       "row": 2,
       "relations": [
         {
@@ -423,6 +451,8 @@
       "name": "Salesforce",
       "sub": "業務ソフト",
       "sub_en": "Business software",
+      "sub_short": "業務ソフト",
+      "sub_short_en": "Business apps",
       "row": 2,
       "relations": [
         {
@@ -446,6 +476,8 @@
       "name": "Oracle",
       "sub": "クラウド・ソフト",
       "sub_en": "Cloud & software",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud & software",
       "row": 3,
       "relations": [
         {
@@ -469,6 +501,8 @@
       "name": "Snowflake",
       "sub": "データ基盤",
       "sub_en": "Data platform",
+      "sub_short": "データ基盤",
+      "sub_short_en": "Data platform",
       "row": 3,
       "relations": [
         {
@@ -492,6 +526,8 @@
       "name": "MongoDB",
       "sub": "データベース",
       "sub_en": "Database",
+      "sub_short": "データベース",
+      "sub_short_en": "Database",
       "row": 3,
       "relations": [
         {
@@ -515,6 +551,8 @@
       "name": "eBay",
       "sub": "ネット通販",
       "sub_en": "E-commerce",
+      "sub_short": "ネット通販",
+      "sub_short_en": "E-commerce",
       "row": 3,
       "relations": [
         {
@@ -538,6 +576,8 @@
       "name": "Costco",
       "sub": "小売",
       "sub_en": "Retail",
+      "sub_short": "小売",
+      "sub_short_en": "Retail",
       "row": 3,
       "relations": [
         {
@@ -561,6 +601,8 @@
       "name": "Roku",
       "sub": "ストリーミング端末",
       "sub_en": "Streaming devices",
+      "sub_short": "配信端末",
+      "sub_short_en": "Streaming gear",
       "row": 2,
       "relations": [
         {

@@ -33,6 +33,8 @@
       "name": "ナビタス・セミコンダクター",
       "sub": "GaNパワー半導体",
       "sub_en": "GaN power chips",
+      "sub_short": "GaN半導体",
+      "sub_short_en": "GaN power chips",
       "row": 0,
       "relations": [
         {
@@ -70,6 +72,8 @@
       "name": "シーラス・ロジック",
       "sub": "オーディオ半導体",
       "sub_en": "Audio chips",
+      "sub_short": "音響半導体",
+      "sub_short_en": "Audio chips",
       "row": 0,
       "relations": [
         {
@@ -107,6 +111,8 @@
       "name": "STマイクロエレクトロニクス",
       "sub": "半導体",
       "sub_en": "Semiconductors",
+      "sub_short": "半導体",
+      "sub_short_en": "Semiconductors",
       "row": 1,
       "relations": [
         {
@@ -133,6 +139,8 @@
       "name": "onsemi",
       "sub": "パワー半導体",
       "sub_en": "Power chips",
+      "sub_short": "パワー半導体",
+      "sub_short_en": "Power chips",
       "row": 1,
       "relations": [
         {
@@ -155,6 +163,8 @@
       "name": "シノプシス",
       "sub": "設計ソフト",
       "sub_en": "Design software",
+      "sub_short": "設計ソフト",
+      "sub_short_en": "Design software",
       "row": 1,
       "relations": [
         {
@@ -181,6 +191,8 @@
       "name": "AMD",
       "sub": "CPU・GPU",
       "sub_en": "CPUs & GPUs",
+      "sub_short": "CPU・GPU",
+      "sub_short_en": "CPUs & GPUs",
       "row": 1,
       "relations": [
         {
@@ -219,6 +231,8 @@
       "name": "JPモルガン・チェース",
       "sub": "銀行",
       "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
       "row": 1,
       "relations": [
         {
@@ -260,6 +274,8 @@
       "name": "バンク・オブ・アメリカ",
       "sub": "銀行",
       "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
       "row": 1,
       "relations": [
         {
@@ -301,6 +317,8 @@
       "name": "TSMC",
       "sub": "半導体受託製造",
       "sub_en": "Foundry",
+      "sub_short": "半導体受託製造",
+      "sub_short_en": "Foundry",
       "row": 2,
       "relations": [
         {
@@ -324,6 +342,8 @@
       "name": "ユナイテッド・マイクロエレクトロニクス",
       "sub": "半導体受託製造",
       "sub_en": "Foundry",
+      "sub_short": "半導体受託製造",
+      "sub_short_en": "Foundry",
       "row": 2,
       "relations": [
         {
@@ -348,6 +368,8 @@
       "name": "タワーセミコンダクター",
       "sub": "特殊ファウンドリ",
       "sub_en": "Specialty foundry",
+      "sub_short": "半導体受託",
+      "sub_short_en": "Chip foundry",
       "row": 2,
       "relations": [
         {
@@ -385,6 +407,8 @@
       "name": "テキサス・インスツルメンツ",
       "sub": "アナログ半導体",
       "sub_en": "Analog chips",
+      "sub_short": "アナログ半導体",
+      "sub_short_en": "Analog chips",
       "row": 2,
       "relations": [
         {
@@ -409,6 +433,8 @@
       "name": "インテル",
       "sub": "半導体",
       "sub_en": "Semiconductors",
+      "sub_short": "半導体",
+      "sub_short_en": "Semiconductors",
       "row": 2,
       "relations": [
         {
@@ -433,6 +459,8 @@
       "name": "CEVA",
       "sub": "半導体IP",
       "sub_en": "Semiconductor IP",
+      "sub_short": "半導体IP",
+      "sub_short_en": "Semiconductor IP",
       "row": 2,
       "relations": [
         {

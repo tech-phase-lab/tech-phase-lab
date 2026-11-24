@@ -33,6 +33,8 @@
       "name": "Amazon(AWS)",
       "sub": "クラウド",
       "sub_en": "Cloud",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 0,
       "relations": [
         {
@@ -56,6 +58,8 @@
       "name": "Microsoft",
       "sub": "クラウド",
       "sub_en": "Cloud",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 1,
       "relations": [
         {
@@ -81,6 +85,8 @@
       "name": "Oracle",
       "sub": "クラウド",
       "sub_en": "Cloud",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 1,
       "relations": [
         {
@@ -103,6 +109,8 @@
       "name": "NVIDIA",
       "sub": "AI半導体",
       "sub_en": "AI chips",
+      "sub_short": "AI半導体",
+      "sub_short_en": "AI chips",
       "row": 1,
       "relations": [
         {
@@ -126,6 +134,8 @@
       "name": "Snowflake",
       "sub": "データ基盤",
       "sub_en": "Data platform",
+      "sub_short": "データ基盤",
+      "sub_short_en": "Data platform",
       "row": 1,
       "relations": [
         {
@@ -149,6 +159,8 @@
       "name": "Nebius",
       "sub": "AIクラウド",
       "sub_en": "AI cloud",
+      "sub_short": "AIクラウド",
+      "sub_short_en": "AI cloud",
       "row": 1,
       "relations": [
         {
@@ -172,6 +184,8 @@
       "name": "SAP",
       "sub": "業務ソフト",
       "sub_en": "Business software",
+      "sub_short": "業務ソフト",
+      "sub_short_en": "Business apps",
       "row": 1,
       "relations": [
         {
@@ -195,6 +209,8 @@
       "name": "Accenture",
       "sub": "ITコンサル",
       "sub_en": "IT consulting",
+      "sub_short": "ITコンサル",
+      "sub_short_en": "IT consulting",
       "row": 2,
       "relations": [
         {
@@ -218,6 +234,8 @@
       "name": "Boeing",
       "sub": "航空・防衛",
       "sub_en": "Aerospace & defense",
+      "sub_short": "航空・防衛",
+      "sub_short_en": "Aerospace",
       "row": 2,
       "relations": [
         {
@@ -241,6 +259,8 @@
       "name": "L3Harris",
       "sub": "防衛",
       "sub_en": "Defense",
+      "sub_short": "防衛",
+      "sub_short_en": "Defense",
       "row": 2,
       "relations": [
         {
@@ -264,6 +284,8 @@
       "name": "Fujitsu",
       "sub": "ITサービス",
       "sub_en": "IT services",
+      "sub_short": "ITサービス",
+      "sub_short_en": "IT services",
       "row": 2,
       "relations": [
         {
@@ -287,6 +309,8 @@
       "name": "SOMPO Holdings",
       "sub": "保険",
       "sub_en": "Insurance",
+      "sub_short": "保険",
+      "sub_short_en": "Insurance",
       "row": 2,
       "relations": [
         {
@@ -310,6 +334,8 @@
       "name": "Cleveland-Cliffs",
       "sub": "鉄鋼",
       "sub_en": "Steel",
+      "sub_short": "鉄鋼",
+      "sub_short_en": "Steel",
       "row": 2,
       "relations": [
         {
@@ -333,6 +359,8 @@
       "name": "Veritone",
       "sub": "AIソフト",
       "sub_en": "AI software",
+      "sub_short": "AIソフト",
+      "sub_short_en": "AI software",
       "row": 3,
       "relations": [
         {
@@ -356,6 +384,8 @@
       "name": "Alphabet(Google Cloud)",
       "sub": "クラウド",
       "sub_en": "Cloud",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 1,
       "relations": [
         {
@@ -381,6 +411,8 @@
       "name": "Lumen Technologies",
       "sub": "通信",
       "sub_en": "Telecom",
+      "sub_short": "通信",
+      "sub_short_en": "Telecom",
       "row": 2,
       "relations": [
         {
@@ -404,6 +436,8 @@
       "name": "HD Hyundai",
       "sub": "造船・重工",
       "sub_en": "Shipbuilding",
+      "sub_short": "造船・重工",
+      "sub_short_en": "Shipbuilding",
       "row": 2,
       "relations": [
         {
@@ -444,6 +478,8 @@
       "name": "Lear",
       "sub": "自動車部品",
       "sub_en": "Auto parts",
+      "sub_short": "自動車部品",
+      "sub_short_en": "Auto parts",
       "row": 2,
       "relations": [
         {
@@ -467,6 +503,8 @@
       "name": "Cognizant",
       "sub": "ITサービス",
       "sub_en": "IT services",
+      "sub_short": "ITサービス",
+      "sub_short_en": "IT services",
       "row": 2,
       "relations": [
         {
@@ -490,6 +528,8 @@
       "name": "Voyager Technologies",
       "sub": "宇宙",
       "sub_en": "Space",
+      "sub_short": "宇宙",
+      "sub_short_en": "Space",
       "row": 2,
       "relations": [
         {
@@ -515,6 +555,8 @@
       "name": "Archer Aviation",
       "sub": "空飛ぶクルマ",
       "sub_en": "eVTOL aircraft",
+      "sub_short": "空飛ぶクルマ",
+      "sub_short_en": "eVTOL aircraft",
       "row": 2,
       "relations": [
         {
@@ -538,6 +580,8 @@
       "name": "Centrus Energy",
       "sub": "ウラン濃縮",
       "sub_en": "Uranium enrichment",
+      "sub_short": "ウラン濃縮",
+      "sub_short_en": "Enrichment",
       "row": 2,
       "relations": [
         {
@@ -563,6 +607,8 @@
       "name": "Mercury Systems",
       "sub": "防衛エレクトロニクス",
       "sub_en": "Defense electronics",
+      "sub_short": "防衛電子機器",
+      "sub_short_en": "Defense tech",
       "row": 2,
       "relations": [
         {
@@ -586,6 +632,8 @@
       "name": "Red Cat Holdings",
       "sub": "ドローン",
       "sub_en": "Drones",
+      "sub_short": "ドローン",
+      "sub_short_en": "Drones",
       "row": 2,
       "relations": [
         {

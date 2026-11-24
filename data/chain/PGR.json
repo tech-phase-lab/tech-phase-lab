@@ -29,6 +29,8 @@
       "name_en": "LendingTree",
       "sub": "ローン・保険の比較サイト",
       "sub_en": "Loan & insurance marketplace",
+      "sub_short": "比較サイト",
+      "sub_short_en": "Loan comparison",
       "row": 0,
       "relations": [
         {
@@ -53,6 +55,8 @@
       "name_en": "TWFG",
       "sub": "保険代理店",
       "sub_en": "Insurance agency",
+      "sub_short": "保険代理店",
+      "sub_short_en": "Insurance agency",
       "row": 0,
       "relations": [
         {
@@ -77,6 +81,8 @@
       "name_en": "SelectQuote",
       "sub": "保険の販売(オンライン)",
       "sub_en": "Insurance distribution",
+      "sub_short": "保険の販売",
+      "sub_short_en": "Insurance sales",
       "row": 0,
       "relations": [
         {
@@ -101,6 +107,8 @@
       "name_en": "Berkshire Hathaway (GEICO)",
       "sub": "保険・複合企業",
       "sub_en": "Insurance & conglomerate",
+      "sub_short": "保険・複合企業",
+      "sub_short_en": "Insurance",
       "row": 1,
       "relations": [
         {
@@ -125,6 +133,8 @@
       "name_en": "Root",
       "sub": "自動車保険(テレマティクス)",
       "sub_en": "Auto insurance (telematics)",
+      "sub_short": "自動車保険",
+      "sub_short_en": "Auto insurance",
       "row": 1,
       "relations": [
         {
@@ -149,6 +159,8 @@
       "name_en": "Lemonade",
       "sub": "保険(AI)",
       "sub_en": "Insurance (AI-driven)",
+      "sub_short": "保険",
+      "sub_short_en": "Insurance",
       "row": 1,
       "relations": [
         {
@@ -173,6 +185,8 @@
       "name_en": "Safety Insurance",
       "sub": "自動車保険(マサチューセッツ)",
       "sub_en": "Auto insurance (Massachusetts)",
+      "sub_short": "自動車保険",
+      "sub_short_en": "Auto insurance",
       "row": 1,
       "relations": [
         {
@@ -197,6 +211,8 @@
       "name_en": "Horace Mann",
       "sub": "教職員向け保険",
       "sub_en": "Insurance for educators",
+      "sub_short": "教職員向け保険",
+      "sub_short_en": "Educator cover",
       "row": 1,
       "relations": [
         {

@@ -33,6 +33,8 @@
       "name_en": "Rio Tinto",
       "sub": "資源",
       "sub_en": "Mining",
+      "sub_short": "資源",
+      "sub_short_en": "Mining",
       "row": 0,
       "relations": [
         {
@@ -70,6 +72,8 @@
       "name_en": "South32",
       "sub": "資源(豪)",
       "sub_en": "Mining (Australia)",
+      "sub_short": "資源",
+      "sub_short_en": "Mining",
       "row": 0,
       "relations": [
         {
@@ -94,6 +98,8 @@
       "name_en": "Ma'aden",
       "sub": "資源(サウジ)",
       "sub_en": "Mining (Saudi Arabia)",
+      "sub_short": "資源",
+      "sub_short_en": "Mining",
       "row": 0,
       "relations": [
         {
@@ -118,6 +124,8 @@
       "name_en": "Trento Equity Holdings",
       "sub": "投資会社(スペイン)",
       "sub_en": "Investor (Spain)",
+      "sub_short": "投資会社",
+      "sub_short_en": "Investor",
       "row": 0,
       "relations": [
         {
@@ -142,6 +150,8 @@
       "name_en": "Landsvirkjun",
       "sub": "電力(アイスランド)",
       "sub_en": "Power (Iceland)",
+      "sub_short": "電力",
+      "sub_short_en": "Power",
       "row": 0,
       "relations": [
         {
@@ -166,6 +176,8 @@
       "name_en": "Alumina Limited",
       "sub": "AWAC合弁の相手(豪)",
       "sub_en": "AWAC partner (Australia)",
+      "sub_short": "合弁相手",
+      "sub_short_en": "AWAC partner",
       "row": 1,
       "relations": [
         {
@@ -190,6 +202,8 @@
       "name_en": "Howmet Aerospace",
       "sub": "航空機部品",
       "sub_en": "Aerospace components",
+      "sub_short": "航空機部品",
+      "sub_short_en": "Aero parts",
       "row": 1,
       "relations": [
         {
@@ -214,6 +228,8 @@
       "name_en": "Kaiser Aluminum",
       "sub": "アルミ圧延",
       "sub_en": "Aluminum rolling",
+      "sub_short": "アルミ圧延",
+      "sub_short_en": "Aluminum rolling",
       "row": 1,
       "relations": [
         {
@@ -238,6 +254,8 @@
       "name_en": "Bitdeer Technologies",
       "sub": "ビットコイン採掘",
       "sub_en": "Bitcoin mining",
+      "sub_short": "BTC採掘",
+      "sub_short_en": "Bitcoin mining",
       "row": 1,
       "relations": [
         {
@@ -262,6 +280,8 @@
       "name_en": "Century Aluminum",
       "sub": "アルミ製錬",
       "sub_en": "Aluminum smelting",
+      "sub_short": "アルミ製錬",
+      "sub_short_en": "Aluminum",
       "row": 2,
       "relations": [
         {
@@ -286,6 +306,8 @@
       "name_en": "Norsk Hydro",
       "sub": "アルミ(ノルウェー)",
       "sub_en": "Aluminum (Norway)",
+      "sub_short": "アルミ",
+      "sub_short_en": "Aluminum",
       "row": 2,
       "relations": [
         {

@@ -29,6 +29,8 @@
       "name_en": "Franco-Nevada",
       "sub": "ロイヤルティ",
       "sub_en": "Royalties",
+      "sub_short": "ロイヤルティ",
+      "sub_short_en": "Royalties",
       "row": 0,
       "relations": [
         {
@@ -53,6 +55,8 @@
       "name_en": "Royal Gold (formerly Sandstorm)",
       "sub": "ロイヤルティ",
       "sub_en": "Royalties",
+      "sub_short": "ロイヤルティ",
+      "sub_short_en": "Royalties",
       "row": 0,
       "relations": [
         {
@@ -77,6 +81,8 @@
       "name_en": "Contango ORE",
       "sub": "金鉱山(アラスカ)",
       "sub_en": "Gold mining (Alaska)",
+      "sub_short": "金鉱山",
+      "sub_short_en": "Gold mining",
       "row": 1,
       "relations": [
         {
@@ -101,6 +107,8 @@
       "name_en": "Great Bear Resources",
       "sub": "金開発(カナダ)",
       "sub_en": "Gold development (Canada)",
+      "sub_short": "金開発",
+      "sub_short_en": "Gold development",
       "row": 1,
       "relations": [
         {
@@ -125,6 +133,8 @@
       "name_en": "Red Back Mining",
       "sub": "金鉱山",
       "sub_en": "Gold mining",
+      "sub_short": "金鉱山",
+      "sub_short_en": "Gold mining",
       "row": 1,
       "relations": [
         {
@@ -149,6 +159,8 @@
       "name_en": "Asante Gold",
       "sub": "金鉱山(ガーナ)",
       "sub_en": "Gold mining (Ghana)",
+      "sub_short": "金鉱山",
+      "sub_short_en": "Gold mining",
       "row": 2,
       "relations": [
         {
@@ -173,6 +185,8 @@
       "name_en": "Gold Royalty",
       "sub": "ロイヤルティ",
       "sub_en": "Royalties",
+      "sub_short": "ロイヤルティ",
+      "sub_short_en": "Royalties",
       "row": 0,
       "relations": [
         {
@@ -197,6 +211,8 @@
       "name_en": "Integra Resources",
       "sub": "金銀開発",
       "sub_en": "Gold & silver development",
+      "sub_short": "金銀開発",
+      "sub_short_en": "Gold mining",
       "row": 2,
       "relations": [
         {
@@ -221,6 +237,8 @@
       "name_en": "Caledonia Mining",
       "sub": "金鉱山(ジンバブエ)",
       "sub_en": "Gold mining (Zimbabwe)",
+      "sub_short": "金鉱山",
+      "sub_short_en": "Gold mining",
       "row": 2,
       "relations": [
         {

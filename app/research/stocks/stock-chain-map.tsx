@@ -127,7 +127,7 @@ export function StockChainMap({ data, lang, sample = false }: { data: ChainMapDa
     return <button type="button" key={company.id} ref={element => { chips.current[company.id] = element; }} className={`${styles.chip} ${related(company.id) ? styles.on : ""}`}
       data-tone={kinds[0]} onClick={() => select(company.id)} aria-pressed={sel === company.id}>
       <span className={styles.dots} aria-hidden="true">{kinds.map(kind => <i key={kind} data-tone={kind} />)}</span>
-      <b>{company.ticker}</b><small>{ja ? company.sub : company.sub_en}</small>
+      <b>{company.ticker}</b><small title={ja ? company.sub : company.sub_en}>{ja ? company.sub_short ?? company.sub : company.sub_short_en ?? company.sub_en}</small>
     </button>;
   };
   // A crowded row shows its main companies and a "＋" chip for the rest, so the map stays readable (owner, Oct 19).
@@ -157,7 +157,7 @@ export function StockChainMap({ data, lang, sample = false }: { data: ChainMapDa
         <div className={styles.legend}>{([...CHAIN_KINDS.filter(kind => data.companies.some(company => chainKinds(company).includes(kind))), ...(data.far.length > 0 ? ["far"] : [])] as ChainTone[]).map(tone => <span key={tone} data-tone={tone}><i />{chainText(tone, "legend", lang)}</span>)}</div>
       </div>
       <div className={styles.mapWrap}>
-      <div className={`${styles.map} ${sel ? styles.hasSel : ""}`} ref={map}>
+      <div className={`${styles.map} ${sel ? styles.hasSel : ""}`} data-lang={lang} ref={map}>
         <svg viewBox={`0 0 ${box.width} ${box.height}`} aria-hidden="true">
           {lines.map((line, index) => <path key={index} className={`${styles.p} ${line.on ? styles.lineOn : ""}`} data-tone={line.tone} d={line.d} />)}
         </svg>

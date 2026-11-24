@@ -28,6 +28,8 @@
       "name": "アンシュッツ・エンターテインメント・グループ",
       "sub": "ライブ興行の競合",
       "sub_en": "Live promotion competitor",
+      "sub_short": "ライブ興行",
+      "sub_short_en": "Live events",
       "row": 1,
       "relations": [
         {
@@ -52,6 +54,8 @@
       "name": "CTSエヴェンティム",
       "sub": "興行・チケットの競合",
       "sub_en": "Promotion & ticketing competitor",
+      "sub_short": "興行",
+      "sub_short_en": "Live events",
       "row": 1,
       "relations": [
         {
@@ -76,6 +80,8 @@
       "name": "マディソン・スクエア・ガーデン・エンターテインメント",
       "sub": "会場運営の競合",
       "sub_en": "Venue management competitor",
+      "sub_short": "会場運営の競合",
+      "sub_short_en": "Venues",
       "row": 1,
       "relations": [
         {
@@ -100,6 +106,8 @@
       "name": "レジェンズ・グローバル",
       "sub": "会場運営の競合",
       "sub_en": "Venue management competitor",
+      "sub_short": "会場運営の競合",
+      "sub_short_en": "Venues",
       "row": 1,
       "relations": [
         {
@@ -124,6 +132,8 @@
       "name": "スタブハブ",
       "sub": "二次チケットの競合",
       "sub_en": "Secondary ticketing competitor",
+      "sub_short": "チケット転売",
+      "sub_short_en": "Ticket resale",
       "row": 1,
       "relations": [
         {
@@ -148,6 +158,8 @@
       "name": "ヴィヴィッド・シーツ",
       "sub": "二次チケットの競合",
       "sub_en": "Secondary ticketing competitor",
+      "sub_short": "チケット転売",
+      "sub_short_en": "Ticket resale",
       "row": 1,
       "relations": [
         {
@@ -172,6 +184,8 @@
       "name": "シートゲーク",
       "sub": "チケットの競合",
       "sub_en": "Ticketing competitor",
+      "sub_short": "チケットの競合",
+      "sub_short_en": "Ticketing",
       "row": 1,
       "relations": [
         {
@@ -196,6 +210,8 @@
       "name": "イベントブライト",
       "sub": "チケットの競合",
       "sub_en": "Ticketing competitor",
+      "sub_short": "チケットの競合",
+      "sub_short_en": "Ticketing",
       "row": 1,
       "relations": [
         {
@@ -220,6 +236,8 @@
       "name": "シリウスXM",
       "sub": "広告の出稿先",
       "sub_en": "Advertising vendor",
+      "sub_short": "広告の出稿先",
+      "sub_short_en": "Ad vendor",
       "row": 0,
       "relations": [
         {

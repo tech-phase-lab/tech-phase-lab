@@ -30,6 +30,8 @@
       "name": "スリーエム",
       "sub": "素材・工業",
       "sub_en": "Materials & industrial",
+      "sub_short": "素材・工業",
+      "sub_short_en": "Materials",
       "row": 0,
       "relations": [
         {
@@ -54,6 +56,8 @@
       "name": "スミス・アンド・ネフュー",
       "sub": "医療機器",
       "sub_en": "Medical devices",
+      "sub_short": "医療機器",
+      "sub_short_en": "Medical devices",
       "row": 1,
       "relations": [
         {
@@ -78,6 +82,8 @@
       "name": "コロプラスト",
       "sub": "医療機器",
       "sub_en": "Medical devices",
+      "sub_short": "医療機器",
+      "sub_short_en": "Medical devices",
       "row": 1,
       "relations": [
         {
@@ -102,6 +108,8 @@
       "name": "コンバテック",
       "sub": "医療機器",
       "sub_en": "Medical devices",
+      "sub_short": "医療機器",
+      "sub_short_en": "Medical devices",
       "row": 1,
       "relations": [
         {
@@ -126,6 +134,8 @@
       "name": "ベクトン・ディッキンソン",
       "sub": "医療機器",
       "sub_en": "Medical devices",
+      "sub_short": "医療機器",
+      "sub_short_en": "Medical devices",
       "row": 1,
       "relations": [
         {
@@ -150,6 +160,8 @@
       "name": "カーディナル・ヘルス",
       "sub": "医療流通",
       "sub_en": "Medical distribution",
+      "sub_short": "医療流通",
+      "sub_short_en": "Medical supply",
       "row": 1,
       "relations": [
         {
@@ -174,6 +186,8 @@
       "name": "ステリス",
       "sub": "医療機器",
       "sub_en": "Medical devices",
+      "sub_short": "医療機器",
+      "sub_short_en": "Medical devices",
       "row": 1,
       "relations": [
         {
@@ -198,6 +212,8 @@
       "name": "デンツプライシロナ",
       "sub": "歯科",
       "sub_en": "Dental",
+      "sub_short": "歯科",
+      "sub_short_en": "Dental",
       "row": 1,
       "relations": [
         {
@@ -222,6 +238,8 @@
       "name": "エンビスタ",
       "sub": "歯科",
       "sub_en": "Dental",
+      "sub_short": "歯科",
+      "sub_short_en": "Dental",
       "row": 1,
       "relations": [
         {
@@ -246,6 +264,8 @@
       "name": "オプタム(ユナイテッドヘルス)",
       "sub": "医療IT",
       "sub_en": "Healthcare IT",
+      "sub_short": "医療IT",
+      "sub_short_en": "Healthcare IT",
       "row": 1,
       "relations": [
         {
@@ -270,6 +290,8 @@
       "name": "オラクル(サーナー)",
       "sub": "医療IT",
       "sub_en": "Healthcare IT",
+      "sub_short": "医療IT",
+      "sub_short_en": "Healthcare IT",
       "row": 1,
       "relations": [
         {

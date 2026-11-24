@@ -21,6 +21,8 @@
       "name": "シェブロン",
       "sub": "石油・エネルギー",
       "sub_en": "Oil & energy",
+      "sub_short": "石油",
+      "sub_short_en": "Oil & energy",
       "row": 0,
       "relations": [
         {
@@ -45,6 +47,8 @@
       "name": "レプソル",
       "sub": "エネルギー",
       "sub_en": "Energy",
+      "sub_short": "エネルギー",
+      "sub_short_en": "Energy",
       "row": 0,
       "relations": [
         {
@@ -69,6 +73,8 @@
       "name": "IOIコーポレーション",
       "sub": "パーム油・油脂",
       "sub_en": "Palm oil & fats",
+      "sub_short": "パーム油・油脂",
+      "sub_short_en": "Palm oil & fats",
       "row": 0,
       "relations": [
         {
@@ -93,6 +99,8 @@
       "name": "インターナショナル・フレーバーズ・アンド・フレグランス",
       "sub": "香料・素材",
       "sub_en": "Flavors & ingredients",
+      "sub_short": "香料・素材",
+      "sub_short_en": "Flavors",
       "row": 0,
       "relations": [
         {
@@ -117,6 +125,8 @@
       "name": "アーチャー・ダニエルズ・ミッドランド",
       "sub": "穀物・油糧種子",
       "sub_en": "Grain & oilseeds",
+      "sub_short": "穀物・油糧種子",
+      "sub_short_en": "Grain & oilseeds",
       "row": 0,
       "relations": [
         {
@@ -141,6 +151,8 @@
       "name": "カーギル",
       "sub": "穀物・食品",
       "sub_en": "Grain & food",
+      "sub_short": "穀物・食品",
+      "sub_short_en": "Grain & food",
       "row": 0,
       "relations": [
         {
@@ -165,6 +177,8 @@
       "name": "ルイ・ドレフュス",
       "sub": "穀物・商社",
       "sub_en": "Grain trader",
+      "sub_short": "穀物・商社",
+      "sub_short_en": "Grain trader",
       "row": 0,
       "relations": [
         {
@@ -189,6 +203,8 @@
       "name": "ウィルマー",
       "sub": "アグリビジネス",
       "sub_en": "Agribusiness",
+      "sub_short": "アグリビジネス",
+      "sub_short_en": "Agribusiness",
       "row": 0,
       "relations": [
         {
@@ -213,6 +229,8 @@
       "name": "コフコ・インターナショナル",
       "sub": "穀物商社",
       "sub_en": "Grain trader",
+      "sub_short": "穀物商社",
+      "sub_short_en": "Grain trader",
       "row": 0,
       "relations": [
         {
@@ -237,6 +255,8 @@
       "name": "オラム・グループ",
       "sub": "農産物商社",
       "sub_en": "Agri trader",
+      "sub_short": "農産物商社",
+      "sub_short_en": "Agri trader",
       "row": 0,
       "relations": [
         {
@@ -261,6 +281,8 @@
       "name": "AAKエービー",
       "sub": "特殊油脂",
       "sub_en": "Specialty oils",
+      "sub_short": "特殊油脂",
+      "sub_short_en": "Specialty oils",
       "row": 0,
       "relations": [
         {
@@ -285,6 +307,8 @@
       "name": "不二製油",
       "sub": "油脂・大豆素材",
       "sub_en": "Oils & soy materials",
+      "sub_short": "油脂・大豆素材",
+      "sub_short_en": "Oils",
       "row": 0,
       "relations": [
         {

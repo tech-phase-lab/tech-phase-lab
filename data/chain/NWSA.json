@@ -27,6 +27,8 @@
       "name": "アマゾン",
       "sub": "クラウド・書籍販売先",
       "sub_en": "Cloud supplier & book customer",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud supplier",
       "row": 0,
       "relations": [
         {
@@ -64,6 +66,8 @@
       "name": "グーグル",
       "sub": "業務基盤の供給元",
       "sub_en": "Workspace provider",
+      "sub_short": "業務基盤",
+      "sub_short_en": "Coworking",
       "row": 0,
       "relations": [
         {
@@ -88,6 +92,8 @@
       "name": "アップル",
       "sub": "書籍の販売先",
       "sub_en": "Book customer",
+      "sub_short": "書籍の販売先",
+      "sub_short_en": "Book customer",
       "row": 1,
       "relations": [
         {
@@ -112,6 +118,8 @@
       "name": "バーンズ・アンド・ノーブル",
       "sub": "書籍の販売先",
       "sub_en": "Book customer",
+      "sub_short": "書籍の販売先",
+      "sub_short_en": "Book customer",
       "row": 1,
       "relations": [
         {
@@ -136,6 +144,8 @@
       "name": "テスコ",
       "sub": "書籍の販売先",
       "sub_en": "Book customer",
+      "sub_short": "書籍の販売先",
+      "sub_short_en": "Book customer",
       "row": 1,
       "relations": [
         {
@@ -160,6 +170,8 @@
       "name": "DMGメディア",
       "sub": "印刷の合弁相手",
       "sub_en": "Printing JV partner",
+      "sub_short": "印刷の合弁相手",
+      "sub_short_en": "Printing JV",
       "row": 1,
       "relations": [
         {
@@ -184,6 +196,8 @@
       "name": "S&Pグローバル",
       "sub": "情報サービスの競合",
       "sub_en": "Information competitor",
+      "sub_short": "情報サービス",
+      "sub_short_en": "Information",
       "row": 1,
       "relations": [
         {
@@ -208,6 +222,8 @@
       "name": "レレックス",
       "sub": "情報サービスの競合",
       "sub_en": "Information competitor",
+      "sub_short": "情報サービス",
+      "sub_short_en": "Information",
       "row": 1,
       "relations": [
         {
@@ -232,6 +248,8 @@
       "name": "ペンギン・ランダムハウス",
       "sub": "出版の競合",
       "sub_en": "Publishing competitor",
+      "sub_short": "出版の競合",
+      "sub_short_en": "Publishing",
       "row": 1,
       "relations": [
         {
@@ -256,6 +274,8 @@
       "name": "サイモン&シュスター",
       "sub": "出版の競合",
       "sub_en": "Publishing competitor",
+      "sub_short": "出版の競合",
+      "sub_short_en": "Publishing",
       "row": 1,
       "relations": [
         {

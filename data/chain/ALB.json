@@ -37,6 +37,8 @@
       "name_en": "Mineral Resources",
       "sub": "鉱業(豪)",
       "sub_en": "Mining (Australia)",
+      "sub_short": "鉱業",
+      "sub_short_en": "Mining",
       "row": 0,
       "relations": [
         {
@@ -61,6 +63,8 @@
       "name_en": "CORFO",
       "sub": "チリ政府機関",
       "sub_en": "Chilean government agency",
+      "sub_short": "チリ政府機関",
+      "sub_short_en": "Chile agency",
       "row": 0,
       "relations": [
         {
@@ -85,6 +89,8 @@
       "name_en": "SQM",
       "sub": "リチウム・化学(チリ)",
       "sub_en": "Lithium & chemicals (Chile)",
+      "sub_short": "リチウム・化学",
+      "sub_short_en": "Lithium",
       "row": 1,
       "relations": [
         {
@@ -109,6 +115,8 @@
       "name_en": "Tianqi Lithium",
       "sub": "リチウム(中国)",
       "sub_en": "Lithium (China)",
+      "sub_short": "リチウム",
+      "sub_short_en": "Lithium",
       "row": 1,
       "relations": [
         {
@@ -133,6 +141,8 @@
       "name_en": "Ganfeng Lithium",
       "sub": "リチウム(中国)",
       "sub_en": "Lithium (China)",
+      "sub_short": "リチウム",
+      "sub_short_en": "Lithium",
       "row": 1,
       "relations": [
         {
@@ -157,6 +167,8 @@
       "name_en": "Rio Tinto",
       "sub": "資源大手",
       "sub_en": "Diversified mining",
+      "sub_short": "資源大手",
+      "sub_short_en": "Mining",
       "row": 1,
       "relations": [
         {
@@ -181,6 +193,8 @@
       "name_en": "Pilbara Minerals",
       "sub": "リチウム鉱山(豪)",
       "sub_en": "Lithium mining (Australia)",
+      "sub_short": "リチウム鉱山",
+      "sub_short_en": "Lithium mining",
       "row": 1,
       "relations": [
         {
@@ -205,6 +219,8 @@
       "name_en": "Lanxess",
       "sub": "特殊化学(独)",
       "sub_en": "Specialty chemicals (Germany)",
+      "sub_short": "特殊化学",
+      "sub_short_en": "Chemicals",
       "row": 1,
       "relations": [
         {
@@ -229,6 +245,8 @@
       "name_en": "ICL Group",
       "sub": "特殊化学(イスラエル)",
       "sub_en": "Specialty chemicals (Israel)",
+      "sub_short": "特殊化学",
+      "sub_short_en": "Chemicals",
       "row": 1,
       "relations": [
         {
@@ -266,6 +284,8 @@
       "name_en": "Arcadium Lithium",
       "sub": "リチウム",
       "sub_en": "Lithium",
+      "sub_short": "リチウム",
+      "sub_short_en": "Lithium",
       "row": 2,
       "relations": [
         {
@@ -290,6 +310,8 @@
       "name_en": "Ecovyst",
       "sub": "触媒・特殊化学",
       "sub_en": "Catalysts & specialty chemicals",
+      "sub_short": "触媒・特殊化学",
+      "sub_short_en": "Catalysts",
       "row": 2,
       "relations": [
         {
@@ -314,6 +336,8 @@
       "name_en": "Elevra Lithium",
       "sub": "リチウム鉱山",
       "sub_en": "Lithium mining",
+      "sub_short": "リチウム鉱山",
+      "sub_short_en": "Lithium mining",
       "row": 2,
       "relations": [
         {
@@ -338,6 +362,8 @@
       "name_en": "SIGA Technologies",
       "sub": "医薬品",
       "sub_en": "Pharma",
+      "sub_short": "医薬品",
+      "sub_short_en": "Pharma",
       "row": 3,
       "relations": [
         {
@@ -362,6 +388,8 @@
       "name_en": "NewMarket",
       "sub": "燃料添加剤",
       "sub_en": "Fuel additives",
+      "sub_short": "燃料添加剤",
+      "sub_short_en": "Fuel additives",
       "row": 3,
       "relations": [
         {

@@ -33,6 +33,8 @@
       "name_en": "Verallia",
       "sub": "ガラス瓶(仏)",
       "sub_en": "Glass containers (France)",
+      "sub_short": "ガラス瓶",
+      "sub_short_en": "Glass containers",
       "row": 0,
       "relations": [
         {
@@ -57,6 +59,8 @@
       "name_en": "Vidrala",
       "sub": "ガラス瓶(西)",
       "sub_en": "Glass containers (Spain)",
+      "sub_short": "ガラス瓶",
+      "sub_short_en": "Glass containers",
       "row": 0,
       "relations": [
         {
@@ -81,6 +85,8 @@
       "name_en": "Orora",
       "sub": "包装(豪)",
       "sub_en": "Packaging (Australia)",
+      "sub_short": "包装",
+      "sub_short_en": "Packaging",
       "row": 0,
       "relations": [
         {
@@ -105,6 +111,8 @@
       "name_en": "Anheuser-Busch InBev",
       "sub": "ビール",
       "sub_en": "Beer",
+      "sub_short": "ビール",
+      "sub_short_en": "Beer",
       "row": 1,
       "relations": [
         {
@@ -129,6 +137,8 @@
       "name_en": "Diageo",
       "sub": "酒類(英)",
       "sub_en": "Spirits (UK)",
+      "sub_short": "酒類",
+      "sub_short_en": "Spirits",
       "row": 1,
       "relations": [
         {
@@ -153,6 +163,8 @@
       "name_en": "Heineken",
       "sub": "ビール(蘭)",
       "sub_en": "Beer (Netherlands)",
+      "sub_short": "ビール",
+      "sub_short_en": "Beer",
       "row": 1,
       "relations": [
         {
@@ -177,6 +189,8 @@
       "name_en": "Molson Coors",
       "sub": "ビール",
       "sub_en": "Beer",
+      "sub_short": "ビール",
+      "sub_short_en": "Beer",
       "row": 1,
       "relations": [
         {
@@ -201,6 +215,8 @@
       "name_en": "Coca-Cola",
       "sub": "飲料",
       "sub_en": "Beverages",
+      "sub_short": "飲料",
+      "sub_short_en": "Beverages",
       "row": 1,
       "relations": [
         {
@@ -225,6 +241,8 @@
       "name_en": "Brown-Forman",
       "sub": "酒類",
       "sub_en": "Spirits",
+      "sub_short": "酒類",
+      "sub_short_en": "Spirits",
       "row": 1,
       "relations": [
         {
@@ -249,6 +267,8 @@
       "name_en": "Pernod Ricard",
       "sub": "酒類(仏)",
       "sub_en": "Spirits (France)",
+      "sub_short": "酒類",
+      "sub_short_en": "Spirits",
       "row": 1,
       "relations": [
         {
@@ -273,6 +293,8 @@
       "name_en": "Ardagh Group",
       "sub": "ガラス瓶・缶(非上場)",
       "sub_en": "Glass & metal packaging (private)",
+      "sub_short": "ガラス瓶・缶",
+      "sub_short_en": "Glass packaging",
       "row": 2,
       "relations": [
         {
@@ -297,6 +319,8 @@
       "name_en": "Anchor Glass Container",
       "sub": "ガラス瓶(非上場)",
       "sub_en": "Glass containers (private)",
+      "sub_short": "ガラス瓶",
+      "sub_short_en": "Glass containers",
       "row": 2,
       "relations": [
         {
@@ -321,6 +345,8 @@
       "name_en": "Crown Holdings",
       "sub": "金属缶・ガラス",
       "sub_en": "Metal & glass packaging",
+      "sub_short": "金属缶・ガラス",
+      "sub_short_en": "Metal packaging",
       "row": 2,
       "relations": [
         {

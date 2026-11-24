@@ -38,6 +38,8 @@
       "name_en": "McKesson",
       "sub": "医薬品卸",
       "sub_en": "Pharma wholesaler",
+      "sub_short": "医薬品卸",
+      "sub_short_en": "Drug wholesale",
       "row": 1,
       "relations": [
         {
@@ -62,6 +64,8 @@
       "name_en": "Cencora",
       "sub": "医薬品卸",
       "sub_en": "Pharma wholesaler",
+      "sub_short": "医薬品卸",
+      "sub_short_en": "Drug wholesale",
       "row": 1,
       "relations": [
         {
@@ -86,6 +90,8 @@
       "name_en": "Cardinal Health",
       "sub": "医薬品卸",
       "sub_en": "Pharma wholesaler",
+      "sub_short": "医薬品卸",
+      "sub_short_en": "Drug wholesale",
       "row": 1,
       "relations": [
         {
@@ -110,6 +116,8 @@
       "name_en": "AstraZeneca",
       "sub": "医薬品",
       "sub_en": "Pharma",
+      "sub_short": "医薬品",
+      "sub_short_en": "Pharma",
       "row": 2,
       "relations": [
         {
@@ -134,6 +142,8 @@
       "name_en": "UCB",
       "sub": "医薬品",
       "sub_en": "Pharma",
+      "sub_short": "医薬品",
+      "sub_short_en": "Pharma",
       "row": 2,
       "relations": [
         {
@@ -158,6 +168,8 @@
       "name_en": "BeOne Medicines",
       "sub": "がん治療薬(中国)",
       "sub_en": "Oncology (China)",
+      "sub_short": "がん治療薬",
+      "sub_short_en": "Oncology",
       "row": 2,
       "relations": [
         {
@@ -195,6 +207,8 @@
       "name_en": "Kyowa Kirin",
       "sub": "医薬品",
       "sub_en": "Pharma",
+      "sub_short": "医薬品",
+      "sub_short_en": "Pharma",
       "row": 2,
       "relations": [
         {
@@ -219,6 +233,8 @@
       "name_en": "Takeda",
       "sub": "医薬品",
       "sub_en": "Pharma",
+      "sub_short": "医薬品",
+      "sub_short_en": "Pharma",
       "row": 2,
       "relations": [
         {
@@ -243,6 +259,8 @@
       "name_en": "Astellas Pharma",
       "sub": "医薬品",
       "sub_en": "Pharma",
+      "sub_short": "医薬品",
+      "sub_short_en": "Pharma",
       "row": 2,
       "relations": [
         {
@@ -267,6 +285,8 @@
       "name_en": "AbbVie",
       "sub": "医薬品",
       "sub_en": "Pharma",
+      "sub_short": "医薬品",
+      "sub_short_en": "Pharma",
       "row": 3,
       "relations": [
         {
@@ -291,6 +311,8 @@
       "name_en": "Eli Lilly",
       "sub": "医薬品",
       "sub_en": "Pharma",
+      "sub_short": "医薬品",
+      "sub_short_en": "Pharma",
       "row": 3,
       "relations": [
         {
@@ -315,6 +337,8 @@
       "name_en": "Novartis",
       "sub": "医薬品",
       "sub_en": "Pharma",
+      "sub_short": "医薬品",
+      "sub_short_en": "Pharma",
       "row": 3,
       "relations": [
         {
@@ -339,6 +363,8 @@
       "name_en": "Regeneron",
       "sub": "バイオ医薬品",
       "sub_en": "Biopharma",
+      "sub_short": "バイオ医薬品",
+      "sub_short_en": "Biopharma",
       "row": 3,
       "relations": [
         {
@@ -363,6 +389,8 @@
       "name_en": "Pfizer",
       "sub": "医薬品",
       "sub_en": "Pharma",
+      "sub_short": "医薬品",
+      "sub_short_en": "Pharma",
       "row": 3,
       "relations": [
         {
@@ -387,6 +415,8 @@
       "name_en": "Bristol Myers Squibb",
       "sub": "医薬品",
       "sub_en": "Pharma",
+      "sub_short": "医薬品",
+      "sub_short_en": "Pharma",
       "row": 3,
       "relations": [
         {
@@ -411,6 +441,8 @@
       "name_en": "Johnson & Johnson",
       "sub": "医薬品",
       "sub_en": "Pharma",
+      "sub_short": "医薬品",
+      "sub_short_en": "Pharma",
       "row": 3,
       "relations": [
         {
@@ -434,6 +466,8 @@
       "name": "サイトエックス・セラピューティクス",
       "sub": "がん治療薬",
       "sub_en": "Oncology",
+      "sub_short": "がん治療薬",
+      "sub_short_en": "Oncology",
       "row": 2,
       "relations": [
         {

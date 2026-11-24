@@ -29,6 +29,8 @@
       "name_en": "Lifetime Brands",
       "sub": "キッチン用品",
       "sub_en": "Kitchenware",
+      "sub_short": "キッチン用品",
+      "sub_short_en": "Kitchenware",
       "row": 0,
       "relations": [
         {
@@ -53,6 +55,8 @@
       "name_en": "Dormify",
       "sub": "寮・小部屋向けインテリア",
       "sub_en": "Dorm & small-space decor",
+      "sub_short": "インテリア",
+      "sub_short_en": "Dorm decor",
       "row": 0,
       "relations": [
         {
@@ -77,6 +81,8 @@
       "name_en": "JLL Income Property Trust",
       "sub": "不動産投資",
       "sub_en": "Real estate investment",
+      "sub_short": "不動産投資",
+      "sub_short_en": "RE investing",
       "row": 0,
       "relations": [
         {
@@ -101,6 +107,8 @@
       "name_en": "Wayfair",
       "sub": "家具のネット通販",
       "sub_en": "Online furniture",
+      "sub_short": "家具通販",
+      "sub_short_en": "Online furniture",
       "row": 1,
       "relations": [
         {
@@ -125,6 +133,8 @@
       "name_en": "Arhaus",
       "sub": "高級家具",
       "sub_en": "Premium furniture",
+      "sub_short": "高級家具",
+      "sub_short_en": "Furniture",
       "row": 1,
       "relations": [
         {
@@ -149,6 +159,8 @@
       "name_en": "MillerKnoll",
       "sub": "家具",
       "sub_en": "Furniture",
+      "sub_short": "家具",
+      "sub_short_en": "Furniture",
       "row": 1,
       "relations": [
         {
@@ -173,6 +185,8 @@
       "name_en": "Kirkland's",
       "sub": "インテリア雑貨",
       "sub_en": "Home decor",
+      "sub_short": "インテリア雑貨",
+      "sub_short_en": "Home decor",
       "row": 1,
       "relations": [
         {

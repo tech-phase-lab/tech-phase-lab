@@ -33,6 +33,8 @@
       "name": "オーソ・クリニカル・ダイアグノスティックス",
       "sub": "検査スライド供給",
       "sub_en": "Chemistry slide supplier",
+      "sub_short": "検査スライド",
+      "sub_short_en": "Lab slides",
       "row": 0,
       "relations": [
         {
@@ -57,6 +59,8 @@
       "name": "サーモフィッシャーサイエンティフィック",
       "sub": "検査機器・試薬",
       "sub_en": "Lab instruments",
+      "sub_short": "検査機器・試薬",
+      "sub_short_en": "Lab instruments",
       "row": 0,
       "relations": [
         {
@@ -94,6 +98,8 @@
       "name": "マース",
       "sub": "動物病院・検査",
       "sub_en": "Vet diagnostics",
+      "sub_short": "動物病院・検査",
+      "sub_short_en": "Vet diagnostics",
       "row": 2,
       "relations": [
         {
@@ -118,6 +124,8 @@
       "name": "ゾエティス",
       "sub": "動物用医薬品",
       "sub_en": "Animal health",
+      "sub_short": "動物用医薬品",
+      "sub_short_en": "Animal health",
       "row": 2,
       "relations": [
         {
@@ -142,6 +150,8 @@
       "name": "コベトラス",
       "sub": "動物医療ソフト",
       "sub_en": "Vet software",
+      "sub_short": "動物医療ソフト",
+      "sub_short_en": "Vet software",
       "row": 2,
       "relations": [
         {
@@ -166,6 +176,8 @@
       "name": "ネオジェン",
       "sub": "食品・畜産検査",
       "sub_en": "Food & animal testing",
+      "sub_short": "食品・畜産検査",
+      "sub_short_en": "Food testing",
       "row": 2,
       "relations": [
         {
@@ -190,6 +202,8 @@
       "name": "ゾメディカ",
       "sub": "動物用診断",
       "sub_en": "Veterinary diagnostics",
+      "sub_short": "動物用診断",
+      "sub_short_en": "Vet tests",
       "row": 2,
       "relations": [
         {

@@ -29,6 +29,8 @@
       "name_en": "AssuredPartners",
       "sub": "保険仲介",
       "sub_en": "Insurance brokerage",
+      "sub_short": "保険仲介",
+      "sub_short_en": "Insurance broker",
       "row": 0,
       "relations": [
         {
@@ -53,6 +55,8 @@
       "name_en": "Woodruff Sawyer",
       "sub": "保険仲介",
       "sub_en": "Insurance brokerage",
+      "sub_short": "保険仲介",
+      "sub_short_en": "Insurance broker",
       "row": 0,
       "relations": [
         {
@@ -77,6 +81,8 @@
       "name_en": "Buck",
       "sub": "年金・人事コンサル",
       "sub_en": "Retirement & HR consulting",
+      "sub_short": "年金",
+      "sub_short_en": "Retirement",
       "row": 0,
       "relations": [
         {
@@ -101,6 +107,8 @@
       "name_en": "WTW",
       "sub": "保険仲介・コンサル",
       "sub_en": "Brokerage & consulting",
+      "sub_short": "保険仲介",
+      "sub_short_en": "Brokerage",
       "row": 0,
       "relations": [
         {
@@ -138,6 +146,8 @@
       "name_en": "Evans Bancorp",
       "sub": "地方銀行",
       "sub_en": "Community bank",
+      "sub_short": "地方銀行",
+      "sub_short_en": "Community bank",
       "row": 0,
       "relations": [
         {
@@ -162,6 +172,8 @@
       "name_en": "Aon",
       "sub": "保険仲介",
       "sub_en": "Insurance brokerage",
+      "sub_short": "保険仲介",
+      "sub_short_en": "Insurance broker",
       "row": 1,
       "relations": [
         {
@@ -186,6 +198,8 @@
       "name_en": "Marsh & McLennan",
       "sub": "保険仲介",
       "sub_en": "Insurance brokerage",
+      "sub_short": "保険仲介",
+      "sub_short_en": "Insurance broker",
       "row": 1,
       "relations": [
         {
@@ -210,6 +224,8 @@
       "name_en": "Brown & Brown",
       "sub": "保険仲介",
       "sub_en": "Insurance brokerage",
+      "sub_short": "保険仲介",
+      "sub_short_en": "Insurance broker",
       "row": 1,
       "relations": [
         {

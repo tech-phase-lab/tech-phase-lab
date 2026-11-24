@@ -35,6 +35,8 @@
       "name_en": "Wheaton Precious Metals",
       "sub": "ストリーム",
       "sub_en": "Streams",
+      "sub_short": "ストリーム",
+      "sub_short_en": "Streams",
       "row": 0,
       "relations": [
         {
@@ -59,6 +61,8 @@
       "name_en": "OR Royalties (Osisko Gold Royalties)",
       "sub": "ロイヤルティ",
       "sub_en": "Royalties",
+      "sub_short": "ロイヤルティ",
+      "sub_short_en": "Royalties",
       "row": 0,
       "relations": [
         {
@@ -83,6 +87,8 @@
       "name_en": "Gatos Silver",
       "sub": "銀鉱山",
       "sub_en": "Silver mining",
+      "sub_short": "銀鉱山",
+      "sub_short_en": "Silver mining",
       "row": 1,
       "relations": [
         {
@@ -107,6 +113,8 @@
       "name_en": "Dowa",
       "sub": "非鉄金属(日本)",
       "sub_en": "Non-ferrous metals (Japan)",
+      "sub_short": "非鉄金属",
+      "sub_short_en": "Metals",
       "row": 1,
       "relations": [
         {
@@ -131,6 +139,8 @@
       "name_en": "Primero Mining",
       "sub": "金銀鉱山",
       "sub_en": "Gold & silver mining",
+      "sub_short": "金銀鉱山",
+      "sub_short_en": "Gold mining",
       "row": 1,
       "relations": [
         {
@@ -155,6 +165,8 @@
       "name_en": "Sierra Madre Gold and Silver",
       "sub": "銀鉱山",
       "sub_en": "Silver mining",
+      "sub_short": "銀鉱山",
+      "sub_short_en": "Silver mining",
       "row": 2,
       "relations": [
         {
@@ -192,6 +204,8 @@
       "name_en": "First Mining Gold",
       "sub": "金開発",
       "sub_en": "Gold development",
+      "sub_short": "金開発",
+      "sub_short_en": "Gold development",
       "row": 2,
       "relations": [
         {
@@ -216,6 +230,8 @@
       "name_en": "Metalla Royalty & Streaming",
       "sub": "ロイヤルティ",
       "sub_en": "Royalties",
+      "sub_short": "ロイヤルティ",
+      "sub_short_en": "Royalties",
       "row": 2,
       "relations": [
         {
@@ -240,6 +256,8 @@
       "name_en": "Sinda",
       "sub": "銀探鉱(メキシコ)",
       "sub_en": "Silver exploration (Mexico)",
+      "sub_short": "銀探鉱",
+      "sub_short_en": "Silver mining",
       "row": 3,
       "relations": [
         {

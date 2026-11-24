@@ -35,6 +35,8 @@
       "name_en": "Centrus Energy",
       "sub": "核燃料(HALEU)",
       "sub_en": "Nuclear fuel (HALEU)",
+      "sub_short": "核燃料",
+      "sub_short_en": "Nuclear fuel",
       "row": 0,
       "relations": [
         {
@@ -72,6 +74,8 @@
       "name_en": "Siemens Energy",
       "sub": "発電設備",
       "sub_en": "Power equipment",
+      "sub_short": "発電設備",
+      "sub_short_en": "Power equipment",
       "row": 0,
       "relations": [
         {
@@ -96,6 +100,8 @@
       "name_en": "Amentum",
       "sub": "技術・エンジニアリング",
       "sub_en": "Engineering services",
+      "sub_short": "技術サービス",
+      "sub_short_en": "Engineering",
       "row": 0,
       "relations": [
         {
@@ -120,6 +126,8 @@
       "name_en": "Lightbridge",
       "sub": "核燃料開発",
       "sub_en": "Nuclear fuel development",
+      "sub_short": "核燃料開発",
+      "sub_short_en": "Nuclear fuel",
       "row": 0,
       "relations": [
         {
@@ -144,6 +152,8 @@
       "name_en": "Meta Platforms",
       "sub": "SNS・AI",
       "sub_en": "Social & AI",
+      "sub_short": "SNS・AI",
+      "sub_short_en": "Social & AI",
       "row": 1,
       "relations": [
         {
@@ -170,6 +180,8 @@
       "name_en": "Equinix",
       "sub": "データセンター",
       "sub_en": "Data centers",
+      "sub_short": "データセンター",
+      "sub_short_en": "Data centers",
       "row": 1,
       "relations": [
         {
@@ -196,6 +208,8 @@
       "name_en": "Diamondback Energy",
       "sub": "石油・ガス",
       "sub_en": "Oil & gas",
+      "sub_short": "石油・ガス",
+      "sub_short_en": "Oil & gas",
       "row": 1,
       "relations": [
         {
@@ -222,6 +236,8 @@
       "name_en": "NVIDIA",
       "sub": "AI半導体",
       "sub_en": "AI chips",
+      "sub_short": "AI半導体",
+      "sub_short_en": "AI chips",
       "row": 2,
       "relations": [
         {
@@ -246,6 +262,8 @@
       "name_en": "Vertiv",
       "sub": "電源・冷却",
       "sub_en": "Power & cooling",
+      "sub_short": "電源・冷却",
+      "sub_short_en": "Power & cooling",
       "row": 2,
       "relations": [
         {
@@ -270,6 +288,8 @@
       "name_en": "Liberty Energy",
       "sub": "油田サービス・電力",
       "sub_en": "Oilfield services & power",
+      "sub_short": "油田サービス",
+      "sub_short_en": "Oilfield svcs",
       "row": 2,
       "relations": [
         {
@@ -294,6 +314,8 @@
       "name_en": "NANO Nuclear Energy",
       "sub": "小型原子炉",
       "sub_en": "Microreactors",
+      "sub_short": "小型原子炉",
+      "sub_short_en": "Microreactors",
       "row": 3,
       "relations": [
         {
@@ -318,6 +340,8 @@
       "name_en": "Kiewit",
       "sub": "建設",
       "sub_en": "Construction",
+      "sub_short": "建設",
+      "sub_short_en": "Construction",
       "row": 0,
       "relations": [
         {
@@ -342,6 +366,8 @@
       "name_en": "U.S. Forged Rings",
       "sub": "大型鍛造品",
       "sub_en": "Large forgings",
+      "sub_short": "大型鍛造品",
+      "sub_short_en": "Large forgings",
       "row": 0,
       "relations": [
         {
@@ -366,6 +392,8 @@
       "name_en": "Switch",
       "sub": "データセンター",
       "sub_en": "Data centers",
+      "sub_short": "データセンター",
+      "sub_short_en": "Data centers",
       "row": 1,
       "relations": [
         {
@@ -392,6 +420,8 @@
       "name_en": "Prometheus Hyperscale",
       "sub": "データセンター",
       "sub_en": "Data centers",
+      "sub_short": "データセンター",
+      "sub_short_en": "Data centers",
       "row": 1,
       "relations": [
         {
@@ -418,6 +448,8 @@
       "name_en": "RPower",
       "sub": "ガス発電",
       "sub_en": "Gas generation",
+      "sub_short": "ガス発電",
+      "sub_short_en": "Gas generation",
       "row": 2,
       "relations": [
         {
@@ -442,6 +474,8 @@
       "name_en": "Battelle Energy Alliance",
       "sub": "研究所運営(INL)",
       "sub_en": "National lab operator (INL)",
+      "sub_short": "研究所運営",
+      "sub_short_en": "National lab",
       "row": 2,
       "relations": [
         {
@@ -466,6 +500,8 @@
       "name_en": "newcleo",
       "sub": "先進原子炉(欧州)",
       "sub_en": "Advanced nuclear (Europe)",
+      "sub_short": "先進原子炉",
+      "sub_short_en": "Advanced nuclear",
       "row": 2,
       "relations": [
         {

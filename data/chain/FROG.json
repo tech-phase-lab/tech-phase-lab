@@ -27,6 +27,8 @@
       "name": "Amazon",
       "sub": "クラウド",
       "sub_en": "Cloud",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 0,
       "relations": [
         {
@@ -65,6 +67,8 @@
       "name": "NVIDIA",
       "sub": "AI半導体",
       "sub_en": "AI chips",
+      "sub_short": "AI半導体",
+      "sub_short_en": "AI chips",
       "row": 0,
       "relations": [
         {
@@ -88,6 +92,8 @@
       "name": "Microsoft",
       "sub": "ソフト・クラウド",
       "sub_en": "Software & cloud",
+      "sub_short": "ソフト",
+      "sub_short_en": "Software & cloud",
       "row": 1,
       "relations": [
         {
@@ -113,6 +119,8 @@
       "name": "アルファベット",
       "sub": "検索・クラウド",
       "sub_en": "Search & cloud",
+      "sub_short": "検索・クラウド",
+      "sub_short_en": "Search & cloud",
       "row": 1,
       "relations": [
         {
@@ -139,6 +147,8 @@
       "name": "GitLab",
       "sub": "DevOps",
       "sub_en": "DevOps",
+      "sub_short": "DevOps",
+      "sub_short_en": "DevOps",
       "row": 1,
       "relations": [
         {
@@ -162,6 +172,8 @@
       "name": "シノプシス",
       "sub": "半導体設計・ソフト",
       "sub_en": "Design software",
+      "sub_short": "半導体設計",
+      "sub_short_en": "Design software",
       "row": 1,
       "relations": [
         {

@@ -20,6 +20,8 @@
       "name": "シスコシステムズ",
       "sub": "ルーター・伝送機器",
       "sub_en": "Routers & transmission",
+      "sub_short": "ルーター",
+      "sub_short_en": "Routers",
       "row": 0,
       "relations": [
         {
@@ -44,6 +46,8 @@
       "name": "アリスタネットワークス",
       "sub": "ルーター",
       "sub_en": "Routers",
+      "sub_short": "ルーター",
+      "sub_short_en": "Routers",
       "row": 0,
       "relations": [
         {
@@ -68,6 +72,8 @@
       "name": "シエナ",
       "sub": "光波長機器",
       "sub_en": "Optical equipment",
+      "sub_short": "光波長機器",
+      "sub_short_en": "Optics",
       "row": 0,
       "relations": [
         {

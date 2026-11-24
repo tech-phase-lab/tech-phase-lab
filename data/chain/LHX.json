@@ -34,6 +34,8 @@
       "name": "パランティア・テクノロジーズ",
       "sub": "データ分析ソフト",
       "sub_en": "Data analytics software",
+      "sub_short": "データ分析",
+      "sub_short_en": "Data analytics",
       "row": 0,
       "relations": [
         {
@@ -58,6 +60,8 @@
       "name": "アマゾン(カイパー)",
       "sub": "衛星通信",
       "sub_en": "Satellite communications",
+      "sub_short": "衛星通信",
+      "sub_short_en": "Satellite comms",
       "row": 0,
       "relations": [
         {
@@ -82,6 +86,8 @@
       "name": "シールド・キャピタル",
       "sub": "投資会社",
       "sub_en": "Investment firm",
+      "sub_short": "投資会社",
+      "sub_short_en": "Investment firm",
       "row": 0,
       "relations": [
         {
@@ -106,6 +112,8 @@
       "name": "アンドゥリル",
       "sub": "防衛テクノロジー",
       "sub_en": "Defense technology",
+      "sub_short": "防衛技術",
+      "sub_short_en": "Defense tech",
       "row": 0,
       "relations": [
         {
@@ -143,6 +151,8 @@
       "name": "AEインダストリアル・パートナーズ",
       "sub": "宇宙事業の共同設立",
       "sub_en": "Space venture co-founder",
+      "sub_short": "宇宙事業",
+      "sub_short_en": "Space venture",
       "row": 0,
       "relations": [
         {
@@ -167,6 +177,8 @@
       "name": "ボーイング",
       "sub": "航空宇宙・防衛",
       "sub_en": "Aerospace & defense",
+      "sub_short": "航空宇宙・防衛",
+      "sub_short_en": "Aerospace",
       "row": 0,
       "relations": [
         {
@@ -191,6 +203,8 @@
       "name": "ゼネラル・ダイナミクス",
       "sub": "防衛・航空機",
       "sub_en": "Defense & aircraft",
+      "sub_short": "防衛・航空機",
+      "sub_short_en": "Defense",
       "row": 0,
       "relations": [
         {
@@ -215,6 +229,8 @@
       "name": "ロッキード・マーチン",
       "sub": "防衛・航空宇宙",
       "sub_en": "Defense & aerospace",
+      "sub_short": "防衛・航空宇宙",
+      "sub_short_en": "Defense",
       "row": 0,
       "relations": [
         {
@@ -239,6 +255,8 @@
       "name": "ノースロップ・グラマン",
       "sub": "防衛・宇宙",
       "sub_en": "Defense & space",
+      "sub_short": "防衛・宇宙",
+      "sub_short_en": "Defense & space",
       "row": 0,
       "relations": [
         {
@@ -263,6 +281,8 @@
       "name": "RTXコーポレーション",
       "sub": "航空宇宙・防衛",
       "sub_en": "Aerospace & defense",
+      "sub_short": "航空宇宙・防衛",
+      "sub_short_en": "Aerospace",
       "row": 0,
       "relations": [
         {
@@ -287,6 +307,8 @@
       "name": "サイプリス・ソリューションズ",
       "sub": "防衛・航空部品",
       "sub_en": "Defense & aerospace components",
+      "sub_short": "防衛・航空部品",
+      "sub_short_en": "Defense",
       "row": 1,
       "relations": [
         {
@@ -311,6 +333,8 @@
       "name": "エアロバイロメント",
       "sub": "ドローン・防衛",
       "sub_en": "Drones & defense",
+      "sub_short": "ドローン・防衛",
+      "sub_short_en": "Drones & defense",
       "row": 2,
       "relations": [
         {

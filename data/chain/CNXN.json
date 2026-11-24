@@ -28,6 +28,8 @@
       "name": "TDシネックス",
       "sub": "IT流通",
       "sub_en": "IT distribution",
+      "sub_short": "IT流通",
+      "sub_short_en": "IT distribution",
       "row": 0,
       "relations": [
         {
@@ -52,6 +54,8 @@
       "name": "イングラム・マイクロ",
       "sub": "IT流通",
       "sub_en": "IT distribution",
+      "sub_short": "IT流通",
+      "sub_short_en": "IT distribution",
       "row": 0,
       "relations": [
         {
@@ -76,6 +80,8 @@
       "name": "マイクロソフト",
       "sub": "ソフトウェア",
       "sub_en": "Software",
+      "sub_short": "ソフトウェア",
+      "sub_short_en": "Software",
       "row": 0,
       "relations": [
         {
@@ -113,6 +119,8 @@
       "name": "HPインク",
       "sub": "PC・周辺機器",
       "sub_en": "PCs & peripherals",
+      "sub_short": "PC・周辺機器",
+      "sub_short_en": "PCs",
       "row": 0,
       "relations": [
         {
@@ -137,6 +145,8 @@
       "name": "デル・テクノロジーズ",
       "sub": "PC・サーバー",
       "sub_en": "PCs & servers",
+      "sub_short": "PC・サーバー",
+      "sub_short_en": "PCs & servers",
       "row": 0,
       "relations": [
         {
@@ -161,6 +171,8 @@
       "name": "CDW社",
       "sub": "ITソリューション",
       "sub_en": "IT solutions",
+      "sub_short": "ITサービス",
+      "sub_short_en": "IT solutions",
       "row": 1,
       "relations": [
         {
@@ -185,6 +197,8 @@
       "name": "インサイト・エンタープライゼス",
       "sub": "ITソリューション",
       "sub_en": "IT solutions",
+      "sub_short": "ITサービス",
+      "sub_short_en": "IT solutions",
       "row": 1,
       "relations": [
         {
@@ -209,6 +223,8 @@
       "name": "アップル",
       "sub": "PC・端末",
       "sub_en": "PCs & devices",
+      "sub_short": "PC・端末",
+      "sub_short_en": "PCs & devices",
       "row": 1,
       "relations": [
         {
@@ -233,6 +249,8 @@
       "name": "レノボ",
       "sub": "PC・サーバー",
       "sub_en": "PCs & servers",
+      "sub_short": "PC・サーバー",
+      "sub_short_en": "PCs & servers",
       "row": 1,
       "relations": [
         {

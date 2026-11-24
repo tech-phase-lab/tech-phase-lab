@@ -33,6 +33,8 @@
       "name_en": "JPMorgan Chase",
       "sub": "銀行",
       "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
       "row": 0,
       "relations": [
         {
@@ -57,6 +59,8 @@
       "name_en": "Goldman Sachs",
       "sub": "銀行",
       "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
       "row": 0,
       "relations": [
         {
@@ -81,6 +85,8 @@
       "name_en": "U.S. Department of War",
       "sub": "米政府",
       "sub_en": "U.S. government",
+      "sub_short": "米政府",
+      "sub_short_en": "U.S. government",
       "row": 0,
       "relations": [
         {
@@ -105,6 +111,8 @@
       "name_en": "Saudi Arabian Mining Company (Maaden)",
       "sub": "鉱業(サウジ)",
       "sub_en": "Mining (Saudi Arabia)",
+      "sub_short": "鉱業",
+      "sub_short_en": "Mining",
       "row": 0,
       "relations": [
         {
@@ -129,6 +137,8 @@
       "name_en": "Apple",
       "sub": "スマホ・PC",
       "sub_en": "Devices",
+      "sub_short": "スマホ・PC",
+      "sub_short_en": "Devices",
       "row": 1,
       "relations": [
         {
@@ -153,6 +163,8 @@
       "name_en": "General Motors",
       "sub": "自動車",
       "sub_en": "Autos",
+      "sub_short": "自動車",
+      "sub_short_en": "Autos",
       "row": 1,
       "relations": [
         {
@@ -177,6 +189,8 @@
       "name_en": "Sumitomo Corporation",
       "sub": "商社",
       "sub_en": "Trading house",
+      "sub_short": "商社",
+      "sub_short_en": "Trading house",
       "row": 1,
       "relations": [
         {
@@ -201,6 +215,8 @@
       "name_en": "Shenghe Resources",
       "sub": "レアアース(中国)",
       "sub_en": "Rare earths (China)",
+      "sub_short": "レアアース",
+      "sub_short_en": "Rare earths",
       "row": 1,
       "relations": [
         {
@@ -225,6 +241,8 @@
       "name_en": "USA Rare Earth",
       "sub": "レアアース磁石",
       "sub_en": "Rare earth magnets",
+      "sub_short": "レアアース磁石",
+      "sub_short_en": "Magnets",
       "row": 2,
       "relations": [
         {
@@ -249,6 +267,8 @@
       "name_en": "Energy Fuels",
       "sub": "ウラン・レアアース",
       "sub_en": "Uranium & rare earths",
+      "sub_short": "ウラン",
+      "sub_short_en": "Uranium",
       "row": 2,
       "relations": [
         {
@@ -273,6 +293,8 @@
       "name_en": "American Resources",
       "sub": "重要鉱物",
       "sub_en": "Critical minerals",
+      "sub_short": "重要鉱物",
+      "sub_short_en": "Minerals",
       "row": 2,
       "relations": [
         {

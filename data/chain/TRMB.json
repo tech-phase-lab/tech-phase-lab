@@ -24,6 +24,8 @@
       "name": "キャタピラー",
       "sub": "建機メーカー",
       "sub_en": "Construction machinery",
+      "sub_short": "建機メーカー",
+      "sub_short_en": "Heavy machinery",
       "row": 0,
       "relations": [
         {
@@ -48,6 +50,8 @@
       "name": "アグコ",
       "sub": "農機メーカー",
       "sub_en": "Agricultural machinery",
+      "sub_short": "農機メーカー",
+      "sub_short_en": "Farm machinery",
       "row": 0,
       "relations": [
         {
@@ -85,6 +89,8 @@
       "name": "ヒルティ",
       "sub": "建設工具",
       "sub_en": "Construction tools",
+      "sub_short": "建設工具",
+      "sub_short_en": "Tools",
       "row": 0,
       "relations": [
         {
@@ -109,6 +115,8 @@
       "name": "ニコン",
       "sub": "光学・測量機器",
       "sub_en": "Optics & surveying",
+      "sub_short": "光学・測量機器",
+      "sub_short_en": "Optics",
       "row": 0,
       "relations": [
         {
@@ -133,6 +141,8 @@
       "name": "ジェイビル",
       "sub": "受託製造",
       "sub_en": "Contract manufacturing",
+      "sub_short": "受託製造",
+      "sub_short_en": "Contract maker",
       "row": 1,
       "relations": [
         {
@@ -157,6 +167,8 @@
       "name": "ベンチマーク・エレクトロニクス",
       "sub": "受託製造",
       "sub_en": "Contract manufacturing",
+      "sub_short": "受託製造",
+      "sub_short_en": "Contract maker",
       "row": 1,
       "relations": [
         {

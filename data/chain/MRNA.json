@@ -29,6 +29,8 @@
       "name": "メルク",
       "sub": "製薬大手",
       "sub_en": "Pharmaceuticals",
+      "sub_short": "製薬大手",
+      "sub_short_en": "Pharmaceuticals",
       "row": 0,
       "relations": [
         {
@@ -53,6 +55,8 @@
       "name": "バーテックス・ファーマシューティカルズ",
       "sub": "嚢胞性線維症薬",
       "sub_en": "Cystic fibrosis drugs",
+      "sub_short": "嚢胞性線維症薬",
+      "sub_short_en": "CF drugs",
       "row": 0,
       "relations": [
         {
@@ -90,6 +94,8 @@
       "name": "レコルダティ",
       "sub": "製薬",
       "sub_en": "Pharmaceuticals",
+      "sub_short": "製薬",
+      "sub_short_en": "Pharmaceuticals",
       "row": 0,
       "relations": [
         {
@@ -114,6 +120,8 @@
       "name": "イマティクス",
       "sub": "細胞療法",
       "sub_en": "Cell therapy",
+      "sub_short": "細胞療法",
+      "sub_short_en": "Cell therapy",
       "row": 0,
       "relations": [
         {
@@ -138,6 +146,8 @@
       "name": "オープンAI",
       "sub": "AI開発",
       "sub_en": "AI developer",
+      "sub_short": "AI開発",
+      "sub_short_en": "AI developer",
       "row": 0,
       "relations": [
         {
@@ -162,6 +172,8 @@
       "name": "ファイザー",
       "sub": "製薬大手",
       "sub_en": "Pharmaceuticals",
+      "sub_short": "製薬大手",
+      "sub_short_en": "Pharmaceuticals",
       "row": 0,
       "relations": [
         {
@@ -186,6 +198,8 @@
       "name": "ビオンテック",
       "sub": "mRNA医薬",
       "sub_en": "mRNA medicines",
+      "sub_short": "mRNA医薬",
+      "sub_short_en": "mRNA medicines",
       "row": 0,
       "relations": [
         {
@@ -210,6 +224,8 @@
       "name": "サノフィ",
       "sub": "製薬大手",
       "sub_en": "Pharmaceuticals",
+      "sub_short": "製薬大手",
+      "sub_short_en": "Pharmaceuticals",
       "row": 0,
       "relations": [
         {
@@ -234,6 +250,8 @@
       "name": "グラクソ・スミスクライン",
       "sub": "製薬大手",
       "sub_en": "Pharmaceuticals",
+      "sub_short": "製薬大手",
+      "sub_short_en": "Pharmaceuticals",
       "row": 0,
       "relations": [
         {
@@ -258,6 +276,8 @@
       "name": "パーソナリス",
       "sub": "がんゲノム解析",
       "sub_en": "Cancer genomics",
+      "sub_short": "がんゲノム解析",
+      "sub_short_en": "Cancer genomics",
       "row": 1,
       "relations": [
         {
@@ -282,6 +302,8 @@
       "name": "サイトエックス・セラピューティクス",
       "sub": "がん治療薬",
       "sub_en": "Oncology",
+      "sub_short": "がん治療薬",
+      "sub_short_en": "Oncology",
       "row": 0,
       "relations": [
         {

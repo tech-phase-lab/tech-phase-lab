@@ -28,6 +28,8 @@
       "name_en": "Eco Material Technologies",
       "sub": "セメント代替材",
       "sub_en": "Supplementary cementitious materials",
+      "sub_short": "セメント代替材",
+      "sub_short_en": "Cement additive",
       "row": 0,
       "relations": [
         {
@@ -52,6 +54,8 @@
       "name_en": "Adbri",
       "sub": "建材(豪)",
       "sub_en": "Building materials (Australia)",
+      "sub_short": "建材",
+      "sub_short_en": "Building supply",
       "row": 0,
       "relations": [
         {
@@ -76,6 +80,8 @@
       "name_en": "Hunter",
       "sub": "建材",
       "sub_en": "Building materials",
+      "sub_short": "建材",
+      "sub_short_en": "Building supply",
       "row": 0,
       "relations": [
         {
@@ -100,6 +106,8 @@
       "name_en": "Martin Marietta Materials",
       "sub": "骨材",
       "sub_en": "Aggregates",
+      "sub_short": "骨材",
+      "sub_short_en": "Aggregates",
       "row": 0,
       "relations": [
         {
@@ -124,6 +132,8 @@
       "name_en": "Cemex",
       "sub": "セメント(メキシコ)",
       "sub_en": "Cement (Mexico)",
+      "sub_short": "セメント",
+      "sub_short_en": "Cement",
       "row": 1,
       "relations": [
         {
@@ -148,6 +158,8 @@
       "name_en": "Amrize",
       "sub": "セメント・建材(北米)",
       "sub_en": "Cement & building materials",
+      "sub_short": "セメント・建材",
+      "sub_short_en": "Cement",
       "row": 1,
       "relations": [
         {
@@ -172,6 +184,8 @@
       "name_en": "Knife River",
       "sub": "骨材・舗装",
       "sub_en": "Aggregates & paving",
+      "sub_short": "骨材・舗装",
+      "sub_short_en": "Aggregates",
       "row": 1,
       "relations": [
         {

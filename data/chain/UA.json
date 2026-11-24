@@ -30,6 +30,8 @@
       "name_en": "Dick's Sporting Goods",
       "sub": "スポーツ用品小売",
       "sub_en": "Sporting goods retail",
+      "sub_short": "スポーツ小売",
+      "sub_short_en": "Sporting goods",
       "row": 0,
       "relations": [
         {
@@ -54,6 +56,8 @@
       "name_en": "Big 5 Sporting Goods",
       "sub": "スポーツ用品小売",
       "sub_en": "Sporting goods retail",
+      "sub_short": "スポーツ小売",
+      "sub_short_en": "Sporting goods",
       "row": 0,
       "relations": [
         {
@@ -78,6 +82,8 @@
       "name_en": "TKO Group",
       "sub": "格闘技・プロレス(UFC・WWE)",
       "sub_en": "Combat sports & entertainment",
+      "sub_short": "格闘技",
+      "sub_short_en": "Combat sports",
       "row": 0,
       "relations": [
         {
@@ -102,6 +108,8 @@
       "name_en": "Nike",
       "sub": "スポーツ用品",
       "sub_en": "Athletic footwear & apparel",
+      "sub_short": "スポーツ用品",
+      "sub_short_en": "Sportswear",
       "row": 1,
       "relations": [
         {
@@ -126,6 +134,8 @@
       "name_en": "On Holding",
       "sub": "スポーツシューズ",
       "sub_en": "Athletic footwear",
+      "sub_short": "スポーツ靴",
+      "sub_short_en": "Sneakers",
       "row": 1,
       "relations": [
         {
@@ -150,6 +160,8 @@
       "name_en": "lululemon",
       "sub": "スポーツウェア",
       "sub_en": "Athletic apparel",
+      "sub_short": "スポーツウェア",
+      "sub_short_en": "Athletic apparel",
       "row": 1,
       "relations": [
         {
@@ -174,6 +186,8 @@
       "name_en": "Acushnet",
       "sub": "ゴルフ用品",
       "sub_en": "Golf equipment",
+      "sub_short": "ゴルフ用品",
+      "sub_short_en": "Golf equipment",
       "row": 1,
       "relations": [
         {

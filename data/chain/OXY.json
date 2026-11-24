@@ -24,6 +24,8 @@
       "name": "ウエスタン・ミッドストリーム・パートナーズ",
       "sub": "ガス集積・処理",
       "sub_en": "Midstream",
+      "sub_short": "ガス集積・処理",
+      "sub_short_en": "Midstream",
       "row": 1,
       "relations": [
         {
@@ -61,6 +63,8 @@
       "name": "バークシャー・ハサウェイ",
       "sub": "投資・保険",
       "sub_en": "Conglomerate",
+      "sub_short": "投資・保険",
+      "sub_short_en": "Conglomerate",
       "row": 1,
       "relations": [
         {
@@ -85,6 +89,8 @@
       "name": "ブラックロック",
       "sub": "資産運用",
       "sub_en": "Asset manager",
+      "sub_short": "資産運用",
+      "sub_short_en": "Asset manager",
       "row": 1,
       "relations": [
         {
@@ -109,6 +115,8 @@
       "name": "ドルフィン・エナジー",
       "sub": "中東のガス事業",
       "sub_en": "Middle East gas",
+      "sub_short": "中東のガス事業",
+      "sub_short_en": "Middle East gas",
       "row": 1,
       "relations": [
         {

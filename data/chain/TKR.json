@@ -27,6 +27,8 @@
       "name_en": "CGI",
       "sub": "医療ロボット用の精密駆動",
       "sub_en": "Precision drives for medical robotics",
+      "sub_short": "精密駆動部品",
+      "sub_short_en": "Robot drives",
       "row": 0,
       "relations": [
         {
@@ -51,6 +53,8 @@
       "name_en": "Lovejoy",
       "sub": "カップリング",
       "sub_en": "Couplings",
+      "sub_short": "カップリング",
+      "sub_short_en": "Couplings",
       "row": 0,
       "relations": [
         {
@@ -75,6 +79,8 @@
       "name_en": "Metallus",
       "sub": "特殊鋼",
       "sub_en": "Special steel",
+      "sub_short": "特殊鋼",
+      "sub_short_en": "Special steel",
       "row": 0,
       "relations": [
         {
@@ -99,6 +105,8 @@
       "name_en": "SKF",
       "sub": "軸受(スウェーデン)",
       "sub_en": "Bearings (Sweden)",
+      "sub_short": "軸受",
+      "sub_short_en": "Bearings",
       "row": 1,
       "relations": [
         {
@@ -123,6 +131,8 @@
       "name_en": "Schaeffler",
       "sub": "軸受・自動車部品(独)",
       "sub_en": "Bearings & auto parts (Germany)",
+      "sub_short": "軸受",
+      "sub_short_en": "Bearings",
       "row": 1,
       "relations": [
         {
@@ -147,6 +157,8 @@
       "name_en": "RBC Bearings",
       "sub": "軸受",
       "sub_en": "Bearings",
+      "sub_short": "軸受",
+      "sub_short_en": "Bearings",
       "row": 1,
       "relations": [
         {
@@ -184,6 +196,8 @@
       "name_en": "Gates Industrial",
       "sub": "ベルト・ホース",
       "sub_en": "Belts & hoses",
+      "sub_short": "ベルト・ホース",
+      "sub_short_en": "Belts & hoses",
       "row": 1,
       "relations": [
         {

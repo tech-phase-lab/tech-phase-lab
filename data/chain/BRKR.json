@@ -29,6 +29,8 @@
       "name_en": "10x Genomics",
       "sub": "単一細胞解析",
       "sub_en": "Single-cell analysis",
+      "sub_short": "単一細胞解析",
+      "sub_short_en": "Single-cell",
       "row": 0,
       "relations": [
         {
@@ -53,6 +55,8 @@
       "name_en": "AbCellera Biologics",
       "sub": "抗体創薬",
       "sub_en": "Antibody discovery",
+      "sub_short": "抗体創薬",
+      "sub_short_en": "Antibodies",
       "row": 0,
       "relations": [
         {
@@ -77,6 +81,8 @@
       "name_en": "Accelerate Diagnostics",
       "sub": "微生物検査",
       "sub_en": "Microbiology diagnostics",
+      "sub_short": "微生物検査",
+      "sub_short_en": "Microbiology",
       "row": 0,
       "relations": [
         {
@@ -101,6 +107,8 @@
       "name_en": "ATI",
       "sub": "特殊金属",
       "sub_en": "Specialty metals",
+      "sub_short": "特殊金属",
+      "sub_short_en": "Specialty metals",
       "row": 0,
       "relations": [
         {
@@ -125,6 +133,8 @@
       "name_en": "Agilent Technologies",
       "sub": "分析機器",
       "sub_en": "Analytical instruments",
+      "sub_short": "分析機器",
+      "sub_short_en": "Lab instruments",
       "row": 1,
       "relations": [
         {
@@ -149,6 +159,8 @@
       "name_en": "Camtek",
       "sub": "半導体検査",
       "sub_en": "Semiconductor inspection",
+      "sub_short": "半導体検査",
+      "sub_short_en": "Chip inspection",
       "row": 1,
       "relations": [
         {
@@ -173,6 +185,8 @@
       "name_en": "908 Devices",
       "sub": "小型質量分析",
       "sub_en": "Handheld mass spec",
+      "sub_short": "小型質量分析",
+      "sub_short_en": "Mass spec",
       "row": 1,
       "relations": [
         {
@@ -197,6 +211,8 @@
       "name_en": "Akoya Biosciences",
       "sub": "空間生物学",
       "sub_en": "Spatial biology",
+      "sub_short": "空間生物学",
+      "sub_short_en": "Spatial biology",
       "row": 1,
       "relations": [
         {
@@ -221,6 +237,8 @@
       "name_en": "OmniAb",
       "sub": "抗体創薬",
       "sub_en": "Antibody discovery",
+      "sub_short": "抗体創薬",
+      "sub_short_en": "Antibodies",
       "row": 1,
       "relations": [
         {
@@ -245,6 +263,8 @@
       "name_en": "Quanterix",
       "sub": "タンパク質測定",
       "sub_en": "Protein detection",
+      "sub_short": "タンパク質測定",
+      "sub_short_en": "Protein tests",
       "row": 1,
       "relations": [
         {

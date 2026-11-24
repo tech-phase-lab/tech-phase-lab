@@ -27,6 +27,8 @@
       "name": "バイエル",
       "sub": "医薬品の共同開発",
       "sub_en": "Pharma co-development",
+      "sub_short": "医薬品開発",
+      "sub_short_en": "Pharma co-dev",
       "row": 0,
       "relations": [
         {
@@ -51,6 +53,8 @@
       "name": "アッヴィ(ファーマサイクリクス)",
       "sub": "がん薬の共同販売",
       "sub_en": "Oncology co-marketing",
+      "sub_short": "がん薬販売提携",
+      "sub_short_en": "Cancer co-sales",
       "row": 0,
       "relations": [
         {
@@ -75,6 +79,8 @@
       "name": "レジェンド・バイオテック",
       "sub": "細胞治療の提携",
       "sub_en": "Cell therapy partner",
+      "sub_short": "細胞治療の提携",
+      "sub_short_en": "Cell therapy",
       "row": 0,
       "relations": [
         {
@@ -99,6 +105,8 @@
       "name": "ゲンマブ",
       "sub": "特許・ロイヤルティ",
       "sub_en": "Patents & royalties",
+      "sub_short": "特許",
+      "sub_short_en": "Patents",
       "row": 0,
       "relations": [
         {
@@ -123,6 +131,8 @@
       "name": "ジンマー・バイオメット",
       "sub": "医療機器",
       "sub_en": "Medical devices",
+      "sub_short": "医療機器",
+      "sub_short_en": "Medical devices",
       "row": 1,
       "relations": [
         {
@@ -147,6 +157,8 @@
       "name": "アルファ・プロ・テック",
       "sub": "防護用品",
       "sub_en": "Protective apparel",
+      "sub_short": "防護用品",
+      "sub_short_en": "Protective wear",
       "row": 1,
       "relations": [
         {
@@ -171,6 +183,8 @@
       "name": "スターコ・ブランズ",
       "sub": "日用品",
       "sub_en": "Household products",
+      "sub_short": "日用品",
+      "sub_short_en": "Household goods",
       "row": 1,
       "relations": [
         {

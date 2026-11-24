@@ -19,6 +19,8 @@
       "name": "マスミューチュアル",
       "sub": "生命保険・大株主",
       "sub_en": "Insurer & shareholder",
+      "sub_short": "生命保険",
+      "sub_short_en": "Insurer",
       "row": 0,
       "relations": [
         {
@@ -43,6 +45,8 @@
       "name": "バリングス",
       "sub": "資産運用",
       "sub_en": "Asset management",
+      "sub_short": "資産運用",
+      "sub_short_en": "Asset management",
       "row": 0,
       "relations": [
         {
@@ -67,6 +71,8 @@
       "name": "LGTキャピタル・パートナーズ",
       "sub": "資産運用",
       "sub_en": "Asset management",
+      "sub_short": "資産運用",
+      "sub_short_en": "Asset management",
       "row": 0,
       "relations": [
         {
@@ -91,6 +97,8 @@
       "name": "インドスインド・インターナショナル・ホールディングス",
       "sub": "金融・販売網",
       "sub_en": "Finance & distribution",
+      "sub_short": "金融・販売網",
+      "sub_short_en": "Finance",
       "row": 0,
       "relations": [
         {

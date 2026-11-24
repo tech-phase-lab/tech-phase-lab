@@ -33,6 +33,8 @@
       "name_en": "Unusual Machines",
       "sub": "ドローン部品",
       "sub_en": "Drone components",
+      "sub_short": "ドローン部品",
+      "sub_short_en": "Drone components",
       "row": 0,
       "relations": [
         {
@@ -57,6 +59,8 @@
       "name_en": "Lantronix",
       "sub": "組込みコンピューター",
       "sub_en": "Embedded computing",
+      "sub_short": "組込みPC",
+      "sub_short_en": "Embedded PCs",
       "row": 0,
       "relations": [
         {
@@ -81,6 +85,8 @@
       "name_en": "Palantir Technologies",
       "sub": "AIソフト",
       "sub_en": "AI software",
+      "sub_short": "AIソフト",
+      "sub_short_en": "AI software",
       "row": 1,
       "relations": [
         {
@@ -105,6 +111,8 @@
       "name_en": "AeroVironment",
       "sub": "無人機・防衛",
       "sub_en": "Drones & defense",
+      "sub_short": "無人機・防衛",
+      "sub_short_en": "Drones & defense",
       "row": 1,
       "relations": [
         {
@@ -142,6 +150,8 @@
       "name_en": "Safe Pro Group",
       "sub": "AI画像解析",
       "sub_en": "AI imagery analysis",
+      "sub_short": "AI画像解析",
+      "sub_short_en": "AI imagery",
       "row": 1,
       "relations": [
         {
@@ -166,6 +176,8 @@
       "name_en": "Ocean Power Technologies",
       "sub": "無人艇",
       "sub_en": "Uncrewed vessels",
+      "sub_short": "無人艇",
+      "sub_short_en": "Uncrewed vessels",
       "row": 1,
       "relations": [
         {
@@ -190,6 +202,8 @@
       "name_en": "Palladyne AI",
       "sub": "自律制御ソフト",
       "sub_en": "Autonomy software",
+      "sub_short": "自律制御ソフト",
+      "sub_short_en": "Autonomy",
       "row": 1,
       "relations": [
         {
@@ -214,6 +228,8 @@
       "name_en": "Lockheed Martin",
       "sub": "防衛・宇宙",
       "sub_en": "Defense & space",
+      "sub_short": "防衛・宇宙",
+      "sub_short_en": "Defense & space",
       "row": 2,
       "relations": [
         {
@@ -238,6 +254,8 @@
       "name_en": "Northrop Grumman",
       "sub": "防衛・宇宙",
       "sub_en": "Defense & space",
+      "sub_short": "防衛・宇宙",
+      "sub_short_en": "Defense & space",
       "row": 2,
       "relations": [
         {
@@ -262,6 +280,8 @@
       "name_en": "Redwire",
       "sub": "宇宙・防衛",
       "sub_en": "Space & defense",
+      "sub_short": "宇宙・防衛",
+      "sub_short_en": "Space & defense",
       "row": 1,
       "relations": [
         {

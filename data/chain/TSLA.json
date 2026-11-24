@@ -36,6 +36,8 @@
       "name": "Panasonic Holdings",
       "sub": "電池セル",
       "sub_en": "Battery cells",
+      "sub_short": "電池セル",
+      "sub_short_en": "Battery cells",
       "row": 0,
       "relations": [
         {
@@ -60,6 +62,8 @@
       "name": "CATL",
       "sub": "電池セル",
       "sub_en": "Battery cells",
+      "sub_short": "電池セル",
+      "sub_short_en": "Battery cells",
       "row": 0,
       "relations": [
         {
@@ -84,6 +88,8 @@
       "name": "Samsung Electronics",
       "sub": "半導体製造",
       "sub_en": "Chip manufacturing",
+      "sub_short": "半導体製造",
+      "sub_short_en": "Chipmaking",
       "row": 0,
       "relations": [
         {
@@ -106,6 +112,8 @@
       "name": "AMD",
       "sub": "車載プロセッサ",
       "sub_en": "In-car processors",
+      "sub_short": "車載プロセッサ",
+      "sub_short_en": "Car processors",
       "row": 0,
       "relations": [
         {
@@ -130,6 +138,8 @@
       "name": "SpaceX",
       "sub": "宇宙・AI",
       "sub_en": "Space & AI",
+      "sub_short": "宇宙・AI",
+      "sub_short_en": "Space & AI",
       "row": 1,
       "relations": [
         {
@@ -178,6 +188,8 @@
       "name": "Fluence Energy",
       "sub": "大規模蓄電",
       "sub_en": "Utility-scale storage",
+      "sub_short": "大規模蓄電",
+      "sub_short_en": "Grid storage",
       "row": 3,
       "relations": [
         {
@@ -200,6 +212,8 @@
       "name": "Enphase Energy",
       "sub": "家庭用蓄電",
       "sub_en": "Home storage",
+      "sub_short": "家庭用蓄電",
+      "sub_short_en": "Home storage",
       "row": 3,
       "relations": [
         {
@@ -222,6 +236,8 @@
       "name": "General Motors",
       "sub": "自動車",
       "sub_en": "Automaker",
+      "sub_short": "自動車",
+      "sub_short_en": "Automaker",
       "row": 2,
       "relations": [
         {
@@ -246,6 +262,8 @@
       "name": "Ford",
       "sub": "自動車",
       "sub_en": "Automaker",
+      "sub_short": "自動車",
+      "sub_short_en": "Automaker",
       "row": 2,
       "relations": [
         {
@@ -271,6 +289,8 @@
       "name": "Rivian",
       "sub": "EV",
       "sub_en": "EV maker",
+      "sub_short": "EV",
+      "sub_short_en": "EV maker",
       "row": 2,
       "relations": [
         {
@@ -296,6 +316,8 @@
       "name": "Honda",
       "sub": "自動車",
       "sub_en": "Automaker",
+      "sub_short": "自動車",
+      "sub_short_en": "Automaker",
       "row": 2,
       "relations": [
         {
@@ -321,6 +343,8 @@
       "name": "Nissan",
       "sub": "自動車",
       "sub_en": "Automaker",
+      "sub_short": "自動車",
+      "sub_short_en": "Automaker",
       "row": 2,
       "relations": [
         {
@@ -346,6 +370,8 @@
       "name": "Toyota",
       "sub": "自動車",
       "sub_en": "Automaker",
+      "sub_short": "自動車",
+      "sub_short_en": "Automaker",
       "row": 2,
       "relations": [
         {
@@ -371,6 +397,8 @@
       "name": "Lucid",
       "sub": "EV",
       "sub_en": "EV maker",
+      "sub_short": "EV",
+      "sub_short_en": "EV maker",
       "row": 2,
       "relations": [
         {
@@ -395,6 +423,8 @@
       "name": "SolarEdge",
       "sub": "太陽光・蓄電",
       "sub_en": "Solar & storage",
+      "sub_short": "太陽光・蓄電",
+      "sub_short_en": "Solar & storage",
       "row": 3,
       "relations": [
         {
@@ -420,6 +450,8 @@
       "name": "Eos Energy",
       "sub": "蓄電池",
       "sub_en": "Batteries",
+      "sub_short": "蓄電池",
+      "sub_short_en": "Batteries",
       "row": 3,
       "relations": [
         {
@@ -443,6 +475,8 @@
       "name": "Albemarle",
       "sub": "リチウム",
       "sub_en": "Lithium",
+      "sub_short": "リチウム",
+      "sub_short_en": "Lithium",
       "row": 3,
       "relations": [
         {
@@ -468,6 +502,8 @@
       "name": "Li Auto",
       "sub": "EVメーカー",
       "sub_en": "EV maker",
+      "sub_short": "EVメーカー",
+      "sub_short_en": "EV maker",
       "row": 3,
       "relations": [
         {
@@ -493,6 +529,8 @@
       "name": "XPeng",
       "sub": "EVメーカー",
       "sub_en": "EV maker",
+      "sub_short": "EVメーカー",
+      "sub_short_en": "EV maker",
       "row": 3,
       "relations": [
         {
@@ -518,6 +556,8 @@
       "name": "Faraday Future",
       "sub": "EVメーカー",
       "sub_en": "EV maker",
+      "sub_short": "EVメーカー",
+      "sub_short_en": "EV maker",
       "row": 3,
       "relations": [
         {

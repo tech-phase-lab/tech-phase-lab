@@ -32,6 +32,8 @@
       "name_en": "ITRenew",
       "sub": "IT機器の再生・売却",
       "sub_en": "IT asset lifecycle",
+      "sub_short": "IT機器の再生",
+      "sub_short_en": "IT lifecycle",
       "row": 0,
       "relations": [
         {
@@ -56,6 +58,8 @@
       "name_en": "Regency Technologies",
       "sub": "IT資産の処分",
       "sub_en": "IT asset disposition",
+      "sub_short": "IT資産の処分",
+      "sub_short_en": "IT disposal",
       "row": 0,
       "relations": [
         {
@@ -80,6 +84,8 @@
       "name_en": "AGC Equity Partners",
       "sub": "投資会社",
       "sub_en": "Investment firm",
+      "sub_short": "投資会社",
+      "sub_short_en": "Investment firm",
       "row": 0,
       "relations": [
         {
@@ -104,6 +110,8 @@
       "name_en": "Clutter",
       "sub": "個人向け保管",
       "sub_en": "Consumer storage",
+      "sub_short": "個人向け保管",
+      "sub_short_en": "Consumer storage",
       "row": 0,
       "relations": [
         {
@@ -128,6 +136,8 @@
       "name_en": "Recall Holdings",
       "sub": "文書保管(豪州)",
       "sub_en": "Records management (Australia)",
+      "sub_short": "文書保管",
+      "sub_short_en": "Records storage",
       "row": 0,
       "relations": [
         {
@@ -152,6 +162,8 @@
       "name_en": "IO Data Centers",
       "sub": "データセンター",
       "sub_en": "Data centers",
+      "sub_short": "データセンター",
+      "sub_short_en": "Data centers",
       "row": 0,
       "relations": [
         {
@@ -176,6 +188,8 @@
       "name_en": "Web Werks",
       "sub": "データセンター(インド)",
       "sub_en": "Data centers (India)",
+      "sub_short": "データセンター",
+      "sub_short_en": "Data centers",
       "row": 0,
       "relations": [
         {
@@ -200,6 +214,8 @@
       "name_en": "XData Properties",
       "sub": "データセンター(スペイン)",
       "sub_en": "Data centers (Spain)",
+      "sub_short": "データセンター",
+      "sub_short_en": "Data centers",
       "row": 0,
       "relations": [
         {
@@ -224,6 +240,8 @@
       "name_en": "Intelligent Protection Management",
       "sub": "クラウド運用",
       "sub_en": "Managed cloud services",
+      "sub_short": "クラウド運用",
+      "sub_short_en": "Managed cloud",
       "row": 1,
       "relations": [
         {
@@ -248,6 +266,8 @@
       "name_en": "Intellinetics",
       "sub": "文書管理",
       "sub_en": "Document services",
+      "sub_short": "文書管理",
+      "sub_short_en": "Documents",
       "row": 2,
       "relations": [
         {
@@ -272,6 +292,8 @@
       "name_en": "WhiteFiber",
       "sub": "AIデータセンター",
       "sub_en": "AI data centers",
+      "sub_short": "AI向けDC",
+      "sub_short_en": "AI data centers",
       "row": 2,
       "relations": [
         {

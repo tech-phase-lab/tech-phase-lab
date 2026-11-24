@@ -27,6 +27,8 @@
       "name": "TモバイルUS",
       "sub": "携帯通信事業者",
       "sub_en": "Wireless carrier",
+      "sub_short": "携帯通信事業者",
+      "sub_short_en": "Wireless carrier",
       "row": 0,
       "relations": [
         {
@@ -64,6 +66,8 @@
       "name": "エーティーアンドティー",
       "sub": "携帯通信事業者",
       "sub_en": "Wireless carrier",
+      "sub_short": "携帯通信事業者",
+      "sub_short_en": "Wireless carrier",
       "row": 0,
       "relations": [
         {
@@ -88,6 +92,8 @@
       "name": "ベライゾン",
       "sub": "携帯通信事業者",
       "sub_en": "Wireless carrier",
+      "sub_short": "携帯通信事業者",
+      "sub_short_en": "Wireless carrier",
       "row": 0,
       "relations": [
         {
@@ -112,6 +118,8 @@
       "name": "アメリカン・タワー",
       "sub": "通信タワー",
       "sub_en": "Tower operator",
+      "sub_short": "通信タワー",
+      "sub_short_en": "Tower operator",
       "row": 1,
       "relations": [
         {
@@ -136,6 +144,8 @@
       "name": "クラウン・キャッスル",
       "sub": "通信タワー",
       "sub_en": "Tower operator",
+      "sub_short": "通信タワー",
+      "sub_short_en": "Tower operator",
       "row": 1,
       "relations": [
         {
@@ -160,6 +170,8 @@
       "name": "SBAコミュニケーションズ",
       "sub": "通信タワー",
       "sub_en": "Tower operator",
+      "sub_short": "通信タワー",
+      "sub_short_en": "Tower operator",
       "row": 1,
       "relations": [
         {

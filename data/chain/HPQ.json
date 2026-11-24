@@ -32,6 +32,8 @@
       "name": "インテル",
       "sub": "半導体",
       "sub_en": "Semiconductors",
+      "sub_short": "半導体",
+      "sub_short_en": "Semiconductors",
       "row": 0,
       "relations": [
         {
@@ -69,6 +71,8 @@
       "name": "アドバンスト・マイクロ・デバイセズ",
       "sub": "半導体",
       "sub_en": "Semiconductors",
+      "sub_short": "半導体",
+      "sub_short_en": "Semiconductors",
       "row": 0,
       "relations": [
         {
@@ -106,6 +110,8 @@
       "name": "エヌビディア",
       "sub": "AI半導体",
       "sub_en": "AI chips",
+      "sub_short": "AI半導体",
+      "sub_short_en": "AI chips",
       "row": 0,
       "relations": [
         {
@@ -143,6 +149,8 @@
       "name": "キヤノン",
       "sub": "事務機器",
       "sub_en": "Imaging equipment",
+      "sub_short": "事務機器",
+      "sub_short_en": "Imaging",
       "row": 0,
       "relations": [
         {
@@ -180,6 +188,8 @@
       "name": "ヒューレット・パッカード・エンタープライズ",
       "sub": "IT基盤",
       "sub_en": "IT infrastructure",
+      "sub_short": "IT基盤",
+      "sub_short_en": "IT infra",
       "row": 1,
       "relations": [
         {
@@ -217,6 +227,8 @@
       "name": "JPモルガン・チェース",
       "sub": "銀行",
       "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
       "row": 1,
       "relations": [
         {
@@ -243,6 +255,8 @@
       "name": "アップル",
       "sub": "消費者向け機器",
       "sub_en": "Consumer devices",
+      "sub_short": "消費者向け機器",
+      "sub_short_en": "Consumer devices",
       "row": 2,
       "relations": [
         {
@@ -267,6 +281,8 @@
       "name": "デル・テクノロジーズ",
       "sub": "PC・サーバー",
       "sub_en": "PCs & servers",
+      "sub_short": "PC・サーバー",
+      "sub_short_en": "PCs & servers",
       "row": 2,
       "relations": [
         {
@@ -291,6 +307,8 @@
       "name": "レノボ・グループ",
       "sub": "PC",
       "sub_en": "PCs",
+      "sub_short": "PC",
+      "sub_short_en": "PCs",
       "row": 2,
       "relations": [
         {
@@ -315,6 +333,8 @@
       "name": "マイクロソフト",
       "sub": "ソフト・クラウド",
       "sub_en": "Software & cloud",
+      "sub_short": "ソフト",
+      "sub_short_en": "Software & cloud",
       "row": 2,
       "relations": [
         {
@@ -339,6 +359,8 @@
       "name": "サムスン電子",
       "sub": "電機・半導体",
       "sub_en": "Electronics & chips",
+      "sub_short": "電機・半導体",
+      "sub_short_en": "Electronics",
       "row": 2,
       "relations": [
         {
@@ -363,6 +385,8 @@
       "name": "ロジクール",
       "sub": "周辺機器",
       "sub_en": "PC peripherals",
+      "sub_short": "周辺機器",
+      "sub_short_en": "PC peripherals",
       "row": 2,
       "relations": [
         {

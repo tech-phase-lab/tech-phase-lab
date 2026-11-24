@@ -19,6 +19,8 @@
       "name": "日本郵政",
       "sub": "郵便・金融グループ",
       "sub_en": "Postal & financial group",
+      "sub_short": "郵便",
+      "sub_short_en": "Postal",
       "row": 0,
       "relations": [
         {
@@ -56,6 +58,8 @@
       "name": "第一生命",
       "sub": "生命保険",
       "sub_en": "Life insurance",
+      "sub_short": "生命保険",
+      "sub_short_en": "Life insurance",
       "row": 0,
       "relations": [
         {
@@ -80,6 +84,8 @@
       "name": "大同生命",
       "sub": "生命保険",
       "sub_en": "Life insurance",
+      "sub_short": "生命保険",
+      "sub_short_en": "Life insurance",
       "row": 0,
       "relations": [
         {

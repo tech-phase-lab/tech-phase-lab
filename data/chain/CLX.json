@@ -33,6 +33,8 @@
       "name_en": "Oil-Dri",
       "sub": "猫砂・吸着剤",
       "sub_en": "Cat litter & sorbents",
+      "sub_short": "猫砂・吸着剤",
+      "sub_short_en": "Cat litter",
       "row": 0,
       "relations": [
         {
@@ -57,6 +59,8 @@
       "name_en": "Hamilton Beach Brands",
       "sub": "小型家電",
       "sub_en": "Small appliances",
+      "sub_short": "小型家電",
+      "sub_short_en": "Small appliances",
       "row": 0,
       "relations": [
         {
@@ -81,6 +85,8 @@
       "name_en": "Walmart",
       "sub": "小売",
       "sub_en": "Retail",
+      "sub_short": "小売",
+      "sub_short_en": "Retail",
       "row": 1,
       "relations": [
         {
@@ -105,6 +111,8 @@
       "name_en": "GOJO (Purell)",
       "sub": "衛生用品",
       "sub_en": "Hygiene products",
+      "sub_short": "衛生用品",
+      "sub_short_en": "Hygiene products",
       "row": 1,
       "relations": [
         {
@@ -129,6 +137,8 @@
       "name_en": "Procter & Gamble",
       "sub": "日用品",
       "sub_en": "Consumer products",
+      "sub_short": "日用品",
+      "sub_short_en": "Consumer goods",
       "row": 1,
       "relations": [
         {
@@ -153,6 +163,8 @@
       "name_en": "Church & Dwight",
       "sub": "日用品",
       "sub_en": "Consumer products",
+      "sub_short": "日用品",
+      "sub_short_en": "Consumer goods",
       "row": 2,
       "relations": [
         {
@@ -177,6 +189,8 @@
       "name_en": "Honest Company",
       "sub": "自然派日用品",
       "sub_en": "Clean personal care",
+      "sub_short": "自然派日用品",
+      "sub_short_en": "Personal care",
       "row": 2,
       "relations": [
         {
@@ -201,6 +215,8 @@
       "name_en": "Hain Celestial",
       "sub": "自然派食品・日用品",
       "sub_en": "Natural foods & personal care",
+      "sub_short": "自然派食品",
+      "sub_short_en": "Natural foods",
       "row": 2,
       "relations": [
         {
@@ -225,6 +241,8 @@
       "name_en": "TOMI Environmental Solutions",
       "sub": "除菌装置",
       "sub_en": "Disinfection systems",
+      "sub_short": "除菌装置",
+      "sub_short_en": "Disinfection",
       "row": 2,
       "relations": [
         {

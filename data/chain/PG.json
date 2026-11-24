@@ -28,6 +28,8 @@
       "name": "ウォルマート",
       "sub": "小売・最大顧客",
       "sub_en": "Retail, largest customer",
+      "sub_short": "小売・最大顧客",
+      "sub_short_en": "Top retailer",
       "row": 0,
       "relations": [
         {
@@ -52,6 +54,8 @@
       "name": "ソーン",
       "sub": "栄養補助食品",
       "sub_en": "Supplements",
+      "sub_short": "栄養補助食品",
+      "sub_short_en": "Supplements",
       "row": 0,
       "relations": [
         {
@@ -76,6 +80,8 @@
       "name": "クロロックス",
       "sub": "家庭用品",
       "sub_en": "Household products",
+      "sub_short": "家庭用品",
+      "sub_short_en": "Household goods",
       "row": 0,
       "relations": [
         {
@@ -100,6 +106,8 @@
       "name": "チャーチ・アンド・ドワイト",
       "sub": "日用品",
       "sub_en": "Household products",
+      "sub_short": "日用品",
+      "sub_short_en": "Household goods",
       "row": 1,
       "relations": [
         {
@@ -124,6 +132,8 @@
       "name": "ケンビュー",
       "sub": "消費者向けヘルスケア",
       "sub_en": "Consumer health",
+      "sub_short": "一般用医薬品",
+      "sub_short_en": "Consumer health",
       "row": 1,
       "relations": [
         {
@@ -148,6 +158,8 @@
       "name": "エッジウェル・パーソナルケア",
       "sub": "カミソリ・日用品",
       "sub_en": "Razors & personal care",
+      "sub_short": "カミソリ",
+      "sub_short_en": "Razors",
       "row": 1,
       "relations": [
         {
@@ -172,6 +184,8 @@
       "name": "オネスト・カンパニー",
       "sub": "ベビー・パーソナルケア",
       "sub_en": "Baby & personal care",
+      "sub_short": "ベビー",
+      "sub_short_en": "Baby care",
       "row": 1,
       "relations": [
         {
@@ -196,6 +210,8 @@
       "name": "コティ",
       "sub": "化粧品・香水",
       "sub_en": "Beauty & fragrance",
+      "sub_short": "化粧品・香水",
+      "sub_short_en": "Beauty",
       "row": 0,
       "relations": [
         {
@@ -220,6 +236,8 @@
       "name": "AMCONディストリビューティング",
       "sub": "食品・たばこ卸",
       "sub_en": "Convenience wholesale",
+      "sub_short": "食品・たばこ卸",
+      "sub_short_en": "Wholesale",
       "row": 0,
       "relations": [
         {
@@ -244,6 +262,8 @@
       "name": "スターコ・ブランズ",
       "sub": "日用品",
       "sub_en": "Household products",
+      "sub_short": "日用品",
+      "sub_short_en": "Household goods",
       "row": 1,
       "relations": [
         {

@@ -34,6 +34,8 @@
       "name_en": "Cencora",
       "sub": "医薬品卸",
       "sub_en": "Drug distribution",
+      "sub_short": "医薬品卸",
+      "sub_short_en": "Drug wholesale",
       "row": 0,
       "relations": [
         {
@@ -58,6 +60,8 @@
       "name_en": "KKR",
       "sub": "投資会社",
       "sub_en": "Investment firm",
+      "sub_short": "投資会社",
+      "sub_short_en": "Investment firm",
       "row": 1,
       "relations": [
         {
@@ -82,6 +86,8 @@
       "name_en": "Sevita (National Mentor)",
       "sub": "障害者支援サービス",
       "sub_en": "Disability services",
+      "sub_short": "障害者支援",
+      "sub_short_en": "Disability care",
       "row": 1,
       "relations": [
         {
@@ -106,6 +112,8 @@
       "name_en": "Option Care Health",
       "sub": "在宅点滴",
       "sub_en": "Home infusion",
+      "sub_short": "在宅点滴",
+      "sub_short_en": "Home infusion",
       "row": 2,
       "relations": [
         {
@@ -130,6 +138,8 @@
       "name_en": "CVS Health",
       "sub": "薬局・保険",
       "sub_en": "Pharmacy & insurance",
+      "sub_short": "薬局・保険",
+      "sub_short_en": "Pharmacy",
       "row": 2,
       "relations": [
         {
@@ -154,6 +164,8 @@
       "name_en": "Cigna",
       "sub": "医療保険",
       "sub_en": "Health insurance",
+      "sub_short": "医療保険",
+      "sub_short_en": "Health insurance",
       "row": 2,
       "relations": [
         {
@@ -178,6 +190,8 @@
       "name_en": "UnitedHealth Group",
       "sub": "医療保険",
       "sub_en": "Health insurance",
+      "sub_short": "医療保険",
+      "sub_short_en": "Health insurance",
       "row": 2,
       "relations": [
         {

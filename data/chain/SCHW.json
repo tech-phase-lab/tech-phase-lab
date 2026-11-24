@@ -33,6 +33,8 @@
       "name_en": "Forge Global",
       "sub": "未上場株の取引",
       "sub_en": "Private securities marketplace",
+      "sub_short": "未上場株の取引",
+      "sub_short_en": "Private shares",
       "row": 0,
       "relations": [
         {
@@ -57,6 +59,8 @@
       "name_en": "Toronto-Dominion Bank",
       "sub": "銀行(カナダ)",
       "sub_en": "Bank (Canada)",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
       "row": 0,
       "relations": [
         {
@@ -81,6 +85,8 @@
       "name_en": "Federal Home Loan Bank of Dallas",
       "sub": "住宅金融の公的金融機関",
       "sub_en": "Government-sponsored lender",
+      "sub_short": "住宅金融",
+      "sub_short_en": "Gov lender",
       "row": 0,
       "relations": [
         {
@@ -105,6 +111,8 @@
       "name_en": "WisdomTree",
       "sub": "ETF運用",
       "sub_en": "ETF sponsor",
+      "sub_short": "ETF運用",
+      "sub_short_en": "ETF sponsor",
       "row": 1,
       "relations": [
         {
@@ -129,6 +137,8 @@
       "name_en": "SEI Investments",
       "sub": "資産運用・事務代行",
       "sub_en": "Asset management & services",
+      "sub_short": "資産運用",
+      "sub_short_en": "Asset management",
       "row": 2,
       "relations": [
         {
@@ -153,6 +163,8 @@
       "name_en": "SS&C Technologies",
       "sub": "金融ソフトウェア",
       "sub_en": "Financial software",
+      "sub_short": "金融ソフト",
+      "sub_short_en": "Finance apps",
       "row": 2,
       "relations": [
         {
@@ -177,6 +189,8 @@
       "name_en": "Webull",
       "sub": "ネット証券",
       "sub_en": "Online brokerage",
+      "sub_short": "ネット証券",
+      "sub_short_en": "Online brokerage",
       "row": 2,
       "relations": [
         {

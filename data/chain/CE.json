@@ -24,6 +24,8 @@
       "name_en": "Mitsui & Co.",
       "sub": "総合商社",
       "sub_en": "Trading house",
+      "sub_short": "総合商社",
+      "sub_short_en": "Trading house",
       "row": 0,
       "relations": [
         {
@@ -48,6 +50,8 @@
       "name_en": "Mitsubishi Gas Chemical",
       "sub": "化学",
       "sub_en": "Chemicals",
+      "sub_short": "化学",
+      "sub_short_en": "Chemicals",
       "row": 0,
       "relations": [
         {
@@ -72,6 +76,8 @@
       "name_en": "Kureha",
       "sub": "化学",
       "sub_en": "Chemicals",
+      "sub_short": "化学",
+      "sub_short_en": "Chemicals",
       "row": 0,
       "relations": [
         {
@@ -96,6 +102,8 @@
       "name_en": "SABIC",
       "sub": "化学(サウジ)",
       "sub_en": "Chemicals (Saudi Arabia)",
+      "sub_short": "化学",
+      "sub_short_en": "Chemicals",
       "row": 0,
       "relations": [
         {
@@ -120,6 +128,8 @@
       "name_en": "DuPont",
       "sub": "化学",
       "sub_en": "Chemicals",
+      "sub_short": "化学",
+      "sub_short_en": "Chemicals",
       "row": 1,
       "relations": [
         {
@@ -144,6 +154,8 @@
       "name_en": "Glaukos",
       "sub": "眼科医療機器",
       "sub_en": "Ophthalmic devices",
+      "sub_short": "眼科医療機器",
+      "sub_short_en": "Eye devices",
       "row": 1,
       "relations": [
         {

@@ -27,6 +27,8 @@
       "name": "ウォルマート",
       "sub": "総合小売",
       "sub_en": "General retail",
+      "sub_short": "総合小売",
+      "sub_short_en": "General retail",
       "row": 0,
       "relations": [
         {
@@ -51,6 +53,8 @@
       "name": "ファミリー・ダラー",
       "sub": "均一価格小売",
       "sub_en": "Discount retail",
+      "sub_short": "均一価格小売",
+      "sub_short_en": "Discount retail",
       "row": 0,
       "relations": [
         {
@@ -75,6 +79,8 @@
       "name": "ダラー・ツリー",
       "sub": "均一価格小売",
       "sub_en": "Discount retail",
+      "sub_short": "均一価格小売",
+      "sub_short_en": "Discount retail",
       "row": 0,
       "relations": [
         {
@@ -99,6 +105,8 @@
       "name": "ワーナー・エンタープライズ",
       "sub": "トラック輸送",
       "sub_en": "Trucking",
+      "sub_short": "トラック輸送",
+      "sub_short_en": "Trucking",
       "row": 1,
       "relations": [
         {

@@ -30,6 +30,8 @@
       "name_en": "Walmart",
       "sub": "小売",
       "sub_en": "Retail",
+      "sub_short": "小売",
+      "sub_short_en": "Retail",
       "row": 0,
       "relations": [
         {
@@ -54,6 +56,8 @@
       "name_en": "Echo Lake Foods",
       "sub": "卵加工食品",
       "sub_en": "Egg-based foods",
+      "sub_short": "卵加工食品",
+      "sub_short_en": "Egg-based foods",
       "row": 1,
       "relations": [
         {
@@ -78,6 +82,8 @@
       "name_en": "Crepini Foods",
       "sub": "卵製品・調理食品",
       "sub_en": "Egg products & prepared foods",
+      "sub_short": "卵製品",
+      "sub_short_en": "Egg products",
       "row": 1,
       "relations": [
         {
@@ -102,6 +108,8 @@
       "name_en": "Sara Lee Frozen Bakery",
       "sub": "冷凍食品",
       "sub_en": "Frozen foods",
+      "sub_short": "冷凍食品",
+      "sub_short_en": "Frozen foods",
       "row": 1,
       "relations": [
         {
@@ -126,6 +134,8 @@
       "name_en": "Vital Farms",
       "sub": "放牧卵",
       "sub_en": "Pasture-raised eggs",
+      "sub_short": "放牧卵",
+      "sub_short_en": "Eggs",
       "row": 2,
       "relations": [
         {

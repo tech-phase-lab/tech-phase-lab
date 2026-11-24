@@ -33,6 +33,8 @@
       "name_en": "LCI Industries",
       "sub": "RV・船舶向け部品",
       "sub_en": "RV & marine components",
+      "sub_short": "RV・船舶部品",
+      "sub_short_en": "RV/marine parts",
       "row": 0,
       "relations": [
         {
@@ -57,6 +59,8 @@
       "name_en": "Patrick Industries",
       "sub": "RV・住宅向け部品",
       "sub_en": "RV & housing components",
+      "sub_short": "RV・住宅部品",
+      "sub_short_en": "RV/home parts",
       "row": 0,
       "relations": [
         {
@@ -81,6 +85,8 @@
       "name_en": "Lazydays",
       "sub": "RV販売店",
       "sub_en": "RV dealerships",
+      "sub_short": "RV販売店",
+      "sub_short_en": "RV dealerships",
       "row": 1,
       "relations": [
         {
@@ -105,6 +111,8 @@
       "name_en": "Thor Industries",
       "sub": "RV",
       "sub_en": "RVs",
+      "sub_short": "RV",
+      "sub_short_en": "RVs",
       "row": 2,
       "relations": [
         {
@@ -129,6 +137,8 @@
       "name_en": "REV Group",
       "sub": "特殊車両・RV",
       "sub_en": "Specialty vehicles & RVs",
+      "sub_short": "特殊車両・RV",
+      "sub_short_en": "Vehicles & RVs",
       "row": 2,
       "relations": [
         {
@@ -153,6 +163,8 @@
       "name_en": "Fox Factory",
       "sub": "サスペンション・車両改造",
       "sub_en": "Suspension & upfitting",
+      "sub_short": "サスペンション",
+      "sub_short_en": "Suspension",
       "row": 2,
       "relations": [
         {

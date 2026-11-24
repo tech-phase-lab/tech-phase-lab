@@ -28,6 +28,8 @@
       "name": "セールスフォース",
       "sub": "業務ソフト",
       "sub_en": "Business software",
+      "sub_short": "業務ソフト",
+      "sub_short_en": "Business apps",
       "row": 0,
       "relations": [
         {
@@ -52,6 +54,8 @@
       "name": "マイクロソフト",
       "sub": "ソフト・クラウド",
       "sub_en": "Software & cloud",
+      "sub_short": "ソフト",
+      "sub_short_en": "Software & cloud",
       "row": 0,
       "relations": [
         {
@@ -76,6 +80,8 @@
       "name": "サービスナウ",
       "sub": "業務ワークフロー",
       "sub_en": "Workflow software",
+      "sub_short": "業務フロー",
+      "sub_short_en": "Workflow",
       "row": 0,
       "relations": [
         {
@@ -100,6 +106,8 @@
       "name": "パロアルトネットワークス",
       "sub": "セキュリティ",
       "sub_en": "Cybersecurity",
+      "sub_short": "セキュリティ",
+      "sub_short_en": "Cybersecurity",
       "row": 0,
       "relations": [
         {
@@ -124,6 +132,8 @@
       "name": "ボックス",
       "sub": "クラウド保管",
       "sub_en": "Cloud content",
+      "sub_short": "クラウド保管",
+      "sub_short_en": "Cloud content",
       "row": 1,
       "relations": [
         {
@@ -161,6 +171,8 @@
       "name": "ドロップボックス",
       "sub": "クラウド保管",
       "sub_en": "Cloud storage",
+      "sub_short": "クラウド保管",
+      "sub_short_en": "Cloud storage",
       "row": 1,
       "relations": [
         {
@@ -185,6 +197,8 @@
       "name": "アブポイント",
       "sub": "データ管理",
       "sub_en": "Data management",
+      "sub_short": "データ管理",
+      "sub_short_en": "Data management",
       "row": 1,
       "relations": [
         {
@@ -209,6 +223,8 @@
       "name": "バロニス・システムズ",
       "sub": "データセキュリティ",
       "sub_en": "Data security",
+      "sub_short": "データ保護",
+      "sub_short_en": "Data security",
       "row": 1,
       "relations": [
         {
@@ -233,6 +249,8 @@
       "name": "OpenAI",
       "sub": "生成AI",
       "sub_en": "Generative AI",
+      "sub_short": "生成AI",
+      "sub_short_en": "Generative AI",
       "row": 2,
       "relations": [
         {
@@ -257,6 +275,8 @@
       "name": "Anthropic",
       "sub": "生成AI",
       "sub_en": "Generative AI",
+      "sub_short": "生成AI",
+      "sub_short_en": "Generative AI",
       "row": 2,
       "relations": [
         {

@@ -24,6 +24,8 @@
       "name": "マイクロソフト",
       "sub": "ソフトウェア・クラウド",
       "sub_en": "Software & cloud",
+      "sub_short": "ソフトウェア",
+      "sub_short_en": "Software & cloud",
       "row": 1,
       "relations": [
         {
@@ -48,6 +50,8 @@
       "name": "アマゾン・ウェブ・サービス",
       "sub": "クラウド基盤",
       "sub_en": "Cloud hosting",
+      "sub_short": "クラウド基盤",
+      "sub_short_en": "Cloud hosting",
       "row": 0,
       "relations": [
         {
@@ -72,6 +76,8 @@
       "name": "CCBウェルス・マネジメント",
       "sub": "中国の資産運用",
       "sub_en": "China wealth mgmt",
+      "sub_short": "中国の資産運用",
+      "sub_short_en": "China wealth",
       "row": 1,
       "relations": [
         {
@@ -96,6 +102,8 @@
       "name": "サークル",
       "sub": "ステーブルコイン",
       "sub_en": "Stablecoins",
+      "sub_short": "ステーブル通貨",
+      "sub_short_en": "Stablecoins",
       "row": 1,
       "relations": [
         {

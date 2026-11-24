@@ -28,6 +28,8 @@
       "name": "ウォルグリーン",
       "sub": "ドラッグストア",
       "sub_en": "Pharmacy chain",
+      "sub_short": "ドラッグストア",
+      "sub_short_en": "Pharmacy chain",
       "row": 0,
       "relations": [
         {
@@ -65,6 +67,8 @@
       "name": "ブーツUK",
       "sub": "ドラッグストア",
       "sub_en": "Pharmacy chain",
+      "sub_short": "ドラッグストア",
+      "sub_short_en": "Pharmacy chain",
       "row": 0,
       "relations": [
         {
@@ -89,6 +93,8 @@
       "name": "エバーノース・ヘルス・サービシズ",
       "sub": "薬剤給付管理",
       "sub_en": "Pharmacy benefit services",
+      "sub_short": "薬剤給付管理",
+      "sub_short_en": "Pharmacy benefit",
       "row": 0,
       "relations": [
         {
@@ -113,6 +119,8 @@
       "name": "ウォルグリーンズ・ブーツ・アライアンス・デベロップメント",
       "sub": "購買代行",
       "sub_en": "Purchasing services",
+      "sub_short": "購買代行",
+      "sub_short_en": "Purchasing",
       "row": 1,
       "relations": [
         {
@@ -137,6 +145,8 @@
       "name": "TPGインク",
       "sub": "投資会社",
       "sub_en": "Investment firm",
+      "sub_short": "投資会社",
+      "sub_short_en": "Investment firm",
       "row": 0,
       "relations": [
         {
@@ -161,6 +171,8 @@
       "name": "マッケソン",
       "sub": "医薬品卸",
       "sub_en": "Pharmaceutical distribution",
+      "sub_short": "医薬品卸",
+      "sub_short_en": "Drug wholesale",
       "row": 0,
       "relations": [
         {
@@ -198,6 +210,8 @@
       "name": "カーディナル・ヘルス",
       "sub": "医薬品卸",
       "sub_en": "Pharmaceutical distribution",
+      "sub_short": "医薬品卸",
+      "sub_short_en": "Drug wholesale",
       "row": 0,
       "relations": [
         {
@@ -235,6 +249,8 @@
       "name": "UPSロジスティクス",
       "sub": "物流",
       "sub_en": "Logistics",
+      "sub_short": "物流",
+      "sub_short_en": "Logistics",
       "row": 0,
       "relations": [
         {
@@ -259,6 +275,8 @@
       "name": "アムニール・ファーマシューティカルズ",
       "sub": "ジェネリック医薬品",
       "sub_en": "Generic drugs",
+      "sub_short": "後発薬",
+      "sub_short_en": "Generic drugs",
       "row": 1,
       "relations": [
         {
@@ -283,6 +301,8 @@
       "name": "ジャズ・ファーマシューティカルズ",
       "sub": "医薬品",
       "sub_en": "Pharma",
+      "sub_short": "医薬品",
+      "sub_short_en": "Pharma",
       "row": 1,
       "relations": [
         {

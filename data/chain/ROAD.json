@@ -31,6 +31,8 @@
       "name_en": "Vulcan Materials",
       "sub": "骨材・建設資材",
       "sub_en": "Aggregates",
+      "sub_short": "骨材・建設資材",
+      "sub_short_en": "Aggregates",
       "row": 0,
       "relations": [
         {
@@ -55,6 +57,8 @@
       "name_en": "P&S Paving",
       "sub": "アスファルト舗装",
       "sub_en": "Asphalt paving",
+      "sub_short": "舗装",
+      "sub_short_en": "Asphalt paving",
       "row": 0,
       "relations": [
         {
@@ -79,6 +83,8 @@
       "name_en": "Durwood Greene Construction",
       "sub": "道路舗装(テキサス)",
       "sub_en": "Road paving (Texas)",
+      "sub_short": "道路舗装",
+      "sub_short_en": "Road paving",
       "row": 0,
       "relations": [
         {
@@ -103,6 +109,8 @@
       "name_en": "G&S Asphalt (American Materials)",
       "sub": "アスファルト",
       "sub_en": "Asphalt",
+      "sub_short": "アスファルト",
+      "sub_short_en": "Asphalt",
       "row": 0,
       "relations": [
         {
@@ -127,6 +135,8 @@
       "name_en": "SunTx Capital",
       "sub": "投資会社",
       "sub_en": "Private equity",
+      "sub_short": "投資会社",
+      "sub_short_en": "Private equity",
       "row": 1,
       "relations": [
         {
@@ -151,6 +161,8 @@
       "name_en": "Knife River",
       "sub": "骨材・建設資材",
       "sub_en": "Aggregates & construction materials",
+      "sub_short": "骨材・建設資材",
+      "sub_short_en": "Aggregates",
       "row": 2,
       "relations": [
         {

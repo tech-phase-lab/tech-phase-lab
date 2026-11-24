@@ -26,6 +26,8 @@
       "name": "コカ・コーラ",
       "sub": "飲料の供給元",
       "sub_en": "Beverage supplier",
+      "sub_short": "飲料の供給元",
+      "sub_short_en": "Beverages",
       "row": 1,
       "relations": [
         {
@@ -50,6 +52,8 @@
       "name": "ウーバー・テクノロジーズ",
       "sub": "宅配プラットフォーム",
       "sub_en": "Delivery platform",
+      "sub_short": "宅配",
+      "sub_short_en": "Delivery",
       "row": 0,
       "relations": [
         {
@@ -74,6 +78,8 @@
       "name": "ドアダッシュ",
       "sub": "宅配プラットフォーム",
       "sub_en": "Delivery platform",
+      "sub_short": "宅配",
+      "sub_short_en": "Delivery",
       "row": 0,
       "relations": [
         {
@@ -98,6 +104,8 @@
       "name": "ピザハット",
       "sub": "ピザチェーン",
       "sub_en": "Pizza chain",
+      "sub_short": "ピザチェーン",
+      "sub_short_en": "Pizza chain",
       "row": 0,
       "relations": [
         {
@@ -122,6 +130,8 @@
       "name": "パパジョンズ",
       "sub": "ピザチェーン",
       "sub_en": "Pizza chain",
+      "sub_short": "ピザチェーン",
+      "sub_short_en": "Pizza chain",
       "row": 0,
       "relations": [
         {
@@ -146,6 +156,8 @@
       "name": "リトル・シーザーズ・ピザ",
       "sub": "ピザチェーン",
       "sub_en": "Pizza chain",
+      "sub_short": "ピザチェーン",
+      "sub_short_en": "Pizza chain",
       "row": 0,
       "relations": [
         {

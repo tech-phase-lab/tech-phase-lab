@@ -28,6 +28,8 @@
       "name_en": "Carvana",
       "sub": "中古車EC",
       "sub_en": "Online used cars",
+      "sub_short": "中古車EC",
+      "sub_short_en": "Online used cars",
       "row": 0,
       "relations": [
         {
@@ -52,6 +54,8 @@
       "name_en": "Mediaco",
       "sub": "ラジオ・メディア",
       "sub_en": "Radio & media",
+      "sub_short": "ラジオ",
+      "sub_short_en": "Radio & media",
       "row": 0,
       "relations": [
         {
@@ -76,6 +80,8 @@
       "name_en": "BitMine Immersion Technologies",
       "sub": "暗号資産",
       "sub_en": "Crypto treasury",
+      "sub_short": "暗号資産",
+      "sub_short_en": "Crypto treasury",
       "row": 0,
       "relations": [
         {
@@ -100,6 +106,8 @@
       "name_en": "Office Properties Income Trust",
       "sub": "オフィスREIT",
       "sub_en": "Office REIT",
+      "sub_short": "オフィスREIT",
+      "sub_short_en": "Office REIT",
       "row": 0,
       "relations": [
         {
@@ -124,6 +132,8 @@
       "name_en": "Vireo Growth",
       "sub": "大麻",
       "sub_en": "Cannabis",
+      "sub_short": "大麻",
+      "sub_short_en": "Cannabis",
       "row": 0,
       "relations": [
         {
@@ -148,6 +158,8 @@
       "name_en": "Evercore",
       "sub": "投資銀行(独立系)",
       "sub_en": "Independent investment bank",
+      "sub_short": "投資銀行",
+      "sub_short_en": "Investment bank",
       "row": 1,
       "relations": [
         {
@@ -172,6 +184,8 @@
       "name_en": "Houlihan Lokey",
       "sub": "投資銀行(独立系)",
       "sub_en": "Independent investment bank",
+      "sub_short": "投資銀行",
+      "sub_short_en": "Investment bank",
       "row": 1,
       "relations": [
         {
@@ -196,6 +210,8 @@
       "name_en": "B. Riley Financial",
       "sub": "投資銀行・資産運用",
       "sub_en": "Investment banking & asset management",
+      "sub_short": "投資銀行",
+      "sub_short_en": "Investment bank",
       "row": 1,
       "relations": [
         {
@@ -220,6 +236,8 @@
       "name_en": "Lincoln International",
       "sub": "M&A助言",
       "sub_en": "M&A advisory",
+      "sub_short": "M&A助言",
+      "sub_short_en": "M&A advisory",
       "row": 1,
       "relations": [
         {

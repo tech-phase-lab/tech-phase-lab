@@ -26,6 +26,8 @@
       "name": "アマゾン・ドット・コム",
       "sub": "EC小売",
       "sub_en": "E-commerce",
+      "sub_short": "EC小売",
+      "sub_short_en": "E-commerce",
       "row": 0,
       "relations": [
         {
@@ -50,6 +52,8 @@
       "name": "ウォルマート",
       "sub": "小売",
       "sub_en": "Retail",
+      "sub_short": "小売",
+      "sub_short_en": "Retail",
       "row": 0,
       "relations": [
         {
@@ -74,6 +78,8 @@
       "name": "ウォルト・ディズニー",
       "sub": "ライセンス提供元",
       "sub_en": "Licensor",
+      "sub_short": "ライセンス元",
+      "sub_short_en": "Licensor",
       "row": 0,
       "relations": [
         {
@@ -98,6 +104,8 @@
       "name": "スコープリー",
       "sub": "モバイルゲーム",
       "sub_en": "Mobile games",
+      "sub_short": "モバイルゲーム",
+      "sub_short_en": "Mobile games",
       "row": 0,
       "relations": [
         {
@@ -122,6 +130,8 @@
       "name": "ラリアン・スタジオ",
       "sub": "ゲーム開発",
       "sub_en": "Game development",
+      "sub_short": "ゲーム開発",
+      "sub_short_en": "Game development",
       "row": 0,
       "relations": [
         {
@@ -146,6 +156,8 @@
       "name": "マーリン・エンターテインメント",
       "sub": "テーマパーク",
       "sub_en": "Theme parks",
+      "sub_short": "テーマパーク",
+      "sub_short_en": "Theme parks",
       "row": 0,
       "relations": [
         {
@@ -170,6 +182,8 @@
       "name": "マテル",
       "sub": "玩具",
       "sub_en": "Toys",
+      "sub_short": "玩具",
+      "sub_short_en": "Toys",
       "row": 1,
       "relations": [
         {
@@ -194,6 +208,8 @@
       "name": "ジャックス・パシフィック",
       "sub": "玩具",
       "sub_en": "Toys",
+      "sub_short": "玩具",
+      "sub_short_en": "Toys",
       "row": 1,
       "relations": [
         {

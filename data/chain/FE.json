@@ -19,6 +19,8 @@
       "name": "ブルックフィールド",
       "sub": "インフラ投資家",
       "sub_en": "Infrastructure investor",
+      "sub_short": "インフラ投資家",
+      "sub_short_en": "Infra investing",
       "row": 0,
       "relations": [
         {
@@ -43,6 +45,8 @@
       "name": "ドミニオン・エナジー",
       "sub": "電力会社",
       "sub_en": "Electric utility",
+      "sub_short": "電力会社",
+      "sub_short_en": "Electric utility",
       "row": 0,
       "relations": [
         {
@@ -67,6 +71,8 @@
       "name": "アメリカン・エレクトリック・パワー(トランスソース)",
       "sub": "電力会社",
       "sub_en": "Electric utility",
+      "sub_short": "電力会社",
+      "sub_short_en": "Electric utility",
       "row": 0,
       "relations": [
         {

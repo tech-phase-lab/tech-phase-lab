@@ -31,6 +31,8 @@
       "name_en": "Oncor Electric Delivery",
       "sub": "送配電(テキサス)",
       "sub_en": "Transmission & distribution (Texas)",
+      "sub_short": "送配電",
+      "sub_short_en": "Transmission",
       "row": 0,
       "relations": [
         {
@@ -55,6 +57,8 @@
       "name_en": "American Electric Power",
       "sub": "電力",
       "sub_en": "Electric utility",
+      "sub_short": "電力",
+      "sub_short_en": "Electric utility",
       "row": 0,
       "relations": [
         {
@@ -79,6 +83,8 @@
       "name_en": "LS Power",
       "sub": "発電投資会社",
       "sub_en": "Power generation investor",
+      "sub_short": "発電投資会社",
+      "sub_short_en": "Power investing",
       "row": 1,
       "relations": [
         {
@@ -103,6 +109,8 @@
       "name_en": "Vivint",
       "sub": "スマートホーム",
       "sub_en": "Smart home",
+      "sub_short": "スマートホーム",
+      "sub_short_en": "Smart home",
       "row": 1,
       "relations": [
         {
@@ -127,6 +135,8 @@
       "name_en": "Rockland Capital",
       "sub": "発電投資会社",
       "sub_en": "Power generation investor",
+      "sub_short": "発電投資会社",
+      "sub_short_en": "Power investing",
       "row": 1,
       "relations": [
         {
@@ -151,6 +161,8 @@
       "name_en": "Clearway Energy",
       "sub": "再エネ発電",
       "sub_en": "Renewable generation",
+      "sub_short": "再エネ発電",
+      "sub_short_en": "Renewables",
       "row": 1,
       "relations": [
         {
@@ -175,6 +187,8 @@
       "name_en": "Constellation Energy",
       "sub": "発電・小売",
       "sub_en": "Generation & retail",
+      "sub_short": "発電・小売",
+      "sub_short_en": "Power & retail",
       "row": 1,
       "relations": [
         {
@@ -199,6 +213,8 @@
       "name_en": "Via Renewables",
       "sub": "電力・ガス小売",
       "sub_en": "Energy retail",
+      "sub_short": "電力・ガス小売",
+      "sub_short_en": "Energy retail",
       "row": 2,
       "relations": [
         {

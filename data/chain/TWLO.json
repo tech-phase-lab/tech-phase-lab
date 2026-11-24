@@ -36,6 +36,8 @@
       "name": "アマゾン",
       "sub": "クラウド",
       "sub_en": "Cloud",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 0,
       "relations": [
         {
@@ -60,6 +62,8 @@
       "name": "リングセントラル",
       "sub": "クラウド通信",
       "sub_en": "Cloud communications",
+      "sub_short": "クラウド通信",
+      "sub_short_en": "Cloud comms",
       "row": 1,
       "relations": [
         {
@@ -84,6 +88,8 @@
       "name": "8x8",
       "sub": "クラウド通信",
       "sub_en": "Cloud communications",
+      "sub_short": "クラウド通信",
+      "sub_short_en": "Cloud comms",
       "row": 1,
       "relations": [
         {
@@ -106,6 +112,8 @@
       "name": "マイクロソフト",
       "sub": "ソフト・クラウド",
       "sub_en": "Software & cloud",
+      "sub_short": "ソフト",
+      "sub_short_en": "Software & cloud",
       "row": 3,
       "relations": [
         {
@@ -130,6 +138,8 @@
       "name": "アルファベット(Google Cloud)",
       "sub": "クラウド",
       "sub_en": "Cloud",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 3,
       "relations": [
         {
@@ -171,6 +181,8 @@
       "name": "OpenAI",
       "sub": "生成AI",
       "sub_en": "Generative AI",
+      "sub_short": "生成AI",
+      "sub_short_en": "Generative AI",
       "row": 3,
       "relations": [
         {
@@ -196,6 +208,8 @@
       "name": "Snowflake",
       "sub": "データクラウド",
       "sub_en": "Data cloud",
+      "sub_short": "データクラウド",
+      "sub_short_en": "Data cloud",
       "row": 3,
       "relations": [
         {
@@ -221,6 +235,8 @@
       "name": "AT&T",
       "sub": "携帯通信",
       "sub_en": "Wireless carrier",
+      "sub_short": "携帯通信",
+      "sub_short_en": "Wireless carrier",
       "row": 2,
       "relations": [
         {
@@ -246,6 +262,8 @@
       "name": "T-Mobile US",
       "sub": "通信",
       "sub_en": "Telecom",
+      "sub_short": "通信",
+      "sub_short_en": "Telecom",
       "row": 2,
       "relations": [
         {
@@ -271,6 +289,8 @@
       "name": "ベライゾン",
       "sub": "携帯通信",
       "sub_en": "Wireless carrier",
+      "sub_short": "携帯通信",
+      "sub_short_en": "Wireless carrier",
       "row": 2,
       "relations": [
         {

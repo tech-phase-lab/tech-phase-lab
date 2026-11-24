@@ -24,6 +24,8 @@
       "name": "ラムリサーチ",
       "sub": "半導体製造装置",
       "sub_en": "Semiconductor equipment",
+      "sub_short": "半導体製造装置",
+      "sub_short_en": "Chip equipment",
       "row": 0,
       "relations": [
         {
@@ -74,6 +76,8 @@
       "name": "アプライド マテリアルズ",
       "sub": "半導体製造装置",
       "sub_en": "Semiconductor equipment",
+      "sub_short": "半導体製造装置",
+      "sub_short_en": "Chip equipment",
       "row": 0,
       "relations": [
         {
@@ -124,6 +128,8 @@
       "name": "ASML",
       "sub": "半導体製造装置",
       "sub_en": "Semiconductor equipment",
+      "sub_short": "半導体製造装置",
+      "sub_short_en": "Chip equipment",
       "row": 0,
       "relations": [
         {
@@ -147,6 +153,8 @@
       "name": "ウルトラクリーン・ホールディングス",
       "sub": "半導体装置サブシステム",
       "sub_en": "Semiconductor equipment subsystems",
+      "sub_short": "装置部品",
+      "sub_short_en": "Chip tool parts",
       "row": 1,
       "relations": [
         {

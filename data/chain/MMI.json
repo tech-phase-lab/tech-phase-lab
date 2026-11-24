@@ -30,6 +30,8 @@
       "name_en": "M&T Bank",
       "sub": "銀行(M&Tリアルティ・キャピタル)",
       "sub_en": "Bank (M&T Realty Capital)",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
       "row": 0,
       "relations": [
         {
@@ -54,6 +56,8 @@
       "name_en": "Fannie Mae",
       "sub": "住宅金融公社",
       "sub_en": "Government-sponsored mortgage agency",
+      "sub_short": "住宅金融公社",
+      "sub_short_en": "Gov mortgage",
       "row": 0,
       "relations": [
         {
@@ -78,6 +82,8 @@
       "name_en": "Wells Fargo",
       "sub": "銀行",
       "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
       "row": 0,
       "relations": [
         {
@@ -102,6 +108,8 @@
       "name_en": "CBRE Group",
       "sub": "商業不動産サービス",
       "sub_en": "Commercial real estate services",
+      "sub_short": "商業不動産",
+      "sub_short_en": "Commercial RE",
       "row": 1,
       "relations": [
         {
@@ -126,6 +134,8 @@
       "name_en": "Colliers International",
       "sub": "商業不動産サービス(加)",
       "sub_en": "Commercial real estate services (Canada)",
+      "sub_short": "商業不動産",
+      "sub_short_en": "Commercial RE",
       "row": 1,
       "relations": [
         {
@@ -150,6 +160,8 @@
       "name_en": "Cushman & Wakefield",
       "sub": "商業不動産サービス",
       "sub_en": "Commercial real estate services",
+      "sub_short": "商業不動産",
+      "sub_short_en": "Commercial RE",
       "row": 1,
       "relations": [
         {
@@ -174,6 +186,8 @@
       "name_en": "Jones Lang LaSalle",
       "sub": "商業不動産サービス",
       "sub_en": "Commercial real estate services",
+      "sub_short": "商業不動産",
+      "sub_short_en": "Commercial RE",
       "row": 1,
       "relations": [
         {
@@ -198,6 +212,8 @@
       "name_en": "Newmark Group",
       "sub": "商業不動産サービス",
       "sub_en": "Commercial real estate services",
+      "sub_short": "商業不動産",
+      "sub_short_en": "Commercial RE",
       "row": 1,
       "relations": [
         {

@@ -34,6 +34,8 @@
       "name_en": "Syntiant",
       "sub": "エッジAI半導体",
       "sub_en": "Edge AI chips",
+      "sub_short": "エッジAI半導体",
+      "sub_short_en": "Edge AI chips",
       "row": 0,
       "relations": [
         {
@@ -58,6 +60,8 @@
       "name_en": "Best Buy",
       "sub": "家電量販店",
       "sub_en": "Electronics retail",
+      "sub_short": "家電量販店",
+      "sub_short_en": "Electronics shop",
       "row": 1,
       "relations": [
         {
@@ -82,6 +86,8 @@
       "name_en": "Amazon",
       "sub": "ネット通販",
       "sub_en": "E-commerce",
+      "sub_short": "ネット通販",
+      "sub_short_en": "E-commerce",
       "row": 1,
       "relations": [
         {
@@ -106,6 +112,8 @@
       "name_en": "NETGEAR",
       "sub": "ネットワーク機器",
       "sub_en": "Networking equipment",
+      "sub_short": "通信機器",
+      "sub_short_en": "Network gear",
       "row": 1,
       "relations": [
         {
@@ -130,6 +138,8 @@
       "name_en": "Logitech",
       "sub": "PC周辺機器・オーディオ",
       "sub_en": "PC peripherals & audio",
+      "sub_short": "PC周辺機器",
+      "sub_short_en": "PC peripherals",
       "row": 2,
       "relations": [
         {
@@ -154,6 +164,8 @@
       "name_en": "Xperi",
       "sub": "映像・音響技術",
       "sub_en": "Media & audio technology",
+      "sub_short": "映像・音響技術",
+      "sub_short_en": "Audio & video",
       "row": 2,
       "relations": [
         {
@@ -178,6 +190,8 @@
       "name_en": "Masimo",
       "sub": "医療機器・オーディオ",
       "sub_en": "Medical devices & audio",
+      "sub_short": "医療機器",
+      "sub_short_en": "Medical devices",
       "row": 2,
       "relations": [
         {
@@ -202,6 +216,8 @@
       "name_en": "Gentex",
       "sub": "車載ミラー・電子機器",
       "sub_en": "Auto mirrors & electronics",
+      "sub_short": "車載電子機器",
+      "sub_short_en": "Auto mirrors",
       "row": 2,
       "relations": [
         {
@@ -226,6 +242,8 @@
       "name_en": "Vizio",
       "sub": "テレビ・サウンドバー",
       "sub_en": "TVs & sound bars",
+      "sub_short": "テレビ",
+      "sub_short_en": "TVs & sound bars",
       "row": 2,
       "relations": [
         {

@@ -31,6 +31,8 @@
       "name_en": "Cboe Global Markets",
       "sub": "取引所",
       "sub_en": "Exchanges",
+      "sub_short": "取引所",
+      "sub_short_en": "Exchanges",
       "row": 0,
       "relations": [
         {
@@ -55,6 +57,8 @@
       "name_en": "Corpay",
       "sub": "法人決済",
       "sub_en": "Corporate payments",
+      "sub_short": "法人決済",
+      "sub_short_en": "Corp payments",
       "row": 1,
       "relations": [
         {
@@ -79,6 +83,8 @@
       "name_en": "Lumen Technologies",
       "sub": "通信",
       "sub_en": "Telecom",
+      "sub_short": "通信",
+      "sub_short_en": "Telecom",
       "row": 1,
       "relations": [
         {
@@ -103,6 +109,8 @@
       "name_en": "Asbury Automotive",
       "sub": "自動車ディーラー",
       "sub_en": "Auto dealers",
+      "sub_short": "車ディーラー",
+      "sub_short_en": "Auto dealers",
       "row": 1,
       "relations": [
         {
@@ -127,6 +135,8 @@
       "name_en": "KB Home",
       "sub": "住宅建設",
       "sub_en": "Homebuilding",
+      "sub_short": "住宅建設",
+      "sub_short_en": "Homebuilding",
       "row": 1,
       "relations": [
         {
@@ -151,6 +161,8 @@
       "name_en": "Masimo",
       "sub": "医療機器",
       "sub_en": "Medical devices",
+      "sub_short": "医療機器",
+      "sub_short_en": "Medical devices",
       "row": 1,
       "relations": [
         {
@@ -175,6 +187,8 @@
       "name_en": "AllianceBernstein",
       "sub": "資産運用",
       "sub_en": "Asset management",
+      "sub_short": "資産運用",
+      "sub_short_en": "Asset management",
       "row": 1,
       "relations": [
         {
@@ -199,6 +213,8 @@
       "name_en": "General Mills",
       "sub": "食品",
       "sub_en": "Packaged foods",
+      "sub_short": "食品",
+      "sub_short_en": "Packaged foods",
       "row": 1,
       "relations": [
         {
@@ -223,6 +239,8 @@
       "name_en": "Citizens Financial Group",
       "sub": "銀行",
       "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
       "row": 2,
       "relations": [
         {

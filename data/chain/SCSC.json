@@ -28,6 +28,8 @@
       "name": "シスコシステムズ",
       "sub": "ネットワーク機器",
       "sub_en": "Networking gear",
+      "sub_short": "通信機器",
+      "sub_short_en": "Networking gear",
       "row": 0,
       "relations": [
         {
@@ -52,6 +54,8 @@
       "name": "ゼブラ・テクノロジーズ",
       "sub": "バーコード機器",
       "sub_en": "Barcode & mobile devices",
+      "sub_short": "バーコード機器",
+      "sub_short_en": "Barcode scanners",
       "row": 0,
       "relations": [
         {
@@ -76,6 +80,8 @@
       "name": "マイクロソフト",
       "sub": "ソフト・クラウド",
       "sub_en": "Software & cloud",
+      "sub_short": "ソフト",
+      "sub_short_en": "Software & cloud",
       "row": 0,
       "relations": [
         {
@@ -100,6 +106,8 @@
       "name": "デル・テクノロジーズ",
       "sub": "PC・サーバー",
       "sub_en": "PCs & servers",
+      "sub_short": "PC・サーバー",
+      "sub_short_en": "PCs & servers",
       "row": 0,
       "relations": [
         {
@@ -124,6 +132,8 @@
       "name": "フォーティネット",
       "sub": "セキュリティ",
       "sub_en": "Cybersecurity",
+      "sub_short": "セキュリティ",
+      "sub_short_en": "Cybersecurity",
       "row": 0,
       "relations": [
         {
@@ -148,6 +158,8 @@
       "name": "ハネウェル",
       "sub": "産業機器",
       "sub_en": "Industrial equipment",
+      "sub_short": "産業機器",
+      "sub_short_en": "Industrial gear",
       "row": 0,
       "relations": [
         {
@@ -172,6 +184,8 @@
       "name": "AT&Tインク",
       "sub": "通信",
       "sub_en": "Telecom",
+      "sub_short": "通信",
+      "sub_short_en": "Telecom",
       "row": 0,
       "relations": [
         {
@@ -196,6 +210,8 @@
       "name": "ベライゾン",
       "sub": "通信",
       "sub_en": "Telecom",
+      "sub_short": "通信",
+      "sub_short_en": "Telecom",
       "row": 0,
       "relations": [
         {
@@ -220,6 +236,8 @@
       "name": "ズーム・コミュニケーションズ",
       "sub": "Web会議",
       "sub_en": "Video conferencing",
+      "sub_short": "Web会議",
+      "sub_short_en": "Video calls",
       "row": 0,
       "relations": [
         {
@@ -244,6 +262,8 @@
       "name": "ヒューレット・パッカード・エンタープライズ",
       "sub": "ネットワーク・サーバー",
       "sub_en": "Networking & servers",
+      "sub_short": "ネットワーク",
+      "sub_short_en": "Networking",
       "row": 0,
       "relations": [
         {
@@ -268,6 +288,8 @@
       "name": "イングラム・マイクロ",
       "sub": "IT流通",
       "sub_en": "IT distribution",
+      "sub_short": "IT流通",
+      "sub_short_en": "IT distribution",
       "row": 1,
       "relations": [
         {
@@ -292,6 +314,8 @@
       "name": "TDシンネックス",
       "sub": "IT流通",
       "sub_en": "IT distribution",
+      "sub_short": "IT流通",
+      "sub_short_en": "IT distribution",
       "row": 1,
       "relations": [
         {
@@ -316,6 +340,8 @@
       "name": "ウェスコ・インターナショナル",
       "sub": "電材流通",
       "sub_en": "Electrical distribution",
+      "sub_short": "電材流通",
+      "sub_short_en": "Electrical goods",
       "row": 1,
       "relations": [
         {

@@ -27,6 +27,8 @@
       "name": "ファイブナイン",
       "sub": "コンタクトセンター",
       "sub_en": "Contact center",
+      "sub_short": "コールセンター",
+      "sub_short_en": "Contact center",
       "row": 0,
       "relations": [
         {
@@ -50,6 +52,8 @@
       "name": "シスコシステムズ",
       "sub": "ネットワーク機器",
       "sub_en": "Networking",
+      "sub_short": "通信機器",
+      "sub_short_en": "Networking",
       "row": 0,
       "relations": [
         {
@@ -87,6 +91,8 @@
       "name": "アマゾン",
       "sub": "クラウド",
       "sub_en": "Cloud",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 0,
       "relations": [
         {
@@ -111,6 +117,8 @@
       "name": "セールスフォース",
       "sub": "CRM",
       "sub_en": "CRM software",
+      "sub_short": "CRM",
+      "sub_short_en": "CRM software",
       "row": 0,
       "relations": [
         {
@@ -146,6 +154,8 @@
       "name": "OpenAI",
       "sub": "生成AI",
       "sub_en": "Generative AI",
+      "sub_short": "生成AI",
+      "sub_short_en": "Generative AI",
       "row": 0,
       "relations": [
         {
@@ -186,6 +196,8 @@
       "name": "リングセントラル",
       "sub": "クラウド通信",
       "sub_en": "Cloud communications",
+      "sub_short": "クラウド通信",
+      "sub_short_en": "Cloud comms",
       "row": 1,
       "relations": [
         {
@@ -210,6 +222,8 @@
       "name": "バンク・オブ・アメリカ",
       "sub": "銀行",
       "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
       "row": 2,
       "relations": [
         {

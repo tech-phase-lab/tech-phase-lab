@@ -36,6 +36,8 @@
       "name": "ビアビ・ソリューションズ",
       "sub": "試験・測定機器",
       "sub_en": "Test & measurement",
+      "sub_short": "試験・測定機器",
+      "sub_short_en": "Test equipment",
       "row": 0,
       "relations": [
         {
@@ -60,6 +62,8 @@
       "name": "AT&T",
       "sub": "通信事業者",
       "sub_en": "Telecom carrier",
+      "sub_short": "通信事業者",
+      "sub_short_en": "Telecom carrier",
       "row": 1,
       "relations": [
         {
@@ -96,6 +100,8 @@
       "name": "バンク・オブ・アメリカ",
       "sub": "銀行",
       "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
       "row": 2,
       "relations": [
         {
@@ -135,6 +141,8 @@
       "name": "シスコシステムズ",
       "sub": "ネットワーク機器",
       "sub_en": "Networking equipment",
+      "sub_short": "通信機器",
+      "sub_short_en": "Network gear",
       "row": 3,
       "relations": [
         {
@@ -172,6 +180,8 @@
       "name": "ノキア",
       "sub": "通信機器",
       "sub_en": "Telecom equipment",
+      "sub_short": "通信機器",
+      "sub_short_en": "Telecom gear",
       "row": 3,
       "relations": [
         {
@@ -196,6 +206,8 @@
       "name": "ヒューレット・パッカード・エンタープライズ",
       "sub": "IT機器",
       "sub_en": "IT infrastructure",
+      "sub_short": "IT機器",
+      "sub_short_en": "IT infra",
       "row": 3,
       "relations": [
         {
@@ -220,6 +232,8 @@
       "name": "ブロードコム",
       "sub": "半導体",
       "sub_en": "Semiconductors",
+      "sub_short": "半導体",
+      "sub_short_en": "Semiconductors",
       "row": 3,
       "relations": [
         {

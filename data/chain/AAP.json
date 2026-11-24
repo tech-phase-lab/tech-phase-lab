@@ -33,6 +33,8 @@
       "name_en": "Motorcar Parts of America",
       "sub": "再生部品",
       "sub_en": "Remanufactured parts",
+      "sub_short": "再生部品",
+      "sub_short_en": "Reman parts",
       "row": 0,
       "relations": [
         {
@@ -57,6 +59,8 @@
       "name_en": "1847 Holdings",
       "sub": "持株会社(部品など)",
       "sub_en": "Holding company",
+      "sub_short": "持株会社",
+      "sub_short_en": "Holding company",
       "row": 0,
       "relations": [
         {
@@ -81,6 +85,8 @@
       "name_en": "Worldpac",
       "sub": "輸入車部品の卸",
       "sub_en": "Import parts wholesale",
+      "sub_short": "輸入車部品の卸",
+      "sub_short_en": "Import parts",
       "row": 1,
       "relations": [
         {
@@ -105,6 +111,8 @@
       "name_en": "General Parts International",
       "sub": "部品卸(Carquest)",
       "sub_en": "Parts distribution (Carquest)",
+      "sub_short": "部品卸",
+      "sub_short_en": "Auto parts",
       "row": 1,
       "relations": [
         {
@@ -129,6 +137,8 @@
       "name_en": "FrontView REIT",
       "sub": "ネットリースREIT",
       "sub_en": "Net lease REIT",
+      "sub_short": "ネットリース",
+      "sub_short_en": "Net lease REIT",
       "row": 1,
       "relations": [
         {
@@ -153,6 +163,8 @@
       "name_en": "AEI Income & Growth Fund 25",
       "sub": "不動産ファンド",
       "sub_en": "Real estate fund",
+      "sub_short": "不動産ファンド",
+      "sub_short_en": "Real estate fund",
       "row": 1,
       "relations": [
         {
@@ -177,6 +189,8 @@
       "name_en": "O'Reilly Automotive",
       "sub": "自動車部品小売",
       "sub_en": "Auto parts retail",
+      "sub_short": "自動車部品小売",
+      "sub_short_en": "Auto parts",
       "row": 2,
       "relations": [
         {
@@ -201,6 +215,8 @@
       "name_en": "Genuine Parts",
       "sub": "自動車・産業部品",
       "sub_en": "Auto & industrial parts",
+      "sub_short": "自動車部品",
+      "sub_short_en": "Auto parts",
       "row": 2,
       "relations": [
         {
@@ -225,6 +241,8 @@
       "name_en": "CarParts.com",
       "sub": "自動車部品EC",
       "sub_en": "Online auto parts",
+      "sub_short": "自動車部品EC",
+      "sub_short_en": "Auto parts",
       "row": 2,
       "relations": [
         {

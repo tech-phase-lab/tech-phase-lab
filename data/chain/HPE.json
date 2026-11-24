@@ -38,6 +38,8 @@
       "name": "AMD",
       "sub": "半導体",
       "sub_en": "Semiconductors",
+      "sub_short": "半導体",
+      "sub_short_en": "Semiconductors",
       "row": 0,
       "relations": [
         {
@@ -63,6 +65,8 @@
       "name": "インテル",
       "sub": "半導体",
       "sub_en": "Semiconductors",
+      "sub_short": "半導体",
+      "sub_short_en": "Semiconductors",
       "row": 0,
       "relations": [
         {
@@ -89,6 +93,8 @@
       "name": "ブロードコム",
       "sub": "半導体",
       "sub_en": "Semiconductors",
+      "sub_short": "半導体",
+      "sub_short_en": "Semiconductors",
       "row": 0,
       "relations": [
         {
@@ -128,6 +134,8 @@
       "name": "NVIDIA",
       "sub": "AI半導体",
       "sub_en": "AI chips",
+      "sub_short": "AI半導体",
+      "sub_short_en": "AI chips",
       "row": 0,
       "relations": [
         {
@@ -153,6 +161,8 @@
       "name": "HP",
       "sub": "PC・プリンター",
       "sub_en": "PCs & printers",
+      "sub_short": "PC・印刷機",
+      "sub_short_en": "PCs & printers",
       "row": 1,
       "relations": [
         {
@@ -189,6 +199,8 @@
       "name": "DXCテクノロジー",
       "sub": "ITサービス",
       "sub_en": "IT services",
+      "sub_short": "ITサービス",
+      "sub_short_en": "IT services",
       "row": 1,
       "relations": [
         {
@@ -226,6 +238,8 @@
       "name": "JPモルガン・チェース",
       "sub": "銀行",
       "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
       "row": 2,
       "relations": [
         {
@@ -265,6 +279,8 @@
       "name": "アリスタネットワークス",
       "sub": "データセンター・ネットワーク",
       "sub_en": "Data center networking",
+      "sub_short": "データセンター",
+      "sub_short_en": "DC networking",
       "row": 3,
       "relations": [
         {
@@ -302,6 +318,8 @@
       "name": "シスコシステムズ",
       "sub": "ネットワーク機器",
       "sub_en": "Networking equipment",
+      "sub_short": "通信機器",
+      "sub_short_en": "Network gear",
       "row": 3,
       "relations": [
         {
@@ -326,6 +344,8 @@
       "name": "IBM",
       "sub": "IT・ソフト",
       "sub_en": "IT & software",
+      "sub_short": "IT・ソフト",
+      "sub_short_en": "IT & software",
       "row": 3,
       "relations": [
         {
@@ -364,6 +384,8 @@
       "name": "シエナ",
       "sub": "光ネットワーク",
       "sub_en": "Optical networking",
+      "sub_short": "光ネットワーク",
+      "sub_short_en": "Optical nets",
       "row": 3,
       "relations": [
         {
@@ -388,6 +410,8 @@
       "name": "フォーティネット",
       "sub": "セキュリティ",
       "sub_en": "Cybersecurity",
+      "sub_short": "セキュリティ",
+      "sub_short_en": "Cybersecurity",
       "row": 3,
       "relations": [
         {
@@ -412,6 +436,8 @@
       "name": "ニュータニックス",
       "sub": "ハイパーコンバージド基盤",
       "sub_en": "Hyperconverged infrastructure",
+      "sub_short": "HCI",
+      "sub_short_en": "HCI",
       "row": 3,
       "relations": [
         {
@@ -436,6 +462,8 @@
       "name": "ビスタンス・ネットワークス",
       "sub": "ネットワーク機器",
       "sub_en": "Networking equipment",
+      "sub_short": "通信機器",
+      "sub_short_en": "Network gear",
       "row": 3,
       "relations": [
         {

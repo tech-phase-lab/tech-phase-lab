@@ -32,6 +32,8 @@
       "name": "OpenAI",
       "sub": "生成AI",
       "sub_en": "Generative AI",
+      "sub_short": "生成AI",
+      "sub_short_en": "Generative AI",
       "row": 0,
       "relations": [
         {
@@ -57,6 +59,8 @@
       "name": "JPモルガン・チェース",
       "sub": "銀行",
       "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
       "row": 1,
       "relations": [
         {
@@ -96,6 +100,8 @@
       "name": "Apple",
       "sub": "スマートフォン・端末",
       "sub_en": "Devices",
+      "sub_short": "スマートフォン",
+      "sub_short_en": "Devices",
       "row": 2,
       "relations": [
         {
@@ -132,6 +138,8 @@
       "name": "アルファベット(Google)",
       "sub": "検索・クラウド",
       "sub_en": "Search & cloud",
+      "sub_short": "検索・クラウド",
+      "sub_short_en": "Search & cloud",
       "row": 2,
       "relations": [
         {
@@ -156,6 +164,8 @@
       "name": "メタ・プラットフォームズ",
       "sub": "SNS",
       "sub_en": "Social media",
+      "sub_short": "SNS",
+      "sub_short_en": "Social media",
       "row": 2,
       "relations": [
         {
@@ -180,6 +190,8 @@
       "name": "ピンタレスト",
       "sub": "画像SNS",
       "sub_en": "Visual social",
+      "sub_short": "画像SNS",
+      "sub_short_en": "Visual social",
       "row": 2,
       "relations": [
         {
@@ -204,6 +216,8 @@
       "name": "レディット",
       "sub": "掲示板・SNS",
       "sub_en": "Social platform",
+      "sub_short": "掲示板・SNS",
+      "sub_short_en": "Social platform",
       "row": 2,
       "relations": [
         {
@@ -228,6 +242,8 @@
       "name": "ロブロックス",
       "sub": "ゲームプラットフォーム",
       "sub_en": "Gaming platform",
+      "sub_short": "ゲーム基盤",
+      "sub_short_en": "Gaming platform",
       "row": 2,
       "relations": [
         {
@@ -252,6 +268,8 @@
       "name": "テンセント",
       "sub": "インターネット・ゲーム",
       "sub_en": "Internet & gaming",
+      "sub_short": "インターネット",
+      "sub_short_en": "Internet",
       "row": 2,
       "relations": [
         {

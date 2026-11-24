@@ -31,6 +31,8 @@
       "name_en": "Anglo American",
       "sub": "資源大手(英)",
       "sub_en": "Diversified mining (UK)",
+      "sub_short": "資源大手",
+      "sub_short_en": "Mining",
       "row": 0,
       "relations": [
         {
@@ -55,6 +57,8 @@
       "name_en": "Glencore",
       "sub": "資源・商社",
       "sub_en": "Mining & trading",
+      "sub_short": "資源・商社",
+      "sub_short_en": "Mining & trading",
       "row": 0,
       "relations": [
         {
@@ -92,6 +96,8 @@
       "name_en": "Nippon Steel",
       "sub": "鉄鋼",
       "sub_en": "Steel",
+      "sub_short": "鉄鋼",
+      "sub_short_en": "Steel",
       "row": 0,
       "relations": [
         {
@@ -116,6 +122,8 @@
       "name_en": "POSCO Holdings",
       "sub": "鉄鋼(韓国)",
       "sub_en": "Steel (Korea)",
+      "sub_short": "鉄鋼",
+      "sub_short_en": "Steel",
       "row": 0,
       "relations": [
         {
@@ -140,6 +148,8 @@
       "name_en": "Sumitomo Metal Mining",
       "sub": "非鉄金属",
       "sub_en": "Non-ferrous metals",
+      "sub_short": "非鉄金属",
+      "sub_short_en": "Metals",
       "row": 1,
       "relations": [
         {
@@ -164,6 +174,8 @@
       "name_en": "Sumitomo Corporation",
       "sub": "商社",
       "sub_en": "Trading house",
+      "sub_short": "商社",
+      "sub_short_en": "Trading house",
       "row": 1,
       "relations": [
         {
@@ -188,6 +200,8 @@
       "name_en": "Codelco",
       "sub": "国営銅山(チリ)",
       "sub_en": "State copper (Chile)",
+      "sub_short": "国営銅山",
+      "sub_short_en": "State copper",
       "row": 1,
       "relations": [
         {
@@ -212,6 +226,8 @@
       "name_en": "Newmont",
       "sub": "金鉱山",
       "sub_en": "Gold mining",
+      "sub_short": "金鉱山",
+      "sub_short_en": "Gold mining",
       "row": 1,
       "relations": [
         {
@@ -236,6 +252,8 @@
       "name_en": "Mitsubishi Corporation",
       "sub": "商社",
       "sub_en": "Trading house",
+      "sub_short": "商社",
+      "sub_short_en": "Trading house",
       "row": 1,
       "relations": [
         {
@@ -260,6 +278,8 @@
       "name_en": "Mitsubishi Materials",
       "sub": "非鉄金属",
       "sub_en": "Non-ferrous metals",
+      "sub_short": "非鉄金属",
+      "sub_short_en": "Metals",
       "row": 1,
       "relations": [
         {
@@ -284,6 +304,8 @@
       "name_en": "Franco-Nevada",
       "sub": "ロイヤルティ・ストリーム",
       "sub_en": "Royalties & streams",
+      "sub_short": "ロイヤルティ",
+      "sub_short_en": "Royalties",
       "row": 1,
       "relations": [
         {
@@ -308,6 +330,8 @@
       "name_en": "NANA Regional Corporation",
       "sub": "アラスカ先住民企業",
       "sub_en": "Alaska Native corporation",
+      "sub_short": "アラスカ先住民",
+      "sub_short_en": "Alaska Native co",
       "row": 1,
       "relations": [
         {
@@ -332,6 +356,8 @@
       "name_en": "Solitario Resources",
       "sub": "探鉱",
       "sub_en": "Exploration",
+      "sub_short": "探鉱",
+      "sub_short_en": "Exploration",
       "row": 1,
       "relations": [
         {
@@ -356,6 +382,8 @@
       "name_en": "BHP",
       "sub": "資源大手",
       "sub_en": "Diversified mining",
+      "sub_short": "資源大手",
+      "sub_short_en": "Mining",
       "row": 2,
       "relations": [
         {

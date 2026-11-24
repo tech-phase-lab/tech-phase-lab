@@ -32,6 +32,8 @@
       "name_en": "With Intelligence",
       "sub": "私募市場のデータ",
       "sub_en": "Private markets data",
+      "sub_short": "私募市場データ",
+      "sub_short_en": "Private mkt data",
       "row": 0,
       "relations": [
         {
@@ -56,6 +58,8 @@
       "name_en": "TeraHelix",
       "sub": "金融テクノロジー",
       "sub_en": "Financial technology",
+      "sub_short": "フィンテック",
+      "sub_short_en": "Fintech",
       "row": 0,
       "relations": [
         {
@@ -80,6 +84,8 @@
       "name_en": "Mobility Global",
       "sub": "自動車関連データ",
       "sub_en": "Automotive data",
+      "sub_short": "車関連データ",
+      "sub_short_en": "Automotive data",
       "row": 0,
       "relations": [
         {
@@ -104,6 +110,8 @@
       "name_en": "CME Group",
       "sub": "先物取引所",
       "sub_en": "Derivatives exchange",
+      "sub_short": "先物取引所",
+      "sub_short_en": "Derivatives",
       "row": 1,
       "relations": [
         {
@@ -128,6 +136,8 @@
       "name_en": "KKR",
       "sub": "投資会社",
       "sub_en": "Private equity",
+      "sub_short": "投資会社",
+      "sub_short_en": "Private equity",
       "row": 1,
       "relations": [
         {
@@ -152,6 +162,8 @@
       "name_en": "MSCI",
       "sub": "指数・分析",
       "sub_en": "Indexes & analytics",
+      "sub_short": "指数・分析",
+      "sub_short_en": "Indexes",
       "row": 2,
       "relations": [
         {
@@ -176,6 +188,8 @@
       "name_en": "Morningstar",
       "sub": "投資情報",
       "sub_en": "Investment research",
+      "sub_short": "投資情報",
+      "sub_short_en": "Research",
       "row": 2,
       "relations": [
         {

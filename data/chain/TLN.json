@@ -29,6 +29,8 @@
       "name_en": "Energy Capital Partners",
       "sub": "投資会社",
       "sub_en": "Investment firm",
+      "sub_short": "投資会社",
+      "sub_short_en": "Investment firm",
       "row": 0,
       "relations": [
         {
@@ -53,6 +55,8 @@
       "name_en": "Moxie Freedom",
       "sub": "ガス火力発電所",
       "sub_en": "Gas power plant",
+      "sub_short": "ガス火力発電所",
+      "sub_short_en": "Gas power plant",
       "row": 0,
       "relations": [
         {
@@ -77,6 +81,8 @@
       "name_en": "Guernsey Power",
       "sub": "ガス火力発電所",
       "sub_en": "Gas power plant",
+      "sub_short": "ガス火力発電所",
+      "sub_short_en": "Gas power plant",
       "row": 0,
       "relations": [
         {
@@ -101,6 +107,8 @@
       "name_en": "Amazon",
       "sub": "クラウド(AWS)",
       "sub_en": "Cloud (AWS)",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 1,
       "relations": [
         {
@@ -125,6 +133,8 @@
       "name_en": "PPL",
       "sub": "電力会社(送配電)",
       "sub_en": "Utility (grid)",
+      "sub_short": "電力会社",
+      "sub_short_en": "Utility",
       "row": 1,
       "relations": [
         {
@@ -149,6 +159,8 @@
       "name_en": "TeraWulf",
       "sub": "ビットコイン採掘・AIデータセンター",
       "sub_en": "Bitcoin mining & AI data centers",
+      "sub_short": "BTC採掘・AI",
+      "sub_short_en": "Bitcoin mining",
       "row": 2,
       "relations": [
         {
@@ -173,6 +185,8 @@
       "name_en": "Constellation Energy",
       "sub": "発電(原子力)",
       "sub_en": "Power generation (nuclear)",
+      "sub_short": "発電",
+      "sub_short_en": "Power generation",
       "row": 2,
       "relations": [
         {
@@ -197,6 +211,8 @@
       "name_en": "Microsoft",
       "sub": "クラウド・AI",
       "sub_en": "Cloud & AI",
+      "sub_short": "クラウド・AI",
+      "sub_short_en": "Cloud & AI",
       "row": 2,
       "relations": [
         {
@@ -221,6 +237,8 @@
       "name_en": "Alphabet (Google)",
       "sub": "クラウド・AI",
       "sub_en": "Cloud & AI",
+      "sub_short": "クラウド・AI",
+      "sub_short_en": "Cloud & AI",
       "row": 2,
       "relations": [
         {

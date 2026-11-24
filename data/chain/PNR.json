@@ -34,6 +34,8 @@
       "name_en": "Hydra-Stop",
       "sub": "配管の止水工具",
       "sub_en": "Pipe line-stopping tools",
+      "sub_short": "配管の止水工具",
+      "sub_short_en": "Pipe tools",
       "row": 0,
       "relations": [
         {
@@ -58,6 +60,8 @@
       "name_en": "G & F Manufacturing",
       "sub": "プール用部品",
       "sub_en": "Pool components",
+      "sub_short": "プール用部品",
+      "sub_short_en": "Pool components",
       "row": 0,
       "relations": [
         {
@@ -82,6 +86,8 @@
       "name_en": "nVent",
       "sub": "電気設備部品",
       "sub_en": "Electrical connection & protection",
+      "sub_short": "電気設備部品",
+      "sub_short_en": "Electrical parts",
       "row": 0,
       "relations": [
         {
@@ -106,6 +112,8 @@
       "name_en": "Pool Corp",
       "sub": "プール用品の卸売",
       "sub_en": "Pool supplies distribution",
+      "sub_short": "プール用品",
+      "sub_short_en": "Pool supplies",
       "row": 1,
       "relations": [
         {
@@ -130,6 +138,8 @@
       "name_en": "Xylem",
       "sub": "水処理機器",
       "sub_en": "Water technology",
+      "sub_short": "水処理機器",
+      "sub_short_en": "Water technology",
       "row": 2,
       "relations": [
         {
@@ -154,6 +164,8 @@
       "name_en": "A. O. Smith",
       "sub": "給湯器・浄水器",
       "sub_en": "Water heaters & treatment",
+      "sub_short": "給湯器・浄水器",
+      "sub_short_en": "Water heaters",
       "row": 2,
       "relations": [
         {
@@ -178,6 +190,8 @@
       "name_en": "Solventum",
       "sub": "医療・ろ過製品",
       "sub_en": "Healthcare & filtration",
+      "sub_short": "医療・ろ過製品",
+      "sub_short_en": "Healthcare",
       "row": 2,
       "relations": [
         {
@@ -202,6 +216,8 @@
       "name_en": "Franklin Electric",
       "sub": "ポンプ・水関連機器",
       "sub_en": "Pumps & water systems",
+      "sub_short": "ポンプ",
+      "sub_short_en": "Pumps",
       "row": 2,
       "relations": [
         {
@@ -226,6 +242,8 @@
       "name_en": "BioLargo",
       "sub": "水処理技術",
       "sub_en": "Water treatment tech",
+      "sub_short": "水処理技術",
+      "sub_short_en": "Water treatment",
       "row": 2,
       "relations": [
         {

@@ -25,6 +25,8 @@
       "name": "アップル",
       "sub": "フィットネス等の競合",
       "sub_en": "Fitness & outdoor rival",
+      "sub_short": "フィットネス",
+      "sub_short_en": "Fitness",
       "row": 0,
       "relations": [
         {
@@ -49,6 +51,8 @@
       "name": "アルファベット(Google)",
       "sub": "フィットネスの競合",
       "sub_en": "Fitness rival",
+      "sub_short": "フィットネス",
+      "sub_short_en": "Fitness rival",
       "row": 0,
       "relations": [
         {
@@ -73,6 +77,8 @@
       "name": "ハネウェル",
       "sub": "航空電子の競合",
       "sub_en": "Avionics rival",
+      "sub_short": "航空電子の競合",
+      "sub_short_en": "Avionics rival",
       "row": 0,
       "relations": [
         {
@@ -97,6 +103,8 @@
       "name": "RTXコーポレーション",
       "sub": "航空電子の競合",
       "sub_en": "Avionics rival",
+      "sub_short": "航空電子の競合",
+      "sub_short_en": "Avionics rival",
       "row": 0,
       "relations": [
         {
@@ -121,6 +129,8 @@
       "name": "ブランズウィック",
       "sub": "マリン機器の競合",
       "sub_en": "Marine rival",
+      "sub_short": "マリン機器",
+      "sub_short_en": "Marine rival",
       "row": 0,
       "relations": [
         {
@@ -145,6 +155,8 @@
       "name": "テレダイン",
       "sub": "マリン機器の競合",
       "sub_en": "Marine rival",
+      "sub_short": "マリン機器",
+      "sub_short_en": "Marine rival",
       "row": 0,
       "relations": [
         {
@@ -169,6 +181,8 @@
       "name": "ジョンソン・アウトドアーズ",
       "sub": "マリン機器の競合",
       "sub_en": "Marine rival",
+      "sub_short": "マリン機器",
+      "sub_short_en": "Marine rival",
       "row": 0,
       "relations": [
         {
@@ -206,6 +220,8 @@
       "name": "アプティブ",
       "sub": "車載の競合",
       "sub_en": "Auto OEM rival",
+      "sub_short": "車載の競合",
+      "sub_short_en": "Auto OEM rival",
       "row": 0,
       "relations": [
         {
@@ -230,6 +246,8 @@
       "name": "ビステオン",
       "sub": "車載の競合",
       "sub_en": "Auto OEM rival",
+      "sub_short": "車載の競合",
+      "sub_short_en": "Auto OEM rival",
       "row": 0,
       "relations": [
         {
@@ -254,6 +272,8 @@
       "name": "ジェップ・ヘルス",
       "sub": "フィットネスの競合",
       "sub_en": "Fitness rival",
+      "sub_short": "フィットネス",
+      "sub_short_en": "Fitness rival",
       "row": 0,
       "relations": [
         {

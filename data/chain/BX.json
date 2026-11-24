@@ -29,6 +29,8 @@
       "name_en": "Blackstone Mortgage Trust",
       "sub": "不動産融資REIT",
       "sub_en": "Mortgage REIT",
+      "sub_short": "融資REIT",
+      "sub_short_en": "Mortgage REIT",
       "row": 0,
       "relations": [
         {
@@ -53,6 +55,8 @@
       "name_en": "Corebridge Financial",
       "sub": "生命保険・年金",
       "sub_en": "Life & retirement",
+      "sub_short": "生命保険・年金",
+      "sub_short_en": "Life insurance",
       "row": 0,
       "relations": [
         {
@@ -77,6 +81,8 @@
       "name_en": "American International Group",
       "sub": "保険",
       "sub_en": "Insurance",
+      "sub_short": "保険",
+      "sub_short_en": "Insurance",
       "row": 0,
       "relations": [
         {
@@ -101,6 +107,8 @@
       "name_en": "Cheniere Energy Partners",
       "sub": "LNG",
       "sub_en": "LNG",
+      "sub_short": "LNG",
+      "sub_short_en": "LNG",
       "row": 0,
       "relations": [
         {
@@ -125,6 +133,8 @@
       "name_en": "Medtronic (MiniMed)",
       "sub": "医療機器",
       "sub_en": "Medical devices",
+      "sub_short": "医療機器",
+      "sub_short_en": "Medical devices",
       "row": 1,
       "relations": [
         {
@@ -149,6 +159,8 @@
       "name_en": "Alnylam",
       "sub": "RNA医薬",
       "sub_en": "RNAi therapeutics",
+      "sub_short": "RNA医薬",
+      "sub_short_en": "RNAi drugs",
       "row": 1,
       "relations": [
         {
@@ -173,6 +185,8 @@
       "name_en": "Autolus Therapeutics",
       "sub": "細胞治療",
       "sub_en": "Cell therapy",
+      "sub_short": "細胞治療",
+      "sub_short_en": "Cell therapy",
       "row": 1,
       "relations": [
         {
@@ -197,6 +211,8 @@
       "name_en": "Sutro Biopharma",
       "sub": "バイオ",
       "sub_en": "Biotech",
+      "sub_short": "バイオ",
+      "sub_short_en": "Biotech",
       "row": 1,
       "relations": [
         {
@@ -221,6 +237,8 @@
       "name_en": "Galera Therapeutics",
       "sub": "バイオ",
       "sub_en": "Biotech",
+      "sub_short": "バイオ",
+      "sub_short_en": "Biotech",
       "row": 1,
       "relations": [
         {
@@ -245,6 +263,8 @@
       "name_en": "Axsome Therapeutics",
       "sub": "神経疾患の医薬品",
       "sub_en": "CNS pharma",
+      "sub_short": "神経疾患薬",
+      "sub_short_en": "CNS pharma",
       "row": 2,
       "relations": [
         {
@@ -269,6 +289,8 @@
       "name_en": "Paysafe",
       "sub": "決済",
       "sub_en": "Payments",
+      "sub_short": "決済",
+      "sub_short_en": "Payments",
       "row": 2,
       "relations": [
         {
@@ -293,6 +315,8 @@
       "name_en": "Bumble",
       "sub": "マッチングアプリ",
       "sub_en": "Dating apps",
+      "sub_short": "マッチング",
+      "sub_short_en": "Dating apps",
       "row": 2,
       "relations": [
         {

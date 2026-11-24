@@ -25,6 +25,8 @@
       "name": "アマゾン",
       "sub": "大口顧客",
       "sub_en": "Major customer",
+      "sub_short": "大口顧客",
+      "sub_short_en": "Major customer",
       "row": 0,
       "relations": [
         {
@@ -49,6 +51,8 @@
       "name": "米国郵便公社",
       "sub": "航空貨物の顧客",
       "sub_en": "Air cargo customer",
+      "sub_short": "航空貨物の顧客",
+      "sub_short_en": "Air cargo",
       "row": 0,
       "relations": [
         {
@@ -73,6 +77,8 @@
       "name": "アンドラウアー・ヘルスケア・グループ",
       "sub": "医療物流",
       "sub_en": "Healthcare logistics",
+      "sub_short": "医療物流",
+      "sub_short_en": "Health logistics",
       "row": 0,
       "relations": [
         {
@@ -97,6 +103,8 @@
       "name": "フェデックス",
       "sub": "物流",
       "sub_en": "Logistics",
+      "sub_short": "物流",
+      "sub_short_en": "Logistics",
       "row": 1,
       "relations": [
         {

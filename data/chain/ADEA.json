@@ -19,6 +19,8 @@
       "name": "アマゾン",
       "sub": "ネット通販・動画配信",
       "sub_en": "E-commerce & streaming",
+      "sub_short": "ネット通販",
+      "sub_short_en": "E-commerce",
       "row": 0,
       "relations": [
         {
@@ -43,6 +45,8 @@
       "name": "ウォルト・ディズニー",
       "sub": "メディア・配信",
       "sub_en": "Media & streaming",
+      "sub_short": "メディア・配信",
+      "sub_short_en": "Media",
       "row": 0,
       "relations": [
         {
@@ -67,6 +71,8 @@
       "name": "グーグル",
       "sub": "ネット・動画配信",
       "sub_en": "Internet & video",
+      "sub_short": "ネット",
+      "sub_short_en": "Internet & video",
       "row": 0,
       "relations": [
         {
@@ -91,6 +97,8 @@
       "name": "コムキャスト",
       "sub": "ケーブル・通信",
       "sub_en": "Cable & telecom",
+      "sub_short": "ケーブル・通信",
+      "sub_short_en": "Cable & telecom",
       "row": 0,
       "relations": [
         {
@@ -115,6 +123,8 @@
       "name": "チャーター・コミュニケーションズ",
       "sub": "ケーブル・通信",
       "sub_en": "Cable & telecom",
+      "sub_short": "ケーブル・通信",
+      "sub_short_en": "Cable & telecom",
       "row": 0,
       "relations": [
         {
@@ -139,6 +149,8 @@
       "name": "ベライゾン",
       "sub": "通信",
       "sub_en": "Telecom",
+      "sub_short": "通信",
+      "sub_short_en": "Telecom",
       "row": 0,
       "relations": [
         {
@@ -163,6 +175,8 @@
       "name": "ロク",
       "sub": "動画配信機器",
       "sub_en": "Streaming devices",
+      "sub_short": "動画配信機器",
+      "sub_short_en": "Streaming gear",
       "row": 0,
       "relations": [
         {
@@ -187,6 +201,8 @@
       "name": "サムスン電子",
       "sub": "家電・半導体",
       "sub_en": "Electronics & semis",
+      "sub_short": "家電・半導体",
+      "sub_short_en": "Electronics",
       "row": 0,
       "relations": [
         {
@@ -224,6 +240,8 @@
       "name": "マイクロン・テクノロジー",
       "sub": "半導体メモリ",
       "sub_en": "Memory semiconductors",
+      "sub_short": "半導体メモリ",
+      "sub_short_en": "Memory chips",
       "row": 0,
       "relations": [
         {
@@ -248,6 +266,8 @@
       "name": "サンディスク",
       "sub": "半導体メモリ",
       "sub_en": "Memory semiconductors",
+      "sub_short": "半導体メモリ",
+      "sub_short_en": "Memory chips",
       "row": 0,
       "relations": [
         {

@@ -30,6 +30,8 @@
       "name": "ウォルマート",
       "sub": "小売",
       "sub_en": "Retail",
+      "sub_short": "小売",
+      "sub_short_en": "Retail",
       "row": 0,
       "relations": [
         {
@@ -54,6 +56,8 @@
       "name": "オキシデンタル・ケミカル",
       "sub": "化学",
       "sub_en": "Chemicals",
+      "sub_short": "化学",
+      "sub_short_en": "Chemicals",
       "row": 0,
       "relations": [
         {
@@ -78,6 +82,8 @@
       "name": "プロクター・アンド・ギャンブル",
       "sub": "日用品",
       "sub_en": "Household products",
+      "sub_short": "日用品",
+      "sub_short_en": "Household goods",
       "row": 0,
       "relations": [
         {
@@ -115,6 +121,8 @@
       "name": "クロロックス",
       "sub": "日用品",
       "sub_en": "Household products",
+      "sub_short": "日用品",
+      "sub_short_en": "Household goods",
       "row": 0,
       "relations": [
         {
@@ -152,6 +160,8 @@
       "name": "コルゲート・パルモリブ",
       "sub": "日用品・オーラルケア",
       "sub_en": "Household & oral care",
+      "sub_short": "日用品",
+      "sub_short_en": "Household",
       "row": 0,
       "relations": [
         {
@@ -189,6 +199,8 @@
       "name": "ケンビュー",
       "sub": "コンシューマーヘルス",
       "sub_en": "Consumer health",
+      "sub_short": "一般用医薬品",
+      "sub_short_en": "Consumer health",
       "row": 0,
       "relations": [
         {
@@ -226,6 +238,8 @@
       "name": "ファイザー",
       "sub": "医薬品",
       "sub_en": "Pharmaceuticals",
+      "sub_short": "医薬品",
+      "sub_short_en": "Pharmaceuticals",
       "row": 0,
       "relations": [
         {
@@ -250,6 +264,8 @@
       "name": "ヘイリオン",
       "sub": "コンシューマーヘルス",
       "sub_en": "Consumer health",
+      "sub_short": "一般用医薬品",
+      "sub_short_en": "Consumer health",
       "row": 0,
       "relations": [
         {

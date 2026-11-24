@@ -24,6 +24,8 @@
       "name": "Amazon Web Services",
       "sub": "クラウド",
       "sub_en": "Cloud",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 0,
       "relations": [
         {
@@ -47,6 +49,8 @@
       "name": "Microsoft",
       "sub": "ソフト・クラウド",
       "sub_en": "Software & cloud",
+      "sub_short": "ソフト",
+      "sub_short_en": "Software & cloud",
       "row": 1,
       "relations": [
         {
@@ -72,6 +76,8 @@
       "name": "ネメチェック",
       "sub": "建設・設計ソフト",
       "sub_en": "AEC software",
+      "sub_short": "建設",
+      "sub_short_en": "AEC software",
       "row": 1,
       "relations": [
         {

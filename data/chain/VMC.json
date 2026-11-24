@@ -25,6 +25,8 @@
       "name": "アルコサ",
       "sub": "骨材メーカー",
       "sub_en": "Aggregates producer",
+      "sub_short": "骨材メーカー",
+      "sub_short_en": "Aggregates",
       "row": 0,
       "relations": [
         {
@@ -49,6 +51,8 @@
       "name": "アムライズ",
       "sub": "骨材メーカー",
       "sub_en": "Aggregates producer",
+      "sub_short": "骨材メーカー",
+      "sub_short_en": "Aggregates",
       "row": 0,
       "relations": [
         {
@@ -73,6 +77,8 @@
       "name": "セメックス",
       "sub": "骨材メーカー",
       "sub_en": "Aggregates producer",
+      "sub_short": "骨材メーカー",
+      "sub_short_en": "Aggregates",
       "row": 0,
       "relations": [
         {
@@ -97,6 +103,8 @@
       "name": "CRHピーエルシー",
       "sub": "骨材メーカー",
       "sub_en": "Aggregates producer",
+      "sub_short": "骨材メーカー",
+      "sub_short_en": "Aggregates",
       "row": 0,
       "relations": [
         {
@@ -121,6 +129,8 @@
       "name": "ハイデルベルク・マテリアルズ",
       "sub": "骨材メーカー",
       "sub_en": "Aggregates producer",
+      "sub_short": "骨材メーカー",
+      "sub_short_en": "Aggregates",
       "row": 0,
       "relations": [
         {
@@ -145,6 +155,8 @@
       "name": "ナイフ・リバー",
       "sub": "骨材メーカー",
       "sub_en": "Aggregates producer",
+      "sub_short": "骨材メーカー",
+      "sub_short_en": "Aggregates",
       "row": 0,
       "relations": [
         {
@@ -182,6 +194,8 @@
       "name": "マーティン・マリエッタ・マテリアルズ",
       "sub": "骨材メーカー",
       "sub_en": "Aggregates producer",
+      "sub_short": "骨材メーカー",
+      "sub_short_en": "Aggregates",
       "row": 0,
       "relations": [
         {
@@ -206,6 +220,8 @@
       "name": "FRPホールディングス",
       "sub": "不動産・鉱区ロイヤルティ",
       "sub_en": "Real estate & mining royalties",
+      "sub_short": "不動産",
+      "sub_short_en": "Real estate",
       "row": 0,
       "relations": [
         {

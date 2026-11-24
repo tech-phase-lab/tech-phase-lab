@@ -31,6 +31,8 @@
       "name_en": "Scotiabank",
       "sub": "銀行(カナダ)",
       "sub_en": "Bank (Canada)",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
       "row": 0,
       "relations": [
         {
@@ -55,6 +57,8 @@
       "name_en": "CTO Realty Growth",
       "sub": "REIT",
       "sub_en": "REIT",
+      "sub_short": "REIT",
+      "sub_short_en": "REIT",
       "row": 1,
       "relations": [
         {
@@ -79,6 +83,8 @@
       "name_en": "National Storage Affiliates",
       "sub": "貸倉庫REIT",
       "sub_en": "Self-storage REIT",
+      "sub_short": "貸倉庫REIT",
+      "sub_short_en": "Storage REIT",
       "row": 1,
       "relations": [
         {
@@ -103,6 +109,8 @@
       "name_en": "SmartStop Self Storage REIT",
       "sub": "貸倉庫REIT",
       "sub_en": "Self-storage REIT",
+      "sub_short": "貸倉庫REIT",
+      "sub_short_en": "Storage REIT",
       "row": 1,
       "relations": [
         {
@@ -127,6 +135,8 @@
       "name_en": "Runway Growth Finance",
       "sub": "ベンチャー融資BDC",
       "sub_en": "Venture lending BDC",
+      "sub_short": "ベンチャー融資",
+      "sub_short_en": "Venture lending",
       "row": 1,
       "relations": [
         {
@@ -151,6 +161,8 @@
       "name_en": "Modiv Industrial",
       "sub": "産業用REIT",
       "sub_en": "Industrial REIT",
+      "sub_short": "産業用REIT",
+      "sub_short_en": "Industrial REIT",
       "row": 1,
       "relations": [
         {
@@ -175,6 +187,8 @@
       "name_en": "Inland Real Estate Income Trust",
       "sub": "REIT",
       "sub_en": "REIT",
+      "sub_short": "REIT",
+      "sub_short_en": "REIT",
       "row": 1,
       "relations": [
         {
@@ -199,6 +213,8 @@
       "name_en": "M&T Bank",
       "sub": "銀行",
       "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
       "row": 2,
       "relations": [
         {
@@ -223,6 +239,8 @@
       "name_en": "Lake Shore Bancorp",
       "sub": "地方銀行",
       "sub_en": "Community bank",
+      "sub_short": "地方銀行",
+      "sub_short_en": "Community bank",
       "row": 2,
       "relations": [
         {

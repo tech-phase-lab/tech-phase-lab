@@ -37,6 +37,8 @@
       "name": "NVIDIA",
       "sub": "AI半導体",
       "sub_en": "AI chips",
+      "sub_short": "AI半導体",
+      "sub_short_en": "AI chips",
       "row": 0,
       "relations": [
         {
@@ -101,6 +103,8 @@
       "name": "Dell Technologies",
       "sub": "PC・サーバー",
       "sub_en": "PCs & servers",
+      "sub_short": "PC・サーバー",
+      "sub_short_en": "PCs & servers",
       "row": 0,
       "relations": [
         {
@@ -156,6 +160,8 @@
       "name": "AMD",
       "sub": "半導体",
       "sub_en": "Semiconductors",
+      "sub_short": "半導体",
+      "sub_short_en": "Semiconductors",
       "row": 0,
       "relations": [
         {
@@ -192,6 +198,8 @@
       "name": "Lenovo Group",
       "sub": "PC・サーバー",
       "sub_en": "PCs & servers",
+      "sub_short": "PC・サーバー",
+      "sub_short_en": "PCs & servers",
       "row": 0,
       "relations": [
         {
@@ -215,6 +223,8 @@
       "name": "Super Micro Computer",
       "sub": "AIサーバー",
       "sub_en": "AI servers",
+      "sub_short": "AIサーバー",
+      "sub_short_en": "AI servers",
       "row": 0,
       "relations": [
         {
@@ -238,6 +248,8 @@
       "name": "Gigabyte Technology",
       "sub": "サーバー・PC",
       "sub_en": "Servers & PCs",
+      "sub_short": "サーバー・PC",
+      "sub_short_en": "Servers & PCs",
       "row": 0,
       "relations": [
         {
@@ -261,6 +273,8 @@
       "name": "Microsoft",
       "sub": "クラウド・ソフト",
       "sub_en": "Cloud & software",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud & software",
       "row": 1,
       "relations": [
         {
@@ -312,6 +326,8 @@
       "name": "Anthropic",
       "sub": "生成AI",
       "sub_en": "Generative AI",
+      "sub_short": "生成AI",
+      "sub_short_en": "Generative AI",
       "row": 1,
       "relations": [
         {
@@ -336,6 +352,8 @@
       "name": "Goldman Sachs",
       "sub": "投資銀行",
       "sub_en": "Investment bank",
+      "sub_short": "投資銀行",
+      "sub_short_en": "Investment bank",
       "row": 2,
       "relations": [
         {
@@ -361,6 +379,8 @@
       "name": "JPMorgan Chase",
       "sub": "銀行",
       "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
       "row": 2,
       "relations": [
         {
@@ -386,6 +406,8 @@
       "name": "Amazon(AWS)",
       "sub": "クラウド",
       "sub_en": "Cloud",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 3,
       "relations": [
         {
@@ -409,6 +431,8 @@
       "name": "Alphabet(Google Cloud)",
       "sub": "クラウド",
       "sub_en": "Cloud",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 3,
       "relations": [
         {
@@ -432,6 +456,8 @@
       "name": "Oracle",
       "sub": "クラウド",
       "sub_en": "Cloud",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 3,
       "relations": [
         {
@@ -455,6 +481,8 @@
       "name": "CoreWeave",
       "sub": "クラウド",
       "sub_en": "Cloud",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 3,
       "relations": [
         {
@@ -478,6 +506,8 @@
       "name": "Nebius Group",
       "sub": "クラウド",
       "sub_en": "Cloud",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 3,
       "relations": [
         {

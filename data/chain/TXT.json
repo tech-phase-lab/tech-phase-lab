@@ -32,6 +32,8 @@
       "name_en": "Innovative Solutions & Support",
       "sub": "航空機の計器",
       "sub_en": "Avionics",
+      "sub_short": "航空機の計器",
+      "sub_short_en": "Avionics",
       "row": 0,
       "relations": [
         {
@@ -56,6 +58,8 @@
       "name_en": "TAT Technologies",
       "sub": "航空機の熱交換器・整備",
       "sub_en": "Aerospace heat transfer & MRO",
+      "sub_short": "航空機部品",
+      "sub_short_en": "Aero heat & MRO",
       "row": 0,
       "relations": [
         {
@@ -80,6 +84,8 @@
       "name_en": "BETA Technologies",
       "sub": "電動航空機・推進系",
       "sub_en": "Electric aircraft & propulsion",
+      "sub_short": "電動航空機",
+      "sub_short_en": "Electric planes",
       "row": 0,
       "relations": [
         {
@@ -104,6 +110,8 @@
       "name_en": "Jet.AI",
       "sub": "プライベートジェット",
       "sub_en": "Private aviation",
+      "sub_short": "自家用ジェット",
+      "sub_short_en": "Private aviation",
       "row": 1,
       "relations": [
         {
@@ -128,6 +136,8 @@
       "name_en": "flyExclusive",
       "sub": "プライベートジェット",
       "sub_en": "Private aviation",
+      "sub_short": "自家用ジェット",
+      "sub_short_en": "Private aviation",
       "row": 1,
       "relations": [
         {
@@ -152,6 +162,8 @@
       "name_en": "Kodiak AI",
       "sub": "自動運転トラック",
       "sub_en": "Autonomous trucking",
+      "sub_short": "自動運転",
+      "sub_short_en": "Robo-trucks",
       "row": 1,
       "relations": [
         {
@@ -176,6 +188,8 @@
       "name_en": "CAE",
       "sub": "飛行訓練・シミュレーター",
       "sub_en": "Flight training & simulators",
+      "sub_short": "飛行訓練",
+      "sub_short_en": "Flight training",
       "row": 1,
       "relations": [
         {
@@ -200,6 +214,8 @@
       "name_en": "AeroVironment",
       "sub": "無人機・防衛",
       "sub_en": "Drones & defense",
+      "sub_short": "無人機・防衛",
+      "sub_short_en": "Drones & defense",
       "row": 2,
       "relations": [
         {
@@ -224,6 +240,8 @@
       "name_en": "AYRO",
       "sub": "小型電気自動車",
       "sub_en": "Low-speed EVs",
+      "sub_short": "小型電気自動車",
+      "sub_short_en": "Low-speed EVs",
       "row": 2,
       "relations": [
         {

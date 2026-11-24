@@ -24,6 +24,8 @@
       "name": "アップル",
       "sub": "スマホ・IT機器",
       "sub_en": "Devices",
+      "sub_short": "スマホ・IT機器",
+      "sub_short_en": "Devices",
       "row": 0,
       "relations": [
         {
@@ -61,6 +63,8 @@
       "name": "アルファベット",
       "sub": "検索・クラウド",
       "sub_en": "Search & cloud",
+      "sub_short": "検索・クラウド",
+      "sub_short_en": "Search & cloud",
       "row": 0,
       "relations": [
         {
@@ -111,6 +115,8 @@
       "name": "アマゾン",
       "sub": "クラウド",
       "sub_en": "Cloud",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 1,
       "relations": [
         {

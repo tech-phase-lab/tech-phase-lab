@@ -28,6 +28,8 @@
       "name_en": "Barrick Mining",
       "sub": "金鉱山",
       "sub_en": "Gold mining",
+      "sub_short": "金鉱山",
+      "sub_short_en": "Gold mining",
       "row": 0,
       "relations": [
         {
@@ -52,6 +54,8 @@
       "name_en": "Gold Fields",
       "sub": "金鉱山",
       "sub_en": "Gold mining",
+      "sub_short": "金鉱山",
+      "sub_short_en": "Gold mining",
       "row": 0,
       "relations": [
         {
@@ -78,6 +82,8 @@
       "name_en": "SOKIMO",
       "sub": "国営鉱業(コンゴ)",
       "sub_en": "State mining (DRC)",
+      "sub_short": "国営鉱業",
+      "sub_short_en": "State mining",
       "row": 0,
       "relations": [
         {
@@ -102,6 +108,8 @@
       "name_en": "Centamin",
       "sub": "金鉱山(エジプト)",
       "sub_en": "Gold mining (Egypt)",
+      "sub_short": "金鉱山",
+      "sub_short_en": "Gold mining",
       "row": 1,
       "relations": [
         {
@@ -126,6 +134,8 @@
       "name_en": "Augusta Gold",
       "sub": "金開発(ネバダ)",
       "sub_en": "Gold development (Nevada)",
+      "sub_short": "金開発",
+      "sub_short_en": "Gold development",
       "row": 1,
       "relations": [
         {
@@ -150,6 +160,8 @@
       "name_en": "Corvus Gold",
       "sub": "金探鉱(ネバダ)",
       "sub_en": "Gold exploration (Nevada)",
+      "sub_short": "金探鉱",
+      "sub_short_en": "Gold exploration",
       "row": 1,
       "relations": [
         {
@@ -174,6 +186,8 @@
       "name_en": "Coeur Mining",
       "sub": "金銀鉱山",
       "sub_en": "Gold & silver mining",
+      "sub_short": "金銀鉱山",
+      "sub_short_en": "Gold mining",
       "row": 1,
       "relations": [
         {
@@ -198,6 +212,8 @@
       "name_en": "Resolute Mining",
       "sub": "金鉱山(豪)",
       "sub_en": "Gold mining (Australia)",
+      "sub_short": "金鉱山",
+      "sub_short_en": "Gold mining",
       "row": 2,
       "relations": [
         {
@@ -222,6 +238,8 @@
       "name_en": "Allied Gold",
       "sub": "金鉱山",
       "sub_en": "Gold mining",
+      "sub_short": "金鉱山",
+      "sub_short_en": "Gold mining",
       "row": 2,
       "relations": [
         {

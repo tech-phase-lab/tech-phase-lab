@@ -33,6 +33,8 @@
       "name_en": "UniFirst",
       "sub": "ユニフォーム供給",
       "sub_en": "Uniform rental",
+      "sub_short": "制服供給",
+      "sub_short_en": "Uniform rental",
       "row": 0,
       "relations": [
         {
@@ -83,6 +85,8 @@
       "name_en": "ABM Industries",
       "sub": "施設管理",
       "sub_en": "Facility services",
+      "sub_short": "施設管理",
+      "sub_short_en": "Facilities",
       "row": 1,
       "relations": [
         {
@@ -107,6 +111,8 @@
       "name_en": "Aramark",
       "sub": "給食・ユニフォーム",
       "sub_en": "Food and uniform services",
+      "sub_short": "給食",
+      "sub_short_en": "Food services",
       "row": 1,
       "relations": [
         {
@@ -131,6 +137,8 @@
       "name_en": "Rollins",
       "sub": "害虫駆除",
       "sub_en": "Pest control",
+      "sub_short": "害虫駆除",
+      "sub_short_en": "Pest control",
       "row": 1,
       "relations": [
         {
@@ -154,6 +162,8 @@
       "name": "ベスティス",
       "sub": "ユニフォーム",
       "sub_en": "Uniform rental",
+      "sub_short": "ユニフォーム",
+      "sub_short_en": "Uniform rental",
       "row": 2,
       "relations": [
         {
@@ -178,6 +188,8 @@
       "name": "アクメ・ユナイテッド",
       "sub": "救急・安全用品",
       "sub_en": "First aid & safety",
+      "sub_short": "救急・安全用品",
+      "sub_short_en": "First aid",
       "row": 2,
       "relations": [
         {

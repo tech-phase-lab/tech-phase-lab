@@ -32,6 +32,8 @@
       "name_en": "KeHE Distributors",
       "sub": "自然食品の卸",
       "sub_en": "Natural foods distribution",
+      "sub_short": "自然食品の卸",
+      "sub_short_en": "Natural foods",
       "row": 0,
       "relations": [
         {
@@ -56,6 +58,8 @@
       "name_en": "United Natural Foods",
       "sub": "食品卸",
       "sub_en": "Food distribution",
+      "sub_short": "食品卸",
+      "sub_short_en": "Food supply",
       "row": 0,
       "relations": [
         {
@@ -80,6 +84,8 @@
       "name_en": "Vital Farms",
       "sub": "放牧卵",
       "sub_en": "Pasture-raised eggs",
+      "sub_short": "放牧卵",
+      "sub_short_en": "Eggs",
       "row": 0,
       "relations": [
         {
@@ -104,6 +110,8 @@
       "name_en": "Belpointe PREP",
       "sub": "不動産開発",
       "sub_en": "Real estate development",
+      "sub_short": "不動産開発",
+      "sub_short_en": "Developer",
       "row": 1,
       "relations": [
         {
@@ -128,6 +136,8 @@
       "name_en": "InvenTrust Properties",
       "sub": "商業施設REIT",
       "sub_en": "Shopping center REIT",
+      "sub_short": "商業施設REIT",
+      "sub_short_en": "Mall REIT",
       "row": 1,
       "relations": [
         {
@@ -152,6 +162,8 @@
       "name_en": "Natural Grocers",
       "sub": "自然食品スーパー",
       "sub_en": "Natural grocery",
+      "sub_short": "自然食品",
+      "sub_short_en": "Natural grocery",
       "row": 2,
       "relations": [
         {
@@ -176,6 +188,8 @@
       "name_en": "AMCON Distributing",
       "sub": "卸売・健康食品店",
       "sub_en": "Wholesale & health food retail",
+      "sub_short": "卸売",
+      "sub_short_en": "Wholesale",
       "row": 2,
       "relations": [
         {

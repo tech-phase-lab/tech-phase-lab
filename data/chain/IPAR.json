@@ -25,6 +25,8 @@
       "name_en": "Tapestry (Coach)",
       "sub": "ファッション",
       "sub_en": "Fashion",
+      "sub_short": "ファッション",
+      "sub_short_en": "Fashion",
       "row": 0,
       "relations": [
         {
@@ -49,6 +51,8 @@
       "name_en": "Capri Holdings (Jimmy Choo)",
       "sub": "ファッション",
       "sub_en": "Fashion",
+      "sub_short": "ファッション",
+      "sub_short_en": "Fashion",
       "row": 0,
       "relations": [
         {
@@ -73,6 +77,8 @@
       "name_en": "G-III Apparel (Donna Karan/DKNY)",
       "sub": "アパレル",
       "sub_en": "Apparel",
+      "sub_short": "アパレル",
+      "sub_short_en": "Apparel",
       "row": 0,
       "relations": [
         {
@@ -97,6 +103,8 @@
       "name_en": "GUESS",
       "sub": "アパレル",
       "sub_en": "Apparel",
+      "sub_short": "アパレル",
+      "sub_short_en": "Apparel",
       "row": 0,
       "relations": [
         {
@@ -121,6 +129,8 @@
       "name_en": "Richemont (Montblanc)",
       "sub": "高級品(スイス)",
       "sub_en": "Luxury goods (Switzerland)",
+      "sub_short": "高級品",
+      "sub_short_en": "Luxury goods",
       "row": 0,
       "relations": [
         {
@@ -145,6 +155,8 @@
       "name_en": "Lacoste",
       "sub": "アパレル(フランス)",
       "sub_en": "Apparel (France)",
+      "sub_short": "アパレル",
+      "sub_short_en": "Apparel",
       "row": 0,
       "relations": [
         {
@@ -169,6 +181,8 @@
       "name_en": "Ferragamo",
       "sub": "高級品(イタリア)",
       "sub_en": "Luxury goods (Italy)",
+      "sub_short": "高級品",
+      "sub_short_en": "Luxury goods",
       "row": 0,
       "relations": [
         {
@@ -193,6 +207,8 @@
       "name_en": "Abercrombie & Fitch",
       "sub": "アパレル",
       "sub_en": "Apparel",
+      "sub_short": "アパレル",
+      "sub_short_en": "Apparel",
       "row": 1,
       "relations": [
         {
@@ -217,6 +233,8 @@
       "name_en": "Longchamp",
       "sub": "高級バッグ(フランス)",
       "sub_en": "Luxury bags (France)",
+      "sub_short": "高級バッグ",
+      "sub_short_en": "Luxury bags",
       "row": 1,
       "relations": [
         {

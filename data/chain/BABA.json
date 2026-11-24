@@ -30,6 +30,8 @@
       "name": "SAP",
       "sub": "業務ソフト",
       "sub_en": "Business software",
+      "sub_short": "業務ソフト",
+      "sub_short_en": "Business apps",
       "row": 0,
       "relations": [
         {
@@ -66,6 +68,8 @@
       "name": "MongoDB",
       "sub": "データベース",
       "sub_en": "Database",
+      "sub_short": "データベース",
+      "sub_short_en": "Database",
       "row": 0,
       "relations": [
         {
@@ -91,6 +95,8 @@
       "name": "ソフトバンクグループ",
       "sub": "投資・通信",
       "sub_en": "Investment & telecom",
+      "sub_short": "投資・通信",
+      "sub_short_en": "Investment",
       "row": 0,
       "relations": [
         {
@@ -117,6 +123,8 @@
       "name": "HP",
       "sub": "パソコン・IT機器",
       "sub_en": "PCs & IT hardware",
+      "sub_short": "パソコン",
+      "sub_short_en": "PCs",
       "row": 0,
       "relations": [
         {
@@ -153,6 +161,8 @@
       "name": "クアルコム",
       "sub": "半導体",
       "sub_en": "Semiconductors",
+      "sub_short": "半導体",
+      "sub_short_en": "Semiconductors",
       "row": 0,
       "relations": [
         {
@@ -177,6 +187,8 @@
       "name": "NVIDIA",
       "sub": "AI半導体",
       "sub_en": "AI chips",
+      "sub_short": "AI半導体",
+      "sub_short_en": "AI chips",
       "row": 0,
       "relations": [
         {
@@ -215,6 +227,8 @@
       "name": "パロアルトネットワークス",
       "sub": "セキュリティ",
       "sub_en": "Cybersecurity",
+      "sub_short": "セキュリティ",
+      "sub_short_en": "Cybersecurity",
       "row": 0,
       "relations": [
         {
@@ -241,6 +255,8 @@
       "name": "シグニファイ",
       "sub": "照明",
       "sub_en": "Lighting",
+      "sub_short": "照明",
+      "sub_short_en": "Lighting",
       "row": 1,
       "relations": [
         {
@@ -265,6 +281,8 @@
       "name": "BYD",
       "sub": "自動車",
       "sub_en": "Automobiles",
+      "sub_short": "自動車",
+      "sub_short_en": "Automobiles",
       "row": 1,
       "relations": [
         {
@@ -290,6 +308,8 @@
       "name": "リ・オート",
       "sub": "自動車",
       "sub_en": "Automobiles",
+      "sub_short": "自動車",
+      "sub_short_en": "Automobiles",
       "row": 1,
       "relations": [
         {
@@ -316,6 +336,8 @@
       "name": "百度(バイドゥ)",
       "sub": "検索・AI",
       "sub_en": "Search & AI",
+      "sub_short": "検索・AI",
+      "sub_short_en": "Search & AI",
       "row": 2,
       "relations": [
         {
@@ -340,6 +362,8 @@
       "name": "JDドットコム",
       "sub": "EC",
       "sub_en": "E-commerce",
+      "sub_short": "EC",
+      "sub_short_en": "E-commerce",
       "row": 2,
       "relations": [
         {

@@ -33,6 +33,8 @@
       "name": "ボーイング",
       "sub": "航空機製造",
       "sub_en": "Aircraft manufacturer",
+      "sub_short": "航空機製造",
+      "sub_short_en": "Aircraft maker",
       "row": 0,
       "relations": [
         {
@@ -57,6 +59,8 @@
       "name": "アメリカン航空",
       "sub": "航空",
       "sub_en": "Airline",
+      "sub_short": "航空",
+      "sub_short_en": "Airline",
       "row": 1,
       "relations": [
         {
@@ -81,6 +85,8 @@
       "name": "デルタ航空",
       "sub": "航空",
       "sub_en": "Airline",
+      "sub_short": "航空",
+      "sub_short_en": "Airline",
       "row": 1,
       "relations": [
         {
@@ -105,6 +111,8 @@
       "name": "ユナイテッド航空",
       "sub": "航空",
       "sub_en": "Airline",
+      "sub_short": "航空",
+      "sub_short_en": "Airline",
       "row": 1,
       "relations": [
         {
@@ -129,6 +137,8 @@
       "name": "エクスペディア",
       "sub": "オンライン旅行",
       "sub_en": "Online travel",
+      "sub_short": "オンライン旅行",
+      "sub_short_en": "Online travel",
       "row": 1,
       "relations": [
         {
@@ -153,6 +163,8 @@
       "name": "プライスライン",
       "sub": "オンライン旅行",
       "sub_en": "Online travel",
+      "sub_short": "オンライン旅行",
+      "sub_short_en": "Online travel",
       "row": 1,
       "relations": [
         {
@@ -177,6 +189,8 @@
       "name": "Tモバイル",
       "sub": "無線通信",
       "sub_en": "Wireless carrier",
+      "sub_short": "無線通信",
+      "sub_short_en": "Wireless carrier",
       "row": 1,
       "relations": [
         {
@@ -201,6 +215,8 @@
       "name": "セイバー",
       "sub": "旅行システム",
       "sub_en": "Travel systems",
+      "sub_short": "旅行システム",
+      "sub_short_en": "Travel systems",
       "row": 1,
       "relations": [
         {
@@ -225,6 +241,8 @@
       "name": "アラスカ・エア・グループ",
       "sub": "航空",
       "sub_en": "Airline",
+      "sub_short": "航空",
+      "sub_short_en": "Airline",
       "row": 2,
       "relations": [
         {

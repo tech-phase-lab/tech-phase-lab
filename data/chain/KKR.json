@@ -28,6 +28,8 @@
       "name_en": "OneStream",
       "sub": "企業向け財務ソフト",
       "sub_en": "Corporate finance software",
+      "sub_short": "財務ソフト",
+      "sub_short_en": "Finance apps",
       "row": 0,
       "relations": [
         {
@@ -52,6 +54,8 @@
       "name_en": "Wella",
       "sub": "ヘアケア",
       "sub_en": "Hair care",
+      "sub_short": "ヘアケア",
+      "sub_short_en": "Hair care",
       "row": 0,
       "relations": [
         {
@@ -76,6 +80,8 @@
       "name_en": "BrightSpring Health Services",
       "sub": "在宅医療・薬局",
       "sub_en": "Home health & pharmacy",
+      "sub_short": "在宅医療・薬局",
+      "sub_short_en": "Home health",
       "row": 0,
       "relations": [
         {
@@ -100,6 +106,8 @@
       "name_en": "BrightView",
       "sub": "造園サービス",
       "sub_en": "Commercial landscaping",
+      "sub_short": "造園サービス",
+      "sub_short_en": "Landscaping",
       "row": 0,
       "relations": [
         {
@@ -124,6 +132,8 @@
       "name_en": "AppLovin",
       "sub": "モバイル広告",
       "sub_en": "Mobile advertising",
+      "sub_short": "モバイル広告",
+      "sub_short_en": "Mobile ads",
       "row": 0,
       "relations": [
         {
@@ -148,6 +158,8 @@
       "name_en": "NIQ Global Intelligence",
       "sub": "消費者データ",
       "sub_en": "Consumer intelligence",
+      "sub_short": "消費者データ",
+      "sub_short_en": "Consumer data",
       "row": 0,
       "relations": [
         {
@@ -172,6 +184,8 @@
       "name_en": "Coty",
       "sub": "化粧品",
       "sub_en": "Beauty",
+      "sub_short": "化粧品",
+      "sub_short_en": "Beauty",
       "row": 1,
       "relations": [
         {
@@ -196,6 +210,8 @@
       "name_en": "Henry Schein",
       "sub": "歯科・医療用品流通",
       "sub_en": "Dental & medical distribution",
+      "sub_short": "歯科",
+      "sub_short_en": "Dental supply",
       "row": 1,
       "relations": [
         {
@@ -220,6 +236,8 @@
       "name_en": "Keurig Dr Pepper",
       "sub": "飲料",
       "sub_en": "Beverages",
+      "sub_short": "飲料",
+      "sub_short_en": "Beverages",
       "row": 1,
       "relations": [
         {
@@ -244,6 +262,8 @@
       "name_en": "Harley-Davidson",
       "sub": "二輪車",
       "sub_en": "Motorcycles",
+      "sub_short": "二輪車",
+      "sub_short_en": "Motorcycles",
       "row": 1,
       "relations": [
         {
@@ -268,6 +288,8 @@
       "name_en": "HA Sustainable Infrastructure Capital",
       "sub": "気候インフラ投資",
       "sub_en": "Climate infrastructure investment",
+      "sub_short": "気候インフラ",
+      "sub_short_en": "Climate infra",
       "row": 1,
       "relations": [
         {
@@ -292,6 +314,8 @@
       "name_en": "Sempra",
       "sub": "電力・ガス・LNG",
       "sub_en": "Utilities & LNG",
+      "sub_short": "電力",
+      "sub_short_en": "Utilities & LNG",
       "row": 1,
       "relations": [
         {
@@ -316,6 +340,8 @@
       "name_en": "Karyopharm Therapeutics",
       "sub": "がん治療薬",
       "sub_en": "Oncology drugs",
+      "sub_short": "がん治療薬",
+      "sub_short_en": "Oncology drugs",
       "row": 1,
       "relations": [
         {
@@ -340,6 +366,8 @@
       "name_en": "Box",
       "sub": "クラウドストレージ",
       "sub_en": "Cloud content management",
+      "sub_short": "クラウド保存",
+      "sub_short_en": "Cloud content",
       "row": 1,
       "relations": [
         {
@@ -364,6 +392,8 @@
       "name_en": "US Foods",
       "sub": "外食向け食品卸",
       "sub_en": "Foodservice distribution",
+      "sub_short": "外食向け食品卸",
+      "sub_short_en": "Food supply",
       "row": 1,
       "relations": [
         {
@@ -388,6 +418,8 @@
       "name_en": "Securitize",
       "sub": "資産トークン化",
       "sub_en": "Asset tokenization",
+      "sub_short": "資産トークン化",
+      "sub_short_en": "Tokenization",
       "row": 1,
       "relations": [
         {
@@ -412,6 +444,8 @@
       "name_en": "Capital Group",
       "sub": "資産運用(非上場)",
       "sub_en": "Asset management (private)",
+      "sub_short": "資産運用",
+      "sub_short_en": "Asset management",
       "row": 1,
       "relations": [
         {
@@ -436,6 +470,8 @@
       "name_en": "FS KKR Capital",
       "sub": "事業開発会社(BDC)",
       "sub_en": "Business development company",
+      "sub_short": "事業開発会社",
+      "sub_short_en": "BDC",
       "row": 2,
       "relations": [
         {
@@ -460,6 +496,8 @@
       "name_en": "KKR Real Estate Finance Trust",
       "sub": "商業不動産融資REIT",
       "sub_en": "Commercial mortgage REIT",
+      "sub_short": "不動産融資",
+      "sub_short_en": "Mortgage REIT",
       "row": 2,
       "relations": [
         {
@@ -484,6 +522,8 @@
       "name_en": "Crescent Energy",
       "sub": "石油・ガス",
       "sub_en": "Oil & gas",
+      "sub_short": "石油・ガス",
+      "sub_short_en": "Oil & gas",
       "row": 2,
       "relations": [
         {

@@ -24,6 +24,8 @@
       "name": "イーベイ",
       "sub": "Depopの売却先",
       "sub_en": "Buyer of Depop",
+      "sub_short": "Depopの売却先",
+      "sub_short_en": "Buyer of Depop",
       "row": 1,
       "relations": [
         {
@@ -48,6 +50,8 @@
       "name": "アルファベット(Google)",
       "sub": "クラウド・集客",
       "sub_en": "Cloud & search traffic",
+      "sub_short": "クラウド・集客",
+      "sub_short_en": "Cloud",
       "row": 0,
       "relations": [
         {
@@ -85,6 +89,8 @@
       "name": "アマゾン",
       "sub": "クラウド(Depop)",
       "sub_en": "Cloud (Depop)",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 0,
       "relations": [
         {
@@ -109,6 +115,8 @@
       "name": "メタ・プラットフォームズ",
       "sub": "SNS経由の集客",
       "sub_en": "Social traffic",
+      "sub_short": "SNS経由の集客",
+      "sub_short_en": "Social traffic",
       "row": 0,
       "relations": [
         {

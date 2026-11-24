@@ -35,6 +35,8 @@
       "name_en": "Gentherm",
       "sub": "シート空調部品",
       "sub_en": "Seat climate components",
+      "sub_short": "シート空調部品",
+      "sub_short_en": "Seat climate",
       "row": 0,
       "relations": [
         {
@@ -59,6 +61,8 @@
       "name_en": "Stellantis",
       "sub": "自動車",
       "sub_en": "Automaker",
+      "sub_short": "自動車",
+      "sub_short_en": "Automaker",
       "row": 1,
       "relations": [
         {
@@ -83,6 +87,8 @@
       "name_en": "Guangzhou Automobile Group",
       "sub": "自動車(中国)",
       "sub_en": "Automaker (China)",
+      "sub_short": "自動車",
+      "sub_short_en": "Automaker",
       "row": 2,
       "relations": [
         {
@@ -107,6 +113,8 @@
       "name_en": "Beijing Automobile Group",
       "sub": "自動車(中国)",
       "sub_en": "Automaker (China)",
+      "sub_short": "自動車",
+      "sub_short_en": "Automaker",
       "row": 2,
       "relations": [
         {
@@ -131,6 +139,8 @@
       "name_en": "FAW Group",
       "sub": "自動車(中国)",
       "sub_en": "Automaker (China)",
+      "sub_short": "自動車",
+      "sub_short_en": "Automaker",
       "row": 2,
       "relations": [
         {
@@ -155,6 +165,8 @@
       "name_en": "Lear",
       "sub": "シート・電装",
       "sub_en": "Seating & e-systems",
+      "sub_short": "シート・電装",
+      "sub_short_en": "Seating",
       "row": 3,
       "relations": [
         {

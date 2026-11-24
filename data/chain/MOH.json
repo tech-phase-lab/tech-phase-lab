@@ -35,6 +35,8 @@
       "name_en": "Evolent Health",
       "sub": "専門医療の管理サービス",
       "sub_en": "Specialty care management",
+      "sub_short": "専門医療管理",
+      "sub_short_en": "Specialty care",
       "row": 0,
       "relations": [
         {
@@ -72,6 +74,8 @@
       "name_en": "ConnectiCare",
       "sub": "医療保険(コネチカット州)",
       "sub_en": "Health plan (Connecticut)",
+      "sub_short": "医療保険",
+      "sub_short_en": "Health plan",
       "row": 0,
       "relations": [
         {
@@ -96,6 +100,8 @@
       "name_en": "NeueHealth",
       "sub": "医療サービス",
       "sub_en": "Value-based care",
+      "sub_short": "医療サービス",
+      "sub_short_en": "Value-based care",
       "row": 0,
       "relations": [
         {
@@ -120,6 +126,8 @@
       "name_en": "Indivior",
       "sub": "依存症治療薬",
       "sub_en": "Addiction treatment drugs",
+      "sub_short": "依存症治療薬",
+      "sub_short_en": "Addiction drugs",
       "row": 1,
       "relations": [
         {
@@ -144,6 +152,8 @@
       "name_en": "Jazz Pharmaceuticals",
       "sub": "製薬",
       "sub_en": "Pharmaceuticals",
+      "sub_short": "製薬",
+      "sub_short_en": "Pharmaceuticals",
       "row": 1,
       "relations": [
         {
@@ -168,6 +178,8 @@
       "name_en": "Centene",
       "sub": "医療保険",
       "sub_en": "Health insurance",
+      "sub_short": "医療保険",
+      "sub_short_en": "Health insurance",
       "row": 2,
       "relations": [
         {
@@ -192,6 +204,8 @@
       "name_en": "Elevance Health",
       "sub": "医療保険",
       "sub_en": "Health insurance",
+      "sub_short": "医療保険",
+      "sub_short_en": "Health insurance",
       "row": 2,
       "relations": [
         {
@@ -216,6 +230,8 @@
       "name_en": "UnitedHealth Group",
       "sub": "医療保険",
       "sub_en": "Health insurance",
+      "sub_short": "医療保険",
+      "sub_short_en": "Health insurance",
       "row": 2,
       "relations": [
         {
@@ -240,6 +256,8 @@
       "name_en": "CVS Health",
       "sub": "医療保険・薬局",
       "sub_en": "Health insurance & pharmacy",
+      "sub_short": "医療保険・薬局",
+      "sub_short_en": "Health insurance",
       "row": 2,
       "relations": [
         {
@@ -264,6 +282,8 @@
       "name_en": "Humana",
       "sub": "医療保険",
       "sub_en": "Health insurance",
+      "sub_short": "医療保険",
+      "sub_short_en": "Health insurance",
       "row": 2,
       "relations": [
         {

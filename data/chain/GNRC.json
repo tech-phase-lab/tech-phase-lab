@@ -29,6 +29,8 @@
       "name": "レルコ",
       "sub": "発電機",
       "sub_en": "Generators",
+      "sub_short": "発電機",
+      "sub_short_en": "Generators",
       "row": 0,
       "relations": [
         {
@@ -66,6 +68,8 @@
       "name": "ブリッグス・アンド・ストラットン",
       "sub": "小型エンジン・発電機",
       "sub_en": "Engines & generators",
+      "sub_short": "小型エンジン",
+      "sub_short_en": "Engines",
       "row": 0,
       "relations": [
         {
@@ -90,6 +94,8 @@
       "name": "ホンダ",
       "sub": "発電機・エンジン",
       "sub_en": "Generators & engines",
+      "sub_short": "発電機",
+      "sub_short_en": "Generators",
       "row": 0,
       "relations": [
         {
@@ -114,6 +120,8 @@
       "name": "テスラ",
       "sub": "蓄電池・EV",
       "sub_en": "Storage & EVs",
+      "sub_short": "蓄電池・EV",
+      "sub_short_en": "Storage & EVs",
       "row": 0,
       "relations": [
         {
@@ -138,6 +146,8 @@
       "name": "エンフェーズ・エナジー",
       "sub": "マイクロインバーター",
       "sub_en": "Microinverters",
+      "sub_short": "インバーター",
+      "sub_short_en": "Microinverters",
       "row": 0,
       "relations": [
         {
@@ -162,6 +172,8 @@
       "name": "ソーラーエッジ",
       "sub": "太陽光インバーター",
       "sub_en": "Solar inverters",
+      "sub_short": "太陽光機器",
+      "sub_short_en": "Solar inverters",
       "row": 0,
       "relations": [
         {
@@ -186,6 +198,8 @@
       "name": "キャタピラー",
       "sub": "産業用発電機",
       "sub_en": "Industrial generators",
+      "sub_short": "産業用発電機",
+      "sub_short_en": "Generators",
       "row": 0,
       "relations": [
         {
@@ -223,6 +237,8 @@
       "name": "カミンズ",
       "sub": "産業用発電機",
       "sub_en": "Industrial generators",
+      "sub_short": "産業用発電機",
+      "sub_short_en": "Generators",
       "row": 0,
       "relations": [
         {
@@ -247,6 +263,8 @@
       "name": "ウォールボックス",
       "sub": "EV充電器",
       "sub_en": "EV chargers",
+      "sub_short": "EV充電器",
+      "sub_short_en": "EV chargers",
       "row": 0,
       "relations": [
         {
@@ -271,6 +289,8 @@
       "name": "ハイリオン",
       "sub": "発電機",
       "sub_en": "Generators",
+      "sub_short": "発電機",
+      "sub_short_en": "Generators",
       "row": 1,
       "relations": [
         {

@@ -26,6 +26,8 @@
       "name": "Salesforce",
       "sub": "CRM・クラウド",
       "sub_en": "CRM & cloud",
+      "sub_short": "CRM・クラウド",
+      "sub_short_en": "CRM & cloud",
       "row": 0,
       "relations": [
         {
@@ -49,6 +51,8 @@
       "name": "Amazon",
       "sub": "クラウド",
       "sub_en": "Cloud",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 0,
       "relations": [
         {
@@ -85,6 +89,8 @@
       "name": "Apple",
       "sub": "スマホ・端末",
       "sub_en": "Devices",
+      "sub_short": "スマホ・端末",
+      "sub_short_en": "Devices",
       "row": 0,
       "relations": [
         {
@@ -108,6 +114,8 @@
       "name": "Anthropic",
       "sub": "生成AI",
       "sub_en": "Generative AI",
+      "sub_short": "生成AI",
+      "sub_short_en": "Generative AI",
       "row": 0,
       "relations": [
         {
@@ -148,6 +156,8 @@
       "name": "Wix",
       "sub": "ウェブサイト構築",
       "sub_en": "Website platform",
+      "sub_short": "サイト構築",
+      "sub_short_en": "Website platform",
       "row": 0,
       "relations": [
         {
@@ -171,6 +181,8 @@
       "name": "OpenAI",
       "sub": "生成AI",
       "sub_en": "Generative AI",
+      "sub_short": "生成AI",
+      "sub_short_en": "Generative AI",
       "row": 0,
       "relations": [
         {
@@ -196,6 +208,8 @@
       "name": "Microsoft",
       "sub": "ソフト・クラウド",
       "sub_en": "Software & cloud",
+      "sub_short": "ソフト",
+      "sub_short_en": "Software & cloud",
       "row": 1,
       "relations": [
         {
@@ -244,6 +258,8 @@
       "name": "Google",
       "sub": "検索・クラウド",
       "sub_en": "Search & cloud",
+      "sub_short": "検索・クラウド",
+      "sub_short_en": "Search & cloud",
       "row": 1,
       "relations": [
         {

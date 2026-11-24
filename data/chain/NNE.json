@@ -33,6 +33,8 @@
       "name_en": "Ultra Safe Nuclear",
       "sub": "小型原子炉(破産)",
       "sub_en": "Microreactors (bankrupt)",
+      "sub_short": "小型原子炉",
+      "sub_short_en": "Microreactors",
       "row": 0,
       "relations": [
         {
@@ -57,6 +59,8 @@
       "name_en": "Cambridge Atom Works",
       "sub": "先進原子炉(英国)",
       "sub_en": "Advanced reactors (UK)",
+      "sub_short": "先進原子炉",
+      "sub_short_en": "Nuclear reactors",
       "row": 0,
       "relations": [
         {
@@ -83,6 +87,8 @@
       "name_en": "LIS Technologies",
       "sub": "レーザー濃縮",
       "sub_en": "Laser enrichment",
+      "sub_short": "レーザー濃縮",
+      "sub_short_en": "Laser enrichment",
       "row": 0,
       "relations": [
         {
@@ -107,6 +113,8 @@
       "name_en": "Digihost Technology",
       "sub": "データセンター・採掘",
       "sub_en": "Data centers & mining",
+      "sub_short": "データセンター",
+      "sub_short_en": "Data centers",
       "row": 1,
       "relations": [
         {
@@ -131,6 +139,8 @@
       "name_en": "Oklo",
       "sub": "小型原子炉",
       "sub_en": "Advanced nuclear",
+      "sub_short": "小型原子炉",
+      "sub_short_en": "Advanced nuclear",
       "row": 2,
       "relations": [
         {
@@ -155,6 +165,8 @@
       "name_en": "TerraPower",
       "sub": "先進原子炉",
       "sub_en": "Advanced nuclear",
+      "sub_short": "先進原子炉",
+      "sub_short_en": "Advanced nuclear",
       "row": 2,
       "relations": [
         {
@@ -179,6 +191,8 @@
       "name_en": "X-energy",
       "sub": "小型原子炉",
       "sub_en": "Advanced nuclear",
+      "sub_short": "小型原子炉",
+      "sub_short_en": "Advanced nuclear",
       "row": 2,
       "relations": [
         {
@@ -203,6 +217,8 @@
       "name_en": "GE Hitachi",
       "sub": "小型原子炉",
       "sub_en": "Advanced nuclear",
+      "sub_short": "小型原子炉",
+      "sub_short_en": "Advanced nuclear",
       "row": 2,
       "relations": [
         {
@@ -227,6 +243,8 @@
       "name_en": "Holtec",
       "sub": "原子力",
       "sub_en": "Nuclear",
+      "sub_short": "原子力",
+      "sub_short_en": "Nuclear",
       "row": 2,
       "relations": [
         {
@@ -251,6 +269,8 @@
       "name_en": "Kairos Power",
       "sub": "先進原子炉",
       "sub_en": "Advanced nuclear",
+      "sub_short": "先進原子炉",
+      "sub_short_en": "Advanced nuclear",
       "row": 2,
       "relations": [
         {

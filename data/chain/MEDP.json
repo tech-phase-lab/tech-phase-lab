@@ -29,6 +29,8 @@
       "name_en": "Corcept Therapeutics",
       "sub": "内分泌・がん治療薬",
       "sub_en": "Endocrine & oncology drugs",
+      "sub_short": "内分泌薬",
+      "sub_short_en": "Endocrine drugs",
       "row": 0,
       "relations": [
         {
@@ -53,6 +55,8 @@
       "name_en": "Agenus",
       "sub": "がん免疫薬",
       "sub_en": "Immuno-oncology",
+      "sub_short": "がん免疫薬",
+      "sub_short_en": "Immuno-oncology",
       "row": 0,
       "relations": [
         {
@@ -77,6 +81,8 @@
       "name_en": "Exicure",
       "sub": "バイオ医薬",
       "sub_en": "Biotech",
+      "sub_short": "バイオ医薬",
+      "sub_short_en": "Biotech",
       "row": 0,
       "relations": [
         {
@@ -101,6 +107,8 @@
       "name_en": "Apollomics",
       "sub": "がん治療薬",
       "sub_en": "Oncology drugs",
+      "sub_short": "がん治療薬",
+      "sub_short_en": "Oncology drugs",
       "row": 0,
       "relations": [
         {
@@ -125,6 +133,8 @@
       "name_en": "IQVIA",
       "sub": "CRO・医療データ",
       "sub_en": "CRO & health data",
+      "sub_short": "CRO",
+      "sub_short_en": "CRO",
       "row": 1,
       "relations": [
         {
@@ -149,6 +159,8 @@
       "name_en": "ICON",
       "sub": "CRO(アイルランド)",
       "sub_en": "CRO (Ireland)",
+      "sub_short": "CRO",
+      "sub_short_en": "CRO",
       "row": 1,
       "relations": [
         {
@@ -173,6 +185,8 @@
       "name_en": "Fortrea",
       "sub": "CRO",
       "sub_en": "CRO",
+      "sub_short": "CRO",
+      "sub_short_en": "CRO",
       "row": 1,
       "relations": [
         {
@@ -197,6 +211,8 @@
       "name_en": "Thermo Fisher (PPD)",
       "sub": "研究機器・CRO",
       "sub_en": "Life science tools & CRO",
+      "sub_short": "研究機器・CRO",
+      "sub_short_en": "Lab tools & CRO",
       "row": 1,
       "relations": [
         {

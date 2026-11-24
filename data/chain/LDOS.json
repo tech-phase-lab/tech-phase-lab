@@ -26,6 +26,8 @@
       "name": "ロッキード・マーティン",
       "sub": "防衛大手",
       "sub_en": "Defense prime",
+      "sub_short": "防衛大手",
+      "sub_short_en": "Defense prime",
       "row": 0,
       "relations": [
         {
@@ -50,6 +52,8 @@
       "name": "ノースロップ・グラマン",
       "sub": "防衛大手",
       "sub_en": "Defense prime",
+      "sub_short": "防衛大手",
+      "sub_short_en": "Defense prime",
       "row": 0,
       "relations": [
         {
@@ -74,6 +78,8 @@
       "name": "ゼネラル・ダイナミクス",
       "sub": "防衛大手",
       "sub_en": "Defense prime",
+      "sub_short": "防衛大手",
+      "sub_short_en": "Defense prime",
       "row": 0,
       "relations": [
         {
@@ -98,6 +104,8 @@
       "name": "RTXコーポレーション",
       "sub": "防衛・航空宇宙",
       "sub_en": "Defense & aerospace",
+      "sub_short": "防衛・航空宇宙",
+      "sub_short_en": "Defense",
       "row": 0,
       "relations": [
         {
@@ -122,6 +130,8 @@
       "name": "L3ハリス・テクノロジーズ",
       "sub": "防衛エレクトロニクス",
       "sub_en": "Defense electronics",
+      "sub_short": "防衛電子機器",
+      "sub_short_en": "Defense tech",
       "row": 0,
       "relations": [
         {
@@ -146,6 +156,8 @@
       "name": "ブーズ・アレン・ハミルトン",
       "sub": "政府向けコンサル",
       "sub_en": "Government consulting",
+      "sub_short": "政府コンサル",
+      "sub_short_en": "Gov consulting",
       "row": 0,
       "relations": [
         {
@@ -170,6 +182,8 @@
       "name": "CACIインターナショナル",
       "sub": "政府向けIT",
       "sub_en": "Government IT",
+      "sub_short": "政府向けIT",
+      "sub_short_en": "Government IT",
       "row": 0,
       "relations": [
         {
@@ -194,6 +208,8 @@
       "name": "サイエンス・アプリケーションズ・インターナショナル",
       "sub": "政府向けIT",
       "sub_en": "Government IT",
+      "sub_short": "政府向けIT",
+      "sub_short_en": "Government IT",
       "row": 0,
       "relations": [
         {
@@ -218,6 +234,8 @@
       "name": "ケービーアール",
       "sub": "政府向けサービス",
       "sub_en": "Government services",
+      "sub_short": "政府サービス",
+      "sub_short_en": "Gov services",
       "row": 0,
       "relations": [
         {
@@ -242,6 +260,8 @@
       "name": "パーソンズ",
       "sub": "政府向けサービス",
       "sub_en": "Government services",
+      "sub_short": "政府サービス",
+      "sub_short_en": "Gov services",
       "row": 0,
       "relations": [
         {
@@ -266,6 +286,8 @@
       "name": "アメンタム",
       "sub": "政府向けサービス",
       "sub_en": "Government services",
+      "sub_short": "政府サービス",
+      "sub_short_en": "Gov services",
       "row": 0,
       "relations": [
         {
@@ -290,6 +312,8 @@
       "name": "アイビーエム",
       "sub": "ITサービス",
       "sub_en": "IT services",
+      "sub_short": "ITサービス",
+      "sub_short_en": "IT services",
       "row": 0,
       "relations": [
         {

@@ -33,6 +33,8 @@
       "name_en": "CordenPharma",
       "sub": "医薬品の受託製造",
       "sub_en": "Contract drug manufacturing",
+      "sub_short": "医薬品受託",
+      "sub_short_en": "Drug CDMO",
       "row": 0,
       "relations": [
         {
@@ -57,6 +59,8 @@
       "name_en": "Ligand Pharmaceuticals",
       "sub": "創薬・ライセンス",
       "sub_en": "Drug discovery & licensing",
+      "sub_short": "創薬",
+      "sub_short_en": "Drug discovery",
       "row": 0,
       "relations": [
         {
@@ -81,6 +85,8 @@
       "name_en": "Novo Nordisk",
       "sub": "医薬品(肥満症)",
       "sub_en": "Pharma (obesity)",
+      "sub_short": "医薬品",
+      "sub_short_en": "Pharma",
       "row": 1,
       "relations": [
         {
@@ -105,6 +111,8 @@
       "name_en": "Eli Lilly",
       "sub": "医薬品(肥満症)",
       "sub_en": "Pharma (obesity)",
+      "sub_short": "医薬品",
+      "sub_short_en": "Pharma",
       "row": 1,
       "relations": [
         {
@@ -129,6 +137,8 @@
       "name_en": "Amgen",
       "sub": "バイオ医薬品",
       "sub_en": "Biotech",
+      "sub_short": "バイオ医薬品",
+      "sub_short_en": "Biotech",
       "row": 1,
       "relations": [
         {
@@ -153,6 +163,8 @@
       "name_en": "Boehringer Ingelheim",
       "sub": "医薬品(独)",
       "sub_en": "Pharma (Germany)",
+      "sub_short": "医薬品",
+      "sub_short_en": "Pharma",
       "row": 1,
       "relations": [
         {
@@ -177,6 +189,8 @@
       "name_en": "Altimmune",
       "sub": "バイオ(肝疾患・肥満)",
       "sub_en": "Biotech (liver & obesity)",
+      "sub_short": "バイオ",
+      "sub_short_en": "Biotech",
       "row": 2,
       "relations": [
         {
@@ -201,6 +215,8 @@
       "name_en": "Metsera",
       "sub": "バイオ(肥満症)",
       "sub_en": "Biotech (obesity)",
+      "sub_short": "バイオ",
+      "sub_short_en": "Biotech",
       "row": 2,
       "relations": [
         {
@@ -225,6 +241,8 @@
       "name_en": "Kailera Therapeutics",
       "sub": "バイオ(肥満症)",
       "sub_en": "Biotech (obesity)",
+      "sub_short": "バイオ",
+      "sub_short_en": "Biotech",
       "row": 2,
       "relations": [
         {
@@ -249,6 +267,8 @@
       "name_en": "Corbus Pharmaceuticals",
       "sub": "バイオ",
       "sub_en": "Biotech",
+      "sub_short": "バイオ",
+      "sub_short_en": "Biotech",
       "row": 2,
       "relations": [
         {
@@ -273,6 +293,8 @@
       "name_en": "Galmed Pharmaceuticals",
       "sub": "バイオ(肝疾患)",
       "sub_en": "Biotech (liver)",
+      "sub_short": "バイオ",
+      "sub_short_en": "Biotech",
       "row": 2,
       "relations": [
         {

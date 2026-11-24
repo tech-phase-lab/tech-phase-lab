@@ -37,6 +37,8 @@
       "name": "NVIDIA",
       "sub": "AI半導体",
       "sub_en": "AI chips",
+      "sub_short": "AI半導体",
+      "sub_short_en": "AI chips",
       "row": 0,
       "relations": [
         {
@@ -101,6 +103,8 @@
       "name": "AMD",
       "sub": "半導体",
       "sub_en": "Semiconductors",
+      "sub_short": "半導体",
+      "sub_short_en": "Semiconductors",
       "row": 0,
       "relations": [
         {
@@ -124,6 +128,8 @@
       "name": "Bloom Energy",
       "sub": "燃料電池",
       "sub_en": "Fuel cells",
+      "sub_short": "燃料電池",
+      "sub_short_en": "Fuel cells",
       "row": 0,
       "relations": [
         {
@@ -162,6 +168,8 @@
       "name": "Meta Platforms",
       "sub": "SNS・広告",
       "sub_en": "Social media",
+      "sub_short": "SNS・広告",
+      "sub_short_en": "Social media",
       "row": 1,
       "relations": [
         {
@@ -187,6 +195,8 @@
       "name": "Applied Optoelectronics",
       "sub": "光通信部品",
       "sub_en": "Optical components",
+      "sub_short": "光通信部品",
+      "sub_short_en": "Optics",
       "row": 0,
       "relations": [
         {
@@ -212,6 +222,8 @@
       "name": "Microsoft",
       "sub": "クラウド・ソフト",
       "sub_en": "Cloud & software",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud & software",
       "row": 2,
       "relations": [
         {
@@ -265,6 +277,8 @@
       "name": "Marvell Technology",
       "sub": "半導体",
       "sub_en": "Semiconductors",
+      "sub_short": "半導体",
+      "sub_short_en": "Semiconductors",
       "row": 2,
       "relations": [
         {
@@ -288,6 +302,8 @@
       "name": "Amazon(AWS)",
       "sub": "クラウド",
       "sub_en": "Cloud",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 2,
       "relations": [
         {
@@ -358,6 +374,8 @@
       "name": "Alphabet(Google)",
       "sub": "クラウド・AI",
       "sub_en": "Cloud & AI",
+      "sub_short": "クラウド・AI",
+      "sub_short_en": "Cloud & AI",
       "row": 2,
       "relations": [
         {
@@ -413,6 +431,8 @@
       "name": "Palantir Technologies",
       "sub": "データ分析ソフト",
       "sub_en": "Data analytics software",
+      "sub_short": "データ分析",
+      "sub_short_en": "Data analytics",
       "row": 2,
       "relations": [
         {
@@ -437,6 +457,8 @@
       "name": "NetApp",
       "sub": "データストレージ",
       "sub_en": "Data storage",
+      "sub_short": "ストレージ",
+      "sub_short_en": "Data storage",
       "row": 2,
       "relations": [
         {
@@ -462,6 +484,8 @@
       "name": "Arm Holdings",
       "sub": "半導体IP",
       "sub_en": "Chip IP",
+      "sub_short": "半導体IP",
+      "sub_short_en": "Chip IP",
       "row": 2,
       "relations": [
         {
@@ -487,6 +511,8 @@
       "name": "SoftBank Group",
       "sub": "投資持株会社",
       "sub_en": "Investment holding",
+      "sub_short": "投資持株会社",
+      "sub_short_en": "Holding company",
       "row": 2,
       "relations": [
         {
@@ -527,6 +553,8 @@
       "name": "OpenAI",
       "sub": "生成AI",
       "sub_en": "Generative AI",
+      "sub_short": "生成AI",
+      "sub_short_en": "Generative AI",
       "row": 2,
       "relations": [
         {
@@ -567,6 +595,8 @@
       "name": "IBM",
       "sub": "IT・クラウド",
       "sub_en": "IT & cloud",
+      "sub_short": "IT・クラウド",
+      "sub_short_en": "IT & cloud",
       "row": 2,
       "relations": [
         {
@@ -605,6 +635,8 @@
       "name": "Adobe",
       "sub": "クリエイティブ・ソフト",
       "sub_en": "Creative software",
+      "sub_short": "クリエイティブ",
+      "sub_short_en": "Creative apps",
       "row": 3,
       "relations": [
         {
@@ -630,6 +662,8 @@
       "name": "Cisco Systems",
       "sub": "ネットワーク機器",
       "sub_en": "Networking gear",
+      "sub_short": "通信機器",
+      "sub_short_en": "Networking gear",
       "row": 3,
       "relations": [
         {
@@ -655,6 +689,8 @@
       "name": "Intel",
       "sub": "半導体",
       "sub_en": "Semiconductors",
+      "sub_short": "半導体",
+      "sub_short_en": "Semiconductors",
       "row": 3,
       "relations": [
         {
@@ -680,6 +716,8 @@
       "name": "Salesforce",
       "sub": "業務ソフト",
       "sub_en": "Enterprise software",
+      "sub_short": "業務ソフト",
+      "sub_short_en": "Enterprise apps",
       "row": 3,
       "relations": [
         {
@@ -705,6 +743,8 @@
       "name": "SAP",
       "sub": "業務ソフト",
       "sub_en": "Enterprise software",
+      "sub_short": "業務ソフト",
+      "sub_short_en": "Enterprise apps",
       "row": 3,
       "relations": [
         {
@@ -730,6 +770,8 @@
       "name": "Hewlett Packard Enterprise",
       "sub": "サーバー・ITインフラ",
       "sub_en": "Servers & IT infrastructure",
+      "sub_short": "サーバー",
+      "sub_short_en": "Servers",
       "row": 3,
       "relations": [
         {
@@ -755,6 +797,8 @@
       "name": "Workday",
       "sub": "業務ソフト",
       "sub_en": "Enterprise software",
+      "sub_short": "業務ソフト",
+      "sub_short_en": "Enterprise apps",
       "row": 3,
       "relations": [
         {
@@ -780,6 +824,8 @@
       "name": "ServiceNow",
       "sub": "業務ソフト",
       "sub_en": "Enterprise software",
+      "sub_short": "業務ソフト",
+      "sub_short_en": "Enterprise apps",
       "row": 3,
       "relations": [
         {
@@ -803,6 +849,8 @@
       "name": "MongoDB",
       "sub": "データベース",
       "sub_en": "Databases",
+      "sub_short": "データベース",
+      "sub_short_en": "Databases",
       "row": 3,
       "relations": [
         {
@@ -826,6 +874,8 @@
       "name": "CoreWeave",
       "sub": "AIクラウド",
       "sub_en": "AI cloud",
+      "sub_short": "AIクラウド",
+      "sub_short_en": "AI cloud",
       "row": 3,
       "relations": [
         {
@@ -849,6 +899,8 @@
       "name": "Nebius Group",
       "sub": "AIクラウド",
       "sub_en": "AI cloud",
+      "sub_short": "AIクラウド",
+      "sub_short_en": "AI cloud",
       "row": 3,
       "relations": [
         {
@@ -872,6 +924,8 @@
       "name": "IREN",
       "sub": "AIクラウド",
       "sub_en": "AI cloud",
+      "sub_short": "AIクラウド",
+      "sub_short_en": "AI cloud",
       "row": 3,
       "relations": [
         {

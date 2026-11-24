@@ -30,6 +30,8 @@
       "name_en": "Marel",
       "sub": "食品加工機械(アイスランド)",
       "sub_en": "Food processing equipment (Iceland)",
+      "sub_short": "食品加工機械",
+      "sub_short_en": "Food machinery",
       "row": 0,
       "relations": [
         {
@@ -54,6 +56,8 @@
       "name_en": "Oshkosh",
       "sub": "特殊車両",
       "sub_en": "Specialty vehicles",
+      "sub_short": "特殊車両",
+      "sub_short_en": "Vehicles",
       "row": 0,
       "relations": [
         {
@@ -78,6 +82,8 @@
       "name_en": "Middleby",
       "sub": "厨房・食品加工機械",
       "sub_en": "Kitchen & food processing equipment",
+      "sub_short": "厨房",
+      "sub_short_en": "Kitchen gear",
       "row": 1,
       "relations": [
         {
@@ -102,6 +108,8 @@
       "name_en": "Mettler-Toledo",
       "sub": "計量・検査機器",
       "sub_en": "Weighing & inspection",
+      "sub_short": "計量・検査機器",
+      "sub_short_en": "Weighing",
       "row": 1,
       "relations": [
         {
@@ -126,6 +134,8 @@
       "name_en": "GEA Group",
       "sub": "食品・プロセス機械(独)",
       "sub_en": "Food & process machinery (Germany)",
+      "sub_short": "食品",
+      "sub_short_en": "Food machinery",
       "row": 1,
       "relations": [
         {
@@ -150,6 +160,8 @@
       "name_en": "Krones",
       "sub": "飲料充填機(独)",
       "sub_en": "Bottling machinery (Germany)",
+      "sub_short": "飲料充填機",
+      "sub_short_en": "Bottling gear",
       "row": 1,
       "relations": [
         {
@@ -174,6 +186,8 @@
       "name_en": "Bühler Group",
       "sub": "食品加工機械(スイス)",
       "sub_en": "Food processing equipment (Switzerland)",
+      "sub_short": "食品加工機械",
+      "sub_short_en": "Food machinery",
       "row": 1,
       "relations": [
         {
@@ -198,6 +212,8 @@
       "name_en": "Baader",
       "sub": "魚・食肉加工機械(独)",
       "sub_en": "Fish & meat processing (Germany)",
+      "sub_short": "食品加工機械",
+      "sub_short_en": "Food machinery",
       "row": 1,
       "relations": [
         {
@@ -222,6 +238,8 @@
       "name_en": "Barry-Wehmiller",
       "sub": "包装機械",
       "sub_en": "Packaging machinery",
+      "sub_short": "包装機械",
+      "sub_short_en": "Packaging tools",
       "row": 1,
       "relations": [
         {
@@ -246,6 +264,8 @@
       "name_en": "Duravant",
       "sub": "食品・包装機械",
       "sub_en": "Food & packaging machinery",
+      "sub_short": "食品・包装機械",
+      "sub_short_en": "Food machinery",
       "row": 1,
       "relations": [
         {

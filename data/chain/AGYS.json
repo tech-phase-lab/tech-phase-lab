@@ -21,6 +21,8 @@
       "name": "ボイド・ゲーミング",
       "sub": "カジノ・ゲーミング",
       "sub_en": "Casino gaming",
+      "sub_short": "カジノ",
+      "sub_short_en": "Casino gaming",
       "row": 0,
       "relations": [
         {
@@ -45,6 +47,8 @@
       "name": "シーザーズ・エンターテインメント",
       "sub": "カジノ・ホテル",
       "sub_en": "Casinos & hotels",
+      "sub_short": "カジノ・ホテル",
+      "sub_short_en": "Casinos & hotels",
       "row": 0,
       "relations": [
         {
@@ -69,6 +73,8 @@
       "name": "ヒルトン・ワールドワイド",
       "sub": "ホテル",
       "sub_en": "Hotels",
+      "sub_short": "ホテル",
+      "sub_short_en": "Hotels",
       "row": 0,
       "relations": [
         {
@@ -93,6 +99,8 @@
       "name": "ロイヤル・カリビアン・グループ",
       "sub": "クルーズ",
       "sub_en": "Cruise lines",
+      "sub_short": "クルーズ",
+      "sub_short_en": "Cruise lines",
       "row": 0,
       "relations": [
         {
@@ -117,6 +125,8 @@
       "name": "マリオット・インターナショナル",
       "sub": "ホテル",
       "sub_en": "Hotels",
+      "sub_short": "ホテル",
+      "sub_short_en": "Hotels",
       "row": 0,
       "relations": [
         {
@@ -141,6 +151,8 @@
       "name": "オラクル",
       "sub": "ソフトウェア",
       "sub_en": "Software",
+      "sub_short": "ソフトウェア",
+      "sub_short_en": "Software",
       "row": 0,
       "relations": [
         {
@@ -165,6 +177,8 @@
       "name": "シージ・グループ",
       "sub": "ホスピタリティ系ソフト",
       "sub_en": "Hospitality software",
+      "sub_short": "接客業ソフト",
+      "sub_short_en": "Hotel software",
       "row": 0,
       "relations": [
         {
@@ -189,6 +203,8 @@
       "name": "インフォア",
       "sub": "業務ソフトウェア",
       "sub_en": "Enterprise software",
+      "sub_short": "業務ソフト",
+      "sub_short_en": "Enterprise apps",
       "row": 0,
       "relations": [
         {

@@ -25,6 +25,8 @@
       "name_en": "Hudson Pacific Properties",
       "sub": "オフィス・スタジオREIT",
       "sub_en": "Office & studio REIT",
+      "sub_short": "オフィス",
+      "sub_short_en": "Office REIT",
       "row": 0,
       "relations": [
         {
@@ -49,6 +51,8 @@
       "name_en": "Blackstone",
       "sub": "投資会社",
       "sub_en": "Investment firm",
+      "sub_short": "投資会社",
+      "sub_short_en": "Investment firm",
       "row": 0,
       "relations": [
         {
@@ -73,6 +77,8 @@
       "name_en": "Citadel",
       "sub": "ヘッジファンド",
       "sub_en": "Hedge fund",
+      "sub_short": "ヘッジファンド",
+      "sub_short_en": "Hedge fund",
       "row": 0,
       "relations": [
         {
@@ -97,6 +103,8 @@
       "name_en": "Rudin Family",
       "sub": "不動産(ニューヨーク)",
       "sub_en": "Real estate (New York)",
+      "sub_short": "不動産",
+      "sub_short_en": "Real estate",
       "row": 0,
       "relations": [
         {
@@ -121,6 +129,8 @@
       "name_en": "Alexander's",
       "sub": "不動産REIT(ニューヨーク)",
       "sub_en": "Real estate REIT (New York)",
+      "sub_short": "不動産REIT",
+      "sub_short_en": "Real estate REIT",
       "row": 1,
       "relations": [
         {
@@ -145,6 +155,8 @@
       "name_en": "LB Pharmaceuticals",
       "sub": "中枢神経の医薬",
       "sub_en": "CNS drugs",
+      "sub_short": "中枢神経の医薬",
+      "sub_short_en": "CNS drugs",
       "row": 1,
       "relations": [
         {

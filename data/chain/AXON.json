@@ -29,6 +29,8 @@
       "name": "モトローラ・ソリューションズ",
       "sub": "公共安全の通信機器",
       "sub_en": "Public safety technology",
+      "sub_short": "公共安全通信",
+      "sub_short_en": "Public safety",
       "row": 0,
       "relations": [
         {
@@ -53,6 +55,8 @@
       "name": "ジェネテック",
       "sub": "映像監視ソフト",
       "sub_en": "Video surveillance software",
+      "sub_short": "映像監視ソフト",
+      "sub_short_en": "Video security",
       "row": 0,
       "relations": [
         {
@@ -90,6 +94,8 @@
       "name": "フロック・セーフティ",
       "sub": "ナンバー読取",
       "sub_en": "License plate recognition",
+      "sub_short": "ナンバー読取",
+      "sub_short_en": "Plate readers",
       "row": 0,
       "relations": [
         {
@@ -114,6 +120,8 @@
       "name": "オラクル",
       "sub": "クラウドソフト",
       "sub_en": "Cloud software",
+      "sub_short": "クラウドソフト",
+      "sub_short_en": "Cloud software",
       "row": 0,
       "relations": [
         {
@@ -138,6 +146,8 @@
       "name": "タイラー・テクノロジーズ",
       "sub": "行政向けソフト",
       "sub_en": "Public sector software",
+      "sub_short": "行政向けソフト",
+      "sub_short_en": "Gov software",
       "row": 0,
       "relations": [
         {
@@ -162,6 +172,8 @@
       "name": "ラップ・テクノロジーズ",
       "sub": "非致死性護身機器",
       "sub_en": "Less-lethal devices",
+      "sub_short": "護身用品",
+      "sub_short_en": "Less-lethal",
       "row": 0,
       "relations": [
         {
@@ -186,6 +198,8 @@
       "name": "ヘキサゴン",
       "sub": "測位・情報システム",
       "sub_en": "Positioning & information systems",
+      "sub_short": "測位",
+      "sub_short_en": "Positioning",
       "row": 0,
       "relations": [
         {
@@ -210,6 +224,8 @@
       "name": "アクシス・コミュニケーションズ",
       "sub": "ネットワークカメラ",
       "sub_en": "Network cameras",
+      "sub_short": "ネットカメラ",
+      "sub_short_en": "Network cameras",
       "row": 0,
       "relations": [
         {
@@ -234,6 +250,8 @@
       "name": "ハイクビジョン",
       "sub": "監視カメラ",
       "sub_en": "Surveillance cameras",
+      "sub_short": "監視カメラ",
+      "sub_short_en": "Cameras",
       "row": 0,
       "relations": [
         {
@@ -258,6 +276,8 @@
       "name": "デジタル・アライ",
       "sub": "ボディカメラ",
       "sub_en": "Body cameras",
+      "sub_short": "ボディカメラ",
+      "sub_short_en": "Body cameras",
       "row": 0,
       "relations": [
         {
@@ -282,6 +302,8 @@
       "name": "バーナ・テクノロジーズ",
       "sub": "非致死性護身用品",
       "sub_en": "Less-lethal security",
+      "sub_short": "護身用品",
+      "sub_short_en": "Less-lethal",
       "row": 1,
       "relations": [
         {

@@ -37,6 +37,8 @@
       "name_en": "Omeros",
       "sub": "バイオ",
       "sub_en": "Biotech",
+      "sub_short": "バイオ",
+      "sub_short_en": "Biotech",
       "row": 0,
       "relations": [
         {
@@ -61,6 +63,8 @@
       "name_en": "Lexicon Pharmaceuticals",
       "sub": "バイオ",
       "sub_en": "Biotech",
+      "sub_short": "バイオ",
+      "sub_short_en": "Biotech",
       "row": 0,
       "relations": [
         {
@@ -85,6 +89,8 @@
       "name_en": "Ascendis Pharma",
       "sub": "バイオ(徐放技術)",
       "sub_en": "Biotech (sustained release)",
+      "sub_short": "バイオ",
+      "sub_short_en": "Biotech",
       "row": 0,
       "relations": [
         {
@@ -109,6 +115,8 @@
       "name_en": "Septerna",
       "sub": "バイオ(低分子)",
       "sub_en": "Biotech (small molecules)",
+      "sub_short": "バイオ",
+      "sub_short_en": "Biotech",
       "row": 0,
       "relations": [
         {
@@ -133,6 +141,8 @@
       "name_en": "Prothena",
       "sub": "バイオ(神経)",
       "sub_en": "Biotech (neurology)",
+      "sub_short": "バイオ",
+      "sub_short_en": "Biotech",
       "row": 0,
       "relations": [
         {
@@ -157,6 +167,8 @@
       "name_en": "Novo Holdings",
       "sub": "財団の投資会社",
       "sub_en": "Foundation holding company",
+      "sub_short": "財団の投資会社",
+      "sub_short_en": "Foundation owner",
       "row": 1,
       "relations": [
         {
@@ -181,6 +193,8 @@
       "name_en": "Akero Therapeutics",
       "sub": "バイオ(MASH)",
       "sub_en": "Biotech (MASH)",
+      "sub_short": "バイオ",
+      "sub_short_en": "Biotech",
       "row": 1,
       "relations": [
         {
@@ -205,6 +219,8 @@
       "name_en": "Innate Pharma",
       "sub": "バイオ(がん免疫)",
       "sub_en": "Biotech (immuno-oncology)",
+      "sub_short": "バイオ",
+      "sub_short_en": "Biotech",
       "row": 2,
       "relations": [
         {
@@ -229,6 +245,8 @@
       "name_en": "vTv Therapeutics",
       "sub": "バイオ(糖尿病)",
       "sub_en": "Biotech (diabetes)",
+      "sub_short": "バイオ",
+      "sub_short_en": "Biotech",
       "row": 2,
       "relations": [
         {
@@ -253,6 +271,8 @@
       "name_en": "LifeMD",
       "sub": "遠隔医療",
       "sub_en": "Telehealth",
+      "sub_short": "遠隔医療",
+      "sub_short_en": "Telehealth",
       "row": 2,
       "relations": [
         {
@@ -277,6 +297,8 @@
       "name_en": "Eli Lilly",
       "sub": "医薬品",
       "sub_en": "Pharma",
+      "sub_short": "医薬品",
+      "sub_short_en": "Pharma",
       "row": 3,
       "relations": [
         {
@@ -301,6 +323,8 @@
       "name_en": "Viking Therapeutics",
       "sub": "バイオ(肥満症)",
       "sub_en": "Biotech (obesity)",
+      "sub_short": "バイオ",
+      "sub_short_en": "Biotech",
       "row": 3,
       "relations": [
         {
@@ -325,6 +349,8 @@
       "name_en": "Altimmune",
       "sub": "バイオ(肝疾患・肥満)",
       "sub_en": "Biotech (liver & obesity)",
+      "sub_short": "バイオ",
+      "sub_short_en": "Biotech",
       "row": 3,
       "relations": [
         {
@@ -349,6 +375,8 @@
       "name_en": "BioMarin",
       "sub": "希少疾患",
       "sub_en": "Rare disease",
+      "sub_short": "希少疾患",
+      "sub_short_en": "Rare disease",
       "row": 3,
       "relations": [
         {

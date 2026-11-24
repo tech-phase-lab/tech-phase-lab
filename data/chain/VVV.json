@@ -31,6 +31,8 @@
       "name_en": "Ashland",
       "sub": "特殊化学品",
       "sub_en": "Specialty chemicals",
+      "sub_short": "特殊化学品",
+      "sub_short_en": "Chemicals",
       "row": 0,
       "relations": [
         {
@@ -55,6 +57,8 @@
       "name_en": "Saudi Aramco",
       "sub": "石油(サウジアラビア)",
       "sub_en": "Oil (Saudi Arabia)",
+      "sub_short": "石油",
+      "sub_short_en": "Oil",
       "row": 0,
       "relations": [
         {
@@ -79,6 +83,8 @@
       "name_en": "Breeze Autocare",
       "sub": "オイル交換チェーン",
       "sub_en": "Quick-lube chain",
+      "sub_short": "オイル交換",
+      "sub_short_en": "Quick-lube chain",
       "row": 0,
       "relations": [
         {
@@ -103,6 +109,8 @@
       "name_en": "DoubleVerify",
       "sub": "デジタル広告の検証",
       "sub_en": "Ad verification",
+      "sub_short": "広告検証",
+      "sub_short_en": "Ad verification",
       "row": 1,
       "relations": [
         {
@@ -127,6 +135,8 @@
       "name_en": "CIM Real Estate Finance Trust",
       "sub": "不動産投資",
       "sub_en": "Real estate investment",
+      "sub_short": "不動産投資",
+      "sub_short_en": "RE investing",
       "row": 1,
       "relations": [
         {
@@ -151,6 +161,8 @@
       "name_en": "Calumet",
       "sub": "特殊石油製品",
       "sub_en": "Specialty petroleum products",
+      "sub_short": "特殊石油製品",
+      "sub_short_en": "Petroleum",
       "row": 2,
       "relations": [
         {

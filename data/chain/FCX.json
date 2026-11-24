@@ -32,6 +32,8 @@
       "name_en": "LSB Industries",
       "sub": "化学(硝安)",
       "sub_en": "Chemicals (ammonium nitrate)",
+      "sub_short": "化学",
+      "sub_short_en": "Chemicals",
       "row": 0,
       "relations": [
         {
@@ -56,6 +58,8 @@
       "name_en": "Mitsubishi Materials",
       "sub": "非鉄金属",
       "sub_en": "Non-ferrous metals",
+      "sub_short": "非鉄金属",
+      "sub_short_en": "Metals",
       "row": 1,
       "relations": [
         {
@@ -80,6 +84,8 @@
       "name_en": "Sumitomo Metal Mining",
       "sub": "非鉄金属",
       "sub_en": "Non-ferrous metals",
+      "sub_short": "非鉄金属",
+      "sub_short_en": "Metals",
       "row": 1,
       "relations": [
         {
@@ -117,6 +123,8 @@
       "name_en": "MIND ID",
       "sub": "国営鉱業(インドネシア)",
       "sub_en": "State mining (Indonesia)",
+      "sub_short": "国営鉱業",
+      "sub_short_en": "State mining",
       "row": 1,
       "relations": [
         {
@@ -141,6 +149,8 @@
       "name_en": "Buenaventura",
       "sub": "鉱山(ペルー)",
       "sub_en": "Mining (Peru)",
+      "sub_short": "鉱山",
+      "sub_short_en": "Mining",
       "row": 1,
       "relations": [
         {
@@ -165,6 +175,8 @@
       "name_en": "Amarc Resources",
       "sub": "探鉱(カナダ)",
       "sub_en": "Exploration (Canada)",
+      "sub_short": "探鉱",
+      "sub_short_en": "Exploration",
       "row": 1,
       "relations": [
         {
@@ -189,6 +201,8 @@
       "name_en": "BHP",
       "sub": "資源大手",
       "sub_en": "Diversified mining",
+      "sub_short": "資源大手",
+      "sub_short_en": "Mining",
       "row": 2,
       "relations": [
         {
@@ -213,6 +227,8 @@
       "name_en": "Vale",
       "sub": "資源大手",
       "sub_en": "Diversified mining",
+      "sub_short": "資源大手",
+      "sub_short_en": "Mining",
       "row": 2,
       "relations": [
         {

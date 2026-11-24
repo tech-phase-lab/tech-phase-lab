@@ -33,6 +33,8 @@
       "name_en": "Recruit Holdings",
       "sub": "人材・求人サイト",
       "sub_en": "HR technology & staffing",
+      "sub_short": "人材",
+      "sub_short_en": "HR technology",
       "row": 0,
       "relations": [
         {
@@ -57,6 +59,8 @@
       "name_en": "Robert Half",
       "sub": "専門職人材",
       "sub_en": "Professional staffing",
+      "sub_short": "専門職人材",
+      "sub_short_en": "Staffing",
       "row": 0,
       "relations": [
         {
@@ -81,6 +85,8 @@
       "name_en": "Kforce",
       "sub": "IT人材",
       "sub_en": "Technology staffing",
+      "sub_short": "IT人材",
+      "sub_short_en": "Tech staffing",
       "row": 0,
       "relations": [
         {
@@ -105,6 +111,8 @@
       "name_en": "Korn Ferry",
       "sub": "人材コンサル",
       "sub_en": "Talent consulting",
+      "sub_short": "人材コンサル",
+      "sub_short_en": "Talent",
       "row": 0,
       "relations": [
         {
@@ -129,6 +137,8 @@
       "name_en": "PageGroup",
       "sub": "人材紹介(英)",
       "sub_en": "Recruitment (UK)",
+      "sub_short": "人材紹介",
+      "sub_short_en": "Recruitment",
       "row": 0,
       "relations": [
         {
@@ -153,6 +163,8 @@
       "name_en": "Allegis Group",
       "sub": "人材(非上場)",
       "sub_en": "Staffing (private)",
+      "sub_short": "人材",
+      "sub_short_en": "Staffing",
       "row": 0,
       "relations": [
         {
@@ -177,6 +189,8 @@
       "name_en": "Barrett Business Services",
       "sub": "人事・人材サービス",
       "sub_en": "HR outsourcing & staffing",
+      "sub_short": "人事",
+      "sub_short_en": "HR outsourcing",
       "row": 1,
       "relations": [
         {
@@ -201,6 +215,8 @@
       "name_en": "Baiya International",
       "sub": "人材(中国)",
       "sub_en": "Recruitment (China)",
+      "sub_short": "人材",
+      "sub_short_en": "Recruitment",
       "row": 1,
       "relations": [
         {
@@ -225,6 +241,8 @@
       "name_en": "Adecco Group",
       "sub": "人材(スイス)",
       "sub_en": "Staffing (Switzerland)",
+      "sub_short": "人材",
+      "sub_short_en": "Staffing",
       "row": 2,
       "relations": [
         {
@@ -249,6 +267,8 @@
       "name_en": "Randstad",
       "sub": "人材(蘭)",
       "sub_en": "Staffing (Netherlands)",
+      "sub_short": "人材",
+      "sub_short_en": "Staffing",
       "row": 2,
       "relations": [
         {
@@ -273,6 +293,8 @@
       "name_en": "Kelly Services",
       "sub": "人材派遣",
       "sub_en": "Staffing",
+      "sub_short": "人材派遣",
+      "sub_short_en": "Staffing",
       "row": 2,
       "relations": [
         {
