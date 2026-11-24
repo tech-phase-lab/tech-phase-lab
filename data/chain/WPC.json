@@ -1,0 +1,204 @@
+{
+  "root": {
+    "ticker": "WPC",
+    "name": "W.P.ケアリー",
+    "cik": 1025378,
+    "name_en": "W. P. Carey"
+  },
+  "rows": [
+    {
+      "ja": "主なテナント(賃料の多い順)",
+      "en": "Largest tenants (by rent)"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "EXR",
+      "ticker": "EXR",
+      "name": "エクストラ・スペース・ストレージ",
+      "name_en": "Extra Space Storage",
+      "sub": "トランクルーム",
+      "sub_en": "Self storage",
+      "sub_short": "倉庫",
+      "sub_short_en": "Storage",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "米国のトランクルーム43物件を借りる(年間賃料の2.7%)",
+          "text_en": "Major tenant (2.7% of annualized base rent)",
+          "source": {
+            "label": "W. P. Carey 10-K(2025年度)",
+            "label_en": "W. P. Carey 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1025378/000102537826000036/wpc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Extra Space Storage Net lease self-storage properties in the U.S. leased to publicly traded self-storage REIT 43 $ 41,332 2.7 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Apotex",
+      "ticker": "Apotex",
+      "name": "アポテックス",
+      "name_en": "Apotex",
+      "sub": "後発医薬品",
+      "sub_en": "Generic drugs",
+      "sub_short": "後発薬",
+      "sub_short_en": "Generics",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "トロントの研究・製造拠点11物件を借りる(年間賃料の2.2%)",
+          "text_en": "Major tenant (2.2% of annualized base rent)",
+          "source": {
+            "label": "W. P. Carey 10-K(2025年度)",
+            "label_en": "W. P. Carey 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1025378/000102537826000036/wpc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Apotex (a) Pharmaceutical R&D and manufacturing properties in the Greater Toronto Area leased to generic drug manufacturer 11 33,448 2.2 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "LTH",
+      "ticker": "LTH",
+      "name": "ライフタイム・グループ",
+      "name_en": "Life Time Group",
+      "sub": "フィットネスクラブ",
+      "sub_en": "Fitness clubs",
+      "sub_short": "ジム",
+      "sub_short_en": "Fitness",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "米国のフィットネス施設12物件を借りる(年間賃料の2.1%)",
+          "text_en": "Major tenant (2.1% of annualized base rent)",
+          "source": {
+            "label": "W. P. Carey 10-K(2025年度)",
+            "label_en": "W. P. Carey 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1025378/000102537826000036/wpc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Life Time Fitness Health and fitness facilities in the U.S. leased to premium athletic club operator 12 32,450 2.1 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MetroAG",
+      "ticker": "Metro AG",
+      "name": "メトロ(イタリア)",
+      "name_en": "Metro AG (Metro Italia)",
+      "sub": "業務用卸売",
+      "sub_en": "Cash & carry wholesale",
+      "sub_short": "卸売",
+      "sub_short_en": "B2B",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "イタリアの業務用店舗19物件を借りる(年間賃料の2.0%)",
+          "text_en": "Major tenant (2.0% of annualized base rent)",
+          "source": {
+            "label": "W. P. Carey 10-K(2025年度)",
+            "label_en": "W. P. Carey 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1025378/000102537826000036/wpc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Metro Italia (b) Business-to-business retail stores in Italy leased to cash and carry wholesaler 19 30,893 2.0 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Fortenova",
+      "ticker": "Fortenova",
+      "name": "フォルテノヴァ",
+      "name_en": "Fortenova",
+      "sub": "食品小売(クロアチア)",
+      "sub_en": "Grocery (Croatia)",
+      "sub_short": "スーパー",
+      "sub_short_en": "Grocery",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "クロアチアのスーパーなど19物件を借りる(年間賃料の1.8%)",
+          "text_en": "Major tenant (1.8% of annualized base rent)",
+          "source": {
+            "label": "W. P. Carey 10-K(2025年度)",
+            "label_en": "W. P. Carey 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1025378/000102537826000036/wpc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Fortenova (b) Grocery stores and one warehouse in Croatia leased to European food retailer 19 28,404 1.8 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "OBI",
+      "ticker": "OBI",
+      "name": "オービーアイ",
+      "name_en": "OBI",
+      "sub": "ホームセンター",
+      "sub_en": "DIY retail",
+      "sub_short": "DIY",
+      "sub_short_en": "DIY",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ポーランドの店舗26物件を借りる(年間賃料の1.8%)",
+          "text_en": "Major tenant (1.8% of annualized base rent)",
+          "source": {
+            "label": "W. P. Carey 10-K(2025年度)",
+            "label_en": "W. P. Carey 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1025378/000102537826000036/wpc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "OBI (b) Retail properties in Poland leased to German DIY retailer 26 27,524 1.8 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Fedrigoni",
+      "ticker": "Fedrigoni",
+      "name": "フェドリゴーニ",
+      "name_en": "Fedrigoni",
+      "sub": "包装材・ラベル",
+      "sub_en": "Packaging & labels",
+      "sub_short": "包装材",
+      "sub_short_en": "Labels",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "欧州の工場・倉庫16物件を借りる(年間賃料の1.6%)",
+          "text_en": "Major tenant (1.6% of annualized base rent)",
+          "source": {
+            "label": "W. P. Carey 10-K(2025年度)",
+            "label_en": "W. P. Carey 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1025378/000102537826000036/wpc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Fedrigoni (b) Industrial and warehouse facilities in Germany, Italy and Spain leased to global manufacturer of premium packaging and labels 16 25,517 1.6 %"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,183 @@
+{
+  "root": {
+    "ticker": "PARR",
+    "name": "パー・パシフィック",
+    "cik": 821483,
+    "name_en": "Par Pacific"
+  },
+  "rows": [
+    {
+      "ja": "原油調達・在庫金融(上流)",
+      "en": "Crude supply & inventory finance (upstream)",
+      "above": true
+    },
+    {
+      "ja": "顧客・合弁相手",
+      "en": "Customers & joint-venture partners"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "C",
+      "ticker": "C",
+      "name": "シティグループ",
+      "name_en": "Citigroup",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ハワイ製油所向けの原油を購入・納入(在庫金融)",
+          "text_en": "Buys and delivers crude oil to the Hawaii refinery (inventory financing)",
+          "source": {
+            "label": "Par Pacific 10-K(2025年度)",
+            "label_en": "Par Pacific 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/821483/000082148326000005/parr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "We have the Inventory Intermediation Agreement with Citigroup Energy Inc. (\"Citi\"), pursuant to which Citi will purchase and deliver crude oil to our Hawaii refinery."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WFC",
+      "ticker": "WFC",
+      "name": "ウェルズ・ファーゴ",
+      "name_en": "Wells Fargo",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "再生燃料の原料調達の資金を提供(2025年)",
+          "text_en": "Funds renewable feedstock purchases (2025)",
+          "source": {
+            "label": "Par Pacific 10-K(2025年度)",
+            "label_en": "Par Pacific 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/821483/000082148326000005/parr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "On October 2, 2025, we entered into an agreement with Wells Fargo (the \"Renewables Intermediation Agreement\") to, among other things, provide funding to finance renewables feedstock."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HawaiianElectric",
+      "ticker": "HE",
+      "name": "ハワイアン・エレクトリック",
+      "name_en": "Hawaiian Electric",
+      "sub": "電力(ハワイ)",
+      "sub_en": "Utility (Hawaii)",
+      "sub_short": "電力",
+      "sub_short_en": "Utility",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ハワイの電力会社に発電用の燃料を供給",
+          "text_en": "Supplies fuel to Hawaii's electric utilities",
+          "source": {
+            "label": "Hawaiian Electric 10-K(2025年度)",
+            "label_en": "Hawaiian Electric 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/354707/000035470726000008/he-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "On February 1, 2022, the Utilities and PAR Hawaii Refining, LLC (PAR Hawaii) entered into a fuel supply contract (Supply Agreement) commencing January 1, 2023."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MitsubishiCorp",
+      "ticker": "Mitsubishi Corp",
+      "name": "三菱商事",
+      "name_en": "Mitsubishi Corporation",
+      "sub": "総合商社",
+      "sub_en": "Trading house",
+      "sub_short": "商社",
+      "sub_short_en": "Trading",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ハワイの再生燃料工場の合弁(Alohi経由で出資)",
+          "text_en": "Partner in the Hawaii renewable fuels joint venture (through Alohi)",
+          "source": {
+            "label": "Par Pacific 10-K(2025年度)",
+            "label_en": "Par Pacific 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/821483/000082148326000005/parr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "entered into a definitive Equity Contribution Agreement (the \"Equity Contribution Agreement\") with Alohi Renewable Energy LLC (\"Alohi\"), an entity owned by Mitsubishi Corporation and ENEOS Corporation, to establish Hawaii Renewables as a joint venture."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ENEOS",
+      "ticker": "ENEOS",
+      "name": "ENEOS",
+      "name_en": "ENEOS",
+      "sub": "石油元売り",
+      "sub_en": "Oil refining (Japan)",
+      "sub_short": "石油",
+      "sub_short_en": "Oil",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ハワイの再生燃料工場の合弁(Alohi経由で出資)",
+          "text_en": "Partner in the Hawaii renewable fuels joint venture (through Alohi)",
+          "source": {
+            "label": "Par Pacific 10-K(2025年度)",
+            "label_en": "Par Pacific 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/821483/000082148326000005/parr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "entered into a definitive Equity Contribution Agreement (the \"Equity Contribution Agreement\") with Alohi Renewable Energy LLC (\"Alohi\"), an entity owned by Mitsubishi Corporation and ENEOS Corporation, to establish Hawaii Renewables as a joint venture."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Laramie",
+      "ticker": "Laramie",
+      "name": "ララミー・エナジー",
+      "name_en": "Laramie Energy",
+      "sub": "天然ガス開発",
+      "sub_en": "Natural gas producer",
+      "sub_short": "ガス開発",
+      "sub_short_en": "Gas",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "46%を出資する天然ガス会社",
+          "text_en": "Natural gas producer 46% owned by Par",
+          "source": {
+            "label": "Par Pacific 10-K(2025年度)",
+            "label_en": "Par Pacific 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/821483/000082148326000005/parr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "As of December 31, 2025, we owned a 46 % equity investment in Laramie Energy, LLC (\"Laramie Energy\")."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
