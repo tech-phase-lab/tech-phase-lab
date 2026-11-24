@@ -34,6 +34,8 @@
       "name_en": "Calca Solutions",
       "sub": "ヒドラジン(宇宙・防衛)",
       "sub_en": "Hydrazine (aerospace & defense)",
+      "sub_short": "化学品",
+      "sub_short_en": "Chem",
       "row": 0,
       "relations": [
         {
@@ -58,6 +60,8 @@
       "name_en": "BASF",
       "sub": "化学(独)",
       "sub_en": "Chemicals (Germany)",
+      "sub_short": "化学",
+      "sub_short_en": "Chem",
       "row": 1,
       "relations": [
         {
@@ -82,6 +86,8 @@
       "name_en": "Innospec",
       "sub": "特殊化学品",
       "sub_en": "Specialty chemicals",
+      "sub_short": "化学品",
+      "sub_short_en": "Chem",
       "row": 1,
       "relations": [
         {
@@ -106,6 +112,8 @@
       "name_en": "Clariant",
       "sub": "化学(スイス)",
       "sub_en": "Chemicals (Switzerland)",
+      "sub_short": "化学",
+      "sub_short_en": "Chem",
       "row": 1,
       "relations": [
         {
@@ -130,6 +138,8 @@
       "name_en": "Dorf Ketal",
       "sub": "化学(印、非上場)",
       "sub_en": "Chemicals (India, private)",
+      "sub_short": "化学",
+      "sub_short_en": "Chem",
       "row": 1,
       "relations": [
         {
@@ -154,6 +164,8 @@
       "name_en": "Berkshire Hathaway (Lubrizol)",
       "sub": "複合企業",
       "sub_en": "Conglomerate",
+      "sub_short": "複合企業",
+      "sub_short_en": "Group",
       "row": 2,
       "relations": [
         {
@@ -178,6 +190,8 @@
       "name_en": "Chevron (Oronite)",
       "sub": "石油",
       "sub_en": "Oil",
+      "sub_short": "石油",
+      "sub_short_en": "Oil",
       "row": 2,
       "relations": [
         {
@@ -202,6 +216,8 @@
       "name_en": "ExxonMobil (Infineum)",
       "sub": "石油",
       "sub_en": "Oil",
+      "sub_short": "石油",
+      "sub_short_en": "Oil",
       "row": 2,
       "relations": [
         {
@@ -226,6 +242,8 @@
       "name_en": "Shell (Infineum)",
       "sub": "石油",
       "sub_en": "Oil",
+      "sub_short": "石油",
+      "sub_short_en": "Oil",
       "row": 2,
       "relations": [
         {

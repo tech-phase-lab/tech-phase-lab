@@ -37,6 +37,8 @@
       "name_en": "Grifols",
       "sub": "血漿分画製剤",
       "sub_en": "Plasma-derived medicines",
+      "sub_short": "血漿製剤",
+      "sub_short_en": "Plasma",
       "row": 0,
       "relations": [
         {
@@ -61,6 +63,8 @@
       "name_en": "KEDPlasma",
       "sub": "血漿採取",
       "sub_en": "Plasma collection",
+      "sub_short": "血漿採取",
+      "sub_short_en": "Plasma",
       "row": 0,
       "relations": [
         {
@@ -85,6 +89,8 @@
       "name_en": "Biotest",
       "sub": "血漿分画製剤",
       "sub_en": "Plasma-derived medicines",
+      "sub_short": "血漿製剤",
+      "sub_short_en": "Plasma",
       "row": 1,
       "relations": [
         {
@@ -109,6 +115,8 @@
       "name_en": "BioCare",
       "sub": "医薬品卸",
       "sub_en": "Pharmaceutical distribution",
+      "sub_short": "医薬品卸",
+      "sub_short_en": "Pharma",
       "row": 2,
       "relations": [
         {
@@ -133,6 +141,8 @@
       "name_en": "CuraScript",
       "sub": "医薬品卸",
       "sub_en": "Pharmaceutical distribution",
+      "sub_short": "医薬品卸",
+      "sub_short_en": "Pharma",
       "row": 2,
       "relations": [
         {
@@ -157,6 +167,8 @@
       "name_en": "CSL Behring",
       "sub": "血漿分画製剤",
       "sub_en": "Plasma-derived medicines",
+      "sub_short": "血漿製剤",
+      "sub_short_en": "Plasma",
       "row": 3,
       "relations": [
         {
@@ -181,6 +193,8 @@
       "name_en": "Takeda",
       "sub": "医薬品",
       "sub_en": "Pharmaceuticals",
+      "sub_short": "医薬品",
+      "sub_short_en": "Pharma",
       "row": 3,
       "relations": [
         {
@@ -205,6 +219,8 @@
       "name_en": "Octapharma",
       "sub": "血漿分画製剤",
       "sub_en": "Plasma-derived medicines",
+      "sub_short": "血漿製剤",
+      "sub_short_en": "Plasma",
       "row": 3,
       "relations": [
         {

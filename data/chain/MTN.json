@@ -28,6 +28,8 @@
       "name_en": "Crans-Montana",
       "sub": "スキー場(スイス)",
       "sub_en": "Ski resort (Switzerland)",
+      "sub_short": "スキー場",
+      "sub_short_en": "Ski resort",
       "row": 0,
       "relations": [
         {
@@ -52,6 +54,8 @@
       "name_en": "Andermatt-Sedrun",
       "sub": "スキー場(スイス)",
       "sub_en": "Ski resort (Switzerland)",
+      "sub_short": "スキー場",
+      "sub_short_en": "Ski resort",
       "row": 0,
       "relations": [
         {
@@ -76,6 +80,8 @@
       "name_en": "Seven Springs Resorts",
       "sub": "スキー場(ペンシルベニア)",
       "sub_en": "Ski areas (Pennsylvania)",
+      "sub_short": "スキー場",
+      "sub_short_en": "Ski areas",
       "row": 0,
       "relations": [
         {
@@ -100,6 +106,8 @@
       "name_en": "IKON Pass",
       "sub": "複数リゾート共通パス",
       "sub_en": "Multi-resort pass",
+      "sub_short": "リゾート",
+      "sub_short_en": "Ski pass",
       "row": 1,
       "relations": [
         {
@@ -124,6 +132,8 @@
       "name_en": "Indy Pass",
       "sub": "複数リゾート共通パス",
       "sub_en": "Multi-resort pass",
+      "sub_short": "リゾート",
+      "sub_short_en": "Ski pass",
       "row": 1,
       "relations": [
         {
@@ -148,6 +158,8 @@
       "name_en": "Aspen Snowmass",
       "sub": "スキーリゾート",
       "sub_en": "Ski resort",
+      "sub_short": "スキー場",
+      "sub_short_en": "Ski resort",
       "row": 1,
       "relations": [
         {
@@ -172,6 +184,8 @@
       "name_en": "Jackson Hole",
       "sub": "スキーリゾート",
       "sub_en": "Ski resort",
+      "sub_short": "スキー場",
+      "sub_short_en": "Ski resort",
       "row": 1,
       "relations": [
         {
@@ -196,6 +210,8 @@
       "name_en": "Killington",
       "sub": "スキーリゾート",
       "sub_en": "Ski resort",
+      "sub_short": "スキー場",
+      "sub_short_en": "Ski resort",
       "row": 1,
       "relations": [
         {
@@ -220,6 +236,8 @@
       "name_en": "Zermatt",
       "sub": "スキーリゾート(スイス)",
       "sub_en": "Ski resort (Switzerland)",
+      "sub_short": "スキー場",
+      "sub_short_en": "Ski resort",
       "row": 1,
       "relations": [
         {
@@ -244,6 +262,8 @@
       "name_en": "Marriott International",
       "sub": "ホテル",
       "sub_en": "Hotels",
+      "sub_short": "ホテル",
+      "sub_short_en": "Hotels",
       "row": 1,
       "relations": [
         {
@@ -268,6 +288,8 @@
       "name_en": "Hilton",
       "sub": "ホテル",
       "sub_en": "Hotels",
+      "sub_short": "ホテル",
+      "sub_short_en": "Hotels",
       "row": 1,
       "relations": [
         {
@@ -292,6 +314,8 @@
       "name_en": "Hyatt Hotels",
       "sub": "ホテル",
       "sub_en": "Hotels",
+      "sub_short": "ホテル",
+      "sub_short_en": "Hotels",
       "row": 1,
       "relations": [
         {

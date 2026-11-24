@@ -30,6 +30,8 @@
       "name_en": "Cardlytics",
       "sub": "カード連動広告",
       "sub_en": "Card-linked advertising",
+      "sub_short": "広告",
+      "sub_short_en": "Ads",
       "row": 0,
       "relations": [
         {
@@ -54,6 +56,8 @@
       "name_en": "Lazard",
       "sub": "投資銀行(助言)",
       "sub_en": "Advisory investment bank",
+      "sub_short": "投資銀行",
+      "sub_short_en": "Bank",
       "row": 1,
       "relations": [
         {
@@ -78,6 +82,8 @@
       "name_en": "Jefferies Financial Group",
       "sub": "投資銀行",
       "sub_en": "Investment banking",
+      "sub_short": "投資銀行",
+      "sub_short_en": "Bank",
       "row": 1,
       "relations": [
         {
@@ -102,6 +108,8 @@
       "name_en": "Moelis & Company",
       "sub": "投資銀行(助言)",
       "sub_en": "Advisory investment bank",
+      "sub_short": "投資銀行",
+      "sub_short_en": "Bank",
       "row": 1,
       "relations": [
         {
@@ -126,6 +134,8 @@
       "name_en": "Evercore",
       "sub": "投資銀行(助言)",
       "sub_en": "Advisory investment bank",
+      "sub_short": "投資銀行",
+      "sub_short_en": "Bank",
       "row": 1,
       "relations": [
         {
@@ -150,6 +160,8 @@
       "name_en": "PJT Partners",
       "sub": "投資銀行(助言)",
       "sub_en": "Advisory investment bank",
+      "sub_short": "投資銀行",
+      "sub_short_en": "Bank",
       "row": 1,
       "relations": [
         {
@@ -174,6 +186,8 @@
       "name_en": "Perella Weinberg Partners",
       "sub": "投資銀行(助言)",
       "sub_en": "Advisory investment bank",
+      "sub_short": "投資銀行",
+      "sub_short_en": "Bank",
       "row": 1,
       "relations": [
         {
@@ -198,6 +212,8 @@
       "name_en": "Piper Sandler",
       "sub": "投資銀行",
       "sub_en": "Investment banking",
+      "sub_short": "投資銀行",
+      "sub_short_en": "Bank",
       "row": 1,
       "relations": [
         {
@@ -222,6 +238,8 @@
       "name_en": "Raymond James Financial",
       "sub": "証券・投資銀行",
       "sub_en": "Brokerage & investment banking",
+      "sub_short": "証券",
+      "sub_short_en": "Broker",
       "row": 1,
       "relations": [
         {
@@ -246,6 +264,8 @@
       "name_en": "Lincoln International",
       "sub": "M&A助言",
       "sub_en": "M&A advisory",
+      "sub_short": "M&A助言",
+      "sub_short_en": "M&A",
       "row": 1,
       "relations": [
         {
@@ -270,6 +290,8 @@
       "name_en": "B. Riley Financial",
       "sub": "投資銀行・資産運用",
       "sub_en": "Investment banking & wealth",
+      "sub_short": "投資銀行",
+      "sub_short_en": "Bank",
       "row": 1,
       "relations": [
         {

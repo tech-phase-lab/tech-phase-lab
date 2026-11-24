@@ -28,6 +28,8 @@
       "name": "TモバイルUS",
       "sub": "携帯ネットワーク",
       "sub_en": "Wireless network",
+      "sub_short": "携帯通信",
+      "sub_short_en": "Wireless",
       "row": 0,
       "relations": [
         {
@@ -65,6 +67,8 @@
       "name": "AT&Tインク",
       "sub": "携帯ネットワーク",
       "sub_en": "Wireless network",
+      "sub_short": "携帯通信",
+      "sub_short_en": "Wireless",
       "row": 0,
       "relations": [
         {
@@ -115,6 +119,8 @@
       "name": "ベライゾン",
       "sub": "携帯通信",
       "sub_en": "Wireless carrier",
+      "sub_short": "携帯通信",
+      "sub_short_en": "Carrier",
       "row": 1,
       "relations": [
         {
@@ -139,6 +145,8 @@
       "name": "スペースX",
       "sub": "衛星通信",
       "sub_en": "Satellite services",
+      "sub_short": "衛星通信",
+      "sub_short_en": "Satellites",
       "row": 1,
       "relations": [
         {
@@ -176,6 +184,8 @@
       "name": "アマゾン・ドット・コム",
       "sub": "衛星通信",
       "sub_en": "Satellite services",
+      "sub_short": "衛星通信",
+      "sub_short_en": "Satellites",
       "row": 1,
       "relations": [
         {
@@ -200,6 +210,8 @@
       "name": "アップル",
       "sub": "端末",
       "sub_en": "Devices",
+      "sub_short": "端末",
+      "sub_short_en": "Devices",
       "row": 0,
       "relations": [
         {
@@ -224,6 +236,8 @@
       "name": "タウカウズ",
       "sub": "ドメイン・通信",
       "sub_en": "Domains & telecom",
+      "sub_short": "ドメイン",
+      "sub_short_en": "Domains",
       "row": 0,
       "relations": [
         {

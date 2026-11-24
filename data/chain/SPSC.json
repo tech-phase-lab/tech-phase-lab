@@ -29,6 +29,8 @@
       "name_en": "Carbon6 Technologies",
       "sub": "EC出店者向けソフト",
       "sub_en": "Software for online sellers",
+      "sub_short": "EC支援",
+      "sub_short_en": "Sellers",
       "row": 0,
       "relations": [
         {
@@ -53,6 +55,8 @@
       "name_en": "SupplyPike",
       "sub": "小売サプライヤー向け分析",
       "sub_en": "Retail supplier analytics",
+      "sub_short": "小売分析",
+      "sub_short_en": "Data",
       "row": 0,
       "relations": [
         {
@@ -77,6 +81,8 @@
       "name_en": "Microsoft",
       "sub": "ソフトウェア",
       "sub_en": "Software",
+      "sub_short": "ソフト",
+      "sub_short_en": "Software",
       "row": 1,
       "relations": [
         {
@@ -101,6 +107,8 @@
       "name_en": "Oracle",
       "sub": "ソフトウェア(NetSuite含む)",
       "sub_en": "Software (incl. NetSuite)",
+      "sub_short": "ソフト",
+      "sub_short_en": "Software",
       "row": 1,
       "relations": [
         {
@@ -125,6 +133,8 @@
       "name_en": "SAP",
       "sub": "業務ソフト(独)",
       "sub_en": "Enterprise software (Germany)",
+      "sub_short": "業務IT",
+      "sub_short_en": "Software",
       "row": 1,
       "relations": [
         {
@@ -143,12 +153,14 @@
       ]
     },
     {
-      "id": "Sage",
+      "id": "SageGroup",
       "ticker": "Sage",
       "name": "セージ",
       "name_en": "Sage",
       "sub": "会計ソフト(英)",
       "sub_en": "Accounting software (UK)",
+      "sub_short": "会計",
+      "sub_short_en": "Accounts",
       "row": 1,
       "relations": [
         {
@@ -173,6 +185,8 @@
       "name_en": "Five Below",
       "sub": "雑貨小売",
       "sub_en": "Discount retail",
+      "sub_short": "雑貨小売",
+      "sub_short_en": "Discount",
       "row": 2,
       "relations": [
         {

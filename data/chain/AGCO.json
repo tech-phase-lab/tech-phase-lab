@@ -32,6 +32,8 @@
       "name_en": "Tractors and Farm Equipment (TAFE)",
       "sub": "トラクター(インド)",
       "sub_en": "Tractors (India)",
+      "sub_short": "農機",
+      "sub_short_en": "Tractors",
       "row": 0,
       "relations": [
         {
@@ -56,6 +58,8 @@
       "name_en": "SDF",
       "sub": "トラクター(伊)",
       "sub_en": "Tractors (Italy)",
+      "sub_short": "農機",
+      "sub_short_en": "Tractors",
       "row": 0,
       "relations": [
         {
@@ -80,6 +84,8 @@
       "name_en": "Iseki",
       "sub": "農機",
       "sub_en": "Farm machinery",
+      "sub_short": "農機",
+      "sub_short_en": "Farm",
       "row": 0,
       "relations": [
         {
@@ -104,6 +110,8 @@
       "name_en": "Titan International",
       "sub": "農機用ホイール・タイヤ",
       "sub_en": "Off-highway wheels & tires",
+      "sub_short": "車輪",
+      "sub_short_en": "Wheels",
       "row": 0,
       "relations": [
         {
@@ -128,6 +136,8 @@
       "name_en": "Trimble",
       "sub": "測位・ソフト",
       "sub_en": "Positioning & software",
+      "sub_short": "測位",
+      "sub_short_en": "GNSS",
       "row": 1,
       "relations": [
         {
@@ -152,6 +162,8 @@
       "name_en": "Rabobank",
       "sub": "銀行(蘭)",
       "sub_en": "Bank (Netherlands)",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
       "row": 1,
       "relations": [
         {
@@ -176,6 +188,8 @@
       "name_en": "Deere",
       "sub": "農機・建機",
       "sub_en": "Ag & construction equipment",
+      "sub_short": "農機",
+      "sub_short_en": "Farm",
       "row": 2,
       "relations": [
         {
@@ -200,6 +214,8 @@
       "name_en": "CNH Industrial",
       "sub": "農機・建機",
       "sub_en": "Ag & construction equipment",
+      "sub_short": "農機",
+      "sub_short_en": "Farm",
       "row": 2,
       "relations": [
         {
@@ -224,6 +240,8 @@
       "name_en": "Titan Machinery",
       "sub": "農機ディーラー",
       "sub_en": "Equipment dealer",
+      "sub_short": "農機販売",
+      "sub_short_en": "Dealer",
       "row": 2,
       "relations": [
         {

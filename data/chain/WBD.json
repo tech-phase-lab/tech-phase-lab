@@ -14,11 +14,13 @@
   "rivals": [],
   "companies": [
     {
-      "id": "CEG",
+      "id": "CuttingEdgeGroup",
       "ticker": "Cutting Edge Group",
       "name": "カッティング・エッジ・グループ",
       "sub": "音楽カタログ合弁",
       "sub_en": "Music catalog JV",
+      "sub_short": "音楽",
+      "sub_short_en": "Music",
       "row": 0,
       "relations": [
         {
@@ -43,6 +45,8 @@
       "name": "ウォルト・ディズニー",
       "sub": "メディア・娯楽",
       "sub_en": "Media & entertainment",
+      "sub_short": "メディア",
+      "sub_short_en": "Media",
       "row": 0,
       "relations": [
         {
@@ -67,6 +71,8 @@
       "name": "フォックス",
       "sub": "メディア・放送",
       "sub_en": "Media & broadcasting",
+      "sub_short": "メディア",
+      "sub_short_en": "Media",
       "row": 0,
       "relations": [
         {
@@ -91,6 +97,8 @@
       "name": "AT&T(エーティーアンドティー)",
       "sub": "通信・旧親会社",
       "sub_en": "Telecom, former owner",
+      "sub_short": "通信",
+      "sub_short_en": "Telecom",
       "row": 0,
       "relations": [
         {

@@ -34,6 +34,8 @@
       "name_en": "Unifoil",
       "sub": "金属化紙",
       "sub_en": "Metallized paper",
+      "sub_short": "金属化紙",
+      "sub_short_en": "Paper",
       "row": 0,
       "relations": [
         {
@@ -58,6 +60,8 @@
       "name_en": "Clearwater Paper",
       "sub": "板紙",
       "sub_en": "Paperboard",
+      "sub_short": "板紙",
+      "sub_short_en": "Paper",
       "row": 1,
       "relations": [
         {
@@ -82,6 +86,8 @@
       "name_en": "Greif",
       "sub": "工業用包装",
       "sub_en": "Industrial packaging",
+      "sub_short": "包装",
+      "sub_short_en": "Packing",
       "row": 1,
       "relations": [
         {
@@ -106,6 +112,8 @@
       "name_en": "Bell Incorporated",
       "sub": "紙器包装",
       "sub_en": "Folding cartons",
+      "sub_short": "紙器包装",
+      "sub_short_en": "Cartons",
       "row": 1,
       "relations": [
         {
@@ -130,6 +138,8 @@
       "name_en": "International Paper",
       "sub": "紙・段ボール",
       "sub_en": "Paper & packaging",
+      "sub_short": "製紙",
+      "sub_short_en": "Paper",
       "row": 1,
       "relations": [
         {
@@ -154,6 +164,8 @@
       "name_en": "Smurfit Westrock",
       "sub": "紙・段ボール",
       "sub_en": "Paper packaging",
+      "sub_short": "製紙",
+      "sub_short_en": "Paper",
       "row": 2,
       "relations": [
         {
@@ -178,6 +190,8 @@
       "name_en": "Amcor",
       "sub": "包装",
       "sub_en": "Packaging",
+      "sub_short": "包装",
+      "sub_short_en": "Packing",
       "row": 2,
       "relations": [
         {
@@ -202,6 +216,8 @@
       "name_en": "Rayonier Advanced Materials",
       "sub": "セルロース・板紙",
       "sub_en": "Cellulose & paperboard",
+      "sub_short": "繊維素材",
+      "sub_short_en": "Cellulose",
       "row": 2,
       "relations": [
         {
@@ -226,6 +242,8 @@
       "name_en": "DSS",
       "sub": "包装・印刷",
       "sub_en": "Packaging & printing",
+      "sub_short": "包装",
+      "sub_short_en": "Packing",
       "row": 2,
       "relations": [
         {

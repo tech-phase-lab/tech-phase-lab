@@ -25,6 +25,8 @@
       "name": "Q2 Holdings",
       "sub": "デジタルバンキング",
       "sub_en": "Digital banking",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
       "row": 1,
       "relations": [
         {
@@ -61,6 +63,8 @@
       "name": "プロビデント・ファイナンシャル・サービシズ",
       "sub": "地域銀行",
       "sub_en": "Regional bank",
+      "sub_short": "地域銀行",
+      "sub_short_en": "Bank",
       "row": 0,
       "relations": [
         {

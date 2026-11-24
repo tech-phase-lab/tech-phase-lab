@@ -30,6 +30,8 @@
       "name_en": "Global Water Resources",
       "sub": "水道事業",
       "sub_en": "Water utility",
+      "sub_short": "水道事業",
+      "sub_short_en": "Water",
       "row": 0,
       "relations": [
         {
@@ -54,6 +56,8 @@
       "name_en": "First Mid Bancshares",
       "sub": "地方銀行",
       "sub_en": "Regional bank",
+      "sub_short": "地方銀行",
+      "sub_short_en": "Bank",
       "row": 0,
       "relations": [
         {
@@ -78,6 +82,8 @@
       "name_en": "StepStone Group",
       "sub": "プライベート市場投資",
       "sub_en": "Private markets investing",
+      "sub_short": "投資",
+      "sub_short_en": "Private",
       "row": 0,
       "relations": [
         {
@@ -102,6 +108,8 @@
       "name_en": "Rezera",
       "sub": "米国企業",
       "sub_en": "U.S. company",
+      "sub_short": "米国企業",
+      "sub_short_en": "US firm",
       "row": 0,
       "relations": [
         {
@@ -126,6 +134,8 @@
       "name_en": "Outdoor Holding",
       "sub": "銃器関連EC",
       "sub_en": "Firearms marketplace",
+      "sub_short": "銃器EC",
+      "sub_short_en": "Firearms",
       "row": 0,
       "relations": [
         {
@@ -150,6 +160,8 @@
       "name_en": "State Street",
       "sub": "資産管理・カストディ",
       "sub_en": "Custody & asset servicing",
+      "sub_short": "資産管理",
+      "sub_short_en": "Custody",
       "row": 1,
       "relations": [
         {
@@ -174,6 +186,8 @@
       "name_en": "SS&C Technologies",
       "sub": "金融向けソフト",
       "sub_en": "Financial software",
+      "sub_short": "金融IT",
+      "sub_short_en": "Finance",
       "row": 1,
       "relations": [
         {
@@ -198,6 +212,8 @@
       "name_en": "SEI Investments",
       "sub": "資産運用サービス",
       "sub_en": "Investment processing",
+      "sub_short": "資産運用",
+      "sub_short_en": "Investing",
       "row": 1,
       "relations": [
         {
@@ -222,6 +238,8 @@
       "name_en": "Clearwater Analytics",
       "sub": "投資会計ソフト",
       "sub_en": "Investment accounting software",
+      "sub_short": "会計",
+      "sub_short_en": "Investing",
       "row": 1,
       "relations": [
         {
@@ -246,6 +264,8 @@
       "name_en": "Stifel Financial",
       "sub": "証券・資産運用",
       "sub_en": "Brokerage & wealth management",
+      "sub_short": "証券",
+      "sub_short_en": "Broker",
       "row": 1,
       "relations": [
         {

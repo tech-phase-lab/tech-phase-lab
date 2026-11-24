@@ -33,6 +33,8 @@
       "name_en": "Cyrq Energy",
       "sub": "地熱発電",
       "sub_en": "Geothermal power",
+      "sub_short": "地熱発電",
+      "sub_short_en": "Geo",
       "row": 0,
       "relations": [
         {
@@ -57,6 +59,8 @@
       "name_en": "Innergex Renewable Energy",
       "sub": "再エネ発電(加)",
       "sub_en": "Renewable power (Canada)",
+      "sub_short": "再エネ",
+      "sub_short_en": "Green",
       "row": 0,
       "relations": [
         {
@@ -81,6 +85,8 @@
       "name_en": "Enel Green Power North America",
       "sub": "再エネ発電",
       "sub_en": "Renewable power",
+      "sub_short": "再エネ",
+      "sub_short_en": "Green",
       "row": 0,
       "relations": [
         {
@@ -105,6 +111,8 @@
       "name_en": "Enel Chile",
       "sub": "電力(チリ)",
       "sub_en": "Power (Chile)",
+      "sub_short": "電力",
+      "sub_short_en": "Power",
       "row": 0,
       "relations": [
         {
@@ -129,6 +137,8 @@
       "name_en": "Southern California Public Power Authority",
       "sub": "公営電力",
       "sub_en": "Public power agency",
+      "sub_short": "公営電力",
+      "sub_short_en": "Utility",
       "row": 1,
       "relations": [
         {
@@ -153,6 +163,8 @@
       "name_en": "NV Energy",
       "sub": "電力会社(ネバダ)",
       "sub_en": "Utility (Nevada)",
+      "sub_short": "電力会社",
+      "sub_short_en": "Utility",
       "row": 1,
       "relations": [
         {
@@ -177,6 +189,8 @@
       "name_en": "Kenya Power and Lighting",
       "sub": "電力会社(ケニア)",
       "sub_en": "Utility (Kenya)",
+      "sub_short": "電力会社",
+      "sub_short_en": "Utility",
       "row": 1,
       "relations": [
         {
@@ -201,6 +215,8 @@
       "name_en": "Mitsubishi Heavy Industries",
       "sub": "発電機器",
       "sub_en": "Power equipment",
+      "sub_short": "発電機器",
+      "sub_short_en": "Power",
       "row": 2,
       "relations": [
         {
@@ -225,6 +241,8 @@
       "name_en": "Fuji Electric",
       "sub": "発電機器",
       "sub_en": "Power equipment",
+      "sub_short": "発電機器",
+      "sub_short_en": "Power",
       "row": 2,
       "relations": [
         {
@@ -249,6 +267,8 @@
       "name_en": "Toshiba",
       "sub": "発電機器",
       "sub_en": "Power equipment",
+      "sub_short": "発電機器",
+      "sub_short_en": "Power",
       "row": 2,
       "relations": [
         {
@@ -273,6 +293,8 @@
       "name_en": "Chevron",
       "sub": "石油・地熱",
       "sub_en": "Oil & geothermal",
+      "sub_short": "石油",
+      "sub_short_en": "Oil",
       "row": 2,
       "relations": [
         {

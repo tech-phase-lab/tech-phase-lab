@@ -25,6 +25,8 @@
       "name": "ジョンソン・エンド・ジョンソン",
       "sub": "医療・コンタクト",
       "sub_en": "Healthcare & lenses",
+      "sub_short": "医療",
+      "sub_short_en": "Health",
       "row": 0,
       "relations": [
         {
@@ -62,6 +64,8 @@
       "name": "アルコン",
       "sub": "眼科ヘルスケア",
       "sub_en": "Eye care",
+      "sub_short": "眼科",
+      "sub_short_en": "Eye care",
       "row": 0,
       "relations": [
         {
@@ -86,6 +90,8 @@
       "name": "ボシュロム",
       "sub": "眼科ヘルスケア",
       "sub_en": "Eye care",
+      "sub_short": "眼科",
+      "sub_short_en": "Eye care",
       "row": 0,
       "relations": [
         {
@@ -110,6 +116,8 @@
       "name": "バクスター・インターナショナル",
       "sub": "医療機器",
       "sub_en": "Medical devices",
+      "sub_short": "医療機器",
+      "sub_short_en": "Medtech",
       "row": 0,
       "relations": [
         {
@@ -134,6 +142,8 @@
       "name": "メドトロニック",
       "sub": "医療機器",
       "sub_en": "Medical devices",
+      "sub_short": "医療機器",
+      "sub_short_en": "Medtech",
       "row": 0,
       "relations": [
         {
@@ -158,6 +168,8 @@
       "name": "レビティ",
       "sub": "診断・ライフサイエンス",
       "sub_en": "Diagnostics & life science",
+      "sub_short": "診断",
+      "sub_short_en": "Tests",
       "row": 0,
       "relations": [
         {
@@ -182,6 +194,8 @@
       "name": "アッヴィ",
       "sub": "医薬品",
       "sub_en": "Pharmaceuticals",
+      "sub_short": "医薬品",
+      "sub_short_en": "Pharma",
       "row": 0,
       "relations": [
         {
@@ -206,6 +220,8 @@
       "name": "オルガノン",
       "sub": "女性の健康",
       "sub_en": "Women's health",
+      "sub_short": "女性医療",
+      "sub_short_en": "Women",
       "row": 0,
       "relations": [
         {

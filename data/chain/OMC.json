@@ -34,6 +34,8 @@
       "name_en": "Netskope",
       "sub": "クラウドセキュリティ",
       "sub_en": "Cloud security",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 0,
       "relations": [
         {
@@ -58,6 +60,8 @@
       "name_en": "Interpublic Group",
       "sub": "広告代理店",
       "sub_en": "Advertising agencies",
+      "sub_short": "広告",
+      "sub_short_en": "Ads",
       "row": 1,
       "relations": [
         {
@@ -82,6 +86,8 @@
       "name_en": "Ascential",
       "sub": "デジタルコマース",
       "sub_en": "Digital commerce",
+      "sub_short": "EC",
+      "sub_short_en": "E-com",
       "row": 1,
       "relations": [
         {
@@ -106,6 +112,8 @@
       "name_en": "Achieve Life Sciences",
       "sub": "禁煙治療薬",
       "sub_en": "Smoking-cessation drug",
+      "sub_short": "禁煙薬",
+      "sub_short_en": "Smoking",
       "row": 1,
       "relations": [
         {
@@ -130,6 +138,8 @@
       "name_en": "WPP",
       "sub": "広告代理店(英)",
       "sub_en": "Advertising agencies (UK)",
+      "sub_short": "広告",
+      "sub_short_en": "Ads",
       "row": 2,
       "relations": [
         {
@@ -154,6 +164,8 @@
       "name_en": "Stagwell",
       "sub": "広告代理店",
       "sub_en": "Advertising agencies",
+      "sub_short": "広告",
+      "sub_short_en": "Ads",
       "row": 2,
       "relations": [
         {
@@ -178,6 +190,8 @@
       "name_en": "CI&T",
       "sub": "デジタル変革支援",
       "sub_en": "Digital transformation services",
+      "sub_short": "DX支援",
+      "sub_short_en": "IT",
       "row": 2,
       "relations": [
         {
@@ -202,6 +216,8 @@
       "name_en": "Digital Turbine",
       "sub": "モバイル広告",
       "sub_en": "Mobile advertising",
+      "sub_short": "広告",
+      "sub_short_en": "Ads",
       "row": 2,
       "relations": [
         {
@@ -226,6 +242,8 @@
       "name_en": "Altice USA",
       "sub": "ケーブルTV",
       "sub_en": "Cable TV",
+      "sub_short": "ケーブル",
+      "sub_short_en": "Cable TV",
       "row": 2,
       "relations": [
         {
@@ -250,6 +268,8 @@
       "name_en": "Similarweb",
       "sub": "デジタル市場データ",
       "sub_en": "Digital market data",
+      "sub_short": "市場情報",
+      "sub_short_en": "Data",
       "row": 2,
       "relations": [
         {
@@ -274,6 +294,8 @@
       "name_en": "Specificity",
       "sub": "デジタル広告",
       "sub_en": "Digital marketing",
+      "sub_short": "広告",
+      "sub_short_en": "Ads",
       "row": 2,
       "relations": [
         {

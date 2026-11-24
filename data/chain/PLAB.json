@@ -27,6 +27,8 @@
       "name": "バンク・オブ・アメリカ",
       "sub": "銀行",
       "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
       "row": 0,
       "relations": [
         {
@@ -53,6 +55,8 @@
       "name": "大日本印刷",
       "sub": "印刷・電子部材",
       "sub_en": "Printing & electronics",
+      "sub_short": "印刷",
+      "sub_short_en": "Printing",
       "row": 1,
       "relations": [
         {
@@ -79,6 +83,8 @@
       "name": "Micron Technology",
       "sub": "メモリ半導体",
       "sub_en": "Memory chips",
+      "sub_short": "メモリ",
+      "sub_short_en": "Memory",
       "row": 2,
       "relations": [
         {

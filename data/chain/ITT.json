@@ -29,6 +29,8 @@
       "name_en": "Wolverine Advanced Materials",
       "sub": "シム・シール材",
       "sub_en": "Shims & seals",
+      "sub_short": "シール材",
+      "sub_short_en": "Seals",
       "row": 0,
       "relations": [
         {
@@ -53,6 +55,8 @@
       "name_en": "Aumovio",
       "sub": "自動車部品(ドイツ)",
       "sub_en": "Auto parts (Germany)",
+      "sub_short": "車部品",
+      "sub_short_en": "Car parts",
       "row": 1,
       "relations": [
         {
@@ -77,6 +81,8 @@
       "name_en": "Continental",
       "sub": "自動車部品(ドイツ)",
       "sub_en": "Auto parts (Germany)",
+      "sub_short": "車部品",
+      "sub_short_en": "Car parts",
       "row": 1,
       "relations": [
         {
@@ -101,6 +107,8 @@
       "name_en": "Svanehøj",
       "sub": "船舶用ポンプ(デンマーク)",
       "sub_en": "Marine pumps (Denmark)",
+      "sub_short": "ポンプ",
+      "sub_short_en": "Pumps",
       "row": 2,
       "relations": [
         {
@@ -125,6 +133,8 @@
       "name_en": "kSARIA",
       "sub": "ケーブル組立品",
       "sub_en": "Cable assemblies",
+      "sub_short": "ケーブル",
+      "sub_short_en": "Cables",
       "row": 2,
       "relations": [
         {

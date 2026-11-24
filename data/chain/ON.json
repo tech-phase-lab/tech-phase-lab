@@ -33,6 +33,8 @@
       "name": "Synaptics",
       "sub": "ヒューマンインターフェース半導体",
       "sub_en": "Human-interface chips",
+      "sub_short": "HMI",
+      "sub_short_en": "HMI ICs",
       "row": 0,
       "relations": [
         {
@@ -58,6 +60,8 @@
       "name": "GlobalFoundries",
       "sub": "半導体受託製造",
       "sub_en": "Foundry",
+      "sub_short": "受託生産",
+      "sub_short_en": "Foundry",
       "row": 0,
       "relations": [
         {
@@ -81,6 +85,8 @@
       "name": "Qorvo",
       "sub": "RF半導体",
       "sub_en": "RF chips",
+      "sub_short": "RF半導体",
+      "sub_short_en": "RF chips",
       "row": 0,
       "relations": [
         {
@@ -104,6 +110,8 @@
       "name": "Diodes Incorporated",
       "sub": "ディスクリート半導体",
       "sub_en": "Discrete semiconductors",
+      "sub_short": "半導体",
+      "sub_short_en": "Discretes",
       "row": 2,
       "relations": [
         {
@@ -140,6 +148,8 @@
       "name": "NVIDIA",
       "sub": "AI半導体",
       "sub_en": "AI chips",
+      "sub_short": "AI半導体",
+      "sub_short_en": "AI chips",
       "row": 0,
       "relations": [
         {
@@ -162,6 +172,8 @@
       "name": "JPMorgan Chase",
       "sub": "銀行",
       "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
       "row": 0,
       "relations": [
         {
@@ -187,6 +199,8 @@
       "name": "BMW",
       "sub": "自動車",
       "sub_en": "Automobiles",
+      "sub_short": "自動車",
+      "sub_short_en": "Cars",
       "row": 1,
       "relations": [
         {
@@ -223,6 +237,8 @@
       "name": "フォルクスワーゲン",
       "sub": "自動車",
       "sub_en": "Automobiles",
+      "sub_short": "自動車",
+      "sub_short_en": "Cars",
       "row": 1,
       "relations": [
         {
@@ -248,6 +264,8 @@
       "name": "Rivian",
       "sub": "電気自動車",
       "sub_en": "Electric vehicles",
+      "sub_short": "EV",
+      "sub_short_en": "EVs",
       "row": 1,
       "relations": [
         {
@@ -271,6 +289,8 @@
       "name": "Monolithic Power Systems",
       "sub": "電源半導体",
       "sub_en": "Power chips",
+      "sub_short": "電源IC",
+      "sub_short_en": "Power ICs",
       "row": 2,
       "relations": [
         {
@@ -294,6 +314,8 @@
       "name": "Power Integrations",
       "sub": "高電圧電源IC",
       "sub_en": "High-voltage power ICs",
+      "sub_short": "電源IC",
+      "sub_short_en": "Power ICs",
       "row": 2,
       "relations": [
         {
@@ -317,6 +339,8 @@
       "name": "Navitas Semiconductor",
       "sub": "GaNパワー半導体",
       "sub_en": "GaN power chips",
+      "sub_short": "GaN",
+      "sub_short_en": "GaN",
       "row": 2,
       "relations": [
         {
@@ -340,6 +364,8 @@
       "name": "Alpha and Omega Semiconductor",
       "sub": "パワー半導体",
       "sub_en": "Power semiconductors",
+      "sub_short": "半導体",
+      "sub_short_en": "Power ICs",
       "row": 2,
       "relations": [
         {

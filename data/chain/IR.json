@@ -25,6 +25,8 @@
       "name": "アトラスコプコ",
       "sub": "圧縮機",
       "sub_en": "Compressors",
+      "sub_short": "圧縮機",
+      "sub_short_en": "Pumps",
       "row": 0,
       "relations": [
         {
@@ -49,6 +51,8 @@
       "name": "フローサーブ",
       "sub": "ポンプ・バルブ",
       "sub_en": "Pumps & valves",
+      "sub_short": "ポンプ",
+      "sub_short_en": "Pumps",
       "row": 0,
       "relations": [
         {
@@ -73,6 +77,8 @@
       "name": "アイデックス",
       "sub": "ポンプ・流体機器",
       "sub_en": "Pumps & fluids",
+      "sub_short": "ポンプ",
+      "sub_short_en": "Pumps",
       "row": 0,
       "relations": [
         {
@@ -97,6 +103,8 @@
       "name": "ケーザー・コンプレッサー",
       "sub": "圧縮機",
       "sub_en": "Compressors",
+      "sub_short": "圧縮機",
+      "sub_short_en": "Pumps",
       "row": 0,
       "relations": [
         {
@@ -121,6 +129,8 @@
       "name": "ドーバー",
       "sub": "産業機器",
       "sub_en": "Industrial equipment",
+      "sub_short": "産業機器",
+      "sub_short_en": "Industrial",
       "row": 0,
       "relations": [
         {
@@ -145,6 +155,8 @@
       "name": "グラコ",
       "sub": "流体制御",
       "sub_en": "Fluid handling",
+      "sub_short": "流体制御",
+      "sub_short_en": "Pumps",
       "row": 0,
       "relations": [
         {
@@ -169,6 +181,8 @@
       "name": "NOVインク",
       "sub": "エネルギー機器",
       "sub_en": "Energy equipment",
+      "sub_short": "エネ機器",
+      "sub_short_en": "Energy",
       "row": 0,
       "relations": [
         {
@@ -193,6 +207,8 @@
       "name": "ザルトリウス",
       "sub": "バイオ機器",
       "sub_en": "Bioprocess equipment",
+      "sub_short": "バイオ",
+      "sub_short_en": "Bio",
       "row": 0,
       "relations": [
         {
@@ -217,6 +233,8 @@
       "name": "サーモフィッシャーサイエンティフィック",
       "sub": "ライフサイエンス",
       "sub_en": "Life sciences",
+      "sub_short": "生命科学",
+      "sub_short_en": "Life sci",
       "row": 0,
       "relations": [
         {
@@ -236,11 +254,13 @@
       "name_en": "Thermo Fisher Scientific"
     },
     {
-      "id": "WM",
+      "id": "WatsonMarlow",
       "ticker": "Watson-Marlow",
       "name": "ワトソン・マーロー",
       "sub": "蠕動ポンプ",
       "sub_en": "Peristaltic pumps",
+      "sub_short": "ポンプ",
+      "sub_short_en": "Pumps",
       "row": 0,
       "relations": [
         {

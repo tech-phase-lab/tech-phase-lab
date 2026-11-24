@@ -32,6 +32,8 @@
       "name_en": "BellRing Brands",
       "sub": "プロテイン飲料",
       "sub_en": "Protein shakes",
+      "sub_short": "飲料",
+      "sub_short_en": "Drinks",
       "row": 0,
       "relations": [
         {
@@ -56,6 +58,8 @@
       "name_en": "Sysco",
       "sub": "業務用食品卸",
       "sub_en": "Foodservice distribution",
+      "sub_short": "食品卸",
+      "sub_short_en": "Food",
       "row": 1,
       "relations": [
         {
@@ -80,6 +84,8 @@
       "name_en": "US Foods",
       "sub": "業務用食品卸",
       "sub_en": "Foodservice distribution",
+      "sub_short": "食品卸",
+      "sub_short_en": "Food",
       "row": 1,
       "relations": [
         {
@@ -104,6 +110,8 @@
       "name_en": "Herbalife",
       "sub": "栄養食品",
       "sub_en": "Nutrition products",
+      "sub_short": "栄養食品",
+      "sub_short_en": "Nutrition",
       "row": 2,
       "relations": [
         {
@@ -128,6 +136,8 @@
       "name_en": "NightFood",
       "sub": "スナック食品",
       "sub_en": "Snack foods",
+      "sub_short": "菓子",
+      "sub_short_en": "Snacks",
       "row": 2,
       "relations": [
         {

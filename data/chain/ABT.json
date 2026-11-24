@@ -33,6 +33,8 @@
       "name_en": "NVE Corporation",
       "sub": "磁気センサー",
       "sub_en": "Spintronic sensors",
+      "sub_short": "センサー",
+      "sub_short_en": "Sensors",
       "row": 0,
       "relations": [
         {
@@ -57,6 +59,8 @@
       "name_en": "Exact Sciences",
       "sub": "がん検査",
       "sub_en": "Cancer diagnostics",
+      "sub_short": "がん検査",
+      "sub_short_en": "Cancer",
       "row": 1,
       "relations": [
         {
@@ -75,12 +79,14 @@
       ]
     },
     {
-      "id": "CSI",
+      "id": "CardiovascularSystems",
       "ticker": "Cardiovascular Systems",
       "name": "カーディオバスキュラー・システムズ",
       "name_en": "Cardiovascular Systems",
       "sub": "血管治療機器",
       "sub_en": "Vascular devices",
+      "sub_short": "血管治療",
+      "sub_short_en": "Vascular",
       "row": 1,
       "relations": [
         {
@@ -105,6 +111,8 @@
       "name_en": "Bigfoot Biomedical",
       "sub": "糖尿病管理",
       "sub_en": "Diabetes management",
+      "sub_short": "糖尿病",
+      "sub_short_en": "Diabetes",
       "row": 1,
       "relations": [
         {
@@ -129,6 +137,8 @@
       "name_en": "Senseonics",
       "sub": "埋め込み型血糖センサー",
       "sub_en": "Implantable glucose sensors",
+      "sub_short": "血糖測定",
+      "sub_short_en": "CGM",
       "row": 1,
       "relations": [
         {
@@ -153,6 +163,8 @@
       "name_en": "AbbVie",
       "sub": "医薬品",
       "sub_en": "Pharma",
+      "sub_short": "医薬品",
+      "sub_short_en": "Pharma",
       "row": 1,
       "relations": [
         {
@@ -177,6 +189,8 @@
       "name_en": "DexCom",
       "sub": "持続血糖測定",
       "sub_en": "Continuous glucose monitoring",
+      "sub_short": "血糖測定",
+      "sub_short_en": "CGM",
       "row": 2,
       "relations": [
         {
@@ -201,6 +215,8 @@
       "name_en": "Nevro",
       "sub": "脊髄刺激",
       "sub_en": "Spinal cord stimulation",
+      "sub_short": "脊髄刺激",
+      "sub_short_en": "Neuro",
       "row": 2,
       "relations": [
         {
@@ -225,6 +241,8 @@
       "name_en": "Artivion",
       "sub": "心臓弁",
       "sub_en": "Heart valves",
+      "sub_short": "心臓弁",
+      "sub_short_en": "Valves",
       "row": 2,
       "relations": [
         {
@@ -249,6 +267,8 @@
       "name_en": "Encore Medical",
       "sub": "心臓閉鎖デバイス",
       "sub_en": "Heart closure devices",
+      "sub_short": "心臓機器",
+      "sub_short_en": "Cardiac",
       "row": 2,
       "relations": [
         {
@@ -273,6 +293,8 @@
       "name_en": "InspireMD",
       "sub": "頸動脈ステント",
       "sub_en": "Carotid stents",
+      "sub_short": "ステント",
+      "sub_short_en": "Stents",
       "row": 2,
       "relations": [
         {
@@ -297,6 +319,8 @@
       "name_en": "Glucotrack",
       "sub": "血糖モニター",
       "sub_en": "Glucose monitoring",
+      "sub_short": "血糖測定",
+      "sub_short_en": "CGM",
       "row": 2,
       "relations": [
         {

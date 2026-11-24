@@ -26,6 +26,8 @@
       "name": "ユナイテッド・パーセル・サービス",
       "sub": "小口配送大手",
       "sub_en": "Package delivery",
+      "sub_short": "宅配",
+      "sub_short_en": "Parcels",
       "row": 0,
       "relations": [
         {
@@ -63,6 +65,8 @@
       "name": "DHL（ディーエイチエル）",
       "sub": "国際宅配の競合",
       "sub_en": "Intl. express rival",
+      "sub_short": "国際宅配",
+      "sub_short_en": "Express",
       "row": 0,
       "relations": [
         {
@@ -87,6 +91,8 @@
       "name": "アマゾン・ドット・コム",
       "sub": "EC・自社配送",
       "sub_en": "E-commerce & in-house delivery",
+      "sub_short": "EC",
+      "sub_short_en": "E-com",
       "row": 0,
       "relations": [
         {
@@ -111,6 +117,8 @@
       "name": "オフィス・デポ",
       "sub": "事務用品小売",
       "sub_en": "Office supplies retail",
+      "sub_short": "事務用品",
+      "sub_short_en": "Office",
       "row": 0,
       "relations": [
         {
@@ -135,6 +143,8 @@
       "name": "ウォルグリーン",
       "sub": "ドラッグストア",
       "sub_en": "Drugstore chain",
+      "sub_short": "薬局",
+      "sub_short_en": "Drugstore",
       "row": 0,
       "relations": [
         {
@@ -159,6 +169,8 @@
       "name": "ダラー・ゼネラル",
       "sub": "ディスカウント小売",
       "sub_en": "Discount retail",
+      "sub_short": "格安小売",
+      "sub_short_en": "Discount",
       "row": 0,
       "relations": [
         {
@@ -183,6 +195,8 @@
       "name": "サービスナウ",
       "sub": "業務ソフトウェア",
       "sub_en": "Workflow software",
+      "sub_short": "業務IT",
+      "sub_short_en": "Workflow",
       "row": 0,
       "relations": [
         {
@@ -207,6 +221,8 @@
       "name": "ダン・アンド・ブラッドストリート",
       "sub": "企業情報提供",
       "sub_en": "Business data provider",
+      "sub_short": "企業情報",
+      "sub_short_en": "Data",
       "row": 0,
       "relations": [
         {

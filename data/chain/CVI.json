@@ -32,6 +32,8 @@
       "name_en": "Icahn Enterprises",
       "sub": "投資持株会社",
       "sub_en": "Holding company",
+      "sub_short": "持株会社",
+      "sub_short_en": "Holding",
       "row": 0,
       "relations": [
         {
@@ -56,6 +58,8 @@
       "name_en": "CVR Partners",
       "sub": "窒素肥料",
       "sub_en": "Nitrogen fertilizer",
+      "sub_short": "窒素肥料",
+      "sub_short_en": "Fertilizer",
       "row": 0,
       "relations": [
         {
@@ -80,6 +84,8 @@
       "name_en": "Plains All American",
       "sub": "パイプライン",
       "sub_en": "Pipelines",
+      "sub_short": "配管網",
+      "sub_short_en": "Pipelines",
       "row": 1,
       "relations": [
         {
@@ -104,6 +110,8 @@
       "name_en": "CHS Inc.",
       "sub": "農協・石油精製",
       "sub_en": "Farm cooperative & refining",
+      "sub_short": "農協",
+      "sub_short_en": "Co-op",
       "row": 2,
       "relations": [
         {
@@ -128,6 +136,8 @@
       "name_en": "HF Sinclair",
       "sub": "石油精製",
       "sub_en": "Refining",
+      "sub_short": "石油精製",
+      "sub_short_en": "Refining",
       "row": 2,
       "relations": [
         {
@@ -152,6 +162,8 @@
       "name_en": "Phillips 66",
       "sub": "石油精製",
       "sub_en": "Refining",
+      "sub_short": "石油精製",
+      "sub_short_en": "Refining",
       "row": 2,
       "relations": [
         {
@@ -176,6 +188,8 @@
       "name_en": "Valero Energy",
       "sub": "石油精製",
       "sub_en": "Refining",
+      "sub_short": "石油精製",
+      "sub_short_en": "Refining",
       "row": 2,
       "relations": [
         {

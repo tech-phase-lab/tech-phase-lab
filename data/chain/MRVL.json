@@ -41,6 +41,8 @@
       "name": "GlobalFoundries",
       "sub": "半導体製造",
       "sub_en": "Foundry",
+      "sub_short": "半導体",
+      "sub_short_en": "Foundry",
       "row": 0,
       "relations": [
         {
@@ -64,6 +66,8 @@
       "name": "Tower Semiconductor",
       "sub": "半導体製造",
       "sub_en": "Foundry",
+      "sub_short": "半導体",
+      "sub_short_en": "Foundry",
       "row": 0,
       "relations": [
         {
@@ -87,6 +91,8 @@
       "name": "Microsoft",
       "sub": "クラウド・ソフト",
       "sub_en": "Cloud & software",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 1,
       "relations": [
         {
@@ -136,6 +142,8 @@
       "name": "Fortinet",
       "sub": "セキュリティ機器",
       "sub_en": "Security appliances",
+      "sub_short": "防犯機器",
+      "sub_short_en": "Firewalls",
       "row": 1,
       "relations": [
         {
@@ -159,6 +167,8 @@
       "name": "Lantronix",
       "sub": "IoT機器",
       "sub_en": "IoT hardware",
+      "sub_short": "IoT機器",
+      "sub_short_en": "IoT",
       "row": 1,
       "relations": [
         {
@@ -182,6 +192,8 @@
       "name": "NVIDIA",
       "sub": "AI半導体",
       "sub_en": "AI chips",
+      "sub_short": "AI半導体",
+      "sub_short_en": "AI chips",
       "row": 2,
       "relations": [
         {
@@ -257,6 +269,8 @@
       "name": "Amazon (AWS)",
       "sub": "クラウド",
       "sub_en": "Cloud",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 2,
       "relations": [
         {
@@ -282,6 +296,8 @@
       "name": "Oracle",
       "sub": "クラウド・ソフト",
       "sub_en": "Cloud & software",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 2,
       "relations": [
         {
@@ -305,6 +321,8 @@
       "name": "Lumentum",
       "sub": "光部品",
       "sub_en": "Optical components",
+      "sub_short": "光部品",
+      "sub_short_en": "Optics",
       "row": 2,
       "relations": [
         {
@@ -330,6 +348,8 @@
       "name": "Coherent",
       "sub": "光部品",
       "sub_en": "Optical components",
+      "sub_short": "光部品",
+      "sub_short_en": "Optics",
       "row": 2,
       "relations": [
         {
@@ -355,6 +375,8 @@
       "name": "Micron",
       "sub": "メモリー",
       "sub_en": "Memory",
+      "sub_short": "メモリー",
+      "sub_short_en": "Memory",
       "row": 2,
       "relations": [
         {
@@ -380,6 +402,8 @@
       "name": "サムスン電子",
       "sub": "メモリー",
       "sub_en": "Memory",
+      "sub_short": "メモリー",
+      "sub_short_en": "Memory",
       "row": 2,
       "relations": [
         {
@@ -406,6 +430,8 @@
       "name": "SKハイニックス",
       "sub": "メモリー",
       "sub_en": "Memory",
+      "sub_short": "メモリー",
+      "sub_short_en": "Memory",
       "row": 2,
       "relations": [
         {
@@ -432,6 +458,8 @@
       "name": "AMD",
       "sub": "半導体",
       "sub_en": "Semiconductors",
+      "sub_short": "半導体",
+      "sub_short_en": "Chips",
       "row": 2,
       "relations": [
         {
@@ -483,6 +511,8 @@
       "name": "Intel",
       "sub": "半導体",
       "sub_en": "Semiconductors",
+      "sub_short": "半導体",
+      "sub_short_en": "Chips",
       "row": 2,
       "relations": [
         {
@@ -521,6 +551,8 @@
       "name": "インフィニオン",
       "sub": "車載・電力半導体",
       "sub_en": "Auto & power chips",
+      "sub_short": "車載IC",
+      "sub_short_en": "Auto ICs",
       "row": 3,
       "relations": [
         {
@@ -547,6 +579,8 @@
       "name": "Rambus",
       "sub": "メモリーIP",
       "sub_en": "Memory interface IP",
+      "sub_short": "メモリIP",
+      "sub_short_en": "Memory",
       "row": 3,
       "relations": [
         {
@@ -583,6 +617,8 @@
       "name": "Arm Holdings",
       "sub": "CPU設計",
       "sub_en": "CPU architecture",
+      "sub_short": "CPU設計",
+      "sub_short_en": "CPU IP",
       "row": 3,
       "relations": [
         {
@@ -608,6 +644,8 @@
       "name": "Broadcom",
       "sub": "半導体",
       "sub_en": "Semiconductors",
+      "sub_short": "半導体",
+      "sub_short_en": "Chips",
       "row": 4,
       "relations": [
         {
@@ -631,6 +669,8 @@
       "name": "アルチップ・テクノロジーズ",
       "sub": "ASIC設計",
       "sub_en": "ASIC design services",
+      "sub_short": "ASIC設計",
+      "sub_short_en": "ASICs",
       "row": 4,
       "relations": [
         {
@@ -655,6 +695,8 @@
       "name": "Astera Labs",
       "sub": "接続半導体",
       "sub_en": "Connectivity chips",
+      "sub_short": "半導体",
+      "sub_short_en": "Links",
       "row": 4,
       "relations": [
         {
@@ -691,6 +733,8 @@
       "name": "Cisco Systems",
       "sub": "ネットワーク機器",
       "sub_en": "Networking equipment",
+      "sub_short": "通信機器",
+      "sub_short_en": "Network",
       "row": 4,
       "relations": [
         {
@@ -714,6 +758,8 @@
       "name": "Credo Technology Group",
       "sub": "接続半導体",
       "sub_en": "Connectivity chips",
+      "sub_short": "半導体",
+      "sub_short_en": "Links",
       "row": 4,
       "relations": [
         {
@@ -750,6 +796,8 @@
       "name": "Global Unichip",
       "sub": "ASIC設計",
       "sub_en": "ASIC design services",
+      "sub_short": "ASIC設計",
+      "sub_short_en": "ASICs",
       "row": 4,
       "relations": [
         {
@@ -773,6 +821,8 @@
       "name": "MACOM Technology Solutions",
       "sub": "アナログ・光半導体",
       "sub_en": "Analog & optical chips",
+      "sub_short": "アナログ",
+      "sub_short_en": "Analog",
       "row": 4,
       "relations": [
         {
@@ -809,6 +859,8 @@
       "name": "MediaTek",
       "sub": "SoC",
       "sub_en": "SoCs",
+      "sub_short": "SoC",
+      "sub_short_en": "SoCs",
       "row": 4,
       "relations": [
         {
@@ -832,6 +884,8 @@
       "name": "Microchip Technology",
       "sub": "マイコン・半導体",
       "sub_en": "Microcontrollers & chips",
+      "sub_short": "マイコン",
+      "sub_short_en": "MCUs",
       "row": 4,
       "relations": [
         {
@@ -855,6 +909,8 @@
       "name": "Montage Technology",
       "sub": "メモリーインターフェース",
       "sub_en": "Memory interface chips",
+      "sub_short": "メモリIP",
+      "sub_short_en": "Memory",
       "row": 4,
       "relations": [
         {
@@ -878,6 +934,8 @@
       "name": "NXP Semiconductors",
       "sub": "車載半導体",
       "sub_en": "Auto chips",
+      "sub_short": "車載IC",
+      "sub_short_en": "Auto ICs",
       "row": 4,
       "relations": [
         {
@@ -901,6 +959,8 @@
       "name": "群聯電子(Phison)",
       "sub": "ストレージ制御",
       "sub_en": "Storage controllers",
+      "sub_short": "記憶用IC",
+      "sub_short_en": "Storage",
       "row": 4,
       "relations": [
         {
@@ -925,6 +985,8 @@
       "name": "Qualcomm",
       "sub": "モバイル半導体",
       "sub_en": "Mobile chips",
+      "sub_short": "半導体",
+      "sub_short_en": "Mobile IC",
       "row": 4,
       "relations": [
         {
@@ -948,6 +1010,8 @@
       "name": "Realtek Semiconductor",
       "sub": "ネットワーク半導体",
       "sub_en": "Networking chips",
+      "sub_short": "通信IC",
+      "sub_short_en": "Network",
       "row": 4,
       "relations": [
         {
@@ -971,6 +1035,8 @@
       "name": "Semtech",
       "sub": "アナログ半導体",
       "sub_en": "Analog chips",
+      "sub_short": "アナログ",
+      "sub_short_en": "Analog",
       "row": 4,
       "relations": [
         {
@@ -994,6 +1060,8 @@
       "name": "Silicon Motion Technology",
       "sub": "ストレージ制御",
       "sub_en": "Storage controllers",
+      "sub_short": "記憶用IC",
+      "sub_short_en": "Storage",
       "row": 4,
       "relations": [
         {
@@ -1017,6 +1085,8 @@
       "name": "ソシオネクスト",
       "sub": "SoC設計",
       "sub_en": "SoC design",
+      "sub_short": "SoC設計",
+      "sub_short_en": "Chip IP",
       "row": 4,
       "relations": [
         {
@@ -1041,6 +1111,8 @@
       "name": "MaxLinear",
       "sub": "接続半導体",
       "sub_en": "Connectivity chips",
+      "sub_short": "半導体",
+      "sub_short_en": "Links",
       "row": 4,
       "relations": [
         {
@@ -1064,6 +1136,8 @@
       "name": "Ciena",
       "sub": "光ネットワーク",
       "sub_en": "Optical networking",
+      "sub_short": "光通信",
+      "sub_short_en": "Optics",
       "row": 4,
       "relations": [
         {
@@ -1087,6 +1161,8 @@
       "name": "CEVA",
       "sub": "半導体IP",
       "sub_en": "Semiconductor IP",
+      "sub_short": "半導体IP",
+      "sub_short_en": "Chip IP",
       "row": 4,
       "relations": [
         {
@@ -1110,6 +1186,8 @@
       "name": "Silicom",
       "sub": "ネットワークカード",
       "sub_en": "Network cards",
+      "sub_short": "通信機器",
+      "sub_short_en": "Network",
       "row": 4,
       "relations": [
         {

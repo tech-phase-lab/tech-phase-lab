@@ -19,6 +19,8 @@
       "name": "ファイザー",
       "sub": "抗凝固薬の共同開発",
       "sub_en": "Eliquis co-development",
+      "sub_short": "抗凝固薬",
+      "sub_short_en": "Pharma",
       "row": 0,
       "relations": [
         {
@@ -43,6 +45,8 @@
       "name": "小野薬品工業",
       "sub": "日韓台の共同開発",
       "sub_en": "Joint development in Asia",
+      "sub_short": "共同開発",
+      "sub_short_en": "Co-dev",
       "row": 0,
       "relations": [
         {
@@ -67,6 +71,8 @@
       "name": "ビオンテック",
       "sub": "がん抗体の共同開発",
       "sub_en": "Bispecific antibody collaboration",
+      "sub_short": "がん抗体",
+      "sub_short_en": "Antibody",
       "row": 0,
       "relations": [
         {
@@ -91,6 +97,8 @@
       "name": "シストイミューン",
       "sub": "ADC薬の共同開発",
       "sub_en": "ADC co-development",
+      "sub_short": "ADC薬",
+      "sub_short_en": "ADC",
       "row": 0,
       "relations": [
         {
@@ -115,6 +123,8 @@
       "name": "ジョンソン・エンド・ジョンソン",
       "sub": "血栓薬の共同開発",
       "sub_en": "Milvexian co-development",
+      "sub_short": "血栓薬",
+      "sub_short_en": "Pharma",
       "row": 0,
       "relations": [
         {
@@ -139,6 +149,8 @@
       "name": "メルク",
       "sub": "ライセンス相手",
       "sub_en": "Licensing partner",
+      "sub_short": "許諾先",
+      "sub_short_en": "Licensing",
       "row": 0,
       "relations": [
         {
@@ -171,11 +183,13 @@
       "name_en": "Merck"
     },
     {
-      "id": "ROG",
+      "id": "ROCHE",
       "ticker": "Roche",
       "name": "ロシュ",
       "sub": "特許ライセンス",
       "sub_en": "Patent license",
+      "sub_short": "特許",
+      "sub_short_en": "Patents",
       "row": 0,
       "relations": [
         {
@@ -200,6 +214,8 @@
       "name": "マッケソン",
       "sub": "医薬品卸",
       "sub_en": "Wholesaler",
+      "sub_short": "医薬品卸",
+      "sub_short_en": "Supply",
       "row": 0,
       "relations": [
         {
@@ -224,6 +240,8 @@
       "name": "センコラ",
       "sub": "医薬品卸",
       "sub_en": "Wholesaler",
+      "sub_short": "医薬品卸",
+      "sub_short_en": "Supply",
       "row": 0,
       "relations": [
         {
@@ -248,6 +266,8 @@
       "name": "カーディナル・ヘルス",
       "sub": "医薬品卸",
       "sub_en": "Wholesaler",
+      "sub_short": "医薬品卸",
+      "sub_short_en": "Supply",
       "row": 0,
       "relations": [
         {
@@ -272,6 +292,8 @@
       "name": "ジャナックス・セラピューティクス",
       "sub": "がん免疫療法",
       "sub_en": "Cancer immunotherapy",
+      "sub_short": "がん免疫",
+      "sub_short_en": "Oncology",
       "row": 0,
       "relations": [
         {
@@ -296,6 +318,8 @@
       "name": "サイトエックス・セラピューティクス",
       "sub": "がん治療薬",
       "sub_en": "Oncology",
+      "sub_short": "がん薬",
+      "sub_short_en": "Oncology",
       "row": 0,
       "relations": [
         {

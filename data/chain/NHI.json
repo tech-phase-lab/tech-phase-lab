@@ -24,6 +24,8 @@
       "name_en": "Senior Living Communities",
       "sub": "シニア住宅運営",
       "sub_en": "Senior housing operator",
+      "sub_short": "高齢住宅",
+      "sub_short_en": "Seniors",
       "row": 0,
       "relations": [
         {
@@ -48,6 +50,8 @@
       "name_en": "Bickford Senior Living",
       "sub": "介護付き住宅運営",
       "sub_en": "Assisted living operator",
+      "sub_short": "介護住宅",
+      "sub_short_en": "Seniors",
       "row": 0,
       "relations": [
         {
@@ -72,6 +76,8 @@
       "name_en": "National HealthCare Corporation",
       "sub": "介護施設運営",
       "sub_en": "Skilled nursing operator",
+      "sub_short": "介護",
+      "sub_short_en": "Nursing",
       "row": 0,
       "relations": [
         {
@@ -96,6 +102,8 @@
       "name_en": "Agemark Senior Living",
       "sub": "介護付き住宅運営",
       "sub_en": "Assisted living operator",
+      "sub_short": "介護住宅",
+      "sub_short_en": "Seniors",
       "row": 1,
       "relations": [
         {
@@ -120,6 +128,8 @@
       "name_en": "Generations, LLC",
       "sub": "シニア住宅運営",
       "sub_en": "Senior housing operator",
+      "sub_short": "高齢住宅",
+      "sub_short_en": "Seniors",
       "row": 1,
       "relations": [
         {
@@ -144,6 +154,8 @@
       "name_en": "Mainstay Healthcare",
       "sub": "介護付き住宅運営",
       "sub_en": "Assisted living operator",
+      "sub_short": "介護住宅",
+      "sub_short_en": "Seniors",
       "row": 1,
       "relations": [
         {
@@ -162,12 +174,14 @@
       ]
     },
     {
-      "id": "Juniper",
+      "id": "JuniperCommunities",
       "ticker": "Juniper Communities",
       "name": "ジュニパー・コミュニティーズ",
       "name_en": "Juniper Communities",
       "sub": "シニア住宅運営",
       "sub_en": "Senior housing operator",
+      "sub_short": "高齢住宅",
+      "sub_short_en": "Seniors",
       "row": 1,
       "relations": [
         {
@@ -192,6 +206,8 @@
       "name_en": "Priority Life Care",
       "sub": "介護付き住宅運営",
       "sub_en": "Assisted living operator",
+      "sub_short": "介護住宅",
+      "sub_short_en": "Seniors",
       "row": 1,
       "relations": [
         {
@@ -216,6 +232,8 @@
       "name_en": "Compass Senior Living",
       "sub": "シニア住宅運営",
       "sub_en": "Senior housing manager",
+      "sub_short": "高齢住宅",
+      "sub_short_en": "Seniors",
       "row": 1,
       "relations": [
         {

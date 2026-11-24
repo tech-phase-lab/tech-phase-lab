@@ -30,6 +30,8 @@
       "name_en": "Purolite",
       "sub": "精製用樹脂",
       "sub_en": "Purification resins",
+      "sub_short": "樹脂",
+      "sub_short_en": "Resins",
       "row": 0,
       "relations": [
         {
@@ -54,6 +56,8 @@
       "name_en": "908 Devices",
       "sub": "小型質量分析",
       "sub_en": "Handheld mass spectrometry",
+      "sub_short": "分析装置",
+      "sub_short_en": "Lab tools",
       "row": 0,
       "relations": [
         {
@@ -78,6 +82,8 @@
       "name_en": "Metenova",
       "sub": "バイオ生産用ミキサー(スウェーデン)",
       "sub_en": "Bioprocess mixers (Sweden)",
+      "sub_short": "培養装置",
+      "sub_short_en": "Bio",
       "row": 1,
       "relations": [
         {
@@ -102,6 +108,8 @@
       "name_en": "Tantti Laboratory",
       "sub": "クロマトグラフィー樹脂(台湾)",
       "sub_en": "Chromatography resins (Taiwan)",
+      "sub_short": "樹脂",
+      "sub_short_en": "Resins",
       "row": 1,
       "relations": [
         {
@@ -126,6 +134,8 @@
       "name_en": "Solventum",
       "sub": "医療・ろ過",
       "sub_en": "Healthcare & filtration",
+      "sub_short": "医療",
+      "sub_short_en": "Health",
       "row": 2,
       "relations": [
         {

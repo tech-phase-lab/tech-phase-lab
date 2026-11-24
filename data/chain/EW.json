@@ -28,6 +28,8 @@
       "name": "メドトロニック",
       "sub": "医療機器",
       "sub_en": "Medical devices",
+      "sub_short": "医療機器",
+      "sub_short_en": "Medtech",
       "row": 0,
       "relations": [
         {
@@ -65,6 +67,8 @@
       "name": "アボット・ラボラトリーズ",
       "sub": "医療機器・医薬",
       "sub_en": "Medical devices",
+      "sub_short": "医療機器",
+      "sub_short_en": "Medtech",
       "row": 0,
       "relations": [
         {
@@ -89,6 +93,8 @@
       "name": "ジェナバルブ・テクノロジー",
       "sub": "心臓弁",
       "sub_en": "Heart valves",
+      "sub_short": "心臓弁",
+      "sub_short_en": "Valves",
       "row": 0,
       "relations": [
         {
@@ -126,6 +132,8 @@
       "name": "アーティビオン",
       "sub": "心臓外科機器",
       "sub_en": "Cardiac surgery devices",
+      "sub_short": "心臓機器",
+      "sub_short_en": "Cardiac",
       "row": 1,
       "relations": [
         {
@@ -150,6 +158,8 @@
       "name": "メリット・メディカル・システムズ",
       "sub": "心臓・血管インターベンション機器",
       "sub_en": "Interventional devices",
+      "sub_short": "心臓機器",
+      "sub_short_en": "Medtech",
       "row": 1,
       "relations": [
         {

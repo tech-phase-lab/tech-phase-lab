@@ -24,6 +24,8 @@
       "name_en": "Dollar Tree",
       "sub": "ディスカウント店",
       "sub_en": "Discount retail",
+      "sub_short": "格安店",
+      "sub_short_en": "Discount",
       "row": 0,
       "relations": [
         {
@@ -48,6 +50,8 @@
       "name_en": "Albertsons",
       "sub": "スーパー",
       "sub_en": "Grocery",
+      "sub_short": "スーパー",
+      "sub_short_en": "Grocery",
       "row": 0,
       "relations": [
         {
@@ -72,6 +76,8 @@
       "name_en": "Sally Beauty",
       "sub": "美容用品",
       "sub_en": "Beauty supplies",
+      "sub_short": "美容用品",
+      "sub_short_en": "Beauty",
       "row": 0,
       "relations": [
         {
@@ -96,6 +102,8 @@
       "name_en": "Uber",
       "sub": "配車・宅配",
       "sub_en": "Ride-hailing & delivery",
+      "sub_short": "配車",
+      "sub_short_en": "Rides",
       "row": 1,
       "relations": [
         {
@@ -120,6 +128,8 @@
       "name_en": "Ibotta",
       "sub": "デジタル販促",
       "sub_en": "Digital promotions",
+      "sub_short": "販促",
+      "sub_short_en": "Promos",
       "row": 1,
       "relations": [
         {
@@ -144,6 +154,8 @@
       "name_en": "Roku",
       "sub": "動画配信機器",
       "sub_en": "Streaming platform",
+      "sub_short": "配信機器",
+      "sub_short_en": "Video",
       "row": 1,
       "relations": [
         {

@@ -19,6 +19,8 @@
       "name": "ノーフォーク・サザン",
       "sub": "東部の鉄道会社",
       "sub_en": "Eastern railroad",
+      "sub_short": "鉄道",
+      "sub_short_en": "Railroad",
       "row": 0,
       "relations": [
         {
@@ -43,6 +45,8 @@
       "name": "BNSF鉄道",
       "sub": "競合の鉄道",
       "sub_en": "Rival railroad",
+      "sub_short": "鉄道",
+      "sub_short_en": "Railroad",
       "row": 0,
       "relations": [
         {
@@ -67,6 +71,8 @@
       "name": "TTX社",
       "sub": "貨車プール会社",
       "sub_en": "Rail car pooling",
+      "sub_short": "貨車",
+      "sub_short_en": "Railcars",
       "row": 0,
       "relations": [
         {
@@ -104,6 +110,8 @@
       "name": "コア・ナチュラル・リソーシズ",
       "sub": "石炭",
       "sub_en": "Coal",
+      "sub_short": "石炭",
+      "sub_short_en": "Coal",
       "row": 0,
       "relations": [
         {

@@ -29,6 +29,8 @@
       "name": "TSMC",
       "sub": "半導体製造",
       "sub_en": "Semiconductor foundry",
+      "sub_short": "半導体",
+      "sub_short_en": "Foundry",
       "row": 0,
       "relations": [
         {
@@ -65,6 +67,8 @@
       "name": "インテル",
       "sub": "半導体",
       "sub_en": "Semiconductors",
+      "sub_short": "半導体",
+      "sub_short_en": "Chips",
       "row": 1,
       "relations": [
         {
@@ -91,6 +95,8 @@
       "name": "グーグル",
       "sub": "ソフト・クラウド",
       "sub_en": "Software & cloud",
+      "sub_short": "ソフト",
+      "sub_short_en": "Software",
       "row": 1,
       "relations": [
         {
@@ -115,6 +121,8 @@
       "name": "マイクロチップ・テクノロジー",
       "sub": "半導体",
       "sub_en": "Semiconductors",
+      "sub_short": "半導体",
+      "sub_short_en": "Chips",
       "row": 1,
       "relations": [
         {
@@ -139,6 +147,8 @@
       "name": "エイブリィ・デニソン",
       "sub": "素材・RFIDラベル",
       "sub_en": "Materials & RFID labels",
+      "sub_short": "RFID",
+      "sub_short_en": "Materials",
       "row": 1,
       "relations": [
         {
@@ -165,6 +175,8 @@
       "name": "NXPセミコンダクターズ",
       "sub": "半導体",
       "sub_en": "Semiconductors",
+      "sub_short": "半導体",
+      "sub_short_en": "Chips",
       "row": 2,
       "relations": [
         {

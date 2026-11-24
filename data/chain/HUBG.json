@@ -20,6 +20,8 @@
       "name_en": "Marten Transport",
       "sub": "冷凍輸送",
       "sub_en": "Refrigerated trucking",
+      "sub_short": "冷凍輸送",
+      "sub_short_en": "Trucking",
       "row": 0,
       "relations": [
         {
@@ -44,6 +46,8 @@
       "name_en": "EASO",
       "sub": "国境物流(メキシコ)",
       "sub_en": "Cross-border logistics (Mexico)",
+      "sub_short": "国境物流",
+      "sub_short_en": "Logistics",
       "row": 0,
       "relations": [
         {
@@ -68,6 +72,8 @@
       "name_en": "Forward Air",
       "sub": "物流",
       "sub_en": "Logistics",
+      "sub_short": "物流",
+      "sub_short_en": "Logistics",
       "row": 0,
       "relations": [
         {
@@ -92,6 +98,8 @@
       "name_en": "TAGG Logistics",
       "sub": "EC物流",
       "sub_en": "E-commerce fulfillment",
+      "sub_short": "EC物流",
+      "sub_short_en": "Logistics",
       "row": 0,
       "relations": [
         {

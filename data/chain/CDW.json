@@ -30,6 +30,8 @@
       "name": "アップル",
       "sub": "IT機器メーカー",
       "sub_en": "IT hardware maker",
+      "sub_short": "IT機器",
+      "sub_short_en": "IT",
       "row": 1,
       "relations": [
         {
@@ -54,6 +56,8 @@
       "name": "シスコシステムズ",
       "sub": "ネットワーク機器",
       "sub_en": "Networking equipment",
+      "sub_short": "通信機器",
+      "sub_short_en": "Network",
       "row": 1,
       "relations": [
         {
@@ -91,6 +95,8 @@
       "name": "デル・テクノロジーズ",
       "sub": "IT機器メーカー",
       "sub_en": "IT hardware maker",
+      "sub_short": "IT機器",
+      "sub_short_en": "IT",
       "row": 1,
       "relations": [
         {
@@ -115,6 +121,8 @@
       "name": "HPインク",
       "sub": "PC・プリンター",
       "sub_en": "PCs & printers",
+      "sub_short": "PC",
+      "sub_short_en": "PCs",
       "row": 1,
       "relations": [
         {
@@ -139,6 +147,8 @@
       "name": "レノボ",
       "sub": "PCメーカー",
       "sub_en": "PC maker",
+      "sub_short": "PC",
+      "sub_short_en": "PC maker",
       "row": 1,
       "relations": [
         {
@@ -163,6 +173,8 @@
       "name": "マイクロソフト",
       "sub": "ソフトウェア・クラウド",
       "sub_en": "Software & cloud",
+      "sub_short": "ソフト",
+      "sub_short_en": "Software",
       "row": 1,
       "relations": [
         {
@@ -187,6 +199,8 @@
       "name": "イングラム・マイクロ",
       "sub": "卸売ディストリビューター",
       "sub_en": "Wholesale distributor",
+      "sub_short": "卸売",
+      "sub_short_en": "Supply",
       "row": 1,
       "relations": [
         {
@@ -211,6 +225,8 @@
       "name": "TDシネックス",
       "sub": "卸売ディストリビューター",
       "sub_en": "Wholesale distributor",
+      "sub_short": "卸売",
+      "sub_short_en": "Supply",
       "row": 1,
       "relations": [
         {
@@ -235,6 +251,8 @@
       "name": "パロアルトネットワークス",
       "sub": "セキュリティ",
       "sub_en": "Cybersecurity",
+      "sub_short": "防御",
+      "sub_short_en": "Security",
       "row": 1,
       "relations": [
         {
@@ -259,6 +277,8 @@
       "name": "PCコネクション",
       "sub": "ITソリューション販売",
       "sub_en": "IT solutions reseller",
+      "sub_short": "IT販売",
+      "sub_short_en": "IT reseller",
       "row": 2,
       "relations": [
         {

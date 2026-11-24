@@ -19,6 +19,8 @@
       "name": "ロレアル",
       "sub": "化粧品・香水",
       "sub_en": "Beauty & fragrance",
+      "sub_short": "化粧品",
+      "sub_short_en": "Beauty",
       "row": 0,
       "relations": [
         {
@@ -43,6 +45,8 @@
       "name": "ルックスオティカ",
       "sub": "アイウェア",
       "sub_en": "Eyewear",
+      "sub_short": "眼鏡",
+      "sub_short_en": "Eyewear",
       "row": 0,
       "relations": [
         {
@@ -62,11 +66,13 @@
       "name_en": "Luxottica Group"
     },
     {
-      "id": "VC",
+      "id": "VisualComfort",
       "ticker": "Visual Comfort",
       "name": "ビジュアル・コンフォート",
       "sub": "照明器具",
       "sub_en": "Lighting",
+      "sub_short": "照明器具",
+      "sub_short_en": "Lighting",
       "row": 0,
       "relations": [
         {
@@ -86,11 +92,13 @@
       "name_en": "Visual Comfort"
     },
     {
-      "id": "DELTA",
+      "id": "DeltaGalil",
       "ticker": "Delta Galil",
       "name": "デルタ・ガリル",
       "sub": "インナー・ナイトウェア",
       "sub_en": "Intimates & sleepwear",
+      "sub_short": "インナー",
+      "sub_short_en": "Intimates",
       "row": 0,
       "relations": [
         {
@@ -115,6 +123,8 @@
       "name": "レンフロ",
       "sub": "靴下・ホーザリー",
       "sub_en": "Socks & hosiery",
+      "sub_short": "靴下",
+      "sub_short_en": "Socks",
       "row": 0,
       "relations": [
         {

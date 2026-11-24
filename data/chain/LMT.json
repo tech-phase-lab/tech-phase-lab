@@ -34,6 +34,8 @@
       "name": "RTXコーポレーション",
       "sub": "合弁相手・競合",
       "sub_en": "JV partner & rival",
+      "sub_short": "合弁",
+      "sub_short_en": "JV",
       "row": 0,
       "relations": [
         {
@@ -71,6 +73,8 @@
       "name": "ユナイテッド・ローンチ・アライアンス",
       "sub": "打上げサービス合弁",
       "sub_en": "Launch services JV",
+      "sub_short": "ロケット",
+      "sub_short_en": "Launch",
       "row": 0,
       "relations": [
         {
@@ -95,6 +99,8 @@
       "name": "ボーイング",
       "sub": "競合",
       "sub_en": "Competitor",
+      "sub_short": "競合",
+      "sub_short_en": "Rival",
       "row": 0,
       "relations": [
         {
@@ -119,6 +125,8 @@
       "name": "ゼネラル・ダイナミクス",
       "sub": "競合",
       "sub_en": "Competitor",
+      "sub_short": "競合",
+      "sub_short_en": "Rival",
       "row": 0,
       "relations": [
         {
@@ -143,6 +151,8 @@
       "name": "L3ハリス・テクノロジーズ",
       "sub": "競合",
       "sub_en": "Competitor",
+      "sub_short": "競合",
+      "sub_short_en": "Rival",
       "row": 0,
       "relations": [
         {
@@ -167,6 +177,8 @@
       "name": "ノースロップ・グラマン",
       "sub": "競合",
       "sub_en": "Competitor",
+      "sub_short": "競合",
+      "sub_short_en": "Rival",
       "row": 0,
       "relations": [
         {
@@ -191,6 +203,8 @@
       "name": "サイプリス・ソリューションズ",
       "sub": "防衛・航空部品",
       "sub_en": "Defense & aerospace components",
+      "sub_short": "防衛",
+      "sub_short_en": "Defense",
       "row": 1,
       "relations": [
         {
@@ -215,6 +229,8 @@
       "name": "イノベイティブ・ソリューションズ&サポート",
       "sub": "航空電子機器",
       "sub_en": "Avionics",
+      "sub_short": "航空電子",
+      "sub_short_en": "Avionics",
       "row": 1,
       "relations": [
         {
@@ -239,6 +255,8 @@
       "name": "エアロバイロメント",
       "sub": "ドローン・防衛",
       "sub_en": "Drones & defense",
+      "sub_short": "ドローン",
+      "sub_short_en": "Drones",
       "row": 2,
       "relations": [
         {

@@ -28,6 +28,8 @@
       "name": "フィサーブ",
       "sub": "決済処理",
       "sub_en": "Payment processing",
+      "sub_short": "決済処理",
+      "sub_short_en": "Payment",
       "row": 0,
       "relations": [
         {
@@ -52,6 +54,8 @@
       "name": "トースト",
       "sub": "飲食店向け決済",
       "sub_en": "Restaurant payments",
+      "sub_short": "決済",
+      "sub_short_en": "Payment",
       "row": 0,
       "relations": [
         {
@@ -76,6 +80,8 @@
       "name": "ストライプ",
       "sub": "オンライン決済",
       "sub_en": "Online payments",
+      "sub_short": "決済",
+      "sub_short_en": "Payment",
       "row": 0,
       "relations": [
         {
@@ -100,6 +106,8 @@
       "name": "ショッピファイ",
       "sub": "ECプラットフォーム",
       "sub_en": "E-commerce platform",
+      "sub_short": "EC基盤",
+      "sub_short_en": "E-com",
       "row": 0,
       "relations": [
         {
@@ -124,6 +132,8 @@
       "name": "ブロック",
       "sub": "決済・POS",
       "sub_en": "Payments & POS",
+      "sub_short": "決済",
+      "sub_short_en": "Payment",
       "row": 0,
       "relations": [
         {
@@ -148,6 +158,8 @@
       "name": "シフト4・ペイメンツ",
       "sub": "決済処理",
       "sub_en": "Payment processing",
+      "sub_short": "決済処理",
+      "sub_short_en": "Payment",
       "row": 1,
       "relations": [
         {

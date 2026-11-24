@@ -25,6 +25,8 @@
       "name": "ServiceNow",
       "sub": "ワークフローソフト",
       "sub_en": "Workflow software",
+      "sub_short": "業務IT",
+      "sub_short_en": "Workflow",
       "row": 0,
       "relations": [
         {
@@ -48,6 +50,8 @@
       "name": "Fortinet",
       "sub": "ネットワークセキュリティ",
       "sub_en": "Network security",
+      "sub_short": "防御",
+      "sub_short_en": "Security",
       "row": 1,
       "relations": [
         {
@@ -71,6 +75,8 @@
       "name": "CrowdStrike",
       "sub": "エンドポイントセキュリティ",
       "sub_en": "Endpoint security",
+      "sub_short": "端末保護",
+      "sub_short_en": "Security",
       "row": 0,
       "relations": [
         {
@@ -96,6 +102,8 @@
       "name": "Google",
       "sub": "検索・クラウド",
       "sub_en": "Search & cloud",
+      "sub_short": "検索",
+      "sub_short_en": "Search",
       "row": 0,
       "relations": [
         {
@@ -119,6 +127,8 @@
       "name": "NVIDIA",
       "sub": "AI半導体",
       "sub_en": "AI chips",
+      "sub_short": "AI半導体",
+      "sub_short_en": "AI chips",
       "row": 0,
       "relations": [
         {
@@ -144,6 +154,8 @@
       "name": "CoreWeave",
       "sub": "AIクラウド",
       "sub_en": "AI cloud",
+      "sub_short": "AI基盤",
+      "sub_short_en": "AI cloud",
       "row": 0,
       "relations": [
         {
@@ -167,6 +179,8 @@
       "name": "Equinix",
       "sub": "データセンター",
       "sub_en": "Data centers",
+      "sub_short": "DC",
+      "sub_short_en": "DCs",
       "row": 0,
       "relations": [
         {
@@ -190,6 +204,8 @@
       "name": "OpenAI",
       "sub": "生成AI",
       "sub_en": "Generative AI",
+      "sub_short": "生成AI",
+      "sub_short_en": "AI",
       "row": 0,
       "relations": [
         {
@@ -215,6 +231,8 @@
       "name": "NTT",
       "sub": "通信・ITサービス",
       "sub_en": "Telecom & IT services",
+      "sub_short": "通信・IT",
+      "sub_short_en": "Telecom",
       "row": 0,
       "relations": [
         {

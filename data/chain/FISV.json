@@ -33,6 +33,8 @@
       "name_en": "Synchrony Financial",
       "sub": "カード・消費者金融",
       "sub_en": "Consumer finance",
+      "sub_short": "カード",
+      "sub_short_en": "Finance",
       "row": 0,
       "relations": [
         {
@@ -57,6 +59,8 @@
       "name_en": "Bread Financial",
       "sub": "カード",
       "sub_en": "Credit cards",
+      "sub_short": "カード",
+      "sub_short_en": "Cards",
       "row": 0,
       "relations": [
         {
@@ -75,12 +79,14 @@
       ]
     },
     {
-      "id": "UCB",
+      "id": "UCBI",
       "ticker": "UCB",
       "name": "ユナイテッド・コミュニティ・バンクス",
       "name_en": "United Community Banks",
       "sub": "地方銀行",
       "sub_en": "Regional bank",
+      "sub_short": "地方銀行",
+      "sub_short_en": "Bank",
       "row": 0,
       "relations": [
         {
@@ -105,6 +111,8 @@
       "name_en": "Fulton Financial",
       "sub": "地方銀行",
       "sub_en": "Regional bank",
+      "sub_short": "地方銀行",
+      "sub_short_en": "Bank",
       "row": 0,
       "relations": [
         {
@@ -129,6 +137,8 @@
       "name_en": "Priority Technology",
       "sub": "決済",
       "sub_en": "Payments",
+      "sub_short": "決済",
+      "sub_short_en": "Payment",
       "row": 0,
       "relations": [
         {
@@ -153,6 +163,8 @@
       "name_en": "First Solar",
       "sub": "太陽光パネル",
       "sub_en": "Solar modules",
+      "sub_short": "太陽光",
+      "sub_short_en": "Solar",
       "row": 1,
       "relations": [
         {
@@ -177,6 +189,8 @@
       "name_en": "Bitcoin Depot",
       "sub": "暗号資産ATM",
       "sub_en": "Crypto ATMs",
+      "sub_short": "暗号資産",
+      "sub_short_en": "Crypto",
       "row": 1,
       "relations": [
         {
@@ -201,6 +215,8 @@
       "name_en": "Global Payments",
       "sub": "決済",
       "sub_en": "Payments",
+      "sub_short": "決済",
+      "sub_short_en": "Payment",
       "row": 2,
       "relations": [
         {
@@ -225,6 +241,8 @@
       "name_en": "Shift4 Payments",
       "sub": "決済",
       "sub_en": "Payments",
+      "sub_short": "決済",
+      "sub_short_en": "Payment",
       "row": 2,
       "relations": [
         {
@@ -249,6 +267,8 @@
       "name_en": "ACI Worldwide",
       "sub": "決済ソフト",
       "sub_en": "Payments software",
+      "sub_short": "決済",
+      "sub_short_en": "Payment",
       "row": 2,
       "relations": [
         {
@@ -273,6 +293,8 @@
       "name_en": "Q2 Holdings",
       "sub": "銀行向けソフト",
       "sub_en": "Digital banking software",
+      "sub_short": "銀行IT",
+      "sub_short_en": "Bank IT",
       "row": 2,
       "relations": [
         {
@@ -297,6 +319,8 @@
       "name_en": "NCR Atleos",
       "sub": "ATM",
       "sub_en": "ATMs",
+      "sub_short": "ATM",
+      "sub_short_en": "ATMs",
       "row": 2,
       "relations": [
         {
@@ -321,6 +345,8 @@
       "name_en": "Marqeta",
       "sub": "カード発行基盤",
       "sub_en": "Card issuing platform",
+      "sub_short": "カード",
+      "sub_short_en": "Cards",
       "row": 2,
       "relations": [
         {

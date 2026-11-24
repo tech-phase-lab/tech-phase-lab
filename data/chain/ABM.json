@@ -27,6 +27,8 @@
       "name_en": "LMC FM",
       "sub": "施設管理(アイルランド)",
       "sub_en": "Facility services (Ireland)",
+      "sub_short": "施設管理",
+      "sub_short_en": "Facilities",
       "row": 0,
       "relations": [
         {
@@ -51,6 +53,8 @@
       "name_en": "Quality Uptime Services",
       "sub": "データセンター電源保守",
       "sub_en": "Data center power services",
+      "sub_short": "DC電源",
+      "sub_short_en": "DC power",
       "row": 0,
       "relations": [
         {
@@ -75,6 +79,8 @@
       "name_en": "Momentum Support",
       "sub": "清掃・施設管理(アイルランド)",
       "sub_en": "Janitorial & facilities (Ireland)",
+      "sub_short": "清掃",
+      "sub_short_en": "Janitorial",
       "row": 0,
       "relations": [
         {
@@ -99,6 +105,8 @@
       "name_en": "Crown Building Maintenance",
       "sub": "清掃",
       "sub_en": "Janitorial",
+      "sub_short": "清掃",
+      "sub_short_en": "Janitorial",
       "row": 0,
       "relations": [
         {
@@ -123,6 +131,8 @@
       "name_en": "Newmark",
       "sub": "商業不動産サービス",
       "sub_en": "Commercial real estate services",
+      "sub_short": "不動産",
+      "sub_short_en": "Property",
       "row": 1,
       "relations": [
         {
@@ -147,6 +157,8 @@
       "name_en": "EMCOR",
       "sub": "設備工事",
       "sub_en": "Building services",
+      "sub_short": "設備工事",
+      "sub_short_en": "Facilities",
       "row": 1,
       "relations": [
         {

@@ -31,6 +31,8 @@
       "name": "オーウェンズ・イリノイ",
       "sub": "ガラス容器",
       "sub_en": "Glass containers",
+      "sub_short": "ガラス瓶",
+      "sub_short_en": "Glass",
       "row": 0,
       "relations": [
         {
@@ -68,6 +70,8 @@
       "name": "サザン・グレイザーズ・ワイン・アンド・スピリッツ",
       "sub": "酒類卸売",
       "sub_en": "Alcohol distribution",
+      "sub_short": "酒類卸売",
+      "sub_short_en": "Alcohol",
       "row": 1,
       "relations": [
         {
@@ -92,6 +96,8 @@
       "name": "キャノピー・グロース",
       "sub": "大麻関連",
       "sub_en": "Cannabis",
+      "sub_short": "大麻関連",
+      "sub_short_en": "Cannabis",
       "row": 1,
       "relations": [
         {
@@ -116,6 +122,8 @@
       "name": "モルソン・クアーズ",
       "sub": "ビール",
       "sub_en": "Beer",
+      "sub_short": "ビール",
+      "sub_short_en": "Beer",
       "row": 2,
       "relations": [
         {
@@ -140,6 +148,8 @@
       "name": "ディアジオ",
       "sub": "酒類",
       "sub_en": "Spirits",
+      "sub_short": "酒類",
+      "sub_short_en": "Spirits",
       "row": 2,
       "relations": [
         {

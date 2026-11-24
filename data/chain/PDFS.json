@@ -25,6 +25,8 @@
       "name": "アドバンテスト",
       "sub": "半導体試験装置",
       "sub_en": "Semiconductor test equipment",
+      "sub_short": "検査装置",
+      "sub_short_en": "Testing",
       "row": 0,
       "relations": [
         {
@@ -75,6 +77,8 @@
       "name": "ケーエルエー",
       "sub": "検査・歩留まり管理",
       "sub_en": "Inspection & yield management",
+      "sub_short": "検査",
+      "sub_short_en": "Testing",
       "row": 0,
       "relations": [
         {
@@ -99,6 +103,8 @@
       "name": "オントー・イノベーション",
       "sub": "検査・計測装置",
       "sub_en": "Inspection & metrology",
+      "sub_short": "検査",
+      "sub_short_en": "Testing",
       "row": 0,
       "relations": [
         {
@@ -136,6 +142,8 @@
       "name": "シノプシス",
       "sub": "設計・製造ソフト",
       "sub_en": "EDA & manufacturing software",
+      "sub_short": "設計",
+      "sub_short_en": "EDA",
       "row": 0,
       "relations": [
         {
@@ -160,6 +168,8 @@
       "name": "アプライド・マテリアルズ",
       "sub": "半導体製造装置",
       "sub_en": "Semiconductor equipment",
+      "sub_short": "製造装置",
+      "sub_short_en": "Chip tools",
       "row": 0,
       "relations": [
         {
@@ -184,6 +194,8 @@
       "name": "エマソン・エレクトリック",
       "sub": "産業オートメーション",
       "sub_en": "Industrial automation",
+      "sub_short": "自動化",
+      "sub_short_en": "Robotics",
       "row": 0,
       "relations": [
         {
@@ -208,6 +220,8 @@
       "name": "キーサイト・テクノロジー",
       "sub": "電子計測器",
       "sub_en": "Electronic measurement",
+      "sub_short": "計測",
+      "sub_short_en": "Testing",
       "row": 0,
       "relations": [
         {
@@ -232,6 +246,8 @@
       "name": "エーエスエムエル",
       "sub": "露光・計測装置",
       "sub_en": "Lithography & metrology",
+      "sub_short": "露光装置",
+      "sub_short_en": "Litho",
       "row": 0,
       "relations": [
         {
@@ -256,6 +272,8 @@
       "name": "スノーフレイク",
       "sub": "データクラウド",
       "sub_en": "Data cloud",
+      "sub_short": "データ",
+      "sub_short_en": "Data",
       "row": 0,
       "relations": [
         {

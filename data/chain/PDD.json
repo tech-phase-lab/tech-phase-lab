@@ -33,6 +33,8 @@
       "name_en": "Tencent",
       "sub": "SNS・ゲーム",
       "sub_en": "Social media & games",
+      "sub_short": "SNS",
+      "sub_short_en": "Social",
       "row": 0,
       "relations": [
         {
@@ -57,6 +59,8 @@
       "name_en": "dLocal",
       "sub": "新興国決済",
       "sub_en": "Emerging-market payments",
+      "sub_short": "決済",
+      "sub_short_en": "Payment",
       "row": 0,
       "relations": [
         {
@@ -81,6 +85,8 @@
       "name_en": "Block",
       "sub": "決済",
       "sub_en": "Payments",
+      "sub_short": "決済",
+      "sub_short_en": "Payment",
       "row": 0,
       "relations": [
         {
@@ -105,6 +111,8 @@
       "name_en": "Armlogi",
       "sub": "米国倉庫・物流",
       "sub_en": "US warehousing & logistics",
+      "sub_short": "物流",
+      "sub_short_en": "Logistics",
       "row": 0,
       "relations": [
         {
@@ -129,6 +137,8 @@
       "name_en": "iPower",
       "sub": "園芸用品のネット販売",
       "sub_en": "Online hydroponics supplies",
+      "sub_short": "園芸用品",
+      "sub_short_en": "Growing",
       "row": 1,
       "relations": [
         {
@@ -153,6 +163,8 @@
       "name_en": "Shein",
       "sub": "ネット通販",
       "sub_en": "E-commerce",
+      "sub_short": "通販",
+      "sub_short_en": "E-com",
       "row": 2,
       "relations": [
         {
@@ -177,6 +189,8 @@
       "name_en": "Jumia",
       "sub": "ネット通販(アフリカ)",
       "sub_en": "E-commerce (Africa)",
+      "sub_short": "通販",
+      "sub_short_en": "E-com",
       "row": 2,
       "relations": [
         {
@@ -201,6 +215,8 @@
       "name_en": "Beyond (Overstock)",
       "sub": "家具のネット通販",
       "sub_en": "Online home goods",
+      "sub_short": "家具通販",
+      "sub_short_en": "Home",
       "row": 2,
       "relations": [
         {
@@ -225,6 +241,8 @@
       "name_en": "Hepsiburada",
       "sub": "ネット通販(トルコ)",
       "sub_en": "E-commerce (Turkey)",
+      "sub_short": "通販",
+      "sub_short_en": "E-com",
       "row": 2,
       "relations": [
         {
@@ -249,6 +267,8 @@
       "name_en": "Tilly's",
       "sub": "衣料品小売",
       "sub_en": "Apparel retail",
+      "sub_short": "衣料小売",
+      "sub_short_en": "Apparel",
       "row": 2,
       "relations": [
         {
@@ -273,6 +293,8 @@
       "name_en": "RedCloud",
       "sub": "B2B取引基盤",
       "sub_en": "B2B commerce platform",
+      "sub_short": "B2B取引",
+      "sub_short_en": "B2B",
       "row": 2,
       "relations": [
         {

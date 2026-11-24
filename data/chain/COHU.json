@@ -31,6 +31,8 @@
       "name": "ジェイビル",
       "sub": "電子機器受託製造",
       "sub_en": "Electronics manufacturing services",
+      "sub_short": "EMS",
+      "sub_short_en": "EMS",
       "row": 0,
       "relations": [
         {
@@ -68,6 +70,8 @@
       "name": "テラダイン",
       "sub": "半導体テスト装置",
       "sub_en": "Semiconductor test equipment",
+      "sub_short": "検査装置",
+      "sub_short_en": "Testing",
       "row": 2,
       "relations": [
         {
@@ -105,6 +109,8 @@
       "name": "KLA",
       "sub": "検査・計測装置",
       "sub_en": "Inspection & metrology",
+      "sub_short": "検査",
+      "sub_short_en": "Testing",
       "row": 2,
       "relations": [
         {
@@ -128,6 +134,8 @@
       "name": "アドバンテスト",
       "sub": "半導体テスト装置",
       "sub_en": "Semiconductor test equipment",
+      "sub_short": "検査装置",
+      "sub_short_en": "Testing",
       "row": 2,
       "relations": [
         {
@@ -152,6 +160,8 @@
       "name": "STマイクロエレクトロニクス",
       "sub": "半導体メーカー",
       "sub_en": "Semiconductor maker",
+      "sub_short": "半導体",
+      "sub_short_en": "Chips",
       "row": 1,
       "relations": [
         {
@@ -178,6 +188,8 @@
       "name": "アナログ・デバイセズ",
       "sub": "アナログ半導体",
       "sub_en": "Analog semiconductors",
+      "sub_short": "アナログ",
+      "sub_short_en": "Analog",
       "row": 1,
       "relations": [
         {

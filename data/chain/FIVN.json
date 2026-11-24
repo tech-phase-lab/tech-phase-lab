@@ -33,6 +33,8 @@
       "name": "グーグル",
       "sub": "検索・クラウド",
       "sub_en": "Search & cloud",
+      "sub_short": "検索",
+      "sub_short_en": "Search",
       "row": 0,
       "relations": [
         {
@@ -68,6 +70,8 @@
       "name": "マイクロソフト",
       "sub": "ソフト・クラウド",
       "sub_en": "Software & cloud",
+      "sub_short": "ソフト",
+      "sub_short_en": "Software",
       "row": 0,
       "relations": [
         {
@@ -105,6 +109,8 @@
       "name": "セールスフォース",
       "sub": "業務ソフト",
       "sub_en": "Business software",
+      "sub_short": "業務IT",
+      "sub_short_en": "Biz apps",
       "row": 0,
       "relations": [
         {
@@ -129,6 +135,8 @@
       "name": "オラクル",
       "sub": "データベース・クラウド",
       "sub_en": "Database & cloud",
+      "sub_short": "DB",
+      "sub_short_en": "Database",
       "row": 0,
       "relations": [
         {
@@ -153,6 +161,8 @@
       "name": "サービスナウ",
       "sub": "業務ワークフロー",
       "sub_en": "Workflow software",
+      "sub_short": "業務IT",
+      "sub_short_en": "Workflow",
       "row": 0,
       "relations": [
         {
@@ -177,6 +187,8 @@
       "name": "IBM",
       "sub": "ITサービス・ソフト",
       "sub_en": "IT services & software",
+      "sub_short": "IT",
+      "sub_short_en": "IT",
       "row": 1,
       "relations": [
         {
@@ -200,6 +212,8 @@
       "name": "アクセンチュア",
       "sub": "コンサルティング",
       "sub_en": "Consulting",
+      "sub_short": "コンサル",
+      "sub_short_en": "Advisory",
       "row": 1,
       "relations": [
         {
@@ -224,6 +238,8 @@
       "name": "Kyndryl",
       "sub": "ITインフラサービス",
       "sub_en": "IT infrastructure services",
+      "sub_short": "IT基盤",
+      "sub_short_en": "IT infra",
       "row": 1,
       "relations": [
         {
@@ -247,6 +263,8 @@
       "name": "AT&T",
       "sub": "通信",
       "sub_en": "Telecom",
+      "sub_short": "通信",
+      "sub_short_en": "Telecom",
       "row": 1,
       "relations": [
         {
@@ -270,6 +288,8 @@
       "name": "Bandwidth",
       "sub": "通信API",
       "sub_en": "Communications APIs",
+      "sub_short": "通信API",
+      "sub_short_en": "APIs",
       "row": 1,
       "relations": [
         {
@@ -293,6 +313,8 @@
       "name": "シスコシステムズ",
       "sub": "ネットワーク機器",
       "sub_en": "Networking equipment",
+      "sub_short": "通信機器",
+      "sub_short_en": "Network",
       "row": 2,
       "relations": [
         {
@@ -330,6 +352,8 @@
       "name": "リングセントラル",
       "sub": "クラウド通信",
       "sub_en": "Cloud communications",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 2,
       "relations": [
         {
@@ -354,6 +378,8 @@
       "name": "ナイス",
       "sub": "コンタクトセンター",
       "sub_en": "Contact center",
+      "sub_short": "顧客対応",
+      "sub_short_en": "CX",
       "row": 2,
       "relations": [
         {
@@ -378,6 +404,8 @@
       "name": "エイトバイエイト",
       "sub": "クラウド通信",
       "sub_en": "Cloud communications",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 2,
       "relations": [
         {

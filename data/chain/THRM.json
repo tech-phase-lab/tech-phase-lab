@@ -24,6 +24,8 @@
       "name_en": "Lear",
       "sub": "シート・電装",
       "sub_en": "Seating & e-systems",
+      "sub_short": "シート",
+      "sub_short_en": "Seating",
       "row": 0,
       "relations": [
         {
@@ -48,6 +50,8 @@
       "name_en": "Adient",
       "sub": "自動車シート",
       "sub_en": "Automotive seating",
+      "sub_short": "シート",
+      "sub_short_en": "Car seats",
       "row": 0,
       "relations": [
         {
@@ -72,6 +76,8 @@
       "name_en": "General Motors",
       "sub": "自動車",
       "sub_en": "Automaker",
+      "sub_short": "自動車",
+      "sub_short_en": "Cars",
       "row": 0,
       "relations": [
         {
@@ -96,6 +102,8 @@
       "name_en": "Volkswagen",
       "sub": "自動車(ドイツ)",
       "sub_en": "Automaker (Germany)",
+      "sub_short": "自動車",
+      "sub_short_en": "Cars",
       "row": 0,
       "relations": [
         {
@@ -120,6 +128,8 @@
       "name_en": "Modine Manufacturing",
       "sub": "熱管理",
       "sub_en": "Thermal management",
+      "sub_short": "熱管理",
+      "sub_short_en": "Thermal",
       "row": 1,
       "relations": [
         {

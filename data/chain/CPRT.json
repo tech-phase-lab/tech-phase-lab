@@ -24,6 +24,8 @@
       "name": "RBグローバル",
       "sub": "車両オークション",
       "sub_en": "Vehicle auctions",
+      "sub_short": "車競売",
+      "sub_short_en": "Auctions",
       "row": 0,
       "relations": [
         {
@@ -48,6 +50,8 @@
       "name": "カーバナ",
       "sub": "車両販売・競売",
       "sub_en": "Vehicle retail & auctions",
+      "sub_short": "車販売",
+      "sub_short_en": "Cars",
       "row": 0,
       "relations": [
         {
@@ -72,6 +76,8 @@
       "name": "オープンレーン",
       "sub": "車両オークション",
       "sub_en": "Vehicle auctions",
+      "sub_short": "車競売",
+      "sub_short_en": "Auctions",
       "row": 0,
       "relations": [
         {
@@ -96,6 +102,8 @@
       "name": "マンハイム",
       "sub": "車両オークション",
       "sub_en": "Vehicle auctions",
+      "sub_short": "車競売",
+      "sub_short_en": "Auctions",
       "row": 0,
       "relations": [
         {
@@ -120,6 +128,8 @@
       "name": "LKQコーポレーション",
       "sub": "中古部品・解体",
       "sub_en": "Auto parts dismantling",
+      "sub_short": "中古部品",
+      "sub_short_en": "Salvage",
       "row": 0,
       "relations": [
         {

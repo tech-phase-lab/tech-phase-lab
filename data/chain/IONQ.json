@@ -37,6 +37,8 @@
       "name": "Amazon(AWS)",
       "sub": "クラウド",
       "sub_en": "Cloud",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 0,
       "relations": [
         {
@@ -75,6 +77,8 @@
       "name": "Microsoft",
       "sub": "クラウド・ソフト",
       "sub_en": "Cloud & software",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 0,
       "relations": [
         {
@@ -111,6 +115,8 @@
       "name": "Alphabet(Google)",
       "sub": "クラウド・AI",
       "sub_en": "Cloud & AI",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 0,
       "relations": [
         {
@@ -147,6 +153,8 @@
       "name": "豊田通商",
       "sub": "商社",
       "sub_en": "Trading house",
+      "sub_short": "商社",
+      "sub_short_en": "Trading",
       "row": 1,
       "relations": [
         {
@@ -171,6 +179,8 @@
       "name": "General Dynamics",
       "sub": "防衛",
       "sub_en": "Defense",
+      "sub_short": "防衛",
+      "sub_short_en": "Defense",
       "row": 1,
       "relations": [
         {
@@ -196,6 +206,8 @@
       "name": "NVIDIA",
       "sub": "AI半導体",
       "sub_en": "AI chips",
+      "sub_short": "AI半導体",
+      "sub_short_en": "AI chips",
       "row": 2,
       "relations": [
         {
@@ -219,6 +231,8 @@
       "name": "AstraZeneca",
       "sub": "製薬",
       "sub_en": "Pharma",
+      "sub_short": "製薬",
+      "sub_short_en": "Pharma",
       "row": 2,
       "relations": [
         {
@@ -242,6 +256,8 @@
       "name": "Synopsys",
       "sub": "半導体設計ソフト",
       "sub_en": "Chip design software",
+      "sub_short": "設計",
+      "sub_short_en": "Chip IP",
       "row": 2,
       "relations": [
         {
@@ -265,6 +281,8 @@
       "name": "Intellian Technologies",
       "sub": "衛星通信機器",
       "sub_en": "Satellite antennas",
+      "sub_short": "衛星通信",
+      "sub_short_en": "Antennas",
       "row": 2,
       "relations": [
         {
@@ -290,6 +308,8 @@
       "name": "SK Telecom",
       "sub": "通信",
       "sub_en": "Telecom",
+      "sub_short": "通信",
+      "sub_short_en": "Telecom",
       "row": 2,
       "relations": [
         {
@@ -315,6 +335,8 @@
       "name": "Samsung Electronics",
       "sub": "半導体・電機",
       "sub_en": "Semiconductors & electronics",
+      "sub_short": "半導体",
+      "sub_short_en": "Chips",
       "row": 2,
       "relations": [
         {
@@ -340,6 +362,8 @@
       "name": "Hyundai Motor",
       "sub": "自動車",
       "sub_en": "Automaker",
+      "sub_short": "自動車",
+      "sub_short_en": "Cars",
       "row": 2,
       "relations": [
         {
@@ -360,11 +384,13 @@
       ]
     },
     {
-      "id": "AIR",
+      "id": "Airbus",
       "ticker": "Airbus",
       "name": "Airbus",
       "sub": "航空機",
       "sub_en": "Aircraft",
+      "sub_short": "航空機",
+      "sub_short_en": "Aircraft",
       "row": 2,
       "relations": [
         {
@@ -390,6 +416,8 @@
       "name": "IBM",
       "sub": "IT・量子",
       "sub_en": "IT & quantum",
+      "sub_short": "IT・量子",
+      "sub_short_en": "IT",
       "row": 3,
       "relations": [
         {
@@ -413,6 +441,8 @@
       "name": "Intel",
       "sub": "半導体",
       "sub_en": "Semiconductors",
+      "sub_short": "半導体",
+      "sub_short_en": "Chips",
       "row": 3,
       "relations": [
         {
@@ -436,6 +466,8 @@
       "name": "Rigetti Computing",
       "sub": "量子コンピューター",
       "sub_en": "Quantum computers",
+      "sub_short": "量子",
+      "sub_short_en": "Quantum",
       "row": 3,
       "relations": [
         {
@@ -472,6 +504,8 @@
       "name": "D-Wave Quantum",
       "sub": "量子コンピューター",
       "sub_en": "Quantum computers",
+      "sub_short": "量子",
+      "sub_short_en": "Quantum",
       "row": 3,
       "relations": [
         {
@@ -495,6 +529,8 @@
       "name": "Quantum Computing Inc.",
       "sub": "量子技術",
       "sub_en": "Quantum technology",
+      "sub_short": "量子技術",
+      "sub_short_en": "Quantum",
       "row": 3,
       "relations": [
         {

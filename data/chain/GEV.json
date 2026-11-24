@@ -43,6 +43,8 @@
       "name": "NRG Energy",
       "sub": "電力会社",
       "sub_en": "Power producer",
+      "sub_short": "電力会社",
+      "sub_short_en": "Power",
       "row": 1,
       "relations": [
         {
@@ -68,6 +70,8 @@
       "name": "LG&E and KU(PPL)",
       "sub": "電力会社",
       "sub_en": "Utility",
+      "sub_short": "電力会社",
+      "sub_short_en": "Utility",
       "row": 1,
       "relations": [
         {
@@ -93,6 +97,8 @@
       "name": "Amazon(AWS)",
       "sub": "クラウド",
       "sub_en": "Cloud",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 2,
       "relations": [
         {
@@ -116,6 +122,8 @@
       "name": "Chevron / Engine No. 1",
       "sub": "石油・投資",
       "sub_en": "Energy & investment",
+      "sub_short": "石油",
+      "sub_short_en": "Energy",
       "row": 2,
       "relations": [
         {
@@ -141,6 +149,8 @@
       "name": "日立製作所",
       "sub": "原子力・電機",
       "sub_en": "Nuclear & electric",
+      "sub_short": "原子力",
+      "sub_short_en": "Nuclear",
       "row": 2,
       "relations": [
         {
@@ -165,6 +175,8 @@
       "name": "Baker Hughes",
       "sub": "エネルギー機器",
       "sub_en": "Energy equipment",
+      "sub_short": "エネ機器",
+      "sub_short_en": "Energy",
       "row": 2,
       "relations": [
         {
@@ -201,6 +213,8 @@
       "name": "GE Aerospace",
       "sub": "航空エンジン",
       "sub_en": "Aerospace",
+      "sub_short": "エンジン",
+      "sub_short_en": "Aero",
       "row": 2,
       "relations": [
         {
@@ -224,6 +238,8 @@
       "name": "Siemens Energy",
       "sub": "発電機器",
       "sub_en": "Power equipment",
+      "sub_short": "発電機器",
+      "sub_short_en": "Power",
       "row": 3,
       "relations": [
         {
@@ -247,6 +263,8 @@
       "name": "Rolls-Royce",
       "sub": "発電機器",
       "sub_en": "Power equipment",
+      "sub_short": "発電機器",
+      "sub_short_en": "Power",
       "row": 3,
       "relations": [
         {
@@ -270,6 +288,8 @@
       "name": "Vestas",
       "sub": "風力発電",
       "sub_en": "Wind power",
+      "sub_short": "風力発電",
+      "sub_short_en": "Wind",
       "row": 4,
       "relations": [
         {
@@ -293,6 +313,8 @@
       "name": "Nordex",
       "sub": "風力発電",
       "sub_en": "Wind power",
+      "sub_short": "風力発電",
+      "sub_short_en": "Wind",
       "row": 4,
       "relations": [
         {
@@ -316,6 +338,8 @@
       "name": "Goldwind",
       "sub": "風力発電",
       "sub_en": "Wind power",
+      "sub_short": "風力発電",
+      "sub_short_en": "Wind",
       "row": 4,
       "relations": [
         {
@@ -339,6 +363,8 @@
       "name": "Schneider Electric",
       "sub": "電機・電力管理",
       "sub_en": "Electrical equipment",
+      "sub_short": "電機",
+      "sub_short_en": "Electrical",
       "row": 5,
       "relations": [
         {
@@ -362,6 +388,8 @@
       "name": "ABB",
       "sub": "電機・ロボット",
       "sub_en": "Electrical equipment",
+      "sub_short": "電機",
+      "sub_short_en": "Electrical",
       "row": 5,
       "relations": [
         {
@@ -385,6 +413,8 @@
       "name": "Siemens",
       "sub": "電機・産業",
       "sub_en": "Electrical equipment",
+      "sub_short": "電機",
+      "sub_short_en": "Electrical",
       "row": 5,
       "relations": [
         {
@@ -408,6 +438,8 @@
       "name": "三菱電機",
       "sub": "電機",
       "sub_en": "Electrical equipment",
+      "sub_short": "電機",
+      "sub_short_en": "Electrical",
       "row": 5,
       "relations": [
         {
@@ -432,6 +464,8 @@
       "name": "Caterpillar",
       "sub": "建機・発電機",
       "sub_en": "Machinery & generators",
+      "sub_short": "建機",
+      "sub_short_en": "Machines",
       "row": 3,
       "relations": [
         {
@@ -455,6 +489,8 @@
       "name": "Babcock & Wilcox",
       "sub": "発電・環境機器",
       "sub_en": "Power & environmental equipment",
+      "sub_short": "発電",
+      "sub_short_en": "Power",
       "row": 3,
       "relations": [
         {
@@ -478,6 +514,8 @@
       "name": "Duke Energy",
       "sub": "電力会社",
       "sub_en": "Utility",
+      "sub_short": "電力会社",
+      "sub_short_en": "Utility",
       "row": 1,
       "relations": [
         {

@@ -32,6 +32,8 @@
       "name": "AXT Inc",
       "sub": "半導体基板",
       "sub_en": "Semiconductor substrates",
+      "sub_short": "基板",
+      "sub_short_en": "Substrate",
       "row": 0,
       "relations": [
         {
@@ -57,6 +59,8 @@
       "name": "NVIDIA",
       "sub": "AI半導体",
       "sub_en": "AI chips",
+      "sub_short": "AI半導体",
+      "sub_short_en": "AI chips",
       "row": 1,
       "relations": [
         {
@@ -121,6 +125,8 @@
       "name": "IPG Photonics",
       "sub": "レーザー",
       "sub_en": "Lasers",
+      "sub_short": "レーザー",
+      "sub_short_en": "Lasers",
       "row": 1,
       "relations": [
         {
@@ -156,6 +162,8 @@
       "name": "Viavi Solutions",
       "sub": "元の親会社",
       "sub_en": "Former parent",
+      "sub_short": "旧親会社",
+      "sub_short_en": "Ex-parent",
       "row": 1,
       "relations": [
         {
@@ -192,6 +200,8 @@
       "name": "Applied Optoelectronics",
       "sub": "光通信部品",
       "sub_en": "Optical components",
+      "sub_short": "光部品",
+      "sub_short_en": "Optics",
       "row": 2,
       "relations": [
         {
@@ -215,6 +225,8 @@
       "name": "MKS",
       "sub": "レーザー・装置",
       "sub_en": "Lasers & tools",
+      "sub_short": "レーザー",
+      "sub_short_en": "Lasers",
       "row": 2,
       "relations": [
         {
@@ -238,6 +250,8 @@
       "name": "Qualcomm",
       "sub": "半導体",
       "sub_en": "Semiconductors",
+      "sub_short": "半導体",
+      "sub_short_en": "Chips",
       "row": 1,
       "relations": [
         {
@@ -263,6 +277,8 @@
       "name": "Corning",
       "sub": "光ファイバー・ガラス",
       "sub_en": "Optical fiber & glass",
+      "sub_short": "光通信",
+      "sub_short_en": "Fiber",
       "row": 1,
       "relations": [
         {
@@ -289,6 +305,8 @@
       "name_en": "Marvell Technology",
       "sub": "データセンター半導体",
       "sub_en": "Data-center chips",
+      "sub_short": "DC半導体",
+      "sub_short_en": "DC chips",
       "row": 1,
       "relations": [
         {
@@ -315,6 +333,8 @@
       "name_en": "Cloud Light Technology",
       "sub": "光トランシーバー",
       "sub_en": "Optical transceivers",
+      "sub_short": "光部品",
+      "sub_short_en": "Optics",
       "row": 1,
       "relations": [
         {
@@ -341,6 +361,8 @@
       "name_en": "NeoPhotonics",
       "sub": "光部品",
       "sub_en": "Optical components",
+      "sub_short": "光部品",
+      "sub_short_en": "Optics",
       "row": 1,
       "relations": [
         {

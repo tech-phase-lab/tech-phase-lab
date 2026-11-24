@@ -37,6 +37,8 @@
       "name_en": "CVC Capital Partners",
       "sub": "投資会社",
       "sub_en": "Investment firm",
+      "sub_short": "投資会社",
+      "sub_short_en": "Investing",
       "row": 0,
       "relations": [
         {
@@ -61,6 +63,8 @@
       "name_en": "Blackstone",
       "sub": "投資会社",
       "sub_en": "Investment firm",
+      "sub_short": "投資会社",
+      "sub_short_en": "Investing",
       "row": 0,
       "relations": [
         {
@@ -85,6 +89,8 @@
       "name_en": "Amwins Group",
       "sub": "保険卸",
       "sub_en": "Insurance wholesale",
+      "sub_short": "保険卸",
+      "sub_short_en": "Insurance",
       "row": 0,
       "relations": [
         {
@@ -109,6 +115,8 @@
       "name_en": "Corebridge Financial",
       "sub": "生命保険・年金",
       "sub_en": "Life & retirement",
+      "sub_short": "生保",
+      "sub_short_en": "Life ins",
       "row": 1,
       "relations": [
         {
@@ -133,6 +141,8 @@
       "name_en": "Everest Group",
       "sub": "再保険",
       "sub_en": "Reinsurance",
+      "sub_short": "再保険",
+      "sub_short_en": "Reinsure",
       "row": 1,
       "relations": [
         {
@@ -157,6 +167,8 @@
       "name_en": "RenaissanceRe",
       "sub": "再保険",
       "sub_en": "Reinsurance",
+      "sub_short": "再保険",
+      "sub_short_en": "Reinsure",
       "row": 1,
       "relations": [
         {
@@ -181,6 +193,8 @@
       "name_en": "TrueBlue",
       "sub": "人材派遣",
       "sub_en": "Staffing",
+      "sub_short": "人材派遣",
+      "sub_short_en": "Staffing",
       "row": 2,
       "relations": [
         {
@@ -205,6 +219,8 @@
       "name_en": "GTJ REIT",
       "sub": "不動産",
       "sub_en": "Real estate",
+      "sub_short": "不動産",
+      "sub_short_en": "Property",
       "row": 2,
       "relations": [
         {
@@ -229,6 +245,8 @@
       "name_en": "Kinsale Capital",
       "sub": "特殊保険",
       "sub_en": "Specialty insurance",
+      "sub_short": "特殊保険",
+      "sub_short_en": "Insurance",
       "row": 3,
       "relations": [
         {
@@ -253,6 +271,8 @@
       "name_en": "Bowhead Specialty",
       "sub": "特殊保険",
       "sub_en": "Specialty insurance",
+      "sub_short": "特殊保険",
+      "sub_short_en": "Insurance",
       "row": 3,
       "relations": [
         {
@@ -277,6 +297,8 @@
       "name_en": "Global Indemnity",
       "sub": "特殊保険",
       "sub_en": "Specialty insurance",
+      "sub_short": "特殊保険",
+      "sub_short_en": "Insurance",
       "row": 3,
       "relations": [
         {
@@ -301,6 +323,8 @@
       "name_en": "Core Specialty Insurance",
       "sub": "特殊保険",
       "sub_en": "Specialty insurance",
+      "sub_short": "特殊保険",
+      "sub_short_en": "Insurance",
       "row": 3,
       "relations": [
         {

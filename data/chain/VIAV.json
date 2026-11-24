@@ -29,6 +29,8 @@
       "name": "AMD",
       "sub": "半導体",
       "sub_en": "Semiconductors",
+      "sub_short": "半導体",
+      "sub_short_en": "Chips",
       "row": 0,
       "relations": [
         {
@@ -54,6 +56,8 @@
       "name": "Cisco",
       "sub": "ネットワーク",
       "sub_en": "Networking",
+      "sub_short": "通信網",
+      "sub_short_en": "Network",
       "row": 0,
       "relations": [
         {
@@ -79,6 +83,8 @@
       "name": "Ciena",
       "sub": "光ネットワーク",
       "sub_en": "Optical networking",
+      "sub_short": "光通信",
+      "sub_short_en": "Optics",
       "row": 0,
       "relations": [
         {
@@ -104,6 +110,8 @@
       "name": "AT&T",
       "sub": "通信",
       "sub_en": "Telecom",
+      "sub_short": "通信",
+      "sub_short_en": "Telecom",
       "row": 0,
       "relations": [
         {
@@ -129,6 +137,8 @@
       "name": "Verizon",
       "sub": "通信",
       "sub_en": "Telecom",
+      "sub_short": "通信",
+      "sub_short_en": "Telecom",
       "row": 0,
       "relations": [
         {
@@ -154,6 +164,8 @@
       "name": "Nokia",
       "sub": "通信機器",
       "sub_en": "Telecom equipment",
+      "sub_short": "通信機器",
+      "sub_short_en": "Telecom",
       "row": 0,
       "relations": [
         {
@@ -179,6 +191,8 @@
       "name": "Ericsson",
       "sub": "通信機器",
       "sub_en": "Telecom equipment",
+      "sub_short": "通信機器",
+      "sub_short_en": "Telecom",
       "row": 0,
       "relations": [
         {
@@ -204,6 +218,8 @@
       "name": "Lockheed Martin",
       "sub": "防衛・航空",
       "sub_en": "Defense & aerospace",
+      "sub_short": "防衛",
+      "sub_short_en": "Defense",
       "row": 0,
       "relations": [
         {
@@ -227,6 +243,8 @@
       "name": "Keysight Technologies",
       "sub": "計測機器",
       "sub_en": "Test & measurement",
+      "sub_short": "計測機器",
+      "sub_short_en": "Testing",
       "row": 1,
       "relations": [
         {
@@ -276,6 +294,8 @@
       "name": "NVIDIA",
       "sub": "AI半導体",
       "sub_en": "AI chips",
+      "sub_short": "AI半導体",
+      "sub_short_en": "AI chips",
       "row": 1,
       "relations": [
         {
@@ -310,6 +330,8 @@
       "name": "Wells Fargo",
       "sub": "銀行",
       "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
       "row": 1,
       "relations": [
         {
@@ -348,6 +370,8 @@
       "name": "Lumentum",
       "sub": "光部品",
       "sub_en": "Optical components",
+      "sub_short": "光部品",
+      "sub_short_en": "Optics",
       "row": 1,
       "relations": [
         {
@@ -373,6 +397,8 @@
       "name": "Coherent",
       "sub": "光部品",
       "sub_en": "Optical components",
+      "sub_short": "光部品",
+      "sub_short_en": "Optics",
       "row": 2,
       "relations": [
         {

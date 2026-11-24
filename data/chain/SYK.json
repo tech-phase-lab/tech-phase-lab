@@ -34,6 +34,8 @@
       "name": "ジンマー・バイオメット",
       "sub": "整形外科機器",
       "sub_en": "Orthopaedic devices",
+      "sub_short": "整形外科",
+      "sub_short_en": "Ortho",
       "row": 0,
       "relations": [
         {
@@ -71,6 +73,8 @@
       "name": "メドトロニック",
       "sub": "医療機器",
       "sub_en": "Medical devices",
+      "sub_short": "医療機器",
+      "sub_short_en": "Medtech",
       "row": 0,
       "relations": [
         {
@@ -95,6 +99,8 @@
       "name": "ジョンソン・エンド・ジョンソン",
       "sub": "医療機器",
       "sub_en": "Medical devices",
+      "sub_short": "医療機器",
+      "sub_short_en": "Medtech",
       "row": 0,
       "relations": [
         {
@@ -119,6 +125,8 @@
       "name": "コンメド",
       "sub": "外科・内視鏡",
       "sub_en": "Surgical & endoscopy",
+      "sub_short": "外科",
+      "sub_short_en": "Surgical",
       "row": 0,
       "relations": [
         {
@@ -143,6 +151,8 @@
       "name": "カール・ストルツ",
       "sub": "内視鏡",
       "sub_en": "Endoscopy",
+      "sub_short": "内視鏡",
+      "sub_short_en": "Scopes",
       "row": 0,
       "relations": [
         {
@@ -167,6 +177,8 @@
       "name": "オリンパス",
       "sub": "内視鏡",
       "sub_en": "Endoscopy",
+      "sub_short": "内視鏡",
+      "sub_short_en": "Scopes",
       "row": 0,
       "relations": [
         {
@@ -191,6 +203,8 @@
       "name": "スミス・アンド・ネフュー",
       "sub": "整形外科・内視鏡",
       "sub_en": "Orthopaedics & endoscopy",
+      "sub_short": "整形外科",
+      "sub_short_en": "Ortho",
       "row": 0,
       "relations": [
         {
@@ -215,6 +229,8 @@
       "name": "アースレックス",
       "sub": "内視鏡・関節鏡",
       "sub_en": "Endoscopy",
+      "sub_short": "内視鏡",
+      "sub_short_en": "Scopes",
       "row": 0,
       "relations": [
         {
@@ -239,6 +255,8 @@
       "name": "ステリス",
       "sub": "滅菌・内視鏡",
       "sub_en": "Sterilization",
+      "sub_short": "滅菌",
+      "sub_short_en": "Sterilize",
       "row": 0,
       "relations": [
         {
@@ -263,6 +281,8 @@
       "name": "バクスター・インターナショナル",
       "sub": "病院向け医療",
       "sub_en": "Hospital care",
+      "sub_short": "病院",
+      "sub_short_en": "Hospitals",
       "row": 0,
       "relations": [
         {
@@ -287,6 +307,8 @@
       "name": "ゾール・メディカル",
       "sub": "救急医療機器",
       "sub_en": "Emergency devices",
+      "sub_short": "救急",
+      "sub_short_en": "Safety",
       "row": 0,
       "relations": [
         {
@@ -311,6 +333,8 @@
       "name": "テルモ",
       "sub": "医療機器",
       "sub_en": "Medical devices",
+      "sub_short": "医療機器",
+      "sub_short_en": "Medtech",
       "row": 0,
       "relations": [
         {
@@ -335,6 +359,8 @@
       "name": "ペナンブラ",
       "sub": "血栓除去機器",
       "sub_en": "Thrombectomy devices",
+      "sub_short": "血管治療",
+      "sub_short_en": "Vascular",
       "row": 0,
       "relations": [
         {
@@ -359,6 +385,8 @@
       "name": "UFPテクノロジーズ",
       "sub": "医療機器部品",
       "sub_en": "Medical device components",
+      "sub_short": "医療部品",
+      "sub_short_en": "Medtech",
       "row": 2,
       "relations": [
         {
@@ -383,6 +411,8 @@
       "name": "トリース・メディカル",
       "sub": "足の外科機器",
       "sub_en": "Foot surgery devices",
+      "sub_short": "外科機器",
+      "sub_short_en": "Ortho",
       "row": 1,
       "relations": [
         {
@@ -407,6 +437,8 @@
       "name": "グローバス・メディカル",
       "sub": "脊椎手術機器",
       "sub_en": "Spine surgery devices",
+      "sub_short": "脊椎",
+      "sub_short_en": "Spine",
       "row": 1,
       "relations": [
         {

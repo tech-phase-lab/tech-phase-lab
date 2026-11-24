@@ -32,6 +32,8 @@
       "name_en": "LCI Industries",
       "sub": "RV・船舶向け部品",
       "sub_en": "RV & marine components",
+      "sub_short": "RV部品",
+      "sub_short_en": "RV parts",
       "row": 0,
       "relations": [
         {
@@ -56,6 +58,8 @@
       "name_en": "Wells Fargo",
       "sub": "銀行",
       "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
       "row": 0,
       "relations": [
         {
@@ -80,6 +84,8 @@
       "name_en": "RideNow Group",
       "sub": "パワースポーツ販売店",
       "sub_en": "Powersports dealerships",
+      "sub_short": "二輪販売",
+      "sub_short_en": "ATVs",
       "row": 1,
       "relations": [
         {
@@ -104,6 +110,8 @@
       "name_en": "Massimo Group",
       "sub": "UTV・ボート",
       "sub_en": "UTVs & boats",
+      "sub_short": "UTV",
+      "sub_short_en": "UTVs",
       "row": 2,
       "relations": [
         {
@@ -128,6 +136,8 @@
       "name_en": "AYRO",
       "sub": "小型電気自動車",
       "sub_en": "Low-speed EVs",
+      "sub_short": "EV",
+      "sub_short_en": "EVs",
       "row": 2,
       "relations": [
         {

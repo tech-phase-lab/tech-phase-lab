@@ -29,6 +29,8 @@
       "name_en": "Ares Capital",
       "sub": "BDC(中堅企業融資)",
       "sub_en": "BDC (middle-market lending)",
+      "sub_short": "BDC",
+      "sub_short_en": "BDC",
       "row": 0,
       "relations": [
         {
@@ -53,6 +55,8 @@
       "name_en": "Ares Commercial Real Estate",
       "sub": "不動産融資REIT",
       "sub_en": "Mortgage REIT",
+      "sub_short": "融資REIT",
+      "sub_short_en": "REIT",
       "row": 0,
       "relations": [
         {
@@ -77,6 +81,8 @@
       "name_en": "GLP Capital Partners",
       "sub": "物流不動産の運用",
       "sub_en": "Logistics real estate manager",
+      "sub_short": "物流施設",
+      "sub_short_en": "Property",
       "row": 1,
       "relations": [
         {
@@ -101,6 +107,8 @@
       "name_en": "Whitestone REIT",
       "sub": "商業施設REIT",
       "sub_en": "Retail REIT",
+      "sub_short": "REIT",
+      "sub_short_en": "REIT",
       "row": 1,
       "relations": [
         {
@@ -125,6 +133,8 @@
       "name_en": "Vinci Compass Investments",
       "sub": "資産運用(中南米)",
       "sub_en": "Asset management (Latin America)",
+      "sub_short": "資産運用",
+      "sub_short_en": "Assets",
       "row": 1,
       "relations": [
         {
@@ -149,6 +159,8 @@
       "name_en": "Artivion",
       "sub": "医療機器(心臓血管)",
       "sub_en": "Medical devices (cardiac)",
+      "sub_short": "医療機器",
+      "sub_short_en": "Medtech",
       "row": 2,
       "relations": [
         {
@@ -173,6 +185,8 @@
       "name_en": "FTAI Infrastructure",
       "sub": "インフラ",
       "sub_en": "Infrastructure",
+      "sub_short": "インフラ",
+      "sub_short_en": "Infra",
       "row": 2,
       "relations": [
         {
@@ -197,6 +211,8 @@
       "name_en": "Hornbeck Offshore",
       "sub": "海洋支援船",
       "sub_en": "Offshore vessels",
+      "sub_short": "支援船",
+      "sub_short_en": "Offshore",
       "row": 2,
       "relations": [
         {

@@ -36,6 +36,8 @@
       "name_en": "Ingersoll Rand plc (former)",
       "sub": "産業機器",
       "sub_en": "Industrial",
+      "sub_short": "産業機器",
+      "sub_short_en": "Industrial",
       "row": 0,
       "relations": [
         {
@@ -60,6 +62,8 @@
       "name_en": "Stanley Black & Decker",
       "sub": "工具",
       "sub_en": "Tools",
+      "sub_short": "工具",
+      "sub_short_en": "Tools",
       "row": 0,
       "relations": [
         {
@@ -84,6 +88,8 @@
       "name_en": "ELATEC",
       "sub": "RFIDリーダー(ドイツ)",
       "sub_en": "RFID readers (Germany)",
+      "sub_short": "RFID",
+      "sub_short_en": "RFID",
       "row": 1,
       "relations": [
         {
@@ -108,6 +114,8 @@
       "name_en": "Lemaar",
       "sub": "セキュリティ製品(豪州)",
       "sub_en": "Security products (Australia)",
+      "sub_short": "防犯製品",
+      "sub_short_en": "Security",
       "row": 1,
       "relations": [
         {
@@ -132,6 +140,8 @@
       "name_en": "ASSA ABLOY",
       "sub": "錠前(スウェーデン)",
       "sub_en": "Locks (Sweden)",
+      "sub_short": "錠前",
+      "sub_short_en": "Locks",
       "row": 2,
       "relations": [
         {
@@ -156,6 +166,8 @@
       "name_en": "dormakaba",
       "sub": "錠前・ドア(スイス)",
       "sub_en": "Locks & doors (Switzerland)",
+      "sub_short": "錠前",
+      "sub_short_en": "Locks",
       "row": 2,
       "relations": [
         {
@@ -180,6 +192,8 @@
       "name_en": "Fortune Brands Innovations",
       "sub": "住宅設備",
       "sub_en": "Home products",
+      "sub_short": "住宅設備",
+      "sub_short_en": "Home",
       "row": 2,
       "relations": [
         {
@@ -204,6 +218,8 @@
       "name_en": "Motorola Solutions",
       "sub": "通信・映像セキュリティ",
       "sub_en": "Communications & video security",
+      "sub_short": "通信",
+      "sub_short_en": "Comms",
       "row": 3,
       "relations": [
         {

@@ -22,6 +22,8 @@
       "name": "インターネット名称資源管理機関(ICANN)",
       "sub": "レジストリ契約の相手",
       "sub_en": "Registry agreement counterparty",
+      "sub_short": "ドメイン",
+      "sub_short_en": "Domains",
       "row": 0,
       "relations": [
         {
@@ -46,6 +48,8 @@
       "name": "米国商務省",
       "sub": "協力協定の相手",
       "sub_en": "Cooperative agreement counterparty",
+      "sub_short": "協力先",
+      "sub_short_en": "Partner",
       "row": 0,
       "relations": [
         {
@@ -70,6 +74,8 @@
       "name": "ゴーダディ",
       "sub": "レジストリの競合",
       "sub_en": "Registry competitor",
+      "sub_short": "ドメイン",
+      "sub_short_en": "Domains",
       "row": 0,
       "relations": [
         {
@@ -94,6 +100,8 @@
       "name": "グーグル",
       "sub": "レジストリの競合",
       "sub_en": "Registry competitor",
+      "sub_short": "ドメイン",
+      "sub_short_en": "Domains",
       "row": 0,
       "relations": [
         {
@@ -118,6 +126,8 @@
       "name": "アイデンティティ・デジタル",
       "sub": "レジストリの競合",
       "sub_en": "Registry competitor",
+      "sub_short": "ドメイン",
+      "sub_short_en": "Domains",
       "row": 0,
       "relations": [
         {
@@ -142,6 +152,8 @@
       "name": "パブリック・インタレスト・レジストリ",
       "sub": "レジストリの競合",
       "sub_en": "Registry competitor",
+      "sub_short": "ドメイン",
+      "sub_short_en": "Domains",
       "row": 0,
       "relations": [
         {
@@ -166,6 +178,8 @@
       "name": "セントラルニック",
       "sub": "レジストリの競合",
       "sub_en": "Registry competitor",
+      "sub_short": "ドメイン",
+      "sub_short_en": "Domains",
       "row": 0,
       "relations": [
         {

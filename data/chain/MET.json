@@ -19,6 +19,8 @@
       "name": "パインブリッジ・インベストメンツ",
       "sub": "資産運用",
       "sub_en": "Asset management",
+      "sub_short": "資産運用",
+      "sub_short_en": "Assets",
       "row": 0,
       "relations": [
         {
@@ -43,6 +45,8 @@
       "name": "ブライトハウス・ファイナンシャル",
       "sub": "生命保険",
       "sub_en": "Life insurance",
+      "sub_short": "生命保険",
+      "sub_short_en": "Life ins",
       "row": 0,
       "relations": [
         {
@@ -67,6 +71,8 @@
       "name": "タルコット・レゾリューション・ライフ保険",
       "sub": "保険・再保険",
       "sub_en": "Insurance & reinsurance",
+      "sub_short": "保険",
+      "sub_short_en": "Insurance",
       "row": 0,
       "relations": [
         {
@@ -91,6 +97,8 @@
       "name": "シャリオット・リインシュアランス",
       "sub": "再保険",
       "sub_en": "Reinsurance",
+      "sub_short": "再保険",
+      "sub_short_en": "Reinsure",
       "row": 0,
       "relations": [
         {

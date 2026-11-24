@@ -30,6 +30,8 @@
       "name_en": "Life Molecular Imaging",
       "sub": "PET診断薬(独)",
       "sub_en": "PET imaging agents (Germany)",
+      "sub_short": "PET薬",
+      "sub_short_en": "PET",
       "row": 0,
       "relations": [
         {
@@ -54,6 +56,8 @@
       "name_en": "Evergreen Theragnostics",
       "sub": "放射性医薬品の受託製造",
       "sub_en": "Radiopharmaceutical CDMO",
+      "sub_short": "放射性薬",
+      "sub_short_en": "Radio Rx",
       "row": 0,
       "relations": [
         {
@@ -78,6 +82,8 @@
       "name_en": "Meilleur Technologies",
       "sub": "アルツハイマー診断薬",
       "sub_en": "Alzheimer imaging agent",
+      "sub_short": "診断",
+      "sub_short_en": "Dementia",
       "row": 0,
       "relations": [
         {
@@ -102,6 +108,8 @@
       "name_en": "POINT Biopharma",
       "sub": "放射性治療薬",
       "sub_en": "Radioligand therapy",
+      "sub_short": "放射性薬",
+      "sub_short_en": "Radio Rx",
       "row": 0,
       "relations": [
         {
@@ -126,6 +134,8 @@
       "name_en": "Novartis",
       "sub": "製薬",
       "sub_en": "Pharmaceuticals",
+      "sub_short": "製薬",
+      "sub_short_en": "Pharma",
       "row": 1,
       "relations": [
         {
@@ -150,6 +160,8 @@
       "name_en": "Telix Pharmaceuticals",
       "sub": "放射性医薬品(豪)",
       "sub_en": "Radiopharmaceuticals (Australia)",
+      "sub_short": "放射性薬",
+      "sub_short_en": "Radio Rx",
       "row": 1,
       "relations": [
         {
@@ -174,6 +186,8 @@
       "name_en": "Bracco",
       "sub": "造影剤(伊)",
       "sub_en": "Contrast agents (Italy)",
+      "sub_short": "造影剤",
+      "sub_short_en": "Imaging",
       "row": 1,
       "relations": [
         {
@@ -198,6 +212,8 @@
       "name_en": "Eli Lilly",
       "sub": "製薬",
       "sub_en": "Pharmaceuticals",
+      "sub_short": "製薬",
+      "sub_short_en": "Pharma",
       "row": 1,
       "relations": [
         {
@@ -222,6 +238,8 @@
       "name_en": "GE HealthCare",
       "sub": "医療画像",
       "sub_en": "Medical imaging",
+      "sub_short": "医療画像",
+      "sub_short_en": "Imaging",
       "row": 1,
       "relations": [
         {
@@ -246,6 +264,8 @@
       "name_en": "Curium",
       "sub": "放射性医薬品(仏)",
       "sub_en": "Radiopharmaceuticals (France)",
+      "sub_short": "放射性薬",
+      "sub_short_en": "Radio Rx",
       "row": 1,
       "relations": [
         {

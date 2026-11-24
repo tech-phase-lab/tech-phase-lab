@@ -48,6 +48,8 @@
       "name": "Broadcom",
       "sub": "AI半導体",
       "sub_en": "AI chips",
+      "sub_short": "AI半導体",
+      "sub_short_en": "AI chips",
       "row": 0,
       "relations": [
         {
@@ -86,6 +88,8 @@
       "name": "AMD",
       "sub": "GPU",
       "sub_en": "GPUs",
+      "sub_short": "GPU",
+      "sub_short_en": "GPUs",
       "row": 0,
       "relations": [
         {
@@ -122,6 +126,8 @@
       "name": "NVIDIA",
       "sub": "AI半導体",
       "sub_en": "AI chips",
+      "sub_short": "AI半導体",
+      "sub_short_en": "AI chips",
       "row": 0,
       "relations": [
         {
@@ -158,6 +164,8 @@
       "name": "Arm",
       "sub": "CPU",
       "sub_en": "CPUs",
+      "sub_short": "CPU",
+      "sub_short_en": "CPUs",
       "row": 0,
       "relations": [
         {
@@ -182,6 +190,8 @@
       "name": "Arista Networks",
       "sub": "ネットワーク",
       "sub_en": "Networking",
+      "sub_short": "通信網",
+      "sub_short_en": "Network",
       "row": 0,
       "relations": [
         {
@@ -207,6 +217,8 @@
       "name": "Corning",
       "sub": "光ファイバー",
       "sub_en": "Optical fiber",
+      "sub_short": "光通信",
+      "sub_short_en": "Fiber",
       "row": 0,
       "relations": [
         {
@@ -231,6 +243,8 @@
       "name": "Qualcomm",
       "sub": "XR向け半導体",
       "sub_en": "XR chips",
+      "sub_short": "XR",
+      "sub_short_en": "XR chips",
       "row": 0,
       "relations": [
         {
@@ -267,6 +281,8 @@
       "name": "Amazon",
       "sub": "クラウド(AWS)",
       "sub_en": "Cloud (AWS)",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 1,
       "relations": [
         {
@@ -291,6 +307,8 @@
       "name": "Nebius",
       "sub": "AI計算容量",
       "sub_en": "AI compute",
+      "sub_short": "AI計算",
+      "sub_short_en": "AI cloud",
       "row": 1,
       "relations": [
         {
@@ -313,6 +331,8 @@
       "name": "CoreWeave",
       "sub": "AI計算容量",
       "sub_en": "AI compute",
+      "sub_short": "AI計算",
+      "sub_short_en": "AI cloud",
       "row": 1,
       "relations": [
         {
@@ -336,6 +356,8 @@
       "name": "Reliance Industries",
       "sub": "データセンター",
       "sub_en": "Data centers",
+      "sub_short": "DC",
+      "sub_short_en": "DCs",
       "row": 1,
       "relations": [
         {
@@ -360,6 +382,8 @@
       "name": "Vistra",
       "sub": "電力",
       "sub_en": "Power",
+      "sub_short": "電力",
+      "sub_short_en": "Power",
       "row": 2,
       "relations": [
         {
@@ -384,6 +408,8 @@
       "name": "Constellation Energy",
       "sub": "電力",
       "sub_en": "Power",
+      "sub_short": "電力",
+      "sub_short_en": "Power",
       "row": 2,
       "relations": [
         {
@@ -409,6 +435,8 @@
       "name": "Oklo",
       "sub": "原子力開発",
       "sub_en": "Nuclear development",
+      "sub_short": "原子力",
+      "sub_short_en": "Nuclear",
       "row": 2,
       "relations": [
         {
@@ -428,11 +456,13 @@
       ]
     },
     {
-      "id": "EL",
+      "id": "EssilorLuxottica",
       "ticker": "EssilorLuxottica",
       "name": "EssilorLuxottica",
       "sub": "AIグラス",
       "sub_en": "AI glasses",
+      "sub_short": "AIグラス",
+      "sub_short_en": "AI specs",
       "row": 3,
       "relations": [
         {
@@ -457,6 +487,8 @@
       "name": "Snap",
       "sub": "SNS",
       "sub_en": "Social",
+      "sub_short": "SNS",
+      "sub_short_en": "Social",
       "row": 3,
       "relations": [
         {
@@ -479,6 +511,8 @@
       "name": "AppLovin",
       "sub": "広告配信",
       "sub_en": "Ad tech",
+      "sub_short": "広告配信",
+      "sub_short_en": "Ad tech",
       "row": 3,
       "relations": [
         {
@@ -501,6 +535,8 @@
       "name": "Blue Owl Capital",
       "sub": "投資会社",
       "sub_en": "Investment firm",
+      "sub_short": "投資会社",
+      "sub_short_en": "Investing",
       "row": 1,
       "relations": [
         {
@@ -526,6 +562,8 @@
       "name": "BlackRock",
       "sub": "投資会社",
       "sub_en": "Investment firm",
+      "sub_short": "投資会社",
+      "sub_short_en": "Investing",
       "row": 1,
       "relations": [
         {
@@ -551,6 +589,8 @@
       "name": "Entergy",
       "sub": "電力会社",
       "sub_en": "Utility",
+      "sub_short": "電力会社",
+      "sub_short_en": "Utility",
       "row": 2,
       "relations": [
         {
@@ -576,6 +616,8 @@
       "name": "NextEra Energy",
       "sub": "電力会社",
       "sub_en": "Utility",
+      "sub_short": "電力会社",
+      "sub_short_en": "Utility",
       "row": 2,
       "relations": [
         {
@@ -600,6 +642,8 @@
       "name": "Garmin",
       "sub": "スポーツ機器",
       "sub_en": "Sports devices",
+      "sub_short": "スポーツ",
+      "sub_short_en": "Sports",
       "row": 4,
       "relations": [
         {
@@ -625,6 +669,8 @@
       "name": "Apple",
       "sub": "スマホ・OS",
       "sub_en": "Phones & OS",
+      "sub_short": "スマホ",
+      "sub_short_en": "Phones",
       "row": 3,
       "relations": [
         {
@@ -648,6 +694,8 @@
       "name": "Alphabet(Google)",
       "sub": "検索・OS",
       "sub_en": "Search & OS",
+      "sub_short": "検索・OS",
+      "sub_short_en": "Search",
       "row": 3,
       "relations": [
         {
@@ -671,6 +719,8 @@
       "name": "Pinterest",
       "sub": "SNS",
       "sub_en": "Social",
+      "sub_short": "SNS",
+      "sub_short_en": "Social",
       "row": 3,
       "relations": [
         {
@@ -694,6 +744,8 @@
       "name": "Reddit",
       "sub": "SNS",
       "sub_en": "Social",
+      "sub_short": "SNS",
+      "sub_short_en": "Social",
       "row": 3,
       "relations": [
         {
@@ -717,6 +769,8 @@
       "name": "Roblox",
       "sub": "ゲーム",
       "sub_en": "Games",
+      "sub_short": "ゲーム",
+      "sub_short_en": "Games",
       "row": 3,
       "relations": [
         {
@@ -740,6 +794,8 @@
       "name": "Match Group",
       "sub": "出会い系",
       "sub_en": "Dating",
+      "sub_short": "出会い系",
+      "sub_short_en": "Dating",
       "row": 3,
       "relations": [
         {
@@ -763,6 +819,8 @@
       "name": "Bumble",
       "sub": "出会い系",
       "sub_en": "Dating",
+      "sub_short": "出会い系",
+      "sub_short_en": "Dating",
       "row": 3,
       "relations": [
         {
@@ -786,6 +844,8 @@
       "name": "Unity Software",
       "sub": "ゲーム開発・広告",
       "sub_en": "Game dev & ads",
+      "sub_short": "ゲーム",
+      "sub_short_en": "Games",
       "row": 3,
       "relations": [
         {
@@ -811,6 +871,8 @@
       "name": "Yelp",
       "sub": "口コミ・広告",
       "sub_en": "Reviews & ads",
+      "sub_short": "口コミ",
+      "sub_short_en": "Reviews",
       "row": 3,
       "relations": [
         {
@@ -834,6 +896,8 @@
       "name": "Spotify",
       "sub": "音楽・ポッドキャスト",
       "sub_en": "Audio streaming",
+      "sub_short": "音楽",
+      "sub_short_en": "Audio",
       "row": 3,
       "relations": [
         {
@@ -857,6 +921,8 @@
       "name": "Intel",
       "sub": "半導体",
       "sub_en": "Chips",
+      "sub_short": "半導体",
+      "sub_short_en": "Chips",
       "row": 5,
       "relations": [
         {

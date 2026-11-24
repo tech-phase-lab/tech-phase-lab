@@ -24,6 +24,8 @@
       "name_en": "Walmart",
       "sub": "小売",
       "sub_en": "Retail",
+      "sub_short": "小売",
+      "sub_short_en": "Retail",
       "row": 0,
       "relations": [
         {
@@ -48,6 +50,8 @@
       "name_en": "VF Corp",
       "sub": "アパレル",
       "sub_en": "Apparel",
+      "sub_short": "アパレル",
+      "sub_short_en": "Apparel",
       "row": 1,
       "relations": [
         {
@@ -72,6 +76,8 @@
       "name_en": "Helly Hansen",
       "sub": "アウトドアウェア(ノルウェー)",
       "sub_en": "Outdoor wear (Norway)",
+      "sub_short": "野外衣料",
+      "sub_short_en": "Outdoor",
       "row": 1,
       "relations": [
         {
@@ -96,6 +102,8 @@
       "name_en": "Genesco",
       "sub": "靴の小売・ブランド",
       "sub_en": "Footwear retail & brands",
+      "sub_short": "靴の小売",
+      "sub_short_en": "Shoes",
       "row": 1,
       "relations": [
         {

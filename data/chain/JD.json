@@ -25,6 +25,8 @@
       "name": "テンセント",
       "sub": "インターネット",
       "sub_en": "Internet",
+      "sub_short": "ネット",
+      "sub_short_en": "Internet",
       "row": 0,
       "relations": [
         {
@@ -64,6 +66,8 @@
       "name": "コストコ",
       "sub": "会員制小売",
       "sub_en": "Warehouse retail",
+      "sub_short": "量販店",
+      "sub_short_en": "Clubs",
       "row": 0,
       "relations": [
         {
@@ -101,6 +105,8 @@
       "name": "ウォルマート",
       "sub": "小売",
       "sub_en": "Retail",
+      "sub_short": "小売",
+      "sub_short_en": "Retail",
       "row": 0,
       "relations": [
         {
@@ -127,6 +133,8 @@
       "name": "アリババ",
       "sub": "EC・クラウド",
       "sub_en": "E-commerce & cloud",
+      "sub_short": "EC",
+      "sub_short_en": "E-com",
       "row": 1,
       "relations": [
         {
@@ -151,6 +159,8 @@
       "name": "セコノミー",
       "sub": "家電小売",
       "sub_en": "Consumer electronics retail",
+      "sub_short": "家電小売",
+      "sub_short_en": "Retail",
       "row": 0,
       "relations": [
         {
@@ -177,6 +187,8 @@
       "name": "マスターカード",
       "sub": "決済",
       "sub_en": "Payments",
+      "sub_short": "決済",
+      "sub_short_en": "Payment",
       "row": 0,
       "relations": [
         {
@@ -201,6 +213,8 @@
       "name": "イーライリリー",
       "sub": "製薬",
       "sub_en": "Pharmaceuticals",
+      "sub_short": "製薬",
+      "sub_short_en": "Pharma",
       "row": 0,
       "relations": [
         {
@@ -227,6 +241,8 @@
       "name": "イノベント・バイオロジクス",
       "sub": "バイオ医薬",
       "sub_en": "Biopharmaceuticals",
+      "sub_short": "バイオ",
+      "sub_short_en": "Pharma",
       "row": 0,
       "relations": [
         {
@@ -253,6 +269,8 @@
       "name": "スリーエム",
       "sub": "電機・素材",
       "sub_en": "Industrial & materials",
+      "sub_short": "電機",
+      "sub_short_en": "Industrial",
       "row": 0,
       "relations": [
         {

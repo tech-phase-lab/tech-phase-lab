@@ -34,6 +34,8 @@
       "name_en": "Republic Airways",
       "sub": "地域航空",
       "sub_en": "Regional airline",
+      "sub_short": "地域航空",
+      "sub_short_en": "Airline",
       "row": 0,
       "relations": [
         {
@@ -58,6 +60,8 @@
       "name_en": "Harbor Diversified (Air Wisconsin)",
       "sub": "地域航空",
       "sub_en": "Regional airline",
+      "sub_short": "地域航空",
+      "sub_short_en": "Airline",
       "row": 0,
       "relations": [
         {
@@ -82,6 +86,8 @@
       "name_en": "Embraer",
       "sub": "航空機",
       "sub_en": "Aircraft",
+      "sub_short": "航空機",
+      "sub_short_en": "Aircraft",
       "row": 0,
       "relations": [
         {
@@ -106,6 +112,8 @@
       "name_en": "Vertical Aerospace",
       "sub": "電動航空機",
       "sub_en": "Electric aircraft",
+      "sub_short": "eVTOL",
+      "sub_short_en": "eVTOL",
       "row": 0,
       "relations": [
         {
@@ -130,6 +138,8 @@
       "name_en": "Alaska Air Group",
       "sub": "航空",
       "sub_en": "Airline",
+      "sub_short": "航空",
+      "sub_short_en": "Airline",
       "row": 1,
       "relations": [
         {
@@ -167,6 +177,8 @@
       "name_en": "Qatar Airways",
       "sub": "航空(カタール)",
       "sub_en": "Airline (Qatar)",
+      "sub_short": "航空",
+      "sub_short_en": "Airline",
       "row": 1,
       "relations": [
         {
@@ -191,6 +203,8 @@
       "name_en": "Citigroup",
       "sub": "銀行",
       "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
       "row": 1,
       "relations": [
         {
@@ -215,6 +229,8 @@
       "name_en": "Azul",
       "sub": "航空(ブラジル)",
       "sub_en": "Airline (Brazil)",
+      "sub_short": "航空",
+      "sub_short_en": "Airline",
       "row": 1,
       "relations": [
         {
@@ -239,6 +255,8 @@
       "name_en": "JetSMART",
       "sub": "格安航空(南米)",
       "sub_en": "Low-cost airline (South America)",
+      "sub_short": "格安航空",
+      "sub_short_en": "Airline",
       "row": 1,
       "relations": [
         {
@@ -263,6 +281,8 @@
       "name_en": "Delta Air Lines",
       "sub": "航空",
       "sub_en": "Airline",
+      "sub_short": "航空",
+      "sub_short_en": "Airline",
       "row": 2,
       "relations": [
         {
@@ -287,6 +307,8 @@
       "name_en": "United Airlines",
       "sub": "航空",
       "sub_en": "Airline",
+      "sub_short": "航空",
+      "sub_short_en": "Airline",
       "row": 2,
       "relations": [
         {
@@ -311,6 +333,8 @@
       "name_en": "Southwest Airlines",
       "sub": "航空",
       "sub_en": "Airline",
+      "sub_short": "航空",
+      "sub_short_en": "Airline",
       "row": 2,
       "relations": [
         {
@@ -335,6 +359,8 @@
       "name_en": "JetBlue Airways",
       "sub": "航空",
       "sub_en": "Airline",
+      "sub_short": "航空",
+      "sub_short_en": "Airline",
       "row": 2,
       "relations": [
         {
@@ -359,6 +385,8 @@
       "name_en": "Frontier Group",
       "sub": "格安航空",
       "sub_en": "Ultra-low-cost airline",
+      "sub_short": "格安航空",
+      "sub_short_en": "Airline",
       "row": 2,
       "relations": [
         {
@@ -383,6 +411,8 @@
       "name_en": "Copa Holdings",
       "sub": "航空(パナマ)",
       "sub_en": "Airline (Panama)",
+      "sub_short": "航空",
+      "sub_short_en": "Airline",
       "row": 2,
       "relations": [
         {

@@ -33,6 +33,8 @@
       "name": "エヌビディア",
       "sub": "AI半導体",
       "sub_en": "AI chips",
+      "sub_short": "AI半導体",
+      "sub_short_en": "AI chips",
       "row": 0,
       "relations": [
         {
@@ -70,6 +72,8 @@
       "name": "マイクロン・テクノロジー",
       "sub": "メモリ",
       "sub_en": "Memory",
+      "sub_short": "メモリ",
+      "sub_short_en": "Memory",
       "row": 0,
       "relations": [
         {
@@ -96,6 +100,8 @@
       "name": "アイレン",
       "sub": "AIクラウド",
       "sub_en": "AI cloud",
+      "sub_short": "AI基盤",
+      "sub_short_en": "AI cloud",
       "row": 1,
       "relations": [
         {
@@ -120,6 +126,8 @@
       "name": "ニュータニックス",
       "sub": "ハイブリッドクラウド",
       "sub_en": "Hybrid cloud",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 1,
       "relations": [
         {
@@ -157,6 +165,8 @@
       "name": "JPモルガン・チェース",
       "sub": "銀行",
       "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
       "row": 2,
       "relations": [
         {
@@ -196,6 +206,8 @@
       "name": "ヒューレット・パッカード・エンタープライズ",
       "sub": "IT基盤",
       "sub_en": "IT infrastructure",
+      "sub_short": "IT基盤",
+      "sub_short_en": "IT infra",
       "row": 3,
       "relations": [
         {

@@ -33,6 +33,8 @@
       "name_en": "Nishat Group",
       "sub": "複合企業(パキスタン)",
       "sub_en": "Conglomerate (Pakistan)",
+      "sub_short": "複合企業",
+      "sub_short_en": "Group",
       "row": 0,
       "relations": [
         {
@@ -57,6 +59,8 @@
       "name_en": "Ambev",
       "sub": "ビール(伯)",
       "sub_en": "Beer (Brazil)",
+      "sub_short": "ビール",
+      "sub_short_en": "Beer",
       "row": 0,
       "relations": [
         {
@@ -81,6 +85,8 @@
       "name_en": "Roquette",
       "sub": "でんぷん(仏、非上場)",
       "sub_en": "Starches (France, private)",
+      "sub_short": "でんぷん",
+      "sub_short_en": "Starches",
       "row": 1,
       "relations": [
         {
@@ -105,6 +111,8 @@
       "name_en": "Primient",
       "sub": "でんぷん・甘味料(非上場)",
       "sub_en": "Starch & sweeteners (private)",
+      "sub_short": "でんぷん",
+      "sub_short_en": "Starch",
       "row": 1,
       "relations": [
         {
@@ -129,6 +137,8 @@
       "name_en": "Archer-Daniels-Midland",
       "sub": "穀物加工",
       "sub_en": "Grain processing",
+      "sub_short": "穀物加工",
+      "sub_short_en": "Grain",
       "row": 2,
       "relations": [
         {
@@ -153,6 +163,8 @@
       "name_en": "Cargill",
       "sub": "穀物(非上場)",
       "sub_en": "Agribusiness (private)",
+      "sub_short": "穀物",
+      "sub_short_en": "Farming",
       "row": 2,
       "relations": [
         {
@@ -177,6 +189,8 @@
       "name_en": "Tate & Lyle",
       "sub": "食品素材(英)",
       "sub_en": "Food ingredients (UK)",
+      "sub_short": "食品素材",
+      "sub_short_en": "Food",
       "row": 2,
       "relations": [
         {

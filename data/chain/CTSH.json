@@ -38,6 +38,8 @@
       "name_en": "Microsoft",
       "sub": "クラウド・ソフト",
       "sub_en": "Cloud & software",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 0,
       "relations": [
         {
@@ -62,6 +64,8 @@
       "name_en": "Amazon (AWS)",
       "sub": "クラウド",
       "sub_en": "Cloud",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 0,
       "relations": [
         {
@@ -86,6 +90,8 @@
       "name_en": "Google",
       "sub": "クラウド",
       "sub_en": "Cloud",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 0,
       "relations": [
         {
@@ -110,6 +116,8 @@
       "name_en": "SAP",
       "sub": "業務ソフト",
       "sub_en": "Enterprise software",
+      "sub_short": "業務IT",
+      "sub_short_en": "Software",
       "row": 0,
       "relations": [
         {
@@ -134,6 +142,8 @@
       "name_en": "ServiceNow",
       "sub": "業務ワークフロー",
       "sub_en": "Workflow software",
+      "sub_short": "業務IT",
+      "sub_short_en": "Workflow",
       "row": 0,
       "relations": [
         {
@@ -171,6 +181,8 @@
       "name_en": "Salesforce",
       "sub": "顧客管理ソフト",
       "sub_en": "CRM software",
+      "sub_short": "CRM",
+      "sub_short_en": "CRM",
       "row": 0,
       "relations": [
         {
@@ -195,6 +207,8 @@
       "name_en": "3Cloud",
       "sub": "Azure導入支援",
       "sub_en": "Azure services",
+      "sub_short": "IT支援",
+      "sub_short_en": "IT",
       "row": 1,
       "relations": [
         {
@@ -219,6 +233,8 @@
       "name_en": "Belcan",
       "sub": "航空宇宙のエンジニアリング",
       "sub_en": "Aerospace engineering services",
+      "sub_short": "航空宇宙",
+      "sub_short_en": "Aero",
       "row": 1,
       "relations": [
         {
@@ -243,6 +259,8 @@
       "name_en": "Thirdera",
       "sub": "ServiceNow導入支援",
       "sub_en": "ServiceNow consulting",
+      "sub_short": "IT支援",
+      "sub_short_en": "IT",
       "row": 1,
       "relations": [
         {
@@ -267,6 +285,8 @@
       "name_en": "Pearson",
       "sub": "教育",
       "sub_en": "Education",
+      "sub_short": "教育",
+      "sub_short_en": "Education",
       "row": 1,
       "relations": [
         {
@@ -291,6 +311,8 @@
       "name_en": "Accenture",
       "sub": "ITサービス",
       "sub_en": "IT services",
+      "sub_short": "IT",
+      "sub_short_en": "IT",
       "row": 2,
       "relations": [
         {
@@ -315,6 +337,8 @@
       "name_en": "IBM",
       "sub": "ITサービス",
       "sub_en": "IT services",
+      "sub_short": "IT",
+      "sub_short_en": "IT",
       "row": 2,
       "relations": [
         {
@@ -339,6 +363,8 @@
       "name_en": "Infosys",
       "sub": "ITサービス(インド)",
       "sub_en": "IT services (India)",
+      "sub_short": "IT",
+      "sub_short_en": "IT",
       "row": 2,
       "relations": [
         {
@@ -363,6 +389,8 @@
       "name_en": "Wipro",
       "sub": "ITサービス(インド)",
       "sub_en": "IT services (India)",
+      "sub_short": "IT",
+      "sub_short_en": "IT",
       "row": 2,
       "relations": [
         {
@@ -387,6 +415,8 @@
       "name_en": "EPAM Systems",
       "sub": "ソフト開発受託",
       "sub_en": "Software engineering services",
+      "sub_short": "ソフト",
+      "sub_short_en": "Software",
       "row": 2,
       "relations": [
         {
@@ -411,6 +441,8 @@
       "name_en": "DXC Technology",
       "sub": "ITサービス",
       "sub_en": "IT services",
+      "sub_short": "IT",
+      "sub_short_en": "IT",
       "row": 2,
       "relations": [
         {
@@ -435,6 +467,8 @@
       "name_en": "Genpact",
       "sub": "業務外部委託",
       "sub_en": "Business process services",
+      "sub_short": "業務委託",
+      "sub_short_en": "BPO",
       "row": 2,
       "relations": [
         {
@@ -459,6 +493,8 @@
       "name_en": "Conduent",
       "sub": "業務外部委託",
       "sub_en": "Business process services",
+      "sub_short": "業務委託",
+      "sub_short_en": "BPO",
       "row": 3,
       "relations": [
         {
@@ -483,6 +519,8 @@
       "name_en": "Grid Dynamics",
       "sub": "デジタル変革支援",
       "sub_en": "Digital engineering services",
+      "sub_short": "DX支援",
+      "sub_short_en": "IT",
       "row": 3,
       "relations": [
         {
@@ -507,6 +545,8 @@
       "name_en": "TELUS",
       "sub": "通信・デジタルサービス(加)",
       "sub_en": "Telecom & digital services (Canada)",
+      "sub_short": "通信",
+      "sub_short_en": "Telecom",
       "row": 3,
       "relations": [
         {

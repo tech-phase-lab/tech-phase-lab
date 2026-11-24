@@ -29,6 +29,8 @@
       "name_en": "Standard Motor Products",
       "sub": "自動車補修部品",
       "sub_en": "Aftermarket auto parts",
+      "sub_short": "車部品",
+      "sub_short_en": "Car parts",
       "row": 0,
       "relations": [
         {
@@ -53,6 +55,8 @@
       "name_en": "Motorcar Parts of America",
       "sub": "再生部品",
       "sub_en": "Remanufactured parts",
+      "sub_short": "再生部品",
+      "sub_short_en": "Parts",
       "row": 0,
       "relations": [
         {
@@ -77,6 +81,8 @@
       "name_en": "1847 Holdings",
       "sub": "複合企業(部品等)",
       "sub_en": "Holding company (parts & more)",
+      "sub_short": "複合企業",
+      "sub_short_en": "Holding",
       "row": 0,
       "relations": [
         {
@@ -101,6 +107,8 @@
       "name_en": "First Brands Group",
       "sub": "自動車補修部品(経営破綻)",
       "sub_en": "Aftermarket parts (bankrupt)",
+      "sub_short": "車部品",
+      "sub_short_en": "Parts",
       "row": 0,
       "relations": [
         {
@@ -125,6 +133,8 @@
       "name_en": "O'Reilly Automotive",
       "sub": "自動車部品小売",
       "sub_en": "Auto parts retail",
+      "sub_short": "車部品",
+      "sub_short_en": "Car parts",
       "row": 1,
       "relations": [
         {
@@ -149,6 +159,8 @@
       "name_en": "Advance Auto Parts",
       "sub": "自動車部品小売",
       "sub_en": "Auto parts retail",
+      "sub_short": "車部品",
+      "sub_short_en": "Car parts",
       "row": 1,
       "relations": [
         {
@@ -173,6 +185,8 @@
       "name_en": "Genuine Parts (NAPA)",
       "sub": "自動車部品流通",
       "sub_en": "Auto parts distribution",
+      "sub_short": "車部品",
+      "sub_short_en": "Car parts",
       "row": 1,
       "relations": [
         {
@@ -197,6 +211,8 @@
       "name_en": "CarParts.com",
       "sub": "自動車部品のネット販売",
       "sub_en": "Online auto parts",
+      "sub_short": "車部品",
+      "sub_short_en": "Car parts",
       "row": 1,
       "relations": [
         {

@@ -23,6 +23,8 @@
       "name": "ブラックロック",
       "sub": "資産運用・最大顧客",
       "sub_en": "Asset manager, top client",
+      "sub_short": "資産運用",
+      "sub_short_en": "Assets",
       "row": 0,
       "relations": [
         {
@@ -47,6 +49,8 @@
       "name": "S&Pグローバル",
       "sub": "指数・格付け",
       "sub_en": "Indexes & ratings",
+      "sub_short": "指数",
+      "sub_short_en": "Indexes",
       "row": 0,
       "relations": [
         {
@@ -84,6 +88,8 @@
       "name": "ファクトセット",
       "sub": "金融データ・分析",
       "sub_en": "Financial data & analytics",
+      "sub_short": "金融情報",
+      "sub_short_en": "Fin data",
       "row": 0,
       "relations": [
         {
@@ -108,6 +114,8 @@
       "name": "モーニングスター",
       "sub": "サステナ評価",
       "sub_en": "Sustainability ratings",
+      "sub_short": "ESG評価",
+      "sub_short_en": "ESG",
       "row": 0,
       "relations": [
         {
@@ -145,6 +153,8 @@
       "name": "ブルームバーグ",
       "sub": "金融情報",
       "sub_en": "Financial information",
+      "sub_short": "金融情報",
+      "sub_short_en": "Fin data",
       "row": 0,
       "relations": [
         {

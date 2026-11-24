@@ -25,6 +25,85 @@ test('the NVDA chain map data keeps its companies, rows and two-step links', () 
 });
 const CHAIN = () => chain.CHAIN_KINDS;
 
+// One id must mean one real company across every map (HD is The Home Depot, not HD Hyundai).
+// Names are compared after dropping legal suffixes and parentheses; one name may extend the other
+// ("Merck" / "Merck & Co."). Ids whose real company goes by unrelated names are listed with every
+// accepted spelling, so a different company reusing one of these ids still fails.
+const COMPANY_NAME_ALIASES = {
+  ADP: ["adp", "automaticdataprocessing"],
+  AEP: ["aep", "americanelectricpower"],
+  AMD: ["amd", "advancedmicrodevices"],
+  AMZN: ["aws", "amazon", "amazoncom", "amazonkuiper", "amazonwholefoods", "amazonprimevideo", "amazonwebservices", "amazonwholefoodsmarket"],
+  BKNG: ["booking", "priceline"],
+  BLCO: ["bauschlomb", "bauschandlomb"],
+  CFG: ["citizensbankna", "citizensfinancial"],
+  CIFR: ["ciphermining", "cipherdigital"],
+  COMM: ["commscope", "vistancenetworks"],
+  DIS: ["disney", "waltdisney", "disneycruiseline"],
+  DISH: ["dishnetwork", "dishwireless"],
+  Electrolux: ["electrolux", "abelectrolux"],
+  FIS: ["fis", "fidelityinformationservices", "fidelitynationalinformationservices"],
+  Foxconn: ["honhai", "foxconn"],
+  GE: ["geaviation", "geaerospace", "generalelectric"],
+  GOOG: ["google", "alphabet"],
+  GOOGL: ["google", "youtube", "alphabet", "googlecloud"],
+  HPE: ["hpe", "hewlettpackardenterprise"],
+  IFF: ["iff", "flavorsandfragrances"],
+  IHG: ["ihghotelsandresorts", "intercontinentalhotels"],
+  IMXI: ["intermex", "moneyexpress"],
+  JD: ["jdcom", "jdcloud"],
+  LOREAL: ["loral", "loreal"],
+  LSEG: ["lseg", "londonstockexchange"],
+  LVMH: ["lvmh", "sephora"],
+  MMC: ["marshmclennan", "marshandmclennan", "marshandmclennancompanies"],
+  MSGE: ["msgentertainment", "madisonsquaregardenentertainment"],
+  Maaden: ["maaden", "saudiarabianmining"],
+  ODP: ["odp", "officedepot"],
+  OI: ["oiglass", "owensillinois"],
+  ORLY: ["oreillyautoparts", "oreillyautomotive"],
+  OXY: ["occidentalchemical", "occidentalpetroleum"],
+  PEG: ["pseg", "publicserviceelectricandgas"],
+  PHG: ["philips", "royalphilips", "koninklijkephilips"],
+  PPL: ["ppl", "lgandeandku"],
+  ROCHE: ["roche", "rochediagnostics", "hoffmannlarochegenentech"],
+  SAIC: ["saic", "scienceapplications"],
+  SLAB: ["siliconlabs", "siliconlaboratories"],
+  SPACEX: ["spacex", "spaceexploration"],
+  SPCX: ["spacex", "spaceexploration"],
+  TD: ["tdbank", "torontodominionbank"],
+  TEF: ["telefnica", "telefonica"],
+  TSM: ["tsmc", "taiwansemiconductormanufacturing"],
+  UMC: ["umc", "unitedmicroelectronics"],
+  UNH: ["optum", "unitedhealth", "unitedhealthcare"],
+  UPS: ["ups", "upslogistics", "unitedparcelservice"],
+  WTW: ["wtw", "willistowerswatson"],
+};
+const companyKey = name => name.toLowerCase().replace(/&/g, ' and ').replace(/\(.*?\)/g, '').replace(/[’'.,]/g, '')
+  .replace(/\b(inc|incorporated|corp|corporation|company|co|ltd|limited|plc|group|holdings?|se|ag|sa|nv|llc|lp|the|technologies|technology|international|systems)\b/g, ' ')
+  .replace(/[^a-z0-9]/g, '');
+
+test('a company id refers to the same real company in every chain map', () => {
+  const names = new Map();
+  for (const ticker of ALL) {
+    const map = JSON.parse(readFileSync(new URL(`../data/chain/${ticker}.json`, import.meta.url), 'utf8'));
+    for (const company of map.companies) {
+      const key = companyKey(company.name_en ?? company.name);
+      if (!names.has(company.id)) names.set(company.id, new Map());
+      names.get(company.id).set(key, ticker);
+    }
+  }
+  const clashes = [];
+  for (const [id, keys] of names) {
+    const sorted = [...keys.keys()].sort((a, b) => a.length - b.length);
+    if (sorted.every(key => key.startsWith(sorted[0]))) continue;
+    const allowed = COMPANY_NAME_ALIASES[id] ?? [];
+    for (const key of sorted) if (!allowed.includes(key)) clashes.push(`${id}: "${key}" in ${keys.get(key)}.json`);
+  }
+  assert.deepEqual(clashes, []);
+  assert.deepEqual([...names.get('HD').keys()], ['homedepot']);
+  assert.deepEqual([...names.get('HDHyundai').keys()], ['hdhyundai']);
+});
+
 test('every relation has Japanese and English text and a linked, labelled source; press items are marked', () => {
   const sources = [...data.companies.flatMap(company => company.relations), ...data.far];
   assert.equal(sources.length, 31);
@@ -180,4 +259,29 @@ test('the PRO tour sample leaves out 「05 競合は？」 and numbers the map h
   }
   const ui = readFileSync(new URL('../app/research/pro-experience/samples/relation-map.tsx', import.meta.url), 'utf8');
   assert.match(ui, /<StockChainMap [^>]*\bsample \/>/);
+});
+
+// Owner, Nov 24: every map card is the compact size the short cards had before (74px; 49px for the label inside the padding)
+// and shows its label on one line, so each company has a short label that fits. Widths are the site font's at 10.5px, measured
+// in Chromium (a full-width character is 11px there, a little wider than on a phone).
+const GLYPH = { 1: "',.", 2: '!()', 3: ' ":;I`ijl|', 3.1: 'f', 3.5: 't', 4: '1-[]^r{', 4.1: '/\\', 5: '369#*+?Tcos}', 5.1: 'k', 6: '0478&=EFLX_abdegpquvxyz~', 7: '25$<>ACDGJKOPQRSVYZhn', 8: '%BHNU', 9: '@Mmw', 10: 'W' };
+const glyph = char => char.codePointAt(0) > 0x2E7F ? 11 : Number(Object.keys(GLYPH).find(width => GLYPH[width].includes(char)) ?? 6);
+const labelWidth = text => [...text].reduce((sum, char) => sum + glyph(char), 0);
+test('every company in every map has a short card label that fits one line of the compact card', () => {
+  for (const ticker of ALL) {
+    for (const company of chain.chainDataFor(ticker).companies) {
+      const where = `${ticker} ${company.id}`;
+      assert.ok(company.sub_short && company.sub_short_en, where);
+      assert.ok(labelWidth(company.sub_short) <= 49, `${where}: ${company.sub_short}`);
+      assert.ok(labelWidth(company.sub_short_en) <= 49 && !hasJapanese(company.sub_short_en), `${where}: ${company.sub_short_en}`);
+      for (const label of [company.sub_short, company.sub_short_en]) assert.ok(!/…|\.\.\./.test(label) && label === label.trim(), `${where}: ${label}`);
+    }
+  }
+  const html = renderToStaticMarkup(createElement(StockChainMap, { data: chain.chainDataFor('SONO'), lang: 'ja' }));
+  assert.match(html, /<small title="PC周辺機器・オーディオ">PC周辺<\/small>/);
+  assert.match(html, /<small title="車載ミラー・電子機器">車載電子<\/small>/);
+  const css = readFileSync(new URL('../app/research/stocks/stock-chain-map.module.css', import.meta.url), 'utf8');
+  assert.match(css, /\.chips \{ display: grid; grid-template-columns: repeat\(auto-fill, 74px\);/);
+  assert.doesNotMatch(css, /\.chips > \.chip:not\(\.root\) \{ padding/);
+  assert.match(css, /\.chips > \.chip:not\(\.root\) small \{ white-space: nowrap; \}/);
 });

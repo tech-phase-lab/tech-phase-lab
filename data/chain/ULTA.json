@@ -24,6 +24,8 @@
       "name": "ロレアル",
       "sub": "化粧品メーカー",
       "sub_en": "Beauty brand",
+      "sub_short": "化粧品",
+      "sub_short_en": "Beauty",
       "row": 0,
       "relations": [
         {
@@ -48,6 +50,8 @@
       "name": "エスティローダー・カンパニーズ",
       "sub": "化粧品メーカー",
       "sub_en": "Beauty brand",
+      "sub_short": "化粧品",
+      "sub_short_en": "Beauty",
       "row": 0,
       "relations": [
         {
@@ -72,6 +76,8 @@
       "name": "ターゲット",
       "sub": "小売りの提携先",
       "sub_en": "Retail partner",
+      "sub_short": "小売",
+      "sub_short_en": "Retail",
       "row": 1,
       "relations": [
         {
@@ -96,6 +102,8 @@
       "name": "グルポ・アクソ",
       "sub": "メキシコ合弁",
       "sub_en": "Mexico JV partner",
+      "sub_short": "合弁",
+      "sub_short_en": "JV",
       "row": 1,
       "relations": [
         {
@@ -120,6 +128,8 @@
       "name": "アルシャヤ・グループ",
       "sub": "中東フランチャイズ",
       "sub_en": "Middle East franchisee",
+      "sub_short": "中東FC",
+      "sub_short_en": "Licensee",
       "row": 1,
       "relations": [
         {

@@ -24,6 +24,8 @@
       "name_en": "Salesforce",
       "sub": "業務ソフト",
       "sub_en": "Enterprise software",
+      "sub_short": "業務IT",
+      "sub_short_en": "Software",
       "row": 0,
       "relations": [
         {
@@ -48,6 +50,8 @@
       "name_en": "Google",
       "sub": "ネット",
       "sub_en": "Internet",
+      "sub_short": "ネット",
+      "sub_short_en": "Internet",
       "row": 0,
       "relations": [
         {
@@ -72,6 +76,8 @@
       "name_en": "Fannie Mae",
       "sub": "住宅金融",
       "sub_en": "Mortgage finance",
+      "sub_short": "住宅金融",
+      "sub_short_en": "Mortgage",
       "row": 0,
       "relations": [
         {
@@ -96,6 +102,8 @@
       "name_en": "Akamai Technologies",
       "sub": "ネットワーク・クラウド",
       "sub_en": "Edge cloud",
+      "sub_short": "通信網",
+      "sub_short_en": "Edge",
       "row": 0,
       "relations": [
         {
@@ -120,6 +128,8 @@
       "name_en": "Snap",
       "sub": "SNS",
       "sub_en": "Social media",
+      "sub_short": "SNS",
+      "sub_short_en": "Social",
       "row": 0,
       "relations": [
         {
@@ -144,6 +154,8 @@
       "name_en": "Microsoft",
       "sub": "ソフト・クラウド",
       "sub_en": "Software & cloud",
+      "sub_short": "ソフト",
+      "sub_short_en": "Software",
       "row": 0,
       "relations": [
         {
@@ -168,6 +180,8 @@
       "name_en": "Biogen",
       "sub": "バイオ医薬品",
       "sub_en": "Biotech",
+      "sub_short": "バイオ",
+      "sub_short_en": "Biotech",
       "row": 0,
       "relations": [
         {
@@ -192,6 +206,8 @@
       "name_en": "Marriott International",
       "sub": "ホテル",
       "sub_en": "Hotels",
+      "sub_short": "ホテル",
+      "sub_short_en": "Hotels",
       "row": 1,
       "relations": [
         {
@@ -216,6 +232,8 @@
       "name_en": "NeuroPace",
       "sub": "医療機器",
       "sub_en": "Medical devices",
+      "sub_short": "医療機器",
+      "sub_short_en": "Medtech",
       "row": 1,
       "relations": [
         {
@@ -240,6 +258,8 @@
       "name_en": "Kailera Therapeutics",
       "sub": "バイオ(肥満症)",
       "sub_en": "Biotech (obesity)",
+      "sub_short": "バイオ",
+      "sub_short_en": "Biotech",
       "row": 1,
       "relations": [
         {

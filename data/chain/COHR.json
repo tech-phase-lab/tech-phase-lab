@@ -32,6 +32,8 @@
       "name": "NVIDIA",
       "sub": "AI半導体",
       "sub_en": "AI chips",
+      "sub_short": "AI半導体",
+      "sub_short_en": "AI chips",
       "row": 0,
       "relations": [
         {
@@ -81,6 +83,8 @@
       "name": "Apple",
       "sub": "スマホ・PC",
       "sub_en": "Devices",
+      "sub_short": "スマホ",
+      "sub_short_en": "Devices",
       "row": 0,
       "relations": [
         {
@@ -104,6 +108,8 @@
       "name": "DENSO",
       "sub": "自動車部品",
       "sub_en": "Auto parts",
+      "sub_short": "車部品",
+      "sub_short_en": "Car parts",
       "row": 1,
       "relations": [
         {
@@ -129,6 +135,8 @@
       "name": "三菱電機",
       "sub": "電機",
       "sub_en": "Electrical equipment",
+      "sub_short": "電機",
+      "sub_short_en": "Electrical",
       "row": 1,
       "relations": [
         {
@@ -155,6 +163,8 @@
       "name": "IPG Photonics",
       "sub": "レーザー",
       "sub_en": "Lasers",
+      "sub_short": "レーザー",
+      "sub_short_en": "Lasers",
       "row": 2,
       "relations": [
         {
@@ -180,6 +190,8 @@
       "name": "nLIGHT",
       "sub": "レーザー",
       "sub_en": "Lasers",
+      "sub_short": "レーザー",
+      "sub_short_en": "Lasers",
       "row": 2,
       "relations": [
         {
@@ -205,6 +217,8 @@
       "name": "Applied Optoelectronics",
       "sub": "光トランシーバー",
       "sub_en": "Optical transceivers",
+      "sub_short": "光部品",
+      "sub_short_en": "Optics",
       "row": 2,
       "relations": [
         {
@@ -228,6 +242,8 @@
       "name": "MKS Instruments",
       "sub": "半導体装置部品",
       "sub_en": "Semiconductor equipment parts",
+      "sub_short": "装置部品",
+      "sub_short_en": "Tool parts",
       "row": 2,
       "relations": [
         {
@@ -251,6 +267,8 @@
       "name": "Viavi Solutions",
       "sub": "通信測定機器",
       "sub_en": "Network test",
+      "sub_short": "計測",
+      "sub_short_en": "Testing",
       "row": 2,
       "relations": [
         {
@@ -276,6 +294,8 @@
       "name": "Fabrinet",
       "sub": "光部品の受託製造",
       "sub_en": "Optical contract manufacturing",
+      "sub_short": "光部品",
+      "sub_short_en": "Optics",
       "row": 2,
       "relations": [
         {

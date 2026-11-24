@@ -19,6 +19,8 @@
       "name": "アマゾン",
       "sub": "EC・物流",
       "sub_en": "E-commerce & logistics",
+      "sub_short": "EC・物流",
+      "sub_short_en": "E-com",
       "row": 0,
       "relations": [
         {
@@ -43,6 +45,8 @@
       "name": "ホーム・デポ",
       "sub": "住宅資材小売",
       "sub_en": "Home improvement retail",
+      "sub_short": "住宅資材",
+      "sub_short_en": "Home",
       "row": 0,
       "relations": [
         {
@@ -67,6 +71,8 @@
       "name": "フェデックス",
       "sub": "運送・物流",
       "sub_en": "Parcel & logistics",
+      "sub_short": "物流",
+      "sub_short_en": "Parcel",
       "row": 0,
       "relations": [
         {
@@ -91,6 +97,8 @@
       "name": "ユナイテッド・パーセル・サービス",
       "sub": "運送・物流",
       "sub_en": "Parcel & logistics",
+      "sub_short": "物流",
+      "sub_short_en": "Parcel",
       "row": 0,
       "relations": [
         {
@@ -115,6 +123,8 @@
       "name": "ウォルマート",
       "sub": "総合小売",
       "sub_en": "General retail",
+      "sub_short": "総合小売",
+      "sub_short_en": "Retail",
       "row": 0,
       "relations": [
         {
@@ -139,6 +149,8 @@
       "name": "GXOロジスティクス",
       "sub": "契約物流",
       "sub_en": "Contract logistics",
+      "sub_short": "契約物流",
+      "sub_short_en": "Logistics",
       "row": 0,
       "relations": [
         {
@@ -163,6 +175,8 @@
       "name": "日本プロロジスリート投資法人",
       "sub": "上場共同投資ビークル",
       "sub_en": "Listed co-investment vehicle",
+      "sub_short": "共同投資",
+      "sub_short_en": "Investor",
       "row": 0,
       "relations": [
         {

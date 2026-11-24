@@ -34,6 +34,8 @@
       "name": "GEベルノバ",
       "sub": "発電機器",
       "sub_en": "Power equipment",
+      "sub_short": "発電機器",
+      "sub_short_en": "Power",
       "row": 1,
       "relations": [
         {
@@ -71,6 +73,8 @@
       "name": "GEエアロスペース",
       "sub": "航空エンジン",
       "sub_en": "Aero engines",
+      "sub_short": "エンジン",
+      "sub_short_en": "Engines",
       "row": 1,
       "relations": [
         {
@@ -95,6 +99,8 @@
       "name": "カクタス",
       "sub": "坑口設備",
       "sub_en": "Wellhead equipment",
+      "sub_short": "坑口設備",
+      "sub_short_en": "Wells",
       "row": 0,
       "relations": [
         {
@@ -132,6 +138,8 @@
       "name": "クレーン・カンパニー",
       "sub": "産業機器",
       "sub_en": "Industrial equipment",
+      "sub_short": "産業機器",
+      "sub_short_en": "Industrial",
       "row": 0,
       "relations": [
         {
@@ -156,6 +164,8 @@
       "name": "エスエルビー",
       "sub": "油田サービス",
       "sub_en": "Oilfield services",
+      "sub_short": "油田",
+      "sub_short_en": "Oilfield",
       "row": 0,
       "relations": [
         {
@@ -180,6 +190,8 @@
       "name": "ハリバートン",
       "sub": "油田サービス",
       "sub_en": "Oilfield services",
+      "sub_short": "油田",
+      "sub_short_en": "Oilfield",
       "row": 0,
       "relations": [
         {
@@ -204,6 +216,8 @@
       "name": "エヌオーブイ",
       "sub": "油田機器",
       "sub_en": "Oilfield equipment",
+      "sub_short": "油田機器",
+      "sub_short_en": "Oilfield",
       "row": 0,
       "relations": [
         {
@@ -228,6 +242,8 @@
       "name": "ウェザーフォード",
       "sub": "油田サービス",
       "sub_en": "Oilfield services",
+      "sub_short": "油田",
+      "sub_short_en": "Oilfield",
       "row": 0,
       "relations": [
         {
@@ -252,6 +268,8 @@
       "name": "テクニップFMC",
       "sub": "海底機器",
       "sub_en": "Subsea equipment",
+      "sub_short": "海底機器",
+      "sub_short_en": "Subsea",
       "row": 0,
       "relations": [
         {
@@ -276,6 +294,8 @@
       "name": "フローサーブ",
       "sub": "流体制御機器",
       "sub_en": "Flow control",
+      "sub_short": "流体機器",
+      "sub_short_en": "Valves",
       "row": 0,
       "relations": [
         {
@@ -300,6 +320,8 @@
       "name": "エマソン",
       "sub": "自動化機器",
       "sub_en": "Automation",
+      "sub_short": "自動化",
+      "sub_short_en": "Robotics",
       "row": 0,
       "relations": [
         {
@@ -324,6 +346,8 @@
       "name": "キャタピラー",
       "sub": "建設・鉱山機械",
       "sub_en": "Construction & mining machinery",
+      "sub_short": "建機",
+      "sub_short_en": "Building",
       "row": 2,
       "relations": [
         {
@@ -348,6 +372,8 @@
       "name": "C3.ai",
       "sub": "企業向けAI",
       "sub_en": "Enterprise AI",
+      "sub_short": "AIソフト",
+      "sub_short_en": "AI apps",
       "row": 0,
       "relations": [
         {

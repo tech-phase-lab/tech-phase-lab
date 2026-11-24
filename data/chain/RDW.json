@@ -41,6 +41,8 @@
       "name": "スペースX",
       "sub": "打ち上げ",
       "sub_en": "Launch",
+      "sub_short": "打ち上げ",
+      "sub_short_en": "Launch",
       "row": 0,
       "relations": [
         {
@@ -81,6 +83,8 @@
       "name": "JPモルガン・チェース",
       "sub": "銀行",
       "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
       "row": 3,
       "relations": [
         {
@@ -120,6 +124,8 @@
       "name": "兼松",
       "sub": "商社",
       "sub_en": "Trading company",
+      "sub_short": "商社",
+      "sub_short_en": "Trading",
       "row": 2,
       "relations": [
         {
@@ -144,6 +150,8 @@
       "name": "ムーグ",
       "sub": "航空宇宙・精密制御",
       "sub_en": "Aerospace & motion control",
+      "sub_short": "航空宇宙",
+      "sub_short_en": "Aero",
       "row": 1,
       "relations": [
         {
@@ -168,6 +176,8 @@
       "name": "エアロバイロメント",
       "sub": "防衛・無人機",
       "sub_en": "Defense & drones",
+      "sub_short": "防衛",
+      "sub_short_en": "Defense",
       "row": 4,
       "relations": [
         {
@@ -192,6 +202,8 @@
       "name": "ロケット・ラボ",
       "sub": "宇宙・打ち上げ",
       "sub_en": "Space & launch",
+      "sub_short": "宇宙",
+      "sub_short_en": "Space",
       "row": 4,
       "relations": [
         {
@@ -229,6 +241,8 @@
       "name": "エアバス",
       "sub": "航空宇宙",
       "sub_en": "Aerospace",
+      "sub_short": "航空宇宙",
+      "sub_short_en": "Aero",
       "row": 4,
       "relations": [
         {
@@ -253,6 +267,8 @@
       "name": "ボイジャー・テクノロジーズ",
       "sub": "宇宙機器",
       "sub_en": "Space systems",
+      "sub_short": "宇宙機器",
+      "sub_short_en": "Space",
       "row": 4,
       "relations": [
         {

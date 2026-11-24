@@ -30,6 +30,8 @@
       "name_en": "AZZ",
       "sub": "亜鉛めっき・金属塗装",
       "sub_en": "Galvanizing & coatings",
+      "sub_short": "めっき",
+      "sub_short_en": "Coatings",
       "row": 0,
       "relations": [
         {
@@ -54,6 +56,8 @@
       "name_en": "Brookfield Business Partners",
       "sub": "事業投資",
       "sub_en": "Business investments",
+      "sub_short": "事業投資",
+      "sub_short_en": "Investing",
       "row": 0,
       "relations": [
         {
@@ -78,6 +82,8 @@
       "name_en": "ECM Industries",
       "sub": "電気接続製品",
       "sub_en": "Electrical connection products",
+      "sub_short": "電気部品",
+      "sub_short_en": "Electrical",
       "row": 0,
       "relations": [
         {
@@ -102,6 +108,8 @@
       "name_en": "Trachte",
       "sub": "制御盤用筐体",
       "sub_en": "Control building enclosures",
+      "sub_short": "筐体",
+      "sub_short_en": "Cabinets",
       "row": 0,
       "relations": [
         {
@@ -126,6 +134,8 @@
       "name_en": "Thermon",
       "sub": "産業用ヒーター",
       "sub_en": "Industrial heat tracing",
+      "sub_short": "ヒーター",
+      "sub_short_en": "Heating",
       "row": 1,
       "relations": [
         {
@@ -150,6 +160,8 @@
       "name_en": "Forgent Power Solutions",
       "sub": "配電機器",
       "sub_en": "Power distribution equipment",
+      "sub_short": "配電機器",
+      "sub_short_en": "Power",
       "row": 1,
       "relations": [
         {
@@ -174,6 +186,8 @@
       "name_en": "Atkore",
       "sub": "電線管・ケーブル",
       "sub_en": "Conduit & cable",
+      "sub_short": "電線管",
+      "sub_short_en": "Conduit",
       "row": 1,
       "relations": [
         {
@@ -198,6 +212,8 @@
       "name_en": "ABB",
       "sub": "電機(スイス)",
       "sub_en": "Electrical equipment (Switzerland)",
+      "sub_short": "電機",
+      "sub_short_en": "Electrical",
       "row": 1,
       "relations": [
         {

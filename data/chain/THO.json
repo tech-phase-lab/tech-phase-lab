@@ -32,6 +32,8 @@
       "name_en": "Patrick Industries",
       "sub": "RV部品",
       "sub_en": "RV components",
+      "sub_short": "RV部品",
+      "sub_short_en": "RV parts",
       "row": 0,
       "relations": [
         {
@@ -56,6 +58,8 @@
       "name_en": "LCI Industries",
       "sub": "RV部品",
       "sub_en": "RV components",
+      "sub_short": "RV部品",
+      "sub_short_en": "RV parts",
       "row": 0,
       "relations": [
         {
@@ -80,6 +84,8 @@
       "name_en": "Dragonfly Energy",
       "sub": "RV用リチウム電池",
       "sub_en": "RV lithium batteries",
+      "sub_short": "RV電池",
+      "sub_short_en": "Batteries",
       "row": 0,
       "relations": [
         {
@@ -104,6 +110,8 @@
       "name_en": "FreedomRoads",
       "sub": "RVディーラー",
       "sub_en": "RV dealer",
+      "sub_short": "RV販売",
+      "sub_short_en": "RV dealer",
       "row": 1,
       "relations": [
         {
@@ -128,6 +136,8 @@
       "name_en": "Forest River",
       "sub": "RV",
       "sub_en": "Recreational vehicles",
+      "sub_short": "RV",
+      "sub_short_en": "RVs",
       "row": 2,
       "relations": [
         {
@@ -152,6 +162,8 @@
       "name_en": "Winnebago Industries",
       "sub": "RV",
       "sub_en": "Recreational vehicles",
+      "sub_short": "RV",
+      "sub_short_en": "RVs",
       "row": 2,
       "relations": [
         {

@@ -31,6 +31,8 @@
       "name": "大協精工",
       "sub": "ゴム栓・樹脂容器",
       "sub_en": "Elastomer & resin components",
+      "sub_short": "医薬容器",
+      "sub_short_en": "Rubber",
       "row": 1,
       "relations": [
         {
@@ -55,6 +57,8 @@
       "name": "ダトウィラー",
       "sub": "エラストマー部品",
       "sub_en": "Elastomer components",
+      "sub_short": "ゴム部品",
+      "sub_short_en": "Rubber",
       "row": 0,
       "relations": [
         {
@@ -79,6 +83,8 @@
       "name": "アプターグループ",
       "sub": "薬剤送達システム",
       "sub_en": "Drug delivery systems",
+      "sub_short": "薬剤送達",
+      "sub_short_en": "Delivery",
       "row": 0,
       "relations": [
         {
@@ -103,6 +109,8 @@
       "name": "SMC社",
       "sub": "医療機器受託製造",
       "sub_en": "Device contract manufacturer",
+      "sub_short": "医療機器",
+      "sub_short_en": "Devices",
       "row": 0,
       "relations": [
         {
@@ -127,6 +135,8 @@
       "name": "フィリップス・メディシゼ",
       "sub": "医療機器受託製造",
       "sub_en": "Device contract manufacturer",
+      "sub_short": "医療機器",
+      "sub_short_en": "Devices",
       "row": 0,
       "relations": [
         {
@@ -151,6 +161,8 @@
       "name": "ハロザイム",
       "sub": "薬物送達技術",
       "sub_en": "Drug delivery",
+      "sub_short": "薬物送達",
+      "sub_short_en": "Delivery",
       "row": 2,
       "relations": [
         {

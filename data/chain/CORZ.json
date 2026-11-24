@@ -38,6 +38,8 @@
       "name_en": "Block",
       "sub": "決済・半導体開発",
       "sub_en": "Payments & chip design",
+      "sub_short": "決済",
+      "sub_short_en": "Payment",
       "row": 0,
       "relations": [
         {
@@ -62,6 +64,8 @@
       "name_en": "CoreWeave",
       "sub": "AIクラウド",
       "sub_en": "AI cloud",
+      "sub_short": "AI基盤",
+      "sub_short_en": "AI cloud",
       "row": 1,
       "relations": [
         {
@@ -114,6 +118,8 @@
       "name_en": "Hyperscale Data",
       "sub": "データセンター・採掘",
       "sub_en": "Data centers & mining",
+      "sub_short": "DC",
+      "sub_short_en": "DCs",
       "row": 1,
       "relations": [
         {
@@ -138,6 +144,8 @@
       "name_en": "Equinix",
       "sub": "データセンター",
       "sub_en": "Data centers",
+      "sub_short": "DC",
+      "sub_short_en": "DCs",
       "row": 2,
       "relations": [
         {
@@ -162,6 +170,8 @@
       "name_en": "Digital Realty Trust",
       "sub": "データセンター",
       "sub_en": "Data centers",
+      "sub_short": "DC",
+      "sub_short_en": "DCs",
       "row": 2,
       "relations": [
         {
@@ -186,6 +196,8 @@
       "name_en": "NTT",
       "sub": "通信・データセンター",
       "sub_en": "Telecom & data centers",
+      "sub_short": "通信・DC",
+      "sub_short_en": "Telecom",
       "row": 2,
       "relations": [
         {
@@ -210,6 +222,8 @@
       "name_en": "Applied Digital",
       "sub": "AIデータセンター",
       "sub_en": "AI data centers",
+      "sub_short": "AI向けDC",
+      "sub_short_en": "AI DCs",
       "row": 2,
       "relations": [
         {
@@ -247,6 +261,8 @@
       "name_en": "IREN",
       "sub": "AIクラウド・データセンター",
       "sub_en": "AI cloud & data centers",
+      "sub_short": "AI基盤",
+      "sub_short_en": "AI cloud",
       "row": 2,
       "relations": [
         {
@@ -271,6 +287,8 @@
       "name_en": "Cipher Digital",
       "sub": "AIデータセンター",
       "sub_en": "AI data centers",
+      "sub_short": "AI向けDC",
+      "sub_short_en": "AI DCs",
       "row": 2,
       "relations": [
         {
@@ -308,6 +326,8 @@
       "name_en": "Hut 8",
       "sub": "AIデータセンター",
       "sub_en": "AI data centers",
+      "sub_short": "AI向けDC",
+      "sub_short_en": "AI DCs",
       "row": 2,
       "relations": [
         {
@@ -332,6 +352,8 @@
       "name_en": "TeraWulf",
       "sub": "AIデータセンター",
       "sub_en": "AI data centers",
+      "sub_short": "AI向けDC",
+      "sub_short_en": "AI DCs",
       "row": 2,
       "relations": [
         {
@@ -356,6 +378,8 @@
       "name_en": "Galaxy Digital",
       "sub": "デジタル資産・データセンター",
       "sub_en": "Digital assets & data centers",
+      "sub_short": "暗号資産",
+      "sub_short_en": "Crypto",
       "row": 2,
       "relations": [
         {
@@ -380,6 +404,8 @@
       "name_en": "CleanSpark",
       "sub": "ビットコイン採掘",
       "sub_en": "Bitcoin mining",
+      "sub_short": "BTC採掘",
+      "sub_short_en": "Bitcoin",
       "row": 3,
       "relations": [
         {
@@ -417,6 +443,8 @@
       "name_en": "Bitfarms",
       "sub": "ビットコイン採掘",
       "sub_en": "Bitcoin mining",
+      "sub_short": "BTC採掘",
+      "sub_short_en": "Bitcoin",
       "row": 3,
       "relations": [
         {
@@ -441,6 +469,8 @@
       "name_en": "Bit Digital",
       "sub": "ビットコイン採掘",
       "sub_en": "Bitcoin mining",
+      "sub_short": "BTC採掘",
+      "sub_short_en": "Bitcoin",
       "row": 3,
       "relations": [
         {

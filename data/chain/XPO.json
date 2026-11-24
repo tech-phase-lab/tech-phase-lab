@@ -30,6 +30,8 @@
       "name_en": "GXO Logistics",
       "sub": "物流受託",
       "sub_en": "Contract logistics",
+      "sub_short": "物流受託",
+      "sub_short_en": "Logistics",
       "row": 0,
       "relations": [
         {
@@ -54,6 +56,8 @@
       "name_en": "RXO",
       "sub": "トラック輸送の仲介",
       "sub_en": "Truck brokerage",
+      "sub_short": "物流仲介",
+      "sub_short_en": "Freight",
       "row": 0,
       "relations": [
         {
@@ -78,6 +82,8 @@
       "name_en": "Old Dominion Freight Line",
       "sub": "混載トラック輸送(LTL)",
       "sub_en": "Less-than-truckload",
+      "sub_short": "混載輸送",
+      "sub_short_en": "Trucking",
       "row": 1,
       "relations": [
         {
@@ -102,6 +108,8 @@
       "name_en": "Saia",
       "sub": "混載トラック輸送(LTL)",
       "sub_en": "Less-than-truckload",
+      "sub_short": "混載輸送",
+      "sub_short_en": "Trucking",
       "row": 1,
       "relations": [
         {
@@ -126,6 +134,8 @@
       "name_en": "FedEx",
       "sub": "物流・宅配",
       "sub_en": "Logistics & parcel",
+      "sub_short": "物流",
+      "sub_short_en": "Logistics",
       "row": 1,
       "relations": [
         {
@@ -150,6 +160,8 @@
       "name_en": "TFI International",
       "sub": "トラック輸送(カナダ)",
       "sub_en": "Trucking (Canada)",
+      "sub_short": "トラック",
+      "sub_short_en": "Trucking",
       "row": 1,
       "relations": [
         {

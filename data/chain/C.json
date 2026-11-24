@@ -25,6 +25,8 @@
       "name_en": "American Airlines",
       "sub": "航空",
       "sub_en": "Airline",
+      "sub_short": "航空",
+      "sub_short_en": "Airline",
       "row": 0,
       "relations": [
         {
@@ -49,6 +51,8 @@
       "name_en": "Banco de Chile",
       "sub": "銀行(チリ)",
       "sub_en": "Bank (Chile)",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
       "row": 0,
       "relations": [
         {
@@ -73,6 +77,8 @@
       "name_en": "TD SYNNEX",
       "sub": "IT流通",
       "sub_en": "IT distribution",
+      "sub_short": "IT流通",
+      "sub_short_en": "IT",
       "row": 1,
       "relations": [
         {
@@ -97,6 +103,8 @@
       "name_en": "Science Applications International",
       "sub": "政府ITサービス",
       "sub_en": "Government IT services",
+      "sub_short": "政府IT",
+      "sub_short_en": "Gov IT",
       "row": 1,
       "relations": [
         {
@@ -121,6 +129,8 @@
       "name_en": "Dana",
       "sub": "自動車部品",
       "sub_en": "Auto parts",
+      "sub_short": "車部品",
+      "sub_short_en": "Car parts",
       "row": 1,
       "relations": [
         {
@@ -145,6 +155,8 @@
       "name_en": "Magnite",
       "sub": "広告技術",
       "sub_en": "Ad tech",
+      "sub_short": "広告技術",
+      "sub_short_en": "Ad tech",
       "row": 1,
       "relations": [
         {
@@ -169,6 +181,8 @@
       "name_en": "Carvana",
       "sub": "中古車ネット販売",
       "sub_en": "Online used cars",
+      "sub_short": "中古車",
+      "sub_short_en": "Cars",
       "row": 1,
       "relations": [
         {
@@ -193,6 +207,8 @@
       "name_en": "Recursion Pharmaceuticals",
       "sub": "AI創薬",
       "sub_en": "AI drug discovery",
+      "sub_short": "AI創薬",
+      "sub_short_en": "AI drugs",
       "row": 1,
       "relations": [
         {

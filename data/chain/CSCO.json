@@ -37,6 +37,8 @@
       "name": "Viavi Solutions",
       "sub": "試験・計測",
       "sub_en": "Test & measurement",
+      "sub_short": "計測",
+      "sub_short_en": "Testing",
       "row": 0,
       "relations": [
         {
@@ -62,6 +64,8 @@
       "name": "NVIDIA",
       "sub": "AI半導体",
       "sub_en": "AI chips",
+      "sub_short": "AI半導体",
+      "sub_short_en": "AI chips",
       "row": 1,
       "relations": [
         {
@@ -84,6 +88,8 @@
       "name": "AMD",
       "sub": "AI半導体",
       "sub_en": "AI chips",
+      "sub_short": "AI半導体",
+      "sub_short_en": "AI chips",
       "row": 1,
       "relations": [
         {
@@ -106,6 +112,8 @@
       "name": "Supermicro",
       "sub": "AIサーバー",
       "sub_en": "AI servers",
+      "sub_short": "AI機器",
+      "sub_short_en": "AI servers",
       "row": 1,
       "relations": [
         {
@@ -140,6 +148,8 @@
       "name": "NetApp",
       "sub": "データストレージ",
       "sub_en": "Data storage",
+      "sub_short": "記憶装置",
+      "sub_short_en": "Storage",
       "row": 1,
       "relations": [
         {
@@ -163,6 +173,8 @@
       "name": "Box",
       "sub": "クラウドコンテンツ管理",
       "sub_en": "Cloud content management",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 1,
       "relations": [
         {
@@ -186,6 +198,8 @@
       "name": "Dropbox",
       "sub": "クラウドストレージ",
       "sub_en": "Cloud storage",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 1,
       "relations": [
         {
@@ -209,6 +223,8 @@
       "name": "Nutanix",
       "sub": "ハイブリッドクラウド",
       "sub_en": "Hybrid cloud",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 1,
       "relations": [
         {
@@ -232,6 +248,8 @@
       "name": "Bandwidth",
       "sub": "通信API",
       "sub_en": "Communications APIs",
+      "sub_short": "通信API",
+      "sub_short_en": "APIs",
       "row": 1,
       "relations": [
         {
@@ -268,6 +286,8 @@
       "name": "Bank of America",
       "sub": "銀行",
       "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
       "row": 2,
       "relations": [
         {
@@ -293,6 +313,8 @@
       "name": "アリスタネットワークス",
       "sub": "ネットワーク機器",
       "sub_en": "Networking",
+      "sub_short": "通信機器",
+      "sub_short_en": "Network",
       "row": 3,
       "relations": [
         {
@@ -317,6 +339,8 @@
       "name": "ヒューレット・パッカード・エンタープライズ",
       "sub": "IT基盤",
       "sub_en": "IT infrastructure",
+      "sub_short": "IT基盤",
+      "sub_short_en": "IT infra",
       "row": 3,
       "relations": [
         {
@@ -354,6 +378,8 @@
       "name": "フォーティネット",
       "sub": "セキュリティ",
       "sub_en": "Security",
+      "sub_short": "防御",
+      "sub_short_en": "Security",
       "row": 3,
       "relations": [
         {
@@ -378,6 +404,8 @@
       "name": "パロアルトネットワークス",
       "sub": "セキュリティ",
       "sub_en": "Security",
+      "sub_short": "防御",
+      "sub_short_en": "Security",
       "row": 3,
       "relations": [
         {
@@ -402,6 +430,8 @@
       "name": "データドッグ",
       "sub": "監視・可観測性",
       "sub_en": "Observability",
+      "sub_short": "監視",
+      "sub_short_en": "Monitors",
       "row": 3,
       "relations": [
         {
@@ -439,6 +469,8 @@
       "name": "ダイナトレース",
       "sub": "可観測性",
       "sub_en": "Observability",
+      "sub_short": "可観測性",
+      "sub_short_en": "Monitors",
       "row": 3,
       "relations": [
         {
@@ -463,6 +495,8 @@
       "name": "チェック・ポイント",
       "sub": "セキュリティ",
       "sub_en": "Security",
+      "sub_short": "防御",
+      "sub_short_en": "Security",
       "row": 3,
       "relations": [
         {
@@ -487,6 +521,8 @@
       "name": "シエナ",
       "sub": "光ネットワーク",
       "sub_en": "Optical networking",
+      "sub_short": "光通信",
+      "sub_short_en": "Optics",
       "row": 3,
       "relations": [
         {
@@ -511,6 +547,8 @@
       "name": "ファイブナイン",
       "sub": "コンタクトセンター",
       "sub_en": "Contact center",
+      "sub_short": "顧客対応",
+      "sub_short_en": "CX",
       "row": 3,
       "relations": [
         {
@@ -535,6 +573,8 @@
       "name": "ナイス",
       "sub": "コンタクトセンター",
       "sub_en": "Contact center",
+      "sub_short": "顧客対応",
+      "sub_short_en": "CX",
       "row": 3,
       "relations": [
         {
@@ -559,6 +599,8 @@
       "name": "ズーム",
       "sub": "Web会議",
       "sub_en": "Video meetings",
+      "sub_short": "Web会議",
+      "sub_short_en": "Video",
       "row": 3,
       "relations": [
         {
@@ -583,6 +625,8 @@
       "name": "リングセントラル",
       "sub": "クラウド通信",
       "sub_en": "Cloud communications",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 3,
       "relations": [
         {
@@ -607,6 +651,8 @@
       "name": "ビスタンス・ネットワークス",
       "sub": "ネットワーク機器",
       "sub_en": "Networking equipment",
+      "sub_short": "通信機器",
+      "sub_short_en": "Network",
       "row": 3,
       "relations": [
         {

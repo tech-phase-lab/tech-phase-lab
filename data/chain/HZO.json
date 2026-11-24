@@ -25,6 +25,8 @@
       "name_en": "Brunswick",
       "sub": "ボート・マリン製品",
       "sub_en": "Boats & marine products",
+      "sub_short": "ボート",
+      "sub_short_en": "Boats",
       "row": 0,
       "relations": [
         {
@@ -49,6 +51,8 @@
       "name_en": "Azimut-Benetti",
       "sub": "ヨット(伊)",
       "sub_en": "Yachts (Italy)",
+      "sub_short": "ヨット",
+      "sub_short_en": "Yachts",
       "row": 0,
       "relations": [
         {
@@ -73,6 +77,8 @@
       "name_en": "Williams Jet Tenders",
       "sub": "ジェットテンダー(英)",
       "sub_en": "Jet tenders (UK)",
+      "sub_short": "船艇",
+      "sub_short_en": "Boats",
       "row": 0,
       "relations": [
         {
@@ -97,6 +103,8 @@
       "name_en": "Atalanta Golden Yachts",
       "sub": "ヨットチャーター運営(希)",
       "sub_en": "Yacht charter management (Greece)",
+      "sub_short": "ヨット",
+      "sub_short_en": "Yachts",
       "row": 1,
       "relations": [
         {
@@ -121,6 +129,8 @@
       "name_en": "Native Marine",
       "sub": "ボート販売",
       "sub_en": "Boat dealer",
+      "sub_short": "ボート",
+      "sub_short_en": "Boats",
       "row": 1,
       "relations": [
         {
@@ -145,6 +155,8 @@
       "name_en": "Shelter Bay Marina",
       "sub": "マリーナ",
       "sub_en": "Marina",
+      "sub_short": "マリーナ",
+      "sub_short_en": "Marina",
       "row": 1,
       "relations": [
         {
@@ -169,6 +181,8 @@
       "name_en": "Treasure Island Marina",
       "sub": "マリーナ",
       "sub_en": "Marina",
+      "sub_short": "マリーナ",
+      "sub_short_en": "Marina",
       "row": 1,
       "relations": [
         {
@@ -193,6 +207,8 @@
       "name_en": "NextBoat",
       "sub": "中古艇取引",
       "sub_en": "Pre-owned boat marketplace",
+      "sub_short": "中古艇",
+      "sub_short_en": "Boats",
       "row": 1,
       "relations": [
         {

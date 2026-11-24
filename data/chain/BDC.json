@@ -22,12 +22,14 @@
   ],
   "companies": [
     {
-      "id": "Precision",
+      "id": "PrecisionOptical",
       "ticker": "Precision Optical",
       "name": "プレシジョン・オプティカル・テクノロジーズ",
       "name_en": "Precision Optical Technologies",
       "sub": "光通信部品",
       "sub_en": "Optical components",
+      "sub_short": "光部品",
+      "sub_short_en": "Optics",
       "row": 0,
       "relations": [
         {
@@ -52,6 +54,8 @@
       "name_en": "Berthold Sichert",
       "sub": "通信用キャビネット(ドイツ)",
       "sub_en": "Telecom cabinets (Germany)",
+      "sub_short": "筐体",
+      "sub_short_en": "Cabinets",
       "row": 0,
       "relations": [
         {
@@ -76,6 +80,8 @@
       "name_en": "CloudRail",
       "sub": "産業IoT(ドイツ)",
       "sub_en": "Industrial IoT (Germany)",
+      "sub_short": "産業IoT",
+      "sub_short_en": "IoT",
       "row": 0,
       "relations": [
         {
@@ -100,6 +106,8 @@
       "name_en": "Optical Cable",
       "sub": "光ファイバーケーブル",
       "sub_en": "Fiber optic cable",
+      "sub_short": "光通信",
+      "sub_short_en": "Fiber",
       "row": 1,
       "relations": [
         {
@@ -124,6 +132,8 @@
       "name_en": "Clearfield",
       "sub": "光ファイバー管理",
       "sub_en": "Fiber management",
+      "sub_short": "光通信",
+      "sub_short_en": "Fiber",
       "row": 1,
       "relations": [
         {
@@ -148,6 +158,8 @@
       "name_en": "Actelis Networks",
       "sub": "産業用ネットワーク",
       "sub_en": "Industrial networking",
+      "sub_short": "通信機器",
+      "sub_short_en": "Network",
       "row": 1,
       "relations": [
         {

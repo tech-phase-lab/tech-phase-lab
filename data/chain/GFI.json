@@ -28,6 +28,8 @@
       "name_en": "Osisko Mining",
       "sub": "金開発(カナダ)",
       "sub_en": "Gold development (Canada)",
+      "sub_short": "金開発",
+      "sub_short_en": "Gold",
       "row": 0,
       "relations": [
         {
@@ -52,6 +54,8 @@
       "name_en": "Gold Road Resources",
       "sub": "金鉱山(豪)",
       "sub_en": "Gold mining (Australia)",
+      "sub_short": "金鉱山",
+      "sub_short_en": "Gold",
       "row": 0,
       "relations": [
         {
@@ -76,6 +80,8 @@
       "name_en": "AngloGold Ashanti",
       "sub": "金鉱山",
       "sub_en": "Gold mining",
+      "sub_short": "金鉱山",
+      "sub_short_en": "Gold",
       "row": 0,
       "relations": [
         {
@@ -102,6 +108,8 @@
       "name_en": "Torq Resources",
       "sub": "探鉱(チリ)",
       "sub_en": "Exploration (Chile)",
+      "sub_short": "探鉱",
+      "sub_short_en": "Mining",
       "row": 1,
       "relations": [
         {
@@ -126,6 +134,8 @@
       "name_en": "Tesoro Gold",
       "sub": "探鉱(チリ)",
       "sub_en": "Exploration (Chile)",
+      "sub_short": "探鉱",
+      "sub_short_en": "Mining",
       "row": 1,
       "relations": [
         {
@@ -150,6 +160,8 @@
       "name_en": "Yamana Gold",
       "sub": "金鉱山",
       "sub_en": "Gold mining",
+      "sub_short": "金鉱山",
+      "sub_short_en": "Gold",
       "row": 2,
       "relations": [
         {
@@ -174,6 +186,8 @@
       "name_en": "Pan American Silver",
       "sub": "銀・金鉱山",
       "sub_en": "Silver & gold mining",
+      "sub_short": "銀鉱山",
+      "sub_short_en": "Silver",
       "row": 2,
       "relations": [
         {
@@ -198,6 +212,8 @@
       "name_en": "Agnico Eagle Mines",
       "sub": "金鉱山",
       "sub_en": "Gold mining",
+      "sub_short": "金鉱山",
+      "sub_short_en": "Gold",
       "row": 2,
       "relations": [
         {

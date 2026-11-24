@@ -25,6 +25,8 @@
       "name": "エイコム",
       "sub": "エンジニアリング",
       "sub_en": "Engineering",
+      "sub_short": "技術",
+      "sub_short_en": "Design",
       "row": 0,
       "relations": [
         {
@@ -49,6 +51,8 @@
       "name": "テトラ・テック",
       "sub": "エンジニアリング",
       "sub_en": "Engineering",
+      "sub_short": "技術",
+      "sub_short_en": "Design",
       "row": 0,
       "relations": [
         {
@@ -73,6 +77,8 @@
       "name": "ダブリューエスピー",
       "sub": "エンジニアリング",
       "sub_en": "Engineering",
+      "sub_short": "技術",
+      "sub_short_en": "Design",
       "row": 0,
       "relations": [
         {
@@ -97,6 +103,8 @@
       "name": "ベクテル",
       "sub": "建設・設計",
       "sub_en": "Engineering & construction",
+      "sub_short": "建設",
+      "sub_short_en": "Design",
       "row": 0,
       "relations": [
         {
@@ -121,6 +129,8 @@
       "name": "パーソンズ",
       "sub": "政府系エンジニアリング",
       "sub_en": "Government engineering",
+      "sub_short": "政府技術",
+      "sub_short_en": "Gov IT",
       "row": 0,
       "relations": [
         {
@@ -145,6 +155,8 @@
       "name": "フルアー",
       "sub": "建設・設計",
       "sub_en": "Engineering & construction",
+      "sub_short": "建設",
+      "sub_short_en": "Design",
       "row": 0,
       "relations": [
         {
@@ -169,6 +181,8 @@
       "name": "アクセンチュア",
       "sub": "コンサル・IT",
       "sub_en": "Consulting & IT",
+      "sub_short": "コンサル",
+      "sub_short_en": "Advisory",
       "row": 0,
       "relations": [
         {
@@ -193,6 +207,8 @@
       "name": "アメンタム",
       "sub": "分離した事業",
       "sub_en": "Spun-off business",
+      "sub_short": "分社",
+      "sub_short_en": "Spinoff",
       "row": 0,
       "relations": [
         {

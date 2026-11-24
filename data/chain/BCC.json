@@ -35,6 +35,8 @@
       "name_en": "James Hardie",
       "sub": "外装材",
       "sub_en": "Siding",
+      "sub_short": "外装材",
+      "sub_short_en": "Siding",
       "row": 0,
       "relations": [
         {
@@ -59,6 +61,8 @@
       "name_en": "Builders FirstSource",
       "sub": "建材流通",
       "sub_en": "Building materials supply",
+      "sub_short": "建材流通",
+      "sub_short_en": "Building",
       "row": 1,
       "relations": [
         {
@@ -83,6 +87,8 @@
       "name_en": "The Home Depot",
       "sub": "ホームセンター",
       "sub_en": "Home improvement retail",
+      "sub_short": "住宅用品",
+      "sub_short_en": "Home",
       "row": 1,
       "relations": [
         {
@@ -107,6 +113,8 @@
       "name_en": "Brockway-Smith (BROSCO)",
       "sub": "ドア・造作材の卸",
       "sub_en": "Doors & millwork wholesale",
+      "sub_short": "ドア",
+      "sub_short_en": "Doors",
       "row": 2,
       "relations": [
         {
@@ -131,6 +139,8 @@
       "name_en": "Coastal Plywood",
       "sub": "合板",
       "sub_en": "Plywood",
+      "sub_short": "合板",
+      "sub_short_en": "Plywood",
       "row": 2,
       "relations": [
         {
@@ -155,6 +165,8 @@
       "name_en": "BlueLinx",
       "sub": "建材流通",
       "sub_en": "Building materials distribution",
+      "sub_short": "建材流通",
+      "sub_short_en": "Building",
       "row": 3,
       "relations": [
         {

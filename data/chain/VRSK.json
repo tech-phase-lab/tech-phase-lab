@@ -29,6 +29,8 @@
       "name_en": "AccuLynx",
       "sub": "屋根工事業者向けソフト",
       "sub_en": "Roofing contractor software",
+      "sub_short": "建設IT",
+      "sub_short_en": "Roofing",
       "row": 0,
       "relations": [
         {
@@ -53,6 +55,8 @@
       "name_en": "Slide Insurance",
       "sub": "住宅保険(フロリダ)",
       "sub_en": "Homeowners insurance (Florida)",
+      "sub_short": "住宅保険",
+      "sub_short_en": "Insurance",
       "row": 0,
       "relations": [
         {
@@ -77,6 +81,8 @@
       "name_en": "TransUnion",
       "sub": "信用情報",
       "sub_en": "Credit information",
+      "sub_short": "信用情報",
+      "sub_short_en": "Credit",
       "row": 1,
       "relations": [
         {
@@ -101,6 +107,8 @@
       "name_en": "RELX",
       "sub": "情報・分析(英)",
       "sub_en": "Information & analytics (UK)",
+      "sub_short": "情報",
+      "sub_short_en": "Data",
       "row": 1,
       "relations": [
         {
@@ -125,6 +133,8 @@
       "name_en": "Solera",
       "sub": "自動車保険・修理のソフト",
       "sub_en": "Auto claims & repair software",
+      "sub_short": "車両保険",
+      "sub_short_en": "Claims",
       "row": 1,
       "relations": [
         {

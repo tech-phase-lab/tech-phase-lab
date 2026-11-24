@@ -30,6 +30,8 @@
       "name": "アプライド マテリアルズ",
       "sub": "半導体製造装置",
       "sub_en": "Chip equipment",
+      "sub_short": "製造装置",
+      "sub_short_en": "Chip tools",
       "row": 0,
       "relations": [
         {
@@ -67,6 +69,8 @@
       "name": "オースター",
       "sub": "ライダーセンサー",
       "sub_en": "Lidar sensors",
+      "sub_short": "LiDAR",
+      "sub_short_en": "Lidar",
       "row": 0,
       "relations": [
         {
@@ -93,6 +97,8 @@
       "name": "AEye",
       "sub": "ライダーセンサー",
       "sub_en": "Lidar sensors",
+      "sub_short": "LiDAR",
+      "sub_short_en": "Lidar",
       "row": 0,
       "relations": [
         {
@@ -118,6 +124,8 @@
       "name": "バンク・オブ・アメリカ",
       "sub": "銀行",
       "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
       "row": 1,
       "relations": [
         {
@@ -157,6 +165,8 @@
       "name": "フレックス",
       "sub": "EMS",
       "sub_en": "EMS",
+      "sub_short": "EMS",
+      "sub_short_en": "EMS",
       "row": 2,
       "relations": [
         {
@@ -194,6 +204,8 @@
       "name": "サンミナ",
       "sub": "EMS",
       "sub_en": "EMS",
+      "sub_short": "EMS",
+      "sub_short_en": "EMS",
       "row": 2,
       "relations": [
         {
@@ -218,6 +230,8 @@
       "name": "ウルトラ・クリーン・ホールディングス",
       "sub": "半導体装置部品",
       "sub_en": "Chip equipment subsystems",
+      "sub_short": "装置部品",
+      "sub_short_en": "Tool parts",
       "row": 2,
       "relations": [
         {

@@ -30,6 +30,8 @@
       "name_en": "JBT Marel",
       "sub": "食品機械",
       "sub_en": "Food processing equipment",
+      "sub_short": "食品機械",
+      "sub_short_en": "Food gear",
       "row": 0,
       "relations": [
         {
@@ -54,6 +56,8 @@
       "name_en": "AUSA",
       "sub": "小型建機(スペイン)",
       "sub_en": "Compact equipment (Spain)",
+      "sub_short": "小型建機",
+      "sub_short_en": "Machines",
       "row": 0,
       "relations": [
         {
@@ -78,6 +82,8 @@
       "name_en": "Hinowa",
       "sub": "クローラー式高所作業車(伊)",
       "sub_en": "Crawler booms (Italy)",
+      "sub_short": "作業車",
+      "sub_short_en": "Lifts",
       "row": 0,
       "relations": [
         {
@@ -102,6 +108,8 @@
       "name_en": "Terex",
       "sub": "高所作業車・建機",
       "sub_en": "Aerial work platforms & machinery",
+      "sub_short": "作業車",
+      "sub_short_en": "Lifts",
       "row": 1,
       "relations": [
         {
@@ -126,6 +134,8 @@
       "name_en": "REV Group",
       "sub": "消防車・特殊車両",
       "sub_en": "Fire trucks & specialty vehicles",
+      "sub_short": "消防車",
+      "sub_short_en": "Trucks",
       "row": 1,
       "relations": [
         {
@@ -150,6 +160,8 @@
       "name_en": "Federal Signal",
       "sub": "特殊車両",
       "sub_en": "Specialty vehicles",
+      "sub_short": "特殊車両",
+      "sub_short_en": "Vehicles",
       "row": 1,
       "relations": [
         {
@@ -174,6 +186,8 @@
       "name_en": "General Dynamics",
       "sub": "防衛",
       "sub_en": "Defense",
+      "sub_short": "防衛",
+      "sub_short_en": "Defense",
       "row": 1,
       "relations": [
         {
@@ -198,6 +212,8 @@
       "name_en": "General Motors",
       "sub": "自動車",
       "sub_en": "Autos",
+      "sub_short": "自動車",
+      "sub_short_en": "Autos",
       "row": 1,
       "relations": [
         {
@@ -222,6 +238,8 @@
       "name_en": "BAE Systems",
       "sub": "防衛(英)",
       "sub_en": "Defense (UK)",
+      "sub_short": "防衛",
+      "sub_short_en": "Defense",
       "row": 1,
       "relations": [
         {
@@ -246,6 +264,8 @@
       "name_en": "Linamar",
       "sub": "自動車部品・高所作業車(加)",
       "sub_en": "Auto parts & aerial platforms (Canada)",
+      "sub_short": "車部品",
+      "sub_short_en": "Car parts",
       "row": 1,
       "relations": [
         {
@@ -270,6 +290,8 @@
       "name_en": "Palfinger",
       "sub": "クレーン(墺)",
       "sub_en": "Cranes (Austria)",
+      "sub_short": "クレーン",
+      "sub_short_en": "Cranes",
       "row": 1,
       "relations": [
         {

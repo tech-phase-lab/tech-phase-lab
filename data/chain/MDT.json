@@ -31,6 +31,8 @@
       "name_en": "MiniMed Group",
       "sub": "糖尿病機器",
       "sub_en": "Diabetes devices",
+      "sub_short": "糖尿病",
+      "sub_short_en": "Diabetes",
       "row": 0,
       "relations": [
         {
@@ -55,6 +57,8 @@
       "name_en": "Orchestra BioMed",
       "sub": "循環器医療機器",
       "sub_en": "Cardiology devices",
+      "sub_short": "循環器",
+      "sub_short_en": "Cardiac",
       "row": 0,
       "relations": [
         {
@@ -79,6 +83,8 @@
       "name_en": "Anteris Technologies",
       "sub": "心臓弁",
       "sub_en": "Heart valves",
+      "sub_short": "心臓弁",
+      "sub_short_en": "Valves",
       "row": 0,
       "relations": [
         {
@@ -116,6 +122,8 @@
       "name_en": "Acutus Medical",
       "sub": "心臓電気生理",
       "sub_en": "Cardiac electrophysiology",
+      "sub_short": "心臓機器",
+      "sub_short_en": "Cardiac",
       "row": 0,
       "relations": [
         {
@@ -140,6 +148,8 @@
       "name_en": "Inspire Medical Systems",
       "sub": "睡眠時無呼吸治療",
       "sub_en": "Sleep apnea devices",
+      "sub_short": "睡眠治療",
+      "sub_short_en": "Sleep",
       "row": 0,
       "relations": [
         {
@@ -164,6 +174,8 @@
       "name_en": "DaVita",
       "sub": "透析サービス",
       "sub_en": "Dialysis services",
+      "sub_short": "透析",
+      "sub_short_en": "Dialysis",
       "row": 0,
       "relations": [
         {
@@ -188,6 +200,8 @@
       "name_en": "NeuroPace",
       "sub": "てんかん治療機器",
       "sub_en": "Epilepsy devices",
+      "sub_short": "てんかん",
+      "sub_short_en": "Epilepsy",
       "row": 0,
       "relations": [
         {
@@ -212,6 +226,8 @@
       "name_en": "Edwards Lifesciences",
       "sub": "心臓弁",
       "sub_en": "Heart valves",
+      "sub_short": "心臓弁",
+      "sub_short_en": "Valves",
       "row": 1,
       "relations": [
         {
@@ -236,6 +252,8 @@
       "name_en": "Insulet",
       "sub": "インスリンポンプ",
       "sub_en": "Insulin pumps",
+      "sub_short": "糖尿病",
+      "sub_short_en": "Insulin",
       "row": 1,
       "relations": [
         {
@@ -260,6 +278,8 @@
       "name_en": "Tandem Diabetes Care",
       "sub": "インスリンポンプ",
       "sub_en": "Insulin pumps",
+      "sub_short": "糖尿病",
+      "sub_short_en": "Insulin",
       "row": 1,
       "relations": [
         {
@@ -284,6 +304,8 @@
       "name_en": "Beta Bionics",
       "sub": "インスリンポンプ",
       "sub_en": "Insulin pumps",
+      "sub_short": "糖尿病",
+      "sub_short_en": "Insulin",
       "row": 1,
       "relations": [
         {
@@ -308,6 +330,8 @@
       "name_en": "Senseonics",
       "sub": "持続血糖測定",
       "sub_en": "Continuous glucose monitoring",
+      "sub_short": "血糖測定",
+      "sub_short_en": "CGM",
       "row": 1,
       "relations": [
         {
@@ -332,6 +356,8 @@
       "name_en": "Nevro",
       "sub": "脊髄刺激装置",
       "sub_en": "Spinal cord stimulators",
+      "sub_short": "神経刺激",
+      "sub_short_en": "Neuro",
       "row": 1,
       "relations": [
         {
@@ -356,6 +382,8 @@
       "name_en": "Artivion",
       "sub": "心臓・大動脈機器",
       "sub_en": "Cardiac & aortic devices",
+      "sub_short": "心臓機器",
+      "sub_short_en": "Cardiac",
       "row": 1,
       "relations": [
         {

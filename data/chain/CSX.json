@@ -22,6 +22,8 @@
       "name": "ノーフォーク・サザン",
       "sub": "鉄道・競合",
       "sub_en": "Railroad rival",
+      "sub_short": "鉄道",
+      "sub_short_en": "Railroad",
       "row": 0,
       "relations": [
         {
@@ -85,6 +87,8 @@
       "name": "ユニオン・パシフィック",
       "sub": "鉄道",
       "sub_en": "Railroad",
+      "sub_short": "鉄道",
+      "sub_short_en": "Railroad",
       "row": 0,
       "relations": [
         {
@@ -109,6 +113,8 @@
       "name": "TTX社",
       "sub": "貨車プール",
       "sub_en": "Railcar pooling",
+      "sub_short": "貨車",
+      "sub_short_en": "Railcars",
       "row": 0,
       "relations": [
         {
@@ -133,6 +139,8 @@
       "name": "コンレール",
       "sub": "共同保有の鉄道",
       "sub_en": "Jointly owned rail",
+      "sub_short": "鉄道",
+      "sub_short_en": "Railroad",
       "row": 0,
       "relations": [
         {
@@ -157,6 +165,8 @@
       "name": "カナディアン・パシフィック・カンザスシティ",
       "sub": "鉄道",
       "sub_en": "Railroad",
+      "sub_short": "鉄道",
+      "sub_short_en": "Railroad",
       "row": 0,
       "relations": [
         {

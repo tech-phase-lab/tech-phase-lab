@@ -28,6 +28,8 @@
       "name": "サムスン",
       "sub": "ダクトレス空調JV",
       "sub_en": "Ductless HVAC JV",
+      "sub_short": "空調JV",
+      "sub_short_en": "HVAC JV",
       "row": 0,
       "relations": [
         {
@@ -52,6 +54,8 @@
       "name": "アリストン・グループ",
       "sub": "給湯器JV",
       "sub_en": "Water heater JV",
+      "sub_short": "給湯器JV",
+      "sub_short_en": "Heaters",
       "row": 0,
       "relations": [
         {
@@ -76,6 +80,8 @@
       "name": "キャリア・グローバル",
       "sub": "空調大手",
       "sub_en": "HVAC major",
+      "sub_short": "空調大手",
+      "sub_short_en": "HVAC",
       "row": 1,
       "relations": [
         {
@@ -100,6 +106,8 @@
       "name": "トレイン・テクノロジーズ",
       "sub": "空調大手",
       "sub_en": "HVAC major",
+      "sub_short": "空調大手",
+      "sub_short_en": "HVAC",
       "row": 1,
       "relations": [
         {
@@ -124,6 +132,8 @@
       "name": "ダイキン工業",
       "sub": "空調大手",
       "sub_en": "HVAC major",
+      "sub_short": "空調大手",
+      "sub_short_en": "HVAC",
       "row": 1,
       "relations": [
         {
@@ -148,6 +158,8 @@
       "name": "パロマ工業",
       "sub": "給湯・空調",
       "sub_en": "Water heating & HVAC",
+      "sub_short": "給湯",
+      "sub_short_en": "Heaters",
       "row": 1,
       "relations": [
         {
@@ -172,6 +184,8 @@
       "name": "エマソン・エレクトリック",
       "sub": "冷凍機器",
       "sub_en": "Refrigeration",
+      "sub_short": "冷凍機器",
+      "sub_short_en": "Cooling",
       "row": 1,
       "relations": [
         {
@@ -196,6 +210,8 @@
       "name": "エーエーオーエヌ",
       "sub": "業務用空調",
       "sub_en": "Commercial HVAC",
+      "sub_short": "空調",
+      "sub_short_en": "HVAC",
       "row": 1,
       "relations": [
         {

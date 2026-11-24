@@ -32,6 +32,8 @@
       "name_en": "Anixter",
       "sub": "電線・通信機器の流通",
       "sub_en": "Wire, cable & network distribution",
+      "sub_short": "電線",
+      "sub_short_en": "Cable",
       "row": 0,
       "relations": [
         {
@@ -56,6 +58,8 @@
       "name_en": "Rahi Systems",
       "sub": "データセンター設備",
       "sub_en": "Data center solutions",
+      "sub_short": "DC設備",
+      "sub_short_en": "DCs",
       "row": 0,
       "relations": [
         {
@@ -80,6 +84,8 @@
       "name_en": "entroCIM",
       "sub": "ビル管理ソフト",
       "sub_en": "Building analytics software",
+      "sub_short": "ビル管理",
+      "sub_short_en": "Buildings",
       "row": 0,
       "relations": [
         {
@@ -104,6 +110,8 @@
       "name_en": "Independent Electric Supply",
       "sub": "電材の卸売",
       "sub_en": "Electrical distribution",
+      "sub_short": "電材",
+      "sub_short_en": "Electrical",
       "row": 0,
       "relations": [
         {
@@ -128,6 +136,8 @@
       "name_en": "Ascent",
       "sub": "データセンターのサービス",
       "sub_en": "Data center services",
+      "sub_short": "DC",
+      "sub_short_en": "DCs",
       "row": 0,
       "relations": [
         {
@@ -152,6 +162,8 @@
       "name_en": "Atkore",
       "sub": "電線管・配管",
       "sub_en": "Conduit & pipe",
+      "sub_short": "電線管",
+      "sub_short_en": "Conduit",
       "row": 1,
       "relations": [
         {
@@ -176,6 +188,8 @@
       "name_en": "ScanSource",
       "sub": "IT・セキュリティ製品の卸売",
       "sub_en": "Tech & security distribution",
+      "sub_short": "IT製品卸",
+      "sub_short_en": "IT",
       "row": 2,
       "relations": [
         {
@@ -200,6 +214,8 @@
       "name_en": "W.W. Grainger",
       "sub": "産業資材の流通",
       "sub_en": "Industrial supplies distribution",
+      "sub_short": "資材流通",
+      "sub_short_en": "Parts",
       "row": 2,
       "relations": [
         {

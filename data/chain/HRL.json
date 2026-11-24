@@ -26,6 +26,8 @@
       "name": "ウォルマート",
       "sub": "小売",
       "sub_en": "Retail",
+      "sub_short": "小売",
+      "sub_short_en": "Retail",
       "row": 0,
       "relations": [
         {
@@ -50,6 +52,8 @@
       "name": "メガメックス・フーズ",
       "sub": "メキシコ食品JV",
       "sub_en": "Mexican food JV",
+      "sub_short": "合弁",
+      "sub_short_en": "Food JV",
       "row": 0,
       "relations": [
         {
@@ -74,6 +78,8 @@
       "name": "ガルーダフード",
       "sub": "インドネシア食品",
       "sub_en": "Indonesian food",
+      "sub_short": "食品",
+      "sub_short_en": "Food",
       "row": 0,
       "relations": [
         {
@@ -98,6 +104,8 @@
       "name": "ピュアフーズ・ホーメル",
       "sub": "フィリピン食品",
       "sub_en": "Philippine food",
+      "sub_short": "食品",
+      "sub_short_en": "Food",
       "row": 0,
       "relations": [
         {
@@ -122,6 +130,8 @@
       "name": "ペプシコ",
       "sub": "飲料・スナック",
       "sub_en": "Beverages & snacks",
+      "sub_short": "飲料",
+      "sub_short_en": "Drinks",
       "row": 1,
       "relations": [
         {
@@ -146,6 +156,8 @@
       "name": "ビヨンド・ミート",
       "sub": "植物由来食品",
       "sub_en": "Plant-based foods",
+      "sub_short": "食品",
+      "sub_short_en": "Vegan",
       "row": 1,
       "relations": [
         {

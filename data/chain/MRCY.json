@@ -28,6 +28,8 @@
       "name_en": "RTX",
       "sub": "防衛・航空",
       "sub_en": "Defense & aerospace",
+      "sub_short": "防衛",
+      "sub_short_en": "Defense",
       "row": 0,
       "relations": [
         {
@@ -52,6 +54,8 @@
       "name_en": "Lockheed Martin",
       "sub": "防衛",
       "sub_en": "Defense",
+      "sub_short": "防衛",
+      "sub_short_en": "Defense",
       "row": 0,
       "relations": [
         {
@@ -76,6 +80,8 @@
       "name_en": "Northrop Grumman",
       "sub": "防衛",
       "sub_en": "Defense",
+      "sub_short": "防衛",
+      "sub_short_en": "Defense",
       "row": 0,
       "relations": [
         {
@@ -100,6 +106,8 @@
       "name_en": "L3Harris",
       "sub": "防衛電子",
       "sub_en": "Defense electronics",
+      "sub_short": "防衛電子",
+      "sub_short_en": "Defense",
       "row": 0,
       "relations": [
         {
@@ -124,6 +132,8 @@
       "name_en": "Boeing",
       "sub": "航空機・防衛",
       "sub_en": "Aircraft & defense",
+      "sub_short": "航空機",
+      "sub_short_en": "Aircraft",
       "row": 0,
       "relations": [
         {
@@ -148,6 +158,8 @@
       "name_en": "General Dynamics",
       "sub": "防衛",
       "sub_en": "Defense",
+      "sub_short": "防衛",
+      "sub_short_en": "Defense",
       "row": 0,
       "relations": [
         {
@@ -172,6 +184,8 @@
       "name_en": "Airbus",
       "sub": "航空機(欧)",
       "sub_en": "Aircraft (Europe)",
+      "sub_short": "航空機",
+      "sub_short_en": "Aircraft",
       "row": 0,
       "relations": [
         {
@@ -196,6 +210,8 @@
       "name_en": "BAE Systems",
       "sub": "防衛(英)",
       "sub_en": "Defense (UK)",
+      "sub_short": "防衛",
+      "sub_short_en": "Defense",
       "row": 0,
       "relations": [
         {
@@ -220,6 +236,8 @@
       "name_en": "Leonardo",
       "sub": "防衛・航空(伊)",
       "sub_en": "Defense & aerospace (Italy)",
+      "sub_short": "防衛",
+      "sub_short_en": "Defense",
       "row": 0,
       "relations": [
         {
@@ -244,6 +262,8 @@
       "name_en": "Kratos Defense",
       "sub": "防衛技術",
       "sub_en": "Defense technology",
+      "sub_short": "防衛技術",
+      "sub_short_en": "Defense",
       "row": 1,
       "relations": [
         {
@@ -268,6 +288,8 @@
       "name_en": "TTM Technologies",
       "sub": "プリント基板・防衛電子",
       "sub_en": "PCBs & defense electronics",
+      "sub_short": "基板",
+      "sub_short_en": "PCBs",
       "row": 1,
       "relations": [
         {
@@ -292,6 +314,8 @@
       "name_en": "Frequency Electronics",
       "sub": "精密時刻・電子戦",
       "sub_en": "Precision timing & EW",
+      "sub_short": "精密時刻",
+      "sub_short_en": "Timing",
       "row": 1,
       "relations": [
         {

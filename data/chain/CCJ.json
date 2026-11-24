@@ -35,6 +35,8 @@
       "name_en": "Kazatomprom",
       "sub": "ウラン生産",
       "sub_en": "Uranium mining",
+      "sub_short": "ウラン",
+      "sub_short_en": "Uranium",
       "row": 0,
       "relations": [
         {
@@ -59,6 +61,8 @@
       "name_en": "Silex Systems",
       "sub": "レーザー濃縮技術",
       "sub_en": "Laser enrichment technology",
+      "sub_short": "ウラン",
+      "sub_short_en": "Uranium",
       "row": 0,
       "relations": [
         {
@@ -83,6 +87,8 @@
       "name_en": "Tokyo Electric Power",
       "sub": "電力会社",
       "sub_en": "Utility",
+      "sub_short": "電力会社",
+      "sub_short_en": "Utility",
       "row": 0,
       "relations": [
         {
@@ -107,6 +113,8 @@
       "name_en": "Brookfield Renewable",
       "sub": "再エネ・原子力",
       "sub_en": "Renewables & nuclear",
+      "sub_short": "再エネ",
+      "sub_short_en": "Green",
       "row": 1,
       "relations": [
         {
@@ -146,6 +154,8 @@
       "name_en": "Brookfield Business",
       "sub": "事業投資",
       "sub_en": "Business services",
+      "sub_short": "事業投資",
+      "sub_short_en": "Services",
       "row": 1,
       "relations": [
         {
@@ -172,6 +182,8 @@
       "name_en": "Uranium Energy",
       "sub": "ウラン生産",
       "sub_en": "Uranium mining",
+      "sub_short": "ウラン",
+      "sub_short_en": "Uranium",
       "row": 2,
       "relations": [
         {
@@ -196,6 +208,8 @@
       "name_en": "Energy Fuels",
       "sub": "ウラン・レアアース",
       "sub_en": "Uranium & rare earths",
+      "sub_short": "ウラン",
+      "sub_short_en": "Uranium",
       "row": 2,
       "relations": [
         {
@@ -220,6 +234,8 @@
       "name_en": "Lithium Americas",
       "sub": "リチウム",
       "sub_en": "Lithium",
+      "sub_short": "リチウム",
+      "sub_short_en": "Lithium",
       "row": 2,
       "relations": [
         {
@@ -244,6 +260,8 @@
       "name_en": "BWX Technologies",
       "sub": "原子力機器・燃料",
       "sub_en": "Nuclear components & fuel",
+      "sub_short": "原子力",
+      "sub_short_en": "Nuclear",
       "row": 3,
       "relations": [
         {
@@ -268,6 +286,8 @@
       "name_en": "Orano",
       "sub": "核燃料(仏政府系)",
       "sub_en": "Nuclear fuel (French state-owned)",
+      "sub_short": "核燃料",
+      "sub_short_en": "Nuclear",
       "row": 0,
       "relations": [
         {
@@ -305,6 +325,8 @@
       "name_en": "Uranium Royalty",
       "sub": "ウランのロイヤルティ",
       "sub_en": "Uranium royalties",
+      "sub_short": "ウラン",
+      "sub_short_en": "Uranium",
       "row": 2,
       "relations": [
         {
@@ -329,6 +351,8 @@
       "name_en": "enCore Energy",
       "sub": "ウラン生産",
       "sub_en": "Uranium mining",
+      "sub_short": "ウラン",
+      "sub_short_en": "Uranium",
       "row": 2,
       "relations": [
         {

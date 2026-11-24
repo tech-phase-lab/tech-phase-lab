@@ -22,12 +22,14 @@
   ],
   "companies": [
     {
-      "id": "MARS",
+      "id": "MARSParts",
       "ticker": "MARS Parts",
       "name": "マーズ・パーツ",
       "name_en": "MARS Parts",
       "sub": "空調部品",
       "sub_en": "HVAC/R parts",
+      "sub_short": "空調部品",
+      "sub_short_en": "HVAC",
       "row": 0,
       "relations": [
         {
@@ -52,6 +54,8 @@
       "name_en": "Hydrotex",
       "sub": "潤滑剤",
       "sub_en": "Lubricants",
+      "sub_short": "潤滑剤",
+      "sub_short_en": "Lubes",
       "row": 0,
       "relations": [
         {
@@ -76,6 +80,8 @@
       "name_en": "PF WaterWorks",
       "sub": "配管製品",
       "sub_en": "Plumbing products",
+      "sub_short": "配管製品",
+      "sub_short_en": "Plumbing",
       "row": 0,
       "relations": [
         {
@@ -100,6 +106,8 @@
       "name_en": "PSP Products",
       "sub": "配管製品",
       "sub_en": "Plumbing products",
+      "sub_short": "配管製品",
+      "sub_short_en": "Plumbing",
       "row": 0,
       "relations": [
         {
@@ -124,6 +132,8 @@
       "name_en": "ExxonMobil",
       "sub": "石油",
       "sub_en": "Oil & gas",
+      "sub_short": "石油",
+      "sub_short_en": "Oil & gas",
       "row": 1,
       "relations": [
         {
@@ -148,6 +158,8 @@
       "name_en": "Shell",
       "sub": "石油",
       "sub_en": "Oil & gas",
+      "sub_short": "石油",
+      "sub_short_en": "Oil & gas",
       "row": 1,
       "relations": [
         {
@@ -172,6 +184,8 @@
       "name_en": "Fuchs",
       "sub": "潤滑剤(ドイツ)",
       "sub_en": "Lubricants (Germany)",
+      "sub_short": "潤滑剤",
+      "sub_short_en": "Lubes",
       "row": 1,
       "relations": [
         {
