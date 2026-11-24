@@ -1,0 +1,123 @@
+{
+  "root": {
+    "ticker": "VFC",
+    "name": "VFコーポレーション",
+    "cik": 103379,
+    "name_en": "VF Corp"
+  },
+  "rows": [
+    {
+      "ja": "縫製の委託先",
+      "en": "Apparel manufacturer",
+      "above": true
+    },
+    {
+      "ja": "ブランド売却・分離",
+      "en": "Brand sales & spin-off"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "JRSH",
+      "ticker": "JRSH",
+      "name": "ジェラッシュ・ホールディングス",
+      "name_en": "Jerash Holdings",
+      "sub": "衣料品製造",
+      "sub_en": "Apparel manufacturing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "JerashにとってVFは売上の64.6%を占める最大の顧客",
+          "text_en": "VF is Jerash's largest customer at 64.6% of its sales",
+          "source": {
+            "label": "Jerash Holdings 10-K(2025年3月期)",
+            "label_en": "Jerash Holdings 10-K (FY ended Mar 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1696558/000121390025057935/ea0245883-10k_jerash.htm",
+            "level": "official",
+            "date": "2025-06-26",
+            "quote": "VF Corporation (1) $ 94,151 64.6 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Bluestar",
+      "ticker": "Bluestar Alliance",
+      "name": "ブルースター・アライアンス",
+      "name_en": "Bluestar Alliance",
+      "sub": "ブランド管理",
+      "sub_en": "Brand management",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Dickiesブランドの事業を売却する契約(2025年9月)",
+          "text_en": "Agreed to sell the Dickies brand business (September 2025)",
+          "source": {
+            "label": "VF Corp 10-K(2026年3月期)",
+            "label_en": "VF Corp 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/103379/000010337926000030/vfc-20260328.htm",
+            "level": "official",
+            "date": "2026-05-20",
+            "quote": "On September 15, 2025, VF entered into a definitive agreement with Bluestar Alliance LLC to sell the Dickies ® brand business (\"Dickies\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "EL.PA",
+      "ticker": "EssilorLuxottica",
+      "name": "エシロールルックスオティカ",
+      "name_en": "EssilorLuxottica",
+      "sub": "眼鏡(フランス)",
+      "sub_en": "Eyewear (France)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Supremeブランドの事業を売却する契約(2024年7月)",
+          "text_en": "Agreed to sell the Supreme brand business (July 2024)",
+          "source": {
+            "label": "VF Corp 10-K(2026年3月期)",
+            "label_en": "VF Corp 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/103379/000010337926000030/vfc-20260328.htm",
+            "level": "official",
+            "date": "2026-05-20",
+            "quote": "On July 16, 2024, VF entered into a definitive Stock and Asset Purchase Agreement with EssilorLuxottica S.A. to sell the Supreme ® brand business (\"Supreme\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "KTB",
+      "ticker": "KTB",
+      "name": "コンツール・ブランズ",
+      "name_en": "Kontoor Brands",
+      "sub": "ジーンズ",
+      "sub_en": "Jeans",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ジーンズ事業をKontoor Brandsとして分離(2019年5月)",
+          "text_en": "Spun off its jeans business as Kontoor Brands (May 2019)",
+          "source": {
+            "label": "VF Corp 10-K(2026年3月期)",
+            "label_en": "VF Corp 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/103379/000010337926000030/vfc-20260328.htm",
+            "level": "official",
+            "date": "2026-05-20",
+            "quote": "the May 22, 2019 spin-off of our Jeans business, Kontoor Brands, Inc."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

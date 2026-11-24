@@ -1,0 +1,231 @@
+{
+  "root": {
+    "ticker": "ADMA",
+    "name": "ADMAバイオロジクス",
+    "cik": 1368514,
+    "name_en": "ADMA Biologics"
+  },
+  "rows": [
+    {
+      "ja": "血漿の調達元",
+      "en": "Plasma suppliers",
+      "above": true
+    },
+    {
+      "ja": "ライセンス先(欧州など)",
+      "en": "Licensee (Europe and other regions)"
+    },
+    {
+      "ja": "主要顧客(卸)",
+      "en": "Major customers (distributors)"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in its 10-K)"
+    }
+  ],
+  "rivals": [
+    "CSLBehring",
+    "4502",
+    "Octapharma"
+  ],
+  "companies": [
+    {
+      "id": "GRFS",
+      "ticker": "GRFS",
+      "name": "グリフォルス",
+      "name_en": "Grifols",
+      "sub": "血漿分画製剤",
+      "sub_en": "Plasma-derived medicines",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ASCENIV用のRSV血漿を年3.5万リットル以上供給(2039年9月までの契約)",
+          "text_en": "Supplies at least 35,000 liters of RSV plasma a year for ASCENIV (agreement to September 2039)",
+          "source": {
+            "label": "ADMA Biologics 10-K(2025年度)",
+            "label_en": "ADMA Biologics 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1368514/000114036126006815/ef20059416_10-k.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Pursuant to the A&R Grifols Agreement, Grifols supplies, on a non-exclusive basis, to ADMA BioManufacturing a minimum of 35,000 liters of RSV plasma annually to be used in the manufacture of ASCENIV, with an escalating price per liter depending on the volume supplied in a given 12-month period, with a minimum annual price increase every 12 months."
+          }
+        }
+      ]
+    },
+    {
+      "id": "KEDPlasma",
+      "ticker": "KEDPlasma",
+      "name": "KEDプラズマ",
+      "name_en": "KEDPlasma",
+      "sub": "血漿採取",
+      "sub_en": "Plasma collection",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "血漿購入契約(2031年7月まで)",
+          "text_en": "Plasma purchase agreement (through July 2031)",
+          "source": {
+            "label": "ADMA Biologics 10-K(2025年度)",
+            "label_en": "ADMA Biologics 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1368514/000114036126006815/ef20059416_10-k.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Effective August 6, 2024, we entered into a Plasma Purchase Agreement with KEDPlasma LLC (\"KEDPlasma\") with a term expiring in July 2031"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Biotest",
+      "ticker": "Biotest",
+      "name": "バイオテスト",
+      "name_en": "Biotest",
+      "sub": "血漿分画製剤",
+      "sub_en": "Plasma-derived medicines",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ASCENIVを欧州・中東・北アフリカの一部で販売する独占ライセンス先",
+          "text_en": "Exclusive licensee to sell ASCENIV in Europe and parts of the Middle East and North Africa",
+          "source": {
+            "label": "ADMA Biologics 10-K(2025年度)",
+            "label_en": "ADMA Biologics 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1368514/000114036126006815/ef20059416_10-k.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "we granted to Biotest AG (\"Biotest\") an exclusive license to market and sell ASCENIV in Europe and in certain countries in Northern Africa and the Middle East"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BioCare",
+      "ticker": "BioCare",
+      "name": "バイオケア",
+      "name_en": "BioCare",
+      "sub": "医薬品卸",
+      "sub_en": "Pharmaceutical distribution",
+      "row": 2,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2社合計で売上の約73%を占める主要顧客の一社(2025年)",
+          "text_en": "One of two customers making up about 73% of revenue (2025)",
+          "source": {
+            "label": "ADMA Biologics 10-K(2025年度)",
+            "label_en": "ADMA Biologics 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1368514/000114036126006815/ef20059416_10-k.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "For the year ended December 31, 2025, two customers, BioCare, Inc. (\"BioCare\") and Priority Healthcare Distribution, Inc. (\"CuraScript\"), represented an aggregate of approximately 73% of our consolidated revenues."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CuraScript",
+      "ticker": "CuraScript",
+      "name": "キュラスクリプト",
+      "name_en": "CuraScript",
+      "sub": "医薬品卸",
+      "sub_en": "Pharmaceutical distribution",
+      "row": 2,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2社合計で売上の約73%を占める主要顧客の一社(2025年)",
+          "text_en": "One of two customers making up about 73% of revenue (2025)",
+          "source": {
+            "label": "ADMA Biologics 10-K(2025年度)",
+            "label_en": "ADMA Biologics 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1368514/000114036126006815/ef20059416_10-k.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "For the year ended December 31, 2025, two customers, BioCare, Inc. (\"BioCare\") and Priority Healthcare Distribution, Inc. (\"CuraScript\"), represented an aggregate of approximately 73% of our consolidated revenues."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CSLBehring",
+      "ticker": "CSL Behring",
+      "name": "CSLベーリング",
+      "name_en": "CSL Behring",
+      "sub": "血漿分画製剤",
+      "sub_en": "Plasma-derived medicines",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "血漿製剤の競合",
+          "text_en": "A plasma products competitor",
+          "source": {
+            "label": "ADMA Biologics 10-K(2025年度)",
+            "label_en": "ADMA Biologics 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1368514/000114036126006815/ef20059416_10-k.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "These competitors may include but are not limited to: CSL Behring, Grifols, Takeda, Octapharma and BPL/Kedrion."
+          }
+        }
+      ]
+    },
+    {
+      "id": "4502",
+      "ticker": "4502",
+      "name": "武田薬品工業",
+      "name_en": "Takeda",
+      "sub": "医薬品",
+      "sub_en": "Pharmaceuticals",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "血漿製剤の競合",
+          "text_en": "A plasma products competitor",
+          "source": {
+            "label": "ADMA Biologics 10-K(2025年度)",
+            "label_en": "ADMA Biologics 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1368514/000114036126006815/ef20059416_10-k.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "These competitors may include but are not limited to: CSL Behring, Grifols, Takeda, Octapharma and BPL/Kedrion."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Octapharma",
+      "ticker": "Octapharma",
+      "name": "オクタファルマ",
+      "name_en": "Octapharma",
+      "sub": "血漿分画製剤",
+      "sub_en": "Plasma-derived medicines",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "血漿製剤の競合",
+          "text_en": "A plasma products competitor",
+          "source": {
+            "label": "ADMA Biologics 10-K(2025年度)",
+            "label_en": "ADMA Biologics 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1368514/000114036126006815/ef20059416_10-k.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "These competitors may include but are not limited to: CSL Behring, Grifols, Takeda, Octapharma and BPL/Kedrion."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

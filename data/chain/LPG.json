@@ -1,0 +1,99 @@
+{
+  "root": {
+    "ticker": "LPG",
+    "name": "ドリアンLPG",
+    "cik": 1596993,
+    "name_en": "Dorian LPG"
+  },
+  "rows": [
+    {
+      "ja": "新造船の発注先(造船所)",
+      "en": "Newbuild shipyards",
+      "above": true
+    },
+    {
+      "ja": "合弁(運航プール)",
+      "en": "Joint venture (Helios Pool)"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "HDHyundai",
+      "ticker": "HD Hyundai",
+      "name": "HD現代",
+      "name_en": "HD Hyundai",
+      "sub": "造船",
+      "sub_en": "Shipbuilding",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "9万立方メートル級VLGC1隻を約1.15億ドルで発注(2029年7月引き渡し予定)",
+          "text_en": "Ordered one 90,000 cbm VLGC for about $115 million (delivery July 2029)",
+          "source": {
+            "label": "Dorian LPG 8-K(2026年6月、新造船発注)",
+            "label_en": "Dorian LPG 8-K (Jun 2026 newbuild order)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1596993/000159699326000028/lpg-20260623xex99d1.htm",
+            "level": "official",
+            "date": "2026-06-23",
+            "quote": "today announced that it entered into an agreement with HD Hyundai to build one 90,000 cbm VLGC for delivery in July 2029 for a price of approximately $115 million."
+          }
+        }
+      ]
+    },
+    {
+      "id": "042660",
+      "ticker": "042660",
+      "name": "ハンファオーシャン",
+      "name_en": "Hanwha Ocean",
+      "sub": "造船",
+      "sub_en": "Shipbuilding",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "二元燃料VLGC3隻を約3.45億ドルで発注(2030年引き渡し予定)",
+          "text_en": "Ordered three dual-fuel VLGCs for about $345 million (delivery in 2030)",
+          "source": {
+            "label": "Dorian LPG 8-K(2026年9月、新造船発注)",
+            "label_en": "Dorian LPG 8-K (Sep 2026 newbuild order)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1596993/000159699326000041/lpg-20260902xex99d1.htm",
+            "level": "official",
+            "date": "2026-09-04",
+            "quote": "today announced that it entered into an agreement with Hanwha Ocean to build three 90,000 cbm dual-fuel Panamax VLGCs for delivery in June, September, and December of 2030 for a total price of approximately $345 million."
+          }
+        }
+      ]
+    },
+    {
+      "id": "9104",
+      "ticker": "9104",
+      "name": "商船三井",
+      "name_en": "Mitsui O.S.K. Lines",
+      "sub": "海運",
+      "sub_en": "Shipping",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "子会社MOL Energiaと運航プールHeliosを50%ずつ保有",
+          "text_en": "Its subsidiary MOL Energia co-owns the Helios Pool 50/50",
+          "source": {
+            "label": "Dorian LPG 10-K(2026年3月期)",
+            "label_en": "Dorian LPG 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1596993/000159699326000025/lpg-20260331x10k.htm",
+            "level": "official",
+            "date": "2026-05-27",
+            "quote": "Ltd., a wholly-owned subsidiary of Mitsui OSK Lines Ltd., an unaffiliated third party, began operation of Helios LPG Pool LLC, (the \"Helios Pool\"), a joint venture owned 50% by us and 50% by MOL Energia."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
