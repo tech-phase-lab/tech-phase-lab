@@ -46,7 +46,7 @@ test('LP button: an auto-renewal order shows the stop notice and needs a fresh t
     assert.deepEqual(r.went, []); // held: not to PayPal yet
     const line = r.notice();
     assert.ok(line);
-    assert.equal(line.textContent, '1年後から自動で更新。更新日の前日までアカウント画面で止められます');
+    assert.equal(line.textContent, '1年後から自動で更新されます。更新日の前日までアカウント画面から止められます');
     assert.equal(line.getAttribute('role'), 'status');
     // The notice sits right above the consent line, which sits right above the button.
     assert.equal(line.nextElementSibling, r.box().closest('[data-consent]'));
