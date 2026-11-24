@@ -24,8 +24,8 @@
       "name_en": "American Woodmark",
       "sub": "キッチン収納",
       "sub_en": "Kitchen cabinets",
-      "sub_short": "キッチン収納",
-      "sub_short_en": "Kitchen cabinets",
+      "sub_short": "台所家具",
+      "sub_short_en": "Cabinets",
       "row": 0,
       "relations": [
         {
@@ -50,8 +50,8 @@
       "name_en": "Supreme Cabinetry Brands",
       "sub": "キッチン収納",
       "sub_en": "Kitchen cabinets",
-      "sub_short": "キッチン収納",
-      "sub_short_en": "Kitchen cabinets",
+      "sub_short": "台所家具",
+      "sub_short_en": "Cabinets",
       "row": 0,
       "relations": [
         {
@@ -76,8 +76,8 @@
       "name_en": "Lowe's",
       "sub": "ホームセンター",
       "sub_en": "Home improvement retail",
-      "sub_short": "ホームセンター",
-      "sub_short_en": "Home improvement",
+      "sub_short": "小売",
+      "sub_short_en": "Retail",
       "row": 1,
       "relations": [
         {
@@ -102,8 +102,8 @@
       "name_en": "The Home Depot",
       "sub": "ホームセンター",
       "sub_en": "Home improvement retail",
-      "sub_short": "ホームセンター",
-      "sub_short_en": "Home improvement",
+      "sub_short": "住宅用品",
+      "sub_short_en": "Home",
       "row": 1,
       "relations": [
         {

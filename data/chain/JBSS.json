@@ -26,7 +26,7 @@
       "name_en": "Walmart",
       "sub": "小売",
       "sub_en": "Retail",
-      "sub_short": "小売",
+      "sub_short": "量販店",
       "sub_short_en": "Retail",
       "row": 0,
       "relations": [
@@ -52,7 +52,7 @@
       "name_en": "Target",
       "sub": "小売",
       "sub_en": "Retail",
-      "sub_short": "小売",
+      "sub_short": "総合小売",
       "sub_short_en": "Retail",
       "row": 0,
       "relations": [

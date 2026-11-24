@@ -33,7 +33,7 @@
       "sub": "建材流通",
       "sub_en": "Building materials distribution",
       "sub_short": "建材流通",
-      "sub_short_en": "Building supply",
+      "sub_short_en": "Building",
       "row": 0,
       "relations": [
         {
@@ -58,8 +58,8 @@
       "name_en": "The Home Depot",
       "sub": "ホームセンター",
       "sub_en": "Home improvement retail",
-      "sub_short": "ホームセンター",
-      "sub_short_en": "Home improvement",
+      "sub_short": "住宅用品",
+      "sub_short_en": "Home",
       "row": 0,
       "relations": [
         {
@@ -84,8 +84,8 @@
       "name_en": "Lowe's",
       "sub": "ホームセンター",
       "sub_en": "Home improvement retail",
-      "sub_short": "ホームセンター",
-      "sub_short_en": "Home improvement",
+      "sub_short": "小売",
+      "sub_short_en": "Retail",
       "row": 0,
       "relations": [
         {
@@ -111,7 +111,7 @@
       "sub": "建材流通",
       "sub_en": "Building materials distribution",
       "sub_short": "建材流通",
-      "sub_short_en": "Building supply",
+      "sub_short_en": "Building",
       "row": 0,
       "relations": [
         {
@@ -137,7 +137,7 @@
       "sub": "建材",
       "sub_en": "Building products",
       "sub_short": "建材",
-      "sub_short_en": "Building goods",
+      "sub_short_en": "Building",
       "row": 1,
       "relations": [
         {
@@ -163,7 +163,7 @@
       "sub": "木材製品",
       "sub_en": "Wood products",
       "sub_short": "木材製品",
-      "sub_short_en": "Wood products",
+      "sub_short_en": "Wood",
       "row": 1,
       "relations": [
         {
@@ -189,7 +189,7 @@
       "sub": "住宅設備",
       "sub_en": "Home products",
       "sub_short": "住宅設備",
-      "sub_short_en": "Home products",
+      "sub_short_en": "Home",
       "row": 1,
       "relations": [
         {
@@ -214,8 +214,8 @@
       "name_en": "Westlake",
       "sub": "化学・建材",
       "sub_en": "Chemicals & building products",
-      "sub_short": "化学・建材",
-      "sub_short_en": "Chemicals",
+      "sub_short": "化学",
+      "sub_short_en": "Chem",
       "row": 2,
       "relations": [
         {

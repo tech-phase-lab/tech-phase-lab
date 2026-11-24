@@ -25,8 +25,8 @@
       "name_en": "Worthington Enterprises",
       "sub": "金属加工製品",
       "sub_en": "Metal products",
-      "sub_short": "金属加工製品",
-      "sub_short_en": "Metal products",
+      "sub_short": "金属加工",
+      "sub_short_en": "Metal",
       "row": 0,
       "relations": [
         {
@@ -52,7 +52,7 @@
       "sub": "鉄鋼流通",
       "sub_en": "Steel distribution",
       "sub_short": "鉄鋼流通",
-      "sub_short_en": "Steel trading",
+      "sub_short_en": "Steel",
       "row": 0,
       "relations": [
         {
@@ -78,7 +78,7 @@
       "sub": "自動車",
       "sub_en": "Automobiles",
       "sub_short": "自動車",
-      "sub_short_en": "Automobiles",
+      "sub_short_en": "Cars",
       "row": 1,
       "relations": [
         {
@@ -104,7 +104,7 @@
       "sub": "自動車",
       "sub_en": "Automobiles",
       "sub_short": "自動車",
-      "sub_short_en": "Automobiles",
+      "sub_short_en": "Cars",
       "row": 1,
       "relations": [
         {
@@ -130,7 +130,7 @@
       "sub": "自動車",
       "sub_en": "Automobiles",
       "sub_short": "自動車",
-      "sub_short_en": "Automobiles",
+      "sub_short_en": "Cars",
       "row": 1,
       "relations": [
         {

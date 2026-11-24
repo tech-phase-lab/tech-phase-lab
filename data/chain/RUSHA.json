@@ -25,8 +25,8 @@
       "name_en": "Peterbilt",
       "sub": "大型トラック",
       "sub_en": "Heavy trucks",
-      "sub_short": "大型トラック",
-      "sub_short_en": "Heavy trucks",
+      "sub_short": "トラック",
+      "sub_short_en": "Trucks",
       "row": 0,
       "relations": [
         {
@@ -51,8 +51,8 @@
       "name_en": "International Motors",
       "sub": "大型トラック",
       "sub_en": "Heavy trucks",
-      "sub_short": "大型トラック",
-      "sub_short_en": "Heavy trucks",
+      "sub_short": "トラック",
+      "sub_short_en": "Trucks",
       "row": 0,
       "relations": [
         {
@@ -78,7 +78,7 @@
       "sub": "自動車",
       "sub_en": "Automobiles",
       "sub_short": "自動車",
-      "sub_short_en": "Automobiles",
+      "sub_short_en": "Cars",
       "row": 0,
       "relations": [
         {
@@ -155,8 +155,8 @@
       "name_en": "Blue Bird",
       "sub": "スクールバス",
       "sub_en": "School buses",
-      "sub_short": "スクールバス",
-      "sub_short_en": "School buses",
+      "sub_short": "バス",
+      "sub_short_en": "Buses",
       "row": 0,
       "relations": [
         {
@@ -181,8 +181,8 @@
       "name_en": "PACCAR",
       "sub": "大型トラック",
       "sub_en": "Heavy trucks",
-      "sub_short": "大型トラック",
-      "sub_short_en": "Heavy trucks",
+      "sub_short": "トラック",
+      "sub_short_en": "Trucks",
       "row": 1,
       "relations": [
         {

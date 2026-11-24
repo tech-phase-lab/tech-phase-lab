@@ -33,7 +33,7 @@
       "sub": "自動車",
       "sub_en": "Automaker",
       "sub_short": "自動車",
-      "sub_short_en": "Automaker",
+      "sub_short_en": "Cars",
       "row": 0,
       "relations": [
         {
@@ -58,8 +58,8 @@
       "name_en": "BorgWarner",
       "sub": "自動車部品",
       "sub_en": "Auto parts",
-      "sub_short": "自動車部品",
-      "sub_short_en": "Auto parts",
+      "sub_short": "車両部品",
+      "sub_short_en": "Car parts",
       "row": 1,
       "relations": [
         {
@@ -84,8 +84,8 @@
       "name_en": "Delphi-TVS Diesel Systems",
       "sub": "ディーゼル燃料系",
       "sub_en": "Diesel fuel systems",
-      "sub_short": "ディーゼル部品",
-      "sub_short_en": "Diesel systems",
+      "sub_short": "燃料噴射",
+      "sub_short_en": "Diesel",
       "row": 1,
       "relations": [
         {
@@ -110,8 +110,8 @@
       "name_en": "Robert Bosch",
       "sub": "自動車部品(ドイツ)",
       "sub_en": "Auto parts (Germany)",
-      "sub_short": "自動車部品",
-      "sub_short_en": "Auto parts",
+      "sub_short": "車部品",
+      "sub_short_en": "Car parts",
       "row": 2,
       "relations": [
         {
@@ -162,8 +162,8 @@
       "name_en": "Denso",
       "sub": "自動車部品",
       "sub_en": "Auto parts",
-      "sub_short": "自動車部品",
-      "sub_short_en": "Auto parts",
+      "sub_short": "車部品",
+      "sub_short_en": "Car parts",
       "row": 2,
       "relations": [
         {
@@ -189,7 +189,7 @@
       "sub": "補修部品",
       "sub_en": "Aftermarket parts",
       "sub_short": "補修部品",
-      "sub_short_en": "Aftermarket",
+      "sub_short_en": "Parts",
       "row": 2,
       "relations": [
         {
@@ -214,8 +214,8 @@
       "name_en": "Valeo",
       "sub": "自動車部品(フランス)",
       "sub_en": "Auto parts (France)",
-      "sub_short": "自動車部品",
-      "sub_short_en": "Auto parts",
+      "sub_short": "車部品",
+      "sub_short_en": "Car parts",
       "row": 2,
       "relations": [
         {

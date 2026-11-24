@@ -30,7 +30,7 @@
       "sub": "海洋掘削",
       "sub_en": "Offshore drilling",
       "sub_short": "海洋掘削",
-      "sub_short_en": "Offshore drill",
+      "sub_short_en": "Offshore",
       "row": 0,
       "relations": [
         {
@@ -55,8 +55,8 @@
       "name_en": "Baker Hughes",
       "sub": "油田サービス",
       "sub_en": "Oilfield services",
-      "sub_short": "油田サービス",
-      "sub_short_en": "Oilfield svcs",
+      "sub_short": "油田",
+      "sub_short_en": "Oilfield",
       "row": 0,
       "relations": [
         {
@@ -134,7 +134,7 @@
       "sub": "石油",
       "sub_en": "Oil & gas",
       "sub_short": "石油",
-      "sub_short_en": "Oil & gas",
+      "sub_short_en": "Oil",
       "row": 1,
       "relations": [
         {
@@ -186,7 +186,7 @@
       "sub": "石油",
       "sub_en": "Oil & gas",
       "sub_short": "石油",
-      "sub_short_en": "Oil & gas",
+      "sub_short_en": "Oil major",
       "row": 1,
       "relations": [
         {
@@ -238,7 +238,7 @@
       "sub": "海洋掘削",
       "sub_en": "Offshore drilling",
       "sub_short": "海洋掘削",
-      "sub_short_en": "Offshore drill",
+      "sub_short_en": "Offshore",
       "row": 2,
       "relations": [
         {

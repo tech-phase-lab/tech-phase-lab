@@ -28,8 +28,8 @@
       "name_en": "Matricel",
       "sub": "医療用素材",
       "sub_en": "Medical materials",
-      "sub_short": "医療用素材",
-      "sub_short_en": "Biomaterials",
+      "sub_short": "医療素材",
+      "sub_short_en": "Materials",
       "row": 0,
       "relations": [
         {
@@ -54,8 +54,8 @@
       "name_en": "MediWound",
       "sub": "バイオ医薬",
       "sub_en": "Biopharma",
-      "sub_short": "バイオ医薬",
-      "sub_short_en": "Biopharma",
+      "sub_short": "バイオ",
+      "sub_short_en": "Pharma",
       "row": 0,
       "relations": [
         {
@@ -80,8 +80,8 @@
       "name_en": "Arthrex",
       "sub": "整形外科機器",
       "sub_en": "Orthopedic devices",
-      "sub_short": "整形外科機器",
-      "sub_short_en": "Orthopedics",
+      "sub_short": "整形外科",
+      "sub_short_en": "Ortho",
       "row": 1,
       "relations": [
         {
@@ -107,7 +107,7 @@
       "sub": "医療機器",
       "sub_en": "Medical devices",
       "sub_short": "医療機器",
-      "sub_short_en": "Medical devices",
+      "sub_short_en": "Medtech",
       "row": 1,
       "relations": [
         {

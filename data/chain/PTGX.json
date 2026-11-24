@@ -27,8 +27,8 @@
       "name_en": "Johnson & Johnson",
       "sub": "医薬品・医療機器",
       "sub_en": "Pharma & medical devices",
-      "sub_short": "医薬・医療機器",
-      "sub_short_en": "Pharma & devices",
+      "sub_short": "医療機器",
+      "sub_short_en": "Medtech",
       "row": 0,
       "relations": [
         {
@@ -54,7 +54,7 @@
       "sub": "医薬品",
       "sub_en": "Pharmaceuticals",
       "sub_short": "医薬品",
-      "sub_short_en": "Pharmaceuticals",
+      "sub_short_en": "Pharma",
       "row": 0,
       "relations": [
         {
@@ -80,7 +80,7 @@
       "sub": "医薬品",
       "sub_en": "Pharmaceuticals",
       "sub_short": "医薬品",
-      "sub_short_en": "Pharmaceuticals",
+      "sub_short_en": "Pharma",
       "row": 1,
       "relations": [
         {
@@ -106,7 +106,7 @@
       "sub": "医薬品",
       "sub_en": "Pharmaceuticals",
       "sub_short": "医薬品",
-      "sub_short_en": "Pharmaceuticals",
+      "sub_short_en": "Pharma",
       "row": 1,
       "relations": [
         {

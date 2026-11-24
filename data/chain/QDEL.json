@@ -29,8 +29,8 @@
       "name_en": "Grifols",
       "sub": "血漿分画製剤・診断",
       "sub_en": "Plasma medicines & diagnostics",
-      "sub_short": "血漿製剤・診断",
-      "sub_short_en": "Plasma & tests",
+      "sub_short": "血漿製剤",
+      "sub_short_en": "Plasma",
       "row": 0,
       "relations": [
         {
@@ -55,8 +55,8 @@
       "name_en": "Abbott",
       "sub": "医療機器・診断",
       "sub_en": "Medical devices & diagnostics",
-      "sub_short": "医療機器・診断",
-      "sub_short_en": "Medical devices",
+      "sub_short": "血糖測定",
+      "sub_short_en": "CGM",
       "row": 1,
       "relations": [
         {
@@ -81,8 +81,8 @@
       "name_en": "Danaher",
       "sub": "ライフサイエンス・診断",
       "sub_en": "Life sciences & diagnostics",
-      "sub_short": "生命科学・診断",
-      "sub_short_en": "Life sciences",
+      "sub_short": "生命科学",
+      "sub_short_en": "Lab tools",
       "row": 1,
       "relations": [
         {
@@ -107,8 +107,8 @@
       "name_en": "Roche",
       "sub": "医薬品・診断",
       "sub_en": "Pharma & diagnostics",
-      "sub_short": "医薬品・診断",
-      "sub_short_en": "Pharma & tests",
+      "sub_short": "大手製薬",
+      "sub_short_en": "Pharma",
       "row": 1,
       "relations": [
         {

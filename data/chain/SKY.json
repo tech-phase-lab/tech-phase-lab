@@ -24,8 +24,8 @@
       "name_en": "Triad Financial Services",
       "sub": "住宅ローン",
       "sub_en": "Home financing",
-      "sub_short": "住宅ローン",
-      "sub_short_en": "Home financing",
+      "sub_short": "住宅金融",
+      "sub_short_en": "Loans",
       "row": 0,
       "relations": [
         {
@@ -76,8 +76,8 @@
       "name_en": "Iseman Homes",
       "sub": "住宅販売店",
       "sub_en": "Home retail",
-      "sub_short": "住宅販売店",
-      "sub_short_en": "Home retail",
+      "sub_short": "住宅販売",
+      "sub_short_en": "Retail",
       "row": 1,
       "relations": [
         {
@@ -102,8 +102,8 @@
       "name_en": "Regional Homes",
       "sub": "住宅製造・販売",
       "sub_en": "Home building & retail",
-      "sub_short": "住宅製造販売",
-      "sub_short_en": "Homes & retail",
+      "sub_short": "住宅製造",
+      "sub_short_en": "Homes",
       "row": 1,
       "relations": [
         {
