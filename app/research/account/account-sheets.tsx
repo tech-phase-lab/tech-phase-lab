@@ -5,9 +5,9 @@ import { billingRequest, billingSummary, sandboxApproval } from "@/lib/membershi
 import { INITIAL, TILES, tileBackground, tileById } from "./avatars";
 import styles from "./account.module.css";
 import AgreeButton, { CheckoutLines, PRO_CHECKOUT_LINE } from "../../legal/agree-button";
+import { ConsentCheck, ConsentError, useConsent } from "../../legal/consent-check";
 
 export type Mode = "live" | "sandbox";
-const check = <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2a1f05" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10" /></svg>;
 
 function Sheet({ title, onClose, children, plain = false, dismissible = true }: { title: string; onClose: () => void; children: ReactNode; plain?: boolean; dismissible?: boolean }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -27,26 +27,29 @@ function Sheet({ title, onClose, children, plain = false, dismissible = true }: 
   </div>;
 }
 
-/** Start a checkout and go straight to PayPal. The server chooses the PayPal plan from currency and period; no plan id is sent. */
-export async function startCheckout(mode: Mode, refresh: (force?: boolean) => Promise<void>, currency: "JPY" | "USD", period: "month" | "year") {
+/** Start a checkout and go straight to PayPal. The server chooses the PayPal plan from currency and period; no plan id is sent.
+ * consentAt: when the member ticked 「利用規約とプライバシーポリシーに同意する」 above the button; the server refuses a checkout without it. */
+export async function startCheckout(mode: Mode, refresh: (force?: boolean) => Promise<void>, currency: "JPY" | "USD", period: "month" | "year", consentAt: string) {
   await refresh(true);
-  const result = await billingRequest("create", { currency, period, acceptedTerms: mode === "live" ? "pro-live-v1" : "sandbox-v1" }, AbortSignal.timeout(20_000), mode);
+  const result = await billingRequest("create", { currency, period, acceptedTerms: mode === "live" ? "pro-live-v1" : "sandbox-v1", consentAt }, AbortSignal.timeout(20_000), mode);
   window.location.assign(sandboxApproval(result.approvalUrl, mode));
 }
 const SHEET_PRICE = { JPY: { month: "¥2,980", year: "¥29,800" }, USD: { month: "$20", year: "$200" } } as const;
 
-/** Resume sheet (used after stopping renewal): the consent starts off, and "PayPalへ進む" stays dimmed until it is ticked. */
+/** Resume sheet (used after stopping renewal): the consent line starts unticked; pressing the button without it shows the red line (lawyer review, Nov 24). */
 export function UpgradeSheet({ ja, mode, blocked, refresh, onClose, currency = "JPY", period = "month" }: { ja: boolean; mode: Mode | null; blocked?: boolean; refresh: (force?: boolean) => Promise<void>; onClose: () => void; currency?: "JPY" | "USD"; period?: "month" | "year" }) {
-  const [agreed, setAgreed] = useState(false);
+  const consent = useConsent();
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const t = (a: string, b: string) => ja ? a : b;
   const closed = !mode || blocked;
   async function go() {
-    if (!mode || busy || !agreed) return;
+    if (!mode || busy) return;
+    const consentAt = consent.require();
+    if (!consentAt) return;
     setBusy(true); setError("");
     try {
-      await startCheckout(mode, refresh, currency, period);
+      await startCheckout(mode, refresh, currency, period, consentAt);
     } catch (e) {
       setBusy(false);
       setError(e instanceof Error && e.message === "existing-subscription" ? "existing" : "failed");
@@ -59,16 +62,13 @@ export function UpgradeSheet({ ja, mode, blocked, refresh, onClose, currency = "
       <div className={styles.kv}><span>{t("更新", "Renewal")}</span><b>{period === "year" ? t("毎年自動で更新", "Renews yearly") : t("毎月自動で更新", "Renews monthly")}</b></div>
       <div className={styles.kv}><span>{t("お支払い", "Payment")}</span><b>PayPal</b></div>
     </div>
-    <label className={styles.check}>
-      <input type="checkbox" checked={agreed} disabled={busy || closed} onChange={event => setAgreed(event.target.checked)} />
-      <span className={styles.box}><i>{agreed && check}</i></span>
-      <span>{ja ? <><Link href="/terms">利用規約</Link>に同意し、{period === "year" ? "毎年" : "毎月"}自動で更新されることを確認しました。</> : <>I agree to the <Link href="/terms">Terms</Link> and understand it renews {period === "year" ? "yearly" : "monthly"}.</>}</span>
-    </label>
     {closed && <p className={styles.err}>{t("お申し込みの受付は、現在停止中です。", "New subscriptions are closed right now.")}</p>}
     {error === "failed" && <p className={styles.err} role="alert">{t("お申し込みを開始できませんでした。時間をおいて、もう一度お試しください。", "Could not start checkout. Please try again shortly.")}</p>}
     {error === "existing" && <p className={styles.err} role="alert">{t("手続き中の契約があります。", "A checkout is already in progress.")} <Link href="/research/account/billing" style={{ color: "#e7c982" }}>{t("手続きを再開する", "Resume")}</Link></p>}
     <CheckoutLines lines={[ja ? PRO_CHECKOUT_LINE.ja : PRO_CHECKOUT_LINE.en]} />
-    <AgreeButton en={!ja} className={`${styles.btn} ${styles.gbt}`} disabled={!agreed || busy || closed} busy={busy} busyLabel={t("PayPalへ移動しています…", "Opening PayPal…")} onClick={() => void go()} />
+    <ConsentCheck en={!ja} consent={consent} />
+    <AgreeButton en={!ja} className={`${styles.btn} ${styles.gbt}`} disabled={busy || closed} busy={busy} busyLabel={t("PayPalへ移動しています…", "Opening PayPal…")} onClick={() => void go()} />
+    <ConsentError en={!ja} consent={consent} />
     <button type="button" className={styles.sCancel} disabled={busy} onClick={onClose}>{t("キャンセル", "Cancel")}</button>
   </Sheet>;
 }

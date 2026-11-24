@@ -40,7 +40,8 @@ test('the PayPal button goes straight to PayPal: a real button when a handler is
   const button = html(true, { href: undefined, onSubscribe: () => {} });
   // The account page's button is the final one (owner pack, Nov 17): the lawyer's wording, 「利用規約」 opening the terms, the renewal line above.
   assert.match(button, /<button[^>]*class="paypal"[^>]*aria-label="利用規約に同意して申し込む"[^>]*><span role="link" data-href="\/terms"[^>]*>利用規約<\/span>に同意して申し込む<\/button>/);
-  assert.match(button, /<p>月額・年額とも解約するまで自動更新。いつでも解約できます。<\/p><\/div><button/);
+  // Lawyer review (Nov 24): the consent tick line sits between the renewal line and the button.
+  assert.match(button, /<p>月額・年額とも解約するまで自動更新。いつでも解約できます。<\/p><\/div><label[^>]*data-consent=""><input type="checkbox"[^>]*\/><span><a href="\/terms"[^>]*>利用規約<\/a>と<a href="\/privacy"[^>]*>プライバシーポリシー<\/a>に同意する<\/span><\/label><button/);
   assert.match(html(false, { href: undefined, onSubscribe: () => {} }), /aria-label="Agree to the Terms and buy"[^>]*>Agree to the <span role="link" data-href="\/terms\?lang=en"[^>]*>Terms<\/span> and buy<\/button>/);
   // The introduction card's link only leads to the account page, so it keeps 「PayPalで申し込む」.
   assert.match(html(true, { href: "/research/account?upgrade=1" }), />PayPalで申し込む<\/a>/);

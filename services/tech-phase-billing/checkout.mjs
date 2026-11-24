@@ -1,11 +1,20 @@
 import { approvalUrl, periodOfMinor } from './paypal.mjs';
+// The time the member ticked 「利用規約とプライバシーポリシーに同意する」 above the button (lawyer review, Nov 24).
+// Required for every new checkout and stored on the subscription row (terms_consent_at, db/tech-phase/010_terms_consent.sql).
+// Only the format and "not in the future" (10 minutes of clock skew) are checked: it is the member's own clock.
+export function consentTime(value, now) {
+  const at = typeof value === 'string' && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,3})?Z$/.test(value) ? Date.parse(value) : NaN;
+  if (!Number.isFinite(at) || !Number.isFinite(now) || at > now + 600000) throw Error('CONSENT_REQUIRED');
+  return new Date(at).toISOString();
+}
 // Internal authenticated-service API, not a public HTTP handler. userId must come
 // from verified Clerk authentication. No return-page input can grant membership.
 export function checkoutService({ store, paypal, termsVersion, now = Date.now }) {
   return {
-    async start(userId, currency, acceptedTerms, period = 'month') {
+    async start(userId, currency, acceptedTerms, period = 'month', consentAt) {
       if (!termsVersion || acceptedTerms !== termsVersion) throw Error('TERMS_REQUIRED');
-      let row = await store.reserve(userId, currency, termsVersion, period);
+      const agreedAt = consentTime(consentAt, now());
+      let row = await store.reserve(userId, currency, termsVersion, period, agreedAt);
       if (!row.paypal_id) {
         // PayPal retains create keys for 72h. Never blindly retry after that window.
         const age = now() - new Date(row.created_at).getTime();

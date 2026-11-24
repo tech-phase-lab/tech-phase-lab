@@ -4,6 +4,7 @@ import { checkoutUrl, liveApprovalUrl, liveCheckoutRequest, liveOrder, type Live
 import type { CheckoutProps } from "./screen";
 import styles from "./styles.module.css";
 import AgreeButton, { CheckoutLines, resoluteCheckoutLines, termsHref } from "../../legal/agree-button";
+import { ConsentCheck, ConsentError, useConsent } from "../../legal/consent-check";
 const errors: Record<string,[string,string]> = {
  GUEST_SESSION_REQUIRED:["購入時と同じブラウザで開いてください。解決しない場合は注文番号を添えてお問い合わせください。","Open this page in the browser you used to purchase. If you still need help, contact support with your order number."],
  PAYMENT_DISABLED:["現在、購入の受付を停止しています。","Checkout is currently closed."],
@@ -22,8 +23,10 @@ export default function LiveCheckoutScreen({orderId,language:initialLanguage,can
  const [claimed,setClaimed]=useState(false);
  const [uncertain,setUncertain]=useState(false);
  const generation=useRef(0),mounted=useRef(true);
+ // Every purchase button here (create and the final one) sits under the consent line (lawyer review, Nov 24).
+ const consent=useConsent();
  useEffect(()=>{mounted.current=true;return ()=>{mounted.current=false;};},[]);
- const lock=useRef(false),attempt=useRef<{kind:"initial"|"renewal";language:"ja"|"en";requestKey:string}|null>(null);
+ const lock=useRef(false),attempt=useRef<{kind:"initial"|"renewal";language:"ja"|"en";requestKey:string;consentAt:string}|null>(null);
  const en=language === "en", id=order?.orderId ?? orderId;
  useEffect(()=>{
   if (!orderId) return;
@@ -40,6 +43,8 @@ export default function LiveCheckoutScreen({orderId,language:initialLanguage,can
  async function act(action:"create"|"capture"|"status"|"claim") {
   if(lock.current)return;
   if(["create","capture"].includes(action) && !salesEnabled){setError("PAYMENT_DISABLED");return;}
+  const consentAt=["create","capture"].includes(action) ? consent.require() : null;
+  if(["create","capture"].includes(action) && !consentAt)return;
   generation.current++;lock.current=true;setBusy(true);setError("");
   try {
    if(action==="claim" && id) {
@@ -47,12 +52,12 @@ export default function LiveCheckoutScreen({orderId,language:initialLanguage,can
     if(mounted.current)setClaimed(true);
    } else if(action==="create") {
     if(guest)await liveCheckoutRequest("session",{},true);
-    attempt.current ??= {kind,language,requestKey:crypto.randomUUID()};
+    attempt.current ??= {kind,language,requestKey:crypto.randomUUID(),consentAt:consentAt as string};
     const next=liveOrder(await liveCheckoutRequest("orders",attempt.current,guest));
     if(!mounted.current)return;
     setOrder(next);window.history.replaceState(null,"",checkoutUrl(language,next.orderId,false,guest));
    } else if(id) {
-    if(action==="capture"){setUncertain(true);await liveCheckoutRequest("capture",{orderId:id},guest);}
+    if(action==="capture"){setUncertain(true);await liveCheckoutRequest("capture",{orderId:id,consentAt},guest);}
     if(!mounted.current)return;
     const next=liveOrder(await liveCheckoutRequest(`orders/${id}`,undefined,guest));
     if(!mounted.current)return;
@@ -79,7 +84,9 @@ export default function LiveCheckoutScreen({orderId,language:initialLanguage,can
   {cancelled && <p>{en?"You returned from PayPal. Opening this page does not complete a payment.":"PayPalから戻りました。このページを開いただけで支払いは確定しません。"}</p>}
   {!id && <>
    {kind==="initial" && <p>{en?"Your first purchase includes RESOLUTE and one year of Alerts, Morning Note, Shock Gauge and RIZEL’s Take. Payment is by PayPal (credit card or bank account).":"初回購入にはRESOLUTEと、1年間のアラート通知・翌朝のひとこと・衝撃度チェッカー・RIZELの一言が含まれます。お支払いはPayPal（クレジットカード・銀行口座払い）です。"}</p>}
+   {salesEnabled && <ConsentCheck en={en} consent={consent} />}
    <button disabled={busy || !salesEnabled} onClick={()=>void act("create")}>{en?"Check price and continue":"価格を確認して進む"}</button>
+   <ConsentError en={en} consent={consent} />
   </>}
   {order && <>
    <dl><dt>{en?"Order":"購入内容"}</dt><dd>{order.quote.kind==="initial"?(en?"First purchase":"初回購入"):(en?"Annual renewal":"1年間の更新")}</dd>
@@ -95,7 +102,9 @@ export default function LiveCheckoutScreen({orderId,language:initialLanguage,can
     {approval && <a className={styles.button} href={approval} rel="noreferrer">{en?"Continue to PayPal":"PayPalへ進む"}</a>}
     <p>{en?"After approving in PayPal, return here to complete your payment.":"PayPalで承認した後、この画面で支払いを確定します。"}</p>
     <CheckoutLines lines={resoluteCheckoutLines(en,order.autoRenewal===true)} />
+    <ConsentCheck en={en} consent={consent} />
     <AgreeButton en={en} disabled={busy} onClick={()=>void act("capture")} />
+    <ConsentError en={en} consent={consent} />
    </div>}
   </>}
   {paid && order?.claimRequired && !claimed && <section>
