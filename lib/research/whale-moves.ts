@@ -112,6 +112,13 @@ export function signedPoints(value: number | null, digits = 1, ja = true) {
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 /** "11/20" from "2026-11-20"; "Nov 20" in English. */
 export const monthDay = (iso: string, ja = true) => ja ? `${Number(iso.slice(5, 7))}/${Number(iso.slice(8, 10))}` : `${MONTHS[Number(iso.slice(5, 7)) - 1]} ${Number(iso.slice(8, 10))}`;
+/** The insider list's narrow date column (owner, Nov 24: the date took too much width): "11月" over "21" ("Nov" over "21"), the year on
+ * top only when it differs from the year of the newest filing in the list (a list that crosses New Year). */
+export function dateStack(iso: string, ja: boolean, newestYear: string) {
+  const year = iso.slice(0, 4), month = Number(iso.slice(5, 7)), day = String(Number(iso.slice(8, 10)));
+  return { year: year === newestYear ? null : year, month: ja ? `${month}月` : MONTHS[month - 1], day,
+    label: ja ? `${year === newestYear ? "" : `${year}年`}${month}月${day}日` : `${MONTHS[month - 1]} ${day}${year === newestYear ? "" : `, ${year}`}` };
+}
 export const stockHref = (ticker: string) => `/research/stocks?q=${encodeURIComponent(ticker)}`;
 
 /** "7〜9月" for the quarter that ends on `end` (an end in the first half of a month belongs to the month before: 52/53-week years). */

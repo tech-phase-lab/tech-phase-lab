@@ -7,7 +7,7 @@ import StockRowLink from "../stock-row-link";
 import { useMemberDisplay, useMemberSettled, useOwnerAccount } from "../member-display-provider";
 import { useResearchLanguage } from "../use-research-language";
 import {
-  ABOUT, SORTS, WHALE_TABS, asOfLine, filterInsiders, money, monthDay, parseWhaleSnapshot, percent, quarterLabel, roleLabel, signedPoints,
+  ABOUT, SORTS, WHALE_TABS, asOfLine, dateStack, filterInsiders, money, monthDay, parseWhaleSnapshot, percent, quarterLabel, roleLabel, signedPoints,
   sortBuybacks, sortInstitutions, sortShort, stockHref, type WhaleSnapshot, type WhaleTab,
 } from "@/lib/research/whale-moves";
 import styles from "./whales.module.css";
@@ -80,8 +80,13 @@ function Short({ data, sort, ja }: { data: WhaleSnapshot; sort: string; ja: bool
 function Insiders({ data, sort, ja }: { data: WhaleSnapshot; sort: string; ja: boolean }) {
   const items = filterInsiders(data.insiders, sort);
   if (!items.length) return <p className={styles.note}>{ja ? "該当する届け出はありません。" : "No filings to show."}</p>;
-  return <ul className={styles.timeline}>{items.map((row, index) => <li key={`${row.ticker}-${row.date}-${index}`}>
-    <span className={styles.date}>{index === 0 || items[index - 1].date !== row.date ? monthDay(row.date, ja) : ""}</span>
+  const newestYear = items.reduce((year, row) => row.date.slice(0, 4) > year ? row.date.slice(0, 4) : year, "");
+  return <ul className={styles.timeline}>{items.map((row, index) => {
+    const date = index === 0 || items[index - 1].date !== row.date ? dateStack(row.date, ja, newestYear) : null;
+    return <li key={`${row.ticker}-${row.date}-${index}`}>
+    <span className={styles.date}>{date && <time dateTime={row.date} aria-label={date.label}>
+      {date.year && <small className={styles.dateYear}>{date.year}</small>}<small>{date.month}</small><b>{date.day}</b>
+    </time>}</span>
     <StockRowLink href={stockHref(row.ticker)} className={`${styles.card} ${row.side === "buy" ? styles.buyCard : styles.sellCard}`}>
       <StockLogo ticker={row.ticker} className={styles.logo} full />
       <span className={styles.names}>
@@ -93,7 +98,8 @@ function Insiders({ data, sort, ja }: { data: WhaleSnapshot; sort: string; ja: b
         <b className={styles.amount}>{money(row.value, ja)}</b>
       </span>
     </StockRowLink>
-  </li>)}</ul>;
+  </li>;
+  })}</ul>;
 }
 
 function Buybacks({ data, sort, ja }: { data: WhaleSnapshot; sort: string; ja: boolean }) {

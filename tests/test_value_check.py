@@ -73,12 +73,22 @@ class Score(unittest.TestCase):
         both = vc.score_at(history + [(300, 3.8, 2.5)], 300)
         self.assertAlmostEqual(both['exact'], (100 * (1 - 3.8 / 15) + 50) / 2)
         self.assertTrue(both['low'])
-        loss = vc.score_at(history + [(300, None, 2.5)], 300)  # no P/E today: P/S alone
-        self.assertAlmostEqual(loss['exact'], 50)
+        self.assertIsNone(vc.score_at(history + [(300, None, 2.5)], 300))  # a loss today: never scored (owner, Nov 24)
         self.assertIsNone(vc.score_at(history[:200] + [(200, 3.8, 2.5)], 200))  # under a year of history
         # loss days have no P/E and stay out of its mean
         mixed = [(i, None if i % 2 else 10.0, 5.0) for i in range(600)]
         self.assertAlmostEqual(vc.score_at(mixed + [(600, 5.0, 5.0)], 600)['exact'], (50 + 0) / 2)
+        # under a year of profitable days: not scored (a company just out of losses has no P/E history to compare with)
+        self.assertIsNone(vc.score_at(mixed[:400] + [(400, 5.0, 5.0)], 400))
+
+    def test_years_of_near_zero_revenue_or_earnings_count_at_the_cap(self):
+        # AST SpaceMobile, Nov 2026: P/S in the thousands while revenue was near zero, about 170 now. Uncapped, today looked 80% cheap.
+        history = [(i, 20.0, 2000.0 if i < 400 else 300.0) for i in range(600)]
+        today = vc.score_at(history + [(600, 20.0, 40.0)], 600)
+        self.assertAlmostEqual(today['exact'], (0 + 100 * (1 - 40 / vc.PS_CAP)) / 2)
+        # a P/E of 900 on earnings near zero counts as 100 in the mean: a P/E of 60 today is 40% below it, not 93%
+        thin = [(i, 900.0, 5.0) for i in range(600)]
+        self.assertAlmostEqual(vc.score_at(thin + [(600, 60.0, 5.0)], 600)['exact'], (40 + 0) / 2)
 
     def test_split_rebases_the_stored_closes_and_keeps_market_value(self):
         db = sqlite3.connect(':memory:')
@@ -126,15 +136,15 @@ class Snapshot(unittest.TestCase):
     def test_ranking_exclusions_and_order(self):
         snap = self.build()
         tech = snap['universes']['tech']
-        self.assertEqual([r['ticker'] for r in tech['items']], ['LOSS', 'UP'])  # the same value: by ticker
-        self.assertEqual(tech['excluded'], {'above-average': ['DOWN'], 'revenue-decline': ['SHRINK']})
+        self.assertEqual([r['ticker'] for r in tech['items']], ['UP'])  # a loss-maker is never ranked (owner, Nov 24)
+        self.assertEqual(tech['excluded'], {'above-average': ['DOWN'], 'not-profitable': ['LOSS'], 'revenue-decline': ['SHRINK']})
         self.assertEqual(snap['universes']['all']['excluded']['share-class'], ['BRK.B'])
-        loss = tech['items'][0]
-        self.assertIsNone(loss['pe'])
-        self.assertGreater(loss['score'], 30)
-        self.assertTrue(loss['low'])
+        up = tech['items'][0]
+        self.assertGreater(up['score'], 30)
+        self.assertTrue(up['low'])
+        self.assertIsNotNone(up['pe'])
         self.assertEqual(snap['basis'], 'trailing')
-        self.assertEqual(loss['ja'], 'LOSSジャ')
+        self.assertEqual(up['ja'], 'UPジャ')
 
     def test_in_and_out(self):
         rows = [{'ticker': 'A', 'score': 50, 'previous': 20}, {'ticker': 'B', 'score': 20, 'previous': 40},
@@ -180,13 +190,33 @@ class ForeignAndShort(unittest.TestCase):
     def test_a_recent_listing_is_calculated_over_its_own_history_and_says_so(self):
         days = trading_days('2025-06-02', 300)
         first = date.fromisoformat(days[0]).toordinal()
-        record = {'shares': [{'end': first - 5, 'value': 1.0}], 'income': [],
-                  'revenue': [{'end': first - 400 + q * 91, 'filed': first - 380 + q * 91, 'value': 100.0 + q} for q in range(12)]}
+        revenue = [{'end': first - 400 + q * 91, 'filed': first - 380 + q * 91, 'value': 100.0 + q} for q in range(12)]
+        record = {'shares': [{'end': first - 5, 'value': 1.0}], 'income': [{**p, 'value': 5.0} for p in revenue], 'revenue': revenue}
         closes = [(d, 100.0 - i * 0.1, 100.0 - i * 0.1) for i, d in enumerate(days)]
         row = vc.evaluate('NEW', closes, record, days[-1])
         self.assertEqual(row['period'], 'listed')
         self.assertGreater(row['score'], 0)
         self.assertTrue(row['low'])
+
+    def test_loss_makers_thin_earnings_and_new_profits_are_not_ranked(self):
+        # The AST SpaceMobile case (owner, Nov 24): revenue from near zero to 143 million, a net loss of 628 million, P/S down from
+        # the thousands. It came first in ハイテク on its P/S alone; now it is left out.
+        days = trading_days('2021-11-01', 1300)
+        first = date.fromisoformat(days[0]).toordinal()
+        revenue = [{'end': first - 400 + q * 91, 'filed': first - 380 + q * 91, 'value': 0.5 if q < 18 else 143.0} for q in range(26)]
+        closes = [(d, 50.0, 50.0) for d in days]
+
+        def row(income_of):
+            record = {'shares': [{'end': first - 10, 'value': 100.0}], 'revenue': revenue,
+                      'income': [{**p, 'value': income_of(q)} for q, p in enumerate(revenue)]}
+            return vc.evaluate('X', closes, record, days[-1])
+
+        self.assertEqual(row(lambda q: -628.0), {'excluded': 'not-profitable'})
+        self.assertEqual(row(lambda q: -628.0 if q < 22 else 10.0), {'excluded': 'short-profit-history'})
+        self.assertEqual(row(lambda q: 40.0), {'excluded': 'thin-earnings'})  # P/E 125
+        ranked = row(lambda q: 500.0)  # P/E 10 all along: P/S compared with its capped mean, not 99% below the raw one
+        self.assertEqual(ranked['pe'], 10.0)
+        self.assertLess(ranked['score'], 50)
 
     def test_the_same_percent_is_ordered_by_the_unrounded_value(self):
         rows = [{'ticker': 'A', 'score': 40, 'exact': 40.2}, {'ticker': 'B', 'score': 40, 'exact': 40.4}, {'ticker': 'C', 'score': 41, 'exact': 40.6}]

@@ -1396,7 +1396,10 @@ class AutomaticMonitor:
                         result = value_check.run_once(db, should_stop=self.stop_event.is_set)
                         last_day = slot if slot != "first" else (value_check.due(now(), None) or last_day)
                         print(json.dumps({"event": "value-check-run", "asOf": result.get("asOf"), "credits": result.get("credits"),
-                                          "ranked": {k: len(v["items"]) for k, v in result["universes"].items()}}), flush=True)
+                                          "ranked": {k: len(v["items"]) for k, v in result["universes"].items()},
+                                          # the first ten of each list (public tickers), so the ranking can be checked from the logs
+                                          "top": {k: [f'{i["ticker"]}:{i["score"]}' for i in v["items"][:10]] for k, v in result["universes"].items()}}),
+                              flush=True)
                 finally:
                     db.close()
             except Exception as error:

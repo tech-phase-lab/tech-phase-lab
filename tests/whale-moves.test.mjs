@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { ABOUT, asOfLine, filterInsiders, money, parseWhaleSnapshot, quarterLabel, roleLabel, signedPoints, sortBuybacks, sortInstitutions, sortShort,
-  whaleMovesAccess, whaleMovesEnabled, monthDay, SORTS, WHALE_TABS } from "../lib/research/whale-moves.ts";
+  whaleMovesAccess, whaleMovesEnabled, monthDay, dateStack, SORTS, WHALE_TABS } from "../lib/research/whale-moves.ts";
 
 const now = Date.UTC(2026, 10, 22);
 const pro = { status: "signed-in", plan: "pro", accessExpiresAt: now + 60_000 };
@@ -118,4 +118,15 @@ test("menu: PRO tiles in the owner's order, クジラの足あと behind its swi
   assert.match(tiles, /\{whaleMoves && tile\("\/research\/whales", "whale"/);
   assert.match(header, /const whaleMoves = whaleMovesEnabled\(\) \|\| ownerAccount;/);
   assert.match(read("../proxy.ts"), /"\/api\/research\/whales"/);
+});
+
+test("insider dates stay narrow: the month over the day, the year only across New Year (owner, Nov 24)", () => {
+  assert.deepEqual(dateStack("2026-11-24", true, "2026"), { year: null, month: "11月", day: "24", label: "11月24日" });
+  assert.deepEqual(dateStack("2026-11-04", false, "2026"), { year: null, month: "Nov", day: "4", label: "Nov 4" });
+  assert.deepEqual(dateStack("2025-12-30", true, "2026"), { year: "2025", month: "12月", day: "30", label: "2025年12月30日" });
+  assert.equal(dateStack("2025-12-30", false, "2026").label, "Dec 30, 2025");
+  const css = readFileSync(new URL("../app/research/whales/whales.module.css", import.meta.url), "utf8");
+  assert.match(css, /\.timeline li \{[^}]*grid-template-columns:26px minmax\(0,1fr\)/);
+  const screen = readFileSync(new URL("../app/research/whales/screen.tsx", import.meta.url), "utf8");
+  assert.match(screen, /dateStack\(row\.date, ja, newestYear\)/);
 });
