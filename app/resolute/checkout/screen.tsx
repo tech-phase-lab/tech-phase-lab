@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import { formatDisplay } from "@/lib/research/display-time";
 import styles from "./styles.module.css";
+import { ConsentCheck, ConsentError, useConsent } from "../../legal/consent-check";
 export type CheckoutProps = { orderId: string | null; language: "ja" | "en"; cancelled: boolean };
 type Order = { orderId: string; state: string; sandbox: true; expiresAt: string; approvalUrl?: string | null;
  quote: { kind: "initial" | "renewal"; language: "ja" | "en"; currency: "JPY" | "USD"; value: string; priceClass: string } };
@@ -38,6 +39,8 @@ export default function CheckoutScreen({ orderId, language: initialLanguage, can
  const requestKey = useRef<string | null>(null);
  const requestLanguage = useRef<"ja" | "en" | null>(null);
  const lock = useRef(false);
+ const consent = useConsent();
+ const consentAtRef = useRef<string | null>(null);
  function switchLanguage(next: "ja" | "en") {
   if (lock.current) return;
   setLanguage(next);
@@ -56,6 +59,8 @@ export default function CheckoutScreen({ orderId, language: initialLanguage, can
  }, [orderId]);
  async function act(action: "create" | "capture" | "status" | "access") {
   if (lock.current) return;
+  const consentAt = action === "create" || action === "capture" ? consent.require() : null;
+  if ((action === "create" || action === "capture") && !consentAt) return;
   lock.current = true; setBusy(true); setError("");
   try {
    if (action === "access") {
@@ -69,14 +74,15 @@ export default function CheckoutScreen({ orderId, language: initialLanguage, can
    } else if (action === "create") {
     requestKey.current ??= crypto.randomUUID();
     requestLanguage.current ??= language;
-    const data: Order = await request("orders", { kind, language: requestLanguage.current, requestKey: requestKey.current });
+    consentAtRef.current ??= consentAt;
+    const data: Order = await request("orders", { kind, language: requestLanguage.current, requestKey: requestKey.current, consentAt: consentAtRef.current });
     setOrder(data);
     window.history.replaceState(null, "", `/resolute/checkout?lang=${language}&order=${data.orderId}`);
    } else {
     const id = order?.orderId ?? orderId;
     if (!id) return;
     setAccess(null);
-    if (action === "capture") { setUncertain(true); await request("capture", { orderId: id }); }
+    if (action === "capture") { setUncertain(true); await request("capture", { orderId: id, consentAt }); }
     setOrder(await request(`orders/${id}`)); setUncertain(false);
    }
   } catch (e) { failure(action === "access" ? new Error("ACCESS_UNAVAILABLE") : e); } finally { lock.current = false; setBusy(false); }
@@ -105,7 +111,9 @@ export default function CheckoutScreen({ orderId, language: initialLanguage, can
     <option value="initial">{en ? "First purchase" : "初回購入"}</option><option value="renewal">{en ? "Annual renewal" : "1年間の更新"}</option>
    </select></label>
    <p>{en ? "Your account determines renewal eligibility and pricing. You’ll see the amount before continuing to PayPal." : "更新の可否と価格は会員情報で判定します。PayPalへ進む前に金額を表示します。"}</p>
+   <ConsentCheck en={en} consent={consent} />
    <button disabled={busy} onClick={() => void act("create")}>{en ? "Check price and create test order" : "価格を確認してテスト注文を作る"}</button>
+   <ConsentError en={en} consent={consent} />
   </> : null}
   {order && <>
    <dl><dt>{en ? "Order" : "注文内容"}</dt><dd>{order.quote.kind === "initial" ? (en ? "First purchase" : "初回購入") : (en ? "Annual renewal" : "1年間の更新")}</dd>
@@ -115,7 +123,9 @@ export default function CheckoutScreen({ orderId, language: initialLanguage, can
    {!paid && !paused && !uncertain && order.state === "created" && <div className={styles.actions}>
     {safeApproval && <a className={styles.button} href={safeApproval} rel="noreferrer">{en ? "Continue to PayPal Sandbox" : "PayPalのテスト画面へ進む"}</a>}
     <p>{en ? "After approving in PayPal, return here and confirm the test payment." : "PayPalで承認した後、この画面でテスト支払いを確定します。"}</p>
+    <ConsentCheck en={en} consent={consent} />
     <button disabled={busy} onClick={() => void act("capture")}>{en ? "Confirm test payment" : "テスト支払いを確定する"}</button>
+    <ConsentError en={en} consent={consent} />
    </div>}
   </>}
   {(order || orderId) && <button disabled={busy} onClick={() => void act("status")}>{en ? "Refresh payment status" : "支払い状況を再確認する"}</button>}

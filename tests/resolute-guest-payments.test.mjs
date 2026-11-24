@@ -9,6 +9,8 @@ import { paymentHttp } from '../services/resolute-api/payments/http.mjs';
 import { guestIdentity, authenticateGuest } from '../services/resolute-api/payments/guest.mjs';
 import { createLiveEntitlementReader } from '../services/resolute-api/payments/live-entitlements.mjs';
 import { checkoutUrl } from '../lib/resolute/live-checkout.ts';
+// The consent tick time every purchase request carries (lawyer review, Nov 24).
+const CONSENT = '2025-01-01T00:00:00.000Z';
 
 const now=Date.parse('2026-10-27T06:00:00Z');
 const account=id=>({id,primaryEmailAddressId:'email_verified',emailAddresses:[{id:'email_verified',verification:{status:'verified'}}],privateMetadata:{plan:'pro',proExpiresAt:'2029-01-01T00:00:00Z'}});
@@ -44,7 +46,7 @@ test('guest payment lifecycle uses the verified live ledger without premature or
  };
  const engine=paymentEngine({store,paypal,environment:'live',merchantId:'MERCHANT1234',getUser:async id=>({...account(id),banned}),
   now:()=>clock,canCharge:()=>charge,allowGuest:()=>allow});
- const body=()=>({kind:'initial',language:'ja',requestKey:randomUUID()});
+ const body=()=>({kind:'initial',language:'ja',requestKey:randomUUID(),consentAt:CONSENT});
  let first;
  await t.test('initial purchase is normal price, renewal and disabled guest sales are rejected',async()=>{
   allow=false;await assert.rejects(engine.create(guest,body()),/AUTH_REQUIRED/);allow=true;
@@ -56,8 +58,8 @@ test('guest payment lifecycle uses the verified live ledger without premature or
   await assert.rejects(engine.claim('user_buyer',guest,{orderId:first.orderId}),/PAYMENT_REVIEW_REQUIRED/);
  });
  await t.test('capture retry grants no rights until account claim; payment is captured only once',async()=>{
-  assert.equal((await engine.capture(guest,{orderId:first.orderId})).state,'paid');
-  assert.equal((await engine.capture(guest,{orderId:first.orderId})).state,'already-paid');assert.equal(captures,1);
+  assert.equal((await engine.capture(guest,{orderId:first.orderId,consentAt:CONSENT})).state,'paid');
+  assert.equal((await engine.capture(guest,{orderId:first.orderId,consentAt:CONSENT})).state,'already-paid');assert.equal(captures,1);
   assert.equal((await query('SELECT * FROM resolute_payments_live.grants')).rows.length,0);
   assert.equal((await access('user_buyer')).canUseTools,false);
  });
@@ -86,7 +88,7 @@ test('guest payment lifecycle uses the verified live ledger without premature or
   charge=true;clock=now;
   for(const state of ['revoked','suspended']) {
    const g=guestIdentity(randomBytes(32).toString('hex')),o=await engine.create(g,body());
-   await engine.capture(g,{orderId:o.orderId});
+   await engine.capture(g,{orderId:o.orderId,consentAt:CONSENT});
    const raw=await store.get(o.orderId);await store.adverse(raw.paypal_id,state,'ADVERSE','EVENT'+state);
    await assert.rejects(engine.claim('user_next',g,{orderId:o.orderId}),/PAYMENT_REVIEW_REQUIRED/);
    assert.equal((await access('user_next')).canUseTools,false);
@@ -96,7 +98,7 @@ test('guest payment lifecycle uses the verified live ledger without premature or
   const orders=[];
   for(let i=0;i<2;i++) {
    const g=guestIdentity(randomBytes(32).toString('hex')),o=await engine.create(g,body());
-   await engine.capture(g,{orderId:o.orderId});orders.push({g,o});
+   await engine.capture(g,{orderId:o.orderId,consentAt:CONSENT});orders.push({g,o});
   }
   await engine.claim('user_single',orders[0].g,{orderId:orders[0].o.orderId});
   await assert.rejects(engine.claim('user_single',orders[1].g,{orderId:orders[1].o.orderId}),/ALREADY_PURCHASED/);

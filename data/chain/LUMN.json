@@ -1,0 +1,216 @@
+{
+  "root": {
+    "ticker": "LUMN",
+    "name": "ルーメン・テクノロジーズ",
+    "cik": 18926,
+    "name_en": "Lumen Technologies"
+  },
+  "rows": [
+    {
+      "ja": "工事・機器の仕入れ先(上流)",
+      "en": "Contractors & equipment suppliers (upstream)",
+      "above": true
+    },
+    {
+      "ja": "事業の売却先",
+      "en": "Buyers of its businesses"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "OPTU",
+    "TCX"
+  ],
+  "companies": [
+    {
+      "id": "DY",
+      "ticker": "DY",
+      "name": "ダイコム・インダストリーズ",
+      "name_en": "Dycom Industries",
+      "sub": "通信インフラ工事",
+      "sub_en": "Telecom infrastructure services",
+      "sub_short": "通信工事",
+      "sub_short_en": "Builder",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Dycomが10-Kで、売上の10.8%をLumenから得ると記載",
+          "text_en": "Dycom derived 10.8% of contract revenues from Lumen",
+          "source": {
+            "label": "Dycom Industries 10-K(2026年1月期)",
+            "label_en": "Dycom Industries 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/67215/000006721526000008/dy-20260131.htm",
+            "level": "official",
+            "date": "2026-03-09",
+            "quote": "During fiscal 2026, we derived approximately 25.4% of our total contract revenues from AT&T Inc., 14.0% from Verizon Communications, Inc. and 10.8% from Lumen Technologies Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "VIAV",
+      "ticker": "VIAV",
+      "name": "ヴィアヴィ・ソリューションズ",
+      "name_en": "Viavi Solutions",
+      "sub": "通信計測",
+      "sub_en": "Network test & measurement",
+      "sub_short": "通信計測",
+      "sub_short_en": "Testing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Viaviが10-Kで、顧客の一社に挙げる",
+          "text_en": "Viavi names Lumen among its customers",
+          "source": {
+            "label": "Viavi Solutions 10-K(2025年6月期)",
+            "label_en": "Viavi Solutions 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/912093/000091209325000096/viav-20250628.htm",
+            "level": "official",
+            "date": "2025-08-11",
+            "quote": "Examples of our customers include América Móvil, AT&T Inc., Lumen Technologies, Inc. (formerly CenturyLink, Inc.), Ciena, Cisco Systems, Inc., Ericsson, Nokia"
+          }
+        }
+      ]
+    },
+    {
+      "id": "T",
+      "ticker": "T",
+      "name": "AT&T",
+      "name_en": "AT&T",
+      "sub": "通信",
+      "sub_en": "Telecom",
+      "sub_short": "携帯通信",
+      "sub_short_en": "Carrier",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "11州の家庭向け光回線事業をAT&Tに57.5億ドルで売却(2026年2月完了)",
+          "text_en": "Sold its fiber-to-the-home business in 11 states to AT&T for $5.75 billion (closed Feb 2026)",
+          "source": {
+            "label": "Lumen Technologies 10-K(2025年度)",
+            "label_en": "Lumen Technologies 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/18926/000001892626000014/lumn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "On February 2, 2026, we completed our sale of our Mass Markets Fiber-to-the-Home business in the Territory (\"Mass Markets Fiber-to-the-Home business\") to AT&T in exchange for gross cash proceeds of $5.75 billion"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AKAM",
+      "ticker": "AKAM",
+      "name": "アカマイ",
+      "name_en": "Akamai",
+      "sub": "CDN・セキュリティ",
+      "sub_en": "CDN & security",
+      "sub_short": "CDN",
+      "sub_short_en": "CDN",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "LumenのCDN顧客契約の一部を取得(2023年10月)",
+          "text_en": "Acquired certain customer contracts from Lumen (Oct 2023)",
+          "source": {
+            "label": "Akamai 10-K(2025年度)",
+            "label_en": "Akamai 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1086222/000108622226000022/akam-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "We acquired certain customer contracts from Lumen Technologies, Inc. (\"Lumen\") in October 2023"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Colt",
+      "ticker": "Colt",
+      "name": "コルト・テクノロジー・サービシズ",
+      "name_en": "Colt Technology Services",
+      "sub": "通信(欧州)",
+      "sub_en": "Telecom (Europe)",
+      "sub_short": "欧州通信",
+      "sub_short_en": "Telecom",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "欧州・中東・アフリカ事業を17億ドルで売却(2023年)",
+          "text_en": "Sold its EMEA business for $1.7 billion (2023)",
+          "source": {
+            "label": "Lumen Technologies 10-K(2025年度)",
+            "label_en": "Lumen Technologies 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/18926/000001892626000014/lumn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "sold Lumen's operations in Europe, the Middle East and Africa (\"EMEA\") to Colt Technology Services Group Limited, a portfolio company of Fidelity Investments, for pre-tax cash proceeds of $ 1.7 billion"
+          }
+        }
+      ]
+    },
+    {
+      "id": "OPTU",
+      "ticker": "OPTU",
+      "name": "オプティマム・コミュニケーションズ",
+      "name_en": "Optimum Communications",
+      "sub": "ケーブル通信",
+      "sub_en": "Cable broadband",
+      "sub_short": "ケーブル",
+      "sub_short_en": "Cable",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Optimumが10-Kで、法人通信の主な競合に挙げる",
+          "text_en": "Optimum names Lumen a main competitor in business telecom",
+          "source": {
+            "label": "Optimum Communications 10-K/A(2025年度)",
+            "label_en": "Optimum Communications 10-K/A (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1702780/000170278026000071/optu-20251231.htm",
+            "level": "official",
+            "date": "2026-11-06",
+            "quote": "compete primarily with local incumbent telephone companies, especially AT&T, Lumen Technologies, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TCX",
+      "ticker": "TCX",
+      "name": "トゥカウズ",
+      "name_en": "Tucows",
+      "sub": "光回線・ドメイン",
+      "sub_en": "Fiber & domains",
+      "sub_short": "光回線",
+      "sub_short_en": "Fiber",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Tucowsが10-Kで、Ting光回線の競合に挙げる",
+          "text_en": "Tucows names Lumen among broadband providers competing with Ting",
+          "source": {
+            "label": "Tucows 10-K(2024年度)",
+            "label_en": "Tucows 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/909494/000143774925007558/tcx20241231_10k.htm",
+            "level": "official",
+            "date": "2025-03-13",
+            "quote": "Broadband providers such as AT&T, Comcast, Verizon and Lumen Technologies, who primarily compete with Ting Internet services."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

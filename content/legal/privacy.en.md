@@ -19,11 +19,15 @@ Holdings you enter or import (stocks, number of shares, purchase price and so on
 
 ## 3. How We Use Information
 
+- To register members and verify their identity
+- To bill for the service
+- To send emails about prices and renewals
+- To improve the service
 - Providing the Service and the Product, signing in, managing contracts and purchases, saving and showing diagnosis results and rules, and notifications based on your rules
-- Sending notifications and notices about renewal timing
+- Sending notifications
 - Answering inquiries
 - Preventing misuse and investigating the causes of failures
-- Improving features and contacting you about important notices
+- Contacting you about important notices
 
 ## 4. Cookies and Similar Technologies
 

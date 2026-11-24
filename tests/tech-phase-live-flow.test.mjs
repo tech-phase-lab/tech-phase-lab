@@ -11,6 +11,8 @@ import {liveMember,liveHandler} from '../services/tech-phase-billing/live-http.m
 import {liveMembership} from '../services/tech-phase-billing/live-membership.mjs';
 import {liveConfig,createPaypal,approvalUrl,RETURN_URL} from '../services/tech-phase-billing/paypal.mjs';
 import {liveDatabaseConfig} from '../services/tech-phase-billing/database-config.mjs';
+// The consent tick time every checkout carries (lawyer review, Nov 24).
+const CONSENT = '2025-01-01T00:00:00.000Z';
 const origin='https://billing.tech-phase-fixture.com';
 const environment=()=>({VERCEL_ENV:'production',TECH_PHASE_PAYPAL_ENV:'live',TECH_PHASE_BILLING_LIVE_ENABLED:'true',TECH_PHASE_BILLING_LIVE_ENTITLEMENTS_ENABLED:'true',TECH_PHASE_BILLING_LIVE_SALES_ENABLED:'true',TECH_PHASE_BILLING_LIVE_WEBHOOK_ENABLED:'true',TECH_PHASE_BILLING_LIVE_ORIGIN:origin,TECH_PHASE_BILLING_LIVE_SERVICE_URL:'https://fixture.up.railway.app',TECH_PHASE_BILLING_LIVE_SERVICE_TOKEN:'fixture_'.repeat(8),TECH_PHASE_BILLING_RUNTIME:'railway-live',TECH_PHASE_BILLING_LIVE_BRANCH:'codex/research-preview',RAILWAY_GIT_BRANCH:'codex/research-preview',TECH_PHASE_PAYPAL_LIVE_CLIENT_ID:'fixture',TECH_PHASE_PAYPAL_LIVE_CLIENT_SECRET:'fixture',TECH_PHASE_PAYPAL_LIVE_WEBHOOK_ID:'fixture',TECH_PHASE_PAYPAL_LIVE_PLAN_JPY:'P-'+'J'.repeat(24),TECH_PHASE_PAYPAL_LIVE_PLAN_USD:'P-'+'U'.repeat(24)});
 test('Live checkout isolates two members through duplicate webhooks and refund', async () => {
@@ -18,7 +20,7 @@ test('Live checkout isolates two members through duplicate webhooks and refund',
   try {
     await db.exec('CREATE ROLE tech_phase_billing_live_writer');
     const migration=readFileSync(new URL('../db/tech-phase/005_billing_live.sql',import.meta.url),'utf8');
-    await db.exec(migration);await db.exec(migration);
+    await db.exec(migration);await db.exec(migration);await db.exec(readFileSync(new URL('../db/tech-phase/010_terms_consent.sql',import.meta.url),'utf8'));
     const store=billingStore({query:(...args)=>db.query(...args),connect:async()=>({query:(...args)=>db.query(...args),release(){}})},'live');
     const owner = 'user_owner', member = 'user_Member2';
     const env=environment();
@@ -66,9 +68,9 @@ test('Live checkout isolates two members through duplicate webhooks and refund',
       assert.equal(response.status, expected);
       return response.json();
     }
-    const first = await call('create', {currency: 'JPY', acceptedTerms: 'pro-live-v1'});
+    const first = await call('create', {currency: 'JPY', acceptedTerms: 'pro-live-v1',consentAt:CONSENT});
     identity = member;
-    const second = await call('create', {currency: 'USD', acceptedTerms: 'pro-live-v1'});
+    const second = await call('create', {currency: 'USD', acceptedTerms: 'pro-live-v1',consentAt:CONSENT});
     assert.notEqual(first.id, second.id);
     assert.equal((await call('status')).plan, 'free', 'provider ACTIVE alone must not grant access');
     await call('reconcile', {id: first.id}, 404);
@@ -161,7 +163,7 @@ test('failed rollback discards the billing client and preserves the original err
  for(const rollbackFails of [false,true]){
   const original=Error('fixture write failure');const released=[];
   const pool={async connect(){return {async query(sql){if(sql==='BEGIN')return {};if(sql==='ROLLBACK'){if(rollbackFails)throw Error('rollback failure');return {};}throw original;},release(error){released.push(error);}};}};
-  await assert.rejects(billingStore(pool).reserve('user_First','JPY','sandbox-v1'),error=>error===original);
+  await assert.rejects(billingStore(pool).reserve('user_First','JPY','sandbox-v1','month',CONSENT),error=>error===original);
   assert.equal(released.length,1);
   assert.equal(released[0]?.message,rollbackFails?'BILLING_TRANSACTION_FAILED':undefined);
  }

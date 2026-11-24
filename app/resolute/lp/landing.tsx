@@ -27,7 +27,6 @@ function Buy({ price, small = false }: { price: ResolutePrice; small?: boolean }
  return <div className={s.buy}>
   <BuyButton language="ja" shownValue={price.value} className={small ? `${s.cta} ${s.ctaSmall}` : s.cta}>RESOLUTEを手に入れる</BuyButton>
   <p className={s.guest}>ログインなしでも購入できます</p>
-  <p className={s.terms}><Link href="/terms" target="_blank" rel="noopener">利用規約</Link>に同意のうえお進みください</p>
  </div>;
 }
 const WHAT = "RESOLUTEは相場が荒れる日でも冷静に立ち回るためのキットです。30問の診断で自分だけのルールを作り、壁紙と一冊の本にしていつも手元に置いておく。決めたラインに株価が届けばアラートが知らせてくれるので、感情で売り買いする前に立ち止まれます。";

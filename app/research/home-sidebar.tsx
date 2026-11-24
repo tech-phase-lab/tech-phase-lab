@@ -83,6 +83,8 @@ export default function HomeSidebar({ lang, tab, companyCount, savedCount, openV
     return item.href ? <Link key={item.key} href={item.href} {...props}>{inner}</Link> : <button key={item.key} type="button" onClick={item.onClick} {...props}>{inner}</button>;
   };
   return <nav className={styles.menu} aria-label={t("メインメニュー", "Main menu")}>
+    {/* Same first row as the phone menu for FREE (owner, Nov 24); members, the owner's accounts included, do not see it. */}
+    {!member && <div className={styles.group}>{row({ key: "pro-experience", icon: icons.gem, label: t("PRO機能体験", "PRO feature tour"), href: "/research/pro-experience", current: pathname === "/research/pro-experience", badge: <em className={styles.count}>PRO</em> })}</div>}
     <div className={styles.group}><p className={styles.eyebrow}>QUICK</p>{quick.map(row)}</div>
     <div className={styles.group}><p className={styles.eyebrow}>RESEARCH</p>{research.map(row)}</div>
     <div className={styles.group}>

@@ -1,0 +1,158 @@
+{
+  "root": {
+    "ticker": "SHAK",
+    "name": "シェイク・シャック",
+    "cik": 1620533,
+    "name_en": "Shake Shack"
+  },
+  "rows": [
+    {
+      "ja": "提携先・海外のライセンス先",
+      "en": "Partners & international licensees"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "SG"
+  ],
+  "companies": [
+    {
+      "id": "DAL",
+      "ticker": "DAL",
+      "name": "デルタ航空",
+      "name_en": "Delta Air Lines",
+      "sub": "航空",
+      "sub_en": "Airlines",
+      "sub_short": "航空",
+      "sub_short_en": "Airline",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "国内13空港発の便のファーストクラスで提供する提携",
+          "text_en": "Partnership serving Shake Shack in first class on flights from 13 US airports",
+          "source": {
+            "label": "Shake Shack 10-K(2025年度)",
+            "label_en": "Shake Shack 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1620533/000162053326000018/shak-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our partnership with Delta Air Lines grew meaningfully in 2025, with Shake Shack now served in select routes across flights originating from 13 domestic airports via First Class pre select and supported by strong guest feedback."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Maxims",
+      "ticker": "Maxim's",
+      "name": "美心(マキシム)",
+      "name_en": "Maxim's",
+      "sub": "外食",
+      "sub_en": "Restaurants",
+      "sub_short": "外食",
+      "sub_short_en": "Dining",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ベトナムで15店を出す長期出店契約",
+          "text_en": "Long-term deal to open 15 Shacks in Vietnam",
+          "source": {
+            "label": "Shake Shack 10-K(2025年度)",
+            "label_en": "Shake Shack 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1620533/000162053326000018/shak-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "we signed several new long-term development agreements, including a plan to open 15 Shacks in Vietnam with Maxim's and a 12-Shack partnership in Panama with Grupo Attie-Multifood Enterprises."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GrupoAttie",
+      "ticker": "Grupo Attie",
+      "name": "グルポ・アティエ",
+      "name_en": "Grupo Attie-Multifood Enterprises",
+      "sub": "外食",
+      "sub_en": "Restaurants",
+      "sub_short": "外食",
+      "sub_short_en": "Dining",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "パナマで12店の提携",
+          "text_en": "12-Shack partnership in Panama",
+          "source": {
+            "label": "Shake Shack 10-K(2025年度)",
+            "label_en": "Shake Shack 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1620533/000162053326000018/shak-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "we signed several new long-term development agreements, including a plan to open 15 Shacks in Vietnam with Maxim's and a 12-Shack partnership in Panama with Grupo Attie-Multifood Enterprises."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Avride",
+      "ticker": "Avride",
+      "name": "アヴライド",
+      "name_en": "Avride",
+      "sub": "自動配送",
+      "sub_en": "Autonomous delivery",
+      "sub_short": "自動配送",
+      "sub_short_en": "Robots",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "配送ロボットの導入先にShake Shackが加わる(2025年)",
+          "text_en": "Shake Shack joined its autonomous delivery service (2025)",
+          "source": {
+            "label": "Nebius 20-F(2025年度)",
+            "label_en": "Nebius 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926052948/nbis-20251231x20f.htm",
+            "level": "official",
+            "date": "2026-04-30",
+            "quote": "During 2025, Avride onboarded Shake Shack, Wendy's, and White Castle, and signed commercial agreements with Uber Eats and Grubhub to utilize those distribution platforms."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SG",
+      "ticker": "SG",
+      "name": "スウィートグリーン",
+      "name_en": "Sweetgreen",
+      "sub": "外食",
+      "sub_en": "Restaurants",
+      "sub_short": "外食",
+      "sub_short_en": "Dining",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Sweetgreenが10-Kで、競合としてShake Shackを挙げる",
+          "text_en": "Sweetgreen names Shake Shack as a competitor",
+          "source": {
+            "label": "Sweetgreen 10-K(2024年度)",
+            "label_en": "Sweetgreen 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1477815/000162828025008367/sg-20241229.htm",
+            "level": "official",
+            "date": "2025-02-27",
+            "quote": "including companies like Chipotle, CAVA, McDonald's, Panera Bread, and Shake Shack"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

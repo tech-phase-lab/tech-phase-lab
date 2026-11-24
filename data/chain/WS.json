@@ -1,0 +1,157 @@
+{
+  "root": {
+    "ticker": "WS",
+    "name": "ワージントン・スチール",
+    "cik": 1968487,
+    "name_en": "Worthington Steel"
+  },
+  "rows": [
+    {
+      "ja": "分離元・買収",
+      "en": "Former parent & acquisition",
+      "above": true
+    },
+    {
+      "ja": "主要顧客(デトロイト3社で売上の35%)",
+      "en": "Major customers (Detroit Three: 35% of sales)"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "WOR",
+      "ticker": "WOR",
+      "name": "ワージントン・エンタープライゼズ",
+      "name_en": "Worthington Enterprises",
+      "sub": "金属加工製品",
+      "sub_en": "Metal products",
+      "sub_short": "金属加工",
+      "sub_short_en": "Metal",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "分離元。鋼材供給・サービス契約などを締結",
+          "text_en": "Former parent; linked by a steel supply and services agreement and other agreements",
+          "source": {
+            "label": "Worthington Steel 10-K(2026年5月期)",
+            "label_en": "Worthington Steel 10-K (FY ended May 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1968487/000196848726000026/ws-20260531.htm",
+            "level": "official",
+            "date": "2026-07-30",
+            "quote": "In connection with the Separation, Worthington Steel entered into several agreements with Worthington Enterprises that govern the relationship between the parties following the Distribution, including a Separation and Distribution Agreement, Tax Matters Agreement, Employee Matters Agreement, Steel Supply and Services Agreement, and Transition Services Agreement."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Kloeckner",
+      "ticker": "Kloeckner",
+      "name": "クロックナー",
+      "name_en": "Kloeckner",
+      "sub": "鉄鋼流通",
+      "sub_en": "Steel distribution",
+      "sub_short": "鉄鋼流通",
+      "sub_short_en": "Steel",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "独Kloecknerの株式約60.86%を取得し支配(2026年6月)",
+          "text_en": "Acquired a controlling stake of about 60.86% in Germany-based Kloeckner (June 2026)",
+          "source": {
+            "label": "Worthington Steel 10-K(2026年5月期)",
+            "label_en": "Worthington Steel 10-K (FY ended May 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1968487/000196848726000026/ws-20260531.htm",
+            "level": "official",
+            "date": "2026-07-30",
+            "quote": "On June 3, 2026, we acquired a controlling equity stake in Germany-based Kloeckner (the \"Kloeckner Acquisition\") at which date we owned approximately 60.86% of Kloeckner's total outstanding share capital."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GM",
+      "ticker": "GM",
+      "name": "ゼネラル・モーターズ",
+      "name_en": "General Motors",
+      "sub": "自動車",
+      "sub_en": "Automobiles",
+      "sub_short": "自動車",
+      "sub_short_en": "Cars",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "デトロイト3社の一社(3社合計で売上の35%、2026年5月期)",
+          "text_en": "One of the Detroit Three (together 35% of FY2026 sales)",
+          "source": {
+            "label": "Worthington Steel 10-K(2026年5月期)",
+            "label_en": "Worthington Steel 10-K (FY ended May 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1968487/000196848726000026/ws-20260531.htm",
+            "level": "official",
+            "date": "2026-07-30",
+            "quote": "The Detroit Three automakers represented 35% and 33% of our consolidated net sales during fiscal 2026 and fiscal 2025, respectively."
+          }
+        }
+      ]
+    },
+    {
+      "id": "F",
+      "ticker": "F",
+      "name": "フォード",
+      "name_en": "Ford",
+      "sub": "自動車",
+      "sub_en": "Automobiles",
+      "sub_short": "自動車",
+      "sub_short_en": "Cars",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "デトロイト3社の一社(3社合計で売上の35%、2026年5月期)",
+          "text_en": "One of the Detroit Three (together 35% of FY2026 sales)",
+          "source": {
+            "label": "Worthington Steel 10-K(2026年5月期)",
+            "label_en": "Worthington Steel 10-K (FY ended May 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1968487/000196848726000026/ws-20260531.htm",
+            "level": "official",
+            "date": "2026-07-30",
+            "quote": "The Detroit Three automakers represented 35% and 33% of our consolidated net sales during fiscal 2026 and fiscal 2025, respectively."
+          }
+        }
+      ]
+    },
+    {
+      "id": "STLA",
+      "ticker": "STLA",
+      "name": "ステランティス",
+      "name_en": "Stellantis",
+      "sub": "自動車",
+      "sub_en": "Automobiles",
+      "sub_short": "自動車",
+      "sub_short_en": "Cars",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "デトロイト3社の一社(3社合計で売上の35%、2026年5月期)",
+          "text_en": "One of the Detroit Three (together 35% of FY2026 sales)",
+          "source": {
+            "label": "Worthington Steel 10-K(2026年5月期)",
+            "label_en": "Worthington Steel 10-K (FY ended May 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1968487/000196848726000026/ws-20260531.htm",
+            "level": "official",
+            "date": "2026-07-30",
+            "quote": "The Detroit Three automakers represented 35% and 33% of our consolidated net sales during fiscal 2026 and fiscal 2025, respectively."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

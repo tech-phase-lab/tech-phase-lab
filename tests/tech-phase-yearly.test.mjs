@@ -10,6 +10,8 @@ import { accountContract } from '../services/tech-phase-billing/account-view.mjs
 import { sandboxHandler } from '../services/tech-phase-billing/http.mjs';
 import { liveHandler } from '../services/tech-phase-billing/live-http.mjs';
 import { livePreflight } from '../services/tech-phase-billing/live-preflight.mjs';
+// The consent tick time every checkout carries (lawyer review, Nov 24).
+const CONSENT = '2025-01-01T00:00:00.000Z';
 
 const P = c => 'P-' + c.repeat(24), sid = 'I-ABCDEFGHIJKL', rid = '00000000-0000-4000-8000-000000000001';
 const plans = { JPY: P('J'), USD: P('U'), JPY_YEAR: P('Y'), USD_YEAR: P('Z') };
@@ -76,7 +78,7 @@ test('HTTP: period is optional and only month|year; a plan id from the client is
   const seen = [], services = async () => ({ checkout: { start: async (...a) => { seen.push(a); return { id: rid }; } }, store: {} });
   const sandbox = sandboxHandler({ env: { VERCEL_ENV: 'preview', TECH_PHASE_BILLING_SANDBOX_ENABLED: 'true', TECH_PHASE_PAYPAL_ENV: 'sandbox' }, identity: async () => 'user_owner', ownerId: 'user_owner', services });
   const req = body => new Request('https://example.test/api/create', { method: 'POST', headers: { origin: 'https://example.test', 'content-type': 'application/json' }, body: JSON.stringify(body) });
-  const t = { currency: 'USD', acceptedTerms: 'sandbox-v1' };
+  const t = { currency: 'USD', acceptedTerms: 'sandbox-v1',consentAt:CONSENT };
   assert.equal((await sandbox(req({ ...t, period: 'year' }), 'create')).status, 200);
   assert.equal((await sandbox(req(t), 'create')).status, 200);
   assert.deepEqual(seen.map(a => a[3]), ['year', 'month']);
@@ -86,7 +88,7 @@ test('HTTP: period is optional and only month|year; a plan id from the client is
   const live = liveHandler({ env: { VERCEL_ENV: 'production', TECH_PHASE_PAYPAL_ENV: 'live', TECH_PHASE_BILLING_LIVE_ENABLED: 'true', TECH_PHASE_BILLING_LIVE_ENTITLEMENTS_ENABLED: 'true', TECH_PHASE_BILLING_LIVE_SALES_ENABLED: 'true', TECH_PHASE_BILLING_LIVE_ORIGIN: 'https://techphase.example.com' },
     identity: async () => 'user_abc123', services: async () => ({ abuse: null, checkout: { start: async (...a) => { liveSeen.push(a); return { id: rid }; } } }) });
   const lreq = body => new Request('https://techphase.example.com/api/create', { method: 'POST', headers: { origin: 'https://techphase.example.com', 'content-type': 'application/json' }, body: JSON.stringify(body) });
-  const lt = { currency: 'JPY', acceptedTerms: 'pro-live-v1' };
+  const lt = { currency: 'JPY', acceptedTerms: 'pro-live-v1',consentAt:CONSENT };
   assert.equal((await live(lreq({ ...lt, period: 'year' }), 'create')).status, 200);
   assert.equal((await live(lreq({ ...lt, period: 'decade' }), 'create')).status, 400);
   assert.equal((await live(lreq({ ...lt, plan_id: plans.JPY_YEAR }), 'create')).status, 400);
@@ -135,7 +137,7 @@ test('verifiedPeriod refuses monthly/yearly mixups and unverified yearly evidenc
 async function database(work) {
   const db = new PGlite();
   try {
-    for (const name of ['001_billing_sandbox.sql', '002_paid_periods_sandbox.sql', '003_provider_billing_clock.sql', '004_dispute_holds_sandbox.sql', '008_yearly_plans.sql'])
+    for (const name of ['001_billing_sandbox.sql', '002_paid_periods_sandbox.sql', '003_provider_billing_clock.sql', '004_dispute_holds_sandbox.sql', '008_yearly_plans.sql', '010_terms_consent.sql'])
       await db.exec(readFileSync(new URL('../db/tech-phase/' + name, import.meta.url), 'utf8'));
     const pool = { query: (...a) => db.query(...a), connect: async () => ({ query: (...a) => db.query(...a), release() {} }) };
     await work(billingStore(pool), db);
@@ -147,14 +149,14 @@ test('ledger: yearly checkout, reconcile and entitlement for a full year (migrat
     const created = [];
     const paypal = { create: async r => { created.push(r); return { id: sid.replace('ABCDEFGHIJKL', currency + 'AAAAAAAAA'), approvalUrl: 'https://www.sandbox.paypal.com/webapps/billing/subscriptions?ba_token=BA-ABCDEFGHIJKL' }; } };
     const svc = checkoutService({ store, paypal, termsVersion: 'sandbox-v1' });
-    const out = await svc.start(user, currency, 'sandbox-v1', 'year');
+    const out = await svc.start(user, currency, 'sandbox-v1', 'year',CONSENT);
     assert.equal(created[0].period, 'year');
     const row = await store.get(user, out.id);
     assert.equal(row.minor, offer(currency, 'year').minor);
     assert.equal((await store.summary(user)).subscription.period, 'year');
     assert.equal((await store.deletionContracts(user))[0].minor, offer(currency, 'year').minor); // the deletion check derives the plan from it
     // A different period for the same open contract is refused, not silently reused.
-    await assert.rejects(store.reserve(user, currency, 'sandbox-v1', 'month'), /EXISTING_SUBSCRIPTION/);
+    await assert.rejects(store.reserve(user, currency, 'sandbox-v1', 'month',CONSENT), /EXISTING_SUBSCRIPTION/);
     const start = '2026-10-20T00:00:00Z', r = year(1, start, currency); r.id = row.paypal_id; r.custom_id = row.id;
     const clock = Date.parse('2026-10-20T00:00:30Z');
     const recon = reconciliationService({ store, paypal: { get: async () => structuredClone(r), transactions: async () => ({ transactions: [tx(1, start, currency)] }) }, plans, now: () => clock });

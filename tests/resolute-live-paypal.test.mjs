@@ -7,6 +7,8 @@ import {livePaypalConfig, paypalConfig, createPaypal, approvalUrl} from '../serv
 import {livePaymentConfiguration} from '../services/resolute-api/payments/live-services.mjs';
 import {paymentEngine} from '../services/resolute-api/payments/engine.mjs';
 import {paymentStore} from '../services/resolute-api/payments/store.mjs';
+// The consent tick time every purchase request carries (lawyer review, Nov 24).
+const CONSENT = '2025-01-01T00:00:00.000Z';
 const env=()=>({RESOLUTE_PAYPAL_LIVE_ENABLED:'true',RESOLUTE_PAYPAL_LIVE_CLIENT_ID:'live-id',
  RESOLUTE_PAYPAL_LIVE_CLIENT_SECRET:'live-secret',RESOLUTE_PAYPAL_LIVE_MERCHANT_ID:'MERCHANT1234',
  RESOLUTE_PAYPAL_LIVE_WEBHOOK_ID:'WH-live',RESOLUTE_LIVE_SITE_ORIGIN:'https://shop.example.org',
@@ -86,7 +88,7 @@ test('closed sales prevent order and capture calls but verified refunds remain p
     captureDetails:async id=>({id,status:'REFUNDED',amount:{currency_code:'JPY',value:'7980'},supplementary_data:{related_ids:{order_id:'PAYPAL123456'}}})};
   const engine=paymentEngine({store,paypal,environment:'live',merchantId:'MERCHANT1234',getUser:async()=>{throw Error('not needed');},canCharge:()=>false});
   await assert.rejects(engine.create('user_test',{}),/PAYMENT_DISABLED/);
-  await assert.rejects(engine.capture('user_test',{orderId:'00000000-0000-4000-8000-000000000001'}),/PAYMENT_DISABLED/);
+  await assert.rejects(engine.capture('user_test',{orderId:'00000000-0000-4000-8000-000000000001',consentAt:CONSENT}),/PAYMENT_DISABLED/);
   assert.equal(createCalls,0);assert.equal(captureCalls,0);
   const event={id:'REFUND-live',event_type:'PAYMENT.CAPTURE.REFUNDED',resource:{links:[{rel:'up',href:'https://api.paypal.com/v2/payments/captures/CAPTURE12345'}]}};
   const wrongHost=structuredClone(event);wrongHost.id='WRONG-HOST';wrongHost.resource.links[0].href=wrongHost.resource.links[0].href.replace('api.paypal.com','api.sandbox.paypal.com');
@@ -117,15 +119,15 @@ test('closed sales prevent order and capture calls but verified refunds remain p
       if(++lookups===closedOnLookup)open=false;
       return {id,primaryEmailAddressId:'email1',emailAddresses:[{id:'email1',verification:{status:'verified'}}],privateMetadata:{}};
     }});
-  const purchase=await purchasing.create('user_liveBuyer',{kind:'initial',language:'en',requestKey:randomUUID()});
+  const purchase=await purchasing.create('user_liveBuyer',{kind:'initial',language:'en',requestKey:randomUUID(),consentAt:CONSENT});
   assert.equal(purchase.sandbox,false);assert.equal(purchase.quote.currency,'USD');assert.equal(purchase.quote.value,'59.00');
-  assert.equal((await purchasing.capture('user_liveBuyer',{orderId:purchase.orderId})).state,'paid');
-  assert.equal((await purchasing.capture('user_liveBuyer',{orderId:purchase.orderId})).state,'already-paid');
+  assert.equal((await purchasing.capture('user_liveBuyer',{orderId:purchase.orderId,consentAt:CONSENT})).state,'paid');
+  assert.equal((await purchasing.capture('user_liveBuyer',{orderId:purchase.orderId,consentAt:CONSENT})).state,'already-paid');
   assert.equal(captureCount,1);
   assert.equal((await db.query("SELECT count(*)::int AS n FROM resolute_payments_live.audit WHERE order_id=$1 AND code='LIVE_ACCESS_GRANTED'",[purchase.orderId])).rows[0].n,1);
-  const stopped=await purchasing.create('user_liveStopped',{kind:'initial',language:'ja',requestKey:randomUUID()});
+  const stopped=await purchasing.create('user_liveStopped',{kind:'initial',language:'ja',requestKey:randomUUID(),consentAt:CONSENT});
   closedOnLookup=lookups+2; // Close sales during the final authoritative member recheck.
-  await assert.rejects(purchasing.capture('user_liveStopped',{orderId:stopped.orderId}),/PAYMENT_DISABLED/);
+  await assert.rejects(purchasing.capture('user_liveStopped',{orderId:stopped.orderId,consentAt:CONSENT}),/PAYMENT_DISABLED/);
   assert.equal(captureCount,1);
   assert.equal((await db.query('SELECT count(*)::int AS n FROM resolute_payments_live.grants WHERE order_id=$1',[stopped.orderId])).rows[0].n,0);
  } finally {await db.close();}

@@ -1,0 +1,160 @@
+{
+  "root": {
+    "ticker": "FERG",
+    "name": "ファーガソン・エンタープライゼズ",
+    "cik": 2011641,
+    "name_en": "Ferguson Enterprises"
+  },
+  "rows": [
+    {
+      "ja": "商品の仕入れ先(上流)",
+      "en": "Product suppliers (upstream)",
+      "above": true
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "GlobalInd",
+    "MRC"
+  ],
+  "companies": [
+    {
+      "id": "WMS",
+      "ticker": "WMS",
+      "name": "アドバンスト・ドレナージ・システムズ",
+      "name_en": "Advanced Drainage Systems",
+      "sub": "排水管",
+      "sub_en": "Drainage pipe",
+      "sub_short": "排水管",
+      "sub_short_en": "Pipe",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ADSが10-Kで、売上の13.1%を占める最大顧客と記載",
+          "text_en": "ADS says Ferguson accounted for 13.1% of its net sales",
+          "source": {
+            "label": "Advanced Drainage Systems 10-K(2026年3月期)",
+            "label_en": "Advanced Drainage Systems 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1604028/000160402826000019/wms-20260331.htm",
+            "level": "official",
+            "date": "2026-05-21",
+            "quote": "Ferguson Enterprises (\"Ferguson\") accounted for 13.1% and Core & Main, Inc. (\"Core & Main\") accounted for 12.8% of fiscal 2026 net sales."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MAS",
+      "ticker": "MAS",
+      "name": "マスコ",
+      "name_en": "Masco",
+      "sub": "水栓・塗料",
+      "sub_en": "Faucets & paint",
+      "sub_short": "水栓",
+      "sub_short_en": "Faucets",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Mascoが10-Kで、Fergusonへの販売を失うリスクを記載",
+          "text_en": "Masco flags the risk of losing its sales to Ferguson",
+          "source": {
+            "label": "Masco 10-K(2025年度)",
+            "label_en": "Masco 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/62996/000006299626000005/mas-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "we might not be able to quickly replace, or replace at all, the loss of a substantial portion of our sales to The Home Depot or the loss of all of our sales to either Ferguson or Lowe's."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FGI",
+      "ticker": "FGI",
+      "name": "FGIインダストリーズ",
+      "name_en": "FGI Industries",
+      "sub": "浴室・キッチン用品",
+      "sub_en": "Kitchen & bath products",
+      "sub_short": "浴室用品",
+      "sub_short_en": "Bath",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "FGIが10-Kで、最大級の顧客の一社に挙げる",
+          "text_en": "FGI names Ferguson among its largest customers",
+          "source": {
+            "label": "FGI Industries 10-K(2025年度)",
+            "label_en": "FGI Industries 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1864943/000162828026024682/fgi-20251231.htm",
+            "level": "official",
+            "date": "2026-03-31",
+            "quote": "Some of our largest customers include The Home Depot, Menards, Ferguson and Lowe's."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GlobalInd",
+      "ticker": "GIC",
+      "name": "グローバル・インダストリアル",
+      "name_en": "Global Industrial",
+      "sub": "産業用品通販",
+      "sub_en": "Industrial supplies",
+      "sub_short": "産業用品",
+      "sub_short_en": "MRO",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Global Industrialが雇用契約で、競合事業の一社に挙げる",
+          "text_en": "Global Industrial lists Ferguson as a competitive business in an employment agreement",
+          "source": {
+            "label": "Global Industrial 10-K(2024年度) 添付の雇用契約",
+            "label_en": "Global Industrial 10-K (FY2024), employment agreement exhibit",
+            "url": "https://www.sec.gov/Archives/edgar/data/945114/000094511425000012/ex-10_812312024.htm",
+            "level": "official",
+            "date": "2025-02-26",
+            "quote": "W. W. Grainger, Inc. (including Zoro and other divisions), MSC Industrial Direct Co., Inc., Amazon Supply, Office Depot, Staples, Northern Tool & Equipment Company, Inc., Uline, Inc., Fastenal Co., HD Supply, Supply Basket, LLC (a/k/a SupplyBasket.com), Ferguson Enterprises, Inc., McMaster-Carr Supply Company"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MRC",
+      "ticker": "MRC",
+      "name": "MRCグローバル",
+      "name_en": "MRC Global",
+      "sub": "配管・バルブ流通",
+      "sub_en": "Pipe & valve distribution",
+      "sub_short": "配管流通",
+      "sub_short_en": "Valves",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "MRC Globalが契約で、競合事業としてFergusonの産業部門を挙げる",
+          "text_en": "MRC Global names Ferguson's industrial business as a competing business in an agreement",
+          "source": {
+            "label": "MRC Global 10-K(2024年度) 添付の契約",
+            "label_en": "MRC Global 10-K (FY2024), agreement exhibit",
+            "url": "https://www.sec.gov/Archives/edgar/data/1439095/000143774925007707/ex_781815.htm",
+            "level": "official",
+            "date": "2025-03-14",
+            "quote": "businesses that compete with the Company's business include (without limitation) the distribution business to the energy industry of NOW Inc., RK Supply, Elite Supply, Jet Specialty, Charbonneau Industries, the Sunbelt business of Floworks, Russell Metals, Score Group, the industrial business of Ferguson/Wolseley"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

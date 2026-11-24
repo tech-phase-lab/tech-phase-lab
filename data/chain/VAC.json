@@ -7,8 +7,8 @@
   },
   "rows": [
     {
-      "ja": "ブランドのライセンス元",
-      "en": "Brand licensors",
+      "ja": "ブランドのライセンス元・買収",
+      "en": "Brand licensors & acquisition",
       "above": true
     },
     {
@@ -125,6 +125,32 @@
             "level": "official",
             "date": "2026-02-26",
             "quote": "Our primary competitors in the timeshare space include Marriott Vacations Worldwide, Travel + Leisure Co., Disney Vacation Club"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Welk",
+      "ticker": "Welk",
+      "name": "ウェルク・ホスピタリティ",
+      "name_en": "Welk Hospitality Group",
+      "sub": "タイムシェア",
+      "sub_en": "Vacation ownership",
+      "sub_short": "別荘権",
+      "sub_short_en": "Resorts",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Welk Hospitality Groupを買収(2021年)",
+          "text_en": "Acquired Welk Hospitality Group (2021)",
+          "source": {
+            "label": "Marriott Vacations Worldwide 10-K(2025年度)",
+            "label_en": "Marriott Vacations Worldwide 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1524358/000152435826000010/vac-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "In 2021, we completed the acquisition of Welk Hospitality Group, Inc."
           }
         }
       ]

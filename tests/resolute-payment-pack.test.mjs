@@ -16,6 +16,8 @@ import { paymentEngine } from '../services/resolute-api/payments/engine.mjs';
 import { paymentStore } from '../services/resolute-api/payments/store.mjs';
 import { RESOLUTE_LAUNCH_END, resolutePrice } from '../lib/resolute/price.ts';
 import { OWNER_ACCOUNT_ID, PRODUCTION_OWNER_ACCOUNT_ID, isOwnerAccount } from '../lib/membership/entitlements.ts';
+// The consent tick time every purchase request carries (lawyer review, Nov 24).
+const CONSENT = '2025-01-01T00:00:00.000Z';
 
 const read = path => readFileSync(new URL(path, import.meta.url), 'utf8');
 const merchant = 'MERCHANT1234';
@@ -83,9 +85,10 @@ test('display after the switch: no launch line, no strike-through, only ¥9,800 
     assert.ok(enBefore.includes('Launch price · Through Feb 28, 2027') && enBefore.includes('<del>$69</del><b>$59</b>'));
     assert.ok(!enAfter.includes('Launch price') && !enAfter.includes('<del>') && !enAfter.includes('$59'));
     assert.equal(enAfter.match(/<b>\$69<\/b>/g).length, 2);
-    // The terms line under 「ログインなしでも購入できます」, three buttons each.
-    assert.equal(jaBefore.match(/<a target="_blank" rel="noopener" href="\/terms">利用規約<\/a>に同意のうえお進みください/g).length, 3);
-    assert.equal(enBefore.match(/By continuing, you agree to the <a target="_blank" rel="noopener" href="\/terms\?lang=en">Terms<\/a>/g).length, 3);
+    // Lawyer review (Nov 24): the consent tick line right above each of the three buttons replaces the terms line under them.
+    assert.equal(jaBefore.match(/<label[^>]*data-consent=""[^>]*><input type="checkbox"[^>]*\/><span><a href="\/terms"[^>]*>利用規約<\/a>と<a href="\/privacy"[^>]*>プライバシーポリシー<\/a>に同意する<\/span><\/label><a href="\/resolute\/checkout/g).length, 3);
+    assert.equal(enBefore.match(/<span>I agree to the <a href="\/terms\?lang=en"[^>]*>Terms of Service<\/a> and <a href="\/privacy\?lang=en"[^>]*>Privacy Policy<\/a><\/span><\/label><a href="\/resolute\/checkout/g).length, 3);
+    assert.ok(!jaBefore.includes('に同意のうえお進みください') && !enBefore.includes('By continuing, you agree'));
     assert.equal(jaBefore.match(/>RESOLUTEを手に入れる<\/a>/g).length, 3);
     assert.equal(enBefore.match(/>Get RESOLUTE<\/a>/g).length, 3);
   } finally { Date.now = realNow; await rm(dir, { recursive: true, force: true }); }
@@ -115,16 +118,16 @@ async function fixture(start) {
 test('an order created 23:59:59 JST and paid after 00:00 is charged and verified at the price it was created with', async () => {
   const f = await fixture(LAST);
   try {
-    const order = await f.engine.create('user_test', { kind: 'initial', language: 'ja', requestKey: randomUUID() });
+    const order = await f.engine.create('user_test', { kind: 'initial', language: 'ja', requestKey: randomUUID(), consentAt: CONSENT });
     assert.equal(order.quote.value, '7980'); assert.equal(order.quote.priceClass, 'launch');
     f.setTime(FIRST + 120000); // Approved in PayPal and captured two minutes after the switch, within the order's 15 minutes.
-    assert.equal((await f.engine.capture('user_test', { orderId: order.orderId })).state, 'paid');
-    const after = await f.engine.create('user_test', { kind: 'initial', language: 'ja', requestKey: randomUUID() }).catch(e => e);
+    assert.equal((await f.engine.capture('user_test',{orderId:order.orderId,consentAt:CONSENT})).state, 'paid');
+    const after = await f.engine.create('user_test', { kind: 'initial', language: 'ja', requestKey: randomUUID(), consentAt: CONSENT }).catch(e => e);
     assert.match(String(after.message ?? after), /ALREADY_PURCHASED/);
   } finally { await f.db.close(); }
   const g = await fixture(FIRST);
   try {
-    const order = await g.engine.create('user_test', { kind: 'initial', language: 'en', requestKey: randomUUID() });
+    const order = await g.engine.create('user_test', { kind: 'initial', language: 'en', requestKey: randomUUID(), consentAt: CONSENT });
     assert.equal(order.quote.value, '69.00'); assert.equal(order.quote.priceClass, 'standard');
   } finally { await g.db.close(); }
 });
@@ -146,7 +149,7 @@ test('LP button: creates the order on the server and goes straight to PayPal (me
   const keys = ['window', 'document', 'IS_REACT_ACT_ENVIRONMENT', 'fetch'], before = new Map(keys.map(k => [k, Object.getOwnPropertyDescriptor(globalThis, k)]));
   try {
     const outfile = join(dir, 'buy.cjs');
-    await build({ entryPoints: ['app/resolute/lp/buy-button.tsx'], outfile, bundle: true, platform: 'node', format: 'cjs', jsx: 'automatic', external: ['react', 'react/jsx-runtime'] });
+    await build({ entryPoints: ['app/resolute/lp/buy-button.tsx'], outfile, bundle: true, platform: 'node', format: 'cjs', jsx: 'automatic', external: ['react', 'react/jsx-runtime'], loader: { '.css': 'empty' } });
     const BuyButton = require(outfile).default, id = '12345678-1234-4234-8234-123456789abc', approval = 'https://www.paypal.com/checkoutnow?token=ORDER12345678';
     const run = async ({ signedIn, value = '7980', closed = false, language = 'ja', shown = '7980' }) => {
       const dom = new JSDOM('<div id="root"></div>', { url: 'https://site.test/resolute/lp' }), calls = [], went = [];
@@ -159,14 +162,16 @@ test('LP button: creates the order on the server and goes straight to PayPal (me
         if (path === 'orders' && !signedIn) return Response.json({ error: 'AUTH_REQUIRED' }, { status: 401 });
         if (path.endsWith('session')) return Response.json({ ready: true, sandbox: false });
         const body = JSON.parse(options.body);
-        assert.equal(body.kind, 'initial'); assert.equal(body.language, language); assert.match(body.requestKey, /^[0-9a-f-]{36}$/);
+        assert.equal(body.kind, 'initial'); assert.equal(body.language, language); assert.ok(Number.isFinite(Date.parse(body.consentAt))); assert.match(body.requestKey, /^[0-9a-f-]{36}$/);
         return Response.json({ orderId: id, sandbox: false, state: 'created', expiresAt: '2027-03-01T00:00:00Z', approvalUrl: approval, claimRequired: !signedIn,
           quote: { kind: 'initial', language, currency: language === 'ja' ? 'JPY' : 'USD', value, priceClass: 'launch' } });
       };
       const root = createRoot(document.getElementById('root'));
       await React.act(async () => root.render(React.createElement(BuyButton, { language, shownValue: shown, className: 'cta', navigate: url => went.push(url) }, 'RESOLUTEを手に入れる')));
-      const link = document.querySelector('a');
+      const link = document.querySelector('a[data-buy]');
       assert.equal(link.getAttribute('href'), `/resolute/checkout?lang=${language}`);
+      // The consent tick first (lawyer review, Nov 24; the no-tick case is in legal-final-1124.test.mjs).
+      await React.act(async () => { document.querySelector('[data-consent] input').click(); });
       await React.act(async () => { link.dispatchEvent(new dom.window.MouseEvent('click', { bubbles: true, cancelable: true })); });
       await React.act(async () => { await new Promise(r => setTimeout(r, 0)); });
       await React.act(async () => root.unmount());
