@@ -28,6 +28,8 @@
       "name_en": "Paragon Energy Solutions",
       "sub": "原子力部品",
       "sub_en": "Nuclear components",
+      "sub_short": "原子力部品",
+      "sub_short_en": "Nuclear parts",
       "row": 0,
       "relations": [
         {
@@ -52,6 +54,8 @@
       "name_en": "Certrec",
       "sub": "原子力規制対応サービス",
       "sub_en": "Nuclear compliance services",
+      "sub_short": "原子力規制対応",
+      "sub_short_en": "Nuclear support",
       "row": 0,
       "relations": [
         {
@@ -76,6 +80,8 @@
       "name_en": "Hadron Energy",
       "sub": "小型原子炉",
       "sub_en": "Microreactors",
+      "sub_short": "小型原子炉",
+      "sub_short_en": "Microreactors",
       "row": 0,
       "relations": [
         {
@@ -100,6 +106,8 @@
       "name_en": "Thermo Fisher Scientific",
       "sub": "分析機器",
       "sub_en": "Life science tools",
+      "sub_short": "分析機器",
+      "sub_short_en": "Lab tools",
       "row": 1,
       "relations": [
         {
@@ -124,6 +132,8 @@
       "name_en": "Curtiss-Wright",
       "sub": "防衛・原子力部品",
       "sub_en": "Defense & nuclear components",
+      "sub_short": "防衛",
+      "sub_short_en": "Defense",
       "row": 1,
       "relations": [
         {
@@ -148,6 +158,8 @@
       "name_en": "AMETEK",
       "sub": "電子計測機器",
       "sub_en": "Electronic instruments",
+      "sub_short": "電子計測機器",
+      "sub_short_en": "Instruments",
       "row": 1,
       "relations": [
         {
@@ -172,6 +184,8 @@
       "name_en": "Teledyne Technologies",
       "sub": "計測・画像機器",
       "sub_en": "Instrumentation & imaging",
+      "sub_short": "計測・画像機器",
+      "sub_short_en": "Instrumentation",
       "row": 1,
       "relations": [
         {
@@ -196,6 +210,8 @@
       "name_en": "Fortive",
       "sub": "計測機器",
       "sub_en": "Instrumentation",
+      "sub_short": "計測機器",
+      "sub_short_en": "Instrumentation",
       "row": 1,
       "relations": [
         {

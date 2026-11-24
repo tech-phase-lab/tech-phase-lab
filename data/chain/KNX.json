@@ -26,6 +26,8 @@
       "name_en": "U.S. Xpress",
       "sub": "トラック輸送",
       "sub_en": "Truckload carrier",
+      "sub_short": "トラック輸送",
+      "sub_short_en": "Trucking",
       "row": 0,
       "relations": [
         {
@@ -50,6 +52,8 @@
       "name_en": "Dependable Highway Express",
       "sub": "LTL輸送",
       "sub_en": "LTL trucking",
+      "sub_short": "LTL輸送",
+      "sub_short_en": "LTL trucking",
       "row": 0,
       "relations": [
         {
@@ -74,6 +78,8 @@
       "name_en": "Eleos",
       "sub": "運送向けソフト",
       "sub_en": "Trucking software",
+      "sub_short": "運送向けソフト",
+      "sub_short_en": "Trucking apps",
       "row": 0,
       "relations": [
         {
@@ -98,6 +104,8 @@
       "name_en": "ArcBest",
       "sub": "LTL輸送・物流",
       "sub_en": "LTL & logistics",
+      "sub_short": "LTL輸送・物流",
+      "sub_short_en": "LTL & logistics",
       "row": 1,
       "relations": [
         {

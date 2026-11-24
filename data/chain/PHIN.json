@@ -32,6 +32,8 @@
       "name_en": "General Motors",
       "sub": "自動車",
       "sub_en": "Automaker",
+      "sub_short": "自動車",
+      "sub_short_en": "Automaker",
       "row": 0,
       "relations": [
         {
@@ -56,6 +58,8 @@
       "name_en": "BorgWarner",
       "sub": "自動車部品",
       "sub_en": "Auto parts",
+      "sub_short": "自動車部品",
+      "sub_short_en": "Auto parts",
       "row": 1,
       "relations": [
         {
@@ -80,6 +84,8 @@
       "name_en": "Robert Bosch",
       "sub": "自動車部品(ドイツ)",
       "sub_en": "Auto parts (Germany)",
+      "sub_short": "自動車部品",
+      "sub_short_en": "Auto parts",
       "row": 2,
       "relations": [
         {
@@ -104,6 +110,8 @@
       "name_en": "Cummins",
       "sub": "エンジン",
       "sub_en": "Engines",
+      "sub_short": "エンジン",
+      "sub_short_en": "Engines",
       "row": 2,
       "relations": [
         {
@@ -128,6 +136,8 @@
       "name_en": "Denso",
       "sub": "自動車部品",
       "sub_en": "Auto parts",
+      "sub_short": "自動車部品",
+      "sub_short_en": "Auto parts",
       "row": 2,
       "relations": [
         {
@@ -152,6 +162,8 @@
       "name_en": "Dorman Products",
       "sub": "補修部品",
       "sub_en": "Aftermarket parts",
+      "sub_short": "補修部品",
+      "sub_short_en": "Aftermarket",
       "row": 2,
       "relations": [
         {
@@ -176,6 +188,8 @@
       "name_en": "Valeo",
       "sub": "自動車部品(フランス)",
       "sub_en": "Auto parts (France)",
+      "sub_short": "自動車部品",
+      "sub_short_en": "Auto parts",
       "row": 2,
       "relations": [
         {

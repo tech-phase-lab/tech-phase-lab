@@ -28,6 +28,8 @@
       "name_en": "Boston Scientific",
       "sub": "医療機器",
       "sub_en": "Medical devices",
+      "sub_short": "医療機器",
+      "sub_short_en": "Medical devices",
       "row": 0,
       "relations": [
         {
@@ -52,6 +54,8 @@
       "name_en": "OSR Holdings",
       "sub": "医療機器流通",
       "sub_en": "Medical device distribution",
+      "sub_short": "医療機器流通",
+      "sub_short_en": "Medical supply",
       "row": 0,
       "relations": [
         {
@@ -76,6 +80,8 @@
       "name_en": "Medtronic",
       "sub": "医療機器",
       "sub_en": "Medical devices",
+      "sub_short": "医療機器",
+      "sub_short_en": "Medical devices",
       "row": 1,
       "relations": [
         {
@@ -100,6 +106,8 @@
       "name_en": "Stryker (incl. Inari Medical)",
       "sub": "医療機器",
       "sub_en": "Medical devices",
+      "sub_short": "医療機器",
+      "sub_short_en": "Medical devices",
       "row": 1,
       "relations": [
         {
@@ -124,6 +132,8 @@
       "name_en": "Terumo",
       "sub": "医療機器",
       "sub_en": "Medical devices",
+      "sub_short": "医療機器",
+      "sub_short_en": "Medical devices",
       "row": 1,
       "relations": [
         {
