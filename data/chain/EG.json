@@ -1,0 +1,174 @@
+{
+  "root": {
+    "ticker": "EG",
+    "name": "エベレスト・グループ",
+    "cik": 1095073,
+    "name_en": "Everest Group"
+  },
+  "rows": [
+    {
+      "ja": "再保険の仲介(ブローカー)",
+      "en": "Reinsurance brokers"
+    },
+    {
+      "ja": "再保険の出再先",
+      "en": "Reinsurers it cedes to"
+    },
+    {
+      "ja": "事業売却",
+      "en": "Divestiture"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "MMC",
+      "ticker": "MMC",
+      "name": "マーシュ・マクレナン",
+      "name_en": "Marsh McLennan",
+      "sub": "保険仲介",
+      "sub_en": "Insurance brokerage",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "最大の仲介ブローカー(再保険部門の元受保険料の22.4%)",
+          "text_en": "Largest broker, 22.4% of reinsurance gross written premiums",
+          "source": {
+            "label": "Everest Group 10-K(2025年度)",
+            "label_en": "Everest Group 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1095073/000109507326000006/eg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "The broker with the largest share of the company's business, Marsh McLennan, accounted for approximately 22.4% of gross written premiums."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AON",
+      "ticker": "AON",
+      "name": "エーオン",
+      "name_en": "Aon",
+      "sub": "保険仲介",
+      "sub_en": "Insurance brokerage",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "2番目の仲介ブローカー(18.7%)",
+          "text_en": "Second-largest broker (18.7%)",
+          "source": {
+            "label": "Everest Group 10-K(2025年度)",
+            "label_en": "Everest Group 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1095073/000109507326000006/eg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "The broker with the next-largest share, Aon, accounted for approximately 18.7% of gross written premiums."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MUV2",
+      "ticker": "Munich Re",
+      "name": "ミュンヘン再保険",
+      "name_en": "Munich Re",
+      "sub": "再保険(ドイツ)",
+      "sub_en": "Reinsurance (Germany)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "米国子会社への再保険回収額が2.89億ドル(5.7%)",
+          "text_en": "$289 million (5.7%) recoverable from its US unit",
+          "source": {
+            "label": "Everest Group 10-K(2025年度)",
+            "label_en": "Everest Group 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1095073/000109507326000006/eg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "$289 million, or 5.7%, was recoverable from Munich Reinsurance America, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "StateNational",
+      "ticker": "State National",
+      "name": "ステート・ナショナル",
+      "name_en": "State National Insurance",
+      "sub": "保険",
+      "sub_en": "Insurance",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "過去の損失12.53億ドル分を出再",
+          "text_en": "Ceded $1,253 million of covered losses to it",
+          "source": {
+            "label": "Everest Group 10-K(2025年度)",
+            "label_en": "Everest Group 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1095073/000109507326000006/eg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "As of December 31, 2025, the total covered losses ceded to State National Insurance Company, Inc. were $1,253 million."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MSTransverse",
+      "ticker": "MS Transverse",
+      "name": "MSトランスバース",
+      "name_en": "MS Transverse Insurance",
+      "sub": "保険",
+      "sub_en": "Insurance",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "4億ドルの未経過限度額を持つ出再先",
+          "text_en": "Reinsurer with a $400 million unexpired limit",
+          "source": {
+            "label": "Everest Group 10-K(2025年度)",
+            "label_en": "Everest Group 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1095073/000109507326000006/eg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "The aggregated unexpired limit was $597 million and $400 million for State National Insurance Company, Inc. and MS Transverse Insurance Company, respectively."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AIG",
+      "ticker": "AIG",
+      "name": "AIG",
+      "name_en": "American International Group",
+      "sub": "保険",
+      "sub_en": "Insurance",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "商業保険の更新権を2.52億ドルでAIGに売却(2025年10月)",
+          "text_en": "Sold commercial retail insurance renewal rights to AIG for $252 million (October 2025)",
+          "source": {
+            "label": "Everest Group 10-K(2025年度)",
+            "label_en": "Everest Group 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1095073/000109507326000006/eg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "the Company entered into an agreement with American International Group, Inc. (\"AIG\") to sell the renewal rights for certain lines of commercial retail insurance business written by the Company in the U.S., U.K. and Asia Pacific, for an aggregate purchase price of $252 million."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

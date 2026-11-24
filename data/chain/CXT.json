@@ -1,0 +1,124 @@
+{
+  "root": {
+    "ticker": "CXT",
+    "name": "クレーンNXT",
+    "cik": 25445,
+    "name_en": "Crane NXT"
+  },
+  "rows": [
+    {
+      "ja": "買収・分離",
+      "en": "Acquisitions & separation"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "VIAV"
+  ],
+  "companies": [
+    {
+      "id": "DLAR",
+      "ticker": "De La Rue",
+      "name": "デ・ラ・ルー",
+      "name_en": "De La Rue",
+      "sub": "紙幣・偽造防止(英国)",
+      "sub_en": "Banknotes & security (UK)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "偽造防止事業(DLR)を3億ポンドで買収(2025年5月)",
+          "text_en": "Bought its Authentication Solutions business for £300 million (May 2025)",
+          "source": {
+            "label": "Crane NXT 10-K(2025年度)",
+            "label_en": "Crane NXT 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/25445/000002544526000009/cxt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "On May 1, 2025, we acquired De La Rue Authentication Solutions (\"DLR\") for a base purchase price of £300 million."
+          }
+        }
+      ]
+    },
+    {
+      "id": "OpSec",
+      "ticker": "OpSec Security",
+      "name": "オプセック・セキュリティ",
+      "name_en": "OpSec Security",
+      "sub": "偽造防止",
+      "sub_en": "Anti-counterfeiting",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "OpSecを2.7億ドルで買収(2024年5月)",
+          "text_en": "Acquired OpSec for $270 million (May 2024)",
+          "source": {
+            "label": "Crane NXT 10-K(2025年度)",
+            "label_en": "Crane NXT 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/25445/000002544526000009/cxt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "On May 3, 2024, we acquired OpSec Security (\"OpSec\"), for a base purchase price of $ 270 million"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CR",
+      "ticker": "CR",
+      "name": "クレーン・カンパニー",
+      "name_en": "Crane Company",
+      "sub": "産業機器",
+      "sub_en": "Industrial products",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2023年4月に分離した旧グループ会社",
+          "text_en": "Separated from it in April 2023",
+          "source": {
+            "label": "Crane Company 10-K(2024年度)",
+            "label_en": "Crane Company 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1944013/000162828025008728/cr-20241231.htm",
+            "level": "official",
+            "date": "2025-02-27",
+            "quote": "In connection with the Separation on April 3, 2023, Crane Holdings, Co., which was renamed \"Crane NXT, Co.,\" and Crane Company entered into various agreements to effect the Separation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "VIAV",
+      "ticker": "VIAV",
+      "name": "ヴィアヴィ・ソリューションズ",
+      "name_en": "Viavi Solutions",
+      "sub": "通信計測・光学",
+      "sub_en": "Network test & optics",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Viaviが10-Kで、偽造防止技術の競合として挙げる",
+          "text_en": "Viavi names Crane NXT among anti-counterfeiting competitors",
+          "source": {
+            "label": "Viavi Solutions 10-K(2025年6月期)",
+            "label_en": "Viavi Solutions 10-K (FY ended Jun 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/912093/000091209325000096/viav-20250628.htm",
+            "level": "official",
+            "date": "2025-08-11",
+            "quote": "OSP competitors include providers of anti-counterfeiting technologies such as Giesecke & Devrient and Crane NXT"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

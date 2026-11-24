@@ -1,0 +1,181 @@
+{
+  "root": {
+    "ticker": "ADNT",
+    "name": "アディエント",
+    "cik": 1670541,
+    "name_en": "Adient"
+  },
+  "rows": [
+    {
+      "ja": "部品の調達先",
+      "en": "Component supplier",
+      "above": true
+    },
+    {
+      "ja": "主要顧客",
+      "en": "Major customer"
+    },
+    {
+      "ja": "中国の合弁の相手(自動車メーカー)",
+      "en": "Chinese JV partners (automakers)"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "LEA"
+  ],
+  "companies": [
+    {
+      "id": "THRM",
+      "ticker": "THRM",
+      "name": "ジェンサーム",
+      "name_en": "Gentherm",
+      "sub": "シート空調部品",
+      "sub_en": "Seat climate components",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "GenthermはAdientを2番目の顧客とする(製品売上の11%)",
+          "text_en": "Gentherm counts Adient as its second-largest customer (11% of product revenue)",
+          "source": {
+            "label": "Gentherm 10-K(2024年度)",
+            "label_en": "Gentherm 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/903129/000095017025023344/thrm-20241231.htm",
+            "level": "official",
+            "date": "2025-02-19",
+            "quote": "our revenues from sales to our two largest customers, Lear Corporation (\"Lear\") and Adient plc (\"Adient\") were $231 million and $157 million, respectively, representing 16% and 11% of our product revenues"
+          }
+        }
+      ]
+    },
+    {
+      "id": "STLA",
+      "ticker": "STLA",
+      "name": "ステランティス",
+      "name_en": "Stellantis",
+      "sub": "自動車",
+      "sub_en": "Automaker",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "連結売上の11%を占める顧客",
+          "text_en": "A customer at 11% of consolidated net sales",
+          "source": {
+            "label": "Adient 10-K(2026年9月期)",
+            "label_en": "Adient 10-K (FY ended Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1670541/000167054126000122/adnt-20260930.htm",
+            "level": "official",
+            "date": "2026-11-13",
+            "quote": "Stellantis N.V. comprised 11 % and 10 % of consolidated net sales in fiscal 2026 and 2025"
+          }
+        }
+      ]
+    },
+    {
+      "id": "2238.HK",
+      "ticker": "GAC",
+      "name": "広州汽車集団",
+      "name_en": "Guangzhou Automobile Group",
+      "sub": "自動車(中国)",
+      "sub_en": "Automaker (China)",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "中国の合弁の相手",
+          "text_en": "Joint venture partner in China",
+          "source": {
+            "label": "Adient 10-K(2026年9月期)",
+            "label_en": "Adient 10-K (FY ended Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1670541/000167054126000122/adnt-20260930.htm",
+            "level": "official",
+            "date": "2026-11-13",
+            "quote": "Additionally, Adient has 7 joint venture partnerships with key OEMs, including Guangzhou Automobile Group Co., Ltd., Beijing Automobile Group Co., Ltd. and FAW Group Corporation."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BAIC",
+      "ticker": "BAIC",
+      "name": "北京汽車集団",
+      "name_en": "Beijing Automobile Group",
+      "sub": "自動車(中国)",
+      "sub_en": "Automaker (China)",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "中国の合弁の相手",
+          "text_en": "Joint venture partner in China",
+          "source": {
+            "label": "Adient 10-K(2026年9月期)",
+            "label_en": "Adient 10-K (FY ended Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1670541/000167054126000122/adnt-20260930.htm",
+            "level": "official",
+            "date": "2026-11-13",
+            "quote": "Additionally, Adient has 7 joint venture partnerships with key OEMs, including Guangzhou Automobile Group Co., Ltd., Beijing Automobile Group Co., Ltd. and FAW Group Corporation."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FAW",
+      "ticker": "FAW",
+      "name": "第一汽車集団",
+      "name_en": "FAW Group",
+      "sub": "自動車(中国)",
+      "sub_en": "Automaker (China)",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "中国の合弁の相手",
+          "text_en": "Joint venture partner in China",
+          "source": {
+            "label": "Adient 10-K(2026年9月期)",
+            "label_en": "Adient 10-K (FY ended Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1670541/000167054126000122/adnt-20260930.htm",
+            "level": "official",
+            "date": "2026-11-13",
+            "quote": "Additionally, Adient has 7 joint venture partnerships with key OEMs, including Guangzhou Automobile Group Co., Ltd., Beijing Automobile Group Co., Ltd. and FAW Group Corporation."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LEA",
+      "ticker": "LEA",
+      "name": "リア",
+      "name_en": "Lear",
+      "sub": "シート・電装",
+      "sub_en": "Seating & e-systems",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Learが10-Kで、シート部門の世界的な主要競合の筆頭に挙げる",
+          "text_en": "Lear lists Adient first among key global seating competitors",
+          "source": {
+            "label": "Lear 10-K(2025年度)",
+            "label_en": "Lear 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/842162/000084216226000011/lear-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Key competitors in the Seating segment globally include Adient plc, Forvia SE, Magna International Inc."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,200 @@
+{
+  "root": {
+    "ticker": "ARWR",
+    "name": "アローヘッド・ファーマシューティカルズ",
+    "cik": 879407,
+    "name_en": "Arrowhead Pharmaceuticals"
+  },
+  "rows": [
+    {
+      "ja": "ライセンス・共同開発の相手",
+      "en": "Licensing & collaboration partners"
+    },
+    {
+      "ja": "資金調達",
+      "en": "Funding"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in its 10-K)"
+    }
+  ],
+  "rivals": [
+    "IONS"
+  ],
+  "companies": [
+    {
+      "id": "NVS",
+      "ticker": "NVS",
+      "name": "ノバルティス",
+      "name_en": "Novartis",
+      "sub": "医薬品(スイス)",
+      "sub_en": "Pharmaceuticals (Switzerland)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "世界的なライセンス・共同開発契約(2025年8月)",
+          "text_en": "Global licensing and collaboration agreement (August 2025)",
+          "source": {
+            "label": "Arrowhead 10-K(2026年9月期)",
+            "label_en": "Arrowhead 10-K (FY ended Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/879407/000087940726000078/arwr-20260930.htm",
+            "level": "official",
+            "date": "2026-11-12",
+            "quote": "Novartis Pharma AG (\"Novartis\") On August 29, 2025, Novartis and the Company entered into a global licensing and collaboration agreement."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SRPT",
+      "ticker": "SRPT",
+      "name": "サレプタ・セラピューティクス",
+      "name_en": "Sarepta Therapeutics",
+      "sub": "遺伝子治療",
+      "sub_en": "Gene therapy",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "世界的なライセンス・共同開発契約(2024年11月)",
+          "text_en": "Global licensing and collaboration agreement (November 2024)",
+          "source": {
+            "label": "Arrowhead 10-K(2026年9月期)",
+            "label_en": "Arrowhead 10-K (FY ended Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/879407/000087940726000078/arwr-20260930.htm",
+            "level": "official",
+            "date": "2026-11-12",
+            "quote": "On November 25, 2024, Sarepta and the Company entered into a global licensing and collaboration agreement."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GSK",
+      "ticker": "GSK",
+      "name": "GSK",
+      "name_en": "GSK",
+      "sub": "医薬品(英国)",
+      "sub_en": "Pharmaceuticals (UK)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ARO-HSDの独占ライセンスを供与",
+          "text_en": "Holds an exclusive license to ARO-HSD",
+          "source": {
+            "label": "Arrowhead 10-K(2026年9月期)",
+            "label_en": "Arrowhead 10-K (FY ended Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/879407/000087940726000078/arwr-20260930.htm",
+            "level": "official",
+            "date": "2026-11-12",
+            "quote": "Under the GSK-HSD License Agreement, GSK has received an exclusive license for GSK-4532990 (formerly ARO-HSD)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMGN",
+      "ticker": "AMGN",
+      "name": "アムジェン",
+      "name_en": "Amgen",
+      "sub": "バイオ医薬品",
+      "sub_en": "Biopharmaceuticals",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "olpasiranの開発・販売を全面的に担う",
+          "text_en": "Wholly responsible for developing and selling olpasiran",
+          "source": {
+            "label": "Arrowhead 10-K(2026年9月期)",
+            "label_en": "Arrowhead 10-K (FY ended Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/879407/000087940726000078/arwr-20260930.htm",
+            "level": "official",
+            "date": "2026-11-12",
+            "quote": "Under the Olpasiran Agreement, Amgen is wholly responsible for clinical development and commercialization."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TAK",
+      "ticker": "TAK",
+      "name": "武田薬品工業",
+      "name_en": "Takeda",
+      "sub": "医薬品",
+      "sub_en": "Pharmaceuticals",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "AATD肝疾患の第3相試験を実施",
+          "text_en": "Runs Phase 3 studies in AATD liver disease",
+          "source": {
+            "label": "Arrowhead 10-K(2026年9月期)",
+            "label_en": "Arrowhead 10-K (FY ended Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/879407/000087940726000078/arwr-20260930.htm",
+            "level": "official",
+            "date": "2026-11-12",
+            "quote": "Takeda is conducting multiple Phase 3 studies for the treatment of AATD liver disease including the REDWOOD study."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RPRX",
+      "ticker": "RPRX",
+      "name": "ロイヤルティ・ファーマ",
+      "name_en": "Royalty Pharma",
+      "sub": "医薬品ロイヤルティ",
+      "sub_en": "Drug royalties",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ロイヤルティ購入契約を結ぶ(2022年11月)",
+          "text_en": "Royalty purchase agreement (November 2022)",
+          "source": {
+            "label": "Arrowhead 10-K(2026年9月期)",
+            "label_en": "Arrowhead 10-K (FY ended Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/879407/000087940726000078/arwr-20260930.htm",
+            "level": "official",
+            "date": "2026-11-12",
+            "quote": "In November 2022, Royalty Pharma Investments 2019 ICAV (\"Royalty Pharma\") and the Company entered into a Royalty Purchase Agreement (the \"Royalty Pharma Agreement\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "IONS",
+      "ticker": "IONS",
+      "name": "アイオニス・ファーマシューティカルズ",
+      "name_en": "Ionis Pharmaceuticals",
+      "sub": "核酸医薬",
+      "sub_en": "RNA-targeted drugs",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "REDEMPLOがIonisのTRYNGOLZAと競合",
+          "text_en": "REDEMPLO competes with Ionis's TRYNGOLZA",
+          "source": {
+            "label": "Arrowhead 10-K(2026年9月期)",
+            "label_en": "Arrowhead 10-K (FY ended Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/879407/000087940726000078/arwr-20260930.htm",
+            "level": "official",
+            "date": "2026-11-12",
+            "quote": "With respect to REDEMPLO, we compete with TRYNGOLZA (olezarsen), which is marketed by Ionis Pharmaceuticals, Inc."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
