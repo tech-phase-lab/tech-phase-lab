@@ -89,7 +89,7 @@ The Operator may change, temporarily suspend or end all or part of the Service o
 ## Article 15 (Disclaimer)
 
 1. The Operator is not liable for damage arising from use of the Service or the Product, except where the Operator acted intentionally or negligently.
-2. Where the Operator is liable for damages (except where the Operator acted intentionally or with gross negligence), the amount is limited, for the PRO plan, to one month's fee immediately before the day the cause of the damage occurred (for a yearly plan, one twelfth of the yearly fee), and for the Product, to the fee received for the purchase or the most recent renewal. If that amount is less than JPY 3,000 (including on the FREE plan), the limit is JPY 3,000. This paragraph does not limit refunds under Article 6, Paragraph 2 and Article 22, Paragraph 2.
+2. Where the Operator is liable for damages (except where the Operator acted intentionally or with gross negligence), the amount is limited, for the Product, to the fee received for the purchase or the most recent renewal, and for the PRO plan, to one month's fee immediately before the day the cause of the damage occurred (for a yearly plan, one twelfth of the yearly fee). If that amount is less than JPY 3,000 (including on the FREE plan), the limit is JPY 3,000. This paragraph does not limit refunds under Article 6, Paragraph 2 and Article 22, Paragraph 2.
 
 ## Article 16 (Changes to These Terms)
 
@@ -112,7 +112,7 @@ The Japanese version of these Terms is the original, and if the English version 
 1. The Product costs JPY 9,800 (tax included) from March 1, 2027. Until the end of February 2027, it is sold at the launch price of JPY 7,980 (tax included).
 2. A purchase is completed when payment is completed.
 3. You can pay with PayPal (credit card or bank account).
-4. You can use the Product right after purchase.
+4. You can start using the Product within 2 days after payment is completed.
 5. The English version is sold in U.S. dollars, at the prices shown on the English pages.
 
 ## Article 20 (Gauge and Notifications)
@@ -125,15 +125,21 @@ The Japanese version of these Terms is the original, and if the English version 
 
 ## Article 21 (Period of Use and Renewal of Notifications)
 
-1. Alerts (including closing-price alerts), the next-morning note, the Shock Gauge and RIZEL's Take (the "Notification Features") can be used for one year from the date of purchase.
+1. The next-morning note, the Shock Gauge, RIZEL's Take and alerts (including closing-price alerts) (the "Notification Features") can be used for one year from the date of purchase.
 2. From the second year, you can keep using the Notification Features by renewing. Renewal costs JPY 5,980 (tax included). If you are a Tech Phase PRO member when you pay the renewal fee, it costs JPY 3,980 (tax included).
 3. At least 30 days before the end of the period, the Operator will notify your registered email address of when to renew and the renewal fee.
-4. Renewal happens only for those who choose it. When you complete the renewal procedure and pay the renewal fee, the period in which you can use the Notification Features is extended by one year. You are never charged automatically.
-5. If you do not renew, the Notification Features end at the end of the period.
-6. Even after the Notification Features end, you can keep using the rest of the Product. The parts of the Product other than the Notification Features are a one-time purchase and can be used without a set period, except in the case of Article 14.
+4. At your first purchase, with your consent, the Operator saves the PayPal you paid with and renews the Notification Features automatically every year. The renewal fee is paid on the renewal date with the saved PayPal. If you are a Tech Phase PRO member on the renewal date, the PRO member fee applies.
+5. You can stop automatic renewal from your account page until the day before the renewal date. If you stop it, you are not charged the next renewal fee. After you stop it, you can keep using the Notification Features until the end of the period.
+6. If the automatic payment fails, the Operator retries it until 3 days after the renewal date. If it still fails, or if no PayPal is saved, there is no automatic renewal; when you complete the renewal procedure and pay the renewal fee, the period in which you can use the Notification Features is extended by one year. If you do not renew, the Notification Features end at the end of the period.
+7. Even after the Notification Features end, you can keep using the rest of the Product. The parts of the Product other than the Notification Features are a one-time purchase and can be used without a set period, except in the case of Article 14.
 
 ## Article 22 (Refunds)
 
 1. Because of the nature of digital products, purchases and renewals are not refunded for reasons of your own convenience.
-2. In the following cases, the Operator will return all or part of the fee received: (1) when you were charged twice or otherwise charged because of an error on the Operator's side (the amount charged in error); (2) when, for reasons attributable to the Operator, you could not use all or the main features of the Product for a considerable period (an amount according to the features and period you could not use).
+2. In the following cases, the Operator will return all or part of the fee received.
+
+(1) When you were charged twice or otherwise charged because of an error on the Operator's side (the amount charged in error)
+
+(2) When, for reasons attributable to the Operator, you could not use all or the main features of the Product for a considerable period (an amount according to the features and period you could not use)
+
 3. This article does not restrict any rights users have under law.

@@ -7,13 +7,14 @@ import { renewalStore } from './renewal-store.mjs';
 import { renewalJob, renewalMailProvider } from './renewal.mjs';
 
 // RESOLUTE automatic renewal, one run (charges due renewals, settles pending ones, sends the 30-days-before email).
-// Explicit command only: nothing schedules it. Off unless RESOLUTE_AUTO_RENEWAL_ENABLED=true (owner approval);
-// then prints {"enabled":false} and exits 1 like the other disabled RESOLUTE jobs. Never prints values.
+// Run on a schedule (hourly) by the Railway cron service built from services/resolute-auto-renewal/Dockerfile (owner, Nov 24:
+// RESOLUTE launches with automatic renewal). Inert unless RESOLUTE_AUTO_RENEWAL_ENABLED=true (owner approval): it then
+// prints {"enabled":false} and exits 0, so the daily run does not show as failed while the flag is off. Never prints values.
 let pool;
 try {
   const env = process.env;
   if (env.RESOLUTE_AUTO_RENEWAL_ENABLED !== 'true') {
-    console.log(JSON.stringify({ enabled: false })); process.exitCode = 1;
+    console.log(JSON.stringify({ enabled: false }));
   } else {
     if (env.RESOLUTE_PAYPAL_LIVE_ENABLED !== 'true') throw Error('Live payments required');
     const config = livePaymentConfiguration(env);

@@ -137,7 +137,7 @@ test('RESOLUTE renewal: the 30-day email has the stop line and URL; the purchase
   assert.ok(renewalMessage('upcoming_auto', 'en', end, '$39').text.endsWith("\n\nIf you'd like to stop renewing, you can do it here:\nhttps://techphase.app/research/account?lang=en"));
   assert.deepEqual(RENEWAL_STOP_URL, { ja: 'https://techphase.app/research/account', en: 'https://techphase.app/research/account?lang=en' });
   const agree = read('../app/legal/agree-button.tsx');
-  assert.ok(agree.includes('ja: "1年後から自動で更新。更新日の前日までアカウント画面で止められます"'));
+  assert.ok(agree.includes('ja: "1年後から自動で更新されます。更新日の前日までアカウント画面から止められます"'));
   assert.ok(agree.includes('自動更新は、更新日（有効期限の日）の前日までにここで止められます。'));
   assert.match(read('../app/research/account/account-view.tsx'), /renewal\?\.available && renewal\.enabled && <p[^>]*data-renewal-stop="">\{t\(RESOLUTE_RENEWAL_STOP_NOTE\.ja, RESOLUTE_RENEWAL_STOP_NOTE\.en\)\}/);
   // The deadline matches the mechanism: the charge starts at 00:00 JST of the renewal day.
@@ -158,7 +158,7 @@ test('特商法: start within 2 days of payment and "no withdrawal after applyin
 test('privacy: the four purposes first, the existing ones not covered by them kept', () => {
   const ja = privacyJa.split('## 3. 利用目的')[1].split('## 4.')[0].split('\n').filter(l => l.startsWith('- ')).map(l => l.slice(2));
   assert.deepEqual(ja, ['会員登録と本人確認のため', 'サービスの料金の請求のため', '料金や更新のご案内メールを送るため', 'サービスの向上のため',
-    '本サービスと本商品の提供、ログイン、契約や購入の管理、診断の結果とルールの保存・表示、ルールに基づく通知', '通知の送信', 'お問い合わせへの回答', '不正利用の防止、障害の原因調査', '重要なお知らせの連絡']);
+    '本サービスと本商品の提供、ログイン、契約や購入の管理、更新時期のお知らせ、自動更新の課金、診断の結果とルールの保存・表示、ルールに基づく通知', '通知の送信', 'お問い合わせへの回答', '不正利用の防止、障害の原因調査', '重要なお知らせの連絡']);
   const en = privacyEn.split('## 3. How We Use Information')[1].split('## 4.')[0].split('\n').filter(l => l.startsWith('- '));
   assert.equal(en.length, 9); assert.equal(en[0], '- To register members and verify their identity');
 });
@@ -168,4 +168,38 @@ test('name: 「危険度チェッカー」 / "Risk Checker" appear nowhere a use
   const walk = dir => { for (const name of readdirSync(dir)) { const p = join(dir, name); if (statSync(p).isDirectory()) walk(p); else if (/\.(tsx?|mjs|md|json|py|html)$/.test(name)) files.push(p); } };
   for (const dir of ['app', 'lib', 'content', 'services', 'public']) walk(new URL(`../${dir}`, import.meta.url).pathname);
   for (const file of files) assert.doesNotMatch(readFileSync(file, 'utf8'), /危険度チェッカー|Risk Checker/i, file);
+});
+
+// Owner, Nov 24: RESOLUTE launches WITH automatic renewal (docs/AUTO-RENEWAL-COPY-PROPOSAL-2026-11-19.md §1–§4). Every public
+// page says it renews automatically, how to stop it and by when (更新日の前日まで, lawyer's final review, Nov 24).
+test('RESOLUTE auto-renewal copy: LP FAQ, 特商法, Terms Article 21 and privacy, ja and en; the stop deadline everywhere', async () => {
+  const lp = read('../app/resolute/lp/landing.tsx'), lpEn = read('../app/resolute/lp/landing-en.tsx');
+  assert.ok(lp.includes('1年後から自動で更新され、更新日の30日前にメールでご案内します。自動更新は、更新日の前日までアカウント画面から止められます。'));
+  assert.ok(lp.includes('<details><summary>自動更新を止めるには?</summary><p>更新日の前日までに、アカウント画面の「自動更新」から止められます。止めた後も、期限まで通知機能は使えます。</p></details>'));
+  assert.ok(lp.includes('5,980円です。更新日にTech Phase PROの会員なら3,980円です。購入時に保存したPayPalで、更新日に自動でお支払いいただきます。'));
+  assert.ok(lpEn.includes('You can stop automatic renewal on your account page until the day before the renewal date.'));
+  assert.ok(lpEn.includes('<details><summary>How do I stop automatic renewal?</summary><p>You can stop it under “Auto-renewal” on your account page until the day before the renewal date.'));
+  const resoluteJa = commerceJa.slice(commerceJa.indexOf('## RESOLUTE')), resoluteEn = commerceEn.slice(commerceEn.indexOf('## RESOLUTE'));
+  assert.ok(resoluteJa.includes('| 支払時期 | 申込時に支払います。通知機能の更新料金は、購入から1年ごとの更新日に、購入時に保存したPayPalで自動で支払います（自動更新を止めた方は、更新の手続きをした時に支払います） |'));
+  assert.ok(resoluteJa.includes('| 通知機能の更新 | 1年ごとに自動で更新します。更新日の30日前に、登録されたメールアドレスにお知らせします。自動更新は、更新日の前日までにアカウント画面から止められます。止めた後も、期限まで使えます。'));
+  assert.ok(resoluteEn.includes('You can stop automatic renewal from your account page until the day before the renewal date'));
+  const { default: termsJa } = await import('../lib/legal/terms-ja.ts'), { default: termsEn } = await import('../lib/legal/terms-en.ts');
+  const art21 = termsJa.slice(termsJa.indexOf('## 第21条'), termsJa.indexOf('## 第22条')), art21En = termsEn.slice(termsEn.indexOf('## Article 21'), termsEn.indexOf('## Article 22'));
+  assert.deepEqual(art21.split('\n').filter(l => /^\d\. /.test(l)).map(l => l.slice(0, 2)), ['1.', '2.', '3.', '4.', '5.', '6.', '7.']);
+  assert.ok(art21.includes('4. 初回購入のときに、利用者の同意を得て、支払いに使ったPayPalを保存し、通知機能を1年ごとに自動で更新します。'));
+  assert.ok(art21.includes('5. 利用者は、更新日の前日までに、アカウント画面から自動更新を止められます。止めたときは、次の更新の料金はかかりません。'));
+  assert.ok(art21.includes('6. 自動で支払えなかったときは、更新日から3日後までの間に支払いをやり直します。'));
+  assert.ok(art21En.includes('5. You can stop automatic renewal from your account page until the day before the renewal date.'));
+  // Article 19(4): the lawyer asked to stop saying 「すぐ」; same start time as the 特商法 page.
+  assert.ok(termsJa.includes('4. 決済完了後2日以内に利用を開始できます。')); assert.doesNotMatch(termsJa, /すぐに使え/);
+  assert.ok(termsEn.includes('4. You can start using the Product within 2 days after payment is completed.')); assert.doesNotMatch(termsEn, /right after purchase/);
+  assert.ok(privacyJa.includes('自動更新のためにPayPalが発行する支払い方法の識別子') && privacyJa.includes('自動更新の課金'));
+  assert.ok(privacyEn.includes('the payment method identifier issued by PayPal (for automatic renewal)'));
+});
+
+test('no page says RESOLUTE is never charged or renewed automatically any more', () => {
+  const files = [];
+  const walk = dir => { for (const name of readdirSync(dir)) { const p = join(dir, name); if (statSync(p).isDirectory()) walk(p); else if (/\.(tsx?|mjs|md|json|html)$/.test(name)) files.push(p); } };
+  for (const dir of ['app', 'lib', 'content', 'public']) walk(new URL(`../${dir}`, import.meta.url).pathname);
+  for (const file of files) assert.doesNotMatch(readFileSync(file, 'utf8'), /自動で課金することはありません|never charged automatically|ご希望の方だけ行います/i, file);
 });

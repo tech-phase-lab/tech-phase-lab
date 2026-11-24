@@ -72,7 +72,7 @@ test("3: RESOLUTE checkout — only the final pay button reads 「利用規約�
   const agree = legalModule("../../legal/agree-button");
   assert.deepEqual(agree.AGREE_LABEL, { ja: "利用規約に同意して申し込む", en: "Agree to the Terms and buy" });
   // Owner decision 案B: renewal as implemented today, the same for everyone (notice, then renew only if you choose).
-  assert.deepEqual(agree.RESOLUTE_CHECKOUT_LINES.ja, ["通知機能は1年間。2年目からの更新（5,980円・PRO会員3,980円）は、更新時期にお知らせし、ご希望の方だけ更新します。", "お客様都合の返金はできません(二重課金・当方の不具合で使えない場合を除く)。"]);
+  assert.deepEqual(agree.RESOLUTE_CHECKOUT_LINES.ja, ["通知機能は1年間。2年目からの更新（5,980円・PRO会員3,980円）は、更新時期にお知らせし、ご希望の方だけ更新します。", "お客様都合の返金はできません(二重課金・当方の不具合で使えない場合を除く)"]);
   assert.deepEqual(agree.RESOLUTE_CHECKOUT_LINES.en, ["Alerts run for one year. For renewal from year two ($39, PRO $29), we'll let you know when it's time to renew; only those who choose to renew are renewed.", "No refunds for change of mind (except double charges or if a fault on our side stops it from working)."]);
   assert.equal(agree.PRO_CHECKOUT_LINE.ja, "月額・年額とも解約するまで自動更新。いつでも解約できます。");
   const { createElement } = await import("react"), { renderToStaticMarkup } = await import("react-dom/server");
@@ -100,10 +100,11 @@ test("3: PRO — the final button (account card, resume sheet, live billing page
   assert.ok(!read("../app/research/account/account-sheets.tsx").includes('t("PayPalへ進む", "Continue to PayPal")'));
 });
 
-test("4 (owner decision 案B): one payment method — PayPal (credit card or bank account) — and RESOLUTE renewal only on request, everywhere", () => {
+test("4 (owner decision 案B): one payment method — PayPal (credit card or bank account); RESOLUTE renews automatically (owner, Nov 24) and says how to stop", () => {
   const PM = "PayPal（クレジットカード・銀行口座払い）", PE = "PayPal (credit card or bank account)";
-  assert.ok(lp.includes("更新時期にお知らせし、ご希望の方だけ更新します。"));
-  assert.ok(lpEn.includes("We’ll let you know when it’s time to renew; only those who choose to renew are renewed."));
+  // Owner, Nov 24: RESOLUTE launches with automatic renewal; every page says the stop deadline (lawyer, Nov 24).
+  assert.ok(lp.includes("1年後から自動で更新され、更新日の30日前にメールでご案内します。自動更新は、更新日の前日までアカウント画面から止められます。"));
+  assert.ok(lpEn.includes("Alerts renew automatically after one year; we’ll email you 30 days before. You can stop automatic renewal on your account page until the day before the renewal date."));
   assert.ok(lp.includes(`<details><summary>支払い方法は?</summary><p>${PM}です。</p></details>`));
   assert.ok(lpEn.includes(`<details><summary>How can I pay?</summary><p>${PE}.</p></details>`));
   const live = read("../app/resolute/checkout/live-screen.tsx");
@@ -113,16 +114,16 @@ test("4 (owner decision 案B): one payment method — PayPal (credit card or ban
   assert.ok(termsEn.includes(`3. You can pay with ${PE}.`));
   assert.equal(commerceJa.split(`| 支払方法 | ${PM} |`).length - 1, 2);
   assert.equal(commerceEn.split(`| Payment method | ${PE} |`).length - 1, 2);
-  assert.ok(termsJa.includes("4. 更新は、ご希望の方だけ行います。") && termsJa.includes("自動で課金することはありません。"));
-  assert.ok(commerceJa.includes("| 通知機能の更新 | 更新時期にお知らせし、ご希望の方だけ更新します。自動で課金することはありません |"));
-  // No bank transfer anywhere, and no claim that RESOLUTE renews automatically (PRO's own subscription does auto-renew).
+  assert.ok(termsJa.includes("5. 利用者は、更新日の前日までに、アカウント画面から自動更新を止められます。"));
+  assert.ok(commerceJa.includes("| 通知機能の更新 | 1年ごとに自動で更新します。"));
+  // No bank transfer anywhere, and nothing says RESOLUTE is never renewed or charged automatically any more.
   const mail = read("../services/resolute-api/payments/recovery.mjs");
   const everywhere = { termsJa, termsEn, privacyJa, privacyEn, commerceJa, commerceEn, lp, lpEn, live, sandbox: read("../app/resolute/checkout/screen.tsx"), agree: read("../app/legal/agree-button.tsx"), mail };
   for (const [name, text] of Object.entries(everywhere)) assert.ok(!/銀行振込|振込手数料|振込先|bank transfer/i.test(text), `${name}: bank transfer`);
   const resoluteOnly = { lp, lpEn, live, mail, lines: JSON.stringify(legalModule("../../legal/agree-button").RESOLUTE_CHECKOUT_LINES),
     terms21: termsJa.slice(termsJa.indexOf("## 第21条")), terms21En: termsEn.slice(termsEn.indexOf("## Article 21")), commerceResolute: commerceJa.slice(commerceJa.indexOf("## RESOLUTE")), commerceResoluteEn: commerceEn.slice(commerceEn.indexOf("## RESOLUTE")) };
   for (const [name, text] of Object.entries(resoluteOnly)) {
-    assert.ok(!/自動で更新され|自動更新|自動で課金します|renews? automatically|charged automatically|automatic renewal/.test(text.replace(/自動で課金することはありません|You are never charged automatically/g, "")), `${name}: auto-renew claim`);
+    assert.ok(!/自動で課金することはありません|ご希望の方だけ行います|never charged automatically/.test(text), `${name}: "no automatic renewal" claim`);
   }
   for (const text of [lp, lpEn, read("../app/resolute/checkout/live-screen.tsx"), read("../app/resolute/checkout/screen.tsx")]) {
     assert.ok(!/never renew automatically|never automatic|自動継続なし|自動継続はありません|自動で更新されることはありません/.test(text));
@@ -135,7 +136,7 @@ test("4 (owner decision 案B): one payment method — PayPal (credit card or ban
 
 test("5: LP FAQ — one-time purchase (feature names, renewal prices, 「提供を続ける限り使えます」) and the refund exception, JA and EN", () => {
   assert.ok(lp.includes("<details><summary>買い切りですか?</summary><p>アラート通知・翌朝のひとこと・衝撃度チェッカー・RIZELの一言は購入から1年間で、2年目以降は更新する形です。更新料金は5,980円、Tech Phase PRO会員は3,980円です。"));
-  assert.ok(lp.includes("更新料金は5,980円、Tech Phase PRO会員は3,980円です。更新時期にお知らせし、ご希望の方だけ更新します。それ以外の機能は、一度の購入で、提供を続ける限り使えます。</p></details>"));
+  assert.ok(lp.includes("更新料金は5,980円、Tech Phase PRO会員は3,980円です。1年後から自動で更新され、更新日の30日前にメールでご案内します。自動更新は、更新日の前日までアカウント画面から止められます。それ以外の機能は、一度の購入で、提供を続ける限り使えます。</p></details>"));
   assert.ok(!lp.includes("ずっと使えます"));
   assert.ok(lp.includes("内容をご確認のうえお申し込みください。二重課金や、当方の不具合で使えない場合は返金します。</p>"));
   assert.ok(lpEn.includes("<p>Alerts, Morning Note, Shock Gauge and RIZEL’s Take run for one year from purchase; from the second year they need renewal, at $39 a year or $29 for Tech Phase PRO members."));
@@ -194,7 +195,7 @@ test("9: the three lawyer-reviewed texts, their English, Web Push providers, and
   // The lawyer's wording, verbatim (spot checks across the texts; legal-pages.test.mjs checks every line renders as written).
   for (const phrase of ["リゼル(英語ではRIZEL、以下「運営者」)", "第18条から第22条は、RESOLUTEにだけ当てはまります。", "運営者は、金融商品取引法に基づく投資助言・代理業の登録を受けていないため",
     "ただし、当該額が3,000円に満たない場合（FREEプランの場合を含みます。）は、3,000円を上限とします。", "本規約は日本法に従います。紛争は、東京地方裁判所を第一審の合意管轄とします。",
-    "アラート通知（終値アラートを含みます。）、翌朝のひとこと、衝撃度チェッカー及びRIZELの一言(以下「通知機能」)は、購入日から1年間使えます。"]) assert.ok(termsJa.includes(phrase), phrase);
+    "翌朝のひとこと、衝撃度チェッカー、RIZELの一言及びアラート通知（終値アラートを含みます。）(以下「通知機能」)は、購入日から1年間使えます。"]) assert.ok(termsJa.includes(phrase), phrase);
   assert.equal(termsJa, source("terms.ja.md")); assert.equal(privacyJa, source("privacy.ja.md")); assert.equal(commerceJa, source("commerce.ja.md"));
   assert.equal(termsEn, source("terms.en.md")); assert.equal(privacyEn, source("privacy.en.md")); assert.equal(commerceEn, source("commerce.en.md"));
   // 「●日」 stays until the backup retention is confirmed (RESOLUTE's protection chain keeps objects without an expiry today).
@@ -220,7 +221,7 @@ test("9: the three lawyer-reviewed texts, their English, Web Push providers, and
   // Web Push delivery services: exactly the push hosts web_push.py allows.
   const allowed = read("../scripts/research/web_push.py").match(/'fcm\.googleapis\.com', 'updates\.push\.services\.mozilla\.com', 'web\.push\.apple\.com'/);
   assert.ok(allowed, "the allowlist in web_push.py");
-  assert.ok(privacyJa.includes("Apple Push Notification service(Apple社)、Firebase Cloud Messaging(Google社)、Mozillaのプッシュサービス(Mozilla社)"));
+  assert.ok(privacyJa.includes("Apple Push Notification service(Apple社)・Firebase Cloud Messaging(Google社)・Mozillaのプッシュサービス(Mozilla社)"));
   assert.ok(privacyEn.includes("Apple Push Notification service (Apple), Firebase Cloud Messaging (Google) or Mozilla's push service (Mozilla)"));
   // The commerce notice is reachable where the LPs and plan cards link.
   assert.ok(lp.includes(`<Link href="/commerce">特定商取引法</Link>`));

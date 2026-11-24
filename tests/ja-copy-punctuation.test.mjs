@@ -4,8 +4,8 @@ import { extname, join } from "node:path";
 import test from "node:test";
 
 // Owner, Nov 19: no 「。」「、」 right after a closing parenthesis, and amounts are written 「20ドル」, not 「20米ドル」.
-// The currency name 「米ドル」 (tabs, 「米ドル建て」) is fine; the unit is 「百万ドル」, not 「百万米ドル」 (owner, Nov 20). Legal pages wait for the lawyer:
-// docs/COPY-PAREN-DOLLAR-LEGAL-PROPOSAL-2026-11-19.md.
+// The currency name 「米ドル」 (tabs, 「米ドル建て」) is fine; the unit is 「百万ドル」, not 「百万米ドル」 (owner, Nov 20).
+// Legal pages (owner, Nov 24): docs/COPY-PAREN-DOLLAR-LEGAL-PROPOSAL-2026-11-19.md applied; no 「米ドル」 at all there (checked below).
 const ROOTS = ["app", "lib"];
 const SKIP_DIRS = new Set(["lib/legal", "node_modules"]);
 const CODE = new Set([".ts", ".tsx", ".mjs", ".js"]);
@@ -14,7 +14,6 @@ const PATTERNS = [/[)）][。、]/g, /\d米ドル/g, /百万米ドル/g];
 // Each entry: file, a piece of the matching line, and why it stays.
 const ALLOWED = [
   { file: "lib/research/whale-moves.ts", text: "（空売り残高÷平均出来高）。", reason: "クジラの足あとの「i」の説明。オーナー指定の文言をそのまま使う（11/22）" },
-  { file: "app/legal/agree-button.tsx", text: "使えない場合を除く)。", reason: "弁護士確認済みの購入直前の文言。法律ページと一緒に、弁護士の確認後に直す" },
   { file: "lib/research/company-introductions.data.json", text: "Applied Optoelectronics（AAOI）、産業用", reason: "社名のティッカーの括弧のあとで、分野の区切りの読点。並べ替えても括弧が読点の前に来る" },
   { file: "lib/research/company-introductions.data.json", text: "Constellation（Calpine取得済み）、NRG", reason: "社名の補足の括弧のあとの列挙。並べ替えても分野の区切りの読点の前に来る" },
   { file: "lib/research/company-introductions.data.json", text: "Ortec (Ametek)、FLIR (Teledyne)、Fluke", reason: "親会社の括弧が付いた社名が3つ続く列挙。並べ替えでは避けられない" },
@@ -108,4 +107,18 @@ test("Japanese copy in app/ and lib/: no 「。」「、」 after a closing pare
 
 test("the allow-list always says why", () => {
   for (const entry of ALLOWED) assert.ok(entry.reason.length > 0, entry.text);
+});
+
+// Owner, Nov 24: the legal pages follow the same rule. Prices in dollars are 「20ドル」「200ドル」; 「米ドル」 appears nowhere,
+// in the Markdown or in the generated modules the pages render. No 「。」「、」 right after a closing parenthesis in the Japanese texts.
+test("legal pages: no 「米ドル」 and no 「。」「、」 after a closing parenthesis", () => {
+  const legal = [...readdirSync("content/legal").map(name => `content/legal/${name}`), ...readdirSync("lib/legal").map(name => `lib/legal/${name}`)];
+  for (const file of legal) assert.ok(!readFileSync(file, "utf8").includes("米ドル"), file);
+  for (const file of legal.filter(f => /\.ja\.md$|-ja\.ts$/.test(f))) {
+    const text = readFileSync(file, "utf8");
+    assert.deepEqual([...text.matchAll(/[)）][。、]/g)].map(m => text.slice(Math.max(0, m.index - 30), m.index + 2)), [], file);
+  }
+  const commerce = readFileSync("content/legal/commerce.ja.md", "utf8"), terms = readFileSync("content/legal/terms.ja.md", "utf8");
+  assert.ok(commerce.includes("日本国外の利用者は月額20ドル、年額200ドル。"));
+  assert.ok(terms.includes("日本国外の利用者には、月額20ドルまたは年額200ドルで提供します。"));
 });
