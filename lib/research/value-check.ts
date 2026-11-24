@@ -96,8 +96,8 @@ export function footerLine(asOf: string, basis: ValueSnapshot["basis"], ja: bool
 
 /** The "i" text, verbatim from the owner's sheet of Nov 22 (the trailing version drops 予想 / forward as the sheet says). */
 export function aboutText(basis: ValueSnapshot["basis"], ja: boolean) {
-  if (ja) return `割安度は、${basis === "forward" ? "予想PERと予想PSR" : "PERとPSR"}が、その銘柄の過去5年の平均と比べてどれだけ低いかを%で表したものです。数字が大きいほど、5年平均より安い位置にあります。「5年最安」は、過去5年で一番安い水準にある銘柄です。売上が前年より減っている銘柄はのぞいています。毎日の終値で更新します。`;
-  return `The Value Score shows how far a stock's ${basis === "forward" ? "forward P/E and forward P/S are" : "P/E and P/S are"} below their own five-year averages. The higher the number, the cheaper it is compared with its five-year average. "5Y Low" marks stocks at their lowest level in five years. Stocks with falling year-over-year revenue are excluded. Updated daily at the close.`;
+  if (ja) return `割安度は、${basis === "forward" ? "予想PERと予想PSR" : "PERとPSR"}が、その銘柄の過去5年の平均と比べてどれだけ低いかを%で表したものです。数字が大きいほど、5年平均より安い位置にあります。「5年最安」は、過去5年で一番安い水準にある銘柄です。赤字の銘柄、PERが100倍を超える銘柄、売上が前年より減っている銘柄はのぞいています。毎日の終値で更新します。`;
+  return `The Value Score shows how far a stock's ${basis === "forward" ? "forward P/E and forward P/S are" : "P/E and P/S are"} below their own five-year averages. The higher the number, the cheaper it is compared with its five-year average. "5Y Low" marks stocks at their lowest level in five years. Loss-making stocks, stocks with a P/E above 100 and stocks with falling year-over-year revenue are excluded. Updated daily at the close.`;
 }
 
 /** The small note on a row whose look-back is shorter than five years. */

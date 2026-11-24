@@ -60,7 +60,7 @@ export function createCloseProvider(options: { apiKey: string | undefined; now?:
       }
       if (!response || response.status !== 200) throw new Error('unavailable');
       const body = (await response.json()) as { status?: unknown; meta?: { symbol?: unknown; currency?: unknown } };
-      // 別銘柄・エラー本文・米ドル以外は採用しない。
+      // 別銘柄・エラー本文・ドル建て以外は採用しない。
       if (body?.status === 'error' || (typeof body?.meta?.symbol === 'string' && body.meta.symbol.toUpperCase() !== symbol)) throw new Error('unavailable');
       if (typeof body?.meta?.currency === 'string' && body.meta.currency !== 'USD') throw new Error('unavailable');
       const bar = parseBars(body).find((b) => b.at.slice(0, 10) === date);

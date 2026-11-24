@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import { wireStories, isNotNews, lawFirmSolicitation, staleResults, cleanTitle } from '../lib/research/wire-stories.ts';
 
 const item = (id, titleEn, titleJa, publishedAt, origin = 'third-party') => ({ id, titleEn, titleJa, publisher: 'P', origin, url: `https://example.com/${id}`, publishedAt });
@@ -352,4 +353,36 @@ test('the same broker action from two outlets is one row, the first report (owne
   const apart = wireStories({ MRVL: [item('a', 'Stifel cuts Marvell price target to $280', 'a', '2026-11-20T13:00:00Z'), item('b', 'Needham cuts Marvell price target to $280', 'b', '2026-11-20T13:10:00Z')],
     LITE: [item('c', 'Stifel cuts Lumentum price target to $300', 'c', '2026-11-20T13:20:00Z')] }, 'en', new Set(['MRVL', 'LITE']));
   assert.equal(apart.length, 3);
+});
+
+// Owner, Nov 24 (ハイテク速報「こういうニュースはいらない」): chart-of-the-day recaps, options-chain and quote pages, social posts and interviews,
+// opinion and predictions, and consumer how-to tips are left out, by title and by outlet or link; real company news is kept.
+const NOISE_1124 = JSON.parse(readFileSync(new URL('./fixtures/tech-alerts-noise-1124.json', import.meta.url), 'utf8'));
+
+test('chart recaps, options pages, social posts, opinion and how-to tips are dropped by title (owner, Nov 24)', () => {
+  for (const [kind, titles] of Object.entries(NOISE_1124.dropped)) for (const title of titles) assert.equal(isNotNews(title), true, `${kind}: ${title}`);
+  for (const [ja, en] of NOISE_1124.droppedJa) { assert.equal(isNotNews(ja, en), true, ja); assert.equal(isNotNews(en), true, en); }
+  for (const title of NOISE_1124.kept) assert.equal(isNotNews(title), false, title);
+});
+
+test('social, opinion-mill and how-to outlets and options or social links are dropped; others are kept (owner, Nov 24)', async () => {
+  const { noiseSource } = await import('../lib/research/wire-stories.ts');
+  for (const row of NOISE_1124.sources.dropped) assert.equal(noiseSource(row), true, JSON.stringify(row));
+  for (const row of NOISE_1124.sources.kept) assert.equal(noiseSource(row), false, JSON.stringify(row));
+  // A real headline from a dropped outlet or link is left out of the stories; the same headline elsewhere is kept.
+  const title = 'Nvidia reinstates Jensen Huang after Trump speaks ‘directly’ to board';
+  const row = (id, publisher, source, url) => ({ ...item(id, title, 'エヌビディア、フアン氏をCEOに復帰', '2026-11-24T01:00:00Z'), publisher, source, url });
+  assert.deepEqual(wireStories({ NVDA: [row('li', 'LinkedIn', 'gnews', 'https://news.google.com/rss/articles/li')] }, 'ja', WATCHED), []);
+  assert.deepEqual(wireStories({ NVDA: [row('opt', '', 'yahoo', 'https://finance.yahoo.com/quote/NVDA/options/')] }, 'ja', WATCHED), []);
+  assert.deepEqual(wireStories({ NVDA: [row('rt', 'Reuters', 'gnews', 'https://news.google.com/rss/articles/rt')] }, 'ja', WATCHED).map(story => story.id), ['rt']);
+});
+
+test('the outlet and link lists match scripts/research/company_wire.py (owner, Nov 24)', async () => {
+  const { NOISE_PUBLISHERS, NOISE_URL } = await import('../lib/research/wire-stories.ts');
+  const python = readFileSync(new URL('../scripts/research/company_wire.py', import.meta.url), 'utf8');
+  const list = python.match(/GNEWS_DROP_PUBLISHERS = \(([\s\S]*?)\)\nGNEWS_DROP_KEYS/)[1].replace(/#.*$/gm, '');
+  const names = [...list.matchAll(/'([^']*)'|"([^"]*)"/g)].map(match => match[1] ?? match[2]);
+  assert.deepEqual(names, NOISE_PUBLISHERS);
+  const pattern = python.match(/NOISE_URL_PATTERN = \(([\s\S]*?)\)\nDROPPED_HOST/)[1];
+  assert.equal([...pattern.matchAll(/r'([^']*)'/g)].map(match => match[1]).join(''), NOISE_URL.source.replaceAll('\\/', '/'));
 });

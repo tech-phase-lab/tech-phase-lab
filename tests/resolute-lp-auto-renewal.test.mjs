@@ -1,6 +1,5 @@
-// RESOLUTE LP gold button and automatic renewal (lawyer review, Nov 24): a member whose order renews automatically
-// sees the one-line auto-renewal notice (how and by when to stop) right by the button, with the consent line,
-// before anything goes to PayPal.
+// RESOLUTE LP gold button and automatic renewal (lawyer review, Nov 24; owner, Nov 24: one tick, one press): the one-line
+// auto-renewal notice (how and by when to stop) is always shown right above the consent line, before anything goes to PayPal.
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { mkdtemp, rm } from 'node:fs/promises';
@@ -9,7 +8,7 @@ import { join } from 'node:path';
 import { build } from 'esbuild';
 import { JSDOM } from 'jsdom';
 
-test('LP button: an auto-renewal order shows the stop notice and needs a fresh tick before PayPal; others go straight', async () => {
+test('LP button: the auto-renewal and refund lines sit above the consent line; one tick and one press go to PayPal', async () => {
   const dir = await mkdtemp(join(process.cwd(), '.buy-renewal-')), require = createRequire(import.meta.url);
   const React = require('react'), { createRoot } = require('react-dom/client');
   const keys = ['window', 'document', 'IS_REACT_ACT_ENVIRONMENT', 'fetch'], before = new Map(keys.map(k => [k, Object.getOwnPropertyDescriptor(globalThis, k)]));
@@ -39,37 +38,29 @@ test('LP button: an auto-renewal order shows the stop notice and needs a fresh t
       return { dom, root, bodies, went, tick, press, box, notice: () => document.querySelector('[data-auto-renewal]'), React };
     };
 
-    // Japanese member with automatic renewal.
+    // One tick, one press (owner, Nov 24): the auto-renewal line and the refund line are always shown right above the
+    // consent line, so even an auto-renewal order goes straight to PayPal on the first press.
     let r = await run({});
-    assert.equal(r.notice(), null); // not before the server says so
+    const lines = () => [...document.querySelectorAll('[data-buy-lines] p')].map(p => p.textContent);
+    assert.deepEqual(lines(), ['ログインしてご購入の場合、1年後から自動で更新されます。更新日の前日までアカウント画面から止められます',
+      'お客様都合の返金はできません(二重課金・当方の不具合で使えない場合を除く)']);
+    assert.equal(document.querySelector('[data-buy-lines]').nextElementSibling, r.box().closest('[data-consent]'));
     await r.tick(); await r.press();
-    assert.deepEqual(r.went, []); // held: not to PayPal yet
-    const line = r.notice();
-    assert.ok(line);
-    assert.equal(line.textContent, '1年後から自動で更新されます。更新日の前日までアカウント画面から止められます');
-    assert.equal(line.getAttribute('role'), 'status');
-    // The notice sits right above the consent line, which sits right above the button.
-    assert.equal(line.nextElementSibling, r.box().closest('[data-consent]'));
-    assert.equal(r.box().checked, false); // ticked again after reading it
-    await r.press();
-    assert.deepEqual(r.went, []); assert.ok(r.dom.window.document.querySelector('[data-consent-error]'));
-    await r.tick(); await r.press();
-    assert.deepEqual(r.went, [approval]);
-    assert.equal(r.bodies.length, 2);
-    assert.notEqual(r.bodies[0].requestKey, r.bodies[1].requestKey); // a fresh order carries the later consent time
-    assert.ok(Date.parse(r.bodies[1].consentAt) >= Date.parse(r.bodies[0].consentAt));
+    assert.deepEqual(r.went, [approval]); assert.equal(r.bodies.length, 1);
+    assert.equal(r.notice(), null); // no second notice, no re-tick
     await r.React.act(async () => r.root.unmount());
 
     // English wording.
     r = await run({ language: 'en' });
+    assert.equal(lines()[0], 'If you buy while signed in, it renews automatically after one year. You can stop it on your account page until the day before the renewal date.');
     await r.tick(); await r.press();
-    assert.equal(r.notice().textContent, 'Renews automatically after one year. You can stop it on your account page until the day before the renewal date.');
+    assert.deepEqual(r.went, [approval]); assert.equal(r.bodies.length, 1);
     await r.React.act(async () => r.root.unmount());
 
-    // Without automatic renewal: no notice, straight to PayPal on the first press.
+    // Without automatic renewal: the same single press.
     r = await run({ autoRenewal: false });
     await r.tick(); await r.press();
-    assert.deepEqual(r.went, [approval]); assert.equal(r.notice(), null); assert.equal(r.bodies.length, 1);
+    assert.deepEqual(r.went, [approval]); assert.equal(r.bodies.length, 1);
     await r.React.act(async () => r.root.unmount());
   } finally {
     for (const [k, d] of before) { if (d) Object.defineProperty(globalThis, k, d); else delete globalThis[k]; }
