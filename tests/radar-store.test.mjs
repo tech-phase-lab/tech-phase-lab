@@ -75,3 +75,16 @@ test("a value older than six hours is calculated again", () => {
   assert.equal(isStale(row, at + STALE_MS + 1000), true);
   assert.equal(isStale(undefined, at), true);
 });
+
+// Nov 24: the storage service's columns are fixed, so needs_review also carries "prepayments of years ahead were taken out".
+test("a row whose prepayments were taken out comes back marked; an older unadjusted row above 100% does not", () => {
+  const prepaid = { ...facts, latest: { ...facts.latest, prepaid: true } };
+  const row = toRow("ai-cloud", "NBIS", prepaid, at, 100);
+  assert.equal(row.needs_review, true);
+  assert.equal(factsFromRow(row).latest.prepaid, true);
+  assert.deepEqual(buildRadar("ai-cloud", [{ ticker: "NBIS", facts: factsFromRow(row) }], "pro"), buildRadar("ai-cloud", [{ ticker: "NBIS", facts: prepaid }], "pro"));
+  const old = factsFromRow({ ...row, ocf_margin: 231 });
+  assert.equal(old.latest.prepaid, undefined);
+  assert.equal(buildRadar("ai-cloud", [{ ticker: "NBIS", facts: old }], "pro").dots[0].review, true);
+  assert.equal(factsFromRow(toRow("ai-cloud", "NBIS", facts, at, 100)).latest.prepaid, undefined);
+});

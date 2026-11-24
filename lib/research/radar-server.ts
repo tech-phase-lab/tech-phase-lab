@@ -28,8 +28,9 @@ const readNow = async (cik: string): Promise<RadarFacts> => {
   return { ...radarFacts(more.facts), filing: more.filing, unread: more.unread };
 };
 // Read again every half hour, so a new earnings report or filing shows up on its own; the previous earnings
-// come from the same filing history, so there is nothing separate to store. v2: with the archive's filings (Nov 18).
-const read = unstable_cache(readNow, ["radar-facts-v2-filings"], { revalidate: 1800 });
+// come from the same filing history, so there is nothing separate to store. v2: with the archive's filings (Nov 18). v3: prepayments of
+// years ahead taken out, revenue definitions checked against the total, growth from the year to date (Nov 24).
+const read = unstable_cache(readNow, ["radar-facts-v3-prepaid"], { revalidate: 1800 });
 
 /** The daily refresh (app/api/research/radar/refresh): straight from the SEC, never the half-hour cache, so a filing of the last
  * half hour is included. Throws when the SEC cannot be read (the caller then keeps the stored value). */

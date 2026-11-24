@@ -68,13 +68,16 @@ export type Tone = "up" | "down" | null;
 export type RadarDotFree = { ticker: string } & Point & { up: boolean | null; tone: Tone; size: SizeTier; /** No revenue: earning power cannot be calculated; the dot sits at the left edge. */ noRevenue?: boolean };
 /** PRO adds the movement from the previous earnings, the numbers behind the dot and the ranking order. */
 export type RadarDotPro = RadarDotFree & { fcfMargin: number; growth: number | null; asOf: string; basis: "annual" | "ttm"; previous: (Point & { asOf: string }) | null;
-  /** Position in the ranking; null for a dot that needs checking (not ranked). */
+  /** Position in the ranking; null only for a company without revenue (earning power cannot be worked out). */
   rank: number | null;
   /** Fitness score out of 100 (average of the two chart points). */
   score: number;
-  /** Earning power above 100% usually comes from customers paying in advance, not from the business: it is flagged and left out of the ranking. */
-  review: boolean };
-/** Operating cash flow above this share of revenue is flagged for checking. */
+  /** Earning power is still above 100% of revenue (prepayments whose amount the filing does not state): the dot is ranked with its score
+   * stopped at the chart's edge, like every value beyond it, and the card says why. */
+  review: boolean;
+  /** Customer prepayments of more than a year of revenue were taken out of the operating cash flow (radar-facts.ts PREPAID_SHARE). */
+  prepaid?: boolean };
+/** Operating cash flow above this share of revenue cannot come from the business alone. */
 export const REVIEW_ABOVE = 100;
 export type RadarPayload =
   | { tier: "free"; genre: RadarGenreId; dots: RadarDotFree[] }
@@ -102,12 +105,16 @@ export function buildRadar(genre: RadarGenreId, entries: { ticker: string; facts
     return { ticker: entry.ticker, ocfMargin: entry.latest.ocfMargin, cover: finite(entry.latest.cover), up: growth === null ? null : growth >= 0, tone, size: sizes[entry.ticker], ...(entry.latest.noRevenue ? { noRevenue: true } : {}) };
   });
   if (tier === "free") return { tier, genre, dots: base };
-  const flagged = (entry: typeof ready[number]) => entry.latest.ocfMargin > REVIEW_ABOVE || entry.latest.noRevenue === true;
-  const order = rankByScore(ready.filter(entry => !flagged(entry)).map(entry => ({ ticker: entry.ticker, ocfMargin: entry.latest.ocfMargin, cover: finite(entry.latest.cover) })));
+  // Nov 24 (owner: "財務レーダーの順位外もできればどうにかしてほしい"): every company with revenue is ranked. Prepayments of years ahead are
+  // taken out of the cash flow before this point (radar-facts.ts); a value still beyond the chart counts as the chart's edge, as any other.
+  // Only a company without revenue has no earning power to score, and the screen says so in one line.
+  const unranked = (entry: typeof ready[number]) => entry.latest.noRevenue === true;
+  const order = rankByScore(ready.filter(entry => !unranked(entry)).map(entry => ({ ticker: entry.ticker, ocfMargin: entry.latest.ocfMargin, cover: finite(entry.latest.cover) })));
   const dots: RadarDotPro[] = ready.map((entry, i) => ({
     ...base[i], fcfMargin: entry.latest.fcfMargin, growth: entry.latest.revenueGrowth, asOf: entry.latest.end, basis: entry.latest.basis,
     previous: entry.previous && !entry.latest.noRevenue ? { ocfMargin: entry.previous.ocfMargin, cover: finite(entry.previous.cover), asOf: entry.previous.end } : null,
-    score: fitnessScore(entry.latest.ocfMargin, finite(entry.latest.cover)), rank: flagged(entry) ? null : order.indexOf(entry.ticker) + 1, review: flagged(entry),
+    score: fitnessScore(entry.latest.ocfMargin, finite(entry.latest.cover)), rank: unranked(entry) ? null : order.indexOf(entry.ticker) + 1,
+    review: !entry.latest.noRevenue && entry.latest.ocfMargin > REVIEW_ABOVE, ...(entry.latest.prepaid ? { prepaid: true } : {}),
   }));
   const asOf = ready.map(entry => entry.latest.end).sort().at(-1) ?? null;
   return { tier, genre, dots, missing: entries.filter(entry => !entry.facts.latest).map(entry => entry.ticker), asOf };
