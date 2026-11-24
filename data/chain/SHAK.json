@@ -9,9 +9,15 @@
     {
       "ja": "提携先・海外のライセンス先",
       "en": "Partners & international licensees"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
     }
   ],
-  "rivals": [],
+  "rivals": [
+    "SG"
+  ],
   "companies": [
     {
       "id": "DAL",
@@ -87,6 +93,58 @@
             "level": "official",
             "date": "2026-02-26",
             "quote": "we signed several new long-term development agreements, including a plan to open 15 Shacks in Vietnam with Maxim's and a 12-Shack partnership in Panama with Grupo Attie-Multifood Enterprises."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Avride",
+      "ticker": "Avride",
+      "name": "アヴライド",
+      "name_en": "Avride",
+      "sub": "自動配送",
+      "sub_en": "Autonomous delivery",
+      "sub_short": "自動配送",
+      "sub_short_en": "Robots",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "配送ロボットの導入先にShake Shackが加わる(2025年)",
+          "text_en": "Shake Shack joined its autonomous delivery service (2025)",
+          "source": {
+            "label": "Nebius 20-F(2025年度)",
+            "label_en": "Nebius 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926052948/nbis-20251231x20f.htm",
+            "level": "official",
+            "date": "2026-04-30",
+            "quote": "During 2025, Avride onboarded Shake Shack, Wendy's, and White Castle, and signed commercial agreements with Uber Eats and Grubhub to utilize those distribution platforms."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SG",
+      "ticker": "SG",
+      "name": "スウィートグリーン",
+      "name_en": "Sweetgreen",
+      "sub": "外食",
+      "sub_en": "Restaurants",
+      "sub_short": "外食",
+      "sub_short_en": "Dining",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Sweetgreenが10-Kで、競合としてShake Shackを挙げる",
+          "text_en": "Sweetgreen names Shake Shack as a competitor",
+          "source": {
+            "label": "Sweetgreen 10-K(2024年度)",
+            "label_en": "Sweetgreen 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1477815/000162828025008367/sg-20241229.htm",
+            "level": "official",
+            "date": "2025-02-27",
+            "quote": "including companies like Chipotle, CAVA, McDonald's, Panera Bread, and Shake Shack"
           }
         }
       ]
