@@ -2,10 +2,10 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useResearchLanguage } from "../use-research-language";
 import PriceChart from "./price-chart";
-import { useMinute } from "./use-minute";
+import { useMinute, useSecond } from "./use-minute";
 import { useChartStore } from "./use-chart-store";
 import { signedPercent, type Bar } from "@/lib/research/market-quote";
-import { bannerLine, closedDayClose, closedDayLine, marketBanner, marketPhase } from "@/lib/research/us-market-session";
+import { bannerLine, closedDayClose, closedDayLine, freshnessNote, marketBanner, marketPhase } from "@/lib/research/us-market-session";
 import { DEFAULT_PERIOD, OTHER_PERIODS, PERIOD_LABEL, PRIMARY_PERIODS, drawnSeries, isBoardPeriod, isIntradayPeriod, periodInterval, type BoardPeriod } from "@/lib/research/market-board-periods";
 import { nextFlash, startFlash } from "@/lib/research/value-flash";
 import type { BoardQuote } from "@/lib/research/market-data";
@@ -98,6 +98,15 @@ function BigPrice({ scope, value, text }: { scope: string; value: number | null;
 function ExtLine({ id, ext, label }: { id: string; ext: NonNullable<BoardQuote["extended"]>; label: string }) {
   const flash = useFlash(id, ext.price);
   return <span key={flash.n} className={`${styles.colExt} ${styles[toneOf(ext.percentChange)]} ${flashClass(flash.dir)}`}><small>{label}</small>{signedPercent(ext.percentChange ?? 0)}</span>;
+}
+
+/** The running clock of the status line (owner, Nov 24: "プレ取引中 ・ 22:23:50 JST" did not move). Its own component, so only these words
+ * re-render every second, not the board and its chart. The age of the prices is said beside it when the reads have stopped, never by freezing it. */
+function StatusClock({ ja, fetchedAt }: { ja: boolean; fetchedAt: number | null }) {
+  const now = useSecond();
+  const stale = freshnessNote(ja, fetchedAt, now);
+  return <><span className={styles.clock}>{bannerLine(marketPhase(new Date(now ?? fetchedAt ?? 0)), ja, now)}</span>
+    {stale && <span className={styles.stale} role="status">{stale}</span>}</>;
 }
 
 /** The "more" pull-down of the period buttons: the other candles and spans, the chosen one with a check mark and in mint. */
@@ -207,8 +216,9 @@ export default function MarketBoard() {
   const name = (p: BoardPeriod) => PERIOD_LABEL[p][ja ? "ja" : "en"];
   return <div className={styles.wrap}>
     <section className={styles.indices} aria-label={t("主要3指数に連動するETF", "ETFs tracking the three major indices")}>
-      <div className={styles.state} role="status">{first ? closedDay ? <><span className={styles.dot} data-closed="true" /><span>{closedDayLine(closedDay, ja)}</span></>
-        : <><span key={board.at} className={styles.dot} data-open={banner.lit} data-pulse={banner.lit ? "1" : undefined} /><span>{bannerLine(phase, ja, board.at)}</span></> : <span>{indexQuotes === null ? t("読み込み中…", "Loading…") : t("株価を取得できませんでした", "Prices unavailable")}</span>}</div>
+      {/* Not a live region: a clock read aloud every second would drown a screen reader. Only the loading / failure words are announced. */}
+      <div className={styles.state}>{first ? closedDay ? <><span className={styles.dot} data-closed="true" /><span>{closedDayLine(closedDay, ja)}</span></>
+        : <><span key={board.at} className={styles.dot} data-open={banner.lit} data-pulse={banner.lit ? "1" : undefined} /><StatusClock ja={ja} fetchedAt={board.at} /></> : <span role="status">{indexQuotes === null ? t("読み込み中…", "Loading…") : t("株価を取得できませんでした", "Prices unavailable")}</span>}</div>
       <div className={styles.cols}>{INDEX_ETFS.map(item => {
         const q = indexQuotes?.[item.id], tn = toneOf(q?.percentChange ?? null), itemExt = q?.extended;
         return <button type="button" key={item.id} className={styles.col} aria-pressed={selected === item.id} onClick={() => { setSelected(item.id); setActive(null); }} aria-label={`${item.short} ${ja ? item.sub.ja : item.sub.en}`}>
