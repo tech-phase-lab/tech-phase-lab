@@ -21,6 +21,8 @@
       "name": "ジボダン",
       "sub": "香料大手",
       "sub_en": "Flavors & fragrances",
+      "sub_short": "香料大手",
+      "sub_short_en": "Flavors",
       "row": 0,
       "relations": [
         {
@@ -45,6 +47,8 @@
       "name": "ノボネシス",
       "sub": "バイオ素材",
       "sub_en": "Bio-solutions",
+      "sub_short": "バイオ",
+      "sub_short_en": "Bio",
       "row": 0,
       "relations": [
         {
@@ -69,6 +73,8 @@
       "name": "DSM-フィルメニッヒ",
       "sub": "香料・栄養",
       "sub_en": "Flavors & nutrition",
+      "sub_short": "香料",
+      "sub_short_en": "Flavors",
       "row": 0,
       "relations": [
         {
@@ -88,11 +94,13 @@
       "name_en": "DSM-Firmenich"
     },
     {
-      "id": "SYM",
+      "id": "Symrise",
       "ticker": "Symrise",
       "name": "シムライズ",
       "sub": "香料大手",
       "sub_en": "Flavors & fragrances",
+      "sub_short": "香料大手",
+      "sub_short_en": "Flavors",
       "row": 0,
       "relations": [
         {
@@ -117,6 +125,8 @@
       "name": "ケリー",
       "sub": "食品素材",
       "sub_en": "Food ingredients",
+      "sub_short": "食品素材",
+      "sub_short_en": "Food",
       "row": 0,
       "relations": [
         {
@@ -141,6 +151,8 @@
       "name": "アーチャー・ダニエルズ・ミッドランド",
       "sub": "穀物・食品素材",
       "sub_en": "Grain & ingredients",
+      "sub_short": "穀物",
+      "sub_short_en": "Grain",
       "row": 0,
       "relations": [
         {
@@ -165,6 +177,8 @@
       "name": "デュポン",
       "sub": "素材大手",
       "sub_en": "Materials",
+      "sub_short": "素材大手",
+      "sub_short_en": "Materials",
       "row": 0,
       "relations": [
         {

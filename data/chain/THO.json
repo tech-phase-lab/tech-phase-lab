@@ -1,0 +1,190 @@
+{
+  "root": {
+    "ticker": "THO",
+    "name": "ソー・インダストリーズ",
+    "cik": 730263,
+    "name_en": "THOR Industries"
+  },
+  "rows": [
+    {
+      "ja": "部品の調達先・出資先",
+      "en": "Component suppliers & investee",
+      "above": true
+    },
+    {
+      "ja": "最大の販売先",
+      "en": "Largest dealer customer"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in its 10-K)"
+    }
+  ],
+  "rivals": [
+    "ForestRiver",
+    "WGO"
+  ],
+  "companies": [
+    {
+      "id": "PATK",
+      "ticker": "PATK",
+      "name": "パトリック・インダストリーズ",
+      "name_en": "Patrick Industries",
+      "sub": "RV部品",
+      "sub_en": "RV components",
+      "sub_short": "RV部品",
+      "sub_short_en": "RV parts",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "北米RV業界の最大級の部品サプライヤー",
+          "text_en": "One of the largest component suppliers to North American RV makers",
+          "source": {
+            "label": "THOR Industries 10-K(2026年7月期)",
+            "label_en": "THOR Industries 10-K (FY ended Jul 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/730263/000073026326000027/tho-20260731.htm",
+            "level": "official",
+            "date": "2026-09-22",
+            "quote": "in June 2026 Patrick Industries and LCI Industries, two of the largest component suppliers to the North American RV industry, announced a proposed merger"
+          }
+        }
+      ]
+    },
+    {
+      "id": "LCII",
+      "ticker": "LCII",
+      "name": "LCIインダストリーズ",
+      "name_en": "LCI Industries",
+      "sub": "RV部品",
+      "sub_en": "RV components",
+      "sub_short": "RV部品",
+      "sub_short_en": "RV parts",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "北米RV業界の最大級の部品サプライヤー",
+          "text_en": "One of the largest component suppliers to North American RV makers",
+          "source": {
+            "label": "THOR Industries 10-K(2026年7月期)",
+            "label_en": "THOR Industries 10-K (FY ended Jul 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/730263/000073026326000027/tho-20260731.htm",
+            "level": "official",
+            "date": "2026-09-22",
+            "quote": "in June 2026 Patrick Industries and LCI Industries, two of the largest component suppliers to the North American RV industry, announced a proposed merger"
+          }
+        }
+      ]
+    },
+    {
+      "id": "DFLI",
+      "ticker": "DFLI",
+      "name": "ドラゴンフライ・エナジー",
+      "name_en": "Dragonfly Energy",
+      "sub": "RV用リチウム電池",
+      "sub_en": "RV lithium batteries",
+      "sub_short": "RV電池",
+      "sub_short_en": "Batteries",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "THORが戦略出資(2022年7月)",
+          "text_en": "THOR made a strategic investment (July 2022)",
+          "source": {
+            "label": "Dragonfly Energy 10-K(2024年度)",
+            "label_en": "Dragonfly Energy 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1847986/000164117225001755/form10-k.htm",
+            "level": "official",
+            "date": "2025-03-31",
+            "quote": "in July 2022, we agreed to a strategic investment by THOR Industries, or THOR"
+          }
+        }
+      ]
+    },
+    {
+      "id": "FreedomRoads",
+      "ticker": "FreedomRoads",
+      "name": "フリーダムロード",
+      "name_en": "FreedomRoads",
+      "sub": "RVディーラー",
+      "sub_en": "RV dealer",
+      "sub_short": "RV販売",
+      "sub_short_en": "RV dealer",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大の販売先(売上の約13.0%)",
+          "text_en": "Largest dealer customer (about 13.0% of net sales)",
+          "source": {
+            "label": "THOR Industries 10-K(2026年7月期)",
+            "label_en": "THOR Industries 10-K (FY ended Jul 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/730263/000073026326000027/tho-20260731.htm",
+            "level": "official",
+            "date": "2026-09-22",
+            "quote": "Sales to FreedomRoads, LLC accounted for approximately 13.0% of our consolidated net sales for fiscal 2026."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ForestRiver",
+      "ticker": "Forest River",
+      "name": "フォレスト・リバー",
+      "name_en": "Forest River",
+      "sub": "RV",
+      "sub_en": "Recreational vehicles",
+      "sub_short": "RV",
+      "sub_short_en": "RVs",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "北米RVの主な競合",
+          "text_en": "A primary North American RV competitor",
+          "source": {
+            "label": "THOR Industries 10-K(2026年7月期)",
+            "label_en": "THOR Industries 10-K (FY ended Jul 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/730263/000073026326000027/tho-20260731.htm",
+            "level": "official",
+            "date": "2026-09-22",
+            "quote": "Our primary RV competitors within the North American Towable and North American Motorized segments are Forest River, Inc. and Winnebago Industries, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WGO",
+      "ticker": "WGO",
+      "name": "ウィネベーゴ・インダストリーズ",
+      "name_en": "Winnebago Industries",
+      "sub": "RV",
+      "sub_en": "Recreational vehicles",
+      "sub_short": "RV",
+      "sub_short_en": "RVs",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "北米RVの主な競合",
+          "text_en": "A primary North American RV competitor",
+          "source": {
+            "label": "THOR Industries 10-K(2026年7月期)",
+            "label_en": "THOR Industries 10-K (FY ended Jul 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/730263/000073026326000027/tho-20260731.htm",
+            "level": "official",
+            "date": "2026-09-22",
+            "quote": "Our primary RV competitors within the North American Towable and North American Motorized segments are Forest River, Inc. and Winnebago Industries, Inc."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

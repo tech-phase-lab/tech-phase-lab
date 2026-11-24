@@ -25,6 +25,8 @@
       "name": "ネスレ",
       "sub": "食品・飲料",
       "sub_en": "Food & beverage",
+      "sub_short": "食品",
+      "sub_short_en": "Food",
       "row": 0,
       "relations": [
         {
@@ -62,6 +64,8 @@
       "name": "ペプシコ",
       "sub": "飲料・食品",
       "sub_en": "Beverages & food",
+      "sub_short": "飲料",
+      "sub_short_en": "Drinks",
       "row": 0,
       "relations": [
         {
@@ -86,6 +90,8 @@
       "name": "ボーユー・キャピタル",
       "sub": "投資会社",
       "sub_en": "Investment firm",
+      "sub_short": "投資会社",
+      "sub_short_en": "Investing",
       "row": 0,
       "relations": [
         {
@@ -105,11 +111,13 @@
       "name_en": "Boyu Capital"
     },
     {
-      "id": "TATA",
+      "id": "TataStarbucks",
       "ticker": "Tata Starbucks",
       "name": "タタ・スターバックス",
       "sub": "インド合弁",
       "sub_en": "India venture",
+      "sub_short": "インド",
+      "sub_short_en": "India JV",
       "row": 0,
       "relations": [
         {
@@ -134,6 +142,8 @@
       "name": "キューリグ・ドクターペッパー",
       "sub": "飲料",
       "sub_en": "Beverages",
+      "sub_short": "飲料",
+      "sub_short_en": "Drinks",
       "row": 1,
       "relations": [
         {

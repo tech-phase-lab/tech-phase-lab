@@ -33,6 +33,8 @@
       "name": "台湾積体電路製造",
       "sub": "半導体製造",
       "sub_en": "Foundry",
+      "sub_short": "半導体",
+      "sub_short_en": "Foundry",
       "row": 0,
       "relations": [
         {
@@ -59,6 +61,8 @@
       "name": "ユナイテッド・マイクロエレクトロニクス",
       "sub": "半導体製造",
       "sub_en": "Foundry",
+      "sub_short": "半導体",
+      "sub_short_en": "Foundry",
       "row": 0,
       "relations": [
         {
@@ -85,6 +89,8 @@
       "name": "グローバルファウンドリーズ",
       "sub": "半導体製造",
       "sub_en": "Foundry",
+      "sub_short": "半導体",
+      "sub_short_en": "Foundry",
       "row": 0,
       "relations": [
         {
@@ -111,6 +117,8 @@
       "name": "Vanguard International Semiconductor",
       "sub": "半導体製造",
       "sub_en": "Foundry",
+      "sub_short": "半導体",
+      "sub_short_en": "Foundry",
       "row": 0,
       "relations": [
         {
@@ -136,6 +144,8 @@
       "name": "Powerchip Semiconductor Manufacturing",
       "sub": "半導体製造",
       "sub_en": "Foundry",
+      "sub_short": "半導体",
+      "sub_short_en": "Foundry",
       "row": 0,
       "relations": [
         {
@@ -161,6 +171,8 @@
       "name": "ChipMOS Technologies",
       "sub": "後工程(組立・テスト)",
       "sub_en": "Assembly & test",
+      "sub_short": "後工程",
+      "sub_short_en": "Chip pack",
       "row": 1,
       "relations": [
         {
@@ -184,6 +196,8 @@
       "name": "Chipbond Technology",
       "sub": "後工程(組立・テスト)",
       "sub_en": "Assembly & test",
+      "sub_short": "後工程",
+      "sub_short_en": "Chip pack",
       "row": 1,
       "relations": [
         {
@@ -207,6 +221,8 @@
       "name": "King Yuan Electronics",
       "sub": "後工程(組立・テスト)",
       "sub_en": "Assembly & test",
+      "sub_short": "後工程",
+      "sub_short_en": "Chip pack",
       "row": 1,
       "relations": [
         {
@@ -230,6 +246,8 @@
       "name": "シナプティクス",
       "sub": "タッチ・表示IC",
       "sub_en": "Touch & display ICs",
+      "sub_short": "表示IC",
+      "sub_short_en": "Touch ICs",
       "row": 2,
       "relations": [
         {
@@ -254,6 +272,8 @@
       "name": "Novatek Microelectronics",
       "sub": "表示ドライバIC",
       "sub_en": "Display driver ICs",
+      "sub_short": "表示IC",
+      "sub_short_en": "Display",
       "row": 2,
       "relations": [
         {
@@ -277,6 +297,8 @@
       "name": "FocalTech Systems",
       "sub": "タッチ・表示IC",
       "sub_en": "Touch & display ICs",
+      "sub_short": "表示IC",
+      "sub_short_en": "Touch ICs",
       "row": 2,
       "relations": [
         {
@@ -300,6 +322,8 @@
       "name": "クアルコム",
       "sub": "通信半導体",
       "sub_en": "Wireless chips",
+      "sub_short": "通信IC",
+      "sub_short_en": "RF ICs",
       "row": 2,
       "relations": [
         {
@@ -324,6 +348,8 @@
       "name": "テキサス・インスツルメンツ",
       "sub": "アナログ半導体",
       "sub_en": "Analog chips",
+      "sub_short": "アナログ",
+      "sub_short_en": "Analog",
       "row": 2,
       "relations": [
         {
@@ -348,6 +374,8 @@
       "name": "ソニーグループ",
       "sub": "電機・エンタメ",
       "sub_en": "Electronics & entertainment",
+      "sub_short": "電機",
+      "sub_short_en": "Devices",
       "row": 2,
       "relations": [
         {

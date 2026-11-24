@@ -32,6 +32,8 @@
       "name_en": "Ipsen",
       "sub": "製薬(仏)",
       "sub_en": "Pharma (France)",
+      "sub_short": "製薬",
+      "sub_short_en": "Pharma",
       "row": 0,
       "relations": [
         {
@@ -56,6 +58,8 @@
       "name_en": "Takeda",
       "sub": "製薬",
       "sub_en": "Pharma",
+      "sub_short": "製薬",
+      "sub_short_en": "Pharma",
       "row": 0,
       "relations": [
         {
@@ -80,6 +84,8 @@
       "name_en": "Merck",
       "sub": "製薬",
       "sub_en": "Pharma",
+      "sub_short": "製薬",
+      "sub_short_en": "Pharma",
       "row": 0,
       "relations": [
         {
@@ -104,6 +110,8 @@
       "name_en": "Royalty Pharma",
       "sub": "医薬品ロイヤルティ",
       "sub_en": "Drug royalties",
+      "sub_short": "医薬権益",
+      "sub_short_en": "Royalties",
       "row": 0,
       "relations": [
         {
@@ -128,6 +136,8 @@
       "name_en": "Daiichi Sankyo",
       "sub": "製薬",
       "sub_en": "Pharma",
+      "sub_short": "製薬",
+      "sub_short_en": "Pharma",
       "row": 0,
       "relations": [
         {
@@ -152,6 +162,8 @@
       "name_en": "Adagene",
       "sub": "抗体技術",
       "sub_en": "Antibody technology",
+      "sub_short": "抗体技術",
+      "sub_short_en": "Antibody",
       "row": 1,
       "relations": [
         {
@@ -176,6 +188,8 @@
       "name_en": "Structure Therapeutics",
       "sub": "創薬(GPCR)",
       "sub_en": "Drug discovery (GPCR)",
+      "sub_short": "創薬",
+      "sub_short_en": "Drug R&D",
       "row": 1,
       "relations": [
         {
@@ -200,6 +214,8 @@
       "name_en": "Zymeworks",
       "sub": "抗体医薬",
       "sub_en": "Antibody therapeutics",
+      "sub_short": "抗体医薬",
+      "sub_short_en": "Antibody",
       "row": 1,
       "relations": [
         {
@@ -224,6 +240,8 @@
       "name_en": "Merus",
       "sub": "がん抗体",
       "sub_en": "Cancer antibodies",
+      "sub_short": "がん抗体",
+      "sub_short_en": "Oncology",
       "row": 2,
       "relations": [
         {
@@ -248,6 +266,8 @@
       "name_en": "Can-Fite BioPharma",
       "sub": "創薬(イスラエル)",
       "sub_en": "Biotech (Israel)",
+      "sub_short": "創薬",
+      "sub_short_en": "Biotech",
       "row": 2,
       "relations": [
         {
@@ -272,6 +292,8 @@
       "name_en": "Repare Therapeutics",
       "sub": "がん創薬",
       "sub_en": "Cancer drug discovery",
+      "sub_short": "がん創薬",
+      "sub_short_en": "Oncology",
       "row": 2,
       "relations": [
         {

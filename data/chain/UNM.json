@@ -29,6 +29,8 @@
       "name_en": "Fortitude Re",
       "sub": "再保険",
       "sub_en": "Reinsurance",
+      "sub_short": "再保険",
+      "sub_short_en": "Reinsure",
       "row": 0,
       "relations": [
         {
@@ -53,6 +55,8 @@
       "name_en": "Commonwealth Annuity and Life",
       "sub": "生命保険・再保険",
       "sub_en": "Life insurance & reinsurance",
+      "sub_short": "生命保険",
+      "sub_short_en": "Life ins",
       "row": 0,
       "relations": [
         {
@@ -77,6 +81,8 @@
       "name_en": "Voya Financial",
       "sub": "退職・職域保険",
       "sub_en": "Retirement & workplace benefits",
+      "sub_short": "保険",
+      "sub_short_en": "Pensions",
       "row": 1,
       "relations": [
         {
@@ -101,6 +107,8 @@
       "name_en": "CNO Financial",
       "sub": "生命・医療保険",
       "sub_en": "Life & health insurance",
+      "sub_short": "生保",
+      "sub_short_en": "Life ins",
       "row": 1,
       "relations": [
         {
@@ -125,6 +133,8 @@
       "name_en": "Horace Mann",
       "sub": "教職員向け保険",
       "sub_en": "Insurance for educators",
+      "sub_short": "保険",
+      "sub_short_en": "Insurance",
       "row": 1,
       "relations": [
         {

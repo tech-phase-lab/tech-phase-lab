@@ -24,6 +24,8 @@
       "name": "オッター・テイル・パワー",
       "sub": "電力会社",
       "sub_en": "Electric utility",
+      "sub_short": "電力会社",
+      "sub_short_en": "Utility",
       "row": 1,
       "relations": [
         {
@@ -43,11 +45,13 @@
       "name_en": "Otter Tail Power Company"
     },
     {
-      "id": "BHP",
+      "id": "BlackHillsPower",
       "ticker": "Black Hills Power",
       "name": "ブラックヒルズ・パワー",
       "sub": "電力会社",
       "sub_en": "Electric utility",
+      "sub_short": "電力会社",
+      "sub_short_en": "Utility",
       "row": 0,
       "relations": [
         {
@@ -72,6 +76,8 @@
       "name": "ワイオダック・リソーシズ",
       "sub": "石炭供給",
       "sub_en": "Coal supply",
+      "sub_short": "石炭供給",
+      "sub_short_en": "Coal",
       "row": 0,
       "relations": [
         {
@@ -96,6 +102,8 @@
       "name": "ナバホ・トランジショナル・エナジー",
       "sub": "石炭供給",
       "sub_en": "Coal supply",
+      "sub_short": "石炭供給",
+      "sub_short_en": "Coal",
       "row": 0,
       "relations": [
         {

@@ -1,0 +1,185 @@
+{
+  "root": {
+    "ticker": "FSS",
+    "name": "フェデラル・シグナル",
+    "cik": 277509,
+    "name_en": "Federal Signal"
+  },
+  "rows": [
+    {
+      "ja": "買収",
+      "en": "Acquisitions"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "OSK",
+    "GNSS"
+  ],
+  "companies": [
+    {
+      "id": "NewWay",
+      "ticker": "New Way Trucks",
+      "name": "ニューウェイ・トラックス",
+      "name_en": "New Way Trucks",
+      "sub": "ごみ収集車",
+      "sub_en": "Refuse collection vehicles",
+      "sub_short": "ごみ車両",
+      "sub_short_en": "Trucks",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ごみ収集車のNew Wayを約4.13億ドルで買収",
+          "text_en": "Acquired refuse truck maker New Way for about $413 million",
+          "source": {
+            "label": "Federal Signal 10-K(2025年度)",
+            "label_en": "Federal Signal 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/277509/000162828026011576/fss-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "The initial cash consideration paid by the Company to acquire New Way was approximately $ 413 million"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Kinloch",
+      "ticker": "Kinloch",
+      "name": "キンロック・イクイップメント",
+      "name_en": "Kinloch Equipment & Supply",
+      "sub": "機器販売",
+      "sub_en": "Equipment distribution",
+      "sub_short": "機器販売",
+      "sub_short_en": "Gear",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "テキサスの販売店Kinlochを1,490万ドルで買収(2025年12月)",
+          "text_en": "Acquired Texas distributor Kinloch for $14.9 million (December 2025)",
+          "source": {
+            "label": "Federal Signal 10-K(2025年度)",
+            "label_en": "Federal Signal 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/277509/000162828026011576/fss-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "On December 4, 2025, the Company acquired certain assets and operations of Kinloch Equipment & Supply, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Trackless",
+      "ticker": "Trackless",
+      "name": "トラックレス",
+      "name_en": "Trackless Vehicles",
+      "sub": "多目的作業車(カナダ)",
+      "sub_en": "Utility vehicles (Canada)",
+      "sub_short": "作業車",
+      "sub_short_en": "UTVs",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "カナダの多目的作業車メーカーを買収",
+          "text_en": "Acquired the Canadian utility vehicle maker",
+          "source": {
+            "label": "Federal Signal 10-K(2025年度)",
+            "label_en": "Federal Signal 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/277509/000162828026011576/fss-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "(collectively, \"Trackless\"), a leading Canadian manufacturer of off-road, multi-purpose maintenance vehicles and attachments."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Blasters",
+      "ticker": "Blasters",
+      "name": "ブラスターズ",
+      "name_en": "Blasters",
+      "sub": "路面標示の除去",
+      "sub_en": "Road marking removal",
+      "sub_short": "道路",
+      "sub_short_en": "Roads",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Blastersを1,300万ドルで買収",
+          "text_en": "Acquired Blasters for $13.0 million",
+          "source": {
+            "label": "Federal Signal 10-K(2025年度)",
+            "label_en": "Federal Signal 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/277509/000162828026011576/fss-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "The initial cash consideration paid by the Company to acquire Blasters was $ 13.0 million."
+          }
+        }
+      ]
+    },
+    {
+      "id": "OSK",
+      "ticker": "OSK",
+      "name": "オシュコシュ",
+      "name_en": "Oshkosh",
+      "sub": "特殊車両",
+      "sub_en": "Specialty vehicles",
+      "sub_short": "特殊車両",
+      "sub_short_en": "Vehicles",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Oshkoshが10-Kで、子会社New Wayをごみ収集車の競合として挙げる",
+          "text_en": "Oshkosh names its New Way unit a refuse vehicle competitor",
+          "source": {
+            "label": "Oshkosh 10-K(2025年度)",
+            "label_en": "Oshkosh 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/775158/000119312526054061/osk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "New Way Trucks (a subsidiary of Federal Signal)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GNSS",
+      "ticker": "GNSS",
+      "name": "ジェナシス",
+      "name_en": "Genasys",
+      "sub": "音響警報システム",
+      "sub_en": "Acoustic alert systems",
+      "sub_short": "音響警報",
+      "sub_short_en": "Alerts",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Genasysが10-Kで、一斉通報システムの競合として挙げる",
+          "text_en": "Genasys names Federal Signal among mass notification competitors",
+          "source": {
+            "label": "Genasys 10-K(2025年9月期)",
+            "label_en": "Genasys 10-K (FY ended Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/924383/000119312525319294/gnss-20250930.htm",
+            "level": "official",
+            "date": "2025-12-15",
+            "quote": "Our advanced Acoustics mass notification systems compete against several domestic and international companies, including Federal Signal, Whelen Engineering Company"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

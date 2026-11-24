@@ -1,0 +1,272 @@
+{
+  "root": {
+    "ticker": "DAN",
+    "name": "デーナ",
+    "cik": 26780,
+    "name_en": "Dana"
+  },
+  "rows": [
+    {
+      "ja": "主要顧客",
+      "en": "Major customers"
+    },
+    {
+      "ja": "事業売却",
+      "en": "Divestiture"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in its 10-K)"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "DCH",
+    "ZF",
+    "CMI"
+  ],
+  "companies": [
+    {
+      "id": "F",
+      "ticker": "F",
+      "name": "フォード",
+      "name_en": "Ford",
+      "sub": "自動車",
+      "sub_en": "Automaker",
+      "sub_short": "自動車",
+      "sub_short_en": "Cars",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大の顧客(売上の32%)",
+          "text_en": "Largest customer (32% of sales)",
+          "source": {
+            "label": "Dana 10-K(2025年度)",
+            "label_en": "Dana 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/26780/000143774926006076/dan20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "As a percentage of total sales from operations, our sales to Ford were approximately 32% in 2025"
+          }
+        }
+      ]
+    },
+    {
+      "id": "STLA",
+      "ticker": "STLA",
+      "name": "ステランティス",
+      "name_en": "Stellantis",
+      "sub": "自動車",
+      "sub_en": "Automaker",
+      "sub_short": "自動車",
+      "sub_short_en": "Cars",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2番目の顧客(売上の13%)",
+          "text_en": "Second-largest customer (13% of sales)",
+          "source": {
+            "label": "Dana 10-K(2025年度)",
+            "label_en": "Dana 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/26780/000143774926006076/dan20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our sales to Stellantis (via a directed supply relationship) were approximately 13% in 2025"
+          }
+        }
+      ]
+    },
+    {
+      "id": "TM",
+      "ticker": "TM",
+      "name": "トヨタ自動車",
+      "name_en": "Toyota",
+      "sub": "自動車",
+      "sub_en": "Automaker",
+      "sub_short": "自動車",
+      "sub_short_en": "Cars",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "3番目の顧客",
+          "text_en": "Third-largest customer",
+          "source": {
+            "label": "Dana 10-K(2025年度)",
+            "label_en": "Dana 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/26780/000143774926006076/dan20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Toyota Motor Corporation, Volkswagen AG (including Traton SE), and PACCAR, Inc. were our third, fourth and fifth largest customers in 2025."
+          }
+        }
+      ]
+    },
+    {
+      "id": "VOW3",
+      "ticker": "Volkswagen",
+      "name": "フォルクスワーゲン",
+      "name_en": "Volkswagen",
+      "sub": "自動車(ドイツ)",
+      "sub_en": "Automaker (Germany)",
+      "sub_short": "自動車",
+      "sub_short_en": "Cars",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Traton含め4番目の顧客",
+          "text_en": "Fourth-largest customer, including Traton",
+          "source": {
+            "label": "Dana 10-K(2025年度)",
+            "label_en": "Dana 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/26780/000143774926006076/dan20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Toyota Motor Corporation, Volkswagen AG (including Traton SE), and PACCAR, Inc. were our third, fourth and fifth largest customers in 2025."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PCAR",
+      "ticker": "PCAR",
+      "name": "パッカー",
+      "name_en": "PACCAR",
+      "sub": "トラック",
+      "sub_en": "Trucks",
+      "sub_short": "トラック",
+      "sub_short_en": "Trucks",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "5番目の顧客",
+          "text_en": "Fifth-largest customer",
+          "source": {
+            "label": "Dana 10-K(2025年度)",
+            "label_en": "Dana 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/26780/000143774926006076/dan20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Toyota Motor Corporation, Volkswagen AG (including Traton SE), and PACCAR, Inc. were our third, fourth and fifth largest customers in 2025."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ALSN",
+      "ticker": "ALSN",
+      "name": "アリソン・トランスミッション",
+      "name_en": "Allison Transmission",
+      "sub": "変速機",
+      "sub_en": "Transmissions",
+      "sub_short": "変速機",
+      "sub_short_en": "Gears",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "オフハイウェイ事業をAllisonに売却する契約(2025年6月)",
+          "text_en": "Agreed to sell its Off-Highway business to Allison (June 2025)",
+          "source": {
+            "label": "Dana 10-K(2025年度)",
+            "label_en": "Dana 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/26780/000143774926006076/dan20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "In June 2025, we entered into a definitive agreement to sell our Off-Highway business to Allison Transmission Holdings, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DCH",
+      "ticker": "DCH",
+      "name": "ダウチ(旧アメリカン・アクスル)",
+      "name_en": "Dauch (formerly American Axle)",
+      "sub": "駆動系部品",
+      "sub_en": "Driveline components",
+      "sub_short": "駆動部品",
+      "sub_short_en": "Axles",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "軽自動車向け駆動系の競合",
+          "text_en": "A light vehicle driveline competitor",
+          "source": {
+            "label": "Dana 10-K(2025年度)",
+            "label_en": "Dana 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/26780/000143774926006076/dan20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Dauch Corporation (formerly American Axle & Manufacturing Holdings, Inc.)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ZF",
+      "ticker": "ZF",
+      "name": "ZF",
+      "name_en": "ZF Friedrichshafen",
+      "sub": "自動車部品(ドイツ)",
+      "sub_en": "Auto parts (Germany)",
+      "sub_short": "車部品",
+      "sub_short_en": "Car parts",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "駆動系の競合",
+          "text_en": "A driveline competitor",
+          "source": {
+            "label": "Dana 10-K(2025年度)",
+            "label_en": "Dana 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/26780/000143774926006076/dan20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "ZF Friedrichshafen AG Linamar Corporation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CMI",
+      "ticker": "CMI",
+      "name": "カミンズ",
+      "name_en": "Cummins",
+      "sub": "エンジン",
+      "sub_en": "Engines",
+      "sub_short": "エンジン",
+      "sub_short_en": "Engines",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Cumminsが10-Kで、主な競合の一社として挙げる",
+          "text_en": "Cummins names Dana among primary competitors",
+          "source": {
+            "label": "Cummins 10-K(2024年度)",
+            "label_en": "Cummins 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/26172/000002617225000007/cmi-20241231.htm",
+            "level": "official",
+            "date": "2025-02-11",
+            "quote": "Our primary competitors include Daimler, PACCAR, Traton, BYD Company Limited, Dana Incorporated, BorgWarner Inc."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

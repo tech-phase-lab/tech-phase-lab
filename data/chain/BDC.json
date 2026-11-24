@@ -1,0 +1,186 @@
+{
+  "root": {
+    "ticker": "BDC",
+    "name": "ベルデン",
+    "cik": 913142,
+    "name_en": "Belden"
+  },
+  "rows": [
+    {
+      "ja": "買収",
+      "en": "Acquisitions"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "OCC",
+    "CLFD",
+    "ASNS"
+  ],
+  "companies": [
+    {
+      "id": "PrecisionOptical",
+      "ticker": "Precision Optical",
+      "name": "プレシジョン・オプティカル・テクノロジーズ",
+      "name_en": "Precision Optical Technologies",
+      "sub": "光通信部品",
+      "sub_en": "Optical components",
+      "sub_short": "光部品",
+      "sub_short_en": "Optics",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Precision Optical Technologiesを買収(2024年6月)",
+          "text_en": "Acquired Precision Optical Technologies (June 2024)",
+          "source": {
+            "label": "Belden 10-K(2025年度)",
+            "label_en": "Belden 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/913142/000091314226000009/bdc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "On June 30, 2024, we acquired Precision Optical Technologies (Precision) and accounted for it as a business combination."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Sichert",
+      "ticker": "Sichert",
+      "name": "ベルトルト・ジッヒャート",
+      "name_en": "Berthold Sichert",
+      "sub": "通信用キャビネット(ドイツ)",
+      "sub_en": "Telecom cabinets (Germany)",
+      "sub_short": "筐体",
+      "sub_short_en": "Cabinets",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Sichertを9,750万ドルで買収(2023年4月)",
+          "text_en": "Acquired Sichert for $97.5 million (April 2023)",
+          "source": {
+            "label": "Belden 10-K(2025年度)",
+            "label_en": "Belden 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/913142/000091314226000009/bdc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "In April 2023, we acquired Berthold Sichert GmbH (Sichert) with cash on hand for $ 97.5 million"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CloudRail",
+      "ticker": "CloudRail",
+      "name": "クラウドレール",
+      "name_en": "CloudRail",
+      "sub": "産業IoT(ドイツ)",
+      "sub_en": "Industrial IoT (Germany)",
+      "sub_short": "産業IoT",
+      "sub_short_en": "IoT",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "CloudRailを920万ドルで買収(2023年8月)",
+          "text_en": "Acquired CloudRail for $9.2 million (August 2023)",
+          "source": {
+            "label": "Belden 10-K(2025年度)",
+            "label_en": "Belden 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/913142/000091314226000009/bdc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "In August 2023, we acquired CloudRail GmbH (CloudRail) with cash on hand for $ 9.2 million"
+          }
+        }
+      ]
+    },
+    {
+      "id": "OCC",
+      "ticker": "OCC",
+      "name": "オプティカル・ケーブル",
+      "name_en": "Optical Cable",
+      "sub": "光ファイバーケーブル",
+      "sub_en": "Fiber optic cable",
+      "sub_short": "光通信",
+      "sub_short_en": "Fiber",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Optical Cableが10-Kで、銅線ケーブルの大手競合として挙げる",
+          "text_en": "Optical Cable names Belden among large copper cable competitors",
+          "source": {
+            "label": "Optical Cable 10-K(2025年10月期)",
+            "label_en": "Optical Cable 10-K (FY ended Oct 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1000230/000143774925038228/occ20251031_10k.htm",
+            "level": "official",
+            "date": "2025-12-18",
+            "quote": "Superior Essex (part of LS Cable & System), Belden Inc., and others."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CLFD",
+      "ticker": "CLFD",
+      "name": "クリアフィールド",
+      "name_en": "Clearfield",
+      "sub": "光ファイバー管理",
+      "sub_en": "Fiber management",
+      "sub_short": "光通信",
+      "sub_short_en": "Fiber",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Clearfieldが10-Kで、子会社PPC Broadbandを競合として挙げる",
+          "text_en": "Clearfield names Belden's PPC Broadband as a competitor",
+          "source": {
+            "label": "Clearfield 10-K(2026年9月期)",
+            "label_en": "Clearfield 10-K (FY ended Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/796505/000117184326007524/clfd20260930_10k.htm",
+            "level": "official",
+            "date": "2026-11-17",
+            "quote": "Competitors to FieldShield product lines include products offered by PPC Broadband (a subsidiary of Belden, Inc.), and Emtelle UK Limited."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ASNS",
+      "ticker": "ASNS",
+      "name": "アクテリス・ネットワークス",
+      "name_en": "Actelis Networks",
+      "sub": "産業用ネットワーク",
+      "sub_en": "Industrial networking",
+      "sub_short": "通信機器",
+      "sub_short_en": "Network",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Actelisが10-Kで、主要な競合の一社として挙げる",
+          "text_en": "Actelis names Belden among key competitors",
+          "source": {
+            "label": "Actelis Networks 10-K(2024年度)",
+            "label_en": "Actelis Networks 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1141284/000101376225001251/ea0234571-10k_actelis.htm",
+            "level": "official",
+            "date": "2025-03-24",
+            "quote": "Our key competitors include Moxa Technologies, FlexDSL Telecommunications AG, EtherWAN Systems, Inc. and Belden Inc."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -25,6 +25,8 @@
       "name": "カーディナル・ヘルス",
       "sub": "医薬品・医療流通",
       "sub_en": "Healthcare distribution",
+      "sub_short": "医薬品",
+      "sub_short_en": "Medtech",
       "row": 0,
       "relations": [
         {
@@ -49,6 +51,8 @@
       "name": "メドライン",
       "sub": "医療用品の流通",
       "sub_en": "Medical supply distribution",
+      "sub_short": "医療流通",
+      "sub_short_en": "Medtech",
       "row": 0,
       "relations": [
         {
@@ -73,6 +77,8 @@
       "name": "バンティブ・ヘルス",
       "sub": "腎ケア事業",
       "sub_en": "Kidney care",
+      "sub_short": "腎臓",
+      "sub_short_en": "Kidney",
       "row": 0,
       "relations": [
         {
@@ -97,6 +103,8 @@
       "name": "カーライル・グループ",
       "sub": "投資会社",
       "sub_en": "Investment firm",
+      "sub_short": "投資会社",
+      "sub_short_en": "Investing",
       "row": 0,
       "relations": [
         {
@@ -121,6 +129,8 @@
       "name": "ICUメディカル",
       "sub": "輸液・医療機器",
       "sub_en": "Infusion & medical devices",
+      "sub_short": "輸液",
+      "sub_short_en": "Infusion",
       "row": 1,
       "relations": [
         {

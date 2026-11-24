@@ -29,6 +29,8 @@
       "name": "エーティーアンドティー",
       "sub": "通信大手",
       "sub_en": "Wireless carrier",
+      "sub_short": "通信大手",
+      "sub_short_en": "Carrier",
       "row": 0,
       "relations": [
         {
@@ -53,6 +55,8 @@
       "name": "ベライゾン・コミュニケーションズ",
       "sub": "通信大手",
       "sub_en": "Wireless carrier",
+      "sub_short": "通信大手",
+      "sub_short_en": "Carrier",
       "row": 0,
       "relations": [
         {
@@ -77,6 +81,8 @@
       "name": "チャーター・コミュニケーションズ",
       "sub": "ケーブル大手",
       "sub_en": "Cable operator",
+      "sub_short": "ケーブル",
+      "sub_short_en": "Cable",
       "row": 0,
       "relations": [
         {
@@ -114,6 +120,8 @@
       "name": "コムキャスト",
       "sub": "ケーブル大手",
       "sub_en": "Cable operator",
+      "sub_short": "ケーブル",
+      "sub_short_en": "Cable",
       "row": 0,
       "relations": [
         {
@@ -151,6 +159,8 @@
       "name": "エコースター",
       "sub": "衛星・無線",
       "sub_en": "Satellite & wireless",
+      "sub_short": "衛星",
+      "sub_short_en": "Satellites",
       "row": 0,
       "relations": [
         {
@@ -175,6 +185,8 @@
       "name": "コックス・コミュニケーションズ",
       "sub": "ケーブル大手",
       "sub_en": "Cable operator",
+      "sub_short": "ケーブル",
+      "sub_short_en": "Cable",
       "row": 0,
       "relations": [
         {
@@ -199,6 +211,8 @@
       "name": "イーキューティー",
       "sub": "光ファイバー合弁",
       "sub_en": "Fiber JV partner",
+      "sub_short": "光通信",
+      "sub_short_en": "Fiber JV",
       "row": 0,
       "relations": [
         {
@@ -223,6 +237,8 @@
       "name": "ケーケーアール",
       "sub": "光ファイバー合弁",
       "sub_en": "Fiber JV partner",
+      "sub_short": "光通信",
+      "sub_short_en": "Fiber JV",
       "row": 0,
       "relations": [
         {
@@ -247,6 +263,8 @@
       "name": "クラウン・キャッスル",
       "sub": "通信タワー",
       "sub_en": "Cell towers",
+      "sub_short": "鉄塔",
+      "sub_short_en": "Towers",
       "row": 0,
       "relations": [
         {
@@ -266,11 +284,13 @@
       "name_en": "Crown Castle"
     },
     {
-      "id": "DT",
+      "id": "DeutscheTelekom",
       "ticker": "Deutsche Telekom",
       "name": "ドイツテレコム",
       "sub": "支配株主",
       "sub_en": "Controlling stockholder",
+      "sub_short": "支配株主",
+      "sub_short_en": "Owner",
       "row": 0,
       "relations": [
         {
@@ -295,6 +315,8 @@
       "name": "リバティ・ラテン・アメリカ",
       "sub": "通信(中南米)",
       "sub_en": "Telecom (Latin America)",
+      "sub_short": "通信",
+      "sub_short_en": "Telecom",
       "row": 1,
       "relations": [
         {

@@ -23,6 +23,8 @@
       "name": "CHSインク",
       "sub": "農業協同組合",
       "sub_en": "Agricultural cooperative",
+      "sub_short": "農協",
+      "sub_short_en": "Co-op",
       "row": 0,
       "relations": [
         {
@@ -60,6 +62,8 @@
       "name": "ジェラ",
       "sub": "電力・エネルギー",
       "sub_en": "Power & energy",
+      "sub_short": "電力",
+      "sub_short_en": "Power",
       "row": 0,
       "relations": [
         {
@@ -84,6 +88,8 @@
       "name": "三井物産",
       "sub": "総合商社",
       "sub_en": "Trading company",
+      "sub_short": "総合商社",
+      "sub_short_en": "Trading",
       "row": 0,
       "relations": [
         {
@@ -121,6 +127,8 @@
       "name": "リンデ",
       "sub": "産業ガス",
       "sub_en": "Industrial gases",
+      "sub_short": "産業ガス",
+      "sub_short_en": "Gases",
       "row": 0,
       "relations": [
         {
@@ -145,6 +153,8 @@
       "name": "オキシデンタル・ペトロリアム",
       "sub": "石油・ガス",
       "sub_en": "Oil & gas",
+      "sub_short": "石油",
+      "sub_short_en": "Oil & gas",
       "row": 0,
       "relations": [
         {
@@ -169,6 +179,8 @@
       "name": "コッホ・ファーティライザー",
       "sub": "肥料",
       "sub_en": "Fertilizer",
+      "sub_short": "肥料",
+      "sub_short_en": "Fertilizer",
       "row": 0,
       "relations": [
         {
@@ -206,6 +218,8 @@
       "name": "ニュートリエン",
       "sub": "肥料",
       "sub_en": "Fertilizer",
+      "sub_short": "肥料",
+      "sub_short_en": "Fertilizer",
       "row": 0,
       "relations": [
         {
@@ -230,6 +244,8 @@
       "name": "LSBインダストリーズ",
       "sub": "窒素化学品",
       "sub_en": "Nitrogen chemicals",
+      "sub_short": "窒素",
+      "sub_short_en": "Nitrogen",
       "row": 0,
       "relations": [
         {
@@ -254,6 +270,8 @@
       "name": "CVRパートナーズ",
       "sub": "窒素肥料",
       "sub_en": "Nitrogen fertilizer",
+      "sub_short": "窒素肥料",
+      "sub_short_en": "Fertilizer",
       "row": 0,
       "relations": [
         {
@@ -291,6 +309,8 @@
       "name": "ヤラ・インターナショナル",
       "sub": "肥料",
       "sub_en": "Fertilizer",
+      "sub_short": "肥料",
+      "sub_short_en": "Fertilizer",
       "row": 0,
       "relations": [
         {

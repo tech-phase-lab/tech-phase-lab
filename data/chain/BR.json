@@ -30,6 +30,8 @@
       "name_en": "CQG",
       "sub": "先物の執行管理システム",
       "sub_en": "Futures execution management",
+      "sub_short": "先物",
+      "sub_short_en": "Futures",
       "row": 0,
       "relations": [
         {
@@ -54,6 +56,8 @@
       "name_en": "Acolin",
       "sub": "ファンド販売支援(欧州)",
       "sub_en": "Fund distribution services (Europe)",
+      "sub_short": "ファンド",
+      "sub_short_en": "Funds",
       "row": 0,
       "relations": [
         {
@@ -78,6 +82,8 @@
       "name_en": "iJoin (LDI-MAP)",
       "sub": "退職年金テック",
       "sub_en": "Retirement plan technology",
+      "sub_short": "年金",
+      "sub_short_en": "Pensions",
       "row": 0,
       "relations": [
         {
@@ -102,6 +108,8 @@
       "name_en": "Signal Agency",
       "sub": "顧客コミュニケーション(英)",
       "sub_en": "Customer communications (UK)",
+      "sub_short": "顧客連絡",
+      "sub_short_en": "CX",
       "row": 0,
       "relations": [
         {
@@ -126,6 +134,8 @@
       "name_en": "Edward Jones",
       "sub": "証券(個人向け)",
       "sub_en": "Retail brokerage",
+      "sub_short": "証券",
+      "sub_short_en": "Broker",
       "row": 1,
       "relations": [
         {
@@ -150,6 +160,8 @@
       "name_en": "Siebert Financial",
       "sub": "証券",
       "sub_en": "Brokerage",
+      "sub_short": "証券",
+      "sub_short_en": "Broker",
       "row": 1,
       "relations": [
         {
@@ -174,6 +186,8 @@
       "name_en": "Blackbaud",
       "sub": "非営利向けソフト",
       "sub_en": "Nonprofit software",
+      "sub_short": "非営利IT",
+      "sub_short_en": "Software",
       "row": 1,
       "relations": [
         {
@@ -198,6 +212,8 @@
       "name_en": "IZEA Worldwide",
       "sub": "インフルエンサー広告",
       "sub_en": "Influencer marketing",
+      "sub_short": "SNS販促",
+      "sub_short_en": "Social",
       "row": 1,
       "relations": [
         {
@@ -222,6 +238,8 @@
       "name_en": "Barnwell Industries",
       "sub": "石油ガス",
       "sub_en": "Oil & gas",
+      "sub_short": "石油ガス",
+      "sub_short_en": "Oil & gas",
       "row": 1,
       "relations": [
         {
@@ -246,6 +264,8 @@
       "name_en": "Clearwater Analytics",
       "sub": "投資会計ソフト",
       "sub_en": "Investment accounting software",
+      "sub_short": "会計",
+      "sub_short_en": "Investing",
       "row": 2,
       "relations": [
         {

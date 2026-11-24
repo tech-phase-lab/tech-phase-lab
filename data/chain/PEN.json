@@ -1,0 +1,160 @@
+{
+  "root": {
+    "ticker": "PEN",
+    "name": "ペナンブラ",
+    "cik": 1321732,
+    "name_en": "Penumbra"
+  },
+  "rows": [
+    {
+      "ja": "買収合意・流通",
+      "en": "Pending acquirer & distribution"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in its 10-K)"
+    }
+  ],
+  "rivals": [
+    "MDT",
+    "SYK",
+    "4543"
+  ],
+  "companies": [
+    {
+      "id": "BSX",
+      "ticker": "BSX",
+      "name": "ボストン・サイエンティフィック",
+      "name_en": "Boston Scientific",
+      "sub": "医療機器",
+      "sub_en": "Medical devices",
+      "sub_short": "医療機器",
+      "sub_short_en": "Medtech",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Penumbraの全株を取得する最終契約を発表(2026年1月)",
+          "text_en": "Agreed to acquire all of Penumbra (January 2026)",
+          "source": {
+            "label": "Boston Scientific 10-K(2025年度)",
+            "label_en": "Boston Scientific 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/885725/000088572526000010/bsx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "On January 15, 2026, we announced our entry into a definitive agreement to acquire 100 percent of Penumbra, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "OSRH",
+      "ticker": "OSRH",
+      "name": "OSRホールディングス",
+      "name_en": "OSR Holdings",
+      "sub": "医療機器流通",
+      "sub_en": "Medical device distribution",
+      "sub_short": "医療流通",
+      "sub_short_en": "Medtech",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "傘下のRMCがPenumbra製品を再販していた(2024年に終了)",
+          "text_en": "Its RMC unit resold Penumbra catheters until 2024",
+          "source": {
+            "label": "OSR Holdings 10-K(2024年度)",
+            "label_en": "OSR Holdings 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1840425/000121390025034116/ea0237686-10k_osrhold.htm",
+            "level": "official",
+            "date": "2025-04-22",
+            "quote": "RMC's distribution agreement with Penumbra Inc. for the resale of its reperfusion catheter, neuron delivery catheter and related tubing and canister, expired on June 30, 2024."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MDT",
+      "ticker": "MDT",
+      "name": "メドトロニック",
+      "name_en": "Medtronic",
+      "sub": "医療機器",
+      "sub_en": "Medical devices",
+      "sub_short": "医療機器",
+      "sub_short_en": "Medtech",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "最も注目すべき競合の一社",
+          "text_en": "One of its most notable competitors",
+          "source": {
+            "label": "Penumbra 10-K(2025年度)",
+            "label_en": "Penumbra 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1321732/000132173226000007/pen-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Our most notable competitors are Boston Scientific, Medtronic, Stryker (now including Inari Medical), Terumo and several private companies."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SYK",
+      "ticker": "SYK",
+      "name": "ストライカー",
+      "name_en": "Stryker (incl. Inari Medical)",
+      "sub": "医療機器",
+      "sub_en": "Medical devices",
+      "sub_short": "医療機器",
+      "sub_short_en": "Medtech",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Inari Medicalを含め、最も注目すべき競合の一社",
+          "text_en": "One of its most notable competitors, now including Inari Medical",
+          "source": {
+            "label": "Penumbra 10-K(2025年度)",
+            "label_en": "Penumbra 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1321732/000132173226000007/pen-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Our most notable competitors are Boston Scientific, Medtronic, Stryker (now including Inari Medical), Terumo and several private companies."
+          }
+        }
+      ]
+    },
+    {
+      "id": "4543",
+      "ticker": "4543",
+      "name": "テルモ",
+      "name_en": "Terumo",
+      "sub": "医療機器",
+      "sub_en": "Medical devices",
+      "sub_short": "医療機器",
+      "sub_short_en": "Medtech",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "最も注目すべき競合の一社",
+          "text_en": "One of its most notable competitors",
+          "source": {
+            "label": "Penumbra 10-K(2025年度)",
+            "label_en": "Penumbra 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1321732/000132173226000007/pen-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Our most notable competitors are Boston Scientific, Medtronic, Stryker (now including Inari Medical), Terumo and several private companies."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

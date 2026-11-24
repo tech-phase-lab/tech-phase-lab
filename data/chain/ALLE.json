@@ -1,0 +1,246 @@
+{
+  "root": {
+    "ticker": "ALLE",
+    "name": "アレジオン",
+    "cik": 1579241,
+    "name_en": "Allegion"
+  },
+  "rows": [
+    {
+      "ja": "成り立ち・事業買収",
+      "en": "Origin & business purchase"
+    },
+    {
+      "ja": "買収(2025年)",
+      "en": "Acquisitions (2025)"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in its 10-K)"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "ASSA",
+    "DOKA",
+    "FBIN"
+  ],
+  "companies": [
+    {
+      "id": "IngersollRandPlc",
+      "ticker": "Ingersoll Rand plc",
+      "name": "旧インガソール・ランド",
+      "name_en": "Ingersoll Rand plc (former)",
+      "sub": "産業機器",
+      "sub_en": "Industrial",
+      "sub_short": "産業機器",
+      "sub_short_en": "Industrial",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2013年、当時のIngersoll Randの業務・住宅用セキュリティ事業を引き継いで設立",
+          "text_en": "Formed in 2013 to hold the then Ingersoll Rand's security businesses",
+          "source": {
+            "label": "Allegion 10-K(2025年度)",
+            "label_en": "Allegion 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1579241/000157924126000007/alle-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "We were incorporated in Ireland on May 9, 2013, to hold the commercial and residential security businesses of what was then Ingersoll Rand plc (\"Ingersoll Rand\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SWK",
+      "ticker": "SWK",
+      "name": "スタンレー・ブラック&デッカー",
+      "name_en": "Stanley Black & Decker",
+      "sub": "工具",
+      "sub_en": "Tools",
+      "sub_short": "工具",
+      "sub_short_en": "Tools",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "自動ドア事業を9.16億ドルで買収(2022年)。ブランドの使用許諾も受ける",
+          "text_en": "Bought its automatic doors business for $916 million (2022) and licenses the Stanley brand",
+          "source": {
+            "label": "Stanley Black & Decker 10-K(2024年度)",
+            "label_en": "Stanley Black & Decker 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/93556/000009355625000007/swk-20241228.htm",
+            "level": "official",
+            "date": "2025-02-18",
+            "quote": "the Company completed the sale of its Mechanical Access Solutions (\"MAS\") business comprised of the automatic doors business to Allegion plc for net proceeds of $ 916.0 million"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ELATEC",
+      "ticker": "ELATEC",
+      "name": "エラテック",
+      "name_en": "ELATEC",
+      "sub": "RFIDリーダー(ドイツ)",
+      "sub_en": "RFID readers (Germany)",
+      "sub_short": "RFID",
+      "sub_short_en": "RFID",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ELATECを買収(2025年7月)",
+          "text_en": "Acquired ELATEC (July 2025)",
+          "source": {
+            "label": "Allegion 10-K(2025年度)",
+            "label_en": "Allegion 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1579241/000157924126000007/alle-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "On July 1, 2025, the Company, through its subsidiaries, acquired 100% of ELATEC, including Elatec GmbH and other group entities (\"ELATEC\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Lemaar",
+      "ticker": "Lemaar",
+      "name": "レマール",
+      "name_en": "Lemaar",
+      "sub": "セキュリティ製品(豪州)",
+      "sub_en": "Security products (Australia)",
+      "sub_short": "防犯製品",
+      "sub_short_en": "Security",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "豪州のLemaarを買収(2025年3月)",
+          "text_en": "Acquired Australia's Lemaar (March 2025)",
+          "source": {
+            "label": "Allegion 10-K(2025年度)",
+            "label_en": "Allegion 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1579241/000157924126000007/alle-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "On March 1, 2025, the Company, through its subsidiaries, acquired Lemaar Pty Ltd (\"Lemaar\"), a global provider of security products and solutions based in Australia."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ASSA",
+      "ticker": "ASSA ABLOY",
+      "name": "アッサ・アブロイ",
+      "name_en": "ASSA ABLOY",
+      "sub": "錠前(スウェーデン)",
+      "sub_en": "Locks (Sweden)",
+      "sub_short": "錠前",
+      "sub_short_en": "Locks",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "世界的な主な競合",
+          "text_en": "A principal global competitor",
+          "source": {
+            "label": "Allegion 10-K(2025年度)",
+            "label_en": "Allegion 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1579241/000157924126000007/alle-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "We believe our principal global competitors are Assa Abloy AB and dormakaba Group."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DOKA",
+      "ticker": "dormakaba",
+      "name": "ドルマカバ",
+      "name_en": "dormakaba",
+      "sub": "錠前・ドア(スイス)",
+      "sub_en": "Locks & doors (Switzerland)",
+      "sub_short": "錠前",
+      "sub_short_en": "Locks",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "世界的な主な競合",
+          "text_en": "A principal global competitor",
+          "source": {
+            "label": "Allegion 10-K(2025年度)",
+            "label_en": "Allegion 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1579241/000157924126000007/alle-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "We believe our principal global competitors are Assa Abloy AB and dormakaba Group."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FBIN",
+      "ticker": "FBIN",
+      "name": "フォーチュン・ブランズ・イノベーションズ",
+      "name_en": "Fortune Brands Innovations",
+      "sub": "住宅設備",
+      "sub_en": "Home products",
+      "sub_short": "住宅設備",
+      "sub_short_en": "Home",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "北米の住宅市場で競合",
+          "text_en": "A competitor in the North American residential market",
+          "source": {
+            "label": "Allegion 10-K(2025年度)",
+            "label_en": "Allegion 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1579241/000157924126000007/alle-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "including Fortune Brands Innovations, Inc. in the North American residential market"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MSI",
+      "ticker": "MSI",
+      "name": "モトローラ・ソリューションズ",
+      "name_en": "Motorola Solutions",
+      "sub": "通信・映像セキュリティ",
+      "sub_en": "Communications & video security",
+      "sub_short": "通信",
+      "sub_short_en": "Comms",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Motorolaが10-Kで、映像分野の主な競合として挙げる",
+          "text_en": "Motorola names Allegion among major video competitors",
+          "source": {
+            "label": "Motorola Solutions 10-K(2024年度)",
+            "label_en": "Motorola Solutions 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/68505/000006850525000012/msi-20241231.htm",
+            "level": "official",
+            "date": "2025-02-14",
+            "quote": "Video Allegion, Assa Abloy, Axis Communications"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

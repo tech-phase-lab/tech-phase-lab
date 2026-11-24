@@ -35,6 +35,8 @@
       "name_en": "Bechtel",
       "sub": "建設(EPC)",
       "sub_en": "Engineering & construction",
+      "sub_short": "建設",
+      "sub_short_en": "Design",
       "row": 0,
       "relations": [
         {
@@ -59,6 +61,8 @@
       "name_en": "Flex LNG",
       "sub": "LNG船",
       "sub_en": "LNG shipping",
+      "sub_short": "LNG船",
+      "sub_short_en": "LNG",
       "row": 0,
       "relations": [
         {
@@ -83,6 +87,8 @@
       "name_en": "Capital Clean Energy Carriers",
       "sub": "LNG船",
       "sub_en": "LNG shipping",
+      "sub_short": "LNG船",
+      "sub_short_en": "LNG",
       "row": 0,
       "relations": [
         {
@@ -107,6 +113,8 @@
       "name_en": "TotalEnergies",
       "sub": "石油メジャー",
       "sub_en": "Oil major",
+      "sub_short": "石油",
+      "sub_short_en": "Oil major",
       "row": 1,
       "relations": [
         {
@@ -131,6 +139,8 @@
       "name_en": "POSCO Holdings",
       "sub": "鉄鋼・商社(韓国)",
       "sub_en": "Steel & trading (Korea)",
+      "sub_short": "鉄鋼",
+      "sub_short_en": "Steel",
       "row": 1,
       "relations": [
         {
@@ -155,6 +165,8 @@
       "name_en": "Cheniere Energy Partners",
       "sub": "LNG(上場子会社)",
       "sub_en": "LNG (listed subsidiary)",
+      "sub_short": "LNG",
+      "sub_short_en": "LNG",
       "row": 2,
       "relations": [
         {
@@ -179,6 +191,8 @@
       "name_en": "Blackstone",
       "sub": "投資会社",
       "sub_en": "Investment firm",
+      "sub_short": "投資会社",
+      "sub_short_en": "Investing",
       "row": 2,
       "relations": [
         {
@@ -203,6 +217,8 @@
       "name_en": "Brookfield",
       "sub": "投資会社",
       "sub_en": "Investment firm",
+      "sub_short": "投資会社",
+      "sub_short_en": "Investing",
       "row": 2,
       "relations": [
         {
@@ -227,6 +243,8 @@
       "name_en": "Venture Global",
       "sub": "LNG",
       "sub_en": "LNG",
+      "sub_short": "LNG",
+      "sub_short_en": "LNG",
       "row": 3,
       "relations": [
         {

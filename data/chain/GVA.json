@@ -1,0 +1,185 @@
+{
+  "root": {
+    "ticker": "GVA",
+    "name": "グラナイト・コンストラクション",
+    "cik": 861459,
+    "name_en": "Granite Construction"
+  },
+  "rows": [
+    {
+      "ja": "買収",
+      "en": "Acquisitions"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "KNF",
+    "SHIM"
+  ],
+  "companies": [
+    {
+      "id": "Papich",
+      "ticker": "Papich",
+      "name": "パピッチ・コンストラクション",
+      "name_en": "Papich Construction",
+      "sub": "道路工事",
+      "sub_en": "Road construction",
+      "sub_short": "道路工事",
+      "sub_short_en": "Roads",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Papich Constructionを買収(2025年8月)",
+          "text_en": "Acquired Papich Construction (August 2025)",
+          "source": {
+            "label": "Granite Construction 10-K(2025年度)",
+            "label_en": "Granite Construction 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/861459/000086145926000004/gva-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "On August 5, 2025, we acquired Papich Construction Company, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WarrenPaving",
+      "ticker": "Warren Paving",
+      "name": "ウォーレン・ペイビング",
+      "name_en": "Warren Paving",
+      "sub": "舗装・骨材",
+      "sub_en": "Paving & aggregates",
+      "sub_short": "舗装",
+      "sub_short_en": "Paving",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Slats LucasとWarren Pavingを買収(2025年8月)",
+          "text_en": "Acquired Slats Lucas and Warren Paving (August 2025)",
+          "source": {
+            "label": "Granite Construction 10-K(2025年度)",
+            "label_en": "Granite Construction 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/861459/000086145926000004/gva-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "On August 5, 2025, we acquired Slats Lucas, LLC and Warren Paving, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DickersonBowen",
+      "ticker": "Dickerson & Bowen",
+      "name": "ディッカーソン&ボーウェン",
+      "name_en": "Dickerson & Bowen",
+      "sub": "舗装・骨材",
+      "sub_en": "Paving & aggregates",
+      "sub_short": "舗装",
+      "sub_short_en": "Paving",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Dickerson & Bowenを買収(2024年8月)",
+          "text_en": "Acquired Dickerson & Bowen (August 2024)",
+          "source": {
+            "label": "Granite Construction 10-K(2025年度)",
+            "label_en": "Granite Construction 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/861459/000086145926000004/gva-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "On August 9, 2024, we acquired Dickerson & Bowen, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LRC",
+      "ticker": "Lehman-Roberts",
+      "name": "リーマン・ロバーツ",
+      "name_en": "Lehman-Roberts",
+      "sub": "舗装・骨材",
+      "sub_en": "Paving & aggregates",
+      "sub_short": "舗装",
+      "sub_short_en": "Paving",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Lehman-RobertsとMemphis Stone & Gravelを買収(2023年11月)",
+          "text_en": "Acquired Lehman-Roberts and Memphis Stone & Gravel (November 2023)",
+          "source": {
+            "label": "Granite Construction 10-K(2025年度)",
+            "label_en": "Granite Construction 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/861459/000086145926000004/gva-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "On November 30, 2023, we acquired Lehman-Roberts Company and Memphis Stone & Gravel Company (collectively, \"LRC/MSG\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "KNF",
+      "ticker": "KNF",
+      "name": "ナイフ・リバー",
+      "name_en": "Knife River",
+      "sub": "骨材・建設資材",
+      "sub_en": "Aggregates & construction materials",
+      "sub_short": "骨材",
+      "sub_short_en": "Gravel",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Knife Riverが10-Kで、骨材の競合の一社として挙げる",
+          "text_en": "Knife River names Granite among aggregates competitors",
+          "source": {
+            "label": "Knife River 10-K(2025年度)",
+            "label_en": "Knife River 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1955520/000195552026000003/knf-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "CRH plc, Eagle Materials, Inc., Granite Construction, Inc., Heidelberg Materials"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SHIM",
+      "ticker": "SHIM",
+      "name": "シミック",
+      "name_en": "Shimmick",
+      "sub": "水インフラ工事",
+      "sub_en": "Water infrastructure construction",
+      "sub_short": "水道工事",
+      "sub_short_en": "Water",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Shimmickが10-Kで、大手の全国的な競合として挙げる",
+          "text_en": "Shimmick names Granite among larger national competitors",
+          "source": {
+            "label": "Shimmick 10-K(2024年度)",
+            "label_en": "Shimmick 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1887944/000095017025042721/shim-20250103.htm",
+            "level": "official",
+            "date": "2025-03-20",
+            "quote": "Flatiron Construction Corp., Fluor Corporation, Granite Construction Incorporated, Kiewit Corporation"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,104 @@
+{
+  "root": {
+    "ticker": "PATK",
+    "name": "パトリック・インダストリーズ",
+    "cik": 76605,
+    "name_en": "Patrick Industries"
+  },
+  "rows": [
+    {
+      "ja": "主要顧客(RVメーカー)",
+      "en": "Major customers (RV makers)"
+    },
+    {
+      "ja": "合併提案",
+      "en": "Proposed merger"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "THO",
+      "ticker": "THO",
+      "name": "ソー・インダストリーズ",
+      "name_en": "THOR Industries",
+      "sub": "RV(キャンピングカー)",
+      "sub_en": "Recreational vehicles",
+      "sub_short": "RV",
+      "sub_short_en": "RVs",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "売上の10%超を占める主要顧客",
+          "text_en": "A major customer above 10% of net sales",
+          "source": {
+            "label": "Patrick Industries 10-K(2025年度)",
+            "label_en": "Patrick Industries 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/76605/000007660526000013/patk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Its revenues from the RV market include sales to two major manufacturers of RVs that each account for over 10% of the Company's net sales, Forest River and Thor."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ForestRiver",
+      "ticker": "Forest River",
+      "name": "フォレスト・リバー",
+      "name_en": "Forest River",
+      "sub": "RV(キャンピングカー)",
+      "sub_en": "Recreational vehicles",
+      "sub_short": "RV",
+      "sub_short_en": "RVs",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "売上の10%超を占める主要顧客",
+          "text_en": "A major customer above 10% of net sales",
+          "source": {
+            "label": "Patrick Industries 10-K(2025年度)",
+            "label_en": "Patrick Industries 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/76605/000007660526000013/patk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Its revenues from the RV market include sales to two major manufacturers of RVs that each account for over 10% of the Company's net sales, Forest River and Thor."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LCII",
+      "ticker": "LCII",
+      "name": "LCIインダストリーズ",
+      "name_en": "LCI Industries",
+      "sub": "RV部品",
+      "sub_en": "RV components",
+      "sub_short": "RV部品",
+      "sub_short_en": "RV parts",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "RV部品大手同士の合併案を発表(2026年6月)",
+          "text_en": "Announced a proposed merger of the two large RV component suppliers (June 2026)",
+          "source": {
+            "label": "THOR Industries 10-K(2026年7月期)",
+            "label_en": "THOR Industries 10-K (FY ended Jul 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/730263/000073026326000027/tho-20260731.htm",
+            "level": "official",
+            "date": "2026-09-22",
+            "quote": "in June 2026 Patrick Industries and LCI Industries, two of the largest component suppliers to the North American RV industry, announced a proposed merger"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

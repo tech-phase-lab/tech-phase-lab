@@ -1,0 +1,216 @@
+{
+  "root": {
+    "ticker": "SFM",
+    "name": "スプラウツ・ファーマーズ・マーケット",
+    "cik": 1575515,
+    "name_en": "Sprouts Farmers Market"
+  },
+  "rows": [
+    {
+      "ja": "仕入先・卸",
+      "en": "Suppliers & distributors",
+      "above": true
+    },
+    {
+      "ja": "店舗の貸主(商業施設)",
+      "en": "Store landlords"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "NGVC",
+    "DIT"
+  ],
+  "companies": [
+    {
+      "id": "KeHE",
+      "ticker": "KeHE",
+      "name": "キーヒー・ディストリビューターズ",
+      "name_en": "KeHE Distributors",
+      "sub": "自然食品の卸",
+      "sub_en": "Natural foods distribution",
+      "sub_short": "食品卸",
+      "sub_short_en": "Foods",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "全店の主要な卸で、契約は2035年7月まで",
+          "text_en": "Primary distributor for all its stores under a contract running to July 2035",
+          "source": {
+            "label": "Sprouts 10-K(2025年度)",
+            "label_en": "Sprouts 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1575515/000157551526000008/sfm-20251228.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Our current primary contractual relationship with KeHE continues through July 31, 2035 and provides that KeHE will be our primary distributor for all of our stores."
+          }
+        }
+      ]
+    },
+    {
+      "id": "UNFI",
+      "ticker": "UNFI",
+      "name": "ユナイテッド・ナチュラル・フーズ",
+      "name_en": "United Natural Foods",
+      "sub": "食品卸",
+      "sub_en": "Food distribution",
+      "sub_short": "食品卸",
+      "sub_short_en": "Food",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "二番手の仕入先(仕入れの約3%)",
+          "text_en": "Secondary supplier, about 3% of purchases",
+          "source": {
+            "label": "Sprouts Farmers Market 10-K(2025年提出)",
+            "label_en": "Sprouts Farmers Market 10-K (filed 2025-02)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1575515/000157551525000011/sfm-20241229.htm",
+            "level": "official",
+            "date": "2025-02-20",
+            "quote": "Another 3% of our total purchases in each of fiscal 2024, 2023 and 2022 were made through our secondary supplier, United Natural Foods, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "VITL",
+      "ticker": "VITL",
+      "name": "バイタル・ファームズ",
+      "name_en": "Vital Farms",
+      "sub": "放牧卵",
+      "sub_en": "Pasture-raised eggs",
+      "sub_short": "放牧卵",
+      "sub_short_en": "Eggs",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "小売の販売先の一社がSprouts",
+          "text_en": "Sprouts is one of its retail partners",
+          "source": {
+            "label": "Vital Farms 10-K(2025年提出)",
+            "label_en": "Vital Farms 10-K (filed 2025-02)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1579733/000095017025028365/vitl-20241229.htm",
+            "level": "official",
+            "date": "2025-02-27",
+            "quote": "including Albertsons, Kroger, Publix, Whole Foods, Sprouts Farmers Market"
+          }
+        }
+      ]
+    },
+    {
+      "id": "OZ",
+      "ticker": "OZ",
+      "name": "ベルポイント・PREP",
+      "name_en": "Belpointe PREP",
+      "sub": "不動産開発",
+      "sub_en": "Real estate development",
+      "sub_short": "不動産",
+      "sub_short_en": "Developer",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2023年5月、Sproutsと店舗の賃貸借契約を締結",
+          "text_en": "Signed a definitive lease agreement with Sprouts in May 2023",
+          "source": {
+            "label": "Belpointe PREP 10-K(2025年提出)",
+            "label_en": "Belpointe PREP 10-K (filed 2025-03)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1807046/000164117225001569/form10-k.htm",
+            "level": "official",
+            "date": "2025-03-31",
+            "quote": "In May 2023, we announced the signing of a definitive lease agreement with Sprouts Farmers Market (\"Sprouts\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "IVT",
+      "ticker": "IVT",
+      "name": "インベントラスト",
+      "name_en": "InvenTrust Properties",
+      "sub": "商業施設REIT",
+      "sub_en": "Shopping center REIT",
+      "sub_short": "REIT",
+      "sub_short_en": "Mall REIT",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年12月、Sproutsが核テナントの商業施設Mesa Shoresを取得",
+          "text_en": "Bought Mesa Shores, a center anchored by Sprouts, in December 2025",
+          "source": {
+            "label": "InvenTrust Properties 8-K添付(2026年2月)",
+            "label_en": "InvenTrust Properties 8-K exhibit (2026-02)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1307748/000130774826000037/q42025supplemental.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "the Company acquired Mesa Shores, a 111,000 square foot neighborhood center anchored by Sprouts Farmers Market and Trader Joe's"
+          }
+        }
+      ]
+    },
+    {
+      "id": "NGVC",
+      "ticker": "NGVC",
+      "name": "ナチュラル・グローサーズ",
+      "name_en": "Natural Grocers",
+      "sub": "自然食品スーパー",
+      "sub_en": "Natural grocery",
+      "sub_short": "自然食品",
+      "sub_short_en": "Grocery",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Natural Grocersが10-Kで、競合の専門食品小売としてSproutsを挙げる",
+          "text_en": "Natural Grocers names Sprouts among specialty food retail competitors",
+          "source": {
+            "label": "Natural Grocers by Vitamin Cottage 10-K(2025年提出)",
+            "label_en": "Natural Grocers by Vitamin Cottage 10-K (filed 2025-12)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1547459/000143774925037556/ngvc20250930_10k.htm",
+            "level": "official",
+            "date": "2025-12-11",
+            "quote": "specialty food retailers such as Sprouts Farmers Market and Trader Joe's"
+          }
+        }
+      ]
+    },
+    {
+      "id": "DIT",
+      "ticker": "DIT",
+      "name": "アムコン・ディストリビューティング",
+      "name_en": "AMCON Distributing",
+      "sub": "卸売・健康食品店",
+      "sub_en": "Wholesale & health food retail",
+      "sub_short": "卸売",
+      "sub_short_en": "Supply",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "AMCONが10-Kで、健康食品小売の競合としてSproutsを挙げる",
+          "text_en": "AMCON names Sprouts among competitors of its health food retail business",
+          "source": {
+            "label": "Amcon Distributing 10-K(2025年提出)",
+            "label_en": "Amcon Distributing 10-K (filed 2025-11)",
+            "url": "https://www.sec.gov/Archives/edgar/data/928465/000110465925108504/dit-20250930x10k.htm",
+            "level": "official",
+            "date": "2025-11-07",
+            "quote": "Our competitors primarily include other specialty food retailers such as Whole Foods, Sprouts Farmers Market, Trader Joe's"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

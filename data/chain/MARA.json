@@ -34,6 +34,8 @@
       "name_en": "Auradine",
       "sub": "マイニング機器",
       "sub_en": "Mining hardware",
+      "sub_short": "採掘機器",
+      "sub_short_en": "Mining",
       "row": 0,
       "relations": [
         {
@@ -58,6 +60,8 @@
       "name_en": "MPLX",
       "sub": "天然ガス・パイプライン",
       "sub_en": "Natural gas pipelines",
+      "sub_short": "天然ガス",
+      "sub_short_en": "Pipeline",
       "row": 0,
       "relations": [
         {
@@ -84,6 +88,8 @@
       "name_en": "Exaion",
       "sub": "AIクラウド(仏)",
       "sub_en": "AI cloud (France)",
+      "sub_short": "AI基盤",
+      "sub_short_en": "AI cloud",
       "row": 1,
       "relations": [
         {
@@ -108,6 +114,8 @@
       "name_en": "Starwood Digital Ventures",
       "sub": "データセンター開発",
       "sub_en": "Data center development",
+      "sub_short": "DC開発",
+      "sub_short_en": "DCs",
       "row": 1,
       "relations": [
         {
@@ -132,6 +140,8 @@
       "name_en": "One Power",
       "sub": "電力・用地",
       "sub_en": "Power & sites",
+      "sub_short": "電力",
+      "sub_short_en": "Power",
       "row": 1,
       "relations": [
         {
@@ -156,6 +166,8 @@
       "name_en": "Hut 8",
       "sub": "マイニング・データセンター",
       "sub_en": "Mining & data centers",
+      "sub_short": "採掘",
+      "sub_short_en": "Mining",
       "row": 1,
       "relations": [
         {
@@ -180,6 +192,8 @@
       "name_en": "CleanSpark",
       "sub": "ビットコイン採掘",
       "sub_en": "Bitcoin mining",
+      "sub_short": "BTC採掘",
+      "sub_short_en": "Bitcoin",
       "row": 2,
       "relations": [
         {
@@ -204,6 +218,8 @@
       "name_en": "IREN",
       "sub": "ビットコイン採掘・AIクラウド",
       "sub_en": "Bitcoin mining & AI cloud",
+      "sub_short": "BTC採掘",
+      "sub_short_en": "Bitcoin",
       "row": 2,
       "relations": [
         {
@@ -228,6 +244,8 @@
       "name_en": "Cipher Mining",
       "sub": "ビットコイン採掘",
       "sub_en": "Bitcoin mining",
+      "sub_short": "BTC採掘",
+      "sub_short_en": "Bitcoin",
       "row": 2,
       "relations": [
         {
@@ -252,6 +270,8 @@
       "name_en": "Bit Digital",
       "sub": "マイニング・AI基盤",
       "sub_en": "Mining & AI infrastructure",
+      "sub_short": "採掘",
+      "sub_short_en": "Mining",
       "row": 2,
       "relations": [
         {
@@ -276,6 +296,8 @@
       "name_en": "HIVE Digital Technologies",
       "sub": "マイニング・AI基盤",
       "sub_en": "Mining & AI infrastructure",
+      "sub_short": "採掘",
+      "sub_short_en": "Mining",
       "row": 2,
       "relations": [
         {
@@ -300,6 +322,8 @@
       "name_en": "Applied Digital",
       "sub": "AIデータセンター",
       "sub_en": "AI data centers",
+      "sub_short": "AI向けDC",
+      "sub_short_en": "AI DCs",
       "row": 2,
       "relations": [
         {

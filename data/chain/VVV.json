@@ -1,0 +1,189 @@
+{
+  "root": {
+    "ticker": "VVV",
+    "name": "バルボリン",
+    "cik": 1674910,
+    "name_en": "Valvoline"
+  },
+  "rows": [
+    {
+      "ja": "旧親会社・事業の売却先・買収",
+      "en": "Former parent, buyer & acquisition",
+      "above": true
+    },
+    {
+      "ja": "取引先",
+      "en": "Business partners"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "CLMT"
+  ],
+  "companies": [
+    {
+      "id": "ASH",
+      "ticker": "ASH",
+      "name": "アッシュランド",
+      "name_en": "Ashland",
+      "sub": "特殊化学品",
+      "sub_en": "Specialty chemicals",
+      "sub_short": "化学品",
+      "sub_short_en": "Chem",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "旧親会社。2016年に分離契約を結んでValvolineを分離",
+          "text_en": "Former parent; separated Valvoline under a 2016 separation agreement",
+          "source": {
+            "label": "Ashland 10-K(2024年提出)",
+            "label_en": "Ashland 10-K (filed 2024-11)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1674862/000095017024128009/ash-20240930.htm",
+            "level": "official",
+            "date": "2024-11-18",
+            "quote": "Separation Agreement dated as of September 22, 2016, between and among Ashland Global Holdings Inc. and Valvoline Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Aramco",
+      "ticker": "Aramco",
+      "name": "サウジアラムコ",
+      "name_en": "Saudi Aramco",
+      "sub": "石油(サウジアラビア)",
+      "sub_en": "Oil (Saudi Arabia)",
+      "sub_short": "石油",
+      "sub_short_en": "Oil",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2023年3月、潤滑油の製品事業(Global Products)をAramcoに売却し、供給契約を結ぶ",
+          "text_en": "Bought Valvoline's Global Products lubricants business in March 2023, with a supply agreement",
+          "source": {
+            "label": "Valvoline 10-K(2026年度)",
+            "label_en": "Valvoline 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1674910/000167491026000083/vvv-20260930.htm",
+            "level": "official",
+            "date": "2026-11-19",
+            "quote": "On March 1, 2023, Valvoline completed the sale of its former Global Products reportable segment (\"Global Products\") , now doing business as Valvoline Global Operations (\"VGO\") to Aramco Overseas Company B.V."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Breeze",
+      "ticker": "Breeze Autocare",
+      "name": "ブリーズ・オートケア",
+      "name_en": "Breeze Autocare",
+      "sub": "オイル交換チェーン",
+      "sub_en": "Quick-lube chain",
+      "sub_short": "整備",
+      "sub_short_en": "Car care",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年12月に約6.37億ドルで全持分を取得",
+          "text_en": "Acquired all equity interests in December 2025 for about $637 million",
+          "source": {
+            "label": "Valvoline 10-K(2026年度)",
+            "label_en": "Valvoline 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1674910/000167491026000083/vvv-20260930.htm",
+            "level": "official",
+            "date": "2026-11-19",
+            "quote": "On December 1, 2025, the Company acquired 100 % of the equity interests in Breeze Autocare (\"Breeze\") for total cash consideration of $ 637.4 million ."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DV",
+      "ticker": "DV",
+      "name": "ダブルベリファイ",
+      "name_en": "DoubleVerify",
+      "sub": "デジタル広告の検証",
+      "sub_en": "Ad verification",
+      "sub_short": "広告検証",
+      "sub_short_en": "Ad audit",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年第1四半期の新規大口顧客の一社がValvoline",
+          "text_en": "Valvoline was one of its new enterprise customer wins in Q1 2025",
+          "source": {
+            "label": "DoubleVerify 8-K添付(2025年5月)",
+            "label_en": "DoubleVerify 8-K exhibit (2025-05)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1819928/000155837025006971/dv-20250508xex99d1.htm",
+            "level": "official",
+            "date": "2025-05-08",
+            "quote": "New enterprise customer wins: Natura/Avon , Valvoline , INEOS Grenadier"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CMFT",
+      "ticker": "CIM Real Estate Finance Trust",
+      "name": "CIMリアルエステート・ファイナンス",
+      "name_en": "CIM Real Estate Finance Trust",
+      "sub": "不動産投資",
+      "sub_en": "Real estate investment",
+      "sub_short": "不動産",
+      "sub_short_en": "Property",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "テナントの一社がValvoline Oil Change",
+          "text_en": "Valvoline Oil Change is one of its tenants",
+          "source": {
+            "label": "Cim Real Estate Finance Trust 10-K(2026年提出)",
+            "label_en": "Cim Real Estate Finance Trust 10-K (filed 2026-03)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1498547/000149854726000013/cmft-20251231.htm",
+            "level": "official",
+            "date": "2026-03-30",
+            "quote": "Valvoline Oil Change 1 162 3,060 18.89 3 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CLMT",
+      "ticker": "CLMT",
+      "name": "キャリュメット",
+      "name_en": "Calumet",
+      "sub": "特殊石油製品",
+      "sub_en": "Specialty petroleum products",
+      "sub_short": "石油製品",
+      "sub_short_en": "Oil",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Calumetが10-Kで、潤滑油製品の主な競合としてValvolineを挙げる",
+          "text_en": "Calumet names Valvoline among primary competitors in packaged and synthetic products",
+          "source": {
+            "label": "Calumet 10-K(2025年提出)",
+            "label_en": "Calumet 10-K (filed 2025-03)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2013745/000155837025001961/clmt-20241231x10k.htm",
+            "level": "official",
+            "date": "2025-03-03",
+            "quote": "Our primary competitors in retail and commercial packaged and synthetic specialty products include Exxon Mobil Corporation (Mobil 1), Valvoline, Inc."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -19,6 +19,8 @@
       "name": "サークル・インターネット・ファイナンシャル",
       "sub": "ステーブルコイン",
       "sub_en": "Stablecoin issuer",
+      "sub_short": "暗号資産",
+      "sub_short_en": "Crypto",
       "row": 0,
       "relations": [
         {
@@ -56,6 +58,8 @@
       "name": "グーグル",
       "sub": "アプリ配信",
       "sub_en": "App distribution",
+      "sub_short": "アプリ",
+      "sub_short_en": "Apps",
       "row": 0,
       "relations": [
         {
@@ -80,6 +84,8 @@
       "name": "アップル",
       "sub": "アプリ配信",
       "sub_en": "App distribution",
+      "sub_short": "アプリ",
+      "sub_short_en": "Apps",
       "row": 0,
       "relations": [
         {
@@ -104,6 +110,8 @@
       "name": "ライオット・プラットフォームズ",
       "sub": "ビットコイン採掘",
       "sub_en": "Bitcoin mining",
+      "sub_short": "BTC採掘",
+      "sub_short_en": "Bitcoin",
       "row": 0,
       "relations": [
         {
@@ -128,6 +136,8 @@
       "name": "クリーンスパーク",
       "sub": "ビットコイン採掘",
       "sub_en": "Bitcoin mining",
+      "sub_short": "BTC採掘",
+      "sub_short_en": "Bitcoin",
       "row": 0,
       "relations": [
         {

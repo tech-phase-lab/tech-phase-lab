@@ -29,6 +29,8 @@
       "name_en": "Doosan Enerbility",
       "sub": "重電・原子炉機器",
       "sub_en": "Heavy equipment",
+      "sub_short": "重電",
+      "sub_short_en": "Machines",
       "row": 0,
       "relations": [
         {
@@ -53,6 +55,8 @@
       "name_en": "IHI",
       "sub": "重工業",
       "sub_en": "Heavy industry",
+      "sub_short": "重工業",
+      "sub_short_en": "Industry",
       "row": 0,
       "relations": [
         {
@@ -77,6 +81,8 @@
       "name_en": "Curtiss-Wright",
       "sub": "機器・計装",
       "sub_en": "Equipment & instruments",
+      "sub_short": "計装",
+      "sub_short_en": "Gear",
       "row": 0,
       "relations": [
         {
@@ -101,6 +107,8 @@
       "name_en": "Honeywell",
       "sub": "制御システム",
       "sub_en": "Control systems",
+      "sub_short": "制御",
+      "sub_short_en": "Controls",
       "row": 0,
       "relations": [
         {
@@ -125,6 +133,8 @@
       "name_en": "Mirion Technologies",
       "sub": "放射線計測",
       "sub_en": "Radiation measurement",
+      "sub_short": "放射線",
+      "sub_short_en": "Radiation",
       "row": 0,
       "relations": [
         {
@@ -143,12 +153,14 @@
       ]
     },
     {
-      "id": "SNN",
+      "id": "Nuclearelectrica",
       "ticker": "SNN",
       "name": "ニュークリアエレクトリカ",
       "name_en": "Nuclearelectrica",
       "sub": "電力(ルーマニア)",
       "sub_en": "Power (Romania)",
+      "sub_short": "電力",
+      "sub_short_en": "Power",
       "row": 1,
       "relations": [
         {
@@ -175,6 +187,8 @@
       "name_en": "Fluor",
       "sub": "エンジニアリング・建設",
       "sub_en": "Engineering & construction",
+      "sub_short": "設計",
+      "sub_short_en": "Design",
       "row": 2,
       "relations": [
         {
@@ -212,6 +226,8 @@
       "name_en": "JGC Holdings",
       "sub": "プラント建設",
       "sub_en": "Plant engineering",
+      "sub_short": "建設",
+      "sub_short_en": "Plants",
       "row": 2,
       "relations": [
         {
@@ -236,6 +252,8 @@
       "name_en": "Samsung C&T",
       "sub": "建設・商社",
       "sub_en": "Construction & trading",
+      "sub_short": "建設",
+      "sub_short_en": "Building",
       "row": 2,
       "relations": [
         {
@@ -260,6 +278,8 @@
       "name_en": "Precision Custom Components",
       "sub": "原子炉部品",
       "sub_en": "Reactor components",
+      "sub_short": "原子炉",
+      "sub_short_en": "Nuclear",
       "row": 0,
       "relations": [
         {
@@ -284,6 +304,8 @@
       "name_en": "Sarens Nuclear & Industrial Services",
       "sub": "重量物据付",
       "sub_en": "Heavy lifting & installation",
+      "sub_short": "重量物",
+      "sub_short_en": "Lifting",
       "row": 0,
       "relations": [
         {
@@ -308,6 +330,8 @@
       "name_en": "Paragon Energy Solutions",
       "sub": "安全保護系",
       "sub_en": "Protection systems",
+      "sub_short": "安全装置",
+      "sub_short_en": "Safety",
       "row": 0,
       "relations": [
         {
@@ -332,6 +356,8 @@
       "name_en": "Sensia",
       "sub": "計測・制御",
       "sub_en": "Measurement & control",
+      "sub_short": "計測",
+      "sub_short_en": "Metrology",
       "row": 0,
       "relations": [
         {
@@ -356,6 +382,8 @@
       "name_en": "ATS Corporation",
       "sub": "自動化設備",
       "sub_en": "Automation systems",
+      "sub_short": "自動化",
+      "sub_short_en": "Robotics",
       "row": 0,
       "relations": [
         {
@@ -380,6 +408,8 @@
       "name_en": "Trillium Flow Technologies",
       "sub": "バルブ・ポンプ",
       "sub_en": "Valves & pumps",
+      "sub_short": "バルブ",
+      "sub_short_en": "Valves",
       "row": 0,
       "relations": [
         {
@@ -404,6 +434,8 @@
       "name_en": "Conval",
       "sub": "バルブ",
       "sub_en": "Valves",
+      "sub_short": "バルブ",
+      "sub_short_en": "Valves",
       "row": 0,
       "relations": [
         {
@@ -428,6 +460,8 @@
       "name_en": "PaR Systems",
       "sub": "クレーン",
       "sub_en": "Cranes",
+      "sub_short": "クレーン",
+      "sub_short_en": "Cranes",
       "row": 0,
       "relations": [
         {
@@ -452,6 +486,8 @@
       "name_en": "ENTRA1 Energy",
       "sub": "原子力発電の事業開発",
       "sub_en": "Nuclear project development",
+      "sub_short": "原子力",
+      "sub_short_en": "Nuclear",
       "row": 1,
       "relations": [
         {
@@ -491,6 +527,8 @@
       "name_en": "Sargent & Lundy",
       "sub": "エンジニアリング",
       "sub_en": "Engineering",
+      "sub_short": "技術",
+      "sub_short_en": "Design",
       "row": 2,
       "relations": [
         {
@@ -515,6 +553,8 @@
       "name_en": "GS Energy",
       "sub": "エネルギー(韓国)",
       "sub_en": "Energy (Korea)",
+      "sub_short": "エネ",
+      "sub_short_en": "Energy",
       "row": 2,
       "relations": [
         {

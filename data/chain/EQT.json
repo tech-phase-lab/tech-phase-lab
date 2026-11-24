@@ -24,6 +24,8 @@
       "name": "ネクステラ・エナジー",
       "sub": "電力・ガス",
       "sub_en": "Utility & energy",
+      "sub_short": "電力",
+      "sub_short_en": "Utility",
       "row": 0,
       "relations": [
         {
@@ -48,6 +50,8 @@
       "name": "コンソリデーテッド・エジソン",
       "sub": "ガスパイプライン",
       "sub_en": "Gas pipeline",
+      "sub_short": "ガス管",
+      "sub_short_en": "Pipeline",
       "row": 0,
       "relations": [
         {
@@ -72,6 +76,8 @@
       "name": "アルタガス",
       "sub": "ガス・エネルギー",
       "sub_en": "Gas & energy",
+      "sub_short": "ガス",
+      "sub_short_en": "Gas",
       "row": 0,
       "relations": [
         {
@@ -96,6 +102,8 @@
       "name": "RGCリソーシズ",
       "sub": "ガス事業",
       "sub_en": "Gas utility",
+      "sub_short": "ガス事業",
+      "sub_short_en": "Gas",
       "row": 0,
       "relations": [
         {
@@ -120,6 +128,8 @@
       "name": "ウィリアムズ・カンパニーズ",
       "sub": "ミッドストリーム",
       "sub_en": "Midstream",
+      "sub_short": "中流",
+      "sub_short_en": "Pipeline",
       "row": 0,
       "relations": [
         {
@@ -144,6 +154,8 @@
       "name": "スマート・サンド",
       "sub": "フラック砂",
       "sub_en": "Frac sand",
+      "sub_short": "採掘砂",
+      "sub_short_en": "Frac sand",
       "row": 1,
       "relations": [
         {

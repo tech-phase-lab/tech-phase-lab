@@ -35,6 +35,8 @@
       "name": "アマゾン",
       "sub": "クラウド",
       "sub_en": "Cloud",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 0,
       "relations": [
         {
@@ -72,6 +74,8 @@
       "name": "マイクロソフト",
       "sub": "ソフト・クラウド",
       "sub_en": "Software & cloud",
+      "sub_short": "ソフト",
+      "sub_short_en": "Software",
       "row": 0,
       "relations": [
         {
@@ -96,6 +100,8 @@
       "name": "グーグル",
       "sub": "検索・クラウド",
       "sub_en": "Search & cloud",
+      "sub_short": "検索",
+      "sub_short_en": "Search",
       "row": 0,
       "relations": [
         {
@@ -120,6 +126,8 @@
       "name": "エヌビディア",
       "sub": "AI半導体",
       "sub_en": "AI chips",
+      "sub_short": "AI半導体",
+      "sub_short_en": "AI chips",
       "row": 0,
       "relations": [
         {
@@ -157,6 +165,8 @@
       "name": "シスコシステムズ",
       "sub": "ネットワーク",
       "sub_en": "Networking",
+      "sub_short": "通信網",
+      "sub_short_en": "Network",
       "row": 0,
       "relations": [
         {
@@ -193,6 +203,8 @@
       "name": "キャップジェミニ",
       "sub": "ITサービス",
       "sub_en": "IT services",
+      "sub_short": "IT",
+      "sub_short_en": "IT",
       "row": 0,
       "relations": [
         {
@@ -217,6 +229,8 @@
       "name": "富士通",
       "sub": "ITサービス・サーバー",
       "sub_en": "IT services & servers",
+      "sub_short": "IT",
+      "sub_short_en": "IT",
       "row": 0,
       "relations": [
         {
@@ -241,6 +255,8 @@
       "name": "ニュータニックス",
       "sub": "ハイブリッドクラウド",
       "sub_en": "Hybrid cloud",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 0,
       "relations": [
         {
@@ -267,6 +283,8 @@
       "name": "センチネルワン",
       "sub": "サイバーセキュリティ",
       "sub_en": "Cybersecurity",
+      "sub_short": "サイバー",
+      "sub_short_en": "Security",
       "row": 0,
       "relations": [
         {
@@ -291,6 +309,8 @@
       "name": "レノボ・グループ",
       "sub": "PC・サーバー",
       "sub_en": "PCs & servers",
+      "sub_short": "PC",
+      "sub_short_en": "PCs",
       "row": 1,
       "relations": [
         {
@@ -315,6 +335,8 @@
       "name": "JPモルガン・チェース",
       "sub": "銀行",
       "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
       "row": 2,
       "relations": [
         {
@@ -341,6 +363,8 @@
       "name": "ヒューレット・パッカード・エンタープライズ",
       "sub": "IT基盤",
       "sub_en": "IT infrastructure",
+      "sub_short": "IT基盤",
+      "sub_short_en": "IT infra",
       "row": 3,
       "relations": [
         {
@@ -378,6 +402,8 @@
       "name": "IBM",
       "sub": "ITサービス・ハード",
       "sub_en": "IT services & hardware",
+      "sub_short": "IT",
+      "sub_short_en": "IT",
       "row": 3,
       "relations": [
         {
@@ -402,6 +428,8 @@
       "name": "テラデータ",
       "sub": "データ分析",
       "sub_en": "Data analytics",
+      "sub_short": "分析",
+      "sub_short_en": "Analytics",
       "row": 0,
       "relations": [
         {

@@ -32,6 +32,8 @@
       "name": "TSMC",
       "sub": "受託製造",
       "sub_en": "Foundry",
+      "sub_short": "受託製造",
+      "sub_short_en": "Foundry",
       "row": 1,
       "relations": [
         {
@@ -57,6 +59,8 @@
       "name": "Applied Materials",
       "sub": "製造装置",
       "sub_en": "Equipment",
+      "sub_short": "製造装置",
+      "sub_short_en": "Gear",
       "row": 2,
       "relations": [
         {
@@ -80,6 +84,8 @@
       "name": "ASML",
       "sub": "露光装置",
       "sub_en": "Lithography",
+      "sub_short": "露光装置",
+      "sub_short_en": "Litho",
       "row": 2,
       "relations": [
         {
@@ -118,6 +124,8 @@
       "name": "レーザーテック",
       "sub": "検査装置",
       "sub_en": "Inspection tools",
+      "sub_short": "検査装置",
+      "sub_short_en": "Testing",
       "row": 2,
       "relations": [
         {
@@ -142,6 +150,8 @@
       "name": "Onto Innovation",
       "sub": "検査・計測装置",
       "sub_en": "Inspection & metrology",
+      "sub_short": "検査",
+      "sub_short_en": "Testing",
       "row": 2,
       "relations": [
         {
@@ -178,6 +188,8 @@
       "name": "Nova",
       "sub": "計測装置",
       "sub_en": "Metrology",
+      "sub_short": "計測装置",
+      "sub_short_en": "Metrology",
       "row": 2,
       "relations": [
         {
@@ -201,6 +213,8 @@
       "name": "Cohu",
       "sub": "テスト・検査",
       "sub_en": "Test & inspection",
+      "sub_short": "検査",
+      "sub_short_en": "Testing",
       "row": 2,
       "relations": [
         {
@@ -224,6 +238,8 @@
       "name": "PDF Solutions",
       "sub": "歩留まり管理",
       "sub_en": "Yield management",
+      "sub_short": "品質管理",
+      "sub_short_en": "Yield",
       "row": 2,
       "relations": [
         {
@@ -248,6 +264,8 @@
       "name_en": "Hitachi (Hitachi High-Tech)",
       "sub": "検査・計測装置",
       "sub_en": "Inspection & metrology",
+      "sub_short": "検査",
+      "sub_short_en": "Testing",
       "row": 2,
       "relations": [
         {

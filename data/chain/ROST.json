@@ -32,6 +32,8 @@
       "name_en": "Lifetime Brands",
       "sub": "キッチン用品",
       "sub_en": "Kitchenware",
+      "sub_short": "台所用品",
+      "sub_short_en": "Kitchen",
       "row": 0,
       "relations": [
         {
@@ -56,6 +58,8 @@
       "name_en": "Kimco Realty",
       "sub": "商業施設REIT",
       "sub_en": "Shopping center REIT",
+      "sub_short": "REIT",
+      "sub_short_en": "Mall REIT",
       "row": 1,
       "relations": [
         {
@@ -80,6 +84,8 @@
       "name_en": "Brixmor Property",
       "sub": "商業施設REIT",
       "sub_en": "Shopping center REIT",
+      "sub_short": "REIT",
+      "sub_short_en": "Mall REIT",
       "row": 1,
       "relations": [
         {
@@ -104,6 +110,8 @@
       "name_en": "Kohl's",
       "sub": "百貨店",
       "sub_en": "Department stores",
+      "sub_short": "百貨店",
+      "sub_short_en": "Stores",
       "row": 2,
       "relations": [
         {
@@ -128,6 +136,8 @@
       "name_en": "Citi Trends",
       "sub": "衣料のディスカウント小売",
       "sub_en": "Value apparel retail",
+      "sub_short": "格安衣料",
+      "sub_short_en": "Apparel",
       "row": 2,
       "relations": [
         {

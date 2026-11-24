@@ -36,6 +36,8 @@
       "name": "Amazon",
       "sub": "クラウド(AWS)",
       "sub_en": "Cloud (AWS)",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 1,
       "relations": [
         {
@@ -61,6 +63,8 @@
       "name": "Microsoft",
       "sub": "クラウド",
       "sub_en": "Cloud",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 1,
       "relations": [
         {
@@ -84,6 +88,8 @@
       "name": "Oracle",
       "sub": "クラウド",
       "sub_en": "Cloud",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 1,
       "relations": [
         {
@@ -109,6 +115,8 @@
       "name": "Coherent",
       "sub": "光通信部品",
       "sub_en": "Optical components",
+      "sub_short": "光部品",
+      "sub_short_en": "Optics",
       "row": 2,
       "relations": [
         {
@@ -132,6 +140,8 @@
       "name": "Lumentum",
       "sub": "光通信部品",
       "sub_en": "Optical components",
+      "sub_short": "光部品",
+      "sub_short_en": "Optics",
       "row": 2,
       "relations": [
         {
@@ -155,6 +165,8 @@
       "name": "Intel",
       "sub": "半導体",
       "sub_en": "Chips",
+      "sub_short": "半導体",
+      "sub_short_en": "Chips",
       "row": 2,
       "relations": [
         {
@@ -178,6 +190,8 @@
       "name": "Eoptolink(旭創)",
       "sub": "光トランシーバー",
       "sub_en": "Optical transceivers",
+      "sub_short": "光部品",
+      "sub_short_en": "Optics",
       "row": 2,
       "relations": [
         {
@@ -202,6 +216,8 @@
       "name": "Zhongji InnoLight(中際旭創)",
       "sub": "光トランシーバー",
       "sub_en": "Optical transceivers",
+      "sub_short": "光部品",
+      "sub_short_en": "Optics",
       "row": 2,
       "relations": [
         {
@@ -226,6 +242,8 @@
       "name": "Foxconn Interconnect Technology",
       "sub": "接続部品",
       "sub_en": "Interconnects",
+      "sub_short": "接続部品",
+      "sub_short_en": "Links",
       "row": 2,
       "relations": [
         {
@@ -249,6 +267,8 @@
       "name": "Sumitomo Electric(住友電工)",
       "sub": "電線・光部品",
       "sub_en": "Wires & optical parts",
+      "sub_short": "電線",
+      "sub_short_en": "Wires",
       "row": 2,
       "relations": [
         {
@@ -273,6 +293,8 @@
       "name": "BOK Financial",
       "sub": "銀行",
       "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
       "row": 3,
       "relations": [
         {
@@ -298,6 +320,8 @@
       "name": "上海浦東発展銀行",
       "sub": "銀行",
       "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
       "row": 3,
       "relations": [
         {
@@ -322,6 +346,8 @@
       "name": "中国建設銀行",
       "sub": "銀行",
       "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
       "row": 3,
       "relations": [
         {

@@ -1,0 +1,189 @@
+{
+  "root": {
+    "ticker": "ROAD",
+    "name": "コンストラクション・パートナーズ",
+    "cik": 1718227,
+    "name_en": "Construction Partners"
+  },
+  "rows": [
+    {
+      "ja": "買収・事業の取得",
+      "en": "Acquisitions",
+      "above": true
+    },
+    {
+      "ja": "大株主",
+      "en": "Major shareholder"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "KNF"
+  ],
+  "companies": [
+    {
+      "id": "VMC",
+      "ticker": "VMC",
+      "name": "バルカン・マテリアルズ",
+      "name_en": "Vulcan Materials",
+      "sub": "骨材・建設資材",
+      "sub_en": "Aggregates",
+      "sub_short": "骨材",
+      "sub_short_en": "Gravel",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年10月、ヒューストン地域のアスファルト工場8か所などをVulcanの関連会社から取得",
+          "text_en": "Bought eight asphalt plants and crews in Houston from Vulcan affiliates in October 2025",
+          "source": {
+            "label": "Construction Partners 10-K(2025年度)",
+            "label_en": "Construction Partners 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1718227/000162828025053871/road-20250930.htm",
+            "level": "official",
+            "date": "2025-11-25",
+            "quote": "In October 2025, we acquired eight HMA plants and related crews and equipment in the Houston, Texas metro area from affiliates of Vulcan Materials Company, and acquired all of the outstanding equity interests of P&S Paving, LLC"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PSPaving",
+      "ticker": "P&S Paving",
+      "name": "P&Sペービング",
+      "name_en": "P&S Paving",
+      "sub": "アスファルト舗装",
+      "sub_en": "Asphalt paving",
+      "sub_short": "舗装",
+      "sub_short_en": "Paving",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年10月に全持分を取得(フロリダ州)",
+          "text_en": "Acquired all equity interests in October 2025 (Florida)",
+          "source": {
+            "label": "Construction Partners 10-K(2025年度)",
+            "label_en": "Construction Partners 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1718227/000162828025053871/road-20250930.htm",
+            "level": "official",
+            "date": "2025-11-25",
+            "quote": "In October 2025, we acquired eight HMA plants and related crews and equipment in the Houston, Texas metro area from affiliates of Vulcan Materials Company, and acquired all of the outstanding equity interests of P&S Paving, LLC"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Durwood",
+      "ticker": "Durwood Greene",
+      "name": "ダーウッド・グリーン・コンストラクション",
+      "name_en": "Durwood Greene Construction",
+      "sub": "道路舗装(テキサス)",
+      "sub_en": "Road paving (Texas)",
+      "sub_short": "道路舗装",
+      "sub_short_en": "Paving",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年8月に全株を取得",
+          "text_en": "Acquired all outstanding stock in August 2025",
+          "source": {
+            "label": "Construction Partners 10-K(2025年度)",
+            "label_en": "Construction Partners 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1718227/000162828025053871/road-20250930.htm",
+            "level": "official",
+            "date": "2025-11-25",
+            "quote": "On August 1, 2025, the Company acquired all the outstanding capital stock of Durwood Greene Construction Co. and G&S Asphalt, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GSAsphalt",
+      "ticker": "G&S Asphalt",
+      "name": "G&Sアスファルト",
+      "name_en": "G&S Asphalt (American Materials)",
+      "sub": "アスファルト",
+      "sub_en": "Asphalt",
+      "sub_short": "舗装材",
+      "sub_short_en": "Asphalt",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年8月にDurwood Greeneと合わせて全株を取得",
+          "text_en": "Acquired with Durwood Greene in August 2025",
+          "source": {
+            "label": "Construction Partners 10-K(2025年度)",
+            "label_en": "Construction Partners 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1718227/000162828025053871/road-20250930.htm",
+            "level": "official",
+            "date": "2025-11-25",
+            "quote": "On August 1, 2025, the Company acquired all the outstanding capital stock of Durwood Greene Construction Co. and G&S Asphalt, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SunTx",
+      "ticker": "SunTx",
+      "name": "サンTx",
+      "name_en": "SunTx Capital",
+      "sub": "投資会社",
+      "sub_en": "Private equity",
+      "sub_short": "投資会社",
+      "sub_short_en": "PE",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "SunTxグループが議決権の過半を持つ",
+          "text_en": "The SunTx Group controls a majority of its voting power",
+          "source": {
+            "label": "Construction Partners 10-K(2025年度)",
+            "label_en": "Construction Partners 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1718227/000162828025053871/road-20250930.htm",
+            "level": "official",
+            "date": "2025-11-25",
+            "quote": "The SunTx Group controls a majority of the voting power of our outstanding common stock."
+          }
+        }
+      ]
+    },
+    {
+      "id": "KNF",
+      "ticker": "KNF",
+      "name": "ナイフ・リバー",
+      "name_en": "Knife River",
+      "sub": "骨材・建設資材",
+      "sub_en": "Aggregates & construction materials",
+      "sub_short": "骨材",
+      "sub_short_en": "Gravel",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Knife Riverが10-Kで、競合の上場企業としてConstruction Partnersを挙げる",
+          "text_en": "Knife River names Construction Partners among publicly traded competitors",
+          "source": {
+            "label": "Knife River 10-K(2025年提出)",
+            "label_en": "Knife River 10-K (filed 2025-02)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1955520/000195552025000010/knf-20241231.htm",
+            "level": "official",
+            "date": "2025-02-21",
+            "quote": "Martin Marietta Materials, Inc., Construction Partners, Inc., and Vulcan Materials Company."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

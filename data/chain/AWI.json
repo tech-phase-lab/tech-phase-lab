@@ -1,0 +1,186 @@
+{
+  "root": {
+    "ticker": "AWI",
+    "name": "アームストロング・ワールド・インダストリーズ",
+    "cik": 7431,
+    "name_en": "Armstrong World Industries"
+  },
+  "rows": [
+    {
+      "ja": "合弁・ソフト提供元",
+      "en": "Joint venture & software licensor"
+    },
+    {
+      "ja": "主要顧客(流通)",
+      "en": "Major customers (distribution)"
+    },
+    {
+      "ja": "買収",
+      "en": "Acquisitions"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "WOR",
+      "ticker": "WOR",
+      "name": "ワージントン・エンタープライゼズ",
+      "name_en": "Worthington Enterprises",
+      "sub": "金属加工",
+      "sub_en": "Metal products",
+      "sub_short": "金属加工",
+      "sub_short_en": "Metal",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "天井の吊り金具を作る合弁WAVEの相手",
+          "text_en": "Partner in WAVE, the ceiling grid joint venture",
+          "source": {
+            "label": "Armstrong World Industries 10-K(2025年度)",
+            "label_en": "Armstrong World Industries 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/7431/000119312526065183/awi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "We also manufacture ceiling suspension system (grid) products through a joint venture with Worthington Enterprises, Inc. called Worthington Armstrong Venture (\"WAVE\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DRTT",
+      "ticker": "DIRTT",
+      "name": "ダート・エンバイロメンタル",
+      "name_en": "DIRTT Environmental Solutions",
+      "sub": "内装システム",
+      "sub_en": "Interior construction systems",
+      "sub_short": "内装",
+      "sub_short_en": "Interiors",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "DIRTTから設計ソフトICEのライセンスを受ける",
+          "text_en": "Licenses DIRTT's ICE design software",
+          "source": {
+            "label": "DIRTT Environmental Solutions 10-K(2024年度)",
+            "label_en": "DIRTT Environmental Solutions 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1340476/000095017025027896/drttf-20241231.htm",
+            "level": "official",
+            "date": "2025-02-26",
+            "quote": "Our ICE Software is licensed to our Construction Partners (as defined herein), as well as other third-parties, including Armstrong World Industries, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LOW",
+      "ticker": "LOW",
+      "name": "ロウズ",
+      "name_en": "Lowe's",
+      "sub": "ホームセンター・建材流通",
+      "sub_en": "Home improvement & building materials",
+      "sub_short": "住宅用品",
+      "sub_short_en": "Home",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "傘下のFoundation Building Materialsを含め、売上の10%超",
+          "text_en": "Over 10% of gross sales, including its Foundation Building Materials unit",
+          "source": {
+            "label": "Armstrong World Industries 10-K(2025年度)",
+            "label_en": "Armstrong World Industries 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/7431/000119312526065183/awi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Gross sales to Lowe's Companies, Inc. (including sales to Foundation Building Materials, Inc.) and The Home Depot, Inc. (including sales to GMS, Inc.) totaled $937.8 million and each individually exceeded 10% of our consolidated gross sales in 2025."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HD",
+      "ticker": "HD",
+      "name": "ホーム・デポ",
+      "name_en": "The Home Depot",
+      "sub": "ホームセンター・建材流通",
+      "sub_en": "Home improvement & building materials",
+      "sub_short": "住宅用品",
+      "sub_short_en": "Home",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "傘下のGMSを含め、売上の10%超",
+          "text_en": "Over 10% of gross sales, including its GMS unit",
+          "source": {
+            "label": "Armstrong World Industries 10-K(2025年度)",
+            "label_en": "Armstrong World Industries 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/7431/000119312526065183/awi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Gross sales to Lowe's Companies, Inc. (including sales to Foundation Building Materials, Inc.) and The Home Depot, Inc. (including sales to GMS, Inc.) totaled $937.8 million and each individually exceeded 10% of our consolidated gross sales in 2025."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Geometrik",
+      "ticker": "Geometrik",
+      "name": "ジオメトリック",
+      "name_en": "Geometrik Manufacturing",
+      "sub": "木製天井材(カナダ)",
+      "sub_en": "Wood ceilings (Canada)",
+      "sub_short": "建材",
+      "sub_short_en": "Ceilings",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "カナダのGeometrikを買収(2025年9月)",
+          "text_en": "Acquired Canada's Geometrik (September 2025)",
+          "source": {
+            "label": "Armstrong World Industries 10-K(2025年度)",
+            "label_en": "Armstrong World Industries 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/7431/000119312526065183/awi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "In September 2025, we acquired all of the issued and outstanding stock of Geometrik Manufacturing, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Zahner",
+      "ticker": "Zahner",
+      "name": "ザーナー",
+      "name_en": "A. Zahner Company",
+      "sub": "金属外装",
+      "sub_en": "Architectural metal",
+      "sub_short": "金属外装",
+      "sub_short_en": "Metal",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "金属外装のZahnerを買収(2024年12月)",
+          "text_en": "Acquired metal facade maker Zahner (December 2024)",
+          "source": {
+            "label": "Armstrong World Industries 10-K(2025年度)",
+            "label_en": "Armstrong World Industries 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/7431/000119312526065183/awi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "In December 2024, we acquired all of the issued and outstanding stock of A."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

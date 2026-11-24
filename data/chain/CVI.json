@@ -1,0 +1,216 @@
+{
+  "root": {
+    "ticker": "CVI",
+    "name": "CVRエナジー",
+    "cik": 1376139,
+    "name_en": "CVR Energy"
+  },
+  "rows": [
+    {
+      "ja": "親会社・子会社",
+      "en": "Parent & subsidiary"
+    },
+    {
+      "ja": "事業売却",
+      "en": "Divestiture"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in its 10-K)"
+    }
+  ],
+  "rivals": [
+    "DINO",
+    "PSX",
+    "VLO"
+  ],
+  "companies": [
+    {
+      "id": "IEP",
+      "ticker": "IEP",
+      "name": "アイカーン・エンタープライゼズ",
+      "name_en": "Icahn Enterprises",
+      "sub": "投資持株会社",
+      "sub_en": "Holding company",
+      "sub_short": "持株会社",
+      "sub_short_en": "Holding",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "発行済み株式の約70%を保有する親会社",
+          "text_en": "Owns about 70% of its common stock",
+          "source": {
+            "label": "CVR Energy 10-K(2025年度)",
+            "label_en": "CVR Energy 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1376139/000137613926000014/cvi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "owned approximately 70% of our outstanding common stock."
+          }
+        }
+      ]
+    },
+    {
+      "id": "UAN",
+      "ticker": "UAN",
+      "name": "CVRパートナーズ",
+      "name_en": "CVR Partners",
+      "sub": "窒素肥料",
+      "sub_en": "Nitrogen fertilizer",
+      "sub_short": "窒素肥料",
+      "sub_short_en": "Fertilizer",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "窒素肥料事業の子会社。CVR Energyの経営陣が運営",
+          "text_en": "Nitrogen fertilizer subsidiary run by CVR Energy's management",
+          "source": {
+            "label": "CVR Energy 10-K(2025年度)",
+            "label_en": "CVR Energy 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1376139/000137613926000014/cvi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "CVR Partners is managed by the executive officers of its general partner, who are employed by and also serve as part of the senior management team of the Company."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PAA",
+      "ticker": "PAA",
+      "name": "プレインズ・オール・アメリカン",
+      "name_en": "Plains All American",
+      "sub": "パイプライン",
+      "sub_en": "Pipelines",
+      "sub_short": "配管網",
+      "sub_short_en": "Pipelines",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Midwayパイプライン合弁の持分を約9,000万ドルで売却(2024年12月)",
+          "text_en": "Sold its Midway pipeline JV interest for about $90 million (December 2024)",
+          "source": {
+            "label": "CVR Energy 10-K(2025年度)",
+            "label_en": "CVR Energy 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1376139/000137613926000014/cvi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "On December 23, 2024, the Company sold its interest in Midway JV to Plains Pipeline, L.P."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CHS",
+      "ticker": "CHS",
+      "name": "CHS",
+      "name_en": "CHS Inc.",
+      "sub": "農協・石油精製",
+      "sub_en": "Farm cooperative & refining",
+      "sub_short": "農協",
+      "sub_short_en": "Co-op",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "中西部の製油所で競合",
+          "text_en": "Competes with its mid-continent refinery",
+          "source": {
+            "label": "CVR Energy 10-K(2025年度)",
+            "label_en": "CVR Energy 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1376139/000137613926000014/cvi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "We primarily compete against CHS Inc.'s McPherson Refinery; HF Sinclair Corporation's El Dorado and Tulsa Refineries; Phillips 66 Company's Ponca Refinery; and Valero Energy Corporation's Ardmore Refinery in the mid-continent region."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DINO",
+      "ticker": "DINO",
+      "name": "HFシンクレア",
+      "name_en": "HF Sinclair",
+      "sub": "石油精製",
+      "sub_en": "Refining",
+      "sub_short": "石油精製",
+      "sub_short_en": "Refining",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "中西部の製油所で競合",
+          "text_en": "Competes with its mid-continent refineries",
+          "source": {
+            "label": "CVR Energy 10-K(2025年度)",
+            "label_en": "CVR Energy 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1376139/000137613926000014/cvi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "We primarily compete against CHS Inc.'s McPherson Refinery; HF Sinclair Corporation's El Dorado and Tulsa Refineries; Phillips 66 Company's Ponca Refinery; and Valero Energy Corporation's Ardmore Refinery in the mid-continent region."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PSX",
+      "ticker": "PSX",
+      "name": "フィリップス66",
+      "name_en": "Phillips 66",
+      "sub": "石油精製",
+      "sub_en": "Refining",
+      "sub_short": "石油精製",
+      "sub_short_en": "Refining",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "中西部の製油所で競合",
+          "text_en": "Competes with its mid-continent refinery",
+          "source": {
+            "label": "CVR Energy 10-K(2025年度)",
+            "label_en": "CVR Energy 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1376139/000137613926000014/cvi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "We primarily compete against CHS Inc.'s McPherson Refinery; HF Sinclair Corporation's El Dorado and Tulsa Refineries; Phillips 66 Company's Ponca Refinery; and Valero Energy Corporation's Ardmore Refinery in the mid-continent region."
+          }
+        }
+      ]
+    },
+    {
+      "id": "VLO",
+      "ticker": "VLO",
+      "name": "バレロ・エナジー",
+      "name_en": "Valero Energy",
+      "sub": "石油精製",
+      "sub_en": "Refining",
+      "sub_short": "石油精製",
+      "sub_short_en": "Refining",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "中西部の製油所で競合",
+          "text_en": "Competes with its mid-continent refinery",
+          "source": {
+            "label": "CVR Energy 10-K(2025年度)",
+            "label_en": "CVR Energy 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1376139/000137613926000014/cvi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "We primarily compete against CHS Inc.'s McPherson Refinery; HF Sinclair Corporation's El Dorado and Tulsa Refineries; Phillips 66 Company's Ponca Refinery; and Valero Energy Corporation's Ardmore Refinery in the mid-continent region."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

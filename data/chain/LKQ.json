@@ -1,0 +1,134 @@
+{
+  "root": {
+    "ticker": "LKQ",
+    "name": "LKQ",
+    "cik": 1065696,
+    "name_en": "LKQ Corporation"
+  },
+  "rows": [
+    {
+      "ja": "事業売却",
+      "en": "Divestiture"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "GPC",
+    "DORM",
+    "PRTS"
+  ],
+  "companies": [
+    {
+      "id": "PacificAvenue",
+      "ticker": "Pacific Avenue Capital",
+      "name": "パシフィック・アベニュー・キャピタル",
+      "name_en": "Pacific Avenue Capital Partners",
+      "sub": "投資会社",
+      "sub_en": "Investment firm",
+      "sub_short": "投資会社",
+      "sub_short_en": "Investing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "セルフサービス部門を同社の関連会社に売却(2025年9月)",
+          "text_en": "Sold its Self Service segment to an affiliate (September 2025)",
+          "source": {
+            "label": "LKQ 10-K(2025年度)",
+            "label_en": "LKQ 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1065696/000106569626000012/lkq-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "On September 30, 2025, we completed the sale of our Self Service segment to an affiliate of Pacific Avenue Capital Partners, LLC."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GPC",
+      "ticker": "GPC",
+      "name": "ジェニュイン・パーツ",
+      "name_en": "Genuine Parts",
+      "sub": "自動車部品流通",
+      "sub_en": "Auto parts distribution",
+      "sub_short": "車部品",
+      "sub_short_en": "Car parts",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Genuine Partsが10-Kで、北米の主な競合として挙げる",
+          "text_en": "Genuine Parts names LKQ a key North American competitor",
+          "source": {
+            "label": "Genuine Parts 10-K(2025年度)",
+            "label_en": "Genuine Parts 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/40987/000004098726000003/gpc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Key competitors in North America include AutoZone, Inc., O'Reilly Auto Parts, Inc., Advance Auto Parts, Inc., and LKQ Corporation, among others."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DORM",
+      "ticker": "DORM",
+      "name": "ドーマン・プロダクツ",
+      "name_en": "Dorman Products",
+      "sub": "補修部品",
+      "sub_en": "Aftermarket parts",
+      "sub_short": "補修部品",
+      "sub_short_en": "Parts",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Dormanが10-Kで、傘下のWARN Industriesを競合に挙げる",
+          "text_en": "Dorman names LKQ's WARN Industries as a competitor",
+          "source": {
+            "label": "Dorman 10-K(2025年度)",
+            "label_en": "Dorman 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/868780/000086878026000014/dorm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "WARN Industries (owned by LKQ Corporation)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PRTS",
+      "ticker": "PRTS",
+      "name": "カーパーツ・ドットコム",
+      "name_en": "CarParts.com",
+      "sub": "自動車部品のネット販売",
+      "sub_en": "Online auto parts",
+      "sub_short": "車部品",
+      "sub_short_en": "Car parts",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "CarParts.comが10-Kで、補修部品卸の競合として挙げる",
+          "text_en": "CarParts.com names LKQ among wholesale aftermarket competitors",
+          "source": {
+            "label": "CarParts.com 10-K(2024年度)",
+            "label_en": "CarParts.com 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1378950/000137895025000036/prts-20241228x10k.htm",
+            "level": "official",
+            "date": "2025-03-26",
+            "quote": "wholesale aftermarket auto parts distributors such as LKQ Corporation;"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

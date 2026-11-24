@@ -24,6 +24,8 @@
       "name": "シタデル・セキュリティーズ",
       "sub": "マーケットメイカー",
       "sub_en": "Market maker",
+      "sub_short": "証券",
+      "sub_short_en": "Trading",
       "row": 0,
       "relations": [
         {
@@ -48,6 +50,8 @@
       "name": "ウィンターミュート・トレーディング",
       "sub": "マーケットメイカー",
       "sub_en": "Market maker",
+      "sub_short": "証券",
+      "sub_short_en": "Trading",
       "row": 0,
       "relations": [
         {
@@ -72,6 +76,8 @@
       "name": "ヴァーチュ・ファイナンシャル",
       "sub": "マーケットメイカー",
       "sub_en": "Market maker",
+      "sub_short": "証券",
+      "sub_short_en": "Trading",
       "row": 1,
       "relations": [
         {
@@ -96,6 +102,8 @@
       "name": "モーニングスター",
       "sub": "投資調査",
       "sub_en": "Investment research",
+      "sub_short": "投資調査",
+      "sub_short_en": "Research",
       "row": 1,
       "relations": [
         {
@@ -120,6 +128,8 @@
       "name": "ナスダック",
       "sub": "取引所・市場データ",
       "sub_en": "Exchange & market data",
+      "sub_short": "取引所",
+      "sub_short_en": "Exchange",
       "row": 1,
       "relations": [
         {
@@ -144,6 +154,8 @@
       "name": "セージ・ホーム・ローンズ",
       "sub": "住宅ローン",
       "sub_en": "Mortgage lending",
+      "sub_short": "住宅融資",
+      "sub_short_en": "Mortgage",
       "row": 0,
       "relations": [
         {
@@ -163,11 +175,13 @@
       "name_en": "Sage Home Loans"
     },
     {
-      "id": "SIG",
+      "id": "Susquehanna",
       "ticker": "Susquehanna",
       "name": "サスケハナ・インターナショナル・グループ",
       "sub": "トレーディング",
       "sub_en": "Trading firm",
+      "sub_short": "取引",
+      "sub_short_en": "Trading",
       "row": 0,
       "relations": [
         {
@@ -192,6 +206,8 @@
       "name": "ビザ",
       "sub": "決済ネットワーク",
       "sub_en": "Payment network",
+      "sub_short": "決済網",
+      "sub_short_en": "Payment",
       "row": 1,
       "relations": [
         {

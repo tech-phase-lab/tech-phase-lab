@@ -1,0 +1,182 @@
+{
+  "root": {
+    "ticker": "ELF",
+    "name": "e.l.f.ビューティー",
+    "cik": 1600033,
+    "name_en": "e.l.f. Beauty"
+  },
+  "rows": [
+    {
+      "ja": "主要顧客(小売)",
+      "en": "Major customers (retailers)"
+    },
+    {
+      "ja": "買収したブランド",
+      "en": "Acquired brands"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "TGT",
+      "ticker": "TGT",
+      "name": "ターゲット",
+      "name_en": "Target",
+      "sub": "小売",
+      "sub_en": "Retail",
+      "sub_short": "小売",
+      "sub_short_en": "Retail",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大の顧客(売上の18%)",
+          "text_en": "Largest customer (18% of net sales)",
+          "source": {
+            "label": "e.l.f. Beauty 10-K(2026年3月期)",
+            "label_en": "e.l.f. Beauty 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1600033/000160003326000020/elf-20260331.htm",
+            "level": "official",
+            "date": "2026-05-21",
+            "quote": "Our largest customers, Target, Walmart, Amazon and Sephora, accounted for 18%, 13%, 11% and 10%, respectively, of our net sales in the fiscal year ended March 31, 2026."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WMT",
+      "ticker": "WMT",
+      "name": "ウォルマート",
+      "name_en": "Walmart",
+      "sub": "小売",
+      "sub_en": "Retail",
+      "sub_short": "小売",
+      "sub_short_en": "Retail",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2番目の顧客(13%)",
+          "text_en": "Second-largest customer (13%)",
+          "source": {
+            "label": "e.l.f. Beauty 10-K(2026年3月期)",
+            "label_en": "e.l.f. Beauty 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1600033/000160003326000020/elf-20260331.htm",
+            "level": "official",
+            "date": "2026-05-21",
+            "quote": "Our largest customers, Target, Walmart, Amazon and Sephora, accounted for 18%, 13%, 11% and 10%, respectively, of our net sales in the fiscal year ended March 31, 2026."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン",
+      "name_en": "Amazon",
+      "sub": "EC",
+      "sub_en": "E-commerce",
+      "sub_short": "EC",
+      "sub_short_en": "E-com",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "3番目の顧客(11%)",
+          "text_en": "Third-largest customer (11%)",
+          "source": {
+            "label": "e.l.f. Beauty 10-K(2026年3月期)",
+            "label_en": "e.l.f. Beauty 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1600033/000160003326000020/elf-20260331.htm",
+            "level": "official",
+            "date": "2026-05-21",
+            "quote": "Our largest customers, Target, Walmart, Amazon and Sephora, accounted for 18%, 13%, 11% and 10%, respectively, of our net sales in the fiscal year ended March 31, 2026."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LVMH",
+      "ticker": "Sephora (LVMH)",
+      "name": "セフォラ(LVMH)",
+      "name_en": "Sephora (LVMH)",
+      "sub": "化粧品小売",
+      "sub_en": "Beauty retail",
+      "sub_short": "化粧品",
+      "sub_short_en": "Beauty",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "4番目の顧客(10%)",
+          "text_en": "Fourth-largest customer (10%)",
+          "source": {
+            "label": "e.l.f. Beauty 10-K(2026年3月期)",
+            "label_en": "e.l.f. Beauty 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1600033/000160003326000020/elf-20260331.htm",
+            "level": "official",
+            "date": "2026-05-21",
+            "quote": "Our largest customers, Target, Walmart, Amazon and Sephora, accounted for 18%, 13%, 11% and 10%, respectively, of our net sales in the fiscal year ended March 31, 2026."
+          }
+        }
+      ]
+    },
+    {
+      "id": "rhode",
+      "ticker": "rhode",
+      "name": "ロード",
+      "name_en": "rhode",
+      "sub": "スキンケア",
+      "sub_en": "Skincare",
+      "sub_short": "化粧品",
+      "sub_short_en": "Skincare",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ヘイリー・ビーバー創業のrhodeを買収。3億ドル相当の株式を発行",
+          "text_en": "Acquired Hailey Bieber's rhode, issuing $300.3 million of stock",
+          "source": {
+            "label": "e.l.f. Beauty 10-K(2026年3月期)",
+            "label_en": "e.l.f. Beauty 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1600033/000160003326000020/elf-20260331.htm",
+            "level": "official",
+            "date": "2026-05-21",
+            "quote": "In connection with our acquisition of rhode, we issued 2,582,371 shares of the Company's common stock, with a fair market value of $300.3 million as of the date of the acquisition."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Naturium",
+      "ticker": "Naturium",
+      "name": "ナチュリウム",
+      "name_en": "Naturium",
+      "sub": "スキンケア",
+      "sub_en": "Skincare",
+      "sub_short": "化粧品",
+      "sub_short_en": "Skincare",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "スキンケアのNaturiumを買収",
+          "text_en": "Acquired skincare brand Naturium",
+          "source": {
+            "label": "e.l.f. Beauty 10-K(2026年3月期)",
+            "label_en": "e.l.f. Beauty 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1600033/000160003326000020/elf-20260331.htm",
+            "level": "official",
+            "date": "2026-05-21",
+            "quote": "In connection with our acquisition of Naturium, we issued 577,659 shares of the Company's common stock, with a fair market value of $57.8 million as of the date of the acquisition."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

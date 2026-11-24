@@ -1,0 +1,214 @@
+{
+  "root": {
+    "ticker": "UA",
+    "name": "アンダーアーマー",
+    "cik": 1336917,
+    "name_en": "Under Armour"
+  },
+  "rows": [
+    {
+      "ja": "販売先・ライセンス提携",
+      "en": "Retailers & licensing partners",
+      "above": true
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "NKE",
+    "ONON",
+    "LULU",
+    "GOLF"
+  ],
+  "companies": [
+    {
+      "id": "DKS",
+      "ticker": "DKS",
+      "name": "ディックス・スポーティング・グッズ",
+      "name_en": "Dick's Sporting Goods",
+      "sub": "スポーツ用品小売",
+      "sub_en": "Sporting goods retail",
+      "sub_short": "スポーツ",
+      "sub_short_en": "Sports",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "取引先(仕入先)の例としてUnder Armourを挙げる",
+          "text_en": "Cites Under Armour as an example of its vendors",
+          "source": {
+            "label": "Dick'S Sporting Goods 10-K(2025年提出)",
+            "label_en": "Dick'S Sporting Goods 10-K (filed 2025-03)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1089063/000108906325000012/dks-exhibit_191x20250201.htm",
+            "level": "official",
+            "date": "2025-03-27",
+            "quote": "this could apply to information any Company Personnel learns about a vendor, such as Nike (NYSE: NKE), Under Armour (NYSE: UA)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BGFV",
+      "ticker": "BGFV",
+      "name": "ビッグ5スポーティング・グッズ",
+      "name_en": "Big 5 Sporting Goods",
+      "sub": "スポーツ用品小売",
+      "sub_en": "Sporting goods retail",
+      "sub_short": "スポーツ",
+      "sub_short_en": "Sports",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "店舗で扱う有名ブランドの一つがUnder Armour",
+          "text_en": "Carries Under Armour among the brand-name manufacturers in its stores",
+          "source": {
+            "label": "Big 5 Sporting Goods 10-K(2025年提出)",
+            "label_en": "Big 5 Sporting Goods 10-K (filed 2025-02)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1156388/000095017025027520/bgfv-20241229.htm",
+            "level": "official",
+            "date": "2025-02-26",
+            "quote": "Rawlings, Skechers, Spalding, Under Armour and Wilson."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TKO",
+      "ticker": "TKO",
+      "name": "TKOグループ",
+      "name_en": "TKO Group",
+      "sub": "格闘技・プロレス(UFC・WWE)",
+      "sub_en": "Combat sports & entertainment",
+      "sub_short": "格闘技",
+      "sub_short_en": "Sports",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "UFCのライセンス提携ブランドの一つがUnder ArmourのProject Rock",
+          "text_en": "Project Rock by Under Armour is one of UFC's licensing partners",
+          "source": {
+            "label": "TKO Group 10-K(2025年提出)",
+            "label_en": "TKO Group 10-K (filed 2025-02)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1973266/000095017025027778/tko-20241231.htm",
+            "level": "official",
+            "date": "2025-02-26",
+            "quote": "UFC maintains licensing partnerships with over 40 premium brands, including EA Sports, Project Rock by Under Armour, Timex, and Venum."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NKE",
+      "ticker": "NKE",
+      "name": "ナイキ",
+      "name_en": "Nike",
+      "sub": "スポーツ用品",
+      "sub_en": "Athletic footwear & apparel",
+      "sub_short": "スポーツ",
+      "sub_short_en": "Apparel",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Nikeが10-Kで、競合の一社としてUnder Armourを挙げる",
+          "text_en": "Nike names Under Armour among its competitors",
+          "source": {
+            "label": "Nike 10-K(2026年提出)",
+            "label_en": "Nike 10-K (filed 2026-07)",
+            "url": "https://www.sec.gov/Archives/edgar/data/320187/000032018726000088/nke-20260531.htm",
+            "level": "official",
+            "date": "2026-07-15",
+            "quote": "including adidas, Anta, ASICS, Deckers, Li Ning, lululemon athletica, New Balance, On, Puma, Under Armour and V.F. Corporation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ONON",
+      "ticker": "ONON",
+      "name": "オン・ホールディング",
+      "name_en": "On Holding",
+      "sub": "スポーツシューズ",
+      "sub_en": "Athletic footwear",
+      "sub_short": "靴",
+      "sub_short_en": "Sneakers",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Onが年次報告で、直接の競合としてUnder Armourを挙げる",
+          "text_en": "On names Under Armour among direct competitors",
+          "source": {
+            "label": "On Holding AG 年次報告(20-F)(2025年提出)",
+            "label_en": "On Holding AG annual report (20-F) (filed 2025-03)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1858985/000185898525000003/onholdingag-20241231.htm",
+            "level": "official",
+            "date": "2025-03-04",
+            "quote": "We are in direct competition with wholesalers and direct sellers of athletic footwear and apparel, such as Nike, Inc., Adidas AG, Under Armour, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LULU",
+      "ticker": "LULU",
+      "name": "ルルレモン",
+      "name_en": "lululemon",
+      "sub": "スポーツウェア",
+      "sub_en": "Athletic apparel",
+      "sub_short": "スポーツ",
+      "sub_short_en": "Apparel",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "lululemonの契約書で、競合事業の例としてUnder Armourを挙げる",
+          "text_en": "A lululemon agreement lists Under Armour as a competing business",
+          "source": {
+            "label": "lululemon athletica 10-K(2026年提出)",
+            "label_en": "lululemon athletica 10-K (filed 2026-03)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1397187/000139718726000020/lulu-20260201xex1018.htm",
+            "level": "official",
+            "date": "2026-03-17",
+            "quote": "Competing Business includes, but is not limited to, Athleta, Nike, Under Armour, Adidas"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GOLF",
+      "ticker": "GOLF",
+      "name": "アクシネット",
+      "name_en": "Acushnet",
+      "sub": "ゴルフ用品",
+      "sub_en": "Golf equipment",
+      "sub_short": "ゴルフ",
+      "sub_short_en": "Golf",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Acushnetが10-Kで、ゴルフウェアの競合としてUnder Armourを挙げる",
+          "text_en": "Acushnet names Under Armour among its golf apparel competitors",
+          "source": {
+            "label": "Acushnet 10-K(2025年提出)",
+            "label_en": "Acushnet 10-K (filed 2025-02)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1672013/000167201325000009/golf-20241231.htm",
+            "level": "official",
+            "date": "2025-02-27",
+            "quote": "In the golf apparel category, FootJoy has numerous competitors in each geographical market, including Nike, Adidas, Peter Millar, GFore and Under Armour."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

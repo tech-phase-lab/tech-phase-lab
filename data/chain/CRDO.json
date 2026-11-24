@@ -36,6 +36,8 @@
       "name": "TSMC",
       "sub": "半導体製造",
       "sub_en": "Foundry",
+      "sub_short": "半導体",
+      "sub_short_en": "Foundry",
       "row": 0,
       "relations": [
         {
@@ -59,6 +61,8 @@
       "name": "Amkor Technology",
       "sub": "後工程",
       "sub_en": "Packaging & test",
+      "sub_short": "後工程",
+      "sub_short_en": "Chip pack",
       "row": 0,
       "relations": [
         {
@@ -82,6 +86,8 @@
       "name": "日月光(ASE)",
       "sub": "後工程",
       "sub_en": "Packaging & test",
+      "sub_short": "後工程",
+      "sub_short_en": "Chip pack",
       "row": 0,
       "relations": [
         {
@@ -108,6 +114,8 @@
       "name": "京元電子(KYEC)",
       "sub": "半導体テスト",
       "sub_en": "Chip testing",
+      "sub_short": "検査装置",
+      "sub_short_en": "Testing",
       "row": 0,
       "relations": [
         {
@@ -132,6 +140,8 @@
       "name": "Sigurd Microelectronics",
       "sub": "半導体テスト",
       "sub_en": "Chip testing",
+      "sub_short": "検査装置",
+      "sub_short_en": "Testing",
       "row": 0,
       "relations": [
         {
@@ -155,6 +165,8 @@
       "name": "BizLink Technology",
       "sub": "ケーブル・接続部品",
       "sub_en": "Cables & connectivity",
+      "sub_short": "ケーブル",
+      "sub_short_en": "Cables",
       "row": 0,
       "relations": [
         {
@@ -191,6 +203,8 @@
       "name": "Amazon",
       "sub": "クラウド",
       "sub_en": "Cloud",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 1,
       "relations": [
         {
@@ -216,6 +230,8 @@
       "name": "Microsoft",
       "sub": "クラウド・ソフト",
       "sub_en": "Cloud & software",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 2,
       "relations": [
         {
@@ -252,6 +268,8 @@
       "name": "Oracle",
       "sub": "クラウド・ソフト",
       "sub_en": "Cloud & software",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 2,
       "relations": [
         {
@@ -275,6 +293,8 @@
       "name": "Broadcom",
       "sub": "半導体",
       "sub_en": "Semiconductors",
+      "sub_short": "半導体",
+      "sub_short_en": "Chips",
       "row": 3,
       "relations": [
         {
@@ -300,6 +320,8 @@
       "name": "Marvell Technology",
       "sub": "半導体",
       "sub_en": "Semiconductors",
+      "sub_short": "半導体",
+      "sub_short_en": "Chips",
       "row": 3,
       "relations": [
         {
@@ -336,6 +358,8 @@
       "name": "Astera Labs",
       "sub": "接続半導体",
       "sub_en": "Connectivity chips",
+      "sub_short": "半導体",
+      "sub_short_en": "Links",
       "row": 3,
       "relations": [
         {
@@ -374,6 +398,8 @@
       "name": "MACOM Technology Solutions",
       "sub": "高速通信半導体",
       "sub_en": "High-speed analog chips",
+      "sub_short": "通信IC",
+      "sub_short_en": "Analog",
       "row": 3,
       "relations": [
         {
@@ -397,6 +423,8 @@
       "name": "Ciena",
       "sub": "光ネットワーク機器",
       "sub_en": "Optical networking",
+      "sub_short": "光通信",
+      "sub_short_en": "Optics",
       "row": 3,
       "relations": [
         {
@@ -422,6 +450,8 @@
       "name": "MaxLinear",
       "sub": "通信半導体",
       "sub_en": "Communications chips",
+      "sub_short": "通信IC",
+      "sub_short_en": "Comms IC",
       "row": 3,
       "relations": [
         {

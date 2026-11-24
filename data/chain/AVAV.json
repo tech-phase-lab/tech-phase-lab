@@ -33,6 +33,8 @@
       "name": "クラトス・ディフェンス",
       "sub": "防衛・宇宙システム",
       "sub_en": "Defense & space systems",
+      "sub_short": "防衛",
+      "sub_short_en": "Defense",
       "row": 0,
       "relations": [
         {
@@ -59,6 +61,8 @@
       "name": "JPモルガン・チェース",
       "sub": "銀行",
       "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
       "row": 1,
       "relations": [
         {
@@ -85,6 +89,8 @@
       "name": "バンク・オブ・アメリカ",
       "sub": "銀行",
       "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
       "row": 1,
       "relations": [
         {
@@ -111,6 +117,8 @@
       "name": "ロッキード・マーティン",
       "sub": "防衛・航空宇宙",
       "sub_en": "Defense & aerospace",
+      "sub_short": "防衛",
+      "sub_short_en": "Defense",
       "row": 2,
       "relations": [
         {
@@ -135,6 +143,8 @@
       "name": "RTX",
       "sub": "防衛・航空宇宙",
       "sub_en": "Defense & aerospace",
+      "sub_short": "防衛",
+      "sub_short_en": "Defense",
       "row": 2,
       "relations": [
         {
@@ -158,6 +168,8 @@
       "name": "ボーイング",
       "sub": "航空宇宙",
       "sub_en": "Aerospace",
+      "sub_short": "航空宇宙",
+      "sub_short_en": "Aero",
       "row": 2,
       "relations": [
         {
@@ -182,6 +194,8 @@
       "name": "L3ハリス・テクノロジーズ",
       "sub": "防衛・通信",
       "sub_en": "Defense & communications",
+      "sub_short": "防衛",
+      "sub_short_en": "Defense",
       "row": 2,
       "relations": [
         {
@@ -206,6 +220,8 @@
       "name": "ノースロップ・グラマン",
       "sub": "防衛・航空宇宙",
       "sub_en": "Defense & aerospace",
+      "sub_short": "防衛",
+      "sub_short_en": "Defense",
       "row": 2,
       "relations": [
         {
@@ -230,6 +246,8 @@
       "name": "レッドワイヤー",
       "sub": "宇宙インフラ",
       "sub_en": "Space infrastructure",
+      "sub_short": "宇宙",
+      "sub_short_en": "Space",
       "row": 2,
       "relations": [
         {
@@ -254,6 +272,8 @@
       "name": "テレダイン・テクノロジーズ",
       "sub": "センサー・電子機器",
       "sub_en": "Sensors & electronics",
+      "sub_short": "センサー",
+      "sub_short_en": "Sensors",
       "row": 2,
       "relations": [
         {
@@ -278,6 +298,8 @@
       "name": "テキストロン",
       "sub": "航空機・防衛",
       "sub_en": "Aircraft & defense",
+      "sub_short": "航空機",
+      "sub_short_en": "Aircraft",
       "row": 2,
       "relations": [
         {

@@ -34,6 +34,8 @@
       "name_en": "VOXX International",
       "sub": "車載・家電",
       "sub_en": "Auto & consumer electronics",
+      "sub_short": "車載",
+      "sub_short_en": "Car tech",
       "row": 0,
       "relations": [
         {
@@ -58,6 +60,8 @@
       "name_en": "eSight",
       "sub": "視覚補助メガネ",
       "sub_en": "Low-vision smart glasses",
+      "sub_short": "眼鏡",
+      "sub_short_en": "Glasses",
       "row": 0,
       "relations": [
         {
@@ -82,6 +86,8 @@
       "name_en": "Solace Power",
       "sub": "ワイヤレス給電",
       "sub_en": "Wireless power",
+      "sub_short": "給電",
+      "sub_short_en": "Wireless",
       "row": 0,
       "relations": [
         {
@@ -106,6 +112,8 @@
       "name_en": "Toyota",
       "sub": "自動車",
       "sub_en": "Autos",
+      "sub_short": "自動車",
+      "sub_short_en": "Autos",
       "row": 1,
       "relations": [
         {
@@ -130,6 +138,8 @@
       "name_en": "Volkswagen Group",
       "sub": "自動車(独)",
       "sub_en": "Autos (Germany)",
+      "sub_short": "自動車",
+      "sub_short_en": "Autos",
       "row": 1,
       "relations": [
         {
@@ -154,6 +164,8 @@
       "name_en": "Tesla",
       "sub": "電気自動車",
       "sub_en": "Electric vehicles",
+      "sub_short": "EV",
+      "sub_short_en": "EVs",
       "row": 1,
       "relations": [
         {
@@ -178,6 +190,8 @@
       "name_en": "General Motors",
       "sub": "自動車",
       "sub_en": "Autos",
+      "sub_short": "自動車",
+      "sub_short_en": "Autos",
       "row": 1,
       "relations": [
         {
@@ -202,6 +216,8 @@
       "name_en": "Ford",
       "sub": "自動車",
       "sub_en": "Autos",
+      "sub_short": "自動車",
+      "sub_short_en": "Autos",
       "row": 1,
       "relations": [
         {
@@ -226,6 +242,8 @@
       "name_en": "Stellantis",
       "sub": "自動車",
       "sub_en": "Autos",
+      "sub_short": "自動車",
+      "sub_short_en": "Autos",
       "row": 1,
       "relations": [
         {
@@ -250,6 +268,8 @@
       "name_en": "Honda",
       "sub": "自動車",
       "sub_en": "Autos",
+      "sub_short": "自動車",
+      "sub_short_en": "Autos",
       "row": 1,
       "relations": [
         {
@@ -274,6 +294,8 @@
       "name_en": "Rivian",
       "sub": "電気自動車",
       "sub_en": "Electric vehicles",
+      "sub_short": "EV",
+      "sub_short_en": "EVs",
       "row": 1,
       "relations": [
         {
@@ -298,6 +320,8 @@
       "name_en": "Magna International",
       "sub": "自動車部品",
       "sub_en": "Auto parts",
+      "sub_short": "車部品",
+      "sub_short_en": "Car parts",
       "row": 2,
       "relations": [
         {
@@ -322,6 +346,8 @@
       "name_en": "Aptiv",
       "sub": "車載電子",
       "sub_en": "Auto electronics",
+      "sub_short": "車載電子",
+      "sub_short_en": "Car tech",
       "row": 2,
       "relations": [
         {
@@ -346,6 +372,8 @@
       "name_en": "Gauzy",
       "sub": "調光ガラス",
       "sub_en": "Light-control glass",
+      "sub_short": "ガラス",
+      "sub_short_en": "Glass",
       "row": 2,
       "relations": [
         {
@@ -370,6 +398,8 @@
       "name_en": "Capstone Companies",
       "sub": "スマートミラー",
       "sub_en": "Smart mirrors",
+      "sub_short": "ミラー",
+      "sub_short_en": "Mirrors",
       "row": 2,
       "relations": [
         {

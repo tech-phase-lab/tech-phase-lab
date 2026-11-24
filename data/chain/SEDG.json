@@ -27,6 +27,8 @@
       "name": "ジェイビル",
       "sub": "電子機器受託製造",
       "sub_en": "Electronics manufacturing",
+      "sub_short": "EMS",
+      "sub_short_en": "EMS",
       "row": 0,
       "relations": [
         {
@@ -51,6 +53,8 @@
       "name": "フレックス",
       "sub": "電子機器受託製造",
       "sub_en": "Electronics manufacturing",
+      "sub_short": "EMS",
+      "sub_short_en": "EMS",
       "row": 0,
       "relations": [
         {
@@ -75,6 +79,8 @@
       "name": "テスラ",
       "sub": "EV・蓄電池",
       "sub_en": "EVs & storage",
+      "sub_short": "EV",
+      "sub_short_en": "EVs",
       "row": 1,
       "relations": [
         {
@@ -99,6 +105,8 @@
       "name": "エンフェーズ・エナジー",
       "sub": "マイクロインバーター",
       "sub_en": "Microinverters",
+      "sub_short": "電力変換",
+      "sub_short_en": "Inverters",
       "row": 1,
       "relations": [
         {
@@ -136,6 +144,8 @@
       "name": "SMAソーラー・テクノロジー",
       "sub": "インバーター",
       "sub_en": "Inverters",
+      "sub_short": "電力変換",
+      "sub_short_en": "Inverters",
       "row": 1,
       "relations": [
         {
@@ -160,6 +170,8 @@
       "name": "サングロー・パワー・サプライ",
       "sub": "インバーター",
       "sub_en": "Inverters",
+      "sub_short": "電力変換",
+      "sub_short_en": "Inverters",
       "row": 1,
       "relations": [
         {

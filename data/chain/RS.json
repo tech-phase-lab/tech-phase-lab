@@ -21,6 +21,8 @@
       "name_en": "Cooksey Iron & Metal",
       "sub": "鋼材の流通",
       "sub_en": "Steel service center",
+      "sub_short": "鋼材",
+      "sub_short_en": "Steel",
       "row": 0,
       "relations": [
         {
@@ -45,6 +47,8 @@
       "name_en": "American Alloy Steel",
       "sub": "特殊鋼の流通",
       "sub_en": "Specialty steel distribution",
+      "sub_short": "鉄鋼",
+      "sub_short_en": "Steel",
       "row": 0,
       "relations": [
         {
@@ -69,6 +73,8 @@
       "name_en": "Mid-West Materials",
       "sub": "鋼板の流通",
       "sub_en": "Flat-rolled steel distribution",
+      "sub_short": "鋼材",
+      "sub_short_en": "Steel",
       "row": 0,
       "relations": [
         {
@@ -93,6 +99,8 @@
       "name_en": "Ferragon",
       "sub": "鋼材の加工・流通",
       "sub_en": "Steel processing",
+      "sub_short": "鋼材",
+      "sub_short_en": "Steel",
       "row": 0,
       "relations": [
         {
@@ -117,6 +125,8 @@
       "name_en": "Earle M. Jorgensen (EMJ)",
       "sub": "金属の流通",
       "sub_en": "Metals distribution",
+      "sub_short": "金属",
+      "sub_short_en": "Metals",
       "row": 0,
       "relations": [
         {

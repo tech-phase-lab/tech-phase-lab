@@ -33,6 +33,8 @@
       "name_en": "MannKind",
       "sub": "吸入薬",
       "sub_en": "Inhaled therapies",
+      "sub_short": "吸入薬",
+      "sub_short_en": "Inhaled",
       "row": 0,
       "relations": [
         {
@@ -57,6 +59,8 @@
       "name_en": "DEKA Research & Development",
       "sub": "医療機器開発",
       "sub_en": "Medical device R&D",
+      "sub_short": "医療機器",
+      "sub_short_en": "Medtech",
       "row": 0,
       "relations": [
         {
@@ -81,6 +85,8 @@
       "name_en": "Supernus",
       "sub": "中枢神経系の医薬品",
       "sub_en": "CNS drugs",
+      "sub_short": "神経薬",
+      "sub_short_en": "CNS",
       "row": 0,
       "relations": [
         {
@@ -105,6 +111,8 @@
       "name_en": "Eli Lilly",
       "sub": "医薬品",
       "sub_en": "Pharmaceuticals",
+      "sub_short": "医薬品",
+      "sub_short_en": "Pharma",
       "row": 1,
       "relations": [
         {
@@ -129,6 +137,8 @@
       "name_en": "Miromatrix Medical",
       "sub": "再生医療(臓器)",
       "sub_en": "Regenerative medicine (organs)",
+      "sub_short": "再生医療",
+      "sub_short_en": "Regen",
       "row": 1,
       "relations": [
         {
@@ -153,6 +163,8 @@
       "name_en": "IVIVA Medical",
       "sub": "再生医療(腎臓)",
       "sub_en": "Regenerative medicine (kidney)",
+      "sub_short": "再生医療",
+      "sub_short_en": "Regen",
       "row": 1,
       "relations": [
         {
@@ -177,6 +189,8 @@
       "name_en": "BETA Technologies",
       "sub": "電動航空機",
       "sub_en": "Electric aircraft",
+      "sub_short": "eVTOL",
+      "sub_short_en": "eVTOL",
       "row": 1,
       "relations": [
         {
@@ -201,6 +215,8 @@
       "name_en": "Liquidia",
       "sub": "肺高血圧症の治療薬",
       "sub_en": "Pulmonary hypertension drugs",
+      "sub_short": "肺疾患薬",
+      "sub_short_en": "PAH",
       "row": 2,
       "relations": [
         {
@@ -225,6 +241,8 @@
       "name_en": "Gossamer Bio",
       "sub": "肺高血圧症の新薬",
       "sub_en": "Pulmonary hypertension drugs",
+      "sub_short": "肺疾患薬",
+      "sub_short_en": "PAH",
       "row": 2,
       "relations": [
         {
@@ -249,6 +267,8 @@
       "name_en": "Alaunos Therapeutics",
       "sub": "新薬開発",
       "sub_en": "Drug development",
+      "sub_short": "新薬開発",
+      "sub_short_en": "Drug R&D",
       "row": 2,
       "relations": [
         {
@@ -273,6 +293,8 @@
       "name_en": "PureTech Health",
       "sub": "新薬開発",
       "sub_en": "Drug development",
+      "sub_short": "新薬開発",
+      "sub_short_en": "Drug R&D",
       "row": 2,
       "relations": [
         {

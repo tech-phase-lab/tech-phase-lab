@@ -1,0 +1,242 @@
+{
+  "root": {
+    "ticker": "ESI",
+    "name": "エレメント・ソリューションズ",
+    "cik": 1590714,
+    "name_en": "Element Solutions"
+  },
+  "rows": [
+    {
+      "ja": "買収・提携",
+      "en": "Acquisitions & alliance"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in its 10-K)"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "MKSI",
+    "Q",
+    "DD"
+  ],
+  "companies": [
+    {
+      "id": "EFC",
+      "ticker": "EFC Gases",
+      "name": "EFCガシズ&アドバンスト・マテリアルズ",
+      "name_en": "EFC Gases & Advanced Materials",
+      "sub": "特殊ガス",
+      "sub_en": "Specialty gases",
+      "sub_short": "特殊ガス",
+      "sub_short_en": "Gases",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "EFCを買収(2026年1月)",
+          "text_en": "Acquired EFC (January 2026)",
+          "source": {
+            "label": "Element Solutions 10-K(2025年度)",
+            "label_en": "Element Solutions 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1590714/000159071426000018/esi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "EFC Acquisition Element Solutions' acquisition of EFC Gases & Advanced Materials on January 2, 2026."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Micromax",
+      "ticker": "Micromax",
+      "name": "マイクロマックス",
+      "name_en": "Micromax",
+      "sub": "電子材料",
+      "sub_en": "Electronic materials",
+      "sub_short": "電子材料",
+      "sub_short_en": "Materials",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Micromaxを買収(2026年2月)",
+          "text_en": "Acquired Micromax (February 2026)",
+          "source": {
+            "label": "Element Solutions 10-K(2025年度)",
+            "label_en": "Element Solutions 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1590714/000159071426000018/esi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Micromax Acquisition Element Solutions' acquisition of Micromax (US) Holdings LLC on February 2, 2026."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ENTG",
+      "ticker": "ENTG",
+      "name": "インテグリス",
+      "name_en": "Entegris",
+      "sub": "半導体材料",
+      "sub_en": "Semiconductor materials",
+      "sub_short": "材料",
+      "sub_short_en": "Materials",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "MacDermid Enthoneとの提携契約を2023年6月に解消",
+          "text_en": "Ended its alliance agreement with MacDermid Enthone in June 2023",
+          "source": {
+            "label": "Entegris 10-K(2024年度)",
+            "label_en": "Entegris 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1101302/000110130225000015/entg-20241231.htm",
+            "level": "official",
+            "date": "2025-02-12",
+            "quote": "On June 5, 2023, the Company terminated an Alliance Agreement (the \"Alliance Agreement\") between the Company and MacDermid Enthone Inc., a global business unit of Element Solutions Inc (\"MacDermid Enthone\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "KWR",
+      "ticker": "KWR",
+      "name": "クエーカー・ホートン",
+      "name_en": "Quaker Houghton",
+      "sub": "工業用潤滑剤",
+      "sub_en": "Industrial fluids",
+      "sub_short": "潤滑剤",
+      "sub_short_en": "Fluids",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "最も重要な競合の一社",
+          "text_en": "One of its most significant competitors",
+          "source": {
+            "label": "Element Solutions 10-K(2025年度)",
+            "label_en": "Element Solutions 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1590714/000159071426000018/esi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Although competition varies by end-market and geography, our most significant competitors are MKS Instruments, Quaker Houghton, and Castrol."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Castrol",
+      "ticker": "Castrol",
+      "name": "カストロール",
+      "name_en": "Castrol",
+      "sub": "潤滑油",
+      "sub_en": "Lubricants",
+      "sub_short": "潤滑油",
+      "sub_short_en": "Lubes",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "最も重要な競合の一社",
+          "text_en": "One of its most significant competitors",
+          "source": {
+            "label": "Element Solutions 10-K(2025年度)",
+            "label_en": "Element Solutions 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1590714/000159071426000018/esi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Although competition varies by end-market and geography, our most significant competitors are MKS Instruments, Quaker Houghton, and Castrol."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MKSI",
+      "ticker": "MKSI",
+      "name": "MKS",
+      "name_en": "MKS",
+      "sub": "半導体装置・化学",
+      "sub_en": "Semiconductor equipment & chemistry",
+      "sub_short": "製造装置",
+      "sub_short_en": "Chip tools",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "MKSが10-Kで化学品の競合として挙げる。ESIもMKSを最も重要な競合とする",
+          "text_en": "MKS names ESI a chemistry competitor; ESI names MKS a top competitor too",
+          "source": {
+            "label": "MKS 10-K(2025年度)",
+            "label_en": "MKS 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1049502/000119312526066820/mksi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "In MSD, Element Solutions Inc., Qnity Electronics, Inc., Uyemura, JCU International, Inc. and Okuno Chemical Industries Co., Ltd. offer products that compete with our chemistry products."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Q",
+      "ticker": "Q",
+      "name": "キュニティ・エレクトロニクス",
+      "name_en": "Qnity Electronics",
+      "sub": "電子材料",
+      "sub_en": "Electronic materials",
+      "sub_short": "電子材料",
+      "sub_short_en": "Materials",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Qnityが10-Kで、最も注目すべき競合の一社として挙げる",
+          "text_en": "Qnity names Element Solutions among its most notable competitors",
+          "source": {
+            "label": "Qnity Electronics 10-K(2025年度)",
+            "label_en": "Qnity Electronics 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2058873/000205887326000010/q-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our most notable competitors are Entegris, Merck KGA, Resonac, Element Solutions and MKS Instruments."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DD",
+      "ticker": "DD",
+      "name": "デュポン",
+      "name_en": "DuPont",
+      "sub": "化学",
+      "sub_en": "Chemicals",
+      "sub_short": "化学",
+      "sub_short_en": "Chem",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "DuPontが10-Kで、エレクトロニクス分野の主な競合として挙げる",
+          "text_en": "DuPont names Element Solutions among key electronics competitors",
+          "source": {
+            "label": "DuPont 10-K(2024年度)",
+            "label_en": "DuPont 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1666700/000166670025000005/dd-20241231.htm",
+            "level": "official",
+            "date": "2025-02-14",
+            "quote": "Electronics & Industrial: Element Solutions, Entegris, Fujifilm, Henkel, JSR, Merck KGaA, MKS Instruments, and Resonac."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

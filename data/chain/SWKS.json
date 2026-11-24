@@ -33,6 +33,8 @@
       "name": "アップル",
       "sub": "スマートフォン・PC",
       "sub_en": "Smartphones & PCs",
+      "sub_short": "スマホ",
+      "sub_short_en": "Phones",
       "row": 0,
       "relations": [
         {
@@ -57,6 +59,8 @@
       "name": "アマゾン",
       "sub": "EC・クラウド",
       "sub_en": "E-commerce & cloud",
+      "sub_short": "EC",
+      "sub_short_en": "E-com",
       "row": 0,
       "relations": [
         {
@@ -81,6 +85,8 @@
       "name": "コルボ",
       "sub": "RF半導体",
       "sub_en": "RF chips",
+      "sub_short": "RF半導体",
+      "sub_short_en": "RF chips",
       "row": 1,
       "relations": [
         {
@@ -133,6 +139,8 @@
       "name": "シリコン・ラボラトリーズ",
       "sub": "IoT半導体",
       "sub_en": "IoT chips",
+      "sub_short": "IoT半導体",
+      "sub_short_en": "IoT chips",
       "row": 1,
       "relations": [
         {
@@ -159,6 +167,8 @@
       "name": "JPモルガン・チェース",
       "sub": "銀行",
       "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
       "row": 1,
       "relations": [
         {
@@ -185,6 +195,8 @@
       "name": "ゴールドマン・サックス",
       "sub": "投資銀行",
       "sub_en": "Investment bank",
+      "sub_short": "投資銀行",
+      "sub_short_en": "Bank",
       "row": 1,
       "relations": [
         {
@@ -211,6 +223,8 @@
       "name": "バンク・オブ・アメリカ",
       "sub": "銀行",
       "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
       "row": 1,
       "relations": [
         {
@@ -237,6 +251,8 @@
       "name": "アナログ・デバイセズ",
       "sub": "アナログ半導体",
       "sub_en": "Analog chips",
+      "sub_short": "アナログ",
+      "sub_short_en": "Analog",
       "row": 2,
       "relations": [
         {
@@ -261,6 +277,8 @@
       "name": "ブロードコム",
       "sub": "通信・インフラ半導体",
       "sub_en": "Networking & infrastructure chips",
+      "sub_short": "通信IC",
+      "sub_short_en": "Network",
       "row": 2,
       "relations": [
         {
@@ -285,6 +303,8 @@
       "name": "シーラス・ロジック",
       "sub": "オーディオ半導体",
       "sub_en": "Audio chips",
+      "sub_short": "音響IC",
+      "sub_short_en": "Audio ICs",
       "row": 2,
       "relations": [
         {
@@ -309,6 +329,8 @@
       "name": "村田製作所",
       "sub": "電子部品",
       "sub_en": "Electronic components",
+      "sub_short": "電子部品",
+      "sub_short_en": "Parts",
       "row": 2,
       "relations": [
         {
@@ -333,6 +355,8 @@
       "name": "NXPセミコンダクターズ",
       "sub": "車載・産業用半導体",
       "sub_en": "Automotive & industrial chips",
+      "sub_short": "車載IC",
+      "sub_short_en": "Auto ICs",
       "row": 2,
       "relations": [
         {
@@ -357,6 +381,8 @@
       "name": "クアルコム",
       "sub": "モバイル半導体",
       "sub_en": "Mobile chips",
+      "sub_short": "半導体",
+      "sub_short_en": "Mobile IC",
       "row": 2,
       "relations": [
         {
@@ -394,6 +420,8 @@
       "name": "テキサス・インスツルメンツ",
       "sub": "アナログ半導体",
       "sub_en": "Analog chips",
+      "sub_short": "アナログ",
+      "sub_short_en": "Analog",
       "row": 2,
       "relations": [
         {
@@ -418,6 +446,8 @@
       "name": "マコム・テクノロジー・ソリューションズ",
       "sub": "高周波半導体",
       "sub_en": "RF & microwave chips",
+      "sub_short": "RF IC",
+      "sub_short_en": "RF chips",
       "row": 2,
       "relations": [
         {
@@ -442,6 +472,8 @@
       "name": "マックスリニア",
       "sub": "接続用半導体",
       "sub_en": "Connectivity chips",
+      "sub_short": "半導体",
+      "sub_short_en": "Links",
       "row": 2,
       "relations": [
         {
@@ -466,6 +498,8 @@
       "name": "ゲリラRF",
       "sub": "RF半導体",
       "sub_en": "RF semis",
+      "sub_short": "RF半導体",
+      "sub_short_en": "RF semis",
       "row": 2,
       "relations": [
         {

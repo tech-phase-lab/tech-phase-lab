@@ -1,0 +1,261 @@
+{
+  "root": {
+    "ticker": "IPAR",
+    "name": "インターパルファン",
+    "cik": 822663,
+    "name_en": "Inter Parfums"
+  },
+  "rows": [
+    {
+      "ja": "ブランドのライセンス元(主力)",
+      "en": "Brand licensors (largest brands)",
+      "above": true
+    },
+    {
+      "ja": "ブランドのライセンス元(その他)",
+      "en": "Other brand licensors"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "TPR",
+      "ticker": "TPR",
+      "name": "タペストリー",
+      "name_en": "Tapestry (Coach)",
+      "sub": "ファッション",
+      "sub_en": "Fashion",
+      "sub_short": "衣料",
+      "sub_short_en": "Fashion",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Coachブランドの香水を展開(CoachはTapestry傘下)",
+          "text_en": "Makes Coach fragrances; Coach is a Tapestry brand",
+          "source": {
+            "label": "Inter Parfums 10-K(2025年度)",
+            "label_en": "Inter Parfums 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/822663/000175392626000464/ipar-20251231.htm",
+            "level": "official",
+            "date": "2026-03-10",
+            "quote": "Coach is part of the Tapestry house of brands."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CPRI",
+      "ticker": "CPRI",
+      "name": "カプリ・ホールディングス",
+      "name_en": "Capri Holdings (Jimmy Choo)",
+      "sub": "ファッション",
+      "sub_en": "Fashion",
+      "sub_short": "衣料",
+      "sub_short_en": "Fashion",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Jimmy Chooの香水を展開(Jimmy ChooはCapri傘下)",
+          "text_en": "Makes Jimmy Choo fragrances; Jimmy Choo is a Capri brand",
+          "source": {
+            "label": "Inter Parfums 10-K(2025年度)",
+            "label_en": "Inter Parfums 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/822663/000175392626000464/ipar-20251231.htm",
+            "level": "official",
+            "date": "2026-03-10",
+            "quote": "Jimmy Choo is part of the Capri Holdings luxury fashion group."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GIII",
+      "ticker": "GIII",
+      "name": "G-IIIアパレル",
+      "name_en": "G-III Apparel (Donna Karan/DKNY)",
+      "sub": "アパレル",
+      "sub_en": "Apparel",
+      "sub_short": "アパレル",
+      "sub_short_en": "Apparel",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Donna Karan・DKNYの香水を展開(G-III傘下のブランド)",
+          "text_en": "Makes Donna Karan and DKNY fragrances; both are G-III brands",
+          "source": {
+            "label": "Inter Parfums 10-K(2025年度)",
+            "label_en": "Inter Parfums 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/822663/000175392626000464/ipar-20251231.htm",
+            "level": "official",
+            "date": "2026-03-10",
+            "quote": "Donna Karan and DKNY are part of the G-III house of brands."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GES",
+      "ticker": "GES",
+      "name": "ゲス",
+      "name_en": "GUESS",
+      "sub": "アパレル",
+      "sub_en": "Apparel",
+      "sub_short": "アパレル",
+      "sub_short_en": "Apparel",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "主力ブランドGUESSのライセンス元",
+          "text_en": "Licenses it the GUESS brand, one of its largest",
+          "source": {
+            "label": "Inter Parfums 10-K(2025年度)",
+            "label_en": "Inter Parfums 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/822663/000175392626000464/ipar-20251231.htm",
+            "level": "official",
+            "date": "2026-03-10",
+            "quote": "With respect to the Company's largest brands, we license the Jimmy Choo, Coach, Montblanc, GUESS, Lacoste, Donna Karan/DKNY and Ferragamo brand names."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CFR",
+      "ticker": "Richemont",
+      "name": "リシュモン",
+      "name_en": "Richemont (Montblanc)",
+      "sub": "高級品(スイス)",
+      "sub_en": "Luxury goods (Switzerland)",
+      "sub_short": "高級品",
+      "sub_short_en": "Luxury",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "主力ブランドMontblancのライセンス元",
+          "text_en": "Licenses it Montblanc, one of its largest brands",
+          "source": {
+            "label": "Inter Parfums 10-K(2025年度)",
+            "label_en": "Inter Parfums 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/822663/000175392626000464/ipar-20251231.htm",
+            "level": "official",
+            "date": "2026-03-10",
+            "quote": "With respect to the Company's largest brands, we license the Jimmy Choo, Coach, Montblanc, GUESS, Lacoste, Donna Karan/DKNY and Ferragamo brand names."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Lacoste",
+      "ticker": "Lacoste",
+      "name": "ラコステ",
+      "name_en": "Lacoste",
+      "sub": "アパレル(フランス)",
+      "sub_en": "Apparel (France)",
+      "sub_short": "アパレル",
+      "sub_short_en": "Apparel",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "主力ブランドLacosteのライセンス元",
+          "text_en": "Licenses it Lacoste, one of its largest brands",
+          "source": {
+            "label": "Inter Parfums 10-K(2025年度)",
+            "label_en": "Inter Parfums 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/822663/000175392626000464/ipar-20251231.htm",
+            "level": "official",
+            "date": "2026-03-10",
+            "quote": "With respect to the Company's largest brands, we license the Jimmy Choo, Coach, Montblanc, GUESS, Lacoste, Donna Karan/DKNY and Ferragamo brand names."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SFER",
+      "ticker": "Ferragamo",
+      "name": "フェラガモ",
+      "name_en": "Ferragamo",
+      "sub": "高級品(イタリア)",
+      "sub_en": "Luxury goods (Italy)",
+      "sub_short": "高級品",
+      "sub_short_en": "Luxury",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "主力ブランドFerragamoのライセンス元",
+          "text_en": "Licenses it Ferragamo, one of its largest brands",
+          "source": {
+            "label": "Inter Parfums 10-K(2025年度)",
+            "label_en": "Inter Parfums 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/822663/000175392626000464/ipar-20251231.htm",
+            "level": "official",
+            "date": "2026-03-10",
+            "quote": "With respect to the Company's largest brands, we license the Jimmy Choo, Coach, Montblanc, GUESS, Lacoste, Donna Karan/DKNY and Ferragamo brand names."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ANF",
+      "ticker": "ANF",
+      "name": "アバクロンビー&フィッチ",
+      "name_en": "Abercrombie & Fitch",
+      "sub": "アパレル",
+      "sub_en": "Apparel",
+      "sub_short": "アパレル",
+      "sub_short_en": "Apparel",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Abercrombie & Fitch・Hollisterの香水ライセンス(2028年3月まで)",
+          "text_en": "Abercrombie & Fitch and Hollister fragrance license (to March 2028)",
+          "source": {
+            "label": "Inter Parfums 10-K(2025年度)",
+            "label_en": "Inter Parfums 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/822663/000175392626000464/ipar-20251231.htm",
+            "level": "official",
+            "date": "2026-03-10",
+            "quote": "our existing Abercrombie & Fitch and Hollister fragrance license agreement will expire on March 14, 2028."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Longchamp",
+      "ticker": "Longchamp",
+      "name": "ロンシャン",
+      "name_en": "Longchamp",
+      "sub": "高級バッグ(フランス)",
+      "sub_en": "Luxury bags (France)",
+      "sub_short": "バッグ",
+      "sub_short_en": "Luxury",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "香水の独占ライセンス契約(2025年7月、2036年まで)",
+          "text_en": "Exclusive fragrance license (July 2025, through 2036)",
+          "source": {
+            "label": "Inter Parfums 10-K(2025年度)",
+            "label_en": "Inter Parfums 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/822663/000175392626000464/ipar-20251231.htm",
+            "level": "official",
+            "date": "2026-03-10",
+            "quote": "Longchamp - In July 2025, we signed an exclusive license agreement with Longchamp, through December 31, 2036."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

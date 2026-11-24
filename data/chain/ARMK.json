@@ -1,0 +1,216 @@
+{
+  "root": {
+    "ticker": "ARMK",
+    "name": "アラマーク",
+    "cik": 1584509,
+    "name_en": "Aramark"
+  },
+  "rows": [
+    {
+      "ja": "分離・顧客",
+      "en": "Spin-off & customer"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in its 10-K)"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "CVEO",
+    "BNED",
+    "MTN"
+  ],
+  "companies": [
+    {
+      "id": "VSTS",
+      "ticker": "VSTS",
+      "name": "ベスティス",
+      "name_en": "Vestis",
+      "sub": "ユニフォーム",
+      "sub_en": "Uniforms",
+      "sub_short": "制服",
+      "sub_short_en": "Uniforms",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ユニフォーム部門を分離・独立させた会社(2023年9月)",
+          "text_en": "Its uniform segment, spun off in September 2023",
+          "source": {
+            "label": "Aramark 10-K(2025年9月期)",
+            "label_en": "Aramark 10-K (FY ended Oct 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1584509/000158450925000219/cik0-20251003.htm",
+            "level": "official",
+            "date": "2025-11-25",
+            "quote": "On September 30, 2023, the Company completed the separation and distribution of its Uniform segment into an independent publicly traded company, Vestis."
+          }
+        }
+      ]
+    },
+    {
+      "id": "VENU",
+      "ticker": "VENU",
+      "name": "ベニュー・ホールディング",
+      "name_en": "Venu Holding",
+      "sub": "野外劇場",
+      "sub_en": "Amphitheaters",
+      "sub_short": "野外劇場",
+      "sub_short_en": "Venues",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "野外劇場の飲食・物販・施設管理を受託(2025年6月)",
+          "text_en": "Won food, retail and facilities contracts at its amphitheaters (June 2025)",
+          "source": {
+            "label": "Venu Holding 10-K(2025年度)",
+            "label_en": "Venu Holding 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1770501/000149315226014137/form10-k.htm",
+            "level": "official",
+            "date": "2026-03-31",
+            "quote": "June 2025: Venu awarded Aramark Sports + Entertainment the contracts for food & beverage concessions"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CPG.L",
+      "ticker": "Compass Group",
+      "name": "コンパス・グループ",
+      "name_en": "Compass Group",
+      "sub": "給食・施設サービス(英国)",
+      "sub_en": "Food & support services (UK)",
+      "sub_short": "給食",
+      "sub_short_en": "Catering",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "国内外の主な競合",
+          "text_en": "A main competitor in the U.S. and abroad",
+          "source": {
+            "label": "Aramark 10-K(2025年9月期)",
+            "label_en": "Aramark 10-K (FY ended Oct 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1584509/000158450925000219/cik0-20251003.htm",
+            "level": "official",
+            "date": "2025-11-25",
+            "quote": "Internationally, our external food service and support service competitors include Compass Group plc, Elior SA, ISS and Sodexo SA."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SW.PA",
+      "ticker": "Sodexo",
+      "name": "ソデクソ",
+      "name_en": "Sodexo",
+      "sub": "給食・施設サービス(フランス)",
+      "sub_en": "Food & support services (France)",
+      "sub_short": "給食",
+      "sub_short_en": "Catering",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "国内外の主な競合",
+          "text_en": "A main competitor in the U.S. and abroad",
+          "source": {
+            "label": "Aramark 10-K(2025年9月期)",
+            "label_en": "Aramark 10-K (FY ended Oct 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1584509/000158450925000219/cik0-20251003.htm",
+            "level": "official",
+            "date": "2025-11-25",
+            "quote": "Internationally, our external food service and support service competitors include Compass Group plc, Elior SA, ISS and Sodexo SA."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CVEO",
+      "ticker": "CVEO",
+      "name": "シベオ",
+      "name_en": "Civeo",
+      "sub": "宿泊施設サービス",
+      "sub_en": "Workforce accommodation",
+      "sub_short": "宿泊",
+      "sub_short_en": "Housing",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Civeoが10-Kで、カナダの施設サービスの競合として挙げる",
+          "text_en": "Civeo names Aramark among Canadian facility services competitors",
+          "source": {
+            "label": "Civeo 10-K(2024年度)",
+            "label_en": "Civeo 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1590584/000159058425000037/cveo-20241231.htm",
+            "level": "official",
+            "date": "2025-02-27",
+            "quote": "In Canada, we also compete against Aramark, Sodexo, Compass Group and Royal Camp Services"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BNED",
+      "ticker": "BNED",
+      "name": "バーンズ&ノーブル・エデュケーション",
+      "name_en": "Barnes & Noble Education",
+      "sub": "大学書店",
+      "sub_en": "Campus bookstores",
+      "sub_short": "大学書店",
+      "sub_short_en": "Stores",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "BNEDが10-Kで、大学のカフェ契約の競合として挙げる",
+          "text_en": "BNED names Aramark among competitors for institutional cafe contracts",
+          "source": {
+            "label": "Barnes & Noble Education 10-K(2026年4月期)",
+            "label_en": "Barnes & Noble Education 10-K (FY ended Apr 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1634117/000163411726000070/bned-20260502.htm",
+            "level": "official",
+            "date": "2026-07-09",
+            "quote": "Competitors for institutional contracts for our cafe and convenience general merchandise offerings include Sodexo and Aramark."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MTN",
+      "ticker": "MTN",
+      "name": "ベイル・リゾーツ",
+      "name_en": "Vail Resorts",
+      "sub": "スキーリゾート",
+      "sub_en": "Ski resorts",
+      "sub_short": "スキー場",
+      "sub_short_en": "Skiing",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Vailが10-Kで、国立公園の営業権の競合として挙げる",
+          "text_en": "Vail names Aramark among competitors for national park concessions",
+          "source": {
+            "label": "Vail Resorts 10-K(2026年7月期)",
+            "label_en": "Vail Resorts 10-K (FY ended Jul 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/812011/000081201126000049/mtn-20260731.htm",
+            "level": "official",
+            "date": "2026-09-28",
+            "quote": "We primarily compete with such companies as Aramark Parks & Resorts, Delaware North Companies Parks & Resorts"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

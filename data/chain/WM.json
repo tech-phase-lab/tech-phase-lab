@@ -33,6 +33,8 @@
       "name_en": "Stericycle",
       "sub": "医療廃棄物処理",
       "sub_en": "Medical waste",
+      "sub_short": "医療廃棄",
+      "sub_short_en": "Waste",
       "row": 0,
       "relations": [
         {
@@ -57,6 +59,8 @@
       "name_en": "Montauk Renewables",
       "sub": "再生可能天然ガス",
       "sub_en": "Renewable natural gas",
+      "sub_short": "再生ガス",
+      "sub_short_en": "Biogas",
       "row": 1,
       "relations": [
         {
@@ -81,6 +85,8 @@
       "name_en": "OPAL Fuels",
       "sub": "再生可能天然ガス",
       "sub_en": "Renewable natural gas",
+      "sub_short": "再生ガス",
+      "sub_short_en": "Biogas",
       "row": 1,
       "relations": [
         {
@@ -105,6 +111,8 @@
       "name_en": "Waste Connections",
       "sub": "廃棄物処理",
       "sub_en": "Waste services",
+      "sub_short": "廃棄物",
+      "sub_short_en": "Waste",
       "row": 2,
       "relations": [
         {
@@ -129,6 +137,8 @@
       "name_en": "Clean Harbors",
       "sub": "産業廃棄物処理",
       "sub_en": "Environmental services",
+      "sub_short": "廃棄物",
+      "sub_short_en": "Eco svcs",
       "row": 2,
       "relations": [
         {
@@ -153,6 +163,8 @@
       "name_en": "Casella Waste Systems",
       "sub": "廃棄物処理",
       "sub_en": "Waste services",
+      "sub_short": "廃棄物",
+      "sub_short_en": "Waste",
       "row": 2,
       "relations": [
         {
@@ -177,6 +189,8 @@
       "name_en": "Quest Resource",
       "sub": "廃棄物・リサイクル管理",
       "sub_en": "Waste & recycling management",
+      "sub_short": "廃棄物",
+      "sub_short_en": "Waste",
       "row": 2,
       "relations": [
         {
@@ -201,6 +215,8 @@
       "name_en": "PureBase",
       "sub": "農業・建材用鉱物",
       "sub_en": "Agricultural & construction minerals",
+      "sub_short": "鉱物",
+      "sub_short_en": "Minerals",
       "row": 2,
       "relations": [
         {

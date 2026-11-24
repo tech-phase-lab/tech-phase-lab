@@ -1,0 +1,295 @@
+{
+  "root": {
+    "ticker": "GOLF",
+    "name": "アクシネット",
+    "cik": 1672013,
+    "name_en": "Acushnet"
+  },
+  "rows": [
+    {
+      "ja": "旧親会社・買収者",
+      "en": "Former parent & acquirer",
+      "above": true
+    },
+    {
+      "ja": "ゴルフシューズの競合",
+      "en": "Golf shoe competitors"
+    },
+    {
+      "ja": "ゴルフ用品の主な競合",
+      "en": "Main golf equipment competitors"
+    }
+  ],
+  "rivals": [
+    "Callaway",
+    "TaylorMade",
+    "Ping"
+  ],
+  "companies": [
+    {
+      "id": "Fila",
+      "ticker": "Fila Holdings",
+      "name": "FILAホールディングス",
+      "name_en": "Fila Holdings",
+      "sub": "スポーツ用品(韓)",
+      "sub_en": "Sportswear (Korea)",
+      "sub_short": "スポーツ",
+      "sub_short_en": "Apparel",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2011年に投資家と共同でアクシネットを買収",
+          "text_en": "Bought Acushnet with financial investors in 2011",
+          "source": {
+            "label": "Acushnet 10-K(2025年度)",
+            "label_en": "Acushnet 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1672013/000167201326000057/golf-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "In July 2011, Acushnet Holdings Corp. (at the time known as Alexandria Holdings Corp.), an entity owned by Misto Holdings Corp. (at the time known as Fila Korea Co., Ltd.) , and certain financial investors, acquired Acushnet Company from Beam."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Beam",
+      "ticker": "Beam Suntory",
+      "name": "ビーム・サントリー",
+      "name_en": "Beam Suntory",
+      "sub": "酒類(旧親会社)",
+      "sub_en": "Spirits (former parent)",
+      "sub_short": "酒類",
+      "sub_short_en": "Spirits",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "旧親会社(2011年にアクシネットを売却)",
+          "text_en": "Former parent that sold Acushnet in 2011",
+          "source": {
+            "label": "Acushnet 10-K(2025年度)",
+            "label_en": "Acushnet 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1672013/000167201326000057/golf-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "In July 2011, Acushnet Holdings Corp. (at the time known as Alexandria Holdings Corp.), an entity owned by Misto Holdings Corp. (at the time known as Fila Korea Co., Ltd.) , and certain financial investors, acquired Acushnet Company from Beam."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NKE",
+      "ticker": "NKE",
+      "name": "ナイキ",
+      "name_en": "Nike",
+      "sub": "スポーツ用品",
+      "sub_en": "Sportswear",
+      "sub_short": "スポーツ",
+      "sub_short_en": "Apparel",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ゴルフシューズの競合",
+          "text_en": "Golf shoe competitor",
+          "source": {
+            "label": "Acushnet 10-K(2025年度)",
+            "label_en": "Acushnet 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1672013/000167201326000057/golf-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "FootJoy's significant worldwide competitors in golf shoes include Nike, Adidas and Ecco."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Adidas",
+      "ticker": "Adidas",
+      "name": "アディダス",
+      "name_en": "Adidas",
+      "sub": "スポーツ用品(独)",
+      "sub_en": "Sportswear (Germany)",
+      "sub_short": "スポーツ",
+      "sub_short_en": "Apparel",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ゴルフシューズの競合",
+          "text_en": "Golf shoe competitor",
+          "source": {
+            "label": "Acushnet 10-K(2025年度)",
+            "label_en": "Acushnet 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1672013/000167201326000057/golf-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "FootJoy's significant worldwide competitors in golf shoes include Nike, Adidas and Ecco."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Ecco",
+      "ticker": "Ecco",
+      "name": "エコー",
+      "name_en": "Ecco",
+      "sub": "靴(デンマーク、非上場)",
+      "sub_en": "Footwear (Denmark, private)",
+      "sub_short": "靴",
+      "sub_short_en": "Footwear",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ゴルフシューズの競合",
+          "text_en": "Golf shoe competitor",
+          "source": {
+            "label": "Acushnet 10-K(2025年度)",
+            "label_en": "Acushnet 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1672013/000167201326000057/golf-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "FootJoy's significant worldwide competitors in golf shoes include Nike, Adidas and Ecco."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Callaway",
+      "ticker": "Callaway",
+      "name": "キャロウェイ",
+      "name_en": "Callaway",
+      "sub": "ゴルフ用品",
+      "sub_en": "Golf equipment",
+      "sub_short": "ゴルフ",
+      "sub_short_en": "Golf",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ゴルフ用品の大手競合",
+          "text_en": "Major golf equipment competitor",
+          "source": {
+            "label": "Acushnet 10-K(2025年度)",
+            "label_en": "Acushnet 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1672013/000167201326000057/golf-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "There are a number of well‐established and well‐financed competitors, including Callaway, TaylorMade, Karsten Manufacturing Corporation (\"Ping\"), SRI Sports Limited (Dunlop and Srixon brands) and Bridgestone (Bridgestone and Precept brands)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TaylorMade",
+      "ticker": "TaylorMade",
+      "name": "テーラーメイド",
+      "name_en": "TaylorMade",
+      "sub": "ゴルフ用品(非上場)",
+      "sub_en": "Golf equipment (private)",
+      "sub_short": "ゴルフ",
+      "sub_short_en": "Golf",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ゴルフ用品の大手競合",
+          "text_en": "Major golf equipment competitor",
+          "source": {
+            "label": "Acushnet 10-K(2025年度)",
+            "label_en": "Acushnet 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1672013/000167201326000057/golf-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "There are a number of well‐established and well‐financed competitors, including Callaway, TaylorMade, Karsten Manufacturing Corporation (\"Ping\"), SRI Sports Limited (Dunlop and Srixon brands) and Bridgestone (Bridgestone and Precept brands)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Ping",
+      "ticker": "Ping",
+      "name": "ピン",
+      "name_en": "Ping (Karsten Manufacturing)",
+      "sub": "ゴルフ用品(非上場)",
+      "sub_en": "Golf equipment (private)",
+      "sub_short": "ゴルフ",
+      "sub_short_en": "Golf",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ゴルフ用品の大手競合",
+          "text_en": "Major golf equipment competitor",
+          "source": {
+            "label": "Acushnet 10-K(2025年度)",
+            "label_en": "Acushnet 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1672013/000167201326000057/golf-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "There are a number of well‐established and well‐financed competitors, including Callaway, TaylorMade, Karsten Manufacturing Corporation (\"Ping\"), SRI Sports Limited (Dunlop and Srixon brands) and Bridgestone (Bridgestone and Precept brands)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SRI",
+      "ticker": "Sumitomo Rubber",
+      "name": "住友ゴム工業(スリクソン)",
+      "name_en": "Sumitomo Rubber (Srixon)",
+      "sub": "タイヤ・ゴルフ用品",
+      "sub_en": "Tires & golf equipment",
+      "sub_short": "タイヤ",
+      "sub_short_en": "Tires",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ダンロップ・スリクソンでゴルフ用品の競合",
+          "text_en": "Competes with its Dunlop and Srixon brands",
+          "source": {
+            "label": "Acushnet 10-K(2025年度)",
+            "label_en": "Acushnet 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1672013/000167201326000057/golf-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "There are a number of well‐established and well‐financed competitors, including Callaway, TaylorMade, Karsten Manufacturing Corporation (\"Ping\"), SRI Sports Limited (Dunlop and Srixon brands) and Bridgestone (Bridgestone and Precept brands)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Bridgestone",
+      "ticker": "Bridgestone",
+      "name": "ブリヂストン",
+      "name_en": "Bridgestone",
+      "sub": "タイヤ・ゴルフ用品",
+      "sub_en": "Tires & golf equipment",
+      "sub_short": "タイヤ",
+      "sub_short_en": "Tires",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ゴルフ用品の競合",
+          "text_en": "Golf equipment competitor",
+          "source": {
+            "label": "Acushnet 10-K(2025年度)",
+            "label_en": "Acushnet 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1672013/000167201326000057/golf-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "There are a number of well‐established and well‐financed competitors, including Callaway, TaylorMade, Karsten Manufacturing Corporation (\"Ping\"), SRI Sports Limited (Dunlop and Srixon brands) and Bridgestone (Bridgestone and Precept brands)."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

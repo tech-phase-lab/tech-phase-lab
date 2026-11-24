@@ -1,0 +1,216 @@
+{
+  "root": {
+    "ticker": "CYTK",
+    "name": "サイトキネティクス",
+    "cik": 1061983,
+    "name_en": "Cytokinetics"
+  },
+  "rows": [
+    {
+      "ja": "提携・ライセンス・資金",
+      "en": "Partners, licensees & funding"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in its 10-K)"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "BMY",
+    "EWTX",
+    "TNYA"
+  ],
+  "companies": [
+    {
+      "id": "SNY",
+      "ticker": "SNY",
+      "name": "サノフィ",
+      "name_en": "Sanofi",
+      "sub": "医薬品(フランス)",
+      "sub_en": "Pharmaceuticals (France)",
+      "sub_short": "医薬品",
+      "sub_short_en": "Pharma",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "中国でのMYQORZOの販売を担う。承認で1,500万ドルのマイルストーン",
+          "text_en": "Commercializes MYQORZO in China; paid $15 million in approval milestones",
+          "source": {
+            "label": "Cytokinetics 10-K(2025年度)",
+            "label_en": "Cytokinetics 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1061983/000119312526076495/cytk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "We depend on Sanofi for commercialization of MYQORZO in China."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BAYN",
+      "ticker": "Bayer",
+      "name": "バイエル",
+      "name_en": "Bayer",
+      "sub": "医薬・農業(ドイツ)",
+      "sub_en": "Pharma & crop science (Germany)",
+      "sub_short": "医薬",
+      "sub_short_en": "Pharma",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "日本でaficamtenの第3相試験を実施",
+          "text_en": "Runs a Phase 3 aficamten trial in Japan",
+          "source": {
+            "label": "Cytokinetics 10-K(2025年度)",
+            "label_en": "Cytokinetics 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1061983/000119312526076495/cytk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "The first patient was dosed in Bayer's Phase 3 clinical trial in oHCM, CAMELLIA-HCM, in Japan in the third quarter of 2025."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMGN",
+      "ticker": "AMGN",
+      "name": "アムジェン",
+      "name_en": "Amgen",
+      "sub": "バイオ医薬品",
+      "sub_en": "Biopharmaceuticals",
+      "sub_short": "バイオ",
+      "sub_short_en": "Pharma",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "omecamtiv mecarbilの第3相試験GALACTIC-HFを共同で実施",
+          "text_en": "Ran the GALACTIC-HF Phase 3 trial of omecamtiv mecarbil in collaboration",
+          "source": {
+            "label": "Cytokinetics 10-K(2025年度)",
+            "label_en": "Cytokinetics 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1061983/000119312526076495/cytk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "GALACTIC-HF GALACTIC-HF is a Phase 3 cardiovascular outcomes clinical trial of omecamtiv mecarbil that was conducted by Amgen in collaboration with Cytokinetics."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RPRX",
+      "ticker": "RPRX",
+      "name": "ロイヤルティ・ファーマ",
+      "name_en": "Royalty Pharma",
+      "sub": "医薬品ロイヤルティ",
+      "sub_en": "Drug royalties",
+      "sub_short": "医薬権益",
+      "sub_short_en": "Royalties",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "omecamtiv mecarbilの第3相試験に1億ドルを資金提供",
+          "text_en": "Provided $100 million for the omecamtiv mecarbil Phase 3 trial",
+          "source": {
+            "label": "Royalty Pharma 10-K(2024年度)",
+            "label_en": "Royalty Pharma 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1802768/000180276825000010/rprx-20241231.htm",
+            "level": "official",
+            "date": "2025-02-12",
+            "quote": "we provided funding of $ 100 million (\"Cytokinetics Development Funding\") for Cytokinetics' Phase 3 clinical trial of omecamtiv mecarbil"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BMY",
+      "ticker": "BMY",
+      "name": "ブリストル・マイヤーズ スクイブ",
+      "name_en": "Bristol Myers Squibb",
+      "sub": "医薬品",
+      "sub_en": "Pharmaceuticals",
+      "sub_short": "医薬品",
+      "sub_short_en": "Pharma",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "同じ作用の開発品MYK-224で競合",
+          "text_en": "Competes with its in-class candidate MYK-224",
+          "source": {
+            "label": "Cytokinetics 10-K(2025年度)",
+            "label_en": "Cytokinetics 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1061983/000119312526076495/cytk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "In-class competitive agents that are currently in development include Bristol Myers Squibb's MYK-224, Shandong's HRS-1893 and Edgewise's EDG-15400."
+          }
+        }
+      ]
+    },
+    {
+      "id": "EWTX",
+      "ticker": "EWTX",
+      "name": "エッジワイズ・セラピューティクス",
+      "name_en": "Edgewise Therapeutics",
+      "sub": "心筋・筋疾患薬",
+      "sub_en": "Cardiac & muscle drugs",
+      "sub_short": "心臓薬",
+      "sub_short_en": "Cardiac",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "同じ作用の開発品EDG-15400で競合",
+          "text_en": "Competes with its in-class candidate EDG-15400",
+          "source": {
+            "label": "Cytokinetics 10-K(2025年度)",
+            "label_en": "Cytokinetics 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1061983/000119312526076495/cytk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "In-class competitive agents that are currently in development include Bristol Myers Squibb's MYK-224, Shandong's HRS-1893 and Edgewise's EDG-15400."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TNYA",
+      "ticker": "TNYA",
+      "name": "テナヤ・セラピューティクス",
+      "name_en": "Tenaya Therapeutics",
+      "sub": "心疾患の遺伝子治療",
+      "sub_en": "Cardiac gene therapy",
+      "sub_short": "遺伝子",
+      "sub_short_en": "Cardiac",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Tenayaが10-Kで、Myqorzoを競合の一つとして挙げる",
+          "text_en": "Tenaya names Myqorzo among competing treatments",
+          "source": {
+            "label": "Tenaya Therapeutics 10-K(2025年度)",
+            "label_en": "Tenaya Therapeutics 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1858848/000119312526102252/tnya-20251231.htm",
+            "level": "official",
+            "date": "2026-03-11",
+            "quote": "we may face competition from treatments for both nHCM and oHCM, including Bristol Myers Squibb's myosin inhibitor Camzyos and Cytokinetics' Myqorzo."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

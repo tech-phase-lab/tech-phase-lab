@@ -36,6 +36,8 @@
       "name": "Amazon(AWS)",
       "sub": "クラウド",
       "sub_en": "Cloud",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 0,
       "relations": [
         {
@@ -91,6 +93,8 @@
       "name": "Microsoft",
       "sub": "クラウド・ソフト",
       "sub_en": "Cloud & software",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 0,
       "relations": [
         {
@@ -142,6 +146,8 @@
       "name": "Alphabet(Google Cloud)",
       "sub": "クラウド",
       "sub_en": "Cloud",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 0,
       "relations": [
         {
@@ -197,6 +203,8 @@
       "name": "Anthropic",
       "sub": "生成AI",
       "sub_en": "Generative AI",
+      "sub_short": "生成AI",
+      "sub_short_en": "AI",
       "row": 0,
       "relations": [
         {
@@ -252,6 +260,8 @@
       "name": "OpenAI",
       "sub": "生成AI",
       "sub_en": "Generative AI",
+      "sub_short": "生成AI",
+      "sub_short_en": "AI",
       "row": 0,
       "relations": [
         {
@@ -292,6 +302,8 @@
       "name": "LSEG",
       "sub": "金融データ",
       "sub_en": "Financial data",
+      "sub_short": "金融情報",
+      "sub_short_en": "Fin data",
       "row": 1,
       "relations": [
         {
@@ -328,6 +340,8 @@
       "name": "NVIDIA",
       "sub": "AI半導体",
       "sub_en": "AI chips",
+      "sub_short": "AI半導体",
+      "sub_short_en": "AI chips",
       "row": 2,
       "relations": [
         {
@@ -351,6 +365,8 @@
       "name": "Palantir Technologies",
       "sub": "データ分析ソフト",
       "sub_en": "Data analytics software",
+      "sub_short": "分析",
+      "sub_short_en": "Analytics",
       "row": 2,
       "relations": [
         {
@@ -374,6 +390,8 @@
       "name": "SAP",
       "sub": "業務ソフト",
       "sub_en": "Enterprise software",
+      "sub_short": "業務IT",
+      "sub_short_en": "Software",
       "row": 2,
       "relations": [
         {
@@ -410,6 +428,8 @@
       "name": "ServiceNow",
       "sub": "業務ソフト",
       "sub_en": "Enterprise software",
+      "sub_short": "業務IT",
+      "sub_short_en": "Software",
       "row": 2,
       "relations": [
         {
@@ -435,6 +455,8 @@
       "name": "Salesforce",
       "sub": "業務ソフト",
       "sub_en": "Enterprise software",
+      "sub_short": "業務IT",
+      "sub_short_en": "Software",
       "row": 2,
       "relations": [
         {
@@ -460,6 +482,8 @@
       "name": "FactSet Research Systems",
       "sub": "金融データ",
       "sub_en": "Financial data",
+      "sub_short": "金融情報",
+      "sub_short_en": "Fin data",
       "row": 2,
       "relations": [
         {
@@ -483,6 +507,8 @@
       "name": "MSCI",
       "sub": "指数・金融データ",
       "sub_en": "Indexes & financial data",
+      "sub_short": "指数",
+      "sub_short_en": "Indexes",
       "row": 2,
       "relations": [
         {
@@ -506,6 +532,8 @@
       "name": "Nasdaq",
       "sub": "取引所・金融データ",
       "sub_en": "Exchange & financial data",
+      "sub_short": "取引所",
+      "sub_short_en": "Exchange",
       "row": 2,
       "relations": [
         {
@@ -529,6 +557,8 @@
       "name": "C3.ai",
       "sub": "企業向けAIソフト",
       "sub_en": "Enterprise AI software",
+      "sub_short": "AIソフト",
+      "sub_short_en": "AI apps",
       "row": 2,
       "relations": [
         {
@@ -554,6 +584,8 @@
       "name": "Teradata",
       "sub": "データ基盤",
       "sub_en": "Data platforms",
+      "sub_short": "データ",
+      "sub_short_en": "Data",
       "row": 3,
       "relations": [
         {

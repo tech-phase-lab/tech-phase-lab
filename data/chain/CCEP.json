@@ -25,6 +25,8 @@
       "name_en": "The Coca-Cola Company",
       "sub": "飲料ブランド",
       "sub_en": "Beverage brands",
+      "sub_short": "飲料",
+      "sub_short_en": "Drinks",
       "row": 0,
       "relations": [
         {
@@ -62,6 +64,8 @@
       "name_en": "Monster Beverage",
       "sub": "エナジードリンク",
       "sub_en": "Energy drinks",
+      "sub_short": "飲料",
+      "sub_short_en": "Drinks",
       "row": 1,
       "relations": [
         {

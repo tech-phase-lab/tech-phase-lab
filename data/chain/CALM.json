@@ -1,0 +1,162 @@
+{
+  "root": {
+    "ticker": "CALM",
+    "name": "カルメイン・フーズ",
+    "cik": 16160,
+    "name_en": "Cal-Maine Foods"
+  },
+  "rows": [
+    {
+      "ja": "最大の顧客",
+      "en": "Largest customer"
+    },
+    {
+      "ja": "買収・出資",
+      "en": "Acquisitions & investment"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "VITL"
+  ],
+  "companies": [
+    {
+      "id": "WMT",
+      "ticker": "WMT",
+      "name": "ウォルマート",
+      "name_en": "Walmart",
+      "sub": "小売",
+      "sub_en": "Retail",
+      "sub_short": "小売",
+      "sub_short_en": "Retail",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大の顧客(サムズクラブを含め売上の30.0%)",
+          "text_en": "Largest customer (30.0% of net sales, including Sam's Club)",
+          "source": {
+            "label": "Cal-Maine Foods 10-K(2026年5月期)",
+            "label_en": "Cal-Maine Foods 10-K (FY ended May 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/16160/000156276226000080/calm2026053010K.htm",
+            "level": "official",
+            "date": "2026-07-22",
+            "quote": "Our largest customer, Walmart Inc. (including Sam's Club), accounted for 30.0%, 33.6% and 34.0% of net sales dollars for fiscal 2026, 2025 and 2024, respectively."
+          }
+        }
+      ]
+    },
+    {
+      "id": "EchoLake",
+      "ticker": "Echo Lake Foods",
+      "name": "エコー・レイク・フーズ",
+      "name_en": "Echo Lake Foods",
+      "sub": "卵加工食品",
+      "sub_en": "Egg-based foods",
+      "sub_short": "卵製品",
+      "sub_short_en": "Eggs",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Echo Lake Foodsを約2.895億ドルで買収(2025年6月)",
+          "text_en": "Acquired Echo Lake Foods for about $289.5 million (June 2025)",
+          "source": {
+            "label": "Cal-Maine Foods 10-K(2026年5月期)",
+            "label_en": "Cal-Maine Foods 10-K (FY ended May 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/16160/000156276226000080/calm2026053010K.htm",
+            "level": "official",
+            "date": "2026-07-22",
+            "quote": "Effective June 2, 2025, we acquired Echo Lake Foods, LLC and certain related companies (collectively \"Echo Lake Foods\") for approximately $289.5 million."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Crepini",
+      "ticker": "Crepini",
+      "name": "クレピーニ",
+      "name_en": "Crepini Foods",
+      "sub": "卵製品・調理食品",
+      "sub_en": "Egg products & prepared foods",
+      "sub_short": "卵製品",
+      "sub_short_en": "Eggs",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Crepiniへ戦略出資し、卵製品・調理食品の事業を設立",
+          "text_en": "Strategic investment forming an egg products and prepared foods venture",
+          "source": {
+            "label": "Cal-Maine Foods 10-K(2026年5月期)",
+            "label_en": "Cal-Maine Foods 10-K (FY ended May 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/16160/000156276226000080/calm2026053010K.htm",
+            "level": "official",
+            "date": "2026-07-22",
+            "quote": "During the second quarter of fiscal 2025, we completed a strategic investment with Crepini LLC, establishing a new egg products and prepared foods venture."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SaraLee",
+      "ticker": "Sara Lee Frozen Bakery",
+      "name": "サラ・リー・フローズン・ベーカリー",
+      "name_en": "Sara Lee Frozen Bakery",
+      "sub": "冷凍食品",
+      "sub_en": "Frozen foods",
+      "sub_short": "冷凍食品",
+      "sub_short_en": "Frozen",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "冷凍食品ブランドVan'sの事業を約2,480万ドルで取得(2026年5月)",
+          "text_en": "Bought its Van's frozen foods business for about $24.8 million (May 2026)",
+          "source": {
+            "label": "Cal-Maine Foods 10-K(2026年5月期)",
+            "label_en": "Cal-Maine Foods 10-K (FY ended May 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/16160/000156276226000080/calm2026053010K.htm",
+            "level": "official",
+            "date": "2026-07-22",
+            "quote": "Effective May 12, 2026, we acquired certain assets of the Van's Foods (\"Van 's\") business of Sara Lee Frozen Bakery, LLC for approximately $24.8 million."
+          }
+        }
+      ]
+    },
+    {
+      "id": "VITL",
+      "ticker": "VITL",
+      "name": "バイタル・ファームズ",
+      "name_en": "Vital Farms",
+      "sub": "放牧卵",
+      "sub_en": "Pasture-raised eggs",
+      "sub_short": "放牧卵",
+      "sub_short_en": "Eggs",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Vital Farmsが10-Kで、大手の卵会社の競合として挙げる",
+          "text_en": "Vital Farms names Cal-Maine among large egg competitors",
+          "source": {
+            "label": "Vital Farms 10-K(2025年度)",
+            "label_en": "Vital Farms 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1579733/000119312526073423/vitl-20251228.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "We compete with large egg companies such as Cal-Maine Foods, Inc. and large international food companies such as Ornua Co-operative Limited (Kerrygold)."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

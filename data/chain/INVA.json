@@ -1,0 +1,243 @@
+{
+  "root": {
+    "ticker": "INVA",
+    "name": "イノビバ",
+    "cik": 1080014,
+    "name_en": "Innoviva"
+  },
+  "rows": [
+    {
+      "ja": "ロイヤルティ・導入元・出資先",
+      "en": "Royalty partner, licensor & holdings",
+      "above": true
+    },
+    {
+      "ja": "競合する呼吸器薬の販売会社(10-Kに記載)",
+      "en": "Marketers of competing respiratory drugs (named in the 10-K)"
+    },
+    {
+      "ja": "主な競合",
+      "en": "Main competitors"
+    }
+  ],
+  "rivals": [
+    "AZN",
+    "BI",
+    "MRK"
+  ],
+  "companies": [
+    {
+      "id": "GSK",
+      "ticker": "GSK",
+      "name": "GSK",
+      "name_en": "GSK",
+      "sub": "製薬(英)",
+      "sub_en": "Pharmaceuticals (UK)",
+      "sub_short": "製薬",
+      "sub_short_en": "Pharma",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "呼吸器薬レルバー/ブレオの売上に応じたロイヤルティを支払う",
+          "text_en": "Pays royalties on RELVAR/BREO ELLIPTA sales",
+          "source": {
+            "label": "Innoviva 10-K(2025年度)",
+            "label_en": "Innoviva 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1080014/000119312526071776/inva-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Innoviva is entitled to receive royalties from GSK on sales of RELVAR ® /BREO ® ELLIPTA ® as follows: 15% on the first $3.0 billion of annual global net sales"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Basilea",
+      "ticker": "Basilea",
+      "name": "バジリア・ファーマシューティカ",
+      "name_en": "Basilea Pharmaceutica",
+      "sub": "製薬(スイス)",
+      "sub_en": "Pharmaceuticals (Switzerland)",
+      "sub_short": "製薬",
+      "sub_short_en": "Pharma",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "抗菌薬の米国販売権を導入(2025年第3四半期に発売)",
+          "text_en": "Licensed U.S. rights to an antibiotic launched in the third quarter of 2025",
+          "source": {
+            "label": "Innoviva 10-K(2025年度)",
+            "label_en": "Innoviva 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1080014/000119312526071776/inva-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "licensed from Basilea Pharmaceutica Ltd, Allschwil (SIX: BSLN) (\"Basilea\") for U.S. commercialization and commercially launched in the third quarter of 2025"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ARMP",
+      "ticker": "ARMP",
+      "name": "アルマタ・ファーマシューティカルズ",
+      "name_en": "Armata Pharmaceuticals",
+      "sub": "ファージ治療",
+      "sub_en": "Bacteriophage therapy",
+      "sub_short": "治療薬",
+      "sub_short_en": "Phage",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "大株主として出資",
+          "text_en": "Holds a significant stake",
+          "source": {
+            "label": "Innoviva 10-K(2025年度)",
+            "label_en": "Innoviva 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1080014/000119312526071776/inva-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "we own other strategic healthcare assets, such as a significant stake in Armata Pharmaceuticals, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TEVA",
+      "ticker": "TEVA",
+      "name": "テバ",
+      "name_en": "Teva",
+      "sub": "後発薬",
+      "sub_en": "Generics",
+      "sub_short": "後発薬",
+      "sub_short_en": "Generics",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "アドエアの後発品で競合",
+          "text_en": "Competes with a generic version of Advair",
+          "source": {
+            "label": "Innoviva 10-K(2025年度)",
+            "label_en": "Innoviva 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1080014/000119312526071776/inva-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "a non-substitutable generic version of Advair, marketed by TEVA"
+          }
+        }
+      ]
+    },
+    {
+      "id": "NVS",
+      "ticker": "NVS",
+      "name": "ノバルティス",
+      "name_en": "Novartis",
+      "sub": "製薬(スイス)",
+      "sub_en": "Pharmaceuticals (Switzerland)",
+      "sub_short": "製薬",
+      "sub_short_en": "Pharma",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合する吸入薬を販売",
+          "text_en": "Markets competing inhaled drugs",
+          "source": {
+            "label": "Innoviva 10-K(2025年度)",
+            "label_en": "Innoviva 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1080014/000119312526071776/inva-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "marketed by Novartis outside the U.S. and Sunovion in the U.S."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AZN",
+      "ticker": "AZN",
+      "name": "アストラゼネカ",
+      "name_en": "AstraZeneca",
+      "sub": "製薬(英)",
+      "sub_en": "Pharmaceuticals (UK)",
+      "sub_short": "製薬",
+      "sub_short_en": "Pharma",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "シムビコートなど競合する吸入薬を販売",
+          "text_en": "Markets competing inhalers such as Symbicort",
+          "source": {
+            "label": "Innoviva 10-K(2025年度)",
+            "label_en": "Innoviva 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1080014/000119312526071776/inva-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Symbicort ® (formoterol and budesonide as a combination) marketed by AstraZeneca"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BI",
+      "ticker": "Boehringer",
+      "name": "ベーリンガーインゲルハイム",
+      "name_en": "Boehringer Ingelheim",
+      "sub": "製薬(独、非上場)",
+      "sub_en": "Pharmaceuticals (Germany, private)",
+      "sub_short": "製薬",
+      "sub_short_en": "Pharma",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "スピリーバなど競合する吸入薬を販売",
+          "text_en": "Markets competing inhalers such as Spiriva",
+          "source": {
+            "label": "Innoviva 10-K(2025年度)",
+            "label_en": "Innoviva 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1080014/000119312526071776/inva-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Spiriva ® Respimat ® (tiotropium) marketed by Boehringer Ingelheim"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MRK",
+      "ticker": "MRK",
+      "name": "メルク",
+      "name_en": "Merck & Co.",
+      "sub": "製薬",
+      "sub_en": "Pharmaceuticals",
+      "sub_short": "製薬",
+      "sub_short_en": "Pharma",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "デュレラなど競合する吸入薬を販売",
+          "text_en": "Markets competing inhalers such as Dulera",
+          "source": {
+            "label": "Innoviva 10-K(2025年度)",
+            "label_en": "Innoviva 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1080014/000119312526071776/inva-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Dulera ® (formoterol and mometasone as a combination) marketed by Merck"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

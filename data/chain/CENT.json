@@ -1,0 +1,241 @@
+{
+  "root": {
+    "ticker": "CENT",
+    "name": "セントラル・ガーデン&ペット",
+    "cik": 887733,
+    "name_en": "Central Garden & Pet"
+  },
+  "rows": [
+    {
+      "ja": "主要顧客",
+      "en": "Major customers"
+    },
+    {
+      "ja": "買収",
+      "en": "Acquisition"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "SPB",
+    "SMG"
+  ],
+  "companies": [
+    {
+      "id": "WMT",
+      "ticker": "WMT",
+      "name": "ウォルマート",
+      "name_en": "Walmart",
+      "sub": "小売",
+      "sub_en": "Retail",
+      "sub_short": "小売",
+      "sub_short_en": "Retail",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大の顧客(売上の約17%)",
+          "text_en": "Largest customer (about 17% of net sales)",
+          "source": {
+            "label": "Central Garden & Pet 10-K(2025年9月期)",
+            "label_en": "Central Garden & Pet 10-K (FY ended Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/887733/000088773325000041/cent-20250927.htm",
+            "level": "official",
+            "date": "2025-11-26",
+            "quote": "Walmart, our largest customer, accounted for approximately 17% of total net sales in fiscal 2025"
+          }
+        }
+      ]
+    },
+    {
+      "id": "HD",
+      "ticker": "HD",
+      "name": "ホーム・デポ",
+      "name_en": "The Home Depot",
+      "sub": "ホームセンター",
+      "sub_en": "Home improvement retail",
+      "sub_short": "住宅用品",
+      "sub_short_en": "Home",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2番目の顧客(約16%)",
+          "text_en": "Second-largest customer (about 16%)",
+          "source": {
+            "label": "Central Garden & Pet 10-K(2025年9月期)",
+            "label_en": "Central Garden & Pet 10-K (FY ended Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/887733/000088773325000041/cent-20250927.htm",
+            "level": "official",
+            "date": "2025-11-26",
+            "quote": "Home Depot, our second largest customer, represented approximately 16% of total net sales in fiscal 2025"
+          }
+        }
+      ]
+    },
+    {
+      "id": "COST",
+      "ticker": "COST",
+      "name": "コストコ",
+      "name_en": "Costco",
+      "sub": "会員制量販店",
+      "sub_en": "Warehouse clubs",
+      "sub_short": "量販店",
+      "sub_short_en": "Clubs",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "重要な顧客の一社",
+          "text_en": "A significant customer",
+          "source": {
+            "label": "Central Garden & Pet 10-K(2025年9月期)",
+            "label_en": "Central Garden & Pet 10-K (FY ended Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/887733/000088773325000041/cent-20250927.htm",
+            "level": "official",
+            "date": "2025-11-26",
+            "quote": "Costco, Lowe's and Amazon are also significant customers, and together with Walmart and Home Depot, accounted for approximately 54% of our net sales in fiscal 2025 and 2024."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LOW",
+      "ticker": "LOW",
+      "name": "ロウズ",
+      "name_en": "Lowe's",
+      "sub": "ホームセンター",
+      "sub_en": "Home improvement retail",
+      "sub_short": "住宅用品",
+      "sub_short_en": "Home",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "重要な顧客の一社",
+          "text_en": "A significant customer",
+          "source": {
+            "label": "Central Garden & Pet 10-K(2025年9月期)",
+            "label_en": "Central Garden & Pet 10-K (FY ended Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/887733/000088773325000041/cent-20250927.htm",
+            "level": "official",
+            "date": "2025-11-26",
+            "quote": "Costco, Lowe's and Amazon are also significant customers, and together with Walmart and Home Depot, accounted for approximately 54% of our net sales in fiscal 2025 and 2024."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン",
+      "name_en": "Amazon",
+      "sub": "EC",
+      "sub_en": "E-commerce",
+      "sub_short": "EC",
+      "sub_short_en": "E-com",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "重要な顧客の一社",
+          "text_en": "A significant customer",
+          "source": {
+            "label": "Central Garden & Pet 10-K(2025年9月期)",
+            "label_en": "Central Garden & Pet 10-K (FY ended Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/887733/000088773325000041/cent-20250927.htm",
+            "level": "official",
+            "date": "2025-11-26",
+            "quote": "Costco, Lowe's and Amazon are also significant customers, and together with Walmart and Home Depot, accounted for approximately 54% of our net sales in fiscal 2025 and 2024."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TDBBS",
+      "ticker": "TDBBS",
+      "name": "TDBBS",
+      "name_en": "TDBBS",
+      "sub": "犬用おやつ",
+      "sub_en": "Natural dog chews",
+      "sub_short": "ペット",
+      "sub_short_en": "Pet food",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "犬用の天然おやつのTDBBSを約6,000万ドルで買収(2023年11月)",
+          "text_en": "Acquired natural dog chew maker TDBBS for about $60 million (November 2023)",
+          "source": {
+            "label": "Central Garden & Pet 10-K(2025年9月期)",
+            "label_en": "Central Garden & Pet 10-K (FY ended Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/887733/000088773325000041/cent-20250927.htm",
+            "level": "official",
+            "date": "2025-11-26",
+            "quote": "On November 3, 2023, the Company acquired TDBBS, LLC (\"TDBBS\"), a provider of premium natural dog chews and treats for approximately $ 60 million."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SPB",
+      "ticker": "SPB",
+      "name": "スペクトラム・ブランズ",
+      "name_en": "Spectrum Brands",
+      "sub": "ペット・家庭用品",
+      "sub_en": "Pet & home products",
+      "sub_short": "ペット",
+      "sub_short_en": "Pet",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Spectrumが10-Kで、ペット用品の主な競合として挙げる",
+          "text_en": "Spectrum names Central among primary pet competitors",
+          "source": {
+            "label": "Spectrum Brands 10-K(2026年9月期)",
+            "label_en": "Spectrum Brands 10-K (FY ended Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/109177/000010917726000044/spb-20260930.htm",
+            "level": "official",
+            "date": "2026-11-18",
+            "quote": "Primary competitors are Mars Corporation, Nestle Purina, and the Central Garden & Pet Company"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SMG",
+      "ticker": "SMG",
+      "name": "スコッツ・ミラクルグロ",
+      "name_en": "Scotts Miracle-Gro",
+      "sub": "園芸用品",
+      "sub_en": "Lawn & garden",
+      "sub_short": "園芸用品",
+      "sub_short_en": "Garden",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Scottsが10-Kで、主な競合として挙げる",
+          "text_en": "Scotts names Central among primary competitors",
+          "source": {
+            "label": "Scotts Miracle-Gro 10-K(2025年9月期)",
+            "label_en": "Scotts Miracle-Gro 10-K (FY ended Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/825542/000082554225000022/smg-20250930.htm",
+            "level": "official",
+            "date": "2025-11-25",
+            "quote": "Primary competitors include Spectrum Brands Holdings, Inc., Central Garden & Pet Company, Kellogg Garden Products"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

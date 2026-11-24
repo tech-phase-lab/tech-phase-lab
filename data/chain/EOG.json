@@ -24,6 +24,8 @@
       "name": "トリニダード・トバゴ国営ガス会社",
       "sub": "ガス購入先",
       "sub_en": "Gas purchaser",
+      "sub_short": "ガス",
+      "sub_short_en": "Gas",
       "row": 0,
       "relations": [
         {
@@ -48,6 +50,8 @@
       "name": "ヘリテージ・ペトロリアム",
       "sub": "原油の販売先",
       "sub_en": "Crude oil buyer",
+      "sub_short": "原油",
+      "sub_short_en": "Oil",
       "row": 0,
       "relations": [
         {
@@ -72,6 +76,8 @@
       "name": "BPトリニダード・トバゴ",
       "sub": "原油の販売先",
       "sub_en": "Crude oil buyer",
+      "sub_short": "原油",
+      "sub_short_en": "Oil",
       "row": 0,
       "relations": [
         {
@@ -96,6 +102,8 @@
       "name": "バプコ・エナジーズ",
       "sub": "バーレーンの提携先",
       "sub_en": "Bahrain partner",
+      "sub_short": "中東提携",
+      "sub_short_en": "Partner",
       "row": 0,
       "relations": [
         {
@@ -120,6 +128,8 @@
       "name": "ドリリング・ツールズ・インターナショナル",
       "sub": "掘削ツール",
       "sub_en": "Drilling tools",
+      "sub_short": "掘削",
+      "sub_short_en": "Drilling",
       "row": 1,
       "relations": [
         {

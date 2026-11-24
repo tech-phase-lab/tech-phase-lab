@@ -39,6 +39,8 @@
       "name": "スーパー・マイクロ・コンピューター",
       "sub": "サーバー",
       "sub_en": "Servers",
+      "sub_short": "サーバー",
+      "sub_short_en": "Servers",
       "row": 0,
       "relations": [
         {
@@ -76,6 +78,8 @@
       "name": "デル・テクノロジーズ",
       "sub": "サーバー・PC",
       "sub_en": "Servers & PCs",
+      "sub_short": "サーバー",
+      "sub_short_en": "Servers",
       "row": 0,
       "relations": [
         {
@@ -113,6 +117,8 @@
       "name": "レノボ・グループ",
       "sub": "PC・サーバー",
       "sub_en": "PCs & servers",
+      "sub_short": "PC",
+      "sub_short_en": "PCs",
       "row": 0,
       "relations": [
         {
@@ -137,6 +143,8 @@
       "name": "インテル",
       "sub": "半導体",
       "sub_en": "Semiconductors",
+      "sub_short": "半導体",
+      "sub_short_en": "Chips",
       "row": 0,
       "relations": [
         {
@@ -161,6 +169,8 @@
       "name": "エヌビディア",
       "sub": "AI半導体",
       "sub_en": "AI chips",
+      "sub_short": "AI半導体",
+      "sub_short_en": "AI chips",
       "row": 0,
       "relations": [
         {
@@ -198,6 +208,8 @@
       "name": "シスコシステムズ",
       "sub": "ネットワーク",
       "sub_en": "Networking",
+      "sub_short": "通信網",
+      "sub_short_en": "Network",
       "row": 1,
       "relations": [
         {
@@ -235,6 +247,8 @@
       "name": "パロアルトネットワークス",
       "sub": "セキュリティ",
       "sub_en": "Cybersecurity",
+      "sub_short": "防御",
+      "sub_short_en": "Security",
       "row": 1,
       "relations": [
         {
@@ -259,6 +273,8 @@
       "name": "ネットアップ",
       "sub": "データストレージ",
       "sub_en": "Data storage",
+      "sub_short": "記憶装置",
+      "sub_short_en": "Storage",
       "row": 1,
       "relations": [
         {
@@ -296,6 +312,8 @@
       "name": "ウィプロ",
       "sub": "ITサービス",
       "sub_en": "IT services",
+      "sub_short": "IT",
+      "sub_short_en": "IT",
       "row": 1,
       "relations": [
         {
@@ -320,6 +338,8 @@
       "name": "マイクロン・テクノロジー",
       "sub": "メモリ半導体",
       "sub_en": "Memory chips",
+      "sub_short": "メモリ",
+      "sub_short_en": "Memory",
       "row": 2,
       "relations": [
         {
@@ -346,6 +366,8 @@
       "name": "AMD",
       "sub": "半導体",
       "sub_en": "Semiconductors",
+      "sub_short": "半導体",
+      "sub_short_en": "Chips",
       "row": 3,
       "relations": [
         {
@@ -382,6 +404,8 @@
       "name": "バンク・オブ・アメリカ",
       "sub": "銀行",
       "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
       "row": 3,
       "relations": [
         {
@@ -419,6 +443,8 @@
       "name": "ブロードコム",
       "sub": "半導体・ソフト",
       "sub_en": "Semiconductors & software",
+      "sub_short": "半導体",
+      "sub_short_en": "Chips",
       "row": 4,
       "relations": [
         {
@@ -443,6 +469,8 @@
       "name": "ヒューレット・パッカード・エンタープライズ",
       "sub": "IT基盤",
       "sub_en": "IT infrastructure",
+      "sub_short": "IT基盤",
+      "sub_short_en": "IT infra",
       "row": 4,
       "relations": [
         {

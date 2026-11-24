@@ -1,0 +1,296 @@
+{
+  "root": {
+    "ticker": "NYT",
+    "name": "ニューヨーク・タイムズ",
+    "cik": 71691,
+    "name_en": "The New York Times"
+  },
+  "rows": [
+    {
+      "ja": "アプリストア(購読の販売経路)",
+      "en": "App stores (subscription channels)",
+      "above": true
+    },
+    {
+      "ja": "著作権訴訟の相手",
+      "en": "Copyright lawsuits"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in the 10-K)"
+    }
+  ],
+  "rivals": [
+    "NWSA",
+    "WBD",
+    "DIS",
+    "META"
+  ],
+  "companies": [
+    {
+      "id": "AAPL",
+      "ticker": "AAPL",
+      "name": "アップル",
+      "name_en": "Apple",
+      "sub": "IT機器・アプリストア",
+      "sub_en": "Devices & app store",
+      "sub_short": "IT機器",
+      "sub_short_en": "Devices",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "アプリストア経由で購読を販売",
+          "text_en": "Sells NYT subscriptions through its app store",
+          "source": {
+            "label": "New York Times 10-K(2025年度)",
+            "label_en": "New York Times 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/71691/000007169126000011/nyt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Individual consumers can subscribe to our products directly or through third-party app stores operated by Apple and Alphabet."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GOOGL",
+      "ticker": "GOOGL",
+      "name": "アルファベット",
+      "name_en": "Alphabet",
+      "sub": "検索・アプリストア",
+      "sub_en": "Search & app store",
+      "sub_short": "検索",
+      "sub_short_en": "Search",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "アプリストア経由で購読を販売",
+          "text_en": "Sells NYT subscriptions through its app store",
+          "source": {
+            "label": "New York Times 10-K(2025年度)",
+            "label_en": "New York Times 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/71691/000007169126000011/nyt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Individual consumers can subscribe to our products directly or through third-party app stores operated by Apple and Alphabet."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "マイクロソフト",
+      "name_en": "Microsoft",
+      "sub": "ソフトウェア・AI",
+      "sub_en": "Software & AI",
+      "sub_short": "ソフト",
+      "sub_short_en": "Software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "記事の無断利用でOpenAIとともに提訴(2023年12月)",
+          "text_en": "Sued with OpenAI over unauthorized use of its journalism (December 2023)",
+          "source": {
+            "label": "New York Times 10-K(2025年度)",
+            "label_en": "New York Times 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/71691/000007169126000011/nyt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "On December 27, 2023, we filed a lawsuit against Microsoft Corporation (\"Microsoft\"), Open AI Inc. and various of its corporate affiliates (collectively, \"OpenAI\")"
+          }
+        }
+      ]
+    },
+    {
+      "id": "OpenAI",
+      "ticker": "OpenAI",
+      "name": "OpenAI",
+      "name_en": "OpenAI",
+      "sub": "生成AI(非上場)",
+      "sub_en": "Generative AI (private)",
+      "sub_short": "生成AI",
+      "sub_short_en": "AI",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "記事の無断利用で提訴(2023年12月)",
+          "text_en": "Sued over unauthorized use of its journalism (December 2023)",
+          "source": {
+            "label": "New York Times 10-K(2025年度)",
+            "label_en": "New York Times 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/71691/000007169126000011/nyt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "On December 27, 2023, we filed a lawsuit against Microsoft Corporation (\"Microsoft\"), Open AI Inc. and various of its corporate affiliates (collectively, \"OpenAI\")"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Perplexity",
+      "ticker": "Perplexity",
+      "name": "パープレキシティ",
+      "name_en": "Perplexity",
+      "sub": "AI検索(非上場)",
+      "sub_en": "AI search (private)",
+      "sub_short": "AI検索",
+      "sub_short_en": "AI search",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "著作権・商標侵害で提訴(2025年12月)",
+          "text_en": "Sued for copyright and trademark infringement (December 2025)",
+          "source": {
+            "label": "New York Times 10-K(2025年度)",
+            "label_en": "New York Times 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/71691/000007169126000011/nyt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "On December 5, 2025, we filed a lawsuit against Perplexity AI, Inc. (\"Perplexity\") in the SDNY, alleging copyright infringement, trademark dilution and trademark infringement"
+          }
+        }
+      ]
+    },
+    {
+      "id": "WashingtonPost",
+      "ticker": "Washington Post",
+      "name": "ワシントン・ポスト",
+      "name_en": "The Washington Post",
+      "sub": "新聞(非上場)",
+      "sub_en": "Newspaper (private)",
+      "sub_short": "新聞",
+      "sub_short_en": "News",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ニュースの競合",
+          "text_en": "News competitor",
+          "source": {
+            "label": "New York Times 10-K(2025年度)",
+            "label_en": "New York Times 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/71691/000007169126000011/nyt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "from companies such as The Wall Street Journal, The Washington Post, CNN, BBC News, The Guardian, Financial Times, ESPN and other general interest and vertical media"
+          }
+        }
+      ]
+    },
+    {
+      "id": "NWSA",
+      "ticker": "NWSA",
+      "name": "ニューズ・コープ(WSJ)",
+      "name_en": "News Corp (The Wall Street Journal)",
+      "sub": "新聞・メディア",
+      "sub_en": "News media",
+      "sub_short": "新聞",
+      "sub_short_en": "News",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "傘下ウォール・ストリート・ジャーナルがニュースの競合",
+          "text_en": "Its Wall Street Journal is a news competitor",
+          "source": {
+            "label": "New York Times 10-K(2025年度)",
+            "label_en": "New York Times 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/71691/000007169126000011/nyt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "from companies such as The Wall Street Journal, The Washington Post, CNN, BBC News, The Guardian, Financial Times, ESPN and other general interest and vertical media"
+          }
+        }
+      ]
+    },
+    {
+      "id": "WBD",
+      "ticker": "WBD",
+      "name": "ワーナー・ブラザース・ディスカバリー(CNN)",
+      "name_en": "Warner Bros. Discovery (CNN)",
+      "sub": "メディア",
+      "sub_en": "Media",
+      "sub_short": "メディア",
+      "sub_short_en": "Media",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "傘下CNNがニュースの競合",
+          "text_en": "Its CNN is a news competitor",
+          "source": {
+            "label": "New York Times 10-K(2025年度)",
+            "label_en": "New York Times 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/71691/000007169126000011/nyt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "from companies such as The Wall Street Journal, The Washington Post, CNN, BBC News, The Guardian, Financial Times, ESPN and other general interest and vertical media"
+          }
+        }
+      ]
+    },
+    {
+      "id": "DIS",
+      "ticker": "DIS",
+      "name": "ウォルト・ディズニー(ESPN)",
+      "name_en": "Walt Disney (ESPN)",
+      "sub": "娯楽・メディア",
+      "sub_en": "Entertainment & media",
+      "sub_short": "娯楽",
+      "sub_short_en": "Media",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "傘下ESPNが競合",
+          "text_en": "Its ESPN is named as a competitor",
+          "source": {
+            "label": "New York Times 10-K(2025年度)",
+            "label_en": "New York Times 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/71691/000007169126000011/nyt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "from companies such as The Wall Street Journal, The Washington Post, CNN, BBC News, The Guardian, Financial Times, ESPN and other general interest and vertical media"
+          }
+        }
+      ]
+    },
+    {
+      "id": "META",
+      "ticker": "META",
+      "name": "メタ・プラットフォームズ",
+      "name_en": "Meta Platforms",
+      "sub": "SNS・AI",
+      "sub_en": "Social media & AI",
+      "sub_short": "SNS・AI",
+      "sub_short_en": "Social",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "SNS・生成AIの競合",
+          "text_en": "Competitor via social media and generative AI products",
+          "source": {
+            "label": "New York Times 10-K(2025年度)",
+            "label_en": "New York Times 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/71691/000007169126000011/nyt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "chatbots and other products and tools powered by generative AI, from companies such as Apple, Alphabet, ByteDance, Meta Platforms, Microsoft, OpenAI, Perplexity and X."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

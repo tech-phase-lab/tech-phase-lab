@@ -20,6 +20,8 @@
       "name_en": "Kroger",
       "sub": "スーパー",
       "sub_en": "Grocery",
+      "sub_short": "スーパー",
+      "sub_short_en": "Grocery",
       "row": 0,
       "relations": [
         {
@@ -44,6 +46,8 @@
       "name_en": "Publix Super Markets",
       "sub": "スーパー",
       "sub_en": "Grocery",
+      "sub_short": "スーパー",
+      "sub_short_en": "Grocery",
       "row": 0,
       "relations": [
         {
@@ -68,6 +72,8 @@
       "name_en": "TJX Companies",
       "sub": "オフプライス衣料",
       "sub_en": "Off-price apparel",
+      "sub_short": "割安衣料",
+      "sub_short_en": "Off-price",
       "row": 0,
       "relations": [
         {
@@ -92,6 +98,8 @@
       "name_en": "Amazon",
       "sub": "EC(ホールフーズ)",
       "sub_en": "E-commerce (Whole Foods)",
+      "sub_short": "EC",
+      "sub_short_en": "E-com",
       "row": 0,
       "relations": [
         {
@@ -116,6 +124,8 @@
       "name_en": "Albertsons",
       "sub": "スーパー",
       "sub_en": "Grocery",
+      "sub_short": "スーパー",
+      "sub_short_en": "Grocery",
       "row": 0,
       "relations": [
         {
@@ -140,6 +150,8 @@
       "name_en": "H-E-B",
       "sub": "スーパー(テキサス)",
       "sub_en": "Grocery (Texas)",
+      "sub_short": "スーパー",
+      "sub_short_en": "Grocery",
       "row": 0,
       "relations": [
         {
@@ -164,6 +176,8 @@
       "name_en": "Apollo Global Management",
       "sub": "投資会社(マイケルズ)",
       "sub_en": "Investment firm (Michaels)",
+      "sub_short": "投資会社",
+      "sub_short_en": "Investing",
       "row": 0,
       "relations": [
         {
@@ -188,6 +202,8 @@
       "name_en": "Trader Joe's",
       "sub": "スーパー",
       "sub_en": "Grocery",
+      "sub_short": "スーパー",
+      "sub_short_en": "Grocery",
       "row": 0,
       "relations": [
         {
@@ -212,6 +228,8 @@
       "name_en": "Wegmans",
       "sub": "スーパー",
       "sub_en": "Grocery",
+      "sub_short": "スーパー",
+      "sub_short_en": "Grocery",
       "row": 0,
       "relations": [
         {
@@ -236,6 +254,8 @@
       "name_en": "Ross Stores",
       "sub": "オフプライス衣料",
       "sub_en": "Off-price apparel",
+      "sub_short": "割安衣料",
+      "sub_short_en": "Off-price",
       "row": 0,
       "relations": [
         {

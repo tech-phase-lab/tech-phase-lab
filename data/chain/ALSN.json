@@ -1,0 +1,241 @@
+{
+  "root": {
+    "ticker": "ALSN",
+    "name": "アリソン・トランスミッション",
+    "cik": 1411207,
+    "name_en": "Allison Transmission"
+  },
+  "rows": [
+    {
+      "ja": "主要顧客・納入先",
+      "en": "Major customers"
+    },
+    {
+      "ja": "買収",
+      "en": "Acquisition"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in its 10-K)"
+    }
+  ],
+  "rivals": [
+    "CAT",
+    "ZF"
+  ],
+  "companies": [
+    {
+      "id": "DTG",
+      "ticker": "Daimler Truck",
+      "name": "ダイムラー・トラック",
+      "name_en": "Daimler Truck",
+      "sub": "トラック(ドイツ)",
+      "sub_en": "Trucks (Germany)",
+      "sub_short": "トラック",
+      "sub_short_en": "Trucks",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大の顧客(売上の18%)",
+          "text_en": "Largest customer (18% of net sales)",
+          "source": {
+            "label": "Allison Transmission 10-K(2025年度)",
+            "label_en": "Allison Transmission 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1411207/000119312526065627/alsn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Our top three customers, Daimler AG, PACCAR Inc. and Traton SE, accounted for approximately 18%, 11% and 10%, respectively, of our net sales during 2025."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PCAR",
+      "ticker": "PCAR",
+      "name": "パッカー",
+      "name_en": "PACCAR",
+      "sub": "トラック",
+      "sub_en": "Trucks",
+      "sub_short": "トラック",
+      "sub_short_en": "Trucks",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2番目の顧客(売上の11%)",
+          "text_en": "Second-largest customer (11%)",
+          "source": {
+            "label": "Allison Transmission 10-K(2025年度)",
+            "label_en": "Allison Transmission 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1411207/000119312526065627/alsn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Our top three customers, Daimler AG, PACCAR Inc. and Traton SE, accounted for approximately 18%, 11% and 10%, respectively, of our net sales during 2025."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Traton",
+      "ticker": "Traton",
+      "name": "トラトン",
+      "name_en": "Traton",
+      "sub": "トラック(ドイツ)",
+      "sub_en": "Trucks (Germany)",
+      "sub_short": "トラック",
+      "sub_short_en": "Trucks",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "3番目の顧客(売上の10%)",
+          "text_en": "Third-largest customer (10%)",
+          "source": {
+            "label": "Allison Transmission 10-K(2025年度)",
+            "label_en": "Allison Transmission 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1411207/000119312526065627/alsn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Our top three customers, Daimler AG, PACCAR Inc. and Traton SE, accounted for approximately 18%, 11% and 10%, respectively, of our net sales during 2025."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BLBD",
+      "ticker": "BLBD",
+      "name": "ブルーバード",
+      "name_en": "Blue Bird",
+      "sub": "スクールバス",
+      "sub_en": "School buses",
+      "sub_short": "バス",
+      "sub_short_en": "Buses",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Blue Birdが変速機の供給元として記載",
+          "text_en": "Blue Bird lists Allison as its transmission supplier",
+          "source": {
+            "label": "Blue Bird 10-K(2025年9月期)",
+            "label_en": "Blue Bird 10-K (FY ended Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1589526/000158952625000100/blbd-20250927.htm",
+            "level": "official",
+            "date": "2025-11-24",
+            "quote": "Transmissions Allison Transmission"
+          }
+        }
+      ]
+    },
+    {
+      "id": "DAN",
+      "ticker": "DAN",
+      "name": "デーナ",
+      "name_en": "Dana",
+      "sub": "駆動系部品",
+      "sub_en": "Drivetrain components",
+      "sub_short": "駆動部品",
+      "sub_short_en": "Axles",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Danaのオフハイウェイ事業を買収(2026年1月に完了)",
+          "text_en": "Acquired Dana's Off-Highway business (completed January 2026)",
+          "source": {
+            "label": "Dana 10-K(2025年度)",
+            "label_en": "Dana 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/26780/000143774926006076/dan20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "In June 2025, we entered into a definitive agreement to sell our Off-Highway business to Allison Transmission Holdings, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CAT",
+      "ticker": "CAT",
+      "name": "キャタピラー",
+      "name_en": "Caterpillar",
+      "sub": "建設機械",
+      "sub_en": "Construction machinery",
+      "sub_short": "建設機械",
+      "sub_short_en": "Machines",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "エネルギー・鉱山・建設用途の主な競合",
+          "text_en": "A primary competitor in energy, mining and construction uses",
+          "source": {
+            "label": "Allison Transmission 10-K(2025年度)",
+            "label_en": "Allison Transmission 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1411207/000119312526065627/alsn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Our primary competitors were Caterpillar, Danyang Winstar Auto Parts Co., Ltd., Twin Disc and manufacturers of electrified solutions in energy applications"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ZF",
+      "ticker": "ZF",
+      "name": "ZF",
+      "name_en": "ZF Friedrichshafen",
+      "sub": "自動車部品(ドイツ)",
+      "sub_en": "Auto parts (Germany)",
+      "sub_short": "車部品",
+      "sub_short_en": "Car parts",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "独立系の変速機メーカーとして競合",
+          "text_en": "Competes as an independent transmission maker",
+          "source": {
+            "label": "Allison Transmission 10-K(2025年度)",
+            "label_en": "Allison Transmission 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1411207/000119312526065627/alsn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "We also compete with independent manufacturers such as ZF."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BA.L",
+      "ticker": "BAE Systems",
+      "name": "BAEシステムズ",
+      "name_en": "BAE Systems",
+      "sub": "防衛(英国)",
+      "sub_en": "Defense (UK)",
+      "sub_short": "防衛",
+      "sub_short_en": "Defense",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "バスなど公共交通向けの主な競合",
+          "text_en": "Main competitor in the transit market",
+          "source": {
+            "label": "Allison Transmission 10-K(2025年度)",
+            "label_en": "Allison Transmission 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1411207/000119312526065627/alsn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "We compete primarily with BAE Systems plc in the transit market segment."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

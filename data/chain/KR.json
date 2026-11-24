@@ -33,6 +33,8 @@
       "name_en": "Coca-Cola Consolidated",
       "sub": "飲料ボトラー",
       "sub_en": "Beverage bottler",
+      "sub_short": "飲料",
+      "sub_short_en": "Drinks",
       "row": 0,
       "relations": [
         {
@@ -57,6 +59,8 @@
       "name_en": "Vital Farms",
       "sub": "鶏卵・乳製品",
       "sub_en": "Eggs & butter",
+      "sub_short": "鶏卵",
+      "sub_short_en": "Eggs",
       "row": 0,
       "relations": [
         {
@@ -81,6 +85,8 @@
       "name_en": "Suja Life",
       "sub": "コールドプレス飲料",
       "sub_en": "Cold-pressed beverages",
+      "sub_short": "ジュース",
+      "sub_short_en": "Juice",
       "row": 0,
       "relations": [
         {
@@ -105,6 +111,8 @@
       "name_en": "Local Bounti",
       "sub": "屋内栽培野菜",
       "sub_en": "Indoor-grown produce",
+      "sub_short": "野菜",
+      "sub_short_en": "Farming",
       "row": 0,
       "relations": [
         {
@@ -129,6 +137,8 @@
       "name_en": "Edible Garden",
       "sub": "ハーブ・野菜",
       "sub_en": "Herbs & produce",
+      "sub_short": "野菜",
+      "sub_short_en": "Produce",
       "row": 0,
       "relations": [
         {
@@ -153,6 +163,8 @@
       "name_en": "Albertsons",
       "sub": "スーパー",
       "sub_en": "Grocery",
+      "sub_short": "スーパー",
+      "sub_short_en": "Grocery",
       "row": 1,
       "relations": [
         {
@@ -177,6 +189,8 @@
       "name_en": "GoodRx",
       "sub": "処方薬割引",
       "sub_en": "Prescription savings",
+      "sub_short": "薬局",
+      "sub_short_en": "Rx",
       "row": 1,
       "relations": [
         {
@@ -201,6 +215,8 @@
       "name_en": "Costco",
       "sub": "会員制量販店",
       "sub_en": "Warehouse clubs",
+      "sub_short": "量販店",
+      "sub_short_en": "Clubs",
       "row": 2,
       "relations": [
         {
@@ -225,6 +241,8 @@
       "name_en": "Ingles Markets",
       "sub": "スーパー",
       "sub_en": "Grocery",
+      "sub_short": "スーパー",
+      "sub_short_en": "Grocery",
       "row": 2,
       "relations": [
         {
@@ -249,6 +267,8 @@
       "name_en": "AMCON Distributing",
       "sub": "卸・健康食品店",
       "sub_en": "Wholesale & health food retail",
+      "sub_short": "卸売",
+      "sub_short_en": "Supply",
       "row": 2,
       "relations": [
         {

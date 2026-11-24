@@ -1,0 +1,243 @@
+{
+  "root": {
+    "ticker": "CLH",
+    "name": "クリーン・ハーバーズ",
+    "cik": 822818,
+    "name_en": "Clean Harbors"
+  },
+  "rows": [
+    {
+      "ja": "買収(2024年)",
+      "en": "Acquisitions (2024)"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in its 10-K)"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "WM",
+    "RSG",
+    "WCN",
+    "CVEO"
+  ],
+  "companies": [
+    {
+      "id": "HEPACO",
+      "ticker": "HEPACO",
+      "name": "ヘパコ",
+      "name_en": "HEPACO",
+      "sub": "緊急対応・現場作業",
+      "sub_en": "Emergency response & field services",
+      "sub_short": "緊急対応",
+      "sub_short_en": "Safety",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "HEPACOを3.922億ドルで買収(2024年)",
+          "text_en": "Acquired HEPACO for $392.2 million (2024)",
+          "source": {
+            "label": "Clean Harbors 10-K(2025年度)",
+            "label_en": "Clean Harbors 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/822818/000082281826000009/clh-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "In 2024, we acquired HEPACO for an all-cash purchase price of $392.2 million, net of cash acquired."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Noble",
+      "ticker": "Noble Oil Services",
+      "name": "ノーブル・オイル・サービシズ",
+      "name_en": "Noble Oil Services",
+      "sub": "廃油回収",
+      "sub_en": "Used oil collection",
+      "sub_short": "廃油回収",
+      "sub_short_en": "Used oil",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Noble Oil Servicesを6,870万ドルで買収(2024年)",
+          "text_en": "Acquired Noble Oil Services for $68.7 million (2024)",
+          "source": {
+            "label": "Clean Harbors 10-K(2025年度)",
+            "label_en": "Clean Harbors 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/822818/000082281826000009/clh-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Also in 2024, we acquired Noble Oil Services, Inc. and its subsidiaries, collectively Noble, for an all-cash purchase price of $68.7 million"
+          }
+        }
+      ]
+    },
+    {
+      "id": "VIE.PA",
+      "ticker": "Veolia",
+      "name": "ヴェオリア",
+      "name_en": "Veolia",
+      "sub": "環境サービス(フランス)",
+      "sub_en": "Environmental services (France)",
+      "sub_short": "環境",
+      "sub_short_en": "Eco svcs",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "全国規模の主な競合",
+          "text_en": "A principal national competitor",
+          "source": {
+            "label": "Clean Harbors 10-K(2025年度)",
+            "label_en": "Clean Harbors 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/822818/000082281826000009/clh-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Veolia North America, Enviri Corporation, Republic Services, Waste Management, GFL Environmental and Crystal Clean were the principal national firms with which we competed in 2025."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WM",
+      "ticker": "WM",
+      "name": "ウェイスト・マネジメント",
+      "name_en": "Waste Management",
+      "sub": "廃棄物処理",
+      "sub_en": "Waste management",
+      "sub_short": "廃棄物",
+      "sub_short_en": "Waste",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "全国規模の主な競合",
+          "text_en": "A principal national competitor",
+          "source": {
+            "label": "Clean Harbors 10-K(2025年度)",
+            "label_en": "Clean Harbors 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/822818/000082281826000009/clh-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Veolia North America, Enviri Corporation, Republic Services, Waste Management, GFL Environmental and Crystal Clean were the principal national firms with which we competed in 2025."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RSG",
+      "ticker": "RSG",
+      "name": "リパブリック・サービシズ",
+      "name_en": "Republic Services",
+      "sub": "廃棄物処理",
+      "sub_en": "Waste management",
+      "sub_short": "廃棄物",
+      "sub_short_en": "Waste",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "全国規模の主な競合",
+          "text_en": "A principal national competitor",
+          "source": {
+            "label": "Clean Harbors 10-K(2025年度)",
+            "label_en": "Clean Harbors 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/822818/000082281826000009/clh-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Veolia North America, Enviri Corporation, Republic Services, Waste Management, GFL Environmental and Crystal Clean were the principal national firms with which we competed in 2025."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GFL",
+      "ticker": "GFL",
+      "name": "GFLエンバイロメンタル",
+      "name_en": "GFL Environmental",
+      "sub": "廃棄物処理(カナダ)",
+      "sub_en": "Waste management (Canada)",
+      "sub_short": "廃棄物",
+      "sub_short_en": "Waste",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "全国規模の主な競合",
+          "text_en": "A principal national competitor",
+          "source": {
+            "label": "Clean Harbors 10-K(2025年度)",
+            "label_en": "Clean Harbors 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/822818/000082281826000009/clh-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Veolia North America, Enviri Corporation, Republic Services, Waste Management, GFL Environmental and Crystal Clean were the principal national firms with which we competed in 2025."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WCN",
+      "ticker": "WCN",
+      "name": "ウェイスト・コネクションズ",
+      "name_en": "Waste Connections",
+      "sub": "廃棄物処理",
+      "sub_en": "Waste management",
+      "sub_short": "廃棄物",
+      "sub_short_en": "Waste",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Waste Connectionsが10-Kで、競合の一社として挙げる",
+          "text_en": "Waste Connections names Clean Harbors among competitors",
+          "source": {
+            "label": "Waste Connections 10-K(2025年度)",
+            "label_en": "Waste Connections 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1318220/000110465926013700/wcn-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "such as Waste Management, Inc., Republic Services, Inc., Clean Harbors, Inc., Secure Waste Infrastructure Corp."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CVEO",
+      "ticker": "CVEO",
+      "name": "シベオ",
+      "name_en": "Civeo",
+      "sub": "宿泊施設サービス",
+      "sub_en": "Workforce accommodation",
+      "sub_short": "宿泊",
+      "sub_short_en": "Housing",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Civeoが10-Kで、カナダの宿泊サービスの主な競合として挙げる",
+          "text_en": "Civeo names Clean Harbors among primary Canadian lodging competitors",
+          "source": {
+            "label": "Civeo 10-K(2024年度)",
+            "label_en": "Civeo 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1590584/000159058425000037/cveo-20241231.htm",
+            "level": "official",
+            "date": "2025-02-27",
+            "quote": "Our primary competitors in Canada in lodge and mobile asset hospitality services include ATCO, Black Diamond, Dexterra and Clean Harbors, Inc."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

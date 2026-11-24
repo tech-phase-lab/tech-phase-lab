@@ -30,6 +30,8 @@
       "name_en": "WestRock",
       "sub": "段ボール・紙器(米)",
       "sub_en": "Paper packaging (US)",
+      "sub_short": "段ボール",
+      "sub_short_en": "Paper",
       "row": 0,
       "relations": [
         {
@@ -54,6 +56,8 @@
       "name_en": "Ingevity",
       "sub": "特殊化学品",
       "sub_en": "Specialty chemicals",
+      "sub_short": "化学品",
+      "sub_short_en": "Chem",
       "row": 0,
       "relations": [
         {
@@ -78,6 +82,8 @@
       "name_en": "Graphic Packaging",
       "sub": "紙器",
       "sub_en": "Paperboard packaging",
+      "sub_short": "紙器",
+      "sub_short_en": "Paper",
       "row": 1,
       "relations": [
         {
@@ -102,6 +108,8 @@
       "name_en": "Packaging Corp of America",
       "sub": "段ボール",
       "sub_en": "Corrugated packaging",
+      "sub_short": "段ボール",
+      "sub_short_en": "Boxes",
       "row": 1,
       "relations": [
         {
@@ -126,6 +134,8 @@
       "name_en": "Amcor",
       "sub": "包装材",
       "sub_en": "Packaging",
+      "sub_short": "包装材",
+      "sub_short_en": "Packing",
       "row": 1,
       "relations": [
         {
@@ -150,6 +160,8 @@
       "name_en": "Clearwater Paper",
       "sub": "板紙",
       "sub_en": "Paperboard",
+      "sub_short": "板紙",
+      "sub_short_en": "Paper",
       "row": 1,
       "relations": [
         {
@@ -174,6 +186,8 @@
       "name_en": "Rayonier Advanced Materials",
       "sub": "セルロース・板紙",
       "sub_en": "Cellulose & paperboard",
+      "sub_short": "繊維素材",
+      "sub_short_en": "Cellulose",
       "row": 1,
       "relations": [
         {
@@ -198,6 +212,8 @@
       "name_en": "Ranpak",
       "sub": "紙の緩衝材・梱包自動化",
       "sub_en": "Paper packaging & automation",
+      "sub_short": "緩衝材",
+      "sub_short_en": "Paper",
       "row": 1,
       "relations": [
         {

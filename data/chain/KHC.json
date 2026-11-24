@@ -30,6 +30,8 @@
       "name": "ウォルマート",
       "sub": "小売大手",
       "sub_en": "Retailer",
+      "sub_short": "小売大手",
+      "sub_short_en": "Retailer",
       "row": 0,
       "relations": [
         {
@@ -54,6 +56,8 @@
       "name": "ラクタリス",
       "sub": "乳製品大手",
       "sub_en": "Dairy group",
+      "sub_short": "乳業",
+      "sub_short_en": "Dairy",
       "row": 0,
       "relations": [
         {
@@ -78,6 +82,8 @@
       "name": "バークシャー・ハサウェイ",
       "sub": "大株主",
       "sub_en": "Major shareholder",
+      "sub_short": "大株主",
+      "sub_short_en": "Owner",
       "row": 0,
       "relations": [
         {
@@ -102,6 +108,8 @@
       "name": "ペプシコ",
       "sub": "飲料・スナック",
       "sub_en": "Beverages & snacks",
+      "sub_short": "飲料",
+      "sub_short_en": "Drinks",
       "row": 1,
       "relations": [
         {
@@ -126,6 +134,8 @@
       "name": "グラフィック・パッケージング",
       "sub": "紙パッケージ",
       "sub_en": "Paperboard packaging",
+      "sub_short": "紙包装",
+      "sub_short_en": "Paper",
       "row": 2,
       "relations": [
         {
@@ -150,6 +160,8 @@
       "name": "シルガン・ホールディングス",
       "sub": "金属・プラ容器",
       "sub_en": "Metal & plastic containers",
+      "sub_short": "容器",
+      "sub_short_en": "Cans",
       "row": 2,
       "relations": [
         {
@@ -174,6 +186,8 @@
       "name": "AMCONディストリビューティング",
       "sub": "食品・たばこ卸",
       "sub_en": "Convenience wholesale",
+      "sub_short": "食品卸",
+      "sub_short_en": "Supply",
       "row": 0,
       "relations": [
         {

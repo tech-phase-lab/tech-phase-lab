@@ -1,0 +1,188 @@
+{
+  "root": {
+    "ticker": "PRIM",
+    "name": "プリモリス・サービシズ",
+    "cik": 1361538,
+    "name_en": "Primoris Services"
+  },
+  "rows": [
+    {
+      "ja": "工事の発注元・提携",
+      "en": "Customers & partners",
+      "above": true
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "CTRI",
+    "ECG",
+    "MWH",
+    "ITG"
+  ],
+  "companies": [
+    {
+      "id": "FRMI",
+      "ticker": "FRMI",
+      "name": "フェルミ",
+      "name_en": "Fermi",
+      "sub": "AIデータセンター・発電",
+      "sub_en": "AI data center & power",
+      "sub_short": "AI向けDC",
+      "sub_short_en": "AI DCs",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "発電所の周辺設備工事(BOP)でPrimorisと戦略的提携を結んだ",
+          "text_en": "Signed a strategic partnership with Primoris for balance-of-plant work",
+          "source": {
+            "label": "Fermi 8-K添付(2026年8月)",
+            "label_en": "Fermi 8-K exhibit (2026-08)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2071778/000207177826000046/fermiq22026erex_991.htm",
+            "level": "official",
+            "date": "2026-08-13",
+            "quote": "Fermi also recently signed strategic partnerships with leading EPC firms Primoris Services Corporation (\"Primoris\") for balance of plant work"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CTRI",
+      "ticker": "CTRI",
+      "name": "センチュリ・ホールディングス",
+      "name_en": "Centuri Holdings",
+      "sub": "公益インフラ工事",
+      "sub_en": "Utility infrastructure services",
+      "sub_short": "インフラ",
+      "sub_short_en": "Utility",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Centuriが年次報告などで、競合としてPrimorisを挙げる",
+          "text_en": "Centuri Holdings names Primoris as a competitor",
+          "source": {
+            "label": "Centuri 10-K(2026年提出)",
+            "label_en": "Centuri 10-K (filed 2026-02)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1981599/000198159926000020/ctri-20251228.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "These competitors include Quanta Services, Inc., MYR Group, Mastec, Inc., Primoris Services Corporation and Everus Construction Group, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ECG",
+      "ticker": "ECG",
+      "name": "エベラス・コンストラクション",
+      "name_en": "Everus Construction",
+      "sub": "電気・設備工事",
+      "sub_en": "Electrical & mechanical construction",
+      "sub_short": "電気工事",
+      "sub_short_en": "Electrical",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Everusが年次報告などで、競合としてPrimorisを挙げる",
+          "text_en": "Everus Construction names Primoris as a competitor",
+          "source": {
+            "label": "Everus Construction Group 10-Q(2026年11月)",
+            "label_en": "Everus Construction Group 10-Q (2026-11)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2015845/000201584526000061/q32026ex103-ecgxuse.htm",
+            "level": "official",
+            "date": "2026-11-06",
+            "quote": "Comfort Systems USA, Inc., Primoris Services Corporation, Dycom Industries, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MWH",
+      "ticker": "MWH",
+      "name": "SOLVエナジー",
+      "name_en": "SOLV Energy",
+      "sub": "太陽光・蓄電池の工事",
+      "sub_en": "Solar & storage EPC",
+      "sub_short": "太陽光",
+      "sub_short_en": "Solar EPC",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "SOLVが年次報告などで、競合としてPrimorisを挙げる",
+          "text_en": "SOLV Energy names Primoris as a competitor",
+          "source": {
+            "label": "SOLV Energy 10-K(2026年提出)",
+            "label_en": "SOLV Energy 10-K (filed 2026-03)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2065636/000119312526124117/d31834d10k.htm",
+            "level": "official",
+            "date": "2026-03-25",
+            "quote": "Some of our national competitors include Kiewit, MasTec, McCarthy, Mortenson, Quanta Services and Primoris Services."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ITG",
+      "ticker": "ITG",
+      "name": "ITG",
+      "name_en": "ITG",
+      "sub": "通信インフラ工事",
+      "sub_en": "Telecom infrastructure services",
+      "sub_short": "通信工事",
+      "sub_short_en": "Telecom",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ITGが年次報告などで、競合としてPrimorisを挙げる",
+          "text_en": "ITG names Primoris as a competitor",
+          "source": {
+            "label": "ITG, Inc./DE/ 上場届出書(S-1)(2026年6月)",
+            "label_en": "ITG, Inc./DE/ registration statement (S-1) (2026-06)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2110117/000119312526259828/d103576ds1.htm",
+            "level": "official",
+            "date": "2026-06-05",
+            "quote": "Our competitors include Dycom Industries, Inc., MasTec, Inc., Primoris Services Corporation and Quanta Services, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CoVolt",
+      "ticker": "CoVolt Power",
+      "name": "コボルト・パワー",
+      "name_en": "CoVolt Power",
+      "sub": "発電・蓄電の工事",
+      "sub_en": "Generation & storage construction",
+      "sub_short": "発電",
+      "sub_short_en": "Grid work",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "CoVoltが年次報告などで、競合としてPrimorisを挙げる",
+          "text_en": "CoVolt Power names Primoris as a competitor",
+          "source": {
+            "label": "CoVolt Power 上場届出書(S-1)(2026年8月)",
+            "label_en": "CoVolt Power registration statement (S-1) (2026-08)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2131613/000119312526361190/d25482ds1.htm",
+            "level": "official",
+            "date": "2026-08-21",
+            "quote": "Our principal competitors in the generation and storage markets include Kiewit, MasTec, McCarthy, Mortenson, Moss, Primoris Services"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

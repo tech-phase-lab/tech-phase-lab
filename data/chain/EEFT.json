@@ -1,0 +1,242 @@
+{
+  "root": {
+    "ticker": "EEFT",
+    "name": "ユーロネット・ワールドワイド",
+    "cik": 1029199,
+    "name_en": "Euronet Worldwide"
+  },
+  "rows": [
+    {
+      "ja": "カードブランド・買収",
+      "en": "Card networks & acquisitions"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in its 10-K)"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "WU",
+    "IMXI",
+    "NATL"
+  ],
+  "companies": [
+    {
+      "id": "V",
+      "ticker": "V",
+      "name": "ビザ",
+      "name_en": "Visa",
+      "sub": "決済ネットワーク",
+      "sub_en": "Payment network",
+      "sub_short": "決済網",
+      "sub_short_en": "Payment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Visaブランドのギフトカードを販売",
+          "text_en": "Sells Visa-branded gift cards",
+          "source": {
+            "label": "Euronet 10-K(2025年度)",
+            "label_en": "Euronet 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1029199/000155485526000131/eeft-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "We distribute and issue single-use, non-reloadable open loop gift cards carrying the Visa ® brand in our retail channels."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MA",
+      "ticker": "MA",
+      "name": "マスターカード",
+      "name_en": "Mastercard",
+      "sub": "決済ネットワーク",
+      "sub_en": "Payment network",
+      "sub_short": "決済網",
+      "sub_short_en": "Payment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Visa・Mastercardのデビットカードを流通",
+          "text_en": "Distributes Visa and Mastercard debit cards",
+          "source": {
+            "label": "Euronet 10-K(2025年度)",
+            "label_en": "Euronet 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1029199/000155485526000131/eeft-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Open Loop Reloadable We distribute Visa ® and Mastercard ® issued debit cards provided by card issuers."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CoreCard",
+      "ticker": "CoreCard",
+      "name": "コアカード",
+      "name_en": "CoreCard",
+      "sub": "カード処理ソフト",
+      "sub_en": "Card processing software",
+      "sub_short": "カード",
+      "sub_short_en": "Cards",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "CoreCardを全株取得",
+          "text_en": "Acquired 100% of CoreCard",
+          "source": {
+            "label": "Euronet 10-K(2025年度)",
+            "label_en": "Euronet 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1029199/000155485526000131/eeft-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "The Company acquired 100 % of CoreCard; no noncontrolling interest was recognized."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Kyodai",
+      "ticker": "Kyodai",
+      "name": "キョウダイ(UNIDOS)",
+      "name_en": "Kyodai (UNIDOS)",
+      "sub": "送金(日本)",
+      "sub_en": "Remittance (Japan)",
+      "sub_short": "送金",
+      "sub_short_en": "Transfers",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "日本の送金会社の株式60%を取得(2025年5月)",
+          "text_en": "Acquired a 60% stake in a Japanese remittance company (May 2025)",
+          "source": {
+            "label": "Euronet 10-K(2025年度)",
+            "label_en": "Euronet 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1029199/000155485526000131/eeft-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Kyodai (Japan) On May 31, 2025, Euronet completed the acquisition of a 60 % equity stake in UNIDOS CO."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WU",
+      "ticker": "WU",
+      "name": "ウエスタンユニオン",
+      "name_en": "Western Union",
+      "sub": "国際送金",
+      "sub_en": "Money transfer",
+      "sub_short": "国際送金",
+      "sub_short_en": "Transfers",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "送金の最大の競合(送金部門の約2倍の売上)",
+          "text_en": "Leading money transfer competitor, about twice its segment revenue",
+          "source": {
+            "label": "Euronet 10-K(2025年度)",
+            "label_en": "Euronet 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1029199/000155485526000131/eeft-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our competition includes The Western Union Company, the leading competitor with revenue approximately two times greater than our Money Transfer Segment revenue."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MoneyGram",
+      "ticker": "MoneyGram",
+      "name": "マネーグラム",
+      "name_en": "MoneyGram",
+      "sub": "国際送金",
+      "sub_en": "Money transfer",
+      "sub_short": "国際送金",
+      "sub_short_en": "Transfers",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "送金の競合",
+          "text_en": "A money transfer competitor",
+          "source": {
+            "label": "Euronet 10-K(2025年度)",
+            "label_en": "Euronet 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1029199/000155485526000131/eeft-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our competitors include The Western Union Company and MoneyGram International Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "IMXI",
+      "ticker": "IMXI",
+      "name": "インターナショナル・マネー・エクスプレス",
+      "name_en": "International Money Express",
+      "sub": "国際送金",
+      "sub_en": "Money transfer",
+      "sub_short": "国際送金",
+      "sub_short_en": "Transfers",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Intermexが10-Kで、大手の競合として挙げる",
+          "text_en": "Intermex names Euronet among larger competitors",
+          "source": {
+            "label": "International Money Express 10-K(2024年度)",
+            "label_en": "International Money Express 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1683695/000168369525000030/imxi-20241231.htm",
+            "level": "official",
+            "date": "2025-02-27",
+            "quote": "We compete with larger companies, such as The Western Union Company (\"Western Union\"), MoneyGram International, Inc. (\"MoneyGram\"), Remitly Global, Inc. (\"Remitly\") and Euronet Worldwide Inc. (\"Euronet\")"
+          }
+        }
+      ]
+    },
+    {
+      "id": "NATL",
+      "ticker": "NATL",
+      "name": "NCRアトレオス",
+      "name_en": "NCR Atleos",
+      "sub": "ATM",
+      "sub_en": "ATMs",
+      "sub_short": "ATM",
+      "sub_short_en": "ATMs",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "NCR Atleosが10-Kで、ATMの競合として挙げる",
+          "text_en": "NCR Atleos names Euronet among ATM competitors",
+          "source": {
+            "label": "NCR Atleos 10-K(2025年度)",
+            "label_en": "NCR Atleos 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1974138/000162828026012576/ncr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our competition consists of global ATM software, services and hardware companies including Fiserv, Euronet, Brink's Company, Hyosung, and Diebold Nixdorf."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -33,6 +33,8 @@
       "name": "ラムバス",
       "sub": "メモリ・インターフェースIP",
       "sub_en": "Memory interface IP",
+      "sub_short": "メモリIP",
+      "sub_short_en": "Memory",
       "row": 0,
       "relations": [
         {
@@ -70,6 +72,8 @@
       "name": "Arm",
       "sub": "プロセッサIP",
       "sub_en": "Processor IP",
+      "sub_short": "IP",
+      "sub_short_en": "CPU IP",
       "row": 0,
       "relations": [
         {
@@ -93,6 +97,8 @@
       "name": "CEVA",
       "sub": "プロセッサIP",
       "sub_en": "Processor IP",
+      "sub_short": "IP",
+      "sub_short_en": "CPU IP",
       "row": 0,
       "relations": [
         {
@@ -129,6 +135,8 @@
       "name": "NVIDIA",
       "sub": "AI半導体",
       "sub_en": "AI chips",
+      "sub_short": "AI半導体",
+      "sub_short_en": "AI chips",
       "row": 0,
       "relations": [
         {
@@ -152,6 +160,8 @@
       "name": "インテル",
       "sub": "半導体",
       "sub_en": "Semiconductors",
+      "sub_short": "半導体",
+      "sub_short_en": "Chips",
       "row": 0,
       "relations": [
         {
@@ -176,6 +186,8 @@
       "name": "UMC",
       "sub": "ファウンドリ",
       "sub_en": "Foundry",
+      "sub_short": "受託生産",
+      "sub_short_en": "Foundry",
       "row": 0,
       "relations": [
         {
@@ -199,6 +211,8 @@
       "name": "タワーセミコンダクター",
       "sub": "ファウンドリ",
       "sub_en": "Foundry",
+      "sub_short": "受託生産",
+      "sub_short_en": "Foundry",
       "row": 0,
       "relations": [
         {
@@ -223,6 +237,8 @@
       "name": "JPモルガン・チェース",
       "sub": "銀行",
       "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
       "row": 1,
       "relations": [
         {
@@ -249,6 +265,8 @@
       "name": "バンク・オブ・アメリカ",
       "sub": "銀行",
       "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
       "row": 1,
       "relations": [
         {
@@ -288,6 +306,8 @@
       "name": "シノプシス",
       "sub": "EDAソフト",
       "sub_en": "EDA software",
+      "sub_short": "EDA",
+      "sub_short_en": "EDA",
       "row": 2,
       "relations": [
         {
@@ -312,6 +332,8 @@
       "name": "キーサイト・テクノロジー",
       "sub": "計測機器",
       "sub_en": "Test & measurement",
+      "sub_short": "計測機器",
+      "sub_short_en": "Testing",
       "row": 2,
       "relations": [
         {
@@ -336,6 +358,8 @@
       "name": "シルバコ・グループ",
       "sub": "半導体設計ソフト",
       "sub_en": "Chip design software",
+      "sub_short": "設計",
+      "sub_short_en": "Chip IP",
       "row": 0,
       "relations": [
         {

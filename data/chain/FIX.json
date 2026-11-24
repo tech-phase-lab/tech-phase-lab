@@ -1,0 +1,212 @@
+{
+  "root": {
+    "ticker": "FIX",
+    "name": "コンフォート・システムズUSA",
+    "cik": 1035983,
+    "name_en": "Comfort Systems USA"
+  },
+  "rows": [
+    {
+      "ja": "買収(2025年)",
+      "en": "Acquisitions (2025)"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "EME",
+    "LGN",
+    "ECG"
+  ],
+  "companies": [
+    {
+      "id": "FeyenZylstra",
+      "ticker": "Feyen-Zylstra",
+      "name": "フェイエン・ジルストラ",
+      "name_en": "Feyen-Zylstra",
+      "sub": "電気工事",
+      "sub_en": "Electrical contractor",
+      "sub_short": "電気工事",
+      "sub_short_en": "Electrical",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Feyen-Zylstraを買収(2025年10月)",
+          "text_en": "Acquired Feyen-Zylstra (October 2025)",
+          "source": {
+            "label": "Comfort Systems USA 10-K(2025年度)",
+            "label_en": "Comfort Systems USA 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1035983/000110465926017530/fix-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "The Company acquired Feyen-Zylstra Holdings, LLC and Meisner Electric, Inc . in October 2025, Right Way Plumbing & Mechanical LLC in May 2025 and Century Contractors, LLC in January 2025."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Meisner",
+      "ticker": "Meisner Electric",
+      "name": "マイズナー・エレクトリック",
+      "name_en": "Meisner Electric",
+      "sub": "電気工事",
+      "sub_en": "Electrical contractor",
+      "sub_short": "電気工事",
+      "sub_short_en": "Electrical",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Meisner Electricを買収(2025年10月)",
+          "text_en": "Acquired Meisner Electric (October 2025)",
+          "source": {
+            "label": "Comfort Systems USA 10-K(2025年度)",
+            "label_en": "Comfort Systems USA 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1035983/000110465926017530/fix-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "The Company acquired Feyen-Zylstra Holdings, LLC and Meisner Electric, Inc . in October 2025, Right Way Plumbing & Mechanical LLC in May 2025 and Century Contractors, LLC in January 2025."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RightWay",
+      "ticker": "Right Way",
+      "name": "ライトウェイ配管",
+      "name_en": "Right Way Plumbing & Mechanical",
+      "sub": "配管・空調工事",
+      "sub_en": "Plumbing & mechanical",
+      "sub_short": "設備工事",
+      "sub_short_en": "Plumbing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Right Wayを買収(2025年5月)",
+          "text_en": "Acquired Right Way (May 2025)",
+          "source": {
+            "label": "Comfort Systems USA 10-K(2025年度)",
+            "label_en": "Comfort Systems USA 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1035983/000110465926017530/fix-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "The Company acquired Feyen-Zylstra Holdings, LLC and Meisner Electric, Inc . in October 2025, Right Way Plumbing & Mechanical LLC in May 2025 and Century Contractors, LLC in January 2025."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Century",
+      "ticker": "Century Contractors",
+      "name": "センチュリー・コントラクターズ",
+      "name_en": "Century Contractors",
+      "sub": "機械設備工事",
+      "sub_en": "Mechanical contractor",
+      "sub_short": "設備工事",
+      "sub_short_en": "Plumbing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Century Contractorsを買収(2025年1月)",
+          "text_en": "Acquired Century Contractors (January 2025)",
+          "source": {
+            "label": "Comfort Systems USA 10-K(2025年度)",
+            "label_en": "Comfort Systems USA 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1035983/000110465926017530/fix-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "The Company acquired Feyen-Zylstra Holdings, LLC and Meisner Electric, Inc . in October 2025, Right Way Plumbing & Mechanical LLC in May 2025 and Century Contractors, LLC in January 2025."
+          }
+        }
+      ]
+    },
+    {
+      "id": "EME",
+      "ticker": "EME",
+      "name": "エムコー",
+      "name_en": "EMCOR",
+      "sub": "設備工事",
+      "sub_en": "Building services",
+      "sub_short": "設備工事",
+      "sub_short_en": "Facilities",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "EMCORが10-Kで、機械設備サービスの競合として挙げる",
+          "text_en": "EMCOR names Comfort Systems among mechanical services competitors",
+          "source": {
+            "label": "EMCOR 10-K(2025年度)",
+            "label_en": "EMCOR 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/105634/000010563426000025/eme-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Within our mechanical services division, we compete with entities such as APi Group Corporation, Comfort Systems USA, Inc., and Service Logic LLC"
+          }
+        }
+      ]
+    },
+    {
+      "id": "LGN",
+      "ticker": "LGN",
+      "name": "レジェンス",
+      "name_en": "Legence",
+      "sub": "建物設備・省エネ",
+      "sub_en": "Building systems & efficiency",
+      "sub_short": "建物設備",
+      "sub_short_en": "Buildings",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Legenceが10-Kで、全国的な競合の筆頭に挙げる",
+          "text_en": "Legence lists Comfort Systems first among national competitors",
+          "source": {
+            "label": "Legence 10-K(2025年度)",
+            "label_en": "Legence 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2052568/000205256826000008/lgn-20251231.htm",
+            "level": "official",
+            "date": "2026-03-30",
+            "quote": "National competitors of our Installation & Maintenance segment include Comfort Systems USA, Inc., ACCO Engineered Systems, Inc. and Southland Industries, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ECG",
+      "ticker": "ECG",
+      "name": "エベラス・コンストラクション",
+      "name_en": "Everus Construction",
+      "sub": "電気・機械工事",
+      "sub_en": "Electrical & mechanical contractor",
+      "sub_short": "電気工事",
+      "sub_short_en": "Electrical",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Everusが株式報酬契約で、主な競合の一社として挙げる",
+          "text_en": "Everus names Comfort Systems among its primary competitors",
+          "source": {
+            "label": "Everus Construction 10-K添付の株式報酬契約",
+            "label_en": "Everus Construction award agreement (10-K exhibit)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2015845/000201584526000010/a2025q4ex1023-ecgxuse.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "APi Group Corporation, Comfort Systems USA, Inc."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

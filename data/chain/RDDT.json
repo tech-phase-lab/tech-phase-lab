@@ -26,6 +26,8 @@
       "name": "テンセント",
       "sub": "インターネット・ゲーム",
       "sub_en": "Internet & gaming",
+      "sub_short": "ネット",
+      "sub_short_en": "Internet",
       "row": 0,
       "relations": [
         {
@@ -52,6 +54,8 @@
       "name": "Sprout Social",
       "sub": "SNS運用ソフト",
       "sub_en": "Social media software",
+      "sub_short": "SNS管理",
+      "sub_short_en": "Social",
       "row": 0,
       "relations": [
         {
@@ -75,6 +79,8 @@
       "name": "JPモルガン・チェース",
       "sub": "銀行",
       "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
       "row": 0,
       "relations": [
         {
@@ -101,6 +107,8 @@
       "name": "スナップ",
       "sub": "SNS・カメラ",
       "sub_en": "Social & camera",
+      "sub_short": "SNS",
+      "sub_short_en": "Social",
       "row": 1,
       "relations": [
         {
@@ -125,6 +133,8 @@
       "name": "ピンタレスト",
       "sub": "画像SNS",
       "sub_en": "Visual social",
+      "sub_short": "画像SNS",
+      "sub_short_en": "Social",
       "row": 1,
       "relations": [
         {
@@ -149,6 +159,8 @@
       "name": "ロブロックス",
       "sub": "ゲームプラットフォーム",
       "sub_en": "Gaming platform",
+      "sub_short": "ゲーム",
+      "sub_short_en": "Games",
       "row": 1,
       "relations": [
         {

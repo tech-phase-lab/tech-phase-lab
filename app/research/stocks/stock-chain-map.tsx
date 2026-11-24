@@ -127,7 +127,7 @@ export function StockChainMap({ data, lang, sample = false }: { data: ChainMapDa
     return <button type="button" key={company.id} ref={element => { chips.current[company.id] = element; }} className={`${styles.chip} ${related(company.id) ? styles.on : ""}`}
       data-tone={kinds[0]} onClick={() => select(company.id)} aria-pressed={sel === company.id}>
       <span className={styles.dots} aria-hidden="true">{kinds.map(kind => <i key={kind} data-tone={kind} />)}</span>
-      <b>{company.ticker}</b><small>{ja ? company.sub : company.sub_en}</small>
+      <b data-long={company.ticker.length > 6 || undefined}>{company.ticker}</b><small title={ja ? company.sub : company.sub_en}>{ja ? company.sub_short ?? company.sub : company.sub_short_en ?? company.sub_en}</small>
     </button>;
   };
   // A crowded row shows its main companies and a "＋" chip for the rest, so the map stays readable (owner, Oct 19).

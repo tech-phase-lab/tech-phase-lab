@@ -1,0 +1,185 @@
+{
+  "root": {
+    "ticker": "REYN",
+    "name": "レイノルズ・コンシューマー・プロダクツ",
+    "cik": 1786431,
+    "name_en": "Reynolds Consumer Products"
+  },
+  "rows": [
+    {
+      "ja": "親会社・旧グループ",
+      "en": "Parent & former group"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in its 10-K)"
+    }
+  ],
+  "rivals": [
+    "CLX",
+    "SCJ"
+  ],
+  "companies": [
+    {
+      "id": "PFL",
+      "ticker": "Packaging Finance",
+      "name": "パッケージング・ファイナンス",
+      "name_en": "Packaging Finance Limited",
+      "sub": "持株会社",
+      "sub_en": "Holding company",
+      "sub_short": "持株会社",
+      "sub_short_en": "Holding",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "発行済み株式の過半数を保有する親会社",
+          "text_en": "Owns the majority of its common stock",
+          "source": {
+            "label": "Reynolds Consumer Products 10-K(2025年度)",
+            "label_en": "Reynolds Consumer Products 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1786431/000162828026005284/reyn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-04",
+            "quote": "Packaging Finance Limited (\"PFL\") owns the majority of our outstanding common stock."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PTVE",
+      "ticker": "Pactiv Evergreen",
+      "name": "パクティブ・エバーグリーン",
+      "name_en": "Pactiv Evergreen",
+      "sub": "食品包装",
+      "sub_en": "Food packaging",
+      "sub_short": "食品包装",
+      "sub_short_en": "Packing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2020年の上場前はPactiv Evergreenの一部",
+          "text_en": "Operated as part of Pactiv Evergreen before its 2020 IPO",
+          "source": {
+            "label": "Reynolds Consumer Products 10-K(2025年度)",
+            "label_en": "Reynolds Consumer Products 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1786431/000162828026005284/reyn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-04",
+            "quote": "Prior to our initial public offering (\"IPO\") in 2020, we historically operated as part of Pactiv Evergreen Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CLX",
+      "ticker": "CLX",
+      "name": "クロロックス",
+      "name_en": "Clorox",
+      "sub": "家庭用品",
+      "sub_en": "Household products",
+      "sub_short": "家庭用品",
+      "sub_short_en": "Home",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合",
+          "text_en": "A main competitor",
+          "source": {
+            "label": "Reynolds Consumer Products 10-K(2025年度)",
+            "label_en": "Reynolds Consumer Products 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1786431/000162828026005284/reyn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-04",
+            "quote": "Our main competitors include The Clorox Company, S.C. Johnson & Son, Inc., Poly-America, Handi-Foil Corporation, Republic Plastics, Ltd., Trinidad Benham Corporation and Inteplast Group, Ltd."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SCJ",
+      "ticker": "S.C. Johnson",
+      "name": "S.C.ジョンソン",
+      "name_en": "S.C. Johnson",
+      "sub": "家庭用品",
+      "sub_en": "Household products",
+      "sub_short": "家庭用品",
+      "sub_short_en": "Home",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合",
+          "text_en": "A main competitor",
+          "source": {
+            "label": "Reynolds Consumer Products 10-K(2025年度)",
+            "label_en": "Reynolds Consumer Products 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1786431/000162828026005284/reyn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-04",
+            "quote": "Our main competitors include The Clorox Company, S.C. Johnson & Son, Inc., Poly-America, Handi-Foil Corporation, Republic Plastics, Ltd., Trinidad Benham Corporation and Inteplast Group, Ltd."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PolyAmerica",
+      "ticker": "Poly-America",
+      "name": "ポリアメリカ",
+      "name_en": "Poly-America",
+      "sub": "ごみ袋",
+      "sub_en": "Trash bags",
+      "sub_short": "ごみ袋",
+      "sub_short_en": "Bags",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合",
+          "text_en": "A main competitor",
+          "source": {
+            "label": "Reynolds Consumer Products 10-K(2025年度)",
+            "label_en": "Reynolds Consumer Products 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1786431/000162828026005284/reyn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-04",
+            "quote": "Our main competitors include The Clorox Company, S.C. Johnson & Son, Inc., Poly-America, Handi-Foil Corporation, Republic Plastics, Ltd., Trinidad Benham Corporation and Inteplast Group, Ltd."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HandiFoil",
+      "ticker": "Handi-Foil",
+      "name": "ハンディフォイル",
+      "name_en": "Handi-Foil",
+      "sub": "アルミ容器",
+      "sub_en": "Aluminum containers",
+      "sub_short": "アルミ缶",
+      "sub_short_en": "Cans",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合",
+          "text_en": "A main competitor",
+          "source": {
+            "label": "Reynolds Consumer Products 10-K(2025年度)",
+            "label_en": "Reynolds Consumer Products 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1786431/000162828026005284/reyn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-04",
+            "quote": "Our main competitors include The Clorox Company, S.C. Johnson & Son, Inc., Poly-America, Handi-Foil Corporation, Republic Plastics, Ltd., Trinidad Benham Corporation and Inteplast Group, Ltd."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

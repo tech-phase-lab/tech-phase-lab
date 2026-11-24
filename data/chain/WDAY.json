@@ -35,6 +35,8 @@
       "name": "アルファベット(Google)",
       "sub": "検索・クラウド",
       "sub_en": "Search & cloud",
+      "sub_short": "検索",
+      "sub_short_en": "Search",
       "row": 0,
       "relations": [
         {
@@ -70,6 +72,8 @@
       "name": "アクセンチュア",
       "sub": "コンサルティング",
       "sub_en": "Consulting",
+      "sub_short": "コンサル",
+      "sub_short_en": "Advisory",
       "row": 0,
       "relations": [
         {
@@ -93,6 +97,8 @@
       "name": "Amazon(AWS)",
       "sub": "クラウド",
       "sub_en": "Cloud",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 0,
       "relations": [
         {
@@ -116,6 +122,8 @@
       "name": "Microsoft",
       "sub": "ソフト・クラウド",
       "sub_en": "Software & cloud",
+      "sub_short": "ソフト",
+      "sub_short_en": "Software",
       "row": 0,
       "relations": [
         {
@@ -139,6 +147,8 @@
       "name": "オートマティック・データ・プロセッシング",
       "sub": "給与計算",
       "sub_en": "Payroll",
+      "sub_short": "給与計算",
+      "sub_short_en": "Payroll",
       "row": 1,
       "relations": [
         {
@@ -163,6 +173,8 @@
       "name": "BlackLine",
       "sub": "会計ソフト",
       "sub_en": "Accounting software",
+      "sub_short": "会計",
+      "sub_short_en": "Accounts",
       "row": 1,
       "relations": [
         {
@@ -186,6 +198,8 @@
       "name": "Box",
       "sub": "クラウドストレージ",
       "sub_en": "Cloud content",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 1,
       "relations": [
         {
@@ -209,6 +223,8 @@
       "name": "Okta",
       "sub": "ID管理",
       "sub_en": "Identity management",
+      "sub_short": "ID管理",
+      "sub_short_en": "Identity",
       "row": 1,
       "relations": [
         {
@@ -232,6 +248,8 @@
       "name": "Docusign",
       "sub": "電子署名",
       "sub_en": "E-signature",
+      "sub_short": "電子署名",
+      "sub_short_en": "E-sign",
       "row": 1,
       "relations": [
         {
@@ -255,6 +273,8 @@
       "name": "アトラシアン",
       "sub": "業務ソフト",
       "sub_en": "Collaboration software",
+      "sub_short": "業務IT",
+      "sub_short_en": "Collab",
       "row": 1,
       "relations": [
         {
@@ -279,6 +299,8 @@
       "name": "バンク・オブ・アメリカ",
       "sub": "銀行",
       "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
       "row": 2,
       "relations": [
         {
@@ -303,6 +325,8 @@
       "name": "ウェルズ・ファーゴ",
       "sub": "銀行",
       "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
       "row": 2,
       "relations": [
         {
@@ -327,6 +351,8 @@
       "name": "オラクル",
       "sub": "データベース・ソフト",
       "sub_en": "Database & software",
+      "sub_short": "DB",
+      "sub_short_en": "Database",
       "row": 3,
       "relations": [
         {
@@ -351,6 +377,8 @@
       "name": "SAP",
       "sub": "業務ソフト",
       "sub_en": "Business software",
+      "sub_short": "業務IT",
+      "sub_short_en": "Biz apps",
       "row": 3,
       "relations": [
         {
@@ -374,6 +402,8 @@
       "name": "Paycom",
       "sub": "人事・給与ソフト",
       "sub_en": "HR & payroll software",
+      "sub_short": "人事",
+      "sub_short_en": "HR",
       "row": 3,
       "relations": [
         {

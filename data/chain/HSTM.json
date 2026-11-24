@@ -1,0 +1,295 @@
+{
+  "root": {
+    "ticker": "HSTM",
+    "name": "ヘルスストリーム",
+    "cik": 1095565,
+    "name_en": "HealthStream"
+  },
+  "rows": [
+    {
+      "ja": "医療特化の競合(10-Kに記載)",
+      "en": "Healthcare-focused competitors (named in the 10-K)",
+      "above": true
+    },
+    {
+      "ja": "業種横断の人事ソフト競合",
+      "en": "Cross-industry HR software competitors"
+    },
+    {
+      "ja": "主な競合",
+      "en": "Main competitors"
+    }
+  ],
+  "rivals": [
+    "WDAY",
+    "ORCL",
+    "SAP"
+  ],
+  "companies": [
+    {
+      "id": "Relias",
+      "ticker": "Relias Learning",
+      "name": "レリアス・ラーニング",
+      "name_en": "Relias Learning",
+      "sub": "医療教育(非上場)",
+      "sub_en": "Healthcare learning (private)",
+      "sub_short": "医療教育",
+      "sub_short_en": "Training",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "医療特化の競合",
+          "text_en": "Healthcare-focused competitor",
+          "source": {
+            "label": "HealthStream 10-K(2025年度)",
+            "label_en": "HealthStream 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1095565/000143774926005916/hstm20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "such as Relias Learning, RLDatix, Symplr, Verisys, MD-Staff, AMN Healthcare"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RLDatix",
+      "ticker": "RLDatix",
+      "name": "RLダティックス",
+      "name_en": "RLDatix",
+      "sub": "医療ソフト(非上場)",
+      "sub_en": "Healthcare software (private)",
+      "sub_short": "医療IT",
+      "sub_short_en": "Health IT",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "医療特化の競合",
+          "text_en": "Healthcare-focused competitor",
+          "source": {
+            "label": "HealthStream 10-K(2025年度)",
+            "label_en": "HealthStream 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1095565/000143774926005916/hstm20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "such as Relias Learning, RLDatix, Symplr, Verisys, MD-Staff, AMN Healthcare"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Symplr",
+      "ticker": "Symplr",
+      "name": "シンプラー",
+      "name_en": "Symplr",
+      "sub": "医療ソフト(非上場)",
+      "sub_en": "Healthcare software (private)",
+      "sub_short": "医療IT",
+      "sub_short_en": "Health IT",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "医療特化の競合",
+          "text_en": "Healthcare-focused competitor",
+          "source": {
+            "label": "HealthStream 10-K(2025年度)",
+            "label_en": "HealthStream 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1095565/000143774926005916/hstm20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "such as Relias Learning, RLDatix, Symplr, Verisys, MD-Staff, AMN Healthcare"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMN",
+      "ticker": "AMN",
+      "name": "AMNヘルスケア",
+      "name_en": "AMN Healthcare",
+      "sub": "医療人材",
+      "sub_en": "Healthcare staffing",
+      "sub_short": "医療人材",
+      "sub_short_en": "Staffing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "医療特化の競合",
+          "text_en": "Healthcare-focused competitor",
+          "source": {
+            "label": "HealthStream 10-K(2025年度)",
+            "label_en": "HealthStream 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1095565/000143774926005916/hstm20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "such as Relias Learning, RLDatix, Symplr, Verisys, MD-Staff, AMN Healthcare"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CornerstoneOnDemand",
+      "ticker": "Cornerstone OnDemand",
+      "name": "コーナーストーン・オンデマンド",
+      "name_en": "Cornerstone OnDemand",
+      "sub": "人材育成ソフト(非上場)",
+      "sub_en": "Learning software (private)",
+      "sub_short": "研修",
+      "sub_short_en": "Edtech",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "業種横断の人事ソフト競合",
+          "text_en": "Cross-industry HR software competitor",
+          "source": {
+            "label": "HealthStream 10-K(2025年度)",
+            "label_en": "HealthStream 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1095565/000143774926005916/hstm20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "We compete with companies such as Cornerstone OnDemand, Ultimate Kronos Group, Degreed, Oracle, SAP, Infor, Qgenda, Indeed, and Workday"
+          }
+        }
+      ]
+    },
+    {
+      "id": "UKG",
+      "ticker": "UKG",
+      "name": "UKG",
+      "name_en": "Ultimate Kronos Group",
+      "sub": "人事・勤怠ソフト(非上場)",
+      "sub_en": "HR & workforce software (private)",
+      "sub_short": "人事",
+      "sub_short_en": "HR",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "業種横断の人事ソフト競合",
+          "text_en": "Cross-industry HR software competitor",
+          "source": {
+            "label": "HealthStream 10-K(2025年度)",
+            "label_en": "HealthStream 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1095565/000143774926005916/hstm20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "We compete with companies such as Cornerstone OnDemand, Ultimate Kronos Group, Degreed, Oracle, SAP, Infor, Qgenda, Indeed, and Workday"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Recruit",
+      "ticker": "RCRUY",
+      "name": "リクルート(Indeed)",
+      "name_en": "Recruit Holdings (Indeed)",
+      "sub": "求人サイト",
+      "sub_en": "Job sites",
+      "sub_short": "求人",
+      "sub_short_en": "Job sites",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "傘下Indeedが競合",
+          "text_en": "Its Indeed is named as a competitor",
+          "source": {
+            "label": "HealthStream 10-K(2025年度)",
+            "label_en": "HealthStream 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1095565/000143774926005916/hstm20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "We compete with companies such as Cornerstone OnDemand, Ultimate Kronos Group, Degreed, Oracle, SAP, Infor, Qgenda, Indeed, and Workday"
+          }
+        }
+      ]
+    },
+    {
+      "id": "WDAY",
+      "ticker": "WDAY",
+      "name": "ワークデイ",
+      "name_en": "Workday",
+      "sub": "人事・財務クラウド",
+      "sub_en": "HR & finance cloud",
+      "sub_short": "人事",
+      "sub_short_en": "HR",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "業種横断の人事ソフト競合",
+          "text_en": "Cross-industry HR software competitor",
+          "source": {
+            "label": "HealthStream 10-K(2025年度)",
+            "label_en": "HealthStream 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1095565/000143774926005916/hstm20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "We compete with companies such as Cornerstone OnDemand, Ultimate Kronos Group, Degreed, Oracle, SAP, Infor, Qgenda, Indeed, and Workday"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ORCL",
+      "ticker": "ORCL",
+      "name": "オラクル",
+      "name_en": "Oracle",
+      "sub": "ソフトウェア",
+      "sub_en": "Software",
+      "sub_short": "ソフト",
+      "sub_short_en": "Software",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "業種横断の人事ソフト競合",
+          "text_en": "Cross-industry HR software competitor",
+          "source": {
+            "label": "HealthStream 10-K(2025年度)",
+            "label_en": "HealthStream 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1095565/000143774926005916/hstm20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "We compete with companies such as Cornerstone OnDemand, Ultimate Kronos Group, Degreed, Oracle, SAP, Infor, Qgenda, Indeed, and Workday"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SAP",
+      "ticker": "SAP",
+      "name": "SAP",
+      "name_en": "SAP",
+      "sub": "ソフトウェア(独)",
+      "sub_en": "Software (Germany)",
+      "sub_short": "ソフト",
+      "sub_short_en": "Software",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "業種横断の人事ソフト競合",
+          "text_en": "Cross-industry HR software competitor",
+          "source": {
+            "label": "HealthStream 10-K(2025年度)",
+            "label_en": "HealthStream 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1095565/000143774926005916/hstm20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "We compete with companies such as Cornerstone OnDemand, Ultimate Kronos Group, Degreed, Oracle, SAP, Infor, Qgenda, Indeed, and Workday"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

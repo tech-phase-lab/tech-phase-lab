@@ -22,6 +22,8 @@
       "name": "MKSインスツルメンツ",
       "sub": "半導体装置電源",
       "sub_en": "Semiconductor power",
+      "sub_short": "装置電源",
+      "sub_short_en": "Power ICs",
       "row": 0,
       "relations": [
         {
@@ -46,6 +48,8 @@
       "name": "デルタ電子",
       "sub": "電源・電子部品",
       "sub_en": "Power electronics",
+      "sub_short": "電源",
+      "sub_short_en": "Power",
       "row": 0,
       "relations": [
         {
@@ -70,6 +74,8 @@
       "name": "フレックス",
       "sub": "電源・受託製造",
       "sub_en": "Power & EMS",
+      "sub_short": "電源",
+      "sub_short_en": "Power",
       "row": 0,
       "relations": [
         {
@@ -94,6 +100,8 @@
       "name": "コメット・ホールディング",
       "sub": "半導体装置電源",
       "sub_en": "Semiconductor RF",
+      "sub_short": "装置電源",
+      "sub_short_en": "RF ICs",
       "row": 0,
       "relations": [
         {
@@ -118,6 +126,8 @@
       "name": "ダイヘン",
       "sub": "電源機器",
       "sub_en": "Power equipment",
+      "sub_short": "電源機器",
+      "sub_short_en": "Power",
       "row": 0,
       "relations": [
         {
@@ -142,6 +152,8 @@
       "name": "ライトオン・テクノロジー",
       "sub": "電源・電子部品",
       "sub_en": "Power electronics",
+      "sub_short": "電源",
+      "sub_short_en": "Power",
       "row": 0,
       "relations": [
         {
@@ -166,6 +178,8 @@
       "name": "XPパワー",
       "sub": "電源機器",
       "sub_en": "Power equipment",
+      "sub_short": "電源機器",
+      "sub_short_en": "Power",
       "row": 0,
       "relations": [
         {

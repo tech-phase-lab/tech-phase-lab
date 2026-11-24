@@ -1,0 +1,217 @@
+{
+  "root": {
+    "ticker": "SUPN",
+    "name": "スーパーナス・ファーマシューティカルズ",
+    "cik": 1356576,
+    "name_en": "Supernus Pharmaceuticals"
+  },
+  "rows": [
+    {
+      "ja": "買収・共同販売",
+      "en": "Acquisition & collaboration",
+      "above": true
+    },
+    {
+      "ja": "製剤技術のライセンス先",
+      "en": "Licensees of its drug-delivery technology"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "AMRX",
+    "XENE",
+    "RAPP"
+  ],
+  "companies": [
+    {
+      "id": "SageTherapeutics",
+      "ticker": "Sage Therapeutics",
+      "name": "セージ・セラピューティクス",
+      "name_en": "Sage Therapeutics",
+      "sub": "中枢神経の医薬",
+      "sub_en": "CNS drugs",
+      "sub_short": "神経薬",
+      "sub_short_en": "CNS",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年7月に買収を完了",
+          "text_en": "Completed the acquisition on July 31, 2025",
+          "source": {
+            "label": "Supernus 10-K(2025年度)",
+            "label_en": "Supernus 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1356576/000135657626000011/supn-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "The transaction closed and the Company completed the acquisition of Sage on July 31, 2025."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BIIB",
+      "ticker": "BIIB",
+      "name": "バイオジェン",
+      "name_en": "Biogen",
+      "sub": "神経疾患の医薬",
+      "sub_en": "Neurology drugs",
+      "sub_short": "神経薬",
+      "sub_short_en": "Neuro",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Sageから引き継いだ産後うつ病薬zuranoloneでBiogenと共同事業",
+          "text_en": "Collaborates with Biogen on zuranolone, inherited from Sage",
+          "source": {
+            "label": "Supernus 10-K(2025年度)",
+            "label_en": "Supernus 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1356576/000135657626000011/supn-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "Through a collaboration agreement with Biogen MA Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "UTHR",
+      "ticker": "UTHR",
+      "name": "ユナイテッド・セラピューティクス",
+      "name_en": "United Therapeutics",
+      "sub": "肺高血圧症の医薬",
+      "sub_en": "Pulmonary hypertension drugs",
+      "sub_short": "肺疾患薬",
+      "sub_short_en": "PAH",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "製剤技術の利用権を与え、Orenitramの開発に使われた",
+          "text_en": "Licensed its technology, used to develop Orenitram",
+          "source": {
+            "label": "Supernus 10-K(2025年度)",
+            "label_en": "Supernus 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1356576/000135657626000011/supn-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "Orenitram (developed for United Therapeutics Corporation); and Namzaric (developed for Allergan plc)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TAK",
+      "ticker": "TAK",
+      "name": "武田薬品工業",
+      "name_en": "Takeda",
+      "sub": "医薬品(日本)",
+      "sub_en": "Pharmaceuticals (Japan)",
+      "sub_short": "医薬品",
+      "sub_short_en": "Pharma",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Shire(現Takeda)向けにAdderall XRを開発",
+          "text_en": "Developed Adderall XR for Shire, now part of Takeda",
+          "source": {
+            "label": "Supernus 10-K(2025年度)",
+            "label_en": "Supernus 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1356576/000135657626000011/supn-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "A dderall XR (developed for Shire, which has been acquired by Takeda Pharmaceutical Company);"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMRX",
+      "ticker": "AMRX",
+      "name": "アムニール",
+      "name_en": "Amneal Pharmaceuticals",
+      "sub": "ジェネリック・専門薬",
+      "sub_en": "Generics & specialty drugs",
+      "sub_short": "後発薬",
+      "sub_short_en": "Generics",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Amnealが10-Kで、専門薬市場の主な競合としてSupernusを挙げる",
+          "text_en": "Amneal names Supernus among its principal specialty pharmaceutical competitors",
+          "source": {
+            "label": "Amneal Pharmaceuticals 10-K(2025年提出)",
+            "label_en": "Amneal Pharmaceuticals 10-K (filed 2025-02)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1723128/000172312825000012/amrx-20241231.htm",
+            "level": "official",
+            "date": "2025-02-28",
+            "quote": "Our principal competitors in the specialty pharmaceutical products market include Supernus Pharmaceuticals, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "XENE",
+      "ticker": "XENE",
+      "name": "ゼノン・ファーマシューティカルズ",
+      "name_en": "Xenon Pharmaceuticals",
+      "sub": "てんかんの新薬",
+      "sub_en": "Epilepsy drugs",
+      "sub_short": "てんかん",
+      "sub_short_en": "Epilepsy",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Xenonが、競合しうる抗てんかん薬の開発企業としてSupernusを挙げる",
+          "text_en": "Xenon names Supernus among developers of potentially competing anti-seizure medicines",
+          "source": {
+            "label": "Xenon Pharmaceuticals 10-Q(2024年11月)",
+            "label_en": "Xenon Pharmaceuticals 10-Q (2024-11)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1582313/000095017024125547/xene-20240930.htm",
+            "level": "official",
+            "date": "2024-11-12",
+            "quote": "SK Life Science Inc., Supernus Pharmaceuticals, Inc., QurAlis Corporation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RAPP",
+      "ticker": "RAPP",
+      "name": "ラポート・セラピューティクス",
+      "name_en": "Rapport Therapeutics",
+      "sub": "てんかんの新薬",
+      "sub_en": "Epilepsy drugs",
+      "sub_short": "てんかん",
+      "sub_short_en": "Epilepsy",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Rapportが10-Kで、競合しうる開発品としてSupernusのSPN-817を挙げる",
+          "text_en": "Rapport names Supernus's SPN-817 among potentially competing candidates",
+          "source": {
+            "label": "Rapport Therapeutics 10-K(2025年提出)",
+            "label_en": "Rapport Therapeutics 10-K (filed 2025-03)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2012593/000095017025036828/rapp-20241231.htm",
+            "level": "official",
+            "date": "2025-03-11",
+            "quote": "SPN-817 being developed by Supernus Pharmaceuticals, Inc."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

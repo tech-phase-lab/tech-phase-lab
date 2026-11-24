@@ -32,6 +32,8 @@
       "name_en": "Sera Prognostics",
       "sub": "妊娠検査",
       "sub_en": "Pregnancy diagnostics",
+      "sub_short": "妊娠検査",
+      "sub_short_en": "Tests",
       "row": 0,
       "relations": [
         {
@@ -56,6 +58,8 @@
       "name_en": "Hinge Health",
       "sub": "デジタル理学療法",
       "sub_en": "Digital physical therapy",
+      "sub_short": "遠隔療法",
+      "sub_short_en": "Digital PT",
       "row": 0,
       "relations": [
         {
@@ -80,6 +84,8 @@
       "name_en": "GoHealth",
       "sub": "保険販売プラットフォーム",
       "sub_en": "Insurance marketplace",
+      "sub_short": "保険販売",
+      "sub_short_en": "Insurance",
       "row": 0,
       "relations": [
         {
@@ -104,6 +110,8 @@
       "name_en": "CareBridge",
       "sub": "在宅ケア管理",
       "sub_en": "Home-based care management",
+      "sub_short": "在宅医療",
+      "sub_short_en": "Care",
       "row": 1,
       "relations": [
         {
@@ -128,6 +136,8 @@
       "name_en": "Centers Plan for Healthy Living",
       "sub": "医療保険(NY)",
       "sub_en": "Health plan (New York)",
+      "sub_short": "医療保険",
+      "sub_short_en": "Health",
       "row": 1,
       "relations": [
         {
@@ -152,6 +162,8 @@
       "name_en": "Kroger",
       "sub": "スーパー",
       "sub_en": "Grocery",
+      "sub_short": "スーパー",
+      "sub_short_en": "Grocery",
       "row": 1,
       "relations": [
         {
@@ -176,6 +188,8 @@
       "name_en": "American Well",
       "sub": "遠隔医療",
       "sub_en": "Telehealth",
+      "sub_short": "遠隔医療",
+      "sub_short_en": "eHealth",
       "row": 1,
       "relations": [
         {
@@ -200,6 +214,8 @@
       "name_en": "Cigna (Express Scripts)",
       "sub": "医療保険・PBM",
       "sub_en": "Health insurance & PBM",
+      "sub_short": "医療保険",
+      "sub_short_en": "Health",
       "row": 1,
       "relations": [
         {
@@ -224,6 +240,8 @@
       "name_en": "Molina Healthcare",
       "sub": "メディケイド保険",
       "sub_en": "Medicaid health plans",
+      "sub_short": "医療保険",
+      "sub_short_en": "Medicaid",
       "row": 2,
       "relations": [
         {
@@ -248,6 +266,8 @@
       "name_en": "Clover Health",
       "sub": "メディケア保険",
       "sub_en": "Medicare Advantage",
+      "sub_short": "医療保険",
+      "sub_short_en": "Medicare",
       "row": 2,
       "relations": [
         {

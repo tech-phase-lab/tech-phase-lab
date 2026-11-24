@@ -33,6 +33,8 @@
       "name_en": "Silgan Holdings",
       "sub": "容器",
       "sub_en": "Containers",
+      "sub_short": "容器",
+      "sub_short_en": "Boxes",
       "row": 0,
       "relations": [
         {
@@ -57,6 +59,8 @@
       "name_en": "Walmart",
       "sub": "小売",
       "sub_en": "Retail",
+      "sub_short": "小売",
+      "sub_short_en": "Retail",
       "row": 1,
       "relations": [
         {
@@ -81,6 +85,8 @@
       "name_en": "Sovos Brands",
       "sub": "食品(Rao's)",
       "sub_en": "Foods (Rao's)",
+      "sub_short": "食品",
+      "sub_short_en": "Foods",
       "row": 1,
       "relations": [
         {
@@ -105,6 +111,8 @@
       "name_en": "La Regina",
       "sub": "トマトソース(伊)",
       "sub_en": "Tomato sauce (Italy)",
+      "sub_short": "食品",
+      "sub_short_en": "Food",
       "row": 1,
       "relations": [
         {
@@ -129,6 +137,8 @@
       "name_en": "PepsiCo",
       "sub": "飲料・食品",
       "sub_en": "Beverages & snacks",
+      "sub_short": "飲料",
+      "sub_short_en": "Drinks",
       "row": 2,
       "relations": [
         {
@@ -153,6 +163,8 @@
       "name_en": "Flowers Foods",
       "sub": "パン",
       "sub_en": "Bakery",
+      "sub_short": "パン",
+      "sub_short_en": "Bakery",
       "row": 2,
       "relations": [
         {
@@ -177,6 +189,8 @@
       "name_en": "Hain Celestial",
       "sub": "自然派食品",
       "sub_en": "Natural foods",
+      "sub_short": "自然食品",
+      "sub_short_en": "Foods",
       "row": 2,
       "relations": [
         {

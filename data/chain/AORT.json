@@ -1,0 +1,221 @@
+{
+  "root": {
+    "ticker": "AORT",
+    "name": "アーティビオン",
+    "cik": 784199,
+    "name_en": "Artivion"
+  },
+  "rows": [
+    {
+      "ja": "流通・製造の提携",
+      "en": "Distribution & manufacturing partners",
+      "above": true
+    },
+    {
+      "ja": "買収",
+      "en": "Acquisition"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in its 10-K)"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "MDT",
+    "ABT",
+    "EW"
+  ],
+  "companies": [
+    {
+      "id": "Endospan",
+      "ticker": "Endospan",
+      "name": "エンドスパン",
+      "name_en": "Endospan",
+      "sub": "血管内治療(イスラエル)",
+      "sub_en": "Endovascular devices (Israel)",
+      "sub_short": "血管治療",
+      "sub_short_en": "Vascular",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "NEXUS製品を欧州・アジアで独占販売。買収の選択権も持つ",
+          "text_en": "Exclusive distributor of NEXUS in EMEA and APAC, with a purchase option",
+          "source": {
+            "label": "Artivion 10-K(2025年度)",
+            "label_en": "Artivion 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/784199/000162828026009046/aort-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "We distribute the NEXUS family of products in certain countries in EMEA and APAC under an exclusive distribution agreement with Endospan Ltd."
+          }
+        }
+      ]
+    },
+    {
+      "id": "StarchMedical",
+      "ticker": "Starch Medical",
+      "name": "スターチ・メディカル",
+      "name_en": "Starch Medical",
+      "sub": "止血材",
+      "sub_en": "Hemostats",
+      "sub_short": "止血材",
+      "sub_short_en": "Surgical",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "止血材の流通・ライセンス・製造契約(2010年9月)",
+          "text_en": "Distribution, license and manufacturing agreements (September 2010)",
+          "source": {
+            "label": "Artivion 10-K(2025年度)",
+            "label_en": "Artivion 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/784199/000162828026009046/aort-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "In September 2010 we entered into a distribution agreement and a license and manufacturing agreement with Starch Medical, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Ascyrus",
+      "ticker": "Ascyrus",
+      "name": "アサイラス",
+      "name_en": "Ascyrus Medical",
+      "sub": "大動脈治療機器",
+      "sub_en": "Aortic devices",
+      "sub_short": "大動脈",
+      "sub_short_en": "Aortic",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "AMDSを開発したAscyrusを買収(2020年9月)",
+          "text_en": "Acquired Ascyrus, developer of AMDS (September 2020)",
+          "source": {
+            "label": "Artivion 10-K(2025年度)",
+            "label_en": "Artivion 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/784199/000162828026009046/aort-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "AMDS TM We acquired Ascyrus in September 2020."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MDT",
+      "ticker": "MDT",
+      "name": "メドトロニック",
+      "name_en": "Medtronic",
+      "sub": "医療機器",
+      "sub_en": "Medical devices",
+      "sub_short": "医療機器",
+      "sub_short_en": "Medtech",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "機械弁On-Xの主な競合",
+          "text_en": "A main competitor for On-X mechanical valves",
+          "source": {
+            "label": "Artivion 10-K(2025年度)",
+            "label_en": "Artivion 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/784199/000162828026009046/aort-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "On-X heart valves compete primarily with mechanical valves from Abbott Laboratories, Medtronic, plc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ABT",
+      "ticker": "ABT",
+      "name": "アボット",
+      "name_en": "Abbott",
+      "sub": "医療機器・医薬",
+      "sub_en": "Medical devices & pharma",
+      "sub_short": "医療機器",
+      "sub_short_en": "Medtech",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "機械弁On-Xの主な競合",
+          "text_en": "A main competitor for On-X mechanical valves",
+          "source": {
+            "label": "Artivion 10-K(2025年度)",
+            "label_en": "Artivion 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/784199/000162828026009046/aort-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "On-X heart valves compete primarily with mechanical valves from Abbott Laboratories, Medtronic, plc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "4543",
+      "ticker": "4543",
+      "name": "テルモ",
+      "name_en": "Terumo",
+      "sub": "医療機器",
+      "sub_en": "Medical devices",
+      "sub_short": "医療機器",
+      "sub_short_en": "Medtech",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "欧州などでE-vita Open NEOの競合",
+          "text_en": "Competes with E-vita Open NEO outside the U.S.",
+          "source": {
+            "label": "Artivion 10-K(2025年度)",
+            "label_en": "Artivion 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/784199/000162828026009046/aort-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "The E-vita Open NEO competes outside the United States (\"US\") with products from Terumo Medical Corporation (\"Terumo\", formerly Vascutek) and two smaller companies."
+          }
+        }
+      ]
+    },
+    {
+      "id": "EW",
+      "ticker": "EW",
+      "name": "エドワーズ・ライフサイエンシズ",
+      "name_en": "Edwards Lifesciences",
+      "sub": "心臓弁",
+      "sub_en": "Heart valves",
+      "sub_short": "心臓弁",
+      "sub_short_en": "Valves",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Edwardsが10-Kで、外科部門の主な競合として挙げる",
+          "text_en": "Edwards names Artivion among primary Surgical competitors",
+          "source": {
+            "label": "Edwards Lifesciences 10-K(2024年度)",
+            "label_en": "Edwards Lifesciences 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1099800/000109980025000005/ew-20241231.htm",
+            "level": "official",
+            "date": "2025-02-28",
+            "quote": "In Surgical, our primary competitors include Medtronic, Abbott, and Artivion, Inc (formerly CryoLife)."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

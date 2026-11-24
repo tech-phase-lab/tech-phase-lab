@@ -31,6 +31,8 @@
       "name": "Micron",
       "sub": "メモリ",
       "sub_en": "Memory",
+      "sub_short": "メモリ",
+      "sub_short_en": "Memory",
       "row": 0,
       "relations": [
         {
@@ -67,6 +69,8 @@
       "name": "Samsung Electronics",
       "sub": "メモリ・電子",
       "sub_en": "Memory & electronics",
+      "sub_short": "メモリ",
+      "sub_short_en": "Memory",
       "row": 0,
       "relations": [
         {
@@ -103,6 +107,8 @@
       "name": "SK hynix",
       "sub": "メモリ",
       "sub_en": "Memory",
+      "sub_short": "メモリ",
+      "sub_short_en": "Memory",
       "row": 0,
       "relations": [
         {
@@ -139,6 +145,8 @@
       "name": "AMD",
       "sub": "プロセッサー",
       "sub_en": "Processors",
+      "sub_short": "CPU",
+      "sub_short_en": "CPUs",
       "row": 1,
       "relations": [
         {
@@ -164,6 +172,8 @@
       "name": "NVIDIA",
       "sub": "AI半導体",
       "sub_en": "AI chips",
+      "sub_short": "AI半導体",
+      "sub_short_en": "AI chips",
       "row": 1,
       "relations": [
         {
@@ -189,6 +199,8 @@
       "name": "Qualcomm",
       "sub": "通信半導体",
       "sub_en": "Wireless chips",
+      "sub_short": "通信IC",
+      "sub_short_en": "RF ICs",
       "row": 1,
       "relations": [
         {
@@ -214,6 +226,8 @@
       "name": "Broadcom",
       "sub": "ネットワーク半導体",
       "sub_en": "Networking chips",
+      "sub_short": "通信IC",
+      "sub_short_en": "Network",
       "row": 1,
       "relations": [
         {
@@ -239,6 +253,8 @@
       "name": "Marvell",
       "sub": "データインフラ半導体",
       "sub_en": "Data infrastructure chips",
+      "sub_short": "半導体",
+      "sub_short_en": "Data ICs",
       "row": 1,
       "relations": [
         {
@@ -264,6 +280,8 @@
       "name": "Silicon Motion",
       "sub": "フラッシュコントローラー",
       "sub_en": "Flash controllers",
+      "sub_short": "メモリIC",
+      "sub_short_en": "Flash",
       "row": 1,
       "relations": [
         {
@@ -289,6 +307,8 @@
       "name": "Infineon",
       "sub": "パワー半導体",
       "sub_en": "Power semiconductors",
+      "sub_short": "半導体",
+      "sub_short_en": "Power ICs",
       "row": 1,
       "relations": [
         {
@@ -314,6 +334,8 @@
       "name": "Cadence",
       "sub": "設計ソフト・IP",
       "sub_en": "Design software & IP",
+      "sub_short": "設計IT",
+      "sub_short_en": "Design",
       "row": 2,
       "relations": [
         {
@@ -363,6 +385,8 @@
       "name": "Synopsys",
       "sub": "設計ソフト・IP",
       "sub_en": "Design software & IP",
+      "sub_short": "設計IT",
+      "sub_short_en": "Design",
       "row": 2,
       "relations": [
         {
@@ -386,6 +410,8 @@
       "name": "Monolithic Power Systems",
       "sub": "電源半導体",
       "sub_en": "Power chips",
+      "sub_short": "電源IC",
+      "sub_short_en": "Power ICs",
       "row": 2,
       "relations": [
         {
@@ -409,6 +435,8 @@
       "name": "Astera Labs",
       "sub": "接続半導体",
       "sub_en": "Connectivity chips",
+      "sub_short": "半導体",
+      "sub_short_en": "Links",
       "row": 2,
       "relations": [
         {

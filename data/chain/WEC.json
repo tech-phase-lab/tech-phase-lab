@@ -24,6 +24,8 @@
       "name": "ティルデン・マイニング",
       "sub": "鉄鉱石鉱山",
       "sub_en": "Iron ore mine",
+      "sub_short": "鉄鉱石",
+      "sub_short_en": "Iron ore",
       "row": 0,
       "relations": [
         {
@@ -48,6 +50,8 @@
       "name": "アメリカン・トランスミッション",
       "sub": "送電会社",
       "sub_en": "Transmission company",
+      "sub_short": "送電会社",
+      "sub_short_en": "Grid",
       "row": 0,
       "relations": [
         {
@@ -67,11 +71,13 @@
       "name_en": "American Transmission Company"
     },
     {
-      "id": "FPL",
+      "id": "PointBeach",
       "ticker": "FPL Energy Point",
       "name": "FPLエナジー・ポイント・ビーチ",
       "sub": "発電事業者",
       "sub_en": "Power generator",
+      "sub_short": "発電",
+      "sub_short_en": "Power",
       "row": 1,
       "relations": [
         {
@@ -96,6 +102,8 @@
       "name": "マイクロソフト",
       "sub": "データセンター",
       "sub_en": "Data centers",
+      "sub_short": "DC",
+      "sub_short_en": "DCs",
       "row": 0,
       "relations": [
         {
@@ -120,6 +128,8 @@
       "name": "バンテージ・データセンターズ",
       "sub": "データセンター",
       "sub_en": "Data centers",
+      "sub_short": "DC",
+      "sub_short_en": "DCs",
       "row": 0,
       "relations": [
         {

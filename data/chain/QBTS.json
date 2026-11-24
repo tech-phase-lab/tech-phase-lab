@@ -34,6 +34,8 @@
       "name": "Amazon",
       "sub": "EC・クラウド",
       "sub_en": "E-commerce & cloud",
+      "sub_short": "EC",
+      "sub_short_en": "E-com",
       "row": 0,
       "relations": [
         {
@@ -72,6 +74,8 @@
       "name": "Lockheed Martin",
       "sub": "防衛・航空",
       "sub_en": "Defense & aerospace",
+      "sub_short": "防衛",
+      "sub_short_en": "Defense",
       "row": 1,
       "relations": [
         {
@@ -112,6 +116,8 @@
       "name": "Mastercard",
       "sub": "決済",
       "sub_en": "Payments",
+      "sub_short": "決済",
+      "sub_short_en": "Payment",
       "row": 1,
       "relations": [
         {
@@ -135,6 +141,8 @@
       "name": "Pfizer",
       "sub": "医薬品",
       "sub_en": "Pharmaceuticals",
+      "sub_short": "医薬品",
+      "sub_short_en": "Pharma",
       "row": 1,
       "relations": [
         {
@@ -158,6 +166,8 @@
       "name": "BASF",
       "sub": "化学",
       "sub_en": "Chemicals",
+      "sub_short": "化学",
+      "sub_short_en": "Chem",
       "row": 1,
       "relations": [
         {
@@ -181,6 +191,8 @@
       "name": "シーメンス",
       "sub": "産業機器・ソフト",
       "sub_en": "Industrial tech",
+      "sub_short": "産業機器",
+      "sub_short_en": "Industrial",
       "row": 1,
       "relations": [
         {
@@ -207,6 +219,8 @@
       "name": "クアンタム・コンピューティング",
       "sub": "量子コンピューター",
       "sub_en": "Quantum computing",
+      "sub_short": "量子",
+      "sub_short_en": "Quantum",
       "row": 2,
       "relations": [
         {
@@ -231,6 +245,8 @@
       "name": "Google",
       "sub": "検索・クラウド",
       "sub_en": "Search & cloud",
+      "sub_short": "検索",
+      "sub_short_en": "Search",
       "row": 2,
       "relations": [
         {
@@ -254,6 +270,8 @@
       "name": "IBM",
       "sub": "ITサービス・ソフト",
       "sub_en": "IT services & software",
+      "sub_short": "IT",
+      "sub_short_en": "IT",
       "row": 2,
       "relations": [
         {
@@ -277,6 +295,8 @@
       "name": "Microsoft",
       "sub": "ソフト・クラウド",
       "sub_en": "Software & cloud",
+      "sub_short": "ソフト",
+      "sub_short_en": "Software",
       "row": 2,
       "relations": [
         {
@@ -300,6 +320,8 @@
       "name": "Intel",
       "sub": "半導体",
       "sub_en": "Semiconductors",
+      "sub_short": "半導体",
+      "sub_short_en": "Chips",
       "row": 2,
       "relations": [
         {

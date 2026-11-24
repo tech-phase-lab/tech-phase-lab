@@ -30,6 +30,8 @@
       "name_en": "Franklin BSP Realty Trust",
       "sub": "不動産融資REIT",
       "sub_en": "Mortgage REIT",
+      "sub_short": "融資REIT",
+      "sub_short_en": "REIT",
       "row": 0,
       "relations": [
         {
@@ -54,6 +56,8 @@
       "name_en": "Franklin BSP Capital",
       "sub": "BDC(融資)",
       "sub_en": "Business development company",
+      "sub_short": "BDC",
+      "sub_short_en": "BDC",
       "row": 0,
       "relations": [
         {
@@ -78,6 +82,8 @@
       "name_en": "eToro",
       "sub": "投資アプリ",
       "sub_en": "Trading platform",
+      "sub_short": "投資",
+      "sub_short_en": "Trading",
       "row": 0,
       "relations": [
         {
@@ -102,6 +108,8 @@
       "name_en": "Empower",
       "sub": "退職年金",
       "sub_en": "Retirement services",
+      "sub_short": "退職年金",
+      "sub_short_en": "Pensions",
       "row": 0,
       "relations": [
         {
@@ -126,6 +134,8 @@
       "name_en": "BNY",
       "sub": "カストディ・事務",
       "sub_en": "Custody & fund services",
+      "sub_short": "資産保管",
+      "sub_short_en": "Custody",
       "row": 0,
       "relations": [
         {
@@ -150,6 +160,8 @@
       "name_en": "Putnam Investments",
       "sub": "資産運用",
       "sub_en": "Asset management",
+      "sub_short": "資産運用",
+      "sub_short_en": "Assets",
       "row": 1,
       "relations": [
         {
@@ -174,6 +186,8 @@
       "name_en": "Apera Asset Management",
       "sub": "私募クレジット(欧州)",
       "sub_en": "Private credit (Europe)",
+      "sub_short": "私募融資",
+      "sub_short_en": "Credit",
       "row": 1,
       "relations": [
         {
@@ -198,6 +212,8 @@
       "name_en": "Encina Lender Finance",
       "sub": "資産担保融資",
       "sub_en": "Asset-based lending",
+      "sub_short": "融資",
+      "sub_short_en": "Lending",
       "row": 1,
       "relations": [
         {
@@ -222,6 +238,8 @@
       "name_en": "Voya Financial",
       "sub": "保険・資産運用",
       "sub_en": "Insurance & asset management",
+      "sub_short": "保険",
+      "sub_short_en": "Insurance",
       "row": 2,
       "relations": [
         {

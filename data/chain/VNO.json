@@ -1,0 +1,183 @@
+{
+  "root": {
+    "ticker": "VNO",
+    "name": "ボルネード・リアルティ・トラスト",
+    "cik": 899689,
+    "name_en": "Vornado Realty Trust"
+  },
+  "rows": [
+    {
+      "ja": "開発の合弁相手",
+      "en": "Development joint venture partners",
+      "above": true
+    },
+    {
+      "ja": "運営受託先・テナント",
+      "en": "Managed REIT & tenants"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "HPP",
+      "ticker": "HPP",
+      "name": "ハドソン・パシフィック",
+      "name_en": "Hudson Pacific Properties",
+      "sub": "オフィス・スタジオREIT",
+      "sub_en": "Office & studio REIT",
+      "sub_short": "オフィス",
+      "sub_short_en": "REIT",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ニューヨークのスタジオ開発(Sunset Pier 94)をVornado・Blackstoneと合弁で行う",
+          "text_en": "Joint venture with Vornado and Blackstone to develop Sunset Pier 94 Studios in New York",
+          "source": {
+            "label": "Vornado 10-K(2025年度)",
+            "label_en": "Vornado 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/899689/000089968926000009/vno-20251231.htm",
+            "level": "official",
+            "date": "2026-02-09",
+            "quote": "On August 28, 2023, we, together with Hudson Pacific Properties and Blackstone Inc., formed a joint venture to develop Pier 94"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BX",
+      "ticker": "BX",
+      "name": "ブラックストーン",
+      "name_en": "Blackstone",
+      "sub": "投資会社",
+      "sub_en": "Investment firm",
+      "sub_short": "投資会社",
+      "sub_short_en": "Investing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ニューヨークのスタジオ開発(Sunset Pier 94)をVornado・Hudson Pacificと合弁で行う",
+          "text_en": "Joint venture with Vornado and Hudson Pacific to develop Sunset Pier 94 Studios",
+          "source": {
+            "label": "Vornado 10-K(2025年度)",
+            "label_en": "Vornado 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/899689/000089968926000009/vno-20251231.htm",
+            "level": "official",
+            "date": "2026-02-09",
+            "quote": "On August 28, 2023, we, together with Hudson Pacific Properties and Blackstone Inc., formed a joint venture to develop Pier 94"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Citadel",
+      "ticker": "Citadel",
+      "name": "シタデル",
+      "name_en": "Citadel",
+      "sub": "ヘッジファンド",
+      "sub_en": "Hedge fund",
+      "sub_short": "ファンド",
+      "sub_short_en": "Fund",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "創業者がパーク街350番地の合弁で60%以上の持分を取得する選択権を行使(新本社ビル)",
+          "text_en": "Its founder exercised an option to take at least 60% of the 350 Park Avenue joint venture",
+          "source": {
+            "label": "Vornado 10-K(2025年度)",
+            "label_en": "Vornado 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/899689/000089968926000009/vno-20251231.htm",
+            "level": "official",
+            "date": "2026-02-09",
+            "quote": "exercised an option to acquire at least a 60% interest in a joint venture (the \"350 Park JV"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Rudin",
+      "ticker": "Rudin",
+      "name": "ルーディン家",
+      "name_en": "Rudin Family",
+      "sub": "不動産(ニューヨーク)",
+      "sub_en": "Real estate (New York)",
+      "sub_short": "不動産",
+      "sub_short_en": "Property",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Vornadoと合弁(Vornado/Rudin JV)を組み、350 Park合弁の持分取得の選択権を持つ",
+          "text_en": "Partners with Vornado in the Vornado/Rudin JV, with an option on part of the 350 Park JV",
+          "source": {
+            "label": "Vornado 10-K(2025年度)",
+            "label_en": "Vornado 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/899689/000089968926000009/vno-20251231.htm",
+            "level": "official",
+            "date": "2026-02-09",
+            "quote": "Vornado and the Rudin Family, via a joint venture (the \"Vornado/Rudin JV\"), have the option to acquire an interest between 23% and 40% in the 350 Park JV"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ALX",
+      "ticker": "ALX",
+      "name": "アレクサンダーズ",
+      "name_en": "Alexander's",
+      "sub": "不動産REIT(ニューヨーク)",
+      "sub_en": "Real estate REIT (New York)",
+      "sub_short": "REIT",
+      "sub_short_en": "REIT",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "物件の管理・賃貸・開発をVornadoに委託",
+          "text_en": "Managed by Vornado, which leases and develops its properties",
+          "source": {
+            "label": "Alexanders 10-K(2025年提出)",
+            "label_en": "Alexanders 10-K (filed 2025-02)",
+            "url": "https://www.sec.gov/Archives/edgar/data/3499/000000349925000004/alx-20241231.htm",
+            "level": "official",
+            "date": "2025-02-10",
+            "quote": "Relationship with Vornado We are managed by, and our properties are leased and developed by, Vornado"
+          }
+        }
+      ]
+    },
+    {
+      "id": "LBRX",
+      "ticker": "LBRX",
+      "name": "LBファーマシューティカルズ",
+      "name_en": "LB Pharmaceuticals",
+      "sub": "中枢神経の医薬",
+      "sub_en": "CNS drugs",
+      "sub_short": "神経薬",
+      "sub_short_en": "CNS",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Vornado系の会社が貸主のワン・ペン・プラザに入居",
+          "text_en": "Leases space at One Penn Plaza from a Vornado entity",
+          "source": {
+            "label": "LB Pharmaceuticals 上場届出書(S-1)(2025年8月)",
+            "label_en": "LB Pharmaceuticals registration statement (S-1) (2025-08)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1691082/000119312525186467/d12080dex1026.htm",
+            "level": "official",
+            "date": "2025-08-22",
+            "quote": "ONE PENN PLAZA LLC, Landlord By: VNO PENN District Holdings II LLC, as managing member By: VNO PENN District Holdings LLC, its sole member By: Vornado Realty L.P."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -23,6 +23,8 @@
       "name": "JPMorgan Chase",
       "sub": "銀行",
       "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
       "row": 0,
       "relations": [
         {
@@ -63,6 +65,8 @@
       "name": "Bank of America",
       "sub": "銀行",
       "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
       "row": 0,
       "relations": [
         {
@@ -88,6 +92,8 @@
       "name": "Morgan Stanley",
       "sub": "銀行",
       "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
       "row": 0,
       "relations": [
         {
@@ -113,6 +119,8 @@
       "name": "Shopify",
       "sub": "ECプラットフォーム",
       "sub_en": "E-commerce platform",
+      "sub_short": "EC基盤",
+      "sub_short_en": "E-com",
       "row": 1,
       "relations": [
         {

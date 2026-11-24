@@ -1,0 +1,161 @@
+{
+  "root": {
+    "ticker": "ITT",
+    "name": "ITT",
+    "cik": 216228,
+    "name_en": "ITT Inc."
+  },
+  "rows": [
+    {
+      "ja": "部品の調達先(旧子会社)",
+      "en": "Supplier (former unit)",
+      "above": true
+    },
+    {
+      "ja": "最大の顧客",
+      "en": "Largest customers"
+    },
+    {
+      "ja": "買収",
+      "en": "Acquisitions"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "Wolverine",
+      "ticker": "Wolverine",
+      "name": "ウルバリン・アドバンスト・マテリアルズ",
+      "name_en": "Wolverine Advanced Materials",
+      "sub": "シム・シール材",
+      "sub_en": "Shims & seals",
+      "sub_short": "シール材",
+      "sub_short_en": "Seals",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "2024年7月に売却した後も、シム・シール材の供給元",
+          "text_en": "Still supplies ITT shims and seals after the July 2024 sale",
+          "source": {
+            "label": "ITT 10-K(2025年度)",
+            "label_en": "ITT 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/216228/000021622826000012/itt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-09",
+            "quote": "Wolverine will continue to act as a third-party supplier of high-performance shims and seals for ITT."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Aumovio",
+      "ticker": "Aumovio",
+      "name": "オウモビオ",
+      "name_en": "Aumovio",
+      "sub": "自動車部品(ドイツ)",
+      "sub_en": "Auto parts (Germany)",
+      "sub_short": "車部品",
+      "sub_short_en": "Car parts",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大の顧客。ブレーキパッドを供給",
+          "text_en": "Largest customer; buys its brake pads",
+          "source": {
+            "label": "ITT 10-K(2025年度)",
+            "label_en": "ITT 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/216228/000021622826000012/itt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-09",
+            "quote": "Following the spin-off, Aumovio is ITT's largest customer."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CON",
+      "ticker": "Continental",
+      "name": "コンチネンタル",
+      "name_en": "Continental",
+      "sub": "自動車部品(ドイツ)",
+      "sub_en": "Auto parts (Germany)",
+      "sub_short": "車部品",
+      "sub_short_en": "Car parts",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Aumovioと合わせて輸送部門売上の17%",
+          "text_en": "With Aumovio, 17% of the Motion Technologies segment's revenue",
+          "source": {
+            "label": "ITT 10-K(2025年度)",
+            "label_en": "ITT 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/216228/000021622826000012/itt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-09",
+            "quote": "Combined sales to Aumovio and Continental AG during 2025 represented 17% of MT's revenue, and approximately 6% of ITT's total revenue."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Svanehoj",
+      "ticker": "Svanehøj",
+      "name": "スヴァネホイ",
+      "name_en": "Svanehøj",
+      "sub": "船舶用ポンプ(デンマーク)",
+      "sub_en": "Marine pumps (Denmark)",
+      "sub_short": "ポンプ",
+      "sub_short_en": "Pumps",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "船舶用ポンプのSvanehøjを買収(2024年1月)",
+          "text_en": "Acquired marine pump maker Svanehøj (January 2024)",
+          "source": {
+            "label": "ITT 10-K(2025年度)",
+            "label_en": "ITT 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/216228/000021622826000012/itt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-09",
+            "quote": "In January 2024, we acquired Svanehøj Group A/S (Svanehøj) incorporating the Svanehøj ® and Hamworthy Pumps ® brand pumps into IP's portfolio."
+          }
+        }
+      ]
+    },
+    {
+      "id": "kSARIA",
+      "ticker": "kSARIA",
+      "name": "ケーサリア",
+      "name_en": "kSARIA",
+      "sub": "ケーブル組立品",
+      "sub_en": "Cable assemblies",
+      "sub_short": "ケーブル",
+      "sub_short_en": "Cables",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "航空宇宙向けケーブルのkSARIAを買収(2024年9月)",
+          "text_en": "Acquired aerospace cable assembly maker kSARIA (September 2024)",
+          "source": {
+            "label": "ITT 10-K(2025年度)",
+            "label_en": "ITT 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/216228/000021622826000012/itt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-09",
+            "quote": "In September 2024, ITT acquired kSARIA Parent, Inc."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

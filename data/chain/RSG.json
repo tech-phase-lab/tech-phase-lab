@@ -1,0 +1,244 @@
+{
+  "root": {
+    "ticker": "RSG",
+    "name": "リパブリック・サービシズ",
+    "cik": 1060391,
+    "name_en": "Republic Services"
+  },
+  "rows": [
+    {
+      "ja": "燃料の供給元・合弁",
+      "en": "Fuel supplier & joint venture",
+      "above": true
+    },
+    {
+      "ja": "資源物の買い手・顧客",
+      "en": "Recyclables buyers & customers"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "WCN",
+    "CLH",
+    "CWST",
+    "QRHC"
+  ],
+  "companies": [
+    {
+      "id": "CLNE",
+      "ticker": "CLNE",
+      "name": "クリーン・エナジー・フューエルズ",
+      "name_en": "Clean Energy Fuels",
+      "sub": "天然ガス燃料",
+      "sub_en": "Natural gas fuel",
+      "sub_short": "天然ガス",
+      "sub_short_en": "Gas",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Republic Servicesなどの収集車に燃料を供給",
+          "text_en": "Fuels refuse trucks for customers including Republic Services",
+          "source": {
+            "label": "Clean Energy Fuels 10-K(2025年提出)",
+            "label_en": "Clean Energy Fuels 10-K (filed 2025-02)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1368265/000155837025001390/clne-20241231x10k.htm",
+            "level": "official",
+            "date": "2025-02-24",
+            "quote": "we fuel approximately 16,100 refuse vehicles for customers including Waste Management, Republic Services"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Ravago",
+      "ticker": "Ravago",
+      "name": "ラバゴ",
+      "name_en": "Ravago",
+      "sub": "樹脂の流通(ベルギー)",
+      "sub_en": "Plastics distribution (Belgium)",
+      "sub_short": "樹脂",
+      "sub_short_en": "Plastics",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "プラスチック再生の合弁Blue Polymersを2023年に設立",
+          "text_en": "Formed the Blue Polymers plastics recycling joint venture in 2023",
+          "source": {
+            "label": "Republic Services 10-K(2025年度)",
+            "label_en": "Republic Services 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1060391/000106039126000094/rsg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "In 2023, we announced the creation of Blue Polymers, LLC, a joint venture with Ravago"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Toppoint",
+      "ticker": "Toppoint",
+      "name": "トップポイント",
+      "name_en": "Toppoint Holdings",
+      "sub": "資源物の輸送",
+      "sub_en": "Recyclables trucking",
+      "sub_short": "輸送",
+      "sub_short_en": "Recycling",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "主要顧客の一社がRepublic Services",
+          "text_en": "Republic Services is one of its top customers",
+          "source": {
+            "label": "Toppoint 上場届出書(S-1)(2024年8月)",
+            "label_en": "Toppoint registration statement (S-1) (2024-08)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1960847/000121390024067615/ea0209908-s1_toppoint.htm",
+            "level": "official",
+            "date": "2024-08-12",
+            "quote": "Our top customers include CellMark, Republic Services"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AHT",
+      "ticker": "AHT",
+      "name": "アシュフォード・ホスピタリティ",
+      "name_en": "Ashford Hospitality Trust",
+      "sub": "ホテルREIT",
+      "sub_en": "Hotel REIT",
+      "sub_short": "REIT",
+      "sub_short_en": "REIT",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "傘下のホテルがRepublic Servicesと廃棄物収集の契約",
+          "text_en": "A hotel subsidiary has a customer service agreement with Republic Services",
+          "source": {
+            "label": "Ashford Hospitality Trust 10-Q(2024年8月)",
+            "label_en": "Ashford Hospitality Trust 10-Q (2024-08)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1232582/000123258224000107/psaoneocean-ex108.htm",
+            "level": "official",
+            "date": "2024-08-08",
+            "quote": "Customer Service Agreement dated July 9, 2020 between Republic Services and Ashford TRS Atlantic Beach, LLC"
+          }
+        }
+      ]
+    },
+    {
+      "id": "WCN",
+      "ticker": "WCN",
+      "name": "ウェイスト・コネクションズ",
+      "name_en": "Waste Connections",
+      "sub": "廃棄物処理",
+      "sub_en": "Waste services",
+      "sub_short": "廃棄物",
+      "sub_short_en": "Waste",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Waste Connectionsが10-Kで、競合する上場の廃棄物大手としてRepublic Servicesを挙げる",
+          "text_en": "Waste Connections names Republic Services among publicly held competitors",
+          "source": {
+            "label": "Waste Connections 10-K(2026年提出)",
+            "label_en": "Waste Connections 10-K (filed 2026-02)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1318220/000110465926013700/wcn-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "three publicly-held solid waste companies-Waste Management, Inc., Republic Services, Inc. and GFL Environmental, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CLH",
+      "ticker": "CLH",
+      "name": "クリーン・ハーバーズ",
+      "name_en": "Clean Harbors",
+      "sub": "産業廃棄物処理",
+      "sub_en": "Environmental services",
+      "sub_short": "廃棄物",
+      "sub_short_en": "Eco svcs",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Clean Harborsが10-Kで、全国規模の競合としてRepublic Servicesを挙げる",
+          "text_en": "Clean Harbors names Republic Services among principal national competitors",
+          "source": {
+            "label": "Clean Harbors 10-K(2026年提出)",
+            "label_en": "Clean Harbors 10-K (filed 2026-02)",
+            "url": "https://www.sec.gov/Archives/edgar/data/822818/000082281826000009/clh-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Veolia North America, Enviri Corporation, Republic Services, Waste Management, GFL Environmental and Crystal Clean"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CWST",
+      "ticker": "CWST",
+      "name": "カセラ・ウェイスト・システムズ",
+      "name_en": "Casella Waste Systems",
+      "sub": "廃棄物処理",
+      "sub_en": "Waste services",
+      "sub_short": "廃棄物",
+      "sub_short_en": "Waste",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Casellaが10-Kで、都市部で競合する全国大手としてRepublic Servicesを挙げる",
+          "text_en": "Casella names Republic Services among national competitors in larger markets",
+          "source": {
+            "label": "Casella Waste Systems 10-K(2025年提出)",
+            "label_en": "Casella Waste Systems 10-K (filed 2025-02)",
+            "url": "https://www.sec.gov/Archives/edgar/data/911177/000091117725000010/cwst-20241231.htm",
+            "level": "official",
+            "date": "2025-02-18",
+            "quote": "including Waste Management, Inc., Republic Services, Inc. and Waste Connections, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "QRHC",
+      "ticker": "QRHC",
+      "name": "クエスト・リソース",
+      "name_en": "Quest Resource",
+      "sub": "廃棄物・リサイクル管理",
+      "sub_en": "Waste & recycling management",
+      "sub_short": "廃棄物",
+      "sub_short_en": "Waste",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Quest Resourceが10-Kで、業界を支配する大手としてRepublic Servicesを挙げる",
+          "text_en": "Quest Resource names Republic Services among large companies dominating the industry",
+          "source": {
+            "label": "Quest Resource Holding 10-K(2025年提出)",
+            "label_en": "Quest Resource Holding 10-K (filed 2025-03)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1442236/000095017025037891/qrhc-20241231.htm",
+            "level": "official",
+            "date": "2025-03-12",
+            "quote": "The recycling and waste disposal industry as a whole is dominated by large multi-billion dollar companies, such as Waste Management and Republic Services."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -32,6 +32,8 @@
       "name_en": "Apollo",
       "sub": "オルタナティブ運用",
       "sub_en": "Alternative asset management",
+      "sub_short": "資産運用",
+      "sub_short_en": "Alt. assets",
       "row": 0,
       "relations": [
         {
@@ -50,12 +52,14 @@
       ]
     },
     {
-      "id": "CARS",
+      "id": "CarlyleCredit",
       "ticker": "Carlyle Credit Solutions",
       "name": "カーライル・クレジット・ソリューションズ",
       "name_en": "Carlyle Credit Solutions",
       "sub": "私募融資ファンド(BDC)",
       "sub_en": "Private credit fund (BDC)",
+      "sub_short": "私募融資",
+      "sub_short_en": "Credit",
       "row": 1,
       "relations": [
         {
@@ -80,6 +84,8 @@
       "name_en": "Silver Capital Holdings",
       "sub": "私募融資ファンド(BDC)",
       "sub_en": "Private credit fund (BDC)",
+      "sub_short": "私募融資",
+      "sub_short_en": "Credit",
       "row": 1,
       "relations": [
         {
@@ -104,6 +110,8 @@
       "name_en": "West Bay BDC",
       "sub": "私募融資ファンド(BDC)",
       "sub_en": "Private credit fund (BDC)",
+      "sub_short": "私募融資",
+      "sub_short_en": "Credit",
       "row": 1,
       "relations": [
         {
@@ -128,6 +136,8 @@
       "name_en": "Blue Owl Technology Finance",
       "sub": "テック企業向け融資(BDC)",
       "sub_en": "Tech lending (BDC)",
+      "sub_short": "融資",
+      "sub_short_en": "Lending",
       "row": 1,
       "relations": [
         {
@@ -152,6 +162,8 @@
       "name_en": "AB Commercial Real Estate Private Debt Fund",
       "sub": "不動産融資ファンド",
       "sub_en": "Real estate debt fund",
+      "sub_short": "不動産",
+      "sub_short_en": "Property",
       "row": 1,
       "relations": [
         {
@@ -176,6 +188,8 @@
       "name_en": "SS&C Technologies",
       "sub": "金融ソフトウェア・事務代行",
       "sub_en": "Financial software & fund admin",
+      "sub_short": "金融IT",
+      "sub_short_en": "Finance",
       "row": 2,
       "relations": [
         {
@@ -200,6 +214,8 @@
       "name_en": "SEI Investments",
       "sub": "資産運用・事務代行",
       "sub_en": "Asset management & fund services",
+      "sub_short": "資産運用",
+      "sub_short_en": "Assets",
       "row": 2,
       "relations": [
         {

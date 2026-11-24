@@ -32,6 +32,8 @@
       "name": "Kioxia",
       "sub": "NAND(合弁相手)",
       "sub_en": "NAND (JV partner)",
+      "sub_short": "NAND",
+      "sub_short_en": "NAND",
       "row": 0,
       "relations": [
         {
@@ -94,6 +96,8 @@
       "name": "Nanya Technology",
       "sub": "DRAM",
       "sub_en": "DRAM",
+      "sub_short": "DRAM",
+      "sub_short_en": "DRAM",
       "row": 0,
       "relations": [
         {
@@ -132,6 +136,8 @@
       "name": "Western Digital",
       "sub": "元の親会社",
       "sub_en": "Former parent",
+      "sub_short": "旧親会社",
+      "sub_short_en": "Ex-parent",
       "row": 1,
       "relations": [
         {
@@ -170,6 +176,8 @@
       "name": "JCET Group",
       "sub": "組み立て・テスト",
       "sub_en": "Assembly & test",
+      "sub_short": "組み立て",
+      "sub_short_en": "Chip pack",
       "row": 1,
       "relations": [
         {
@@ -206,6 +214,8 @@
       "name": "SK hynix",
       "sub": "メモリー",
       "sub_en": "Memory",
+      "sub_short": "メモリー",
+      "sub_short_en": "Memory",
       "row": 1,
       "relations": [
         {
@@ -244,6 +254,8 @@
       "name": "Micron",
       "sub": "メモリー",
       "sub_en": "Memory",
+      "sub_short": "メモリー",
+      "sub_short_en": "Memory",
       "row": 2,
       "relations": [
         {
@@ -280,6 +292,8 @@
       "name": "Samsung Electronics",
       "sub": "メモリー",
       "sub_en": "Memory",
+      "sub_short": "メモリー",
+      "sub_short_en": "Memory",
       "row": 2,
       "relations": [
         {
@@ -304,6 +318,8 @@
       "name_en": "Rambus",
       "sub": "半導体IP・メモリー接続",
       "sub_en": "Chip IP & memory interfaces",
+      "sub_short": "半導体IP",
+      "sub_short_en": "Chip IP",
       "row": 1,
       "relations": [
         {
@@ -328,6 +344,8 @@
       "name_en": "Yangtze Memory Technologies",
       "sub": "NANDフラッシュ(中国)",
       "sub_en": "NAND flash (China)",
+      "sub_short": "メモリ",
+      "sub_short_en": "NAND",
       "row": 2,
       "relations": [
         {

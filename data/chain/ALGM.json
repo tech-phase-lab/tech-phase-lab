@@ -19,6 +19,8 @@
       "name": "ユナイテッド・マイクロエレクトロニクス",
       "sub": "ウエハー製造",
       "sub_en": "Wafer foundry",
+      "sub_short": "ウエハー",
+      "sub_short_en": "Foundry",
       "row": 0,
       "relations": [
         {
@@ -43,6 +45,8 @@
       "name": "タワー・セミコンダクター",
       "sub": "ウエハー製造",
       "sub_en": "Wafer foundry",
+      "sub_short": "ウエハー",
+      "sub_short_en": "Foundry",
       "row": 0,
       "relations": [
         {
@@ -67,6 +71,8 @@
       "name": "台湾積体電路製造",
       "sub": "ウエハー製造",
       "sub_en": "Wafer foundry",
+      "sub_short": "ウエハー",
+      "sub_short_en": "Foundry",
       "row": 0,
       "relations": [
         {
@@ -91,6 +97,8 @@
       "name": "サンケン電気",
       "sub": "大株主・提携",
       "sub_en": "Shareholder & partner",
+      "sub_short": "大株主",
+      "sub_short_en": "Owner",
       "row": 0,
       "relations": [
         {

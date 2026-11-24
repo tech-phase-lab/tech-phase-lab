@@ -1,0 +1,321 @@
+{
+  "root": {
+    "ticker": "KFY",
+    "name": "コーン・フェリー",
+    "cik": 56679,
+    "name_en": "Korn Ferry"
+  },
+  "rows": [
+    {
+      "ja": "人事コンサル・デジタルの競合",
+      "en": "HR consulting & digital competitors",
+      "above": true
+    },
+    {
+      "ja": "採用代行・専門職紹介の競合",
+      "en": "RPO & professional search competitors"
+    },
+    {
+      "ja": "エグゼクティブサーチの競合",
+      "en": "Executive search competitors"
+    }
+  ],
+  "rivals": [
+    "HSII",
+    "EgonZehnder",
+    "AON"
+  ],
+  "companies": [
+    {
+      "id": "AON",
+      "ticker": "AON",
+      "name": "エーオン",
+      "name_en": "Aon",
+      "sub": "保険仲介・人事コンサル",
+      "sub_en": "Insurance brokerage & HR consulting",
+      "sub_short": "保険仲介",
+      "sub_short_en": "Broker",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "人事コンサルとデジタル製品の競合",
+          "text_en": "Competitor in HR consulting and digital products",
+          "source": {
+            "label": "Korn Ferry 10-K(2026年4月期)",
+            "label_en": "Korn Ferry 10-K (FY ended Apr 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/56679/000005667926000021/kfy-20260430.htm",
+            "level": "official",
+            "date": "2026-06-26",
+            "quote": "a number of large consulting firms, such as AON, Deloitte, McKinsey, Mercer and Willis Towers Watson have built businesses in human resource consulting"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MMC",
+      "ticker": "MMC",
+      "name": "マーシュ・マクレナン(マーサー)",
+      "name_en": "Marsh McLennan (Mercer)",
+      "sub": "保険仲介・人事コンサル",
+      "sub_en": "Insurance brokerage & HR consulting",
+      "sub_short": "保険仲介",
+      "sub_short_en": "Broker",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "傘下マーサーが人事コンサルの競合",
+          "text_en": "Its Mercer unit competes in HR consulting",
+          "source": {
+            "label": "Korn Ferry 10-K(2026年4月期)",
+            "label_en": "Korn Ferry 10-K (FY ended Apr 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/56679/000005667926000021/kfy-20260430.htm",
+            "level": "official",
+            "date": "2026-06-26",
+            "quote": "a number of large consulting firms, such as AON, Deloitte, McKinsey, Mercer and Willis Towers Watson have built businesses in human resource consulting"
+          }
+        }
+      ]
+    },
+    {
+      "id": "WTW",
+      "ticker": "WTW",
+      "name": "ウィリス・タワーズワトソン",
+      "name_en": "Willis Towers Watson",
+      "sub": "保険仲介・人事コンサル",
+      "sub_en": "Insurance brokerage & HR consulting",
+      "sub_short": "保険仲介",
+      "sub_short_en": "Broker",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "人事コンサルの競合",
+          "text_en": "HR consulting competitor",
+          "source": {
+            "label": "Korn Ferry 10-K(2026年4月期)",
+            "label_en": "Korn Ferry 10-K (FY ended Apr 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/56679/000005667926000021/kfy-20260430.htm",
+            "level": "official",
+            "date": "2026-06-26",
+            "quote": "a number of large consulting firms, such as AON, Deloitte, McKinsey, Mercer and Willis Towers Watson have built businesses in human resource consulting"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Randstad",
+      "ticker": "Randstad",
+      "name": "ランスタッド",
+      "name_en": "Randstad",
+      "sub": "人材(蘭)",
+      "sub_en": "Staffing (Netherlands)",
+      "sub_short": "人材",
+      "sub_short_en": "Staffing",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "採用代行(RPO)の競合",
+          "text_en": "RPO competitor",
+          "source": {
+            "label": "Korn Ferry 10-K(2026年4月期)",
+            "label_en": "Korn Ferry 10-K (FY ended Apr 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/56679/000005667926000021/kfy-20260430.htm",
+            "level": "official",
+            "date": "2026-06-26",
+            "quote": "Our RPO services primarily compete for business with other RPO providers such as Alexander Mann Solutions, Allegis, Cielo, Randstad, WilsonHCG, Hudson and LHH."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RHI",
+      "ticker": "RHI",
+      "name": "ロバート・ハーフ",
+      "name_en": "Robert Half",
+      "sub": "専門職人材",
+      "sub_en": "Professional staffing",
+      "sub_short": "人材",
+      "sub_short_en": "Staffing",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "専門職紹介と期間限定人材の競合",
+          "text_en": "Competitor in professional search and interim services",
+          "source": {
+            "label": "Korn Ferry 10-K(2026年4月期)",
+            "label_en": "Korn Ferry 10-K (FY ended Apr 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/56679/000005667926000021/kfy-20260430.htm",
+            "level": "official",
+            "date": "2026-06-26",
+            "quote": "large national retained recruitment firms such as Michael Page, Robert Half and Hays, while our Interim services compete with firms such as Axiom, Heidrick & Struggles, KForce, MLA, RGP and Robert Half."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Hays",
+      "ticker": "Hays",
+      "name": "ヘイズ",
+      "name_en": "Hays",
+      "sub": "人材紹介(英)",
+      "sub_en": "Recruitment (UK)",
+      "sub_short": "人材紹介",
+      "sub_short_en": "Hiring",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "専門職紹介の競合",
+          "text_en": "Professional search competitor",
+          "source": {
+            "label": "Korn Ferry 10-K(2026年4月期)",
+            "label_en": "Korn Ferry 10-K (FY ended Apr 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/56679/000005667926000021/kfy-20260430.htm",
+            "level": "official",
+            "date": "2026-06-26",
+            "quote": "large national retained recruitment firms such as Michael Page, Robert Half and Hays, while our Interim services compete with firms such as Axiom, Heidrick & Struggles, KForce, MLA, RGP and Robert Half."
+          }
+        }
+      ]
+    },
+    {
+      "id": "KFRC",
+      "ticker": "KFRC",
+      "name": "Kフォース",
+      "name_en": "Kforce",
+      "sub": "IT人材",
+      "sub_en": "Technology staffing",
+      "sub_short": "IT人材",
+      "sub_short_en": "Staffing",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "期間限定人材の競合",
+          "text_en": "Interim services competitor",
+          "source": {
+            "label": "Korn Ferry 10-K(2026年4月期)",
+            "label_en": "Korn Ferry 10-K (FY ended Apr 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/56679/000005667926000021/kfy-20260430.htm",
+            "level": "official",
+            "date": "2026-06-26",
+            "quote": "large national retained recruitment firms such as Michael Page, Robert Half and Hays, while our Interim services compete with firms such as Axiom, Heidrick & Struggles, KForce, MLA, RGP and Robert Half."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HSII",
+      "ticker": "HSII",
+      "name": "ハイドリック&ストラグルズ",
+      "name_en": "Heidrick & Struggles",
+      "sub": "エグゼクティブサーチ",
+      "sub_en": "Executive search",
+      "sub_short": "人材紹介",
+      "sub_short_en": "Hiring",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "エグゼクティブサーチの主要競合",
+          "text_en": "Main executive search competitor",
+          "source": {
+            "label": "Korn Ferry 10-K(2026年4月期)",
+            "label_en": "Korn Ferry 10-K (FY ended Apr 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/56679/000005667926000021/kfy-20260430.htm",
+            "level": "official",
+            "date": "2026-06-26",
+            "quote": "Traditional executive search competitors include Egon Zehnder, Heidrick & Struggles International, Inc., Russell Reynolds Associates and Spencer Stuart."
+          }
+        }
+      ]
+    },
+    {
+      "id": "EgonZehnder",
+      "ticker": "Egon Zehnder",
+      "name": "エゴンゼンダー",
+      "name_en": "Egon Zehnder",
+      "sub": "エグゼクティブサーチ(非上場)",
+      "sub_en": "Executive search (private)",
+      "sub_short": "人材紹介",
+      "sub_short_en": "Hiring",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "エグゼクティブサーチの主要競合",
+          "text_en": "Main executive search competitor",
+          "source": {
+            "label": "Korn Ferry 10-K(2026年4月期)",
+            "label_en": "Korn Ferry 10-K (FY ended Apr 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/56679/000005667926000021/kfy-20260430.htm",
+            "level": "official",
+            "date": "2026-06-26",
+            "quote": "Traditional executive search competitors include Egon Zehnder, Heidrick & Struggles International, Inc., Russell Reynolds Associates and Spencer Stuart."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RussellReynolds",
+      "ticker": "Russell Reynolds",
+      "name": "ラッセル・レイノルズ",
+      "name_en": "Russell Reynolds Associates",
+      "sub": "エグゼクティブサーチ(非上場)",
+      "sub_en": "Executive search (private)",
+      "sub_short": "人材紹介",
+      "sub_short_en": "Hiring",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "エグゼクティブサーチの主要競合",
+          "text_en": "Main executive search competitor",
+          "source": {
+            "label": "Korn Ferry 10-K(2026年4月期)",
+            "label_en": "Korn Ferry 10-K (FY ended Apr 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/56679/000005667926000021/kfy-20260430.htm",
+            "level": "official",
+            "date": "2026-06-26",
+            "quote": "Traditional executive search competitors include Egon Zehnder, Heidrick & Struggles International, Inc., Russell Reynolds Associates and Spencer Stuart."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SpencerStuart",
+      "ticker": "Spencer Stuart",
+      "name": "スペンサースチュアート",
+      "name_en": "Spencer Stuart",
+      "sub": "エグゼクティブサーチ(非上場)",
+      "sub_en": "Executive search (private)",
+      "sub_short": "人材紹介",
+      "sub_short_en": "Hiring",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "エグゼクティブサーチの主要競合",
+          "text_en": "Main executive search competitor",
+          "source": {
+            "label": "Korn Ferry 10-K(2026年4月期)",
+            "label_en": "Korn Ferry 10-K (FY ended Apr 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/56679/000005667926000021/kfy-20260430.htm",
+            "level": "official",
+            "date": "2026-06-26",
+            "quote": "Traditional executive search competitors include Egon Zehnder, Heidrick & Struggles International, Inc., Russell Reynolds Associates and Spencer Stuart."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

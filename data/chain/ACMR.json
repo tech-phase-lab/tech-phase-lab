@@ -12,7 +12,7 @@
   ],
   "rivals": [
     "LRCX",
-    "TEL",
+    "8035",
     "NAURA",
     "SCREEN"
   ],
@@ -23,6 +23,8 @@
       "name": "ラム・リサーチ",
       "sub": "半導体製造装置",
       "sub_en": "Chip equipment",
+      "sub_short": "製造装置",
+      "sub_short_en": "Chip tools",
       "row": 0,
       "relations": [
         {
@@ -60,6 +62,8 @@
       "name": "北方華創科技集団",
       "sub": "半導体製造装置",
       "sub_en": "Chip equipment",
+      "sub_short": "製造装置",
+      "sub_short_en": "Chip tools",
       "row": 0,
       "relations": [
         {
@@ -84,6 +88,8 @@
       "name": "SCREENホールディングス",
       "sub": "半導体製造装置",
       "sub_en": "Chip equipment",
+      "sub_short": "製造装置",
+      "sub_short_en": "Chip tools",
       "row": 0,
       "relations": [
         {
@@ -103,11 +109,13 @@
       "name_en": "SCREEN Holdings"
     },
     {
-      "id": "TEL",
+      "id": "8035",
       "ticker": "TEL",
       "name": "東京エレクトロン",
       "sub": "半導体製造装置",
       "sub_en": "Chip equipment",
+      "sub_short": "製造装置",
+      "sub_short_en": "Chip tools",
       "row": 0,
       "relations": [
         {
@@ -132,6 +140,8 @@
       "name": "アプライド マテリアルズ",
       "sub": "半導体製造装置",
       "sub_en": "Chip equipment",
+      "sub_short": "製造装置",
+      "sub_short_en": "Chip tools",
       "row": 0,
       "relations": [
         {

@@ -24,6 +24,8 @@
       "name": "ウォルマート",
       "sub": "小売大手",
       "sub_en": "Retailer",
+      "sub_short": "小売大手",
+      "sub_short_en": "Retailer",
       "row": 0,
       "relations": [
         {
@@ -48,6 +50,8 @@
       "name": "ペプシコ",
       "sub": "飲料・食品",
       "sub_en": "Beverages & foods",
+      "sub_short": "飲料",
+      "sub_short_en": "Drinks",
       "row": 0,
       "relations": [
         {
@@ -72,6 +76,8 @@
       "name": "グルポ・エルデス",
       "sub": "メキシコの食品",
       "sub_en": "Mexican foods",
+      "sub_short": "食品",
+      "sub_short_en": "Food",
       "row": 0,
       "relations": [
         {
@@ -96,6 +102,8 @@
       "name": "シルガン・ホールディングス",
       "sub": "金属・プラ容器",
       "sub_en": "Metal & plastic containers",
+      "sub_short": "容器",
+      "sub_short_en": "Cans",
       "row": 1,
       "relations": [
         {

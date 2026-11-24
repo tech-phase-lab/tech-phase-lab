@@ -25,6 +25,8 @@
       "name": "ビザ",
       "sub": "決済ネットワーク",
       "sub_en": "Payment network",
+      "sub_short": "決済網",
+      "sub_short_en": "Payment",
       "row": 0,
       "relations": [
         {
@@ -50,6 +52,8 @@
       "name": "シティグループ",
       "sub": "銀行",
       "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
       "row": 0,
       "relations": [
         {
@@ -75,6 +79,8 @@
       "name": "アマゾン",
       "sub": "EC・クラウド",
       "sub_en": "E-commerce & cloud",
+      "sub_short": "EC",
+      "sub_short_en": "E-com",
       "row": 1,
       "relations": [
         {
@@ -99,6 +105,8 @@
       "name": "ウォルマート",
       "sub": "小売",
       "sub_en": "Retail",
+      "sub_short": "小売",
+      "sub_short_en": "Retail",
       "row": 1,
       "relations": [
         {
@@ -123,6 +131,8 @@
       "name": "ドアダッシュ",
       "sub": "宅配プラットフォーム",
       "sub_en": "Delivery platform",
+      "sub_short": "宅配",
+      "sub_short_en": "Delivery",
       "row": 0,
       "relations": [
         {
@@ -147,6 +157,8 @@
       "name": "インスタカート",
       "sub": "宅配・EC基盤",
       "sub_en": "Delivery & e-commerce platform",
+      "sub_short": "宅配",
+      "sub_short_en": "Delivery",
       "row": 0,
       "relations": [
         {

@@ -30,6 +30,8 @@
       "name_en": "GW Pharmaceuticals",
       "sub": "カンナビノイド薬(英)",
       "sub_en": "Cannabinoid drugs (UK)",
+      "sub_short": "大麻薬",
+      "sub_short_en": "Cannabis",
       "row": 0,
       "relations": [
         {
@@ -54,6 +56,8 @@
       "name_en": "Zymeworks",
       "sub": "抗体医薬",
       "sub_en": "Antibody drugs",
+      "sub_short": "抗体医薬",
+      "sub_short_en": "Antibody",
       "row": 0,
       "relations": [
         {
@@ -78,6 +82,8 @@
       "name_en": "Chimerix",
       "sub": "がん治療薬",
       "sub_en": "Oncology drugs",
+      "sub_short": "がん薬",
+      "sub_short_en": "Oncology",
       "row": 0,
       "relations": [
         {
@@ -102,6 +108,8 @@
       "name_en": "Werewolf Therapeutics",
       "sub": "がん免疫薬",
       "sub_en": "Immuno-oncology",
+      "sub_short": "がん免疫",
+      "sub_short_en": "Oncology",
       "row": 0,
       "relations": [
         {
@@ -126,6 +134,8 @@
       "name_en": "Redx Pharma",
       "sub": "創薬(英)",
       "sub_en": "Drug discovery (UK)",
+      "sub_short": "創薬",
+      "sub_short_en": "Drug R&D",
       "row": 0,
       "relations": [
         {
@@ -150,6 +160,8 @@
       "name_en": "PharmaMar",
       "sub": "抗がん剤(西)",
       "sub_en": "Cancer drugs (Spain)",
+      "sub_short": "抗がん剤",
+      "sub_short_en": "Oncology",
       "row": 0,
       "relations": [
         {
@@ -174,6 +186,8 @@
       "name_en": "Alkermes",
       "sub": "中枢神経薬",
       "sub_en": "CNS drugs",
+      "sub_short": "神経薬",
+      "sub_short_en": "CNS",
       "row": 1,
       "relations": [
         {
@@ -198,6 +212,8 @@
       "name_en": "Axsome Therapeutics",
       "sub": "中枢神経薬",
       "sub_en": "CNS drugs",
+      "sub_short": "神経薬",
+      "sub_short_en": "CNS",
       "row": 1,
       "relations": [
         {
@@ -222,6 +238,8 @@
       "name_en": "Harmony Biosciences",
       "sub": "睡眠障害薬",
       "sub_en": "Sleep disorder drugs",
+      "sub_short": "睡眠薬",
+      "sub_short_en": "Sleep",
       "row": 1,
       "relations": [
         {
@@ -246,6 +264,8 @@
       "name_en": "Amneal Pharmaceuticals",
       "sub": "後発医薬品",
       "sub_en": "Generic drugs",
+      "sub_short": "後発薬",
+      "sub_short_en": "Generics",
       "row": 1,
       "relations": [
         {
@@ -270,6 +290,8 @@
       "name_en": "UCB",
       "sub": "製薬(ベルギー)",
       "sub_en": "Pharmaceuticals (Belgium)",
+      "sub_short": "製薬",
+      "sub_short_en": "Pharma",
       "row": 1,
       "relations": [
         {

@@ -1,0 +1,163 @@
+{
+  "root": {
+    "ticker": "RDNT",
+    "name": "ラドネット",
+    "cik": 790526,
+    "name_en": "RadNet"
+  },
+  "rows": [
+    {
+      "ja": "買収",
+      "en": "Acquisitions",
+      "above": true
+    },
+    {
+      "ja": "機器の導入先(相手の資料に記載)",
+      "en": "Technology partners (named in their filings)"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "ASTH"
+  ],
+  "companies": [
+    {
+      "id": "ICAD",
+      "ticker": "ICAD",
+      "name": "アイキャド",
+      "name_en": "iCAD",
+      "sub": "乳がん検出AI",
+      "sub_en": "AI breast cancer detection",
+      "sub_short": "AI検診",
+      "sub_short_en": "AI scans",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年7月に買収",
+          "text_en": "Acquired in July 2025",
+          "source": {
+            "label": "RadNet 10-K(2025年度)",
+            "label_en": "RadNet 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/790526/000162828026013337/rdnt-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "In connection with our acquisition of iCAD, Inc. on July 17, 2025"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Nulogix",
+      "ticker": "Nulogix Health",
+      "name": "ヌロジックス・ヘルス",
+      "name_en": "Nulogix Health",
+      "sub": "医療の収益管理AI",
+      "sub_en": "Healthcare revenue AI",
+      "sub_short": "医療AI",
+      "sub_short_en": "Billing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2019年に買収",
+          "text_en": "Acquired in 2019",
+          "source": {
+            "label": "RadNet 10-K(2025年度)",
+            "label_en": "RadNet 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/790526/000162828026013337/rdnt-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "acquired in connection with the 2011 acquisition of Raven Holdings U.S., Inc., 2019 acquisition of Nulogix Health, Inc., and the 2025 acquisition of iCAD, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RavenHoldings",
+      "ticker": "Raven Holdings",
+      "name": "レイブン・ホールディングス",
+      "name_en": "Raven Holdings",
+      "sub": "画像診断センター",
+      "sub_en": "Imaging centers",
+      "sub_short": "画像診断",
+      "sub_short_en": "Imaging",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2011年に買収",
+          "text_en": "Acquired in 2011",
+          "source": {
+            "label": "RadNet 10-K(2025年度)",
+            "label_en": "RadNet 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/790526/000162828026013337/rdnt-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "acquired in connection with the 2011 acquisition of Raven Holdings U.S., Inc., 2019 acquisition of Nulogix Health, Inc., and the 2025 acquisition of iCAD, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PROF",
+      "ticker": "PROF",
+      "name": "プロファウンド・メディカル",
+      "name_en": "Profound Medical",
+      "sub": "前立腺の超音波治療",
+      "sub_en": "Prostate ultrasound therapy",
+      "sub_short": "前立腺",
+      "sub_short_en": "Urology",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2020年、RadNetと治療装置TULSA-PROの複数拠点導入の契約を締結",
+          "text_en": "Signed its first US multi-site imaging center agreement for TULSA-PRO with RadNet in 2020",
+          "source": {
+            "label": "Profound Medical 10-K(2025年提出)",
+            "label_en": "Profound Medical 10-K (filed 2025-03)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1628808/000141057825000300/prof-20241231x10k.htm",
+            "level": "official",
+            "date": "2025-03-07",
+            "quote": "we announced the signing of our first-ever US multi-site imaging center agreement for TULSA-PRO with RadNet, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ASTH",
+      "ticker": "ASTH",
+      "name": "アストラナ・ヘルス",
+      "name_en": "Astrana Health",
+      "sub": "医療グループ",
+      "sub_en": "Physician groups",
+      "sub_short": "医療",
+      "sub_short_en": "Doctors",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Astranaが10-Kで、外来クリニックの競合としてRadNetを挙げる",
+          "text_en": "Astrana names RadNet among competitors of its outpatient clinics",
+          "source": {
+            "label": "Astrana Health 10-K(2025年提出)",
+            "label_en": "Astrana Health 10-K (filed 2025-03)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1083446/000095017025039122/asth-20241231.htm",
+            "level": "official",
+            "date": "2025-03-14",
+            "quote": "Our outpatient clinics compete with large ambulatory surgery centers and/or diagnostic centers such as RadNet and Envision Healthcare"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

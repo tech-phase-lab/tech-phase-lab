@@ -1,0 +1,185 @@
+{
+  "root": {
+    "ticker": "ABM",
+    "name": "ABMインダストリーズ",
+    "cik": 771497,
+    "name_en": "ABM Industries"
+  },
+  "rows": [
+    {
+      "ja": "買収",
+      "en": "Acquisitions"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "NMRK",
+    "EME"
+  ],
+  "companies": [
+    {
+      "id": "LMC",
+      "ticker": "LMC FM",
+      "name": "LMC FM",
+      "name_en": "LMC FM",
+      "sub": "施設管理(アイルランド)",
+      "sub_en": "Facility services (Ireland)",
+      "sub_short": "施設管理",
+      "sub_short_en": "Facilities",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ダブリンの施設管理会社LMCを買収(2025年)",
+          "text_en": "Acquired Dublin facilities services firm LMC (2025)",
+          "source": {
+            "label": "ABM 10-K(2025年10月期)",
+            "label_en": "ABM 10-K (FY ended Oct 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/771497/000077149725000031/abm-20251031.htm",
+            "level": "official",
+            "date": "2025-12-19",
+            "quote": "In 2025, we acquired LMC FM Limited (\"LMC\"), a Dublin-based facilities services company with coverage across Ireland."
+          }
+        }
+      ]
+    },
+    {
+      "id": "QualityUptime",
+      "ticker": "Quality Uptime",
+      "name": "クオリティ・アップタイム",
+      "name_en": "Quality Uptime Services",
+      "sub": "データセンター電源保守",
+      "sub_en": "Data center power services",
+      "sub_short": "DC電源",
+      "sub_short_en": "DC power",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Quality Uptime Servicesを買収(2024年6月)",
+          "text_en": "Acquired Quality Uptime Services (June 2024)",
+          "source": {
+            "label": "ABM 10-K(2025年10月期)",
+            "label_en": "ABM 10-K (FY ended Oct 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/771497/000077149725000031/abm-20251031.htm",
+            "level": "official",
+            "date": "2025-12-19",
+            "quote": "Effective June 21, 2024, we acquired Quality Uptime Services, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Momentum",
+      "ticker": "Momentum Support",
+      "name": "モメンタム・サポート",
+      "name_en": "Momentum Support",
+      "sub": "清掃・施設管理(アイルランド)",
+      "sub_en": "Janitorial & facilities (Ireland)",
+      "sub_short": "清掃",
+      "sub_short_en": "Janitorial",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "アイルランドのMomentumを買収(2022年)",
+          "text_en": "Acquired Ireland's Momentum (2022)",
+          "source": {
+            "label": "ABM 10-K(2025年10月期)",
+            "label_en": "ABM 10-K (FY ended Oct 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/771497/000077149725000031/abm-20251031.htm",
+            "level": "official",
+            "date": "2025-12-19",
+            "quote": "In 2022, we acquired Momentum Support (\"Momentum\"), a leading independent provider of facility services"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Crown",
+      "ticker": "Crown Building Maintenance",
+      "name": "クラウン・ビルディング・メンテナンス",
+      "name_en": "Crown Building Maintenance",
+      "sub": "清掃",
+      "sub_en": "Janitorial",
+      "sub_short": "清掃",
+      "sub_short_en": "Janitorial",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Crown Building Maintenanceなどを買収(2021年)",
+          "text_en": "Acquired Crown Building Maintenance and Crown Energy Services (2021)",
+          "source": {
+            "label": "ABM 10-K(2025年10月期)",
+            "label_en": "ABM 10-K (FY ended Oct 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/771497/000077149725000031/abm-20251031.htm",
+            "level": "official",
+            "date": "2025-12-19",
+            "quote": "In 2021, we acquired Crown Building Maintenance Co. and Crown Energy Services, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NMRK",
+      "ticker": "NMRK",
+      "name": "ニューマーク",
+      "name_en": "Newmark",
+      "sub": "商業不動産サービス",
+      "sub_en": "Commercial real estate services",
+      "sub_short": "不動産",
+      "sub_short_en": "Property",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Newmarkが10-Kで、外部委託の競合として挙げる",
+          "text_en": "Newmark names ABM among outsourcing competitors",
+          "source": {
+            "label": "Newmark 10-K(2024年度)",
+            "label_en": "Newmark 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1690680/000162828025009332/nmrk-20241231.htm",
+            "level": "official",
+            "date": "2025-03-03",
+            "quote": "including outsourcing companies such as Aramark, ISS A/S, and ABM Industries."
+          }
+        }
+      ]
+    },
+    {
+      "id": "EME",
+      "ticker": "EME",
+      "name": "エムコー",
+      "name_en": "EMCOR",
+      "sub": "設備工事",
+      "sub_en": "Building services",
+      "sub_short": "設備工事",
+      "sub_short_en": "Facilities",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "EMCORが10-Kで、ビルサービスの大手競合として挙げる",
+          "text_en": "EMCOR names ABM among large building services competitors",
+          "source": {
+            "label": "EMCOR 10-K(2024年度)",
+            "label_en": "EMCOR 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/105634/000010563425000015/eme-20241231.htm",
+            "level": "official",
+            "date": "2025-02-26",
+            "quote": "Sodexo, Inc., Aramark, and ABM Industries Incorporated are engaged in this field"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

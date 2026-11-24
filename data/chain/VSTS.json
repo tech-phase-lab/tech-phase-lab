@@ -1,0 +1,137 @@
+{
+  "root": {
+    "ticker": "VSTS",
+    "name": "ベスティス",
+    "cik": 1967649,
+    "name_en": "Vestis"
+  },
+  "rows": [
+    {
+      "ja": "分離元",
+      "en": "Former parent"
+    },
+    {
+      "ja": "納入元",
+      "en": "Supplier"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in its 10-K)"
+    }
+  ],
+  "rivals": [
+    "CTAS",
+    "UNF"
+  ],
+  "companies": [
+    {
+      "id": "ARMK",
+      "ticker": "ARMK",
+      "name": "アラマーク",
+      "name_en": "Aramark",
+      "sub": "給食・施設サービス",
+      "sub_en": "Food & facilities services",
+      "sub_short": "給食",
+      "sub_short_en": "Catering",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Aramarkからスピンオフ(2023年9月)",
+          "text_en": "Spun off from Aramark (September 2023)",
+          "source": {
+            "label": "Vestis 10-K(2025年9月期)",
+            "label_en": "Vestis 10-K (FY ended Oct 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1967649/000162828025054597/vsts-20251003.htm",
+            "level": "official",
+            "date": "2025-12-02",
+            "quote": "On September 30, 2023 (the \"Distribution Date\"), Vestis Corporation completed its spin-off from Aramark"
+          }
+        }
+      ]
+    },
+    {
+      "id": "XOS",
+      "ticker": "XOS",
+      "name": "ゾス",
+      "name_en": "Xos",
+      "sub": "電動商用車",
+      "sub_en": "Electric commercial vehicles",
+      "sub_short": "EV車両",
+      "sub_short_en": "EV trucks",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Xosが車両の納入先としてVestisの名前を挙げる(2025年1〜3月期)",
+          "text_en": "Xos names Vestis among customers receiving vehicle deliveries (Q1 2025)",
+          "source": {
+            "label": "Xos 8-K(2025年5月、決算発表)",
+            "label_en": "Xos 8-K (May 2025 earnings release)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1819493/000181949325000078/a20250514form8-kexhibit991.htm",
+            "level": "official",
+            "date": "2025-05-14",
+            "quote": "Deliveries this quarter included customers such as Vestis Corporation and FedEx ISPs."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CTAS",
+      "ticker": "CTAS",
+      "name": "シンタス",
+      "name_en": "Cintas",
+      "sub": "ユニフォームレンタル",
+      "sub_en": "Uniform rental",
+      "sub_short": "制服貸与",
+      "sub_short_en": "Uniforms",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "規模の大きい注目すべき競合",
+          "text_en": "A notable competitor of size",
+          "source": {
+            "label": "Vestis 10-K(2025年9月期)",
+            "label_en": "Vestis 10-K (FY ended Oct 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1967649/000162828025054597/vsts-20251003.htm",
+            "level": "official",
+            "date": "2025-12-02",
+            "quote": "Cintas Corporation and UniFirst Corporation are notable competitors of size"
+          }
+        }
+      ]
+    },
+    {
+      "id": "UNF",
+      "ticker": "UNF",
+      "name": "ユニファースト",
+      "name_en": "UniFirst",
+      "sub": "ユニフォームレンタル",
+      "sub_en": "Uniform rental",
+      "sub_short": "制服貸与",
+      "sub_short_en": "Uniforms",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "UniFirstが10-Kで、主な競合として挙げる",
+          "text_en": "UniFirst names Vestis among principal competitors",
+          "source": {
+            "label": "UniFirst 10-K(2025年8月期)",
+            "label_en": "UniFirst 10-K (FY ended Aug 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/717954/000119312525256222/unf-20250830.htm",
+            "level": "official",
+            "date": "2025-10-29",
+            "quote": "Our principal competitors include Cintas Corporation, Alsco and Vestis Corporation."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

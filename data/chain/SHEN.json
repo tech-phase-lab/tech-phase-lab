@@ -27,6 +27,8 @@
       "name": "Tモバイル・US",
       "sub": "携帯通信",
       "sub_en": "Wireless carrier",
+      "sub_short": "携帯通信",
+      "sub_short_en": "Carrier",
       "row": 0,
       "relations": [
         {
@@ -51,6 +53,8 @@
       "name": "ネットフリックス",
       "sub": "動画配信",
       "sub_en": "Video streaming",
+      "sub_short": "動画配信",
+      "sub_short_en": "Video",
       "row": 1,
       "relations": [
         {
@@ -75,6 +79,8 @@
       "name": "ウォルト・ディズニー",
       "sub": "メディア・配信",
       "sub_en": "Media & streaming",
+      "sub_short": "メディア",
+      "sub_short_en": "Media",
       "row": 1,
       "relations": [
         {
@@ -99,6 +105,8 @@
       "name": "アマゾン",
       "sub": "EC・動画配信",
       "sub_en": "E-commerce & video",
+      "sub_short": "EC",
+      "sub_short_en": "E-com",
       "row": 1,
       "relations": [
         {

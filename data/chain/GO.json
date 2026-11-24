@@ -1,0 +1,269 @@
+{
+  "root": {
+    "ticker": "GO",
+    "name": "グローサリー・アウトレット",
+    "cik": 1771515,
+    "name_en": "Grocery Outlet"
+  },
+  "rows": [
+    {
+      "ja": "買収",
+      "en": "Acquisition",
+      "above": true
+    },
+    {
+      "ja": "ディスカウント系の競合(10-Kに記載)",
+      "en": "Discount competitors (named in the 10-K)"
+    },
+    {
+      "ja": "客が併用する主な小売",
+      "en": "Retailers its shoppers also use most"
+    }
+  ],
+  "rivals": [
+    "WMT",
+    "ACI",
+    "COST"
+  ],
+  "companies": [
+    {
+      "id": "UGO",
+      "ticker": "United Grocery Outlet",
+      "name": "ユナイテッド・グローサリー・アウトレット",
+      "name_en": "United Grocery Outlet",
+      "sub": "食品ディスカウント",
+      "sub_en": "Discount grocery",
+      "sub_short": "格安食品",
+      "sub_short_en": "Grocery",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2024年4月に買収(6州・40店)",
+          "text_en": "Acquired in April 2024 (40 stores in six states)",
+          "source": {
+            "label": "Grocery Outlet 10-K(2025年度)",
+            "label_en": "Grocery Outlet 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1771515/000177151526000015/go-20260103.htm",
+            "level": "official",
+            "date": "2026-03-04",
+            "quote": "On April 1, 2024, Grocery Outlet Inc., our wholly owned subsidiary, acquired The Bargain Barn, Inc., which does business as United Grocery Outlet"
+          }
+        }
+      ]
+    },
+    {
+      "id": "TGT",
+      "ticker": "TGT",
+      "name": "ターゲット",
+      "name_en": "Target",
+      "sub": "総合小売",
+      "sub_en": "General merchandise",
+      "sub_short": "総合小売",
+      "sub_short_en": "Retail",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ディスカウント系の競合",
+          "text_en": "Discount competitor",
+          "source": {
+            "label": "Grocery Outlet 10-K(2025年度)",
+            "label_en": "Grocery Outlet 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1771515/000177151526000015/go-20260103.htm",
+            "level": "official",
+            "date": "2026-03-04",
+            "quote": "We see discount retailers of consumable products, which include Costco, WinCo, Target, Trader Joe's, Aldi and Lidl, as competitors"
+          }
+        }
+      ]
+    },
+    {
+      "id": "WinCo",
+      "ticker": "WinCo",
+      "name": "ウィンコ・フーズ",
+      "name_en": "WinCo Foods",
+      "sub": "スーパー(非上場)",
+      "sub_en": "Grocery (private)",
+      "sub_short": "スーパー",
+      "sub_short_en": "Grocery",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ディスカウント系の競合",
+          "text_en": "Discount competitor",
+          "source": {
+            "label": "Grocery Outlet 10-K(2025年度)",
+            "label_en": "Grocery Outlet 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1771515/000177151526000015/go-20260103.htm",
+            "level": "official",
+            "date": "2026-03-04",
+            "quote": "We see discount retailers of consumable products, which include Costco, WinCo, Target, Trader Joe's, Aldi and Lidl, as competitors"
+          }
+        }
+      ]
+    },
+    {
+      "id": "TraderJoes",
+      "ticker": "Trader Joe's",
+      "name": "トレーダー・ジョーズ",
+      "name_en": "Trader Joe's",
+      "sub": "スーパー(非上場)",
+      "sub_en": "Grocery (private)",
+      "sub_short": "スーパー",
+      "sub_short_en": "Grocery",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ディスカウント系の競合",
+          "text_en": "Discount competitor",
+          "source": {
+            "label": "Grocery Outlet 10-K(2025年度)",
+            "label_en": "Grocery Outlet 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1771515/000177151526000015/go-20260103.htm",
+            "level": "official",
+            "date": "2026-03-04",
+            "quote": "We see discount retailers of consumable products, which include Costco, WinCo, Target, Trader Joe's, Aldi and Lidl, as competitors"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Aldi",
+      "ticker": "Aldi",
+      "name": "アルディ",
+      "name_en": "Aldi",
+      "sub": "ディスカウントスーパー(独、非上場)",
+      "sub_en": "Discount grocery (Germany, private)",
+      "sub_short": "スーパー",
+      "sub_short_en": "Grocery",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ディスカウント系の競合",
+          "text_en": "Discount competitor",
+          "source": {
+            "label": "Grocery Outlet 10-K(2025年度)",
+            "label_en": "Grocery Outlet 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1771515/000177151526000015/go-20260103.htm",
+            "level": "official",
+            "date": "2026-03-04",
+            "quote": "We see discount retailers of consumable products, which include Costco, WinCo, Target, Trader Joe's, Aldi and Lidl, as competitors"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Lidl",
+      "ticker": "Lidl",
+      "name": "リドル",
+      "name_en": "Lidl",
+      "sub": "ディスカウントスーパー(独、非上場)",
+      "sub_en": "Discount grocery (Germany, private)",
+      "sub_short": "スーパー",
+      "sub_short_en": "Grocery",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ディスカウント系の競合",
+          "text_en": "Discount competitor",
+          "source": {
+            "label": "Grocery Outlet 10-K(2025年度)",
+            "label_en": "Grocery Outlet 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1771515/000177151526000015/go-20260103.htm",
+            "level": "official",
+            "date": "2026-03-04",
+            "quote": "We see discount retailers of consumable products, which include Costco, WinCo, Target, Trader Joe's, Aldi and Lidl, as competitors"
+          }
+        }
+      ]
+    },
+    {
+      "id": "WMT",
+      "ticker": "WMT",
+      "name": "ウォルマート",
+      "name_en": "Walmart",
+      "sub": "総合小売",
+      "sub_en": "General merchandise",
+      "sub_short": "総合小売",
+      "sub_short_en": "Retail",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "客が日用品を併用する筆頭の小売",
+          "text_en": "Most cited by its shoppers as another place they buy consumables",
+          "source": {
+            "label": "Grocery Outlet 10-K(2025年度)",
+            "label_en": "Grocery Outlet 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1771515/000177151526000015/go-20260103.htm",
+            "level": "official",
+            "date": "2026-03-04",
+            "quote": "our customers most often cite Walmart and Safeway as retailers where they also shop for consumables."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ACI",
+      "ticker": "ACI",
+      "name": "アルバートソンズ(セーフウェイ)",
+      "name_en": "Albertsons (Safeway)",
+      "sub": "スーパー",
+      "sub_en": "Grocery",
+      "sub_short": "スーパー",
+      "sub_short_en": "Grocery",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "客が併用するスーパー(セーフウェイ)",
+          "text_en": "Its Safeway is often cited by shoppers as another store they use",
+          "source": {
+            "label": "Grocery Outlet 10-K(2025年度)",
+            "label_en": "Grocery Outlet 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1771515/000177151526000015/go-20260103.htm",
+            "level": "official",
+            "date": "2026-03-04",
+            "quote": "our customers most often cite Walmart and Safeway as retailers where they also shop for consumables."
+          }
+        }
+      ]
+    },
+    {
+      "id": "COST",
+      "ticker": "COST",
+      "name": "コストコ",
+      "name_en": "Costco",
+      "sub": "会員制量販店",
+      "sub_en": "Warehouse clubs",
+      "sub_short": "量販店",
+      "sub_short_en": "Clubs",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ディスカウント系の競合",
+          "text_en": "Discount competitor",
+          "source": {
+            "label": "Grocery Outlet 10-K(2025年度)",
+            "label_en": "Grocery Outlet 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1771515/000177151526000015/go-20260103.htm",
+            "level": "official",
+            "date": "2026-03-04",
+            "quote": "We see discount retailers of consumable products, which include Costco, WinCo, Target, Trader Joe's, Aldi and Lidl, as competitors"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

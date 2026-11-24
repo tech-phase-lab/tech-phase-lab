@@ -29,6 +29,8 @@
       "name": "アマゾン",
       "sub": "クラウド",
       "sub_en": "Cloud",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 0,
       "relations": [
         {
@@ -66,6 +68,8 @@
       "name": "アクセンチュア",
       "sub": "コンサル・SI",
       "sub_en": "Consulting & SI",
+      "sub_short": "コンサル",
+      "sub_short_en": "Advisory",
       "row": 1,
       "relations": [
         {
@@ -118,6 +122,8 @@
       "name": "ウェルズ・ファーゴ",
       "sub": "銀行",
       "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
       "row": 1,
       "relations": [
         {
@@ -157,6 +163,8 @@
       "name": "スノーフレーク",
       "sub": "データクラウド",
       "sub_en": "Data cloud",
+      "sub_short": "データ",
+      "sub_short_en": "Data",
       "row": 1,
       "relations": [
         {
@@ -181,6 +189,8 @@
       "name": "ガイドワイヤ",
       "sub": "保険向けソフト",
       "sub_en": "Insurance software",
+      "sub_short": "保険IT",
+      "sub_short_en": "Insure IT",
       "row": 1,
       "relations": [
         {
@@ -207,6 +217,8 @@
       "name": "ボックス",
       "sub": "コンテンツ管理",
       "sub_en": "Content management",
+      "sub_short": "文書管理",
+      "sub_short_en": "Content",
       "row": 1,
       "relations": [
         {
@@ -233,6 +245,8 @@
       "name": "ペガシステムズ",
       "sub": "ローコード・BPM",
       "sub_en": "Low-code & BPM",
+      "sub_short": "開発基盤",
+      "sub_short_en": "Low-code",
       "row": 2,
       "relations": [
         {

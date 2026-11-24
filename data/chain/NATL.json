@@ -1,0 +1,269 @@
+{
+  "root": {
+    "ticker": "NATL",
+    "name": "NCRアトレオス",
+    "cik": 1974138,
+    "name_en": "NCR Atleos"
+  },
+  "rows": [
+    {
+      "ja": "旧親会社",
+      "en": "Former parent",
+      "above": true
+    },
+    {
+      "ja": "決済・金融ITの競合(10-Kに記載)",
+      "en": "Payments & financial technology competitors (named in the 10-K)"
+    },
+    {
+      "ja": "ATMの主な競合",
+      "en": "Main ATM competitors"
+    }
+  ],
+  "rivals": [
+    "DBD",
+    "Hyosung",
+    "FIS"
+  ],
+  "companies": [
+    {
+      "id": "VYX",
+      "ticker": "VYX",
+      "name": "NCRボイックス",
+      "name_en": "NCR Voyix",
+      "sub": "POS・決済",
+      "sub_en": "Point of sale & payments",
+      "sub_short": "POS",
+      "sub_short_en": "POS",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "分離元。分離時の契約で相互に補償義務を負う",
+          "text_en": "Former parent; the two owe each other indemnities under the spin-off agreements",
+          "source": {
+            "label": "NCR Atleos 10-K(2025年度)",
+            "label_en": "NCR Atleos 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1974138/000162828026012576/ncr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Atleos' obligation to indemnify NCR Voyix Corporation (\"Voyix\") pursuant to the agreements entered into in connection with the spin-off"
+          }
+        }
+      ]
+    },
+    {
+      "id": "FI",
+      "ticker": "FI",
+      "name": "ファイサーブ",
+      "name_en": "Fiserv",
+      "sub": "金融IT",
+      "sub_en": "Financial technology",
+      "sub_short": "金融IT",
+      "sub_short_en": "Fintech",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合",
+          "text_en": "Competitor",
+          "source": {
+            "label": "NCR Atleos 10-K(2025年度)",
+            "label_en": "NCR Atleos 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1974138/000162828026012576/ncr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "such as Fidelity National Information Services Inc., Fiserv, Inc., Visa Inc., Mastercard Inc., Infosys Ltd., Diebold Nixdorf, Inc., Hyosung TNS Inc., and ACI Worldwide"
+          }
+        }
+      ]
+    },
+    {
+      "id": "V",
+      "ticker": "V",
+      "name": "ビザ",
+      "name_en": "Visa",
+      "sub": "決済ネットワーク",
+      "sub_en": "Payment network",
+      "sub_short": "決済網",
+      "sub_short_en": "Payment",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合",
+          "text_en": "Competitor",
+          "source": {
+            "label": "NCR Atleos 10-K(2025年度)",
+            "label_en": "NCR Atleos 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1974138/000162828026012576/ncr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "such as Fidelity National Information Services Inc., Fiserv, Inc., Visa Inc., Mastercard Inc., Infosys Ltd., Diebold Nixdorf, Inc., Hyosung TNS Inc., and ACI Worldwide"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MA",
+      "ticker": "MA",
+      "name": "マスターカード",
+      "name_en": "Mastercard",
+      "sub": "決済ネットワーク",
+      "sub_en": "Payment network",
+      "sub_short": "決済網",
+      "sub_short_en": "Payment",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合",
+          "text_en": "Competitor",
+          "source": {
+            "label": "NCR Atleos 10-K(2025年度)",
+            "label_en": "NCR Atleos 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1974138/000162828026012576/ncr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "such as Fidelity National Information Services Inc., Fiserv, Inc., Visa Inc., Mastercard Inc., Infosys Ltd., Diebold Nixdorf, Inc., Hyosung TNS Inc., and ACI Worldwide"
+          }
+        }
+      ]
+    },
+    {
+      "id": "INFY",
+      "ticker": "INFY",
+      "name": "インフォシス",
+      "name_en": "Infosys",
+      "sub": "ITサービス(印)",
+      "sub_en": "IT services (India)",
+      "sub_short": "IT",
+      "sub_short_en": "IT",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合",
+          "text_en": "Competitor",
+          "source": {
+            "label": "NCR Atleos 10-K(2025年度)",
+            "label_en": "NCR Atleos 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1974138/000162828026012576/ncr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "such as Fidelity National Information Services Inc., Fiserv, Inc., Visa Inc., Mastercard Inc., Infosys Ltd., Diebold Nixdorf, Inc., Hyosung TNS Inc., and ACI Worldwide"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ACIW",
+      "ticker": "ACIW",
+      "name": "ACIワールドワイド",
+      "name_en": "ACI Worldwide",
+      "sub": "決済ソフト",
+      "sub_en": "Payments software",
+      "sub_short": "決済",
+      "sub_short_en": "Payment",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合",
+          "text_en": "Competitor",
+          "source": {
+            "label": "NCR Atleos 10-K(2025年度)",
+            "label_en": "NCR Atleos 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1974138/000162828026012576/ncr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "such as Fidelity National Information Services Inc., Fiserv, Inc., Visa Inc., Mastercard Inc., Infosys Ltd., Diebold Nixdorf, Inc., Hyosung TNS Inc., and ACI Worldwide"
+          }
+        }
+      ]
+    },
+    {
+      "id": "DBD",
+      "ticker": "DBD",
+      "name": "ディーボルド・ニクスドルフ",
+      "name_en": "Diebold Nixdorf",
+      "sub": "ATM・銀行機器",
+      "sub_en": "ATMs & banking equipment",
+      "sub_short": "ATM",
+      "sub_short_en": "ATMs",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ATMの主な競合",
+          "text_en": "Main ATM competitor",
+          "source": {
+            "label": "NCR Atleos 10-K(2025年度)",
+            "label_en": "NCR Atleos 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1974138/000162828026012576/ncr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "such as Fidelity National Information Services Inc., Fiserv, Inc., Visa Inc., Mastercard Inc., Infosys Ltd., Diebold Nixdorf, Inc., Hyosung TNS Inc., and ACI Worldwide"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Hyosung",
+      "ticker": "Hyosung",
+      "name": "暁星TNS",
+      "name_en": "Hyosung TNS",
+      "sub": "ATM(韓)",
+      "sub_en": "ATMs (Korea)",
+      "sub_short": "ATM",
+      "sub_short_en": "ATMs",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ATMの主な競合",
+          "text_en": "Main ATM competitor",
+          "source": {
+            "label": "NCR Atleos 10-K(2025年度)",
+            "label_en": "NCR Atleos 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1974138/000162828026012576/ncr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "such as Fidelity National Information Services Inc., Fiserv, Inc., Visa Inc., Mastercard Inc., Infosys Ltd., Diebold Nixdorf, Inc., Hyosung TNS Inc., and ACI Worldwide"
+          }
+        }
+      ]
+    },
+    {
+      "id": "FIS",
+      "ticker": "FIS",
+      "name": "FIS",
+      "name_en": "FIS",
+      "sub": "金融IT",
+      "sub_en": "Financial technology",
+      "sub_short": "金融IT",
+      "sub_short_en": "Fintech",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "銀行向けITの競合",
+          "text_en": "Banking technology competitor",
+          "source": {
+            "label": "NCR Atleos 10-K(2025年度)",
+            "label_en": "NCR Atleos 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1974138/000162828026012576/ncr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "such as Fidelity National Information Services Inc., Fiserv, Inc., Visa Inc., Mastercard Inc., Infosys Ltd., Diebold Nixdorf, Inc., Hyosung TNS Inc., and ACI Worldwide"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

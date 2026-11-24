@@ -19,6 +19,8 @@
       "name": "ルックスオティカ",
       "sub": "アイウェア",
       "sub_en": "Eyewear",
+      "sub_short": "眼鏡",
+      "sub_short_en": "Eyewear",
       "row": 0,
       "relations": [
         {
@@ -43,6 +45,8 @@
       "name": "モバード",
       "sub": "腕時計",
       "sub_en": "Watches",
+      "sub_short": "腕時計",
+      "sub_short_en": "Watches",
       "row": 0,
       "relations": [
         {
@@ -67,6 +71,8 @@
       "name": "インターパルファム",
       "sub": "香水",
       "sub_en": "Fragrance",
+      "sub_short": "香水",
+      "sub_short_en": "Scents",
       "row": 0,
       "relations": [
         {
@@ -91,6 +97,8 @@
       "name": "ケースメイト",
       "sub": "テック小物",
       "sub_en": "Tech accessories",
+      "sub_short": "小物",
+      "sub_short_en": "Gadgets",
       "row": 0,
       "relations": [
         {
@@ -115,6 +123,8 @@
       "name": "コマー",
       "sub": "寝間着",
       "sub_en": "Sleepwear",
+      "sub_short": "寝間着",
+      "sub_short_en": "Apparel",
       "row": 0,
       "relations": [
         {
@@ -139,6 +149,8 @@
       "name": "サフィロ",
       "sub": "アイウェア",
       "sub_en": "Eyewear",
+      "sub_short": "眼鏡",
+      "sub_short_en": "Eyewear",
       "row": 0,
       "relations": [
         {
@@ -163,6 +175,8 @@
       "name": "リブ・コンフォタブリー",
       "sub": "寝具",
       "sub_en": "Bedding",
+      "sub_short": "寝具",
+      "sub_short_en": "Bedding",
       "row": 0,
       "relations": [
         {

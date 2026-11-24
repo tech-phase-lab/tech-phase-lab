@@ -1,0 +1,321 @@
+{
+  "root": {
+    "ticker": "MAN",
+    "name": "マンパワーグループ",
+    "cik": 871763,
+    "name_en": "ManpowerGroup"
+  },
+  "rows": [
+    {
+      "ja": "専門・地域の競合(10-Kに記載)",
+      "en": "Specialized & regional competitors (named in the 10-K)",
+      "above": true
+    },
+    {
+      "ja": "マンパワーを競合に挙げる会社",
+      "en": "Companies naming ManpowerGroup as a competitor"
+    },
+    {
+      "ja": "最大手の競合",
+      "en": "Largest competitors"
+    }
+  ],
+  "rivals": [
+    "Adecco",
+    "Randstad",
+    "KELYA"
+  ],
+  "companies": [
+    {
+      "id": "Recruit",
+      "ticker": "RCRUY",
+      "name": "リクルートホールディングス",
+      "name_en": "Recruit Holdings",
+      "sub": "人材・求人サイト",
+      "sub_en": "HR technology & staffing",
+      "sub_short": "人材",
+      "sub_short_en": "HR",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "専門・地域で競合",
+          "text_en": "Specialized and regional competitor",
+          "source": {
+            "label": "ManpowerGroup 10-K(2025年度)",
+            "label_en": "ManpowerGroup 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/871763/000119312526064113/man-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "We also compete against a variety of regional or specialized companies such as Recruit Holdings, Allegis Group, Kelly Services, Robert Half, Kforce, PageGroup, Korn/Ferry International and Alexander Mann."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RHI",
+      "ticker": "RHI",
+      "name": "ロバート・ハーフ",
+      "name_en": "Robert Half",
+      "sub": "専門職人材",
+      "sub_en": "Professional staffing",
+      "sub_short": "人材",
+      "sub_short_en": "Staffing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "専門・地域で競合",
+          "text_en": "Specialized and regional competitor",
+          "source": {
+            "label": "ManpowerGroup 10-K(2025年度)",
+            "label_en": "ManpowerGroup 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/871763/000119312526064113/man-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "We also compete against a variety of regional or specialized companies such as Recruit Holdings, Allegis Group, Kelly Services, Robert Half, Kforce, PageGroup, Korn/Ferry International and Alexander Mann."
+          }
+        }
+      ]
+    },
+    {
+      "id": "KFRC",
+      "ticker": "KFRC",
+      "name": "Kフォース",
+      "name_en": "Kforce",
+      "sub": "IT人材",
+      "sub_en": "Technology staffing",
+      "sub_short": "IT人材",
+      "sub_short_en": "Staffing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "専門・地域で競合",
+          "text_en": "Specialized and regional competitor",
+          "source": {
+            "label": "ManpowerGroup 10-K(2025年度)",
+            "label_en": "ManpowerGroup 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/871763/000119312526064113/man-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "We also compete against a variety of regional or specialized companies such as Recruit Holdings, Allegis Group, Kelly Services, Robert Half, Kforce, PageGroup, Korn/Ferry International and Alexander Mann."
+          }
+        }
+      ]
+    },
+    {
+      "id": "KFY",
+      "ticker": "KFY",
+      "name": "コーン・フェリー",
+      "name_en": "Korn Ferry",
+      "sub": "人材コンサル",
+      "sub_en": "Talent consulting",
+      "sub_short": "人材",
+      "sub_short_en": "Talent",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "専門・地域で競合",
+          "text_en": "Specialized and regional competitor",
+          "source": {
+            "label": "ManpowerGroup 10-K(2025年度)",
+            "label_en": "ManpowerGroup 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/871763/000119312526064113/man-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "We also compete against a variety of regional or specialized companies such as Recruit Holdings, Allegis Group, Kelly Services, Robert Half, Kforce, PageGroup, Korn/Ferry International and Alexander Mann."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PageGroup",
+      "ticker": "PageGroup",
+      "name": "ペイジグループ",
+      "name_en": "PageGroup",
+      "sub": "人材紹介(英)",
+      "sub_en": "Recruitment (UK)",
+      "sub_short": "人材紹介",
+      "sub_short_en": "Hiring",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "専門・地域で競合",
+          "text_en": "Specialized and regional competitor",
+          "source": {
+            "label": "ManpowerGroup 10-K(2025年度)",
+            "label_en": "ManpowerGroup 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/871763/000119312526064113/man-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "We also compete against a variety of regional or specialized companies such as Recruit Holdings, Allegis Group, Kelly Services, Robert Half, Kforce, PageGroup, Korn/Ferry International and Alexander Mann."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Allegis",
+      "ticker": "Allegis Group",
+      "name": "アレジス・グループ",
+      "name_en": "Allegis Group",
+      "sub": "人材(非上場)",
+      "sub_en": "Staffing (private)",
+      "sub_short": "人材",
+      "sub_short_en": "Staffing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "専門・地域で競合",
+          "text_en": "Specialized and regional competitor",
+          "source": {
+            "label": "ManpowerGroup 10-K(2025年度)",
+            "label_en": "ManpowerGroup 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/871763/000119312526064113/man-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "We also compete against a variety of regional or specialized companies such as Recruit Holdings, Allegis Group, Kelly Services, Robert Half, Kforce, PageGroup, Korn/Ferry International and Alexander Mann."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BBSI",
+      "ticker": "BBSI",
+      "name": "バレット・ビジネス・サービシズ",
+      "name_en": "Barrett Business Services",
+      "sub": "人事・人材サービス",
+      "sub_en": "HR outsourcing & staffing",
+      "sub_short": "人事",
+      "sub_short_en": "HR",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "人材派遣の競合にマンパワーを挙げる",
+          "text_en": "Names ManpowerGroup among staffing competitors",
+          "source": {
+            "label": "Barrett Business Services 10-K(2025年度)",
+            "label_en": "Barrett Business Services 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/902791/000119312526072255/bbsi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our competitors include companies that are engaged in staffing services such as Robert Half International Inc., Kelly Services, Inc., and ManpowerGroup Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BIYA",
+      "ticker": "BIYA",
+      "name": "バイヤ・インターナショナル",
+      "name_en": "Baiya International",
+      "sub": "人材(中国)",
+      "sub_en": "Recruitment (China)",
+      "sub_short": "人材",
+      "sub_short_en": "Hiring",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "従来型人材会社の競合にマンパワーを挙げる",
+          "text_en": "Names ManpowerGroup among traditional recruitment competitors",
+          "source": {
+            "label": "Baiya International 20-F(2024年度)",
+            "label_en": "Baiya International 20-F (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1944712/000121390025042694/ea0239630-20f_baiya.htm",
+            "level": "official",
+            "date": "2025-05-13",
+            "quote": "We face competition from traditional recruitment companies such as Career International, ManpowerGroup and Renrui Human Resources"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Adecco",
+      "ticker": "Adecco",
+      "name": "アデコ",
+      "name_en": "Adecco Group",
+      "sub": "人材(スイス)",
+      "sub_en": "Staffing (Switzerland)",
+      "sub_short": "人材",
+      "sub_short_en": "Staffing",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "人材サービスの最大手の上場競合",
+          "text_en": "Largest listed recruitment competitor",
+          "source": {
+            "label": "ManpowerGroup 10-K(2025年度)",
+            "label_en": "ManpowerGroup 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/871763/000119312526064113/man-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "In addition to us, the largest publicly owned companies specializing in recruitment services are The Adecco Group and Randstad."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Randstad",
+      "ticker": "Randstad",
+      "name": "ランスタッド",
+      "name_en": "Randstad",
+      "sub": "人材(蘭)",
+      "sub_en": "Staffing (Netherlands)",
+      "sub_short": "人材",
+      "sub_short_en": "Staffing",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "人材サービスの最大手の上場競合",
+          "text_en": "Largest listed recruitment competitor",
+          "source": {
+            "label": "ManpowerGroup 10-K(2025年度)",
+            "label_en": "ManpowerGroup 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/871763/000119312526064113/man-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "In addition to us, the largest publicly owned companies specializing in recruitment services are The Adecco Group and Randstad."
+          }
+        }
+      ]
+    },
+    {
+      "id": "KELYA",
+      "ticker": "KELYA",
+      "name": "ケリー・サービス",
+      "name_en": "Kelly Services",
+      "sub": "人材派遣",
+      "sub_en": "Staffing",
+      "sub_short": "人材派遣",
+      "sub_short_en": "Staffing",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "マンパワーを最大の競合の一社に挙げる",
+          "text_en": "Names ManpowerGroup among its largest competitors",
+          "source": {
+            "label": "Kelly Services 10-K(2025年度)",
+            "label_en": "Kelly Services 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/55135/000005513526000053/kelya-20251228.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "In 2025, our largest competitors were Randstad, Adecco Group, ManpowerGroup Inc. and Allegis Group."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

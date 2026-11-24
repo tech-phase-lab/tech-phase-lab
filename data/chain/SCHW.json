@@ -1,0 +1,217 @@
+{
+  "root": {
+    "ticker": "SCHW",
+    "name": "チャールズ・シュワブ",
+    "cik": 316709,
+    "name_en": "Charles Schwab"
+  },
+  "rows": [
+    {
+      "ja": "買収・株主・資金調達",
+      "en": "Acquisition, shareholder & funding",
+      "above": true
+    },
+    {
+      "ja": "販売プラットフォームの提携先",
+      "en": "Platform partners"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "SEIC",
+    "SSNC",
+    "BULL"
+  ],
+  "companies": [
+    {
+      "id": "FRGE",
+      "ticker": "FRGE",
+      "name": "フォージ・グローバル",
+      "name_en": "Forge Global",
+      "sub": "未上場株の取引",
+      "sub_en": "Private securities marketplace",
+      "sub_short": "株取引",
+      "sub_short_en": "Shares",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年11月、Schwabに買収される合併契約を締結",
+          "text_en": "Signed a merger agreement in November 2025 to be acquired by Schwab",
+          "source": {
+            "label": "Forge Global 10-Q(2025年11月)",
+            "label_en": "Forge Global 10-Q (2025-11)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1827821/000182782125000032/forge-20250930.htm",
+            "level": "official",
+            "date": "2025-11-13",
+            "quote": "On November 5, 2025, the Company entered into an Agreement and Plan of Merger (the \"Schwab Merger Agreement\")"
+          }
+        }
+      ]
+    },
+    {
+      "id": "TD",
+      "ticker": "TD",
+      "name": "トロント・ドミニオン銀行",
+      "name_en": "Toronto-Dominion Bank",
+      "sub": "銀行(カナダ)",
+      "sub_en": "Bank (Canada)",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Schwab株を保有していたが、2024年8月に4,050万株を売却(預金の取り決めIDAもある)",
+          "text_en": "Held Schwab shares, selling 40.5 million in August 2024; the two also have an insured deposit agreement",
+          "source": {
+            "label": "Toronto-Dominion Bank 年次報告(40-F)(2024年提出)",
+            "label_en": "Toronto-Dominion Bank annual report (40-F) (filed 2024-12)",
+            "url": "https://www.sec.gov/Archives/edgar/data/947263/000156276224000281/ex992.htm",
+            "level": "official",
+            "date": "2024-12-06",
+            "quote": "On August 21, 2024, the Bank sold 40.5 million shares of common stock of The Charles Schwab Corporation (\"Schwab\")"
+          }
+        }
+      ]
+    },
+    {
+      "id": "FHLBD",
+      "ticker": "FHLB Dallas",
+      "name": "ダラス連邦住宅貸付銀行",
+      "name_en": "Federal Home Loan Bank of Dallas",
+      "sub": "住宅金融の公的金融機関",
+      "sub_en": "Government-sponsored lender",
+      "sub_short": "住宅金融",
+      "sub_short_en": "Lender",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Schwabの銀行子会社が最大の借り手(貸付残高の24.2%)",
+          "text_en": "Schwab's bank is its largest borrower, 24.2% of advances",
+          "source": {
+            "label": "Federal Home Loan Bank of Dallas 10-K(2025年提出)",
+            "label_en": "Federal Home Loan Bank of Dallas 10-K (filed 2025-03)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1331757/000133175725000052/fhlbd-20241231.htm",
+            "level": "official",
+            "date": "2025-03-21",
+            "quote": "Advances to the Bank's three largest borrowers (Charles Schwab Bank, SSB, USAA Federal Savings Bank and American General Life Insurance Company) represented 24.2 percent"
+          }
+        }
+      ]
+    },
+    {
+      "id": "WT",
+      "ticker": "WT",
+      "name": "ウィズダムツリー",
+      "name_en": "WisdomTree",
+      "sub": "ETF運用",
+      "sub_en": "ETF sponsor",
+      "sub_short": "ETF運用",
+      "sub_short_en": "ETFs",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "販売を広げる提携先のプラットフォームの一社がCharles Schwab",
+          "text_en": "Charles Schwab is one of the platforms it partners with to reach clients",
+          "source": {
+            "label": "WisdomTree 10-K(2025年提出)",
+            "label_en": "WisdomTree 10-K (filed 2025-02)",
+            "url": "https://www.sec.gov/Archives/edgar/data/880631/000121465925003503/wt-20241231.htm",
+            "level": "official",
+            "date": "2025-02-26",
+            "quote": "deepen partnerships with platforms such as Merrill Lynch, LPL Financial, UBS, Charles Schwab"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SEIC",
+      "ticker": "SEIC",
+      "name": "SEIインベストメンツ",
+      "name_en": "SEI Investments",
+      "sub": "資産運用・事務代行",
+      "sub_en": "Asset management & services",
+      "sub_short": "資産運用",
+      "sub_short_en": "Assets",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "SEIが10-Kで、カストディ業務の主な競合としてCharles Schwabを挙げる",
+          "text_en": "SEI names Charles Schwab among principal competitors focused on custody",
+          "source": {
+            "label": "Sei Investments 10-K(2026年提出)",
+            "label_en": "Sei Investments 10-K (filed 2026-02)",
+            "url": "https://www.sec.gov/Archives/edgar/data/350894/000035089426000013/seic-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "as well as diversified firms that focus on custody operations, such as Charles Schwab & Co., Inc., and Fidelity Investments."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SSNC",
+      "ticker": "SSNC",
+      "name": "SS&Cテクノロジーズ",
+      "name_en": "SS&C Technologies",
+      "sub": "金融ソフトウェア",
+      "sub_en": "Financial software",
+      "sub_short": "金融IT",
+      "sub_short_en": "Finance",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "SS&Cが10-Kで、資産管理プラットフォームの競合(カストディアン)としてCharles Schwabを挙げる",
+          "text_en": "SS&C names Charles Schwab among custodians competing with its wealth platform",
+          "source": {
+            "label": "SS&C Technologies 10-K(2025年提出)",
+            "label_en": "SS&C Technologies 10-K (filed 2025-03)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1402436/000095017025030421/ssnc-20241231.htm",
+            "level": "official",
+            "date": "2025-03-03",
+            "quote": "custodians such as Charles Schwab, Fidelity and Raymond James."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BULL",
+      "ticker": "BULL",
+      "name": "ウィブル",
+      "name_en": "Webull",
+      "sub": "ネット証券",
+      "sub_en": "Online brokerage",
+      "sub_short": "証券",
+      "sub_short_en": "Broker",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Webullが年次報告で、主な競合の伝統的な証券会社としてCharles Schwabを挙げる",
+          "text_en": "Webull names Charles Schwab among traditional brokerages it competes with",
+          "source": {
+            "label": "Webull 年次報告(20-F)(2026年提出)",
+            "label_en": "Webull annual report (20-F) (filed 2026-04)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1866364/000121390026041653/ea0283691-20f_webull.htm",
+            "level": "official",
+            "date": "2026-04-09",
+            "quote": "as well as more traditional and hybrid brokerage companies such as Fidelity, Charles Schwab and E-Trade."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

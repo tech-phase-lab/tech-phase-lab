@@ -1,0 +1,235 @@
+{
+  "root": {
+    "ticker": "GIII",
+    "name": "G-IIIアパレル・グループ",
+    "cik": 821002,
+    "name_en": "G-III Apparel Group"
+  },
+  "rows": [
+    {
+      "ja": "ブランドのライセンス元",
+      "en": "Brand licensors",
+      "above": true
+    },
+    {
+      "ja": "主要顧客・販売先",
+      "en": "Major customers & retail partners"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "PVH",
+      "ticker": "PVH",
+      "name": "PVH",
+      "name_en": "PVH",
+      "sub": "アパレル",
+      "sub_en": "Apparel",
+      "sub_short": "アパレル",
+      "sub_short_en": "Apparel",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Calvin Klein・Tommy Hilfigerのライセンス元。2022年11月に大半の契約を延長",
+          "text_en": "Licensor of Calvin Klein and Tommy Hilfiger; extended most licenses in November 2022",
+          "source": {
+            "label": "PVH 10-K(2025年2月期)",
+            "label_en": "PVH 10-K (FY ended Feb 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/78239/000007823925000018/pvh-20250202.htm",
+            "level": "official",
+            "date": "2025-04-01",
+            "quote": "We extended in November 2022 most of our licensing agreements with G-III Apparel Group, Ltd."
+          }
+        }
+      ]
+    },
+    {
+      "id": "XELB",
+      "ticker": "XELB",
+      "name": "エクセル・ブランズ",
+      "name_en": "Xcel Brands",
+      "sub": "ブランド管理",
+      "sub_en": "Brand management",
+      "sub_short": "ブランド",
+      "sub_short_en": "Brands",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Halstonブランドの長期マスターライセンス元",
+          "text_en": "Licensor of the Halston brand under a long-term master license",
+          "source": {
+            "label": "Xcel Brands 10-K(2024年度)",
+            "label_en": "Xcel Brands 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1083220/000155837025008172/xelb-20241231x10k.htm",
+            "level": "official",
+            "date": "2025-05-28",
+            "quote": "through our long-term master license agreement with G-III Apparel Group."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LEVI",
+      "ticker": "LEVI",
+      "name": "リーバイ・ストラウス",
+      "name_en": "Levi Strauss",
+      "sub": "アパレル",
+      "sub_en": "Apparel",
+      "sub_short": "消費者",
+      "sub_short_en": "Consumer",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Levi'sブランドのライセンス元",
+          "text_en": "Licensor of the Levi's brand",
+          "source": {
+            "label": "G-III Apparel 10-K(2026年1月期)",
+            "label_en": "G-III Apparel 10-K (FY ended Jan 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/821002/000110465926033891/giii-20260131x10k.htm",
+            "level": "official",
+            "date": "2026-03-24",
+            "quote": "Licensed brands include Calvin Klein, Tommy Hilfiger, Levi's, Nautica, Halston, Champion, Converse, BCBG, French Connection, Starter and major national sports leagues, among others."
+          }
+        }
+      ]
+    },
+    {
+      "id": "M",
+      "ticker": "M",
+      "name": "メイシーズ",
+      "name_en": "Macy's",
+      "sub": "百貨店",
+      "sub_en": "Department stores",
+      "sub_short": "百貨店",
+      "sub_short_en": "Stores",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大の顧客(売上の20.6%、2026年1月期)",
+          "text_en": "Largest customer (20.6% of net sales, FY ended Jan 2026)",
+          "source": {
+            "label": "G-III Apparel 10-K(2026年1月期)",
+            "label_en": "G-III Apparel 10-K (FY ended Jan 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/821002/000110465926033891/giii-20260131x10k.htm",
+            "level": "official",
+            "date": "2026-03-24",
+            "quote": "Sales to Macy's, which includes sales to its Macy's and Bloomingdale's store chains, as well as through macys.com, accounted for an aggregate of 20.6% of our net sales in fiscal 2026."
+          }
+        }
+      ]
+    },
+    {
+      "id": "KSS",
+      "ticker": "KSS",
+      "name": "コールズ",
+      "name_en": "Kohl's",
+      "sub": "百貨店",
+      "sub_en": "Department stores",
+      "sub_short": "百貨店",
+      "sub_short_en": "Stores",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "プライベートブランド商品を共同開発する販売先",
+          "text_en": "Retail partner for private-label collections",
+          "source": {
+            "label": "G-III Apparel 10-K(2026年1月期)",
+            "label_en": "G-III Apparel 10-K (FY ended Jan 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/821002/000110465926033891/giii-20260131x10k.htm",
+            "level": "official",
+            "date": "2026-03-24",
+            "quote": "We also partner with a diversified group of retailers such as Macy's, Harley-Davidson, Costco, Kohl's and Ross Stores to develop private-label collections."
+          }
+        }
+      ]
+    },
+    {
+      "id": "COST",
+      "ticker": "COST",
+      "name": "コストコ",
+      "name_en": "Costco",
+      "sub": "会員制倉庫店",
+      "sub_en": "Warehouse clubs",
+      "sub_short": "量販店",
+      "sub_short_en": "Clubs",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "プライベートブランド商品を共同開発する販売先",
+          "text_en": "Retail partner for private-label collections",
+          "source": {
+            "label": "G-III Apparel 10-K(2026年1月期)",
+            "label_en": "G-III Apparel 10-K (FY ended Jan 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/821002/000110465926033891/giii-20260131x10k.htm",
+            "level": "official",
+            "date": "2026-03-24",
+            "quote": "We also partner with a diversified group of retailers such as Macy's, Harley-Davidson, Costco, Kohl's and Ross Stores to develop private-label collections."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ROST",
+      "ticker": "ROST",
+      "name": "ロス・ストアーズ",
+      "name_en": "Ross Stores",
+      "sub": "オフプライス小売",
+      "sub_en": "Off-price retail",
+      "sub_short": "格安小売",
+      "sub_short_en": "Off-price",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "プライベートブランド商品を共同開発する販売先",
+          "text_en": "Retail partner for private-label collections",
+          "source": {
+            "label": "G-III Apparel 10-K(2026年1月期)",
+            "label_en": "G-III Apparel 10-K (FY ended Jan 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/821002/000110465926033891/giii-20260131x10k.htm",
+            "level": "official",
+            "date": "2026-03-24",
+            "quote": "We also partner with a diversified group of retailers such as Macy's, Harley-Davidson, Costco, Kohl's and Ross Stores to develop private-label collections."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HOG",
+      "ticker": "HOG",
+      "name": "ハーレーダビッドソン",
+      "name_en": "Harley-Davidson",
+      "sub": "二輪車",
+      "sub_en": "Motorcycles",
+      "sub_short": "二輪車",
+      "sub_short_en": "Bikes",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "プライベートブランド商品を共同開発する販売先",
+          "text_en": "Retail partner for private-label collections",
+          "source": {
+            "label": "G-III Apparel 10-K(2026年1月期)",
+            "label_en": "G-III Apparel 10-K (FY ended Jan 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/821002/000110465926033891/giii-20260131x10k.htm",
+            "level": "official",
+            "date": "2026-03-24",
+            "quote": "We also partner with a diversified group of retailers such as Macy's, Harley-Davidson, Costco, Kohl's and Ross Stores to develop private-label collections."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

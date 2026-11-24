@@ -27,6 +27,8 @@
       "name": "アプライド マテリアルズ",
       "sub": "半導体製造装置",
       "sub_en": "Semiconductor equipment",
+      "sub_short": "製造装置",
+      "sub_short_en": "Chip tools",
       "row": 0,
       "relations": [
         {
@@ -64,6 +66,8 @@
       "name": "ラムリサーチ",
       "sub": "半導体製造装置",
       "sub_en": "Semiconductor equipment",
+      "sub_short": "製造装置",
+      "sub_short_en": "Chip tools",
       "row": 0,
       "relations": [
         {
@@ -101,6 +105,8 @@
       "name": "ASML",
       "sub": "半導体製造装置",
       "sub_en": "Semiconductor equipment",
+      "sub_short": "製造装置",
+      "sub_short_en": "Chip tools",
       "row": 0,
       "relations": [
         {
@@ -126,6 +132,8 @@
       "name": "アイコー・ホールディングス",
       "sub": "流体供給サブシステム",
       "sub_en": "Fluid delivery subsystems",
+      "sub_short": "流体機器",
+      "sub_short_en": "Pumps",
       "row": 1,
       "relations": [
         {
@@ -163,6 +171,8 @@
       "name": "ジェイビル",
       "sub": "電子機器受託製造",
       "sub_en": "Electronics manufacturing services",
+      "sub_short": "EMS",
+      "sub_short_en": "EMS",
       "row": 1,
       "relations": [
         {
@@ -187,6 +197,8 @@
       "name": "セレスティカ",
       "sub": "電子機器受託製造",
       "sub_en": "Electronics manufacturing services",
+      "sub_short": "EMS",
+      "sub_short_en": "EMS",
       "row": 1,
       "relations": [
         {
@@ -211,6 +223,8 @@
       "name": "ベンチマーク・エレクトロニクス",
       "sub": "電子機器受託製造",
       "sub_en": "Electronics manufacturing services",
+      "sub_short": "EMS",
+      "sub_short_en": "EMS",
       "row": 1,
       "relations": [
         {

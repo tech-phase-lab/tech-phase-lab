@@ -29,6 +29,8 @@
       "name_en": "Royal Gold (formerly Sandstorm)",
       "sub": "ストリーム・ロイヤルティ",
       "sub_en": "Streams & royalties",
+      "sub_short": "権益",
+      "sub_short_en": "Streams",
       "row": 0,
       "relations": [
         {
@@ -53,6 +55,8 @@
       "name_en": "Triple Flag Precious Metals",
       "sub": "ストリーム・ロイヤルティ",
       "sub_en": "Streams & royalties",
+      "sub_short": "権益",
+      "sub_short_en": "Streams",
       "row": 0,
       "relations": [
         {
@@ -77,6 +81,8 @@
       "name_en": "MAG Silver",
       "sub": "銀鉱山",
       "sub_en": "Silver mining",
+      "sub_short": "銀鉱山",
+      "sub_short_en": "Silver",
       "row": 1,
       "relations": [
         {
@@ -101,6 +107,8 @@
       "name_en": "Fresnillo",
       "sub": "銀鉱山(メキシコ)",
       "sub_en": "Silver mining (Mexico)",
+      "sub_short": "銀鉱山",
+      "sub_short_en": "Silver",
       "row": 1,
       "relations": [
         {
@@ -125,6 +133,8 @@
       "name_en": "Tahoe Resources",
       "sub": "銀・金鉱山",
       "sub_en": "Silver & gold mining",
+      "sub_short": "銀鉱山",
+      "sub_short_en": "Silver",
       "row": 1,
       "relations": [
         {
@@ -149,6 +159,8 @@
       "name_en": "Yamana Gold",
       "sub": "金鉱山",
       "sub_en": "Gold mining",
+      "sub_short": "金鉱山",
+      "sub_short_en": "Gold",
       "row": 1,
       "relations": [
         {
@@ -173,6 +185,8 @@
       "name_en": "Agnico Eagle Mines",
       "sub": "金鉱山",
       "sub_en": "Gold mining",
+      "sub_short": "金鉱山",
+      "sub_short_en": "Gold",
       "row": 2,
       "relations": [
         {
@@ -197,6 +211,8 @@
       "name_en": "Gold Fields",
       "sub": "金鉱山",
       "sub_en": "Gold mining",
+      "sub_short": "金鉱山",
+      "sub_short_en": "Gold",
       "row": 2,
       "relations": [
         {
@@ -221,6 +237,8 @@
       "name_en": "Glencore",
       "sub": "資源・商社",
       "sub_en": "Mining & trading",
+      "sub_short": "資源",
+      "sub_short_en": "Mining",
       "row": 2,
       "relations": [
         {

@@ -31,6 +31,8 @@
       "name_en": "AT&T",
       "sub": "通信",
       "sub_en": "Telecom",
+      "sub_short": "通信",
+      "sub_short_en": "Telecom",
       "row": 0,
       "relations": [
         {
@@ -55,6 +57,8 @@
       "name_en": "Verizon",
       "sub": "通信",
       "sub_en": "Telecom",
+      "sub_short": "通信",
+      "sub_short_en": "Telecom",
       "row": 0,
       "relations": [
         {
@@ -79,6 +83,8 @@
       "name_en": "Lumen Technologies",
       "sub": "通信",
       "sub_en": "Telecom",
+      "sub_short": "通信",
+      "sub_short_en": "Telecom",
       "row": 0,
       "relations": [
         {
@@ -103,6 +109,8 @@
       "name_en": "Comcast",
       "sub": "ケーブル・メディア",
       "sub_en": "Cable & media",
+      "sub_short": "ケーブル",
+      "sub_short_en": "Cable",
       "row": 0,
       "relations": [
         {
@@ -127,6 +135,8 @@
       "name_en": "Power Solutions",
       "sub": "データセンター電気工事",
       "sub_en": "Data center electrical",
+      "sub_short": "DC工事",
+      "sub_short_en": "Electrical",
       "row": 1,
       "relations": [
         {
@@ -151,6 +161,8 @@
       "name_en": "Bigham Cable Construction",
       "sub": "通信工事",
       "sub_en": "Telecom construction",
+      "sub_short": "通信工事",
+      "sub_short_en": "Telecom",
       "row": 1,
       "relations": [
         {
@@ -175,6 +187,8 @@
       "name_en": "Primoris Services",
       "sub": "インフラ工事",
       "sub_en": "Infrastructure contractor",
+      "sub_short": "インフラ",
+      "sub_short_en": "Infra",
       "row": 2,
       "relations": [
         {
@@ -199,6 +213,8 @@
       "name_en": "Everus Construction",
       "sub": "電気・機械工事",
       "sub_en": "Electrical & mechanical contractor",
+      "sub_short": "電気工事",
+      "sub_short_en": "Electrical",
       "row": 2,
       "relations": [
         {

@@ -33,6 +33,8 @@
       "name": "NVIDIA",
       "sub": "AI半導体",
       "sub_en": "AI chips",
+      "sub_short": "AI半導体",
+      "sub_short_en": "AI chips",
       "row": 0,
       "relations": [
         {
@@ -56,6 +58,8 @@
       "name": "Wells Fargo",
       "sub": "銀行",
       "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
       "row": 1,
       "relations": [
         {
@@ -94,6 +98,8 @@
       "name": "モノリシック・パワー・システムズ",
       "sub": "電源IC",
       "sub_en": "Power ICs",
+      "sub_short": "電源IC",
+      "sub_short_en": "Power ICs",
       "row": 2,
       "relations": [
         {
@@ -118,6 +124,8 @@
       "name": "ナビタス・セミコンダクター",
       "sub": "GaN電源IC",
       "sub_en": "GaN power ICs",
+      "sub_short": "GaN",
+      "sub_short_en": "GaN",
       "row": 2,
       "relations": [
         {
@@ -155,6 +163,8 @@
       "name": "STマイクロエレクトロニクス",
       "sub": "半導体",
       "sub_en": "Semiconductors",
+      "sub_short": "半導体",
+      "sub_short_en": "Chips",
       "row": 2,
       "relations": [
         {
@@ -192,6 +202,8 @@
       "name": "テキサス・インスツルメンツ",
       "sub": "アナログ半導体",
       "sub_en": "Analog chips",
+      "sub_short": "アナログ",
+      "sub_short_en": "Analog",
       "row": 2,
       "relations": [
         {
@@ -216,6 +228,8 @@
       "name": "三菱電機",
       "sub": "電機",
       "sub_en": "Electric equipment",
+      "sub_short": "電機",
+      "sub_short_en": "Electrical",
       "row": 2,
       "relations": [
         {

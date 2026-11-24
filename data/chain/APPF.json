@@ -24,6 +24,8 @@
       "name": "Amazon Web Services",
       "sub": "クラウド",
       "sub_en": "Cloud",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 0,
       "relations": [
         {
@@ -60,6 +62,8 @@
       "name": "Anthropic",
       "sub": "生成AI",
       "sub_en": "Generative AI",
+      "sub_short": "生成AI",
+      "sub_short_en": "AI",
       "row": 1,
       "relations": [
         {
@@ -100,6 +104,8 @@
       "name": "ジロー・グループ",
       "sub": "不動産ポータル",
       "sub_en": "Real estate portal",
+      "sub_short": "不動産",
+      "sub_short_en": "Property",
       "row": 1,
       "relations": [
         {

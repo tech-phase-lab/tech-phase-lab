@@ -1,0 +1,191 @@
+{
+  "root": {
+    "ticker": "WGO",
+    "name": "ウィネベーゴ・インダストリーズ",
+    "cik": 107687,
+    "name_en": "Winnebago Industries"
+  },
+  "rows": [
+    {
+      "ja": "部品の供給元(相手の資料に記載)",
+      "en": "Component suppliers (named in their filings)",
+      "above": true
+    },
+    {
+      "ja": "販売店",
+      "en": "Dealers"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "THO",
+    "REVG",
+    "FOXF"
+  ],
+  "companies": [
+    {
+      "id": "LCII",
+      "ticker": "LCII",
+      "name": "LCIインダストリーズ",
+      "name_en": "LCI Industries",
+      "sub": "RV・船舶向け部品",
+      "sub_en": "RV & marine components",
+      "sub_short": "RV部品",
+      "sub_short_en": "RV parts",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "RVメーカー向け部品の主要顧客の一社がWinnebago",
+          "text_en": "Winnebago is one of its major RV OEM customers",
+          "source": {
+            "label": "LCI Industries 10-K(2025年度)",
+            "label_en": "LCI Industries 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/763744/000076374426000011/lcii-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Major customers include Thor Industries, Inc. (symbol: THO), Forest River, Inc. (a Berkshire Hathaway company, symbol: BRKA), and Winnebago Industries (symbol: WGO)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PATK",
+      "ticker": "PATK",
+      "name": "パトリック・インダストリーズ",
+      "name_en": "Patrick Industries",
+      "sub": "RV・住宅向け部品",
+      "sub_en": "RV & housing components",
+      "sub_short": "RV部品",
+      "sub_short_en": "RV parts",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "部品を納めるRV市場はThor・Forest River・Winnebagoに集中していると記載",
+          "text_en": "Notes the RV market it supplies is concentrated among Thor, Forest River and Winnebago",
+          "source": {
+            "label": "Patrick Industries 10-K(2025年度)",
+            "label_en": "Patrick Industries 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/76605/000007660526000013/patk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "The RV market is largely concentrated among Thor Industries, Inc. (\"Thor\"), Forest River, Inc. (\"Forest River\") and Winnebago Industries, Inc. (\"Winnebago\")"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GORV",
+      "ticker": "GORV",
+      "name": "レイジーデイズ",
+      "name_en": "Lazydays",
+      "sub": "RV販売店",
+      "sub_en": "RV dealerships",
+      "sub_short": "RV販売店",
+      "sub_short_en": "RVs",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "主要な仕入メーカーで、2024年の仕入れの26%",
+          "text_en": "A significant manufacturer, 26% of its 2024 purchases",
+          "source": {
+            "label": "Lazydays 10-K(2025年提出)",
+            "label_en": "Lazydays 10-K (filed 2025-03)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1721741/000162828025015640/gorv-20241231.htm",
+            "level": "official",
+            "date": "2025-03-31",
+            "quote": "Significant manufacturers were as follows: Year Ended December 31, 2024 2023 Thor Industries 51 % 41 % Winnebago Industries 26 % 32 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "THO",
+      "ticker": "THO",
+      "name": "トール・インダストリーズ",
+      "name_en": "Thor Industries",
+      "sub": "RV",
+      "sub_en": "RVs",
+      "sub_short": "RV",
+      "sub_short_en": "RVs",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Thorが10-Kで、RVの主な競合としてWinnebagoを挙げる",
+          "text_en": "Thor names Winnebago among its primary RV competitors",
+          "source": {
+            "label": "Thor Industries 10-K(2024年提出)",
+            "label_en": "Thor Industries 10-K (filed 2024-09)",
+            "url": "https://www.sec.gov/Archives/edgar/data/730263/000073026324000010/tho-20240731.htm",
+            "level": "official",
+            "date": "2024-09-24",
+            "quote": "Our primary RV competitors within the North American Towable and North American Motorized segments are Forest River, Inc. and Winnebago Industries, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "REVG",
+      "ticker": "REVG",
+      "name": "REVグループ",
+      "name_en": "REV Group",
+      "sub": "特殊車両・RV",
+      "sub_en": "Specialty vehicles & RVs",
+      "sub_short": "特殊車両",
+      "sub_short_en": "Vehicles",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "REV Groupが10-Kで、RV事業の競合としてWinnebagoを挙げる",
+          "text_en": "REV Group names Winnebago among competitors in its RV segment",
+          "source": {
+            "label": "REV Group 10-K(2024年提出)",
+            "label_en": "REV Group 10-K (filed 2024-12)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1687221/000095017024135208/revg-20241031.htm",
+            "level": "official",
+            "date": "2024-12-11",
+            "quote": "In the Recreational Vehicles segment, our competition includes Thor Industries, Inc., Winnebago Industries, Inc., and Forest River Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FOXF",
+      "ticker": "FOXF",
+      "name": "フォックス・ファクトリー",
+      "name_en": "Fox Factory",
+      "sub": "サスペンション・車両改造",
+      "sub_en": "Suspension & upfitting",
+      "sub_short": "足回り",
+      "sub_short_en": "Chassis",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Fox Factoryが10-Kで、架装車両市場の競合としてWinnebagoを挙げる",
+          "text_en": "Fox Factory names Winnebago among competitors in upfitted vehicles",
+          "source": {
+            "label": "Fox Factory Holding 10-K(2026年提出)",
+            "label_en": "Fox Factory Holding 10-K (filed 2026-02)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1424929/000142492926000012/foxf-20260102.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "DSI Custom Vehicles, Storyteller Overland, Remote Vans, Winnebago, Airstream"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

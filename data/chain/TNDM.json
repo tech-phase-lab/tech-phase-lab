@@ -1,0 +1,242 @@
+{
+  "root": {
+    "ticker": "TNDM",
+    "name": "タンデム・ダイアビーティス・ケア",
+    "cik": 1438133,
+    "name_en": "Tandem Diabetes Care"
+  },
+  "rows": [
+    {
+      "ja": "技術提携(血糖センサー)",
+      "en": "Technology partners (glucose sensors)"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in its 10-K)"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "PODD",
+    "MDT",
+    "BBNX"
+  ],
+  "companies": [
+    {
+      "id": "ABT",
+      "ticker": "ABT",
+      "name": "アボット",
+      "name_en": "Abbott",
+      "sub": "医療機器・医薬",
+      "sub_en": "Medical devices & pharma",
+      "sub_short": "血糖測定",
+      "sub_short_en": "CGM",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "血糖センサーFreeStyle Libreとの連携製品を共同開発・販売",
+          "text_en": "Develops and sells integrated systems with its FreeStyle Libre glucose sensors",
+          "source": {
+            "label": "Tandem Diabetes Care 10-K(2025年度)",
+            "label_en": "Tandem Diabetes Care 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1438133/000143813326000010/tndm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "We have also entered into agreements with Abbott to develop and commercialize integrated diabetes solutions using Abbott's glucose sensors."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DXCM",
+      "ticker": "DXCM",
+      "name": "デクスコム",
+      "name_en": "Dexcom",
+      "sub": "血糖モニター",
+      "sub_en": "Glucose monitors",
+      "sub_short": "血糖測定",
+      "sub_short_en": "CGM",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Dexcomの血糖センサー(G7まで)との連携で協業",
+          "text_en": "Collaborates to integrate Dexcom CGMs (through G7)",
+          "source": {
+            "label": "Tandem Diabetes Care 10-K(2025年度)",
+            "label_en": "Tandem Diabetes Care 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1438133/000143813326000010/tndm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Our current agreements with Dexcom do not grant us rights to integrate future generations of Dexcom CGM technology, beyond G7 CGM devices"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BBNX",
+      "ticker": "BBNX",
+      "name": "ベータ・バイオニクス",
+      "name_en": "Beta Bionics",
+      "sub": "インスリンポンプ",
+      "sub_en": "Insulin pumps",
+      "sub_short": "糖尿病",
+      "sub_short_en": "Insulin",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合",
+          "text_en": "A primary competitor",
+          "source": {
+            "label": "Tandem Diabetes Care 10-K(2025年度)",
+            "label_en": "Tandem Diabetes Care 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1438133/000143813326000010/tndm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Our primary competitors are major medical device companies, primarily Beta Bionics, Insulet, Medtronic, mylife (formerly Ypsomed) and Sequel."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PODD",
+      "ticker": "PODD",
+      "name": "インスレット",
+      "name_en": "Insulet",
+      "sub": "インスリンポンプ",
+      "sub_en": "Insulin pumps",
+      "sub_short": "糖尿病",
+      "sub_short_en": "Insulin",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合",
+          "text_en": "A primary competitor",
+          "source": {
+            "label": "Tandem Diabetes Care 10-K(2025年度)",
+            "label_en": "Tandem Diabetes Care 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1438133/000143813326000010/tndm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Our primary competitors are major medical device companies, primarily Beta Bionics, Insulet, Medtronic, mylife (formerly Ypsomed) and Sequel."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MDT",
+      "ticker": "MDT",
+      "name": "メドトロニック",
+      "name_en": "Medtronic",
+      "sub": "医療機器",
+      "sub_en": "Medical devices",
+      "sub_short": "糖尿病",
+      "sub_short_en": "Insulin",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合",
+          "text_en": "A primary competitor",
+          "source": {
+            "label": "Tandem Diabetes Care 10-K(2025年度)",
+            "label_en": "Tandem Diabetes Care 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1438133/000143813326000010/tndm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Our primary competitors are major medical device companies, primarily Beta Bionics, Insulet, Medtronic, mylife (formerly Ypsomed) and Sequel."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Ypsomed",
+      "ticker": "mylife",
+      "name": "マイライフ(旧イプソメド)",
+      "name_en": "mylife (formerly Ypsomed)",
+      "sub": "インスリンポンプ",
+      "sub_en": "Insulin pumps",
+      "sub_short": "糖尿病",
+      "sub_short_en": "Insulin",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合",
+          "text_en": "A primary competitor",
+          "source": {
+            "label": "Tandem Diabetes Care 10-K(2025年度)",
+            "label_en": "Tandem Diabetes Care 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1438133/000143813326000010/tndm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Our primary competitors are major medical device companies, primarily Beta Bionics, Insulet, Medtronic, mylife (formerly Ypsomed) and Sequel."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Sequel",
+      "ticker": "Sequel",
+      "name": "シークエル",
+      "name_en": "Sequel",
+      "sub": "インスリンポンプ",
+      "sub_en": "Insulin pumps",
+      "sub_short": "糖尿病",
+      "sub_short_en": "Insulin",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合",
+          "text_en": "A primary competitor",
+          "source": {
+            "label": "Tandem Diabetes Care 10-K(2025年度)",
+            "label_en": "Tandem Diabetes Care 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1438133/000143813326000010/tndm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Our primary competitors are major medical device companies, primarily Beta Bionics, Insulet, Medtronic, mylife (formerly Ypsomed) and Sequel."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MODD",
+      "ticker": "MODD",
+      "name": "モジュラー・メディカル",
+      "name_en": "Modular Medical",
+      "sub": "インスリンポンプ",
+      "sub_en": "Insulin pumps",
+      "sub_short": "糖尿病",
+      "sub_short_en": "Insulin",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Modular Medicalが10-Kで、大手の競合として挙げる",
+          "text_en": "Modular Medical names Tandem among large competitors",
+          "source": {
+            "label": "Modular Medical 10-K(2025年3月期)",
+            "label_en": "Modular Medical 10-K (FY ended Mar 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1074871/000121390025055793/ea0244006-10k_modular.htm",
+            "level": "official",
+            "date": "2025-06-20",
+            "quote": "We expect to compete against large medical device companies, such as Medtronic, Inc., Tandem Diabetes Care, Inc. and Insulet Corporation"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

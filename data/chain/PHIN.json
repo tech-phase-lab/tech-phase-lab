@@ -1,0 +1,216 @@
+{
+  "root": {
+    "ticker": "PHIN",
+    "name": "フィニア",
+    "cik": 1968915,
+    "name_en": "PHINIA"
+  },
+  "rows": [
+    {
+      "ja": "最大の顧客",
+      "en": "Largest customer"
+    },
+    {
+      "ja": "分離元",
+      "en": "Former parent"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in its 10-K)"
+    }
+  ],
+  "rivals": [
+    "CMI",
+    "DORM",
+    "DNZOY"
+  ],
+  "companies": [
+    {
+      "id": "GM",
+      "ticker": "GM",
+      "name": "ゼネラル・モーターズ",
+      "name_en": "General Motors",
+      "sub": "自動車",
+      "sub_en": "Automaker",
+      "sub_short": "自動車",
+      "sub_short_en": "Cars",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大の顧客(売上の18%)",
+          "text_en": "Largest customer (18% of net sales)",
+          "source": {
+            "label": "PHINIA 10-K(2025年度)",
+            "label_en": "PHINIA 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1968915/000196891526000023/phin-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "our top five customers accounted for approximately 37% of our net sales, with General Motors Company representing 18%."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BWA",
+      "ticker": "BWA",
+      "name": "ボルグワーナー",
+      "name_en": "BorgWarner",
+      "sub": "自動車部品",
+      "sub_en": "Auto parts",
+      "sub_short": "車部品",
+      "sub_short_en": "Car parts",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "旧親会社BorgWarnerとの訴訟を7,800万ドルの支払いで和解(2025年10月)",
+          "text_en": "Settled a lawsuit with former parent BorgWarner by paying $78 million (October 2025)",
+          "source": {
+            "label": "BorgWarner 10-K(2025年度)",
+            "label_en": "BorgWarner 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/908255/000090825526000011/bwa-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "On October 15, 2025, the Company entered into a settlement agreement (the \"Settlement Agreement\") with PHINIA, pursuant to which PHINIA agreed to pay the Company $78 million"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Bosch",
+      "ticker": "Bosch",
+      "name": "ボッシュ",
+      "name_en": "Robert Bosch",
+      "sub": "自動車部品(ドイツ)",
+      "sub_en": "Auto parts (Germany)",
+      "sub_short": "車部品",
+      "sub_short_en": "Car parts",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合",
+          "text_en": "A major competitor",
+          "source": {
+            "label": "PHINIA 10-K(2025年度)",
+            "label_en": "PHINIA 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1968915/000196891526000023/phin-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Our major competitors are Robert Bosch GmbH, Cummins Inc., Denso Corporation, Dorman Products, Inc., Hitachi Astemo, Ltd., Hyundai KEFICO, Marelli, Valeo, Schaeffler Group"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CMI",
+      "ticker": "CMI",
+      "name": "カミンズ",
+      "name_en": "Cummins",
+      "sub": "エンジン",
+      "sub_en": "Engines",
+      "sub_short": "エンジン",
+      "sub_short_en": "Engines",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合",
+          "text_en": "A major competitor",
+          "source": {
+            "label": "PHINIA 10-K(2025年度)",
+            "label_en": "PHINIA 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1968915/000196891526000023/phin-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Our major competitors are Robert Bosch GmbH, Cummins Inc., Denso Corporation, Dorman Products, Inc., Hitachi Astemo, Ltd., Hyundai KEFICO, Marelli, Valeo, Schaeffler Group"
+          }
+        }
+      ]
+    },
+    {
+      "id": "DNZOY",
+      "ticker": "6902",
+      "name": "デンソー",
+      "name_en": "Denso",
+      "sub": "自動車部品",
+      "sub_en": "Auto parts",
+      "sub_short": "車部品",
+      "sub_short_en": "Car parts",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合",
+          "text_en": "A major competitor",
+          "source": {
+            "label": "PHINIA 10-K(2025年度)",
+            "label_en": "PHINIA 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1968915/000196891526000023/phin-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Our major competitors are Robert Bosch GmbH, Cummins Inc., Denso Corporation, Dorman Products, Inc., Hitachi Astemo, Ltd., Hyundai KEFICO, Marelli, Valeo, Schaeffler Group"
+          }
+        }
+      ]
+    },
+    {
+      "id": "DORM",
+      "ticker": "DORM",
+      "name": "ドーマン・プロダクツ",
+      "name_en": "Dorman Products",
+      "sub": "補修部品",
+      "sub_en": "Aftermarket parts",
+      "sub_short": "補修部品",
+      "sub_short_en": "Parts",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合",
+          "text_en": "A major competitor",
+          "source": {
+            "label": "PHINIA 10-K(2025年度)",
+            "label_en": "PHINIA 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1968915/000196891526000023/phin-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Our major competitors are Robert Bosch GmbH, Cummins Inc., Denso Corporation, Dorman Products, Inc., Hitachi Astemo, Ltd., Hyundai KEFICO, Marelli, Valeo, Schaeffler Group"
+          }
+        }
+      ]
+    },
+    {
+      "id": "VLEEY",
+      "ticker": "Valeo",
+      "name": "ヴァレオ",
+      "name_en": "Valeo",
+      "sub": "自動車部品(フランス)",
+      "sub_en": "Auto parts (France)",
+      "sub_short": "車部品",
+      "sub_short_en": "Car parts",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合",
+          "text_en": "A major competitor",
+          "source": {
+            "label": "PHINIA 10-K(2025年度)",
+            "label_en": "PHINIA 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1968915/000196891526000023/phin-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Our major competitors are Robert Bosch GmbH, Cummins Inc., Denso Corporation, Dorman Products, Inc., Hitachi Astemo, Ltd., Hyundai KEFICO, Marelli, Valeo, Schaeffler Group"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

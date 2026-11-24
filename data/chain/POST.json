@@ -1,0 +1,164 @@
+{
+  "root": {
+    "ticker": "POST",
+    "name": "ポスト・ホールディングス",
+    "cik": 1530950,
+    "name_en": "Post Holdings"
+  },
+  "rows": [
+    {
+      "ja": "分離した会社",
+      "en": "Spin-off",
+      "above": true
+    },
+    {
+      "ja": "業務用食品の販売先",
+      "en": "Foodservice customers"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "HLF",
+    "NGTF"
+  ],
+  "companies": [
+    {
+      "id": "BRBR",
+      "ticker": "BRBR",
+      "name": "ベルリング・ブランズ",
+      "name_en": "BellRing Brands",
+      "sub": "プロテイン飲料",
+      "sub_en": "Protein shakes",
+      "sub_short": "飲料",
+      "sub_short_en": "Drinks",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Postから分離・独立(Postが株式を株主に分配)し、関係は継続",
+          "text_en": "Spun off from Post, which distributed BellRing shares to its shareholders",
+          "source": {
+            "label": "Bellring Brands 10-K(2024年提出)",
+            "label_en": "Bellring Brands 10-K (filed 2024-11)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1772016/000177201624000108/brbr-20240930.htm",
+            "level": "official",
+            "date": "2024-11-19",
+            "quote": "risks related to our ongoing relationship with Post Holdings, Inc. (\"Post\") following our separation from Post"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SYY",
+      "ticker": "SYY",
+      "name": "シスコ(食品卸)",
+      "name_en": "Sysco",
+      "sub": "業務用食品卸",
+      "sub_en": "Foodservice distribution",
+      "sub_short": "食品卸",
+      "sub_short_en": "Food",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "業務用食品事業の最大顧客がSyscoとUS Foods(2社で同事業売上の41.2%)",
+          "text_en": "Sysco and US Foods are the largest foodservice customers, 41.2% of the segment's sales",
+          "source": {
+            "label": "Post 10-K(2024年提出)",
+            "label_en": "Post 10-K (filed 2024-11)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1530950/000153095024000365/post-20240930.htm",
+            "level": "official",
+            "date": "2024-11-15",
+            "quote": "The largest customers of our Foodservice segment, Sysco and US Foods, accounted for 41.2% of the segment's net sales in fiscal 2024."
+          }
+        }
+      ]
+    },
+    {
+      "id": "USFD",
+      "ticker": "USFD",
+      "name": "USフーズ",
+      "name_en": "US Foods",
+      "sub": "業務用食品卸",
+      "sub_en": "Foodservice distribution",
+      "sub_short": "食品卸",
+      "sub_short_en": "Food",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "業務用食品事業の最大顧客の一社",
+          "text_en": "One of the two largest customers of its foodservice segment",
+          "source": {
+            "label": "Post 10-K(2024年提出)",
+            "label_en": "Post 10-K (filed 2024-11)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1530950/000153095024000365/post-20240930.htm",
+            "level": "official",
+            "date": "2024-11-15",
+            "quote": "The largest customers of our Foodservice segment, Sysco and US Foods, accounted for 41.2% of the segment's net sales in fiscal 2024."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HLF",
+      "ticker": "HLF",
+      "name": "ハーバライフ",
+      "name_en": "Herbalife",
+      "sub": "栄養食品",
+      "sub_en": "Nutrition products",
+      "sub_short": "栄養食品",
+      "sub_short_en": "Nutrition",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Herbalifeが10-Kで、競合の一社としてPost Holdingsを挙げる",
+          "text_en": "Herbalife names Post Holdings among its competitors",
+          "source": {
+            "label": "Herbalife 10-K(2025年提出)",
+            "label_en": "Herbalife 10-K (filed 2025-02)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1180262/000095017025023207/hlf-20241231.htm",
+            "level": "official",
+            "date": "2025-02-19",
+            "quote": "Our competitors include companies such as BellRing Brands, Inc., Conagra Brands, Inc., The Hain Celestial Group, Inc., Post Holdings, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NGTF",
+      "ticker": "NGTF",
+      "name": "ナイトフード",
+      "name_en": "NightFood",
+      "sub": "スナック食品",
+      "sub_en": "Snack foods",
+      "sub_short": "菓子",
+      "sub_short_en": "Snacks",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "NightFoodが10-Kで、競合の一社としてPost Holdingsを挙げる",
+          "text_en": "NightFood names Post Holdings among its competitors",
+          "source": {
+            "label": "NightFood 10-K(2024年提出)",
+            "label_en": "NightFood 10-K (filed 2024-12)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1593001/000121390024113166/ea0221060-10k_nightfood.htm",
+            "level": "official",
+            "date": "2024-12-27",
+            "quote": "PepsiCo, Post Holdings, and more."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

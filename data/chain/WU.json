@@ -1,0 +1,162 @@
+{
+  "root": {
+    "ticker": "WU",
+    "name": "ウエスタンユニオン",
+    "cik": 1365135,
+    "name_en": "Western Union"
+  },
+  "rows": [
+    {
+      "ja": "買収",
+      "en": "Acquisition",
+      "above": true
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "EEFT",
+    "IDT",
+    "IPSI",
+    "FDCT"
+  ],
+  "companies": [
+    {
+      "id": "IMXI",
+      "ticker": "IMXI",
+      "name": "インターメックス",
+      "name_en": "Intermex",
+      "sub": "国際送金",
+      "sub_en": "Remittances",
+      "sub_short": "国際送金",
+      "sub_short_en": "Transfers",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年8月、Western Unionに買収される合併契約を締結",
+          "text_en": "Signed a merger agreement in August 2025 to be acquired by Western Union",
+          "source": {
+            "label": "International Money Express 10-K(2026年提出)",
+            "label_en": "International Money Express 10-K (filed 2026-03)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1683695/000162828026015647/imxi-20251231.htm",
+            "level": "official",
+            "date": "2026-03-06",
+            "quote": "Pending Merger with The Western Union Company On August 10, 2025, the Company entered into an Agreement and Plan of Merger"
+          }
+        }
+      ]
+    },
+    {
+      "id": "EEFT",
+      "ticker": "EEFT",
+      "name": "ユーロネット・ワールドワイド",
+      "name_en": "Euronet Worldwide",
+      "sub": "決済・送金",
+      "sub_en": "Payments & remittances",
+      "sub_short": "決済",
+      "sub_short_en": "Payment",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Euronetが10-Kで、売上が約2倍の最大の競合としてWestern Unionを挙げる",
+          "text_en": "Euronet names Western Union as its leading competitor, with about twice its revenue",
+          "source": {
+            "label": "Euronet Worldwide 10-K(2025年提出)",
+            "label_en": "Euronet Worldwide 10-K (filed 2025-02)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1029199/000121390025017068/eeft-20241231.htm",
+            "level": "official",
+            "date": "2025-02-25",
+            "quote": "Our competition includes The Western Union Company, the leading competitor with revenue approximately two times greater than our revenue."
+          }
+        }
+      ]
+    },
+    {
+      "id": "IDT",
+      "ticker": "IDT",
+      "name": "IDT",
+      "name_en": "IDT",
+      "sub": "通信・送金(BOSS Money)",
+      "sub_en": "Telecom & remittances (BOSS Money)",
+      "sub_short": "通信",
+      "sub_short_en": "Telecom",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "IDTが10-Kで、送金の伝統的な競合としてWestern Unionを挙げる",
+          "text_en": "IDT names Western Union among traditional money remitters it competes with",
+          "source": {
+            "label": "IDT 10-K(2025年提出)",
+            "label_en": "IDT 10-K (filed 2025-09)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1005731/000149315225016071/form10-k.htm",
+            "level": "official",
+            "date": "2025-09-29",
+            "quote": "along with traditional money remitters, including Western Union, Ria, MoneyGram"
+          }
+        }
+      ]
+    },
+    {
+      "id": "IPSI",
+      "ticker": "IPSI",
+      "name": "イノベーティブ・ペイメント・ソリューションズ",
+      "name_en": "Innovative Payment Solutions",
+      "sub": "決済・送金",
+      "sub_en": "Payments",
+      "sub_short": "決済",
+      "sub_short_en": "Payment",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "送金市場を支配する企業としてWestern Unionを挙げる",
+          "text_en": "Names Western Union among companies dominating money remittance",
+          "source": {
+            "label": "Innovative Payment Solutions 10-K(2025年提出)",
+            "label_en": "Innovative Payment Solutions 10-K (filed 2025-03)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1591913/000121390025026455/ea0235199-10k_innova.htm",
+            "level": "official",
+            "date": "2025-03-31",
+            "quote": "Companies like Western Union, Money Gram, Paypal, and Venmo, dominate the money remittance business"
+          }
+        }
+      ]
+    },
+    {
+      "id": "FDCT",
+      "ticker": "FDCT",
+      "name": "FDCテック",
+      "name_en": "FDCTECH",
+      "sub": "決済・金融テクノロジー",
+      "sub_en": "Payments & fintech",
+      "sub_short": "決済",
+      "sub_short_en": "Payment",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "上場届出書で、競合の送金サービスとしてWestern Unionを挙げる",
+          "text_en": "Names Western Union among competing remittance providers",
+          "source": {
+            "label": "FDCTECH 上場届出書(S-1)(2026年9月)",
+            "label_en": "FDCTECH registration statement (S-1) (2026-09)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1722731/000149315226042707/forms-1.htm",
+            "level": "official",
+            "date": "2026-09-15",
+            "quote": "global payment networks, digital wallets, and remittance providers such as PayPal, Wise, Western Union, MoneyGram"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -33,6 +33,8 @@
       "name": "Microsoft",
       "sub": "クラウド",
       "sub_en": "Cloud",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 1,
       "relations": [
         {
@@ -58,6 +60,8 @@
       "name": "Meta Platforms",
       "sub": "SNS・AI",
       "sub_en": "Social & AI",
+      "sub_short": "SNS・AI",
+      "sub_short_en": "Social",
       "row": 1,
       "relations": [
         {
@@ -81,6 +85,8 @@
       "name": "NRG Energy",
       "sub": "電力",
       "sub_en": "Power",
+      "sub_short": "電力",
+      "sub_short_en": "Power",
       "row": 2,
       "relations": [
         {
@@ -104,6 +110,8 @@
       "name": "PSEG",
       "sub": "電力",
       "sub_en": "Power",
+      "sub_short": "電力",
+      "sub_short_en": "Power",
       "row": 2,
       "relations": [
         {
@@ -127,6 +135,8 @@
       "name": "Exelon",
       "sub": "電力",
       "sub_en": "Power",
+      "sub_short": "電力",
+      "sub_short_en": "Power",
       "row": 2,
       "relations": [
         {
@@ -152,6 +162,8 @@
       "name": "NextEra Energy",
       "sub": "電力会社",
       "sub_en": "Utility",
+      "sub_short": "電力会社",
+      "sub_short_en": "Utility",
       "row": 2,
       "relations": [
         {
@@ -177,6 +189,8 @@
       "name": "Calpine",
       "sub": "ガス火力・地熱発電",
       "sub_en": "Gas & geothermal power",
+      "sub_short": "ガス火力",
+      "sub_short_en": "Gas",
       "row": 2,
       "relations": [
         {
@@ -200,6 +214,8 @@
       "name": "LS Power",
       "sub": "発電・インフラ投資",
       "sub_en": "Power & infrastructure investor",
+      "sub_short": "発電",
+      "sub_short_en": "Power",
       "row": 2,
       "relations": [
         {
@@ -225,6 +241,8 @@
       "name": "Via Renewables",
       "sub": "電力・ガス小売",
       "sub_en": "Retail power & gas",
+      "sub_short": "電力",
+      "sub_short_en": "Power",
       "row": 3,
       "relations": [
         {

@@ -1,0 +1,216 @@
+{
+  "root": {
+    "ticker": "SPGI",
+    "name": "S&Pグローバル",
+    "cik": 64040,
+    "name_en": "S&P Global"
+  },
+  "rows": [
+    {
+      "ja": "買収・分離",
+      "en": "Acquisitions & spin-off",
+      "above": true
+    },
+    {
+      "ja": "合弁・事業の売却先",
+      "en": "Joint venture & buyers"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "MSCI",
+    "MORN"
+  ],
+  "companies": [
+    {
+      "id": "WithIntelligence",
+      "ticker": "With Intelligence",
+      "name": "ウィズ・インテリジェンス",
+      "name_en": "With Intelligence",
+      "sub": "私募市場のデータ",
+      "sub_en": "Private markets data",
+      "sub_short": "私募市場",
+      "sub_short_en": "Data",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年11月、Motive Partnersから18億ドルで買収",
+          "text_en": "Acquired from Motive Partners for $1.8 billion in November 2025",
+          "source": {
+            "label": "S&P Global 10-K(2025年度)",
+            "label_en": "S&P Global 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/64040/000006404026000013/spgi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "On November 25, 2025, we completed the acquisition of With Intelligence from Motive Partners for $1.8 billion."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TeraHelix",
+      "ticker": "TeraHelix",
+      "name": "テラヘリックス",
+      "name_en": "TeraHelix",
+      "sub": "金融テクノロジー",
+      "sub_en": "Financial technology",
+      "sub_short": "金融IT",
+      "sub_short_en": "Fintech",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年6月に買収",
+          "text_en": "Acquired in June 2025",
+          "source": {
+            "label": "S&P Global 10-K(2025年度)",
+            "label_en": "S&P Global 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/64040/000006404026000013/spgi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "On June 6, 2025, we completed the acquisition of TeraHelix, a privately held financial technology firm."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MBGL",
+      "ticker": "MBGL",
+      "name": "モビリティ・グローバル",
+      "name_en": "Mobility Global",
+      "sub": "自動車関連データ",
+      "sub_en": "Automotive data",
+      "sub_short": "車データ",
+      "sub_short_en": "Car data",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "S&P Globalから分離・独立する自動車データ事業(Mobility)",
+          "text_en": "S&P Global's Mobility business, being separated into an independent company",
+          "source": {
+            "label": "Mobility Global 10-Q(2026年8月)",
+            "label_en": "Mobility Global 10-Q (2026-08)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2090312/000209031226000014/mbgl-20260630.htm",
+            "level": "official",
+            "date": "2026-08-07",
+            "quote": "As a result of the Restructuring Transactions , and in anticipation of the Separation, all balances with S&P G lobal have been settled"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CME",
+      "ticker": "CME",
+      "name": "CMEグループ",
+      "name_en": "CME Group",
+      "sub": "先物取引所",
+      "sub_en": "Derivatives exchange",
+      "sub_short": "取引所",
+      "sub_short_en": "Exchange",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "指数会社S&P Dow Jones Indicesの合弁相手。2025年10月には共同で持つOSTTRAをKKRに売却",
+          "text_en": "Joint venture partner in S&P Dow Jones Indices; in October 2025 the two sold OSTTRA to KKR",
+          "source": {
+            "label": "Msci 10-K(2026年提出)",
+            "label_en": "Msci 10-K (filed 2026-02)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1408198/000140819826000011/msci-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "S&P Dow Jones Indices LLC (a joint venture of S&P Global Inc. and CME Group Inc.)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "KKR",
+      "ticker": "KKR",
+      "name": "KKR",
+      "name_en": "KKR",
+      "sub": "投資会社",
+      "sub_en": "Private equity",
+      "sub_short": "投資会社",
+      "sub_short_en": "PE",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年10月、S&P GlobalとCMEの合弁OSTTRAを買収",
+          "text_en": "Bought OSTTRA from S&P Global and CME Group in October 2025",
+          "source": {
+            "label": "S&P Global 10-K(2025年度)",
+            "label_en": "S&P Global 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/64040/000006404026000013/spgi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "On October 10, 2025, the Company and CME Group completed the sale of OSTTRA to Kohlberg Kravis Roberts & Co."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MSCI",
+      "ticker": "MSCI",
+      "name": "MSCI",
+      "name_en": "MSCI",
+      "sub": "指数・分析",
+      "sub_en": "Indexes & analytics",
+      "sub_short": "指数",
+      "sub_short_en": "Indexes",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "MSCIが10-Kで、指数事業の競合としてS&P Dow Jones Indicesを挙げる",
+          "text_en": "MSCI names S&P Dow Jones Indices among its index competitors",
+          "source": {
+            "label": "Msci 10-K(2026年提出)",
+            "label_en": "Msci 10-K (filed 2026-02)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1408198/000140819826000011/msci-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "Among our Index competitors are S&P Dow Jones Indices LLC"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MORN",
+      "ticker": "MORN",
+      "name": "モーニングスター",
+      "name_en": "Morningstar",
+      "sub": "投資情報",
+      "sub_en": "Investment research",
+      "sub_short": "投資情報",
+      "sub_short_en": "Research",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Morningstarが10-Kで、市場・株式データの主な競合としてS&P Globalを挙げる",
+          "text_en": "Morningstar names S&P Global among its main market and equity data competitors",
+          "source": {
+            "label": "Morningstar 10-K(2025年提出)",
+            "label_en": "Morningstar 10-K (filed 2025-02)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1289419/000128941925000041/morn-20241231.htm",
+            "level": "official",
+            "date": "2025-02-28",
+            "quote": "For market and equity data, we primarily compete with Bloomberg, FactSet, ICE Data Services, LSEG (Refinitiv), and S&P Global."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

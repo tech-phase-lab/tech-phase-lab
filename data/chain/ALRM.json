@@ -1,0 +1,221 @@
+{
+  "root": {
+    "ticker": "ALRM",
+    "name": "アラーム・ドットコム",
+    "cik": 1459200,
+    "name_en": "Alarm.com"
+  },
+  "rows": [
+    {
+      "ja": "最大の販売パートナー",
+      "en": "Largest service provider partner"
+    },
+    {
+      "ja": "買収",
+      "en": "Acquisitions"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in its 10-K)"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "AMZN",
+    "GOOGL",
+    "ARLO",
+    "SSTI"
+  ],
+  "companies": [
+    {
+      "id": "ADT",
+      "ticker": "ADT",
+      "name": "ADT",
+      "name_en": "ADT",
+      "sub": "ホームセキュリティ",
+      "sub_en": "Home security",
+      "sub_short": "防犯",
+      "sub_short_en": "Security",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大の販売パートナー(売上の15〜20%)",
+          "text_en": "Largest service provider partner (15-20% of revenue)",
+          "source": {
+            "label": "Alarm.com 10-K(2025年度)",
+            "label_en": "Alarm.com 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1459200/000145920026000005/alrm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "ADT LLC, or ADT, represented greater than 15% but not more than 20% of our revenue in each of 2023, 2024 and 2025."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CHeKT",
+      "ticker": "CHeKT",
+      "name": "チェックト",
+      "name_en": "CHeKT",
+      "sub": "映像監視",
+      "sub_en": "Video monitoring",
+      "sub_short": "映像監視",
+      "sub_short_en": "Video",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "CHeKTの株式81%を取得(2025年2月)",
+          "text_en": "Acquired 81% of CHeKT (February 2025)",
+          "source": {
+            "label": "Alarm.com 10-K(2025年度)",
+            "label_en": "Alarm.com 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1459200/000145920026000005/alrm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "On February 10, 2025, we acquired 81% of the issued and outstanding shares of capital stock of CHeKT."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Noonlight",
+      "ticker": "Noonlight",
+      "name": "ヌーンライト",
+      "name_en": "Noonlight",
+      "sub": "緊急通報",
+      "sub_en": "Emergency response",
+      "sub_short": "緊急通報",
+      "sub_short_en": "Safety",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Noonlightの株式85%を取得(2022年9月)",
+          "text_en": "Acquired 85% of Noonlight (September 2022)",
+          "source": {
+            "label": "Alarm.com 10-K(2025年度)",
+            "label_en": "Alarm.com 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1459200/000145920026000005/alrm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "we acquired 85% of the issued and outstanding shares of capital stock of Noonlight, Inc., or Noonlight."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン",
+      "name_en": "Amazon (Ring)",
+      "sub": "EC・家電",
+      "sub_en": "E-commerce & devices",
+      "sub_short": "EC・家電",
+      "sub_short_en": "E-com",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Ringの防犯システムなどで競合",
+          "text_en": "Competes through Ring and Amazon Home Services",
+          "source": {
+            "label": "Alarm.com 10-K(2025年度)",
+            "label_en": "Alarm.com 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1459200/000145920026000005/alrm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Ring Inc., owned by Amazon.com, offers a connected video doorbell, video cameras and an integrated security system, Ring Alarm."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GOOGL",
+      "ticker": "GOOGL",
+      "name": "アルファベット",
+      "name_en": "Alphabet (Google Nest)",
+      "sub": "IT",
+      "sub_en": "Technology",
+      "sub_short": "IT",
+      "sub_short_en": "Tech",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Nestの単体製品で競合",
+          "text_en": "Competes with Nest point products",
+          "source": {
+            "label": "Alarm.com 10-K(2025年度)",
+            "label_en": "Alarm.com 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1459200/000145920026000005/alrm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "providers of point products, including Google Inc.'s Nest Labs, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ARLO",
+      "ticker": "ARLO",
+      "name": "アーロ・テクノロジーズ",
+      "name_en": "Arlo Technologies",
+      "sub": "防犯カメラ",
+      "sub_en": "Security cameras",
+      "sub_short": "カメラ",
+      "sub_short_en": "Cameras",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ネット接続の防犯カメラで競合",
+          "text_en": "Competes with connected video cameras",
+          "source": {
+            "label": "Alarm.com 10-K(2025年度)",
+            "label_en": "Alarm.com 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1459200/000145920026000005/alrm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Arlo Technologies, Inc. and Wyze Labs, Inc. offers connected video cameras"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SSTI",
+      "ticker": "SSTI",
+      "name": "サウンドシンキング",
+      "name_en": "SoundThinking",
+      "sub": "銃声検知",
+      "sub_en": "Gunshot detection",
+      "sub_short": "銃声検知",
+      "sub_short_en": "Alerts",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "SoundThinkingが10-Kで、銃声検知の主な競合として挙げる",
+          "text_en": "SoundThinking names Alarm.com among primary gunfire detection competitors",
+          "source": {
+            "label": "SoundThinking 10-K(2025年度)",
+            "label_en": "SoundThinking 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1351636/000119312526132104/ssti-20251231.htm",
+            "level": "official",
+            "date": "2026-03-30",
+            "quote": "We believe the primary competitors in the broader gunfire detection space are Alarm.com, Databuoy, EAGL Technology"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
