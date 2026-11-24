@@ -63,7 +63,7 @@ test('LP button: an auto-renewal order shows the stop notice and needs a fresh t
     // English wording.
     r = await run({ language: 'en' });
     await r.tick(); await r.press();
-    assert.equal(r.notice().textContent, 'Renews automatically after one year. Stop it on your account page by the day before renewal.');
+    assert.equal(r.notice().textContent, 'Renews automatically after one year. You can stop it on your account page until the day before the renewal date.');
     await r.React.act(async () => r.root.unmount());
 
     // Without automatic renewal: no notice, straight to PayPal on the first press.
