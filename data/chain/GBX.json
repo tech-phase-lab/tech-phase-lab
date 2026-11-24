@@ -1,0 +1,210 @@
+{
+  "root": {
+    "ticker": "GBX",
+    "name": "グリーンブライアー",
+    "cik": 923120,
+    "name_en": "The Greenbrier Companies, Inc."
+  },
+  "rows": [
+    {
+      "ja": "合弁・出資先",
+      "en": "Joint ventures & affiliates"
+    },
+    {
+      "ja": "顧客・競合",
+      "en": "Customers & competitors"
+    }
+  ],
+  "rivals": [
+    "CAT"
+  ],
+  "companies": [
+    {
+      "id": "GIMSA",
+      "ticker": "Grupo Industrial Monclova",
+      "name": "グルポ・インダストリアル・モンクロバ(GIMSA)",
+      "name_en": "Grupo Industrial Monclova (GIMSA)",
+      "sub": "鉄道車両製造",
+      "sub_en": "Railcar manufacturing",
+      "sub_short": "貨車",
+      "sub_short_en": "Railcars",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "メキシコで貨車製造の合弁(持分50%ずつ)",
+          "text_en": "50/50 railcar manufacturing JV in Mexico",
+          "source": {
+            "label": "Greenbrier 10-K(2026年8月期)",
+            "label_en": "Greenbrier 10-K (FY ended Aug 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/923120/000119312526431954/gbx-20260831.htm",
+            "level": "official",
+            "date": "2026-10-26",
+            "quote": "Noncontrolling interest and Contingently redeemable noncontrolling interest - The Company has a joint venture with Grupo Industrial Monclova, S.A. (GIMSA) that manufactures new railroad freight cars for the North American marketplace at GIMSA's existing manufacturing facility located in Frontera, Mexico."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Astra",
+      "ticker": "Astra Holdings",
+      "name": "アストラ・ホールディングス",
+      "name_en": "Astra Holdings GmbH",
+      "sub": "鉄道車両製造",
+      "sub_en": "Railcar manufacturing",
+      "sub_short": "貨車",
+      "sub_short_en": "Railcars",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "欧州事業の合弁グリーンブライアー・アストラ・レールの共同出資者",
+          "text_en": "Partner in the Greenbrier-Astra Rail European venture",
+          "source": {
+            "label": "Greenbrier 10-K(2026年8月期)",
+            "label_en": "Greenbrier 10-K (FY ended Aug 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/923120/000119312526431954/gbx-20260831.htm",
+            "level": "official",
+            "date": "2026-10-26",
+            "quote": "Greenbrier-Astra Rail B.V. was formed with Astra Holdings GmbH (Astra) in 2017 to combine the Company's existing European operations in Poland and Astra's operations in Romania."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GreenbrierMaxion",
+      "ticker": "Greenbrier-Maxion",
+      "name": "グリーンブライアー・マキシオン",
+      "name_en": "Greenbrier-Maxion",
+      "sub": "鉄道車両製造",
+      "sub_en": "Railcar manufacturing",
+      "sub_short": "貨車",
+      "sub_short_en": "Railcars",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ブラジルの貨車メーカーに60%出資",
+          "text_en": "Holds 60% of the Brazilian railcar maker",
+          "source": {
+            "label": "Greenbrier 10-K(2026年8月期)",
+            "label_en": "Greenbrier 10-K (FY ended Aug 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/923120/000119312526431954/gbx-20260831.htm",
+            "level": "official",
+            "date": "2026-10-26",
+            "quote": "Brazilian Railcar Manufacturing - We have a 60% ownership interest in Greenbrier Maxion-Equipamentos e Serviços Ferroviários S.A. (Greenbrier-Maxion), a leading railcar manufacturer in South America"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AmstedMaxion",
+      "ticker": "Amsted-Maxion",
+      "name": "アムステッド・マキシオン",
+      "name_en": "Amsted-Maxion",
+      "sub": "鋳造部品",
+      "sub_en": "Castings",
+      "sub_short": "鋳造",
+      "sub_short_en": "Castings",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ブラジルの鋳造・車輪部品メーカーに29.5%出資",
+          "text_en": "Holds 29.5% of the Brazilian castings and wheel maker",
+          "source": {
+            "label": "Greenbrier 10-K(2026年8月期)",
+            "label_en": "Greenbrier 10-K (FY ended Aug 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/923120/000119312526431954/gbx-20260831.htm",
+            "level": "official",
+            "date": "2026-10-26",
+            "quote": "Brazilian Castings and Component Parts Manufacturing - We have a 29.5% ownership interest in Amsted-Maxion Fundição e Equipamentos Ferroviários S.A. (Amsted-Maxion) based in Cruzeiro, Brazil."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Axis",
+      "ticker": "Axis",
+      "name": "アクシス",
+      "name_en": "Axis, LLC",
+      "sub": "車軸製造",
+      "sub_en": "Axle manufacturing",
+      "sub_short": "車軸",
+      "sub_short_en": "Axles",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "車軸製造の合弁(41.9%出資)から部品を購入",
+          "text_en": "Buys railcar parts from its axle JV (41.9% stake)",
+          "source": {
+            "label": "Greenbrier 10-K(2026年8月期)",
+            "label_en": "Greenbrier 10-K (FY ended Aug 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/923120/000119312526431954/gbx-20260831.htm",
+            "level": "official",
+            "date": "2026-10-26",
+            "quote": "The Company purchased $ 4.9 million, $ 9.4 million and $ 8.8 million of railcar components from Axis during the years ended August 31, 2026, 2025 and 2024 , respectively."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GATX",
+      "ticker": "GATX",
+      "name": "GATX",
+      "name_en": "GATX",
+      "sub": "貨車リース",
+      "sub_en": "Railcar leasing",
+      "sub_short": "リース",
+      "sub_short_en": "Leasing",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "新造貨車を購入(同社が購入先として明記)",
+          "text_en": "Buys new railcars (GATX names Greenbrier as a supplier)",
+          "source": {
+            "label": "GATX 10-K(2025年度)",
+            "label_en": "GATX 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/40211/000004021126000018/gmt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Rail North America purchases new railcars from a number of manufacturers, including Trinity Rail Group, LLC (\"Trinity\"), a subsidiary of Trinity Industries, Inc., The Greenbrier Companies, Inc. (\"Greenbrier\") and its subsidiaries, National Steel Car Ltd., and FreightCar America, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CAT",
+      "ticker": "CAT",
+      "name": "キャタピラー",
+      "name_en": "Caterpillar",
+      "sub": "建機",
+      "sub_en": "Machinery",
+      "sub_short": "建機",
+      "sub_short_en": "Machines",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "鉄道関連事業でキャタピラーが競合として名指し",
+          "text_en": "Caterpillar names Greenbrier as a rail-business competitor",
+          "source": {
+            "label": "Caterpillar 10-K(2025年度)",
+            "label_en": "Caterpillar 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/18230/000001823026000008/cat-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "In rail-related businesses, our global competitors include Wabtec Corp, Greenbrier Companies, Inc., Voestalpine AG, Vossloh AG, Alstom SA, and Siemens Mobility A/S."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

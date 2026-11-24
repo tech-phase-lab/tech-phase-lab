@@ -1,0 +1,182 @@
+{
+  "root": {
+    "ticker": "CHDN",
+    "name": "チャーチルダウンズ",
+    "cik": 20212,
+    "name_en": "Churchill Downs Incorporated"
+  },
+  "rows": [
+    {
+      "ja": "合弁・出資パートナー",
+      "en": "JV & equity partners"
+    },
+    {
+      "ja": "賭博・放送の提携先",
+      "en": "Wagering & media partners"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "RushStreet",
+      "ticker": "Rush Street Gaming",
+      "name": "ラッシュ・ストリート・ゲーミング",
+      "name_en": "Rush Street Gaming",
+      "sub": "カジノ運営",
+      "sub_en": "Casino operator",
+      "sub_short": "カジノ",
+      "sub_short_en": "Casinos",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "リバーズ・カジノ・デスプレーンズを共同保有(関連会社が36.0%)",
+          "text_en": "Co-owns Rivers Casino Des Plaines (affiliate holds 36.0%)",
+          "source": {
+            "label": "Churchill Downs 10-K(2025年度)",
+            "label_en": "Churchill Downs 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/20212/000002021226000025/chdn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "(2) High Plaines Gaming, LLC (\"High Plaines\"), an affiliate of Rush Street Gaming, LLC owns 36.0 % of Midwest Gaming"
+          }
+        }
+      ]
+    },
+    {
+      "id": "DelawareNorth",
+      "ticker": "Delaware North",
+      "name": "デラウェア・ノース",
+      "name_en": "Delaware North",
+      "sub": "ホスピタリティ",
+      "sub_en": "Hospitality",
+      "sub_short": "娯楽",
+      "sub_short_en": "Leisure",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "マイアミ・バレー・ゲーミングを50%ずつ共同保有",
+          "text_en": "50/50 co-owner of Miami Valley Gaming",
+          "source": {
+            "label": "Churchill Downs 10-K(2025年度)",
+            "label_en": "Churchill Downs 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/20212/000002021226000025/chdn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "The Company owns 50 % interest in MVG and Delaware North Companies Gaming & Entertainment Inc. (\"DNC\") owns the remaining 50 % interest."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NYRA",
+      "ticker": "NYRA",
+      "name": "ニューヨーク競馬協会(NYRA)",
+      "name_en": "New York Racing Association",
+      "sub": "競馬運営",
+      "sub_en": "Horse racing",
+      "sub_short": "競馬",
+      "sub_short_en": "Racing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "馬券システム子会社ユナイテッド・トートの49%を売却",
+          "text_en": "Sold 49% of its United Tote wagering-systems unit",
+          "source": {
+            "label": "Churchill Downs 10-K(2025年度)",
+            "label_en": "Churchill Downs 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/20212/000002021226000025/chdn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "In April 2024, the Company completed the sale of 49% of United Tote, a wholly owned subsidiary of CDI, to NYRA Content Management Solutions, LLC (\"NYRA\"), a subsidiary of the New York Racing Association, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Bet365",
+      "ticker": "Bet365",
+      "name": "ベット365",
+      "name_en": "bet365",
+      "sub": "オンライン賭博",
+      "sub_en": "Online betting",
+      "sub_short": "賭博",
+      "sub_short_en": "Betting",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ペンシルベニア州のオンライン賭博で市場参入契約",
+          "text_en": "Market access agreement for online betting in Pennsylvania",
+          "source": {
+            "label": "Churchill Downs 10-K(2025年度)",
+            "label_en": "Churchill Downs 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/20212/000002021226000025/chdn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "We have executed strategic third-party market access agreements with Bet365 in Pennsylvania, Golden Nugget in Indiana, and with various market access partners in Kentucky."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GoldenNugget",
+      "ticker": "Golden Nugget",
+      "name": "ゴールデン・ナゲット",
+      "name_en": "Golden Nugget",
+      "sub": "オンライン賭博",
+      "sub_en": "Online betting",
+      "sub_short": "賭博",
+      "sub_short_en": "Betting",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "インディアナ州のオンライン賭博で市場参入契約",
+          "text_en": "Market access agreement for online betting in Indiana",
+          "source": {
+            "label": "Churchill Downs 10-K(2025年度)",
+            "label_en": "Churchill Downs 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/20212/000002021226000025/chdn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "We have executed strategic third-party market access agreements with Bet365 in Pennsylvania, Golden Nugget in Indiana, and with various market access partners in Kentucky."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NBCSports",
+      "ticker": "NBC Sports",
+      "name": "NBCスポーツ",
+      "name_en": "NBC Sports",
+      "sub": "スポーツ放送",
+      "sub_en": "Sports TV",
+      "sub_short": "放送",
+      "sub_short_en": "TV",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ケンタッキー・オークスをゴールデンタイムで放送",
+          "text_en": "Will air the Kentucky Oaks in prime time",
+          "source": {
+            "label": "Churchill Downs 10-K(2025年度)",
+            "label_en": "Churchill Downs 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/20212/000002021226000025/chdn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "We announced NBC Sports will showcase the Kentucky Oaks in prime time for the first time ever in 2026."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
