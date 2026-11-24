@@ -16,7 +16,7 @@
   ],
   "rivals": [
     "AMAT",
-    "SHI"
+    "6302"
   ],
   "companies": [
     {
@@ -44,7 +44,7 @@
       "name_en": "Applied Materials"
     },
     {
-      "id": "SHI",
+      "id": "6302",
       "ticker": "Sumitomo Heavy",
       "name": "住友重機械工業",
       "sub": "イオン注入装置",

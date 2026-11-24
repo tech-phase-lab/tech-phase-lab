@@ -14,7 +14,7 @@
   "rivals": [],
   "companies": [
     {
-      "id": "CATALYST",
+      "id": "CatalystBrands",
       "ticker": "Catalyst Brands",
       "name": "カタリスト・ブランズ",
       "sub": "小売事業",
@@ -110,7 +110,7 @@
       "name_en": "Klepierre"
     },
     {
-      "id": "MEC",
+      "id": "8802",
       "ticker": "Mitsubishi Estate",
       "name": "三菱地所",
       "sub": "日本のアウトレット",

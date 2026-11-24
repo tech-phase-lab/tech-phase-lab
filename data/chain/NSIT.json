@@ -23,7 +23,7 @@
   "rivals": [
     "CDW",
     "ACN",
-    "SHI"
+    "SHIIntl"
   ],
   "companies": [
     {
@@ -219,7 +219,7 @@
       ]
     },
     {
-      "id": "SHI",
+      "id": "SHIIntl",
       "ticker": "SHI",
       "name": "SHIインターナショナル",
       "name_en": "SHI International",
