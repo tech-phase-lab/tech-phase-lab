@@ -1,0 +1,196 @@
+{
+  "root": {
+    "ticker": "AR",
+    "name": "アンテロ・リソーシズ",
+    "cik": 1433270,
+    "name_en": "Antero Resources"
+  },
+  "rows": [
+    {
+      "ja": "集ガス・処理・輸送(上流)",
+      "en": "Gathering, processing & pipelines (upstream)",
+      "above": true
+    },
+    {
+      "ja": "出資先・資産の売買先",
+      "en": "Holdings & asset deals"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "AnteroMid",
+      "ticker": "AM",
+      "name": "アンテロ・ミッドストリーム",
+      "name_en": "Antero Midstream",
+      "sub": "ガス集送・水処理",
+      "sub_en": "Gathering & water services",
+      "sub_short": "ガス集送",
+      "sub_short_en": "Pipes",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "集ガス・圧縮をAntero Midstreamに委託(WV・OHの鉱区をほぼすべて専用契約)",
+          "text_en": "Dedicates substantially all its West Virginia and Ohio acreage to Antero Midstream for gathering",
+          "source": {
+            "label": "Antero Resources 10-K(2025年度)",
+            "label_en": "Antero Resources 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1433270/000110465926013386/ar-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "we have dedicated to Antero Midstream substantially all of our current and future acreage in West Virginia and Ohio for gathering and compression services."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Antero Midstream株の29%を保有(持分法)",
+          "text_en": "Owns 29% of Antero Midstream's common stock",
+          "source": {
+            "label": "Antero Resources 10-K(2025年度)",
+            "label_en": "Antero Resources 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1433270/000110465926013386/ar-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "As of December 31, 2025, we owned 29% of Antero Midstream's common stock."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MPLX",
+      "ticker": "MPLX",
+      "name": "MPLX",
+      "name_en": "MPLX",
+      "sub": "中流パイプライン",
+      "sub_en": "Midstream",
+      "sub_short": "中流",
+      "sub_short_en": "Pipeline",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "MPLX傘下MarkWestとガス処理の契約、Antero Midstreamとの合弁も",
+          "text_en": "Contracts with MPLX's MarkWest for gas processing; MarkWest is Antero Midstream's JV partner",
+          "source": {
+            "label": "Antero Resources 10-K(2025年度)",
+            "label_en": "Antero Resources 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1433270/000110465926013386/ar-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "The joint venture entered into on February 6, 2017 between Antero Midstream Partners, a wholly owned subsidiary of Antero Midstream and MarkWest, a wholly owned subsidiary of MPLX, LP, to develop processing and fractionation assets in Appalachia."
+          }
+        }
+      ]
+    },
+    {
+      "id": "EPD",
+      "ticker": "EPD",
+      "name": "エンタープライズ・プロダクツ",
+      "name_en": "Enterprise Products Partners",
+      "sub": "中流パイプライン",
+      "sub_en": "Midstream",
+      "sub_short": "中流",
+      "sub_short_en": "Pipeline",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ATEXパイプラインに輸送枠を確保",
+          "text_en": "Holds firm capacity on Enterprise's ATEX pipeline",
+          "source": {
+            "label": "Antero Resources 10-K(2025年度)",
+            "label_en": "Antero Resources 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1433270/000110465926013386/ar-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "(x) Enterprise Products Partners ATEX Pipeline (\"ATEX\") and (xi) Sunoco Pipeline (\"Mariner East 2\"). Our diverse portfolio of firm capacity gives us the flexibility"
+          }
+        }
+      ]
+    },
+    {
+      "id": "HGEnergy",
+      "ticker": "HG Energy",
+      "name": "HGエナジー",
+      "name_en": "HG Energy",
+      "sub": "天然ガス開発",
+      "sub_en": "Natural gas producer",
+      "sub_short": "ガス開発",
+      "sub_short_en": "Gas",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "HG Energyの上流事業を28億ドルで買収する契約(2025年12月)",
+          "text_en": "Agreed to buy HG Energy's upstream business for $2.8 billion (Dec 2025)",
+          "source": {
+            "label": "Antero Resources 10-K(2025年度)",
+            "label_en": "Antero Resources 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1433270/000110465926013386/ar-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "On December 5, 2025, we entered into a definitive agreement to acquire 100% of the issued and outstanding equity interests of HG Energy II Production Holdings, LLC (\"HG Production\") from HG Energy II LLC (\"HG Energy\") for total cash consideration of $2.8 billion"
+          }
+        }
+      ]
+    },
+    {
+      "id": "INR",
+      "ticker": "INR",
+      "name": "インフィニティ・ナチュラル・リソーシズ",
+      "name_en": "Infinity Natural Resources",
+      "sub": "石油・ガス開発",
+      "sub_en": "Oil & gas producer",
+      "sub_short": "石油ガス",
+      "sub_short_en": "Oil & gas",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "オハイオの上流資産をInfinityとNorthernに売却(2026年2月完了)",
+          "text_en": "Sold Ohio upstream assets to Infinity and Northern (closed Feb 2026)",
+          "source": {
+            "label": "Infinity Natural Resources 10-K(2025年度)",
+            "label_en": "Infinity Natural Resources 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2029118/000202911826000014/inr-20251231.htm",
+            "level": "official",
+            "date": "2026-03-10",
+            "quote": "On February 23, 2026, we completed the acquisitions (\"Antero Acquisition\") of (i) certain rights, title and interests in upstream oil and gas properties, rights and related assets located in the State of Ohio (the \"Upstream Assets\") from Antero Resources Corporation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "NOG",
+      "ticker": "NOG",
+      "name": "ノーザン・オイル・アンド・ガス",
+      "name_en": "Northern Oil and Gas",
+      "sub": "石油・ガス権益",
+      "sub_en": "Oil & gas interests",
+      "sub_short": "石油ガス",
+      "sub_short_en": "Oil & gas",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "オハイオの上流資産をInfinityと共同で買収",
+          "text_en": "Co-buyer of its Ohio upstream assets with Infinity",
+          "source": {
+            "label": "Infinity Natural Resources 10-K(2025年度)",
+            "label_en": "Infinity Natural Resources 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2029118/000202911826000014/inr-20251231.htm",
+            "level": "official",
+            "date": "2026-03-10",
+            "quote": "pursuant to that certain purchase and sale agreement (the \"Upstream Purchase Agreement\"), dated December 5, 2025, by and among INR Holdings, Northern Oil and Gas Inc. (\"Northern\") and the Upstream Sellers"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

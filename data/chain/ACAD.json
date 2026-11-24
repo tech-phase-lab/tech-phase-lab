@@ -1,0 +1,209 @@
+{
+  "root": {
+    "ticker": "ACAD",
+    "name": "アカディア・ファーマシューティカルズ",
+    "cik": 1070494,
+    "name_en": "Acadia Pharmaceuticals"
+  },
+  "rows": [
+    {
+      "ja": "製造委託先(上流)",
+      "en": "Contract manufacturers (upstream)",
+      "above": true
+    },
+    {
+      "ja": "ライセンス・共同開発の相手",
+      "en": "Licensing & research partners"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "Siegfried",
+      "ticker": "Siegfried",
+      "name": "ジークフリート",
+      "name_en": "Siegfried",
+      "sub": "医薬品原薬",
+      "sub_en": "Drug substance",
+      "sub_short": "原薬",
+      "sub_short_en": "API",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "NUPLAZIDの原薬(ピマバンセリン)を製造",
+          "text_en": "Manufactures the pimavanserin drug substance for NUPLAZID",
+          "source": {
+            "label": "Acadia 10-K(2025年度)",
+            "label_en": "Acadia 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1070494/000119312526072519/acad-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Acadia GmbH has contracted with Siegfried AG (Siegfried), to manufacture the pimavanserin API for use in NUPLAZID drug product for commercial sale."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TMO",
+      "ticker": "TMO",
+      "name": "サーモフィッシャー(パテオン)",
+      "name_en": "Thermo Fisher Scientific (Patheon)",
+      "sub": "医薬品受託製造",
+      "sub_en": "Drug manufacturing",
+      "sub_short": "受託製造",
+      "sub_short_en": "CDMO",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "米国向けNUPLAZIDの一部を製造",
+          "text_en": "Makes part of NUPLAZID for the U.S.",
+          "source": {
+            "label": "Acadia 10-K(2025年度)",
+            "label_en": "Acadia 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1070494/000119312526072519/acad-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Under the manufacturing agreement with Patheon, we have agreed to purchase from Patheon a specified percentage of our commercial requirements of NUPLAZID for the United States."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Catalent",
+      "ticker": "Catalent",
+      "name": "キャタレント",
+      "name_en": "Catalent",
+      "sub": "医薬品受託製造",
+      "sub_en": "Drug manufacturing",
+      "sub_short": "受託製造",
+      "sub_short_en": "CDMO",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "米国向けNUPLAZIDを製造",
+          "text_en": "Makes NUPLAZID for the U.S.",
+          "source": {
+            "label": "Acadia 10-K(2025年度)",
+            "label_en": "Acadia 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1070494/000119312526072519/acad-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Under the manufacturing agreement with Catalent, we have agreed to purchase from Catalent NUPLAZID for commercial use in the United States."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HaloPharm",
+      "ticker": "Halo Pharmaceuticals",
+      "name": "ハロー・ファーマシューティカルズ",
+      "name_en": "Halo Pharmaceuticals",
+      "sub": "医薬品受託製造",
+      "sub_en": "Drug manufacturing",
+      "sub_short": "受託製造",
+      "sub_short_en": "CDMO",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "DAYBUE STIX(スティック包装)を製造",
+          "text_en": "Manufactures DAYBUE STIX stick packs",
+          "source": {
+            "label": "Acadia 10-K(2025年度)",
+            "label_en": "Acadia 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1070494/000119312526072519/acad-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "We have contracted with Halo Pharmaceuticals, Inc. (Halo) to manufacture DAYBUE STIX 5g, 6g, and 8g drug product stick packs for commercial use in the United States."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Neuren",
+      "ticker": "Neuren",
+      "name": "ニューレン・ファーマシューティカルズ",
+      "name_en": "Neuren Pharmaceuticals",
+      "sub": "創薬(豪州)",
+      "sub_en": "Biotech (Australia)",
+      "sub_short": "創薬",
+      "sub_short_en": "Biotech",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "レット症候群薬トロフィネチド(DAYBUE)の導入元",
+          "text_en": "Licensed trofinetide (DAYBUE) to Acadia",
+          "source": {
+            "label": "Acadia 10-K(2025年度)",
+            "label_en": "Acadia 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1070494/000119312526072519/acad-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "We acquired an exclusive North American license to develop and commercialize trofinetide from Neuren Pharmaceuticals Limited (Neuren) in August 2018."
+          }
+        }
+      ]
+    },
+    {
+      "id": "STOK",
+      "ticker": "STOK",
+      "name": "ストーク・セラピューティクス",
+      "name_en": "Stoke Therapeutics",
+      "sub": "RNA医薬",
+      "sub_en": "RNA medicines",
+      "sub_short": "RNA薬",
+      "sub_short_en": "RNA",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "神経発達疾患のRNA医薬を共同開発",
+          "text_en": "Co-develops RNA medicines for neurodevelopmental diseases",
+          "source": {
+            "label": "Acadia 10-K(2025年度)",
+            "label_en": "Acadia 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1070494/000119312526072519/acad-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "In January 2022, the Company entered into a license and collaboration agreement with Stoke Therapeutics, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Saniona",
+      "ticker": "Saniona",
+      "name": "サニオナ",
+      "name_en": "Saniona",
+      "sub": "創薬(北欧)",
+      "sub_en": "Biotech (Nordics)",
+      "sub_short": "創薬",
+      "sub_short_en": "Biotech",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ACP-711の導入元",
+          "text_en": "Licensed ACP-711 to Acadia",
+          "source": {
+            "label": "Acadia 10-K(2025年度)",
+            "label_en": "Acadia 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1070494/000119312526072519/acad-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "In November 2024, the Company entered into a license agreement with Saniona, for the development and commercialization of ACP-711, a highly selective GABAA-α3 positive allosteric modulator."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -33,9 +33,9 @@ This is an English translation of the Japanese notice. If the English and Japane
 | Price | JPY 9,800 (tax included) from March 1, 2027. Until the end of February 2027, the launch price of JPY 7,980 (tax included). The product itself is a one-time purchase. The Notification Features (alerts, the next-morning note, the Shock Gauge and RIZEL's Take) can be used for one year from the date of purchase and need renewal from the second year. Renewal of the Notification Features (from the second year): JPY 5,980 (tax included). JPY 3,980 (tax included) for Tech Phase PRO members at the time of renewal |
 | Other costs | Internet connection costs are paid by the user |
 | Payment method | PayPal (credit card or bank account) |
-| Payment timing | You pay when you apply. Renewals are paid when you complete the renewal procedure |
+| Payment timing | You pay when you apply. The renewal fee is paid automatically on each yearly renewal date with the PayPal you saved at purchase (if you stopped automatic renewal, when you complete the renewal procedure) |
 | Delivery | You can start using it within 2 days after payment is completed |
-| Renewal of the Notification Features | We'll let you know when it's time to renew; only those who choose to renew are renewed. You are never charged automatically |
+| Renewal of the Notification Features | Renews automatically every year. We email you 30 days before the renewal date. You can stop automatic renewal from your account page until the day before the renewal date (you keep access until the end of the period). If the charge fails, we retry until 3 days after the renewal date, then stop automatic renewal and let you know |
 | Withdrawal of application | Once you have applied, the contract cannot be withdrawn |
 | Returns and refunds | Because of the nature of digital products, we do not give refunds after a purchase or renewal for reasons of your own convenience. However, we will refund charges made in error on our side, such as double charges, and cases where you could not use all or the main features of the product for a considerable period for reasons attributable to us |
 | System requirements | The latest version of a major browser. Works on smartphones and computers |

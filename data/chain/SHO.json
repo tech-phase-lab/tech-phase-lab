@@ -1,0 +1,165 @@
+{
+  "root": {
+    "ticker": "SHO",
+    "name": "サンストーン・ホテル・インベスターズ",
+    "cik": 1295810,
+    "name_en": "Sunstone Hotel Investors"
+  },
+  "rows": [
+    {
+      "ja": "ホテルのブランド",
+      "en": "Hotel brands"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "MAR",
+      "ticker": "MAR",
+      "name": "マリオット",
+      "name_en": "Marriott International",
+      "sub": "ホテルブランド",
+      "sub_en": "Hotel brand",
+      "sub_short": "ホテル",
+      "sub_short_en": "Hotels",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "保有ホテルの多くがこのブランドで営業",
+          "text_en": "Many of its hotels operate under this brand",
+          "source": {
+            "label": "Sunstone 10-K(2025年度)",
+            "label_en": "Sunstone 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1295810/000110465926021440/sho-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Most of our hotels operate under a brand owned by Four Seasons, Hilton, Hyatt, Marriott, or Montage."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "ザ・ビドウェル・マリオット・ポートランドのフランチャイズ契約を延長(2025年)",
+          "text_en": "Extended the franchise agreement for The Bidwell Marriott Portland (2025)",
+          "source": {
+            "label": "Sunstone 10-K(2025年度)",
+            "label_en": "Sunstone 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1295810/000110465926021440/sho-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "In June 2025, we entered into a one-year extension agreement with Marriott to extend the franchise agreement for The Bidwell Marriott Portland until October 2026."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HLT",
+      "ticker": "HLT",
+      "name": "ヒルトン",
+      "name_en": "Hilton",
+      "sub": "ホテルブランド",
+      "sub_en": "Hotel brand",
+      "sub_short": "ホテル",
+      "sub_short_en": "Hotels",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "保有ホテルの多くがこのブランドで営業",
+          "text_en": "Many of its hotels operate under this brand",
+          "source": {
+            "label": "Sunstone 10-K(2025年度)",
+            "label_en": "Sunstone 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1295810/000110465926021440/sho-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Most of our hotels operate under a brand owned by Four Seasons, Hilton, Hyatt, Marriott, or Montage."
+          }
+        }
+      ]
+    },
+    {
+      "id": "H",
+      "ticker": "H",
+      "name": "ハイアット",
+      "name_en": "Hyatt Hotels",
+      "sub": "ホテルブランド",
+      "sub_en": "Hotel brand",
+      "sub_short": "ホテル",
+      "sub_short_en": "Hotels",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "保有ホテルの多くがこのブランドで営業",
+          "text_en": "Many of its hotels operate under this brand",
+          "source": {
+            "label": "Sunstone 10-K(2025年度)",
+            "label_en": "Sunstone 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1295810/000110465926021440/sho-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Most of our hotels operate under a brand owned by Four Seasons, Hilton, Hyatt, Marriott, or Montage."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FourSeasons",
+      "ticker": "Four Seasons",
+      "name": "フォーシーズンズ",
+      "name_en": "Four Seasons Hotels",
+      "sub": "ホテルブランド",
+      "sub_en": "Hotel brand",
+      "sub_short": "ホテル",
+      "sub_short_en": "Hotels",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "保有ホテルの多くがこのブランドで営業",
+          "text_en": "Many of its hotels operate under this brand",
+          "source": {
+            "label": "Sunstone 10-K(2025年度)",
+            "label_en": "Sunstone 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1295810/000110465926021440/sho-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Most of our hotels operate under a brand owned by Four Seasons, Hilton, Hyatt, Marriott, or Montage."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MontageHotels",
+      "ticker": "Montage Hotels",
+      "name": "モンタージュ",
+      "name_en": "Montage Hotels & Resorts",
+      "sub": "ホテルブランド",
+      "sub_en": "Hotel brand",
+      "sub_short": "ホテル",
+      "sub_short_en": "Hotels",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "保有ホテルの多くがこのブランドで営業",
+          "text_en": "Many of its hotels operate under this brand",
+          "source": {
+            "label": "Sunstone 10-K(2025年度)",
+            "label_en": "Sunstone 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1295810/000110465926021440/sho-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Most of our hotels operate under a brand owned by Four Seasons, Hilton, Hyatt, Marriott, or Montage."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

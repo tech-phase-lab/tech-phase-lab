@@ -1,0 +1,188 @@
+{
+  "root": {
+    "ticker": "LULU",
+    "name": "ルルレモン・アスレティカ",
+    "cik": 1397187,
+    "name_en": "lululemon athletica"
+  },
+  "rows": [
+    {
+      "ja": "提携先・コンテンツ提供元",
+      "en": "Partners & content provider",
+      "above": true
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "NKE",
+    "UAA",
+    "ONON",
+    "AS"
+  ],
+  "companies": [
+    {
+      "id": "PTON",
+      "ticker": "PTON",
+      "name": "ペロトン・インタラクティブ",
+      "name_en": "Peloton Interactive",
+      "sub": "フィットネス機器・配信",
+      "sub_en": "Connected fitness",
+      "sub_short": "フィット",
+      "sub_short_en": "Fitness",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "lululemon Studio会員向けのデジタルフィットネス配信をPelotonに独占委託",
+          "text_en": "Contracted Peloton as exclusive digital fitness content provider for lululemon Studio",
+          "source": {
+            "label": "lululemon 10-K(2025年度)",
+            "label_en": "lululemon 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1397187/000139718726000020/lulu-20260201.htm",
+            "level": "official",
+            "date": "2026-03-17",
+            "quote": "It also contracted with Peloton Interactive, Inc. to be the exclusive digital fitness content provider to existing lululemon Studio subscribers"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Oura",
+      "ticker": "Oura",
+      "name": "オーラ",
+      "name_en": "Oura",
+      "sub": "スマートリング",
+      "sub_en": "Smart rings",
+      "sub_short": "指輪端末",
+      "sub_short_en": "Rings",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "OuraがS-1で、提携するプレミアムブランドに挙げる",
+          "text_en": "Oura names lululemon among its premium brand partnerships",
+          "source": {
+            "label": "Oura S-1/A(2026年)",
+            "label_en": "Oura S-1/A (2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2133022/000119312526396051/d119865ds1a.htm",
+            "level": "official",
+            "date": "2026-09-21",
+            "quote": "These partnerships include premium brands, such as American Express Platinum and Lululemon"
+          }
+        }
+      ]
+    },
+    {
+      "id": "NKE",
+      "ticker": "NKE",
+      "name": "ナイキ",
+      "name_en": "Nike",
+      "sub": "スポーツ用品",
+      "sub_en": "Sportswear",
+      "sub_short": "スポーツ",
+      "sub_short_en": "Apparel",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Nikeが10-Kで、競合の一社に挙げる",
+          "text_en": "Nike names lululemon among its competitors",
+          "source": {
+            "label": "Nike 10-K(2026年5月期)",
+            "label_en": "Nike 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/320187/000032018726000088/nke-20260531.htm",
+            "level": "official",
+            "date": "2026-07-15",
+            "quote": "including adidas, Anta, ASICS, Deckers, Li Ning, lululemon athletica, New Balance, On, Puma, Under Armour and V.F. Corporation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "UAA",
+      "ticker": "UAA",
+      "name": "アンダーアーマー",
+      "name_en": "Under Armour",
+      "sub": "スポーツ用品",
+      "sub_en": "Sportswear",
+      "sub_short": "スポーツ",
+      "sub_short_en": "Apparel",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Under Armourが10-Kで、直接の競合に挙げる",
+          "text_en": "Under Armour names lululemon a direct competitor",
+          "source": {
+            "label": "Under Armour 10-K(2026年3月期)",
+            "label_en": "Under Armour 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1336917/000133691726000073/ua-20260331.htm",
+            "level": "official",
+            "date": "2026-05-19",
+            "quote": "Our direct competitors include, among others, NIKE, adidas, PUMA and lululemon athletica"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ONON",
+      "ticker": "ONON",
+      "name": "オン・ホールディング",
+      "name_en": "On Holding",
+      "sub": "スポーツシューズ",
+      "sub_en": "Running shoes",
+      "sub_short": "靴",
+      "sub_short_en": "Shoes",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Onが20-Fで、主な競合に挙げる",
+          "text_en": "On names lululemon among its primary competitors",
+          "source": {
+            "label": "On Holding 20-F(2025年度)",
+            "label_en": "On Holding 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1858985/000185898526000008/onholdingag-20251231.htm",
+            "level": "official",
+            "date": "2026-03-03",
+            "quote": "Hoka One One (Deckers Outdoor Corporation), ASICS Corporation, New Balance Athletics, Inc., lululemon athletica Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AS",
+      "ticker": "AS",
+      "name": "アメア・スポーツ",
+      "name_en": "Amer Sports",
+      "sub": "スポーツ用品",
+      "sub_en": "Sporting goods",
+      "sub_short": "スポーツ",
+      "sub_short_en": "Sports",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Amer Sportsが20-Fで、競合の一社に挙げる",
+          "text_en": "Amer Sports names lululemon among its competitors",
+          "source": {
+            "label": "Amer Sports 20-F(2025年度)",
+            "label_en": "Amer Sports 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1988894/000198889426000004/as-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "we compete with a broad set of competitors that include Moncler, Canada Goose, Lululemon Athletica, On Running, Hoka, The North Face, and Babolat"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

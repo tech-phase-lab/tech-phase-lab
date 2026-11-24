@@ -1,0 +1,152 @@
+{
+  "root": {
+    "ticker": "SLG",
+    "name": "SLグリーン・リアルティ",
+    "cik": 1040971,
+    "name_en": "SL Green Realty"
+  },
+  "rows": [
+    {
+      "ja": "主なテナント(賃料の多い順)",
+      "en": "Largest tenants (by rent)"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "PSKY",
+      "ticker": "PSKY",
+      "name": "パラマウント・スカイダンス",
+      "name_en": "Paramount Skydance (Paramount Global)",
+      "sub": "メディア",
+      "sub_en": "Media",
+      "sub_short": "メディア",
+      "sub_short_en": "Media",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "マンハッタンのオフィス(1515 Broadway)を借りる最大のテナント",
+          "text_en": "Leases office space at 1515 Broadway, Manhattan",
+          "source": {
+            "label": "SL Green 10-K(2025年度)",
+            "label_en": "SL Green 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1040971/000162828026008669/slg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Paramount Global 1515 Broadway June 2031 1,604,544 $ 109,553 $ 62,335 4.4 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "UBS",
+      "ticker": "UBS",
+      "name": "UBS",
+      "name_en": "UBS",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "マンハッタンのオフィス(11 Madison Avenue)を借りる主なテナント",
+          "text_en": "Leases office space at 11 Madison Avenue, Manhattan",
+          "source": {
+            "label": "SL Green 10-K(2025年度)",
+            "label_en": "SL Green 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1040971/000162828026008669/slg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "UBS Americas, Inc. 11 Madison Avenue May 2037 1,184,489 $ 80,929 $ 48,558 3.4 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Bloomberg",
+      "ticker": "Bloomberg",
+      "name": "ブルームバーグ",
+      "name_en": "Bloomberg",
+      "sub": "金融情報",
+      "sub_en": "Financial data",
+      "sub_short": "金融情報",
+      "sub_short_en": "Data",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "マンハッタンのオフィス(919 Third Avenue)を借りる主なテナント",
+          "text_en": "Leases office space at 919 Third Avenue, Manhattan",
+          "source": {
+            "label": "SL Green 10-K(2025年度)",
+            "label_en": "SL Green 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1040971/000162828026008669/slg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Bloomberg L.P. 919 Third Avenue February 2040 926,156 $ 63,990 $ 32,635 2.3 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SONY",
+      "ticker": "SONY",
+      "name": "ソニーグループ",
+      "name_en": "Sony Group",
+      "sub": "電機・エンタメ",
+      "sub_en": "Electronics & entertainment",
+      "sub_short": "ソニー",
+      "sub_short_en": "Sony",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "マンハッタンのオフィス(11 Madison Avenue)を借りる主なテナント",
+          "text_en": "Leases office space at 11 Madison Avenue, Manhattan",
+          "source": {
+            "label": "SL Green 10-K(2025年度)",
+            "label_en": "SL Green 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1040971/000162828026008669/slg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Sony Corporation 11 Madison Avenue January 2031 578,791 $ 53,094 $ 31,857 2.2 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SocGen",
+      "ticker": "Societe Generale",
+      "name": "ソシエテ・ジェネラル",
+      "name_en": "Societe Generale",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "マンハッタンのオフィス(245 Park Avenue)を借りる主なテナント",
+          "text_en": "Leases office space at 245 Park Avenue, Manhattan",
+          "source": {
+            "label": "SL Green 10-K(2025年度)",
+            "label_en": "SL Green 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1040971/000162828026008669/slg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Societe Generale 245 Park Avenue October 2032 520,831 $ 50,120 $ 25,110 1.8 %"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

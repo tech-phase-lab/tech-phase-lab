@@ -1,0 +1,230 @@
+{
+  "root": {
+    "ticker": "UE",
+    "name": "アーバン・エッジ・プロパティーズ",
+    "cik": 1611547,
+    "name_en": "Urban Edge Properties"
+  },
+  "rows": [
+    {
+      "ja": "主なテナント(売上の多い順)",
+      "en": "Largest tenants (by revenue)"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "TJX",
+      "ticker": "TJX",
+      "name": "TJXカンパニーズ",
+      "name_en": "The TJX Companies",
+      "sub": "衣料品のディスカウント小売",
+      "sub_en": "Off-price apparel",
+      "sub_short": "衣料小売",
+      "sub_short_en": "Apparel",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "28店舗を借りる(売上の5.6%)",
+          "text_en": "Major tenant (5.6% of revenue)",
+          "source": {
+            "label": "Urban Edge 10-K(2025年度)",
+            "label_en": "Urban Edge 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1611547/000161154726000022/ue-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "The TJX Companies (2) 28 873,159 5.1% $26,524 5.6%"
+          }
+        }
+      ]
+    },
+    {
+      "id": "WMT",
+      "ticker": "WMT",
+      "name": "ウォルマート",
+      "name_en": "Walmart",
+      "sub": "総合小売",
+      "sub_en": "Retail",
+      "sub_short": "小売",
+      "sub_short_en": "Retail",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "5店舗を借りる(売上の3.7%)",
+          "text_en": "Major tenant (3.7% of revenue)",
+          "source": {
+            "label": "Urban Edge 10-K(2025年度)",
+            "label_en": "Urban Edge 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1611547/000161154726000022/ue-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Walmart 5 780,788 4.6% 17,531 3.7%"
+          }
+        }
+      ]
+    },
+    {
+      "id": "LOW",
+      "ticker": "LOW",
+      "name": "ロウズ",
+      "name_en": "Lowe's",
+      "sub": "ホームセンター",
+      "sub_en": "Home improvement",
+      "sub_short": "DIY",
+      "sub_short_en": "DIY",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "6店舗を借りる(売上の3.1%)",
+          "text_en": "Major tenant (3.1% of revenue)",
+          "source": {
+            "label": "Urban Edge 10-K(2025年度)",
+            "label_en": "Urban Edge 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1611547/000161154726000022/ue-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Lowe's Companies 6 976,415 5.7% 14,564 3.1%"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BURL",
+      "ticker": "BURL",
+      "name": "バーリントン",
+      "name_en": "Burlington Stores",
+      "sub": "ディスカウント小売",
+      "sub_en": "Discount retail",
+      "sub_short": "安売り店",
+      "sub_short_en": "Discount",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "11店舗を借りる(売上の3.0%)",
+          "text_en": "Major tenant (3.0% of revenue)",
+          "source": {
+            "label": "Urban Edge 10-K(2025年度)",
+            "label_en": "Urban Edge 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1611547/000161154726000022/ue-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Burlington 11 532,514 3.1% 14,122 3.0%"
+          }
+        }
+      ]
+    },
+    {
+      "id": "KSS",
+      "ticker": "KSS",
+      "name": "コールズ",
+      "name_en": "Kohl's",
+      "sub": "百貨店",
+      "sub_en": "Department stores",
+      "sub_short": "百貨店",
+      "sub_short_en": "Dept store",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "9店舗を借りる(売上の3.0%)",
+          "text_en": "Major tenant (3.0% of revenue)",
+          "source": {
+            "label": "Urban Edge 10-K(2025年度)",
+            "label_en": "Urban Edge 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1611547/000161154726000022/ue-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Kohl's 9 855,561 5.0% 14,024 3.0%"
+          }
+        }
+      ]
+    },
+    {
+      "id": "HD",
+      "ticker": "HD",
+      "name": "ホーム・デポ",
+      "name_en": "The Home Depot",
+      "sub": "ホームセンター",
+      "sub_en": "Home improvement",
+      "sub_short": "DIY",
+      "sub_short_en": "DIY",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "5店舗を借りる(売上の2.9%)",
+          "text_en": "Major tenant (2.9% of revenue)",
+          "source": {
+            "label": "Urban Edge 10-K(2025年度)",
+            "label_en": "Urban Edge 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1611547/000161154726000022/ue-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "The Home Depot 5 538,742 3.1% 13,891 2.9%"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BBY",
+      "ticker": "BBY",
+      "name": "ベスト・バイ",
+      "name_en": "Best Buy",
+      "sub": "家電量販",
+      "sub_en": "Electronics retail",
+      "sub_short": "家電",
+      "sub_short_en": "Retail",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "9店舗を借りる(売上の2.7%)",
+          "text_en": "Major tenant (2.7% of revenue)",
+          "source": {
+            "label": "Urban Edge 10-K(2025年度)",
+            "label_en": "Urban Edge 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1611547/000161154726000022/ue-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Best Buy 9 412,305 2.4% 12,718 2.7%"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BJ",
+      "ticker": "BJ",
+      "name": "BJ'sホールセール・クラブ",
+      "name_en": "BJ's Wholesale Club",
+      "sub": "会員制倉庫店",
+      "sub_en": "Warehouse clubs",
+      "sub_short": "会員制",
+      "sub_short_en": "Clubs",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "4店舗を借りる(売上の2.0%)",
+          "text_en": "Major tenant (2.0% of revenue)",
+          "source": {
+            "label": "Urban Edge 10-K(2025年度)",
+            "label_en": "Urban Edge 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1611547/000161154726000022/ue-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "BJ's Wholesale Club 4 454,297 2.7% 9,519 2.0%"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

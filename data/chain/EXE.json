@@ -1,0 +1,157 @@
+{
+  "root": {
+    "ticker": "EXE",
+    "name": "エクスパンド・エナジー",
+    "cik": 895126,
+    "name_en": "Expand Energy"
+  },
+  "rows": [
+    {
+      "ja": "集ガス・パイプライン(上流)",
+      "en": "Gathering & pipelines (upstream)",
+      "above": true
+    },
+    {
+      "ja": "合併・鉱区のロイヤルティ保有者",
+      "en": "Merger & royalty owners"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "DTM",
+      "ticker": "DTM",
+      "name": "DTミッドストリーム",
+      "name_en": "DT Midstream",
+      "sub": "ガス集送・パイプライン",
+      "sub_en": "Gas gathering & pipelines",
+      "sub_short": "ガス集送",
+      "sub_short_en": "Pipes",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "DT Midstreamが10-Kで、唯一の主要顧客と記載",
+          "text_en": "DT Midstream says Expand Energy is its one key customer",
+          "source": {
+            "label": "DT Midstream 10-K(2024年度)",
+            "label_en": "DT Midstream 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1842022/000184202225000003/dtm-20241231.htm",
+            "level": "official",
+            "date": "2025-02-26",
+            "quote": "We have one key customer, Expand Energy."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WMB",
+      "ticker": "WMB",
+      "name": "ウィリアムズ",
+      "name_en": "Williams",
+      "sub": "天然ガスパイプライン",
+      "sub_en": "Natural gas pipelines",
+      "sub_short": "ガス管",
+      "sub_short_en": "Pipelines",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Williamsが10-Kで、顧客の一社に挙げる(ロイヤルティ訴訟の記載)",
+          "text_en": "Williams names Expand Energy among its customers (royalty litigation note)",
+          "source": {
+            "label": "Williams 10-K(2025年度)",
+            "label_en": "Williams 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/107263/000010726326000006/wmb-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Certain customers, including Expand Energy Corporation (formerly Chesapeake Energy Corporation or Chesapeake), have been named in various lawsuits alleging underpayment of royalties"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SWN",
+      "ticker": "SWN",
+      "name": "サウスウェスタン・エナジー",
+      "name_en": "Southwestern Energy",
+      "sub": "天然ガス開発",
+      "sub_en": "Natural gas producer",
+      "sub_short": "天然ガス",
+      "sub_short_en": "Gas",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2024年10月にChesapeakeがSouthwesternと合併し、Expand Energyに改称",
+          "text_en": "Chesapeake merged with Southwestern in Oct 2024 and became Expand Energy",
+          "source": {
+            "label": "Expand Energy 10-K(2025年度)",
+            "label_en": "Expand Energy 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/895126/000089512626000011/exe-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "On October 1, 2024, Chesapeake Energy Corporation completed its previously announced merger with Southwestern Energy Company. In connection with the Southwestern Merger, Chesapeake Energy Corporation changed its name to Expand Energy Corporation."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WHK",
+      "ticker": "WHK",
+      "name": "ホワイトホーク・ミネラルズ",
+      "name_en": "WhiteHawk Minerals",
+      "sub": "鉱区ロイヤルティ",
+      "sub_en": "Mineral royalties",
+      "sub_short": "鉱区権益",
+      "sub_short_en": "Minerals",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "WhiteHawkがS-1で、Haynesvilleの鉱区の主な操業者に挙げる",
+          "text_en": "WhiteHawk names Expand Energy among the operators of its Haynesville acreage",
+          "source": {
+            "label": "WhiteHawk Minerals S-1(2026年)",
+            "label_en": "WhiteHawk Minerals S-1 (2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1921603/000119312526410790/whk-20261001.htm",
+            "level": "official",
+            "date": "2026-10-01",
+            "quote": "with WhiteHawk's acreage operated by premier producers including Expand Energy, Comstock Resources and Adamas Energy."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MXC",
+      "ticker": "MXC",
+      "name": "メキシコ・エナジー",
+      "name_en": "Mexco Energy",
+      "sub": "石油・ガス・ロイヤルティ",
+      "sub_en": "Oil, gas & royalties",
+      "sub_short": "石油ガス",
+      "sub_short_en": "Oil & gas",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Expandが操業する井戸のロイヤルティ権益を取得(2025年10月)",
+          "text_en": "Bought royalty interests in wells operated by Expand Energy (Oct 2025)",
+          "source": {
+            "label": "Mexco Energy 10-K(2026年3月期)",
+            "label_en": "Mexco Energy 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/66418/000149315226030386/form10-k.htm",
+            "level": "official",
+            "date": "2026-06-29",
+            "quote": "In October 2025, the Company acquired royalty interests in 3 producing wells operated by Expand Energy Corporation in Caddo Parish, Louisiana for a purchase price of $31,300"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

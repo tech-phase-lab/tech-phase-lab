@@ -4,6 +4,7 @@ import {aiCheckRequest} from './ai-check.mjs';
 import {rizelReviewRequest} from './rizel-review-store.mjs';
 import { paymentRuntime } from './payments/runtime.mjs';
 import { livePaymentRuntime } from './payments/live-runtime.mjs';
+import { liveConfigSelfCheck } from './payments/live-config-check.mjs';
 import {riskRequest} from './risk-store.mjs';
 import {createThermometerRead} from './thermometer-read.mjs';
 import { operateNotificationSettings } from '../../lib/resolute/notification-database.ts';
@@ -18,6 +19,8 @@ import { resoluteDatabaseConfig } from '../../lib/resolute/database-config.ts';
 const config=authConfig(process.env);
 const db=resoluteDatabaseConfig(process.env.ENTITLEMENT_DB_URL);
 if(new URL(db.connectionString).username!=='resolute_api_reader')throw Error('Read-only DB role required');
+// Booleans only: tells whether the payment Clerk key is the production instance's, without revealing it.
+console.log(JSON.stringify({event:'RESOLUTE_LIVE_CONFIG_CHECK',...liveConfigSelfCheck(process.env)}));
 const payments=paymentRuntime(process.env,config);
 const livePayments=livePaymentRuntime(process.env,config);
 // A wrong thermometer setting must not take the whole API down: the page stays 「準備中」.

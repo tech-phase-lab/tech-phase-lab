@@ -1,0 +1,152 @@
+{
+  "root": {
+    "ticker": "EPRT",
+    "name": "エッセンシャル・プロパティーズ・リアルティ",
+    "cik": 1728951,
+    "name_en": "Essential Properties Realty Trust"
+  },
+  "rows": [
+    {
+      "ja": "主なテナント(賃料の多い順)",
+      "en": "Largest tenants (by rent)"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "EquipmentShare",
+      "ticker": "EquipmentShare",
+      "name": "イクイップメントシェア",
+      "name_en": "EquipmentShare",
+      "sub": "建機レンタル",
+      "sub_en": "Equipment rental",
+      "sub_short": "建機貸出",
+      "sub_short_en": "Rental",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "57物件を借りる(年間賃料の3.4%)",
+          "text_en": "Major tenant (3.4% of annualized base rent)",
+          "source": {
+            "label": "Essential Properties 10-K(2025年度)",
+            "label_en": "Essential Properties 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1728951/000172895126000008/eprt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "EquipmentShare.com Inc. EquipmentShare 57 $ 18,934 3.4 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "WhistleExpress",
+      "ticker": "Whistle Express",
+      "name": "ホイッスル・エクスプレス",
+      "name_en": "Whistle Express Car Wash",
+      "sub": "洗車",
+      "sub_en": "Car washes",
+      "sub_short": "洗車",
+      "sub_short_en": "Car wash",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "洗車場33物件を借りる(年間賃料の2.0%)",
+          "text_en": "Major tenant (2.0% of annualized base rent)",
+          "source": {
+            "label": "Essential Properties 10-K(2025年度)",
+            "label_en": "Essential Properties 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1728951/000172895126000008/eprt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Express Wash Operations, LLC Whistle Express Car Wash 33 10,900 2.0 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ChickenNPickle",
+      "ticker": "Chicken N Pickle",
+      "name": "チキン・アンド・ピクル",
+      "name_en": "Chicken N Pickle",
+      "sub": "飲食・娯楽",
+      "sub_en": "Dining & games",
+      "sub_short": "飲食娯楽",
+      "sub_short_en": "Dining",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "8物件を借りる(年間賃料の1.6%)",
+          "text_en": "Major tenant (1.6% of annualized base rent)",
+          "source": {
+            "label": "Essential Properties 10-K(2025年度)",
+            "label_en": "Essential Properties 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1728951/000172895126000008/eprt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "CNP Holdings, LLC Chicken N Pickle 8 8,641 1.6 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "YSWY",
+      "ticker": "YSWY",
+      "name": "イエスウェイ(オールサップス)",
+      "name_en": "Yesway (Allsup's)",
+      "sub": "コンビニ",
+      "sub_en": "Convenience stores",
+      "sub_short": "コンビニ",
+      "sub_short_en": "C-stores",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "コンビニ13物件を借りる(年間賃料の1.5%)",
+          "text_en": "Major tenant (1.5% of annualized base rent)",
+          "source": {
+            "label": "Essential Properties 10-K(2025年度)",
+            "label_en": "Essential Properties 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1728951/000172895126000008/eprt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "BW Ultimate Parent, LLC Allsup's/YesWay 13 8,337 1.5 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PLAY",
+      "ticker": "PLAY",
+      "name": "デイブ&バスターズ",
+      "name_en": "Dave & Buster's",
+      "sub": "飲食・娯楽",
+      "sub_en": "Dining & games",
+      "sub_short": "飲食娯楽",
+      "sub_short_en": "Dining",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "5物件を借りる(年間賃料の1.5%)",
+          "text_en": "Major tenant (1.5% of annualized base rent)",
+          "source": {
+            "label": "Essential Properties 10-K(2025年度)",
+            "label_en": "Essential Properties 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1728951/000172895126000008/eprt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Dave & Buster's Inc. Dave & Buster's 5 8,078 1.5 %"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

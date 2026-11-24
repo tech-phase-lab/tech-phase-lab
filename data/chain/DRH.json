@@ -1,0 +1,183 @@
+{
+  "root": {
+    "ticker": "DRH",
+    "name": "ダイヤモンドロック・ホスピタリティ",
+    "cik": 1298946,
+    "name_en": "DiamondRock Hospitality"
+  },
+  "rows": [
+    {
+      "ja": "ホテルのブランド",
+      "en": "Hotel brands",
+      "above": true
+    },
+    {
+      "ja": "ホテルの運営会社",
+      "en": "Hotel management companies"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "MAR",
+      "ticker": "MAR",
+      "name": "マリオット",
+      "name_en": "Marriott International",
+      "sub": "ホテルブランド",
+      "sub_en": "Hotel brand",
+      "sub_short": "ホテル",
+      "sub_short_en": "Hotels",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "多くのホテルがマリオットのブランドで営業",
+          "text_en": "Many of its hotels fly a Marriott brand",
+          "source": {
+            "label": "DiamondRock 10-K(2025年度)",
+            "label_en": "DiamondRock 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1298946/000129894626000013/drh-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "which are flagged under a brand owned by Marriott International, Inc. (\"Marriott\"), Hilton Worldwide Holdings Inc. (\"Hilton\") or IHG Hotels & Resorts (\"IHG\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HLT",
+      "ticker": "HLT",
+      "name": "ヒルトン",
+      "name_en": "Hilton Worldwide",
+      "sub": "ホテルブランド",
+      "sub_en": "Hotel brand",
+      "sub_short": "ホテル",
+      "sub_short_en": "Hotels",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ヒルトンのブランドで営業するホテルを保有",
+          "text_en": "Owns hotels under Hilton brands",
+          "source": {
+            "label": "DiamondRock 10-K(2025年度)",
+            "label_en": "DiamondRock 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1298946/000129894626000013/drh-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "which are flagged under a brand owned by Marriott International, Inc. (\"Marriott\"), Hilton Worldwide Holdings Inc. (\"Hilton\") or IHG Hotels & Resorts (\"IHG\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "IHG",
+      "ticker": "IHG",
+      "name": "IHG",
+      "name_en": "InterContinental Hotels (IHG Hotels & Resorts)",
+      "sub": "ホテルブランド",
+      "sub_en": "Hotel brand",
+      "sub_short": "ホテル",
+      "sub_short_en": "Hotels",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "IHGのブランドで営業するホテルを保有",
+          "text_en": "Owns hotels under IHG brands",
+          "source": {
+            "label": "DiamondRock 10-K(2025年度)",
+            "label_en": "DiamondRock 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1298946/000129894626000013/drh-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "which are flagged under a brand owned by Marriott International, Inc. (\"Marriott\"), Hilton Worldwide Holdings Inc. (\"Hilton\") or IHG Hotels & Resorts (\"IHG\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Highgate",
+      "ticker": "Highgate",
+      "name": "ハイゲート・ホテルズ",
+      "name_en": "Highgate Hotels",
+      "sub": "ホテル運営",
+      "sub_en": "Hotel manager",
+      "sub_short": "運営",
+      "sub_short_en": "Manager",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2026年からホテルの運営を委託(10年契約)",
+          "text_en": "New management agreement from 2026 (to 2036)",
+          "source": {
+            "label": "DiamondRock 10-K(2025年度)",
+            "label_en": "DiamondRock 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1298946/000129894626000013/drh-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "we terminated the management agreement with HEI Hotels & Resorts and entered into a management agreement with Highgate Hotels, which expires February 2036"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Aimbridge",
+      "ticker": "Aimbridge",
+      "name": "エイムブリッジ・ホスピタリティ",
+      "name_en": "Aimbridge Hospitality",
+      "sub": "ホテル運営",
+      "sub_en": "Hotel manager",
+      "sub_short": "運営",
+      "sub_short_en": "Manager",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "アトランタのマリオットなどの運営を受託",
+          "text_en": "Manages hotels such as the Atlanta Marriott Alpharetta",
+          "source": {
+            "label": "DiamondRock 10-K(2025年度)",
+            "label_en": "DiamondRock 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1298946/000129894626000013/drh-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Atlanta Marriott Alpharetta Aimbridge Hospitality At will with no fee"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SageHosp",
+      "ticker": "Sage Hospitality",
+      "name": "セージ・ホスピタリティ",
+      "name_en": "Sage Hospitality",
+      "sub": "ホテル運営",
+      "sub_en": "Hotel manager",
+      "sub_short": "運営",
+      "sub_short_en": "Manager",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ACホテル・ミネアポリスの運営を受託",
+          "text_en": "Manages the AC Hotel Minneapolis Downtown",
+          "source": {
+            "label": "DiamondRock 10-K(2025年度)",
+            "label_en": "DiamondRock 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1298946/000129894626000013/drh-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "AC Hotel Minneapolis Downtown Sage Hospitality At will with no fee"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
