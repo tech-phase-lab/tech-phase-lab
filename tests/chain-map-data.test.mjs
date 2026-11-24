@@ -25,6 +25,85 @@ test('the NVDA chain map data keeps its companies, rows and two-step links', () 
 });
 const CHAIN = () => chain.CHAIN_KINDS;
 
+// One id must mean one real company across every map (HD is The Home Depot, not HD Hyundai).
+// Names are compared after dropping legal suffixes and parentheses; one name may extend the other
+// ("Merck" / "Merck & Co."). Ids whose real company goes by unrelated names are listed with every
+// accepted spelling, so a different company reusing one of these ids still fails.
+const COMPANY_NAME_ALIASES = {
+  ADP: ["adp", "automaticdataprocessing"],
+  AEP: ["aep", "americanelectricpower"],
+  AMD: ["amd", "advancedmicrodevices"],
+  AMZN: ["aws", "amazon", "amazoncom", "amazonkuiper", "amazonwholefoods", "amazonprimevideo", "amazonwebservices", "amazonwholefoodsmarket"],
+  BKNG: ["booking", "priceline"],
+  BLCO: ["bauschlomb", "bauschandlomb"],
+  CFG: ["citizensbankna", "citizensfinancial"],
+  CIFR: ["ciphermining", "cipherdigital"],
+  COMM: ["commscope", "vistancenetworks"],
+  DIS: ["disney", "waltdisney", "disneycruiseline"],
+  DISH: ["dishnetwork", "dishwireless"],
+  Electrolux: ["electrolux", "abelectrolux"],
+  FIS: ["fis", "fidelityinformationservices", "fidelitynationalinformationservices"],
+  Foxconn: ["honhai", "foxconn"],
+  GE: ["geaviation", "geaerospace", "generalelectric"],
+  GOOG: ["google", "alphabet"],
+  GOOGL: ["google", "youtube", "alphabet", "googlecloud"],
+  HPE: ["hpe", "hewlettpackardenterprise"],
+  IFF: ["iff", "flavorsandfragrances"],
+  IHG: ["ihghotelsandresorts", "intercontinentalhotels"],
+  IMXI: ["intermex", "moneyexpress"],
+  JD: ["jdcom", "jdcloud"],
+  LOREAL: ["loral", "loreal"],
+  LSEG: ["lseg", "londonstockexchange"],
+  LVMH: ["lvmh", "sephora"],
+  MMC: ["marshmclennan", "marshandmclennan", "marshandmclennancompanies"],
+  MSGE: ["msgentertainment", "madisonsquaregardenentertainment"],
+  Maaden: ["maaden", "saudiarabianmining"],
+  ODP: ["odp", "officedepot"],
+  OI: ["oiglass", "owensillinois"],
+  ORLY: ["oreillyautoparts", "oreillyautomotive"],
+  OXY: ["occidentalchemical", "occidentalpetroleum"],
+  PEG: ["pseg", "publicserviceelectricandgas"],
+  PHG: ["philips", "royalphilips", "koninklijkephilips"],
+  PPL: ["ppl", "lgandeandku"],
+  ROCHE: ["roche", "rochediagnostics", "hoffmannlarochegenentech"],
+  SAIC: ["saic", "scienceapplications"],
+  SLAB: ["siliconlabs", "siliconlaboratories"],
+  SPACEX: ["spacex", "spaceexploration"],
+  SPCX: ["spacex", "spaceexploration"],
+  TD: ["tdbank", "torontodominionbank"],
+  TEF: ["telefnica", "telefonica"],
+  TSM: ["tsmc", "taiwansemiconductormanufacturing"],
+  UMC: ["umc", "unitedmicroelectronics"],
+  UNH: ["optum", "unitedhealth", "unitedhealthcare"],
+  UPS: ["ups", "upslogistics", "unitedparcelservice"],
+  WTW: ["wtw", "willistowerswatson"],
+};
+const companyKey = name => name.toLowerCase().replace(/&/g, ' and ').replace(/\(.*?\)/g, '').replace(/[’'.,]/g, '')
+  .replace(/\b(inc|incorporated|corp|corporation|company|co|ltd|limited|plc|group|holdings?|se|ag|sa|nv|llc|lp|the|technologies|technology|international|systems)\b/g, ' ')
+  .replace(/[^a-z0-9]/g, '');
+
+test('a company id refers to the same real company in every chain map', () => {
+  const names = new Map();
+  for (const ticker of ALL) {
+    const map = JSON.parse(readFileSync(new URL(`../data/chain/${ticker}.json`, import.meta.url), 'utf8'));
+    for (const company of map.companies) {
+      const key = companyKey(company.name_en ?? company.name);
+      if (!names.has(company.id)) names.set(company.id, new Map());
+      names.get(company.id).set(key, ticker);
+    }
+  }
+  const clashes = [];
+  for (const [id, keys] of names) {
+    const sorted = [...keys.keys()].sort((a, b) => a.length - b.length);
+    if (sorted.every(key => key.startsWith(sorted[0]))) continue;
+    const allowed = COMPANY_NAME_ALIASES[id] ?? [];
+    for (const key of sorted) if (!allowed.includes(key)) clashes.push(`${id}: "${key}" in ${keys.get(key)}.json`);
+  }
+  assert.deepEqual(clashes, []);
+  assert.deepEqual([...names.get('HD').keys()], ['homedepot']);
+  assert.deepEqual([...names.get('HDHyundai').keys()], ['hdhyundai']);
+});
+
 test('every relation has Japanese and English text and a linked, labelled source; press items are marked', () => {
   const sources = [...data.companies.flatMap(company => company.relations), ...data.far];
   assert.equal(sources.length, 31);

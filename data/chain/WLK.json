@@ -36,6 +36,8 @@
       "name_en": "Westlake Chemical Partners",
       "sub": "エチレン",
       "sub_en": "Ethylene",
+      "sub_short": "エチレン",
+      "sub_short_en": "Ethylene",
       "row": 0,
       "relations": [
         {
@@ -60,6 +62,8 @@
       "name_en": "Lotte",
       "sub": "化学",
       "sub_en": "Chemicals",
+      "sub_short": "化学",
+      "sub_short_en": "Chem",
       "row": 0,
       "relations": [
         {
@@ -84,6 +88,8 @@
       "name_en": "Hexion",
       "sub": "エポキシ樹脂",
       "sub_en": "Epoxy resins",
+      "sub_short": "エポキシ",
+      "sub_short_en": "Epoxy",
       "row": 0,
       "relations": [
         {
@@ -102,12 +108,14 @@
       ]
     },
     {
-      "id": "ACI",
+      "id": "ACIPerplastic",
       "ticker": "ACI/Perplastic",
       "name": "ACI/パープラスティック",
       "name_en": "ACI/Perplastic Group",
       "sub": "樹脂コンパウンド",
       "sub_en": "Compounding",
+      "sub_short": "樹脂加工",
+      "sub_short_en": "Plastics",
       "row": 0,
       "relations": [
         {
@@ -132,6 +140,8 @@
       "name_en": "Dow",
       "sub": "化学",
       "sub_en": "Chemicals",
+      "sub_short": "化学",
+      "sub_short_en": "Chem",
       "row": 1,
       "relations": [
         {
@@ -156,6 +166,8 @@
       "name_en": "LyondellBasell",
       "sub": "化学",
       "sub_en": "Chemicals",
+      "sub_short": "石油化学",
+      "sub_short_en": "Petchem",
       "row": 1,
       "relations": [
         {
@@ -180,6 +192,8 @@
       "name_en": "ExxonMobil",
       "sub": "石油・化学",
       "sub_en": "Oil & chemicals",
+      "sub_short": "石油",
+      "sub_short_en": "Oil & gas",
       "row": 1,
       "relations": [
         {
@@ -204,6 +218,8 @@
       "name_en": "Olin",
       "sub": "塩素・苛性ソーダ",
       "sub_en": "Chlor-alkali",
+      "sub_short": "塩素化学",
+      "sub_short_en": "Chlorine",
       "row": 2,
       "relations": [
         {
@@ -228,6 +244,8 @@
       "name_en": "Occidental (OxyChem)",
       "sub": "石油・化学",
       "sub_en": "Oil & chemicals",
+      "sub_short": "化学",
+      "sub_short_en": "Chem",
       "row": 2,
       "relations": [
         {
@@ -252,6 +270,8 @@
       "name_en": "Shintech",
       "sub": "塩ビ",
       "sub_en": "PVC",
+      "sub_short": "塩ビ",
+      "sub_short_en": "PVC",
       "row": 2,
       "relations": [
         {
@@ -276,6 +296,8 @@
       "name_en": "Trex",
       "sub": "ウッドデッキ材",
       "sub_en": "Composite decking",
+      "sub_short": "デッキ材",
+      "sub_short_en": "Decking",
       "row": 3,
       "relations": [
         {
@@ -300,6 +322,8 @@
       "name_en": "James Hardie",
       "sub": "建材",
       "sub_en": "Building products",
+      "sub_short": "建材",
+      "sub_short_en": "Building",
       "row": 3,
       "relations": [
         {

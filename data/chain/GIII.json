@@ -25,6 +25,8 @@
       "name_en": "PVH",
       "sub": "アパレル",
       "sub_en": "Apparel",
+      "sub_short": "アパレル",
+      "sub_short_en": "Apparel",
       "row": 0,
       "relations": [
         {
@@ -49,6 +51,8 @@
       "name_en": "Xcel Brands",
       "sub": "ブランド管理",
       "sub_en": "Brand management",
+      "sub_short": "ブランド",
+      "sub_short_en": "Brands",
       "row": 0,
       "relations": [
         {
@@ -73,6 +77,8 @@
       "name_en": "Levi Strauss",
       "sub": "アパレル",
       "sub_en": "Apparel",
+      "sub_short": "消費者",
+      "sub_short_en": "Consumer",
       "row": 0,
       "relations": [
         {
@@ -97,6 +103,8 @@
       "name_en": "Macy's",
       "sub": "百貨店",
       "sub_en": "Department stores",
+      "sub_short": "百貨店",
+      "sub_short_en": "Stores",
       "row": 1,
       "relations": [
         {
@@ -121,6 +129,8 @@
       "name_en": "Kohl's",
       "sub": "百貨店",
       "sub_en": "Department stores",
+      "sub_short": "百貨店",
+      "sub_short_en": "Stores",
       "row": 1,
       "relations": [
         {
@@ -145,6 +155,8 @@
       "name_en": "Costco",
       "sub": "会員制倉庫店",
       "sub_en": "Warehouse clubs",
+      "sub_short": "量販店",
+      "sub_short_en": "Clubs",
       "row": 1,
       "relations": [
         {
@@ -169,6 +181,8 @@
       "name_en": "Ross Stores",
       "sub": "オフプライス小売",
       "sub_en": "Off-price retail",
+      "sub_short": "格安小売",
+      "sub_short_en": "Off-price",
       "row": 1,
       "relations": [
         {
@@ -193,6 +207,8 @@
       "name_en": "Harley-Davidson",
       "sub": "二輪車",
       "sub_en": "Motorcycles",
+      "sub_short": "二輪車",
+      "sub_short_en": "Bikes",
       "row": 1,
       "relations": [
         {
