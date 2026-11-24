@@ -22,6 +22,14 @@ test('guest ownership requires a random capability through the authenticated ser
  assert.equal(authenticateGuest(headers,{serviceToken:secret}),null);
  headers.set('x-resolute-service-token',secret);
  assert.equal(authenticateGuest(headers,{serviceToken:secret}),guest);
+ // Vercel Production sends the production service token; the preview one alone must not be required.
+ const production='p'.repeat(43),config={serviceToken:secret,production:{serviceToken:production}};
+ headers.set('x-resolute-service-token',production);
+ assert.equal(authenticateGuest(headers,config),guest);
+ assert.equal(authenticateGuest(headers,{serviceToken:secret}),null);
+ for(const wrong of ['p'.repeat(42),'q'.repeat(43),'']){headers.set('x-resolute-service-token',wrong);assert.equal(authenticateGuest(headers,config),null);}
+ assert.equal(authenticateGuest(new Headers({'x-resolute-guest-token':token,'x-resolute-service-token':production}),{serviceToken:secret,production:{serviceToken:undefined}}),null);
+ headers.set('x-resolute-service-token',secret);
  assert.equal(new URL(checkoutUrl('en',randomUUID(),false,true),'https://site.test').searchParams.get('guest'),'1');
 });
 

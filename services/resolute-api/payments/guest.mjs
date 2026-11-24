@@ -9,6 +9,9 @@ export function guestIdentity(token) {
   return `guest_${createHash('sha256').update(token).digest('hex')}`;
 }
 export function authenticateGuest(headers, config) {
-  if (!serviceTokenMatches(headers.get('x-resolute-service-token'), config.serviceToken)) return null;
+  // Vercel Production sends the production service token (same rule as auth.mjs).
+  const candidate = headers.get('x-resolute-service-token');
+  if (!serviceTokenMatches(candidate, config.serviceToken) &&
+      !serviceTokenMatches(candidate, config.production?.serviceToken)) return null;
   return guestIdentity(headers.get('x-resolute-guest-token'));
 }

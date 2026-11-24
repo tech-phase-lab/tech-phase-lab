@@ -1,8 +1,11 @@
 import { authenticateGuest } from './guest.mjs';
 import { authenticate } from '../auth.mjs';
-import { OWNER_ACCOUNT_ID } from '../../../lib/membership/entitlements.ts';
+import { OWNER_ACCOUNT_ID, PRODUCTION_OWNER_ACCOUNT_ID } from '../../../lib/membership/entitlements.ts';
 import { createLivePaymentServices } from './live-services.mjs';
 import { paymentHttp } from './http.mjs';
+
+// Owner accounts (preview and production Clerk) may always read the live audit view.
+export const LIVE_AUDIT_USERS = Object.freeze([OWNER_ACCOUNT_ID, PRODUCTION_OWNER_ACCOUNT_ID]);
 
 // Separate server-owned namespace: no request field can select the environment.
 export function livePaymentRuntime(env, authConfig, createServices = createLivePaymentServices) {
@@ -20,7 +23,7 @@ export function livePaymentRuntime(env, authConfig, createServices = createLiveP
           authenticate:headers => authenticate(headers, authConfig),
           authenticateGuest:headers => authenticateGuest(headers,authConfig),
           guestEnabled:()=>env.RESOLUTE_GUEST_CHECKOUT_ENABLED === 'true',
-          allowedUsers:null, auditUsers:[OWNER_ACCOUNT_ID] });
+          allowedUsers:null, auditUsers:LIVE_AUDIT_USERS });
       }
       return await handler(request);
     } catch { return unavailable('PAYMENT_UNAVAILABLE'); }

@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { checkoutUrl, liveApprovalUrl, liveCheckoutRequest, liveOrder } from "@/lib/resolute/live-checkout";
 import { ConsentCheck, ConsentError, useConsent } from "../../legal/consent-check";
+import { RESOLUTE_AUTO_RENEWAL_LINE } from "../../legal/agree-button";
 
 /**
  * The LP's gold button (owner, Nov 2026): no confirmation page, no sheet, no PayPal buttons. Pressing it creates
@@ -12,11 +13,15 @@ import { ConsentCheck, ConsentError, useConsent } from "../../legal/consent-chec
  * checkout page, which explains it; the link itself also leads there without JavaScript.
  * The consent line sits right above it (lawyer review, Nov 24): without the tick, pressing it starts nothing and shows the
  * red line under it; the tick time goes with the order.
+ * Automatic renewal (lawyer review, Nov 24): only the server knows whether a member's order renews automatically
+ * (order.autoRenewal). When it does and the buyer has not yet seen it, the button does not go to PayPal: the one-line
+ * notice (how and by when to stop) appears right above the consent line, the tick is cleared, and the next press —
+ * after the buyer has read it and ticked again — creates a fresh order with that later consent time and goes to PayPal.
  */
 export default function BuyButton({ language, shownValue, className, children, navigate = url => window.location.assign(url) }: {
  language: "ja" | "en"; shownValue: string; className: string; children: ReactNode; navigate?: (url: string) => void;
 }) {
- const [busy, setBusy] = useState(false);
+ const [busy, setBusy] = useState(false), [renews, setRenews] = useState(false);
  const consent = useConsent(), en = language === "en";
  const lock = useRef(false), requestKey = useRef<string | null>(null);
  // Coming back from PayPal with the browser's back button restores this page from memory: make the button usable again.
@@ -45,6 +50,10 @@ export default function BuyButton({ language, shownValue, className, children, n
     else if (code === "ORDER_EXPIRED") { requestKey.current = null; order = await create(false, consentAt); }
     else throw e;
    }
+   if (order.autoRenewal && !renews) {
+    setRenews(true); consent.set(false); requestKey.current = null; lock.current = false; setBusy(false);
+    return;
+   }
    const approval = liveApprovalUrl(order.approvalUrl);
    navigate(approval && order.quote.value === shownValue ? approval : checkoutUrl(language, order.orderId, false, guest));
   } catch (e) {
@@ -54,6 +63,7 @@ export default function BuyButton({ language, shownValue, className, children, n
   }
  }
  return <>
+  {renews && <p role="status" data-auto-renewal="" style={{ margin: "12px 0 0", fontSize: 12.5, lineHeight: 1.5, textAlign: "left" }}>{RESOLUTE_AUTO_RENEWAL_LINE[en ? "en" : "ja"]}</p>}
   <ConsentCheck en={en} consent={consent} />
   <a href={checkoutUrl(language)} className={className} aria-busy={busy || undefined} data-buy="paypal"
    onClick={event => { event.preventDefault(); void buy(); }}>{children}</a>
