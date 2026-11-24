@@ -48,6 +48,14 @@ test('guest proxy establishes an HttpOnly capability before orders, strips clien
   assert.equal(calls.at(-1).init.headers['X-Resolute-Guest-Token'],undefined);
   assert.equal((await request('recovery/claim',{origin:'https://attacker.test'})).status,403);
   userId=null;assert.equal((await request('recovery/claim')).status,401);
+  // Live audit view: both owner accounts (preview and production Clerk), never a member.
+  const { OWNER_ACCOUNT_ID, PRODUCTION_OWNER_ACCOUNT_ID } = await import('../lib/membership/entitlements.ts');
+  userId='user_buyer';assert.equal((await request('audit',{method:'GET'})).status,403);
+  for(const owner of [OWNER_ACCOUNT_ID,PRODUCTION_OWNER_ACCOUNT_ID]){
+   userId=owner;const before=calls.length;assert.equal((await request('audit',{method:'GET'})).status,200);
+   assert.equal(calls.length,before+1);assert.match(calls.at(-1).url,/\/internal\/v1\/live-payments\/audit$/);
+  }
+  userId=null;
   process.env.RESOLUTE_GUEST_CHECKOUT_ENABLED='false';
   assert.equal((await request('guest/orders',{method:'GET'})).status,503);
  } finally {

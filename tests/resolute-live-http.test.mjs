@@ -1,7 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { paymentHttp } from '../services/resolute-api/payments/http.mjs';
-import { livePaymentRuntime } from '../services/resolute-api/payments/live-runtime.mjs';
+import { livePaymentRuntime, LIVE_AUDIT_USERS } from '../services/resolute-api/payments/live-runtime.mjs';
+import { OWNER_ACCOUNT_ID, PRODUCTION_OWNER_ACCOUNT_ID } from '../lib/membership/entitlements.ts';
 const req=(path,method='GET') => new Request('https://internal.test'+path,{method,
   ...(method==='POST'?{headers:{'Content-Type':'application/json'},body:'{}'}:{})});
 
@@ -56,7 +57,7 @@ test('live frontend proxy fails closed and forwards only signed same-origin requ
       b.onResolve({filter:/^next\/headers$/},()=>({path:'cookies',namespace:'fixture'}));
       b.onResolve({filter:/^@clerk\/nextjs\/server$/},()=>({path:'clerk',namespace:'fixture'}));
       b.onResolve({filter:/^@\/lib\/membership\/entitlements$/},()=>({path:'member',namespace:'fixture'}));
-      b.onLoad({filter:/.*/,namespace:'fixture'},a=>({contents:a.path==='cookies'?'export async function cookies(){return {get(){return undefined}}}':a.path==='clerk'?'export async function auth(){return {userId:"member",getToken:async()=>"signed-token"}}':'export const OWNER_ACCOUNT_ID="owner"'}));
+      b.onLoad({filter:/.*/,namespace:'fixture'},a=>({contents:a.path==='cookies'?'export async function cookies(){return {get(){return undefined}}}':a.path==='clerk'?'export async function auth(){return {userId:"member",getToken:async()=>"signed-token"}}':'export const isOwnerAccount=id=>id==="owner"'}));
     }}]});
     const route=await import(pathToFileURL(join(dir,'route.mjs')));
     const context={params:Promise.resolve({action:['orders']})};
@@ -80,4 +81,9 @@ test('live frontend proxy fails closed and forwards only signed same-origin requ
     for(const k of keys) if(old[k]===undefined) delete process.env[k];else process.env[k]=old[k];
     await rm(dir,{recursive:true,force:true});
   }
+});
+
+test('live audit view admits both owner accounts (preview and production Clerk) and nobody else',()=>{
+  assert.deepEqual([...LIVE_AUDIT_USERS].sort(),[OWNER_ACCOUNT_ID,PRODUCTION_OWNER_ACCOUNT_ID].sort());
+  assert.ok(Object.isFrozen(LIVE_AUDIT_USERS));
 });

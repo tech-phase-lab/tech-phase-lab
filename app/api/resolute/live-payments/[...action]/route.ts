@@ -1,7 +1,7 @@
 import { randomBytes } from "node:crypto";
 import { cookies } from "next/headers";
 import { auth } from "@clerk/nextjs/server";
-import { OWNER_ACCOUNT_ID } from "@/lib/membership/entitlements";
+import { isOwnerAccount } from "@/lib/membership/entitlements";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
@@ -18,7 +18,7 @@ async function handle(request: Request, context: { params: Promise<{ action: str
     if ((guest || path === "claim" || path === "recovery/claim") && process.env.RESOLUTE_GUEST_CHECKOUT_ENABLED !== "true")
       return Response.json({ error: "PAYMENT_DISABLED" }, { status: 503, headers });
     const route = guest ? path.slice(6) : path;
-    if (path === "audit" && userId !== OWNER_ACCOUNT_ID)
+    if (path === "audit" && !isOwnerAccount(userId))
       return Response.json({ error: "PAYMENT_ACCESS_DENIED" }, { status: 403, headers });
     if (!(request.method === "POST" && (guest ? ["session", "orders", "capture"] : ["orders", "capture", "claim", "recovery/claim", "auto-renewal"]).includes(route)) &&
         !(request.method === "GET" && ((!guest && (path === "audit" || path === "access" || path === "auto-renewal")) || /^orders\/[0-9a-f-]{36}$/i.test(route))))
