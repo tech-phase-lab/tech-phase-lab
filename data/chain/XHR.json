@@ -1,0 +1,178 @@
+{
+  "root": {
+    "ticker": "XHR",
+    "name": "ゼニア・ホテルズ&リゾーツ",
+    "cik": 1616000,
+    "name_en": "Xenia Hotels & Resorts"
+  },
+  "rows": [
+    {
+      "ja": "ホテルの運営会社・ブランド",
+      "en": "Hotel operators & brands"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "MAR",
+      "ticker": "MAR",
+      "name": "マリオット",
+      "name_en": "Marriott International",
+      "sub": "ホテル運営",
+      "sub_en": "Hotel operator",
+      "sub_short": "ホテル",
+      "sub_short_en": "Hotels",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ブランド運営ホテルの約45%(客室数)を運営",
+          "text_en": "Manages about 45% of its brand-managed rooms",
+          "source": {
+            "label": "Xenia 10-K(2025年度)",
+            "label_en": "Xenia 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1616000/000162828026011060/xhr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Of our brand-managed hotels, approximately 45% of our brand-managed hotels (by room count as of December 31, 2025) are managed by Marriott and its affiliates, approximately 40% are managed by Hyatt"
+          }
+        }
+      ]
+    },
+    {
+      "id": "H",
+      "ticker": "H",
+      "name": "ハイアット",
+      "name_en": "Hyatt Hotels",
+      "sub": "ホテル運営",
+      "sub_en": "Hotel operator",
+      "sub_short": "ホテル",
+      "sub_short_en": "Hotels",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ブランド運営ホテルの約40%(客室数)を運営",
+          "text_en": "Manages about 40% of its brand-managed rooms",
+          "source": {
+            "label": "Xenia 10-K(2025年度)",
+            "label_en": "Xenia 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1616000/000162828026011060/xhr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Of our brand-managed hotels, approximately 45% of our brand-managed hotels (by room count as of December 31, 2025) are managed by Marriott and its affiliates, approximately 40% are managed by Hyatt"
+          }
+        }
+      ]
+    },
+    {
+      "id": "IHG",
+      "ticker": "IHG",
+      "name": "IHG(キンプトン)",
+      "name_en": "InterContinental Hotels (Kimpton)",
+      "sub": "ホテル運営",
+      "sub_en": "Hotel operator",
+      "sub_short": "ホテル",
+      "sub_short_en": "Hotels",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "キンプトンのホテル4軒を運営",
+          "text_en": "Runs its four Kimpton hotels",
+          "source": {
+            "label": "Xenia 10-K(2025年度)",
+            "label_en": "Xenia 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1616000/000162828026011060/xhr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "certain of our third-party hotel management companies, including Marriott, Hilton and Kimpton"
+          }
+        }
+      ]
+    },
+    {
+      "id": "HLT",
+      "ticker": "HLT",
+      "name": "ヒルトン",
+      "name_en": "Hilton",
+      "sub": "ホテル運営",
+      "sub_en": "Hotel operator",
+      "sub_short": "ホテル",
+      "sub_short_en": "Hotels",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ウォルドーフ・アストリア1軒を運営",
+          "text_en": "Runs its Waldorf Astoria hotel",
+          "source": {
+            "label": "Xenia 10-K(2025年度)",
+            "label_en": "Xenia 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1616000/000162828026011060/xhr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "certain of our third-party hotel management companies, including Marriott, Hilton and Kimpton"
+          }
+        }
+      ]
+    },
+    {
+      "id": "L",
+      "ticker": "L",
+      "name": "ロウズ(ロウズ・ホテルズ)",
+      "name_en": "Loews Corporation (Loews Hotels)",
+      "sub": "ホテル",
+      "sub_en": "Hotels",
+      "sub_short": "ホテル",
+      "sub_short_en": "Hotels",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ロウズ・ブランドのホテル1軒(客室の3.2%)",
+          "text_en": "One Loews-branded hotel (3.2% of rooms)",
+          "source": {
+            "label": "Xenia 10-K(2025年度)",
+            "label_en": "Xenia 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1616000/000162828026011060/xhr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Loews 1 285 3.2 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ACCOR",
+      "ticker": "Accor",
+      "name": "アコー(フェアモント)",
+      "name_en": "Accor S.A. (Fairmont)",
+      "sub": "ホテル",
+      "sub_en": "Hotels",
+      "sub_short": "ホテル",
+      "sub_short_en": "Hotels",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "フェアモント・ブランドのホテル1軒(客室の2.1%)",
+          "text_en": "One Fairmont-branded hotel (2.1% of rooms)",
+          "source": {
+            "label": "Xenia 10-K(2025年度)",
+            "label_en": "Xenia 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1616000/000162828026011060/xhr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Fairmont 1 185 2.1 %"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

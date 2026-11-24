@@ -1,0 +1,157 @@
+{
+  "root": {
+    "ticker": "WWW",
+    "name": "ウルヴァリン・ワールドワイド",
+    "cik": 110471,
+    "name_en": "Wolverine World Wide"
+  },
+  "rows": [
+    {
+      "ja": "ブランドのライセンス元(上流)",
+      "en": "Brand licensors (upstream)",
+      "above": true
+    },
+    {
+      "ja": "ブランドの売却先・ライセンス先",
+      "en": "Brand buyers & licensees"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "CAT",
+      "ticker": "CAT",
+      "name": "キャタピラー",
+      "name_en": "Caterpillar",
+      "sub": "建設機械",
+      "sub_en": "Construction machinery",
+      "sub_short": "建機",
+      "sub_short_en": "Machines",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Catブランドの靴の公式ライセンス先",
+          "text_en": "Official footwear licensee of the Cat brand",
+          "source": {
+            "label": "Wolverine World Wide 10-K(2025年度)",
+            "label_en": "Wolverine World Wide 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/110471/000162828026012614/www-20260103.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Cat ® Footwear: Cat ® Footwear , the official footwear licensee of Caterpillar Inc., is committed to extending the Cat brand to consumers around the world."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HOG",
+      "ticker": "HOG",
+      "name": "ハーレーダビッドソン",
+      "name_en": "Harley-Davidson",
+      "sub": "二輪車",
+      "sub_en": "Motorcycles",
+      "sub_short": "二輪車",
+      "sub_short_en": "Bikes",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Harley-Davidsonブランドの靴をライセンスで販売",
+          "text_en": "Sells Harley-Davidson branded footwear under license",
+          "source": {
+            "label": "Wolverine World Wide 10-K(2025年度)",
+            "label_en": "Wolverine World Wide 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/110471/000162828026012614/www-20260103.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Pursuant to a license arrangement with the Harley-Davidson Motor Company, Inc., the Company has footwear marketing and distribution rights for Harley-Davidson ® branded footwear."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AuthenticBrands",
+      "ticker": "Authentic Brands",
+      "name": "オーセンティック・ブランズ・グループ",
+      "name_en": "Authentic Brands Group",
+      "sub": "ブランド管理",
+      "sub_en": "Brand management",
+      "sub_short": "ブランド",
+      "sub_short_en": "Brands",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "靴ブランド「スペリー」の売却先(2024年)",
+          "text_en": "Bought the Sperry business (2024)",
+          "source": {
+            "label": "Wolverine World Wide 10-K(2025年度)",
+            "label_en": "Wolverine World Wide 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/110471/000162828026012614/www-20260103.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Effective January 10, 2024 the Company sold the global Sperry ® business to Authentic Brands Group LLC."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DBI",
+      "ticker": "DBI",
+      "name": "デザイナー・ブランズ",
+      "name_en": "Designer Brands",
+      "sub": "靴の小売",
+      "sub_en": "Footwear retail",
+      "sub_short": "靴小売",
+      "sub_short_en": "Shoes",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "靴ブランド「ケッズ」の売却先(2023年)",
+          "text_en": "Bought the Keds business (2023)",
+          "source": {
+            "label": "Wolverine World Wide 10-K(2025年度)",
+            "label_en": "Wolverine World Wide 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/110471/000162828026012614/www-20260103.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Effective February 4, 2023 the Company sold the global Keds ® business to Designer Brands, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Jiaman",
+      "ticker": "Beijing Jiaman",
+      "name": "北京佳曼服飾",
+      "name_en": "Beijing Jiaman Dress",
+      "sub": "衣料・靴(中国)",
+      "sub_en": "Apparel & shoes (China)",
+      "sub_short": "衣料",
+      "sub_short_en": "Apparel",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "中国でのハッシュパピーの商標を取得したライセンス先",
+          "text_en": "Licensee that bought the Hush Puppies rights in China",
+          "source": {
+            "label": "Wolverine World Wide 10-K(2025年度)",
+            "label_en": "Wolverine World Wide 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/110471/000162828026012614/www-20260103.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "The Company sold the rights to the Hush Puppies ® trademarks, patents, copyrights and domains in China, Hong Kong and Macau to its current sublicensee, Beijing Jiaman Dress Co., Ltd."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
