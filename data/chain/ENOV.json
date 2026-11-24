@@ -1,0 +1,226 @@
+{
+  "root": {
+    "ticker": "ENOV",
+    "name": "エノビス",
+    "cik": 1420800,
+    "name_en": "Enovis"
+  },
+  "rows": [
+    {
+      "ja": "買収・分離・提携",
+      "en": "Acquisitions, spin-off & collaboration"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in its 10-K)"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "SYK",
+    "ZBH",
+    "JNJ"
+  ],
+  "companies": [
+    {
+      "id": "Lima",
+      "ticker": "LimaCorporate",
+      "name": "リマコーポレート",
+      "name_en": "LimaCorporate",
+      "sub": "人工関節(イタリア)",
+      "sub_en": "Orthopedic implants (Italy)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "人工関節のLimaを買収。対価の一部で自社株を発行",
+          "text_en": "Acquired Lima, paying partly in Enovis stock",
+          "source": {
+            "label": "Enovis 10-K(2025年度)",
+            "label_en": "Enovis 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1420800/000142080026000012/cfx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "in connection with the Lima Acquisition, as part of the consideration paid to the seller, we issued to the seller 1,942,686 shares of Company common stock."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Novastep",
+      "ticker": "Novastep",
+      "name": "ノバステップ",
+      "name_en": "Novastep",
+      "sub": "足・足首の低侵襲手術",
+      "sub_en": "Minimally invasive foot & ankle",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Novastepを9,690万ドルで買収(2023年6月)",
+          "text_en": "Acquired Novastep for $96.9 million (June 2023)",
+          "source": {
+            "label": "Enovis 10-K(2025年度)",
+            "label_en": "Enovis 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1420800/000142080026000012/cfx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "On June 28, 2023, we acquired Novastep, a leading player in Minimally Invasive Surgery (MIS) foot and ankle solutions for total consideration of $96.9 million."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ESAB",
+      "ticker": "ESAB",
+      "name": "エサブ",
+      "name_en": "ESAB",
+      "sub": "溶接機器",
+      "sub_en": "Welding equipment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "旧Colfaxから2022年4月に分離した溶接事業",
+          "text_en": "Its welding business, spun off in April 2022",
+          "source": {
+            "label": "ESAB 10-K(2024年度)",
+            "label_en": "ESAB 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1877322/000187732225000021/esab-20241231.htm",
+            "level": "official",
+            "date": "2025-02-20",
+            "quote": "In connection with the Separation, on April 4, 2022, ESAB and Enovis entered into a separation and distribution agreement"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MTLS",
+      "ticker": "MTLS",
+      "name": "マテリアライズ",
+      "name_en": "Materialise",
+      "sub": "3Dプリント・医療ソフト",
+      "sub_en": "3D printing & medical software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "整形外科分野で協業",
+          "text_en": "Collaborates in orthopedics",
+          "source": {
+            "label": "Materialise 20-F(2024年度)",
+            "label_en": "Materialise 20-F (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1091223/000110465925037207/mtls-20241231x20f.htm",
+            "level": "official",
+            "date": "2025-04-22",
+            "quote": "through collaboration agreements with leading medical device companies, including DePuy Synthes, Zimmer Biomet, Enovis"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SYK",
+      "ticker": "SYK",
+      "name": "ストライカー",
+      "name_en": "Stryker",
+      "sub": "医療機器",
+      "sub_en": "Medical devices",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "人工関節部門の主要な競合",
+          "text_en": "A key Reconstructive competitor",
+          "source": {
+            "label": "Enovis 10-K(2025年度)",
+            "label_en": "Enovis 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1420800/000142080026000012/cfx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Key competitors for our Reconstructive segment include Stryker, Zimmer Biomet, and DePuy Synthes, the medical device business within Johnson & Johnson."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ZBH",
+      "ticker": "ZBH",
+      "name": "ジンマー・バイオメット",
+      "name_en": "Zimmer Biomet",
+      "sub": "人工関節",
+      "sub_en": "Orthopedics",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "人工関節部門の主要な競合",
+          "text_en": "A key Reconstructive competitor",
+          "source": {
+            "label": "Enovis 10-K(2025年度)",
+            "label_en": "Enovis 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1420800/000142080026000012/cfx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Key competitors for our Reconstructive segment include Stryker, Zimmer Biomet, and DePuy Synthes, the medical device business within Johnson & Johnson."
+          }
+        }
+      ]
+    },
+    {
+      "id": "JNJ",
+      "ticker": "JNJ",
+      "name": "ジョンソン・エンド・ジョンソン",
+      "name_en": "Johnson & Johnson (DePuy Synthes)",
+      "sub": "医薬品・医療機器",
+      "sub_en": "Pharma & medtech",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "DePuy Synthesが人工関節部門の主要な競合",
+          "text_en": "DePuy Synthes is a key Reconstructive competitor",
+          "source": {
+            "label": "Enovis 10-K(2025年度)",
+            "label_en": "Enovis 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1420800/000142080026000012/cfx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Key competitors for our Reconstructive segment include Stryker, Zimmer Biomet, and DePuy Synthes, the medical device business within Johnson & Johnson."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TMCI",
+      "ticker": "TMCI",
+      "name": "トリース・メディカル",
+      "name_en": "Treace Medical Concepts",
+      "sub": "足の外科機器",
+      "sub_en": "Foot surgery devices",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Treaceが10-Kで、競合の一社として挙げる",
+          "text_en": "Treace names Enovis among competitors",
+          "source": {
+            "label": "Treace Medical 10-K(2024年度)",
+            "label_en": "Treace Medical 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1630627/000095017025029029/tmci-20241231.htm",
+            "level": "official",
+            "date": "2025-02-27",
+            "quote": "Enovis Corporation, Zimmer Biomet Holdings, Inc., CONMED Corporation, Medartis Holdings AG"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

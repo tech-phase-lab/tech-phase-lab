@@ -1,0 +1,198 @@
+{
+  "root": {
+    "ticker": "CSW",
+    "name": "CSWインダストリアルズ",
+    "cik": 1624794,
+    "name_en": "CSW Industrials"
+  },
+  "rows": [
+    {
+      "ja": "買収",
+      "en": "Acquisitions"
+    },
+    {
+      "ja": "競合(10-Kに記載・特殊潤滑剤)",
+      "en": "Competitors (specialty lubricants, named in its 10-K)"
+    }
+  ],
+  "rivals": [
+    "XOM",
+    "SHEL",
+    "FPE"
+  ],
+  "companies": [
+    {
+      "id": "MARS",
+      "ticker": "MARS Parts",
+      "name": "マーズ・パーツ",
+      "name_en": "MARS Parts",
+      "sub": "空調部品",
+      "sub_en": "HVAC/R parts",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "北米最大級の空調部品会社MARS Partsを買収(2025年11月)",
+          "text_en": "Acquired MARS Parts, a top North American HVAC/R parts provider (November 2025)",
+          "source": {
+            "label": "CSW Industrials 10-K(2026年3月期)",
+            "label_en": "CSW Industrials 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1624794/000162479426000027/cswi-20260331.htm",
+            "level": "official",
+            "date": "2026-05-26",
+            "quote": "MARS Parts activity has been included in our consolidated results of operations and in the operating results of our Contractor Solutions segment since the November 4, 2025 date of acquisition."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Hydrotex",
+      "ticker": "Hydrotex",
+      "name": "ハイドロテックス",
+      "name_en": "Hydrotex",
+      "sub": "潤滑剤",
+      "sub_en": "Lubricants",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Hydrotexの資産を1,700万ドルで取得(2025年11月)",
+          "text_en": "Acquired Hydrotex assets for $17.0 million (November 2025)",
+          "source": {
+            "label": "CSW Industrials 10-K(2026年3月期)",
+            "label_en": "CSW Industrials 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1624794/000162479426000027/cswi-20260331.htm",
+            "level": "official",
+            "date": "2026-05-26",
+            "quote": "On November 5, 2025, we acquired certain assets of Hydrotex Holdings, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PFWaterWorks",
+      "ticker": "PF WaterWorks",
+      "name": "PFウォーターワークス",
+      "name_en": "PF WaterWorks",
+      "sub": "配管製品",
+      "sub_en": "Plumbing products",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "PF WaterWorksを4,580万ドルで買収(2025年3月期)",
+          "text_en": "Acquired PF WaterWorks for $45.8 million (fiscal 2025)",
+          "source": {
+            "label": "CSW Industrials 10-K(2026年3月期)",
+            "label_en": "CSW Industrials 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1624794/000162479426000027/cswi-20260331.htm",
+            "level": "official",
+            "date": "2026-05-26",
+            "quote": "During the year ended March 31, 2025, we acquired PF WaterWorks for an aggregate purchase price of $45.8 million and PSP Products for an aggregate purchase price of $51.3 million."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PSP",
+      "ticker": "PSP Products",
+      "name": "PSPプロダクツ",
+      "name_en": "PSP Products",
+      "sub": "配管製品",
+      "sub_en": "Plumbing products",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "PSP Productsを5,130万ドルで買収(2025年3月期)",
+          "text_en": "Acquired PSP Products for $51.3 million (fiscal 2025)",
+          "source": {
+            "label": "CSW Industrials 10-K(2026年3月期)",
+            "label_en": "CSW Industrials 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1624794/000162479426000027/cswi-20260331.htm",
+            "level": "official",
+            "date": "2026-05-26",
+            "quote": "During the year ended March 31, 2025, we acquired PF WaterWorks for an aggregate purchase price of $45.8 million and PSP Products for an aggregate purchase price of $51.3 million."
+          }
+        }
+      ]
+    },
+    {
+      "id": "XOM",
+      "ticker": "XOM",
+      "name": "エクソンモービル",
+      "name_en": "ExxonMobil",
+      "sub": "石油",
+      "sub_en": "Oil & gas",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "特殊潤滑剤の典型的な競合",
+          "text_en": "A typical specialty lubricants competitor",
+          "source": {
+            "label": "CSW Industrials 10-K(2026年3月期)",
+            "label_en": "CSW Industrials 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1624794/000162479426000027/cswi-20260331.htm",
+            "level": "official",
+            "date": "2026-05-26",
+            "quote": "Typical competitors include Exxon-Mobil, Fuchs, Kluber, Shell and South Coast Products."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SHEL",
+      "ticker": "SHEL",
+      "name": "シェル",
+      "name_en": "Shell",
+      "sub": "石油",
+      "sub_en": "Oil & gas",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "特殊潤滑剤の典型的な競合",
+          "text_en": "A typical specialty lubricants competitor",
+          "source": {
+            "label": "CSW Industrials 10-K(2026年3月期)",
+            "label_en": "CSW Industrials 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1624794/000162479426000027/cswi-20260331.htm",
+            "level": "official",
+            "date": "2026-05-26",
+            "quote": "Typical competitors include Exxon-Mobil, Fuchs, Kluber, Shell and South Coast Products."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FPE",
+      "ticker": "Fuchs",
+      "name": "フックス",
+      "name_en": "Fuchs",
+      "sub": "潤滑剤(ドイツ)",
+      "sub_en": "Lubricants (Germany)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "特殊潤滑剤の典型的な競合",
+          "text_en": "A typical specialty lubricants competitor",
+          "source": {
+            "label": "CSW Industrials 10-K(2026年3月期)",
+            "label_en": "CSW Industrials 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1624794/000162479426000027/cswi-20260331.htm",
+            "level": "official",
+            "date": "2026-05-26",
+            "quote": "Typical competitors include Exxon-Mobil, Fuchs, Kluber, Shell and South Coast Products."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

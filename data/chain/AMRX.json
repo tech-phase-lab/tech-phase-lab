@@ -1,0 +1,279 @@
+{
+  "root": {
+    "ticker": "AMRX",
+    "name": "アムニール・ファーマシューティカルズ",
+    "cik": 1723128,
+    "name_en": "Amneal Pharmaceuticals"
+  },
+  "rows": [
+    {
+      "ja": "導入品・ライセンス元",
+      "en": "In-licensed products & licensors",
+      "above": true
+    },
+    {
+      "ja": "製造の受託・提携",
+      "en": "Manufacturing partner"
+    },
+    {
+      "ja": "特許和解によるライセンス",
+      "en": "Patent settlement licenses"
+    },
+    {
+      "ja": "競合(10-Kに記載・流通事業)",
+      "en": "Competitors (distribution, named in its 10-K)"
+    }
+  ],
+  "rivals": [
+    "CAH",
+    "COR",
+    "MCK"
+  ],
+  "companies": [
+    {
+      "id": "BIAL",
+      "ticker": "BIAL",
+      "name": "ビアル",
+      "name_en": "BIAL-Portela",
+      "sub": "医薬品(ポルトガル)",
+      "sub_en": "Pharmaceuticals (Portugal)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "パーキンソン病薬ONGENTYSのライセンス・供給契約",
+          "text_en": "License and supply agreement for Parkinson's drug ONGENTYS",
+          "source": {
+            "label": "Amneal 10-K(2025年度)",
+            "label_en": "Amneal 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1723128/000172312826000011/amrx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "On December 5, 2023, we entered into a license agreement with BIAL-Portela & Ca., S.A."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Zambon",
+      "ticker": "Zambon",
+      "name": "ザンボン",
+      "name_en": "Zambon Biotech",
+      "sub": "医薬品(スイス)",
+      "sub_en": "Pharmaceuticals (Switzerland)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ライセンス・流通・供給契約(2024年2月)",
+          "text_en": "License, distribution and supply agreement (February 2024)",
+          "source": {
+            "label": "Amneal 10-K(2025年度)",
+            "label_en": "Amneal 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1723128/000172312826000011/amrx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "On February 23, 2024, we entered into a license, distribution and supply agreement with Zambon Biotech S.A."
+          }
+        }
+      ]
+    },
+    {
+      "id": "JeromeStevens",
+      "ticker": "Jerome Stevens",
+      "name": "ジェローム・スティーブンス",
+      "name_en": "Jerome Stevens Pharmaceuticals",
+      "sub": "医薬品",
+      "sub_en": "Pharmaceuticals",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "甲状腺薬UNITHROIDのライセンス・流通契約",
+          "text_en": "License and distribution agreement for UNITHROID",
+          "source": {
+            "label": "Amneal 10-K(2025年度)",
+            "label_en": "Amneal 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1723128/000172312826000011/amrx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "UNITHROID ® , indicated for the treatment of hypothyroidism, is sold under a license and distribution agreement with Jerome Stevens Pharmaceuticals, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GUD",
+      "ticker": "Knight Therapeutics",
+      "name": "ナイト・セラピューティクス",
+      "name_en": "Knight Therapeutics",
+      "sub": "医薬品(カナダ)",
+      "sub_en": "Pharmaceuticals (Canada)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "15年のライセンス・流通・供給契約(2024年1月)",
+          "text_en": "15-year license, distribution and supply agreement (January 2024)",
+          "source": {
+            "label": "Amneal 10-K(2025年度)",
+            "label_en": "Amneal 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1723128/000172312826000011/amrx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "On January 24, 2024, we entered into a 15-year license, distribution and supply agreement with Knight Therapeutics International S.A."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Metsera",
+      "ticker": "Metsera",
+      "name": "メッツェラ",
+      "name_en": "Metsera",
+      "sub": "肥満症薬",
+      "sub_en": "Obesity drugs",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "製造面の協業契約(2024年9月)",
+          "text_en": "Manufacturing collaboration agreement (September 2024)",
+          "source": {
+            "label": "Amneal 10-K(2025年度)",
+            "label_en": "Amneal 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1723128/000172312826000011/amrx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "On September 30, 2024, the Company entered into a collaboration agreement with Metsera, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ALKS",
+      "ticker": "ALKS",
+      "name": "アルカーメス",
+      "name_en": "Alkermes",
+      "sub": "中枢神経薬",
+      "sub_en": "CNS drugs",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "和解によりVIVITROL関連特許の非独占ライセンスを受ける",
+          "text_en": "Holds a non-exclusive VIVITROL patent license under a settlement",
+          "source": {
+            "label": "Alkermes 10-K(2025年度)",
+            "label_en": "Alkermes 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1520262/000119312526068925/alks-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "we granted Amneal a non-exclusive license under certain patents covering VIVITROL"
+          }
+        }
+      ]
+    },
+    {
+      "id": "TXMD",
+      "ticker": "TXMD",
+      "name": "セラピューティクスMD",
+      "name_en": "TherapeuticsMD",
+      "sub": "女性医療",
+      "sub_en": "Women's health",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "和解によりBIJUVA後発品のライセンスを受ける",
+          "text_en": "Licensed to sell generic BIJUVA under a settlement",
+          "source": {
+            "label": "TherapeuticsMD 10-K(2024年度)",
+            "label_en": "TherapeuticsMD 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/25743/000101376225003442/ea0232034-10k_therapeu.htm",
+            "level": "official",
+            "date": "2025-03-27",
+            "quote": "the Company granted Amneal a non-exclusive, non-transferable, royalty-free license to commercialize Amneal's generic formulation of BIJUVA"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CAH",
+      "ticker": "CAH",
+      "name": "カーディナル・ヘルス",
+      "name_en": "Cardinal Health",
+      "sub": "医薬品卸",
+      "sub_en": "Drug distribution",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "流通事業の競合",
+          "text_en": "A distribution competitor",
+          "source": {
+            "label": "Amneal 10-K(2025年度)",
+            "label_en": "Amneal 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1723128/000172312826000011/amrx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our competitors are other wholesalers, including Cardinal Health, Inc., Cencora, Inc., McKesson Drug Co., and manufacturers / re-packagers such as Golden State Medical Supply."
+          }
+        }
+      ]
+    },
+    {
+      "id": "COR",
+      "ticker": "COR",
+      "name": "センコラ",
+      "name_en": "Cencora",
+      "sub": "医薬品卸",
+      "sub_en": "Drug distribution",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "流通事業の競合",
+          "text_en": "A distribution competitor",
+          "source": {
+            "label": "Amneal 10-K(2025年度)",
+            "label_en": "Amneal 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1723128/000172312826000011/amrx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our competitors are other wholesalers, including Cardinal Health, Inc., Cencora, Inc., McKesson Drug Co., and manufacturers / re-packagers such as Golden State Medical Supply."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MCK",
+      "ticker": "MCK",
+      "name": "マッケソン",
+      "name_en": "McKesson",
+      "sub": "医薬品卸",
+      "sub_en": "Drug distribution",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "流通事業の競合",
+          "text_en": "A distribution competitor",
+          "source": {
+            "label": "Amneal 10-K(2025年度)",
+            "label_en": "Amneal 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1723128/000172312826000011/amrx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our competitors are other wholesalers, including Cardinal Health, Inc., Cencora, Inc., McKesson Drug Co., and manufacturers / re-packagers such as Golden State Medical Supply."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
