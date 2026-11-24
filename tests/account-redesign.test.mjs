@@ -40,12 +40,12 @@ test("the icon sheet offers the initial and exactly 23 distinct emoji tiles, no 
   assert.doesNotMatch(html, /type="file"/);
 });
 
-test("upgrade sheet: the consent starts off and the PayPal button is dimmed until it is ticked", () => {
+test("upgrade sheet: the consent line starts unticked right above the button, which stays pressable (lawyer review, Nov 24)", () => {
   const html = renderToStaticMarkup(createElement(sheets.UpgradeSheet, { ja: true, mode: "live", refresh: async () => {}, onClose: () => {} }));
   assert.match(html, /type="checkbox"/);
   assert.doesNotMatch(html, /checked=""/);
   // The final button carries the lawyer's wording (owner pack, Nov 17); 「利用規約」 inside it opens the full terms.
-  assert.match(html, /<button[^>]*disabled=""[^>]*aria-label="利用規約に同意して申し込む"[^>]*><span role="link" data-href="\/terms"[^>]*>利用規約<\/span>に同意して申し込む<\/button>/);
+  assert.match(html, /<a href="\/terms"[^>]*>利用規約<\/a>と<a href="\/privacy"[^>]*>プライバシーポリシー<\/a>に同意する<\/span><\/label><button type="button" class="btn gbt" aria-label="利用規約に同意して申し込む"><span role="link" data-href="\/terms"[^>]*>利用規約<\/span>に同意して申し込む<\/button>/);
   assert.match(html, /月額・年額とも解約するまで自動更新。いつでも解約できます。/);
   assert.doesNotMatch(html, /月額料金/); assert.match(html, /料金/); assert.match(html, /¥2,980 \/ 月/); assert.match(html, /毎月自動で更新/);
   const yearly = renderToStaticMarkup(createElement(sheets.UpgradeSheet, { ja: true, mode: "live", refresh: async () => {}, onClose: () => {}, currency: "USD", period: "year" }));
@@ -204,7 +204,7 @@ test("the FREE view of the owner works like a FREE member's screen; the iPhone a
   assert.match(view, /disabled=\{!preview && \(!mode \|\| freeUnverified/);
   // The card goes straight to PayPal (no confirmation sheet); the server picks the plan from currency and period.
   assert.doesNotMatch(view, /UpgradeSheet/);
-  assert.match(view, /startCheckout\(mode, refresh, currency, period\)/);
+  assert.match(view, /startCheckout\(mode, refresh, currency, period, consentAt\)/);
   assert.doesNotMatch(view, /planId|plan_id/);
   const pull = readFileSync(new URL("../app/research/pull-to-refresh.tsx", import.meta.url), "utf8");
   assert.match(pull, /window\.scrollTo\(0, 1\)/);

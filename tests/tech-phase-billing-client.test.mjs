@@ -361,7 +361,8 @@ test('leaving checkout during identity refresh or an in-flight action prevents n
    },m,m.exports);
    globalThis.window={location:{search:'',assign:url=>navigation.push(url)}};
    m.exports.default();const cleanup=effect();await new Promise(r=>setImmediate(r));
-   state[3]=true;state[4]=id;index=0;refIndex=0;calls.length=0;
+   state[3]={agreedAt:'2025-01-01T00:00:00.000Z',missing:false}; // the consent tick (lawyer review, Nov 24)
+   state[4]=id;index=0;refIndex=0;calls.length=0;
    const button=find(m.exports.default(),labels[action]);assert.ok(button,action);
    button.props.onClick();button.props.onClick();await new Promise(r=>setImmediate(r));
    assert.equal(identityCalls,1,'a double click must not start a second action');

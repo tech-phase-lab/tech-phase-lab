@@ -9,13 +9,15 @@ import { webhookService } from '../services/tech-phase-billing/webhook.mjs';
 import { billingGateway, billingBackend } from '../services/tech-phase-billing/transport.mjs';
 import { sandboxMemberAllowed } from '../services/tech-phase-billing/access.mjs';
 import { inspectSandboxLedger } from '../services/tech-phase-billing/inspect-ledger.mjs';
+// The consent tick time every checkout carries (lawyer review, Nov 24).
+const CONSENT = '2025-01-01T00:00:00.000Z';
 
 // Real gateway, backend, checkout, settlement and SQL; only PayPal and identity
 // are fixtures. No network fetch, real credentials or persistent database.
 test('two enrolled members remain isolated through checkout, webhook replay and refund', async () => {
   const db = new PGlite();
   try {
-    for (const name of ['001_billing_sandbox.sql', '002_paid_periods_sandbox.sql', '003_provider_billing_clock.sql', '004_dispute_holds_sandbox.sql']) {
+    for (const name of ['001_billing_sandbox.sql', '002_paid_periods_sandbox.sql', '003_provider_billing_clock.sql', '004_dispute_holds_sandbox.sql','010_terms_consent.sql']) {
       await db.exec(readFileSync(new URL('../db/tech-phase/' + name, import.meta.url), 'utf8'));
     }
     const store = billingStore({query: (...args) => db.query(...args), connect: async () => ({query: (...args) => db.query(...args), release() {}})});
@@ -69,9 +71,9 @@ test('two enrolled members remain isolated through checkout, webhook replay and 
       assert.equal(response.status, expected);
       return response.json();
     }
-    const first = await call('create', {currency: 'JPY', acceptedTerms: 'sandbox-v1'});
+    const first = await call('create', {currency: 'JPY', acceptedTerms: 'sandbox-v1',consentAt:CONSENT});
     identity = member;
-    const second = await call('create', {currency: 'USD', acceptedTerms: 'sandbox-v1'});
+    const second = await call('create', {currency: 'USD', acceptedTerms: 'sandbox-v1',consentAt:CONSENT});
     assert.notEqual(first.id, second.id);
     assert.equal((await call('status')).plan, 'free', 'provider ACTIVE alone must not grant access');
     await call('reconcile', {id: first.id}, 404);

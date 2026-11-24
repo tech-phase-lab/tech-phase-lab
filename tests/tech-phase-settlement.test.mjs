@@ -6,6 +6,8 @@ import { billingStore } from '../services/tech-phase-billing/store.mjs';
 import { amountMinor,monthlyBoundary,verifiedPeriod,reconciliationService } from '../services/tech-phase-billing/settlement.mjs';
 import { webhookService } from '../services/tech-phase-billing/webhook.mjs';
 import { sandboxHandler } from '../services/tech-phase-billing/http.mjs';
+// The consent tick time every checkout carries (lawyer review, Nov 24).
+const CONSENT = '2025-01-01T00:00:00.000Z';
 const now=Date.parse('2026-10-20T00:00:01Z'), sid='I-ABCDEFGHIJKL', plans={JPY:'P-'+'J'.repeat(24),USD:'P-'+'U'.repeat(24)};
 const local={id:'00000000-0000-4000-8000-000000000001',paypal_id:sid,user_id:'user_owner',currency:'JPY',minor:2980};
 const money={currency_code:'JPY',value:'2980'};
@@ -17,7 +19,7 @@ const payment=(count=1)=>({id:'TX-'+count,status:'COMPLETED',time:monthlyBoundar
 async function database(work) {
  const db=new PGlite();
  try {
-  for(const name of ['001_billing_sandbox.sql','002_paid_periods_sandbox.sql','003_provider_billing_clock.sql','004_dispute_holds_sandbox.sql'])await db.exec(readFileSync(new URL('../db/tech-phase/'+name,import.meta.url),'utf8'));
+  for(const name of ['001_billing_sandbox.sql','002_paid_periods_sandbox.sql','003_provider_billing_clock.sql','004_dispute_holds_sandbox.sql','010_terms_consent.sql'])await db.exec(readFileSync(new URL('../db/tech-phase/'+name,import.meta.url),'utf8'));
   const pool={query:(...args)=>db.query(...args),connect:async()=>({query:(...args)=>db.query(...args),release(){}})};
   await work(billingStore(pool),db);
  } finally {await db.close();}
@@ -31,12 +33,12 @@ test('monthly boundaries preserve month-end anchor and exact minor-unit money',(
  assert.equal(amountMinor({currency_code:'JPY',value:'2980.1'},'JPY'),null);
 });
 test('two members cannot exchange payments, periods, cancellations or review holds',()=>database(async(store,db)=>{
- const a=await store.reserve('member_a','JPY','sandbox-v1');
- const b=await store.reserve('member_b','JPY','sandbox-v1');
+ const a=await store.reserve('member_a','JPY','sandbox-v1','month',CONSENT);
+ const b=await store.reserve('member_b','JPY','sandbox-v1','month',CONSENT);
  await store.attach(a.user_id,a.id,'I-MEMBERAAAAAA');
  await store.attach(b.user_id,b.id,'I-MEMBERBBBBBB');
- assert.equal((await store.reserve(a.user_id,'JPY','sandbox-v1')).id,a.id);
- await assert.rejects(store.reserve(a.user_id,'USD','sandbox-v1'),/EXISTING_SUBSCRIPTION/);
+ assert.equal((await store.reserve(a.user_id,'JPY','sandbox-v1','month',CONSENT)).id,a.id);
+ await assert.rejects(store.reserve(a.user_id,'USD','sandbox-v1','month',CONSENT),/EXISTING_SUBSCRIPTION/);
  const period={periodStart:'2026-10-20T00:00:00Z',periodEnd:'2026-11-20T00:00:00Z'};
  const pay=(row,transactionId,eventId)=>({id:row.id,transactionId,eventId,eventType:'PAYMENT.SALE.COMPLETED',currency:'JPY',minor:2980,paidAt:period.periodStart});
  const paidA=pay(a,'TX-MEMBER-A','WH-MEMBER-A'),paidB=pay(b,'TX-MEMBER-B','WH-MEMBER-B');
@@ -67,7 +69,7 @@ test('two members cannot exchange payments, periods, cancellations or review hol
 }));
 test('subscription summary survives reload, binds owner and excludes provider/internal fields',()=>database(async(store)=>{
  assert.equal((await store.summary('user_owner')).subscription,null);
- const row=await store.reserve('user_owner','JPY','sandbox-v1');
+ const row=await store.reserve('user_owner','JPY','sandbox-v1','month',CONSENT);
  await store.attach(row.user_id,row.id,sid);
  const summary=await store.summary(row.user_id);
  assert.deepEqual(summary.subscription,{id:row.id,currency:'JPY',period:'month',state:'approval_pending'});
@@ -79,12 +81,12 @@ test('subscription summary survives reload, binds owner and excludes provider/in
  assert.equal((await store.summary('other')).subscription,null);
  await store.cancelled(row.user_id,row.id);
  assert.equal((await store.summary(row.user_id)).subscription.state,'cancelled');
- const next=await store.reserve(row.user_id,'USD','sandbox-v1');
+ const next=await store.reserve(row.user_id,'USD','sandbox-v1','month',CONSENT);
  assert.equal((await store.summary(row.user_id)).subscription.id,next.id);
  assert.equal((await store.summary(row.user_id)).reviewRequired,false);
 }));
 test('summary observes one snapshot when a hold arrives after its query and expires at the exact boundary',()=>database(async(store,db)=>{
- const row=await store.reserve('user_owner','JPY','sandbox-v1');
+ const row=await store.reserve('user_owner','JPY','sandbox-v1','month',CONSENT);
  const paid={eventId:'WH-summary',eventType:'PAYMENT.SALE.COMPLETED',id:row.id,transactionId:'TX-summary',currency:'JPY',minor:2980,paidAt:'2026-10-20T00:00:00Z'};
  await store.recordPayment(paid);
  await store.grantPeriod(row.user_id,row.id,{transactionId:paid.transactionId,periodStart:paid.paidAt,periodEnd:'2026-11-20T00:00:00Z'});
@@ -126,7 +128,7 @@ test('actual Sandbox billing clock settles once and survives cancellation withou
   GRANT SELECT,INSERT ON ALL TABLES IN SCHEMA tech_phase_billing_sandbox TO billing_writer;
   GRANT UPDATE ON tech_phase_billing_sandbox.subscriptions TO billing_writer;
   SET ROLE billing_writer;`);
- const row=await store.reserve('user_owner','JPY','sandbox-v1');await store.attach(row.user_id,row.id,sid);
+ const row=await store.reserve('user_owner','JPY','sandbox-v1','month',CONSENT);await store.attach(row.user_id,row.id,sid);
  const r=remote(row);r.start_time='2026-10-20T06:17:10Z';
  r.billing_info.last_payment.time='2026-10-20T06:38:15Z';
  r.billing_info.next_billing_time='2026-11-20T10:00:00Z';
@@ -152,7 +154,7 @@ test('actual Sandbox billing clock settles once and survives cancellation withou
  }
 }));
 test('actual USD first renewal on the next UTC date settles once and retains its verified expiry after cancellation',()=>database(async(store,db)=>{
- const row=await store.reserve('user_owner','USD','sandbox-v1');await store.attach(row.user_id,row.id,sid);
+ const row=await store.reserve('user_owner','USD','sandbox-v1','month',CONSENT);await store.attach(row.user_id,row.id,sid);
  const r=remote(row);r.plan_id=plans.USD;r.start_time='2026-10-20T15:23:54Z';
  r.billing_info.last_payment={amount:{currency_code:'USD',value:'20.0'},time:'2026-10-20T15:24:34Z'};
  r.billing_info.outstanding_balance={currency_code:'USD',value:'0.0'};
@@ -191,7 +193,7 @@ test('provider clock respects monthly dates, renewals and month-end anchors with
  }
 });
 test('reconciliation persists first purchase, renews once, expires, and preserves paid access on cancellation',()=>database(async(store,db)=>{
- const row=await store.reserve('user_owner','JPY','sandbox-v1');await store.attach(row.user_id,row.id,sid);
+ const row=await store.reserve('user_owner','JPY','sandbox-v1','month',CONSENT);await store.attach(row.user_id,row.id,sid);
  let count=1,clock=now,status='ACTIVE';
  const paypal={get:async()=>({...remote(row,count),status}),transactions:async()=>({transactions:[payment(count)]})};
  const service=reconciliationService({store,paypal,plans,now:()=>clock});
@@ -209,7 +211,7 @@ test('reconciliation persists first purchase, renews once, expires, and preserve
  await assert.rejects(service.reconcile('user_other',row.id),/NOT_FOUND/);
 }));
 test('failed renewal and mixed provider snapshots cannot extend stored access',()=>database(async(store)=>{
- const row=await store.reserve('user_owner','JPY','sandbox-v1');await store.attach(row.user_id,row.id,sid);
+ const row=await store.reserve('user_owner','JPY','sandbox-v1','month',CONSENT);await store.attach(row.user_id,row.id,sid);
  let r=remote(row),reads=0,mixed=false;
  const paypal={get:async()=>{reads++;return mixed&&reads%2===0?{...r,status:'CANCELLED'}:r;},transactions:async()=>({transactions:[payment()]})};
  const svc=reconciliationService({store,paypal,plans,now:()=>now});await svc.reconcile(row.user_id,row.id);
@@ -220,7 +222,7 @@ test('failed renewal and mixed provider snapshots cannot extend stored access',(
  r=remote(row);mixed=true;await assert.rejects(svc.reconcile(row.user_id,row.id),/RETRY/);
 }));
 test('immutable period and sticky refund evidence survive duplicate and out-of-order completion',()=>database(async(store)=>{
- const row=await store.reserve('user_owner','JPY','sandbox-v1');await store.attach(row.user_id,row.id,sid);
+ const row=await store.reserve('user_owner','JPY','sandbox-v1','month',CONSENT);await store.attach(row.user_id,row.id,sid);
  const paypal={get:async()=>remote(row),transactions:async()=>({transactions:[payment()]}),verify:async()=>true};
  const svc=reconciliationService({store,paypal,plans,now:()=>now});
  const webhook=webhookService({store,paypal,reconciliation:svc,ownerId:row.user_id});
@@ -232,7 +234,7 @@ test('immutable period and sticky refund evidence survive duplicate and out-of-o
  assert.equal((await store.entitlement(row.user_id,now)).plan,'free');
 }));
 test('payment write survives period-write interruption and next reconciliation repairs it exactly once',()=>database(async(store,db)=>{
- const row=await store.reserve('user_owner','JPY','sandbox-v1');await store.attach(row.user_id,row.id,sid);
+ const row=await store.reserve('user_owner','JPY','sandbox-v1','month',CONSENT);await store.attach(row.user_id,row.id,sid);
  const original=store.grantPeriod;let fail=true;
  store.grantPeriod=async(...args)=>{if(fail)throw Error('interrupted');return original.apply(store,args);};
  const svc=reconciliationService({store,paypal:{get:async()=>remote(row),transactions:async()=>({transactions:[payment()]})},plans,now:()=>now});
@@ -243,7 +245,7 @@ test('payment write survives period-write interruption and next reconciliation r
 }));
 test('refunding USD preserves the same member paid JPY period without retaining the USD expiry',()=>database(async(store,db)=>{
  const owner='user_owner';
- const jpy=await store.reserve(owner,'JPY','sandbox-v1');
+ const jpy=await store.reserve(owner,'JPY','sandbox-v1','month',CONSENT);
  await store.attach(owner,jpy.id,'I-JPYAAAAAAAAA');
  const jpyEnd='2026-11-20T10:00:00Z',usdEnd='2026-11-21T10:00:00Z';
  const add=async(row,transactionId,currency,minor,periodEnd)=>{
@@ -253,7 +255,7 @@ test('refunding USD preserves the same member paid JPY period without retaining 
  };
  await add(jpy,'TX-JPY-PAID','JPY',2980,jpyEnd);
  await store.cancelled(owner,jpy.id);
- const usd=await store.reserve(owner,'USD','sandbox-v1');
+ const usd=await store.reserve(owner,'USD','sandbox-v1','month',CONSENT);
  await store.attach(owner,usd.id,'I-USDAAAAAAAAA');
  await store.providerState(owner,usd.id,'ACTIVE');
  await add(usd,'TX-USD-REFUND','USD',2000,usdEnd);
@@ -281,7 +283,7 @@ test('unverified webhook never queries or changes billing records',async()=>{
  assert.equal(calls,0);
 });
 test('signed disputes remain held across early arrival, duplicate delivery, resolution and renewal',()=>database(async(store,db)=>{
- const row=await store.reserve('user_owner','JPY','sandbox-v1');await store.attach(row.user_id,row.id,sid);
+ const row=await store.reserve('user_owner','JPY','sandbox-v1','month',CONSENT);await store.attach(row.user_id,row.id,sid);
  let count=1,clock=now,verified=true;
  const paypal={get:async()=>remote(row,count),transactions:async()=>({transactions:[payment(count)]}),verify:async()=>verified};
  const svc=reconciliationService({store,paypal,plans,now:()=>clock});
@@ -314,7 +316,7 @@ test('signed disputes remain held across early arrival, duplicate delivery, reso
  assert.equal(missingProviderPayment.plan,'free');
 }));
 test('dispute retry completes an interrupted hold without restoring access or duplicating history',()=>database(async(store,db)=>{
- const row=await store.reserve('user_owner','JPY','sandbox-v1');
+ const row=await store.reserve('user_owner','JPY','sandbox-v1','month',CONSENT);
  const transactionId='TX-interrupted';
  await store.recordPayment({eventId:'WH-paid',eventType:'PAYMENT.SALE.COMPLETED',id:row.id,transactionId,currency:'JPY',minor:2980,paidAt:'2026-10-20T00:00:00Z'});
  await store.grantPeriod(row.user_id,row.id,{transactionId,periodStart:'2026-10-20T00:00:00Z',periodEnd:'2026-11-20T00:00:00Z'});
@@ -350,7 +352,7 @@ test('dispute validation checks the whole list before writes and never substitut
 test('owner Sandbox adverse notifications cannot hold known payments of another member',()=>database(async(store,db)=>{
  const rows=[];
  for(const user of ['user_owner','user_other']) {
-  const row=await store.reserve(user,'JPY','sandbox-v1');rows.push(row);
+  const row=await store.reserve(user,'JPY','sandbox-v1','month',CONSENT);rows.push(row);
   const transactionId=`TX-${user.replaceAll('_','-')}`;
   await store.recordPayment({eventId:`WH-${user}`,eventType:'PAYMENT.SALE.COMPLETED',id:row.id,transactionId,currency:'JPY',minor:2980,paidAt:'2026-10-20T00:00:00Z'});
   await store.grantPeriod(user,row.id,{transactionId,periodStart:'2026-10-20T00:00:00Z',periodEnd:'2026-11-20T00:00:00Z'});
@@ -368,8 +370,8 @@ test('owner Sandbox adverse notifications cannot hold known payments of another 
  assert.deepEqual((await db.query('SELECT subscription_id FROM tech_phase_billing_sandbox.review_holds')).rows,[{subscription_id:rows[0].id}]);
 }));
 test('hold migration blocks later paid cycles without blocking another member or deleting the ledger',()=>database(async(store,db)=>{
- const owner=await store.reserve('user_owner','JPY','sandbox-v1');
- const other=await store.reserve('user_other','JPY','sandbox-v1');
+ const owner=await store.reserve('user_owner','JPY','sandbox-v1','month',CONSENT);
+ const other=await store.reserve('user_other','JPY','sandbox-v1','month',CONSENT);
  for(const [row,transactionId,start,end] of [
   [owner,'TX-first','2026-10-20T00:00:00Z','2026-11-20T00:00:00Z'],
   [owner,'TX-renewal','2026-11-20T00:00:00Z','2026-12-20T00:00:00Z'],
@@ -401,11 +403,11 @@ test('sandbox HTTP requires preview, owner identity, exact fields, origin and bo
  for(const mode of ['production','development']) {env.VERCEL_ENV=mode;assert.equal((await handler(req('status'),'status')).status,503);}env.VERCEL_ENV='preview';
  user=null;assert.equal((await handler(req('status'),'status')).status,401);user='user_other';assert.equal((await handler(req('status'),'status')).status,403);
  assert.equal(calls,0);user='user_owner';
- assert.equal((await handler(req('create',{currency:'JPY',acceptedTerms:'sandbox-v1'},'https://evil.test'),'create')).status,403);
+ assert.equal((await handler(req('create',{currency:'JPY',acceptedTerms:'sandbox-v1',consentAt:CONSENT},'https://evil.test'),'create')).status,403);
  assert.equal((await handler(req('create',{currency:'JPY',acceptedTerms:'sandbox-v1',userId:'victim'}),'create')).status,400);
  assert.equal((await handler(req('create',{currency:'JPY',acceptedTerms:'x'.repeat(3000)}),'create')).status,400);
  assert.equal((await handler(req('cancel',{id:'../other'}),'cancel')).status,400);
- const result=await handler(req('create',{currency:'JPY',acceptedTerms:'sandbox-v1'}),'create');
- assert.deepEqual((await result.json()).args,['user_owner','JPY','sandbox-v1','month']);
+ const result=await handler(req('create',{currency:'JPY',acceptedTerms:'sandbox-v1',consentAt:CONSENT}),'create');
+ assert.deepEqual((await result.json()).args,['user_owner','JPY','sandbox-v1','month',CONSENT]);
  assert.equal((await handler(req('status'),'status')).headers.get('Cache-Control'),'private, no-store');
 });

@@ -10,7 +10,11 @@ export const RESOLUTE_CHECKOUT_LINES = {
 } as const;
 // RESOLUTE automatic renewal (owner, Nov 19): replaces the first line ("…ご希望の方だけ更新します") for an order the server
 // created with automatic renewal (order.autoRenewal, flag RESOLUTE_AUTO_RENEWAL_ENABLED). With the flag off the lines stay as above.
-export const RESOLUTE_AUTO_RENEWAL_LINE = { ja: "1年後から自動で更新されます。いつでも止められます", en: "Renews automatically after one year. You can stop it anytime." } as const;
+// Lawyer review (Nov 24): how to stop and by when. The renewal is charged from 00:00 JST of the renewal day
+// (services/resolute-api/payments/renewal.mjs), so the stop deadline is the day before it, on the account page.
+export const RESOLUTE_AUTO_RENEWAL_LINE = { ja: "1年後から自動で更新。更新日の前日までアカウント画面で止められます", en: "Renews automatically after one year. Stop it on your account page by the day before renewal." } as const;
+/** Account screen, RESOLUTE section, under 「自動更新 オン」: the deadline (lawyer review, Nov 24). The renewal day is the expiry day shown above. */
+export const RESOLUTE_RENEWAL_STOP_NOTE = { ja: "自動更新は、更新日（有効期限の日）の前日までにここで止められます。", en: "You can stop auto-renewal here until the day before the renewal date (the expiry date)." } as const;
 export function resoluteCheckoutLines(en: boolean, autoRenewal: boolean): readonly string[] {
   const lines = RESOLUTE_CHECKOUT_LINES[en ? "en" : "ja"];
   return autoRenewal ? [RESOLUTE_AUTO_RENEWAL_LINE[en ? "en" : "ja"], lines[1]] : lines;

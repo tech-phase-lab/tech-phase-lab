@@ -4,18 +4,20 @@ import {readFileSync} from 'node:fs';
 import {PGlite} from '@electric-sql/pglite';
 import {billingStore} from '../services/tech-phase-billing/store.mjs';
 import {liveRecoveryQueue,runLiveRecovery} from '../services/tech-phase-billing/live-recovery.mjs';
+// The consent tick time every checkout carries (lawyer review, Nov 24).
+const CONSENT = '2025-01-01T00:00:00.000Z';
 const env={TECH_PHASE_PAYPAL_ENV:'live',TECH_PHASE_BILLING_RUNTIME:'railway-live',TECH_PHASE_BILLING_LIVE_BRANCH:'codex/research-preview',RAILWAY_GIT_BRANCH:'codex/research-preview',TECH_PHASE_BILLING_LIVE_RECOVERY_ENABLED:'true',TECH_PHASE_BILLING_LIVE_RECOVERY_LIMIT:'2'};
 async function fixture(fn){
  const db=new PGlite();
  try{
   await db.exec('CREATE ROLE tech_phase_billing_live_writer');
-  for(const file of ['005_billing_live.sql','006_live_recovery.sql','006_live_recovery.sql'])await db.exec(readFileSync(new URL('../db/tech-phase/'+file,import.meta.url),'utf8'));
+  for(const file of ['005_billing_live.sql','006_live_recovery.sql','006_live_recovery.sql','010_terms_consent.sql'])await db.exec(readFileSync(new URL('../db/tech-phase/'+file,import.meta.url),'utf8'));
   const pool={query:(...args)=>db.query(...args),connect:async()=>({query:(...args)=>db.query(...args),release(){}})};
   const store=billingStore(pool,'live'),queue=liveRecoveryQueue(pool);
   await fn({db,store,queue});
  }finally{await db.close();}
 }
-async function attach(store,n){const row=await store.reserve('user_Member'+n,'JPY','pro-live-v1');await store.attach('user_Member'+n,row.id,'I-'+String(n).padStart(12,'0'));return row;}
+async function attach(store,n){const row=await store.reserve('user_Member'+n,'JPY','pro-live-v1','month',CONSENT);await store.attach('user_Member'+n,row.id,'I-'+String(n).padStart(12,'0'));return row;}
 test('Live due queue is idempotent, bounds work, resumes after crash, and fences expired workers',async()=>fixture(async({db,store,queue})=>{
  await db.exec('SET ROLE tech_phase_billing_live_writer');
  const a=await attach(store,1);await store.attach('user_Member1',a.id,'I-000000000001');await attach(store,2);await attach(store,3);

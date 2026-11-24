@@ -26,6 +26,8 @@ export function renewalPrice(q) {
   return q.currency === 'JPY' ? `${Number(q.value).toLocaleString('en-US')}円` : `$${q.value.endsWith('.00') ? q.value.slice(0, -3) : q.value}`;
 }
 export const NOTICE_DAYS = 30;
+/** Where automatic renewal is stopped: the account page's RESOLUTE section (lawyer review, Nov 24: the URL goes in the 30-day email). */
+export const RENEWAL_STOP_URL = { ja: 'https://techphase.app/research/account', en: 'https://techphase.app/research/account?lang=en' };
 /**
  * The owner's wording (Nov 19), word for word. upcoming_auto: saved PayPal, renews automatically; upcoming_manual:
  * no saved PayPal (bank/guest-page payers, stopped renewals) — renew from the account page. failed: after the last
@@ -36,9 +38,9 @@ export function renewalMessage(kind, language, periodEnd, price = null) {
   if (kind === 'upcoming_auto') {
     if (!price) throw Error('Renewal price required');
     return en ? { subject: 'Your RESOLUTE alerts renewal',
-      text: `Your RESOLUTE alerts will renew automatically for another year on ${date}. The renewal fee of ${price} will be charged to your PayPal account on file. To stop the renewal, please do so from your account page before ${date}.` }
+      text: `Your RESOLUTE alerts will renew automatically for another year on ${date}. The renewal fee of ${price} will be charged to your PayPal account on file. To stop the renewal, please do so from your account page before ${date}.\n\nIf you'd like to stop renewing, you can do it here:\n${RENEWAL_STOP_URL.en}` }
       : { subject: 'RESOLUTE 通知機能の更新のお知らせ',
-      text: `${date}に、RESOLUTEの通知機能を1年分自動で更新します。\n更新料は${price}で、ご登録のPayPalにてお支払いいただきます。\n停止をご希望の方は、更新日の前日までにアカウント画面からお手続きください。` };
+      text: `${date}に、RESOLUTEの通知機能を1年分自動で更新します。\n更新料は${price}で、ご登録のPayPalにてお支払いいただきます。\n停止をご希望の方は、更新日の前日までにアカウント画面からお手続きください。\n\n更新をやめたい人はこちらから手続きしてください\n${RENEWAL_STOP_URL.ja}` };
   }
   if (kind === 'upcoming_manual') {
     return en ? { subject: 'Your RESOLUTE alerts renewal', text: `Your RESOLUTE alerts end on ${date}. To keep using them, please renew from your account page.` }

@@ -8,6 +8,7 @@ import Crown from "./crown";
 import { INITIAL, tileBackground, tileById } from "./avatars";
 import { AvatarSheet, NameSheet, startCheckout, type Mode } from "./account-sheets";
 import ProOfferCard from "../pro-offer-card";
+import { RESOLUTE_RENEWAL_STOP_NOTE } from "../../legal/agree-button";
 import { ProFeatures } from "../plan-cards";
 import { contractComplete, formatAmount, formatDay, maskEmail, getJson, patchProfile, readContract, readProfile, type Contract, type Profile } from "./account-data";
 import styles from "./account.module.css";
@@ -195,10 +196,10 @@ export default function AccountView({ ja, member, billingAvailable, onRecheck, i
   async function saveName(name: string) { setProfile({ state: "ok", value: await patchProfile({ displayName: name }) }); }
 
   // The PRO card goes straight to PayPal (no confirmation sheet). The server picks the plan from currency and period.
-  async function subscribe(currency: "JPY" | "USD", period: "month" | "year") {
+  async function subscribe(currency: "JPY" | "USD", period: "month" | "year", consentAt: string) {
     if (!mode || checkout.busy) return;
     setCheckout({ busy: true, error: "" });
-    try { await startCheckout(mode, refresh, currency, period); }
+    try { await startCheckout(mode, refresh, currency, period, consentAt); }
     catch (e) { setCheckout({ busy: false, error: e instanceof Error && e.message === "existing-subscription" ? "existing" : "failed" }); }
   }
 
@@ -221,7 +222,7 @@ export default function AccountView({ ja, member, billingAvailable, onRecheck, i
   const period = c?.period === "year" ? "year" : "month"; // the contract's billing period; the amount above is per period
   const planCard = effective === "free"
     ? <ProOfferCard ja={ja} busy={checkout.busy} disabled={!preview && (!mode || freeUnverified || contract.state === "loading")}
-        onSubscribe={preview ? () => undefined : (currency, period) => void subscribe(currency, period)}
+        onSubscribe={preview ? () => undefined : (currency, period, consentAt) => void subscribe(currency, period, consentAt)}
         notice={<>
           {freeUnverified && <div className={styles.ctaNote} role="status">{t("契約の状態を確認できませんでした。", "Could not check your contract.")} <button type="button" className={styles.link} style={{ display: "inline", width: "auto", margin: 0, padding: "0 0 0 6px", color: "#e7c982" }} onClick={recheck}>{t("再確認", "Check again")}</button></div>}
           {!freeUnverified && !mode && !preview && <div className={styles.ctaNote}>{t("お申し込みの受付は、現在停止中です。", "New subscriptions are closed right now.")}</div>}
@@ -257,7 +258,8 @@ export default function AccountView({ ja, member, billingAvailable, onRecheck, i
     {!preview && resolute.state === "unknown" && <p className={styles.note} role="status">{t("購入状況を確認できませんでした。", "Could not check your purchase.")} <button type="button" className={styles.link} onClick={recheck}>{t("再確認", "Check again")}</button></p>}
     {resolute.state === "bought" && !preview
       ? <>{resolute.alertsUntil && formatDay(resolute.alertsUntil, ja) && <div className={styles.kvs} style={{ marginTop: 6 }}><div className={styles.kv}><span>{t("通知サービスの有効期限", "Alerts valid until")}</span><b>{formatDay(resolute.alertsUntil, ja)}</b></div>
-            {renewal?.available && <div className={styles.kv}><span>{t("自動更新", "Auto-renewal")}</span><button type="button" className={styles.link} disabled={renewalBusy} aria-pressed={renewal.enabled} onClick={() => void toggleRenewal()}>{renewal.enabled ? t("オン（止める）", "On (stop)") : t("オフ（再開する）", "Off (resume)")}</button></div>}</div>}
+            {renewal?.available && <div className={styles.kv}><span>{t("自動更新", "Auto-renewal")}</span><button type="button" className={styles.link} disabled={renewalBusy} aria-pressed={renewal.enabled} onClick={() => void toggleRenewal()}>{renewal.enabled ? t("オン（止める）", "On (stop)") : t("オフ（再開する）", "Off (resume)")}</button></div>}
+            {renewal?.available && renewal.enabled && <p className={styles.note} style={{ margin: "6px 0 0" }} data-renewal-stop="">{t(RESOLUTE_RENEWAL_STOP_NOTE.ja, RESOLUTE_RENEWAL_STOP_NOTE.en)}</p>}</div>}
           <div className={styles.stack}><Link className={`${styles.btn} ${styles.abt}`} href={ja ? "/resolute" : "/resolute?lang=en"}>{t("RESOLUTEを開く", "Open RESOLUTE")}</Link>
             <Link className={`${styles.btn} ${styles.abt} ${styles.abtO}`} style={{ height: 46, fontSize: 14 }} href={ja ? "/resolute/checkout?lang=ja&kind=renewal" : "/resolute/checkout?lang=en&kind=renewal"}>{t("通知サービスを更新", "Renew alerts")}</Link></div></>
       : <Link className={`${styles.btn} ${styles.abt} ${styles.abtO}`} style={{ marginTop: 16 }} href={ja ? "/resolute" : "/resolute?lang=en"}>{t("RESOLUTEを見る", "See RESOLUTE")}</Link>}

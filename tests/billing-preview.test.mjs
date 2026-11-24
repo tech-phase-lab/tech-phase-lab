@@ -15,7 +15,7 @@ test('the review screen is reachable only by the owner, before any live-sales ch
 test('in the review screen no API is called, create is refused and the buttons are disabled', () => {
   assert.match(screen, /if \(preview\) \{ setReady\(true\); setSalesReady\(true\);.*return; \}/);
   assert.match(screen, /if \(preview\) return; \/\/ the review screen never starts a payment/);
-  assert.match(screen, /disabled=\{!agreed \|\| busy \|\| preview\}/);
+  assert.match(screen, /disabled=\{busy \|\| preview\}/);
   assert.match(screen, /確認用の表示です（購入はできません）/);
 });
 

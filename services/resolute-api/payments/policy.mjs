@@ -9,6 +9,14 @@ export function input(value, keys) {
       Object.keys(value).length !== keys.length || keys.some(k => !Object.hasOwn(value, k))) reject('INVALID_PAYMENT_INPUT', 400);
   return value;
 }
+// Consent to the Terms of Service and Privacy Policy (lawyer review, Nov 24): the purchase screens send the time the buyer
+// ticked 「利用規約とプライバシーポリシーに同意する」. A request without it is refused; the time is stored with the order.
+// Only the format and "not in the future" (10 minutes of clock skew) are checked: it is the buyer's own clock.
+export function consentTime(value, now) {
+  const at = typeof value === 'string' && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,3})?Z$/.test(value) ? Date.parse(value) : NaN;
+  if (!Number.isFinite(at) || !Number.isFinite(now) || at > now + 600000) reject('CONSENT_REQUIRED', 400);
+  return new Date(at).toISOString();
+}
 export function identity(user, now) {
   if (!user || !/^user_[A-Za-z0-9]{1,128}$/.test(user.id) || user.banned || user.locked ||
       !user.emailAddresses?.some(e => e.id === user.primaryEmailAddressId && e.verification?.status === 'verified')) reject('VERIFIED_ACCOUNT_REQUIRED', 403);

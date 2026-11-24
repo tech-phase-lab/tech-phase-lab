@@ -74,16 +74,18 @@ export function paymentStore(pool, { environment = 'sandbox' } = {}) {
         if (rows[0]?.paypal_id !== paypalId) reject('PAYMENT_MISMATCH'); return iso(rows[0]);
       });
     },
-    async prepare(order, member, now, verifyQuote) {
+    // consentAt: the time the buyer ticked the consent box on the final button; kept in the quote next to the order's own.
+    async prepare(order, member, now, verifyQuote, consentAt = null) {
       return tx(order.user_id, async db => {
         const { rows } = await db.query(`SELECT * FROM ${S}.orders WHERE id=$1 FOR UPDATE`,[order.id]);
         const current=iso(rows[0]);
         if(current.state !== 'created') reject('ORDER_NOT_CAPTURABLE');
         if(Date.parse(current.expires_at) <= now) reject('ORDER_EXPIRED');
         await verifyQuote(current, await rights(db,order.user_id,now,current.quote.kind === 'initial'));
-        await db.query(`UPDATE ${S}.orders SET state='capturing',capture_checked_at=$2,capture_pro_until=$3 WHERE id=$1`,[order.id,new Date(now),member.proUntil]);
+        await db.query(`UPDATE ${S}.orders SET state='capturing',capture_checked_at=$2,capture_pro_until=$3,
+          quote=CASE WHEN $4::text IS NULL THEN quote ELSE quote || jsonb_build_object('captureConsentAt',$4::text) END WHERE id=$1`,[order.id,new Date(now),member.proUntil,consentAt]);
         await audit(db,order.id,'CAPTURE_AUTHORIZED');
-        return { ...current,state:'capturing',capture_checked_at:new Date(now).toISOString(),capture_pro_until:member.proUntil };
+        return { ...current,quote:consentAt ? { ...current.quote,captureConsentAt:consentAt } : current.quote,state:'capturing',capture_checked_at:new Date(now).toISOString(),capture_pro_until:member.proUntil };
       });
     },
     async refreshCapture(order, member, now) {
