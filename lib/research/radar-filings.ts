@@ -1,4 +1,4 @@
-import { CAPEX, CASH, OPERATING_CASH, REVENUE, type CompanyFacts, type LatestFiling, type RadarFacts } from "./radar-facts.ts";
+import { CAPEX, CASH, OPERATING_CASH, PREPAYMENTS, RECEIVABLES, REVENUE, type CompanyFacts, type LatestFiling, type RadarFacts } from "./radar-facts.ts";
 
 /** What the SEC's "company facts" can miss, filled from the SEC's own filing archive (Nov 18, owner: "本当に見てる？" — Nebius had
  * reported its third quarter and the radar still showed its 2025 year):
@@ -169,7 +169,8 @@ function columnsOf(header: string[], years: number[]): { kind: "instant" | "dura
   return { kind: "duration", columns: dates.map((end, i) => ({ start: startOf(end, groups[Math.floor(i / per)]), end })) };
 }
 
-type Line = { tag: string; kind: "instant" | "duration"; abs?: boolean };
+/** `negate`: the cash flow statement shows the line's cash effect (receivables that grew appear as an outflow), the tag the change itself. */
+type Line = { tag: string; kind: "instant" | "duration"; abs?: boolean; negate?: boolean };
 const label = (text: string) => text.toLowerCase().replace(/\(\d\)|\*/g, "").replace(/[’']/g, "'").replace(/\s*[:–—-]\s*$/, "").replace(/\s+/g, " ").trim();
 /** The first tag of `candidates` the company already uses (so the quarter joins its annual line), else the first. */
 const preferred = (base: CompanyFacts, candidates: string[]) => candidates.find(tag => usdRows(base, tag).length) ?? candidates[0];
@@ -178,6 +179,10 @@ function lineOf(text: string, base: CompanyFacts): Line | null {
   if (/^(?:total )?(?:net )?revenues?(?:, net)?$/.test(l)) return { tag: preferred(base, REVENUE), kind: "duration" };
   if (/^net cash\b.*\boperating activities$/.test(l) && !/continuing|discontinued/.test(l)) return { tag: preferred(base, OPERATING_CASH), kind: "duration" };
   if (/^(?:purchases?|acquisitions?|payments? for (?:the )?(?:purchases?|acquisitions?)|capital expenditures?)(?: of)? property(?:,)? (?:plant,? )?(?:and )?equipment/.test(l) || /^capital expenditures?$/.test(l)) return { tag: preferred(base, CAPEX), kind: "duration", abs: true };
+  // The changes in operating assets and liabilities (cash flow statement only: the balance sheet's lines are instants), for the
+  // customer-prepayment adjustment of radar-facts.ts (Nov 24: Nebius's nine months held 7.8 billion dollars paid in advance).
+  if (/^(?:deferred revenues?|contract liabilit(?:y|ies)|customer (?:advances|deposits)|deferred revenues? and customer (?:advances|deposits))(?:, net)?$/.test(l)) return { tag: preferred(base, PREPAYMENTS), kind: "duration" };
+  if (/^(?:accounts|trade) receivables?(?:, net)?$/.test(l)) return { tag: preferred(base, RECEIVABLES), kind: "duration", negate: true };
   if (/^cash and cash equivalents$/.test(l)) return { tag: preferred(base, ["CashAndCashEquivalentsAtCarryingValue", "ifrs-full:CashAndCashEquivalents"]), kind: "instant" };
   if (/^(?:short-term investments|short-term marketable securities|marketable securities, current)$/.test(l)) return { tag: "ShortTermInvestments", kind: "instant" };
   if (/^(?:debt, current|current debt|short-term debt|short-term borrowings|current portion of (?:long-term )?debt(?:, net)?)$/.test(l)) return { tag: "LongTermDebtCurrent", kind: "instant" };
@@ -230,7 +235,7 @@ export function parseStatementTables(html: string, filed: string, accession: str
       if (values.length < columns.columns.length) continue;
       const own = values.slice(-columns.columns.length); // a "Notes" column comes before the figures
       own.forEach((value, i) => {
-        const val = Math.round((line.abs ? Math.abs(value) : value) * scale);
+        const val = Math.round((line.abs ? Math.abs(value) : line.negate ? -value : value) * scale) || 0;
         rows.push({ tag: line.tag, row: { ...columns!.columns[i], val, form: "6-K", filed, accn: accession } });
       });
     }

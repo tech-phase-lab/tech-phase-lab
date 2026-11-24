@@ -27,6 +27,9 @@ export type RadarSnapshot = {
   revenueGrowth: number | null;
   /** True for a company with no revenue (not yet selling): earning power cannot be calculated, so it is a stand-in of -1000% and the screen says "no revenue". */
   noRevenue?: boolean;
+  /** True when customer prepayments received in these twelve months (more than a year of revenue) were taken out of the operating cash flow
+   * before the margins were worked out (Nov 24: Nebius 231%, IREN 276%; see PREPAID_SHARE). */
+  prepaid?: boolean;
 };
 /** The newest periodic report the SEC lists for the company (10-Q, 10-K, 20-F, 40-F, or a 6-K whose statements were read), so the
  * radar's period can be compared with what was actually filed (radar-filings.ts). */
@@ -43,6 +46,10 @@ const shift = (date: string, days: number) => new Date((day(date) + days) * DAY)
 export const REVENUE = ["RevenueFromContractWithCustomerExcludingAssessedTax", "Revenues", "RevenueFromContractWithCustomerIncludingAssessedTax", "SalesRevenueNet", "SalesRevenueGoodsNet", "ifrs-full:Revenue", "ifrs-full:RevenueFromContractsWithCustomers"];
 export const OPERATING_CASH = ["NetCashProvidedByUsedInOperatingActivities", "NetCashProvidedByUsedInOperatingActivitiesContinuingOperations", "ifrs-full:CashFlowsFromUsedInOperatingActivities"];
 export const CAPEX = ["PaymentsToAcquirePropertyPlantAndEquipment", "PaymentsToAcquireProductiveAssets", "PaymentsForCapitalImprovements", "PaymentsToAcquireOtherPropertyPlantAndEquipment", "PaymentsToAcquirePropertyPlantAndEquipmentAndIntangibleAssets", "ifrs-full:PurchaseOfPropertyPlantAndEquipmentClassifiedAsInvestingActivities", "ifrs-full:PurchaseOfPropertyPlantAndEquipment"];
+/** The cash flow statement's change in customer prepayments (contract liabilities / deferred revenue): positive when more was received in advance. */
+export const PREPAYMENTS = ["IncreaseDecreaseInContractWithCustomerLiability", "IncreaseDecreaseInDeferredRevenue", "IncreaseDecreaseInDeferredRevenueAndCustomerAdvancesAndDeposits", "IncreaseDecreaseInCustomerAdvances", "ifrs-full:IncreaseDecreaseInContractLiabilities"];
+/** The change in receivables: positive when receivables grew (money billed, not yet collected). */
+export const RECEIVABLES = ["IncreaseDecreaseInAccountsReceivable", "IncreaseDecreaseInReceivables", "IncreaseDecreaseInAccountsAndOtherReceivables", "ifrs-full:IncreaseDecreaseInTradeAndOtherReceivables"];
 export const CASH = ["CashAndCashEquivalentsAtCarryingValue", "CashCashEquivalentsRestrictedCashAndRestrictedCashEquivalents", "Cash", "ifrs-full:CashAndCashEquivalents"];
 const CASH_AND_INVESTMENTS = ["CashCashEquivalentsAndShortTermInvestments", "CashCashEquivalentsAndMarketableSecurities"];
 const SHORT_INVESTMENTS = ["MarketableSecuritiesCurrent", "ShortTermInvestments", "DebtSecuritiesCurrent", "AvailableForSaleSecuritiesDebtSecuritiesCurrent", "AvailableForSaleSecuritiesCurrent", "OtherShortTermInvestments"];
@@ -154,29 +161,76 @@ function owedAt(data: CompanyFacts, end: string): number | null {
 }
 
 export const NO_REVENUE_MARGIN = -1000;
+/** Customer prepayments are taken out of the operating cash flow when the twelve months' increase is more than a full year of revenue
+ * (money for years ahead, which is not earned yet). On Nov 24 only Nebius (4.3 years of revenue) and IREN (3.6) were above it, both with
+ * operating cash flow above their revenue; the next were CoreWeave (0.63) and GE Vernova's turbine deposits (0.57), then Vertiv (0.23),
+ * and subscription billing at most 0.18 (CrowdStrike, Arista). */
+export const PREPAID_SHARE = 1;
+
+/** Every revenue name gives its twelve months; the first usable one is used. A part of revenue cannot exceed the whole, so when the
+ * total ("Revenues") is smaller than the name chosen, that name mixes two definitions and the total is used (Nov 24: IREN's 10-Q restated
+ * last year's contract revenue without its bitcoin mining, which made its trailing year 900 million dollars instead of 695). */
+function revenueTag(data: CompanyFacts, end: string, basis: "annual" | "ttm"): { tag: string; value: number } | "none" | null {
+  let sawRevenue = false, chosen: { tag: string; value: number } | null = null;
+  for (const tag of REVENUE) {
+    const now = twelveMonths(data, [tag], end);
+    if (now && now.value > 0) sawRevenue = true;
+    // Revenue and cash flow must cover exactly the same twelve months: both the fiscal year, or both the trailing four quarters.
+    if (!now || now.value <= 0 || now.basis !== basis) continue;
+    chosen = { tag, value: now.value };
+    break;
+  }
+  if (!chosen) return sawRevenue ? null : "none";
+  if (chosen.tag !== "Revenues") {
+    const total = twelveMonths(data, ["Revenues"], end);
+    if (total && total.basis === basis && total.value > 0 && total.value < chosen.value * 0.99) return { tag: "Revenues", value: total.value };
+  }
+  return chosen;
+}
+
+/** Growth against the same period a year earlier. The trailing year a year ago first; when that cannot be added up (a foreign filer
+ * whose older quarters were never read, a newly listed company), this year to date against the same months a year earlier, which one
+ * report states side by side (Nov 24: Nebius and Applied Digital showed "売上 —"). */
+function growthOf(data: CompanyFacts, tag: string, end: string, value: number, basis: "annual" | "ttm"): number | null {
+  const before = twelveMonths(data, [tag], shift(end, -364));
+  if (before && before.value > 0) return (value / before.value - 1) * 100;
+  if (basis !== "ttm") return null;
+  const rows = series(data, tag).filter(row => row.start);
+  const ytd = yearToDate(rows, end);
+  if (!ytd?.start) return null;
+  const prior = pick(rows, row => near(row.end, shift(ytd.end, -365), 8) && near(row.start!, shift(ytd.start!, -365), 8) && Math.abs(duration(row) - duration(ytd)) <= 8);
+  return prior && prior.val > 0 && ytd.val > 0 ? (ytd.val / prior.val - 1) * 100 : null;
+}
+
+/** Customer prepayments received in the twelve months, when they exceed PREPAID_SHARE times revenue: the increase in contract liabilities,
+ * less what of it was billed and is still unpaid (the growth in receivables), so that money not yet received is not taken out twice. */
+function prepaidCash(data: CompanyFacts, end: string, basis: "annual" | "ttm", revenue: number): number {
+  const advance = twelveMonths(data, PREPAYMENTS, end);
+  if (!advance || advance.basis !== basis || advance.value <= revenue * PREPAID_SHARE) return 0;
+  const receivable = twelveMonths(data, RECEIVABLES, end);
+  const unpaid = receivable && receivable.basis === basis ? Math.max(0, receivable.value) : 0;
+  return Math.max(0, advance.value - unpaid);
+}
+
 function snapshotAt(data: CompanyFacts, end: string): RadarSnapshot | null {
   const cash = cashAt(data, end), owed = owedAt(data, end);
   if (cash === null || cash < 0 || owed === null || owed < 0) return null;
   const operating = twelveMonths(data, OPERATING_CASH, end), capex = twelveMonths(data, CAPEX, end);
   if (!operating || !capex || operating.basis !== capex.basis) return null;
-  let sawRevenue = false;
-  for (const tag of REVENUE) {
-    const now = twelveMonths(data, [tag], end);
-    if (now && now.value > 0) sawRevenue = true;
-    // Revenue and cash flow must cover exactly the same twelve months: both the fiscal year, or both the trailing four quarters.
-    if (!now || now.value <= 0 || now.basis !== operating.basis) continue;
-    const before = twelveMonths(data, [tag], shift(end, -364));
-    return {
-      end, basis: now.basis, revenue: now.value,
-      ocfMargin: operating.value / now.value * 100,
-      fcfMargin: (operating.value - Math.abs(capex.value)) / now.value * 100,
-      cover: owed > 0 ? cash / owed : Number.POSITIVE_INFINITY,
-      revenueGrowth: before && before.value > 0 ? (now.value / before.value - 1) * 100 : null,
-    };
-  }
+  const cover = owed > 0 ? cash / owed : Number.POSITIVE_INFINITY;
+  const revenue = revenueTag(data, end, operating.basis);
   // No revenue for these twelve months (not selling yet, or too little history to add up a year): the balance sheet is still shown, earning power is not.
-  if (!sawRevenue) return { end, basis: operating.basis, revenue: 0, ocfMargin: NO_REVENUE_MARGIN, fcfMargin: NO_REVENUE_MARGIN, cover: owed > 0 ? cash / owed : Number.POSITIVE_INFINITY, revenueGrowth: null, noRevenue: true };
-  return null;
+  if (revenue === "none") return { end, basis: operating.basis, revenue: 0, ocfMargin: NO_REVENUE_MARGIN, fcfMargin: NO_REVENUE_MARGIN, cover, revenueGrowth: null, noRevenue: true };
+  if (!revenue) return null;
+  const prepaid = prepaidCash(data, end, operating.basis, revenue.value);
+  const earned = operating.value - prepaid;
+  return {
+    end, basis: operating.basis, revenue: revenue.value,
+    ocfMargin: earned / revenue.value * 100,
+    fcfMargin: (earned - Math.abs(capex.value)) / revenue.value * 100,
+    cover, revenueGrowth: growthOf(data, revenue.tag, end, revenue.value, operating.basis),
+    ...(prepaid > 0 ? { prepaid: true } : {}),
+  };
 }
 
 /** True when the cash line is filed only in another currency (an IFRS filer reporting in euros): the radar's sizes are dollars, so it is not drawn. */
