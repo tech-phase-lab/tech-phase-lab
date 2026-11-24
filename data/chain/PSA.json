@@ -1,0 +1,164 @@
+{
+  "root": {
+    "ticker": "PSA",
+    "name": "パブリック・ストレージ",
+    "cik": 1393311,
+    "name_en": "Public Storage"
+  },
+  "rows": [
+    {
+      "ja": "買収",
+      "en": "Acquisitions",
+      "above": true
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "EXR",
+    "CUBE",
+    "UHAL"
+  ],
+  "companies": [
+    {
+      "id": "NSA",
+      "ticker": "NSA",
+      "name": "ナショナル・ストレージ・アフィリエイツ",
+      "name_en": "National Storage Affiliates",
+      "sub": "トランクルームREIT",
+      "sub_en": "Self-storage REIT",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Public Storageとの経営統合(買収)案件を2026年3月に発表",
+          "text_en": "Announced a proposed business combination with Public Storage in March 2026",
+          "source": {
+            "label": "Public Storage 8-K添付(2026年3月)",
+            "label_en": "Public Storage 8-K exhibit (2026-03)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1393311/000119312526107159/d121595dex992.htm",
+            "level": "official",
+            "date": "2026-03-16",
+            "quote": "Each of NSA and Public Storage may also file other relevant documents with the SEC regarding the proposed transaction."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "NSAが10-Kで、競合の上場REITとしてPublic Storageを挙げる",
+          "text_en": "NSA names Public Storage among competing public self-storage REITs",
+          "source": {
+            "label": "National Storage Affiliates Trust 10-K(2026年提出)",
+            "label_en": "National Storage Affiliates Trust 10-K (filed 2026-02)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1618563/000162828026012248/nsa-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "as well as the other public self storage REITs, including Public Storage, CubeSmart, and Extra Space Storage Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BX",
+      "ticker": "BX",
+      "name": "ブラックストーン(BREIT)",
+      "name_en": "Blackstone (BREIT)",
+      "sub": "投資会社",
+      "sub_en": "Investment firm",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2023年、BREIT傘下のトランクルーム会社Simply Storageを22億ドルで買収",
+          "text_en": "Bought BREIT's Simply Storage for $2.2 billion in cash in 2023",
+          "source": {
+            "label": "Public Storage 10-K(2025年度)",
+            "label_en": "Public Storage 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1393311/000162828026007696/psa-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "During 2023, we acquired BREIT Simply Storage LLC (\"Simply\"), a self-storage company that owned and operated 127 self-storage facilities"
+          }
+        }
+      ]
+    },
+    {
+      "id": "EXR",
+      "ticker": "EXR",
+      "name": "エクストラ・スペース・ストレージ",
+      "name_en": "Extra Space Storage",
+      "sub": "トランクルームREIT",
+      "sub_en": "Self-storage REIT",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Extra Spaceが10-Kで、主な競合の上場REITとしてPublic Storageを挙げる",
+          "text_en": "Extra Space names Public Storage among its three primary public self-storage REIT competitors",
+          "source": {
+            "label": "Extra Space Storage 10-K(2025年提出)",
+            "label_en": "Extra Space Storage 10-K (filed 2025-02)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1289490/000162828025009060/exr-20241231.htm",
+            "level": "official",
+            "date": "2025-02-28",
+            "quote": "Our three primary competitors who are public self-storage REITs are CubeSmart, National Storage Affiliates and Public Storage."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CUBE",
+      "ticker": "CUBE",
+      "name": "キューブスマート",
+      "name_en": "CubeSmart",
+      "sub": "トランクルームREIT",
+      "sub_en": "Self-storage REIT",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "CubeSmartが10-Kで、主な競合としてPublic Storageを挙げる",
+          "text_en": "CubeSmart names Public Storage among its key competitors",
+          "source": {
+            "label": "CubeSmart 10-K(2025年提出)",
+            "label_en": "CubeSmart 10-K (filed 2025-02)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1298675/000129867525000011/cube-20241231x10k.htm",
+            "level": "official",
+            "date": "2025-02-28",
+            "quote": "other public self-storage REITs, including, but not limited to, Public Storage, Extra Space Storage Inc., and National Storage Affiliates Trust."
+          }
+        }
+      ]
+    },
+    {
+      "id": "UHAL",
+      "ticker": "UHAL",
+      "name": "U-Haul",
+      "name_en": "U-Haul Holding",
+      "sub": "引越し・トランクルーム",
+      "sub_en": "Moving & self-storage",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "U-Haulが10-Kで、トランクルームの最大の競合としてPublic Storageを挙げる",
+          "text_en": "U-Haul names Public Storage among its largest self-storage competitors",
+          "source": {
+            "label": "U-Haul Holding 10-K(2026年提出)",
+            "label_en": "U-Haul Holding 10-K (filed 2026-05)",
+            "url": "https://www.sec.gov/Archives/edgar/data/4457/000119312526241850/uhal-20260331.htm",
+            "level": "official",
+            "date": "2026-05-27",
+            "quote": "Our largest competitors in the self-storage market are Public Storage Inc., CubeSmart, and Extra Space Storage, Inc."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
