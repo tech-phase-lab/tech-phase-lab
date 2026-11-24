@@ -1,0 +1,241 @@
+{
+  "root": {
+    "ticker": "ALV",
+    "name": "オートリブ",
+    "cik": 1034670,
+    "name_en": "Autoliv"
+  },
+  "rows": [
+    {
+      "ja": "ソフトの仕入れ先(上流)",
+      "en": "Software supplier (upstream)",
+      "above": true
+    },
+    {
+      "ja": "主な顧客(自動車メーカー)",
+      "en": "Main customers (automakers)"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in its 10-K)"
+    }
+  ],
+  "rivals": [
+    "ZF"
+  ],
+  "companies": [
+    {
+      "id": "OS",
+      "ticker": "OS",
+      "name": "ワンストリーム",
+      "name_en": "OneStream",
+      "sub": "経営管理ソフト",
+      "sub_en": "Finance software",
+      "sub_short": "経営ソフ",
+      "sub_short_en": "Finance",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "OneStreamがS-1で、2020年からの顧客事例に挙げる",
+          "text_en": "OneStream features Autoliv as a customer since 2020",
+          "source": {
+            "label": "OneStream S-1(2024年)",
+            "label_en": "OneStream S-1 (2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1889956/000095017024125373/ck0001889956-20241112.htm",
+            "level": "official",
+            "date": "2024-11-12",
+            "quote": "Customer Case Studies Autoliv Customer since: 2020 Solutions delivered: Unified Business Planning, Financial Close and Consolidation, and Reporting and Analysis"
+          }
+        }
+      ]
+    },
+    {
+      "id": "STLA",
+      "ticker": "STLA",
+      "name": "ステランティス",
+      "name_en": "Stellantis",
+      "sub": "自動車",
+      "sub_en": "Automaker",
+      "sub_short": "自動車",
+      "sub_short_en": "Cars",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大の顧客(売上の9.8%)",
+          "text_en": "Largest customer (9.8% of sales)",
+          "source": {
+            "label": "Autoliv 10-K(2025年度)",
+            "label_en": "Autoliv 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1034670/000119312526058162/alv-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Customer % of Autoliv sales % of Global LVP 1) Stellantis 9.8 % 5.8 % Toyota 9.6 % 12.3 % VW 9.0 % 9.6 % Honda 8.3 % 3.8 % Hyundai 7.0 % 8.1 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "TM",
+      "ticker": "TM",
+      "name": "トヨタ自動車",
+      "name_en": "Toyota",
+      "sub": "自動車",
+      "sub_en": "Automaker",
+      "sub_short": "自動車",
+      "sub_short_en": "Cars",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2番目の顧客(売上の9.6%)",
+          "text_en": "Second-largest customer (9.6% of sales)",
+          "source": {
+            "label": "Autoliv 10-K(2025年度)",
+            "label_en": "Autoliv 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1034670/000119312526058162/alv-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Customer % of Autoliv sales % of Global LVP 1) Stellantis 9.8 % 5.8 % Toyota 9.6 % 12.3 % VW 9.0 % 9.6 % Honda 8.3 % 3.8 % Hyundai 7.0 % 8.1 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "VWAGY",
+      "ticker": "VWAGY",
+      "name": "フォルクスワーゲン",
+      "name_en": "Volkswagen",
+      "sub": "自動車",
+      "sub_en": "Automaker",
+      "sub_short": "自動車",
+      "sub_short_en": "Autos",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "3番目の顧客(売上の9.0%)",
+          "text_en": "Third-largest customer (9.0% of sales)",
+          "source": {
+            "label": "Autoliv 10-K(2025年度)",
+            "label_en": "Autoliv 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1034670/000119312526058162/alv-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Customer % of Autoliv sales % of Global LVP 1) Stellantis 9.8 % 5.8 % Toyota 9.6 % 12.3 % VW 9.0 % 9.6 % Honda 8.3 % 3.8 % Hyundai 7.0 % 8.1 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "HMC",
+      "ticker": "HMC",
+      "name": "ホンダ",
+      "name_en": "Honda",
+      "sub": "自動車",
+      "sub_en": "Automaker",
+      "sub_short": "自動車",
+      "sub_short_en": "Autos",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "4番目の顧客(売上の8.3%)",
+          "text_en": "Fourth-largest customer (8.3% of sales)",
+          "source": {
+            "label": "Autoliv 10-K(2025年度)",
+            "label_en": "Autoliv 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1034670/000119312526058162/alv-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Customer % of Autoliv sales % of Global LVP 1) Stellantis 9.8 % 5.8 % Toyota 9.6 % 12.3 % VW 9.0 % 9.6 % Honda 8.3 % 3.8 % Hyundai 7.0 % 8.1 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "005380",
+      "ticker": "005380",
+      "name": "現代自動車",
+      "name_en": "Hyundai Motor",
+      "sub": "自動車",
+      "sub_en": "Automaker",
+      "sub_short": "自動車",
+      "sub_short_en": "Autos",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "5番目の顧客(売上の7.0%)",
+          "text_en": "Fifth-largest customer (7.0% of sales)",
+          "source": {
+            "label": "Autoliv 10-K(2025年度)",
+            "label_en": "Autoliv 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1034670/000119312526058162/alv-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Customer % of Autoliv sales % of Global LVP 1) Stellantis 9.8 % 5.8 % Toyota 9.6 % 12.3 % VW 9.0 % 9.6 % Honda 8.3 % 3.8 % Hyundai 7.0 % 8.1 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "1211",
+      "ticker": "1211",
+      "name": "BYD",
+      "name_en": "BYD",
+      "sub": "EV・電池",
+      "sub_en": "EVs & batteries",
+      "sub_short": "EV",
+      "sub_short_en": "EVs",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "子会社FinDreamsにインフレーターなどの部品を供給",
+          "text_en": "Supplies inflators and other parts to its unit FinDreams",
+          "source": {
+            "label": "Autoliv 10-K(2025年度)",
+            "label_en": "Autoliv 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1034670/000119312526058162/alv-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "BYD Auto., Ltd. (BYD) has a high degree of vertical integration, with a large proportion of in-house sourcing of products and systems. This includes passive safety systems, which is supplied by its subsidiary FinDreams Technology. Autoliv supplies components, especially inflators, to FinDreams Technology."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ZF",
+      "ticker": "ZF",
+      "name": "ZFフリードリヒスハーフェン",
+      "name_en": "ZF Friedrichshafen",
+      "sub": "自動車部品",
+      "sub_en": "Auto parts",
+      "sub_short": "車部品",
+      "sub_short_en": "Parts",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "最大級の競合の一社",
+          "text_en": "One of its largest competitors",
+          "source": {
+            "label": "Autoliv 10-K(2025年度)",
+            "label_en": "Autoliv 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1034670/000119312526058162/alv-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "ZF AG, one of the Company's largest competitors, is a global leader in drive-line and chassis technology as well as in passive safety technologies"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

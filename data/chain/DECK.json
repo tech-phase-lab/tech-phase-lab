@@ -1,0 +1,160 @@
+{
+  "root": {
+    "ticker": "DECK",
+    "name": "デッカーズ・ブランズ",
+    "cik": 910521,
+    "name_en": "Deckers Brands"
+  },
+  "rows": [
+    {
+      "ja": "販売先(小売)",
+      "en": "Retail customers"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "NKE",
+    "ONON",
+    "CROX"
+  ],
+  "companies": [
+    {
+      "id": "DKS",
+      "ticker": "DKS",
+      "name": "ディックス・スポーティング・グッズ",
+      "name_en": "Dick's Sporting Goods",
+      "sub": "スポーツ用品店",
+      "sub_en": "Sporting goods retail",
+      "sub_short": "スポ用品",
+      "sub_short_en": "Sports",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Dick'sが10-Kで、取り扱う有名ブランドにHokaとUggを挙げる",
+          "text_en": "Dick's lists Hoka and Ugg among national brands it carries",
+          "source": {
+            "label": "Dick's Sporting Goods 10-K(2025年度)",
+            "label_en": "Dick's Sporting Goods 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1089063/000108906326000007/dks-20260131.htm",
+            "level": "official",
+            "date": "2026-03-27",
+            "quote": "We carry a wide variety of well-known brands, including but not limited to adidas, Asics, Birkenstock, Brooks, Callaway Golf, Carhartt, Columbia, Easton/Rawlings, Hoka, Jordan, New Balance, Nike, On, Patagonia, Peloton, PING, Stanley, TaylorMade, The North Face, Timberland, Titleist, Ugg"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SCVL",
+      "ticker": "SCVL",
+      "name": "シュー・カーニバル",
+      "name_en": "Shoe Carnival",
+      "sub": "靴小売",
+      "sub_en": "Footwear retail",
+      "sub_short": "靴小売",
+      "sub_short_en": "Shoes",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Shoe Carnivalが10-Kで、販売するブランドにHOKAを挙げる",
+          "text_en": "Shoe Carnival names HOKA among branded footwear it sells",
+          "source": {
+            "label": "Shoe Carnival 10-K(2025年度)",
+            "label_en": "Shoe Carnival 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/895447/000119312526126279/scvl-20260131.htm",
+            "level": "official",
+            "date": "2026-03-26",
+            "quote": "We have a demonstrated track record of selling branded footwear, including Nike, Skechers, Crocs, adidas, Puma, HEYDUDE, HOKA, Birkenstock, Converse and Brooks"
+          }
+        }
+      ]
+    },
+    {
+      "id": "NKE",
+      "ticker": "NKE",
+      "name": "ナイキ",
+      "name_en": "Nike",
+      "sub": "スポーツ用品",
+      "sub_en": "Sportswear",
+      "sub_short": "スポーツ",
+      "sub_short_en": "Apparel",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Nikeが10-Kで、競合の一社に挙げる",
+          "text_en": "Nike names Deckers among its competitors",
+          "source": {
+            "label": "Nike 10-K(2026年5月期)",
+            "label_en": "Nike 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/320187/000032018726000088/nke-20260531.htm",
+            "level": "official",
+            "date": "2026-07-15",
+            "quote": "including adidas, Anta, ASICS, Deckers, Li Ning, lululemon athletica, New Balance, On, Puma, Under Armour and V.F. Corporation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ONON",
+      "ticker": "ONON",
+      "name": "オン・ホールディング",
+      "name_en": "On Holding",
+      "sub": "スポーツシューズ",
+      "sub_en": "Running shoes",
+      "sub_short": "靴",
+      "sub_short_en": "Shoes",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Onが20-Fで、Hokaを主な競合に挙げる",
+          "text_en": "On names Hoka (Deckers) among its primary competitors",
+          "source": {
+            "label": "On Holding 20-F(2025年度)",
+            "label_en": "On Holding 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1858985/000185898526000008/onholdingag-20251231.htm",
+            "level": "official",
+            "date": "2026-03-03",
+            "quote": "Brooks Sports Inc., Hoka One One (Deckers Outdoor Corporation), ASICS Corporation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CROX",
+      "ticker": "CROX",
+      "name": "クロックス",
+      "name_en": "Crocs",
+      "sub": "靴",
+      "sub_en": "Footwear",
+      "sub_short": "靴",
+      "sub_short_en": "Shoes",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Crocsが10-Kで、競合の一社に挙げる",
+          "text_en": "Crocs names Deckers among companies it competes with",
+          "source": {
+            "label": "Crocs 10-K(2024年度)",
+            "label_en": "Crocs 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1334036/000133403625000009/crox-20241231.htm",
+            "level": "official",
+            "date": "2025-02-13",
+            "quote": "compete with companies including, but not limited to: NIKE, Inc., adidas AG, Deckers Outdoor Corporation, Skechers USA, Inc."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

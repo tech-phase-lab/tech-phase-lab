@@ -1,0 +1,153 @@
+{
+  "root": {
+    "ticker": "LAD",
+    "name": "リシア・モーターズ",
+    "cik": 1023128,
+    "name_en": "Lithia Motors"
+  },
+  "rows": [
+    {
+      "ja": "新車の仕入れ先(主要5社で売上の25%)",
+      "en": "Vehicle makers (5 makers = 25% of sales)",
+      "above": true
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "HMC",
+      "ticker": "HMC",
+      "name": "ホンダ",
+      "name_en": "Honda",
+      "sub": "自動車",
+      "sub_en": "Automaker",
+      "sub_short": "自動車",
+      "sub_short_en": "Autos",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "売上の25%を占める主要5メーカーの一社",
+          "text_en": "One of five makers whose new vehicles are 25% of its sales",
+          "source": {
+            "label": "Lithia Motors 10-K(2025年度)",
+            "label_en": "Lithia Motors 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1023128/000102312826000015/lad-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "New vehicles from five manufacturers, Honda, Toyota, Ford, BMW, and Stellantis, represent 25% of our sales."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TM",
+      "ticker": "TM",
+      "name": "トヨタ自動車",
+      "name_en": "Toyota",
+      "sub": "自動車",
+      "sub_en": "Automaker",
+      "sub_short": "自動車",
+      "sub_short_en": "Cars",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "売上の25%を占める主要5メーカーの一社",
+          "text_en": "One of five makers whose new vehicles are 25% of its sales",
+          "source": {
+            "label": "Lithia Motors 10-K(2025年度)",
+            "label_en": "Lithia Motors 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1023128/000102312826000015/lad-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "New vehicles from five manufacturers, Honda, Toyota, Ford, BMW, and Stellantis, represent 25% of our sales."
+          }
+        }
+      ]
+    },
+    {
+      "id": "F",
+      "ticker": "F",
+      "name": "フォード",
+      "name_en": "Ford",
+      "sub": "自動車",
+      "sub_en": "Automaker",
+      "sub_short": "自動車",
+      "sub_short_en": "Cars",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "売上の25%を占める主要5メーカーの一社",
+          "text_en": "One of five makers whose new vehicles are 25% of its sales",
+          "source": {
+            "label": "Lithia Motors 10-K(2025年度)",
+            "label_en": "Lithia Motors 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1023128/000102312826000015/lad-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "New vehicles from five manufacturers, Honda, Toyota, Ford, BMW, and Stellantis, represent 25% of our sales."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BMW",
+      "ticker": "BMW",
+      "name": "BMW",
+      "name_en": "BMW",
+      "sub": "高級車",
+      "sub_en": "Luxury cars",
+      "sub_short": "高級車",
+      "sub_short_en": "Luxury",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "売上の25%を占める主要5メーカーの一社",
+          "text_en": "One of five makers whose new vehicles are 25% of its sales",
+          "source": {
+            "label": "Lithia Motors 10-K(2025年度)",
+            "label_en": "Lithia Motors 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1023128/000102312826000015/lad-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "New vehicles from five manufacturers, Honda, Toyota, Ford, BMW, and Stellantis, represent 25% of our sales."
+          }
+        }
+      ]
+    },
+    {
+      "id": "STLA",
+      "ticker": "STLA",
+      "name": "ステランティス",
+      "name_en": "Stellantis",
+      "sub": "自動車",
+      "sub_en": "Automaker",
+      "sub_short": "自動車",
+      "sub_short_en": "Cars",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "売上の25%を占める主要5メーカーの一社",
+          "text_en": "One of five makers whose new vehicles are 25% of its sales",
+          "source": {
+            "label": "Lithia Motors 10-K(2025年度)",
+            "label_en": "Lithia Motors 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1023128/000102312826000015/lad-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "New vehicles from five manufacturers, Honda, Toyota, Ford, BMW, and Stellantis, represent 25% of our sales."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

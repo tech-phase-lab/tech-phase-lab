@@ -1,0 +1,205 @@
+{
+  "root": {
+    "ticker": "SAH",
+    "name": "ソニック・オートモーティブ",
+    "cik": 1043509,
+    "name_en": "Sonic Automotive"
+  },
+  "rows": [
+    {
+      "ja": "新車の仕入れ先(ブランド別の新車売上比率)",
+      "en": "Vehicle makers (share of new-vehicle revenue)",
+      "above": true
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "BMW",
+      "ticker": "BMW",
+      "name": "BMW",
+      "name_en": "BMW",
+      "sub": "高級車",
+      "sub_en": "Luxury cars",
+      "sub_short": "高級車",
+      "sub_short_en": "Luxury",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "新車売上の23%(最大のブランド)",
+          "text_en": "23% of new-vehicle revenue (largest brand)",
+          "source": {
+            "label": "Sonic Automotive 10-K(2025年度)",
+            "label_en": "Sonic Automotive 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1043509/000162828026010570/sah-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "Brand 2025 2024 2023 Luxury: BMW 23 % 25 % 25 % Mercedes 13 % 14 % 14 % Land Rover 7 % 5 % 4 % Lexus 6 % 5 % 5 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MBG",
+      "ticker": "Mercedes-Benz",
+      "name": "メルセデス・ベンツ",
+      "name_en": "Mercedes-Benz",
+      "sub": "高級車",
+      "sub_en": "Luxury cars",
+      "sub_short": "高級車",
+      "sub_short_en": "Luxury",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "新車売上の13%",
+          "text_en": "13% of new-vehicle revenue",
+          "source": {
+            "label": "Sonic Automotive 10-K(2025年度)",
+            "label_en": "Sonic Automotive 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1043509/000162828026010570/sah-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "Brand 2025 2024 2023 Luxury: BMW 23 % 25 % 25 % Mercedes 13 % 14 % 14 % Land Rover 7 % 5 % 4 % Lexus 6 % 5 % 5 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "HMC",
+      "ticker": "HMC",
+      "name": "ホンダ",
+      "name_en": "Honda",
+      "sub": "自動車",
+      "sub_en": "Automaker",
+      "sub_short": "自動車",
+      "sub_short_en": "Autos",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "新車売上の11%",
+          "text_en": "11% of new-vehicle revenue",
+          "source": {
+            "label": "Sonic Automotive 10-K(2025年度)",
+            "label_en": "Sonic Automotive 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1043509/000162828026010570/sah-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "Mid-line Import: Honda 11 % 11 % 10 % Toyota 9 % 9 % 9 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "TM",
+      "ticker": "TM",
+      "name": "トヨタ自動車",
+      "name_en": "Toyota",
+      "sub": "自動車",
+      "sub_en": "Automaker",
+      "sub_short": "自動車",
+      "sub_short_en": "Cars",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "トヨタが新車売上の9%",
+          "text_en": "Toyota: 9% of new-vehicle revenue",
+          "source": {
+            "label": "Sonic Automotive 10-K(2025年度)",
+            "label_en": "Sonic Automotive 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1043509/000162828026010570/sah-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "Mid-line Import: Honda 11 % 11 % 10 % Toyota 9 % 9 % 9 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "TataMotors",
+      "ticker": "Tata Motors",
+      "name": "タタ・モーターズ",
+      "name_en": "Tata Motors",
+      "sub": "自動車",
+      "sub_en": "Automaker",
+      "sub_short": "自動車",
+      "sub_short_en": "Autos",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ランドローバーが新車売上の7%",
+          "text_en": "Land Rover is 7% of new-vehicle revenue",
+          "source": {
+            "label": "Sonic Automotive 10-K(2025年度)",
+            "label_en": "Sonic Automotive 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1043509/000162828026010570/sah-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "Brand 2025 2024 2023 Luxury: BMW 23 % 25 % 25 % Mercedes 13 % 14 % 14 % Land Rover 7 % 5 % 4 % Lexus 6 % 5 % 5 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GM",
+      "ticker": "GM",
+      "name": "ゼネラル・モーターズ",
+      "name_en": "General Motors",
+      "sub": "自動車",
+      "sub_en": "Automaker",
+      "sub_short": "自動車",
+      "sub_short_en": "Cars",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "新車売上の6%",
+          "text_en": "6% of new-vehicle revenue",
+          "source": {
+            "label": "Sonic Automotive 10-K(2025年度)",
+            "label_en": "Sonic Automotive 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1043509/000162828026010570/sah-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "Domestic: General Motors (3) 6 % 6 % 6 % Chrysler Dodge Jeep RAM 5 % 4 % 4 % Ford 3 % 4 % 4 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "STLA",
+      "ticker": "STLA",
+      "name": "ステランティス",
+      "name_en": "Stellantis",
+      "sub": "自動車",
+      "sub_en": "Automaker",
+      "sub_short": "自動車",
+      "sub_short_en": "Cars",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "新車売上の5%(クライスラー・ダッジ・ジープ・ラム)",
+          "text_en": "5% of new-vehicle revenue (Chrysler, Dodge, Jeep, Ram)",
+          "source": {
+            "label": "Sonic Automotive 10-K(2025年度)",
+            "label_en": "Sonic Automotive 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1043509/000162828026010570/sah-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "Domestic: General Motors (3) 6 % 6 % 6 % Chrysler Dodge Jeep RAM 5 % 4 % 4 % Ford 3 % 4 % 4 %"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

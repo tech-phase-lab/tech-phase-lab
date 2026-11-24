@@ -1,0 +1,157 @@
+{
+  "root": {
+    "ticker": "ASH",
+    "name": "アッシュランド",
+    "cik": 1674862,
+    "name_en": "Ashland"
+  },
+  "rows": [
+    {
+      "ja": "仕入れ先・販売を受託する製品の供給元(上流)",
+      "en": "Suppliers & products it markets (upstream)",
+      "above": true
+    },
+    {
+      "ja": "顧客・事業の売却先・旧子会社",
+      "en": "Customers, business buyer & former unit"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "UG",
+      "ticker": "UG",
+      "name": "ユナイテッド・ガーディアン",
+      "name_en": "United-Guardian",
+      "sub": "化粧品原料",
+      "sub_en": "Cosmetic ingredients",
+      "sub_short": "化粧原料",
+      "sub_short_en": "Cosmetic",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "化粧品原料の最大の販売代理店がAshlandの部門",
+          "text_en": "Ashland Specialty Ingredients is the largest distributor of its cosmetic ingredients",
+          "source": {
+            "label": "United-Guardian 10-K(2024年度)",
+            "label_en": "United-Guardian 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/101295/000117184325001611/ug20241231_10k.htm",
+            "level": "official",
+            "date": "2025-03-21",
+            "quote": "Our cosmetic ingredients are currently marketed globally by five distributors, of which Ashland Specialty Ingredients (\"ASI\"), a business segment of Ashland, Inc., is the largest."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NTSK",
+      "ticker": "NTSK",
+      "name": "ネットスコープ",
+      "name_en": "Netskope",
+      "sub": "クラウドセキュリティ",
+      "sub_en": "Cloud security",
+      "sub_short": "セキュリ",
+      "sub_short_en": "Security",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "NetskopeがS-1で、代表的な顧客の一社に挙げる",
+          "text_en": "Netskope names Ashland in a sample of its customers",
+          "source": {
+            "label": "Netskope S-1(2025年)",
+            "label_en": "Netskope S-1 (2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2063196/000095017025113358/ck0002063196-20250908.htm",
+            "level": "official",
+            "date": "2025-09-08",
+            "quote": "The following is a representative sampling of our customers: AMETEK Exclusive Networks Omnicom Ashland Home Depot"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CYTH",
+      "ticker": "CYTH",
+      "name": "サイクロ・セラピューティクス",
+      "name_en": "Cyclo Therapeutics",
+      "sub": "医薬品開発",
+      "sub_en": "Drug development",
+      "sub_short": "創薬",
+      "sub_short_en": "Biotech",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Ashlandとの契約で、原料の最低購入量を約束(2022年)",
+          "text_en": "Committed to minimum purchases under a 2022 agreement with Ashland",
+          "source": {
+            "label": "Cyclo Therapeutics 10-K/A(2023年度)",
+            "label_en": "Cyclo Therapeutics 10-K/A (FY2023)",
+            "url": "https://www.sec.gov/Archives/edgar/data/922247/000143774924037835/ctdh20231231d_10ka.htm",
+            "level": "official",
+            "date": "2024-12-18",
+            "quote": "In connection with an agreement executed in January 2022 with Ashland, Inc., the Company committed to purchase minimum amounts of goods used in its normal operations based on completion of certain milestones."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Mane",
+      "ticker": "Mane",
+      "name": "マネ",
+      "name_en": "Mane",
+      "sub": "香料",
+      "sub_en": "Flavors & fragrances",
+      "sub_short": "香料",
+      "sub_short_en": "Flavors",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Avoca事業をフランスの香料会社Maneに売却(2025年3月)",
+          "text_en": "Sold its Avoca business to Mane (Mar 2025)",
+          "source": {
+            "label": "Ashland 10-K(2026年9月期)",
+            "label_en": "Ashland 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1674862/000119312526469716/ash-20260930.htm",
+            "level": "official",
+            "date": "2026-11-20",
+            "quote": "On March 31, 2025, Ashland completed the sale of its Avoca business to Mane SA."
+          }
+        }
+      ]
+    },
+    {
+      "id": "VVV",
+      "ticker": "VVV",
+      "name": "バルボリン",
+      "name_en": "Valvoline",
+      "sub": "自動車整備",
+      "sub_en": "Auto service",
+      "sub_short": "整備",
+      "sub_short_en": "Car care",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "旧子会社。2017年に残りの持分を株主に分配して独立",
+          "text_en": "Former unit; Ashland distributed its remaining stake in 2017",
+          "source": {
+            "label": "Valvoline 10-K(2024年9月期)",
+            "label_en": "Valvoline 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1674910/000167491024000152/vvv-20240930.htm",
+            "level": "official",
+            "date": "2024-11-22",
+            "quote": "Valvoline completed its initial public offering of common stock in September 2016, and Ashland distributed its remaining ownership interest in Valvoline in May 2017 (the \"Distribution\")."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

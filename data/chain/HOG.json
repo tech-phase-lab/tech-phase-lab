@@ -1,0 +1,209 @@
+{
+  "root": {
+    "ticker": "HOG",
+    "name": "ハーレーダビッドソン",
+    "cik": 793952,
+    "name_en": "Harley-Davidson"
+  },
+  "rows": [
+    {
+      "ja": "商品・部品の仕入れ先(上流)",
+      "en": "Suppliers (upstream)",
+      "above": true
+    },
+    {
+      "ja": "販売店・ライセンス先・提携先",
+      "en": "Dealers, licensees & partners"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "GIII",
+      "ticker": "GIII",
+      "name": "G-IIIアパレル",
+      "name_en": "G-III Apparel",
+      "sub": "衣料品",
+      "sub_en": "Apparel",
+      "sub_short": "衣料",
+      "sub_short_en": "Apparel",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "G-IIIが10-Kで、PB商品を共同開発する小売の一社に挙げる",
+          "text_en": "G-III names Harley-Davidson among retailers it develops private-label collections with",
+          "source": {
+            "label": "G-III Apparel 10-K(2025年度)",
+            "label_en": "G-III Apparel 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/821002/000110465926033891/giii-20260131x10k.htm",
+            "level": "official",
+            "date": "2026-03-24",
+            "quote": "We also partner with a diversified group of retailers such as Macy's, Harley-Davidson, Costco, Kohl's and Ross Stores to develop private-label collections."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Proterial",
+      "ticker": "Proterial",
+      "name": "プロテリアル・ケーブル・アメリカ",
+      "name_en": "Proterial Cable America",
+      "sub": "ブレーキホース",
+      "sub_en": "Brake hoses",
+      "sub_short": "ホース",
+      "sub_short_en": "Hoses",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ブレーキホースの組立品を供給",
+          "text_en": "Supplies brake hose assemblies",
+          "source": {
+            "label": "Harley-Davidson 10-K(2025年度)",
+            "label_en": "Harley-Davidson 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/793952/000079395226000011/hog-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "the brake hose assemblies provided to the Company by Proterial Cable America, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RDNW",
+      "ticker": "RDNW",
+      "name": "ライドナウ・グループ",
+      "name_en": "RideNow Group",
+      "sub": "パワースポーツ販売店",
+      "sub_en": "Powersports dealer",
+      "sub_short": "販売店",
+      "sub_short_en": "Dealer",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "RideNowが10-Kで、新車を仕入れる主なメーカーの一社に挙げる",
+          "text_en": "RideNow names Harley-Davidson among the OEMs it sources new units from",
+          "source": {
+            "label": "RideNow Group 10-K(2025年度)",
+            "label_en": "RideNow Group 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1596961/000159696126000015/rdnw-20251231.htm",
+            "level": "official",
+            "date": "2026-03-13",
+            "quote": "Our principal suppliers are original equipment manufacturers (\"OEMs\"), including BRP (Can-Am/Sea-Doo), Polaris, Harley-Davidson, Yamaha, and Kawasaki"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Hero",
+      "ticker": "Hero MotoCorp",
+      "name": "ヒーロー・モトコープ",
+      "name_en": "Hero MotoCorp",
+      "sub": "二輪車(インド)",
+      "sub_en": "Motorcycles (India)",
+      "sub_short": "二輪車",
+      "sub_short_en": "Bikes",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "インドでの販売代理店・ブランドのライセンス先",
+          "text_en": "Distributor and licensee of the Harley-Davidson brand",
+          "source": {
+            "label": "Harley-Davidson 10-K(2025年度)",
+            "label_en": "Harley-Davidson 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/793952/000079395226000011/hog-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "maintain a productive relationship with Hero MotoCorp as a distributor and licensee of the Harley-Davidson brand name"
+          }
+        }
+      ]
+    },
+    {
+      "id": "WWW",
+      "ticker": "WWW",
+      "name": "ウルヴァリン・ワールドワイド",
+      "name_en": "Wolverine World Wide",
+      "sub": "靴",
+      "sub_en": "Footwear",
+      "sub_short": "靴",
+      "sub_short_en": "Shoes",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ライセンスでHarley-Davidsonブランドの靴を販売",
+          "text_en": "Sells Harley-Davidson branded footwear under license",
+          "source": {
+            "label": "Wolverine World Wide 10-K(2024年度)",
+            "label_en": "Wolverine World Wide 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/110471/000011047125000046/www-20241228.htm",
+            "level": "official",
+            "date": "2025-02-20",
+            "quote": "Pursuant to a license arrangement with the Harley-Davidson Motor Company, Inc., the Company has footwear marketing and distribution rights for Harley-Davidson ® branded footwear."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LVWR",
+      "ticker": "LVWR",
+      "name": "ライブワイヤー・グループ",
+      "name_en": "LiveWire Group",
+      "sub": "電動バイク",
+      "sub_en": "Electric motorcycles",
+      "sub_short": "電動二輪",
+      "sub_short_en": "E-bikes",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "電動バイク会社。ITなどでHarleyと提携",
+          "text_en": "Electric motorcycle maker that partners with Harley on IT and more",
+          "source": {
+            "label": "LiveWire Group 10-K(2024年度)",
+            "label_en": "LiveWire Group 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1898795/000189879525000055/lvwr-20241231.htm",
+            "level": "official",
+            "date": "2025-02-21",
+            "quote": "Through our partnership with Harley-Davidson we maintain an IT incident response plan"
+          }
+        }
+      ]
+    },
+    {
+      "id": "KKR",
+      "ticker": "KKR",
+      "name": "KKR",
+      "name_en": "KKR",
+      "sub": "投資ファンド",
+      "sub_en": "Private equity",
+      "sub_short": "投資",
+      "sub_short_en": "PE",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "金融子会社HDFSの株9.8%とローン債権をKKRとPIMCOに売却(2025年)",
+          "text_en": "Sold 9.8% of HDFS and most of its retail loans to KKR and PIMCO (2025)",
+          "source": {
+            "label": "Harley-Davidson 10-K(2025年度)",
+            "label_en": "Harley-Davidson 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/793952/000079395226000011/hog-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "During 2025, HDFS (i) sold to KKR and PIMCO a collective 9.8% of its common equity interest, (ii) sold to KKR and PIMCO the majority of its existing gross consumer retail loan receivables"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
