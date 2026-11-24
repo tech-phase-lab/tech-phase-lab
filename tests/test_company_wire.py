@@ -619,3 +619,48 @@ class LowValueTests(unittest.TestCase):
             db.commit()
         self.store(('Stifel cuts Marvell stock price target on deal concerns to $280', 'Investing.com UK', 16))
         self.assertEqual(self.pending(), [])
+
+
+class TechAlertsNoiseTests(unittest.TestCase):
+    """Owner, Nov 24 (ハイテク速報「こういうニュースはいらない」): chart-of-the-day recaps, options-chain and quote pages, social posts and
+    interviews, opinion and predictions, and consumer how-to tips are never translated or published; real company news is."""
+
+    @classmethod
+    def setUpClass(cls):
+        import json
+        cls.cases = json.loads((Path(__file__).resolve().parent / 'fixtures' / 'tech-alerts-noise-1124.json').read_text(encoding='utf-8'))
+
+    def test_each_kind_is_dropped_by_its_english_title(self):
+        for kind, titles in self.cases['dropped'].items():
+            with self.subTest(kind=kind):
+                self.assertEqual([t for t in titles if not company_wire.hidden_title(t)], [])
+        self.assertEqual([en for _ja, en in self.cases['droppedJa'] if not company_wire.hidden_title(en)], [])
+
+    def test_real_news_is_kept(self):
+        self.assertEqual([t for t in self.cases['kept'] if company_wire.hidden_title(t)], [])
+
+    def test_outlets_and_links_are_dropped_and_others_kept(self):
+        title = 'Nvidia reinstates Jensen Huang after Trump speaks directly to board'
+        for row in self.cases['sources']['dropped']:
+            self.assertTrue(company_wire.locally_rejected({**row, 'title': title}), row)
+        for row in self.cases['sources']['kept']:
+            self.assertFalse(company_wire.locally_rejected({**row, 'title': title}), row)
+
+    def test_rows_already_stored_leave_the_public_feed(self):
+        """Rows stored (and translated) before these rules are filtered when the feed is built, so they leave the page on redeploy."""
+        import tempfile, os
+        now = datetime(2026, 11, 24, 3, 0, tzinfo=timezone.utc)
+        with tempfile.TemporaryDirectory() as folder:
+            path = os.path.join(folder, 'db.sqlite')
+            rows = [('Chip stocks led a $3 trillion comeback on Monday — now comes Turnaround Tuesday: Chart of the Day', '', 'yahoo',
+                     'https://finance.yahoo.com/markets/article/chip-stocks-1'),
+                    ('Nebius signs $17.4 billion GPU capacity deal with Microsoft', 'Reuters', 'gnews', 'https://news.example/deal'),
+                    ('Nebius startup programme update', 'LinkedIn', 'gnews', 'https://news.example/post'),
+                    ('Astera Labs (ALAB) quote', '', 'yahoo', 'https://finance.yahoo.com/quote/ALAB/options/')]
+            with company_wire.connect(path) as db:
+                for minutes, (title, publisher, source, url) in enumerate(rows):
+                    published = now - timedelta(minutes=minutes + 1)
+                    company_wire.store(db, [{'ticker': 'NBIS', 'source': source, 'title': title, 'publisher': publisher, 'url': url,
+                                             'published': published}], 'Nebius Group', seen_at=published)
+                feed = company_wire.public_feed(db, now.timestamp())
+        self.assertEqual([r['titleEn'] for r in feed['items'].get('NBIS', [])], ['Nebius signs $17.4 billion GPU capacity deal with Microsoft'])

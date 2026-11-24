@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import type { ReactNode } from "react";
+import ResoluteHtmlLang from "./html-lang";
 const sans = localFont({src:"./fonts/noto-sans-jp.woff2",weight:"100 900",display:"swap",preload:false,variable:"--font-resolute-sans"});
 const serif = localFont({src:"./fonts/noto-serif-jp.woff2",weight:"200 900",display:"swap",preload:false,variable:"--font-resolute-serif"});
 /** RESOLUTE can be put on the home screen as its own app (own name, icon and scope), separate from Tech Phase. */
@@ -12,5 +13,5 @@ export const metadata: Metadata = {
 /** Without viewport-fit=cover the browser reports a top inset of 0, so an overlay bar over the page could never be detected. */
 export const viewport: Viewport = { width: "device-width", initialScale: 1, maximumScale: 1, userScalable: false, viewportFit: "cover" };
 export default function ResoluteLayout({children}:{children:ReactNode}) {
- return <div className={`${sans.variable} ${serif.variable}`}>{children}</div>;
+ return <div className={`${sans.variable} ${serif.variable}`}><ResoluteHtmlLang />{children}</div>;
 }

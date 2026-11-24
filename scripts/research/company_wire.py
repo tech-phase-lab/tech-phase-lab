@@ -280,15 +280,33 @@ def publisher_counter(publisher):
 # Seeking Alpha, MarketBeat, Moomoo, TIKR and Traders Union also carry real news items (deals, rating changes) and are kept.
 # Owner, Nov 21: GuruFocus's templated items ("… Stock Down 11.7% — What the 84 GF Score Means for Investors", "… GF Value $207.57 vs
 # price $152.18") are not news either; they are dropped by outlet name and by a gurufocus.com link from any feed.
+# Owner, Nov 24 (ハイテク速報「こういうニュースはいらない」): social-media posts (an X / LinkedIn post of "@NVIDIAAI's startup ..."), opinion
+# and prediction mills (24/7 Wall St., Kalkine, Blockchain News "Stock Price Prediction", TradingNEWS forecasts) and consumer how-to blogs
+# (Windows Central's "Don't worry, Microsoft remembered you love vertical taskbars") are not company news either. The same outlets are
+# NOISE_PUBLISHERS in lib/research/wire-stories.ts; keep the two in step (a test compares them).
 GNEWS_DROP_PUBLISHERS = ('The Motley Fool', 'Simply Wall St', 'Trefis', 'TradingKey', 'Admirals', 'Zacks Investment Research', 'InvestorPlace',
-                         'Insider Monkey', 'GuruFocus', 'GuruFocus.com')
+                         'Insider Monkey', 'GuruFocus', 'GuruFocus.com',
+                         # social media and personal newsletters
+                         'LinkedIn', 'X', 'X.com', 'Twitter', 'Facebook', 'Instagram', 'Threads', 'YouTube', 'TikTok', 'Reddit',
+                         'Substack', 'Medium',
+                         # opinion, prediction and stock-picking mills
+                         '24/7 Wall St.', 'Kalkine', 'Kalkine Media', 'kalkine.ca', 'kalkine.com', 'Blockchain News', 'TradingNEWS',
+                         # consumer how-to and tips blogs
+                         'Windows Central', 'Windows Latest', 'Neowin', 'How-To Geek', 'MakeUseOf', 'XDA Developers', 'XDA', 'Android Authority',
+                         'Android Police', 'Search Engine Roundtable', 'Lifehacker', 'gHacks', 'Laptop Mag', "Tom's Guide", 'Pureinfotech')
 GNEWS_DROP_KEYS = frozenset(publisher_key(n) for n in GNEWS_DROP_PUBLISHERS)
-DROPPED_HOST = re.compile(r'^https?://(?:[\w-]+\.)*gurufocus\.com(?:[:/?#]|$)', re.I)
+# A link to GuruFocus, to a social-media post, or to an options-chain / option-quote page is never news, whatever the feed (owner, Nov 24:
+# 「アステラ・ラボ (ALAB) のオプションチェーン」). The same rule is NOISE_URL in lib/research/wire-stories.ts.
+NOISE_URL_PATTERN = (r'^https?://(?:[\w-]+\.)*(?:gurufocus\.com|linkedin\.com|x\.com|twitter\.com|facebook\.com|instagram\.com|threads\.net'
+                     r'|tiktok\.com|reddit\.com)(?:[:/?#]|$)'
+                     r'|^https?://[^/?#]+/(?:[^?#]*/)?(?:options|option-chain|options-chain|option-chains)(?:[/?#]|$)')
+DROPPED_HOST = re.compile(NOISE_URL_PATTERN, re.I)
 
 
 def dropped_publisher(row):
     """A Stock News API row from a publisher that is no longer taken (rows stored before Nov 15 are neither translated nor shown), a
-    Google News row from an opinion and stock-picking outlet (GNEWS_DROP_PUBLISHERS), or any row linking to GuruFocus."""
+    Google News row from an opinion, stock-picking, social-media or how-to outlet (GNEWS_DROP_PUBLISHERS), or any row linking to GuruFocus,
+    a social-media post or an options page (NOISE_URL_PATTERN)."""
     url = row['url'] if 'url' in row.keys() else ''
     if DROPPED_HOST.match(url or '') or publisher_key(row['publisher']) in (publisher_key('GuruFocus'), publisher_key('GuruFocus.com')):
         return True
@@ -571,6 +589,11 @@ NOT_NEWS_EN = tuple(re.compile(pattern, flags) for pattern, flags in (
 # cuts, reports, files, sues, surges ..., or a price target or rating change), so "AMD launches MI400: what it means for Nvidia" and
 # "Intel names new CEO - live" are kept. The same patterns are LOW_VALUE, LOW_VALUE_SOFT and CONCRETE_EVENT in
 # lib/research/wire-stories.ts, which also has the Japanese ones; keep them in step (a test compares them).
+# Owner, Nov 24 (ハイテク速報「こういうニュースはいらない」: a "Chart of the Day" market recap, an options-chain page, an "@NVIDIAAI" social
+# post, "ASML Stock What Changed After Nvidia CEO Return" and a Windows taskbar tip): LOW_VALUE_EN also drops chart-of-the-day recaps,
+# options-chain and quote pages (an OCC option symbol, "interactive stock chart"), social handles, podcasts and webinars, stock price
+# predictions and "I'd buy" pieces, and how-to tips; LOW_VALUE_SOFT_EN also drops "what changed / what's behind" teasers, interviews and
+# Windows interface trivia when no concrete event is reported.
 LOW_VALUE_EN = (
     r"\bstock market (?:today|news today|live)\b|\bstocks? (?:today|live)\s*:"
     r"|^\s*(?:Dow Jones|Nasdaq|S&P 500|Stock|Stocks) futures\s*:|^\s*(?:market (?:open|close)|closing bell|opening bell|morning bid|markets? wrap)\s*:"
@@ -584,6 +607,12 @@ LOW_VALUE_EN = (
     r"|\((?:NASDAQ|NYSE|NYSEAMERICAN|AMEX|NYSEARCA):[A-Z.]+\).{0,80}\s[-–—]\s+what.s next\b"
     r"|\bGF (?:Score|Value|Rating)\b"
     r"|^\s*(?:what\b.{0,40}\bmeans?\s+(?:for|to)|what to know|how to (?:read|play|think about|invest|buy|trade|value))\b"
+    r"|\bcharts? of the (?:day|week)\b|\btoday.s charts?\b|\bstocks that explain today.s market\b"
+    r"|\boptions? chains?\b|\boptions spot-on\b|\b[A-Z]{1,6}\d{6}[CP]\d{8}\b|\b(?:interactive stock|seasonal returns) chart\b"
+    r"|\bstock price,? news,? quote\b|\bquote (?:&|and) history\b|\bstock forum (?:&|and) discussion\b|\bquotes,? (?:&|and) charts\b"
+    r"|(?:^|[\s(\[])@[A-Za-z_][A-Za-z0-9_]{2,}|\bpodcast\b|\bwebinar\b|\bfireside chat\b|\bepisode \d+\b"
+    r"|\bstock (?:price )?(?:prediction|forecast)\b|\bI.d (?:still |also |happily |gladly )?(?:buy|sell|hold|own)\b|\bdeserves? (?:your )?attention\b|\bbargain buys?\b|^\s*(?:opinion|social buzz)\s*[:|]"
+    r"|^\s*don.t (?:worry|panic|forget)\b|\btips (?:and|&) tricks\b|\bhere.s how to\b|\bstep[- ]by[- ]step\b"
 )
 LOW_VALUE_SOFT_EN = (
     r"[(\[]\s*live(?: updates?| coverage| blog)?\s*[)\]]|\blive (?:updates|coverage|blog)\b|[-–—:|]\s*(?:business |markets? |stock market )?live\s*$"
@@ -592,6 +621,9 @@ LOW_VALUE_SOFT_EN = (
     r"|\bwhat (?:you|investors|shareholders|traders|buyers) (?:need|should|must|ought|have) to know\b|\bwhat to know\b|\beverything (?:you|investors) need to know\b"
     r"|\bhow to (?:read|play|think about|invest(?: in)?|buy|trade|value|approach|navigate|position)\b"
     r"|\b(?:bull|bear) case\b|\s[-–—]\s+what.s next\b"
+    r"|\bwhat(?:.s| has)? changed\b|\bwhat.s (?:behind|going on|driving)\b|\bwhat (?:sent|lifted|drove|pushed)\b"
+    r"|\binterview with\b|\binterview\s*[:|]|\|\s*interview\b|\bsits down with\b|\bin conversation with\b|\bchats with\b"
+    r"|\b(?:vertical )?taskbars?\b|\bstart menu\b|\bfile explorer\b|\bcontext menu\b|\bsnipping tool\b|\bwallpapers?\b|\bdark mode\b"
 )
 CONCRETE_EVENT_EN = (
     r"\b(?!(?:How|Time|What|Why|When|Where|Who|Here|Stock|Stocks|Shares|Has|Have|Had|Is|Are|Was|Were|Be|It|I|You|We|They|He|She)\b)[A-Z][\w&.'’-]*\s+(?:to\s+|will\s+)?(?:[Ll]aunch(?:es|ed)?|[Nn]ames|[Nn]amed|[Ii]nvest(?:s|ed)?|[Bb]uys|[Bb]uy|[Bb]ought|[Aa]cquires?|[Aa]cquired"

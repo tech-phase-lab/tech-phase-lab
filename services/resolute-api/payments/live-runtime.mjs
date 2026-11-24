@@ -26,6 +26,10 @@ export function livePaymentRuntime(env, authConfig, createServices = createLiveP
           allowedUsers:null, auditUsers:LIVE_AUDIT_USERS });
       }
       return await handler(request);
-    } catch { return unavailable('PAYMENT_UNAVAILABLE'); }
+    } catch {
+      // Setup failed (configuration, database pool, Clerk client): a fixed line, never the error text (it can name a URL).
+      console.error(JSON.stringify({event:'RESOLUTE_PAYMENT_ERROR',environment:'live',stage:'setup',code:'PAYMENT_UNAVAILABLE'}));
+      return unavailable('PAYMENT_UNAVAILABLE');
+    }
   };
 }

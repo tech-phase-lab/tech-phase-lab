@@ -293,7 +293,7 @@ export const TAX_ASSUMPTIONS: readonly { ja: { term: string; text: string }; en:
     en: { term: 'Tax year', text: 'Japan’s rules for tax year 2026 (Reiwa 8). The rate is 20.315%: income tax 15%, resident tax 5% and the reconstruction surtax (2.1% of income tax).' },
   },
   {
-    ja: { term: '為替の換算方法', text: '金額は円で入力します。米ドルで売買した株は、売却代金は売った日、購入額は買った日の為替レートで円に換算した金額(証券会社の取引報告書の円換算額)を入れてください。為替の動きによる損益は、その円換算額の差に含まれます。' },
+    ja: { term: '為替の換算方法', text: '金額は円で入力します。ドルで売買した株は、売却代金は売った日、購入額は買った日の為替レートで円に換算した金額(証券会社の取引報告書の円換算額)を入れてください。為替の動きによる損益は、その円換算額の差に含まれます。' },
     en: { term: 'Currency conversion', text: 'Enter amounts in yen. For shares traded in U.S. dollars, enter the proceeds converted at the exchange rate on the day you sold and the cost converted at the rate on the day you bought (the yen amounts on your broker’s trade reports). Gains or losses from currency moves are included in the difference between those yen amounts.' },
   },
   {

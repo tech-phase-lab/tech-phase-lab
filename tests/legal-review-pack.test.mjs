@@ -81,10 +81,11 @@ test("3: RESOLUTE checkout — only the final pay button reads 「利用規約�
   assert.match(en, /^<button type="button" aria-label="Agree to the Terms and buy">Agree to the <span role="link" data-href="\/terms\?lang=en"[^>]*>Terms<\/span> and buy<\/button>$/);
   assert.match(read("../app/legal/agree-button.tsx"), /window\.open\(href, "_blank", "noopener"\)/);
   const live = read("../app/resolute/checkout/live-screen.tsx");
-  // Owner, Nov 19: for an automatic-renewal order the first line becomes 「1年後から自動で更新されます。いつでも止められます」;
-  // with RESOLUTE_AUTO_RENEWAL_ENABLED off the two lines are RESOLUTE_CHECKOUT_LINES as before (tests/resolute-auto-renewal.test.mjs).
-  // Lawyer review (Nov 24): the consent tick line sits between the small lines and the button.
-  assert.match(live, /<CheckoutLines lines=\{resoluteCheckoutLines\(en,order\.autoRenewal===true\)\} \/>\n    <ConsentCheck en=\{en\} consent=\{consent\} \/>\n    <AgreeButton en=\{en\} disabled=\{busy\} onClick=\{\(\)=>void act\("capture"\)\} \/>/);
+  // Owner, Nov 24 (one tick, one press): no final button after PayPal any more — coming back completes the payment with the
+  // consent ticked on the buy button. Where this screen still sends a buyer on (creating an order, or an order not yet
+  // approved), the auto-renewal and refund lines sit above the consent line, which sits right above the button.
+  assert.match(live, /<CheckoutLines lines=\{resoluteBuyLines\(en\)\} \/>\n    <ConsentCheck en=\{en\} consent=\{consent\} \/>\n    <a className=\{styles\.button\} href=\{approval\}/);
+  assert.ok(!live.includes("<AgreeButton"));
   assert.ok(!live.includes("支払いを確定する") && !live.includes("Complete payment"));
   // The other buttons keep their words; the footer links the full terms and the commerce notice.
   for (const kept of ["価格を確認して進む", "Check price and continue", "PayPalへ進む", "Continue to PayPal"]) assert.ok(live.includes(kept), kept);
