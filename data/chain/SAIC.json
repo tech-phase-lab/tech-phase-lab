@@ -30,7 +30,7 @@
       "name_en": "SilverEdge Government Solutions",
       "sub": "政府向け技術ソリューション",
       "sub_en": "Government technology solutions",
-      "sub_short": "政府向け技術",
+      "sub_short": "政府技術",
       "sub_short_en": "Gov tech",
       "row": 0,
       "relations": [
@@ -82,7 +82,7 @@
       "name_en": "Leidos",
       "sub": "防衛・政府IT",
       "sub_en": "Defense & government IT",
-      "sub_short": "防衛・政府IT",
+      "sub_short": "防衛",
       "sub_short_en": "Defense",
       "row": 1,
       "relations": [
@@ -108,8 +108,8 @@
       "name_en": "Amentum",
       "sub": "政府向けエンジニアリング",
       "sub_en": "Government engineering services",
-      "sub_short": "政府向け技術",
-      "sub_short_en": "Gov engineering",
+      "sub_short": "政府技術",
+      "sub_short_en": "Gov IT",
       "row": 1,
       "relations": [
         {
@@ -134,8 +134,8 @@
       "name_en": "V2X",
       "sub": "政府向けサービス",
       "sub_en": "Government services",
-      "sub_short": "政府サービス",
-      "sub_short_en": "Gov services",
+      "sub_short": "政府支援",
+      "sub_short_en": "Gov IT",
       "row": 1,
       "relations": [
         {
@@ -160,8 +160,8 @@
       "name_en": "ICF International",
       "sub": "政府向けコンサル",
       "sub_en": "Government consulting",
-      "sub_short": "政府コンサル",
-      "sub_short_en": "Gov consulting",
+      "sub_short": "政府支援",
+      "sub_short_en": "Gov IT",
       "row": 1,
       "relations": [
         {

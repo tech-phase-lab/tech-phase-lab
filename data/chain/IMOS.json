@@ -28,7 +28,7 @@
       "sub": "テスタ",
       "sub_en": "Test equipment",
       "sub_short": "テスタ",
-      "sub_short_en": "Test equipment",
+      "sub_short_en": "Testing",
       "row": 0,
       "relations": [
         {
@@ -81,8 +81,8 @@
       "name": "芝浦メカトロニクス",
       "sub": "半導体製造装置",
       "sub_en": "Semiconductor equipment",
-      "sub_short": "半導体製造装置",
-      "sub_short_en": "Chip equipment",
+      "sub_short": "製造装置",
+      "sub_short_en": "Chip tools",
       "row": 0,
       "relations": [
         {
@@ -107,8 +107,8 @@
       "name": "群創光電",
       "sub": "ディスプレイパネル",
       "sub_en": "Display panels",
-      "sub_short": "表示パネル",
-      "sub_short_en": "Display panels",
+      "sub_short": "パネル",
+      "sub_short_en": "Panels",
       "row": 0,
       "relations": [
         {
@@ -135,8 +135,8 @@
       "name": "ハイマックス",
       "sub": "表示ドライバIC",
       "sub_en": "Display driver ICs",
-      "sub_short": "表示ドライバIC",
-      "sub_short_en": "Display chips",
+      "sub_short": "表示IC",
+      "sub_short_en": "Display",
       "row": 1,
       "relations": [
         {
@@ -161,8 +161,8 @@
       "name": "ソニーグループ",
       "sub": "電機・エンタメ",
       "sub_en": "Electronics & entertainment",
-      "sub_short": "電機・エンタメ",
-      "sub_short_en": "Electronics",
+      "sub_short": "電機",
+      "sub_short_en": "Devices",
       "row": 2,
       "relations": [
         {

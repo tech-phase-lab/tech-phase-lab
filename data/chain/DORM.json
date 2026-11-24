@@ -30,7 +30,7 @@
       "sub": "補修部品",
       "sub_en": "Aftermarket parts",
       "sub_short": "補修部品",
-      "sub_short_en": "Aftermarket",
+      "sub_short_en": "Parts",
       "row": 0,
       "relations": [
         {
@@ -55,8 +55,8 @@
       "name_en": "Gates Industrial",
       "sub": "ベルト・ホース",
       "sub_en": "Belts & hoses",
-      "sub_short": "ベルト・ホース",
-      "sub_short_en": "Belts & hoses",
+      "sub_short": "ベルト",
+      "sub_short_en": "Belts",
       "row": 0,
       "relations": [
         {
@@ -82,7 +82,7 @@
       "sub": "自動車",
       "sub_en": "Automaker",
       "sub_short": "自動車",
-      "sub_short_en": "Automaker",
+      "sub_short_en": "Cars",
       "row": 0,
       "relations": [
         {
@@ -108,7 +108,7 @@
       "sub": "自動車",
       "sub_en": "Automaker",
       "sub_short": "自動車",
-      "sub_short_en": "Automaker",
+      "sub_short_en": "Cars",
       "row": 0,
       "relations": [
         {
@@ -159,8 +159,8 @@
       "name_en": "LKQ",
       "sub": "補修部品流通",
       "sub_en": "Aftermarket parts distribution",
-      "sub_short": "補修部品流通",
-      "sub_short_en": "Parts distrib.",
+      "sub_short": "補修部品",
+      "sub_short_en": "Parts",
       "row": 0,
       "relations": [
         {
@@ -186,7 +186,7 @@
       "sub": "燃料系・補修部品",
       "sub_en": "Fuel systems & aftermarket",
       "sub_short": "燃料系",
-      "sub_short_en": "Fuel systems",
+      "sub_short_en": "Fuel",
       "row": 1,
       "relations": [
         {

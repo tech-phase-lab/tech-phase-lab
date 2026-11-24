@@ -25,8 +25,8 @@
       "name": "ゼネラル・モーターズ",
       "sub": "自動車メーカー",
       "sub_en": "Automaker",
-      "sub_short": "自動車メーカー",
-      "sub_short_en": "Automaker",
+      "sub_short": "自動車",
+      "sub_short_en": "Cars",
       "row": 0,
       "relations": [
         {
@@ -51,8 +51,8 @@
       "name": "フォード・モーター",
       "sub": "自動車メーカー",
       "sub_en": "Automaker",
-      "sub_short": "自動車メーカー",
-      "sub_short_en": "Automaker",
+      "sub_short": "自動車",
+      "sub_short_en": "Cars",
       "row": 0,
       "relations": [
         {
@@ -77,8 +77,8 @@
       "name": "ステランティス",
       "sub": "自動車メーカー",
       "sub_en": "Automaker",
-      "sub_short": "自動車メーカー",
-      "sub_short_en": "Automaker",
+      "sub_short": "自動車",
+      "sub_short_en": "Cars",
       "row": 0,
       "relations": [
         {
@@ -103,8 +103,8 @@
       "name": "現代自動車グループ",
       "sub": "自動車メーカー",
       "sub_en": "Automaker",
-      "sub_short": "自動車メーカー",
-      "sub_short_en": "Automaker",
+      "sub_short": "自動車",
+      "sub_short_en": "Cars",
       "row": 0,
       "relations": [
         {
@@ -142,8 +142,8 @@
       "name": "リア",
       "sub": "自動車シート・電装",
       "sub_en": "Auto seating & electrical",
-      "sub_short": "自動車シート",
-      "sub_short_en": "Auto seating",
+      "sub_short": "シート",
+      "sub_short_en": "Seats",
       "row": 1,
       "relations": [
         {

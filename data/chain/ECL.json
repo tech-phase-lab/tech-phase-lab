@@ -34,8 +34,8 @@
       "name_en": "Repligen",
       "sub": "バイオ製造機器",
       "sub_en": "Bioprocessing",
-      "sub_short": "バイオ製造機器",
-      "sub_short_en": "Bioprocessing",
+      "sub_short": "バイオ",
+      "sub_short_en": "Bio",
       "row": 0,
       "relations": [
         {
@@ -61,7 +61,7 @@
       "sub": "半導体向け超純水",
       "sub_en": "Ultrapure water for chips",
       "sub_short": "超純水",
-      "sub_short_en": "Ultrapure water",
+      "sub_short_en": "Water",
       "row": 1,
       "relations": [
         {
@@ -87,7 +87,7 @@
       "sub": "医療用品",
       "sub_en": "Medical supplies",
       "sub_short": "医療用品",
-      "sub_short_en": "Medical supplies",
+      "sub_short_en": "Medtech",
       "row": 1,
       "relations": [
         {
@@ -112,8 +112,8 @@
       "name_en": "ChampionX",
       "sub": "油田化学品",
       "sub_en": "Oilfield chemicals",
-      "sub_short": "油田化学品",
-      "sub_short_en": "Oil chemicals",
+      "sub_short": "油田",
+      "sub_short_en": "Oil",
       "row": 1,
       "relations": [
         {
@@ -138,8 +138,8 @@
       "name_en": "Xylem",
       "sub": "水処理機器",
       "sub_en": "Water technology",
-      "sub_short": "水処理機器",
-      "sub_short_en": "Water technology",
+      "sub_short": "水処理",
+      "sub_short_en": "Water",
       "row": 2,
       "relations": [
         {
@@ -164,8 +164,8 @@
       "name_en": "STERIS",
       "sub": "滅菌・感染予防",
       "sub_en": "Infection prevention",
-      "sub_short": "滅菌・感染予防",
-      "sub_short_en": "Infection ctrl",
+      "sub_short": "滅菌",
+      "sub_short_en": "Hygiene",
       "row": 2,
       "relations": [
         {
@@ -191,7 +191,7 @@
       "sub": "害虫駆除",
       "sub_en": "Pest control",
       "sub_short": "害虫駆除",
-      "sub_short_en": "Pest control",
+      "sub_short_en": "Pests",
       "row": 2,
       "relations": [
         {
@@ -216,8 +216,8 @@
       "name_en": "Rentokil Initial",
       "sub": "害虫駆除・衛生(英)",
       "sub_en": "Pest control & hygiene (UK)",
-      "sub_short": "害虫駆除・衛生",
-      "sub_short_en": "Pest control",
+      "sub_short": "害虫駆除",
+      "sub_short_en": "Pests",
       "row": 2,
       "relations": [
         {
@@ -243,7 +243,7 @@
       "sub": "除菌装置",
       "sub_en": "Disinfection systems",
       "sub_short": "除菌装置",
-      "sub_short_en": "Disinfection",
+      "sub_short_en": "Hygiene",
       "row": 2,
       "relations": [
         {

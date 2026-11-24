@@ -30,7 +30,7 @@
       "sub": "土木工事",
       "sub_en": "Civil construction",
       "sub_short": "土木工事",
-      "sub_short_en": "Construction",
+      "sub_short_en": "Building",
       "row": 0,
       "relations": [
         {
@@ -55,8 +55,8 @@
       "name_en": "Nano Nuclear Energy",
       "sub": "小型原子炉",
       "sub_en": "Microreactors",
-      "sub_short": "小型原子炉",
-      "sub_short_en": "Microreactors",
+      "sub_short": "原子炉",
+      "sub_short_en": "Reactors",
       "row": 0,
       "relations": [
         {
@@ -81,8 +81,8 @@
       "name_en": "Gorilla Technology",
       "sub": "AI・セキュリティ",
       "sub_en": "AI & security",
-      "sub_short": "AIセキュリティ",
-      "sub_short_en": "AI & security",
+      "sub_short": "AI防御",
+      "sub_short_en": "AI",
       "row": 0,
       "relations": [
         {
@@ -107,8 +107,8 @@
       "name_en": "Jacobs Solutions",
       "sub": "設計・コンサル",
       "sub_en": "Engineering & consulting",
-      "sub_short": "設計・コンサル",
-      "sub_short_en": "Engineering",
+      "sub_short": "設計",
+      "sub_short_en": "Design",
       "row": 1,
       "relations": [
         {
@@ -134,7 +134,7 @@
       "sub": "環境・水コンサル",
       "sub_en": "Environmental consulting",
       "sub_short": "環境",
-      "sub_short_en": "Environmental",
+      "sub_short_en": "Eco svcs",
       "row": 1,
       "relations": [
         {
@@ -160,7 +160,7 @@
       "sub": "EPC",
       "sub_en": "Engineering & construction",
       "sub_short": "EPC",
-      "sub_short_en": "Engineering",
+      "sub_short_en": "Design",
       "row": 1,
       "relations": [
         {
@@ -185,8 +185,8 @@
       "name_en": "NV5 Global",
       "sub": "設計・検査",
       "sub_en": "Engineering & testing",
-      "sub_short": "設計・検査",
-      "sub_short_en": "Engineering",
+      "sub_short": "設計",
+      "sub_short_en": "Design",
       "row": 1,
       "relations": [
         {
@@ -211,8 +211,8 @@
       "name_en": "Montrose Environmental",
       "sub": "環境サービス",
       "sub_en": "Environmental services",
-      "sub_short": "環境サービス",
-      "sub_short_en": "Environmental",
+      "sub_short": "環境",
+      "sub_short_en": "Eco svcs",
       "row": 1,
       "relations": [
         {
@@ -238,7 +238,7 @@
       "sub": "建設",
       "sub_en": "Construction",
       "sub_short": "建設",
-      "sub_short_en": "Construction",
+      "sub_short_en": "Building",
       "row": 1,
       "relations": [
         {

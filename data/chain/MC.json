@@ -29,7 +29,7 @@
       "sub": "中古車EC",
       "sub_en": "Online used cars",
       "sub_short": "中古車EC",
-      "sub_short_en": "Online used cars",
+      "sub_short_en": "Cars",
       "row": 0,
       "relations": [
         {
@@ -55,7 +55,7 @@
       "sub": "ラジオ・メディア",
       "sub_en": "Radio & media",
       "sub_short": "ラジオ",
-      "sub_short_en": "Radio & media",
+      "sub_short_en": "Radio",
       "row": 0,
       "relations": [
         {
@@ -81,7 +81,7 @@
       "sub": "暗号資産",
       "sub_en": "Crypto treasury",
       "sub_short": "暗号資産",
-      "sub_short_en": "Crypto treasury",
+      "sub_short_en": "Crypto",
       "row": 0,
       "relations": [
         {
@@ -106,8 +106,8 @@
       "name_en": "Office Properties Income Trust",
       "sub": "オフィスREIT",
       "sub_en": "Office REIT",
-      "sub_short": "オフィスREIT",
-      "sub_short_en": "Office REIT",
+      "sub_short": "REIT",
+      "sub_short_en": "REIT",
       "row": 0,
       "relations": [
         {
@@ -159,7 +159,7 @@
       "sub": "投資銀行(独立系)",
       "sub_en": "Independent investment bank",
       "sub_short": "投資銀行",
-      "sub_short_en": "Investment bank",
+      "sub_short_en": "Bank",
       "row": 1,
       "relations": [
         {
@@ -185,7 +185,7 @@
       "sub": "投資銀行(独立系)",
       "sub_en": "Independent investment bank",
       "sub_short": "投資銀行",
-      "sub_short_en": "Investment bank",
+      "sub_short_en": "Bank",
       "row": 1,
       "relations": [
         {
@@ -211,7 +211,7 @@
       "sub": "投資銀行・資産運用",
       "sub_en": "Investment banking & asset management",
       "sub_short": "投資銀行",
-      "sub_short_en": "Investment bank",
+      "sub_short_en": "Bank",
       "row": 1,
       "relations": [
         {
@@ -237,7 +237,7 @@
       "sub": "M&A助言",
       "sub_en": "M&A advisory",
       "sub_short": "M&A助言",
-      "sub_short_en": "M&A advisory",
+      "sub_short_en": "M&A",
       "row": 1,
       "relations": [
         {

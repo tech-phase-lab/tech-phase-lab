@@ -27,8 +27,8 @@
       "name": "ファイブナイン",
       "sub": "コンタクトセンター",
       "sub_en": "Contact center",
-      "sub_short": "コールセンター",
-      "sub_short_en": "Contact center",
+      "sub_short": "顧客対応",
+      "sub_short_en": "CX",
       "row": 0,
       "relations": [
         {
@@ -53,7 +53,7 @@
       "sub": "ネットワーク機器",
       "sub_en": "Networking",
       "sub_short": "通信機器",
-      "sub_short_en": "Networking",
+      "sub_short_en": "Network",
       "row": 0,
       "relations": [
         {
@@ -118,7 +118,7 @@
       "sub": "CRM",
       "sub_en": "CRM software",
       "sub_short": "CRM",
-      "sub_short_en": "CRM software",
+      "sub_short_en": "CRM",
       "row": 0,
       "relations": [
         {
@@ -155,7 +155,7 @@
       "sub": "生成AI",
       "sub_en": "Generative AI",
       "sub_short": "生成AI",
-      "sub_short_en": "Generative AI",
+      "sub_short_en": "AI",
       "row": 0,
       "relations": [
         {
@@ -196,8 +196,8 @@
       "name": "リングセントラル",
       "sub": "クラウド通信",
       "sub_en": "Cloud communications",
-      "sub_short": "クラウド通信",
-      "sub_short_en": "Cloud comms",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 1,
       "relations": [
         {

@@ -34,8 +34,8 @@
       "name_en": "Constellium",
       "sub": "アルミ圧延",
       "sub_en": "Aluminum products",
-      "sub_short": "アルミ圧延",
-      "sub_short_en": "Aluminum",
+      "sub_short": "アルミ",
+      "sub_short_en": "Metals",
       "row": 0,
       "relations": [
         {
@@ -60,8 +60,8 @@
       "name_en": "Novelis",
       "sub": "アルミ圧延",
       "sub_en": "Aluminum rolling",
-      "sub_short": "アルミ圧延",
-      "sub_short_en": "Aluminum rolling",
+      "sub_short": "アルミ",
+      "sub_short_en": "Metals",
       "row": 0,
       "relations": [
         {
@@ -87,7 +87,7 @@
       "sub": "飲料",
       "sub_en": "Beverages",
       "sub_short": "飲料",
-      "sub_short_en": "Beverages",
+      "sub_short_en": "Drinks",
       "row": 1,
       "relations": [
         {
@@ -112,8 +112,8 @@
       "name_en": "PepsiCo",
       "sub": "飲料・食品",
       "sub_en": "Beverages & snacks",
-      "sub_short": "飲料・食品",
-      "sub_short_en": "Beverages",
+      "sub_short": "飲料",
+      "sub_short_en": "Drinks",
       "row": 1,
       "relations": [
         {
@@ -165,7 +165,7 @@
       "sub": "飲料缶",
       "sub_en": "Beverage cans",
       "sub_short": "飲料缶",
-      "sub_short_en": "Beverage cans",
+      "sub_short_en": "Cans",
       "row": 2,
       "relations": [
         {
@@ -191,7 +191,7 @@
       "sub": "飲料缶",
       "sub_en": "Beverage cans",
       "sub_short": "飲料缶",
-      "sub_short_en": "Beverage cans",
+      "sub_short_en": "Cans",
       "row": 2,
       "relations": [
         {
@@ -216,8 +216,8 @@
       "name_en": "Silgan Holdings",
       "sub": "容器・キャップ",
       "sub_en": "Containers & closures",
-      "sub_short": "容器・キャップ",
-      "sub_short_en": "Containers",
+      "sub_short": "容器",
+      "sub_short_en": "Boxes",
       "row": 2,
       "relations": [
         {
@@ -243,7 +243,7 @@
       "sub": "ガラス瓶",
       "sub_en": "Glass containers",
       "sub_short": "ガラス瓶",
-      "sub_short_en": "Glass containers",
+      "sub_short_en": "Glass",
       "row": 2,
       "relations": [
         {
@@ -269,7 +269,7 @@
       "sub": "包装",
       "sub_en": "Packaging",
       "sub_short": "包装",
-      "sub_short_en": "Packaging",
+      "sub_short_en": "Packing",
       "row": 2,
       "relations": [
         {

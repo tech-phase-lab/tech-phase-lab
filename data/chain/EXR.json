@@ -29,7 +29,7 @@
       "sub": "セルフストレージREIT",
       "sub_en": "Self-storage REIT",
       "sub_short": "倉庫REIT",
-      "sub_short_en": "Storage REIT",
+      "sub_short_en": "REIT",
       "row": 0,
       "relations": [
         {
@@ -68,7 +68,7 @@
       "sub": "セルフストレージREIT",
       "sub_en": "Self-storage REIT",
       "sub_short": "倉庫REIT",
-      "sub_short_en": "Storage REIT",
+      "sub_short_en": "REIT",
       "row": 0,
       "relations": [
         {
@@ -94,7 +94,7 @@
       "sub": "セルフストレージREIT",
       "sub_en": "Self-storage REIT",
       "sub_short": "倉庫REIT",
-      "sub_short_en": "Storage REIT",
+      "sub_short_en": "REIT",
       "row": 0,
       "relations": [
         {
@@ -120,7 +120,7 @@
       "sub": "金融・不動産投資",
       "sub_en": "Financial services",
       "sub_short": "金融",
-      "sub_short_en": "Financials",
+      "sub_short_en": "Finance",
       "row": 0,
       "relations": [
         {

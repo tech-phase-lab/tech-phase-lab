@@ -22,8 +22,8 @@
       "name": "マーシュ・マクレナン",
       "sub": "保険ブローカー",
       "sub_en": "Insurance broker",
-      "sub_short": "保険ブローカー",
-      "sub_short_en": "Insurance broker",
+      "sub_short": "保険仲介",
+      "sub_short_en": "Broker",
       "row": 0,
       "relations": [
         {
@@ -48,8 +48,8 @@
       "name": "ウィリス・タワーズワトソン",
       "sub": "保険ブローカー",
       "sub_en": "Insurance broker",
-      "sub_short": "保険ブローカー",
-      "sub_short_en": "Insurance broker",
+      "sub_short": "保険仲介",
+      "sub_short_en": "Broker",
       "row": 0,
       "relations": [
         {
@@ -87,8 +87,8 @@
       "name": "アーサー・J・ギャラガー",
       "sub": "保険ブローカー",
       "sub_en": "Insurance broker",
-      "sub_short": "保険ブローカー",
-      "sub_short_en": "Insurance broker",
+      "sub_short": "保険仲介",
+      "sub_short_en": "Broker",
       "row": 0,
       "relations": [
         {
@@ -113,8 +113,8 @@
       "name": "ロックトン・カンパニーズ",
       "sub": "保険ブローカー",
       "sub_en": "Insurance broker",
-      "sub_short": "保険ブローカー",
-      "sub_short_en": "Insurance broker",
+      "sub_short": "保険仲介",
+      "sub_short_en": "Broker",
       "row": 0,
       "relations": [
         {
@@ -139,8 +139,8 @@
       "name": "マディソン・ディアボーン・パートナーズ",
       "sub": "投資ファンド",
       "sub_en": "Private equity",
-      "sub_short": "投資ファンド",
-      "sub_short_en": "Private equity",
+      "sub_short": "ファンド",
+      "sub_short_en": "PE",
       "row": 0,
       "relations": [
         {

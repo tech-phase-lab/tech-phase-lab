@@ -32,7 +32,7 @@
       "name": "TSMC",
       "sub": "半導体受託製造",
       "sub_en": "Foundry",
-      "sub_short": "半導体受託製造",
+      "sub_short": "受託生産",
       "sub_short_en": "Foundry",
       "row": 0,
       "relations": [
@@ -59,8 +59,8 @@
       "name": "ASE Technology",
       "sub": "半導体後工程",
       "sub_en": "Chip packaging & test",
-      "sub_short": "半導体後工程",
-      "sub_short_en": "Chip packaging",
+      "sub_short": "後工程",
+      "sub_short_en": "Chip pack",
       "row": 1,
       "relations": [
         {
@@ -113,8 +113,8 @@
       "name": "NXP Semiconductors",
       "sub": "車載・組み込み半導体",
       "sub_en": "Automotive & embedded chips",
-      "sub_short": "車載半導体",
-      "sub_short_en": "Automotive chips",
+      "sub_short": "車載IC",
+      "sub_short_en": "Auto ICs",
       "row": 2,
       "relations": [
         {
@@ -163,8 +163,8 @@
       "name": "Monolithic Power Systems",
       "sub": "電源半導体",
       "sub_en": "Power chips",
-      "sub_short": "電源半導体",
-      "sub_short_en": "Power chips",
+      "sub_short": "電源IC",
+      "sub_short_en": "Power ICs",
       "row": 2,
       "relations": [
         {
@@ -213,8 +213,8 @@
       "name": "MACOM Technology Solutions",
       "sub": "RF・光通信半導体",
       "sub_en": "RF & optical chips",
-      "sub_short": "通信半導体",
-      "sub_short_en": "RF/optical chips",
+      "sub_short": "通信IC",
+      "sub_short_en": "RF ICs",
       "row": 2,
       "relations": [
         {
@@ -238,8 +238,8 @@
       "name": "Cirrus Logic",
       "sub": "オーディオ半導体",
       "sub_en": "Audio chips",
-      "sub_short": "音響半導体",
-      "sub_short_en": "Audio chips",
+      "sub_short": "音響IC",
+      "sub_short_en": "Audio ICs",
       "row": 2,
       "relations": [
         {
@@ -263,8 +263,8 @@
       "name": "MaxLinear",
       "sub": "通信半導体",
       "sub_en": "Connectivity chips",
-      "sub_short": "通信半導体",
-      "sub_short_en": "Connectivity",
+      "sub_short": "通信IC",
+      "sub_short_en": "Links",
       "row": 2,
       "relations": [
         {
@@ -288,8 +288,8 @@
       "name": "AMD",
       "sub": "CPU・GPU",
       "sub_en": "CPUs & GPUs",
-      "sub_short": "CPU・GPU",
-      "sub_short_en": "CPUs & GPUs",
+      "sub_short": "CPU",
+      "sub_short_en": "CPU/GPU",
       "row": 2,
       "relations": [
         {

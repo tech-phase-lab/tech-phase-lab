@@ -35,7 +35,7 @@
       "sub": "地域航空",
       "sub_en": "Regional airline",
       "sub_short": "地域航空",
-      "sub_short_en": "Regional airline",
+      "sub_short_en": "Airline",
       "row": 0,
       "relations": [
         {
@@ -61,7 +61,7 @@
       "sub": "地域航空",
       "sub_en": "Regional airline",
       "sub_short": "地域航空",
-      "sub_short_en": "Regional airline",
+      "sub_short_en": "Airline",
       "row": 0,
       "relations": [
         {
@@ -112,8 +112,8 @@
       "name_en": "Vertical Aerospace",
       "sub": "電動航空機",
       "sub_en": "Electric aircraft",
-      "sub_short": "電動航空機",
-      "sub_short_en": "Electric planes",
+      "sub_short": "eVTOL",
+      "sub_short_en": "eVTOL",
       "row": 0,
       "relations": [
         {
@@ -256,7 +256,7 @@
       "sub": "格安航空(南米)",
       "sub_en": "Low-cost airline (South America)",
       "sub_short": "格安航空",
-      "sub_short_en": "Low-cost airline",
+      "sub_short_en": "Airline",
       "row": 1,
       "relations": [
         {
@@ -386,7 +386,7 @@
       "sub": "格安航空",
       "sub_en": "Ultra-low-cost airline",
       "sub_short": "格安航空",
-      "sub_short_en": "Budget airline",
+      "sub_short_en": "Airline",
       "row": 2,
       "relations": [
         {

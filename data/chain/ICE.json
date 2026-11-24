@@ -107,7 +107,7 @@
       "sub": "予測市場",
       "sub_en": "Prediction market",
       "sub_short": "予測市場",
-      "sub_short_en": "Prediction mkt",
+      "sub_short_en": "Betting",
       "row": 0,
       "relations": [
         {
@@ -133,7 +133,7 @@
       "sub": "暗号資産サービス",
       "sub_en": "Crypto services",
       "sub_short": "暗号資産",
-      "sub_short_en": "Crypto services",
+      "sub_short_en": "Crypto",
       "row": 0,
       "relations": [
         {
@@ -184,8 +184,8 @@
       "name": "マーケットアクセス",
       "sub": "債券電子取引",
       "sub_en": "Electronic bond trading",
-      "sub_short": "債券電子取引",
-      "sub_short_en": "Bond trading",
+      "sub_short": "債券",
+      "sub_short_en": "Bonds",
       "row": 1,
       "relations": [
         {

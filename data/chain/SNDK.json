@@ -136,8 +136,8 @@
       "name": "Western Digital",
       "sub": "元の親会社",
       "sub_en": "Former parent",
-      "sub_short": "元の親会社",
-      "sub_short_en": "Former parent",
+      "sub_short": "旧親会社",
+      "sub_short_en": "Ex-parent",
       "row": 1,
       "relations": [
         {
@@ -177,7 +177,7 @@
       "sub": "組み立て・テスト",
       "sub_en": "Assembly & test",
       "sub_short": "組み立て",
-      "sub_short_en": "Assembly & test",
+      "sub_short_en": "Chip pack",
       "row": 1,
       "relations": [
         {
@@ -344,8 +344,8 @@
       "name_en": "Yangtze Memory Technologies",
       "sub": "NANDフラッシュ(中国)",
       "sub_en": "NAND flash (China)",
-      "sub_short": "フラッシュ",
-      "sub_short_en": "NAND flash",
+      "sub_short": "メモリ",
+      "sub_short_en": "NAND",
       "row": 2,
       "relations": [
         {

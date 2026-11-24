@@ -62,8 +62,8 @@
       "name_en": "Watsco",
       "sub": "空調機器の卸",
       "sub_en": "HVAC distribution",
-      "sub_short": "空調機器の卸",
-      "sub_short_en": "HVAC supply",
+      "sub_short": "空調卸",
+      "sub_short_en": "HVAC",
       "row": 1,
       "relations": [
         {
@@ -101,8 +101,8 @@
       "name_en": "Midea Group",
       "sub": "家電・空調(中国)",
       "sub_en": "Appliances & HVAC (China)",
-      "sub_short": "家電・空調",
-      "sub_short_en": "Appliances",
+      "sub_short": "家電",
+      "sub_short_en": "Appliance",
       "row": 1,
       "relations": [
         {
@@ -153,7 +153,7 @@
       "name_en": "Otis Worldwide",
       "sub": "エレベーター",
       "sub_en": "Elevators",
-      "sub_short": "エレベーター",
+      "sub_short": "昇降機",
       "sub_short_en": "Elevators",
       "row": 2,
       "relations": [
@@ -180,7 +180,7 @@
       "sub": "防火・安全サービス",
       "sub_en": "Safety services",
       "sub_short": "防火",
-      "sub_short_en": "Safety services",
+      "sub_short_en": "Safety",
       "row": 2,
       "relations": [
         {
@@ -206,7 +206,7 @@
       "sub": "空気から水をつくる装置",
       "sub_en": "Atmospheric water technology",
       "sub_short": "造水装置",
-      "sub_short_en": "Air-to-water",
+      "sub_short_en": "Water",
       "row": 2,
       "relations": [
         {
@@ -232,7 +232,7 @@
       "sub": "空調機器",
       "sub_en": "HVAC equipment",
       "sub_short": "空調機器",
-      "sub_short_en": "HVAC equipment",
+      "sub_short_en": "HVAC",
       "row": 3,
       "relations": [
         {
@@ -257,7 +257,7 @@
       "name_en": "Green Circle Decarbonize Technology",
       "sub": "冷凍機の省エネ",
       "sub_en": "Chiller efficiency",
-      "sub_short": "冷凍機の省エネ",
+      "sub_short": "空調",
       "sub_short_en": "Chillers",
       "row": 3,
       "relations": [

@@ -33,7 +33,7 @@
       "sub": "医薬品(フランス)",
       "sub_en": "Pharmaceuticals (France)",
       "sub_short": "医薬品",
-      "sub_short_en": "Pharmaceuticals",
+      "sub_short_en": "Pharma",
       "row": 0,
       "relations": [
         {
@@ -58,7 +58,7 @@
       "name_en": "Bayer",
       "sub": "医薬・農業(ドイツ)",
       "sub_en": "Pharma & crop science (Germany)",
-      "sub_short": "医薬・農業",
+      "sub_short": "医薬",
       "sub_short_en": "Pharma",
       "row": 0,
       "relations": [
@@ -84,8 +84,8 @@
       "name_en": "Amgen",
       "sub": "バイオ医薬品",
       "sub_en": "Biopharmaceuticals",
-      "sub_short": "バイオ医薬品",
-      "sub_short_en": "Biopharma",
+      "sub_short": "バイオ",
+      "sub_short_en": "Pharma",
       "row": 0,
       "relations": [
         {
@@ -110,8 +110,8 @@
       "name_en": "Royalty Pharma",
       "sub": "医薬品ロイヤルティ",
       "sub_en": "Drug royalties",
-      "sub_short": "医薬品権益",
-      "sub_short_en": "Drug royalties",
+      "sub_short": "医薬権益",
+      "sub_short_en": "Royalties",
       "row": 0,
       "relations": [
         {
@@ -137,7 +137,7 @@
       "sub": "医薬品",
       "sub_en": "Pharmaceuticals",
       "sub_short": "医薬品",
-      "sub_short_en": "Pharmaceuticals",
+      "sub_short_en": "Pharma",
       "row": 1,
       "relations": [
         {
@@ -162,8 +162,8 @@
       "name_en": "Edgewise Therapeutics",
       "sub": "心筋・筋疾患薬",
       "sub_en": "Cardiac & muscle drugs",
-      "sub_short": "心筋・筋疾患薬",
-      "sub_short_en": "Cardiac drugs",
+      "sub_short": "心臓薬",
+      "sub_short_en": "Cardiac",
       "row": 1,
       "relations": [
         {
@@ -188,8 +188,8 @@
       "name_en": "Tenaya Therapeutics",
       "sub": "心疾患の遺伝子治療",
       "sub_en": "Cardiac gene therapy",
-      "sub_short": "心臓遺伝子治療",
-      "sub_short_en": "Heart gene tx",
+      "sub_short": "遺伝子",
+      "sub_short_en": "Cardiac",
       "row": 2,
       "relations": [
         {

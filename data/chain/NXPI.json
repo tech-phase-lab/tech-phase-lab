@@ -33,8 +33,8 @@
       "name": "Impinj",
       "sub": "RFID半導体",
       "sub_en": "RFID chips",
-      "sub_short": "RFID半導体",
-      "sub_short_en": "RFID chips",
+      "sub_short": "RFID",
+      "sub_short_en": "RFID",
       "row": 0,
       "relations": [
         {
@@ -71,7 +71,7 @@
       "name": "TSMC",
       "sub": "半導体受託製造",
       "sub_en": "Foundry",
-      "sub_short": "半導体受託製造",
+      "sub_short": "受託生産",
       "sub_short_en": "Foundry",
       "row": 0,
       "relations": [
@@ -109,8 +109,8 @@
       "name": "ASE Technology",
       "sub": "半導体後工程",
       "sub_en": "Chip packaging & test",
-      "sub_short": "半導体後工程",
-      "sub_short_en": "Chip packaging",
+      "sub_short": "後工程",
+      "sub_short_en": "Chip pack",
       "row": 0,
       "relations": [
         {
@@ -136,8 +136,8 @@
       "name": "Marvell",
       "sub": "データインフラ半導体",
       "sub_en": "Data infrastructure chips",
-      "sub_short": "データ半導体",
-      "sub_short_en": "Data chips",
+      "sub_short": "半導体",
+      "sub_short_en": "Data ICs",
       "row": 0,
       "relations": [
         {
@@ -163,8 +163,8 @@
       "name": "STMicroelectronics",
       "sub": "総合半導体",
       "sub_en": "Semiconductors",
-      "sub_short": "総合半導体",
-      "sub_short_en": "Semiconductors",
+      "sub_short": "半導体",
+      "sub_short_en": "Chips",
       "row": 0,
       "relations": [
         {
@@ -201,8 +201,8 @@
       "name": "Philips",
       "sub": "ヘルスケア機器",
       "sub_en": "Health technology",
-      "sub_short": "ヘルスケア機器",
-      "sub_short_en": "Health tech",
+      "sub_short": "医療機器",
+      "sub_short_en": "Health IT",
       "row": 0,
       "relations": [
         {
@@ -228,8 +228,8 @@
       "name": "Avnet",
       "sub": "電子部品商社",
       "sub_en": "Electronics distributor",
-      "sub_short": "電子部品商社",
-      "sub_short_en": "Electronics",
+      "sub_short": "電子部品",
+      "sub_short_en": "Devices",
       "row": 1,
       "relations": [
         {
@@ -267,7 +267,7 @@
       "sub": "コンシューマー機器",
       "sub_en": "Consumer devices",
       "sub_short": "家電",
-      "sub_short_en": "Consumer devices",
+      "sub_short_en": "Devices",
       "row": 1,
       "relations": [
         {
@@ -293,8 +293,8 @@
       "name": "Analog Devices",
       "sub": "アナログ半導体",
       "sub_en": "Analog chips",
-      "sub_short": "アナログ半導体",
-      "sub_short_en": "Analog chips",
+      "sub_short": "アナログ",
+      "sub_short_en": "Analog",
       "row": 2,
       "relations": [
         {
@@ -319,7 +319,7 @@
       "sub": "マイコン",
       "sub_en": "Microcontrollers",
       "sub_short": "マイコン",
-      "sub_short_en": "Microcontrollers",
+      "sub_short_en": "MCUs",
       "row": 2,
       "relations": [
         {
@@ -343,8 +343,8 @@
       "name": "Texas Instruments",
       "sub": "アナログ半導体",
       "sub_en": "Analog chips",
-      "sub_short": "アナログ半導体",
-      "sub_short_en": "Analog chips",
+      "sub_short": "アナログ",
+      "sub_short_en": "Analog",
       "row": 2,
       "relations": [
         {
@@ -368,8 +368,8 @@
       "name": "Qualcomm",
       "sub": "通信半導体",
       "sub_en": "Mobile chips",
-      "sub_short": "通信半導体",
-      "sub_short_en": "Mobile chips",
+      "sub_short": "通信IC",
+      "sub_short_en": "Mobile IC",
       "row": 2,
       "relations": [
         {
@@ -393,8 +393,8 @@
       "name": "Broadcom",
       "sub": "通信・ソフト",
       "sub_en": "Networking & software",
-      "sub_short": "通信・ソフト",
-      "sub_short_en": "Networking",
+      "sub_short": "通信",
+      "sub_short_en": "Network",
       "row": 2,
       "relations": [
         {
@@ -418,8 +418,8 @@
       "name": "Infineon Technologies",
       "sub": "パワー・車載半導体",
       "sub_en": "Power & automotive chips",
-      "sub_short": "パワー半導体",
-      "sub_short_en": "Power chips",
+      "sub_short": "半導体",
+      "sub_short_en": "Power ICs",
       "row": 2,
       "relations": [
         {
@@ -444,7 +444,7 @@
       "sub": "マイコン",
       "sub_en": "Microcontrollers",
       "sub_short": "マイコン",
-      "sub_short_en": "Microcontrollers",
+      "sub_short_en": "MCUs",
       "row": 2,
       "relations": [
         {
@@ -493,8 +493,8 @@
       "name": "Monolithic Power Systems",
       "sub": "電源半導体",
       "sub_en": "Power chips",
-      "sub_short": "電源半導体",
-      "sub_short_en": "Power chips",
+      "sub_short": "電源IC",
+      "sub_short_en": "Power ICs",
       "row": 2,
       "relations": [
         {
@@ -518,8 +518,8 @@
       "name": "indie Semiconductor",
       "sub": "車載半導体",
       "sub_en": "Automotive chips",
-      "sub_short": "車載半導体",
-      "sub_short_en": "Automotive chips",
+      "sub_short": "車載IC",
+      "sub_short_en": "Auto ICs",
       "row": 2,
       "relations": [
         {
@@ -543,8 +543,8 @@
       "name": "Silicon Laboratories",
       "sub": "無線・IoT半導体",
       "sub_en": "Wireless & IoT chips",
-      "sub_short": "無線半導体",
-      "sub_short_en": "Wireless chips",
+      "sub_short": "無線IC",
+      "sub_short_en": "RF ICs",
       "row": 2,
       "relations": [
         {
@@ -568,8 +568,8 @@
       "name": "Diodes Incorporated",
       "sub": "ディスクリート半導体",
       "sub_en": "Discrete semiconductors",
-      "sub_short": "個別半導体",
-      "sub_short_en": "Discrete chips",
+      "sub_short": "半導体",
+      "sub_short_en": "Discretes",
       "row": 2,
       "relations": [
         {
@@ -593,8 +593,8 @@
       "name": "MACOM Technology Solutions",
       "sub": "RF・光通信半導体",
       "sub_en": "RF & optical chips",
-      "sub_short": "通信半導体",
-      "sub_short_en": "RF/optical chips",
+      "sub_short": "通信IC",
+      "sub_short_en": "RF ICs",
       "row": 2,
       "relations": [
         {
@@ -644,8 +644,8 @@
       "name": "アンビック・マイクロ",
       "sub": "低消費電力チップ",
       "sub_en": "Low-power chips",
-      "sub_short": "省電力チップ",
-      "sub_short_en": "Low-power chips",
+      "sub_short": "半導体",
+      "sub_short_en": "Chips",
       "row": 2,
       "relations": [
         {

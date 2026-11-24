@@ -33,8 +33,8 @@
       "name_en": "Artivion",
       "sub": "心臓・血管組織",
       "sub_en": "Cardiac & vascular tissue",
-      "sub_short": "心臓・血管組織",
-      "sub_short_en": "Heart tissue",
+      "sub_short": "心臓",
+      "sub_short_en": "Cardiac",
       "row": 0,
       "relations": [
         {
@@ -59,8 +59,8 @@
       "name_en": "LifeNet Health",
       "sub": "組織バンク(非営利)",
       "sub_en": "Tissue bank (non-profit)",
-      "sub_short": "組織バンク",
-      "sub_short_en": "Tissue bank",
+      "sub_short": "組織移植",
+      "sub_short_en": "Tissue",
       "row": 0,
       "relations": [
         {
@@ -85,8 +85,8 @@
       "name_en": "W. L. Gore",
       "sub": "人工血管・素材(非上場)",
       "sub_en": "Vascular grafts & materials (private)",
-      "sub_short": "人工血管・素材",
-      "sub_short_en": "Vascular grafts",
+      "sub_short": "人工血管",
+      "sub_short_en": "Vascular",
       "row": 0,
       "relations": [
         {
@@ -112,7 +112,7 @@
       "sub": "医療機器",
       "sub_en": "Medical devices",
       "sub_short": "医療機器",
-      "sub_short_en": "Medical devices",
+      "sub_short_en": "Medtech",
       "row": 1,
       "relations": [
         {
@@ -138,7 +138,7 @@
       "sub": "医療機器(スウェーデン)",
       "sub_en": "Medical devices (Sweden)",
       "sub_short": "医療機器",
-      "sub_short_en": "Medical devices",
+      "sub_short_en": "Medtech",
       "row": 1,
       "relations": [
         {
@@ -164,7 +164,7 @@
       "sub": "医療機器",
       "sub_en": "Medical devices",
       "sub_short": "医療機器",
-      "sub_short_en": "Medical devices",
+      "sub_short_en": "Medtech",
       "row": 1,
       "relations": [
         {
@@ -190,7 +190,7 @@
       "sub": "医療機器",
       "sub_en": "Medical devices",
       "sub_short": "医療機器",
-      "sub_short_en": "Medical devices",
+      "sub_short_en": "Medtech",
       "row": 2,
       "relations": [
         {
@@ -216,7 +216,7 @@
       "sub": "心臓弁・血行動態",
       "sub_en": "Heart valves & monitoring",
       "sub_short": "心臓弁",
-      "sub_short_en": "Heart valves",
+      "sub_short_en": "Valves",
       "row": 2,
       "relations": [
         {
@@ -241,8 +241,8 @@
       "name_en": "Abbott",
       "sub": "医療機器・診断",
       "sub_en": "Medical devices & diagnostics",
-      "sub_short": "医療機器・診断",
-      "sub_short_en": "Medical devices",
+      "sub_short": "医療機器",
+      "sub_short_en": "Medtech",
       "row": 2,
       "relations": [
         {

@@ -19,8 +19,8 @@
       "name": "サウスウエスト・ガス",
       "sub": "ガス事業者",
       "sub_en": "Gas utility",
-      "sub_short": "ガス事業者",
-      "sub_short_en": "Gas utility",
+      "sub_short": "ガス",
+      "sub_short_en": "Gas",
       "row": 0,
       "relations": [
         {
@@ -46,7 +46,7 @@
       "sub": "送電合弁",
       "sub_en": "Transmission JV",
       "sub_short": "送電合弁",
-      "sub_short_en": "Transmission JV",
+      "sub_short_en": "Grid",
       "row": 0,
       "relations": [
         {
@@ -71,8 +71,8 @@
       "name": "ソルト・リバー・プロジェクト",
       "sub": "電力事業者",
       "sub_en": "Power utility",
-      "sub_short": "電力事業者",
-      "sub_short_en": "Power utility",
+      "sub_short": "電力",
+      "sub_short_en": "Utility",
       "row": 0,
       "relations": [
         {
@@ -110,8 +110,8 @@
       "name": "サザン・カリフォルニア・エジソン",
       "sub": "電力事業者",
       "sub_en": "Power utility",
-      "sub_short": "電力事業者",
-      "sub_short_en": "Power utility",
+      "sub_short": "電力",
+      "sub_short_en": "Utility",
       "row": 0,
       "relations": [
         {
@@ -136,8 +136,8 @@
       "name": "エルパソ・エレクトリック",
       "sub": "電力事業者",
       "sub_en": "Power utility",
-      "sub_short": "電力事業者",
-      "sub_short_en": "Power utility",
+      "sub_short": "電力",
+      "sub_short_en": "Utility",
       "row": 0,
       "relations": [
         {
@@ -162,8 +162,8 @@
       "name": "ニューメキシコ公益事業",
       "sub": "電力事業者",
       "sub_en": "Power utility",
-      "sub_short": "電力事業者",
-      "sub_short_en": "Power utility",
+      "sub_short": "電力",
+      "sub_short_en": "Utility",
       "row": 0,
       "relations": [
         {
@@ -201,8 +201,8 @@
       "name": "ツーソン・エレクトリック・パワー",
       "sub": "電力事業者",
       "sub_en": "Power utility",
-      "sub_short": "電力事業者",
-      "sub_short_en": "Power utility",
+      "sub_short": "電力",
+      "sub_short_en": "Utility",
       "row": 0,
       "relations": [
         {

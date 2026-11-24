@@ -28,8 +28,8 @@
       "name_en": "HAECO Americas",
       "sub": "航空機整備",
       "sub_en": "Aircraft maintenance",
-      "sub_short": "航空機整備",
-      "sub_short_en": "Aircraft MRO",
+      "sub_short": "航空整備",
+      "sub_short_en": "Air MRO",
       "row": 0,
       "relations": [
         {
@@ -55,7 +55,7 @@
       "sub": "機内改修",
       "sub_en": "Cabin reconfiguration",
       "sub_short": "機内改修",
-      "sub_short_en": "Cabin refits",
+      "sub_short_en": "Cabins",
       "row": 0,
       "relations": [
         {
@@ -80,8 +80,8 @@
       "name_en": "Aerostrat",
       "sub": "航空ソフトウェア",
       "sub_en": "Aviation software",
-      "sub_short": "航空ソフト",
-      "sub_short_en": "Aviation apps",
+      "sub_short": "航空IT",
+      "sub_short_en": "Aviation",
       "row": 0,
       "relations": [
         {
@@ -106,8 +106,8 @@
       "name_en": "GA Telesis",
       "sub": "航空機部品",
       "sub_en": "Aircraft parts",
-      "sub_short": "航空機部品",
-      "sub_short_en": "Aircraft parts",
+      "sub_short": "航空部品",
+      "sub_short_en": "Aircraft",
       "row": 0,
       "relations": [
         {
@@ -133,7 +133,7 @@
       "sub": "防衛技術",
       "sub_en": "Defense technology",
       "sub_short": "防衛技術",
-      "sub_short_en": "Defense tech",
+      "sub_short_en": "Defense",
       "row": 1,
       "relations": [
         {
@@ -158,8 +158,8 @@
       "name_en": "TAT Technologies",
       "sub": "航空機熱交換器",
       "sub_en": "Aircraft heat transfer",
-      "sub_short": "航空機熱交換器",
-      "sub_short_en": "Aircraft parts",
+      "sub_short": "航空部品",
+      "sub_short_en": "Aircraft",
       "row": 1,
       "relations": [
         {
@@ -184,8 +184,8 @@
       "name_en": "AerSale",
       "sub": "中古航空機部品",
       "sub_en": "Used aircraft parts",
-      "sub_short": "中古航空機部品",
-      "sub_short_en": "Aircraft parts",
+      "sub_short": "航空部品",
+      "sub_short_en": "Aircraft",
       "row": 1,
       "relations": [
         {

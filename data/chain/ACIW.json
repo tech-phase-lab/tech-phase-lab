@@ -29,7 +29,7 @@
       "sub": "ソフト・クラウド",
       "sub_en": "Software & cloud",
       "sub_short": "ソフト",
-      "sub_short_en": "Software & cloud",
+      "sub_short_en": "Software",
       "row": 0,
       "relations": [
         {
@@ -133,7 +133,7 @@
       "sub": "ソフト・クラウド",
       "sub_en": "Software & cloud",
       "sub_short": "ソフト",
-      "sub_short_en": "Software & cloud",
+      "sub_short_en": "Software",
       "row": 0,
       "relations": [
         {
@@ -159,7 +159,7 @@
       "sub": "決済ネットワーク",
       "sub_en": "Payment network",
       "sub_short": "決済網",
-      "sub_short_en": "Payment network",
+      "sub_short_en": "Payment",
       "row": 0,
       "relations": [
         {
@@ -185,7 +185,7 @@
       "sub": "決済ネットワーク",
       "sub_en": "Payment network",
       "sub_short": "決済網",
-      "sub_short_en": "Payment network",
+      "sub_short_en": "Payment",
       "row": 0,
       "relations": [
         {
@@ -276,7 +276,7 @@
       "sub": "決済処理",
       "sub_en": "Payment processing",
       "sub_short": "決済処理",
-      "sub_short_en": "Payments",
+      "sub_short_en": "Payment",
       "row": 0,
       "relations": [
         {
@@ -301,8 +301,8 @@
       "name": "フェア・アイザック",
       "sub": "信用スコア・分析",
       "sub_en": "Credit scoring & analytics",
-      "sub_short": "信用スコア",
-      "sub_short_en": "Credit scoring",
+      "sub_short": "信用情報",
+      "sub_short_en": "Credit",
       "row": 1,
       "relations": [
         {

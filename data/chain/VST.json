@@ -34,7 +34,7 @@
       "sub": "送配電",
       "sub_en": "Power delivery",
       "sub_short": "送配電",
-      "sub_short_en": "Power delivery",
+      "sub_short_en": "Power",
       "row": 0,
       "relations": [
         {
@@ -61,7 +61,7 @@
       "sub": "送配電",
       "sub_en": "Power delivery",
       "sub_short": "送配電",
-      "sub_short_en": "Power delivery",
+      "sub_short_en": "Power",
       "row": 0,
       "relations": [
         {
@@ -88,7 +88,7 @@
       "sub": "SNS・AI",
       "sub_en": "Social & AI",
       "sub_short": "SNS・AI",
-      "sub_short_en": "Social & AI",
+      "sub_short_en": "Social",
       "row": 1,
       "relations": [
         {
@@ -141,8 +141,8 @@
       "name": "Cipher Digital",
       "sub": "データセンター",
       "sub_en": "Data centers",
-      "sub_short": "データセンター",
-      "sub_short_en": "Data centers",
+      "sub_short": "DC",
+      "sub_short_en": "DCs",
       "row": 1,
       "relations": [
         {
@@ -169,7 +169,7 @@
       "sub": "投資会社",
       "sub_en": "Investment firm",
       "sub_short": "投資会社",
-      "sub_short_en": "Investment firm",
+      "sub_short_en": "Investing",
       "row": 2,
       "relations": [
         {
@@ -195,8 +195,8 @@
       "name": "Cogentrix Energy",
       "sub": "ガス火力発電",
       "sub_en": "Gas-fired power",
-      "sub_short": "ガス火力発電",
-      "sub_short_en": "Gas-fired power",
+      "sub_short": "ガス火力",
+      "sub_short_en": "Gas",
       "row": 2,
       "relations": [
         {
@@ -220,8 +220,8 @@
       "name": "Lotus Infrastructure Partners",
       "sub": "インフラ投資",
       "sub_en": "Infrastructure investor",
-      "sub_short": "インフラ投資",
-      "sub_short_en": "Infra investing",
+      "sub_short": "インフラ",
+      "sub_short_en": "Infra",
       "row": 2,
       "relations": [
         {
@@ -245,8 +245,8 @@
       "name": "Via Renewables",
       "sub": "電力・ガス小売",
       "sub_en": "Retail power & gas",
-      "sub_short": "電力・ガス小売",
-      "sub_short_en": "Retail power",
+      "sub_short": "電力",
+      "sub_short_en": "Power",
       "row": 3,
       "relations": [
         {

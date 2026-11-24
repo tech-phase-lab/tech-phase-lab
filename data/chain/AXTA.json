@@ -57,8 +57,8 @@
       "name_en": "The CoverFlexx Group",
       "sub": "補修用塗料",
       "sub_en": "Refinish coatings",
-      "sub_short": "補修用塗料",
-      "sub_short_en": "Car refinish",
+      "sub_short": "塗料",
+      "sub_short_en": "Paint",
       "row": 0,
       "relations": [
         {
@@ -110,7 +110,7 @@
       "sub": "化学(ドイツ)",
       "sub_en": "Chemicals (Germany)",
       "sub_short": "化学",
-      "sub_short_en": "Chemicals",
+      "sub_short_en": "Chem",
       "row": 1,
       "relations": [
         {

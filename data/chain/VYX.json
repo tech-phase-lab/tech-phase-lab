@@ -29,8 +29,8 @@
       "name": "エンノコン",
       "sub": "電子機器受託製造",
       "sub_en": "Electronics ODM",
-      "sub_short": "電子機器受託",
-      "sub_short_en": "Electronics ODM",
+      "sub_short": "EMS",
+      "sub_short_en": "ODM",
       "row": 0,
       "relations": [
         {
@@ -55,8 +55,8 @@
       "name": "ブロック",
       "sub": "決済・POS",
       "sub_en": "Payments & POS",
-      "sub_short": "決済・POS",
-      "sub_short_en": "Payments & POS",
+      "sub_short": "決済",
+      "sub_short_en": "Payment",
       "row": 1,
       "relations": [
         {
@@ -82,7 +82,7 @@
       "sub": "決済",
       "sub_en": "Payments",
       "sub_short": "決済",
-      "sub_short_en": "Payments",
+      "sub_short_en": "Payment",
       "row": 1,
       "relations": [
         {
@@ -108,7 +108,7 @@
       "sub": "決済",
       "sub_en": "Payments",
       "sub_short": "決済",
-      "sub_short_en": "Payments",
+      "sub_short_en": "Payment",
       "row": 1,
       "relations": [
         {
@@ -133,7 +133,7 @@
       "name": "オラクル",
       "sub": "ソフトウェア",
       "sub_en": "Software",
-      "sub_short": "ソフトウェア",
+      "sub_short": "ソフト",
       "sub_short_en": "Software",
       "row": 1,
       "relations": [
@@ -159,8 +159,8 @@
       "name": "PARテクノロジー",
       "sub": "飲食店向けPOS",
       "sub_en": "Restaurant POS",
-      "sub_short": "飲食店向けPOS",
-      "sub_short_en": "Restaurant POS",
+      "sub_short": "POS",
+      "sub_short_en": "POS",
       "row": 1,
       "relations": [
         {
@@ -185,8 +185,8 @@
       "name": "トースト",
       "sub": "飲食店向けPOS",
       "sub_en": "Restaurant POS",
-      "sub_short": "飲食店向けPOS",
-      "sub_short_en": "Restaurant POS",
+      "sub_short": "POS",
+      "sub_short_en": "POS",
       "row": 1,
       "relations": [
         {
@@ -211,7 +211,7 @@
       "name": "ディーボルド・ニクスドルフ",
       "sub": "ATM・店舗機器",
       "sub_en": "ATMs & retail tech",
-      "sub_short": "ATM・店舗機器",
+      "sub_short": "ATM",
       "sub_short_en": "ATMs",
       "row": 1,
       "relations": [

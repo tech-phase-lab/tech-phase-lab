@@ -31,8 +31,8 @@
       "name_en": "Vulcan Materials",
       "sub": "骨材・建設資材",
       "sub_en": "Aggregates",
-      "sub_short": "骨材・建設資材",
-      "sub_short_en": "Aggregates",
+      "sub_short": "骨材",
+      "sub_short_en": "Gravel",
       "row": 0,
       "relations": [
         {
@@ -58,7 +58,7 @@
       "sub": "アスファルト舗装",
       "sub_en": "Asphalt paving",
       "sub_short": "舗装",
-      "sub_short_en": "Asphalt paving",
+      "sub_short_en": "Paving",
       "row": 0,
       "relations": [
         {
@@ -84,7 +84,7 @@
       "sub": "道路舗装(テキサス)",
       "sub_en": "Road paving (Texas)",
       "sub_short": "道路舗装",
-      "sub_short_en": "Road paving",
+      "sub_short_en": "Paving",
       "row": 0,
       "relations": [
         {
@@ -109,7 +109,7 @@
       "name_en": "G&S Asphalt (American Materials)",
       "sub": "アスファルト",
       "sub_en": "Asphalt",
-      "sub_short": "アスファルト",
+      "sub_short": "舗装材",
       "sub_short_en": "Asphalt",
       "row": 0,
       "relations": [
@@ -136,7 +136,7 @@
       "sub": "投資会社",
       "sub_en": "Private equity",
       "sub_short": "投資会社",
-      "sub_short_en": "Private equity",
+      "sub_short_en": "PE",
       "row": 1,
       "relations": [
         {
@@ -161,8 +161,8 @@
       "name_en": "Knife River",
       "sub": "骨材・建設資材",
       "sub_en": "Aggregates & construction materials",
-      "sub_short": "骨材・建設資材",
-      "sub_short_en": "Aggregates",
+      "sub_short": "骨材",
+      "sub_short_en": "Gravel",
       "row": 2,
       "relations": [
         {

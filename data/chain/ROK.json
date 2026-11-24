@@ -24,8 +24,8 @@
       "name": "シーメンス",
       "sub": "産業オートメーション",
       "sub_en": "Industrial automation",
-      "sub_short": "産業自動化",
-      "sub_short_en": "Automation",
+      "sub_short": "自動化",
+      "sub_short_en": "Robotics",
       "row": 0,
       "relations": [
         {
@@ -50,8 +50,8 @@
       "name": "ABBグループ",
       "sub": "産業オートメーション",
       "sub_en": "Industrial automation",
-      "sub_short": "産業自動化",
-      "sub_short_en": "Automation",
+      "sub_short": "自動化",
+      "sub_short_en": "Robotics",
       "row": 0,
       "relations": [
         {
@@ -76,8 +76,8 @@
       "name": "シュナイダーエレクトリック",
       "sub": "電機・制御",
       "sub_en": "Electrical & controls",
-      "sub_short": "電機・制御",
-      "sub_short_en": "Electrical gear",
+      "sub_short": "電機",
+      "sub_short_en": "Electrical",
       "row": 0,
       "relations": [
         {
@@ -102,8 +102,8 @@
       "name": "エマソン・エレクトリック",
       "sub": "産業オートメーション",
       "sub_en": "Industrial automation",
-      "sub_short": "産業自動化",
-      "sub_short_en": "Automation",
+      "sub_short": "自動化",
+      "sub_short_en": "Robotics",
       "row": 0,
       "relations": [
         {
@@ -141,8 +141,8 @@
       "name": "三菱電機",
       "sub": "電機・制御",
       "sub_en": "Electrical & controls",
-      "sub_short": "電機・制御",
-      "sub_short_en": "Electrical gear",
+      "sub_short": "電機",
+      "sub_short_en": "Electrical",
       "row": 0,
       "relations": [
         {
@@ -168,7 +168,7 @@
       "sub": "複合産業",
       "sub_en": "Industrial conglomerate",
       "sub_short": "複合産業",
-      "sub_short_en": "Conglomerate",
+      "sub_short_en": "Group",
       "row": 0,
       "relations": [
         {
@@ -206,8 +206,8 @@
       "name": "ダッソー・システムズ",
       "sub": "産業ソフトウェア",
       "sub_en": "Industrial software",
-      "sub_short": "産業ソフト",
-      "sub_short_en": "Industrial apps",
+      "sub_short": "産業IT",
+      "sub_short_en": "Software",
       "row": 0,
       "relations": [
         {
@@ -258,8 +258,8 @@
       "name": "ABB",
       "sub": "電機・自動化",
       "sub_en": "Electrical & automation",
-      "sub_short": "電機・自動化",
-      "sub_short_en": "Automation",
+      "sub_short": "電機",
+      "sub_short_en": "Robotics",
       "row": 0,
       "relations": [
         {
@@ -284,8 +284,8 @@
       "name": "シュナイダーエレクトリック",
       "sub": "電機・自動化",
       "sub_en": "Electrical & automation",
-      "sub_short": "電機・自動化",
-      "sub_short_en": "Automation",
+      "sub_short": "電機",
+      "sub_short_en": "Robotics",
       "row": 0,
       "relations": [
         {

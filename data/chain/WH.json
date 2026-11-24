@@ -33,8 +33,8 @@
       "name_en": "Travel + Leisure",
       "sub": "タイムシェア・旅行",
       "sub_en": "Vacation ownership",
-      "sub_short": "タイムシェア",
-      "sub_short_en": "Timeshares",
+      "sub_short": "別荘権",
+      "sub_short_en": "Resorts",
       "row": 0,
       "relations": [
         {
@@ -85,8 +85,8 @@
       "name_en": "LuxUrban Hotels",
       "sub": "ホテルの一括賃借・運営",
       "sub_en": "Hotel leasing & operation",
-      "sub_short": "ホテル運営",
-      "sub_short_en": "Hotel leasing",
+      "sub_short": "ホテル",
+      "sub_short_en": "Hotels",
       "row": 1,
       "relations": [
         {

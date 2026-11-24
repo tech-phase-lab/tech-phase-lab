@@ -25,7 +25,7 @@
       "sub": "医療保険",
       "sub_en": "Health insurer",
       "sub_short": "医療保険",
-      "sub_short_en": "Health insurer",
+      "sub_short_en": "Health",
       "row": 1,
       "relations": [
         {
@@ -50,8 +50,8 @@
       "name": "プライム・セラピューティクス",
       "sub": "薬剤給付管理",
       "sub_en": "Pharmacy benefits",
-      "sub_short": "薬剤給付管理",
-      "sub_short_en": "Pharmacy benefit",
+      "sub_short": "PBM",
+      "sub_short_en": "PBM",
       "row": 1,
       "relations": [
         {
@@ -76,7 +76,7 @@
       "name": "ユナイテッドヘルス・グループ",
       "sub": "医療保険・IT",
       "sub_en": "Insurer / health IT",
-      "sub_short": "医療保険・IT",
+      "sub_short": "医療保険",
       "sub_short_en": "Insurer",
       "row": 0,
       "relations": [
@@ -102,8 +102,8 @@
       "name": "シールズ・ヘルス・ソリューションズ",
       "sub": "専門薬局管理",
       "sub_en": "Specialty pharmacy mgmt",
-      "sub_short": "専門薬局管理",
-      "sub_short_en": "Pharmacy",
+      "sub_short": "薬局",
+      "sub_short_en": "Drugstore",
       "row": 1,
       "relations": [
         {
@@ -128,8 +128,8 @@
       "name": "ビレッジMD",
       "sub": "プライマリケア",
       "sub_en": "Primary care",
-      "sub_short": "プライマリケア",
-      "sub_short_en": "Primary care",
+      "sub_short": "医療",
+      "sub_short_en": "Clinics",
       "row": 1,
       "relations": [
         {

@@ -25,7 +25,7 @@
       "sub": "食品卸売",
       "sub_en": "Wholesale distributor",
       "sub_short": "食品卸売",
-      "sub_short_en": "Wholesale",
+      "sub_short_en": "Supply",
       "row": 0,
       "relations": [
         {
@@ -50,8 +50,8 @@
       "name": "バリー・カレボー",
       "sub": "カカオ原料",
       "sub_en": "Cocoa supplier",
-      "sub_short": "カカオ原料",
-      "sub_short_en": "Cocoa supplier",
+      "sub_short": "カカオ",
+      "sub_short_en": "Cocoa",
       "row": 1,
       "relations": [
         {
@@ -76,8 +76,8 @@
       "name": "キャドバリーUK",
       "sub": "商標ライセンス",
       "sub_en": "Brand licensor",
-      "sub_short": "商標ライセンス",
-      "sub_short_en": "Brand licensor",
+      "sub_short": "商標",
+      "sub_short_en": "Brands",
       "row": 0,
       "relations": [
         {
@@ -102,8 +102,8 @@
       "name": "ネスレ",
       "sub": "商標ライセンス",
       "sub_en": "Brand licensor",
-      "sub_short": "商標ライセンス",
-      "sub_short_en": "Brand licensor",
+      "sub_short": "商標",
+      "sub_short_en": "Brands",
       "row": 0,
       "relations": [
         {
@@ -128,8 +128,8 @@
       "name": "アイコニックIPインタレスツ",
       "sub": "商標ライセンス",
       "sub_en": "Brand licensor",
-      "sub_short": "商標ライセンス",
-      "sub_short_en": "Brand licensor",
+      "sub_short": "商標",
+      "sub_short_en": "Brands",
       "row": 0,
       "relations": [
         {
@@ -154,8 +154,8 @@
       "name": "AMCONディストリビューティング",
       "sub": "食品・たばこ卸",
       "sub_en": "Convenience wholesale",
-      "sub_short": "食品・たばこ卸",
-      "sub_short_en": "Wholesale",
+      "sub_short": "食品卸",
+      "sub_short_en": "Supply",
       "row": 0,
       "relations": [
         {

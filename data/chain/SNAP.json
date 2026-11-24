@@ -33,7 +33,7 @@
       "sub": "生成AI",
       "sub_en": "Generative AI",
       "sub_short": "生成AI",
-      "sub_short_en": "Generative AI",
+      "sub_short_en": "AI",
       "row": 0,
       "relations": [
         {
@@ -100,7 +100,7 @@
       "name": "Apple",
       "sub": "スマートフォン・端末",
       "sub_en": "Devices",
-      "sub_short": "スマートフォン",
+      "sub_short": "スマホ",
       "sub_short_en": "Devices",
       "row": 2,
       "relations": [
@@ -138,8 +138,8 @@
       "name": "アルファベット(Google)",
       "sub": "検索・クラウド",
       "sub_en": "Search & cloud",
-      "sub_short": "検索・クラウド",
-      "sub_short_en": "Search & cloud",
+      "sub_short": "検索",
+      "sub_short_en": "Search",
       "row": 2,
       "relations": [
         {
@@ -165,7 +165,7 @@
       "sub": "SNS",
       "sub_en": "Social media",
       "sub_short": "SNS",
-      "sub_short_en": "Social media",
+      "sub_short_en": "Social",
       "row": 2,
       "relations": [
         {
@@ -191,7 +191,7 @@
       "sub": "画像SNS",
       "sub_en": "Visual social",
       "sub_short": "画像SNS",
-      "sub_short_en": "Visual social",
+      "sub_short_en": "Social",
       "row": 2,
       "relations": [
         {
@@ -216,8 +216,8 @@
       "name": "レディット",
       "sub": "掲示板・SNS",
       "sub_en": "Social platform",
-      "sub_short": "掲示板・SNS",
-      "sub_short_en": "Social platform",
+      "sub_short": "SNS",
+      "sub_short_en": "Social",
       "row": 2,
       "relations": [
         {
@@ -242,8 +242,8 @@
       "name": "ロブロックス",
       "sub": "ゲームプラットフォーム",
       "sub_en": "Gaming platform",
-      "sub_short": "ゲーム基盤",
-      "sub_short_en": "Gaming platform",
+      "sub_short": "ゲーム",
+      "sub_short_en": "Games",
       "row": 2,
       "relations": [
         {
@@ -268,7 +268,7 @@
       "name": "テンセント",
       "sub": "インターネット・ゲーム",
       "sub_en": "Internet & gaming",
-      "sub_short": "インターネット",
+      "sub_short": "ネット",
       "sub_short_en": "Internet",
       "row": 2,
       "relations": [

@@ -58,8 +58,8 @@
       "name_en": "Bankers Healthcare Group",
       "sub": "医療従事者向け融資",
       "sub_en": "Loans to healthcare professionals",
-      "sub_short": "医療者向け融資",
-      "sub_short_en": "Doctor loans",
+      "sub_short": "医療融資",
+      "sub_short_en": "Lending",
       "row": 0,
       "relations": [
         {
@@ -84,8 +84,8 @@
       "name_en": "MasterBrand",
       "sub": "キッチン収納家具",
       "sub_en": "Kitchen cabinets",
-      "sub_short": "キッチン家具",
-      "sub_short_en": "Kitchen cabinets",
+      "sub_short": "台所家具",
+      "sub_short_en": "Cabinets",
       "row": 1,
       "relations": [
         {

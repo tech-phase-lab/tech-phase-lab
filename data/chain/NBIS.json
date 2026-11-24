@@ -131,7 +131,7 @@
       "sub": "SNS・AI",
       "sub_en": "Social & AI",
       "sub_short": "SNS・AI",
-      "sub_short_en": "Social & AI",
+      "sub_short_en": "Social",
       "row": 1,
       "relations": [
         {
@@ -157,8 +157,8 @@
       "name": "Palantir",
       "sub": "データ分析",
       "sub_en": "Data analytics",
-      "sub_short": "データ分析",
-      "sub_short_en": "Data analytics",
+      "sub_short": "分析",
+      "sub_short_en": "Analytics",
       "row": 2,
       "relations": [
         {
@@ -183,7 +183,7 @@
       "sub": "配車",
       "sub_en": "Ride-hailing",
       "sub_short": "配車",
-      "sub_short_en": "Ride-hailing",
+      "sub_short_en": "Rides",
       "row": 2,
       "relations": [
         {
@@ -209,7 +209,7 @@
       "name": "CoreWeave",
       "sub": "AIクラウド",
       "sub_en": "AI cloud",
-      "sub_short": "AIクラウド",
+      "sub_short": "AI基盤",
       "sub_short_en": "AI cloud",
       "row": 3,
       "relations": [
@@ -309,7 +309,7 @@
       "name": "IREN",
       "sub": "AIクラウド・マイニング",
       "sub_en": "AI cloud & mining",
-      "sub_short": "AIクラウド",
+      "sub_short": "AI基盤",
       "sub_short_en": "AI cloud",
       "row": 3,
       "relations": [
@@ -334,7 +334,7 @@
       "name": "WhiteFiber",
       "sub": "AIクラウド",
       "sub_en": "AI cloud",
-      "sub_short": "AIクラウド",
+      "sub_short": "AI基盤",
       "sub_short_en": "AI cloud",
       "row": 3,
       "relations": [
@@ -360,7 +360,7 @@
       "sub": "自動車",
       "sub_en": "Automaker",
       "sub_short": "自動車",
-      "sub_short_en": "Automaker",
+      "sub_short_en": "Cars",
       "row": 2,
       "relations": [
         {

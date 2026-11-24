@@ -56,7 +56,7 @@
       "name_en": "Appian",
       "sub": "ローコード基盤",
       "sub_en": "Low-code platform",
-      "sub_short": "ローコード基盤",
+      "sub_short": "開発基盤",
       "sub_short_en": "Low-code",
       "row": 0,
       "relations": [
@@ -82,8 +82,8 @@
       "name_en": "nCino",
       "sub": "銀行向けクラウド",
       "sub_en": "Banking cloud",
-      "sub_short": "銀行クラウド",
-      "sub_short_en": "Banking cloud",
+      "sub_short": "銀行IT",
+      "sub_short_en": "Bank IT",
       "row": 0,
       "relations": [
         {
@@ -108,8 +108,8 @@
       "name_en": "Dynatrace",
       "sub": "監視ソフト",
       "sub_en": "Observability software",
-      "sub_short": "監視ソフト",
-      "sub_short_en": "Observability",
+      "sub_short": "監視",
+      "sub_short_en": "Monitors",
       "row": 0,
       "relations": [
         {
@@ -134,7 +134,7 @@
       "name_en": "MongoDB",
       "sub": "データベース",
       "sub_en": "Database",
-      "sub_short": "データベース",
+      "sub_short": "DB",
       "sub_short_en": "Database",
       "row": 0,
       "relations": [
@@ -160,8 +160,8 @@
       "name_en": "Confluent",
       "sub": "データ配信基盤",
       "sub_en": "Data streaming",
-      "sub_short": "データ配信基盤",
-      "sub_short_en": "Data streaming",
+      "sub_short": "データ",
+      "sub_short_en": "Data",
       "row": 0,
       "relations": [
         {
@@ -186,7 +186,7 @@
       "name_en": "Pegasystems",
       "sub": "業務自動化ソフト",
       "sub_en": "Workflow software",
-      "sub_short": "業務自動化",
+      "sub_short": "業務IT",
       "sub_short_en": "Workflow",
       "row": 0,
       "relations": [
@@ -212,8 +212,8 @@
       "name_en": "BlackLine",
       "sub": "会計ソフト",
       "sub_en": "Accounting software",
-      "sub_short": "会計ソフト",
-      "sub_short_en": "Accounting apps",
+      "sub_short": "会計",
+      "sub_short_en": "Accounts",
       "row": 0,
       "relations": [
         {
@@ -238,8 +238,8 @@
       "name_en": "OneStream",
       "sub": "財務計画ソフト",
       "sub_en": "Financial planning software",
-      "sub_short": "財務計画ソフト",
-      "sub_short_en": "Planning apps",
+      "sub_short": "財務IT",
+      "sub_short_en": "Planning",
       "row": 0,
       "relations": [
         {
@@ -264,8 +264,8 @@
       "name_en": "IBM",
       "sub": "ITサービス",
       "sub_en": "IT services",
-      "sub_short": "ITサービス",
-      "sub_short_en": "IT services",
+      "sub_short": "IT",
+      "sub_short_en": "IT",
       "row": 1,
       "relations": [
         {
@@ -291,7 +291,7 @@
       "sub": "デジタル変革支援",
       "sub_en": "Digital engineering services",
       "sub_short": "DX支援",
-      "sub_short_en": "Digital eng.",
+      "sub_short_en": "IT",
       "row": 1,
       "relations": [
         {
@@ -317,7 +317,7 @@
       "sub": "IT販売・サービス",
       "sub_en": "IT solutions",
       "sub_short": "IT販売",
-      "sub_short_en": "IT solutions",
+      "sub_short_en": "IT",
       "row": 1,
       "relations": [
         {
@@ -342,8 +342,8 @@
       "name_en": "TTEC Holdings",
       "sub": "顧客対応の外部委託",
       "sub_en": "Customer experience services",
-      "sub_short": "顧客対応委託",
-      "sub_short_en": "CX services",
+      "sub_short": "顧客対応",
+      "sub_short_en": "CX",
       "row": 1,
       "relations": [
         {
@@ -368,8 +368,8 @@
       "name_en": "Rimini Street",
       "sub": "ソフト保守",
       "sub_en": "Software support",
-      "sub_short": "ソフト保守",
-      "sub_short_en": "Software support",
+      "sub_short": "ソフト",
+      "sub_short_en": "Software",
       "row": 1,
       "relations": [
         {
@@ -394,8 +394,8 @@
       "name_en": "CSG Systems",
       "sub": "通信向けソフト",
       "sub_en": "Telecom software",
-      "sub_short": "通信向けソフト",
-      "sub_short_en": "Telecom software",
+      "sub_short": "通信IT",
+      "sub_short_en": "Telecom",
       "row": 1,
       "relations": [
         {
@@ -420,8 +420,8 @@
       "name_en": "Olo",
       "sub": "飲食店向けソフト",
       "sub_en": "Restaurant software",
-      "sub_short": "飲食店ソフト",
-      "sub_short_en": "Restaurant apps",
+      "sub_short": "飲食IT",
+      "sub_short_en": "POS",
       "row": 1,
       "relations": [
         {
@@ -446,8 +446,8 @@
       "name_en": "Maximus",
       "sub": "行政サービス",
       "sub_en": "Government services",
-      "sub_short": "行政サービス",
-      "sub_short_en": "Gov services",
+      "sub_short": "行政",
+      "sub_short_en": "Gov IT",
       "row": 1,
       "relations": [
         {

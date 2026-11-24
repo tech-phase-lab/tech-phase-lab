@@ -72,8 +72,8 @@
       "name": "アステラ・ラボ",
       "sub": "接続用半導体",
       "sub_en": "Connectivity chips",
-      "sub_short": "接続用半導体",
-      "sub_short_en": "Connectivity",
+      "sub_short": "半導体",
+      "sub_short_en": "Links",
       "row": 0,
       "relations": [
         {
@@ -98,8 +98,8 @@
       "name": "クレド・テクノロジー",
       "sub": "高速接続半導体",
       "sub_en": "High-speed connectivity chips",
-      "sub_short": "高速接続半導体",
-      "sub_short_en": "Connectivity",
+      "sub_short": "接続IC",
+      "sub_short_en": "Links",
       "row": 0,
       "relations": [
         {
@@ -124,8 +124,8 @@
       "name": "クアルコム",
       "sub": "通信用半導体",
       "sub_en": "Wireless chips",
-      "sub_short": "通信用半導体",
-      "sub_short_en": "Wireless chips",
+      "sub_short": "通信IC",
+      "sub_short_en": "RF ICs",
       "row": 0,
       "relations": [
         {
@@ -163,8 +163,8 @@
       "name": "ブロードコム",
       "sub": "通信・ソフト向け半導体",
       "sub_en": "Networking chips & software",
-      "sub_short": "通信半導体",
-      "sub_short_en": "Networking chips",
+      "sub_short": "通信IC",
+      "sub_short_en": "Network",
       "row": 0,
       "relations": [
         {
@@ -189,8 +189,8 @@
       "name": "シーラス・ロジック",
       "sub": "オーディオ半導体",
       "sub_en": "Audio chips",
-      "sub_short": "音響半導体",
-      "sub_short_en": "Audio chips",
+      "sub_short": "音響IC",
+      "sub_short_en": "Audio ICs",
       "row": 0,
       "relations": [
         {
@@ -215,7 +215,7 @@
       "name": "アップル",
       "sub": "スマートフォン・PC",
       "sub_en": "Devices",
-      "sub_short": "スマートフォン",
+      "sub_short": "スマホ",
       "sub_short_en": "Devices",
       "row": 0,
       "relations": [
@@ -254,7 +254,7 @@
       "name": "台湾積体電路製造(TSMC)",
       "sub": "ファウンドリー",
       "sub_en": "Foundry",
-      "sub_short": "ファウンドリー",
+      "sub_short": "受託生産",
       "sub_short_en": "Foundry",
       "row": 1,
       "relations": [
@@ -321,8 +321,8 @@
       "name": "ASEテクノロジー・ホールディング",
       "sub": "半導体後工程",
       "sub_en": "Packaging & test",
-      "sub_short": "半導体後工程",
-      "sub_short_en": "Packaging & test",
+      "sub_short": "後工程",
+      "sub_short_en": "Chip pack",
       "row": 3,
       "relations": [
         {

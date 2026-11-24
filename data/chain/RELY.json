@@ -28,8 +28,8 @@
       "name_en": "Rewire",
       "sub": "移民向けデジタル金融",
       "sub_en": "Digital banking for migrants",
-      "sub_short": "移民向け金融",
-      "sub_short_en": "Migrant banking",
+      "sub_short": "送金",
+      "sub_short_en": "Banking",
       "row": 0,
       "relations": [
         {
@@ -55,7 +55,7 @@
       "sub": "国際送金の決済網(Tranglo)",
       "sub_en": "Cross-border payments (Tranglo)",
       "sub_short": "国際送金",
-      "sub_short_en": "Global payments",
+      "sub_short_en": "Payment",
       "row": 0,
       "relations": [
         {
@@ -107,7 +107,7 @@
       "sub": "国際送金",
       "sub_en": "Remittances",
       "sub_short": "国際送金",
-      "sub_short_en": "Remittances",
+      "sub_short_en": "Transfers",
       "row": 1,
       "relations": [
         {
@@ -132,7 +132,7 @@
       "name_en": "IDT",
       "sub": "通信・送金(BOSS Money)",
       "sub_en": "Telecom & remittances (BOSS Money)",
-      "sub_short": "通信・送金",
+      "sub_short": "通信",
       "sub_short_en": "Telecom",
       "row": 1,
       "relations": [

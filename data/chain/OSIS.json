@@ -24,7 +24,7 @@
       "sub": "医療機器",
       "sub_en": "Medical devices",
       "sub_short": "医療機器",
-      "sub_short_en": "Medical devices",
+      "sub_short_en": "Medtech",
       "row": 0,
       "relations": [
         {
@@ -49,7 +49,7 @@
       "name": "リードス・ホールディングス",
       "sub": "防衛・保安検査",
       "sub_en": "Defense & security screening",
-      "sub_short": "防衛・保安検査",
+      "sub_short": "防衛",
       "sub_short_en": "Defense",
       "row": 0,
       "relations": [
@@ -102,7 +102,7 @@
       "sub": "保安スクリーニング",
       "sub_en": "Security screening",
       "sub_short": "保安検査",
-      "sub_short_en": "Screening",
+      "sub_short_en": "Scans",
       "row": 0,
       "relations": [
         {
@@ -127,8 +127,8 @@
       "name": "ECILラピスカン・セキュリティ・プロダクツ",
       "sub": "検査機器の合弁会社",
       "sub_en": "Inspection systems JV",
-      "sub_short": "検査機器合弁",
-      "sub_short_en": "Inspection JV",
+      "sub_short": "検査合弁",
+      "sub_short_en": "Testing",
       "row": 0,
       "relations": [
         {

@@ -34,8 +34,8 @@
       "name": "ビットメイン",
       "sub": "採掘機メーカー",
       "sub_en": "Miner maker",
-      "sub_short": "採掘機メーカー",
-      "sub_short_en": "Miner maker",
+      "sub_short": "採掘機",
+      "sub_short_en": "Mining",
       "row": 0,
       "relations": [
         {
@@ -60,8 +60,8 @@
       "name": "マイクロBT",
       "sub": "採掘機メーカー",
       "sub_en": "Miner maker",
-      "sub_short": "採掘機メーカー",
-      "sub_short_en": "Miner maker",
+      "sub_short": "採掘機",
+      "sub_short_en": "Mining",
       "row": 0,
       "relations": [
         {
@@ -86,8 +86,8 @@
       "name": "カナン",
       "sub": "採掘機メーカー",
       "sub_en": "Miner maker",
-      "sub_short": "採掘機メーカー",
-      "sub_short_en": "Miner maker",
+      "sub_short": "採掘機",
+      "sub_short_en": "Mining",
       "row": 0,
       "relations": [
         {
@@ -113,7 +113,7 @@
       "sub": "AIデータセンター設計",
       "sub_en": "AI data center design",
       "sub_short": "AI向けDC",
-      "sub_short_en": "AI DC design",
+      "sub_short_en": "AI DCs",
       "row": 1,
       "relations": [
         {
@@ -139,7 +139,7 @@
       "sub": "ビットコイン採掘",
       "sub_en": "Bitcoin mining",
       "sub_short": "BTC採掘",
-      "sub_short_en": "Bitcoin mining",
+      "sub_short_en": "Bitcoin",
       "row": 2,
       "relations": [
         {
@@ -165,7 +165,7 @@
       "sub": "ビットコイン採掘",
       "sub_en": "Bitcoin mining",
       "sub_short": "BTC採掘",
-      "sub_short_en": "Bitcoin mining",
+      "sub_short_en": "Bitcoin",
       "row": 2,
       "relations": [
         {
@@ -217,7 +217,7 @@
       "sub": "ビットコイン採掘",
       "sub_en": "Bitcoin mining",
       "sub_short": "BTC採掘",
-      "sub_short_en": "Bitcoin mining",
+      "sub_short_en": "Bitcoin",
       "row": 2,
       "relations": [
         {
@@ -269,7 +269,7 @@
       "sub": "ビットコイン採掘",
       "sub_en": "Bitcoin mining",
       "sub_short": "BTC採掘",
-      "sub_short_en": "Bitcoin mining",
+      "sub_short_en": "Bitcoin",
       "row": 2,
       "relations": [
         {
@@ -295,7 +295,7 @@
       "sub": "ビットコイン採掘",
       "sub_en": "Bitcoin mining",
       "sub_short": "BTC採掘",
-      "sub_short_en": "Bitcoin mining",
+      "sub_short_en": "Bitcoin",
       "row": 2,
       "relations": [
         {
@@ -320,8 +320,8 @@
       "name": "エクイニクス",
       "sub": "データセンター",
       "sub_en": "Data centers",
-      "sub_short": "データセンター",
-      "sub_short_en": "Data centers",
+      "sub_short": "DC",
+      "sub_short_en": "DCs",
       "row": 2,
       "relations": [
         {
@@ -346,8 +346,8 @@
       "name": "デジタル・リアルティ・トラスト",
       "sub": "データセンター",
       "sub_en": "Data centers",
-      "sub_short": "データセンター",
-      "sub_short_en": "Data centers",
+      "sub_short": "DC",
+      "sub_short_en": "DCs",
       "row": 2,
       "relations": [
         {
@@ -372,7 +372,7 @@
       "name": "コアウィーブ",
       "sub": "AIクラウド",
       "sub_en": "AI cloud",
-      "sub_short": "AIクラウド",
+      "sub_short": "AI基盤",
       "sub_short_en": "AI cloud",
       "row": 2,
       "relations": [

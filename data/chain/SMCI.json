@@ -100,7 +100,7 @@
       "name": "アイレン",
       "sub": "AIクラウド",
       "sub_en": "AI cloud",
-      "sub_short": "AIクラウド",
+      "sub_short": "AI基盤",
       "sub_short_en": "AI cloud",
       "row": 1,
       "relations": [
@@ -127,7 +127,7 @@
       "sub": "ハイブリッドクラウド",
       "sub_en": "Hybrid cloud",
       "sub_short": "クラウド",
-      "sub_short_en": "Hybrid cloud",
+      "sub_short_en": "Cloud",
       "row": 1,
       "relations": [
         {

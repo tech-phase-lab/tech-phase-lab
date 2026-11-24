@@ -58,7 +58,7 @@
       "sub": "腎臓病薬",
       "sub_en": "Kidney disease drugs",
       "sub_short": "腎臓病薬",
-      "sub_short_en": "Kidney drugs",
+      "sub_short_en": "Kidney",
       "row": 0,
       "relations": [
         {
@@ -84,7 +84,7 @@
       "sub": "医療機器",
       "sub_en": "Medical devices",
       "sub_short": "医療機器",
-      "sub_short_en": "Medical devices",
+      "sub_short_en": "Medtech",
       "row": 0,
       "relations": [
         {
@@ -110,7 +110,7 @@
       "sub": "医療機器",
       "sub_en": "Medical devices",
       "sub_short": "医療機器",
-      "sub_short_en": "Medical devices",
+      "sub_short_en": "Medtech",
       "row": 1,
       "relations": [
         {
@@ -136,7 +136,7 @@
       "sub": "複合企業",
       "sub_en": "Conglomerate",
       "sub_short": "複合企業",
-      "sub_short_en": "Conglomerate",
+      "sub_short_en": "Group",
       "row": 1,
       "relations": [
         {

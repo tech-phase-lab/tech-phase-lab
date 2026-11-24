@@ -55,7 +55,7 @@
       "sub": "産業機械",
       "sub_en": "Industrial machinery",
       "sub_short": "産業機械",
-      "sub_short_en": "Machinery",
+      "sub_short_en": "Machines",
       "row": 0,
       "relations": [
         {
@@ -81,7 +81,7 @@
       "sub": "建設機械",
       "sub_en": "Construction equipment",
       "sub_short": "建設機械",
-      "sub_short_en": "Heavy machinery",
+      "sub_short_en": "Machines",
       "row": 1,
       "relations": [
         {
@@ -107,7 +107,7 @@
       "sub": "鉱山機械(フィンランド)",
       "sub_en": "Mining equipment (Finland)",
       "sub_short": "鉱山機械",
-      "sub_short_en": "Mining equipment",
+      "sub_short_en": "Mining",
       "row": 1,
       "relations": [
         {
@@ -132,8 +132,8 @@
       "name_en": "Deere (Wirtgen)",
       "sub": "農機・建機",
       "sub_en": "Farm & construction equipment",
-      "sub_short": "農機・建機",
-      "sub_short_en": "Farm equipment",
+      "sub_short": "農機",
+      "sub_short_en": "Farm",
       "row": 1,
       "relations": [
         {
@@ -158,8 +158,8 @@
       "name_en": "Alamo Group",
       "sub": "インフラ機械",
       "sub_en": "Infrastructure equipment",
-      "sub_short": "インフラ機械",
-      "sub_short_en": "Infrastructure",
+      "sub_short": "インフラ",
+      "sub_short_en": "Infra",
       "row": 1,
       "relations": [
         {
@@ -185,7 +185,7 @@
       "sub": "建設機械(フランス)",
       "sub_en": "Construction equipment (France)",
       "sub_short": "建設機械",
-      "sub_short_en": "Heavy machinery",
+      "sub_short_en": "Machines",
       "row": 1,
       "relations": [
         {

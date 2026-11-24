@@ -34,7 +34,7 @@
       "sub": "受託製造",
       "sub_en": "Contract manufacturing",
       "sub_short": "受託製造",
-      "sub_short_en": "Contract maker",
+      "sub_short_en": "EMS",
       "row": 0,
       "relations": [
         {
@@ -60,7 +60,7 @@
       "sub": "受託製造",
       "sub_en": "Contract manufacturing",
       "sub_short": "受託製造",
-      "sub_short_en": "Contract maker",
+      "sub_short_en": "EMS",
       "row": 0,
       "relations": [
         {
@@ -86,7 +86,7 @@
       "sub": "受託製造",
       "sub_en": "Contract manufacturing",
       "sub_short": "受託製造",
-      "sub_short_en": "Contract maker",
+      "sub_short_en": "EMS",
       "row": 0,
       "relations": [
         {
@@ -112,7 +112,7 @@
       "sub": "受託製造",
       "sub_en": "Contract manufacturing",
       "sub_short": "受託製造",
-      "sub_short_en": "Contract maker",
+      "sub_short_en": "EMS",
       "row": 0,
       "relations": [
         {
@@ -138,7 +138,7 @@
       "sub": "流通業者",
       "sub_en": "Distributor",
       "sub_short": "流通業者",
-      "sub_short_en": "Distributor",
+      "sub_short_en": "Supplier",
       "row": 1,
       "relations": [
         {
@@ -164,7 +164,7 @@
       "sub": "流通業者",
       "sub_en": "Distributor",
       "sub_short": "流通業者",
-      "sub_short_en": "Distributor",
+      "sub_short_en": "Supplier",
       "row": 1,
       "relations": [
         {
@@ -190,7 +190,7 @@
       "sub": "流通業者",
       "sub_en": "Distributor",
       "sub_short": "流通業者",
-      "sub_short_en": "Distributor",
+      "sub_short_en": "Supplier",
       "row": 1,
       "relations": [
         {
@@ -215,7 +215,7 @@
       "name": "レノボ",
       "sub": "PCメーカー",
       "sub_en": "PC maker",
-      "sub_short": "PCメーカー",
+      "sub_short": "PC",
       "sub_short_en": "PC maker",
       "row": 1,
       "relations": [
@@ -242,7 +242,7 @@
       "sub": "通信機器",
       "sub_en": "Communications equipment",
       "sub_short": "通信機器",
-      "sub_short_en": "Comms equipment",
+      "sub_short_en": "Comms",
       "row": 1,
       "relations": [
         {
@@ -267,7 +267,7 @@
       "name": "ベライゾン",
       "sub": "通信キャリア",
       "sub_en": "Carrier",
-      "sub_short": "通信キャリア",
+      "sub_short": "通信",
       "sub_short_en": "Carrier",
       "row": 1,
       "relations": [
@@ -294,7 +294,7 @@
       "sub": "ネットワーク機器",
       "sub_en": "Networking equipment",
       "sub_short": "通信機器",
-      "sub_short_en": "Network gear",
+      "sub_short_en": "Network",
       "row": 2,
       "relations": [
         {
@@ -320,7 +320,7 @@
       "sub": "ネットワーク機器",
       "sub_en": "Networking equipment",
       "sub_short": "通信機器",
-      "sub_short_en": "Network gear",
+      "sub_short_en": "Network",
       "row": 2,
       "relations": [
         {
@@ -346,7 +346,7 @@
       "sub": "ネットワーク機器",
       "sub_en": "Networking equipment",
       "sub_short": "通信機器",
-      "sub_short_en": "Network gear",
+      "sub_short_en": "Network",
       "row": 2,
       "relations": [
         {
@@ -372,7 +372,7 @@
       "sub": "ネットワーク機器",
       "sub_en": "Networking equipment",
       "sub_short": "通信機器",
-      "sub_short_en": "Network gear",
+      "sub_short_en": "Network",
       "row": 2,
       "relations": [
         {
@@ -398,7 +398,7 @@
       "sub": "ネットワーク機器",
       "sub_en": "Networking equipment",
       "sub_short": "通信機器",
-      "sub_short_en": "Network gear",
+      "sub_short_en": "Network",
       "row": 2,
       "relations": [
         {

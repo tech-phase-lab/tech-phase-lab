@@ -27,8 +27,8 @@
       "name_en": "New Way Trucks",
       "sub": "ごみ収集車",
       "sub_en": "Refuse collection vehicles",
-      "sub_short": "ごみ収集車",
-      "sub_short_en": "Garbage trucks",
+      "sub_short": "ごみ車両",
+      "sub_short_en": "Trucks",
       "row": 0,
       "relations": [
         {
@@ -54,7 +54,7 @@
       "sub": "機器販売",
       "sub_en": "Equipment distribution",
       "sub_short": "機器販売",
-      "sub_short_en": "Equipment",
+      "sub_short_en": "Gear",
       "row": 0,
       "relations": [
         {
@@ -79,8 +79,8 @@
       "name_en": "Trackless Vehicles",
       "sub": "多目的作業車(カナダ)",
       "sub_en": "Utility vehicles (Canada)",
-      "sub_short": "多目的作業車",
-      "sub_short_en": "Utility vehicles",
+      "sub_short": "作業車",
+      "sub_short_en": "UTVs",
       "row": 0,
       "relations": [
         {
@@ -105,8 +105,8 @@
       "name_en": "Blasters",
       "sub": "路面標示の除去",
       "sub_en": "Road marking removal",
-      "sub_short": "路面標示の除去",
-      "sub_short_en": "Road markings",
+      "sub_short": "道路",
+      "sub_short_en": "Roads",
       "row": 0,
       "relations": [
         {
@@ -158,7 +158,7 @@
       "sub": "音響警報システム",
       "sub_en": "Acoustic alert systems",
       "sub_short": "音響警報",
-      "sub_short_en": "Acoustic alerts",
+      "sub_short_en": "Alerts",
       "row": 1,
       "relations": [
         {

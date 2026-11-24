@@ -29,7 +29,7 @@
       "sub": "投資会社(スウェーデン)",
       "sub_en": "Private equity (Sweden)",
       "sub_short": "投資会社",
-      "sub_short_en": "Private equity",
+      "sub_short_en": "PE",
       "row": 0,
       "relations": [
         {
@@ -55,7 +55,7 @@
       "sub": "年金基金(カナダ)",
       "sub_en": "Pension fund (Canada)",
       "sub_short": "年金基金",
-      "sub_short_en": "Pension fund",
+      "sub_short_en": "Pension",
       "row": 0,
       "relations": [
         {
@@ -81,7 +81,7 @@
       "sub": "投資会社",
       "sub_en": "Private equity",
       "sub_short": "投資会社",
-      "sub_short_en": "Private equity",
+      "sub_short_en": "PE",
       "row": 0,
       "relations": [
         {
@@ -106,8 +106,8 @@
       "name_en": "Iodine Software",
       "sub": "AI臨床文書の改善",
       "sub_en": "AI clinical documentation",
-      "sub_short": "AI臨床文書",
-      "sub_short_en": "AI clinical docs",
+      "sub_short": "AI医療",
+      "sub_short_en": "AI notes",
       "row": 0,
       "relations": [
         {
@@ -132,7 +132,7 @@
       "name_en": "TruBridge",
       "sub": "医療ITサービス",
       "sub_en": "Healthcare IT services",
-      "sub_short": "医療ITサービス",
+      "sub_short": "医療IT",
       "sub_short_en": "Health IT",
       "row": 1,
       "relations": [
@@ -159,7 +159,7 @@
       "sub": "医療・ヘルスケアIT",
       "sub_en": "Healthcare & health IT",
       "sub_short": "医療IT",
-      "sub_short_en": "Healthcare",
+      "sub_short_en": "Health",
       "row": 1,
       "relations": [
         {

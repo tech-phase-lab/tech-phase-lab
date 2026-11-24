@@ -29,8 +29,8 @@
       "name": "エアロバイロメント",
       "sub": "防衛・無人機",
       "sub_en": "Defense & drones",
-      "sub_short": "防衛・無人機",
-      "sub_short_en": "Defense & drones",
+      "sub_short": "防衛",
+      "sub_short_en": "Defense",
       "row": 0,
       "relations": [
         {
@@ -124,7 +124,7 @@
       "sub": "衛星通信",
       "sub_en": "Satellite communications",
       "sub_short": "衛星通信",
-      "sub_short_en": "Satellite comms",
+      "sub_short_en": "Satcom",
       "row": 2,
       "relations": [
         {
@@ -149,7 +149,7 @@
       "name": "韓国航空宇宙産業",
       "sub": "防衛・航空",
       "sub_en": "Defense & aerospace",
-      "sub_short": "防衛・航空",
+      "sub_short": "防衛",
       "sub_short_en": "Defense",
       "row": 1,
       "relations": [
@@ -175,8 +175,8 @@
       "name": "GEエアロスペース",
       "sub": "航空エンジン",
       "sub_en": "Aircraft engines",
-      "sub_short": "航空エンジン",
-      "sub_short_en": "Aircraft engines",
+      "sub_short": "エンジン",
+      "sub_short_en": "Engines",
       "row": 1,
       "relations": [
         {
@@ -202,7 +202,7 @@
       "sub": "衛星通信",
       "sub_en": "Satellite communications",
       "sub_short": "衛星通信",
-      "sub_short_en": "Satellite comms",
+      "sub_short_en": "Satcom",
       "row": 0,
       "relations": [
         {

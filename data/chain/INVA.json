@@ -34,7 +34,7 @@
       "sub": "製薬(英)",
       "sub_en": "Pharmaceuticals (UK)",
       "sub_short": "製薬",
-      "sub_short_en": "Pharmaceuticals",
+      "sub_short_en": "Pharma",
       "row": 0,
       "relations": [
         {
@@ -60,7 +60,7 @@
       "sub": "製薬(スイス)",
       "sub_en": "Pharmaceuticals (Switzerland)",
       "sub_short": "製薬",
-      "sub_short_en": "Pharmaceuticals",
+      "sub_short_en": "Pharma",
       "row": 0,
       "relations": [
         {
@@ -85,8 +85,8 @@
       "name_en": "Armata Pharmaceuticals",
       "sub": "ファージ治療",
       "sub_en": "Bacteriophage therapy",
-      "sub_short": "ファージ治療",
-      "sub_short_en": "Phage therapy",
+      "sub_short": "治療薬",
+      "sub_short_en": "Phage",
       "row": 0,
       "relations": [
         {
@@ -138,7 +138,7 @@
       "sub": "製薬(スイス)",
       "sub_en": "Pharmaceuticals (Switzerland)",
       "sub_short": "製薬",
-      "sub_short_en": "Pharmaceuticals",
+      "sub_short_en": "Pharma",
       "row": 1,
       "relations": [
         {
@@ -164,7 +164,7 @@
       "sub": "製薬(英)",
       "sub_en": "Pharmaceuticals (UK)",
       "sub_short": "製薬",
-      "sub_short_en": "Pharmaceuticals",
+      "sub_short_en": "Pharma",
       "row": 2,
       "relations": [
         {
@@ -190,7 +190,7 @@
       "sub": "製薬(独、非上場)",
       "sub_en": "Pharmaceuticals (Germany, private)",
       "sub_short": "製薬",
-      "sub_short_en": "Pharmaceuticals",
+      "sub_short_en": "Pharma",
       "row": 2,
       "relations": [
         {
@@ -216,7 +216,7 @@
       "sub": "製薬",
       "sub_en": "Pharmaceuticals",
       "sub_short": "製薬",
-      "sub_short_en": "Pharmaceuticals",
+      "sub_short_en": "Pharma",
       "row": 2,
       "relations": [
         {

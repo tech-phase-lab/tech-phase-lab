@@ -31,8 +31,8 @@
       "name_en": "Foley Products",
       "sub": "プレキャスト・コンクリート",
       "sub_en": "Precast concrete",
-      "sub_short": "プレキャスト",
-      "sub_short_en": "Precast concrete",
+      "sub_short": "建材",
+      "sub_short_en": "Concrete",
       "row": 0,
       "relations": [
         {
@@ -57,8 +57,8 @@
       "name_en": "Concrete Pipe & Precast",
       "sub": "プレキャスト・コンクリート",
       "sub_en": "Precast concrete",
-      "sub_short": "プレキャスト",
-      "sub_short_en": "Precast concrete",
+      "sub_short": "建材",
+      "sub_short_en": "Concrete",
       "row": 0,
       "relations": [
         {
@@ -83,8 +83,8 @@
       "name_en": "InQuik",
       "sub": "橋梁システム",
       "sub_en": "Bridge systems",
-      "sub_short": "橋梁システム",
-      "sub_short_en": "Bridge systems",
+      "sub_short": "橋梁",
+      "sub_short_en": "Bridges",
       "row": 0,
       "relations": [
         {
@@ -110,7 +110,7 @@
       "sub": "建材流通",
       "sub_en": "Building materials distribution",
       "sub_short": "建材流通",
-      "sub_short_en": "Building supply",
+      "sub_short_en": "Building",
       "row": 1,
       "relations": [
         {

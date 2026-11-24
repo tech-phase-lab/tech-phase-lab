@@ -34,8 +34,8 @@
       "name_en": "Constellium",
       "sub": "アルミ圧延",
       "sub_en": "Aluminum products",
-      "sub_short": "アルミ圧延",
-      "sub_short_en": "Aluminum",
+      "sub_short": "アルミ",
+      "sub_short_en": "Metals",
       "row": 0,
       "relations": [
         {
@@ -60,8 +60,8 @@
       "name_en": "Novelis",
       "sub": "アルミ圧延",
       "sub_en": "Aluminum rolling",
-      "sub_short": "アルミ圧延",
-      "sub_short_en": "Aluminum rolling",
+      "sub_short": "アルミ",
+      "sub_short_en": "Metals",
       "row": 0,
       "relations": [
         {
@@ -87,7 +87,7 @@
       "sub": "プラスチック包装",
       "sub_en": "Plastic packaging",
       "sub_short": "樹脂包装",
-      "sub_short_en": "Plastic packs",
+      "sub_short_en": "Plastics",
       "row": 1,
       "relations": [
         {
@@ -113,7 +113,7 @@
       "sub": "軟包装",
       "sub_en": "Flexible packaging",
       "sub_short": "軟包装",
-      "sub_short_en": "Packaging",
+      "sub_short_en": "Packing",
       "row": 1,
       "relations": [
         {
@@ -138,8 +138,8 @@
       "name_en": "Silgan Holdings",
       "sub": "容器・キャップ",
       "sub_en": "Containers & closures",
-      "sub_short": "容器・キャップ",
-      "sub_short_en": "Containers",
+      "sub_short": "容器",
+      "sub_short_en": "Boxes",
       "row": 2,
       "relations": [
         {
@@ -165,7 +165,7 @@
       "sub": "ガラス瓶",
       "sub_en": "Glass containers",
       "sub_short": "ガラス瓶",
-      "sub_short_en": "Glass containers",
+      "sub_short_en": "Glass",
       "row": 2,
       "relations": [
         {
@@ -191,7 +191,7 @@
       "sub": "包装部品",
       "sub_en": "Packaging components",
       "sub_short": "包装部品",
-      "sub_short_en": "Packaging",
+      "sub_short_en": "Packing",
       "row": 2,
       "relations": [
         {
@@ -216,7 +216,7 @@
       "name_en": "Embotelladora Andina",
       "sub": "飲料ボトラー(チリ)",
       "sub_en": "Bottler (Chile)",
-      "sub_short": "飲料ボトラー",
+      "sub_short": "飲料",
       "sub_short_en": "Bottler",
       "row": 2,
       "relations": [

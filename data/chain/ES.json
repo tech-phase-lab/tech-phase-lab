@@ -25,7 +25,7 @@
       "sub": "水力発電",
       "sub_en": "Hydropower",
       "sub_short": "水力発電",
-      "sub_short_en": "Hydropower",
+      "sub_short_en": "Hydro",
       "row": 0,
       "relations": [
         {
@@ -51,7 +51,7 @@
       "sub": "送電線",
       "sub_en": "Transmission line",
       "sub_short": "送電線",
-      "sub_short_en": "Power line",
+      "sub_short_en": "Grid",
       "row": 0,
       "relations": [
         {
@@ -77,7 +77,7 @@
       "sub": "洋上風力",
       "sub_en": "Offshore wind",
       "sub_short": "洋上風力",
-      "sub_short_en": "Offshore wind",
+      "sub_short_en": "Wind",
       "row": 0,
       "relations": [
         {
@@ -103,7 +103,7 @@
       "sub": "ガス導管",
       "sub_en": "Gas pipeline",
       "sub_short": "ガス導管",
-      "sub_short_en": "Gas pipeline",
+      "sub_short_en": "Pipeline",
       "row": 0,
       "relations": [
         {
@@ -129,7 +129,7 @@
       "sub": "ガス導管",
       "sub_en": "Gas pipeline",
       "sub_short": "ガス導管",
-      "sub_short_en": "Gas pipeline",
+      "sub_short_en": "Pipeline",
       "row": 0,
       "relations": [
         {
@@ -154,8 +154,8 @@
       "name": "ナショナル・グリッド",
       "sub": "送電事業者",
       "sub_en": "Grid operator",
-      "sub_short": "送電事業者",
-      "sub_short_en": "Grid operator",
+      "sub_short": "送電",
+      "sub_short_en": "Grid",
       "row": 1,
       "relations": [
         {
@@ -180,8 +180,8 @@
       "name": "アバングリッド",
       "sub": "送電事業者",
       "sub_en": "Grid operator",
-      "sub_short": "送電事業者",
-      "sub_short_en": "Grid operator",
+      "sub_short": "送電",
+      "sub_short_en": "Grid",
       "row": 1,
       "relations": [
         {

@@ -31,7 +31,7 @@
       "sub": "光半導体",
       "sub_en": "Optical semiconductors",
       "sub_short": "光半導体",
-      "sub_short_en": "Optical chips",
+      "sub_short_en": "Optics",
       "row": 0,
       "relations": [
         {
@@ -56,8 +56,8 @@
       "name_en": "Sierra Wireless",
       "sub": "IoT通信モジュール",
       "sub_en": "IoT modules",
-      "sub_short": "IoT通信部品",
-      "sub_short_en": "IoT modules",
+      "sub_short": "IoT",
+      "sub_short_en": "IoT",
       "row": 0,
       "relations": [
         {
@@ -82,8 +82,8 @@
       "name_en": "MACOM",
       "sub": "アナログ・光半導体",
       "sub_en": "Analog & optical chips",
-      "sub_short": "アナログ半導体",
-      "sub_short_en": "Analog chips",
+      "sub_short": "アナログ",
+      "sub_short_en": "Analog",
       "row": 1,
       "relations": [
         {
@@ -134,8 +134,8 @@
       "name_en": "Alpha and Omega Semiconductor",
       "sub": "パワー半導体",
       "sub_en": "Power semiconductors",
-      "sub_short": "パワー半導体",
-      "sub_short_en": "Power chips",
+      "sub_short": "半導体",
+      "sub_short_en": "Power ICs",
       "row": 1,
       "relations": [
         {
@@ -160,8 +160,8 @@
       "name_en": "MaxLinear",
       "sub": "通信用半導体",
       "sub_en": "Communications chips",
-      "sub_short": "通信用半導体",
-      "sub_short_en": "Comms chips",
+      "sub_short": "通信IC",
+      "sub_short_en": "Comms IC",
       "row": 1,
       "relations": [
         {
@@ -187,7 +187,7 @@
       "sub": "回路保護",
       "sub_en": "Circuit protection",
       "sub_short": "回路保護",
-      "sub_short_en": "Circuit protect",
+      "sub_short_en": "Circuits",
       "row": 1,
       "relations": [
         {
@@ -212,7 +212,7 @@
       "name_en": "Airgain",
       "sub": "無線通信機器",
       "sub_en": "Wireless connectivity",
-      "sub_short": "無線通信機器",
+      "sub_short": "無線機器",
       "sub_short_en": "Wireless",
       "row": 1,
       "relations": [

@@ -19,7 +19,7 @@
       "name": "コネ",
       "sub": "エレベーター",
       "sub_en": "Elevators",
-      "sub_short": "エレベーター",
+      "sub_short": "昇降機",
       "sub_short_en": "Elevators",
       "row": 0,
       "relations": [
@@ -45,7 +45,7 @@
       "name": "シンドラーグループ",
       "sub": "エレベーター",
       "sub_en": "Elevators",
-      "sub_short": "エレベーター",
+      "sub_short": "昇降機",
       "sub_short_en": "Elevators",
       "row": 0,
       "relations": [
@@ -71,7 +71,7 @@
       "name": "TKエレベーター",
       "sub": "エレベーター",
       "sub_en": "Elevators",
-      "sub_short": "エレベーター",
+      "sub_short": "昇降機",
       "sub_short_en": "Elevators",
       "row": 0,
       "relations": [
@@ -97,8 +97,8 @@
       "name": "西子電梯集団",
       "sub": "エレベーター合弁",
       "sub_en": "Elevator JV partner",
-      "sub_short": "エレベーター",
-      "sub_short_en": "Elevator JV",
+      "sub_short": "昇降機",
+      "sub_short_en": "Elevators",
       "row": 0,
       "relations": [
         {

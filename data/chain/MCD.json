@@ -31,8 +31,8 @@
       "name_en": "Lamb Weston",
       "sub": "冷凍ポテト",
       "sub_en": "Frozen potatoes",
-      "sub_short": "冷凍ポテト",
-      "sub_short_en": "Frozen potatoes",
+      "sub_short": "冷凍食品",
+      "sub_short_en": "Frozen",
       "row": 0,
       "relations": [
         {
@@ -58,7 +58,7 @@
       "sub": "紙容器",
       "sub_en": "Paper packaging",
       "sub_short": "紙容器",
-      "sub_short_en": "Paper packaging",
+      "sub_short_en": "Paper",
       "row": 0,
       "relations": [
         {
@@ -83,8 +83,8 @@
       "name_en": "PAR Technology",
       "sub": "飲食店向けソフト",
       "sub_en": "Restaurant software",
-      "sub_short": "飲食店ソフト",
-      "sub_short_en": "Restaurant apps",
+      "sub_short": "飲食IT",
+      "sub_short_en": "POS",
       "row": 0,
       "relations": [
         {
@@ -109,8 +109,8 @@
       "name_en": "Arcos Dorados",
       "sub": "フランチャイズ(中南米)",
       "sub_en": "Franchisee (Latin America)",
-      "sub_short": "フランチャイズ",
-      "sub_short_en": "Franchisee",
+      "sub_short": "FC",
+      "sub_short_en": "Franchise",
       "row": 1,
       "relations": [
         {
@@ -188,7 +188,7 @@
       "sub": "ドーナツ",
       "sub_en": "Doughnuts",
       "sub_short": "ドーナツ",
-      "sub_short_en": "Doughnuts",
+      "sub_short_en": "Donuts",
       "row": 1,
       "relations": [
         {
@@ -213,8 +213,8 @@
       "name_en": "Sweetgreen",
       "sub": "サラダチェーン",
       "sub_en": "Salad chain",
-      "sub_short": "サラダチェーン",
-      "sub_short_en": "Salad chain",
+      "sub_short": "外食",
+      "sub_short_en": "Dining",
       "row": 2,
       "relations": [
         {

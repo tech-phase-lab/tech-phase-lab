@@ -29,7 +29,7 @@
       "name_en": "Allianz",
       "sub": "保険・資産運用(独)",
       "sub_en": "Insurance & asset management (Germany)",
-      "sub_short": "保険・資産運用",
+      "sub_short": "保険",
       "sub_short_en": "Insurance",
       "row": 0,
       "relations": [
@@ -56,7 +56,7 @@
       "sub": "生命保険・退職プラン",
       "sub_en": "Life insurance & retirement",
       "sub_short": "生命保険",
-      "sub_short_en": "Life insurance",
+      "sub_short_en": "Life ins",
       "row": 0,
       "relations": [
         {
@@ -81,8 +81,8 @@
       "name_en": "Alight",
       "sub": "福利厚生の管理代行",
       "sub_en": "Benefits administration",
-      "sub_short": "福利厚生代行",
-      "sub_short_en": "Benefits admin",
+      "sub_short": "福利厚生",
+      "sub_short_en": "Benefits",
       "row": 1,
       "relations": [
         {
@@ -107,8 +107,8 @@
       "name_en": "CNO Financial",
       "sub": "生命・医療保険",
       "sub_en": "Life & health insurance",
-      "sub_short": "生命・医療保険",
-      "sub_short_en": "Life insurance",
+      "sub_short": "生保",
+      "sub_short_en": "Life ins",
       "row": 1,
       "relations": [
         {
@@ -133,8 +133,8 @@
       "name_en": "LPL Financial",
       "sub": "独立系証券ブローカー",
       "sub_en": "Independent broker-dealer",
-      "sub_short": "証券ブローカー",
-      "sub_short_en": "Broker-dealer",
+      "sub_short": "証券",
+      "sub_short_en": "Broker",
       "row": 1,
       "relations": [
         {
@@ -159,8 +159,8 @@
       "name_en": "Kestra Financial",
       "sub": "独立系証券ブローカー",
       "sub_en": "Independent broker-dealer",
-      "sub_short": "証券ブローカー",
-      "sub_short_en": "Broker-dealer",
+      "sub_short": "証券",
+      "sub_short_en": "Broker",
       "row": 1,
       "relations": [
         {
@@ -185,8 +185,8 @@
       "name_en": "Securities America",
       "sub": "独立系証券ブローカー",
       "sub_en": "Independent broker-dealer",
-      "sub_short": "証券ブローカー",
-      "sub_short_en": "Broker-dealer",
+      "sub_short": "証券",
+      "sub_short_en": "Broker",
       "row": 1,
       "relations": [
         {
@@ -211,8 +211,8 @@
       "name_en": "SagePoint Financial",
       "sub": "独立系証券ブローカー",
       "sub_en": "Independent broker-dealer",
-      "sub_short": "証券ブローカー",
-      "sub_short_en": "Broker-dealer",
+      "sub_short": "証券",
+      "sub_short_en": "Broker",
       "row": 1,
       "relations": [
         {
@@ -237,8 +237,8 @@
       "name_en": "Aflac",
       "sub": "医療・がん保険",
       "sub_en": "Supplemental insurance",
-      "sub_short": "医療・がん保険",
-      "sub_short_en": "Supplemental",
+      "sub_short": "医療保険",
+      "sub_short_en": "Insurance",
       "row": 1,
       "relations": [
         {
@@ -264,7 +264,7 @@
       "sub": "生命保険",
       "sub_en": "Life insurance",
       "sub_short": "生命保険",
-      "sub_short_en": "Life insurance",
+      "sub_short_en": "Life ins",
       "row": 1,
       "relations": [
         {
@@ -290,7 +290,7 @@
       "sub": "団体保険",
       "sub_en": "Group insurance",
       "sub_short": "団体保険",
-      "sub_short_en": "Group insurance",
+      "sub_short_en": "Insurance",
       "row": 1,
       "relations": [
         {

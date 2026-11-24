@@ -36,7 +36,7 @@
       "name": "GlobalFoundries",
       "sub": "ファウンドリ",
       "sub_en": "Foundry",
-      "sub_short": "ファウンドリ",
+      "sub_short": "受託生産",
       "sub_short_en": "Foundry",
       "row": 0,
       "relations": [
@@ -74,7 +74,7 @@
       "name": "TSMC",
       "sub": "ファウンドリ",
       "sub_en": "Foundry",
-      "sub_short": "ファウンドリ",
+      "sub_short": "受託生産",
       "sub_short_en": "Foundry",
       "row": 0,
       "relations": [
@@ -112,8 +112,8 @@
       "name": "Amkor Technology",
       "sub": "半導体後工程",
       "sub_en": "Assembly & test",
-      "sub_short": "半導体後工程",
-      "sub_short_en": "Assembly & test",
+      "sub_short": "後工程",
+      "sub_short_en": "Chip pack",
       "row": 0,
       "relations": [
         {
@@ -138,7 +138,7 @@
       "sub": "コンシューマー機器",
       "sub_en": "Consumer devices",
       "sub_short": "家電",
-      "sub_short_en": "Consumer devices",
+      "sub_short_en": "Devices",
       "row": 1,
       "relations": [
         {
@@ -162,7 +162,7 @@
       "name": "Foxconn",
       "sub": "電子機器受託製造",
       "sub_en": "Electronics manufacturing",
-      "sub_short": "電子機器受託",
+      "sub_short": "EMS",
       "sub_short_en": "EMS",
       "row": 1,
       "relations": [
@@ -189,7 +189,7 @@
       "name": "Luxshare",
       "sub": "電子機器受託製造",
       "sub_en": "Electronics manufacturing",
-      "sub_short": "電子機器受託",
+      "sub_short": "EMS",
       "sub_short_en": "EMS",
       "row": 1,
       "relations": [
@@ -217,7 +217,7 @@
       "sub": "半導体IP",
       "sub_en": "Semiconductor IP",
       "sub_short": "半導体IP",
-      "sub_short_en": "Semiconductor IP",
+      "sub_short_en": "Chip IP",
       "row": 2,
       "relations": [
         {
@@ -283,8 +283,8 @@
       "name": "Analog Devices",
       "sub": "アナログ半導体",
       "sub_en": "Analog chips",
-      "sub_short": "アナログ半導体",
-      "sub_short_en": "Analog chips",
+      "sub_short": "アナログ",
+      "sub_short_en": "Analog",
       "row": 3,
       "relations": [
         {
@@ -308,8 +308,8 @@
       "name": "Qualcomm",
       "sub": "通信半導体",
       "sub_en": "Wireless chips",
-      "sub_short": "通信半導体",
-      "sub_short_en": "Wireless chips",
+      "sub_short": "通信IC",
+      "sub_short_en": "RF ICs",
       "row": 3,
       "relations": [
         {
@@ -333,8 +333,8 @@
       "name": "Realtek",
       "sub": "通信・PC半導体",
       "sub_en": "Communications & PC chips",
-      "sub_short": "通信半導体",
-      "sub_short_en": "Comms chips",
+      "sub_short": "通信IC",
+      "sub_short_en": "Comms IC",
       "row": 3,
       "relations": [
         {

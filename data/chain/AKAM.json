@@ -34,7 +34,7 @@
       "sub": "生成AI",
       "sub_en": "Generative AI",
       "sub_short": "生成AI",
-      "sub_short_en": "Generative AI",
+      "sub_short_en": "AI",
       "row": 0,
       "relations": [
         {
@@ -114,7 +114,7 @@
       "sub": "ソフト・クラウド",
       "sub_en": "Software & cloud",
       "sub_short": "ソフト",
-      "sub_short_en": "Software & cloud",
+      "sub_short_en": "Software",
       "row": 0,
       "relations": [
         {
@@ -141,7 +141,7 @@
       "sub": "旅行プラットフォーム",
       "sub_en": "Travel platform",
       "sub_short": "旅行予約",
-      "sub_short_en": "Travel platform",
+      "sub_short_en": "Travel",
       "row": 1,
       "relations": [
         {
@@ -165,8 +165,8 @@
       "name": "Autodesk",
       "sub": "設計ソフト",
       "sub_en": "Design software",
-      "sub_short": "設計ソフト",
-      "sub_short_en": "Design software",
+      "sub_short": "設計IT",
+      "sub_short_en": "Design",
       "row": 1,
       "relations": [
         {
@@ -190,8 +190,8 @@
       "name": "Adobe",
       "sub": "クリエイティブソフト",
       "sub_en": "Creative software",
-      "sub_short": "制作ソフト",
-      "sub_short_en": "Creative apps",
+      "sub_short": "制作",
+      "sub_short_en": "Design",
       "row": 1,
       "relations": [
         {
@@ -215,8 +215,8 @@
       "name": "Comcast",
       "sub": "通信・メディア",
       "sub_en": "Telecom & media",
-      "sub_short": "通信・メディア",
-      "sub_short_en": "Telecom & media",
+      "sub_short": "通信",
+      "sub_short_en": "Telecom",
       "row": 1,
       "relations": [
         {
@@ -241,7 +241,7 @@
       "sub": "自動車",
       "sub_en": "Automobiles",
       "sub_short": "自動車",
-      "sub_short_en": "Automobiles",
+      "sub_short_en": "Cars",
       "row": 1,
       "relations": [
         {
@@ -267,7 +267,7 @@
       "sub": "電機",
       "sub_en": "Electronics",
       "sub_short": "電機",
-      "sub_short_en": "Electronics",
+      "sub_short_en": "Devices",
       "row": 1,
       "relations": [
         {
@@ -292,8 +292,8 @@
       "name": "フィリップス",
       "sub": "ヘルスケア機器",
       "sub_en": "Health technology",
-      "sub_short": "ヘルスケア機器",
-      "sub_short_en": "Health tech",
+      "sub_short": "医療機器",
+      "sub_short_en": "Health IT",
       "row": 1,
       "relations": [
         {
@@ -359,8 +359,8 @@
       "name": "ネットスカウト",
       "sub": "ネットワーク監視",
       "sub_en": "Network monitoring",
-      "sub_short": "ネット監視",
-      "sub_short_en": "Net monitoring",
+      "sub_short": "監視",
+      "sub_short_en": "Network",
       "row": 3,
       "relations": [
         {

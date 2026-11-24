@@ -32,7 +32,7 @@
       "sub": "化学・不動産開発",
       "sub_en": "Chemicals & real estate",
       "sub_short": "化学",
-      "sub_short_en": "Chemicals",
+      "sub_short_en": "Chem",
       "row": 0,
       "relations": [
         {
@@ -57,8 +57,8 @@
       "name_en": "Pure Cycle",
       "sub": "水道・宅地開発",
       "sub_en": "Water & land development",
-      "sub_short": "水道・宅地開発",
-      "sub_short_en": "Water & land",
+      "sub_short": "水道",
+      "sub_short_en": "Water",
       "row": 0,
       "relations": [
         {
@@ -83,8 +83,8 @@
       "name_en": "Millrose Properties",
       "sub": "宅地バンキング",
       "sub_en": "Homesite option purchase",
-      "sub_short": "宅地バンキング",
-      "sub_short_en": "Homesites",
+      "sub_short": "宅地",
+      "sub_short_en": "Land",
       "row": 0,
       "relations": [
         {
@@ -109,8 +109,8 @@
       "name_en": "Five Point Holdings",
       "sub": "大規模宅地開発",
       "sub_en": "Master-planned communities",
-      "sub_short": "大規模宅地開発",
-      "sub_short_en": "Planned towns",
+      "sub_short": "宅地開発",
+      "sub_short_en": "Towns",
       "row": 1,
       "relations": [
         {
@@ -136,7 +136,7 @@
       "sub": "住宅建設",
       "sub_en": "Homebuilding",
       "sub_short": "住宅建設",
-      "sub_short_en": "Homebuilding",
+      "sub_short_en": "Homes",
       "row": 1,
       "relations": [
         {
@@ -162,7 +162,7 @@
       "sub": "投資会社",
       "sub_en": "Private equity",
       "sub_short": "投資会社",
-      "sub_short_en": "Private equity",
+      "sub_short_en": "PE",
       "row": 1,
       "relations": [
         {
@@ -188,7 +188,7 @@
       "sub": "住宅保険",
       "sub_en": "Home insurance",
       "sub_short": "住宅保険",
-      "sub_short_en": "Home insurance",
+      "sub_short_en": "Insurance",
       "row": 1,
       "relations": [
         {
@@ -214,7 +214,7 @@
       "sub": "保険仲介",
       "sub_en": "Insurance brokerage",
       "sub_short": "保険仲介",
-      "sub_short_en": "Insurance broker",
+      "sub_short_en": "Broker",
       "row": 1,
       "relations": [
         {
@@ -240,7 +240,7 @@
       "sub": "住宅建設",
       "sub_en": "Homebuilding",
       "sub_short": "住宅建設",
-      "sub_short_en": "Homebuilding",
+      "sub_short_en": "Homes",
       "row": 2,
       "relations": [
         {

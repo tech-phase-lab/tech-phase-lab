@@ -25,7 +25,7 @@
       "sub": "歯科流通",
       "sub_en": "Dental distribution",
       "sub_short": "歯科流通",
-      "sub_short_en": "Dental supply",
+      "sub_short_en": "Dental",
       "row": 0,
       "relations": [
         {
@@ -51,7 +51,7 @@
       "sub": "歯科流通",
       "sub_en": "Dental distribution",
       "sub_short": "歯科流通",
-      "sub_short_en": "Dental supply",
+      "sub_short_en": "Dental",
       "row": 0,
       "relations": [
         {
@@ -76,8 +76,8 @@
       "name": "マッケソン",
       "sub": "医療用品流通",
       "sub_en": "Medical distribution",
-      "sub_short": "医療用品流通",
-      "sub_short_en": "Medical supply",
+      "sub_short": "医療流通",
+      "sub_short_en": "Medtech",
       "row": 0,
       "relations": [
         {
@@ -102,8 +102,8 @@
       "name": "メドライン・インダストリーズ",
       "sub": "医療用品流通",
       "sub_en": "Medical distribution",
-      "sub_short": "医療用品流通",
-      "sub_short_en": "Medical supply",
+      "sub_short": "医療流通",
+      "sub_short_en": "Medtech",
       "row": 0,
       "relations": [
         {
@@ -128,8 +128,8 @@
       "name": "ストローマン",
       "sub": "歯科インプラント",
       "sub_en": "Dental implants",
-      "sub_short": "インプラント",
-      "sub_short_en": "Dental implants",
+      "sub_short": "埋込機器",
+      "sub_short_en": "Dental",
       "row": 0,
       "relations": [
         {
@@ -154,8 +154,8 @@
       "name": "エンビスタ",
       "sub": "歯科インプラント",
       "sub_en": "Dental implants",
-      "sub_short": "インプラント",
-      "sub_short_en": "Dental implants",
+      "sub_short": "埋込機器",
+      "sub_short_en": "Dental",
       "row": 0,
       "relations": [
         {
@@ -180,8 +180,8 @@
       "name": "ジムビー",
       "sub": "歯科インプラント",
       "sub_en": "Dental implants",
-      "sub_short": "インプラント",
-      "sub_short_en": "Dental implants",
+      "sub_short": "埋込機器",
+      "sub_short_en": "Dental",
       "row": 0,
       "relations": [
         {
@@ -206,8 +206,8 @@
       "name": "デンツプライシロナ",
       "sub": "歯科インプラント",
       "sub_en": "Dental implants",
-      "sub_short": "インプラント",
-      "sub_short_en": "Dental implants",
+      "sub_short": "埋込機器",
+      "sub_short_en": "Dental",
       "row": 0,
       "relations": [
         {
@@ -233,7 +233,7 @@
       "sub": "歯科流通",
       "sub_en": "Dental distribution",
       "sub_short": "歯科流通",
-      "sub_short_en": "Dental supply",
+      "sub_short_en": "Dental",
       "row": 0,
       "relations": [
         {
@@ -259,7 +259,7 @@
       "sub": "歯科機器",
       "sub_en": "Dental equipment",
       "sub_short": "歯科機器",
-      "sub_short_en": "Dental equipment",
+      "sub_short_en": "Dental",
       "row": 0,
       "relations": [
         {

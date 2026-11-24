@@ -34,8 +34,8 @@
       "name_en": "Solventum",
       "sub": "医療・ろ過製品",
       "sub_en": "Healthcare & filtration",
-      "sub_short": "医療・ろ過製品",
-      "sub_short_en": "Healthcare",
+      "sub_short": "医療",
+      "sub_short_en": "Health",
       "row": 0,
       "relations": [
         {
@@ -61,7 +61,7 @@
       "sub": "非オピオイド鎮痛薬",
       "sub_en": "Non-opioid pain therapies",
       "sub_short": "鎮痛薬",
-      "sub_short_en": "Pain drugs",
+      "sub_short_en": "Pain",
       "row": 1,
       "relations": [
         {
@@ -112,8 +112,8 @@
       "name_en": "Arcturus Therapeutics",
       "sub": "mRNA医薬",
       "sub_en": "mRNA medicines",
-      "sub_short": "mRNA医薬",
-      "sub_short_en": "mRNA medicines",
+      "sub_short": "mRNA",
+      "sub_short_en": "mRNA",
       "row": 1,
       "relations": [
         {
@@ -139,7 +139,7 @@
       "sub": "抗体医薬",
       "sub_en": "Antibody drugs",
       "sub_short": "抗体医薬",
-      "sub_short_en": "Antibody drugs",
+      "sub_short_en": "Antibody",
       "row": 1,
       "relations": [
         {
@@ -164,8 +164,8 @@
       "name_en": "Insmed",
       "sub": "希少疾患の医薬",
       "sub_en": "Rare disease drugs",
-      "sub_short": "希少疾患の医薬",
-      "sub_short_en": "Rare diseases",
+      "sub_short": "難病薬",
+      "sub_short_en": "Rare dz",
       "row": 1,
       "relations": [
         {
@@ -190,8 +190,8 @@
       "name_en": "AIM ImmunoTech",
       "sub": "免疫治療薬",
       "sub_en": "Immunotherapy",
-      "sub_short": "免疫治療薬",
-      "sub_short_en": "Immunotherapy",
+      "sub_short": "免疫薬",
+      "sub_short_en": "Oncology",
       "row": 1,
       "relations": [
         {
@@ -216,8 +216,8 @@
       "name_en": "CareDx",
       "sub": "移植の検査",
       "sub_en": "Transplant diagnostics",
-      "sub_short": "移植の検査",
-      "sub_short_en": "Transplant tests",
+      "sub_short": "移植検査",
+      "sub_short_en": "Tests",
       "row": 1,
       "relations": [
         {
@@ -242,8 +242,8 @@
       "name_en": "Bio-Techne",
       "sub": "研究用試薬",
       "sub_en": "Life science reagents",
-      "sub_short": "研究用試薬",
-      "sub_short_en": "Lab reagents",
+      "sub_short": "試薬",
+      "sub_short_en": "Reagents",
       "row": 1,
       "relations": [
         {
@@ -268,8 +268,8 @@
       "name_en": "Seer",
       "sub": "プロテオミクス",
       "sub_en": "Proteomics",
-      "sub_short": "プロテオミクス",
-      "sub_short_en": "Proteomics",
+      "sub_short": "解析",
+      "sub_short_en": "Proteins",
       "row": 1,
       "relations": [
         {
@@ -295,7 +295,7 @@
       "sub": "合成DNA",
       "sub_en": "Synthetic DNA",
       "sub_short": "合成DNA",
-      "sub_short_en": "Synthetic DNA",
+      "sub_short_en": "DNA",
       "row": 2,
       "relations": [
         {
@@ -321,7 +321,7 @@
       "sub": "分析機器",
       "sub_en": "Analytical instruments",
       "sub_short": "分析機器",
-      "sub_short_en": "Lab instruments",
+      "sub_short_en": "Lab tools",
       "row": 2,
       "relations": [
         {
@@ -346,8 +346,8 @@
       "name_en": "Maravai LifeSciences",
       "sub": "mRNA原料",
       "sub_en": "mRNA reagents",
-      "sub_short": "mRNA原料",
-      "sub_short_en": "mRNA reagents",
+      "sub_short": "mRNA",
+      "sub_short_en": "mRNA",
       "row": 2,
       "relations": [
         {
@@ -372,8 +372,8 @@
       "name_en": "Quantum-Si",
       "sub": "タンパク質解析",
       "sub_en": "Protein sequencing",
-      "sub_short": "タンパク質解析",
-      "sub_short_en": "Protein seq.",
+      "sub_short": "解析",
+      "sub_short_en": "Proteins",
       "row": 2,
       "relations": [
         {

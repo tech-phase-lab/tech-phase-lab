@@ -34,7 +34,7 @@
       "sub": "製薬",
       "sub_en": "Pharmaceuticals",
       "sub_short": "製薬",
-      "sub_short_en": "Pharmaceuticals",
+      "sub_short_en": "Pharma",
       "row": 0,
       "relations": [
         {
@@ -60,7 +60,7 @@
       "sub": "創薬",
       "sub_en": "Drug discovery",
       "sub_short": "創薬",
-      "sub_short_en": "Drug discovery",
+      "sub_short_en": "Drug R&D",
       "row": 0,
       "relations": [
         {
@@ -86,7 +86,7 @@
       "sub": "製薬",
       "sub_en": "Pharmaceuticals",
       "sub_short": "製薬",
-      "sub_short_en": "Pharmaceuticals",
+      "sub_short_en": "Pharma",
       "row": 0,
       "relations": [
         {
@@ -111,8 +111,8 @@
       "name_en": "Xenon Pharmaceuticals",
       "sub": "てんかん治療薬",
       "sub_en": "Epilepsy drugs",
-      "sub_short": "てんかん治療薬",
-      "sub_short_en": "Epilepsy drugs",
+      "sub_short": "てんかん",
+      "sub_short_en": "Epilepsy",
       "row": 0,
       "relations": [
         {
@@ -137,8 +137,8 @@
       "name_en": "Maze Therapeutics",
       "sub": "遺伝学創薬",
       "sub_en": "Genetics-based drug discovery",
-      "sub_short": "遺伝学創薬",
-      "sub_short_en": "Genetic drug R&D",
+      "sub_short": "創薬",
+      "sub_short_en": "Drug R&D",
       "row": 0,
       "relations": [
         {
@@ -164,7 +164,7 @@
       "sub": "製薬",
       "sub_en": "Pharmaceuticals",
       "sub_short": "製薬",
-      "sub_short_en": "Pharmaceuticals",
+      "sub_short_en": "Pharma",
       "row": 1,
       "relations": [
         {
@@ -190,7 +190,7 @@
       "sub": "製薬",
       "sub_en": "Pharmaceuticals",
       "sub_short": "製薬",
-      "sub_short_en": "Pharmaceuticals",
+      "sub_short_en": "Pharma",
       "row": 1,
       "relations": [
         {
@@ -215,8 +215,8 @@
       "name_en": "Voyager Therapeutics",
       "sub": "遺伝子治療",
       "sub_en": "Gene therapy",
-      "sub_short": "遺伝子治療",
-      "sub_short_en": "Gene therapy",
+      "sub_short": "遺伝子",
+      "sub_short_en": "Genes",
       "row": 1,
       "relations": [
         {
@@ -241,8 +241,8 @@
       "name_en": "Soleno Therapeutics",
       "sub": "希少疾患薬",
       "sub_en": "Rare-disease drugs",
-      "sub_short": "希少疾患薬",
-      "sub_short_en": "Rare diseases",
+      "sub_short": "難病薬",
+      "sub_short_en": "Rare dz",
       "row": 1,
       "relations": [
         {
@@ -268,7 +268,7 @@
       "sub": "製薬",
       "sub_en": "Pharmaceuticals",
       "sub_short": "製薬",
-      "sub_short_en": "Pharmaceuticals",
+      "sub_short_en": "Pharma",
       "row": 2,
       "relations": [
         {
@@ -293,8 +293,8 @@
       "name_en": "LB Pharmaceuticals",
       "sub": "統合失調症薬",
       "sub_en": "Schizophrenia drugs",
-      "sub_short": "統合失調症薬",
-      "sub_short_en": "Psychiatry drugs",
+      "sub_short": "精神薬",
+      "sub_short_en": "Psych",
       "row": 2,
       "relations": [
         {
@@ -320,7 +320,7 @@
       "sub": "うつ病薬",
       "sub_en": "Depression drugs",
       "sub_short": "うつ病薬",
-      "sub_short_en": "Depression drugs",
+      "sub_short_en": "Psych",
       "row": 2,
       "relations": [
         {
@@ -345,8 +345,8 @@
       "name_en": "Larimar Therapeutics",
       "sub": "フリードライヒ失調症",
       "sub_en": "Friedreich's ataxia",
-      "sub_short": "神経難病薬",
-      "sub_short_en": "Ataxia drugs",
+      "sub_short": "神経薬",
+      "sub_short_en": "Ataxia",
       "row": 2,
       "relations": [
         {

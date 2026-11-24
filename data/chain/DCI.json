@@ -27,7 +27,7 @@
       "sub": "建設機械",
       "sub_en": "Construction machinery",
       "sub_short": "建設機械",
-      "sub_short_en": "Heavy machinery",
+      "sub_short_en": "Machines",
       "row": 0,
       "relations": [
         {
@@ -79,7 +79,7 @@
       "sub": "医療機器(イタリア)",
       "sub_en": "Medical devices (Italy)",
       "sub_short": "医療機器",
-      "sub_short_en": "Medical devices",
+      "sub_short_en": "Medtech",
       "row": 0,
       "relations": [
         {
@@ -104,7 +104,7 @@
       "name_en": "PT Panata Jaya Mandiri",
       "sub": "フィルター(インドネシア)",
       "sub_en": "Filters (Indonesia)",
-      "sub_short": "フィルター",
+      "sub_short": "ろ過",
       "sub_short_en": "Filters",
       "row": 0,
       "relations": [
@@ -130,8 +130,8 @@
       "name_en": "Parker-Hannifin",
       "sub": "モーション制御・ろ過",
       "sub_en": "Motion control & filtration",
-      "sub_short": "モーション制御",
-      "sub_short_en": "Motion control",
+      "sub_short": "制御機器",
+      "sub_short_en": "Motion",
       "row": 1,
       "relations": [
         {

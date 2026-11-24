@@ -29,7 +29,7 @@
       "sub": "空調部品",
       "sub_en": "HVAC/R parts",
       "sub_short": "空調部品",
-      "sub_short_en": "HVAC/R parts",
+      "sub_short_en": "HVAC",
       "row": 0,
       "relations": [
         {
@@ -55,7 +55,7 @@
       "sub": "潤滑剤",
       "sub_en": "Lubricants",
       "sub_short": "潤滑剤",
-      "sub_short_en": "Lubricants",
+      "sub_short_en": "Lubes",
       "row": 0,
       "relations": [
         {
@@ -185,7 +185,7 @@
       "sub": "潤滑剤(ドイツ)",
       "sub_en": "Lubricants (Germany)",
       "sub_short": "潤滑剤",
-      "sub_short_en": "Lubricants",
+      "sub_short_en": "Lubes",
       "row": 1,
       "relations": [
         {

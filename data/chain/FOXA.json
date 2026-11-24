@@ -93,7 +93,7 @@
       "sub": "投資銀行",
       "sub_en": "Investment bank",
       "sub_short": "投資銀行",
-      "sub_short_en": "Investment bank",
+      "sub_short_en": "Bank",
       "row": 1,
       "relations": [
         {
@@ -121,7 +121,7 @@
       "sub": "TVストリーミング",
       "sub_en": "TV streaming",
       "sub_short": "TV配信",
-      "sub_short_en": "TV streaming",
+      "sub_short_en": "Video",
       "row": 1,
       "relations": [
         {
@@ -147,8 +147,8 @@
       "name": "チャーター・コミュニケーションズ",
       "sub": "ケーブル・通信",
       "sub_en": "Cable & telecom",
-      "sub_short": "ケーブル・通信",
-      "sub_short_en": "Cable & telecom",
+      "sub_short": "ケーブル",
+      "sub_short_en": "Cable",
       "row": 2,
       "relations": [
         {
@@ -175,8 +175,8 @@
       "name": "コムキャスト",
       "sub": "通信・メディア",
       "sub_en": "Telecom & media",
-      "sub_short": "通信・メディア",
-      "sub_short_en": "Telecom & media",
+      "sub_short": "通信",
+      "sub_short_en": "Telecom",
       "row": 2,
       "relations": [
         {
@@ -247,7 +247,7 @@
       "sub": "広告・マーケティング",
       "sub_en": "Advertising & marketing",
       "sub_short": "広告",
-      "sub_short_en": "Advertising",
+      "sub_short_en": "Ads",
       "row": 2,
       "relations": [
         {
@@ -285,7 +285,7 @@
       "sub": "広告・マーケティング",
       "sub_en": "Advertising & marketing",
       "sub_short": "広告",
-      "sub_short_en": "Advertising",
+      "sub_short_en": "Ads",
       "row": 2,
       "relations": [
         {
@@ -311,7 +311,7 @@
       "sub": "広告・マーケティング",
       "sub_en": "Advertising & marketing",
       "sub_short": "広告",
-      "sub_short_en": "Advertising",
+      "sub_short_en": "Ads",
       "row": 2,
       "relations": [
         {

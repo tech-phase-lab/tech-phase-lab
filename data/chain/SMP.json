@@ -30,8 +30,8 @@
       "name_en": "AutoZone",
       "sub": "自動車部品小売",
       "sub_en": "Auto parts retail",
-      "sub_short": "自動車部品小売",
-      "sub_short_en": "Auto parts",
+      "sub_short": "車部品",
+      "sub_short_en": "Car parts",
       "row": 0,
       "relations": [
         {
@@ -56,8 +56,8 @@
       "name_en": "O'Reilly Automotive",
       "sub": "自動車部品小売",
       "sub_en": "Auto parts retail",
-      "sub_short": "自動車部品小売",
-      "sub_short_en": "Auto parts",
+      "sub_short": "車部品",
+      "sub_short_en": "Car parts",
       "row": 0,
       "relations": [
         {
@@ -82,8 +82,8 @@
       "name_en": "Genuine Parts (NAPA)",
       "sub": "自動車部品流通",
       "sub_en": "Auto parts distribution",
-      "sub_short": "自動車部品流通",
-      "sub_short_en": "Auto parts",
+      "sub_short": "車部品",
+      "sub_short_en": "Car parts",
       "row": 0,
       "relations": [
         {
@@ -134,8 +134,8 @@
       "name_en": "Nissens Automotive",
       "sub": "車両の冷却部品",
       "sub_en": "Vehicle thermal parts",
-      "sub_short": "車両の冷却部品",
-      "sub_short_en": "Thermal parts",
+      "sub_short": "車部品",
+      "sub_short_en": "Thermal",
       "row": 1,
       "relations": [
         {
@@ -161,7 +161,7 @@
       "sub": "補修部品",
       "sub_en": "Aftermarket parts",
       "sub_short": "補修部品",
-      "sub_short_en": "Aftermarket",
+      "sub_short_en": "Parts",
       "row": 2,
       "relations": [
         {

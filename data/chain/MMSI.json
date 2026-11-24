@@ -31,7 +31,7 @@
       "sub": "内視鏡(HOYA傘下)",
       "sub_en": "Endoscopy (HOYA group)",
       "sub_short": "内視鏡",
-      "sub_short_en": "Endoscopy",
+      "sub_short_en": "Scopes",
       "row": 0,
       "relations": [
         {
@@ -56,8 +56,8 @@
       "name_en": "EndoGastric Solutions",
       "sub": "逆流性食道炎治療機器",
       "sub_en": "GERD treatment devices",
-      "sub_short": "食道治療機器",
-      "sub_short_en": "GERD devices",
+      "sub_short": "消化器",
+      "sub_short_en": "GI care",
       "row": 0,
       "relations": [
         {
@@ -83,7 +83,7 @@
       "sub": "医療機器",
       "sub_en": "Medical devices",
       "sub_short": "医療機器",
-      "sub_short_en": "Medical devices",
+      "sub_short_en": "Medtech",
       "row": 0,
       "relations": [
         {
@@ -108,8 +108,8 @@
       "name_en": "Encore Medical",
       "sub": "心臓用閉鎖デバイス",
       "sub_en": "Cardiac closure devices",
-      "sub_short": "心臓デバイス",
-      "sub_short_en": "Heart closure",
+      "sub_short": "心臓機器",
+      "sub_short_en": "Cardiac",
       "row": 0,
       "relations": [
         {
@@ -135,7 +135,7 @@
       "sub": "医療機器",
       "sub_en": "Medical devices",
       "sub_short": "医療機器",
-      "sub_short_en": "Medical devices",
+      "sub_short_en": "Medtech",
       "row": 1,
       "relations": [
         {
@@ -161,7 +161,7 @@
       "sub": "医療機器",
       "sub_en": "Medical devices",
       "sub_short": "医療機器",
-      "sub_short_en": "Medical devices",
+      "sub_short_en": "Medtech",
       "row": 1,
       "relations": [
         {
@@ -187,7 +187,7 @@
       "sub": "医療機器",
       "sub_en": "Medical devices",
       "sub_short": "医療機器",
-      "sub_short_en": "Medical devices",
+      "sub_short_en": "Medtech",
       "row": 1,
       "relations": [
         {
@@ -213,7 +213,7 @@
       "sub": "医療機器",
       "sub_en": "Medical devices",
       "sub_short": "医療機器",
-      "sub_short_en": "Medical devices",
+      "sub_short_en": "Medtech",
       "row": 1,
       "relations": [
         {
@@ -239,7 +239,7 @@
       "sub": "医療機器",
       "sub_en": "Medical devices",
       "sub_short": "医療機器",
-      "sub_short_en": "Medical devices",
+      "sub_short_en": "Medtech",
       "row": 1,
       "relations": [
         {
@@ -265,7 +265,7 @@
       "sub": "心臓弁",
       "sub_en": "Heart valves",
       "sub_short": "心臓弁",
-      "sub_short_en": "Heart valves",
+      "sub_short_en": "Valves",
       "row": 1,
       "relations": [
         {
@@ -291,7 +291,7 @@
       "sub": "医療機器",
       "sub_en": "Medical devices",
       "sub_short": "医療機器",
-      "sub_short_en": "Medical devices",
+      "sub_short_en": "Medtech",
       "row": 1,
       "relations": [
         {
@@ -316,8 +316,8 @@
       "name_en": "Hologic",
       "sub": "女性医療・診断",
       "sub_en": "Women's health & diagnostics",
-      "sub_short": "女性医療・診断",
-      "sub_short_en": "Women's health",
+      "sub_short": "女性医療",
+      "sub_short_en": "Women",
       "row": 1,
       "relations": [
         {

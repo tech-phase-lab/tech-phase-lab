@@ -25,7 +25,7 @@
       "sub": "電力会社",
       "sub_en": "Electric utility",
       "sub_short": "電力会社",
-      "sub_short_en": "Electric utility",
+      "sub_short_en": "Utility",
       "row": 1,
       "relations": [
         {
@@ -51,7 +51,7 @@
       "sub": "電力会社",
       "sub_en": "Electric utility",
       "sub_short": "電力会社",
-      "sub_short_en": "Electric utility",
+      "sub_short_en": "Utility",
       "row": 0,
       "relations": [
         {
@@ -77,7 +77,7 @@
       "sub": "石炭供給",
       "sub_en": "Coal supply",
       "sub_short": "石炭供給",
-      "sub_short_en": "Coal supply",
+      "sub_short_en": "Coal",
       "row": 0,
       "relations": [
         {
@@ -103,7 +103,7 @@
       "sub": "石炭供給",
       "sub_en": "Coal supply",
       "sub_short": "石炭供給",
-      "sub_short_en": "Coal supply",
+      "sub_short_en": "Coal",
       "row": 0,
       "relations": [
         {

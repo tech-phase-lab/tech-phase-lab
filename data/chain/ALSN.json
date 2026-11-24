@@ -109,8 +109,8 @@
       "name_en": "Blue Bird",
       "sub": "スクールバス",
       "sub_en": "School buses",
-      "sub_short": "スクールバス",
-      "sub_short_en": "School buses",
+      "sub_short": "バス",
+      "sub_short_en": "Buses",
       "row": 0,
       "relations": [
         {
@@ -135,8 +135,8 @@
       "name_en": "Dana",
       "sub": "駆動系部品",
       "sub_en": "Drivetrain components",
-      "sub_short": "駆動系部品",
-      "sub_short_en": "Drivetrains",
+      "sub_short": "駆動部品",
+      "sub_short_en": "Axles",
       "row": 1,
       "relations": [
         {
@@ -162,7 +162,7 @@
       "sub": "建設機械",
       "sub_en": "Construction machinery",
       "sub_short": "建設機械",
-      "sub_short_en": "Heavy machinery",
+      "sub_short_en": "Machines",
       "row": 2,
       "relations": [
         {
@@ -187,8 +187,8 @@
       "name_en": "ZF Friedrichshafen",
       "sub": "自動車部品(ドイツ)",
       "sub_en": "Auto parts (Germany)",
-      "sub_short": "自動車部品",
-      "sub_short_en": "Auto parts",
+      "sub_short": "車部品",
+      "sub_short_en": "Car parts",
       "row": 2,
       "relations": [
         {

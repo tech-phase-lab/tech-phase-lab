@@ -33,8 +33,8 @@
       "name_en": "JBT Marel",
       "sub": "食品加工機械",
       "sub_en": "Food processing equipment",
-      "sub_short": "食品加工機械",
-      "sub_short_en": "Food machinery",
+      "sub_short": "食品機械",
+      "sub_short_en": "Food gear",
       "row": 0,
       "relations": [
         {
@@ -59,8 +59,8 @@
       "name_en": "GEA Group",
       "sub": "食品・産業機械(独)",
       "sub_en": "Food & process equipment (Germany)",
-      "sub_short": "食品・産業機械",
-      "sub_short_en": "Food equipment",
+      "sub_short": "食品機械",
+      "sub_short_en": "Food gear",
       "row": 0,
       "relations": [
         {
@@ -85,8 +85,8 @@
       "name_en": "Duravant",
       "sub": "食品加工機械(非上場)",
       "sub_en": "Food processing equipment (private)",
-      "sub_short": "食品加工機械",
-      "sub_short_en": "Food machinery",
+      "sub_short": "食品機械",
+      "sub_short_en": "Food gear",
       "row": 0,
       "relations": [
         {
@@ -112,7 +112,7 @@
       "sub": "包装機械(非上場)",
       "sub_en": "Packaging machinery (private)",
       "sub_short": "包装機械",
-      "sub_short_en": "Packaging tools",
+      "sub_short_en": "Packing",
       "row": 0,
       "relations": [
         {
@@ -138,7 +138,7 @@
       "sub": "厨房機器(伊、非上場)",
       "sub_en": "Foodservice equipment (Italy, private)",
       "sub_short": "厨房機器",
-      "sub_short_en": "Kitchen gear",
+      "sub_short_en": "Kitchen",
       "row": 1,
       "relations": [
         {
@@ -164,7 +164,7 @@
       "sub": "家電(スウェーデン)",
       "sub_en": "Appliances (Sweden)",
       "sub_short": "家電",
-      "sub_short_en": "Appliances",
+      "sub_short_en": "Appliance",
       "row": 1,
       "relations": [
         {
@@ -190,7 +190,7 @@
       "sub": "厨房機器",
       "sub_en": "Foodservice equipment",
       "sub_short": "厨房機器",
-      "sub_short_en": "Kitchen gear",
+      "sub_short_en": "Kitchen",
       "row": 1,
       "relations": [
         {
@@ -216,7 +216,7 @@
       "sub": "家電(中)",
       "sub_en": "Appliances (China)",
       "sub_short": "家電",
-      "sub_short_en": "Appliances",
+      "sub_short_en": "Appliance",
       "row": 1,
       "relations": [
         {
@@ -242,7 +242,7 @@
       "sub": "電機",
       "sub_en": "Electronics",
       "sub_short": "電機",
-      "sub_short_en": "Electronics",
+      "sub_short_en": "Devices",
       "row": 1,
       "relations": [
         {
@@ -268,7 +268,7 @@
       "sub": "産業機械",
       "sub_en": "Industrial products",
       "sub_short": "産業機械",
-      "sub_short_en": "Industrial goods",
+      "sub_short_en": "Industrial",
       "row": 2,
       "relations": [
         {
@@ -294,7 +294,7 @@
       "sub": "複合企業",
       "sub_en": "Conglomerate",
       "sub_short": "複合企業",
-      "sub_short_en": "Conglomerate",
+      "sub_short_en": "Group",
       "row": 2,
       "relations": [
         {
@@ -319,8 +319,8 @@
       "name_en": "Rational",
       "sub": "業務用オーブン(独)",
       "sub_en": "Commercial ovens (Germany)",
-      "sub_short": "業務用オーブン",
-      "sub_short_en": "Commercial ovens",
+      "sub_short": "厨房機器",
+      "sub_short_en": "Ovens",
       "row": 2,
       "relations": [
         {

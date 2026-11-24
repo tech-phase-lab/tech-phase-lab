@@ -26,7 +26,7 @@
       "sub": "製薬",
       "sub_en": "Pharmaceuticals",
       "sub_short": "製薬",
-      "sub_short_en": "Pharmaceuticals",
+      "sub_short_en": "Pharma",
       "row": 0,
       "relations": [
         {
@@ -52,7 +52,7 @@
       "sub": "製薬",
       "sub_en": "Pharmaceuticals",
       "sub_short": "製薬",
-      "sub_short_en": "Pharmaceuticals",
+      "sub_short_en": "Pharma",
       "row": 0,
       "relations": [
         {
@@ -77,8 +77,8 @@
       "name": "グブラ",
       "sub": "バイオ医薬",
       "sub_en": "Biopharma",
-      "sub_short": "バイオ医薬",
-      "sub_short_en": "Biopharma",
+      "sub_short": "バイオ",
+      "sub_short_en": "Pharma",
       "row": 0,
       "relations": [
         {
@@ -103,8 +103,8 @@
       "name": "レメゲン",
       "sub": "バイオ医薬",
       "sub_en": "Biopharma",
-      "sub_short": "バイオ医薬",
-      "sub_short_en": "Biopharma",
+      "sub_short": "バイオ",
+      "sub_short_en": "Pharma",
       "row": 0,
       "relations": [
         {
@@ -129,8 +129,8 @@
       "name": "イクノス・グレンマーク・イノベーション",
       "sub": "バイオ医薬",
       "sub_en": "Biopharma",
-      "sub_short": "バイオ医薬",
-      "sub_short_en": "Biopharma",
+      "sub_short": "バイオ",
+      "sub_short_en": "Pharma",
       "row": 0,
       "relations": [
         {
@@ -156,7 +156,7 @@
       "sub": "RNA医薬",
       "sub_en": "RNA medicines",
       "sub_short": "RNA医薬",
-      "sub_short_en": "RNA medicines",
+      "sub_short_en": "RNA",
       "row": 0,
       "relations": [
         {
@@ -182,7 +182,7 @@
       "sub": "大手製薬",
       "sub_en": "Large pharma",
       "sub_short": "大手製薬",
-      "sub_short_en": "Large pharma",
+      "sub_short_en": "Pharma",
       "row": 0,
       "relations": [
         {
@@ -208,7 +208,7 @@
       "sub": "医薬品卸",
       "sub_en": "Drug wholesaler",
       "sub_short": "医薬品卸",
-      "sub_short_en": "Drug wholesaler",
+      "sub_short_en": "Pharma",
       "row": 0,
       "relations": [
         {
@@ -234,7 +234,7 @@
       "sub": "医薬品卸",
       "sub_en": "Drug wholesaler",
       "sub_short": "医薬品卸",
-      "sub_short_en": "Drug wholesaler",
+      "sub_short_en": "Pharma",
       "row": 0,
       "relations": [
         {
@@ -260,7 +260,7 @@
       "sub": "医薬品卸",
       "sub_en": "Drug wholesaler",
       "sub_short": "医薬品卸",
-      "sub_short_en": "Drug wholesaler",
+      "sub_short_en": "Pharma",
       "row": 0,
       "relations": [
         {
@@ -286,7 +286,7 @@
       "sub": "美容医療",
       "sub_en": "Aesthetics",
       "sub_short": "美容医療",
-      "sub_short_en": "Aesthetics",
+      "sub_short_en": "Beauty",
       "row": 1,
       "relations": [
         {

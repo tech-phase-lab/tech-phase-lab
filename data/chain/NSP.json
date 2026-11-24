@@ -30,7 +30,7 @@
       "sub": "人事・財務ソフト",
       "sub_en": "HR & finance software",
       "sub_short": "人事",
-      "sub_short_en": "HR & finance",
+      "sub_short_en": "HR",
       "row": 0,
       "relations": [
         {
@@ -55,8 +55,8 @@
       "name_en": "PGA Tour",
       "sub": "プロゴルフ",
       "sub_en": "Pro golf tour",
-      "sub_short": "プロゴルフ",
-      "sub_short_en": "Pro golf tour",
+      "sub_short": "ゴルフ",
+      "sub_short_en": "Golf",
       "row": 0,
       "relations": [
         {
@@ -81,8 +81,8 @@
       "name_en": "Automatic Data Processing",
       "sub": "給与計算・人事",
       "sub_en": "Payroll & HR",
-      "sub_short": "給与計算・人事",
-      "sub_short_en": "Payroll & HR",
+      "sub_short": "給与計算",
+      "sub_short_en": "Payroll",
       "row": 1,
       "relations": [
         {
@@ -107,8 +107,8 @@
       "name_en": "Paychex",
       "sub": "給与計算・人事",
       "sub_en": "Payroll & HR",
-      "sub_short": "給与計算・人事",
-      "sub_short_en": "Payroll & HR",
+      "sub_short": "給与計算",
+      "sub_short_en": "Payroll",
       "row": 1,
       "relations": [
         {
@@ -159,8 +159,8 @@
       "name_en": "Barrett Business Services",
       "sub": "PEO・人材",
       "sub_en": "PEO & staffing",
-      "sub_short": "PEO・人材",
-      "sub_short_en": "PEO & staffing",
+      "sub_short": "PEO",
+      "sub_short_en": "PEO",
       "row": 1,
       "relations": [
         {
@@ -211,8 +211,8 @@
       "name_en": "Rippling",
       "sub": "人事ソフト・PEO",
       "sub_en": "HR software & PEO",
-      "sub_short": "人事ソフト",
-      "sub_short_en": "HR software",
+      "sub_short": "人事",
+      "sub_short_en": "HR",
       "row": 1,
       "relations": [
         {

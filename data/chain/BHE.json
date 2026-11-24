@@ -30,8 +30,8 @@
       "name": "アプライド マテリアルズ",
       "sub": "半導体製造装置",
       "sub_en": "Chip equipment",
-      "sub_short": "半導体製造装置",
-      "sub_short_en": "Chip equipment",
+      "sub_short": "製造装置",
+      "sub_short_en": "Chip tools",
       "row": 0,
       "relations": [
         {
@@ -70,7 +70,7 @@
       "sub": "ライダーセンサー",
       "sub_en": "Lidar sensors",
       "sub_short": "LiDAR",
-      "sub_short_en": "Lidar sensors",
+      "sub_short_en": "Lidar",
       "row": 0,
       "relations": [
         {
@@ -98,7 +98,7 @@
       "sub": "ライダーセンサー",
       "sub_en": "Lidar sensors",
       "sub_short": "LiDAR",
-      "sub_short_en": "Lidar sensors",
+      "sub_short_en": "Lidar",
       "row": 0,
       "relations": [
         {
@@ -230,8 +230,8 @@
       "name": "ウルトラ・クリーン・ホールディングス",
       "sub": "半導体装置部品",
       "sub_en": "Chip equipment subsystems",
-      "sub_short": "半導体装置部品",
-      "sub_short_en": "Chip tool parts",
+      "sub_short": "装置部品",
+      "sub_short_en": "Tool parts",
       "row": 2,
       "relations": [
         {

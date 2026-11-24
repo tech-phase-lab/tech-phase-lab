@@ -35,8 +35,8 @@
       "name_en": "Evolent Health",
       "sub": "専門医療の管理サービス",
       "sub_en": "Specialty care management",
-      "sub_short": "専門医療管理",
-      "sub_short_en": "Specialty care",
+      "sub_short": "医療管理",
+      "sub_short_en": "Care",
       "row": 0,
       "relations": [
         {
@@ -75,7 +75,7 @@
       "sub": "医療保険(コネチカット州)",
       "sub_en": "Health plan (Connecticut)",
       "sub_short": "医療保険",
-      "sub_short_en": "Health plan",
+      "sub_short_en": "Health",
       "row": 0,
       "relations": [
         {
@@ -100,8 +100,8 @@
       "name_en": "NeueHealth",
       "sub": "医療サービス",
       "sub_en": "Value-based care",
-      "sub_short": "医療サービス",
-      "sub_short_en": "Value-based care",
+      "sub_short": "医療",
+      "sub_short_en": "Care",
       "row": 0,
       "relations": [
         {
@@ -126,8 +126,8 @@
       "name_en": "Indivior",
       "sub": "依存症治療薬",
       "sub_en": "Addiction treatment drugs",
-      "sub_short": "依存症治療薬",
-      "sub_short_en": "Addiction drugs",
+      "sub_short": "依存症",
+      "sub_short_en": "Addiction",
       "row": 1,
       "relations": [
         {
@@ -153,7 +153,7 @@
       "sub": "製薬",
       "sub_en": "Pharmaceuticals",
       "sub_short": "製薬",
-      "sub_short_en": "Pharmaceuticals",
+      "sub_short_en": "Pharma",
       "row": 1,
       "relations": [
         {
@@ -179,7 +179,7 @@
       "sub": "医療保険",
       "sub_en": "Health insurance",
       "sub_short": "医療保険",
-      "sub_short_en": "Health insurance",
+      "sub_short_en": "Health",
       "row": 2,
       "relations": [
         {
@@ -205,7 +205,7 @@
       "sub": "医療保険",
       "sub_en": "Health insurance",
       "sub_short": "医療保険",
-      "sub_short_en": "Health insurance",
+      "sub_short_en": "Health",
       "row": 2,
       "relations": [
         {
@@ -231,7 +231,7 @@
       "sub": "医療保険",
       "sub_en": "Health insurance",
       "sub_short": "医療保険",
-      "sub_short_en": "Health insurance",
+      "sub_short_en": "Health",
       "row": 2,
       "relations": [
         {
@@ -256,8 +256,8 @@
       "name_en": "CVS Health",
       "sub": "医療保険・薬局",
       "sub_en": "Health insurance & pharmacy",
-      "sub_short": "医療保険・薬局",
-      "sub_short_en": "Health insurance",
+      "sub_short": "医療保険",
+      "sub_short_en": "Health",
       "row": 2,
       "relations": [
         {
@@ -283,7 +283,7 @@
       "sub": "医療保険",
       "sub_en": "Health insurance",
       "sub_short": "医療保険",
-      "sub_short_en": "Health insurance",
+      "sub_short_en": "Health",
       "row": 2,
       "relations": [
         {

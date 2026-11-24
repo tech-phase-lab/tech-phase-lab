@@ -34,7 +34,7 @@
       "sub": "容器",
       "sub_en": "Containers",
       "sub_short": "容器",
-      "sub_short_en": "Containers",
+      "sub_short_en": "Boxes",
       "row": 0,
       "relations": [
         {
@@ -111,8 +111,8 @@
       "name_en": "La Regina",
       "sub": "トマトソース(伊)",
       "sub_en": "Tomato sauce (Italy)",
-      "sub_short": "トマトソース",
-      "sub_short_en": "Tomato sauce",
+      "sub_short": "食品",
+      "sub_short_en": "Food",
       "row": 1,
       "relations": [
         {
@@ -137,8 +137,8 @@
       "name_en": "PepsiCo",
       "sub": "飲料・食品",
       "sub_en": "Beverages & snacks",
-      "sub_short": "飲料・食品",
-      "sub_short_en": "Beverages",
+      "sub_short": "飲料",
+      "sub_short_en": "Drinks",
       "row": 2,
       "relations": [
         {
@@ -189,8 +189,8 @@
       "name_en": "Hain Celestial",
       "sub": "自然派食品",
       "sub_en": "Natural foods",
-      "sub_short": "自然派食品",
-      "sub_short_en": "Natural foods",
+      "sub_short": "自然食品",
+      "sub_short_en": "Foods",
       "row": 2,
       "relations": [
         {

@@ -28,7 +28,7 @@
       "sub": "電子機器",
       "sub_en": "Electronics",
       "sub_short": "電子機器",
-      "sub_short_en": "Electronics",
+      "sub_short_en": "Devices",
       "row": 0,
       "relations": [
         {
@@ -53,7 +53,7 @@
       "name_en": "Apple",
       "sub": "IT機器・配信",
       "sub_en": "Devices & streaming",
-      "sub_short": "IT機器・配信",
+      "sub_short": "IT機器",
       "sub_short_en": "Devices",
       "row": 0,
       "relations": [
@@ -80,7 +80,7 @@
       "sub": "EC・配信",
       "sub_en": "E-commerce & streaming",
       "sub_short": "EC・配信",
-      "sub_short_en": "E-commerce",
+      "sub_short_en": "E-com",
       "row": 0,
       "relations": [
         {
@@ -106,7 +106,7 @@
       "sub": "映画館",
       "sub_en": "Movie theaters",
       "sub_short": "映画館",
-      "sub_short_en": "Movie theaters",
+      "sub_short_en": "Cinemas",
       "row": 0,
       "relations": [
         {
@@ -131,8 +131,8 @@
       "name_en": "Moving iMage Technologies",
       "sub": "映画館機器",
       "sub_en": "Cinema equipment",
-      "sub_short": "映画館機器",
-      "sub_short_en": "Cinema equipment",
+      "sub_short": "映画館",
+      "sub_short_en": "Cinema",
       "row": 0,
       "relations": [
         {
@@ -157,8 +157,8 @@
       "name_en": "Access Advance",
       "sub": "特許プール",
       "sub_en": "Patent pool",
-      "sub_short": "特許プール",
-      "sub_short_en": "Patent pool",
+      "sub_short": "特許",
+      "sub_short_en": "Patents",
       "row": 0,
       "relations": [
         {
@@ -183,8 +183,8 @@
       "name_en": "Xperi",
       "sub": "音響・映像技術",
       "sub_en": "Audio & video technology",
-      "sub_short": "音響・映像技術",
-      "sub_short_en": "Audio & video",
+      "sub_short": "音響",
+      "sub_short_en": "Audio",
       "row": 1,
       "relations": [
         {
@@ -209,8 +209,8 @@
       "name_en": "Pixelworks",
       "sub": "映像処理チップ",
       "sub_en": "Video processing chips",
-      "sub_short": "映像処理チップ",
-      "sub_short_en": "Video chips",
+      "sub_short": "映像IC",
+      "sub_short_en": "Video ICs",
       "row": 1,
       "relations": [
         {

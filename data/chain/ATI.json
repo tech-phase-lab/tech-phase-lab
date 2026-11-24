@@ -89,7 +89,7 @@
       "sub": "精密圧延(中国)",
       "sub_en": "Precision rolled strip (China)",
       "sub_short": "精密圧延",
-      "sub_short_en": "Rolled strip",
+      "sub_short_en": "Steel",
       "row": 1,
       "relations": [
         {
@@ -115,7 +115,7 @@
       "sub": "複合企業",
       "sub_en": "Conglomerate",
       "sub_short": "複合企業",
-      "sub_short_en": "Conglomerate",
+      "sub_short_en": "Group",
       "row": 2,
       "relations": [
         {
@@ -140,8 +140,8 @@
       "name_en": "Howmet Aerospace",
       "sub": "航空機部品",
       "sub_en": "Aerospace components",
-      "sub_short": "航空機部品",
-      "sub_short_en": "Aero parts",
+      "sub_short": "航空部品",
+      "sub_short_en": "Aircraft",
       "row": 2,
       "relations": [
         {
@@ -167,7 +167,7 @@
       "sub": "特殊合金",
       "sub_en": "Specialty alloys",
       "sub_short": "特殊合金",
-      "sub_short_en": "Specialty alloys",
+      "sub_short_en": "Alloys",
       "row": 2,
       "relations": [
         {
@@ -193,7 +193,7 @@
       "sub": "金属粉末",
       "sub_en": "Metal powders",
       "sub_short": "金属粉末",
-      "sub_short_en": "Metal powders",
+      "sub_short_en": "Powders",
       "row": 3,
       "relations": [
         {

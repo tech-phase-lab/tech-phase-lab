@@ -32,8 +32,8 @@
       "name_en": "CTI",
       "sub": "連邦政府向けサービス",
       "sub_en": "Federal services",
-      "sub_short": "政府サービス",
-      "sub_short_en": "Federal services",
+      "sub_short": "政府支援",
+      "sub_short_en": "Gov IT",
       "row": 0,
       "relations": [
         {
@@ -58,8 +58,8 @@
       "name_en": "Applied Sciences",
       "sub": "インフラ技術サービス",
       "sub_en": "Infrastructure engineering",
-      "sub_short": "インフラ技術",
-      "sub_short_en": "Infrastructure",
+      "sub_short": "インフラ",
+      "sub_short_en": "Infra",
       "row": 0,
       "relations": [
         {
@@ -110,7 +110,7 @@
       "name_en": "Leidos",
       "sub": "防衛・政府IT",
       "sub_en": "Defense & government IT",
-      "sub_short": "防衛・政府IT",
+      "sub_short": "防衛",
       "sub_short_en": "Defense",
       "row": 1,
       "relations": [
@@ -136,7 +136,7 @@
       "name_en": "Centerra Group",
       "sub": "警備・施設運営",
       "sub_en": "Security & site services",
-      "sub_short": "警備・施設運営",
+      "sub_short": "警備",
       "sub_short_en": "Security",
       "row": 1,
       "relations": [
@@ -162,8 +162,8 @@
       "name_en": "Jacobs",
       "sub": "建設コンサル・エンジニアリング",
       "sub_en": "Engineering & consulting",
-      "sub_short": "建設コンサル",
-      "sub_short_en": "Engineering",
+      "sub_short": "建設",
+      "sub_short_en": "Design",
       "row": 2,
       "relations": [
         {
@@ -188,8 +188,8 @@
       "name_en": "Amentum",
       "sub": "政府向けエンジニアリング",
       "sub_en": "Government engineering services",
-      "sub_short": "政府向け技術",
-      "sub_short_en": "Gov engineering",
+      "sub_short": "政府技術",
+      "sub_short_en": "Gov IT",
       "row": 2,
       "relations": [
         {

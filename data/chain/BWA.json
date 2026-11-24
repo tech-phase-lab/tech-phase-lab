@@ -32,7 +32,7 @@
       "sub": "自動車",
       "sub_en": "Automaker",
       "sub_short": "自動車",
-      "sub_short_en": "Automaker",
+      "sub_short_en": "Cars",
       "row": 0,
       "relations": [
         {
@@ -58,7 +58,7 @@
       "sub": "自動車",
       "sub_en": "Automaker",
       "sub_short": "自動車",
-      "sub_short_en": "Automaker",
+      "sub_short_en": "Cars",
       "row": 0,
       "relations": [
         {
@@ -84,7 +84,7 @@
       "sub": "自動車",
       "sub_en": "Automaker",
       "sub_short": "自動車",
-      "sub_short_en": "Automaker",
+      "sub_short_en": "Cars",
       "row": 0,
       "relations": [
         {
@@ -110,7 +110,7 @@
       "sub": "自動車",
       "sub_en": "Automaker",
       "sub_short": "自動車",
-      "sub_short_en": "Automaker",
+      "sub_short_en": "Cars",
       "row": 0,
       "relations": [
         {
@@ -136,7 +136,7 @@
       "sub": "燃料系・補修部品",
       "sub_en": "Fuel systems & aftermarket",
       "sub_short": "燃料系",
-      "sub_short_en": "Fuel systems",
+      "sub_short_en": "Fuel",
       "row": 1,
       "relations": [
         {
@@ -162,7 +162,7 @@
       "sub": "EVプラットフォーム",
       "sub_en": "EV platforms",
       "sub_short": "EV基盤",
-      "sub_short_en": "EV platforms",
+      "sub_short_en": "EVs",
       "row": 1,
       "relations": [
         {
@@ -187,8 +187,8 @@
       "name_en": "Magna International",
       "sub": "自動車部品",
       "sub_en": "Auto parts",
-      "sub_short": "自動車部品",
-      "sub_short_en": "Auto parts",
+      "sub_short": "車部品",
+      "sub_short_en": "Car parts",
       "row": 2,
       "relations": [
         {

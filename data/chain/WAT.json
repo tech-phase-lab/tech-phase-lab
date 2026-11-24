@@ -25,7 +25,7 @@
       "sub": "分析機器",
       "sub_en": "Analytical instruments",
       "sub_short": "分析機器",
-      "sub_short_en": "Lab instruments",
+      "sub_short_en": "Lab tools",
       "row": 0,
       "relations": [
         {
@@ -51,7 +51,7 @@
       "sub": "分析機器",
       "sub_en": "Analytical instruments",
       "sub_short": "分析機器",
-      "sub_short_en": "Lab instruments",
+      "sub_short_en": "Lab tools",
       "row": 0,
       "relations": [
         {
@@ -77,7 +77,7 @@
       "sub": "分析機器",
       "sub_en": "Analytical instruments",
       "sub_short": "分析機器",
-      "sub_short_en": "Lab instruments",
+      "sub_short_en": "Lab tools",
       "row": 0,
       "relations": [
         {
@@ -102,7 +102,7 @@
       "name": "ダナハー",
       "sub": "ライフサイエンス機器",
       "sub_en": "Life science tools",
-      "sub_short": "生命科学機器",
+      "sub_short": "生命科学",
       "sub_short_en": "Lab tools",
       "row": 0,
       "relations": [
@@ -128,7 +128,7 @@
       "name": "サーモフィッシャーサイエンティフィック",
       "sub": "ライフサイエンス機器",
       "sub_en": "Life science tools",
-      "sub_short": "生命科学機器",
+      "sub_short": "生命科学",
       "sub_short_en": "Lab tools",
       "row": 0,
       "relations": [
@@ -154,8 +154,8 @@
       "name": "ネッチ",
       "sub": "熱分析機器",
       "sub_en": "Thermal analysis",
-      "sub_short": "熱分析機器",
-      "sub_short_en": "Thermal analysis",
+      "sub_short": "分析機器",
+      "sub_short_en": "Thermal",
       "row": 0,
       "relations": [
         {
@@ -181,7 +181,7 @@
       "sub": "計測機器",
       "sub_en": "Measurement instruments",
       "sub_short": "計測機器",
-      "sub_short_en": "Instruments",
+      "sub_short_en": "Gauges",
       "row": 0,
       "relations": [
         {
@@ -207,7 +207,7 @@
       "sub": "計測機器",
       "sub_en": "Measurement instruments",
       "sub_short": "計測機器",
-      "sub_short_en": "Instruments",
+      "sub_short_en": "Gauges",
       "row": 0,
       "relations": [
         {

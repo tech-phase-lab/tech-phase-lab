@@ -72,7 +72,7 @@
       "sub": "ソフト・クラウド",
       "sub_en": "Software & cloud",
       "sub_short": "ソフト",
-      "sub_short_en": "Software & cloud",
+      "sub_short_en": "Software",
       "row": 0,
       "relations": [
         {
@@ -98,7 +98,7 @@
       "sub": "コンサルティング",
       "sub_en": "Consulting",
       "sub_short": "コンサル",
-      "sub_short_en": "Consulting",
+      "sub_short_en": "Advisory",
       "row": 1,
       "relations": [
         {
@@ -123,8 +123,8 @@
       "name": "インフォシス",
       "sub": "ITサービス",
       "sub_en": "IT services",
-      "sub_short": "ITサービス",
-      "sub_short_en": "IT services",
+      "sub_short": "IT",
+      "sub_short_en": "IT",
       "row": 1,
       "relations": [
         {
@@ -148,7 +148,7 @@
       "name": "IBM",
       "sub": "IT・クラウド",
       "sub_en": "IT & cloud",
-      "sub_short": "IT・クラウド",
+      "sub_short": "IT",
       "sub_short_en": "IT & cloud",
       "row": 2,
       "relations": [
@@ -174,7 +174,7 @@
       "sub": "ソフト・クラウド",
       "sub_en": "Software & cloud",
       "sub_short": "ソフト",
-      "sub_short_en": "Software & cloud",
+      "sub_short_en": "Software",
       "row": 2,
       "relations": [
         {
@@ -199,8 +199,8 @@
       "name": "セールスフォース",
       "sub": "顧客管理ソフト",
       "sub_en": "CRM software",
-      "sub_short": "顧客管理ソフト",
-      "sub_short_en": "CRM software",
+      "sub_short": "CRM",
+      "sub_short_en": "CRM",
       "row": 2,
       "relations": [
         {
@@ -225,7 +225,7 @@
       "name": "サービスナウ",
       "sub": "業務ワークフロー",
       "sub_en": "Workflow software",
-      "sub_short": "業務フロー",
+      "sub_short": "業務IT",
       "sub_short_en": "Workflow",
       "row": 2,
       "relations": [
@@ -251,8 +251,8 @@
       "name": "SAP",
       "sub": "業務ソフト",
       "sub_en": "Enterprise software",
-      "sub_short": "業務ソフト",
-      "sub_short_en": "Enterprise apps",
+      "sub_short": "業務IT",
+      "sub_short_en": "Software",
       "row": 2,
       "relations": [
         {
@@ -276,7 +276,7 @@
       "name": "オラクル",
       "sub": "データベース・業務ソフト",
       "sub_en": "Database & enterprise software",
-      "sub_short": "データベース",
+      "sub_short": "DB",
       "sub_short_en": "Database",
       "row": 2,
       "relations": [
@@ -302,8 +302,8 @@
       "name": "アピアン",
       "sub": "業務自動化ソフト",
       "sub_en": "Process automation software",
-      "sub_short": "業務自動化",
-      "sub_short_en": "Automation apps",
+      "sub_short": "業務IT",
+      "sub_short_en": "Robotics",
       "row": 2,
       "relations": [
         {
@@ -328,8 +328,8 @@
       "name": "フェア・アイザック",
       "sub": "信用スコア・分析",
       "sub_en": "Credit scoring & analytics",
-      "sub_short": "信用スコア",
-      "sub_short_en": "Credit scoring",
+      "sub_short": "信用情報",
+      "sub_short_en": "Credit",
       "row": 2,
       "relations": [
         {

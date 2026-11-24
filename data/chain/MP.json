@@ -86,7 +86,7 @@
       "sub": "米政府",
       "sub_en": "U.S. government",
       "sub_short": "米政府",
-      "sub_short_en": "U.S. government",
+      "sub_short_en": "US gov",
       "row": 0,
       "relations": [
         {
@@ -137,7 +137,7 @@
       "name_en": "Apple",
       "sub": "スマホ・PC",
       "sub_en": "Devices",
-      "sub_short": "スマホ・PC",
+      "sub_short": "スマホ",
       "sub_short_en": "Devices",
       "row": 1,
       "relations": [
@@ -190,7 +190,7 @@
       "sub": "商社",
       "sub_en": "Trading house",
       "sub_short": "商社",
-      "sub_short_en": "Trading house",
+      "sub_short_en": "Trading",
       "row": 1,
       "relations": [
         {
@@ -215,8 +215,8 @@
       "name_en": "Shenghe Resources",
       "sub": "レアアース(中国)",
       "sub_en": "Rare earths (China)",
-      "sub_short": "レアアース",
-      "sub_short_en": "Rare earths",
+      "sub_short": "希土類",
+      "sub_short_en": "Minerals",
       "row": 1,
       "relations": [
         {
@@ -241,7 +241,7 @@
       "name_en": "USA Rare Earth",
       "sub": "レアアース磁石",
       "sub_en": "Rare earth magnets",
-      "sub_short": "レアアース磁石",
+      "sub_short": "磁石",
       "sub_short_en": "Magnets",
       "row": 2,
       "relations": [

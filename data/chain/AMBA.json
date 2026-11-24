@@ -32,8 +32,8 @@
       "name": "サムスン電子",
       "sub": "半導体・電子",
       "sub_en": "Semiconductors & electronics",
-      "sub_short": "半導体・電子",
-      "sub_short_en": "Semiconductors",
+      "sub_short": "半導体",
+      "sub_short_en": "Chips",
       "row": 0,
       "relations": [
         {
@@ -71,8 +71,8 @@
       "name": "ASEテクノロジー・ホールディング",
       "sub": "半導体の組立・検査",
       "sub_en": "Semiconductor assembly & test",
-      "sub_short": "半導体の組立",
-      "sub_short_en": "Chip packaging",
+      "sub_short": "後工程",
+      "sub_short_en": "Chip pack",
       "row": 0,
       "relations": [
         {
@@ -97,8 +97,8 @@
       "name": "クアンタ・コンピュータ",
       "sub": "ODM・サーバー",
       "sub_en": "ODM & servers",
-      "sub_short": "ODM・サーバー",
-      "sub_short_en": "ODM & servers",
+      "sub_short": "ODM",
+      "sub_short_en": "ODM",
       "row": 1,
       "relations": [
         {
@@ -125,7 +125,7 @@
       "name": "零跑汽車",
       "sub": "電気自動車",
       "sub_en": "Electric vehicles",
-      "sub_short": "電気自動車",
+      "sub_short": "EV",
       "sub_short_en": "EVs",
       "row": 1,
       "relations": [
@@ -153,8 +153,8 @@
       "name": "キャップジェミニ",
       "sub": "IT・コンサルティング",
       "sub_en": "IT & consulting",
-      "sub_short": "ITコンサル",
-      "sub_short_en": "IT & consulting",
+      "sub_short": "IT支援",
+      "sub_short_en": "IT",
       "row": 1,
       "relations": [
         {
@@ -180,7 +180,7 @@
       "sub": "クラウド・ネット",
       "sub_en": "Cloud & internet",
       "sub_short": "クラウド",
-      "sub_short_en": "Cloud & internet",
+      "sub_short_en": "Cloud",
       "row": 1,
       "relations": [
         {
@@ -205,8 +205,8 @@
       "name": "マクニカ",
       "sub": "半導体商社",
       "sub_en": "Semiconductor distributor",
-      "sub_short": "半導体商社",
-      "sub_short_en": "Chip distributor",
+      "sub_short": "半導体",
+      "sub_short_en": "Chips",
       "row": 1,
       "relations": [
         {
@@ -272,7 +272,7 @@
       "sub": "半導体IP",
       "sub_en": "Semiconductor IP",
       "sub_short": "半導体IP",
-      "sub_short_en": "Semiconductor IP",
+      "sub_short_en": "Chip IP",
       "row": 2,
       "relations": [
         {
@@ -296,8 +296,8 @@
       "name": "モービルアイ",
       "sub": "自動運転チップ",
       "sub_en": "ADAS chips",
-      "sub_short": "自動運転チップ",
-      "sub_short_en": "ADAS chips",
+      "sub_short": "自動運転",
+      "sub_short_en": "ADAS",
       "row": 2,
       "relations": [
         {

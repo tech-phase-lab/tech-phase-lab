@@ -99,7 +99,7 @@
       "name": "コヒレント",
       "sub": "レーザー・光学",
       "sub_en": "Lasers & photonics",
-      "sub_short": "レーザー・光学",
+      "sub_short": "レーザー",
       "sub_short_en": "Lasers",
       "row": 2,
       "relations": [
@@ -126,7 +126,7 @@
       "sub": "産業機器",
       "sub_en": "Industrial equipment",
       "sub_short": "産業機器",
-      "sub_short_en": "Industrial gear",
+      "sub_short_en": "Industrial",
       "row": 1,
       "relations": [
         {
@@ -219,7 +219,7 @@
       "sub": "ファイバーレーザー",
       "sub_en": "Fiber lasers",
       "sub_short": "レーザー",
-      "sub_short_en": "Fiber lasers",
+      "sub_short_en": "Lasers",
       "row": 2,
       "relations": [
         {

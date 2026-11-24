@@ -26,7 +26,7 @@
       "sub": "電力会社",
       "sub_en": "Electric utility",
       "sub_short": "電力会社",
-      "sub_short_en": "Electric utility",
+      "sub_short_en": "Utility",
       "row": 0,
       "relations": [
         {
@@ -51,7 +51,7 @@
       "name": "ナショナル・グリッド",
       "sub": "電力・ガス会社",
       "sub_en": "Electric & gas utility",
-      "sub_short": "電力・ガス会社",
+      "sub_short": "電力",
       "sub_short_en": "Utility",
       "row": 0,
       "relations": [
@@ -77,7 +77,7 @@
       "name": "センターポイント・エナジー",
       "sub": "電力・ガス会社",
       "sub_en": "Electric & gas utility",
-      "sub_short": "電力・ガス会社",
+      "sub_short": "電力",
       "sub_short_en": "Utility",
       "row": 0,
       "relations": [
@@ -104,7 +104,7 @@
       "sub": "電力会社",
       "sub_en": "Electric utility",
       "sub_short": "電力会社",
-      "sub_short_en": "Electric utility",
+      "sub_short_en": "Utility",
       "row": 0,
       "relations": [
         {
@@ -129,8 +129,8 @@
       "name": "コムキャスト",
       "sub": "通信・メディア",
       "sub_en": "Telecom & media",
-      "sub_short": "通信・メディア",
-      "sub_short_en": "Telecom & media",
+      "sub_short": "通信",
+      "sub_short_en": "Telecom",
       "row": 0,
       "relations": [
         {
@@ -156,7 +156,7 @@
       "sub": "電力会社",
       "sub_en": "Electric utility",
       "sub_short": "電力会社",
-      "sub_short_en": "Electric utility",
+      "sub_short_en": "Utility",
       "row": 0,
       "relations": [
         {
@@ -182,7 +182,7 @@
       "sub": "電力会社",
       "sub_en": "Electric utility",
       "sub_short": "電力会社",
-      "sub_short_en": "Electric utility",
+      "sub_short_en": "Utility",
       "row": 0,
       "relations": [
         {
@@ -207,8 +207,8 @@
       "name": "ウィリアムズ・カンパニーズ",
       "sub": "エネルギーインフラ",
       "sub_en": "Energy infrastructure",
-      "sub_short": "エネルギー基盤",
-      "sub_short_en": "Energy infra",
+      "sub_short": "エネ基盤",
+      "sub_short_en": "Energy",
       "row": 0,
       "relations": [
         {
@@ -234,7 +234,7 @@
       "sub": "プエルトリコの送配電",
       "sub_en": "Puerto Rico T&D JV",
       "sub_short": "送配電",
-      "sub_short_en": "Puerto Rico grid",
+      "sub_short_en": "Grid",
       "row": 0,
       "relations": [
         {
@@ -260,7 +260,7 @@
       "sub": "建設・インフラ工事",
       "sub_en": "Construction & infrastructure",
       "sub_short": "建設",
-      "sub_short_en": "Construction",
+      "sub_short_en": "Building",
       "row": 1,
       "relations": [
         {
@@ -285,8 +285,8 @@
       "name": "サイファー・デジタル",
       "sub": "ビットコイン採掘・データセンター",
       "sub_en": "Bitcoin mining & data centers",
-      "sub_short": "BTC採掘・DC",
-      "sub_short_en": "Bitcoin mining",
+      "sub_short": "BTC採掘",
+      "sub_short_en": "Bitcoin",
       "row": 0,
       "relations": [
         {

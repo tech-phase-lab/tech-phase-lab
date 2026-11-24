@@ -25,8 +25,8 @@
       "name_en": "Resideo",
       "sub": "サーモスタット・住宅制御",
       "sub_en": "Thermostats & home controls",
-      "sub_short": "サーモスタット",
-      "sub_short_en": "Thermostats",
+      "sub_short": "温度制御",
+      "sub_short_en": "Climate",
       "row": 0,
       "relations": [
         {
@@ -52,7 +52,7 @@
       "sub": "産業機器(英)",
       "sub_en": "Industrial technology (UK)",
       "sub_short": "産業機器",
-      "sub_short_en": "Industrial tech",
+      "sub_short_en": "Industrial",
       "row": 0,
       "relations": [
         {
@@ -78,7 +78,7 @@
       "sub": "複合企業",
       "sub_en": "Conglomerate",
       "sub_short": "複合企業",
-      "sub_short_en": "Conglomerate",
+      "sub_short_en": "Group",
       "row": 0,
       "relations": [
         {
@@ -104,7 +104,7 @@
       "sub": "圧縮機",
       "sub_en": "Compressors",
       "sub_short": "圧縮機",
-      "sub_short_en": "Compressors",
+      "sub_short_en": "Pumps",
       "row": 0,
       "relations": [
         {
@@ -130,7 +130,7 @@
       "sub": "化学品(冷媒)",
       "sub_en": "Chemicals (refrigerants)",
       "sub_short": "化学品",
-      "sub_short_en": "Chemicals",
+      "sub_short_en": "Chem",
       "row": 0,
       "relations": [
         {
@@ -155,8 +155,8 @@
       "name_en": "Mueller Industries",
       "sub": "銅管・バルブ",
       "sub_en": "Copper tube & valves",
-      "sub_short": "銅管・バルブ",
-      "sub_short_en": "Copper tube",
+      "sub_short": "銅管",
+      "sub_short_en": "Copper",
       "row": 0,
       "relations": [
         {
@@ -181,8 +181,8 @@
       "name_en": "Pentair",
       "sub": "水関連機器",
       "sub_en": "Water solutions",
-      "sub_short": "水関連機器",
-      "sub_short_en": "Water solutions",
+      "sub_short": "水機器",
+      "sub_short_en": "Water",
       "row": 0,
       "relations": [
         {
@@ -208,7 +208,7 @@
       "sub": "空調機器",
       "sub_en": "HVAC equipment",
       "sub_short": "空調機器",
-      "sub_short_en": "HVAC equipment",
+      "sub_short_en": "HVAC",
       "row": 1,
       "relations": [
         {
@@ -233,8 +233,8 @@
       "name_en": "Russell Sigler",
       "sub": "空調機器の卸売(米西部)",
       "sub_en": "HVAC distribution (Western US)",
-      "sub_short": "空調機器の卸売",
-      "sub_short_en": "HVAC supply",
+      "sub_short": "空調卸",
+      "sub_short_en": "HVAC",
       "row": 1,
       "relations": [
         {
@@ -259,8 +259,8 @@
       "name_en": "Peirce-Phelps",
       "sub": "空調機器の卸売",
       "sub_en": "HVAC distribution",
-      "sub_short": "空調機器の卸売",
-      "sub_short_en": "HVAC supply",
+      "sub_short": "空調卸",
+      "sub_short_en": "HVAC",
       "row": 1,
       "relations": [
         {

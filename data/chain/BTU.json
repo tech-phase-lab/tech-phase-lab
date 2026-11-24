@@ -109,8 +109,8 @@
       "name_en": "Glencore",
       "sub": "資源・商社(スイス)",
       "sub_en": "Mining & trading (Switzerland)",
-      "sub_short": "資源・商社",
-      "sub_short_en": "Mining & trading",
+      "sub_short": "資源",
+      "sub_short_en": "Mining",
       "row": 1,
       "relations": [
         {
@@ -136,7 +136,7 @@
       "sub": "原料炭",
       "sub_en": "Metallurgical coal",
       "sub_short": "原料炭",
-      "sub_short_en": "Coking coal",
+      "sub_short_en": "Coal",
       "row": 1,
       "relations": [
         {
@@ -213,8 +213,8 @@
       "name_en": "Hallador Energy",
       "sub": "石炭・電力",
       "sub_en": "Coal & power",
-      "sub_short": "石炭・電力",
-      "sub_short_en": "Coal & power",
+      "sub_short": "石炭",
+      "sub_short_en": "Coal",
       "row": 2,
       "relations": [
         {

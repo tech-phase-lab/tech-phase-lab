@@ -30,7 +30,7 @@
       "sub": "通信機器",
       "sub_en": "Networking equipment",
       "sub_short": "通信機器",
-      "sub_short_en": "Network gear",
+      "sub_short_en": "Network",
       "row": 0,
       "relations": [
         {
@@ -82,7 +82,7 @@
       "sub": "通信機器",
       "sub_en": "Telecom equipment",
       "sub_short": "通信機器",
-      "sub_short_en": "Telecom gear",
+      "sub_short_en": "Telecom",
       "row": 0,
       "relations": [
         {
@@ -107,7 +107,7 @@
       "name": "アマゾン",
       "sub": "クラウド・EC",
       "sub_en": "Cloud & e-commerce",
-      "sub_short": "クラウド・EC",
+      "sub_short": "クラウド",
       "sub_short_en": "Cloud",
       "row": 0,
       "relations": [
@@ -147,7 +147,7 @@
       "sub": "受託製造",
       "sub_en": "Contract manufacturing",
       "sub_short": "受託製造",
-      "sub_short_en": "Contract maker",
+      "sub_short_en": "EMS",
       "row": 0,
       "relations": [
         {
@@ -173,7 +173,7 @@
       "sub": "受託製造",
       "sub_en": "Contract manufacturing",
       "sub_short": "受託製造",
-      "sub_short_en": "Contract maker",
+      "sub_short_en": "EMS",
       "row": 0,
       "relations": [
         {
@@ -199,7 +199,7 @@
       "sub": "受託製造",
       "sub_en": "Contract manufacturing",
       "sub_short": "受託製造",
-      "sub_short_en": "Contract maker",
+      "sub_short_en": "EMS",
       "row": 0,
       "relations": [
         {
@@ -225,7 +225,7 @@
       "sub": "受託製造",
       "sub_en": "Contract manufacturing",
       "sub_short": "受託製造",
-      "sub_short_en": "Contract maker",
+      "sub_short_en": "EMS",
       "row": 0,
       "relations": [
         {
@@ -251,7 +251,7 @@
       "sub": "ライダー(センサー)",
       "sub_en": "Lidar sensors",
       "sub_short": "ライダー",
-      "sub_short_en": "Lidar sensors",
+      "sub_short_en": "Lidar",
       "row": 1,
       "relations": [
         {

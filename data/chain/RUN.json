@@ -29,8 +29,8 @@
       "name_en": "Vivint Solar",
       "sub": "住宅用太陽光",
       "sub_en": "Residential solar",
-      "sub_short": "住宅用太陽光",
-      "sub_short_en": "Home solar",
+      "sub_short": "太陽光",
+      "sub_short_en": "Solar",
       "row": 0,
       "relations": [
         {
@@ -56,7 +56,7 @@
       "sub": "パワーコンディショナ",
       "sub_en": "Solar inverters",
       "sub_short": "パワコン",
-      "sub_short_en": "Solar inverters",
+      "sub_short_en": "Solar",
       "row": 0,
       "relations": [
         {
@@ -81,8 +81,8 @@
       "name_en": "Tesla",
       "sub": "EV・蓄電池・電力小売",
       "sub_en": "EVs, batteries & power retail",
-      "sub_short": "EV・蓄電池",
-      "sub_short_en": "EVs, batteries",
+      "sub_short": "EV",
+      "sub_short_en": "EVs",
       "row": 1,
       "relations": [
         {
@@ -107,8 +107,8 @@
       "name_en": "Renew Home",
       "sub": "仮想発電所",
       "sub_en": "Virtual power plants",
-      "sub_short": "仮想発電所",
-      "sub_short_en": "Virtual power",
+      "sub_short": "発電",
+      "sub_short_en": "Power",
       "row": 1,
       "relations": [
         {
@@ -238,7 +238,7 @@
       "sub": "送配電(プエルトリコ)",
       "sub_en": "Grid operator (Puerto Rico)",
       "sub_short": "送配電",
-      "sub_short_en": "Grid operator",
+      "sub_short_en": "Grid",
       "row": 1,
       "relations": [
         {
@@ -263,8 +263,8 @@
       "name_en": "HA Sustainable Infrastructure Capital",
       "sub": "再エネ投資",
       "sub_en": "Clean energy investment",
-      "sub_short": "再エネ投資",
-      "sub_short_en": "Clean energy",
+      "sub_short": "再エネ",
+      "sub_short_en": "Clean",
       "row": 2,
       "relations": [
         {
@@ -289,7 +289,7 @@
       "name_en": "National Grid",
       "sub": "電力・ガス(英米)",
       "sub_en": "Utility (UK/US)",
-      "sub_short": "電力・ガス",
+      "sub_short": "電力",
       "sub_short_en": "Utility",
       "row": 2,
       "relations": [

@@ -25,8 +25,8 @@
       "name": "オートゾーン",
       "sub": "自動車部品小売",
       "sub_en": "Auto parts retail",
-      "sub_short": "自動車部品小売",
-      "sub_short_en": "Auto parts",
+      "sub_short": "車部品",
+      "sub_short_en": "Car parts",
       "row": 0,
       "relations": [
         {
@@ -51,8 +51,8 @@
       "name": "オライリー・オートモーティブ",
       "sub": "自動車部品小売",
       "sub_en": "Auto parts retail",
-      "sub_short": "自動車部品小売",
-      "sub_short_en": "Auto parts",
+      "sub_short": "車部品",
+      "sub_short_en": "Car parts",
       "row": 0,
       "relations": [
         {
@@ -77,8 +77,8 @@
       "name": "アドバンス・オートパーツ",
       "sub": "自動車部品小売",
       "sub_en": "Auto parts retail",
-      "sub_short": "自動車部品小売",
-      "sub_short_en": "Auto parts",
+      "sub_short": "車部品",
+      "sub_short_en": "Car parts",
       "row": 0,
       "relations": [
         {
@@ -103,8 +103,8 @@
       "name": "LKQコーポレーション",
       "sub": "自動車部品流通",
       "sub_en": "Auto parts distribution",
-      "sub_short": "自動車部品流通",
-      "sub_short_en": "Auto parts",
+      "sub_short": "車部品",
+      "sub_short_en": "Car parts",
       "row": 0,
       "relations": [
         {
@@ -129,8 +129,8 @@
       "name": "バプコー",
       "sub": "自動車部品流通",
       "sub_en": "Auto parts distribution",
-      "sub_short": "自動車部品流通",
-      "sub_short_en": "Auto parts",
+      "sub_short": "車部品",
+      "sub_short_en": "Car parts",
       "row": 0,
       "relations": [
         {
@@ -155,8 +155,8 @@
       "name": "アプライド・インダストリアル・テクノロジーズ",
       "sub": "産業用部品流通",
       "sub_en": "Industrial distribution",
-      "sub_short": "産業用部品流通",
-      "sub_short_en": "Industrial parts",
+      "sub_short": "部品流通",
+      "sub_short_en": "Parts",
       "row": 0,
       "relations": [
         {
@@ -181,8 +181,8 @@
       "name": "ファスナル",
       "sub": "産業用部品流通",
       "sub_en": "Industrial distribution",
-      "sub_short": "産業用部品流通",
-      "sub_short_en": "Industrial parts",
+      "sub_short": "部品流通",
+      "sub_short_en": "Parts",
       "row": 0,
       "relations": [
         {
@@ -207,8 +207,8 @@
       "name": "W.W.グレインジャー",
       "sub": "産業用部品流通",
       "sub_en": "Industrial distribution",
-      "sub_short": "産業用部品流通",
-      "sub_short_en": "Industrial parts",
+      "sub_short": "部品流通",
+      "sub_short_en": "Parts",
       "row": 0,
       "relations": [
         {

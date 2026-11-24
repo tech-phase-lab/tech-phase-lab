@@ -38,7 +38,7 @@
       "sub": "生成AI",
       "sub_en": "Generative AI",
       "sub_short": "生成AI",
-      "sub_short_en": "Generative AI",
+      "sub_short_en": "AI",
       "row": 0,
       "relations": [
         {
@@ -110,7 +110,7 @@
       "sub": "生成AI",
       "sub_en": "Generative AI",
       "sub_short": "生成AI",
-      "sub_short_en": "Generative AI",
+      "sub_short_en": "AI",
       "row": 0,
       "relations": [
         {
@@ -208,8 +208,8 @@
       "name": "Alphabet(Google)",
       "sub": "検索・クラウド",
       "sub_en": "Search & cloud",
-      "sub_short": "検索・クラウド",
-      "sub_short_en": "Search & cloud",
+      "sub_short": "検索",
+      "sub_short_en": "Search",
       "row": 0,
       "relations": [
         {
@@ -273,8 +273,8 @@
       "name": "CrowdStrike",
       "sub": "サイバーセキュリティ",
       "sub_en": "Cybersecurity",
-      "sub_short": "サイバー防御",
-      "sub_short_en": "Cybersecurity",
+      "sub_short": "サイバー",
+      "sub_short_en": "Security",
       "row": 1,
       "relations": [
         {
@@ -327,8 +327,8 @@
       "name": "Five9",
       "sub": "コンタクトセンター",
       "sub_en": "Contact center software",
-      "sub_short": "コールセンター",
-      "sub_short_en": "Contact center",
+      "sub_short": "顧客対応",
+      "sub_short_en": "CX",
       "row": 2,
       "relations": [
         {
@@ -355,7 +355,7 @@
       "sub": "電子署名",
       "sub_en": "E-signature",
       "sub_short": "電子署名",
-      "sub_short_en": "E-signature",
+      "sub_short_en": "E-sign",
       "row": 2,
       "relations": [
         {
@@ -381,8 +381,8 @@
       "name": "Box",
       "sub": "クラウド保存",
       "sub_en": "Cloud content",
-      "sub_short": "クラウド保存",
-      "sub_short_en": "Cloud content",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 2,
       "relations": [
         {
@@ -408,8 +408,8 @@
       "name": "Zoom Communications",
       "sub": "ビデオ会議",
       "sub_en": "Video meetings",
-      "sub_short": "ビデオ会議",
-      "sub_short_en": "Video meetings",
+      "sub_short": "会議",
+      "sub_short_en": "Video",
       "row": 2,
       "relations": [
         {
@@ -462,8 +462,8 @@
       "name": "Atlassian",
       "sub": "チーム向けソフト",
       "sub_en": "Team collaboration software",
-      "sub_short": "チームソフト",
-      "sub_short_en": "Team apps",
+      "sub_short": "協働IT",
+      "sub_short_en": "Collab",
       "row": 2,
       "relations": [
         {
@@ -489,8 +489,8 @@
       "name": "Cognizant",
       "sub": "ITサービス",
       "sub_en": "IT services",
-      "sub_short": "ITサービス",
-      "sub_short_en": "IT services",
+      "sub_short": "IT",
+      "sub_short_en": "IT",
       "row": 2,
       "relations": [
         {
@@ -516,8 +516,8 @@
       "name": "Infosys",
       "sub": "ITサービス",
       "sub_en": "IT services",
-      "sub_short": "ITサービス",
-      "sub_short_en": "IT services",
+      "sub_short": "IT",
+      "sub_short_en": "IT",
       "row": 2,
       "relations": [
         {
@@ -543,8 +543,8 @@
       "name": "Wipro",
       "sub": "ITサービス",
       "sub_en": "IT services",
-      "sub_short": "ITサービス",
-      "sub_short_en": "IT services",
+      "sub_short": "IT",
+      "sub_short_en": "IT",
       "row": 2,
       "relations": [
         {
@@ -571,7 +571,7 @@
       "sub": "顧客対応サービス",
       "sub_en": "Customer experience services",
       "sub_short": "顧客対応",
-      "sub_short_en": "CX services",
+      "sub_short_en": "CX",
       "row": 2,
       "relations": [
         {
@@ -597,8 +597,8 @@
       "name": "IBM",
       "sub": "ITサービス・ソフト",
       "sub_en": "IT services & software",
-      "sub_short": "ITサービス",
-      "sub_short_en": "IT services",
+      "sub_short": "IT",
+      "sub_short_en": "IT",
       "row": 3,
       "relations": [
         {
@@ -639,8 +639,8 @@
       "name": "Freshworks",
       "sub": "顧客対応ソフト",
       "sub_en": "Customer service software",
-      "sub_short": "顧客対応ソフト",
-      "sub_short_en": "Service desk",
+      "sub_short": "顧客対応",
+      "sub_short_en": "Helpdesk",
       "row": 3,
       "relations": [
         {
@@ -664,8 +664,8 @@
       "name": "Braze",
       "sub": "マーケティングソフト",
       "sub_en": "Marketing software",
-      "sub_short": "販促ソフト",
-      "sub_short_en": "Marketing tech",
+      "sub_short": "販促",
+      "sub_short_en": "Ads",
       "row": 3,
       "relations": [
         {
@@ -689,8 +689,8 @@
       "name": "Klaviyo",
       "sub": "マーケティング自動化",
       "sub_en": "Marketing automation",
-      "sub_short": "販促自動化",
-      "sub_short_en": "Marketing tech",
+      "sub_short": "販促",
+      "sub_short_en": "Ads",
       "row": 3,
       "relations": [
         {
@@ -714,7 +714,7 @@
       "name": "Pegasystems",
       "sub": "業務自動化ソフト",
       "sub_en": "Workflow software",
-      "sub_short": "業務自動化",
+      "sub_short": "業務IT",
       "sub_short_en": "Workflow",
       "row": 3,
       "relations": [
@@ -739,8 +739,8 @@
       "name": "Oracle",
       "sub": "データベース・クラウド",
       "sub_en": "Database & cloud",
-      "sub_short": "データベース",
-      "sub_short_en": "Database & cloud",
+      "sub_short": "DB",
+      "sub_short_en": "Database",
       "row": 3,
       "relations": [
         {
@@ -764,8 +764,8 @@
       "name": "ServiceNow",
       "sub": "業務ソフト",
       "sub_en": "Enterprise software",
-      "sub_short": "業務ソフト",
-      "sub_short_en": "Enterprise apps",
+      "sub_short": "業務IT",
+      "sub_short_en": "Software",
       "row": 3,
       "relations": [
         {
@@ -789,8 +789,8 @@
       "name": "Guidewire Software",
       "sub": "保険向けソフト",
       "sub_en": "Insurance software",
-      "sub_short": "保険向けソフト",
-      "sub_short_en": "Insurance apps",
+      "sub_short": "保険IT",
+      "sub_short_en": "Insure IT",
       "row": 3,
       "relations": [
         {
@@ -814,7 +814,7 @@
       "name": "ExlService Holdings",
       "sub": "業務プロセス・分析",
       "sub_en": "Analytics & operations",
-      "sub_short": "業務プロセス",
+      "sub_short": "業務IT",
       "sub_short_en": "Analytics",
       "row": 3,
       "relations": [

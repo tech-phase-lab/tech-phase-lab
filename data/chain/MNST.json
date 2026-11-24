@@ -29,7 +29,7 @@
       "sub": "飲料大手",
       "sub_en": "Beverages",
       "sub_short": "飲料大手",
-      "sub_short_en": "Beverages",
+      "sub_short_en": "Drinks",
       "row": 0,
       "relations": [
         {
@@ -67,7 +67,7 @@
       "name": "コカ・コーラ・ヨーロピアン・パートナーズ",
       "sub": "ボトラー・販売",
       "sub_en": "Bottler & distributor",
-      "sub_short": "ボトラー・販売",
+      "sub_short": "飲料",
       "sub_short_en": "Bottler",
       "row": 0,
       "relations": [
@@ -93,8 +93,8 @@
       "name": "コカ・コーラ・コンソリデーテッド",
       "sub": "米国のボトラー",
       "sub_en": "U.S. bottler",
-      "sub_short": "米国のボトラー",
-      "sub_short_en": "U.S. bottler",
+      "sub_short": "飲料",
+      "sub_short_en": "Bottler",
       "row": 0,
       "relations": [
         {
@@ -120,7 +120,7 @@
       "sub": "酒類卸",
       "sub_en": "Beverage distributor",
       "sub_short": "酒類卸",
-      "sub_short_en": "Beverages",
+      "sub_short_en": "Drinks",
       "row": 0,
       "relations": [
         {
@@ -145,8 +145,8 @@
       "name": "ペプシコ",
       "sub": "飲料・食品",
       "sub_en": "Beverages & foods",
-      "sub_short": "飲料・食品",
-      "sub_short_en": "Beverages",
+      "sub_short": "飲料",
+      "sub_short_en": "Drinks",
       "row": 0,
       "relations": [
         {
@@ -185,7 +185,7 @@
       "sub": "飲料大手",
       "sub_en": "Beverages",
       "sub_short": "飲料大手",
-      "sub_short_en": "Beverages",
+      "sub_short_en": "Drinks",
       "row": 0,
       "relations": [
         {
@@ -210,8 +210,8 @@
       "name": "レッドブル",
       "sub": "エナジードリンク",
       "sub_en": "Energy drinks",
-      "sub_short": "エナジー飲料",
-      "sub_short_en": "Energy drinks",
+      "sub_short": "飲料",
+      "sub_short_en": "Drinks",
       "row": 0,
       "relations": [
         {
@@ -236,8 +236,8 @@
       "name": "セルシウス・ホールディングス",
       "sub": "エナジードリンク",
       "sub_en": "Energy drinks",
-      "sub_short": "エナジー飲料",
-      "sub_short_en": "Energy drinks",
+      "sub_short": "飲料",
+      "sub_short_en": "Drinks",
       "row": 0,
       "relations": [
         {

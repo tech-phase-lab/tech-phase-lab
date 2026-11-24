@@ -52,7 +52,7 @@
       "sub": "発電",
       "sub_en": "Power generation",
       "sub_short": "発電",
-      "sub_short_en": "Power generation",
+      "sub_short_en": "Power",
       "row": 0,
       "relations": [
         {
@@ -78,7 +78,7 @@
       "sub": "石油・ガス・発電",
       "sub_en": "Oil, gas & power",
       "sub_short": "石油",
-      "sub_short_en": "Oil, gas & power",
+      "sub_short_en": "Oil",
       "row": 0,
       "relations": [
         {
@@ -103,8 +103,8 @@
       "name_en": "HA Sustainable Infrastructure Capital",
       "sub": "再エネ投資",
       "sub_en": "Clean energy investment",
-      "sub_short": "再エネ投資",
-      "sub_short_en": "Clean energy",
+      "sub_short": "再エネ",
+      "sub_short_en": "Clean",
       "row": 0,
       "relations": [
         {
@@ -155,8 +155,8 @@
       "name_en": "Citizens Energy",
       "sub": "送電への投資",
       "sub_en": "Transmission investment",
-      "sub_short": "送電への投資",
-      "sub_short_en": "Transmission",
+      "sub_short": "送電",
+      "sub_short_en": "Grid",
       "row": 1,
       "relations": [
         {
@@ -207,8 +207,8 @@
       "name_en": "Sunrun",
       "sub": "住宅用太陽光・蓄電池",
       "sub_en": "Residential solar & storage",
-      "sub_short": "住宅用太陽光",
-      "sub_short_en": "Home solar",
+      "sub_short": "太陽光",
+      "sub_short_en": "Solar",
       "row": 1,
       "relations": [
         {

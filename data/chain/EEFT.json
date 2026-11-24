@@ -33,7 +33,7 @@
       "sub": "決済ネットワーク",
       "sub_en": "Payment network",
       "sub_short": "決済網",
-      "sub_short_en": "Payment network",
+      "sub_short_en": "Payment",
       "row": 0,
       "relations": [
         {
@@ -59,7 +59,7 @@
       "sub": "決済ネットワーク",
       "sub_en": "Payment network",
       "sub_short": "決済網",
-      "sub_short_en": "Payment network",
+      "sub_short_en": "Payment",
       "row": 0,
       "relations": [
         {
@@ -84,8 +84,8 @@
       "name_en": "CoreCard",
       "sub": "カード処理ソフト",
       "sub_en": "Card processing software",
-      "sub_short": "カード処理",
-      "sub_short_en": "Card processing",
+      "sub_short": "カード",
+      "sub_short_en": "Cards",
       "row": 0,
       "relations": [
         {
@@ -111,7 +111,7 @@
       "sub": "送金(日本)",
       "sub_en": "Remittance (Japan)",
       "sub_short": "送金",
-      "sub_short_en": "Remittance",
+      "sub_short_en": "Transfers",
       "row": 0,
       "relations": [
         {
@@ -137,7 +137,7 @@
       "sub": "国際送金",
       "sub_en": "Money transfer",
       "sub_short": "国際送金",
-      "sub_short_en": "Money transfer",
+      "sub_short_en": "Transfers",
       "row": 1,
       "relations": [
         {
@@ -163,7 +163,7 @@
       "sub": "国際送金",
       "sub_en": "Money transfer",
       "sub_short": "国際送金",
-      "sub_short_en": "Money transfer",
+      "sub_short_en": "Transfers",
       "row": 1,
       "relations": [
         {
@@ -189,7 +189,7 @@
       "sub": "国際送金",
       "sub_en": "Money transfer",
       "sub_short": "国際送金",
-      "sub_short_en": "Money transfer",
+      "sub_short_en": "Transfers",
       "row": 2,
       "relations": [
         {

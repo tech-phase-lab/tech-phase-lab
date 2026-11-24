@@ -26,8 +26,8 @@
       "name": "エーザイ",
       "sub": "医薬品メーカー",
       "sub_en": "Pharmaceuticals",
-      "sub_short": "医薬品メーカー",
-      "sub_short_en": "Pharmaceuticals",
+      "sub_short": "医薬品",
+      "sub_short_en": "Pharma",
       "row": 0,
       "relations": [
         {
@@ -53,7 +53,7 @@
       "sub": "ロシュ傘下の製薬",
       "sub_en": "Roche Group pharma",
       "sub_short": "製薬",
-      "sub_short_en": "Roche pharma",
+      "sub_short_en": "Pharma",
       "row": 0,
       "relations": [
         {
@@ -78,8 +78,8 @@
       "name": "サムスン・バイオエピス",
       "sub": "バイオシミラー",
       "sub_en": "Biosimilars",
-      "sub_short": "バイオシミラー",
-      "sub_short_en": "Biosimilars",
+      "sub_short": "後続薬",
+      "sub_short_en": "Biosimilar",
       "row": 0,
       "relations": [
         {
@@ -104,8 +104,8 @@
       "name": "スーパーナス・ファーマシューティカルズ",
       "sub": "神経系医薬品",
       "sub_en": "Neurology drugs",
-      "sub_short": "神経系医薬品",
-      "sub_short_en": "Neurology drugs",
+      "sub_short": "神経薬",
+      "sub_short_en": "Neuro",
       "row": 0,
       "relations": [
         {
@@ -131,7 +131,7 @@
       "sub": "RNA医薬",
       "sub_en": "RNA therapeutics",
       "sub_short": "RNA医薬",
-      "sub_short_en": "RNA therapeutics",
+      "sub_short_en": "RNA",
       "row": 1,
       "relations": [
         {
@@ -169,8 +169,8 @@
       "name": "アルカーミス",
       "sub": "神経系医薬品",
       "sub_en": "Neurology drugs",
-      "sub_short": "神経系医薬品",
-      "sub_short_en": "Neurology drugs",
+      "sub_short": "神経薬",
+      "sub_short_en": "Neuro",
       "row": 1,
       "relations": [
         {
@@ -195,8 +195,8 @@
       "name": "デナリ・セラピューティクス",
       "sub": "神経変性疾患薬",
       "sub_en": "Neurodegeneration drugs",
-      "sub_short": "神経変性疾患薬",
-      "sub_short_en": "Neuro drugs",
+      "sub_short": "神経薬",
+      "sub_short_en": "Neuro",
       "row": 0,
       "relations": [
         {
@@ -222,7 +222,7 @@
       "sub": "大手製薬",
       "sub_en": "Large pharma",
       "sub_short": "大手製薬",
-      "sub_short_en": "Large pharma",
+      "sub_short_en": "Pharma",
       "row": 0,
       "relations": [
         {

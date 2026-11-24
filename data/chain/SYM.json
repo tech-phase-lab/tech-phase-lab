@@ -137,7 +137,7 @@
       "sub": "食品卸",
       "sub_en": "Food wholesale",
       "sub_short": "食品卸",
-      "sub_short_en": "Food wholesale",
+      "sub_short_en": "Food",
       "row": 0,
       "relations": [
         {
@@ -189,7 +189,7 @@
       "sub": "投資",
       "sub_en": "Investment",
       "sub_short": "投資",
-      "sub_short_en": "Investment",
+      "sub_short_en": "Investing",
       "row": 1,
       "relations": [
         {
@@ -215,7 +215,7 @@
       "sub": "産業機器・自動化",
       "sub_en": "Industrial automation",
       "sub_short": "産業機器",
-      "sub_short_en": "Automation",
+      "sub_short_en": "Robotics",
       "row": 2,
       "relations": [
         {
@@ -241,7 +241,7 @@
       "sub": "物流機器",
       "sub_en": "Logistics equipment",
       "sub_short": "物流機器",
-      "sub_short_en": "Logistics gear",
+      "sub_short_en": "Logistics",
       "row": 2,
       "relations": [
         {
@@ -266,8 +266,8 @@
       "name_en": "Ocado Group",
       "sub": "EC物流技術",
       "sub_en": "E-commerce logistics tech",
-      "sub_short": "EC物流技術",
-      "sub_short_en": "E-com logistics",
+      "sub_short": "EC物流",
+      "sub_short_en": "Logistics",
       "row": 2,
       "relations": [
         {
@@ -293,7 +293,7 @@
       "sub": "自動倉庫",
       "sub_en": "Automated storage",
       "sub_short": "自動倉庫",
-      "sub_short_en": "Auto storage",
+      "sub_short_en": "Storage",
       "row": 2,
       "relations": [
         {
@@ -318,8 +318,8 @@
       "name_en": "Geek+",
       "sub": "倉庫ロボット",
       "sub_en": "Warehouse robots",
-      "sub_short": "倉庫ロボット",
-      "sub_short_en": "Warehouse robots",
+      "sub_short": "ロボット",
+      "sub_short_en": "Robots",
       "row": 2,
       "relations": [
         {

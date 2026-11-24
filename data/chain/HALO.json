@@ -32,7 +32,7 @@
       "sub": "製薬(スイス)",
       "sub_en": "Pharmaceuticals (Switzerland)",
       "sub_short": "製薬",
-      "sub_short_en": "Pharmaceuticals",
+      "sub_short_en": "Pharma",
       "row": 0,
       "relations": [
         {
@@ -58,7 +58,7 @@
       "sub": "製薬",
       "sub_en": "Pharmaceuticals",
       "sub_short": "製薬",
-      "sub_short_en": "Pharmaceuticals",
+      "sub_short_en": "Pharma",
       "row": 0,
       "relations": [
         {
@@ -84,7 +84,7 @@
       "sub": "製薬",
       "sub_en": "Pharmaceuticals",
       "sub_short": "製薬",
-      "sub_short_en": "Pharmaceuticals",
+      "sub_short_en": "Pharma",
       "row": 0,
       "relations": [
         {
@@ -110,7 +110,7 @@
       "sub": "製薬",
       "sub_en": "Pharmaceuticals",
       "sub_short": "製薬",
-      "sub_short_en": "Pharmaceuticals",
+      "sub_short_en": "Pharma",
       "row": 0,
       "relations": [
         {
@@ -135,8 +135,8 @@
       "name_en": "argenx",
       "sub": "免疫疾患薬(蘭)",
       "sub_en": "Immunology drugs (Netherlands)",
-      "sub_short": "免疫疾患薬",
-      "sub_short_en": "Immunology drugs",
+      "sub_short": "免疫薬",
+      "sub_short_en": "Immune",
       "row": 0,
       "relations": [
         {
@@ -162,7 +162,7 @@
       "sub": "製薬",
       "sub_en": "Pharmaceuticals",
       "sub_short": "製薬",
-      "sub_short_en": "Pharmaceuticals",
+      "sub_short_en": "Pharma",
       "row": 0,
       "relations": [
         {
@@ -188,7 +188,7 @@
       "sub": "製薬",
       "sub_en": "Pharmaceuticals",
       "sub_short": "製薬",
-      "sub_short_en": "Pharmaceuticals",
+      "sub_short_en": "Pharma",
       "row": 0,
       "relations": [
         {
@@ -214,7 +214,7 @@
       "sub": "製薬",
       "sub_en": "Pharmaceuticals",
       "sub_short": "製薬",
-      "sub_short_en": "Pharmaceuticals",
+      "sub_short_en": "Pharma",
       "row": 0,
       "relations": [
         {
@@ -240,7 +240,7 @@
       "sub": "アルツハイマー病薬",
       "sub_en": "Alzheimer's drugs",
       "sub_short": "認知症薬",
-      "sub_short_en": "Alzheimer's",
+      "sub_short_en": "Dementia",
       "row": 0,
       "relations": [
         {
@@ -266,7 +266,7 @@
       "sub": "肥満症薬",
       "sub_en": "Obesity drugs",
       "sub_short": "肥満症薬",
-      "sub_short_en": "Obesity drugs",
+      "sub_short_en": "Obesity",
       "row": 0,
       "relations": [
         {
@@ -291,8 +291,8 @@
       "name_en": "Elektrofi",
       "sub": "高濃度製剤技術",
       "sub_en": "High-concentration formulation",
-      "sub_short": "高濃度製剤技術",
-      "sub_short_en": "Formulation",
+      "sub_short": "製剤技術",
+      "sub_short_en": "Pharma",
       "row": 1,
       "relations": [
         {
@@ -317,8 +317,8 @@
       "name_en": "Surf Bio",
       "sub": "薬物送達技術",
       "sub_en": "Drug delivery technology",
-      "sub_short": "薬物送達技術",
-      "sub_short_en": "Drug delivery",
+      "sub_short": "薬物送達",
+      "sub_short_en": "Delivery",
       "row": 1,
       "relations": [
         {
@@ -344,7 +344,7 @@
       "sub": "製薬",
       "sub_en": "Pharmaceuticals",
       "sub_short": "製薬",
-      "sub_short_en": "Pharmaceuticals",
+      "sub_short_en": "Pharma",
       "row": 1,
       "relations": [
         {
@@ -370,7 +370,7 @@
       "sub": "注射剤",
       "sub_en": "Injectable drugs",
       "sub_short": "注射剤",
-      "sub_short_en": "Injectable drugs",
+      "sub_short_en": "Injectable",
       "row": 2,
       "relations": [
         {
@@ -395,8 +395,8 @@
       "name_en": "West Pharmaceutical Services",
       "sub": "注射容器・機器",
       "sub_en": "Injectable containment & devices",
-      "sub_short": "注射容器・機器",
-      "sub_short_en": "Injectables",
+      "sub_short": "注射器",
+      "sub_short_en": "Injectable",
       "row": 2,
       "relations": [
         {

@@ -24,8 +24,8 @@
       "name": "アマゾン・ウェブ・サービス",
       "sub": "クラウド基盤",
       "sub_en": "Cloud platform",
-      "sub_short": "クラウド基盤",
-      "sub_short_en": "Cloud platform",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 1,
       "relations": [
         {
@@ -128,8 +128,8 @@
       "name": "オラクル",
       "sub": "クラウド基盤",
       "sub_en": "Cloud platform",
-      "sub_short": "クラウド基盤",
-      "sub_short_en": "Cloud platform",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 1,
       "relations": [
         {
@@ -155,7 +155,7 @@
       "sub": "AI基盤",
       "sub_en": "AI platform",
       "sub_short": "AI基盤",
-      "sub_short_en": "AI platform",
+      "sub_short_en": "AI",
       "row": 1,
       "relations": [
         {
@@ -181,7 +181,7 @@
       "sub": "AI基盤",
       "sub_en": "AI platform",
       "sub_short": "AI基盤",
-      "sub_short_en": "AI platform",
+      "sub_short_en": "AI",
       "row": 1,
       "relations": [
         {
@@ -207,7 +207,7 @@
       "sub": "投資会社",
       "sub_en": "Investment firm",
       "sub_short": "投資会社",
-      "sub_short_en": "Investment firm",
+      "sub_short_en": "Investing",
       "row": 0,
       "relations": [
         {
@@ -232,8 +232,8 @@
       "name": "インディコア",
       "sub": "旧産業事業",
       "sub_en": "Former industrial businesses",
-      "sub_short": "旧産業事業",
-      "sub_short_en": "Ex-industrial",
+      "sub_short": "旧事業",
+      "sub_short_en": "Ex-unit",
       "row": 0,
       "relations": [
         {

@@ -88,7 +88,7 @@
       "sub": "ソフト・クラウド",
       "sub_en": "Software & cloud",
       "sub_short": "ソフト",
-      "sub_short_en": "Software & cloud",
+      "sub_short_en": "Software",
       "row": 0,
       "relations": [
         {
@@ -125,8 +125,8 @@
       "name": "IBM",
       "sub": "ITサービス",
       "sub_en": "IT services",
-      "sub_short": "ITサービス",
-      "sub_short_en": "IT services",
+      "sub_short": "IT",
+      "sub_short_en": "IT",
       "row": 0,
       "relations": [
         {
@@ -177,7 +177,7 @@
       "sub": "コンサルティング",
       "sub_en": "Consulting",
       "sub_short": "コンサル",
-      "sub_short_en": "Consulting",
+      "sub_short_en": "Advisory",
       "row": 0,
       "relations": [
         {
@@ -202,8 +202,8 @@
       "name": "インフォシス",
       "sub": "ITサービス",
       "sub_en": "IT services",
-      "sub_short": "ITサービス",
-      "sub_short_en": "IT services",
+      "sub_short": "IT",
+      "sub_short_en": "IT",
       "row": 0,
       "relations": [
         {
@@ -228,8 +228,8 @@
       "name": "コグニザント",
       "sub": "ITサービス",
       "sub_en": "IT services",
-      "sub_short": "ITサービス",
-      "sub_short_en": "IT services",
+      "sub_short": "IT",
+      "sub_short_en": "IT",
       "row": 0,
       "relations": [
         {
@@ -254,8 +254,8 @@
       "name": "ウィプロ",
       "sub": "ITサービス",
       "sub_en": "IT services",
-      "sub_short": "ITサービス",
-      "sub_short_en": "IT services",
+      "sub_short": "IT",
+      "sub_short_en": "IT",
       "row": 0,
       "relations": [
         {
@@ -280,8 +280,8 @@
       "name": "Confluent",
       "sub": "データ基盤",
       "sub_en": "Data streaming",
-      "sub_short": "データ基盤",
-      "sub_short_en": "Data streaming",
+      "sub_short": "データ",
+      "sub_short_en": "Data",
       "row": 0,
       "relations": [
         {
@@ -318,8 +318,8 @@
       "name": "アリババ",
       "sub": "EC・クラウド",
       "sub_en": "E-commerce & cloud",
-      "sub_short": "EC・クラウド",
-      "sub_short_en": "E-commerce",
+      "sub_short": "EC",
+      "sub_short_en": "E-com",
       "row": 1,
       "relations": [
         {
@@ -344,8 +344,8 @@
       "name": "テンセント",
       "sub": "インターネット・クラウド",
       "sub_en": "Internet & cloud",
-      "sub_short": "インターネット",
-      "sub_short_en": "Internet & cloud",
+      "sub_short": "ネット",
+      "sub_short_en": "Internet",
       "row": 1,
       "relations": [
         {
@@ -396,7 +396,7 @@
       "sub": "投資銀行",
       "sub_en": "Investment bank",
       "sub_short": "投資銀行",
-      "sub_short_en": "Investment bank",
+      "sub_short_en": "Bank",
       "row": 2,
       "relations": [
         {
@@ -436,7 +436,7 @@
       "name": "オラクル",
       "sub": "データベース・ソフト",
       "sub_en": "Database & software",
-      "sub_short": "データベース",
+      "sub_short": "DB",
       "sub_short_en": "Database",
       "row": 3,
       "relations": [
@@ -462,7 +462,7 @@
       "name": "Elastic",
       "sub": "検索・分析",
       "sub_en": "Search & analytics",
-      "sub_short": "検索・分析",
+      "sub_short": "検索",
       "sub_short_en": "Search",
       "row": 3,
       "relations": [

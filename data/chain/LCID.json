@@ -22,8 +22,8 @@
       "name": "アストンマーティン・ラゴンダ",
       "sub": "高級車メーカー",
       "sub_en": "Luxury automaker",
-      "sub_short": "高級車メーカー",
-      "sub_short_en": "Luxury automaker",
+      "sub_short": "高級車",
+      "sub_short_en": "Cars",
       "row": 0,
       "relations": [
         {
@@ -49,7 +49,7 @@
       "sub": "配車・移動サービス",
       "sub_en": "Ride-hailing",
       "sub_short": "配車",
-      "sub_short_en": "Ride-hailing",
+      "sub_short_en": "Rides",
       "row": 0,
       "relations": [
         {
@@ -74,8 +74,8 @@
       "name": "ニューロ",
       "sub": "自動運転技術",
       "sub_en": "Autonomous driving",
-      "sub_short": "自動運転技術",
-      "sub_short_en": "Self-driving",
+      "sub_short": "自動運転",
+      "sub_short_en": "AV tech",
       "row": 0,
       "relations": [
         {
@@ -100,8 +100,8 @@
       "name": "エヌビディア",
       "sub": "半導体・AI基盤",
       "sub_en": "Semiconductors & AI",
-      "sub_short": "半導体・AI基盤",
-      "sub_short_en": "Semiconductors",
+      "sub_short": "半導体",
+      "sub_short_en": "Chips",
       "row": 0,
       "relations": [
         {
@@ -126,7 +126,7 @@
       "name": "テスラ",
       "sub": "電気自動車",
       "sub_en": "Electric vehicles",
-      "sub_short": "電気自動車",
+      "sub_short": "EV",
       "sub_short_en": "EVs",
       "row": 0,
       "relations": [
@@ -152,7 +152,7 @@
       "name": "リヴィアン",
       "sub": "電気自動車",
       "sub_en": "Electric vehicles",
-      "sub_short": "電気自動車",
+      "sub_short": "EV",
       "sub_short_en": "EVs",
       "row": 0,
       "relations": [

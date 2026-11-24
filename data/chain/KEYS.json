@@ -28,8 +28,8 @@
       "name": "シノプシス",
       "sub": "EDA・設計ソフト",
       "sub_en": "EDA & design software",
-      "sub_short": "EDAソフト",
-      "sub_short_en": "EDA software",
+      "sub_short": "EDA",
+      "sub_short_en": "EDA",
       "row": 0,
       "relations": [
         {
@@ -81,7 +81,7 @@
       "sub": "光・ネットワーク試験",
       "sub_en": "Optical & network test",
       "sub_short": "通信試験",
-      "sub_short_en": "Optical test",
+      "sub_short_en": "Optics",
       "row": 0,
       "relations": [
         {
@@ -145,8 +145,8 @@
       "name": "タワーセミコンダクター",
       "sub": "半導体ファウンドリ",
       "sub_en": "Semiconductor foundry",
-      "sub_short": "半導体受託",
-      "sub_short_en": "Chip foundry",
+      "sub_short": "受託生産",
+      "sub_short_en": "Foundry",
       "row": 0,
       "relations": [
         {
@@ -173,8 +173,8 @@
       "name": "ケイデンス・デザイン・システムズ",
       "sub": "EDA・設計ソフト",
       "sub_en": "EDA & design software",
-      "sub_short": "EDAソフト",
-      "sub_short_en": "EDA software",
+      "sub_short": "EDA",
+      "sub_short_en": "EDA",
       "row": 1,
       "relations": [
         {
@@ -200,7 +200,7 @@
       "sub": "ネットワーク機器",
       "sub_en": "Networking equipment",
       "sub_short": "通信機器",
-      "sub_short_en": "Network gear",
+      "sub_short_en": "Network",
       "row": 1,
       "relations": [
         {
@@ -226,7 +226,7 @@
       "sub": "半導体・製品試験",
       "sub_en": "Semiconductor & product test",
       "sub_short": "半導体",
-      "sub_short_en": "Chip testing",
+      "sub_short_en": "Testing",
       "row": 1,
       "relations": [
         {

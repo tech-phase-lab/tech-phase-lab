@@ -27,7 +27,7 @@
       "sub": "ソフト・クラウド",
       "sub_en": "Software & cloud",
       "sub_short": "ソフト",
-      "sub_short_en": "Software & cloud",
+      "sub_short_en": "Software",
       "row": 0,
       "relations": [
         {
@@ -107,7 +107,7 @@
       "sub": "生成AI",
       "sub_en": "Generative AI",
       "sub_short": "生成AI",
-      "sub_short_en": "Generative AI",
+      "sub_short_en": "AI",
       "row": 0,
       "relations": [
         {
@@ -202,7 +202,7 @@
       "name": "パロアルトネットワークス",
       "sub": "セキュリティ",
       "sub_en": "Security",
-      "sub_short": "セキュリティ",
+      "sub_short": "防御",
       "sub_short_en": "Security",
       "row": 1,
       "relations": [
@@ -228,8 +228,8 @@
       "name": "フォーティネット",
       "sub": "ネットワークセキュリティ",
       "sub_en": "Network security",
-      "sub_short": "ネット防御",
-      "sub_short_en": "Network security",
+      "sub_short": "防御",
+      "sub_short_en": "Security",
       "row": 1,
       "relations": [
         {
@@ -255,7 +255,7 @@
       "sub": "ネットワーク機器",
       "sub_en": "Networking equipment",
       "sub_short": "通信機器",
-      "sub_short_en": "Network gear",
+      "sub_short_en": "Network",
       "row": 1,
       "relations": [
         {

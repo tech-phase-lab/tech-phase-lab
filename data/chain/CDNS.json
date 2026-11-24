@@ -33,8 +33,8 @@
       "name": "ラムバス",
       "sub": "メモリ・インターフェースIP",
       "sub_en": "Memory interface IP",
-      "sub_short": "メモリ用IP",
-      "sub_short_en": "Memory IP",
+      "sub_short": "メモリIP",
+      "sub_short_en": "Memory",
       "row": 0,
       "relations": [
         {
@@ -72,8 +72,8 @@
       "name": "Arm",
       "sub": "プロセッサIP",
       "sub_en": "Processor IP",
-      "sub_short": "プロセッサIP",
-      "sub_short_en": "Processor IP",
+      "sub_short": "IP",
+      "sub_short_en": "CPU IP",
       "row": 0,
       "relations": [
         {
@@ -97,8 +97,8 @@
       "name": "CEVA",
       "sub": "プロセッサIP",
       "sub_en": "Processor IP",
-      "sub_short": "プロセッサIP",
-      "sub_short_en": "Processor IP",
+      "sub_short": "IP",
+      "sub_short_en": "CPU IP",
       "row": 0,
       "relations": [
         {
@@ -161,7 +161,7 @@
       "sub": "半導体",
       "sub_en": "Semiconductors",
       "sub_short": "半導体",
-      "sub_short_en": "Semiconductors",
+      "sub_short_en": "Chips",
       "row": 0,
       "relations": [
         {
@@ -186,7 +186,7 @@
       "name": "UMC",
       "sub": "ファウンドリ",
       "sub_en": "Foundry",
-      "sub_short": "ファウンドリ",
+      "sub_short": "受託生産",
       "sub_short_en": "Foundry",
       "row": 0,
       "relations": [
@@ -211,7 +211,7 @@
       "name": "タワーセミコンダクター",
       "sub": "ファウンドリ",
       "sub_en": "Foundry",
-      "sub_short": "ファウンドリ",
+      "sub_short": "受託生産",
       "sub_short_en": "Foundry",
       "row": 0,
       "relations": [
@@ -306,8 +306,8 @@
       "name": "シノプシス",
       "sub": "EDAソフト",
       "sub_en": "EDA software",
-      "sub_short": "EDAソフト",
-      "sub_short_en": "EDA software",
+      "sub_short": "EDA",
+      "sub_short_en": "EDA",
       "row": 2,
       "relations": [
         {
@@ -333,7 +333,7 @@
       "sub": "計測機器",
       "sub_en": "Test & measurement",
       "sub_short": "計測機器",
-      "sub_short_en": "Test equipment",
+      "sub_short_en": "Testing",
       "row": 2,
       "relations": [
         {
@@ -358,8 +358,8 @@
       "name": "シルバコ・グループ",
       "sub": "半導体設計ソフト",
       "sub_en": "Chip design software",
-      "sub_short": "半導体設計",
-      "sub_short_en": "Chip design",
+      "sub_short": "設計",
+      "sub_short_en": "Chip IP",
       "row": 0,
       "relations": [
         {

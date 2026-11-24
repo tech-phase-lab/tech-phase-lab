@@ -35,7 +35,7 @@
       "sub": "ソフト・クラウド",
       "sub_en": "Software & cloud",
       "sub_short": "ソフト",
-      "sub_short_en": "Software & cloud",
+      "sub_short_en": "Software",
       "row": 0,
       "relations": [
         {
@@ -73,8 +73,8 @@
       "name": "セールスフォース",
       "sub": "業務ソフト",
       "sub_en": "Business software",
-      "sub_short": "業務ソフト",
-      "sub_short_en": "Business apps",
+      "sub_short": "業務IT",
+      "sub_short_en": "Biz apps",
       "row": 0,
       "relations": [
         {
@@ -127,8 +127,8 @@
       "name": "ナイス",
       "sub": "コンタクトセンター",
       "sub_en": "Contact center",
-      "sub_short": "コールセンター",
-      "sub_short_en": "Contact center",
+      "sub_short": "顧客対応",
+      "sub_short_en": "CX",
       "row": 2,
       "relations": [
         {
@@ -153,8 +153,8 @@
       "name": "リングセントラル",
       "sub": "クラウド通信",
       "sub_en": "Cloud communications",
-      "sub_short": "クラウド通信",
-      "sub_short_en": "Cloud comms",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 2,
       "relations": [
         {
@@ -192,8 +192,8 @@
       "name": "ファイブナイン",
       "sub": "コンタクトセンター",
       "sub_en": "Contact center",
-      "sub_short": "コールセンター",
-      "sub_short_en": "Contact center",
+      "sub_short": "顧客対応",
+      "sub_short_en": "CX",
       "row": 2,
       "relations": [
         {
@@ -219,7 +219,7 @@
       "sub": "Web会議",
       "sub_en": "Video meetings",
       "sub_short": "Web会議",
-      "sub_short_en": "Video meetings",
+      "sub_short_en": "Video",
       "row": 2,
       "relations": [
         {
@@ -245,7 +245,7 @@
       "sub": "通信機器",
       "sub_en": "Telecom equipment",
       "sub_short": "通信機器",
-      "sub_short_en": "Telecom gear",
+      "sub_short_en": "Telecom",
       "row": 2,
       "relations": [
         {
@@ -270,7 +270,7 @@
       "name": "IDT",
       "sub": "通信・決済サービス",
       "sub_en": "Telecom & payments",
-      "sub_short": "通信・決済",
+      "sub_short": "通信",
       "sub_short_en": "Telecom",
       "row": 2,
       "relations": [

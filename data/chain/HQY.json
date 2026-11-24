@@ -32,7 +32,7 @@
       "sub": "業務委託サービス",
       "sub_en": "Business process services",
       "sub_short": "業務委託",
-      "sub_short_en": "Outsourcing",
+      "sub_short_en": "BPO",
       "row": 0,
       "relations": [
         {
@@ -58,7 +58,7 @@
       "sub": "資産運用",
       "sub_en": "Asset management",
       "sub_short": "資産運用",
-      "sub_short_en": "Asset management",
+      "sub_short_en": "Assets",
       "row": 1,
       "relations": [
         {
@@ -84,7 +84,7 @@
       "sub": "人事・福利厚生サービス",
       "sub_en": "HR & benefits services",
       "sub_short": "人事",
-      "sub_short_en": "HR & benefits",
+      "sub_short_en": "HR",
       "row": 2,
       "relations": [
         {
@@ -110,7 +110,7 @@
       "sub": "保険仲介・コンサル",
       "sub_en": "Insurance brokerage & consulting",
       "sub_short": "保険仲介",
-      "sub_short_en": "Insurance broker",
+      "sub_short_en": "Broker",
       "row": 2,
       "relations": [
         {

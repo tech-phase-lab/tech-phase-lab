@@ -24,7 +24,7 @@
       "name": "スイス・リー・グループ",
       "sub": "再保険会社",
       "sub_en": "Reinsurer",
-      "sub_short": "再保険会社",
+      "sub_short": "再保険",
       "sub_short_en": "Reinsurer",
       "row": 0,
       "relations": [
@@ -50,7 +50,7 @@
       "name": "バークシャー・ハサウェイ",
       "sub": "再保険会社",
       "sub_en": "Reinsurer",
-      "sub_short": "再保険会社",
+      "sub_short": "再保険",
       "sub_short_en": "Reinsurer",
       "row": 0,
       "relations": [
@@ -76,7 +76,7 @@
       "name": "ミュンヘン再保険グループ",
       "sub": "再保険会社",
       "sub_en": "Reinsurer",
-      "sub_short": "再保険会社",
+      "sub_short": "再保険",
       "sub_short_en": "Reinsurer",
       "row": 0,
       "relations": [
@@ -102,7 +102,7 @@
       "name": "ロング・ポイント・リーIV",
       "sub": "巨大災害債券",
       "sub_en": "Catastrophe bonds",
-      "sub_short": "巨大災害債券",
+      "sub_short": "債券",
       "sub_short_en": "Cat bonds",
       "row": 0,
       "relations": [
@@ -128,8 +128,8 @@
       "name": "フィデリス・インシュアランス・ホールディングス",
       "sub": "再保険の相手",
       "sub_en": "Quota share partner",
-      "sub_short": "再保険の相手",
-      "sub_short_en": "Reinsurance",
+      "sub_short": "再保険",
+      "sub_short_en": "Reinsure",
       "row": 1,
       "relations": [
         {
@@ -154,8 +154,8 @@
       "name": "ジュント・ホールディング・ブラジル",
       "sub": "ブラジル保証保険",
       "sub_en": "Brazil surety JV",
-      "sub_short": "ブラジル保険",
-      "sub_short_en": "Brazil surety JV",
+      "sub_short": "保険",
+      "sub_short_en": "Insurance",
       "row": 1,
       "relations": [
         {

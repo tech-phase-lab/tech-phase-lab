@@ -21,8 +21,8 @@
       "name": "ロシュ",
       "sub": "製薬・共同開発",
       "sub_en": "Pharma co-development",
-      "sub_short": "製薬・共同開発",
-      "sub_short_en": "Pharma co-dev",
+      "sub_short": "製薬",
+      "sub_short_en": "Pharma",
       "row": 0,
       "relations": [
         {
@@ -47,8 +47,8 @@
       "name": "リジェネロン・ファーマシューティカルズ",
       "sub": "バイオ医薬",
       "sub_en": "Biopharma",
-      "sub_short": "バイオ医薬",
-      "sub_short_en": "Biopharma",
+      "sub_short": "バイオ",
+      "sub_short_en": "Pharma",
       "row": 0,
       "relations": [
         {
@@ -125,7 +125,7 @@
       "name": "ペプチドリーム",
       "sub": "ペプチド創薬",
       "sub_en": "Peptide discovery",
-      "sub_short": "ペプチド創薬",
+      "sub_short": "創薬",
       "sub_short_en": "Peptides",
       "row": 0,
       "relations": [
@@ -151,8 +151,8 @@
       "name": "ヴィア・バイオテクノロジー",
       "sub": "バイオ医薬",
       "sub_en": "Biopharma",
-      "sub_short": "バイオ医薬",
-      "sub_short_en": "Biopharma",
+      "sub_short": "バイオ",
+      "sub_short_en": "Pharma",
       "row": 0,
       "relations": [
         {
@@ -178,7 +178,7 @@
       "sub": "RNA医薬",
       "sub_en": "RNA therapeutics",
       "sub_short": "RNA医薬",
-      "sub_short_en": "RNA therapeutics",
+      "sub_short_en": "RNA",
       "row": 0,
       "relations": [
         {
@@ -204,7 +204,7 @@
       "sub": "RNA医薬",
       "sub_en": "RNA therapeutics",
       "sub_short": "RNA医薬",
-      "sub_short_en": "RNA therapeutics",
+      "sub_short_en": "RNA",
       "row": 0,
       "relations": [
         {
@@ -229,8 +229,8 @@
       "name": "アルブタス・バイオファーマ",
       "sub": "バイオ医薬",
       "sub_en": "Biopharma",
-      "sub_short": "バイオ医薬",
-      "sub_short_en": "Biopharma",
+      "sub_short": "バイオ",
+      "sub_short_en": "Pharma",
       "row": 0,
       "relations": [
         {

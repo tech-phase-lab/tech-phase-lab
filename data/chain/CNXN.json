@@ -29,7 +29,7 @@
       "sub": "IT流通",
       "sub_en": "IT distribution",
       "sub_short": "IT流通",
-      "sub_short_en": "IT distribution",
+      "sub_short_en": "IT",
       "row": 0,
       "relations": [
         {
@@ -55,7 +55,7 @@
       "sub": "IT流通",
       "sub_en": "IT distribution",
       "sub_short": "IT流通",
-      "sub_short_en": "IT distribution",
+      "sub_short_en": "IT",
       "row": 0,
       "relations": [
         {
@@ -80,7 +80,7 @@
       "name": "マイクロソフト",
       "sub": "ソフトウェア",
       "sub_en": "Software",
-      "sub_short": "ソフトウェア",
+      "sub_short": "ソフト",
       "sub_short_en": "Software",
       "row": 0,
       "relations": [
@@ -119,7 +119,7 @@
       "name": "HPインク",
       "sub": "PC・周辺機器",
       "sub_en": "PCs & peripherals",
-      "sub_short": "PC・周辺機器",
+      "sub_short": "PC",
       "sub_short_en": "PCs",
       "row": 0,
       "relations": [
@@ -145,8 +145,8 @@
       "name": "デル・テクノロジーズ",
       "sub": "PC・サーバー",
       "sub_en": "PCs & servers",
-      "sub_short": "PC・サーバー",
-      "sub_short_en": "PCs & servers",
+      "sub_short": "PC",
+      "sub_short_en": "PCs",
       "row": 0,
       "relations": [
         {
@@ -171,8 +171,8 @@
       "name": "CDW社",
       "sub": "ITソリューション",
       "sub_en": "IT solutions",
-      "sub_short": "ITサービス",
-      "sub_short_en": "IT solutions",
+      "sub_short": "IT",
+      "sub_short_en": "IT",
       "row": 1,
       "relations": [
         {
@@ -197,8 +197,8 @@
       "name": "インサイト・エンタープライゼス",
       "sub": "ITソリューション",
       "sub_en": "IT solutions",
-      "sub_short": "ITサービス",
-      "sub_short_en": "IT solutions",
+      "sub_short": "IT",
+      "sub_short_en": "IT",
       "row": 1,
       "relations": [
         {
@@ -224,7 +224,7 @@
       "sub": "PC・端末",
       "sub_en": "PCs & devices",
       "sub_short": "PC・端末",
-      "sub_short_en": "PCs & devices",
+      "sub_short_en": "PCs",
       "row": 1,
       "relations": [
         {
@@ -249,8 +249,8 @@
       "name": "レノボ",
       "sub": "PC・サーバー",
       "sub_en": "PCs & servers",
-      "sub_short": "PC・サーバー",
-      "sub_short_en": "PCs & servers",
+      "sub_short": "PC",
+      "sub_short_en": "PCs",
       "row": 1,
       "relations": [
         {

@@ -38,7 +38,7 @@
       "sub": "露光装置",
       "sub_en": "Lithography",
       "sub_short": "露光装置",
-      "sub_short_en": "Lithography",
+      "sub_short_en": "Litho",
       "row": 0,
       "relations": [
         {
@@ -153,7 +153,7 @@
       "sub": "クラウド・ソフト",
       "sub_en": "Cloud & software",
       "sub_short": "クラウド",
-      "sub_short_en": "Cloud & software",
+      "sub_short_en": "Cloud",
       "row": 1,
       "relations": [
         {
@@ -179,7 +179,7 @@
       "name": "Fortinet",
       "sub": "セキュリティ",
       "sub_en": "Security",
-      "sub_short": "セキュリティ",
+      "sub_short": "防御",
       "sub_short_en": "Security",
       "row": 1,
       "relations": [
@@ -281,7 +281,7 @@
       "sub": "自動運転",
       "sub_en": "Autonomous driving",
       "sub_short": "自動運転",
-      "sub_short_en": "Self-driving",
+      "sub_short_en": "AV tech",
       "row": 2,
       "relations": [
         {
@@ -420,8 +420,8 @@
       "name": "Apple",
       "sub": "PC・スマホ",
       "sub_en": "PCs & phones",
-      "sub_short": "PC・スマホ",
-      "sub_short_en": "PCs & phones",
+      "sub_short": "PC",
+      "sub_short_en": "PCs",
       "row": 3,
       "relations": [
         {

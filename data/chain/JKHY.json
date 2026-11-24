@@ -27,8 +27,8 @@
       "name": "フィデリティ・ナショナル・インフォメーション・サービシズ",
       "sub": "銀行向けシステム",
       "sub_en": "Bank processing",
-      "sub_short": "銀行システム",
-      "sub_short_en": "Bank processing",
+      "sub_short": "銀行IT",
+      "sub_short_en": "Bank IT",
       "row": 0,
       "relations": [
         {
@@ -53,8 +53,8 @@
       "name": "フィサーブ",
       "sub": "銀行向けシステム",
       "sub_en": "Bank processing",
-      "sub_short": "銀行システム",
-      "sub_short_en": "Bank processing",
+      "sub_short": "銀行IT",
+      "sub_short_en": "Bank IT",
       "row": 0,
       "relations": [
         {
@@ -79,8 +79,8 @@
       "name": "コアレーション",
       "sub": "信用組合向け",
       "sub_en": "Credit union core",
-      "sub_short": "信用組合向け",
-      "sub_short_en": "Credit union IT",
+      "sub_short": "金融IT",
+      "sub_short_en": "Bank IT",
       "row": 0,
       "relations": [
         {
@@ -105,8 +105,8 @@
       "name": "フィナストラ",
       "sub": "銀行向けシステム",
       "sub_en": "Bank software",
-      "sub_short": "銀行システム",
-      "sub_short_en": "Bank software",
+      "sub_short": "銀行IT",
+      "sub_short_en": "Bank IT",
       "row": 0,
       "relations": [
         {
@@ -131,7 +131,7 @@
       "name": "アイ・ビー・エム",
       "sub": "ハードウェア",
       "sub_en": "Hardware",
-      "sub_short": "ハードウェア",
+      "sub_short": "機器",
       "sub_short_en": "Hardware",
       "row": 1,
       "relations": [
@@ -210,7 +210,7 @@
       "sub": "ネットワーク機器",
       "sub_en": "Networking",
       "sub_short": "通信機器",
-      "sub_short_en": "Networking",
+      "sub_short_en": "Network",
       "row": 1,
       "relations": [
         {

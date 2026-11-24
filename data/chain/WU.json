@@ -31,7 +31,7 @@
       "sub": "国際送金",
       "sub_en": "Remittances",
       "sub_short": "国際送金",
-      "sub_short_en": "Remittances",
+      "sub_short_en": "Transfers",
       "row": 0,
       "relations": [
         {
@@ -56,8 +56,8 @@
       "name_en": "Euronet Worldwide",
       "sub": "決済・送金",
       "sub_en": "Payments & remittances",
-      "sub_short": "決済・送金",
-      "sub_short_en": "Payments",
+      "sub_short": "決済",
+      "sub_short_en": "Payment",
       "row": 1,
       "relations": [
         {
@@ -82,7 +82,7 @@
       "name_en": "IDT",
       "sub": "通信・送金(BOSS Money)",
       "sub_en": "Telecom & remittances (BOSS Money)",
-      "sub_short": "通信・送金",
+      "sub_short": "通信",
       "sub_short_en": "Telecom",
       "row": 1,
       "relations": [
@@ -108,8 +108,8 @@
       "name_en": "Innovative Payment Solutions",
       "sub": "決済・送金",
       "sub_en": "Payments",
-      "sub_short": "決済・送金",
-      "sub_short_en": "Payments",
+      "sub_short": "決済",
+      "sub_short_en": "Payment",
       "row": 1,
       "relations": [
         {
@@ -135,7 +135,7 @@
       "sub": "決済・金融テクノロジー",
       "sub_en": "Payments & fintech",
       "sub_short": "決済",
-      "sub_short_en": "Payments",
+      "sub_short_en": "Payment",
       "row": 1,
       "relations": [
         {

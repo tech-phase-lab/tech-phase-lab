@@ -30,7 +30,7 @@
       "sub": "投資会社",
       "sub_en": "Investment firm",
       "sub_short": "投資会社",
-      "sub_short_en": "Investment firm",
+      "sub_short_en": "Investing",
       "row": 0,
       "relations": [
         {
@@ -55,8 +55,8 @@
       "name_en": "Moxie Freedom",
       "sub": "ガス火力発電所",
       "sub_en": "Gas power plant",
-      "sub_short": "ガス火力発電所",
-      "sub_short_en": "Gas power plant",
+      "sub_short": "ガス火力",
+      "sub_short_en": "Gas",
       "row": 0,
       "relations": [
         {
@@ -81,8 +81,8 @@
       "name_en": "Guernsey Power",
       "sub": "ガス火力発電所",
       "sub_en": "Gas power plant",
-      "sub_short": "ガス火力発電所",
-      "sub_short_en": "Gas power plant",
+      "sub_short": "ガス火力",
+      "sub_short_en": "Gas",
       "row": 0,
       "relations": [
         {
@@ -159,8 +159,8 @@
       "name_en": "TeraWulf",
       "sub": "ビットコイン採掘・AIデータセンター",
       "sub_en": "Bitcoin mining & AI data centers",
-      "sub_short": "BTC採掘・AI",
-      "sub_short_en": "Bitcoin mining",
+      "sub_short": "BTC採掘",
+      "sub_short_en": "Bitcoin",
       "row": 2,
       "relations": [
         {
@@ -186,7 +186,7 @@
       "sub": "発電(原子力)",
       "sub_en": "Power generation (nuclear)",
       "sub_short": "発電",
-      "sub_short_en": "Power generation",
+      "sub_short_en": "Power",
       "row": 2,
       "relations": [
         {
@@ -211,8 +211,8 @@
       "name_en": "Microsoft",
       "sub": "クラウド・AI",
       "sub_en": "Cloud & AI",
-      "sub_short": "クラウド・AI",
-      "sub_short_en": "Cloud & AI",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 2,
       "relations": [
         {
@@ -237,8 +237,8 @@
       "name_en": "Alphabet (Google)",
       "sub": "クラウド・AI",
       "sub_en": "Cloud & AI",
-      "sub_short": "クラウド・AI",
-      "sub_short_en": "Cloud & AI",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 2,
       "relations": [
         {

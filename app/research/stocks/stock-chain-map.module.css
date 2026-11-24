@@ -30,18 +30,16 @@
 .row { position: relative; z-index: 1; min-width: 0; }
 .row h4 { margin: 0 0 8px; font-size: 11px; font-weight: 500; letter-spacing: .08em; color: var(--muted); display: flex; align-items: center; gap: 8px; }
 .row h4::after { content: ""; flex: 1; border-top: 1px dashed var(--line); }
-/* Every company card in a map has the same width (owner, Nov 24): a grid of equal columns, the same in every row. The column is
-   wide enough for a short label on one line (7 full-width characters in Japanese, 16 letters in English;
-   the narrowest column leaves 80px for the label in Japanese at 390px, three cards a row). */
-.map { --card: 95px; } .map[data-lang="en"] { --card: 118px; }
-.chips { display: grid; grid-template-columns: repeat(auto-fill, minmax(var(--card), 1fr)); gap: 8px; }
+/* Every company card in a map has the same width (owner, Nov 24): the compact card size (74px, as MU's card was), in a grid of
+   equal columns in every row. The label stays on one line, so card labels are short (they fit the card's 49px). */
+.chips { display: grid; grid-template-columns: repeat(auto-fill, 74px); gap: 8px; }
 .rootRow .chips { display: flex; flex-wrap: wrap; justify-content: center; }
 .chip { text-align: left; line-height: 1.3; color: #e9eef5; background: #0f1722; border: 1.5px solid var(--line); border-radius: 9px; padding: 6px 11px; min-width: 74px; display: grid; position: relative; transition: opacity .2s, background .2s; }
 .chip b { font: 600 13px var(--font-mono), ui-monospace, monospace; letter-spacing: .02em; }
 .chip small { font-size: 10.5px; color: var(--muted); }
-.chips > .chip:not(.root) { padding: 6px; }
-.chips > .chip:not(.root) b { padding-right: 10px; overflow-wrap: anywhere; }
 .chips > .chip:not(.root) small { white-space: nowrap; }
+/* A long name in place of a ticker (an unlisted company) is set a little smaller and wraps between words. */
+.chips > .chip:not(.root) b[data-long] { font-size: 10px; letter-spacing: 0; overflow-wrap: anywhere; }
 .chip[data-tone] { border-color: var(--tone); }
 .chip[data-tone="up"] { background: #0f1d2a; } .chip[data-tone="down"] { background: #241d12; } .chip[data-tone="tie"] { background: #0f2220; }
 .chip[data-tone="rival"] { border-style: dashed; background: #19152a; }

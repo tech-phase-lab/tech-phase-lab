@@ -29,8 +29,8 @@
       "name_en": "Sartorius",
       "sub": "バイオ製造機器(独)",
       "sub_en": "Bioprocess (Germany)",
-      "sub_short": "バイオ製造機器",
-      "sub_short_en": "Bioprocess",
+      "sub_short": "バイオ",
+      "sub_short_en": "Bio",
       "row": 0,
       "relations": [
         {
@@ -56,7 +56,7 @@
       "sub": "移植検査",
       "sub_en": "Transplant diagnostics",
       "sub_short": "移植検査",
-      "sub_short_en": "Transplant tests",
+      "sub_short_en": "Tests",
       "row": 0,
       "relations": [
         {
@@ -82,7 +82,7 @@
       "sub": "がん診断",
       "sub_en": "Cancer diagnostics",
       "sub_short": "がん診断",
-      "sub_short_en": "Cancer tests",
+      "sub_short_en": "Cancer",
       "row": 0,
       "relations": [
         {
@@ -107,8 +107,8 @@
       "name_en": "10x Genomics",
       "sub": "単一細胞解析",
       "sub_en": "Single-cell analysis",
-      "sub_short": "単一細胞解析",
-      "sub_short_en": "Single-cell",
+      "sub_short": "細胞解析",
+      "sub_short_en": "Cells",
       "row": 0,
       "relations": [
         {
@@ -134,7 +134,7 @@
       "sub": "診断薬",
       "sub_en": "Diagnostics",
       "sub_short": "診断薬",
-      "sub_short_en": "Diagnostics",
+      "sub_short_en": "Tests",
       "row": 1,
       "relations": [
         {
@@ -160,7 +160,7 @@
       "sub": "フローサイトメトリー",
       "sub_en": "Flow cytometry",
       "sub_short": "細胞分析",
-      "sub_short_en": "Flow cytometry",
+      "sub_short_en": "Cells",
       "row": 1,
       "relations": [
         {
@@ -185,8 +185,8 @@
       "name_en": "Quanterix",
       "sub": "タンパク質測定",
       "sub_en": "Protein detection",
-      "sub_short": "タンパク質測定",
-      "sub_short_en": "Protein tests",
+      "sub_short": "測定",
+      "sub_short_en": "Proteins",
       "row": 1,
       "relations": [
         {
@@ -212,7 +212,7 @@
       "sub": "細胞エンジニアリング",
       "sub_en": "Cell engineering",
       "sub_short": "細胞工学",
-      "sub_short_en": "Cell engineering",
+      "sub_short_en": "Cells",
       "row": 1,
       "relations": [
         {
@@ -238,7 +238,7 @@
       "sub": "研究機器",
       "sub_en": "Research instruments",
       "sub_short": "研究機器",
-      "sub_short_en": "Lab instruments",
+      "sub_short_en": "Lab tools",
       "row": 1,
       "relations": [
         {

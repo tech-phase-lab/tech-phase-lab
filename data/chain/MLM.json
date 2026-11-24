@@ -25,7 +25,7 @@
       "name": "アムライズ",
       "sub": "セメント・建材",
       "sub_en": "Cement & building materials",
-      "sub_short": "セメント・建材",
+      "sub_short": "セメント",
       "sub_short_en": "Cement",
       "row": 0,
       "relations": [
@@ -51,8 +51,8 @@
       "name": "アルコサ",
       "sub": "骨材・建設資材",
       "sub_en": "Aggregates & construction",
-      "sub_short": "骨材・建設資材",
-      "sub_short_en": "Aggregates",
+      "sub_short": "骨材",
+      "sub_short_en": "Gravel",
       "row": 0,
       "relations": [
         {
@@ -77,7 +77,7 @@
       "name": "セメックス",
       "sub": "セメント・骨材",
       "sub_en": "Cement & aggregates",
-      "sub_short": "セメント・骨材",
+      "sub_short": "セメント",
       "sub_short_en": "Cement",
       "row": 0,
       "relations": [
@@ -104,7 +104,7 @@
       "sub": "建設資材",
       "sub_en": "Building materials",
       "sub_short": "建設資材",
-      "sub_short_en": "Building supply",
+      "sub_short_en": "Building",
       "row": 0,
       "relations": [
         {
@@ -129,7 +129,7 @@
       "name": "ハイデルベルク・マテリアルズ",
       "sub": "セメント・骨材",
       "sub_en": "Cement & aggregates",
-      "sub_short": "セメント・骨材",
+      "sub_short": "セメント",
       "sub_short_en": "Cement",
       "row": 0,
       "relations": [
@@ -156,7 +156,7 @@
       "sub": "建設資材",
       "sub_en": "Building materials",
       "sub_short": "建設資材",
-      "sub_short_en": "Building supply",
+      "sub_short_en": "Building",
       "row": 0,
       "relations": [
         {
@@ -181,8 +181,8 @@
       "name": "ナイフ・リバー",
       "sub": "骨材・舗装",
       "sub_en": "Aggregates & paving",
-      "sub_short": "骨材・舗装",
-      "sub_short_en": "Aggregates",
+      "sub_short": "骨材",
+      "sub_short_en": "Gravel",
       "row": 0,
       "relations": [
         {
@@ -221,7 +221,7 @@
       "sub": "骨材",
       "sub_en": "Aggregates",
       "sub_short": "骨材",
-      "sub_short_en": "Aggregates",
+      "sub_short_en": "Gravel",
       "row": 0,
       "relations": [
         {

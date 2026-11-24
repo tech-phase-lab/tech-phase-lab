@@ -29,7 +29,7 @@
       "name_en": "F&G Annuities & Life",
       "sub": "年金・生保",
       "sub_en": "Annuities & life insurance",
-      "sub_short": "年金・生保",
+      "sub_short": "年金",
       "sub_short_en": "Annuities",
       "row": 0,
       "relations": [
@@ -69,7 +69,7 @@
       "sub": "決済",
       "sub_en": "Payments",
       "sub_short": "決済",
-      "sub_short_en": "Payments",
+      "sub_short_en": "Payment",
       "row": 0,
       "relations": [
         {
@@ -121,7 +121,7 @@
       "sub": "投資会社",
       "sub_en": "Holding company",
       "sub_short": "投資会社",
-      "sub_short_en": "Holding company",
+      "sub_short_en": "Holding",
       "row": 0,
       "relations": [
         {
@@ -147,7 +147,7 @@
       "sub": "権原保険",
       "sub_en": "Title insurance",
       "sub_short": "権原保険",
-      "sub_short_en": "Title insurance",
+      "sub_short_en": "Title",
       "row": 1,
       "relations": [
         {
@@ -173,7 +173,7 @@
       "sub": "権原保険",
       "sub_en": "Title insurance",
       "sub_short": "権原保険",
-      "sub_short_en": "Title insurance",
+      "sub_short_en": "Title",
       "row": 1,
       "relations": [
         {
@@ -198,8 +198,8 @@
       "name_en": "Essent Group",
       "sub": "住宅ローン保険",
       "sub_en": "Mortgage insurance",
-      "sub_short": "住宅ローン保険",
-      "sub_short_en": "Mortgage cover",
+      "sub_short": "保険",
+      "sub_short_en": "Mortgage",
       "row": 1,
       "relations": [
         {
@@ -225,7 +225,7 @@
       "sub": "権原保険",
       "sub_en": "Title insurance",
       "sub_short": "権原保険",
-      "sub_short_en": "Title insurance",
+      "sub_short_en": "Title",
       "row": 1,
       "relations": [
         {

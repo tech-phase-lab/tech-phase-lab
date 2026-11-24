@@ -57,7 +57,7 @@
       "sub": "音声・ポッドキャスト",
       "sub_en": "Audio & podcasts",
       "sub_short": "音声",
-      "sub_short_en": "Audio & podcasts",
+      "sub_short_en": "Audio",
       "row": 1,
       "relations": [
         {
@@ -94,8 +94,8 @@
       "name": "Microsoft",
       "sub": "広告の技術・販売",
       "sub_en": "Ad technology & sales",
-      "sub_short": "広告の技術",
-      "sub_short_en": "Ad technology",
+      "sub_short": "広告",
+      "sub_short_en": "Ad tech",
       "row": 0,
       "relations": [
         {
@@ -122,7 +122,7 @@
       "sub": "広告配信",
       "sub_en": "Ad buying",
       "sub_short": "広告配信",
-      "sub_short_en": "Ad buying",
+      "sub_short_en": "Ads",
       "row": 0,
       "relations": [
         {
@@ -147,7 +147,7 @@
       "sub": "広告配信",
       "sub_en": "Ad exchange",
       "sub_short": "広告配信",
-      "sub_short_en": "Ad exchange",
+      "sub_short_en": "Ads",
       "row": 0,
       "relations": [
         {
@@ -172,7 +172,7 @@
       "sub": "広告配信(DV360)",
       "sub_en": "Ad buying (DV360)",
       "sub_short": "広告配信",
-      "sub_short_en": "Ad buying",
+      "sub_short_en": "Ads",
       "row": 0,
       "relations": [
         {
@@ -196,8 +196,8 @@
       "name": "Sony Group",
       "sub": "映画の供給",
       "sub_en": "Film supply",
-      "sub_short": "映画の供給",
-      "sub_short_en": "Film supply",
+      "sub_short": "映画",
+      "sub_short_en": "Film",
       "row": 0,
       "relations": [
         {
@@ -223,8 +223,8 @@
       "name": "AMC Networks",
       "sub": "番組の供給",
       "sub_en": "Programming supply",
-      "sub_short": "番組の供給",
-      "sub_short_en": "TV programming",
+      "sub_short": "番組",
+      "sub_short_en": "TV",
       "row": 0,
       "relations": [
         {
@@ -261,8 +261,8 @@
       "name": "Fox Corporation",
       "sub": "番組の制作",
       "sub_en": "Programming production",
-      "sub_short": "番組の制作",
-      "sub_short_en": "TV production",
+      "sub_short": "番組",
+      "sub_short_en": "TV",
       "row": 0,
       "relations": [
         {
@@ -299,8 +299,8 @@
       "name": "TKO Group(WWE)",
       "sub": "スポーツエンタメ",
       "sub_en": "Sports entertainment",
-      "sub_short": "スポーツ興行",
-      "sub_short_en": "Sports media",
+      "sub_short": "スポーツ",
+      "sub_short_en": "Sports",
       "row": 1,
       "relations": [
         {
@@ -338,7 +338,7 @@
       "sub": "動画端末",
       "sub_en": "Streaming devices",
       "sub_short": "動画端末",
-      "sub_short_en": "Streaming gear",
+      "sub_short_en": "Video",
       "row": 1,
       "relations": [
         {
@@ -362,7 +362,7 @@
       "name": "Comcast",
       "sub": "ケーブル・配信",
       "sub_en": "Cable & streaming",
-      "sub_short": "ケーブル・配信",
+      "sub_short": "ケーブル",
       "sub_short_en": "Cable",
       "row": 2,
       "relations": [
@@ -413,7 +413,7 @@
       "sub": "ゲーム・コンテンツ",
       "sub_en": "Games & content",
       "sub_short": "ゲーム",
-      "sub_short_en": "Games & content",
+      "sub_short_en": "Games",
       "row": 2,
       "relations": [
         {

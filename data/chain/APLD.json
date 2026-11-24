@@ -65,7 +65,7 @@
       "sub": "発電設備",
       "sub_en": "Power equipment",
       "sub_short": "発電設備",
-      "sub_short_en": "Power equipment",
+      "sub_short_en": "Power",
       "row": 0,
       "relations": [
         {
@@ -107,7 +107,7 @@
       "name_en": "CoreWeave",
       "sub": "AIクラウド",
       "sub_en": "AI cloud",
-      "sub_short": "AIクラウド",
+      "sub_short": "AI基盤",
       "sub_short_en": "AI cloud",
       "row": 1,
       "relations": [
@@ -146,8 +146,8 @@
       "name_en": "Macquarie Group",
       "sub": "投資・金融",
       "sub_en": "Investment & finance",
-      "sub_short": "投資・金融",
-      "sub_short_en": "Investment",
+      "sub_short": "投資",
+      "sub_short_en": "Investing",
       "row": 2,
       "relations": [
         {
@@ -213,8 +213,8 @@
       "name_en": "ChronoScale",
       "sub": "GPUクラウド",
       "sub_en": "GPU cloud",
-      "sub_short": "GPUクラウド",
-      "sub_short_en": "GPU cloud",
+      "sub_short": "GPU基盤",
+      "sub_short_en": "GPUs",
       "row": 2,
       "relations": [
         {
@@ -239,8 +239,8 @@
       "name_en": "Equinix",
       "sub": "データセンター",
       "sub_en": "Data centers",
-      "sub_short": "データセンター",
-      "sub_short_en": "Data centers",
+      "sub_short": "DC",
+      "sub_short_en": "DCs",
       "row": 3,
       "relations": [
         {
@@ -265,8 +265,8 @@
       "name_en": "Digital Realty Trust",
       "sub": "データセンター",
       "sub_en": "Data centers",
-      "sub_short": "データセンター",
-      "sub_short_en": "Data centers",
+      "sub_short": "DC",
+      "sub_short_en": "DCs",
       "row": 3,
       "relations": [
         {
@@ -291,7 +291,7 @@
       "name_en": "IREN",
       "sub": "AIクラウド・データセンター",
       "sub_en": "AI cloud & data centers",
-      "sub_short": "AIクラウド",
+      "sub_short": "AI基盤",
       "sub_short_en": "AI cloud",
       "row": 3,
       "relations": [
@@ -318,7 +318,7 @@
       "sub": "AIデータセンター",
       "sub_en": "AI data centers",
       "sub_short": "AI向けDC",
-      "sub_short_en": "AI data centers",
+      "sub_short_en": "AI DCs",
       "row": 3,
       "relations": [
         {
@@ -357,7 +357,7 @@
       "sub": "AIデータセンター",
       "sub_en": "AI data centers",
       "sub_short": "AI向けDC",
-      "sub_short_en": "AI data centers",
+      "sub_short_en": "AI DCs",
       "row": 3,
       "relations": [
         {
@@ -383,7 +383,7 @@
       "sub": "AIデータセンター",
       "sub_en": "AI data centers",
       "sub_short": "AI向けDC",
-      "sub_short_en": "AI data centers",
+      "sub_short_en": "AI DCs",
       "row": 3,
       "relations": [
         {
@@ -409,7 +409,7 @@
       "sub": "AIデータセンター",
       "sub_en": "AI data centers",
       "sub_short": "AI向けDC",
-      "sub_short_en": "AI data centers",
+      "sub_short_en": "AI DCs",
       "row": 3,
       "relations": [
         {
@@ -460,8 +460,8 @@
       "name_en": "Galaxy Digital",
       "sub": "デジタル資産・データセンター",
       "sub_en": "Digital assets & data centers",
-      "sub_short": "デジタル資産",
-      "sub_short_en": "Digital assets",
+      "sub_short": "暗号資産",
+      "sub_short_en": "Crypto",
       "row": 3,
       "relations": [
         {

@@ -27,7 +27,7 @@
       "sub": "クラウド・ソフト",
       "sub_en": "Cloud & software",
       "sub_short": "クラウド",
-      "sub_short_en": "Cloud & software",
+      "sub_short_en": "Cloud",
       "row": 0,
       "relations": [
         {
@@ -52,7 +52,7 @@
       "name": "アイ・ビー・エム",
       "sub": "IT・クラウド",
       "sub_en": "IT & cloud",
-      "sub_short": "IT・クラウド",
+      "sub_short": "IT",
       "sub_short_en": "IT & cloud",
       "row": 0,
       "relations": [
@@ -78,8 +78,8 @@
       "name": "メタ・プラットフォームズ",
       "sub": "SNS・広告",
       "sub_en": "Social media",
-      "sub_short": "SNS・広告",
-      "sub_short_en": "Social media",
+      "sub_short": "SNS",
+      "sub_short_en": "Social",
       "row": 0,
       "relations": [
         {
@@ -130,8 +130,8 @@
       "name": "エクイニクス",
       "sub": "データセンター",
       "sub_en": "Data centers",
-      "sub_short": "データセンター",
-      "sub_short_en": "Data centers",
+      "sub_short": "DC",
+      "sub_short_en": "DCs",
       "row": 0,
       "relations": [
         {
@@ -169,8 +169,8 @@
       "name": "エヌ・ティ・ティ",
       "sub": "データセンター",
       "sub_en": "Data centers",
-      "sub_short": "データセンター",
-      "sub_short_en": "Data centers",
+      "sub_short": "DC",
+      "sub_short_en": "DCs",
       "row": 0,
       "relations": [
         {
@@ -195,8 +195,8 @@
       "name": "グローバル・スイッチ",
       "sub": "データセンター",
       "sub_en": "Data centers",
-      "sub_short": "データセンター",
-      "sub_short_en": "Data centers",
+      "sub_short": "DC",
+      "sub_short_en": "DCs",
       "row": 0,
       "relations": [
         {
@@ -221,8 +221,8 @@
       "name": "ブラックストーン",
       "sub": "合弁パートナー",
       "sub_en": "JV partner",
-      "sub_short": "合弁パートナー",
-      "sub_short_en": "JV partner",
+      "sub_short": "合弁",
+      "sub_short_en": "JV",
       "row": 0,
       "relations": [
         {
@@ -247,8 +247,8 @@
       "name": "三菱商事",
       "sub": "合弁パートナー",
       "sub_en": "JV partner",
-      "sub_short": "合弁パートナー",
-      "sub_short_en": "JV partner",
+      "sub_short": "合弁",
+      "sub_short_en": "JV",
       "row": 0,
       "relations": [
         {
@@ -273,8 +273,8 @@
       "name": "GIパートナーズ",
       "sub": "合弁パートナー",
       "sub_en": "JV partner",
-      "sub_short": "合弁パートナー",
-      "sub_short_en": "JV partner",
+      "sub_short": "合弁",
+      "sub_short_en": "JV",
       "row": 0,
       "relations": [
         {
@@ -300,7 +300,7 @@
       "sub": "ビットコイン採掘",
       "sub_en": "Bitcoin mining",
       "sub_short": "BTC採掘",
-      "sub_short_en": "Bitcoin mining",
+      "sub_short_en": "Bitcoin",
       "row": 1,
       "relations": [
         {

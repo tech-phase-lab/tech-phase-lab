@@ -29,8 +29,8 @@
       "name": "AT&T社",
       "sub": "通信事業者",
       "sub_en": "Telecom carrier",
-      "sub_short": "通信事業者",
-      "sub_short_en": "Telecom carrier",
+      "sub_short": "通信",
+      "sub_short_en": "Telecom",
       "row": 0,
       "relations": [
         {
@@ -55,8 +55,8 @@
       "name": "ベライゾン・コミュニケーションズ",
       "sub": "通信事業者",
       "sub_en": "Telecom carrier",
-      "sub_short": "通信事業者",
-      "sub_short_en": "Telecom carrier",
+      "sub_short": "通信",
+      "sub_short_en": "Telecom",
       "row": 0,
       "relations": [
         {
@@ -82,7 +82,7 @@
       "sub": "水道計測・水処理",
       "sub_en": "Water metering & treatment",
       "sub_short": "水道計測",
-      "sub_short_en": "Water metering",
+      "sub_short_en": "Meters",
       "row": 1,
       "relations": [
         {
@@ -107,8 +107,8 @@
       "name": "ローパー・テクノロジーズ",
       "sub": "水道メーター(Neptune)",
       "sub_en": "Water meters (Neptune)",
-      "sub_short": "水道メーター",
-      "sub_short_en": "Water meters",
+      "sub_short": "水道",
+      "sub_short_en": "Meters",
       "row": 1,
       "relations": [
         {
@@ -134,7 +134,7 @@
       "sub": "水質分析(Hach)",
       "sub_en": "Water analytics (Hach)",
       "sub_short": "水質分析",
-      "sub_short_en": "Water analytics",
+      "sub_short_en": "Water",
       "row": 1,
       "relations": [
         {
@@ -160,7 +160,7 @@
       "sub": "スマートメーター",
       "sub_en": "Smart metering",
       "sub_short": "電力計",
-      "sub_short_en": "Smart metering",
+      "sub_short_en": "Meters",
       "row": 1,
       "relations": [
         {
@@ -185,8 +185,8 @@
       "name": "ハベル",
       "sub": "通信・計測(Aclara)",
       "sub_en": "Metering comms (Aclara)",
-      "sub_short": "通信・計測",
-      "sub_short_en": "Metering comms",
+      "sub_short": "通信",
+      "sub_short_en": "Metering",
       "row": 1,
       "relations": [
         {
@@ -211,8 +211,8 @@
       "name": "ミューラー・ウォーター・プロダクツ",
       "sub": "水道インフラ",
       "sub_en": "Water infrastructure",
-      "sub_short": "水道インフラ",
-      "sub_short_en": "Water infra",
+      "sub_short": "水道",
+      "sub_short_en": "Water",
       "row": 1,
       "relations": [
         {
@@ -237,8 +237,8 @@
       "name": "エマソン・エレクトリック",
       "sub": "流量計測機器",
       "sub_en": "Flow instrumentation",
-      "sub_short": "流量計測機器",
-      "sub_short_en": "Flow meters",
+      "sub_short": "流量計",
+      "sub_short_en": "Meters",
       "row": 1,
       "relations": [
         {

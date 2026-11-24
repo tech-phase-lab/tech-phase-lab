@@ -32,8 +32,8 @@
       "name_en": "ITRenew",
       "sub": "IT機器の再生・売却",
       "sub_en": "IT asset lifecycle",
-      "sub_short": "IT機器の再生",
-      "sub_short_en": "IT lifecycle",
+      "sub_short": "IT再生",
+      "sub_short_en": "IT",
       "row": 0,
       "relations": [
         {
@@ -58,8 +58,8 @@
       "name_en": "Regency Technologies",
       "sub": "IT資産の処分",
       "sub_en": "IT asset disposition",
-      "sub_short": "IT資産の処分",
-      "sub_short_en": "IT disposal",
+      "sub_short": "IT処分",
+      "sub_short_en": "IT",
       "row": 0,
       "relations": [
         {
@@ -85,7 +85,7 @@
       "sub": "投資会社",
       "sub_en": "Investment firm",
       "sub_short": "投資会社",
-      "sub_short_en": "Investment firm",
+      "sub_short_en": "Investing",
       "row": 0,
       "relations": [
         {
@@ -110,8 +110,8 @@
       "name_en": "Clutter",
       "sub": "個人向け保管",
       "sub_en": "Consumer storage",
-      "sub_short": "個人向け保管",
-      "sub_short_en": "Consumer storage",
+      "sub_short": "貸倉庫",
+      "sub_short_en": "Storage",
       "row": 0,
       "relations": [
         {
@@ -137,7 +137,7 @@
       "sub": "文書保管(豪州)",
       "sub_en": "Records management (Australia)",
       "sub_short": "文書保管",
-      "sub_short_en": "Records storage",
+      "sub_short_en": "Records",
       "row": 0,
       "relations": [
         {
@@ -162,8 +162,8 @@
       "name_en": "IO Data Centers",
       "sub": "データセンター",
       "sub_en": "Data centers",
-      "sub_short": "データセンター",
-      "sub_short_en": "Data centers",
+      "sub_short": "DC",
+      "sub_short_en": "DCs",
       "row": 0,
       "relations": [
         {
@@ -188,8 +188,8 @@
       "name_en": "Web Werks",
       "sub": "データセンター(インド)",
       "sub_en": "Data centers (India)",
-      "sub_short": "データセンター",
-      "sub_short_en": "Data centers",
+      "sub_short": "DC",
+      "sub_short_en": "DCs",
       "row": 0,
       "relations": [
         {
@@ -214,8 +214,8 @@
       "name_en": "XData Properties",
       "sub": "データセンター(スペイン)",
       "sub_en": "Data centers (Spain)",
-      "sub_short": "データセンター",
-      "sub_short_en": "Data centers",
+      "sub_short": "DC",
+      "sub_short_en": "DCs",
       "row": 0,
       "relations": [
         {
@@ -240,8 +240,8 @@
       "name_en": "Intelligent Protection Management",
       "sub": "クラウド運用",
       "sub_en": "Managed cloud services",
-      "sub_short": "クラウド運用",
-      "sub_short_en": "Managed cloud",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 1,
       "relations": [
         {
@@ -267,7 +267,7 @@
       "sub": "文書管理",
       "sub_en": "Document services",
       "sub_short": "文書管理",
-      "sub_short_en": "Documents",
+      "sub_short_en": "Docs",
       "row": 2,
       "relations": [
         {
@@ -293,7 +293,7 @@
       "sub": "AIデータセンター",
       "sub_en": "AI data centers",
       "sub_short": "AI向けDC",
-      "sub_short_en": "AI data centers",
+      "sub_short_en": "AI DCs",
       "row": 2,
       "relations": [
         {

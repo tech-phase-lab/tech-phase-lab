@@ -51,8 +51,8 @@
       "name_en": "BrightSpring Health Services",
       "sub": "在宅医療・薬局",
       "sub_en": "Home health & pharmacy",
-      "sub_short": "在宅医療・薬局",
-      "sub_short_en": "Home health",
+      "sub_short": "在宅医療",
+      "sub_short_en": "Care",
       "row": 1,
       "relations": [
         {
@@ -78,7 +78,7 @@
       "sub": "機内通信",
       "sub_en": "In-flight connectivity",
       "sub_short": "機内通信",
-      "sub_short_en": "In-flight Wi-Fi",
+      "sub_short_en": "Wi-Fi",
       "row": 1,
       "relations": [
         {
@@ -104,7 +104,7 @@
       "sub": "不動産融資REIT",
       "sub_en": "Mortgage REIT",
       "sub_short": "融資REIT",
-      "sub_short_en": "Mortgage REIT",
+      "sub_short_en": "REIT",
       "row": 1,
       "relations": [
         {
@@ -130,7 +130,7 @@
       "sub": "半導体",
       "sub_en": "Semiconductors",
       "sub_short": "半導体",
-      "sub_short_en": "Semiconductors",
+      "sub_short_en": "Chips",
       "row": 1,
       "relations": [
         {
@@ -156,7 +156,7 @@
       "sub": "飲料水",
       "sub_en": "Bottled water",
       "sub_short": "飲料水",
-      "sub_short_en": "Bottled water",
+      "sub_short_en": "Water",
       "row": 1,
       "relations": [
         {
@@ -208,7 +208,7 @@
       "sub": "出張管理",
       "sub_en": "Business travel",
       "sub_short": "出張管理",
-      "sub_short_en": "Business travel",
+      "sub_short_en": "Travel",
       "row": 1,
       "relations": [
         {

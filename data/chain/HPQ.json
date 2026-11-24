@@ -33,7 +33,7 @@
       "sub": "半導体",
       "sub_en": "Semiconductors",
       "sub_short": "半導体",
-      "sub_short_en": "Semiconductors",
+      "sub_short_en": "Chips",
       "row": 0,
       "relations": [
         {
@@ -72,7 +72,7 @@
       "sub": "半導体",
       "sub_en": "Semiconductors",
       "sub_short": "半導体",
-      "sub_short_en": "Semiconductors",
+      "sub_short_en": "Chips",
       "row": 0,
       "relations": [
         {
@@ -255,8 +255,8 @@
       "name": "アップル",
       "sub": "消費者向け機器",
       "sub_en": "Consumer devices",
-      "sub_short": "消費者向け機器",
-      "sub_short_en": "Consumer devices",
+      "sub_short": "家電",
+      "sub_short_en": "Devices",
       "row": 2,
       "relations": [
         {
@@ -281,8 +281,8 @@
       "name": "デル・テクノロジーズ",
       "sub": "PC・サーバー",
       "sub_en": "PCs & servers",
-      "sub_short": "PC・サーバー",
-      "sub_short_en": "PCs & servers",
+      "sub_short": "PC",
+      "sub_short_en": "PCs",
       "row": 2,
       "relations": [
         {
@@ -334,7 +334,7 @@
       "sub": "ソフト・クラウド",
       "sub_en": "Software & cloud",
       "sub_short": "ソフト",
-      "sub_short_en": "Software & cloud",
+      "sub_short_en": "Software",
       "row": 2,
       "relations": [
         {
@@ -359,8 +359,8 @@
       "name": "サムスン電子",
       "sub": "電機・半導体",
       "sub_en": "Electronics & chips",
-      "sub_short": "電機・半導体",
-      "sub_short_en": "Electronics",
+      "sub_short": "電機",
+      "sub_short_en": "Devices",
       "row": 2,
       "relations": [
         {
@@ -386,7 +386,7 @@
       "sub": "周辺機器",
       "sub_en": "PC peripherals",
       "sub_short": "周辺機器",
-      "sub_short_en": "PC peripherals",
+      "sub_short_en": "PC gear",
       "row": 2,
       "relations": [
         {

@@ -28,7 +28,7 @@
       "sub": "道路工事",
       "sub_en": "Road construction",
       "sub_short": "道路工事",
-      "sub_short_en": "Road building",
+      "sub_short_en": "Roads",
       "row": 0,
       "relations": [
         {
@@ -53,7 +53,7 @@
       "name_en": "Warren Paving",
       "sub": "舗装・骨材",
       "sub_en": "Paving & aggregates",
-      "sub_short": "舗装・骨材",
+      "sub_short": "舗装",
       "sub_short_en": "Paving",
       "row": 0,
       "relations": [
@@ -79,7 +79,7 @@
       "name_en": "Dickerson & Bowen",
       "sub": "舗装・骨材",
       "sub_en": "Paving & aggregates",
-      "sub_short": "舗装・骨材",
+      "sub_short": "舗装",
       "sub_short_en": "Paving",
       "row": 0,
       "relations": [
@@ -105,7 +105,7 @@
       "name_en": "Lehman-Roberts",
       "sub": "舗装・骨材",
       "sub_en": "Paving & aggregates",
-      "sub_short": "舗装・骨材",
+      "sub_short": "舗装",
       "sub_short_en": "Paving",
       "row": 0,
       "relations": [
@@ -131,8 +131,8 @@
       "name_en": "Knife River",
       "sub": "骨材・建設資材",
       "sub_en": "Aggregates & construction materials",
-      "sub_short": "骨材・建設資材",
-      "sub_short_en": "Aggregates",
+      "sub_short": "骨材",
+      "sub_short_en": "Gravel",
       "row": 1,
       "relations": [
         {
@@ -157,8 +157,8 @@
       "name_en": "Shimmick",
       "sub": "水インフラ工事",
       "sub_en": "Water infrastructure construction",
-      "sub_short": "水インフラ工事",
-      "sub_short_en": "Water works",
+      "sub_short": "水道工事",
+      "sub_short_en": "Water",
       "row": 1,
       "relations": [
         {

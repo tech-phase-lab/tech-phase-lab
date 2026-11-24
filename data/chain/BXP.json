@@ -24,8 +24,8 @@
       "name_en": "Salesforce",
       "sub": "業務ソフト",
       "sub_en": "Enterprise software",
-      "sub_short": "業務ソフト",
-      "sub_short_en": "Enterprise apps",
+      "sub_short": "業務IT",
+      "sub_short_en": "Software",
       "row": 0,
       "relations": [
         {
@@ -77,7 +77,7 @@
       "sub": "住宅金融",
       "sub_en": "Mortgage finance",
       "sub_short": "住宅金融",
-      "sub_short_en": "Mortgage finance",
+      "sub_short_en": "Mortgage",
       "row": 0,
       "relations": [
         {
@@ -102,8 +102,8 @@
       "name_en": "Akamai Technologies",
       "sub": "ネットワーク・クラウド",
       "sub_en": "Edge cloud",
-      "sub_short": "ネットワーク",
-      "sub_short_en": "Edge cloud",
+      "sub_short": "通信網",
+      "sub_short_en": "Edge",
       "row": 0,
       "relations": [
         {
@@ -129,7 +129,7 @@
       "sub": "SNS",
       "sub_en": "Social media",
       "sub_short": "SNS",
-      "sub_short_en": "Social media",
+      "sub_short_en": "Social",
       "row": 0,
       "relations": [
         {
@@ -155,7 +155,7 @@
       "sub": "ソフト・クラウド",
       "sub_en": "Software & cloud",
       "sub_short": "ソフト",
-      "sub_short_en": "Software & cloud",
+      "sub_short_en": "Software",
       "row": 0,
       "relations": [
         {
@@ -180,7 +180,7 @@
       "name_en": "Biogen",
       "sub": "バイオ医薬品",
       "sub_en": "Biotech",
-      "sub_short": "バイオ医薬品",
+      "sub_short": "バイオ",
       "sub_short_en": "Biotech",
       "row": 0,
       "relations": [
@@ -233,7 +233,7 @@
       "sub": "医療機器",
       "sub_en": "Medical devices",
       "sub_short": "医療機器",
-      "sub_short_en": "Medical devices",
+      "sub_short_en": "Medtech",
       "row": 1,
       "relations": [
         {

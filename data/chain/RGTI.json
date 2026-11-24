@@ -31,8 +31,8 @@
       "name": "アマゾン",
       "sub": "EC・クラウド",
       "sub_en": "E-commerce & cloud",
-      "sub_short": "EC・クラウド",
-      "sub_short_en": "E-commerce",
+      "sub_short": "EC",
+      "sub_short_en": "E-com",
       "row": 0,
       "relations": [
         {
@@ -71,7 +71,7 @@
       "sub": "ソフト・クラウド",
       "sub_en": "Software & cloud",
       "sub_short": "ソフト",
-      "sub_short_en": "Software & cloud",
+      "sub_short_en": "Software",
       "row": 0,
       "relations": [
         {
@@ -212,7 +212,7 @@
       "name": "クアンタ・コンピュータ",
       "sub": "電子機器受託製造",
       "sub_en": "Electronics manufacturing",
-      "sub_short": "電子機器受託",
+      "sub_short": "EMS",
       "sub_short_en": "EMS",
       "row": 1,
       "relations": [
@@ -264,7 +264,7 @@
       "name": "ヒューレット・パッカード・エンタープライズ",
       "sub": "ITインフラ",
       "sub_en": "IT infrastructure",
-      "sub_short": "ITインフラ",
+      "sub_short": "IT基盤",
       "sub_short_en": "IT infra",
       "row": 1,
       "relations": [
@@ -328,7 +328,7 @@
       "name": "クアンタム・コンピューティング",
       "sub": "量子コンピュータ",
       "sub_en": "Quantum computing",
-      "sub_short": "量子計算機",
+      "sub_short": "量子",
       "sub_short_en": "Quantum",
       "row": 2,
       "relations": [
@@ -355,7 +355,7 @@
       "sub": "ネット・クラウド",
       "sub_en": "Internet & cloud",
       "sub_short": "ネット",
-      "sub_short_en": "Internet & cloud",
+      "sub_short_en": "Internet",
       "row": 2,
       "relations": [
         {
@@ -380,8 +380,8 @@
       "name": "IBM",
       "sub": "ITサービス・量子",
       "sub_en": "IT services & quantum",
-      "sub_short": "ITサービス",
-      "sub_short_en": "IT services",
+      "sub_short": "IT",
+      "sub_short_en": "IT",
       "row": 2,
       "relations": [
         {

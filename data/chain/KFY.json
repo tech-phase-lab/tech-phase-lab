@@ -34,7 +34,7 @@
       "sub": "保険仲介・人事コンサル",
       "sub_en": "Insurance brokerage & HR consulting",
       "sub_short": "保険仲介",
-      "sub_short_en": "Insurance broker",
+      "sub_short_en": "Broker",
       "row": 0,
       "relations": [
         {
@@ -60,7 +60,7 @@
       "sub": "保険仲介・人事コンサル",
       "sub_en": "Insurance brokerage & HR consulting",
       "sub_short": "保険仲介",
-      "sub_short_en": "Insurance broker",
+      "sub_short_en": "Broker",
       "row": 0,
       "relations": [
         {
@@ -86,7 +86,7 @@
       "sub": "保険仲介・人事コンサル",
       "sub_en": "Insurance brokerage & HR consulting",
       "sub_short": "保険仲介",
-      "sub_short_en": "Insurance broker",
+      "sub_short_en": "Broker",
       "row": 0,
       "relations": [
         {
@@ -137,7 +137,7 @@
       "name_en": "Robert Half",
       "sub": "専門職人材",
       "sub_en": "Professional staffing",
-      "sub_short": "専門職人材",
+      "sub_short": "人材",
       "sub_short_en": "Staffing",
       "row": 1,
       "relations": [
@@ -164,7 +164,7 @@
       "sub": "人材紹介(英)",
       "sub_en": "Recruitment (UK)",
       "sub_short": "人材紹介",
-      "sub_short_en": "Recruitment",
+      "sub_short_en": "Hiring",
       "row": 1,
       "relations": [
         {
@@ -190,7 +190,7 @@
       "sub": "IT人材",
       "sub_en": "Technology staffing",
       "sub_short": "IT人材",
-      "sub_short_en": "Tech staffing",
+      "sub_short_en": "Staffing",
       "row": 1,
       "relations": [
         {
@@ -216,7 +216,7 @@
       "sub": "エグゼクティブサーチ",
       "sub_en": "Executive search",
       "sub_short": "人材紹介",
-      "sub_short_en": "Executive search",
+      "sub_short_en": "Hiring",
       "row": 2,
       "relations": [
         {
@@ -242,7 +242,7 @@
       "sub": "エグゼクティブサーチ(非上場)",
       "sub_en": "Executive search (private)",
       "sub_short": "人材紹介",
-      "sub_short_en": "Executive search",
+      "sub_short_en": "Hiring",
       "row": 2,
       "relations": [
         {
@@ -268,7 +268,7 @@
       "sub": "エグゼクティブサーチ(非上場)",
       "sub_en": "Executive search (private)",
       "sub_short": "人材紹介",
-      "sub_short_en": "Executive search",
+      "sub_short_en": "Hiring",
       "row": 2,
       "relations": [
         {
@@ -294,7 +294,7 @@
       "sub": "エグゼクティブサーチ(非上場)",
       "sub_en": "Executive search (private)",
       "sub_short": "人材紹介",
-      "sub_short_en": "Executive search",
+      "sub_short_en": "Hiring",
       "row": 2,
       "relations": [
         {

@@ -30,8 +30,8 @@
       "name_en": "Johnson & Johnson",
       "sub": "医薬・医療機器",
       "sub_en": "Pharma & medtech",
-      "sub_short": "医薬・医療機器",
-      "sub_short_en": "Pharma & medtech",
+      "sub_short": "医薬",
+      "sub_short_en": "Pharma",
       "row": 0,
       "relations": [
         {
@@ -57,7 +57,7 @@
       "sub": "医療機器",
       "sub_en": "Medical devices",
       "sub_short": "医療機器",
-      "sub_short_en": "Medical devices",
+      "sub_short_en": "Medtech",
       "row": 0,
       "relations": [
         {
@@ -96,7 +96,7 @@
       "sub": "医療機器",
       "sub_en": "Medical devices",
       "sub_short": "医療機器",
-      "sub_short_en": "Medical devices",
+      "sub_short_en": "Medtech",
       "row": 1,
       "relations": [
         {
@@ -121,8 +121,8 @@
       "name_en": "Steris",
       "sub": "滅菌・手術機器",
       "sub_en": "Sterilization & surgical",
-      "sub_short": "滅菌・手術機器",
-      "sub_short_en": "Sterilization",
+      "sub_short": "滅菌",
+      "sub_short_en": "Sterilize",
       "row": 1,
       "relations": [
         {
@@ -147,8 +147,8 @@
       "name_en": "Smith & Nephew",
       "sub": "創傷・整形",
       "sub_en": "Wound & orthopedics",
-      "sub_short": "創傷・整形",
-      "sub_short_en": "Wound care",
+      "sub_short": "創傷",
+      "sub_short_en": "Wounds",
       "row": 1,
       "relations": [
         {
@@ -174,7 +174,7 @@
       "sub": "再生医療",
       "sub_en": "Regenerative medicine",
       "sub_short": "再生医療",
-      "sub_short_en": "Regen medicine",
+      "sub_short_en": "Regen",
       "row": 1,
       "relations": [
         {
@@ -199,8 +199,8 @@
       "name_en": "MiMedx Group",
       "sub": "胎盤組織製品",
       "sub_en": "Placental tissue products",
-      "sub_short": "胎盤組織製品",
-      "sub_short_en": "Placental tissue",
+      "sub_short": "組織製品",
+      "sub_short_en": "Tissue",
       "row": 1,
       "relations": [
         {
@@ -226,7 +226,7 @@
       "sub": "医療機器",
       "sub_en": "Medical devices",
       "sub_short": "医療機器",
-      "sub_short_en": "Medical devices",
+      "sub_short_en": "Medtech",
       "row": 1,
       "relations": [
         {
@@ -251,8 +251,8 @@
       "name_en": "Axogen",
       "sub": "末梢神経修復",
       "sub_en": "Nerve repair",
-      "sub_short": "末梢神経修復",
-      "sub_short_en": "Nerve repair",
+      "sub_short": "神経修復",
+      "sub_short_en": "Nerves",
       "row": 1,
       "relations": [
         {
@@ -278,7 +278,7 @@
       "sub": "脊椎機器",
       "sub_en": "Spine devices",
       "sub_short": "脊椎機器",
-      "sub_short_en": "Spine devices",
+      "sub_short_en": "Spine",
       "row": 1,
       "relations": [
         {
@@ -303,8 +303,8 @@
       "name_en": "Sanuwave Health",
       "sub": "創傷治療機器",
       "sub_en": "Wound care devices",
-      "sub_short": "創傷治療機器",
-      "sub_short_en": "Wound care",
+      "sub_short": "創傷",
+      "sub_short_en": "Wounds",
       "row": 1,
       "relations": [
         {

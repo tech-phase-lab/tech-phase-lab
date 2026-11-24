@@ -34,7 +34,7 @@
       "sub": "安全装備・原子力機器",
       "sub_en": "Safety & nuclear equipment",
       "sub_short": "安全装備",
-      "sub_short_en": "Safety equipment",
+      "sub_short_en": "Safety",
       "row": 0,
       "relations": [
         {
@@ -59,8 +59,8 @@
       "name_en": "Perma-Fix Environmental",
       "sub": "放射性廃棄物処理",
       "sub_en": "Nuclear waste services",
-      "sub_short": "廃棄物処理",
-      "sub_short_en": "Nuclear waste",
+      "sub_short": "廃棄物",
+      "sub_short_en": "Nuclear",
       "row": 0,
       "relations": [
         {
@@ -85,8 +85,8 @@
       "name_en": "Kinectrics",
       "sub": "原子力技術サービス(加)",
       "sub_en": "Nuclear services (Canada)",
-      "sub_short": "原子力技術",
-      "sub_short_en": "Nuclear services",
+      "sub_short": "原子力",
+      "sub_short_en": "Nuclear",
       "row": 1,
       "relations": [
         {
@@ -112,7 +112,7 @@
       "sub": "造船(原子力艦)",
       "sub_en": "Shipbuilding",
       "sub_short": "造船",
-      "sub_short_en": "Shipbuilding",
+      "sub_short_en": "Ships",
       "row": 1,
       "relations": [
         {
@@ -137,7 +137,7 @@
       "name_en": "Amentum",
       "sub": "政府向け技術サービス",
       "sub_en": "Government technical services",
-      "sub_short": "政府向け技術",
+      "sub_short": "政府技術",
       "sub_short_en": "Gov tech",
       "row": 1,
       "relations": [
@@ -190,7 +190,7 @@
       "sub": "EPC",
       "sub_en": "Engineering & construction",
       "sub_short": "EPC",
-      "sub_short_en": "Engineering",
+      "sub_short_en": "Design",
       "row": 2,
       "relations": [
         {
@@ -228,8 +228,8 @@
       "name_en": "Lantheus",
       "sub": "放射性医薬品",
       "sub_en": "Radiopharmaceuticals",
-      "sub_short": "放射性医薬品",
-      "sub_short_en": "Radiopharma",
+      "sub_short": "放射性薬",
+      "sub_short_en": "Radio Rx",
       "row": 2,
       "relations": [
         {
@@ -254,8 +254,8 @@
       "name_en": "Standard Nuclear",
       "sub": "原子炉燃料",
       "sub_en": "Reactor fuel",
-      "sub_short": "原子炉燃料",
-      "sub_short_en": "Reactor fuel",
+      "sub_short": "核燃料",
+      "sub_short_en": "Nuclear",
       "row": 2,
       "relations": [
         {

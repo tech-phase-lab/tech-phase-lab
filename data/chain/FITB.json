@@ -51,7 +51,7 @@
       "sub": "無線機",
       "sub_en": "Two-way radios",
       "sub_short": "無線機",
-      "sub_short_en": "Two-way radios",
+      "sub_short_en": "Radios",
       "row": 1,
       "relations": [
         {
@@ -76,8 +76,8 @@
       "name_en": "American Shared Hospital Services",
       "sub": "放射線治療機器",
       "sub_en": "Radiation therapy services",
-      "sub_short": "放射線治療機器",
-      "sub_short_en": "Radiotherapy",
+      "sub_short": "放射線",
+      "sub_short_en": "Radiation",
       "row": 1,
       "relations": [
         {
@@ -102,8 +102,8 @@
       "name_en": "Mammoth Energy Services",
       "sub": "エネルギー・インフラ工事",
       "sub_en": "Energy & infrastructure services",
-      "sub_short": "エネルギー",
-      "sub_short_en": "Energy services",
+      "sub_short": "エネ",
+      "sub_short_en": "Energy",
       "row": 1,
       "relations": [
         {
@@ -128,8 +128,8 @@
       "name_en": "Lincoln Educational Services",
       "sub": "職業訓練校",
       "sub_en": "Vocational schools",
-      "sub_short": "職業訓練校",
-      "sub_short_en": "Trade schools",
+      "sub_short": "職業訓練",
+      "sub_short_en": "Schools",
       "row": 1,
       "relations": [
         {
@@ -155,7 +155,7 @@
       "sub": "電子部品",
       "sub_en": "Electronic components",
       "sub_short": "電子部品",
-      "sub_short_en": "Components",
+      "sub_short_en": "Parts",
       "row": 1,
       "relations": [
         {
@@ -180,7 +180,7 @@
       "name_en": "Stratus Properties",
       "sub": "不動産開発",
       "sub_en": "Real estate development",
-      "sub_short": "不動産開発",
+      "sub_short": "不動産",
       "sub_short_en": "Developer",
       "row": 1,
       "relations": [
@@ -206,7 +206,7 @@
       "name_en": "HighPeak Energy",
       "sub": "石油・ガス生産",
       "sub_en": "Oil & gas production",
-      "sub_short": "石油・ガス生産",
+      "sub_short": "石油",
       "sub_short_en": "Oil & gas",
       "row": 1,
       "relations": [
@@ -232,8 +232,8 @@
       "name_en": "Universal Technical Institute",
       "sub": "職業訓練校",
       "sub_en": "Vocational schools",
-      "sub_short": "職業訓練校",
-      "sub_short_en": "Trade schools",
+      "sub_short": "職業訓練",
+      "sub_short_en": "Schools",
       "row": 1,
       "relations": [
         {

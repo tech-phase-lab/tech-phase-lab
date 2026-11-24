@@ -34,8 +34,8 @@
       "name_en": "Caterpillar",
       "sub": "建機・発電機",
       "sub_en": "Machinery & power systems",
-      "sub_short": "建機・発電機",
-      "sub_short_en": "Machinery",
+      "sub_short": "建機",
+      "sub_short_en": "Machines",
       "row": 0,
       "relations": [
         {
@@ -86,8 +86,8 @@
       "name_en": "Vantage Data Centers",
       "sub": "データセンター(非上場)",
       "sub_en": "Data centers (private)",
-      "sub_short": "データセンター",
-      "sub_short_en": "Data centers",
+      "sub_short": "DC",
+      "sub_short_en": "DCs",
       "row": 1,
       "relations": [
         {
@@ -112,8 +112,8 @@
       "name_en": "Tamboran Resources",
       "sub": "天然ガス開発(豪)",
       "sub_en": "Natural gas (Australia)",
-      "sub_short": "天然ガス開発",
-      "sub_short_en": "Natural gas",
+      "sub_short": "天然ガス",
+      "sub_short_en": "Gas",
       "row": 1,
       "relations": [
         {
@@ -138,8 +138,8 @@
       "name_en": "Fervo Energy",
       "sub": "次世代地熱",
       "sub_en": "Enhanced geothermal",
-      "sub_short": "次世代地熱",
-      "sub_short_en": "Geothermal",
+      "sub_short": "地熱",
+      "sub_short_en": "Geo",
       "row": 1,
       "relations": [
         {
@@ -164,8 +164,8 @@
       "name_en": "Halliburton",
       "sub": "油田サービス",
       "sub_en": "Oilfield services",
-      "sub_short": "油田サービス",
-      "sub_short_en": "Oilfield svcs",
+      "sub_short": "油田",
+      "sub_short_en": "Oilfield",
       "row": 2,
       "relations": [
         {
@@ -268,8 +268,8 @@
       "name_en": "RPC",
       "sub": "油田サービス",
       "sub_en": "Oilfield services",
-      "sub_short": "油田サービス",
-      "sub_short_en": "Oilfield svcs",
+      "sub_short": "油田",
+      "sub_short_en": "Oilfield",
       "row": 2,
       "relations": [
         {
@@ -294,7 +294,7 @@
       "name_en": "Atlas Energy Solutions",
       "sub": "フラック砂",
       "sub_en": "Frac sand",
-      "sub_short": "フラック砂",
+      "sub_short": "採掘砂",
       "sub_short_en": "Frac sand",
       "row": 2,
       "relations": [

@@ -72,7 +72,7 @@
       "sub": "給与・人事サービス",
       "sub_en": "Payroll & HR services",
       "sub_short": "給与",
-      "sub_short_en": "Payroll services",
+      "sub_short_en": "Payroll",
       "row": 1,
       "relations": [
         {
@@ -97,7 +97,7 @@
       "sub": "給与・人事サービス",
       "sub_en": "Payroll & HR services",
       "sub_short": "給与",
-      "sub_short_en": "Payroll services",
+      "sub_short_en": "Payroll",
       "row": 1,
       "relations": [
         {
@@ -122,7 +122,7 @@
       "sub": "給与・人事ソフト",
       "sub_en": "Payroll & HR software",
       "sub_short": "給与",
-      "sub_short_en": "Payroll software",
+      "sub_short_en": "Payroll",
       "row": 1,
       "relations": [
         {
@@ -173,7 +173,7 @@
       "sub": "人事・財務ソフト",
       "sub_en": "HR & finance software",
       "sub_short": "人事",
-      "sub_short_en": "HR & finance",
+      "sub_short_en": "HR",
       "row": 1,
       "relations": [
         {
@@ -197,8 +197,8 @@
       "name": "Oracle",
       "sub": "業務ソフト・DB",
       "sub_en": "Business software & databases",
-      "sub_short": "業務ソフト",
-      "sub_short_en": "Business apps",
+      "sub_short": "業務IT",
+      "sub_short_en": "Biz apps",
       "row": 1,
       "relations": [
         {
@@ -222,8 +222,8 @@
       "name": "SAP",
       "sub": "業務ソフト",
       "sub_en": "Business software",
-      "sub_short": "業務ソフト",
-      "sub_short_en": "Business apps",
+      "sub_short": "業務IT",
+      "sub_short_en": "Biz apps",
       "row": 1,
       "relations": [
         {
@@ -247,7 +247,7 @@
       "name": "ServiceNow",
       "sub": "業務ワークフロー",
       "sub_en": "Enterprise workflow",
-      "sub_short": "業務フロー",
+      "sub_short": "業務IT",
       "sub_short_en": "Workflow",
       "row": 1,
       "relations": [
@@ -273,7 +273,7 @@
       "sub": "会計・給与ソフト",
       "sub_en": "Accounting & payroll software",
       "sub_short": "会計",
-      "sub_short_en": "Accounting apps",
+      "sub_short_en": "Accounts",
       "row": 1,
       "relations": [
         {

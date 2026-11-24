@@ -24,7 +24,7 @@
       "name_en": "Lear",
       "sub": "シート・電装",
       "sub_en": "Seating & e-systems",
-      "sub_short": "シート・電装",
+      "sub_short": "シート",
       "sub_short_en": "Seating",
       "row": 0,
       "relations": [
@@ -50,7 +50,7 @@
       "name_en": "Adient",
       "sub": "自動車シート",
       "sub_en": "Automotive seating",
-      "sub_short": "自動車シート",
+      "sub_short": "シート",
       "sub_short_en": "Car seats",
       "row": 0,
       "relations": [
@@ -77,7 +77,7 @@
       "sub": "自動車",
       "sub_en": "Automaker",
       "sub_short": "自動車",
-      "sub_short_en": "Automaker",
+      "sub_short_en": "Cars",
       "row": 0,
       "relations": [
         {
@@ -103,7 +103,7 @@
       "sub": "自動車(ドイツ)",
       "sub_en": "Automaker (Germany)",
       "sub_short": "自動車",
-      "sub_short_en": "Automaker",
+      "sub_short_en": "Cars",
       "row": 0,
       "relations": [
         {

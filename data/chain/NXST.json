@@ -25,8 +25,8 @@
       "name": "ワーナー・ブラザース・ディスカバリー",
       "sub": "フードネットワーク共同保有",
       "sub_en": "TV Food Network partner",
-      "sub_short": "TV局共同保有",
-      "sub_short_en": "Food Network",
+      "sub_short": "TV局",
+      "sub_short_en": "TV",
       "row": 0,
       "relations": [
         {
@@ -52,7 +52,7 @@
       "sub": "動画配信",
       "sub_en": "Video streaming",
       "sub_short": "動画配信",
-      "sub_short_en": "Video streaming",
+      "sub_short_en": "Video",
       "row": 0,
       "relations": [
         {
@@ -78,7 +78,7 @@
       "sub": "動画配信",
       "sub_en": "Video streaming",
       "sub_short": "動画配信",
-      "sub_short_en": "Video streaming",
+      "sub_short_en": "Video",
       "row": 0,
       "relations": [
         {
@@ -104,7 +104,7 @@
       "sub": "動画配信",
       "sub_en": "Video streaming",
       "sub_short": "動画配信",
-      "sub_short_en": "Video streaming",
+      "sub_short_en": "Video",
       "row": 0,
       "relations": [
         {
@@ -129,8 +129,8 @@
       "name": "アルファベット",
       "sub": "動画・検索広告",
       "sub_en": "Online video & ads",
-      "sub_short": "動画・検索広告",
-      "sub_short_en": "Online video",
+      "sub_short": "動画",
+      "sub_short_en": "Video",
       "row": 0,
       "relations": [
         {
@@ -155,8 +155,8 @@
       "name": "メタ・プラットフォームズ",
       "sub": "ネット広告",
       "sub_en": "Online advertising",
-      "sub_short": "ネット広告",
-      "sub_short_en": "Online ads",
+      "sub_short": "広告",
+      "sub_short_en": "Ads",
       "row": 0,
       "relations": [
         {
@@ -182,7 +182,7 @@
       "sub": "放送",
       "sub_en": "Broadcasting",
       "sub_short": "放送",
-      "sub_short_en": "Broadcasting",
+      "sub_short_en": "Broadcast",
       "row": 0,
       "relations": [
         {

@@ -38,7 +38,7 @@
       "name_en": "Innovative Solutions & Support",
       "sub": "航空電子機器",
       "sub_en": "Avionics",
-      "sub_short": "航空電子機器",
+      "sub_short": "航空電子",
       "sub_short_en": "Avionics",
       "row": 0,
       "relations": [
@@ -64,7 +64,7 @@
       "name_en": "AIRO Group",
       "sub": "航空電子機器",
       "sub_en": "Avionics",
-      "sub_short": "航空電子機器",
+      "sub_short": "航空電子",
       "sub_short_en": "Avionics",
       "row": 0,
       "relations": [
@@ -90,8 +90,8 @@
       "name_en": "StandardAero",
       "sub": "エンジン整備",
       "sub_en": "Engine MRO",
-      "sub_short": "エンジン整備",
-      "sub_short_en": "Engine MRO",
+      "sub_short": "エンジン",
+      "sub_short_en": "Engines",
       "row": 0,
       "relations": [
         {
@@ -116,8 +116,8 @@
       "name_en": "Vertical Aerospace",
       "sub": "電動航空機",
       "sub_en": "Electric aircraft",
-      "sub_short": "電動航空機",
-      "sub_short_en": "Electric planes",
+      "sub_short": "eVTOL",
+      "sub_short_en": "eVTOL",
       "row": 1,
       "relations": [
         {
@@ -142,8 +142,8 @@
       "name_en": "HEICO",
       "sub": "航空部品・電子",
       "sub_en": "Aerospace parts & electronics",
-      "sub_short": "航空部品・電子",
-      "sub_short_en": "Aerospace parts",
+      "sub_short": "航空部品",
+      "sub_short_en": "Aircraft",
       "row": 1,
       "relations": [
         {
@@ -168,8 +168,8 @@
       "name_en": "VSE Corporation",
       "sub": "航空部品の流通・整備",
       "sub_en": "Aviation parts distribution & MRO",
-      "sub_short": "航空部品の流通",
-      "sub_short_en": "Aviation parts",
+      "sub_short": "航空部品",
+      "sub_short_en": "Aircraft",
       "row": 1,
       "relations": [
         {
@@ -195,7 +195,7 @@
       "sub": "蓄電池",
       "sub_en": "Energy storage",
       "sub_short": "蓄電池",
-      "sub_short_en": "Energy storage",
+      "sub_short_en": "Storage",
       "row": 1,
       "relations": [
         {
@@ -247,7 +247,7 @@
       "sub": "住宅設備",
       "sub_en": "Home technology",
       "sub_short": "住宅設備",
-      "sub_short_en": "Home technology",
+      "sub_short_en": "Home IT",
       "row": 2,
       "relations": [
         {
@@ -272,7 +272,7 @@
       "name_en": "Quantinuum",
       "sub": "量子コンピューター",
       "sub_en": "Quantum computing",
-      "sub_short": "量子計算機",
+      "sub_short": "量子",
       "sub_short_en": "Quantum",
       "row": 2,
       "relations": [
@@ -298,7 +298,7 @@
       "name_en": "Sundyne",
       "sub": "ポンプ・圧縮機",
       "sub_en": "Pumps & compressors",
-      "sub_short": "ポンプ・圧縮機",
+      "sub_short": "ポンプ",
       "sub_short_en": "Pumps",
       "row": 2,
       "relations": [
@@ -324,7 +324,7 @@
       "name_en": "Johnson Matthey",
       "sub": "触媒・化学",
       "sub_en": "Catalysts & chemicals",
-      "sub_short": "触媒・化学",
+      "sub_short": "触媒",
       "sub_short_en": "Catalysts",
       "row": 2,
       "relations": [
@@ -350,8 +350,8 @@
       "name_en": "RTX",
       "sub": "航空宇宙・防衛",
       "sub_en": "Aerospace & defense",
-      "sub_short": "航空宇宙・防衛",
-      "sub_short_en": "Aerospace",
+      "sub_short": "航空宇宙",
+      "sub_short_en": "Aero",
       "row": 3,
       "relations": [
         {
@@ -377,7 +377,7 @@
       "sub": "ビル制御",
       "sub_en": "Building automation",
       "sub_short": "ビル制御",
-      "sub_short_en": "Building control",
+      "sub_short_en": "Controls",
       "row": 3,
       "relations": [
         {
@@ -402,8 +402,8 @@
       "name_en": "Emerson Electric",
       "sub": "産業オートメーション",
       "sub_en": "Industrial automation",
-      "sub_short": "産業自動化",
-      "sub_short_en": "Automation",
+      "sub_short": "自動化",
+      "sub_short_en": "Robotics",
       "row": 3,
       "relations": [
         {
@@ -428,8 +428,8 @@
       "name_en": "Rockwell Automation",
       "sub": "産業オートメーション",
       "sub_en": "Industrial automation",
-      "sub_short": "産業自動化",
-      "sub_short_en": "Automation",
+      "sub_short": "自動化",
+      "sub_short_en": "Robotics",
       "row": 3,
       "relations": [
         {
@@ -454,7 +454,7 @@
       "name_en": "Zebra Technologies",
       "sub": "バーコード機器",
       "sub_en": "Barcode & mobile computing",
-      "sub_short": "バーコード機器",
+      "sub_short": "読取機器",
       "sub_short_en": "Barcode",
       "row": 3,
       "relations": [
@@ -493,8 +493,8 @@
       "name_en": "Veeva Systems",
       "sub": "製薬向けクラウド",
       "sub_en": "Life-sciences cloud",
-      "sub_short": "製薬クラウド",
-      "sub_short_en": "Life sci cloud",
+      "sub_short": "製薬IT",
+      "sub_short_en": "Life sci",
       "row": 3,
       "relations": [
         {

@@ -26,7 +26,7 @@
       "sub": "大口顧客",
       "sub_en": "Major customer",
       "sub_short": "大口顧客",
-      "sub_short_en": "Major customer",
+      "sub_short_en": "Customer",
       "row": 0,
       "relations": [
         {
@@ -51,7 +51,7 @@
       "name": "米国郵便公社",
       "sub": "航空貨物の顧客",
       "sub_en": "Air cargo customer",
-      "sub_short": "航空貨物の顧客",
+      "sub_short": "航空貨物",
       "sub_short_en": "Air cargo",
       "row": 0,
       "relations": [
@@ -78,7 +78,7 @@
       "sub": "医療物流",
       "sub_en": "Healthcare logistics",
       "sub_short": "医療物流",
-      "sub_short_en": "Health logistics",
+      "sub_short_en": "Health",
       "row": 0,
       "relations": [
         {

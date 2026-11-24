@@ -30,7 +30,7 @@
       "name": "TSMC",
       "sub": "半導体受託製造",
       "sub_en": "Foundry",
-      "sub_short": "半導体受託製造",
+      "sub_short": "受託生産",
       "sub_short_en": "Foundry",
       "row": 0,
       "relations": [
@@ -72,8 +72,8 @@
       "name": "サムスン電子",
       "sub": "メモリ・半導体",
       "sub_en": "Memory & chips",
-      "sub_short": "メモリ・半導体",
-      "sub_short_en": "Memory & chips",
+      "sub_short": "メモリ",
+      "sub_short_en": "Memory",
       "row": 0,
       "relations": [
         {
@@ -100,8 +100,8 @@
       "name": "リガク・ホールディングス",
       "sub": "X線分析装置",
       "sub_en": "X-ray analytical equipment",
-      "sub_short": "X線分析装置",
-      "sub_short_en": "X-ray analysis",
+      "sub_short": "X線装置",
+      "sub_short_en": "X-ray",
       "row": 1,
       "relations": [
         {
@@ -139,8 +139,8 @@
       "name": "SKハイニックス",
       "sub": "メモリ半導体",
       "sub_en": "Memory chips",
-      "sub_short": "メモリ半導体",
-      "sub_short_en": "Memory chips",
+      "sub_short": "メモリ",
+      "sub_short_en": "Memory",
       "row": 0,
       "relations": [
         {
@@ -165,8 +165,8 @@
       "name": "ラム・リサーチ",
       "sub": "半導体製造装置",
       "sub_en": "Chip equipment",
-      "sub_short": "半導体製造装置",
-      "sub_short_en": "Chip equipment",
+      "sub_short": "製造装置",
+      "sub_short_en": "Chip tools",
       "row": 1,
       "relations": [
         {
@@ -193,7 +193,7 @@
       "name": "コーニング",
       "sub": "ガラス・素材",
       "sub_en": "Glass & materials",
-      "sub_short": "ガラス・素材",
+      "sub_short": "ガラス",
       "sub_short_en": "Glass",
       "row": 1,
       "relations": [
@@ -221,7 +221,7 @@
       "name": "MKSインスツルメンツ",
       "sub": "半導体装置部品",
       "sub_en": "Equipment subsystems",
-      "sub_short": "半導体装置部品",
+      "sub_short": "装置部品",
       "sub_short_en": "Tool parts",
       "row": 1,
       "relations": [
@@ -249,8 +249,8 @@
       "name": "レゾナック・ホールディングス",
       "sub": "半導体材料",
       "sub_en": "Semiconductor materials",
-      "sub_short": "半導体材料",
-      "sub_short_en": "Chip materials",
+      "sub_short": "材料",
+      "sub_short_en": "Materials",
       "row": 1,
       "relations": [
         {
@@ -277,8 +277,8 @@
       "name": "KLA",
       "sub": "半導体検査・計測",
       "sub_en": "Process control",
-      "sub_short": "半導体検査",
-      "sub_short_en": "Process control",
+      "sub_short": "検査装置",
+      "sub_short_en": "Controls",
       "row": 2,
       "relations": [
         {
@@ -315,7 +315,7 @@
       "name": "Nova",
       "sub": "半導体計測",
       "sub_en": "Metrology",
-      "sub_short": "半導体計測",
+      "sub_short": "計測装置",
       "sub_short_en": "Metrology",
       "row": 2,
       "relations": [
@@ -353,8 +353,8 @@
       "name": "Camtek",
       "sub": "検査・計測装置",
       "sub_en": "Inspection & metrology",
-      "sub_short": "検査・計測装置",
-      "sub_short_en": "Inspection",
+      "sub_short": "検査",
+      "sub_short_en": "Testing",
       "row": 2,
       "relations": [
         {

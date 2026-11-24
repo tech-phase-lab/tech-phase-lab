@@ -34,7 +34,7 @@
       "sub": "医療教育(非上場)",
       "sub_en": "Healthcare learning (private)",
       "sub_short": "医療教育",
-      "sub_short_en": "Health training",
+      "sub_short_en": "Training",
       "row": 0,
       "relations": [
         {
@@ -59,8 +59,8 @@
       "name_en": "RLDatix",
       "sub": "医療ソフト(非上場)",
       "sub_en": "Healthcare software (private)",
-      "sub_short": "医療ソフト",
-      "sub_short_en": "Health software",
+      "sub_short": "医療IT",
+      "sub_short_en": "Health IT",
       "row": 0,
       "relations": [
         {
@@ -85,8 +85,8 @@
       "name_en": "Symplr",
       "sub": "医療ソフト(非上場)",
       "sub_en": "Healthcare software (private)",
-      "sub_short": "医療ソフト",
-      "sub_short_en": "Health software",
+      "sub_short": "医療IT",
+      "sub_short_en": "Health IT",
       "row": 0,
       "relations": [
         {
@@ -112,7 +112,7 @@
       "sub": "医療人材",
       "sub_en": "Healthcare staffing",
       "sub_short": "医療人材",
-      "sub_short_en": "Health staffing",
+      "sub_short_en": "Staffing",
       "row": 0,
       "relations": [
         {
@@ -137,8 +137,8 @@
       "name_en": "Cornerstone OnDemand",
       "sub": "人材育成ソフト(非上場)",
       "sub_en": "Learning software (private)",
-      "sub_short": "人材育成ソフト",
-      "sub_short_en": "Learning apps",
+      "sub_short": "研修",
+      "sub_short_en": "Edtech",
       "row": 1,
       "relations": [
         {
@@ -164,7 +164,7 @@
       "sub": "人事・勤怠ソフト(非上場)",
       "sub_en": "HR & workforce software (private)",
       "sub_short": "人事",
-      "sub_short_en": "HR software",
+      "sub_short_en": "HR",
       "row": 1,
       "relations": [
         {
@@ -189,7 +189,7 @@
       "name_en": "Recruit Holdings (Indeed)",
       "sub": "求人サイト",
       "sub_en": "Job sites",
-      "sub_short": "求人サイト",
+      "sub_short": "求人",
       "sub_short_en": "Job sites",
       "row": 1,
       "relations": [
@@ -216,7 +216,7 @@
       "sub": "人事・財務クラウド",
       "sub_en": "HR & finance cloud",
       "sub_short": "人事",
-      "sub_short_en": "HR & finance",
+      "sub_short_en": "HR",
       "row": 2,
       "relations": [
         {
@@ -241,7 +241,7 @@
       "name_en": "Oracle",
       "sub": "ソフトウェア",
       "sub_en": "Software",
-      "sub_short": "ソフトウェア",
+      "sub_short": "ソフト",
       "sub_short_en": "Software",
       "row": 2,
       "relations": [
@@ -267,7 +267,7 @@
       "name_en": "SAP",
       "sub": "ソフトウェア(独)",
       "sub_en": "Software (Germany)",
-      "sub_short": "ソフトウェア",
+      "sub_short": "ソフト",
       "sub_short_en": "Software",
       "row": 2,
       "relations": [

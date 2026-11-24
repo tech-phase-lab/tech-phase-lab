@@ -29,7 +29,7 @@
       "name_en": "Franco-Nevada",
       "sub": "ロイヤルティ",
       "sub_en": "Royalties",
-      "sub_short": "ロイヤルティ",
+      "sub_short": "権益",
       "sub_short_en": "Royalties",
       "row": 0,
       "relations": [
@@ -55,7 +55,7 @@
       "name_en": "Royal Gold (formerly Sandstorm)",
       "sub": "ロイヤルティ",
       "sub_en": "Royalties",
-      "sub_short": "ロイヤルティ",
+      "sub_short": "権益",
       "sub_short_en": "Royalties",
       "row": 0,
       "relations": [
@@ -82,7 +82,7 @@
       "sub": "金鉱山(アラスカ)",
       "sub_en": "Gold mining (Alaska)",
       "sub_short": "金鉱山",
-      "sub_short_en": "Gold mining",
+      "sub_short_en": "Gold",
       "row": 1,
       "relations": [
         {
@@ -108,7 +108,7 @@
       "sub": "金開発(カナダ)",
       "sub_en": "Gold development (Canada)",
       "sub_short": "金開発",
-      "sub_short_en": "Gold development",
+      "sub_short_en": "Gold",
       "row": 1,
       "relations": [
         {
@@ -134,7 +134,7 @@
       "sub": "金鉱山",
       "sub_en": "Gold mining",
       "sub_short": "金鉱山",
-      "sub_short_en": "Gold mining",
+      "sub_short_en": "Gold",
       "row": 1,
       "relations": [
         {
@@ -160,7 +160,7 @@
       "sub": "金鉱山(ガーナ)",
       "sub_en": "Gold mining (Ghana)",
       "sub_short": "金鉱山",
-      "sub_short_en": "Gold mining",
+      "sub_short_en": "Gold",
       "row": 2,
       "relations": [
         {
@@ -185,7 +185,7 @@
       "name_en": "Gold Royalty",
       "sub": "ロイヤルティ",
       "sub_en": "Royalties",
-      "sub_short": "ロイヤルティ",
+      "sub_short": "権益",
       "sub_short_en": "Royalties",
       "row": 0,
       "relations": [
@@ -212,7 +212,7 @@
       "sub": "金銀開発",
       "sub_en": "Gold & silver development",
       "sub_short": "金銀開発",
-      "sub_short_en": "Gold mining",
+      "sub_short_en": "Gold",
       "row": 2,
       "relations": [
         {
@@ -238,7 +238,7 @@
       "sub": "金鉱山(ジンバブエ)",
       "sub_en": "Gold mining (Zimbabwe)",
       "sub_short": "金鉱山",
-      "sub_short_en": "Gold mining",
+      "sub_short_en": "Gold",
       "row": 2,
       "relations": [
         {

@@ -22,8 +22,8 @@
       "name": "Tモバイル・US",
       "sub": "無線通信事業者",
       "sub_en": "Wireless carrier",
-      "sub_short": "無線通信事業者",
-      "sub_short_en": "Wireless carrier",
+      "sub_short": "無線通信",
+      "sub_short_en": "Carrier",
       "row": 0,
       "relations": [
         {
@@ -61,8 +61,8 @@
       "name": "AT&Tワイヤレス",
       "sub": "無線通信事業者",
       "sub_en": "Wireless carrier",
-      "sub_short": "無線通信事業者",
-      "sub_short_en": "Wireless carrier",
+      "sub_short": "無線通信",
+      "sub_short_en": "Carrier",
       "row": 0,
       "relations": [
         {
@@ -87,8 +87,8 @@
       "name": "ベライゾン・ワイヤレス",
       "sub": "無線通信事業者",
       "sub_en": "Wireless carrier",
-      "sub_short": "無線通信事業者",
-      "sub_short_en": "Wireless carrier",
+      "sub_short": "無線通信",
+      "sub_short_en": "Carrier",
       "row": 0,
       "relations": [
         {
@@ -113,8 +113,8 @@
       "name": "アメリカン・タワー",
       "sub": "通信タワー",
       "sub_en": "Tower company",
-      "sub_short": "通信タワー",
-      "sub_short_en": "Tower company",
+      "sub_short": "鉄塔",
+      "sub_short_en": "Towers",
       "row": 0,
       "relations": [
         {
@@ -152,8 +152,8 @@
       "name": "クラウン・キャッスル",
       "sub": "通信タワー",
       "sub_en": "Tower company",
-      "sub_short": "通信タワー",
-      "sub_short_en": "Tower company",
+      "sub_short": "鉄塔",
+      "sub_short_en": "Towers",
       "row": 0,
       "relations": [
         {

@@ -26,7 +26,7 @@
       "sub": "オフィス・スタジオREIT",
       "sub_en": "Office & studio REIT",
       "sub_short": "オフィス",
-      "sub_short_en": "Office REIT",
+      "sub_short_en": "REIT",
       "row": 0,
       "relations": [
         {
@@ -52,7 +52,7 @@
       "sub": "投資会社",
       "sub_en": "Investment firm",
       "sub_short": "投資会社",
-      "sub_short_en": "Investment firm",
+      "sub_short_en": "Investing",
       "row": 0,
       "relations": [
         {
@@ -77,8 +77,8 @@
       "name_en": "Citadel",
       "sub": "ヘッジファンド",
       "sub_en": "Hedge fund",
-      "sub_short": "ヘッジファンド",
-      "sub_short_en": "Hedge fund",
+      "sub_short": "ファンド",
+      "sub_short_en": "Fund",
       "row": 0,
       "relations": [
         {
@@ -104,7 +104,7 @@
       "sub": "不動産(ニューヨーク)",
       "sub_en": "Real estate (New York)",
       "sub_short": "不動産",
-      "sub_short_en": "Real estate",
+      "sub_short_en": "Property",
       "row": 0,
       "relations": [
         {
@@ -129,8 +129,8 @@
       "name_en": "Alexander's",
       "sub": "不動産REIT(ニューヨーク)",
       "sub_en": "Real estate REIT (New York)",
-      "sub_short": "不動産REIT",
-      "sub_short_en": "Real estate REIT",
+      "sub_short": "REIT",
+      "sub_short_en": "REIT",
       "row": 1,
       "relations": [
         {
@@ -155,8 +155,8 @@
       "name_en": "LB Pharmaceuticals",
       "sub": "中枢神経の医薬",
       "sub_en": "CNS drugs",
-      "sub_short": "中枢神経の医薬",
-      "sub_short_en": "CNS drugs",
+      "sub_short": "神経薬",
+      "sub_short_en": "CNS",
       "row": 1,
       "relations": [
         {

@@ -29,7 +29,7 @@
       "sub": "投資会社",
       "sub_en": "Investment firm",
       "sub_short": "投資会社",
-      "sub_short_en": "Investment firm",
+      "sub_short_en": "Investing",
       "row": 0,
       "relations": [
         {
@@ -54,8 +54,8 @@
       "name_en": "Genuine Parts",
       "sub": "自動車部品流通",
       "sub_en": "Auto parts distribution",
-      "sub_short": "自動車部品流通",
-      "sub_short_en": "Auto parts",
+      "sub_short": "車部品",
+      "sub_short_en": "Car parts",
       "row": 1,
       "relations": [
         {
@@ -81,7 +81,7 @@
       "sub": "補修部品",
       "sub_en": "Aftermarket parts",
       "sub_short": "補修部品",
-      "sub_short_en": "Aftermarket",
+      "sub_short_en": "Parts",
       "row": 1,
       "relations": [
         {
@@ -106,8 +106,8 @@
       "name_en": "CarParts.com",
       "sub": "自動車部品のネット販売",
       "sub_en": "Online auto parts",
-      "sub_short": "車部品通販",
-      "sub_short_en": "Auto parts",
+      "sub_short": "車部品",
+      "sub_short_en": "Car parts",
       "row": 1,
       "relations": [
         {

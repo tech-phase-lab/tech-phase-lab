@@ -32,8 +32,8 @@
       "name_en": "Honeywell",
       "sub": "産業・航空宇宙",
       "sub_en": "Industrial & aerospace",
-      "sub_short": "産業・航空宇宙",
-      "sub_short_en": "Industrial goods",
+      "sub_short": "産業",
+      "sub_short_en": "Industrial",
       "row": 0,
       "relations": [
         {
@@ -58,8 +58,8 @@
       "name_en": "ADI Global Distribution",
       "sub": "セキュリティ機器の流通",
       "sub_en": "Security products distribution",
-      "sub_short": "防犯機器流通",
-      "sub_short_en": "Security gear",
+      "sub_short": "防犯",
+      "sub_short_en": "Security",
       "row": 0,
       "relations": [
         {
@@ -84,8 +84,8 @@
       "name_en": "Alarm.com",
       "sub": "スマートホームのクラウド",
       "sub_en": "Connected property platform",
-      "sub_short": "スマートホーム",
-      "sub_short_en": "Smart property",
+      "sub_short": "家電",
+      "sub_short_en": "Property",
       "row": 0,
       "relations": [
         {
@@ -137,7 +137,7 @@
       "sub": "リモコン・空調制御",
       "sub_en": "Remotes & climate controls",
       "sub_short": "リモコン",
-      "sub_short_en": "Remote controls",
+      "sub_short_en": "Remotes",
       "row": 2,
       "relations": [
         {
@@ -162,8 +162,8 @@
       "name_en": "Madison Air Solutions",
       "sub": "空調・換気機器",
       "sub_en": "Air handling & ventilation",
-      "sub_short": "空調・換気機器",
-      "sub_short_en": "Air handling",
+      "sub_short": "空調",
+      "sub_short_en": "HVAC",
       "row": 2,
       "relations": [
         {

@@ -35,7 +35,7 @@
       "sub": "家電(トルコ)",
       "sub_en": "Appliances (Turkey)",
       "sub_short": "家電",
-      "sub_short_en": "Appliances",
+      "sub_short_en": "Appliance",
       "row": 0,
       "relations": [
         {
@@ -61,7 +61,7 @@
       "sub": "工場向け風力発電",
       "sub_en": "On-site wind power",
       "sub_short": "風力発電",
-      "sub_short_en": "Wind power",
+      "sub_short_en": "Wind",
       "row": 0,
       "relations": [
         {
@@ -87,7 +87,7 @@
       "sub": "家電・家具のリース販売",
       "sub_en": "Lease-to-own retail",
       "sub_short": "家電",
-      "sub_short_en": "Rent-to-own",
+      "sub_short_en": "Rentals",
       "row": 1,
       "relations": [
         {
@@ -113,7 +113,7 @@
       "sub": "家電(スウェーデン)",
       "sub_en": "Appliances (Sweden)",
       "sub_short": "家電",
-      "sub_short_en": "Appliances",
+      "sub_short_en": "Appliance",
       "row": 2,
       "relations": [
         {
@@ -139,7 +139,7 @@
       "sub": "家電(中国)",
       "sub_en": "Appliances (China)",
       "sub_short": "家電",
-      "sub_short_en": "Appliances",
+      "sub_short_en": "Appliance",
       "row": 2,
       "relations": [
         {
@@ -165,7 +165,7 @@
       "sub": "家電(韓国)",
       "sub_en": "Appliances (Korea)",
       "sub_short": "家電",
-      "sub_short_en": "Appliances",
+      "sub_short_en": "Appliance",
       "row": 2,
       "relations": [
         {
@@ -190,8 +190,8 @@
       "name_en": "Samsung Electronics",
       "sub": "家電・半導体(韓国)",
       "sub_en": "Appliances & chips (Korea)",
-      "sub_short": "家電・半導体",
-      "sub_short_en": "Appliances",
+      "sub_short": "家電",
+      "sub_short_en": "Appliance",
       "row": 2,
       "relations": [
         {
@@ -217,7 +217,7 @@
       "sub": "業務用・家庭用調理機器",
       "sub_en": "Commercial & residential cooking",
       "sub_short": "調理機器",
-      "sub_short_en": "Cooking gear",
+      "sub_short_en": "Kitchen",
       "row": 2,
       "relations": [
         {
@@ -242,7 +242,7 @@
       "name_en": "Fortune Brands Innovations",
       "sub": "水栓・住宅設備",
       "sub_en": "Faucets & home products",
-      "sub_short": "水栓・住宅設備",
+      "sub_short": "水栓",
       "sub_short_en": "Faucets",
       "row": 2,
       "relations": [

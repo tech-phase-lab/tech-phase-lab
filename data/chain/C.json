@@ -78,7 +78,7 @@
       "sub": "IT流通",
       "sub_en": "IT distribution",
       "sub_short": "IT流通",
-      "sub_short_en": "IT distribution",
+      "sub_short_en": "IT",
       "row": 1,
       "relations": [
         {
@@ -103,8 +103,8 @@
       "name_en": "Science Applications International",
       "sub": "政府ITサービス",
       "sub_en": "Government IT services",
-      "sub_short": "政府ITサービス",
-      "sub_short_en": "Government IT",
+      "sub_short": "政府IT",
+      "sub_short_en": "Gov IT",
       "row": 1,
       "relations": [
         {
@@ -129,8 +129,8 @@
       "name_en": "Dana",
       "sub": "自動車部品",
       "sub_en": "Auto parts",
-      "sub_short": "自動車部品",
-      "sub_short_en": "Auto parts",
+      "sub_short": "車部品",
+      "sub_short_en": "Car parts",
       "row": 1,
       "relations": [
         {
@@ -181,8 +181,8 @@
       "name_en": "Carvana",
       "sub": "中古車ネット販売",
       "sub_en": "Online used cars",
-      "sub_short": "中古車販売",
-      "sub_short_en": "Online used cars",
+      "sub_short": "中古車",
+      "sub_short_en": "Cars",
       "row": 1,
       "relations": [
         {
@@ -208,7 +208,7 @@
       "sub": "AI創薬",
       "sub_en": "AI drug discovery",
       "sub_short": "AI創薬",
-      "sub_short_en": "AI drug R&D",
+      "sub_short_en": "AI drugs",
       "row": 1,
       "relations": [
         {

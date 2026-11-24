@@ -86,8 +86,8 @@
       "name_en": "Microsoft",
       "sub": "ソフトウェア・AI",
       "sub_en": "Software & AI",
-      "sub_short": "ソフトウェア",
-      "sub_short_en": "Software & AI",
+      "sub_short": "ソフト",
+      "sub_short_en": "Software",
       "row": 1,
       "relations": [
         {
@@ -113,7 +113,7 @@
       "sub": "生成AI(非上場)",
       "sub_en": "Generative AI (private)",
       "sub_short": "生成AI",
-      "sub_short_en": "Generative AI",
+      "sub_short_en": "AI",
       "row": 1,
       "relations": [
         {
@@ -165,7 +165,7 @@
       "sub": "新聞(非上場)",
       "sub_en": "Newspaper (private)",
       "sub_short": "新聞",
-      "sub_short_en": "Newspaper",
+      "sub_short_en": "News",
       "row": 2,
       "relations": [
         {
@@ -190,8 +190,8 @@
       "name_en": "News Corp (The Wall Street Journal)",
       "sub": "新聞・メディア",
       "sub_en": "News media",
-      "sub_short": "新聞・メディア",
-      "sub_short_en": "News media",
+      "sub_short": "新聞",
+      "sub_short_en": "News",
       "row": 2,
       "relations": [
         {
@@ -242,8 +242,8 @@
       "name_en": "Walt Disney (ESPN)",
       "sub": "娯楽・メディア",
       "sub_en": "Entertainment & media",
-      "sub_short": "娯楽・メディア",
-      "sub_short_en": "Entertainment",
+      "sub_short": "娯楽",
+      "sub_short_en": "Media",
       "row": 2,
       "relations": [
         {
@@ -269,7 +269,7 @@
       "sub": "SNS・AI",
       "sub_en": "Social media & AI",
       "sub_short": "SNS・AI",
-      "sub_short_en": "Social media",
+      "sub_short_en": "Social",
       "row": 2,
       "relations": [
         {

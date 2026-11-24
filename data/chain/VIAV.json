@@ -30,7 +30,7 @@
       "sub": "半導体",
       "sub_en": "Semiconductors",
       "sub_short": "半導体",
-      "sub_short_en": "Semiconductors",
+      "sub_short_en": "Chips",
       "row": 0,
       "relations": [
         {
@@ -56,8 +56,8 @@
       "name": "Cisco",
       "sub": "ネットワーク",
       "sub_en": "Networking",
-      "sub_short": "ネットワーク",
-      "sub_short_en": "Networking",
+      "sub_short": "通信網",
+      "sub_short_en": "Network",
       "row": 0,
       "relations": [
         {
@@ -83,8 +83,8 @@
       "name": "Ciena",
       "sub": "光ネットワーク",
       "sub_en": "Optical networking",
-      "sub_short": "光ネットワーク",
-      "sub_short_en": "Optical nets",
+      "sub_short": "光通信",
+      "sub_short_en": "Optics",
       "row": 0,
       "relations": [
         {
@@ -165,7 +165,7 @@
       "sub": "通信機器",
       "sub_en": "Telecom equipment",
       "sub_short": "通信機器",
-      "sub_short_en": "Telecom gear",
+      "sub_short_en": "Telecom",
       "row": 0,
       "relations": [
         {
@@ -192,7 +192,7 @@
       "sub": "通信機器",
       "sub_en": "Telecom equipment",
       "sub_short": "通信機器",
-      "sub_short_en": "Telecom gear",
+      "sub_short_en": "Telecom",
       "row": 0,
       "relations": [
         {
@@ -218,7 +218,7 @@
       "name": "Lockheed Martin",
       "sub": "防衛・航空",
       "sub_en": "Defense & aerospace",
-      "sub_short": "防衛・航空",
+      "sub_short": "防衛",
       "sub_short_en": "Defense",
       "row": 0,
       "relations": [
@@ -244,7 +244,7 @@
       "sub": "計測機器",
       "sub_en": "Test & measurement",
       "sub_short": "計測機器",
-      "sub_short_en": "Test equipment",
+      "sub_short_en": "Testing",
       "row": 1,
       "relations": [
         {

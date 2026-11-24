@@ -71,8 +71,8 @@
       "name": "エクスパンド・エナジー",
       "sub": "天然ガス生産者",
       "sub_en": "Gas producer",
-      "sub_short": "天然ガス生産者",
-      "sub_short_en": "Gas producer",
+      "sub_short": "天然ガス",
+      "sub_short_en": "Gas",
       "row": 0,
       "relations": [
         {
@@ -97,8 +97,8 @@
       "name": "ブルー・レーサー・ミッドストリーム",
       "sub": "中流合弁会社",
       "sub_en": "Midstream JV",
-      "sub_short": "中流合弁会社",
-      "sub_short_en": "Midstream JV",
+      "sub_short": "中流合弁",
+      "sub_short_en": "Pipeline",
       "row": 0,
       "relations": [
         {
@@ -123,8 +123,8 @@
       "name": "ローレル・マウンテン・ミッドストリーム",
       "sub": "集ガス合弁会社",
       "sub_en": "Gathering JV",
-      "sub_short": "集ガス合弁会社",
-      "sub_short_en": "Gathering JV",
+      "sub_short": "ガス合弁",
+      "sub_short_en": "Pipeline",
       "row": 0,
       "relations": [
         {
@@ -149,8 +149,8 @@
       "name": "ルイジアナLNG",
       "sub": "LNG輸出事業",
       "sub_en": "LNG export project",
-      "sub_short": "LNG輸出事業",
-      "sub_short_en": "LNG export",
+      "sub_short": "LNG輸出",
+      "sub_short_en": "LNG",
       "row": 0,
       "relations": [
         {
@@ -175,8 +175,8 @@
       "name": "コージェントリックス共同投資ファンド",
       "sub": "ガス火力投資ファンド",
       "sub_en": "Gas power fund",
-      "sub_short": "ガス火力投資",
-      "sub_short_en": "Gas power fund",
+      "sub_short": "ガス火力",
+      "sub_short_en": "Gas",
       "row": 0,
       "relations": [
         {

@@ -29,8 +29,8 @@
       "name": "TSMC",
       "sub": "半導体製造",
       "sub_en": "Semiconductor foundry",
-      "sub_short": "半導体製造",
-      "sub_short_en": "Chip foundry",
+      "sub_short": "半導体",
+      "sub_short_en": "Foundry",
       "row": 0,
       "relations": [
         {
@@ -68,7 +68,7 @@
       "sub": "半導体",
       "sub_en": "Semiconductors",
       "sub_short": "半導体",
-      "sub_short_en": "Semiconductors",
+      "sub_short_en": "Chips",
       "row": 1,
       "relations": [
         {
@@ -96,7 +96,7 @@
       "sub": "ソフト・クラウド",
       "sub_en": "Software & cloud",
       "sub_short": "ソフト",
-      "sub_short_en": "Software & cloud",
+      "sub_short_en": "Software",
       "row": 1,
       "relations": [
         {
@@ -122,7 +122,7 @@
       "sub": "半導体",
       "sub_en": "Semiconductors",
       "sub_short": "半導体",
-      "sub_short_en": "Semiconductors",
+      "sub_short_en": "Chips",
       "row": 1,
       "relations": [
         {
@@ -147,7 +147,7 @@
       "name": "エイブリィ・デニソン",
       "sub": "素材・RFIDラベル",
       "sub_en": "Materials & RFID labels",
-      "sub_short": "RFIDラベル",
+      "sub_short": "RFID",
       "sub_short_en": "Materials",
       "row": 1,
       "relations": [
@@ -176,7 +176,7 @@
       "sub": "半導体",
       "sub_en": "Semiconductors",
       "sub_short": "半導体",
-      "sub_short_en": "Semiconductors",
+      "sub_short_en": "Chips",
       "row": 2,
       "relations": [
         {

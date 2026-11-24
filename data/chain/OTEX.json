@@ -79,7 +79,7 @@
       "name": "Amazon",
       "sub": "クラウド・EC",
       "sub_en": "Cloud & e-commerce",
-      "sub_short": "クラウド・EC",
+      "sub_short": "クラウド",
       "sub_short_en": "Cloud",
       "row": 0,
       "relations": [
@@ -105,7 +105,7 @@
       "sub": "ソフト・クラウド",
       "sub_en": "Software & cloud",
       "sub_short": "ソフト",
-      "sub_short_en": "Software & cloud",
+      "sub_short_en": "Software",
       "row": 0,
       "relations": [
         {
@@ -155,8 +155,8 @@
       "name": "Salesforce",
       "sub": "業務ソフト",
       "sub_en": "Business software",
-      "sub_short": "業務ソフト",
-      "sub_short_en": "Business apps",
+      "sub_short": "業務IT",
+      "sub_short_en": "Biz apps",
       "row": 0,
       "relations": [
         {
@@ -192,8 +192,8 @@
       "name": "SAP",
       "sub": "業務ソフト",
       "sub_en": "Business software",
-      "sub_short": "業務ソフト",
-      "sub_short_en": "Business apps",
+      "sub_short": "業務IT",
+      "sub_short_en": "Biz apps",
       "row": 0,
       "relations": [
         {
@@ -217,8 +217,8 @@
       "name": "Veeva Systems",
       "sub": "ライフサイエンス向けソフト",
       "sub_en": "Life sciences software",
-      "sub_short": "生命科学ソフト",
-      "sub_short_en": "Life sci apps",
+      "sub_short": "生命科学",
+      "sub_short_en": "Life sci",
       "row": 1,
       "relations": [
         {
@@ -268,8 +268,8 @@
       "name": "Oracle",
       "sub": "業務ソフト・DB",
       "sub_en": "Business software & databases",
-      "sub_short": "業務ソフト",
-      "sub_short_en": "Business apps",
+      "sub_short": "業務IT",
+      "sub_short_en": "Biz apps",
       "row": 1,
       "relations": [
         {
@@ -293,8 +293,8 @@
       "name": "IBM",
       "sub": "IT・ソフト",
       "sub_en": "IT & software",
-      "sub_short": "IT・ソフト",
-      "sub_short_en": "IT & software",
+      "sub_short": "IT",
+      "sub_short_en": "IT",
       "row": 1,
       "relations": [
         {
@@ -318,7 +318,7 @@
       "name": "ServiceNow",
       "sub": "業務ワークフロー",
       "sub_en": "Enterprise workflow",
-      "sub_short": "業務フロー",
+      "sub_short": "業務IT",
       "sub_short_en": "Workflow",
       "row": 1,
       "relations": [
@@ -343,8 +343,8 @@
       "name": "Box",
       "sub": "コンテンツ管理",
       "sub_en": "Content management",
-      "sub_short": "コンテンツ管理",
-      "sub_short_en": "Content mgmt",
+      "sub_short": "文書管理",
+      "sub_short_en": "Content",
       "row": 1,
       "relations": [
         {

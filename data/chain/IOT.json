@@ -87,7 +87,7 @@
       "sub": "車両管理",
       "sub_en": "Fleet management",
       "sub_short": "車両管理",
-      "sub_short_en": "Fleet management",
+      "sub_short_en": "Fleets",
       "row": 1,
       "relations": [
         {
@@ -112,7 +112,7 @@
       "sub": "自動車",
       "sub_en": "Automobiles",
       "sub_short": "自動車",
-      "sub_short_en": "Automobiles",
+      "sub_short_en": "Cars",
       "row": 1,
       "relations": [
         {
@@ -140,7 +140,7 @@
       "sub": "自動車",
       "sub_en": "Automobiles",
       "sub_short": "自動車",
-      "sub_short_en": "Automobiles",
+      "sub_short_en": "Cars",
       "row": 1,
       "relations": [
         {
@@ -166,7 +166,7 @@
       "sub": "自動車",
       "sub_en": "Automobiles",
       "sub_short": "自動車",
-      "sub_short_en": "Automobiles",
+      "sub_short_en": "Cars",
       "row": 1,
       "relations": [
         {
@@ -194,7 +194,7 @@
       "sub": "車載部品",
       "sub_en": "Automotive components",
       "sub_short": "車載部品",
-      "sub_short_en": "Auto parts",
+      "sub_short_en": "Car parts",
       "row": 1,
       "relations": [
         {

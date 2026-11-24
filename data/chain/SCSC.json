@@ -29,7 +29,7 @@
       "sub": "ネットワーク機器",
       "sub_en": "Networking gear",
       "sub_short": "通信機器",
-      "sub_short_en": "Networking gear",
+      "sub_short_en": "Network",
       "row": 0,
       "relations": [
         {
@@ -54,8 +54,8 @@
       "name": "ゼブラ・テクノロジーズ",
       "sub": "バーコード機器",
       "sub_en": "Barcode & mobile devices",
-      "sub_short": "バーコード機器",
-      "sub_short_en": "Barcode scanners",
+      "sub_short": "読取機器",
+      "sub_short_en": "Scanners",
       "row": 0,
       "relations": [
         {
@@ -81,7 +81,7 @@
       "sub": "ソフト・クラウド",
       "sub_en": "Software & cloud",
       "sub_short": "ソフト",
-      "sub_short_en": "Software & cloud",
+      "sub_short_en": "Software",
       "row": 0,
       "relations": [
         {
@@ -106,8 +106,8 @@
       "name": "デル・テクノロジーズ",
       "sub": "PC・サーバー",
       "sub_en": "PCs & servers",
-      "sub_short": "PC・サーバー",
-      "sub_short_en": "PCs & servers",
+      "sub_short": "PC",
+      "sub_short_en": "PCs",
       "row": 0,
       "relations": [
         {
@@ -132,8 +132,8 @@
       "name": "フォーティネット",
       "sub": "セキュリティ",
       "sub_en": "Cybersecurity",
-      "sub_short": "セキュリティ",
-      "sub_short_en": "Cybersecurity",
+      "sub_short": "防御",
+      "sub_short_en": "Security",
       "row": 0,
       "relations": [
         {
@@ -159,7 +159,7 @@
       "sub": "産業機器",
       "sub_en": "Industrial equipment",
       "sub_short": "産業機器",
-      "sub_short_en": "Industrial gear",
+      "sub_short_en": "Industrial",
       "row": 0,
       "relations": [
         {
@@ -237,7 +237,7 @@
       "sub": "Web会議",
       "sub_en": "Video conferencing",
       "sub_short": "Web会議",
-      "sub_short_en": "Video calls",
+      "sub_short_en": "Video",
       "row": 0,
       "relations": [
         {
@@ -262,8 +262,8 @@
       "name": "ヒューレット・パッカード・エンタープライズ",
       "sub": "ネットワーク・サーバー",
       "sub_en": "Networking & servers",
-      "sub_short": "ネットワーク",
-      "sub_short_en": "Networking",
+      "sub_short": "通信網",
+      "sub_short_en": "Network",
       "row": 0,
       "relations": [
         {
@@ -289,7 +289,7 @@
       "sub": "IT流通",
       "sub_en": "IT distribution",
       "sub_short": "IT流通",
-      "sub_short_en": "IT distribution",
+      "sub_short_en": "IT",
       "row": 1,
       "relations": [
         {
@@ -315,7 +315,7 @@
       "sub": "IT流通",
       "sub_en": "IT distribution",
       "sub_short": "IT流通",
-      "sub_short_en": "IT distribution",
+      "sub_short_en": "IT",
       "row": 1,
       "relations": [
         {
@@ -341,7 +341,7 @@
       "sub": "電材流通",
       "sub_en": "Electrical distribution",
       "sub_short": "電材流通",
-      "sub_short_en": "Electrical goods",
+      "sub_short_en": "Electrical",
       "row": 1,
       "relations": [
         {

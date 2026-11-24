@@ -30,8 +30,8 @@
       "name": "IBM",
       "sub": "コンピューター・IT",
       "sub_en": "Computing & IT",
-      "sub_short": "コンピューター",
-      "sub_short_en": "Computing & IT",
+      "sub_short": "PC",
+      "sub_short_en": "IT",
       "row": 0,
       "relations": [
         {
@@ -57,8 +57,8 @@
       "name": "SAP",
       "sub": "業務ソフト",
       "sub_en": "Enterprise software",
-      "sub_short": "業務ソフト",
-      "sub_short_en": "Enterprise apps",
+      "sub_short": "業務IT",
+      "sub_short_en": "Software",
       "row": 1,
       "relations": [
         {
@@ -83,7 +83,7 @@
       "sub": "人事・財務ソフト",
       "sub_en": "HR & finance software",
       "sub_short": "人事",
-      "sub_short_en": "HR & finance",
+      "sub_short_en": "HR",
       "row": 1,
       "relations": [
         {
@@ -150,7 +150,7 @@
       "sub": "給与・人事ソフト",
       "sub_en": "Payroll & HR software",
       "sub_short": "給与",
-      "sub_short_en": "Payroll software",
+      "sub_short_en": "Payroll",
       "row": 2,
       "relations": [
         {
@@ -176,7 +176,7 @@
       "sub": "給与・人事ソフト",
       "sub_en": "Payroll & HR software",
       "sub_short": "給与",
-      "sub_short_en": "Payroll software",
+      "sub_short_en": "Payroll",
       "row": 2,
       "relations": [
         {

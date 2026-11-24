@@ -34,8 +34,8 @@
       "name_en": "Clean Energy Fuels",
       "sub": "天然ガス燃料",
       "sub_en": "Natural gas fuel",
-      "sub_short": "天然ガス燃料",
-      "sub_short_en": "Natural gas fuel",
+      "sub_short": "天然ガス",
+      "sub_short_en": "Gas",
       "row": 0,
       "relations": [
         {
@@ -60,8 +60,8 @@
       "name_en": "Ravago",
       "sub": "樹脂の流通(ベルギー)",
       "sub_en": "Plastics distribution (Belgium)",
-      "sub_short": "樹脂の流通",
-      "sub_short_en": "Plastics supply",
+      "sub_short": "樹脂",
+      "sub_short_en": "Plastics",
       "row": 0,
       "relations": [
         {
@@ -86,8 +86,8 @@
       "name_en": "Toppoint Holdings",
       "sub": "資源物の輸送",
       "sub_en": "Recyclables trucking",
-      "sub_short": "資源物の輸送",
-      "sub_short_en": "Recycling haul",
+      "sub_short": "輸送",
+      "sub_short_en": "Recycling",
       "row": 1,
       "relations": [
         {
@@ -112,8 +112,8 @@
       "name_en": "Ashford Hospitality Trust",
       "sub": "ホテルREIT",
       "sub_en": "Hotel REIT",
-      "sub_short": "ホテルREIT",
-      "sub_short_en": "Hotel REIT",
+      "sub_short": "REIT",
+      "sub_short_en": "REIT",
       "row": 1,
       "relations": [
         {
@@ -138,8 +138,8 @@
       "name_en": "Waste Connections",
       "sub": "廃棄物処理",
       "sub_en": "Waste services",
-      "sub_short": "廃棄物処理",
-      "sub_short_en": "Waste services",
+      "sub_short": "廃棄物",
+      "sub_short_en": "Waste",
       "row": 2,
       "relations": [
         {
@@ -164,8 +164,8 @@
       "name_en": "Clean Harbors",
       "sub": "産業廃棄物処理",
       "sub_en": "Environmental services",
-      "sub_short": "産業廃棄物処理",
-      "sub_short_en": "Environmental",
+      "sub_short": "廃棄物",
+      "sub_short_en": "Eco svcs",
       "row": 2,
       "relations": [
         {
@@ -190,8 +190,8 @@
       "name_en": "Casella Waste Systems",
       "sub": "廃棄物処理",
       "sub_en": "Waste services",
-      "sub_short": "廃棄物処理",
-      "sub_short_en": "Waste services",
+      "sub_short": "廃棄物",
+      "sub_short_en": "Waste",
       "row": 2,
       "relations": [
         {

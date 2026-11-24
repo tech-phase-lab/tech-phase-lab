@@ -43,7 +43,7 @@
       "sub": "ソフト・クラウド",
       "sub_en": "Software & cloud",
       "sub_short": "ソフト",
-      "sub_short_en": "Software & cloud",
+      "sub_short_en": "Software",
       "row": 0,
       "relations": [
         {
@@ -66,8 +66,8 @@
       "name": "Google",
       "sub": "検索・クラウド",
       "sub_en": "Search & cloud",
-      "sub_short": "検索・クラウド",
-      "sub_short_en": "Search & cloud",
+      "sub_short": "検索",
+      "sub_short_en": "Search",
       "row": 0,
       "relations": [
         {
@@ -91,8 +91,8 @@
       "name": "Alibaba",
       "sub": "EC・クラウド",
       "sub_en": "E-commerce & cloud",
-      "sub_short": "EC・クラウド",
-      "sub_short_en": "E-commerce",
+      "sub_short": "EC",
+      "sub_short_en": "E-com",
       "row": 0,
       "relations": [
         {
@@ -129,8 +129,8 @@
       "name": "Palantir",
       "sub": "データ・AI基盤",
       "sub_en": "Data & AI platforms",
-      "sub_short": "データ・AI基盤",
-      "sub_short_en": "Data platforms",
+      "sub_short": "データ",
+      "sub_short_en": "Data",
       "row": 0,
       "relations": [
         {
@@ -154,8 +154,8 @@
       "name": "Snowflake",
       "sub": "データクラウド",
       "sub_en": "Data cloud",
-      "sub_short": "データクラウド",
-      "sub_short_en": "Data cloud",
+      "sub_short": "データ",
+      "sub_short_en": "Data",
       "row": 0,
       "relations": [
         {
@@ -180,7 +180,7 @@
       "sub": "生成AI",
       "sub_en": "Generative AI",
       "sub_short": "生成AI",
-      "sub_short_en": "Generative AI",
+      "sub_short_en": "AI",
       "row": 0,
       "relations": [
         {
@@ -207,7 +207,7 @@
       "sub": "生成AI",
       "sub_en": "Generative AI",
       "sub_short": "生成AI",
-      "sub_short_en": "Generative AI",
+      "sub_short_en": "AI",
       "row": 0,
       "relations": [
         {
@@ -233,7 +233,7 @@
       "sub": "コンサルティング",
       "sub_en": "Consulting",
       "sub_short": "コンサル",
-      "sub_short_en": "Consulting",
+      "sub_short_en": "Advisory",
       "row": 1,
       "relations": [
         {
@@ -257,8 +257,8 @@
       "name": "Capgemini",
       "sub": "コンサルティング・IT",
       "sub_en": "Consulting & IT",
-      "sub_short": "コンサル・IT",
-      "sub_short_en": "Consulting & IT",
+      "sub_short": "コンサル",
+      "sub_short_en": "Advisory",
       "row": 1,
       "relations": [
         {
@@ -283,7 +283,7 @@
       "sub": "給与・人事サービス",
       "sub_en": "Payroll & HR services",
       "sub_short": "給与",
-      "sub_short_en": "Payroll services",
+      "sub_short_en": "Payroll",
       "row": 1,
       "relations": [
         {
@@ -307,8 +307,8 @@
       "name": "OpenText",
       "sub": "情報管理ソフト",
       "sub_en": "Information management",
-      "sub_short": "情報管理ソフト",
-      "sub_short_en": "Info management",
+      "sub_short": "情報管理",
+      "sub_short_en": "Data",
       "row": 2,
       "relations": [
         {
@@ -332,8 +332,8 @@
       "name": "BlackLine",
       "sub": "経理ソフト",
       "sub_en": "Accounting software",
-      "sub_short": "経理ソフト",
-      "sub_short_en": "Accounting apps",
+      "sub_short": "会計",
+      "sub_short_en": "Accounts",
       "row": 2,
       "relations": [
         {
@@ -370,8 +370,8 @@
       "name": "Sprinklr",
       "sub": "顧客体験ソフト",
       "sub_en": "Customer experience software",
-      "sub_short": "顧客体験ソフト",
-      "sub_short_en": "CX software",
+      "sub_short": "顧客対応",
+      "sub_short_en": "CX",
       "row": 2,
       "relations": [
         {
@@ -396,7 +396,7 @@
       "sub": "電子署名",
       "sub_en": "E-signature",
       "sub_short": "電子署名",
-      "sub_short_en": "E-signature",
+      "sub_short_en": "E-sign",
       "row": 2,
       "relations": [
         {
@@ -420,7 +420,7 @@
       "name": "Okta",
       "sub": "IDセキュリティ",
       "sub_en": "Identity security",
-      "sub_short": "IDセキュリティ",
+      "sub_short": "ID防御",
       "sub_short_en": "Identity",
       "row": 2,
       "relations": [
@@ -445,8 +445,8 @@
       "name": "Dynatrace",
       "sub": "監視ソフト",
       "sub_en": "Observability software",
-      "sub_short": "監視ソフト",
-      "sub_short_en": "Observability",
+      "sub_short": "監視",
+      "sub_short_en": "Monitors",
       "row": 2,
       "relations": [
         {
@@ -470,8 +470,8 @@
       "name": "Samsung Electronics",
       "sub": "電機・半導体",
       "sub_en": "Electronics & semiconductors",
-      "sub_short": "電機・半導体",
-      "sub_short_en": "Electronics",
+      "sub_short": "電機",
+      "sub_short_en": "Devices",
       "row": 3,
       "relations": [
         {
@@ -496,8 +496,8 @@
       "name": "Oracle",
       "sub": "企業向けソフト・クラウド",
       "sub_en": "Enterprise software & cloud",
-      "sub_short": "企業向けソフト",
-      "sub_short_en": "Enterprise apps",
+      "sub_short": "業務IT",
+      "sub_short_en": "Software",
       "row": 4,
       "relations": [
         {
@@ -521,7 +521,7 @@
       "sub": "人事・財務クラウド",
       "sub_en": "HR & finance cloud",
       "sub_short": "人事",
-      "sub_short_en": "HR & finance",
+      "sub_short_en": "HR",
       "row": 4,
       "relations": [
         {
@@ -545,8 +545,8 @@
       "name": "Pegasystems",
       "sub": "業務自動化ソフト",
       "sub_en": "Process automation software",
-      "sub_short": "業務自動化",
-      "sub_short_en": "Automation apps",
+      "sub_short": "業務IT",
+      "sub_short_en": "Robotics",
       "row": 4,
       "relations": [
         {
@@ -571,7 +571,7 @@
       "sub": "給与・人事ソフト",
       "sub_en": "Payroll & HR software",
       "sub_short": "給与",
-      "sub_short_en": "Payroll software",
+      "sub_short_en": "Payroll",
       "row": 4,
       "relations": [
         {
@@ -595,8 +595,8 @@
       "name": "PTC",
       "sub": "製品設計ソフト",
       "sub_en": "Product design software",
-      "sub_short": "製品設計ソフト",
-      "sub_short_en": "Design software",
+      "sub_short": "設計IT",
+      "sub_short_en": "Design",
       "row": 4,
       "relations": [
         {
@@ -620,8 +620,8 @@
       "name": "Freshworks",
       "sub": "顧客対応ソフト",
       "sub_en": "Customer service software",
-      "sub_short": "顧客対応ソフト",
-      "sub_short_en": "Service desk",
+      "sub_short": "顧客対応",
+      "sub_short_en": "Helpdesk",
       "row": 4,
       "relations": [
         {

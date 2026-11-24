@@ -27,8 +27,8 @@
       "name": "アマゾン",
       "sub": "EC・クラウド",
       "sub_en": "E-commerce & cloud",
-      "sub_short": "EC・クラウド",
-      "sub_short_en": "E-commerce",
+      "sub_short": "EC",
+      "sub_short_en": "E-com",
       "row": 0,
       "relations": [
         {
@@ -82,7 +82,7 @@
       "sub": "ネット・クラウド",
       "sub_en": "Internet & cloud",
       "sub_short": "ネット",
-      "sub_short_en": "Internet & cloud",
+      "sub_short_en": "Internet",
       "row": 0,
       "relations": [
         {
@@ -108,7 +108,7 @@
       "sub": "エンドポイント保護",
       "sub_en": "Endpoint security",
       "sub_short": "端末保護",
-      "sub_short_en": "Endpoint guard",
+      "sub_short_en": "Security",
       "row": 1,
       "relations": [
         {
@@ -133,8 +133,8 @@
       "name": "ブロードコム",
       "sub": "半導体・ソフト",
       "sub_en": "Semis & software",
-      "sub_short": "半導体・ソフト",
-      "sub_short_en": "Semis & software",
+      "sub_short": "半導体",
+      "sub_short_en": "Chips",
       "row": 1,
       "relations": [
         {
@@ -159,8 +159,8 @@
       "name": "マイクロソフト",
       "sub": "ソフトウェア・クラウド",
       "sub_en": "Software & cloud",
-      "sub_short": "ソフトウェア",
-      "sub_short_en": "Software & cloud",
+      "sub_short": "ソフト",
+      "sub_short_en": "Software",
       "row": 1,
       "relations": [
         {
@@ -185,8 +185,8 @@
       "name": "パロアルト・ネットワークス",
       "sub": "ネットワークセキュリティ",
       "sub_en": "Network security",
-      "sub_short": "ネット防御",
-      "sub_short_en": "Network security",
+      "sub_short": "防御",
+      "sub_short_en": "Security",
       "row": 1,
       "relations": [
         {
@@ -212,7 +212,7 @@
       "sub": "ネットワーク機器",
       "sub_en": "Networking",
       "sub_short": "通信機器",
-      "sub_short_en": "Networking",
+      "sub_short_en": "Network",
       "row": 1,
       "relations": [
         {
@@ -237,7 +237,7 @@
       "name": "エラスティック",
       "sub": "検索・ログ分析",
       "sub_en": "Search & analytics",
-      "sub_short": "検索・ログ分析",
+      "sub_short": "検索",
       "sub_short_en": "Search",
       "row": 1,
       "relations": [

@@ -83,7 +83,7 @@
       "sub": "清算機関",
       "sub_en": "Clearing house",
       "sub_short": "清算機関",
-      "sub_short_en": "Clearing house",
+      "sub_short_en": "Clearing",
       "row": 0,
       "relations": [
         {
@@ -108,7 +108,7 @@
       "name_en": "Bank of America (BofA Securities)",
       "sub": "銀行・証券",
       "sub_en": "Bank & securities",
-      "sub_short": "銀行・証券",
+      "sub_short": "銀行",
       "sub_short_en": "Bank",
       "row": 0,
       "relations": [
@@ -135,7 +135,7 @@
       "sub": "取引所",
       "sub_en": "Exchanges",
       "sub_short": "取引所",
-      "sub_short_en": "Exchanges",
+      "sub_short_en": "Exchange",
       "row": 1,
       "relations": [
         {
@@ -161,7 +161,7 @@
       "sub": "取引所",
       "sub_en": "Exchanges",
       "sub_short": "取引所",
-      "sub_short_en": "Exchanges",
+      "sub_short_en": "Exchange",
       "row": 1,
       "relations": [
         {
@@ -186,7 +186,7 @@
       "name_en": "CME Group",
       "sub": "先物取引所",
       "sub_en": "Futures exchanges",
-      "sub_short": "先物取引所",
+      "sub_short": "取引所",
       "sub_short_en": "Futures",
       "row": 1,
       "relations": [
@@ -213,7 +213,7 @@
       "sub": "取引所",
       "sub_en": "Exchanges",
       "sub_short": "取引所",
-      "sub_short_en": "Exchanges",
+      "sub_short_en": "Exchange",
       "row": 1,
       "relations": [
         {

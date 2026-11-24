@@ -34,7 +34,7 @@
       "sub": "ユニフォーム供給",
       "sub_en": "Uniform rental",
       "sub_short": "制服供給",
-      "sub_short_en": "Uniform rental",
+      "sub_short_en": "Uniforms",
       "row": 0,
       "relations": [
         {
@@ -112,7 +112,7 @@
       "sub": "給食・ユニフォーム",
       "sub_en": "Food and uniform services",
       "sub_short": "給食",
-      "sub_short_en": "Food services",
+      "sub_short_en": "Catering",
       "row": 1,
       "relations": [
         {
@@ -138,7 +138,7 @@
       "sub": "害虫駆除",
       "sub_en": "Pest control",
       "sub_short": "害虫駆除",
-      "sub_short_en": "Pest control",
+      "sub_short_en": "Pests",
       "row": 1,
       "relations": [
         {
@@ -162,8 +162,8 @@
       "name": "ベスティス",
       "sub": "ユニフォーム",
       "sub_en": "Uniform rental",
-      "sub_short": "ユニフォーム",
-      "sub_short_en": "Uniform rental",
+      "sub_short": "制服",
+      "sub_short_en": "Uniforms",
       "row": 2,
       "relations": [
         {
@@ -188,7 +188,7 @@
       "name": "アクメ・ユナイテッド",
       "sub": "救急・安全用品",
       "sub_en": "First aid & safety",
-      "sub_short": "救急・安全用品",
+      "sub_short": "救急",
       "sub_short_en": "First aid",
       "row": 2,
       "relations": [

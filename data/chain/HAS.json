@@ -27,7 +27,7 @@
       "sub": "EC小売",
       "sub_en": "E-commerce",
       "sub_short": "EC小売",
-      "sub_short_en": "E-commerce",
+      "sub_short_en": "E-com",
       "row": 0,
       "relations": [
         {
@@ -78,7 +78,7 @@
       "name": "ウォルト・ディズニー",
       "sub": "ライセンス提供元",
       "sub_en": "Licensor",
-      "sub_short": "ライセンス元",
+      "sub_short": "許諾元",
       "sub_short_en": "Licensor",
       "row": 0,
       "relations": [
@@ -104,8 +104,8 @@
       "name": "スコープリー",
       "sub": "モバイルゲーム",
       "sub_en": "Mobile games",
-      "sub_short": "モバイルゲーム",
-      "sub_short_en": "Mobile games",
+      "sub_short": "ゲーム",
+      "sub_short_en": "Games",
       "row": 0,
       "relations": [
         {
@@ -130,8 +130,8 @@
       "name": "ラリアン・スタジオ",
       "sub": "ゲーム開発",
       "sub_en": "Game development",
-      "sub_short": "ゲーム開発",
-      "sub_short_en": "Game development",
+      "sub_short": "ゲーム",
+      "sub_short_en": "Games",
       "row": 0,
       "relations": [
         {
@@ -156,8 +156,8 @@
       "name": "マーリン・エンターテインメント",
       "sub": "テーマパーク",
       "sub_en": "Theme parks",
-      "sub_short": "テーマパーク",
-      "sub_short_en": "Theme parks",
+      "sub_short": "遊園地",
+      "sub_short_en": "Parks",
       "row": 0,
       "relations": [
         {

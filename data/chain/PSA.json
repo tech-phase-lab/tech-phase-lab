@@ -30,7 +30,7 @@
       "sub": "トランクルームREIT",
       "sub_en": "Self-storage REIT",
       "sub_short": "倉庫REIT",
-      "sub_short_en": "Storage REIT",
+      "sub_short_en": "REIT",
       "row": 0,
       "relations": [
         {
@@ -69,7 +69,7 @@
       "sub": "投資会社",
       "sub_en": "Investment firm",
       "sub_short": "投資会社",
-      "sub_short_en": "Investment firm",
+      "sub_short_en": "Investing",
       "row": 0,
       "relations": [
         {
@@ -95,7 +95,7 @@
       "sub": "トランクルームREIT",
       "sub_en": "Self-storage REIT",
       "sub_short": "倉庫REIT",
-      "sub_short_en": "Storage REIT",
+      "sub_short_en": "REIT",
       "row": 1,
       "relations": [
         {
@@ -121,7 +121,7 @@
       "sub": "トランクルームREIT",
       "sub_en": "Self-storage REIT",
       "sub_short": "倉庫REIT",
-      "sub_short_en": "Storage REIT",
+      "sub_short_en": "REIT",
       "row": 1,
       "relations": [
         {

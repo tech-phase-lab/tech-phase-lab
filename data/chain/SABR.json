@@ -25,8 +25,8 @@
       "name_en": "Constellation Software",
       "sub": "業種特化ソフトの買収・運営",
       "sub_en": "Vertical market software",
-      "sub_short": "業種別ソフト",
-      "sub_short_en": "Vertical apps",
+      "sub_short": "業務IT",
+      "sub_short_en": "Software",
       "row": 0,
       "relations": [
         {
@@ -52,7 +52,7 @@
       "sub": "投資会社",
       "sub_en": "Private equity",
       "sub_short": "投資会社",
-      "sub_short_en": "Private equity",
+      "sub_short_en": "PE",
       "row": 0,
       "relations": [
         {
@@ -78,7 +78,7 @@
       "sub": "法人向け旅行代理店",
       "sub_en": "Corporate travel management",
       "sub_short": "法人旅行",
-      "sub_short_en": "Business travel",
+      "sub_short_en": "Travel",
       "row": 0,
       "relations": [
         {
@@ -103,8 +103,8 @@
       "name_en": "Expedia",
       "sub": "オンライン旅行",
       "sub_en": "Online travel",
-      "sub_short": "オンライン旅行",
-      "sub_short_en": "Online travel",
+      "sub_short": "旅行予約",
+      "sub_short_en": "Travel",
       "row": 1,
       "relations": [
         {
@@ -182,7 +182,7 @@
       "sub": "格安航空",
       "sub_en": "Low-cost airline",
       "sub_short": "格安航空",
-      "sub_short_en": "Low-cost airline",
+      "sub_short_en": "Airline",
       "row": 1,
       "relations": [
         {

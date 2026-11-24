@@ -28,7 +28,7 @@
       "sub": "ミシガンの医療機関",
       "sub_en": "Michigan health system",
       "sub_short": "医療機関",
-      "sub_short_en": "Health system",
+      "sub_short_en": "Hospitals",
       "row": 0,
       "relations": [
         {
@@ -54,7 +54,7 @@
       "sub": "臨床検査の最大手競合",
       "sub_en": "Largest clinical lab rival",
       "sub_short": "臨床検査",
-      "sub_short_en": "Clinical labs",
+      "sub_short_en": "Labs",
       "row": 0,
       "relations": [
         {
@@ -79,8 +79,8 @@
       "name": "ユナイテッドヘルスケア",
       "sub": "民間医療保険",
       "sub_en": "Health insurer",
-      "sub_short": "民間医療保険",
-      "sub_short_en": "Health insurer",
+      "sub_short": "医療保険",
+      "sub_short_en": "Health",
       "row": 0,
       "relations": [
         {
@@ -106,7 +106,7 @@
       "sub": "大手小売",
       "sub_en": "Big-box retailer",
       "sub_short": "大手小売",
-      "sub_short_en": "Big-box retailer",
+      "sub_short_en": "Retail",
       "row": 0,
       "relations": [
         {
@@ -131,8 +131,8 @@
       "name": "CVSヘルス",
       "sub": "薬局チェーン",
       "sub_en": "Pharmacy chain",
-      "sub_short": "薬局チェーン",
-      "sub_short_en": "Pharmacy chain",
+      "sub_short": "薬局",
+      "sub_short_en": "Drugstore",
       "row": 0,
       "relations": [
         {
@@ -158,7 +158,7 @@
       "sub": "がん検査",
       "sub_en": "Cancer screening",
       "sub_short": "がん検査",
-      "sub_short_en": "Cancer screening",
+      "sub_short_en": "Cancer",
       "row": 0,
       "relations": [
         {
@@ -184,7 +184,7 @@
       "sub": "がん検査",
       "sub_en": "Cancer diagnostics",
       "sub_short": "がん検査",
-      "sub_short_en": "Cancer tests",
+      "sub_short_en": "Cancer",
       "row": 1,
       "relations": [
         {
@@ -210,7 +210,7 @@
       "sub": "がん検査",
       "sub_en": "Cancer testing",
       "sub_short": "がん検査",
-      "sub_short_en": "Cancer testing",
+      "sub_short_en": "Cancer",
       "row": 1,
       "relations": [
         {

@@ -32,8 +32,8 @@
       "name_en": "LCI Industries",
       "sub": "RV・船舶向け部品",
       "sub_en": "RV & marine components",
-      "sub_short": "RV・船舶部品",
-      "sub_short_en": "RV/marine parts",
+      "sub_short": "RV部品",
+      "sub_short_en": "RV parts",
       "row": 0,
       "relations": [
         {
@@ -84,8 +84,8 @@
       "name_en": "RideNow Group",
       "sub": "パワースポーツ販売店",
       "sub_en": "Powersports dealerships",
-      "sub_short": "二輪販売店",
-      "sub_short_en": "Powersports",
+      "sub_short": "二輪販売",
+      "sub_short_en": "ATVs",
       "row": 1,
       "relations": [
         {
@@ -110,8 +110,8 @@
       "name_en": "Massimo Group",
       "sub": "UTV・ボート",
       "sub_en": "UTVs & boats",
-      "sub_short": "UTV・ボート",
-      "sub_short_en": "UTVs & boats",
+      "sub_short": "UTV",
+      "sub_short_en": "UTVs",
       "row": 2,
       "relations": [
         {
@@ -136,8 +136,8 @@
       "name_en": "AYRO",
       "sub": "小型電気自動車",
       "sub_en": "Low-speed EVs",
-      "sub_short": "小型電気自動車",
-      "sub_short_en": "Low-speed EVs",
+      "sub_short": "EV",
+      "sub_short_en": "EVs",
       "row": 2,
       "relations": [
         {

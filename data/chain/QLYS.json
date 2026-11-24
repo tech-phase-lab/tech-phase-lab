@@ -29,8 +29,8 @@
       "name": "Google",
       "sub": "検索・クラウド",
       "sub_en": "Search & cloud",
-      "sub_short": "検索・クラウド",
-      "sub_short_en": "Search & cloud",
+      "sub_short": "検索",
+      "sub_short_en": "Search",
       "row": 0,
       "relations": [
         {
@@ -54,8 +54,8 @@
       "name": "Amazon",
       "sub": "EC・クラウド",
       "sub_en": "E-commerce & cloud",
-      "sub_short": "EC・クラウド",
-      "sub_short_en": "E-commerce",
+      "sub_short": "EC",
+      "sub_short_en": "E-com",
       "row": 0,
       "relations": [
         {
@@ -80,7 +80,7 @@
       "sub": "ソフト・クラウド",
       "sub_en": "Software & cloud",
       "sub_short": "ソフト",
-      "sub_short_en": "Software & cloud",
+      "sub_short_en": "Software",
       "row": 0,
       "relations": [
         {
@@ -105,7 +105,7 @@
       "sub": "ソフト・クラウド",
       "sub_en": "Software & cloud",
       "sub_short": "ソフト",
-      "sub_short_en": "Software & cloud",
+      "sub_short_en": "Software",
       "row": 0,
       "relations": [
         {
@@ -129,7 +129,7 @@
       "name": "ServiceNow",
       "sub": "業務ワークフロー",
       "sub_en": "Workflow software",
-      "sub_short": "業務フロー",
+      "sub_short": "業務IT",
       "sub_short_en": "Workflow",
       "row": 0,
       "relations": [
@@ -168,7 +168,7 @@
       "sub": "生成AI",
       "sub_en": "Generative AI",
       "sub_short": "生成AI",
-      "sub_short_en": "Generative AI",
+      "sub_short_en": "AI",
       "row": 0,
       "relations": [
         {
@@ -195,7 +195,7 @@
       "sub": "生成AI",
       "sub_en": "Generative AI",
       "sub_short": "生成AI",
-      "sub_short_en": "Generative AI",
+      "sub_short_en": "AI",
       "row": 0,
       "relations": [
         {
@@ -221,8 +221,8 @@
       "name": "テナブル",
       "sub": "脆弱性管理",
       "sub_en": "Vulnerability management",
-      "sub_short": "脆弱性管理",
-      "sub_short_en": "Vuln. mgmt",
+      "sub_short": "防御",
+      "sub_short_en": "Security",
       "row": 1,
       "relations": [
         {
@@ -274,7 +274,7 @@
       "sub": "エンドポイント保護",
       "sub_en": "Endpoint security",
       "sub_short": "端末保護",
-      "sub_short_en": "Endpoint guard",
+      "sub_short_en": "Security",
       "row": 1,
       "relations": [
         {
@@ -299,8 +299,8 @@
       "name": "パロアルトネットワークス",
       "sub": "ネットワーク保護",
       "sub_en": "Network security",
-      "sub_short": "ネット防御",
-      "sub_short_en": "Network security",
+      "sub_short": "防御",
+      "sub_short_en": "Security",
       "row": 1,
       "relations": [
         {
@@ -325,8 +325,8 @@
       "name": "ラピッド7",
       "sub": "脆弱性管理",
       "sub_en": "Vulnerability management",
-      "sub_short": "脆弱性管理",
-      "sub_short_en": "Vuln. mgmt",
+      "sub_short": "防御",
+      "sub_short_en": "Security",
       "row": 1,
       "relations": [
         {

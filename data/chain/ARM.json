@@ -63,7 +63,7 @@
       "sub": "パッケージ・テスト",
       "sub_en": "Packaging & test",
       "sub_short": "後工程",
-      "sub_short_en": "Packaging & test",
+      "sub_short_en": "Chip pack",
       "row": 0,
       "relations": [
         {
@@ -112,8 +112,8 @@
       "name": "Cadence Design Systems",
       "sub": "半導体設計ツール",
       "sub_en": "Chip design tools",
-      "sub_short": "半導体設計",
-      "sub_short_en": "Chip design",
+      "sub_short": "設計",
+      "sub_short_en": "Chip IP",
       "row": 1,
       "relations": [
         {
@@ -253,7 +253,7 @@
       "sub": "SNS・AI",
       "sub_en": "Social & AI",
       "sub_short": "SNS・AI",
-      "sub_short_en": "Social & AI",
+      "sub_short_en": "Social",
       "row": 2,
       "relations": [
         {
@@ -277,8 +277,8 @@
       "name": "Cloudflare",
       "sub": "ネットワーク・セキュリティ",
       "sub_en": "Network & security",
-      "sub_short": "ネットワーク",
-      "sub_short_en": "Network security",
+      "sub_short": "通信網",
+      "sub_short_en": "Security",
       "row": 2,
       "relations": [
         {
@@ -304,8 +304,8 @@
       "name": "F5",
       "sub": "ネットワーク",
       "sub_en": "Networking",
-      "sub_short": "ネットワーク",
-      "sub_short_en": "Networking",
+      "sub_short": "通信網",
+      "sub_short_en": "Network",
       "row": 2,
       "relations": [
         {
@@ -331,8 +331,8 @@
       "name": "SAP",
       "sub": "業務ソフト",
       "sub_en": "Business software",
-      "sub_short": "業務ソフト",
-      "sub_short_en": "Business apps",
+      "sub_short": "業務IT",
+      "sub_short_en": "Biz apps",
       "row": 2,
       "relations": [
         {
@@ -385,8 +385,8 @@
       "name": "Lenovo",
       "sub": "PC・サーバー",
       "sub_en": "PCs & servers",
-      "sub_short": "PC・サーバー",
-      "sub_short_en": "PCs & servers",
+      "sub_short": "PC",
+      "sub_short_en": "PCs",
       "row": 3,
       "relations": [
         {
@@ -410,8 +410,8 @@
       "name": "Quanta Computer",
       "sub": "サーバー製造",
       "sub_en": "Server maker",
-      "sub_short": "サーバー製造",
-      "sub_short_en": "Server maker",
+      "sub_short": "サーバー",
+      "sub_short_en": "Servers",
       "row": 3,
       "relations": [
         {
@@ -511,7 +511,7 @@
       "sub": "半導体IP",
       "sub_en": "Semiconductor IP",
       "sub_short": "半導体IP",
-      "sub_short_en": "Semiconductor IP",
+      "sub_short_en": "Chip IP",
       "row": 4,
       "relations": [
         {
@@ -563,7 +563,7 @@
       "sub": "半導体",
       "sub_en": "Semiconductors",
       "sub_short": "半導体",
-      "sub_short_en": "Semiconductors",
+      "sub_short_en": "Chips",
       "row": 3,
       "relations": [
         {
@@ -662,8 +662,8 @@
       "name": "Synopsys",
       "sub": "半導体設計ソフト",
       "sub_en": "Chip design software",
-      "sub_short": "半導体設計",
-      "sub_short_en": "Chip design",
+      "sub_short": "設計",
+      "sub_short_en": "Chip IP",
       "row": 3,
       "relations": [
         {
@@ -687,8 +687,8 @@
       "name": "Siemens(Siemens EDA)",
       "sub": "半導体設計ソフト",
       "sub_en": "Chip design software",
-      "sub_short": "半導体設計",
-      "sub_short_en": "Chip design",
+      "sub_short": "設計",
+      "sub_short_en": "Chip IP",
       "row": 3,
       "relations": [
         {
@@ -713,7 +713,7 @@
       "sub": "ネットワーク機器",
       "sub_en": "Networking gear",
       "sub_short": "通信機器",
-      "sub_short_en": "Networking gear",
+      "sub_short_en": "Network",
       "row": 3,
       "relations": [
         {
@@ -740,7 +740,7 @@
       "sub": "半導体",
       "sub_en": "Semiconductors",
       "sub_short": "半導体",
-      "sub_short_en": "Semiconductors",
+      "sub_short_en": "Chips",
       "row": 3,
       "relations": [
         {
@@ -765,7 +765,7 @@
       "sub": "半導体",
       "sub_en": "Semiconductors",
       "sub_short": "半導体",
-      "sub_short_en": "Semiconductors",
+      "sub_short_en": "Chips",
       "row": 3,
       "relations": [
         {
@@ -791,8 +791,8 @@
       "name": "NXP Semiconductors",
       "sub": "車載半導体",
       "sub_en": "Auto chips",
-      "sub_short": "車載半導体",
-      "sub_short_en": "Auto chips",
+      "sub_short": "車載IC",
+      "sub_short_en": "Auto ICs",
       "row": 3,
       "relations": [
         {
@@ -816,7 +816,7 @@
       "name": "Apple",
       "sub": "スマホ・PC",
       "sub_en": "Devices",
-      "sub_short": "スマホ・PC",
+      "sub_short": "スマホ",
       "sub_short_en": "Devices",
       "row": 1,
       "relations": [

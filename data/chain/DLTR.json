@@ -32,7 +32,7 @@
       "sub": "菓子",
       "sub_en": "Confectionery",
       "sub_short": "菓子",
-      "sub_short_en": "Confectionery",
+      "sub_short_en": "Candy",
       "row": 0,
       "relations": [
         {
@@ -83,8 +83,8 @@
       "name_en": "FrontView REIT",
       "sub": "ネットリースREIT",
       "sub_en": "Net lease REIT",
-      "sub_short": "ネットリース",
-      "sub_short_en": "Net lease REIT",
+      "sub_short": "リース",
+      "sub_short_en": "REIT",
       "row": 1,
       "relations": [
         {
@@ -109,8 +109,8 @@
       "name_en": "Agree Realty",
       "sub": "ネットリースREIT",
       "sub_en": "Net lease REIT",
-      "sub_short": "ネットリース",
-      "sub_short_en": "Net lease REIT",
+      "sub_short": "リース",
+      "sub_short_en": "REIT",
       "row": 1,
       "relations": [
         {
@@ -135,7 +135,7 @@
       "name_en": "Broad Street Realty",
       "sub": "商業施設REIT",
       "sub_en": "Shopping center REIT",
-      "sub_short": "商業施設REIT",
+      "sub_short": "REIT",
       "sub_short_en": "Mall REIT",
       "row": 1,
       "relations": [
@@ -161,8 +161,8 @@
       "name_en": "Generation Income Properties",
       "sub": "ネットリースREIT",
       "sub_en": "Net lease REIT",
-      "sub_short": "ネットリース",
-      "sub_short_en": "Net lease REIT",
+      "sub_short": "リース",
+      "sub_short_en": "REIT",
       "row": 1,
       "relations": [
         {
@@ -188,7 +188,7 @@
       "sub": "ディスカウント店",
       "sub_en": "Discount stores",
       "sub_short": "格安店",
-      "sub_short_en": "Discount stores",
+      "sub_short_en": "Discount",
       "row": 2,
       "relations": [
         {
@@ -214,7 +214,7 @@
       "sub": "ディスカウント店",
       "sub_en": "Discount stores",
       "sub_short": "格安店",
-      "sub_short_en": "Discount stores",
+      "sub_short_en": "Discount",
       "row": 2,
       "relations": [
         {

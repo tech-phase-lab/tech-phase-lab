@@ -350,7 +350,7 @@
       "sub": "SNS・AI",
       "sub_en": "Social & AI",
       "sub_short": "SNS・AI",
-      "sub_short_en": "Social & AI",
+      "sub_short_en": "Social",
       "row": 1,
       "relations": [
         {
@@ -375,7 +375,7 @@
       "sub": "動画配信",
       "sub_en": "Streaming",
       "sub_short": "動画配信",
-      "sub_short_en": "Streaming",
+      "sub_short_en": "Video",
       "row": 1,
       "relations": [
         {
@@ -399,8 +399,8 @@
       "name": "Palantir",
       "sub": "データ分析",
       "sub_en": "Data analytics",
-      "sub_short": "データ分析",
-      "sub_short_en": "Data analytics",
+      "sub_short": "分析",
+      "sub_short_en": "Analytics",
       "row": 1,
       "relations": [
         {
@@ -451,8 +451,8 @@
       "name": "Salesforce",
       "sub": "業務ソフト",
       "sub_en": "Business software",
-      "sub_short": "業務ソフト",
-      "sub_short_en": "Business apps",
+      "sub_short": "業務IT",
+      "sub_short_en": "Biz apps",
       "row": 2,
       "relations": [
         {
@@ -477,7 +477,7 @@
       "sub": "クラウド・ソフト",
       "sub_en": "Cloud & software",
       "sub_short": "クラウド",
-      "sub_short_en": "Cloud & software",
+      "sub_short_en": "Cloud",
       "row": 3,
       "relations": [
         {
@@ -501,8 +501,8 @@
       "name": "Snowflake",
       "sub": "データ基盤",
       "sub_en": "Data platform",
-      "sub_short": "データ基盤",
-      "sub_short_en": "Data platform",
+      "sub_short": "データ",
+      "sub_short_en": "Data",
       "row": 3,
       "relations": [
         {
@@ -526,7 +526,7 @@
       "name": "MongoDB",
       "sub": "データベース",
       "sub_en": "Database",
-      "sub_short": "データベース",
+      "sub_short": "DB",
       "sub_short_en": "Database",
       "row": 3,
       "relations": [
@@ -551,8 +551,8 @@
       "name": "eBay",
       "sub": "ネット通販",
       "sub_en": "E-commerce",
-      "sub_short": "ネット通販",
-      "sub_short_en": "E-commerce",
+      "sub_short": "通販",
+      "sub_short_en": "E-com",
       "row": 3,
       "relations": [
         {
@@ -602,7 +602,7 @@
       "sub": "ストリーミング端末",
       "sub_en": "Streaming devices",
       "sub_short": "配信端末",
-      "sub_short_en": "Streaming gear",
+      "sub_short_en": "Video",
       "row": 2,
       "relations": [
         {

@@ -63,8 +63,8 @@
       "name_en": "CORFO",
       "sub": "チリ政府機関",
       "sub_en": "Chilean government agency",
-      "sub_short": "チリ政府機関",
-      "sub_short_en": "Chile agency",
+      "sub_short": "チリ政府",
+      "sub_short_en": "Chile gov",
       "row": 0,
       "relations": [
         {
@@ -89,7 +89,7 @@
       "name_en": "SQM",
       "sub": "リチウム・化学(チリ)",
       "sub_en": "Lithium & chemicals (Chile)",
-      "sub_short": "リチウム・化学",
+      "sub_short": "リチウム",
       "sub_short_en": "Lithium",
       "row": 1,
       "relations": [
@@ -193,8 +193,8 @@
       "name_en": "Pilbara Minerals",
       "sub": "リチウム鉱山(豪)",
       "sub_en": "Lithium mining (Australia)",
-      "sub_short": "リチウム鉱山",
-      "sub_short_en": "Lithium mining",
+      "sub_short": "リチウム",
+      "sub_short_en": "Lithium",
       "row": 1,
       "relations": [
         {
@@ -220,7 +220,7 @@
       "sub": "特殊化学(独)",
       "sub_en": "Specialty chemicals (Germany)",
       "sub_short": "特殊化学",
-      "sub_short_en": "Chemicals",
+      "sub_short_en": "Chem",
       "row": 1,
       "relations": [
         {
@@ -246,7 +246,7 @@
       "sub": "特殊化学(イスラエル)",
       "sub_en": "Specialty chemicals (Israel)",
       "sub_short": "特殊化学",
-      "sub_short_en": "Chemicals",
+      "sub_short_en": "Chem",
       "row": 1,
       "relations": [
         {
@@ -310,7 +310,7 @@
       "name_en": "Ecovyst",
       "sub": "触媒・特殊化学",
       "sub_en": "Catalysts & specialty chemicals",
-      "sub_short": "触媒・特殊化学",
+      "sub_short": "触媒",
       "sub_short_en": "Catalysts",
       "row": 2,
       "relations": [
@@ -336,8 +336,8 @@
       "name_en": "Elevra Lithium",
       "sub": "リチウム鉱山",
       "sub_en": "Lithium mining",
-      "sub_short": "リチウム鉱山",
-      "sub_short_en": "Lithium mining",
+      "sub_short": "リチウム",
+      "sub_short_en": "Lithium",
       "row": 2,
       "relations": [
         {
@@ -388,8 +388,8 @@
       "name_en": "NewMarket",
       "sub": "燃料添加剤",
       "sub_en": "Fuel additives",
-      "sub_short": "燃料添加剤",
-      "sub_short_en": "Fuel additives",
+      "sub_short": "添加剤",
+      "sub_short_en": "Additives",
       "row": 3,
       "relations": [
         {

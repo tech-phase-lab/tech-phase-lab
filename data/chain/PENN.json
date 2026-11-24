@@ -25,8 +25,8 @@
       "name_en": "Gaming and Leisure Properties",
       "sub": "カジノ不動産REIT",
       "sub_en": "Casino REIT",
-      "sub_short": "カジノREIT",
-      "sub_short_en": "Casino REIT",
+      "sub_short": "REIT",
+      "sub_short_en": "REIT",
       "row": 0,
       "relations": [
         {
@@ -51,8 +51,8 @@
       "name_en": "ESPN",
       "sub": "スポーツメディア",
       "sub_en": "Sports media",
-      "sub_short": "スポーツ媒体",
-      "sub_short_en": "Sports media",
+      "sub_short": "スポーツ",
+      "sub_short_en": "Sports",
       "row": 1,
       "relations": [
         {
@@ -77,8 +77,8 @@
       "name_en": "NASCAR",
       "sub": "モータースポーツ",
       "sub_en": "Motorsports",
-      "sub_short": "モーター競技",
-      "sub_short_en": "Motorsports",
+      "sub_short": "レース",
+      "sub_short_en": "Racing",
       "row": 1,
       "relations": [
         {
@@ -103,8 +103,8 @@
       "name_en": "Greenwood Racing",
       "sub": "競馬・カジノ",
       "sub_en": "Racing & gaming",
-      "sub_short": "競馬・カジノ",
-      "sub_short_en": "Racing & gaming",
+      "sub_short": "カジノ",
+      "sub_short_en": "Betting",
       "row": 1,
       "relations": [
         {
@@ -130,7 +130,7 @@
       "sub": "外食",
       "sub_en": "Restaurants",
       "sub_short": "外食",
-      "sub_short_en": "Restaurants",
+      "sub_short_en": "Dining",
       "row": 1,
       "relations": [
         {

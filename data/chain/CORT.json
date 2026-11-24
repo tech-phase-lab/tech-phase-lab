@@ -33,7 +33,7 @@
       "sub": "専門薬局",
       "sub_en": "Specialty pharmacy",
       "sub_short": "専門薬局",
-      "sub_short_en": "Pharmacy",
+      "sub_short_en": "Drugstore",
       "row": 0,
       "relations": [
         {
@@ -59,7 +59,7 @@
       "sub": "専門薬局",
       "sub_en": "Specialty pharmacy",
       "sub_short": "専門薬局",
-      "sub_short_en": "Pharmacy",
+      "sub_short_en": "Drugstore",
       "row": 0,
       "relations": [
         {
@@ -84,8 +84,8 @@
       "name_en": "Teva",
       "sub": "後発医薬品",
       "sub_en": "Generic drugs",
-      "sub_short": "後発医薬品",
-      "sub_short_en": "Generic drugs",
+      "sub_short": "後発薬",
+      "sub_short_en": "Generics",
       "row": 1,
       "relations": [
         {
@@ -111,7 +111,7 @@
       "sub": "医薬品(イタリア)",
       "sub_en": "Pharmaceuticals (Italy)",
       "sub_short": "医薬品",
-      "sub_short_en": "Pharmaceuticals",
+      "sub_short_en": "Pharma",
       "row": 1,
       "relations": [
         {
@@ -137,7 +137,7 @@
       "sub": "内分泌薬",
       "sub_en": "Endocrine drugs",
       "sub_short": "内分泌薬",
-      "sub_short_en": "Endocrine drugs",
+      "sub_short_en": "Endocrine",
       "row": 2,
       "relations": [
         {

@@ -19,8 +19,8 @@
       "name": "アマゾン・ウェブ・サービス",
       "sub": "クラウド基盤",
       "sub_en": "Cloud platform",
-      "sub_short": "クラウド基盤",
-      "sub_short_en": "Cloud platform",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 0,
       "relations": [
         {
@@ -45,8 +45,8 @@
       "name": "マイクロソフト",
       "sub": "クラウド基盤",
       "sub_en": "Cloud platform",
-      "sub_short": "クラウド基盤",
-      "sub_short_en": "Cloud platform",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 0,
       "relations": [
         {
@@ -71,8 +71,8 @@
       "name": "グーグル",
       "sub": "クラウド基盤",
       "sub_en": "Cloud platform",
-      "sub_short": "クラウド基盤",
-      "sub_short_en": "Cloud platform",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 0,
       "relations": [
         {
@@ -97,8 +97,8 @@
       "name": "セールスフォース",
       "sub": "業務ソフト",
       "sub_en": "Enterprise software",
-      "sub_short": "業務ソフト",
-      "sub_short_en": "Enterprise apps",
+      "sub_short": "業務IT",
+      "sub_short_en": "Software",
       "row": 0,
       "relations": [
         {
@@ -123,8 +123,8 @@
       "name": "サービスナウ",
       "sub": "業務ソフト",
       "sub_en": "Enterprise software",
-      "sub_short": "業務ソフト",
-      "sub_short_en": "Enterprise apps",
+      "sub_short": "業務IT",
+      "sub_short_en": "Software",
       "row": 0,
       "relations": [
         {
@@ -149,8 +149,8 @@
       "name": "ワークデイ",
       "sub": "業務ソフト",
       "sub_en": "Enterprise software",
-      "sub_short": "業務ソフト",
-      "sub_short_en": "Enterprise apps",
+      "sub_short": "業務IT",
+      "sub_short_en": "Software",
       "row": 0,
       "relations": [
         {
@@ -175,8 +175,8 @@
       "name": "クラウドストライク",
       "sub": "セキュリティ",
       "sub_en": "Cybersecurity",
-      "sub_short": "セキュリティ",
-      "sub_short_en": "Cybersecurity",
+      "sub_short": "防御",
+      "sub_short_en": "Security",
       "row": 0,
       "relations": [
         {
@@ -201,8 +201,8 @@
       "name": "スノーフレイク",
       "sub": "データ基盤",
       "sub_en": "Data platform",
-      "sub_short": "データ基盤",
-      "sub_short_en": "Data platform",
+      "sub_short": "データ",
+      "sub_short_en": "Data",
       "row": 0,
       "relations": [
         {
@@ -227,8 +227,8 @@
       "name": "データブリックス",
       "sub": "データ基盤",
       "sub_en": "Data platform",
-      "sub_short": "データ基盤",
-      "sub_short_en": "Data platform",
+      "sub_short": "データ",
+      "sub_short_en": "Data",
       "row": 0,
       "relations": [
         {

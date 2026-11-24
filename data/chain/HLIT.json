@@ -30,8 +30,8 @@
       "name": "チャーター・コミュニケーションズ",
       "sub": "ケーブル事業者",
       "sub_en": "Cable operator",
-      "sub_short": "ケーブル事業者",
-      "sub_short_en": "Cable operator",
+      "sub_short": "ケーブル",
+      "sub_short_en": "Cable",
       "row": 1,
       "relations": [
         {
@@ -56,8 +56,8 @@
       "name": "コムキャスト",
       "sub": "ケーブル事業者",
       "sub_en": "Cable operator",
-      "sub_short": "ケーブル事業者",
-      "sub_short_en": "Cable operator",
+      "sub_short": "ケーブル",
+      "sub_short_en": "Cable",
       "row": 1,
       "relations": [
         {
@@ -82,8 +82,8 @@
       "name": "ケーブル・ワン",
       "sub": "ケーブル事業者",
       "sub_en": "Cable operator",
-      "sub_short": "ケーブル事業者",
-      "sub_short_en": "Cable operator",
+      "sub_short": "ケーブル",
+      "sub_short_en": "Cable",
       "row": 1,
       "relations": [
         {
@@ -108,8 +108,8 @@
       "name": "アメリカ・モビル",
       "sub": "通信事業者",
       "sub_en": "Telecom operator",
-      "sub_short": "通信事業者",
-      "sub_short_en": "Telecom operator",
+      "sub_short": "通信",
+      "sub_short_en": "Telecom",
       "row": 1,
       "relations": [
         {
@@ -135,7 +135,7 @@
       "sub": "受託製造",
       "sub_en": "Contract manufacturing",
       "sub_short": "受託製造",
-      "sub_short_en": "Contract maker",
+      "sub_short_en": "EMS",
       "row": 0,
       "relations": [
         {
@@ -161,7 +161,7 @@
       "sub": "通信機器",
       "sub_en": "Telecom equipment",
       "sub_short": "通信機器",
-      "sub_short_en": "Telecom gear",
+      "sub_short_en": "Telecom",
       "row": 2,
       "relations": [
         {

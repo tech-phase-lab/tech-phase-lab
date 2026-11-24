@@ -19,8 +19,8 @@
       "name": "ダーリング・イングレディエンツ",
       "sub": "再生ディーゼル合弁",
       "sub_en": "Renewable diesel JV",
-      "sub_short": "再生燃料合弁",
-      "sub_short_en": "Biodiesel JV",
+      "sub_short": "再生燃料",
+      "sub_short_en": "Biofuel",
       "row": 0,
       "relations": [
         {
@@ -71,8 +71,8 @@
       "name": "コロニアル・パイプライン",
       "sub": "製品の輸送路",
       "sub_en": "Product pipeline",
-      "sub_short": "製品の輸送路",
-      "sub_short_en": "Product pipeline",
+      "sub_short": "輸送",
+      "sub_short_en": "Pipeline",
       "row": 0,
       "relations": [
         {
@@ -97,8 +97,8 @@
       "name": "エクスプローラー・パイプライン",
       "sub": "製品の輸送路",
       "sub_en": "Product pipeline",
-      "sub_short": "製品の輸送路",
-      "sub_short_en": "Product pipeline",
+      "sub_short": "輸送",
+      "sub_short_en": "Pipeline",
       "row": 0,
       "relations": [
         {
@@ -124,7 +124,7 @@
       "sub": "燃料卸売",
       "sub_en": "Fuel distribution",
       "sub_short": "燃料卸売",
-      "sub_short_en": "Fuel supply",
+      "sub_short_en": "Fuel",
       "row": 0,
       "relations": [
         {
@@ -150,7 +150,7 @@
       "sub": "燃料卸売",
       "sub_en": "Fuel distribution",
       "sub_short": "燃料卸売",
-      "sub_short_en": "Fuel supply",
+      "sub_short_en": "Fuel",
       "row": 0,
       "relations": [
         {
@@ -175,7 +175,7 @@
       "name": "プレインズ・オール・アメリカン・パイプライン",
       "sub": "パイプライン",
       "sub_en": "Pipelines",
-      "sub_short": "パイプライン",
+      "sub_short": "配管網",
       "sub_short_en": "Pipelines",
       "row": 0,
       "relations": [

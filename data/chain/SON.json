@@ -30,7 +30,7 @@
       "sub": "投資会社",
       "sub_en": "Private equity",
       "sub_short": "投資会社",
-      "sub_short_en": "Private equity",
+      "sub_short_en": "PE",
       "row": 0,
       "relations": [
         {
@@ -56,7 +56,7 @@
       "sub": "アルミ缶",
       "sub_en": "Aluminum cans",
       "sub_short": "アルミ缶",
-      "sub_short_en": "Aluminum cans",
+      "sub_short_en": "Cans",
       "row": 0,
       "relations": [
         {
@@ -82,7 +82,7 @@
       "sub": "金属缶",
       "sub_en": "Metal packaging",
       "sub_short": "金属缶",
-      "sub_short_en": "Metal packaging",
+      "sub_short_en": "Cans",
       "row": 1,
       "relations": [
         {
@@ -108,7 +108,7 @@
       "sub": "包装材",
       "sub_en": "Packaging",
       "sub_short": "包装材",
-      "sub_short_en": "Packaging",
+      "sub_short_en": "Packing",
       "row": 1,
       "relations": [
         {
@@ -134,7 +134,7 @@
       "sub": "金属缶・キャップ",
       "sub_en": "Metal containers & closures",
       "sub_short": "金属缶",
-      "sub_short_en": "Metal containers",
+      "sub_short_en": "Cans",
       "row": 1,
       "relations": [
         {
@@ -160,7 +160,7 @@
       "sub": "包装材(箔・紙)",
       "sub_en": "Foil & paper packaging",
       "sub_short": "包装材",
-      "sub_short_en": "Foil packaging",
+      "sub_short_en": "Packing",
       "row": 1,
       "relations": [
         {

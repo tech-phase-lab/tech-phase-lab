@@ -27,7 +27,7 @@
       "name": "ベリシュア",
       "sub": "セキュリティサービス",
       "sub_en": "Security services",
-      "sub_short": "警備サービス",
+      "sub_short": "警備",
       "sub_short_en": "Security",
       "row": 0,
       "relations": [
@@ -54,7 +54,7 @@
       "sub": "家電小売",
       "sub_en": "Electronics retail",
       "sub_short": "家電小売",
-      "sub_short_en": "Electronics shop",
+      "sub_short_en": "Retail",
       "row": 0,
       "relations": [
         {
@@ -157,7 +157,7 @@
       "name": "エーディーティー",
       "sub": "セキュリティサービス",
       "sub_en": "Security services",
-      "sub_short": "警備サービス",
+      "sub_short": "警備",
       "sub_short_en": "Security",
       "row": 0,
       "relations": [
@@ -183,7 +183,7 @@
       "name": "フォックスコン・クラウド・ネットワーク・テクノロジー",
       "sub": "電子機器受託製造",
       "sub_en": "Electronics manufacturing",
-      "sub_short": "電子機器受託",
+      "sub_short": "EMS",
       "sub_short_en": "EMS",
       "row": 1,
       "relations": [
@@ -209,7 +209,7 @@
       "name": "ペガトロン",
       "sub": "電子機器受託製造",
       "sub_en": "Electronics manufacturing",
-      "sub_short": "電子機器受託",
+      "sub_short": "EMS",
       "sub_short_en": "EMS",
       "row": 1,
       "relations": [
@@ -236,7 +236,7 @@
       "sub": "半導体",
       "sub_en": "Semiconductors",
       "sub_short": "半導体",
-      "sub_short_en": "Semiconductors",
+      "sub_short_en": "Chips",
       "row": 1,
       "relations": [
         {
@@ -262,7 +262,7 @@
       "sub": "半導体",
       "sub_en": "Semiconductors",
       "sub_short": "半導体",
-      "sub_short_en": "Semiconductors",
+      "sub_short_en": "Chips",
       "row": 1,
       "relations": [
         {
@@ -288,7 +288,7 @@
       "sub": "半導体",
       "sub_en": "Semiconductors",
       "sub_short": "半導体",
-      "sub_short_en": "Semiconductors",
+      "sub_short_en": "Chips",
       "row": 1,
       "relations": [
         {
@@ -313,8 +313,8 @@
       "name": "アマゾン",
       "sub": "ネット通販・IT",
       "sub_en": "E-commerce & cloud",
-      "sub_short": "ネット通販・IT",
-      "sub_short_en": "E-commerce",
+      "sub_short": "通販",
+      "sub_short_en": "E-com",
       "row": 0,
       "relations": [
         {
@@ -339,8 +339,8 @@
       "name": "グーグル",
       "sub": "ネット・IT",
       "sub_en": "Internet & tech",
-      "sub_short": "ネット・IT",
-      "sub_short_en": "Internet & tech",
+      "sub_short": "ネット",
+      "sub_short_en": "Internet",
       "row": 0,
       "relations": [
         {

@@ -33,8 +33,8 @@
       "name": "Phison Electronics",
       "sub": "SSDコントローラー",
       "sub_en": "SSD controllers",
-      "sub_short": "SSD制御半導体",
-      "sub_short_en": "SSD controllers",
+      "sub_short": "SSD",
+      "sub_short_en": "SSD ICs",
       "row": 0,
       "relations": [
         {
@@ -60,8 +60,8 @@
       "name": "Kioxia(旧 東芝メモリ)",
       "sub": "NANDメモリー",
       "sub_en": "NAND flash",
-      "sub_short": "NANDメモリー",
-      "sub_short_en": "NAND flash",
+      "sub_short": "NAND",
+      "sub_short_en": "NAND",
       "row": 0,
       "relations": [
         {
@@ -104,7 +104,7 @@
       "sub": "HDD用サスペンション",
       "sub_en": "HDD suspension assemblies",
       "sub_short": "HDD部品",
-      "sub_short_en": "HDD parts",
+      "sub_short_en": "HDD",
       "row": 0,
       "relations": [
         {
@@ -130,8 +130,8 @@
       "name": "TDK",
       "sub": "HDD用部品",
       "sub_en": "HDD components",
-      "sub_short": "HDD用部品",
-      "sub_short_en": "HDD components",
+      "sub_short": "HDD部品",
+      "sub_short_en": "HDD",
       "row": 0,
       "relations": [
         {
@@ -157,8 +157,8 @@
       "name": "Dell Technologies",
       "sub": "PC・サーバー",
       "sub_en": "PCs & servers",
-      "sub_short": "PC・サーバー",
-      "sub_short_en": "PCs & servers",
+      "sub_short": "PC",
+      "sub_short_en": "PCs",
       "row": 1,
       "relations": [
         {
@@ -184,8 +184,8 @@
       "name": "Dropbox",
       "sub": "クラウドストレージ",
       "sub_en": "Cloud storage",
-      "sub_short": "クラウド保存",
-      "sub_short_en": "Cloud storage",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 1,
       "relations": [
         {
@@ -211,8 +211,8 @@
       "name": "Zoom Communications",
       "sub": "ビデオ会議",
       "sub_en": "Video conferencing",
-      "sub_short": "ビデオ会議",
-      "sub_short_en": "Video calls",
+      "sub_short": "会議",
+      "sub_short_en": "Video",
       "row": 1,
       "relations": [
         {
@@ -266,7 +266,7 @@
       "sub": "クラウド・ソフト",
       "sub_en": "Cloud & software",
       "sub_short": "クラウド",
-      "sub_short_en": "Cloud & software",
+      "sub_short_en": "Cloud",
       "row": 2,
       "relations": [
         {
@@ -292,7 +292,7 @@
       "name": "Sony Group(PlayStation)",
       "sub": "ゲーム・電機",
       "sub_en": "Games & electronics",
-      "sub_short": "ゲーム・電機",
+      "sub_short": "ゲーム",
       "sub_short_en": "Games",
       "row": 2,
       "relations": [
@@ -319,8 +319,8 @@
       "name": "eBay",
       "sub": "ネット通販",
       "sub_en": "E-commerce",
-      "sub_short": "ネット通販",
-      "sub_short_en": "E-commerce",
+      "sub_short": "通販",
+      "sub_short_en": "E-com",
       "row": 2,
       "relations": [
         {
@@ -346,8 +346,8 @@
       "name": "Equinix",
       "sub": "データセンター",
       "sub_en": "Data centers",
-      "sub_short": "データセンター",
-      "sub_short_en": "Data centers",
+      "sub_short": "DC",
+      "sub_short_en": "DCs",
       "row": 2,
       "relations": [
         {
@@ -374,7 +374,7 @@
       "sub": "半導体",
       "sub_en": "Semiconductors",
       "sub_short": "半導体",
-      "sub_short_en": "Semiconductors",
+      "sub_short_en": "Chips",
       "row": 2,
       "relations": [
         {
@@ -401,7 +401,7 @@
       "sub": "HDD・ストレージ",
       "sub_en": "HDD & storage",
       "sub_short": "HDD",
-      "sub_short_en": "HDD & storage",
+      "sub_short_en": "HDDs",
       "row": 3,
       "relations": [
         {

@@ -83,8 +83,8 @@
       "name_en": "National Storage Affiliates",
       "sub": "貸倉庫REIT",
       "sub_en": "Self-storage REIT",
-      "sub_short": "貸倉庫REIT",
-      "sub_short_en": "Storage REIT",
+      "sub_short": "REIT",
+      "sub_short_en": "REIT",
       "row": 1,
       "relations": [
         {
@@ -109,8 +109,8 @@
       "name_en": "SmartStop Self Storage REIT",
       "sub": "貸倉庫REIT",
       "sub_en": "Self-storage REIT",
-      "sub_short": "貸倉庫REIT",
-      "sub_short_en": "Storage REIT",
+      "sub_short": "REIT",
+      "sub_short_en": "REIT",
       "row": 1,
       "relations": [
         {
@@ -135,8 +135,8 @@
       "name_en": "Runway Growth Finance",
       "sub": "ベンチャー融資BDC",
       "sub_en": "Venture lending BDC",
-      "sub_short": "ベンチャー融資",
-      "sub_short_en": "Venture lending",
+      "sub_short": "融資",
+      "sub_short_en": "Lending",
       "row": 1,
       "relations": [
         {
@@ -161,8 +161,8 @@
       "name_en": "Modiv Industrial",
       "sub": "産業用REIT",
       "sub_en": "Industrial REIT",
-      "sub_short": "産業用REIT",
-      "sub_short_en": "Industrial REIT",
+      "sub_short": "REIT",
+      "sub_short_en": "REIT",
       "row": 1,
       "relations": [
         {
@@ -240,7 +240,7 @@
       "sub": "地方銀行",
       "sub_en": "Community bank",
       "sub_short": "地方銀行",
-      "sub_short_en": "Community bank",
+      "sub_short_en": "Bank",
       "row": 2,
       "relations": [
         {

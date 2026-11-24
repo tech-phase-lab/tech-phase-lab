@@ -62,7 +62,7 @@
       "sub": "建材流通",
       "sub_en": "Building materials supply",
       "sub_short": "建材流通",
-      "sub_short_en": "Building supply",
+      "sub_short_en": "Building",
       "row": 1,
       "relations": [
         {
@@ -87,8 +87,8 @@
       "name_en": "The Home Depot",
       "sub": "ホームセンター",
       "sub_en": "Home improvement retail",
-      "sub_short": "ホームセンター",
-      "sub_short_en": "Home improvement",
+      "sub_short": "住宅用品",
+      "sub_short_en": "Home",
       "row": 1,
       "relations": [
         {
@@ -166,7 +166,7 @@
       "sub": "建材流通",
       "sub_en": "Building materials distribution",
       "sub_short": "建材流通",
-      "sub_short_en": "Building supply",
+      "sub_short_en": "Building",
       "row": 3,
       "relations": [
         {

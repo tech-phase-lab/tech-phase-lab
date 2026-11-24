@@ -30,7 +30,7 @@
       "sub": "ガス・パイプライン",
       "sub_en": "Gas pipelines",
       "sub_short": "ガス",
-      "sub_short_en": "Gas pipelines",
+      "sub_short_en": "Pipeline",
       "row": 0,
       "relations": [
         {
@@ -55,8 +55,8 @@
       "name_en": "Infinity Natural Resources",
       "sub": "天然ガス開発",
       "sub_en": "Natural gas E&P",
-      "sub_short": "天然ガス開発",
-      "sub_short_en": "Natural gas E&P",
+      "sub_short": "天然ガス",
+      "sub_short_en": "Gas",
       "row": 0,
       "relations": [
         {
@@ -81,8 +81,8 @@
       "name_en": "Stonepeak",
       "sub": "インフラ投資",
       "sub_en": "Infrastructure investor",
-      "sub_short": "インフラ投資",
-      "sub_short_en": "Infra investing",
+      "sub_short": "インフラ",
+      "sub_short_en": "Infra",
       "row": 1,
       "relations": [
         {
@@ -211,7 +211,7 @@
       "name_en": "Enbridge",
       "sub": "パイプライン・ガス配給",
       "sub_en": "Pipelines & gas utilities",
-      "sub_short": "パイプライン",
+      "sub_short": "配管網",
       "sub_short_en": "Pipelines",
       "row": 2,
       "relations": [
@@ -237,7 +237,7 @@
       "name_en": "Berkshire Hathaway Energy",
       "sub": "エネルギー",
       "sub_en": "Energy",
-      "sub_short": "エネルギー",
+      "sub_short": "エネ",
       "sub_short_en": "Energy",
       "row": 2,
       "relations": [

@@ -31,7 +31,7 @@
       "sub": "半導体",
       "sub_en": "Semiconductors",
       "sub_short": "半導体",
-      "sub_short_en": "Semiconductors",
+      "sub_short_en": "Chips",
       "row": 0,
       "relations": [
         {
@@ -69,7 +69,7 @@
       "sub": "電機",
       "sub_en": "Electronics",
       "sub_short": "電機",
-      "sub_short_en": "Electronics",
+      "sub_short_en": "Devices",
       "row": 1,
       "relations": [
         {
@@ -109,7 +109,7 @@
       "name": "Cadence Design Systems",
       "sub": "設計自動化",
       "sub_en": "EDA",
-      "sub_short": "設計自動化",
+      "sub_short": "EDA",
       "sub_short_en": "EDA",
       "row": 1,
       "relations": [
@@ -134,7 +134,7 @@
       "name": "Synopsys",
       "sub": "設計自動化",
       "sub_en": "EDA",
-      "sub_short": "設計自動化",
+      "sub_short": "EDA",
       "sub_short_en": "EDA",
       "row": 1,
       "relations": [
@@ -173,7 +173,7 @@
       "sub": "計測機器",
       "sub_en": "Test & measurement",
       "sub_short": "計測機器",
-      "sub_short_en": "Test equipment",
+      "sub_short_en": "Testing",
       "row": 1,
       "relations": [
         {
@@ -197,7 +197,7 @@
       "name": "GlobalFoundries",
       "sub": "ファウンドリ",
       "sub_en": "Foundry",
-      "sub_short": "ファウンドリ",
+      "sub_short": "受託生産",
       "sub_short_en": "Foundry",
       "row": 2,
       "relations": [

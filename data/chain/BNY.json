@@ -31,8 +31,8 @@
       "name_en": "Grayscale",
       "sub": "暗号資産ファンド",
       "sub_en": "Crypto funds",
-      "sub_short": "暗号資産投信",
-      "sub_short_en": "Crypto funds",
+      "sub_short": "暗号資産",
+      "sub_short_en": "Crypto",
       "row": 0,
       "relations": [
         {
@@ -57,8 +57,8 @@
       "name_en": "Bitwise",
       "sub": "暗号資産ETF",
       "sub_en": "Crypto ETFs",
-      "sub_short": "暗号資産ETF",
-      "sub_short_en": "Crypto ETFs",
+      "sub_short": "暗号資産",
+      "sub_short_en": "Crypto",
       "row": 0,
       "relations": [
         {
@@ -83,8 +83,8 @@
       "name_en": "21Shares",
       "sub": "暗号資産ETF",
       "sub_en": "Crypto ETFs",
-      "sub_short": "暗号資産ETF",
-      "sub_short_en": "Crypto ETFs",
+      "sub_short": "暗号資産",
+      "sub_short_en": "Crypto",
       "row": 0,
       "relations": [
         {
@@ -110,7 +110,7 @@
       "sub": "資産運用",
       "sub_en": "Asset management",
       "sub_short": "資産運用",
-      "sub_short_en": "Asset management",
+      "sub_short_en": "Assets",
       "row": 0,
       "relations": [
         {
@@ -135,8 +135,8 @@
       "name_en": "Morgan Stanley",
       "sub": "証券・資産運用",
       "sub_en": "Investment bank & wealth",
-      "sub_short": "証券・資産運用",
-      "sub_short_en": "Investment bank",
+      "sub_short": "証券",
+      "sub_short_en": "Bank",
       "row": 0,
       "relations": [
         {
@@ -162,7 +162,7 @@
       "sub": "ETF運用",
       "sub_en": "ETF sponsor",
       "sub_short": "ETF運用",
-      "sub_short_en": "ETF sponsor",
+      "sub_short_en": "ETFs",
       "row": 0,
       "relations": [
         {
@@ -188,7 +188,7 @@
       "sub": "資産運用",
       "sub_en": "Asset management",
       "sub_short": "資産運用",
-      "sub_short_en": "Asset management",
+      "sub_short_en": "Assets",
       "row": 0,
       "relations": [
         {
@@ -213,8 +213,8 @@
       "name_en": "MV Oil Trust",
       "sub": "石油ロイヤルティ信託",
       "sub_en": "Oil royalty trust",
-      "sub_short": "石油権益信託",
-      "sub_short_en": "Oil royalties",
+      "sub_short": "石油権益",
+      "sub_short_en": "Oil",
       "row": 1,
       "relations": [
         {
@@ -239,8 +239,8 @@
       "name_en": "SS&C Technologies",
       "sub": "金融ソフト・事務代行",
       "sub_en": "Financial software & fund admin",
-      "sub_short": "金融ソフト",
-      "sub_short_en": "Finance apps",
+      "sub_short": "金融IT",
+      "sub_short_en": "Finance",
       "row": 2,
       "relations": [
         {
@@ -265,8 +265,8 @@
       "name_en": "Clearwater Analytics",
       "sub": "投資会計ソフト",
       "sub_en": "Investment accounting software",
-      "sub_short": "投資会計ソフト",
-      "sub_short_en": "Investment apps",
+      "sub_short": "会計",
+      "sub_short_en": "Investing",
       "row": 2,
       "relations": [
         {

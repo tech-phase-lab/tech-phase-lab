@@ -19,8 +19,8 @@
       "name": "MSGエンターテインメント",
       "sub": "ライブ興行・会場",
       "sub_en": "Live venues",
-      "sub_short": "ライブ興行",
-      "sub_short_en": "Live venues",
+      "sub_short": "興行",
+      "sub_short_en": "Venues",
       "row": 0,
       "relations": [
         {
@@ -45,8 +45,8 @@
       "name": "スフィア・エンターテインメント",
       "sub": "メディア・会場",
       "sub_en": "Media & venues",
-      "sub_short": "メディア・会場",
-      "sub_short_en": "Media & venues",
+      "sub_short": "メディア",
+      "sub_short_en": "Media",
       "row": 0,
       "relations": [
         {
@@ -136,8 +136,8 @@
       "name": "アマゾン",
       "sub": "配信・放映権",
       "sub_en": "Streaming & broadcast rights",
-      "sub_short": "配信・放映権",
-      "sub_short_en": "Streaming",
+      "sub_short": "配信",
+      "sub_short_en": "Video",
       "row": 0,
       "relations": [
         {

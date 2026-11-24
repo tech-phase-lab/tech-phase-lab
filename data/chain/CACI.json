@@ -29,8 +29,8 @@
       "name_en": "ARKA Group",
       "sub": "宇宙・防衛光学",
       "sub_en": "Space & defense optics",
-      "sub_short": "宇宙・防衛光学",
-      "sub_short_en": "Space optics",
+      "sub_short": "宇宙",
+      "sub_short_en": "Space",
       "row": 0,
       "relations": [
         {
@@ -55,8 +55,8 @@
       "name_en": "Datalynx",
       "sub": "ITサービス(英)",
       "sub_en": "IT services (UK)",
-      "sub_short": "ITサービス",
-      "sub_short_en": "IT services",
+      "sub_short": "IT",
+      "sub_short_en": "IT",
       "row": 0,
       "relations": [
         {
@@ -81,8 +81,8 @@
       "name_en": "Intermap Technologies",
       "sub": "地理空間データ",
       "sub_en": "Geospatial data",
-      "sub_short": "地理空間データ",
-      "sub_short_en": "Geospatial data",
+      "sub_short": "地図情報",
+      "sub_short_en": "Maps",
       "row": 0,
       "relations": [
         {
@@ -108,7 +108,7 @@
       "sub": "防衛IT・サイバー",
       "sub_en": "Defense IT & cyber",
       "sub_short": "防衛IT",
-      "sub_short_en": "Defense IT",
+      "sub_short_en": "Defense",
       "row": 0,
       "relations": [
         {
@@ -133,8 +133,8 @@
       "name_en": "DHI Group",
       "sub": "IT人材サイト",
       "sub_en": "Tech job sites",
-      "sub_short": "IT人材サイト",
-      "sub_short_en": "Tech job sites",
+      "sub_short": "IT人材",
+      "sub_short_en": "Jobs",
       "row": 0,
       "relations": [
         {
@@ -159,8 +159,8 @@
       "name_en": "Leidos",
       "sub": "政府向けIT",
       "sub_en": "Government IT",
-      "sub_short": "政府向けIT",
-      "sub_short_en": "Government IT",
+      "sub_short": "政府IT",
+      "sub_short_en": "Gov IT",
       "row": 1,
       "relations": [
         {
@@ -185,8 +185,8 @@
       "name_en": "Science Applications International",
       "sub": "政府向けIT",
       "sub_en": "Government IT",
-      "sub_short": "政府向けIT",
-      "sub_short_en": "Government IT",
+      "sub_short": "政府IT",
+      "sub_short_en": "Gov IT",
       "row": 1,
       "relations": [
         {
@@ -211,7 +211,7 @@
       "name_en": "Amentum",
       "sub": "政府向け技術サービス",
       "sub_en": "Government technical services",
-      "sub_short": "政府向け技術",
+      "sub_short": "政府技術",
       "sub_short_en": "Gov tech",
       "row": 1,
       "relations": [
@@ -237,8 +237,8 @@
       "name_en": "Kratos Defense",
       "sub": "防衛システム",
       "sub_en": "Defense systems",
-      "sub_short": "防衛システム",
-      "sub_short_en": "Defense systems",
+      "sub_short": "防衛",
+      "sub_short_en": "Defense",
       "row": 1,
       "relations": [
         {
@@ -263,8 +263,8 @@
       "name_en": "AeroVironment",
       "sub": "ドローン・防衛",
       "sub_en": "Drones & defense",
-      "sub_short": "ドローン・防衛",
-      "sub_short_en": "Drones & defense",
+      "sub_short": "ドローン",
+      "sub_short_en": "Drones",
       "row": 1,
       "relations": [
         {
@@ -289,8 +289,8 @@
       "name_en": "DLH Holdings",
       "sub": "政府向けサービス",
       "sub_en": "Government services",
-      "sub_short": "政府サービス",
-      "sub_short_en": "Gov services",
+      "sub_short": "政府支援",
+      "sub_short_en": "Gov IT",
       "row": 1,
       "relations": [
         {

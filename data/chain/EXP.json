@@ -57,7 +57,7 @@
       "sub": "住宅建設",
       "sub_en": "Homebuilding",
       "sub_short": "住宅建設",
-      "sub_short_en": "Homebuilding",
+      "sub_short_en": "Homes",
       "row": 0,
       "relations": [
         {
@@ -82,7 +82,7 @@
       "name_en": "Smart Sand",
       "sub": "フラック用の砂",
       "sub_en": "Frac sand",
-      "sub_short": "フラック用の砂",
+      "sub_short": "採掘砂",
       "sub_short_en": "Frac sand",
       "row": 0,
       "relations": [
@@ -108,8 +108,8 @@
       "name_en": "Knauf",
       "sub": "石膏ボード(ドイツ)",
       "sub_en": "Wallboard (Germany)",
-      "sub_short": "石膏ボード",
-      "sub_short_en": "Wallboard",
+      "sub_short": "建材",
+      "sub_short_en": "Drywall",
       "row": 1,
       "relations": [
         {
@@ -134,8 +134,8 @@
       "name_en": "National Gypsum",
       "sub": "石膏ボード",
       "sub_en": "Wallboard",
-      "sub_short": "石膏ボード",
-      "sub_short_en": "Wallboard",
+      "sub_short": "建材",
+      "sub_short_en": "Drywall",
       "row": 1,
       "relations": [
         {
@@ -161,7 +161,7 @@
       "sub": "建材",
       "sub_en": "Building products",
       "sub_short": "建材",
-      "sub_short_en": "Building supply",
+      "sub_short_en": "Building",
       "row": 1,
       "relations": [
         {
@@ -187,7 +187,7 @@
       "sub": "複合企業",
       "sub_en": "Conglomerate",
       "sub_short": "複合企業",
-      "sub_short_en": "Conglomerate",
+      "sub_short_en": "Group",
       "row": 1,
       "relations": [
         {
@@ -212,8 +212,8 @@
       "name_en": "Knife River",
       "sub": "骨材・建設資材",
       "sub_en": "Aggregates & construction materials",
-      "sub_short": "骨材・建設資材",
-      "sub_short_en": "Aggregates",
+      "sub_short": "骨材",
+      "sub_short_en": "Gravel",
       "row": 2,
       "relations": [
         {

@@ -34,7 +34,7 @@
       "name": "マイクロソフト",
       "sub": "メール・生産性",
       "sub_en": "Email & productivity",
-      "sub_short": "メール・生産性",
+      "sub_short": "メール",
       "sub_short_en": "Email",
       "row": 0,
       "relations": [
@@ -73,8 +73,8 @@
       "name": "アマゾン",
       "sub": "クラウド基盤",
       "sub_en": "Cloud platform",
-      "sub_short": "クラウド基盤",
-      "sub_short_en": "Cloud platform",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 1,
       "relations": [
         {
@@ -112,8 +112,8 @@
       "name": "プルーフポイント",
       "sub": "メール保護",
       "sub_en": "Email security",
-      "sub_short": "メール保護",
-      "sub_short_en": "Email security",
+      "sub_short": "メール",
+      "sub_short_en": "Email",
       "row": 0,
       "relations": [
         {
@@ -138,8 +138,8 @@
       "name": "バラクーダ",
       "sub": "メール保護",
       "sub_en": "Email security",
-      "sub_short": "メール保護",
-      "sub_short_en": "Email security",
+      "sub_short": "メール",
+      "sub_short_en": "Email",
       "row": 0,
       "relations": [
         {
@@ -165,7 +165,7 @@
       "sub": "メール",
       "sub_en": "Email service",
       "sub_short": "メール",
-      "sub_short_en": "Email service",
+      "sub_short_en": "Email",
       "row": 0,
       "relations": [
         {
@@ -191,7 +191,7 @@
       "sub": "メール",
       "sub_en": "Email service",
       "sub_short": "メール",
-      "sub_short_en": "Email service",
+      "sub_short_en": "Email",
       "row": 0,
       "relations": [
         {
@@ -216,8 +216,8 @@
       "name": "ウィックス",
       "sub": "ウェブ制作",
       "sub_en": "Website building",
-      "sub_short": "ウェブ制作",
-      "sub_short_en": "Website building",
+      "sub_short": "ウェブ",
+      "sub_short_en": "Websites",
       "row": 0,
       "relations": [
         {
@@ -243,7 +243,7 @@
       "sub": "ECプラットフォーム",
       "sub_en": "E-commerce platform",
       "sub_short": "EC基盤",
-      "sub_short_en": "E-commerce",
+      "sub_short_en": "E-com",
       "row": 0,
       "relations": [
         {
@@ -268,8 +268,8 @@
       "name": "クラウドフレア",
       "sub": "ネットワーク・セキュリティ",
       "sub_en": "Network & security",
-      "sub_short": "ネットワーク",
-      "sub_short_en": "Network security",
+      "sub_short": "通信網",
+      "sub_short_en": "Security",
       "row": 0,
       "relations": [
         {
@@ -294,7 +294,7 @@
       "name": "タクス",
       "sub": "ドメイン登録",
       "sub_en": "Domain registration",
-      "sub_short": "ドメイン登録",
+      "sub_short": "ドメイン",
       "sub_short_en": "Domains",
       "row": 0,
       "relations": [
@@ -320,8 +320,8 @@
       "name": "ベリサイン",
       "sub": "ドメイン登録",
       "sub_en": "Domain registry",
-      "sub_short": "ドメイン登録",
-      "sub_short_en": "Domain registry",
+      "sub_short": "ドメイン",
+      "sub_short_en": "Domains",
       "row": 2,
       "relations": [
         {

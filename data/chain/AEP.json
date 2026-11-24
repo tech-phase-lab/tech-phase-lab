@@ -52,7 +52,7 @@
       "sub": "電力",
       "sub_en": "Electric utility",
       "sub_short": "電力",
-      "sub_short_en": "Electric utility",
+      "sub_short_en": "Utility",
       "row": 1,
       "relations": [
         {
@@ -78,7 +78,7 @@
       "sub": "電力",
       "sub_en": "Electric utility",
       "sub_short": "電力",
-      "sub_short_en": "Electric utility",
+      "sub_short_en": "Utility",
       "row": 1,
       "relations": [
         {
@@ -116,7 +116,7 @@
       "sub": "電力・ガス設備工事",
       "sub_en": "Utility infrastructure services",
       "sub_short": "電力",
-      "sub_short_en": "Utility works",
+      "sub_short_en": "Utility",
       "row": 0,
       "relations": [
         {

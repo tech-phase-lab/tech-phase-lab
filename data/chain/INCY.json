@@ -19,7 +19,7 @@
       "name": "ノバルティス",
       "sub": "ライセンス提携先",
       "sub_en": "Licensing partner",
-      "sub_short": "ライセンス先",
+      "sub_short": "許諾先",
       "sub_short_en": "Licensing",
       "row": 0,
       "relations": [
@@ -45,7 +45,7 @@
       "name": "イーライリリー",
       "sub": "ライセンス提携先",
       "sub_en": "Licensing partner",
-      "sub_short": "ライセンス先",
+      "sub_short": "許諾先",
       "sub_short_en": "Licensing",
       "row": 0,
       "relations": [
@@ -175,8 +175,8 @@
       "name": "メルス",
       "sub": "二重特異性抗体",
       "sub_en": "Bispecific antibodies",
-      "sub_short": "二重特異性抗体",
-      "sub_short_en": "Bispecifics",
+      "sub_short": "抗体",
+      "sub_short_en": "Antibody",
       "row": 0,
       "relations": [
         {

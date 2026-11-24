@@ -36,8 +36,8 @@
       "name_en": "Howmet Aerospace",
       "sub": "航空機部品",
       "sub_en": "Aerospace components",
-      "sub_short": "航空機部品",
-      "sub_short_en": "Aero parts",
+      "sub_short": "航空部品",
+      "sub_short_en": "Aircraft",
       "row": 0,
       "relations": [
         {
@@ -62,8 +62,8 @@
       "name_en": "Woodward",
       "sub": "航空機制御部品",
       "sub_en": "Aircraft controls",
-      "sub_short": "航空機制御部品",
-      "sub_short_en": "Flight controls",
+      "sub_short": "航空部品",
+      "sub_short_en": "Aircraft",
       "row": 0,
       "relations": [
         {
@@ -88,8 +88,8 @@
       "name_en": "Berkshire Hathaway (PCC)",
       "sub": "航空機部品(PCC)",
       "sub_en": "Aerospace parts (PCC)",
-      "sub_short": "航空機部品",
-      "sub_short_en": "Aerospace parts",
+      "sub_short": "航空部品",
+      "sub_short_en": "Aircraft",
       "row": 0,
       "relations": [
         {
@@ -114,8 +114,8 @@
       "name_en": "Park Aerospace",
       "sub": "航空機用複合材",
       "sub_en": "Aerospace composites",
-      "sub_short": "航空機用複合材",
-      "sub_short_en": "Aero composites",
+      "sub_short": "航空部品",
+      "sub_short_en": "Aircraft",
       "row": 0,
       "relations": [
         {
@@ -140,8 +140,8 @@
       "name_en": "StandardAero",
       "sub": "エンジン整備",
       "sub_en": "Engine MRO",
-      "sub_short": "エンジン整備",
-      "sub_short_en": "Engine MRO",
+      "sub_short": "エンジン",
+      "sub_short_en": "Engines",
       "row": 0,
       "relations": [
         {
@@ -166,8 +166,8 @@
       "name_en": "AerCap",
       "sub": "航空機リース",
       "sub_en": "Aircraft leasing",
-      "sub_short": "航空機リース",
-      "sub_short_en": "Aircraft leasing",
+      "sub_short": "航空機",
+      "sub_short_en": "Leasing",
       "row": 0,
       "relations": [
         {
@@ -192,8 +192,8 @@
       "name_en": "Triumph Group",
       "sub": "航空機システム",
       "sub_en": "Aerospace systems",
-      "sub_short": "航空機システム",
-      "sub_short_en": "Aero systems",
+      "sub_short": "航空部品",
+      "sub_short_en": "Aero",
       "row": 0,
       "relations": [
         {
@@ -270,8 +270,8 @@
       "name_en": "Safran",
       "sub": "航空エンジン(仏)",
       "sub_en": "Aircraft engines (France)",
-      "sub_short": "航空エンジン",
-      "sub_short_en": "Aircraft engines",
+      "sub_short": "エンジン",
+      "sub_short_en": "Engines",
       "row": 2,
       "relations": [
         {
@@ -296,8 +296,8 @@
       "name_en": "Baker Hughes",
       "sub": "エネルギー機器",
       "sub_en": "Energy equipment",
-      "sub_short": "エネルギー機器",
-      "sub_short_en": "Energy equipment",
+      "sub_short": "エネ機器",
+      "sub_short_en": "Energy",
       "row": 2,
       "relations": [
         {
@@ -322,8 +322,8 @@
       "name_en": "Kratos",
       "sub": "無人機・防衛",
       "sub_en": "Drones & defense",
-      "sub_short": "無人機・防衛",
-      "sub_short_en": "Drones & defense",
+      "sub_short": "無人機",
+      "sub_short_en": "Drones",
       "row": 2,
       "relations": [
         {
@@ -348,8 +348,8 @@
       "name_en": "BETA Technologies",
       "sub": "電動航空機",
       "sub_en": "Electric aircraft",
-      "sub_short": "電動航空機",
-      "sub_short_en": "Electric planes",
+      "sub_short": "eVTOL",
+      "sub_short_en": "eVTOL",
       "row": 2,
       "relations": [
         {
@@ -375,7 +375,7 @@
       "sub": "自律飛行",
       "sub_en": "Autonomous flight",
       "sub_short": "自律飛行",
-      "sub_short_en": "Autonomous fly",
+      "sub_short_en": "Drones",
       "row": 2,
       "relations": [
         {
@@ -400,7 +400,7 @@
       "name_en": "Innovative Solutions & Support",
       "sub": "航空電子機器",
       "sub_en": "Avionics",
-      "sub_short": "航空電子機器",
+      "sub_short": "航空電子",
       "sub_short_en": "Avionics",
       "row": 3,
       "relations": [
@@ -426,7 +426,7 @@
       "name_en": "KULR Technology",
       "sub": "電池・振動解析",
       "sub_en": "Batteries & vibration analysis",
-      "sub_short": "電池・振動解析",
+      "sub_short": "電池",
       "sub_short_en": "Batteries",
       "row": 3,
       "relations": [

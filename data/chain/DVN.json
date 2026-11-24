@@ -19,8 +19,8 @@
       "name": "ウォーターブリッジ",
       "sub": "随伴水の処理",
       "sub_en": "Produced water",
-      "sub_short": "随伴水の処理",
-      "sub_short_en": "Produced water",
+      "sub_short": "水処理",
+      "sub_short_en": "Water",
       "row": 0,
       "relations": [
         {
@@ -45,8 +45,8 @@
       "name": "カタリスト・ミッドストリーム・パートナーズ",
       "sub": "ガス集積・処理",
       "sub_en": "Midstream gathering",
-      "sub_short": "ガス集積・処理",
-      "sub_short_en": "Midstream",
+      "sub_short": "ガス処理",
+      "sub_short_en": "Pipeline",
       "row": 0,
       "relations": [
         {
@@ -84,8 +84,8 @@
       "name": "ハワード・エナジー・パートナーズ",
       "sub": "ガス集積・処理",
       "sub_en": "Midstream partner",
-      "sub_short": "ガス集積・処理",
-      "sub_short_en": "Midstream",
+      "sub_short": "ガス処理",
+      "sub_short_en": "Pipeline",
       "row": 0,
       "relations": [
         {
@@ -111,7 +111,7 @@
       "sub": "地熱発電",
       "sub_en": "Geothermal power",
       "sub_short": "地熱発電",
-      "sub_short_en": "Geothermal power",
+      "sub_short_en": "Geo",
       "row": 0,
       "relations": [
         {

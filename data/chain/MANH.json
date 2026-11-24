@@ -29,7 +29,7 @@
       "sub": "電機",
       "sub_en": "Electronics",
       "sub_short": "電機",
-      "sub_short_en": "Electronics",
+      "sub_short_en": "Devices",
       "row": 1,
       "relations": [
         {
@@ -56,8 +56,8 @@
       "name": "IBM",
       "sub": "ITサービス",
       "sub_en": "IT services",
-      "sub_short": "ITサービス",
-      "sub_short_en": "IT services",
+      "sub_short": "IT",
+      "sub_short_en": "IT",
       "row": 1,
       "relations": [
         {
@@ -121,8 +121,8 @@
       "name": "ハネウェル",
       "sub": "産業・自動化",
       "sub_en": "Industrial & automation",
-      "sub_short": "産業・自動化",
-      "sub_short_en": "Automation",
+      "sub_short": "産業",
+      "sub_short_en": "Robotics",
       "row": 0,
       "relations": [
         {
@@ -148,7 +148,7 @@
       "sub": "ECプラットフォーム",
       "sub_en": "E-commerce platform",
       "sub_short": "EC基盤",
-      "sub_short_en": "E-commerce",
+      "sub_short_en": "E-com",
       "row": 0,
       "relations": [
         {
@@ -172,8 +172,8 @@
       "name": "オラクル",
       "sub": "ERP・クラウド",
       "sub_en": "ERP & cloud",
-      "sub_short": "ERP・クラウド",
-      "sub_short_en": "ERP & cloud",
+      "sub_short": "ERP",
+      "sub_short_en": "ERP",
       "row": 1,
       "relations": [
         {
@@ -198,8 +198,8 @@
       "name": "SAP",
       "sub": "ERPソフト",
       "sub_en": "ERP software",
-      "sub_short": "ERPソフト",
-      "sub_short_en": "ERP software",
+      "sub_short": "ERP",
+      "sub_short_en": "ERP",
       "row": 1,
       "relations": [
         {

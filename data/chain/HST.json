@@ -19,8 +19,8 @@
       "name": "マリオット・インターナショナル",
       "sub": "ホテル運営会社",
       "sub_en": "Hotel operator",
-      "sub_short": "ホテル運営会社",
-      "sub_short_en": "Hotel operator",
+      "sub_short": "ホテル",
+      "sub_short_en": "Hotels",
       "row": 0,
       "relations": [
         {
@@ -45,8 +45,8 @@
       "name": "ハイアット・ホテルズ",
       "sub": "ホテル運営会社",
       "sub_en": "Hotel operator",
-      "sub_short": "ホテル運営会社",
-      "sub_short_en": "Hotel operator",
+      "sub_short": "ホテル",
+      "sub_short_en": "Hotels",
       "row": 0,
       "relations": [
         {
@@ -71,8 +71,8 @@
       "name": "ヒルトン・ワールドワイド",
       "sub": "ホテル運営会社",
       "sub_en": "Hotel operator",
-      "sub_short": "ホテル運営会社",
-      "sub_short_en": "Hotel operator",
+      "sub_short": "ホテル",
+      "sub_short_en": "Hotels",
       "row": 0,
       "relations": [
         {
@@ -97,8 +97,8 @@
       "name": "アコー",
       "sub": "ホテル運営会社",
       "sub_en": "Hotel operator",
-      "sub_short": "ホテル運営会社",
-      "sub_short_en": "Hotel operator",
+      "sub_short": "ホテル",
+      "sub_short_en": "Hotels",
       "row": 0,
       "relations": [
         {
@@ -123,8 +123,8 @@
       "name": "ノーブル・インベストメント・グループ",
       "sub": "ホテル資産運用",
       "sub_en": "Hotel asset manager",
-      "sub_short": "ホテル資産運用",
-      "sub_short_en": "Hotel assets",
+      "sub_short": "ホテル",
+      "sub_short_en": "Hotels",
       "row": 0,
       "relations": [
         {

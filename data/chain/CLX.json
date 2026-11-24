@@ -33,7 +33,7 @@
       "name_en": "Oil-Dri",
       "sub": "猫砂・吸着剤",
       "sub_en": "Cat litter & sorbents",
-      "sub_short": "猫砂・吸着剤",
+      "sub_short": "ペット",
       "sub_short_en": "Cat litter",
       "row": 0,
       "relations": [
@@ -60,7 +60,7 @@
       "sub": "小型家電",
       "sub_en": "Small appliances",
       "sub_short": "小型家電",
-      "sub_short_en": "Small appliances",
+      "sub_short_en": "Appliance",
       "row": 0,
       "relations": [
         {
@@ -112,7 +112,7 @@
       "sub": "衛生用品",
       "sub_en": "Hygiene products",
       "sub_short": "衛生用品",
-      "sub_short_en": "Hygiene products",
+      "sub_short_en": "Hygiene",
       "row": 1,
       "relations": [
         {
@@ -138,7 +138,7 @@
       "sub": "日用品",
       "sub_en": "Consumer products",
       "sub_short": "日用品",
-      "sub_short_en": "Consumer goods",
+      "sub_short_en": "Goods",
       "row": 1,
       "relations": [
         {
@@ -164,7 +164,7 @@
       "sub": "日用品",
       "sub_en": "Consumer products",
       "sub_short": "日用品",
-      "sub_short_en": "Consumer goods",
+      "sub_short_en": "Goods",
       "row": 2,
       "relations": [
         {
@@ -189,8 +189,8 @@
       "name_en": "Honest Company",
       "sub": "自然派日用品",
       "sub_en": "Clean personal care",
-      "sub_short": "自然派日用品",
-      "sub_short_en": "Personal care",
+      "sub_short": "日用品",
+      "sub_short_en": "Care",
       "row": 2,
       "relations": [
         {
@@ -215,8 +215,8 @@
       "name_en": "Hain Celestial",
       "sub": "自然派食品・日用品",
       "sub_en": "Natural foods & personal care",
-      "sub_short": "自然派食品",
-      "sub_short_en": "Natural foods",
+      "sub_short": "自然食品",
+      "sub_short_en": "Foods",
       "row": 2,
       "relations": [
         {
@@ -242,7 +242,7 @@
       "sub": "除菌装置",
       "sub_en": "Disinfection systems",
       "sub_short": "除菌装置",
-      "sub_short_en": "Disinfection",
+      "sub_short_en": "Hygiene",
       "row": 2,
       "relations": [
         {

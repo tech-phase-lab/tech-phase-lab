@@ -19,7 +19,7 @@
       "name": "ロレアル",
       "sub": "化粧品・香水",
       "sub_en": "Beauty & fragrance",
-      "sub_short": "化粧品・香水",
+      "sub_short": "化粧品",
       "sub_short_en": "Beauty",
       "row": 0,
       "relations": [
@@ -45,7 +45,7 @@
       "name": "ルックスオティカ",
       "sub": "アイウェア",
       "sub_en": "Eyewear",
-      "sub_short": "アイウェア",
+      "sub_short": "眼鏡",
       "sub_short_en": "Eyewear",
       "row": 0,
       "relations": [
@@ -124,7 +124,7 @@
       "sub": "靴下・ホーザリー",
       "sub_en": "Socks & hosiery",
       "sub_short": "靴下",
-      "sub_short_en": "Socks & hosiery",
+      "sub_short_en": "Socks",
       "row": 0,
       "relations": [
         {

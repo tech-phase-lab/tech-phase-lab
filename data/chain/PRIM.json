@@ -31,7 +31,7 @@
       "sub": "AIデータセンター・発電",
       "sub_en": "AI data center & power",
       "sub_short": "AI向けDC",
-      "sub_short_en": "AI data center",
+      "sub_short_en": "AI DCs",
       "row": 0,
       "relations": [
         {
@@ -56,8 +56,8 @@
       "name_en": "Centuri Holdings",
       "sub": "公益インフラ工事",
       "sub_en": "Utility infrastructure services",
-      "sub_short": "インフラ工事",
-      "sub_short_en": "Utility works",
+      "sub_short": "インフラ",
+      "sub_short_en": "Utility",
       "row": 1,
       "relations": [
         {
@@ -82,8 +82,8 @@
       "name_en": "Everus Construction",
       "sub": "電気・設備工事",
       "sub_en": "Electrical & mechanical construction",
-      "sub_short": "電気・設備工事",
-      "sub_short_en": "Electrical work",
+      "sub_short": "電気工事",
+      "sub_short_en": "Electrical",
       "row": 1,
       "relations": [
         {
@@ -135,7 +135,7 @@
       "sub": "通信インフラ工事",
       "sub_en": "Telecom infrastructure services",
       "sub_short": "通信工事",
-      "sub_short_en": "Telecom infra",
+      "sub_short_en": "Telecom",
       "row": 1,
       "relations": [
         {
@@ -161,7 +161,7 @@
       "sub": "発電・蓄電の工事",
       "sub_en": "Generation & storage construction",
       "sub_short": "発電",
-      "sub_short_en": "Power works",
+      "sub_short_en": "Grid work",
       "row": 1,
       "relations": [
         {

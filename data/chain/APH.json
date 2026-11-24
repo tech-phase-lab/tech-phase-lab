@@ -28,8 +28,8 @@
       "name": "Vistance Networks(旧CommScope)",
       "sub": "通信ケーブル・接続",
       "sub_en": "Network cabling & connectivity",
-      "sub_short": "通信ケーブル",
-      "sub_short_en": "Network cabling",
+      "sub_short": "ケーブル",
+      "sub_short_en": "Cabling",
       "row": 0,
       "relations": [
         {
@@ -82,8 +82,8 @@
       "name": "Carlisle Companies",
       "sub": "建材・産業機器",
       "sub_en": "Building products & industrial",
-      "sub_short": "建材・産業機器",
-      "sub_short_en": "Building supply",
+      "sub_short": "建材",
+      "sub_short_en": "Building",
       "row": 0,
       "relations": [
         {
@@ -107,8 +107,8 @@
       "name": "TE Connectivity",
       "sub": "コネクター",
       "sub_en": "Connectors",
-      "sub_short": "コネクター",
-      "sub_short_en": "Connectors",
+      "sub_short": "接続部品",
+      "sub_short_en": "Plugs",
       "row": 1,
       "relations": [
         {
@@ -133,7 +133,7 @@
       "sub": "車載部品",
       "sub_en": "Auto components",
       "sub_short": "車載部品",
-      "sub_short_en": "Auto components",
+      "sub_short_en": "Car parts",
       "row": 1,
       "relations": [
         {
@@ -157,8 +157,8 @@
       "name": "Corning",
       "sub": "光ファイバー・ガラス",
       "sub_en": "Optical fiber & glass",
-      "sub_short": "光ファイバー",
-      "sub_short_en": "Optical fiber",
+      "sub_short": "光通信",
+      "sub_short_en": "Fiber",
       "row": 1,
       "relations": [
         {
@@ -232,8 +232,8 @@
       "name": "Foxconn Interconnect Technology",
       "sub": "コネクター",
       "sub_en": "Connectors",
-      "sub_short": "コネクター",
-      "sub_short_en": "Connectors",
+      "sub_short": "接続部品",
+      "sub_short_en": "Plugs",
       "row": 1,
       "relations": [
         {
@@ -282,8 +282,8 @@
       "name": "Luxshare Precision Industry",
       "sub": "コネクター・組立",
       "sub_en": "Connectors & assembly",
-      "sub_short": "コネクター",
-      "sub_short_en": "Connectors",
+      "sub_short": "接続部品",
+      "sub_short_en": "Plugs",
       "row": 1,
       "relations": [
         {
@@ -307,8 +307,8 @@
       "name": "AVIC Jonhon Optronic Technology",
       "sub": "コネクター",
       "sub_en": "Connectors",
-      "sub_short": "コネクター",
-      "sub_short_en": "Connectors",
+      "sub_short": "接続部品",
+      "sub_short_en": "Plugs",
       "row": 1,
       "relations": [
         {

@@ -32,8 +32,8 @@
       "name_en": "Industrious",
       "sub": "フレキシブルオフィス",
       "sub_en": "Flexible workspace",
-      "sub_short": "シェアオフィス",
-      "sub_short_en": "Coworking",
+      "sub_short": "オフィス",
+      "sub_short_en": "Offices",
       "row": 0,
       "relations": [
         {
@@ -58,8 +58,8 @@
       "name_en": "Pearce Services",
       "sub": "デジタル・電力インフラ保守",
       "sub_en": "Digital & power infrastructure services",
-      "sub_short": "インフラ保守",
-      "sub_short_en": "Digital services",
+      "sub_short": "インフラ",
+      "sub_short_en": "IT",
       "row": 0,
       "relations": [
         {
@@ -85,7 +85,7 @@
       "sub": "プロジェクト管理",
       "sub_en": "Project management",
       "sub_short": "工程管理",
-      "sub_short_en": "Project mgmt",
+      "sub_short_en": "Projects",
       "row": 0,
       "relations": [
         {
@@ -110,8 +110,8 @@
       "name_en": "Altus Power",
       "sub": "太陽光発電",
       "sub_en": "Solar power",
-      "sub_short": "太陽光発電",
-      "sub_short_en": "Solar power",
+      "sub_short": "太陽光",
+      "sub_short_en": "Solar",
       "row": 0,
       "relations": [
         {
@@ -162,8 +162,8 @@
       "name_en": "Jones Lang LaSalle",
       "sub": "不動産サービス",
       "sub_en": "Real estate services",
-      "sub_short": "不動産サービス",
-      "sub_short_en": "Real estate",
+      "sub_short": "不動産",
+      "sub_short_en": "Property",
       "row": 2,
       "relations": [
         {
@@ -188,8 +188,8 @@
       "name_en": "Cushman & Wakefield",
       "sub": "不動産サービス",
       "sub_en": "Real estate services",
-      "sub_short": "不動産サービス",
-      "sub_short_en": "Real estate",
+      "sub_short": "不動産",
+      "sub_short_en": "Property",
       "row": 2,
       "relations": [
         {
@@ -214,8 +214,8 @@
       "name_en": "EMCOR Group",
       "sub": "設備工事・保守",
       "sub_en": "Building services",
-      "sub_short": "設備工事・保守",
-      "sub_short_en": "Building upkeep",
+      "sub_short": "設備工事",
+      "sub_short_en": "Facilities",
       "row": 2,
       "relations": [
         {

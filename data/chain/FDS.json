@@ -24,8 +24,8 @@
       "name": "ブルームバーグ",
       "sub": "金融データ",
       "sub_en": "Financial data",
-      "sub_short": "金融データ",
-      "sub_short_en": "Financial data",
+      "sub_short": "金融情報",
+      "sub_short_en": "Fin data",
       "row": 0,
       "relations": [
         {
@@ -50,8 +50,8 @@
       "name": "S&Pグローバル",
       "sub": "金融データ・格付け",
       "sub_en": "Financial data & ratings",
-      "sub_short": "金融データ",
-      "sub_short_en": "Financial data",
+      "sub_short": "金融情報",
+      "sub_short_en": "Fin data",
       "row": 0,
       "relations": [
         {
@@ -76,8 +76,8 @@
       "name": "ロンドン証券取引所グループ",
       "sub": "取引所・データ",
       "sub_en": "Exchange & data",
-      "sub_short": "取引所・データ",
-      "sub_short_en": "Exchange & data",
+      "sub_short": "取引所",
+      "sub_short_en": "Exchange",
       "row": 0,
       "relations": [
         {
@@ -102,8 +102,8 @@
       "name": "ブラックロック",
       "sub": "資産運用・分析",
       "sub_en": "Asset management & analytics",
-      "sub_short": "資産運用・分析",
-      "sub_short_en": "Asset management",
+      "sub_short": "資産運用",
+      "sub_short_en": "Assets",
       "row": 0,
       "relations": [
         {
@@ -128,7 +128,7 @@
       "name": "MSCI(エムエスシーアイ)",
       "sub": "指数・分析",
       "sub_en": "Indexes & analytics",
-      "sub_short": "指数・分析",
+      "sub_short": "指数",
       "sub_short_en": "Indexes",
       "row": 0,
       "relations": [

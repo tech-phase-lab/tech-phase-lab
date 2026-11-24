@@ -77,8 +77,8 @@
       "name_en": "Williams Jet Tenders",
       "sub": "ジェットテンダー(英)",
       "sub_en": "Jet tenders (UK)",
-      "sub_short": "ジェット船艇",
-      "sub_short_en": "Jet tenders",
+      "sub_short": "船艇",
+      "sub_short_en": "Boats",
       "row": 0,
       "relations": [
         {
@@ -103,8 +103,8 @@
       "name_en": "Atalanta Golden Yachts",
       "sub": "ヨットチャーター運営(希)",
       "sub_en": "Yacht charter management (Greece)",
-      "sub_short": "ヨット運営",
-      "sub_short_en": "Yacht charters",
+      "sub_short": "ヨット",
+      "sub_short_en": "Yachts",
       "row": 1,
       "relations": [
         {
@@ -129,8 +129,8 @@
       "name_en": "Native Marine",
       "sub": "ボート販売",
       "sub_en": "Boat dealer",
-      "sub_short": "ボート販売",
-      "sub_short_en": "Boat dealer",
+      "sub_short": "ボート",
+      "sub_short_en": "Boats",
       "row": 1,
       "relations": [
         {
@@ -207,8 +207,8 @@
       "name_en": "NextBoat",
       "sub": "中古艇取引",
       "sub_en": "Pre-owned boat marketplace",
-      "sub_short": "中古艇取引",
-      "sub_short_en": "Used boats",
+      "sub_short": "中古艇",
+      "sub_short_en": "Boats",
       "row": 1,
       "relations": [
         {

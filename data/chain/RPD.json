@@ -30,7 +30,7 @@
       "sub": "ソフト・クラウド",
       "sub_en": "Software & cloud",
       "sub_short": "ソフト",
-      "sub_short_en": "Software & cloud",
+      "sub_short_en": "Software",
       "row": 0,
       "relations": [
         {
@@ -70,7 +70,7 @@
       "name": "サービスナウ",
       "sub": "業務ワークフロー",
       "sub_en": "Workflow software",
-      "sub_short": "業務フロー",
+      "sub_short": "業務IT",
       "sub_short_en": "Workflow",
       "row": 0,
       "relations": [
@@ -98,8 +98,8 @@
       "name": "アマゾン",
       "sub": "EC・クラウド",
       "sub_en": "E-commerce & cloud",
-      "sub_short": "EC・クラウド",
-      "sub_short_en": "E-commerce",
+      "sub_short": "EC",
+      "sub_short_en": "E-com",
       "row": 0,
       "relations": [
         {
@@ -126,8 +126,8 @@
       "name": "グーグル",
       "sub": "検索・クラウド",
       "sub_en": "Search & cloud",
-      "sub_short": "検索・クラウド",
-      "sub_short_en": "Search & cloud",
+      "sub_short": "検索",
+      "sub_short_en": "Search",
       "row": 0,
       "relations": [
         {
@@ -154,8 +154,8 @@
       "name": "パロアルトネットワークス",
       "sub": "サイバーセキュリティ",
       "sub_en": "Cybersecurity",
-      "sub_short": "サイバー防御",
-      "sub_short_en": "Cybersecurity",
+      "sub_short": "サイバー",
+      "sub_short_en": "Security",
       "row": 0,
       "relations": [
         {
@@ -183,7 +183,7 @@
       "sub": "生成AI",
       "sub_en": "Generative AI",
       "sub_short": "生成AI",
-      "sub_short_en": "Generative AI",
+      "sub_short_en": "AI",
       "row": 0,
       "relations": [
         {
@@ -237,8 +237,8 @@
       "name": "クオリス",
       "sub": "脆弱性管理",
       "sub_en": "Vulnerability management",
-      "sub_short": "脆弱性管理",
-      "sub_short_en": "Vuln. mgmt",
+      "sub_short": "防御",
+      "sub_short_en": "Security",
       "row": 2,
       "relations": [
         {
@@ -263,8 +263,8 @@
       "name": "テナブル",
       "sub": "脆弱性管理",
       "sub_en": "Vulnerability management",
-      "sub_short": "脆弱性管理",
-      "sub_short_en": "Vuln. mgmt",
+      "sub_short": "防御",
+      "sub_short_en": "Security",
       "row": 2,
       "relations": [
         {

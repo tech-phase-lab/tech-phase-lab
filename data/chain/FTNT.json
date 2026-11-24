@@ -38,7 +38,7 @@
       "sub": "受託製造",
       "sub_en": "Contract manufacturing",
       "sub_short": "受託製造",
-      "sub_short_en": "Contract maker",
+      "sub_short_en": "EMS",
       "row": 0,
       "relations": [
         {
@@ -76,8 +76,8 @@
       "name": "東芝",
       "sub": "電機・半導体",
       "sub_en": "Electronics & semiconductors",
-      "sub_short": "電機・半導体",
-      "sub_short_en": "Electronics",
+      "sub_short": "電機",
+      "sub_short_en": "Devices",
       "row": 0,
       "relations": [
         {
@@ -117,8 +117,8 @@
       "name": "ウエスタンデジタル",
       "sub": "ストレージ",
       "sub_en": "Data storage",
-      "sub_short": "ストレージ",
-      "sub_short_en": "Data storage",
+      "sub_short": "記憶装置",
+      "sub_short_en": "Storage",
       "row": 0,
       "relations": [
         {
@@ -143,8 +143,8 @@
       "name": "台湾積体電路製造",
       "sub": "半導体ファウンドリ",
       "sub_en": "Semiconductor foundry",
-      "sub_short": "半導体受託",
-      "sub_short_en": "Chip foundry",
+      "sub_short": "受託生産",
+      "sub_short_en": "Foundry",
       "row": 0,
       "relations": [
         {
@@ -171,7 +171,7 @@
       "name": "アマゾン",
       "sub": "クラウド・EC",
       "sub_en": "Cloud & e-commerce",
-      "sub_short": "クラウド・EC",
+      "sub_short": "クラウド",
       "sub_short_en": "Cloud",
       "row": 0,
       "relations": [
@@ -198,7 +198,7 @@
       "sub": "電子部品・IT流通",
       "sub_en": "Electronics & IT distribution",
       "sub_short": "電子部品",
-      "sub_short_en": "Electronics",
+      "sub_short_en": "Devices",
       "row": 1,
       "relations": [
         {
@@ -224,7 +224,7 @@
       "sub": "半導体",
       "sub_en": "Semiconductors",
       "sub_short": "半導体",
-      "sub_short_en": "Semiconductors",
+      "sub_short_en": "Chips",
       "row": 2,
       "relations": [
         {
@@ -287,8 +287,8 @@
       "name": "Google",
       "sub": "検索・クラウド",
       "sub_en": "Search & cloud",
-      "sub_short": "検索・クラウド",
-      "sub_short_en": "Search & cloud",
+      "sub_short": "検索",
+      "sub_short_en": "Search",
       "row": 2,
       "relations": [
         {
@@ -313,7 +313,7 @@
       "sub": "生成AI",
       "sub_en": "Generative AI",
       "sub_short": "生成AI",
-      "sub_short_en": "Generative AI",
+      "sub_short_en": "AI",
       "row": 2,
       "relations": [
         {
@@ -340,7 +340,7 @@
       "sub": "生成AI",
       "sub_en": "Generative AI",
       "sub_short": "生成AI",
-      "sub_short_en": "Generative AI",
+      "sub_short_en": "AI",
       "row": 2,
       "relations": [
         {
@@ -366,8 +366,8 @@
       "name": "チェック・ポイント・ソフトウェア・テクノロジーズ",
       "sub": "ネットワークセキュリティ",
       "sub_en": "Network security",
-      "sub_short": "ネット防御",
-      "sub_short_en": "Network security",
+      "sub_short": "防御",
+      "sub_short_en": "Security",
       "row": 3,
       "relations": [
         {
@@ -392,8 +392,8 @@
       "name": "パロアルトネットワークス",
       "sub": "ネットワークセキュリティ",
       "sub_en": "Network security",
-      "sub_short": "ネット防御",
-      "sub_short_en": "Network security",
+      "sub_short": "防御",
+      "sub_short_en": "Security",
       "row": 3,
       "relations": [
         {
@@ -419,7 +419,7 @@
       "sub": "エンドポイントセキュリティ",
       "sub_en": "Endpoint security",
       "sub_short": "端末保護",
-      "sub_short_en": "Endpoint guard",
+      "sub_short_en": "Security",
       "row": 3,
       "relations": [
         {
@@ -445,7 +445,7 @@
       "sub": "ネットワーク機器",
       "sub_en": "Networking equipment",
       "sub_short": "通信機器",
-      "sub_short_en": "Network gear",
+      "sub_short_en": "Network",
       "row": 3,
       "relations": [
         {
@@ -470,8 +470,8 @@
       "name": "ゼットスケーラー",
       "sub": "クラウドセキュリティ",
       "sub_en": "Cloud security",
-      "sub_short": "クラウド保護",
-      "sub_short_en": "Cloud security",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 3,
       "relations": [
         {
@@ -496,8 +496,8 @@
       "name": "ネットスカウト",
       "sub": "ネットワーク監視",
       "sub_en": "Network monitoring",
-      "sub_short": "ネット監視",
-      "sub_short_en": "Net monitoring",
+      "sub_short": "監視",
+      "sub_short_en": "Network",
       "row": 3,
       "relations": [
         {

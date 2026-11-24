@@ -30,7 +30,7 @@
       "sub": "水処理",
       "sub_en": "Water treatment",
       "sub_short": "水処理",
-      "sub_short_en": "Water treatment",
+      "sub_short_en": "Water",
       "row": 0,
       "relations": [
         {
@@ -55,8 +55,8 @@
       "name_en": "Idrica",
       "sub": "水道のデータ基盤",
       "sub_en": "Water data platform",
-      "sub_short": "水道データ",
-      "sub_short_en": "Water data",
+      "sub_short": "水道",
+      "sub_short_en": "Water",
       "row": 0,
       "relations": [
         {
@@ -81,8 +81,8 @@
       "name_en": "Roper Technologies",
       "sub": "産業ソフトウェア",
       "sub_en": "Vertical software",
-      "sub_short": "産業ソフト",
-      "sub_short_en": "Vertical apps",
+      "sub_short": "産業IT",
+      "sub_short_en": "Software",
       "row": 0,
       "relations": [
         {
@@ -108,7 +108,7 @@
       "sub": "水道インフラ機器",
       "sub_en": "Water infrastructure products",
       "sub_short": "水道機器",
-      "sub_short_en": "Water infra",
+      "sub_short_en": "Water",
       "row": 1,
       "relations": [
         {
@@ -134,7 +134,7 @@
       "sub": "スマートメーター",
       "sub_en": "Smart meters",
       "sub_short": "電力計",
-      "sub_short_en": "Smart meters",
+      "sub_short_en": "Meters",
       "row": 1,
       "relations": [
         {
@@ -159,8 +159,8 @@
       "name_en": "Badger Meter",
       "sub": "水道メーター",
       "sub_en": "Water meters",
-      "sub_short": "水道メーター",
-      "sub_short_en": "Water meters",
+      "sub_short": "水道",
+      "sub_short_en": "Meters",
       "row": 1,
       "relations": [
         {
@@ -185,8 +185,8 @@
       "name_en": "Montrose Environmental",
       "sub": "環境サービス",
       "sub_en": "Environmental services",
-      "sub_short": "環境サービス",
-      "sub_short_en": "Environmental",
+      "sub_short": "環境",
+      "sub_short_en": "Eco svcs",
       "row": 1,
       "relations": [
         {
@@ -211,8 +211,8 @@
       "name_en": "BioLargo",
       "sub": "水処理技術",
       "sub_en": "Water treatment tech",
-      "sub_short": "水処理技術",
-      "sub_short_en": "Water treatment",
+      "sub_short": "水処理",
+      "sub_short_en": "Water",
       "row": 1,
       "relations": [
         {

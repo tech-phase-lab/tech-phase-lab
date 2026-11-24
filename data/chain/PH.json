@@ -61,8 +61,8 @@
       "name_en": "Curtis Instruments",
       "sub": "電動車両の制御機器",
       "sub_en": "Electric vehicle controls",
-      "sub_short": "EV制御機器",
-      "sub_short_en": "EV controls",
+      "sub_short": "EV制御",
+      "sub_short_en": "EV parts",
       "row": 0,
       "relations": [
         {
@@ -87,8 +87,8 @@
       "name_en": "CIRCOR Aerospace",
       "sub": "航空機部品",
       "sub_en": "Aerospace components",
-      "sub_short": "航空機部品",
-      "sub_short_en": "Aero parts",
+      "sub_short": "航空部品",
+      "sub_short_en": "Aircraft",
       "row": 0,
       "relations": [
         {
@@ -114,7 +114,7 @@
       "sub": "投資会社",
       "sub_en": "Private equity",
       "sub_short": "投資会社",
-      "sub_short_en": "Private equity",
+      "sub_short_en": "PE",
       "row": 0,
       "relations": [
         {
@@ -139,8 +139,8 @@
       "name_en": "TAT Technologies",
       "sub": "航空機の熱交換器・整備",
       "sub_en": "Aerospace heat transfer & MRO",
-      "sub_short": "航空機部品",
-      "sub_short_en": "Aero heat & MRO",
+      "sub_short": "航空部品",
+      "sub_short_en": "Aero MRO",
       "row": 1,
       "relations": [
         {
@@ -166,7 +166,7 @@
       "sub": "航空機・エンジン制御",
       "sub_en": "Aerospace & engine controls",
       "sub_short": "航空機",
-      "sub_short_en": "Aerospace",
+      "sub_short_en": "Aero",
       "row": 2,
       "relations": [
         {
@@ -192,7 +192,7 @@
       "sub": "化学品",
       "sub_en": "Chemicals",
       "sub_short": "化学品",
-      "sub_short_en": "Chemicals",
+      "sub_short_en": "Chem",
       "row": 2,
       "relations": [
         {
@@ -217,8 +217,8 @@
       "name_en": "Ultra Clean",
       "sub": "半導体装置部品",
       "sub_en": "Semiconductor subsystems",
-      "sub_short": "半導体装置部品",
-      "sub_short_en": "Chip tool parts",
+      "sub_short": "装置部品",
+      "sub_short_en": "Tool parts",
       "row": 2,
       "relations": [
         {
@@ -243,8 +243,8 @@
       "name_en": "Helios Technologies",
       "sub": "油圧・電子制御",
       "sub_en": "Hydraulics & electronics",
-      "sub_short": "油圧・電子制御",
-      "sub_short_en": "Hydraulics",
+      "sub_short": "油圧",
+      "sub_short_en": "Hydraulic",
       "row": 2,
       "relations": [
         {
@@ -269,8 +269,8 @@
       "name_en": "Allient",
       "sub": "モーター・制御",
       "sub_en": "Motion control",
-      "sub_short": "モーター・制御",
-      "sub_short_en": "Motion control",
+      "sub_short": "モーター",
+      "sub_short_en": "Motion",
       "row": 2,
       "relations": [
         {
@@ -295,8 +295,8 @@
       "name_en": "ESCO Technologies",
       "sub": "航空・防衛部品",
       "sub_en": "Aerospace & defense products",
-      "sub_short": "航空・防衛部品",
-      "sub_short_en": "Aerospace",
+      "sub_short": "航空部品",
+      "sub_short_en": "Aero",
       "row": 2,
       "relations": [
         {

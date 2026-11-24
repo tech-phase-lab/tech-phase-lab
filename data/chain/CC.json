@@ -28,8 +28,8 @@
       "name_en": "DuPont de Nemours",
       "sub": "化学・素材",
       "sub_en": "Chemicals & materials",
-      "sub_short": "化学・素材",
-      "sub_short_en": "Chemicals",
+      "sub_short": "化学",
+      "sub_short_en": "Chem",
       "row": 0,
       "relations": [
         {
@@ -55,7 +55,7 @@
       "sub": "農業(種子・農薬)",
       "sub_en": "Agriculture",
       "sub_short": "農業",
-      "sub_short_en": "Agriculture",
+      "sub_short_en": "Farming",
       "row": 0,
       "relations": [
         {
@@ -80,8 +80,8 @@
       "name_en": "Qnity Electronics",
       "sub": "半導体材料",
       "sub_en": "Semiconductor materials",
-      "sub_short": "半導体材料",
-      "sub_short_en": "Chip materials",
+      "sub_short": "材料",
+      "sub_short_en": "Materials",
       "row": 0,
       "relations": [
         {
@@ -107,7 +107,7 @@
       "sub": "水道",
       "sub_en": "Water utility",
       "sub_short": "水道",
-      "sub_short_en": "Water utility",
+      "sub_short_en": "Water",
       "row": 0,
       "relations": [
         {
@@ -132,8 +132,8 @@
       "name_en": "Kronos Worldwide",
       "sub": "酸化チタン",
       "sub_en": "Titanium dioxide",
-      "sub_short": "酸化チタン",
-      "sub_short_en": "Titanium dioxide",
+      "sub_short": "顔料",
+      "sub_short_en": "Pigments",
       "row": 1,
       "relations": [
         {
@@ -158,8 +158,8 @@
       "name_en": "Tronox",
       "sub": "酸化チタン",
       "sub_en": "Titanium dioxide",
-      "sub_short": "酸化チタン",
-      "sub_short_en": "Titanium dioxide",
+      "sub_short": "顔料",
+      "sub_short_en": "Pigments",
       "row": 1,
       "relations": [
         {
@@ -184,8 +184,8 @@
       "name_en": "Solstice Advanced Materials",
       "sub": "冷媒・特殊材料",
       "sub_en": "Refrigerants & specialty materials",
-      "sub_short": "冷媒・特殊材料",
-      "sub_short_en": "Refrigerants",
+      "sub_short": "冷媒",
+      "sub_short_en": "Coolants",
       "row": 1,
       "relations": [
         {
@@ -211,7 +211,7 @@
       "sub": "持株会社(Kronos株)",
       "sub_en": "Holding company",
       "sub_short": "持株会社",
-      "sub_short_en": "Holding company",
+      "sub_short_en": "Holding",
       "row": 1,
       "relations": [
         {

@@ -30,7 +30,7 @@
       "name_en": "Flex",
       "sub": "電子機器受託製造",
       "sub_en": "Electronics manufacturing",
-      "sub_short": "電子機器受託",
+      "sub_short": "EMS",
       "sub_short_en": "EMS",
       "row": 0,
       "relations": [
@@ -56,8 +56,8 @@
       "name_en": "Array Technologies",
       "sub": "太陽光追尾架台",
       "sub_en": "Solar trackers",
-      "sub_short": "太陽光追尾架台",
-      "sub_short_en": "Solar trackers",
+      "sub_short": "太陽光",
+      "sub_short_en": "Solar",
       "row": 1,
       "relations": [
         {
@@ -82,8 +82,8 @@
       "name_en": "Shoals Technologies",
       "sub": "太陽光配線部材",
       "sub_en": "Solar electrical balance of system",
-      "sub_short": "太陽光配線部材",
-      "sub_short_en": "Solar wiring",
+      "sub_short": "太陽光",
+      "sub_short_en": "Solar",
       "row": 1,
       "relations": [
         {
@@ -108,8 +108,8 @@
       "name_en": "FTC Solar",
       "sub": "太陽光追尾架台",
       "sub_en": "Solar trackers",
-      "sub_short": "太陽光追尾架台",
-      "sub_short_en": "Solar trackers",
+      "sub_short": "太陽光",
+      "sub_short_en": "Solar",
       "row": 1,
       "relations": [
         {
@@ -134,8 +134,8 @@
       "name_en": "Bentek",
       "sub": "太陽光配線部材",
       "sub_en": "Solar electrical balance of system",
-      "sub_short": "太陽光配線部材",
-      "sub_short_en": "Solar wiring",
+      "sub_short": "太陽光",
+      "sub_short_en": "Solar",
       "row": 0,
       "relations": [
         {
@@ -160,8 +160,8 @@
       "name_en": "Arctech Solar",
       "sub": "太陽光追尾架台(中)",
       "sub_en": "Solar trackers (China)",
-      "sub_short": "太陽光追尾架台",
-      "sub_short_en": "Solar trackers",
+      "sub_short": "太陽光",
+      "sub_short_en": "Solar",
       "row": 1,
       "relations": [
         {
@@ -186,8 +186,8 @@
       "name_en": "Trina Solar",
       "sub": "太陽光パネル・架台(中)",
       "sub_en": "Solar modules & trackers (China)",
-      "sub_short": "太陽光パネル",
-      "sub_short_en": "Solar modules",
+      "sub_short": "太陽光",
+      "sub_short_en": "Solar",
       "row": 1,
       "relations": [
         {
@@ -212,8 +212,8 @@
       "name_en": "GameChange Solar",
       "sub": "太陽光架台",
       "sub_en": "Solar racking",
-      "sub_short": "太陽光架台",
-      "sub_short_en": "Solar racking",
+      "sub_short": "太陽光",
+      "sub_short_en": "Solar",
       "row": 1,
       "relations": [
         {
@@ -238,8 +238,8 @@
       "name_en": "PV Hardware",
       "sub": "太陽光追尾架台(西)",
       "sub_en": "Solar trackers (Spain)",
-      "sub_short": "太陽光追尾架台",
-      "sub_short_en": "Solar trackers",
+      "sub_short": "太陽光",
+      "sub_short_en": "Solar",
       "row": 1,
       "relations": [
         {

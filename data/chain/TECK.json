@@ -57,8 +57,8 @@
       "name_en": "Glencore",
       "sub": "資源・商社",
       "sub_en": "Mining & trading",
-      "sub_short": "資源・商社",
-      "sub_short_en": "Mining & trading",
+      "sub_short": "資源",
+      "sub_short_en": "Mining",
       "row": 0,
       "relations": [
         {
@@ -175,7 +175,7 @@
       "sub": "商社",
       "sub_en": "Trading house",
       "sub_short": "商社",
-      "sub_short_en": "Trading house",
+      "sub_short_en": "Trading",
       "row": 1,
       "relations": [
         {
@@ -201,7 +201,7 @@
       "sub": "国営銅山(チリ)",
       "sub_en": "State copper (Chile)",
       "sub_short": "国営銅山",
-      "sub_short_en": "State copper",
+      "sub_short_en": "Copper",
       "row": 1,
       "relations": [
         {
@@ -227,7 +227,7 @@
       "sub": "金鉱山",
       "sub_en": "Gold mining",
       "sub_short": "金鉱山",
-      "sub_short_en": "Gold mining",
+      "sub_short_en": "Gold",
       "row": 1,
       "relations": [
         {
@@ -253,7 +253,7 @@
       "sub": "商社",
       "sub_en": "Trading house",
       "sub_short": "商社",
-      "sub_short_en": "Trading house",
+      "sub_short_en": "Trading",
       "row": 1,
       "relations": [
         {
@@ -304,7 +304,7 @@
       "name_en": "Franco-Nevada",
       "sub": "ロイヤルティ・ストリーム",
       "sub_en": "Royalties & streams",
-      "sub_short": "ロイヤルティ",
+      "sub_short": "権益",
       "sub_short_en": "Royalties",
       "row": 1,
       "relations": [
@@ -330,8 +330,8 @@
       "name_en": "NANA Regional Corporation",
       "sub": "アラスカ先住民企業",
       "sub_en": "Alaska Native corporation",
-      "sub_short": "アラスカ先住民",
-      "sub_short_en": "Alaska Native co",
+      "sub_short": "先住民",
+      "sub_short_en": "Alaska co",
       "row": 1,
       "relations": [
         {
@@ -357,7 +357,7 @@
       "sub": "探鉱",
       "sub_en": "Exploration",
       "sub_short": "探鉱",
-      "sub_short_en": "Exploration",
+      "sub_short_en": "Mining",
       "row": 1,
       "relations": [
         {

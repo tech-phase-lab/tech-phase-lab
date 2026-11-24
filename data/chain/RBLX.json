@@ -33,7 +33,7 @@
       "name": "Apple",
       "sub": "スマートフォン・端末",
       "sub_en": "Devices",
-      "sub_short": "スマートフォン",
+      "sub_short": "スマホ",
       "sub_short_en": "Devices",
       "row": 0,
       "relations": [
@@ -60,8 +60,8 @@
       "name": "アルファベット(Google)",
       "sub": "検索・クラウド",
       "sub_en": "Search & cloud",
-      "sub_short": "検索・クラウド",
-      "sub_short_en": "Search & cloud",
+      "sub_short": "検索",
+      "sub_short_en": "Search",
       "row": 0,
       "relations": [
         {
@@ -88,7 +88,7 @@
       "name": "テンセント",
       "sub": "インターネット・ゲーム",
       "sub_en": "Internet & gaming",
-      "sub_short": "インターネット",
+      "sub_short": "ネット",
       "sub_short_en": "Internet",
       "row": 1,
       "relations": [
@@ -128,7 +128,7 @@
       "sub": "ECプラットフォーム",
       "sub_en": "E-commerce platform",
       "sub_short": "EC基盤",
-      "sub_short_en": "E-commerce",
+      "sub_short_en": "E-com",
       "row": 1,
       "relations": [
         {
@@ -154,7 +154,7 @@
       "sub": "動画配信",
       "sub_en": "Video streaming",
       "sub_short": "動画配信",
-      "sub_short_en": "Video streaming",
+      "sub_short_en": "Video",
       "row": 1,
       "relations": [
         {
@@ -180,7 +180,7 @@
       "sub": "SNS・メタバース",
       "sub_en": "Social & metaverse",
       "sub_short": "SNS",
-      "sub_short_en": "Social media",
+      "sub_short_en": "Social",
       "row": 2,
       "relations": [
         {
@@ -205,8 +205,8 @@
       "name": "アマゾン",
       "sub": "EC・クラウド",
       "sub_en": "E-commerce & cloud",
-      "sub_short": "EC・クラウド",
-      "sub_short_en": "E-commerce",
+      "sub_short": "EC",
+      "sub_short_en": "E-com",
       "row": 2,
       "relations": [
         {
@@ -232,7 +232,7 @@
       "sub": "ソフト・クラウド",
       "sub_en": "Software & cloud",
       "sub_short": "ソフト",
-      "sub_short_en": "Software & cloud",
+      "sub_short_en": "Software",
       "row": 2,
       "relations": [
         {
@@ -258,7 +258,7 @@
       "sub": "ゲーム",
       "sub_en": "Video games",
       "sub_short": "ゲーム",
-      "sub_short_en": "Video games",
+      "sub_short_en": "Games",
       "row": 2,
       "relations": [
         {
@@ -283,8 +283,8 @@
       "name": "スナップ",
       "sub": "SNS・カメラ",
       "sub_en": "Social & camera",
-      "sub_short": "SNS・カメラ",
-      "sub_short_en": "Social & camera",
+      "sub_short": "SNS",
+      "sub_short_en": "Social",
       "row": 2,
       "relations": [
         {
@@ -309,8 +309,8 @@
       "name": "レディット",
       "sub": "掲示板・SNS",
       "sub_en": "Social platform",
-      "sub_short": "掲示板・SNS",
-      "sub_short_en": "Social platform",
+      "sub_short": "SNS",
+      "sub_short_en": "Social",
       "row": 2,
       "relations": [
         {

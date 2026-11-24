@@ -26,7 +26,7 @@
       "sub": "投資銀行(政府・防衛)",
       "sub_en": "Investment bank (government & defense)",
       "sub_short": "投資銀行",
-      "sub_short_en": "Investment bank",
+      "sub_short_en": "Bank",
       "row": 0,
       "relations": [
         {
@@ -52,7 +52,7 @@
       "sub": "オルタナティブ投資銀行",
       "sub_en": "Alternative investment bank",
       "sub_short": "投資銀行",
-      "sub_short_en": "Investment bank",
+      "sub_short_en": "Bank",
       "row": 0,
       "relations": [
         {
@@ -77,8 +77,8 @@
       "name_en": "BNY (Pershing)",
       "sub": "金融サービス",
       "sub_en": "Financial services",
-      "sub_short": "金融サービス",
-      "sub_short_en": "Financials",
+      "sub_short": "金融",
+      "sub_short_en": "Finance",
       "row": 0,
       "relations": [
         {
@@ -103,8 +103,8 @@
       "name_en": "Nurix Therapeutics",
       "sub": "たんぱく質分解薬",
       "sub_en": "Protein degradation drugs",
-      "sub_short": "たんぱく分解薬",
-      "sub_short_en": "Protein degrader",
+      "sub_short": "分解薬",
+      "sub_short_en": "Drugs",
       "row": 1,
       "relations": [
         {
@@ -129,8 +129,8 @@
       "name_en": "Akoya Biosciences",
       "sub": "空間生物学",
       "sub_en": "Spatial biology",
-      "sub_short": "空間生物学",
-      "sub_short_en": "Spatial biology",
+      "sub_short": "細胞解析",
+      "sub_short_en": "Bio tools",
       "row": 1,
       "relations": [
         {
@@ -156,7 +156,7 @@
       "sub": "糖尿病・がんの新薬",
       "sub_en": "Diabetes & cancer drugs",
       "sub_short": "糖尿病薬",
-      "sub_short_en": "Diabetes drugs",
+      "sub_short_en": "Diabetes",
       "row": 1,
       "relations": [
         {
@@ -181,8 +181,8 @@
       "name_en": "Zeo Energy",
       "sub": "住宅用太陽光",
       "sub_en": "Residential solar",
-      "sub_short": "住宅用太陽光",
-      "sub_short_en": "Home solar",
+      "sub_short": "太陽光",
+      "sub_short_en": "Solar",
       "row": 1,
       "relations": [
         {

@@ -32,7 +32,7 @@
       "sub": "複合企業(メキシコ)",
       "sub_en": "Conglomerate (Mexico)",
       "sub_short": "複合企業",
-      "sub_short_en": "Conglomerate",
+      "sub_short_en": "Group",
       "row": 0,
       "relations": [
         {
@@ -162,7 +162,7 @@
       "sub": "建設(グループ会社)",
       "sub_en": "Construction (group company)",
       "sub_short": "建設",
-      "sub_short_en": "Construction",
+      "sub_short_en": "Building",
       "row": 0,
       "relations": [
         {

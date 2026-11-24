@@ -93,7 +93,7 @@
       "sub": "ソフト・クラウド",
       "sub_en": "Software & cloud",
       "sub_short": "ソフト",
-      "sub_short_en": "Software & cloud",
+      "sub_short_en": "Software",
       "row": 1,
       "relations": [
         {
@@ -119,8 +119,8 @@
       "name": "アルファベット",
       "sub": "検索・クラウド",
       "sub_en": "Search & cloud",
-      "sub_short": "検索・クラウド",
-      "sub_short_en": "Search & cloud",
+      "sub_short": "検索",
+      "sub_short_en": "Search",
       "row": 1,
       "relations": [
         {
@@ -172,8 +172,8 @@
       "name": "シノプシス",
       "sub": "半導体設計・ソフト",
       "sub_en": "Design software",
-      "sub_short": "半導体設計",
-      "sub_short_en": "Design software",
+      "sub_short": "設計",
+      "sub_short_en": "Design",
       "row": 1,
       "relations": [
         {

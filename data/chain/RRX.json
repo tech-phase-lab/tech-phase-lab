@@ -29,8 +29,8 @@
       "name_en": "Altra Industrial Motion",
       "sub": "動力伝達部品",
       "sub_en": "Power transmission products",
-      "sub_short": "動力伝達部品",
-      "sub_short_en": "Power transfer",
+      "sub_short": "駆動部品",
+      "sub_short_en": "Drives",
       "row": 0,
       "relations": [
         {
@@ -55,8 +55,8 @@
       "name_en": "Zurn Elkay",
       "sub": "水回り製品",
       "sub_en": "Water solutions",
-      "sub_short": "水回り製品",
-      "sub_short_en": "Water solutions",
+      "sub_short": "水回り",
+      "sub_short_en": "Water",
       "row": 0,
       "relations": [
         {
@@ -81,8 +81,8 @@
       "name_en": "Columbus McKinnon",
       "sub": "荷役・搬送機器",
       "sub_en": "Material handling",
-      "sub_short": "荷役・搬送機器",
-      "sub_short_en": "Materials gear",
+      "sub_short": "荷役機器",
+      "sub_short_en": "Handling",
       "row": 1,
       "relations": [
         {
@@ -107,8 +107,8 @@
       "name_en": "Allient",
       "sub": "モーター・制御",
       "sub_en": "Motion control",
-      "sub_short": "モーター・制御",
-      "sub_short_en": "Motion control",
+      "sub_short": "モーター",
+      "sub_short_en": "Motion",
       "row": 1,
       "relations": [
         {

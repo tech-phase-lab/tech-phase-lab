@@ -28,7 +28,7 @@
       "name_en": "Ergon",
       "sub": "アスファルト・石油製品",
       "sub_en": "Asphalt & petroleum products",
-      "sub_short": "アスファルト",
+      "sub_short": "舗装材",
       "sub_short_en": "Asphalt",
       "row": 0,
       "relations": [
@@ -54,7 +54,7 @@
       "name_en": "Idaho Asphalt Supply",
       "sub": "アスファルト",
       "sub_en": "Asphalt",
-      "sub_short": "アスファルト",
+      "sub_short": "舗装材",
       "sub_short_en": "Asphalt",
       "row": 0,
       "relations": [
@@ -80,8 +80,8 @@
       "name_en": "The Heritage Group",
       "sub": "道路建設資材",
       "sub_en": "Road construction materials",
-      "sub_short": "道路建設資材",
-      "sub_short_en": "Road materials",
+      "sub_short": "建設資材",
+      "sub_short_en": "Roads",
       "row": 0,
       "relations": [
         {
@@ -107,7 +107,7 @@
       "sub": "農薬",
       "sub_en": "Crop protection",
       "sub_short": "農薬",
-      "sub_short_en": "Crop protection",
+      "sub_short_en": "Crops",
       "row": 0,
       "relations": [
         {
@@ -133,7 +133,7 @@
       "sub": "化学品",
       "sub_en": "Chemicals",
       "sub_short": "化学品",
-      "sub_short_en": "Chemicals",
+      "sub_short_en": "Chem",
       "row": 0,
       "relations": [
         {
@@ -159,7 +159,7 @@
       "sub": "化学品",
       "sub_en": "Chemicals",
       "sub_short": "化学品",
-      "sub_short_en": "Chemicals",
+      "sub_short_en": "Chem",
       "row": 0,
       "relations": [
         {
@@ -184,8 +184,8 @@
       "name_en": "Kuraray",
       "sub": "化学・活性炭",
       "sub_en": "Chemicals & activated carbon",
-      "sub_short": "化学・活性炭",
-      "sub_short_en": "Chemicals",
+      "sub_short": "化学",
+      "sub_short_en": "Chem",
       "row": 1,
       "relations": [
         {
@@ -211,7 +211,7 @@
       "sub": "活性炭",
       "sub_en": "Activated carbon",
       "sub_short": "活性炭",
-      "sub_short_en": "Activated carbon",
+      "sub_short_en": "Carbon",
       "row": 1,
       "relations": [
         {
@@ -237,7 +237,7 @@
       "sub": "化学",
       "sub_en": "Chemicals",
       "sub_short": "化学",
-      "sub_short_en": "Chemicals",
+      "sub_short_en": "Chem",
       "row": 1,
       "relations": [
         {
@@ -263,7 +263,7 @@
       "sub": "化学(独)",
       "sub_en": "Chemicals (Germany)",
       "sub_short": "化学",
-      "sub_short_en": "Chemicals",
+      "sub_short_en": "Chem",
       "row": 1,
       "relations": [
         {

@@ -103,8 +103,8 @@
       "name": "シスコシステムズ",
       "sub": "ネットワーク",
       "sub_en": "Networking",
-      "sub_short": "ネットワーク",
-      "sub_short_en": "Networking",
+      "sub_short": "通信網",
+      "sub_short_en": "Network",
       "row": 0,
       "relations": [
         {
@@ -181,7 +181,7 @@
       "name": "オラクル",
       "sub": "データベース",
       "sub_en": "Database",
-      "sub_short": "データベース",
+      "sub_short": "DB",
       "sub_short_en": "Database",
       "row": 0,
       "relations": [
@@ -233,8 +233,8 @@
       "name": "エスエーピー",
       "sub": "業務ソフト",
       "sub_en": "Enterprise software",
-      "sub_short": "業務ソフト",
-      "sub_short_en": "Enterprise apps",
+      "sub_short": "業務IT",
+      "sub_short_en": "Software",
       "row": 0,
       "relations": [
         {
@@ -259,8 +259,8 @@
       "name": "サービスナウ",
       "sub": "業務ソフト",
       "sub_en": "Enterprise software",
-      "sub_short": "業務ソフト",
-      "sub_short_en": "Enterprise apps",
+      "sub_short": "業務IT",
+      "sub_short_en": "Software",
       "row": 0,
       "relations": [
         {
@@ -286,7 +286,7 @@
       "sub": "元親会社",
       "sub_en": "Former parent",
       "sub_short": "元親会社",
-      "sub_short_en": "Former parent",
+      "sub_short_en": "Ex-parent",
       "row": 0,
       "relations": [
         {
@@ -311,8 +311,8 @@
       "name": "ダイナトレース",
       "sub": "監視ソフト",
       "sub_en": "Observability software",
-      "sub_short": "監視ソフト",
-      "sub_short_en": "Observability",
+      "sub_short": "監視",
+      "sub_short_en": "Monitors",
       "row": 0,
       "relations": [
         {
@@ -338,7 +338,7 @@
       "sub": "クラウドサービス",
       "sub_en": "Cloud services",
       "sub_short": "クラウド",
-      "sub_short_en": "Cloud services",
+      "sub_short_en": "Cloud",
       "row": 1,
       "relations": [
         {

@@ -128,8 +128,8 @@
       "name_en": "Bombardier",
       "sub": "ビジネスジェット(加)",
       "sub_en": "Business jets (Canada)",
-      "sub_short": "ビジネス機",
-      "sub_short_en": "Business jets",
+      "sub_short": "航空機",
+      "sub_short_en": "Jets",
       "row": 0,
       "relations": [
         {
@@ -154,7 +154,7 @@
       "name_en": "Textron",
       "sub": "航空機・防衛",
       "sub_en": "Aircraft & defense",
-      "sub_short": "航空機・防衛",
+      "sub_short": "航空機",
       "sub_short_en": "Aircraft",
       "row": 0,
       "relations": [
@@ -232,7 +232,7 @@
       "name_en": "RTX",
       "sub": "航空エンジン・防衛",
       "sub_en": "Engines & defense",
-      "sub_short": "航空エンジン",
+      "sub_short": "エンジン",
       "sub_short_en": "Engines",
       "row": 1,
       "relations": [
@@ -284,8 +284,8 @@
       "name_en": "Safran",
       "sub": "航空エンジン(仏)",
       "sub_en": "Aircraft engines (France)",
-      "sub_short": "航空エンジン",
-      "sub_short_en": "Aircraft engines",
+      "sub_short": "エンジン",
+      "sub_short_en": "Engines",
       "row": 1,
       "relations": [
         {
@@ -310,8 +310,8 @@
       "name_en": "GE Aerospace",
       "sub": "航空エンジン",
       "sub_en": "Aircraft engines",
-      "sub_short": "航空エンジン",
-      "sub_short_en": "Aircraft engines",
+      "sub_short": "エンジン",
+      "sub_short_en": "Engines",
       "row": 1,
       "relations": [
         {

@@ -30,8 +30,8 @@
       "name": "SAP",
       "sub": "業務ソフト",
       "sub_en": "Business software",
-      "sub_short": "業務ソフト",
-      "sub_short_en": "Business apps",
+      "sub_short": "業務IT",
+      "sub_short_en": "Biz apps",
       "row": 0,
       "relations": [
         {
@@ -68,7 +68,7 @@
       "name": "MongoDB",
       "sub": "データベース",
       "sub_en": "Database",
-      "sub_short": "データベース",
+      "sub_short": "DB",
       "sub_short_en": "Database",
       "row": 0,
       "relations": [
@@ -95,8 +95,8 @@
       "name": "ソフトバンクグループ",
       "sub": "投資・通信",
       "sub_en": "Investment & telecom",
-      "sub_short": "投資・通信",
-      "sub_short_en": "Investment",
+      "sub_short": "投資",
+      "sub_short_en": "Investing",
       "row": 0,
       "relations": [
         {
@@ -162,7 +162,7 @@
       "sub": "半導体",
       "sub_en": "Semiconductors",
       "sub_short": "半導体",
-      "sub_short_en": "Semiconductors",
+      "sub_short_en": "Chips",
       "row": 0,
       "relations": [
         {
@@ -227,8 +227,8 @@
       "name": "パロアルトネットワークス",
       "sub": "セキュリティ",
       "sub_en": "Cybersecurity",
-      "sub_short": "セキュリティ",
-      "sub_short_en": "Cybersecurity",
+      "sub_short": "防御",
+      "sub_short_en": "Security",
       "row": 0,
       "relations": [
         {
@@ -282,7 +282,7 @@
       "sub": "自動車",
       "sub_en": "Automobiles",
       "sub_short": "自動車",
-      "sub_short_en": "Automobiles",
+      "sub_short_en": "Cars",
       "row": 1,
       "relations": [
         {
@@ -309,7 +309,7 @@
       "sub": "自動車",
       "sub_en": "Automobiles",
       "sub_short": "自動車",
-      "sub_short_en": "Automobiles",
+      "sub_short_en": "Cars",
       "row": 1,
       "relations": [
         {
@@ -337,7 +337,7 @@
       "sub": "検索・AI",
       "sub_en": "Search & AI",
       "sub_short": "検索・AI",
-      "sub_short_en": "Search & AI",
+      "sub_short_en": "Search",
       "row": 2,
       "relations": [
         {
@@ -363,7 +363,7 @@
       "sub": "EC",
       "sub_en": "E-commerce",
       "sub_short": "EC",
-      "sub_short_en": "E-commerce",
+      "sub_short_en": "E-com",
       "row": 2,
       "relations": [
         {

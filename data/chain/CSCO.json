@@ -37,8 +37,8 @@
       "name": "Viavi Solutions",
       "sub": "試験・計測",
       "sub_en": "Test & measurement",
-      "sub_short": "試験・計測",
-      "sub_short_en": "Test equipment",
+      "sub_short": "計測",
+      "sub_short_en": "Testing",
       "row": 0,
       "relations": [
         {
@@ -112,7 +112,7 @@
       "name": "Supermicro",
       "sub": "AIサーバー",
       "sub_en": "AI servers",
-      "sub_short": "AIサーバー",
+      "sub_short": "AI機器",
       "sub_short_en": "AI servers",
       "row": 1,
       "relations": [
@@ -148,8 +148,8 @@
       "name": "NetApp",
       "sub": "データストレージ",
       "sub_en": "Data storage",
-      "sub_short": "ストレージ",
-      "sub_short_en": "Data storage",
+      "sub_short": "記憶装置",
+      "sub_short_en": "Storage",
       "row": 1,
       "relations": [
         {
@@ -173,8 +173,8 @@
       "name": "Box",
       "sub": "クラウドコンテンツ管理",
       "sub_en": "Cloud content management",
-      "sub_short": "クラウド管理",
-      "sub_short_en": "Cloud content",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 1,
       "relations": [
         {
@@ -198,8 +198,8 @@
       "name": "Dropbox",
       "sub": "クラウドストレージ",
       "sub_en": "Cloud storage",
-      "sub_short": "クラウド保存",
-      "sub_short_en": "Cloud storage",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 1,
       "relations": [
         {
@@ -224,7 +224,7 @@
       "sub": "ハイブリッドクラウド",
       "sub_en": "Hybrid cloud",
       "sub_short": "クラウド",
-      "sub_short_en": "Hybrid cloud",
+      "sub_short_en": "Cloud",
       "row": 1,
       "relations": [
         {
@@ -249,7 +249,7 @@
       "sub": "通信API",
       "sub_en": "Communications APIs",
       "sub_short": "通信API",
-      "sub_short_en": "Comms APIs",
+      "sub_short_en": "APIs",
       "row": 1,
       "relations": [
         {
@@ -314,7 +314,7 @@
       "sub": "ネットワーク機器",
       "sub_en": "Networking",
       "sub_short": "通信機器",
-      "sub_short_en": "Networking",
+      "sub_short_en": "Network",
       "row": 3,
       "relations": [
         {
@@ -378,7 +378,7 @@
       "name": "フォーティネット",
       "sub": "セキュリティ",
       "sub_en": "Security",
-      "sub_short": "セキュリティ",
+      "sub_short": "防御",
       "sub_short_en": "Security",
       "row": 3,
       "relations": [
@@ -404,7 +404,7 @@
       "name": "パロアルトネットワークス",
       "sub": "セキュリティ",
       "sub_en": "Security",
-      "sub_short": "セキュリティ",
+      "sub_short": "防御",
       "sub_short_en": "Security",
       "row": 3,
       "relations": [
@@ -430,8 +430,8 @@
       "name": "データドッグ",
       "sub": "監視・可観測性",
       "sub_en": "Observability",
-      "sub_short": "監視・可観測性",
-      "sub_short_en": "Observability",
+      "sub_short": "監視",
+      "sub_short_en": "Monitors",
       "row": 3,
       "relations": [
         {
@@ -470,7 +470,7 @@
       "sub": "可観測性",
       "sub_en": "Observability",
       "sub_short": "可観測性",
-      "sub_short_en": "Observability",
+      "sub_short_en": "Monitors",
       "row": 3,
       "relations": [
         {
@@ -495,7 +495,7 @@
       "name": "チェック・ポイント",
       "sub": "セキュリティ",
       "sub_en": "Security",
-      "sub_short": "セキュリティ",
+      "sub_short": "防御",
       "sub_short_en": "Security",
       "row": 3,
       "relations": [
@@ -521,8 +521,8 @@
       "name": "シエナ",
       "sub": "光ネットワーク",
       "sub_en": "Optical networking",
-      "sub_short": "光ネットワーク",
-      "sub_short_en": "Optical nets",
+      "sub_short": "光通信",
+      "sub_short_en": "Optics",
       "row": 3,
       "relations": [
         {
@@ -547,8 +547,8 @@
       "name": "ファイブナイン",
       "sub": "コンタクトセンター",
       "sub_en": "Contact center",
-      "sub_short": "コールセンター",
-      "sub_short_en": "Contact center",
+      "sub_short": "顧客対応",
+      "sub_short_en": "CX",
       "row": 3,
       "relations": [
         {
@@ -573,8 +573,8 @@
       "name": "ナイス",
       "sub": "コンタクトセンター",
       "sub_en": "Contact center",
-      "sub_short": "コールセンター",
-      "sub_short_en": "Contact center",
+      "sub_short": "顧客対応",
+      "sub_short_en": "CX",
       "row": 3,
       "relations": [
         {
@@ -600,7 +600,7 @@
       "sub": "Web会議",
       "sub_en": "Video meetings",
       "sub_short": "Web会議",
-      "sub_short_en": "Video meetings",
+      "sub_short_en": "Video",
       "row": 3,
       "relations": [
         {
@@ -625,8 +625,8 @@
       "name": "リングセントラル",
       "sub": "クラウド通信",
       "sub_en": "Cloud communications",
-      "sub_short": "クラウド通信",
-      "sub_short_en": "Cloud comms",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 3,
       "relations": [
         {
@@ -652,7 +652,7 @@
       "sub": "ネットワーク機器",
       "sub_en": "Networking equipment",
       "sub_short": "通信機器",
-      "sub_short_en": "Network gear",
+      "sub_short_en": "Network",
       "row": 3,
       "relations": [
         {

@@ -32,7 +32,7 @@
       "sub": "取引所",
       "sub_en": "Exchanges",
       "sub_short": "取引所",
-      "sub_short_en": "Exchanges",
+      "sub_short_en": "Exchange",
       "row": 0,
       "relations": [
         {
@@ -58,7 +58,7 @@
       "sub": "法人決済",
       "sub_en": "Corporate payments",
       "sub_short": "法人決済",
-      "sub_short_en": "Corp payments",
+      "sub_short_en": "Payment",
       "row": 1,
       "relations": [
         {
@@ -109,8 +109,8 @@
       "name_en": "Asbury Automotive",
       "sub": "自動車ディーラー",
       "sub_en": "Auto dealers",
-      "sub_short": "車ディーラー",
-      "sub_short_en": "Auto dealers",
+      "sub_short": "車販売",
+      "sub_short_en": "Car sales",
       "row": 1,
       "relations": [
         {
@@ -136,7 +136,7 @@
       "sub": "住宅建設",
       "sub_en": "Homebuilding",
       "sub_short": "住宅建設",
-      "sub_short_en": "Homebuilding",
+      "sub_short_en": "Homes",
       "row": 1,
       "relations": [
         {
@@ -162,7 +162,7 @@
       "sub": "医療機器",
       "sub_en": "Medical devices",
       "sub_short": "医療機器",
-      "sub_short_en": "Medical devices",
+      "sub_short_en": "Medtech",
       "row": 1,
       "relations": [
         {
@@ -188,7 +188,7 @@
       "sub": "資産運用",
       "sub_en": "Asset management",
       "sub_short": "資産運用",
-      "sub_short_en": "Asset management",
+      "sub_short_en": "Assets",
       "row": 1,
       "relations": [
         {
@@ -214,7 +214,7 @@
       "sub": "食品",
       "sub_en": "Packaged foods",
       "sub_short": "食品",
-      "sub_short_en": "Packaged foods",
+      "sub_short_en": "Food",
       "row": 1,
       "relations": [
         {

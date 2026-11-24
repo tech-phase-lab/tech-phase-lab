@@ -24,7 +24,7 @@
       "name": "トタルエナジーズ",
       "sub": "エネルギー",
       "sub_en": "Energy",
-      "sub_short": "エネルギー",
+      "sub_short": "エネ",
       "sub_short_en": "Energy",
       "row": 1,
       "relations": [
@@ -51,7 +51,7 @@
       "sub": "総合商社",
       "sub_en": "Trading company",
       "sub_short": "総合商社",
-      "sub_short_en": "Trading company",
+      "sub_short_en": "Trading",
       "row": 1,
       "relations": [
         {
@@ -76,7 +76,7 @@
       "name": "コノコフィリップス",
       "sub": "石油・ガス",
       "sub_en": "Oil & gas",
-      "sub_short": "石油・ガス",
+      "sub_short": "石油",
       "sub_short_en": "Oil & gas",
       "row": 1,
       "relations": [
@@ -103,7 +103,7 @@
       "sub": "投資会社",
       "sub_en": "Investment firm",
       "sub_short": "投資会社",
-      "sub_short_en": "Investment firm",
+      "sub_short_en": "Investing",
       "row": 1,
       "relations": [
         {
@@ -129,7 +129,7 @@
       "sub": "投資会社",
       "sub_en": "Investment firm",
       "sub_short": "投資会社",
-      "sub_short_en": "Investment firm",
+      "sub_short_en": "Investing",
       "row": 1,
       "relations": [
         {
@@ -180,8 +180,8 @@
       "name": "ジェラ",
       "sub": "電力・燃料",
       "sub_en": "Power & fuel",
-      "sub_short": "電力・燃料",
-      "sub_short_en": "Power & fuel",
+      "sub_short": "電力",
+      "sub_short_en": "Power",
       "row": 1,
       "relations": [
         {
@@ -207,7 +207,7 @@
       "sub": "天然ガス",
       "sub_en": "Natural gas",
       "sub_short": "天然ガス",
-      "sub_short_en": "Natural gas",
+      "sub_short_en": "Gas",
       "row": 1,
       "relations": [
         {
@@ -232,8 +232,8 @@
       "name": "ベクテル",
       "sub": "建設・EPC",
       "sub_en": "EPC contractor",
-      "sub_short": "建設・EPC",
-      "sub_short_en": "EPC contractor",
+      "sub_short": "建設",
+      "sub_short_en": "EPC",
       "row": 0,
       "relations": [
         {
@@ -259,7 +259,7 @@
       "sub": "電力・ガス設備工事",
       "sub_en": "Utility infrastructure services",
       "sub_short": "電力",
-      "sub_short_en": "Utility works",
+      "sub_short_en": "Utility",
       "row": 0,
       "relations": [
         {

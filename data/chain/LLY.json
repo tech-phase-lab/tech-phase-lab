@@ -20,7 +20,7 @@
       "sub": "大手製薬",
       "sub_en": "Large pharma",
       "sub_short": "大手製薬",
-      "sub_short_en": "Large pharma",
+      "sub_short_en": "Pharma",
       "row": 0,
       "relations": [
         {
@@ -46,7 +46,7 @@
       "sub": "大手製薬",
       "sub_en": "Large pharma",
       "sub_short": "大手製薬",
-      "sub_short_en": "Large pharma",
+      "sub_short_en": "Pharma",
       "row": 0,
       "relations": [
         {
@@ -71,8 +71,8 @@
       "name": "アルミラル",
       "sub": "皮膚科製薬",
       "sub_en": "Dermatology pharma",
-      "sub_short": "皮膚科製薬",
-      "sub_short_en": "Dermatology",
+      "sub_short": "皮膚薬",
+      "sub_short_en": "Skin",
       "row": 0,
       "relations": [
         {
@@ -98,7 +98,7 @@
       "sub": "製薬",
       "sub_en": "Pharmaceuticals",
       "sub_short": "製薬",
-      "sub_short_en": "Pharmaceuticals",
+      "sub_short_en": "Pharma",
       "row": 0,
       "relations": [
         {
@@ -124,7 +124,7 @@
       "sub": "大手製薬",
       "sub_en": "Large pharma",
       "sub_short": "大手製薬",
-      "sub_short_en": "Large pharma",
+      "sub_short_en": "Pharma",
       "row": 0,
       "relations": [
         {
@@ -150,7 +150,7 @@
       "sub": "医薬品卸",
       "sub_en": "Drug wholesaler",
       "sub_short": "医薬品卸",
-      "sub_short_en": "Drug wholesaler",
+      "sub_short_en": "Pharma",
       "row": 0,
       "relations": [
         {
@@ -176,7 +176,7 @@
       "sub": "医薬品卸",
       "sub_en": "Drug wholesaler",
       "sub_short": "医薬品卸",
-      "sub_short_en": "Drug wholesaler",
+      "sub_short_en": "Pharma",
       "row": 0,
       "relations": [
         {
@@ -202,7 +202,7 @@
       "sub": "医薬品卸",
       "sub_en": "Drug wholesaler",
       "sub_short": "医薬品卸",
-      "sub_short_en": "Drug wholesaler",
+      "sub_short_en": "Pharma",
       "row": 0,
       "relations": [
         {

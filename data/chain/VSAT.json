@@ -25,8 +25,8 @@
       "name": "コムテック・テレコミュニケーションズ",
       "sub": "衛星通信機器",
       "sub_en": "Satellite equipment",
-      "sub_short": "衛星通信機器",
-      "sub_short_en": "Satellite gear",
+      "sub_short": "衛星通信",
+      "sub_short_en": "Satcom",
       "row": 0,
       "relations": [
         {
@@ -52,7 +52,7 @@
       "sub": "衛星通信",
       "sub_en": "Satellite communications",
       "sub_short": "衛星通信",
-      "sub_short_en": "Satellite comms",
+      "sub_short_en": "Satcom",
       "row": 0,
       "relations": [
         {
@@ -103,8 +103,8 @@
       "name": "ギラット・サテライト・ネットワークス",
       "sub": "衛星通信機器",
       "sub_en": "Satellite equipment",
-      "sub_short": "衛星通信機器",
-      "sub_short_en": "Satellite gear",
+      "sub_short": "衛星通信",
+      "sub_short_en": "Satcom",
       "row": 0,
       "relations": [
         {
@@ -129,8 +129,8 @@
       "name": "L3ハリス・テクノロジーズ",
       "sub": "防衛・通信",
       "sub_en": "Defense & comms",
-      "sub_short": "防衛・通信",
-      "sub_short_en": "Defense & comms",
+      "sub_short": "防衛",
+      "sub_short_en": "Defense",
       "row": 0,
       "relations": [
         {
@@ -156,7 +156,7 @@
       "sub": "衛星通信",
       "sub_en": "Satellite communications",
       "sub_short": "衛星通信",
-      "sub_short_en": "Satellite comms",
+      "sub_short_en": "Satcom",
       "row": 0,
       "relations": [
         {
@@ -195,7 +195,7 @@
       "sub": "機内通信",
       "sub_en": "In-flight connectivity",
       "sub_short": "機内通信",
-      "sub_short_en": "In-flight Wi-Fi",
+      "sub_short_en": "Wi-Fi",
       "row": 0,
       "relations": [
         {
@@ -221,7 +221,7 @@
       "sub": "衛星通信",
       "sub_en": "Satellite communications",
       "sub_short": "衛星通信",
-      "sub_short_en": "Satellite comms",
+      "sub_short_en": "Satcom",
       "row": 0,
       "relations": [
         {

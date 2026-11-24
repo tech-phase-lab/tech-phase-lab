@@ -34,8 +34,8 @@
       "name": "ベライゾン・コミュニケーションズ",
       "sub": "無線網の提供元",
       "sub_en": "Wireless network",
-      "sub_short": "無線網の提供元",
-      "sub_short_en": "Wireless network",
+      "sub_short": "無線網",
+      "sub_short_en": "Wireless",
       "row": 0,
       "relations": [
         {
@@ -60,8 +60,8 @@
       "name": "Tモバイル・US",
       "sub": "無線網・周波数",
       "sub_en": "Wireless network",
-      "sub_short": "無線網・周波数",
-      "sub_short_en": "Wireless network",
+      "sub_short": "無線網",
+      "sub_short_en": "Wireless",
       "row": 0,
       "relations": [
         {
@@ -112,8 +112,8 @@
       "name": "パラマウント・スカイダンス",
       "sub": "番組の提供元",
       "sub_en": "Content licensor",
-      "sub_short": "番組の提供元",
-      "sub_short_en": "Content licensor",
+      "sub_short": "番組",
+      "sub_short_en": "Content",
       "row": 0,
       "relations": [
         {
@@ -138,8 +138,8 @@
       "name": "ワーナー・ブラザース・ディスカバリー",
       "sub": "番組の提供元",
       "sub_en": "Content licensor",
-      "sub_short": "番組の提供元",
-      "sub_short_en": "Content licensor",
+      "sub_short": "番組",
+      "sub_short_en": "Content",
       "row": 0,
       "relations": [
         {
@@ -164,8 +164,8 @@
       "name": "チャーター・コミュニケーションズ",
       "sub": "合弁パートナー",
       "sub_en": "JV partner",
-      "sub_short": "合弁パートナー",
-      "sub_short_en": "JV partner",
+      "sub_short": "合弁",
+      "sub_short_en": "JV",
       "row": 1,
       "relations": [
         {
@@ -190,8 +190,8 @@
       "name": "RTLグループ",
       "sub": "Sky独事業の売却先",
       "sub_en": "Sky Germany buyer",
-      "sub_short": "Sky独事業",
-      "sub_short_en": "Sky Germany",
+      "sub_short": "Sky独",
+      "sub_short_en": "Pay TV",
       "row": 1,
       "relations": [
         {
@@ -216,7 +216,7 @@
       "name": "アタイロス",
       "sub": "投資の提携先",
       "sub_en": "Investment partner",
-      "sub_short": "投資の提携先",
+      "sub_short": "投資",
       "sub_short_en": "Investor",
       "row": 1,
       "relations": [
@@ -243,7 +243,7 @@
       "sub": "通信大手",
       "sub_en": "Wireless carrier",
       "sub_short": "通信大手",
-      "sub_short_en": "Wireless carrier",
+      "sub_short_en": "Carrier",
       "row": 1,
       "relations": [
         {
@@ -269,7 +269,7 @@
       "sub": "動画配信",
       "sub_en": "Video streaming",
       "sub_short": "動画配信",
-      "sub_short_en": "Video streaming",
+      "sub_short_en": "Video",
       "row": 1,
       "relations": [
         {
@@ -295,7 +295,7 @@
       "sub": "動画配信",
       "sub_en": "Video streaming",
       "sub_short": "動画配信",
-      "sub_short_en": "Video streaming",
+      "sub_short_en": "Video",
       "row": 1,
       "relations": [
         {
@@ -320,8 +320,8 @@
       "name": "ウーマ",
       "sub": "クラウド電話",
       "sub_en": "Cloud telephony",
-      "sub_short": "クラウド電話",
-      "sub_short_en": "Cloud telephony",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 2,
       "relations": [
         {

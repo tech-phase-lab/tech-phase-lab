@@ -33,7 +33,7 @@
       "sub": "食品卸(ヒューストン)",
       "sub_en": "Food distribution (Houston)",
       "sub_short": "食品卸",
-      "sub_short_en": "Food supply",
+      "sub_short_en": "Food",
       "row": 0,
       "relations": [
         {
@@ -58,8 +58,8 @@
       "name_en": "Post Holdings",
       "sub": "食品メーカー",
       "sub_en": "Packaged foods",
-      "sub_short": "食品メーカー",
-      "sub_short_en": "Packaged foods",
+      "sub_short": "食品",
+      "sub_short_en": "Food",
       "row": 0,
       "relations": [
         {
@@ -111,7 +111,7 @@
       "sub": "業務用食材の専門流通",
       "sub_en": "Specialty foodservice distribution",
       "sub_short": "食材流通",
-      "sub_short_en": "Food supply",
+      "sub_short_en": "Food",
       "row": 1,
       "relations": [
         {
@@ -136,8 +136,8 @@
       "name_en": "Good Times Restaurants",
       "sub": "レストランチェーン",
       "sub_en": "Restaurant chains",
-      "sub_short": "外食チェーン",
-      "sub_short_en": "Restaurants",
+      "sub_short": "外食",
+      "sub_short_en": "Dining",
       "row": 1,
       "relations": [
         {
@@ -162,8 +162,8 @@
       "name_en": "Nathan's Famous",
       "sub": "ホットドッグ・ブランド",
       "sub_en": "Hot dog brand",
-      "sub_short": "ホットドッグ",
-      "sub_short_en": "Hot dog brand",
+      "sub_short": "食品",
+      "sub_short_en": "Food",
       "row": 1,
       "relations": [
         {
@@ -188,8 +188,8 @@
       "name_en": "Performance Food Group",
       "sub": "業務用食品卸",
       "sub_en": "Foodservice distribution",
-      "sub_short": "業務用食品卸",
-      "sub_short_en": "Food supply",
+      "sub_short": "食品卸",
+      "sub_short_en": "Food",
       "row": 2,
       "relations": [
         {
@@ -214,8 +214,8 @@
       "name_en": "Farmer Brothers",
       "sub": "業務用コーヒー",
       "sub_en": "Foodservice coffee",
-      "sub_short": "業務用コーヒー",
-      "sub_short_en": "Coffee supply",
+      "sub_short": "コーヒー",
+      "sub_short_en": "Coffee",
       "row": 2,
       "relations": [
         {

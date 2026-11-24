@@ -76,8 +76,8 @@
       "name_en": "Helly Hansen",
       "sub": "アウトドアウェア(ノルウェー)",
       "sub_en": "Outdoor wear (Norway)",
-      "sub_short": "アウトドア衣料",
-      "sub_short_en": "Outdoor wear",
+      "sub_short": "野外衣料",
+      "sub_short_en": "Outdoor",
       "row": 1,
       "relations": [
         {
@@ -103,7 +103,7 @@
       "sub": "靴の小売・ブランド",
       "sub_en": "Footwear retail & brands",
       "sub_short": "靴の小売",
-      "sub_short_en": "Footwear retail",
+      "sub_short_en": "Shoes",
       "row": 1,
       "relations": [
         {

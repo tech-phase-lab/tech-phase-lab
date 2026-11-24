@@ -38,7 +38,7 @@
       "sub": "半導体",
       "sub_en": "Semiconductors",
       "sub_short": "半導体",
-      "sub_short_en": "Semiconductors",
+      "sub_short_en": "Chips",
       "row": 0,
       "relations": [
         {
@@ -65,7 +65,7 @@
       "sub": "クラウド・ソフト",
       "sub_en": "Cloud & software",
       "sub_short": "クラウド",
-      "sub_short_en": "Cloud & software",
+      "sub_short_en": "Cloud",
       "row": 0,
       "relations": [
         {
@@ -92,7 +92,7 @@
       "sub": "半導体",
       "sub_en": "Semiconductors",
       "sub_short": "半導体",
-      "sub_short_en": "Semiconductors",
+      "sub_short_en": "Chips",
       "row": 0,
       "relations": [
         {
@@ -129,8 +129,8 @@
       "name": "Micron Technology",
       "sub": "メモリー・SSD",
       "sub_en": "Memory & SSDs",
-      "sub_short": "メモリー・SSD",
-      "sub_short_en": "Memory & SSDs",
+      "sub_short": "メモリ",
+      "sub_short_en": "Memory",
       "row": 0,
       "relations": [
         {
@@ -156,7 +156,7 @@
       "name": "IREN",
       "sub": "AIクラウド・データセンター",
       "sub_en": "AI cloud & data centers",
-      "sub_short": "AIクラウド",
+      "sub_short": "AI基盤",
       "sub_short_en": "AI cloud",
       "row": 1,
       "relations": [
@@ -211,8 +211,8 @@
       "name": "Nutanix",
       "sub": "ハイブリッドクラウド・ソフト",
       "sub_en": "Hybrid cloud software",
-      "sub_short": "クラウドソフト",
-      "sub_short_en": "Hybrid cloud",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 2,
       "relations": [
         {
@@ -277,7 +277,7 @@
       "sub": "半導体・インフラソフト",
       "sub_en": "Semiconductors & infrastructure software",
       "sub_short": "半導体",
-      "sub_short_en": "Semiconductors",
+      "sub_short_en": "Chips",
       "row": 2,
       "relations": [
         {
@@ -343,8 +343,8 @@
       "name": "HP Inc.",
       "sub": "PC・プリンター",
       "sub_en": "PCs & printers",
-      "sub_short": "PC・印刷機",
-      "sub_short_en": "PCs & printers",
+      "sub_short": "PC",
+      "sub_short_en": "PCs",
       "row": 3,
       "relations": [
         {
@@ -368,7 +368,7 @@
       "name": "Super Micro Computer",
       "sub": "AIサーバー",
       "sub_en": "AI servers",
-      "sub_short": "AIサーバー",
+      "sub_short": "AI機器",
       "sub_short_en": "AI servers",
       "row": 3,
       "relations": [
@@ -394,7 +394,7 @@
       "sub": "ネットワーク機器",
       "sub_en": "Networking equipment",
       "sub_short": "通信機器",
-      "sub_short_en": "Network gear",
+      "sub_short_en": "Network",
       "row": 3,
       "relations": [
         {
@@ -418,8 +418,8 @@
       "name": "IBM",
       "sub": "ITサービス・ソフト",
       "sub_en": "IT services & software",
-      "sub_short": "ITサービス",
-      "sub_short_en": "IT services",
+      "sub_short": "IT",
+      "sub_short_en": "IT",
       "row": 3,
       "relations": [
         {
@@ -443,8 +443,8 @@
       "name": "Pure Storage(Everpure)",
       "sub": "ストレージ",
       "sub_en": "Data storage",
-      "sub_short": "ストレージ",
-      "sub_short_en": "Data storage",
+      "sub_short": "記憶装置",
+      "sub_short_en": "Storage",
       "row": 3,
       "relations": [
         {

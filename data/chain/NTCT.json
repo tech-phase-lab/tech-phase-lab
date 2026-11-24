@@ -26,7 +26,7 @@
       "sub": "ネットワーク機器",
       "sub_en": "Networking equipment",
       "sub_short": "通信機器",
-      "sub_short_en": "Network gear",
+      "sub_short_en": "Network",
       "row": 0,
       "relations": [
         {
@@ -64,7 +64,7 @@
       "name": "アイ・ビー・エム",
       "sub": "IT基盤・ソフト",
       "sub_en": "IT infrastructure & software",
-      "sub_short": "IT基盤・ソフト",
+      "sub_short": "IT基盤",
       "sub_short_en": "IT infra",
       "row": 0,
       "relations": [
@@ -103,8 +103,8 @@
       "name": "ダイナトレース",
       "sub": "オブザーバビリティ",
       "sub_en": "Observability",
-      "sub_short": "システム監視",
-      "sub_short_en": "Observability",
+      "sub_short": "監視",
+      "sub_short_en": "Monitors",
       "row": 0,
       "relations": [
         {
@@ -129,8 +129,8 @@
       "name": "データドッグ",
       "sub": "クラウド監視",
       "sub_en": "Cloud monitoring",
-      "sub_short": "クラウド監視",
-      "sub_short_en": "Cloud monitoring",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 0,
       "relations": [
         {
@@ -156,7 +156,7 @@
       "sub": "ネットワーク試験",
       "sub_en": "Network test",
       "sub_short": "通信試験",
-      "sub_short_en": "Network test",
+      "sub_short_en": "Testing",
       "row": 0,
       "relations": [
         {
@@ -194,8 +194,8 @@
       "name": "ブロードコム",
       "sub": "半導体・ソフト",
       "sub_en": "Semiconductors & software",
-      "sub_short": "半導体・ソフト",
-      "sub_short_en": "Semiconductors",
+      "sub_short": "半導体",
+      "sub_short_en": "Chips",
       "row": 0,
       "relations": [
         {
@@ -220,8 +220,8 @@
       "name": "ソーラーウインズ",
       "sub": "IT運用管理",
       "sub_en": "IT operations management",
-      "sub_short": "IT運用管理",
-      "sub_short_en": "IT operations",
+      "sub_short": "IT運用",
+      "sub_short_en": "IT",
       "row": 0,
       "relations": [
         {
@@ -246,8 +246,8 @@
       "name": "スプランク",
       "sub": "データ分析",
       "sub_en": "Data analytics",
-      "sub_short": "データ分析",
-      "sub_short_en": "Data analytics",
+      "sub_short": "分析",
+      "sub_short_en": "Analytics",
       "row": 0,
       "relations": [
         {
@@ -272,7 +272,7 @@
       "name": "サービスナウ",
       "sub": "業務ワークフロー",
       "sub_en": "Workflow software",
-      "sub_short": "業務フロー",
+      "sub_short": "業務IT",
       "sub_short_en": "Workflow",
       "row": 0,
       "relations": [

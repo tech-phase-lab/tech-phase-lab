@@ -33,8 +33,8 @@
       "name_en": "LendingTree",
       "sub": "比較サイト",
       "sub_en": "Comparison marketplace",
-      "sub_short": "比較サイト",
-      "sub_short_en": "Price comparison",
+      "sub_short": "比較",
+      "sub_short_en": "Compare",
       "row": 0,
       "relations": [
         {
@@ -60,7 +60,7 @@
       "sub": "地方銀行",
       "sub_en": "Regional bank",
       "sub_short": "地方銀行",
-      "sub_short_en": "Regional bank",
+      "sub_short_en": "Bank",
       "row": 0,
       "relations": [
         {
@@ -86,7 +86,7 @@
       "sub": "フロリダの住宅保険",
       "sub_en": "Florida homeowners insurance",
       "sub_short": "住宅保険",
-      "sub_short_en": "Home insurance",
+      "sub_short_en": "Insurance",
       "row": 1,
       "relations": [
         {
@@ -111,8 +111,8 @@
       "name_en": "Everlake",
       "sub": "生命保険・年金",
       "sub_en": "Life & annuities",
-      "sub_short": "生命保険・年金",
-      "sub_short_en": "Life & annuities",
+      "sub_short": "生保",
+      "sub_short_en": "Life ins",
       "row": 1,
       "relations": [
         {
@@ -138,7 +138,7 @@
       "sub": "不動産",
       "sub_en": "Real estate",
       "sub_short": "不動産",
-      "sub_short_en": "Real estate",
+      "sub_short_en": "Property",
       "row": 1,
       "relations": [
         {
@@ -163,7 +163,7 @@
       "name_en": "Lemonade",
       "sub": "保険テック",
       "sub_en": "Insurtech",
-      "sub_short": "保険テック",
+      "sub_short": "保険",
       "sub_short_en": "Insurtech",
       "row": 2,
       "relations": [
@@ -189,8 +189,8 @@
       "name_en": "Root",
       "sub": "自動車保険テック",
       "sub_en": "Auto insurtech",
-      "sub_short": "自動車保険",
-      "sub_short_en": "Auto insurtech",
+      "sub_short": "車両保険",
+      "sub_short_en": "Car cover",
       "row": 2,
       "relations": [
         {
@@ -215,8 +215,8 @@
       "name_en": "Hippo",
       "sub": "住宅保険テック",
       "sub_en": "Home insurtech",
-      "sub_short": "住宅保険テック",
-      "sub_short_en": "Home insurtech",
+      "sub_short": "住宅保険",
+      "sub_short_en": "Insurance",
       "row": 2,
       "relations": [
         {
@@ -242,7 +242,7 @@
       "sub": "フロリダの住宅保険",
       "sub_en": "Florida homeowners insurance",
       "sub_short": "住宅保険",
-      "sub_short_en": "Home insurance",
+      "sub_short_en": "Insurance",
       "row": 2,
       "relations": [
         {
@@ -267,8 +267,8 @@
       "name_en": "Gen Digital",
       "sub": "個人向けセキュリティ",
       "sub_en": "Consumer cyber safety",
-      "sub_short": "個人向け防御",
-      "sub_short_en": "Cyber safety",
+      "sub_short": "防御",
+      "sub_short_en": "Security",
       "row": 2,
       "relations": [
         {

@@ -37,8 +37,8 @@
       "name_en": "Endospan",
       "sub": "血管内治療(イスラエル)",
       "sub_en": "Endovascular devices (Israel)",
-      "sub_short": "血管内治療",
-      "sub_short_en": "Vascular devices",
+      "sub_short": "血管治療",
+      "sub_short_en": "Vascular",
       "row": 0,
       "relations": [
         {
@@ -64,7 +64,7 @@
       "sub": "止血材",
       "sub_en": "Hemostats",
       "sub_short": "止血材",
-      "sub_short_en": "Hemostats",
+      "sub_short_en": "Surgical",
       "row": 0,
       "relations": [
         {
@@ -89,8 +89,8 @@
       "name_en": "Ascyrus Medical",
       "sub": "大動脈治療機器",
       "sub_en": "Aortic devices",
-      "sub_short": "大動脈治療機器",
-      "sub_short_en": "Aortic devices",
+      "sub_short": "大動脈",
+      "sub_short_en": "Aortic",
       "row": 1,
       "relations": [
         {
@@ -116,7 +116,7 @@
       "sub": "医療機器",
       "sub_en": "Medical devices",
       "sub_short": "医療機器",
-      "sub_short_en": "Medical devices",
+      "sub_short_en": "Medtech",
       "row": 2,
       "relations": [
         {
@@ -141,8 +141,8 @@
       "name_en": "Abbott",
       "sub": "医療機器・医薬",
       "sub_en": "Medical devices & pharma",
-      "sub_short": "医療機器・医薬",
-      "sub_short_en": "Medical devices",
+      "sub_short": "医療機器",
+      "sub_short_en": "Medtech",
       "row": 2,
       "relations": [
         {
@@ -168,7 +168,7 @@
       "sub": "医療機器",
       "sub_en": "Medical devices",
       "sub_short": "医療機器",
-      "sub_short_en": "Medical devices",
+      "sub_short_en": "Medtech",
       "row": 2,
       "relations": [
         {
@@ -194,7 +194,7 @@
       "sub": "心臓弁",
       "sub_en": "Heart valves",
       "sub_short": "心臓弁",
-      "sub_short_en": "Heart valves",
+      "sub_short_en": "Valves",
       "row": 3,
       "relations": [
         {

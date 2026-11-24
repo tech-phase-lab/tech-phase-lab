@@ -29,8 +29,8 @@
       "name_en": "Dyadic",
       "sub": "バイオ生産技術",
       "sub_en": "Biomanufacturing platform",
-      "sub_short": "バイオ生産技術",
-      "sub_short_en": "Biomanufacturing",
+      "sub_short": "バイオ",
+      "sub_short_en": "Bio CDMO",
       "row": 0,
       "relations": [
         {
@@ -55,8 +55,8 @@
       "name_en": "Zoetis",
       "sub": "動物用医薬品",
       "sub_en": "Animal health",
-      "sub_short": "動物用医薬品",
-      "sub_short_en": "Animal health",
+      "sub_short": "動物薬",
+      "sub_short_en": "Vet",
       "row": 1,
       "relations": [
         {
@@ -81,8 +81,8 @@
       "name_en": "Elanco Animal Health",
       "sub": "動物用医薬品",
       "sub_en": "Animal health",
-      "sub_short": "動物用医薬品",
-      "sub_short_en": "Animal health",
+      "sub_short": "動物薬",
+      "sub_short_en": "Vet",
       "row": 1,
       "relations": [
         {
@@ -108,7 +108,7 @@
       "sub": "医薬品",
       "sub_en": "Pharmaceuticals",
       "sub_short": "医薬品",
-      "sub_short_en": "Pharmaceuticals",
+      "sub_short_en": "Pharma",
       "row": 1,
       "relations": [
         {
@@ -134,7 +134,7 @@
       "sub": "医薬品(ドイツ)",
       "sub_en": "Pharmaceuticals (Germany)",
       "sub_short": "医薬品",
-      "sub_short_en": "Pharmaceuticals",
+      "sub_short_en": "Pharma",
       "row": 1,
       "relations": [
         {
@@ -159,8 +159,8 @@
       "name_en": "Ceva Santé Animale",
       "sub": "動物用医薬品(フランス)",
       "sub_en": "Animal health (France)",
-      "sub_short": "動物用医薬品",
-      "sub_short_en": "Animal health",
+      "sub_short": "動物薬",
+      "sub_short_en": "Vet",
       "row": 1,
       "relations": [
         {
@@ -185,8 +185,8 @@
       "name_en": "Huvepharma",
       "sub": "動物用医薬品",
       "sub_en": "Animal health",
-      "sub_short": "動物用医薬品",
-      "sub_short_en": "Animal health",
+      "sub_short": "動物薬",
+      "sub_short_en": "Vet",
       "row": 1,
       "relations": [
         {

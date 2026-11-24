@@ -24,8 +24,8 @@
       "name": "ブルックリン・ネイビーヤード・コージェネレーション・パートナーズ",
       "sub": "コージェネ発電",
       "sub_en": "Cogeneration",
-      "sub_short": "コージェネ発電",
-      "sub_short_en": "Cogeneration",
+      "sub_short": "発電",
+      "sub_short_en": "Power",
       "row": 0,
       "relations": [
         {
@@ -50,8 +50,8 @@
       "name": "ナショナル・グリッド",
       "sub": "電力・ガス",
       "sub_en": "Electricity & gas",
-      "sub_short": "電力・ガス",
-      "sub_short_en": "Power & gas",
+      "sub_short": "電力",
+      "sub_short_en": "Power",
       "row": 0,
       "relations": [
         {
@@ -76,8 +76,8 @@
       "name": "エバーソース・エナジー",
       "sub": "電力・ガス",
       "sub_en": "Electricity & gas",
-      "sub_short": "電力・ガス",
-      "sub_short_en": "Power & gas",
+      "sub_short": "電力",
+      "sub_short_en": "Power",
       "row": 0,
       "relations": [
         {
@@ -102,8 +102,8 @@
       "name": "パブリック・サービス・エレクトリック・アンド・ガス",
       "sub": "電力・ガス",
       "sub_en": "Electricity & gas",
-      "sub_short": "電力・ガス",
-      "sub_short_en": "Power & gas",
+      "sub_short": "電力",
+      "sub_short_en": "Power",
       "row": 0,
       "relations": [
         {
@@ -128,8 +128,8 @@
       "name": "セントラル・ハドソン・ガス・アンド・エレクトリック",
       "sub": "電力・ガス",
       "sub_en": "Electricity & gas",
-      "sub_short": "電力・ガス",
-      "sub_short_en": "Power & gas",
+      "sub_short": "電力",
+      "sub_short_en": "Power",
       "row": 0,
       "relations": [
         {
@@ -154,7 +154,7 @@
       "name": "ウィルダン・グループ",
       "sub": "エネルギー・インフラ工学",
       "sub_en": "Energy & infrastructure engineering",
-      "sub_short": "エネルギー",
+      "sub_short": "エネ",
       "sub_short_en": "Energy",
       "row": 1,
       "relations": [

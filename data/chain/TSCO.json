@@ -29,8 +29,8 @@
       "name_en": "YETI",
       "sub": "アウトドア用品",
       "sub_en": "Outdoor products",
-      "sub_short": "アウトドア用品",
-      "sub_short_en": "Outdoor products",
+      "sub_short": "野外用品",
+      "sub_short_en": "Outdoor",
       "row": 0,
       "relations": [
         {
@@ -55,7 +55,7 @@
       "name_en": "Hillman Solutions",
       "sub": "金物・小物部品",
       "sub_en": "Hardware & fasteners",
-      "sub_short": "金物・小物部品",
+      "sub_short": "金物",
       "sub_short_en": "Hardware",
       "row": 0,
       "relations": [
@@ -81,8 +81,8 @@
       "name_en": "Massimo Group",
       "sub": "UTV・ボート",
       "sub_en": "UTVs & boats",
-      "sub_short": "UTV・ボート",
-      "sub_short_en": "UTVs & boats",
+      "sub_short": "UTV",
+      "sub_short_en": "UTVs",
       "row": 0,
       "relations": [
         {
@@ -107,8 +107,8 @@
       "name_en": "Expion360",
       "sub": "リチウム電池",
       "sub_en": "Lithium batteries",
-      "sub_short": "リチウム電池",
-      "sub_short_en": "Li batteries",
+      "sub_short": "電池",
+      "sub_short_en": "Batteries",
       "row": 0,
       "relations": [
         {
@@ -133,8 +133,8 @@
       "name_en": "Allivet",
       "sub": "ペット薬のネット薬局",
       "sub_en": "Online pet pharmacy",
-      "sub_short": "ペット薬局",
-      "sub_short_en": "Pet pharmacy",
+      "sub_short": "ペット",
+      "sub_short_en": "Pet",
       "row": 1,
       "relations": [
         {
@@ -159,8 +159,8 @@
       "name_en": "Citigroup",
       "sub": "銀行・カード",
       "sub_en": "Bank & cards",
-      "sub_short": "銀行・カード",
-      "sub_short_en": "Bank & cards",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
       "row": 1,
       "relations": [
         {
@@ -185,8 +185,8 @@
       "name_en": "Broadstone Net Lease",
       "sub": "ネットリースREIT",
       "sub_en": "Net lease REIT",
-      "sub_short": "ネットリース",
-      "sub_short_en": "Net lease REIT",
+      "sub_short": "リース",
+      "sub_short_en": "REIT",
       "row": 2,
       "relations": [
         {
@@ -211,8 +211,8 @@
       "name_en": "Generation Income Properties",
       "sub": "ネットリースREIT",
       "sub_en": "Net lease REIT",
-      "sub_short": "ネットリース",
-      "sub_short_en": "Net lease REIT",
+      "sub_short": "リース",
+      "sub_short_en": "REIT",
       "row": 2,
       "relations": [
         {

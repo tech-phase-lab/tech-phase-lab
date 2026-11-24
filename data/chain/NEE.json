@@ -36,8 +36,8 @@
       "name_en": "JinkoSolar",
       "sub": "太陽光パネル(中)",
       "sub_en": "Solar modules (China)",
-      "sub_short": "太陽光パネル",
-      "sub_short_en": "Solar modules",
+      "sub_short": "太陽光",
+      "sub_short_en": "Solar",
       "row": 0,
       "relations": [
         {
@@ -63,7 +63,7 @@
       "sub": "電力インフラ工事",
       "sub_en": "Utility infrastructure services",
       "sub_short": "電力工事",
-      "sub_short_en": "Utility works",
+      "sub_short_en": "Utility",
       "row": 0,
       "relations": [
         {
@@ -89,7 +89,7 @@
       "sub": "天然ガス",
       "sub_en": "Natural gas",
       "sub_short": "天然ガス",
-      "sub_short_en": "Natural gas",
+      "sub_short_en": "Gas",
       "row": 0,
       "relations": [
         {
@@ -115,7 +115,7 @@
       "sub": "再生可能天然ガス",
       "sub_en": "Renewable natural gas",
       "sub_short": "再生ガス",
-      "sub_short_en": "Renewable gas",
+      "sub_short_en": "Biogas",
       "row": 1,
       "relations": [
         {
@@ -141,7 +141,7 @@
       "sub": "電力",
       "sub_en": "Electric utility",
       "sub_short": "電力",
-      "sub_short_en": "Electric utility",
+      "sub_short_en": "Utility",
       "row": 1,
       "relations": [
         {
@@ -167,7 +167,7 @@
       "sub": "電力",
       "sub_en": "Electric utility",
       "sub_short": "電力",
-      "sub_short_en": "Electric utility",
+      "sub_short_en": "Utility",
       "row": 1,
       "relations": [
         {
@@ -192,8 +192,8 @@
       "name_en": "Alphabet (Google)",
       "sub": "IT・クラウド",
       "sub_en": "Internet & cloud",
-      "sub_short": "IT・クラウド",
-      "sub_short_en": "Internet & cloud",
+      "sub_short": "IT",
+      "sub_short_en": "Internet",
       "row": 1,
       "relations": [
         {
@@ -218,8 +218,8 @@
       "name_en": "XPLR Infrastructure",
       "sub": "再エネ資産保有",
       "sub_en": "Renewable asset owner",
-      "sub_short": "再エネ資産保有",
-      "sub_short_en": "Renewables",
+      "sub_short": "再エネ",
+      "sub_short_en": "Green",
       "row": 2,
       "relations": [
         {
@@ -245,7 +245,7 @@
       "sub": "天然ガス",
       "sub_en": "Natural gas",
       "sub_short": "天然ガス",
-      "sub_short_en": "Natural gas",
+      "sub_short_en": "Gas",
       "row": 2,
       "relations": [
         {
@@ -270,7 +270,7 @@
       "name_en": "Kinder Morgan",
       "sub": "パイプライン",
       "sub_en": "Pipelines",
-      "sub_short": "パイプライン",
+      "sub_short": "配管網",
       "sub_short_en": "Pipelines",
       "row": 2,
       "relations": [
@@ -297,7 +297,7 @@
       "sub": "電力",
       "sub_en": "Electric utility",
       "sub_short": "電力",
-      "sub_short_en": "Electric utility",
+      "sub_short_en": "Utility",
       "row": 2,
       "relations": [
         {
@@ -323,7 +323,7 @@
       "sub": "送電(加オンタリオ州)",
       "sub_en": "Transmission (Ontario)",
       "sub_short": "送電",
-      "sub_short_en": "Transmission",
+      "sub_short_en": "Grid",
       "row": 2,
       "relations": [
         {
@@ -349,7 +349,7 @@
       "sub": "省エネ・再エネ事業",
       "sub_en": "Energy efficiency & renewables",
       "sub_short": "省エネ",
-      "sub_short_en": "Clean energy",
+      "sub_short_en": "Clean",
       "row": 3,
       "relations": [
         {
@@ -374,8 +374,8 @@
       "name_en": "SolarMax Technology",
       "sub": "太陽光・蓄電池",
       "sub_en": "Solar & storage",
-      "sub_short": "太陽光・蓄電池",
-      "sub_short_en": "Solar & storage",
+      "sub_short": "太陽光",
+      "sub_short_en": "Solar",
       "row": 3,
       "relations": [
         {

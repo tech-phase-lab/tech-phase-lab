@@ -57,7 +57,7 @@
       "sub": "燃料小売",
       "sub_en": "Fuel retail",
       "sub_short": "燃料小売",
-      "sub_short_en": "Fuel retail",
+      "sub_short_en": "Fuel",
       "row": 0,
       "relations": [
         {
@@ -83,7 +83,7 @@
       "sub": "投資会社",
       "sub_en": "Investment firm",
       "sub_short": "投資会社",
-      "sub_short_en": "Investment firm",
+      "sub_short_en": "Investing",
       "row": 0,
       "relations": [
         {
@@ -109,7 +109,7 @@
       "sub": "コンビニ",
       "sub_en": "Convenience stores",
       "sub_short": "コンビニ",
-      "sub_short_en": "Convenience",
+      "sub_short_en": "C-stores",
       "row": 1,
       "relations": [
         {
@@ -134,8 +134,8 @@
       "name_en": "Calumet",
       "sub": "特殊石油製品",
       "sub_en": "Specialty petroleum products",
-      "sub_short": "特殊石油製品",
-      "sub_short_en": "Petroleum",
+      "sub_short": "石油製品",
+      "sub_short_en": "Oil",
       "row": 2,
       "relations": [
         {

@@ -27,7 +27,7 @@
       "sub": "元親会社",
       "sub_en": "Former parent",
       "sub_short": "元親会社",
-      "sub_short_en": "Former parent",
+      "sub_short_en": "Ex-parent",
       "row": 0,
       "relations": [
         {
@@ -52,8 +52,8 @@
       "name": "キンバリークラーク",
       "sub": "合併契約・競合",
       "sub_en": "Merger partner & rival",
-      "sub_short": "合併契約・競合",
-      "sub_short_en": "Merger partner",
+      "sub_short": "合併先",
+      "sub_short_en": "Merger",
       "row": 0,
       "relations": [
         {
@@ -104,8 +104,8 @@
       "name": "プロクター・アンド・ギャンブル",
       "sub": "一般消費財",
       "sub_en": "Consumer goods",
-      "sub_short": "一般消費財",
-      "sub_short_en": "Consumer goods",
+      "sub_short": "日用品",
+      "sub_short_en": "Goods",
       "row": 0,
       "relations": [
         {
@@ -143,8 +143,8 @@
       "name": "ヘイリオン",
       "sub": "コンシューマーヘルス",
       "sub_en": "Consumer health",
-      "sub_short": "一般用医薬品",
-      "sub_short_en": "Consumer health",
+      "sub_short": "市販薬",
+      "sub_short_en": "Health",
       "row": 0,
       "relations": [
         {
@@ -182,8 +182,8 @@
       "name": "レキットベンキーザー",
       "sub": "一般消費財",
       "sub_en": "Consumer goods",
-      "sub_short": "一般消費財",
-      "sub_short_en": "Consumer goods",
+      "sub_short": "日用品",
+      "sub_short_en": "Goods",
       "row": 0,
       "relations": [
         {
@@ -234,7 +234,7 @@
       "name": "バイヤスドルフ",
       "sub": "スキンケア",
       "sub_en": "Skin care",
-      "sub_short": "スキンケア",
+      "sub_short": "化粧品",
       "sub_short_en": "Skin care",
       "row": 0,
       "relations": [
@@ -260,8 +260,8 @@
       "name": "チャーチ・アンド・ドワイト",
       "sub": "一般消費財",
       "sub_en": "Consumer goods",
-      "sub_short": "一般消費財",
-      "sub_short_en": "Consumer goods",
+      "sub_short": "日用品",
+      "sub_short_en": "Goods",
       "row": 0,
       "relations": [
         {
@@ -299,7 +299,7 @@
       "name": "コルゲート・パーモリブ",
       "sub": "オーラルケア",
       "sub_en": "Oral care",
-      "sub_short": "オーラルケア",
+      "sub_short": "口腔ケア",
       "sub_short_en": "Oral care",
       "row": 0,
       "relations": [

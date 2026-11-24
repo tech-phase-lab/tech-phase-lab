@@ -34,7 +34,7 @@
       "sub": "鋼管",
       "sub_en": "Steel pipe",
       "sub_short": "鋼管",
-      "sub_short_en": "Steel pipe",
+      "sub_short_en": "Pipe",
       "row": 0,
       "relations": [
         {
@@ -86,7 +86,7 @@
       "sub": "水道管",
       "sub_en": "Water pipe",
       "sub_short": "水道管",
-      "sub_short_en": "Water pipe",
+      "sub_short_en": "Pipe",
       "row": 0,
       "relations": [
         {
@@ -111,7 +111,7 @@
       "name_en": "Southwest Data Products",
       "sub": "データセンター用ラック",
       "sub_en": "Data center racking",
-      "sub_short": "DC用ラック",
+      "sub_short": "DCラック",
       "sub_short_en": "DC racks",
       "row": 1,
       "relations": [
@@ -164,7 +164,7 @@
       "sub": "金属塗装",
       "sub_en": "Metal coatings",
       "sub_short": "金属塗装",
-      "sub_short_en": "Metal coatings",
+      "sub_short_en": "Coatings",
       "row": 1,
       "relations": [
         {
@@ -294,7 +294,7 @@
       "sub": "金属建材",
       "sub_en": "Metal building products",
       "sub_short": "金属建材",
-      "sub_short_en": "Metal buildings",
+      "sub_short_en": "Metal",
       "row": 2,
       "relations": [
         {

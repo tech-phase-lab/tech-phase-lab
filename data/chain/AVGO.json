@@ -37,7 +37,7 @@
       "name": "TSMC",
       "sub": "半導体製造",
       "sub_en": "Foundry",
-      "sub_short": "半導体製造",
+      "sub_short": "半導体",
       "sub_short_en": "Foundry",
       "row": 0,
       "relations": [
@@ -76,7 +76,7 @@
       "sub": "後工程",
       "sub_en": "Packaging & test",
       "sub_short": "後工程",
-      "sub_short_en": "Packaging & test",
+      "sub_short_en": "Chip pack",
       "row": 0,
       "relations": [
         {
@@ -102,7 +102,7 @@
       "sub": "後工程",
       "sub_en": "Packaging & test",
       "sub_short": "後工程",
-      "sub_short_en": "Packaging & test",
+      "sub_short_en": "Chip pack",
       "row": 0,
       "relations": [
         {
@@ -126,8 +126,8 @@
       "name": "Alphabet(Google)",
       "sub": "検索・クラウド",
       "sub_en": "Search & cloud",
-      "sub_short": "検索・クラウド",
-      "sub_short_en": "Search & cloud",
+      "sub_short": "検索",
+      "sub_short_en": "Search",
       "row": 1,
       "relations": [
         {
@@ -151,7 +151,7 @@
       "name": "Apple",
       "sub": "スマホ・PC",
       "sub_en": "Devices",
-      "sub_short": "スマホ・PC",
+      "sub_short": "スマホ",
       "sub_short_en": "Devices",
       "row": 1,
       "relations": [
@@ -177,7 +177,7 @@
       "sub": "ネットワーク機器",
       "sub_en": "Networking gear",
       "sub_short": "通信機器",
-      "sub_short_en": "Networking gear",
+      "sub_short_en": "Network",
       "row": 1,
       "relations": [
         {
@@ -218,8 +218,8 @@
       "name": "Hewlett Packard Enterprise",
       "sub": "企業向けITインフラ",
       "sub_en": "Enterprise IT",
-      "sub_short": "企業ITインフラ",
-      "sub_short_en": "Enterprise IT",
+      "sub_short": "IT基盤",
+      "sub_short_en": "IT",
       "row": 1,
       "relations": [
         {
@@ -259,7 +259,7 @@
       "sub": "生成AI",
       "sub_en": "Generative AI",
       "sub_short": "生成AI",
-      "sub_short_en": "Generative AI",
+      "sub_short_en": "AI",
       "row": 2,
       "relations": [
         {
@@ -285,8 +285,8 @@
       "name": "Seagate Technology",
       "sub": "ハードディスク",
       "sub_en": "Hard drives",
-      "sub_short": "ハードディスク",
-      "sub_short_en": "Hard drives",
+      "sub_short": "HDD",
+      "sub_short_en": "HDDs",
       "row": 2,
       "relations": [
         {
@@ -312,8 +312,8 @@
       "name": "Dell Technologies",
       "sub": "PC・サーバー",
       "sub_en": "PCs & servers",
-      "sub_short": "PC・サーバー",
-      "sub_short_en": "PCs & servers",
+      "sub_short": "PC",
+      "sub_short_en": "PCs",
       "row": 2,
       "relations": [
         {
@@ -340,7 +340,7 @@
       "sub": "ネットワーク機器",
       "sub_en": "Networking gear",
       "sub_short": "通信機器",
-      "sub_short_en": "Networking gear",
+      "sub_short_en": "Network",
       "row": 3,
       "relations": [
         {
@@ -390,7 +390,7 @@
       "sub": "半導体",
       "sub_en": "Semiconductors",
       "sub_short": "半導体",
-      "sub_short_en": "Semiconductors",
+      "sub_short_en": "Chips",
       "row": 3,
       "relations": [
         {
@@ -417,7 +417,7 @@
       "sub": "半導体",
       "sub_en": "Semiconductors",
       "sub_short": "半導体",
-      "sub_short_en": "Semiconductors",
+      "sub_short_en": "Chips",
       "row": 3,
       "relations": [
         {
@@ -442,7 +442,7 @@
       "sub": "半導体",
       "sub_en": "Semiconductors",
       "sub_short": "半導体",
-      "sub_short_en": "Semiconductors",
+      "sub_short_en": "Chips",
       "row": 3,
       "relations": [
         {
@@ -466,8 +466,8 @@
       "name": "Qualcomm",
       "sub": "スマホ向け半導体",
       "sub_en": "Mobile chips",
-      "sub_short": "スマホ半導体",
-      "sub_short_en": "Mobile chips",
+      "sub_short": "スマホ",
+      "sub_short_en": "Mobile IC",
       "row": 3,
       "relations": [
         {
@@ -491,8 +491,8 @@
       "name": "Astera Labs",
       "sub": "接続半導体",
       "sub_en": "Connectivity chips",
-      "sub_short": "接続半導体",
-      "sub_short_en": "Connectivity",
+      "sub_short": "半導体",
+      "sub_short_en": "Links",
       "row": 3,
       "relations": [
         {
@@ -516,8 +516,8 @@
       "name": "Credo Technology",
       "sub": "接続半導体",
       "sub_en": "Connectivity chips",
-      "sub_short": "接続半導体",
-      "sub_short_en": "Connectivity",
+      "sub_short": "半導体",
+      "sub_short_en": "Links",
       "row": 3,
       "relations": [
         {
@@ -541,8 +541,8 @@
       "name": "Ciena",
       "sub": "光ネットワーク",
       "sub_en": "Optical networking",
-      "sub_short": "光ネットワーク",
-      "sub_short_en": "Optical nets",
+      "sub_short": "光通信",
+      "sub_short_en": "Optics",
       "row": 3,
       "relations": [
         {
@@ -568,8 +568,8 @@
       "name": "MACOM Technology",
       "sub": "高周波・光半導体",
       "sub_en": "RF & optical chips",
-      "sub_short": "高周波半導体",
-      "sub_short_en": "RF/optical chips",
+      "sub_short": "RF IC",
+      "sub_short_en": "RF ICs",
       "row": 3,
       "relations": [
         {
@@ -593,8 +593,8 @@
       "name": "MaxLinear",
       "sub": "通信半導体",
       "sub_en": "Comms chips",
-      "sub_short": "通信半導体",
-      "sub_short_en": "Comms chips",
+      "sub_short": "通信IC",
+      "sub_short_en": "Comms IC",
       "row": 3,
       "relations": [
         {
@@ -618,7 +618,7 @@
       "name": "Skyworks Solutions",
       "sub": "高周波半導体",
       "sub_en": "RF chips",
-      "sub_short": "高周波半導体",
+      "sub_short": "RF IC",
       "sub_short_en": "RF chips",
       "row": 3,
       "relations": [
@@ -643,7 +643,7 @@
       "name": "Qorvo",
       "sub": "高周波半導体",
       "sub_en": "RF chips",
-      "sub_short": "高周波半導体",
+      "sub_short": "RF IC",
       "sub_short_en": "RF chips",
       "row": 3,
       "relations": [

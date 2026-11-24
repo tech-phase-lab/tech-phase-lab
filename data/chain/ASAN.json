@@ -70,8 +70,8 @@
       "name": "アクセンチュア",
       "sub": "コンサル・SI",
       "sub_en": "Consulting & SI",
-      "sub_short": "コンサル・SI",
-      "sub_short_en": "Consulting & SI",
+      "sub_short": "コンサル",
+      "sub_short_en": "Advisory",
       "row": 1,
       "relations": [
         {
@@ -123,7 +123,7 @@
       "sub": "自動車",
       "sub_en": "Automobiles",
       "sub_short": "自動車",
-      "sub_short_en": "Automobiles",
+      "sub_short_en": "Cars",
       "row": 1,
       "relations": [
         {
@@ -149,7 +149,7 @@
       "sub": "生成AI",
       "sub_en": "Generative AI",
       "sub_short": "生成AI",
-      "sub_short_en": "Generative AI",
+      "sub_short_en": "AI",
       "row": 2,
       "relations": [
         {
@@ -176,7 +176,7 @@
       "sub": "生成AI",
       "sub_en": "Generative AI",
       "sub_short": "生成AI",
-      "sub_short_en": "Generative AI",
+      "sub_short_en": "AI",
       "row": 2,
       "relations": [
         {
@@ -215,8 +215,8 @@
       "name": "グーグル",
       "sub": "検索・クラウド",
       "sub_en": "Search & cloud",
-      "sub_short": "検索・クラウド",
-      "sub_short_en": "Search & cloud",
+      "sub_short": "検索",
+      "sub_short_en": "Search",
       "row": 2,
       "relations": [
         {
@@ -242,7 +242,7 @@
       "sub": "決済",
       "sub_en": "Payments",
       "sub_short": "決済",
-      "sub_short_en": "Payments",
+      "sub_short_en": "Payment",
       "row": 2,
       "relations": [
         {
@@ -281,7 +281,7 @@
       "sub": "ソフト・クラウド",
       "sub_en": "Software & cloud",
       "sub_short": "ソフト",
-      "sub_short_en": "Software & cloud",
+      "sub_short_en": "Software",
       "row": 3,
       "relations": [
         {
@@ -306,8 +306,8 @@
       "name": "セールスフォース",
       "sub": "CRM・クラウド",
       "sub_en": "CRM & cloud",
-      "sub_short": "CRM・クラウド",
-      "sub_short_en": "CRM & cloud",
+      "sub_short": "CRM",
+      "sub_short_en": "CRM",
       "row": 3,
       "relations": [
         {
@@ -332,8 +332,8 @@
       "name": "アドビ",
       "sub": "クリエイティブソフト",
       "sub_en": "Creative software",
-      "sub_short": "制作ソフト",
-      "sub_short_en": "Creative apps",
+      "sub_short": "制作",
+      "sub_short_en": "Design",
       "row": 3,
       "relations": [
         {

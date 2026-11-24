@@ -36,8 +36,8 @@
       "name": "TSMC",
       "sub": "半導体ファウンドリ",
       "sub_en": "Semiconductor foundry",
-      "sub_short": "半導体受託",
-      "sub_short_en": "Chip foundry",
+      "sub_short": "受託生産",
+      "sub_short_en": "Foundry",
       "row": 0,
       "relations": [
         {
@@ -74,8 +74,8 @@
       "name": "アロー・エレクトロニクス",
       "sub": "電子部品商社",
       "sub_en": "Electronics distributor",
-      "sub_short": "電子部品商社",
-      "sub_short_en": "Electronics",
+      "sub_short": "電子部品",
+      "sub_short_en": "Devices",
       "row": 1,
       "relations": [
         {
@@ -113,8 +113,8 @@
       "name": "テキサス・インスツルメンツ",
       "sub": "アナログ半導体",
       "sub_en": "Analog semiconductors",
-      "sub_short": "アナログ半導体",
-      "sub_short_en": "Analog chips",
+      "sub_short": "アナログ",
+      "sub_short_en": "Analog",
       "row": 2,
       "relations": [
         {
@@ -153,8 +153,8 @@
       "name": "スカイワークス・ソリューションズ",
       "sub": "無線通信半導体",
       "sub_en": "Wireless semiconductors",
-      "sub_short": "無線通信半導体",
-      "sub_short_en": "Wireless chips",
+      "sub_short": "無線IC",
+      "sub_short_en": "RF ICs",
       "row": 2,
       "relations": [
         {
@@ -181,8 +181,8 @@
       "name": "アマゾン・ドット・コム",
       "sub": "eコマース・クラウド",
       "sub_en": "E-commerce & cloud",
-      "sub_short": "eコマース",
-      "sub_short_en": "E-commerce",
+      "sub_short": "EC",
+      "sub_short_en": "E-com",
       "row": 2,
       "relations": [
         {
@@ -209,8 +209,8 @@
       "name": "グローバルファウンドリーズ",
       "sub": "半導体ファウンドリ",
       "sub_en": "Semiconductor foundry",
-      "sub_short": "半導体受託",
-      "sub_short_en": "Chip foundry",
+      "sub_short": "受託生産",
+      "sub_short_en": "Foundry",
       "row": 2,
       "relations": [
         {
@@ -279,7 +279,7 @@
       "sub": "マイコン・アナログ半導体",
       "sub_en": "Microcontrollers & analog",
       "sub_short": "マイコン",
-      "sub_short_en": "Microcontrollers",
+      "sub_short_en": "MCUs",
       "row": 3,
       "relations": [
         {
@@ -305,7 +305,7 @@
       "sub": "半導体IP",
       "sub_en": "Semiconductor IP",
       "sub_short": "半導体IP",
-      "sub_short_en": "Semiconductor IP",
+      "sub_short_en": "Chip IP",
       "row": 3,
       "relations": [
         {
@@ -342,8 +342,8 @@
       "name": "アンビック・マイクロ",
       "sub": "低消費電力チップ",
       "sub_en": "Low-power chips",
-      "sub_short": "省電力チップ",
-      "sub_short_en": "Low-power chips",
+      "sub_short": "半導体",
+      "sub_short_en": "Chips",
       "row": 3,
       "relations": [
         {

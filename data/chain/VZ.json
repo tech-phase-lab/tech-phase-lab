@@ -34,7 +34,7 @@
       "sub": "通信大手",
       "sub_en": "Wireless carrier",
       "sub_short": "通信大手",
-      "sub_short_en": "Wireless carrier",
+      "sub_short_en": "Carrier",
       "row": 0,
       "relations": [
         {
@@ -60,7 +60,7 @@
       "sub": "通信大手",
       "sub_en": "Wireless carrier",
       "sub_short": "通信大手",
-      "sub_short_en": "Wireless carrier",
+      "sub_short_en": "Carrier",
       "row": 0,
       "relations": [
         {
@@ -85,8 +85,8 @@
       "name": "コムキャスト",
       "sub": "ケーブル大手",
       "sub_en": "Cable operator",
-      "sub_short": "ケーブル大手",
-      "sub_short_en": "Cable operator",
+      "sub_short": "ケーブル",
+      "sub_short_en": "Cable",
       "row": 0,
       "relations": [
         {
@@ -111,8 +111,8 @@
       "name": "チャーター・コミュニケーションズ",
       "sub": "ケーブル大手",
       "sub_en": "Cable operator",
-      "sub_short": "ケーブル大手",
-      "sub_short_en": "Cable operator",
+      "sub_short": "ケーブル",
+      "sub_short_en": "Cable",
       "row": 0,
       "relations": [
         {
@@ -137,8 +137,8 @@
       "name": "アメリカン・タワー",
       "sub": "通信タワー",
       "sub_en": "Cell towers",
-      "sub_short": "通信タワー",
-      "sub_short_en": "Cell towers",
+      "sub_short": "鉄塔",
+      "sub_short_en": "Towers",
       "row": 0,
       "relations": [
         {
@@ -163,8 +163,8 @@
       "name": "バーティカル・ブリッジ",
       "sub": "通信タワー",
       "sub_en": "Cell towers",
-      "sub_short": "通信タワー",
-      "sub_short_en": "Cell towers",
+      "sub_short": "鉄塔",
+      "sub_short_en": "Towers",
       "row": 0,
       "relations": [
         {
@@ -189,8 +189,8 @@
       "name": "ティルマン・グローバル・ホールディングス",
       "sub": "光ファイバー",
       "sub_en": "Fiber access",
-      "sub_short": "光ファイバー",
-      "sub_short_en": "Fiber access",
+      "sub_short": "光通信",
+      "sub_short_en": "Fiber",
       "row": 0,
       "relations": [
         {
@@ -241,8 +241,8 @@
       "name": "リボン・コミュニケーションズ",
       "sub": "通信ソフト・機器",
       "sub_en": "Telecom software & equipment",
-      "sub_short": "通信ソフト",
-      "sub_short_en": "Telecom software",
+      "sub_short": "通信IT",
+      "sub_short_en": "Telecom",
       "row": 2,
       "relations": [
         {
@@ -267,8 +267,8 @@
       "name": "ウーマ",
       "sub": "クラウド電話",
       "sub_en": "Cloud telephony",
-      "sub_short": "クラウド電話",
-      "sub_short_en": "Cloud telephony",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 1,
       "relations": [
         {

@@ -56,7 +56,7 @@
       "sub": "金鉱山",
       "sub_en": "Gold mining",
       "sub_short": "金鉱山",
-      "sub_short_en": "Gold mining",
+      "sub_short_en": "Gold",
       "row": 1,
       "relations": [
         {
@@ -82,7 +82,7 @@
       "sub": "金鉱山(豪)",
       "sub_en": "Gold mining (Australia)",
       "sub_short": "金鉱山",
-      "sub_short_en": "Gold mining",
+      "sub_short_en": "Gold",
       "row": 1,
       "relations": [
         {
@@ -108,7 +108,7 @@
       "sub": "銅鉱山(豪)",
       "sub_en": "Copper mining (Australia)",
       "sub_short": "銅鉱山",
-      "sub_short_en": "Copper mining",
+      "sub_short_en": "Copper",
       "row": 2,
       "relations": [
         {
@@ -134,7 +134,7 @@
       "sub": "金鉱山",
       "sub_en": "Gold mining",
       "sub_short": "金鉱山",
-      "sub_short_en": "Gold mining",
+      "sub_short_en": "Gold",
       "row": 2,
       "relations": [
         {
@@ -160,7 +160,7 @@
       "sub": "銅鉱山(加)",
       "sub_en": "Copper mining (Canada)",
       "sub_short": "銅鉱山",
-      "sub_short_en": "Copper mining",
+      "sub_short_en": "Copper",
       "row": 2,
       "relations": [
         {
@@ -185,8 +185,8 @@
       "name_en": "Glencore",
       "sub": "資源・商社",
       "sub_en": "Mining & trading",
-      "sub_short": "資源・商社",
-      "sub_short_en": "Mining & trading",
+      "sub_short": "資源",
+      "sub_short_en": "Mining",
       "row": 2,
       "relations": [
         {
@@ -212,7 +212,7 @@
       "sub": "政府",
       "sub_en": "Government",
       "sub_short": "政府",
-      "sub_short_en": "Government",
+      "sub_short_en": "Gov",
       "row": 1,
       "relations": [
         {

@@ -28,8 +28,8 @@
       "name": "アジアン・ペインツ",
       "sub": "インドの塗料大手",
       "sub_en": "Indian paint maker",
-      "sub_short": "インド塗料",
-      "sub_short_en": "Paints (India)",
+      "sub_short": "塗料",
+      "sub_short_en": "Paint",
       "row": 0,
       "relations": [
         {
@@ -67,8 +67,8 @@
       "name": "関西ペイント",
       "sub": "日本の塗料大手",
       "sub_en": "Japanese paint maker",
-      "sub_short": "日本の塗料大手",
-      "sub_short_en": "Paints (Japan)",
+      "sub_short": "塗料",
+      "sub_short_en": "Paint",
       "row": 0,
       "relations": [
         {
@@ -106,8 +106,8 @@
       "name": "シャーウィン・ウィリアムズ",
       "sub": "塗料の競合",
       "sub_en": "Coatings rival",
-      "sub_short": "塗料の競合",
-      "sub_short_en": "Coatings rival",
+      "sub_short": "塗料",
+      "sub_short_en": "Coatings",
       "row": 0,
       "relations": [
         {
@@ -132,8 +132,8 @@
       "name": "アクサルタ・コーティング・システムズ",
       "sub": "塗料の競合",
       "sub_en": "Coatings rival",
-      "sub_short": "塗料の競合",
-      "sub_short_en": "Coatings rival",
+      "sub_short": "塗料",
+      "sub_short_en": "Coatings",
       "row": 0,
       "relations": [
         {
@@ -159,7 +159,7 @@
       "sub": "塗料・建材の競合",
       "sub_en": "Coatings rival",
       "sub_short": "塗料",
-      "sub_short_en": "Coatings rival",
+      "sub_short_en": "Coatings",
       "row": 0,
       "relations": [
         {
@@ -184,8 +184,8 @@
       "name": "スリーエム",
       "sub": "素材の競合",
       "sub_en": "Materials rival",
-      "sub_short": "素材の競合",
-      "sub_short_en": "Materials rival",
+      "sub_short": "素材",
+      "sub_short_en": "Materials",
       "row": 0,
       "relations": [
         {
@@ -210,8 +210,8 @@
       "name": "アクゾノーベル",
       "sub": "塗料の競合",
       "sub_en": "Coatings rival",
-      "sub_short": "塗料の競合",
-      "sub_short_en": "Coatings rival",
+      "sub_short": "塗料",
+      "sub_short_en": "Coatings",
       "row": 0,
       "relations": [
         {
@@ -236,8 +236,8 @@
       "name": "日本ペイント",
       "sub": "塗料の競合",
       "sub_en": "Coatings rival",
-      "sub_short": "塗料の競合",
-      "sub_short_en": "Coatings rival",
+      "sub_short": "塗料",
+      "sub_short_en": "Coatings",
       "row": 0,
       "relations": [
         {
@@ -262,8 +262,8 @@
       "name": "インジェビティ",
       "sub": "特殊化学品",
       "sub_en": "Specialty chemicals",
-      "sub_short": "特殊化学品",
-      "sub_short_en": "Chemicals",
+      "sub_short": "化学品",
+      "sub_short_en": "Chem",
       "row": 1,
       "relations": [
         {

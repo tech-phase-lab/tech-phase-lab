@@ -62,8 +62,8 @@
       "name": "オラクル",
       "sub": "クラウド・DB",
       "sub_en": "Cloud & database",
-      "sub_short": "クラウド・DB",
-      "sub_short_en": "Cloud & database",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 0,
       "relations": [
         {
@@ -88,8 +88,8 @@
       "name": "ヴィーヴァ システムズ",
       "sub": "ライフサイエンス向けソフト",
       "sub_en": "Life sciences software",
-      "sub_short": "生命科学ソフト",
-      "sub_short_en": "Life sci apps",
+      "sub_short": "生命科学",
+      "sub_short_en": "Life sci",
       "row": 1,
       "relations": [
         {
@@ -114,8 +114,8 @@
       "name": "ファイブナイン",
       "sub": "コンタクトセンター",
       "sub_en": "Contact center",
-      "sub_short": "コールセンター",
-      "sub_short_en": "Contact center",
+      "sub_short": "顧客対応",
+      "sub_short_en": "CX",
       "row": 2,
       "relations": [
         {
@@ -140,7 +140,7 @@
       "name": "パロアルトネットワークス",
       "sub": "セキュリティ",
       "sub_en": "Security",
-      "sub_short": "セキュリティ",
+      "sub_short": "防御",
       "sub_short_en": "Security",
       "row": 2,
       "relations": [
@@ -166,8 +166,8 @@
       "name": "セールスフォース",
       "sub": "ビジネスソフト",
       "sub_en": "Business software",
-      "sub_short": "ビジネスソフト",
-      "sub_short_en": "Business apps",
+      "sub_short": "業務IT",
+      "sub_short_en": "Biz apps",
       "row": 2,
       "relations": [
         {
@@ -193,7 +193,7 @@
       "sub": "生成AI",
       "sub_en": "Generative AI",
       "sub_short": "生成AI",
-      "sub_short_en": "Generative AI",
+      "sub_short_en": "AI",
       "row": 2,
       "relations": [
         {
@@ -220,7 +220,7 @@
       "sub": "生成AI",
       "sub_en": "Generative AI",
       "sub_short": "生成AI",
-      "sub_short_en": "Generative AI",
+      "sub_short_en": "AI",
       "row": 2,
       "relations": [
         {
@@ -247,7 +247,7 @@
       "sub": "ソフト・クラウド",
       "sub_en": "Software & cloud",
       "sub_short": "ソフト",
-      "sub_short_en": "Software & cloud",
+      "sub_short_en": "Software",
       "row": 3,
       "relations": [
         {
@@ -286,7 +286,7 @@
       "sub": "ネット・クラウド",
       "sub_en": "Internet & cloud",
       "sub_short": "ネット",
-      "sub_short_en": "Internet & cloud",
+      "sub_short_en": "Internet",
       "row": 3,
       "relations": [
         {
@@ -325,7 +325,7 @@
       "sub": "通信機器",
       "sub_en": "Networking",
       "sub_short": "通信機器",
-      "sub_short_en": "Networking",
+      "sub_short_en": "Network",
       "row": 3,
       "relations": [
         {
@@ -350,8 +350,8 @@
       "name": "エイトバイエイト",
       "sub": "クラウド通信",
       "sub_en": "Cloud communications",
-      "sub_short": "クラウド通信",
-      "sub_short_en": "Cloud comms",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 3,
       "relations": [
         {

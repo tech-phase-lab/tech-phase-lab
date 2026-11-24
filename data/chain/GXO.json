@@ -34,7 +34,7 @@
       "sub": "物流(LTL)",
       "sub_en": "Less-than-truckload freight",
       "sub_short": "物流",
-      "sub_short_en": "LTL freight",
+      "sub_short_en": "Trucking",
       "row": 0,
       "relations": [
         {
@@ -85,7 +85,7 @@
       "name_en": "Beachbody",
       "sub": "フィットネス",
       "sub_en": "Fitness",
-      "sub_short": "フィットネス",
+      "sub_short": "ジム",
       "sub_short_en": "Fitness",
       "row": 0,
       "relations": [
@@ -267,7 +267,7 @@
       "name_en": "Ryder System",
       "sub": "物流・リース",
       "sub_en": "Logistics & leasing",
-      "sub_short": "物流・リース",
+      "sub_short": "物流",
       "sub_short_en": "Logistics",
       "row": 2,
       "relations": [

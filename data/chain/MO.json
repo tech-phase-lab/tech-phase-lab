@@ -31,8 +31,8 @@
       "name": "日本たばこ産業",
       "sub": "加熱式たばこの合弁相手",
       "sub_en": "Heated tobacco JV partner",
-      "sub_short": "加熱式たばこ",
-      "sub_short_en": "Heated tobacco",
+      "sub_short": "たばこ",
+      "sub_short_en": "Tobacco",
       "row": 0,
       "relations": [
         {
@@ -58,7 +58,7 @@
       "sub": "IQOS事業の相手先",
       "sub_en": "IQOS rights counterparty",
       "sub_short": "IQOS事業",
-      "sub_short_en": "IQOS rights",
+      "sub_short_en": "IQOS",
       "row": 0,
       "relations": [
         {
@@ -96,8 +96,8 @@
       "name": "アンハイザー・ブッシュ・インベブ",
       "sub": "持分法投資先",
       "sub_en": "Equity-method investee",
-      "sub_short": "持分法投資先",
-      "sub_short_en": "Equity stake",
+      "sub_short": "出資先",
+      "sub_short_en": "Stake",
       "row": 0,
       "relations": [
         {
@@ -122,8 +122,8 @@
       "name": "クロノス・グループ",
       "sub": "大麻関連の投資先",
       "sub_en": "Cannabinoid investee",
-      "sub_short": "大麻関連投資",
-      "sub_short_en": "Cannabis stake",
+      "sub_short": "大麻投資",
+      "sub_short_en": "Cannabis",
       "row": 0,
       "relations": [
         {
@@ -148,8 +148,8 @@
       "name": "AMCONディストリビューティング",
       "sub": "食品・たばこ卸",
       "sub_en": "Convenience wholesale",
-      "sub_short": "食品・たばこ卸",
-      "sub_short_en": "Wholesale",
+      "sub_short": "食品卸",
+      "sub_short_en": "Supply",
       "row": 0,
       "relations": [
         {
@@ -175,7 +175,7 @@
       "sub": "たばこ葉",
       "sub_en": "Leaf tobacco",
       "sub_short": "たばこ葉",
-      "sub_short_en": "Leaf tobacco",
+      "sub_short_en": "Tobacco",
       "row": 2,
       "relations": [
         {
@@ -200,8 +200,8 @@
       "name": "パフォーマンス・フード・グループ",
       "sub": "外食・小売向け卸",
       "sub_en": "Foodservice distribution",
-      "sub_short": "外食向け卸",
-      "sub_short_en": "Food supply",
+      "sub_short": "外食卸",
+      "sub_short_en": "Food",
       "row": 0,
       "relations": [
         {
@@ -226,7 +226,7 @@
       "name": "ターニング・ポイント・ブランズ",
       "sub": "たばこ・喫煙具",
       "sub_en": "Tobacco & smoking accessories",
-      "sub_short": "たばこ・喫煙具",
+      "sub_short": "たばこ",
       "sub_short_en": "Tobacco",
       "row": 1,
       "relations": [

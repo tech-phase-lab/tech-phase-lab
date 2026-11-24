@@ -105,7 +105,7 @@
       "name_en": "X-energy",
       "sub": "小型原子炉",
       "sub_en": "Small modular reactors",
-      "sub_short": "小型原子炉",
+      "sub_short": "原子炉",
       "sub_short_en": "SMRs",
       "row": 0,
       "relations": [
@@ -132,7 +132,7 @@
       "sub": "電子部品",
       "sub_en": "Electronic components",
       "sub_short": "電子部品",
-      "sub_short_en": "Components",
+      "sub_short_en": "Parts",
       "row": 1,
       "relations": [
         {
@@ -157,8 +157,8 @@
       "name_en": "Mirion Technologies",
       "sub": "放射線計測",
       "sub_en": "Radiation measurement",
-      "sub_short": "放射線計測",
-      "sub_short_en": "Radiation tests",
+      "sub_short": "放射線",
+      "sub_short_en": "Radiation",
       "row": 1,
       "relations": [
         {

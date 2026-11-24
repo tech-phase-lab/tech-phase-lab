@@ -36,7 +36,7 @@
       "sub": "ソフト・クラウド",
       "sub_en": "Software & cloud",
       "sub_short": "ソフト",
-      "sub_short_en": "Software & cloud",
+      "sub_short_en": "Software",
       "row": 0,
       "relations": [
         {
@@ -74,7 +74,7 @@
       "sub": "ソフト・クラウド",
       "sub_en": "Software & cloud",
       "sub_short": "ソフト",
-      "sub_short_en": "Software & cloud",
+      "sub_short_en": "Software",
       "row": 0,
       "relations": [
         {
@@ -111,7 +111,7 @@
       "name": "Amazon",
       "sub": "クラウド・EC",
       "sub_en": "Cloud & e-commerce",
-      "sub_short": "クラウド・EC",
+      "sub_short": "クラウド",
       "sub_short_en": "Cloud",
       "row": 0,
       "relations": [
@@ -137,7 +137,7 @@
       "sub": "生成AI",
       "sub_en": "Generative AI",
       "sub_short": "生成AI",
-      "sub_short_en": "Generative AI",
+      "sub_short_en": "AI",
       "row": 0,
       "relations": [
         {
@@ -164,7 +164,7 @@
       "sub": "生成AI",
       "sub_en": "Generative AI",
       "sub_short": "生成AI",
-      "sub_short_en": "Generative AI",
+      "sub_short_en": "AI",
       "row": 0,
       "relations": [
         {
@@ -214,7 +214,7 @@
       "name": "Apple",
       "sub": "スマホ・PC",
       "sub_en": "Devices",
-      "sub_short": "スマホ・PC",
+      "sub_short": "スマホ",
       "sub_short_en": "Devices",
       "row": 1,
       "relations": [
@@ -239,8 +239,8 @@
       "name": "Adobe",
       "sub": "クリエイティブソフト",
       "sub_en": "Creative software",
-      "sub_short": "制作ソフト",
-      "sub_short_en": "Creative apps",
+      "sub_short": "制作",
+      "sub_short_en": "Design",
       "row": 1,
       "relations": [
         {
@@ -264,8 +264,8 @@
       "name": "Salesforce",
       "sub": "業務クラウド",
       "sub_en": "Business cloud",
-      "sub_short": "業務クラウド",
-      "sub_short_en": "Business cloud",
+      "sub_short": "業務IT",
+      "sub_short_en": "Cloud",
       "row": 1,
       "relations": [
         {
@@ -289,7 +289,7 @@
       "name": "ServiceNow",
       "sub": "業務ワークフロー",
       "sub_en": "Workflow software",
-      "sub_short": "業務フロー",
+      "sub_short": "業務IT",
       "sub_short_en": "Workflow",
       "row": 1,
       "relations": [
@@ -314,8 +314,8 @@
       "name": "Atlassian",
       "sub": "チーム協働ソフト",
       "sub_en": "Collaboration software",
-      "sub_short": "協働ソフト",
-      "sub_short_en": "Collab apps",
+      "sub_short": "協働IT",
+      "sub_short_en": "Collab",
       "row": 1,
       "relations": [
         {
@@ -340,7 +340,7 @@
       "sub": "投資銀行",
       "sub_en": "Investment bank",
       "sub_short": "投資銀行",
-      "sub_short_en": "Investment bank",
+      "sub_short_en": "Bank",
       "row": 2,
       "relations": [
         {
@@ -404,8 +404,8 @@
       "name": "Dropbox",
       "sub": "クラウドストレージ",
       "sub_en": "Cloud storage",
-      "sub_short": "クラウド保存",
-      "sub_short_en": "Cloud storage",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 3,
       "relations": [
         {

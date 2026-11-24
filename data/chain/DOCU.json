@@ -31,8 +31,8 @@
       "name": "セールスフォース",
       "sub": "業務ソフト",
       "sub_en": "Business software",
-      "sub_short": "業務ソフト",
-      "sub_short_en": "Business apps",
+      "sub_short": "業務IT",
+      "sub_short_en": "Biz apps",
       "row": 0,
       "relations": [
         {
@@ -58,7 +58,7 @@
       "sub": "ソフト・クラウド",
       "sub_en": "Software & cloud",
       "sub_short": "ソフト",
-      "sub_short_en": "Software & cloud",
+      "sub_short_en": "Software",
       "row": 0,
       "relations": [
         {
@@ -95,8 +95,8 @@
       "name": "SAP",
       "sub": "業務ソフト",
       "sub_en": "Business software",
-      "sub_short": "業務ソフト",
-      "sub_short_en": "Business apps",
+      "sub_short": "業務IT",
+      "sub_short_en": "Biz apps",
       "row": 0,
       "relations": [
         {
@@ -133,8 +133,8 @@
       "name": "アルファベット",
       "sub": "検索・クラウド",
       "sub_en": "Search & cloud",
-      "sub_short": "検索・クラウド",
-      "sub_short_en": "Search & cloud",
+      "sub_short": "検索",
+      "sub_short_en": "Search",
       "row": 0,
       "relations": [
         {
@@ -172,7 +172,7 @@
       "name": "サービスナウ",
       "sub": "業務ソフト",
       "sub_en": "Workflow software",
-      "sub_short": "業務ソフト",
+      "sub_short": "業務IT",
       "sub_short_en": "Workflow",
       "row": 0,
       "relations": [
@@ -212,7 +212,7 @@
       "sub": "人事・財務ソフト",
       "sub_en": "HR & finance software",
       "sub_short": "人事",
-      "sub_short_en": "HR & finance",
+      "sub_short_en": "HR",
       "row": 0,
       "relations": [
         {
@@ -238,7 +238,7 @@
       "sub": "生成AI",
       "sub_en": "Generative AI",
       "sub_short": "生成AI",
-      "sub_short_en": "Generative AI",
+      "sub_short_en": "AI",
       "row": 1,
       "relations": [
         {
@@ -265,7 +265,7 @@
       "sub": "生成AI",
       "sub_en": "Generative AI",
       "sub_short": "生成AI",
-      "sub_short_en": "Generative AI",
+      "sub_short_en": "AI",
       "row": 1,
       "relations": [
         {
@@ -291,7 +291,7 @@
       "name": "オクタ",
       "sub": "IDセキュリティ",
       "sub_en": "Identity security",
-      "sub_short": "IDセキュリティ",
+      "sub_short": "ID防御",
       "sub_short_en": "Identity",
       "row": 2,
       "relations": [
@@ -317,8 +317,8 @@
       "name": "トムソン・ロイター",
       "sub": "情報サービス",
       "sub_en": "Information services",
-      "sub_short": "情報サービス",
-      "sub_short_en": "Information",
+      "sub_short": "情報",
+      "sub_short_en": "Data",
       "row": 2,
       "relations": [
         {
@@ -343,8 +343,8 @@
       "name": "ハブスポット",
       "sub": "CRMソフト",
       "sub_en": "CRM software",
-      "sub_short": "CRMソフト",
-      "sub_short_en": "CRM software",
+      "sub_short": "CRM",
+      "sub_short_en": "CRM",
       "row": 2,
       "relations": [
         {
@@ -369,8 +369,8 @@
       "name": "nCino",
       "sub": "銀行向けソフト",
       "sub_en": "Banking software",
-      "sub_short": "銀行向けソフト",
-      "sub_short_en": "Banking software",
+      "sub_short": "銀行IT",
+      "sub_short_en": "Bank IT",
       "row": 2,
       "relations": [
         {

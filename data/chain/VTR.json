@@ -19,8 +19,8 @@
       "name": "ブルックデール・シニア・リビング",
       "sub": "シニア住宅運営",
       "sub_en": "Senior living operator",
-      "sub_short": "シニア住宅運営",
-      "sub_short_en": "Senior living",
+      "sub_short": "高齢住宅",
+      "sub_short_en": "Seniors",
       "row": 0,
       "relations": [
         {
@@ -45,8 +45,8 @@
       "name": "キンドレッド・ヘルスケア",
       "sub": "病院・介護運営",
       "sub_en": "Post-acute care operator",
-      "sub_short": "病院・介護運営",
-      "sub_short_en": "Post-acute care",
+      "sub_short": "病院",
+      "sub_short_en": "Care",
       "row": 0,
       "relations": [
         {
@@ -72,7 +72,7 @@
       "sub": "病院運営",
       "sub_en": "Health system operator",
       "sub_short": "病院運営",
-      "sub_short_en": "Health system",
+      "sub_short_en": "Hospitals",
       "row": 0,
       "relations": [
         {
@@ -110,8 +110,8 @@
       "name": "アトリア・シニア・リビング",
       "sub": "シニア住宅運営",
       "sub_en": "Senior living manager",
-      "sub_short": "シニア住宅運営",
-      "sub_short_en": "Senior living",
+      "sub_short": "高齢住宅",
+      "sub_short_en": "Seniors",
       "row": 0,
       "relations": [
         {
@@ -149,8 +149,8 @@
       "name": "サンライズ・シニア・リビング",
       "sub": "シニア住宅運営",
       "sub_en": "Senior living manager",
-      "sub_short": "シニア住宅運営",
-      "sub_short_en": "Senior living",
+      "sub_short": "高齢住宅",
+      "sub_short_en": "Seniors",
       "row": 0,
       "relations": [
         {
@@ -175,8 +175,8 @@
       "name": "ル・グループ・モーリス",
       "sub": "シニア住宅運営",
       "sub_en": "Senior living manager",
-      "sub_short": "シニア住宅運営",
-      "sub_short_en": "Senior living",
+      "sub_short": "高齢住宅",
+      "sub_short_en": "Seniors",
       "row": 0,
       "relations": [
         {

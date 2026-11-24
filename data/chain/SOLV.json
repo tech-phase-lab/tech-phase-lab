@@ -30,7 +30,7 @@
       "name": "スリーエム",
       "sub": "素材・工業",
       "sub_en": "Materials & industrial",
-      "sub_short": "素材・工業",
+      "sub_short": "素材",
       "sub_short_en": "Materials",
       "row": 0,
       "relations": [
@@ -57,7 +57,7 @@
       "sub": "医療機器",
       "sub_en": "Medical devices",
       "sub_short": "医療機器",
-      "sub_short_en": "Medical devices",
+      "sub_short_en": "Medtech",
       "row": 1,
       "relations": [
         {
@@ -83,7 +83,7 @@
       "sub": "医療機器",
       "sub_en": "Medical devices",
       "sub_short": "医療機器",
-      "sub_short_en": "Medical devices",
+      "sub_short_en": "Medtech",
       "row": 1,
       "relations": [
         {
@@ -109,7 +109,7 @@
       "sub": "医療機器",
       "sub_en": "Medical devices",
       "sub_short": "医療機器",
-      "sub_short_en": "Medical devices",
+      "sub_short_en": "Medtech",
       "row": 1,
       "relations": [
         {
@@ -135,7 +135,7 @@
       "sub": "医療機器",
       "sub_en": "Medical devices",
       "sub_short": "医療機器",
-      "sub_short_en": "Medical devices",
+      "sub_short_en": "Medtech",
       "row": 1,
       "relations": [
         {
@@ -161,7 +161,7 @@
       "sub": "医療流通",
       "sub_en": "Medical distribution",
       "sub_short": "医療流通",
-      "sub_short_en": "Medical supply",
+      "sub_short_en": "Medtech",
       "row": 1,
       "relations": [
         {
@@ -187,7 +187,7 @@
       "sub": "医療機器",
       "sub_en": "Medical devices",
       "sub_short": "医療機器",
-      "sub_short_en": "Medical devices",
+      "sub_short_en": "Medtech",
       "row": 1,
       "relations": [
         {
@@ -265,7 +265,7 @@
       "sub": "医療IT",
       "sub_en": "Healthcare IT",
       "sub_short": "医療IT",
-      "sub_short_en": "Healthcare IT",
+      "sub_short_en": "Health IT",
       "row": 1,
       "relations": [
         {
@@ -291,7 +291,7 @@
       "sub": "医療IT",
       "sub_en": "Healthcare IT",
       "sub_short": "医療IT",
-      "sub_short_en": "Healthcare IT",
+      "sub_short_en": "Health IT",
       "row": 1,
       "relations": [
         {

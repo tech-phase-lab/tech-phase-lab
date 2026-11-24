@@ -34,8 +34,8 @@
       "name_en": "Calca Solutions",
       "sub": "ヒドラジン(宇宙・防衛)",
       "sub_en": "Hydrazine (aerospace & defense)",
-      "sub_short": "ヒドラジン",
-      "sub_short_en": "Hydrazine",
+      "sub_short": "化学品",
+      "sub_short_en": "Chem",
       "row": 0,
       "relations": [
         {
@@ -61,7 +61,7 @@
       "sub": "化学(独)",
       "sub_en": "Chemicals (Germany)",
       "sub_short": "化学",
-      "sub_short_en": "Chemicals",
+      "sub_short_en": "Chem",
       "row": 1,
       "relations": [
         {
@@ -86,8 +86,8 @@
       "name_en": "Innospec",
       "sub": "特殊化学品",
       "sub_en": "Specialty chemicals",
-      "sub_short": "特殊化学品",
-      "sub_short_en": "Chemicals",
+      "sub_short": "化学品",
+      "sub_short_en": "Chem",
       "row": 1,
       "relations": [
         {
@@ -113,7 +113,7 @@
       "sub": "化学(スイス)",
       "sub_en": "Chemicals (Switzerland)",
       "sub_short": "化学",
-      "sub_short_en": "Chemicals",
+      "sub_short_en": "Chem",
       "row": 1,
       "relations": [
         {
@@ -139,7 +139,7 @@
       "sub": "化学(印、非上場)",
       "sub_en": "Chemicals (India, private)",
       "sub_short": "化学",
-      "sub_short_en": "Chemicals",
+      "sub_short_en": "Chem",
       "row": 1,
       "relations": [
         {
@@ -165,7 +165,7 @@
       "sub": "複合企業",
       "sub_en": "Conglomerate",
       "sub_short": "複合企業",
-      "sub_short_en": "Conglomerate",
+      "sub_short_en": "Group",
       "row": 2,
       "relations": [
         {

@@ -25,7 +25,7 @@
       "name_en": "Tapestry (Coach)",
       "sub": "ファッション",
       "sub_en": "Fashion",
-      "sub_short": "ファッション",
+      "sub_short": "衣料",
       "sub_short_en": "Fashion",
       "row": 0,
       "relations": [
@@ -51,7 +51,7 @@
       "name_en": "Capri Holdings (Jimmy Choo)",
       "sub": "ファッション",
       "sub_en": "Fashion",
-      "sub_short": "ファッション",
+      "sub_short": "衣料",
       "sub_short_en": "Fashion",
       "row": 0,
       "relations": [
@@ -130,7 +130,7 @@
       "sub": "高級品(スイス)",
       "sub_en": "Luxury goods (Switzerland)",
       "sub_short": "高級品",
-      "sub_short_en": "Luxury goods",
+      "sub_short_en": "Luxury",
       "row": 0,
       "relations": [
         {
@@ -182,7 +182,7 @@
       "sub": "高級品(イタリア)",
       "sub_en": "Luxury goods (Italy)",
       "sub_short": "高級品",
-      "sub_short_en": "Luxury goods",
+      "sub_short_en": "Luxury",
       "row": 0,
       "relations": [
         {
@@ -233,8 +233,8 @@
       "name_en": "Longchamp",
       "sub": "高級バッグ(フランス)",
       "sub_en": "Luxury bags (France)",
-      "sub_short": "高級バッグ",
-      "sub_short_en": "Luxury bags",
+      "sub_short": "バッグ",
+      "sub_short_en": "Luxury",
       "row": 1,
       "relations": [
         {

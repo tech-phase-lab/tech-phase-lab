@@ -34,8 +34,8 @@
       "name_en": "Palantir Technologies",
       "sub": "データ分析・AI",
       "sub_en": "Data analytics & AI",
-      "sub_short": "データ分析・AI",
-      "sub_short_en": "Data analytics",
+      "sub_short": "分析",
+      "sub_short_en": "Analytics",
       "row": 0,
       "relations": [
         {
@@ -216,8 +216,8 @@
       "name_en": "Adient",
       "sub": "自動車シート",
       "sub_en": "Auto seating",
-      "sub_short": "自動車シート",
-      "sub_short_en": "Auto seating",
+      "sub_short": "シート",
+      "sub_short_en": "Seats",
       "row": 2,
       "relations": [
         {
@@ -242,8 +242,8 @@
       "name_en": "Magna International",
       "sub": "自動車部品(加)",
       "sub_en": "Auto parts (Canada)",
-      "sub_short": "自動車部品",
-      "sub_short_en": "Auto parts",
+      "sub_short": "車部品",
+      "sub_short_en": "Car parts",
       "row": 2,
       "relations": [
         {
@@ -268,8 +268,8 @@
       "name_en": "Forvia",
       "sub": "自動車部品(仏)",
       "sub_en": "Auto parts (France)",
-      "sub_short": "自動車部品",
-      "sub_short_en": "Auto parts",
+      "sub_short": "車部品",
+      "sub_short_en": "Car parts",
       "row": 2,
       "relations": [
         {
@@ -294,8 +294,8 @@
       "name_en": "Toyota Boshoku",
       "sub": "自動車シート",
       "sub_en": "Auto seating",
-      "sub_short": "自動車シート",
-      "sub_short_en": "Auto seating",
+      "sub_short": "シート",
+      "sub_short_en": "Seats",
       "row": 2,
       "relations": [
         {
@@ -347,7 +347,7 @@
       "sub": "コネクタ",
       "sub_en": "Connectors",
       "sub_short": "コネクタ",
-      "sub_short_en": "Connectors",
+      "sub_short_en": "Plugs",
       "row": 2,
       "relations": [
         {
@@ -373,7 +373,7 @@
       "sub": "ワイヤーハーネス",
       "sub_en": "Wiring harnesses",
       "sub_short": "配線部品",
-      "sub_short_en": "Wiring harnesses",
+      "sub_short_en": "Wiring",
       "row": 2,
       "relations": [
         {

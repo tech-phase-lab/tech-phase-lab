@@ -35,8 +35,8 @@
       "name_en": "Gentherm",
       "sub": "シート空調部品",
       "sub_en": "Seat climate components",
-      "sub_short": "シート空調部品",
-      "sub_short_en": "Seat climate",
+      "sub_short": "シート",
+      "sub_short_en": "Seats",
       "row": 0,
       "relations": [
         {
@@ -62,7 +62,7 @@
       "sub": "自動車",
       "sub_en": "Automaker",
       "sub_short": "自動車",
-      "sub_short_en": "Automaker",
+      "sub_short_en": "Cars",
       "row": 1,
       "relations": [
         {
@@ -88,7 +88,7 @@
       "sub": "自動車(中国)",
       "sub_en": "Automaker (China)",
       "sub_short": "自動車",
-      "sub_short_en": "Automaker",
+      "sub_short_en": "Cars",
       "row": 2,
       "relations": [
         {
@@ -114,7 +114,7 @@
       "sub": "自動車(中国)",
       "sub_en": "Automaker (China)",
       "sub_short": "自動車",
-      "sub_short_en": "Automaker",
+      "sub_short_en": "Cars",
       "row": 2,
       "relations": [
         {
@@ -140,7 +140,7 @@
       "sub": "自動車(中国)",
       "sub_en": "Automaker (China)",
       "sub_short": "自動車",
-      "sub_short_en": "Automaker",
+      "sub_short_en": "Cars",
       "row": 2,
       "relations": [
         {
@@ -165,7 +165,7 @@
       "name_en": "Lear",
       "sub": "シート・電装",
       "sub_en": "Seating & e-systems",
-      "sub_short": "シート・電装",
+      "sub_short": "シート",
       "sub_short_en": "Seating",
       "row": 3,
       "relations": [

@@ -105,8 +105,8 @@
       "name": "Atomera",
       "sub": "半導体材料技術",
       "sub_en": "Semiconductor materials tech",
-      "sub_short": "半導体材料技術",
-      "sub_short_en": "Chip materials",
+      "sub_short": "材料",
+      "sub_short_en": "Materials",
       "row": 1,
       "relations": [
         {
@@ -132,8 +132,8 @@
       "name": "BE Semiconductor Industries",
       "sub": "半導体後工程装置",
       "sub_en": "Back-end equipment",
-      "sub_short": "後工程装置",
-      "sub_short_en": "Back-end tools",
+      "sub_short": "後工程",
+      "sub_short_en": "Back-end",
       "row": 2,
       "relations": [
         {
@@ -172,8 +172,8 @@
       "name": "Lam Research",
       "sub": "半導体製造装置",
       "sub_en": "Chip equipment",
-      "sub_short": "半導体製造装置",
-      "sub_short_en": "Chip equipment",
+      "sub_short": "製造装置",
+      "sub_short_en": "Chip tools",
       "row": 3,
       "relations": [
         {
@@ -197,8 +197,8 @@
       "name": "KLA Corporation",
       "sub": "検査・計測装置",
       "sub_en": "Inspection & metrology",
-      "sub_short": "検査・計測装置",
-      "sub_short_en": "Inspection",
+      "sub_short": "検査",
+      "sub_short_en": "Testing",
       "row": 3,
       "relations": [
         {
@@ -223,7 +223,7 @@
       "sub": "露光装置",
       "sub_en": "Lithography",
       "sub_short": "露光装置",
-      "sub_short_en": "Lithography",
+      "sub_short_en": "Litho",
       "row": 3,
       "relations": [
         {
@@ -249,8 +249,8 @@
       "name": "Axcelis Technologies",
       "sub": "イオン注入装置",
       "sub_en": "Ion implantation",
-      "sub_short": "イオン注入装置",
-      "sub_short_en": "Ion implantation",
+      "sub_short": "注入装置",
+      "sub_short_en": "Chip tools",
       "row": 3,
       "relations": [
         {
@@ -275,7 +275,7 @@
       "sub": "成膜・エッチング装置",
       "sub_en": "Deposition & etch",
       "sub_short": "成膜装置",
-      "sub_short_en": "Deposition",
+      "sub_short_en": "Chip tools",
       "row": 3,
       "relations": [
         {
@@ -299,7 +299,7 @@
       "name": "ACM Research",
       "sub": "洗浄・成膜装置",
       "sub_en": "Cleaning & deposition",
-      "sub_short": "洗浄・成膜装置",
+      "sub_short": "製造装置",
       "sub_short_en": "Cleaning",
       "row": 3,
       "relations": [
@@ -326,8 +326,8 @@
       "name": "PDF Solutions",
       "sub": "製造データ解析ソフト",
       "sub_en": "Manufacturing analytics",
-      "sub_short": "製造データ解析",
-      "sub_short_en": "Factory data",
+      "sub_short": "製造IT",
+      "sub_short_en": "Factory IT",
       "row": 3,
       "relations": [
         {

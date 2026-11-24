@@ -25,8 +25,8 @@
       "name": "レンディングツリー",
       "sub": "ネット金融比較",
       "sub_en": "Online finance marketplace",
-      "sub_short": "ネット金融比較",
-      "sub_short_en": "Finance market",
+      "sub_short": "比較",
+      "sub_short_en": "Finance",
       "row": 0,
       "relations": [
         {
@@ -52,7 +52,7 @@
       "sub": "保険広告",
       "sub_en": "Insurance ad platform",
       "sub_short": "保険広告",
-      "sub_short_en": "Insurance ads",
+      "sub_short_en": "Ads",
       "row": 0,
       "relations": [
         {
@@ -77,8 +77,8 @@
       "name": "グーグル(アルファベット)",
       "sub": "検索・広告",
       "sub_en": "Search & ads",
-      "sub_short": "検索・広告",
-      "sub_short_en": "Search & ads",
+      "sub_short": "検索",
+      "sub_short_en": "Search",
       "row": 0,
       "relations": [
         {
@@ -103,8 +103,8 @@
       "name": "マイクロソフト",
       "sub": "ソフト・広告",
       "sub_en": "Software & ads",
-      "sub_short": "ソフト・広告",
-      "sub_short_en": "Software & ads",
+      "sub_short": "ソフト",
+      "sub_short_en": "Software",
       "row": 0,
       "relations": [
         {
@@ -129,8 +129,8 @@
       "name": "メタ・プラットフォームズ",
       "sub": "SNS・広告",
       "sub_en": "Social media & ads",
-      "sub_short": "SNS・広告",
-      "sub_short_en": "Social media",
+      "sub_short": "SNS",
+      "sub_short_en": "Social",
       "row": 0,
       "relations": [
         {

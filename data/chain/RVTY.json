@@ -34,8 +34,8 @@
       "name_en": "Advanced Chemistry Development",
       "sub": "化学ソフトウェア",
       "sub_en": "Chemistry software",
-      "sub_short": "化学ソフト",
-      "sub_short_en": "Chemistry apps",
+      "sub_short": "化学",
+      "sub_short_en": "Chem IT",
       "row": 0,
       "relations": [
         {
@@ -60,8 +60,8 @@
       "name_en": "Akoya Biosciences",
       "sub": "空間生物学",
       "sub_en": "Spatial biology",
-      "sub_short": "空間生物学",
-      "sub_short_en": "Spatial biology",
+      "sub_short": "細胞解析",
+      "sub_short_en": "Bio tools",
       "row": 0,
       "relations": [
         {
@@ -86,7 +86,7 @@
       "name_en": "GeoVax",
       "sub": "ワクチン開発",
       "sub_en": "Vaccine development",
-      "sub_short": "ワクチン開発",
+      "sub_short": "ワクチン",
       "sub_short_en": "Vaccines",
       "row": 1,
       "relations": [
@@ -113,7 +113,7 @@
       "sub": "分析機器",
       "sub_en": "Analytical instruments",
       "sub_short": "分析機器",
-      "sub_short_en": "Lab instruments",
+      "sub_short_en": "Lab tools",
       "row": 2,
       "relations": [
         {
@@ -139,7 +139,7 @@
       "sub": "診断薬",
       "sub_en": "Diagnostics",
       "sub_short": "診断薬",
-      "sub_short_en": "Diagnostics",
+      "sub_short_en": "Tests",
       "row": 2,
       "relations": [
         {
@@ -164,8 +164,8 @@
       "name_en": "Cooper Companies",
       "sub": "コンタクトレンズ・女性医療",
       "sub_en": "Contact lenses & women's health",
-      "sub_short": "眼科・女性医療",
-      "sub_short_en": "Contact lenses",
+      "sub_short": "眼科",
+      "sub_short_en": "Lenses",
       "row": 2,
       "relations": [
         {
@@ -190,8 +190,8 @@
       "name_en": "Schrödinger",
       "sub": "創薬ソフトウェア",
       "sub_en": "Drug discovery software",
-      "sub_short": "創薬ソフト",
-      "sub_short_en": "Drug R&D apps",
+      "sub_short": "創薬",
+      "sub_short_en": "Drug R&D",
       "row": 2,
       "relations": [
         {
@@ -216,8 +216,8 @@
       "name_en": "Harvard Bioscience",
       "sub": "研究用機器",
       "sub_en": "Research instruments",
-      "sub_short": "研究用機器",
-      "sub_short_en": "Lab instruments",
+      "sub_short": "研究機器",
+      "sub_short_en": "Lab tools",
       "row": 2,
       "relations": [
         {

@@ -19,7 +19,7 @@
       "name": "ビオンテック",
       "sub": "ワクチン共同開発",
       "sub_en": "Vaccine co-development",
-      "sub_short": "ワクチン開発",
+      "sub_short": "ワクチン",
       "sub_short_en": "Vaccines",
       "row": 0,
       "relations": [
@@ -45,7 +45,7 @@
       "name": "バルネバ",
       "sub": "ワクチン共同開発",
       "sub_en": "Vaccine co-development",
-      "sub_short": "ワクチン開発",
+      "sub_short": "ワクチン",
       "sub_short_en": "Vaccines",
       "row": 0,
       "relations": [
@@ -71,8 +71,8 @@
       "name": "武田薬品工業",
       "sub": "がん薬の提携",
       "sub_en": "Oncology partner",
-      "sub_short": "がん薬の提携",
-      "sub_short_en": "Oncology partner",
+      "sub_short": "がん薬",
+      "sub_short_en": "Oncology",
       "row": 0,
       "relations": [
         {
@@ -97,8 +97,8 @@
       "name": "ゲンマブ",
       "sub": "がん薬の共同販売",
       "sub_en": "Oncology co-marketing",
-      "sub_short": "がん薬販売提携",
-      "sub_short_en": "Cancer co-sales",
+      "sub_short": "がん薬",
+      "sub_short_en": "Oncology",
       "row": 0,
       "relations": [
         {
@@ -123,8 +123,8 @@
       "name": "アービナス",
       "sub": "がん薬の共同開発",
       "sub_en": "Oncology co-development",
-      "sub_short": "がん薬共同開発",
-      "sub_short_en": "Cancer co-dev",
+      "sub_short": "がん薬",
+      "sub_short_en": "Oncology",
       "row": 0,
       "relations": [
         {
@@ -150,7 +150,7 @@
       "sub": "分離後の製造委託",
       "sub_en": "Post-spin-off supply",
       "sub_short": "製造委託",
-      "sub_short_en": "Post-spin supply",
+      "sub_short_en": "Supply",
       "row": 0,
       "relations": [
         {

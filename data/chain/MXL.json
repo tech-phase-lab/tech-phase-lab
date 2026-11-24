@@ -37,7 +37,7 @@
       "name": "TSMC",
       "sub": "ファウンドリ",
       "sub_en": "Foundry",
-      "sub_short": "ファウンドリ",
+      "sub_short": "受託生産",
       "sub_short_en": "Foundry",
       "row": 0,
       "relations": [
@@ -75,7 +75,7 @@
       "name": "UMC",
       "sub": "ファウンドリ",
       "sub_en": "Foundry",
-      "sub_short": "ファウンドリ",
+      "sub_short": "受託生産",
       "sub_short_en": "Foundry",
       "row": 0,
       "relations": [
@@ -113,8 +113,8 @@
       "name": "ASE",
       "sub": "半導体後工程",
       "sub_en": "Assembly & test",
-      "sub_short": "半導体後工程",
-      "sub_short_en": "Assembly & test",
+      "sub_short": "後工程",
+      "sub_short_en": "Chip pack",
       "row": 0,
       "relations": [
         {
@@ -138,8 +138,8 @@
       "name": "Comcast",
       "sub": "通信・メディア",
       "sub_en": "Telecom & media",
-      "sub_short": "通信・メディア",
-      "sub_short_en": "Telecom & media",
+      "sub_short": "通信",
+      "sub_short_en": "Telecom",
       "row": 1,
       "relations": [
         {
@@ -165,8 +165,8 @@
       "name": "Silicon Motion",
       "sub": "フラッシュコントローラー",
       "sub_en": "Flash controllers",
-      "sub_short": "フラッシュ制御",
-      "sub_short_en": "Flash chips",
+      "sub_short": "メモリIC",
+      "sub_short_en": "Flash",
       "row": 2,
       "relations": [
         {
@@ -245,8 +245,8 @@
       "name": "Broadcom",
       "sub": "ネットワーク半導体",
       "sub_en": "Networking chips",
-      "sub_short": "通信半導体",
-      "sub_short_en": "Networking chips",
+      "sub_short": "通信IC",
+      "sub_short_en": "Network",
       "row": 3,
       "relations": [
         {
@@ -270,8 +270,8 @@
       "name": "Qualcomm",
       "sub": "通信半導体",
       "sub_en": "Wireless chips",
-      "sub_short": "通信半導体",
-      "sub_short_en": "Wireless chips",
+      "sub_short": "通信IC",
+      "sub_short_en": "RF ICs",
       "row": 3,
       "relations": [
         {
@@ -295,8 +295,8 @@
       "name": "Marvell",
       "sub": "データインフラ半導体",
       "sub_en": "Data infrastructure chips",
-      "sub_short": "データ半導体",
-      "sub_short_en": "Data chips",
+      "sub_short": "半導体",
+      "sub_short_en": "Data ICs",
       "row": 3,
       "relations": [
         {
@@ -320,8 +320,8 @@
       "name": "MACOM",
       "sub": "高速接続半導体",
       "sub_en": "High-speed connectivity chips",
-      "sub_short": "高速接続半導体",
-      "sub_short_en": "Connectivity",
+      "sub_short": "接続IC",
+      "sub_short_en": "Links",
       "row": 3,
       "relations": [
         {
@@ -358,8 +358,8 @@
       "name": "Credo",
       "sub": "高速接続半導体",
       "sub_en": "High-speed connectivity chips",
-      "sub_short": "高速接続半導体",
-      "sub_short_en": "Connectivity",
+      "sub_short": "接続IC",
+      "sub_short_en": "Links",
       "row": 3,
       "relations": [
         {
@@ -383,8 +383,8 @@
       "name": "MediaTek",
       "sub": "通信・SoC",
       "sub_en": "Communications & SoC",
-      "sub_short": "通信・SoC",
-      "sub_short_en": "Comms chips",
+      "sub_short": "通信IC",
+      "sub_short_en": "Comms IC",
       "row": 3,
       "relations": [
         {
@@ -408,8 +408,8 @@
       "name": "Realtek",
       "sub": "通信・PC半導体",
       "sub_en": "Communications & PC chips",
-      "sub_short": "通信半導体",
-      "sub_short_en": "Comms chips",
+      "sub_short": "通信IC",
+      "sub_short_en": "Comms IC",
       "row": 3,
       "relations": [
         {

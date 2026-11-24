@@ -25,7 +25,7 @@
       "sub": "ビル制御",
       "sub_en": "Building controls",
       "sub_short": "ビル制御",
-      "sub_short_en": "Building control",
+      "sub_short_en": "Controls",
       "row": 0,
       "relations": [
         {
@@ -51,7 +51,7 @@
       "sub": "ビル設備",
       "sub_en": "Building technology",
       "sub_short": "ビル設備",
-      "sub_short_en": "Building tech",
+      "sub_short_en": "Buildings",
       "row": 0,
       "relations": [
         {
@@ -76,8 +76,8 @@
       "name": "シュナイダーエレクトリック",
       "sub": "電力・制御",
       "sub_en": "Power & controls",
-      "sub_short": "電力・制御",
-      "sub_short_en": "Power & controls",
+      "sub_short": "電力",
+      "sub_short_en": "Power",
       "row": 0,
       "relations": [
         {
@@ -154,8 +154,8 @@
       "name": "バーティブ・ホールディングス",
       "sub": "設備・冷却",
       "sub_en": "Critical infrastructure",
-      "sub_short": "設備・冷却",
-      "sub_short_en": "Infrastructure",
+      "sub_short": "設備",
+      "sub_short_en": "Infra",
       "row": 0,
       "relations": [
         {

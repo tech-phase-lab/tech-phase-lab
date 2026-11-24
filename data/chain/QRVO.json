@@ -37,8 +37,8 @@
       "name": "ラックスシェア",
       "sub": "電子部品・組立",
       "sub_en": "Components & assembly",
-      "sub_short": "電子部品・組立",
-      "sub_short_en": "Components",
+      "sub_short": "電子部品",
+      "sub_short_en": "Parts",
       "row": 0,
       "relations": [
         {
@@ -76,8 +76,8 @@
       "name": "アップル",
       "sub": "スマートフォン・PC",
       "sub_en": "Smartphones & PCs",
-      "sub_short": "スマートフォン",
-      "sub_short_en": "Smartphones",
+      "sub_short": "スマホ",
+      "sub_short_en": "Phones",
       "row": 1,
       "relations": [
         {
@@ -102,8 +102,8 @@
       "name": "サムスン電子",
       "sub": "スマートフォン・家電",
       "sub_en": "Smartphones & electronics",
-      "sub_short": "スマートフォン",
-      "sub_short_en": "Smartphones",
+      "sub_short": "スマホ",
+      "sub_short_en": "Phones",
       "row": 1,
       "relations": [
         {
@@ -182,8 +182,8 @@
       "name": "onsemi",
       "sub": "パワー半導体",
       "sub_en": "Power chips",
-      "sub_short": "パワー半導体",
-      "sub_short_en": "Power chips",
+      "sub_short": "半導体",
+      "sub_short_en": "Power ICs",
       "row": 2,
       "relations": [
         {
@@ -248,8 +248,8 @@
       "name": "アナログ・デバイセズ",
       "sub": "アナログ半導体",
       "sub_en": "Analog chips",
-      "sub_short": "アナログ半導体",
-      "sub_short_en": "Analog chips",
+      "sub_short": "アナログ",
+      "sub_short_en": "Analog",
       "row": 3,
       "relations": [
         {
@@ -274,8 +274,8 @@
       "name": "ブロードコム",
       "sub": "通信・インフラ半導体",
       "sub_en": "Networking & infrastructure chips",
-      "sub_short": "通信半導体",
-      "sub_short_en": "Networking chips",
+      "sub_short": "通信IC",
+      "sub_short_en": "Network",
       "row": 3,
       "relations": [
         {
@@ -313,7 +313,7 @@
       "name": "マコム・テクノロジー・ソリューションズ",
       "sub": "高周波半導体",
       "sub_en": "RF & microwave chips",
-      "sub_short": "高周波半導体",
+      "sub_short": "RF IC",
       "sub_short_en": "RF chips",
       "row": 3,
       "relations": [
@@ -339,8 +339,8 @@
       "name": "ナビタス・セミコンダクター",
       "sub": "GaNパワー半導体",
       "sub_en": "GaN power chips",
-      "sub_short": "GaN半導体",
-      "sub_short_en": "GaN power chips",
+      "sub_short": "GaN",
+      "sub_short_en": "GaN",
       "row": 3,
       "relations": [
         {

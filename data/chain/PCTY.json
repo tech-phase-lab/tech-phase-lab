@@ -28,7 +28,7 @@
       "sub": "ソフト・クラウド",
       "sub_en": "Software & cloud",
       "sub_short": "ソフト",
-      "sub_short_en": "Software & cloud",
+      "sub_short_en": "Software",
       "row": 0,
       "relations": [
         {
@@ -108,7 +108,7 @@
       "name": "オクタ",
       "sub": "IDセキュリティ",
       "sub_en": "Identity security",
-      "sub_short": "IDセキュリティ",
+      "sub_short": "ID防御",
       "sub_short_en": "Identity",
       "row": 0,
       "relations": [
@@ -135,7 +135,7 @@
       "sub": "給与・人事サービス",
       "sub_en": "Payroll & HR services",
       "sub_short": "給与",
-      "sub_short_en": "Payroll services",
+      "sub_short_en": "Payroll",
       "row": 1,
       "relations": [
         {
@@ -161,7 +161,7 @@
       "sub": "給与・人事サービス",
       "sub_en": "Payroll & HR services",
       "sub_short": "給与",
-      "sub_short_en": "Payroll services",
+      "sub_short_en": "Payroll",
       "row": 1,
       "relations": [
         {
@@ -187,7 +187,7 @@
       "sub": "給与・人事ソフト",
       "sub_en": "Payroll & HR software",
       "sub_short": "給与",
-      "sub_short_en": "Payroll software",
+      "sub_short_en": "Payroll",
       "row": 1,
       "relations": [
         {

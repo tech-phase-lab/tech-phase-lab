@@ -24,8 +24,8 @@
       "name": "ワイルド・ウェル・コントロール",
       "sub": "坑井の緊急対応",
       "sub_en": "Well control services",
-      "sub_short": "坑井の緊急対応",
-      "sub_short_en": "Well control",
+      "sub_short": "坑井",
+      "sub_short_en": "Wells",
       "row": 0,
       "relations": [
         {
@@ -50,8 +50,8 @@
       "name": "エジプト一般石油公社",
       "sub": "エジプトの石油公社",
       "sub_en": "Egyptian state oil company",
-      "sub_short": "エジプト石油",
-      "sub_short_en": "Egypt state oil",
+      "sub_short": "石油",
+      "sub_short_en": "Oil",
       "row": 1,
       "relations": [
         {
@@ -76,7 +76,7 @@
       "name": "シノペック・インターナショナル",
       "sub": "中国の石油会社",
       "sub_en": "Chinese oil company",
-      "sub_short": "中国の石油会社",
+      "sub_short": "中国石油",
       "sub_short_en": "China oil",
       "row": 1,
       "relations": [
@@ -102,7 +102,7 @@
       "name": "トタルエナジーズ",
       "sub": "総合エネルギー",
       "sub_en": "Integrated energy",
-      "sub_short": "総合エネルギー",
+      "sub_short": "エネ",
       "sub_short_en": "Energy",
       "row": 1,
       "relations": [

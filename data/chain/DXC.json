@@ -55,7 +55,7 @@
       "name_en": "Coca-Cola FEMSA",
       "sub": "飲料ボトラー(メキシコ)",
       "sub_en": "Bottler (Mexico)",
-      "sub_short": "飲料ボトラー",
+      "sub_short": "飲料",
       "sub_short_en": "Bottler",
       "row": 0,
       "relations": [
@@ -108,7 +108,7 @@
       "sub": "マーケティングSaaS",
       "sub_en": "Marketing SaaS",
       "sub_short": "販促SaaS",
-      "sub_short_en": "Marketing SaaS",
+      "sub_short_en": "Ads",
       "row": 0,
       "relations": [
         {
@@ -133,8 +133,8 @@
       "name_en": "Cognizant",
       "sub": "ITサービス",
       "sub_en": "IT services",
-      "sub_short": "ITサービス",
-      "sub_short_en": "IT services",
+      "sub_short": "IT",
+      "sub_short_en": "IT",
       "row": 1,
       "relations": [
         {
@@ -159,8 +159,8 @@
       "name_en": "Globant",
       "sub": "ITサービス",
       "sub_en": "IT services",
-      "sub_short": "ITサービス",
-      "sub_short_en": "IT services",
+      "sub_short": "IT",
+      "sub_short_en": "IT",
       "row": 1,
       "relations": [
         {
@@ -185,8 +185,8 @@
       "name_en": "Rackspace Technology",
       "sub": "クラウド運用",
       "sub_en": "Managed cloud",
-      "sub_short": "クラウド運用",
-      "sub_short_en": "Managed cloud",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 1,
       "relations": [
         {
@@ -211,8 +211,8 @@
       "name_en": "Guidewire Software",
       "sub": "損保向けソフト",
       "sub_en": "P&C insurance software",
-      "sub_short": "損保向けソフト",
-      "sub_short_en": "Insurance apps",
+      "sub_short": "保険IT",
+      "sub_short_en": "Insure IT",
       "row": 1,
       "relations": [
         {
@@ -237,8 +237,8 @@
       "name_en": "Intelligent Protection Management",
       "sub": "マネージドIT",
       "sub_en": "Managed IT",
-      "sub_short": "マネージドIT",
-      "sub_short_en": "Managed IT",
+      "sub_short": "IT運用",
+      "sub_short_en": "IT",
       "row": 1,
       "relations": [
         {

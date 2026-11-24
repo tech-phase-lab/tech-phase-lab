@@ -33,7 +33,7 @@
       "name": "Elastic",
       "sub": "検索・分析",
       "sub_en": "Search & analytics",
-      "sub_short": "検索・分析",
+      "sub_short": "検索",
       "sub_short_en": "Search",
       "row": 0,
       "relations": [
@@ -61,7 +61,7 @@
       "sub": "生成AI",
       "sub_en": "Generative AI",
       "sub_short": "生成AI",
-      "sub_short_en": "Generative AI",
+      "sub_short_en": "AI",
       "row": 1,
       "relations": [
         {
@@ -87,7 +87,7 @@
       "sub": "生成AI",
       "sub_en": "Generative AI",
       "sub_short": "生成AI",
-      "sub_short_en": "Generative AI",
+      "sub_short_en": "AI",
       "row": 1,
       "relations": [
         {
@@ -112,8 +112,8 @@
       "name": "RingCentral",
       "sub": "クラウド通信",
       "sub_en": "Cloud communications",
-      "sub_short": "クラウド通信",
-      "sub_short_en": "Cloud comms",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 1,
       "relations": [
         {
@@ -163,8 +163,8 @@
       "name": "Freshworks",
       "sub": "業務ソフト",
       "sub_en": "Business software",
-      "sub_short": "業務ソフト",
-      "sub_short_en": "Business apps",
+      "sub_short": "業務IT",
+      "sub_short_en": "Biz apps",
       "row": 3,
       "relations": [
         {

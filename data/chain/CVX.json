@@ -24,8 +24,8 @@
       "name": "シェブロン・フィリップス・ケミカル",
       "sub": "石油化学合弁",
       "sub_en": "Petrochemical JV",
-      "sub_short": "石油化学合弁",
-      "sub_short_en": "Petrochemical JV",
+      "sub_short": "石化合弁",
+      "sub_short_en": "Petchem",
       "row": 0,
       "relations": [
         {
@@ -50,8 +50,8 @@
       "name": "GSエナジー",
       "sub": "韓国の精製合弁相手",
       "sub_en": "Korea refining JV partner",
-      "sub_short": "韓国精製合弁",
-      "sub_short_en": "Korea refining",
+      "sub_short": "精製合弁",
+      "sub_short_en": "Refining",
       "row": 0,
       "relations": [
         {
@@ -76,8 +76,8 @@
       "name": "テンギズシェブロイル",
       "sub": "カザフスタン油田",
       "sub_en": "Kazakhstan oil fields",
-      "sub_short": "カザフ油田",
-      "sub_short_en": "Kazakh oil",
+      "sub_short": "油田",
+      "sub_short_en": "Oil",
       "row": 0,
       "relations": [
         {
@@ -102,8 +102,8 @@
       "name": "カスピ海パイプライン・コンソーシアム",
       "sub": "輸送パイプライン",
       "sub_en": "Export pipeline",
-      "sub_short": "パイプライン",
-      "sub_short_en": "Export pipeline",
+      "sub_short": "配管網",
+      "sub_short_en": "Pipeline",
       "row": 0,
       "relations": [
         {
@@ -129,7 +129,7 @@
       "sub": "精製合弁",
       "sub_en": "Refining JV",
       "sub_short": "精製合弁",
-      "sub_short_en": "Refining JV",
+      "sub_short_en": "Refining",
       "row": 0,
       "relations": [
         {
@@ -155,7 +155,7 @@
       "sub": "化学",
       "sub_en": "Chemicals",
       "sub_short": "化学",
-      "sub_short_en": "Chemicals",
+      "sub_short_en": "Chem",
       "row": 1,
       "relations": [
         {

@@ -27,8 +27,8 @@
       "name_en": "Alloy Steel Australia",
       "sub": "保守・補修材(豪州)",
       "sub_en": "Maintenance & repair solutions (Australia)",
-      "sub_short": "保守・補修材",
-      "sub_short_en": "Maintenance",
+      "sub_short": "補修材",
+      "sub_short_en": "Upkeep",
       "row": 0,
       "relations": [
         {
@@ -53,8 +53,8 @@
       "name_en": "Inrotech",
       "sub": "溶接ロボット(デンマーク)",
       "sub_en": "Welding robots (Denmark)",
-      "sub_short": "溶接ロボット",
-      "sub_short_en": "Welding robots",
+      "sub_short": "溶接",
+      "sub_short_en": "Welding",
       "row": 0,
       "relations": [
         {
@@ -79,8 +79,8 @@
       "name_en": "Vanair",
       "sub": "電源・空圧機器",
       "sub_en": "Power & air systems",
-      "sub_short": "電源・空圧機器",
-      "sub_short_en": "Power systems",
+      "sub_short": "電源",
+      "sub_short_en": "Power",
       "row": 0,
       "relations": [
         {
@@ -105,8 +105,8 @@
       "name_en": "RedViking",
       "sub": "自動化システム",
       "sub_en": "Automation systems",
-      "sub_short": "自動化システム",
-      "sub_short_en": "Automation",
+      "sub_short": "自動化",
+      "sub_short_en": "Robotics",
       "row": 0,
       "relations": [
         {
@@ -132,7 +132,7 @@
       "sub": "産業機器",
       "sub_en": "Industrial products",
       "sub_short": "産業機器",
-      "sub_short_en": "Industrial goods",
+      "sub_short_en": "Industrial",
       "row": 1,
       "relations": [
         {

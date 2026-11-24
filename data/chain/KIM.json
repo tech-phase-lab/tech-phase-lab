@@ -20,7 +20,7 @@
       "sub": "ディスカウント小売",
       "sub_en": "Off-price retail",
       "sub_short": "格安小売",
-      "sub_short_en": "Off-price retail",
+      "sub_short_en": "Off-price",
       "row": 0,
       "relations": [
         {
@@ -46,7 +46,7 @@
       "sub": "ディスカウント小売",
       "sub_en": "Off-price retail",
       "sub_short": "格安小売",
-      "sub_short_en": "Off-price retail",
+      "sub_short_en": "Off-price",
       "row": 0,
       "relations": [
         {
@@ -72,7 +72,7 @@
       "sub": "ディスカウント小売",
       "sub_en": "Off-price retail",
       "sub_short": "格安小売",
-      "sub_short_en": "Off-price retail",
+      "sub_short_en": "Off-price",
       "row": 0,
       "relations": [
         {
@@ -123,7 +123,7 @@
       "name": "アルバートソンズ",
       "sub": "食品スーパー",
       "sub_en": "Grocery",
-      "sub_short": "食品スーパー",
+      "sub_short": "スーパー",
       "sub_short_en": "Grocery",
       "row": 0,
       "relations": [
@@ -149,8 +149,8 @@
       "name": "ホーム・デポ",
       "sub": "ホームセンター",
       "sub_en": "Home improvement",
-      "sub_short": "ホームセンター",
-      "sub_short_en": "Home improvement",
+      "sub_short": "住宅用品",
+      "sub_short_en": "Home",
       "row": 0,
       "relations": [
         {
@@ -175,7 +175,7 @@
       "name": "クローガー",
       "sub": "食品スーパー",
       "sub_en": "Grocery",
-      "sub_short": "食品スーパー",
+      "sub_short": "スーパー",
       "sub_short_en": "Grocery",
       "row": 0,
       "relations": [
@@ -201,8 +201,8 @@
       "name": "ディックス・スポーティング・グッズ",
       "sub": "スポーツ用品小売",
       "sub_en": "Sporting goods retail",
-      "sub_short": "スポーツ小売",
-      "sub_short_en": "Sporting goods",
+      "sub_short": "スポーツ",
+      "sub_short_en": "Sports",
       "row": 0,
       "relations": [
         {

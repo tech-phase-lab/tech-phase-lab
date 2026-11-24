@@ -36,7 +36,7 @@
       "sub": "後工程",
       "sub_en": "Packaging & test",
       "sub_short": "後工程",
-      "sub_short_en": "Packaging & test",
+      "sub_short_en": "Chip pack",
       "row": 0,
       "relations": [
         {
@@ -59,8 +59,8 @@
       "name": "Entegris",
       "sub": "半導体材料",
       "sub_en": "Semiconductor materials",
-      "sub_short": "半導体材料",
-      "sub_short_en": "Chip materials",
+      "sub_short": "材料",
+      "sub_short_en": "Materials",
       "row": 0,
       "relations": [
         {
@@ -83,8 +83,8 @@
       "name": "KLA",
       "sub": "検査・計測装置",
       "sub_en": "Inspection & metrology",
-      "sub_short": "検査・計測装置",
-      "sub_short_en": "Inspection",
+      "sub_short": "検査",
+      "sub_short_en": "Testing",
       "row": 0,
       "relations": [
         {
@@ -109,7 +109,7 @@
       "sub": "製造装置",
       "sub_en": "Equipment",
       "sub_short": "製造装置",
-      "sub_short_en": "Equipment",
+      "sub_short_en": "Gear",
       "row": 0,
       "relations": [
         {
@@ -133,8 +133,8 @@
       "name": "Onto Innovation",
       "sub": "検査・計測装置",
       "sub_en": "Inspection & metrology",
-      "sub_short": "検査・計測装置",
-      "sub_short_en": "Inspection",
+      "sub_short": "検査",
+      "sub_short_en": "Testing",
       "row": 0,
       "relations": [
         {
@@ -253,8 +253,8 @@
       "name": "Astera Labs",
       "sub": "接続用半導体",
       "sub_en": "Connectivity chips",
-      "sub_short": "接続用半導体",
-      "sub_short_en": "Connectivity",
+      "sub_short": "半導体",
+      "sub_short_en": "Links",
       "row": 1,
       "relations": [
         {
@@ -277,8 +277,8 @@
       "name": "Credo Technology",
       "sub": "接続用半導体",
       "sub_en": "Connectivity chips",
-      "sub_short": "接続用半導体",
-      "sub_short_en": "Connectivity",
+      "sub_short": "半導体",
+      "sub_short_en": "Links",
       "row": 1,
       "relations": [
         {
@@ -337,7 +337,7 @@
       "name": "Sony Group",
       "sub": "半導体・電機",
       "sub_en": "Chips & electronics",
-      "sub_short": "半導体・電機",
+      "sub_short": "半導体",
       "sub_short_en": "Chips",
       "row": 2,
       "relations": [
@@ -377,8 +377,8 @@
       "name": "DENSO",
       "sub": "自動車部品",
       "sub_en": "Auto parts",
-      "sub_short": "自動車部品",
-      "sub_short_en": "Auto parts",
+      "sub_short": "車部品",
+      "sub_short_en": "Car parts",
       "row": 2,
       "relations": [
         {
@@ -403,7 +403,7 @@
       "sub": "自動車",
       "sub_en": "Automaker",
       "sub_short": "自動車",
-      "sub_short_en": "Automaker",
+      "sub_short_en": "Cars",
       "row": 2,
       "relations": [
         {
@@ -427,8 +427,8 @@
       "name": "Infineon Technologies",
       "sub": "車載半導体",
       "sub_en": "Automotive chips",
-      "sub_short": "車載半導体",
-      "sub_short_en": "Automotive chips",
+      "sub_short": "車載IC",
+      "sub_short_en": "Auto ICs",
       "row": 2,
       "relations": [
         {
@@ -452,8 +452,8 @@
       "name": "NXP Semiconductors",
       "sub": "車載半導体",
       "sub_en": "Automotive chips",
-      "sub_short": "車載半導体",
-      "sub_short_en": "Automotive chips",
+      "sub_short": "車載IC",
+      "sub_short_en": "Auto ICs",
       "row": 2,
       "relations": [
         {
@@ -578,7 +578,7 @@
       "sub": "自動車",
       "sub_en": "Automaker",
       "sub_short": "自動車",
-      "sub_short_en": "Automaker",
+      "sub_short_en": "Cars",
       "row": 2,
       "relations": [
         {
@@ -602,8 +602,8 @@
       "name": "Global Unichip(GUC)",
       "sub": "チップ設計サービス",
       "sub_en": "Chip design services",
-      "sub_short": "チップ設計",
-      "sub_short_en": "Chip design",
+      "sub_short": "IC設計",
+      "sub_short_en": "Chip IP",
       "row": 2,
       "relations": [
         {
@@ -675,8 +675,8 @@
       "name": "Navitas Semiconductor",
       "sub": "パワー半導体",
       "sub_en": "Power chips",
-      "sub_short": "パワー半導体",
-      "sub_short_en": "Power chips",
+      "sub_short": "半導体",
+      "sub_short_en": "Power ICs",
       "row": 1,
       "relations": [
         {
@@ -702,8 +702,8 @@
       "name": "Himax Technologies",
       "sub": "ディスプレイ用半導体",
       "sub_en": "Display driver chips",
-      "sub_short": "表示用半導体",
-      "sub_short_en": "Display chips",
+      "sub_short": "表示IC",
+      "sub_short_en": "Display",
       "row": 1,
       "relations": [
         {

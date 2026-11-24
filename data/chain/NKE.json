@@ -25,8 +25,8 @@
       "name": "アディダス",
       "sub": "スポーツ用品",
       "sub_en": "Sportswear",
-      "sub_short": "スポーツ用品",
-      "sub_short_en": "Sportswear",
+      "sub_short": "スポーツ",
+      "sub_short_en": "Apparel",
       "row": 0,
       "relations": [
         {
@@ -51,8 +51,8 @@
       "name": "安踏体育用品",
       "sub": "スポーツ用品",
       "sub_en": "Sportswear",
-      "sub_short": "スポーツ用品",
-      "sub_short_en": "Sportswear",
+      "sub_short": "スポーツ",
+      "sub_short_en": "Apparel",
       "row": 0,
       "relations": [
         {
@@ -77,8 +77,8 @@
       "name": "アシックス",
       "sub": "スポーツ用品",
       "sub_en": "Sportswear",
-      "sub_short": "スポーツ用品",
-      "sub_short_en": "Sportswear",
+      "sub_short": "スポーツ",
+      "sub_short_en": "Apparel",
       "row": 0,
       "relations": [
         {
@@ -103,7 +103,7 @@
       "name": "デッカーズ・ブランズ",
       "sub": "靴・アパレル",
       "sub_en": "Footwear & apparel",
-      "sub_short": "靴・アパレル",
+      "sub_short": "靴",
       "sub_short_en": "Footwear",
       "row": 0,
       "relations": [
@@ -129,8 +129,8 @@
       "name": "李寧",
       "sub": "スポーツ用品",
       "sub_en": "Sportswear",
-      "sub_short": "スポーツ用品",
-      "sub_short_en": "Sportswear",
+      "sub_short": "スポーツ",
+      "sub_short_en": "Apparel",
       "row": 0,
       "relations": [
         {
@@ -156,7 +156,7 @@
       "sub": "アパレル",
       "sub_en": "Athletic apparel",
       "sub_short": "アパレル",
-      "sub_short_en": "Athletic apparel",
+      "sub_short_en": "Apparel",
       "row": 0,
       "relations": [
         {
@@ -181,8 +181,8 @@
       "name": "ニューバランス",
       "sub": "スポーツ用品",
       "sub_en": "Sportswear",
-      "sub_short": "スポーツ用品",
-      "sub_short_en": "Sportswear",
+      "sub_short": "スポーツ",
+      "sub_short_en": "Apparel",
       "row": 0,
       "relations": [
         {
@@ -207,8 +207,8 @@
       "name": "オン・ホールディング",
       "sub": "スポーツシューズ",
       "sub_en": "Running footwear",
-      "sub_short": "スポーツ靴",
-      "sub_short_en": "Running footwear",
+      "sub_short": "靴",
+      "sub_short_en": "Shoes",
       "row": 0,
       "relations": [
         {
@@ -233,8 +233,8 @@
       "name": "プーマ",
       "sub": "スポーツ用品",
       "sub_en": "Sportswear",
-      "sub_short": "スポーツ用品",
-      "sub_short_en": "Sportswear",
+      "sub_short": "スポーツ",
+      "sub_short_en": "Apparel",
       "row": 0,
       "relations": [
         {
@@ -259,8 +259,8 @@
       "name": "アンダーアーマー",
       "sub": "スポーツ用品",
       "sub_en": "Sportswear",
-      "sub_short": "スポーツ用品",
-      "sub_short_en": "Sportswear",
+      "sub_short": "スポーツ",
+      "sub_short_en": "Apparel",
       "row": 0,
       "relations": [
         {
@@ -285,7 +285,7 @@
       "name": "VFコーポレーション",
       "sub": "アパレル・靴",
       "sub_en": "Apparel & footwear",
-      "sub_short": "アパレル・靴",
+      "sub_short": "アパレル",
       "sub_short_en": "Apparel",
       "row": 0,
       "relations": [
@@ -312,7 +312,7 @@
       "sub": "再生ポリエステル",
       "sub_en": "Recycled polyester",
       "sub_short": "再生繊維",
-      "sub_short_en": "Recycled fiber",
+      "sub_short_en": "Recycled",
       "row": 0,
       "relations": [
         {

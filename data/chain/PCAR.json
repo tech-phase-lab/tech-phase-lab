@@ -77,7 +77,7 @@
       "sub": "トランスミッション",
       "sub_en": "Transmissions",
       "sub_short": "変速機",
-      "sub_short_en": "Transmissions",
+      "sub_short_en": "Gears",
       "row": 0,
       "relations": [
         {
@@ -103,7 +103,7 @@
       "sub": "トランスミッション",
       "sub_en": "Transmissions",
       "sub_short": "変速機",
-      "sub_short_en": "Transmissions",
+      "sub_short_en": "Gears",
       "row": 0,
       "relations": [
         {
@@ -128,8 +128,8 @@
       "name": "マグナ・インターナショナル",
       "sub": "キャブ用プレス部品",
       "sub_en": "Cab stampings",
-      "sub_short": "プレス部品",
-      "sub_short_en": "Cab stampings",
+      "sub_short": "部品",
+      "sub_short_en": "Stamping",
       "row": 0,
       "relations": [
         {
@@ -155,7 +155,7 @@
       "sub": "トラック・キャブ",
       "sub_en": "Truck cabs",
       "sub_short": "トラック",
-      "sub_short_en": "Truck cabs",
+      "sub_short_en": "Cabs",
       "row": 0,
       "relations": [
         {
@@ -233,7 +233,7 @@
       "sub": "成形部品",
       "sub_en": "Molded components",
       "sub_short": "成形部品",
-      "sub_short_en": "Molded parts",
+      "sub_short_en": "Molding",
       "row": 0,
       "relations": [
         {

@@ -29,7 +29,7 @@
       "sub": "ネットワーク機器",
       "sub_en": "Networking equipment",
       "sub_short": "通信機器",
-      "sub_short_en": "Network gear",
+      "sub_short_en": "Network",
       "row": 0,
       "relations": [
         {
@@ -55,7 +55,7 @@
       "sub": "通信機器",
       "sub_en": "Telecom equipment",
       "sub_short": "通信機器",
-      "sub_short_en": "Telecom gear",
+      "sub_short_en": "Telecom",
       "row": 0,
       "relations": [
         {
@@ -93,8 +93,8 @@
       "name": "AMD",
       "sub": "CPU・GPU",
       "sub_en": "CPUs & GPUs",
-      "sub_short": "CPU・GPU",
-      "sub_short_en": "CPUs & GPUs",
+      "sub_short": "CPU",
+      "sub_short_en": "CPU/GPU",
       "row": 1,
       "relations": [
         {
@@ -186,8 +186,8 @@
       "name": "Amazon",
       "sub": "EC・クラウド",
       "sub_en": "E-commerce & cloud",
-      "sub_short": "EC・クラウド",
-      "sub_short_en": "E-commerce",
+      "sub_short": "EC",
+      "sub_short_en": "E-com",
       "row": 1,
       "relations": [
         {
@@ -214,7 +214,7 @@
       "sub": "複合企業",
       "sub_en": "Conglomerate",
       "sub_short": "複合企業",
-      "sub_short_en": "Conglomerate",
+      "sub_short_en": "Group",
       "row": 1,
       "relations": [
         {
@@ -241,7 +241,7 @@
       "name": "ベンチマーク・エレクトロニクス",
       "sub": "電子機器受託製造",
       "sub_en": "Electronics manufacturing services",
-      "sub_short": "電子機器受託",
+      "sub_short": "EMS",
       "sub_short_en": "EMS",
       "row": 2,
       "relations": [

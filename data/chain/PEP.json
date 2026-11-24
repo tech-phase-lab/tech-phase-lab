@@ -34,7 +34,7 @@
       "sub": "大手小売",
       "sub_en": "Major retailer",
       "sub_short": "大手小売",
-      "sub_short_en": "Major retailer",
+      "sub_short_en": "Retail",
       "row": 0,
       "relations": [
         {
@@ -59,8 +59,8 @@
       "name": "ユニリーバ",
       "sub": "日用品・食品",
       "sub_en": "Consumer goods",
-      "sub_short": "日用品・食品",
-      "sub_short_en": "Consumer goods",
+      "sub_short": "日用品",
+      "sub_short_en": "Goods",
       "row": 0,
       "relations": [
         {
@@ -86,7 +86,7 @@
       "sub": "コーヒーチェーン",
       "sub_en": "Coffee retailer",
       "sub_short": "コーヒー",
-      "sub_short_en": "Coffee retailer",
+      "sub_short_en": "Coffee",
       "row": 0,
       "relations": [
         {
@@ -111,8 +111,8 @@
       "name": "キューリグ・ドクターペッパー",
       "sub": "飲料メーカー",
       "sub_en": "Beverage maker",
-      "sub_short": "飲料メーカー",
-      "sub_short_en": "Beverage maker",
+      "sub_short": "飲料",
+      "sub_short_en": "Drinks",
       "row": 0,
       "relations": [
         {
@@ -163,7 +163,7 @@
       "name": "モンデリーズ・インターナショナル",
       "sub": "菓子・スナック",
       "sub_en": "Snacks & confectionery",
-      "sub_short": "菓子・スナック",
+      "sub_short": "菓子",
       "sub_short_en": "Snacks",
       "row": 0,
       "relations": [
@@ -202,8 +202,8 @@
       "name": "モンスター・ビバレッジ",
       "sub": "エナジードリンク",
       "sub_en": "Energy drinks",
-      "sub_short": "エナジー飲料",
-      "sub_short_en": "Energy drinks",
+      "sub_short": "飲料",
+      "sub_short_en": "Drinks",
       "row": 0,
       "relations": [
         {
@@ -242,7 +242,7 @@
       "sub": "加工食品",
       "sub_en": "Packaged foods",
       "sub_short": "加工食品",
-      "sub_short_en": "Packaged foods",
+      "sub_short_en": "Food",
       "row": 0,
       "relations": [
         {
@@ -281,7 +281,7 @@
       "sub": "加工食品",
       "sub_en": "Packaged food",
       "sub_short": "加工食品",
-      "sub_short_en": "Packaged food",
+      "sub_short_en": "Food",
       "row": 1,
       "relations": [
         {
@@ -307,7 +307,7 @@
       "sub": "加工食品",
       "sub_en": "Packaged food",
       "sub_short": "加工食品",
-      "sub_short_en": "Packaged food",
+      "sub_short_en": "Food",
       "row": 1,
       "relations": [
         {
@@ -332,8 +332,8 @@
       "name": "ホーメル・フーズ",
       "sub": "食肉・食品",
       "sub_en": "Meat & food",
-      "sub_short": "食肉・食品",
-      "sub_short_en": "Meat & food",
+      "sub_short": "食肉",
+      "sub_short_en": "Meat",
       "row": 1,
       "relations": [
         {
@@ -358,8 +358,8 @@
       "name": "ネスレ",
       "sub": "食品・飲料",
       "sub_en": "Food & beverages",
-      "sub_short": "食品・飲料",
-      "sub_short_en": "Food & beverages",
+      "sub_short": "食品",
+      "sub_short_en": "Food",
       "row": 1,
       "relations": [
         {
@@ -385,7 +385,7 @@
       "sub": "清涼飲料",
       "sub_en": "Soft drinks",
       "sub_short": "清涼飲料",
-      "sub_short_en": "Soft drinks",
+      "sub_short_en": "Drinks",
       "row": 1,
       "relations": [
         {
@@ -436,8 +436,8 @@
       "name": "ビタ・ココ",
       "sub": "ココナッツウォーター",
       "sub_en": "Coconut water",
-      "sub_short": "ココナッツ水",
-      "sub_short_en": "Coconut water",
+      "sub_short": "飲料",
+      "sub_short_en": "Drinks",
       "row": 1,
       "relations": [
         {

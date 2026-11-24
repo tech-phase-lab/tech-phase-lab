@@ -39,7 +39,7 @@
       "sub": "半導体",
       "sub_en": "Semiconductors",
       "sub_short": "半導体",
-      "sub_short_en": "Semiconductors",
+      "sub_short_en": "Chips",
       "row": 0,
       "relations": [
         {
@@ -66,7 +66,7 @@
       "sub": "半導体",
       "sub_en": "Semiconductors",
       "sub_short": "半導体",
-      "sub_short_en": "Semiconductors",
+      "sub_short_en": "Chips",
       "row": 0,
       "relations": [
         {
@@ -94,7 +94,7 @@
       "sub": "半導体",
       "sub_en": "Semiconductors",
       "sub_short": "半導体",
-      "sub_short_en": "Semiconductors",
+      "sub_short_en": "Chips",
       "row": 0,
       "relations": [
         {
@@ -161,8 +161,8 @@
       "name": "HP",
       "sub": "PC・プリンター",
       "sub_en": "PCs & printers",
-      "sub_short": "PC・印刷機",
-      "sub_short_en": "PCs & printers",
+      "sub_short": "PC",
+      "sub_short_en": "PCs",
       "row": 1,
       "relations": [
         {
@@ -199,8 +199,8 @@
       "name": "DXCテクノロジー",
       "sub": "ITサービス",
       "sub_en": "IT services",
-      "sub_short": "ITサービス",
-      "sub_short_en": "IT services",
+      "sub_short": "IT",
+      "sub_short_en": "IT",
       "row": 1,
       "relations": [
         {
@@ -279,8 +279,8 @@
       "name": "アリスタネットワークス",
       "sub": "データセンター・ネットワーク",
       "sub_en": "Data center networking",
-      "sub_short": "データセンター",
-      "sub_short_en": "DC networking",
+      "sub_short": "DC",
+      "sub_short_en": "Network",
       "row": 3,
       "relations": [
         {
@@ -319,7 +319,7 @@
       "sub": "ネットワーク機器",
       "sub_en": "Networking equipment",
       "sub_short": "通信機器",
-      "sub_short_en": "Network gear",
+      "sub_short_en": "Network",
       "row": 3,
       "relations": [
         {
@@ -344,8 +344,8 @@
       "name": "IBM",
       "sub": "IT・ソフト",
       "sub_en": "IT & software",
-      "sub_short": "IT・ソフト",
-      "sub_short_en": "IT & software",
+      "sub_short": "IT",
+      "sub_short_en": "IT",
       "row": 3,
       "relations": [
         {
@@ -384,8 +384,8 @@
       "name": "シエナ",
       "sub": "光ネットワーク",
       "sub_en": "Optical networking",
-      "sub_short": "光ネットワーク",
-      "sub_short_en": "Optical nets",
+      "sub_short": "光通信",
+      "sub_short_en": "Optics",
       "row": 3,
       "relations": [
         {
@@ -410,8 +410,8 @@
       "name": "フォーティネット",
       "sub": "セキュリティ",
       "sub_en": "Cybersecurity",
-      "sub_short": "セキュリティ",
-      "sub_short_en": "Cybersecurity",
+      "sub_short": "防御",
+      "sub_short_en": "Security",
       "row": 3,
       "relations": [
         {
@@ -463,7 +463,7 @@
       "sub": "ネットワーク機器",
       "sub_en": "Networking equipment",
       "sub_short": "通信機器",
-      "sub_short_en": "Network gear",
+      "sub_short_en": "Network",
       "row": 3,
       "relations": [
         {

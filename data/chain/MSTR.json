@@ -24,8 +24,8 @@
       "name": "アイ・ビー・エム",
       "sub": "ITサービス",
       "sub_en": "IT services",
-      "sub_short": "ITサービス",
-      "sub_short_en": "IT services",
+      "sub_short": "IT",
+      "sub_short_en": "IT",
       "row": 0,
       "relations": [
         {
@@ -50,8 +50,8 @@
       "name": "マイクロソフト",
       "sub": "ソフトウェア・クラウド",
       "sub_en": "Software & cloud",
-      "sub_short": "ソフトウェア",
-      "sub_short_en": "Software & cloud",
+      "sub_short": "ソフト",
+      "sub_short_en": "Software",
       "row": 0,
       "relations": [
         {
@@ -89,7 +89,7 @@
       "name": "オラクル",
       "sub": "ソフトウェア",
       "sub_en": "Software",
-      "sub_short": "ソフトウェア",
+      "sub_short": "ソフト",
       "sub_short_en": "Software",
       "row": 0,
       "relations": [
@@ -115,7 +115,7 @@
       "name": "セールスフォース",
       "sub": "ソフトウェア",
       "sub_en": "Software",
-      "sub_short": "ソフトウェア",
+      "sub_short": "ソフト",
       "sub_short_en": "Software",
       "row": 0,
       "relations": [
@@ -141,7 +141,7 @@
       "name": "エスエーピー",
       "sub": "ソフトウェア",
       "sub_en": "Software",
-      "sub_short": "ソフトウェア",
+      "sub_short": "ソフト",
       "sub_short_en": "Software",
       "row": 0,
       "relations": [
@@ -168,7 +168,7 @@
       "sub": "クラウド",
       "sub_en": "Cloud hosting",
       "sub_short": "クラウド",
-      "sub_short_en": "Cloud hosting",
+      "sub_short_en": "Cloud",
       "row": 0,
       "relations": [
         {
@@ -194,7 +194,7 @@
       "sub": "クラウド",
       "sub_en": "Cloud hosting",
       "sub_short": "クラウド",
-      "sub_short_en": "Cloud hosting",
+      "sub_short_en": "Cloud",
       "row": 0,
       "relations": [
         {

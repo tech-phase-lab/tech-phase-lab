@@ -34,8 +34,8 @@
       "name_en": "Fair Isaac (FICO)",
       "sub": "信用スコア",
       "sub_en": "Credit scoring",
-      "sub_short": "信用スコア",
-      "sub_short_en": "Credit scoring",
+      "sub_short": "信用情報",
+      "sub_short_en": "Credit",
       "row": 0,
       "relations": [
         {
@@ -86,8 +86,8 @@
       "name_en": "Nu Holdings",
       "sub": "デジタル銀行(ブラジル)",
       "sub_en": "Digital bank (Brazil)",
-      "sub_short": "デジタル銀行",
-      "sub_short_en": "Digital bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
       "row": 0,
       "relations": [
         {
@@ -113,7 +113,7 @@
       "sub": "信用情報(ブラジル)",
       "sub_en": "Credit bureau (Brazil)",
       "sub_short": "信用情報",
-      "sub_short_en": "Credit bureau",
+      "sub_short_en": "Credit",
       "row": 1,
       "relations": [
         {
@@ -138,8 +138,8 @@
       "name_en": "Appriss Insights",
       "sub": "犯罪・身元情報",
       "sub_en": "Criminal & identity data",
-      "sub_short": "犯罪・身元情報",
-      "sub_short_en": "Background data",
+      "sub_short": "身元情報",
+      "sub_short_en": "Records",
       "row": 1,
       "relations": [
         {
@@ -164,8 +164,8 @@
       "name_en": "The Food Industry Credit Bureau",
       "sub": "業界信用情報",
       "sub_en": "Industry credit bureau",
-      "sub_short": "業界信用情報",
-      "sub_short_en": "Credit bureau",
+      "sub_short": "信用情報",
+      "sub_short_en": "Credit",
       "row": 1,
       "relations": [
         {
@@ -191,7 +191,7 @@
       "sub": "信用情報",
       "sub_en": "Credit bureau",
       "sub_short": "信用情報",
-      "sub_short_en": "Credit bureau",
+      "sub_short_en": "Credit",
       "row": 2,
       "relations": [
         {
@@ -216,8 +216,8 @@
       "name_en": "Dun & Bradstreet",
       "sub": "企業信用情報",
       "sub_en": "Business credit data",
-      "sub_short": "企業信用情報",
-      "sub_short_en": "Business credit",
+      "sub_short": "信用情報",
+      "sub_short_en": "Credit",
       "row": 2,
       "relations": [
         {
@@ -242,8 +242,8 @@
       "name_en": "Gen Digital",
       "sub": "個人向けセキュリティ",
       "sub_en": "Consumer security",
-      "sub_short": "個人向け防御",
-      "sub_short_en": "Cyber safety",
+      "sub_short": "防御",
+      "sub_short_en": "Security",
       "row": 2,
       "relations": [
         {
@@ -268,8 +268,8 @@
       "name_en": "CreditRiskMonitor",
       "sub": "企業信用分析",
       "sub_en": "Business credit analytics",
-      "sub_short": "企業信用分析",
-      "sub_short_en": "Business credit",
+      "sub_short": "信用情報",
+      "sub_short_en": "Credit",
       "row": 2,
       "relations": [
         {

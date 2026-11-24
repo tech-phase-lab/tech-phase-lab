@@ -32,8 +32,8 @@
       "name_en": "Servotronics",
       "sub": "航空機用サーボ弁",
       "sub_en": "Aerospace servo valves",
-      "sub_short": "航空機部品",
-      "sub_short_en": "Aero valves",
+      "sub_short": "航空部品",
+      "sub_short_en": "Aircraft",
       "row": 0,
       "relations": [
         {
@@ -58,8 +58,8 @@
       "name_en": "RTX (Goodrich)",
       "sub": "航空宇宙・防衛",
       "sub_en": "Aerospace & defense",
-      "sub_short": "航空宇宙・防衛",
-      "sub_short_en": "Aerospace",
+      "sub_short": "航空宇宙",
+      "sub_short_en": "Aero",
       "row": 0,
       "relations": [
         {
@@ -84,8 +84,8 @@
       "name_en": "JPE",
       "sub": "航空機部品",
       "sub_en": "Aerospace components",
-      "sub_short": "航空機部品",
-      "sub_short_en": "Aero parts",
+      "sub_short": "航空部品",
+      "sub_short_en": "Aircraft",
       "row": 0,
       "relations": [
         {
@@ -110,8 +110,8 @@
       "name_en": "Prince & Izant",
       "sub": "ろう付け材料",
       "sub_en": "Brazing alloys",
-      "sub_short": "ろう付け材料",
-      "sub_short_en": "Brazing alloys",
+      "sub_short": "ろう材",
+      "sub_short_en": "Alloys",
       "row": 0,
       "relations": [
         {
@@ -136,8 +136,8 @@
       "name_en": "Ducommun",
       "sub": "航空機部品・構造",
       "sub_en": "Aerostructures & electronics",
-      "sub_short": "航空機部品",
-      "sub_short_en": "Aerostructures",
+      "sub_short": "航空部品",
+      "sub_short_en": "Aircraft",
       "row": 1,
       "relations": [
         {
@@ -162,8 +162,8 @@
       "name_en": "AerSale",
       "sub": "航空機の中古部品・整備",
       "sub_en": "Used aircraft parts & MRO",
-      "sub_short": "航空機整備",
-      "sub_short_en": "Aircraft parts",
+      "sub_short": "航空整備",
+      "sub_short_en": "Aircraft",
       "row": 2,
       "relations": [
         {
@@ -188,8 +188,8 @@
       "name_en": "ESCO Technologies",
       "sub": "航空・防衛部品",
       "sub_en": "Aerospace & defense products",
-      "sub_short": "航空・防衛部品",
-      "sub_short_en": "Aerospace",
+      "sub_short": "航空部品",
+      "sub_short_en": "Aero",
       "row": 2,
       "relations": [
         {

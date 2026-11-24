@@ -28,8 +28,8 @@
       "name_en": "Talkspace",
       "sub": "オンライン心理療法",
       "sub_en": "Online therapy",
-      "sub_short": "オンライン療法",
-      "sub_short_en": "Online therapy",
+      "sub_short": "遠隔療法",
+      "sub_short_en": "Therapy",
       "row": 0,
       "relations": [
         {
@@ -54,8 +54,8 @@
       "name_en": "Premier",
       "sub": "病院の共同購買",
       "sub_en": "Healthcare group purchasing",
-      "sub_short": "病院の共同購買",
-      "sub_short_en": "Health buying",
+      "sub_short": "共同購買",
+      "sub_short_en": "Health",
       "row": 0,
       "relations": [
         {
@@ -81,7 +81,7 @@
       "sub": "医療不動産REIT",
       "sub_en": "Healthcare REIT",
       "sub_short": "医療REIT",
-      "sub_short_en": "Healthcare REIT",
+      "sub_short_en": "REIT",
       "row": 0,
       "relations": [
         {
@@ -107,7 +107,7 @@
       "sub": "行動医療(精神科)",
       "sub_en": "Behavioral health",
       "sub_short": "行動医療",
-      "sub_short_en": "Mental health",
+      "sub_short_en": "Mental",
       "row": 1,
       "relations": [
         {
@@ -132,7 +132,7 @@
       "name_en": "Tenet Healthcare",
       "sub": "病院・外来手術",
       "sub_en": "Hospitals & surgery centers",
-      "sub_short": "病院・外来手術",
+      "sub_short": "病院",
       "sub_short_en": "Hospitals",
       "row": 1,
       "relations": [

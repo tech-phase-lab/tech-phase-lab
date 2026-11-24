@@ -37,7 +37,7 @@
       "sub": "露光装置",
       "sub_en": "Lithography",
       "sub_short": "露光装置",
-      "sub_short_en": "Lithography",
+      "sub_short_en": "Litho",
       "row": 0,
       "relations": [
         {
@@ -62,7 +62,7 @@
       "sub": "製造装置",
       "sub_en": "Equipment",
       "sub_short": "製造装置",
-      "sub_short_en": "Equipment",
+      "sub_short_en": "Gear",
       "row": 0,
       "relations": [
         {
@@ -87,7 +87,7 @@
       "sub": "検査装置",
       "sub_en": "Probe cards",
       "sub_short": "検査装置",
-      "sub_short_en": "Probe cards",
+      "sub_short_en": "Testing",
       "row": 0,
       "relations": [
         {
@@ -111,8 +111,8 @@
       "name": "Rambus",
       "sub": "メモリー用チップ",
       "sub_en": "Memory interface chips",
-      "sub_short": "メモリ用チップ",
-      "sub_short_en": "Memory chips",
+      "sub_short": "メモリ",
+      "sub_short_en": "Memory",
       "row": 0,
       "relations": [
         {
@@ -202,7 +202,7 @@
       "sub": "製造装置",
       "sub_en": "Equipment",
       "sub_short": "製造装置",
-      "sub_short_en": "Equipment",
+      "sub_short_en": "Gear",
       "row": 2,
       "relations": [
         {
@@ -283,7 +283,7 @@
       "sub": "持株会社",
       "sub_en": "Holding company",
       "sub_short": "持株会社",
-      "sub_short_en": "Holding company",
+      "sub_short_en": "Holding",
       "row": 2,
       "relations": [
         {
@@ -308,7 +308,7 @@
       "sub": "NAND",
       "sub_en": "NAND flash",
       "sub_short": "NAND",
-      "sub_short_en": "NAND flash",
+      "sub_short_en": "NAND",
       "row": 2,
       "relations": [
         {
@@ -396,7 +396,7 @@
       "sub": "NAND",
       "sub_en": "NAND flash",
       "sub_short": "NAND",
-      "sub_short_en": "NAND flash",
+      "sub_short_en": "NAND",
       "row": 3,
       "relations": [
         {

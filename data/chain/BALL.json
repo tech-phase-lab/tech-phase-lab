@@ -26,7 +26,7 @@
       "name": "アンハイザー・ブッシュ・インベブ",
       "sub": "ビール大手",
       "sub_en": "Brewer",
-      "sub_short": "ビール大手",
+      "sub_short": "ビール",
       "sub_short_en": "Brewer",
       "row": 0,
       "relations": [
@@ -52,8 +52,8 @@
       "name": "コカ・コーラ・ボトラーズ・セールス&サービス",
       "sub": "飲料ボトラー",
       "sub_en": "Beverage bottler",
-      "sub_short": "飲料ボトラー",
-      "sub_short_en": "Beverage bottler",
+      "sub_short": "飲料",
+      "sub_short_en": "Drinks",
       "row": 0,
       "relations": [
         {
@@ -78,8 +78,8 @@
       "name": "レッドブル",
       "sub": "エナジー飲料",
       "sub_en": "Energy drinks",
-      "sub_short": "エナジー飲料",
-      "sub_short_en": "Energy drinks",
+      "sub_short": "飲料",
+      "sub_short_en": "Drinks",
       "row": 0,
       "relations": [
         {
@@ -104,8 +104,8 @@
       "name": "クラウン・ホールディングス",
       "sub": "飲料缶・容器",
       "sub_en": "Cans & packaging",
-      "sub_short": "飲料缶・容器",
-      "sub_short_en": "Cans & packaging",
+      "sub_short": "飲料缶",
+      "sub_short_en": "Cans",
       "row": 1,
       "relations": [
         {
@@ -131,7 +131,7 @@
       "sub": "包装",
       "sub_en": "Packaging",
       "sub_short": "包装",
-      "sub_short_en": "Packaging",
+      "sub_short_en": "Packing",
       "row": 1,
       "relations": [
         {

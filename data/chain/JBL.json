@@ -30,8 +30,8 @@
       "name": "コヒュー",
       "sub": "半導体試験装置",
       "sub_en": "Semiconductor test equipment",
-      "sub_short": "半導体試験装置",
-      "sub_short_en": "Chip testing",
+      "sub_short": "検査装置",
+      "sub_short_en": "Testing",
       "row": 0,
       "relations": [
         {
@@ -70,7 +70,7 @@
       "sub": "ネットワーク機器",
       "sub_en": "Networking",
       "sub_short": "通信機器",
-      "sub_short_en": "Networking",
+      "sub_short_en": "Network",
       "row": 0,
       "relations": [
         {
@@ -95,7 +95,7 @@
       "name": "アマゾン",
       "sub": "クラウド・EC",
       "sub_en": "Cloud & e-commerce",
-      "sub_short": "クラウド・EC",
+      "sub_short": "クラウド",
       "sub_short_en": "Cloud",
       "row": 1,
       "relations": [
@@ -135,7 +135,7 @@
       "sub": "半導体",
       "sub_en": "Semiconductors",
       "sub_short": "半導体",
-      "sub_short_en": "Semiconductors",
+      "sub_short_en": "Chips",
       "row": 1,
       "relations": [
         {
@@ -162,7 +162,7 @@
       "name": "ユナイテッド・マイクロエレクトロニクス",
       "sub": "半導体受託製造",
       "sub_en": "Foundry",
-      "sub_short": "半導体受託製造",
+      "sub_short": "受託生産",
       "sub_short_en": "Foundry",
       "row": 1,
       "relations": [
@@ -189,7 +189,7 @@
       "sub": "インフラ・複合企業",
       "sub_en": "Infrastructure conglomerate",
       "sub_short": "インフラ",
-      "sub_short_en": "Infrastructure",
+      "sub_short_en": "Infra",
       "row": 1,
       "relations": [
         {
@@ -217,7 +217,7 @@
       "sub": "検査装置・ソフト",
       "sub_en": "Inspection equipment & software",
       "sub_short": "検査装置",
-      "sub_short_en": "Inspection",
+      "sub_short_en": "Testing",
       "row": 1,
       "relations": [
         {
@@ -242,7 +242,7 @@
       "name": "ベンチマーク・エレクトロニクス",
       "sub": "電子機器受託製造",
       "sub_en": "EMS",
-      "sub_short": "電子機器受託",
+      "sub_short": "EMS",
       "sub_short_en": "EMS",
       "row": 2,
       "relations": [
@@ -269,7 +269,7 @@
       "sub": "半導体装置サブシステム",
       "sub_en": "Semiconductor subsystems",
       "sub_short": "装置部品",
-      "sub_short_en": "Chip tool parts",
+      "sub_short_en": "Tool parts",
       "row": 2,
       "relations": [
         {
@@ -297,7 +297,7 @@
       "sub": "家族向け位置情報",
       "sub_en": "Family safety app",
       "sub_short": "位置情報",
-      "sub_short_en": "Family safety",
+      "sub_short_en": "Safety",
       "row": 0,
       "relations": [
         {

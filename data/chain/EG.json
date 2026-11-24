@@ -29,7 +29,7 @@
       "sub": "保険仲介",
       "sub_en": "Insurance brokerage",
       "sub_short": "保険仲介",
-      "sub_short_en": "Insurance broker",
+      "sub_short_en": "Broker",
       "row": 0,
       "relations": [
         {
@@ -55,7 +55,7 @@
       "sub": "保険仲介",
       "sub_en": "Insurance brokerage",
       "sub_short": "保険仲介",
-      "sub_short_en": "Insurance broker",
+      "sub_short_en": "Broker",
       "row": 0,
       "relations": [
         {
@@ -81,7 +81,7 @@
       "sub": "再保険(ドイツ)",
       "sub_en": "Reinsurance (Germany)",
       "sub_short": "再保険",
-      "sub_short_en": "Reinsurance",
+      "sub_short_en": "Reinsure",
       "row": 1,
       "relations": [
         {

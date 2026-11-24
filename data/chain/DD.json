@@ -31,8 +31,8 @@
       "name_en": "Qnity Electronics",
       "sub": "半導体材料",
       "sub_en": "Semiconductor materials",
-      "sub_short": "半導体材料",
-      "sub_short_en": "Chip materials",
+      "sub_short": "材料",
+      "sub_short_en": "Materials",
       "row": 0,
       "relations": [
         {
@@ -58,7 +58,7 @@
       "sub": "化学(フッ素)",
       "sub_en": "Chemicals (fluoroproducts)",
       "sub_short": "化学",
-      "sub_short_en": "Chemicals",
+      "sub_short_en": "Chem",
       "row": 0,
       "relations": [
         {
@@ -84,7 +84,7 @@
       "sub": "農業(種子・農薬)",
       "sub_en": "Agriculture",
       "sub_short": "農業",
-      "sub_short_en": "Agriculture",
+      "sub_short_en": "Farming",
       "row": 0,
       "relations": [
         {
@@ -109,7 +109,7 @@
       "name_en": "IFF",
       "sub": "香料・食品原料",
       "sub_en": "Flavors & ingredients",
-      "sub_short": "香料・食品原料",
+      "sub_short": "香料",
       "sub_short_en": "Flavors",
       "row": 1,
       "relations": [
@@ -136,7 +136,7 @@
       "sub": "化学",
       "sub_en": "Chemicals",
       "sub_short": "化学",
-      "sub_short_en": "Chemicals",
+      "sub_short_en": "Chem",
       "row": 1,
       "relations": [
         {
@@ -188,7 +188,7 @@
       "sub": "水処理膜(中国)",
       "sub_en": "Water membranes (China)",
       "sub_short": "水処理膜",
-      "sub_short_en": "Water membranes",
+      "sub_short_en": "Water",
       "row": 1,
       "relations": [
         {
@@ -213,8 +213,8 @@
       "name_en": "Donatelle Plastics",
       "sub": "医療用部品",
       "sub_en": "Medical components",
-      "sub_short": "医療用部品",
-      "sub_short_en": "Medical parts",
+      "sub_short": "医療部品",
+      "sub_short_en": "Medtech",
       "row": 1,
       "relations": [
         {
@@ -239,8 +239,8 @@
       "name_en": "Spectrum Plastics Group",
       "sub": "医療用部品",
       "sub_en": "Medical components",
-      "sub_short": "医療用部品",
-      "sub_short_en": "Medical parts",
+      "sub_short": "医療部品",
+      "sub_short_en": "Medtech",
       "row": 1,
       "relations": [
         {
@@ -265,8 +265,8 @@
       "name_en": "Alpha Pro Tech",
       "sub": "防護服・建材",
       "sub_en": "Protective apparel & building products",
-      "sub_short": "防護服・建材",
-      "sub_short_en": "Protective wear",
+      "sub_short": "防護服",
+      "sub_short_en": "Safety",
       "row": 2,
       "relations": [
         {

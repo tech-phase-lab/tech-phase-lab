@@ -36,7 +36,7 @@
       "sub": "飲料",
       "sub_en": "Beverages",
       "sub_short": "飲料",
-      "sub_short_en": "Beverages",
+      "sub_short_en": "Drinks",
       "row": 0,
       "relations": [
         {
@@ -61,8 +61,8 @@
       "name_en": "Monster Beverage",
       "sub": "エナジードリンク",
       "sub_en": "Energy drinks",
-      "sub_short": "エナジー飲料",
-      "sub_short_en": "Energy drinks",
+      "sub_short": "飲料",
+      "sub_short_en": "Drinks",
       "row": 0,
       "relations": [
         {
@@ -88,7 +88,7 @@
       "sub": "飲料",
       "sub_en": "Beverages",
       "sub_short": "飲料",
-      "sub_short_en": "Beverages",
+      "sub_short_en": "Drinks",
       "row": 0,
       "relations": [
         {
@@ -114,7 +114,7 @@
       "sub": "共同調達",
       "sub_en": "Joint procurement",
       "sub_short": "共同調達",
-      "sub_short_en": "Joint buying",
+      "sub_short_en": "Co-op",
       "row": 1,
       "relations": [
         {
@@ -139,7 +139,7 @@
       "name_en": "South Atlantic Canners",
       "sub": "缶詰め製造",
       "sub_en": "Canning",
-      "sub_short": "缶詰め製造",
+      "sub_short": "缶詰",
       "sub_short_en": "Canning",
       "row": 1,
       "relations": [
@@ -217,8 +217,8 @@
       "name_en": "PepsiCo",
       "sub": "飲料・食品",
       "sub_en": "Beverages & snacks",
-      "sub_short": "飲料・食品",
-      "sub_short_en": "Beverages",
+      "sub_short": "飲料",
+      "sub_short_en": "Drinks",
       "row": 3,
       "relations": [
         {

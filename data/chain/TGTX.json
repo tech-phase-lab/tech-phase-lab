@@ -33,8 +33,8 @@
       "name_en": "Precision BioSciences",
       "sub": "ゲノム編集・細胞治療",
       "sub_en": "Gene editing & cell therapy",
-      "sub_short": "ゲノム編集",
-      "sub_short_en": "Gene editing",
+      "sub_short": "遺伝子",
+      "sub_short_en": "Genes",
       "row": 0,
       "relations": [
         {
@@ -59,8 +59,8 @@
       "name_en": "Checkpoint Therapeutics",
       "sub": "がん免疫薬",
       "sub_en": "Cancer immunotherapy",
-      "sub_short": "がん免疫薬",
-      "sub_short_en": "Immuno-oncology",
+      "sub_short": "がん免疫",
+      "sub_short_en": "Oncology",
       "row": 0,
       "relations": [
         {
@@ -85,8 +85,8 @@
       "name_en": "Fortress Biotech",
       "sub": "バイオ企業の育成",
       "sub_en": "Biotech holding company",
-      "sub_short": "バイオ育成",
-      "sub_short_en": "Biotech holding",
+      "sub_short": "バイオ",
+      "sub_short_en": "Biotech",
       "row": 0,
       "relations": [
         {
@@ -111,8 +111,8 @@
       "name_en": "Neuraxpharm",
       "sub": "中枢神経の医薬(欧州)",
       "sub_en": "CNS pharma (Europe)",
-      "sub_short": "中枢神経の医薬",
-      "sub_short_en": "CNS pharma",
+      "sub_short": "神経薬",
+      "sub_short_en": "CNS",
       "row": 1,
       "relations": [
         {
@@ -138,7 +138,7 @@
       "sub": "抗体医薬",
       "sub_en": "Antibody drugs",
       "sub_short": "抗体医薬",
-      "sub_short_en": "Antibody drugs",
+      "sub_short_en": "Antibody",
       "row": 2,
       "relations": [
         {
@@ -164,7 +164,7 @@
       "sub": "医薬品",
       "sub_en": "Pharmaceuticals",
       "sub_short": "医薬品",
-      "sub_short_en": "Pharmaceuticals",
+      "sub_short_en": "Pharma",
       "row": 2,
       "relations": [
         {
@@ -189,8 +189,8 @@
       "name_en": "Nkarta",
       "sub": "NK細胞治療",
       "sub_en": "NK cell therapy",
-      "sub_short": "NK細胞治療",
-      "sub_short_en": "NK cell therapy",
+      "sub_short": "細胞治療",
+      "sub_short_en": "Cell tx",
       "row": 2,
       "relations": [
         {

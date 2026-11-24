@@ -30,7 +30,7 @@
       "name": "バルコ",
       "sub": "映写・音響機器",
       "sub_en": "Projection & sound",
-      "sub_short": "映写・音響機器",
+      "sub_short": "映写機",
       "sub_short_en": "Projection",
       "row": 0,
       "relations": [
@@ -57,7 +57,7 @@
       "sub": "館内広告",
       "sub_en": "In-theater ads",
       "sub_short": "館内広告",
-      "sub_short_en": "In-theater ads",
+      "sub_short_en": "Ads",
       "row": 1,
       "relations": [
         {
@@ -82,8 +82,8 @@
       "name": "AMCエンターテインメント",
       "sub": "映画館運営",
       "sub_en": "Theater operator",
-      "sub_short": "映画館運営",
-      "sub_short_en": "Theater operator",
+      "sub_short": "映画館",
+      "sub_short_en": "Cinemas",
       "row": 1,
       "relations": [
         {
@@ -121,8 +121,8 @@
       "name": "リーガル",
       "sub": "映画館運営",
       "sub_en": "Theater operator",
-      "sub_short": "映画館運営",
-      "sub_short_en": "Theater operator",
+      "sub_short": "映画館",
+      "sub_short_en": "Cinemas",
       "row": 2,
       "relations": [
         {
@@ -147,8 +147,8 @@
       "name": "シネポリス",
       "sub": "映画館運営",
       "sub_en": "Theater operator",
-      "sub_short": "映画館運営",
-      "sub_short_en": "Theater operator",
+      "sub_short": "映画館",
+      "sub_short_en": "Cinemas",
       "row": 2,
       "relations": [
         {

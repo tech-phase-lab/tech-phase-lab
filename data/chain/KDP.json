@@ -29,8 +29,8 @@
       "name": "ウォルマート",
       "sub": "最大の小売顧客",
       "sub_en": "Largest retail customer",
-      "sub_short": "最大の小売顧客",
-      "sub_short_en": "Top retailer",
+      "sub_short": "小売",
+      "sub_short_en": "Retail",
       "row": 0,
       "relations": [
         {
@@ -56,7 +56,7 @@
       "sub": "清涼飲料",
       "sub_en": "Soft drinks",
       "sub_short": "清涼飲料",
-      "sub_short_en": "Soft drinks",
+      "sub_short_en": "Drinks",
       "row": 0,
       "relations": [
         {
@@ -108,7 +108,7 @@
       "sub": "清涼飲料",
       "sub_en": "Soft drinks",
       "sub_short": "清涼飲料",
-      "sub_short_en": "Soft drinks",
+      "sub_short_en": "Drinks",
       "row": 0,
       "relations": [
         {
@@ -211,8 +211,8 @@
       "name": "J.M.スマッカー",
       "sub": "コーヒー・食品",
       "sub_en": "Coffee & food",
-      "sub_short": "コーヒー・食品",
-      "sub_short_en": "Coffee & food",
+      "sub_short": "コーヒー",
+      "sub_short_en": "Coffee",
       "row": 0,
       "relations": [
         {
@@ -263,8 +263,8 @@
       "name": "ネスレ",
       "sub": "食品・飲料",
       "sub_en": "Food & beverage",
-      "sub_short": "食品・飲料",
-      "sub_short_en": "Food & beverage",
+      "sub_short": "食品",
+      "sub_short_en": "Food",
       "row": 0,
       "relations": [
         {
@@ -289,8 +289,8 @@
       "name": "ビタココ",
       "sub": "ココナッツウォーター",
       "sub_en": "Coconut water",
-      "sub_short": "ココナッツ水",
-      "sub_short_en": "Coconut water",
+      "sub_short": "飲料",
+      "sub_short_en": "Drinks",
       "row": 0,
       "relations": [
         {
@@ -341,8 +341,8 @@
       "name": "セルシウス・ホールディングス",
       "sub": "エナジードリンク",
       "sub_en": "Energy drinks",
-      "sub_short": "エナジー飲料",
-      "sub_short_en": "Energy drinks",
+      "sub_short": "飲料",
+      "sub_short_en": "Drinks",
       "row": 1,
       "relations": [
         {
@@ -368,7 +368,7 @@
       "sub": "清涼飲料",
       "sub_en": "Soft drinks",
       "sub_short": "清涼飲料",
-      "sub_short_en": "Soft drinks",
+      "sub_short_en": "Drinks",
       "row": 1,
       "relations": [
         {

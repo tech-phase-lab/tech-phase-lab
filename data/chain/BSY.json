@@ -33,7 +33,7 @@
       "sub": "ソフト・クラウド",
       "sub_en": "Software & cloud",
       "sub_short": "ソフト",
-      "sub_short_en": "Software & cloud",
+      "sub_short_en": "Software",
       "row": 0,
       "relations": [
         {
@@ -57,8 +57,8 @@
       "name": "Siemens",
       "sub": "産業・電機",
       "sub_en": "Industrial & electrical",
-      "sub_short": "産業・電機",
-      "sub_short_en": "Industrial goods",
+      "sub_short": "産業",
+      "sub_short_en": "Industrial",
       "row": 1,
       "relations": [
         {
@@ -85,7 +85,7 @@
       "sub": "ソフト・クラウド",
       "sub_en": "Software & cloud",
       "sub_short": "ソフト",
-      "sub_short_en": "Software & cloud",
+      "sub_short_en": "Software",
       "row": 1,
       "relations": [
         {
@@ -108,8 +108,8 @@
       "name": "Autodesk",
       "sub": "設計ソフト",
       "sub_en": "Design software",
-      "sub_short": "設計ソフト",
-      "sub_short_en": "Design software",
+      "sub_short": "設計IT",
+      "sub_short_en": "Design",
       "row": 2,
       "relations": [
         {
@@ -146,8 +146,8 @@
       "name": "Oracle",
       "sub": "業務ソフト・DB",
       "sub_en": "Enterprise software & databases",
-      "sub_short": "業務ソフト",
-      "sub_short_en": "Enterprise apps",
+      "sub_short": "業務IT",
+      "sub_short_en": "Software",
       "row": 2,
       "relations": [
         {
@@ -172,7 +172,7 @@
       "sub": "電力機器",
       "sub_en": "Power equipment",
       "sub_short": "電力機器",
-      "sub_short_en": "Power equipment",
+      "sub_short_en": "Power",
       "row": 2,
       "relations": [
         {
@@ -196,8 +196,8 @@
       "name": "Schneider Electric",
       "sub": "電機・自動化",
       "sub_en": "Electrical & automation",
-      "sub_short": "電機・自動化",
-      "sub_short_en": "Automation",
+      "sub_short": "電機",
+      "sub_short_en": "Robotics",
       "row": 2,
       "relations": [
         {

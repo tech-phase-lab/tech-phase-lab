@@ -31,8 +31,8 @@
       "name_en": "CommonSpirit Health",
       "sub": "非営利の病院グループ",
       "sub_en": "Nonprofit health system",
-      "sub_short": "病院グループ",
-      "sub_short_en": "Health system",
+      "sub_short": "病院",
+      "sub_short_en": "Hospitals",
       "row": 0,
       "relations": [
         {
@@ -57,8 +57,8 @@
       "name_en": "John Muir Health",
       "sub": "非営利の病院グループ",
       "sub_en": "Nonprofit health system",
-      "sub_short": "病院グループ",
-      "sub_short_en": "Health system",
+      "sub_short": "病院",
+      "sub_short_en": "Hospitals",
       "row": 0,
       "relations": [
         {
@@ -83,8 +83,8 @@
       "name_en": "Baylor Scott & White Health",
       "sub": "非営利の病院グループ(テキサス)",
       "sub_en": "Nonprofit health system (Texas)",
-      "sub_short": "病院グループ",
-      "sub_short_en": "Health system",
+      "sub_short": "病院",
+      "sub_short_en": "Hospitals",
       "row": 0,
       "relations": [
         {
@@ -110,7 +110,7 @@
       "sub": "医療不動産REIT",
       "sub_en": "Healthcare REIT",
       "sub_short": "医療REIT",
-      "sub_short_en": "Healthcare REIT",
+      "sub_short_en": "REIT",
       "row": 1,
       "relations": [
         {
@@ -136,7 +136,7 @@
       "sub": "医療不動産REIT",
       "sub_en": "Healthcare REIT",
       "sub_short": "医療REIT",
-      "sub_short_en": "Healthcare REIT",
+      "sub_short_en": "REIT",
       "row": 1,
       "relations": [
         {
@@ -162,7 +162,7 @@
       "sub": "外来手術センター",
       "sub_en": "Surgical facilities",
       "sub_short": "外来手術",
-      "sub_short_en": "Surgery centers",
+      "sub_short_en": "Surgery",
       "row": 2,
       "relations": [
         {

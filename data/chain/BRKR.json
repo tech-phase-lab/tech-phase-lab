@@ -29,8 +29,8 @@
       "name_en": "10x Genomics",
       "sub": "単一細胞解析",
       "sub_en": "Single-cell analysis",
-      "sub_short": "単一細胞解析",
-      "sub_short_en": "Single-cell",
+      "sub_short": "細胞解析",
+      "sub_short_en": "Cells",
       "row": 0,
       "relations": [
         {
@@ -56,7 +56,7 @@
       "sub": "抗体創薬",
       "sub_en": "Antibody discovery",
       "sub_short": "抗体創薬",
-      "sub_short_en": "Antibodies",
+      "sub_short_en": "Antibody",
       "row": 0,
       "relations": [
         {
@@ -81,8 +81,8 @@
       "name_en": "Accelerate Diagnostics",
       "sub": "微生物検査",
       "sub_en": "Microbiology diagnostics",
-      "sub_short": "微生物検査",
-      "sub_short_en": "Microbiology",
+      "sub_short": "検査",
+      "sub_short_en": "Microbio",
       "row": 0,
       "relations": [
         {
@@ -108,7 +108,7 @@
       "sub": "特殊金属",
       "sub_en": "Specialty metals",
       "sub_short": "特殊金属",
-      "sub_short_en": "Specialty metals",
+      "sub_short_en": "Metals",
       "row": 0,
       "relations": [
         {
@@ -134,7 +134,7 @@
       "sub": "分析機器",
       "sub_en": "Analytical instruments",
       "sub_short": "分析機器",
-      "sub_short_en": "Lab instruments",
+      "sub_short_en": "Lab tools",
       "row": 1,
       "relations": [
         {
@@ -159,8 +159,8 @@
       "name_en": "Camtek",
       "sub": "半導体検査",
       "sub_en": "Semiconductor inspection",
-      "sub_short": "半導体検査",
-      "sub_short_en": "Chip inspection",
+      "sub_short": "検査装置",
+      "sub_short_en": "Chip tools",
       "row": 1,
       "relations": [
         {
@@ -185,8 +185,8 @@
       "name_en": "908 Devices",
       "sub": "小型質量分析",
       "sub_en": "Handheld mass spec",
-      "sub_short": "小型質量分析",
-      "sub_short_en": "Mass spec",
+      "sub_short": "分析装置",
+      "sub_short_en": "Lab tools",
       "row": 1,
       "relations": [
         {
@@ -211,8 +211,8 @@
       "name_en": "Akoya Biosciences",
       "sub": "空間生物学",
       "sub_en": "Spatial biology",
-      "sub_short": "空間生物学",
-      "sub_short_en": "Spatial biology",
+      "sub_short": "細胞解析",
+      "sub_short_en": "Bio tools",
       "row": 1,
       "relations": [
         {
@@ -238,7 +238,7 @@
       "sub": "抗体創薬",
       "sub_en": "Antibody discovery",
       "sub_short": "抗体創薬",
-      "sub_short_en": "Antibodies",
+      "sub_short_en": "Antibody",
       "row": 1,
       "relations": [
         {
@@ -263,8 +263,8 @@
       "name_en": "Quanterix",
       "sub": "タンパク質測定",
       "sub_en": "Protein detection",
-      "sub_short": "タンパク質測定",
-      "sub_short_en": "Protein tests",
+      "sub_short": "測定",
+      "sub_short_en": "Proteins",
       "row": 1,
       "relations": [
         {

@@ -33,8 +33,8 @@
       "name_en": "Aymium",
       "sub": "バイオカーボン",
       "sub_en": "Biocarbon",
-      "sub_short": "バイオカーボン",
-      "sub_short_en": "Biocarbon",
+      "sub_short": "炭素材",
+      "sub_short_en": "Carbon",
       "row": 0,
       "relations": [
         {
@@ -59,8 +59,8 @@
       "name_en": "Rare Earths Americas",
       "sub": "レアアース探鉱",
       "sub_en": "Rare earth exploration",
-      "sub_short": "レアアース探鉱",
-      "sub_short_en": "Rare earths",
+      "sub_short": "希土類",
+      "sub_short_en": "Minerals",
       "row": 0,
       "relations": [
         {
@@ -85,8 +85,8 @@
       "name_en": "Builders FirstSource",
       "sub": "建材の流通",
       "sub_en": "Building materials distribution",
-      "sub_short": "建材の流通",
-      "sub_short_en": "Building supply",
+      "sub_short": "建材",
+      "sub_short_en": "Building",
       "row": 1,
       "relations": [
         {
@@ -111,8 +111,8 @@
       "name_en": "BlueLinx",
       "sub": "建材の卸売",
       "sub_en": "Building products wholesale",
-      "sub_short": "建材の卸売",
-      "sub_short_en": "Building supply",
+      "sub_short": "建材",
+      "sub_short_en": "Building",
       "row": 1,
       "relations": [
         {
@@ -138,7 +138,7 @@
       "sub": "木材製品・建材流通",
       "sub_en": "Wood products & distribution",
       "sub_short": "木材製品",
-      "sub_short_en": "Wood products",
+      "sub_short_en": "Wood",
       "row": 2,
       "relations": [
         {
@@ -164,7 +164,7 @@
       "sub": "森林REIT",
       "sub_en": "Timberland REIT",
       "sub_short": "森林REIT",
-      "sub_short_en": "Timberland REIT",
+      "sub_short_en": "REIT",
       "row": 2,
       "relations": [
         {
@@ -189,8 +189,8 @@
       "name_en": "Mercer International",
       "sub": "パルプ・木材",
       "sub_en": "Pulp & lumber",
-      "sub_short": "パルプ・木材",
-      "sub_short_en": "Pulp & lumber",
+      "sub_short": "パルプ",
+      "sub_short_en": "Pulp",
       "row": 2,
       "relations": [
         {
@@ -216,7 +216,7 @@
       "sub": "林産品(チリ)",
       "sub_en": "Forest products (Chile)",
       "sub_short": "林産品",
-      "sub_short_en": "Forest products",
+      "sub_short_en": "Timber",
       "row": 2,
       "relations": [
         {

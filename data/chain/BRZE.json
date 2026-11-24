@@ -31,7 +31,7 @@
       "name": "Amazon",
       "sub": "クラウド・EC",
       "sub_en": "Cloud & e-commerce",
-      "sub_short": "クラウド・EC",
+      "sub_short": "クラウド",
       "sub_short_en": "Cloud",
       "row": 0,
       "relations": [
@@ -57,7 +57,7 @@
       "sub": "ソフト・クラウド",
       "sub_en": "Software & cloud",
       "sub_short": "ソフト",
-      "sub_short_en": "Software & cloud",
+      "sub_short_en": "Software",
       "row": 0,
       "relations": [
         {
@@ -82,7 +82,7 @@
       "sub": "ソフト・クラウド",
       "sub_en": "Software & cloud",
       "sub_short": "ソフト",
-      "sub_short_en": "Software & cloud",
+      "sub_short_en": "Software",
       "row": 0,
       "relations": [
         {
@@ -119,8 +119,8 @@
       "name": "Datadog",
       "sub": "監視ソフト",
       "sub_en": "Observability software",
-      "sub_short": "監視ソフト",
-      "sub_short_en": "Observability",
+      "sub_short": "監視",
+      "sub_short_en": "Monitors",
       "row": 0,
       "relations": [
         {
@@ -145,7 +145,7 @@
       "sub": "生成AI",
       "sub_en": "Generative AI",
       "sub_short": "生成AI",
-      "sub_short_en": "Generative AI",
+      "sub_short_en": "AI",
       "row": 1,
       "relations": [
         {
@@ -184,7 +184,7 @@
       "sub": "生成AI",
       "sub_en": "Generative AI",
       "sub_short": "生成AI",
-      "sub_short_en": "Generative AI",
+      "sub_short_en": "AI",
       "row": 1,
       "relations": [
         {
@@ -209,8 +209,8 @@
       "name": "Snowflake",
       "sub": "データ基盤",
       "sub_en": "Data platform",
-      "sub_short": "データ基盤",
-      "sub_short_en": "Data platform",
+      "sub_short": "データ",
+      "sub_short_en": "Data",
       "row": 1,
       "relations": [
         {
@@ -234,8 +234,8 @@
       "name": "Adobe",
       "sub": "クリエイティブソフト",
       "sub_en": "Creative software",
-      "sub_short": "制作ソフト",
-      "sub_short_en": "Creative apps",
+      "sub_short": "制作",
+      "sub_short_en": "Design",
       "row": 2,
       "relations": [
         {
@@ -259,8 +259,8 @@
       "name": "Salesforce",
       "sub": "業務クラウド",
       "sub_en": "Business cloud",
-      "sub_short": "業務クラウド",
-      "sub_short_en": "Business cloud",
+      "sub_short": "業務IT",
+      "sub_short_en": "Cloud",
       "row": 2,
       "relations": [
         {
@@ -284,8 +284,8 @@
       "name": "Klaviyo",
       "sub": "マーケ自動化",
       "sub_en": "Marketing automation",
-      "sub_short": "マーケ自動化",
-      "sub_short_en": "Marketing tech",
+      "sub_short": "販促",
+      "sub_short_en": "Ads",
       "row": 2,
       "relations": [
         {

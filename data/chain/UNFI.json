@@ -58,8 +58,8 @@
       "name_en": "Above Food Ingredients",
       "sub": "植物性食品原料",
       "sub_en": "Plant-based ingredients",
-      "sub_short": "植物性食品原料",
-      "sub_short_en": "Plant-based",
+      "sub_short": "食品原料",
+      "sub_short_en": "Vegan",
       "row": 0,
       "relations": [
         {
@@ -84,8 +84,8 @@
       "name_en": "Amazon (Whole Foods Market)",
       "sub": "ネット通販・スーパー",
       "sub_en": "E-commerce & grocery",
-      "sub_short": "ネット通販",
-      "sub_short_en": "E-commerce",
+      "sub_short": "通販",
+      "sub_short_en": "E-com",
       "row": 1,
       "relations": [
         {
@@ -111,7 +111,7 @@
       "sub": "自然食品スーパー",
       "sub_en": "Natural grocery",
       "sub_short": "自然食品",
-      "sub_short_en": "Natural grocery",
+      "sub_short_en": "Grocery",
       "row": 1,
       "relations": [
         {
@@ -136,7 +136,7 @@
       "name_en": "Sprouts Farmers Market",
       "sub": "食品スーパー",
       "sub_en": "Grocery",
-      "sub_short": "食品スーパー",
+      "sub_short": "スーパー",
       "sub_short_en": "Grocery",
       "row": 1,
       "relations": [
@@ -188,8 +188,8 @@
       "name_en": "JX Luxventure",
       "sub": "卸売・観光(中国)",
       "sub_en": "Wholesale & tourism (China)",
-      "sub_short": "卸売・観光",
-      "sub_short_en": "Wholesale",
+      "sub_short": "卸売",
+      "sub_short_en": "Supply",
       "row": 2,
       "relations": [
         {

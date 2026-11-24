@@ -33,7 +33,7 @@
       "sub": "ロケット打ち上げ",
       "sub_en": "Launch services",
       "sub_short": "ロケット",
-      "sub_short_en": "Launch services",
+      "sub_short_en": "Launch",
       "row": 0,
       "relations": [
         {
@@ -59,7 +59,7 @@
       "sub": "重工業",
       "sub_en": "Heavy industry",
       "sub_short": "重工業",
-      "sub_short_en": "Heavy industry",
+      "sub_short_en": "Industry",
       "row": 0,
       "relations": [
         {
@@ -85,7 +85,7 @@
       "sub": "ソフト・クラウド",
       "sub_en": "Software & cloud",
       "sub_short": "ソフト",
-      "sub_short_en": "Software & cloud",
+      "sub_short_en": "Software",
       "row": 1,
       "relations": [
         {
@@ -165,7 +165,7 @@
       "sub": "衛星通信",
       "sub_en": "Satellite communications",
       "sub_short": "衛星通信",
-      "sub_short_en": "Satellite comms",
+      "sub_short_en": "Satcom",
       "row": 1,
       "relations": [
         {
@@ -193,7 +193,7 @@
       "sub": "航空宇宙",
       "sub_en": "Aerospace",
       "sub_short": "航空宇宙",
-      "sub_short_en": "Aerospace",
+      "sub_short_en": "Aero",
       "row": 2,
       "relations": [
         {
@@ -219,7 +219,7 @@
       "sub": "衛星画像",
       "sub_en": "Satellite imagery",
       "sub_short": "衛星画像",
-      "sub_short_en": "Sat imagery",
+      "sub_short_en": "Imaging",
       "row": 2,
       "relations": [
         {
@@ -245,7 +245,7 @@
       "sub": "宇宙開発",
       "sub_en": "Space systems",
       "sub_short": "宇宙開発",
-      "sub_short_en": "Space systems",
+      "sub_short_en": "Space",
       "row": 2,
       "relations": [
         {
@@ -271,7 +271,7 @@
       "sub": "衛星画像",
       "sub_en": "Satellite imagery",
       "sub_short": "衛星画像",
-      "sub_short_en": "Sat imagery",
+      "sub_short_en": "Imaging",
       "row": 2,
       "relations": [
         {
@@ -296,7 +296,7 @@
       "name": "スペースX",
       "sub": "ロケット・衛星",
       "sub_en": "Launch & satellites",
-      "sub_short": "ロケット・衛星",
+      "sub_short": "ロケット",
       "sub_short_en": "Launch",
       "row": 2,
       "relations": [
@@ -324,7 +324,7 @@
       "name": "アマゾン",
       "sub": "クラウド・EC",
       "sub_en": "Cloud & e-commerce",
-      "sub_short": "クラウド・EC",
+      "sub_short": "クラウド",
       "sub_short_en": "Cloud",
       "row": 2,
       "relations": [

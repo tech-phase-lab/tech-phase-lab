@@ -25,8 +25,8 @@
       "name": "アプライド マテリアルズ",
       "sub": "半導体製造装置",
       "sub_en": "Chip equipment",
-      "sub_short": "半導体製造装置",
-      "sub_short_en": "Chip equipment",
+      "sub_short": "製造装置",
+      "sub_short_en": "Chip tools",
       "row": 1,
       "relations": [
         {
@@ -51,8 +51,8 @@
       "name": "住友重機械工業",
       "sub": "イオン注入装置",
       "sub_en": "Ion implanters",
-      "sub_short": "イオン注入装置",
-      "sub_short_en": "Ion implanters",
+      "sub_short": "注入装置",
+      "sub_short_en": "Chip tools",
       "row": 1,
       "relations": [
         {
@@ -80,7 +80,7 @@
       "sub": "薄膜プロセス装置",
       "sub_en": "Thin-film equipment",
       "sub_short": "薄膜装置",
-      "sub_short_en": "Thin-film tools",
+      "sub_short_en": "Chip tools",
       "row": 0,
       "relations": [
         {
@@ -107,8 +107,8 @@
       "name": "SCREENホールディングス",
       "sub": "半導体製造装置",
       "sub_en": "Chip equipment",
-      "sub_short": "半導体製造装置",
-      "sub_short_en": "Chip equipment",
+      "sub_short": "製造装置",
+      "sub_short_en": "Chip tools",
       "row": 0,
       "relations": [
         {

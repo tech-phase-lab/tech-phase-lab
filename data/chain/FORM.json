@@ -28,8 +28,8 @@
       "name": "カムテック",
       "sub": "検査・計測装置",
       "sub_en": "Inspection & metrology",
-      "sub_short": "検査・計測装置",
-      "sub_short_en": "Inspection",
+      "sub_short": "検査",
+      "sub_short_en": "Testing",
       "row": 0,
       "relations": [
         {
@@ -69,8 +69,8 @@
       "name": "アドバンテスト",
       "sub": "半導体テスト装置",
       "sub_en": "Semiconductor test equipment",
-      "sub_short": "半導体検査",
-      "sub_short_en": "Chip testing",
+      "sub_short": "検査装置",
+      "sub_short_en": "Testing",
       "row": 0,
       "relations": [
         {
@@ -110,8 +110,8 @@
       "name": "テラダイン",
       "sub": "半導体テスト装置",
       "sub_en": "Semiconductor test equipment",
-      "sub_short": "半導体検査",
-      "sub_short_en": "Chip testing",
+      "sub_short": "検査装置",
+      "sub_short_en": "Testing",
       "row": 0,
       "relations": [
         {
@@ -203,8 +203,8 @@
       "name": "キーサイト・テクノロジー",
       "sub": "電子計測器",
       "sub_en": "Electronic test & measurement",
-      "sub_short": "電子計測器",
-      "sub_short_en": "Electronic test",
+      "sub_short": "計測",
+      "sub_short_en": "Testing",
       "row": 0,
       "relations": [
         {
@@ -231,8 +231,8 @@
       "name": "東京エレクトロン",
       "sub": "半導体製造装置",
       "sub_en": "Semiconductor equipment",
-      "sub_short": "半導体製造装置",
-      "sub_short_en": "Chip equipment",
+      "sub_short": "製造装置",
+      "sub_short_en": "Chip tools",
       "row": 2,
       "relations": [
         {

@@ -33,7 +33,7 @@
       "sub": "政府",
       "sub_en": "Government",
       "sub_short": "政府",
-      "sub_short_en": "Government",
+      "sub_short_en": "Gov",
       "row": 0,
       "relations": [
         {
@@ -58,8 +58,8 @@
       "name_en": "Jacobs Solutions",
       "sub": "エンジニアリング",
       "sub_en": "Engineering",
-      "sub_short": "エンジニア",
-      "sub_short_en": "Engineering",
+      "sub_short": "技術",
+      "sub_short_en": "Design",
       "row": 0,
       "relations": [
         {
@@ -84,8 +84,8 @@
       "name_en": "BWX Technologies",
       "sub": "原子力部品",
       "sub_en": "Nuclear components",
-      "sub_short": "原子力部品",
-      "sub_short_en": "Nuclear parts",
+      "sub_short": "原子力",
+      "sub_short_en": "Nuclear",
       "row": 1,
       "relations": [
         {
@@ -110,8 +110,8 @@
       "name_en": "Fluor",
       "sub": "エンジニアリング",
       "sub_en": "Engineering",
-      "sub_short": "エンジニア",
-      "sub_short_en": "Engineering",
+      "sub_short": "技術",
+      "sub_short_en": "Design",
       "row": 1,
       "relations": [
         {
@@ -136,7 +136,7 @@
       "name_en": "Oklo",
       "sub": "小型原子炉",
       "sub_en": "Small modular reactors",
-      "sub_short": "小型原子炉",
+      "sub_short": "原子炉",
       "sub_short_en": "SMRs",
       "row": 1,
       "relations": [
@@ -163,7 +163,7 @@
       "sub": "原子燃料",
       "sub_en": "Nuclear fuel",
       "sub_short": "原子燃料",
-      "sub_short_en": "Nuclear fuel",
+      "sub_short_en": "Nuclear",
       "row": 1,
       "relations": [
         {
@@ -188,8 +188,8 @@
       "name_en": "Leidos",
       "sub": "政府向けIT・技術",
       "sub_en": "Government IT & technology",
-      "sub_short": "政府向けIT",
-      "sub_short_en": "Government IT",
+      "sub_short": "政府IT",
+      "sub_short_en": "Gov IT",
       "row": 2,
       "relations": [
         {
@@ -214,8 +214,8 @@
       "name_en": "V2X",
       "sub": "政府向けサービス",
       "sub_en": "Government services",
-      "sub_short": "政府サービス",
-      "sub_short_en": "Gov services",
+      "sub_short": "政府支援",
+      "sub_short_en": "Gov IT",
       "row": 2,
       "relations": [
         {
@@ -241,7 +241,7 @@
       "sub": "設備工事",
       "sub_en": "Building services",
       "sub_short": "設備工事",
-      "sub_short_en": "Building upkeep",
+      "sub_short_en": "Facilities",
       "row": 2,
       "relations": [
         {

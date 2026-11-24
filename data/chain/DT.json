@@ -31,7 +31,7 @@
       "name": "アマゾン",
       "sub": "クラウド・EC",
       "sub_en": "Cloud & e-commerce",
-      "sub_short": "クラウド・EC",
+      "sub_short": "クラウド",
       "sub_short_en": "Cloud",
       "row": 0,
       "relations": [
@@ -71,7 +71,7 @@
       "sub": "ソフト・クラウド",
       "sub_en": "Software & cloud",
       "sub_short": "ソフト",
-      "sub_short_en": "Software & cloud",
+      "sub_short_en": "Software",
       "row": 0,
       "relations": [
         {
@@ -109,8 +109,8 @@
       "name": "アルファベット",
       "sub": "検索・クラウド",
       "sub_en": "Search & cloud",
-      "sub_short": "検索・クラウド",
-      "sub_short_en": "Search & cloud",
+      "sub_short": "検索",
+      "sub_short_en": "Search",
       "row": 0,
       "relations": [
         {
@@ -148,8 +148,8 @@
       "name": "アクセンチュア",
       "sub": "ITサービス",
       "sub_en": "IT services",
-      "sub_short": "ITサービス",
-      "sub_short_en": "IT services",
+      "sub_short": "IT",
+      "sub_short_en": "IT",
       "row": 0,
       "relations": [
         {
@@ -174,7 +174,7 @@
       "name": "サービスナウ",
       "sub": "業務ソフト",
       "sub_en": "Workflow software",
-      "sub_short": "業務ソフト",
+      "sub_short": "業務IT",
       "sub_short_en": "Workflow",
       "row": 1,
       "relations": [
@@ -200,8 +200,8 @@
       "name": "アトラシアン",
       "sub": "開発者向けソフト",
       "sub_en": "Developer software",
-      "sub_short": "開発者ソフト",
-      "sub_short_en": "Developer tools",
+      "sub_short": "開発IT",
+      "sub_short_en": "Dev tools",
       "row": 1,
       "relations": [
         {
@@ -266,7 +266,7 @@
       "sub": "IT機器",
       "sub_en": "IT hardware",
       "sub_short": "IT機器",
-      "sub_short_en": "IT hardware",
+      "sub_short_en": "IT",
       "row": 1,
       "relations": [
         {
@@ -291,7 +291,7 @@
       "sub": "生成AI",
       "sub_en": "Generative AI",
       "sub_short": "生成AI",
-      "sub_short_en": "Generative AI",
+      "sub_short_en": "AI",
       "row": 1,
       "relations": [
         {
@@ -318,7 +318,7 @@
       "sub": "ネットワーク機器",
       "sub_en": "Networking",
       "sub_short": "通信機器",
-      "sub_short_en": "Networking",
+      "sub_short_en": "Network",
       "row": 2,
       "relations": [
         {
@@ -343,8 +343,8 @@
       "name": "データドッグ",
       "sub": "オブザーバビリティ",
       "sub_en": "Observability",
-      "sub_short": "システム監視",
-      "sub_short_en": "Observability",
+      "sub_short": "監視",
+      "sub_short_en": "Monitors",
       "row": 2,
       "relations": [
         {
@@ -382,7 +382,7 @@
       "name": "エラスティック",
       "sub": "検索・分析",
       "sub_en": "Search & analytics",
-      "sub_short": "検索・分析",
+      "sub_short": "検索",
       "sub_short_en": "Search",
       "row": 2,
       "relations": [

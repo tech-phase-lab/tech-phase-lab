@@ -19,8 +19,8 @@
       "name": "サムスン電子",
       "sub": "スマホ特許ライセンス",
       "sub_en": "Smartphone licensee",
-      "sub_short": "スマホ特許",
-      "sub_short_en": "Phone licensee",
+      "sub_short": "特許",
+      "sub_short_en": "Licensee",
       "row": 0,
       "relations": [
         {
@@ -45,8 +45,8 @@
       "name": "アップル",
       "sub": "スマホ特許ライセンス",
       "sub_en": "Smartphone licensee",
-      "sub_short": "スマホ特許",
-      "sub_short_en": "Phone licensee",
+      "sub_short": "特許",
+      "sub_short_en": "Licensee",
       "row": 0,
       "relations": [
         {
@@ -72,7 +72,7 @@
       "sub": "パソコン特許ライセンス",
       "sub_en": "PC licensee",
       "sub_short": "PC特許",
-      "sub_short_en": "PC licensee",
+      "sub_short_en": "Licensee",
       "row": 0,
       "relations": [
         {
@@ -98,7 +98,7 @@
       "sub": "パソコン特許ライセンス",
       "sub_en": "PC licensee",
       "sub_short": "PC特許",
-      "sub_short_en": "PC licensee",
+      "sub_short_en": "Licensee",
       "row": 0,
       "relations": [
         {
@@ -123,8 +123,8 @@
       "name": "シャオミ",
       "sub": "スマホ特許ライセンス",
       "sub_en": "Smartphone licensee",
-      "sub_short": "スマホ特許",
-      "sub_short_en": "Phone licensee",
+      "sub_short": "特許",
+      "sub_short_en": "Licensee",
       "row": 0,
       "relations": [
         {
@@ -149,8 +149,8 @@
       "name": "LGエレクトロニクス",
       "sub": "テレビ特許ライセンス",
       "sub_en": "TV licensee",
-      "sub_short": "テレビ特許",
-      "sub_short_en": "TV licensee",
+      "sub_short": "特許",
+      "sub_short_en": "TV",
       "row": 0,
       "relations": [
         {
@@ -175,8 +175,8 @@
       "name": "ソニー",
       "sub": "共同ライセンス",
       "sub_en": "Joint licensing",
-      "sub_short": "共同ライセンス",
-      "sub_short_en": "Joint licensing",
+      "sub_short": "許諾",
+      "sub_short_en": "Licensing",
       "row": 0,
       "relations": [
         {
@@ -201,8 +201,8 @@
       "name": "シャープ",
       "sub": "機器ライセンス",
       "sub_en": "Device licensee",
-      "sub_short": "機器ライセンス",
-      "sub_short_en": "Device licensee",
+      "sub_short": "許諾",
+      "sub_short_en": "Licensee",
       "row": 0,
       "relations": [
         {
@@ -227,8 +227,8 @@
       "name": "イートン",
       "sub": "機器ライセンス",
       "sub_en": "Device licensee",
-      "sub_short": "機器ライセンス",
-      "sub_short_en": "Device licensee",
+      "sub_short": "許諾",
+      "sub_short_en": "Licensee",
       "row": 0,
       "relations": [
         {

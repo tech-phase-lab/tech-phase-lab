@@ -28,8 +28,8 @@
       "name": "ブラックストーン",
       "sub": "プライベートエクイティ",
       "sub_en": "Private equity",
-      "sub_short": "PEファンド",
-      "sub_short_en": "Private equity",
+      "sub_short": "PE",
+      "sub_short_en": "PE",
       "row": 0,
       "relations": [
         {
@@ -55,7 +55,7 @@
       "sub": "空調コンプレッサー",
       "sub_en": "Climate technologies",
       "sub_short": "空調部品",
-      "sub_short_en": "Climate tech",
+      "sub_short_en": "Climate",
       "row": 0,
       "relations": [
         {
@@ -93,8 +93,8 @@
       "name": "ワールプール",
       "sub": "家電メーカー",
       "sub_en": "Home appliances",
-      "sub_short": "家電メーカー",
-      "sub_short_en": "Home appliances",
+      "sub_short": "家電",
+      "sub_short_en": "Appliance",
       "row": 0,
       "relations": [
         {
@@ -132,8 +132,8 @@
       "name": "ロックウェル・オートメーション",
       "sub": "産業オートメーション",
       "sub_en": "Industrial automation",
-      "sub_short": "産業自動化",
-      "sub_short_en": "Automation",
+      "sub_short": "自動化",
+      "sub_short_en": "Robotics",
       "row": 1,
       "relations": [
         {
@@ -158,8 +158,8 @@
       "name": "ABB",
       "sub": "電機・自動化",
       "sub_en": "Electrical & automation",
-      "sub_short": "電機・自動化",
-      "sub_short_en": "Automation",
+      "sub_short": "電機",
+      "sub_short_en": "Robotics",
       "row": 1,
       "relations": [
         {
@@ -184,8 +184,8 @@
       "name": "ベーカー・ヒューズ",
       "sub": "油田サービス",
       "sub_en": "Oilfield services",
-      "sub_short": "油田サービス",
-      "sub_short_en": "Oilfield svcs",
+      "sub_short": "油田",
+      "sub_short_en": "Oilfield",
       "row": 1,
       "relations": [
         {
@@ -210,8 +210,8 @@
       "name": "フローサーブ",
       "sub": "バルブ・ポンプ",
       "sub_en": "Valves & pumps",
-      "sub_short": "バルブ・ポンプ",
-      "sub_short_en": "Valves & pumps",
+      "sub_short": "バルブ",
+      "sub_short_en": "Valves",
       "row": 1,
       "relations": [
         {

@@ -30,7 +30,7 @@
       "sub": "受託製造",
       "sub_en": "Contract manufacturing",
       "sub_short": "受託製造",
-      "sub_short_en": "Contract maker",
+      "sub_short_en": "EMS",
       "row": 1,
       "relations": [
         {
@@ -56,7 +56,7 @@
       "sub": "受託製造",
       "sub_en": "Contract manufacturing",
       "sub_short": "受託製造",
-      "sub_short_en": "Contract maker",
+      "sub_short_en": "EMS",
       "row": 1,
       "relations": [
         {
@@ -81,8 +81,8 @@
       "name": "サンウォーダ・エレクトロニック",
       "sub": "受託製造・電池",
       "sub_en": "Contract manufacturing",
-      "sub_short": "受託製造・電池",
-      "sub_short_en": "Contract maker",
+      "sub_short": "受託製造",
+      "sub_short_en": "EMS",
       "row": 1,
       "relations": [
         {
@@ -107,7 +107,7 @@
       "name": "ソーラーエッジ",
       "sub": "インバーター",
       "sub_en": "Inverters",
-      "sub_short": "インバーター",
+      "sub_short": "電力変換",
       "sub_short_en": "Inverters",
       "row": 0,
       "relations": [
@@ -147,7 +147,7 @@
       "sub": "EV・蓄電",
       "sub_en": "EVs & storage",
       "sub_short": "EV・蓄電",
-      "sub_short_en": "EVs & storage",
+      "sub_short_en": "EVs",
       "row": 0,
       "relations": [
         {
@@ -185,7 +185,7 @@
       "name": "ファーウェイ",
       "sub": "通信・インバーター",
       "sub_en": "Telecom & inverters",
-      "sub_short": "通信・電源",
+      "sub_short": "通信",
       "sub_short_en": "Telecom",
       "row": 0,
       "relations": [
@@ -211,7 +211,7 @@
       "name": "サングロウ・パワー・サプライ",
       "sub": "インバーター",
       "sub_en": "Inverters",
-      "sub_short": "インバーター",
+      "sub_short": "電力変換",
       "sub_short_en": "Inverters",
       "row": 0,
       "relations": [
@@ -238,7 +238,7 @@
       "sub": "EV充電器",
       "sub_en": "EV chargers",
       "sub_short": "EV充電器",
-      "sub_short_en": "EV chargers",
+      "sub_short_en": "Charging",
       "row": 0,
       "relations": [
         {
@@ -264,7 +264,7 @@
       "sub": "EV充電器",
       "sub_en": "EV chargers",
       "sub_short": "EV充電器",
-      "sub_short_en": "EV chargers",
+      "sub_short_en": "Charging",
       "row": 0,
       "relations": [
         {

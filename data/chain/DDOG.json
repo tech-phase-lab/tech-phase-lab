@@ -33,7 +33,7 @@
       "name": "アマゾン",
       "sub": "クラウド・EC",
       "sub_en": "Cloud & e-commerce",
-      "sub_short": "クラウド・EC",
+      "sub_short": "クラウド",
       "sub_short_en": "Cloud",
       "row": 0,
       "relations": [
@@ -71,8 +71,8 @@
       "name": "オラクル",
       "sub": "データベース・クラウド",
       "sub_en": "Database & cloud",
-      "sub_short": "データベース",
-      "sub_short_en": "Database & cloud",
+      "sub_short": "DB",
+      "sub_short_en": "Database",
       "row": 0,
       "relations": [
         {
@@ -98,7 +98,7 @@
       "sub": "顧客エンゲージメント",
       "sub_en": "Customer engagement",
       "sub_short": "顧客対応",
-      "sub_short_en": "Customer engage",
+      "sub_short_en": "CX",
       "row": 1,
       "relations": [
         {
@@ -124,7 +124,7 @@
       "sub": "ネットワーク機器",
       "sub_en": "Networking equipment",
       "sub_short": "通信機器",
-      "sub_short_en": "Network gear",
+      "sub_short_en": "Network",
       "row": 2,
       "relations": [
         {
@@ -163,7 +163,7 @@
       "sub": "監視・オブザーバビリティ",
       "sub_en": "Observability",
       "sub_short": "監視",
-      "sub_short_en": "Observability",
+      "sub_short_en": "Monitors",
       "row": 2,
       "relations": [
         {
@@ -201,7 +201,7 @@
       "name": "エラスティック",
       "sub": "検索・ログ分析",
       "sub_en": "Search & log analytics",
-      "sub_short": "検索・ログ分析",
+      "sub_short": "検索",
       "sub_short_en": "Search",
       "row": 2,
       "relations": [
@@ -228,7 +228,7 @@
       "sub": "ソフト・クラウド",
       "sub_en": "Software & cloud",
       "sub_short": "ソフト",
-      "sub_short_en": "Software & cloud",
+      "sub_short_en": "Software",
       "row": 2,
       "relations": [
         {
@@ -267,7 +267,7 @@
       "sub": "IT・ソフトウェア",
       "sub_en": "IT & software",
       "sub_short": "ITソフト",
-      "sub_short_en": "IT & software",
+      "sub_short_en": "IT",
       "row": 2,
       "relations": [
         {

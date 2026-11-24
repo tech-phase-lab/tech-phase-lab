@@ -137,8 +137,8 @@
       "name_en": "Rolls-Royce",
       "sub": "航空エンジン(英)",
       "sub_en": "Aircraft engines (UK)",
-      "sub_short": "航空エンジン",
-      "sub_short_en": "Aircraft engines",
+      "sub_short": "エンジン",
+      "sub_short_en": "Engines",
       "row": 1,
       "relations": [
         {
@@ -163,8 +163,8 @@
       "name_en": "Brookfield Infrastructure Partners",
       "sub": "インフラ投資",
       "sub_en": "Infrastructure investment",
-      "sub_short": "インフラ投資",
-      "sub_short_en": "Infra investing",
+      "sub_short": "インフラ",
+      "sub_short_en": "Infra",
       "row": 1,
       "relations": [
         {
@@ -215,8 +215,8 @@
       "name_en": "Union Tank Car",
       "sub": "貨車リース(バークシャー傘下)",
       "sub_en": "Railcar leasing (Berkshire Hathaway)",
-      "sub_short": "貨車リース",
-      "sub_short_en": "Railcar leasing",
+      "sub_short": "貨車",
+      "sub_short_en": "Railcars",
       "row": 2,
       "relations": [
         {
@@ -241,8 +241,8 @@
       "name_en": "VTG",
       "sub": "貨車リース(独、非上場)",
       "sub_en": "Railcar leasing (Germany, private)",
-      "sub_short": "貨車リース",
-      "sub_short_en": "Railcar leasing",
+      "sub_short": "貨車",
+      "sub_short_en": "Railcars",
       "row": 2,
       "relations": [
         {
@@ -267,8 +267,8 @@
       "name_en": "Streem",
       "sub": "貨車リース(仏、非上場)",
       "sub_en": "Railcar leasing (France, private)",
-      "sub_short": "貨車リース",
-      "sub_short_en": "Railcar leasing",
+      "sub_short": "貨車",
+      "sub_short_en": "Railcars",
       "row": 2,
       "relations": [
         {

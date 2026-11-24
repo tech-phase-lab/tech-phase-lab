@@ -37,8 +37,8 @@
       "name": "台湾積体電路製造",
       "sub": "半導体ファウンドリ",
       "sub_en": "Semiconductor foundry",
-      "sub_short": "半導体受託",
-      "sub_short_en": "Chip foundry",
+      "sub_short": "受託生産",
+      "sub_short_en": "Foundry",
       "row": 0,
       "relations": [
         {
@@ -76,8 +76,8 @@
       "name": "聯華電子",
       "sub": "半導体ファウンドリ",
       "sub_en": "Semiconductor foundry",
-      "sub_short": "半導体受託",
-      "sub_short_en": "Chip foundry",
+      "sub_short": "受託生産",
+      "sub_short_en": "Foundry",
       "row": 0,
       "relations": [
         {
@@ -102,8 +102,8 @@
       "name": "ASEテクノロジー・ホールディング",
       "sub": "組立・検査",
       "sub_en": "Assembly & test",
-      "sub_short": "組立・検査",
-      "sub_short_en": "Assembly & test",
+      "sub_short": "後工程",
+      "sub_short_en": "Chip pack",
       "row": 0,
       "relations": [
         {
@@ -128,8 +128,8 @@
       "name": "アップル",
       "sub": "スマートフォン・PC",
       "sub_en": "Smartphones & PCs",
-      "sub_short": "スマートフォン",
-      "sub_short_en": "Smartphones",
+      "sub_short": "スマホ",
+      "sub_short_en": "Phones",
       "row": 1,
       "relations": [
         {
@@ -211,7 +211,7 @@
       "sub": "マイコン・アナログ半導体",
       "sub_en": "Microcontrollers & analog chips",
       "sub_short": "マイコン",
-      "sub_short_en": "Microcontrollers",
+      "sub_short_en": "MCUs",
       "row": 3,
       "relations": [
         {
@@ -236,8 +236,8 @@
       "name": "テキサス・インスツルメンツ",
       "sub": "アナログ半導体",
       "sub_en": "Analog chips",
-      "sub_short": "アナログ半導体",
-      "sub_short_en": "Analog chips",
+      "sub_short": "アナログ",
+      "sub_short_en": "Analog",
       "row": 3,
       "relations": [
         {
@@ -289,7 +289,7 @@
       "sub": "電子部品",
       "sub_en": "Electronic components",
       "sub_short": "電子部品",
-      "sub_short_en": "Components",
+      "sub_short_en": "Parts",
       "row": 3,
       "relations": [
         {
@@ -314,8 +314,8 @@
       "name": "ダイオーズ",
       "sub": "ディスクリート半導体",
       "sub_en": "Discrete semiconductors",
-      "sub_short": "個別半導体",
-      "sub_short_en": "Discrete chips",
+      "sub_short": "半導体",
+      "sub_short_en": "Discretes",
       "row": 3,
       "relations": [
         {

@@ -30,8 +30,8 @@
       "name_en": "JLL Income Property Trust",
       "sub": "非上場REIT",
       "sub_en": "Non-traded REIT",
-      "sub_short": "非上場REIT",
-      "sub_short_en": "Non-traded REIT",
+      "sub_short": "REIT",
+      "sub_short_en": "REIT",
       "row": 0,
       "relations": [
         {
@@ -56,8 +56,8 @@
       "name_en": "Cushman & Wakefield",
       "sub": "商業不動産サービス",
       "sub_en": "Commercial real estate services",
-      "sub_short": "商業不動産",
-      "sub_short_en": "Commercial RE",
+      "sub_short": "不動産",
+      "sub_short_en": "Property",
       "row": 1,
       "relations": [
         {
@@ -82,8 +82,8 @@
       "name_en": "Newmark Group",
       "sub": "商業不動産サービス",
       "sub_en": "Commercial real estate services",
-      "sub_short": "商業不動産",
-      "sub_short_en": "Commercial RE",
+      "sub_short": "不動産",
+      "sub_short_en": "Property",
       "row": 1,
       "relations": [
         {
@@ -108,8 +108,8 @@
       "name_en": "Marcus & Millichap",
       "sub": "不動産仲介",
       "sub_en": "Real estate brokerage",
-      "sub_short": "不動産仲介",
-      "sub_short_en": "RE brokerage",
+      "sub_short": "不動産",
+      "sub_short_en": "Property",
       "row": 1,
       "relations": [
         {
@@ -135,7 +135,7 @@
       "sub": "設備工事・ビル管理",
       "sub_en": "Building services",
       "sub_short": "設備工事",
-      "sub_short_en": "Building upkeep",
+      "sub_short_en": "Facilities",
       "row": 1,
       "relations": [
         {
@@ -160,8 +160,8 @@
       "name_en": "Mag Mile Capital",
       "sub": "不動産金融仲介",
       "sub_en": "Real estate finance brokerage",
-      "sub_short": "不動産金融仲介",
-      "sub_short_en": "RE finance",
+      "sub_short": "不動産",
+      "sub_short_en": "Property",
       "row": 1,
       "relations": [
         {
@@ -186,8 +186,8 @@
       "name_en": "La Rosa Holdings",
       "sub": "不動産仲介",
       "sub_en": "Real estate brokerage",
-      "sub_short": "不動産仲介",
-      "sub_short_en": "RE brokerage",
+      "sub_short": "不動産",
+      "sub_short_en": "Property",
       "row": 1,
       "relations": [
         {
@@ -212,8 +212,8 @@
       "name_en": "MDJM",
       "sub": "不動産サービス(英・中)",
       "sub_en": "Real estate services (UK/China)",
-      "sub_short": "不動産サービス",
-      "sub_short_en": "Real estate",
+      "sub_short": "不動産",
+      "sub_short_en": "Property",
       "row": 1,
       "relations": [
         {

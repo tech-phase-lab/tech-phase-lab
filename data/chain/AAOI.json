@@ -115,7 +115,7 @@
       "name": "Coherent",
       "sub": "光通信部品",
       "sub_en": "Optical components",
-      "sub_short": "光通信部品",
+      "sub_short": "光部品",
       "sub_short_en": "Optics",
       "row": 2,
       "relations": [
@@ -140,7 +140,7 @@
       "name": "Lumentum",
       "sub": "光通信部品",
       "sub_en": "Optical components",
-      "sub_short": "光通信部品",
+      "sub_short": "光部品",
       "sub_short_en": "Optics",
       "row": 2,
       "relations": [
@@ -190,8 +190,8 @@
       "name": "Eoptolink(旭創)",
       "sub": "光トランシーバー",
       "sub_en": "Optical transceivers",
-      "sub_short": "光通信部品",
-      "sub_short_en": "Transceivers",
+      "sub_short": "光部品",
+      "sub_short_en": "Optics",
       "row": 2,
       "relations": [
         {
@@ -216,8 +216,8 @@
       "name": "Zhongji InnoLight(中際旭創)",
       "sub": "光トランシーバー",
       "sub_en": "Optical transceivers",
-      "sub_short": "光通信部品",
-      "sub_short_en": "Transceivers",
+      "sub_short": "光部品",
+      "sub_short_en": "Optics",
       "row": 2,
       "relations": [
         {
@@ -243,7 +243,7 @@
       "sub": "接続部品",
       "sub_en": "Interconnects",
       "sub_short": "接続部品",
-      "sub_short_en": "Interconnects",
+      "sub_short_en": "Links",
       "row": 2,
       "relations": [
         {
@@ -267,7 +267,7 @@
       "name": "Sumitomo Electric(住友電工)",
       "sub": "電線・光部品",
       "sub_en": "Wires & optical parts",
-      "sub_short": "電線・光部品",
+      "sub_short": "電線",
       "sub_short_en": "Wires",
       "row": 2,
       "relations": [

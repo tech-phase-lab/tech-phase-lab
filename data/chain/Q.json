@@ -23,8 +23,8 @@
       "name": "サムスン電子",
       "sub": "半導体メーカー",
       "sub_en": "Semiconductor maker",
-      "sub_short": "半導体メーカー",
-      "sub_short_en": "Chipmaker",
+      "sub_short": "半導体",
+      "sub_short_en": "Chips",
       "row": 0,
       "relations": [
         {
@@ -49,8 +49,8 @@
       "name": "台湾積体電路製造",
       "sub": "半導体ファウンドリ",
       "sub_en": "Semiconductor foundry",
-      "sub_short": "半導体受託",
-      "sub_short_en": "Chip foundry",
+      "sub_short": "受託生産",
+      "sub_short_en": "Foundry",
       "row": 0,
       "relations": [
         {
@@ -75,8 +75,8 @@
       "name": "エンテグリス",
       "sub": "半導体材料",
       "sub_en": "Semiconductor materials",
-      "sub_short": "半導体材料",
-      "sub_short_en": "Chip materials",
+      "sub_short": "材料",
+      "sub_short_en": "Materials",
       "row": 0,
       "relations": [
         {
@@ -101,8 +101,8 @@
       "name": "メルクKGaA",
       "sub": "化学・電子材料",
       "sub_en": "Chemicals & electronic materials",
-      "sub_short": "化学・電子材料",
-      "sub_short_en": "Chemicals",
+      "sub_short": "化学",
+      "sub_short_en": "Chem",
       "row": 0,
       "relations": [
         {
@@ -127,8 +127,8 @@
       "name": "レゾナック",
       "sub": "化学・電子材料",
       "sub_en": "Chemicals & electronic materials",
-      "sub_short": "化学・電子材料",
-      "sub_short_en": "Chemicals",
+      "sub_short": "化学",
+      "sub_short_en": "Chem",
       "row": 0,
       "relations": [
         {
@@ -153,8 +153,8 @@
       "name": "エレメント・ソリューションズ",
       "sub": "特殊化学品",
       "sub_en": "Specialty chemicals",
-      "sub_short": "特殊化学品",
-      "sub_short_en": "Chemicals",
+      "sub_short": "化学品",
+      "sub_short_en": "Chem",
       "row": 0,
       "relations": [
         {
@@ -192,8 +192,8 @@
       "name": "MKSインスツルメンツ",
       "sub": "半導体装置・材料",
       "sub_en": "Semiconductor equipment & materials",
-      "sub_short": "半導体装置",
-      "sub_short_en": "Chip equipment",
+      "sub_short": "製造装置",
+      "sub_short_en": "Chip tools",
       "row": 0,
       "relations": [
         {

@@ -24,8 +24,8 @@
       "name": "ビナコミン(ベトナム国家石炭・鉱物産業グループ)",
       "sub": "石炭の供給元",
       "sub_en": "Coal supplier",
-      "sub_short": "石炭の供給元",
-      "sub_short_en": "Coal supplier",
+      "sub_short": "石炭",
+      "sub_short_en": "Coal",
       "row": 0,
       "relations": [
         {
@@ -50,8 +50,8 @@
       "name": "フルエンス・エナジー",
       "sub": "蓄電システム",
       "sub_en": "Energy storage",
-      "sub_short": "蓄電システム",
-      "sub_short_en": "Energy storage",
+      "sub_short": "蓄電",
+      "sub_short_en": "Storage",
       "row": 1,
       "relations": [
         {
@@ -89,8 +89,8 @@
       "name": "シーメンスAG",
       "sub": "合弁パートナー",
       "sub_en": "Joint venture partner",
-      "sub_short": "合弁パートナー",
-      "sub_short_en": "JV partner",
+      "sub_short": "合弁",
+      "sub_short_en": "JV",
       "row": 1,
       "relations": [
         {
@@ -115,8 +115,8 @@
       "name": "グルポ・バル",
       "sub": "風力の合弁相手",
       "sub_en": "Wind JV partner",
-      "sub_short": "風力の合弁相手",
-      "sub_short_en": "Wind JV partner",
+      "sub_short": "風力",
+      "sub_short_en": "Wind",
       "row": 1,
       "relations": [
         {
@@ -141,8 +141,8 @@
       "name": "エストレリャ・リンダ・グループ",
       "sub": "ドミニカの提携先",
       "sub_en": "Dominican partner",
-      "sub_short": "ドミニカ提携",
-      "sub_short_en": "Dominican",
+      "sub_short": "ドミニカ",
+      "sub_short_en": "Partner",
       "row": 1,
       "relations": [
         {
@@ -167,8 +167,8 @@
       "name": "グルポ・ポプラル",
       "sub": "ドミニカの提携先",
       "sub_en": "Dominican partner",
-      "sub_short": "ドミニカ提携",
-      "sub_short_en": "Dominican",
+      "sub_short": "ドミニカ",
+      "sub_short_en": "Partner",
       "row": 1,
       "relations": [
         {
@@ -193,8 +193,8 @@
       "name": "ベトナム電力公社(EVN)",
       "sub": "電力の買い手",
       "sub_en": "Power offtaker",
-      "sub_short": "電力の買い手",
-      "sub_short_en": "Power offtaker",
+      "sub_short": "電力",
+      "sub_short_en": "Power",
       "row": 1,
       "relations": [
         {
@@ -219,8 +219,8 @@
       "name": "サザン・カリフォルニア・エジソン",
       "sub": "電力の買い手",
       "sub_en": "Power offtaker",
-      "sub_short": "電力の買い手",
-      "sub_short_en": "Power offtaker",
+      "sub_short": "電力",
+      "sub_short_en": "Power",
       "row": 1,
       "relations": [
         {
@@ -245,8 +245,8 @@
       "name": "セメックス",
       "sub": "電力の買い手",
       "sub_en": "Power offtaker",
-      "sub_short": "電力の買い手",
-      "sub_short_en": "Power offtaker",
+      "sub_short": "電力",
+      "sub_short_en": "Power",
       "row": 1,
       "relations": [
         {
@@ -271,8 +271,8 @@
       "name": "ケベック預金投資公庫(CDPQ)",
       "sub": "IPALCOの出資者",
       "sub_en": "IPALCO investor",
-      "sub_short": "IPALCO出資",
-      "sub_short_en": "IPALCO investor",
+      "sub_short": "電力出資",
+      "sub_short_en": "Investor",
       "row": 1,
       "relations": [
         {

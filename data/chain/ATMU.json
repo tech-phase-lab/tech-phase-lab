@@ -109,7 +109,7 @@
       "name_en": "Shanghai Fleetguard Filter",
       "sub": "フィルター(中国)",
       "sub_en": "Filters (China)",
-      "sub_short": "フィルター",
+      "sub_short": "ろ過",
       "sub_short_en": "Filters",
       "row": 1,
       "relations": [
@@ -135,7 +135,7 @@
       "name_en": "Fleetguard Filter (India)",
       "sub": "フィルター(インド)",
       "sub_en": "Filters (India)",
-      "sub_short": "フィルター",
+      "sub_short": "ろ過",
       "sub_short_en": "Filters",
       "row": 1,
       "relations": [
@@ -161,7 +161,7 @@
       "name_en": "MANN+HUMMEL",
       "sub": "フィルター(ドイツ)",
       "sub_en": "Filters (Germany)",
-      "sub_short": "フィルター",
+      "sub_short": "ろ過",
       "sub_short_en": "Filters",
       "row": 2,
       "relations": [
@@ -187,7 +187,7 @@
       "name_en": "Donaldson",
       "sub": "フィルター",
       "sub_en": "Filters",
-      "sub_short": "フィルター",
+      "sub_short": "ろ過",
       "sub_short_en": "Filters",
       "row": 2,
       "relations": [
@@ -213,8 +213,8 @@
       "name_en": "Parker-Hannifin",
       "sub": "モーション制御・ろ過",
       "sub_en": "Motion control & filtration",
-      "sub_short": "モーション制御",
-      "sub_short_en": "Motion control",
+      "sub_short": "制御機器",
+      "sub_short_en": "Motion",
       "row": 2,
       "relations": [
         {

@@ -34,7 +34,7 @@
       "sub": "持株会社",
       "sub_en": "Holding company",
       "sub_short": "持株会社",
-      "sub_short_en": "Holding company",
+      "sub_short_en": "Holding",
       "row": 0,
       "relations": [
         {
@@ -59,8 +59,8 @@
       "name_en": "Docebo",
       "sub": "学習管理ソフト",
       "sub_en": "Learning software",
-      "sub_short": "学習管理ソフト",
-      "sub_short_en": "Learning apps",
+      "sub_short": "教育IT",
+      "sub_short_en": "Edtech",
       "row": 0,
       "relations": [
         {
@@ -85,8 +85,8 @@
       "name_en": "London Stock Exchange Group",
       "sub": "金融データ・取引所",
       "sub_en": "Financial data & exchanges",
-      "sub_short": "金融データ",
-      "sub_short_en": "Financial data",
+      "sub_short": "金融情報",
+      "sub_short_en": "Fin data",
       "row": 1,
       "relations": [
         {
@@ -111,8 +111,8 @@
       "name_en": "SafeSend",
       "sub": "税務ソフト",
       "sub_en": "Tax software",
-      "sub_short": "税務ソフト",
-      "sub_short_en": "Tax software",
+      "sub_short": "税務",
+      "sub_short_en": "Tax",
       "row": 1,
       "relations": [
         {
@@ -164,7 +164,7 @@
       "sub": "法令情報(豪州)",
       "sub_en": "Legislative data (Australia)",
       "sub_short": "法令情報",
-      "sub_short_en": "Legislative data",
+      "sub_short_en": "Policy",
       "row": 1,
       "relations": [
         {
@@ -189,8 +189,8 @@
       "name_en": "Noetica",
       "sub": "M&A取引データAI",
       "sub_en": "Deal data AI",
-      "sub_short": "M&AデータAI",
-      "sub_short_en": "Deal data AI",
+      "sub_short": "M&A",
+      "sub_short_en": "Deal data",
       "row": 1,
       "relations": [
         {
@@ -216,7 +216,7 @@
       "sub": "法律・情報サービス",
       "sub_en": "Legal & information services",
       "sub_short": "法律",
-      "sub_short_en": "Legal services",
+      "sub_short_en": "Legal",
       "row": 2,
       "relations": [
         {
@@ -254,7 +254,7 @@
       "name_en": "Wolters Kluwer",
       "sub": "法律・税務情報",
       "sub_en": "Legal & tax information",
-      "sub_short": "法律・税務情報",
+      "sub_short": "法律情報",
       "sub_short_en": "Legal info",
       "row": 2,
       "relations": [
@@ -281,7 +281,7 @@
       "sub": "税務・会計ソフト",
       "sub_en": "Tax & accounting software",
       "sub_short": "税務",
-      "sub_short_en": "Tax software",
+      "sub_short_en": "Tax",
       "row": 2,
       "relations": [
         {
@@ -306,8 +306,8 @@
       "name_en": "Bloomberg",
       "sub": "金融情報・報道",
       "sub_en": "Financial data & news",
-      "sub_short": "金融情報・報道",
-      "sub_short_en": "Financial data",
+      "sub_short": "金融情報",
+      "sub_short_en": "Fin data",
       "row": 2,
       "relations": [
         {
@@ -332,7 +332,7 @@
       "name_en": "CS Disco",
       "sub": "法務AIソフト",
       "sub_en": "Legal AI software",
-      "sub_short": "法務AIソフト",
+      "sub_short": "法務AI",
       "sub_short_en": "Legal AI",
       "row": 2,
       "relations": [
@@ -359,7 +359,7 @@
       "sub": "政策情報",
       "sub_en": "Policy intelligence",
       "sub_short": "政策情報",
-      "sub_short_en": "Policy data",
+      "sub_short_en": "Policy",
       "row": 2,
       "relations": [
         {
@@ -384,8 +384,8 @@
       "name_en": "Red Violet",
       "sub": "データ分析",
       "sub_en": "Data analytics",
-      "sub_short": "データ分析",
-      "sub_short_en": "Data analytics",
+      "sub_short": "分析",
+      "sub_short_en": "Analytics",
       "row": 2,
       "relations": [
         {
@@ -410,8 +410,8 @@
       "name_en": "Tyler Technologies",
       "sub": "行政向けソフト",
       "sub_en": "Public-sector software",
-      "sub_short": "行政向けソフト",
-      "sub_short_en": "Gov software",
+      "sub_short": "行政IT",
+      "sub_short_en": "Gov IT",
       "row": 2,
       "relations": [
         {

@@ -26,7 +26,7 @@
       "sub": "地方銀行",
       "sub_en": "Regional bank",
       "sub_short": "地方銀行",
-      "sub_short_en": "Regional bank",
+      "sub_short_en": "Bank",
       "row": 0,
       "relations": [
         {
@@ -52,7 +52,7 @@
       "sub": "地方銀行(テキサス)",
       "sub_en": "Regional bank (Texas)",
       "sub_short": "地方銀行",
-      "sub_short_en": "Regional bank",
+      "sub_short_en": "Bank",
       "row": 0,
       "relations": [
         {
@@ -77,8 +77,8 @@
       "name_en": "Ameriprise Financial",
       "sub": "資産運用・助言",
       "sub_en": "Wealth management",
-      "sub_short": "資産運用・助言",
-      "sub_short_en": "Wealth mgmt",
+      "sub_short": "資産運用",
+      "sub_short_en": "Wealth",
       "row": 0,
       "relations": [
         {
@@ -103,8 +103,8 @@
       "name_en": "Root",
       "sub": "自動車保険",
       "sub_en": "Auto insurance",
-      "sub_short": "自動車保険",
-      "sub_short_en": "Auto insurance",
+      "sub_short": "車両保険",
+      "sub_short_en": "Car cover",
       "row": 1,
       "relations": [
         {
@@ -130,7 +130,7 @@
       "sub": "ガス・エネルギー",
       "sub_en": "Gas & energy",
       "sub_short": "ガス",
-      "sub_short_en": "Gas & energy",
+      "sub_short_en": "Gas",
       "row": 1,
       "relations": [
         {
@@ -156,7 +156,7 @@
       "sub": "住宅保険",
       "sub_en": "Home insurance",
       "sub_short": "住宅保険",
-      "sub_short_en": "Home insurance",
+      "sub_short_en": "Insurance",
       "row": 1,
       "relations": [
         {
@@ -182,7 +182,7 @@
       "sub": "樹脂成形",
       "sub_en": "Molded plastics",
       "sub_short": "樹脂成形",
-      "sub_short_en": "Molded plastics",
+      "sub_short_en": "Plastics",
       "row": 1,
       "relations": [
         {
@@ -207,8 +207,8 @@
       "name_en": "Casella Waste Systems",
       "sub": "廃棄物処理",
       "sub_en": "Waste management",
-      "sub_short": "廃棄物処理",
-      "sub_short_en": "Waste management",
+      "sub_short": "廃棄物",
+      "sub_short_en": "Waste",
       "row": 1,
       "relations": [
         {
@@ -234,7 +234,7 @@
       "sub": "外食",
       "sub_en": "Restaurants",
       "sub_short": "外食",
-      "sub_short_en": "Restaurants",
+      "sub_short_en": "Dining",
       "row": 1,
       "relations": [
         {
@@ -260,7 +260,7 @@
       "sub": "金融仲介",
       "sub_en": "Financial brokerage",
       "sub_short": "金融仲介",
-      "sub_short_en": "Brokerage",
+      "sub_short_en": "Broker",
       "row": 1,
       "relations": [
         {

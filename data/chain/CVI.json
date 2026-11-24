@@ -32,8 +32,8 @@
       "name_en": "Icahn Enterprises",
       "sub": "投資持株会社",
       "sub_en": "Holding company",
-      "sub_short": "投資持株会社",
-      "sub_short_en": "Holding company",
+      "sub_short": "持株会社",
+      "sub_short_en": "Holding",
       "row": 0,
       "relations": [
         {
@@ -84,7 +84,7 @@
       "name_en": "Plains All American",
       "sub": "パイプライン",
       "sub_en": "Pipelines",
-      "sub_short": "パイプライン",
+      "sub_short": "配管網",
       "sub_short_en": "Pipelines",
       "row": 1,
       "relations": [
@@ -110,8 +110,8 @@
       "name_en": "CHS Inc.",
       "sub": "農協・石油精製",
       "sub_en": "Farm cooperative & refining",
-      "sub_short": "農協・石油精製",
-      "sub_short_en": "Farm cooperative",
+      "sub_short": "農協",
+      "sub_short_en": "Co-op",
       "row": 2,
       "relations": [
         {

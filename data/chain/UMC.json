@@ -34,8 +34,8 @@
       "name": "信越化学工業",
       "sub": "半導体ウエハー",
       "sub_en": "Silicon wafers",
-      "sub_short": "半導体ウエハー",
-      "sub_short_en": "Silicon wafers",
+      "sub_short": "ウエハー",
+      "sub_short_en": "Wafers",
       "row": 0,
       "relations": [
         {
@@ -116,8 +116,8 @@
       "name": "マックスリニア",
       "sub": "接続用半導体",
       "sub_en": "Connectivity chips",
-      "sub_short": "接続用半導体",
-      "sub_short_en": "Connectivity",
+      "sub_short": "半導体",
+      "sub_short_en": "Links",
       "row": 1,
       "relations": [
         {
@@ -155,8 +155,8 @@
       "name": "サイタイム",
       "sub": "タイミング半導体",
       "sub_en": "Timing chips",
-      "sub_short": "タイミングIC",
-      "sub_short_en": "Timing chips",
+      "sub_short": "半導体",
+      "sub_short_en": "Timing",
       "row": 1,
       "relations": [
         {
@@ -194,8 +194,8 @@
       "name": "ハイマックス・テクノロジーズ",
       "sub": "ディスプレイ用半導体",
       "sub_en": "Display driver chips",
-      "sub_short": "表示用半導体",
-      "sub_short_en": "Display chips",
+      "sub_short": "表示IC",
+      "sub_short_en": "Display",
       "row": 1,
       "relations": [
         {
@@ -220,8 +220,8 @@
       "name": "AMD",
       "sub": "CPU・GPU",
       "sub_en": "CPUs & GPUs",
-      "sub_short": "CPU・GPU",
-      "sub_short_en": "CPUs & GPUs",
+      "sub_short": "CPU",
+      "sub_short_en": "CPU/GPU",
       "row": 1,
       "relations": [
         {
@@ -245,8 +245,8 @@
       "name": "テキサス・インスツルメンツ",
       "sub": "アナログ半導体",
       "sub_en": "Analog chips",
-      "sub_short": "アナログ半導体",
-      "sub_short_en": "Analog chips",
+      "sub_short": "アナログ",
+      "sub_short_en": "Analog",
       "row": 1,
       "relations": [
         {
@@ -271,8 +271,8 @@
       "name": "メディアテック",
       "sub": "スマホ・家電用半導体",
       "sub_en": "Mobile & consumer chips",
-      "sub_short": "スマホ半導体",
-      "sub_short_en": "Mobile chips",
+      "sub_short": "スマホ",
+      "sub_short_en": "Mobile IC",
       "row": 1,
       "relations": [
         {
@@ -298,7 +298,7 @@
       "sub": "半導体",
       "sub_en": "Semiconductors",
       "sub_short": "半導体",
-      "sub_short_en": "Semiconductors",
+      "sub_short_en": "Chips",
       "row": 2,
       "relations": [
         {
@@ -349,8 +349,8 @@
       "name": "ケイデンス・デザイン・システムズ",
       "sub": "設計ソフト",
       "sub_en": "Design software",
-      "sub_short": "設計ソフト",
-      "sub_short_en": "Design software",
+      "sub_short": "設計IT",
+      "sub_short_en": "Design",
       "row": 2,
       "relations": [
         {
@@ -375,8 +375,8 @@
       "name": "IBM",
       "sub": "ITサービス・ソフトウェア",
       "sub_en": "IT services & software",
-      "sub_short": "ITサービス",
-      "sub_short_en": "IT services",
+      "sub_short": "IT",
+      "sub_short_en": "IT",
       "row": 2,
       "relations": [
         {
@@ -400,8 +400,8 @@
       "name": "ブロードコム",
       "sub": "通信・インフラ半導体",
       "sub_en": "Networking & infrastructure chips",
-      "sub_short": "通信半導体",
-      "sub_short_en": "Networking chips",
+      "sub_short": "通信IC",
+      "sub_short_en": "Network",
       "row": 2,
       "relations": [
         {
@@ -454,7 +454,7 @@
       "name": "グローバルファウンドリーズ",
       "sub": "半導体受託製造",
       "sub_en": "Foundry",
-      "sub_short": "半導体受託製造",
+      "sub_short": "受託生産",
       "sub_short_en": "Foundry",
       "row": 3,
       "relations": [

@@ -34,7 +34,7 @@
       "sub": "複合企業(パキスタン)",
       "sub_en": "Conglomerate (Pakistan)",
       "sub_short": "複合企業",
-      "sub_short_en": "Conglomerate",
+      "sub_short_en": "Group",
       "row": 0,
       "relations": [
         {
@@ -138,7 +138,7 @@
       "sub": "穀物加工",
       "sub_en": "Grain processing",
       "sub_short": "穀物加工",
-      "sub_short_en": "Grain processing",
+      "sub_short_en": "Grain",
       "row": 2,
       "relations": [
         {
@@ -164,7 +164,7 @@
       "sub": "穀物(非上場)",
       "sub_en": "Agribusiness (private)",
       "sub_short": "穀物",
-      "sub_short_en": "Agribusiness",
+      "sub_short_en": "Farming",
       "row": 2,
       "relations": [
         {
@@ -190,7 +190,7 @@
       "sub": "食品素材(英)",
       "sub_en": "Food ingredients (UK)",
       "sub_short": "食品素材",
-      "sub_short_en": "Food ingredients",
+      "sub_short_en": "Food",
       "row": 2,
       "relations": [
         {

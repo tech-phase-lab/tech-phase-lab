@@ -34,8 +34,8 @@
       "name_en": "Syntiant",
       "sub": "エッジAI半導体",
       "sub_en": "Edge AI chips",
-      "sub_short": "エッジAI半導体",
-      "sub_short_en": "Edge AI chips",
+      "sub_short": "エッジAI",
+      "sub_short_en": "Edge AI",
       "row": 0,
       "relations": [
         {
@@ -60,8 +60,8 @@
       "name_en": "Best Buy",
       "sub": "家電量販店",
       "sub_en": "Electronics retail",
-      "sub_short": "家電量販店",
-      "sub_short_en": "Electronics shop",
+      "sub_short": "家電販売",
+      "sub_short_en": "Retail",
       "row": 1,
       "relations": [
         {
@@ -86,8 +86,8 @@
       "name_en": "Amazon",
       "sub": "ネット通販",
       "sub_en": "E-commerce",
-      "sub_short": "ネット通販",
-      "sub_short_en": "E-commerce",
+      "sub_short": "通販",
+      "sub_short_en": "E-com",
       "row": 1,
       "relations": [
         {
@@ -113,7 +113,7 @@
       "sub": "ネットワーク機器",
       "sub_en": "Networking equipment",
       "sub_short": "通信機器",
-      "sub_short_en": "Network gear",
+      "sub_short_en": "Network",
       "row": 1,
       "relations": [
         {
@@ -138,8 +138,8 @@
       "name_en": "Logitech",
       "sub": "PC周辺機器・オーディオ",
       "sub_en": "PC peripherals & audio",
-      "sub_short": "PC周辺機器",
-      "sub_short_en": "PC peripherals",
+      "sub_short": "PC周辺",
+      "sub_short_en": "PC gear",
       "row": 2,
       "relations": [
         {
@@ -164,8 +164,8 @@
       "name_en": "Xperi",
       "sub": "映像・音響技術",
       "sub_en": "Media & audio technology",
-      "sub_short": "映像・音響技術",
-      "sub_short_en": "Audio & video",
+      "sub_short": "映像技術",
+      "sub_short_en": "Audio",
       "row": 2,
       "relations": [
         {
@@ -191,7 +191,7 @@
       "sub": "医療機器・オーディオ",
       "sub_en": "Medical devices & audio",
       "sub_short": "医療機器",
-      "sub_short_en": "Medical devices",
+      "sub_short_en": "Medtech",
       "row": 2,
       "relations": [
         {
@@ -216,8 +216,8 @@
       "name_en": "Gentex",
       "sub": "車載ミラー・電子機器",
       "sub_en": "Auto mirrors & electronics",
-      "sub_short": "車載電子機器",
-      "sub_short_en": "Auto mirrors",
+      "sub_short": "車載電子",
+      "sub_short_en": "Mirrors",
       "row": 2,
       "relations": [
         {
@@ -243,7 +243,7 @@
       "sub": "テレビ・サウンドバー",
       "sub_en": "TVs & sound bars",
       "sub_short": "テレビ",
-      "sub_short_en": "TVs & sound bars",
+      "sub_short_en": "TVs",
       "row": 2,
       "relations": [
         {

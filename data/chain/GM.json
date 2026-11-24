@@ -24,8 +24,8 @@
       "name": "LGエナジーソリューション",
       "sub": "電池メーカー",
       "sub_en": "Battery maker",
-      "sub_short": "電池メーカー",
-      "sub_short_en": "Battery maker",
+      "sub_short": "電池",
+      "sub_short_en": "Batteries",
       "row": 0,
       "relations": [
         {
@@ -50,8 +50,8 @@
       "name": "上海汽車集団",
       "sub": "中国の自動車合弁",
       "sub_en": "China auto JV partner",
-      "sub_short": "中国車合弁",
-      "sub_short_en": "China auto JV",
+      "sub_short": "中国合弁",
+      "sub_short_en": "China JV",
       "row": 0,
       "relations": [
         {
@@ -76,8 +76,8 @@
       "name": "ステランティス",
       "sub": "自動車メーカー",
       "sub_en": "Automaker",
-      "sub_short": "自動車メーカー",
-      "sub_short_en": "Automaker",
+      "sub_short": "自動車",
+      "sub_short_en": "Cars",
       "row": 0,
       "relations": [
         {
@@ -102,7 +102,7 @@
       "name": "リチウム・アメリカズ",
       "sub": "リチウム開発",
       "sub_en": "Lithium developer",
-      "sub_short": "リチウム開発",
+      "sub_short": "リチウム",
       "sub_short_en": "Lithium",
       "row": 0,
       "relations": [
@@ -128,8 +128,8 @@
       "name": "ストラテック・セキュリティ",
       "sub": "自動車部品(鍵・ドア機構)",
       "sub_en": "Auto parts (locks, latches)",
-      "sub_short": "自動車部品",
-      "sub_short_en": "Auto parts",
+      "sub_short": "車部品",
+      "sub_short_en": "Car parts",
       "row": 1,
       "relations": [
         {
@@ -154,8 +154,8 @@
       "name": "リア",
       "sub": "自動車シート・電装",
       "sub_en": "Auto seating & electrical",
-      "sub_short": "自動車シート",
-      "sub_short_en": "Auto seating",
+      "sub_short": "シート",
+      "sub_short_en": "Seats",
       "row": 1,
       "relations": [
         {
@@ -181,7 +181,7 @@
       "sub": "車載電装",
       "sub_en": "Automotive electronics",
       "sub_short": "車載電装",
-      "sub_short_en": "Car electronics",
+      "sub_short_en": "Car tech",
       "row": 1,
       "relations": [
         {
@@ -206,7 +206,7 @@
       "name": "マリブ・ボーツ",
       "sub": "レジャーボート",
       "sub_en": "Recreational boats",
-      "sub_short": "レジャーボート",
+      "sub_short": "ボート",
       "sub_short_en": "Boats",
       "row": 0,
       "relations": [

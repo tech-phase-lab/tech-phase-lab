@@ -25,8 +25,8 @@
       "name": "Tモバイル・US",
       "sub": "通信キャリア",
       "sub_en": "Wireless carrier",
-      "sub_short": "通信キャリア",
-      "sub_short_en": "Wireless carrier",
+      "sub_short": "通信",
+      "sub_short_en": "Carrier",
       "row": 0,
       "relations": [
         {
@@ -51,8 +51,8 @@
       "name": "エーティーアンドティー",
       "sub": "通信キャリア",
       "sub_en": "Wireless carrier",
-      "sub_short": "通信キャリア",
-      "sub_short_en": "Wireless carrier",
+      "sub_short": "通信",
+      "sub_short_en": "Carrier",
       "row": 0,
       "relations": [
         {
@@ -90,8 +90,8 @@
       "name": "ベライゾン",
       "sub": "通信キャリア",
       "sub_en": "Wireless carrier",
-      "sub_short": "通信キャリア",
-      "sub_short_en": "Wireless carrier",
+      "sub_short": "通信",
+      "sub_short_en": "Carrier",
       "row": 0,
       "relations": [
         {
@@ -129,8 +129,8 @@
       "name": "テレフォニカ",
       "sub": "通信キャリア",
       "sub_en": "Wireless carrier",
-      "sub_short": "通信キャリア",
-      "sub_short_en": "Wireless carrier",
+      "sub_short": "通信",
+      "sub_short_en": "Carrier",
       "row": 0,
       "relations": [
         {
@@ -155,8 +155,8 @@
       "name": "ディッシュ(エコスター傘下)",
       "sub": "通信キャリア",
       "sub_en": "Wireless carrier",
-      "sub_short": "通信キャリア",
-      "sub_short_en": "Wireless carrier",
+      "sub_short": "通信",
+      "sub_short_en": "Carrier",
       "row": 0,
       "relations": [
         {
@@ -194,8 +194,8 @@
       "name": "クラウン・キャッスル",
       "sub": "通信タワー",
       "sub_en": "Cell towers",
-      "sub_short": "通信タワー",
-      "sub_short_en": "Cell towers",
+      "sub_short": "鉄塔",
+      "sub_short_en": "Towers",
       "row": 1,
       "relations": [
         {

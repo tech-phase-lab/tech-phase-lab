@@ -33,7 +33,7 @@
       "name_en": "L3Harris Technologies",
       "sub": "防衛・通信",
       "sub_en": "Defense & communications",
-      "sub_short": "防衛・通信",
+      "sub_short": "防衛",
       "sub_short_en": "Defense",
       "row": 0,
       "relations": [
@@ -60,7 +60,7 @@
       "sub": "衛星通信",
       "sub_en": "Satellite communications",
       "sub_short": "衛星通信",
-      "sub_short_en": "Satellite comms",
+      "sub_short_en": "Satcom",
       "row": 0,
       "relations": [
         {
@@ -114,7 +114,7 @@
       "sub": "通信機器",
       "sub_en": "Telecom equipment",
       "sub_short": "通信機器",
-      "sub_short_en": "Telecom gear",
+      "sub_short_en": "Telecom",
       "row": 0,
       "relations": [
         {
@@ -140,7 +140,7 @@
       "sub": "航空宇宙",
       "sub_en": "Aerospace",
       "sub_short": "航空宇宙",
-      "sub_short_en": "Aerospace",
+      "sub_short_en": "Aero",
       "row": 1,
       "relations": [
         {
@@ -178,8 +178,8 @@
       "name_en": "Northrop Grumman",
       "sub": "防衛・宇宙",
       "sub_en": "Defense & space",
-      "sub_short": "防衛・宇宙",
-      "sub_short_en": "Defense & space",
+      "sub_short": "防衛",
+      "sub_short_en": "Defense",
       "row": 1,
       "relations": [
         {
@@ -243,7 +243,7 @@
       "name_en": "Fugro",
       "sub": "地理空間データ",
       "sub_en": "Geo-data",
-      "sub_short": "地理空間データ",
+      "sub_short": "地図情報",
       "sub_short_en": "Geo-data",
       "row": 1,
       "relations": [
@@ -269,8 +269,8 @@
       "name_en": "Leonardo",
       "sub": "防衛・宇宙",
       "sub_en": "Defense & space",
-      "sub_short": "防衛・宇宙",
-      "sub_short_en": "Defense & space",
+      "sub_short": "防衛",
+      "sub_short_en": "Defense",
       "row": 1,
       "relations": [
         {
@@ -295,8 +295,8 @@
       "name_en": "Lockheed Martin",
       "sub": "防衛・宇宙",
       "sub_en": "Defense & space",
-      "sub_short": "防衛・宇宙",
-      "sub_short_en": "Defense & space",
+      "sub_short": "防衛",
+      "sub_short_en": "Defense",
       "row": 2,
       "relations": [
         {
@@ -347,7 +347,7 @@
       "name_en": "Rocket Lab",
       "sub": "ロケット・衛星",
       "sub_en": "Launch & satellites",
-      "sub_short": "ロケット・衛星",
+      "sub_short": "ロケット",
       "sub_short_en": "Launch",
       "row": 2,
       "relations": [
@@ -373,8 +373,8 @@
       "name_en": "Voyager Technologies",
       "sub": "宇宙・防衛",
       "sub_en": "Space & defense",
-      "sub_short": "宇宙・防衛",
-      "sub_short_en": "Space & defense",
+      "sub_short": "宇宙",
+      "sub_short_en": "Space",
       "row": 2,
       "relations": [
         {
@@ -400,7 +400,7 @@
       "sub": "航空宇宙",
       "sub_en": "Aerospace",
       "sub_short": "航空宇宙",
-      "sub_short_en": "Aerospace",
+      "sub_short_en": "Aero",
       "row": 2,
       "relations": [
         {

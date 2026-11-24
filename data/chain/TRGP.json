@@ -19,8 +19,8 @@
       "name": "エムピーエルエックス",
       "sub": "ミッドストリーム",
       "sub_en": "Midstream",
-      "sub_short": "中流エネルギー",
-      "sub_short_en": "Midstream",
+      "sub_short": "中流",
+      "sub_short_en": "Pipeline",
       "row": 0,
       "relations": [
         {
@@ -45,7 +45,7 @@
       "name": "ホワイトウォーター・ミッドストリーム",
       "sub": "パイプライン運営",
       "sub_en": "Pipeline operator",
-      "sub_short": "パイプライン",
+      "sub_short": "配管網",
       "sub_short_en": "Pipelines",
       "row": 0,
       "relations": [
@@ -71,7 +71,7 @@
       "name": "エンブリッジ",
       "sub": "パイプライン",
       "sub_en": "Pipeline",
-      "sub_short": "パイプライン",
+      "sub_short": "配管網",
       "sub_short_en": "Pipeline",
       "row": 0,
       "relations": [
@@ -97,7 +97,7 @@
       "name": "エクソンモービル",
       "sub": "石油・ガス",
       "sub_en": "Oil & gas",
-      "sub_short": "石油・ガス",
+      "sub_short": "石油",
       "sub_short_en": "Oil & gas",
       "row": 0,
       "relations": [
@@ -123,8 +123,8 @@
       "name": "ウィリアムズ",
       "sub": "ミッドストリーム",
       "sub_en": "Midstream",
-      "sub_short": "中流エネルギー",
-      "sub_short_en": "Midstream",
+      "sub_short": "中流",
+      "sub_short_en": "Pipeline",
       "row": 0,
       "relations": [
         {
@@ -150,7 +150,7 @@
       "sub": "石油化学",
       "sub_en": "Petrochemicals",
       "sub_short": "石油化学",
-      "sub_short_en": "Petrochemicals",
+      "sub_short_en": "Petchem",
       "row": 0,
       "relations": [
         {
@@ -201,8 +201,8 @@
       "name": "ヘス・ミッドストリーム",
       "sub": "石油・ガス中流",
       "sub_en": "Midstream",
-      "sub_short": "石油・ガス中流",
-      "sub_short_en": "Midstream",
+      "sub_short": "石油",
+      "sub_short_en": "Pipeline",
       "row": 0,
       "relations": [
         {

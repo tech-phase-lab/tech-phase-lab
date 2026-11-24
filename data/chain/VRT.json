@@ -63,8 +63,8 @@
       "name": "Bitfarms",
       "sub": "データセンター",
       "sub_en": "Data centers",
-      "sub_short": "データセンター",
-      "sub_short_en": "Data centers",
+      "sub_short": "DC",
+      "sub_short_en": "DCs",
       "row": 1,
       "relations": [
         {
@@ -87,8 +87,8 @@
       "name": "Hut 8",
       "sub": "データセンター",
       "sub_en": "Data centers",
-      "sub_short": "データセンター",
-      "sub_short_en": "Data centers",
+      "sub_short": "DC",
+      "sub_short_en": "DCs",
       "row": 1,
       "relations": [
         {
@@ -163,8 +163,8 @@
       "name": "Oklo",
       "sub": "原子力開発",
       "sub_en": "Nuclear development",
-      "sub_short": "原子力開発",
-      "sub_short_en": "Nuclear power",
+      "sub_short": "原子力",
+      "sub_short_en": "Nuclear",
       "row": 2,
       "relations": [
         {
@@ -190,8 +190,8 @@
       "name": "Caterpillar",
       "sub": "建機・発電機",
       "sub_en": "Machinery & generators",
-      "sub_short": "建機・発電機",
-      "sub_short_en": "Machinery",
+      "sub_short": "建機",
+      "sub_short_en": "Machines",
       "row": 2,
       "relations": [
         {
@@ -215,8 +215,8 @@
       "name": "Schneider Electric",
       "sub": "電機・電力管理",
       "sub_en": "Electrical equipment",
-      "sub_short": "電機・電力管理",
-      "sub_short_en": "Electrical gear",
+      "sub_short": "電機",
+      "sub_short_en": "Electrical",
       "row": 3,
       "relations": [
         {
@@ -240,8 +240,8 @@
       "name": "Eaton",
       "sub": "電機・電力管理",
       "sub_en": "Electrical equipment",
-      "sub_short": "電機・電力管理",
-      "sub_short_en": "Electrical gear",
+      "sub_short": "電機",
+      "sub_short_en": "Electrical",
       "row": 3,
       "relations": [
         {
@@ -266,7 +266,7 @@
       "sub": "電気設備",
       "sub_en": "Electrical equipment",
       "sub_short": "電気設備",
-      "sub_short_en": "Electrical gear",
+      "sub_short_en": "Electrical",
       "row": 3,
       "relations": [
         {
@@ -291,7 +291,7 @@
       "sub": "電源",
       "sub_en": "Power supplies",
       "sub_short": "電源",
-      "sub_short_en": "Power supplies",
+      "sub_short_en": "Power",
       "row": 3,
       "relations": [
         {
@@ -315,8 +315,8 @@
       "name": "Johnson Controls",
       "sub": "空調・設備",
       "sub_en": "HVAC & building systems",
-      "sub_short": "空調・設備",
-      "sub_short_en": "HVAC systems",
+      "sub_short": "空調",
+      "sub_short_en": "HVAC",
       "row": 3,
       "relations": [
         {
@@ -394,8 +394,8 @@
       "name": "Huawei",
       "sub": "通信機器・電源",
       "sub_en": "Telecom & power equipment",
-      "sub_short": "通信機器・電源",
-      "sub_short_en": "Telecom gear",
+      "sub_short": "通信機器",
+      "sub_short_en": "Telecom",
       "row": 3,
       "relations": [
         {
@@ -419,7 +419,7 @@
       "name": "Stulz",
       "sub": "空調・冷却",
       "sub_en": "Cooling",
-      "sub_short": "空調・冷却",
+      "sub_short": "空調",
       "sub_short_en": "Cooling",
       "row": 3,
       "relations": [
@@ -445,7 +445,7 @@
       "sub": "電源機器",
       "sub_en": "Power equipment",
       "sub_short": "電源機器",
-      "sub_short_en": "Power equipment",
+      "sub_short_en": "Power",
       "row": 3,
       "relations": [
         {

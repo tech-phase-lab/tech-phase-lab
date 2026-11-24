@@ -29,7 +29,7 @@
       "name": "Amazon",
       "sub": "クラウド・EC",
       "sub_en": "Cloud & e-commerce",
-      "sub_short": "クラウド・EC",
+      "sub_short": "クラウド",
       "sub_short_en": "Cloud",
       "row": 0,
       "relations": [
@@ -68,7 +68,7 @@
       "sub": "ソフト・クラウド",
       "sub_en": "Software & cloud",
       "sub_short": "ソフト",
-      "sub_short_en": "Software & cloud",
+      "sub_short_en": "Software",
       "row": 0,
       "relations": [
         {
@@ -93,7 +93,7 @@
       "sub": "ロケット・宇宙機器",
       "sub_en": "Launch & space systems",
       "sub_short": "ロケット",
-      "sub_short_en": "Launch systems",
+      "sub_short_en": "Launch",
       "row": 0,
       "relations": [
         {
@@ -144,8 +144,8 @@
       "name": "Palantir",
       "sub": "データ分析ソフト",
       "sub_en": "Data analytics software",
-      "sub_short": "データ分析",
-      "sub_short_en": "Data analytics",
+      "sub_short": "分析",
+      "sub_short_en": "Analytics",
       "row": 1,
       "relations": [
         {
@@ -201,8 +201,8 @@
       "name": "スパイア・グローバル",
       "sub": "衛星データ",
       "sub_en": "Satellite data",
-      "sub_short": "衛星データ",
-      "sub_short_en": "Satellite data",
+      "sub_short": "衛星",
+      "sub_short_en": "Satellite",
       "row": 1,
       "relations": [
         {
@@ -230,7 +230,7 @@
       "sub": "航空宇宙",
       "sub_en": "Aerospace",
       "sub_short": "航空宇宙",
-      "sub_short_en": "Aerospace",
+      "sub_short_en": "Aero",
       "row": 0,
       "relations": [
         {
@@ -258,7 +258,7 @@
       "sub": "防衛・エンジニアリング",
       "sub_en": "Engineering & defense",
       "sub_short": "防衛",
-      "sub_short_en": "Engineering",
+      "sub_short_en": "Design",
       "row": 1,
       "relations": [
         {
@@ -314,7 +314,7 @@
       "sub": "衛星画像",
       "sub_en": "Satellite imagery",
       "sub_short": "衛星画像",
-      "sub_short_en": "Sat imagery",
+      "sub_short_en": "Imaging",
       "row": 2,
       "relations": [
         {

@@ -84,7 +84,7 @@
       "sub": "炭素回収",
       "sub_en": "Carbon capture",
       "sub_short": "炭素回収",
-      "sub_short_en": "Carbon capture",
+      "sub_short_en": "Carbon",
       "row": 0,
       "relations": [
         {
@@ -109,8 +109,8 @@
       "name": "ベーカー・ヒューズ",
       "sub": "油田サービス",
       "sub_en": "Oilfield services",
-      "sub_short": "油田サービス",
-      "sub_short_en": "Oilfield svcs",
+      "sub_short": "油田",
+      "sub_short_en": "Oilfield",
       "row": 1,
       "relations": [
         {
@@ -135,8 +135,8 @@
       "name": "ウェザーフォード",
       "sub": "油田サービス",
       "sub_en": "Oilfield services",
-      "sub_short": "油田サービス",
-      "sub_short_en": "Oilfield svcs",
+      "sub_short": "油田",
+      "sub_short_en": "Oilfield",
       "row": 1,
       "relations": [
         {
@@ -162,7 +162,7 @@
       "sub": "地熱発電",
       "sub_en": "Geothermal power",
       "sub_short": "地熱発電",
-      "sub_short_en": "Geothermal power",
+      "sub_short_en": "Geo",
       "row": 0,
       "relations": [
         {
@@ -188,7 +188,7 @@
       "sub": "海洋油田サービス",
       "sub_en": "Offshore well services",
       "sub_short": "海洋油田",
-      "sub_short_en": "Offshore wells",
+      "sub_short_en": "Offshore",
       "row": 0,
       "relations": [
         {
@@ -213,8 +213,8 @@
       "name": "ドリリング・ツールズ・インターナショナル",
       "sub": "掘削ツール",
       "sub_en": "Drilling tools",
-      "sub_short": "掘削ツール",
-      "sub_short_en": "Drilling tools",
+      "sub_short": "掘削",
+      "sub_short_en": "Drilling",
       "row": 2,
       "relations": [
         {

@@ -29,8 +29,8 @@
       "name_en": "Broadwind",
       "sub": "金属加工・ギア",
       "sub_en": "Fabrication & gearing",
-      "sub_short": "金属加工・ギア",
-      "sub_short_en": "Fabrication",
+      "sub_short": "金属加工",
+      "sub_short_en": "Metal",
       "row": 0,
       "relations": [
         {
@@ -55,8 +55,8 @@
       "name_en": "DMC Power",
       "sub": "送電用コネクタ",
       "sub_en": "Transmission connectors",
-      "sub_short": "送電用コネクタ",
-      "sub_short_en": "Grid connectors",
+      "sub_short": "送電部品",
+      "sub_short_en": "Grid",
       "row": 0,
       "relations": [
         {
@@ -82,7 +82,7 @@
       "sub": "通信インフラ機器",
       "sub_en": "Telecom infrastructure products",
       "sub_short": "通信機器",
-      "sub_short_en": "Telecom infra",
+      "sub_short_en": "Telecom",
       "row": 0,
       "relations": [
         {
@@ -107,7 +107,7 @@
       "name_en": "Nicor",
       "sub": "照明・電気製品",
       "sub_en": "Lighting & electrical products",
-      "sub_short": "照明・電気製品",
+      "sub_short": "照明",
       "sub_short_en": "Lighting",
       "row": 0,
       "relations": [
@@ -133,8 +133,8 @@
       "name_en": "Systems Control",
       "sub": "変電所制御盤",
       "sub_en": "Substation control systems",
-      "sub_short": "変電所制御盤",
-      "sub_short_en": "Grid controls",
+      "sub_short": "変電設備",
+      "sub_short_en": "Grid",
       "row": 0,
       "relations": [
         {
@@ -160,7 +160,7 @@
       "sub": "コネクタ",
       "sub_en": "Connectors",
       "sub_short": "コネクタ",
-      "sub_short_en": "Connectors",
+      "sub_short_en": "Plugs",
       "row": 1,
       "relations": [
         {
@@ -185,8 +185,8 @@
       "name_en": "Badger Meter",
       "sub": "水道メーター",
       "sub_en": "Water meters",
-      "sub_short": "水道メーター",
-      "sub_short_en": "Water meters",
+      "sub_short": "水道",
+      "sub_short_en": "Meters",
       "row": 1,
       "relations": [
         {
@@ -212,7 +212,7 @@
       "sub": "電線管・ケーブル",
       "sub_en": "Conduit & cable",
       "sub_short": "電線管",
-      "sub_short_en": "Conduit & cable",
+      "sub_short_en": "Conduit",
       "row": 1,
       "relations": [
         {
@@ -237,8 +237,8 @@
       "name_en": "Knightscope",
       "sub": "警備ロボット・非常電話",
       "sub_en": "Security robots & emergency phones",
-      "sub_short": "警備ロボット",
-      "sub_short_en": "Security robots",
+      "sub_short": "警備",
+      "sub_short_en": "Security",
       "row": 1,
       "relations": [
         {

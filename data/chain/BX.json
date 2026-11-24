@@ -30,7 +30,7 @@
       "sub": "不動産融資REIT",
       "sub_en": "Mortgage REIT",
       "sub_short": "融資REIT",
-      "sub_short_en": "Mortgage REIT",
+      "sub_short_en": "REIT",
       "row": 0,
       "relations": [
         {
@@ -55,8 +55,8 @@
       "name_en": "Corebridge Financial",
       "sub": "生命保険・年金",
       "sub_en": "Life & retirement",
-      "sub_short": "生命保険・年金",
-      "sub_short_en": "Life insurance",
+      "sub_short": "生保",
+      "sub_short_en": "Life ins",
       "row": 0,
       "relations": [
         {
@@ -134,7 +134,7 @@
       "sub": "医療機器",
       "sub_en": "Medical devices",
       "sub_short": "医療機器",
-      "sub_short_en": "Medical devices",
+      "sub_short_en": "Medtech",
       "row": 1,
       "relations": [
         {
@@ -160,7 +160,7 @@
       "sub": "RNA医薬",
       "sub_en": "RNAi therapeutics",
       "sub_short": "RNA医薬",
-      "sub_short_en": "RNAi drugs",
+      "sub_short_en": "RNAi",
       "row": 1,
       "relations": [
         {
@@ -186,7 +186,7 @@
       "sub": "細胞治療",
       "sub_en": "Cell therapy",
       "sub_short": "細胞治療",
-      "sub_short_en": "Cell therapy",
+      "sub_short_en": "Cell tx",
       "row": 1,
       "relations": [
         {
@@ -263,8 +263,8 @@
       "name_en": "Axsome Therapeutics",
       "sub": "神経疾患の医薬品",
       "sub_en": "CNS pharma",
-      "sub_short": "神経疾患薬",
-      "sub_short_en": "CNS pharma",
+      "sub_short": "神経薬",
+      "sub_short_en": "CNS",
       "row": 2,
       "relations": [
         {
@@ -290,7 +290,7 @@
       "sub": "決済",
       "sub_en": "Payments",
       "sub_short": "決済",
-      "sub_short_en": "Payments",
+      "sub_short_en": "Payment",
       "row": 2,
       "relations": [
         {
@@ -315,8 +315,8 @@
       "name_en": "Bumble",
       "sub": "マッチングアプリ",
       "sub_en": "Dating apps",
-      "sub_short": "マッチング",
-      "sub_short_en": "Dating apps",
+      "sub_short": "出会い",
+      "sub_short_en": "Dating",
       "row": 2,
       "relations": [
         {

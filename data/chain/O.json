@@ -20,7 +20,7 @@
       "sub": "コンビニ",
       "sub_en": "Convenience stores",
       "sub_short": "コンビニ",
-      "sub_short_en": "Convenience",
+      "sub_short_en": "C-stores",
       "row": 0,
       "relations": [
         {
@@ -46,7 +46,7 @@
       "sub": "ディスカウント小売",
       "sub_en": "Discount retail",
       "sub_short": "格安小売",
-      "sub_short_en": "Discount retail",
+      "sub_short_en": "Discount",
       "row": 0,
       "relations": [
         {
@@ -71,7 +71,7 @@
       "name": "ウォルグリーン",
       "sub": "ドラッグストア",
       "sub_en": "Drugstore",
-      "sub_short": "ドラッグストア",
+      "sub_short": "薬局",
       "sub_short_en": "Drugstore",
       "row": 0,
       "relations": [
@@ -123,8 +123,8 @@
       "name": "ホーム・デポ",
       "sub": "住宅建材小売",
       "sub_en": "Home improvement retail",
-      "sub_short": "住宅建材小売",
-      "sub_short_en": "Home improvement",
+      "sub_short": "建材小売",
+      "sub_short_en": "Home",
       "row": 0,
       "relations": [
         {
@@ -149,8 +149,8 @@
       "name": "ブラックストーン",
       "sub": "不動産投資",
       "sub_en": "Real estate investor",
-      "sub_short": "不動産投資",
-      "sub_short_en": "RE investing",
+      "sub_short": "不動産",
+      "sub_short_en": "Property",
       "row": 0,
       "relations": [
         {
@@ -175,7 +175,7 @@
       "name": "ジーアイシー",
       "sub": "機関投資家",
       "sub_en": "Institutional investor",
-      "sub_short": "機関投資家",
+      "sub_short": "投資家",
       "sub_short_en": "Investor",
       "row": 0,
       "relations": [
@@ -201,7 +201,7 @@
       "name": "トラメル・クロウ",
       "sub": "不動産開発",
       "sub_en": "Real estate developer",
-      "sub_short": "不動産開発",
+      "sub_short": "不動産",
       "sub_short_en": "Developer",
       "row": 0,
       "relations": [

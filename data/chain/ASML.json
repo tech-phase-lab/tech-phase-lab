@@ -36,8 +36,8 @@
       "name": "Ichor Holdings",
       "sub": "ガス・流体部品",
       "sub_en": "Fluid delivery subsystems",
-      "sub_short": "ガス・流体部品",
-      "sub_short_en": "Fluid systems",
+      "sub_short": "ガス部品",
+      "sub_short_en": "Pumps",
       "row": 0,
       "relations": [
         {
@@ -167,7 +167,7 @@
       "sub": "露光装置",
       "sub_en": "Lithography",
       "sub_short": "露光装置",
-      "sub_short_en": "Lithography",
+      "sub_short_en": "Litho",
       "row": 2,
       "relations": [
         {
@@ -191,7 +191,7 @@
       "sub": "露光装置",
       "sub_en": "Lithography",
       "sub_short": "露光装置",
-      "sub_short_en": "Lithography",
+      "sub_short_en": "Litho",
       "row": 2,
       "relations": [
         {
@@ -215,7 +215,7 @@
       "sub": "製造装置",
       "sub_en": "Equipment",
       "sub_short": "製造装置",
-      "sub_short_en": "Equipment",
+      "sub_short_en": "Gear",
       "row": 2,
       "relations": [
         {
@@ -240,8 +240,8 @@
       "name": "KLA",
       "sub": "検査・計測装置",
       "sub_en": "Inspection & metrology",
-      "sub_short": "検査・計測装置",
-      "sub_short_en": "Inspection",
+      "sub_short": "検査",
+      "sub_short_en": "Testing",
       "row": 2,
       "relations": [
         {
@@ -332,7 +332,7 @@
       "sub": "医療機器",
       "sub_en": "Medical devices",
       "sub_short": "医療機器",
-      "sub_short_en": "Medical devices",
+      "sub_short_en": "Medtech",
       "row": 3,
       "relations": [
         {

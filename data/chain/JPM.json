@@ -167,7 +167,7 @@
       "sub": "IT機器",
       "sub_en": "Consumer technology",
       "sub_short": "IT機器",
-      "sub_short_en": "Consumer tech",
+      "sub_short_en": "Devices",
       "row": 1,
       "relations": [
         {
@@ -219,7 +219,7 @@
       "sub": "決済ネットワーク",
       "sub_en": "Payment network",
       "sub_short": "決済網",
-      "sub_short_en": "Payment network",
+      "sub_short_en": "Payment",
       "row": 1,
       "relations": [
         {
@@ -244,8 +244,8 @@
       "name_en": "MarketAxess",
       "sub": "債券電子取引",
       "sub_en": "Electronic bond trading",
-      "sub_short": "債券電子取引",
-      "sub_short_en": "Bond trading",
+      "sub_short": "債券",
+      "sub_short_en": "Bonds",
       "row": 1,
       "relations": [
         {
@@ -270,8 +270,8 @@
       "name_en": "IBM",
       "sub": "ITサービス",
       "sub_en": "IT services",
-      "sub_short": "ITサービス",
-      "sub_short_en": "IT services",
+      "sub_short": "IT",
+      "sub_short_en": "IT",
       "row": 2,
       "relations": [
         {
@@ -296,8 +296,8 @@
       "name_en": "PayPal",
       "sub": "オンライン決済",
       "sub_en": "Online payments",
-      "sub_short": "オンライン決済",
-      "sub_short_en": "Online payments",
+      "sub_short": "決済",
+      "sub_short_en": "Payment",
       "row": 2,
       "relations": [
         {
@@ -322,8 +322,8 @@
       "name_en": "Robinhood",
       "sub": "ネット証券",
       "sub_en": "Online brokerage",
-      "sub_short": "ネット証券",
-      "sub_short_en": "Online brokerage",
+      "sub_short": "証券",
+      "sub_short_en": "Broker",
       "row": 2,
       "relations": [
         {
@@ -374,7 +374,7 @@
       "name_en": "Affirm",
       "sub": "後払い決済",
       "sub_en": "Buy now, pay later",
-      "sub_short": "後払い決済",
+      "sub_short": "後払い",
       "sub_short_en": "BNPL",
       "row": 3,
       "relations": [
@@ -401,7 +401,7 @@
       "sub": "医療購買サービス",
       "sub_en": "Healthcare purchasing",
       "sub_short": "医療購買",
-      "sub_short_en": "Health buying",
+      "sub_short_en": "Health",
       "row": 3,
       "relations": [
         {

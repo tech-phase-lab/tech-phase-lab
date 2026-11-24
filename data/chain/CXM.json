@@ -28,8 +28,8 @@
       "name": "アドビ",
       "sub": "クリエイティブソフト",
       "sub_en": "Creative software",
-      "sub_short": "制作ソフト",
-      "sub_short_en": "Creative apps",
+      "sub_short": "制作",
+      "sub_short_en": "Design",
       "row": 0,
       "relations": [
         {
@@ -68,7 +68,7 @@
       "sub": "ソフト・クラウド",
       "sub_en": "Software & cloud",
       "sub_short": "ソフト",
-      "sub_short_en": "Software & cloud",
+      "sub_short_en": "Software",
       "row": 0,
       "relations": [
         {
@@ -119,8 +119,8 @@
       "name": "セールスフォース",
       "sub": "顧客管理ソフト",
       "sub_en": "CRM software",
-      "sub_short": "顧客管理ソフト",
-      "sub_short_en": "CRM software",
+      "sub_short": "CRM",
+      "sub_short_en": "CRM",
       "row": 0,
       "relations": [
         {
@@ -158,8 +158,8 @@
       "name": "オラクル",
       "sub": "企業向けソフト",
       "sub_en": "Enterprise software",
-      "sub_short": "企業向けソフト",
-      "sub_short_en": "Enterprise apps",
+      "sub_short": "業務IT",
+      "sub_short_en": "Software",
       "row": 0,
       "relations": [
         {
@@ -197,8 +197,8 @@
       "name": "SAP",
       "sub": "企業向けソフト",
       "sub_en": "Enterprise software",
-      "sub_short": "企業向けソフト",
-      "sub_short_en": "Enterprise apps",
+      "sub_short": "業務IT",
+      "sub_short_en": "Software",
       "row": 0,
       "relations": [
         {
@@ -235,7 +235,7 @@
       "name": "サービスナウ",
       "sub": "業務ワークフロー",
       "sub_en": "Workflow software",
-      "sub_short": "業務フロー",
+      "sub_short": "業務IT",
       "sub_short_en": "Workflow",
       "row": 0,
       "relations": [
@@ -274,8 +274,8 @@
       "name": "アルファベット",
       "sub": "検索・クラウド",
       "sub_en": "Search & cloud",
-      "sub_short": "検索・クラウド",
-      "sub_short_en": "Search & cloud",
+      "sub_short": "検索",
+      "sub_short_en": "Search",
       "row": 0,
       "relations": [
         {
@@ -301,7 +301,7 @@
       "sub": "コンサルティング",
       "sub_en": "Consulting",
       "sub_short": "コンサル",
-      "sub_short_en": "Consulting",
+      "sub_short_en": "Advisory",
       "row": 0,
       "relations": [
         {
@@ -326,8 +326,8 @@
       "name": "サムスン電子",
       "sub": "電機・半導体",
       "sub_en": "Electronics & chips",
-      "sub_short": "電機・半導体",
-      "sub_short_en": "Electronics",
+      "sub_short": "電機",
+      "sub_short_en": "Devices",
       "row": 1,
       "relations": [
         {
@@ -353,7 +353,7 @@
       "sub": "日用品",
       "sub_en": "Consumer goods",
       "sub_short": "日用品",
-      "sub_short_en": "Consumer goods",
+      "sub_short_en": "Goods",
       "row": 1,
       "relations": [
         {
@@ -378,8 +378,8 @@
       "name": "スプラウト・ソーシャル",
       "sub": "SNS管理ソフト",
       "sub_en": "Social media management",
-      "sub_short": "SNS管理ソフト",
-      "sub_short_en": "Social media",
+      "sub_short": "SNS管理",
+      "sub_short_en": "Social",
       "row": 2,
       "relations": [
         {

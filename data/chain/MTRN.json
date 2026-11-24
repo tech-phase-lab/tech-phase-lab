@@ -34,7 +34,7 @@
       "sub": "成膜用ターゲット",
       "sub_en": "Sputtering targets",
       "sub_short": "成膜材料",
-      "sub_short_en": "Sputter targets",
+      "sub_short_en": "Targets",
       "row": 0,
       "relations": [
         {
@@ -60,7 +60,7 @@
       "sub": "光学部品",
       "sub_en": "Optical systems",
       "sub_short": "光学部品",
-      "sub_short_en": "Optical systems",
+      "sub_short_en": "Optics",
       "row": 0,
       "relations": [
         {
@@ -85,8 +85,8 @@
       "name_en": "Viavi Solutions",
       "sub": "光学・測定",
       "sub_en": "Optics & test",
-      "sub_short": "光学・測定",
-      "sub_short_en": "Optics & test",
+      "sub_short": "光学",
+      "sub_short_en": "Optics",
       "row": 0,
       "relations": [
         {
@@ -111,8 +111,8 @@
       "name_en": "IBC Advanced Alloys",
       "sub": "ベリリウム合金(加)",
       "sub_en": "Beryllium alloys (Canada)",
-      "sub_short": "ベリリウム合金",
-      "sub_short_en": "Beryllium alloys",
+      "sub_short": "合金",
+      "sub_short_en": "Alloys",
       "row": 1,
       "relations": [
         {
@@ -137,7 +137,7 @@
       "name_en": "CoorsTek",
       "sub": "セラミックス(非上場)",
       "sub_en": "Ceramics (private)",
-      "sub_short": "セラミックス",
+      "sub_short": "陶磁材",
       "sub_short_en": "Ceramics",
       "row": 1,
       "relations": [
@@ -164,7 +164,7 @@
       "sub": "銅合金(独、非上場)",
       "sub_en": "Copper alloys (Germany, private)",
       "sub_short": "銅合金",
-      "sub_short_en": "Copper alloys",
+      "sub_short_en": "Copper",
       "row": 1,
       "relations": [
         {
@@ -190,7 +190,7 @@
       "sub": "貴金属(独、非上場)",
       "sub_en": "Precious metals (Germany, private)",
       "sub_short": "貴金属",
-      "sub_short_en": "Precious metals",
+      "sub_short_en": "Metals",
       "row": 1,
       "relations": [
         {
@@ -215,7 +215,7 @@
       "name_en": "NGK Insulators",
       "sub": "セラミックス・合金",
       "sub_en": "Ceramics & alloys",
-      "sub_short": "セラミックス",
+      "sub_short": "陶磁材",
       "sub_short_en": "Ceramics",
       "row": 2,
       "relations": [
@@ -242,7 +242,7 @@
       "sub": "特殊金属",
       "sub_en": "Specialty metals",
       "sub_short": "特殊金属",
-      "sub_short_en": "Specialty metals",
+      "sub_short_en": "Metals",
       "row": 2,
       "relations": [
         {

@@ -26,8 +26,8 @@
       "name": "スリーエム",
       "sub": "粘着材・素材",
       "sub_en": "Adhesives & materials",
-      "sub_short": "粘着材・素材",
-      "sub_short_en": "Adhesives",
+      "sub_short": "粘着材",
+      "sub_short_en": "Glues",
       "row": 0,
       "relations": [
         {
@@ -65,8 +65,8 @@
       "name": "ユーピーエム",
       "sub": "ラベル素材",
       "sub_en": "Label materials",
-      "sub_short": "ラベル素材",
-      "sub_short_en": "Label materials",
+      "sub_short": "ラベル",
+      "sub_short_en": "Labels",
       "row": 0,
       "relations": [
         {
@@ -92,7 +92,7 @@
       "sub": "粘着素材",
       "sub_en": "Adhesive materials",
       "sub_short": "粘着素材",
-      "sub_short_en": "Adhesives",
+      "sub_short_en": "Glues",
       "row": 0,
       "relations": [
         {
@@ -118,7 +118,7 @@
       "sub": "粘着素材",
       "sub_en": "Adhesive materials",
       "sub_short": "粘着素材",
-      "sub_short_en": "Adhesives",
+      "sub_short_en": "Glues",
       "row": 0,
       "relations": [
         {
@@ -143,7 +143,7 @@
       "name": "日東電工",
       "sub": "機能性テープ",
       "sub_en": "Performance tapes",
-      "sub_short": "機能性テープ",
+      "sub_short": "テープ",
       "sub_short_en": "Tapes",
       "row": 0,
       "relations": [
@@ -169,7 +169,7 @@
       "name": "テサ",
       "sub": "機能性テープ",
       "sub_en": "Performance tapes",
-      "sub_short": "機能性テープ",
+      "sub_short": "テープ",
       "sub_short_en": "Tapes",
       "row": 0,
       "relations": [
@@ -196,7 +196,7 @@
       "sub": "RFID・ソリューション",
       "sub_en": "RFID & solutions",
       "sub_short": "RFID",
-      "sub_short_en": "RFID & solutions",
+      "sub_short_en": "RFID",
       "row": 0,
       "relations": [
         {
@@ -222,7 +222,7 @@
       "sub": "RFID・ソリューション",
       "sub_en": "RFID & solutions",
       "sub_short": "RFID",
-      "sub_short_en": "RFID & solutions",
+      "sub_short_en": "RFID",
       "row": 0,
       "relations": [
         {
@@ -247,7 +247,7 @@
       "name": "ゼブラ・テクノロジーズ",
       "sub": "バーコード・自動認識",
       "sub_en": "Barcode & auto-ID",
-      "sub_short": "バーコード",
+      "sub_short": "読取機器",
       "sub_short_en": "Barcode",
       "row": 1,
       "relations": [

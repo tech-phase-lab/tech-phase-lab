@@ -62,8 +62,8 @@
       "name": "リングセントラル",
       "sub": "クラウド通信",
       "sub_en": "Cloud communications",
-      "sub_short": "クラウド通信",
-      "sub_short_en": "Cloud comms",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 1,
       "relations": [
         {
@@ -88,8 +88,8 @@
       "name": "8x8",
       "sub": "クラウド通信",
       "sub_en": "Cloud communications",
-      "sub_short": "クラウド通信",
-      "sub_short_en": "Cloud comms",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 1,
       "relations": [
         {
@@ -113,7 +113,7 @@
       "sub": "ソフト・クラウド",
       "sub_en": "Software & cloud",
       "sub_short": "ソフト",
-      "sub_short_en": "Software & cloud",
+      "sub_short_en": "Software",
       "row": 3,
       "relations": [
         {
@@ -182,7 +182,7 @@
       "sub": "生成AI",
       "sub_en": "Generative AI",
       "sub_short": "生成AI",
-      "sub_short_en": "Generative AI",
+      "sub_short_en": "AI",
       "row": 3,
       "relations": [
         {
@@ -208,8 +208,8 @@
       "name": "Snowflake",
       "sub": "データクラウド",
       "sub_en": "Data cloud",
-      "sub_short": "データクラウド",
-      "sub_short_en": "Data cloud",
+      "sub_short": "データ",
+      "sub_short_en": "Data",
       "row": 3,
       "relations": [
         {
@@ -236,7 +236,7 @@
       "sub": "携帯通信",
       "sub_en": "Wireless carrier",
       "sub_short": "携帯通信",
-      "sub_short_en": "Wireless carrier",
+      "sub_short_en": "Carrier",
       "row": 2,
       "relations": [
         {
@@ -290,7 +290,7 @@
       "sub": "携帯通信",
       "sub_en": "Wireless carrier",
       "sub_short": "携帯通信",
-      "sub_short_en": "Wireless carrier",
+      "sub_short_en": "Carrier",
       "row": 2,
       "relations": [
         {

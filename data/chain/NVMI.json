@@ -29,8 +29,8 @@
       "name": "サムスン電子",
       "sub": "メモリ・半導体",
       "sub_en": "Memory & chips",
-      "sub_short": "メモリ・半導体",
-      "sub_short_en": "Memory & chips",
+      "sub_short": "メモリ",
+      "sub_short_en": "Memory",
       "row": 0,
       "relations": [
         {
@@ -68,8 +68,8 @@
       "name": "IBM",
       "sub": "ITサービス・量子",
       "sub_en": "IT services & quantum",
-      "sub_short": "ITサービス",
-      "sub_short_en": "IT services",
+      "sub_short": "IT",
+      "sub_short_en": "IT",
       "row": 0,
       "relations": [
         {
@@ -122,8 +122,8 @@
       "name": "KLA",
       "sub": "半導体検査・計測装置",
       "sub_en": "Inspection & metrology",
-      "sub_short": "半導体検査",
-      "sub_short_en": "Inspection",
+      "sub_short": "検査装置",
+      "sub_short_en": "Testing",
       "row": 1,
       "relations": [
         {
@@ -147,8 +147,8 @@
       "name": "Onto Innovation",
       "sub": "半導体検査・計測装置",
       "sub_en": "Inspection & metrology",
-      "sub_short": "半導体検査",
-      "sub_short_en": "Inspection",
+      "sub_short": "検査装置",
+      "sub_short_en": "Testing",
       "row": 1,
       "relations": [
         {
@@ -173,7 +173,7 @@
       "sub": "露光装置",
       "sub_en": "Lithography equipment",
       "sub_short": "露光装置",
-      "sub_short_en": "Lithography",
+      "sub_short_en": "Litho",
       "row": 1,
       "relations": [
         {
@@ -197,8 +197,8 @@
       "name": "アプライド マテリアルズ",
       "sub": "半導体製造装置",
       "sub_en": "Semiconductor equipment",
-      "sub_short": "半導体製造装置",
-      "sub_short_en": "Chip equipment",
+      "sub_short": "製造装置",
+      "sub_short_en": "Chip tools",
       "row": 1,
       "relations": [
         {
@@ -223,8 +223,8 @@
       "name": "ラムリサーチ",
       "sub": "半導体製造装置",
       "sub_en": "Semiconductor equipment",
-      "sub_short": "半導体製造装置",
-      "sub_short_en": "Chip equipment",
+      "sub_short": "製造装置",
+      "sub_short_en": "Chip tools",
       "row": 1,
       "relations": [
         {
@@ -249,8 +249,8 @@
       "name": "カムテック",
       "sub": "検査・計測装置",
       "sub_en": "Inspection & metrology",
-      "sub_short": "検査・計測装置",
-      "sub_short_en": "Inspection",
+      "sub_short": "検査",
+      "sub_short_en": "Testing",
       "row": 1,
       "relations": [
         {

@@ -71,7 +71,7 @@
       "name": "モデルナ",
       "sub": "バイオ医薬",
       "sub_en": "Biotech",
-      "sub_short": "バイオ医薬",
+      "sub_short": "バイオ",
       "sub_short_en": "Biotech",
       "row": 0,
       "relations": [
@@ -149,7 +149,7 @@
       "name": "イルミナ",
       "sub": "ゲノム解析機器",
       "sub_en": "Genomics",
-      "sub_short": "ゲノム解析機器",
+      "sub_short": "ゲノム",
       "sub_short_en": "Genomics",
       "row": 0,
       "relations": [
@@ -201,7 +201,7 @@
       "name": "ウーバー・テクノロジーズ",
       "sub": "配車・配送",
       "sub_en": "Mobility",
-      "sub_short": "配車・配送",
+      "sub_short": "配車",
       "sub_short_en": "Mobility",
       "row": 0,
       "relations": [
@@ -253,7 +253,7 @@
       "name": "アルファベット",
       "sub": "インターネット",
       "sub_en": "Internet",
-      "sub_short": "インターネット",
+      "sub_short": "ネット",
       "sub_short_en": "Internet",
       "row": 0,
       "relations": [

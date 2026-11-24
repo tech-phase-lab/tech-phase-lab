@@ -34,7 +34,7 @@
       "name_en": "Suvinil",
       "sub": "建築用塗料(ブラジル)",
       "sub_en": "Architectural paints (Brazil)",
-      "sub_short": "建築用塗料",
+      "sub_short": "塗料",
       "sub_short_en": "Paints",
       "row": 0,
       "relations": [
@@ -60,8 +60,8 @@
       "name_en": "Agree Realty",
       "sub": "ネットリースREIT",
       "sub_en": "Net lease REIT",
-      "sub_short": "ネットリース",
-      "sub_short_en": "Net lease REIT",
+      "sub_short": "リース",
+      "sub_short_en": "REIT",
       "row": 1,
       "relations": [
         {
@@ -86,8 +86,8 @@
       "name_en": "Generation Income Properties",
       "sub": "ネットリースREIT",
       "sub_en": "Net lease REIT",
-      "sub_short": "ネットリース",
-      "sub_short_en": "Net lease REIT",
+      "sub_short": "リース",
+      "sub_short_en": "REIT",
       "row": 1,
       "relations": [
         {
@@ -164,8 +164,8 @@
       "name_en": "Masco",
       "sub": "住宅設備・塗料",
       "sub_en": "Home products & paint",
-      "sub_short": "住宅設備・塗料",
-      "sub_short_en": "Home products",
+      "sub_short": "住宅設備",
+      "sub_short_en": "Home",
       "row": 2,
       "relations": [
         {
@@ -190,8 +190,8 @@
       "name_en": "Ingevity",
       "sub": "特殊化学品",
       "sub_en": "Specialty chemicals",
-      "sub_short": "特殊化学品",
-      "sub_short_en": "Chemicals",
+      "sub_short": "化学品",
+      "sub_short_en": "Chem",
       "row": 2,
       "relations": [
         {
@@ -217,7 +217,7 @@
       "sub": "複合企業",
       "sub_en": "Conglomerate",
       "sub_short": "複合企業",
-      "sub_short_en": "Conglomerate",
+      "sub_short_en": "Group",
       "row": 2,
       "relations": [
         {

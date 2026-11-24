@@ -103,8 +103,8 @@
       "name": "アメリカン・エキスプレス",
       "sub": "カード会社",
       "sub_en": "Card issuer",
-      "sub_short": "カード会社",
-      "sub_short_en": "Card issuer",
+      "sub_short": "カード",
+      "sub_short_en": "Cards",
       "row": 0,
       "relations": [
         {

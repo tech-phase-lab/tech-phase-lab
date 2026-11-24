@@ -33,8 +33,8 @@
       "name_en": "StrongMind",
       "sub": "オンライン学校支援(非上場)",
       "sub_en": "Online school services (private)",
-      "sub_short": "オンライン学校",
-      "sub_short_en": "Online schools",
+      "sub_short": "教育",
+      "sub_short_en": "Edtech",
       "row": 0,
       "relations": [
         {
@@ -59,8 +59,8 @@
       "name_en": "Lincoln Learning Solutions",
       "sub": "オンライン教材(非上場)",
       "sub_en": "Online curriculum (private)",
-      "sub_short": "オンライン教材",
-      "sub_short_en": "Online courses",
+      "sub_short": "教材",
+      "sub_short_en": "Edtech",
       "row": 0,
       "relations": [
         {
@@ -86,7 +86,7 @@
       "sub": "チャータースクール運営(非上場)",
       "sub_en": "Charter school operator (private)",
       "sub_short": "学校運営",
-      "sub_short_en": "Charter schools",
+      "sub_short_en": "Schools",
       "row": 0,
       "relations": [
         {
@@ -112,7 +112,7 @@
       "sub": "教材(非上場)",
       "sub_en": "Curriculum (private)",
       "sub_short": "教材",
-      "sub_short_en": "Curriculum",
+      "sub_short_en": "Education",
       "row": 1,
       "relations": [
         {
@@ -137,8 +137,8 @@
       "name_en": "Imagine Learning",
       "sub": "デジタル教材(非上場)",
       "sub_en": "Digital curriculum (private)",
-      "sub_short": "デジタル教材",
-      "sub_short_en": "Online courses",
+      "sub_short": "教材",
+      "sub_short_en": "Edtech",
       "row": 1,
       "relations": [
         {
@@ -163,8 +163,8 @@
       "name_en": "Edmentum",
       "sub": "デジタル教材(非上場)",
       "sub_en": "Digital curriculum (private)",
-      "sub_short": "デジタル教材",
-      "sub_short_en": "Online courses",
+      "sub_short": "教材",
+      "sub_short_en": "Edtech",
       "row": 1,
       "relations": [
         {
@@ -267,8 +267,8 @@
       "name_en": "Duolingo",
       "sub": "語学アプリ",
       "sub_en": "Language learning app",
-      "sub_short": "語学アプリ",
-      "sub_short_en": "Language app",
+      "sub_short": "語学",
+      "sub_short_en": "Language",
       "row": 2,
       "relations": [
         {

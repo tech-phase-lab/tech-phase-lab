@@ -52,7 +52,7 @@
       "sub": "銅の権益",
       "sub_en": "Copper interests",
       "sub_short": "銅の権益",
-      "sub_short_en": "Copper interests",
+      "sub_short_en": "Copper",
       "row": 0,
       "relations": [
         {
@@ -78,7 +78,7 @@
       "sub": "金鉱山",
       "sub_en": "Gold mining",
       "sub_short": "金鉱山",
-      "sub_short_en": "Gold mining",
+      "sub_short_en": "Gold",
       "row": 0,
       "relations": [
         {
@@ -103,8 +103,8 @@
       "name_en": "Barrick",
       "sub": "金・銅鉱山",
       "sub_en": "Gold & copper mining",
-      "sub_short": "金・銅鉱山",
-      "sub_short_en": "Gold mining",
+      "sub_short": "金鉱山",
+      "sub_short_en": "Gold",
       "row": 1,
       "relations": [
         {
@@ -130,7 +130,7 @@
       "sub": "銅の探鉱(エクアドル)",
       "sub_en": "Copper exploration (Ecuador)",
       "sub_short": "銅の探鉱",
-      "sub_short_en": "Copper mining",
+      "sub_short_en": "Copper",
       "row": 1,
       "relations": [
         {
@@ -156,7 +156,7 @@
       "sub": "銀鉱山",
       "sub_en": "Silver mining",
       "sub_short": "銀鉱山",
-      "sub_short_en": "Silver mining",
+      "sub_short_en": "Silver",
       "row": 1,
       "relations": [
         {
@@ -181,8 +181,8 @@
       "name_en": "Ero Copper",
       "sub": "銅・金鉱山(ブラジル)",
       "sub_en": "Copper & gold (Brazil)",
-      "sub_short": "銅・金鉱山",
-      "sub_short_en": "Copper & gold",
+      "sub_short": "銅鉱山",
+      "sub_short_en": "Copper",
       "row": 1,
       "relations": [
         {
@@ -208,7 +208,7 @@
       "sub": "金鉱山(アフリカ)",
       "sub_en": "Gold mining (Africa)",
       "sub_short": "金鉱山",
-      "sub_short_en": "Gold mining",
+      "sub_short_en": "Gold",
       "row": 1,
       "relations": [
         {
@@ -233,8 +233,8 @@
       "name_en": "New Gold",
       "sub": "金・銅鉱山",
       "sub_en": "Gold & copper mining",
-      "sub_short": "金・銅鉱山",
-      "sub_short_en": "Gold mining",
+      "sub_short": "金鉱山",
+      "sub_short_en": "Gold",
       "row": 1,
       "relations": [
         {
@@ -259,8 +259,8 @@
       "name_en": "McEwen",
       "sub": "金・銀鉱山",
       "sub_en": "Gold & silver mining",
-      "sub_short": "金・銀鉱山",
-      "sub_short_en": "Gold mining",
+      "sub_short": "金鉱山",
+      "sub_short_en": "Gold",
       "row": 1,
       "relations": [
         {
@@ -286,7 +286,7 @@
       "sub": "金鉱山",
       "sub_en": "Gold mining",
       "sub_short": "金鉱山",
-      "sub_short_en": "Gold mining",
+      "sub_short_en": "Gold",
       "row": 1,
       "relations": [
         {
@@ -312,7 +312,7 @@
       "sub": "金鉱山(ネバダ)",
       "sub_en": "Gold mining (Nevada)",
       "sub_short": "金鉱山",
-      "sub_short_en": "Gold mining",
+      "sub_short_en": "Gold",
       "row": 1,
       "relations": [
         {

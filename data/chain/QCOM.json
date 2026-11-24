@@ -83,7 +83,7 @@
       "sub": "後工程",
       "sub_en": "Packaging & test",
       "sub_short": "後工程",
-      "sub_short_en": "Packaging & test",
+      "sub_short_en": "Chip pack",
       "row": 0,
       "relations": [
         {
@@ -108,7 +108,7 @@
       "sub": "後工程",
       "sub_en": "Packaging & test",
       "sub_short": "後工程",
-      "sub_short_en": "Packaging & test",
+      "sub_short_en": "Chip pack",
       "row": 0,
       "relations": [
         {
@@ -132,8 +132,8 @@
       "name": "Arm Holdings",
       "sub": "半導体設計",
       "sub_en": "Chip design",
-      "sub_short": "半導体設計",
-      "sub_short_en": "Chip design",
+      "sub_short": "設計",
+      "sub_short_en": "Chip IP",
       "row": 0,
       "relations": [
         {
@@ -174,8 +174,8 @@
       "name": "Apple",
       "sub": "PC・スマホ",
       "sub_en": "PCs & phones",
-      "sub_short": "PC・スマホ",
-      "sub_short_en": "PCs & phones",
+      "sub_short": "PC",
+      "sub_short_en": "PCs",
       "row": 1,
       "relations": [
         {
@@ -201,8 +201,8 @@
       "name": "Samsung Electronics",
       "sub": "スマホ・製造",
       "sub_en": "Phones & foundry",
-      "sub_short": "スマホ・製造",
-      "sub_short_en": "Phones & foundry",
+      "sub_short": "スマホ",
+      "sub_short_en": "Phones",
       "row": 1,
       "relations": [
         {
@@ -347,8 +347,8 @@
       "name": "Microsoft",
       "sub": "PC・クラウド",
       "sub_en": "PCs & cloud",
-      "sub_short": "PC・クラウド",
-      "sub_short_en": "PCs & cloud",
+      "sub_short": "PC",
+      "sub_short_en": "PCs",
       "row": 1,
       "relations": [
         {
@@ -473,7 +473,7 @@
       "sub": "自動運転",
       "sub_en": "Autonomous driving",
       "sub_short": "自動運転",
-      "sub_short_en": "Self-driving",
+      "sub_short_en": "AV tech",
       "row": 2,
       "relations": [
         {
@@ -497,7 +497,7 @@
       "name": "Skyworks",
       "sub": "高周波半導体",
       "sub_en": "RF chips",
-      "sub_short": "高周波半導体",
+      "sub_short": "RF IC",
       "sub_short_en": "RF chips",
       "row": 2,
       "relations": [

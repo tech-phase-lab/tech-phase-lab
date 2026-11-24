@@ -33,7 +33,7 @@
       "sub": "特殊ガス",
       "sub_en": "Specialty gases",
       "sub_short": "特殊ガス",
-      "sub_short_en": "Specialty gases",
+      "sub_short_en": "Gases",
       "row": 0,
       "relations": [
         {
@@ -84,8 +84,8 @@
       "name_en": "Entegris",
       "sub": "半導体材料",
       "sub_en": "Semiconductor materials",
-      "sub_short": "半導体材料",
-      "sub_short_en": "Chip materials",
+      "sub_short": "材料",
+      "sub_short_en": "Materials",
       "row": 0,
       "relations": [
         {
@@ -110,7 +110,7 @@
       "name_en": "Quaker Houghton",
       "sub": "工業用潤滑剤",
       "sub_en": "Industrial fluids",
-      "sub_short": "工業用潤滑剤",
+      "sub_short": "潤滑剤",
       "sub_short_en": "Fluids",
       "row": 1,
       "relations": [
@@ -137,7 +137,7 @@
       "sub": "潤滑油",
       "sub_en": "Lubricants",
       "sub_short": "潤滑油",
-      "sub_short_en": "Lubricants",
+      "sub_short_en": "Lubes",
       "row": 1,
       "relations": [
         {
@@ -162,8 +162,8 @@
       "name_en": "MKS",
       "sub": "半導体装置・化学",
       "sub_en": "Semiconductor equipment & chemistry",
-      "sub_short": "半導体装置",
-      "sub_short_en": "Chip equipment",
+      "sub_short": "製造装置",
+      "sub_short_en": "Chip tools",
       "row": 2,
       "relations": [
         {
@@ -215,7 +215,7 @@
       "sub": "化学",
       "sub_en": "Chemicals",
       "sub_short": "化学",
-      "sub_short_en": "Chemicals",
+      "sub_short_en": "Chem",
       "row": 2,
       "relations": [
         {

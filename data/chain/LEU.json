@@ -37,8 +37,8 @@
       "name_en": "TENEX",
       "sub": "濃縮ウラン(ロシア国営)",
       "sub_en": "Enriched uranium (Russian state-owned)",
-      "sub_short": "濃縮ウラン",
-      "sub_short_en": "Enriched uranium",
+      "sub_short": "ウラン",
+      "sub_short_en": "Uranium",
       "row": 0,
       "relations": [
         {
@@ -79,7 +79,7 @@
       "sub": "核燃料(仏政府系)",
       "sub_en": "Nuclear fuel (French state-owned)",
       "sub_short": "核燃料",
-      "sub_short_en": "Nuclear fuel",
+      "sub_short_en": "Nuclear",
       "row": 0,
       "relations": [
         {
@@ -117,8 +117,8 @@
       "name_en": "Fluor",
       "sub": "エンジニアリング・建設",
       "sub_en": "Engineering & construction",
-      "sub_short": "設計・建設",
-      "sub_short_en": "Engineering",
+      "sub_short": "設計",
+      "sub_short_en": "Design",
       "row": 0,
       "relations": [
         {
@@ -144,7 +144,7 @@
       "sub": "建設",
       "sub_en": "Construction",
       "sub_short": "建設",
-      "sub_short_en": "Construction",
+      "sub_short_en": "Building",
       "row": 0,
       "relations": [
         {
@@ -169,8 +169,8 @@
       "name_en": "Oklo",
       "sub": "小型原子炉",
       "sub_en": "Advanced nuclear",
-      "sub_short": "小型原子炉",
-      "sub_short_en": "Advanced nuclear",
+      "sub_short": "原子炉",
+      "sub_short_en": "Nuclear",
       "row": 1,
       "relations": [
         {
@@ -208,8 +208,8 @@
       "name_en": "X-energy",
       "sub": "小型原子炉",
       "sub_en": "Advanced nuclear",
-      "sub_short": "小型原子炉",
-      "sub_short_en": "Advanced nuclear",
+      "sub_short": "原子炉",
+      "sub_short_en": "Nuclear",
       "row": 1,
       "relations": [
         {
@@ -234,8 +234,8 @@
       "name_en": "Radiant",
       "sub": "超小型原子炉",
       "sub_en": "Microreactors",
-      "sub_short": "超小型原子炉",
-      "sub_short_en": "Microreactors",
+      "sub_short": "原子炉",
+      "sub_short_en": "Reactors",
       "row": 1,
       "relations": [
         {
@@ -260,8 +260,8 @@
       "name_en": "Antares",
       "sub": "超小型原子炉",
       "sub_en": "Microreactors",
-      "sub_short": "超小型原子炉",
-      "sub_short_en": "Microreactors",
+      "sub_short": "原子炉",
+      "sub_short_en": "Reactors",
       "row": 1,
       "relations": [
         {
@@ -287,7 +287,7 @@
       "sub": "SNS・AI",
       "sub_en": "Social & AI",
       "sub_short": "SNS・AI",
-      "sub_short_en": "Social & AI",
+      "sub_short_en": "Social",
       "row": 2,
       "relations": [
         {
@@ -313,7 +313,7 @@
       "sub": "AIソフト",
       "sub_en": "AI software",
       "sub_short": "AIソフト",
-      "sub_short_en": "AI software",
+      "sub_short_en": "AI apps",
       "row": 2,
       "relations": [
         {
@@ -338,8 +338,8 @@
       "name_en": "Urenco",
       "sub": "ウラン濃縮(英蘭独)",
       "sub_en": "Uranium enrichment (UK/NL/DE)",
-      "sub_short": "ウラン濃縮",
-      "sub_short_en": "Enrichment",
+      "sub_short": "ウラン",
+      "sub_short_en": "Uranium",
       "row": 3,
       "relations": [
         {
@@ -364,8 +364,8 @@
       "name_en": "CNEIC",
       "sub": "ウラン濃縮(中国)",
       "sub_en": "Uranium enrichment (China)",
-      "sub_short": "ウラン濃縮",
-      "sub_short_en": "Enrichment",
+      "sub_short": "ウラン",
+      "sub_short_en": "Uranium",
       "row": 3,
       "relations": [
         {

@@ -34,7 +34,7 @@
       "sub": "半導体",
       "sub_en": "Semiconductors",
       "sub_short": "半導体",
-      "sub_short_en": "Semiconductors",
+      "sub_short_en": "Chips",
       "row": 0,
       "relations": [
         {
@@ -59,7 +59,7 @@
       "sub": "ゲーム",
       "sub_en": "Video games",
       "sub_short": "ゲーム",
-      "sub_short_en": "Video games",
+      "sub_short_en": "Games",
       "row": 1,
       "relations": [
         {
@@ -83,8 +83,8 @@
       "name": "Roblox",
       "sub": "ゲームプラットフォーム",
       "sub_en": "Game platform",
-      "sub_short": "ゲーム基盤",
-      "sub_short_en": "Game platform",
+      "sub_short": "ゲーム",
+      "sub_short_en": "Games",
       "row": 1,
       "relations": [
         {
@@ -108,8 +108,8 @@
       "name": "TSMC",
       "sub": "半導体受託製造",
       "sub_en": "Chip foundry",
-      "sub_short": "半導体受託製造",
-      "sub_short_en": "Chip foundry",
+      "sub_short": "受託生産",
+      "sub_short_en": "Foundry",
       "row": 2,
       "relations": [
         {
@@ -149,7 +149,7 @@
       "sub": "自動車",
       "sub_en": "Automobiles",
       "sub_short": "自動車",
-      "sub_short_en": "Automobiles",
+      "sub_short_en": "Cars",
       "row": 2,
       "relations": [
         {
@@ -212,7 +212,7 @@
       "sub": "音楽配信",
       "sub_en": "Music streaming",
       "sub_short": "音楽配信",
-      "sub_short_en": "Music streaming",
+      "sub_short_en": "Music",
       "row": 2,
       "relations": [
         {
@@ -251,8 +251,8 @@
       "name": "Samsung Electronics",
       "sub": "電機・半導体",
       "sub_en": "Electronics & semiconductors",
-      "sub_short": "電機・半導体",
-      "sub_short_en": "Electronics",
+      "sub_short": "電機",
+      "sub_short_en": "Devices",
       "row": 2,
       "relations": [
         {
@@ -279,7 +279,7 @@
       "sub": "通信機器",
       "sub_en": "Telecom equipment",
       "sub_short": "通信機器",
-      "sub_short_en": "Telecom gear",
+      "sub_short_en": "Telecom",
       "row": 2,
       "relations": [
         {
@@ -306,7 +306,7 @@
       "sub": "電子部品",
       "sub_en": "Electronic components",
       "sub_short": "電子部品",
-      "sub_short_en": "Components",
+      "sub_short_en": "Parts",
       "row": 2,
       "relations": [
         {
@@ -332,8 +332,8 @@
       "name": "Himax Technologies",
       "sub": "マイクロディスプレイ",
       "sub_en": "Microdisplays",
-      "sub_short": "小型表示装置",
-      "sub_short_en": "Microdisplays",
+      "sub_short": "表示装置",
+      "sub_short_en": "Displays",
       "row": 3,
       "relations": [
         {

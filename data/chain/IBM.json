@@ -46,7 +46,7 @@
       "sub": "クラウド・ソフト",
       "sub_en": "Cloud & software",
       "sub_short": "クラウド",
-      "sub_short_en": "Cloud & software",
+      "sub_short_en": "Cloud",
       "row": 1,
       "relations": [
         {
@@ -82,7 +82,7 @@
       "sub": "クラウド・ソフト",
       "sub_en": "Cloud & software",
       "sub_short": "クラウド",
-      "sub_short_en": "Cloud & software",
+      "sub_short_en": "Cloud",
       "row": 1,
       "relations": [
         {
@@ -155,7 +155,7 @@
       "name": "Oracle",
       "sub": "データベース・ソフト",
       "sub_en": "Database & software",
-      "sub_short": "データベース",
+      "sub_short": "DB",
       "sub_short_en": "Database",
       "row": 1,
       "relations": [
@@ -204,7 +204,7 @@
       "name": "Palo Alto Networks",
       "sub": "セキュリティ",
       "sub_en": "Security",
-      "sub_short": "セキュリティ",
+      "sub_short": "防御",
       "sub_short_en": "Security",
       "row": 1,
       "relations": [
@@ -228,8 +228,8 @@
       "name": "Salesforce",
       "sub": "業務ソフト",
       "sub_en": "Business software",
-      "sub_short": "業務ソフト",
-      "sub_short_en": "Business apps",
+      "sub_short": "業務IT",
+      "sub_short_en": "Biz apps",
       "row": 1,
       "relations": [
         {
@@ -264,8 +264,8 @@
       "name": "Adobe",
       "sub": "業務ソフト",
       "sub_en": "Business software",
-      "sub_short": "業務ソフト",
-      "sub_short_en": "Business apps",
+      "sub_short": "業務IT",
+      "sub_short_en": "Biz apps",
       "row": 1,
       "relations": [
         {
@@ -288,8 +288,8 @@
       "name": "SAP",
       "sub": "業務ソフト",
       "sub_en": "Business software",
-      "sub_short": "業務ソフト",
-      "sub_short_en": "Business apps",
+      "sub_short": "業務IT",
+      "sub_short_en": "Biz apps",
       "row": 1,
       "relations": [
         {
@@ -385,8 +385,8 @@
       "name": "Accenture",
       "sub": "ITコンサル",
       "sub_en": "IT consulting",
-      "sub_short": "ITコンサル",
-      "sub_short_en": "IT consulting",
+      "sub_short": "IT支援",
+      "sub_short_en": "IT",
       "row": 3,
       "relations": [
         {
@@ -409,8 +409,8 @@
       "name": "Capgemini",
       "sub": "ITコンサル",
       "sub_en": "IT consulting",
-      "sub_short": "ITコンサル",
-      "sub_short_en": "IT consulting",
+      "sub_short": "IT支援",
+      "sub_short_en": "IT",
       "row": 3,
       "relations": [
         {
@@ -433,8 +433,8 @@
       "name": "Samsung Electronics",
       "sub": "半導体製造",
       "sub_en": "Chip manufacturing",
-      "sub_short": "半導体製造",
-      "sub_short_en": "Chipmaking",
+      "sub_short": "半導体",
+      "sub_short_en": "Chips",
       "row": 0,
       "relations": [
         {
@@ -470,7 +470,7 @@
       "name": "CoreWeave",
       "sub": "AIクラウド",
       "sub_en": "AI cloud",
-      "sub_short": "AIクラウド",
+      "sub_short": "AI基盤",
       "sub_short_en": "AI cloud",
       "row": 0,
       "relations": [
@@ -574,8 +574,8 @@
       "name": "Cisco",
       "sub": "ネットワーク",
       "sub_en": "Networking",
-      "sub_short": "ネットワーク",
-      "sub_short_en": "Networking",
+      "sub_short": "通信網",
+      "sub_short_en": "Network",
       "row": 4,
       "relations": [
         {
@@ -613,8 +613,8 @@
       "name": "Siemens",
       "sub": "産業・技術",
       "sub_en": "Industrial technology",
-      "sub_short": "産業・技術",
-      "sub_short_en": "Industrial tech",
+      "sub_short": "産業",
+      "sub_short_en": "Industrial",
       "row": 4,
       "relations": [
         {
@@ -638,8 +638,8 @@
       "name": "ServiceNow",
       "sub": "業務ソフト",
       "sub_en": "Business software",
-      "sub_short": "業務ソフト",
-      "sub_short_en": "Business apps",
+      "sub_short": "業務IT",
+      "sub_short_en": "Biz apps",
       "row": 1,
       "relations": [
         {
@@ -663,7 +663,7 @@
       "name": "MongoDB",
       "sub": "データベース",
       "sub_en": "Database",
-      "sub_short": "データベース",
+      "sub_short": "DB",
       "sub_short_en": "Database",
       "row": 1,
       "relations": [
@@ -701,8 +701,8 @@
       "name": "Pegasystems",
       "sub": "業務ソフト",
       "sub_en": "Business software",
-      "sub_short": "業務ソフト",
-      "sub_short_en": "Business apps",
+      "sub_short": "業務IT",
+      "sub_short_en": "Biz apps",
       "row": 1,
       "relations": [
         {
@@ -726,8 +726,8 @@
       "name": "Broadcom",
       "sub": "ソフト・半導体",
       "sub_en": "Software & chips",
-      "sub_short": "ソフト・半導体",
-      "sub_short_en": "Software & chips",
+      "sub_short": "ソフト",
+      "sub_short_en": "Software",
       "row": 1,
       "relations": [
         {
@@ -751,7 +751,7 @@
       "sub": "半導体・サーバー",
       "sub_en": "Chips & servers",
       "sub_short": "半導体",
-      "sub_short_en": "Chips & servers",
+      "sub_short_en": "Chips",
       "row": 2,
       "relations": [
         {
@@ -774,7 +774,7 @@
       "name": "NetApp",
       "sub": "ストレージ",
       "sub_en": "Storage",
-      "sub_short": "ストレージ",
+      "sub_short": "記憶装置",
       "sub_short_en": "Storage",
       "row": 2,
       "relations": [
@@ -798,7 +798,7 @@
       "name": "Pure Storage(現Everpure)",
       "sub": "ストレージ",
       "sub_en": "Storage",
-      "sub_short": "ストレージ",
+      "sub_short": "記憶装置",
       "sub_short_en": "Storage",
       "row": 2,
       "relations": [
@@ -849,8 +849,8 @@
       "name": "Cognizant",
       "sub": "ITコンサル",
       "sub_en": "IT consulting",
-      "sub_short": "ITコンサル",
-      "sub_short_en": "IT consulting",
+      "sub_short": "IT支援",
+      "sub_short_en": "IT",
       "row": 3,
       "relations": [
         {
@@ -874,8 +874,8 @@
       "name": "GlobalFoundries",
       "sub": "半導体製造",
       "sub_en": "Chip foundry",
-      "sub_short": "半導体製造",
-      "sub_short_en": "Chip foundry",
+      "sub_short": "半導体",
+      "sub_short_en": "Foundry",
       "row": 4,
       "relations": [
         {
@@ -900,8 +900,8 @@
       "name": "Kyndryl",
       "sub": "ITサービス",
       "sub_en": "IT services",
-      "sub_short": "ITサービス",
-      "sub_short_en": "IT services",
+      "sub_short": "IT",
+      "sub_short_en": "IT",
       "row": 5,
       "relations": [
         {

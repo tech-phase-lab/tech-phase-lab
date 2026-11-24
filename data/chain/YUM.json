@@ -25,7 +25,7 @@
       "sub": "中国の最大フランチャイジー",
       "sub_en": "Largest master franchisee",
       "sub_short": "中国FC",
-      "sub_short_en": "Top franchisee",
+      "sub_short_en": "Franchise",
       "row": 1,
       "relations": [
         {
@@ -50,8 +50,8 @@
       "name": "マクレーン・フードサービス",
       "sub": "米国の食材流通",
       "sub_en": "U.S. food distribution",
-      "sub_short": "米国の食材流通",
-      "sub_short_en": "Food supply",
+      "sub_short": "食品卸",
+      "sub_short_en": "Food",
       "row": 0,
       "relations": [
         {
@@ -76,8 +76,8 @@
       "name": "レストラン・サプライチェーン・ソリューションズ",
       "sub": "購買の共同組織",
       "sub_en": "Purchasing cooperative",
-      "sub_short": "購買の共同組織",
-      "sub_short_en": "Buying co-op",
+      "sub_short": "共同購買",
+      "sub_short_en": "Co-op",
       "row": 0,
       "relations": [
         {
@@ -102,8 +102,8 @@
       "name": "デヴヤニ・インターナショナル",
       "sub": "インドの加盟店運営",
       "sub_en": "India franchisee",
-      "sub_short": "インド加盟店",
-      "sub_short_en": "India franchisee",
+      "sub_short": "インドFC",
+      "sub_short_en": "Franchise",
       "row": 1,
       "relations": [
         {

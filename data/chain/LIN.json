@@ -85,7 +85,7 @@
       "sub": "化学",
       "sub_en": "Chemicals",
       "sub_short": "化学",
-      "sub_short_en": "Chemicals",
+      "sub_short_en": "Chem",
       "row": 0,
       "relations": [
         {
@@ -111,7 +111,7 @@
       "sub": "ガス販売・溶接材",
       "sub_en": "Gas distribution & welding supply",
       "sub_short": "ガス販売",
-      "sub_short_en": "Gas distribution",
+      "sub_short_en": "Gas",
       "row": 1,
       "relations": [
         {
@@ -136,7 +136,7 @@
       "name_en": "Energy Transfer",
       "sub": "パイプライン",
       "sub_en": "Pipelines",
-      "sub_short": "パイプライン",
+      "sub_short": "配管網",
       "sub_short_en": "Pipelines",
       "row": 1,
       "relations": [
@@ -163,7 +163,7 @@
       "sub": "産業ガス",
       "sub_en": "Industrial gases",
       "sub_short": "産業ガス",
-      "sub_short_en": "Industrial gases",
+      "sub_short_en": "Gases",
       "row": 2,
       "relations": [
         {
@@ -189,7 +189,7 @@
       "sub": "産業ガス(仏)",
       "sub_en": "Industrial gases (France)",
       "sub_short": "産業ガス",
-      "sub_short_en": "Industrial gases",
+      "sub_short_en": "Gases",
       "row": 2,
       "relations": [
         {
@@ -215,7 +215,7 @@
       "sub": "産業ガス(独)",
       "sub_en": "Industrial gases (Germany)",
       "sub_short": "産業ガス",
-      "sub_short_en": "Industrial gases",
+      "sub_short_en": "Gases",
       "row": 2,
       "relations": [
         {
@@ -241,7 +241,7 @@
       "sub": "産業ガス",
       "sub_en": "Industrial gases",
       "sub_short": "産業ガス",
-      "sub_short_en": "Industrial gases",
+      "sub_short_en": "Gases",
       "row": 2,
       "relations": [
         {

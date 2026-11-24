@@ -28,8 +28,8 @@
       "name": "ベライゾン",
       "sub": "携帯網の提供",
       "sub_en": "Mobile network provider",
-      "sub_short": "携帯網の提供",
-      "sub_short_en": "Mobile carrier",
+      "sub_short": "携帯通信",
+      "sub_short_en": "Carrier",
       "row": 0,
       "relations": [
         {
@@ -67,8 +67,8 @@
       "name": "Tモバイル・US",
       "sub": "携帯網の提供",
       "sub_en": "Mobile network provider",
-      "sub_short": "携帯網の提供",
-      "sub_short_en": "Mobile carrier",
+      "sub_short": "携帯通信",
+      "sub_short_en": "Carrier",
       "row": 0,
       "relations": [
         {
@@ -93,8 +93,8 @@
       "name": "ロサンゼルス・レイカーズ",
       "sub": "スポーツ放映権",
       "sub_en": "Sports rights",
-      "sub_short": "スポーツ放映権",
-      "sub_short_en": "Sports rights",
+      "sub_short": "放映権",
+      "sub_short_en": "Sports",
       "row": 0,
       "relations": [
         {
@@ -119,8 +119,8 @@
       "name": "アップル",
       "sub": "端末メーカー",
       "sub_en": "Device maker",
-      "sub_short": "端末メーカー",
-      "sub_short_en": "Device maker",
+      "sub_short": "端末",
+      "sub_short_en": "Devices",
       "row": 0,
       "relations": [
         {
@@ -146,7 +146,7 @@
       "sub": "ケーブル・メディア",
       "sub_en": "Cable & media",
       "sub_short": "ケーブル",
-      "sub_short_en": "Cable & media",
+      "sub_short_en": "Cable",
       "row": 1,
       "relations": [
         {
@@ -185,7 +185,7 @@
       "sub": "通信大手",
       "sub_en": "Telecom major",
       "sub_short": "通信大手",
-      "sub_short_en": "Telecom major",
+      "sub_short_en": "Telecom",
       "row": 1,
       "relations": [
         {

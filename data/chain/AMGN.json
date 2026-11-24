@@ -39,7 +39,7 @@
       "sub": "医薬品卸",
       "sub_en": "Pharma wholesaler",
       "sub_short": "医薬品卸",
-      "sub_short_en": "Drug wholesale",
+      "sub_short_en": "Pharma",
       "row": 1,
       "relations": [
         {
@@ -65,7 +65,7 @@
       "sub": "医薬品卸",
       "sub_en": "Pharma wholesaler",
       "sub_short": "医薬品卸",
-      "sub_short_en": "Drug wholesale",
+      "sub_short_en": "Pharma",
       "row": 1,
       "relations": [
         {
@@ -91,7 +91,7 @@
       "sub": "医薬品卸",
       "sub_en": "Pharma wholesaler",
       "sub_short": "医薬品卸",
-      "sub_short_en": "Drug wholesale",
+      "sub_short_en": "Pharma",
       "row": 1,
       "relations": [
         {
@@ -168,7 +168,7 @@
       "name_en": "BeOne Medicines",
       "sub": "がん治療薬(中国)",
       "sub_en": "Oncology (China)",
-      "sub_short": "がん治療薬",
+      "sub_short": "がん薬",
       "sub_short_en": "Oncology",
       "row": 2,
       "relations": [
@@ -363,8 +363,8 @@
       "name_en": "Regeneron",
       "sub": "バイオ医薬品",
       "sub_en": "Biopharma",
-      "sub_short": "バイオ医薬品",
-      "sub_short_en": "Biopharma",
+      "sub_short": "バイオ",
+      "sub_short_en": "Pharma",
       "row": 3,
       "relations": [
         {
@@ -466,7 +466,7 @@
       "name": "サイトエックス・セラピューティクス",
       "sub": "がん治療薬",
       "sub_en": "Oncology",
-      "sub_short": "がん治療薬",
+      "sub_short": "がん薬",
       "sub_short_en": "Oncology",
       "row": 2,
       "relations": [

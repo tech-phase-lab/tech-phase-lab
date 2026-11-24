@@ -35,7 +35,7 @@
       "name": "TSMC",
       "sub": "台湾積体電路",
       "sub_en": "Taiwan Semiconductor Manufacturing",
-      "sub_short": "台湾積体電路",
+      "sub_short": "TSMC",
       "sub_short_en": "TSMC",
       "row": 0,
       "relations": [
@@ -107,7 +107,7 @@
       "name": "Samsung",
       "sub": "サムスン電子",
       "sub_en": "Samsung Electronics",
-      "sub_short": "サムスン電子",
+      "sub_short": "サムスン",
       "sub_short_en": "Samsung",
       "row": 0,
       "relations": [
@@ -180,8 +180,8 @@
       "name": "Marvell",
       "sub": "カスタムチップ",
       "sub_en": "Custom chips",
-      "sub_short": "カスタムチップ",
-      "sub_short_en": "Custom chips",
+      "sub_short": "特注IC",
+      "sub_short_en": "ASICs",
       "row": 1,
       "relations": [
         {
@@ -265,8 +265,8 @@
       "name": "Arista",
       "sub": "ネットワーク",
       "sub_en": "Networking",
-      "sub_short": "ネットワーク",
-      "sub_short_en": "Networking",
+      "sub_short": "通信網",
+      "sub_short_en": "Network",
       "row": 2,
       "relations": [
         {
@@ -290,8 +290,8 @@
       "name": "Cisco",
       "sub": "ネットワーク",
       "sub_en": "Networking",
-      "sub_short": "ネットワーク",
-      "sub_short_en": "Networking",
+      "sub_short": "通信網",
+      "sub_short_en": "Network",
       "row": 2,
       "relations": [
         {
@@ -315,8 +315,8 @@
       "name": "Broadcom",
       "sub": "通信チップ",
       "sub_en": "Networking chips",
-      "sub_short": "通信チップ",
-      "sub_short_en": "Networking chips",
+      "sub_short": "通信IC",
+      "sub_short_en": "Network",
       "row": 2,
       "relations": [
         {
@@ -340,8 +340,8 @@
       "name": "AMD",
       "sub": "CPU・GPU",
       "sub_en": "CPU & GPU",
-      "sub_short": "CPU・GPU",
-      "sub_short_en": "CPU & GPU",
+      "sub_short": "CPU",
+      "sub_short_en": "CPU/GPU",
       "row": 2,
       "relations": [
         {
@@ -460,7 +460,7 @@
       "sub": "AI・広告",
       "sub_en": "AI & advertising",
       "sub_short": "AI・広告",
-      "sub_short_en": "AI & advertising",
+      "sub_short_en": "AI & ads",
       "row": 3,
       "relations": [
         {
@@ -484,8 +484,8 @@
       "name": "CoreWeave",
       "sub": "AI専用クラウド",
       "sub_en": "AI-focused cloud",
-      "sub_short": "AI専用クラウド",
-      "sub_short_en": "AI-focused cloud",
+      "sub_short": "AI基盤",
+      "sub_short_en": "AI cloud",
       "row": 3,
       "relations": [
         {
@@ -521,8 +521,8 @@
       "name": "Nebius",
       "sub": "AI専用クラウド",
       "sub_en": "AI-focused cloud",
-      "sub_short": "AI専用クラウド",
-      "sub_short_en": "AI-focused cloud",
+      "sub_short": "AI基盤",
+      "sub_short_en": "AI cloud",
       "row": 3,
       "relations": [
         {

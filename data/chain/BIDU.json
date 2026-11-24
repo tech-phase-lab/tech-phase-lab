@@ -28,7 +28,7 @@
       "sub": "配車",
       "sub_en": "Ride-hailing",
       "sub_short": "配車",
-      "sub_short_en": "Ride-hailing",
+      "sub_short_en": "Rides",
       "row": 0,
       "relations": [
         {
@@ -79,8 +79,8 @@
       "name": "アリババ",
       "sub": "EC・クラウド",
       "sub_en": "E-commerce & cloud",
-      "sub_short": "EC・クラウド",
-      "sub_short_en": "E-commerce",
+      "sub_short": "EC",
+      "sub_short_en": "E-com",
       "row": 1,
       "relations": [
         {
@@ -105,8 +105,8 @@
       "name": "グーグル",
       "sub": "検索・広告",
       "sub_en": "Search & ads",
-      "sub_short": "検索・広告",
-      "sub_short_en": "Search & ads",
+      "sub_short": "検索",
+      "sub_short_en": "Search",
       "row": 1,
       "relations": [
         {
@@ -131,7 +131,7 @@
       "name": "テンセント",
       "sub": "インターネット",
       "sub_en": "Internet",
-      "sub_short": "インターネット",
+      "sub_short": "ネット",
       "sub_short_en": "Internet",
       "row": 1,
       "relations": [
@@ -160,7 +160,7 @@
       "sub": "配車",
       "sub_en": "Ride-hailing",
       "sub_short": "配車",
-      "sub_short_en": "Ride-hailing",
+      "sub_short_en": "Rides",
       "row": 0,
       "relations": [
         {
@@ -198,7 +198,7 @@
       "sub": "タクシー・移動サービス",
       "sub_en": "Taxi & mobility",
       "sub_short": "タクシー",
-      "sub_short_en": "Taxi & mobility",
+      "sub_short_en": "Taxis",
       "row": 0,
       "relations": [
         {

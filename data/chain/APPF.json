@@ -63,7 +63,7 @@
       "sub": "生成AI",
       "sub_en": "Generative AI",
       "sub_short": "生成AI",
-      "sub_short_en": "Generative AI",
+      "sub_short_en": "AI",
       "row": 1,
       "relations": [
         {
@@ -104,8 +104,8 @@
       "name": "ジロー・グループ",
       "sub": "不動産ポータル",
       "sub_en": "Real estate portal",
-      "sub_short": "不動産ポータル",
-      "sub_short_en": "Property portal",
+      "sub_short": "不動産",
+      "sub_short_en": "Property",
       "row": 1,
       "relations": [
         {

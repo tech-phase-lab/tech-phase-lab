@@ -72,7 +72,7 @@
       "sub": "ソフト・クラウド",
       "sub_en": "Software & cloud",
       "sub_short": "ソフト",
-      "sub_short_en": "Software & cloud",
+      "sub_short_en": "Software",
       "row": 0,
       "relations": [
         {
@@ -138,7 +138,7 @@
       "sub": "ネットワーク機器",
       "sub_en": "Networking",
       "sub_short": "通信機器",
-      "sub_short_en": "Networking",
+      "sub_short_en": "Network",
       "row": 2,
       "relations": [
         {
@@ -162,8 +162,8 @@
       "name": "Five9",
       "sub": "コンタクトセンター",
       "sub_en": "Contact center",
-      "sub_short": "コールセンター",
-      "sub_short_en": "Contact center",
+      "sub_short": "顧客対応",
+      "sub_short_en": "CX",
       "row": 2,
       "relations": [
         {
@@ -187,8 +187,8 @@
       "name": "Salesforce",
       "sub": "CRM・クラウド",
       "sub_en": "CRM & cloud",
-      "sub_short": "CRM・クラウド",
-      "sub_short_en": "CRM & cloud",
+      "sub_short": "CRM",
+      "sub_short_en": "CRM",
       "row": 2,
       "relations": [
         {
@@ -212,8 +212,8 @@
       "name": "Oracle",
       "sub": "データベース・クラウド",
       "sub_en": "Database & cloud",
-      "sub_short": "データベース",
-      "sub_short_en": "Database & cloud",
+      "sub_short": "DB",
+      "sub_short_en": "Database",
       "row": 2,
       "relations": [
         {
@@ -250,8 +250,8 @@
       "name": "8x8",
       "sub": "クラウド通信",
       "sub_en": "Cloud communications",
-      "sub_short": "クラウド通信",
-      "sub_short_en": "Cloud comms",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 2,
       "relations": [
         {
@@ -275,8 +275,8 @@
       "name": "Zoom",
       "sub": "ビデオ会議",
       "sub_en": "Video conferencing",
-      "sub_short": "ビデオ会議",
-      "sub_short_en": "Video calls",
+      "sub_short": "会議",
+      "sub_short_en": "Video",
       "row": 2,
       "relations": [
         {

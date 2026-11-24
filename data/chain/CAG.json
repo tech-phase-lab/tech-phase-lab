@@ -35,7 +35,7 @@
       "sub": "容器",
       "sub_en": "Containers",
       "sub_short": "容器",
-      "sub_short_en": "Containers",
+      "sub_short_en": "Boxes",
       "row": 0,
       "relations": [
         {
@@ -60,8 +60,8 @@
       "name_en": "CHS",
       "sub": "農業協同組合",
       "sub_en": "Agricultural cooperative",
-      "sub_short": "農業協同組合",
-      "sub_short_en": "Farm co-op",
+      "sub_short": "農協",
+      "sub_short_en": "Co-op",
       "row": 1,
       "relations": [
         {
@@ -86,8 +86,8 @@
       "name_en": "Cargill",
       "sub": "穀物・食品",
       "sub_en": "Agribusiness",
-      "sub_short": "穀物・食品",
-      "sub_short_en": "Agribusiness",
+      "sub_short": "穀物",
+      "sub_short_en": "Farming",
       "row": 1,
       "relations": [
         {
@@ -113,7 +113,7 @@
       "sub": "PB食品",
       "sub_en": "Private label foods",
       "sub_short": "PB食品",
-      "sub_short_en": "Private label",
+      "sub_short_en": "Brands",
       "row": 1,
       "relations": [
         {
@@ -164,8 +164,8 @@
       "name_en": "PepsiCo",
       "sub": "飲料・食品",
       "sub_en": "Beverages & snacks",
-      "sub_short": "飲料・食品",
-      "sub_short_en": "Beverages",
+      "sub_short": "飲料",
+      "sub_short_en": "Drinks",
       "row": 2,
       "relations": [
         {
@@ -190,7 +190,7 @@
       "name_en": "Smithfield Foods",
       "sub": "豚肉・加工肉",
       "sub_en": "Pork & packaged meats",
-      "sub_short": "豚肉・加工肉",
+      "sub_short": "食肉",
       "sub_short_en": "Pork",
       "row": 2,
       "relations": [
@@ -216,8 +216,8 @@
       "name_en": "Hain Celestial",
       "sub": "自然派食品",
       "sub_en": "Natural foods",
-      "sub_short": "自然派食品",
-      "sub_short_en": "Natural foods",
+      "sub_short": "自然食品",
+      "sub_short_en": "Foods",
       "row": 2,
       "relations": [
         {

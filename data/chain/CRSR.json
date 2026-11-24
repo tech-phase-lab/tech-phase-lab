@@ -84,8 +84,8 @@
       "name": "AMD社",
       "sub": "CPU・GPU",
       "sub_en": "CPUs & GPUs",
-      "sub_short": "CPU・GPU",
-      "sub_short_en": "CPUs & GPUs",
+      "sub_short": "CPU",
+      "sub_short_en": "CPU/GPU",
       "row": 0,
       "relations": [
         {
@@ -110,8 +110,8 @@
       "name": "アマゾン",
       "sub": "eコマース",
       "sub_en": "E-commerce",
-      "sub_short": "eコマース",
-      "sub_short_en": "E-commerce",
+      "sub_short": "EC",
+      "sub_short_en": "E-com",
       "row": 1,
       "relations": [
         {
@@ -137,7 +137,7 @@
       "sub": "家電小売",
       "sub_en": "Electronics retail",
       "sub_short": "家電小売",
-      "sub_short_en": "Electronics shop",
+      "sub_short_en": "Retail",
       "row": 1,
       "relations": [
         {
@@ -188,8 +188,8 @@
       "name": "ロジクール",
       "sub": "ゲーム周辺機器",
       "sub_en": "Gaming peripherals",
-      "sub_short": "ゲーム周辺機器",
-      "sub_short_en": "Gaming gear",
+      "sub_short": "ゲーム",
+      "sub_short_en": "Gaming",
       "row": 2,
       "relations": [
         {
@@ -214,8 +214,8 @@
       "name": "レイザー",
       "sub": "ゲーム周辺機器",
       "sub_en": "Gaming peripherals",
-      "sub_short": "ゲーム周辺機器",
-      "sub_short_en": "Gaming gear",
+      "sub_short": "ゲーム",
+      "sub_short_en": "Gaming",
       "row": 2,
       "relations": [
         {
@@ -240,8 +240,8 @@
       "name": "マイクロソフト",
       "sub": "ゲームコントローラー",
       "sub_en": "Game controllers",
-      "sub_short": "ゲーム周辺機器",
-      "sub_short_en": "Game controllers",
+      "sub_short": "ゲーム",
+      "sub_short_en": "Gaming",
       "row": 2,
       "relations": [
         {
@@ -266,7 +266,7 @@
       "name": "HPインク(HyperX)",
       "sub": "ヘッドセット",
       "sub_en": "Headsets",
-      "sub_short": "ヘッドセット",
+      "sub_short": "音響機器",
       "sub_short_en": "Headsets",
       "row": 2,
       "relations": [
@@ -293,7 +293,7 @@
       "sub": "メモリ",
       "sub_en": "Memory modules",
       "sub_short": "メモリ",
-      "sub_short_en": "Memory modules",
+      "sub_short_en": "Memory",
       "row": 2,
       "relations": [
         {

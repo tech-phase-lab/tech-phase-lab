@@ -58,8 +58,8 @@
       "name_en": "Motion Industries",
       "sub": "産業部品流通",
       "sub_en": "Industrial parts distribution",
-      "sub_short": "産業部品流通",
-      "sub_short_en": "Industrial parts",
+      "sub_short": "部品流通",
+      "sub_short_en": "Parts",
       "row": 0,
       "relations": [
         {
@@ -85,7 +85,7 @@
       "sub": "産業機器",
       "sub_en": "Industrial products",
       "sub_short": "産業機器",
-      "sub_short_en": "Industrial goods",
+      "sub_short_en": "Industrial",
       "row": 1,
       "relations": [
         {
@@ -110,7 +110,7 @@
       "name_en": "SKF",
       "sub": "ベアリング(スウェーデン)",
       "sub_en": "Bearings (Sweden)",
-      "sub_short": "ベアリング",
+      "sub_short": "軸受",
       "sub_short_en": "Bearings",
       "row": 2,
       "relations": [
@@ -136,7 +136,7 @@
       "name_en": "Timken",
       "sub": "ベアリング",
       "sub_en": "Bearings",
-      "sub_short": "ベアリング",
+      "sub_short": "軸受",
       "sub_short_en": "Bearings",
       "row": 2,
       "relations": [
@@ -162,8 +162,8 @@
       "name_en": "Regal Rexnord",
       "sub": "動力伝達機器",
       "sub_en": "Power transmission",
-      "sub_short": "動力伝達機器",
-      "sub_short_en": "Power transfer",
+      "sub_short": "駆動部品",
+      "sub_short_en": "Drives",
       "row": 2,
       "relations": [
         {
@@ -188,7 +188,7 @@
       "name_en": "New Hampshire Ball Bearings",
       "sub": "ベアリング",
       "sub_en": "Bearings",
-      "sub_short": "ベアリング",
+      "sub_short": "軸受",
       "sub_short_en": "Bearings",
       "row": 2,
       "relations": [

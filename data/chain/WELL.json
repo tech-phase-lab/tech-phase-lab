@@ -19,8 +19,8 @@
       "name": "ケア・ユーケー",
       "sub": "高齢者住宅運営",
       "sub_en": "Seniors housing operator",
-      "sub_short": "高齢者住宅運営",
-      "sub_short_en": "Senior housing",
+      "sub_short": "高齢住宅",
+      "sub_short_en": "Seniors",
       "row": 0,
       "relations": [
         {
@@ -45,8 +45,8 @@
       "name": "コジール・マネジメント",
       "sub": "高齢者住宅運営",
       "sub_en": "Seniors housing operator",
-      "sub_short": "高齢者住宅運営",
-      "sub_short_en": "Senior housing",
+      "sub_short": "高齢住宅",
+      "sub_short_en": "Seniors",
       "row": 0,
       "relations": [
         {
@@ -71,8 +71,8 @@
       "name": "サンライズ・シニア・リビング",
       "sub": "高齢者住宅運営",
       "sub_en": "Seniors housing operator",
-      "sub_short": "高齢者住宅運営",
-      "sub_short_en": "Senior housing",
+      "sub_short": "高齢住宅",
+      "sub_short_en": "Seniors",
       "row": 0,
       "relations": [
         {
@@ -97,7 +97,7 @@
       "name": "インテグラ・ヘルスケア・プロパティーズ",
       "sub": "高齢者施設の賃借人",
       "sub_en": "Triple-net tenant",
-      "sub_short": "高齢者施設",
+      "sub_short": "高齢住宅",
       "sub_short_en": "Tenant",
       "row": 0,
       "relations": [
@@ -123,8 +123,8 @@
       "name": "ブルックデール・シニアリビング",
       "sub": "高齢者住宅",
       "sub_en": "Senior living",
-      "sub_short": "高齢者住宅",
-      "sub_short_en": "Senior living",
+      "sub_short": "高齢住宅",
+      "sub_short_en": "Seniors",
       "row": 0,
       "relations": [
         {

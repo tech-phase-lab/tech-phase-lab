@@ -26,8 +26,8 @@
       "name": "Asana",
       "sub": "業務管理ソフト",
       "sub_en": "Work management software",
-      "sub_short": "業務管理ソフト",
-      "sub_short_en": "Work mgmt",
+      "sub_short": "業務IT",
+      "sub_short_en": "Work IT",
       "row": 0,
       "relations": [
         {
@@ -51,8 +51,8 @@
       "name": "Roblox",
       "sub": "ゲームプラットフォーム",
       "sub_en": "Game platform",
-      "sub_short": "ゲーム基盤",
-      "sub_short_en": "Game platform",
+      "sub_short": "ゲーム",
+      "sub_short_en": "Games",
       "row": 0,
       "relations": [
         {
@@ -115,7 +115,7 @@
       "sub": "ECプラットフォーム",
       "sub_en": "E-commerce platform",
       "sub_short": "EC基盤",
-      "sub_short_en": "E-commerce",
+      "sub_short_en": "E-com",
       "row": 1,
       "relations": [
         {
@@ -140,7 +140,7 @@
       "sub": "生成AI",
       "sub_en": "Generative AI",
       "sub_short": "生成AI",
-      "sub_short_en": "Generative AI",
+      "sub_short_en": "AI",
       "row": 1,
       "relations": [
         {

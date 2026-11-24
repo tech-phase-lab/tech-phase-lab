@@ -33,8 +33,8 @@
       "name": "Broadcom",
       "sub": "スイッチ用半導体",
       "sub_en": "Switch silicon",
-      "sub_short": "スイッチ半導体",
-      "sub_short_en": "Switch silicon",
+      "sub_short": "半導体",
+      "sub_short_en": "Switch IC",
       "row": 0,
       "relations": [
         {
@@ -87,7 +87,7 @@
       "sub": "製造委託",
       "sub_en": "Contract manufacturing",
       "sub_short": "製造委託",
-      "sub_short_en": "Contract maker",
+      "sub_short_en": "EMS",
       "row": 0,
       "relations": [
         {
@@ -112,7 +112,7 @@
       "sub": "製造委託",
       "sub_en": "Contract manufacturing",
       "sub_short": "製造委託",
-      "sub_short_en": "Contract maker",
+      "sub_short_en": "EMS",
       "row": 0,
       "relations": [
         {
@@ -137,7 +137,7 @@
       "sub": "製造委託",
       "sub_en": "Contract manufacturing",
       "sub_short": "製造委託",
-      "sub_short_en": "Contract maker",
+      "sub_short_en": "EMS",
       "row": 0,
       "relations": [
         {
@@ -161,8 +161,8 @@
       "name": "Arm",
       "sub": "半導体設計",
       "sub_en": "Chip design",
-      "sub_short": "半導体設計",
-      "sub_short_en": "Chip design",
+      "sub_short": "設計",
+      "sub_short_en": "Chip IP",
       "row": 1,
       "relations": [
         {
@@ -216,7 +216,7 @@
       "sub": "SNS・AI",
       "sub_en": "Social & AI",
       "sub_short": "SNS・AI",
-      "sub_short_en": "Social & AI",
+      "sub_short_en": "Social",
       "row": 1,
       "relations": [
         {
@@ -269,8 +269,8 @@
       "name": "Cisco",
       "sub": "ネットワーク",
       "sub_en": "Networking",
-      "sub_short": "ネットワーク",
-      "sub_short_en": "Networking",
+      "sub_short": "通信網",
+      "sub_short_en": "Network",
       "row": 2,
       "relations": [
         {
@@ -332,8 +332,8 @@
       "name": "Extreme Networks",
       "sub": "ネットワーク",
       "sub_en": "Networking",
-      "sub_short": "ネットワーク",
-      "sub_short_en": "Networking",
+      "sub_short": "通信網",
+      "sub_short_en": "Network",
       "row": 2,
       "relations": [
         {
@@ -447,7 +447,7 @@
       "sub": "計測機器",
       "sub_en": "Test & measurement",
       "sub_short": "計測機器",
-      "sub_short_en": "Test equipment",
+      "sub_short_en": "Testing",
       "row": 2,
       "relations": [
         {
@@ -471,8 +471,8 @@
       "name": "NetScout",
       "sub": "ネットワーク監視",
       "sub_en": "Network monitoring",
-      "sub_short": "ネット監視",
-      "sub_short_en": "Net monitoring",
+      "sub_short": "監視",
+      "sub_short_en": "Network",
       "row": 2,
       "relations": [
         {
@@ -497,7 +497,7 @@
       "sub": "ネットワーク機器",
       "sub_en": "Network hardware",
       "sub_short": "通信機器",
-      "sub_short_en": "Network hardware",
+      "sub_short_en": "Network",
       "row": 2,
       "relations": [
         {
@@ -522,7 +522,7 @@
       "sub": "半導体",
       "sub_en": "Semiconductors",
       "sub_short": "半導体",
-      "sub_short_en": "Semiconductors",
+      "sub_short_en": "Chips",
       "row": 1,
       "relations": [
         {

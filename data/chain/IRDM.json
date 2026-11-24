@@ -31,7 +31,7 @@
       "name": "ベンチマーク・エレクトロニクス",
       "sub": "電子機器受託製造",
       "sub_en": "Electronics manufacturing",
-      "sub_short": "電子機器受託",
+      "sub_short": "EMS",
       "sub_short_en": "EMS",
       "row": 0,
       "relations": [
@@ -84,7 +84,7 @@
       "sub": "建設機械",
       "sub_en": "Heavy equipment",
       "sub_short": "建設機械",
-      "sub_short_en": "Heavy equipment",
+      "sub_short_en": "Machines",
       "row": 1,
       "relations": [
         {
@@ -110,7 +110,7 @@
       "sub": "建設機械",
       "sub_en": "Heavy equipment",
       "sub_short": "建設機械",
-      "sub_short_en": "Heavy equipment",
+      "sub_short_en": "Machines",
       "row": 1,
       "relations": [
         {
@@ -136,7 +136,7 @@
       "sub": "通信機器",
       "sub_en": "Communications devices",
       "sub_short": "通信機器",
-      "sub_short_en": "Comms devices",
+      "sub_short_en": "Comms",
       "row": 1,
       "relations": [
         {
@@ -161,7 +161,7 @@
       "name": "タレス",
       "sub": "航空電子機器",
       "sub_en": "Avionics",
-      "sub_short": "航空電子機器",
+      "sub_short": "航空電子",
       "sub_short_en": "Avionics",
       "row": 1,
       "relations": [
@@ -187,8 +187,8 @@
       "name": "テルストラ",
       "sub": "通信事業者",
       "sub_en": "Telecom operator",
-      "sub_short": "通信事業者",
-      "sub_short_en": "Telecom operator",
+      "sub_short": "通信",
+      "sub_short_en": "Telecom",
       "row": 1,
       "relations": [
         {
@@ -213,8 +213,8 @@
       "name": "ケーディーディーアイ",
       "sub": "通信事業者",
       "sub_en": "Telecom operator",
-      "sub_short": "通信事業者",
-      "sub_short_en": "Telecom operator",
+      "sub_short": "通信",
+      "sub_short_en": "Telecom",
       "row": 1,
       "relations": [
         {
@@ -240,7 +240,7 @@
       "sub": "衛星通信",
       "sub_en": "Satellite comms",
       "sub_short": "衛星通信",
-      "sub_short_en": "Satellite comms",
+      "sub_short_en": "Satcom",
       "row": 2,
       "relations": [
         {
@@ -279,7 +279,7 @@
       "sub": "衛星通信",
       "sub_en": "Satellite comms",
       "sub_short": "衛星通信",
-      "sub_short_en": "Satellite comms",
+      "sub_short_en": "Satcom",
       "row": 2,
       "relations": [
         {
@@ -305,7 +305,7 @@
       "sub": "衛星通信",
       "sub_en": "Satellite comms",
       "sub_short": "衛星通信",
-      "sub_short_en": "Satellite comms",
+      "sub_short_en": "Satcom",
       "row": 2,
       "relations": [
         {
@@ -331,7 +331,7 @@
       "sub": "衛星通信",
       "sub_en": "Satellite comms",
       "sub_short": "衛星通信",
-      "sub_short_en": "Satellite comms",
+      "sub_short_en": "Satcom",
       "row": 2,
       "relations": [
         {

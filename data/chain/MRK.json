@@ -19,8 +19,8 @@
       "name": "モデルナ",
       "sub": "mRNA医薬",
       "sub_en": "mRNA medicines",
-      "sub_short": "mRNA医薬",
-      "sub_short_en": "mRNA medicines",
+      "sub_short": "mRNA",
+      "sub_short_en": "mRNA",
       "row": 0,
       "relations": [
         {
@@ -46,7 +46,7 @@
       "sub": "大手製薬",
       "sub_en": "Large pharma",
       "sub_short": "大手製薬",
-      "sub_short_en": "Large pharma",
+      "sub_short_en": "Pharma",
       "row": 0,
       "relations": [
         {
@@ -72,7 +72,7 @@
       "sub": "製薬",
       "sub_en": "Pharmaceuticals",
       "sub_short": "製薬",
-      "sub_short_en": "Pharmaceuticals",
+      "sub_short_en": "Pharma",
       "row": 0,
       "relations": [
         {
@@ -97,7 +97,7 @@
       "name": "バイエル",
       "sub": "製薬・化学",
       "sub_en": "Pharma & chemicals",
-      "sub_short": "製薬・化学",
+      "sub_short": "製薬",
       "sub_short_en": "Pharma",
       "row": 0,
       "relations": [
@@ -124,7 +124,7 @@
       "sub": "製薬",
       "sub_en": "Pharmaceuticals",
       "sub_short": "製薬",
-      "sub_short_en": "Pharmaceuticals",
+      "sub_short_en": "Pharma",
       "row": 0,
       "relations": [
         {
@@ -149,8 +149,8 @@
       "name": "クルン・バイオテック",
       "sub": "バイオ医薬",
       "sub_en": "Biopharma",
-      "sub_short": "バイオ医薬",
-      "sub_short_en": "Biopharma",
+      "sub_short": "バイオ",
+      "sub_short_en": "Pharma",
       "row": 0,
       "relations": [
         {
@@ -175,8 +175,8 @@
       "name": "リッジバック・バイオセラピューティクス",
       "sub": "バイオ医薬",
       "sub_en": "Biopharma",
-      "sub_short": "バイオ医薬",
-      "sub_short_en": "Biopharma",
+      "sub_short": "バイオ",
+      "sub_short_en": "Pharma",
       "row": 0,
       "relations": [
         {
@@ -202,7 +202,7 @@
       "sub": "大手製薬",
       "sub_en": "Large pharma",
       "sub_short": "大手製薬",
-      "sub_short_en": "Large pharma",
+      "sub_short_en": "Pharma",
       "row": 0,
       "relations": [
         {
@@ -228,7 +228,7 @@
       "sub": "製薬",
       "sub_en": "Pharmaceuticals",
       "sub_short": "製薬",
-      "sub_short_en": "Pharmaceuticals",
+      "sub_short_en": "Pharma",
       "row": 0,
       "relations": [
         {
@@ -254,7 +254,7 @@
       "sub": "大手製薬",
       "sub_en": "Large pharma",
       "sub_short": "大手製薬",
-      "sub_short_en": "Large pharma",
+      "sub_short_en": "Pharma",
       "row": 0,
       "relations": [
         {
@@ -280,7 +280,7 @@
       "sub": "医薬品卸",
       "sub_en": "Drug wholesaler",
       "sub_short": "医薬品卸",
-      "sub_short_en": "Drug wholesaler",
+      "sub_short_en": "Pharma",
       "row": 0,
       "relations": [
         {
@@ -306,7 +306,7 @@
       "sub": "医薬品卸",
       "sub_en": "Drug wholesaler",
       "sub_short": "医薬品卸",
-      "sub_short_en": "Drug wholesaler",
+      "sub_short_en": "Pharma",
       "row": 0,
       "relations": [
         {
@@ -332,7 +332,7 @@
       "sub": "医薬品卸",
       "sub_en": "Drug wholesaler",
       "sub_short": "医薬品卸",
-      "sub_short_en": "Drug wholesaler",
+      "sub_short_en": "Pharma",
       "row": 0,
       "relations": [
         {

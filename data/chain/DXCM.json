@@ -27,8 +27,8 @@
       "name": "アボット・ラボラトリーズ",
       "sub": "CGMの競合",
       "sub_en": "CGM competitor",
-      "sub_short": "CGMの競合",
-      "sub_short_en": "CGM competitor",
+      "sub_short": "CGM",
+      "sub_short_en": "CGM",
       "row": 0,
       "relations": [
         {
@@ -66,8 +66,8 @@
       "name": "メドトロニック",
       "sub": "CGMの競合",
       "sub_en": "CGM competitor",
-      "sub_short": "CGMの競合",
-      "sub_short_en": "CGM competitor",
+      "sub_short": "CGM",
+      "sub_short_en": "CGM",
       "row": 0,
       "relations": [
         {
@@ -92,8 +92,8 @@
       "name": "ロシュ",
       "sub": "血糖測定の競合",
       "sub_en": "Glucose monitoring competitor",
-      "sub_short": "血糖測定の競合",
-      "sub_short_en": "Glucose monitor",
+      "sub_short": "血糖測定",
+      "sub_short_en": "CGM",
       "row": 0,
       "relations": [
         {
@@ -118,8 +118,8 @@
       "name": "ライフスキャン",
       "sub": "血糖測定の競合",
       "sub_en": "Glucose monitoring competitor",
-      "sub_short": "血糖測定の競合",
-      "sub_short_en": "Glucose monitor",
+      "sub_short": "血糖測定",
+      "sub_short_en": "CGM",
       "row": 0,
       "relations": [
         {
@@ -144,8 +144,8 @@
       "name": "アセンシア・ダイアベティス・ケア",
       "sub": "血糖測定の競合",
       "sub_en": "Glucose monitoring competitor",
-      "sub_short": "血糖測定の競合",
-      "sub_short_en": "Glucose monitor",
+      "sub_short": "血糖測定",
+      "sub_short_en": "CGM",
       "row": 0,
       "relations": [
         {
@@ -170,8 +170,8 @@
       "name": "ベリリー・ライフサイエンシズ",
       "sub": "共同開発の相手",
       "sub_en": "Collaboration partner",
-      "sub_short": "共同開発の相手",
-      "sub_short_en": "Collaborator",
+      "sub_short": "共同開発",
+      "sub_short_en": "Partner",
       "row": 0,
       "relations": [
         {
@@ -196,8 +196,8 @@
       "name": "アップル",
       "sub": "端末連携先",
       "sub_en": "Device integration",
-      "sub_short": "端末連携先",
-      "sub_short_en": "Device links",
+      "sub_short": "端末",
+      "sub_short_en": "Devices",
       "row": 0,
       "relations": [
         {
@@ -222,8 +222,8 @@
       "name": "ガーミン",
       "sub": "端末連携先",
       "sub_en": "Device integration",
-      "sub_short": "端末連携先",
-      "sub_short_en": "Device links",
+      "sub_short": "端末",
+      "sub_short_en": "Devices",
       "row": 0,
       "relations": [
         {
@@ -248,8 +248,8 @@
       "name": "センセオニクス",
       "sub": "血糖モニター",
       "sub_en": "Glucose monitors",
-      "sub_short": "血糖モニター",
-      "sub_short_en": "Glucose monitors",
+      "sub_short": "血糖測定",
+      "sub_short_en": "CGM",
       "row": 1,
       "relations": [
         {

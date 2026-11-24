@@ -54,7 +54,7 @@
       "name_en": "Franco-Nevada",
       "sub": "ロイヤルティ・ストリーム",
       "sub_en": "Royalties & streams",
-      "sub_short": "ロイヤルティ",
+      "sub_short": "権益",
       "sub_short_en": "Royalties",
       "row": 0,
       "relations": [
@@ -80,8 +80,8 @@
       "name_en": "Wheaton Precious Metals",
       "sub": "ストリーム",
       "sub_en": "Precious metals streams",
-      "sub_short": "ストリーム",
-      "sub_short_en": "Metal streams",
+      "sub_short": "権益",
+      "sub_short_en": "Metals",
       "row": 0,
       "relations": [
         {
@@ -158,8 +158,8 @@
       "name_en": "Perpetua Resources",
       "sub": "金・アンチモン",
       "sub_en": "Gold & antimony",
-      "sub_short": "金・アンチモン",
-      "sub_short_en": "Gold & antimony",
+      "sub_short": "金鉱山",
+      "sub_short_en": "Gold",
       "row": 2,
       "relations": [
         {

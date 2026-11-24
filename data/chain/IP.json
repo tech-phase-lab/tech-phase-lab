@@ -33,7 +33,7 @@
       "name_en": "DS Smith",
       "sub": "段ボール包装(英)",
       "sub_en": "Corrugated packaging (UK)",
-      "sub_short": "段ボール包装",
+      "sub_short": "段ボール",
       "sub_short_en": "Boxes",
       "row": 0,
       "relations": [
@@ -60,7 +60,7 @@
       "sub": "投資会社",
       "sub_en": "Private equity",
       "sub_short": "投資会社",
-      "sub_short_en": "Private equity",
+      "sub_short_en": "PE",
       "row": 0,
       "relations": [
         {
@@ -86,7 +86,7 @@
       "sub": "印刷用紙",
       "sub_en": "Uncoated paper",
       "sub_short": "印刷用紙",
-      "sub_short_en": "Uncoated paper",
+      "sub_short_en": "Paper",
       "row": 0,
       "relations": [
         {
@@ -138,7 +138,7 @@
       "sub": "紙器包装",
       "sub_en": "Paperboard packaging",
       "sub_short": "紙器包装",
-      "sub_short_en": "Paperboard",
+      "sub_short_en": "Paper",
       "row": 1,
       "relations": [
         {
@@ -163,8 +163,8 @@
       "name_en": "SLB",
       "sub": "油田サービス",
       "sub_en": "Oilfield services",
-      "sub_short": "油田サービス",
-      "sub_short_en": "Oilfield svcs",
+      "sub_short": "油田",
+      "sub_short_en": "Oilfield",
       "row": 1,
       "relations": [
         {
@@ -189,8 +189,8 @@
       "name_en": "Smurfit Westrock",
       "sub": "紙・段ボール",
       "sub_en": "Paper packaging",
-      "sub_short": "紙・段ボール",
-      "sub_short_en": "Paper packaging",
+      "sub_short": "製紙",
+      "sub_short_en": "Paper",
       "row": 1,
       "relations": [
         {
@@ -216,7 +216,7 @@
       "sub": "段ボール",
       "sub_en": "Containerboard",
       "sub_short": "段ボール",
-      "sub_short_en": "Containerboard",
+      "sub_short_en": "Boxes",
       "row": 2,
       "relations": [
         {
@@ -242,7 +242,7 @@
       "sub": "包装",
       "sub_en": "Packaging",
       "sub_short": "包装",
-      "sub_short_en": "Packaging",
+      "sub_short_en": "Packing",
       "row": 2,
       "relations": [
         {
@@ -267,7 +267,7 @@
       "name_en": "Rayonier Advanced Materials",
       "sub": "セルロース",
       "sub_en": "Cellulose",
-      "sub_short": "セルロース",
+      "sub_short": "繊維素材",
       "sub_short_en": "Cellulose",
       "row": 2,
       "relations": [

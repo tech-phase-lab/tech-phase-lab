@@ -37,7 +37,7 @@
       "name": "Flex",
       "sub": "電子機器受託製造",
       "sub_en": "Electronics manufacturing",
-      "sub_short": "電子機器受託",
+      "sub_short": "EMS",
       "sub_short_en": "EMS",
       "row": 0,
       "relations": [
@@ -90,7 +90,7 @@
       "sub": "クラウド・ソフト",
       "sub_en": "Cloud & software",
       "sub_short": "クラウド",
-      "sub_short_en": "Cloud & software",
+      "sub_short_en": "Cloud",
       "row": 1,
       "relations": [
         {
@@ -142,8 +142,8 @@
       "name": "Alphabet(Google Cloud)",
       "sub": "クラウド・検索",
       "sub_en": "Cloud & search",
-      "sub_short": "クラウド・検索",
-      "sub_short_en": "Cloud & search",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 1,
       "relations": [
         {
@@ -197,7 +197,7 @@
       "name": "Oracle",
       "sub": "クラウド・DB",
       "sub_en": "Cloud & databases",
-      "sub_short": "クラウド・DB",
+      "sub_short": "クラウド",
       "sub_short_en": "Cloud",
       "row": 1,
       "relations": [
@@ -224,7 +224,7 @@
       "name": "CDW",
       "sub": "ITリセラー",
       "sub_en": "IT reseller",
-      "sub_short": "ITリセラー",
+      "sub_short": "IT販売",
       "sub_short_en": "IT reseller",
       "row": 1,
       "relations": [
@@ -251,7 +251,7 @@
       "name": "ePlus",
       "sub": "ITリセラー",
       "sub_en": "IT reseller",
-      "sub_short": "ITリセラー",
+      "sub_short": "IT販売",
       "sub_short_en": "IT reseller",
       "row": 1,
       "relations": [
@@ -278,8 +278,8 @@
       "name": "IBM",
       "sub": "ITサービス・ソフト",
       "sub_en": "IT services & software",
-      "sub_short": "ITサービス",
-      "sub_short_en": "IT services",
+      "sub_short": "IT",
+      "sub_short_en": "IT",
       "row": 2,
       "relations": [
         {
@@ -410,7 +410,7 @@
       "name": "Okta",
       "sub": "IDセキュリティ",
       "sub_en": "Identity security",
-      "sub_short": "IDセキュリティ",
+      "sub_short": "ID防御",
       "sub_short_en": "Identity",
       "row": 2,
       "relations": [
@@ -448,8 +448,8 @@
       "name": "ServiceNow",
       "sub": "業務ソフト",
       "sub_en": "Enterprise software",
-      "sub_short": "業務ソフト",
-      "sub_short_en": "Enterprise apps",
+      "sub_short": "業務IT",
+      "sub_short_en": "Software",
       "row": 2,
       "relations": [
         {
@@ -474,7 +474,7 @@
       "sub": "通信機器",
       "sub_en": "Telecom equipment",
       "sub_short": "通信機器",
-      "sub_short_en": "Telecom gear",
+      "sub_short_en": "Telecom",
       "row": 2,
       "relations": [
         {
@@ -501,7 +501,7 @@
       "sub": "生成AI",
       "sub_en": "Generative AI",
       "sub_short": "生成AI",
-      "sub_short_en": "Generative AI",
+      "sub_short_en": "AI",
       "row": 2,
       "relations": [
         {
@@ -528,7 +528,7 @@
       "sub": "生成AI",
       "sub_en": "Generative AI",
       "sub_short": "生成AI",
-      "sub_short_en": "Generative AI",
+      "sub_short_en": "AI",
       "row": 2,
       "relations": [
         {
@@ -555,7 +555,7 @@
       "sub": "産業機器",
       "sub_en": "Industrial automation",
       "sub_short": "産業機器",
-      "sub_short_en": "Automation",
+      "sub_short_en": "Robotics",
       "row": 2,
       "relations": [
         {
@@ -579,8 +579,8 @@
       "name": "三菱電機",
       "sub": "電機・産業機器",
       "sub_en": "Electrical & industrial equipment",
-      "sub_short": "電機・産業機器",
-      "sub_short_en": "Electrical gear",
+      "sub_short": "電機",
+      "sub_short_en": "Electrical",
       "row": 2,
       "relations": [
         {
@@ -605,8 +605,8 @@
       "name": "Rapid7",
       "sub": "セキュリティ運用",
       "sub_en": "Security operations",
-      "sub_short": "セキュリティ",
-      "sub_short_en": "Security ops",
+      "sub_short": "防御",
+      "sub_short_en": "Security",
       "row": 2,
       "relations": [
         {
@@ -630,8 +630,8 @@
       "name": "Zoom Communications",
       "sub": "ビデオ会議",
       "sub_en": "Video conferencing",
-      "sub_short": "ビデオ会議",
-      "sub_short_en": "Video calls",
+      "sub_short": "会議",
+      "sub_short_en": "Video",
       "row": 2,
       "relations": [
         {
@@ -656,7 +656,7 @@
       "sub": "ハイブリッドクラウド",
       "sub_en": "Hybrid cloud",
       "sub_short": "クラウド",
-      "sub_short_en": "Hybrid cloud",
+      "sub_short_en": "Cloud",
       "row": 2,
       "relations": [
         {
@@ -680,7 +680,7 @@
       "name": "Kyndryl",
       "sub": "ITインフラサービス",
       "sub_en": "IT infrastructure services",
-      "sub_short": "ITインフラ",
+      "sub_short": "IT基盤",
       "sub_short_en": "IT infra",
       "row": 2,
       "relations": [
@@ -705,8 +705,8 @@
       "name": "Rackspace Technology",
       "sub": "マネージドクラウド",
       "sub_en": "Managed cloud",
-      "sub_short": "クラウド運用",
-      "sub_short_en": "Managed cloud",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 2,
       "relations": [
         {
@@ -731,7 +731,7 @@
       "sub": "ネットワーク機器",
       "sub_en": "Networking gear",
       "sub_short": "通信機器",
-      "sub_short_en": "Networking gear",
+      "sub_short_en": "Network",
       "row": 2,
       "relations": [
         {
@@ -781,7 +781,7 @@
       "sub": "ネットワーク機器",
       "sub_en": "Networking gear",
       "sub_short": "通信機器",
-      "sub_short_en": "Networking gear",
+      "sub_short_en": "Network",
       "row": 3,
       "relations": [
         {
@@ -805,8 +805,8 @@
       "name": "Check Point Software",
       "sub": "ネットワークセキュリティ",
       "sub_en": "Network security",
-      "sub_short": "ネット防御",
-      "sub_short_en": "Network security",
+      "sub_short": "防御",
+      "sub_short_en": "Security",
       "row": 3,
       "relations": [
         {
@@ -831,7 +831,7 @@
       "sub": "エンドポイント保護",
       "sub_en": "Endpoint security",
       "sub_short": "端末保護",
-      "sub_short_en": "Endpoint guard",
+      "sub_short_en": "Security",
       "row": 3,
       "relations": [
         {
@@ -855,8 +855,8 @@
       "name": "Fortinet",
       "sub": "ネットワークセキュリティ",
       "sub_en": "Network security",
-      "sub_short": "ネット防御",
-      "sub_short_en": "Network security",
+      "sub_short": "防御",
+      "sub_short_en": "Security",
       "row": 3,
       "relations": [
         {
@@ -880,7 +880,7 @@
       "name": "SailPoint",
       "sub": "IDセキュリティ",
       "sub_en": "Identity security",
-      "sub_short": "IDセキュリティ",
+      "sub_short": "ID防御",
       "sub_short_en": "Identity",
       "row": 3,
       "relations": [
@@ -905,8 +905,8 @@
       "name": "Zscaler",
       "sub": "クラウドセキュリティ",
       "sub_en": "Cloud security",
-      "sub_short": "クラウド保護",
-      "sub_short_en": "Cloud security",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 3,
       "relations": [
         {
@@ -930,8 +930,8 @@
       "name": "Datadog",
       "sub": "オブザーバビリティ",
       "sub_en": "Observability",
-      "sub_short": "システム監視",
-      "sub_short_en": "Observability",
+      "sub_short": "監視",
+      "sub_short_en": "Monitors",
       "row": 3,
       "relations": [
         {
@@ -955,8 +955,8 @@
       "name": "Dynatrace",
       "sub": "オブザーバビリティ",
       "sub_en": "Observability",
-      "sub_short": "システム監視",
-      "sub_short_en": "Observability",
+      "sub_short": "監視",
+      "sub_short_en": "Monitors",
       "row": 3,
       "relations": [
         {
@@ -980,8 +980,8 @@
       "name": "Netskope",
       "sub": "クラウドセキュリティ",
       "sub_en": "Cloud security",
-      "sub_short": "クラウド保護",
-      "sub_short_en": "Cloud security",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 3,
       "relations": [
         {
@@ -1006,7 +1006,7 @@
       "sub": "エンドポイント保護",
       "sub_en": "Endpoint security",
       "sub_short": "端末保護",
-      "sub_short_en": "Endpoint guard",
+      "sub_short_en": "Security",
       "row": 3,
       "relations": [
         {
@@ -1030,8 +1030,8 @@
       "name": "Qualys",
       "sub": "脆弱性管理",
       "sub_en": "Vulnerability management",
-      "sub_short": "脆弱性管理",
-      "sub_short_en": "Vuln. mgmt",
+      "sub_short": "防御",
+      "sub_short_en": "Security",
       "row": 3,
       "relations": [
         {
@@ -1055,8 +1055,8 @@
       "name": "Tenable",
       "sub": "脆弱性管理",
       "sub_en": "Vulnerability management",
-      "sub_short": "脆弱性管理",
-      "sub_short_en": "Vuln. mgmt",
+      "sub_short": "防御",
+      "sub_short_en": "Security",
       "row": 3,
       "relations": [
         {
@@ -1105,8 +1105,8 @@
       "name": "Hewlett Packard Enterprise",
       "sub": "ネットワーク・サーバー",
       "sub_en": "Networking & servers",
-      "sub_short": "ネットワーク",
-      "sub_short_en": "Networking",
+      "sub_short": "通信網",
+      "sub_short_en": "Network",
       "row": 3,
       "relations": [
         {

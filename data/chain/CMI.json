@@ -34,7 +34,7 @@
       "sub": "トラックメーカー",
       "sub_en": "Truck maker",
       "sub_short": "トラック",
-      "sub_short_en": "Truck maker",
+      "sub_short_en": "Trucks",
       "row": 0,
       "relations": [
         {
@@ -73,7 +73,7 @@
       "sub": "トラックメーカー",
       "sub_en": "Truck maker",
       "sub_short": "トラック",
-      "sub_short_en": "Truck maker",
+      "sub_short_en": "Trucks",
       "row": 0,
       "relations": [
         {
@@ -112,7 +112,7 @@
       "sub": "トラックメーカー",
       "sub_en": "Truck maker",
       "sub_short": "トラック",
-      "sub_short_en": "Truck maker",
+      "sub_short_en": "Trucks",
       "row": 0,
       "relations": [
         {
@@ -137,8 +137,8 @@
       "name": "ステランティス",
       "sub": "自動車メーカー",
       "sub_en": "Automaker",
-      "sub_short": "自動車メーカー",
-      "sub_short_en": "Automaker",
+      "sub_short": "自動車",
+      "sub_short_en": "Cars",
       "row": 0,
       "relations": [
         {
@@ -164,7 +164,7 @@
       "sub": "産業機器",
       "sub_en": "Industrial equipment",
       "sub_short": "産業機器",
-      "sub_short_en": "Industrial gear",
+      "sub_short_en": "Industrial",
       "row": 0,
       "relations": [
         {
@@ -189,8 +189,8 @@
       "name": "東風汽車",
       "sub": "中国の自動車",
       "sub_en": "Chinese automaker",
-      "sub_short": "中国の自動車",
-      "sub_short_en": "China automaker",
+      "sub_short": "中国車",
+      "sub_short_en": "China car",
       "row": 0,
       "relations": [
         {
@@ -215,8 +215,8 @@
       "name": "北汽福田汽車",
       "sub": "中国の商用車",
       "sub_en": "Chinese commercial vehicles",
-      "sub_short": "中国の商用車",
-      "sub_short_en": "China trucks",
+      "sub_short": "商用車",
+      "sub_short_en": "Trucks",
       "row": 0,
       "relations": [
         {
@@ -241,8 +241,8 @@
       "name": "タタ・モーターズ",
       "sub": "インドの自動車",
       "sub_en": "Indian automaker",
-      "sub_short": "インドの自動車",
-      "sub_short_en": "Indian automaker",
+      "sub_short": "インド車",
+      "sub_short_en": "Cars",
       "row": 0,
       "relations": [
         {
@@ -268,7 +268,7 @@
       "sub": "建設機械",
       "sub_en": "Construction machinery",
       "sub_short": "建設機械",
-      "sub_short_en": "Heavy machinery",
+      "sub_short_en": "Machines",
       "row": 0,
       "relations": [
         {
@@ -307,7 +307,7 @@
       "sub": "車両部品",
       "sub_en": "Vehicle components",
       "sub_short": "車両部品",
-      "sub_short_en": "Auto parts",
+      "sub_short_en": "Car parts",
       "row": 0,
       "relations": [
         {
@@ -333,7 +333,7 @@
       "sub": "車両部品",
       "sub_en": "Vehicle components",
       "sub_short": "車両部品",
-      "sub_short_en": "Auto parts",
+      "sub_short_en": "Car parts",
       "row": 0,
       "relations": [
         {
@@ -359,7 +359,7 @@
       "sub": "発電機",
       "sub_en": "Generators",
       "sub_short": "発電機",
-      "sub_short_en": "Generators",
+      "sub_short_en": "Gensets",
       "row": 1,
       "relations": [
         {
@@ -384,7 +384,7 @@
       "name": "アトマス・フィルトレーション",
       "sub": "フィルター",
       "sub_en": "Filtration",
-      "sub_short": "フィルター",
+      "sub_short": "ろ過",
       "sub_short_en": "Filtration",
       "row": 2,
       "relations": [
@@ -410,8 +410,8 @@
       "name": "ブルーバード",
       "sub": "スクールバス",
       "sub_en": "School buses",
-      "sub_short": "スクールバス",
-      "sub_short_en": "School buses",
+      "sub_short": "バス",
+      "sub_short_en": "Buses",
       "row": 0,
       "relations": [
         {
@@ -437,7 +437,7 @@
       "sub": "発電機",
       "sub_en": "Generators",
       "sub_short": "発電機",
-      "sub_short_en": "Generators",
+      "sub_short_en": "Gensets",
       "row": 1,
       "relations": [
         {

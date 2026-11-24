@@ -29,7 +29,7 @@
       "sub": "決済",
       "sub_en": "Payments",
       "sub_short": "決済",
-      "sub_short_en": "Payments",
+      "sub_short_en": "Payment",
       "row": 0,
       "relations": [
         {
@@ -54,7 +54,7 @@
       "name_en": "Adobe",
       "sub": "ソフトウェア",
       "sub_en": "Software",
-      "sub_short": "ソフトウェア",
+      "sub_short": "ソフト",
       "sub_short_en": "Software",
       "row": 0,
       "relations": [
@@ -80,7 +80,7 @@
       "name_en": "Salesforce",
       "sub": "ソフトウェア",
       "sub_en": "Software",
-      "sub_short": "ソフトウェア",
+      "sub_short": "ソフト",
       "sub_short_en": "Software",
       "row": 0,
       "relations": [
@@ -106,7 +106,7 @@
       "name_en": "Okta",
       "sub": "認証ソフト",
       "sub_en": "Identity software",
-      "sub_short": "認証ソフト",
+      "sub_short": "認証",
       "sub_short_en": "Identity",
       "row": 0,
       "relations": [
@@ -158,8 +158,8 @@
       "name_en": "Box",
       "sub": "クラウドストレージ",
       "sub_en": "Cloud content",
-      "sub_short": "クラウド保存",
-      "sub_short_en": "Cloud content",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 0,
       "relations": [
         {
@@ -184,8 +184,8 @@
       "name_en": "Synopsys",
       "sub": "半導体設計ソフト",
       "sub_en": "Chip design software",
-      "sub_short": "半導体設計",
-      "sub_short_en": "Chip design",
+      "sub_short": "設計",
+      "sub_short_en": "Chip IP",
       "row": 0,
       "relations": [
         {
@@ -210,8 +210,8 @@
       "name_en": "Amazon",
       "sub": "EC・クラウド",
       "sub_en": "E-commerce & cloud",
-      "sub_short": "EC・クラウド",
-      "sub_short_en": "E-commerce",
+      "sub_short": "EC",
+      "sub_short_en": "E-com",
       "row": 0,
       "relations": [
         {
@@ -237,7 +237,7 @@
       "sub": "自動運転",
       "sub_en": "Autonomous vehicles",
       "sub_short": "自動運転",
-      "sub_short_en": "Self-driving",
+      "sub_short_en": "AV tech",
       "row": 0,
       "relations": [
         {
@@ -263,7 +263,7 @@
       "sub": "動画配信",
       "sub_en": "Streaming",
       "sub_short": "動画配信",
-      "sub_short_en": "Streaming",
+      "sub_short_en": "Video",
       "row": 1,
       "relations": [
         {
@@ -288,7 +288,7 @@
       "name_en": "Cytokinetics",
       "sub": "バイオ医薬",
       "sub_en": "Biotech",
-      "sub_short": "バイオ医薬",
+      "sub_short": "バイオ",
       "sub_short_en": "Biotech",
       "row": 1,
       "relations": [
@@ -314,8 +314,8 @@
       "name_en": "Tandem Diabetes Care",
       "sub": "インスリンポンプ",
       "sub_en": "Insulin pumps",
-      "sub_short": "インスリン機器",
-      "sub_short_en": "Insulin pumps",
+      "sub_short": "糖尿病",
+      "sub_short_en": "Insulin",
       "row": 1,
       "relations": [
         {
@@ -340,7 +340,7 @@
       "name_en": "Neurocrine Biosciences",
       "sub": "バイオ医薬",
       "sub_en": "Biotech",
-      "sub_short": "バイオ医薬",
+      "sub_short": "バイオ",
       "sub_short_en": "Biotech",
       "row": 1,
       "relations": [
@@ -367,7 +367,7 @@
       "sub": "エンタメ・エレクトロニクス",
       "sub_en": "Entertainment & electronics",
       "sub_short": "エンタメ",
-      "sub_short_en": "Entertainment",
+      "sub_short_en": "Media",
       "row": 1,
       "relations": [
         {
@@ -392,7 +392,7 @@
       "name_en": "Nektar Therapeutics",
       "sub": "バイオ医薬",
       "sub_en": "Biotech",
-      "sub_short": "バイオ医薬",
+      "sub_short": "バイオ",
       "sub_short_en": "Biotech",
       "row": 1,
       "relations": [
@@ -419,7 +419,7 @@
       "sub": "血糖測定",
       "sub_en": "Glucose monitoring",
       "sub_short": "血糖測定",
-      "sub_short_en": "Glucose monitor",
+      "sub_short_en": "CGM",
       "row": 2,
       "relations": [
         {
@@ -444,8 +444,8 @@
       "name_en": "Acadia Pharmaceuticals",
       "sub": "中枢神経薬",
       "sub_en": "CNS drugs",
-      "sub_short": "中枢神経薬",
-      "sub_short_en": "CNS drugs",
+      "sub_short": "神経薬",
+      "sub_short_en": "CNS",
       "row": 2,
       "relations": [
         {
@@ -470,8 +470,8 @@
       "name_en": "Travere Therapeutics",
       "sub": "希少疾患薬",
       "sub_en": "Rare-disease drugs",
-      "sub_short": "希少疾患薬",
-      "sub_short_en": "Rare diseases",
+      "sub_short": "難病薬",
+      "sub_short_en": "Rare dz",
       "row": 2,
       "relations": [
         {
@@ -497,7 +497,7 @@
       "sub": "医療人材",
       "sub_en": "Healthcare staffing",
       "sub_short": "医療人材",
-      "sub_short_en": "Health staffing",
+      "sub_short_en": "Staffing",
       "row": 2,
       "relations": [
         {

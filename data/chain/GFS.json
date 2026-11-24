@@ -33,8 +33,8 @@
       "name": "ナビタス・セミコンダクター",
       "sub": "GaNパワー半導体",
       "sub_en": "GaN power chips",
-      "sub_short": "GaN半導体",
-      "sub_short_en": "GaN power chips",
+      "sub_short": "GaN",
+      "sub_short_en": "GaN",
       "row": 0,
       "relations": [
         {
@@ -72,8 +72,8 @@
       "name": "シーラス・ロジック",
       "sub": "オーディオ半導体",
       "sub_en": "Audio chips",
-      "sub_short": "音響半導体",
-      "sub_short_en": "Audio chips",
+      "sub_short": "音響IC",
+      "sub_short_en": "Audio ICs",
       "row": 0,
       "relations": [
         {
@@ -112,7 +112,7 @@
       "sub": "半導体",
       "sub_en": "Semiconductors",
       "sub_short": "半導体",
-      "sub_short_en": "Semiconductors",
+      "sub_short_en": "Chips",
       "row": 1,
       "relations": [
         {
@@ -139,8 +139,8 @@
       "name": "onsemi",
       "sub": "パワー半導体",
       "sub_en": "Power chips",
-      "sub_short": "パワー半導体",
-      "sub_short_en": "Power chips",
+      "sub_short": "半導体",
+      "sub_short_en": "Power ICs",
       "row": 1,
       "relations": [
         {
@@ -163,8 +163,8 @@
       "name": "シノプシス",
       "sub": "設計ソフト",
       "sub_en": "Design software",
-      "sub_short": "設計ソフト",
-      "sub_short_en": "Design software",
+      "sub_short": "設計IT",
+      "sub_short_en": "Design",
       "row": 1,
       "relations": [
         {
@@ -191,8 +191,8 @@
       "name": "AMD",
       "sub": "CPU・GPU",
       "sub_en": "CPUs & GPUs",
-      "sub_short": "CPU・GPU",
-      "sub_short_en": "CPUs & GPUs",
+      "sub_short": "CPU",
+      "sub_short_en": "CPU/GPU",
       "row": 1,
       "relations": [
         {
@@ -317,7 +317,7 @@
       "name": "TSMC",
       "sub": "半導体受託製造",
       "sub_en": "Foundry",
-      "sub_short": "半導体受託製造",
+      "sub_short": "受託生産",
       "sub_short_en": "Foundry",
       "row": 2,
       "relations": [
@@ -342,7 +342,7 @@
       "name": "ユナイテッド・マイクロエレクトロニクス",
       "sub": "半導体受託製造",
       "sub_en": "Foundry",
-      "sub_short": "半導体受託製造",
+      "sub_short": "受託生産",
       "sub_short_en": "Foundry",
       "row": 2,
       "relations": [
@@ -368,8 +368,8 @@
       "name": "タワーセミコンダクター",
       "sub": "特殊ファウンドリ",
       "sub_en": "Specialty foundry",
-      "sub_short": "半導体受託",
-      "sub_short_en": "Chip foundry",
+      "sub_short": "受託生産",
+      "sub_short_en": "Foundry",
       "row": 2,
       "relations": [
         {
@@ -407,8 +407,8 @@
       "name": "テキサス・インスツルメンツ",
       "sub": "アナログ半導体",
       "sub_en": "Analog chips",
-      "sub_short": "アナログ半導体",
-      "sub_short_en": "Analog chips",
+      "sub_short": "アナログ",
+      "sub_short_en": "Analog",
       "row": 2,
       "relations": [
         {
@@ -434,7 +434,7 @@
       "sub": "半導体",
       "sub_en": "Semiconductors",
       "sub_short": "半導体",
-      "sub_short_en": "Semiconductors",
+      "sub_short_en": "Chips",
       "row": 2,
       "relations": [
         {
@@ -460,7 +460,7 @@
       "sub": "半導体IP",
       "sub_en": "Semiconductor IP",
       "sub_short": "半導体IP",
-      "sub_short_en": "Semiconductor IP",
+      "sub_short_en": "Chip IP",
       "row": 2,
       "relations": [
         {

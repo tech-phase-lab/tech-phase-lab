@@ -32,8 +32,8 @@
       "name": "Planet Labs",
       "sub": "地球観測衛星",
       "sub_en": "Earth observation satellites",
-      "sub_short": "地球観測衛星",
-      "sub_short_en": "Earth imaging",
+      "sub_short": "観測衛星",
+      "sub_short_en": "Imaging",
       "row": 0,
       "relations": [
         {
@@ -60,7 +60,7 @@
       "sub": "衛星通信",
       "sub_en": "Satellite communications",
       "sub_short": "衛星通信",
-      "sub_short_en": "Satellite comms",
+      "sub_short_en": "Satcom",
       "row": 1,
       "relations": [
         {
@@ -87,7 +87,7 @@
       "name": "RTX(レイセオン)",
       "sub": "防衛・航空宇宙",
       "sub_en": "Defense & aerospace",
-      "sub_short": "防衛・航空宇宙",
+      "sub_short": "防衛",
       "sub_short_en": "Defense",
       "row": 1,
       "relations": [
@@ -115,8 +115,8 @@
       "name": "BlackSky Technology",
       "sub": "地球観測衛星",
       "sub_en": "Earth observation satellites",
-      "sub_short": "地球観測衛星",
-      "sub_short_en": "Earth imaging",
+      "sub_short": "観測衛星",
+      "sub_short_en": "Imaging",
       "row": 1,
       "relations": [
         {
@@ -250,8 +250,8 @@
       "name": "ノースロップ・グラマン",
       "sub": "防衛・宇宙",
       "sub_en": "Defense & space",
-      "sub_short": "防衛・宇宙",
-      "sub_short_en": "Defense & space",
+      "sub_short": "防衛",
+      "sub_short_en": "Defense",
       "row": 2,
       "relations": [
         {
@@ -276,8 +276,8 @@
       "name": "レッドワイヤー",
       "sub": "宇宙インフラ",
       "sub_en": "Space infrastructure",
-      "sub_short": "宇宙インフラ",
-      "sub_short_en": "Space infra",
+      "sub_short": "宇宙",
+      "sub_short_en": "Space",
       "row": 2,
       "relations": [
         {
@@ -316,7 +316,7 @@
       "sub": "複合産業",
       "sub_en": "Industrial conglomerate",
       "sub_short": "複合産業",
-      "sub_short_en": "Conglomerate",
+      "sub_short_en": "Group",
       "row": 2,
       "relations": [
         {
@@ -342,7 +342,7 @@
       "sub": "宇宙機器",
       "sub_en": "Space systems",
       "sub_short": "宇宙機器",
-      "sub_short_en": "Space systems",
+      "sub_short_en": "Space",
       "row": 2,
       "relations": [
         {
@@ -368,7 +368,7 @@
       "sub": "宇宙輸送",
       "sub_en": "Space transport",
       "sub_short": "宇宙輸送",
-      "sub_short_en": "Space transport",
+      "sub_short_en": "Rockets",
       "row": 2,
       "relations": [
         {

@@ -21,8 +21,8 @@
       "name": "カザフスタン国鉄(KTZ)",
       "sub": "鉄道事業者",
       "sub_en": "Railway operator",
-      "sub_short": "鉄道事業者",
-      "sub_short_en": "Railway operator",
+      "sub_short": "鉄道",
+      "sub_short_en": "Railroad",
       "row": 0,
       "relations": [
         {
@@ -74,7 +74,7 @@
       "sub": "貨物鉄道",
       "sub_en": "Freight railroad",
       "sub_short": "貨物鉄道",
-      "sub_short_en": "Freight railroad",
+      "sub_short_en": "Railroad",
       "row": 0,
       "relations": [
         {
@@ -100,7 +100,7 @@
       "sub": "ブレーキ・鉄道機器",
       "sub_en": "Brakes & rail equipment",
       "sub_short": "ブレーキ",
-      "sub_short_en": "Rail brakes",
+      "sub_short_en": "Rail",
       "row": 0,
       "relations": [
         {
@@ -126,7 +126,7 @@
       "sub": "鉄道機器",
       "sub_en": "Rail equipment",
       "sub_short": "鉄道機器",
-      "sub_short_en": "Rail equipment",
+      "sub_short_en": "Rail",
       "row": 0,
       "relations": [
         {
@@ -151,8 +151,8 @@
       "name": "キャタピラー",
       "sub": "建設・鉄道機械",
       "sub_en": "Machinery & rail",
-      "sub_short": "建設・鉄道機械",
-      "sub_short_en": "Machinery & rail",
+      "sub_short": "建機",
+      "sub_short_en": "Machines",
       "row": 0,
       "relations": [
         {

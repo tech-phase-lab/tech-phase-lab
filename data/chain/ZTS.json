@@ -29,8 +29,8 @@
       "name_en": "Phibro Animal Health",
       "sub": "動物用医薬品",
       "sub_en": "Animal health",
-      "sub_short": "動物用医薬品",
-      "sub_short_en": "Animal health",
+      "sub_short": "動物薬",
+      "sub_short_en": "Vet",
       "row": 0,
       "relations": [
         {
@@ -56,7 +56,7 @@
       "sub": "食品安全・動物の遺伝子検査",
       "sub_en": "Food safety & genomics",
       "sub_short": "食品安全",
-      "sub_short_en": "Food safety",
+      "sub_short_en": "Food tests",
       "row": 0,
       "relations": [
         {
@@ -81,8 +81,8 @@
       "name_en": "Elanco",
       "sub": "動物用医薬品",
       "sub_en": "Animal health",
-      "sub_short": "動物用医薬品",
-      "sub_short_en": "Animal health",
+      "sub_short": "動物薬",
+      "sub_short_en": "Vet",
       "row": 1,
       "relations": [
         {
@@ -107,7 +107,7 @@
       "name_en": "IDEXX Laboratories",
       "sub": "動物用診断",
       "sub_en": "Veterinary diagnostics",
-      "sub_short": "動物用診断",
+      "sub_short": "動物医療",
       "sub_short_en": "Vet tests",
       "row": 1,
       "relations": [
@@ -133,8 +133,8 @@
       "name_en": "Zomedica",
       "sub": "動物用医療機器",
       "sub_en": "Veterinary devices",
-      "sub_short": "動物用医療機器",
-      "sub_short_en": "Vet devices",
+      "sub_short": "動物医療",
+      "sub_short_en": "Vet",
       "row": 1,
       "relations": [
         {
@@ -159,8 +159,8 @@
       "name_en": "PetVivo",
       "sub": "動物用医療機器",
       "sub_en": "Veterinary medical devices",
-      "sub_short": "動物用医療機器",
-      "sub_short_en": "Vet devices",
+      "sub_short": "動物医療",
+      "sub_short_en": "Vet",
       "row": 1,
       "relations": [
         {
@@ -185,8 +185,8 @@
       "name_en": "Akston Biosciences",
       "sub": "動物用医薬品",
       "sub_en": "Animal therapeutics",
-      "sub_short": "動物用医薬品",
-      "sub_short_en": "Animal health",
+      "sub_short": "動物薬",
+      "sub_short_en": "Vet",
       "row": 1,
       "relations": [
         {

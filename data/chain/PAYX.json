@@ -28,7 +28,7 @@
       "sub": "請求・支払ソフト",
       "sub_en": "Billing & payments software",
       "sub_short": "請求",
-      "sub_short_en": "Billing software",
+      "sub_short_en": "Billing",
       "row": 0,
       "relations": [
         {
@@ -67,7 +67,7 @@
       "sub": "ソフト・クラウド",
       "sub_en": "Software & cloud",
       "sub_short": "ソフト",
-      "sub_short_en": "Software & cloud",
+      "sub_short_en": "Software",
       "row": 0,
       "relations": [
         {
@@ -104,7 +104,7 @@
       "sub": "決済",
       "sub_en": "Payments",
       "sub_short": "決済",
-      "sub_short_en": "Payments",
+      "sub_short_en": "Payment",
       "row": 0,
       "relations": [
         {
@@ -129,8 +129,8 @@
       "name": "インテュイット",
       "sub": "会計ソフト",
       "sub_en": "Accounting software",
-      "sub_short": "会計ソフト",
-      "sub_short_en": "Accounting apps",
+      "sub_short": "会計",
+      "sub_short_en": "Accounts",
       "row": 0,
       "relations": [
         {
@@ -158,7 +158,7 @@
       "sub": "決済・金融ソフト",
       "sub_en": "Payments & fintech",
       "sub_short": "決済",
-      "sub_short_en": "Payments",
+      "sub_short_en": "Payment",
       "row": 0,
       "relations": [
         {
@@ -185,8 +185,8 @@
       "name": "トライネット・グループ",
       "sub": "PEO・人事サービス",
       "sub_en": "PEO & HR services",
-      "sub_short": "人事サービス",
-      "sub_short_en": "PEO services",
+      "sub_short": "人事",
+      "sub_short_en": "PEO",
       "row": 1,
       "relations": [
         {
@@ -211,7 +211,7 @@
       "sub": "給与・人事ソフト",
       "sub_en": "Payroll & HR software",
       "sub_short": "給与",
-      "sub_short_en": "Payroll software",
+      "sub_short_en": "Payroll",
       "row": 1,
       "relations": [
         {
@@ -237,7 +237,7 @@
       "sub": "給与・人事ソフト",
       "sub_en": "Payroll & HR software",
       "sub_short": "給与",
-      "sub_short_en": "Payroll software",
+      "sub_short_en": "Payroll",
       "row": 1,
       "relations": [
         {

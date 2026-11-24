@@ -24,8 +24,8 @@
       "name_en": "Senior Living Communities",
       "sub": "シニア住宅運営",
       "sub_en": "Senior housing operator",
-      "sub_short": "シニア住宅運営",
-      "sub_short_en": "Senior housing",
+      "sub_short": "高齢住宅",
+      "sub_short_en": "Seniors",
       "row": 0,
       "relations": [
         {
@@ -51,7 +51,7 @@
       "sub": "介護付き住宅運営",
       "sub_en": "Assisted living operator",
       "sub_short": "介護住宅",
-      "sub_short_en": "Assisted living",
+      "sub_short_en": "Seniors",
       "row": 0,
       "relations": [
         {
@@ -76,8 +76,8 @@
       "name_en": "National HealthCare Corporation",
       "sub": "介護施設運営",
       "sub_en": "Skilled nursing operator",
-      "sub_short": "介護施設運営",
-      "sub_short_en": "Nursing homes",
+      "sub_short": "介護",
+      "sub_short_en": "Nursing",
       "row": 0,
       "relations": [
         {
@@ -103,7 +103,7 @@
       "sub": "介護付き住宅運営",
       "sub_en": "Assisted living operator",
       "sub_short": "介護住宅",
-      "sub_short_en": "Assisted living",
+      "sub_short_en": "Seniors",
       "row": 1,
       "relations": [
         {
@@ -128,8 +128,8 @@
       "name_en": "Generations, LLC",
       "sub": "シニア住宅運営",
       "sub_en": "Senior housing operator",
-      "sub_short": "シニア住宅運営",
-      "sub_short_en": "Senior housing",
+      "sub_short": "高齢住宅",
+      "sub_short_en": "Seniors",
       "row": 1,
       "relations": [
         {
@@ -155,7 +155,7 @@
       "sub": "介護付き住宅運営",
       "sub_en": "Assisted living operator",
       "sub_short": "介護住宅",
-      "sub_short_en": "Assisted living",
+      "sub_short_en": "Seniors",
       "row": 1,
       "relations": [
         {
@@ -180,8 +180,8 @@
       "name_en": "Juniper Communities",
       "sub": "シニア住宅運営",
       "sub_en": "Senior housing operator",
-      "sub_short": "シニア住宅運営",
-      "sub_short_en": "Senior housing",
+      "sub_short": "高齢住宅",
+      "sub_short_en": "Seniors",
       "row": 1,
       "relations": [
         {
@@ -207,7 +207,7 @@
       "sub": "介護付き住宅運営",
       "sub_en": "Assisted living operator",
       "sub_short": "介護住宅",
-      "sub_short_en": "Assisted living",
+      "sub_short_en": "Seniors",
       "row": 1,
       "relations": [
         {
@@ -232,8 +232,8 @@
       "name_en": "Compass Senior Living",
       "sub": "シニア住宅運営",
       "sub_en": "Senior housing manager",
-      "sub_short": "シニア住宅運営",
-      "sub_short_en": "Senior housing",
+      "sub_short": "高齢住宅",
+      "sub_short_en": "Seniors",
       "row": 1,
       "relations": [
         {

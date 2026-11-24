@@ -60,7 +60,7 @@
       "sub": "製造装置",
       "sub_en": "Equipment",
       "sub_short": "製造装置",
-      "sub_short_en": "Equipment",
+      "sub_short_en": "Gear",
       "row": 2,
       "relations": [
         {
@@ -85,7 +85,7 @@
       "sub": "露光装置",
       "sub_en": "Lithography",
       "sub_short": "露光装置",
-      "sub_short_en": "Lithography",
+      "sub_short_en": "Litho",
       "row": 2,
       "relations": [
         {
@@ -125,7 +125,7 @@
       "sub": "検査装置",
       "sub_en": "Inspection tools",
       "sub_short": "検査装置",
-      "sub_short_en": "Inspection tools",
+      "sub_short_en": "Testing",
       "row": 2,
       "relations": [
         {
@@ -150,8 +150,8 @@
       "name": "Onto Innovation",
       "sub": "検査・計測装置",
       "sub_en": "Inspection & metrology",
-      "sub_short": "検査・計測装置",
-      "sub_short_en": "Inspection",
+      "sub_short": "検査",
+      "sub_short_en": "Testing",
       "row": 2,
       "relations": [
         {
@@ -213,8 +213,8 @@
       "name": "Cohu",
       "sub": "テスト・検査",
       "sub_en": "Test & inspection",
-      "sub_short": "テスト・検査",
-      "sub_short_en": "Test equipment",
+      "sub_short": "検査",
+      "sub_short_en": "Testing",
       "row": 2,
       "relations": [
         {
@@ -238,8 +238,8 @@
       "name": "PDF Solutions",
       "sub": "歩留まり管理",
       "sub_en": "Yield management",
-      "sub_short": "歩留まり管理",
-      "sub_short_en": "Yield management",
+      "sub_short": "品質管理",
+      "sub_short_en": "Yield",
       "row": 2,
       "relations": [
         {
@@ -264,8 +264,8 @@
       "name_en": "Hitachi (Hitachi High-Tech)",
       "sub": "検査・計測装置",
       "sub_en": "Inspection & metrology",
-      "sub_short": "検査・計測装置",
-      "sub_short_en": "Inspection",
+      "sub_short": "検査",
+      "sub_short_en": "Testing",
       "row": 2,
       "relations": [
         {

@@ -29,7 +29,7 @@
       "name_en": "Royal Gold",
       "sub": "ロイヤルティ",
       "sub_en": "Royalties",
-      "sub_short": "ロイヤルティ",
+      "sub_short": "権益",
       "sub_short_en": "Royalties",
       "row": 0,
       "relations": [
@@ -55,7 +55,7 @@
       "name_en": "OR Royalties (Osisko Gold Royalties)",
       "sub": "ロイヤルティ",
       "sub_en": "Royalties",
-      "sub_short": "ロイヤルティ",
+      "sub_short": "権益",
       "sub_short_en": "Royalties",
       "row": 0,
       "relations": [
@@ -82,7 +82,7 @@
       "sub": "金鉱山",
       "sub_en": "Gold mining",
       "sub_short": "金鉱山",
-      "sub_short_en": "Gold mining",
+      "sub_short_en": "Gold",
       "row": 1,
       "relations": [
         {
@@ -107,8 +107,8 @@
       "name_en": "Pan American Silver",
       "sub": "銀・金鉱山",
       "sub_en": "Silver & gold mining",
-      "sub_short": "銀・金鉱山",
-      "sub_short_en": "Silver mining",
+      "sub_short": "銀鉱山",
+      "sub_short_en": "Silver",
       "row": 1,
       "relations": [
         {
@@ -160,7 +160,7 @@
       "sub": "金探鉱",
       "sub_en": "Gold exploration",
       "sub_short": "金探鉱",
-      "sub_short_en": "Gold exploration",
+      "sub_short_en": "Gold",
       "row": 1,
       "relations": [
         {
@@ -186,7 +186,7 @@
       "sub": "金鉱山",
       "sub_en": "Gold mining",
       "sub_short": "金鉱山",
-      "sub_short_en": "Gold mining",
+      "sub_short_en": "Gold",
       "row": 1,
       "relations": [
         {
@@ -212,7 +212,7 @@
       "sub": "探鉱(スウェーデン)",
       "sub_en": "Exploration (Sweden)",
       "sub_short": "探鉱",
-      "sub_short_en": "Exploration",
+      "sub_short_en": "Mining",
       "row": 1,
       "relations": [
         {
@@ -238,7 +238,7 @@
       "sub": "金探鉱(コロンビア)",
       "sub_en": "Gold exploration (Colombia)",
       "sub_short": "金探鉱",
-      "sub_short_en": "Gold exploration",
+      "sub_short_en": "Gold",
       "row": 2,
       "relations": [
         {
@@ -263,8 +263,8 @@
       "name_en": "Perpetua Resources",
       "sub": "金・アンチモン開発",
       "sub_en": "Gold & antimony development",
-      "sub_short": "金鉱山開発",
-      "sub_short_en": "Gold mining",
+      "sub_short": "金鉱山",
+      "sub_short_en": "Gold",
       "row": 2,
       "relations": [
         {
@@ -290,7 +290,7 @@
       "sub": "金鉱山",
       "sub_en": "Gold mining",
       "sub_short": "金鉱山",
-      "sub_short_en": "Gold mining",
+      "sub_short_en": "Gold",
       "row": 2,
       "relations": [
         {

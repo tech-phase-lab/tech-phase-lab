@@ -61,8 +61,8 @@
       "name_en": "BlackLine",
       "sub": "会計クラウド",
       "sub_en": "Accounting software",
-      "sub_short": "会計クラウド",
-      "sub_short_en": "Accounting apps",
+      "sub_short": "会計",
+      "sub_short_en": "Accounts",
       "row": 0,
       "relations": [
         {
@@ -113,8 +113,8 @@
       "name_en": "Accenture",
       "sub": "コンサル・IT",
       "sub_en": "Consulting & IT",
-      "sub_short": "コンサル・IT",
-      "sub_short_en": "Consulting & IT",
+      "sub_short": "コンサル",
+      "sub_short_en": "Advisory",
       "row": 2,
       "relations": [
         {
@@ -139,8 +139,8 @@
       "name_en": "Cognizant",
       "sub": "ITサービス",
       "sub_en": "IT services",
-      "sub_short": "ITサービス",
-      "sub_short_en": "IT services",
+      "sub_short": "IT",
+      "sub_short_en": "IT",
       "row": 2,
       "relations": [
         {
@@ -165,8 +165,8 @@
       "name_en": "EXL",
       "sub": "データ・業務受託",
       "sub_en": "Data & operations",
-      "sub_short": "データ受託",
-      "sub_short_en": "Data & ops",
+      "sub_short": "データ",
+      "sub_short_en": "Data",
       "row": 2,
       "relations": [
         {
@@ -191,8 +191,8 @@
       "name_en": "Infosys",
       "sub": "ITサービス(印)",
       "sub_en": "IT services (India)",
-      "sub_short": "ITサービス",
-      "sub_short_en": "IT services",
+      "sub_short": "IT",
+      "sub_short_en": "IT",
       "row": 2,
       "relations": [
         {
@@ -217,8 +217,8 @@
       "name_en": "Wipro",
       "sub": "ITサービス(印)",
       "sub_en": "IT services (India)",
-      "sub_short": "ITサービス",
-      "sub_short_en": "IT services",
+      "sub_short": "IT",
+      "sub_short_en": "IT",
       "row": 2,
       "relations": [
         {
@@ -243,8 +243,8 @@
       "name_en": "TTEC",
       "sub": "顧客対応受託",
       "sub_en": "Customer experience outsourcing",
-      "sub_short": "顧客対応受託",
-      "sub_short_en": "CX outsourcing",
+      "sub_short": "顧客対応",
+      "sub_short_en": "CX",
       "row": 2,
       "relations": [
         {
@@ -269,8 +269,8 @@
       "name_en": "Globant",
       "sub": "デジタル開発",
       "sub_en": "Digital engineering",
-      "sub_short": "デジタル開発",
-      "sub_short_en": "Digital eng.",
+      "sub_short": "IT開発",
+      "sub_short_en": "IT",
       "row": 2,
       "relations": [
         {

@@ -51,8 +51,8 @@
       "name": "DD IPホルダー(ダンキン)",
       "sub": "商標ライセンス",
       "sub_en": "Trademark licensor",
-      "sub_short": "商標ライセンス",
-      "sub_short_en": "Trademarks",
+      "sub_short": "商標",
+      "sub_short_en": "Brands",
       "row": 0,
       "relations": [
         {
@@ -103,8 +103,8 @@
       "name": "キューリグ・ドクターペッパー",
       "sub": "飲料・コーヒー",
       "sub_en": "Beverages & coffee",
-      "sub_short": "飲料・コーヒー",
-      "sub_short_en": "Beverages",
+      "sub_short": "飲料",
+      "sub_short_en": "Drinks",
       "row": 0,
       "relations": [
         {
@@ -233,8 +233,8 @@
       "name": "マース",
       "sub": "食品・ペット",
       "sub_en": "Food & pet",
-      "sub_short": "食品・ペット",
-      "sub_short_en": "Food & pet",
+      "sub_short": "食品",
+      "sub_short_en": "Food",
       "row": 0,
       "relations": [
         {

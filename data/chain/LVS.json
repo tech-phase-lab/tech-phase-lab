@@ -22,8 +22,8 @@
       "name": "マリオット・インターナショナル",
       "sub": "ホテルブランド",
       "sub_en": "Hotel brand",
-      "sub_short": "ホテルブランド",
-      "sub_short_en": "Hotel brand",
+      "sub_short": "ホテル",
+      "sub_short_en": "Hotels",
       "row": 0,
       "relations": [
         {
@@ -48,8 +48,8 @@
       "name": "ウィン・リゾーツ",
       "sub": "マカオ競合",
       "sub_en": "Macao rival",
-      "sub_short": "マカオ競合",
-      "sub_short_en": "Macao rival",
+      "sub_short": "カジノ",
+      "sub_short_en": "Casinos",
       "row": 0,
       "relations": [
         {
@@ -74,8 +74,8 @@
       "name": "メルコ・リゾーツ",
       "sub": "マカオ競合",
       "sub_en": "Macao rival",
-      "sub_short": "マカオ競合",
-      "sub_short_en": "Macao rival",
+      "sub_short": "カジノ",
+      "sub_short_en": "Casinos",
       "row": 0,
       "relations": [
         {
@@ -100,8 +100,8 @@
       "name": "MGMグランド・パラダイス",
       "sub": "マカオ競合",
       "sub_en": "Macao rival",
-      "sub_short": "マカオ競合",
-      "sub_short_en": "Macao rival",
+      "sub_short": "カジノ",
+      "sub_short_en": "Casinos",
       "row": 0,
       "relations": [
         {
@@ -126,8 +126,8 @@
       "name": "SJMリゾーツ",
       "sub": "マカオ競合",
       "sub_en": "Macao rival",
-      "sub_short": "マカオ競合",
-      "sub_short_en": "Macao rival",
+      "sub_short": "カジノ",
+      "sub_short_en": "Casinos",
       "row": 0,
       "relations": [
         {
@@ -152,8 +152,8 @@
       "name": "ギャラクシー・カジノ",
       "sub": "マカオ競合",
       "sub_en": "Macao rival",
-      "sub_short": "マカオ競合",
-      "sub_short_en": "Macao rival",
+      "sub_short": "カジノ",
+      "sub_short_en": "Casinos",
       "row": 0,
       "relations": [
         {
@@ -178,8 +178,8 @@
       "name": "リゾート・ワールド・セントーサ",
       "sub": "シンガポール競合",
       "sub_en": "Singapore rival",
-      "sub_short": "シンガポール",
-      "sub_short_en": "Singapore rival",
+      "sub_short": "星国企業",
+      "sub_short_en": "Rival",
       "row": 0,
       "relations": [
         {

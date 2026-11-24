@@ -26,8 +26,8 @@
       "name_en": "Dipsol Chemicals",
       "sub": "表面処理薬品(日本)",
       "sub_en": "Surface treatment chemicals (Japan)",
-      "sub_short": "表面処理薬品",
-      "sub_short_en": "Surface coatings",
+      "sub_short": "薬品",
+      "sub_short_en": "Coatings",
       "row": 0,
       "relations": [
         {
@@ -52,8 +52,8 @@
       "name_en": "Natech",
       "sub": "工業用薬品",
       "sub_en": "Industrial chemicals",
-      "sub_short": "工業用薬品",
-      "sub_short_en": "Chemicals",
+      "sub_short": "薬品",
+      "sub_short_en": "Chem",
       "row": 0,
       "relations": [
         {
@@ -78,8 +78,8 @@
       "name_en": "Chemical Solutions & Innovations",
       "sub": "工業用薬品(南アフリカ)",
       "sub_en": "Industrial chemicals (South Africa)",
-      "sub_short": "工業用薬品",
-      "sub_short_en": "Chemicals",
+      "sub_short": "薬品",
+      "sub_short_en": "Chem",
       "row": 0,
       "relations": [
         {
@@ -105,7 +105,7 @@
       "sub": "潤滑剤(フランス)",
       "sub_en": "Lubricants (France)",
       "sub_short": "潤滑剤",
-      "sub_short_en": "Lubricants",
+      "sub_short_en": "Lubes",
       "row": 0,
       "relations": [
         {
@@ -130,8 +130,8 @@
       "name_en": "Element Solutions",
       "sub": "特殊化学品",
       "sub_en": "Specialty chemicals",
-      "sub_short": "特殊化学品",
-      "sub_short_en": "Chemicals",
+      "sub_short": "化学品",
+      "sub_short_en": "Chem",
       "row": 1,
       "relations": [
         {

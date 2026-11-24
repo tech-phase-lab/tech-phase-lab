@@ -32,8 +32,8 @@
       "name_en": "Teradyne",
       "sub": "半導体テスト装置",
       "sub_en": "Semiconductor test equipment",
-      "sub_short": "半導体検査",
-      "sub_short_en": "Chip testing",
+      "sub_short": "検査装置",
+      "sub_short_en": "Testing",
       "row": 0,
       "relations": [
         {
@@ -58,8 +58,8 @@
       "name_en": "Martin Marietta Materials",
       "sub": "建設用骨材",
       "sub_en": "Construction aggregates",
-      "sub_short": "建設用骨材",
-      "sub_short_en": "Aggregates",
+      "sub_short": "骨材",
+      "sub_short_en": "Gravel",
       "row": 0,
       "relations": [
         {
@@ -84,8 +84,8 @@
       "name_en": "OneWater Marine",
       "sub": "ボート販売店",
       "sub_en": "Boat dealerships",
-      "sub_short": "ボート販売店",
-      "sub_short_en": "Boat dealerships",
+      "sub_short": "ボート",
+      "sub_short_en": "Boats",
       "row": 0,
       "relations": [
         {
@@ -111,7 +111,7 @@
       "sub": "家具小売",
       "sub_en": "Furniture retail",
       "sub_short": "家具小売",
-      "sub_short_en": "Furniture retail",
+      "sub_short_en": "Furniture",
       "row": 0,
       "relations": [
         {
@@ -163,7 +163,7 @@
       "sub": "教育・メディア・自動車販売",
       "sub_en": "Education, media & auto dealerships",
       "sub_short": "教育",
-      "sub_short_en": "Education, media",
+      "sub_short_en": "Education",
       "row": 0,
       "relations": [
         {
@@ -188,8 +188,8 @@
       "name_en": "Entegris",
       "sub": "半導体材料",
       "sub_en": "Semiconductor materials",
-      "sub_short": "半導体材料",
-      "sub_short_en": "Chip materials",
+      "sub_short": "材料",
+      "sub_short_en": "Materials",
       "row": 1,
       "relations": [
         {
@@ -214,8 +214,8 @@
       "name_en": "Herc Holdings",
       "sub": "建機レンタル",
       "sub_en": "Equipment rental",
-      "sub_short": "建機レンタル",
-      "sub_short_en": "Equipment rental",
+      "sub_short": "建機",
+      "sub_short_en": "Rentals",
       "row": 1,
       "relations": [
         {

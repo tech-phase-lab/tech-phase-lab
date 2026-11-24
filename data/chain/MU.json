@@ -33,7 +33,7 @@
       "sub": "製造装置",
       "sub_en": "Equipment",
       "sub_short": "製造装置",
-      "sub_short_en": "Equipment",
+      "sub_short_en": "Gear",
       "row": 0,
       "relations": [
         {
@@ -57,8 +57,8 @@
       "name": "Rambus",
       "sub": "メモリー用チップ・特許",
       "sub_en": "Memory interface chips & IP",
-      "sub_short": "メモリ用チップ",
-      "sub_short_en": "Memory chips",
+      "sub_short": "メモリ",
+      "sub_short_en": "Memory",
       "row": 0,
       "relations": [
         {
@@ -121,7 +121,7 @@
       "sub": "サーバー・メモリー",
       "sub_en": "Servers & memory",
       "sub_short": "サーバー",
-      "sub_short_en": "Servers & memory",
+      "sub_short_en": "Servers",
       "row": 1,
       "relations": [
         {
@@ -221,7 +221,7 @@
       "sub": "NAND",
       "sub_en": "NAND flash",
       "sub_short": "NAND",
-      "sub_short_en": "NAND flash",
+      "sub_short_en": "NAND",
       "row": 2,
       "relations": [
         {
@@ -246,7 +246,7 @@
       "sub": "NAND",
       "sub_en": "NAND flash",
       "sub_short": "NAND",
-      "sub_short_en": "NAND flash",
+      "sub_short_en": "NAND",
       "row": 2,
       "relations": [
         {

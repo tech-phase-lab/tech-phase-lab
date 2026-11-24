@@ -35,7 +35,7 @@
       "sub": "在宅医療・ホスピス",
       "sub_en": "Home health & hospice",
       "sub_short": "在宅医療",
-      "sub_short_en": "Home health",
+      "sub_short_en": "Care",
       "row": 0,
       "relations": [
         {
@@ -60,8 +60,8 @@
       "name_en": "Pennant Group",
       "sub": "在宅医療・介護",
       "sub_en": "Home health & senior living",
-      "sub_short": "在宅医療・介護",
-      "sub_short_en": "Home health",
+      "sub_short": "在宅医療",
+      "sub_short_en": "Care",
       "row": 0,
       "relations": [
         {
@@ -112,8 +112,8 @@
       "name_en": "Bioventus",
       "sub": "整形外科医療機器",
       "sub_en": "Orthopedic devices",
-      "sub_short": "整形外科機器",
-      "sub_short_en": "Orthopedics",
+      "sub_short": "整形外科",
+      "sub_short_en": "Ortho",
       "row": 1,
       "relations": [
         {
@@ -139,7 +139,7 @@
       "sub": "医療保険(メディケイド)",
       "sub_en": "Health insurance (Medicaid)",
       "sub_short": "医療保険",
-      "sub_short_en": "Health insurance",
+      "sub_short_en": "Health",
       "row": 2,
       "relations": [
         {
@@ -165,7 +165,7 @@
       "sub": "医療保険(メディケア)",
       "sub_en": "Health insurance (Medicare)",
       "sub_short": "医療保険",
-      "sub_short_en": "Health insurance",
+      "sub_short_en": "Health",
       "row": 2,
       "relations": [
         {
@@ -190,7 +190,7 @@
       "name_en": "HealthEquity",
       "sub": "医療貯蓄口座(HSA)",
       "sub_en": "Health savings accounts",
-      "sub_short": "医療貯蓄口座",
+      "sub_short": "医療口座",
       "sub_short_en": "HSAs",
       "row": 2,
       "relations": [
@@ -217,7 +217,7 @@
       "sub": "在宅点滴",
       "sub_en": "Home infusion",
       "sub_short": "在宅点滴",
-      "sub_short_en": "Home infusion",
+      "sub_short_en": "Care",
       "row": 2,
       "relations": [
         {
@@ -242,7 +242,7 @@
       "name_en": "TruBridge",
       "sub": "医療ITサービス",
       "sub_en": "Healthcare IT services",
-      "sub_short": "医療ITサービス",
+      "sub_short": "医療IT",
       "sub_short_en": "Health IT",
       "row": 2,
       "relations": [
@@ -268,8 +268,8 @@
       "name_en": "SS&C Technologies",
       "sub": "金融・医療ソフトウェア",
       "sub_en": "Financial & healthcare software",
-      "sub_short": "業務ソフト",
-      "sub_short_en": "Finance apps",
+      "sub_short": "業務IT",
+      "sub_short_en": "Finance",
       "row": 2,
       "relations": [
         {
@@ -294,8 +294,8 @@
       "name_en": "Astrana Health",
       "sub": "医療グループ",
       "sub_en": "Physician groups",
-      "sub_short": "医療グループ",
-      "sub_short_en": "Physician groups",
+      "sub_short": "医療",
+      "sub_short_en": "Doctors",
       "row": 2,
       "relations": [
         {
@@ -320,8 +320,8 @@
       "name_en": "NeueHealth",
       "sub": "医療サービス",
       "sub_en": "Care delivery",
-      "sub_short": "医療サービス",
-      "sub_short_en": "Care delivery",
+      "sub_short": "医療",
+      "sub_short_en": "Care",
       "row": 2,
       "relations": [
         {

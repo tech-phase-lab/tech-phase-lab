@@ -74,7 +74,7 @@
       "name": "Nebius",
       "sub": "AIクラウド",
       "sub_en": "AI cloud",
-      "sub_short": "AIクラウド",
+      "sub_short": "AI基盤",
       "sub_short_en": "AI cloud",
       "row": 1,
       "relations": [
@@ -101,8 +101,8 @@
       "name": "Equinix",
       "sub": "データセンター",
       "sub_en": "Data centers",
-      "sub_short": "データセンター",
-      "sub_short_en": "Data centers",
+      "sub_short": "DC",
+      "sub_short_en": "DCs",
       "row": 1,
       "relations": [
         {
@@ -126,8 +126,8 @@
       "name": "MiTAC Computing",
       "sub": "AIサーバー製造",
       "sub_en": "AI server maker",
-      "sub_short": "AIサーバー製造",
-      "sub_short_en": "AI server maker",
+      "sub_short": "AI機器",
+      "sub_short_en": "AI servers",
       "row": 1,
       "relations": [
         {
@@ -192,7 +192,7 @@
       "sub": "投資会社",
       "sub_en": "Investment firm",
       "sub_short": "投資会社",
-      "sub_short_en": "Investment firm",
+      "sub_short_en": "Investing",
       "row": 2,
       "relations": [
         {
@@ -231,8 +231,8 @@
       "name": "SoftBank Group",
       "sub": "投資・通信",
       "sub_en": "Investment & telecom",
-      "sub_short": "投資・通信",
-      "sub_short_en": "Investment",
+      "sub_short": "投資",
+      "sub_short_en": "Investing",
       "row": 2,
       "relations": [
         {
@@ -258,7 +258,7 @@
       "name": "CoreWeave",
       "sub": "AIクラウド",
       "sub_en": "AI cloud",
-      "sub_short": "AIクラウド",
+      "sub_short": "AI基盤",
       "sub_short_en": "AI cloud",
       "row": 1,
       "relations": [
@@ -283,8 +283,8 @@
       "name": "NTT DATA",
       "sub": "データセンター",
       "sub_en": "Data centers",
-      "sub_short": "データセンター",
-      "sub_short_en": "Data centers",
+      "sub_short": "DC",
+      "sub_short_en": "DCs",
       "row": 1,
       "relations": [
         {
@@ -309,7 +309,7 @@
       "sub": "電力インフラ工事",
       "sub_en": "Power infrastructure contractor",
       "sub_short": "電力工事",
-      "sub_short_en": "Power works",
+      "sub_short_en": "Grid work",
       "row": 2,
       "relations": [
         {
@@ -333,7 +333,7 @@
       "name": "SK eternix",
       "sub": "エネルギー(韓国)",
       "sub_en": "Energy (Korea)",
-      "sub_short": "エネルギー",
+      "sub_short": "エネ",
       "sub_short_en": "Energy",
       "row": 2,
       "relations": [
@@ -359,7 +359,7 @@
       "sub": "発電機",
       "sub_en": "Generators",
       "sub_short": "発電機",
-      "sub_short_en": "Generators",
+      "sub_short_en": "Gensets",
       "row": 3,
       "relations": [
         {
@@ -383,8 +383,8 @@
       "name": "Capstone Energy Plus",
       "sub": "分散型発電",
       "sub_en": "Distributed generation",
-      "sub_short": "分散型発電",
-      "sub_short_en": "Onsite power",
+      "sub_short": "発電",
+      "sub_short_en": "Power",
       "row": 3,
       "relations": [
         {

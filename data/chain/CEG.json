@@ -61,7 +61,7 @@
       "sub": "SNS・AI",
       "sub_en": "Social & AI",
       "sub_short": "SNS・AI",
-      "sub_short_en": "Social & AI",
+      "sub_short_en": "Social",
       "row": 1,
       "relations": [
         {
@@ -190,7 +190,7 @@
       "sub": "ガス火力・地熱発電",
       "sub_en": "Gas & geothermal power",
       "sub_short": "ガス火力",
-      "sub_short_en": "Gas power",
+      "sub_short_en": "Gas",
       "row": 2,
       "relations": [
         {
@@ -241,8 +241,8 @@
       "name": "Via Renewables",
       "sub": "電力・ガス小売",
       "sub_en": "Retail power & gas",
-      "sub_short": "電力・ガス小売",
-      "sub_short_en": "Retail power",
+      "sub_short": "電力",
+      "sub_short_en": "Power",
       "row": 3,
       "relations": [
         {

@@ -22,8 +22,8 @@
       "name": "サウジアラムコ",
       "sub": "産油・合弁相手",
       "sub_en": "Oil company, JV partner",
-      "sub_short": "産油・合弁相手",
-      "sub_short_en": "Oil company",
+      "sub_short": "石油",
+      "sub_short_en": "Oil",
       "row": 0,
       "relations": [
         {
@@ -61,8 +61,8 @@
       "name": "サダラ・ケミカル",
       "sub": "サウジの合弁化学",
       "sub_en": "Saudi chemicals JV",
-      "sub_short": "サウジ化学合弁",
-      "sub_short_en": "Saudi chem JV",
+      "sub_short": "化学合弁",
+      "sub_short_en": "Chem JV",
       "row": 0,
       "relations": [
         {
@@ -87,8 +87,8 @@
       "name": "イクエート・ペトロケミカル",
       "sub": "クウェートの合弁",
       "sub_en": "Kuwait JV",
-      "sub_short": "クウェート合弁",
-      "sub_short_en": "Kuwait JV",
+      "sub_short": "合弁",
+      "sub_short_en": "JV",
       "row": 0,
       "relations": [
         {
@@ -113,8 +113,8 @@
       "name": "クウェート・スチレン",
       "sub": "スチレンの合弁",
       "sub_en": "Styrene JV",
-      "sub_short": "スチレンの合弁",
-      "sub_short_en": "Styrene JV",
+      "sub_short": "化学合弁",
+      "sub_short_en": "Chem JV",
       "row": 0,
       "relations": [
         {
@@ -140,7 +140,7 @@
       "sub": "タイの合弁グループ",
       "sub_en": "Thailand JV group",
       "sub_short": "タイ合弁",
-      "sub_short_en": "Thailand JV",
+      "sub_short_en": "JV",
       "row": 0,
       "relations": [
         {
@@ -165,8 +165,8 @@
       "name": "マプタプット・オレフィンズ",
       "sub": "タイのオレフィン合弁",
       "sub_en": "Thailand olefins JV",
-      "sub_short": "タイ化学合弁",
-      "sub_short_en": "Thai olefins JV",
+      "sub_short": "タイ合弁",
+      "sub_short_en": "Chem JV",
       "row": 0,
       "relations": [
         {
@@ -191,8 +191,8 @@
       "name": "エクソンモービル",
       "sub": "石化の競合",
       "sub_en": "Petrochemical rival",
-      "sub_short": "石化の競合",
-      "sub_short_en": "Petrochemicals",
+      "sub_short": "石油化学",
+      "sub_short_en": "Petchem",
       "row": 0,
       "relations": [
         {
@@ -217,8 +217,8 @@
       "name": "ライオンデルバセル",
       "sub": "石化の競合",
       "sub_en": "Petrochemical rival",
-      "sub_short": "石化の競合",
-      "sub_short_en": "Petrochemicals",
+      "sub_short": "石油化学",
+      "sub_short_en": "Petchem",
       "row": 0,
       "relations": [
         {
@@ -243,8 +243,8 @@
       "name": "イネオス",
       "sub": "石化の競合",
       "sub_en": "Petrochemical rival",
-      "sub_short": "石化の競合",
-      "sub_short_en": "Petrochemicals",
+      "sub_short": "石油化学",
+      "sub_short_en": "Petchem",
       "row": 0,
       "relations": [
         {
@@ -269,8 +269,8 @@
       "name": "サウジ基礎産業公社(SABIC)",
       "sub": "石化の競合",
       "sub_en": "Petrochemical rival",
-      "sub_short": "石化の競合",
-      "sub_short_en": "Petrochemicals",
+      "sub_short": "石油化学",
+      "sub_short_en": "Petchem",
       "row": 0,
       "relations": [
         {
@@ -295,8 +295,8 @@
       "name": "中国石油化工(シノペック)",
       "sub": "石化の競合",
       "sub_en": "Petrochemical rival",
-      "sub_short": "石化の競合",
-      "sub_short_en": "Petrochemicals",
+      "sub_short": "石油化学",
+      "sub_short_en": "Petchem",
       "row": 0,
       "relations": [
         {
@@ -321,8 +321,8 @@
       "name": "ノバ・ケミカルズ",
       "sub": "石化の競合",
       "sub_en": "Petrochemical rival",
-      "sub_short": "石化の競合",
-      "sub_short_en": "Petrochemicals",
+      "sub_short": "石油化学",
+      "sub_short_en": "Petchem",
       "row": 0,
       "relations": [
         {

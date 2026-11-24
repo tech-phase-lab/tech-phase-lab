@@ -26,7 +26,7 @@
       "sub": "医薬品",
       "sub_en": "Pharmaceuticals",
       "sub_short": "医薬品",
-      "sub_short_en": "Pharmaceuticals",
+      "sub_short_en": "Pharma",
       "row": 0,
       "relations": [
         {
@@ -52,7 +52,7 @@
       "sub": "医薬品(韓国)",
       "sub_en": "Pharmaceuticals (Korea)",
       "sub_short": "医薬品",
-      "sub_short_en": "Pharmaceuticals",
+      "sub_short_en": "Pharma",
       "row": 0,
       "relations": [
         {
@@ -77,7 +77,7 @@
       "name_en": "Bayer",
       "sub": "医薬品・農業(独)",
       "sub_en": "Pharma & crop science (Germany)",
-      "sub_short": "医薬品・農業",
+      "sub_short": "医薬品",
       "sub_short_en": "Pharma",
       "row": 0,
       "relations": [
@@ -104,7 +104,7 @@
       "sub": "核酸医薬・脂質ナノ粒子",
       "sub_en": "RNA & lipid nanoparticles",
       "sub_short": "核酸医薬",
-      "sub_short_en": "RNA drugs",
+      "sub_short_en": "RNA",
       "row": 0,
       "relations": [
         {
@@ -130,7 +130,7 @@
       "sub": "医薬品(スイス)",
       "sub_en": "Pharmaceuticals (Switzerland)",
       "sub_short": "医薬品",
-      "sub_short_en": "Pharmaceuticals",
+      "sub_short_en": "Pharma",
       "row": 1,
       "relations": [
         {
@@ -156,7 +156,7 @@
       "sub": "医薬品",
       "sub_en": "Pharmaceuticals",
       "sub_short": "医薬品",
-      "sub_short_en": "Pharmaceuticals",
+      "sub_short_en": "Pharma",
       "row": 1,
       "relations": [
         {
@@ -182,7 +182,7 @@
       "sub": "医薬品(日本)",
       "sub_en": "Pharmaceuticals (Japan)",
       "sub_short": "医薬品",
-      "sub_short_en": "Pharmaceuticals",
+      "sub_short_en": "Pharma",
       "row": 1,
       "relations": [
         {
@@ -207,8 +207,8 @@
       "name_en": "Editas Medicine",
       "sub": "ゲノム編集",
       "sub_en": "Gene editing",
-      "sub_short": "ゲノム編集",
-      "sub_short_en": "Gene editing",
+      "sub_short": "遺伝子",
+      "sub_short_en": "Genes",
       "row": 1,
       "relations": [
         {
@@ -233,8 +233,8 @@
       "name_en": "Mammoth Biotechnologies",
       "sub": "ゲノム編集",
       "sub_en": "Gene editing",
-      "sub_short": "ゲノム編集",
-      "sub_short_en": "Gene editing",
+      "sub_short": "遺伝子",
+      "sub_short_en": "Genes",
       "row": 1,
       "relations": [
         {

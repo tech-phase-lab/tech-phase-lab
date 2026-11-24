@@ -24,7 +24,7 @@
       "sub": "半導体",
       "sub_en": "Semiconductors",
       "sub_short": "半導体",
-      "sub_short_en": "Semiconductors",
+      "sub_short_en": "Chips",
       "row": 0,
       "relations": [
         {
@@ -170,8 +170,8 @@
       "name": "ナビタス・セミコンダクター",
       "sub": "パワー半導体",
       "sub_en": "Power semiconductors",
-      "sub_short": "パワー半導体",
-      "sub_short_en": "Power chips",
+      "sub_short": "半導体",
+      "sub_short_en": "Power ICs",
       "row": 0,
       "relations": [
         {

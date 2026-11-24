@@ -31,8 +31,8 @@
       "name_en": "Bren-Tronics Defense",
       "sub": "防衛用電池",
       "sub_en": "Defense batteries",
-      "sub_short": "防衛用電池",
-      "sub_short_en": "Defense battery",
+      "sub_short": "防衛電池",
+      "sub_short_en": "Defense",
       "row": 0,
       "relations": [
         {
@@ -84,7 +84,7 @@
       "sub": "鉛蓄電池",
       "sub_en": "Lead-acid batteries",
       "sub_short": "鉛蓄電池",
-      "sub_short_en": "Lead batteries",
+      "sub_short_en": "Batteries",
       "row": 1,
       "relations": [
         {
@@ -109,8 +109,8 @@
       "name_en": "Clarios",
       "sub": "自動車用電池",
       "sub_en": "Automotive batteries",
-      "sub_short": "自動車用電池",
-      "sub_short_en": "Car batteries",
+      "sub_short": "車載電池",
+      "sub_short_en": "Batteries",
       "row": 1,
       "relations": [
         {
@@ -162,7 +162,7 @@
       "sub": "リチウムイオン電池",
       "sub_en": "Lithium-ion batteries",
       "sub_short": "電池",
-      "sub_short_en": "Li-ion batteries",
+      "sub_short_en": "Batteries",
       "row": 2,
       "relations": [
         {
@@ -187,8 +187,8 @@
       "name_en": "Flux Power",
       "sub": "フォークリフト用電池",
       "sub_en": "Forklift batteries",
-      "sub_short": "産業用電池",
-      "sub_short_en": "Forklift battery",
+      "sub_short": "電池",
+      "sub_short_en": "Batteries",
       "row": 2,
       "relations": [
         {

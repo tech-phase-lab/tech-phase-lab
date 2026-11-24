@@ -25,7 +25,7 @@
       "sub": "クラウド・ソフト",
       "sub_en": "Cloud & software",
       "sub_short": "クラウド",
-      "sub_short_en": "Cloud & software",
+      "sub_short_en": "Cloud",
       "row": 0,
       "relations": [
         {
@@ -77,7 +77,7 @@
       "sub": "ネットワーク機器",
       "sub_en": "Networking",
       "sub_short": "通信機器",
-      "sub_short_en": "Networking",
+      "sub_short_en": "Network",
       "row": 0,
       "relations": [
         {
@@ -102,8 +102,8 @@
       "name": "オラクル",
       "sub": "データベース",
       "sub_en": "Database software",
-      "sub_short": "データベース",
-      "sub_short_en": "Databases",
+      "sub_short": "DB",
+      "sub_short_en": "Database",
       "row": 0,
       "relations": [
         {
@@ -129,7 +129,7 @@
       "sub": "ハイパーコンバージド",
       "sub_en": "Hyperconverged",
       "sub_short": "HCI",
-      "sub_short_en": "Hyperconverged",
+      "sub_short_en": "HCI",
       "row": 0,
       "relations": [
         {
@@ -154,8 +154,8 @@
       "name": "コムボルト",
       "sub": "データ保護",
       "sub_en": "Data protection",
-      "sub_short": "データ保護",
-      "sub_short_en": "Data protection",
+      "sub_short": "データ",
+      "sub_short_en": "Backup",
       "row": 0,
       "relations": [
         {
@@ -180,8 +180,8 @@
       "name": "ルーブリック",
       "sub": "データ保護",
       "sub_en": "Data protection",
-      "sub_short": "データ保護",
-      "sub_short_en": "Data protection",
+      "sub_short": "データ",
+      "sub_short_en": "Backup",
       "row": 0,
       "relations": [
         {
@@ -206,8 +206,8 @@
       "name": "デル・テクノロジーズ",
       "sub": "ストレージ競合",
       "sub_en": "Storage rival",
-      "sub_short": "ストレージ競合",
-      "sub_short_en": "Storage rival",
+      "sub_short": "記憶装置",
+      "sub_short_en": "Storage",
       "row": 0,
       "relations": [
         {
@@ -232,8 +232,8 @@
       "name": "ネットアップ",
       "sub": "ストレージ競合",
       "sub_en": "Storage rival",
-      "sub_short": "ストレージ競合",
-      "sub_short_en": "Storage rival",
+      "sub_short": "記憶装置",
+      "sub_short_en": "Storage",
       "row": 0,
       "relations": [
         {
@@ -258,8 +258,8 @@
       "name": "ヒューレット・パッカード・エンタープライズ",
       "sub": "ストレージ競合",
       "sub_en": "Storage rival",
-      "sub_short": "ストレージ競合",
-      "sub_short_en": "Storage rival",
+      "sub_short": "記憶装置",
+      "sub_short_en": "Storage",
       "row": 0,
       "relations": [
         {
@@ -284,7 +284,7 @@
       "name": "アイ・ビー・エム",
       "sub": "ITサービス",
       "sub_en": "IT & cloud",
-      "sub_short": "ITサービス",
+      "sub_short": "IT",
       "sub_short_en": "IT & cloud",
       "row": 0,
       "relations": [

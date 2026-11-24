@@ -26,7 +26,7 @@
       "name": "テンセント",
       "sub": "インターネット・ゲーム",
       "sub_en": "Internet & gaming",
-      "sub_short": "インターネット",
+      "sub_short": "ネット",
       "sub_short_en": "Internet",
       "row": 0,
       "relations": [
@@ -54,8 +54,8 @@
       "name": "Sprout Social",
       "sub": "SNS運用ソフト",
       "sub_en": "Social media software",
-      "sub_short": "SNS運用ソフト",
-      "sub_short_en": "Social media",
+      "sub_short": "SNS管理",
+      "sub_short_en": "Social",
       "row": 0,
       "relations": [
         {
@@ -107,8 +107,8 @@
       "name": "スナップ",
       "sub": "SNS・カメラ",
       "sub_en": "Social & camera",
-      "sub_short": "SNS・カメラ",
-      "sub_short_en": "Social & camera",
+      "sub_short": "SNS",
+      "sub_short_en": "Social",
       "row": 1,
       "relations": [
         {
@@ -134,7 +134,7 @@
       "sub": "画像SNS",
       "sub_en": "Visual social",
       "sub_short": "画像SNS",
-      "sub_short_en": "Visual social",
+      "sub_short_en": "Social",
       "row": 1,
       "relations": [
         {
@@ -159,8 +159,8 @@
       "name": "ロブロックス",
       "sub": "ゲームプラットフォーム",
       "sub_en": "Gaming platform",
-      "sub_short": "ゲーム基盤",
-      "sub_short_en": "Gaming platform",
+      "sub_short": "ゲーム",
+      "sub_short_en": "Games",
       "row": 1,
       "relations": [
         {

@@ -21,7 +21,7 @@
       "sub": "製薬(旧親会社)",
       "sub_en": "Pharmaceuticals (former parent)",
       "sub_short": "製薬",
-      "sub_short_en": "Pharmaceuticals",
+      "sub_short_en": "Pharma",
       "row": 0,
       "relations": [
         {
@@ -46,8 +46,8 @@
       "name_en": "Samsung Bioepis",
       "sub": "バイオシミラー(韓)",
       "sub_en": "Biosimilars (Korea)",
-      "sub_short": "バイオシミラー",
-      "sub_short_en": "Biosimilars",
+      "sub_short": "後続薬",
+      "sub_short_en": "Biosimilar",
       "row": 0,
       "relations": [
         {
@@ -72,8 +72,8 @@
       "name_en": "Shanghai Henlius Biotech",
       "sub": "バイオシミラー(中)",
       "sub_en": "Biosimilars (China)",
-      "sub_short": "バイオシミラー",
-      "sub_short_en": "Biosimilars",
+      "sub_short": "後続薬",
+      "sub_short_en": "Biosimilar",
       "row": 0,
       "relations": [
         {
@@ -98,7 +98,7 @@
       "name_en": "Biogen",
       "sub": "バイオ医薬",
       "sub_en": "Biotech",
-      "sub_short": "バイオ医薬",
+      "sub_short": "バイオ",
       "sub_short_en": "Biotech",
       "row": 0,
       "relations": [
@@ -124,8 +124,8 @@
       "name_en": "Bio-Thera Solutions",
       "sub": "バイオ医薬(中)",
       "sub_en": "Biopharma (China)",
-      "sub_short": "バイオ医薬",
-      "sub_short_en": "Biopharma",
+      "sub_short": "バイオ",
+      "sub_short_en": "Pharma",
       "row": 0,
       "relations": [
         {
@@ -151,7 +151,7 @@
       "sub": "製薬",
       "sub_en": "Pharmaceuticals",
       "sub_short": "製薬",
-      "sub_short_en": "Pharmaceuticals",
+      "sub_short_en": "Pharma",
       "row": 0,
       "relations": [
         {
@@ -176,7 +176,7 @@
       "name_en": "Genentech",
       "sub": "バイオ医薬",
       "sub_en": "Biotech",
-      "sub_short": "バイオ医薬",
+      "sub_short": "バイオ",
       "sub_short_en": "Biotech",
       "row": 0,
       "relations": [
@@ -203,7 +203,7 @@
       "sub": "女性医療",
       "sub_en": "Women's health",
       "sub_short": "女性医療",
-      "sub_short_en": "Women's health",
+      "sub_short_en": "Women",
       "row": 0,
       "relations": [
         {
@@ -228,8 +228,8 @@
       "name_en": "Cirqle Biomedical",
       "sub": "避妊薬開発",
       "sub_en": "Contraceptive R&D",
-      "sub_short": "避妊薬開発",
-      "sub_short_en": "Contraceptives",
+      "sub_short": "避妊薬",
+      "sub_short_en": "Birth ctrl",
       "row": 0,
       "relations": [
         {

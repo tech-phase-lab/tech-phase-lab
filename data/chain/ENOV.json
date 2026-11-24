@@ -33,7 +33,7 @@
       "sub": "人工関節(イタリア)",
       "sub_en": "Orthopedic implants (Italy)",
       "sub_short": "人工関節",
-      "sub_short_en": "Orthopedics",
+      "sub_short_en": "Ortho",
       "row": 0,
       "relations": [
         {
@@ -58,8 +58,8 @@
       "name_en": "Novastep",
       "sub": "足・足首の低侵襲手術",
       "sub_en": "Minimally invasive foot & ankle",
-      "sub_short": "足の手術機器",
-      "sub_short_en": "Foot surgery",
+      "sub_short": "外科機器",
+      "sub_short_en": "Ortho",
       "row": 0,
       "relations": [
         {
@@ -110,8 +110,8 @@
       "name_en": "Materialise",
       "sub": "3Dプリント・医療ソフト",
       "sub_en": "3D printing & medical software",
-      "sub_short": "3Dプリント",
-      "sub_short_en": "3D printing",
+      "sub_short": "3D印刷",
+      "sub_short_en": "3D print",
       "row": 0,
       "relations": [
         {
@@ -137,7 +137,7 @@
       "sub": "医療機器",
       "sub_en": "Medical devices",
       "sub_short": "医療機器",
-      "sub_short_en": "Medical devices",
+      "sub_short_en": "Medtech",
       "row": 1,
       "relations": [
         {
@@ -163,7 +163,7 @@
       "sub": "人工関節",
       "sub_en": "Orthopedics",
       "sub_short": "人工関節",
-      "sub_short_en": "Orthopedics",
+      "sub_short_en": "Ortho",
       "row": 1,
       "relations": [
         {
@@ -189,7 +189,7 @@
       "sub": "医薬品・医療機器",
       "sub_en": "Pharma & medtech",
       "sub_short": "医薬品",
-      "sub_short_en": "Pharma & medtech",
+      "sub_short_en": "Pharma",
       "row": 1,
       "relations": [
         {
@@ -214,8 +214,8 @@
       "name_en": "Treace Medical Concepts",
       "sub": "足の外科機器",
       "sub_en": "Foot surgery devices",
-      "sub_short": "足の外科機器",
-      "sub_short_en": "Foot surgery",
+      "sub_short": "外科機器",
+      "sub_short_en": "Ortho",
       "row": 2,
       "relations": [
         {

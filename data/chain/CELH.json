@@ -36,7 +36,7 @@
       "sub": "飲料缶",
       "sub_en": "Beverage cans",
       "sub_short": "飲料缶",
-      "sub_short_en": "Beverage cans",
+      "sub_short_en": "Cans",
       "row": 0,
       "relations": [
         {
@@ -61,8 +61,8 @@
       "name_en": "PepsiCo",
       "sub": "飲料・食品",
       "sub_en": "Beverages & snacks",
-      "sub_short": "飲料・食品",
-      "sub_short_en": "Beverages",
+      "sub_short": "飲料",
+      "sub_short_en": "Drinks",
       "row": 1,
       "relations": [
         {
@@ -88,7 +88,7 @@
       "sub": "EC",
       "sub_en": "E-commerce",
       "sub_short": "EC",
-      "sub_short_en": "E-commerce",
+      "sub_short_en": "E-com",
       "row": 1,
       "relations": [
         {
@@ -113,8 +113,8 @@
       "name_en": "Alani Nu",
       "sub": "エナジードリンク",
       "sub_en": "Energy drinks",
-      "sub_short": "エナジー飲料",
-      "sub_short_en": "Energy drinks",
+      "sub_short": "飲料",
+      "sub_short_en": "Drinks",
       "row": 2,
       "relations": [
         {
@@ -139,8 +139,8 @@
       "name_en": "Rockstar Energy",
       "sub": "エナジードリンク",
       "sub_en": "Energy drinks",
-      "sub_short": "エナジー飲料",
-      "sub_short_en": "Energy drinks",
+      "sub_short": "飲料",
+      "sub_short_en": "Drinks",
       "row": 2,
       "relations": [
         {
@@ -165,8 +165,8 @@
       "name_en": "Monster Beverage",
       "sub": "エナジードリンク",
       "sub_en": "Energy drinks",
-      "sub_short": "エナジー飲料",
-      "sub_short_en": "Energy drinks",
+      "sub_short": "飲料",
+      "sub_short_en": "Drinks",
       "row": 3,
       "relations": [
         {

@@ -26,8 +26,8 @@
       "name": "コカ・コーラ",
       "sub": "飲料の供給元",
       "sub_en": "Beverage supplier",
-      "sub_short": "飲料の供給元",
-      "sub_short_en": "Beverages",
+      "sub_short": "飲料",
+      "sub_short_en": "Drinks",
       "row": 1,
       "relations": [
         {
@@ -104,8 +104,8 @@
       "name": "ピザハット",
       "sub": "ピザチェーン",
       "sub_en": "Pizza chain",
-      "sub_short": "ピザチェーン",
-      "sub_short_en": "Pizza chain",
+      "sub_short": "ピザ",
+      "sub_short_en": "Pizza",
       "row": 0,
       "relations": [
         {
@@ -130,8 +130,8 @@
       "name": "パパジョンズ",
       "sub": "ピザチェーン",
       "sub_en": "Pizza chain",
-      "sub_short": "ピザチェーン",
-      "sub_short_en": "Pizza chain",
+      "sub_short": "ピザ",
+      "sub_short_en": "Pizza",
       "row": 0,
       "relations": [
         {
@@ -156,8 +156,8 @@
       "name": "リトル・シーザーズ・ピザ",
       "sub": "ピザチェーン",
       "sub_en": "Pizza chain",
-      "sub_short": "ピザチェーン",
-      "sub_short_en": "Pizza chain",
+      "sub_short": "ピザ",
+      "sub_short_en": "Pizza",
       "row": 0,
       "relations": [
         {

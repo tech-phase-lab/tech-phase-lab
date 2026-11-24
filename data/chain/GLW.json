@@ -32,7 +32,7 @@
       "name": "アマゾン",
       "sub": "クラウド・EC",
       "sub_en": "Cloud & e-commerce",
-      "sub_short": "クラウド・EC",
+      "sub_short": "クラウド",
       "sub_short_en": "Cloud",
       "row": 0,
       "relations": [
@@ -97,8 +97,8 @@
       "name": "アップル",
       "sub": "消費者向け機器",
       "sub_en": "Consumer devices",
-      "sub_short": "消費者向け機器",
-      "sub_short_en": "Consumer devices",
+      "sub_short": "家電",
+      "sub_short_en": "Devices",
       "row": 1,
       "relations": [
         {
@@ -123,8 +123,8 @@
       "name": "サムスン電子",
       "sub": "電機・半導体",
       "sub_en": "Electronics & chips",
-      "sub_short": "電機・半導体",
-      "sub_short_en": "Electronics",
+      "sub_short": "電機",
+      "sub_short_en": "Devices",
       "row": 1,
       "relations": [
         {
@@ -193,7 +193,7 @@
       "sub": "コネクタ",
       "sub_en": "Connectors",
       "sub_short": "コネクタ",
-      "sub_short_en": "Connectors",
+      "sub_short_en": "Plugs",
       "row": 2,
       "relations": [
         {
@@ -231,8 +231,8 @@
       "name": "フジクラ",
       "sub": "光ファイバー・ケーブル",
       "sub_en": "Fiber & cable",
-      "sub_short": "光ファイバー",
-      "sub_short_en": "Fiber & cable",
+      "sub_short": "光通信",
+      "sub_short_en": "Fiber",
       "row": 2,
       "relations": [
         {
@@ -283,7 +283,7 @@
       "name": "サーモフィッシャーサイエンティフィック",
       "sub": "ライフサイエンス機器",
       "sub_en": "Life science tools",
-      "sub_short": "生命科学機器",
+      "sub_short": "生命科学",
       "sub_short_en": "Lab tools",
       "row": 2,
       "relations": [
@@ -309,8 +309,8 @@
       "name": "アバンター",
       "sub": "ライフサイエンス資材",
       "sub_en": "Life science supplies",
-      "sub_short": "生命科学資材",
-      "sub_short_en": "Lab supplies",
+      "sub_short": "生命科学",
+      "sub_short_en": "Lab",
       "row": 2,
       "relations": [
         {
@@ -335,8 +335,8 @@
       "name": "オプティカル・ケーブル",
       "sub": "光ファイバーケーブル",
       "sub_en": "Fiber optic cable",
-      "sub_short": "光ファイバー",
-      "sub_short_en": "Fiber cable",
+      "sub_short": "光通信",
+      "sub_short_en": "Fiber",
       "row": 2,
       "relations": [
         {

@@ -24,7 +24,7 @@
       "name": "マルコリン",
       "sub": "アイウェア",
       "sub_en": "Eyewear",
-      "sub_short": "アイウェア",
+      "sub_short": "眼鏡",
       "sub_short_en": "Eyewear",
       "row": 0,
       "relations": [
@@ -50,7 +50,7 @@
       "name": "エルメネジルド・ゼニア",
       "sub": "ファッション",
       "sub_en": "Fashion",
-      "sub_short": "ファッション",
+      "sub_short": "衣料",
       "sub_short_en": "Fashion",
       "row": 0,
       "relations": [
@@ -76,8 +76,8 @@
       "name": "ロレアル",
       "sub": "化粧品大手",
       "sub_en": "Beauty major",
-      "sub_short": "化粧品大手",
-      "sub_short_en": "Beauty major",
+      "sub_short": "化粧品",
+      "sub_short_en": "Beauty",
       "row": 0,
       "relations": [
         {
@@ -102,8 +102,8 @@
       "name": "ユニリーバ",
       "sub": "日用品大手",
       "sub_en": "Consumer goods",
-      "sub_short": "日用品大手",
-      "sub_short_en": "Consumer goods",
+      "sub_short": "日用品",
+      "sub_short_en": "Goods",
       "row": 0,
       "relations": [
         {
@@ -128,8 +128,8 @@
       "name": "プロクター・アンド・ギャンブル",
       "sub": "日用品大手",
       "sub_en": "Consumer goods",
-      "sub_short": "日用品大手",
-      "sub_short_en": "Consumer goods",
+      "sub_short": "日用品",
+      "sub_short_en": "Goods",
       "row": 0,
       "relations": [
         {
@@ -154,7 +154,7 @@
       "name": "モエ ヘネシー・ルイ ヴィトン",
       "sub": "ラグジュアリー",
       "sub_en": "Luxury",
-      "sub_short": "ラグジュアリー",
+      "sub_short": "高級品",
       "sub_short_en": "Luxury",
       "row": 0,
       "relations": [
@@ -180,7 +180,7 @@
       "name": "シャネル",
       "sub": "ラグジュアリー",
       "sub_en": "Luxury",
-      "sub_short": "ラグジュアリー",
+      "sub_short": "高級品",
       "sub_short_en": "Luxury",
       "row": 0,
       "relations": [
@@ -206,7 +206,7 @@
       "name": "バイヤスドルフ",
       "sub": "スキンケア",
       "sub_en": "Skin care",
-      "sub_short": "スキンケア",
+      "sub_short": "化粧品",
       "sub_short_en": "Skin care",
       "row": 0,
       "relations": [
@@ -232,8 +232,8 @@
       "name": "資生堂",
       "sub": "化粧品大手",
       "sub_en": "Beauty major",
-      "sub_short": "化粧品大手",
-      "sub_short_en": "Beauty major",
+      "sub_short": "化粧品",
+      "sub_short_en": "Beauty",
       "row": 0,
       "relations": [
         {
@@ -258,8 +258,8 @@
       "name": "コティ",
       "sub": "香水・化粧品",
       "sub_en": "Fragrance & beauty",
-      "sub_short": "香水・化粧品",
-      "sub_short_en": "Fragrance",
+      "sub_short": "香水",
+      "sub_short_en": "Scents",
       "row": 0,
       "relations": [
         {
@@ -284,8 +284,8 @@
       "name": "プイグ",
       "sub": "香水・化粧品",
       "sub_en": "Fragrance & beauty",
-      "sub_short": "香水・化粧品",
-      "sub_short_en": "Fragrance",
+      "sub_short": "香水",
+      "sub_short_en": "Scents",
       "row": 0,
       "relations": [
         {

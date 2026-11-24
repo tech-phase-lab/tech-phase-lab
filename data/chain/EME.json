@@ -25,8 +25,8 @@
       "name": "APIグループ",
       "sub": "設備・保守",
       "sub_en": "Building services",
-      "sub_short": "設備・保守",
-      "sub_short_en": "Building upkeep",
+      "sub_short": "設備",
+      "sub_short_en": "Facilities",
       "row": 0,
       "relations": [
         {
@@ -64,8 +64,8 @@
       "name": "コンフォート・システムズUSA",
       "sub": "機械設備工事",
       "sub_en": "Mechanical contracting",
-      "sub_short": "機械設備工事",
-      "sub_short_en": "Mechanical work",
+      "sub_short": "設備工事",
+      "sub_short_en": "Plumbing",
       "row": 0,
       "relations": [
         {
@@ -104,7 +104,7 @@
       "sub": "通信インフラ工事",
       "sub_en": "Telecom infrastructure",
       "sub_short": "通信工事",
-      "sub_short_en": "Telecom infra",
+      "sub_short_en": "Telecom",
       "row": 0,
       "relations": [
         {
@@ -129,8 +129,8 @@
       "name": "エバラス・コンストラクション",
       "sub": "電気・機械工事",
       "sub_en": "Electrical & mechanical",
-      "sub_short": "電気・機械工事",
-      "sub_short_en": "Electrical work",
+      "sub_short": "電気工事",
+      "sub_short_en": "Electrical",
       "row": 0,
       "relations": [
         {
@@ -156,7 +156,7 @@
       "sub": "電気工事",
       "sub_en": "Electrical contracting",
       "sub_short": "電気工事",
-      "sub_short_en": "Electrical work",
+      "sub_short_en": "Electrical",
       "row": 0,
       "relations": [
         {
@@ -181,8 +181,8 @@
       "name": "マステック",
       "sub": "インフラ工事",
       "sub_en": "Infrastructure construction",
-      "sub_short": "インフラ工事",
-      "sub_short_en": "Infrastructure",
+      "sub_short": "インフラ",
+      "sub_short_en": "Infra",
       "row": 0,
       "relations": [
         {
@@ -207,8 +207,8 @@
       "name": "MYRグループ",
       "sub": "送配電工事",
       "sub_en": "Electrical construction",
-      "sub_short": "送配電工事",
-      "sub_short_en": "Electrical work",
+      "sub_short": "電力工事",
+      "sub_short_en": "Electrical",
       "row": 0,
       "relations": [
         {
@@ -233,8 +233,8 @@
       "name": "クオンタ・サービシズ",
       "sub": "インフラ工事",
       "sub_en": "Infrastructure construction",
-      "sub_short": "インフラ工事",
-      "sub_short_en": "Infrastructure",
+      "sub_short": "インフラ",
+      "sub_short_en": "Infra",
       "row": 0,
       "relations": [
         {
@@ -260,7 +260,7 @@
       "sub": "建設",
       "sub_en": "Construction",
       "sub_short": "建設",
-      "sub_short_en": "Construction",
+      "sub_short_en": "Building",
       "row": 0,
       "relations": [
         {
@@ -286,7 +286,7 @@
       "sub": "空調機器",
       "sub_en": "HVAC equipment",
       "sub_short": "空調機器",
-      "sub_short_en": "HVAC equipment",
+      "sub_short_en": "HVAC",
       "row": 0,
       "relations": [
         {
@@ -312,7 +312,7 @@
       "sub": "空調機器",
       "sub_en": "HVAC equipment",
       "sub_short": "空調機器",
-      "sub_short_en": "HVAC equipment",
+      "sub_short_en": "HVAC",
       "row": 0,
       "relations": [
         {
@@ -337,8 +337,8 @@
       "name": "フルアー",
       "sub": "エンジニアリング",
       "sub_en": "Engineering",
-      "sub_short": "エンジニア",
-      "sub_short_en": "Engineering",
+      "sub_short": "技術",
+      "sub_short_en": "Design",
       "row": 0,
       "relations": [
         {
@@ -363,8 +363,8 @@
       "name": "CBREグループ",
       "sub": "不動産サービス",
       "sub_en": "Real estate services",
-      "sub_short": "不動産サービス",
-      "sub_short_en": "Real estate",
+      "sub_short": "不動産",
+      "sub_short_en": "Property",
       "row": 0,
       "relations": [
         {

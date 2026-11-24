@@ -31,7 +31,7 @@
       "sub": "自動車",
       "sub_en": "Automaker",
       "sub_short": "自動車",
-      "sub_short_en": "Automaker",
+      "sub_short_en": "Cars",
       "row": 0,
       "relations": [
         {
@@ -70,7 +70,7 @@
       "sub": "自動車",
       "sub_en": "Automaker",
       "sub_short": "自動車",
-      "sub_short_en": "Automaker",
+      "sub_short_en": "Cars",
       "row": 0,
       "relations": [
         {
@@ -95,8 +95,8 @@
       "name_en": "Carvana",
       "sub": "中古車ネット販売",
       "sub_en": "Online used cars",
-      "sub_short": "中古車販売",
-      "sub_short_en": "Online used cars",
+      "sub_short": "中古車",
+      "sub_short_en": "Cars",
       "row": 1,
       "relations": [
         {
@@ -121,8 +121,8 @@
       "name_en": "CarMax",
       "sub": "中古車販売",
       "sub_en": "Used car retail",
-      "sub_short": "中古車販売",
-      "sub_short_en": "Used car retail",
+      "sub_short": "中古車",
+      "sub_short_en": "Cars",
       "row": 1,
       "relations": [
         {
@@ -147,8 +147,8 @@
       "name_en": "Sonic Automotive (EchoPark)",
       "sub": "自動車販売",
       "sub_en": "Auto retail",
-      "sub_short": "自動車販売",
-      "sub_short_en": "Auto retail",
+      "sub_short": "車販売",
+      "sub_short_en": "Car sales",
       "row": 1,
       "relations": [
         {

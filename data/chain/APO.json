@@ -29,8 +29,8 @@
       "name_en": "Athene Holding",
       "sub": "退職年金保険",
       "sub_en": "Retirement insurance",
-      "sub_short": "退職年金保険",
-      "sub_short_en": "Retirement",
+      "sub_short": "年金",
+      "sub_short_en": "Pensions",
       "row": 0,
       "relations": [
         {
@@ -82,7 +82,7 @@
       "sub": "医薬品卸",
       "sub_en": "Drug distribution",
       "sub_short": "医薬品卸",
-      "sub_short_en": "Drug wholesale",
+      "sub_short_en": "Pharma",
       "row": 1,
       "relations": [
         {
@@ -108,7 +108,7 @@
       "sub": "建材流通",
       "sub_en": "Building products distribution",
       "sub_short": "建材流通",
-      "sub_short_en": "Building supply",
+      "sub_short_en": "Building",
       "row": 1,
       "relations": [
         {
@@ -159,8 +159,8 @@
       "name_en": "Sotherly Hotels",
       "sub": "ホテルREIT",
       "sub_en": "Hotel REIT",
-      "sub_short": "ホテルREIT",
-      "sub_short_en": "Hotel REIT",
+      "sub_short": "REIT",
+      "sub_short_en": "REIT",
       "row": 1,
       "relations": [
         {
@@ -185,8 +185,8 @@
       "name_en": "Bridge Investment Group",
       "sub": "不動産運用",
       "sub_en": "Real estate investment manager",
-      "sub_short": "不動産運用",
-      "sub_short_en": "RE investing",
+      "sub_short": "不動産",
+      "sub_short_en": "Property",
       "row": 2,
       "relations": [
         {
@@ -211,8 +211,8 @@
       "name_en": "Trinity Industries",
       "sub": "鉄道車両リース",
       "sub_en": "Railcar leasing",
-      "sub_short": "鉄道車両リース",
-      "sub_short_en": "Railcar leasing",
+      "sub_short": "鉄道車両",
+      "sub_short_en": "Railcars",
       "row": 2,
       "relations": [
         {

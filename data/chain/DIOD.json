@@ -57,8 +57,8 @@
       "name": "テキサス・インスツルメンツ",
       "sub": "アナログ半導体",
       "sub_en": "Analog chips",
-      "sub_short": "アナログ半導体",
-      "sub_short_en": "Analog chips",
+      "sub_short": "アナログ",
+      "sub_short_en": "Analog",
       "row": 1,
       "relations": [
         {
@@ -98,8 +98,8 @@
       "name": "オン・セミコンダクター",
       "sub": "パワー半導体",
       "sub_en": "Power semiconductors",
-      "sub_short": "パワー半導体",
-      "sub_short_en": "Power chips",
+      "sub_short": "半導体",
+      "sub_short_en": "Power ICs",
       "row": 1,
       "relations": [
         {
@@ -139,8 +139,8 @@
       "name": "NXPセミコンダクターズ",
       "sub": "車載・汎用半導体",
       "sub_en": "Automotive & general chips",
-      "sub_short": "車載半導体",
-      "sub_short_en": "Automotive chips",
+      "sub_short": "車載IC",
+      "sub_short_en": "Auto ICs",
       "row": 1,
       "relations": [
         {
@@ -165,8 +165,8 @@
       "name": "サイタイム",
       "sub": "タイミング半導体",
       "sub_en": "Timing chips",
-      "sub_short": "タイミングIC",
-      "sub_short_en": "Timing chips",
+      "sub_short": "半導体",
+      "sub_short_en": "Timing",
       "row": 1,
       "relations": [
         {
@@ -191,8 +191,8 @@
       "name": "アルファ・アンド・オメガ・セミコンダクター",
       "sub": "パワー半導体",
       "sub_en": "Power semiconductors",
-      "sub_short": "パワー半導体",
-      "sub_short_en": "Power chips",
+      "sub_short": "半導体",
+      "sub_short_en": "Power ICs",
       "row": 1,
       "relations": [
         {

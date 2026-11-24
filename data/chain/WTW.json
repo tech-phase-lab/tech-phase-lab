@@ -52,7 +52,7 @@
       "sub": "保険仲介",
       "sub_en": "Insurance broking",
       "sub_short": "保険仲介",
-      "sub_short_en": "Insurance broker",
+      "sub_short_en": "Broker",
       "row": 0,
       "relations": [
         {
@@ -78,7 +78,7 @@
       "sub": "保険仲介",
       "sub_en": "Insurance broking",
       "sub_short": "保険仲介",
-      "sub_short_en": "Insurance broker",
+      "sub_short_en": "Broker",
       "row": 0,
       "relations": [
         {
@@ -103,8 +103,8 @@
       "name": "コグニザント・テクノロジー・ソリューションズ",
       "sub": "ITサービス",
       "sub_en": "IT services",
-      "sub_short": "ITサービス",
-      "sub_short_en": "IT services",
+      "sub_short": "IT",
+      "sub_short_en": "IT",
       "row": 0,
       "relations": [
         {
@@ -155,7 +155,7 @@
       "name": "ロバート・ハーフ",
       "sub": "人材・コンサル",
       "sub_en": "Staffing & consulting",
-      "sub_short": "人材・コンサル",
+      "sub_short": "人材",
       "sub_short_en": "Staffing",
       "row": 0,
       "relations": [
@@ -181,7 +181,7 @@
       "name": "ヘルスエクイティ",
       "sub": "医療費口座",
       "sub_en": "Health spending accounts",
-      "sub_short": "医療費口座",
+      "sub_short": "医療口座",
       "sub_short_en": "HSAs",
       "row": 0,
       "relations": [

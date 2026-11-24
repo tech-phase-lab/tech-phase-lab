@@ -33,7 +33,7 @@
       "name_en": "Yak",
       "sub": "仮設マット・アクセス",
       "sub_en": "Matting & site access",
-      "sub_short": "仮設マット",
+      "sub_short": "仮設",
       "sub_short_en": "Matting",
       "row": 0,
       "relations": [
@@ -59,8 +59,8 @@
       "name_en": "H&E Equipment Services",
       "sub": "建機レンタル",
       "sub_en": "Equipment rental",
-      "sub_short": "建機レンタル",
-      "sub_short_en": "Equipment rental",
+      "sub_short": "建機",
+      "sub_short_en": "Rentals",
       "row": 0,
       "relations": [
         {
@@ -85,8 +85,8 @@
       "name_en": "North American Construction",
       "sub": "鉱山・土木工事",
       "sub_en": "Mining & heavy civil construction",
-      "sub_short": "鉱山・土木工事",
-      "sub_short_en": "Mining & civil",
+      "sub_short": "鉱山",
+      "sub_short_en": "Mining",
       "row": 1,
       "relations": [
         {
@@ -111,8 +111,8 @@
       "name_en": "Sunbelt Rentals",
       "sub": "建機レンタル",
       "sub_en": "Equipment rental",
-      "sub_short": "建機レンタル",
-      "sub_short_en": "Equipment rental",
+      "sub_short": "建機",
+      "sub_short_en": "Rentals",
       "row": 2,
       "relations": [
         {
@@ -137,8 +137,8 @@
       "name_en": "Herc",
       "sub": "建機レンタル",
       "sub_en": "Equipment rental",
-      "sub_short": "建機レンタル",
-      "sub_short_en": "Equipment rental",
+      "sub_short": "建機",
+      "sub_short_en": "Rentals",
       "row": 2,
       "relations": [
         {
@@ -163,8 +163,8 @@
       "name_en": "WillScot",
       "sub": "仮設オフィス・コンテナのレンタル",
       "sub_en": "Modular space & storage rental",
-      "sub_short": "仮設オフィス",
-      "sub_short_en": "Modular space",
+      "sub_short": "仮設",
+      "sub_short_en": "Modular",
       "row": 2,
       "relations": [
         {
@@ -189,8 +189,8 @@
       "name_en": "Xylem",
       "sub": "水処理機器",
       "sub_en": "Water technology",
-      "sub_short": "水処理機器",
-      "sub_short_en": "Water technology",
+      "sub_short": "水処理",
+      "sub_short_en": "Water",
       "row": 2,
       "relations": [
         {
@@ -215,8 +215,8 @@
       "name_en": "NPK International",
       "sub": "複合材マットのレンタル",
       "sub_en": "Composite matting rental",
-      "sub_short": "マットレンタル",
-      "sub_short_en": "Mat rental",
+      "sub_short": "レンタル",
+      "sub_short_en": "Rentals",
       "row": 2,
       "relations": [
         {

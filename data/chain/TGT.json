@@ -19,8 +19,8 @@
       "name": "アップル",
       "sub": "消費者向け提携",
       "sub_en": "Consumer-facing tie",
-      "sub_short": "消費者向け提携",
-      "sub_short_en": "Consumer tie",
+      "sub_short": "消費者",
+      "sub_short_en": "Consumer",
       "row": 0,
       "relations": [
         {
@@ -46,7 +46,7 @@
       "sub": "店内薬局・クリニック",
       "sub_en": "In-store pharmacy",
       "sub_short": "店内薬局",
-      "sub_short_en": "Store pharmacy",
+      "sub_short_en": "Drugstore",
       "row": 0,
       "relations": [
         {
@@ -71,8 +71,8 @@
       "name": "ウォルト・ディズニー",
       "sub": "消費者向け提携",
       "sub_en": "Consumer-facing tie",
-      "sub_short": "消費者向け提携",
-      "sub_short_en": "Consumer tie",
+      "sub_short": "消費者",
+      "sub_short_en": "Consumer",
       "row": 0,
       "relations": [
         {
@@ -97,8 +97,8 @@
       "name": "リーバイ・ストラウス",
       "sub": "消費者向け提携",
       "sub_en": "Consumer-facing tie",
-      "sub_short": "消費者向け提携",
-      "sub_short_en": "Consumer tie",
+      "sub_short": "消費者",
+      "sub_short_en": "Consumer",
       "row": 0,
       "relations": [
         {
@@ -123,8 +123,8 @@
       "name": "スターバックス",
       "sub": "消費者向け提携",
       "sub_en": "Consumer-facing tie",
-      "sub_short": "消費者向け提携",
-      "sub_short_en": "Consumer tie",
+      "sub_short": "消費者",
+      "sub_short_en": "Consumer",
       "row": 0,
       "relations": [
         {
@@ -149,8 +149,8 @@
       "name": "アルタ・ビューティー",
       "sub": "店内ショップ提携",
       "sub_en": "Shop-in-shop partner",
-      "sub_short": "店内ショップ",
-      "sub_short_en": "Shop-in-shop",
+      "sub_short": "店舗",
+      "sub_short_en": "Retail",
       "row": 0,
       "relations": [
         {
@@ -175,8 +175,8 @@
       "name": "TDバンク・グループ",
       "sub": "クレジットカード提携",
       "sub_en": "Credit card partner",
-      "sub_short": "カード提携",
-      "sub_short_en": "Card partner",
+      "sub_short": "カード",
+      "sub_short_en": "Cards",
       "row": 0,
       "relations": [
         {

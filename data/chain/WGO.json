@@ -33,8 +33,8 @@
       "name_en": "LCI Industries",
       "sub": "RV・船舶向け部品",
       "sub_en": "RV & marine components",
-      "sub_short": "RV・船舶部品",
-      "sub_short_en": "RV/marine parts",
+      "sub_short": "RV部品",
+      "sub_short_en": "RV parts",
       "row": 0,
       "relations": [
         {
@@ -59,8 +59,8 @@
       "name_en": "Patrick Industries",
       "sub": "RV・住宅向け部品",
       "sub_en": "RV & housing components",
-      "sub_short": "RV・住宅部品",
-      "sub_short_en": "RV/home parts",
+      "sub_short": "RV部品",
+      "sub_short_en": "RV parts",
       "row": 0,
       "relations": [
         {
@@ -86,7 +86,7 @@
       "sub": "RV販売店",
       "sub_en": "RV dealerships",
       "sub_short": "RV販売店",
-      "sub_short_en": "RV dealerships",
+      "sub_short_en": "RVs",
       "row": 1,
       "relations": [
         {
@@ -137,8 +137,8 @@
       "name_en": "REV Group",
       "sub": "特殊車両・RV",
       "sub_en": "Specialty vehicles & RVs",
-      "sub_short": "特殊車両・RV",
-      "sub_short_en": "Vehicles & RVs",
+      "sub_short": "特殊車両",
+      "sub_short_en": "Vehicles",
       "row": 2,
       "relations": [
         {
@@ -163,8 +163,8 @@
       "name_en": "Fox Factory",
       "sub": "サスペンション・車両改造",
       "sub_en": "Suspension & upfitting",
-      "sub_short": "サスペンション",
-      "sub_short_en": "Suspension",
+      "sub_short": "足回り",
+      "sub_short_en": "Chassis",
       "row": 2,
       "relations": [
         {

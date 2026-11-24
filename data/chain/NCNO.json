@@ -31,7 +31,7 @@
       "sub": "生成AI",
       "sub_en": "Generative AI",
       "sub_short": "生成AI",
-      "sub_short_en": "Generative AI",
+      "sub_short_en": "AI",
       "row": 0,
       "relations": [
         {
@@ -83,7 +83,7 @@
       "sub": "電子署名",
       "sub_en": "E-signature",
       "sub_short": "電子署名",
-      "sub_short_en": "E-signature",
+      "sub_short_en": "E-sign",
       "row": 0,
       "relations": [
         {
@@ -107,8 +107,8 @@
       "name": "Salesforce",
       "sub": "CRM・クラウド",
       "sub_en": "CRM & cloud",
-      "sub_short": "CRM・クラウド",
-      "sub_short_en": "CRM & cloud",
+      "sub_short": "CRM",
+      "sub_short_en": "CRM",
       "row": 0,
       "relations": [
         {
@@ -147,8 +147,8 @@
       "name": "Accenture",
       "sub": "コンサル・SI",
       "sub_en": "Consulting & SI",
-      "sub_short": "コンサル・SI",
-      "sub_short_en": "Consulting & SI",
+      "sub_short": "コンサル",
+      "sub_short_en": "Advisory",
       "row": 0,
       "relations": [
         {
@@ -340,8 +340,8 @@
       "name": "Q2 Holdings",
       "sub": "銀行向けソフト",
       "sub_en": "Banking software",
-      "sub_short": "銀行向けソフト",
-      "sub_short_en": "Banking software",
+      "sub_short": "銀行IT",
+      "sub_short_en": "Bank IT",
       "row": 2,
       "relations": [
         {

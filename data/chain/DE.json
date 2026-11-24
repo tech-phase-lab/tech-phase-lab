@@ -31,7 +31,7 @@
       "sub": "建設機械",
       "sub_en": "Construction machinery",
       "sub_short": "建設機械",
-      "sub_short_en": "Heavy machinery",
+      "sub_short_en": "Machines",
       "row": 0,
       "relations": [
         {
@@ -69,8 +69,8 @@
       "name": "キャタピラー",
       "sub": "建機・エンジン",
       "sub_en": "Construction machinery & engines",
-      "sub_short": "建機・エンジン",
-      "sub_short_en": "Heavy machinery",
+      "sub_short": "建機",
+      "sub_short_en": "Machines",
       "row": 1,
       "relations": [
         {
@@ -95,8 +95,8 @@
       "name": "CNHインダストリアル",
       "sub": "建機・農機",
       "sub_en": "Construction & farm equipment",
-      "sub_short": "建機・農機",
-      "sub_short_en": "Construction",
+      "sub_short": "建機",
+      "sub_short_en": "Building",
       "row": 1,
       "relations": [
         {
@@ -122,7 +122,7 @@
       "sub": "農業機械",
       "sub_en": "Agricultural machinery",
       "sub_short": "農業機械",
-      "sub_short_en": "Farm machinery",
+      "sub_short_en": "Farm",
       "row": 1,
       "relations": [
         {
@@ -160,8 +160,8 @@
       "name": "トロ",
       "sub": "芝生・景観機器",
       "sub_en": "Turf & landscape equipment",
-      "sub_short": "芝生・景観機器",
-      "sub_short_en": "Turf equipment",
+      "sub_short": "芝刈機",
+      "sub_short_en": "Mowers",
       "row": 1,
       "relations": [
         {
@@ -186,8 +186,8 @@
       "name": "クボタ",
       "sub": "農機・建機",
       "sub_en": "Farm & construction equipment",
-      "sub_short": "農機・建機",
-      "sub_short_en": "Farm equipment",
+      "sub_short": "農機",
+      "sub_short_en": "Farm",
       "row": 1,
       "relations": [
         {
@@ -213,7 +213,7 @@
       "sub": "建設機械",
       "sub_en": "Construction machinery",
       "sub_short": "建設機械",
-      "sub_short_en": "Heavy machinery",
+      "sub_short_en": "Machines",
       "row": 1,
       "relations": [
         {
@@ -239,7 +239,7 @@
       "sub": "建設機械",
       "sub_en": "Construction machinery",
       "sub_short": "建設機械",
-      "sub_short_en": "Heavy machinery",
+      "sub_short_en": "Machines",
       "row": 1,
       "relations": [
         {
@@ -264,8 +264,8 @@
       "name": "テレックス",
       "sub": "建設・荷役機械",
       "sub_en": "Construction & handling machinery",
-      "sub_short": "建設・荷役機械",
-      "sub_short_en": "Construction",
+      "sub_short": "建機",
+      "sub_short_en": "Building",
       "row": 1,
       "relations": [
         {
@@ -291,7 +291,7 @@
       "sub": "ホイール・タイヤ",
       "sub_en": "Wheels & tires",
       "sub_short": "ホイール",
-      "sub_short_en": "Wheels & tires",
+      "sub_short_en": "Wheels",
       "row": 0,
       "relations": [
         {
@@ -316,7 +316,7 @@
       "name": "アトマス・フィルトレーション",
       "sub": "フィルター",
       "sub_en": "Filtration",
-      "sub_short": "フィルター",
+      "sub_short": "ろ過",
       "sub_short_en": "Filtration",
       "row": 0,
       "relations": [

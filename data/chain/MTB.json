@@ -19,7 +19,7 @@
       "name": "ベイビュー・ファイナンシャル",
       "sub": "特化型金融",
       "sub_en": "Specialty finance",
-      "sub_short": "特化型金融",
+      "sub_short": "金融",
       "sub_short_en": "Finance",
       "row": 0,
       "relations": [
@@ -45,8 +45,8 @@
       "name": "ベイビュー・レンディング・グループ",
       "sub": "商業用不動産融資",
       "sub_en": "Commercial mortgage",
-      "sub_short": "不動産融資",
-      "sub_short_en": "CRE lending",
+      "sub_short": "不動産",
+      "sub_short_en": "Lending",
       "row": 0,
       "relations": [
         {
@@ -72,7 +72,7 @@
       "sub": "住宅金融",
       "sub_en": "Housing finance",
       "sub_short": "住宅金融",
-      "sub_short_en": "Housing finance",
+      "sub_short_en": "Mortgage",
       "row": 0,
       "relations": [
         {
@@ -98,7 +98,7 @@
       "sub": "住宅金融",
       "sub_en": "Housing finance",
       "sub_short": "住宅金融",
-      "sub_short_en": "Housing finance",
+      "sub_short_en": "Mortgage",
       "row": 0,
       "relations": [
         {

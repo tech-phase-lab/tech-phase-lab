@@ -32,7 +32,7 @@
       "sub": "ストリーミング機器",
       "sub_en": "Streaming devices",
       "sub_short": "配信機器",
-      "sub_short_en": "Streaming gear",
+      "sub_short_en": "Video",
       "row": 0,
       "relations": [
         {
@@ -97,8 +97,8 @@
       "name": "エイブリィ・デニソン",
       "sub": "ラベル・RFID",
       "sub_en": "Labels & RFID",
-      "sub_short": "ラベル・RFID",
-      "sub_short_en": "Labels & RFID",
+      "sub_short": "ラベル",
+      "sub_short_en": "Labels",
       "row": 0,
       "relations": [
         {
@@ -123,8 +123,8 @@
       "name": "シンボティック",
       "sub": "物流ロボット",
       "sub_en": "Warehouse robotics",
-      "sub_short": "物流ロボット",
-      "sub_short_en": "Warehouse robots",
+      "sub_short": "ロボット",
+      "sub_short_en": "Robots",
       "row": 0,
       "relations": [
         {
@@ -176,7 +176,7 @@
       "sub": "ソフト・クラウド",
       "sub_en": "Software & cloud",
       "sub_short": "ソフト",
-      "sub_short_en": "Software & cloud",
+      "sub_short_en": "Software",
       "row": 0,
       "relations": [
         {
@@ -203,8 +203,8 @@
       "name": "シンクロニー",
       "sub": "消費者金融",
       "sub_en": "Consumer finance",
-      "sub_short": "消費者金融",
-      "sub_short_en": "Consumer finance",
+      "sub_short": "金融",
+      "sub_short_en": "Finance",
       "row": 1,
       "relations": [
         {
@@ -231,8 +231,8 @@
       "name": "Google(Alphabet)",
       "sub": "検索・クラウド",
       "sub_en": "Search & cloud",
-      "sub_short": "検索・クラウド",
-      "sub_short_en": "Search & cloud",
+      "sub_short": "検索",
+      "sub_short_en": "Search",
       "row": 1,
       "relations": [
         {
@@ -256,7 +256,7 @@
       "sub": "生成AI",
       "sub_en": "Generative AI",
       "sub_short": "生成AI",
-      "sub_short_en": "Generative AI",
+      "sub_short_en": "AI",
       "row": 1,
       "relations": [
         {
@@ -282,7 +282,7 @@
       "sub": "中国EC",
       "sub_en": "China e-commerce",
       "sub_short": "中国EC",
-      "sub_short_en": "China e-commerce",
+      "sub_short_en": "E-com",
       "row": 1,
       "relations": [
         {
@@ -308,8 +308,8 @@
       "name": "コストコ",
       "sub": "会員制小売",
       "sub_en": "Warehouse clubs",
-      "sub_short": "会員制小売",
-      "sub_short_en": "Warehouse clubs",
+      "sub_short": "量販店",
+      "sub_short_en": "Clubs",
       "row": 2,
       "relations": [
         {

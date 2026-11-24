@@ -35,7 +35,7 @@
       "name_en": "Wheaton Precious Metals",
       "sub": "ストリーム",
       "sub_en": "Streams",
-      "sub_short": "ストリーム",
+      "sub_short": "権益",
       "sub_short_en": "Streams",
       "row": 0,
       "relations": [
@@ -61,7 +61,7 @@
       "name_en": "OR Royalties (Osisko Gold Royalties)",
       "sub": "ロイヤルティ",
       "sub_en": "Royalties",
-      "sub_short": "ロイヤルティ",
+      "sub_short": "権益",
       "sub_short_en": "Royalties",
       "row": 0,
       "relations": [
@@ -88,7 +88,7 @@
       "sub": "銀鉱山",
       "sub_en": "Silver mining",
       "sub_short": "銀鉱山",
-      "sub_short_en": "Silver mining",
+      "sub_short_en": "Silver",
       "row": 1,
       "relations": [
         {
@@ -140,7 +140,7 @@
       "sub": "金銀鉱山",
       "sub_en": "Gold & silver mining",
       "sub_short": "金銀鉱山",
-      "sub_short_en": "Gold mining",
+      "sub_short_en": "Gold",
       "row": 1,
       "relations": [
         {
@@ -166,7 +166,7 @@
       "sub": "銀鉱山",
       "sub_en": "Silver mining",
       "sub_short": "銀鉱山",
-      "sub_short_en": "Silver mining",
+      "sub_short_en": "Silver",
       "row": 2,
       "relations": [
         {
@@ -205,7 +205,7 @@
       "sub": "金開発",
       "sub_en": "Gold development",
       "sub_short": "金開発",
-      "sub_short_en": "Gold development",
+      "sub_short_en": "Gold",
       "row": 2,
       "relations": [
         {
@@ -230,7 +230,7 @@
       "name_en": "Metalla Royalty & Streaming",
       "sub": "ロイヤルティ",
       "sub_en": "Royalties",
-      "sub_short": "ロイヤルティ",
+      "sub_short": "権益",
       "sub_short_en": "Royalties",
       "row": 2,
       "relations": [
@@ -257,7 +257,7 @@
       "sub": "銀探鉱(メキシコ)",
       "sub_en": "Silver exploration (Mexico)",
       "sub_short": "銀探鉱",
-      "sub_short_en": "Silver mining",
+      "sub_short_en": "Silver",
       "row": 3,
       "relations": [
         {

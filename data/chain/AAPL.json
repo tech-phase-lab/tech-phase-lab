@@ -137,7 +137,7 @@
       "sub": "製造装置",
       "sub_en": "Equipment",
       "sub_short": "製造装置",
-      "sub_short_en": "Equipment",
+      "sub_short_en": "Gear",
       "row": 0,
       "relations": [
         {
@@ -162,7 +162,7 @@
       "sub": "後工程",
       "sub_en": "Packaging & test",
       "sub_short": "後工程",
-      "sub_short_en": "Packaging & test",
+      "sub_short_en": "Chip pack",
       "row": 0,
       "relations": [
         {
@@ -211,8 +211,8 @@
       "name": "Cirrus Logic",
       "sub": "音声用半導体",
       "sub_en": "Audio chips",
-      "sub_short": "音声用半導体",
-      "sub_short_en": "Audio chips",
+      "sub_short": "音声IC",
+      "sub_short_en": "Audio ICs",
       "row": 0,
       "relations": [
         {
@@ -263,8 +263,8 @@
       "name": "MP Materials",
       "sub": "レアアース",
       "sub_en": "Rare earths",
-      "sub_short": "レアアース",
-      "sub_short_en": "Rare earths",
+      "sub_short": "希土類",
+      "sub_short_en": "Minerals",
       "row": 1,
       "relations": [
         {
@@ -288,8 +288,8 @@
       "name": "Coherent",
       "sub": "レーザー部品",
       "sub_en": "Laser components",
-      "sub_short": "レーザー部品",
-      "sub_short_en": "Laser components",
+      "sub_short": "レーザー",
+      "sub_short_en": "Lasers",
       "row": 1,
       "relations": [
         {
@@ -314,7 +314,7 @@
       "sub": "電子部品",
       "sub_en": "Electronic components",
       "sub_short": "電子部品",
-      "sub_short_en": "Components",
+      "sub_short_en": "Parts",
       "row": 1,
       "relations": [
         {
@@ -339,7 +339,7 @@
       "sub": "衛星通信",
       "sub_en": "Satellite connectivity",
       "sub_short": "衛星通信",
-      "sub_short_en": "Satellite links",
+      "sub_short_en": "Satcom",
       "row": 1,
       "relations": [
         {
@@ -364,7 +364,7 @@
       "sub": "検索・AI",
       "sub_en": "Search & AI",
       "sub_short": "検索・AI",
-      "sub_short_en": "Search & AI",
+      "sub_short_en": "Search",
       "row": 2,
       "relations": [
         {
@@ -485,7 +485,7 @@
       "sub": "音楽配信",
       "sub_en": "Audio streaming",
       "sub_short": "音楽配信",
-      "sub_short_en": "Audio streaming",
+      "sub_short_en": "Audio",
       "row": 3,
       "relations": [
         {
@@ -509,8 +509,8 @@
       "name": "Garmin",
       "sub": "スポーツウォッチ",
       "sub_en": "Sports watches",
-      "sub_short": "スポーツ時計",
-      "sub_short_en": "Sports watches",
+      "sub_short": "時計",
+      "sub_short_en": "Watches",
       "row": 3,
       "relations": [
         {
@@ -535,7 +535,7 @@
       "sub": "動画端末",
       "sub_en": "Streaming devices",
       "sub_short": "動画端末",
-      "sub_short_en": "Streaming gear",
+      "sub_short_en": "Video",
       "row": 3,
       "relations": [
         {
@@ -559,8 +559,8 @@
       "name": "Texas Instruments",
       "sub": "アナログ半導体",
       "sub_en": "Analog chips",
-      "sub_short": "アナログ半導体",
-      "sub_short_en": "Analog chips",
+      "sub_short": "アナログ",
+      "sub_short_en": "Analog",
       "row": 0,
       "relations": [
         {
@@ -585,7 +585,7 @@
       "sub": "シリコンウエハー",
       "sub_en": "Silicon wafers",
       "sub_short": "ウエハー",
-      "sub_short_en": "Silicon wafers",
+      "sub_short_en": "Wafers",
       "row": 1,
       "relations": [
         {
@@ -611,7 +611,7 @@
       "name": "Skyworks Solutions",
       "sub": "通信半導体",
       "sub_en": "RF chips",
-      "sub_short": "通信半導体",
+      "sub_short": "通信IC",
       "sub_short_en": "RF chips",
       "row": 1,
       "relations": [
@@ -664,7 +664,7 @@
       "sub": "SNS",
       "sub_en": "Social media",
       "sub_short": "SNS",
-      "sub_short_en": "Social media",
+      "sub_short_en": "Social",
       "row": 3,
       "relations": [
         {

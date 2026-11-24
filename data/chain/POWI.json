@@ -124,8 +124,8 @@
       "name": "ナビタス・セミコンダクター",
       "sub": "GaN電源IC",
       "sub_en": "GaN power ICs",
-      "sub_short": "GaN電源IC",
-      "sub_short_en": "GaN power ICs",
+      "sub_short": "GaN",
+      "sub_short_en": "GaN",
       "row": 2,
       "relations": [
         {
@@ -164,7 +164,7 @@
       "sub": "半導体",
       "sub_en": "Semiconductors",
       "sub_short": "半導体",
-      "sub_short_en": "Semiconductors",
+      "sub_short_en": "Chips",
       "row": 2,
       "relations": [
         {
@@ -202,8 +202,8 @@
       "name": "テキサス・インスツルメンツ",
       "sub": "アナログ半導体",
       "sub_en": "Analog chips",
-      "sub_short": "アナログ半導体",
-      "sub_short_en": "Analog chips",
+      "sub_short": "アナログ",
+      "sub_short_en": "Analog",
       "row": 2,
       "relations": [
         {
@@ -229,7 +229,7 @@
       "sub": "電機",
       "sub_en": "Electric equipment",
       "sub_short": "電機",
-      "sub_short_en": "Electrical gear",
+      "sub_short_en": "Electrical",
       "row": 2,
       "relations": [
         {

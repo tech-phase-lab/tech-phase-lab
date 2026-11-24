@@ -31,8 +31,8 @@
       "name": "オーウェンズ・イリノイ",
       "sub": "ガラス容器",
       "sub_en": "Glass containers",
-      "sub_short": "ガラス容器",
-      "sub_short_en": "Glass containers",
+      "sub_short": "ガラス瓶",
+      "sub_short_en": "Glass",
       "row": 0,
       "relations": [
         {
@@ -71,7 +71,7 @@
       "sub": "酒類卸売",
       "sub_en": "Alcohol distribution",
       "sub_short": "酒類卸売",
-      "sub_short_en": "Alcohol distrib.",
+      "sub_short_en": "Alcohol",
       "row": 1,
       "relations": [
         {

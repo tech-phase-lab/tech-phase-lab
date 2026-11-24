@@ -20,7 +20,7 @@
       "sub": "音楽配信",
       "sub_en": "Music streaming",
       "sub_short": "音楽配信",
-      "sub_short_en": "Music streaming",
+      "sub_short_en": "Music",
       "row": 0,
       "relations": [
         {
@@ -45,8 +45,8 @@
       "name": "アルファベット",
       "sub": "動画・音楽配信",
       "sub_en": "Video & music streaming",
-      "sub_short": "動画・音楽配信",
-      "sub_short_en": "Streaming",
+      "sub_short": "動画配信",
+      "sub_short_en": "Video",
       "row": 0,
       "relations": [
         {
@@ -72,7 +72,7 @@
       "sub": "音楽配信",
       "sub_en": "Music streaming",
       "sub_short": "音楽配信",
-      "sub_short_en": "Music streaming",
+      "sub_short_en": "Music",
       "row": 0,
       "relations": [
         {
@@ -98,7 +98,7 @@
       "sub": "音楽配信",
       "sub_en": "Music streaming",
       "sub_short": "音楽配信",
-      "sub_short_en": "Music streaming",
+      "sub_short_en": "Music",
       "row": 0,
       "relations": [
         {
@@ -124,7 +124,7 @@
       "sub": "音楽配信",
       "sub_en": "Music streaming",
       "sub_short": "音楽配信",
-      "sub_short_en": "Music streaming",
+      "sub_short_en": "Music",
       "row": 0,
       "relations": [
         {
@@ -150,7 +150,7 @@
       "sub": "音楽配信",
       "sub_en": "Music streaming",
       "sub_short": "音楽配信",
-      "sub_short_en": "Music streaming",
+      "sub_short_en": "Music",
       "row": 0,
       "relations": [
         {
@@ -175,8 +175,8 @@
       "name": "ユニバーサル・ミュージック・グループ",
       "sub": "大手レーベル",
       "sub_en": "Major label",
-      "sub_short": "大手レーベル",
-      "sub_short_en": "Major label",
+      "sub_short": "レーベル",
+      "sub_short_en": "Music",
       "row": 0,
       "relations": [
         {
@@ -201,8 +201,8 @@
       "name": "ソニーグループ",
       "sub": "大手レーベル",
       "sub_en": "Major label",
-      "sub_short": "大手レーベル",
-      "sub_short_en": "Major label",
+      "sub_short": "レーベル",
+      "sub_short_en": "Music",
       "row": 0,
       "relations": [
         {

@@ -25,7 +25,7 @@
       "sub": "製薬",
       "sub_en": "Pharmaceuticals",
       "sub_short": "製薬",
-      "sub_short_en": "Pharmaceuticals",
+      "sub_short_en": "Pharma",
       "row": 0,
       "relations": [
         {
@@ -51,7 +51,7 @@
       "sub": "製薬",
       "sub_en": "Pharmaceuticals",
       "sub_short": "製薬",
-      "sub_short_en": "Pharmaceuticals",
+      "sub_short_en": "Pharma",
       "row": 0,
       "relations": [
         {
@@ -76,8 +76,8 @@
       "name_en": "Palvella Therapeutics",
       "sub": "皮膚疾患薬",
       "sub_en": "Dermatology drugs",
-      "sub_short": "皮膚疾患薬",
-      "sub_short_en": "Dermatology",
+      "sub_short": "皮膚薬",
+      "sub_short_en": "Skin",
       "row": 0,
       "relations": [
         {
@@ -102,8 +102,8 @@
       "name_en": "Alvogen / Adalvo",
       "sub": "後発医薬品",
       "sub_en": "Generic drugs",
-      "sub_short": "後発医薬品",
-      "sub_short_en": "Generic drugs",
+      "sub_short": "後発薬",
+      "sub_short_en": "Generics",
       "row": 0,
       "relations": [
         {
@@ -129,7 +129,7 @@
       "sub": "呼吸器薬",
       "sub_en": "Respiratory drugs",
       "sub_short": "呼吸器薬",
-      "sub_short_en": "Lung drugs",
+      "sub_short_en": "Lung",
       "row": 0,
       "relations": [
         {
@@ -154,8 +154,8 @@
       "name_en": "Orchestra BioMed",
       "sub": "循環器医療機器",
       "sub_en": "Cardiology devices",
-      "sub_short": "循環器医療機器",
-      "sub_short_en": "Cardiology",
+      "sub_short": "循環器",
+      "sub_short_en": "Cardiac",
       "row": 1,
       "relations": [
         {
@@ -180,8 +180,8 @@
       "name_en": "Agenus",
       "sub": "がん免疫薬",
       "sub_en": "Immuno-oncology",
-      "sub_short": "がん免疫薬",
-      "sub_short_en": "Immuno-oncology",
+      "sub_short": "がん免疫",
+      "sub_short_en": "Oncology",
       "row": 1,
       "relations": [
         {
@@ -206,8 +206,8 @@
       "name_en": "Apeiron Biologics",
       "sub": "希少がん薬",
       "sub_en": "Rare cancer drugs",
-      "sub_short": "希少がん薬",
-      "sub_short_en": "Rare cancers",
+      "sub_short": "がん薬",
+      "sub_short_en": "Oncology",
       "row": 1,
       "relations": [
         {
@@ -233,7 +233,7 @@
       "sub": "製剤技術(英)",
       "sub_en": "Formulation technology (UK)",
       "sub_short": "製剤技術",
-      "sub_short_en": "Formulation",
+      "sub_short_en": "Pharma",
       "row": 1,
       "relations": [
         {
@@ -258,8 +258,8 @@
       "name_en": "Pelthos Therapeutics",
       "sub": "皮膚疾患薬",
       "sub_en": "Dermatology drugs",
-      "sub_short": "皮膚疾患薬",
-      "sub_short_en": "Dermatology",
+      "sub_short": "皮膚薬",
+      "sub_short_en": "Skin",
       "row": 1,
       "relations": [
         {

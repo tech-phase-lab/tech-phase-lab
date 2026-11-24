@@ -19,8 +19,8 @@
       "name": "アルティス・ユーエスエー",
       "sub": "ケーブル配信事業者",
       "sub_en": "Cable distributor",
-      "sub_short": "ケーブル配信",
-      "sub_short_en": "Cable distrib.",
+      "sub_short": "ケーブル",
+      "sub_short_en": "Cables",
       "row": 0,
       "relations": [
         {
@@ -45,8 +45,8 @@
       "name": "コムキャスト",
       "sub": "ケーブル配信事業者",
       "sub_en": "Cable distributor",
-      "sub_short": "ケーブル配信",
-      "sub_short_en": "Cable distrib.",
+      "sub_short": "ケーブル",
+      "sub_short_en": "Cables",
       "row": 0,
       "relations": [
         {
@@ -97,7 +97,7 @@
       "name": "MSGエンターテインメント",
       "sub": "興行・会場運営",
       "sub_en": "Venues & entertainment",
-      "sub_short": "興行・会場運営",
+      "sub_short": "興行",
       "sub_short_en": "Venues",
       "row": 0,
       "relations": [

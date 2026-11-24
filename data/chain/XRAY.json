@@ -29,7 +29,7 @@
       "sub": "歯科・医療用品の流通",
       "sub_en": "Dental & medical distribution",
       "sub_short": "歯科",
-      "sub_short_en": "Dental supply",
+      "sub_short_en": "Dental",
       "row": 0,
       "relations": [
         {
@@ -67,8 +67,8 @@
       "name_en": "Patterson Companies",
       "sub": "歯科用品の流通",
       "sub_en": "Dental distribution",
-      "sub_short": "歯科用品の流通",
-      "sub_short_en": "Dental supply",
+      "sub_short": "歯科",
+      "sub_short_en": "Dental",
       "row": 0,
       "relations": [
         {
@@ -93,8 +93,8 @@
       "name_en": "Solventum",
       "sub": "医療・口腔ケア製品",
       "sub_en": "Healthcare & oral care",
-      "sub_short": "医療・口腔ケア",
-      "sub_short_en": "Healthcare",
+      "sub_short": "医療",
+      "sub_short_en": "Health",
       "row": 1,
       "relations": [
         {
@@ -119,8 +119,8 @@
       "name_en": "ZimVie",
       "sub": "歯科インプラント",
       "sub_en": "Dental implants",
-      "sub_short": "インプラント",
-      "sub_short_en": "Dental implants",
+      "sub_short": "埋込機器",
+      "sub_short_en": "Dental",
       "row": 1,
       "relations": [
         {
@@ -146,7 +146,7 @@
       "sub": "マウスピース矯正",
       "sub_en": "Clear aligners",
       "sub_short": "歯科矯正",
-      "sub_short_en": "Clear aligners",
+      "sub_short_en": "Aligners",
       "row": 1,
       "relations": [
         {
@@ -171,8 +171,8 @@
       "name_en": "Milestone Scientific",
       "sub": "歯科用麻酔器",
       "sub_en": "Dental anesthetic delivery",
-      "sub_short": "歯科用麻酔器",
-      "sub_short_en": "Dental devices",
+      "sub_short": "歯科",
+      "sub_short_en": "Dental",
       "row": 1,
       "relations": [
         {

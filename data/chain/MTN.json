@@ -106,7 +106,7 @@
       "name_en": "IKON Pass",
       "sub": "複数リゾート共通パス",
       "sub_en": "Multi-resort pass",
-      "sub_short": "リゾートパス",
+      "sub_short": "リゾート",
       "sub_short_en": "Ski pass",
       "row": 1,
       "relations": [
@@ -132,7 +132,7 @@
       "name_en": "Indy Pass",
       "sub": "複数リゾート共通パス",
       "sub_en": "Multi-resort pass",
-      "sub_short": "リゾートパス",
+      "sub_short": "リゾート",
       "sub_short_en": "Ski pass",
       "row": 1,
       "relations": [
@@ -158,7 +158,7 @@
       "name_en": "Aspen Snowmass",
       "sub": "スキーリゾート",
       "sub_en": "Ski resort",
-      "sub_short": "スキーリゾート",
+      "sub_short": "スキー場",
       "sub_short_en": "Ski resort",
       "row": 1,
       "relations": [
@@ -184,7 +184,7 @@
       "name_en": "Jackson Hole",
       "sub": "スキーリゾート",
       "sub_en": "Ski resort",
-      "sub_short": "スキーリゾート",
+      "sub_short": "スキー場",
       "sub_short_en": "Ski resort",
       "row": 1,
       "relations": [
@@ -210,7 +210,7 @@
       "name_en": "Killington",
       "sub": "スキーリゾート",
       "sub_en": "Ski resort",
-      "sub_short": "スキーリゾート",
+      "sub_short": "スキー場",
       "sub_short_en": "Ski resort",
       "row": 1,
       "relations": [
@@ -236,7 +236,7 @@
       "name_en": "Zermatt",
       "sub": "スキーリゾート(スイス)",
       "sub_en": "Ski resort (Switzerland)",
-      "sub_short": "スキーリゾート",
+      "sub_short": "スキー場",
       "sub_short_en": "Ski resort",
       "row": 1,
       "relations": [

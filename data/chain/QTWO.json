@@ -34,8 +34,8 @@
       "name": "Salesforce",
       "sub": "業務ソフト",
       "sub_en": "Business software",
-      "sub_short": "業務ソフト",
-      "sub_short_en": "Business apps",
+      "sub_short": "業務IT",
+      "sub_short_en": "Biz apps",
       "row": 0,
       "relations": [
         {
@@ -128,7 +128,7 @@
       "name": "フィサーブ",
       "sub": "金融システム",
       "sub_en": "Financial technology",
-      "sub_short": "金融システム",
+      "sub_short": "金融IT",
       "sub_short_en": "Fintech",
       "row": 2,
       "relations": [
@@ -167,7 +167,7 @@
       "name": "フィデリティ・ナショナル・インフォメーション・サービシーズ",
       "sub": "金融システム",
       "sub_en": "Financial technology",
-      "sub_short": "金融システム",
+      "sub_short": "金融IT",
       "sub_short_en": "Fintech",
       "row": 2,
       "relations": [
@@ -193,7 +193,7 @@
       "name": "ジャック・ヘンリー",
       "sub": "金融システム",
       "sub_en": "Financial technology",
-      "sub_short": "金融システム",
+      "sub_short": "金融IT",
       "sub_short_en": "Fintech",
       "row": 2,
       "relations": [
@@ -219,8 +219,8 @@
       "name": "アルカミ・テクノロジー",
       "sub": "デジタルバンキング",
       "sub_en": "Digital banking",
-      "sub_short": "ネット銀行",
-      "sub_short_en": "Digital banking",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
       "row": 2,
       "relations": [
         {
@@ -245,8 +245,8 @@
       "name": "nCino",
       "sub": "銀行向けソフト",
       "sub_en": "Banking software",
-      "sub_short": "銀行向けソフト",
-      "sub_short_en": "Banking software",
+      "sub_short": "銀行IT",
+      "sub_short_en": "Bank IT",
       "row": 2,
       "relations": [
         {
@@ -270,8 +270,8 @@
       "name": "Marqeta",
       "sub": "カード発行基盤",
       "sub_en": "Card issuing",
-      "sub_short": "カード発行基盤",
-      "sub_short_en": "Card issuing",
+      "sub_short": "カード",
+      "sub_short_en": "Cards",
       "row": 2,
       "relations": [
         {
@@ -295,8 +295,8 @@
       "name": "Green Dot",
       "sub": "金融サービス",
       "sub_en": "Financial services",
-      "sub_short": "金融サービス",
-      "sub_short_en": "Financials",
+      "sub_short": "金融",
+      "sub_short_en": "Finance",
       "row": 2,
       "relations": [
         {
@@ -320,7 +320,7 @@
       "name": "ソーファイ・テクノロジーズ",
       "sub": "フィンテック",
       "sub_en": "Fintech",
-      "sub_short": "フィンテック",
+      "sub_short": "金融IT",
       "sub_short_en": "Fintech",
       "row": 2,
       "relations": [

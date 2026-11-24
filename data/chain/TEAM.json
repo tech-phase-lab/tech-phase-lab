@@ -64,7 +64,7 @@
       "name": "Rivian",
       "sub": "電気自動車",
       "sub_en": "Electric vehicles",
-      "sub_short": "電気自動車",
+      "sub_short": "EV",
       "sub_short_en": "EVs",
       "row": 1,
       "relations": [
@@ -141,8 +141,8 @@
       "name": "アルファベット(Google)",
       "sub": "検索・クラウド",
       "sub_en": "Search & cloud",
-      "sub_short": "検索・クラウド",
-      "sub_short_en": "Search & cloud",
+      "sub_short": "検索",
+      "sub_short_en": "Search",
       "row": 2,
       "relations": [
         {
@@ -181,7 +181,7 @@
       "sub": "ソフト・クラウド",
       "sub_en": "Software & cloud",
       "sub_short": "ソフト",
-      "sub_short_en": "Software & cloud",
+      "sub_short_en": "Software",
       "row": 2,
       "relations": [
         {
@@ -205,8 +205,8 @@
       "name": "セールスフォース",
       "sub": "業務ソフト",
       "sub_en": "Business software",
-      "sub_short": "業務ソフト",
-      "sub_short_en": "Business apps",
+      "sub_short": "業務IT",
+      "sub_short_en": "Biz apps",
       "row": 2,
       "relations": [
         {
@@ -232,7 +232,7 @@
       "sub": "人事・財務ソフト",
       "sub_en": "HR & finance software",
       "sub_short": "人事",
-      "sub_short_en": "HR & finance",
+      "sub_short_en": "HR",
       "row": 2,
       "relations": [
         {
@@ -258,7 +258,7 @@
       "sub": "Web会議",
       "sub_en": "Video conferencing",
       "sub_short": "Web会議",
-      "sub_short_en": "Video calls",
+      "sub_short_en": "Video",
       "row": 2,
       "relations": [
         {
@@ -295,8 +295,8 @@
       "name": "Dropbox",
       "sub": "クラウドストレージ",
       "sub_en": "Cloud storage",
-      "sub_short": "クラウド保存",
-      "sub_short_en": "Cloud storage",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 4,
       "relations": [
         {
@@ -333,8 +333,8 @@
       "name": "Dynatrace",
       "sub": "監視ソフト",
       "sub_en": "Observability",
-      "sub_short": "監視ソフト",
-      "sub_short_en": "Observability",
+      "sub_short": "監視",
+      "sub_short_en": "Monitors",
       "row": 2,
       "relations": [
         {
@@ -384,7 +384,7 @@
       "sub": "生成AI",
       "sub_en": "Generative AI",
       "sub_short": "生成AI",
-      "sub_short_en": "Generative AI",
+      "sub_short_en": "AI",
       "row": 2,
       "relations": [
         {
@@ -410,7 +410,7 @@
       "sub": "生成AI",
       "sub_en": "Generative AI",
       "sub_short": "生成AI",
-      "sub_short_en": "Generative AI",
+      "sub_short_en": "AI",
       "row": 2,
       "relations": [
         {
@@ -488,7 +488,7 @@
       "sub": "投資銀行",
       "sub_en": "Investment bank",
       "sub_short": "投資銀行",
-      "sub_short_en": "Investment bank",
+      "sub_short_en": "Bank",
       "row": 3,
       "relations": [
         {
@@ -513,8 +513,8 @@
       "name": "GitLab",
       "sub": "DevOpsソフト",
       "sub_en": "DevOps software",
-      "sub_short": "DevOpsソフト",
-      "sub_short_en": "DevOps software",
+      "sub_short": "DevOps",
+      "sub_short_en": "DevOps",
       "row": 4,
       "relations": [
         {
@@ -537,8 +537,8 @@
       "name": "Freshworks",
       "sub": "業務ソフト",
       "sub_en": "Business software",
-      "sub_short": "業務ソフト",
-      "sub_short_en": "Business apps",
+      "sub_short": "業務IT",
+      "sub_short_en": "Biz apps",
       "row": 4,
       "relations": [
         {

@@ -33,7 +33,7 @@
       "sub": "化学(硝安)",
       "sub_en": "Chemicals (ammonium nitrate)",
       "sub_short": "化学",
-      "sub_short_en": "Chemicals",
+      "sub_short_en": "Chem",
       "row": 0,
       "relations": [
         {
@@ -124,7 +124,7 @@
       "sub": "国営鉱業(インドネシア)",
       "sub_en": "State mining (Indonesia)",
       "sub_short": "国営鉱業",
-      "sub_short_en": "State mining",
+      "sub_short_en": "Mining",
       "row": 1,
       "relations": [
         {
@@ -176,7 +176,7 @@
       "sub": "探鉱(カナダ)",
       "sub_en": "Exploration (Canada)",
       "sub_short": "探鉱",
-      "sub_short_en": "Exploration",
+      "sub_short_en": "Mining",
       "row": 1,
       "relations": [
         {

@@ -33,8 +33,8 @@
       "name_en": "Lowe's",
       "sub": "ホームセンター",
       "sub_en": "Home improvement retail",
-      "sub_short": "ホームセンター",
-      "sub_short_en": "Home improvement",
+      "sub_short": "住宅用品",
+      "sub_short_en": "Home",
       "row": 0,
       "relations": [
         {
@@ -59,8 +59,8 @@
       "name_en": "The Home Depot",
       "sub": "ホームセンター",
       "sub_en": "Home improvement retail",
-      "sub_short": "ホームセンター",
-      "sub_short_en": "Home improvement",
+      "sub_short": "住宅用品",
+      "sub_short_en": "Home",
       "row": 0,
       "relations": [
         {
@@ -111,7 +111,7 @@
       "name_en": "MasterBrand",
       "sub": "キャビネット",
       "sub_en": "Cabinets",
-      "sub_short": "キャビネット",
+      "sub_short": "収納家具",
       "sub_short_en": "Cabinets",
       "row": 1,
       "relations": [
@@ -138,7 +138,7 @@
       "sub": "住宅設備",
       "sub_en": "Home products",
       "sub_short": "住宅設備",
-      "sub_short_en": "Home products",
+      "sub_short_en": "Home",
       "row": 2,
       "relations": [
         {
@@ -163,7 +163,7 @@
       "name_en": "Trex",
       "sub": "ウッドデッキ材",
       "sub_en": "Composite decking",
-      "sub_short": "ウッドデッキ材",
+      "sub_short": "デッキ材",
       "sub_short_en": "Decking",
       "row": 2,
       "relations": [
@@ -190,7 +190,7 @@
       "sub": "ドア・窓",
       "sub_en": "Doors & windows",
       "sub_short": "ドア・窓",
-      "sub_short_en": "Doors & windows",
+      "sub_short_en": "Doors",
       "row": 2,
       "relations": [
         {
@@ -216,7 +216,7 @@
       "sub": "錠前・セキュリティ",
       "sub_en": "Locks & security",
       "sub_short": "錠前",
-      "sub_short_en": "Locks & security",
+      "sub_short_en": "Locks",
       "row": 2,
       "relations": [
         {

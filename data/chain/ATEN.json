@@ -31,7 +31,7 @@
       "sub": "ハードウェア製造",
       "sub_en": "Hardware maker",
       "sub_short": "機器製造",
-      "sub_short_en": "Hardware maker",
+      "sub_short_en": "Hardware",
       "row": 0,
       "relations": [
         {
@@ -57,7 +57,7 @@
       "sub": "ハードウェア製造",
       "sub_en": "Hardware maker",
       "sub_short": "機器製造",
-      "sub_short_en": "Hardware maker",
+      "sub_short_en": "Hardware",
       "row": 0,
       "relations": [
         {
@@ -83,7 +83,7 @@
       "sub": "ハードウェア製造",
       "sub_en": "Hardware maker",
       "sub_short": "機器製造",
-      "sub_short_en": "Hardware maker",
+      "sub_short_en": "Hardware",
       "row": 0,
       "relations": [
         {
@@ -108,8 +108,8 @@
       "name": "F5ネットワークス",
       "sub": "アプリ配信・DDoS",
       "sub_en": "App delivery & DDoS",
-      "sub_short": "アプリ配信",
-      "sub_short_en": "App delivery",
+      "sub_short": "アプリ",
+      "sub_short_en": "Apps",
       "row": 1,
       "relations": [
         {
@@ -135,7 +135,7 @@
       "sub": "DDoS対策",
       "sub_en": "DDoS protection",
       "sub_short": "DDoS対策",
-      "sub_short_en": "DDoS protection",
+      "sub_short_en": "Security",
       "row": 1,
       "relations": [
         {
@@ -174,7 +174,7 @@
       "sub": "DDoS対策",
       "sub_en": "DDoS protection",
       "sub_short": "DDoS対策",
-      "sub_short_en": "DDoS protection",
+      "sub_short_en": "Security",
       "row": 1,
       "relations": [
         {
@@ -200,7 +200,7 @@
       "sub": "ネットワーク機器",
       "sub_en": "Network equipment",
       "sub_short": "通信機器",
-      "sub_short_en": "Network gear",
+      "sub_short_en": "Network",
       "row": 1,
       "relations": [
         {
@@ -226,7 +226,7 @@
       "sub": "ネットワーク機器",
       "sub_en": "Network equipment",
       "sub_short": "通信機器",
-      "sub_short_en": "Network gear",
+      "sub_short_en": "Network",
       "row": 1,
       "relations": [
         {
@@ -251,8 +251,8 @@
       "name": "フォーティネット",
       "sub": "ネットワークセキュリティ",
       "sub_en": "Network security",
-      "sub_short": "ネット防御",
-      "sub_short_en": "Network security",
+      "sub_short": "防御",
+      "sub_short_en": "Security",
       "row": 1,
       "relations": [
         {
@@ -277,8 +277,8 @@
       "name": "アカマイ・テクノロジーズ",
       "sub": "クラウドセキュリティ",
       "sub_en": "Cloud security",
-      "sub_short": "クラウド保護",
-      "sub_short_en": "Cloud security",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 1,
       "relations": [
         {
@@ -303,8 +303,8 @@
       "name": "クラウドフレア",
       "sub": "クラウドセキュリティ",
       "sub_en": "Cloud security",
-      "sub_short": "クラウド保護",
-      "sub_short_en": "Cloud security",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 1,
       "relations": [
         {

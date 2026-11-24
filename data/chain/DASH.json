@@ -37,7 +37,7 @@
       "sub": "決済",
       "sub_en": "Payments",
       "sub_short": "決済",
-      "sub_short_en": "Payments",
+      "sub_short_en": "Payment",
       "row": 0,
       "relations": [
         {
@@ -62,8 +62,8 @@
       "name": "グーグル",
       "sub": "検索・クラウド",
       "sub_en": "Search & cloud",
-      "sub_short": "検索・クラウド",
-      "sub_short_en": "Search & cloud",
+      "sub_short": "検索",
+      "sub_short_en": "Search",
       "row": 0,
       "relations": [
         {
@@ -89,7 +89,7 @@
       "sub": "スーパーマーケット",
       "sub_en": "Supermarkets",
       "sub_short": "スーパー",
-      "sub_short_en": "Supermarkets",
+      "sub_short_en": "Grocery",
       "row": 1,
       "relations": [
         {
@@ -154,7 +154,7 @@
       "name": "ウーバー・テクノロジーズ",
       "sub": "配車・配達",
       "sub_en": "Mobility & delivery",
-      "sub_short": "配車・配達",
+      "sub_short": "配車",
       "sub_short_en": "Mobility",
       "row": 3,
       "relations": [
@@ -193,8 +193,8 @@
       "name": "アマゾン",
       "sub": "EC・クラウド",
       "sub_en": "E-commerce & cloud",
-      "sub_short": "EC・クラウド",
-      "sub_short_en": "E-commerce",
+      "sub_short": "EC",
+      "sub_short_en": "E-com",
       "row": 3,
       "relations": [
         {
@@ -232,8 +232,8 @@
       "name": "デリバリーヒーロー",
       "sub": "フードデリバリー",
       "sub_en": "Food delivery",
-      "sub_short": "フード宅配",
-      "sub_short_en": "Food delivery",
+      "sub_short": "宅配",
+      "sub_short_en": "Delivery",
       "row": 3,
       "relations": [
         {
@@ -259,7 +259,7 @@
       "sub": "外食",
       "sub_en": "Restaurants",
       "sub_short": "外食",
-      "sub_short_en": "Restaurants",
+      "sub_short_en": "Dining",
       "row": 1,
       "relations": [
         {

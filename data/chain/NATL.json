@@ -33,8 +33,8 @@
       "name_en": "NCR Voyix",
       "sub": "POS・決済",
       "sub_en": "Point of sale & payments",
-      "sub_short": "POS・決済",
-      "sub_short_en": "Point of sale",
+      "sub_short": "POS",
+      "sub_short_en": "POS",
       "row": 0,
       "relations": [
         {
@@ -86,7 +86,7 @@
       "sub": "決済ネットワーク",
       "sub_en": "Payment network",
       "sub_short": "決済網",
-      "sub_short_en": "Payment network",
+      "sub_short_en": "Payment",
       "row": 1,
       "relations": [
         {
@@ -112,7 +112,7 @@
       "sub": "決済ネットワーク",
       "sub_en": "Payment network",
       "sub_short": "決済網",
-      "sub_short_en": "Payment network",
+      "sub_short_en": "Payment",
       "row": 1,
       "relations": [
         {
@@ -137,8 +137,8 @@
       "name_en": "Infosys",
       "sub": "ITサービス(印)",
       "sub_en": "IT services (India)",
-      "sub_short": "ITサービス",
-      "sub_short_en": "IT services",
+      "sub_short": "IT",
+      "sub_short_en": "IT",
       "row": 1,
       "relations": [
         {
@@ -163,8 +163,8 @@
       "name_en": "ACI Worldwide",
       "sub": "決済ソフト",
       "sub_en": "Payments software",
-      "sub_short": "決済ソフト",
-      "sub_short_en": "Payments",
+      "sub_short": "決済",
+      "sub_short_en": "Payment",
       "row": 1,
       "relations": [
         {
@@ -189,7 +189,7 @@
       "name_en": "Diebold Nixdorf",
       "sub": "ATM・銀行機器",
       "sub_en": "ATMs & banking equipment",
-      "sub_short": "ATM・銀行機器",
+      "sub_short": "ATM",
       "sub_short_en": "ATMs",
       "row": 2,
       "relations": [

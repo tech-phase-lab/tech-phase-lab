@@ -30,8 +30,8 @@
       "name": "Apple",
       "sub": "スマホ・OS",
       "sub_en": "Devices & OS",
-      "sub_short": "スマホ・OS",
-      "sub_short_en": "Devices & OS",
+      "sub_short": "スマホ",
+      "sub_short_en": "Devices",
       "row": 0,
       "relations": [
         {
@@ -55,8 +55,8 @@
       "name": "Google",
       "sub": "検索・クラウド",
       "sub_en": "Search & cloud",
-      "sub_short": "検索・クラウド",
-      "sub_short_en": "Search & cloud",
+      "sub_short": "検索",
+      "sub_short_en": "Search",
       "row": 0,
       "relations": [
         {
@@ -93,7 +93,7 @@
       "name": "Baidu",
       "sub": "検索・自動運転",
       "sub_en": "Search & autonomous driving",
-      "sub_short": "検索・自動運転",
+      "sub_short": "検索",
       "sub_short_en": "Search",
       "row": 1,
       "relations": [
@@ -131,7 +131,7 @@
       "name": "Nebius",
       "sub": "AIクラウド",
       "sub_en": "AI cloud",
-      "sub_short": "AIクラウド",
+      "sub_short": "AI基盤",
       "sub_short_en": "AI cloud",
       "row": 1,
       "relations": [
@@ -173,7 +173,7 @@
       "name": "Lucid",
       "sub": "電気自動車",
       "sub_en": "Electric vehicles",
-      "sub_short": "電気自動車",
+      "sub_short": "EV",
       "sub_short_en": "EVs",
       "row": 1,
       "relations": [
@@ -201,7 +201,7 @@
       "sub": "自動運転",
       "sub_en": "Autonomous driving",
       "sub_short": "自動運転",
-      "sub_short_en": "Self-driving",
+      "sub_short_en": "AV tech",
       "row": 1,
       "relations": [
         {
@@ -254,8 +254,8 @@
       "name": "Amazon",
       "sub": "EC・クラウド",
       "sub_en": "E-commerce & cloud",
-      "sub_short": "EC・クラウド",
-      "sub_short_en": "E-commerce",
+      "sub_short": "EC",
+      "sub_short_en": "E-com",
       "row": 2,
       "relations": [
         {
@@ -318,7 +318,7 @@
       "sub": "外食",
       "sub_en": "Restaurants",
       "sub_short": "外食",
-      "sub_short_en": "Restaurants",
+      "sub_short_en": "Dining",
       "row": 1,
       "relations": [
         {
@@ -343,7 +343,7 @@
       "name": "ジョビー・アビエーション",
       "sub": "空飛ぶタクシー",
       "sub_en": "Air taxis",
-      "sub_short": "空飛ぶタクシー",
+      "sub_short": "eVTOL",
       "sub_short_en": "Air taxis",
       "row": 1,
       "relations": [

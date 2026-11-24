@@ -27,8 +27,8 @@
       "name": "ODPコーポレーション",
       "sub": "紙製品の顧客",
       "sub_en": "Paper customer",
-      "sub_short": "紙製品の顧客",
-      "sub_short_en": "Paper customer",
+      "sub_short": "紙製品",
+      "sub_short_en": "Paper",
       "row": 0,
       "relations": [
         {
@@ -54,7 +54,7 @@
       "sub": "段ボール",
       "sub_en": "Corrugated",
       "sub_short": "段ボール",
-      "sub_short_en": "Corrugated",
+      "sub_short_en": "Boxes",
       "row": 1,
       "relations": [
         {
@@ -80,7 +80,7 @@
       "sub": "段ボール",
       "sub_en": "Corrugated",
       "sub_short": "段ボール",
-      "sub_short_en": "Corrugated",
+      "sub_short_en": "Boxes",
       "row": 1,
       "relations": [
         {
@@ -106,7 +106,7 @@
       "sub": "段ボール",
       "sub_en": "Corrugated",
       "sub_short": "段ボール",
-      "sub_short_en": "Corrugated",
+      "sub_short_en": "Boxes",
       "row": 1,
       "relations": [
         {
@@ -132,7 +132,7 @@
       "sub": "段ボール",
       "sub_en": "Corrugated",
       "sub_short": "段ボール",
-      "sub_short_en": "Corrugated",
+      "sub_short_en": "Boxes",
       "row": 1,
       "relations": [
         {

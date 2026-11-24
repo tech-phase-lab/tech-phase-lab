@@ -177,7 +177,7 @@
       "sub": "AWAC合弁の相手(豪)",
       "sub_en": "AWAC partner (Australia)",
       "sub_short": "合弁相手",
-      "sub_short_en": "AWAC partner",
+      "sub_short_en": "JV",
       "row": 1,
       "relations": [
         {
@@ -202,8 +202,8 @@
       "name_en": "Howmet Aerospace",
       "sub": "航空機部品",
       "sub_en": "Aerospace components",
-      "sub_short": "航空機部品",
-      "sub_short_en": "Aero parts",
+      "sub_short": "航空部品",
+      "sub_short_en": "Aircraft",
       "row": 1,
       "relations": [
         {
@@ -228,8 +228,8 @@
       "name_en": "Kaiser Aluminum",
       "sub": "アルミ圧延",
       "sub_en": "Aluminum rolling",
-      "sub_short": "アルミ圧延",
-      "sub_short_en": "Aluminum rolling",
+      "sub_short": "アルミ",
+      "sub_short_en": "Metals",
       "row": 1,
       "relations": [
         {
@@ -255,7 +255,7 @@
       "sub": "ビットコイン採掘",
       "sub_en": "Bitcoin mining",
       "sub_short": "BTC採掘",
-      "sub_short_en": "Bitcoin mining",
+      "sub_short_en": "Bitcoin",
       "row": 1,
       "relations": [
         {
@@ -280,8 +280,8 @@
       "name_en": "Century Aluminum",
       "sub": "アルミ製錬",
       "sub_en": "Aluminum smelting",
-      "sub_short": "アルミ製錬",
-      "sub_short_en": "Aluminum",
+      "sub_short": "アルミ",
+      "sub_short_en": "Metals",
       "row": 2,
       "relations": [
         {
@@ -307,7 +307,7 @@
       "sub": "アルミ(ノルウェー)",
       "sub_en": "Aluminum (Norway)",
       "sub_short": "アルミ",
-      "sub_short_en": "Aluminum",
+      "sub_short_en": "Metals",
       "row": 2,
       "relations": [
         {

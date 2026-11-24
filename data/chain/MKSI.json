@@ -72,7 +72,7 @@
       "name": "TTMテクノロジーズ",
       "sub": "プリント基板・防衛電子",
       "sub_en": "PCBs & defense electronics",
-      "sub_short": "プリント基板",
+      "sub_short": "基板",
       "sub_short_en": "PCBs",
       "row": 0,
       "relations": [
@@ -100,8 +100,8 @@
       "name": "ラム・リサーチ",
       "sub": "半導体製造装置",
       "sub_en": "Semiconductor equipment",
-      "sub_short": "半導体製造装置",
-      "sub_short_en": "Chip equipment",
+      "sub_short": "製造装置",
+      "sub_short_en": "Chip tools",
       "row": 1,
       "relations": [
         {
@@ -129,7 +129,7 @@
       "sub": "ファイバーレーザー",
       "sub_en": "Fiber lasers",
       "sub_short": "レーザー",
-      "sub_short_en": "Fiber lasers",
+      "sub_short_en": "Lasers",
       "row": 2,
       "relations": [
         {
@@ -179,7 +179,7 @@
       "sub": "総合電機",
       "sub_en": "Electronics conglomerate",
       "sub_short": "総合電機",
-      "sub_short_en": "Electronics",
+      "sub_short_en": "Devices",
       "row": 2,
       "relations": [
         {
@@ -205,7 +205,7 @@
       "sub": "総合電機",
       "sub_en": "Electronics conglomerate",
       "sub_short": "総合電機",
-      "sub_short_en": "Electronics",
+      "sub_short_en": "Devices",
       "row": 2,
       "relations": [
         {

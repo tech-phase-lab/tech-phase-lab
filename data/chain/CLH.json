@@ -34,7 +34,7 @@
       "sub": "緊急対応・現場作業",
       "sub_en": "Emergency response & field services",
       "sub_short": "緊急対応",
-      "sub_short_en": "Emergency svcs",
+      "sub_short_en": "Safety",
       "row": 0,
       "relations": [
         {
@@ -85,8 +85,8 @@
       "name_en": "Veolia",
       "sub": "環境サービス(フランス)",
       "sub_en": "Environmental services (France)",
-      "sub_short": "環境サービス",
-      "sub_short_en": "Environmental",
+      "sub_short": "環境",
+      "sub_short_en": "Eco svcs",
       "row": 1,
       "relations": [
         {
@@ -111,8 +111,8 @@
       "name_en": "Waste Management",
       "sub": "廃棄物処理",
       "sub_en": "Waste management",
-      "sub_short": "廃棄物処理",
-      "sub_short_en": "Waste management",
+      "sub_short": "廃棄物",
+      "sub_short_en": "Waste",
       "row": 1,
       "relations": [
         {
@@ -137,8 +137,8 @@
       "name_en": "Republic Services",
       "sub": "廃棄物処理",
       "sub_en": "Waste management",
-      "sub_short": "廃棄物処理",
-      "sub_short_en": "Waste management",
+      "sub_short": "廃棄物",
+      "sub_short_en": "Waste",
       "row": 1,
       "relations": [
         {
@@ -163,8 +163,8 @@
       "name_en": "GFL Environmental",
       "sub": "廃棄物処理(カナダ)",
       "sub_en": "Waste management (Canada)",
-      "sub_short": "廃棄物処理",
-      "sub_short_en": "Waste management",
+      "sub_short": "廃棄物",
+      "sub_short_en": "Waste",
       "row": 1,
       "relations": [
         {
@@ -189,8 +189,8 @@
       "name_en": "Waste Connections",
       "sub": "廃棄物処理",
       "sub_en": "Waste management",
-      "sub_short": "廃棄物処理",
-      "sub_short_en": "Waste management",
+      "sub_short": "廃棄物",
+      "sub_short_en": "Waste",
       "row": 2,
       "relations": [
         {
@@ -215,8 +215,8 @@
       "name_en": "Civeo",
       "sub": "宿泊施設サービス",
       "sub_en": "Workforce accommodation",
-      "sub_short": "宿泊サービス",
-      "sub_short_en": "Worker housing",
+      "sub_short": "宿泊",
+      "sub_short_en": "Housing",
       "row": 2,
       "relations": [
         {

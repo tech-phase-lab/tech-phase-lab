@@ -30,8 +30,8 @@
       "name": "アップル",
       "sub": "IT機器メーカー",
       "sub_en": "IT hardware maker",
-      "sub_short": "IT機器メーカー",
-      "sub_short_en": "IT hardware",
+      "sub_short": "IT機器",
+      "sub_short_en": "IT",
       "row": 1,
       "relations": [
         {
@@ -57,7 +57,7 @@
       "sub": "ネットワーク機器",
       "sub_en": "Networking equipment",
       "sub_short": "通信機器",
-      "sub_short_en": "Network gear",
+      "sub_short_en": "Network",
       "row": 1,
       "relations": [
         {
@@ -95,8 +95,8 @@
       "name": "デル・テクノロジーズ",
       "sub": "IT機器メーカー",
       "sub_en": "IT hardware maker",
-      "sub_short": "IT機器メーカー",
-      "sub_short_en": "IT hardware",
+      "sub_short": "IT機器",
+      "sub_short_en": "IT",
       "row": 1,
       "relations": [
         {
@@ -121,8 +121,8 @@
       "name": "HPインク",
       "sub": "PC・プリンター",
       "sub_en": "PCs & printers",
-      "sub_short": "PC・印刷機",
-      "sub_short_en": "PCs & printers",
+      "sub_short": "PC",
+      "sub_short_en": "PCs",
       "row": 1,
       "relations": [
         {
@@ -147,7 +147,7 @@
       "name": "レノボ",
       "sub": "PCメーカー",
       "sub_en": "PC maker",
-      "sub_short": "PCメーカー",
+      "sub_short": "PC",
       "sub_short_en": "PC maker",
       "row": 1,
       "relations": [
@@ -173,8 +173,8 @@
       "name": "マイクロソフト",
       "sub": "ソフトウェア・クラウド",
       "sub_en": "Software & cloud",
-      "sub_short": "ソフトウェア",
-      "sub_short_en": "Software & cloud",
+      "sub_short": "ソフト",
+      "sub_short_en": "Software",
       "row": 1,
       "relations": [
         {
@@ -200,7 +200,7 @@
       "sub": "卸売ディストリビューター",
       "sub_en": "Wholesale distributor",
       "sub_short": "卸売",
-      "sub_short_en": "Wholesale",
+      "sub_short_en": "Supply",
       "row": 1,
       "relations": [
         {
@@ -226,7 +226,7 @@
       "sub": "卸売ディストリビューター",
       "sub_en": "Wholesale distributor",
       "sub_short": "卸売",
-      "sub_short_en": "Wholesale",
+      "sub_short_en": "Supply",
       "row": 1,
       "relations": [
         {
@@ -251,8 +251,8 @@
       "name": "パロアルトネットワークス",
       "sub": "セキュリティ",
       "sub_en": "Cybersecurity",
-      "sub_short": "セキュリティ",
-      "sub_short_en": "Cybersecurity",
+      "sub_short": "防御",
+      "sub_short_en": "Security",
       "row": 1,
       "relations": [
         {

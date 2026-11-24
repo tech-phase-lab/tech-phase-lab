@@ -31,7 +31,7 @@
       "sub": "半導体",
       "sub_en": "Semiconductors",
       "sub_short": "半導体",
-      "sub_short_en": "Semiconductors",
+      "sub_short_en": "Chips",
       "row": 0,
       "relations": [
         {
@@ -69,8 +69,8 @@
       "name": "オン・セミコンダクター",
       "sub": "パワー・センシング半導体",
       "sub_en": "Power and sensing semiconductors",
-      "sub_short": "パワー半導体",
-      "sub_short_en": "Power chips",
+      "sub_short": "半導体",
+      "sub_short_en": "Power ICs",
       "row": 0,
       "relations": [
         {
@@ -108,8 +108,8 @@
       "name": "アルファベット(グーグル)",
       "sub": "インターネット・AI",
       "sub_en": "Internet & AI",
-      "sub_short": "インターネット",
-      "sub_short_en": "Internet & AI",
+      "sub_short": "ネット",
+      "sub_short_en": "Internet",
       "row": 0,
       "relations": [
         {
@@ -186,8 +186,8 @@
       "name": "ヒマックス・テクノロジーズ",
       "sub": "ディスプレイドライバー",
       "sub_en": "Display drivers",
-      "sub_short": "表示用半導体",
-      "sub_short_en": "Display drivers",
+      "sub_short": "表示IC",
+      "sub_short_en": "Display",
       "row": 2,
       "relations": [
         {
@@ -212,7 +212,7 @@
       "name": "シリコン・ラボラトリーズ",
       "sub": "無線IoT半導体",
       "sub_en": "Wireless IoT semiconductors",
-      "sub_short": "無線IoT半導体",
+      "sub_short": "無線IC",
       "sub_short_en": "IoT chips",
       "row": 2,
       "relations": [

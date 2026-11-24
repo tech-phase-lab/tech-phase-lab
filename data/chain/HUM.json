@@ -32,8 +32,8 @@
       "name_en": "Evolent Health",
       "sub": "専門医療の管理サービス",
       "sub_en": "Specialty care management",
-      "sub_short": "専門医療管理",
-      "sub_short_en": "Specialty care",
+      "sub_short": "医療管理",
+      "sub_short_en": "Care",
       "row": 0,
       "relations": [
         {
@@ -58,8 +58,8 @@
       "name_en": "eHealth",
       "sub": "保険オンライン販売",
       "sub_en": "Online insurance brokerage",
-      "sub_short": "ネット保険販売",
-      "sub_short_en": "Insurance broker",
+      "sub_short": "保険",
+      "sub_short_en": "Broker",
       "row": 0,
       "relations": [
         {
@@ -84,8 +84,8 @@
       "name_en": "SelectQuote",
       "sub": "保険販売代理",
       "sub_en": "Insurance brokerage",
-      "sub_short": "保険販売代理",
-      "sub_short_en": "Insurance broker",
+      "sub_short": "保険",
+      "sub_short_en": "Broker",
       "row": 0,
       "relations": [
         {
@@ -110,8 +110,8 @@
       "name_en": "Plus Therapeutics",
       "sub": "がん診断・治療",
       "sub_en": "Cancer diagnostics",
-      "sub_short": "がん診断・治療",
-      "sub_short_en": "Cancer tests",
+      "sub_short": "がん診断",
+      "sub_short_en": "Cancer",
       "row": 0,
       "relations": [
         {
@@ -137,7 +137,7 @@
       "sub": "投資会社",
       "sub_en": "Private equity",
       "sub_short": "投資会社",
-      "sub_short_en": "Private equity",
+      "sub_short_en": "PE",
       "row": 1,
       "relations": [
         {
@@ -163,7 +163,7 @@
       "sub": "製薬",
       "sub_en": "Pharmaceuticals",
       "sub_short": "製薬",
-      "sub_short_en": "Pharmaceuticals",
+      "sub_short_en": "Pharma",
       "row": 1,
       "relations": [
         {
@@ -188,8 +188,8 @@
       "name_en": "Clover Health",
       "sub": "メディケア保険",
       "sub_en": "Medicare Advantage",
-      "sub_short": "メディケア保険",
-      "sub_short_en": "Medicare plans",
+      "sub_short": "医療保険",
+      "sub_short_en": "Medicare",
       "row": 2,
       "relations": [
         {
@@ -214,8 +214,8 @@
       "name_en": "GoHealth",
       "sub": "保険オンライン販売",
       "sub_en": "Online insurance brokerage",
-      "sub_short": "ネット保険販売",
-      "sub_short_en": "Insurance broker",
+      "sub_short": "保険",
+      "sub_short_en": "Broker",
       "row": 0,
       "relations": [
         {
@@ -240,8 +240,8 @@
       "name_en": "Alignment Healthcare",
       "sub": "メディケア保険",
       "sub_en": "Medicare Advantage",
-      "sub_short": "メディケア保険",
-      "sub_short_en": "Medicare plans",
+      "sub_short": "医療保険",
+      "sub_short_en": "Medicare",
       "row": 2,
       "relations": [
         {

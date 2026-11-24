@@ -36,7 +36,7 @@
       "sub": "水圧破砕サービス",
       "sub_en": "Frac services",
       "sub_short": "水圧破砕",
-      "sub_short_en": "Frac services",
+      "sub_short_en": "Fracking",
       "row": 0,
       "relations": [
         {
@@ -62,7 +62,7 @@
       "sub": "海洋掘削",
       "sub_en": "Offshore drilling",
       "sub_short": "海洋掘削",
-      "sub_short_en": "Offshore drill",
+      "sub_short_en": "Offshore",
       "row": 0,
       "relations": [
         {
@@ -87,7 +87,7 @@
       "name_en": "Talos Energy",
       "sub": "石油・ガス生産",
       "sub_en": "Oil & gas production",
-      "sub_short": "石油・ガス生産",
+      "sub_short": "石油",
       "sub_short_en": "Oil & gas",
       "row": 0,
       "relations": [
@@ -114,7 +114,7 @@
       "sub": "中流(パイプライン)",
       "sub_en": "Midstream",
       "sub_short": "中流",
-      "sub_short_en": "Midstream",
+      "sub_short_en": "Pipeline",
       "row": 0,
       "relations": [
         {
@@ -140,7 +140,7 @@
       "sub": "LPG船",
       "sub_en": "LPG shipping",
       "sub_short": "LPG船",
-      "sub_short_en": "LPG shipping",
+      "sub_short_en": "LPG",
       "row": 0,
       "relations": [
         {
@@ -217,7 +217,7 @@
       "name_en": "Chevron",
       "sub": "石油メジャー",
       "sub_en": "Oil major",
-      "sub_short": "石油メジャー",
+      "sub_short": "石油",
       "sub_short_en": "Oil major",
       "row": 1,
       "relations": [
@@ -244,7 +244,7 @@
       "sub": "石油生産",
       "sub_en": "Oil production",
       "sub_short": "石油生産",
-      "sub_short_en": "Oil production",
+      "sub_short_en": "Oil",
       "row": 2,
       "relations": [
         {
@@ -269,7 +269,7 @@
       "name_en": "Chord Energy",
       "sub": "石油・ガス生産",
       "sub_en": "Oil & gas production",
-      "sub_short": "石油・ガス生産",
+      "sub_short": "石油",
       "sub_short_en": "Oil & gas",
       "row": 2,
       "relations": [
@@ -321,8 +321,8 @@
       "name_en": "Calumet",
       "sub": "特殊石油製品",
       "sub_en": "Specialty petroleum products",
-      "sub_short": "特殊石油製品",
-      "sub_short_en": "Petroleum",
+      "sub_short": "石油製品",
+      "sub_short_en": "Oil",
       "row": 3,
       "relations": [
         {

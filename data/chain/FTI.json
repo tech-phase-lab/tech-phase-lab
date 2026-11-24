@@ -34,8 +34,8 @@
       "name_en": "Halliburton",
       "sub": "油田サービス",
       "sub_en": "Oilfield services",
-      "sub_short": "油田サービス",
-      "sub_short_en": "Oilfield svcs",
+      "sub_short": "油田",
+      "sub_short_en": "Oilfield",
       "row": 0,
       "relations": [
         {
@@ -60,8 +60,8 @@
       "name_en": "Technip Energies",
       "sub": "エンジニアリング(仏)",
       "sub_en": "Engineering (France)",
-      "sub_short": "エンジニア",
-      "sub_short_en": "Engineering",
+      "sub_short": "技術",
+      "sub_short_en": "Design",
       "row": 0,
       "relations": [
         {
@@ -190,8 +190,8 @@
       "name_en": "Baker Hughes",
       "sub": "油田サービス",
       "sub_en": "Oilfield services",
-      "sub_short": "油田サービス",
-      "sub_short_en": "Oilfield svcs",
+      "sub_short": "油田",
+      "sub_short_en": "Oilfield",
       "row": 2,
       "relations": [
         {
@@ -230,7 +230,7 @@
       "sub": "坑井介入",
       "sub_en": "Well intervention",
       "sub_short": "坑井介入",
-      "sub_short_en": "Well services",
+      "sub_short_en": "Wells",
       "row": 2,
       "relations": [
         {
@@ -256,7 +256,7 @@
       "sub": "坑口装置",
       "sub_en": "Wellheads",
       "sub_short": "坑口装置",
-      "sub_short_en": "Wellheads",
+      "sub_short_en": "Wells",
       "row": 2,
       "relations": [
         {
@@ -281,8 +281,8 @@
       "name_en": "Innovex International",
       "sub": "坑井用製品",
       "sub_en": "Well products",
-      "sub_short": "坑井用製品",
-      "sub_short_en": "Well products",
+      "sub_short": "坑井",
+      "sub_short_en": "Wells",
       "row": 2,
       "relations": [
         {

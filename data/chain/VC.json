@@ -33,8 +33,8 @@
       "name_en": "Micware",
       "sub": "車載ナビソフト(日本)",
       "sub_en": "Automotive navigation software (Japan)",
-      "sub_short": "車載ナビソフト",
-      "sub_short_en": "Car navigation",
+      "sub_short": "ナビ",
+      "sub_short_en": "Nav",
       "row": 0,
       "relations": [
         {
@@ -137,8 +137,8 @@
       "name_en": "Aptiv",
       "sub": "車載電子・配線",
       "sub_en": "Auto electronics & wiring",
-      "sub_short": "車載電子・配線",
-      "sub_short_en": "Auto electronics",
+      "sub_short": "車載電子",
+      "sub_short_en": "Car tech",
       "row": 2,
       "relations": [
         {
@@ -163,7 +163,7 @@
       "name_en": "Garmin",
       "sub": "GPS・車載機器",
       "sub_en": "GPS & auto electronics",
-      "sub_short": "GPS・車載機器",
+      "sub_short": "GPS",
       "sub_short_en": "GPS",
       "row": 2,
       "relations": [
@@ -189,8 +189,8 @@
       "name_en": "Denso",
       "sub": "自動車部品(日本)",
       "sub_en": "Auto parts (Japan)",
-      "sub_short": "自動車部品",
-      "sub_short_en": "Auto parts",
+      "sub_short": "車部品",
+      "sub_short_en": "Car parts",
       "row": 2,
       "relations": [
         {

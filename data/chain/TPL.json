@@ -26,7 +26,7 @@
       "sub": "資産運用",
       "sub_en": "Asset management",
       "sub_short": "資産運用",
-      "sub_short_en": "Asset management",
+      "sub_short_en": "Assets",
       "row": 0,
       "relations": [
         {
@@ -51,8 +51,8 @@
       "name_en": "SoftVest",
       "sub": "投資ファンド",
       "sub_en": "Investment fund",
-      "sub_short": "投資ファンド",
-      "sub_short_en": "Investment fund",
+      "sub_short": "ファンド",
+      "sub_short_en": "Fund",
       "row": 0,
       "relations": [
         {
@@ -104,7 +104,7 @@
       "sub": "データセンター開発",
       "sub_en": "Data center development",
       "sub_short": "DC開発",
-      "sub_short_en": "Data centers",
+      "sub_short_en": "DCs",
       "row": 1,
       "relations": [
         {
@@ -129,7 +129,7 @@
       "name_en": "Chevron",
       "sub": "石油・ガス",
       "sub_en": "Oil & gas",
-      "sub_short": "石油・ガス",
+      "sub_short": "石油",
       "sub_short_en": "Oil & gas",
       "row": 1,
       "relations": [
@@ -156,7 +156,7 @@
       "sub": "土地・資源の地主",
       "sub_en": "Land & resources",
       "sub_short": "地主",
-      "sub_short_en": "Land & resources",
+      "sub_short_en": "Land",
       "row": 1,
       "relations": [
         {
@@ -181,8 +181,8 @@
       "name_en": "WaterBridge",
       "sub": "産出水の処理",
       "sub_en": "Produced water infrastructure",
-      "sub_short": "産出水の処理",
-      "sub_short_en": "Water handling",
+      "sub_short": "水処理",
+      "sub_short_en": "Water",
       "row": 1,
       "relations": [
         {

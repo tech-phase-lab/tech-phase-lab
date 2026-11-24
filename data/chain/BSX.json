@@ -34,8 +34,8 @@
       "name_en": "Penumbra",
       "sub": "血栓除去デバイス",
       "sub_en": "Thrombectomy devices",
-      "sub_short": "血栓除去機器",
-      "sub_short_en": "Thrombectomy",
+      "sub_short": "血管治療",
+      "sub_short_en": "Vascular",
       "row": 0,
       "relations": [
         {
@@ -61,7 +61,7 @@
       "sub": "排尿障害の神経刺激",
       "sub_en": "Sacral neuromodulation",
       "sub_short": "神経刺激",
-      "sub_short_en": "Neuromodulation",
+      "sub_short_en": "Neuro",
       "row": 0,
       "relations": [
         {
@@ -86,8 +86,8 @@
       "name_en": "Silk Road Medical",
       "sub": "頸動脈治療",
       "sub_en": "Carotid therapy",
-      "sub_short": "頸動脈治療",
-      "sub_short_en": "Carotid therapy",
+      "sub_short": "血管治療",
+      "sub_short_en": "Stents",
       "row": 0,
       "relations": [
         {
@@ -112,8 +112,8 @@
       "name_en": "Bolt Medical",
       "sub": "血管内治療",
       "sub_en": "Intravascular lithotripsy",
-      "sub_short": "血管内治療",
-      "sub_short_en": "Vascular IVL",
+      "sub_short": "血管治療",
+      "sub_short_en": "Vascular",
       "row": 0,
       "relations": [
         {
@@ -139,7 +139,7 @@
       "sub": "血管治療(中国)",
       "sub_en": "Vascular devices (China)",
       "sub_short": "血管治療",
-      "sub_short_en": "Vascular devices",
+      "sub_short_en": "Vascular",
       "row": 0,
       "relations": [
         {
@@ -165,7 +165,7 @@
       "sub": "神経刺激",
       "sub_en": "Neuromodulation",
       "sub_short": "神経刺激",
-      "sub_short_en": "Neuromodulation",
+      "sub_short_en": "Neuro",
       "row": 0,
       "relations": [
         {
@@ -216,8 +216,8 @@
       "name_en": "EDAP TMS",
       "sub": "泌尿器の治療機器",
       "sub_en": "Urology devices",
-      "sub_short": "泌尿器機器",
-      "sub_short_en": "Urology devices",
+      "sub_short": "泌尿器",
+      "sub_short_en": "Urology",
       "row": 1,
       "relations": [
         {
@@ -243,7 +243,7 @@
       "sub": "脊髄刺激",
       "sub_en": "Spinal cord stimulation",
       "sub_short": "脊髄刺激",
-      "sub_short_en": "Spinal stim.",
+      "sub_short_en": "Neuro",
       "row": 2,
       "relations": [
         {
@@ -268,8 +268,8 @@
       "name_en": "PROCEPT BioRobotics",
       "sub": "前立腺治療ロボット",
       "sub_en": "BPH robotics",
-      "sub_short": "前立腺治療",
-      "sub_short_en": "BPH robotics",
+      "sub_short": "前立腺",
+      "sub_short_en": "Robotics",
       "row": 2,
       "relations": [
         {
@@ -294,8 +294,8 @@
       "name_en": "Merit Medical Systems",
       "sub": "カテーテル関連",
       "sub_en": "Interventional devices",
-      "sub_short": "カテーテル関連",
-      "sub_short_en": "Interventional",
+      "sub_short": "医療機器",
+      "sub_short_en": "Medtech",
       "row": 2,
       "relations": [
         {
@@ -320,8 +320,8 @@
       "name_en": "Orchestra BioMed",
       "sub": "心血管デバイス",
       "sub_en": "Cardiovascular devices",
-      "sub_short": "心血管デバイス",
-      "sub_short_en": "Cardio devices",
+      "sub_short": "心臓機器",
+      "sub_short_en": "Cardiac",
       "row": 2,
       "relations": [
         {
@@ -346,8 +346,8 @@
       "name_en": "NeuroOne Medical",
       "sub": "神経用電極",
       "sub_en": "Neural electrodes",
-      "sub_short": "神経用電極",
-      "sub_short_en": "Neural implants",
+      "sub_short": "電極",
+      "sub_short_en": "Neuro",
       "row": 2,
       "relations": [
         {

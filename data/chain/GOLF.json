@@ -33,8 +33,8 @@
       "name_en": "Fila Holdings",
       "sub": "スポーツ用品(韓)",
       "sub_en": "Sportswear (Korea)",
-      "sub_short": "スポーツ用品",
-      "sub_short_en": "Sportswear",
+      "sub_short": "スポーツ",
+      "sub_short_en": "Apparel",
       "row": 0,
       "relations": [
         {
@@ -85,8 +85,8 @@
       "name_en": "Nike",
       "sub": "スポーツ用品",
       "sub_en": "Sportswear",
-      "sub_short": "スポーツ用品",
-      "sub_short_en": "Sportswear",
+      "sub_short": "スポーツ",
+      "sub_short_en": "Apparel",
       "row": 1,
       "relations": [
         {
@@ -111,8 +111,8 @@
       "name_en": "Adidas",
       "sub": "スポーツ用品(独)",
       "sub_en": "Sportswear (Germany)",
-      "sub_short": "スポーツ用品",
-      "sub_short_en": "Sportswear",
+      "sub_short": "スポーツ",
+      "sub_short_en": "Apparel",
       "row": 1,
       "relations": [
         {
@@ -163,8 +163,8 @@
       "name_en": "Callaway",
       "sub": "ゴルフ用品",
       "sub_en": "Golf equipment",
-      "sub_short": "ゴルフ用品",
-      "sub_short_en": "Golf equipment",
+      "sub_short": "ゴルフ",
+      "sub_short_en": "Golf",
       "row": 2,
       "relations": [
         {
@@ -189,8 +189,8 @@
       "name_en": "TaylorMade",
       "sub": "ゴルフ用品(非上場)",
       "sub_en": "Golf equipment (private)",
-      "sub_short": "ゴルフ用品",
-      "sub_short_en": "Golf equipment",
+      "sub_short": "ゴルフ",
+      "sub_short_en": "Golf",
       "row": 2,
       "relations": [
         {
@@ -215,8 +215,8 @@
       "name_en": "Ping (Karsten Manufacturing)",
       "sub": "ゴルフ用品(非上場)",
       "sub_en": "Golf equipment (private)",
-      "sub_short": "ゴルフ用品",
-      "sub_short_en": "Golf equipment",
+      "sub_short": "ゴルフ",
+      "sub_short_en": "Golf",
       "row": 2,
       "relations": [
         {
@@ -242,7 +242,7 @@
       "sub": "タイヤ・ゴルフ用品",
       "sub_en": "Tires & golf equipment",
       "sub_short": "タイヤ",
-      "sub_short_en": "Tires & golf",
+      "sub_short_en": "Tires",
       "row": 2,
       "relations": [
         {
@@ -268,7 +268,7 @@
       "sub": "タイヤ・ゴルフ用品",
       "sub_en": "Tires & golf equipment",
       "sub_short": "タイヤ",
-      "sub_short_en": "Tires & golf",
+      "sub_short_en": "Tires",
       "row": 2,
       "relations": [
         {

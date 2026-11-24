@@ -33,8 +33,8 @@
       "name_en": "Unusual Machines",
       "sub": "ドローン部品",
       "sub_en": "Drone components",
-      "sub_short": "ドローン部品",
-      "sub_short_en": "Drone components",
+      "sub_short": "ドローン",
+      "sub_short_en": "Drones",
       "row": 0,
       "relations": [
         {
@@ -60,7 +60,7 @@
       "sub": "組込みコンピューター",
       "sub_en": "Embedded computing",
       "sub_short": "組込みPC",
-      "sub_short_en": "Embedded PCs",
+      "sub_short_en": "Boards",
       "row": 0,
       "relations": [
         {
@@ -86,7 +86,7 @@
       "sub": "AIソフト",
       "sub_en": "AI software",
       "sub_short": "AIソフト",
-      "sub_short_en": "AI software",
+      "sub_short_en": "AI apps",
       "row": 1,
       "relations": [
         {
@@ -111,8 +111,8 @@
       "name_en": "AeroVironment",
       "sub": "無人機・防衛",
       "sub_en": "Drones & defense",
-      "sub_short": "無人機・防衛",
-      "sub_short_en": "Drones & defense",
+      "sub_short": "無人機",
+      "sub_short_en": "Drones",
       "row": 1,
       "relations": [
         {
@@ -150,8 +150,8 @@
       "name_en": "Safe Pro Group",
       "sub": "AI画像解析",
       "sub_en": "AI imagery analysis",
-      "sub_short": "AI画像解析",
-      "sub_short_en": "AI imagery",
+      "sub_short": "AI画像",
+      "sub_short_en": "AI images",
       "row": 1,
       "relations": [
         {
@@ -177,7 +177,7 @@
       "sub": "無人艇",
       "sub_en": "Uncrewed vessels",
       "sub_short": "無人艇",
-      "sub_short_en": "Uncrewed vessels",
+      "sub_short_en": "Drones",
       "row": 1,
       "relations": [
         {
@@ -202,7 +202,7 @@
       "name_en": "Palladyne AI",
       "sub": "自律制御ソフト",
       "sub_en": "Autonomy software",
-      "sub_short": "自律制御ソフト",
+      "sub_short": "自律制御",
       "sub_short_en": "Autonomy",
       "row": 1,
       "relations": [
@@ -228,8 +228,8 @@
       "name_en": "Lockheed Martin",
       "sub": "防衛・宇宙",
       "sub_en": "Defense & space",
-      "sub_short": "防衛・宇宙",
-      "sub_short_en": "Defense & space",
+      "sub_short": "防衛",
+      "sub_short_en": "Defense",
       "row": 2,
       "relations": [
         {
@@ -254,8 +254,8 @@
       "name_en": "Northrop Grumman",
       "sub": "防衛・宇宙",
       "sub_en": "Defense & space",
-      "sub_short": "防衛・宇宙",
-      "sub_short_en": "Defense & space",
+      "sub_short": "防衛",
+      "sub_short_en": "Defense",
       "row": 2,
       "relations": [
         {
@@ -280,8 +280,8 @@
       "name_en": "Redwire",
       "sub": "宇宙・防衛",
       "sub_en": "Space & defense",
-      "sub_short": "宇宙・防衛",
-      "sub_short_en": "Space & defense",
+      "sub_short": "宇宙",
+      "sub_short_en": "Space",
       "row": 1,
       "relations": [
         {

@@ -33,7 +33,7 @@
       "sub": "自動車",
       "sub_en": "Automaker",
       "sub_short": "自動車",
-      "sub_short_en": "Automaker",
+      "sub_short_en": "Cars",
       "row": 0,
       "relations": [
         {
@@ -59,7 +59,7 @@
       "sub": "自動車",
       "sub_en": "Automaker",
       "sub_short": "自動車",
-      "sub_short_en": "Automaker",
+      "sub_short_en": "Cars",
       "row": 0,
       "relations": [
         {
@@ -85,7 +85,7 @@
       "sub": "自動車",
       "sub_en": "Automaker",
       "sub_short": "自動車",
-      "sub_short_en": "Automaker",
+      "sub_short_en": "Cars",
       "row": 0,
       "relations": [
         {
@@ -111,7 +111,7 @@
       "sub": "自動運転",
       "sub_en": "Autonomous driving",
       "sub_short": "自動運転",
-      "sub_short_en": "Self-driving",
+      "sub_short_en": "AV tech",
       "row": 0,
       "relations": [
         {
@@ -137,7 +137,7 @@
       "sub": "投資会社",
       "sub_en": "Investment firm",
       "sub_short": "投資会社",
-      "sub_short_en": "Investment firm",
+      "sub_short_en": "Investing",
       "row": 1,
       "relations": [
         {
@@ -162,8 +162,8 @@
       "name_en": "Travel + Leisure",
       "sub": "タイムシェア",
       "sub_en": "Vacation ownership",
-      "sub_short": "タイムシェア",
-      "sub_short_en": "Timeshares",
+      "sub_short": "別荘権",
+      "sub_short_en": "Resorts",
       "row": 1,
       "relations": [
         {
@@ -188,8 +188,8 @@
       "name_en": "Verra Mobility",
       "sub": "有料道路決済",
       "sub_en": "Tolling services",
-      "sub_short": "有料道路決済",
-      "sub_short_en": "Tolling services",
+      "sub_short": "料金決済",
+      "sub_short_en": "Tolls",
       "row": 1,
       "relations": [
         {
@@ -214,8 +214,8 @@
       "name_en": "Hertz",
       "sub": "レンタカー",
       "sub_en": "Car rental",
-      "sub_short": "レンタカー",
-      "sub_short_en": "Car rental",
+      "sub_short": "車貸出",
+      "sub_short_en": "Car hire",
       "row": 2,
       "relations": [
         {
@@ -240,8 +240,8 @@
       "name_en": "U-Haul Holding",
       "sub": "引越しトラック",
       "sub_en": "Moving equipment rental",
-      "sub_short": "引越しトラック",
-      "sub_short_en": "Moving rentals",
+      "sub_short": "引越し",
+      "sub_short_en": "Rentals",
       "row": 2,
       "relations": [
         {

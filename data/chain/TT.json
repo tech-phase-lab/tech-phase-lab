@@ -34,8 +34,8 @@
       "name_en": "BrainBox AI",
       "sub": "AIによる空調の最適化",
       "sub_en": "AI for HVAC optimization",
-      "sub_short": "AI空調最適化",
-      "sub_short_en": "AI for HVAC",
+      "sub_short": "AI空調",
+      "sub_short_en": "AI HVAC",
       "row": 0,
       "relations": [
         {
@@ -61,7 +61,7 @@
       "sub": "設備工事",
       "sub_en": "Mechanical contracting",
       "sub_short": "設備工事",
-      "sub_short_en": "Mechanical work",
+      "sub_short_en": "Plumbing",
       "row": 1,
       "relations": [
         {
@@ -87,7 +87,7 @@
       "sub": "ターボチャージャー",
       "sub_en": "Turbochargers",
       "sub_short": "ターボ",
-      "sub_short_en": "Turbochargers",
+      "sub_short_en": "Turbos",
       "row": 1,
       "relations": [
         {
@@ -113,7 +113,7 @@
       "sub": "空調機器",
       "sub_en": "HVAC equipment",
       "sub_short": "空調機器",
-      "sub_short_en": "HVAC equipment",
+      "sub_short_en": "HVAC",
       "row": 2,
       "relations": [
         {
@@ -138,8 +138,8 @@
       "name_en": "Johnson Controls",
       "sub": "ビル設備・空調",
       "sub_en": "Building systems & HVAC",
-      "sub_short": "ビル設備・空調",
-      "sub_short_en": "Building systems",
+      "sub_short": "ビル設備",
+      "sub_short_en": "Buildings",
       "row": 2,
       "relations": [
         {
@@ -165,7 +165,7 @@
       "sub": "空調機器",
       "sub_en": "HVAC equipment",
       "sub_short": "空調機器",
-      "sub_short_en": "HVAC equipment",
+      "sub_short_en": "HVAC",
       "row": 2,
       "relations": [
         {
@@ -191,7 +191,7 @@
       "sub": "設備工事・ビルサービス",
       "sub_en": "Mechanical & building services",
       "sub_short": "設備工事",
-      "sub_short_en": "Mechanical",
+      "sub_short_en": "Plumbing",
       "row": 2,
       "relations": [
         {
@@ -216,8 +216,8 @@
       "name_en": "Madison Air Solutions",
       "sub": "空調・換気機器",
       "sub_en": "Air handling & ventilation",
-      "sub_short": "空調・換気機器",
-      "sub_short_en": "Air handling",
+      "sub_short": "空調",
+      "sub_short_en": "HVAC",
       "row": 2,
       "relations": [
         {

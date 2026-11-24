@@ -34,7 +34,7 @@
       "sub": "食品ディスカウント",
       "sub_en": "Discount grocery",
       "sub_short": "格安食品",
-      "sub_short_en": "Discount grocery",
+      "sub_short_en": "Grocery",
       "row": 0,
       "relations": [
         {
@@ -137,8 +137,8 @@
       "name_en": "Aldi",
       "sub": "ディスカウントスーパー(独、非上場)",
       "sub_en": "Discount grocery (Germany, private)",
-      "sub_short": "格安スーパー",
-      "sub_short_en": "Discount grocery",
+      "sub_short": "スーパー",
+      "sub_short_en": "Grocery",
       "row": 1,
       "relations": [
         {
@@ -163,8 +163,8 @@
       "name_en": "Lidl",
       "sub": "ディスカウントスーパー(独、非上場)",
       "sub_en": "Discount grocery (Germany, private)",
-      "sub_short": "格安スーパー",
-      "sub_short_en": "Discount grocery",
+      "sub_short": "スーパー",
+      "sub_short_en": "Grocery",
       "row": 1,
       "relations": [
         {
@@ -241,8 +241,8 @@
       "name_en": "Costco",
       "sub": "会員制量販店",
       "sub_en": "Warehouse clubs",
-      "sub_short": "会員制量販店",
-      "sub_short_en": "Warehouse clubs",
+      "sub_short": "量販店",
+      "sub_short_en": "Clubs",
       "row": 2,
       "relations": [
         {

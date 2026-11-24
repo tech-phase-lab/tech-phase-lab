@@ -37,7 +37,7 @@
       "sub": "自動車",
       "sub_en": "Automaker",
       "sub_short": "自動車",
-      "sub_short_en": "Automaker",
+      "sub_short_en": "Cars",
       "row": 0,
       "relations": [
         {
@@ -63,7 +63,7 @@
       "sub": "自動車",
       "sub_en": "Automaker",
       "sub_short": "自動車",
-      "sub_short_en": "Automaker",
+      "sub_short_en": "Cars",
       "row": 0,
       "relations": [
         {
@@ -89,7 +89,7 @@
       "sub": "自動車",
       "sub_en": "Automaker",
       "sub_short": "自動車",
-      "sub_short_en": "Automaker",
+      "sub_short_en": "Cars",
       "row": 0,
       "relations": [
         {
@@ -115,7 +115,7 @@
       "sub": "自動車(ドイツ)",
       "sub_en": "Automaker (Germany)",
       "sub_short": "自動車",
-      "sub_short_en": "Automaker",
+      "sub_short_en": "Cars",
       "row": 0,
       "relations": [
         {
@@ -167,7 +167,7 @@
       "sub": "変速機",
       "sub_en": "Transmissions",
       "sub_short": "変速機",
-      "sub_short_en": "Transmissions",
+      "sub_short_en": "Gears",
       "row": 1,
       "relations": [
         {
@@ -192,8 +192,8 @@
       "name_en": "Dauch (formerly American Axle)",
       "sub": "駆動系部品",
       "sub_en": "Driveline components",
-      "sub_short": "駆動系部品",
-      "sub_short_en": "Drivelines",
+      "sub_short": "駆動部品",
+      "sub_short_en": "Axles",
       "row": 2,
       "relations": [
         {
@@ -218,8 +218,8 @@
       "name_en": "ZF Friedrichshafen",
       "sub": "自動車部品(ドイツ)",
       "sub_en": "Auto parts (Germany)",
-      "sub_short": "自動車部品",
-      "sub_short_en": "Auto parts",
+      "sub_short": "車部品",
+      "sub_short_en": "Car parts",
       "row": 2,
       "relations": [
         {

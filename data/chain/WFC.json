@@ -32,8 +32,8 @@
       "name_en": "GATX",
       "sub": "貨車リース",
       "sub_en": "Railcar leasing",
-      "sub_short": "貨車リース",
-      "sub_short_en": "Railcar leasing",
+      "sub_short": "貨車",
+      "sub_short_en": "Railcars",
       "row": 0,
       "relations": [
         {
@@ -58,8 +58,8 @@
       "name_en": "Brookfield Infrastructure",
       "sub": "インフラ投資",
       "sub_en": "Infrastructure investment",
-      "sub_short": "インフラ投資",
-      "sub_short_en": "Infra investing",
+      "sub_short": "インフラ",
+      "sub_short_en": "Infra",
       "row": 0,
       "relations": [
         {
@@ -84,8 +84,8 @@
       "name_en": "Overland Advantage",
       "sub": "中堅企業向け融資ファンド",
       "sub_en": "Middle-market lending fund",
-      "sub_short": "融資ファンド",
-      "sub_short_en": "Lending fund",
+      "sub_short": "融資",
+      "sub_short_en": "Lending",
       "row": 0,
       "relations": [
         {
@@ -110,8 +110,8 @@
       "name_en": "SiTime",
       "sub": "タイミング半導体",
       "sub_en": "Timing chips",
-      "sub_short": "タイミングIC",
-      "sub_short_en": "Timing chips",
+      "sub_short": "半導体",
+      "sub_short_en": "Timing",
       "row": 1,
       "relations": [
         {
@@ -137,7 +137,7 @@
       "sub": "ウエスタン衣料小売",
       "sub_en": "Western wear retail",
       "sub_short": "衣料小売",
-      "sub_short_en": "Western wear",
+      "sub_short_en": "Apparel",
       "row": 1,
       "relations": [
         {
@@ -162,8 +162,8 @@
       "name_en": "Asbury Automotive",
       "sub": "自動車ディーラー",
       "sub_en": "Auto dealerships",
-      "sub_short": "車ディーラー",
-      "sub_short_en": "Auto dealerships",
+      "sub_short": "車販売",
+      "sub_short_en": "Car sales",
       "row": 1,
       "relations": [
         {
@@ -188,8 +188,8 @@
       "name_en": "Ranger Energy Services",
       "sub": "油井サービス",
       "sub_en": "Oilfield services",
-      "sub_short": "油井サービス",
-      "sub_short_en": "Oilfield svcs",
+      "sub_short": "油井",
+      "sub_short_en": "Oilfield",
       "row": 1,
       "relations": [
         {
@@ -240,7 +240,7 @@
       "name_en": "UBS",
       "sub": "銀行・資産運用",
       "sub_en": "Bank & wealth management",
-      "sub_short": "銀行・資産運用",
+      "sub_short": "銀行",
       "sub_short_en": "Bank",
       "row": 2,
       "relations": [

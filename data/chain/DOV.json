@@ -25,7 +25,7 @@
       "name": "スナップオン",
       "sub": "工具・整備機器",
       "sub_en": "Tools & equipment",
-      "sub_short": "工具・整備機器",
+      "sub_short": "工具",
       "sub_short_en": "Tools",
       "row": 0,
       "relations": [
@@ -51,8 +51,8 @@
       "name": "ノードソン",
       "sub": "精密塗布装置",
       "sub_en": "Dispensing equipment",
-      "sub_short": "精密塗布装置",
-      "sub_short_en": "Dispensers",
+      "sub_short": "塗布装置",
+      "sub_short_en": "Dispenser",
       "row": 0,
       "relations": [
         {
@@ -77,8 +77,8 @@
       "name": "テレダイン・テクノロジーズ",
       "sub": "計測・電子機器",
       "sub_en": "Instrumentation",
-      "sub_short": "計測・電子機器",
-      "sub_short_en": "Instrumentation",
+      "sub_short": "計測",
+      "sub_short_en": "Gauges",
       "row": 0,
       "relations": [
         {
@@ -103,8 +103,8 @@
       "name": "ボンティア",
       "sub": "燃料給油機器",
       "sub_en": "Fueling equipment",
-      "sub_short": "燃料給油機器",
-      "sub_short_en": "Fueling gear",
+      "sub_short": "給油機器",
+      "sub_short_en": "Fueling",
       "row": 0,
       "relations": [
         {
@@ -129,8 +129,8 @@
       "name": "フランクリン・エレクトリック",
       "sub": "ポンプ・給油",
       "sub_en": "Pumps & fueling",
-      "sub_short": "ポンプ・給油",
-      "sub_short_en": "Pumps & fueling",
+      "sub_short": "ポンプ",
+      "sub_short_en": "Pumps",
       "row": 0,
       "relations": [
         {
@@ -155,7 +155,7 @@
       "name": "ベラルト",
       "sub": "産業用マーキング",
       "sub_en": "Industrial marking",
-      "sub_short": "産業用印字",
+      "sub_short": "印字機",
       "sub_short_en": "Marking",
       "row": 0,
       "relations": [
@@ -182,7 +182,7 @@
       "sub": "ポンプ・流体機器",
       "sub_en": "Pumps & fluidics",
       "sub_short": "ポンプ",
-      "sub_short_en": "Pumps & fluidics",
+      "sub_short_en": "Pumps",
       "row": 0,
       "relations": [
         {
@@ -207,8 +207,8 @@
       "name": "インガソール・ランド",
       "sub": "圧縮機・ポンプ",
       "sub_en": "Compressors & pumps",
-      "sub_short": "圧縮機・ポンプ",
-      "sub_short_en": "Compressors",
+      "sub_short": "圧縮機",
+      "sub_short_en": "Pumps",
       "row": 0,
       "relations": [
         {
@@ -273,7 +273,7 @@
       "sub": "ライフサイエンス",
       "sub_en": "Life sciences",
       "sub_short": "生命科学",
-      "sub_short_en": "Life sciences",
+      "sub_short_en": "Life sci",
       "row": 0,
       "relations": [
         {
@@ -298,8 +298,8 @@
       "name": "エコラボ",
       "sub": "水処理・衛生",
       "sub_en": "Water & hygiene",
-      "sub_short": "水処理・衛生",
-      "sub_short_en": "Water & hygiene",
+      "sub_short": "水処理",
+      "sub_short_en": "Water",
       "row": 0,
       "relations": [
         {
@@ -325,7 +325,7 @@
       "sub": "金属包装",
       "sub_en": "Metal packaging",
       "sub_short": "金属包装",
-      "sub_short_en": "Metal packaging",
+      "sub_short_en": "Cans",
       "row": 0,
       "relations": [
         {

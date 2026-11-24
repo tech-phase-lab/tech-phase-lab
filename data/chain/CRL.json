@@ -25,8 +25,8 @@
       "name_en": "Harvard Bioscience",
       "sub": "研究用機器",
       "sub_en": "Lab instruments",
-      "sub_short": "研究用機器",
-      "sub_short_en": "Lab instruments",
+      "sub_short": "研究機器",
+      "sub_short_en": "Lab tools",
       "row": 0,
       "relations": [
         {
@@ -52,7 +52,7 @@
       "sub": "実験用霊長類の供給(モーリシャス)",
       "sub_en": "Research primate supplier (Mauritius)",
       "sub_short": "実験動物",
-      "sub_short_en": "Lab animals",
+      "sub_short_en": "Lab",
       "row": 0,
       "relations": [
         {
@@ -78,7 +78,7 @@
       "sub": "創薬スクリーニング",
       "sub_en": "Drug discovery screening",
       "sub_short": "創薬支援",
-      "sub_short_en": "Drug screening",
+      "sub_short_en": "Drug R&D",
       "row": 0,
       "relations": [
         {
@@ -130,7 +130,7 @@
       "sub": "細胞治療",
       "sub_en": "Cell therapy",
       "sub_short": "細胞治療",
-      "sub_short_en": "Cell therapy",
+      "sub_short_en": "Cell tx",
       "row": 1,
       "relations": [
         {
@@ -155,8 +155,8 @@
       "name_en": "BioCorRx",
       "sub": "依存症治療",
       "sub_en": "Addiction treatment",
-      "sub_short": "依存症治療",
-      "sub_short_en": "Addiction care",
+      "sub_short": "依存症",
+      "sub_short_en": "Addiction",
       "row": 1,
       "relations": [
         {
@@ -182,7 +182,7 @@
       "sub": "創薬",
       "sub_en": "Drug development",
       "sub_short": "創薬",
-      "sub_short_en": "Drug development",
+      "sub_short_en": "Drug R&D",
       "row": 1,
       "relations": [
         {
@@ -208,7 +208,7 @@
       "sub": "細胞治療",
       "sub_en": "Cell therapy",
       "sub_short": "細胞治療",
-      "sub_short_en": "Cell therapy",
+      "sub_short_en": "Cell tx",
       "row": 1,
       "relations": [
         {
@@ -234,7 +234,7 @@
       "sub": "創薬",
       "sub_en": "Drug development",
       "sub_short": "創薬",
-      "sub_short_en": "Drug development",
+      "sub_short_en": "Drug R&D",
       "row": 1,
       "relations": [
         {

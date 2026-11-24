@@ -59,7 +59,7 @@
       "sub": "産業機器",
       "sub_en": "Industrial equipment",
       "sub_short": "産業機器",
-      "sub_short_en": "Industrial gear",
+      "sub_short_en": "Industrial",
       "row": 0,
       "relations": [
         {
@@ -84,8 +84,8 @@
       "name_en": "Custom Truck One Source",
       "sub": "特殊トラックの販売・レンタル",
       "sub_en": "Specialty truck sales & rental",
-      "sub_short": "特殊トラック",
-      "sub_short_en": "Truck rental",
+      "sub_short": "特殊車両",
+      "sub_short_en": "Trucks",
       "row": 1,
       "relations": [
         {
@@ -110,8 +110,8 @@
       "name_en": "H&E Equipment Services",
       "sub": "建機レンタル",
       "sub_en": "Equipment rental",
-      "sub_short": "建機レンタル",
-      "sub_short_en": "Equipment rental",
+      "sub_short": "建機",
+      "sub_short_en": "Rentals",
       "row": 1,
       "relations": [
         {
@@ -162,8 +162,8 @@
       "name_en": "Astec Industries",
       "sub": "道路・骨材機械",
       "sub_en": "Road & aggregates equipment",
-      "sub_short": "道路・骨材機械",
-      "sub_short_en": "Road equipment",
+      "sub_short": "建機",
+      "sub_short_en": "Roads",
       "row": 2,
       "relations": [
         {

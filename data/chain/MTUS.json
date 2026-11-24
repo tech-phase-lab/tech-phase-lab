@@ -33,7 +33,7 @@
       "name_en": "Timken",
       "sub": "ベアリング",
       "sub_en": "Bearings",
-      "sub_short": "ベアリング",
+      "sub_short": "軸受",
       "sub_short_en": "Bearings",
       "row": 0,
       "relations": [
@@ -60,7 +60,7 @@
       "sub": "鋼管",
       "sub_en": "Steel pipe",
       "sub_short": "鋼管",
-      "sub_short_en": "Steel pipe",
+      "sub_short_en": "Pipe",
       "row": 1,
       "relations": [
         {
@@ -86,7 +86,7 @@
       "sub": "鋼管(仏)",
       "sub_en": "Steel pipe (France)",
       "sub_short": "鋼管",
-      "sub_short_en": "Steel pipe",
+      "sub_short_en": "Pipe",
       "row": 1,
       "relations": [
         {

@@ -34,8 +34,8 @@
       "name_en": "London Stock Exchange Group",
       "sub": "取引所・データ(英)",
       "sub_en": "Exchange & data (UK)",
-      "sub_short": "取引所・データ",
-      "sub_short_en": "Exchange & data",
+      "sub_short": "取引所",
+      "sub_short_en": "Exchange",
       "row": 0,
       "relations": [
         {
@@ -61,7 +61,7 @@
       "sub": "金融情報(非上場)",
       "sub_en": "Financial data (private)",
       "sub_short": "金融情報",
-      "sub_short_en": "Financial data",
+      "sub_short_en": "Fin data",
       "row": 0,
       "relations": [
         {
@@ -87,7 +87,7 @@
       "sub": "資産運用",
       "sub_en": "Asset management",
       "sub_short": "資産運用",
-      "sub_short_en": "Asset management",
+      "sub_short_en": "Assets",
       "row": 0,
       "relations": [
         {
@@ -113,7 +113,7 @@
       "sub": "格付け(非上場)",
       "sub_en": "Credit ratings (private)",
       "sub_short": "格付け",
-      "sub_short_en": "Credit ratings",
+      "sub_short_en": "Ratings",
       "row": 1,
       "relations": [
         {
@@ -139,7 +139,7 @@
       "sub": "格付け(非上場)",
       "sub_en": "Credit ratings (private)",
       "sub_short": "格付け",
-      "sub_short_en": "Credit ratings",
+      "sub_short_en": "Ratings",
       "row": 1,
       "relations": [
         {
@@ -164,8 +164,8 @@
       "name_en": "FactSet",
       "sub": "金融データ",
       "sub_en": "Financial data",
-      "sub_short": "金融データ",
-      "sub_short_en": "Financial data",
+      "sub_short": "金融情報",
+      "sub_short_en": "Fin data",
       "row": 2,
       "relations": [
         {
@@ -191,7 +191,7 @@
       "sub": "格付け・指数・データ",
       "sub_en": "Ratings, indexes & data",
       "sub_short": "格付け",
-      "sub_short_en": "Ratings, indexes",
+      "sub_short_en": "Ratings",
       "row": 2,
       "relations": [
         {
@@ -229,7 +229,7 @@
       "name_en": "MSCI",
       "sub": "指数・分析",
       "sub_en": "Indexes & analytics",
-      "sub_short": "指数・分析",
+      "sub_short": "指数",
       "sub_short_en": "Indexes",
       "row": 2,
       "relations": [
@@ -255,7 +255,7 @@
       "name_en": "Moody's",
       "sub": "格付け・分析",
       "sub_en": "Ratings & analytics",
-      "sub_short": "格付け・分析",
+      "sub_short": "格付け",
       "sub_short_en": "Ratings",
       "row": 2,
       "relations": [

@@ -55,8 +55,8 @@
       "name": "ソニーグループ",
       "sub": "エンタメ・電機",
       "sub_en": "Entertainment & electronics",
-      "sub_short": "エンタメ・電機",
-      "sub_short_en": "Entertainment",
+      "sub_short": "エンタメ",
+      "sub_short_en": "Media",
       "row": 0,
       "relations": [
         {
@@ -97,7 +97,7 @@
       "sub": "生成AI",
       "sub_en": "Generative AI",
       "sub_short": "生成AI",
-      "sub_short_en": "Generative AI",
+      "sub_short_en": "AI",
       "row": 1,
       "relations": [
         {
@@ -124,7 +124,7 @@
       "sub": "動画配信",
       "sub_en": "Video streaming",
       "sub_short": "動画配信",
-      "sub_short_en": "Video streaming",
+      "sub_short_en": "Video",
       "row": 1,
       "relations": [
         {
@@ -148,7 +148,7 @@
       "name": "テンセント",
       "sub": "インターネット・ゲーム",
       "sub_en": "Internet & gaming",
-      "sub_short": "インターネット",
+      "sub_short": "ネット",
       "sub_short_en": "Internet",
       "row": 1,
       "relations": [
@@ -187,7 +187,7 @@
       "name": "Apple",
       "sub": "スマートフォン・端末",
       "sub_en": "Devices",
-      "sub_short": "スマートフォン",
+      "sub_short": "スマホ",
       "sub_short_en": "Devices",
       "row": 2,
       "relations": [

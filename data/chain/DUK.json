@@ -24,8 +24,8 @@
       "name": "ブルックフィールド・スーパーコア・インフラ",
       "sub": "インフラ投資会社",
       "sub_en": "Infrastructure investor",
-      "sub_short": "インフラ投資",
-      "sub_short_en": "Infra investing",
+      "sub_short": "インフラ",
+      "sub_short_en": "Infra",
       "row": 1,
       "relations": [
         {
@@ -51,7 +51,7 @@
       "sub": "再生可能エネルギー",
       "sub_en": "Renewable energy",
       "sub_short": "再エネ",
-      "sub_short_en": "Renewable energy",
+      "sub_short_en": "Green",
       "row": 1,
       "relations": [
         {
@@ -76,8 +76,8 @@
       "name": "スパイア",
       "sub": "ガス公益事業",
       "sub_en": "Gas utility",
-      "sub_short": "ガス公益事業",
-      "sub_short_en": "Gas utility",
+      "sub_short": "ガス公益",
+      "sub_short_en": "Gas",
       "row": 1,
       "relations": [
         {
@@ -102,8 +102,8 @@
       "name": "ノースカロライナ電力協同組合",
       "sub": "電力協同組合",
       "sub_en": "Electric cooperative",
-      "sub_short": "電力協同組合",
-      "sub_short_en": "Power co-op",
+      "sub_short": "電力",
+      "sub_short_en": "Power",
       "row": 1,
       "relations": [
         {
@@ -128,7 +128,7 @@
       "name": "ドミニオン・エナジー",
       "sub": "電力・ガス公益",
       "sub_en": "Electric & gas utility",
-      "sub_short": "電力・ガス公益",
+      "sub_short": "電力",
       "sub_short_en": "Utility",
       "row": 1,
       "relations": [
@@ -154,7 +154,7 @@
       "name": "アマゾン",
       "sub": "クラウド・EC",
       "sub_en": "Cloud & e-commerce",
-      "sub_short": "クラウド・EC",
+      "sub_short": "クラウド",
       "sub_short_en": "Cloud",
       "row": 1,
       "relations": [
@@ -180,7 +180,7 @@
       "name": "ゾス",
       "sub": "商用EVトラック",
       "sub_en": "Commercial EV trucks",
-      "sub_short": "EVトラック",
+      "sub_short": "EV車両",
       "sub_short_en": "EV trucks",
       "row": 0,
       "relations": [

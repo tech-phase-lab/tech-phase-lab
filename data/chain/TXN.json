@@ -32,7 +32,7 @@
       "name": "UMC",
       "sub": "半導体受託製造",
       "sub_en": "Foundry",
-      "sub_short": "半導体受託製造",
+      "sub_short": "受託生産",
       "sub_short_en": "Foundry",
       "row": 0,
       "relations": [
@@ -57,8 +57,8 @@
       "name": "Silicon Laboratories",
       "sub": "無線・IoT半導体",
       "sub_en": "Wireless & IoT chips",
-      "sub_short": "無線半導体",
-      "sub_short_en": "Wireless chips",
+      "sub_short": "無線IC",
+      "sub_short_en": "RF ICs",
       "row": 1,
       "relations": [
         {
@@ -146,8 +146,8 @@
       "name": "NXP Semiconductors",
       "sub": "車載・組み込み半導体",
       "sub_en": "Automotive & embedded chips",
-      "sub_short": "車載半導体",
-      "sub_short_en": "Automotive chips",
+      "sub_short": "車載IC",
+      "sub_short_en": "Auto ICs",
       "row": 2,
       "relations": [
         {
@@ -196,8 +196,8 @@
       "name": "Monolithic Power Systems",
       "sub": "電源半導体",
       "sub_en": "Power chips",
-      "sub_short": "電源半導体",
-      "sub_short_en": "Power chips",
+      "sub_short": "電源IC",
+      "sub_short_en": "Power ICs",
       "row": 2,
       "relations": [
         {
@@ -221,8 +221,8 @@
       "name": "AMD",
       "sub": "CPU・GPU",
       "sub_en": "CPUs & GPUs",
-      "sub_short": "CPU・GPU",
-      "sub_short_en": "CPUs & GPUs",
+      "sub_short": "CPU",
+      "sub_short_en": "CPU/GPU",
       "row": 2,
       "relations": [
         {
@@ -246,8 +246,8 @@
       "name": "Alpha and Omega Semiconductor",
       "sub": "パワー半導体",
       "sub_en": "Power semiconductors",
-      "sub_short": "パワー半導体",
-      "sub_short_en": "Power chips",
+      "sub_short": "半導体",
+      "sub_short_en": "Power ICs",
       "row": 2,
       "relations": [
         {
@@ -284,8 +284,8 @@
       "name": "Power Integrations",
       "sub": "高電圧電源IC",
       "sub_en": "High-voltage power ICs",
-      "sub_short": "高電圧電源IC",
-      "sub_short_en": "Power chips",
+      "sub_short": "電源IC",
+      "sub_short_en": "Power ICs",
       "row": 2,
       "relations": [
         {
@@ -309,8 +309,8 @@
       "name": "Navitas Semiconductor",
       "sub": "GaNパワー半導体",
       "sub_en": "GaN power chips",
-      "sub_short": "GaN半導体",
-      "sub_short_en": "GaN power chips",
+      "sub_short": "GaN",
+      "sub_short_en": "GaN",
       "row": 2,
       "relations": [
         {
@@ -347,7 +347,7 @@
       "name": "GlobalFoundries",
       "sub": "半導体受託製造",
       "sub_en": "Foundry",
-      "sub_short": "半導体受託製造",
+      "sub_short": "受託生産",
       "sub_short_en": "Foundry",
       "row": 2,
       "relations": [
@@ -372,8 +372,8 @@
       "name": "MaxLinear",
       "sub": "通信半導体",
       "sub_en": "Connectivity chips",
-      "sub_short": "通信半導体",
-      "sub_short_en": "Connectivity",
+      "sub_short": "通信IC",
+      "sub_short_en": "Links",
       "row": 2,
       "relations": [
         {
@@ -397,8 +397,8 @@
       "name": "Ambarella",
       "sub": "画像処理半導体",
       "sub_en": "Vision chips",
-      "sub_short": "画像処理半導体",
-      "sub_short_en": "Vision chips",
+      "sub_short": "画像IC",
+      "sub_short_en": "Vision",
       "row": 2,
       "relations": [
         {
@@ -422,8 +422,8 @@
       "name": "Rambus",
       "sub": "メモリ関連半導体",
       "sub_en": "Memory interface chips",
-      "sub_short": "メモリ半導体",
-      "sub_short_en": "Memory chips",
+      "sub_short": "メモリ",
+      "sub_short_en": "Memory",
       "row": 2,
       "relations": [
         {
@@ -460,8 +460,8 @@
       "name": "Himax Technologies",
       "sub": "ディスプレイ半導体",
       "sub_en": "Display chips",
-      "sub_short": "表示用半導体",
-      "sub_short_en": "Display chips",
+      "sub_short": "表示IC",
+      "sub_short_en": "Display",
       "row": 2,
       "relations": [
         {
@@ -485,8 +485,8 @@
       "name": "Diodes Incorporated",
       "sub": "ディスクリート半導体",
       "sub_en": "Discrete semiconductors",
-      "sub_short": "個別半導体",
-      "sub_short_en": "Discrete chips",
+      "sub_short": "半導体",
+      "sub_short_en": "Discretes",
       "row": 2,
       "relations": [
         {
@@ -523,8 +523,8 @@
       "name": "アンビック・マイクロ",
       "sub": "低消費電力チップ",
       "sub_en": "Low-power chips",
-      "sub_short": "省電力チップ",
-      "sub_short_en": "Low-power chips",
+      "sub_short": "半導体",
+      "sub_short_en": "Chips",
       "row": 2,
       "relations": [
         {

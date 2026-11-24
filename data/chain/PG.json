@@ -28,8 +28,8 @@
       "name": "ウォルマート",
       "sub": "小売・最大顧客",
       "sub_en": "Retail, largest customer",
-      "sub_short": "小売・最大顧客",
-      "sub_short_en": "Top retailer",
+      "sub_short": "小売",
+      "sub_short_en": "Retail",
       "row": 0,
       "relations": [
         {
@@ -54,8 +54,8 @@
       "name": "ソーン",
       "sub": "栄養補助食品",
       "sub_en": "Supplements",
-      "sub_short": "栄養補助食品",
-      "sub_short_en": "Supplements",
+      "sub_short": "サプリ",
+      "sub_short_en": "Vitamins",
       "row": 0,
       "relations": [
         {
@@ -81,7 +81,7 @@
       "sub": "家庭用品",
       "sub_en": "Household products",
       "sub_short": "家庭用品",
-      "sub_short_en": "Household goods",
+      "sub_short_en": "Home",
       "row": 0,
       "relations": [
         {
@@ -107,7 +107,7 @@
       "sub": "日用品",
       "sub_en": "Household products",
       "sub_short": "日用品",
-      "sub_short_en": "Household goods",
+      "sub_short_en": "Home",
       "row": 1,
       "relations": [
         {
@@ -132,8 +132,8 @@
       "name": "ケンビュー",
       "sub": "消費者向けヘルスケア",
       "sub_en": "Consumer health",
-      "sub_short": "一般用医薬品",
-      "sub_short_en": "Consumer health",
+      "sub_short": "市販薬",
+      "sub_short_en": "Health",
       "row": 1,
       "relations": [
         {
@@ -185,7 +185,7 @@
       "sub": "ベビー・パーソナルケア",
       "sub_en": "Baby & personal care",
       "sub_short": "ベビー",
-      "sub_short_en": "Baby care",
+      "sub_short_en": "Baby",
       "row": 1,
       "relations": [
         {
@@ -210,7 +210,7 @@
       "name": "コティ",
       "sub": "化粧品・香水",
       "sub_en": "Beauty & fragrance",
-      "sub_short": "化粧品・香水",
+      "sub_short": "化粧品",
       "sub_short_en": "Beauty",
       "row": 0,
       "relations": [
@@ -236,8 +236,8 @@
       "name": "AMCONディストリビューティング",
       "sub": "食品・たばこ卸",
       "sub_en": "Convenience wholesale",
-      "sub_short": "食品・たばこ卸",
-      "sub_short_en": "Wholesale",
+      "sub_short": "食品卸",
+      "sub_short_en": "Supply",
       "row": 0,
       "relations": [
         {
@@ -263,7 +263,7 @@
       "sub": "日用品",
       "sub_en": "Household products",
       "sub_short": "日用品",
-      "sub_short_en": "Household goods",
+      "sub_short_en": "Home",
       "row": 1,
       "relations": [
         {

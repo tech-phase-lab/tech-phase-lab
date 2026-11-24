@@ -26,7 +26,7 @@
       "sub": "損害保険",
       "sub_en": "Property casualty insurance",
       "sub_short": "損害保険",
-      "sub_short_en": "P&C insurance",
+      "sub_short_en": "P&C",
       "row": 0,
       "relations": [
         {
@@ -77,8 +77,8 @@
       "name": "エッセント・グループ",
       "sub": "住宅ローン保険",
       "sub_en": "Mortgage insurance",
-      "sub_short": "住宅ローン保険",
-      "sub_short_en": "Mortgage cover",
+      "sub_short": "保険",
+      "sub_short_en": "Mortgage",
       "row": 0,
       "relations": [
         {
@@ -103,8 +103,8 @@
       "name": "イナクト・ホールディングス",
       "sub": "住宅ローン保険",
       "sub_en": "Mortgage insurance",
-      "sub_short": "住宅ローン保険",
-      "sub_short_en": "Mortgage cover",
+      "sub_short": "保険",
+      "sub_short_en": "Mortgage",
       "row": 0,
       "relations": [
         {
@@ -129,8 +129,8 @@
       "name": "MGICインベストメント",
       "sub": "住宅ローン保険",
       "sub_en": "Mortgage insurance",
-      "sub_short": "住宅ローン保険",
-      "sub_short_en": "Mortgage cover",
+      "sub_short": "保険",
+      "sub_short_en": "Mortgage",
       "row": 0,
       "relations": [
         {
@@ -155,8 +155,8 @@
       "name": "NMIホールディングス",
       "sub": "住宅ローン保険",
       "sub_en": "Mortgage insurance",
-      "sub_short": "住宅ローン保険",
-      "sub_short_en": "Mortgage cover",
+      "sub_short": "保険",
+      "sub_short_en": "Mortgage",
       "row": 0,
       "relations": [
         {
@@ -181,8 +181,8 @@
       "name": "レイディアン・グループ",
       "sub": "住宅ローン保険",
       "sub_en": "Mortgage insurance",
-      "sub_short": "住宅ローン保険",
-      "sub_short_en": "Mortgage cover",
+      "sub_short": "保険",
+      "sub_short_en": "Mortgage",
       "row": 0,
       "relations": [
         {

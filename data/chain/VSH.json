@@ -24,8 +24,8 @@
       "name": "インフィニオン・テクノロジーズ",
       "sub": "パワー半導体",
       "sub_en": "Power semiconductors",
-      "sub_short": "パワー半導体",
-      "sub_short_en": "Power chips",
+      "sub_short": "半導体",
+      "sub_short_en": "Power ICs",
       "row": 0,
       "relations": [
         {
@@ -50,8 +50,8 @@
       "name": "オン・セミコンダクター",
       "sub": "パワー半導体",
       "sub_en": "Power semiconductors",
-      "sub_short": "パワー半導体",
-      "sub_short_en": "Power chips",
+      "sub_short": "半導体",
+      "sub_short_en": "Power ICs",
       "row": 0,
       "relations": [
         {
@@ -77,7 +77,7 @@
       "sub": "半導体",
       "sub_en": "Semiconductors",
       "sub_short": "半導体",
-      "sub_short_en": "Semiconductors",
+      "sub_short_en": "Chips",
       "row": 0,
       "relations": [
         {
@@ -103,7 +103,7 @@
       "sub": "半導体",
       "sub_en": "Semiconductors",
       "sub_short": "半導体",
-      "sub_short_en": "Semiconductors",
+      "sub_short_en": "Chips",
       "row": 0,
       "relations": [
         {
@@ -128,8 +128,8 @@
       "name": "ダイオーズ",
       "sub": "ディスクリート半導体",
       "sub_en": "Discrete semiconductors",
-      "sub_short": "個別半導体",
-      "sub_short_en": "Discrete chips",
+      "sub_short": "半導体",
+      "sub_short_en": "Discretes",
       "row": 0,
       "relations": [
         {
@@ -155,7 +155,7 @@
       "sub": "半導体",
       "sub_en": "Semiconductors",
       "sub_short": "半導体",
-      "sub_short_en": "Semiconductors",
+      "sub_short_en": "Chips",
       "row": 0,
       "relations": [
         {
@@ -180,8 +180,8 @@
       "name": "アルファ・アンド・オメガ・セミコンダクター",
       "sub": "パワー半導体",
       "sub_en": "Power semis",
-      "sub_short": "パワー半導体",
-      "sub_short_en": "Power semis",
+      "sub_short": "半導体",
+      "sub_short_en": "Power ICs",
       "row": 0,
       "relations": [
         {

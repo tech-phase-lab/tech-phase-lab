@@ -167,8 +167,8 @@
       "name_en": "Novo Holdings",
       "sub": "財団の投資会社",
       "sub_en": "Foundation holding company",
-      "sub_short": "財団の投資会社",
-      "sub_short_en": "Foundation owner",
+      "sub_short": "財団",
+      "sub_short_en": "Owner",
       "row": 1,
       "relations": [
         {
@@ -272,7 +272,7 @@
       "sub": "遠隔医療",
       "sub_en": "Telehealth",
       "sub_short": "遠隔医療",
-      "sub_short_en": "Telehealth",
+      "sub_short_en": "eHealth",
       "row": 2,
       "relations": [
         {
@@ -376,7 +376,7 @@
       "sub": "希少疾患",
       "sub_en": "Rare disease",
       "sub_short": "希少疾患",
-      "sub_short_en": "Rare disease",
+      "sub_short_en": "Rare dz",
       "row": 3,
       "relations": [
         {

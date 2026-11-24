@@ -31,8 +31,8 @@
       "name_en": "DuPont de Nemours",
       "sub": "化学・素材",
       "sub_en": "Chemicals & materials",
-      "sub_short": "化学・素材",
-      "sub_short_en": "Chemicals",
+      "sub_short": "化学",
+      "sub_short_en": "Chem",
       "row": 0,
       "relations": [
         {
@@ -58,7 +58,7 @@
       "sub": "化学",
       "sub_en": "Chemicals",
       "sub_short": "化学",
-      "sub_short_en": "Chemicals",
+      "sub_short_en": "Chem",
       "row": 0,
       "relations": [
         {
@@ -84,7 +84,7 @@
       "sub": "化学(フッ素)",
       "sub_en": "Chemicals (fluoroproducts)",
       "sub_short": "化学",
-      "sub_short_en": "Chemicals",
+      "sub_short_en": "Chem",
       "row": 0,
       "relations": [
         {
@@ -135,8 +135,8 @@
       "name_en": "Arcadia Biosciences",
       "sub": "農業バイオ",
       "sub_en": "Ag biotech",
-      "sub_short": "農業バイオ",
-      "sub_short_en": "Ag biotech",
+      "sub_short": "農業",
+      "sub_short_en": "Ag bio",
       "row": 1,
       "relations": [
         {
@@ -161,8 +161,8 @@
       "name_en": "Evogene",
       "sub": "農業バイオ",
       "sub_en": "Ag biotech",
-      "sub_short": "農業バイオ",
-      "sub_short_en": "Ag biotech",
+      "sub_short": "農業",
+      "sub_short_en": "Ag bio",
       "row": 1,
       "relations": [
         {
@@ -187,8 +187,8 @@
       "name_en": "Caribou Biosciences",
       "sub": "ゲノム編集",
       "sub_en": "Gene editing",
-      "sub_short": "ゲノム編集",
-      "sub_short_en": "Gene editing",
+      "sub_short": "遺伝子",
+      "sub_short_en": "Genes",
       "row": 1,
       "relations": [
         {
@@ -213,8 +213,8 @@
       "name_en": "Sangamo Therapeutics",
       "sub": "遺伝子治療",
       "sub_en": "Genomic medicine",
-      "sub_short": "遺伝子治療",
-      "sub_short_en": "Genomic medicine",
+      "sub_short": "遺伝子",
+      "sub_short_en": "Genomics",
       "row": 1,
       "relations": [
         {
@@ -240,7 +240,7 @@
       "sub": "水道",
       "sub_en": "Water utility",
       "sub_short": "水道",
-      "sub_short_en": "Water utility",
+      "sub_short_en": "Water",
       "row": 1,
       "relations": [
         {
@@ -265,8 +265,8 @@
       "name_en": "Cibus",
       "sub": "遺伝子編集作物",
       "sub_en": "Gene-edited crops",
-      "sub_short": "遺伝子編集作物",
-      "sub_short_en": "Gene-edit crops",
+      "sub_short": "農業",
+      "sub_short_en": "Crops",
       "row": 2,
       "relations": [
         {

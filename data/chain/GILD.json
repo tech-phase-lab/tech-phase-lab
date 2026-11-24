@@ -19,8 +19,8 @@
       "name": "ジョンソン・エンド・ジョンソン",
       "sub": "HIV配合剤の提携",
       "sub_en": "HIV combination partner",
-      "sub_short": "HIV配合剤提携",
-      "sub_short_en": "HIV combo",
+      "sub_short": "HIV薬",
+      "sub_short_en": "HIV",
       "row": 0,
       "relations": [
         {
@@ -45,7 +45,7 @@
       "name": "メルク",
       "sub": "HIV長時間作用薬の提携",
       "sub_en": "Long-acting HIV partner",
-      "sub_short": "HIV薬の提携",
+      "sub_short": "HIV薬",
       "sub_short_en": "HIV drugs",
       "row": 0,
       "relations": [
@@ -71,8 +71,8 @@
       "name": "アーセルクス",
       "sub": "CAR-T療法の提携",
       "sub_en": "CAR-T partner",
-      "sub_short": "CAR-T療法",
-      "sub_short_en": "CAR-T partner",
+      "sub_short": "CAR-T",
+      "sub_short_en": "CAR-T",
       "row": 0,
       "relations": [
         {
@@ -123,7 +123,7 @@
       "name": "日本たばこ産業",
       "sub": "HIV薬の導出元",
       "sub_en": "HIV drug licensor",
-      "sub_short": "HIV薬の導出元",
+      "sub_short": "HIV薬",
       "sub_short_en": "HIV drugs",
       "row": 0,
       "relations": [
@@ -150,7 +150,7 @@
       "sub": "医薬品卸",
       "sub_en": "Wholesaler",
       "sub_short": "医薬品卸",
-      "sub_short_en": "Wholesaler",
+      "sub_short_en": "Supply",
       "row": 0,
       "relations": [
         {
@@ -176,7 +176,7 @@
       "sub": "医薬品卸",
       "sub_en": "Wholesaler",
       "sub_short": "医薬品卸",
-      "sub_short_en": "Wholesaler",
+      "sub_short_en": "Supply",
       "row": 0,
       "relations": [
         {
@@ -202,7 +202,7 @@
       "sub": "医薬品卸",
       "sub_en": "Wholesaler",
       "sub_short": "医薬品卸",
-      "sub_short_en": "Wholesaler",
+      "sub_short_en": "Supply",
       "row": 0,
       "relations": [
         {
@@ -227,8 +227,8 @@
       "name": "マクロジェニクス",
       "sub": "バイオ医薬",
       "sub_en": "Biopharma",
-      "sub_short": "バイオ医薬",
-      "sub_short_en": "Biopharma",
+      "sub_short": "バイオ",
+      "sub_short_en": "Pharma",
       "row": 0,
       "relations": [
         {

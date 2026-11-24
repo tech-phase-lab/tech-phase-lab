@@ -38,7 +38,7 @@
       "sub": "投資会社",
       "sub_en": "Investment firm",
       "sub_short": "投資会社",
-      "sub_short_en": "Investment firm",
+      "sub_short_en": "Investing",
       "row": 0,
       "relations": [
         {
@@ -64,7 +64,7 @@
       "sub": "投資会社",
       "sub_en": "Investment firm",
       "sub_short": "投資会社",
-      "sub_short_en": "Investment firm",
+      "sub_short_en": "Investing",
       "row": 0,
       "relations": [
         {
@@ -90,7 +90,7 @@
       "sub": "保険卸",
       "sub_en": "Insurance wholesale",
       "sub_short": "保険卸",
-      "sub_short_en": "Insurance sales",
+      "sub_short_en": "Insurance",
       "row": 0,
       "relations": [
         {
@@ -115,8 +115,8 @@
       "name_en": "Corebridge Financial",
       "sub": "生命保険・年金",
       "sub_en": "Life & retirement",
-      "sub_short": "生命保険・年金",
-      "sub_short_en": "Life insurance",
+      "sub_short": "生保",
+      "sub_short_en": "Life ins",
       "row": 1,
       "relations": [
         {
@@ -142,7 +142,7 @@
       "sub": "再保険",
       "sub_en": "Reinsurance",
       "sub_short": "再保険",
-      "sub_short_en": "Reinsurance",
+      "sub_short_en": "Reinsure",
       "row": 1,
       "relations": [
         {
@@ -168,7 +168,7 @@
       "sub": "再保険",
       "sub_en": "Reinsurance",
       "sub_short": "再保険",
-      "sub_short_en": "Reinsurance",
+      "sub_short_en": "Reinsure",
       "row": 1,
       "relations": [
         {
@@ -220,7 +220,7 @@
       "sub": "不動産",
       "sub_en": "Real estate",
       "sub_short": "不動産",
-      "sub_short_en": "Real estate",
+      "sub_short_en": "Property",
       "row": 2,
       "relations": [
         {

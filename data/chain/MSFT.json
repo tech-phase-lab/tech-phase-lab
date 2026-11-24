@@ -167,7 +167,7 @@
       "name": "Nebius",
       "sub": "AIクラウド",
       "sub_en": "AI cloud",
-      "sub_short": "AIクラウド",
+      "sub_short": "AI基盤",
       "sub_short_en": "AI cloud",
       "row": 0,
       "relations": [
@@ -194,7 +194,7 @@
       "name": "CoreWeave",
       "sub": "AIクラウド",
       "sub_en": "AI cloud",
-      "sub_short": "AIクラウド",
+      "sub_short": "AI基盤",
       "sub_short_en": "AI cloud",
       "row": 0,
       "relations": [
@@ -326,8 +326,8 @@
       "name": "SAP",
       "sub": "業務ソフト",
       "sub_en": "Business software",
-      "sub_short": "業務ソフト",
-      "sub_short_en": "Business apps",
+      "sub_short": "業務IT",
+      "sub_short_en": "Biz apps",
       "row": 1,
       "relations": [
         {
@@ -351,8 +351,8 @@
       "name": "Oracle",
       "sub": "データベース・クラウド",
       "sub_en": "Database & cloud",
-      "sub_short": "データベース",
-      "sub_short_en": "Database & cloud",
+      "sub_short": "DB",
+      "sub_short_en": "Database",
       "row": 1,
       "relations": [
         {
@@ -389,8 +389,8 @@
       "name": "Snowflake",
       "sub": "データ基盤",
       "sub_en": "Data platform",
-      "sub_short": "データ基盤",
-      "sub_short_en": "Data platform",
+      "sub_short": "データ",
+      "sub_short_en": "Data",
       "row": 2,
       "relations": [
         {
@@ -414,7 +414,7 @@
       "name": "SentinelOne",
       "sub": "セキュリティ",
       "sub_en": "Security",
-      "sub_short": "セキュリティ",
+      "sub_short": "防御",
       "sub_short_en": "Security",
       "row": 2,
       "relations": [
@@ -439,8 +439,8 @@
       "name": "Pegasystems",
       "sub": "業務ソフト",
       "sub_en": "Business software",
-      "sub_short": "業務ソフト",
-      "sub_short_en": "Business apps",
+      "sub_short": "業務IT",
+      "sub_short_en": "Biz apps",
       "row": 2,
       "relations": [
         {
@@ -489,8 +489,8 @@
       "name": "ServiceNow",
       "sub": "業務ソフト",
       "sub_en": "Business software",
-      "sub_short": "業務ソフト",
-      "sub_short_en": "Business apps",
+      "sub_short": "業務IT",
+      "sub_short_en": "Biz apps",
       "row": 2,
       "relations": [
         {
@@ -514,8 +514,8 @@
       "name": "Workday",
       "sub": "業務ソフト",
       "sub_en": "Business software",
-      "sub_short": "業務ソフト",
-      "sub_short_en": "Business apps",
+      "sub_short": "業務IT",
+      "sub_short_en": "Biz apps",
       "row": 2,
       "relations": [
         {
@@ -539,8 +539,8 @@
       "name": "Zoom",
       "sub": "ビデオ会議",
       "sub_en": "Video meetings",
-      "sub_short": "ビデオ会議",
-      "sub_short_en": "Video meetings",
+      "sub_short": "会議",
+      "sub_short_en": "Video",
       "row": 2,
       "relations": [
         {
@@ -564,8 +564,8 @@
       "name": "Datadog",
       "sub": "監視ソフト",
       "sub_en": "Observability",
-      "sub_short": "監視ソフト",
-      "sub_short_en": "Observability",
+      "sub_short": "監視",
+      "sub_short_en": "Monitors",
       "row": 2,
       "relations": [
         {
@@ -589,7 +589,7 @@
       "name": "Palo Alto Networks",
       "sub": "セキュリティ",
       "sub_en": "Security",
-      "sub_short": "セキュリティ",
+      "sub_short": "防御",
       "sub_short_en": "Security",
       "row": 2,
       "relations": [
@@ -614,7 +614,7 @@
       "name": "Fortinet",
       "sub": "セキュリティ",
       "sub_en": "Security",
-      "sub_short": "セキュリティ",
+      "sub_short": "防御",
       "sub_short_en": "Security",
       "row": 2,
       "relations": [
@@ -639,7 +639,7 @@
       "name": "MongoDB",
       "sub": "データベース",
       "sub_en": "Database",
-      "sub_short": "データベース",
+      "sub_short": "DB",
       "sub_short_en": "Database",
       "row": 2,
       "relations": [
@@ -664,8 +664,8 @@
       "name": "Box",
       "sub": "ファイル共有",
       "sub_en": "Content cloud",
-      "sub_short": "ファイル共有",
-      "sub_short_en": "Content cloud",
+      "sub_short": "共有",
+      "sub_short_en": "Cloud",
       "row": 2,
       "relations": [
         {
@@ -689,8 +689,8 @@
       "name": "Dropbox",
       "sub": "ファイル共有",
       "sub_en": "File sharing",
-      "sub_short": "ファイル共有",
-      "sub_short_en": "File sharing",
+      "sub_short": "共有",
+      "sub_short_en": "Files",
       "row": 2,
       "relations": [
         {

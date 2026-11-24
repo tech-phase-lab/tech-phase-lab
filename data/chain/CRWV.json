@@ -87,7 +87,7 @@
       "name": "TSMC",
       "sub": "半導体製造",
       "sub_en": "Foundry",
-      "sub_short": "半導体製造",
+      "sub_short": "半導体",
       "sub_short_en": "Foundry",
       "row": 0,
       "relations": [
@@ -115,7 +115,7 @@
       "sub": "半導体",
       "sub_en": "Semiconductors",
       "sub_short": "半導体",
-      "sub_short_en": "Semiconductors",
+      "sub_short_en": "Chips",
       "row": 0,
       "relations": [
         {
@@ -142,7 +142,7 @@
       "sub": "半導体",
       "sub_en": "Semiconductors",
       "sub_short": "半導体",
-      "sub_short_en": "Semiconductors",
+      "sub_short_en": "Chips",
       "row": 0,
       "relations": [
         {
@@ -168,8 +168,8 @@
       "name": "Core Scientific",
       "sub": "データセンター",
       "sub_en": "Data centers",
-      "sub_short": "データセンター",
-      "sub_short_en": "Data centers",
+      "sub_short": "DC",
+      "sub_short_en": "DCs",
       "row": 0,
       "relations": [
         {
@@ -208,8 +208,8 @@
       "name": "Applied Digital",
       "sub": "データセンター",
       "sub_en": "Data centers",
-      "sub_short": "データセンター",
-      "sub_short_en": "Data centers",
+      "sub_short": "DC",
+      "sub_short_en": "DCs",
       "row": 0,
       "relations": [
         {
@@ -273,8 +273,8 @@
       "name": "Backblaze",
       "sub": "クラウドストレージ",
       "sub_en": "Cloud storage",
-      "sub_short": "クラウド保存",
-      "sub_short_en": "Cloud storage",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 0,
       "relations": [
         {
@@ -298,8 +298,8 @@
       "name": "SK hynix(Solidigm)",
       "sub": "メモリー・SSD",
       "sub_en": "Memory & SSDs",
-      "sub_short": "メモリー・SSD",
-      "sub_short_en": "Memory & SSDs",
+      "sub_short": "メモリ",
+      "sub_short_en": "Memory",
       "row": 0,
       "relations": [
         {
@@ -325,8 +325,8 @@
       "name": "Sprout Social",
       "sub": "SNS管理ソフト",
       "sub_en": "Social media software",
-      "sub_short": "SNS管理ソフト",
-      "sub_short_en": "Social media",
+      "sub_short": "SNS管理",
+      "sub_short_en": "Social",
       "row": 0,
       "relations": [
         {
@@ -353,7 +353,7 @@
       "sub": "クラウド・ソフト",
       "sub_en": "Cloud & software",
       "sub_short": "クラウド",
-      "sub_short_en": "Cloud & software",
+      "sub_short_en": "Cloud",
       "row": 1,
       "relations": [
         {
@@ -393,7 +393,7 @@
       "sub": "SNS・AI",
       "sub_en": "Social & AI",
       "sub_short": "SNS・AI",
-      "sub_short_en": "Social & AI",
+      "sub_short_en": "Social",
       "row": 1,
       "relations": [
         {
@@ -418,7 +418,7 @@
       "sub": "生成AI",
       "sub_en": "Generative AI",
       "sub_short": "生成AI",
-      "sub_short_en": "Generative AI",
+      "sub_short_en": "AI",
       "row": 1,
       "relations": [
         {
@@ -460,7 +460,7 @@
       "sub": "生成AI",
       "sub_en": "Generative AI",
       "sub_short": "生成AI",
-      "sub_short_en": "Generative AI",
+      "sub_short_en": "AI",
       "row": 1,
       "relations": [
         {
@@ -486,8 +486,8 @@
       "name": "Flow Traders",
       "sub": "高頻度取引",
       "sub_en": "Market making",
-      "sub_short": "高頻度取引",
-      "sub_short_en": "Market making",
+      "sub_short": "証券",
+      "sub_short_en": "Trading",
       "row": 1,
       "relations": [
         {
@@ -512,7 +512,7 @@
       "sub": "自動車",
       "sub_en": "Automaker",
       "sub_short": "自動車",
-      "sub_short_en": "Automaker",
+      "sub_short_en": "Cars",
       "row": 1,
       "relations": [
         {
@@ -538,8 +538,8 @@
       "name": "CrowdStrike",
       "sub": "セキュリティ",
       "sub_en": "Cybersecurity",
-      "sub_short": "セキュリティ",
-      "sub_short_en": "Cybersecurity",
+      "sub_short": "防御",
+      "sub_short_en": "Security",
       "row": 2,
       "relations": [
         {
@@ -564,7 +564,7 @@
       "sub": "防衛・IT",
       "sub_en": "Defense & IT",
       "sub_short": "防衛・IT",
-      "sub_short_en": "Defense & IT",
+      "sub_short_en": "Defense",
       "row": 2,
       "relations": [
         {
@@ -619,7 +619,7 @@
       "sub": "投資銀行",
       "sub_en": "Investment bank",
       "sub_short": "投資銀行",
-      "sub_short_en": "Investment bank",
+      "sub_short_en": "Bank",
       "row": 2,
       "relations": [
         {
@@ -673,7 +673,7 @@
       "sub": "投資銀行",
       "sub_en": "Investment bank",
       "sub_short": "投資銀行",
-      "sub_short_en": "Investment bank",
+      "sub_short_en": "Bank",
       "row": 2,
       "relations": [
         {
@@ -808,7 +808,7 @@
       "name": "Nebius Group",
       "sub": "AIクラウド",
       "sub_en": "AI cloud",
-      "sub_short": "AIクラウド",
+      "sub_short": "AI基盤",
       "sub_short_en": "AI cloud",
       "row": 3,
       "relations": [
@@ -833,7 +833,7 @@
       "name": "IREN",
       "sub": "AIクラウド・マイニング",
       "sub_en": "AI cloud & mining",
-      "sub_short": "AIクラウド",
+      "sub_short": "AI基盤",
       "sub_short_en": "AI cloud",
       "row": 3,
       "relations": [
@@ -859,7 +859,7 @@
       "sub": "AI半導体・クラウド",
       "sub_en": "AI chips & cloud",
       "sub_short": "AI半導体",
-      "sub_short_en": "AI chips & cloud",
+      "sub_short_en": "AI chips",
       "row": 3,
       "relations": [
         {
@@ -883,7 +883,7 @@
       "name": "WhiteFiber",
       "sub": "AIクラウド",
       "sub_en": "AI cloud",
-      "sub_short": "AIクラウド",
+      "sub_short": "AI基盤",
       "sub_short_en": "AI cloud",
       "row": 3,
       "relations": [
@@ -908,8 +908,8 @@
       "name": "Cipher Digital",
       "sub": "データセンター・マイニング",
       "sub_en": "Data centers & mining",
-      "sub_short": "データセンター",
-      "sub_short_en": "Data centers",
+      "sub_short": "DC",
+      "sub_short_en": "DCs",
       "row": 3,
       "relations": [
         {
@@ -933,8 +933,8 @@
       "name": "HIVE Digital Technologies",
       "sub": "データセンター・マイニング",
       "sub_en": "Data centers & mining",
-      "sub_short": "データセンター",
-      "sub_short_en": "Data centers",
+      "sub_short": "DC",
+      "sub_short_en": "DCs",
       "row": 3,
       "relations": [
         {
@@ -958,8 +958,8 @@
       "name": "Soluna Holdings",
       "sub": "データセンター",
       "sub_en": "Data centers",
-      "sub_short": "データセンター",
-      "sub_short_en": "Data centers",
+      "sub_short": "DC",
+      "sub_short_en": "DCs",
       "row": 3,
       "relations": [
         {
@@ -983,7 +983,7 @@
       "name": "CleanSpark",
       "sub": "マイニング・AI基盤",
       "sub_en": "Mining & AI infrastructure",
-      "sub_short": "マイニング",
+      "sub_short": "採掘",
       "sub_short_en": "Mining",
       "row": 3,
       "relations": [
@@ -1008,8 +1008,8 @@
       "name": "Digi Power X",
       "sub": "データセンター",
       "sub_en": "Data centers",
-      "sub_short": "データセンター",
-      "sub_short_en": "Data centers",
+      "sub_short": "DC",
+      "sub_short_en": "DCs",
       "row": 3,
       "relations": [
         {
@@ -1034,7 +1034,7 @@
       "sub": "宇宙・AI",
       "sub_en": "Space & AI",
       "sub_short": "宇宙・AI",
-      "sub_short_en": "Space & AI",
+      "sub_short_en": "Space",
       "row": 3,
       "relations": [
         {

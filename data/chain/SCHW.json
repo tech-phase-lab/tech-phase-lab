@@ -33,8 +33,8 @@
       "name_en": "Forge Global",
       "sub": "未上場株の取引",
       "sub_en": "Private securities marketplace",
-      "sub_short": "未上場株の取引",
-      "sub_short_en": "Private shares",
+      "sub_short": "株取引",
+      "sub_short_en": "Shares",
       "row": 0,
       "relations": [
         {
@@ -86,7 +86,7 @@
       "sub": "住宅金融の公的金融機関",
       "sub_en": "Government-sponsored lender",
       "sub_short": "住宅金融",
-      "sub_short_en": "Gov lender",
+      "sub_short_en": "Lender",
       "row": 0,
       "relations": [
         {
@@ -112,7 +112,7 @@
       "sub": "ETF運用",
       "sub_en": "ETF sponsor",
       "sub_short": "ETF運用",
-      "sub_short_en": "ETF sponsor",
+      "sub_short_en": "ETFs",
       "row": 1,
       "relations": [
         {
@@ -138,7 +138,7 @@
       "sub": "資産運用・事務代行",
       "sub_en": "Asset management & services",
       "sub_short": "資産運用",
-      "sub_short_en": "Asset management",
+      "sub_short_en": "Assets",
       "row": 2,
       "relations": [
         {
@@ -163,8 +163,8 @@
       "name_en": "SS&C Technologies",
       "sub": "金融ソフトウェア",
       "sub_en": "Financial software",
-      "sub_short": "金融ソフト",
-      "sub_short_en": "Finance apps",
+      "sub_short": "金融IT",
+      "sub_short_en": "Finance",
       "row": 2,
       "relations": [
         {
@@ -189,8 +189,8 @@
       "name_en": "Webull",
       "sub": "ネット証券",
       "sub_en": "Online brokerage",
-      "sub_short": "ネット証券",
-      "sub_short_en": "Online brokerage",
+      "sub_short": "証券",
+      "sub_short_en": "Broker",
       "row": 2,
       "relations": [
         {

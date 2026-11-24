@@ -27,8 +27,8 @@
       "name": "ASEテクノロジー・ホールディング",
       "sub": "半導体後工程",
       "sub_en": "Chip packaging",
-      "sub_short": "半導体後工程",
-      "sub_short_en": "Chip packaging",
+      "sub_short": "後工程",
+      "sub_short_en": "Chip pack",
       "row": 0,
       "relations": [
         {
@@ -97,7 +97,7 @@
       "sub": "コネクタ",
       "sub_en": "Connectors",
       "sub_short": "コネクタ",
-      "sub_short_en": "Connectors",
+      "sub_short_en": "Plugs",
       "row": 1,
       "relations": [
         {
@@ -135,8 +135,8 @@
       "name": "アプティブ",
       "sub": "自動車部品",
       "sub_en": "Auto components",
-      "sub_short": "自動車部品",
-      "sub_short_en": "Auto components",
+      "sub_short": "車部品",
+      "sub_short_en": "Car parts",
       "row": 1,
       "relations": [
         {
@@ -188,7 +188,7 @@
       "sub": "総合産業",
       "sub_en": "Industrial conglomerate",
       "sub_short": "総合産業",
-      "sub_short_en": "Conglomerate",
+      "sub_short_en": "Group",
       "row": 1,
       "relations": [
         {

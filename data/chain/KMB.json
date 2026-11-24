@@ -57,8 +57,8 @@
       "name": "スザノ",
       "sub": "紙パルプ大手",
       "sub_en": "Pulp & paper",
-      "sub_short": "紙パルプ大手",
-      "sub_short_en": "Pulp & paper",
+      "sub_short": "製紙",
+      "sub_short_en": "Paper",
       "row": 0,
       "relations": [
         {
@@ -83,8 +83,8 @@
       "name": "ケンビュー",
       "sub": "コンシューマーヘルス",
       "sub_en": "Consumer health",
-      "sub_short": "一般用医薬品",
-      "sub_short_en": "Consumer health",
+      "sub_short": "市販薬",
+      "sub_short_en": "Health",
       "row": 0,
       "relations": [
         {
@@ -123,7 +123,7 @@
       "sub": "ベビー・パーソナルケア",
       "sub_en": "Baby & personal care",
       "sub_short": "ベビー",
-      "sub_short_en": "Baby care",
+      "sub_short_en": "Baby",
       "row": 1,
       "relations": [
         {
@@ -148,8 +148,8 @@
       "name": "グラフィック・パッケージング",
       "sub": "紙パッケージ",
       "sub_en": "Paperboard packaging",
-      "sub_short": "紙パッケージ",
-      "sub_short_en": "Paperboard",
+      "sub_short": "紙包装",
+      "sub_short_en": "Paper",
       "row": 2,
       "relations": [
         {

@@ -33,8 +33,8 @@
       "name": "Zoom",
       "sub": "ビデオ会議",
       "sub_en": "Video conferencing",
-      "sub_short": "ビデオ会議",
-      "sub_short_en": "Video calls",
+      "sub_short": "会議",
+      "sub_short_en": "Video",
       "row": 0,
       "relations": [
         {
@@ -59,7 +59,7 @@
       "sub": "ソフト・クラウド",
       "sub_en": "Software & cloud",
       "sub_short": "ソフト",
-      "sub_short_en": "Software & cloud",
+      "sub_short_en": "Software",
       "row": 1,
       "relations": [
         {
@@ -82,8 +82,8 @@
       "name": "Salesforce",
       "sub": "CRM・クラウド",
       "sub_en": "CRM & cloud",
-      "sub_short": "CRM・クラウド",
-      "sub_short_en": "CRM & cloud",
+      "sub_short": "CRM",
+      "sub_short_en": "CRM",
       "row": 2,
       "relations": [
         {
@@ -107,8 +107,8 @@
       "name": "Oracle",
       "sub": "データベース・クラウド",
       "sub_en": "Database & cloud",
-      "sub_short": "データベース",
-      "sub_short_en": "Database & cloud",
+      "sub_short": "DB",
+      "sub_short_en": "Database",
       "row": 2,
       "relations": [
         {
@@ -133,7 +133,7 @@
       "sub": "情報管理",
       "sub_en": "Information mgmt",
       "sub_short": "情報管理",
-      "sub_short_en": "Information mgmt",
+      "sub_short_en": "Data",
       "row": 2,
       "relations": [
         {
@@ -157,8 +157,8 @@
       "name": "Honeywell",
       "sub": "産業・ソフト",
       "sub_en": "Industrial & software",
-      "sub_short": "産業・ソフト",
-      "sub_short_en": "Industrial apps",
+      "sub_short": "産業",
+      "sub_short_en": "Software",
       "row": 2,
       "relations": [
         {

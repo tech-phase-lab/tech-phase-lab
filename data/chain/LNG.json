@@ -36,7 +36,7 @@
       "sub": "建設(EPC)",
       "sub_en": "Engineering & construction",
       "sub_short": "建設",
-      "sub_short_en": "Engineering",
+      "sub_short_en": "Design",
       "row": 0,
       "relations": [
         {
@@ -62,7 +62,7 @@
       "sub": "LNG船",
       "sub_en": "LNG shipping",
       "sub_short": "LNG船",
-      "sub_short_en": "LNG shipping",
+      "sub_short_en": "LNG",
       "row": 0,
       "relations": [
         {
@@ -88,7 +88,7 @@
       "sub": "LNG船",
       "sub_en": "LNG shipping",
       "sub_short": "LNG船",
-      "sub_short_en": "LNG shipping",
+      "sub_short_en": "LNG",
       "row": 0,
       "relations": [
         {
@@ -113,7 +113,7 @@
       "name_en": "TotalEnergies",
       "sub": "石油メジャー",
       "sub_en": "Oil major",
-      "sub_short": "石油メジャー",
+      "sub_short": "石油",
       "sub_short_en": "Oil major",
       "row": 1,
       "relations": [
@@ -139,8 +139,8 @@
       "name_en": "POSCO Holdings",
       "sub": "鉄鋼・商社(韓国)",
       "sub_en": "Steel & trading (Korea)",
-      "sub_short": "鉄鋼・商社",
-      "sub_short_en": "Steel & trading",
+      "sub_short": "鉄鋼",
+      "sub_short_en": "Steel",
       "row": 1,
       "relations": [
         {
@@ -192,7 +192,7 @@
       "sub": "投資会社",
       "sub_en": "Investment firm",
       "sub_short": "投資会社",
-      "sub_short_en": "Investment firm",
+      "sub_short_en": "Investing",
       "row": 2,
       "relations": [
         {
@@ -218,7 +218,7 @@
       "sub": "投資会社",
       "sub_en": "Investment firm",
       "sub_short": "投資会社",
-      "sub_short_en": "Investment firm",
+      "sub_short_en": "Investing",
       "row": 2,
       "relations": [
         {

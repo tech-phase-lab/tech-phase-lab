@@ -29,7 +29,7 @@
       "sub": "医療機器",
       "sub_en": "Medical devices",
       "sub_short": "医療機器",
-      "sub_short_en": "Medical devices",
+      "sub_short_en": "Medtech",
       "row": 0,
       "relations": [
         {
@@ -54,8 +54,8 @@
       "name_en": "OSR Holdings",
       "sub": "医療機器流通",
       "sub_en": "Medical device distribution",
-      "sub_short": "医療機器流通",
-      "sub_short_en": "Medical supply",
+      "sub_short": "医療流通",
+      "sub_short_en": "Medtech",
       "row": 0,
       "relations": [
         {
@@ -81,7 +81,7 @@
       "sub": "医療機器",
       "sub_en": "Medical devices",
       "sub_short": "医療機器",
-      "sub_short_en": "Medical devices",
+      "sub_short_en": "Medtech",
       "row": 1,
       "relations": [
         {
@@ -107,7 +107,7 @@
       "sub": "医療機器",
       "sub_en": "Medical devices",
       "sub_short": "医療機器",
-      "sub_short_en": "Medical devices",
+      "sub_short_en": "Medtech",
       "row": 1,
       "relations": [
         {
@@ -133,7 +133,7 @@
       "sub": "医療機器",
       "sub_en": "Medical devices",
       "sub_short": "医療機器",
-      "sub_short_en": "Medical devices",
+      "sub_short_en": "Medtech",
       "row": 1,
       "relations": [
         {

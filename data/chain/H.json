@@ -58,7 +58,7 @@
       "name_en": "Apple Leisure Group",
       "sub": "リゾート運営・旅行",
       "sub_en": "Resort management & travel",
-      "sub_short": "リゾート運営",
+      "sub_short": "リゾート",
       "sub_short_en": "Resorts",
       "row": 0,
       "relations": [
@@ -85,7 +85,7 @@
       "sub": "ライフスタイルホテル",
       "sub_en": "Lifestyle hotels",
       "sub_short": "ホテル",
-      "sub_short_en": "Lifestyle hotels",
+      "sub_short_en": "Hotels",
       "row": 0,
       "relations": [
         {
@@ -110,8 +110,8 @@
       "name_en": "Mr & Mrs Smith",
       "sub": "高級ホテル予約",
       "sub_en": "Boutique hotel booking",
-      "sub_short": "高級ホテル予約",
-      "sub_short_en": "Hotel booking",
+      "sub_short": "旅行予約",
+      "sub_short_en": "Travel",
       "row": 0,
       "relations": [
         {
@@ -137,7 +137,7 @@
       "sub": "ライフスタイルホテル",
       "sub_en": "Lifestyle hotels",
       "sub_short": "ホテル",
-      "sub_short_en": "Lifestyle hotels",
+      "sub_short_en": "Hotels",
       "row": 0,
       "relations": [
         {
@@ -162,8 +162,8 @@
       "name_en": "Juniper Hotels",
       "sub": "ホテル所有(インド)",
       "sub_en": "Hotel owner (India)",
-      "sub_short": "ホテル所有",
-      "sub_short_en": "Hotel owner",
+      "sub_short": "ホテル",
+      "sub_short_en": "Hotels",
       "row": 0,
       "relations": [
         {
@@ -188,8 +188,8 @@
       "name_en": "Xenia Hotels & Resorts",
       "sub": "ホテルREIT",
       "sub_en": "Hotel REIT",
-      "sub_short": "ホテルREIT",
-      "sub_short_en": "Hotel REIT",
+      "sub_short": "REIT",
+      "sub_short_en": "REIT",
       "row": 1,
       "relations": [
         {
@@ -215,7 +215,7 @@
       "sub": "民泊仲介",
       "sub_en": "Home-sharing platform",
       "sub_short": "民泊仲介",
-      "sub_short_en": "Home sharing",
+      "sub_short_en": "Rentals",
       "row": 2,
       "relations": [
         {
@@ -240,8 +240,8 @@
       "name_en": "Expedia Group",
       "sub": "オンライン旅行(Vrbo)",
       "sub_en": "Online travel (Vrbo)",
-      "sub_short": "オンライン旅行",
-      "sub_short_en": "Online travel",
+      "sub_short": "旅行予約",
+      "sub_short_en": "Travel",
       "row": 2,
       "relations": [
         {
@@ -267,7 +267,7 @@
       "sub": "EC・旅行サービス",
       "sub_en": "E-commerce & travel services",
       "sub_short": "EC・旅行",
-      "sub_short_en": "E-commerce",
+      "sub_short_en": "E-com",
       "row": 2,
       "relations": [
         {

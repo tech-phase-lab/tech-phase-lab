@@ -32,7 +32,7 @@
       "name": "TSMC",
       "sub": "ファウンドリ",
       "sub_en": "Foundry",
-      "sub_short": "ファウンドリ",
+      "sub_short": "受託生産",
       "sub_short_en": "Foundry",
       "row": 0,
       "relations": [
@@ -70,7 +70,7 @@
       "name": "GlobalFoundries",
       "sub": "ファウンドリ",
       "sub_en": "Foundry",
-      "sub_short": "ファウンドリ",
+      "sub_short": "受託生産",
       "sub_short_en": "Foundry",
       "row": 0,
       "relations": [
@@ -108,7 +108,7 @@
       "name": "Powerchip Semiconductor",
       "sub": "ファウンドリ",
       "sub_en": "Foundry",
-      "sub_short": "ファウンドリ",
+      "sub_short": "受託生産",
       "sub_short_en": "Foundry",
       "row": 0,
       "relations": [
@@ -157,8 +157,8 @@
       "name": "Infineon",
       "sub": "パワー半導体",
       "sub_en": "Power semiconductors",
-      "sub_short": "パワー半導体",
-      "sub_short_en": "Power chips",
+      "sub_short": "半導体",
+      "sub_short_en": "Power ICs",
       "row": 2,
       "relations": [
         {
@@ -182,8 +182,8 @@
       "name": "Power Integrations",
       "sub": "パワー半導体",
       "sub_en": "Power chips",
-      "sub_short": "パワー半導体",
-      "sub_short_en": "Power chips",
+      "sub_short": "半導体",
+      "sub_short_en": "Power ICs",
       "row": 2,
       "relations": [
         {
@@ -220,8 +220,8 @@
       "name": "onsemi",
       "sub": "パワー半導体",
       "sub_en": "Power semiconductors",
-      "sub_short": "パワー半導体",
-      "sub_short_en": "Power chips",
+      "sub_short": "半導体",
+      "sub_short_en": "Power ICs",
       "row": 2,
       "relations": [
         {
@@ -245,8 +245,8 @@
       "name": "Texas Instruments",
       "sub": "アナログ半導体",
       "sub_en": "Analog chips",
-      "sub_short": "アナログ半導体",
-      "sub_short_en": "Analog chips",
+      "sub_short": "アナログ",
+      "sub_short_en": "Analog",
       "row": 2,
       "relations": [
         {
@@ -270,7 +270,7 @@
       "name": "Wolfspeed",
       "sub": "SiC半導体",
       "sub_en": "SiC semiconductors",
-      "sub_short": "SiC半導体",
+      "sub_short": "SiC",
       "sub_short_en": "SiC chips",
       "row": 2,
       "relations": [
@@ -296,7 +296,7 @@
       "sub": "半導体",
       "sub_en": "Semiconductors",
       "sub_short": "半導体",
-      "sub_short_en": "Semiconductors",
+      "sub_short_en": "Chips",
       "row": 2,
       "relations": [
         {
@@ -321,7 +321,7 @@
       "sub": "半導体",
       "sub_en": "Semiconductors",
       "sub_short": "半導体",
-      "sub_short_en": "Semiconductors",
+      "sub_short_en": "Chips",
       "row": 2,
       "relations": [
         {

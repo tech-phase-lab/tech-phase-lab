@@ -44,7 +44,7 @@
       "sub": "電力会社",
       "sub_en": "Power producer",
       "sub_short": "電力会社",
-      "sub_short_en": "Power producer",
+      "sub_short_en": "Power",
       "row": 1,
       "relations": [
         {
@@ -122,7 +122,7 @@
       "name": "Chevron / Engine No. 1",
       "sub": "石油・投資",
       "sub_en": "Energy & investment",
-      "sub_short": "石油・投資",
+      "sub_short": "石油",
       "sub_short_en": "Energy",
       "row": 2,
       "relations": [
@@ -149,7 +149,7 @@
       "name": "日立製作所",
       "sub": "原子力・電機",
       "sub_en": "Nuclear & electric",
-      "sub_short": "原子力・電機",
+      "sub_short": "原子力",
       "sub_short_en": "Nuclear",
       "row": 2,
       "relations": [
@@ -175,8 +175,8 @@
       "name": "Baker Hughes",
       "sub": "エネルギー機器",
       "sub_en": "Energy equipment",
-      "sub_short": "エネルギー機器",
-      "sub_short_en": "Energy equipment",
+      "sub_short": "エネ機器",
+      "sub_short_en": "Energy",
       "row": 2,
       "relations": [
         {
@@ -213,8 +213,8 @@
       "name": "GE Aerospace",
       "sub": "航空エンジン",
       "sub_en": "Aerospace",
-      "sub_short": "航空エンジン",
-      "sub_short_en": "Aerospace",
+      "sub_short": "エンジン",
+      "sub_short_en": "Aero",
       "row": 2,
       "relations": [
         {
@@ -239,7 +239,7 @@
       "sub": "発電機器",
       "sub_en": "Power equipment",
       "sub_short": "発電機器",
-      "sub_short_en": "Power equipment",
+      "sub_short_en": "Power",
       "row": 3,
       "relations": [
         {
@@ -264,7 +264,7 @@
       "sub": "発電機器",
       "sub_en": "Power equipment",
       "sub_short": "発電機器",
-      "sub_short_en": "Power equipment",
+      "sub_short_en": "Power",
       "row": 3,
       "relations": [
         {
@@ -289,7 +289,7 @@
       "sub": "風力発電",
       "sub_en": "Wind power",
       "sub_short": "風力発電",
-      "sub_short_en": "Wind power",
+      "sub_short_en": "Wind",
       "row": 4,
       "relations": [
         {
@@ -314,7 +314,7 @@
       "sub": "風力発電",
       "sub_en": "Wind power",
       "sub_short": "風力発電",
-      "sub_short_en": "Wind power",
+      "sub_short_en": "Wind",
       "row": 4,
       "relations": [
         {
@@ -339,7 +339,7 @@
       "sub": "風力発電",
       "sub_en": "Wind power",
       "sub_short": "風力発電",
-      "sub_short_en": "Wind power",
+      "sub_short_en": "Wind",
       "row": 4,
       "relations": [
         {
@@ -363,8 +363,8 @@
       "name": "Schneider Electric",
       "sub": "電機・電力管理",
       "sub_en": "Electrical equipment",
-      "sub_short": "電機・電力管理",
-      "sub_short_en": "Electrical gear",
+      "sub_short": "電機",
+      "sub_short_en": "Electrical",
       "row": 5,
       "relations": [
         {
@@ -388,8 +388,8 @@
       "name": "ABB",
       "sub": "電機・ロボット",
       "sub_en": "Electrical equipment",
-      "sub_short": "電機・ロボット",
-      "sub_short_en": "Electrical gear",
+      "sub_short": "電機",
+      "sub_short_en": "Electrical",
       "row": 5,
       "relations": [
         {
@@ -413,8 +413,8 @@
       "name": "Siemens",
       "sub": "電機・産業",
       "sub_en": "Electrical equipment",
-      "sub_short": "電機・産業",
-      "sub_short_en": "Electrical gear",
+      "sub_short": "電機",
+      "sub_short_en": "Electrical",
       "row": 5,
       "relations": [
         {
@@ -439,7 +439,7 @@
       "sub": "電機",
       "sub_en": "Electrical equipment",
       "sub_short": "電機",
-      "sub_short_en": "Electrical gear",
+      "sub_short_en": "Electrical",
       "row": 5,
       "relations": [
         {
@@ -464,8 +464,8 @@
       "name": "Caterpillar",
       "sub": "建機・発電機",
       "sub_en": "Machinery & generators",
-      "sub_short": "建機・発電機",
-      "sub_short_en": "Machinery",
+      "sub_short": "建機",
+      "sub_short_en": "Machines",
       "row": 3,
       "relations": [
         {
@@ -489,8 +489,8 @@
       "name": "Babcock & Wilcox",
       "sub": "発電・環境機器",
       "sub_en": "Power & environmental equipment",
-      "sub_short": "発電・環境機器",
-      "sub_short_en": "Power equipment",
+      "sub_short": "発電",
+      "sub_short_en": "Power",
       "row": 3,
       "relations": [
         {

@@ -30,8 +30,8 @@
       "name": "Alphabet(Google)",
       "sub": "検索・広告",
       "sub_en": "Search & ads",
-      "sub_short": "検索・広告",
-      "sub_short_en": "Search & ads",
+      "sub_short": "検索",
+      "sub_short_en": "Search",
       "row": 0,
       "relations": [
         {
@@ -68,8 +68,8 @@
       "name": "Amazon",
       "sub": "EC・クラウド",
       "sub_en": "E-commerce & cloud",
-      "sub_short": "EC・クラウド",
-      "sub_short_en": "E-commerce",
+      "sub_short": "EC",
+      "sub_short_en": "E-com",
       "row": 2,
       "relations": [
         {
@@ -134,7 +134,7 @@
       "sub": "音楽配信",
       "sub_en": "Music streaming",
       "sub_short": "音楽配信",
-      "sub_short_en": "Music streaming",
+      "sub_short_en": "Music",
       "row": 1,
       "relations": [
         {
@@ -171,7 +171,7 @@
       "sub": "動画配信",
       "sub_en": "Video streaming",
       "sub_short": "動画配信",
-      "sub_short_en": "Video streaming",
+      "sub_short_en": "Video",
       "row": 0,
       "relations": [
         {
@@ -222,8 +222,8 @@
       "name": "サムスン電子",
       "sub": "電機・家電",
       "sub_en": "Consumer electronics",
-      "sub_short": "電機・家電",
-      "sub_short_en": "Electronics",
+      "sub_short": "電機",
+      "sub_short_en": "Devices",
       "row": 0,
       "relations": [
         {
@@ -250,8 +250,8 @@
       "name": "マグナイト",
       "sub": "広告枠取引(SSP)",
       "sub_en": "Ad exchange (SSP)",
-      "sub_short": "広告枠取引",
-      "sub_short_en": "Ad exchange",
+      "sub_short": "広告",
+      "sub_short_en": "Ads",
       "row": 0,
       "relations": [
         {
@@ -276,8 +276,8 @@
       "name": "パブマティック",
       "sub": "広告枠取引(SSP)",
       "sub_en": "Ad exchange (SSP)",
-      "sub_short": "広告枠取引",
-      "sub_short_en": "Ad exchange",
+      "sub_short": "広告",
+      "sub_short_en": "Ads",
       "row": 0,
       "relations": [
         {
@@ -302,8 +302,8 @@
       "name": "アドビ",
       "sub": "クリエイティブ・マーケティングソフト",
       "sub_en": "Creative & marketing software",
-      "sub_short": "クリエイティブ",
-      "sub_short_en": "Creative apps",
+      "sub_short": "制作",
+      "sub_short_en": "Design",
       "row": 1,
       "relations": [
         {
@@ -328,7 +328,7 @@
       "name": "ウーバー・テクノロジーズ",
       "sub": "配車・配達",
       "sub_en": "Mobility & delivery",
-      "sub_short": "配車・配達",
+      "sub_short": "配車",
       "sub_short_en": "Mobility",
       "row": 1,
       "relations": [
@@ -354,8 +354,8 @@
       "name": "スノーフレイク",
       "sub": "データクラウド",
       "sub_en": "Data cloud",
-      "sub_short": "データクラウド",
-      "sub_short_en": "Data cloud",
+      "sub_short": "データ",
+      "sub_short_en": "Data",
       "row": 1,
       "relations": [
         {
@@ -381,7 +381,7 @@
       "sub": "決済",
       "sub_en": "Payments",
       "sub_short": "決済",
-      "sub_short_en": "Payments",
+      "sub_short_en": "Payment",
       "row": 1,
       "relations": [
         {
@@ -406,8 +406,8 @@
       "name": "電通グループ",
       "sub": "広告代理店",
       "sub_en": "Advertising agency",
-      "sub_short": "広告代理店",
-      "sub_short_en": "Ad agency",
+      "sub_short": "広告",
+      "sub_short_en": "Ads",
       "row": 1,
       "relations": [
         {
@@ -432,8 +432,8 @@
       "name": "インスタカート",
       "sub": "食料品配送",
       "sub_en": "Grocery delivery",
-      "sub_short": "食料品配送",
-      "sub_short_en": "Grocery delivery",
+      "sub_short": "宅配",
+      "sub_short_en": "Grocery",
       "row": 1,
       "relations": [
         {

@@ -33,7 +33,7 @@
       "sub": "ソフト・クラウド",
       "sub_en": "Software & cloud",
       "sub_short": "ソフト",
-      "sub_short_en": "Software & cloud",
+      "sub_short_en": "Software",
       "row": 0,
       "relations": [
         {
@@ -136,7 +136,7 @@
       "sub": "ゲーム機",
       "sub_en": "Game consoles",
       "sub_short": "ゲーム機",
-      "sub_short_en": "Game consoles",
+      "sub_short_en": "Consoles",
       "row": 0,
       "relations": [
         {
@@ -241,7 +241,7 @@
       "name": "Apple",
       "sub": "ハード・ソフト",
       "sub_en": "Devices & software",
-      "sub_short": "ハード・ソフト",
+      "sub_short": "機器",
       "sub_short_en": "Devices",
       "row": 2,
       "relations": [
@@ -279,8 +279,8 @@
       "name": "Alphabet(Google)",
       "sub": "検索・クラウド",
       "sub_en": "Search & cloud",
-      "sub_short": "検索・クラウド",
-      "sub_short_en": "Search & cloud",
+      "sub_short": "検索",
+      "sub_short_en": "Search",
       "row": 2,
       "relations": [
         {
@@ -331,7 +331,7 @@
       "sub": "SNS",
       "sub_en": "Social media",
       "sub_short": "SNS",
-      "sub_short_en": "Social media",
+      "sub_short_en": "Social",
       "row": 2,
       "relations": [
         {
@@ -368,8 +368,8 @@
       "name": "Tencent",
       "sub": "ゲーム・SNS",
       "sub_en": "Games & social",
-      "sub_short": "ゲーム・SNS",
-      "sub_short_en": "Games & social",
+      "sub_short": "ゲーム",
+      "sub_short_en": "Games",
       "row": 2,
       "relations": [
         {

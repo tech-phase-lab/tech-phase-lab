@@ -30,7 +30,7 @@
       "sub": "香水",
       "sub_en": "Fragrances",
       "sub_short": "香水",
-      "sub_short_en": "Fragrances",
+      "sub_short_en": "Scents",
       "row": 0,
       "relations": [
         {
@@ -56,7 +56,7 @@
       "sub": "医療金融",
       "sub_en": "Healthcare finance",
       "sub_short": "医療金融",
-      "sub_short_en": "Health finance",
+      "sub_short_en": "Health",
       "row": 0,
       "relations": [
         {
@@ -82,7 +82,7 @@
       "sub": "点鼻薬",
       "sub_en": "Nasal drugs",
       "sub_short": "点鼻薬",
-      "sub_short_en": "Nasal drugs",
+      "sub_short_en": "Nasal",
       "row": 0,
       "relations": [
         {
@@ -108,7 +108,7 @@
       "sub": "点鼻アドレナリン",
       "sub_en": "Nasal epinephrine",
       "sub_short": "点鼻薬",
-      "sub_short_en": "Nasal spray",
+      "sub_short_en": "Nasal",
       "row": 0,
       "relations": [
         {
@@ -133,8 +133,8 @@
       "name_en": "West Pharmaceutical Services",
       "sub": "医薬品包装",
       "sub_en": "Drug packaging",
-      "sub_short": "医薬品包装",
-      "sub_short_en": "Drug packaging",
+      "sub_short": "医薬包装",
+      "sub_short_en": "Pharma",
       "row": 1,
       "relations": [
         {
@@ -159,8 +159,8 @@
       "name_en": "Silgan Holdings",
       "sub": "容器・キャップ",
       "sub_en": "Containers & closures",
-      "sub_short": "容器・キャップ",
-      "sub_short_en": "Containers",
+      "sub_short": "容器",
+      "sub_short_en": "Boxes",
       "row": 1,
       "relations": [
         {
@@ -186,7 +186,7 @@
       "sub": "包装",
       "sub_en": "Packaging",
       "sub_short": "包装",
-      "sub_short_en": "Packaging",
+      "sub_short_en": "Packing",
       "row": 1,
       "relations": [
         {
@@ -212,7 +212,7 @@
       "sub": "包装部品",
       "sub_en": "Packaging components",
       "sub_short": "包装部品",
-      "sub_short_en": "Packaging",
+      "sub_short_en": "Packing",
       "row": 1,
       "relations": [
         {

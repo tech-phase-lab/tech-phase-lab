@@ -38,7 +38,7 @@
       "name_en": "Amprius Technologies",
       "sub": "高性能電池",
       "sub_en": "High-energy batteries",
-      "sub_short": "高性能電池",
+      "sub_short": "電池",
       "sub_short_en": "Batteries",
       "row": 0,
       "relations": [
@@ -64,8 +64,8 @@
       "name_en": "Mobilicom",
       "sub": "ドローン通信",
       "sub_en": "Drone communications",
-      "sub_short": "ドローン通信",
-      "sub_short_en": "Drone comms",
+      "sub_short": "ドローン",
+      "sub_short_en": "Drones",
       "row": 0,
       "relations": [
         {
@@ -90,8 +90,8 @@
       "name_en": "SiTime",
       "sub": "MEMSタイミング",
       "sub_en": "MEMS timing",
-      "sub_short": "タイミングIC",
-      "sub_short_en": "MEMS timing",
+      "sub_short": "半導体",
+      "sub_short_en": "Timing",
       "row": 1,
       "relations": [
         {
@@ -116,8 +116,8 @@
       "name_en": "Bionano Genomics",
       "sub": "ゲノム解析",
       "sub_en": "Genome analysis",
-      "sub_short": "ゲノム解析",
-      "sub_short_en": "Genome analysis",
+      "sub_short": "ゲノム",
+      "sub_short_en": "Genomics",
       "row": 1,
       "relations": [
         {
@@ -143,7 +143,7 @@
       "sub": "分析機器",
       "sub_en": "Scientific instruments",
       "sub_short": "分析機器",
-      "sub_short_en": "Lab instruments",
+      "sub_short_en": "Lab tools",
       "row": 1,
       "relations": [
         {
@@ -168,7 +168,7 @@
       "name_en": "Qioptiq",
       "sub": "光学・防衛電子",
       "sub_en": "Optics & defense electronics",
-      "sub_short": "光学・防衛電子",
+      "sub_short": "光学",
       "sub_short_en": "Optics",
       "row": 2,
       "relations": [
@@ -194,8 +194,8 @@
       "name_en": "Ocean Power Technologies",
       "sub": "海洋無人機・波力",
       "sub_en": "Ocean drones & wave power",
-      "sub_short": "海洋無人機",
-      "sub_short_en": "Ocean drones",
+      "sub_short": "無人機",
+      "sub_short_en": "Drones",
       "row": 2,
       "relations": [
         {
@@ -247,7 +247,7 @@
       "sub": "航法機器",
       "sub_en": "Navigation devices",
       "sub_short": "航法機器",
-      "sub_short_en": "Navigation",
+      "sub_short_en": "Nav",
       "row": 3,
       "relations": [
         {
@@ -272,8 +272,8 @@
       "name_en": "Xylem",
       "sub": "水処理・計測",
       "sub_en": "Water technology",
-      "sub_short": "水処理・計測",
-      "sub_short_en": "Water technology",
+      "sub_short": "水処理",
+      "sub_short_en": "Water",
       "row": 3,
       "relations": [
         {
@@ -298,8 +298,8 @@
       "name_en": "Mirion Technologies",
       "sub": "放射線計測",
       "sub_en": "Radiation detection",
-      "sub_short": "放射線計測",
-      "sub_short_en": "Radiation tests",
+      "sub_short": "放射線",
+      "sub_short_en": "Radiation",
       "row": 3,
       "relations": [
         {
@@ -325,7 +325,7 @@
       "sub": "計測機器",
       "sub_en": "Test & measurement",
       "sub_short": "計測機器",
-      "sub_short_en": "Test equipment",
+      "sub_short_en": "Testing",
       "row": 3,
       "relations": [
         {
@@ -350,8 +350,8 @@
       "name_en": "908 Devices",
       "sub": "小型分析装置",
       "sub_en": "Portable analyzers",
-      "sub_short": "小型分析装置",
-      "sub_short_en": "Analyzers",
+      "sub_short": "分析装置",
+      "sub_short_en": "Testers",
       "row": 3,
       "relations": [
         {
@@ -377,7 +377,7 @@
       "sub": "X線部品",
       "sub_en": "X-ray components",
       "sub_short": "X線部品",
-      "sub_short_en": "X-ray components",
+      "sub_short_en": "X-ray",
       "row": 3,
       "relations": [
         {
@@ -402,7 +402,7 @@
       "name_en": "AIRO Group",
       "sub": "ドローン・航空",
       "sub_en": "Drones & aviation",
-      "sub_short": "ドローン・航空",
+      "sub_short": "ドローン",
       "sub_short_en": "Drones",
       "row": 3,
       "relations": [

@@ -33,8 +33,8 @@
       "name_en": "UFP Technologies",
       "sub": "医療用部品",
       "sub_en": "Medical components",
-      "sub_short": "医療用部品",
-      "sub_short_en": "Medical parts",
+      "sub_short": "医療部品",
+      "sub_short_en": "Medtech",
       "row": 0,
       "relations": [
         {
@@ -60,7 +60,7 @@
       "sub": "医薬品",
       "sub_en": "Pharmaceuticals",
       "sub_short": "医薬品",
-      "sub_short_en": "Pharmaceuticals",
+      "sub_short_en": "Pharma",
       "row": 1,
       "relations": [
         {
@@ -86,7 +86,7 @@
       "sub": "医療機器",
       "sub_en": "Medical devices",
       "sub_short": "医療機器",
-      "sub_short_en": "Medical devices",
+      "sub_short_en": "Medtech",
       "row": 2,
       "relations": [
         {
@@ -112,7 +112,7 @@
       "sub": "医療機器・医薬品",
       "sub_en": "Medical devices & pharma",
       "sub_short": "医療機器",
-      "sub_short_en": "Medical devices",
+      "sub_short_en": "Medtech",
       "row": 2,
       "relations": [
         {
@@ -137,8 +137,8 @@
       "name_en": "SS Innovations",
       "sub": "手術支援ロボット",
       "sub_en": "Surgical robots",
-      "sub_short": "手術ロボット",
-      "sub_short_en": "Surgical robots",
+      "sub_short": "手術機器",
+      "sub_short_en": "Robots",
       "row": 2,
       "relations": [
         {
@@ -176,8 +176,8 @@
       "name_en": "MicroPort MedBot",
       "sub": "手術支援ロボット",
       "sub_en": "Surgical robots",
-      "sub_short": "手術ロボット",
-      "sub_short_en": "Surgical robots",
+      "sub_short": "手術機器",
+      "sub_short_en": "Robots",
       "row": 2,
       "relations": [
         {
@@ -203,7 +203,7 @@
       "sub": "医療機器",
       "sub_en": "Medical devices",
       "sub_short": "医療機器",
-      "sub_short_en": "Medical devices",
+      "sub_short_en": "Medtech",
       "row": 2,
       "relations": [
         {
@@ -228,8 +228,8 @@
       "name_en": "Vicarious Surgical",
       "sub": "手術支援ロボット",
       "sub_en": "Surgical robots",
-      "sub_short": "手術ロボット",
-      "sub_short_en": "Surgical robots",
+      "sub_short": "手術機器",
+      "sub_short_en": "Robots",
       "row": 2,
       "relations": [
         {
@@ -254,8 +254,8 @@
       "name_en": "CMR Surgical",
       "sub": "手術支援ロボット(英国)",
       "sub_en": "Surgical robots (UK)",
-      "sub_short": "手術ロボット",
-      "sub_short_en": "Surgical robots",
+      "sub_short": "手術機器",
+      "sub_short_en": "Robots",
       "row": 2,
       "relations": [
         {
@@ -280,8 +280,8 @@
       "name_en": "Distalmotion",
       "sub": "手術支援ロボット(スイス)",
       "sub_en": "Surgical robots (Switzerland)",
-      "sub_short": "手術ロボット",
-      "sub_short_en": "Surgical robots",
+      "sub_short": "手術機器",
+      "sub_short_en": "Robots",
       "row": 2,
       "relations": [
         {
@@ -307,7 +307,7 @@
       "sub": "内視鏡(ドイツ)",
       "sub_en": "Endoscopy (Germany)",
       "sub_short": "内視鏡",
-      "sub_short_en": "Endoscopy",
+      "sub_short_en": "Scopes",
       "row": 2,
       "relations": [
         {
@@ -332,8 +332,8 @@
       "name_en": "Medicaroid",
       "sub": "手術支援ロボット(日本)",
       "sub_en": "Surgical robots (Japan)",
-      "sub_short": "手術ロボット",
-      "sub_short_en": "Surgical robots",
+      "sub_short": "手術機器",
+      "sub_short_en": "Robots",
       "row": 2,
       "relations": [
         {
@@ -358,8 +358,8 @@
       "name_en": "Noah Medical",
       "sub": "気管支鏡ロボット",
       "sub_en": "Bronchoscopy robots",
-      "sub_short": "気管支ロボット",
-      "sub_short_en": "Lung robots",
+      "sub_short": "手術機器",
+      "sub_short_en": "Robots",
       "row": 2,
       "relations": [
         {
@@ -384,8 +384,8 @@
       "name_en": "Shenzhen Edge Medical",
       "sub": "手術支援ロボット(中国)",
       "sub_en": "Surgical robots (China)",
-      "sub_short": "手術ロボット",
-      "sub_short_en": "Surgical robots",
+      "sub_short": "手術機器",
+      "sub_short_en": "Robots",
       "row": 2,
       "relations": [
         {
@@ -410,8 +410,8 @@
       "name_en": "meerecompany",
       "sub": "手術支援ロボット(韓国)",
       "sub_en": "Surgical robots (Korea)",
-      "sub_short": "手術ロボット",
-      "sub_short_en": "Surgical robots",
+      "sub_short": "手術機器",
+      "sub_short_en": "Robots",
       "row": 2,
       "relations": [
         {
@@ -436,8 +436,8 @@
       "name_en": "Beijing Surgerii Robotics",
       "sub": "手術支援ロボット(中国)",
       "sub_en": "Surgical robots (China)",
-      "sub_short": "手術ロボット",
-      "sub_short_en": "Surgical robots",
+      "sub_short": "手術機器",
+      "sub_short_en": "Robots",
       "row": 2,
       "relations": [
         {

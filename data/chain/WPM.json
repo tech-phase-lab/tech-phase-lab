@@ -84,7 +84,7 @@
       "sub": "金鉱山",
       "sub_en": "Gold mining",
       "sub_short": "金鉱山",
-      "sub_short_en": "Gold mining",
+      "sub_short_en": "Gold",
       "row": 0,
       "relations": [
         {
@@ -110,7 +110,7 @@
       "sub": "銅鉱山",
       "sub_en": "Copper mining",
       "sub_short": "銅鉱山",
-      "sub_short_en": "Copper mining",
+      "sub_short_en": "Copper",
       "row": 0,
       "relations": [
         {
@@ -136,7 +136,7 @@
       "sub": "銀鉱山",
       "sub_en": "Silver mining",
       "sub_short": "銀鉱山",
-      "sub_short_en": "Silver mining",
+      "sub_short_en": "Silver",
       "row": 0,
       "relations": [
         {
@@ -162,7 +162,7 @@
       "sub": "銀鉱山",
       "sub_en": "Silver mining",
       "sub_short": "銀鉱山",
-      "sub_short_en": "Silver mining",
+      "sub_short_en": "Silver",
       "row": 0,
       "relations": [
         {
@@ -188,7 +188,7 @@
       "sub": "金鉱山",
       "sub_en": "Gold mining",
       "sub_short": "金鉱山",
-      "sub_short_en": "Gold mining",
+      "sub_short_en": "Gold",
       "row": 0,
       "relations": [
         {
@@ -214,7 +214,7 @@
       "sub": "金銀開発",
       "sub_en": "Gold & silver development",
       "sub_short": "金銀開発",
-      "sub_short_en": "Gold mining",
+      "sub_short_en": "Gold",
       "row": 1,
       "relations": [
         {
@@ -240,7 +240,7 @@
       "sub": "金開発",
       "sub_en": "Gold development",
       "sub_short": "金開発",
-      "sub_short_en": "Gold development",
+      "sub_short_en": "Gold",
       "row": 1,
       "relations": [
         {

@@ -23,8 +23,8 @@
       "name": "カーニバル",
       "sub": "クルーズ大手",
       "sub_en": "Cruise operator",
-      "sub_short": "クルーズ大手",
-      "sub_short_en": "Cruise operator",
+      "sub_short": "クルーズ",
+      "sub_short_en": "Cruises",
       "row": 0,
       "relations": [
         {
@@ -62,8 +62,8 @@
       "name": "ロイヤル・カリビアン",
       "sub": "クルーズ大手",
       "sub_en": "Cruise operator",
-      "sub_short": "クルーズ大手",
-      "sub_short_en": "Cruise operator",
+      "sub_short": "クルーズ",
+      "sub_short_en": "Cruises",
       "row": 0,
       "relations": [
         {
@@ -88,8 +88,8 @@
       "name": "バイキング(外洋クルーズ)",
       "sub": "クルーズ会社",
       "sub_en": "Cruise line",
-      "sub_short": "クルーズ会社",
-      "sub_short_en": "Cruise line",
+      "sub_short": "クルーズ",
+      "sub_short_en": "Cruises",
       "row": 0,
       "relations": [
         {
@@ -114,8 +114,8 @@
       "name": "MSCクルーズ",
       "sub": "クルーズ会社",
       "sub_en": "Cruise line",
-      "sub_short": "クルーズ会社",
-      "sub_short_en": "Cruise line",
+      "sub_short": "クルーズ",
+      "sub_short_en": "Cruises",
       "row": 0,
       "relations": [
         {
@@ -140,8 +140,8 @@
       "name": "リージェント・ホスピタリティ・ワールドワイド",
       "sub": "ブランド使用許諾元",
       "sub_en": "Brand licensor",
-      "sub_short": "ブランド許諾",
-      "sub_short_en": "Brand licensor",
+      "sub_short": "ブランド",
+      "sub_short_en": "Brands",
       "row": 0,
       "relations": [
         {

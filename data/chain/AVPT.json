@@ -75,7 +75,7 @@
       "sub": "ソフト・クラウド",
       "sub_en": "Software & cloud",
       "sub_short": "ソフト",
-      "sub_short_en": "Software & cloud",
+      "sub_short_en": "Software",
       "row": 0,
       "relations": [
         {
@@ -101,8 +101,8 @@
       "name": "monday.com",
       "sub": "業務管理SaaS",
       "sub_en": "Work management SaaS",
-      "sub_short": "業務管理SaaS",
-      "sub_short_en": "Work mgmt",
+      "sub_short": "業務IT",
+      "sub_short_en": "Work IT",
       "row": 1,
       "relations": [
         {
@@ -129,7 +129,7 @@
       "sub": "電子署名",
       "sub_en": "E-signature",
       "sub_short": "電子署名",
-      "sub_short_en": "E-signature",
+      "sub_short_en": "E-sign",
       "row": 1,
       "relations": [
         {

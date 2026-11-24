@@ -25,7 +25,7 @@
       "sub": "総合商社",
       "sub_en": "Trading house",
       "sub_short": "総合商社",
-      "sub_short_en": "Trading house",
+      "sub_short_en": "Trading",
       "row": 0,
       "relations": [
         {
@@ -51,7 +51,7 @@
       "sub": "化学",
       "sub_en": "Chemicals",
       "sub_short": "化学",
-      "sub_short_en": "Chemicals",
+      "sub_short_en": "Chem",
       "row": 0,
       "relations": [
         {
@@ -77,7 +77,7 @@
       "sub": "化学",
       "sub_en": "Chemicals",
       "sub_short": "化学",
-      "sub_short_en": "Chemicals",
+      "sub_short_en": "Chem",
       "row": 0,
       "relations": [
         {
@@ -103,7 +103,7 @@
       "sub": "化学(サウジ)",
       "sub_en": "Chemicals (Saudi Arabia)",
       "sub_short": "化学",
-      "sub_short_en": "Chemicals",
+      "sub_short_en": "Chem",
       "row": 0,
       "relations": [
         {
@@ -129,7 +129,7 @@
       "sub": "化学",
       "sub_en": "Chemicals",
       "sub_short": "化学",
-      "sub_short_en": "Chemicals",
+      "sub_short_en": "Chem",
       "row": 1,
       "relations": [
         {
@@ -154,8 +154,8 @@
       "name_en": "Glaukos",
       "sub": "眼科医療機器",
       "sub_en": "Ophthalmic devices",
-      "sub_short": "眼科医療機器",
-      "sub_short_en": "Eye devices",
+      "sub_short": "眼科",
+      "sub_short_en": "Eye care",
       "row": 1,
       "relations": [
         {

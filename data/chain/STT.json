@@ -32,7 +32,7 @@
       "name_en": "Apollo",
       "sub": "オルタナティブ運用",
       "sub_en": "Alternative asset management",
-      "sub_short": "代替資産運用",
+      "sub_short": "資産運用",
       "sub_short_en": "Alt. assets",
       "row": 0,
       "relations": [
@@ -59,7 +59,7 @@
       "sub": "私募融資ファンド(BDC)",
       "sub_en": "Private credit fund (BDC)",
       "sub_short": "私募融資",
-      "sub_short_en": "Private credit",
+      "sub_short_en": "Credit",
       "row": 1,
       "relations": [
         {
@@ -85,7 +85,7 @@
       "sub": "私募融資ファンド(BDC)",
       "sub_en": "Private credit fund (BDC)",
       "sub_short": "私募融資",
-      "sub_short_en": "Private credit",
+      "sub_short_en": "Credit",
       "row": 1,
       "relations": [
         {
@@ -111,7 +111,7 @@
       "sub": "私募融資ファンド(BDC)",
       "sub_en": "Private credit fund (BDC)",
       "sub_short": "私募融資",
-      "sub_short_en": "Private credit",
+      "sub_short_en": "Credit",
       "row": 1,
       "relations": [
         {
@@ -136,8 +136,8 @@
       "name_en": "Blue Owl Technology Finance",
       "sub": "テック企業向け融資(BDC)",
       "sub_en": "Tech lending (BDC)",
-      "sub_short": "テック融資",
-      "sub_short_en": "Tech lending",
+      "sub_short": "融資",
+      "sub_short_en": "Lending",
       "row": 1,
       "relations": [
         {
@@ -162,8 +162,8 @@
       "name_en": "AB Commercial Real Estate Private Debt Fund",
       "sub": "不動産融資ファンド",
       "sub_en": "Real estate debt fund",
-      "sub_short": "不動産融資",
-      "sub_short_en": "RE debt fund",
+      "sub_short": "不動産",
+      "sub_short_en": "Property",
       "row": 1,
       "relations": [
         {
@@ -188,8 +188,8 @@
       "name_en": "SS&C Technologies",
       "sub": "金融ソフトウェア・事務代行",
       "sub_en": "Financial software & fund admin",
-      "sub_short": "金融ソフト",
-      "sub_short_en": "Finance apps",
+      "sub_short": "金融IT",
+      "sub_short_en": "Finance",
       "row": 2,
       "relations": [
         {
@@ -215,7 +215,7 @@
       "sub": "資産運用・事務代行",
       "sub_en": "Asset management & fund services",
       "sub_short": "資産運用",
-      "sub_short_en": "Asset management",
+      "sub_short_en": "Assets",
       "row": 2,
       "relations": [
         {

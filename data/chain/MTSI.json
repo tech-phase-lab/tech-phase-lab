@@ -34,7 +34,7 @@
       "sub": "投資銀行",
       "sub_en": "Investment bank",
       "sub_short": "投資銀行",
-      "sub_short_en": "Investment bank",
+      "sub_short_en": "Bank",
       "row": 1,
       "relations": [
         {
@@ -62,7 +62,7 @@
       "sub": "半導体",
       "sub_en": "Semiconductors",
       "sub_short": "半導体",
-      "sub_short_en": "Semiconductors",
+      "sub_short_en": "Chips",
       "row": 2,
       "relations": [
         {
@@ -87,8 +87,8 @@
       "name": "アナログ・デバイセズ",
       "sub": "アナログ半導体",
       "sub_en": "Analog semiconductors",
-      "sub_short": "アナログ半導体",
-      "sub_short_en": "Analog chips",
+      "sub_short": "アナログ",
+      "sub_short_en": "Analog",
       "row": 2,
       "relations": [
         {
@@ -113,8 +113,8 @@
       "name": "マックスリニア",
       "sub": "通信用半導体",
       "sub_en": "Communications semiconductors",
-      "sub_short": "通信用半導体",
-      "sub_short_en": "Comms chips",
+      "sub_short": "通信IC",
+      "sub_short_en": "Comms IC",
       "row": 2,
       "relations": [
         {
@@ -139,8 +139,8 @@
       "name": "IQE",
       "sub": "化合物半導体ウエハー",
       "sub_en": "Compound semiconductor wafers",
-      "sub_short": "化合物ウエハー",
-      "sub_short_en": "Compound wafers",
+      "sub_short": "ウエハー",
+      "sub_short_en": "Wafers",
       "row": 0,
       "relations": [
         {
@@ -178,7 +178,7 @@
       "sub": "半導体",
       "sub_en": "Semiconductors",
       "sub_short": "半導体",
-      "sub_short_en": "Semiconductors",
+      "sub_short_en": "Chips",
       "row": 0,
       "relations": [
         {
@@ -205,8 +205,8 @@
       "name": "アプライド・オプトエレクトロニクス",
       "sub": "光トランシーバー",
       "sub_en": "Optical transceivers",
-      "sub_short": "光通信部品",
-      "sub_short_en": "Transceivers",
+      "sub_short": "光部品",
+      "sub_short_en": "Optics",
       "row": 0,
       "relations": [
         {
@@ -233,7 +233,7 @@
       "name": "TTMテクノロジーズ",
       "sub": "プリント基板",
       "sub_en": "Printed circuit boards",
-      "sub_short": "プリント基板",
+      "sub_short": "基板",
       "sub_short_en": "PCBs",
       "row": 2,
       "relations": [

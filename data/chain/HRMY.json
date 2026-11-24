@@ -30,7 +30,7 @@
       "sub": "製薬(仏)",
       "sub_en": "Pharmaceuticals (France)",
       "sub_short": "製薬",
-      "sub_short_en": "Pharmaceuticals",
+      "sub_short_en": "Pharma",
       "row": 0,
       "relations": [
         {
@@ -56,7 +56,7 @@
       "sub": "カンナビジオール製剤",
       "sub_en": "Cannabidiol gel",
       "sub_short": "CBD製剤",
-      "sub_short_en": "Cannabidiol gel",
+      "sub_short_en": "CBD",
       "row": 0,
       "relations": [
         {
@@ -82,7 +82,7 @@
       "sub": "創薬",
       "sub_en": "Drug discovery",
       "sub_short": "創薬",
-      "sub_short_en": "Drug discovery",
+      "sub_short_en": "Drug R&D",
       "row": 0,
       "relations": [
         {
@@ -107,8 +107,8 @@
       "name_en": "Jazz Pharmaceuticals",
       "sub": "睡眠障害薬",
       "sub_en": "Sleep disorder drugs",
-      "sub_short": "睡眠障害薬",
-      "sub_short_en": "Sleep drugs",
+      "sub_short": "睡眠薬",
+      "sub_short_en": "Sleep",
       "row": 1,
       "relations": [
         {
@@ -133,8 +133,8 @@
       "name_en": "Axsome Therapeutics",
       "sub": "中枢神経薬",
       "sub_en": "CNS drugs",
-      "sub_short": "中枢神経薬",
-      "sub_short_en": "CNS drugs",
+      "sub_short": "神経薬",
+      "sub_short_en": "CNS",
       "row": 1,
       "relations": [
         {
@@ -160,7 +160,7 @@
       "sub": "創薬(印)",
       "sub_en": "Drug discovery (India)",
       "sub_short": "創薬",
-      "sub_short_en": "Drug discovery",
+      "sub_short_en": "Drug R&D",
       "row": 1,
       "relations": [
         {
@@ -185,8 +185,8 @@
       "name_en": "NLS Pharmaceutics",
       "sub": "中枢神経薬(スイス)",
       "sub_en": "CNS drugs (Switzerland)",
-      "sub_short": "中枢神経薬",
-      "sub_short_en": "CNS drugs",
+      "sub_short": "神経薬",
+      "sub_short_en": "CNS",
       "row": 1,
       "relations": [
         {
@@ -212,7 +212,7 @@
       "sub": "製薬",
       "sub_en": "Pharmaceuticals",
       "sub_short": "製薬",
-      "sub_short_en": "Pharmaceuticals",
+      "sub_short_en": "Pharma",
       "row": 1,
       "relations": [
         {

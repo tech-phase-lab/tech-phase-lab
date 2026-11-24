@@ -21,8 +21,8 @@
       "name_en": "Ipswitch",
       "sub": "ファイル転送・ネットワーク監視",
       "sub_en": "File transfer & network monitoring",
-      "sub_short": "ファイル転送",
-      "sub_short_en": "File transfer",
+      "sub_short": "転送",
+      "sub_short_en": "Files",
       "row": 0,
       "relations": [
         {
@@ -47,8 +47,8 @@
       "name_en": "Chef Software",
       "sub": "IT運用の自動化",
       "sub_en": "Infrastructure automation",
-      "sub_short": "IT運用の自動化",
-      "sub_short_en": "Infra automation",
+      "sub_short": "IT運用",
+      "sub_short_en": "IT",
       "row": 0,
       "relations": [
         {
@@ -74,7 +74,7 @@
       "sub": "負荷分散",
       "sub_en": "Load balancing",
       "sub_short": "負荷分散",
-      "sub_short_en": "Load balancing",
+      "sub_short_en": "Network",
       "row": 0,
       "relations": [
         {
@@ -99,7 +99,7 @@
       "name_en": "MarkLogic",
       "sub": "データベース",
       "sub_en": "Database",
-      "sub_short": "データベース",
+      "sub_short": "DB",
       "sub_short_en": "Database",
       "row": 0,
       "relations": [
@@ -125,8 +125,8 @@
       "name_en": "ShareFile",
       "sub": "ファイル共有",
       "sub_en": "File sharing",
-      "sub_short": "ファイル共有",
-      "sub_short_en": "File sharing",
+      "sub_short": "共有",
+      "sub_short_en": "Files",
       "row": 0,
       "relations": [
         {

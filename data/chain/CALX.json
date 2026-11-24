@@ -33,8 +33,8 @@
       "name": "ベライゾン・コミュニケーションズ",
       "sub": "通信事業者",
       "sub_en": "Telecom carrier",
-      "sub_short": "通信事業者",
-      "sub_short_en": "Telecom carrier",
+      "sub_short": "通信",
+      "sub_short_en": "Telecom",
       "row": 0,
       "relations": [
         {
@@ -59,8 +59,8 @@
       "name": "コックス・コミュニケーションズ",
       "sub": "ケーブル事業者",
       "sub_en": "Cable operator",
-      "sub_short": "ケーブル事業者",
-      "sub_short_en": "Cable operator",
+      "sub_short": "ケーブル",
+      "sub_short_en": "Cable",
       "row": 0,
       "relations": [
         {
@@ -85,8 +85,8 @@
       "name": "Tモバイル(Lumos)",
       "sub": "光ファイバー事業者",
       "sub_en": "Fiber operator",
-      "sub_short": "光ファイバー",
-      "sub_short_en": "Fiber operator",
+      "sub_short": "光通信",
+      "sub_short_en": "Fiber",
       "row": 0,
       "relations": [
         {
@@ -111,8 +111,8 @@
       "name": "ブライトスピード",
       "sub": "通信事業者",
       "sub_en": "Telecom carrier",
-      "sub_short": "通信事業者",
-      "sub_short_en": "Telecom carrier",
+      "sub_short": "通信",
+      "sub_short_en": "Telecom",
       "row": 0,
       "relations": [
         {
@@ -137,8 +137,8 @@
       "name": "シティファイバー",
       "sub": "光ファイバー事業者",
       "sub_en": "Fiber operator",
-      "sub_short": "光ファイバー",
-      "sub_short_en": "Fiber operator",
+      "sub_short": "光通信",
+      "sub_short_en": "Fiber",
       "row": 0,
       "relations": [
         {
@@ -216,7 +216,7 @@
       "sub": "通信機器",
       "sub_en": "Telecom equipment",
       "sub_short": "通信機器",
-      "sub_short_en": "Telecom gear",
+      "sub_short_en": "Telecom",
       "row": 2,
       "relations": [
         {
@@ -255,7 +255,7 @@
       "sub": "通信機器",
       "sub_en": "Telecom equipment",
       "sub_short": "通信機器",
-      "sub_short_en": "Telecom gear",
+      "sub_short_en": "Telecom",
       "row": 2,
       "relations": [
         {
@@ -281,7 +281,7 @@
       "sub": "通信機器",
       "sub_en": "Telecom equipment",
       "sub_short": "通信機器",
-      "sub_short_en": "Telecom gear",
+      "sub_short_en": "Telecom",
       "row": 2,
       "relations": [
         {
@@ -307,7 +307,7 @@
       "sub": "ブロードバンド機器",
       "sub_en": "Broadband equipment",
       "sub_short": "通信機器",
-      "sub_short_en": "Broadband gear",
+      "sub_short_en": "Network",
       "row": 2,
       "relations": [
         {
@@ -333,7 +333,7 @@
       "sub": "通信機器",
       "sub_en": "Telecom equipment",
       "sub_short": "通信機器",
-      "sub_short_en": "Telecom gear",
+      "sub_short_en": "Telecom",
       "row": 2,
       "relations": [
         {
@@ -359,7 +359,7 @@
       "sub": "ネットワーク機器",
       "sub_en": "Networking equipment",
       "sub_short": "通信機器",
-      "sub_short_en": "Network gear",
+      "sub_short_en": "Network",
       "row": 2,
       "relations": [
         {
@@ -384,8 +384,8 @@
       "name": "アマゾン(eero/Ring)",
       "sub": "ホームWi-Fi",
       "sub_en": "Home Wi-Fi",
-      "sub_short": "ホームWi-Fi",
-      "sub_short_en": "Home Wi-Fi",
+      "sub_short": "Wi-Fi",
+      "sub_short_en": "Wi-Fi",
       "row": 2,
       "relations": [
         {

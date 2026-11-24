@@ -29,8 +29,8 @@
       "name_en": "BIOTRONIK",
       "sub": "循環器医療機器(独)",
       "sub_en": "Cardiovascular devices (Germany)",
-      "sub_short": "循環器医療機器",
-      "sub_short_en": "Cardio devices",
+      "sub_short": "循環器",
+      "sub_short_en": "Cardiac",
       "row": 0,
       "relations": [
         {
@@ -56,7 +56,7 @@
       "sub": "投資会社",
       "sub_en": "Private equity",
       "sub_short": "投資会社",
-      "sub_short_en": "Private equity",
+      "sub_short_en": "PE",
       "row": 0,
       "relations": [
         {
@@ -82,7 +82,7 @@
       "sub": "投資会社",
       "sub_en": "Private equity",
       "sub_short": "投資会社",
-      "sub_short_en": "Private equity",
+      "sub_short_en": "PE",
       "row": 0,
       "relations": [
         {
@@ -108,7 +108,7 @@
       "sub": "呼吸器・麻酔用品",
       "sub_en": "Respiratory & anesthesia products",
       "sub_short": "呼吸器",
-      "sub_short_en": "Respiratory care",
+      "sub_short_en": "Lung",
       "row": 0,
       "relations": [
         {
@@ -133,8 +133,8 @@
       "name_en": "Haemonetics",
       "sub": "血液・血管医療機器",
       "sub_en": "Blood & vascular devices",
-      "sub_short": "血管医療機器",
-      "sub_short_en": "Blood devices",
+      "sub_short": "血管治療",
+      "sub_short_en": "Blood",
       "row": 1,
       "relations": [
         {
@@ -159,7 +159,7 @@
       "name_en": "Merit Medical",
       "sub": "カテーテル等",
       "sub_en": "Catheters & devices",
-      "sub_short": "カテーテル等",
+      "sub_short": "医療機器",
       "sub_short_en": "Catheters",
       "row": 1,
       "relations": [
@@ -186,7 +186,7 @@
       "sub": "輸液・血管アクセス",
       "sub_en": "Infusion & vascular access",
       "sub_short": "輸液",
-      "sub_short_en": "Infusion devices",
+      "sub_short_en": "Infusion",
       "row": 1,
       "relations": [
         {

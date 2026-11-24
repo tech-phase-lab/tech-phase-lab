@@ -32,7 +32,7 @@
       "name_en": "Thermo Fisher Scientific",
       "sub": "研究機器・試薬",
       "sub_en": "Life science tools",
-      "sub_short": "研究機器・試薬",
+      "sub_short": "研究機器",
       "sub_short_en": "Lab tools",
       "row": 0,
       "relations": [
@@ -59,7 +59,7 @@
       "sub": "分子診断",
       "sub_en": "Molecular diagnostics",
       "sub_short": "分子診断",
-      "sub_short_en": "Molecular tests",
+      "sub_short_en": "Tests",
       "row": 0,
       "relations": [
         {
@@ -85,7 +85,7 @@
       "sub": "核酸医薬",
       "sub_en": "Oligonucleotide drugs",
       "sub_short": "核酸医薬",
-      "sub_short_en": "Oligo drugs",
+      "sub_short_en": "RNA",
       "row": 1,
       "relations": [
         {
@@ -111,7 +111,7 @@
       "sub": "細胞治療(パーキンソン病)",
       "sub_en": "Cell therapy (Parkinson's)",
       "sub_short": "細胞治療",
-      "sub_short_en": "Cell therapy",
+      "sub_short_en": "Cell tx",
       "row": 1,
       "relations": [
         {
@@ -136,8 +136,8 @@
       "name_en": "Quanterix",
       "sub": "超高感度タンパク測定",
       "sub_en": "Ultra-sensitive protein detection",
-      "sub_short": "タンパク測定",
-      "sub_short_en": "Protein tests",
+      "sub_short": "測定",
+      "sub_short_en": "Proteins",
       "row": 2,
       "relations": [
         {
@@ -162,8 +162,8 @@
       "name_en": "BillionToOne",
       "sub": "遺伝子検査",
       "sub_en": "Genetic testing",
-      "sub_short": "遺伝子検査",
-      "sub_short_en": "Genetic testing",
+      "sub_short": "遺伝子",
+      "sub_short_en": "DNA tests",
       "row": 2,
       "relations": [
         {

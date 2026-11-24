@@ -30,7 +30,7 @@
       "sub": "発電機",
       "sub_en": "Generators",
       "sub_short": "発電機",
-      "sub_short_en": "Generators",
+      "sub_short_en": "Gensets",
       "row": 0,
       "relations": [
         {
@@ -68,7 +68,7 @@
       "name": "ブリッグス・アンド・ストラットン",
       "sub": "小型エンジン・発電機",
       "sub_en": "Engines & generators",
-      "sub_short": "小型エンジン",
+      "sub_short": "エンジン",
       "sub_short_en": "Engines",
       "row": 0,
       "relations": [
@@ -95,7 +95,7 @@
       "sub": "発電機・エンジン",
       "sub_en": "Generators & engines",
       "sub_short": "発電機",
-      "sub_short_en": "Generators",
+      "sub_short_en": "Gensets",
       "row": 0,
       "relations": [
         {
@@ -120,8 +120,8 @@
       "name": "テスラ",
       "sub": "蓄電池・EV",
       "sub_en": "Storage & EVs",
-      "sub_short": "蓄電池・EV",
-      "sub_short_en": "Storage & EVs",
+      "sub_short": "蓄電池",
+      "sub_short_en": "Storage",
       "row": 0,
       "relations": [
         {
@@ -146,8 +146,8 @@
       "name": "エンフェーズ・エナジー",
       "sub": "マイクロインバーター",
       "sub_en": "Microinverters",
-      "sub_short": "インバーター",
-      "sub_short_en": "Microinverters",
+      "sub_short": "電力変換",
+      "sub_short_en": "Inverters",
       "row": 0,
       "relations": [
         {
@@ -172,8 +172,8 @@
       "name": "ソーラーエッジ",
       "sub": "太陽光インバーター",
       "sub_en": "Solar inverters",
-      "sub_short": "太陽光機器",
-      "sub_short_en": "Solar inverters",
+      "sub_short": "太陽光",
+      "sub_short_en": "Solar",
       "row": 0,
       "relations": [
         {
@@ -198,8 +198,8 @@
       "name": "キャタピラー",
       "sub": "産業用発電機",
       "sub_en": "Industrial generators",
-      "sub_short": "産業用発電機",
-      "sub_short_en": "Generators",
+      "sub_short": "発電機",
+      "sub_short_en": "Gensets",
       "row": 0,
       "relations": [
         {
@@ -237,8 +237,8 @@
       "name": "カミンズ",
       "sub": "産業用発電機",
       "sub_en": "Industrial generators",
-      "sub_short": "産業用発電機",
-      "sub_short_en": "Generators",
+      "sub_short": "発電機",
+      "sub_short_en": "Gensets",
       "row": 0,
       "relations": [
         {
@@ -264,7 +264,7 @@
       "sub": "EV充電器",
       "sub_en": "EV chargers",
       "sub_short": "EV充電器",
-      "sub_short_en": "EV chargers",
+      "sub_short_en": "Charging",
       "row": 0,
       "relations": [
         {
@@ -290,7 +290,7 @@
       "sub": "発電機",
       "sub_en": "Generators",
       "sub_short": "発電機",
-      "sub_short_en": "Generators",
+      "sub_short_en": "Gensets",
       "row": 1,
       "relations": [
         {
