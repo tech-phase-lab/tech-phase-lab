@@ -1,0 +1,239 @@
+{
+  "root": {
+    "ticker": "DCH",
+    "name": "ダウチ(旧アメリカン・アクスル)",
+    "cik": 1062231,
+    "name_en": "Dauch (formerly American Axle)"
+  },
+  "rows": [
+    {
+      "ja": "買収",
+      "en": "Acquisition",
+      "above": true
+    },
+    {
+      "ja": "主要顧客(売上10%超)",
+      "en": "Major customers (over 10% of sales)"
+    },
+    {
+      "ja": "新規受注・量産開始の顧客",
+      "en": "Customers with recent awards & launches"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "Dowlais",
+      "ticker": "Dowlais",
+      "name": "ダウレイス",
+      "name_en": "Dowlais",
+      "sub": "自動車部品",
+      "sub_en": "Auto parts",
+      "sub_short": "車部品",
+      "sub_short_en": "Car parts",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Dowlais Groupを買収(2026年2月)",
+          "text_en": "Acquired Dowlais Group (February 2026)",
+          "source": {
+            "label": "Dauch 10-K(2025年度)",
+            "label_en": "Dauch 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1062231/000106223126000020/dch-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "On February 3, 2026, we completed our previously announced acquisition of Dowlais Group plc (Dowlais) whereby we acquired the entire issued share capital of Dowlais (the Business Combination)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GM",
+      "ticker": "GM",
+      "name": "ゼネラル・モーターズ",
+      "name_en": "General Motors",
+      "sub": "自動車",
+      "sub_en": "Automobiles",
+      "sub_short": "自動車",
+      "sub_short_en": "Cars",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大の顧客(売上の約44%、2025年)",
+          "text_en": "Largest customer (about 44% of 2025 sales)",
+          "source": {
+            "label": "Dauch 10-K(2025年度)",
+            "label_en": "Dauch 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1062231/000106223126000020/dch-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Sales to GM were approximately 44% of our consolidated net sales in 2025, 42% in 2024, and 39% in 2023."
+          }
+        }
+      ]
+    },
+    {
+      "id": "F",
+      "ticker": "F",
+      "name": "フォード",
+      "name_en": "Ford",
+      "sub": "自動車",
+      "sub_en": "Automobiles",
+      "sub_short": "自動車",
+      "sub_short_en": "Cars",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "売上の約15%(2025年)",
+          "text_en": "About 15% of 2025 sales",
+          "source": {
+            "label": "Dauch 10-K(2025年度)",
+            "label_en": "Dauch 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1062231/000106223126000020/dch-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Sales to Ford were approximately 15% of our consolidated net sales in 2025, 13% in 2024, and 12% in 2023."
+          }
+        }
+      ]
+    },
+    {
+      "id": "STLA",
+      "ticker": "STLA",
+      "name": "ステランティス",
+      "name_en": "Stellantis",
+      "sub": "自動車",
+      "sub_en": "Automobiles",
+      "sub_short": "自動車",
+      "sub_short_en": "Cars",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "売上の約13%(2025年)",
+          "text_en": "About 13% of 2025 sales",
+          "source": {
+            "label": "Dauch 10-K(2025年度)",
+            "label_en": "Dauch 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1062231/000106223126000020/dch-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Sales to Stellantis were approximately 13% of our consolidated net sales in 2025, 13% in 2024, and 16% in 2023."
+          }
+        }
+      ]
+    },
+    {
+      "id": "VOW3",
+      "ticker": "VOW3",
+      "name": "フォルクスワーゲン",
+      "name_en": "Volkswagen",
+      "sub": "自動車",
+      "sub_en": "Automobiles",
+      "sub_short": "自動車",
+      "sub_short_en": "Cars",
+      "row": 2,
+      "relations": [
+        {
+          "type": "down",
+          "text": "新規受注・量産開始の顧客",
+          "text_en": "Customer with recent new awards and launches",
+          "source": {
+            "label": "Dauch 10-K(2025年度)",
+            "label_en": "Dauch 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1062231/000106223126000020/dch-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Recent new business awards and program launches include customers such as Scout Motors, Dongfeng, Skywell, Audi, Volkswagen, FAW Group and Phoebus."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Scout",
+      "ticker": "Scout Motors",
+      "name": "スカウト・モーターズ",
+      "name_en": "Scout Motors",
+      "sub": "電動車",
+      "sub_en": "Electric vehicles",
+      "sub_short": "電動車",
+      "sub_short_en": "EVs",
+      "row": 2,
+      "relations": [
+        {
+          "type": "down",
+          "text": "新規受注・量産開始の顧客",
+          "text_en": "Customer with recent new awards and launches",
+          "source": {
+            "label": "Dauch 10-K(2025年度)",
+            "label_en": "Dauch 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1062231/000106223126000020/dch-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Recent new business awards and program launches include customers such as Scout Motors, Dongfeng, Skywell, Audi, Volkswagen, FAW Group and Phoebus."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Dongfeng",
+      "ticker": "Dongfeng",
+      "name": "東風汽車",
+      "name_en": "Dongfeng",
+      "sub": "自動車",
+      "sub_en": "Automobiles",
+      "sub_short": "自動車",
+      "sub_short_en": "Cars",
+      "row": 2,
+      "relations": [
+        {
+          "type": "down",
+          "text": "新規受注・量産開始の顧客",
+          "text_en": "Customer with recent new awards and launches",
+          "source": {
+            "label": "Dauch 10-K(2025年度)",
+            "label_en": "Dauch 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1062231/000106223126000020/dch-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Recent new business awards and program launches include customers such as Scout Motors, Dongfeng, Skywell, Audi, Volkswagen, FAW Group and Phoebus."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FAW",
+      "ticker": "FAW",
+      "name": "第一汽車",
+      "name_en": "FAW Group",
+      "sub": "自動車",
+      "sub_en": "Automobiles",
+      "sub_short": "自動車",
+      "sub_short_en": "Cars",
+      "row": 2,
+      "relations": [
+        {
+          "type": "down",
+          "text": "新規受注・量産開始の顧客",
+          "text_en": "Customer with recent new awards and launches",
+          "source": {
+            "label": "Dauch 10-K(2025年度)",
+            "label_en": "Dauch 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1062231/000106223126000020/dch-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Recent new business awards and program launches include customers such as Scout Motors, Dongfeng, Skywell, Audi, Volkswagen, FAW Group and Phoebus."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

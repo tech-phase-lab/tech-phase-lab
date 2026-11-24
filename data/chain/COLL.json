@@ -1,0 +1,161 @@
+{
+  "root": {
+    "ticker": "COLL",
+    "name": "コレジウム・ファーマシューティカル",
+    "cik": 1267565,
+    "name_en": "Collegium Pharmaceutical"
+  },
+  "rows": [
+    {
+      "ja": "ライセンス元",
+      "en": "Licensors",
+      "above": true
+    },
+    {
+      "ja": "買収・製品取得",
+      "en": "Acquisitions"
+    },
+    {
+      "ja": "提携(後発品)",
+      "en": "Partner (authorized generic)"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "Grunenthal",
+      "ticker": "Grünenthal",
+      "name": "グリュネンタール",
+      "name_en": "Grünenthal",
+      "sub": "医薬品",
+      "sub_en": "Pharmaceuticals",
+      "sub_short": "医薬品",
+      "sub_short_en": "Pharma",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "鎮痛薬Nucyntaの米国販売権のライセンス元",
+          "text_en": "Licensor of US rights to the Nucynta pain medicines",
+          "source": {
+            "label": "Collegium 10-K(2025年度)",
+            "label_en": "Collegium 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1267565/000162828026011992/coll-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "We are party to a license agreement with Grünenthal Gmbh (the \"Grünenthal License\") pursuant to which we license the right to commercialize the Nucynta Products in the United States and its territories and a license agreement with Shionogi (the \"Shionogi License\") pursuant to which we license the right to commercialize Symproic in the United States and its territories."
+          }
+        }
+      ]
+    },
+    {
+      "id": "4507",
+      "ticker": "4507",
+      "name": "塩野義製薬",
+      "name_en": "Shionogi",
+      "sub": "医薬品",
+      "sub_en": "Pharmaceuticals",
+      "sub_short": "医薬品",
+      "sub_short_en": "Pharma",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "便秘治療薬Symproicの米国販売権のライセンス元",
+          "text_en": "Licensor of US rights to Symproic",
+          "source": {
+            "label": "Collegium 10-K(2025年度)",
+            "label_en": "Collegium 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1267565/000162828026011992/coll-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "We are party to a license agreement with Grünenthal Gmbh (the \"Grünenthal License\") pursuant to which we license the right to commercialize the Nucynta Products in the United States and its territories and a license agreement with Shionogi (the \"Shionogi License\") pursuant to which we license the right to commercialize Symproic in the United States and its territories."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Ironshore",
+      "ticker": "Ironshore",
+      "name": "アイアンショア",
+      "name_en": "Ironshore",
+      "sub": "ADHD治療薬",
+      "sub_en": "ADHD medicines",
+      "sub_short": "ADHD薬",
+      "sub_short_en": "ADHD",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ADHD治療薬Jornay PMを持つIronshoreを買収(2024年9月)",
+          "text_en": "Acquired Ironshore, maker of the ADHD drug Jornay PM (September 2024)",
+          "source": {
+            "label": "Collegium 10-K(2025年度)",
+            "label_en": "Collegium 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1267565/000162828026011992/coll-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Jornay PM On September 3, 2024, we acquired Ironshore, which had developed and obtained commercial approval to market Jornay PM in the United States."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ASRT",
+      "ticker": "ASRT",
+      "name": "アサーティオ",
+      "name_en": "Assertio Therapeutics",
+      "sub": "医薬品",
+      "sub_en": "Pharmaceuticals",
+      "sub_short": "医薬品",
+      "sub_short_en": "Pharma",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Nucynta製品の資産と販売をAssertioから取得",
+          "text_en": "Acquired the Nucynta assets and commercial rights from Assertio",
+          "source": {
+            "label": "Collegium 10-K(2025年度)",
+            "label_en": "Collegium 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1267565/000162828026011992/coll-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "acquired trademarks associated with the Nucynta Products in connection with our acquisition of assets and commercialization responsibilities of the Nucynta Products from Assertio Therapeutics, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HIK",
+      "ticker": "Hikma",
+      "name": "ヒクマ・ファーマシューティカルズ",
+      "name_en": "Hikma Pharmaceuticals",
+      "sub": "後発医薬品",
+      "sub_en": "Generic drugs",
+      "sub_short": "後発薬",
+      "sub_short_en": "Generics",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Nucyntaのオーソライズド・ジェネリックの権利を供与",
+          "text_en": "Granted rights to an authorized generic of the Nucynta products",
+          "source": {
+            "label": "Collegium 10-K(2025年度)",
+            "label_en": "Collegium 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1267565/000162828026011992/coll-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "(\"Hikma\"), pursuant to which we granted Hikma rights relating to an authorized generic version of the Nucynta Products in the United States."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

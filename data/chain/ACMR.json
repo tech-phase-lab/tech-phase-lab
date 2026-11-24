@@ -12,7 +12,7 @@
   ],
   "rivals": [
     "LRCX",
-    "TEL",
+    "8035",
     "NAURA",
     "SCREEN"
   ],
@@ -109,7 +109,7 @@
       "name_en": "SCREEN Holdings"
     },
     {
-      "id": "TEL",
+      "id": "8035",
       "ticker": "TEL",
       "name": "東京エレクトロン",
       "sub": "半導体製造装置",

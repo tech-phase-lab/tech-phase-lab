@@ -1,0 +1,156 @@
+{
+  "root": {
+    "ticker": "WOR",
+    "name": "ワージントン・エンタープライゼズ",
+    "cik": 108516,
+    "name_en": "Worthington Enterprises"
+  },
+  "rows": [
+    {
+      "ja": "合弁・分離",
+      "en": "Joint ventures & spin-off"
+    },
+    {
+      "ja": "買収",
+      "en": "Acquisitions"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "AWI",
+      "ticker": "AWI",
+      "name": "アームストロング・ワールド・インダストリーズ",
+      "name_en": "Armstrong World Industries",
+      "sub": "天井材",
+      "sub_en": "Ceiling systems",
+      "sub_short": "天井材",
+      "sub_short_en": "Ceilings",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "天井の吊り金具を作る合弁WAVEの相手",
+          "text_en": "Partner in WAVE, the ceiling grid joint venture",
+          "source": {
+            "label": "Armstrong World Industries 10-K(2025年度)",
+            "label_en": "Armstrong World Industries 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/7431/000119312526065183/awi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "We also manufacture ceiling suspension system (grid) products through a joint venture with Worthington Enterprises, Inc. called Worthington Armstrong Venture (\"WAVE\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CWBS",
+      "ticker": "CWBS-MISA",
+      "name": "CWBS-MISA",
+      "name_en": "CWBS-MISA",
+      "sub": "鉄鋼加工",
+      "sub_en": "Steel processing",
+      "sub_short": "鉄鋼加工",
+      "sub_short_en": "Steel",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "軽量鉄骨の合弁ClarkDietrich(25%)の相手",
+          "text_en": "Partner in ClarkDietrich, a 25%-owned light gauge steel framing JV",
+          "source": {
+            "label": "Worthington Enterprises 10-K(2026年5月期)",
+            "label_en": "Worthington Enterprises 10-K (FY ended May 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/108516/000119312526325872/wor-20260531.htm",
+            "level": "official",
+            "date": "2026-07-30",
+            "quote": "ClarkDietrich , a 25%-owned joint venture with CWBS-MISA, is an industry leader in the manufacture and supply of light gauge steel framing products in the U.S."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WS",
+      "ticker": "WS",
+      "name": "ワージントン・スチール",
+      "name_en": "Worthington Steel",
+      "sub": "鉄鋼加工",
+      "sub_en": "Steel processing",
+      "sub_short": "鉄鋼加工",
+      "sub_short_en": "Steel",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "鉄鋼事業を分離・独立させた会社(2023年12月)",
+          "text_en": "Its steel processing business, spun off in December 2023",
+          "source": {
+            "label": "Worthington Enterprises 10-K(2026年5月期)",
+            "label_en": "Worthington Enterprises 10-K (FY ended May 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/108516/000119312526325872/wor-20260531.htm",
+            "level": "official",
+            "date": "2026-07-30",
+            "quote": "On December 1, 2023, the common shares of Worthington Steel began trading on the NYSE under the ticker symbol WS."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Elgen",
+      "ticker": "Elgen",
+      "name": "エルジェン",
+      "name_en": "Elgen",
+      "sub": "空調部品",
+      "sub_en": "HVAC parts",
+      "sub_short": "空調部品",
+      "sub_short_en": "HVAC",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "空調部品のElgenを買収(2025年6月)",
+          "text_en": "Acquired HVAC parts maker Elgen (June 2025)",
+          "source": {
+            "label": "Worthington Enterprises 10-K(2026年5月期)",
+            "label_en": "Worthington Enterprises 10-K (FY ended May 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/108516/000119312526325872/wor-20260531.htm",
+            "level": "official",
+            "date": "2026-07-30",
+            "quote": "On June 18, 2025, we acquired Elgen, a leading provider of HVAC parts and components."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Hydrostat",
+      "ticker": "Hydrostat",
+      "name": "ハイドロスタット",
+      "name_en": "Hydrostat",
+      "sub": "プロパン容器の再生",
+      "sub_en": "Propane cylinder refurbishment",
+      "sub_short": "容器再生",
+      "sub_short_en": "Cylinders",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Hydrostatのプロパン流通・再生資産を取得(2025年12月)",
+          "text_en": "Acquired Hydrostat's propane distribution and refurbishment assets (December 2025)",
+          "source": {
+            "label": "Worthington Enterprises 10-K(2026年5月期)",
+            "label_en": "Worthington Enterprises 10-K (FY ended May 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/108516/000119312526325872/wor-20260531.htm",
+            "level": "official",
+            "date": "2026-07-30",
+            "quote": "On December 3, 2025, we acquired Hydrostat's propane distribution and refurbishment assets."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

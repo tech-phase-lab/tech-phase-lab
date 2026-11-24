@@ -1,0 +1,138 @@
+{
+  "root": {
+    "ticker": "R",
+    "name": "ライダー・システム",
+    "cik": 85961,
+    "name_en": "Ryder System"
+  },
+  "rows": [
+    {
+      "ja": "納入元",
+      "en": "Supplier",
+      "above": true
+    },
+    {
+      "ja": "買収",
+      "en": "Acquisition"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "GXO",
+    "CAR"
+  ],
+  "companies": [
+    {
+      "id": "WNC",
+      "ticker": "WNC",
+      "name": "ワバッシュ",
+      "name_en": "Wabash",
+      "sub": "トレーラー・荷台",
+      "sub_en": "Trailers & truck bodies",
+      "sub_short": "受託製造",
+      "sub_short_en": "EMS",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "トラックの荷台をRyderに納入",
+          "text_en": "Sells truck bodies to Ryder",
+          "source": {
+            "label": "Wabash 10-K(2025年度)",
+            "label_en": "Wabash 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/879526/000087952626000036/wnc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "In addition, we sell our truck bodies to fleet leasing customers and direct customers including, but not limited to: Ryder System, Inc., Penske Truck Leasing Co., L.P., Budget Truck Rental, LLC, and Enterprise Holdings, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Cardinal",
+      "ticker": "Cardinal Logistics",
+      "name": "カーディナル・ロジスティクス",
+      "name_en": "Cardinal Logistics",
+      "sub": "物流",
+      "sub_en": "Logistics",
+      "sub_short": "物流",
+      "sub_short_en": "Logistics",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Cardinal Logisticsを3.02億ドルで買収(2024年2月)",
+          "text_en": "Acquired Cardinal Logistics for $302 million (February 2024)",
+          "source": {
+            "label": "Ryder System 10-K(2025年度)",
+            "label_en": "Ryder System 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/85961/000008596126000007/r-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "On February 1, 2024, we acquired all the outstanding equity of Cardinal Logistics for a purchase price of $ 302 million."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GXO",
+      "ticker": "GXO",
+      "name": "GXOロジスティクス",
+      "name_en": "GXO Logistics",
+      "sub": "物流受託",
+      "sub_en": "Contract logistics",
+      "sub_short": "契約物流",
+      "sub_short_en": "Logistics",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "GXOが10-Kで、物流受託の競合として挙げる",
+          "text_en": "GXO names Ryder among its contract logistics competitors",
+          "source": {
+            "label": "GXO Logistics 10-K(2025年度)",
+            "label_en": "GXO Logistics 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1852244/000185224426000007/gxo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Our competitors include CEVA Logistics, DHL Group, DSV, GEODIS, ID Logistics Group, Kuehne + Nagel and Ryder System."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CAR",
+      "ticker": "CAR",
+      "name": "エイビス・バジェット・グループ",
+      "name_en": "Avis Budget Group",
+      "sub": "レンタカー",
+      "sub_en": "Car rental",
+      "sub_short": "車貸出",
+      "sub_short_en": "Car hire",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Avis Budgetが10-Kで、トラックレンタルの競合として挙げる",
+          "text_en": "Avis Budget names Ryder among truck rental competitors",
+          "source": {
+            "label": "Avis Budget Group 10-K(2025年度)",
+            "label_en": "Avis Budget Group 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/723612/000072361226000012/car-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "competes with several other local, regional and nationwide truck rental companies including U-Haul International, Inc., Penske Truck Leasing Corporation, Ryder System, Inc."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
