@@ -49,7 +49,9 @@ test("withdrawing an automatic result is the owner's alone and goes through the 
   assert.match(route, /member\.isAdmin/); assert.match(route, /owner-required/); assert.match(route, /RESEARCH_EDITOR_TOKEN/); assert.match(route, /\/admin\/event-results\/withdraw/);
   assert.match(readFileSync(new URL("../proxy.ts", import.meta.url), "utf8"), /\/api\/research\/event-results/);
   const panel = readFileSync(new URL("../app/research/calendar/economic-results-panel.tsx", import.meta.url), "utf8");
-  assert.match(panel, /ownerMode && <button/);
+  // owner accounts only (owner, Nov 24); the button itself lives in the release row
+  assert.match(panel, /auto && ownerAccount \?/);
+  assert.match(route, /!member\.ownerAccount/);
 });
 
 test("a result read from one official page reaches the site, and one bad result never hides the good ones", () => {

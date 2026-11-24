@@ -9,7 +9,8 @@ export async function POST(request: Request) {
   if (request.headers.get("origin") !== new URL(request.url).origin || !request.headers.get("content-type")?.startsWith("application/json")) return reply(403, { ok: false, error: "invalid-request" });
   try {
     const member = await getMembership();
-    if (member.status !== "signed-in" || !member.isAdmin) return reply(403, { ok: false, error: "owner-required" });
+    // The owner accounts only (OWNER_ACCOUNT_ID / PRODUCTION_OWNER_ACCOUNT_ID), the same accounts that see the button (owner, Nov 24).
+    if (member.status !== "signed-in" || !member.isAdmin || !member.ownerAccount) return reply(403, { ok: false, error: "owner-required" });
     const text = await request.text();
     const input = text && text.length < 2000 ? JSON.parse(text) as { id?: unknown } : {};
     if (typeof input.id !== "string" || !/^[a-z0-9-]{3,80}$/.test(input.id)) return reply(400, { ok: false, error: "invalid-request" });
