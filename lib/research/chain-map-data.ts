@@ -427,7 +427,6 @@ import c_ivz from "../../data/chain/IVZ.json" with { type: "json" };
 import c_j from "../../data/chain/J.json" with { type: "json" };
 import c_jazz from "../../data/chain/JAZZ.json" with { type: "json" };
 import c_jbl from "../../data/chain/JBL.json" with { type: "json" };
-import c_jbss from "../../data/chain/JBSS.json" with { type: "json" };
 import c_jbtm from "../../data/chain/JBTM.json" with { type: "json" };
 import c_jci from "../../data/chain/JCI.json" with { type: "json" };
 import c_jd from "../../data/chain/JD.json" with { type: "json" };
@@ -499,7 +498,6 @@ import c_mar from "../../data/chain/MAR.json" with { type: "json" };
 import c_mara from "../../data/chain/MARA.json" with { type: "json" };
 import c_mas from "../../data/chain/MAS.json" with { type: "json" };
 import c_mat from "../../data/chain/MAT.json" with { type: "json" };
-import c_mbc from "../../data/chain/MBC.json" with { type: "json" };
 import c_mc from "../../data/chain/MC.json" with { type: "json" };
 import c_mcd from "../../data/chain/MCD.json" with { type: "json" };
 import c_mchp from "../../data/chain/MCHP.json" with { type: "json" };
@@ -1356,7 +1354,6 @@ const available: Record<string, ChainMapData> = {
   J: c_j as ChainMapData,
   JAZZ: c_jazz as ChainMapData,
   JBL: c_jbl as ChainMapData,
-  JBSS: c_jbss as ChainMapData,
   JBTM: c_jbtm as ChainMapData,
   JCI: c_jci as ChainMapData,
   JD: c_jd as ChainMapData,
@@ -1428,7 +1425,6 @@ const available: Record<string, ChainMapData> = {
   MARA: c_mara as ChainMapData,
   MAS: c_mas as ChainMapData,
   MAT: c_mat as ChainMapData,
-  MBC: c_mbc as ChainMapData,
   MC: c_mc as ChainMapData,
   MCD: c_mcd as ChainMapData,
   MCHP: c_mchp as ChainMapData,

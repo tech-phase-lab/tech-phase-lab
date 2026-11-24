@@ -13,6 +13,10 @@
     {
       "ja": "競合(10-Kに記載、炎症性腸疾患)",
       "en": "Competitors (named in its 10-K, IBD)"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
     }
   ],
   "rivals": [
@@ -120,6 +124,58 @@
             "level": "official",
             "date": "2026-02-25",
             "quote": "and anti-IL-12/23 agents, including Stelara® (Johnson & Johnson), Skyrizi® (AbbVie), Tremfya® (Johnson & Johnson), and Omvoh® (Eli Lilly)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RANI",
+      "ticker": "RANI",
+      "name": "ラニ・セラピューティクス",
+      "name_en": "Rani Therapeutics",
+      "sub": "経口バイオ医薬",
+      "sub_en": "Oral biologics",
+      "sub_short": "経口薬",
+      "sub_short_en": "Oral",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Raniが10-Kで、経口バイオ医薬の競合として挙げる",
+          "text_en": "Rani names Protagonist among oral biologics competitors",
+          "source": {
+            "label": "Rani Therapeutics 10-K(2024年度)",
+            "label_en": "Rani Therapeutics 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1856725/000095017025047740/rani-20241231.htm",
+            "level": "official",
+            "date": "2025-03-31",
+            "quote": "Additionally, we face competition from companies that are pursuing the development and manufacture of oral biologics, including Oramed Pharmaceuticals, Inc., Entera Bio Ltd., Protagonist Therapeutics, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ARQT",
+      "ticker": "ARQT",
+      "name": "アーカティス・バイオセラピューティクス",
+      "name_en": "Arcutis Biotherapeutics",
+      "sub": "皮膚疾患薬",
+      "sub_en": "Dermatology",
+      "sub_short": "皮膚薬",
+      "sub_short_en": "Derm",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Arcutisが10-Kで、乾癬の競合候補にJ&JとProtagonistのicotrokinraを挙げる",
+          "text_en": "Arcutis names icotrokinra from J&J and Protagonist as a potential psoriasis competitor",
+          "source": {
+            "label": "Arcutis 10-K(2025年度)",
+            "label_en": "Arcutis 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1787306/000178730626000018/arqt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "lcotrokinra, under development through a collaboration between Johnson & Johnson and Protagonist Therapeutics"
           }
         }
       ]

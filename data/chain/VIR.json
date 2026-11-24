@@ -14,9 +14,16 @@
     {
       "ja": "共同開発・販売の提携先",
       "en": "Development & commercial partners"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
     }
   ],
-  "rivals": [],
+  "rivals": [
+    "JANX",
+    "CTMX"
+  ],
   "companies": [
     {
       "id": "SNY",
@@ -92,6 +99,84 @@
             "level": "official",
             "date": "2026-02-23",
             "quote": "Collaboration and License Agreement with Alnylam In October 2017, we and Alnylam Pharmaceuticals, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "XNCR",
+      "ticker": "XNCR",
+      "name": "ゼンコア",
+      "name_en": "Xencor",
+      "sub": "抗体技術",
+      "sub_en": "Antibody engineering",
+      "sub_short": "導入元",
+      "sub_short_en": "Licensor",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "抗体改変技術Xtendの提携先としてVirの肝炎B治療候補を挙げる",
+          "text_en": "Names Vir's hepatitis B candidate among partner programs using its Xtend technology",
+          "source": {
+            "label": "Xencor 10-K/A(2023年度)",
+            "label_en": "Xencor 10-K/A (FY2023)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1326732/000132673225000015/xncr-20231231.htm",
+            "level": "official",
+            "date": "2025-02-24",
+            "quote": "In addition to these approved drugs, our partners are 11 advancing multiple clinical-stage programs with antibodies engineered with Xtend and/or Cytotoxic Fc Domains, including: • Vir Biotechnology, Inc.: Vir is advancing tobevibart (VIR-3434)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "JANX",
+      "ticker": "JANX",
+      "name": "ジャナックス・セラピューティクス",
+      "name_en": "Janux Therapeutics",
+      "sub": "バイオ医薬",
+      "sub_en": "Biotech",
+      "sub_short": "抗体",
+      "sub_short_en": "Antibody",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Januxが10-Kで、プロドラッグ型抗体の競合として挙げる",
+          "text_en": "Janux names Vir among biologic prodrug competitors",
+          "source": {
+            "label": "Janux Therapeutics 10-K(2025年度)",
+            "label_en": "Janux Therapeutics 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1817713/000119312526076918/janx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "We also face competition from biologic prodrug developers such as Adagene, Chugai Pharmaceutical Co./Roche Holding AG, CytomX Therapeutics, Merck & Co., Takeda and Vir Biotechnology."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CTMX",
+      "ticker": "CTMX",
+      "name": "サイトムX",
+      "name_en": "CytomX Therapeutics",
+      "sub": "バイオ医薬",
+      "sub_en": "Biotech",
+      "sub_short": "がん薬",
+      "sub_short_en": "Oncology",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "CytomXが10-Kで、抗体マスキング技術の競合として挙げる",
+          "text_en": "CytomX names Vir among antibody masking competitors",
+          "source": {
+            "label": "CytomX 10-K(2025年度)",
+            "label_en": "CytomX 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1501989/000119312526107146/ctmx-20251231.htm",
+            "level": "official",
+            "date": "2026-03-16",
+            "quote": "Several companies, including Adagene, Amgen, Sanofi, BioAtla, Halozyme, Janux Therapeutics, Roche, Takeda, Vir Biotechnology, Werewolf Therapeutics and Xilio are exploring antibody masking and/or conditional activation strategies"
           }
         }
       ]

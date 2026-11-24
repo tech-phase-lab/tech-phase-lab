@@ -13,9 +13,15 @@
     {
       "ja": "買収(販売店)",
       "en": "Acquisitions (retail)"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
     }
   ],
-  "rivals": [],
+  "rivals": [
+    "LEGH"
+  ],
   "companies": [
     {
       "id": "Triad",
@@ -117,6 +123,32 @@
             "level": "official",
             "date": "2026-05-26",
             "quote": "In October 2023, the Company acquired Regional Homes, which operated three manufacturing facilities in Alabama and 44 retail sales centers across the Southeast U.S."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LEGH",
+      "ticker": "LEGH",
+      "name": "レガシー・ハウジング",
+      "name_en": "Legacy Housing",
+      "sub": "プレハブ住宅",
+      "sub_en": "Manufactured homes",
+      "sub_short": "住宅製造",
+      "sub_short_en": "Homes",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Legacy Housingが10-Kで、全国規模の競合として挙げる",
+          "text_en": "Legacy Housing names Champion Homes among national competitors",
+          "source": {
+            "label": "Legacy Housing 10-K(2024年度)",
+            "label_en": "Legacy Housing 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1436208/000155837025002822/legh-20241231x10k.htm",
+            "level": "official",
+            "date": "2025-03-12",
+            "quote": "including Clayton Homes, Inc., Cavco Industries, Inc. and Champion Homes, Inc."
           }
         }
       ]

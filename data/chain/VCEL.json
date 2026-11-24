@@ -14,6 +14,10 @@
     {
       "ja": "競合製品の販売元(10-Kに記載)",
       "en": "Distributors of competing products (named in its 10-K)"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
     }
   ],
   "rivals": [
@@ -121,6 +125,84 @@
             "level": "official",
             "date": "2026-02-26",
             "quote": "This treatment is sometimes augmented with allograft derived products such as BioCartilage ® and Cartiform ® (distributed by Arthrex, Inc.) and Prochondrix ® (distributed by Stryker Corporation)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RGNT",
+      "ticker": "RGNT",
+      "name": "レジェンティス・バイオマテリアルズ",
+      "name_en": "Regentis Biomaterials",
+      "sub": "軟骨再生",
+      "sub_en": "Cartilage repair",
+      "sub_short": "軟骨再生",
+      "sub_short_en": "Cartilage",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Regentisが年次報告で、軟骨修復の競合として挙げる",
+          "text_en": "Regentis names Vericel as a cartilage repair competitor",
+          "source": {
+            "label": "Regentis Biomaterials 20-F(2025年度)",
+            "label_en": "Regentis Biomaterials 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1912966/000121390026019917/ea0277515-20f_regentis.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "While Vericel, Arthrex GmbH and Revaflex will present us with competition"
+          }
+        }
+      ]
+    },
+    {
+      "id": "OCGN",
+      "ticker": "OCGN",
+      "name": "オキュジェン",
+      "name_en": "Ocugen",
+      "sub": "バイオ医薬",
+      "sub_en": "Biotech",
+      "sub_short": "バイオ",
+      "sub_short_en": "Biotech",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Ocugenが10-Kで、軟骨製品NeoCartの競合にMACIを挙げる",
+          "text_en": "Ocugen names MACI as a competitor to its NeoCart candidate",
+          "source": {
+            "label": "Ocugen 10-K(2024年度)",
+            "label_en": "Ocugen 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1372299/000162828025010271/ocgn-20241231.htm",
+            "level": "official",
+            "date": "2025-03-05",
+            "quote": "Companies that may compete with our NeoCart product candidate include Vericel Corporation's MACI, the only FDA-approved ACI product in the United States"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SNWV",
+      "ticker": "SNWV",
+      "name": "サヌウェーブ・ヘルス",
+      "name_en": "SANUWAVE Health",
+      "sub": "創傷治療",
+      "sub_en": "Wound care",
+      "sub_short": "創傷",
+      "sub_short_en": "Wounds",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "SANUWAVEが10-Kで、創傷治療の競合として挙げる",
+          "text_en": "SANUWAVE names Vericel among wound therapy competitors",
+          "source": {
+            "label": "SANUWAVE Health 10-K(2025年度)",
+            "label_en": "SANUWAVE Health 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1417663/000162828026021443/snwv-20251231.htm",
+            "level": "official",
+            "date": "2026-03-26",
+            "quote": "The Company also competes with manufacturers of cellular and tissue-based products and biologic wound therapies, including Organogenesis, MiMedx Group, Integra LifeSciences, Vericel, and Kerecis."
           }
         }
       ]
