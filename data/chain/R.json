@@ -32,8 +32,8 @@
       "name_en": "Wabash",
       "sub": "トレーラー・荷台",
       "sub_en": "Trailers & truck bodies",
-      "sub_short": "トレーラー",
-      "sub_short_en": "Trailers",
+      "sub_short": "受託製造",
+      "sub_short_en": "EMS",
       "row": 0,
       "relations": [
         {
@@ -84,7 +84,7 @@
       "name_en": "GXO Logistics",
       "sub": "物流受託",
       "sub_en": "Contract logistics",
-      "sub_short": "物流受託",
+      "sub_short": "契約物流",
       "sub_short_en": "Logistics",
       "row": 2,
       "relations": [
@@ -110,8 +110,8 @@
       "name_en": "Avis Budget Group",
       "sub": "レンタカー",
       "sub_en": "Car rental",
-      "sub_short": "レンタカー",
-      "sub_short_en": "Car rental",
+      "sub_short": "車貸出",
+      "sub_short_en": "Car hire",
       "row": 2,
       "relations": [
         {

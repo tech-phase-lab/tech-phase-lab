@@ -32,8 +32,8 @@
       "name_en": "Marriott International",
       "sub": "ホテルチェーン",
       "sub_en": "Hotel company",
-      "sub_short": "ホテルチェーン",
-      "sub_short_en": "Hotel company",
+      "sub_short": "ホテル",
+      "sub_short_en": "Hotels",
       "row": 0,
       "relations": [
         {
@@ -58,8 +58,8 @@
       "name_en": "Hyatt Hotels",
       "sub": "ホテルチェーン",
       "sub_en": "Hotel company",
-      "sub_short": "ホテルチェーン",
-      "sub_short_en": "Hotel company",
+      "sub_short": "ホテル",
+      "sub_short_en": "Hotels",
       "row": 0,
       "relations": [
         {
@@ -84,8 +84,8 @@
       "name_en": "Travel + Leisure",
       "sub": "タイムシェア",
       "sub_en": "Vacation ownership",
-      "sub_short": "タイムシェア",
-      "sub_short_en": "Timeshares",
+      "sub_short": "別荘権",
+      "sub_short_en": "Resorts",
       "row": 1,
       "relations": [
         {
@@ -110,8 +110,8 @@
       "name_en": "Hilton Grand Vacations",
       "sub": "タイムシェア",
       "sub_en": "Vacation ownership",
-      "sub_short": "タイムシェア",
-      "sub_short_en": "Timeshares",
+      "sub_short": "別荘権",
+      "sub_short_en": "Resorts",
       "row": 2,
       "relations": [
         {

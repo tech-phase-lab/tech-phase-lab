@@ -32,8 +32,8 @@
       "name_en": "Jungwoo-Mueller",
       "sub": "銅製接合部品",
       "sub_en": "Copper joining products",
-      "sub_short": "銅製継手",
-      "sub_short_en": "Copper fittings",
+      "sub_short": "銅継手",
+      "sub_short_en": "Fittings",
       "row": 0,
       "relations": [
         {
@@ -59,7 +59,7 @@
       "sub": "銅管",
       "sub_en": "Copper tube",
       "sub_short": "銅管",
-      "sub_short_en": "Copper tube",
+      "sub_short_en": "Copper",
       "row": 0,
       "relations": [
         {
@@ -85,7 +85,7 @@
       "sub": "銅継手",
       "sub_en": "Copper fittings",
       "sub_short": "銅継手",
-      "sub_short_en": "Copper fittings",
+      "sub_short_en": "Fittings",
       "row": 0,
       "relations": [
         {
@@ -110,8 +110,8 @@
       "name_en": "Watsco",
       "sub": "空調機器卸",
       "sub_en": "HVAC distribution",
-      "sub_short": "空調機器卸",
-      "sub_short_en": "HVAC wholesale",
+      "sub_short": "空調卸",
+      "sub_short_en": "HVAC",
       "row": 1,
       "relations": [
         {
@@ -137,7 +137,7 @@
       "sub": "配管部材",
       "sub_en": "Piping products",
       "sub_short": "配管部材",
-      "sub_short_en": "Piping products",
+      "sub_short_en": "Piping",
       "row": 2,
       "relations": [
         {
@@ -163,7 +163,7 @@
       "sub": "電線",
       "sub_en": "Wire & cable",
       "sub_short": "電線",
-      "sub_short_en": "Wire & cable",
+      "sub_short_en": "Cable",
       "row": 2,
       "relations": [
         {
@@ -189,7 +189,7 @@
       "sub": "電線",
       "sub_en": "Wire & cable",
       "sub_short": "電線",
-      "sub_short_en": "Wire & cable",
+      "sub_short_en": "Cable",
       "row": 2,
       "relations": [
         {

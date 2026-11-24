@@ -30,7 +30,7 @@
       "sub": "医薬品",
       "sub_en": "Pharmaceuticals",
       "sub_short": "医薬品",
-      "sub_short_en": "Pharmaceuticals",
+      "sub_short_en": "Pharma",
       "row": 0,
       "relations": [
         {
@@ -56,7 +56,7 @@
       "sub": "医薬品",
       "sub_en": "Pharmaceuticals",
       "sub_short": "医薬品",
-      "sub_short_en": "Pharmaceuticals",
+      "sub_short_en": "Pharma",
       "row": 0,
       "relations": [
         {
@@ -81,8 +81,8 @@
       "name_en": "Ironshore",
       "sub": "ADHD治療薬",
       "sub_en": "ADHD medicines",
-      "sub_short": "ADHD治療薬",
-      "sub_short_en": "ADHD medicines",
+      "sub_short": "ADHD薬",
+      "sub_short_en": "ADHD",
       "row": 1,
       "relations": [
         {
@@ -108,7 +108,7 @@
       "sub": "医薬品",
       "sub_en": "Pharmaceuticals",
       "sub_short": "医薬品",
-      "sub_short_en": "Pharmaceuticals",
+      "sub_short_en": "Pharma",
       "row": 1,
       "relations": [
         {
@@ -133,8 +133,8 @@
       "name_en": "Hikma Pharmaceuticals",
       "sub": "後発医薬品",
       "sub_en": "Generic drugs",
-      "sub_short": "後発医薬品",
-      "sub_short_en": "Generic drugs",
+      "sub_short": "後発薬",
+      "sub_short_en": "Generics",
       "row": 2,
       "relations": [
         {

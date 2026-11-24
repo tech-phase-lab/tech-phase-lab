@@ -32,8 +32,8 @@
       "name_en": "Abbott",
       "sub": "医療機器・医薬",
       "sub_en": "Medical devices & pharma",
-      "sub_short": "医療機器・医薬",
-      "sub_short_en": "Devices & pharma",
+      "sub_short": "血糖測定",
+      "sub_short_en": "CGM",
       "row": 0,
       "relations": [
         {
@@ -58,8 +58,8 @@
       "name_en": "Dexcom",
       "sub": "血糖モニター",
       "sub_en": "Glucose monitors",
-      "sub_short": "血糖モニター",
-      "sub_short_en": "Glucose monitors",
+      "sub_short": "血糖測定",
+      "sub_short_en": "CGM",
       "row": 0,
       "relations": [
         {
@@ -84,8 +84,8 @@
       "name_en": "Beta Bionics",
       "sub": "インスリンポンプ",
       "sub_en": "Insulin pumps",
-      "sub_short": "インスリン機器",
-      "sub_short_en": "Insulin pumps",
+      "sub_short": "糖尿病",
+      "sub_short_en": "Insulin",
       "row": 1,
       "relations": [
         {
@@ -110,8 +110,8 @@
       "name_en": "Insulet",
       "sub": "インスリンポンプ",
       "sub_en": "Insulin pumps",
-      "sub_short": "インスリン機器",
-      "sub_short_en": "Insulin pumps",
+      "sub_short": "糖尿病",
+      "sub_short_en": "Insulin",
       "row": 1,
       "relations": [
         {
@@ -136,8 +136,8 @@
       "name_en": "Medtronic",
       "sub": "医療機器",
       "sub_en": "Medical devices",
-      "sub_short": "医療機器",
-      "sub_short_en": "Medical devices",
+      "sub_short": "糖尿病",
+      "sub_short_en": "Insulin",
       "row": 1,
       "relations": [
         {
@@ -162,8 +162,8 @@
       "name_en": "mylife (formerly Ypsomed)",
       "sub": "インスリンポンプ",
       "sub_en": "Insulin pumps",
-      "sub_short": "インスリン機器",
-      "sub_short_en": "Insulin pumps",
+      "sub_short": "糖尿病",
+      "sub_short_en": "Insulin",
       "row": 1,
       "relations": [
         {
@@ -188,8 +188,8 @@
       "name_en": "Sequel",
       "sub": "インスリンポンプ",
       "sub_en": "Insulin pumps",
-      "sub_short": "インスリン機器",
-      "sub_short_en": "Insulin pumps",
+      "sub_short": "糖尿病",
+      "sub_short_en": "Insulin",
       "row": 1,
       "relations": [
         {
@@ -214,8 +214,8 @@
       "name_en": "Modular Medical",
       "sub": "インスリンポンプ",
       "sub_en": "Insulin pumps",
-      "sub_short": "インスリン機器",
-      "sub_short_en": "Insulin pumps",
+      "sub_short": "糖尿病",
+      "sub_short_en": "Insulin",
       "row": 2,
       "relations": [
         {

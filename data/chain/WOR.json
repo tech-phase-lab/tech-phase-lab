@@ -25,7 +25,7 @@
       "sub": "天井材",
       "sub_en": "Ceiling systems",
       "sub_short": "天井材",
-      "sub_short_en": "Ceiling systems",
+      "sub_short_en": "Ceilings",
       "row": 0,
       "relations": [
         {
@@ -51,7 +51,7 @@
       "sub": "鉄鋼加工",
       "sub_en": "Steel processing",
       "sub_short": "鉄鋼加工",
-      "sub_short_en": "Steel processing",
+      "sub_short_en": "Steel",
       "row": 0,
       "relations": [
         {
@@ -77,7 +77,7 @@
       "sub": "鉄鋼加工",
       "sub_en": "Steel processing",
       "sub_short": "鉄鋼加工",
-      "sub_short_en": "Steel processing",
+      "sub_short_en": "Steel",
       "row": 0,
       "relations": [
         {
@@ -103,7 +103,7 @@
       "sub": "空調部品",
       "sub_en": "HVAC parts",
       "sub_short": "空調部品",
-      "sub_short_en": "HVAC parts",
+      "sub_short_en": "HVAC",
       "row": 1,
       "relations": [
         {
@@ -128,8 +128,8 @@
       "name_en": "Hydrostat",
       "sub": "プロパン容器の再生",
       "sub_en": "Propane cylinder refurbishment",
-      "sub_short": "ガス容器再生",
-      "sub_short_en": "Cylinder refurb",
+      "sub_short": "容器再生",
+      "sub_short_en": "Cylinders",
       "row": 1,
       "relations": [
         {

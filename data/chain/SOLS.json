@@ -32,8 +32,8 @@
       "name_en": "Honeywell",
       "sub": "複合企業",
       "sub_en": "Conglomerate",
-      "sub_short": "複合企業",
-      "sub_short_en": "Conglomerate",
+      "sub_short": "ビル制御",
+      "sub_short_en": "Controls",
       "row": 0,
       "relations": [
         {
@@ -58,8 +58,8 @@
       "name_en": "General Atomics",
       "sub": "原子力・防衛",
       "sub_en": "Nuclear & defense",
-      "sub_short": "原子力・防衛",
-      "sub_short_en": "Nuclear, defense",
+      "sub_short": "原子力",
+      "sub_short_en": "Nuclear",
       "row": 0,
       "relations": [
         {
@@ -84,8 +84,8 @@
       "name_en": "Element Solutions",
       "sub": "特殊化学品",
       "sub_en": "Specialty chemicals",
-      "sub_short": "特殊化学品",
-      "sub_short_en": "Specialty chem",
+      "sub_short": "化学品",
+      "sub_short_en": "Chem",
       "row": 0,
       "relations": [
         {
@@ -110,8 +110,8 @@
       "name_en": "Hadron Energy",
       "sub": "小型原子炉",
       "sub_en": "Microreactors",
-      "sub_short": "小型原子炉",
-      "sub_short_en": "Microreactors",
+      "sub_short": "原子炉",
+      "sub_short_en": "Reactors",
       "row": 1,
       "relations": [
         {
@@ -162,8 +162,8 @@
       "name_en": "Chemours",
       "sub": "化学",
       "sub_en": "Chemicals",
-      "sub_short": "化学",
-      "sub_short_en": "Chemicals",
+      "sub_short": "化学品",
+      "sub_short_en": "Chem",
       "row": 2,
       "relations": [
         {
@@ -189,7 +189,7 @@
       "sub": "化学(フランス)",
       "sub_en": "Chemicals (France)",
       "sub_short": "化学",
-      "sub_short_en": "Chemicals",
+      "sub_short_en": "Chem",
       "row": 2,
       "relations": [
         {
@@ -214,8 +214,8 @@
       "name_en": "Daikin",
       "sub": "空調・化学",
       "sub_en": "Air conditioning & chemicals",
-      "sub_short": "空調・化学",
-      "sub_short_en": "HVAC & chemicals",
+      "sub_short": "空調化学",
+      "sub_short_en": "HVAC",
       "row": 2,
       "relations": [
         {
@@ -241,7 +241,7 @@
       "sub": "化学",
       "sub_en": "Chemicals",
       "sub_short": "化学",
-      "sub_short_en": "Chemicals",
+      "sub_short_en": "Chem",
       "row": 2,
       "relations": [
         {
