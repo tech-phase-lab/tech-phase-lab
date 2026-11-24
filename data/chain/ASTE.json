@@ -1,0 +1,198 @@
+{
+  "root": {
+    "ticker": "ASTE",
+    "name": "アステック・インダストリーズ",
+    "cik": 792987,
+    "name_en": "Astec Industries"
+  },
+  "rows": [
+    {
+      "ja": "買収",
+      "en": "Acquisition"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in its 10-K)"
+    }
+  ],
+  "rivals": [
+    "TEX",
+    "DE",
+    "ALG"
+  ],
+  "companies": [
+    {
+      "id": "TerraSource",
+      "ticker": "TerraSource",
+      "name": "テラソース",
+      "name_en": "TerraSource",
+      "sub": "破砕機",
+      "sub_en": "Crushing equipment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "破砕機のTerraSourceを2.45億ドルで買収(2025年7月)",
+          "text_en": "Acquired crushing equipment maker TerraSource for $245 million (July 2025)",
+          "source": {
+            "label": "Hillenbrand 10-K(2025年9月期)",
+            "label_en": "Hillenbrand 10-K (FY ended Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1417398/000162828025053207/hi-20250930.htm",
+            "level": "official",
+            "date": "2025-11-19",
+            "quote": "completed the divestiture of its 46 % interest in TerraSource to Astec Industries for $ 245.0"
+          }
+        }
+      ]
+    },
+    {
+      "id": "HI",
+      "ticker": "HI",
+      "name": "ヒレンブランド",
+      "name_en": "Hillenbrand",
+      "sub": "産業機械",
+      "sub_en": "Industrial machinery",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "TerraSourceの46%持分をAstecへ売却",
+          "text_en": "Sold its 46% TerraSource interest to Astec",
+          "source": {
+            "label": "Hillenbrand 10-K(2025年9月期)",
+            "label_en": "Hillenbrand 10-K (FY ended Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1417398/000162828025053207/hi-20250930.htm",
+            "level": "official",
+            "date": "2025-11-19",
+            "quote": "the Company, in conjunction with its majority stake joint-venture partner in TerraSource Holdings, LLC (\"TerraSource\"), completed the divestiture of its 46 % interest in TerraSource to Astec Industries"
+          }
+        }
+      ]
+    },
+    {
+      "id": "TEX",
+      "ticker": "TEX",
+      "name": "テレックス",
+      "name_en": "Terex",
+      "sub": "建設機械",
+      "sub_en": "Construction equipment",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "資材処理部門の主な競合",
+          "text_en": "A primary Materials Solutions competitor",
+          "source": {
+            "label": "Astec 10-K(2025年度)",
+            "label_en": "Astec 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/792987/000079298726000011/aste-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "CDE Group Masaba, Inc. Terex Corporation Conn-Weld Industries, LLC McCloskey International (part of Metso Corporation)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "METSO",
+      "ticker": "Metso",
+      "name": "メッツォ",
+      "name_en": "Metso",
+      "sub": "鉱山機械(フィンランド)",
+      "sub_en": "Mining equipment (Finland)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "傘下のMcCloskeyが資材処理部門の主な競合",
+          "text_en": "Its McCloskey unit is a primary Materials Solutions competitor",
+          "source": {
+            "label": "Astec 10-K(2025年度)",
+            "label_en": "Astec 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/792987/000079298726000011/aste-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "McCloskey International (part of Metso Corporation)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "DE",
+      "ticker": "DE",
+      "name": "ディア",
+      "name_en": "Deere (Wirtgen)",
+      "sub": "農機・建機",
+      "sub_en": "Farm & construction equipment",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "傘下のWirtgen(Benninghoven)がインフラ部門の主な競合",
+          "text_en": "Its Wirtgen unit (Benninghoven) is a primary Infrastructure Solutions competitor",
+          "source": {
+            "label": "Astec 10-K(2025年度)",
+            "label_en": "Astec 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/792987/000079298726000011/aste-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Diamond Z Morbark, LLC (part of Alamo Group) Asphalt Equipment Company Inc. dba ALmix Doppstadt Stephens Manufacturing Company Ammann Group Dynapac (part of Fayat Group) Tigercat Industries Bandit Industries, Inc. EDGE Innovate, LTD The Vince Hagan Company Benninghoven (part of Wirtgen Group, a John Deere Company)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ALG",
+      "ticker": "ALG",
+      "name": "アラモ・グループ",
+      "name_en": "Alamo Group",
+      "sub": "インフラ機械",
+      "sub_en": "Infrastructure equipment",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "傘下のMorbarkがインフラ部門の主な競合",
+          "text_en": "Its Morbark unit is a primary Infrastructure Solutions competitor",
+          "source": {
+            "label": "Astec 10-K(2025年度)",
+            "label_en": "Astec 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/792987/000079298726000011/aste-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Diamond Z Morbark, LLC (part of Alamo Group) Asphalt Equipment Company Inc. dba ALmix Doppstadt Stephens Manufacturing Company Ammann Group Dynapac (part of Fayat Group) Tigercat Industries Bandit Industries, Inc. EDGE Innovate, LTD The Vince Hagan Company Benninghoven (part of Wirtgen Group, a John Deere Company)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Fayat",
+      "ticker": "Fayat",
+      "name": "ファヤ・グループ",
+      "name_en": "Fayat Group",
+      "sub": "建設機械(フランス)",
+      "sub_en": "Construction equipment (France)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "DynapacなどでInfrastructure部門の主な競合",
+          "text_en": "A primary Infrastructure Solutions competitor through Dynapac and others",
+          "source": {
+            "label": "Astec 10-K(2025年度)",
+            "label_en": "Astec 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/792987/000079298726000011/aste-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Diamond Z Morbark, LLC (part of Alamo Group) Asphalt Equipment Company Inc. dba ALmix Doppstadt Stephens Manufacturing Company Ammann Group Dynapac (part of Fayat Group) Tigercat Industries Bandit Industries, Inc. EDGE Innovate, LTD The Vince Hagan Company Benninghoven (part of Wirtgen Group, a John Deere Company)"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

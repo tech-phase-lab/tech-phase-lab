@@ -1,0 +1,200 @@
+{
+  "root": {
+    "ticker": "VVX",
+    "name": "V2X",
+    "cik": 1601548,
+    "name_en": "V2X"
+  },
+  "rows": [
+    {
+      "ja": "整備の委託先",
+      "en": "MRO supplier",
+      "above": true
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "AMTM",
+    "FLR",
+    "LDOS",
+    "SAIC"
+  ],
+  "companies": [
+    {
+      "id": "VSEC",
+      "ticker": "VSEC",
+      "name": "VSE",
+      "name_en": "VSE Corporation",
+      "sub": "航空機部品・整備",
+      "sub_en": "Aviation parts & MRO",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "V2Xと、米海軍の練習ヘリのエンジン燃料制御装置を整備する長期契約を締結",
+          "text_en": "Signed a long-term agreement with V2X to overhaul engine fuel control units for the US Navy's TH-73",
+          "source": {
+            "label": "Vse 8-K添付(2025年10月)",
+            "label_en": "Vse 8-K exhibit (2025-10)",
+            "url": "https://www.sec.gov/Archives/edgar/data/102752/000119312525251581/d14928dex991.htm",
+            "level": "official",
+            "date": "2025-10-27",
+            "quote": "Defense MRO Expansion with V2X, Inc.: VSE Aviation signed a new long-term agreement to provide repair and overhaul services for engine fuel control units"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMTM",
+      "ticker": "AMTM",
+      "name": "アメンタム",
+      "name_en": "Amentum",
+      "sub": "政府向けエンジニアリング",
+      "sub_en": "Government engineering services",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "互いに主な競合として名前を挙げる",
+          "text_en": "Each names the other as a primary competitor",
+          "source": {
+            "label": "Amentum 10-K(2024年提出)",
+            "label_en": "Amentum 10-K (filed 2024-12)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2011286/000201128624000072/amtm-20240927.htm",
+            "level": "official",
+            "date": "2024-12-17",
+            "quote": "Science Applications International Corporation and V2X, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FLR",
+      "ticker": "FLR",
+      "name": "フルアー",
+      "name_en": "Fluor",
+      "sub": "エンジニアリング・建設",
+      "sub_en": "Engineering & construction",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "互いに競合として名前を挙げる",
+          "text_en": "Each names the other as a competitor",
+          "source": {
+            "label": "Fluor 10-K(2026年提出)",
+            "label_en": "Fluor 10-K (filed 2026-02)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1124198/000112419826000007/flr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Turner Construction Company, V2X, Inc. and Zachry Group"
+          }
+        }
+      ]
+    },
+    {
+      "id": "LDOS",
+      "ticker": "LDOS",
+      "name": "レイドス",
+      "name_en": "Leidos",
+      "sub": "防衛・政府IT",
+      "sub_en": "Defense & government IT",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "V2Xが10-Kで、主な競合として挙げる",
+          "text_en": "V2X names it among its principal competitors",
+          "source": {
+            "label": "V2X 10-K(2025年度)",
+            "label_en": "V2X 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1601548/000160154826000015/vec-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "Our principal competitors include Amentum Holdings, Inc., Valiant Integrated Services, divisions of Leidos Holdings, Inc., Science Applications International Corp., General Dynamics Corporation Technologies Segment., KBR, Inc., Fluor Corporation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SAIC",
+      "ticker": "SAIC",
+      "name": "サイエンス・アプリケーションズ",
+      "name_en": "Science Applications International",
+      "sub": "政府向けIT",
+      "sub_en": "Government IT services",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "V2Xが10-Kで、主な競合として挙げる",
+          "text_en": "V2X names it among its principal competitors",
+          "source": {
+            "label": "V2X 10-K(2025年度)",
+            "label_en": "V2X 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1601548/000160154826000015/vec-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "Our principal competitors include Amentum Holdings, Inc., Valiant Integrated Services, divisions of Leidos Holdings, Inc., Science Applications International Corp., General Dynamics Corporation Technologies Segment., KBR, Inc., Fluor Corporation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "KBR",
+      "ticker": "KBR",
+      "name": "KBR",
+      "name_en": "KBR",
+      "sub": "政府向けサービス・技術",
+      "sub_en": "Government services & technology",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "V2Xが10-Kで、主な競合として挙げる",
+          "text_en": "V2X names it among its principal competitors",
+          "source": {
+            "label": "V2X 10-K(2025年度)",
+            "label_en": "V2X 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1601548/000160154826000015/vec-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "Our principal competitors include Amentum Holdings, Inc., Valiant Integrated Services, divisions of Leidos Holdings, Inc., Science Applications International Corp., General Dynamics Corporation Technologies Segment., KBR, Inc., Fluor Corporation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GD",
+      "ticker": "GD",
+      "name": "ゼネラル・ダイナミクス",
+      "name_en": "General Dynamics",
+      "sub": "防衛",
+      "sub_en": "Defense",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "V2Xが10-Kで、主な競合として挙げる",
+          "text_en": "V2X names it among its principal competitors",
+          "source": {
+            "label": "V2X 10-K(2025年度)",
+            "label_en": "V2X 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1601548/000160154826000015/vec-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "Our principal competitors include Amentum Holdings, Inc., Valiant Integrated Services, divisions of Leidos Holdings, Inc., Science Applications International Corp., General Dynamics Corporation Technologies Segment., KBR, Inc., Fluor Corporation"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
