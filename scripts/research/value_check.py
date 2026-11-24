@@ -5,9 +5,12 @@ Mechanical and the same for everyone:
     Market value = split-adjusted daily close (Twelve Data) x shares outstanding from the SEC cover page, brought to today's share basis.
     The twelve-month figures come from SEC XBRL company facts and are used from the day they were filed.
     Forward (estimate-based) P/E and P/S have no five-year daily history at Twelve Data, so the trailing (実績) values are used.
-  * For each: 1 - today / the five-year mean without the top and bottom 5% of days (loss days have no P/E).
-  * Value Score = mean of the two, in percent (P/S alone without a P/E today); at 0% or below a stock is not ranked.
-    5年最安 = both below every day of the five years. Owner's revision of Nov 22.
+  * For each: 1 - today / the five-year mean without the top and bottom 5% of days (loss days have no P/E). Days of the history
+    above PE_CAP / PS_CAP count at the cap, so years of near-zero revenue or earnings cannot make an ordinary multiple look cheap.
+  * Value Score = mean of the two, in percent; at 0% or below a stock is not ranked. 5年最安 = both below every day of the five years.
+    Owner's revision of Nov 22.
+  * Only profitable companies are ranked (owner, Nov 24, after AST SpaceMobile came first on its P/S alone): a trailing net loss,
+    under a year of profitable days, or a P/E above PE_CAP (earnings too thin to call the price cheap) leaves a stock out.
   * Stocks whose trailing revenue is below the year before are left out of the ranking; so are stocks without enough data (recorded).
 
 Credits (Twelve Data plan: 610 a minute shared with the whole site): the job never lets the minute's usage pass CREDIT_CEILING and
@@ -46,7 +49,9 @@ UPDATE_BARS = 30              # the daily read: enough overlap to notice a split
 WINDOW_DAYS = 5 * 365 + 2     # the five-year look-back
 MIN_PS_DAYS = 252             # at least a year of daily P/S; a younger listing is calculated over what it has (and says so)
 FULL_DAYS = 1150              # fewer days of P/S than this (about 4.6 years): the row says the period was shorter
-MIN_PE_DAYS = 252             # fewer profitable days than this: the P/S position alone
+MIN_PE_DAYS = 252             # fewer profitable days than this: not ranked (owner, Nov 24; it was the P/S position alone)
+PE_CAP = 100                  # a P/E above this is earnings too thin to call cheap: not ranked today, counted at the cap in the history
+PS_CAP = 50                   # P/S days of the history above this (revenue near zero, before a product shipped) count at the cap
 MAX_PS = 200                  # a P/S above this means the filed revenue is only a part of the total: left out, not guessed
 CHEAP = 30                    # 割安: Value Score of 30% or more (IN / OUT), owner Nov 22
 TRIM = 0.05                   # the five-year mean leaves out the top and bottom 5% of days
@@ -572,26 +577,38 @@ def trimmed_mean(values, cut=TRIM):
 
 
 def score_at(ratios, index):
-    """The Value Score on ratios[index] (owner, Nov 22 revision): for P/E and P/S each, 1 - today / the five-year trimmed mean
-    (loss days have no P/E and are left out of its mean); the mean of the two, or P/S alone without a P/E today. In percent,
-    unrounded. Also whether both are below every day of the period (5年最安). None without enough data."""
+    """The Value Score on ratios[index] (owner, Nov 22 revision; Nov 24 profit rule): for P/E and P/S each, 1 - today / the
+    five-year trimmed mean, history days above PE_CAP / PS_CAP counted at the cap (loss days have no P/E and are left out of its
+    mean); the mean of the two. In percent, unrounded. Also whether both are below every day of the period (5年最安).
+    None without enough data, and without a P/E today or a year of profitable days (a loss-maker is never ranked as cheap)."""
     if index < 0 or index >= len(ratios):
         return None
     day, pe, ps = ratios[index]
-    if ps is None:
+    if ps is None or pe is None:
         return None
     window = [r for r in ratios[:index] if day - r[0] <= WINDOW_DAYS]
     ps_history = [r[2] for r in window if r[2] is not None]
-    if len(ps_history) < MIN_PS_DAYS:
-        return None
     pe_history = [r[1] for r in window if r[1] is not None]
-    use_pe = pe is not None and len(pe_history) >= MIN_PE_DAYS
-    parts = [1 - ps / trimmed_mean(ps_history)]
-    low = ps < min(ps_history)
-    if use_pe:
-        parts.insert(0, 1 - pe / trimmed_mean(pe_history))
-        low = low and pe < min(pe_history)
+    if len(ps_history) < MIN_PS_DAYS or len(pe_history) < MIN_PE_DAYS:
+        return None
+    pe_mean = trimmed_mean([min(value, PE_CAP) for value in pe_history])
+    ps_mean = trimmed_mean([min(value, PS_CAP) for value in ps_history])
+    parts = [1 - pe / pe_mean, 1 - ps / ps_mean]
+    low = ps < min(ps_history) and pe < min(pe_history)
     return {'exact': 100 * sum(parts) / len(parts), 'pe': pe, 'ps': ps, 'low': low, 'days': len(ps_history)}
+
+
+def why_unscored(ratios):
+    """The exclusion reason when score_at has no score for the last day."""
+    if not ratios or ratios[-1][2] is None:
+        return 'no-current-figures'
+    day, pe, _ = ratios[-1]
+    if pe is None:
+        return 'not-profitable'
+    window = [r for r in ratios[:-1] if day - r[0] <= WINDOW_DAYS]
+    if len([r for r in window if r[2] is not None]) < MIN_PS_DAYS:
+        return 'short-history'
+    return 'short-profit-history'
 
 
 def revenue_growth(record):
@@ -629,9 +646,11 @@ def evaluate(ticker, closes, record, as_of, fx=None):
     ratios = daily_ratios(closes, record, fx)
     today = score_at(ratios, len(ratios) - 1)
     if today is None:
-        return {'excluded': 'short-history' if ratios and ratios[-1][2] is not None else 'no-current-figures'}
+        return {'excluded': why_unscored(ratios)}
     if today['ps'] > MAX_PS:
         return {'excluded': 'implausible'}
+    if today['pe'] > PE_CAP:
+        return {'excluded': 'thin-earnings'}
     growth = revenue_growth(record)
     if growth is None:
         return {'excluded': 'no-growth'}
@@ -647,7 +666,7 @@ def evaluate(ticker, closes, record, as_of, fx=None):
         note = 'listed' if _day(closes[0][0]) > _day(as_of) - WINDOW_DAYS + 60 else 'data'
     return {'ticker': ticker, 'score': round(today['exact']), 'exact': today['exact'],
             'previous': round(previous['exact']) if previous else None, 'low': today['low'],
-            'pe': round(pe, 1) if pe is not None else None, 'ps': round(ps, 1), 'revenueGrowth': round(growth),
+            'pe': round(pe, 1), 'ps': round(ps, 1), 'revenueGrowth': round(growth),
             'period': note, 'source': record.get('source') or 'sec'}
 
 
