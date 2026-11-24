@@ -7,7 +7,7 @@ const screen = read("../app/research/radar/screen.tsx") + read("../app/research/
 
 test("the page carries the owner's wording", () => {
   for (const text of ["FINANCIAL RADAR", "財務レーダー", "稼ぐ力と守る力を、ジャンルごとに1枚で見比べます。点線は前の決算からの動きです。",
-    "↑ 守る力 ｜ 現金÷(借入+リース)", "稼ぐ力 ｜ 売上に対する営業キャッシュフロー →", "売上が前年より増加", "減少", "大きさ=売上規模", "白抜き=売上の比較なし", "点線=前の決算から", "フリーキャッシュフロー率", "稼ぐ力は営業キャッシュフローの売上に対する割合です。", "並び順:稼ぐ力と守る力の点数の平均。グラフの右上ほど上位です", "要確認", "前受け金(顧客からの前払い)が大きい会社は、営業キャッシュフローが膨らんで見えます。",
+    "↑ 守る力 ｜ 現金÷(借入+リース)", "稼ぐ力 ｜ 売上に対する営業キャッシュフロー →", "売上が前年より増加", "減少", "大きさ=売上規模", "白抜き=売上の比較なし", "点線=前の決算から", "フリーキャッシュフロー率", "稼ぐ力は営業キャッシュフローの売上に対する割合です。", "並び順:稼ぐ力と守る力の点数の平均。グラフの右上ほど上位です", "前受け金除く", "前受け金(顧客からの前払い)が大きい会社は、営業キャッシュフローが膨らんで見えます。", "1年間に受け取った前受け金が1年分の売上を超える会社は、その分を除いた営業キャッシュフローで稼ぐ力を計算し", "売上がまだないため順位なし",
     "体力ランキング", "最新の決算", "データが足りない銘柄 ・", "PRO限定", "稼ぐ力", "守る力",
     "数字は米SECの開示資料から計算しています。範囲を超える値はグラフの端に表示します。売買をすすめるものではありません。"]) assert.ok(screen.includes(text), text);
   for (const text of ["盤石", "借入で攻める", "守りで耐える", "余力が小さい"]) assert.ok(read("../lib/research/radar.ts").includes(text), text);
@@ -70,7 +70,7 @@ test("the page opens with the first genre's dots already in it, and the screen n
 });
 
 test("the English view has no Japanese left in the radar page (owner, Nov 6)", () => {
-  for (const text of ["Financial Radar", "Cash generation", "Financial resilience", "Financial strength ranking", "Available with PRO", "Needs review (not ranked)", "Revenue up from a year earlier"]) assert.ok(screen.includes(text), text);
+  for (const text of ["Financial Radar", "Cash generation", "Financial resilience", "Financial strength ranking", "Available with PRO", "Excl. prepayments", "Not ranked: no revenue yet", "Revenue up from a year earlier"]) assert.ok(screen.includes(text), text);
   const chart = read("../app/research/radar/chart.tsx");
   assert.match(chart, /ja \? "横軸が稼ぐ力、縦軸が守る力の散布図" : "Scatter plot/);
   assert.match(read("../lib/research/radar.ts"), /zoneNameEn/);
@@ -82,4 +82,12 @@ test("the browser tab title is English in the English view", async () => {
   assert.equal(englishTitle("/research/pro-experience/watch-22"), "PRO feature tour | Tech Phase Research");
   assert.equal(englishTitle("/research/unknown"), "Tech Phase Research");
   assert.equal(englishTitle("/terms"), "Terms of Service | Tech Phase");
+});
+
+test("no separate 要確認 block: only a company without revenue is unranked, in one plain line (owner, Nov 24)", () => {
+  assert.ok(!screen.includes("要確認"));
+  assert.ok(!screen.includes("順位外"));
+  assert.ok(!screen.includes("reviewHead"));
+  assert.match(screen, /const unranked = pro\.dots\.filter\(dot => dot\.rank === null\);/);
+  assert.match(screen, /unranked\.map\(dot => <p key=\{dot\.ticker\} className=\{styles\.unranked\}>/);
 });

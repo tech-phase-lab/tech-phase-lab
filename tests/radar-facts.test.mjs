@@ -109,3 +109,34 @@ test("revenue that cannot be added up to twelve months counts as none, but a mis
   for (const tag of ["CashAndCashEquivalentsAtCarryingValue", "ShortTermInvestments", "LongTermDebtNoncurrent", "DebtCurrent", "OperatingLeaseLiability"]) mixed.facts["us-gaap"][tag].units.USD.push(row("2026-06-30", mixed.facts["us-gaap"][tag].units.USD[0].val, undefined));
   assert.equal(radarFacts(mixed, NOW).latest?.noRevenue, undefined);
 });
+
+// Nov 24 (owner: "財務レーダーの順位外もできればどうにかしてほしい"): IREN showed 稼ぐ力 276% and Nebius 231%, both in a 要確認 block.
+test("prepayments of more than a year of revenue are taken out of the operating cash flow; ordinary subscription billing is not", () => {
+  const data = yearEnd(), t = data.facts["us-gaap"];
+  t.IncreaseDecreaseInContractWithCustomerLiability = { units: { USD: [row("2025-12-31", 99, "2025-01-01", "10-K")] } };
+  let latest = radarFacts(data, NOW).latest;
+  assert.equal(latest.ocfMargin, 30); assert.equal(latest.prepaid, undefined, "99 on revenue 100 is not more than a year");
+  t.NetCashProvidedByUsedInOperatingActivities.units.USD.push({ ...row("2025-12-31", 280, "2025-01-01", "10-K/A"), filed: "2027-01-30" });
+  t.IncreaseDecreaseInContractWithCustomerLiability.units.USD.push({ ...row("2025-12-31", 260, "2025-01-01", "10-K/A"), filed: "2027-01-30" });
+  latest = radarFacts(data, NOW).latest;
+  assert.equal(latest.prepaid, true);
+  assert.equal(latest.ocfMargin, 20);           // (280 - 260) / 100
+  assert.equal(latest.fcfMargin, 10);           // minus capex 10
+  t.IncreaseDecreaseInAccountsReceivable = { units: { USD: [row("2025-12-31", 60, "2025-01-01", "10-K")] } };
+  assert.equal(radarFacts(data, NOW).latest.ocfMargin, 80, "billed and not yet paid is not taken out a second time: 280 - (260 - 60)");
+});
+
+test("a revenue name restated narrower than the total uses the total (IREN: contract revenue without bitcoin mining)", () => {
+  const data = yearEnd(), t = data.facts["us-gaap"];
+  // FY to June 2026 707 (mining included), the September quarter 200 of contract revenue, and last year's quarter restated to 7 (mining moved out).
+  t.RevenueFromContractWithCustomerExcludingAssessedTax.units.USD.push(row("2026-06-30", 707, "2025-07-01", "10-K"), row("2026-09-30", 200, "2026-07-01"), { ...row("2025-09-30", 7, "2025-07-01"), filed: "2027-01-31" });
+  t.Revenues = { units: { USD: [row("2026-06-30", 707, "2025-07-01", "10-K"), row("2026-09-30", 228, "2026-07-01"), row("2025-09-30", 240, "2025-07-01"), row("2025-06-30", 501, "2024-07-01", "10-K")] } };
+  t.NetCashProvidedByUsedInOperatingActivities.units.USD.push(row("2026-06-30", 210, "2025-07-01", "10-K"), row("2026-09-30", 53, "2026-07-01"), row("2025-09-30", 14, "2025-07-01"));
+  t.PaymentsToAcquirePropertyPlantAndEquipment.units.USD.push(row("2026-06-30", 100, "2025-07-01", "10-K"), row("2026-09-30", 30, "2026-07-01"), row("2025-09-30", 20, "2025-07-01"));
+  for (const tag of ["CashAndCashEquivalentsAtCarryingValue", "ShortTermInvestments", "LongTermDebtNoncurrent", "DebtCurrent", "OperatingLeaseLiability"]) t[tag].units.USD.push(row("2026-09-30", t[tag].units.USD[0].val, undefined));
+  const latest = radarFacts(data, NOW).latest;
+  assert.equal(latest.end, "2026-09-30");
+  assert.equal(latest.revenue, 695, "707 + 228 - 240, not 707 + 200 - 7 = 900");
+  assert.equal(latest.ocfMargin, (210 + 53 - 14) / 695 * 100);
+  assert.equal(Math.round(latest.revenueGrowth), -5, "no trailing year a year ago: the quarter against the same quarter, 228 / 240");
+});

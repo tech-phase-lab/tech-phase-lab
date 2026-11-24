@@ -204,3 +204,27 @@ test("the refresh lists companies still behind their filing, by ticker and code"
   const report = await refreshChunk(0, { now: () => t, sleep: async ms => { t += ms; }, budgetMs: 1e12, load: async ticker => ticker === "NBIS" ? behind : current, save: async () => true });
   assert.deepEqual(report.stale, ["NBIS:behind"]);
 });
+
+// Nov 24 (owner: "財務レーダーの順位外もできればどうにかしてほしい"): Nebius showed 稼ぐ力 231% and 売上 — in a separate 要確認 block.
+test("Nebius: customer prepayments are read from the 6-K and taken out, net of what is billed but unpaid; growth comes from the nine months", () => {
+  const withPrepayments = exhibit
+    .replace(`${row("Cash and cash equivalents", "4", "3,678.1", "7,425.6")}`, `${row("Cash and cash equivalents", "4", "3,678.1", "7,425.6")}${row("Accounts receivable, net", "4", "1,016.5", "4,377.1")}`)
+    .replace(row("Purchases of property and equipment and intangible assets", "", "(2,010.0)", "(15,430.7)"),
+      `${row("Accounts receivable", "", "(81.8)", "(3,333.9)")}${row("Deferred revenue", "", "(0.7)", "7,829.0")}${row("Purchases of property and equipment and intangible assets", "", "(2,010.0)", "(15,430.7)")}`);
+  const base = annual(), t = base.facts["us-gaap"];
+  t.IncreaseDecreaseInDeferredRevenue = { units: { USD: [fy("", 1_561_200_000)] } };
+  t.IncreaseDecreaseInAccountsReceivable = { units: { USD: [fy("", 714_600_000)] } };
+  const extra = parseStatementTables(withPrepayments, "2026-11-12", "A-6K", base);
+  assert.deepEqual(usd(extra, "IncreaseDecreaseInDeferredRevenue").map(r => [r.end, r.val]), [["2025-09-30", -700_000], ["2026-09-30", 7_829_000_000]], "joins the annual report's own name");
+  assert.deepEqual(usd(extra, "IncreaseDecreaseInAccountsReceivable").map(r => [r.end, r.val]), [["2025-09-30", 81_800_000], ["2026-09-30", 3_333_900_000]],
+    "an outflow in the statement is a growth in receivables; the balance sheet's line is not a change");
+  const all = facts({});
+  for (const source of [base, extra]) for (const [tag, body] of Object.entries(source.facts["us-gaap"])) (all.facts["us-gaap"][tag] ??= { units: { USD: [] } }).units.USD.push(...body.units.USD);
+  const latest = radarFacts(all, NOW).latest;
+  const revenue = 529.8 + 1962.1 - 302.1, ocf = 384.8 + 4231.1 + 449.5;
+  const prepaid = (1561.2 + 7829.0 + 0.7) - (714.6 + 3333.9 - 81.8);
+  assert.equal(latest.prepaid, true);
+  assert.ok(Math.abs(latest.ocfMargin - (ocf - prepaid) / revenue * 100) < 1e-9);
+  assert.equal(Math.round(latest.ocfMargin * 10) / 10, -16.4, "231% before");
+  assert.equal(Math.round(latest.revenueGrowth), 549, "1,962.1 against 302.1 for the nine months, instead of —");
+});

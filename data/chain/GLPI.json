@@ -1,0 +1,204 @@
+{
+  "root": {
+    "ticker": "GLPI",
+    "name": "ゲーミング&レジャー・プロパティーズ",
+    "cik": 1575965,
+    "name_en": "Gaming and Leisure Properties, Inc."
+  },
+  "rows": [
+    {
+      "ja": "主なテナント(カジノ運営会社)",
+      "en": "Major tenants (casino operators)"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "PENN",
+      "ticker": "PENN",
+      "name": "ペン・エンターテインメント",
+      "name_en": "PENN Entertainment",
+      "sub": "カジノ運営",
+      "sub_en": "Casino operator",
+      "sub_short": "カジノ",
+      "sub_short_en": "Casinos",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大のテナント(34施設を運営)",
+          "text_en": "Largest tenant (operates 34 facilities)",
+          "source": {
+            "label": "Gaming and Leisure Properties 10-K(2025年度)",
+            "label_en": "Gaming and Leisure Properties 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1575965/000157596526000032/glpi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "As of December 31, 2025, GLPI's portfolio consisted of interests in 69 gaming and related facilities, including the real property associated with 34 gaming and related facilities operated by PENN"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BALY",
+      "ticker": "BALY",
+      "name": "バリーズ",
+      "name_en": "Bally's Corporation",
+      "sub": "カジノ運営",
+      "sub_en": "Casino operator",
+      "sub_short": "カジノ",
+      "sub_short_en": "Casinos",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "15施設を賃借、シカゴの新施設も開発中",
+          "text_en": "Leases 15 facilities, with Bally's Chicago under development",
+          "source": {
+            "label": "Gaming and Leisure Properties 10-K(2025年度)",
+            "label_en": "Gaming and Leisure Properties 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1575965/000157596526000032/glpi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "the real property associated with 15 gaming and related facilities operated by Bally's Corporation (NYSE: BALY) (\"Bally's\") and 1 facility under development namely Bally's Chicago"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CZR",
+      "ticker": "CZR",
+      "name": "シーザーズ・エンターテインメント",
+      "name_en": "Caesars Entertainment",
+      "sub": "カジノ運営",
+      "sub_en": "Casino operator",
+      "sub_short": "カジノ",
+      "sub_short_en": "Casinos",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "6施設を賃借(マスターリース)",
+          "text_en": "Leases 6 facilities (master lease)",
+          "source": {
+            "label": "Gaming and Leisure Properties 10-K(2025年度)",
+            "label_en": "Gaming and Leisure Properties 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1575965/000157596526000032/glpi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "the real property associated with 6 gaming and related facilities operated by Caesars Entertainment (NASDAQ: CZR) (\"Caesars\")"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BYD",
+      "ticker": "BYD",
+      "name": "ボイド・ゲーミング",
+      "name_en": "Boyd Gaming",
+      "sub": "カジノ運営",
+      "sub_en": "Casino operator",
+      "sub_short": "カジノ",
+      "sub_short_en": "Casinos",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "4施設を賃借",
+          "text_en": "Leases 4 facilities",
+          "source": {
+            "label": "Gaming and Leisure Properties 10-K(2025年度)",
+            "label_en": "Gaming and Leisure Properties 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1575965/000157596526000032/glpi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "the real property associated with 4 gaming and related facilities operated by Boyd Gaming Corporation (NYSE: BYD) (\"Boyd\")"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Cordish",
+      "ticker": "Cordish",
+      "name": "コーディッシュ・カンパニーズ",
+      "name_en": "Cordish Companies",
+      "sub": "カジノ・開発",
+      "sub_en": "Casinos & development",
+      "sub_short": "カジノ",
+      "sub_short_en": "Casinos",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "「ライブ!」3施設を賃借(主要5テナントの一角)",
+          "text_en": "Leases 3 Live! casinos (one of five main tenants)",
+          "source": {
+            "label": "Gaming and Leisure Properties 10-K(2025年度)",
+            "label_en": "Gaming and Leisure Properties 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1575965/000157596526000032/glpi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Approximately 97% of our cash rent comes from five of the company's tenants, PENN, Caesars, Boyd, Cordish and Bally's"
+          }
+        }
+      ]
+    },
+    {
+      "id": "StrategicGaming",
+      "ticker": "Strategic Gaming",
+      "name": "ストラテジック・ゲーミング",
+      "name_en": "Strategic Gaming Management",
+      "sub": "カジノ運営",
+      "sub_en": "Casino operator",
+      "sub_short": "カジノ",
+      "sub_short_en": "Casinos",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "4施設を25年の長期契約で賃借",
+          "text_en": "Leases 4 facilities on 25-year leases",
+          "source": {
+            "label": "Gaming and Leisure Properties 10-K(2025年度)",
+            "label_en": "Gaming and Leisure Properties 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1575965/000157596526000032/glpi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Simultaneous with the acquisition, GLP Capital and affiliates of Strategic entered into two cross-defaulted triple-net lease agreements, each for an initial 25-year term with no purchase option and two ten-year renewal periods (exercisable by the tenant) (the \"Strategic Gaming Leases\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HardRock",
+      "ticker": "Hard Rock",
+      "name": "ハードロック・インターナショナル",
+      "name_en": "Hard Rock International",
+      "sub": "カジノ運営",
+      "sub_en": "Casino operator",
+      "sub_short": "カジノ",
+      "sub_short_en": "Casinos",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "イリノイ州ロックフォードのカジノを運営",
+          "text_en": "Manages the Rockford, Illinois casino",
+          "source": {
+            "label": "Gaming and Leisure Properties 10-K(2025年度)",
+            "label_en": "Gaming and Leisure Properties 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1575965/000157596526000032/glpi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Rockford Lease On August 29, 2023, the Company acquired the land associated with a casino development project in Rockford, IL, that opened in late August 2024 and is managed by a subsidiary of Hard Rock, from an affiliate of 815 Entertainment LLC (\"815 Entertainment\")."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

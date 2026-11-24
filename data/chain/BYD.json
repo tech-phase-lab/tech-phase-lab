@@ -1,0 +1,195 @@
+{
+  "root": {
+    "ticker": "BYD",
+    "name": "ボイド・ゲーミング",
+    "cik": 906553,
+    "name_en": "Boyd Gaming Corporation"
+  },
+  "rows": [
+    {
+      "ja": "提携・運営委託・仕入先",
+      "en": "Partners, clients & suppliers"
+    },
+    {
+      "ja": "カジノ施設の貸し手",
+      "en": "Casino landlord"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "FLUT",
+      "ticker": "FLUT",
+      "name": "ファンデュエル(フラッター)",
+      "name_en": "FanDuel (Flutter)",
+      "sub": "スポーツベッティング",
+      "sub_en": "Sports betting",
+      "sub_short": "賭博",
+      "sub_short_en": "Betting",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ファンデュエルとオンライン賭博の市場参入契約",
+          "text_en": "FanDuel market access agreements for online wagering",
+          "source": {
+            "label": "Boyd Gaming 10-K(2025年度)",
+            "label_en": "Boyd Gaming 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/906553/000143774926004908/bgc20251121_10k.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "In connection with the sale of the Equity Interest, Boyd Gaming and FanDuel or their respective affiliated entities terminated certain of their existing agreements related to their strategic partnership and entered into certain new agreements (collectively, the \"FanDuel Market Access Agreements\")."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "フラッターも市場参入パートナーとして明記",
+          "text_en": "Flutter names Boyd as a market access partner",
+          "source": {
+            "label": "Flutter Entertainment 10-K(2024年度)",
+            "label_en": "Flutter Entertainment 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1635327/000162828025009852/flut-20241231.htm",
+            "level": "official",
+            "date": "2025-03-04",
+            "quote": "Our market access partners include Boyd Gaming Corporation, one of the largest and most experienced gaming companies in the United States."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WiltonRancheria",
+      "ticker": "Wilton Rancheria",
+      "name": "ウィルトン・ランチェリア",
+      "name_en": "Wilton Rancheria",
+      "sub": "先住民部族",
+      "sub_en": "Native American tribe",
+      "sub_short": "部族",
+      "sub_short_en": "Tribe",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "カリフォルニア州のスカイリバー・カジノを運営受託",
+          "text_en": "Manages its Sky River Casino in California",
+          "source": {
+            "label": "Boyd Gaming 10-K(2025年度)",
+            "label_en": "Boyd Gaming 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/906553/000143774926004908/bgc20251121_10k.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Through a management agreement with Wilton Rancheria, we also manage the Sky River Casino, which is located in California."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Mohegan",
+      "ticker": "Mohegan",
+      "name": "モヒガン",
+      "name_en": "Mohegan",
+      "sub": "カジノ運営",
+      "sub_en": "Casino operator",
+      "sub_short": "カジノ",
+      "sub_short_en": "Casinos",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "「モヒガン・サン」ブランドでオンラインカジノを提供",
+          "text_en": "Offers online casino under the Mohegan Sun brand",
+          "source": {
+            "label": "Boyd Gaming 10-K(2025年度)",
+            "label_en": "Boyd Gaming 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/906553/000143774926004908/bgc20251121_10k.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Through Boyd Digital, we also offer online casino gaming under the Resorts Casino and Mohegan Sun brands."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Resorts",
+      "ticker": "Resorts Casino",
+      "name": "リゾーツ・カジノ",
+      "name_en": "Resorts Casino",
+      "sub": "カジノ運営",
+      "sub_en": "Casino operator",
+      "sub_short": "カジノ",
+      "sub_short_en": "Casinos",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "「リゾーツ・カジノ」ブランドでオンラインカジノを提供",
+          "text_en": "Offers online casino under the Resorts Casino brand",
+          "source": {
+            "label": "Boyd Gaming 10-K(2025年度)",
+            "label_en": "Boyd Gaming 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/906553/000143774926004908/bgc20251121_10k.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Through Boyd Digital, we also offer online casino gaming under the Resorts Casino and Mohegan Sun brands."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AGYS",
+      "ticker": "AGYS",
+      "name": "アジリシス",
+      "name_en": "Agilysys",
+      "sub": "ホテル向けソフト",
+      "sub_en": "Hospitality software",
+      "sub_short": "ソフト",
+      "sub_short_en": "Software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ホテル・カジノ向けソフトを導入(同社が代表的な顧客として明記)",
+          "text_en": "Uses its hospitality software (named as a representative client)",
+          "source": {
+            "label": "Agilysys 10-K(2026年3月期)",
+            "label_en": "Agilysys 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/78749/000119312526234423/agys-20260331.htm",
+            "level": "official",
+            "date": "2026-05-21",
+            "quote": "Representative Agilysys clients include: 7 Cedars Casino Golden Nugget Lake Charles Resorts World Bimini AVI Foodsystems, Inc. Grand Sierra Resort and Casino Rosen Hotels & Resorts Boyd Gaming Corporation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GLPI",
+      "ticker": "GLPI",
+      "name": "ゲーミング&レジャー・プロパティーズ",
+      "name_en": "Gaming and Leisure Properties",
+      "sub": "カジノREIT",
+      "sub_en": "Gaming REIT",
+      "sub_short": "REIT",
+      "sub_short_en": "REIT",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ベルテラ・リゾートなどの不動産をマスターリースで賃借",
+          "text_en": "Leases Belterra Resort and other casino real estate under a master lease",
+          "source": {
+            "label": "Boyd Gaming 10-K(2025年度)",
+            "label_en": "Boyd Gaming 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/906553/000143774926004908/bgc20251121_10k.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "The real estate utilized by Belterra Resort is subject to a Master Lease with Gaming and Leisure Properties, Inc. (\"GLPI\")."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

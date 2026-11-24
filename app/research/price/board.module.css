@@ -4,7 +4,9 @@
 .indices::before,.indices::after{content:"";position:absolute;top:-1px;width:26px;height:26px;pointer-events:none}
 .indices::before{left:-1px;border-top:2px solid #d9b46a;border-left:2px solid #d9b46a;border-top-left-radius:20px}
 .indices::after{right:-1px;border-top:2px solid #d9b46a;border-right:2px solid #d9b46a;border-top-right-radius:20px}
-.state{display:flex;align-items:center;justify-content:center;gap:6px;padding:12px 16px 8px;font-size:11px;color:#8c98ab}
+.state{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:2px 6px;padding:12px 16px 8px;font-size:11px;color:#8c98ab}
+.clock{font-variant-numeric:tabular-nums;white-space:nowrap}
+.stale{color:#e0b25c;white-space:nowrap}
 .dot{width:6px;height:6px;border-radius:50%;background:#8c98ab}
 .dot[data-open="true"]{background:#4fe3a6}
 .dot[data-closed="true"]{background:#6f7c8c}

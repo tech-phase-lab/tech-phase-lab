@@ -70,7 +70,7 @@ export default function RadarScreen({ initial }: { initial: RadarPayload | null 
           </section>}
         </>}
       <p className={styles.foot}>{t("数字は米SECの開示資料から計算しています。範囲を超える値はグラフの端に表示します。売買をすすめるものではありません。", "Figures are calculated from U.S. SEC filings. Values outside the chart range appear at the edge. This is not a recommendation to buy or sell.")}</p>
-      <p className={styles.foot}>{t("前受け金(顧客からの前払い)が大きい会社は、営業キャッシュフローが膨らんで見えます。稼ぐ力が100%を超える銘柄は「要確認」とし、順位からは外しています。", "Large customer prepayments can make operating cash flow look inflated. Stocks with cash generation above 100% are marked \"Needs review\" and left out of the ranking.")}</p>
+      <p className={styles.foot}>{t("前受け金(顧客からの前払い)が大きい会社は、営業キャッシュフローが膨らんで見えます。1年間に受け取った前受け金が1年分の売上を超える会社は、その分を除いた営業キャッシュフローで稼ぐ力を計算し、「前受け金除く」と表示します。請求したまま未回収の分は、除く額から差し引きます。", "Large customer prepayments can make operating cash flow look inflated. When the prepayments received in a year exceed a full year of revenue, cash generation is calculated without them and marked \"Excl. prepayments\" (amounts billed but not yet collected are not taken out).")}</p>
       <p className={styles.foot}>{t("稼ぐ力は営業キャッシュフローの売上に対する割合です。守る力の現金は現金同等物と短期の投資、借入は短期・長期の借入とリース負債の合計です。売上や現金の流れは、年の決算の日は1年分、それ以外は直近4四半期分を使います。", "Cash generation is operating cash flow divided by revenue. Financial resilience compares cash (cash equivalents plus short-term investments) with debt (short- and long-term borrowings plus lease liabilities). Revenue and cash flow use the full year for annual reports and the latest four quarters otherwise.")}</p>
     </div>
   </ResearchToolShell>;
@@ -81,13 +81,13 @@ type ProRadar = Extract<RadarPayload, { tier: "pro" }>;
 export function StrengthRanking({ pro, lang }: { pro: ProRadar; lang: "ja" | "en" }) {
   const ja = lang === "ja", t = (a: string, b: string) => ja ? a : b;
   const ranked = pro.dots.filter(dot => dot.rank !== null).sort((a, b) => a.rank! - b.rank!);
-  const review = pro.dots.filter(dot => dot.review);
+  // Only a company without revenue is unranked (earning power cannot be worked out): one plain line, not a card (owner, Nov 24).
+  const unranked = pro.dots.filter(dot => dot.rank === null);
   return <section className={styles.ranking}>
     <header><h2>{t("体力ランキング", "Financial strength ranking")}</h2><small>{ja ? `最新の決算（${quarterOf(pro.asOf, true)}）・決算ごとに自動更新` : `Latest results (${quarterOf(pro.asOf, false)}) · updated with each report`}</small></header>
     <p className={styles.order}>{t("並び順:稼ぐ力と守る力の点数の平均。グラフの右上ほど上位です", "Ranked by the average of the cash-generation and resilience scores. The closer to the upper right, the higher the rank.")}</p>
     {ranked.map(dot => <RankCard key={dot.ticker} dot={dot} lang={lang} />)}
-    {review.length > 0 && <h3 className={styles.reviewHead}>{t("要確認(順位外)", "Needs review (not ranked)")}</h3>}
-    {review.map(dot => <RankCard key={dot.ticker} dot={dot} lang={lang} />)}
+    {unranked.map(dot => <p key={dot.ticker} className={styles.unranked}><b>{dot.ticker}</b>{t(`売上がまだないため順位なし ・ 守る力 ${fmtCover(dot.cover, lang)}`, `Not ranked: no revenue yet · Resilience ${fmtCover(dot.cover, lang)}`)}</p>)}
     {pro.missing.length > 0
       ? <details className={styles.missing}><summary>{t("データが足りない銘柄 ・ ", "Stocks with missing data · ")}{pro.missing.length}{t("件", "")}</summary><p>{pro.missing.join("　")}</p></details>
       : <p className={styles.missing}>{t("データが足りない銘柄 ・ 0件", "Stocks with missing data · 0")}</p>}
@@ -104,7 +104,7 @@ export function RankCard({ dot, lang }: { dot: RadarDotPro; lang: "ja" | "en" })
       <b>{dot.ticker}</b><span className={`${styles.chip} ${styles[zone]}`}>{zoneLabel(zone, lang)}</span>
       <em className={g === null || Math.abs(g) < 0.5 ? styles.flat : g > 0 ? styles.up : styles.down}>{growthText(g, ja)}</em>
     </div>
-    <div className={styles.bar}><span>{ja ? "稼ぐ力" : "Cash generation"}</span><div><u className={`${styles.fcf} ${dot.ocfMargin < 0 ? styles.negative : ""}`} style={{ width: `${Math.max(3, dot.noRevenue ? 0 : xPosition(dot.ocfMargin) * 100)}%` }} /></div><strong>{dot.review && !dot.noRevenue && <small className={styles.review}>{ja ? "要確認" : "Review"}</small>}{dot.noRevenue ? (ja ? "売上なし" : "No revenue") : fmtPercent(dot.ocfMargin)} <Arrow ja={ja} kind={dot.noRevenue ? null : arrow(dot.ocfMargin, dot.previous?.ocfMargin)} /></strong></div>
+    <div className={styles.bar}><span>{ja ? "稼ぐ力" : "Cash generation"}</span><div><u className={`${styles.fcf} ${dot.ocfMargin < 0 ? styles.negative : ""}`} style={{ width: `${Math.max(3, dot.noRevenue ? 0 : xPosition(dot.ocfMargin) * 100)}%` }} /></div><strong>{dot.prepaid && <small className={styles.review}>{ja ? "前受け金除く" : "Excl. prepayments"}</small>}{dot.review && <small className={styles.review}>{ja ? "前受け金込み" : "Incl. prepayments"}</small>}{dot.noRevenue ? (ja ? "売上なし" : "No revenue") : fmtPercent(dot.ocfMargin)} <Arrow ja={ja} kind={dot.noRevenue ? null : arrow(dot.ocfMargin, dot.previous?.ocfMargin)} /></strong></div>
     <div className={styles.bar}><span>{ja ? "守る力" : "Resilience"}</span><div><u className={styles.cover} style={{ width: `${Math.max(3, yPosition(dot.cover) * 100)}%` }} /></div><strong>{fmtCover(dot.cover, lang)} <Arrow ja={ja} kind={arrow(dot.cover, dot.previous?.cover)} /></strong></div>
   </article>;
 }
