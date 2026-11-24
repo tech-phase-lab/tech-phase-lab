@@ -1,0 +1,209 @@
+{
+  "root": {
+    "ticker": "HE",
+    "name": "ハワイアン・エレクトリック",
+    "cik": 354707,
+    "name_en": "Hawaiian Electric Industries"
+  },
+  "rows": [
+    {
+      "ja": "燃料の仕入れ先(上流)",
+      "en": "Fuel suppliers (upstream)",
+      "above": true
+    },
+    {
+      "ja": "電力の購入先(独立系発電)",
+      "en": "Independent power producers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "PARR",
+      "ticker": "PARR",
+      "name": "パー・パシフィック(パー・ハワイ)",
+      "name_en": "Par Pacific (Par Hawaii)",
+      "sub": "石油精製",
+      "sub_en": "Oil refining",
+      "sub_short": "石油精製",
+      "sub_short_en": "Refining",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "発電用の燃料を供給(2023年から)",
+          "text_en": "Supplies fuel for its power plants (since 2023)",
+          "source": {
+            "label": "Hawaiian Electric 10-K(2025年度)",
+            "label_en": "Hawaiian Electric 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/354707/000035470726000008/he-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "On February 1, 2022, the Utilities and PAR Hawaii Refining, LLC (PAR Hawaii) entered into a fuel supply contract (Supply Agreement) commencing January 1, 2023."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PBT",
+      "ticker": "PBT",
+      "name": "パシフィック・バイオディーゼル",
+      "name_en": "Pacific Biodiesel Technologies",
+      "sub": "バイオディーゼル",
+      "sub_en": "Biodiesel",
+      "sub_short": "バイオ",
+      "sub_short_en": "Biofuel",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "全島の発電所にバイオディーゼルを供給",
+          "text_en": "Supplies biodiesel on all islands",
+          "source": {
+            "label": "Hawaiian Electric 10-K(2025年度)",
+            "label_en": "Hawaiian Electric 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/354707/000035470726000008/he-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "On December 13, 2021, the Utilities and PBT signed an agreement for supply of biodiesel on all islands commencing January 1, 2023, which was approved by the PUC on December 1, 2022."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Vitol",
+      "ticker": "Vitol",
+      "name": "ビトル",
+      "name_en": "Vitol",
+      "sub": "石油トレーディング",
+      "sub_en": "Oil trading",
+      "sub_short": "石油商社",
+      "sub_short_en": "Oil trade",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "予備の燃料供給契約",
+          "text_en": "Backup fuel supply contract",
+          "source": {
+            "label": "Hawaiian Electric 10-K(2025年度)",
+            "label_en": "Hawaiian Electric 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/354707/000035470726000008/he-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "The Utilities are taking additional measures to ensure adequate supply of fuel by entering into a backup fuel supply contract with Vitol Inc. (Vitol) commencing on December 1, 2022 through June 30, 2023, with annual extensions if mutually agreed by both parties."
+          }
+        }
+      ]
+    },
+    {
+      "id": "REGML",
+      "ticker": "REG Marketing",
+      "name": "REGマーケティング&ロジスティクス",
+      "name_en": "REG Marketing & Logistics Group",
+      "sub": "バイオディーゼル",
+      "sub_en": "Biodiesel",
+      "sub_short": "バイオ",
+      "sub_short_en": "Biofuel",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "オアフ島向けバイオディーゼルの予備供給",
+          "text_en": "Backup biodiesel supply for Oahu",
+          "source": {
+            "label": "Hawaiian Electric 10-K(2025年度)",
+            "label_en": "Hawaiian Electric 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/354707/000035470726000008/he-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Hawaiian Electric has a contingency supply contract with REG Marketing & Logistics Group, LLC to also supply biodiesel to any generating unit on Oahu in the event PBT is not able to supply necessary quantities."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Kalaeloa",
+      "ticker": "Kalaeloa",
+      "name": "カラエロア・パートナーズ",
+      "name_en": "Kalaeloa Partners",
+      "sub": "火力発電(オアフ)",
+      "sub_en": "Power plant (Oahu)",
+      "sub_short": "火力発電",
+      "sub_short_en": "Power",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "208MWの電力を購入する契約(PPA)",
+          "text_en": "Hawaiian Electric buys 208 MW of firm capacity from it",
+          "source": {
+            "label": "Hawaiian Electric 10-K(2025年度)",
+            "label_en": "Hawaiian Electric 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/354707/000035470726000008/he-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Under the 2021 Amended and Restated PPA with Kalaeloa Partners, L.P. (Kalaeloa), Hawaiian Electric is committed to purchase 208 MW of firm capacity."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PGV",
+      "ticker": "PGV",
+      "name": "プナ地熱ベンチャー",
+      "name_en": "Puna Geothermal Venture",
+      "sub": "地熱発電",
+      "sub_en": "Geothermal power",
+      "sub_short": "地熱発電",
+      "sub_short_en": "Geotherm",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ハワイ島で地熱の電力34.6MWを購入",
+          "text_en": "Buys 34.6 MW of geothermal power on Hawaii Island",
+          "source": {
+            "label": "Hawaiian Electric 10-K(2025年度)",
+            "label_en": "Hawaiian Electric 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/354707/000035470726000008/he-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Hawaii Electric Light has a 35-year PPA, as amended, with Puna Geothermal Venture (PGV) for 34.6 MW of firm capacity from its geothermal steam facility, which will expire on December 31, 2027."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Hamakua",
+      "ticker": "Hamakua",
+      "name": "ハマクア・エナジー",
+      "name_en": "Hamakua Energy",
+      "sub": "火力発電(ハワイ島)",
+      "sub_en": "Power plant (Hawaii Island)",
+      "sub_short": "火力発電",
+      "sub_short_en": "Power",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ハワイ島で電力を購入する契約(PPA)",
+          "text_en": "Power purchase agreement on Hawaii Island",
+          "source": {
+            "label": "Hawaiian Electric 10-K(2025年度)",
+            "label_en": "Hawaiian Electric 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/354707/000035470726000008/he-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "the Utilities are deemed to have a variable interest in Kalaeloa Partners, L.P. (Kalaeloa) and Hamakua Energy by reason of the provisions of the PPA that the Utilities have with the two IPPs."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

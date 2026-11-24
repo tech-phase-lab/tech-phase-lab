@@ -1,0 +1,235 @@
+{
+  "root": {
+    "ticker": "VTOL",
+    "name": "ブリストウ・グループ",
+    "cik": 1525221,
+    "name_en": "Bristow Group"
+  },
+  "rows": [
+    {
+      "ja": "機体・部品の仕入れ先(上流)",
+      "en": "Aircraft & parts suppliers (upstream)",
+      "above": true
+    },
+    {
+      "ja": "顧客・提携先",
+      "en": "Customers & partners"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "LMT",
+      "ticker": "LMT",
+      "name": "ロッキード・マーチン(シコルスキー)",
+      "name_en": "Lockheed Martin (Sikorsky)",
+      "sub": "ヘリコプター",
+      "sub_en": "Helicopters",
+      "sub_short": "ヘリ",
+      "sub_short_en": "Helos",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "部品の供給・オーバーホールで頼る数少ないメーカーの一社",
+          "text_en": "One of the few OEMs Bristow relies on for parts and overhauls",
+          "source": {
+            "label": "Bristow 10-K(2025年度)",
+            "label_en": "Bristow 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1525221/000152522126000013/vtol-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "there are a limited number of suppliers, vendors and OEMs that we are able to rely on (such as Sikorsky Commercial Inc., Leonardo Spa, Nova Systems International Ltd., and General Electric Aviation Inc.)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "LEONARDO",
+      "ticker": "LDO",
+      "name": "レオナルド",
+      "name_en": "Leonardo",
+      "sub": "ヘリコプター",
+      "sub_en": "Helicopters",
+      "sub_short": "ヘリ",
+      "sub_short_en": "Helos",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "部品の供給・オーバーホールで頼る数少ないメーカーの一社",
+          "text_en": "One of the few OEMs Bristow relies on for parts and overhauls",
+          "source": {
+            "label": "Bristow 10-K(2025年度)",
+            "label_en": "Bristow 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1525221/000152522126000013/vtol-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "there are a limited number of suppliers, vendors and OEMs that we are able to rely on (such as Sikorsky Commercial Inc., Leonardo Spa, Nova Systems International Ltd., and General Electric Aviation Inc.)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GE",
+      "ticker": "GE",
+      "name": "GE(ゼネラル・エレクトリック)",
+      "name_en": "General Electric (GE Aviation)",
+      "sub": "航空エンジン",
+      "sub_en": "Aircraft engines",
+      "sub_short": "エンジン",
+      "sub_short_en": "Engines",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "エンジン部品の供給・オーバーホール",
+          "text_en": "Supplies and overhauls engine components",
+          "source": {
+            "label": "Bristow 10-K(2025年度)",
+            "label_en": "Bristow 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1525221/000152522126000013/vtol-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "there are a limited number of suppliers, vendors and OEMs that we are able to rely on (such as Sikorsky Commercial Inc., Leonardo Spa, Nova Systems International Ltd., and General Electric Aviation Inc.)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Electra",
+      "ticker": "Electra",
+      "name": "エレクトラ",
+      "name_en": "Electra.aero",
+      "sub": "ハイブリッド電動機",
+      "sub_en": "Hybrid-electric aircraft",
+      "sub_short": "電動機",
+      "sub_short_en": "E-planes",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ハイブリッド電動機EL9の初号機の納入枠を確保(2026年)",
+          "text_en": "Reserved the first delivery slots for the EL9 (2026)",
+          "source": {
+            "label": "Bristow 10-K(2025年度)",
+            "label_en": "Bristow 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1525221/000152522126000013/vtol-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Bristow announced it had signed a deposit agreement with Electra.aero, Inc. (\"Electra\") to secure the first delivery slots for five Electra EL9 Ultra Short hybrid-electric aircraft"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MCA",
+      "ticker": "MCA",
+      "name": "英国 沿岸警備庁(MCA)",
+      "name_en": "UK Maritime and Coastguard Agency",
+      "sub": "英国政府",
+      "sub_en": "UK government",
+      "sub_short": "英政府",
+      "sub_short_en": "UK gov",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "英国全域の捜索救助(SAR)ヘリ業務を受託",
+          "text_en": "Bristow flies search and rescue for the whole UK",
+          "source": {
+            "label": "Bristow 10-K(2025年度)",
+            "label_en": "Bristow 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1525221/000152522126000013/vtol-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "The UKSAR contract services the emergency SAR needs for all of the UK on behalf of the Maritime and Coastguard Agency (the \"MCA\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BETA",
+      "ticker": "BETA",
+      "name": "ベータ・テクノロジーズ",
+      "name_en": "BETA Technologies",
+      "sub": "電動航空機",
+      "sub_en": "Electric aircraft",
+      "sub_short": "電動機",
+      "sub_short_en": "E-planes",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ノルウェーで電動航空機の実証を共同で実施",
+          "text_en": "Ran an electric aircraft test in Norway together",
+          "source": {
+            "label": "Bristow 10-K(2025年度)",
+            "label_en": "Bristow 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1525221/000152522126000013/vtol-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Bristow completed its first electric aviation test project, conducted as an international test arena alongside partners BETA Technologies, Inc. (\"Beta\"), Avinor and Norway CAA"
+          }
+        }
+      ]
+    },
+    {
+      "id": "EVTL",
+      "ticker": "EVTL",
+      "name": "バーティカル・エアロスペース",
+      "name_en": "Vertical Aerospace",
+      "sub": "電動エアタクシー",
+      "sub_en": "Electric air taxis",
+      "sub_short": "空飛ぶ車",
+      "sub_short_en": "Air taxi",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "英国初の電動エアタクシー網で協業",
+          "text_en": "Working together on the UK's first electric air-taxi network",
+          "source": {
+            "label": "Bristow 10-K(2025年度)",
+            "label_en": "Bristow 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1525221/000152522126000013/vtol-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "a new collaboration with Vertical Aerospace (\"Vertical\") and Skyports Infrastructure (\"Skyports\")"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Cougar",
+      "ticker": "Cougar",
+      "name": "クーガー・ヘリコプターズ",
+      "name_en": "Cougar Helicopters",
+      "sub": "ヘリ運航(カナダ)",
+      "sub_en": "Helicopter operator (Canada)",
+      "sub_short": "ヘリ運航",
+      "sub_short_en": "Operator",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "カナダのヘリ運航会社。議決権25%を保有",
+          "text_en": "Canadian operator; Bristow holds 25% of the votes",
+          "source": {
+            "label": "Bristow 10-K(2025年度)",
+            "label_en": "Bristow 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1525221/000152522126000013/vtol-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "We own a 25% voting interest and a 40% economic interest in Cougar Helicopters Inc."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

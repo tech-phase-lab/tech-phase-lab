@@ -1,0 +1,152 @@
+{
+  "root": {
+    "ticker": "EPR",
+    "name": "EPRプロパティーズ",
+    "cik": 1045450,
+    "name_en": "EPR Properties"
+  },
+  "rows": [
+    {
+      "ja": "主なテナント・運営会社",
+      "en": "Major tenants & operators"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "Topgolf",
+      "ticker": "Topgolf",
+      "name": "トップゴルフ",
+      "name_en": "Topgolf",
+      "sub": "ゴルフ娯楽施設",
+      "sub_en": "Golf entertainment",
+      "sub_short": "ゴルフ",
+      "sub_short_en": "Golf",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ゴルフ娯楽施設を賃貸(または融資)",
+          "text_en": "Leases golf venues to Topgolf or lends against them",
+          "source": {
+            "label": "EPR Properties 10-K(2025年度)",
+            "label_en": "EPR Properties 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1045450/000104545026000007/epr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our golf entertainment complexes combine golf with entertainment, competition and food and beverage service, and are leased to, or we have mortgage receivables from, Topgolf USA (\"Topgolf\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMC",
+      "ticker": "AMC",
+      "name": "AMCエンターテインメント",
+      "name_en": "AMC Entertainment",
+      "sub": "映画館",
+      "sub_en": "Movie theaters",
+      "sub_short": "映画館",
+      "sub_short_en": "Cinemas",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "映画館を賃貸。売上の13.6%",
+          "text_en": "Leases theaters; 13.6% of revenue",
+          "source": {
+            "label": "EPR Properties 10-K(2025年度)",
+            "label_en": "EPR Properties 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1045450/000104545026000007/epr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "For the year ended December 31, 2025, approximately $97.4 million, or 13.6%, and $82.8 million, or 11.5%, of the Company's total revenue was from AMC and Regal, respectively."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RegalCinemas",
+      "ticker": "Regal Cinemas",
+      "name": "リーガル・シネマズ",
+      "name_en": "Regal Cinemas",
+      "sub": "映画館",
+      "sub_en": "Movie theaters",
+      "sub_short": "映画館",
+      "sub_short_en": "Cinemas",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "映画館を賃貸。売上の11.5%",
+          "text_en": "Leases theaters; 11.5% of revenue",
+          "source": {
+            "label": "EPR Properties 10-K(2025年度)",
+            "label_en": "EPR Properties 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1045450/000104545026000007/epr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "For the year ended December 31, 2025, approximately $97.4 million, or 13.6%, and $82.8 million, or 11.5%, of the Company's total revenue was from AMC and Regal, respectively."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Andretti",
+      "ticker": "Andretti",
+      "name": "アンドレッティ・インドア・カート",
+      "name_en": "Andretti Indoor Karting and Games",
+      "sub": "屋内カート",
+      "sub_en": "Indoor karting",
+      "sub_short": "カート",
+      "sub_short_en": "Karting",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "屋内カート・ゲーム施設への投資を拡大",
+          "text_en": "EPR keeps growing its investments with Andretti",
+          "source": {
+            "label": "EPR Properties 10-K(2025年度)",
+            "label_en": "EPR Properties 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1045450/000104545026000007/epr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "We have grown our investments with Andretti as they have consistently created highly entertaining and successful offerings."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RWCatskills",
+      "ticker": "Resorts World Catskills",
+      "name": "リゾート・ワールド・キャッツキルズ",
+      "name_en": "Resorts World Catskills",
+      "sub": "カジノ",
+      "sub_en": "Casino",
+      "sub_short": "カジノ",
+      "sub_short_en": "Casino",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "カジノ・リゾートの土地を長期で賃貸",
+          "text_en": "Ground lease under the casino resort",
+          "source": {
+            "label": "EPR Properties 10-K(2025年度)",
+            "label_en": "EPR Properties 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1045450/000104545026000007/epr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "our investment in gaming consisted solely of land under ground lease related to the Resorts World Catskills casino and resort project in Sullivan County, New York."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
