@@ -653,6 +653,7 @@ import c_podd from "../../data/chain/PODD.json" with { type: "json" };
 import c_pool from "../../data/chain/POOL.json" with { type: "json" };
 import c_post from "../../data/chain/POST.json" with { type: "json" };
 import c_powi from "../../data/chain/POWI.json" with { type: "json" };
+import c_powl from "../../data/chain/POWL.json" with { type: "json" };
 import c_ppg from "../../data/chain/PPG.json" with { type: "json" };
 import c_ppl from "../../data/chain/PPL.json" with { type: "json" };
 import c_ppli from "../../data/chain/PPLI.json" with { type: "json" };
@@ -720,6 +721,7 @@ import c_saic from "../../data/chain/SAIC.json" with { type: "json" };
 import c_sanm from "../../data/chain/SANM.json" with { type: "json" };
 import c_sap from "../../data/chain/SAP.json" with { type: "json" };
 import c_sbac from "../../data/chain/SBAC.json" with { type: "json" };
+import c_sbh from "../../data/chain/SBH.json" with { type: "json" };
 import c_sbux from "../../data/chain/SBUX.json" with { type: "json" };
 import c_scco from "../../data/chain/SCCO.json" with { type: "json" };
 import c_schw from "../../data/chain/SCHW.json" with { type: "json" };
@@ -727,6 +729,7 @@ import c_scsc from "../../data/chain/SCSC.json" with { type: "json" };
 import c_sdgr from "../../data/chain/SDGR.json" with { type: "json" };
 import c_sedg from "../../data/chain/SEDG.json" with { type: "json" };
 import c_sfm from "../../data/chain/SFM.json" with { type: "json" };
+import c_shak from "../../data/chain/SHAK.json" with { type: "json" };
 import c_shen from "../../data/chain/SHEN.json" with { type: "json" };
 import c_shop from "../../data/chain/SHOP.json" with { type: "json" };
 import c_shw from "../../data/chain/SHW.json" with { type: "json" };
@@ -1580,6 +1583,7 @@ const available: Record<string, ChainMapData> = {
   POOL: c_pool as ChainMapData,
   POST: c_post as ChainMapData,
   POWI: c_powi as ChainMapData,
+  POWL: c_powl as ChainMapData,
   PPG: c_ppg as ChainMapData,
   PPL: c_ppl as ChainMapData,
   PPLI: c_ppli as ChainMapData,
@@ -1647,6 +1651,7 @@ const available: Record<string, ChainMapData> = {
   SANM: c_sanm as ChainMapData,
   SAP: c_sap as ChainMapData,
   SBAC: c_sbac as ChainMapData,
+  SBH: c_sbh as ChainMapData,
   SBUX: c_sbux as ChainMapData,
   SCCO: c_scco as ChainMapData,
   SCHW: c_schw as ChainMapData,
@@ -1654,6 +1659,7 @@ const available: Record<string, ChainMapData> = {
   SDGR: c_sdgr as ChainMapData,
   SEDG: c_sedg as ChainMapData,
   SFM: c_sfm as ChainMapData,
+  SHAK: c_shak as ChainMapData,
   SHEN: c_shen as ChainMapData,
   SHOP: c_shop as ChainMapData,
   SHW: c_shw as ChainMapData,

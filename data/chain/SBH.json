@@ -1,0 +1,153 @@
+{
+  "root": {
+    "ticker": "SBH",
+    "name": "サリー・ビューティー",
+    "cik": 1368458,
+    "name_en": "Sally Beauty"
+  },
+  "rows": [
+    {
+      "ja": "主要な仕入先(上位5社で仕入の44%)",
+      "en": "Top suppliers (five make up 44% of purchases)",
+      "above": true
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "Henkel",
+      "ticker": "Henkel",
+      "name": "ヘンケル",
+      "name_en": "Henkel",
+      "sub": "化学・日用品",
+      "sub_en": "Chemicals & consumer goods",
+      "sub_short": "日用品",
+      "sub_short_en": "Consumer",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "上位5社の仕入先の一社(5社で仕入の約44%、2026年9月期)",
+          "text_en": "One of its five largest suppliers (about 44% of FY2026 purchases)",
+          "source": {
+            "label": "Sally Beauty 10-K(2026年9月期)",
+            "label_en": "Sally Beauty 10-K (FY ended Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1368458/000136845826000020/sbh-20260930.htm",
+            "level": "official",
+            "date": "2026-11-10",
+            "quote": "For fiscal year 2026, our five largest suppliers-Henkel AG & Co. KGaA; Wella Company; the Professional Products Division of L'Oreal USA S/D, Inc.; John Paul Mitchell Systems; and Kao Corporation-accounted for approximately 44% of our consolidated merchandise purchases."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Wella",
+      "ticker": "Wella",
+      "name": "ウエラ",
+      "name_en": "Wella Company",
+      "sub": "ヘアケア",
+      "sub_en": "Hair care",
+      "sub_short": "ヘアケア",
+      "sub_short_en": "Hair care",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "上位5社の仕入先の一社(5社で仕入の約44%、2026年9月期)",
+          "text_en": "One of its five largest suppliers (about 44% of FY2026 purchases)",
+          "source": {
+            "label": "Sally Beauty 10-K(2026年9月期)",
+            "label_en": "Sally Beauty 10-K (FY ended Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1368458/000136845826000020/sbh-20260930.htm",
+            "level": "official",
+            "date": "2026-11-10",
+            "quote": "For fiscal year 2026, our five largest suppliers-Henkel AG & Co. KGaA; Wella Company; the Professional Products Division of L'Oreal USA S/D, Inc.; John Paul Mitchell Systems; and Kao Corporation-accounted for approximately 44% of our consolidated merchandise purchases."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LOREAL",
+      "ticker": "L'Oreal",
+      "name": "ロレアル",
+      "name_en": "L'Oreal",
+      "sub": "化粧品",
+      "sub_en": "Cosmetics",
+      "sub_short": "化粧品",
+      "sub_short_en": "Beauty",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "上位5社の仕入先の一社(5社で仕入の約44%、2026年9月期)",
+          "text_en": "One of its five largest suppliers (about 44% of FY2026 purchases)",
+          "source": {
+            "label": "Sally Beauty 10-K(2026年9月期)",
+            "label_en": "Sally Beauty 10-K (FY ended Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1368458/000136845826000020/sbh-20260930.htm",
+            "level": "official",
+            "date": "2026-11-10",
+            "quote": "For fiscal year 2026, our five largest suppliers-Henkel AG & Co. KGaA; Wella Company; the Professional Products Division of L'Oreal USA S/D, Inc.; John Paul Mitchell Systems; and Kao Corporation-accounted for approximately 44% of our consolidated merchandise purchases."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PaulMitchell",
+      "ticker": "Paul Mitchell",
+      "name": "ポール・ミッチェル",
+      "name_en": "John Paul Mitchell Systems",
+      "sub": "ヘアケア",
+      "sub_en": "Hair care",
+      "sub_short": "ヘアケア",
+      "sub_short_en": "Hair care",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "上位5社の仕入先の一社(5社で仕入の約44%、2026年9月期)",
+          "text_en": "One of its five largest suppliers (about 44% of FY2026 purchases)",
+          "source": {
+            "label": "Sally Beauty 10-K(2026年9月期)",
+            "label_en": "Sally Beauty 10-K (FY ended Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1368458/000136845826000020/sbh-20260930.htm",
+            "level": "official",
+            "date": "2026-11-10",
+            "quote": "For fiscal year 2026, our five largest suppliers-Henkel AG & Co. KGaA; Wella Company; the Professional Products Division of L'Oreal USA S/D, Inc.; John Paul Mitchell Systems; and Kao Corporation-accounted for approximately 44% of our consolidated merchandise purchases."
+          }
+        }
+      ]
+    },
+    {
+      "id": "4452",
+      "ticker": "4452",
+      "name": "花王",
+      "name_en": "Kao",
+      "sub": "日用品・化粧品",
+      "sub_en": "Consumer goods",
+      "sub_short": "日用品",
+      "sub_short_en": "Consumer",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "上位5社の仕入先の一社(5社で仕入の約44%、2026年9月期)",
+          "text_en": "One of its five largest suppliers (about 44% of FY2026 purchases)",
+          "source": {
+            "label": "Sally Beauty 10-K(2026年9月期)",
+            "label_en": "Sally Beauty 10-K (FY ended Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1368458/000136845826000020/sbh-20260930.htm",
+            "level": "official",
+            "date": "2026-11-10",
+            "quote": "For fiscal year 2026, our five largest suppliers-Henkel AG & Co. KGaA; Wella Company; the Professional Products Division of L'Oreal USA S/D, Inc.; John Paul Mitchell Systems; and Kao Corporation-accounted for approximately 44% of our consolidated merchandise purchases."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
