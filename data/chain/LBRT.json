@@ -1,0 +1,300 @@
+{
+  "root": {
+    "ticker": "LBRT",
+    "name": "リバティ・エナジー",
+    "cik": 1694028,
+    "name_en": "Liberty Energy"
+  },
+  "rows": [
+    {
+      "ja": "資金調達・設備",
+      "en": "Financing & equipment",
+      "above": true
+    },
+    {
+      "ja": "顧客・提携先(下流)",
+      "en": "Customers & partners (downstream)"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "HAL",
+    "PTEN",
+    "ACDC",
+    "PUMP"
+  ],
+  "companies": [
+    {
+      "id": "CAT",
+      "ticker": "CAT",
+      "name": "キャタピラー",
+      "name_en": "Caterpillar",
+      "sub": "建機・発電機",
+      "sub_en": "Machinery & power systems",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "発電設備向け融資契約(キャタピラー・ファイナンシャル)",
+          "text_en": "Equipment loan agreement with Caterpillar Financial",
+          "source": {
+            "label": "Liberty Energy 10-K(2025年度)",
+            "label_en": "Liberty Energy 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1694028/000169402826000006/lbrt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-02",
+            "quote": "entered into a Master Loan and Security Agreement with Caterpillar Financial Services Corporation (\"Caterpillar\" and such agreement, the \"Caterpillar Agreement\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "JPM",
+      "ticker": "JPM",
+      "name": "JPモルガン・チェース",
+      "name_en": "JPMorgan Chase",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "新たな融資枠契約(2025年7月)",
+          "text_en": "New credit agreement (July 2025)",
+          "source": {
+            "label": "Liberty Energy 10-K(2025年度)",
+            "label_en": "Liberty Energy 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1694028/000169402826000006/lbrt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-02",
+            "quote": "entered into a new Credit Agreement with JPMorgan Chase"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Vantage",
+      "ticker": "Vantage Data Centers",
+      "name": "ヴァンテージ・データセンターズ",
+      "name_en": "Vantage Data Centers",
+      "sub": "データセンター(非上場)",
+      "sub_en": "Data centers (private)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "データセンター向けに1GW以上の電源を開発する契約(2026年1月)",
+          "text_en": "Agreement to develop at least 1 GW of power for its data centers (January 2026)",
+          "source": {
+            "label": "Liberty Energy 10-K(2025年度)",
+            "label_en": "Liberty Energy 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1694028/000169402826000006/lbrt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-02",
+            "quote": "We signed an agreement with Vantage Data Centers to develop and deliver at least one gigawatt (GW) of power solutions to support Vantage data center projects"
+          }
+        }
+      ]
+    },
+    {
+      "id": "TBN",
+      "ticker": "TBN",
+      "name": "タンボラン・リソーシズ",
+      "name_en": "Tamboran Resources",
+      "sub": "天然ガス開発(豪)",
+      "sub_en": "Natural gas (Australia)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "水圧破砕サービス契約の延長で合意(2026年9月)",
+          "text_en": "MOU to extend its fracturing services agreement (September 2026)",
+          "source": {
+            "label": "Tamboran Resources 10-K(2026年6月期)",
+            "label_en": "Tamboran Resources 10-K (FY ended Jun 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1997652/000162828026063492/trc-20260630.htm",
+            "level": "official",
+            "date": "2026-09-25",
+            "quote": "Tamboran and Liberty Energy recently signed an MOU in September 2026 setting out the intent to extend the hydraulic fracture stimulation and wireline services agreement"
+          }
+        }
+      ]
+    },
+    {
+      "id": "FRVO",
+      "ticker": "FRVO",
+      "name": "フェルボ・エナジー",
+      "name_en": "Fervo Energy",
+      "sub": "次世代地熱",
+      "sub_en": "Enhanced geothermal",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "地熱開発で提携する油田サービス会社",
+          "text_en": "Oilfield services partner for its geothermal projects",
+          "source": {
+            "label": "Fervo Energy S-1/A(2026年5月)",
+            "label_en": "Fervo Energy S-1/A (May 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1853868/000162828026029515/fervoenergy-sx1a.htm",
+            "level": "official",
+            "date": "2026-05-04",
+            "quote": "partnerships with well-established oilfield services providers such as Liberty Energy, Helmerich & Payne and Vallourec."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HAL",
+      "ticker": "HAL",
+      "name": "ハリバートン",
+      "name_en": "Halliburton",
+      "sub": "油田サービス",
+      "sub_en": "Oilfield services",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "水圧破砕の大手競合",
+          "text_en": "Large integrated fracturing competitor",
+          "source": {
+            "label": "Liberty Energy 10-K(2025年度)",
+            "label_en": "Liberty Energy 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1694028/000169402826000006/lbrt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-02",
+            "quote": "Our hydraulic fracturing services compete with large, integrated companies such as Halliburton Company as well as other companies including Patterson-UTI Energy Inc. and ProFrac Holding Corp. In addition, we compete regionally with ProPetro Services, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PTEN",
+      "ticker": "PTEN",
+      "name": "パターソンUTI",
+      "name_en": "Patterson-UTI Energy",
+      "sub": "掘削・油田サービス",
+      "sub_en": "Drilling & completions",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "水圧破砕の競合",
+          "text_en": "Fracturing competitor",
+          "source": {
+            "label": "Liberty Energy 10-K(2025年度)",
+            "label_en": "Liberty Energy 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1694028/000169402826000006/lbrt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-02",
+            "quote": "Our hydraulic fracturing services compete with large, integrated companies such as Halliburton Company as well as other companies including Patterson-UTI Energy Inc. and ProFrac Holding Corp. In addition, we compete regionally with ProPetro Services, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ACDC",
+      "ticker": "ACDC",
+      "name": "プロフラック",
+      "name_en": "ProFrac",
+      "sub": "水圧破砕",
+      "sub_en": "Hydraulic fracturing",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "水圧破砕の競合にリバティを挙げる",
+          "text_en": "Names Liberty among its fracturing competitors",
+          "source": {
+            "label": "ProFrac 10-K(2025年度)",
+            "label_en": "ProFrac 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1881487/000119312526106120/acdc-20251231.htm",
+            "level": "official",
+            "date": "2026-03-13",
+            "quote": "Our Stimulation Services competitors include Halliburton Company, Liberty Energy Inc., ProPetro Holding Corp., and Patterson-UTI Energy, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PUMP",
+      "ticker": "PUMP",
+      "name": "プロペトロ",
+      "name_en": "ProPetro",
+      "sub": "水圧破砕",
+      "sub_en": "Hydraulic fracturing",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "地域で競合",
+          "text_en": "Regional competitor",
+          "source": {
+            "label": "Liberty Energy 10-K(2025年度)",
+            "label_en": "Liberty Energy 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1694028/000169402826000006/lbrt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-02",
+            "quote": "Our hydraulic fracturing services compete with large, integrated companies such as Halliburton Company as well as other companies including Patterson-UTI Energy Inc. and ProFrac Holding Corp. In addition, we compete regionally with ProPetro Services, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RES",
+      "ticker": "RES",
+      "name": "RPC",
+      "name_en": "RPC",
+      "sub": "油田サービス",
+      "sub_en": "Oilfield services",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "同業の上場企業にリバティを挙げる",
+          "text_en": "Names Liberty among its closest public peers",
+          "source": {
+            "label": "RPC 10-K(2024年度)",
+            "label_en": "RPC 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/742278/000155837025001922/res-20241231x10k.htm",
+            "level": "official",
+            "date": "2025-02-28",
+            "quote": "The industry also includes a number of other publicly traded peers whose operations are more similar to RPC, including Liberty Energy, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AESI",
+      "ticker": "AESI",
+      "name": "アトラス・エナジー・ソリューションズ",
+      "name_en": "Atlas Energy Solutions",
+      "sub": "フラック砂",
+      "sub_en": "Frac sand",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "砂(プロパント)供給の競合",
+          "text_en": "Competitor in proppant supply",
+          "source": {
+            "label": "Atlas Energy Solutions 10-K(2025年度)",
+            "label_en": "Atlas Energy Solutions 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1984060/000119312526067145/aesi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "in-basin proppant providers, such as Iron Oak Energy Solutions, Liberty Energy Inc."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

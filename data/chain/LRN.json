@@ -1,0 +1,275 @@
+{
+  "root": {
+    "ticker": "LRN",
+    "name": "ストライド",
+    "cik": 1157408,
+    "name_en": "Stride"
+  },
+  "rows": [
+    {
+      "ja": "オンライン学校支援の競合",
+      "en": "Online school services competitors",
+      "above": true
+    },
+    {
+      "ja": "デジタル教材の競合",
+      "en": "Digital curriculum competitors"
+    },
+    {
+      "ja": "主な競合(10-Kに記載)",
+      "en": "Main competitors (named in the 10-K)"
+    }
+  ],
+  "rivals": [
+    "PSO",
+    "MH",
+    "DUOL"
+  ],
+  "companies": [
+    {
+      "id": "StrongMind",
+      "ticker": "StrongMind",
+      "name": "ストロングマインド",
+      "name_en": "StrongMind",
+      "sub": "オンライン学校支援(非上場)",
+      "sub_en": "Online school services (private)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "K-12オンライン学校支援の主な競合",
+          "text_en": "Main competitor in K-12 online school services",
+          "source": {
+            "label": "Stride 10-K(2026年6月期)",
+            "label_en": "Stride 10-K (FY ended Jun 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1157408/000110465926090515/lrn-20260630x10k.htm",
+            "level": "official",
+            "date": "2026-08-05",
+            "quote": "We compete primarily with companies that provide online curriculum and school support services to K-12 virtual and blended public schools, including Pearson PLC (Connections Academy), Lincoln Learning Solutions, StrongMind, Pansophic Learning, Inspire Charter Schools, and Charter Schools USA"
+          }
+        }
+      ]
+    },
+    {
+      "id": "LincolnLearning",
+      "ticker": "Lincoln Learning",
+      "name": "リンカーン・ラーニング",
+      "name_en": "Lincoln Learning Solutions",
+      "sub": "オンライン教材(非上場)",
+      "sub_en": "Online curriculum (private)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "K-12オンライン学校支援の主な競合",
+          "text_en": "Main competitor in K-12 online school services",
+          "source": {
+            "label": "Stride 10-K(2026年6月期)",
+            "label_en": "Stride 10-K (FY ended Jun 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1157408/000110465926090515/lrn-20260630x10k.htm",
+            "level": "official",
+            "date": "2026-08-05",
+            "quote": "We compete primarily with companies that provide online curriculum and school support services to K-12 virtual and blended public schools, including Pearson PLC (Connections Academy), Lincoln Learning Solutions, StrongMind, Pansophic Learning, Inspire Charter Schools, and Charter Schools USA"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CSUSA",
+      "ticker": "Charter Schools USA",
+      "name": "チャータースクールズUSA",
+      "name_en": "Charter Schools USA",
+      "sub": "チャータースクール運営(非上場)",
+      "sub_en": "Charter school operator (private)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "K-12オンライン学校支援の主な競合",
+          "text_en": "Main competitor in K-12 online school services",
+          "source": {
+            "label": "Stride 10-K(2026年6月期)",
+            "label_en": "Stride 10-K (FY ended Jun 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1157408/000110465926090515/lrn-20260630x10k.htm",
+            "level": "official",
+            "date": "2026-08-05",
+            "quote": "We compete primarily with companies that provide online curriculum and school support services to K-12 virtual and blended public schools, including Pearson PLC (Connections Academy), Lincoln Learning Solutions, StrongMind, Pansophic Learning, Inspire Charter Schools, and Charter Schools USA"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CurriculumAssociates",
+      "ticker": "Curriculum Associates",
+      "name": "カリキュラム・アソシエイツ",
+      "name_en": "Curriculum Associates",
+      "sub": "教材(非上場)",
+      "sub_en": "Curriculum (private)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "デジタル・紙の教材の競合",
+          "text_en": "Digital and print curriculum competitor",
+          "source": {
+            "label": "Stride 10-K(2026年6月期)",
+            "label_en": "Stride 10-K (FY ended Jun 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1157408/000110465926090515/lrn-20260630x10k.htm",
+            "level": "official",
+            "date": "2026-08-05",
+            "quote": "We also face competition from digital and print curriculum providers including Curriculum Associates, Imagine Learning LLC, Edmentum Inc., Discovery Education, and traditional textbook publishers such as Houghton Mifflin Harcourt and McGraw Hill."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Imagine",
+      "ticker": "Imagine Learning",
+      "name": "イマジン・ラーニング",
+      "name_en": "Imagine Learning",
+      "sub": "デジタル教材(非上場)",
+      "sub_en": "Digital curriculum (private)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "デジタル・紙の教材の競合",
+          "text_en": "Digital and print curriculum competitor",
+          "source": {
+            "label": "Stride 10-K(2026年6月期)",
+            "label_en": "Stride 10-K (FY ended Jun 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1157408/000110465926090515/lrn-20260630x10k.htm",
+            "level": "official",
+            "date": "2026-08-05",
+            "quote": "We also face competition from digital and print curriculum providers including Curriculum Associates, Imagine Learning LLC, Edmentum Inc., Discovery Education, and traditional textbook publishers such as Houghton Mifflin Harcourt and McGraw Hill."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Edmentum",
+      "ticker": "Edmentum",
+      "name": "エドメンタム",
+      "name_en": "Edmentum",
+      "sub": "デジタル教材(非上場)",
+      "sub_en": "Digital curriculum (private)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "デジタル・紙の教材の競合",
+          "text_en": "Digital and print curriculum competitor",
+          "source": {
+            "label": "Stride 10-K(2026年6月期)",
+            "label_en": "Stride 10-K (FY ended Jun 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1157408/000110465926090515/lrn-20260630x10k.htm",
+            "level": "official",
+            "date": "2026-08-05",
+            "quote": "We also face competition from digital and print curriculum providers including Curriculum Associates, Imagine Learning LLC, Edmentum Inc., Discovery Education, and traditional textbook publishers such as Houghton Mifflin Harcourt and McGraw Hill."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HMH",
+      "ticker": "Houghton Mifflin Harcourt",
+      "name": "ホートン・ミフリン・ハーコート",
+      "name_en": "Houghton Mifflin Harcourt",
+      "sub": "教科書(非上場)",
+      "sub_en": "Textbooks (private)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "伝統的な教科書出版社の競合",
+          "text_en": "Traditional textbook publisher competitor",
+          "source": {
+            "label": "Stride 10-K(2026年6月期)",
+            "label_en": "Stride 10-K (FY ended Jun 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1157408/000110465926090515/lrn-20260630x10k.htm",
+            "level": "official",
+            "date": "2026-08-05",
+            "quote": "We also face competition from digital and print curriculum providers including Curriculum Associates, Imagine Learning LLC, Edmentum Inc., Discovery Education, and traditional textbook publishers such as Houghton Mifflin Harcourt and McGraw Hill."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PSO",
+      "ticker": "PSO",
+      "name": "ピアソン(コネクションズ・アカデミー)",
+      "name_en": "Pearson (Connections Academy)",
+      "sub": "教育(英)",
+      "sub_en": "Education (UK)",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "傘下コネクションズ・アカデミーがK-12オンライン学校の主な競合",
+          "text_en": "Its Connections Academy is a main K-12 online school competitor",
+          "source": {
+            "label": "Stride 10-K(2026年6月期)",
+            "label_en": "Stride 10-K (FY ended Jun 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1157408/000110465926090515/lrn-20260630x10k.htm",
+            "level": "official",
+            "date": "2026-08-05",
+            "quote": "We compete primarily with companies that provide online curriculum and school support services to K-12 virtual and blended public schools, including Pearson PLC (Connections Academy), Lincoln Learning Solutions, StrongMind, Pansophic Learning, Inspire Charter Schools, and Charter Schools USA"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MH",
+      "ticker": "MH",
+      "name": "マグロウヒル",
+      "name_en": "McGraw Hill",
+      "sub": "教科書・デジタル教材",
+      "sub_en": "Textbooks & digital learning",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "教科書出版社の競合",
+          "text_en": "Textbook publisher competitor",
+          "source": {
+            "label": "Stride 10-K(2026年6月期)",
+            "label_en": "Stride 10-K (FY ended Jun 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1157408/000110465926090515/lrn-20260630x10k.htm",
+            "level": "official",
+            "date": "2026-08-05",
+            "quote": "We also face competition from digital and print curriculum providers including Curriculum Associates, Imagine Learning LLC, Edmentum Inc., Discovery Education, and traditional textbook publishers such as Houghton Mifflin Harcourt and McGraw Hill."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DUOL",
+      "ticker": "DUOL",
+      "name": "デュオリンゴ",
+      "name_en": "Duolingo",
+      "sub": "語学アプリ",
+      "sub_en": "Language learning app",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "デジタル学習の競合",
+          "text_en": "Digital learning competitor",
+          "source": {
+            "label": "Stride 10-K(2026年6月期)",
+            "label_en": "Stride 10-K (FY ended Jun 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1157408/000110465926090515/lrn-20260630x10k.htm",
+            "level": "official",
+            "date": "2026-08-05",
+            "quote": "Other competing digital curriculum providers, including Khan Academy, Duolingo, IXL"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

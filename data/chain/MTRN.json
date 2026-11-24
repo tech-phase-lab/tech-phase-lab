@@ -1,0 +1,275 @@
+{
+  "root": {
+    "ticker": "MTRN",
+    "name": "マテリオン",
+    "cik": 1104657,
+    "name_en": "Materion"
+  },
+  "rows": [
+    {
+      "ja": "マテリオンを競合に挙げる会社",
+      "en": "Companies naming Materion as a competitor",
+      "above": true
+    },
+    {
+      "ja": "ベリリウム・特殊合金の競合(10-Kに記載)",
+      "en": "Beryllium & specialty alloy competitors (named in the 10-K)"
+    },
+    {
+      "ja": "主な競合",
+      "en": "Main competitors"
+    }
+  ],
+  "rivals": [
+    "NGK",
+    "ATI",
+    "Aurubis"
+  ],
+  "companies": [
+    {
+      "id": "SCIA",
+      "ticker": "SCIA",
+      "name": "SCIエンジニアード・マテリアルズ",
+      "name_en": "SCI Engineered Materials",
+      "sub": "成膜用ターゲット",
+      "sub_en": "Sputtering targets",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "有力な競合にマテリオンを挙げる",
+          "text_en": "Names Materion among well-established competitors",
+          "source": {
+            "label": "SCI Engineered Materials 10-K(2024年度)",
+            "label_en": "SCI Engineered Materials 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/830616/000155837025000969/scia-20241231x10k.htm",
+            "level": "official",
+            "date": "2025-02-14",
+            "quote": "considerable competition exists from well-established firms such as Vacuum Engineering & Materials, Process Materials, Inc., and Materion"
+          }
+        }
+      ]
+    },
+    {
+      "id": "OPXS",
+      "ticker": "OPXS",
+      "name": "オプテックス・システムズ",
+      "name_en": "Optex Systems",
+      "sub": "光学部品",
+      "sub_en": "Optical systems",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "光学コーティングの主な競合(マテリオン・バー)",
+          "text_en": "Main competitor in optical coatings (Materion-Barr)",
+          "source": {
+            "label": "Optex Systems 10-K(2025年9月期)",
+            "label_en": "Optex Systems 10-K (FY ended Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1397016/000149315225028071/form10-k.htm",
+            "level": "official",
+            "date": "2025-12-17",
+            "quote": "The Applied Optics Center thin film and laser coatings products compete primarily with Materion-Barr, G&H Artemis and Alluxa."
+          }
+        }
+      ]
+    },
+    {
+      "id": "VIAV",
+      "ticker": "VIAV",
+      "name": "ヴィアヴィ・ソリューションズ",
+      "name_en": "Viavi Solutions",
+      "sub": "光学・測定",
+      "sub_en": "Optics & test",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "光学コーティングの競合にマテリオンを挙げる",
+          "text_en": "Names Materion among optical coating competitors",
+          "source": {
+            "label": "Viavi Solutions 10-K(2025年6月期)",
+            "label_en": "Viavi Solutions 10-K (FY ended Jun 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/912093/000091209325000096/viav-20250628.htm",
+            "level": "official",
+            "date": "2025-08-11",
+            "quote": "optical coatings companies such as Materion, Zhejiang Crystal-Optech Co Ltd. and Platinum Optics Technology, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "IBC",
+      "ticker": "IBC Advanced Alloys",
+      "name": "IBCアドバンスト・アロイズ",
+      "name_en": "IBC Advanced Alloys",
+      "sub": "ベリリウム合金(加)",
+      "sub_en": "Beryllium alloys (Canada)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ベリリウム製品の直接競合",
+          "text_en": "Direct competitor in beryllium products",
+          "source": {
+            "label": "Materion 10-K(2025年度)",
+            "label_en": "Materion 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1104657/000110465726000011/mtrn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Direct competitors include IBC Advanced Alloys, NGK Metals, ATI Specialty Metals, CBL Ceramics Limited, and CoorsTek, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CoorsTek",
+      "ticker": "CoorsTek",
+      "name": "クアーズテック",
+      "name_en": "CoorsTek",
+      "sub": "セラミックス(非上場)",
+      "sub_en": "Ceramics (private)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ベリリウム製品の直接競合",
+          "text_en": "Direct competitor in beryllium products",
+          "source": {
+            "label": "Materion 10-K(2025年度)",
+            "label_en": "Materion 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1104657/000110465726000011/mtrn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Direct competitors include IBC Advanced Alloys, NGK Metals, ATI Specialty Metals, CBL Ceramics Limited, and CoorsTek, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "KME",
+      "ticker": "KME",
+      "name": "KME",
+      "name_en": "KME",
+      "sub": "銅合金(独、非上場)",
+      "sub_en": "Copper alloys (Germany, private)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "合金の主な競合",
+          "text_en": "Key alloy competitor",
+          "source": {
+            "label": "Materion 10-K(2025年度)",
+            "label_en": "Materion 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1104657/000110465726000011/mtrn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Key competitors include NGK Insulators, IBC Advanced Alloys Corp., Ningxia Orient Tantalum Industry Co., Ltd., Le Bronze Alloys, Minotti Metals, SA, KME AG & Co. KG, Aurubis AG"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Heraeus",
+      "ticker": "Heraeus",
+      "name": "ヘレウス",
+      "name_en": "Heraeus",
+      "sub": "貴金属(独、非上場)",
+      "sub_en": "Precious metals (Germany, private)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "特殊材料の主な競合",
+          "text_en": "Key specialty materials competitor",
+          "source": {
+            "label": "Materion 10-K(2025年度)",
+            "label_en": "Materion 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1104657/000110465726000011/mtrn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Key competitors include NGK Insulators, Wieland Electric, Inc., Aurubis Stolberg GmbH, Diehl Metall Stiftung & Co. KG, Nippon Mining, Proterial Ltd.,Wickeder Group, Heraeus Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NGK",
+      "ticker": "NGK",
+      "name": "日本ガイシ",
+      "name_en": "NGK Insulators",
+      "sub": "セラミックス・合金",
+      "sub_en": "Ceramics & alloys",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "合金・特殊材料の主な競合",
+          "text_en": "Key alloy and specialty materials competitor",
+          "source": {
+            "label": "Materion 10-K(2025年度)",
+            "label_en": "Materion 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1104657/000110465726000011/mtrn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Key competitors include NGK Insulators, IBC Advanced Alloys Corp., Ningxia Orient Tantalum Industry Co., Ltd., Le Bronze Alloys, Minotti Metals, SA, KME AG & Co. KG, Aurubis AG"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ATI",
+      "ticker": "ATI",
+      "name": "ATI",
+      "name_en": "ATI",
+      "sub": "特殊金属",
+      "sub_en": "Specialty metals",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ベリリウム製品の直接競合",
+          "text_en": "Direct competitor in beryllium products",
+          "source": {
+            "label": "Materion 10-K(2025年度)",
+            "label_en": "Materion 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1104657/000110465726000011/mtrn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Direct competitors include IBC Advanced Alloys, NGK Metals, ATI Specialty Metals, CBL Ceramics Limited, and CoorsTek, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Aurubis",
+      "ticker": "Aurubis",
+      "name": "アウルビス",
+      "name_en": "Aurubis",
+      "sub": "銅(独)",
+      "sub_en": "Copper (Germany)",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "合金・特殊材料の主な競合",
+          "text_en": "Key alloy and specialty materials competitor",
+          "source": {
+            "label": "Materion 10-K(2025年度)",
+            "label_en": "Materion 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1104657/000110465726000011/mtrn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Key competitors include NGK Insulators, IBC Advanced Alloys Corp., Ningxia Orient Tantalum Industry Co., Ltd., Le Bronze Alloys, Minotti Metals, SA, KME AG & Co. KG, Aurubis AG"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
