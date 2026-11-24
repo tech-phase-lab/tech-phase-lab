@@ -1,0 +1,106 @@
+{
+  "root": {
+    "ticker": "JBSS",
+    "name": "ジョン・B・サンフィリッポ・アンド・サン",
+    "cik": 880117,
+    "name_en": "John B. Sanfilippo & Son"
+  },
+  "rows": [
+    {
+      "ja": "主要顧客",
+      "en": "Major customers"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in its 10-K)"
+    }
+  ],
+  "rivals": [
+    "HRL"
+  ],
+  "companies": [
+    {
+      "id": "WMT",
+      "ticker": "WMT",
+      "name": "ウォルマート",
+      "name_en": "Walmart",
+      "sub": "小売",
+      "sub_en": "Retail",
+      "sub_short": "小売",
+      "sub_short_en": "Retail",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大の顧客(売上の約41%、2026年6月期)",
+          "text_en": "Largest customer (about 41% of net sales, FY ended Jun 2026)",
+          "source": {
+            "label": "John B. Sanfilippo & Son 10-K(2026年6月期)",
+            "label_en": "John B. Sanfilippo & Son 10-K (FY ended Jun 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/880117/000119312526356919/jbss-20260625.htm",
+            "level": "official",
+            "date": "2026-08-19",
+            "quote": "Net sales to Walmart Inc. accounted for approximately 41% of our net sales for fiscal 2026, 40% of our net sales for fiscal 2025 and 39% of our net sales for fiscal 2024."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TGT",
+      "ticker": "TGT",
+      "name": "ターゲット",
+      "name_en": "Target",
+      "sub": "小売",
+      "sub_en": "Retail",
+      "sub_short": "小売",
+      "sub_short_en": "Retail",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "売上の約12%(2026年6月期)",
+          "text_en": "About 12% of net sales (FY ended Jun 2026)",
+          "source": {
+            "label": "John B. Sanfilippo & Son 10-K(2026年6月期)",
+            "label_en": "John B. Sanfilippo & Son 10-K (FY ended Jun 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/880117/000119312526356919/jbss-20260625.htm",
+            "level": "official",
+            "date": "2026-08-19",
+            "quote": "Net sales to Target Corporation accounted for approximately 12% of our net sales for fiscal 2026, 11% for fiscal 2025 and 13% for fiscal 2024."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HRL",
+      "ticker": "HRL",
+      "name": "ホーメル・フーズ",
+      "name_en": "Hormel Foods",
+      "sub": "食品",
+      "sub_en": "Food",
+      "sub_short": "食品",
+      "sub_short_en": "Food",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ナッツ製品の競合",
+          "text_en": "A nut products competitor",
+          "source": {
+            "label": "John B. Sanfilippo & Son 10-K(2026年6月期)",
+            "label_en": "John B. Sanfilippo & Son 10-K (FY ended Jun 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/880117/000119312526356919/jbss-20260625.htm",
+            "level": "official",
+            "date": "2026-08-19",
+            "quote": "In the nut industry, we compete with, among others, Hormel Foods Corp."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

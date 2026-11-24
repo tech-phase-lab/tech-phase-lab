@@ -1,0 +1,134 @@
+{
+  "root": {
+    "ticker": "VCEL",
+    "name": "ヴェリセル",
+    "cik": 887359,
+    "name_en": "Vericel"
+  },
+  "rows": [
+    {
+      "ja": "供給元・ライセンス元",
+      "en": "Supplier & licensor",
+      "above": true
+    },
+    {
+      "ja": "競合製品の販売元(10-Kに記載)",
+      "en": "Distributors of competing products (named in its 10-K)"
+    }
+  ],
+  "rivals": [
+    "Arthrex",
+    "SYK"
+  ],
+  "companies": [
+    {
+      "id": "Matricel",
+      "ticker": "Matricel",
+      "name": "マトリセル",
+      "name_en": "Matricel",
+      "sub": "医療用素材",
+      "sub_en": "Medical materials",
+      "sub_short": "医療用素材",
+      "sub_short_en": "Biomaterials",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "MACIの製造に使うコラーゲン膜を長期契約で供給(2023年7月更新)",
+          "text_en": "Supplies collagen membranes for MACI under a long-term agreement (renewed July 2023)",
+          "source": {
+            "label": "Vericel 10-K(2025年度)",
+            "label_en": "Vericel 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/887359/000162828026012013/vcel-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "On July 1, 2023, we renewed our long-term supply agreement with Matricel GmbH (\"Matricel\") for the supply of ACI-Maix collagen membranes used in the manufacture of MACI (the \"Matricel Supply Agreement\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MDWD",
+      "ticker": "MDWD",
+      "name": "メディウンド",
+      "name_en": "MediWound",
+      "sub": "バイオ医薬",
+      "sub_en": "Biopharma",
+      "sub_short": "バイオ医薬",
+      "sub_short_en": "Biopharma",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "熱傷治療薬NexoBridの北米の権利のライセンス元",
+          "text_en": "Licensor of North American rights to the burn treatment NexoBrid",
+          "source": {
+            "label": "Vericel 10-K(2025年度)",
+            "label_en": "Vericel 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/887359/000162828026012013/vcel-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "(\"MediWound\") for the North American rights to NexoBrid"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Arthrex",
+      "ticker": "Arthrex",
+      "name": "アースレックス",
+      "name_en": "Arthrex",
+      "sub": "整形外科機器",
+      "sub_en": "Orthopedic devices",
+      "sub_short": "整形外科機器",
+      "sub_short_en": "Orthopedics",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "軟骨治療で併用される同種組織製品を販売",
+          "text_en": "Distributes allograft cartilage products used in competing treatments",
+          "source": {
+            "label": "Vericel 10-K(2025年度)",
+            "label_en": "Vericel 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/887359/000162828026012013/vcel-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "This treatment is sometimes augmented with allograft derived products such as BioCartilage ® and Cartiform ® (distributed by Arthrex, Inc.) and Prochondrix ® (distributed by Stryker Corporation)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SYK",
+      "ticker": "SYK",
+      "name": "ストライカー",
+      "name_en": "Stryker",
+      "sub": "医療機器",
+      "sub_en": "Medical devices",
+      "sub_short": "医療機器",
+      "sub_short_en": "Medical devices",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "軟骨治療で併用される同種組織製品を販売",
+          "text_en": "Distributes allograft cartilage products used in competing treatments",
+          "source": {
+            "label": "Vericel 10-K(2025年度)",
+            "label_en": "Vericel 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/887359/000162828026012013/vcel-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "This treatment is sometimes augmented with allograft derived products such as BioCartilage ® and Cartiform ® (distributed by Arthrex, Inc.) and Prochondrix ® (distributed by Stryker Corporation)."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

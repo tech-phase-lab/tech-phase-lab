@@ -7,8 +7,8 @@
   },
   "rows": [
     {
-      "ja": "原材料の調達先・ライセンス",
-      "en": "Supplier & licensing",
+      "ja": "原材料の調達先・ライセンス・買収",
+      "en": "Supplier, licensing & acquisition",
       "above": true
     },
     {
@@ -33,6 +33,8 @@
       "name_en": "Celanese",
       "sub": "化学",
       "sub_en": "Chemicals",
+      "sub_short": "化学",
+      "sub_short_en": "Chemicals",
       "row": 0,
       "relations": [
         {
@@ -57,6 +59,8 @@
       "name_en": "Attillaps Holdings",
       "sub": "眼科薬",
       "sub_en": "Eye drugs",
+      "sub_short": "眼科薬",
+      "sub_short_en": "Eye drugs",
       "row": 0,
       "relations": [
         {
@@ -75,12 +79,40 @@
       ]
     },
     {
+      "id": "Mobius",
+      "ticker": "Mobius",
+      "name": "モビウス・セラピューティクス",
+      "name_en": "Mobius Therapeutics",
+      "sub": "眼科薬",
+      "sub_en": "Eye drugs",
+      "sub_short": "眼科薬",
+      "sub_short_en": "Eye drugs",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Mobiusを買収し、主力製品Mitosolの販売を開始(2025年5月)",
+          "text_en": "Acquired Mobius and began selling its lead product Mitosol (May 2025)",
+          "source": {
+            "label": "Glaukos 10-K(2025年度)",
+            "label_en": "Glaukos 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1192448/000119312526061944/gkos-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "Additionally, in May 2025 we acquired all of the outstanding equity interests in Mobius Therapeutics, LLC (Mobius), and began selling its lead product, Mitosol ."
+          }
+        }
+      ]
+    },
+    {
       "id": "ALC",
       "ticker": "ALC",
       "name": "アルコン",
       "name_en": "Alcon",
       "sub": "眼科",
       "sub_en": "Eye care",
+      "sub_short": "眼科",
+      "sub_short_en": "Eye care",
       "row": 1,
       "relations": [
         {
@@ -105,6 +137,8 @@
       "name_en": "AbbVie",
       "sub": "医薬品",
       "sub_en": "Pharmaceuticals",
+      "sub_short": "医薬品",
+      "sub_short_en": "Pharmaceuticals",
       "row": 1,
       "relations": [
         {
@@ -129,6 +163,8 @@
       "name_en": "Sight Sciences",
       "sub": "眼科機器",
       "sub_en": "Eye care devices",
+      "sub_short": "眼科機器",
+      "sub_short_en": "Eye care devices",
       "row": 2,
       "relations": [
         {
@@ -153,6 +189,8 @@
       "name_en": "IRIDEX",
       "sub": "眼科用レーザー",
       "sub_en": "Ophthalmic lasers",
+      "sub_short": "眼科用レーザー",
+      "sub_short_en": "Eye lasers",
       "row": 2,
       "relations": [
         {

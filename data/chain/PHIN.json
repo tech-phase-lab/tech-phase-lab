@@ -11,8 +11,8 @@
       "en": "Largest customer"
     },
     {
-      "ja": "分離元",
-      "en": "Former parent"
+      "ja": "分離元・合弁",
+      "en": "Former parent & joint venture"
     },
     {
       "ja": "競合(10-Kに記載)",
@@ -32,6 +32,8 @@
       "name_en": "General Motors",
       "sub": "自動車",
       "sub_en": "Automaker",
+      "sub_short": "自動車",
+      "sub_short_en": "Automaker",
       "row": 0,
       "relations": [
         {
@@ -56,6 +58,8 @@
       "name_en": "BorgWarner",
       "sub": "自動車部品",
       "sub_en": "Auto parts",
+      "sub_short": "自動車部品",
+      "sub_short_en": "Auto parts",
       "row": 1,
       "relations": [
         {
@@ -74,12 +78,40 @@
       ]
     },
     {
+      "id": "DelphiTVS",
+      "ticker": "Delphi-TVS",
+      "name": "デルファイTVSディーゼル・システムズ",
+      "name_en": "Delphi-TVS Diesel Systems",
+      "sub": "ディーゼル燃料系",
+      "sub_en": "Diesel fuel systems",
+      "sub_short": "ディーゼル部品",
+      "sub_short_en": "Diesel systems",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "52.5%を持つ非連結の合弁会社",
+          "text_en": "Unconsolidated joint venture in which it owns 52.5%",
+          "source": {
+            "label": "PHINIA 10-K(2025年度)",
+            "label_en": "PHINIA 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1968915/000196891526000023/phin-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "The Company has an investment in one unconsolidated joint venture: Delphi-TVS Diesel Systems Ltd (D-TVS), of which the Company owns 52.5 %."
+          }
+        }
+      ]
+    },
+    {
       "id": "Bosch",
       "ticker": "Bosch",
       "name": "ボッシュ",
       "name_en": "Robert Bosch",
       "sub": "自動車部品(ドイツ)",
       "sub_en": "Auto parts (Germany)",
+      "sub_short": "自動車部品",
+      "sub_short_en": "Auto parts",
       "row": 2,
       "relations": [
         {
@@ -104,6 +136,8 @@
       "name_en": "Cummins",
       "sub": "エンジン",
       "sub_en": "Engines",
+      "sub_short": "エンジン",
+      "sub_short_en": "Engines",
       "row": 2,
       "relations": [
         {
@@ -128,6 +162,8 @@
       "name_en": "Denso",
       "sub": "自動車部品",
       "sub_en": "Auto parts",
+      "sub_short": "自動車部品",
+      "sub_short_en": "Auto parts",
       "row": 2,
       "relations": [
         {
@@ -152,6 +188,8 @@
       "name_en": "Dorman Products",
       "sub": "補修部品",
       "sub_en": "Aftermarket parts",
+      "sub_short": "補修部品",
+      "sub_short_en": "Aftermarket",
       "row": 2,
       "relations": [
         {
@@ -176,6 +214,8 @@
       "name_en": "Valeo",
       "sub": "自動車部品(フランス)",
       "sub_en": "Auto parts (France)",
+      "sub_short": "自動車部品",
+      "sub_short_en": "Auto parts",
       "row": 2,
       "relations": [
         {

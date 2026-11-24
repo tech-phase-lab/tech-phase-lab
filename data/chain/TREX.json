@@ -7,8 +7,8 @@
   },
   "rows": [
     {
-      "ja": "販売先(流通)",
-      "en": "Distributor customer"
+      "ja": "販売先(流通・ホームセンター)",
+      "en": "Customers (distributors & home centers)"
     },
     {
       "ja": "競合(10-Kに記載)",
@@ -32,6 +32,8 @@
       "name_en": "Boise Cascade",
       "sub": "建材流通",
       "sub_en": "Building materials distribution",
+      "sub_short": "建材流通",
+      "sub_short_en": "Building supply",
       "row": 0,
       "relations": [
         {
@@ -50,12 +52,92 @@
       ]
     },
     {
+      "id": "HD",
+      "ticker": "HD",
+      "name": "ホーム・デポ",
+      "name_en": "The Home Depot",
+      "sub": "ホームセンター",
+      "sub_en": "Home improvement retail",
+      "sub_short": "ホームセンター",
+      "sub_short_en": "Home improvement",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Trexから直接仕入れて店頭で販売",
+          "text_en": "Buys directly from Trex to stock its shelves",
+          "source": {
+            "label": "Trex 10-K(2025年度)",
+            "label_en": "Trex 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1069878/000119312526068732/trex-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Home Depot and Lowe's purchase products directly from us for stocking on their shelves."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LOW",
+      "ticker": "LOW",
+      "name": "ロウズ",
+      "name_en": "Lowe's",
+      "sub": "ホームセンター",
+      "sub_en": "Home improvement retail",
+      "sub_short": "ホームセンター",
+      "sub_short_en": "Home improvement",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Trexから直接仕入れて店頭で販売",
+          "text_en": "Buys directly from Trex to stock its shelves",
+          "source": {
+            "label": "Trex 10-K(2025年度)",
+            "label_en": "Trex 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1069878/000119312526068732/trex-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Home Depot and Lowe's purchase products directly from us for stocking on their shelves."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SBP",
+      "ticker": "SBP",
+      "name": "スペシャルティ・ビルディング・プロダクツ",
+      "name_en": "Specialty Building Products",
+      "sub": "建材流通",
+      "sub_en": "Building materials distribution",
+      "sub_short": "建材流通",
+      "sub_short_en": "Building supply",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Trex専売の長年のデッキ材卸。ミシガン州全域に販売網を拡大",
+          "text_en": "Longtime Trex-exclusive decking distributor, expanding statewide coverage in Michigan",
+          "source": {
+            "label": "Trex 10-K(2025年度)",
+            "label_en": "Trex 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1069878/000119312526068732/trex-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Longtime Trex-exclusive decking distributor SBP will now provide statewide distribution coverage in Michigan."
+          }
+        }
+      ]
+    },
+    {
       "id": "JHX",
       "ticker": "JHX",
       "name": "ジェームズ・ハーディー",
       "name_en": "James Hardie (Azek)",
       "sub": "建材",
       "sub_en": "Building products",
+      "sub_short": "建材",
+      "sub_short_en": "Building goods",
       "row": 1,
       "relations": [
         {
@@ -80,6 +162,8 @@
       "name_en": "UFP Industries (Deckorators)",
       "sub": "木材製品",
       "sub_en": "Wood products",
+      "sub_short": "木材製品",
+      "sub_short_en": "Wood products",
       "row": 1,
       "relations": [
         {
@@ -104,6 +188,8 @@
       "name_en": "Fortune Brands (Fiberon)",
       "sub": "住宅設備",
       "sub_en": "Home products",
+      "sub_short": "住宅設備",
+      "sub_short_en": "Home products",
       "row": 1,
       "relations": [
         {
@@ -128,6 +214,8 @@
       "name_en": "Westlake",
       "sub": "化学・建材",
       "sub_en": "Chemicals & building products",
+      "sub_short": "化学・建材",
+      "sub_short_en": "Chemicals",
       "row": 2,
       "relations": [
         {

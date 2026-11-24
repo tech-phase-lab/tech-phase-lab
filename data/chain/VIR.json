@@ -1,0 +1,105 @@
+{
+  "root": {
+    "ticker": "VIR",
+    "name": "ヴィア・バイオテクノロジー",
+    "cik": 1706431,
+    "name_en": "Vir Biotechnology"
+  },
+  "rows": [
+    {
+      "ja": "導入元(ライセンス元)",
+      "en": "In-licensing source",
+      "above": true
+    },
+    {
+      "ja": "共同開発・販売の提携先",
+      "en": "Development & commercial partners"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "SNY",
+      "ticker": "SNY",
+      "name": "サノフィ",
+      "name_en": "Sanofi",
+      "sub": "医薬品",
+      "sub_en": "Pharmaceuticals",
+      "sub_short": "医薬品",
+      "sub_short_en": "Pharmaceuticals",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ライセンス元。契約締結時に一時金1億ドルを支払い",
+          "text_en": "Licensor; Vir paid $100 million upfront at closing",
+          "source": {
+            "label": "Vir Biotechnology 10-K(2025年度)",
+            "label_en": "Vir Biotechnology 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1706431/000162828026010749/vir-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "As part of the closing of the Sanofi Agreement, we made an upfront payment to Sanofi in the amount of $ 100.0 million and transferred $ 75.0 million to an escrow account that was due to former shareholders of Amunix upon VIR-5525 achieving \"first in human dosing\" by 2026."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GSK",
+      "ticker": "GSK",
+      "name": "GSK",
+      "name_en": "GSK",
+      "sub": "医薬品",
+      "sub_en": "Pharmaceuticals",
+      "sub_short": "医薬品",
+      "sub_short_en": "Pharmaceuticals",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "抗体薬sotrovimabなどで提携。GSKが製造・販売を主導",
+          "text_en": "Partner on sotrovimab and related antibodies; GSK leads manufacturing and sales",
+          "source": {
+            "label": "Vir Biotechnology 10-K(2025年度)",
+            "label_en": "Vir Biotechnology 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1706431/000162828026010749/vir-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "As the lead party for all manufacturing and commercialization activities, GSK incurs all of the manufacturing, sales and marketing expenses and is the principal on sales transactions with third parties."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ALNY",
+      "ticker": "ALNY",
+      "name": "アルナイラム・ファーマシューティカルズ",
+      "name_en": "Alnylam Pharmaceuticals",
+      "sub": "RNAi医薬",
+      "sub_en": "RNAi therapeutics",
+      "sub_short": "RNAi医薬",
+      "sub_short_en": "RNAi drugs",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "共同研究・ライセンス契約(2017年10月)",
+          "text_en": "Collaboration and license agreement (October 2017)",
+          "source": {
+            "label": "Vir Biotechnology 10-K(2025年度)",
+            "label_en": "Vir Biotechnology 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1706431/000162828026010749/vir-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "Collaboration and License Agreement with Alnylam In October 2017, we and Alnylam Pharmaceuticals, Inc."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
