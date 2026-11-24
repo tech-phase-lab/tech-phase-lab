@@ -1,0 +1,244 @@
+{
+  "root": {
+    "ticker": "HELE",
+    "name": "ヘレン・オブ・トロイ",
+    "cik": 916789,
+    "name_en": "Helen of Troy"
+  },
+  "rows": [
+    {
+      "ja": "ブランドのライセンス元",
+      "en": "Brand licensor",
+      "above": true
+    },
+    {
+      "ja": "主な顧客",
+      "en": "Main customers"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in its 10-K)"
+    }
+  ],
+  "rivals": [
+    "NWL",
+    "SPB",
+    "YETI",
+    "SN"
+  ],
+  "companies": [
+    {
+      "id": "HON",
+      "ticker": "HON",
+      "name": "ハネウェル",
+      "name_en": "Honeywell",
+      "sub": "産業・航空",
+      "sub_en": "Industrials & aerospace",
+      "sub_short": "産業",
+      "sub_short_en": "Industrial",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Honeywellブランドをライセンス使用",
+          "text_en": "Licenses the Honeywell brand",
+          "source": {
+            "label": "Helen of Troy 10-K(2026年2月期)",
+            "label_en": "Helen of Troy 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/916789/000091678926000048/hele-20260228.htm",
+            "level": "official",
+            "date": "2026-04-23",
+            "quote": "Beauty & Wellness Drybar, Hot Tools, Curlsmith, Olive & June, PUR Revlon, Honeywell, Braun, Vicks"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン",
+      "name_en": "Amazon",
+      "sub": "EC・クラウド",
+      "sub_en": "E-commerce & cloud",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大の顧客(売上の約20%)",
+          "text_en": "Largest customer (about 20% of net sales)",
+          "source": {
+            "label": "Helen of Troy 10-K(2026年2月期)",
+            "label_en": "Helen of Troy 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/916789/000091678926000048/hele-20260228.htm",
+            "level": "official",
+            "date": "2026-04-23",
+            "quote": "Sales to our largest customer, Amazon.com Inc ., accounted for approximately 20%, 22% and 21% of our consolidated net sales revenue in fiscal 2026, 2025 and 2024, respectively."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WMT",
+      "ticker": "WMT",
+      "name": "ウォルマート",
+      "name_en": "Walmart",
+      "sub": "小売",
+      "sub_en": "Retail",
+      "sub_short": "量販店",
+      "sub_short_en": "Retail",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2番目の顧客(売上の約13%)",
+          "text_en": "Second-largest customer (about 13% of net sales)",
+          "source": {
+            "label": "Helen of Troy 10-K(2026年2月期)",
+            "label_en": "Helen of Troy 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/916789/000091678926000048/hele-20260228.htm",
+            "level": "official",
+            "date": "2026-04-23",
+            "quote": "Sales to our second largest customer, Walmart, Inc., including its worldwide affiliates, accounted for approximately 13%, 11% and 9% of our consolidated net sales revenue"
+          }
+        }
+      ]
+    },
+    {
+      "id": "TGT",
+      "ticker": "TGT",
+      "name": "ターゲット",
+      "name_en": "Target",
+      "sub": "小売",
+      "sub_en": "Retail",
+      "sub_short": "総合小売",
+      "sub_short_en": "Retail",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "3番目の顧客(売上の約12%)",
+          "text_en": "Third-largest customer (about 12% of net sales)",
+          "source": {
+            "label": "Helen of Troy 10-K(2026年2月期)",
+            "label_en": "Helen of Troy 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/916789/000091678926000048/hele-20260228.htm",
+            "level": "official",
+            "date": "2026-04-23",
+            "quote": "Sales to our third largest customer, Target Corporation, accounted for approximately 12%, 11% and 10% of our consolidated net sales revenue"
+          }
+        }
+      ]
+    },
+    {
+      "id": "NWL",
+      "ticker": "NWL",
+      "name": "ニューウェル・ブランズ",
+      "name_en": "Newell Brands",
+      "sub": "日用品・文具",
+      "sub_en": "Consumer goods",
+      "sub_short": "日用品",
+      "sub_short_en": "Consumer",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "美容・ウェルネスの主な競合",
+          "text_en": "Primary competitor in Beauty & Wellness",
+          "source": {
+            "label": "Helen of Troy 10-K(2026年2月期)",
+            "label_en": "Helen of Troy 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/916789/000091678926000048/hele-20260228.htm",
+            "level": "official",
+            "date": "2026-04-23",
+            "quote": "Simple Human LLC, Yeti Holdings, Inc., Bradshaw International (GoodCook), PMI Worldwide (Stanley), Patagonia, Gregory Mountain Products, CamelBak, The North Face, Deuter, Cotopaxi, Thule Group, Trove Brands, LLC (Owala) Beauty & Wellness Conair, Spectrum Brands Holdings Inc. (Remington), Coty Inc., Dyson Ltd, L'Oréal S.A., DevaCurl, SharkNinja, Inc., Exergen Corporation, Omron Healthcare, Inc., Crane Engineering, Newell Brands, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SPB",
+      "ticker": "SPB",
+      "name": "スペクトラム・ブランズ",
+      "name_en": "Spectrum Brands",
+      "sub": "家庭・ペット用品",
+      "sub_en": "Home & pet products",
+      "sub_short": "日用品",
+      "sub_short_en": "Consumer",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "美容・ウェルネスの主な競合(Remington)",
+          "text_en": "Primary competitor in Beauty & Wellness (Remington)",
+          "source": {
+            "label": "Helen of Troy 10-K(2026年2月期)",
+            "label_en": "Helen of Troy 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/916789/000091678926000048/hele-20260228.htm",
+            "level": "official",
+            "date": "2026-04-23",
+            "quote": "Simple Human LLC, Yeti Holdings, Inc., Bradshaw International (GoodCook), PMI Worldwide (Stanley), Patagonia, Gregory Mountain Products, CamelBak, The North Face, Deuter, Cotopaxi, Thule Group, Trove Brands, LLC (Owala) Beauty & Wellness Conair, Spectrum Brands Holdings Inc. (Remington), Coty Inc., Dyson Ltd, L'Oréal S.A., DevaCurl, SharkNinja, Inc., Exergen Corporation, Omron Healthcare, Inc., Crane Engineering, Newell Brands, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "YETI",
+      "ticker": "YETI",
+      "name": "イエティ",
+      "name_en": "YETI",
+      "sub": "アウトドア用品",
+      "sub_en": "Outdoor products",
+      "sub_short": "野外用品",
+      "sub_short_en": "Outdoor",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "家庭・アウトドアの主な競合",
+          "text_en": "Primary competitor in Home & Outdoor",
+          "source": {
+            "label": "Helen of Troy 10-K(2026年2月期)",
+            "label_en": "Helen of Troy 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/916789/000091678926000048/hele-20260228.htm",
+            "level": "official",
+            "date": "2026-04-23",
+            "quote": "Simple Human LLC, Yeti Holdings, Inc., Bradshaw International (GoodCook), PMI Worldwide (Stanley), Patagonia, Gregory Mountain Products, CamelBak, The North Face, Deuter, Cotopaxi, Thule Group, Trove Brands, LLC (Owala) Beauty & Wellness Conair, Spectrum Brands Holdings Inc. (Remington), Coty Inc., Dyson Ltd, L'Oréal S.A., DevaCurl, SharkNinja, Inc., Exergen Corporation, Omron Healthcare, Inc., Crane Engineering, Newell Brands, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SN",
+      "ticker": "SN",
+      "name": "シャークニンジャ",
+      "name_en": "SharkNinja",
+      "sub": "小型家電",
+      "sub_en": "Small appliances",
+      "sub_short": "家電",
+      "sub_short_en": "Appliance",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "美容・ウェルネスの主な競合",
+          "text_en": "Primary competitor in Beauty & Wellness",
+          "source": {
+            "label": "Helen of Troy 10-K(2026年2月期)",
+            "label_en": "Helen of Troy 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/916789/000091678926000048/hele-20260228.htm",
+            "level": "official",
+            "date": "2026-04-23",
+            "quote": "Simple Human LLC, Yeti Holdings, Inc., Bradshaw International (GoodCook), PMI Worldwide (Stanley), Patagonia, Gregory Mountain Products, CamelBak, The North Face, Deuter, Cotopaxi, Thule Group, Trove Brands, LLC (Owala) Beauty & Wellness Conair, Spectrum Brands Holdings Inc. (Remington), Coty Inc., Dyson Ltd, L'Oréal S.A., DevaCurl, SharkNinja, Inc., Exergen Corporation, Omron Healthcare, Inc., Crane Engineering, Newell Brands, Inc."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

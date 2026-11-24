@@ -1,0 +1,235 @@
+{
+  "root": {
+    "ticker": "UTZ",
+    "name": "ユッツ・ブランズ",
+    "cik": 1739566,
+    "name_en": "Utz Brands"
+  },
+  "rows": [
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in its 10-K)"
+    }
+  ],
+  "rivals": [
+    "PEP",
+    "CPB",
+    "GIS",
+    "HSY"
+  ],
+  "companies": [
+    {
+      "id": "PEP",
+      "ticker": "PEP",
+      "name": "ペプシコ",
+      "name_en": "PepsiCo",
+      "sub": "飲料・スナック",
+      "sub_en": "Beverages & snacks",
+      "sub_short": "飲料菓子",
+      "sub_short_en": "Snacks",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合の筆頭",
+          "text_en": "Listed first among principal competitors",
+          "source": {
+            "label": "Utz Brands 10-K(2025年度)",
+            "label_en": "Utz Brands 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1739566/000162828026007757/utz-20251228.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Our principal identified competitors include PepsiCo, Campbell's, Mars, General Mills, Grupo Bimbo, Hershey's, Hain Celestial, and Arca Continental, among others."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CPB",
+      "ticker": "CPB",
+      "name": "キャンベルズ",
+      "name_en": "Campbell's",
+      "sub": "食品・スナック",
+      "sub_en": "Food & snacks",
+      "sub_short": "食品",
+      "sub_short_en": "Food",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合",
+          "text_en": "Principal competitor",
+          "source": {
+            "label": "Utz Brands 10-K(2025年度)",
+            "label_en": "Utz Brands 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1739566/000162828026007757/utz-20251228.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Our principal identified competitors include PepsiCo, Campbell's, Mars, General Mills, Grupo Bimbo, Hershey's, Hain Celestial, and Arca Continental, among others."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MARS",
+      "ticker": "Mars, Incorporated",
+      "name": "マース",
+      "name_en": "Mars, Incorporated",
+      "sub": "菓子・食品",
+      "sub_en": "Confectionery & food",
+      "sub_short": "菓子",
+      "sub_short_en": "Candy",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合",
+          "text_en": "Principal competitor",
+          "source": {
+            "label": "Utz Brands 10-K(2025年度)",
+            "label_en": "Utz Brands 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1739566/000162828026007757/utz-20251228.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Our principal identified competitors include PepsiCo, Campbell's, Mars, General Mills, Grupo Bimbo, Hershey's, Hain Celestial, and Arca Continental, among others."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GIS",
+      "ticker": "GIS",
+      "name": "ゼネラル・ミルズ",
+      "name_en": "General Mills",
+      "sub": "食品",
+      "sub_en": "Packaged food",
+      "sub_short": "食品",
+      "sub_short_en": "Food",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合",
+          "text_en": "Principal competitor",
+          "source": {
+            "label": "Utz Brands 10-K(2025年度)",
+            "label_en": "Utz Brands 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1739566/000162828026007757/utz-20251228.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Our principal identified competitors include PepsiCo, Campbell's, Mars, General Mills, Grupo Bimbo, Hershey's, Hain Celestial, and Arca Continental, among others."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Bimbo",
+      "ticker": "BIMBOA",
+      "name": "グルポ・ビンボ",
+      "name_en": "Grupo Bimbo",
+      "sub": "パン",
+      "sub_en": "Bakery",
+      "sub_short": "パン",
+      "sub_short_en": "Bakery",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合",
+          "text_en": "Principal competitor",
+          "source": {
+            "label": "Utz Brands 10-K(2025年度)",
+            "label_en": "Utz Brands 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1739566/000162828026007757/utz-20251228.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Our principal identified competitors include PepsiCo, Campbell's, Mars, General Mills, Grupo Bimbo, Hershey's, Hain Celestial, and Arca Continental, among others."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HSY",
+      "ticker": "HSY",
+      "name": "ハーシー",
+      "name_en": "Hershey",
+      "sub": "菓子",
+      "sub_en": "Confectionery",
+      "sub_short": "菓子",
+      "sub_short_en": "Candy",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合",
+          "text_en": "Principal competitor",
+          "source": {
+            "label": "Utz Brands 10-K(2025年度)",
+            "label_en": "Utz Brands 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1739566/000162828026007757/utz-20251228.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Our principal identified competitors include PepsiCo, Campbell's, Mars, General Mills, Grupo Bimbo, Hershey's, Hain Celestial, and Arca Continental, among others."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HAIN",
+      "ticker": "HAIN",
+      "name": "ヘイン・セレスティアル",
+      "name_en": "Hain Celestial",
+      "sub": "自然食品",
+      "sub_en": "Natural foods",
+      "sub_short": "自然食品",
+      "sub_short_en": "Natural",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合",
+          "text_en": "Principal competitor",
+          "source": {
+            "label": "Utz Brands 10-K(2025年度)",
+            "label_en": "Utz Brands 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1739566/000162828026007757/utz-20251228.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Our principal identified competitors include PepsiCo, Campbell's, Mars, General Mills, Grupo Bimbo, Hershey's, Hain Celestial, and Arca Continental, among others."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ARCA",
+      "ticker": "Arca Continental",
+      "name": "アルカ・コンチネンタル",
+      "name_en": "Arca Continental",
+      "sub": "飲料・スナック",
+      "sub_en": "Beverages & snacks",
+      "sub_short": "飲料",
+      "sub_short_en": "Drinks",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合",
+          "text_en": "Principal competitor",
+          "source": {
+            "label": "Utz Brands 10-K(2025年度)",
+            "label_en": "Utz Brands 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1739566/000162828026007757/utz-20251228.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Our principal identified competitors include PepsiCo, Campbell's, Mars, General Mills, Grupo Bimbo, Hershey's, Hain Celestial, and Arca Continental, among others."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

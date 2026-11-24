@@ -1,0 +1,164 @@
+{
+  "root": {
+    "ticker": "SPB",
+    "name": "スペクトラム・ブランズ",
+    "cik": 109177,
+    "name_en": "Spectrum Brands"
+  },
+  "rows": [
+    {
+      "ja": "ブランドのライセンス元",
+      "en": "Brand licensor",
+      "above": true
+    },
+    {
+      "ja": "主な顧客(ペット用品部門)",
+      "en": "Main customers (pet care)"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in its 10-K)"
+    }
+  ],
+  "rivals": [
+    "SMG",
+    "CENT"
+  ],
+  "companies": [
+    {
+      "id": "SWK",
+      "ticker": "SWK",
+      "name": "スタンレー・ブラック&デッカー",
+      "name_en": "Stanley Black & Decker",
+      "sub": "工具",
+      "sub_en": "Tools",
+      "sub_short": "工具",
+      "sub_short_en": "Tools",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "家電でBlack+Deckerブランドをライセンス使用",
+          "text_en": "Licenses the Black+Decker brand for home appliances",
+          "source": {
+            "label": "Spectrum Brands 10-K(2026年9月期)",
+            "label_en": "Spectrum Brands 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/109177/000010917726000044/spb-20260930.htm",
+            "level": "official",
+            "date": "2026-11-18",
+            "quote": "The B+D brand is subject to a trademark license agreement with the license holder, Stanley Black+Decker, pursuant to which we license the brand in NA and LATAM for certain designated products types of home appliances."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン",
+      "name_en": "Amazon",
+      "sub": "EC・クラウド",
+      "sub_en": "E-commerce & cloud",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ペット用品部門の売上の10%超を占める顧客(Walmartと合わせて約35%)",
+          "text_en": "Over 10% of pet care sales (about 35% together with Walmart)",
+          "source": {
+            "label": "Spectrum Brands 10-K(2026年9月期)",
+            "label_en": "Spectrum Brands 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/109177/000010917726000044/spb-20260930.htm",
+            "level": "official",
+            "date": "2026-11-18",
+            "quote": "with a significant concentration of sales to a limited group of retail customers each exceeding 10% of segment sales, consisting of Amazon and Walmart, representing approximately 35% of segment sales for the year ended September 30, 2026."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WMT",
+      "ticker": "WMT",
+      "name": "ウォルマート",
+      "name_en": "Walmart",
+      "sub": "小売",
+      "sub_en": "Retail",
+      "sub_short": "量販店",
+      "sub_short_en": "Retail",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ペット用品部門の売上の10%超を占める顧客(Amazonと合わせて約35%)",
+          "text_en": "Over 10% of pet care sales (about 35% together with Amazon)",
+          "source": {
+            "label": "Spectrum Brands 10-K(2026年9月期)",
+            "label_en": "Spectrum Brands 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/109177/000010917726000044/spb-20260930.htm",
+            "level": "official",
+            "date": "2026-11-18",
+            "quote": "with a significant concentration of sales to a limited group of retail customers each exceeding 10% of segment sales, consisting of Amazon and Walmart, representing approximately 35% of segment sales for the year ended September 30, 2026."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SMG",
+      "ticker": "SMG",
+      "name": "スコッツ・ミラクルグロー",
+      "name_en": "Scotts Miracle-Gro",
+      "sub": "園芸用品",
+      "sub_en": "Lawn & garden",
+      "sub_short": "園芸",
+      "sub_short_en": "Garden",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "家庭用殺虫剤などの主な競合",
+          "text_en": "Primary competitor in home and garden",
+          "source": {
+            "label": "Spectrum Brands 10-K(2026年9月期)",
+            "label_en": "Spectrum Brands 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/109177/000010917726000044/spb-20260930.htm",
+            "level": "official",
+            "date": "2026-11-18",
+            "quote": "Primary competitors include The Scotts Miracle-Gro Company (Ortho, Roundup, Tomcat), S.C. Johnson & Son, Inc. (Raid, OFF!), Central Garden & Pet (AMDRO, Sevin)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CENT",
+      "ticker": "CENT",
+      "name": "セントラル・ガーデン&ペット",
+      "name_en": "Central Garden & Pet",
+      "sub": "ペット・園芸用品",
+      "sub_en": "Pet & garden products",
+      "sub_short": "ペット",
+      "sub_short_en": "Pet",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "家庭・園芸用品の主な競合",
+          "text_en": "Primary competitor in home and garden",
+          "source": {
+            "label": "Spectrum Brands 10-K(2026年9月期)",
+            "label_en": "Spectrum Brands 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/109177/000010917726000044/spb-20260930.htm",
+            "level": "official",
+            "date": "2026-11-18",
+            "quote": "Primary competitors include The Scotts Miracle-Gro Company (Ortho, Roundup, Tomcat), S.C. Johnson & Son, Inc. (Raid, OFF!), Central Garden & Pet (AMDRO, Sevin)"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

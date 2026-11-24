@@ -1,0 +1,152 @@
+{
+  "root": {
+    "ticker": "SRI",
+    "name": "ストーンリッジ",
+    "cik": 1043337,
+    "name_en": "Stoneridge"
+  },
+  "rows": [
+    {
+      "ja": "主な顧客(上位5社)",
+      "en": "Main customers (top five)"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "VolvoGroup",
+      "ticker": "VOLV-B",
+      "name": "ボルボ(ABボルボ)",
+      "name_en": "Volvo Group",
+      "sub": "トラック",
+      "sub_en": "Trucks",
+      "sub_short": "トラック",
+      "sub_short_en": "Trucks",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大の顧客(売上の18%)",
+          "text_en": "Largest customer (18% of net sales)",
+          "source": {
+            "label": "Stoneridge 10-K(2025年度)",
+            "label_en": "Stoneridge 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1043337/000104333726000023/sri-20251231.htm",
+            "level": "official",
+            "date": "2026-03-16",
+            "quote": "In 2025, our top five customers were Volvo, PACCAR, Traton, Daimler Truck and Ford, which comprised 18%, 15%, 11%, 7% and 6% of our net sales, respectively."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PCAR",
+      "ticker": "PCAR",
+      "name": "パッカー",
+      "name_en": "PACCAR",
+      "sub": "トラック",
+      "sub_en": "Trucks",
+      "sub_short": "トラック",
+      "sub_short_en": "Trucks",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2番目の顧客(売上の15%)",
+          "text_en": "Second-largest customer (15% of net sales)",
+          "source": {
+            "label": "Stoneridge 10-K(2025年度)",
+            "label_en": "Stoneridge 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1043337/000104333726000023/sri-20251231.htm",
+            "level": "official",
+            "date": "2026-03-16",
+            "quote": "In 2025, our top five customers were Volvo, PACCAR, Traton, Daimler Truck and Ford, which comprised 18%, 15%, 11%, 7% and 6% of our net sales, respectively."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Traton",
+      "ticker": "Traton",
+      "name": "トレイトン",
+      "name_en": "Traton",
+      "sub": "トラック",
+      "sub_en": "Trucks",
+      "sub_short": "トラック",
+      "sub_short_en": "Trucks",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "3番目の顧客(売上の11%)",
+          "text_en": "Third-largest customer (11% of net sales)",
+          "source": {
+            "label": "Stoneridge 10-K(2025年度)",
+            "label_en": "Stoneridge 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1043337/000104333726000023/sri-20251231.htm",
+            "level": "official",
+            "date": "2026-03-16",
+            "quote": "In 2025, our top five customers were Volvo, PACCAR, Traton, Daimler Truck and Ford, which comprised 18%, 15%, 11%, 7% and 6% of our net sales, respectively."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DTG",
+      "ticker": "Daimler Truck",
+      "name": "ダイムラー・トラック",
+      "name_en": "Daimler Truck",
+      "sub": "トラック",
+      "sub_en": "Trucks",
+      "sub_short": "トラック",
+      "sub_short_en": "Trucks",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "4番目の顧客(売上の7%)",
+          "text_en": "Fourth-largest customer (7% of net sales)",
+          "source": {
+            "label": "Stoneridge 10-K(2025年度)",
+            "label_en": "Stoneridge 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1043337/000104333726000023/sri-20251231.htm",
+            "level": "official",
+            "date": "2026-03-16",
+            "quote": "In 2025, our top five customers were Volvo, PACCAR, Traton, Daimler Truck and Ford, which comprised 18%, 15%, 11%, 7% and 6% of our net sales, respectively."
+          }
+        }
+      ]
+    },
+    {
+      "id": "F",
+      "ticker": "F",
+      "name": "フォード",
+      "name_en": "Ford",
+      "sub": "自動車",
+      "sub_en": "Automaker",
+      "sub_short": "自動車",
+      "sub_short_en": "Cars",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "5番目の顧客(売上の6%)",
+          "text_en": "Fifth-largest customer (6% of net sales)",
+          "source": {
+            "label": "Stoneridge 10-K(2025年度)",
+            "label_en": "Stoneridge 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1043337/000104333726000023/sri-20251231.htm",
+            "level": "official",
+            "date": "2026-03-16",
+            "quote": "In 2025, our top five customers were Volvo, PACCAR, Traton, Daimler Truck and Ford, which comprised 18%, 15%, 11%, 7% and 6% of our net sales, respectively."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

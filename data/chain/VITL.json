@@ -1,0 +1,236 @@
+{
+  "root": {
+    "ticker": "VITL",
+    "name": "バイタル・ファームズ",
+    "cik": 1579733,
+    "name_en": "Vital Farms"
+  },
+  "rows": [
+    {
+      "ja": "主な販売先(卸・小売)",
+      "en": "Main customers (distributor & retailers)"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in its 10-K)"
+    }
+  ],
+  "rivals": [
+    "CALM"
+  ],
+  "companies": [
+    {
+      "id": "UNFI",
+      "ticker": "UNFI",
+      "name": "ユナイテッド・ナチュラル・フーズ",
+      "name_en": "United Natural Foods",
+      "sub": "食品卸",
+      "sub_en": "Grocery wholesale",
+      "sub_short": "食品卸",
+      "sub_short_en": "Grocery",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Whole Foodsの主要卸として売上の約22%",
+          "text_en": "About 22% of net revenue as Whole Foods' primary distributor",
+          "source": {
+            "label": "Vital Farms 10-K(2025年度)",
+            "label_en": "Vital Farms 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1579733/000119312526073423/vitl-20251228.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "In fiscal years 2023, 2024 and 2025, UNFI (the primary distributor for Whole Foods) accounted for approximately 25%, 24% and 22% of our net revenue, respectively."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WMT",
+      "ticker": "WMT",
+      "name": "ウォルマート",
+      "name_en": "Walmart",
+      "sub": "小売",
+      "sub_en": "Retail",
+      "sub_short": "量販店",
+      "sub_short_en": "Retail",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "取引のある主要小売",
+          "text_en": "Major retailer it sells through",
+          "source": {
+            "label": "Vital Farms 10-K(2025年度)",
+            "label_en": "Vital Farms 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1579733/000119312526073423/vitl-20251228.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "through relationships with Albertsons Companies, Inc., or Albertsons, The Kroger Co., or Kroger, Publix Super Markets, Inc., or Publix, Target Corporation, or Target, Walmart Inc., or Walmart, Sprouts Farmers Market, or Sprouts, Whole Foods, and numerous other national and regional food retailers."
+          }
+        }
+      ]
+    },
+    {
+      "id": "KR",
+      "ticker": "KR",
+      "name": "クローガー",
+      "name_en": "Kroger",
+      "sub": "スーパー",
+      "sub_en": "Grocery",
+      "sub_short": "スーパー",
+      "sub_short_en": "Grocery",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "取引のある主要小売",
+          "text_en": "Major retailer it sells through",
+          "source": {
+            "label": "Vital Farms 10-K(2025年度)",
+            "label_en": "Vital Farms 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1579733/000119312526073423/vitl-20251228.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "through relationships with Albertsons Companies, Inc., or Albertsons, The Kroger Co., or Kroger, Publix Super Markets, Inc., or Publix, Target Corporation, or Target, Walmart Inc., or Walmart, Sprouts Farmers Market, or Sprouts, Whole Foods, and numerous other national and regional food retailers."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ACI",
+      "ticker": "ACI",
+      "name": "アルバートソンズ",
+      "name_en": "Albertsons",
+      "sub": "スーパー",
+      "sub_en": "Grocery",
+      "sub_short": "スーパー",
+      "sub_short_en": "Grocery",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "取引のある主要小売",
+          "text_en": "Major retailer it sells through",
+          "source": {
+            "label": "Vital Farms 10-K(2025年度)",
+            "label_en": "Vital Farms 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1579733/000119312526073423/vitl-20251228.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "through relationships with Albertsons Companies, Inc., or Albertsons, The Kroger Co., or Kroger, Publix Super Markets, Inc., or Publix, Target Corporation, or Target, Walmart Inc., or Walmart, Sprouts Farmers Market, or Sprouts, Whole Foods, and numerous other national and regional food retailers."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TGT",
+      "ticker": "TGT",
+      "name": "ターゲット",
+      "name_en": "Target",
+      "sub": "小売",
+      "sub_en": "Retail",
+      "sub_short": "総合小売",
+      "sub_short_en": "Retail",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "取引のある主要小売",
+          "text_en": "Major retailer it sells through",
+          "source": {
+            "label": "Vital Farms 10-K(2025年度)",
+            "label_en": "Vital Farms 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1579733/000119312526073423/vitl-20251228.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "through relationships with Albertsons Companies, Inc., or Albertsons, The Kroger Co., or Kroger, Publix Super Markets, Inc., or Publix, Target Corporation, or Target, Walmart Inc., or Walmart, Sprouts Farmers Market, or Sprouts, Whole Foods, and numerous other national and regional food retailers."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SFM",
+      "ticker": "SFM",
+      "name": "スプラウツ・ファーマーズ・マーケット",
+      "name_en": "Sprouts Farmers Market",
+      "sub": "自然食品スーパー",
+      "sub_en": "Natural grocery",
+      "sub_short": "スーパー",
+      "sub_short_en": "Grocery",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "取引のある主要小売",
+          "text_en": "Major retailer it sells through",
+          "source": {
+            "label": "Vital Farms 10-K(2025年度)",
+            "label_en": "Vital Farms 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1579733/000119312526073423/vitl-20251228.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "through relationships with Albertsons Companies, Inc., or Albertsons, The Kroger Co., or Kroger, Publix Super Markets, Inc., or Publix, Target Corporation, or Target, Walmart Inc., or Walmart, Sprouts Farmers Market, or Sprouts, Whole Foods, and numerous other national and regional food retailers."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Publix",
+      "ticker": "Publix",
+      "name": "パブリックス",
+      "name_en": "Publix Super Markets",
+      "sub": "スーパー",
+      "sub_en": "Grocery",
+      "sub_short": "スーパー",
+      "sub_short_en": "Grocery",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "取引のある主要小売",
+          "text_en": "Major retailer it sells through",
+          "source": {
+            "label": "Vital Farms 10-K(2025年度)",
+            "label_en": "Vital Farms 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1579733/000119312526073423/vitl-20251228.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "through relationships with Albertsons Companies, Inc., or Albertsons, The Kroger Co., or Kroger, Publix Super Markets, Inc., or Publix, Target Corporation, or Target, Walmart Inc., or Walmart, Sprouts Farmers Market, or Sprouts, Whole Foods, and numerous other national and regional food retailers."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CALM",
+      "ticker": "CALM",
+      "name": "カルメイン・フーズ",
+      "name_en": "Cal-Maine Foods",
+      "sub": "鶏卵",
+      "sub_en": "Eggs",
+      "sub_short": "鶏卵",
+      "sub_short_en": "Eggs",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "大手の卵生産の競合",
+          "text_en": "Competitor among large egg companies",
+          "source": {
+            "label": "Vital Farms 10-K(2025年度)",
+            "label_en": "Vital Farms 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1579733/000119312526073423/vitl-20251228.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "We compete with large egg companies such as Cal-Maine Foods, Inc. and large international food companies such as Ornua Co-operative Limited (Kerrygold)."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

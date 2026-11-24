@@ -1,0 +1,188 @@
+{
+  "root": {
+    "ticker": "ACT",
+    "name": "エナクト・ホールディングス",
+    "cik": 1823529,
+    "name_en": "Enact Holdings"
+  },
+  "rows": [
+    {
+      "ja": "親会社",
+      "en": "Parent",
+      "above": true
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in its 10-K)"
+    }
+  ],
+  "rivals": [
+    "ESNT",
+    "MTG",
+    "NMIH",
+    "RDN"
+  ],
+  "companies": [
+    {
+      "id": "GNW",
+      "ticker": "GNW",
+      "name": "ジェンワース・ファイナンシャル",
+      "name_en": "Genworth Financial",
+      "sub": "保険",
+      "sub_en": "Insurance",
+      "sub_short": "保険",
+      "sub_short_en": "Insurer",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "親会社。株式の80%以上を保有",
+          "text_en": "Parent that owns at least 80% of its common stock",
+          "source": {
+            "label": "Enact Holdings 10-K(2025年度)",
+            "label_en": "Enact Holdings 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1823529/000182352926000060/act-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Genworth's continued ownership of at least 80% of our common stock may limit our ability to raise additional capital by issuing common stock to third parties."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ACGL",
+      "ticker": "ACGL",
+      "name": "アーチ・キャピタル",
+      "name_en": "Arch Capital Group",
+      "sub": "保険・再保険",
+      "sub_en": "Insurance & reinsurance",
+      "sub_short": "保険",
+      "sub_short_en": "Insurer",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "民間住宅ローン保険の競合",
+          "text_en": "Private mortgage insurance competitor",
+          "source": {
+            "label": "Enact Holdings 10-K(2025年度)",
+            "label_en": "Enact Holdings 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1823529/000182352926000060/act-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Private mortgage insurance competitors include Arch Capital Group Ltd., Essent Group Ltd., MGIC Investment Corporation, NMI Holdings, Inc. and Radian Group Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ESNT",
+      "ticker": "ESNT",
+      "name": "エッセント・グループ",
+      "name_en": "Essent Group",
+      "sub": "住宅ローン保険",
+      "sub_en": "Mortgage insurance",
+      "sub_short": "住宅保険",
+      "sub_short_en": "Mortgage",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "民間住宅ローン保険の競合",
+          "text_en": "Private mortgage insurance competitor",
+          "source": {
+            "label": "Enact Holdings 10-K(2025年度)",
+            "label_en": "Enact Holdings 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1823529/000182352926000060/act-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Private mortgage insurance competitors include Arch Capital Group Ltd., Essent Group Ltd., MGIC Investment Corporation, NMI Holdings, Inc. and Radian Group Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MTG",
+      "ticker": "MTG",
+      "name": "MGICインベストメント",
+      "name_en": "MGIC Investment",
+      "sub": "住宅ローン保険",
+      "sub_en": "Mortgage insurance",
+      "sub_short": "住宅保険",
+      "sub_short_en": "Mortgage",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "民間住宅ローン保険の競合",
+          "text_en": "Private mortgage insurance competitor",
+          "source": {
+            "label": "Enact Holdings 10-K(2025年度)",
+            "label_en": "Enact Holdings 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1823529/000182352926000060/act-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Private mortgage insurance competitors include Arch Capital Group Ltd., Essent Group Ltd., MGIC Investment Corporation, NMI Holdings, Inc. and Radian Group Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NMIH",
+      "ticker": "NMIH",
+      "name": "NMIホールディングス",
+      "name_en": "NMI Holdings",
+      "sub": "住宅ローン保険",
+      "sub_en": "Mortgage insurance",
+      "sub_short": "住宅保険",
+      "sub_short_en": "Mortgage",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "民間住宅ローン保険の競合",
+          "text_en": "Private mortgage insurance competitor",
+          "source": {
+            "label": "Enact Holdings 10-K(2025年度)",
+            "label_en": "Enact Holdings 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1823529/000182352926000060/act-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Private mortgage insurance competitors include Arch Capital Group Ltd., Essent Group Ltd., MGIC Investment Corporation, NMI Holdings, Inc. and Radian Group Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RDN",
+      "ticker": "RDN",
+      "name": "ラディアン・グループ",
+      "name_en": "Radian Group",
+      "sub": "住宅ローン保険",
+      "sub_en": "Mortgage insurance",
+      "sub_short": "住宅保険",
+      "sub_short_en": "Mortgage",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "民間住宅ローン保険の競合",
+          "text_en": "Private mortgage insurance competitor",
+          "source": {
+            "label": "Enact Holdings 10-K(2025年度)",
+            "label_en": "Enact Holdings 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1823529/000182352926000060/act-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Private mortgage insurance competitors include Arch Capital Group Ltd., Essent Group Ltd., MGIC Investment Corporation, NMI Holdings, Inc. and Radian Group Inc."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,186 @@
+{
+  "root": {
+    "ticker": "KLIC",
+    "name": "キューリック・アンド・ソファ",
+    "cik": 56978,
+    "name_en": "Kulicke & Soffa"
+  },
+  "rows": [
+    {
+      "ja": "最大の顧客",
+      "en": "Largest customer"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in its 10-K)"
+    }
+  ],
+  "rivals": [
+    "BESI",
+    "NDSN",
+    "6146"
+  ],
+  "companies": [
+    {
+      "id": "Haoseng",
+      "ticker": "Haoseng",
+      "name": "ハオセン・インダストリアル",
+      "name_en": "Haoseng Industrial",
+      "sub": "顧客",
+      "sub_en": "Customer",
+      "sub_short": "顧客",
+      "sub_short_en": "Customer",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "売上の16.1%を占める最大の顧客",
+          "text_en": "Largest customer at 16.1% of net revenue",
+          "source": {
+            "label": "Kulicke & Soffa 10-K(2026年9月期)",
+            "label_en": "Kulicke & Soffa 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/56978/000005697826000040/klic-20261003.htm",
+            "level": "official",
+            "date": "2026-11-19",
+            "quote": "in fiscal 2026, Haoseng Industrial Co., Ltd comprised 16.1% of our net revenue."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ASMPT",
+      "ticker": "0522",
+      "name": "ASMPT",
+      "name_en": "ASM Pacific Technology",
+      "sub": "半導体後工程装置",
+      "sub_en": "Chip packaging equipment",
+      "sub_short": "後工程",
+      "sub_short_en": "Bonders",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "装置事業の主な競合",
+          "text_en": "Major equipment competitor",
+          "source": {
+            "label": "Kulicke & Soffa 10-K(2026年9月期)",
+            "label_en": "Kulicke & Soffa 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/56978/000005697826000040/klic-20261003.htm",
+            "level": "official",
+            "date": "2026-11-19",
+            "quote": "Our major equipment competitors are ASM Pacific Technology, Hesse GmbH, Han's Laser Technology Co., Ltd., BE Semiconductor Industries N.V., Hanwha Precision Machinery Co., Ltd., Hanmi Semiconductor Co., Ltd., and Nordson Corporation."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BESI",
+      "ticker": "BESI",
+      "name": "BEセミコンダクター",
+      "name_en": "BE Semiconductor Industries",
+      "sub": "半導体後工程装置",
+      "sub_en": "Chip packaging equipment",
+      "sub_short": "後工程",
+      "sub_short_en": "Bonders",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "装置事業の主な競合",
+          "text_en": "Major equipment competitor",
+          "source": {
+            "label": "Kulicke & Soffa 10-K(2026年9月期)",
+            "label_en": "Kulicke & Soffa 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/56978/000005697826000040/klic-20261003.htm",
+            "level": "official",
+            "date": "2026-11-19",
+            "quote": "Our major equipment competitors are ASM Pacific Technology, Hesse GmbH, Han's Laser Technology Co., Ltd., BE Semiconductor Industries N.V., Hanwha Precision Machinery Co., Ltd., Hanmi Semiconductor Co., Ltd., and Nordson Corporation."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Hanmi",
+      "ticker": "042700",
+      "name": "ハンミ半導体",
+      "name_en": "Hanmi Semiconductor",
+      "sub": "半導体後工程装置",
+      "sub_en": "Chip packaging equipment",
+      "sub_short": "後工程",
+      "sub_short_en": "Bonders",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "装置事業の主な競合",
+          "text_en": "Major equipment competitor",
+          "source": {
+            "label": "Kulicke & Soffa 10-K(2026年9月期)",
+            "label_en": "Kulicke & Soffa 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/56978/000005697826000040/klic-20261003.htm",
+            "level": "official",
+            "date": "2026-11-19",
+            "quote": "Our major equipment competitors are ASM Pacific Technology, Hesse GmbH, Han's Laser Technology Co., Ltd., BE Semiconductor Industries N.V., Hanwha Precision Machinery Co., Ltd., Hanmi Semiconductor Co., Ltd., and Nordson Corporation."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NDSN",
+      "ticker": "NDSN",
+      "name": "ノードソン",
+      "name_en": "Nordson",
+      "sub": "精密塗布装置",
+      "sub_en": "Precision dispensing",
+      "sub_short": "塗布装置",
+      "sub_short_en": "Dispenser",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "装置事業の主な競合",
+          "text_en": "Major equipment competitor",
+          "source": {
+            "label": "Kulicke & Soffa 10-K(2026年9月期)",
+            "label_en": "Kulicke & Soffa 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/56978/000005697826000040/klic-20261003.htm",
+            "level": "official",
+            "date": "2026-11-19",
+            "quote": "Our major equipment competitors are ASM Pacific Technology, Hesse GmbH, Han's Laser Technology Co., Ltd., BE Semiconductor Industries N.V., Hanwha Precision Machinery Co., Ltd., Hanmi Semiconductor Co., Ltd., and Nordson Corporation."
+          }
+        }
+      ]
+    },
+    {
+      "id": "6146",
+      "ticker": "6146",
+      "name": "ディスコ",
+      "name_en": "Disco",
+      "sub": "半導体切断・研削装置",
+      "sub_en": "Dicing & grinding equipment",
+      "sub_short": "切断装置",
+      "sub_short_en": "Dicing",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "消耗品事業の主な競合",
+          "text_en": "Significant consumables competitor",
+          "source": {
+            "label": "Kulicke & Soffa 10-K(2026年9月期)",
+            "label_en": "Kulicke & Soffa 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/56978/000005697826000040/klic-20261003.htm",
+            "level": "official",
+            "date": "2026-11-19",
+            "quote": "Our significant consumables competitors are PECO Co., Ltd., Disco Corporation"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
