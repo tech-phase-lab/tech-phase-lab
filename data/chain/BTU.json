@@ -1,0 +1,225 @@
+{
+  "root": {
+    "ticker": "BTU",
+    "name": "ピーボディ・エナジー",
+    "cik": 1064728,
+    "name_en": "Peabody Energy"
+  },
+  "rows": [
+    {
+      "ja": "合弁・買収交渉",
+      "en": "Joint venture & acquisition talks"
+    },
+    {
+      "ja": "海外の主な競合(10-Kに記載)",
+      "en": "Major international competitors (named in its 10-K)"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "ARLP",
+    "HNRG"
+  ],
+  "companies": [
+    {
+      "id": "Middlemount",
+      "ticker": "Middlemount",
+      "name": "ミドルマウント・コール",
+      "name_en": "Middlemount Coal",
+      "sub": "石炭(豪州)",
+      "sub_en": "Coal (Australia)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "豪州のMiddlemount炭鉱会社に50%出資",
+          "text_en": "Owns a 50% equity interest in the Australian Middlemount mine company",
+          "source": {
+            "label": "Peabody 10-K(2025年度)",
+            "label_en": "Peabody 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1064728/000106472826000006/btu-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Peabody owns a 50% equity interest in Middlemount, which owns the Middlemount Mine."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AAL.L",
+      "ticker": "Anglo American",
+      "name": "アングロ・アメリカン",
+      "name_en": "Anglo American",
+      "sub": "資源(英国)",
+      "sub_en": "Mining (UK)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "原料炭事業の買収を2025年8月に取りやめ。海外の主な競合でもある",
+          "text_en": "Terminated its planned acquisition from Anglo in August 2025; also a major competitor",
+          "source": {
+            "label": "Peabody 10-K(2025年度)",
+            "label_en": "Peabody 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1064728/000106472826000006/btu-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Peabody terminated the acquisition with Anglo on August 19, 2025."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BHP",
+      "ticker": "BHP",
+      "name": "BHP",
+      "name_en": "BHP",
+      "sub": "資源(豪州)",
+      "sub_en": "Mining (Australia)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "原料炭の海外の主な競合",
+          "text_en": "A major international met coal competitor",
+          "source": {
+            "label": "Peabody 10-K(2025年度)",
+            "label_en": "Peabody 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1064728/000106472826000006/btu-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Major international direct competitors (listed alphabetically) include Anglo American; BHP; Core Natural Resources, Inc.; Foxleigh; Glencore; Jellinbah; KRU; Oak Grove Mine; Stanmore; QCoal; Warrior Met Coal; Whitehaven Coal Limited; and Yancoal Australia Ltd, among others."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GLEN.L",
+      "ticker": "Glencore",
+      "name": "グレンコア",
+      "name_en": "Glencore",
+      "sub": "資源・商社(スイス)",
+      "sub_en": "Mining & trading (Switzerland)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "原料炭の海外の主な競合",
+          "text_en": "A major international met coal competitor",
+          "source": {
+            "label": "Peabody 10-K(2025年度)",
+            "label_en": "Peabody 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1064728/000106472826000006/btu-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Major international direct competitors (listed alphabetically) include Anglo American; BHP; Core Natural Resources, Inc.; Foxleigh; Glencore; Jellinbah; KRU; Oak Grove Mine; Stanmore; QCoal; Warrior Met Coal; Whitehaven Coal Limited; and Yancoal Australia Ltd, among others."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HCC",
+      "ticker": "HCC",
+      "name": "ウォリアー・メット・コール",
+      "name_en": "Warrior Met Coal",
+      "sub": "原料炭",
+      "sub_en": "Metallurgical coal",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "原料炭の海外の主な競合",
+          "text_en": "A major international met coal competitor",
+          "source": {
+            "label": "Peabody 10-K(2025年度)",
+            "label_en": "Peabody 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1064728/000106472826000006/btu-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Major international direct competitors (listed alphabetically) include Anglo American; BHP; Core Natural Resources, Inc.; Foxleigh; Glencore; Jellinbah; KRU; Oak Grove Mine; Stanmore; QCoal; Warrior Met Coal; Whitehaven Coal Limited; and Yancoal Australia Ltd, among others."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CNR",
+      "ticker": "CNR",
+      "name": "コア・ナチュラル・リソーシズ",
+      "name_en": "Core Natural Resources",
+      "sub": "石炭",
+      "sub_en": "Coal",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "原料炭の海外の主な競合",
+          "text_en": "A major international met coal competitor",
+          "source": {
+            "label": "Peabody 10-K(2025年度)",
+            "label_en": "Peabody 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1064728/000106472826000006/btu-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Major international direct competitors (listed alphabetically) include Anglo American; BHP; Core Natural Resources, Inc.; Foxleigh; Glencore; Jellinbah; KRU; Oak Grove Mine; Stanmore; QCoal; Warrior Met Coal; Whitehaven Coal Limited; and Yancoal Australia Ltd, among others."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ARLP",
+      "ticker": "ARLP",
+      "name": "アライアンス・リソース・パートナーズ",
+      "name_en": "Alliance Resource Partners",
+      "sub": "石炭",
+      "sub_en": "Coal",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Allianceが10-Kで、主な競合の一社として挙げる",
+          "text_en": "Alliance names Peabody among principal competitors",
+          "source": {
+            "label": "Alliance Resource Partners 10-K(2024年度)",
+            "label_en": "Alliance Resource Partners 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1086600/000155837025001805/arlp-20241231x10k.htm",
+            "level": "official",
+            "date": "2025-02-27",
+            "quote": "Our principal competitors include American Consolidated Natural Resources Inc., Core Natural Resources, Inc., Alpha Metallurgical Resources, Inc., Foresight Energy LP, and Peabody Energy Corporation."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HNRG",
+      "ticker": "HNRG",
+      "name": "ハラドール・エナジー",
+      "name_en": "Hallador Energy",
+      "sub": "石炭・電力",
+      "sub_en": "Coal & power",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Halladorが10-Kで、大手の競合として挙げる",
+          "text_en": "Hallador names Peabody among large competing producers",
+          "source": {
+            "label": "Hallador Energy 10-K(2025年度)",
+            "label_en": "Hallador Energy 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/788965/000110465926027174/hnrg-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-03-12",
+            "quote": "We compete against large producers such as Peabody Energy Corporation (NYSE: BTU), Alliance Resource Partners (Nasdaq: ARLP), and other private producers."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

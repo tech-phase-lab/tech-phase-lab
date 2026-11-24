@@ -1,0 +1,255 @@
+{
+  "root": {
+    "ticker": "ALK",
+    "name": "アラスカ・エア・グループ",
+    "cik": 766421,
+    "name_en": "Alaska Air Group"
+  },
+  "rows": [
+    {
+      "ja": "機材の調達先",
+      "en": "Aircraft suppliers",
+      "above": true
+    },
+    {
+      "ja": "運航委託・提携カード",
+      "en": "Regional flying & co-brand card"
+    },
+    {
+      "ja": "買収",
+      "en": "Acquisitions"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in its 10-K)"
+    }
+  ],
+  "rivals": [
+    "DAL",
+    "LUV",
+    "UAL"
+  ],
+  "companies": [
+    {
+      "id": "BA",
+      "ticker": "BA",
+      "name": "ボーイング",
+      "name_en": "Boeing",
+      "sub": "航空機",
+      "sub_en": "Aircraft",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Alaska・Hawaiianの機材発注先。B787の追加5機も確定",
+          "text_en": "Aircraft supplier for Alaska and Hawaiian, including five more B787s",
+          "source": {
+            "label": "Alaska Air Group 10-K(2025年度)",
+            "label_en": "Alaska Air Group 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/766421/000076642126000010/alk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Alaska and Hawaiian have contractual commitments for aircraft with Boeing."
+          }
+        }
+      ]
+    },
+    {
+      "id": "EMBR3",
+      "ticker": "Embraer",
+      "name": "エンブラエル",
+      "name_en": "Embraer",
+      "sub": "航空機(ブラジル)",
+      "sub_en": "Aircraft (Brazil)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Horizon航空の機材発注先",
+          "text_en": "Aircraft supplier for Horizon Air",
+          "source": {
+            "label": "Alaska Air Group 10-K(2025年度)",
+            "label_en": "Alaska Air Group 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/766421/000076642126000010/alk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Horizon has contractual commitments for aircraft with Embraer."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SKYW",
+      "ticker": "SKYW",
+      "name": "スカイウェスト",
+      "name_en": "SkyWest",
+      "sub": "地域航空",
+      "sub_en": "Regional airline",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "E175機42機の運航を委託",
+          "text_en": "Flies 42 E175 aircraft for Alaska under a capacity purchase agreement",
+          "source": {
+            "label": "Alaska Air Group 10-K(2025年度)",
+            "label_en": "Alaska Air Group 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/766421/000076642126000010/alk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "At December 31, 2025, Alaska had a CPA with SkyWest covering 42 E175 aircraft."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BAC",
+      "ticker": "BAC",
+      "name": "バンク・オブ・アメリカ",
+      "name_en": "Bank of America",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "提携クレジットカード「Atmos Rewards」の契約先",
+          "text_en": "Partner on the Atmos Rewards co-branded credit card",
+          "source": {
+            "label": "Alaska Air Group 10-K(2025年度)",
+            "label_en": "Alaska Air Group 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/766421/000076642126000010/alk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "amendments to the Atmos Rewards co-branded credit card agreement with Bank of America became effective"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Hawaiian",
+      "ticker": "Hawaiian Holdings",
+      "name": "ハワイアン・ホールディングス",
+      "name_en": "Hawaiian Holdings",
+      "sub": "航空",
+      "sub_en": "Airline",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ハワイアン航空を買収(2024年9月)",
+          "text_en": "Acquired Hawaiian Airlines (September 2024)",
+          "source": {
+            "label": "Alaska Air Group 10-K(2025年度)",
+            "label_en": "Alaska Air Group 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/766421/000076642126000010/alk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "On September 18, 2024, we acquired Hawaiian Holdings, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "VirginAmerica",
+      "ticker": "Virgin America",
+      "name": "ヴァージン・アメリカ",
+      "name_en": "Virgin America",
+      "sub": "航空",
+      "sub_en": "Airline",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2016年に買収し、2018年にAlaskaと統合",
+          "text_en": "Acquired in 2016 and merged into Alaska in 2018",
+          "source": {
+            "label": "Alaska Air Group 10-K(2025年度)",
+            "label_en": "Alaska Air Group 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/766421/000076642126000010/alk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Air Group acquired Virgin America in 2016, then legally merged the entity with Alaska in 2018"
+          }
+        }
+      ]
+    },
+    {
+      "id": "DAL",
+      "ticker": "DAL",
+      "name": "デルタ航空",
+      "name_en": "Delta Air Lines",
+      "sub": "航空",
+      "sub_en": "Airline",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "最大の競合。シアトル発着の約78%で競合",
+          "text_en": "Largest competitor, overlapping about 78% of Seattle capacity",
+          "source": {
+            "label": "Alaska Air Group 10-K(2025年度)",
+            "label_en": "Alaska Air Group 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/766421/000076642126000010/alk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Our largest competitor is Delta Air Lines Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LUV",
+      "ticker": "LUV",
+      "name": "サウスウエスト航空",
+      "name_en": "Southwest Airlines",
+      "sub": "航空",
+      "sub_en": "Airline",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ハワイ・西海岸の主要な競合",
+          "text_en": "A significant competitor in Hawaii and on the West Coast",
+          "source": {
+            "label": "Alaska Air Group 10-K(2025年度)",
+            "label_en": "Alaska Air Group 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/766421/000076642126000010/alk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "In addition to Delta, Southwest Airlines and United Airlines are significant competitors in the state of Hawai'i and on the West Coast."
+          }
+        }
+      ]
+    },
+    {
+      "id": "UAL",
+      "ticker": "UAL",
+      "name": "ユナイテッド航空",
+      "name_en": "United Airlines",
+      "sub": "航空",
+      "sub_en": "Airline",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ハワイ・西海岸の主要な競合",
+          "text_en": "A significant competitor in Hawaii and on the West Coast",
+          "source": {
+            "label": "Alaska Air Group 10-K(2025年度)",
+            "label_en": "Alaska Air Group 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/766421/000076642126000010/alk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "In addition to Delta, Southwest Airlines and United Airlines are significant competitors in the state of Hawai'i and on the West Coast."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

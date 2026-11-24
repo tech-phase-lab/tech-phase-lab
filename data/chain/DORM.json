@@ -1,0 +1,199 @@
+{
+  "root": {
+    "ticker": "DORM",
+    "name": "ドーマン・プロダクツ",
+    "cik": 868780,
+    "name_en": "Dorman Products"
+  },
+  "rows": [
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in its 10-K)"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "SMP",
+    "CMI",
+    "LKQ",
+    "PHIN"
+  ],
+  "companies": [
+    {
+      "id": "SMP",
+      "ticker": "SMP",
+      "name": "スタンダード・モーター・プロダクツ",
+      "name_en": "Standard Motor Products",
+      "sub": "補修部品",
+      "sub_en": "Aftermarket parts",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "補修部品の競合の筆頭",
+          "text_en": "Listed first among aftermarket competitors",
+          "source": {
+            "label": "Dorman 10-K(2025年度)",
+            "label_en": "Dorman 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/868780/000086878026000014/dorm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "We compete against a broad range of companies (public and private, large and small) and brands, including, but not limited to, Standard Motor Products, Inc., Tenneco, Inc., TrakMotive, Bosch Auto Parts, Gates Corporation, Continental Automotive Systems, Inc. (VDO), MevoTech LP, ACDelco (owned by General Motors Company), Motorcraft (owned by Ford Motor Company), Cummins Inc. (following its acquisition of Meritor, Inc.), Automann Inc., WARN Industries (owned by LKQ Corporation)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GTES",
+      "ticker": "GTES",
+      "name": "ゲイツ・インダストリアル",
+      "name_en": "Gates Industrial",
+      "sub": "ベルト・ホース",
+      "sub_en": "Belts & hoses",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "補修部品の競合",
+          "text_en": "An aftermarket parts competitor",
+          "source": {
+            "label": "Dorman 10-K(2025年度)",
+            "label_en": "Dorman 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/868780/000086878026000014/dorm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "We compete against a broad range of companies (public and private, large and small) and brands, including, but not limited to, Standard Motor Products, Inc., Tenneco, Inc., TrakMotive, Bosch Auto Parts, Gates Corporation, Continental Automotive Systems, Inc. (VDO), MevoTech LP, ACDelco (owned by General Motors Company), Motorcraft (owned by Ford Motor Company), Cummins Inc. (following its acquisition of Meritor, Inc.), Automann Inc., WARN Industries (owned by LKQ Corporation)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GM",
+      "ticker": "GM",
+      "name": "ゼネラル・モーターズ",
+      "name_en": "General Motors (ACDelco)",
+      "sub": "自動車",
+      "sub_en": "Automaker",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "純正部品ブランドACDelcoで競合",
+          "text_en": "Competes through its ACDelco parts brand",
+          "source": {
+            "label": "Dorman 10-K(2025年度)",
+            "label_en": "Dorman 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/868780/000086878026000014/dorm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "We compete against a broad range of companies (public and private, large and small) and brands, including, but not limited to, Standard Motor Products, Inc., Tenneco, Inc., TrakMotive, Bosch Auto Parts, Gates Corporation, Continental Automotive Systems, Inc. (VDO), MevoTech LP, ACDelco (owned by General Motors Company), Motorcraft (owned by Ford Motor Company), Cummins Inc. (following its acquisition of Meritor, Inc.), Automann Inc., WARN Industries (owned by LKQ Corporation)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "F",
+      "ticker": "F",
+      "name": "フォード",
+      "name_en": "Ford (Motorcraft)",
+      "sub": "自動車",
+      "sub_en": "Automaker",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "純正部品ブランドMotorcraftで競合",
+          "text_en": "Competes through its Motorcraft parts brand",
+          "source": {
+            "label": "Dorman 10-K(2025年度)",
+            "label_en": "Dorman 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/868780/000086878026000014/dorm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "We compete against a broad range of companies (public and private, large and small) and brands, including, but not limited to, Standard Motor Products, Inc., Tenneco, Inc., TrakMotive, Bosch Auto Parts, Gates Corporation, Continental Automotive Systems, Inc. (VDO), MevoTech LP, ACDelco (owned by General Motors Company), Motorcraft (owned by Ford Motor Company), Cummins Inc. (following its acquisition of Meritor, Inc.), Automann Inc., WARN Industries (owned by LKQ Corporation)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CMI",
+      "ticker": "CMI",
+      "name": "カミンズ",
+      "name_en": "Cummins",
+      "sub": "エンジン",
+      "sub_en": "Engines",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Meritor買収を通じて大型車部品で競合",
+          "text_en": "Competes through its Meritor acquisition",
+          "source": {
+            "label": "Dorman 10-K(2025年度)",
+            "label_en": "Dorman 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/868780/000086878026000014/dorm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "We compete against a broad range of companies (public and private, large and small) and brands, including, but not limited to, Standard Motor Products, Inc., Tenneco, Inc., TrakMotive, Bosch Auto Parts, Gates Corporation, Continental Automotive Systems, Inc. (VDO), MevoTech LP, ACDelco (owned by General Motors Company), Motorcraft (owned by Ford Motor Company), Cummins Inc. (following its acquisition of Meritor, Inc.), Automann Inc., WARN Industries (owned by LKQ Corporation)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "LKQ",
+      "ticker": "LKQ",
+      "name": "LKQ",
+      "name_en": "LKQ",
+      "sub": "補修部品流通",
+      "sub_en": "Aftermarket parts distribution",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "傘下のWARN Industriesで競合",
+          "text_en": "Competes through its WARN Industries unit",
+          "source": {
+            "label": "Dorman 10-K(2025年度)",
+            "label_en": "Dorman 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/868780/000086878026000014/dorm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "We compete against a broad range of companies (public and private, large and small) and brands, including, but not limited to, Standard Motor Products, Inc., Tenneco, Inc., TrakMotive, Bosch Auto Parts, Gates Corporation, Continental Automotive Systems, Inc. (VDO), MevoTech LP, ACDelco (owned by General Motors Company), Motorcraft (owned by Ford Motor Company), Cummins Inc. (following its acquisition of Meritor, Inc.), Automann Inc., WARN Industries (owned by LKQ Corporation)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PHIN",
+      "ticker": "PHIN",
+      "name": "フィニア",
+      "name_en": "PHINIA",
+      "sub": "燃料系・補修部品",
+      "sub_en": "Fuel systems & aftermarket",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "PHINIAが10-Kで、主な競合の一社として挙げる",
+          "text_en": "PHINIA names Dorman among major competitors",
+          "source": {
+            "label": "PHINIA 10-K(2024年度)",
+            "label_en": "PHINIA 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1968915/000196891525000006/phin-20241231.htm",
+            "level": "official",
+            "date": "2025-02-13",
+            "quote": "Our major competitors are Robert Bosch GmbH, Cummins Inc., Denso Corporation, Dorman Products, Inc."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

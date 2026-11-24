@@ -1,0 +1,225 @@
+{
+  "root": {
+    "ticker": "ELAN",
+    "name": "エランコ・アニマルヘルス",
+    "cik": 1739104,
+    "name_en": "Elanco Animal Health"
+  },
+  "rows": [
+    {
+      "ja": "成り立ち・買収・売却",
+      "en": "Origin, acquisition & divestiture"
+    },
+    {
+      "ja": "最大の顧客・ライセンス先",
+      "en": "Largest customer & licensees"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "PAHC",
+    "ICCC"
+  ],
+  "companies": [
+    {
+      "id": "LLY",
+      "ticker": "LLY",
+      "name": "イーライリリー",
+      "name_en": "Eli Lilly",
+      "sub": "医薬品",
+      "sub_en": "Pharmaceuticals",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "もとはLillyの動物用医薬品部門。2019年3月に分離完了",
+          "text_en": "Formerly a Lilly business unit; separation finalized March 2019",
+          "source": {
+            "label": "Elanco 10-K(2025年度)",
+            "label_en": "Elanco 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1739104/000173910426000012/elan-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "we were formerly a business unit of Eli Lilly and Company (Lilly), becoming an independently incorporated company on September 18, 2018."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BAYN",
+      "ticker": "Bayer",
+      "name": "バイエル",
+      "name_en": "Bayer",
+      "sub": "医薬・農業(ドイツ)",
+      "sub_en": "Pharma & crop science (Germany)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Bayerの動物用医薬品事業を買収(2020年8月、業界最大の買収)",
+          "text_en": "Acquired Bayer Animal Health (August 2020), the industry's largest deal",
+          "source": {
+            "label": "Elanco 10-K(2025年度)",
+            "label_en": "Elanco 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1739104/000173910426000012/elan-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "In August 2020 we acquired Bayer Animal Health, marking the largest acquisition in industry history."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MRK",
+      "ticker": "MRK",
+      "name": "メルク",
+      "name_en": "Merck & Co.",
+      "sub": "医薬品",
+      "sub_en": "Pharmaceuticals",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "水産用医薬品事業をMerck Animal Healthへ12.94億ドルで売却(2024年7月)",
+          "text_en": "Sold its aqua business to Merck Animal Health for $1,294 million (July 2024)",
+          "source": {
+            "label": "Elanco 10-K(2025年度)",
+            "label_en": "Elanco 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1739104/000173910426000012/elan-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "On July 9, 2024, we closed the sale of our aqua business to a subsidiary of Merck Animal Health, for $1,294 million in cash proceeds"
+          }
+        }
+      ]
+    },
+    {
+      "id": "COR",
+      "ticker": "COR",
+      "name": "センコラ",
+      "name_en": "Cencora",
+      "sub": "医薬品卸",
+      "sub_en": "Drug distribution",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "関連会社が最大の顧客(売上の約12%)",
+          "text_en": "An affiliate is the largest customer (about 12% of revenue)",
+          "source": {
+            "label": "Elanco 10-K(2025年度)",
+            "label_en": "Elanco 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1739104/000173910426000012/elan-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Our largest customer, an affiliate of Cencora, Inc., is a third-party veterinary distributor and represented approximately 12% of our total revenue in 2025."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TARS",
+      "ticker": "TARS",
+      "name": "ターサス・ファーマシューティカルズ",
+      "name_en": "Tarsus Pharmaceuticals",
+      "sub": "眼科薬",
+      "sub_en": "Eye care drugs",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "人の皮膚・眼の疾患向けに独占ライセンスを供与(2019年1月)",
+          "text_en": "Granted it an exclusive license for human skin and eye uses (January 2019)",
+          "source": {
+            "label": "Tarsus 10-K(2024年度)",
+            "label_en": "Tarsus 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1819790/000181979025000011/tars-20241231.htm",
+            "level": "official",
+            "date": "2025-02-25",
+            "quote": "In January 2019, we entered into an agreement with Elanco granting us exclusive, worldwide, sublic"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PCRX",
+      "ticker": "PCRX",
+      "name": "パシラ・バイオサイエンシズ",
+      "name_en": "Pacira BioSciences",
+      "sub": "鎮痛薬",
+      "sub_en": "Pain management",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "子会社Aratanaとライセンス・供給契約",
+          "text_en": "License and supply agreements with its subsidiary Aratana",
+          "source": {
+            "label": "Pacira 10-K(2024年度)",
+            "label_en": "Pacira 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1396814/000139681425000041/pcrx-20241231.htm",
+            "level": "official",
+            "date": "2025-02-27",
+            "quote": "In December 2012, we entered into an Exclusive License, Development and Commercialization Agreement and related Supply Agreement with Aratana Therapeutics, Inc., a wholly owned subsidiary of Elan"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PAHC",
+      "ticker": "PAHC",
+      "name": "フィブロ・アニマルヘルス",
+      "name_en": "Phibro Animal Health",
+      "sub": "動物用医薬品",
+      "sub_en": "Animal health",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Phibroが10-Kで、主な競合の一社として挙げる",
+          "text_en": "Phibro names Elanco among principal competitors",
+          "source": {
+            "label": "Phibro 10-K(2025年6月期)",
+            "label_en": "Phibro 10-K (FY ended Jun 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1069899/000155837025011776/pahc-20250630x10k.htm",
+            "level": "official",
+            "date": "2025-08-27",
+            "quote": "Some of our principal competitors include Boehringer Ingelheim International GmbH, Ceva Santé Animale, Elanco Animal Health Incorporated"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ICCC",
+      "ticker": "ICCC",
+      "name": "イムセル",
+      "name_en": "ImmuCell",
+      "sub": "動物用医薬品",
+      "sub_en": "Animal health",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ImmuCellが10-Kで、子牛の下痢予防の競合として挙げる",
+          "text_en": "ImmuCell names Elanco among scours-prevention competitors",
+          "source": {
+            "label": "ImmuCell 10-K(2025年度)",
+            "label_en": "ImmuCell 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/811641/000143774926010339/iccc20251231_10k.htm",
+            "level": "official",
+            "date": "2026-03-30",
+            "quote": "including Zoetis, Elanco, Merck, Boehringer Ingelheim and CEVA"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
