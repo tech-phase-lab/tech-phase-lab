@@ -1,0 +1,203 @@
+{
+  "root": {
+    "ticker": "TGTX",
+    "name": "TGセラピューティクス",
+    "cik": 1001316,
+    "name_en": "TG Therapeutics"
+  },
+  "rows": [
+    {
+      "ja": "薬・技術の導入元と関係会社",
+      "en": "Licensors & affiliates",
+      "above": true
+    },
+    {
+      "ja": "販売提携",
+      "en": "Commercial partner"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "GMAB",
+    "VNDA",
+    "NKTX"
+  ],
+  "companies": [
+    {
+      "id": "DTIL",
+      "ticker": "DTIL",
+      "name": "プレシジョン・バイオサイエンシズ",
+      "name_en": "Precision BioSciences",
+      "sub": "ゲノム編集・細胞治療",
+      "sub_en": "Gene editing & cell therapy",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "2024年1月、細胞治療azer-celの権利をTGのグループ会社にライセンス供与",
+          "text_en": "Licensed its azer-cel cell therapy program to a TG unit in January 2024",
+          "source": {
+            "label": "Precision Biosciences 10-K(2025年提出)",
+            "label_en": "Precision Biosciences 10-K (filed 2025-03)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1357874/000095017025044775/dtil-20241231.htm",
+            "level": "official",
+            "date": "2025-03-26",
+            "quote": "On January 7, 2024, we entered into a license agreement (the \"TG License Agreement\") with TG Cell Therapy, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CKPT",
+      "ticker": "CKPT",
+      "name": "チェックポイント・セラピューティクス",
+      "name_en": "Checkpoint Therapeutics",
+      "sub": "がん免疫薬",
+      "sub_en": "Cancer immunotherapy",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2015年にTGと世界的な共同開発契約を締結",
+          "text_en": "Signed a global collaboration agreement with TG in 2015",
+          "source": {
+            "label": "Checkpoint Therapeutics 10-K(2025年提出)",
+            "label_en": "Checkpoint Therapeutics 10-K (filed 2025-03)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1651407/000141057825000528/ckpt-20241231x10k.htm",
+            "level": "official",
+            "date": "2025-03-28",
+            "quote": "Also in March 2015, we entered into a Global Collaboration Agreement with TG Therapeutics, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FBIO",
+      "ticker": "FBIO",
+      "name": "フォートレス・バイオテック",
+      "name_en": "Fortress Biotech",
+      "sub": "バイオ企業の育成",
+      "sub_en": "Biotech holding company",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "TGと共同サービス(人員・業務の共有)契約を結ぶ",
+          "text_en": "Has a shared services agreement with TG",
+          "source": {
+            "label": "Fortress Biotech 10-Q(2026年5月)",
+            "label_en": "Fortress Biotech 10-Q (2026-05)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1429260/000110465926061233/fbio-20260331x10q.htm",
+            "level": "official",
+            "date": "2026-05-14",
+            "quote": "Shared Services Agreement with TG Therapeutics, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Neuraxpharm",
+      "ticker": "Neuraxpharm",
+      "name": "ニューラックスファーム",
+      "name_en": "Neuraxpharm",
+      "sub": "中枢神経の医薬(欧州)",
+      "sub_en": "CNS pharma (Europe)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2023年8月、多発性硬化症薬BRIUMVIの欧州などでの販売契約を締結",
+          "text_en": "Signed a commercialization agreement for BRIUMVI outside the US in August 2023",
+          "source": {
+            "label": "TG Therapeutics 10-K(2025年度)",
+            "label_en": "TG Therapeutics 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1001316/000143774926006133/tgtx20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "In August 2023, we entered into a Commercialization Agreement with Neuraxpharm"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GMAB",
+      "ticker": "GMAB",
+      "name": "ジェンマブ",
+      "name_en": "Genmab",
+      "sub": "抗体医薬",
+      "sub_en": "Antibody drugs",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Genmabが年次報告で、多発性硬化症の競合としてTGのBRIUMVIを挙げる",
+          "text_en": "Genmab names TG Therapeutics' BRIUMVI as competition in multiple sclerosis",
+          "source": {
+            "label": "Genmab A/S 年次報告(20-F)(2025年提出)",
+            "label_en": "Genmab A/S annual report (20-F) (filed 2025-02)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1434265/000155837025000846/gmab-20241231x20f.htm",
+            "level": "official",
+            "date": "2025-02-12",
+            "quote": "such as TG Therapeutics' BRIUMVITM, approved in December 2022."
+          }
+        }
+      ]
+    },
+    {
+      "id": "VNDA",
+      "ticker": "VNDA",
+      "name": "バンダ・ファーマシューティカルズ",
+      "name_en": "Vanda Pharmaceuticals",
+      "sub": "医薬品",
+      "sub_en": "Pharmaceuticals",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Vandaが10-Kで、多発性硬化症の競合薬としてTGのBriumviを挙げる",
+          "text_en": "Vanda names TG's Briumvi among competing MS drugs",
+          "source": {
+            "label": "Vanda Pharmaceuticals 10-K(2025年提出)",
+            "label_en": "Vanda Pharmaceuticals 10-K (filed 2025-02)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1347178/000162828025005761/vnda-20241231.htm",
+            "level": "official",
+            "date": "2025-02-14",
+            "quote": "Briumvi ® (ubiltuximab) by TG Therapeutics, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NKTX",
+      "ticker": "NKTX",
+      "name": "ンカルタ",
+      "name_en": "Nkarta",
+      "sub": "NK細胞治療",
+      "sub_en": "NK cell therapy",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Nkartaが10-Kで、自己免疫疾患の細胞治療の競合としてTGを挙げる",
+          "text_en": "Nkarta names TG among competitors in allogeneic cell therapy for autoimmune disease",
+          "source": {
+            "label": "Nkarta 10-K(2025年提出)",
+            "label_en": "Nkarta 10-K (filed 2025-03)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1787400/000095017025045262/nktx-20241231.htm",
+            "level": "official",
+            "date": "2025-03-26",
+            "quote": "Fate Therapeutics, TG Therapeutics, and Sana Biotechnology."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,225 @@
+{
+  "root": {
+    "ticker": "SNEX",
+    "name": "ストーンX・グループ",
+    "cik": 913760,
+    "name_en": "StoneX Group"
+  },
+  "rows": [
+    {
+      "ja": "買収・出資",
+      "en": "Acquisitions & stakes",
+      "above": true
+    },
+    {
+      "ja": "証券・デジタル資産サービスの顧客(相手の資料に記載)",
+      "en": "Securities & digital asset clients (named in their filings)"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "BGC"
+  ],
+  "companies": [
+    {
+      "id": "RJO",
+      "ticker": "R.J. O'Brien",
+      "name": "R.J.オブライエン",
+      "name_en": "R.J. O'Brien & Associates",
+      "sub": "先物仲介",
+      "sub_en": "Futures brokerage",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年7月に買収",
+          "text_en": "Acquired in July 2025",
+          "source": {
+            "label": "StoneX 10-K(2025年度)",
+            "label_en": "StoneX 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/913760/000091376025000196/intl-20250930.htm",
+            "level": "official",
+            "date": "2025-11-28",
+            "quote": "on July 31, 2025, the Company acquired R.J. O'Brien & Associates LLC and selected affiliates"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Intercam",
+      "ticker": "Intercam",
+      "name": "インターカム",
+      "name_en": "Intercam Securities",
+      "sub": "中南米向け証券仲介",
+      "sub_en": "Brokerage for Latin American clients",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年10月、中南米顧客向けの証券・投資助言会社を買収",
+          "text_en": "Acquired brokerage and advisory firms serving Latin American clients in October 2025",
+          "source": {
+            "label": "StoneX 10-K(2025年度)",
+            "label_en": "StoneX 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/913760/000091376025000196/intl-20250930.htm",
+            "level": "official",
+            "date": "2025-11-28",
+            "quote": "On October 17, 2025, we acquired all the outstanding shares of Intercam Securities, Inc. and Intercam Advisors, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Bamboo",
+      "ticker": "Bamboo Payment",
+      "name": "バンブー・ペイメント",
+      "name_en": "Bamboo Payment Holding",
+      "sub": "越境決済",
+      "sub_en": "Cross-border payments",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年3月、越境決済での戦略提携として20%を出資",
+          "text_en": "Bought a 20% stake in March 2025 as a cross-border payments partnership",
+          "source": {
+            "label": "StoneX 10-K(2025年度)",
+            "label_en": "StoneX 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/913760/000091376025000196/intl-20250930.htm",
+            "level": "official",
+            "date": "2025-11-28",
+            "quote": "On March 13, 2025, the Company purchased a 20% interest in Bamboo Payment Holding LLC (\"Bamboo\") as part of a strategic partnership to expand cross-border payment offerings"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CWD",
+      "ticker": "CWD",
+      "name": "キャリバー・カンパニーズ",
+      "name_en": "CaliberCos",
+      "sub": "不動産運用",
+      "sub_en": "Real estate asset management",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "デジタル資産の取引・保管の基盤としてStoneXを採用",
+          "text_en": "Selected StoneX Prime for digital asset trading and custody",
+          "source": {
+            "label": "CaliberCos 8-K添付(2025年12月)",
+            "label_en": "CaliberCos 8-K exhibit (2025-12)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1627282/000162728225000164/ex_991xcaliberaddsstonexfo.htm",
+            "level": "official",
+            "date": "2025-12-16",
+            "quote": "StoneX, through its Prime offering, is providing Caliber with access to deep liquidity and institutional-grade custody"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BLNK",
+      "ticker": "BLNK",
+      "name": "ブリンク・チャージング",
+      "name_en": "Blink Charging",
+      "sub": "EV充電",
+      "sub_en": "EV charging",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "株式の売出し(ATM)契約の販売代理人の一社がStoneX Financial",
+          "text_en": "StoneX Financial is one of its at-the-market sales agents",
+          "source": {
+            "label": "Blink Charging 10-Q(2026年11月)",
+            "label_en": "Blink Charging 10-Q (2026-11)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1429764/000143774926035322/blnk20260930_10q.htm",
+            "level": "official",
+            "date": "2026-11-05",
+            "quote": "Wainwright & Co., LLC (the \"Selling Agent\"), Roth Capital Partners, LLC and StoneX Financial Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AQMS",
+      "ticker": "AQMS",
+      "name": "アクア・メタルズ",
+      "name_en": "Aqua Metals",
+      "sub": "金属リサイクル",
+      "sub_en": "Metals recycling",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "株式の売出し(ATM)契約がStoneX Financialに引き継がれた",
+          "text_en": "Its at-the-market sales agreement was assigned to StoneX Financial",
+          "source": {
+            "label": "Aqua Metals 10-Q(2026年11月)",
+            "label_en": "Aqua Metals 10-Q (2026-11)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1621832/000143774926037167/aqms20260930_10q.htm",
+            "level": "official",
+            "date": "2026-11-16",
+            "quote": "Under the ATM Sales Agreement with The Benchmark Company, LLC (\"Benchmark\"), which Benchmark assigned to its affiliate, StoneX Financial Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FVR",
+      "ticker": "FVR",
+      "name": "フロントビューREIT",
+      "name_en": "FrontView REIT",
+      "sub": "不動産投資信託",
+      "sub_en": "REIT",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "株式の先渡し売出しの販売代理人(Forward Seller)の一社",
+          "text_en": "StoneX Financial is one of its forward sellers",
+          "source": {
+            "label": "FrontView REIT 8-K添付(2026年2月)",
+            "label_en": "FrontView REIT 8-K exhibit (2026-02)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1988494/000119312526083249/fvr-20260227.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "RBC Capital Markets, LLC, StoneX Financial Inc., Truist Securities, Inc. and Wells Fargo Securities, acting in their capacity as Forward Sellers"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BGC",
+      "ticker": "BGC",
+      "name": "BGCグループ",
+      "name_en": "BGC Group",
+      "sub": "金融ブローカー",
+      "sub_en": "Brokerage",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "BGCが10-Kで、エネルギー・商品分野の競合としてStoneXを挙げる",
+          "text_en": "BGC names StoneX among competitors in energy, commodities and shipping",
+          "source": {
+            "label": "BGC Group 10-K(2026年提出)",
+            "label_en": "BGC Group 10-K (filed 2026-03)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1094831/000162828026013162/bgcg-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "We also increasingly compete with a number of ECS brokerage firms, such as Marex Group PLC, StoneX Group, and Clarksons PLC"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

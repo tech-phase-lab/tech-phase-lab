@@ -1,0 +1,202 @@
+{
+  "root": {
+    "ticker": "UNFI",
+    "name": "ユナイテッド・ナチュラル・フーズ",
+    "cik": 1020859,
+    "name_en": "United Natural Foods"
+  },
+  "rows": [
+    {
+      "ja": "仕入先(食品メーカー)",
+      "en": "Suppliers (food makers)",
+      "above": true
+    },
+    {
+      "ja": "小売の顧客",
+      "en": "Retail customers"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "SMFL",
+    "JXG"
+  ],
+  "companies": [
+    {
+      "id": "VITL",
+      "ticker": "VITL",
+      "name": "バイタル・ファームズ",
+      "name_en": "Vital Farms",
+      "sub": "放牧卵",
+      "sub_en": "Pasture-raised eggs",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "自然食品店向けの多くをUNFIなどの食品卸経由で販売",
+          "text_en": "Sells to most natural channel customers through distributors such as UNFI",
+          "source": {
+            "label": "Vital Farms 10-K(2025年提出)",
+            "label_en": "Vital Farms 10-K (filed 2025-02)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1579733/000095017025028365/vitl-20241229.htm",
+            "level": "official",
+            "date": "2025-02-27",
+            "quote": "We serve the majority of natural channel customers through food distributors, such as United Natural Foods, Inc., or UNFI"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ABVE",
+      "ticker": "ABVE",
+      "name": "アバブ・フード",
+      "name_en": "Above Food Ingredients",
+      "sub": "植物性食品原料",
+      "sub_en": "Plant-based ingredients",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "子会社Farmer Direct OrganicがUNFIと供給契約を結ぶ",
+          "text_en": "Its Farmer Direct Organic Foods unit has a supplier agreement with UNFI",
+          "source": {
+            "label": "Above Food Ingredients 年次報告(20-F)(2024年提出)",
+            "label_en": "Above Food Ingredients annual report (20-F) (filed 2024-07)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1979484/000110465924078186/tm2418826d1_20f.htm",
+            "level": "official",
+            "date": "2024-07-08",
+            "quote": "Supplier Agreement, between Farmer Direct Organic Foods Ltd. and United Natural Foods, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン(ホールフーズ)",
+      "name_en": "Amazon (Whole Foods Market)",
+      "sub": "ネット通販・スーパー",
+      "sub_en": "E-commerce & grocery",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大の顧客Whole Foods Marketと2032年までの物流契約(売上の約28%)",
+          "text_en": "Distribution agreement through 2032 with Whole Foods Market, its largest customer (about 28% of sales)",
+          "source": {
+            "label": "United Natural Foods 10-K(2026年度)",
+            "label_en": "United Natural Foods 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1020859/000102085926000025/unfi-20260801.htm",
+            "level": "official",
+            "date": "2026-09-14",
+            "quote": "Amended and Restated Agreement for the Distribution of Products, dated May 21, 2024, between Whole Foods Market Services, Inc. and the Registrant"
+          }
+        }
+      ]
+    },
+    {
+      "id": "NGVC",
+      "ticker": "NGVC",
+      "name": "ナチュラル・グローサーズ",
+      "name_en": "Natural Grocers",
+      "sub": "自然食品スーパー",
+      "sub_en": "Natural grocery",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "仕入れの約69%(2025年度)をUNFIから調達する主要な卸",
+          "text_en": "Buys about 69% of its goods from UNFI, its primary distributor",
+          "source": {
+            "label": "Natural Grocers by Vitamin Cottage 10-K(2025年提出)",
+            "label_en": "Natural Grocers by Vitamin Cottage 10-K (filed 2025-12)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1547459/000143774925037556/ngvc20250930_10k.htm",
+            "level": "official",
+            "date": "2025-12-11",
+            "quote": "approximately 69% of our total purchases were from United Natural Foods Inc. and its subsidiaries (UNFI)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SFM",
+      "ticker": "SFM",
+      "name": "スプラウツ・ファーマーズ・マーケット",
+      "name_en": "Sprouts Farmers Market",
+      "sub": "食品スーパー",
+      "sub_en": "Grocery",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "二番手の仕入先としてUNFIから購入(仕入れの3%)",
+          "text_en": "Buys about 3% of its purchases through UNFI as its secondary supplier",
+          "source": {
+            "label": "Sprouts Farmers Market 10-K(2025年提出)",
+            "label_en": "Sprouts Farmers Market 10-K (filed 2025-02)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1575515/000157551525000011/sfm-20241229.htm",
+            "level": "official",
+            "date": "2025-02-20",
+            "quote": "Another 3% of our total purchases in each of fiscal 2024, 2023 and 2022 were made through our secondary supplier, United Natural Foods, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SMFL",
+      "ticker": "SMFL",
+      "name": "スマート・フォー・ライフ",
+      "name_en": "Smart for Life",
+      "sub": "健康食品",
+      "sub_en": "Nutrition products",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Smart for Lifeが10-Kで、競合する卸としてUNFIを挙げる",
+          "text_en": "Smart for Life names UNFI among distributors it competes with",
+          "source": {
+            "label": "Smart For Life 10-K(2024年提出)",
+            "label_en": "Smart For Life 10-K (filed 2024-09)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1851860/000121390024080709/ea0203858-10k_smart.htm",
+            "level": "official",
+            "date": "2024-09-20",
+            "quote": "We also compete with distributors that sell products to health stores as well as mass market retailers such as United Natural Foods and KeHE Distributors."
+          }
+        }
+      ]
+    },
+    {
+      "id": "JXG",
+      "ticker": "JXG",
+      "name": "JXラックスベンチャー",
+      "name_en": "JX Luxventure",
+      "sub": "卸売・観光(中国)",
+      "sub_en": "Wholesale & tourism (China)",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "JX Luxventureが年次報告で、競合の一社としてUNFIを挙げる",
+          "text_en": "JX Luxventure names UNFI among its competitors",
+          "source": {
+            "label": "JX Luxventure Group 年次報告(20-F)(2025年提出)",
+            "label_en": "JX Luxventure Group annual report (20-F) (filed 2025-05)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1546383/000121390025043744/ea0239227-20f_jxluxven.htm",
+            "level": "official",
+            "date": "2025-05-15",
+            "quote": "Among our competitors are FASTENAL (NYSE:FAST), SYSCO (NYSE:SYY) and United Natural Foods (NASDAQ: UNFI)."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

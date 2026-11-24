@@ -1,0 +1,226 @@
+{
+  "root": {
+    "ticker": "USFD",
+    "name": "USフーズ",
+    "cik": 1665918,
+    "name_en": "US Foods"
+  },
+  "rows": [
+    {
+      "ja": "仕入先・買収",
+      "en": "Suppliers & acquisition",
+      "above": true
+    },
+    {
+      "ja": "外食・給食の顧客",
+      "en": "Restaurant & foodservice customers"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "PFGC",
+    "FARM"
+  ],
+  "companies": [
+    {
+      "id": "Jakes",
+      "ticker": "Jake's Finer Foods",
+      "name": "ジェイクス・ファイナー・フーズ",
+      "name_en": "Jake's Finer Foods",
+      "sub": "食品卸(ヒューストン)",
+      "sub_en": "Food distribution (Houston)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年1月、Gourmet Ranchと合わせて9,200万ドルで買収",
+          "text_en": "Acquired with Gourmet Ranch for $92 million in January 2025",
+          "source": {
+            "label": "US Foods 10-K(2025年度)",
+            "label_en": "US Foods 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1665918/000166591826000008/usfd-20251227.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "On January 10, 2025, USF completed the acquisition of Jake's Finer Foods and Gourmet Ranch in Houston, Texas, for a purchase price of $92 million."
+          }
+        }
+      ]
+    },
+    {
+      "id": "POST",
+      "ticker": "POST",
+      "name": "ポスト・ホールディングス",
+      "name_en": "Post Holdings",
+      "sub": "食品メーカー",
+      "sub_en": "Packaged foods",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "業務用食品事業の最大顧客がSyscoとUS Foods",
+          "text_en": "Sysco and US Foods are the largest customers of its foodservice segment",
+          "source": {
+            "label": "Post 10-K(2024年提出)",
+            "label_en": "Post 10-K (filed 2024-11)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1530950/000153095024000365/post-20240930.htm",
+            "level": "official",
+            "date": "2024-11-15",
+            "quote": "The largest customers of our Foodservice segment, Sysco and US Foods, accounted for 41.2% of the segment's net sales in fiscal 2024."
+          }
+        }
+      ]
+    },
+    {
+      "id": "VITL",
+      "ticker": "VITL",
+      "name": "バイタル・ファームズ",
+      "name_en": "Vital Farms",
+      "sub": "放牧卵",
+      "sub_en": "Pasture-raised eggs",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "自然食品店向けの多くをUS FoodsやUNFIなどの卸経由で販売",
+          "text_en": "Sells to natural channel retailers through distributors such as US Foods and UNFI",
+          "source": {
+            "label": "Vital Farms 10-K(2025年提出)",
+            "label_en": "Vital Farms 10-K (filed 2025-02)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1579733/000095017025028365/vitl-20241229.htm",
+            "level": "official",
+            "date": "2025-02-27",
+            "quote": "through food distributors, such as US Foods Inc. and United Natural Foods, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "IVFH",
+      "ticker": "IVFH",
+      "name": "イノベーティブ・フード",
+      "name_en": "Innovative Food Holdings",
+      "sub": "業務用食材の専門流通",
+      "sub_en": "Specialty foodservice distribution",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "US Foodsと強い取引関係を持つ",
+          "text_en": "Has a strong relationship with US Foods",
+          "source": {
+            "label": "Innovative Food 10-K(2025年提出)",
+            "label_en": "Innovative Food 10-K (filed 2025-03)",
+            "url": "https://www.sec.gov/Archives/edgar/data/312257/000118518525000204/ivfh10k123124.htm",
+            "level": "official",
+            "date": "2025-03-20",
+            "quote": "We have a strong relationship with US Foods, but the Company will benefit from having additional large partners."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GTIM",
+      "ticker": "GTIM",
+      "name": "グッドタイムズ・レストランツ",
+      "name_en": "Good Times Restaurants",
+      "sub": "レストランチェーン",
+      "sub_en": "Restaurant chains",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "指定食材を全店にUS Foods経由で配送",
+          "text_en": "Distributes specified products to all its restaurants through US Foods",
+          "source": {
+            "label": "Good Times Restaurants 10-K(2025年提出)",
+            "label_en": "Good Times Restaurants 10-K (filed 2025-12)",
+            "url": "https://www.sec.gov/Archives/edgar/data/825324/000121465925018518/gtim-20250930.htm",
+            "level": "official",
+            "date": "2025-12-29",
+            "quote": "Specified products are distributed to all restaurants through US Foods"
+          }
+        }
+      ]
+    },
+    {
+      "id": "NATH",
+      "ticker": "NATH",
+      "name": "ネイサンズ・フェイマス",
+      "name_en": "Nathan's Famous",
+      "sub": "ホットドッグ・ブランド",
+      "sub_en": "Hot dog brand",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ブランド商品を配送する卸の一社がUS Foods",
+          "text_en": "US Foods is one of the distributors delivering its branded products",
+          "source": {
+            "label": "Nathans Famous 10-K(2024年提出)",
+            "label_en": "Nathans Famous 10-K (filed 2024-06)",
+            "url": "https://www.sec.gov/Archives/edgar/data/69733/000143774924020013/nath20240331_10k.htm",
+            "level": "official",
+            "date": "2024-06-12",
+            "quote": "including US Foodservice, Inc., SYSCO Corporation, Performance Food Group Company"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PFGC",
+      "ticker": "PFGC",
+      "name": "パフォーマンス・フード・グループ",
+      "name_en": "Performance Food Group",
+      "sub": "業務用食品卸",
+      "sub_en": "Foodservice distribution",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "US FoodsとPerformance Foodが経営統合に向けた情報交換を打ち切り(2025年11月)",
+          "text_en": "US Foods and Performance Food Group ended their information-sharing process in November 2025",
+          "source": {
+            "label": "US Foods 8-K添付(2025年11月)",
+            "label_en": "US Foods 8-K exhibit (2025-11)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1665918/000166591825000148/usfdpressrelease-112425.htm",
+            "level": "official",
+            "date": "2025-11-24",
+            "quote": "US Foods and Performance Food Group Terminate Information Sharing Process"
+          }
+        }
+      ]
+    },
+    {
+      "id": "FARM",
+      "ticker": "FARM",
+      "name": "ファーマー・ブラザーズ",
+      "name_en": "Farmer Brothers",
+      "sub": "業務用コーヒー",
+      "sub_en": "Foodservice coffee",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Farmer Brothersが10-Kで、競合の業務用食品卸としてUS Foodsを挙げる",
+          "text_en": "Farmer Brothers names US Foods among wholesale foodservice distributors it competes with",
+          "source": {
+            "label": "Farmer Brothers 10-K(2025年提出)",
+            "label_en": "Farmer Brothers 10-K (filed 2025-09)",
+            "url": "https://www.sec.gov/Archives/edgar/data/34563/000003456325000071/farm-20250630.htm",
+            "level": "official",
+            "date": "2025-09-11",
+            "quote": "wholesale foodservice distributors such as Sysco Corporation and US Foods Holding Corp."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
