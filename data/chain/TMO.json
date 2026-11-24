@@ -1,0 +1,372 @@
+{
+  "root": {
+    "ticker": "TMO",
+    "name": "サーモフィッシャー・サイエンティフィック",
+    "cik": 97745,
+    "name_en": "Thermo Fisher Scientific"
+  },
+  "rows": [
+    {
+      "ja": "買収・事業の取得",
+      "en": "Acquisitions",
+      "above": true
+    },
+    {
+      "ja": "受託製造・臨床試験・機器の顧客(相手の資料に記載)",
+      "en": "CDMO, CRO & tools customers (named in their filings)"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "TWST",
+    "WAT",
+    "MRVI",
+    "QSI"
+  ],
+  "companies": [
+    {
+      "id": "SOLV",
+      "ticker": "SOLV",
+      "name": "ソルベンタム",
+      "name_en": "Solventum",
+      "sub": "医療・ろ過製品",
+      "sub_en": "Healthcare & filtration",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年2月、精製・ろ過事業をThermo Fisherに売却する契約を締結",
+          "text_en": "Agreed in February 2025 to sell its Purification and Filtration business to Thermo Fisher",
+          "source": {
+            "label": "Solventum 10-K(2026年提出)",
+            "label_en": "Solventum 10-K (filed 2026-02)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1964738/000196473826000007/solv-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "On February 25, 2025, the Company entered into a Transaction Agreement to sell its Purification and Filtration business to Thermo Fisher Scientific Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PCRX",
+      "ticker": "PCRX",
+      "name": "パシラ・バイオサイエンシズ",
+      "name_en": "Pacira BioSciences",
+      "sub": "非オピオイド鎮痛薬",
+      "sub_en": "Non-opioid pain therapies",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Thermo Fisherと薬の共同生産などの契約を結ぶ",
+          "text_en": "Has co-production and other agreements with Thermo Fisher",
+          "source": {
+            "label": "Pacira BioSciences 10-K(2025年提出)",
+            "label_en": "Pacira BioSciences 10-K (filed 2025-02)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1396814/000139681425000041/pcrx-20241231.htm",
+            "level": "official",
+            "date": "2025-02-27",
+            "quote": "That our co-production and other agreements with Thermo Fisher (as defined below) may involve unanticipated expenses and delays."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PCVX",
+      "ticker": "PCVX",
+      "name": "バクサイト",
+      "name_en": "Vaxcyte",
+      "sub": "ワクチン",
+      "sub_en": "Vaccines",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2025年9月、Thermo Fisher傘下のPatheonと製造の基本契約を締結",
+          "text_en": "Signed a master services agreement with Thermo Fisher's Patheon in September 2025",
+          "source": {
+            "label": "Vaxcyte 10-Q(2025年11月)",
+            "label_en": "Vaxcyte 10-Q (2025-11)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1649094/000164909425000114/pcvx-20250930.htm",
+            "level": "official",
+            "date": "2025-11-04",
+            "quote": "On September 24, 2025, we entered into a master services agreement with Patheon Manufacturing Services LLC, part of Thermo Fisher Scientific"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ARCT",
+      "ticker": "ARCT",
+      "name": "アークトゥルス",
+      "name_en": "Arcturus Therapeutics",
+      "sub": "mRNA医薬",
+      "sub_en": "mRNA medicines",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2026年6月、Thermo Fisherと一連の契約を結んだ",
+          "text_en": "Entered a series of agreements with Thermo Fisher in June 2026",
+          "source": {
+            "label": "Arcturus Therapeutics 10-Q(2026年8月)",
+            "label_en": "Arcturus Therapeutics 10-Q (2026-08)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1768224/000119312526338090/arct-20260630.htm",
+            "level": "official",
+            "date": "2026-08-06",
+            "quote": "In June 2026, the Company entered into a series of agreements with Thermo Fisher Scientific Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "JBIO",
+      "ticker": "JBIO",
+      "name": "ジェイド・バイオサイエンシズ",
+      "name_en": "Jade Biosciences",
+      "sub": "抗体医薬",
+      "sub_en": "Antibody drugs",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Thermo Fisher傘下のPatheon Biologicsと製造の基本契約を締結",
+          "text_en": "Has a master services agreement with Thermo Fisher's Patheon Biologics",
+          "source": {
+            "label": "Jade Biosciences 10-Q(2025年8月)",
+            "label_en": "Jade Biosciences 10-Q (2025-08)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1798749/000119312525179853/ck0001798749-ex10_14.htm",
+            "level": "official",
+            "date": "2025-08-13",
+            "quote": "between Patheon Biologics LLC, part of Thermo Fisher Scientific"
+          }
+        }
+      ]
+    },
+    {
+      "id": "INSM",
+      "ticker": "INSM",
+      "name": "インスメッド",
+      "name_en": "Insmed",
+      "sub": "希少疾患の医薬",
+      "sub_en": "Rare disease drugs",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2017年からThermo Fisher子会社のPatheonと製造関連の契約を持つ",
+          "text_en": "Has had manufacturing agreements with Thermo Fisher's Patheon since 2017",
+          "source": {
+            "label": "Insmed 10-K(2025年提出)",
+            "label_en": "Insmed 10-K (filed 2025-02)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1104506/000110450625000009/insm-20241231.htm",
+            "level": "official",
+            "date": "2025-02-20",
+            "quote": "In October 2017, we entered into certain agreements with Patheon UK Limited (Patheon), a wholly-owned subsidiary of Thermo Fisher Scientific, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AIM",
+      "ticker": "AIM",
+      "name": "AIMイミュノテック",
+      "name_en": "AIM ImmunoTech",
+      "sub": "免疫治療薬",
+      "sub_en": "Immunotherapy",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Thermo FisherのPPD(臨床試験受託)と第3相試験の設計で契約",
+          "text_en": "Engaged Thermo Fisher's PPD clinical research business to design its Phase 3 trial",
+          "source": {
+            "label": "AIM ImmunoTech 10-K(2026年提出)",
+            "label_en": "AIM ImmunoTech 10-K (filed 2026-03)",
+            "url": "https://www.sec.gov/Archives/edgar/data/946644/000149315226013301/form10-k.htm",
+            "level": "official",
+            "date": "2026-03-27",
+            "quote": "In March 2026, we announced an agreement with the PPD clinical research business of Thermo Fisher Scientific"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CDNA",
+      "ticker": "CDNA",
+      "name": "ケアディーエックス",
+      "name_en": "CareDx",
+      "sub": "移植の検査",
+      "sub_en": "Transplant diagnostics",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "検査機器・試薬の唯一の調達先の一社がThermo Fisher",
+          "text_en": "Thermo Fisher is a sole-source supplier of instruments and reagents",
+          "source": {
+            "label": "CareDx 10-K(2026年提出)",
+            "label_en": "CareDx 10-K (filed 2026-02)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1217234/000121723426000018/cdna-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "These sole source suppliers include Thermo Fisher Scientific, Inc., or Thermo Fisher, which supplies us with instruments, laboratory reagents and consumables;"
+          }
+        }
+      ]
+    },
+    {
+      "id": "TECH",
+      "ticker": "TECH",
+      "name": "バイオテクネ",
+      "name_en": "Bio-Techne",
+      "sub": "研究用試薬",
+      "sub_en": "Life science reagents",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Bio-Techneの製品を販売代理店契約で扱う",
+          "text_en": "Distributes Bio-Techne products under a distribution agreement",
+          "source": {
+            "label": "Bio-Techne 10-K(2025年提出)",
+            "label_en": "Bio-Techne 10-K (filed 2025-08)",
+            "url": "https://www.sec.gov/Archives/edgar/data/842023/000155837025011716/tech-20250630x10k.htm",
+            "level": "official",
+            "date": "2025-08-22",
+            "quote": "as well as through a distribution agreement with Thermo Fisher Scientific."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SEER",
+      "ticker": "SEER",
+      "name": "シアー",
+      "name_en": "Seer",
+      "sub": "プロテオミクス",
+      "sub_en": "Proteomics",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Thermo Fisherとの共同販売契約で、プロテオミクスの手法を広げる",
+          "text_en": "Runs a co-marketing and sales agreement with Thermo Fisher for its proteomics workflow",
+          "source": {
+            "label": "Seer 10-K(2026年提出)",
+            "label_en": "Seer 10-K (filed 2026-03)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1726445/000119312526085481/ck0001726445-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "In 2025, we operationalized a co-marketing and sales agreement with Thermo Fisher Scientific"
+          }
+        }
+      ]
+    },
+    {
+      "id": "TWST",
+      "ticker": "TWST",
+      "name": "ツイスト・バイオサイエンス",
+      "name_en": "Twist Bioscience",
+      "sub": "合成DNA",
+      "sub_en": "Synthetic DNA",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Twistが10-Kで、次世代シーケンス向け前処理の競合としてThermo Fisherを挙げる",
+          "text_en": "Twist names Thermo Fisher among competitors in NGS sample preparation",
+          "source": {
+            "label": "Twist Bioscience 10-K(2025年提出)",
+            "label_en": "Twist Bioscience 10-K (filed 2025-11)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1581280/000158128025000025/twst-20250930.htm",
+            "level": "official",
+            "date": "2025-11-17",
+            "quote": "focused on sample preparation for NGS such as Thermo Fisher Scientific Inc., Illumina, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WAT",
+      "ticker": "WAT",
+      "name": "ウォーターズ",
+      "name_en": "Waters",
+      "sub": "分析機器",
+      "sub_en": "Analytical instruments",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Watersが10-Kで、サービス市場の主な競合としてThermo Fisherを挙げる",
+          "text_en": "Waters names Thermo Fisher among its principal service-market competitors",
+          "source": {
+            "label": "Waters 10-K(2025年提出)",
+            "label_en": "Waters 10-K (filed 2025-02)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1000697/000119312525034579/d791800d10k.htm",
+            "level": "official",
+            "date": "2025-02-25",
+            "quote": "The Company's principal competitors in the service market include Revvity, Inc., Agilent Technologies, Inc. and Thermo Fisher Scientific Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MRVI",
+      "ticker": "MRVI",
+      "name": "マラバイ・ライフサイエンシズ",
+      "name_en": "Maravai LifeSciences",
+      "sub": "mRNA原料",
+      "sub_en": "mRNA reagents",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Maravaiが10-Kで、mRNAキャッピング材の主な競合としてThermo Fisherを挙げる",
+          "text_en": "Maravai names Thermo Fisher as a principal competitor in mRNA capping",
+          "source": {
+            "label": "Maravai Lifesciences 10-K(2025年提出)",
+            "label_en": "Maravai Lifesciences 10-K (filed 2025-03)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1823239/000182323925000034/mrvi-20241231.htm",
+            "level": "official",
+            "date": "2025-03-18",
+            "quote": "For mRNA capping analogs, we compete principally with Thermo Fisher Scientific, Aldevron (a subsidiary of Danaher), and New England Biolabs"
+          }
+        }
+      ]
+    },
+    {
+      "id": "QSI",
+      "ticker": "QSI",
+      "name": "クアンタムSi",
+      "name_en": "Quantum-Si",
+      "sub": "タンパク質解析",
+      "sub_en": "Protein sequencing",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Quantum-Siが10-Kで、競合のOlinkがThermo Fisherに買収されたと記載",
+          "text_en": "Quantum-Si names Olink, acquired by Thermo Fisher, among potential competitors",
+          "source": {
+            "label": "Quantum-Si 10-K(2026年提出)",
+            "label_en": "Quantum-Si 10-K (filed 2026-03)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1816431/000181643126000011/qsi-20251231.htm",
+            "level": "official",
+            "date": "2026-03-03",
+            "quote": "Olink Proteomics (acquired by Thermo Fisher Scientific)"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

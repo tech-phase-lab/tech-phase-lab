@@ -1,0 +1,178 @@
+{
+  "root": {
+    "ticker": "TBBK",
+    "name": "ザ・バンコープ",
+    "cik": 1295401,
+    "name_en": "The Bancorp"
+  },
+  "rows": [
+    {
+      "ja": "カード発行・銀行サービスの提携先(相手の資料に記載)",
+      "en": "Card issuing & banking partners (named in their filings)",
+      "above": true
+    },
+    {
+      "ja": "融資の相手",
+      "en": "Borrowers"
+    },
+    {
+      "ja": "競合(The Bancorpの10-Kに記載)",
+      "en": "Competitors (named in its 10-K)"
+    }
+  ],
+  "rivals": [
+    "CASH",
+    "LOB"
+  ],
+  "companies": [
+    {
+      "id": "CHYM",
+      "ticker": "CHYM",
+      "name": "チャイム・ファイナンシャル",
+      "name_en": "Chime Financial",
+      "sub": "ネット金融サービス",
+      "sub_en": "Consumer fintech",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "会員向け銀行サービスの提携銀行2行の一つ(基本サービス契約)",
+          "text_en": "One of its two partner banks for member banking services, under a master services agreement",
+          "source": {
+            "label": "Chime Financial 10-Q(2025年8月)",
+            "label_en": "Chime Financial 10-Q (2025-08)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1795586/000179558625000009/chym-20250630.htm",
+            "level": "official",
+            "date": "2025-08-11",
+            "quote": "Banking services are provided by The Bancorp Bank, N.A. or Stride Bank, N.A."
+          }
+        }
+      ]
+    },
+    {
+      "id": "EXFY",
+      "ticker": "EXFY",
+      "name": "エクスペンシファイ",
+      "name_en": "Expensify",
+      "sub": "経費精算ソフト",
+      "sub_en": "Expense management software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "法人カードの発行銀行",
+          "text_en": "Issuing bank of its card program",
+          "source": {
+            "label": "Expensify 10-K(2026年提出)",
+            "label_en": "Expensify 10-K (filed 2026-02)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1476840/000147684026000009/exfy-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "The Updated Card Program operates under an agreement with the issuing bank, The Bancorp Bank, N.A."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PAYC",
+      "ticker": "PAYC",
+      "name": "ペイコム・ソフトウェア",
+      "name_en": "Paycom Software",
+      "sub": "給与計算ソフト",
+      "sub_en": "Payroll software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "給与受取カード「Vault」の発行銀行",
+          "text_en": "Issuer of its Vault Visa payroll card",
+          "source": {
+            "label": "Paycom Software 10-K(2025年度)",
+            "label_en": "Paycom Software 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1590955/000119312526059372/payc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "The Vault Visa ® Payroll Card is issued by The Bancorp Bank, N.A."
+          }
+        }
+      ]
+    },
+    {
+      "id": "XOS",
+      "ticker": "XOS",
+      "name": "ゾス",
+      "name_en": "Xos",
+      "sub": "商用EV",
+      "sub_en": "Commercial EVs",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "The Bancorpが保有するXosの手形について、2025年8月に和解契約を締結",
+          "text_en": "Settled notes held by The Bancorp under an August 2025 settlement agreement",
+          "source": {
+            "label": "Xos 10-Q(2025年8月)",
+            "label_en": "Xos 10-Q (2025-08)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1819493/000181949325000128/xos-20250630.htm",
+            "level": "official",
+            "date": "2025-08-13",
+            "quote": "Bancorp Notes Settlement Pursuant to a Compromise Settlement and Release Agreement, dated as of August 1, 2025 (the \"Bancorp Settlement Agreement\"), between the Company, The Bancorp, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CASH",
+      "ticker": "CASH",
+      "name": "パスワード・ファイナンシャル",
+      "name_en": "Pathward Financial",
+      "sub": "銀行(BaaS)",
+      "sub_en": "Banking-as-a-service bank",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "The Bancorpが10-Kで、プリペイド・デビットカード分野の競合として挙げる",
+          "text_en": "The Bancorp names it a competitor in prepaid and debit card accounts",
+          "source": {
+            "label": "The Bancorp 10-K(2025年度)",
+            "label_en": "The Bancorp 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1295401/000129540126000002/tbbk-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "competitors include banking as a service banks, such as Pathward Financial, Coastal Community, and others."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LOB",
+      "ticker": "LOB",
+      "name": "ライブオーク・バンクシェアーズ",
+      "name_en": "Live Oak Bancshares",
+      "sub": "銀行(SBA融資)",
+      "sub_en": "Bank (SBA lending)",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "The Bancorpが10-Kで、SBA融資の競合としてLive Oak Bankを挙げる",
+          "text_en": "The Bancorp names Live Oak Bank its competitor in SBA loans",
+          "source": {
+            "label": "The Bancorp 10-K(2025年度)",
+            "label_en": "The Bancorp 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1295401/000129540126000002/tbbk-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "For SBA loans, our competitors include Live Oak Bank"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

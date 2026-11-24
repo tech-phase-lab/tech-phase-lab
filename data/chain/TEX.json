@@ -1,0 +1,178 @@
+{
+  "root": {
+    "ticker": "TEX",
+    "name": "テレックス",
+    "cik": 97216,
+    "name_en": "Terex"
+  },
+  "rows": [
+    {
+      "ja": "合併・買収",
+      "en": "Merger & acquisition",
+      "above": true
+    },
+    {
+      "ja": "販売・ライセンス先",
+      "en": "Dealers & licensees"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "OSK",
+    "ASTE"
+  ],
+  "companies": [
+    {
+      "id": "REVG",
+      "ticker": "REVG",
+      "name": "REVグループ",
+      "name_en": "REV Group",
+      "sub": "特殊車両",
+      "sub_en": "Specialty vehicles",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Terexとの合併を進めた(Terexは統合を最大のリスクの一つに挙げる)",
+          "text_en": "Merged with Terex; Terex lists integrating REV among its key risks",
+          "source": {
+            "label": "REV Group 10-K(2025年提出)",
+            "label_en": "REV Group 10-K (filed 2025-12)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1687221/000119312525313470/revg-20251031.htm",
+            "level": "official",
+            "date": "2025-12-10",
+            "quote": "the completion of the merger with Terex Corporation, a Delaware corporation (\"Terex\") on the anticipated terms and timing"
+          }
+        }
+      ]
+    },
+    {
+      "id": "DOV",
+      "ticker": "DOV",
+      "name": "ドーバー",
+      "name_en": "Dover",
+      "sub": "産業機器",
+      "sub_en": "Industrial equipment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2024年7月、環境関連事業(ESG)をTerexに売却する取引契約を締結",
+          "text_en": "Signed a July 2024 transaction agreement to sell its Environmental Solutions business to Terex",
+          "source": {
+            "label": "Dover 10-K(2025年提出)",
+            "label_en": "Dover 10-K (filed 2025-02)",
+            "url": "https://www.sec.gov/Archives/edgar/data/29905/000002990525000006/dov-20241231.htm",
+            "level": "official",
+            "date": "2025-02-14",
+            "quote": "Transaction Agreement, dated as of July 21, 2024, by and between Dover Corporation and Terex Corporation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CTOS",
+      "ticker": "CTOS",
+      "name": "カスタム・トラック・ワンソース",
+      "name_en": "Custom Truck One Source",
+      "sub": "特殊トラックの販売・レンタル",
+      "sub_en": "Specialty truck sales & rental",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Terexの商標を販売促進に使えるライセンスを持つ",
+          "text_en": "Holds a royalty-free license to use certain Terex trademarks",
+          "source": {
+            "label": "Custom Truck One Source 10-K(2025年提出)",
+            "label_en": "Custom Truck One Source 10-K (filed 2025-03)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1709682/000170968225000006/ctos-20241231.htm",
+            "level": "official",
+            "date": "2025-03-04",
+            "quote": "pursuant to an agreement with Terex, we have a revocable, royalty-free, limited license to use certain Terex trademarks"
+          }
+        }
+      ]
+    },
+    {
+      "id": "HEES",
+      "ticker": "HEES",
+      "name": "H&Eイクイップメント",
+      "name_en": "H&E Equipment Services",
+      "sub": "建機レンタル",
+      "sub_en": "Equipment rental",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "長年の仕入先の一社がTerexのGenie",
+          "text_en": "Genie Industries (Terex) is one of its long-standing equipment suppliers",
+          "source": {
+            "label": "H&E Equipment Services 10-K(2025年提出)",
+            "label_en": "H&E Equipment Services 10-K (filed 2025-02)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1339605/000095017025024867/hees-20241231.htm",
+            "level": "official",
+            "date": "2025-02-21",
+            "quote": "We have longstanding relationships with nationally-recognized equipment suppliers, including JLG Industries, Gehl, Genie Industries (Terex)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "OSK",
+      "ticker": "OSK",
+      "name": "オシュコシュ",
+      "name_en": "Oshkosh",
+      "sub": "特殊車両・高所作業車",
+      "sub_en": "Specialty vehicles & access equipment",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Oshkoshが10-Kで、高所作業車の競合としてTerex傘下のGenieを挙げる",
+          "text_en": "Oshkosh names Terex's Genie among aerial work platform competitors",
+          "source": {
+            "label": "Oshkosh 10-K(2026年提出)",
+            "label_en": "Oshkosh 10-K (filed 2026-02)",
+            "url": "https://www.sec.gov/Archives/edgar/data/775158/000119312526054061/osk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "competition for sales of aerial work platform equipment includes Genie Industries, Inc. (a subsidiary of Terex Corporation)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ASTE",
+      "ticker": "ASTE",
+      "name": "アステック・インダストリーズ",
+      "name_en": "Astec Industries",
+      "sub": "道路・骨材機械",
+      "sub_en": "Road & aggregates equipment",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Astecが10-Kで、骨材機械の主な競合としてTerexを挙げる",
+          "text_en": "Astec names Terex among primary competitors of its Materials Solutions segment",
+          "source": {
+            "label": "Astec Industries 10-K(2025年提出)",
+            "label_en": "Astec Industries 10-K (filed 2025-02)",
+            "url": "https://www.sec.gov/Archives/edgar/data/792987/000079298725000013/aste-20241231.htm",
+            "level": "official",
+            "date": "2025-02-26",
+            "quote": "McCloskey International (part of Metso Outotec Corporation) Terex Corporation"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

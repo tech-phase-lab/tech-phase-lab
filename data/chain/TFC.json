@@ -1,0 +1,274 @@
+{
+  "root": {
+    "ticker": "TFC",
+    "name": "トゥルーイスト・ファイナンシャル",
+    "cik": 92230,
+    "name_en": "Truist Financial"
+  },
+  "rows": [
+    {
+      "ja": "融資の取引先(相手の資料に記載)",
+      "en": "Borrowers (named in their filings)",
+      "above": true
+    },
+    {
+      "ja": "社債の受託者を務める相手",
+      "en": "Bond trustee clients"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "FHN",
+    "SFBS"
+  ],
+  "companies": [
+    {
+      "id": "TER",
+      "ticker": "TER",
+      "name": "テラダイン",
+      "name_en": "Teradyne",
+      "sub": "半導体テスト装置",
+      "sub_en": "Semiconductor test equipment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "融資契約の事務管理行(Administrative Agent)をTruist Bankが務める",
+          "text_en": "Truist Bank is administrative agent of its credit agreement",
+          "source": {
+            "label": "Teradyne 10-K(2025年提出)",
+            "label_en": "Teradyne 10-K (filed 2025-02)",
+            "url": "https://www.sec.gov/Archives/edgar/data/97210/000095017025023784/ter-20241231.htm",
+            "level": "official",
+            "date": "2025-02-20",
+            "quote": "Credit Agreement dated May 1, 2020 among Teradyne, Inc., Truist Bank, as the administrative agent, issuing bank and swingline lender, and other lenders party thereto."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MLM",
+      "ticker": "MLM",
+      "name": "マーティン・マリエッタ",
+      "name_en": "Martin Marietta Materials",
+      "sub": "建設用骨材",
+      "sub_en": "Construction aggregates",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "売掛債権を担保にした融資枠の貸し手の一行がTruist Bank",
+          "text_en": "Truist Bank is a lender in its trade receivable facility",
+          "source": {
+            "label": "Martin Marietta Materials 10-K(2025年提出)",
+            "label_en": "Martin Marietta Materials 10-K (filed 2025-02)",
+            "url": "https://www.sec.gov/Archives/edgar/data/916076/000095017025024770/mlm-20241231.htm",
+            "level": "official",
+            "date": "2025-02-21",
+            "quote": "The Trade Receivable Facility, with Truist Bank, Regions Bank, First-Citizens Bank & Trust Company, and certain other lenders"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ONEW",
+      "ticker": "ONEW",
+      "name": "ワンウォーター・マリン",
+      "name_en": "OneWater Marine",
+      "sub": "ボート販売店",
+      "sub_en": "Boat dealerships",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "融資契約の事務管理行がTruist Bank",
+          "text_en": "Truist Bank is administrative agent of its credit facility",
+          "source": {
+            "label": "OneWater Marine 10-K(2024年提出)",
+            "label_en": "OneWater Marine 10-K (filed 2024-12)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1772921/000177292124000101/onew-20240930.htm",
+            "level": "official",
+            "date": "2024-12-10",
+            "quote": "On November 13, 2024, the Company and certain of its subsidiaries entered into Amendment No. 6 with Truist Bank, as administrative agent, and other lenders party thereto."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HVT",
+      "ticker": "HVT",
+      "name": "ハバティーズ",
+      "name_en": "Haverty Furniture",
+      "sub": "家具小売",
+      "sub_en": "Furniture retail",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2026年6月、Truist Bankとの融資契約を改定",
+          "text_en": "Amended its credit agreement with Truist Bank in June 2026",
+          "source": {
+            "label": "Haverty Furniture Companies 10-Q(2026年8月)",
+            "label_en": "Haverty Furniture Companies 10-Q (2026-08)",
+            "url": "https://www.sec.gov/Archives/edgar/data/216085/000162828026052652/hvt-20260630.htm",
+            "level": "official",
+            "date": "2026-08-04",
+            "quote": "In June 2026, we entered into the Sixth Amendment to our Amended and Restated Credit Agreement (as amended, the \"Credit Agreement\") with Truist Bank."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HQI",
+      "ticker": "HQI",
+      "name": "ハイアクエスト",
+      "name_en": "HireQuest",
+      "sub": "人材派遣",
+      "sub_en": "Staffing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "買収資金にTruistの融資枠を使う",
+          "text_en": "Funded an acquisition with a draw on its Truist line of credit",
+          "source": {
+            "label": "HireQuest 10-K(2025年提出)",
+            "label_en": "HireQuest 10-K (filed 2025-03)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1140102/000143774925009646/hqi20241231_10k.htm",
+            "level": "official",
+            "date": "2025-03-27",
+            "quote": "We funded this acquisition with existing cash on hand and a draw on our existing line of credit with Truist."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GHC",
+      "ticker": "GHC",
+      "name": "グラハム・ホールディングス",
+      "name_en": "Graham Holdings",
+      "sub": "教育・メディア・自動車販売",
+      "sub_en": "Education, media & auto dealerships",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "自動車販売子会社の在庫融資(フロアプラン)をTruistとトヨタが提供",
+          "text_en": "Its auto dealership floor plan facility is provided by Truist and Toyota",
+          "source": {
+            "label": "Graham 10-K(2025年提出)",
+            "label_en": "Graham 10-K (filed 2025-02)",
+            "url": "https://www.sec.gov/Archives/edgar/data/104889/000010488925000022/ghc-20241231.htm",
+            "level": "official",
+            "date": "2025-02-26",
+            "quote": "The Truist and Toyota floor plan facility bears interest at variable rates"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ENTG",
+      "ticker": "ENTG",
+      "name": "インテグリス",
+      "name_en": "Entegris",
+      "sub": "半導体材料",
+      "sub_en": "Semiconductor materials",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "社債の受託者(Trustee)をTruist Bankが務める",
+          "text_en": "Truist Bank is trustee for its notes",
+          "source": {
+            "label": "Entegris 10-K(2026年提出)",
+            "label_en": "Entegris 10-K (filed 2026-02)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1101302/000110130226000012/entg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Indenture, dated as of June 30, 2022, by and among Entegris Escrow Corporation, as escrow issuer and Truist Bank, as trustee"
+          }
+        }
+      ]
+    },
+    {
+      "id": "HRI",
+      "ticker": "HRI",
+      "name": "ハーク・ホールディングス",
+      "name_en": "Herc Holdings",
+      "sub": "建機レンタル",
+      "sub_en": "Equipment rental",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2025年6月発行の社債の契約(Indenture)の当事者がTruist Bank",
+          "text_en": "Truist Bank is party to the indenture for notes issued in June 2025",
+          "source": {
+            "label": "Herc 10-K(2026年提出)",
+            "label_en": "Herc 10-K (filed 2026-02)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1364479/000136447926000050/hri-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Indenture (including the forms of Notes), dated as of June 2, 2025, among Herc Holdings Escrow, Inc., Herc Holdings Inc., the subsidiary guarantors party thereto, and Truist Bank."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FHN",
+      "ticker": "FHN",
+      "name": "ファースト・ホライゾン",
+      "name_en": "First Horizon",
+      "sub": "銀行(テネシー州)",
+      "sub_en": "Bank (Tennessee)",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "First Horizonが10-Kで、主な競合の一行としてTruist Bankを挙げる",
+          "text_en": "First Horizon names Truist Bank among its key competitors",
+          "source": {
+            "label": "First Horizon 10-K(2025年度)",
+            "label_en": "First Horizon 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/36966/000003696626000051/fhn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Regions Bank, Pinnacle Bank, PNC Bank National Association, Truist Bank"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SFBS",
+      "ticker": "SFBS",
+      "name": "サービスファースト・バンクシェアーズ",
+      "name_en": "ServisFirst Bancshares",
+      "sub": "銀行(アラバマ州)",
+      "sub_en": "Bank (Alabama)",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ServisFirstが10-Kで、地域の最大競合5社の一社にTruistを挙げる",
+          "text_en": "ServisFirst names Truist among its five largest competitors",
+          "source": {
+            "label": "ServisFirst Bancshares 10-K(2025年度)",
+            "label_en": "ServisFirst Bancshares 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1430723/000117184326001150/sfbs20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "our five largest competitors are Regions Financial Corporation, Wells Fargo & Company, PNC Financial Services Group, Inc., Truist Financial Corporation, and Pinnacle Financial Partners, Inc."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

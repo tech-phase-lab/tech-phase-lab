@@ -1,0 +1,250 @@
+{
+  "root": {
+    "ticker": "SYY",
+    "name": "シスコ(食品卸)",
+    "cik": 96021,
+    "name_en": "Sysco"
+  },
+  "rows": [
+    {
+      "ja": "仕入先・事業の売却先",
+      "en": "Suppliers & business buyer",
+      "above": true
+    },
+    {
+      "ja": "外食・給食の顧客",
+      "en": "Restaurant & foodservice customers"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "FARM",
+    "GIPC"
+  ],
+  "companies": [
+    {
+      "id": "POST",
+      "ticker": "POST",
+      "name": "ポスト・ホールディングス",
+      "name_en": "Post Holdings",
+      "sub": "食品メーカー",
+      "sub_en": "Packaged foods",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "業務用食品事業の最大顧客がSyscoとUS Foods(2社で同事業売上の41.2%)",
+          "text_en": "Sysco and US Foods are the largest customers of its foodservice segment, 41.2% of its sales",
+          "source": {
+            "label": "Post 10-K(2024年提出)",
+            "label_en": "Post 10-K (filed 2024-11)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1530950/000153095024000365/post-20240930.htm",
+            "level": "official",
+            "date": "2024-11-15",
+            "quote": "The largest customers of our Foodservice segment, Sysco and US Foods, accounted for 41.2% of the segment's net sales in fiscal 2024."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MAMA",
+      "ticker": "MAMA",
+      "name": "ママズ・クリエーションズ",
+      "name_en": "Mama's Creations",
+      "sub": "調理済み食品",
+      "sub_en": "Prepared foods",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Syscoの子会社Crown I Enterprisesの資産のほぼ全てを1,750万ドルで取得",
+          "text_en": "Bought substantially all assets of Sysco subsidiary Crown I Enterprises for $17.5 million",
+          "source": {
+            "label": "Mama's Creations 10-Q(2025年9月)",
+            "label_en": "Mama's Creations 10-Q (2025-09)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1520358/000152035825000004/mama-20250731.htm",
+            "level": "official",
+            "date": "2025-09-08",
+            "quote": "a full-service manufacturer of value-added proteins and ready-to-eat meals and a wholly-owned, subsidiary of Sysco Corporation for $ 17.5 million in cash"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ARMK",
+      "ticker": "ARMK",
+      "name": "アラマーク",
+      "name_en": "Aramark",
+      "sub": "給食・施設サービス",
+      "sub_en": "Food & facilities services",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "40年以上にわたりSyscoと物流契約を結ぶ重要な取引先",
+          "text_en": "Has had distribution agreements with Sysco for over 40 years",
+          "source": {
+            "label": "Aramark 10-K(2025年提出)",
+            "label_en": "Aramark 10-K (filed 2025-11)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1584509/000158450925000219/cik0-20251003.htm",
+            "level": "official",
+            "date": "2025-11-25",
+            "quote": "Our relationship with Sysco is important to our operations, and we have had distribution agreements in place for over 40 years."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GENK",
+      "ticker": "GENK",
+      "name": "GENレストラン・グループ",
+      "name_en": "GEN Restaurant Group",
+      "sub": "韓国式焼肉チェーン",
+      "sub_en": "Korean BBQ restaurants",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Syscoのロサンゼルス子会社から3年間食材を購入する契約",
+          "text_en": "Signed a three-year agreement to buy food products from Sysco Los Angeles",
+          "source": {
+            "label": "GEN Restaurant Group 10-K(2025年提出)",
+            "label_en": "GEN Restaurant Group 10-K (filed 2025-03)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1891856/000095017025035772/genk-20241231.htm",
+            "level": "official",
+            "date": "2025-03-10",
+            "quote": "we entered into an agreement with Sysco Los Angeles, Inc., or Sysco, to purchase certain food products for a period of three years."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PNST",
+      "ticker": "PNST",
+      "name": "ピンストライプス",
+      "name_en": "Pinstripes",
+      "sub": "飲食・娯楽施設",
+      "sub_en": "Dining & entertainment",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "主要な食材の仕入先がSysco",
+          "text_en": "Sysco is its key food product supplier",
+          "source": {
+            "label": "Pinstripes 10-K(2024年提出)",
+            "label_en": "Pinstripes 10-K (filed 2024-06)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1852633/000185263324000036/pnst-20240428.htm",
+            "level": "official",
+            "date": "2024-06-28",
+            "quote": "we have established excellent long-term relationships with our key food product supplier, Sysco Corporation (\"Sysco\")"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BRCB",
+      "ticker": "BRCB",
+      "name": "ブラック・ロック・コーヒー・バー",
+      "name_en": "Black Rock Coffee Bar",
+      "sub": "コーヒーチェーン",
+      "sub_en": "Coffee chain",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2025年の仕入れの89%を占める3社の一社がSysco",
+          "text_en": "Sysco is one of three suppliers making up 89% of its 2025 purchases",
+          "source": {
+            "label": "Black Rock Coffee Bar 10-K(2026年提出)",
+            "label_en": "Black Rock Coffee Bar 10-K (filed 2026-03)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2068577/000162828026014380/brcb-20251231.htm",
+            "level": "official",
+            "date": "2026-03-04",
+            "quote": "89% of our purchases came from three suppliers Sysco Corporation, Too Sweet and Royal Coffee"
+          }
+        }
+      ]
+    },
+    {
+      "id": "STKS",
+      "ticker": "STKS",
+      "name": "ONEグループ・ホスピタリティ",
+      "name_en": "ONE Group Hospitality",
+      "sub": "レストラン",
+      "sub_en": "Restaurants",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "食材でSyscoへの依存が大きい(他の仕入先は各15%以下)",
+          "text_en": "Relies heavily on Sysco for food; no other food supplier exceeds 15% of purchases",
+          "source": {
+            "label": "ONE Group Hospitality 10-K(2025年提出)",
+            "label_en": "ONE Group Hospitality 10-K (filed 2025-03)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1399520/000155837025002590/stks-20241231x10k.htm",
+            "level": "official",
+            "date": "2025-03-10",
+            "quote": "no supplier of food, excluding Sysco, accounts for more than 15% of our total food and beverage purchases"
+          }
+        }
+      ]
+    },
+    {
+      "id": "FARM",
+      "ticker": "FARM",
+      "name": "ファーマー・ブラザーズ",
+      "name_en": "Farmer Brothers",
+      "sub": "業務用コーヒー",
+      "sub_en": "Foodservice coffee",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Farmer Brothersが10-Kで、競合の業務用食品卸としてSyscoを挙げる",
+          "text_en": "Farmer Brothers names Sysco among wholesale foodservice distributors it competes with",
+          "source": {
+            "label": "Farmer Brothers 10-K(2025年提出)",
+            "label_en": "Farmer Brothers 10-K (filed 2025-09)",
+            "url": "https://www.sec.gov/Archives/edgar/data/34563/000003456325000071/farm-20250630.htm",
+            "level": "official",
+            "date": "2025-09-11",
+            "quote": "wholesale foodservice distributors such as Sysco Corporation and US Foods Holding Corp."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GIPC",
+      "ticker": "Global Industry Products",
+      "name": "グローバル・インダストリー・プロダクツ",
+      "name_en": "Global Industry Products",
+      "sub": "業務用消耗品の卸",
+      "sub_en": "Foodservice supplies",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合としてSyscoを挙げる",
+          "text_en": "Names Sysco among its primary competitors",
+          "source": {
+            "label": "Global Industry Products 10-K(2026年提出)",
+            "label_en": "Global Industry Products 10-K (filed 2026-04)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1466369/000106594926000032/gipc-20251231.htm",
+            "level": "official",
+            "date": "2026-04-28",
+            "quote": "Our primary competitors are BradyPlus, Sysco, and Shetakis Wholesalers."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
