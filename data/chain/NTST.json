@@ -1,0 +1,204 @@
+{
+  "root": {
+    "ticker": "NTST",
+    "name": "ネットストリート",
+    "cik": 1798100,
+    "name_en": "NETSTREIT"
+  },
+  "rows": [
+    {
+      "ja": "主なテナント(賃料の多い順)",
+      "en": "Largest tenants (by rent)"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "CVS",
+      "ticker": "CVS",
+      "name": "CVSヘルス",
+      "name_en": "CVS Health",
+      "sub": "ドラッグストア",
+      "sub_en": "Drugstores",
+      "sub_short": "薬局",
+      "sub_short_en": "Drugstore",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "31物件を借りる(賃料の4.8%)",
+          "text_en": "Major tenant (4.8% of base rent)",
+          "source": {
+            "label": "NETSTREIT 10-K(2025年度)",
+            "label_en": "NETSTREIT 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1798100/000162828026006901/ntst-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "CVS Health Corporation 31 4.8 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "DG",
+      "ticker": "DG",
+      "name": "ダラー・ジェネラル",
+      "name_en": "Dollar General",
+      "sub": "ディスカウント小売",
+      "sub_en": "Discount retail",
+      "sub_short": "安売り店",
+      "sub_short_en": "Discount",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "78物件を借りる(賃料の4.7%)",
+          "text_en": "Major tenant (4.7% of base rent)",
+          "source": {
+            "label": "NETSTREIT 10-K(2025年度)",
+            "label_en": "NETSTREIT 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1798100/000162828026006901/ntst-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "Dollar General Corporation 78 4.7 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AHOLD",
+      "ticker": "Ahold Delhaize",
+      "name": "アホールド・デレーズ",
+      "name_en": "Ahold Delhaize",
+      "sub": "スーパー",
+      "sub_en": "Grocery",
+      "sub_short": "スーパー",
+      "sub_short_en": "Grocery",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "11物件を借りる(賃料の4.3%)",
+          "text_en": "Major tenant (4.3% of base rent)",
+          "source": {
+            "label": "NETSTREIT 10-K(2025年度)",
+            "label_en": "NETSTREIT 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1798100/000162828026006901/ntst-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "Koninklijke Ahold Delhaize N.V. (Food Lion / Stop & Shop) 11 4.3 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "HD",
+      "ticker": "HD",
+      "name": "ホーム・デポ",
+      "name_en": "The Home Depot",
+      "sub": "ホームセンター",
+      "sub_en": "Home improvement",
+      "sub_short": "DIY",
+      "sub_short_en": "DIY",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "5物件を借りる(賃料の3.8%)",
+          "text_en": "Major tenant (3.8% of base rent)",
+          "source": {
+            "label": "NETSTREIT 10-K(2025年度)",
+            "label_en": "NETSTREIT 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1798100/000162828026006901/ntst-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "Home Depot U.S.A, Inc. 5 3.8 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "HobbyLobby",
+      "ticker": "Hobby Lobby",
+      "name": "ホビーロビー",
+      "name_en": "Hobby Lobby",
+      "sub": "手芸・雑貨店",
+      "sub_en": "Arts & crafts retail",
+      "sub_short": "手芸",
+      "sub_short_en": "Crafts",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "17物件を借りる(賃料の3.6%)",
+          "text_en": "Major tenant (3.6% of base rent)",
+          "source": {
+            "label": "NETSTREIT 10-K(2025年度)",
+            "label_en": "NETSTREIT 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1798100/000162828026006901/ntst-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "Hobby Lobby Stores, Inc. 17 3.6 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "TSCO",
+      "ticker": "TSCO",
+      "name": "トラクター・サプライ",
+      "name_en": "Tractor Supply",
+      "sub": "農村向け小売",
+      "sub_en": "Rural retail",
+      "sub_short": "農業用品",
+      "sub_short_en": "Farm",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "25物件を借りる(賃料の3.5%)",
+          "text_en": "Major tenant (3.5% of base rent)",
+          "source": {
+            "label": "NETSTREIT 10-K(2025年度)",
+            "label_en": "NETSTREIT 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1798100/000162828026006901/ntst-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "Tractor Supply Company 25 3.5 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "WMT",
+      "ticker": "WMT",
+      "name": "ウォルマート",
+      "name_en": "Walmart",
+      "sub": "総合小売",
+      "sub_en": "Retail",
+      "sub_short": "小売",
+      "sub_short_en": "Retail",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "7物件を借りる(賃料の2.5%)",
+          "text_en": "Major tenant (2.5% of base rent)",
+          "source": {
+            "label": "NETSTREIT 10-K(2025年度)",
+            "label_en": "NETSTREIT 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1798100/000162828026006901/ntst-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "Wal-Mart Stores, Inc. 7 2.5 %"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

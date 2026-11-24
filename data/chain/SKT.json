@@ -1,0 +1,230 @@
+{
+  "root": {
+    "ticker": "SKT",
+    "name": "タンガー",
+    "cik": 899715,
+    "name_en": "Tanger"
+  },
+  "rows": [
+    {
+      "ja": "主なテナント(賃料の多い順)",
+      "en": "Largest tenants (by rent)"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "GAP",
+      "ticker": "GAP",
+      "name": "ギャップ",
+      "name_en": "Gap Inc.",
+      "sub": "衣料品",
+      "sub_en": "Apparel",
+      "sub_short": "衣料",
+      "sub_short_en": "Apparel",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "アウトレットに90店舗を出店(賃料の5.1%)",
+          "text_en": "Runs 90 outlet stores (5.1% of base rent)",
+          "source": {
+            "label": "Tanger 10-K(2025年度)",
+            "label_en": "Tanger 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/899715/000162828026012252/skt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "The Gap, Inc. Athleta, Banana Republic, Gap, Old Navy 90 935,042 6.7 % 5.1 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AEO",
+      "ticker": "AEO",
+      "name": "アメリカン・イーグル・アウトフィッターズ",
+      "name_en": "American Eagle Outfitters",
+      "sub": "衣料品",
+      "sub_en": "Apparel",
+      "sub_short": "衣料",
+      "sub_short_en": "Apparel",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "アウトレットに53店舗を出店(賃料の3.1%)",
+          "text_en": "Runs 53 outlet stores (3.1% of base rent)",
+          "source": {
+            "label": "Tanger 10-K(2025年度)",
+            "label_en": "Tanger 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/899715/000162828026012252/skt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "American Eagle Outfitters, Inc. Aerie, American Eagle Outfitters, Offline by Aerie 53 337,174 2.4 % 3.1 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "TPR",
+      "ticker": "TPR",
+      "name": "タペストリー(コーチ)",
+      "name_en": "Tapestry (Coach)",
+      "sub": "バッグ・革小物",
+      "sub_en": "Handbags",
+      "sub_short": "バッグ",
+      "sub_short_en": "Bags",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "アウトレットに54店舗を出店(賃料の3.0%)",
+          "text_en": "Runs 54 outlet stores (3.0% of base rent)",
+          "source": {
+            "label": "Tanger 10-K(2025年度)",
+            "label_en": "Tanger 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/899715/000162828026012252/skt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Tapestry, Inc. Coach, Kate Spade 54 255,319 1.8 % 3.0 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "UAA",
+      "ticker": "UAA",
+      "name": "アンダーアーマー",
+      "name_en": "Under Armour",
+      "sub": "スポーツ衣料",
+      "sub_en": "Sportswear",
+      "sub_short": "スポーツ",
+      "sub_short_en": "Sports",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "アウトレットに31店舗を出店(賃料の2.9%)",
+          "text_en": "Runs 31 outlet stores (2.9% of base rent)",
+          "source": {
+            "label": "Tanger 10-K(2025年度)",
+            "label_en": "Tanger 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/899715/000162828026012252/skt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Under Armour, Inc. Under Armour, Under Armour Youth 31 286,213 2.0 % 2.9 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "NKE",
+      "ticker": "NKE",
+      "name": "ナイキ",
+      "name_en": "Nike",
+      "sub": "スポーツ用品",
+      "sub_en": "Sportswear",
+      "sub_short": "スポーツ",
+      "sub_short_en": "Sports",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "アウトレットに34店舗を出店(賃料の2.4%)",
+          "text_en": "Runs 34 outlet stores (2.4% of base rent)",
+          "source": {
+            "label": "Tanger 10-K(2025年度)",
+            "label_en": "Tanger 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/899715/000162828026012252/skt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Nike, Inc. Converse, Nike 34 407,245 2.9 % 2.4 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PVH",
+      "ticker": "PVH",
+      "name": "PVH",
+      "name_en": "PVH",
+      "sub": "衣料品",
+      "sub_en": "Apparel",
+      "sub_short": "衣料",
+      "sub_short_en": "Apparel",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "アウトレットに35店舗を出店(賃料の2.3%)",
+          "text_en": "Runs 35 outlet stores (2.3% of base rent)",
+          "source": {
+            "label": "Tanger 10-K(2025年度)",
+            "label_en": "Tanger 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/899715/000162828026012252/skt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "PVH Corp. Calvin Klein, Tommy Hilfiger 35 264,546 1.9 % 2.3 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SIG",
+      "ticker": "SIG",
+      "name": "シグネット・ジュエラーズ",
+      "name_en": "Signet Jewelers",
+      "sub": "宝飾品",
+      "sub_en": "Jewelry",
+      "sub_short": "宝飾",
+      "sub_short_en": "Jewelry",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "アウトレットに52店舗を出店(賃料の2.0%)",
+          "text_en": "Runs 52 outlet stores (2.0% of base rent)",
+          "source": {
+            "label": "Tanger 10-K(2025年度)",
+            "label_en": "Tanger 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/899715/000162828026012252/skt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Signet Jewelers Limited Banter by Piercing Pagoda, Jared, Kay Jewelers, Zales 52 112,739 0.8 % 2.0 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "COLM",
+      "ticker": "COLM",
+      "name": "コロンビア・スポーツウェア",
+      "name_en": "Columbia Sportswear",
+      "sub": "アウトドア衣料",
+      "sub_en": "Outdoor apparel",
+      "sub_short": "衣料",
+      "sub_short_en": "Apparel",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "アウトレットに24店舗を出店(賃料の1.9%)",
+          "text_en": "Runs 24 outlet stores (1.9% of base rent)",
+          "source": {
+            "label": "Tanger 10-K(2025年度)",
+            "label_en": "Tanger 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/899715/000162828026012252/skt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Columbia Sportswear Company Columbia Sportswear 24 182,250 1.3 % 1.9 %"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

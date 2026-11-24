@@ -1,0 +1,178 @@
+{
+  "root": {
+    "ticker": "KRG",
+    "name": "カイト・リアルティ・グループ",
+    "cik": 1286043,
+    "name_en": "Kite Realty Group"
+  },
+  "rows": [
+    {
+      "ja": "主なテナント(賃料の多い順)",
+      "en": "Largest tenants (by rent)"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "TJX",
+      "ticker": "TJX",
+      "name": "TJXカンパニーズ",
+      "name_en": "The TJX Companies",
+      "sub": "衣料品のディスカウント小売",
+      "sub_en": "Off-price apparel",
+      "sub_short": "衣料小売",
+      "sub_short_en": "Apparel",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "49店舗を出店(賃料の2.6%)",
+          "text_en": "Major tenant (2.6% of base rent)",
+          "source": {
+            "label": "Kite Realty 10-K(2025年度)",
+            "label_en": "Kite Realty 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1286043/000128604326000009/krg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "TJX Companies, Inc. T.J. Maxx (16), Marshalls (12), HomeGoods (10), Homesense (5), Sierra (4), T.J. Maxx & HomeGoods combined (2) 49 1,398 $ 15,647 2.6 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ROST",
+      "ticker": "ROST",
+      "name": "ロス・ストアーズ",
+      "name_en": "Ross Stores",
+      "sub": "衣料品のディスカウント小売",
+      "sub_en": "Off-price apparel",
+      "sub_short": "衣料小売",
+      "sub_short_en": "Apparel",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "29店舗を出店(賃料の1.9%)",
+          "text_en": "Major tenant (1.9% of base rent)",
+          "source": {
+            "label": "Kite Realty 10-K(2025年度)",
+            "label_en": "Kite Realty 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1286043/000128604326000009/krg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Ross Stores, Inc. Ross Dress for Less (28), dd's DISCOUNTS (1) 29 824 11,468 1.9 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PetSmart",
+      "ticker": "PetSmart",
+      "name": "ペットスマート",
+      "name_en": "PetSmart",
+      "sub": "ペット用品店",
+      "sub_en": "Pet supplies",
+      "sub_short": "ペット",
+      "sub_short_en": "Pets",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "29店舗を出店(賃料の1.6%)",
+          "text_en": "Major tenant (1.6% of base rent)",
+          "source": {
+            "label": "Kite Realty 10-K(2025年度)",
+            "label_en": "Kite Realty 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1286043/000128604326000009/krg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "PetSmart, Inc. 29 593 9,861 1.6 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BBY",
+      "ticker": "BBY",
+      "name": "ベスト・バイ",
+      "name_en": "Best Buy",
+      "sub": "家電量販",
+      "sub_en": "Electronics retail",
+      "sub_short": "家電",
+      "sub_short_en": "Retail",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "15店舗を出店(賃料の1.5%)",
+          "text_en": "Major tenant (1.5% of base rent)",
+          "source": {
+            "label": "Kite Realty 10-K(2025年度)",
+            "label_en": "Kite Realty 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1286043/000128604326000009/krg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Best Buy Co., Inc. Best Buy (14), Pacific Sales (1) 15 593 9,002 1.5 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "DKS",
+      "ticker": "DKS",
+      "name": "ディックス・スポーティング・グッズ",
+      "name_en": "Dick's Sporting Goods",
+      "sub": "スポーツ用品店",
+      "sub_en": "Sporting goods",
+      "sub_short": "スポーツ",
+      "sub_short_en": "Sports",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "15店舗を出店(賃料の1.4%)",
+          "text_en": "Major tenant (1.4% of base rent)",
+          "source": {
+            "label": "Kite Realty 10-K(2025年度)",
+            "label_en": "Kite Realty 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1286043/000128604326000009/krg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Dick's Sporting Goods, Inc. Dick's Sporting Goods (10), Foot Locker (3), Golf Galaxy (2) 15 613 8,646 1.4 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Publix",
+      "ticker": "Publix",
+      "name": "パブリックス",
+      "name_en": "Publix Super Markets",
+      "sub": "スーパー",
+      "sub_en": "Grocery",
+      "sub_short": "スーパー",
+      "sub_short_en": "Grocery",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "15店舗を出店(賃料の1.3%)",
+          "text_en": "Major tenant (1.3% of base rent)",
+          "source": {
+            "label": "Kite Realty 10-K(2025年度)",
+            "label_en": "Kite Realty 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1286043/000128604326000009/krg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Publix Super Markets, Inc. 15 720 7,725 1.3 %"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

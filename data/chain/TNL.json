@@ -1,0 +1,152 @@
+{
+  "root": {
+    "ticker": "TNL",
+    "name": "トラベル+レジャー",
+    "cik": 1361658,
+    "name_en": "Travel + Leisure Co."
+  },
+  "rows": [
+    {
+      "ja": "ブランドのライセンス元・提携先",
+      "en": "Brand licensors & partners"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "WH",
+      "ticker": "WH",
+      "name": "ウィンダム・ホテルズ&リゾーツ",
+      "name_en": "Wyndham Hotels & Resorts",
+      "sub": "ホテルフランチャイズ",
+      "sub_en": "Hotel franchising",
+      "sub_short": "ホテル",
+      "sub_short_en": "Hotels",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "「ウィンダム」ブランドの長期独占ライセンス(分社元)",
+          "text_en": "Long-term exclusive license for the Wyndham brand (former parent)",
+          "source": {
+            "label": "Travel + Leisure 10-K(2025年度)",
+            "label_en": "Travel + Leisure 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1361658/000136165826000009/tnl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "We have a long-term, exclusive license agreement and marketing arrangements with Wyndham Hotels, the world's largest hotel franchising company by number of franchised properties"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ACCOR",
+      "ticker": "Accor",
+      "name": "アコー",
+      "name_en": "Accor S.A.",
+      "sub": "ホテル",
+      "sub_en": "Hotels",
+      "sub_short": "ホテル",
+      "sub_short_en": "Hotels",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "「アコー・バケーション・クラブ」の長期独占ライセンス",
+          "text_en": "Long-term exclusive license for Accor Vacation Club",
+          "source": {
+            "label": "Travel + Leisure 10-K(2025年度)",
+            "label_en": "Travel + Leisure 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1361658/000136165826000009/tnl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "We have long-term, exclusive license agreements and marketing arrangements associated with Accor Vacation Club, Eddie Bauer Adventure Club, Margaritaville Vacation Club, and Sports Illustrated Resorts"
+          }
+        }
+      ]
+    },
+    {
+      "id": "EddieBauer",
+      "ticker": "Eddie Bauer",
+      "name": "エディー・バウアー",
+      "name_en": "Eddie Bauer",
+      "sub": "アウトドアブランド",
+      "sub_en": "Outdoor brand",
+      "sub_short": "衣料",
+      "sub_short_en": "Outdoor",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "「エディー・バウアー・アドベンチャー・クラブ」のライセンス",
+          "text_en": "License for Eddie Bauer Adventure Club",
+          "source": {
+            "label": "Travel + Leisure 10-K(2025年度)",
+            "label_en": "Travel + Leisure 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1361658/000136165826000009/tnl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "We have long-term, exclusive license agreements and marketing arrangements associated with Accor Vacation Club, Eddie Bauer Adventure Club, Margaritaville Vacation Club, and Sports Illustrated Resorts"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Margaritaville",
+      "ticker": "Margaritaville",
+      "name": "マルガリータヴィル",
+      "name_en": "Margaritaville",
+      "sub": "リゾートブランド",
+      "sub_en": "Resort brand",
+      "sub_short": "リゾート",
+      "sub_short_en": "Resorts",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "「マルガリータヴィル・バケーション・クラブ」のライセンス",
+          "text_en": "License for Margaritaville Vacation Club",
+          "source": {
+            "label": "Travel + Leisure 10-K(2025年度)",
+            "label_en": "Travel + Leisure 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1361658/000136165826000009/tnl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "We have long-term, exclusive license agreements and marketing arrangements associated with Accor Vacation Club, Eddie Bauer Adventure Club, Margaritaville Vacation Club, and Sports Illustrated Resorts"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SportsIllustrated",
+      "ticker": "Sports Illustrated",
+      "name": "スポーツ・イラストレイテッド",
+      "name_en": "Sports Illustrated",
+      "sub": "メディアブランド",
+      "sub_en": "Media brand",
+      "sub_short": "メディア",
+      "sub_short_en": "Media",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "「スポーツ・イラストレイテッド・リゾーツ」のライセンス",
+          "text_en": "License for Sports Illustrated Resorts",
+          "source": {
+            "label": "Travel + Leisure 10-K(2025年度)",
+            "label_en": "Travel + Leisure 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1361658/000136165826000009/tnl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "We have long-term, exclusive license agreements and marketing arrangements associated with Accor Vacation Club, Eddie Bauer Adventure Club, Margaritaville Vacation Club, and Sports Illustrated Resorts"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
