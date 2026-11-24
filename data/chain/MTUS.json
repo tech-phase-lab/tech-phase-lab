@@ -1,0 +1,251 @@
+{
+  "root": {
+    "ticker": "MTUS",
+    "name": "メタラス",
+    "cik": 1598428,
+    "name_en": "Metallus"
+  },
+  "rows": [
+    {
+      "ja": "旧親会社",
+      "en": "Former parent",
+      "above": true
+    },
+    {
+      "ja": "大径棒鋼・継目無管の競合(10-Kに記載)",
+      "en": "Large bar & seamless tube competitors (named in the 10-K)"
+    },
+    {
+      "ja": "特殊棒鋼の主な競合",
+      "en": "Main special bar competitors"
+    }
+  ],
+  "rivals": [
+    "GGB",
+    "STLD",
+    "NUE"
+  ],
+  "companies": [
+    {
+      "id": "TKR",
+      "ticker": "TKR",
+      "name": "ティムケン",
+      "name_en": "Timken",
+      "sub": "ベアリング",
+      "sub_en": "Bearings",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2014年にティムケンの鉄鋼事業が分離独立して誕生",
+          "text_en": "Spun off from Timken's steel business in 2014",
+          "source": {
+            "label": "Metallus 10-K(2025年度)",
+            "label_en": "Metallus 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1598428/000119312526061042/mtus-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "became an independent, publicly traded company as the result of a spinoff from The Timken Company (\"Timken\") on June 30, 2014."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TS",
+      "ticker": "TS",
+      "name": "テナリス",
+      "name_en": "Tenaris",
+      "sub": "鋼管",
+      "sub_en": "Steel pipe",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "継目無機械管の主な競合",
+          "text_en": "Primary competitor in seamless mechanical tubing",
+          "source": {
+            "label": "Metallus 10-K(2025年度)",
+            "label_en": "Metallus 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1598428/000119312526061042/mtus-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "For seamless mechanical tubing, offshore producers such as Tenaris, S.A., Vallourec, S.A. and TMK Group are our primary competitors, as well as the foreign-owned domestic producer ArcelorMittal Tubular Products (a unit of Luxembourg-based ArcelorMittal, S.A.)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Vallourec",
+      "ticker": "Vallourec",
+      "name": "ヴァルレック",
+      "name_en": "Vallourec",
+      "sub": "鋼管(仏)",
+      "sub_en": "Steel pipe (France)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "継目無機械管の主な競合",
+          "text_en": "Primary competitor in seamless mechanical tubing",
+          "source": {
+            "label": "Metallus 10-K(2025年度)",
+            "label_en": "Metallus 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1598428/000119312526061042/mtus-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "For seamless mechanical tubing, offshore producers such as Tenaris, S.A., Vallourec, S.A. and TMK Group are our primary competitors, as well as the foreign-owned domestic producer ArcelorMittal Tubular Products (a unit of Luxembourg-based ArcelorMittal, S.A.)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MT",
+      "ticker": "MT",
+      "name": "アルセロール・ミタル",
+      "name_en": "ArcelorMittal",
+      "sub": "鉄鋼",
+      "sub_en": "Steel",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "傘下の米国鋼管子会社が継目無機械管の競合",
+          "text_en": "Its U.S. tubular unit competes in seamless mechanical tubing",
+          "source": {
+            "label": "Metallus 10-K(2025年度)",
+            "label_en": "Metallus 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1598428/000119312526061042/mtus-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "For seamless mechanical tubing, offshore producers such as Tenaris, S.A., Vallourec, S.A. and TMK Group are our primary competitors, as well as the foreign-owned domestic producer ArcelorMittal Tubular Products (a unit of Luxembourg-based ArcelorMittal, S.A.)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ScotForge",
+      "ticker": "Scot Forge",
+      "name": "スコット・フォージ",
+      "name_en": "Scot Forge",
+      "sub": "鍛造(非上場)",
+      "sub_en": "Forging (private)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "超大径棒鋼の競合",
+          "text_en": "Competitor in very large bars",
+          "source": {
+            "label": "Metallus 10-K(2025年度)",
+            "label_en": "Metallus 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1598428/000119312526061042/mtus-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "specialty forging companies in North America such as Scot Forge and Frisa are the primary competitors."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Frisa",
+      "ticker": "Frisa",
+      "name": "フリサ",
+      "name_en": "Frisa",
+      "sub": "鍛造(墨、非上場)",
+      "sub_en": "Forging (Mexico, private)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "超大径棒鋼の競合",
+          "text_en": "Competitor in very large bars",
+          "source": {
+            "label": "Metallus 10-K(2025年度)",
+            "label_en": "Metallus 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1598428/000119312526061042/mtus-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "specialty forging companies in North America such as Scot Forge and Frisa are the primary competitors."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GGB",
+      "ticker": "GGB",
+      "name": "ゲルダウ",
+      "name_en": "Gerdau",
+      "sub": "鉄鋼(伯)",
+      "sub_en": "Steel (Brazil)",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "6インチ未満の棒鋼の主な競合",
+          "text_en": "Primary competitor for bars under 6 inches",
+          "source": {
+            "label": "Metallus 10-K(2025年度)",
+            "label_en": "Metallus 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1598428/000119312526061042/mtus-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "For bar products less than 6-inch in diameter, the primary competitor is foreign-owned domestic producer Gerdau Special Steel North America (a unit of Brazilian steelmaker Gerdau, S.A)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "STLD",
+      "ticker": "STLD",
+      "name": "スチール・ダイナミクス",
+      "name_en": "Steel Dynamics",
+      "sub": "鉄鋼",
+      "sub_en": "Steel",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "9インチ以下の棒鋼の主な競合",
+          "text_en": "Principal competitor for bars up to 9 inches",
+          "source": {
+            "label": "Metallus 10-K(2025年度)",
+            "label_en": "Metallus 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1598428/000119312526061042/mtus-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "For bar products up to 9-inch in diameter, domestic producers Steel Dynamics, Inc. and Nucor Corporation (in some cases up to 10-inch) are our principal competitors."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NUE",
+      "ticker": "NUE",
+      "name": "ニューコア",
+      "name_en": "Nucor",
+      "sub": "鉄鋼",
+      "sub_en": "Steel",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "9インチ以下の棒鋼の主な競合",
+          "text_en": "Principal competitor for bars up to 9 inches",
+          "source": {
+            "label": "Metallus 10-K(2025年度)",
+            "label_en": "Metallus 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1598428/000119312526061042/mtus-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "For bar products up to 9-inch in diameter, domestic producers Steel Dynamics, Inc. and Nucor Corporation (in some cases up to 10-inch) are our principal competitors."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
