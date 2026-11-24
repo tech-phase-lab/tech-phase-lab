@@ -1,0 +1,129 @@
+{
+  "root": {
+    "ticker": "HQY",
+    "name": "ヘルスエクイティ",
+    "cik": 1428336,
+    "name_en": "HealthEquity"
+  },
+  "rows": [
+    {
+      "ja": "口座の取得元",
+      "en": "Portfolio acquisition"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in its 10-K)"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "ALIT",
+    "WTW"
+  ],
+  "companies": [
+    {
+      "id": "CNDT",
+      "ticker": "CNDT",
+      "name": "コンデュエント",
+      "name_en": "Conduent",
+      "sub": "業務委託サービス",
+      "sub_en": "Business process services",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ConduentのHSA口座事業BenefitWalletを取得(2023年9月契約)",
+          "text_en": "Took over Conduent's BenefitWallet HSA portfolio (agreed September 2023)",
+          "source": {
+            "label": "Conduent 10-K(2025年度)",
+            "label_en": "Conduent 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1677703/000167770326000024/cndt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "In September 2023, the Company entered into a Custodial Transfer and Asset Purchase Agreement to transfer its BenefitWallet health savings account and medical savings account portfolio (collectively, the \"BenefitWallet Portfolio\") to HealthEquity, Inc"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Fidelity",
+      "ticker": "Fidelity",
+      "name": "フィデリティ",
+      "name_en": "Fidelity Investments",
+      "sub": "資産運用",
+      "sub_en": "Asset management",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "HSA市場に参入し、シェアを伸ばす競合",
+          "text_en": "Entered the HSA market and gained significant share",
+          "source": {
+            "label": "HealthEquity 10-K(2026年1月期)",
+            "label_en": "HealthEquity 10-K (FY ended Jan 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1428336/000142833626000010/hqy-20260131.htm",
+            "level": "official",
+            "date": "2026-03-17",
+            "quote": "Well-known retail mutual fund companies, such as Fidelity Investments, have entered the HSA and CDB business and gained significant market share."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ALIT",
+      "ticker": "ALIT",
+      "name": "アライト",
+      "name_en": "Alight",
+      "sub": "人事・福利厚生サービス",
+      "sub_en": "HR & benefits services",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Alightが10-Kで、主な競合の一社として挙げる",
+          "text_en": "Alight names HealthEquity among primary competitors",
+          "source": {
+            "label": "Alight 10-K(2025年度)",
+            "label_en": "Alight 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1809104/000162828026011108/alit-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Our primary competitors include ADP, bswift, Businessolver, Conduent, Empower, Empyrean, Fidelity, HealthEquity, Included Health"
+          }
+        }
+      ]
+    },
+    {
+      "id": "WTW",
+      "ticker": "WTW",
+      "name": "WTW",
+      "name_en": "WTW",
+      "sub": "保険仲介・コンサル",
+      "sub_en": "Insurance brokerage & consulting",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "WTWが10-Kで、福利厚生口座の競合として挙げる",
+          "text_en": "WTW names HealthEquity among consumer-directed benefits competitors",
+          "source": {
+            "label": "WTW 10-K(2024年度)",
+            "label_en": "WTW 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1140536/000095017025026278/wtw-20241231.htm",
+            "level": "official",
+            "date": "2025-02-25",
+            "quote": "We also compete with providers of account-based health plans and consumer-directed benefits such as WageWorks and HealthEquity."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

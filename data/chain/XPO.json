@@ -1,0 +1,176 @@
+{
+  "root": {
+    "ticker": "XPO",
+    "name": "XPO",
+    "cik": 1166003,
+    "name_en": "XPO"
+  },
+  "rows": [
+    {
+      "ja": "分離・独立した会社",
+      "en": "Spin-offs",
+      "above": true
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "ODFL",
+    "SAIA",
+    "FDX",
+    "TFII"
+  ],
+  "companies": [
+    {
+      "id": "GXO",
+      "ticker": "GXO",
+      "name": "GXOロジスティクス",
+      "name_en": "GXO Logistics",
+      "sub": "物流受託",
+      "sub_en": "Contract logistics",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2021年8月、分離・分配契約でXPOから独立",
+          "text_en": "Spun off from XPO in August 2021 under a separation and distribution agreement",
+          "source": {
+            "label": "GXO Logistics 10-K(2026年提出)",
+            "label_en": "GXO Logistics 10-K (filed 2026-02)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1852244/000185224426000007/gxo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Separation and Distribution Agreement by and between XPO Logistics, Inc. and GXO Logistics, Inc., dated as of August 1, 2021"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RXO",
+      "ticker": "RXO",
+      "name": "RXO",
+      "name_en": "RXO",
+      "sub": "トラック輸送の仲介",
+      "sub_en": "Truck brokerage",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "分離・分配契約などでXPOから独立し、関係を定める",
+          "text_en": "Separated from XPO under a separation and distribution agreement that governs their relationship",
+          "source": {
+            "label": "Rxo 10-K(2025年提出)",
+            "label_en": "Rxo 10-K (filed 2025-02)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1929561/000192956125000044/rxo-20241231.htm",
+            "level": "official",
+            "date": "2025-02-27",
+            "quote": "The Separation was completed under a Separation and Distribution Agreement and various other agreements that govern aspects of the Company's relationship with XPO"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ODFL",
+      "ticker": "ODFL",
+      "name": "オールド・ドミニオン",
+      "name_en": "Old Dominion Freight Line",
+      "sub": "混載トラック輸送(LTL)",
+      "sub_en": "Less-than-truckload",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "XPOが10-Kで、北米のLTLの競合として挙げる",
+          "text_en": "XPO names it as a North American LTL competitor",
+          "source": {
+            "label": "XPO 10-K(2025年度)",
+            "label_en": "XPO 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1166003/000116600326000016/xpo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-05",
+            "quote": "Our competitors in North America include local, regional and national LTL carriers that offer the same services we provide, such as Old Dominion Freight Line and Saia."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SAIA",
+      "ticker": "SAIA",
+      "name": "サイア",
+      "name_en": "Saia",
+      "sub": "混載トラック輸送(LTL)",
+      "sub_en": "Less-than-truckload",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "XPOが10-Kで、北米のLTLの競合として挙げる",
+          "text_en": "XPO names it as a North American LTL competitor",
+          "source": {
+            "label": "XPO 10-K(2025年度)",
+            "label_en": "XPO 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1166003/000116600326000016/xpo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-05",
+            "quote": "Our competitors in North America include local, regional and national LTL carriers that offer the same services we provide, such as Old Dominion Freight Line and Saia."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FDX",
+      "ticker": "FDX",
+      "name": "フェデックス",
+      "name_en": "FedEx",
+      "sub": "物流・宅配",
+      "sub_en": "Logistics & parcel",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "FedExが10-Kで、FedEx Freightの主な競合としてXPOを挙げる",
+          "text_en": "FedEx names XPO among FedEx Freight's primary competitors",
+          "source": {
+            "label": "Fedex 10-K(2024年提出)",
+            "label_en": "Fedex 10-K (filed 2024-07)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1048911/000095017024083577/fdx-20240531.htm",
+            "level": "official",
+            "date": "2024-07-15",
+            "quote": "FedEx Freight's primary competitors are XPO Logistics, Inc., Old Dominion Freight Line, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TFII",
+      "ticker": "TFII",
+      "name": "TFIインターナショナル",
+      "name_en": "TFI International",
+      "sub": "トラック輸送(カナダ)",
+      "sub_en": "Trucking (Canada)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "TFIが年次報告で、米国のLTLの主な競合としてXPOを挙げる",
+          "text_en": "TFI names XPO among its main US LTL competitors",
+          "source": {
+            "label": "TFI International 年次報告(40-F)(2025年提出)",
+            "label_en": "TFI International annual report (40-F) (filed 2025-02)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1588823/000095017025023200/tfii-ex99_1.htm",
+            "level": "official",
+            "date": "2025-02-19",
+            "quote": "in the LTL sector, Old Dominion, SAIA, ArcBest, and XPO (in the United States)"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
