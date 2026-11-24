@@ -117,7 +117,7 @@ test("sample and production summaries use complete seven-factor scores and groun
     assert.match(result.description,lang==="ja" ? /^DEMO-Aは.+で(大きく)?上回ります。DEMO-[BC]は.+が強みですが、.+。$/ : /^DEMO-A is (well )?ahead in .+\. DEMO-[BC] is stronger in .+, but .+\.$/);
     assert.doesNotMatch(result.description,/\/10|全社にそろう|every company has|総合点を押し上げ/);
   }
-  assert.equal(overallComparison(companies.slice(0,2),"ja",now).description,"DEMO-Aは財務の余力と資金を生む力で大きく上回ります。DEMO-Bは株価の勢いが強みですが、簡易FCFがマイナスです（売上比 -6.0%）。");
+  assert.equal(overallComparison(companies.slice(0,2),"ja",now).description,"DEMO-Aは財務の余力と資金を生む力で大きく上回ります。DEMO-Bは株価の勢いが強みですが、簡易FCFがマイナス（売上比 -6.0%）です。");
   // When the runner-up has no strength of its own, the one caution is the leader's weakness (here its margin decline).
   const low={...companies[0],ticker:"LOW",quarterRevenueGrowth:companies[0].quarterRevenueGrowth-40,preparedAnalysis:{...companies[0].preparedAnalysis,items:[]}};
   assert.match(overallComparison([companies[0],low],"ja",now).description,/^DEMO-Aは成長性で大きく上回ります。ただし、DEMO-Aは営業利益率が38\.0%から32\.0%に下がっています。$/);

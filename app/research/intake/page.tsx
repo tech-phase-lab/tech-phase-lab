@@ -3,6 +3,7 @@ import rawSnapshot from "@/lib/research/intake-snapshot.json";
 import { snapshotIssues, type IntakeSnapshot } from "@/lib/research/intake";
 import { events } from "@/lib/research/content-server";
 import IntakeDashboard from "./intake-dashboard";
+import { requireOperatorPage } from "@/lib/membership/operator-page";
 
 export const metadata: Metadata = {
   title: "資料の取得・確認状況 | Tech Phase Research",
@@ -10,7 +11,10 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-export default function IntakePage() {
+export const dynamic = "force-dynamic";
+
+export default async function IntakePage() {
+  await requireOperatorPage();
   const snapshot = rawSnapshot as IntakeSnapshot;
   const issues = snapshotIssues(snapshot);
   if (issues.length) throw new Error(`Invalid intake snapshot: ${issues.join(", ")}`);

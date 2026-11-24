@@ -175,11 +175,11 @@ export const verifiedChanges: VerifiedChange[] = [{
     location: "Q1 actual net revenue, gross margin, and operating margin",
   }],
   metrics: [
-    { id: "revenue", label: { ja: "売上高", en: "Net revenue" }, previous: 35.9, current: 40.2, unit: "billion", change: { value: 11.978, unit: "percent" }, note: { ja: "米ドル換算。会社発表の前四半期比は12.0%。", en: "US-dollar basis. TSMC reports 12.0% quarter-on-quarter." } },
+    { id: "revenue", label: { ja: "売上高", en: "Net revenue" }, previous: 35.9, current: 40.2, unit: "billion", change: { value: 11.978, unit: "percent" }, note: { ja: "ドル換算。会社発表の前四半期比は12.0%。", en: "US-dollar basis. TSMC reports 12.0% quarter-on-quarter." } },
     { id: "gross-margin", label: { ja: "粗利益率", en: "Gross margin" }, previous: 66.2, current: 67.7, unit: "percent", change: { value: 1.5, unit: "pp" }, note: { ja: "増減率ではなくパーセントポイント差。", en: "Percentage-point difference, not percentage growth." } },
     { id: "operating-margin", label: { ja: "営業利益率", en: "Operating margin" }, previous: 58.1, current: 60.3, unit: "percent", change: { value: 2.2, unit: "pp" }, note: { ja: "増減率ではなくパーセントポイント差。", en: "Percentage-point difference, not percentage growth." } },
   ],
-  reading: { ja: "米ドル建て売上は前四半期比12.0%増の$40.2B。粗利益率は1.5ポイント、営業利益率は2.2ポイント上昇しました。2nmはウェハ売上の3%、7nm以下の先端技術は77%を占めました。", en: "US-dollar revenue rose 12.0% quarter-on-quarter to $40.2B. Gross margin increased 1.5 points and operating margin increased 2.2 points. Two-nanometer accounted for 3% of wafer revenue, while 7nm and below accounted for 77%." },
+  reading: { ja: "ドル建て売上は前四半期比12.0%増の$40.2B。粗利益率は1.5ポイント、営業利益率は2.2ポイント上昇しました。2nmはウェハ売上の3%、7nm以下の先端技術は77%を占めました。", en: "US-dollar revenue rose 12.0% quarter-on-quarter to $40.2B. Gross margin increased 1.5 points and operating margin increased 2.2 points. Two-nanometer accounted for 3% of wafer revenue, while 7nm and below accounted for 77%." },
   unknown: { ja: "Q3見通しの達成可否、2nmの急拡大が製品別・顧客別売上に与える影響、海外生産拡大による将来の利益率への影響は、この発表だけでは確定しません。", en: "This release does not establish whether Q3 guidance will be met, how the 2nm ramp will affect product or customer mix, or the future margin impact of overseas manufacturing expansion." },
   outlook: [
     { ja: "Q3売上見通し：$44.6B〜$45.8B", en: "Q3 revenue outlook: $44.6B–$45.8B" },

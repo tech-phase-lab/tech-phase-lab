@@ -2,7 +2,7 @@
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import { favoriteStocksKey } from "@/lib/research/favorites";
 import { favoriteListsKey, parseFavoriteLists, type FavoriteLists } from "@/lib/research/favorite-lists";
-import { useIdentityRefresh } from "../identity-provider";
+import { useIdentityRefresh, useIdentitySignedIn } from "../identity-provider";
 import { createFavoriteSync, favoriteDisplayDocument, type CloudFavorites, type FavoriteSyncStatus } from "@/lib/research/favorite-sync";
 const eventName = "tech-phase:favorite-lists";
 function snapshot() {
@@ -40,8 +40,12 @@ function useLocalFavoriteLists() {
 
 export function useFavoriteLists() {
   const local = useLocalFavoriteLists();
-  const [cloud, setCloud] = useState<CloudFavorites | null>(null);
-  const [status, setStatus] = useState<FavoriteSyncStatus>("loading");
+  const signedIn = useIdentitySignedIn();
+  const [syncedCloud, setCloud] = useState<CloudFavorites | null>(null);
+  const [syncStatus, setStatus] = useState<FavoriteSyncStatus>("loading");
+  // Signed out: this device's lists, without asking the server (which would only answer 401).
+  const cloud = signedIn === true ? syncedCloud : null;
+  const status: FavoriteSyncStatus = signedIn === true ? syncStatus : signedIn === false ? "guest" : "loading";
   const sync = useRef<ReturnType<typeof createFavoriteSync> | null>(null);
   // Renew the identity session before asking the server, as the other member screens do. After a long idle the
   // session cookie can be stale while the page still shows the signed-in header: a 401 then made the list fall
@@ -50,6 +54,7 @@ export function useFavoriteLists() {
   const identity = useRef(refreshIdentity);
   useEffect(() => { identity.current = refreshIdentity; }, [refreshIdentity]);
   useEffect(() => {
+    if (signedIn !== true) return;
     const request = (init?: { body: string }) => fetch("/api/research/favorites", {
       method: init ? "POST" : "GET", cache: "no-store", signal: AbortSignal.timeout(12000),
       ...(init ? { headers: { "Content-Type": "application/json" }, body: init.body } : {}),
@@ -82,7 +87,7 @@ export function useFavoriteLists() {
       window.removeEventListener("beforeunload", protect); window.removeEventListener("focus", visible);
       window.removeEventListener("online", online); document.removeEventListener("visibilitychange", visible);
     };
-  }, []);
+  }, [signedIn]);
   function update(change: (state: FavoriteLists) => FavoriteLists) {
     return status === "guest" ? local.update(change) : sync.current?.update(change) ?? false;
   }

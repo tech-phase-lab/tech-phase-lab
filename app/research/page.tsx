@@ -12,8 +12,8 @@ import { companyWatches } from "@/lib/research/company-watch";
 import { deduplicateResearchEvents } from "@/lib/research/deduplicate-events";
 
 export const metadata: Metadata = {
-  title: "Tech Phase Research | Research preview",
-  description: "Source-linked company research. Historical review examples, not a live news service.",
+  title: "Tech Phase Research",
+  description: "米国ハイテク株の速報、決算、目標株価、資料をまとめて確認できる日本語の米国株リサーチアプリです。",
   robots: { index: false, follow: false },
 };
 

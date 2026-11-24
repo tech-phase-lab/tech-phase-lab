@@ -201,14 +201,14 @@ export function cautionClause(item: AnalysisItem, lang: "ja"|"en"): string {
   const abs=(n:string|undefined)=>n?.replace(/^-/,"");
   if(item.id==="revenue-growth" && numbers[0]) return ja ? `売上が${abs(numbers[0])}%減っています` : `its revenue fell ${abs(numbers[0])}%`;
   if(item.id==="margin-decline" && numbers.length>=2) return ja ? `営業利益率が${numbers[0]}%から${numbers[1]}%に下がっています` : `its operating margin fell from ${numbers[0]}% to ${numbers[1]}%`;
-  if(item.id==="operating-margin" && numbers[0] && /税引前|Pre-tax/.test(text)) return ja ? `税引前で赤字です（利益率 ${numbers[0]}%）` : `its pre-tax margin was ${numbers[0]}%`;
-  if(item.id==="operating-margin" && numbers[0]) return ja ? `営業赤字です（営業利益率 ${numbers[0]}%）` : `its operating margin was ${numbers[0]}%`;
+  if(item.id==="operating-margin" && numbers[0] && /税引前|Pre-tax/.test(text)) return ja ? `税引前で赤字（利益率 ${numbers[0]}%）です` : `its pre-tax margin was ${numbers[0]}%`;
+  if(item.id==="operating-margin" && numbers[0]) return ja ? `営業赤字（営業利益率 ${numbers[0]}%）です` : `its operating margin was ${numbers[0]}%`;
   if(item.id==="momentum" && numbers.length) return ja ? `株価が約3か月で${abs(numbers.at(-1))}%下がっています` : `its share price fell ${abs(numbers.at(-1))}% over about three months`;
   if(item.id==="share-count" && numbers[0]) return ja ? `平均株式数が${abs(numbers[0])}%増えています` : `its average share count rose ${abs(numbers[0])}%`;
   if(item.id==="debt-cash") return ja ? "有利子負債が現金を上回っています" : "its debt exceeds its cash";
   if(item.id==="revenue-qoq" && numbers[0]) return ja ? `売上が前の四半期より${abs(numbers[0])}%減っています` : `its revenue fell ${abs(numbers[0])}% from the previous quarter`;
   if(item.id==="negative-equity") return ja ? "株主資本がマイナスです" : "its shareholders' equity is negative";
-  if(item.id==="cash-generation" && numbers[0]) return ja ? `簡易FCFがマイナスです（売上比 ${numbers[0]}%）` : `its simple free cash flow is negative (${numbers[0]}% of revenue)`;
+  if(item.id==="cash-generation" && numbers[0]) return ja ? `簡易FCFがマイナス（売上比 ${numbers[0]}%）です` : `its simple free cash flow is negative (${numbers[0]}% of revenue)`;
   return ja ? `${text}には注意が必要です` : `watch ${text}`;
 }
 const joinWords=(words:string[],ja:boolean)=>ja ? words.join("と") : words.join(" and ");

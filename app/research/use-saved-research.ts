@@ -4,6 +4,7 @@ import { parseAnnotations, type Annotation } from '@/lib/research/annotations';
 import { parseSavedIds } from '@/lib/research/saved-collection';
 import { emptySavedDocument, hasBrowserResearch, importBrowserResearch, notebookKey, validateSavedDocument, type SavedDocument } from '@/lib/research/saved-document';
 import { createSavedSync, type SavedCloud, type SavedStatus } from '@/lib/research/saved-sync';
+import { useIdentitySignedIn } from './identity-provider';
 const savedKey = 'tech-phase:research-saved:v1';
 const inkPrefix = 'tech-phase:annotations:v1:';
 const changed = 'tech-phase:research-saved';
@@ -24,12 +25,17 @@ export function useSavedResearch() {
     const [saved, entries] = JSON.parse(raw) as [string, [string, string][]];
     return { saved: parseSavedIds(saved), notebooks: Object.fromEntries(entries.map(([k, v]) => [k, parseAnnotations(v)])) };
   }, [raw]);
-  const [cloud, setCloud] = useState<SavedCloud | null>(null);
-  const [status, setStatus] = useState<SavedStatus>('loading');
+  const signedIn = useIdentitySignedIn();
+  const [syncedCloud, setCloud] = useState<SavedCloud | null>(null);
+  const [syncStatus, setStatus] = useState<SavedStatus>('loading');
+  // Signed out: this browser's saved research, without asking the server (which would only answer 401).
+  const cloud = signedIn === true ? syncedCloud : null;
+  const status: SavedStatus = signedIn === true ? syncStatus : signedIn === false ? 'guest' : 'loading';
   const sync = useRef<ReturnType<typeof createSavedSync> | null>(null);
   const importKey = cloud ? `tech-phase:saved-import:v1:${cloud.account}` : '';
   const imported = useSyncExternalStore(subscribe, () => { try { return importKey ? localStorage.getItem(importKey) ?? '' : ''; } catch { return ''; } }, () => '');
   useEffect(() => {
+    if (signedIn !== true) return;
     const expected = new Map<string, string | null>();
     const key = (account: string) => `tech-phase:saved-pending:v1:${account}`;
     function start() {
@@ -64,7 +70,7 @@ export function useSavedResearch() {
       window.removeEventListener('tech-phase:membership-changed', start);
       window.removeEventListener('beforeunload', protect); document.removeEventListener('visibilitychange', refresh);
     };
-  }, []);
+  }, [signedIn]);
   const displayed = cloud?.document ?? (status === 'guest' ? local : emptySavedDocument());
   function update(change: (current: SavedDocument) => SavedDocument) {
     if (status !== 'guest') return sync.current?.update(change) ?? false;

@@ -135,6 +135,18 @@ test("reader: a refused or failed read shows the last good copy with its own tim
   assert.equal(await other.read(SPEC, "NEVER", async () => { throw new Error("x"); }), null);
 });
 
+test("reader: another instance still finds the day's copy hours later, when the minute has no room (production QA, Nov 24)", async () => {
+  const clock = clockAt(T0), store = memoryStore();
+  await createReader(store, clock.now).read(SPEC, "SMH", async () => ({ price: 7 }));
+  clock.advance(5 * 3_600_000); // past the slot copies and the two hourly copies
+  let calls = 0;
+  const got = await createReader(store, clock.now).read(SPEC, "SMH", async () => { calls++; throw new Error("twelve-budget"); });
+  assert.equal(calls, 1); // the refused read is the only attempt: the fallback adds no provider call
+  assert.equal(got.fresh, false); assert.equal(got.value.price, 7); assert.equal(got.at, T0);
+  clock.advance(STALE_LIMIT_MS); // never older than staleMs
+  assert.equal(await createReader(store, clock.now).read(SPEC, "SMH", async () => { throw new Error("twelve-budget"); }), null);
+});
+
 test("reader: many symbols go out in chunks, at most maxFetch per request, never-read first; unknown symbols are remembered for the slot", async () => {
   const clock = clockAt(T0), reader = createReader(memoryStore(), clock.now);
   const batches = [];
