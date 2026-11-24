@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { bannerLine, closedDayClose, closedDayLine, marketBanner, marketPhase, usMarketSession } from "../lib/research/us-market-session.ts";
+import { BOARD_STALE_MS, bannerLine, closedDayClose, freshnessNote, closedDayLine, marketBanner, marketPhase, usMarketSession } from "../lib/research/us-market-session.ts";
 
 const at = iso => usMarketSession(new Date(iso));
 
@@ -69,7 +69,7 @@ test("banner words and the point: lit for pre, regular and after-hours only", ()
   assert.deepEqual(marketBanner("closed"), { ja: "取引終了", en: "Closed", lit: false });
 });
 
-test("banner line: the state word and the time of the last successful read, to the second, in Japan time (U.S. Eastern in English)", () => {
+test("banner line: the state word and the running clock, to the second, in Japan time (U.S. Eastern in English)", () => {
   const at = Date.parse("2026-11-12T21:20:35Z"); // 06:20:35 on Nov 13 in Tokyo
   assert.equal(bannerLine("post", true, at), "アフター取引中 ・ 06:20:35 JST");
   assert.equal(bannerLine("pre", true, at), "プレ取引中 ・ 06:20:35 JST");
@@ -121,4 +121,28 @@ test("closed-day line: the trading day of the close shown, in Japanese and Engli
   assert.equal(closedDayLine({ month: 11, day: 13, weekday: 5 }, true), "休場 ・ 米国 11/13(金) の終値");
   assert.equal(closedDayLine({ month: 11, day: 13, weekday: 5 }, false), "Closed · U.S. close of Fri 11/13");
   assert.equal(closedDayLine({ month: 11, day: 25, weekday: 3 }, true), "休場 ・ 米国 11/25(水) の終値");
+});
+
+test("the status clock ticks every second, and stale prices are said separately (owner, Nov 24: プレ取引中 ・ 22:23:50 JST stood still)", async () => {
+  const { readFileSync } = await import("node:fs");
+  // 08:23:50 ET on Tue Nov 24 = 22:23:50 JST: pre-market. Each second gives the next second.
+  const start = Date.parse("2026-11-24T13:23:50Z");
+  assert.equal(marketPhase(new Date(start)), "pre");
+  assert.equal(bannerLine("pre", true, start), "プレ取引中 ・ 22:23:50 JST");
+  assert.equal(bannerLine("pre", true, start + 1000), "プレ取引中 ・ 22:23:51 JST");
+  assert.equal(bannerLine("pre", false, start + 10_000), "Pre-market · 08:24:00 ET");
+  // Prices read 15 seconds ago are current: nothing beside the clock.
+  assert.equal(freshnessNote(true, start - 15_000, start), null);
+  assert.equal(freshnessNote(true, null, start), null);
+  assert.equal(freshnessNote(true, start, null), null);
+  // Reads stopped for a minute or more: the clock keeps running and the note gives the prices' own time.
+  assert.equal(freshnessNote(true, start - BOARD_STALE_MS, start), "株価は 22:22:50 時点（更新が止まっています）");
+  assert.equal(freshnessNote(false, start - 5 * 60_000, start), "prices as of 08:18:50 (updates paused)");
+  // The board's status line uses the per-second clock, not the time of the last read, and is not a live region that would read the clock aloud.
+  const board = readFileSync(new URL("../app/research/price/market-board.tsx", import.meta.url), "utf8");
+  assert.match(board, /function StatusClock[\s\S]*?const now = useSecond\(\);[\s\S]*?, ja, now\)\}<\/span>/);
+  assert.doesNotMatch(board, /bannerLine\(phase, ja, board\.at\)/);
+  assert.doesNotMatch(board, /className=\{styles\.state\} role="status"/);
+  const hook = readFileSync(new URL("../app/research/price/use-minute.ts", import.meta.url), "utf8");
+  assert.match(hook, /export function useSecond\(\)[\s\S]*?1000 - \(at % 1000\)/);
 });
