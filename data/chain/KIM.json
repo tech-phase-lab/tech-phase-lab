@@ -19,6 +19,8 @@
       "name": "TJXカンパニーズ",
       "sub": "ディスカウント小売",
       "sub_en": "Off-price retail",
+      "sub_short": "格安小売",
+      "sub_short_en": "Off-price",
       "row": 0,
       "relations": [
         {
@@ -43,6 +45,8 @@
       "name": "ロス・ストアーズ",
       "sub": "ディスカウント小売",
       "sub_en": "Off-price retail",
+      "sub_short": "格安小売",
+      "sub_short_en": "Off-price",
       "row": 0,
       "relations": [
         {
@@ -67,6 +71,8 @@
       "name": "バーリントン・ストアーズ",
       "sub": "ディスカウント小売",
       "sub_en": "Off-price retail",
+      "sub_short": "格安小売",
+      "sub_short_en": "Off-price",
       "row": 0,
       "relations": [
         {
@@ -91,6 +97,8 @@
       "name": "アマゾン/ホールフーズ",
       "sub": "食品・ネット小売",
       "sub_en": "Grocery & e-commerce",
+      "sub_short": "食品",
+      "sub_short_en": "Grocery",
       "row": 0,
       "relations": [
         {
@@ -115,6 +123,8 @@
       "name": "アルバートソンズ",
       "sub": "食品スーパー",
       "sub_en": "Grocery",
+      "sub_short": "スーパー",
+      "sub_short_en": "Grocery",
       "row": 0,
       "relations": [
         {
@@ -139,6 +149,8 @@
       "name": "ホーム・デポ",
       "sub": "ホームセンター",
       "sub_en": "Home improvement",
+      "sub_short": "住宅用品",
+      "sub_short_en": "Home",
       "row": 0,
       "relations": [
         {
@@ -163,6 +175,8 @@
       "name": "クローガー",
       "sub": "食品スーパー",
       "sub_en": "Grocery",
+      "sub_short": "スーパー",
+      "sub_short_en": "Grocery",
       "row": 0,
       "relations": [
         {
@@ -187,6 +201,8 @@
       "name": "ディックス・スポーティング・グッズ",
       "sub": "スポーツ用品小売",
       "sub_en": "Sporting goods retail",
+      "sub_short": "スポーツ",
+      "sub_short_en": "Sports",
       "row": 0,
       "relations": [
         {

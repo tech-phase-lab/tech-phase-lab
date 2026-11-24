@@ -34,6 +34,8 @@
       "name_en": "Suvinil",
       "sub": "建築用塗料(ブラジル)",
       "sub_en": "Architectural paints (Brazil)",
+      "sub_short": "塗料",
+      "sub_short_en": "Paints",
       "row": 0,
       "relations": [
         {
@@ -58,6 +60,8 @@
       "name_en": "Agree Realty",
       "sub": "ネットリースREIT",
       "sub_en": "Net lease REIT",
+      "sub_short": "リース",
+      "sub_short_en": "REIT",
       "row": 1,
       "relations": [
         {
@@ -82,6 +86,8 @@
       "name_en": "Generation Income Properties",
       "sub": "ネットリースREIT",
       "sub_en": "Net lease REIT",
+      "sub_short": "リース",
+      "sub_short_en": "REIT",
       "row": 1,
       "relations": [
         {
@@ -106,6 +112,8 @@
       "name_en": "PPG Industries",
       "sub": "塗料",
       "sub_en": "Paints & coatings",
+      "sub_short": "塗料",
+      "sub_short_en": "Paints",
       "row": 2,
       "relations": [
         {
@@ -130,6 +138,8 @@
       "name_en": "Axalta Coating Systems",
       "sub": "自動車・工業用塗料",
       "sub_en": "Coatings",
+      "sub_short": "塗料",
+      "sub_short_en": "Coatings",
       "row": 2,
       "relations": [
         {
@@ -154,6 +164,8 @@
       "name_en": "Masco",
       "sub": "住宅設備・塗料",
       "sub_en": "Home products & paint",
+      "sub_short": "住宅設備",
+      "sub_short_en": "Home",
       "row": 2,
       "relations": [
         {
@@ -178,6 +190,8 @@
       "name_en": "Ingevity",
       "sub": "特殊化学品",
       "sub_en": "Specialty chemicals",
+      "sub_short": "化学品",
+      "sub_short_en": "Chem",
       "row": 2,
       "relations": [
         {
@@ -202,6 +216,8 @@
       "name_en": "Berkshire Hathaway (Benjamin Moore)",
       "sub": "複合企業",
       "sub_en": "Conglomerate",
+      "sub_short": "複合企業",
+      "sub_short_en": "Group",
       "row": 2,
       "relations": [
         {

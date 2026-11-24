@@ -31,6 +31,8 @@
       "name": "アマゾン・ウェブ・サービス(アマゾン)",
       "sub": "クラウド基盤",
       "sub_en": "Cloud infrastructure",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 0,
       "relations": [
         {
@@ -55,6 +57,8 @@
       "name": "アップル",
       "sub": "スマートフォン・OS",
       "sub_en": "Devices & software",
+      "sub_short": "スマホ",
+      "sub_short_en": "Devices",
       "row": 1,
       "relations": [
         {
@@ -79,6 +83,8 @@
       "name": "アウディ",
       "sub": "自動車",
       "sub_en": "Automaker",
+      "sub_short": "自動車",
+      "sub_short_en": "Cars",
       "row": 1,
       "relations": [
         {
@@ -103,6 +109,8 @@
       "name": "ビー・エム・ダブリュー",
       "sub": "自動車",
       "sub_en": "Automaker",
+      "sub_short": "自動車",
+      "sub_short_en": "Cars",
       "row": 1,
       "relations": [
         {
@@ -127,6 +135,8 @@
       "name": "アルファベット(グーグル)",
       "sub": "検索・広告",
       "sub_en": "Search & advertising",
+      "sub_short": "検索",
+      "sub_short_en": "Search",
       "row": 2,
       "relations": [
         {
@@ -151,6 +161,8 @@
       "name": "メタ・プラットフォームズ",
       "sub": "SNS・広告",
       "sub_en": "Social media & ads",
+      "sub_short": "SNS",
+      "sub_short_en": "Social",
       "row": 2,
       "relations": [
         {
@@ -175,6 +187,8 @@
       "name": "アンジ",
       "sub": "住宅サービス仲介",
       "sub_en": "Home services platform",
+      "sub_short": "住宅",
+      "sub_short_en": "Home",
       "row": 2,
       "relations": [
         {

@@ -30,6 +30,8 @@
       "name_en": "S&P Global (S&P Dow Jones Indices)",
       "sub": "指数",
       "sub_en": "Indices",
+      "sub_short": "指数",
+      "sub_short_en": "Indices",
       "row": 0,
       "relations": [
         {
@@ -54,6 +56,8 @@
       "name_en": "LSEG (FTSE Russell)",
       "sub": "指数",
       "sub_en": "Indices",
+      "sub_short": "指数",
+      "sub_short_en": "Indices",
       "row": 0,
       "relations": [
         {
@@ -78,6 +82,8 @@
       "name_en": "The Options Clearing Corporation",
       "sub": "清算機関",
       "sub_en": "Clearing house",
+      "sub_short": "清算機関",
+      "sub_short_en": "Clearing",
       "row": 0,
       "relations": [
         {
@@ -102,6 +108,8 @@
       "name_en": "Bank of America (BofA Securities)",
       "sub": "銀行・証券",
       "sub_en": "Bank & securities",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
       "row": 0,
       "relations": [
         {
@@ -126,6 +134,8 @@
       "name_en": "Nasdaq",
       "sub": "取引所",
       "sub_en": "Exchanges",
+      "sub_short": "取引所",
+      "sub_short_en": "Exchange",
       "row": 1,
       "relations": [
         {
@@ -150,6 +160,8 @@
       "name_en": "Intercontinental Exchange",
       "sub": "取引所",
       "sub_en": "Exchanges",
+      "sub_short": "取引所",
+      "sub_short_en": "Exchange",
       "row": 1,
       "relations": [
         {
@@ -174,6 +186,8 @@
       "name_en": "CME Group",
       "sub": "先物取引所",
       "sub_en": "Futures exchanges",
+      "sub_short": "取引所",
+      "sub_short_en": "Futures",
       "row": 1,
       "relations": [
         {
@@ -198,6 +212,8 @@
       "name_en": "Miami International Holdings",
       "sub": "取引所",
       "sub_en": "Exchanges",
+      "sub_short": "取引所",
+      "sub_short_en": "Exchange",
       "row": 1,
       "relations": [
         {

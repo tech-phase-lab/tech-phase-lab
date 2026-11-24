@@ -29,6 +29,8 @@
       "name": "デルタ航空",
       "sub": "提携カードの最大パートナー",
       "sub_en": "Largest strategic partner",
+      "sub_short": "カード",
+      "sub_short_en": "Partner",
       "row": 0,
       "relations": [
         {
@@ -79,6 +81,8 @@
       "name": "マリオット・インターナショナル",
       "sub": "ホテル提携カード",
       "sub_en": "Hotel cobrand partner",
+      "sub_short": "カード",
+      "sub_short_en": "Cards",
       "row": 0,
       "relations": [
         {
@@ -103,6 +107,8 @@
       "name": "ヒルトン・ワールドワイド",
       "sub": "ホテル提携カード",
       "sub_en": "Hotel cobrand partner",
+      "sub_short": "カード",
+      "sub_short_en": "Cards",
       "row": 0,
       "relations": [
         {
@@ -127,6 +133,8 @@
       "name": "ブリティッシュ・エアウェイズ",
       "sub": "航空提携カード",
       "sub_en": "Airline cobrand partner",
+      "sub_short": "カード",
+      "sub_short_en": "Cards",
       "row": 0,
       "relations": [
         {
@@ -151,6 +159,8 @@
       "name": "グローバル・ビジネス・トラベル・グループ",
       "sub": "出張管理会社",
       "sub_en": "Business travel",
+      "sub_short": "出張管理",
+      "sub_short_en": "Travel",
       "row": 0,
       "relations": [
         {
@@ -175,6 +185,8 @@
       "name": "ビザ",
       "sub": "カードネットワーク",
       "sub_en": "Card network",
+      "sub_short": "カード",
+      "sub_short_en": "Cards",
       "row": 0,
       "relations": [
         {
@@ -212,6 +224,8 @@
       "name": "マスターカード",
       "sub": "カードネットワーク",
       "sub_en": "Card network",
+      "sub_short": "カード",
+      "sub_short_en": "Cards",
       "row": 0,
       "relations": [
         {
@@ -236,6 +250,8 @@
       "name": "キャピタル・ワン・ファイナンシャル",
       "sub": "カード発行・ネットワーク",
       "sub_en": "Card issuer & network",
+      "sub_short": "カード",
+      "sub_short_en": "Cards",
       "row": 0,
       "relations": [
         {
@@ -260,6 +276,8 @@
       "name": "ペイパル",
       "sub": "オンライン決済",
       "sub_en": "Online payments",
+      "sub_short": "決済",
+      "sub_short_en": "Payment",
       "row": 0,
       "relations": [
         {
@@ -284,6 +302,8 @@
       "name": "GPGI(コンポセキュア)",
       "sub": "金属カード製造",
       "sub_en": "Metal payment cards",
+      "sub_short": "カード",
+      "sub_short_en": "Cards",
       "row": 1,
       "relations": [
         {

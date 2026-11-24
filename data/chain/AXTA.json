@@ -31,6 +31,8 @@
       "name_en": "AkzoNobel",
       "sub": "塗料(オランダ)",
       "sub_en": "Paints & coatings (Netherlands)",
+      "sub_short": "塗料",
+      "sub_short_en": "Paints",
       "row": 0,
       "relations": [
         {
@@ -55,6 +57,8 @@
       "name_en": "The CoverFlexx Group",
       "sub": "補修用塗料",
       "sub_en": "Refinish coatings",
+      "sub_short": "塗料",
+      "sub_short_en": "Paint",
       "row": 0,
       "relations": [
         {
@@ -79,6 +83,8 @@
       "name_en": "Sherwin-Williams",
       "sub": "塗料",
       "sub_en": "Paints & coatings",
+      "sub_short": "塗料",
+      "sub_short_en": "Paints",
       "row": 1,
       "relations": [
         {
@@ -103,6 +109,8 @@
       "name_en": "BASF",
       "sub": "化学(ドイツ)",
       "sub_en": "Chemicals (Germany)",
+      "sub_short": "化学",
+      "sub_short_en": "Chem",
       "row": 1,
       "relations": [
         {
@@ -127,6 +135,8 @@
       "name_en": "PPG Industries",
       "sub": "塗料",
       "sub_en": "Paints & coatings",
+      "sub_short": "塗料",
+      "sub_short_en": "Paints",
       "row": 2,
       "relations": [
         {
@@ -151,6 +161,8 @@
       "name_en": "RPM International",
       "sub": "特殊塗料",
       "sub_en": "Specialty coatings",
+      "sub_short": "特殊塗料",
+      "sub_short_en": "Coatings",
       "row": 2,
       "relations": [
         {

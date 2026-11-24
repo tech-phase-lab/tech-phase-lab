@@ -32,6 +32,8 @@
       "name_en": "Boise Cascade",
       "sub": "建材流通",
       "sub_en": "Building materials distribution",
+      "sub_short": "建材流通",
+      "sub_short_en": "Building",
       "row": 0,
       "relations": [
         {
@@ -56,6 +58,8 @@
       "name_en": "James Hardie (Azek)",
       "sub": "建材",
       "sub_en": "Building products",
+      "sub_short": "建材",
+      "sub_short_en": "Building",
       "row": 1,
       "relations": [
         {
@@ -80,6 +84,8 @@
       "name_en": "UFP Industries (Deckorators)",
       "sub": "木材製品",
       "sub_en": "Wood products",
+      "sub_short": "木材製品",
+      "sub_short_en": "Wood",
       "row": 1,
       "relations": [
         {
@@ -104,6 +110,8 @@
       "name_en": "Fortune Brands (Fiberon)",
       "sub": "住宅設備",
       "sub_en": "Home products",
+      "sub_short": "住宅設備",
+      "sub_short_en": "Home",
       "row": 1,
       "relations": [
         {
@@ -128,6 +136,8 @@
       "name_en": "Westlake",
       "sub": "化学・建材",
       "sub_en": "Chemicals & building products",
+      "sub_short": "化学",
+      "sub_short_en": "Chem",
       "row": 2,
       "relations": [
         {

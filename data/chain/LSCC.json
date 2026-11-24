@@ -30,6 +30,8 @@
       "name": "TSMC",
       "sub": "半導体ファウンドリ",
       "sub_en": "Semiconductor foundry",
+      "sub_short": "受託生産",
+      "sub_short_en": "Foundry",
       "row": 0,
       "relations": [
         {
@@ -53,6 +55,8 @@
       "name": "ユナイテッド・マイクロエレクトロニクス",
       "sub": "半導体ファウンドリ",
       "sub_en": "Semiconductor foundry",
+      "sub_short": "受託生産",
+      "sub_short_en": "Foundry",
       "row": 0,
       "relations": [
         {
@@ -90,6 +94,8 @@
       "name": "サムスン",
       "sub": "半導体ファウンドリ",
       "sub_en": "Semiconductor foundry",
+      "sub_short": "受託生産",
+      "sub_short_en": "Foundry",
       "row": 0,
       "relations": [
         {
@@ -114,6 +120,8 @@
       "name": "ASEテクノロジー・ホールディング",
       "sub": "半導体後工程",
       "sub_en": "Semiconductor assembly & test",
+      "sub_short": "後工程",
+      "sub_short_en": "Chip pack",
       "row": 0,
       "relations": [
         {
@@ -151,6 +159,8 @@
       "name": "アムコー・テクノロジー",
       "sub": "半導体後工程",
       "sub_en": "Semiconductor assembly & test",
+      "sub_short": "後工程",
+      "sub_short_en": "Chip pack",
       "row": 0,
       "relations": [
         {
@@ -188,6 +198,8 @@
       "name": "NVIDIA",
       "sub": "AI半導体",
       "sub_en": "AI chips",
+      "sub_short": "AI半導体",
+      "sub_short_en": "AI chips",
       "row": 1,
       "relations": [
         {
@@ -210,6 +222,8 @@
       "name": "AMD",
       "sub": "FPGA・CPU",
       "sub_en": "FPGAs & CPUs",
+      "sub_short": "FPGA",
+      "sub_short_en": "FPGAs",
       "row": 2,
       "relations": [
         {

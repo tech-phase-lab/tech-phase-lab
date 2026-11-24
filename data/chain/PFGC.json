@@ -31,6 +31,8 @@
       "name_en": "Cheney Bros",
       "sub": "業務用食品卸(南東部)",
       "sub_en": "Foodservice distribution (Southeast)",
+      "sub_short": "食品卸",
+      "sub_short_en": "Food",
       "row": 0,
       "relations": [
         {
@@ -55,6 +57,8 @@
       "name_en": "El Pollo Loco",
       "sub": "ファストフード",
       "sub_en": "Fast casual chicken",
+      "sub_short": "外食",
+      "sub_short_en": "Chicken",
       "row": 1,
       "relations": [
         {
@@ -79,6 +83,8 @@
       "name_en": "Aramark",
       "sub": "給食・施設サービス",
       "sub_en": "Food & facilities services",
+      "sub_short": "給食",
+      "sub_short_en": "Catering",
       "row": 1,
       "relations": [
         {
@@ -103,6 +109,8 @@
       "name_en": "Nathan's Famous",
       "sub": "ホットドッグ・ブランド",
       "sub_en": "Hot dog brand",
+      "sub_short": "食品",
+      "sub_short_en": "Food",
       "row": 1,
       "relations": [
         {
@@ -127,6 +135,8 @@
       "name_en": "US Foods",
       "sub": "業務用食品卸",
       "sub_en": "Foodservice distribution",
+      "sub_short": "食品卸",
+      "sub_short_en": "Food",
       "row": 2,
       "relations": [
         {

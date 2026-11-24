@@ -19,6 +19,8 @@
       "name": "アルティス・ユーエスエー",
       "sub": "ケーブル配信事業者",
       "sub_en": "Cable distributor",
+      "sub_short": "ケーブル",
+      "sub_short_en": "Cables",
       "row": 0,
       "relations": [
         {
@@ -43,6 +45,8 @@
       "name": "コムキャスト",
       "sub": "ケーブル配信事業者",
       "sub_en": "Cable distributor",
+      "sub_short": "ケーブル",
+      "sub_short_en": "Cables",
       "row": 0,
       "relations": [
         {
@@ -67,6 +71,8 @@
       "name": "デルタ航空",
       "sub": "航空会社",
       "sub_en": "Airline",
+      "sub_short": "航空会社",
+      "sub_short_en": "Airline",
       "row": 0,
       "relations": [
         {
@@ -91,6 +97,8 @@
       "name": "MSGエンターテインメント",
       "sub": "興行・会場運営",
       "sub_en": "Venues & entertainment",
+      "sub_short": "興行",
+      "sub_short_en": "Venues",
       "row": 0,
       "relations": [
         {

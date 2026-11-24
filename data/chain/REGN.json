@@ -35,6 +35,8 @@
       "name_en": "Sanofi",
       "sub": "医薬品(仏)",
       "sub_en": "Pharmaceuticals (France)",
+      "sub_short": "医薬品",
+      "sub_short_en": "Pharma",
       "row": 0,
       "relations": [
         {
@@ -59,6 +61,8 @@
       "name_en": "Bayer",
       "sub": "医薬品(独)",
       "sub_en": "Pharmaceuticals (Germany)",
+      "sub_short": "医薬品",
+      "sub_short_en": "Pharma",
       "row": 0,
       "relations": [
         {
@@ -83,6 +87,8 @@
       "name_en": "Hansoh Pharmaceuticals",
       "sub": "医薬品(中国)",
       "sub_en": "Pharmaceuticals (China)",
+      "sub_short": "医薬品",
+      "sub_short_en": "Pharma",
       "row": 1,
       "relations": [
         {
@@ -107,6 +113,8 @@
       "name_en": "23andMe",
       "sub": "個人向け遺伝子検査",
       "sub_en": "Consumer genetics",
+      "sub_short": "遺伝子",
+      "sub_short_en": "DNA tests",
       "row": 1,
       "relations": [
         {
@@ -131,6 +139,8 @@
       "name_en": "Truveta",
       "sub": "医療データ",
       "sub_en": "Health data",
+      "sub_short": "医療IT",
+      "sub_short_en": "Health IT",
       "row": 1,
       "relations": [
         {
@@ -155,6 +165,8 @@
       "name_en": "Adicet Bio",
       "sub": "細胞治療",
       "sub_en": "Cell therapy",
+      "sub_short": "細胞治療",
+      "sub_short_en": "Cell tx",
       "row": 2,
       "relations": [
         {
@@ -179,6 +191,8 @@
       "name_en": "Parabilis Medicines",
       "sub": "新薬開発",
       "sub_en": "Drug discovery",
+      "sub_short": "新薬開発",
+      "sub_short_en": "Drug R&D",
       "row": 2,
       "relations": [
         {
@@ -203,6 +217,8 @@
       "name_en": "Intellia Therapeutics",
       "sub": "ゲノム編集",
       "sub_en": "Gene editing",
+      "sub_short": "遺伝子",
+      "sub_short_en": "Genes",
       "row": 2,
       "relations": [
         {
@@ -227,6 +243,8 @@
       "name_en": "Kiniksa Pharmaceuticals",
       "sub": "免疫疾患の医薬",
       "sub_en": "Immunology drugs",
+      "sub_short": "免疫薬",
+      "sub_short_en": "Immune",
       "row": 2,
       "relations": [
         {
@@ -251,6 +269,8 @@
       "name_en": "Ultragenyx",
       "sub": "希少疾患の医薬",
       "sub_en": "Rare disease drugs",
+      "sub_short": "難病薬",
+      "sub_short_en": "Rare dz",
       "row": 2,
       "relations": [
         {
@@ -275,6 +295,8 @@
       "name_en": "Replimune",
       "sub": "がん治療用ウイルス",
       "sub_en": "Oncolytic immunotherapy",
+      "sub_short": "ウイルス",
+      "sub_short_en": "Oncology",
       "row": 2,
       "relations": [
         {
@@ -299,6 +321,8 @@
       "name_en": "MAIA Biotechnology",
       "sub": "がん治療薬",
       "sub_en": "Cancer drugs",
+      "sub_short": "がん薬",
+      "sub_short_en": "Oncology",
       "row": 2,
       "relations": [
         {
@@ -323,6 +347,8 @@
       "name_en": "Celularity",
       "sub": "細胞治療・再生医療",
       "sub_en": "Cell therapy & biomaterials",
+      "sub_short": "細胞治療",
+      "sub_short_en": "Cell tx",
       "row": 2,
       "relations": [
         {
@@ -347,6 +373,8 @@
       "name_en": "Upstream Bio",
       "sub": "呼吸器疾患の抗体薬",
       "sub_en": "Respiratory antibody drugs",
+      "sub_short": "抗体薬",
+      "sub_short_en": "Lung",
       "row": 2,
       "relations": [
         {
@@ -371,6 +399,8 @@
       "name_en": "Inhibrx Biosciences",
       "sub": "抗体医薬",
       "sub_en": "Antibody drugs",
+      "sub_short": "抗体医薬",
+      "sub_short_en": "Antibody",
       "row": 3,
       "relations": [
         {

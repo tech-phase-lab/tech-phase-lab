@@ -25,6 +25,8 @@
       "name_en": "Biocoat",
       "sub": "医療用コーティング",
       "sub_en": "Medical coatings",
+      "sub_short": "医療部材",
+      "sub_short_en": "Coatings",
       "row": 0,
       "relations": [
         {
@@ -49,6 +51,8 @@
       "name_en": "VSi Parylene",
       "sub": "医療用コーティング",
       "sub_en": "Medical coatings",
+      "sub_short": "医療部材",
+      "sub_short_en": "Coatings",
       "row": 0,
       "relations": [
         {
@@ -73,6 +77,8 @@
       "name_en": "Precision Coating",
       "sub": "医療用コーティング",
       "sub_en": "Medical coatings",
+      "sub_short": "医療部材",
+      "sub_short_en": "Coatings",
       "row": 0,
       "relations": [
         {
@@ -97,6 +103,8 @@
       "name_en": "Pulse Technologies",
       "sub": "精密部品",
       "sub_en": "Precision components",
+      "sub_short": "精密部品",
+      "sub_short_en": "Parts",
       "row": 0,
       "relations": [
         {
@@ -121,6 +129,8 @@
       "name_en": "Abbott Laboratories",
       "sub": "医療機器",
       "sub_en": "Medical devices",
+      "sub_short": "医療機器",
+      "sub_short_en": "Medtech",
       "row": 1,
       "relations": [
         {
@@ -145,6 +155,8 @@
       "name_en": "Boston Scientific",
       "sub": "医療機器",
       "sub_en": "Medical devices",
+      "sub_short": "医療機器",
+      "sub_short_en": "Medtech",
       "row": 1,
       "relations": [
         {
@@ -169,6 +181,8 @@
       "name_en": "Medtronic",
       "sub": "医療機器",
       "sub_en": "Medical devices",
+      "sub_short": "医療機器",
+      "sub_short_en": "Medtech",
       "row": 1,
       "relations": [
         {
@@ -193,6 +207,8 @@
       "name_en": "Nevro",
       "sub": "脊髄刺激装置",
       "sub_en": "Spinal cord stimulators",
+      "sub_short": "神経刺激",
+      "sub_short_en": "Neuro",
       "row": 1,
       "relations": [
         {
@@ -217,6 +233,8 @@
       "name_en": "NeuroPace",
       "sub": "てんかん治療機器",
       "sub_en": "Epilepsy devices",
+      "sub_short": "てんかん",
+      "sub_short_en": "Epilepsy",
       "row": 1,
       "relations": [
         {
@@ -241,6 +259,8 @@
       "name_en": "Anteris Technologies",
       "sub": "心臓弁",
       "sub_en": "Heart valves",
+      "sub_short": "心臓弁",
+      "sub_short_en": "Valves",
       "row": 1,
       "relations": [
         {

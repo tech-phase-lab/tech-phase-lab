@@ -23,6 +23,8 @@
       "name": "グーグル",
       "sub": "ネット・クラウド",
       "sub_en": "Internet & cloud",
+      "sub_short": "ネット",
+      "sub_short_en": "Internet",
       "row": 0,
       "relations": [
         {
@@ -49,6 +51,8 @@
       "name": "OpenAI",
       "sub": "生成AI",
       "sub_en": "Generative AI",
+      "sub_short": "生成AI",
+      "sub_short_en": "AI",
       "row": 1,
       "relations": [
         {
@@ -89,6 +93,8 @@
       "name": "セールスフォース",
       "sub": "ビジネスソフト",
       "sub_en": "Business software",
+      "sub_short": "業務IT",
+      "sub_short_en": "Biz apps",
       "row": 1,
       "relations": [
         {
@@ -112,6 +118,8 @@
       "name": "バンク・オブ・アメリカ",
       "sub": "銀行",
       "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
       "row": 1,
       "relations": [
         {
@@ -151,6 +159,8 @@
       "name": "Palantir",
       "sub": "データ分析ソフト",
       "sub_en": "Data analytics software",
+      "sub_short": "分析",
+      "sub_short_en": "Analytics",
       "row": 1,
       "relations": [
         {
@@ -174,6 +184,8 @@
       "name": "NVIDIA",
       "sub": "AI半導体",
       "sub_en": "AI chips",
+      "sub_short": "AI半導体",
+      "sub_short_en": "AI chips",
       "row": 0,
       "relations": [
         {

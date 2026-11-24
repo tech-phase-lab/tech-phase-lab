@@ -26,6 +26,8 @@
       "name_en": "De La Rue",
       "sub": "紙幣・偽造防止(英国)",
       "sub_en": "Banknotes & security (UK)",
+      "sub_short": "紙幣",
+      "sub_short_en": "Banknote",
       "row": 0,
       "relations": [
         {
@@ -50,6 +52,8 @@
       "name_en": "OpSec Security",
       "sub": "偽造防止",
       "sub_en": "Anti-counterfeiting",
+      "sub_short": "偽造防止",
+      "sub_short_en": "Anti-fake",
       "row": 0,
       "relations": [
         {
@@ -74,6 +78,8 @@
       "name_en": "Crane Company",
       "sub": "産業機器",
       "sub_en": "Industrial products",
+      "sub_short": "産業機器",
+      "sub_short_en": "Industrial",
       "row": 0,
       "relations": [
         {
@@ -98,6 +104,8 @@
       "name_en": "Viavi Solutions",
       "sub": "通信計測・光学",
       "sub_en": "Network test & optics",
+      "sub_short": "計測",
+      "sub_short_en": "Testing",
       "row": 1,
       "relations": [
         {

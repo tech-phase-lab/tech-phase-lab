@@ -34,6 +34,8 @@
       "name_en": "Trivium Packaging",
       "sub": "金属容器",
       "sub_en": "Metal packaging",
+      "sub_short": "金属容器",
+      "sub_short_en": "Cans",
       "row": 0,
       "relations": [
         {
@@ -58,6 +60,8 @@
       "name_en": "Weener Packaging",
       "sub": "ディスペンサー・キャップ",
       "sub_en": "Dispensing systems & closures",
+      "sub_short": "容器",
+      "sub_short_en": "Dispenser",
       "row": 0,
       "relations": [
         {
@@ -82,6 +86,8 @@
       "name_en": "Interparfums",
       "sub": "香水",
       "sub_en": "Fragrances",
+      "sub_short": "香水",
+      "sub_short_en": "Scents",
       "row": 1,
       "relations": [
         {
@@ -106,6 +112,8 @@
       "name_en": "Crown Holdings",
       "sub": "金属缶",
       "sub_en": "Metal packaging",
+      "sub_short": "金属缶",
+      "sub_short_en": "Cans",
       "row": 2,
       "relations": [
         {
@@ -130,6 +138,8 @@
       "name_en": "O-I Glass",
       "sub": "ガラス瓶",
       "sub_en": "Glass containers",
+      "sub_short": "ガラス瓶",
+      "sub_short_en": "Glass",
       "row": 2,
       "relations": [
         {
@@ -154,6 +164,8 @@
       "name_en": "Amcor",
       "sub": "包装材",
       "sub_en": "Packaging",
+      "sub_short": "包装材",
+      "sub_short_en": "Packing",
       "row": 2,
       "relations": [
         {
@@ -178,6 +190,8 @@
       "name_en": "TriMas",
       "sub": "包装・航空部品",
       "sub_en": "Packaging & aerospace",
+      "sub_short": "包装",
+      "sub_short_en": "Packing",
       "row": 2,
       "relations": [
         {
@@ -202,6 +216,8 @@
       "name_en": "Berry Global",
       "sub": "プラスチック包装",
       "sub_en": "Plastic packaging",
+      "sub_short": "樹脂包装",
+      "sub_short_en": "Plastics",
       "row": 2,
       "relations": [
         {

@@ -31,6 +31,8 @@
       "name": "マスターカード",
       "sub": "決済ネットワーク",
       "sub_en": "Payment network",
+      "sub_short": "決済網",
+      "sub_short_en": "Payment",
       "row": 0,
       "relations": [
         {
@@ -68,6 +70,8 @@
       "name": "メットライフ",
       "sub": "保険",
       "sub_en": "Insurance",
+      "sub_short": "保険",
+      "sub_short_en": "Insurance",
       "row": 1,
       "relations": [
         {
@@ -92,6 +96,8 @@
       "name": "スハイ・セグラドーラ",
       "sub": "保険（ブラジル）",
       "sub_en": "Insurance (Brazil)",
+      "sub_short": "保険",
+      "sub_short_en": "Insurance",
       "row": 1,
       "relations": [
         {
@@ -116,6 +122,8 @@
       "name": "WEX",
       "sub": "法人決済",
       "sub_en": "Corporate payments",
+      "sub_short": "法人決済",
+      "sub_short_en": "Payment",
       "row": 2,
       "relations": [
         {
@@ -140,6 +148,8 @@
       "name": "リペイ",
       "sub": "決済処理",
       "sub_en": "Payment processing",
+      "sub_short": "決済処理",
+      "sub_short_en": "Payment",
       "row": 2,
       "relations": [
         {

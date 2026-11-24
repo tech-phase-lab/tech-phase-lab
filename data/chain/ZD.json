@@ -29,6 +29,8 @@
       "name": "アイエーシー",
       "sub": "デジタルメディア",
       "sub_en": "Digital media",
+      "sub_short": "メディア",
+      "sub_short_en": "Media",
       "row": 0,
       "relations": [
         {
@@ -53,6 +55,8 @@
       "name": "テックターゲット",
       "sub": "B2Bメディア",
       "sub_en": "B2B media",
+      "sub_short": "B2B媒体",
+      "sub_short_en": "Media",
       "row": 0,
       "relations": [
         {
@@ -77,6 +81,8 @@
       "name": "ドクシミティ",
       "sub": "医療メディア",
       "sub_en": "Medical media",
+      "sub_short": "医療",
+      "sub_short_en": "Media",
       "row": 0,
       "relations": [
         {
@@ -101,6 +107,8 @@
       "name": "アルファベット",
       "sub": "広告・検索",
       "sub_en": "Advertising & search",
+      "sub_short": "広告",
+      "sub_short_en": "Ads",
       "row": 0,
       "relations": [
         {
@@ -125,6 +133,8 @@
       "name": "メタ・プラットフォームズ",
       "sub": "広告・SNS",
       "sub_en": "Advertising & social",
+      "sub_short": "広告",
+      "sub_short_en": "Ads",
       "row": 0,
       "relations": [
         {
@@ -149,6 +159,8 @@
       "name": "スナップ",
       "sub": "広告・SNS",
       "sub_en": "Advertising & social",
+      "sub_short": "広告",
+      "sub_short_en": "Ads",
       "row": 0,
       "relations": [
         {
@@ -173,6 +185,8 @@
       "name": "システム1",
       "sub": "オンライン広告",
       "sub_en": "Online advertising",
+      "sub_short": "広告",
+      "sub_short_en": "Ads",
       "row": 1,
       "relations": [
         {

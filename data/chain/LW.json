@@ -28,6 +28,8 @@
       "name_en": "McDonald's",
       "sub": "外食",
       "sub_en": "Restaurants",
+      "sub_short": "外食",
+      "sub_short_en": "Dining",
       "row": 0,
       "relations": [
         {
@@ -52,6 +54,8 @@
       "name_en": "RDO Frozen",
       "sub": "冷凍ポテト",
       "sub_en": "Frozen potatoes",
+      "sub_short": "冷凍食品",
+      "sub_short_en": "Frozen",
       "row": 0,
       "relations": [
         {
@@ -76,6 +80,8 @@
       "name_en": "Nathan's Famous",
       "sub": "ホットドッグ",
       "sub_en": "Hot dogs",
+      "sub_short": "食品",
+      "sub_short_en": "Hot dogs",
       "row": 0,
       "relations": [
         {
@@ -100,6 +106,8 @@
       "name_en": "McCain Foods",
       "sub": "冷凍ポテト(カナダ)",
       "sub_en": "Frozen potatoes (Canada)",
+      "sub_short": "冷凍食品",
+      "sub_short_en": "Frozen",
       "row": 1,
       "relations": [
         {
@@ -124,6 +132,8 @@
       "name_en": "J.R. Simplot",
       "sub": "冷凍ポテト",
       "sub_en": "Frozen potatoes",
+      "sub_short": "冷凍食品",
+      "sub_short_en": "Frozen",
       "row": 1,
       "relations": [
         {
@@ -148,6 +158,8 @@
       "name_en": "Kraft Heinz",
       "sub": "食品",
       "sub_en": "Packaged foods",
+      "sub_short": "食品",
+      "sub_short_en": "Food",
       "row": 1,
       "relations": [
         {
@@ -172,6 +184,8 @@
       "name_en": "Aviko",
       "sub": "冷凍ポテト(オランダ)",
       "sub_en": "Frozen potatoes (Netherlands)",
+      "sub_short": "冷凍食品",
+      "sub_short_en": "Frozen",
       "row": 1,
       "relations": [
         {
@@ -196,6 +210,8 @@
       "name_en": "Agristo",
       "sub": "冷凍ポテト(ベルギー)",
       "sub_en": "Frozen potatoes (Belgium)",
+      "sub_short": "冷凍食品",
+      "sub_short_en": "Frozen",
       "row": 1,
       "relations": [
         {

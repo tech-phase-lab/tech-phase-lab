@@ -31,6 +31,8 @@
       "name": "ウォルマート",
       "sub": "小売大手",
       "sub_en": "Retailer",
+      "sub_short": "小売大手",
+      "sub_short_en": "Retailer",
       "row": 0,
       "relations": [
         {
@@ -55,6 +57,8 @@
       "name": "スザノ",
       "sub": "紙パルプ大手",
       "sub_en": "Pulp & paper",
+      "sub_short": "製紙",
+      "sub_short_en": "Paper",
       "row": 0,
       "relations": [
         {
@@ -79,6 +83,8 @@
       "name": "ケンビュー",
       "sub": "コンシューマーヘルス",
       "sub_en": "Consumer health",
+      "sub_short": "市販薬",
+      "sub_short_en": "Health",
       "row": 0,
       "relations": [
         {
@@ -116,6 +122,8 @@
       "name": "オネスト・カンパニー",
       "sub": "ベビー・パーソナルケア",
       "sub_en": "Baby & personal care",
+      "sub_short": "ベビー",
+      "sub_short_en": "Baby",
       "row": 1,
       "relations": [
         {
@@ -140,6 +148,8 @@
       "name": "グラフィック・パッケージング",
       "sub": "紙パッケージ",
       "sub_en": "Paperboard packaging",
+      "sub_short": "紙包装",
+      "sub_short_en": "Paper",
       "row": 2,
       "relations": [
         {

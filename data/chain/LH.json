@@ -29,6 +29,8 @@
       "name_en": "Harvard Bioscience",
       "sub": "研究用機器",
       "sub_en": "Research instruments",
+      "sub_short": "研究機器",
+      "sub_short_en": "Lab tools",
       "row": 0,
       "relations": [
         {
@@ -53,6 +55,8 @@
       "name_en": "Fortrea",
       "sub": "医薬品開発受託(CRO)",
       "sub_en": "Contract research (CRO)",
+      "sub_short": "CRO",
+      "sub_short_en": "CRO",
       "row": 0,
       "relations": [
         {
@@ -77,6 +81,8 @@
       "name_en": "OPKO Health",
       "sub": "診断・医薬",
       "sub_en": "Diagnostics & pharma",
+      "sub_short": "診断",
+      "sub_short_en": "Tests",
       "row": 0,
       "relations": [
         {
@@ -101,6 +107,8 @@
       "name_en": "Genfit",
       "sub": "肝疾患薬・診断(仏)",
       "sub_en": "Liver disease drugs & diagnostics (France)",
+      "sub_short": "肝臓薬",
+      "sub_short_en": "Liver",
       "row": 0,
       "relations": [
         {
@@ -125,6 +133,8 @@
       "name_en": "Onconetix",
       "sub": "前立腺がん診断",
       "sub_en": "Prostate cancer diagnostics",
+      "sub_short": "がん検査",
+      "sub_short_en": "Tests",
       "row": 0,
       "relations": [
         {
@@ -149,6 +159,8 @@
       "name_en": "Natera",
       "sub": "遺伝子検査",
       "sub_en": "Genetic testing",
+      "sub_short": "遺伝子",
+      "sub_short_en": "DNA tests",
       "row": 1,
       "relations": [
         {
@@ -173,6 +185,8 @@
       "name_en": "BillionToOne",
       "sub": "出生前・がん検査",
       "sub_en": "Prenatal & oncology testing",
+      "sub_short": "検査",
+      "sub_short_en": "Tests",
       "row": 1,
       "relations": [
         {
@@ -197,6 +211,8 @@
       "name_en": "MDxHealth",
       "sub": "前立腺がん検査",
       "sub_en": "Prostate cancer testing",
+      "sub_short": "がん検査",
+      "sub_short_en": "Tests",
       "row": 1,
       "relations": [
         {

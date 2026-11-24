@@ -36,6 +36,8 @@
       "name_en": "United Airlines",
       "sub": "航空",
       "sub_en": "Airline",
+      "sub_short": "航空",
+      "sub_short_en": "Airline",
       "row": 0,
       "relations": [
         {
@@ -60,6 +62,8 @@
       "name_en": "Southwest Airlines",
       "sub": "航空",
       "sub_en": "Airline",
+      "sub_short": "航空",
+      "sub_short_en": "Airline",
       "row": 0,
       "relations": [
         {
@@ -84,6 +88,8 @@
       "name_en": "Marriott",
       "sub": "ホテル",
       "sub_en": "Hotels",
+      "sub_short": "ホテル",
+      "sub_short_en": "Hotels",
       "row": 0,
       "relations": [
         {
@@ -108,6 +114,8 @@
       "name_en": "Hyatt",
       "sub": "ホテル",
       "sub_en": "Hotels",
+      "sub_short": "ホテル",
+      "sub_short_en": "Hotels",
       "row": 0,
       "relations": [
         {
@@ -132,6 +140,8 @@
       "name_en": "InterContinental Hotels",
       "sub": "ホテル(英)",
       "sub_en": "Hotels (UK)",
+      "sub_short": "ホテル",
+      "sub_short_en": "Hotels",
       "row": 0,
       "relations": [
         {
@@ -156,6 +166,8 @@
       "name_en": "Apple",
       "sub": "IT機器",
       "sub_en": "Consumer technology",
+      "sub_short": "IT機器",
+      "sub_short_en": "Devices",
       "row": 1,
       "relations": [
         {
@@ -180,6 +192,8 @@
       "name_en": "First Republic Bank",
       "sub": "銀行(破綻後に買収)",
       "sub_en": "Bank (acquired after failure)",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
       "row": 1,
       "relations": [
         {
@@ -204,6 +218,8 @@
       "name_en": "Visa",
       "sub": "決済ネットワーク",
       "sub_en": "Payment network",
+      "sub_short": "決済網",
+      "sub_short_en": "Payment",
       "row": 1,
       "relations": [
         {
@@ -228,6 +244,8 @@
       "name_en": "MarketAxess",
       "sub": "債券電子取引",
       "sub_en": "Electronic bond trading",
+      "sub_short": "債券",
+      "sub_short_en": "Bonds",
       "row": 1,
       "relations": [
         {
@@ -252,6 +270,8 @@
       "name_en": "IBM",
       "sub": "ITサービス",
       "sub_en": "IT services",
+      "sub_short": "IT",
+      "sub_short_en": "IT",
       "row": 2,
       "relations": [
         {
@@ -276,6 +296,8 @@
       "name_en": "PayPal",
       "sub": "オンライン決済",
       "sub_en": "Online payments",
+      "sub_short": "決済",
+      "sub_short_en": "Payment",
       "row": 2,
       "relations": [
         {
@@ -300,6 +322,8 @@
       "name_en": "Robinhood",
       "sub": "ネット証券",
       "sub_en": "Online brokerage",
+      "sub_short": "証券",
+      "sub_short_en": "Broker",
       "row": 2,
       "relations": [
         {
@@ -324,6 +348,8 @@
       "name_en": "FIS",
       "sub": "金融IT",
       "sub_en": "Financial technology",
+      "sub_short": "金融IT",
+      "sub_short_en": "Fintech",
       "row": 2,
       "relations": [
         {
@@ -348,6 +374,8 @@
       "name_en": "Affirm",
       "sub": "後払い決済",
       "sub_en": "Buy now, pay later",
+      "sub_short": "後払い",
+      "sub_short_en": "BNPL",
       "row": 3,
       "relations": [
         {
@@ -372,6 +400,8 @@
       "name_en": "Premier",
       "sub": "医療購買サービス",
       "sub_en": "Healthcare purchasing",
+      "sub_short": "医療購買",
+      "sub_short_en": "Health",
       "row": 3,
       "relations": [
         {

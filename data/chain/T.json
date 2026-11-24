@@ -25,6 +25,8 @@
       "name": "TPGキャピタル",
       "sub": "投資会社",
       "sub_en": "Investment firm",
+      "sub_short": "投資会社",
+      "sub_short_en": "Investing",
       "row": 0,
       "relations": [
         {
@@ -49,6 +51,8 @@
       "name": "ドライブネッツ",
       "sub": "ネットワーク機器",
       "sub_en": "Networking",
+      "sub_short": "通信機器",
+      "sub_short_en": "Network",
       "row": 0,
       "relations": [
         {
@@ -73,6 +77,8 @@
       "name": "ギガパワー",
       "sub": "光ファイバー合弁",
       "sub_en": "Fiber JV",
+      "sub_short": "光通信",
+      "sub_short_en": "Fiber JV",
       "row": 0,
       "relations": [
         {
@@ -97,6 +103,8 @@
       "name": "エコースター",
       "sub": "衛星・通信",
       "sub_en": "Satellite & telecom",
+      "sub_short": "衛星",
+      "sub_short_en": "Satellites",
       "row": 0,
       "relations": [
         {
@@ -121,6 +129,8 @@
       "name": "ルーメン・テクノロジーズ",
       "sub": "光ファイバー事業",
       "sub_en": "Fiber business",
+      "sub_short": "光通信",
+      "sub_short_en": "Fiber",
       "row": 0,
       "relations": [
         {
@@ -145,6 +155,8 @@
       "name": "オプティマム・コミュニケーションズ",
       "sub": "ケーブル・ブロードバンド",
       "sub_en": "Cable & broadband",
+      "sub_short": "ケーブル",
+      "sub_short_en": "Cable",
       "row": 1,
       "relations": [
         {

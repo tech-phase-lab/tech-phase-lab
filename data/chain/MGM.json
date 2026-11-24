@@ -19,6 +19,8 @@
       "name": "エンテイン",
       "sub": "ゲーム・ブックメーカー",
       "sub_en": "Gaming & betting",
+      "sub_short": "ゲーム",
+      "sub_short_en": "Betting",
       "row": 0,
       "relations": [
         {
@@ -43,6 +45,8 @@
       "name": "VICIプロパティーズ",
       "sub": "ゲーミングREIT",
       "sub_en": "Gaming REIT",
+      "sub_short": "REIT",
+      "sub_short_en": "REIT",
       "row": 0,
       "relations": [
         {
@@ -80,6 +84,8 @@
       "name": "オリックス",
       "sub": "総合金融",
       "sub_en": "Diversified financial",
+      "sub_short": "総合金融",
+      "sub_short_en": "Finance",
       "row": 0,
       "relations": [
         {
@@ -104,6 +110,8 @@
       "name": "プレイスタジオ",
       "sub": "モバイルゲーム",
       "sub_en": "Mobile games",
+      "sub_short": "ゲーム",
+      "sub_short_en": "Games",
       "row": 0,
       "relations": [
         {

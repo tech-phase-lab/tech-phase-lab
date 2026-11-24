@@ -24,6 +24,8 @@
       "name_en": "Target",
       "sub": "小売",
       "sub_en": "Retail",
+      "sub_short": "小売",
+      "sub_short_en": "Retail",
       "row": 0,
       "relations": [
         {
@@ -48,6 +50,8 @@
       "name_en": "Walmart",
       "sub": "小売",
       "sub_en": "Retail",
+      "sub_short": "小売",
+      "sub_short_en": "Retail",
       "row": 0,
       "relations": [
         {
@@ -72,6 +76,8 @@
       "name_en": "Amazon",
       "sub": "EC",
       "sub_en": "E-commerce",
+      "sub_short": "EC",
+      "sub_short_en": "E-com",
       "row": 0,
       "relations": [
         {
@@ -96,6 +102,8 @@
       "name_en": "Sephora (LVMH)",
       "sub": "化粧品小売",
       "sub_en": "Beauty retail",
+      "sub_short": "化粧品",
+      "sub_short_en": "Beauty",
       "row": 0,
       "relations": [
         {
@@ -120,6 +128,8 @@
       "name_en": "rhode",
       "sub": "スキンケア",
       "sub_en": "Skincare",
+      "sub_short": "化粧品",
+      "sub_short_en": "Skincare",
       "row": 1,
       "relations": [
         {
@@ -144,6 +154,8 @@
       "name_en": "Naturium",
       "sub": "スキンケア",
       "sub_en": "Skincare",
+      "sub_short": "化粧品",
+      "sub_short_en": "Skincare",
       "row": 1,
       "relations": [
         {

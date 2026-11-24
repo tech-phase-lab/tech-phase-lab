@@ -29,6 +29,8 @@
       "name_en": "Standard Motor Products",
       "sub": "補修部品",
       "sub_en": "Aftermarket parts",
+      "sub_short": "補修部品",
+      "sub_short_en": "Parts",
       "row": 0,
       "relations": [
         {
@@ -53,6 +55,8 @@
       "name_en": "Gates Industrial",
       "sub": "ベルト・ホース",
       "sub_en": "Belts & hoses",
+      "sub_short": "ベルト",
+      "sub_short_en": "Belts",
       "row": 0,
       "relations": [
         {
@@ -77,6 +81,8 @@
       "name_en": "General Motors (ACDelco)",
       "sub": "自動車",
       "sub_en": "Automaker",
+      "sub_short": "自動車",
+      "sub_short_en": "Cars",
       "row": 0,
       "relations": [
         {
@@ -101,6 +107,8 @@
       "name_en": "Ford (Motorcraft)",
       "sub": "自動車",
       "sub_en": "Automaker",
+      "sub_short": "自動車",
+      "sub_short_en": "Cars",
       "row": 0,
       "relations": [
         {
@@ -125,6 +133,8 @@
       "name_en": "Cummins",
       "sub": "エンジン",
       "sub_en": "Engines",
+      "sub_short": "エンジン",
+      "sub_short_en": "Engines",
       "row": 0,
       "relations": [
         {
@@ -149,6 +159,8 @@
       "name_en": "LKQ",
       "sub": "補修部品流通",
       "sub_en": "Aftermarket parts distribution",
+      "sub_short": "補修部品",
+      "sub_short_en": "Parts",
       "row": 0,
       "relations": [
         {
@@ -173,6 +185,8 @@
       "name_en": "PHINIA",
       "sub": "燃料系・補修部品",
       "sub_en": "Fuel systems & aftermarket",
+      "sub_short": "燃料系",
+      "sub_short_en": "Fuel",
       "row": 1,
       "relations": [
         {

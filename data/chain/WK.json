@@ -23,6 +23,8 @@
       "name": "アマゾン・ドット・コム",
       "sub": "クラウド",
       "sub_en": "Cloud",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 0,
       "relations": [
         {
@@ -47,6 +49,8 @@
       "name": "SAP",
       "sub": "業務ソフト",
       "sub_en": "Enterprise software",
+      "sub_short": "業務IT",
+      "sub_short_en": "Software",
       "row": 1,
       "relations": [
         {

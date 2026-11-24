@@ -32,6 +32,8 @@
       "name": "TSMC",
       "sub": "受託製造",
       "sub_en": "Foundry",
+      "sub_short": "受託製造",
+      "sub_short_en": "Foundry",
       "row": 0,
       "relations": [
         {
@@ -55,6 +57,8 @@
       "name": "GlobalFoundries",
       "sub": "受託製造",
       "sub_en": "Foundry",
+      "sub_short": "受託製造",
+      "sub_short_en": "Foundry",
       "row": 0,
       "relations": [
         {
@@ -78,6 +82,8 @@
       "name": "Amkor Technology",
       "sub": "後工程",
       "sub_en": "Packaging & test",
+      "sub_short": "後工程",
+      "sub_short_en": "Chip pack",
       "row": 0,
       "relations": [
         {
@@ -101,6 +107,8 @@
       "name": "ASE Technology",
       "sub": "後工程",
       "sub_en": "Packaging & test",
+      "sub_short": "後工程",
+      "sub_short_en": "Chip pack",
       "row": 0,
       "relations": [
         {
@@ -124,6 +132,8 @@
       "name": "Arm Holdings",
       "sub": "半導体設計",
       "sub_en": "Chip design",
+      "sub_short": "設計",
+      "sub_short_en": "Chip IP",
       "row": 0,
       "relations": [
         {
@@ -164,6 +174,8 @@
       "name": "Apple",
       "sub": "PC・スマホ",
       "sub_en": "PCs & phones",
+      "sub_short": "PC",
+      "sub_short_en": "PCs",
       "row": 1,
       "relations": [
         {
@@ -189,6 +201,8 @@
       "name": "Samsung Electronics",
       "sub": "スマホ・製造",
       "sub_en": "Phones & foundry",
+      "sub_short": "スマホ",
+      "sub_short_en": "Phones",
       "row": 1,
       "relations": [
         {
@@ -252,6 +266,8 @@
       "name": "Xiaomi",
       "sub": "スマホ",
       "sub_en": "Phones",
+      "sub_short": "スマホ",
+      "sub_short_en": "Phones",
       "row": 1,
       "relations": [
         {
@@ -277,6 +293,8 @@
       "name": "Transsion",
       "sub": "スマホ",
       "sub_en": "Phones",
+      "sub_short": "スマホ",
+      "sub_short_en": "Phones",
       "row": 1,
       "relations": [
         {
@@ -302,6 +320,8 @@
       "name": "Amazon",
       "sub": "クラウド",
       "sub_en": "Cloud",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 1,
       "relations": [
         {
@@ -327,6 +347,8 @@
       "name": "Microsoft",
       "sub": "PC・クラウド",
       "sub_en": "PCs & cloud",
+      "sub_short": "PC",
+      "sub_short_en": "PCs",
       "row": 1,
       "relations": [
         {
@@ -350,6 +372,8 @@
       "name": "Intel",
       "sub": "半導体",
       "sub_en": "Chips",
+      "sub_short": "半導体",
+      "sub_short_en": "Chips",
       "row": 2,
       "relations": [
         {
@@ -373,6 +397,8 @@
       "name": "NVIDIA",
       "sub": "AI半導体",
       "sub_en": "AI chips",
+      "sub_short": "AI半導体",
+      "sub_short_en": "AI chips",
       "row": 2,
       "relations": [
         {
@@ -396,6 +422,8 @@
       "name": "Broadcom",
       "sub": "半導体",
       "sub_en": "Chips",
+      "sub_short": "半導体",
+      "sub_short_en": "Chips",
       "row": 2,
       "relations": [
         {
@@ -419,6 +447,8 @@
       "name": "MediaTek",
       "sub": "半導体",
       "sub_en": "Chips",
+      "sub_short": "半導体",
+      "sub_short_en": "Chips",
       "row": 2,
       "relations": [
         {
@@ -442,6 +472,8 @@
       "name": "Mobileye",
       "sub": "自動運転",
       "sub_en": "Autonomous driving",
+      "sub_short": "自動運転",
+      "sub_short_en": "AV tech",
       "row": 2,
       "relations": [
         {
@@ -465,6 +497,8 @@
       "name": "Skyworks",
       "sub": "高周波半導体",
       "sub_en": "RF chips",
+      "sub_short": "RF IC",
+      "sub_short_en": "RF chips",
       "row": 2,
       "relations": [
         {

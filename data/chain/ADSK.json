@@ -31,6 +31,8 @@
       "name": "アカマイ・テクノロジーズ",
       "sub": "CDN・セキュリティ",
       "sub_en": "CDN & security",
+      "sub_short": "CDN",
+      "sub_short_en": "CDN",
       "row": 0,
       "relations": [
         {
@@ -57,6 +59,8 @@
       "name": "ベントレー・システムズ",
       "sub": "インフラ設計ソフト",
       "sub_en": "Infrastructure software",
+      "sub_short": "インフラ",
+      "sub_short_en": "Software",
       "row": 2,
       "relations": [
         {
@@ -107,6 +111,8 @@
       "name": "PTC",
       "sub": "CAD・PLM",
       "sub_en": "CAD & PLM",
+      "sub_short": "CAD",
+      "sub_short_en": "CAD",
       "row": 2,
       "relations": [
         {
@@ -130,6 +136,8 @@
       "name": "アドビ",
       "sub": "クリエイティブソフト",
       "sub_en": "Creative software",
+      "sub_short": "制作",
+      "sub_short_en": "Design",
       "row": 2,
       "relations": [
         {
@@ -169,6 +177,8 @@
       "name": "Amazon",
       "sub": "クラウド",
       "sub_en": "Cloud",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 1,
       "relations": [
         {
@@ -192,6 +202,8 @@
       "name": "NVIDIA",
       "sub": "AI半導体",
       "sub_en": "AI chips",
+      "sub_short": "AI半導体",
+      "sub_short_en": "AI chips",
       "row": 1,
       "relations": [
         {
@@ -275,6 +287,8 @@
       "name": "アップル",
       "sub": "スマホ・IT機器",
       "sub_en": "Devices",
+      "sub_short": "スマホ",
+      "sub_short_en": "Devices",
       "row": 1,
       "relations": [
         {
@@ -301,6 +315,8 @@
       "name": "シーメンス",
       "sub": "産業・PLMソフト",
       "sub_en": "Industrial & PLM software",
+      "sub_short": "産業IT",
+      "sub_short_en": "Software",
       "row": 1,
       "relations": [
         {

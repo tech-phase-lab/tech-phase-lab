@@ -31,6 +31,8 @@
       "name": "ディア",
       "sub": "建機・農機",
       "sub_en": "Construction & farm equipment",
+      "sub_short": "建機",
+      "sub_short_en": "Building",
       "row": 0,
       "relations": [
         {
@@ -55,6 +57,8 @@
       "name": "CNHインダストリアル",
       "sub": "建機・農機",
       "sub_en": "Construction & farm equipment",
+      "sub_short": "建機",
+      "sub_short_en": "Building",
       "row": 0,
       "relations": [
         {
@@ -79,6 +83,8 @@
       "name": "コマツ",
       "sub": "建設・鉱山機械",
       "sub_en": "Construction & mining machinery",
+      "sub_short": "建機",
+      "sub_short_en": "Building",
       "row": 0,
       "relations": [
         {
@@ -103,6 +109,8 @@
       "name": "日立建機",
       "sub": "建設機械",
       "sub_en": "Construction machinery",
+      "sub_short": "建設機械",
+      "sub_short_en": "Machines",
       "row": 0,
       "relations": [
         {
@@ -127,6 +135,8 @@
       "name": "ボルボ建設機械",
       "sub": "建設機械",
       "sub_en": "Construction machinery",
+      "sub_short": "建設機械",
+      "sub_short_en": "Machines",
       "row": 0,
       "relations": [
         {
@@ -151,6 +161,8 @@
       "name": "カミンズ",
       "sub": "エンジン・発電",
       "sub_en": "Engines & power",
+      "sub_short": "エンジン",
+      "sub_short_en": "Engines",
       "row": 0,
       "relations": [
         {
@@ -175,6 +187,8 @@
       "name": "GEベルノバ",
       "sub": "発電設備",
       "sub_en": "Power equipment",
+      "sub_short": "発電設備",
+      "sub_short_en": "Power",
       "row": 0,
       "relations": [
         {
@@ -199,6 +213,8 @@
       "name": "ジェネラック・ホールディングス",
       "sub": "発電機",
       "sub_en": "Generators",
+      "sub_short": "発電機",
+      "sub_short_en": "Gensets",
       "row": 0,
       "relations": [
         {
@@ -236,6 +252,8 @@
       "name": "ベイカー・ヒューズ",
       "sub": "エネルギー機器",
       "sub_en": "Energy equipment",
+      "sub_short": "エネ機器",
+      "sub_short_en": "Energy",
       "row": 0,
       "relations": [
         {
@@ -260,6 +278,8 @@
       "name": "ワブテック",
       "sub": "鉄道機器",
       "sub_en": "Rail equipment",
+      "sub_short": "鉄道機器",
+      "sub_short_en": "Rail",
       "row": 0,
       "relations": [
         {
@@ -284,6 +304,8 @@
       "name": "グリーンブライヤー",
       "sub": "鉄道車両",
       "sub_en": "Rail cars",
+      "sub_short": "鉄道車両",
+      "sub_short_en": "Rail cars",
       "row": 0,
       "relations": [
         {
@@ -308,6 +330,8 @@
       "name": "エピロック",
       "sub": "鉱山機械",
       "sub_en": "Mining machinery",
+      "sub_short": "鉱山機械",
+      "sub_short_en": "Mining",
       "row": 0,
       "relations": [
         {
@@ -332,6 +356,8 @@
       "name": "タイタン・インターナショナル",
       "sub": "ホイール・タイヤ",
       "sub_en": "Wheels & tires",
+      "sub_short": "ホイール",
+      "sub_short_en": "Wheels",
       "row": 1,
       "relations": [
         {

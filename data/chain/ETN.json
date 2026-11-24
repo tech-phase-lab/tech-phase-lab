@@ -36,6 +36,8 @@
       "name": "ダナ",
       "sub": "自動車部品",
       "sub_en": "Auto parts",
+      "sub_short": "車部品",
+      "sub_short_en": "Car parts",
       "row": 0,
       "relations": [
         {
@@ -60,6 +62,8 @@
       "name": "NVIDIA",
       "sub": "AI半導体",
       "sub_en": "AI chips",
+      "sub_short": "AI半導体",
+      "sub_short_en": "AI chips",
       "row": 0,
       "relations": [
         {
@@ -83,6 +87,8 @@
       "name": "TDシネックス",
       "sub": "IT流通",
       "sub_en": "IT distribution",
+      "sub_short": "IT流通",
+      "sub_short_en": "IT",
       "row": 1,
       "relations": [
         {
@@ -109,6 +115,8 @@
       "name": "バーティブ",
       "sub": "データセンター電源・冷却",
       "sub_en": "Data center power & cooling",
+      "sub_short": "DC電源",
+      "sub_short_en": "DC power",
       "row": 2,
       "relations": [
         {
@@ -133,6 +141,8 @@
       "name": "ABB",
       "sub": "電機・自動化",
       "sub_en": "Electrical & automation",
+      "sub_short": "電機",
+      "sub_short_en": "Robotics",
       "row": 2,
       "relations": [
         {
@@ -157,6 +167,8 @@
       "name": "パッカー",
       "sub": "トラック",
       "sub_en": "Trucks",
+      "sub_short": "トラック",
+      "sub_short_en": "Trucks",
       "row": 3,
       "relations": [
         {
@@ -181,6 +193,8 @@
       "name": "リテルヒューズ",
       "sub": "回路保護部品",
       "sub_en": "Circuit protection",
+      "sub_short": "電子部品",
+      "sub_short_en": "Circuits",
       "row": 2,
       "relations": [
         {
@@ -205,6 +219,8 @@
       "name": "カミンズ",
       "sub": "エンジン",
       "sub_en": "Engines",
+      "sub_short": "エンジン",
+      "sub_short_en": "Engines",
       "row": 0,
       "relations": [
         {
@@ -229,6 +245,8 @@
       "name": "チャージポイント",
       "sub": "EV充電",
       "sub_en": "EV charging",
+      "sub_short": "EV充電",
+      "sub_short_en": "Charging",
       "row": 0,
       "relations": [
         {

@@ -30,6 +30,8 @@
       "name": "TSMC",
       "sub": "半導体製造",
       "sub_en": "Foundry",
+      "sub_short": "半導体",
+      "sub_short_en": "Foundry",
       "row": 0,
       "relations": [
         {
@@ -66,6 +68,8 @@
       "name": "ASEテクノロジー・ホールディング",
       "sub": "半導体後工程",
       "sub_en": "Packaging & test",
+      "sub_short": "後工程",
+      "sub_short_en": "Chip pack",
       "row": 0,
       "relations": [
         {
@@ -90,6 +94,8 @@
       "name": "ウェルズ・ファーゴ",
       "sub": "銀行",
       "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
       "row": 1,
       "relations": [
         {
@@ -129,6 +135,8 @@
       "name": "グローバルファウンドリーズ",
       "sub": "半導体製造",
       "sub_en": "Foundry",
+      "sub_short": "半導体",
+      "sub_short_en": "Foundry",
       "row": 0,
       "relations": [
         {
@@ -153,6 +161,8 @@
       "name": "United Faith Auto-Engineering",
       "sub": "中国上場企業",
       "sub_en": "China-listed company",
+      "sub_short": "中国上場",
+      "sub_short_en": "China",
       "row": 1,
       "relations": [
         {
@@ -178,6 +188,8 @@
       "name": "モノリシック・パワー・システムズ",
       "sub": "電源半導体",
       "sub_en": "Power semiconductors",
+      "sub_short": "電源IC",
+      "sub_short_en": "Power ICs",
       "row": 2,
       "relations": [
         {

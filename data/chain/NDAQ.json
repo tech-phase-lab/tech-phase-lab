@@ -27,6 +27,8 @@
       "name": "アマゾン・ドット・コム(AWS)",
       "sub": "クラウド提携先",
       "sub_en": "Cloud partner",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 0,
       "relations": [
         {
@@ -64,6 +66,8 @@
       "name": "Cboeグローバル・マーケッツ",
       "sub": "取引所運営",
       "sub_en": "Exchange operator",
+      "sub_short": "取引所",
+      "sub_short_en": "Exchange",
       "row": 0,
       "relations": [
         {
@@ -88,6 +92,8 @@
       "name": "インターコンチネンタル取引所",
       "sub": "取引所運営",
       "sub_en": "Exchange operator",
+      "sub_short": "取引所",
+      "sub_short_en": "Exchange",
       "row": 0,
       "relations": [
         {
@@ -125,6 +131,8 @@
       "name": "マイアミ・インターナショナル・ホールディングス",
       "sub": "オプション取引所",
       "sub_en": "Options exchange",
+      "sub_short": "証券",
+      "sub_short_en": "Exchange",
       "row": 0,
       "relations": [
         {
@@ -149,6 +157,8 @@
       "name": "ドイツ取引所",
       "sub": "欧州の取引所",
       "sub_en": "European exchange",
+      "sub_short": "取引所",
+      "sub_short_en": "Exchange",
       "row": 0,
       "relations": [
         {

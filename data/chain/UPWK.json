@@ -33,6 +33,8 @@
       "name_en": "WorkMotion",
       "sub": "海外雇用代行(EOR)",
       "sub_en": "Employer of record",
+      "sub_short": "雇用代行",
+      "sub_short_en": "Payroll",
       "row": 0,
       "relations": [
         {
@@ -57,6 +59,8 @@
       "name_en": "Adecco",
       "sub": "人材派遣(スイス)",
       "sub_en": "Staffing (Switzerland)",
+      "sub_short": "人材派遣",
+      "sub_short_en": "Staffing",
       "row": 1,
       "relations": [
         {
@@ -81,6 +85,8 @@
       "name_en": "Randstad",
       "sub": "人材派遣(オランダ)",
       "sub_en": "Staffing (Netherlands)",
+      "sub_short": "人材派遣",
+      "sub_short_en": "Staffing",
       "row": 1,
       "relations": [
         {
@@ -105,6 +111,8 @@
       "name_en": "Recruit Holdings",
       "sub": "人材・求人(日本)",
       "sub_en": "HR & job search (Japan)",
+      "sub_short": "人材",
+      "sub_short_en": "HR",
       "row": 1,
       "relations": [
         {
@@ -129,6 +137,8 @@
       "name_en": "Robert Half",
       "sub": "専門人材サービス",
       "sub_en": "Professional staffing",
+      "sub_short": "専門人材",
+      "sub_short_en": "Staffing",
       "row": 1,
       "relations": [
         {
@@ -153,6 +163,8 @@
       "name_en": "Fiverr",
       "sub": "フリーランス仲介",
       "sub_en": "Freelance marketplace",
+      "sub_short": "人材",
+      "sub_short_en": "Freelance",
       "row": 2,
       "relations": [
         {
@@ -177,6 +189,8 @@
       "name_en": "IZEA Worldwide",
       "sub": "インフルエンサー・マーケティング",
       "sub_en": "Influencer marketing",
+      "sub_short": "SNS販促",
+      "sub_short_en": "Social",
       "row": 2,
       "relations": [
         {

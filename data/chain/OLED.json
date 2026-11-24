@@ -24,6 +24,8 @@
       "name": "ピーピージー",
       "sub": "材料製造パートナー",
       "sub_en": "Materials manufacturer",
+      "sub_short": "材料製造",
+      "sub_short_en": "Materials",
       "row": 0,
       "relations": [
         {
@@ -48,6 +50,8 @@
       "name": "サムスンディスプレイ",
       "sub": "有機EL パネル",
       "sub_en": "OLED panels",
+      "sub_short": "有機EL",
+      "sub_short_en": "OLED",
       "row": 1,
       "relations": [
         {
@@ -72,6 +76,8 @@
       "name": "LGディスプレイ",
       "sub": "有機EL パネル",
       "sub_en": "OLED panels",
+      "sub_short": "有機EL",
+      "sub_short_en": "OLED",
       "row": 1,
       "relations": [
         {
@@ -96,6 +102,8 @@
       "name": "京東方科技集団",
       "sub": "有機EL パネル",
       "sub_en": "OLED panels",
+      "sub_short": "有機EL",
+      "sub_short_en": "OLED",
       "row": 1,
       "relations": [
         {
@@ -120,6 +128,8 @@
       "name": "天馬微電子",
       "sub": "有機EL パネル",
       "sub_en": "OLED panels",
+      "sub_short": "有機EL",
+      "sub_short_en": "OLED",
       "row": 1,
       "relations": [
         {
@@ -144,6 +154,8 @@
       "name": "維信諾",
       "sub": "有機EL パネル",
       "sub_en": "OLED panels",
+      "sub_short": "有機EL",
+      "sub_short_en": "OLED",
       "row": 1,
       "relations": [
         {
@@ -168,6 +180,8 @@
       "name": "コニカミノルタ",
       "sub": "戦略的関係先",
       "sub_en": "Strategic partner",
+      "sub_short": "提携先",
+      "sub_short_en": "Partner",
       "row": 1,
       "relations": [
         {
@@ -192,6 +206,8 @@
       "name": "カネカ",
       "sub": "戦略的関係先",
       "sub_en": "Strategic partner",
+      "sub_short": "提携先",
+      "sub_short_en": "Partner",
       "row": 1,
       "relations": [
         {

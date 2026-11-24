@@ -29,6 +29,8 @@
       "name": "アルファベット(グーグル)",
       "sub": "検索・広告",
       "sub_en": "Search & advertising",
+      "sub_short": "検索",
+      "sub_short_en": "Search",
       "row": 0,
       "relations": [
         {
@@ -53,6 +55,8 @@
       "name": "トリップドットコム・グループ",
       "sub": "オンライン旅行",
       "sub_en": "Online travel",
+      "sub_short": "旅行予約",
+      "sub_short_en": "Travel",
       "row": 0,
       "relations": [
         {
@@ -90,6 +94,8 @@
       "name": "エクスペディア・グループ",
       "sub": "オンライン旅行",
       "sub_en": "Online travel",
+      "sub_short": "旅行予約",
+      "sub_short_en": "Travel",
       "row": 1,
       "relations": [
         {
@@ -114,6 +120,8 @@
       "name": "ブッキング・ホールディングス",
       "sub": "オンライン旅行",
       "sub_en": "Online travel",
+      "sub_short": "旅行予約",
+      "sub_short_en": "Travel",
       "row": 1,
       "relations": [
         {
@@ -138,6 +146,8 @@
       "name": "エアビーアンドビー",
       "sub": "宿泊仲介",
       "sub_en": "Lodging marketplace",
+      "sub_short": "宿泊仲介",
+      "sub_short_en": "Lodging",
       "row": 1,
       "relations": [
         {
@@ -162,6 +172,8 @@
       "name": "トリバゴ",
       "sub": "ホテル比較検索",
       "sub_en": "Hotel metasearch",
+      "sub_short": "旅行予約",
+      "sub_short_en": "Travel",
       "row": 1,
       "relations": [
         {

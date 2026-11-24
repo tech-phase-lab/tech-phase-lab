@@ -19,6 +19,8 @@
       "name": "トヨタ自動車",
       "sub": "自動車メーカー",
       "sub_en": "Automaker",
+      "sub_short": "自動車",
+      "sub_short_en": "Cars",
       "row": 0,
       "relations": [
         {
@@ -43,6 +45,8 @@
       "name": "カミンズ",
       "sub": "エンジンメーカー",
       "sub_en": "Engine maker",
+      "sub_short": "エンジン",
+      "sub_short_en": "Engines",
       "row": 0,
       "relations": [
         {
@@ -67,6 +71,8 @@
       "name": "アヴネット",
       "sub": "電子部品商社",
       "sub_en": "Electronics distributor",
+      "sub_short": "電子部品",
+      "sub_short_en": "Devices",
       "row": 0,
       "relations": [
         {
@@ -91,6 +97,8 @@
       "name": "デジキー・エレクトロニクス",
       "sub": "電子部品商社",
       "sub_en": "Electronics distributor",
+      "sub_short": "電子部品",
+      "sub_short_en": "Devices",
       "row": 0,
       "relations": [
         {
@@ -115,6 +123,8 @@
       "name": "マスター・エレクトロニクス",
       "sub": "電子部品商社",
       "sub_en": "Electronics distributor",
+      "sub_short": "電子部品",
+      "sub_short_en": "Devices",
       "row": 0,
       "relations": [
         {
@@ -139,6 +149,8 @@
       "name": "フューチャー・エレクトロニクス",
       "sub": "電子部品商社",
       "sub_en": "Electronics distributor",
+      "sub_short": "電子部品",
+      "sub_short_en": "Devices",
       "row": 0,
       "relations": [
         {
@@ -163,6 +175,8 @@
       "name": "ティーティーアイ",
       "sub": "電子部品商社",
       "sub_en": "Electronics distributor",
+      "sub_short": "電子部品",
+      "sub_short_en": "Devices",
       "row": 0,
       "relations": [
         {

@@ -31,6 +31,8 @@
       "name_en": "Middlemount Coal",
       "sub": "石炭(豪州)",
       "sub_en": "Coal (Australia)",
+      "sub_short": "石炭",
+      "sub_short_en": "Coal",
       "row": 0,
       "relations": [
         {
@@ -55,6 +57,8 @@
       "name_en": "Anglo American",
       "sub": "資源(英国)",
       "sub_en": "Mining (UK)",
+      "sub_short": "資源",
+      "sub_short_en": "Mining",
       "row": 0,
       "relations": [
         {
@@ -79,6 +83,8 @@
       "name_en": "BHP",
       "sub": "資源(豪州)",
       "sub_en": "Mining (Australia)",
+      "sub_short": "資源",
+      "sub_short_en": "Mining",
       "row": 1,
       "relations": [
         {
@@ -103,6 +109,8 @@
       "name_en": "Glencore",
       "sub": "資源・商社(スイス)",
       "sub_en": "Mining & trading (Switzerland)",
+      "sub_short": "資源",
+      "sub_short_en": "Mining",
       "row": 1,
       "relations": [
         {
@@ -127,6 +135,8 @@
       "name_en": "Warrior Met Coal",
       "sub": "原料炭",
       "sub_en": "Metallurgical coal",
+      "sub_short": "原料炭",
+      "sub_short_en": "Coal",
       "row": 1,
       "relations": [
         {
@@ -151,6 +161,8 @@
       "name_en": "Core Natural Resources",
       "sub": "石炭",
       "sub_en": "Coal",
+      "sub_short": "石炭",
+      "sub_short_en": "Coal",
       "row": 1,
       "relations": [
         {
@@ -175,6 +187,8 @@
       "name_en": "Alliance Resource Partners",
       "sub": "石炭",
       "sub_en": "Coal",
+      "sub_short": "石炭",
+      "sub_short_en": "Coal",
       "row": 2,
       "relations": [
         {
@@ -199,6 +213,8 @@
       "name_en": "Hallador Energy",
       "sub": "石炭・電力",
       "sub_en": "Coal & power",
+      "sub_short": "石炭",
+      "sub_short_en": "Coal",
       "row": 2,
       "relations": [
         {

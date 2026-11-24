@@ -27,6 +27,8 @@
       "name": "ソルベンタム",
       "sub": "元ヘルスケア部門",
       "sub_en": "Former health care unit",
+      "sub_short": "医療部門",
+      "sub_short_en": "Ex-unit",
       "row": 0,
       "relations": [
         {
@@ -64,6 +66,8 @@
       "name": "キャボット",
       "sub": "旧呼吸器事業の所有者",
       "sub_en": "Former respirator owner",
+      "sub_short": "旧事業",
+      "sub_short_en": "Ex-unit",
       "row": 0,
       "relations": [
         {
@@ -88,6 +92,8 @@
       "name": "アメリカン・オプティカル",
       "sub": "旧呼吸器事業の所有者",
       "sub_en": "Former respirator owner",
+      "sub_short": "旧事業",
+      "sub_short_en": "Ex-unit",
       "row": 0,
       "relations": [
         {
@@ -112,6 +118,8 @@
       "name": "ワーナー・ランバート",
       "sub": "旧呼吸器事業の所有者",
       "sub_en": "Former respirator owner",
+      "sub_short": "旧事業",
+      "sub_short_en": "Ex-unit",
       "row": 0,
       "relations": [
         {
@@ -136,6 +144,8 @@
       "name": "アルファ・プロ・テック",
       "sub": "防護用品",
       "sub_en": "Protective apparel",
+      "sub_short": "防護用品",
+      "sub_short_en": "Safety",
       "row": 1,
       "relations": [
         {
@@ -160,6 +170,8 @@
       "name": "ミドルセックス・ウォーター",
       "sub": "水道",
       "sub_en": "Water utility",
+      "sub_short": "水道",
+      "sub_short_en": "Water",
       "row": 0,
       "relations": [
         {
@@ -184,6 +196,8 @@
       "name": "アムコア",
       "sub": "包装",
       "sub_en": "Packaging",
+      "sub_short": "包装",
+      "sub_short_en": "Packing",
       "row": 1,
       "relations": [
         {
@@ -208,6 +222,8 @@
       "name": "ハンツマン",
       "sub": "化学",
       "sub_en": "Chemicals",
+      "sub_short": "化学",
+      "sub_short_en": "Chem",
       "row": 1,
       "relations": [
         {

@@ -34,6 +34,8 @@
       "name": "ブロードコム",
       "sub": "半導体",
       "sub_en": "Chips",
+      "sub_short": "半導体",
+      "sub_short_en": "Chips",
       "row": 0,
       "relations": [
         {
@@ -60,6 +62,8 @@
       "name": "アップル",
       "sub": "スマホ・OS",
       "sub_en": "Phones & OS",
+      "sub_short": "スマホ",
+      "sub_short_en": "Phones",
       "row": 1,
       "relations": [
         {
@@ -99,6 +103,8 @@
       "name": "テラウルフ",
       "sub": "データセンター",
       "sub_en": "Data centers",
+      "sub_short": "DC",
+      "sub_short_en": "DCs",
       "row": 1,
       "relations": [
         {
@@ -125,6 +131,8 @@
       "name": "サイファー・デジタル",
       "sub": "データセンター",
       "sub_en": "Data centers",
+      "sub_short": "DC",
+      "sub_short_en": "DCs",
       "row": 1,
       "relations": [
         {
@@ -151,6 +159,8 @@
       "name": "キンドリル",
       "sub": "ITサービス",
       "sub_en": "IT services",
+      "sub_short": "IT",
+      "sub_short_en": "IT",
       "row": 1,
       "relations": [
         {
@@ -175,6 +185,8 @@
       "name": "サービスナウ",
       "sub": "業務ソフト",
       "sub_en": "Business software",
+      "sub_short": "業務IT",
+      "sub_short_en": "Biz apps",
       "row": 1,
       "relations": [
         {
@@ -199,6 +211,8 @@
       "name": "ウーバー",
       "sub": "配車",
       "sub_en": "Ride-hailing",
+      "sub_short": "配車",
+      "sub_short_en": "Rides",
       "row": 1,
       "relations": [
         {
@@ -225,6 +239,8 @@
       "name": "リフト",
       "sub": "配車",
       "sub_en": "Ride-hailing",
+      "sub_short": "配車",
+      "sub_short_en": "Rides",
       "row": 1,
       "relations": [
         {
@@ -251,6 +267,8 @@
       "name": "スナップ",
       "sub": "SNS",
       "sub_en": "Social",
+      "sub_short": "SNS",
+      "sub_short_en": "Social",
       "row": 1,
       "relations": [
         {
@@ -290,6 +308,8 @@
       "name": "スノーフレイク",
       "sub": "データ基盤",
       "sub_en": "Data platform",
+      "sub_short": "データ",
+      "sub_short_en": "Data",
       "row": 1,
       "relations": [
         {
@@ -316,6 +336,8 @@
       "name": "エヌビディア",
       "sub": "AI半導体",
       "sub_en": "AI chips",
+      "sub_short": "AI半導体",
+      "sub_short_en": "AI chips",
       "row": 2,
       "relations": [
         {
@@ -340,6 +362,8 @@
       "name": "オラクル",
       "sub": "クラウド・ソフト",
       "sub_en": "Cloud & software",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 2,
       "relations": [
         {
@@ -364,6 +388,8 @@
       "name": "アイ・ビー・エム",
       "sub": "IT・ソフト",
       "sub_en": "IT & software",
+      "sub_short": "IT",
+      "sub_short_en": "IT",
       "row": 2,
       "relations": [
         {
@@ -388,6 +414,8 @@
       "name": "ピンタレスト",
       "sub": "SNS",
       "sub_en": "Social",
+      "sub_short": "SNS",
+      "sub_short_en": "Social",
       "row": 2,
       "relations": [
         {
@@ -412,6 +440,8 @@
       "name": "スポティファイ",
       "sub": "音楽配信",
       "sub_en": "Audio streaming",
+      "sub_short": "音楽配信",
+      "sub_short_en": "Audio",
       "row": 2,
       "relations": [
         {
@@ -436,6 +466,8 @@
       "name": "イェルプ",
       "sub": "口コミ・広告",
       "sub_en": "Reviews & ads",
+      "sub_short": "口コミ",
+      "sub_short_en": "Reviews",
       "row": 2,
       "relations": [
         {
@@ -460,6 +492,8 @@
       "name": "ジェイフロッグ",
       "sub": "ソフト開発基盤",
       "sub_en": "Software supply chain",
+      "sub_short": "ソフト",
+      "sub_short_en": "Software",
       "row": 2,
       "relations": [
         {

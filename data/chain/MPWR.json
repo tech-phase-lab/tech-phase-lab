@@ -28,6 +28,8 @@
       "name": "グローバルファウンドリーズ",
       "sub": "半導体ファウンドリ",
       "sub_en": "Semiconductor foundry",
+      "sub_short": "受託生産",
+      "sub_short_en": "Foundry",
       "row": 0,
       "relations": [
         {
@@ -51,6 +53,8 @@
       "name": "アナログ・デバイセズ",
       "sub": "アナログ半導体",
       "sub_en": "Analog semiconductors",
+      "sub_short": "アナログ",
+      "sub_short_en": "Analog",
       "row": 1,
       "relations": [
         {
@@ -75,6 +79,8 @@
       "name": "アルファ・アンド・オメガ・セミコンダクター",
       "sub": "パワー半導体",
       "sub_en": "Power semiconductors",
+      "sub_short": "半導体",
+      "sub_short_en": "Power ICs",
       "row": 1,
       "relations": [
         {
@@ -112,6 +118,8 @@
       "name": "インディ・セミコンダクター",
       "sub": "車載半導体",
       "sub_en": "Automotive semiconductors",
+      "sub_short": "車載IC",
+      "sub_short_en": "Auto ICs",
       "row": 1,
       "relations": [
         {
@@ -136,6 +144,8 @@
       "name": "ラムバス",
       "sub": "メモリーインターフェース",
       "sub_en": "Memory interface",
+      "sub_short": "メモリIP",
+      "sub_short_en": "Memory",
       "row": 1,
       "relations": [
         {
@@ -173,6 +183,8 @@
       "name": "ECARX",
       "sub": "車載システム",
       "sub_en": "Automotive systems",
+      "sub_short": "車載",
+      "sub_short_en": "Car parts",
       "row": 0,
       "relations": [
         {
@@ -196,6 +208,8 @@
       "name": "ヴァンガード・インターナショナル・セミコンダクター",
       "sub": "半導体ファウンドリ",
       "sub_en": "Semiconductor foundry",
+      "sub_short": "受託生産",
+      "sub_short_en": "Foundry",
       "row": 0,
       "relations": [
         {

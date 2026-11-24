@@ -37,6 +37,8 @@
       "name_en": "Boeing",
       "sub": "航空機",
       "sub_en": "Aircraft",
+      "sub_short": "航空機",
+      "sub_short_en": "Aircraft",
       "row": 0,
       "relations": [
         {
@@ -61,6 +63,8 @@
       "name_en": "Embraer",
       "sub": "航空機(ブラジル)",
       "sub_en": "Aircraft (Brazil)",
+      "sub_short": "航空機",
+      "sub_short_en": "Aircraft",
       "row": 0,
       "relations": [
         {
@@ -85,6 +89,8 @@
       "name_en": "SkyWest",
       "sub": "地域航空",
       "sub_en": "Regional airline",
+      "sub_short": "地域航空",
+      "sub_short_en": "Airline",
       "row": 1,
       "relations": [
         {
@@ -109,6 +115,8 @@
       "name_en": "Bank of America",
       "sub": "銀行",
       "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
       "row": 1,
       "relations": [
         {
@@ -133,6 +141,8 @@
       "name_en": "Hawaiian Holdings",
       "sub": "航空",
       "sub_en": "Airline",
+      "sub_short": "航空",
+      "sub_short_en": "Airline",
       "row": 2,
       "relations": [
         {
@@ -157,6 +167,8 @@
       "name_en": "Virgin America",
       "sub": "航空",
       "sub_en": "Airline",
+      "sub_short": "航空",
+      "sub_short_en": "Airline",
       "row": 2,
       "relations": [
         {
@@ -181,6 +193,8 @@
       "name_en": "Delta Air Lines",
       "sub": "航空",
       "sub_en": "Airline",
+      "sub_short": "航空",
+      "sub_short_en": "Airline",
       "row": 3,
       "relations": [
         {
@@ -205,6 +219,8 @@
       "name_en": "Southwest Airlines",
       "sub": "航空",
       "sub_en": "Airline",
+      "sub_short": "航空",
+      "sub_short_en": "Airline",
       "row": 3,
       "relations": [
         {
@@ -229,6 +245,8 @@
       "name_en": "United Airlines",
       "sub": "航空",
       "sub_en": "Airline",
+      "sub_short": "航空",
+      "sub_short_en": "Airline",
       "row": 3,
       "relations": [
         {

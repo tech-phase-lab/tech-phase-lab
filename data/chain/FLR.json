@@ -34,6 +34,8 @@
       "name_en": "NuScale Power",
       "sub": "小型原子炉",
       "sub_en": "Small modular reactors",
+      "sub_short": "原子炉",
+      "sub_short_en": "SMRs",
       "row": 0,
       "relations": [
         {
@@ -58,6 +60,8 @@
       "name_en": "BWX Technologies",
       "sub": "原子力部品",
       "sub_en": "Nuclear components",
+      "sub_short": "原子力",
+      "sub_short_en": "Nuclear",
       "row": 0,
       "relations": [
         {
@@ -82,6 +86,8 @@
       "name_en": "Centrus Energy",
       "sub": "ウラン濃縮",
       "sub_en": "Uranium enrichment",
+      "sub_short": "ウラン",
+      "sub_short_en": "Uranium",
       "row": 1,
       "relations": [
         {
@@ -106,6 +112,8 @@
       "name_en": "USA Rare Earth",
       "sub": "レアアース",
       "sub_en": "Rare earths",
+      "sub_short": "希土類",
+      "sub_short_en": "Minerals",
       "row": 1,
       "relations": [
         {
@@ -130,6 +138,8 @@
       "name_en": "Uranium Energy",
       "sub": "ウラン",
       "sub_en": "Uranium",
+      "sub_short": "ウラン",
+      "sub_short_en": "Uranium",
       "row": 1,
       "relations": [
         {
@@ -154,6 +164,8 @@
       "name_en": "ioneer",
       "sub": "リチウム",
       "sub_en": "Lithium",
+      "sub_short": "リチウム",
+      "sub_short_en": "Lithium",
       "row": 1,
       "relations": [
         {
@@ -178,6 +190,8 @@
       "name_en": "5E Advanced Materials",
       "sub": "ホウ素",
       "sub_en": "Boron",
+      "sub_short": "ホウ素",
+      "sub_short_en": "Boron",
       "row": 1,
       "relations": [
         {
@@ -202,6 +216,8 @@
       "name_en": "Amentum",
       "sub": "政府向け技術サービス",
       "sub_en": "Government technical services",
+      "sub_short": "政府技術",
+      "sub_short_en": "Gov tech",
       "row": 2,
       "relations": [
         {
@@ -226,6 +242,8 @@
       "name_en": "V2X",
       "sub": "政府向けサービス",
       "sub_en": "Government services",
+      "sub_short": "政府支援",
+      "sub_short_en": "Gov IT",
       "row": 2,
       "relations": [
         {
@@ -250,6 +268,8 @@
       "name_en": "EMCOR Group",
       "sub": "設備工事・保守",
       "sub_en": "Building services",
+      "sub_short": "設備工事",
+      "sub_short_en": "Facilities",
       "row": 2,
       "relations": [
         {
@@ -274,6 +294,8 @@
       "name_en": "Babcock & Wilcox",
       "sub": "ボイラー",
       "sub_en": "Boilers",
+      "sub_short": "ボイラー",
+      "sub_short_en": "Boilers",
       "row": 2,
       "relations": [
         {

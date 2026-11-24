@@ -32,6 +32,8 @@
       "name_en": "Chime Financial",
       "sub": "ネット金融サービス",
       "sub_en": "Consumer fintech",
+      "sub_short": "金融",
+      "sub_short_en": "Fintech",
       "row": 0,
       "relations": [
         {
@@ -56,6 +58,8 @@
       "name_en": "Expensify",
       "sub": "経費精算ソフト",
       "sub_en": "Expense management software",
+      "sub_short": "経費精算",
+      "sub_short_en": "Expenses",
       "row": 0,
       "relations": [
         {
@@ -80,6 +84,8 @@
       "name_en": "Paycom Software",
       "sub": "給与計算ソフト",
       "sub_en": "Payroll software",
+      "sub_short": "給与計算",
+      "sub_short_en": "Payroll",
       "row": 0,
       "relations": [
         {
@@ -104,6 +110,8 @@
       "name_en": "Xos",
       "sub": "商用EV",
       "sub_en": "Commercial EVs",
+      "sub_short": "商用EV",
+      "sub_short_en": "EVs",
       "row": 1,
       "relations": [
         {
@@ -128,6 +136,8 @@
       "name_en": "Pathward Financial",
       "sub": "銀行(BaaS)",
       "sub_en": "Banking-as-a-service bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
       "row": 2,
       "relations": [
         {
@@ -152,6 +162,8 @@
       "name_en": "Live Oak Bancshares",
       "sub": "銀行(SBA融資)",
       "sub_en": "Bank (SBA lending)",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
       "row": 2,
       "relations": [
         {

@@ -22,6 +22,8 @@
       "name": "ロウズ",
       "sub": "小売の販売先",
       "sub_en": "Retail customer",
+      "sub_short": "小売",
+      "sub_short_en": "Retail",
       "row": 0,
       "relations": [
         {
@@ -46,6 +48,8 @@
       "name": "アマゾン",
       "sub": "浄水製品の販路",
       "sub_en": "Water treatment channel",
+      "sub_short": "浄水",
+      "sub_short_en": "Water",
       "row": 0,
       "relations": [
         {
@@ -70,6 +74,8 @@
       "name": "リーム",
       "sub": "給湯器の競合",
       "sub_en": "Water heater competitor",
+      "sub_short": "給湯器",
+      "sub_short_en": "Heaters",
       "row": 0,
       "relations": [
         {
@@ -94,6 +100,8 @@
       "name": "ブラッドフォード・ホワイト",
       "sub": "給湯器の競合",
       "sub_en": "Water heater competitor",
+      "sub_short": "給湯器",
+      "sub_short_en": "Heaters",
       "row": 0,
       "relations": [
         {
@@ -118,6 +126,8 @@
       "name": "リンナイ",
       "sub": "給湯器の競合",
       "sub_en": "Water heater competitor",
+      "sub_short": "給湯器",
+      "sub_short_en": "Heaters",
       "row": 0,
       "relations": [
         {
@@ -155,6 +165,8 @@
       "name": "ナビエン",
       "sub": "給湯器の競合",
       "sub_en": "Water heater competitor",
+      "sub_short": "給湯器",
+      "sub_short_en": "Heaters",
       "row": 0,
       "relations": [
         {
@@ -179,6 +191,8 @@
       "name": "ペンテア",
       "sub": "浄水の競合",
       "sub_en": "Water treatment competitor",
+      "sub_short": "浄水",
+      "sub_short_en": "Water",
       "row": 0,
       "relations": [
         {
@@ -203,6 +217,8 @@
       "name": "フランクリン・エレクトリック",
       "sub": "浄水の競合",
       "sub_en": "Water treatment competitor",
+      "sub_short": "浄水",
+      "sub_short_en": "Water",
       "row": 0,
       "relations": [
         {
@@ -227,6 +243,8 @@
       "name": "カリガン",
       "sub": "浄水の競合",
       "sub_en": "Water treatment competitor",
+      "sub_short": "浄水",
+      "sub_short_en": "Water",
       "row": 0,
       "relations": [
         {
@@ -251,6 +269,8 @@
       "name": "ハイアール",
       "sub": "中国の競合",
       "sub_en": "China competitor",
+      "sub_short": "中国",
+      "sub_short_en": "China",
       "row": 0,
       "relations": [
         {

@@ -37,6 +37,8 @@
       "name_en": "EyePoint Pharmaceuticals",
       "sub": "眼科薬",
       "sub_en": "Ophthalmic drugs",
+      "sub_short": "眼科薬",
+      "sub_short_en": "Eye care",
       "row": 0,
       "relations": [
         {
@@ -61,6 +63,8 @@
       "name_en": "Alimera Sciences",
       "sub": "眼科薬",
       "sub_en": "Ophthalmic drugs",
+      "sub_short": "眼科薬",
+      "sub_short_en": "Eye care",
       "row": 0,
       "relations": [
         {
@@ -85,6 +89,8 @@
       "name_en": "Cencora",
       "sub": "医薬品卸",
       "sub_en": "Drug distribution",
+      "sub_short": "医薬品卸",
+      "sub_short_en": "Pharma",
       "row": 1,
       "relations": [
         {
@@ -109,6 +115,8 @@
       "name_en": "Cardinal Health",
       "sub": "医薬品卸",
       "sub_en": "Drug distribution",
+      "sub_short": "医薬品卸",
+      "sub_short_en": "Pharma",
       "row": 1,
       "relations": [
         {
@@ -133,6 +141,8 @@
       "name_en": "McKesson",
       "sub": "医薬品卸",
       "sub_en": "Drug distribution",
+      "sub_short": "医薬品卸",
+      "sub_short_en": "Pharma",
       "row": 1,
       "relations": [
         {
@@ -157,6 +167,8 @@
       "name_en": "Keenova Therapeutics",
       "sub": "医薬品",
       "sub_en": "Pharmaceuticals",
+      "sub_short": "医薬品",
+      "sub_short_en": "Pharma",
       "row": 2,
       "relations": [
         {
@@ -181,6 +193,8 @@
       "name_en": "Bausch & Lomb",
       "sub": "眼科",
       "sub_en": "Eye health",
+      "sub_short": "眼科",
+      "sub_short_en": "Eye care",
       "row": 2,
       "relations": [
         {
@@ -205,6 +219,8 @@
       "name_en": "Emmaus Life Sciences",
       "sub": "鎌状赤血球症薬",
       "sub_en": "Sickle cell drugs",
+      "sub_short": "血液薬",
+      "sub_short_en": "Blood",
       "row": 3,
       "relations": [
         {

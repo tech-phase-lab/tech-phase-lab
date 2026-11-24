@@ -24,6 +24,8 @@
       "name": "シスコシステムズ",
       "sub": "ネットワーク機器",
       "sub_en": "Networking equipment",
+      "sub_short": "通信機器",
+      "sub_short_en": "Network",
       "row": 0,
       "relations": [
         {
@@ -48,6 +50,8 @@
       "name": "ネットアップ",
       "sub": "ストレージ",
       "sub_en": "Data storage",
+      "sub_short": "記憶装置",
+      "sub_short_en": "Storage",
       "row": 0,
       "relations": [
         {
@@ -72,6 +76,8 @@
       "name": "ヒューレット・パッカード・エンタープライズ",
       "sub": "サーバー・ネットワーク",
       "sub_en": "Servers & networking",
+      "sub_short": "サーバー",
+      "sub_short_en": "Servers",
       "row": 0,
       "relations": [
         {
@@ -96,6 +102,8 @@
       "name": "ジュニパーネットワークス",
       "sub": "ネットワーク機器",
       "sub_en": "Networking equipment",
+      "sub_short": "通信機器",
+      "sub_short_en": "Network",
       "row": 0,
       "relations": [
         {
@@ -120,6 +128,8 @@
       "name": "デル・テクノロジーズ",
       "sub": "PC・サーバー",
       "sub_en": "PCs & servers",
+      "sub_short": "PC",
+      "sub_short_en": "PCs",
       "row": 0,
       "relations": [
         {
@@ -144,6 +154,8 @@
       "name": "アリスタネットワークス",
       "sub": "ネットワーク機器",
       "sub_en": "Networking equipment",
+      "sub_short": "通信機器",
+      "sub_short_en": "Network",
       "row": 0,
       "relations": [
         {
@@ -168,6 +180,8 @@
       "name": "ベライゾン・コミュニケーションズ",
       "sub": "通信事業者",
       "sub_en": "Telecom carrier",
+      "sub_short": "通信",
+      "sub_short_en": "Telecom",
       "row": 1,
       "relations": [
         {

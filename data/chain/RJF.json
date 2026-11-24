@@ -33,6 +33,8 @@
       "name_en": "TriState Capital",
       "sub": "銀行",
       "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
       "row": 0,
       "relations": [
         {
@@ -57,6 +59,8 @@
       "name_en": "GreensLedge",
       "sub": "証券化・助言",
       "sub_en": "Securitization & advisory",
+      "sub_short": "証券化",
+      "sub_short_en": "Finance",
       "row": 0,
       "relations": [
         {
@@ -81,6 +85,8 @@
       "name_en": "Niagen Bioscience",
       "sub": "NAD+サプリメント",
       "sub_en": "NAD+ supplements",
+      "sub_short": "サプリ",
+      "sub_short_en": "Vitamins",
       "row": 1,
       "relations": [
         {
@@ -105,6 +111,8 @@
       "name_en": "Clear Street",
       "sub": "証券決済・ブローカー",
       "sub_en": "Brokerage & clearing",
+      "sub_short": "証券決済",
+      "sub_short_en": "Broker",
       "row": 1,
       "relations": [
         {
@@ -129,6 +137,8 @@
       "name_en": "Electrovaya",
       "sub": "リチウムイオン電池",
       "sub_en": "Lithium-ion batteries",
+      "sub_short": "電池",
+      "sub_short_en": "Batteries",
       "row": 1,
       "relations": [
         {
@@ -153,6 +163,8 @@
       "name_en": "Houlihan Lokey",
       "sub": "M&A助言",
       "sub_en": "M&A advisory",
+      "sub_short": "M&A助言",
+      "sub_short_en": "M&A",
       "row": 2,
       "relations": [
         {
@@ -177,6 +189,8 @@
       "name_en": "UBS",
       "sub": "銀行・資産運用",
       "sub_en": "Bank & wealth management",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
       "row": 2,
       "relations": [
         {
@@ -201,6 +215,8 @@
       "name_en": "SS&C Technologies",
       "sub": "金融ソフトウェア",
       "sub_en": "Financial software",
+      "sub_short": "金融IT",
+      "sub_short_en": "Finance",
       "row": 2,
       "relations": [
         {

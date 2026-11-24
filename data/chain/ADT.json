@@ -25,6 +25,8 @@
       "name_en": "Alarm.com",
       "sub": "防犯クラウド",
       "sub_en": "Security cloud platform",
+      "sub_short": "防犯",
+      "sub_short_en": "Cloud",
       "row": 0,
       "relations": [
         {
@@ -49,6 +51,8 @@
       "name_en": "Google",
       "sub": "ネット・機器",
       "sub_en": "Internet & devices",
+      "sub_short": "ネット",
+      "sub_short_en": "Internet",
       "row": 0,
       "relations": [
         {
@@ -73,6 +77,8 @@
       "name_en": "Arlo Technologies",
       "sub": "防犯カメラ",
       "sub_en": "Security cameras",
+      "sub_short": "カメラ",
+      "sub_short_en": "Cameras",
       "row": 0,
       "relations": [
         {
@@ -97,6 +103,8 @@
       "name_en": "State Farm",
       "sub": "保険",
       "sub_en": "Insurance",
+      "sub_short": "保険",
+      "sub_short_en": "Insurance",
       "row": 1,
       "relations": [
         {
@@ -121,6 +129,8 @@
       "name_en": "Lyft",
       "sub": "ライドシェア",
       "sub_en": "Ride-hailing",
+      "sub_short": "配車",
+      "sub_short_en": "Rides",
       "row": 1,
       "relations": [
         {
@@ -145,6 +155,8 @@
       "name_en": "Johnson Controls",
       "sub": "ビル設備",
       "sub_en": "Building technologies",
+      "sub_short": "ビル設備",
+      "sub_short_en": "Buildings",
       "row": 1,
       "relations": [
         {

@@ -24,6 +24,8 @@
       "name": "オグルソープ・パワー",
       "sub": "電力協同組合",
       "sub_en": "Electric cooperative",
+      "sub_short": "電力",
+      "sub_short_en": "Power",
       "row": 0,
       "relations": [
         {
@@ -48,6 +50,8 @@
       "name": "MEAGパワー",
       "sub": "公営電力",
       "sub_en": "Municipal power",
+      "sub_short": "公営電力",
+      "sub_short_en": "Utility",
       "row": 0,
       "relations": [
         {
@@ -72,6 +76,8 @@
       "name": "FP&L(フロリダ電力)",
       "sub": "電力会社",
       "sub_en": "Electric utility",
+      "sub_short": "電力会社",
+      "sub_short_en": "Utility",
       "row": 0,
       "relations": [
         {
@@ -96,6 +102,8 @@
       "name": "ジャクソンビル電力公社",
       "sub": "公営電力",
       "sub_en": "Municipal power",
+      "sub_short": "公営電力",
+      "sub_short_en": "Utility",
       "row": 0,
       "relations": [
         {
@@ -120,6 +128,8 @@
       "name": "パワーサウス・エナジー",
       "sub": "電力協同組合",
       "sub_en": "Electric cooperative",
+      "sub_short": "電力",
+      "sub_short_en": "Power",
       "row": 0,
       "relations": [
         {
@@ -144,6 +154,8 @@
       "name": "ウィリアムズ・カンパニーズ",
       "sub": "天然ガスパイプライン",
       "sub_en": "Gas pipelines",
+      "sub_short": "ガス管",
+      "sub_short_en": "Pipeline",
       "row": 0,
       "relations": [
         {
@@ -168,6 +180,8 @@
       "name": "センチュリ・ホールディングス",
       "sub": "電力・ガス設備工事",
       "sub_en": "Utility infrastructure services",
+      "sub_short": "電力",
+      "sub_short_en": "Utility",
       "row": 1,
       "relations": [
         {

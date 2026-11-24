@@ -37,6 +37,8 @@
       "name": "ASML",
       "sub": "露光装置",
       "sub_en": "Lithography",
+      "sub_short": "露光装置",
+      "sub_short_en": "Litho",
       "row": 0,
       "relations": [
         {
@@ -60,6 +62,8 @@
       "name": "TSMC",
       "sub": "受託製造",
       "sub_en": "Foundry",
+      "sub_short": "受託製造",
+      "sub_short_en": "Foundry",
       "row": 0,
       "relations": [
         {
@@ -98,6 +102,8 @@
       "name": "Alphabet(Google)",
       "sub": "クラウド",
       "sub_en": "Cloud",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 1,
       "relations": [
         {
@@ -121,6 +127,8 @@
       "name": "Amazon(AWS)",
       "sub": "クラウド",
       "sub_en": "Cloud",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 1,
       "relations": [
         {
@@ -144,6 +152,8 @@
       "name": "Microsoft",
       "sub": "クラウド・ソフト",
       "sub_en": "Cloud & software",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 1,
       "relations": [
         {
@@ -169,6 +179,8 @@
       "name": "Fortinet",
       "sub": "セキュリティ",
       "sub_en": "Security",
+      "sub_short": "防御",
+      "sub_short_en": "Security",
       "row": 1,
       "relations": [
         {
@@ -192,6 +204,8 @@
       "name": "NVIDIA",
       "sub": "AI半導体",
       "sub_en": "AI chips",
+      "sub_short": "AI半導体",
+      "sub_short_en": "AI chips",
       "row": 2,
       "relations": [
         {
@@ -241,6 +255,8 @@
       "name": "SoftBank Group",
       "sub": "投資会社",
       "sub_en": "Investor",
+      "sub_short": "投資会社",
+      "sub_short_en": "Investor",
       "row": 2,
       "relations": [
         {
@@ -264,6 +280,8 @@
       "name": "Mobileye",
       "sub": "自動運転",
       "sub_en": "Autonomous driving",
+      "sub_short": "自動運転",
+      "sub_short_en": "AV tech",
       "row": 2,
       "relations": [
         {
@@ -287,6 +305,8 @@
       "name": "AMD",
       "sub": "半導体",
       "sub_en": "Chips",
+      "sub_short": "半導体",
+      "sub_short_en": "Chips",
       "row": 2,
       "relations": [
         {
@@ -323,6 +343,8 @@
       "name": "UMC(聯電)",
       "sub": "受託製造",
       "sub_en": "Foundry",
+      "sub_short": "受託製造",
+      "sub_short_en": "Foundry",
       "row": 2,
       "relations": [
         {
@@ -346,6 +368,8 @@
       "name": "SK hynix",
       "sub": "メモリー",
       "sub_en": "Memory",
+      "sub_short": "メモリー",
+      "sub_short_en": "Memory",
       "row": 2,
       "relations": [
         {
@@ -371,6 +395,8 @@
       "name": "Qualcomm",
       "sub": "半導体",
       "sub_en": "Chips",
+      "sub_short": "半導体",
+      "sub_short_en": "Chips",
       "row": 3,
       "relations": [
         {
@@ -394,6 +420,8 @@
       "name": "Apple",
       "sub": "PC・スマホ",
       "sub_en": "PCs & phones",
+      "sub_short": "PC",
+      "sub_short_en": "PCs",
       "row": 3,
       "relations": [
         {
@@ -417,6 +445,8 @@
       "name": "Broadcom",
       "sub": "半導体",
       "sub_en": "Chips",
+      "sub_short": "半導体",
+      "sub_short_en": "Chips",
       "row": 3,
       "relations": [
         {
@@ -440,6 +470,8 @@
       "name": "Samsung Electronics",
       "sub": "受託製造",
       "sub_en": "Foundry",
+      "sub_short": "受託製造",
+      "sub_short_en": "Foundry",
       "row": 3,
       "relations": [
         {

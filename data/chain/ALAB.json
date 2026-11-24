@@ -40,6 +40,8 @@
       "name": "TSMC",
       "sub": "半導体製造",
       "sub_en": "Foundry",
+      "sub_short": "半導体",
+      "sub_short_en": "Foundry",
       "row": 0,
       "relations": [
         {
@@ -63,6 +65,8 @@
       "name": "日月光(ASE)",
       "sub": "後工程",
       "sub_en": "Packaging & test",
+      "sub_short": "後工程",
+      "sub_short_en": "Chip pack",
       "row": 0,
       "relations": [
         {
@@ -87,6 +91,8 @@
       "name": "Amkor Technology",
       "sub": "後工程",
       "sub_en": "Packaging & test",
+      "sub_short": "後工程",
+      "sub_short_en": "Chip pack",
       "row": 0,
       "relations": [
         {
@@ -110,6 +116,8 @@
       "name": "Amazon",
       "sub": "クラウド",
       "sub_en": "Cloud",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 1,
       "relations": [
         {
@@ -148,6 +156,8 @@
       "name": "Microsoft",
       "sub": "クラウド",
       "sub_en": "Cloud",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 1,
       "relations": [
         {
@@ -173,6 +183,8 @@
       "name": "NVIDIA",
       "sub": "AI半導体",
       "sub_en": "AI chips",
+      "sub_short": "AI半導体",
+      "sub_short_en": "AI chips",
       "row": 2,
       "relations": [
         {
@@ -196,6 +208,8 @@
       "name": "AMD",
       "sub": "半導体",
       "sub_en": "Semiconductors",
+      "sub_short": "半導体",
+      "sub_short_en": "Chips",
       "row": 2,
       "relations": [
         {
@@ -232,6 +246,8 @@
       "name": "Intel",
       "sub": "半導体",
       "sub_en": "Semiconductors",
+      "sub_short": "半導体",
+      "sub_short_en": "Chips",
       "row": 2,
       "relations": [
         {
@@ -255,6 +271,8 @@
       "name": "Arm Holdings",
       "sub": "半導体IP",
       "sub_en": "Chip IP",
+      "sub_short": "半導体IP",
+      "sub_short_en": "Chip IP",
       "row": 2,
       "relations": [
         {
@@ -291,6 +309,8 @@
       "name": "Micron Technology",
       "sub": "メモリー",
       "sub_en": "Memory",
+      "sub_short": "メモリー",
+      "sub_short_en": "Memory",
       "row": 2,
       "relations": [
         {
@@ -314,6 +334,8 @@
       "name": "Samsung Electronics",
       "sub": "メモリー",
       "sub_en": "Memory",
+      "sub_short": "メモリー",
+      "sub_short_en": "Memory",
       "row": 2,
       "relations": [
         {
@@ -337,6 +359,8 @@
       "name": "Alchip Technologies",
       "sub": "チップ設計サービス",
       "sub_en": "Chip design services",
+      "sub_short": "IC設計",
+      "sub_short_en": "Chip IP",
       "row": 2,
       "relations": [
         {
@@ -360,6 +384,8 @@
       "name": "Lumentum",
       "sub": "光通信部品",
       "sub_en": "Optical components",
+      "sub_short": "光部品",
+      "sub_short_en": "Optics",
       "row": 2,
       "relations": [
         {
@@ -383,6 +409,8 @@
       "name": "Amphenol",
       "sub": "コネクター",
       "sub_en": "Connectors",
+      "sub_short": "接続部品",
+      "sub_short_en": "Plugs",
       "row": 2,
       "relations": [
         {
@@ -408,6 +436,8 @@
       "name": "Cadence Design Systems",
       "sub": "半導体設計ソフト",
       "sub_en": "Chip design software",
+      "sub_short": "設計",
+      "sub_short_en": "Chip IP",
       "row": 2,
       "relations": [
         {
@@ -431,6 +461,8 @@
       "name": "Synopsys",
       "sub": "半導体設計ソフト",
       "sub_en": "Chip design software",
+      "sub_short": "設計",
+      "sub_short_en": "Chip IP",
       "row": 2,
       "relations": [
         {
@@ -454,6 +486,8 @@
       "name": "TE Connectivity",
       "sub": "コネクター",
       "sub_en": "Connectors",
+      "sub_short": "接続部品",
+      "sub_short_en": "Plugs",
       "row": 2,
       "relations": [
         {
@@ -479,6 +513,8 @@
       "name": "Keysight Technologies",
       "sub": "測定器",
       "sub_en": "Test & measurement",
+      "sub_short": "測定器",
+      "sub_short_en": "Testing",
       "row": 2,
       "relations": [
         {
@@ -502,6 +538,8 @@
       "name": "Eoptolink Technology",
       "sub": "光トランシーバー",
       "sub_en": "Optical transceivers",
+      "sub_short": "光部品",
+      "sub_short_en": "Optics",
       "row": 2,
       "relations": [
         {
@@ -527,6 +565,8 @@
       "name": "Wiwynn",
       "sub": "サーバー製造",
       "sub_en": "Server ODM",
+      "sub_short": "サーバー",
+      "sub_short_en": "Servers",
       "row": 3,
       "relations": [
         {
@@ -550,6 +590,8 @@
       "name": "Inventec",
       "sub": "サーバー製造",
       "sub_en": "Server ODM",
+      "sub_short": "サーバー",
+      "sub_short_en": "Servers",
       "row": 3,
       "relations": [
         {
@@ -573,6 +615,8 @@
       "name": "GIGABYTE Technology",
       "sub": "サーバー・PC",
       "sub_en": "Servers & PCs",
+      "sub_short": "サーバー",
+      "sub_short_en": "Servers",
       "row": 3,
       "relations": [
         {
@@ -596,6 +640,8 @@
       "name": "Foxconn(Hon Hai)",
       "sub": "サーバー製造",
       "sub_en": "Server ODM",
+      "sub_short": "サーバー",
+      "sub_short_en": "Servers",
       "row": 3,
       "relations": [
         {
@@ -621,6 +667,8 @@
       "name": "Quanta Computer",
       "sub": "サーバー製造",
       "sub_en": "Server ODM",
+      "sub_short": "サーバー",
+      "sub_short_en": "Servers",
       "row": 3,
       "relations": [
         {
@@ -646,6 +694,8 @@
       "name": "Wistron",
       "sub": "サーバー製造",
       "sub_en": "Server ODM",
+      "sub_short": "サーバー",
+      "sub_short_en": "Servers",
       "row": 3,
       "relations": [
         {
@@ -669,6 +719,8 @@
       "name": "Broadcom",
       "sub": "半導体",
       "sub_en": "Semiconductors",
+      "sub_short": "半導体",
+      "sub_short_en": "Chips",
       "row": 4,
       "relations": [
         {
@@ -694,6 +746,8 @@
       "name": "Marvell Technology",
       "sub": "半導体",
       "sub_en": "Semiconductors",
+      "sub_short": "半導体",
+      "sub_short_en": "Chips",
       "row": 4,
       "relations": [
         {
@@ -719,6 +773,8 @@
       "name": "Credo Technology",
       "sub": "接続半導体",
       "sub_en": "Connectivity chips",
+      "sub_short": "半導体",
+      "sub_short_en": "Links",
       "row": 4,
       "relations": [
         {
@@ -744,6 +800,8 @@
       "name": "Rambus",
       "sub": "メモリー関連IP",
       "sub_en": "Memory interface IP",
+      "sub_short": "メモリIP",
+      "sub_short_en": "Memory",
       "row": 4,
       "relations": [
         {
@@ -769,6 +827,8 @@
       "name": "Microchip Technology",
       "sub": "半導体",
       "sub_en": "Semiconductors",
+      "sub_short": "半導体",
+      "sub_short_en": "Chips",
       "row": 4,
       "relations": [
         {
@@ -794,6 +854,8 @@
       "name": "Montage Technology",
       "sub": "メモリー関連半導体",
       "sub_en": "Memory interface chips",
+      "sub_short": "メモリ",
+      "sub_short_en": "Memory",
       "row": 4,
       "relations": [
         {
@@ -819,6 +881,8 @@
       "name": "Parade Technologies",
       "sub": "接続半導体",
       "sub_en": "Connectivity chips",
+      "sub_short": "半導体",
+      "sub_short_en": "Links",
       "row": 4,
       "relations": [
         {

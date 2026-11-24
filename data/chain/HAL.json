@@ -35,6 +35,8 @@
       "name_en": "OMS Energy Technologies",
       "sub": "油井用部材",
       "sub_en": "Oilfield components",
+      "sub_short": "油井",
+      "sub_short_en": "Oilfield",
       "row": 0,
       "relations": [
         {
@@ -59,6 +61,8 @@
       "name_en": "RBC Bearings",
       "sub": "ベアリング",
       "sub_en": "Bearings",
+      "sub_short": "軸受",
+      "sub_short_en": "Bearings",
       "row": 0,
       "relations": [
         {
@@ -83,6 +87,8 @@
       "name_en": "Drilling Tools International",
       "sub": "掘削工具レンタル",
       "sub_en": "Drilling tool rental",
+      "sub_short": "掘削工具",
+      "sub_short_en": "Rentals",
       "row": 0,
       "relations": [
         {
@@ -107,6 +113,8 @@
       "name_en": "VoltaGrid",
       "sub": "分散型ガス発電",
       "sub_en": "Modular gas power",
+      "sub_short": "発電",
+      "sub_short_en": "Gas",
       "row": 1,
       "relations": [
         {
@@ -131,6 +139,8 @@
       "name_en": "TechnipFMC",
       "sub": "海底生産システム",
       "sub_en": "Subsea systems",
+      "sub_short": "海底設備",
+      "sub_short_en": "Subsea",
       "row": 1,
       "relations": [
         {
@@ -155,6 +165,8 @@
       "name_en": "Vital Energy",
       "sub": "石油・ガス開発",
       "sub_en": "Oil & gas producer",
+      "sub_short": "石油",
+      "sub_short_en": "Oil & gas",
       "row": 1,
       "relations": [
         {
@@ -179,6 +191,8 @@
       "name_en": "Deep Isolation Nuclear",
       "sub": "核廃棄物の地層処分",
       "sub_en": "Nuclear waste disposal",
+      "sub_short": "核廃棄物",
+      "sub_short_en": "Nuclear",
       "row": 1,
       "relations": [
         {
@@ -203,6 +217,8 @@
       "name_en": "TETRA Technologies",
       "sub": "坑井試験・化学品",
       "sub_en": "Well testing & chemicals",
+      "sub_short": "坑井試験",
+      "sub_short_en": "Wells",
       "row": 1,
       "relations": [
         {
@@ -227,6 +243,8 @@
       "name_en": "Baker Hughes",
       "sub": "油田サービス",
       "sub_en": "Oilfield services",
+      "sub_short": "油田",
+      "sub_short_en": "Oilfield",
       "row": 2,
       "relations": [
         {
@@ -251,6 +269,8 @@
       "name_en": "Weatherford International",
       "sub": "油田サービス",
       "sub_en": "Oilfield services",
+      "sub_short": "油田",
+      "sub_short_en": "Oilfield",
       "row": 2,
       "relations": [
         {
@@ -275,6 +295,8 @@
       "name_en": "Liberty Energy",
       "sub": "水圧破砕",
       "sub_en": "Hydraulic fracturing",
+      "sub_short": "水圧破砕",
+      "sub_short_en": "Fracking",
       "row": 2,
       "relations": [
         {
@@ -299,6 +321,8 @@
       "name_en": "ProPetro",
       "sub": "水圧破砕",
       "sub_en": "Hydraulic fracturing",
+      "sub_short": "水圧破砕",
+      "sub_short_en": "Fracking",
       "row": 2,
       "relations": [
         {
@@ -323,6 +347,8 @@
       "name_en": "RPC",
       "sub": "油田サービス",
       "sub_en": "Oilfield services",
+      "sub_short": "油田",
+      "sub_short_en": "Oilfield",
       "row": 2,
       "relations": [
         {
@@ -347,6 +373,8 @@
       "name_en": "ProFrac Holding",
       "sub": "水圧破砕",
       "sub_en": "Hydraulic fracturing",
+      "sub_short": "水圧破砕",
+      "sub_short_en": "Fracking",
       "row": 2,
       "relations": [
         {
@@ -371,6 +399,8 @@
       "name_en": "KLX Energy Services",
       "sub": "油田サービス",
       "sub_en": "Oilfield services",
+      "sub_short": "油田",
+      "sub_short_en": "Oilfield",
       "row": 2,
       "relations": [
         {
@@ -395,6 +425,8 @@
       "name_en": "Nabors Industries",
       "sub": "掘削",
       "sub_en": "Drilling",
+      "sub_short": "掘削",
+      "sub_short_en": "Drilling",
       "row": 2,
       "relations": [
         {
@@ -419,6 +451,8 @@
       "name_en": "Innovex International",
       "sub": "坑井用製品",
       "sub_en": "Well products",
+      "sub_short": "坑井",
+      "sub_short_en": "Wells",
       "row": 2,
       "relations": [
         {
@@ -443,6 +477,8 @@
       "name_en": "NCS Multistage",
       "sub": "坑井仕上げ",
       "sub_en": "Well completions",
+      "sub_short": "坑井",
+      "sub_short_en": "Wells",
       "row": 2,
       "relations": [
         {

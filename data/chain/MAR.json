@@ -28,6 +28,8 @@
       "name": "JPモルガン・チェース",
       "sub": "提携カード",
       "sub_en": "Co-brand cards",
+      "sub_short": "カード",
+      "sub_short_en": "Cards",
       "row": 0,
       "relations": [
         {
@@ -52,6 +54,8 @@
       "name": "アメリカン・エキスプレス",
       "sub": "提携カード",
       "sub_en": "Co-brand cards",
+      "sub_short": "カード",
+      "sub_short_en": "Cards",
       "row": 0,
       "relations": [
         {
@@ -76,6 +80,8 @@
       "name": "マリオット・バケーションズ・ワールドワイド",
       "sub": "タイムシェア",
       "sub_en": "Timeshare",
+      "sub_short": "別荘権",
+      "sub_short_en": "Resorts",
       "row": 0,
       "relations": [
         {
@@ -100,6 +106,8 @@
       "name": "ソンダー・ホールディングス",
       "sub": "短期賃貸",
       "sub_en": "Short-term rentals",
+      "sub_short": "短期賃貸",
+      "sub_short_en": "Rentals",
       "row": 0,
       "relations": [
         {
@@ -124,6 +132,8 @@
       "name": "ヒルトン",
       "sub": "ホテル大手",
       "sub_en": "Hotel operator",
+      "sub_short": "ホテル",
+      "sub_short_en": "Hotels",
       "row": 0,
       "relations": [
         {
@@ -148,6 +158,8 @@
       "name": "ハイアット",
       "sub": "ホテル大手",
       "sub_en": "Hotel operator",
+      "sub_short": "ホテル",
+      "sub_short_en": "Hotels",
       "row": 0,
       "relations": [
         {
@@ -172,6 +184,8 @@
       "name": "ウィンダム・ホテルズ",
       "sub": "ホテル大手",
       "sub_en": "Hotel operator",
+      "sub_short": "ホテル",
+      "sub_short_en": "Hotels",
       "row": 0,
       "relations": [
         {
@@ -196,6 +210,8 @@
       "name": "チョイス・ホテルズ",
       "sub": "ホテル大手",
       "sub_en": "Hotel operator",
+      "sub_short": "ホテル",
+      "sub_short_en": "Hotels",
       "row": 0,
       "relations": [
         {
@@ -220,6 +236,8 @@
       "name": "IHGホテルズ&リゾーツ",
       "sub": "ホテル大手",
       "sub_en": "Hotel operator",
+      "sub_short": "ホテル",
+      "sub_short_en": "Hotels",
       "row": 0,
       "relations": [
         {
@@ -244,6 +262,8 @@
       "name": "マーカス",
       "sub": "映画館・ホテル",
       "sub_en": "Theaters & hotels",
+      "sub_short": "映画館",
+      "sub_short_en": "Theaters",
       "row": 1,
       "relations": [
         {
@@ -268,6 +288,8 @@
       "name": "ホスト・ホテルズ・アンド・リゾーツ",
       "sub": "ホテルREIT",
       "sub_en": "Hotel REIT",
+      "sub_short": "REIT",
+      "sub_short_en": "REIT",
       "row": 0,
       "relations": [
         {

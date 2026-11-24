@@ -24,6 +24,8 @@
       "name": "フォード・オトサン",
       "sub": "トルコの合弁会社",
       "sub_en": "Turkish joint venture",
+      "sub_short": "トルコ",
+      "sub_short_en": "JV",
       "row": 0,
       "relations": [
         {
@@ -48,6 +50,8 @@
       "name": "SKオン",
       "sub": "電池の合弁相手",
       "sub_en": "Battery JV partner",
+      "sub_short": "電池合弁",
+      "sub_short_en": "Battery",
       "row": 0,
       "relations": [
         {
@@ -72,6 +76,8 @@
       "name": "マツダ",
       "sub": "タイの合弁相手",
       "sub_en": "Thailand JV partner",
+      "sub_short": "タイ合弁",
+      "sub_short_en": "JV",
       "row": 1,
       "relations": [
         {
@@ -96,6 +102,8 @@
       "name": "重慶長安汽車",
       "sub": "中国の合弁相手",
       "sub_en": "China JV partner",
+      "sub_short": "中国合弁",
+      "sub_short_en": "China JV",
       "row": 1,
       "relations": [
         {
@@ -120,6 +128,8 @@
       "name": "江鈴汽車",
       "sub": "中国の持分法会社",
       "sub_en": "China affiliate",
+      "sub_short": "中国関連",
+      "sub_short_en": "China",
       "row": 1,
       "relations": [
         {
@@ -144,6 +154,8 @@
       "name": "六和集団",
       "sub": "台湾の生産委託先",
       "sub_en": "Taiwan producer",
+      "sub_short": "受託生産",
+      "sub_short_en": "Foundry",
       "row": 1,
       "relations": [
         {
@@ -168,6 +180,8 @@
       "name": "ストラテック・セキュリティ",
       "sub": "自動車部品(鍵・ドア機構)",
       "sub_en": "Auto parts (locks, latches)",
+      "sub_short": "車部品",
+      "sub_short_en": "Car parts",
       "row": 0,
       "relations": [
         {
@@ -192,6 +206,8 @@
       "name": "ドーチ",
       "sub": "自動車部品(駆動系)",
       "sub_en": "Auto parts (driveline)",
+      "sub_short": "車部品",
+      "sub_short_en": "Car parts",
       "row": 0,
       "relations": [
         {

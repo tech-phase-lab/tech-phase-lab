@@ -29,6 +29,8 @@
       "name_en": "Evoqua Water Technologies",
       "sub": "水処理",
       "sub_en": "Water treatment",
+      "sub_short": "水処理",
+      "sub_short_en": "Water",
       "row": 0,
       "relations": [
         {
@@ -53,6 +55,8 @@
       "name_en": "Idrica",
       "sub": "水道のデータ基盤",
       "sub_en": "Water data platform",
+      "sub_short": "水道",
+      "sub_short_en": "Water",
       "row": 0,
       "relations": [
         {
@@ -77,6 +81,8 @@
       "name_en": "Roper Technologies",
       "sub": "産業ソフトウェア",
       "sub_en": "Vertical software",
+      "sub_short": "産業IT",
+      "sub_short_en": "Software",
       "row": 0,
       "relations": [
         {
@@ -101,6 +107,8 @@
       "name_en": "Mueller Water Products",
       "sub": "水道インフラ機器",
       "sub_en": "Water infrastructure products",
+      "sub_short": "水道機器",
+      "sub_short_en": "Water",
       "row": 1,
       "relations": [
         {
@@ -125,6 +133,8 @@
       "name_en": "Itron",
       "sub": "スマートメーター",
       "sub_en": "Smart meters",
+      "sub_short": "電力計",
+      "sub_short_en": "Meters",
       "row": 1,
       "relations": [
         {
@@ -149,6 +159,8 @@
       "name_en": "Badger Meter",
       "sub": "水道メーター",
       "sub_en": "Water meters",
+      "sub_short": "水道",
+      "sub_short_en": "Meters",
       "row": 1,
       "relations": [
         {
@@ -173,6 +185,8 @@
       "name_en": "Montrose Environmental",
       "sub": "環境サービス",
       "sub_en": "Environmental services",
+      "sub_short": "環境",
+      "sub_short_en": "Eco svcs",
       "row": 1,
       "relations": [
         {
@@ -197,6 +211,8 @@
       "name_en": "BioLargo",
       "sub": "水処理技術",
       "sub_en": "Water treatment tech",
+      "sub_short": "水処理",
+      "sub_short_en": "Water",
       "row": 1,
       "relations": [
         {
@@ -221,6 +237,8 @@
       "name_en": "Franklin Electric",
       "sub": "ポンプ・水関連機器",
       "sub_en": "Pumps & water systems",
+      "sub_short": "ポンプ",
+      "sub_short_en": "Pumps",
       "row": 1,
       "relations": [
         {

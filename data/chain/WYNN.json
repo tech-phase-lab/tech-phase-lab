@@ -29,6 +29,8 @@
       "name_en": "Las Vegas Sands",
       "sub": "カジノリゾート",
       "sub_en": "Casino resorts",
+      "sub_short": "カジノ",
+      "sub_short_en": "Casinos",
       "row": 0,
       "relations": [
         {
@@ -53,6 +55,8 @@
       "name_en": "Melco Resorts",
       "sub": "カジノリゾート",
       "sub_en": "Casino resorts",
+      "sub_short": "カジノ",
+      "sub_short_en": "Casinos",
       "row": 0,
       "relations": [
         {
@@ -77,6 +81,8 @@
       "name_en": "Galaxy Entertainment",
       "sub": "カジノ(マカオ)",
       "sub_en": "Casinos (Macau)",
+      "sub_short": "カジノ",
+      "sub_short_en": "Casinos",
       "row": 0,
       "relations": [
         {
@@ -101,6 +107,8 @@
       "name_en": "SJM Holdings",
       "sub": "カジノ(マカオ)",
       "sub_en": "Casinos (Macau)",
+      "sub_short": "カジノ",
+      "sub_short_en": "Casinos",
       "row": 0,
       "relations": [
         {
@@ -125,6 +133,8 @@
       "name_en": "MGM Resorts",
       "sub": "カジノリゾート",
       "sub_en": "Casino resorts",
+      "sub_short": "カジノ",
+      "sub_short_en": "Casinos",
       "row": 1,
       "relations": [
         {

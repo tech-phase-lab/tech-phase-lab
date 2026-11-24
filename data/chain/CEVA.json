@@ -32,6 +32,8 @@
       "name": "マイクロチップ・テクノロジー",
       "sub": "マイコン・半導体",
       "sub_en": "Microcontrollers & chips",
+      "sub_short": "マイコン",
+      "sub_short_en": "MCUs",
       "row": 0,
       "relations": [
         {
@@ -69,6 +71,8 @@
       "name": "シーラス・ロジック",
       "sub": "アナログ・音声半導体",
       "sub_en": "Mixed-signal chips",
+      "sub_short": "アナログ",
+      "sub_short_en": "Chips",
       "row": 0,
       "relations": [
         {
@@ -95,6 +99,8 @@
       "name": "インテル",
       "sub": "半導体",
       "sub_en": "Semiconductors",
+      "sub_short": "半導体",
+      "sub_short_en": "Chips",
       "row": 0,
       "relations": [
         {
@@ -121,6 +127,8 @@
       "name": "STマイクロエレクトロニクス",
       "sub": "半導体",
       "sub_en": "Semiconductors",
+      "sub_short": "半導体",
+      "sub_short_en": "Chips",
       "row": 0,
       "relations": [
         {
@@ -145,6 +153,8 @@
       "name": "ノキア",
       "sub": "通信機器",
       "sub_en": "Telecom equipment",
+      "sub_short": "通信機器",
+      "sub_short_en": "Telecom",
       "row": 0,
       "relations": [
         {
@@ -168,6 +178,8 @@
       "name": "ケイデンス・デザイン・システムズ",
       "sub": "半導体設計ソフト",
       "sub_en": "EDA software",
+      "sub_short": "設計",
+      "sub_short_en": "EDA",
       "row": 1,
       "relations": [
         {
@@ -218,6 +230,8 @@
       "name": "ブロードコム",
       "sub": "半導体",
       "sub_en": "Semiconductors",
+      "sub_short": "半導体",
+      "sub_short_en": "Chips",
       "row": 2,
       "relations": [
         {
@@ -257,6 +271,8 @@
       "name": "グローバルファウンドリーズ",
       "sub": "半導体製造",
       "sub_en": "Chip foundry",
+      "sub_short": "半導体",
+      "sub_short_en": "Foundry",
       "row": 2,
       "relations": [
         {
@@ -281,6 +297,8 @@
       "name": "NXPセミコンダクターズ",
       "sub": "半導体",
       "sub_en": "Semiconductors",
+      "sub_short": "半導体",
+      "sub_short_en": "Chips",
       "row": 2,
       "relations": [
         {
@@ -318,6 +336,8 @@
       "name": "アップル",
       "sub": "家電・ソフト",
       "sub_en": "Consumer electronics",
+      "sub_short": "家電",
+      "sub_short_en": "Devices",
       "row": 2,
       "relations": [
         {
@@ -342,6 +362,8 @@
       "name": "シリコン・ラボラトリーズ",
       "sub": "無線半導体",
       "sub_en": "Wireless chips",
+      "sub_short": "無線IC",
+      "sub_short_en": "RF ICs",
       "row": 2,
       "relations": [
         {
@@ -366,6 +388,8 @@
       "name": "アンバレラ",
       "sub": "画像処理半導体",
       "sub_en": "Vision chips",
+      "sub_short": "画像IC",
+      "sub_short_en": "Vision",
       "row": 2,
       "relations": [
         {

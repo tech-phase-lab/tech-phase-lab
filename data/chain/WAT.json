@@ -24,6 +24,8 @@
       "name": "アジレント・テクノロジーズ",
       "sub": "分析機器",
       "sub_en": "Analytical instruments",
+      "sub_short": "分析機器",
+      "sub_short_en": "Lab tools",
       "row": 0,
       "relations": [
         {
@@ -48,6 +50,8 @@
       "name": "島津製作所",
       "sub": "分析機器",
       "sub_en": "Analytical instruments",
+      "sub_short": "分析機器",
+      "sub_short_en": "Lab tools",
       "row": 0,
       "relations": [
         {
@@ -72,6 +76,8 @@
       "name": "ブルカー",
       "sub": "分析機器",
       "sub_en": "Analytical instruments",
+      "sub_short": "分析機器",
+      "sub_short_en": "Lab tools",
       "row": 0,
       "relations": [
         {
@@ -96,6 +102,8 @@
       "name": "ダナハー",
       "sub": "ライフサイエンス機器",
       "sub_en": "Life science tools",
+      "sub_short": "生命科学",
+      "sub_short_en": "Lab tools",
       "row": 0,
       "relations": [
         {
@@ -120,6 +128,8 @@
       "name": "サーモフィッシャーサイエンティフィック",
       "sub": "ライフサイエンス機器",
       "sub_en": "Life science tools",
+      "sub_short": "生命科学",
+      "sub_short_en": "Lab tools",
       "row": 0,
       "relations": [
         {
@@ -144,6 +154,8 @@
       "name": "ネッチ",
       "sub": "熱分析機器",
       "sub_en": "Thermal analysis",
+      "sub_short": "分析機器",
+      "sub_short_en": "Thermal",
       "row": 0,
       "relations": [
         {
@@ -168,6 +180,8 @@
       "name": "スペクトリス",
       "sub": "計測機器",
       "sub_en": "Measurement instruments",
+      "sub_short": "計測機器",
+      "sub_short_en": "Gauges",
       "row": 0,
       "relations": [
         {
@@ -192,6 +206,8 @@
       "name": "アントンパール",
       "sub": "計測機器",
       "sub_en": "Measurement instruments",
+      "sub_short": "計測機器",
+      "sub_short_en": "Gauges",
       "row": 0,
       "relations": [
         {

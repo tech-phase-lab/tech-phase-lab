@@ -27,6 +27,8 @@
       "name": "ウォルマート",
       "sub": "大手小売り",
       "sub_en": "Retailer",
+      "sub_short": "小売",
+      "sub_short_en": "Retailer",
       "row": 0,
       "relations": [
         {
@@ -51,6 +53,8 @@
       "name": "ビブラ・アグロインダストリアル",
       "sub": "ブラジル鶏肉合弁",
       "sub_en": "Brazil chicken JV",
+      "sub_short": "鶏肉合弁",
+      "sub_short_en": "Chicken",
       "row": 0,
       "relations": [
         {
@@ -75,6 +79,8 @@
       "name": "ホールディング・アグロ・インダストリアル",
       "sub": "南米鶏肉合弁",
       "sub_en": "South America chicken JV",
+      "sub_short": "鶏肉合弁",
+      "sub_short_en": "Chicken",
       "row": 0,
       "relations": [
         {
@@ -99,6 +105,8 @@
       "name": "スミスフィールド・フーズ",
       "sub": "豚肉加工",
       "sub_en": "Pork processing",
+      "sub_short": "豚肉加工",
+      "sub_short_en": "Pork",
       "row": 1,
       "relations": [
         {
@@ -123,6 +131,8 @@
       "name": "ダーリング・イングリーディエンツ",
       "sub": "食品原料・再生燃料",
       "sub_en": "Food ingredients & renewable fuels",
+      "sub_short": "食品原料",
+      "sub_short_en": "Food",
       "row": 1,
       "relations": [
         {
@@ -147,6 +157,8 @@
       "name": "ビヨンド・ミート",
       "sub": "植物由来食品",
       "sub_en": "Plant-based foods",
+      "sub_short": "食品",
+      "sub_short_en": "Vegan",
       "row": 1,
       "relations": [
         {
@@ -171,6 +183,8 @@
       "name": "リネージ",
       "sub": "低温物流",
       "sub_en": "Cold storage",
+      "sub_short": "低温物流",
+      "sub_short_en": "Storage",
       "row": 0,
       "relations": [
         {

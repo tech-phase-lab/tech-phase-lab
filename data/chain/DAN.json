@@ -36,6 +36,8 @@
       "name_en": "Ford",
       "sub": "自動車",
       "sub_en": "Automaker",
+      "sub_short": "自動車",
+      "sub_short_en": "Cars",
       "row": 0,
       "relations": [
         {
@@ -60,6 +62,8 @@
       "name_en": "Stellantis",
       "sub": "自動車",
       "sub_en": "Automaker",
+      "sub_short": "自動車",
+      "sub_short_en": "Cars",
       "row": 0,
       "relations": [
         {
@@ -84,6 +88,8 @@
       "name_en": "Toyota",
       "sub": "自動車",
       "sub_en": "Automaker",
+      "sub_short": "自動車",
+      "sub_short_en": "Cars",
       "row": 0,
       "relations": [
         {
@@ -108,6 +114,8 @@
       "name_en": "Volkswagen",
       "sub": "自動車(ドイツ)",
       "sub_en": "Automaker (Germany)",
+      "sub_short": "自動車",
+      "sub_short_en": "Cars",
       "row": 0,
       "relations": [
         {
@@ -132,6 +140,8 @@
       "name_en": "PACCAR",
       "sub": "トラック",
       "sub_en": "Trucks",
+      "sub_short": "トラック",
+      "sub_short_en": "Trucks",
       "row": 0,
       "relations": [
         {
@@ -156,6 +166,8 @@
       "name_en": "Allison Transmission",
       "sub": "変速機",
       "sub_en": "Transmissions",
+      "sub_short": "変速機",
+      "sub_short_en": "Gears",
       "row": 1,
       "relations": [
         {
@@ -180,6 +192,8 @@
       "name_en": "Dauch (formerly American Axle)",
       "sub": "駆動系部品",
       "sub_en": "Driveline components",
+      "sub_short": "駆動部品",
+      "sub_short_en": "Axles",
       "row": 2,
       "relations": [
         {
@@ -204,6 +218,8 @@
       "name_en": "ZF Friedrichshafen",
       "sub": "自動車部品(ドイツ)",
       "sub_en": "Auto parts (Germany)",
+      "sub_short": "車部品",
+      "sub_short_en": "Car parts",
       "row": 2,
       "relations": [
         {
@@ -228,6 +244,8 @@
       "name_en": "Cummins",
       "sub": "エンジン",
       "sub_en": "Engines",
+      "sub_short": "エンジン",
+      "sub_short_en": "Engines",
       "row": 3,
       "relations": [
         {

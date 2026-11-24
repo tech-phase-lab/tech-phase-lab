@@ -21,6 +21,8 @@
       "name": "レントキル",
       "sub": "害虫防除",
       "sub_en": "Pest control",
+      "sub_short": "害虫防除",
+      "sub_short_en": "Pests",
       "row": 0,
       "relations": [
         {
@@ -45,6 +47,8 @@
       "name": "エコラボ",
       "sub": "衛生・水処理",
       "sub_en": "Hygiene & water",
+      "sub_short": "衛生",
+      "sub_short_en": "Hygiene",
       "row": 0,
       "relations": [
         {
@@ -69,6 +73,8 @@
       "name": "アンチシメックス",
       "sub": "害虫防除",
       "sub_en": "Pest control",
+      "sub_short": "害虫防除",
+      "sub_short_en": "Pests",
       "row": 0,
       "relations": [
         {

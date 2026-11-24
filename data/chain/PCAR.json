@@ -24,6 +24,8 @@
       "name": "カミンズ",
       "sub": "エンジン",
       "sub_en": "Engines",
+      "sub_short": "エンジン",
+      "sub_short_en": "Engines",
       "row": 0,
       "relations": [
         {
@@ -74,6 +76,8 @@
       "name": "イートン",
       "sub": "トランスミッション",
       "sub_en": "Transmissions",
+      "sub_short": "変速機",
+      "sub_short_en": "Gears",
       "row": 0,
       "relations": [
         {
@@ -98,6 +102,8 @@
       "name": "ZFフリードリヒスハーフェン",
       "sub": "トランスミッション",
       "sub_en": "Transmissions",
+      "sub_short": "変速機",
+      "sub_short_en": "Gears",
       "row": 0,
       "relations": [
         {
@@ -122,6 +128,8 @@
       "name": "マグナ・インターナショナル",
       "sub": "キャブ用プレス部品",
       "sub_en": "Cab stampings",
+      "sub_short": "部品",
+      "sub_short_en": "Stamping",
       "row": 0,
       "relations": [
         {
@@ -146,6 +154,8 @@
       "name": "ルノー・トラック",
       "sub": "トラック・キャブ",
       "sub_en": "Truck cabs",
+      "sub_short": "トラック",
+      "sub_short_en": "Cabs",
       "row": 0,
       "relations": [
         {
@@ -170,6 +180,8 @@
       "name": "ダイムラー・トラック",
       "sub": "商用車",
       "sub_en": "Commercial vehicles",
+      "sub_short": "商用車",
+      "sub_short_en": "Trucks",
       "row": 1,
       "relations": [
         {
@@ -194,6 +206,8 @@
       "name": "EVEエナジー",
       "sub": "電池",
       "sub_en": "Batteries",
+      "sub_short": "電池",
+      "sub_short_en": "Batteries",
       "row": 1,
       "relations": [
         {
@@ -218,6 +232,8 @@
       "name": "コア・モールディング・テクノロジーズ",
       "sub": "成形部品",
       "sub_en": "Molded components",
+      "sub_short": "成形部品",
+      "sub_short_en": "Molding",
       "row": 0,
       "relations": [
         {

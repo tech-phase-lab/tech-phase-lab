@@ -33,6 +33,8 @@
       "name": "Apple",
       "sub": "スマートフォン・端末",
       "sub_en": "Devices",
+      "sub_short": "スマホ",
+      "sub_short_en": "Devices",
       "row": 0,
       "relations": [
         {
@@ -58,6 +60,8 @@
       "name": "アルファベット(Google)",
       "sub": "検索・クラウド",
       "sub_en": "Search & cloud",
+      "sub_short": "検索",
+      "sub_short_en": "Search",
       "row": 0,
       "relations": [
         {
@@ -84,6 +88,8 @@
       "name": "テンセント",
       "sub": "インターネット・ゲーム",
       "sub_en": "Internet & gaming",
+      "sub_short": "ネット",
+      "sub_short_en": "Internet",
       "row": 1,
       "relations": [
         {
@@ -121,6 +127,8 @@
       "name": "ショッピファイ",
       "sub": "ECプラットフォーム",
       "sub_en": "E-commerce platform",
+      "sub_short": "EC基盤",
+      "sub_short_en": "E-com",
       "row": 1,
       "relations": [
         {
@@ -145,6 +153,8 @@
       "name": "ネットフリックス",
       "sub": "動画配信",
       "sub_en": "Video streaming",
+      "sub_short": "動画配信",
+      "sub_short_en": "Video",
       "row": 1,
       "relations": [
         {
@@ -169,6 +179,8 @@
       "name": "メタ・プラットフォームズ",
       "sub": "SNS・メタバース",
       "sub_en": "Social & metaverse",
+      "sub_short": "SNS",
+      "sub_short_en": "Social",
       "row": 2,
       "relations": [
         {
@@ -193,6 +205,8 @@
       "name": "アマゾン",
       "sub": "EC・クラウド",
       "sub_en": "E-commerce & cloud",
+      "sub_short": "EC",
+      "sub_short_en": "E-com",
       "row": 2,
       "relations": [
         {
@@ -217,6 +231,8 @@
       "name": "マイクロソフト",
       "sub": "ソフト・クラウド",
       "sub_en": "Software & cloud",
+      "sub_short": "ソフト",
+      "sub_short_en": "Software",
       "row": 2,
       "relations": [
         {
@@ -241,6 +257,8 @@
       "name": "テイクツー・インタラクティブ",
       "sub": "ゲーム",
       "sub_en": "Video games",
+      "sub_short": "ゲーム",
+      "sub_short_en": "Games",
       "row": 2,
       "relations": [
         {
@@ -265,6 +283,8 @@
       "name": "スナップ",
       "sub": "SNS・カメラ",
       "sub_en": "Social & camera",
+      "sub_short": "SNS",
+      "sub_short_en": "Social",
       "row": 2,
       "relations": [
         {
@@ -289,6 +309,8 @@
       "name": "レディット",
       "sub": "掲示板・SNS",
       "sub_en": "Social platform",
+      "sub_short": "SNS",
+      "sub_short_en": "Social",
       "row": 2,
       "relations": [
         {

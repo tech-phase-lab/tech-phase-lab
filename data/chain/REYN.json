@@ -27,6 +27,8 @@
       "name_en": "Packaging Finance Limited",
       "sub": "持株会社",
       "sub_en": "Holding company",
+      "sub_short": "持株会社",
+      "sub_short_en": "Holding",
       "row": 0,
       "relations": [
         {
@@ -51,6 +53,8 @@
       "name_en": "Pactiv Evergreen",
       "sub": "食品包装",
       "sub_en": "Food packaging",
+      "sub_short": "食品包装",
+      "sub_short_en": "Packing",
       "row": 0,
       "relations": [
         {
@@ -75,6 +79,8 @@
       "name_en": "Clorox",
       "sub": "家庭用品",
       "sub_en": "Household products",
+      "sub_short": "家庭用品",
+      "sub_short_en": "Home",
       "row": 1,
       "relations": [
         {
@@ -99,6 +105,8 @@
       "name_en": "S.C. Johnson",
       "sub": "家庭用品",
       "sub_en": "Household products",
+      "sub_short": "家庭用品",
+      "sub_short_en": "Home",
       "row": 1,
       "relations": [
         {
@@ -123,6 +131,8 @@
       "name_en": "Poly-America",
       "sub": "ごみ袋",
       "sub_en": "Trash bags",
+      "sub_short": "ごみ袋",
+      "sub_short_en": "Bags",
       "row": 1,
       "relations": [
         {
@@ -147,6 +157,8 @@
       "name_en": "Handi-Foil",
       "sub": "アルミ容器",
       "sub_en": "Aluminum containers",
+      "sub_short": "アルミ缶",
+      "sub_short_en": "Cans",
       "row": 1,
       "relations": [
         {

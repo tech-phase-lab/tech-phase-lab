@@ -260,3 +260,28 @@ test('the PRO tour sample leaves out 「05 競合は？」 and numbers the map h
   const ui = readFileSync(new URL('../app/research/pro-experience/samples/relation-map.tsx', import.meta.url), 'utf8');
   assert.match(ui, /<StockChainMap [^>]*\bsample \/>/);
 });
+
+// Owner, Nov 24: every map card is the compact size the short cards had before (74px; 49px for the label inside the padding)
+// and shows its label on one line, so each company has a short label that fits. Widths are the site font's at 10.5px, measured
+// in Chromium (a full-width character is 11px there, a little wider than on a phone).
+const GLYPH = { 1: "',.", 2: '!()', 3: ' ":;I`ijl|', 3.1: 'f', 3.5: 't', 4: '1-[]^r{', 4.1: '/\\', 5: '369#*+?Tcos}', 5.1: 'k', 6: '0478&=EFLX_abdegpquvxyz~', 7: '25$<>ACDGJKOPQRSVYZhn', 8: '%BHNU', 9: '@Mmw', 10: 'W' };
+const glyph = char => char.codePointAt(0) > 0x2E7F ? 11 : Number(Object.keys(GLYPH).find(width => GLYPH[width].includes(char)) ?? 6);
+const labelWidth = text => [...text].reduce((sum, char) => sum + glyph(char), 0);
+test('every company in every map has a short card label that fits one line of the compact card', () => {
+  for (const ticker of ALL) {
+    for (const company of chain.chainDataFor(ticker).companies) {
+      const where = `${ticker} ${company.id}`;
+      assert.ok(company.sub_short && company.sub_short_en, where);
+      assert.ok(labelWidth(company.sub_short) <= 49, `${where}: ${company.sub_short}`);
+      assert.ok(labelWidth(company.sub_short_en) <= 49 && !hasJapanese(company.sub_short_en), `${where}: ${company.sub_short_en}`);
+      for (const label of [company.sub_short, company.sub_short_en]) assert.ok(!/…|\.\.\./.test(label) && label === label.trim(), `${where}: ${label}`);
+    }
+  }
+  const html = renderToStaticMarkup(createElement(StockChainMap, { data: chain.chainDataFor('SONO'), lang: 'ja' }));
+  assert.match(html, /<small title="PC周辺機器・オーディオ">PC周辺<\/small>/);
+  assert.match(html, /<small title="車載ミラー・電子機器">車載電子<\/small>/);
+  const css = readFileSync(new URL('../app/research/stocks/stock-chain-map.module.css', import.meta.url), 'utf8');
+  assert.match(css, /\.chips \{ display: grid; grid-template-columns: repeat\(auto-fill, 74px\);/);
+  assert.doesNotMatch(css, /\.chips > \.chip:not\(\.root\) \{ padding/);
+  assert.match(css, /\.chips > \.chip:not\(\.root\) small \{ white-space: nowrap; \}/);
+});

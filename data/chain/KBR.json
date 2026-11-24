@@ -29,6 +29,8 @@
       "name_en": "LinQuest",
       "sub": "宇宙・防衛エンジニアリング",
       "sub_en": "Space & defense engineering",
+      "sub_short": "宇宙",
+      "sub_short_en": "Space",
       "row": 0,
       "relations": [
         {
@@ -53,6 +55,8 @@
       "name_en": "Infrastar",
       "sub": "インフラ技術(英)",
       "sub_en": "Infrastructure engineering (UK)",
+      "sub_short": "インフラ",
+      "sub_short_en": "Infra",
       "row": 0,
       "relations": [
         {
@@ -77,6 +81,8 @@
       "name_en": "Elbit Systems",
       "sub": "防衛電子(イスラエル)",
       "sub_en": "Defense electronics (Israel)",
+      "sub_short": "防衛電子",
+      "sub_short_en": "Defense",
       "row": 0,
       "relations": [
         {
@@ -101,6 +107,8 @@
       "name_en": "Zachry Group",
       "sub": "建設・EPC",
       "sub_en": "Construction & EPC",
+      "sub_short": "建設",
+      "sub_short_en": "Building",
       "row": 0,
       "relations": [
         {
@@ -125,6 +133,8 @@
       "name_en": "Venture Global",
       "sub": "LNG輸出",
       "sub_en": "LNG export",
+      "sub_short": "LNG輸出",
+      "sub_short_en": "LNG",
       "row": 0,
       "relations": [
         {
@@ -149,6 +159,8 @@
       "name_en": "One Equity Partners",
       "sub": "投資会社",
       "sub_en": "Private equity",
+      "sub_short": "投資会社",
+      "sub_short_en": "PE",
       "row": 0,
       "relations": [
         {
@@ -173,6 +185,8 @@
       "name_en": "Leidos",
       "sub": "政府向けIT",
       "sub_en": "Government IT services",
+      "sub_short": "政府IT",
+      "sub_short_en": "Gov IT",
       "row": 1,
       "relations": [
         {
@@ -197,6 +211,8 @@
       "name_en": "V2X",
       "sub": "政府向け運用支援",
       "sub_en": "Government mission support",
+      "sub_short": "政府支援",
+      "sub_short_en": "Gov IT",
       "row": 1,
       "relations": [
         {
@@ -221,6 +237,8 @@
       "name_en": "Fluor",
       "sub": "エンジニアリング・建設",
       "sub_en": "Engineering & construction",
+      "sub_short": "設計",
+      "sub_short_en": "Design",
       "row": 1,
       "relations": [
         {

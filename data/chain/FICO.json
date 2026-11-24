@@ -25,6 +25,8 @@
       "name": "エクスペリアン",
       "sub": "信用情報機関",
       "sub_en": "Consumer reporting agency",
+      "sub_short": "信用情報",
+      "sub_short_en": "Credit",
       "row": 0,
       "relations": [
         {
@@ -62,6 +64,8 @@
       "name": "トランスユニオン",
       "sub": "信用情報機関",
       "sub_en": "Consumer reporting agency",
+      "sub_short": "信用情報",
+      "sub_short_en": "Credit",
       "row": 0,
       "relations": [
         {
@@ -86,6 +90,8 @@
       "name": "エキファックス",
       "sub": "信用情報機関",
       "sub_en": "Consumer reporting agency",
+      "sub_short": "信用情報",
+      "sub_short_en": "Credit",
       "row": 0,
       "relations": [
         {
@@ -123,6 +129,8 @@
       "name": "レキシスネクシス・リスク・ソリューションズ",
       "sub": "データ提供・販売",
       "sub_en": "Data provider & distributor",
+      "sub_short": "データ",
+      "sub_short_en": "Data",
       "row": 0,
       "relations": [
         {
@@ -147,6 +155,8 @@
       "name": "ペガシステムズ",
       "sub": "ソフトウェア",
       "sub_en": "Software",
+      "sub_short": "ソフト",
+      "sub_short_en": "Software",
       "row": 0,
       "relations": [
         {
@@ -171,6 +181,8 @@
       "name": "アイ・ビー・エム",
       "sub": "ITサービス",
       "sub_en": "IT services",
+      "sub_short": "IT",
+      "sub_short_en": "IT",
       "row": 0,
       "relations": [
         {
@@ -195,6 +207,8 @@
       "name": "ムーディーズ",
       "sub": "格付・分析",
       "sub_en": "Ratings & analytics",
+      "sub_short": "格付",
+      "sub_short_en": "Ratings",
       "row": 0,
       "relations": [
         {
@@ -219,6 +233,8 @@
       "name": "SASインスティテュート",
       "sub": "分析ソフト",
       "sub_en": "Analytics software",
+      "sub_short": "分析",
+      "sub_short_en": "Analytics",
       "row": 0,
       "relations": [
         {
@@ -243,6 +259,8 @@
       "name": "アドビ",
       "sub": "ソフトウェア",
       "sub_en": "Software",
+      "sub_short": "ソフト",
+      "sub_short_en": "Software",
       "row": 0,
       "relations": [
         {
@@ -267,6 +285,8 @@
       "name": "セールスフォース",
       "sub": "ソフトウェア",
       "sub_en": "Software",
+      "sub_short": "ソフト",
+      "sub_short_en": "Software",
       "row": 0,
       "relations": [
         {

@@ -29,6 +29,8 @@
       "name_en": "National Storage Affiliates",
       "sub": "トランクルームREIT",
       "sub_en": "Self-storage REIT",
+      "sub_short": "倉庫REIT",
+      "sub_short_en": "REIT",
       "row": 0,
       "relations": [
         {
@@ -66,6 +68,8 @@
       "name_en": "Blackstone (BREIT)",
       "sub": "投資会社",
       "sub_en": "Investment firm",
+      "sub_short": "投資会社",
+      "sub_short_en": "Investing",
       "row": 0,
       "relations": [
         {
@@ -90,6 +94,8 @@
       "name_en": "Extra Space Storage",
       "sub": "トランクルームREIT",
       "sub_en": "Self-storage REIT",
+      "sub_short": "倉庫REIT",
+      "sub_short_en": "REIT",
       "row": 1,
       "relations": [
         {
@@ -114,6 +120,8 @@
       "name_en": "CubeSmart",
       "sub": "トランクルームREIT",
       "sub_en": "Self-storage REIT",
+      "sub_short": "倉庫REIT",
+      "sub_short_en": "REIT",
       "row": 1,
       "relations": [
         {
@@ -138,6 +146,8 @@
       "name_en": "U-Haul Holding",
       "sub": "引越し・トランクルーム",
       "sub_en": "Moving & self-storage",
+      "sub_short": "引越し",
+      "sub_short_en": "Moving",
       "row": 1,
       "relations": [
         {

@@ -24,6 +24,8 @@
       "name": "PSA(カード鑑定会社)",
       "sub": "トレーディングカードの鑑定",
       "sub_en": "Card grading",
+      "sub_short": "鑑定",
+      "sub_short_en": "Grading",
       "row": 0,
       "relations": [
         {
@@ -48,6 +50,8 @@
       "name": "ペイパル",
       "sub": "分離した決済会社",
       "sub_en": "Separated payments firm",
+      "sub_short": "決済会社",
+      "sub_short_en": "Payment",
       "row": 0,
       "relations": [
         {
@@ -72,6 +76,8 @@
       "name": "アディエン",
       "sub": "決済処理",
       "sub_en": "Payment processing",
+      "sub_short": "決済処理",
+      "sub_short_en": "Payment",
       "row": 0,
       "relations": [
         {
@@ -96,6 +102,8 @@
       "name": "クラーナ",
       "sub": "後払い決済",
       "sub_en": "Buy now pay later",
+      "sub_short": "後払い",
+      "sub_short_en": "BNPL",
       "row": 0,
       "relations": [
         {
@@ -120,6 +128,8 @@
       "name": "デポップ",
       "sub": "C2Cファッション",
       "sub_en": "C2C fashion marketplace",
+      "sub_short": "C2C衣料",
+      "sub_short_en": "Fashion",
       "row": 0,
       "relations": [
         {
@@ -144,6 +154,8 @@
       "name": "アルファベット(Google)",
       "sub": "検索・集客",
       "sub_en": "Search traffic",
+      "sub_short": "検索",
+      "sub_short_en": "Search",
       "row": 0,
       "relations": [
         {
@@ -168,6 +180,8 @@
       "name": "アマゾン",
       "sub": "総合ECの競合",
       "sub_en": "General e-commerce rival",
+      "sub_short": "EC",
+      "sub_short_en": "E-com",
       "row": 0,
       "relations": [
         {
@@ -192,6 +206,8 @@
       "name": "メタ・プラットフォームズ",
       "sub": "SNSの競合",
       "sub_en": "Social platform rival",
+      "sub_short": "SNS",
+      "sub_short_en": "Social",
       "row": 0,
       "relations": [
         {
@@ -216,6 +232,8 @@
       "name": "ショッピファイ",
       "sub": "マルチチャネル販売",
       "sub_en": "Multi-channel selling",
+      "sub_short": "EC支援",
+      "sub_short_en": "Selling",
       "row": 0,
       "relations": [
         {

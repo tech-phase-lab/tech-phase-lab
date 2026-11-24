@@ -25,6 +25,8 @@
       "name_en": "National Grid",
       "sub": "電力・ガス(英米)",
       "sub_en": "Utility (UK/US)",
+      "sub_short": "電力",
+      "sub_short_en": "Utility",
       "row": 0,
       "relations": [
         {
@@ -49,6 +51,8 @@
       "name_en": "Blackstone",
       "sub": "投資会社(インフラ)",
       "sub_en": "Investment firm (infrastructure)",
+      "sub_short": "投資会社",
+      "sub_short_en": "Investing",
       "row": 0,
       "relations": [
         {
@@ -73,6 +77,8 @@
       "name_en": "Talen Energy",
       "sub": "発電",
       "sub_en": "Power generation",
+      "sub_short": "発電",
+      "sub_short_en": "Power",
       "row": 1,
       "relations": [
         {
@@ -97,6 +103,8 @@
       "name_en": "X-energy",
       "sub": "小型原子炉(SMR)",
       "sub_en": "Small modular reactors",
+      "sub_short": "原子炉",
+      "sub_short_en": "SMRs",
       "row": 1,
       "relations": [
         {
@@ -121,6 +129,8 @@
       "name_en": "ONE Nuclear Energy",
       "sub": "原子力開発",
       "sub_en": "Nuclear development",
+      "sub_short": "原子力",
+      "sub_short_en": "Nuclear",
       "row": 1,
       "relations": [
         {

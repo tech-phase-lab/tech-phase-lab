@@ -34,6 +34,8 @@
       "name": "Amazon",
       "sub": "クラウド",
       "sub_en": "Cloud",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
       "row": 0,
       "relations": [
         {
@@ -57,6 +59,8 @@
       "name": "ソニーグループ",
       "sub": "電機・エンタメ",
       "sub_en": "Electronics & entertainment",
+      "sub_short": "電機",
+      "sub_short_en": "Devices",
       "row": 1,
       "relations": [
         {
@@ -83,6 +87,8 @@
       "name": "Salesforce",
       "sub": "CRM・クラウド",
       "sub_en": "CRM & cloud",
+      "sub_short": "CRM",
+      "sub_short_en": "CRM",
       "row": 2,
       "relations": [
         {
@@ -108,6 +114,8 @@
       "name": "Microsoft",
       "sub": "ソフト・クラウド",
       "sub_en": "Software & cloud",
+      "sub_short": "ソフト",
+      "sub_short_en": "Software",
       "row": 2,
       "relations": [
         {
@@ -133,6 +141,8 @@
       "name": "HubSpot",
       "sub": "CRMソフト",
       "sub_en": "CRM software",
+      "sub_short": "CRM",
+      "sub_short_en": "CRM",
       "row": 2,
       "relations": [
         {
@@ -158,6 +168,8 @@
       "name": "Meta Platforms",
       "sub": "SNS",
       "sub_en": "Social media",
+      "sub_short": "SNS",
+      "sub_short_en": "Social",
       "row": 2,
       "relations": [
         {
@@ -183,6 +195,8 @@
       "name": "Pinterest",
       "sub": "SNS",
       "sub_en": "Social media",
+      "sub_short": "SNS",
+      "sub_short_en": "Social",
       "row": 2,
       "relations": [
         {
@@ -208,6 +222,8 @@
       "name": "Reddit",
       "sub": "SNS",
       "sub_en": "Social media",
+      "sub_short": "SNS",
+      "sub_short_en": "Social",
       "row": 2,
       "relations": [
         {
@@ -233,6 +249,8 @@
       "name": "Sprinklr",
       "sub": "顧客体験管理",
       "sub_en": "Customer experience mgmt",
+      "sub_short": "顧客対応",
+      "sub_short_en": "CX",
       "row": 3,
       "relations": [
         {

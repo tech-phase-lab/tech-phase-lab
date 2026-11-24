@@ -30,6 +30,8 @@
       "name_en": "Halliburton",
       "sub": "油田サービス",
       "sub_en": "Oilfield services",
+      "sub_short": "油田",
+      "sub_short_en": "Oilfield",
       "row": 0,
       "relations": [
         {
@@ -54,6 +56,8 @@
       "name_en": "Patterson-UTI Energy",
       "sub": "掘削・完成",
       "sub_en": "Drilling & completions",
+      "sub_short": "掘削",
+      "sub_short_en": "Drilling",
       "row": 0,
       "relations": [
         {
@@ -78,6 +82,8 @@
       "name_en": "Baker Hughes",
       "sub": "油田サービス",
       "sub_en": "Oilfield services",
+      "sub_short": "油田",
+      "sub_short_en": "Oilfield",
       "row": 1,
       "relations": [
         {
@@ -102,6 +108,8 @@
       "name_en": "TechnipFMC",
       "sub": "海底生産システム",
       "sub_en": "Subsea systems",
+      "sub_short": "海底設備",
+      "sub_short_en": "Subsea",
       "row": 1,
       "relations": [
         {
@@ -126,6 +134,8 @@
       "name_en": "Oil States International",
       "sub": "油田機器",
       "sub_en": "Oilfield equipment",
+      "sub_short": "油田機器",
+      "sub_short_en": "Oilfield",
       "row": 1,
       "relations": [
         {
@@ -150,6 +160,8 @@
       "name_en": "Forum Energy Technologies",
       "sub": "油田機器",
       "sub_en": "Oilfield equipment",
+      "sub_short": "油田機器",
+      "sub_short_en": "Oilfield",
       "row": 1,
       "relations": [
         {
@@ -174,6 +186,8 @@
       "name_en": "NCS Multistage",
       "sub": "坑井仕上げ",
       "sub_en": "Well completions",
+      "sub_short": "坑井",
+      "sub_short_en": "Wells",
       "row": 1,
       "relations": [
         {
@@ -198,6 +212,8 @@
       "name_en": "Nabors Industries",
       "sub": "掘削",
       "sub_en": "Drilling",
+      "sub_short": "掘削",
+      "sub_short_en": "Drilling",
       "row": 1,
       "relations": [
         {
@@ -222,6 +238,8 @@
       "name_en": "Innovex International",
       "sub": "坑井用製品",
       "sub_en": "Well products",
+      "sub_short": "坑井",
+      "sub_short_en": "Wells",
       "row": 1,
       "relations": [
         {

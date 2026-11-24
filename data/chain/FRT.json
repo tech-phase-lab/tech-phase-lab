@@ -19,6 +19,8 @@
       "name": "ロス・ストアーズ",
       "sub": "小売テナント",
       "sub_en": "Retail tenant",
+      "sub_short": "小売",
+      "sub_short_en": "Retail",
       "row": 0,
       "relations": [
         {
@@ -43,6 +45,8 @@
       "name": "TJX(TJマックス)",
       "sub": "小売テナント",
       "sub_en": "Retail tenant",
+      "sub_short": "小売",
+      "sub_short_en": "Retail",
       "row": 0,
       "relations": [
         {
@@ -67,6 +71,8 @@
       "name": "アルタ・ビューティー",
       "sub": "小売テナント",
       "sub_en": "Retail tenant",
+      "sub_short": "小売",
+      "sub_short_en": "Retail",
       "row": 0,
       "relations": [
         {
@@ -91,6 +97,8 @@
       "name": "クローガー",
       "sub": "食品小売テナント",
       "sub_en": "Grocery tenant",
+      "sub_short": "食品小売",
+      "sub_short_en": "Grocery",
       "row": 0,
       "relations": [
         {
@@ -115,6 +123,8 @@
       "name": "ベスト・バイ",
       "sub": "家電小売テナント",
       "sub_en": "Electronics tenant",
+      "sub_short": "家電小売",
+      "sub_short_en": "Retail",
       "row": 0,
       "relations": [
         {

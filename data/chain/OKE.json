@@ -19,6 +19,8 @@
       "name": "MPLXエルピー",
       "sub": "パイプライン・ターミナル",
       "sub_en": "Midstream",
+      "sub_short": "配管網",
+      "sub_short_en": "Pipeline",
       "row": 0,
       "relations": [
         {
@@ -56,6 +58,8 @@
       "name": "エンブリッジ",
       "sub": "パイプライン",
       "sub_en": "Pipelines",
+      "sub_short": "配管網",
+      "sub_short_en": "Pipelines",
       "row": 0,
       "relations": [
         {
@@ -93,6 +97,8 @@
       "name": "ホワイトウォーター・ミッドストリーム",
       "sub": "パイプライン運営",
       "sub_en": "Pipeline operator",
+      "sub_short": "配管網",
+      "sub_short_en": "Pipelines",
       "row": 0,
       "relations": [
         {

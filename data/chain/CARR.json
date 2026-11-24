@@ -36,6 +36,8 @@
       "name_en": "Universal Electronics",
       "sub": "リモコン・制御機器",
       "sub_en": "Controls & remotes",
+      "sub_short": "リモコン",
+      "sub_short_en": "Controls",
       "row": 0,
       "relations": [
         {
@@ -60,6 +62,8 @@
       "name_en": "Watsco",
       "sub": "空調機器の卸",
       "sub_en": "HVAC distribution",
+      "sub_short": "空調卸",
+      "sub_short_en": "HVAC",
       "row": 1,
       "relations": [
         {
@@ -97,6 +101,8 @@
       "name_en": "Midea Group",
       "sub": "家電・空調(中国)",
       "sub_en": "Appliances & HVAC (China)",
+      "sub_short": "家電",
+      "sub_short_en": "Appliance",
       "row": 1,
       "relations": [
         {
@@ -121,6 +127,8 @@
       "name_en": "Viessmann",
       "sub": "暖房機器(独)",
       "sub_en": "Heating (Germany)",
+      "sub_short": "暖房機器",
+      "sub_short_en": "Heating",
       "row": 2,
       "relations": [
         {
@@ -145,6 +153,8 @@
       "name_en": "Otis Worldwide",
       "sub": "エレベーター",
       "sub_en": "Elevators",
+      "sub_short": "昇降機",
+      "sub_short_en": "Elevators",
       "row": 2,
       "relations": [
         {
@@ -169,6 +179,8 @@
       "name_en": "APi Group",
       "sub": "防火・安全サービス",
       "sub_en": "Safety services",
+      "sub_short": "防火",
+      "sub_short_en": "Safety",
       "row": 2,
       "relations": [
         {
@@ -193,6 +205,8 @@
       "name_en": "AirJoule Technologies",
       "sub": "空気から水をつくる装置",
       "sub_en": "Atmospheric water technology",
+      "sub_short": "造水装置",
+      "sub_short_en": "Water",
       "row": 2,
       "relations": [
         {
@@ -217,6 +231,8 @@
       "name_en": "AAON",
       "sub": "空調機器",
       "sub_en": "HVAC equipment",
+      "sub_short": "空調機器",
+      "sub_short_en": "HVAC",
       "row": 3,
       "relations": [
         {
@@ -241,6 +257,8 @@
       "name_en": "Green Circle Decarbonize Technology",
       "sub": "冷凍機の省エネ",
       "sub_en": "Chiller efficiency",
+      "sub_short": "空調",
+      "sub_short_en": "Chillers",
       "row": 3,
       "relations": [
         {

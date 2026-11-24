@@ -31,6 +31,8 @@
       "name_en": "Foley Products",
       "sub": "プレキャスト・コンクリート",
       "sub_en": "Precast concrete",
+      "sub_short": "建材",
+      "sub_short_en": "Concrete",
       "row": 0,
       "relations": [
         {
@@ -55,6 +57,8 @@
       "name_en": "Concrete Pipe & Precast",
       "sub": "プレキャスト・コンクリート",
       "sub_en": "Precast concrete",
+      "sub_short": "建材",
+      "sub_short_en": "Concrete",
       "row": 0,
       "relations": [
         {
@@ -79,6 +83,8 @@
       "name_en": "InQuik",
       "sub": "橋梁システム",
       "sub_en": "Bridge systems",
+      "sub_short": "橋梁",
+      "sub_short_en": "Bridges",
       "row": 0,
       "relations": [
         {
@@ -103,6 +109,8 @@
       "name_en": "Boise Cascade",
       "sub": "建材流通",
       "sub_en": "Building materials distribution",
+      "sub_short": "建材流通",
+      "sub_short_en": "Building",
       "row": 1,
       "relations": [
         {
@@ -127,6 +135,8 @@
       "name_en": "Gerdau",
       "sub": "鉄鋼(ブラジル)",
       "sub_en": "Steel (Brazil)",
+      "sub_short": "鉄鋼",
+      "sub_short_en": "Steel",
       "row": 2,
       "relations": [
         {
@@ -151,6 +161,8 @@
       "name_en": "Grupo Simec",
       "sub": "鉄鋼(メキシコ)",
       "sub_en": "Steel (Mexico)",
+      "sub_short": "鉄鋼",
+      "sub_short_en": "Steel",
       "row": 2,
       "relations": [
         {

@@ -35,6 +35,8 @@
       "name": "TSMC",
       "sub": "受託製造",
       "sub_en": "Foundry",
+      "sub_short": "受託製造",
+      "sub_short_en": "Foundry",
       "row": 1,
       "relations": [
         {
@@ -57,6 +59,8 @@
       "name": "Micron",
       "sub": "メモリー",
       "sub_en": "Memory",
+      "sub_short": "メモリー",
+      "sub_short_en": "Memory",
       "row": 1,
       "relations": [
         {
@@ -106,6 +110,8 @@
       "name": "Samsung Electronics",
       "sub": "メモリー・受託製造",
       "sub_en": "Memory & foundry",
+      "sub_short": "メモリー",
+      "sub_short_en": "Memory",
       "row": 1,
       "relations": [
         {
@@ -128,6 +134,8 @@
       "name": "SK hynix",
       "sub": "メモリー",
       "sub_en": "Memory",
+      "sub_short": "メモリー",
+      "sub_short_en": "Memory",
       "row": 1,
       "relations": [
         {
@@ -150,6 +158,8 @@
       "name": "Applied Materials",
       "sub": "製造装置",
       "sub_en": "Equipment",
+      "sub_short": "製造装置",
+      "sub_short_en": "Gear",
       "row": 2,
       "relations": [
         {
@@ -172,6 +182,8 @@
       "name": "ASM International",
       "sub": "成膜装置",
       "sub_en": "Deposition tools",
+      "sub_short": "成膜装置",
+      "sub_short_en": "Chip tools",
       "row": 2,
       "relations": [
         {
@@ -194,6 +206,8 @@
       "name": "Tokyo Electron",
       "sub": "製造装置",
       "sub_en": "Equipment",
+      "sub_short": "製造装置",
+      "sub_short_en": "Gear",
       "row": 2,
       "relations": [
         {
@@ -216,6 +230,8 @@
       "name": "Hitachi",
       "sub": "日立製作所",
       "sub_en": "Hitachi, Ltd.",
+      "sub_short": "日立",
+      "sub_short_en": "Hitachi",
       "row": 2,
       "relations": [
         {
@@ -240,6 +256,8 @@
       "name": "Ultra Clean Holdings",
       "sub": "ガス・流体部品",
       "sub_en": "Gas & fluid subsystems",
+      "sub_short": "ガス部品",
+      "sub_short_en": "Gas",
       "row": 0,
       "relations": [
         {
@@ -265,6 +283,8 @@
       "name": "Ichor Holdings",
       "sub": "ガス・流体部品",
       "sub_en": "Fluid delivery subsystems",
+      "sub_short": "ガス部品",
+      "sub_short_en": "Pumps",
       "row": 0,
       "relations": [
         {
@@ -290,6 +310,8 @@
       "name": "Celestica",
       "sub": "電子機器製造",
       "sub_en": "Electronics manufacturing",
+      "sub_short": "EMS",
+      "sub_short_en": "EMS",
       "row": 0,
       "relations": [
         {
@@ -315,6 +337,8 @@
       "name": "INFICON",
       "sub": "真空計測",
       "sub_en": "Vacuum measurement",
+      "sub_short": "真空計測",
+      "sub_short_en": "Gauges",
       "row": 0,
       "relations": [
         {
@@ -340,6 +364,8 @@
       "name": "Amphenol(Times Microwave)",
       "sub": "コネクター・ケーブル",
       "sub_en": "Connectors & cables",
+      "sub_short": "接続部品",
+      "sub_short_en": "Plugs",
       "row": 0,
       "relations": [
         {
@@ -365,6 +391,8 @@
       "name": "TOTO",
       "sub": "セラミック部品",
       "sub_en": "Ceramic parts",
+      "sub_short": "陶磁部品",
+      "sub_short_en": "Ceramics",
       "row": 0,
       "relations": [
         {
@@ -390,6 +418,8 @@
       "name": "VAT Group",
       "sub": "真空バルブ",
       "sub_en": "Vacuum valves",
+      "sub_short": "バルブ",
+      "sub_short_en": "Valves",
       "row": 0,
       "relations": [
         {
@@ -415,6 +445,8 @@
       "name": "Wonik IPS",
       "sub": "成膜装置",
       "sub_en": "Deposition tools",
+      "sub_short": "成膜装置",
+      "sub_short_en": "Chip tools",
       "row": 2,
       "relations": [
         {
@@ -438,6 +470,8 @@
       "name": "SCREENホールディングス",
       "sub": "洗浄装置",
       "sub_en": "Cleaning tools",
+      "sub_short": "洗浄装置",
+      "sub_short_en": "Cleaning",
       "row": 2,
       "relations": [
         {
@@ -462,6 +496,8 @@
       "name": "ACM Research",
       "sub": "洗浄・めっき装置",
       "sub_en": "Cleaning & plating tools",
+      "sub_short": "洗浄装置",
+      "sub_short_en": "Cleaning",
       "row": 2,
       "relations": [
         {
@@ -485,6 +521,8 @@
       "name": "Nova",
       "sub": "検査・計測",
       "sub_en": "Metrology",
+      "sub_short": "検査",
+      "sub_short_en": "Metrology",
       "row": 2,
       "relations": [
         {
@@ -510,6 +548,8 @@
       "name": "IBM",
       "sub": "コンピューター",
       "sub_en": "Computing",
+      "sub_short": "PC",
+      "sub_short_en": "Compute",
       "row": 3,
       "relations": [
         {
@@ -535,6 +575,8 @@
       "name": "Entegris(Gelest)",
       "sub": "半導体材料",
       "sub_en": "Semiconductor materials",
+      "sub_short": "材料",
+      "sub_short_en": "Materials",
       "row": 3,
       "relations": [
         {
@@ -560,6 +602,8 @@
       "name": "ASML",
       "sub": "露光装置",
       "sub_en": "Lithography",
+      "sub_short": "露光装置",
+      "sub_short_en": "Litho",
       "row": 3,
       "relations": [
         {

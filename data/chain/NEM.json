@@ -19,6 +19,8 @@
       "name": "バリック・マイニング",
       "sub": "金鉱山の共同事業",
       "sub_en": "Gold JV partner",
+      "sub_short": "金鉱山",
+      "sub_short_en": "Gold",
       "row": 0,
       "relations": [
         {
@@ -56,6 +58,8 @@
       "name": "テック・リソーシズ",
       "sub": "銅・金の共同事業",
       "sub_en": "Copper/gold JV partner",
+      "sub_short": "銅鉱山",
+      "sub_short_en": "Copper",
       "row": 0,
       "relations": [
         {
@@ -93,6 +97,8 @@
       "name": "ランディン・ゴールド",
       "sub": "金鉱山(持分法投資先)",
       "sub_en": "Gold miner, equity investee",
+      "sub_short": "金鉱山",
+      "sub_short_en": "Gold",
       "row": 0,
       "relations": [
         {
@@ -117,6 +123,8 @@
       "name": "SSRマイニング",
       "sub": "金・銀鉱",
       "sub_en": "Gold & silver mining",
+      "sub_short": "金・銀鉱",
+      "sub_short_en": "Gold",
       "row": 0,
       "relations": [
         {

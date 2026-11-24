@@ -31,6 +31,8 @@
       "name_en": "iCAD",
       "sub": "乳がん検出AI",
       "sub_en": "AI breast cancer detection",
+      "sub_short": "AI検診",
+      "sub_short_en": "AI scans",
       "row": 0,
       "relations": [
         {
@@ -55,6 +57,8 @@
       "name_en": "Nulogix Health",
       "sub": "医療の収益管理AI",
       "sub_en": "Healthcare revenue AI",
+      "sub_short": "医療AI",
+      "sub_short_en": "Billing",
       "row": 0,
       "relations": [
         {
@@ -79,6 +83,8 @@
       "name_en": "Raven Holdings",
       "sub": "画像診断センター",
       "sub_en": "Imaging centers",
+      "sub_short": "画像診断",
+      "sub_short_en": "Imaging",
       "row": 0,
       "relations": [
         {
@@ -103,6 +109,8 @@
       "name_en": "Profound Medical",
       "sub": "前立腺の超音波治療",
       "sub_en": "Prostate ultrasound therapy",
+      "sub_short": "前立腺",
+      "sub_short_en": "Urology",
       "row": 1,
       "relations": [
         {
@@ -127,6 +135,8 @@
       "name_en": "Astrana Health",
       "sub": "医療グループ",
       "sub_en": "Physician groups",
+      "sub_short": "医療",
+      "sub_short_en": "Doctors",
       "row": 2,
       "relations": [
         {

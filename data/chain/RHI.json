@@ -30,6 +30,8 @@
       "name_en": "ManpowerGroup",
       "sub": "人材派遣",
       "sub_en": "Staffing",
+      "sub_short": "人材派遣",
+      "sub_short_en": "Staffing",
       "row": 0,
       "relations": [
         {
@@ -54,6 +56,8 @@
       "name_en": "Korn Ferry",
       "sub": "人材紹介・組織コンサル",
       "sub_en": "Executive search & consulting",
+      "sub_short": "人材紹介",
+      "sub_short_en": "Hiring",
       "row": 0,
       "relations": [
         {
@@ -78,6 +82,8 @@
       "name_en": "Atlantic International",
       "sub": "人材派遣",
       "sub_en": "Staffing",
+      "sub_short": "人材派遣",
+      "sub_short_en": "Staffing",
       "row": 0,
       "relations": [
         {
@@ -102,6 +108,8 @@
       "name_en": "Upwork",
       "sub": "フリーランス仲介",
       "sub_en": "Freelance marketplace",
+      "sub_short": "人材",
+      "sub_short_en": "Freelance",
       "row": 1,
       "relations": [
         {
@@ -126,6 +134,8 @@
       "name_en": "Barrett Business Services",
       "sub": "中小企業向け人事・PEO",
       "sub_en": "PEO & staffing",
+      "sub_short": "人事",
+      "sub_short_en": "PEO",
       "row": 1,
       "relations": [
         {

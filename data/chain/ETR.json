@@ -24,6 +24,8 @@
       "name": "ユニオン・パシフィック",
       "sub": "鉄道輸送",
       "sub_en": "Rail transport",
+      "sub_short": "鉄道輸送",
+      "sub_short_en": "Rail",
       "row": 0,
       "relations": [
         {
@@ -48,6 +50,8 @@
       "name": "グーグル",
       "sub": "データセンター",
       "sub_en": "Data centers",
+      "sub_short": "DC",
+      "sub_short_en": "DCs",
       "row": 1,
       "relations": [
         {
@@ -72,6 +76,8 @@
       "name": "アマゾン・ドット・コム(AWS)",
       "sub": "データセンター",
       "sub_en": "Data centers",
+      "sub_short": "DC",
+      "sub_short_en": "DCs",
       "row": 1,
       "relations": [
         {
@@ -96,6 +102,8 @@
       "name": "メタ・プラットフォームズ",
       "sub": "データセンター",
       "sub_en": "Data centers",
+      "sub_short": "DC",
+      "sub_short_en": "DCs",
       "row": 1,
       "relations": [
         {
@@ -120,6 +128,8 @@
       "name": "センチュリ・ホールディングス",
       "sub": "電力・ガス設備工事",
       "sub_en": "Utility infrastructure services",
+      "sub_short": "電力",
+      "sub_short_en": "Utility",
       "row": 0,
       "relations": [
         {
@@ -144,6 +154,8 @@
       "name": "ハット・エイト",
       "sub": "ビットコイン採掘・データセンター",
       "sub_en": "Bitcoin mining & data centers",
+      "sub_short": "BTC採掘",
+      "sub_short_en": "Bitcoin",
       "row": 1,
       "relations": [
         {

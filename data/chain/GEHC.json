@@ -22,6 +22,8 @@
       "name": "シーメンス・ヘルシニアーズ",
       "sub": "医用画像機器",
       "sub_en": "Medical imaging",
+      "sub_short": "画像機器",
+      "sub_short_en": "Imaging",
       "row": 0,
       "relations": [
         {
@@ -46,6 +48,8 @@
       "name": "フィリップス",
       "sub": "医療機器",
       "sub_en": "Medical technology",
+      "sub_short": "医療機器",
+      "sub_short_en": "Medtech",
       "row": 0,
       "relations": [
         {
@@ -70,6 +74,8 @@
       "name": "ユナイテッド・イメージング",
       "sub": "医用画像機器",
       "sub_en": "Medical imaging",
+      "sub_short": "画像機器",
+      "sub_short_en": "Imaging",
       "row": 0,
       "relations": [
         {
@@ -94,6 +100,8 @@
       "name": "マインドレイ",
       "sub": "医療機器",
       "sub_en": "Medical devices",
+      "sub_short": "医療機器",
+      "sub_short_en": "Medtech",
       "row": 0,
       "relations": [
         {
@@ -118,6 +126,8 @@
       "name": "キヤノン",
       "sub": "画像機器",
       "sub_en": "Imaging equipment",
+      "sub_short": "画像機器",
+      "sub_short_en": "Imaging",
       "row": 0,
       "relations": [
         {
@@ -142,6 +152,8 @@
       "name": "バイエル",
       "sub": "造影剤",
       "sub_en": "Contrast agents",
+      "sub_short": "造影剤",
+      "sub_short_en": "Imaging",
       "row": 0,
       "relations": [
         {
@@ -166,6 +178,8 @@
       "name": "ブラッコ",
       "sub": "造影剤",
       "sub_en": "Contrast agents",
+      "sub_short": "造影剤",
+      "sub_short_en": "Imaging",
       "row": 0,
       "relations": [
         {
@@ -190,6 +204,8 @@
       "name": "ゲルベ",
       "sub": "造影剤",
       "sub_en": "Contrast agents",
+      "sub_short": "造影剤",
+      "sub_short_en": "Imaging",
       "row": 0,
       "relations": [
         {
@@ -214,6 +230,8 @@
       "name": "キュリウム",
       "sub": "核医学診断薬",
       "sub_en": "Nuclear medicine",
+      "sub_short": "核医学",
+      "sub_short_en": "Nuclear",
       "row": 0,
       "relations": [
         {

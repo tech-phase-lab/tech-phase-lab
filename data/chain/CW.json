@@ -27,6 +27,8 @@
       "name_en": "U.S. Navy",
       "sub": "国防",
       "sub_en": "Defense",
+      "sub_short": "国防",
+      "sub_short_en": "Defense",
       "row": 0,
       "relations": [
         {
@@ -51,6 +53,8 @@
       "name_en": "Boeing",
       "sub": "航空機",
       "sub_en": "Aircraft",
+      "sub_short": "航空機",
+      "sub_short_en": "Aircraft",
       "row": 0,
       "relations": [
         {
@@ -75,6 +79,8 @@
       "name_en": "Airbus",
       "sub": "航空機(欧州)",
       "sub_en": "Aircraft (Europe)",
+      "sub_short": "航空機",
+      "sub_short_en": "Aircraft",
       "row": 0,
       "relations": [
         {
@@ -99,6 +105,8 @@
       "name_en": "X-energy",
       "sub": "小型原子炉",
       "sub_en": "Small modular reactors",
+      "sub_short": "原子炉",
+      "sub_short_en": "SMRs",
       "row": 0,
       "relations": [
         {
@@ -123,6 +131,8 @@
       "name_en": "TTM Technologies",
       "sub": "電子部品",
       "sub_en": "Electronic components",
+      "sub_short": "電子部品",
+      "sub_short_en": "Parts",
       "row": 1,
       "relations": [
         {
@@ -147,6 +157,8 @@
       "name_en": "Mirion Technologies",
       "sub": "放射線計測",
       "sub_en": "Radiation measurement",
+      "sub_short": "放射線",
+      "sub_short_en": "Radiation",
       "row": 1,
       "relations": [
         {

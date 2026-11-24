@@ -28,6 +28,8 @@
       "name_en": "TerraSource",
       "sub": "破砕機",
       "sub_en": "Crushing equipment",
+      "sub_short": "破砕機",
+      "sub_short_en": "Crushers",
       "row": 0,
       "relations": [
         {
@@ -52,6 +54,8 @@
       "name_en": "Hillenbrand",
       "sub": "産業機械",
       "sub_en": "Industrial machinery",
+      "sub_short": "産業機械",
+      "sub_short_en": "Machines",
       "row": 0,
       "relations": [
         {
@@ -76,6 +80,8 @@
       "name_en": "Terex",
       "sub": "建設機械",
       "sub_en": "Construction equipment",
+      "sub_short": "建設機械",
+      "sub_short_en": "Machines",
       "row": 1,
       "relations": [
         {
@@ -100,6 +106,8 @@
       "name_en": "Metso",
       "sub": "鉱山機械(フィンランド)",
       "sub_en": "Mining equipment (Finland)",
+      "sub_short": "鉱山機械",
+      "sub_short_en": "Mining",
       "row": 1,
       "relations": [
         {
@@ -124,6 +132,8 @@
       "name_en": "Deere (Wirtgen)",
       "sub": "農機・建機",
       "sub_en": "Farm & construction equipment",
+      "sub_short": "農機",
+      "sub_short_en": "Farm",
       "row": 1,
       "relations": [
         {
@@ -148,6 +158,8 @@
       "name_en": "Alamo Group",
       "sub": "インフラ機械",
       "sub_en": "Infrastructure equipment",
+      "sub_short": "インフラ",
+      "sub_short_en": "Infra",
       "row": 1,
       "relations": [
         {
@@ -172,6 +184,8 @@
       "name_en": "Fayat Group",
       "sub": "建設機械(フランス)",
       "sub_en": "Construction equipment (France)",
+      "sub_short": "建設機械",
+      "sub_short_en": "Machines",
       "row": 1,
       "relations": [
         {

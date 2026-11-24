@@ -26,6 +26,8 @@
       "name_en": "Savara",
       "sub": "希少肺疾患薬",
       "sub_en": "Rare lung disease drugs",
+      "sub_short": "難病薬",
+      "sub_short_en": "Lung",
       "row": 0,
       "relations": [
         {
@@ -50,6 +52,8 @@
       "name_en": "Red Robin Gourmet Burgers",
       "sub": "外食",
       "sub_en": "Restaurants",
+      "sub_short": "外食",
+      "sub_short_en": "Dining",
       "row": 0,
       "relations": [
         {
@@ -74,6 +78,8 @@
       "name_en": "Karman Holdings",
       "sub": "防衛・宇宙部品",
       "sub_en": "Defense & space systems",
+      "sub_short": "防衛",
+      "sub_short_en": "Defense",
       "row": 0,
       "relations": [
         {
@@ -98,6 +104,8 @@
       "name_en": "Mineralys Therapeutics",
       "sub": "高血圧治療薬",
       "sub_en": "Hypertension drugs",
+      "sub_short": "降圧薬",
+      "sub_short_en": "BP drugs",
       "row": 0,
       "relations": [
         {
@@ -122,6 +130,8 @@
       "name_en": "Foghorn Therapeutics",
       "sub": "がん創薬",
       "sub_en": "Cancer drug discovery",
+      "sub_short": "がん創薬",
+      "sub_short_en": "Oncology",
       "row": 0,
       "relations": [
         {
@@ -146,6 +156,8 @@
       "name_en": "Quantum-Si",
       "sub": "タンパク質解析",
       "sub_en": "Protein sequencing",
+      "sub_short": "解析",
+      "sub_short_en": "Proteins",
       "row": 0,
       "relations": [
         {
@@ -170,6 +182,8 @@
       "name_en": "Benitec Biopharma",
       "sub": "遺伝子治療",
       "sub_en": "Gene therapy",
+      "sub_short": "遺伝子",
+      "sub_short_en": "Genes",
       "row": 0,
       "relations": [
         {
@@ -194,6 +208,8 @@
       "name_en": "Moelis",
       "sub": "投資銀行",
       "sub_en": "Investment bank",
+      "sub_short": "投資銀行",
+      "sub_short_en": "Bank",
       "row": 1,
       "relations": [
         {

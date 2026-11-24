@@ -33,6 +33,8 @@
       "name_en": "Timken",
       "sub": "ベアリング",
       "sub_en": "Bearings",
+      "sub_short": "軸受",
+      "sub_short_en": "Bearings",
       "row": 0,
       "relations": [
         {
@@ -57,6 +59,8 @@
       "name_en": "Tenaris",
       "sub": "鋼管",
       "sub_en": "Steel pipe",
+      "sub_short": "鋼管",
+      "sub_short_en": "Pipe",
       "row": 1,
       "relations": [
         {
@@ -81,6 +85,8 @@
       "name_en": "Vallourec",
       "sub": "鋼管(仏)",
       "sub_en": "Steel pipe (France)",
+      "sub_short": "鋼管",
+      "sub_short_en": "Pipe",
       "row": 1,
       "relations": [
         {
@@ -105,6 +111,8 @@
       "name_en": "ArcelorMittal",
       "sub": "鉄鋼",
       "sub_en": "Steel",
+      "sub_short": "鉄鋼",
+      "sub_short_en": "Steel",
       "row": 1,
       "relations": [
         {
@@ -129,6 +137,8 @@
       "name_en": "Scot Forge",
       "sub": "鍛造(非上場)",
       "sub_en": "Forging (private)",
+      "sub_short": "鍛造",
+      "sub_short_en": "Forging",
       "row": 1,
       "relations": [
         {
@@ -153,6 +163,8 @@
       "name_en": "Frisa",
       "sub": "鍛造(墨、非上場)",
       "sub_en": "Forging (Mexico, private)",
+      "sub_short": "鍛造",
+      "sub_short_en": "Forging",
       "row": 1,
       "relations": [
         {
@@ -177,6 +189,8 @@
       "name_en": "Gerdau",
       "sub": "鉄鋼(伯)",
       "sub_en": "Steel (Brazil)",
+      "sub_short": "鉄鋼",
+      "sub_short_en": "Steel",
       "row": 2,
       "relations": [
         {
@@ -201,6 +215,8 @@
       "name_en": "Steel Dynamics",
       "sub": "鉄鋼",
       "sub_en": "Steel",
+      "sub_short": "鉄鋼",
+      "sub_short_en": "Steel",
       "row": 2,
       "relations": [
         {
@@ -225,6 +241,8 @@
       "name_en": "Nucor",
       "sub": "鉄鋼",
       "sub_en": "Steel",
+      "sub_short": "鉄鋼",
+      "sub_short_en": "Steel",
       "row": 2,
       "relations": [
         {

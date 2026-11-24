@@ -31,6 +31,8 @@
       "name_en": "R.J. O'Brien & Associates",
       "sub": "先物仲介",
       "sub_en": "Futures brokerage",
+      "sub_short": "先物仲介",
+      "sub_short_en": "Futures",
       "row": 0,
       "relations": [
         {
@@ -55,6 +57,8 @@
       "name_en": "Intercam Securities",
       "sub": "中南米向け証券仲介",
       "sub_en": "Brokerage for Latin American clients",
+      "sub_short": "証券",
+      "sub_short_en": "Broker",
       "row": 0,
       "relations": [
         {
@@ -79,6 +83,8 @@
       "name_en": "Bamboo Payment Holding",
       "sub": "越境決済",
       "sub_en": "Cross-border payments",
+      "sub_short": "越境決済",
+      "sub_short_en": "Payment",
       "row": 0,
       "relations": [
         {
@@ -103,6 +109,8 @@
       "name_en": "CaliberCos",
       "sub": "不動産運用",
       "sub_en": "Real estate asset management",
+      "sub_short": "不動産",
+      "sub_short_en": "Property",
       "row": 1,
       "relations": [
         {
@@ -127,6 +135,8 @@
       "name_en": "Blink Charging",
       "sub": "EV充電",
       "sub_en": "EV charging",
+      "sub_short": "EV充電",
+      "sub_short_en": "Charging",
       "row": 1,
       "relations": [
         {
@@ -151,6 +161,8 @@
       "name_en": "Aqua Metals",
       "sub": "金属リサイクル",
       "sub_en": "Metals recycling",
+      "sub_short": "金属",
+      "sub_short_en": "Recycling",
       "row": 1,
       "relations": [
         {
@@ -175,6 +187,8 @@
       "name_en": "FrontView REIT",
       "sub": "不動産投資信託",
       "sub_en": "REIT",
+      "sub_short": "REIT",
+      "sub_short_en": "REIT",
       "row": 1,
       "relations": [
         {
@@ -199,6 +213,8 @@
       "name_en": "BGC Group",
       "sub": "金融ブローカー",
       "sub_en": "Brokerage",
+      "sub_short": "証券",
+      "sub_short_en": "Broker",
       "row": 2,
       "relations": [
         {

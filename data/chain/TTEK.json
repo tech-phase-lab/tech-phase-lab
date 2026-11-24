@@ -30,6 +30,8 @@
       "name_en": "Halvik",
       "sub": "連邦政府向けIT",
       "sub_en": "Federal IT services",
+      "sub_short": "政府IT",
+      "sub_short_en": "Federal IT",
       "row": 0,
       "relations": [
         {
@@ -54,6 +56,8 @@
       "name_en": "Carron + Walsh",
       "sub": "建設コンサル(アイルランド)",
       "sub_en": "Engineering consulting (Ireland)",
+      "sub_short": "建設",
+      "sub_short_en": "Design",
       "row": 0,
       "relations": [
         {
@@ -78,6 +82,8 @@
       "name_en": "AECOM",
       "sub": "インフラ設計・コンサル",
       "sub_en": "Infrastructure consulting",
+      "sub_short": "インフラ",
+      "sub_short_en": "Infra",
       "row": 1,
       "relations": [
         {
@@ -102,6 +108,8 @@
       "name_en": "Jacobs",
       "sub": "建設コンサル・エンジニアリング",
       "sub_en": "Engineering & consulting",
+      "sub_short": "建設",
+      "sub_short_en": "Design",
       "row": 1,
       "relations": [
         {
@@ -126,6 +134,8 @@
       "name_en": "Montrose Environmental",
       "sub": "環境サービス",
       "sub_en": "Environmental services",
+      "sub_short": "環境",
+      "sub_short_en": "Eco svcs",
       "row": 1,
       "relations": [
         {
@@ -150,6 +160,8 @@
       "name_en": "ICF International",
       "sub": "政府向けコンサル",
       "sub_en": "Government consulting",
+      "sub_short": "政府支援",
+      "sub_short_en": "Gov IT",
       "row": 1,
       "relations": [
         {
@@ -174,6 +186,8 @@
       "name_en": "Stantec",
       "sub": "設計・コンサル(カナダ)",
       "sub_en": "Engineering & design (Canada)",
+      "sub_short": "設計",
+      "sub_short_en": "Design",
       "row": 1,
       "relations": [
         {
@@ -198,6 +212,8 @@
       "name_en": "WSP Global",
       "sub": "設計・コンサル(カナダ)",
       "sub_en": "Engineering consulting (Canada)",
+      "sub_short": "設計",
+      "sub_short_en": "Design",
       "row": 1,
       "relations": [
         {

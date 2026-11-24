@@ -19,6 +19,8 @@
       "name": "カタリスト・ブランズ",
       "sub": "小売事業",
       "sub_en": "Retail operations",
+      "sub_short": "小売事業",
+      "sub_short_en": "Retail",
       "row": 0,
       "relations": [
         {
@@ -43,6 +45,8 @@
       "name": "ルー・ギルト・グループ",
       "sub": "Eコマース",
       "sub_en": "E-commerce",
+      "sub_short": "EC",
+      "sub_short_en": "E-com",
       "row": 0,
       "relations": [
         {
@@ -67,6 +71,8 @@
       "name": "ジェームズタウン",
       "sub": "不動産投資運用",
       "sub_en": "Real estate investing",
+      "sub_short": "不動産",
+      "sub_short_en": "Property",
       "row": 0,
       "relations": [
         {
@@ -91,6 +97,8 @@
       "name": "クレピエール",
       "sub": "欧州の商業不動産",
       "sub_en": "European retail real estate",
+      "sub_short": "不動産",
+      "sub_short_en": "Property",
       "row": 0,
       "relations": [
         {
@@ -115,6 +123,8 @@
       "name": "三菱地所",
       "sub": "日本のアウトレット",
       "sub_en": "Japan outlets",
+      "sub_short": "商業施設",
+      "sub_short_en": "Outlets",
       "row": 0,
       "relations": [
         {
@@ -139,6 +149,8 @@
       "name": "新世界インターナショナル",
       "sub": "韓国のアウトレット",
       "sub_en": "Korea outlets",
+      "sub_short": "商業施設",
+      "sub_short_en": "Outlets",
       "row": 0,
       "relations": [
         {
@@ -163,6 +175,8 @@
       "name": "メイスリッチ",
       "sub": "商業施設REIT",
       "sub_en": "Mall REIT",
+      "sub_short": "REIT",
+      "sub_short_en": "Mall REIT",
       "row": 0,
       "relations": [
         {

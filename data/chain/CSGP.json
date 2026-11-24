@@ -26,6 +26,8 @@
       "name_en": "Matterport",
       "sub": "3D空間データ",
       "sub_en": "3D spatial data",
+      "sub_short": "3Dデータ",
+      "sub_short_en": "3D data",
       "row": 0,
       "relations": [
         {
@@ -50,6 +52,8 @@
       "name_en": "Domain",
       "sub": "不動産ポータル(豪州)",
       "sub_en": "Property portal (Australia)",
+      "sub_short": "不動産",
+      "sub_short_en": "Property",
       "row": 0,
       "relations": [
         {
@@ -74,6 +78,8 @@
       "name_en": "Visual Lease",
       "sub": "リース管理ソフト",
       "sub_en": "Lease management software",
+      "sub_short": "リース",
+      "sub_short_en": "Leasing",
       "row": 0,
       "relations": [
         {
@@ -98,6 +104,8 @@
       "name_en": "OnTheMarket",
       "sub": "不動産ポータル(英国)",
       "sub_en": "Property portal (UK)",
+      "sub_short": "不動産",
+      "sub_short_en": "Property",
       "row": 0,
       "relations": [
         {
@@ -122,6 +130,8 @@
       "name_en": "Anywhere Real Estate",
       "sub": "不動産仲介",
       "sub_en": "Real estate brokerage",
+      "sub_short": "不動産",
+      "sub_short_en": "Property",
       "row": 1,
       "relations": [
         {

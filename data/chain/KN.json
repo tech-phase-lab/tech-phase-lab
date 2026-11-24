@@ -25,6 +25,8 @@
       "name": "WSオーディオロジー",
       "sub": "補聴器",
       "sub_en": "Hearing aids",
+      "sub_short": "補聴器",
+      "sub_short_en": "Hearing",
       "row": 0,
       "relations": [
         {
@@ -49,6 +51,8 @@
       "name": "ティーティーアイ",
       "sub": "電子部品商社",
       "sub_en": "Electronics distributor",
+      "sub_short": "電子部品",
+      "sub_short_en": "Devices",
       "row": 0,
       "relations": [
         {
@@ -73,6 +77,8 @@
       "name": "シンティアント",
       "sub": "半導体",
       "sub_en": "Semiconductors",
+      "sub_short": "半導体",
+      "sub_short_en": "Chips",
       "row": 0,
       "relations": [
         {
@@ -97,6 +103,8 @@
       "name": "京セラAVX",
       "sub": "コンデンサ",
       "sub_en": "Capacitors",
+      "sub_short": "電子部品",
+      "sub_short_en": "Capacitor",
       "row": 1,
       "relations": [
         {
@@ -121,6 +129,8 @@
       "name": "ヤゲオ",
       "sub": "電子部品",
       "sub_en": "Electronic components",
+      "sub_short": "電子部品",
+      "sub_short_en": "Parts",
       "row": 1,
       "relations": [
         {
@@ -145,6 +155,8 @@
       "name": "ビシェイ・インターテクノロジー",
       "sub": "電子部品",
       "sub_en": "Electronic components",
+      "sub_short": "電子部品",
+      "sub_short_en": "Parts",
       "row": 1,
       "relations": [
         {
@@ -169,6 +181,8 @@
       "name": "ソニオン",
       "sub": "補聴器部品",
       "sub_en": "Hearing components",
+      "sub_short": "補聴器",
+      "sub_short_en": "Hearing",
       "row": 1,
       "relations": [
         {

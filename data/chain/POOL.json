@@ -27,6 +27,8 @@
       "name_en": "Pentair",
       "sub": "水処理・プール機器",
       "sub_en": "Water & pool equipment",
+      "sub_short": "水処理",
+      "sub_short_en": "Water",
       "row": 0,
       "relations": [
         {
@@ -51,6 +53,8 @@
       "name_en": "Zodiac Pool Systems",
       "sub": "プール機器",
       "sub_en": "Pool equipment",
+      "sub_short": "プール",
+      "sub_short_en": "Pools",
       "row": 0,
       "relations": [
         {
@@ -75,6 +79,8 @@
       "name_en": "Hayward Holdings",
       "sub": "プール機器",
       "sub_en": "Pool equipment",
+      "sub_short": "プール",
+      "sub_short_en": "Pools",
       "row": 0,
       "relations": [
         {
@@ -99,6 +105,8 @@
       "name_en": "SiteOne Landscape Supply",
       "sub": "造園資材流通",
       "sub_en": "Landscape supply",
+      "sub_short": "造園",
+      "sub_short_en": "Garden",
       "row": 1,
       "relations": [
         {

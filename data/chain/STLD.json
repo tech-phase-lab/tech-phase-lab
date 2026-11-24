@@ -33,6 +33,8 @@
       "name_en": "New Process Steel",
       "sub": "鋼材の加工・流通",
       "sub_en": "Steel processing & distribution",
+      "sub_short": "鋼材",
+      "sub_short_en": "Steel",
       "row": 0,
       "relations": [
         {
@@ -57,6 +59,8 @@
       "name_en": "SGH",
       "sub": "複合企業(豪州)",
       "sub_en": "Conglomerate (Australia)",
+      "sub_short": "複合企業",
+      "sub_short_en": "Group",
       "row": 0,
       "relations": [
         {
@@ -81,6 +85,8 @@
       "name_en": "BlueScope Steel",
       "sub": "鉄鋼(豪州・北米)",
       "sub_en": "Steel (Australia & North America)",
+      "sub_short": "鉄鋼",
+      "sub_short_en": "Steel",
       "row": 0,
       "relations": [
         {
@@ -105,6 +111,8 @@
       "name_en": "Northwest Pipe",
       "sub": "水道管",
       "sub_en": "Water pipe",
+      "sub_short": "水道管",
+      "sub_short_en": "Pipe",
       "row": 1,
       "relations": [
         {
@@ -129,6 +137,8 @@
       "name_en": "Atkore",
       "sub": "電線管・配管",
       "sub_en": "Conduit & pipe",
+      "sub_short": "電線管",
+      "sub_short_en": "Conduit",
       "row": 1,
       "relations": [
         {
@@ -153,6 +163,8 @@
       "name_en": "Friedman Industries",
       "sub": "鋼材加工",
       "sub_en": "Steel processing",
+      "sub_short": "鋼材加工",
+      "sub_short_en": "Steel",
       "row": 1,
       "relations": [
         {
@@ -177,6 +189,8 @@
       "name_en": "Metallus",
       "sub": "特殊鋼棒鋼",
       "sub_en": "Special bar steel",
+      "sub_short": "鉄鋼",
+      "sub_short_en": "Bar steel",
       "row": 2,
       "relations": [
         {
@@ -201,6 +215,8 @@
       "name_en": "Gerdau",
       "sub": "鉄鋼(ブラジル・北米)",
       "sub_en": "Steel (Brazil & North America)",
+      "sub_short": "鉄鋼",
+      "sub_short_en": "Steel",
       "row": 2,
       "relations": [
         {
@@ -225,6 +241,8 @@
       "name_en": "Grupo Simec",
       "sub": "特殊鋼(メキシコ)",
       "sub_en": "Special steel (Mexico)",
+      "sub_short": "特殊鋼",
+      "sub_short_en": "Steel",
       "row": 2,
       "relations": [
         {

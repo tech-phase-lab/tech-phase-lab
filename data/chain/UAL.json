@@ -30,6 +30,8 @@
       "name": "JPモルガン・チェース銀行",
       "sub": "コブランドカード提携",
       "sub_en": "Co-brand card partner",
+      "sub_short": "カード",
+      "sub_short_en": "Cards",
       "row": 0,
       "relations": [
         {
@@ -54,6 +56,8 @@
       "name": "エア・カナダ",
       "sub": "共同事業の提携",
       "sub_en": "Joint business partner",
+      "sub_short": "共同事業",
+      "sub_short_en": "Partner",
       "row": 0,
       "relations": [
         {
@@ -78,6 +82,8 @@
       "name": "ルフトハンザ",
       "sub": "共同事業の提携",
       "sub_en": "Joint business partner",
+      "sub_short": "共同事業",
+      "sub_short_en": "Partner",
       "row": 0,
       "relations": [
         {
@@ -102,6 +108,8 @@
       "name": "全日本空輸",
       "sub": "共同事業の提携",
       "sub_en": "Joint business partner",
+      "sub_short": "共同事業",
+      "sub_short_en": "Partner",
       "row": 0,
       "relations": [
         {
@@ -126,6 +134,8 @@
       "name": "アズール航空",
       "sub": "出資先の航空会社",
       "sub_en": "Equity-investee airline",
+      "sub_short": "航空会社",
+      "sub_short_en": "Airline",
       "row": 0,
       "relations": [
         {
@@ -150,6 +160,8 @@
       "name": "コミュートエア",
       "sub": "地域航空の出資先",
       "sub_en": "Regional carrier investee",
+      "sub_short": "地域航空",
+      "sub_short_en": "Airline",
       "row": 0,
       "relations": [
         {
@@ -174,6 +186,8 @@
       "name": "リパブリック航空ホールディングス",
       "sub": "地域航空の出資先",
       "sub_en": "Regional carrier investee",
+      "sub_short": "地域航空",
+      "sub_short_en": "Airline",
       "row": 0,
       "relations": [
         {
@@ -198,6 +212,8 @@
       "name": "スカイウエスト",
       "sub": "地域路線の運航委託",
       "sub_en": "Regional flying contractor",
+      "sub_short": "地域路線",
+      "sub_short_en": "Airline",
       "row": 1,
       "relations": [
         {
@@ -222,6 +238,8 @@
       "name": "ボーイング",
       "sub": "航空機メーカー",
       "sub_en": "Aircraft maker",
+      "sub_short": "航空機",
+      "sub_short_en": "Aircraft",
       "row": 1,
       "relations": [
         {
@@ -246,6 +264,8 @@
       "name": "エアバス",
       "sub": "航空機メーカー",
       "sub_en": "Aircraft maker",
+      "sub_short": "航空機",
+      "sub_short_en": "Aircraft",
       "row": 1,
       "relations": [
         {
@@ -270,6 +290,8 @@
       "name": "ロールス・ロイス",
       "sub": "エンジンの供給元",
       "sub_en": "Engine supplier",
+      "sub_short": "エンジン",
+      "sub_short_en": "Engines",
       "row": 1,
       "relations": [
         {
@@ -294,6 +316,8 @@
       "name": "アラスカ・エア・グループ",
       "sub": "航空",
       "sub_en": "Airline",
+      "sub_short": "航空",
+      "sub_short_en": "Airline",
       "row": 2,
       "relations": [
         {
@@ -318,6 +342,8 @@
       "name": "ジェットブルー",
       "sub": "航空",
       "sub_en": "Airline",
+      "sub_short": "航空",
+      "sub_short_en": "Airline",
       "row": 0,
       "relations": [
         {

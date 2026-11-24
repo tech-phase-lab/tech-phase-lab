@@ -19,6 +19,8 @@
       "name": "プリズミック・ライフ・リインシュアランス",
       "sub": "再保険",
       "sub_en": "Reinsurance",
+      "sub_short": "再保険",
+      "sub_short_en": "Reinsure",
       "row": 0,
       "relations": [
         {
@@ -43,6 +45,8 @@
       "name": "ウィルトン・リアシュアランス",
       "sub": "再保険",
       "sub_en": "Reinsurance",
+      "sub_short": "再保険",
+      "sub_short_en": "Reinsure",
       "row": 0,
       "relations": [
         {
@@ -67,6 +71,8 @@
       "name": "サマセット・リインシュアランス",
       "sub": "再保険",
       "sub_en": "Reinsurance",
+      "sub_short": "再保険",
+      "sub_short_en": "Reinsure",
       "row": 0,
       "relations": [
         {
@@ -91,6 +97,8 @@
       "name": "ハートフォード",
       "sub": "保険",
       "sub_en": "Insurance",
+      "sub_short": "保険",
+      "sub_short_en": "Insurance",
       "row": 0,
       "relations": [
         {
@@ -115,6 +123,8 @@
       "name": "オールステート",
       "sub": "保険",
       "sub_en": "Insurance",
+      "sub_short": "保険",
+      "sub_short_en": "Insurance",
       "row": 0,
       "relations": [
         {

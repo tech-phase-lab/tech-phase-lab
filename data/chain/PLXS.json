@@ -29,6 +29,8 @@
       "name_en": "Harmonic",
       "sub": "映像配信・通信機器",
       "sub_en": "Video & broadband equipment",
+      "sub_short": "映像配信",
+      "sub_short_en": "Video",
       "row": 0,
       "relations": [
         {
@@ -53,6 +55,8 @@
       "name_en": "Impinj",
       "sub": "RFID",
       "sub_en": "RFID",
+      "sub_short": "RFID",
+      "sub_short_en": "RFID",
       "row": 0,
       "relations": [
         {
@@ -77,6 +81,8 @@
       "name_en": "Evolv Technologies",
       "sub": "AIセキュリティ検査",
       "sub_en": "AI security screening",
+      "sub_short": "AI防御",
+      "sub_short_en": "AI scans",
       "row": 0,
       "relations": [
         {
@@ -101,6 +107,8 @@
       "name_en": "Blaize",
       "sub": "AI半導体",
       "sub_en": "AI chips",
+      "sub_short": "AI半導体",
+      "sub_short_en": "AI chips",
       "row": 0,
       "relations": [
         {
@@ -125,6 +133,8 @@
       "name_en": "BioSig Technologies",
       "sub": "心臓電気生理の医療機器",
       "sub_en": "Cardiac electrophysiology devices",
+      "sub_short": "心臓機器",
+      "sub_short_en": "Cardiac",
       "row": 0,
       "relations": [
         {
@@ -149,6 +159,8 @@
       "name_en": "Benchmark Electronics",
       "sub": "電子機器の製造受託",
       "sub_en": "Electronics manufacturing services",
+      "sub_short": "EMS",
+      "sub_short_en": "EMS",
       "row": 1,
       "relations": [
         {
@@ -173,6 +185,8 @@
       "name_en": "Kimball Electronics",
       "sub": "電子機器の製造受託",
       "sub_en": "Electronics manufacturing services",
+      "sub_short": "EMS",
+      "sub_short_en": "EMS",
       "row": 1,
       "relations": [
         {
@@ -197,6 +211,8 @@
       "name_en": "Celestica",
       "sub": "電子機器の製造受託",
       "sub_en": "Electronics manufacturing services",
+      "sub_short": "EMS",
+      "sub_short_en": "EMS",
       "row": 1,
       "relations": [
         {

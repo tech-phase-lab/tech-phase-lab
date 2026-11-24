@@ -33,6 +33,8 @@
       "name_en": "Leidos",
       "sub": "防衛IT・電子",
       "sub_en": "Defense IT & electronics",
+      "sub_short": "防衛IT",
+      "sub_short_en": "Defense",
       "row": 0,
       "relations": [
         {
@@ -57,6 +59,8 @@
       "name_en": "Argan",
       "sub": "電力建設",
       "sub_en": "Power construction",
+      "sub_short": "電力建設",
+      "sub_short_en": "Grid work",
       "row": 0,
       "relations": [
         {
@@ -81,6 +85,8 @@
       "name_en": "American Superconductor",
       "sub": "電力機器",
       "sub_en": "Power equipment",
+      "sub_short": "電力機器",
+      "sub_short_en": "Power",
       "row": 0,
       "relations": [
         {
@@ -105,6 +111,8 @@
       "name_en": "Elmet Group",
       "sub": "金属部品",
       "sub_en": "Metal components",
+      "sub_short": "金属部品",
+      "sub_short_en": "Metal",
       "row": 0,
       "relations": [
         {
@@ -129,6 +137,8 @@
       "name_en": "Ondas",
       "sub": "ドローン・通信",
       "sub_en": "Drones & networks",
+      "sub_short": "ドローン",
+      "sub_short_en": "Drones",
       "row": 0,
       "relations": [
         {
@@ -153,6 +163,8 @@
       "name_en": "General Dynamics",
       "sub": "防衛・造船",
       "sub_en": "Defense & shipbuilding",
+      "sub_short": "防衛",
+      "sub_short_en": "Defense",
       "row": 1,
       "relations": [
         {
@@ -177,6 +189,8 @@
       "name_en": "BWX Technologies",
       "sub": "原子力部品",
       "sub_en": "Nuclear components",
+      "sub_short": "原子力",
+      "sub_short_en": "Nuclear",
       "row": 2,
       "relations": [
         {
@@ -201,6 +215,8 @@
       "name_en": "Jacobs",
       "sub": "エンジニアリング",
       "sub_en": "Engineering",
+      "sub_short": "技術",
+      "sub_short_en": "Design",
       "row": 2,
       "relations": [
         {
@@ -225,6 +241,8 @@
       "name_en": "Amentum",
       "sub": "政府向けエンジニアリング",
       "sub_en": "Government engineering",
+      "sub_short": "政府技術",
+      "sub_short_en": "Gov IT",
       "row": 2,
       "relations": [
         {

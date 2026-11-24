@@ -28,6 +28,8 @@
       "name": "ジョンソン・エンド・ジョンソン",
       "sub": "医療機器",
       "sub_en": "Medical devices",
+      "sub_short": "医療機器",
+      "sub_short_en": "Medtech",
       "row": 0,
       "relations": [
         {
@@ -65,6 +67,8 @@
       "name": "ストライカー",
       "sub": "整形外科機器",
       "sub_en": "Orthopaedic devices",
+      "sub_short": "整形外科",
+      "sub_short_en": "Ortho",
       "row": 0,
       "relations": [
         {
@@ -102,6 +106,8 @@
       "name": "スミス・アンド・ネフュー",
       "sub": "整形外科機器",
       "sub_en": "Orthopaedic devices",
+      "sub_short": "整形外科",
+      "sub_short_en": "Ortho",
       "row": 0,
       "relations": [
         {
@@ -139,6 +145,8 @@
       "name": "グローバス・メディカル",
       "sub": "脊椎手術機器",
       "sub_en": "Spine surgery devices",
+      "sub_short": "脊椎",
+      "sub_short_en": "Spine",
       "row": 1,
       "relations": [
         {
