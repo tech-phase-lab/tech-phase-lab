@@ -1,0 +1,228 @@
+{
+  "root": {
+    "ticker": "SLGN",
+    "name": "シルガン・ホールディングス",
+    "cik": 849869,
+    "name_en": "Silgan"
+  },
+  "rows": [
+    {
+      "ja": "買収",
+      "en": "Acquisitions",
+      "above": true
+    },
+    {
+      "ja": "顧客(相手の資料に記載)",
+      "en": "Customers (named in their filings)"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "CCK",
+    "OI",
+    "AMCR",
+    "TRS"
+  ],
+  "companies": [
+    {
+      "id": "Trivium",
+      "ticker": "Trivium",
+      "name": "トリビウム・パッケージング",
+      "name_en": "Trivium Packaging",
+      "sub": "金属容器",
+      "sub_en": "Metal packaging",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "新会社Silgan MCCを通じ、企業価値34億ドルで現金買収する計画(2026年10月発表)",
+          "text_en": "Plans to buy it in cash at a $3.4 billion enterprise value through the new Silgan MCC (announced October 2026)",
+          "source": {
+            "label": "Silgan 8-K添付(2026年10月)",
+            "label_en": "Silgan 8-K exhibit (2026-10)",
+            "url": "https://www.sec.gov/Archives/edgar/data/849869/000119312526424669/d152250dex992.htm",
+            "level": "official",
+            "date": "2026-10-19",
+            "quote": "Silgan MCC acquires Trivium in an all-cash transaction at a $3.4 billion enterprise value"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Weener",
+      "ticker": "Weener Packaging",
+      "name": "ウィーナー・パッケージング",
+      "name_en": "Weener Packaging",
+      "sub": "ディスペンサー・キャップ",
+      "sub_en": "Dispensing systems & closures",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2024年10月に買収",
+          "text_en": "Acquired in October 2024",
+          "source": {
+            "label": "Silgan 10-K(2025年度)",
+            "label_en": "Silgan 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/849869/000162828026012202/slgn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "On October 15, 2024, we acquired Weener Plastics Holding B.V., or Weener Packaging"
+          }
+        }
+      ]
+    },
+    {
+      "id": "IPAR",
+      "ticker": "IPAR",
+      "name": "インターパルファム",
+      "name_en": "Interparfums",
+      "sub": "香水",
+      "sub_en": "Fragrances",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "香水のポンプの調達先の一社がSilgan Dispensing Systems",
+          "text_en": "Buys pumps from suppliers including Silgan Dispensing Systems",
+          "source": {
+            "label": "Interparfums 10-K(2026年提出)",
+            "label_en": "Interparfums 10-K (filed 2026-03)",
+            "url": "https://www.sec.gov/Archives/edgar/data/822663/000175392626000464/ipar-20251231.htm",
+            "level": "official",
+            "date": "2026-03-10",
+            "quote": "pumps (Silgan Dispensing Systems Thomaston Corp, Aptar, Rexam)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CCK",
+      "ticker": "CCK",
+      "name": "クラウン・ホールディングス",
+      "name_en": "Crown Holdings",
+      "sub": "金属缶",
+      "sub_en": "Metal packaging",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Crownが年次報告で、競合としてSilganを挙げる",
+          "text_en": "Crown Holdings names Silgan as a competitor",
+          "source": {
+            "label": "Crown 10-K(2026年提出)",
+            "label_en": "Crown 10-K (filed 2026-02)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1219601/000162828026012904/cck-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Metal Container Corporation, Silgan Holdings Inc., Sonoco, and Trivium Packaging."
+          }
+        }
+      ]
+    },
+    {
+      "id": "OI",
+      "ticker": "OI",
+      "name": "O-Iグラス",
+      "name_en": "O-I Glass",
+      "sub": "ガラス瓶",
+      "sub_en": "Glass containers",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "O-Iが年次報告で、競合としてSilganを挙げる",
+          "text_en": "O-I Glass names Silgan as a competitor",
+          "source": {
+            "label": "O-I Glass 10-K(2026年提出)",
+            "label_en": "O-I Glass 10-K (filed 2026-02)",
+            "url": "https://www.sec.gov/Archives/edgar/data/812074/000110465926014319/oi-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "The principal competitors producing metal containers include Ardagh Group, Ball Corporation, Crown Holdings, Inc., CANPACK and Silgan Holdings Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMCR",
+      "ticker": "AMCR",
+      "name": "アムコア",
+      "name_en": "Amcor",
+      "sub": "包装材",
+      "sub_en": "Packaging",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Amcorが年次報告で、競合としてSilganを挙げる",
+          "text_en": "Amcor names Silgan as a competitor",
+          "source": {
+            "label": "Amcor 10-K(2024年提出)",
+            "label_en": "Amcor 10-K (filed 2024-08)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1748790/000174879024000022/amcr-20240630.htm",
+            "level": "official",
+            "date": "2024-08-16",
+            "quote": "Sealed Air Corporation, Silgan Holdings Inc., and Sonoco Products Company"
+          }
+        }
+      ]
+    },
+    {
+      "id": "TRS",
+      "ticker": "TRS",
+      "name": "トライマス",
+      "name_en": "TriMas",
+      "sub": "包装・航空部品",
+      "sub_en": "Packaging & aerospace",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "TriMasが年次報告で、競合としてSilganを挙げる",
+          "text_en": "TriMas names Silgan as a competitor",
+          "source": {
+            "label": "Trimas 10-K(2026年提出)",
+            "label_en": "Trimas 10-K (filed 2026-03)",
+            "url": "https://www.sec.gov/Archives/edgar/data/842633/000084263326000012/trs-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "Depending on the product and customers served, our competitors include Amcor, Aptar, Bericap, Greif, Mold-Rite, Phoenix Closures, Silgan"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BERY",
+      "ticker": "BERY",
+      "name": "ベリー・グローバル",
+      "name_en": "Berry Global",
+      "sub": "プラスチック包装",
+      "sub_en": "Plastic packaging",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Berryが年次報告で、競合としてSilganを挙げる",
+          "text_en": "Berry Global names Silgan as a competitor",
+          "source": {
+            "label": "Berry Global 10-K(2024年提出)",
+            "label_en": "Berry Global 10-K (filed 2024-11)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1378992/000114036124047881/form10k.htm",
+            "level": "official",
+            "date": "2024-11-26",
+            "quote": "Competitors include but are not limited to Amcor, Silgan, Aptar, 3M, and Sigma."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

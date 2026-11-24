@@ -1,0 +1,223 @@
+{
+  "root": {
+    "ticker": "PLXS",
+    "name": "プレクサス",
+    "cik": 785786,
+    "name_en": "Plexus"
+  },
+  "rows": [
+    {
+      "ja": "製造受託の顧客(相手の資料に記載)",
+      "en": "EMS customers (named in their filings)",
+      "above": true
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "BHE",
+    "KE",
+    "CLS"
+  ],
+  "companies": [
+    {
+      "id": "HLIT",
+      "ticker": "HLIT",
+      "name": "ハーモニック",
+      "name_en": "Harmonic",
+      "sub": "映像配信・通信機器",
+      "sub_en": "Video & broadband equipment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2003年からPlexusが主な製造委託先で、委託品の大半を担う",
+          "text_en": "Plexus has been its primary contract manufacturer since 2003, making most of what it buys from contract manufacturers",
+          "source": {
+            "label": "Harmonic 10-K(2025年提出)",
+            "label_en": "Harmonic 10-K (filed 2025-02)",
+            "url": "https://www.sec.gov/Archives/edgar/data/851310/000085131025000021/hlit-20241231.htm",
+            "level": "official",
+            "date": "2025-02-14",
+            "quote": "In 2003, we entered into an agreement with Plexus Services Corp. (\"Plexus\") to act as our primary contract manufacturer."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PI",
+      "ticker": "PI",
+      "name": "インピンジ",
+      "name_en": "Impinj",
+      "sub": "RFID",
+      "sub_en": "RFID",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Plexusが2005年からアジアで読み取り機などを製造",
+          "text_en": "Plexus has made its readers and gateways in Asia since 2005",
+          "source": {
+            "label": "Impinj 10-K(2025年提出)",
+            "label_en": "Impinj 10-K (filed 2025-02)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1114995/000095017025017077/pi-20241231.htm",
+            "level": "official",
+            "date": "2025-02-10",
+            "quote": "Plexus Corp., or Plexus, manufactures our readers and gateways in Asia and has been our supplier since 2005."
+          }
+        }
+      ]
+    },
+    {
+      "id": "EVLV",
+      "ticker": "EVLV",
+      "name": "エボルブ・テクノロジーズ",
+      "name_en": "Evolv Technologies",
+      "sub": "AIセキュリティ検査",
+      "sub_en": "AI security screening",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "新たな製造委託先としてPlexusと契約",
+          "text_en": "Signed an agreement with Plexus as its new contract manufacturer",
+          "source": {
+            "label": "Evolv Technologies 10-Q(2025年11月)",
+            "label_en": "Evolv Technologies 10-Q (2025-11)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1805385/000180538525000017/evlv-20250930.htm",
+            "level": "official",
+            "date": "2025-11-13",
+            "quote": "the recently executed agreement with the Company's new contract manufacturer, Plexus"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BLZ",
+      "ticker": "BLZ",
+      "name": "ブレイズ",
+      "name_en": "Blaize",
+      "sub": "AI半導体",
+      "sub_en": "AI chips",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "基板実装・最終組立・試験をPlexusに委託",
+          "text_en": "Uses Plexus for board assembly, final assembly and testing",
+          "source": {
+            "label": "Blaize 10-K(2026年提出)",
+            "label_en": "Blaize 10-K (filed 2026-03)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1871638/000187163826000011/blz-20251231.htm",
+            "level": "official",
+            "date": "2026-03-24",
+            "quote": "In addition to performing printed circuit board assembly, final assembly, and functional testing for our products, Plexus procures raw material components"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BSGM",
+      "ticker": "BSGM",
+      "name": "バイオシグ・テクノロジーズ",
+      "name_en": "BioSig Technologies",
+      "sub": "心臓電気生理の医療機器",
+      "sub_en": "Cardiac electrophysiology devices",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "PURE EPシステムの製造パートナーがPlexus",
+          "text_en": "Plexus is its manufacturing partner for the PURE EP System",
+          "source": {
+            "label": "BioSig Technologies 上場届出書(S-1/A)(2024年7月)",
+            "label_en": "BioSig Technologies registration statement (S-1/A) (2024-07)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1530766/000149315224028857/forms-1a.htm",
+            "level": "official",
+            "date": "2024-07-24",
+            "quote": "Plexus Corp is our manufacturing partner for the complete PURE EP System."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BHE",
+      "ticker": "BHE",
+      "name": "ベンチマーク・エレクトロニクス",
+      "name_en": "Benchmark Electronics",
+      "sub": "電子機器の製造受託",
+      "sub_en": "Electronics manufacturing services",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Benchmarkが10-Kで、競合としてPlexusを挙げる",
+          "text_en": "Benchmark names Plexus among its competitors",
+          "source": {
+            "label": "Benchmark Electronics 10-K(2025年提出)",
+            "label_en": "Benchmark Electronics 10-K (filed 2025-02)",
+            "url": "https://www.sec.gov/Archives/edgar/data/863436/000095017025025644/bhe-20241231.htm",
+            "level": "official",
+            "date": "2025-02-24",
+            "quote": "Our competitors include Celestica Inc., Flex Ltd., Jabil Inc., Plexus Corp, Sanmina Corporation and Kimball Electronics Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "KE",
+      "ticker": "KE",
+      "name": "キンボール・エレクトロニクス",
+      "name_en": "Kimball Electronics",
+      "sub": "電子機器の製造受託",
+      "sub_en": "Electronics manufacturing services",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Kimballが10-Kで、競合のEMS企業としてPlexusを挙げる",
+          "text_en": "Kimball names Plexus among competing EMS companies",
+          "source": {
+            "label": "Kimball Electronics 10-K(2026年提出)",
+            "label_en": "Kimball Electronics 10-K (filed 2026-08)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1606757/000160675726000032/ke-20260630.htm",
+            "level": "official",
+            "date": "2026-08-19",
+            "quote": "Our competition includes EMS companies such as Benchmark Electronics, Inc., Flex Ltd., Jabil Inc., Plexus Corp., and Sanmina Corporation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CLS",
+      "ticker": "CLS",
+      "name": "セレスティカ",
+      "name_en": "Celestica",
+      "sub": "電子機器の製造受託",
+      "sub_en": "Electronics manufacturing services",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Celesticaの雇用契約で、競合企業の一社としてPlexusを挙げる",
+          "text_en": "A Celestica employment agreement lists Plexus among competitors",
+          "source": {
+            "label": "Celestica 10-K(2025年提出)",
+            "label_en": "Celestica 10-K (filed 2025-03)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1030894/000103089425000014/exhibit1022024.htm",
+            "level": "official",
+            "date": "2025-03-03",
+            "quote": "including but not limited to Flex Ltd., Benchmark Electronics, Plexus, Sanmina-SCI, Fabrinet and Jabil Circuits."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
