@@ -1,0 +1,286 @@
+{
+  "root": {
+    "ticker": "CLS",
+    "name": "セレスティカ",
+    "cik": 1030894,
+    "name_en": "Celestica"
+  },
+  "rows": [
+    {
+      "ja": "主な顧客(通信・クラウド部門)",
+      "en": "Main customers (connectivity & cloud)"
+    },
+    {
+      "ja": "主な顧客(先端技術部門)",
+      "en": "Main customers (advanced technology)"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン",
+      "name_en": "Amazon",
+      "sub": "EC・クラウド",
+      "sub_en": "E-commerce & cloud",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "通信・クラウド(CCS)部門の顧客",
+          "text_en": "Customer of its Connectivity & Cloud Solutions segment",
+          "source": {
+            "label": "Celestica 10-K(2025年度)",
+            "label_en": "Celestica 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1030894/000103089426000011/cls-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our CCS segment customers include Amazon Fulfillment Services, Inc., Meta Platforms, Inc., Google Inc., Ciena Corporation, Dell Technologies, Hewlett-Packard Enterprise, and IBM Corporation, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "META",
+      "ticker": "META",
+      "name": "メタ・プラットフォームズ",
+      "name_en": "Meta Platforms",
+      "sub": "SNS・AI",
+      "sub_en": "Social media & AI",
+      "sub_short": "SNS",
+      "sub_short_en": "Social",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "通信・クラウド(CCS)部門の顧客",
+          "text_en": "Customer of its Connectivity & Cloud Solutions segment",
+          "source": {
+            "label": "Celestica 10-K(2025年度)",
+            "label_en": "Celestica 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1030894/000103089426000011/cls-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our CCS segment customers include Amazon Fulfillment Services, Inc., Meta Platforms, Inc., Google Inc., Ciena Corporation, Dell Technologies, Hewlett-Packard Enterprise, and IBM Corporation, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GOOGL",
+      "ticker": "GOOGL",
+      "name": "アルファベット(Google)",
+      "name_en": "Google",
+      "sub": "検索・クラウド",
+      "sub_en": "Search & cloud",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "通信・クラウド(CCS)部門の顧客",
+          "text_en": "Customer of its Connectivity & Cloud Solutions segment",
+          "source": {
+            "label": "Celestica 10-K(2025年度)",
+            "label_en": "Celestica 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1030894/000103089426000011/cls-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our CCS segment customers include Amazon Fulfillment Services, Inc., Meta Platforms, Inc., Google Inc., Ciena Corporation, Dell Technologies, Hewlett-Packard Enterprise, and IBM Corporation, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CIEN",
+      "ticker": "CIEN",
+      "name": "シエナ",
+      "name_en": "Ciena",
+      "sub": "光通信機器",
+      "sub_en": "Optical networking",
+      "sub_short": "光通信",
+      "sub_short_en": "Optics",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "通信・クラウド(CCS)部門の顧客",
+          "text_en": "Customer of its Connectivity & Cloud Solutions segment",
+          "source": {
+            "label": "Celestica 10-K(2025年度)",
+            "label_en": "Celestica 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1030894/000103089426000011/cls-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our CCS segment customers include Amazon Fulfillment Services, Inc., Meta Platforms, Inc., Google Inc., Ciena Corporation, Dell Technologies, Hewlett-Packard Enterprise, and IBM Corporation, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DELL",
+      "ticker": "DELL",
+      "name": "デル・テクノロジーズ",
+      "name_en": "Dell Technologies",
+      "sub": "PC・サーバー",
+      "sub_en": "PCs & servers",
+      "sub_short": "PC",
+      "sub_short_en": "PCs",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "通信・クラウド(CCS)部門の顧客",
+          "text_en": "Customer of its Connectivity & Cloud Solutions segment",
+          "source": {
+            "label": "Celestica 10-K(2025年度)",
+            "label_en": "Celestica 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1030894/000103089426000011/cls-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our CCS segment customers include Amazon Fulfillment Services, Inc., Meta Platforms, Inc., Google Inc., Ciena Corporation, Dell Technologies, Hewlett-Packard Enterprise, and IBM Corporation, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HPE",
+      "ticker": "HPE",
+      "name": "ヒューレット・パッカード・エンタープライズ",
+      "name_en": "Hewlett Packard Enterprise",
+      "sub": "サーバー・ネットワーク",
+      "sub_en": "Servers & networking",
+      "sub_short": "IT基盤",
+      "sub_short_en": "IT infra",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "通信・クラウド(CCS)部門の顧客",
+          "text_en": "Customer of its Connectivity & Cloud Solutions segment",
+          "source": {
+            "label": "Celestica 10-K(2025年度)",
+            "label_en": "Celestica 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1030894/000103089426000011/cls-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our CCS segment customers include Amazon Fulfillment Services, Inc., Meta Platforms, Inc., Google Inc., Ciena Corporation, Dell Technologies, Hewlett-Packard Enterprise, and IBM Corporation, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "IBM",
+      "ticker": "IBM",
+      "name": "IBM",
+      "name_en": "IBM",
+      "sub": "IT・クラウド",
+      "sub_en": "IT & cloud",
+      "sub_short": "IT",
+      "sub_short_en": "IT",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "通信・クラウド(CCS)部門の顧客",
+          "text_en": "Customer of its Connectivity & Cloud Solutions segment",
+          "source": {
+            "label": "Celestica 10-K(2025年度)",
+            "label_en": "Celestica 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1030894/000103089426000011/cls-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our CCS segment customers include Amazon Fulfillment Services, Inc., Meta Platforms, Inc., Google Inc., Ciena Corporation, Dell Technologies, Hewlett-Packard Enterprise, and IBM Corporation, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMAT",
+      "ticker": "AMAT",
+      "name": "アプライド・マテリアルズ",
+      "name_en": "Applied Materials",
+      "sub": "半導体製造装置",
+      "sub_en": "Chip equipment",
+      "sub_short": "製造装置",
+      "sub_short_en": "Chip tools",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "先端技術(ATS)部門の顧客",
+          "text_en": "Customer of its Advanced Technology Solutions segment",
+          "source": {
+            "label": "Celestica 10-K(2025年度)",
+            "label_en": "Celestica 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1030894/000103089426000011/cls-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our ATS segment customers include Applied Materials, Inc., LAM Research and Honeywell Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LRCX",
+      "ticker": "LRCX",
+      "name": "ラムリサーチ",
+      "name_en": "Lam Research",
+      "sub": "半導体製造装置",
+      "sub_en": "Chip equipment",
+      "sub_short": "製造装置",
+      "sub_short_en": "Chip tools",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "先端技術(ATS)部門の顧客",
+          "text_en": "Customer of its Advanced Technology Solutions segment",
+          "source": {
+            "label": "Celestica 10-K(2025年度)",
+            "label_en": "Celestica 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1030894/000103089426000011/cls-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our ATS segment customers include Applied Materials, Inc., LAM Research and Honeywell Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HON",
+      "ticker": "HON",
+      "name": "ハネウェル",
+      "name_en": "Honeywell",
+      "sub": "産業・航空",
+      "sub_en": "Industrials & aerospace",
+      "sub_short": "産業",
+      "sub_short_en": "Industrial",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "先端技術(ATS)部門の顧客",
+          "text_en": "Customer of its Advanced Technology Solutions segment",
+          "source": {
+            "label": "Celestica 10-K(2025年度)",
+            "label_en": "Celestica 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1030894/000103089426000011/cls-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our ATS segment customers include Applied Materials, Inc., LAM Research and Honeywell Inc."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,234 @@
+{
+  "root": {
+    "ticker": "LCII",
+    "name": "LCIインダストリーズ",
+    "cik": 763744,
+    "name_en": "LCI Industries"
+  },
+  "rows": [
+    {
+      "ja": "主な顧客(RVメーカー)",
+      "en": "Main customers (RV makers)"
+    },
+    {
+      "ja": "主な顧客(船・住宅・特殊車両など)",
+      "en": "Main customers (marine, housing & more)"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "BRK",
+      "ticker": "BRK.B",
+      "name": "バークシャー・ハサウェイ",
+      "name_en": "Berkshire Hathaway",
+      "sub": "複合企業",
+      "sub_en": "Conglomerate",
+      "sub_short": "複合企業",
+      "sub_short_en": "Holding",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "傘下Forest RiverとClayton Homesで売上の18%(最大の顧客)",
+          "text_en": "Largest customer via Forest River and Clayton Homes (18% of net sales)",
+          "source": {
+            "label": "LCI Industries 10-K(2025年度)",
+            "label_en": "LCI Industries 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/763744/000076374426000011/lcii-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Berkshire Hathaway Inc. (through its subsidiaries Forest River, Inc. and Clayton Homes, Inc.), a customer of both segments, accounted for 18 percent, 18 percent, and 15 percent of our consolidated net sales"
+          }
+        }
+      ]
+    },
+    {
+      "id": "THO",
+      "ticker": "THO",
+      "name": "ソー・インダストリーズ",
+      "name_en": "Thor Industries",
+      "sub": "RVメーカー",
+      "sub_en": "RV maker",
+      "sub_short": "RV",
+      "sub_short_en": "RVs",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "売上の15%を占める顧客",
+          "text_en": "Customer making up 15% of net sales",
+          "source": {
+            "label": "LCI Industries 10-K(2025年度)",
+            "label_en": "LCI Industries 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/763744/000076374426000011/lcii-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Thor Industries, Inc. (\"Thor\"), a customer of both segments, accounted for 15 percent, 16 percent, and 16 percent of our consolidated net sales"
+          }
+        }
+      ]
+    },
+    {
+      "id": "WGO",
+      "ticker": "WGO",
+      "name": "ウィネベーゴ",
+      "name_en": "Winnebago Industries",
+      "sub": "RVメーカー",
+      "sub_en": "RV maker",
+      "sub_short": "RV",
+      "sub_short_en": "RVs",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "RV部門の主要顧客",
+          "text_en": "Major RV customer",
+          "source": {
+            "label": "LCI Industries 10-K(2025年度)",
+            "label_en": "LCI Industries 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/763744/000076374426000011/lcii-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Major customers include Thor Industries, Inc. (symbol: THO), Forest River, Inc. (a Berkshire Hathaway company, symbol: BRKA), and Winnebago Industries (symbol: WGO), as well as other RV OEMs."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BC",
+      "ticker": "BC",
+      "name": "ブランズウィック",
+      "name_en": "Brunswick",
+      "sub": "ボート・船外機",
+      "sub_en": "Boats & engines",
+      "sub_short": "ボート",
+      "sub_short_en": "Boats",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "隣接産業(船・住宅など)の主要顧客",
+          "text_en": "Major customer in adjacent industries",
+          "source": {
+            "label": "LCI Industries 10-K(2025年度)",
+            "label_en": "LCI Industries 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/763744/000076374426000011/lcii-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Major customers include Brunswick Corporation (symbol: BC), Polaris Inc. (symbol: PII), Blue Bird Corporation (symbol: BLBD), Skyline Champion Corporation (symbol: SKY), and Cavco Industries, Inc. (symbol: CVCO)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PII",
+      "ticker": "PII",
+      "name": "ポラリス",
+      "name_en": "Polaris",
+      "sub": "パワースポーツ",
+      "sub_en": "Powersports",
+      "sub_short": "ATV",
+      "sub_short_en": "ATVs",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "隣接産業(船・住宅など)の主要顧客",
+          "text_en": "Major customer in adjacent industries",
+          "source": {
+            "label": "LCI Industries 10-K(2025年度)",
+            "label_en": "LCI Industries 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/763744/000076374426000011/lcii-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Major customers include Brunswick Corporation (symbol: BC), Polaris Inc. (symbol: PII), Blue Bird Corporation (symbol: BLBD), Skyline Champion Corporation (symbol: SKY), and Cavco Industries, Inc. (symbol: CVCO)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BLBD",
+      "ticker": "BLBD",
+      "name": "ブルーバード",
+      "name_en": "Blue Bird",
+      "sub": "スクールバス",
+      "sub_en": "School buses",
+      "sub_short": "バス",
+      "sub_short_en": "Buses",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "隣接産業(船・住宅など)の主要顧客",
+          "text_en": "Major customer in adjacent industries",
+          "source": {
+            "label": "LCI Industries 10-K(2025年度)",
+            "label_en": "LCI Industries 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/763744/000076374426000011/lcii-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Major customers include Brunswick Corporation (symbol: BC), Polaris Inc. (symbol: PII), Blue Bird Corporation (symbol: BLBD), Skyline Champion Corporation (symbol: SKY), and Cavco Industries, Inc. (symbol: CVCO)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SKY",
+      "ticker": "SKY",
+      "name": "スカイライン・チャンピオン",
+      "name_en": "Skyline Champion",
+      "sub": "工場生産住宅",
+      "sub_en": "Factory-built homes",
+      "sub_short": "住宅製造",
+      "sub_short_en": "Homes",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "隣接産業(船・住宅など)の主要顧客",
+          "text_en": "Major customer in adjacent industries",
+          "source": {
+            "label": "LCI Industries 10-K(2025年度)",
+            "label_en": "LCI Industries 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/763744/000076374426000011/lcii-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Major customers include Brunswick Corporation (symbol: BC), Polaris Inc. (symbol: PII), Blue Bird Corporation (symbol: BLBD), Skyline Champion Corporation (symbol: SKY), and Cavco Industries, Inc. (symbol: CVCO)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CVCO",
+      "ticker": "CVCO",
+      "name": "キャブコ・インダストリーズ",
+      "name_en": "Cavco Industries",
+      "sub": "工場生産住宅",
+      "sub_en": "Factory-built homes",
+      "sub_short": "住宅製造",
+      "sub_short_en": "Homes",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "隣接産業(船・住宅など)の主要顧客",
+          "text_en": "Major customer in adjacent industries",
+          "source": {
+            "label": "LCI Industries 10-K(2025年度)",
+            "label_en": "LCI Industries 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/763744/000076374426000011/lcii-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Major customers include Brunswick Corporation (symbol: BC), Polaris Inc. (symbol: PII), Blue Bird Corporation (symbol: BLBD), Skyline Champion Corporation (symbol: SKY), and Cavco Industries, Inc. (symbol: CVCO)."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
