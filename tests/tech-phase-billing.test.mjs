@@ -88,7 +88,7 @@ test('parallel reads share token retrieval and bounded transaction range',async(
 async function database(work) {
  const db=new PGlite();
  try {
-  await db.exec(readFileSync(new URL('../db/tech-phase/001_billing_sandbox.sql',import.meta.url),'utf8'));
+  await db.exec(readFileSync(new URL('../db/tech-phase/001_billing_sandbox.sql',import.meta.url),'utf8'));await db.exec(readFileSync(new URL('../db/tech-phase/010_terms_consent.sql',import.meta.url),'utf8'));
   const pool={query:(...args)=>db.query(...args),connect:async()=>({query:(...args)=>db.query(...args),release(){}})};
   await work(billingStore(pool),db);
  } finally {await db.close();}
@@ -99,7 +99,7 @@ test('durable checkout resumes after response loss; another member cannot cancel
   get:async()=>({...remote(local),status:providerStatus}),cancel:async()=>{cancels++;providerStatus='CANCELLED';throw Error('response lost');}};
  const svc=checkoutService({store,paypal,termsVersion:'sandbox-v1'});
  await assert.rejects(svc.start('user_a','JPY','old'),/TERMS_REQUIRED/);
- const first=await svc.start('user_a','JPY','sandbox-v1');await svc.start('user_a','JPY','sandbox-v1');assert.equal(creates,1);
+ const first=await svc.start('user_a','JPY','sandbox-v1','month',CONSENT);await svc.start('user_a','JPY','sandbox-v1','month',CONSENT);assert.equal(creates,1);
  await assert.rejects(svc.cancel('user_b',first.id),/NOT_FOUND/);assert.equal(cancels,0);
  await assert.rejects(svc.cancel('user_a',first.id),/response lost/);
  assert.equal((await svc.cancel('user_a',first.id)).status,'cancelled');assert.equal(cancels,1);
@@ -108,7 +108,7 @@ test('durable checkout resumes after response loss; another member cannot cancel
 test('JPY and USD cancellation recover a local save failure without repeating provider cancellation',()=>database(async(store,db)=>{
  for(const currency of ['JPY','USD'])for(const initialState of ['ACTIVE','SUSPENDED']) {
   const user=`user_${currency}_${initialState}`;
-  const row=await store.reserve(user,currency,'sandbox-v1');
+  const row=await store.reserve(user,currency,'sandbox-v1','month',CONSENT);
   const providerId=`I-${currency}${initialState}`;
   await store.attach(user,row.id,providerId);await store.providerState(user,row.id,initialState);
   const transactionId=`TX-${currency}-${initialState}`;
@@ -145,11 +145,11 @@ test('JPY and USD checkout reuse the durable key after provider response loss or
    return providerRows.get(request.id);
   }};
   const svc=checkoutService({store:wrapped,paypal,termsVersion:'sandbox-v1'});
-  await assert.rejects(svc.start(user,currency,'sandbox-v1'),/response lost|database unavailable/);
+  await assert.rejects(svc.start(user,currency,'sandbox-v1','month',CONSENT),/response lost|database unavailable/);
   const pending=(await db.query('SELECT * FROM tech_phase_billing_sandbox.subscriptions WHERE user_id=$1',[user])).rows;
   assert.equal(pending.length,1);assert.equal(pending[0].paypal_id,null);
   assert.equal(pending[0].state,'creating');
-  const resumed=await svc.start(user,currency,'sandbox-v1');
+  const resumed=await svc.start(user,currency,'sandbox-v1','month',CONSENT);
   assert.equal(resumed.id,pending[0].id);
   assert.deepEqual(requests,[{id:resumed.id,currency,period:'month'},{id:resumed.id,currency,period:'month'}]);
   assert.equal(providerRows.size,1);assert.equal(attachCalls,failure==='local-attach'?2:1);
@@ -159,9 +159,9 @@ test('JPY and USD checkout reuse the durable key after provider response loss or
  assert.equal((await db.query('SELECT count(*)::int AS n FROM tech_phase_billing_sandbox.payments')).rows[0].n,0);
 }));
 test('ledger deduplicates renewals and rolls back conflicts, cancellation retains payments',async()=>database(async(store,db)=>{
- const row=await store.reserve('user_a','USD','sandbox-v1');
- assert.equal((await store.reserve('user_a','USD','sandbox-v1')).id,row.id);
- await assert.rejects(store.reserve('user_a','JPY','sandbox-v1'),/EXISTING_SUBSCRIPTION/);
+ const row=await store.reserve('user_a','USD','sandbox-v1','month',CONSENT);
+ assert.equal((await store.reserve('user_a','USD','sandbox-v1','month',CONSENT)).id,row.id);
+ await assert.rejects(store.reserve('user_a','JPY','sandbox-v1','month',CONSENT),/EXISTING_SUBSCRIPTION/);
  await store.attach('user_a',row.id,sid);
  const payment={eventId:'WH-1',eventType:'PAYMENT.SALE.COMPLETED',id:row.id,transactionId:'TX-1',currency:'USD',minor:2000,paidAt:'2026-10-20T00:00:00Z'};
  assert.equal(await store.recordPayment(payment),true);assert.equal(await store.recordPayment(payment),false);
@@ -175,13 +175,15 @@ test('ledger deduplicates renewals and rolls back conflicts, cancellation retain
  assert.equal((await db.query('SELECT count(*)::int AS n FROM tech_phase_billing_sandbox.events')).rows[0].n,2);
 }));
 test('uncertain creation older than provider idempotency window requires reconciliation',async()=>database(async(store,db)=>{
- const row=await store.reserve('user_a','JPY','sandbox-v1');
+ const row=await store.reserve('user_a','JPY','sandbox-v1','month',CONSENT);
  await db.query("UPDATE tech_phase_billing_sandbox.subscriptions SET created_at='2020-01-01Z' WHERE id=$1",[row.id]);
  const svc=checkoutService({store,paypal:{create(){throw Error('must not create');}},termsVersion:'sandbox-v1'});
- await assert.rejects(svc.start('user_a','JPY','sandbox-v1'),/RECONCILIATION_REQUIRED/);
+ await assert.rejects(svc.start('user_a','JPY','sandbox-v1','month',CONSENT),/RECONCILIATION_REQUIRED/);
 }));
 
 import { sandboxDatabaseConfig } from '../services/tech-phase-billing/database-config.mjs';
+// The consent tick time every checkout carries (lawyer review, Nov 24).
+const CONSENT = '2025-01-01T00:00:00.000Z';
 test('billing DB configuration requires a dedicated Sandbox database and writer',()=>{
  const key='TECH_PHASE_BILLING_SANDBOX_DATABASE_URL';
  const config={TECH_PHASE_PAYPAL_ENV:'sandbox',[key]:'postgresql://tech_phase_billing_sandbox_writer:fixture@db.example.org/tech_phase_billing_sandbox'};

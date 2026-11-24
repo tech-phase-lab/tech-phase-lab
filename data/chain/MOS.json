@@ -1,0 +1,187 @@
+{
+  "root": {
+    "ticker": "MOS",
+    "name": "モザイク",
+    "cik": 1285785,
+    "name_en": "Mosaic"
+  },
+  "rows": [
+    {
+      "ja": "出資先・販売の合弁・事業の買収元",
+      "en": "Holdings, sales venture & business origin",
+      "above": true
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "ICL",
+    "SQM",
+    "GRO"
+  ],
+  "companies": [
+    {
+      "id": "Maaden",
+      "ticker": "Ma'aden",
+      "name": "マアデン",
+      "name_en": "Ma'aden",
+      "sub": "資源(サウジ)",
+      "sub_en": "Mining (Saudi Arabia)",
+      "sub_short": "資源",
+      "sub_short_en": "Mining",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "サウジの合弁持分25%をMa'aden株と交換し、株主に",
+          "text_en": "Swapped its 25% stake in a Saudi phosphate venture for Ma'aden shares",
+          "source": {
+            "label": "Mosaic 10-K(2025年度)",
+            "label_en": "Mosaic 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1285785/000128578526000017/mos-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "On April 29, 2024, Saudi Arabian Mining Company (\" Ma'aden \") and Mosaic entered into a Share Purchase and Subscription Agreement to exchange our 25 % ownership of the Ma'aden Wa'ad al Shamal Phosphate Company for 111,012,433 shares of Ma'aden."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Canpotex",
+      "ticker": "Canpotex",
+      "name": "カンポテックス",
+      "name_en": "Canpotex",
+      "sub": "カリ輸出会社",
+      "sub_en": "Potash export company",
+      "sub_short": "カリ輸出",
+      "sub_short_en": "Potash",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "北米以外へのカリ販売はCanpotex経由",
+          "text_en": "Sells potash outside the U.S. and Canada through Canpotex",
+          "source": {
+            "label": "Mosaic 10-K(2025年度)",
+            "label_en": "Mosaic 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1285785/000128578526000017/mos-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our sales of potash products outside of the U.S. and Canada are made through Canpotex."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Cargill",
+      "ticker": "Cargill",
+      "name": "カーギル",
+      "name_en": "Cargill",
+      "sub": "穀物・食品",
+      "sub_en": "Agribusiness",
+      "sub_short": "穀物",
+      "sub_short_en": "Farming",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2004年にCargillの肥料事業とIMCが統合して誕生",
+          "text_en": "Formed in 2004 by combining IMC with Cargill's crop nutrient business",
+          "source": {
+            "label": "Mosaic 10-K(2025年度)",
+            "label_en": "Mosaic 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1285785/000128578526000017/mos-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "\" Cargill Crop Nutrition \" means the crop nutrient business we acquired from Cargill in the Combination"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ICL",
+      "ticker": "ICL",
+      "name": "ICLグループ",
+      "name_en": "ICL Group",
+      "sub": "特殊化学・肥料",
+      "sub_en": "Specialty minerals & fertilizers",
+      "sub_short": "特殊化学",
+      "sub_short_en": "Minerals",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ICLが20-Fで、国際カリ市場の主な競合に挙げる",
+          "text_en": "ICL names Mosaic among significant international potash competitors",
+          "source": {
+            "label": "ICL Group 20-F(2025年度)",
+            "label_en": "ICL Group 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/941221/000117891326000817/zk2634483.htm",
+            "level": "official",
+            "date": "2026-03-11",
+            "quote": "ICL's current significant competitors in the international potash market are Nutrien (Canada), Belaruskali (Belarus), Uralkali (Russia), Mosaic (Canada/Brazil)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SQM",
+      "ticker": "SQM",
+      "name": "SQM",
+      "name_en": "SQM",
+      "sub": "リチウム・肥料",
+      "sub_en": "Lithium & fertilizers",
+      "sub_short": "リチウム",
+      "sub_short_en": "Lithium",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "SQMが20-Fで、カリの主な競合に挙げる",
+          "text_en": "SQM names Mosaic among its main potash competitors",
+          "source": {
+            "label": "SQM 20-F(2025年度)",
+            "label_en": "SQM 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/909037/000090903726000023/sqm-20251231.htm",
+            "level": "official",
+            "date": "2026-04-22",
+            "quote": "Our main competitors are Uralkali, Belaruskali, Nutrien and Mosaic"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GRO",
+      "ticker": "GRO",
+      "name": "ブラジル・ポタッシュ",
+      "name_en": "Brazil Potash",
+      "sub": "カリ鉱山開発",
+      "sub_en": "Potash development",
+      "sub_short": "カリ開発",
+      "sub_short_en": "Potash",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Brazil Potashが20-Fで、ブラジルでの最大級の競合に挙げる",
+          "text_en": "Brazil Potash names Mosaic among its largest competitors in Brazil",
+          "source": {
+            "label": "Brazil Potash 20-F(2025年度)",
+            "label_en": "Brazil Potash 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1472326/000119312526119937/gro-20251231.htm",
+            "level": "official",
+            "date": "2026-03-23",
+            "quote": "Upon commencement of our operations, some of our largest competitors would include The Mosaic Company in Brazil"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -40,6 +40,12 @@ test('guest screen preserves order through create, payment, sign-in prompt, relo
   // First purchase only: no purchase-type choice and no renewal explanation (owner, Nov 2026).
   assert.equal(document.querySelector('select'),null);
   assert.ok(!/renewal eligibility|Sign in for annual renewal|Purchase type/.test(document.body.textContent));
+  // Lawyer review (Nov 24): without the consent tick nothing is sent and the red line shows under the button.
+  await click('Check price and continue');
+  assert.deepEqual(calls,[]);
+  assert.equal(document.querySelector('[data-consent-error]').textContent,'Please check the box to agree');
+  await React.act(async()=>{document.querySelector('[data-consent] input').click();});
+  assert.equal(document.querySelector('[data-consent-error]'),null);
   await click('Check price and continue');
   assert.deepEqual(calls,['/api/resolute/live-payments/guest/session','/api/resolute/live-payments/guest/orders']);
   assert.equal(new URL(window.location.href).searchParams.get('order'),id);
@@ -47,6 +53,8 @@ test('guest screen preserves order through create, payment, sign-in prompt, relo
   // The final pay button reads 「Agree to the Terms and buy」, with the two small lines right above it (owner pack, Nov 17).
   assert.ok(document.body.textContent.includes('Alerts run for one year. For renewal from year two ($39, PRO $29), we\'ll let you know when it\'s time to renew; only those who choose to renew are renewed.'));
   assert.ok(document.body.textContent.includes('No refunds for change of mind (except double charges or if a fault on our side stops it from working).'));
+  // The final button has its own consent line: still ticked on this screen, so the capture goes ahead.
+  assert.ok(document.querySelector('[data-consent] input').checked);
   await click('Agree to the Terms and buy');
   assert.equal(document.querySelector('[data-login-order]').getAttribute('data-login-order'),id);
   assert.equal(claimed,false);

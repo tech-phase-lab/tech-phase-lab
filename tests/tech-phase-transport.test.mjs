@@ -53,8 +53,8 @@ test('gateway verifies owner and origin then backend receives only trusted ident
   assert.equal(options.headers.get('x-tech-phase-user'),ownerId);
   return backend(new Request(url,options));
  }});
- const r=await gateway(request('create',{currency:'JPY',acceptedTerms:'sandbox-v1'},{cookie:'private','x-tech-phase-user':'victim',authorization:'Bearer forged'}),'create');
- assert.equal(r.status,200);assert.deepEqual((await r.json()).args,[ownerId,'JPY','sandbox-v1','month']);
+ const r=await gateway(request('create',{currency:'JPY',acceptedTerms:'sandbox-v1',consentAt:'2025-01-01T00:00:00.000Z'},{cookie:'private','x-tech-phase-user':'victim',authorization:'Bearer forged'}),'create');
+ assert.equal(r.status,200);assert.deepEqual((await r.json()).args,[ownerId,'JPY','sandbox-v1','month','2025-01-01T00:00:00.000Z']);
  user='other';assert.equal((await gateway(request('status'),'status')).status,403);
  user=null;assert.equal((await gateway(request('status'),'status')).status,401);user=ownerId;
  assert.equal((await gateway(request('create',{}, {origin:'https://evil.example'}),'create')).status,403);

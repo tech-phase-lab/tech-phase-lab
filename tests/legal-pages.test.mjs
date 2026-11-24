@@ -33,7 +33,7 @@ test("terms has 22 articles, privacy 10 sections, and the commerce notice one ta
   assert.equal(parseLegal(privacy).filter(b => b.kind === "heading").length, 10);
   const tables = parseLegal(commerce).filter(b => b.kind === "table");
   assert.deepEqual(parseLegal(commerce).filter(b => b.kind === "heading").map(b => b.text), ["Tech Phase Research", "RESOLUTE"]);
-  assert.deepEqual(tables.map(t => t.rows.length), [13, 13]);
+  assert.deepEqual(tables.map(t => t.rows.length), [14, 14]); // + 申し込みの撤回 (lawyer review, Nov 24)
 });
 
 test("the pages are public drafts: no sign-in, not indexed, at /terms and /privacy", () => {

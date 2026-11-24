@@ -117,6 +117,11 @@ test("the FREE menu has 「PRO機能体験」 with a gold-crown PRO tag; the pag
   const header = read("../app/research/site-header.tsx");
   assert.match(header, /\{!member && <div className=\{styles\.grp\}>\s*\{item\("\/research\/pro-experience", "crown"/);
   assert.match(header, /PRO機能体験/);
+  // Desktop sidebar (owner, Nov 24): the same FREE-only first row, above QUICK, with the phone menu's labels.
+  const sidebar = read("../app/research/home-sidebar.tsx");
+  assert.match(sidebar, /\{!member && <div className=\{styles\.group\}>\{row\(\{ key: "pro-experience", icon: icons\.gem, label: t\("PRO機能体験", "PRO feature tour"\), href: "\/research\/pro-experience"/);
+  assert.ok(sidebar.indexOf('"pro-experience"') < sidebar.indexOf(">QUICK<"));
+  assert.match(sidebar, /const member = ownerAccount \|\| plan === "pro"/);
   assert.match(read("../app/research/pro-experience/pro-tag.tsx"), /M3 8l4\.5 4L12 5l4\.5 7L21 8l-2 11H5z/);
   const detail = read("../app/research/pro-experience/[id]/page.tsx");
   assert.doesNotMatch(detail, /getMembership|redirect|plan/);

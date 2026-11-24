@@ -1,0 +1,183 @@
+{
+  "root": {
+    "ticker": "CNP",
+    "name": "センターポイント・エナジー",
+    "cik": 1130310,
+    "name_en": "CenterPoint Energy"
+  },
+  "rows": [
+    {
+      "ja": "燃料・工事の仕入れ先(上流)",
+      "en": "Fuel & construction suppliers (upstream)",
+      "above": true
+    },
+    {
+      "ja": "事業の売却先・保有株式",
+      "en": "Business buyer & shareholdings"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "PWR",
+      "ticker": "PWR",
+      "name": "クアンタ・サービシズ",
+      "name_en": "Quanta Services",
+      "sub": "電力インフラ工事",
+      "sub_en": "Utility infrastructure services",
+      "sub_short": "電力工事",
+      "sub_short_en": "Grid",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Quantaが10-Kで、代表的な顧客の一社に挙げる",
+          "text_en": "Quanta names CenterPoint among its representative customers",
+          "source": {
+            "label": "Quanta Services 10-K(2025年度)",
+            "label_en": "Quanta Services 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1050915/000105091526000006/pwr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Representative customers include: l American Electric Power Company, Inc. l National Grid plc l CenterPoint Energy, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HNRG",
+      "ticker": "HNRG",
+      "name": "ハラドール・エナジー",
+      "name_en": "Hallador Energy",
+      "sub": "石炭・発電",
+      "sub_en": "Coal & power",
+      "sub_short": "石炭",
+      "sub_short_en": "Coal",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Halladorが10-Kで、子会社Vectrenを主な石炭の顧客に挙げる",
+          "text_en": "Hallador names CenterPoint's Vectren among significant coal customers",
+          "source": {
+            "label": "Hallador Energy 10-K(2025年度)",
+            "label_en": "Hallador Energy 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/788965/000110465926027174/hnrg-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-03-12",
+            "quote": "Significant third-party customers in 2025 include Vectren Corporation, a wholly-owned subsidiary of CenterPoint Energy (NYSE: CNP)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "NFG",
+      "ticker": "NFG",
+      "name": "ナショナル・フューエル・ガス",
+      "name_en": "National Fuel Gas",
+      "sub": "ガス公益",
+      "sub_en": "Gas utility",
+      "sub_short": "ガス",
+      "sub_short_en": "Gas",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "オハイオのガス事業を26.2億ドルで売却する契約(2025年10月)",
+          "text_en": "Agreed to sell its Ohio gas utility to National Fuel for $2.62 billion (Oct 2025)",
+          "source": {
+            "label": "CenterPoint Energy 10-K(2025年度)",
+            "label_en": "CenterPoint Energy 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1130310/000113031026000008/cnp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "On October 20, 2025, CERC Corp. entered into the Ohio Securities Purchase Agreement to sell all of the issued and outstanding equity interests in CEOH to NFGC. The purchase price is $ 2.62 billion"
+          }
+        }
+      ]
+    },
+    {
+      "id": "T",
+      "ticker": "T",
+      "name": "AT&T",
+      "name_en": "AT&T",
+      "sub": "通信",
+      "sub_en": "Telecom",
+      "sub_short": "携帯通信",
+      "sub_short_en": "Carrier",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ZENS債の裏付けとしてAT&T株1,020万株を保有",
+          "text_en": "Holds 10.2 million AT&T shares backing its ZENS notes",
+          "source": {
+            "label": "CenterPoint Energy 10-K(2025年度)",
+            "label_en": "CenterPoint Energy 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1130310/000113031026000008/cnp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "CenterPoint Energy is exposed to equity market value risk through its ownership of 10.2 million shares of AT&T Common, 0.9 million shares of Charter Common and 2.5 million shares of WBD Common"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CHTR",
+      "ticker": "CHTR",
+      "name": "チャーター・コミュニケーションズ",
+      "name_en": "Charter Communications",
+      "sub": "ケーブル通信",
+      "sub_en": "Cable broadband",
+      "sub_short": "ケーブル",
+      "sub_short_en": "Cable",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ZENS債の裏付けとしてCharter株90万株を保有",
+          "text_en": "Holds 0.9 million Charter shares backing its ZENS notes",
+          "source": {
+            "label": "CenterPoint Energy 10-K(2025年度)",
+            "label_en": "CenterPoint Energy 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1130310/000113031026000008/cnp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "CenterPoint Energy is exposed to equity market value risk through its ownership of 10.2 million shares of AT&T Common, 0.9 million shares of Charter Common and 2.5 million shares of WBD Common"
+          }
+        }
+      ]
+    },
+    {
+      "id": "WBD",
+      "ticker": "WBD",
+      "name": "ワーナー・ブラザース・ディスカバリー",
+      "name_en": "Warner Bros. Discovery",
+      "sub": "メディア",
+      "sub_en": "Media",
+      "sub_short": "メディア",
+      "sub_short_en": "Media",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ZENS債の裏付けとしてWBD株250万株を保有",
+          "text_en": "Holds 2.5 million WBD shares backing its ZENS notes",
+          "source": {
+            "label": "CenterPoint Energy 10-K(2025年度)",
+            "label_en": "CenterPoint Energy 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1130310/000113031026000008/cnp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "CenterPoint Energy is exposed to equity market value risk through its ownership of 10.2 million shares of AT&T Common, 0.9 million shares of Charter Common and 2.5 million shares of WBD Common"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

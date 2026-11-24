@@ -26,7 +26,6 @@ function Buy({ price, small = false }: { price: ResolutePrice; small?: boolean }
  return <div className={s.buy}>
   <BuyButton language="en" shownValue={price.value} className={small ? `${s.cta} ${s.ctaSmall}` : s.cta}>Get RESOLUTE</BuyButton>
   <p className={s.guest}>No account needed to buy</p>
-  <p className={s.terms}>By continuing, you agree to the <Link href="/terms?lang=en" target="_blank" rel="noopener">Terms</Link></p>
  </div>;
 }
 

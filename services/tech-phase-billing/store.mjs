@@ -39,15 +39,20 @@ export function billingStore(pool, mode = 'sandbox') {
         subscription:row.id ? {id:row.id,currency:row.currency,period:row.minor===undefined ? undefined : periodOfMinor(row.currency,row.minor),state:row.state} : null,
         reviewRequired:row.review_required === true};
     },
-    async reserve(userId, currency, termsVersion, period = 'month') {
+    async reserve(userId, currency, termsVersion, period = 'month', consentAt) {
       const q = offer(currency, period);
       if (typeof userId !== 'string' || !userId || userId.length > 128 ||
-          typeof termsVersion !== 'string' || !termsVersion || termsVersion.length > 128) throw Error('INVALID_CHECKOUT');
+          typeof termsVersion !== 'string' || !termsVersion || termsVersion.length > 128 ||
+          typeof consentAt !== 'string' || !Number.isFinite(Date.parse(consentAt))) throw Error('INVALID_CHECKOUT');
       return transaction(async db => {
         // The partial unique index also protects different keys and concurrent requests.
-        await db.query(`INSERT INTO ${S}.subscriptions(id,user_id,currency,minor,terms_version)
-          VALUES ($1,$2,$3,$4,$5) ON CONFLICT (user_id) WHERE state NOT IN ('cancelled','expired') DO NOTHING`,
-          [randomUUID(),userId,q.currency,q.minor,termsVersion]);
+        // terms_consent_at needs db/tech-phase/010_terms_consent.sql applied first (scripts/tech-phase/apply-terms-consent.mjs).
+        await db.query(`INSERT INTO ${S}.subscriptions(id,user_id,currency,minor,terms_version,terms_consent_at)
+          VALUES ($1,$2,$3,$4,$5,$6) ON CONFLICT (user_id) WHERE state NOT IN ('cancelled','expired') DO NOTHING`,
+          [randomUUID(),userId,q.currency,q.minor,termsVersion,new Date(consentAt)]);
+        // Resuming an open checkout keeps its first consent; a row from before the column existed gets this one.
+        await db.query(`UPDATE ${S}.subscriptions SET terms_consent_at=$2 WHERE user_id=$1 AND state NOT IN ('cancelled','expired') AND terms_consent_at IS NULL`,
+          [userId,new Date(consentAt)]);
         const row = (await db.query(`SELECT * FROM ${S}.subscriptions WHERE user_id=$1 AND state NOT IN ('cancelled','expired')`,[userId])).rows[0];
         if (!row || row.currency !== currency || row.minor !== q.minor || row.terms_version !== termsVersion) throw Error('EXISTING_SUBSCRIPTION');
         return row;

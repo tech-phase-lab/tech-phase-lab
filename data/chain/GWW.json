@@ -1,0 +1,216 @@
+{
+  "root": {
+    "ticker": "GWW",
+    "name": "W.W.グレインジャー",
+    "cik": 277135,
+    "name_en": "W.W. Grainger"
+  },
+  "rows": [
+    {
+      "ja": "商品の仕入れ先(上流)",
+      "en": "Product suppliers (upstream)",
+      "above": true
+    },
+    {
+      "ja": "顧客・子会社",
+      "en": "Customers & subsidiaries"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "GPC",
+    "GlobalInd"
+  ],
+  "companies": [
+    {
+      "id": "NWL",
+      "ticker": "NWL",
+      "name": "ニューウェル・ブランズ",
+      "name_en": "Newell Brands",
+      "sub": "日用品・文具",
+      "sub_en": "Consumer goods",
+      "sub_short": "日用品",
+      "sub_short_en": "Consumer",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Newellが10-Kで、Graingerを上位10顧客の一社に挙げる",
+          "text_en": "Newell lists Grainger among its top-ten customers",
+          "source": {
+            "label": "Newell Brands 10-K(2025年度)",
+            "label_en": "Newell Brands 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/814453/000081445326000008/nwl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "The Company's top-ten customers in 2025 included (in alphabetical order): Amazon.com Inc., Costco Wholesale Corporation, Grainger Inc., Office Depot Inc., Staples Inc., Target Corporation, The Home Depot Inc., The Kroger Co., Uline Inc. and Walmart Inc. and subsidiaries."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LBRA",
+      "ticker": "LBRA",
+      "name": "1847ホールディングス",
+      "name_en": "1847 Holdings",
+      "sub": "持株会社",
+      "sub_en": "Holding company",
+      "sub_short": "持株会社",
+      "sub_short_en": "Holding",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "1847 Holdingsが10-Kで、Graingerを顧客の一社に挙げる",
+          "text_en": "1847 Holdings names Grainger among its customers",
+          "source": {
+            "label": "1847 Holdings 10-K(2025年度)",
+            "label_en": "1847 Holdings 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1599407/000121390026036917/ea0282883-10k_1847hold.htm",
+            "level": "official",
+            "date": "2026-03-31",
+            "quote": "We have a diverse customer base, including Amazon, AutoZone, Advance Auto Parts, CarQuest, Aries, das, Grainger, and FleetFarm."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GFF",
+      "ticker": "GFF",
+      "name": "グリフォン",
+      "name_en": "Griffon",
+      "sub": "住宅用品・ガレージドア",
+      "sub_en": "Home products & garage doors",
+      "sub_short": "住宅資材",
+      "sub_short_en": "Home",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Griffonが10-Kで、販売先の産業卸の一社に挙げる",
+          "text_en": "Griffon names Grainger among its industrial distributor customers",
+          "source": {
+            "label": "Griffon 10-K(2025年9月期)",
+            "label_en": "Griffon 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/50725/000162828025053242/gff-20250930.htm",
+            "level": "official",
+            "date": "2025-11-19",
+            "quote": "(3) industrial distributors, such as W.W. Grainger, Inc. and ORS Nasco;"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CETY",
+      "ticker": "CETY",
+      "name": "クリーン・エナジー・テクノロジーズ",
+      "name_en": "Clean Energy Technologies",
+      "sub": "排熱回収発電",
+      "sub_en": "Waste heat recovery",
+      "sub_short": "排熱発電",
+      "sub_short_en": "Heat",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "排熱回収事業の主な仕入れ先としてGraingerを挙げる",
+          "text_en": "Names Grainger a significant supplier to its waste heat recovery business",
+          "source": {
+            "label": "Clean Energy Technologies 10-K/A(2023年度)",
+            "label_en": "Clean Energy Technologies 10-K/A (FY2023)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1329606/000149315224024454/form10-ka.htm",
+            "level": "official",
+            "date": "2024-06-18",
+            "quote": "Our significant suppliers in the Waste Heat Recovery business include Powerhouse, Concise Instrument, and Grainger."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MonotaRO",
+      "ticker": "3064",
+      "name": "モノタロウ",
+      "name_en": "MonotaRO",
+      "sub": "工具・資材のネット通販",
+      "sub_en": "Online MRO supplies",
+      "sub_short": "工具通販",
+      "sub_short_en": "MRO",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Endless Assortment部門の日本のネット販売チャネル",
+          "text_en": "Its online channel in Japan within the Endless Assortment segment",
+          "source": {
+            "label": "W.W. Grainger 10-K(2025年度)",
+            "label_en": "W.W. Grainger 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/277135/000027713526000011/gww-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "The Endless Assortment segment includes the Company's Zoro Tools, Inc. (Zoro) and MonotaRO Co., Ltd. (MonotaRO) online channels which operate predominately in the U.S. and Japan, respectively."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GPC",
+      "ticker": "GPC",
+      "name": "ジェニュイン・パーツ",
+      "name_en": "Genuine Parts",
+      "sub": "自動車・産業部品",
+      "sub_en": "Auto & industrial parts",
+      "sub_short": "車部品",
+      "sub_short_en": "Car parts",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Genuine Partsが10-Kで、産業部品流通の競合として挙げる",
+          "text_en": "Genuine Parts names Grainger a competitor in industrial distribution",
+          "source": {
+            "label": "Genuine Parts 10-K(2025年度)",
+            "label_en": "Genuine Parts 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/40987/000004098726000003/gpc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "In industrial distribution, our main competitor is Applied Industrial Technologies, Inc., but we also compete against Fastenal Company, and W.W. Grainger, Inc, among many other smaller, regional competitors."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GlobalInd",
+      "ticker": "GIC",
+      "name": "グローバル・インダストリアル",
+      "name_en": "Global Industrial",
+      "sub": "産業用品通販",
+      "sub_en": "Industrial supplies",
+      "sub_short": "産業用品",
+      "sub_short_en": "MRO",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Global Industrialが10-Kで、大手MRO卸の競合として挙げる",
+          "text_en": "Global Industrial names Grainger among large MRO distributor competitors",
+          "source": {
+            "label": "Global Industrial 10-K(2025年度)",
+            "label_en": "Global Industrial 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/945114/000162828026012945/gic-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "We face competition from large diversified MRO distributors such as Uline Inc, Grainger Inc., MSC Industrial Direct Inc., Fastenal Inc., and other large retailers, including Amazon."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

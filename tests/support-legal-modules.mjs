@@ -10,15 +10,17 @@ function compile(path) {
   if (!cache.has(path)) {
     const out = ts.transpileModule(readFileSync(new URL(path, import.meta.url), "utf8"), { compilerOptions: { module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX, target: ts.ScriptTarget.ES2022 } }).outputText;
     const mod = { exports: {} };
-    new Function("require", "module", "exports", out)(id => id === "@/lib/legal/disclaimer" ? require("../lib/legal/disclaimer.ts") : require(id), mod, mod.exports);
+    new Function("require", "module", "exports", out)(id => id === "@/lib/legal/disclaimer" ? require("../lib/legal/disclaimer.ts") : id === "@/lib/legal/consent" ? require("../lib/legal/consent.ts") : require(id), mod, mod.exports);
     cache.set(path, mod.exports);
   }
   return cache.get(path);
 }
-/** The module for an import specifier ending in legal/agree-button or resolute/disclaimer (or ./disclaimer, ../disclaimer), else undefined. */
+/** The module for an import specifier ending in legal/agree-button, legal/consent-check or resolute/disclaimer (or ./disclaimer, ../disclaimer), else undefined. */
 export function legalModule(id) {
   if (/(^|\/)legal\/agree-button$/.test(id)) return compile("../app/legal/agree-button.tsx");
+  if (/(^|\/)legal\/consent-check$/.test(id)) return compile("../app/legal/consent-check.tsx");
   if (/(^|\/)resolute\/disclaimer$/.test(id) || id === "./disclaimer" || id === "../disclaimer") return compile("../app/resolute/disclaimer.tsx");
+  if (id === "@/lib/legal/consent") return require("../lib/legal/consent.ts");
   if (id === "@/lib/legal/disclaimer" || /(^|\/)lib\/legal\/disclaimer(\.ts)?$/.test(id)) return require("../lib/legal/disclaimer.ts");
   return undefined;
 }

@@ -16,6 +16,8 @@ import { renewalJob, renewalMessage, renewalDayStart, renewalDate, renewalPrice,
 import { OWNER_ACCOUNT_ID } from '../lib/membership/entitlements.ts';
 import { liveOrder } from '../lib/resolute/live-checkout.ts';
 import { legalModule } from './support-legal-modules.mjs';
+// The consent tick time every purchase request carries (lawyer review, Nov 24).
+const CONSENT = '2025-01-01T00:00:00.000Z';
 
 const read = path => readFileSync(new URL(path, import.meta.url), 'utf8');
 const MID = 'MERCHANT1234', DAY = 86400000;
@@ -76,8 +78,8 @@ async function buy(t, { flag = true, pro = false, user = 'user_buyer1', vault } 
   const users = new Map([[user, account(user, pro)]]);
   const getUser = async id => users.get(id) ?? account(id);
   const engine = paymentEngine({ store: l.store, paypal, environment: 'live', merchantId: MID, getUser, now, renewals: l.renewals, autoRenewal: () => flag });
-  const created = await engine.create(user, { kind: 'initial', language: 'ja', requestKey: randomUUID() });
-  const captured = await engine.capture(user, { orderId: created.orderId });
+  const created = await engine.create(user, { kind: 'initial', language: 'ja', requestKey: randomUUID(), consentAt: CONSENT });
+  const captured = await engine.capture(user,{orderId:created.orderId,consentAt:CONSENT});
   const mails = [];
   const mail = { send: async (key, to, m) => { mails.push({ key, to, ...m }); return 'mail-id'; } };
   const job = () => renewalJob({ store: l.store, renewals: l.renewals, paypal, merchantId: MID, getUser, mail, now, enabled: true })();
@@ -106,7 +108,7 @@ test('first purchase saves PayPal with consent; the renewal is charged once on t
   s.at(RENEWS - 7 * DAY); await s.job();
   assert.equal(s.mails.length, 1);
   assert.equal(s.mails[0].subject, 'RESOLUTE 通知機能の更新のお知らせ'); assert.equal(s.mails[0].to, 'buyer@example.com');
-  assert.equal(s.mails[0].text, '12月16日に、RESOLUTEの通知機能を1年分自動で更新します。\n更新料は5,980円で、ご登録のPayPalにてお支払いいただきます。\n停止をご希望の方は、更新日の前日までにアカウント画面からお手続きください。');
+  assert.equal(s.mails[0].text, '12月16日に、RESOLUTEの通知機能を1年分自動で更新します。\n更新料は5,980円で、ご登録のPayPalにてお支払いいただきます。\n停止をご希望の方は、更新日の前日までにアカウント画面からお手続きください。\n\n更新をやめたい人はこちらから手続きしてください\nhttps://techphase.app/research/account');
   assert.equal(s.paypal.charges, 0, 'no charge at notice time');
   // The day before the renewal day (JST): still nothing.
   s.at(renewalDayStart(new Date(RENEWS).toISOString()) - 60000); await s.job(); assert.equal(s.paypal.charges, 0);
@@ -135,7 +137,7 @@ test('PRO membership is read from server records at charge time: member price, w
   assert.equal(order.quote.priceClass, 'pro'); assert.equal(order.state, 'paid');
   // English buyers pay in USD: $39 / PRO $29 (same table as quote()).
   assert.equal(renewalMessage('upcoming_auto', 'en', new Date(RENEWS).toISOString(), '$29').text,
-    'Your RESOLUTE alerts will renew automatically for another year on December 16, 2027. The renewal fee of $29 will be charged to your PayPal account on file. To stop the renewal, please do so from your account page before December 16, 2027.');
+    'Your RESOLUTE alerts will renew automatically for another year on December 16, 2027. The renewal fee of $29 will be charged to your PayPal account on file. To stop the renewal, please do so from your account page before December 16, 2027.\n\nIf you\'d like to stop renewing, you can do it here:\nhttps://techphase.app/research/account?lang=en');
 });
 
 test('a lost answer is retried with the same PayPal-Request-Id; PayPal replays it and nothing is charged twice', async t => {
@@ -272,7 +274,7 @@ test('notices: the owner\'s wording word for word, date and price formats, email
   assert.equal(renewalDate(end, 'ja'), '12月16日'); assert.equal(renewalDate(end, 'en'), 'December 16, 2027');
   assert.equal(renewalDate('2027-12-15T15:00:00Z', 'ja'), '12月16日', 'JST date');
   assert.equal(renewalPrice({ currency: 'JPY', value: '5980' }), '5,980円'); assert.equal(renewalPrice({ currency: 'USD', value: '39.00' }), '$39');
-  assert.deepEqual(renewalMessage('upcoming_auto', 'ja', end, '5,980円'), { subject: 'RESOLUTE 通知機能の更新のお知らせ', text: '12月16日に、RESOLUTEの通知機能を1年分自動で更新します。\n更新料は5,980円で、ご登録のPayPalにてお支払いいただきます。\n停止をご希望の方は、更新日の前日までにアカウント画面からお手続きください。' });
+  assert.deepEqual(renewalMessage('upcoming_auto', 'ja', end, '5,980円'), { subject: 'RESOLUTE 通知機能の更新のお知らせ', text: '12月16日に、RESOLUTEの通知機能を1年分自動で更新します。\n更新料は5,980円で、ご登録のPayPalにてお支払いいただきます。\n停止をご希望の方は、更新日の前日までにアカウント画面からお手続きください。\n\n更新をやめたい人はこちらから手続きしてください\nhttps://techphase.app/research/account' });
   assert.deepEqual(renewalMessage('upcoming_manual', 'ja', end), { subject: 'RESOLUTE 通知機能の更新のお知らせ', text: '12月16日でRESOLUTEの通知機能のご利用期間が終わります。続けてご利用の方は、アカウント画面から更新のお手続きをお願いします。' });
   assert.deepEqual(renewalMessage('upcoming_manual', 'en', end), { subject: 'Your RESOLUTE alerts renewal', text: 'Your RESOLUTE alerts end on December 16, 2027. To keep using them, please renew from your account page.' });
   assert.throws(() => renewalMessage('upcoming_auto', 'ja', end));
@@ -292,14 +294,15 @@ test('notices: the owner\'s wording word for word, date and price formats, email
 
 test('screens: exactly one checkout line behind the server flag, the account toggle, and the proxy allows stopping while sales are closed', async () => {
   const live = read('../app/resolute/checkout/live-screen.tsx'), agree = read('../app/legal/agree-button.tsx');
-  assert.ok(agree.includes('ja: "1年後から自動で更新されます。いつでも止められます"'));
-  assert.ok(agree.includes('en: "Renews automatically after one year. You can stop it anytime."'));
+  // Lawyer review (Nov 24): the line also says how to stop and by when.
+  assert.ok(agree.includes('ja: "1年後から自動で更新。更新日の前日までアカウント画面で止められます"'));
+  assert.ok(agree.includes('en: "Renews automatically after one year. Stop it on your account page by the day before renewal."'));
   // The 「ご希望の方だけ更新します」 line is replaced (not added to) for an auto-renewal order; flag off = today's lines.
-  assert.match(live, /<CheckoutLines lines=\{resoluteCheckoutLines\(en,order\.autoRenewal===true\)\} \/>\n    <AgreeButton/);
+  assert.match(live, /<CheckoutLines lines=\{resoluteCheckoutLines\(en,order\.autoRenewal===true\)\} \/>\n    <ConsentCheck en=\{en\} consent=\{consent\} \/>\n    <AgreeButton/);
   const { resoluteCheckoutLines, RESOLUTE_CHECKOUT_LINES } = legalModule('../../legal/agree-button');
   assert.deepEqual(resoluteCheckoutLines(false, false), RESOLUTE_CHECKOUT_LINES.ja);
-  assert.deepEqual(resoluteCheckoutLines(false, true), ['1年後から自動で更新されます。いつでも止められます', RESOLUTE_CHECKOUT_LINES.ja[1]]);
-  assert.deepEqual(resoluteCheckoutLines(true, true), ['Renews automatically after one year. You can stop it anytime.', RESOLUTE_CHECKOUT_LINES.en[1]]);
+  assert.deepEqual(resoluteCheckoutLines(false, true), ['1年後から自動で更新。更新日の前日までアカウント画面で止められます', RESOLUTE_CHECKOUT_LINES.ja[1]]);
+  assert.deepEqual(resoluteCheckoutLines(true, true), ['Renews automatically after one year. Stop it on your account page by the day before renewal.', RESOLUTE_CHECKOUT_LINES.en[1]]);
   // Renew by hand from the account page: the existing 「通知サービスを更新」 button opens the renewal checkout (members only).
   assert.match(read('../app/research/account/account-view.tsx'), /"\/resolute\/checkout\?lang=ja&kind=renewal"[^\n]*通知サービスを更新/);
   assert.match(read('../app/resolute/checkout/page.tsx'), /renewal=\{params\.kind === "renewal" && !order\}/);

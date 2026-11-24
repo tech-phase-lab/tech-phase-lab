@@ -8,6 +8,8 @@ import { billingRequest, billingReturn, billingSummary, sandboxApproval, verifyB
 import styles from "./styles.module.css";
 import { formatDisplay, zoneLabel } from "@/lib/research/display-time";
 import AgreeButton, { CheckoutLines, PRO_CHECKOUT_LINE } from "../../../legal/agree-button";
+import { ConsentCheck, ConsentError, consentControls } from "../../../legal/consent-check";
+import { NO_CONSENT, type ConsentState } from "@/lib/legal/consent";
 
 const messages: Record<string, [string, string]> = {
   "identity-loading": ["ログイン状態を確認しています。", "Checking your sign-in status."],
@@ -25,7 +27,9 @@ export default function BillingScreen({mode="sandbox", preview=false}: {mode?: "
   const [ready, setReady] = useState(false);
   const [summary, setSummary] = useState<BillingSummary | null>(null);
   const [currency, setCurrency] = useState<"JPY" | "USD">("JPY");
-  const [agreed, setAgreed] = useState(false);
+  // The consent line right above the button (lawyer review, Nov 24): the button stays pressable; without the tick it shows the red line.
+  const [consentState, setConsentState] = useState<ConsentState>(NO_CONSENT);
+  const consent = consentControls(consentState, setConsentState);
   const [confirmCancel, setConfirmCancel] = useState<string | null>(null);
   const [busy, setBusy] = useState(true);
   const [error, setError] = useState("");
@@ -78,6 +82,8 @@ export default function BillingScreen({mode="sandbox", preview=false}: {mode?: "
   }, [refreshIdentity, load, preview]);
   async function act(action: "refresh" | "create" | "reconcile" | "cancel") {
     if (locked.current) return;
+    const consentAt = action === "create" && !preview ? consent.require() : null;
+    if (action === "create" && !preview && !consentAt) return;
     locked.current = true; setBusy(true); setError("");
     // Notices describe one attempt; a refresh must not retain an earlier
     // pending/success message beside the newly loaded durable contract state.
@@ -88,8 +94,8 @@ export default function BillingScreen({mode="sandbox", preview=false}: {mode?: "
       if (signal?.aborted) return;
       if (action === "create") {
         if (preview) return; // the review screen never starts a payment
-        if (!agreed || !ready || !salesReady) throw Error("billing-disabled");
-        const result = await billingRequest("create", { currency, period, acceptedTerms: mode === "live" ? "pro-live-v1" : "sandbox-v1" }, signal, mode);
+        if (!consentAt || !ready || !salesReady) throw Error("billing-disabled");
+        const result = await billingRequest("create", { currency, period, acceptedTerms: mode === "live" ? "pro-live-v1" : "sandbox-v1", consentAt }, signal, mode);
         if (signal?.aborted) return;
         if (result.approvalUrl) { window.location.assign(sandboxApproval(result.approvalUrl, mode)); return; }
         setNotice("check-payment");
@@ -162,13 +168,18 @@ export default function BillingScreen({mode="sandbox", preview=false}: {mode?: "
       {ready && !salesReady && <p role="status">{t("新規お申し込みの受付は停止中です。契約の確認と自動更新の停止は引き続き行えます。", "New subscriptions are closed. You can still manage your subscription and stop renewal.")}</p>}
       {ready && salesReady && summary && resumable && <fieldset disabled={busy}>
         <legend>{t("プラン", "Plan")}</legend>
-        <label>{t("期間", "Period")}<select value={period} disabled={Boolean(open)} onChange={e => { setPeriod(e.target.value as "month" | "year"); setAgreed(false); }}><option value="year">{t("年額", "Yearly")}</option><option value="month">{t("月額", "Monthly")}</option></select></label>
-        <label>{t("通貨", "Currency")}<select value={currency} disabled={Boolean(open)} onChange={e => { setCurrency(e.target.value as "JPY" | "USD"); setAgreed(false); }}><option value="JPY">JPY {period === "year" ? "29,800" : "2,980"} / {period === "year" ? t("年", "year") : t("月", "month")}</option><option value="USD">USD {period === "year" ? "200" : "20"} / {period === "year" ? t("年", "year") : t("月", "month")}</option></select></label>
-        <label className={styles.check}><input type="checkbox" checked={agreed} onChange={e => setAgreed(e.target.checked)} />{mode === "live" ? period === "year" ? t("選択した年額料金で毎年自動更新されることに同意します。自動更新はこの画面で停止できます。", "I agree to yearly renewal at the selected price. I can stop automatic renewal on this page.") : t("選択した月額料金で毎月自動更新されることに同意します。自動更新はこの画面で停止できます。", "I agree to monthly renewal at the selected price. I can stop automatic renewal on this page.") : t("Sandbox内で自動更新されるテスト契約に同意します。実際の請求はありません。", "I agree to a recurring Sandbox test subscription. There is no real charge.")}</label>
+        <label>{t("期間", "Period")}<select value={period} disabled={Boolean(open)} onChange={e => { setPeriod(e.target.value as "month" | "year"); consent.set(false); }}><option value="year">{t("年額", "Yearly")}</option><option value="month">{t("月額", "Monthly")}</option></select></label>
+        <label>{t("通貨", "Currency")}<select value={currency} disabled={Boolean(open)} onChange={e => { setCurrency(e.target.value as "JPY" | "USD"); consent.set(false); }}><option value="JPY">JPY {period === "year" ? "29,800" : "2,980"} / {period === "year" ? t("年", "year") : t("月", "month")}</option><option value="USD">USD {period === "year" ? "200" : "20"} / {period === "year" ? t("年", "year") : t("月", "month")}</option></select></label>
         {mode === "live" && !open ? <>
           <CheckoutLines lines={[ja ? PRO_CHECKOUT_LINE.ja : PRO_CHECKOUT_LINE.en]} />
-          <AgreeButton en={!ja} disabled={!agreed || busy || preview} onClick={() => void act("create")} />
-        </> : <button type="button" disabled={!agreed || busy || preview} onClick={() => void act("create")}>{open ? t("PayPalで手続きを再開", "Resume on PayPal") : t("PayPalでテスト購入", "Test checkout with PayPal")}</button>}
+          <ConsentCheck en={!ja} consent={consent} />
+          <AgreeButton en={!ja} disabled={busy || preview} onClick={() => void act("create")} />
+          <ConsentError en={!ja} consent={consent} />
+        </> : <>
+          <ConsentCheck en={!ja} consent={consent} />
+          <button type="button" disabled={busy || preview} onClick={() => void act("create")}>{open ? t("PayPalで手続きを再開", "Resume on PayPal") : t("PayPalでテスト購入", "Test checkout with PayPal")}</button>
+          <ConsentError en={!ja} consent={consent} />
+        </>}
       </fieldset>}
       {ready && sub && sub.state !== "creating" && <button type="button" disabled={busy} onClick={() => void act("reconcile")}>{t("支払いを確認", "Verify payment")}</button>}
       {ready && sub && ["active", "suspended"].includes(sub.state) && <fieldset disabled={busy}>

@@ -5,6 +5,8 @@ import {PGlite} from '@electric-sql/pglite';
 import {adminMfaAllowed} from '../lib/membership/admin-mfa.ts';
 import {billingAbuse,deliverBillingAlerts} from '../services/tech-phase-billing/abuse.mjs';
 import {liveHandler} from '../services/tech-phase-billing/live-http.mjs';
+// The consent tick time every checkout carries (lawyer review, Nov 24).
+const CONSENT = '2025-01-01T00:00:00.000Z';
 test('admin access requires enrollment plus a verified second-factor claim',()=>{
  for(const claims of [undefined,{}, {fva:[0,-1]},{fva:[0,'0']},{fva:[0,NaN]},{fva:[0,Infinity]},{fva:[0]}])assert.equal(adminMfaAllowed(true,claims),false);
  assert.equal(adminMfaAllowed(false,{fva:[0,0]}),false);
@@ -33,7 +35,7 @@ test('checkout rate limits block PayPal calls but do not block verified webhook 
  let paypal=0,webhooks=0;
  const env={VERCEL_ENV:'production',TECH_PHASE_PAYPAL_ENV:'live',TECH_PHASE_BILLING_LIVE_ENABLED:'true',TECH_PHASE_BILLING_LIVE_WEBHOOK_ENABLED:'true',TECH_PHASE_BILLING_LIVE_ENTITLEMENTS_ENABLED:'true',TECH_PHASE_BILLING_LIVE_SALES_ENABLED:'true',TECH_PHASE_BILLING_LIVE_ORIGIN:'https://techphase.testdomain.com'};
  const handler=liveHandler({env,identity:async()=> 'user_test',services:async()=>({abuse:{attempt:async()=>{throw Object.assign(Error('RATE_LIMITED'),{retryAfter:23})}},checkout:{start:async()=>paypal++},webhook:async()=>{webhooks++;return{status:'verified'}}})});
- const request=()=>new Request(env.TECH_PHASE_BILLING_LIVE_ORIGIN,{method:'POST',headers:{Origin:env.TECH_PHASE_BILLING_LIVE_ORIGIN,'Content-Type':'application/json'},body:JSON.stringify({currency:'JPY',acceptedTerms:'pro-live-v1'})});
+ const request=()=>new Request(env.TECH_PHASE_BILLING_LIVE_ORIGIN,{method:'POST',headers:{Origin:env.TECH_PHASE_BILLING_LIVE_ORIGIN,'Content-Type':'application/json'},body:JSON.stringify({currency:'JPY',acceptedTerms:'pro-live-v1',consentAt:CONSENT})});
  const result=await handler(request(),'create');assert.equal(result.status,429);assert.equal(result.headers.get('Retry-After'),'23');assert.equal(paypal,0);
  assert.equal((await handler(request(),'webhook')).status,200);assert.equal(webhooks,1);
 });
@@ -41,7 +43,7 @@ test('billing errors count failed checkout without exposing exception contents',
  let failures=0;
  const env={VERCEL_ENV:'production',TECH_PHASE_PAYPAL_ENV:'live',TECH_PHASE_BILLING_LIVE_ENABLED:'true',TECH_PHASE_BILLING_LIVE_ENTITLEMENTS_ENABLED:'true',TECH_PHASE_BILLING_LIVE_SALES_ENABLED:'true',TECH_PHASE_BILLING_LIVE_ORIGIN:'https://techphase.testdomain.com'};
  const handler=liveHandler({env,identity:async()=> 'user_test',services:async()=>({abuse:{attempt:async()=>{},failure:async()=>failures++},checkout:{start:async()=>{throw Error('password=SECRET bearer=TOKEN payer=EMAIL')}}})});
- const result=await handler(new Request(env.TECH_PHASE_BILLING_LIVE_ORIGIN,{method:'POST',headers:{Origin:env.TECH_PHASE_BILLING_LIVE_ORIGIN,'Content-Type':'application/json'},body:JSON.stringify({currency:'JPY',acceptedTerms:'pro-live-v1'})}),'create');
+ const result=await handler(new Request(env.TECH_PHASE_BILLING_LIVE_ORIGIN,{method:'POST',headers:{Origin:env.TECH_PHASE_BILLING_LIVE_ORIGIN,'Content-Type':'application/json'},body:JSON.stringify({currency:'JPY',acceptedTerms:'pro-live-v1',consentAt:CONSENT})}),'create');
  assert.equal(result.status,503);assert.equal(failures,1);assert.equal(await result.text(),'{"error":"billing-unavailable"}');
 });
 

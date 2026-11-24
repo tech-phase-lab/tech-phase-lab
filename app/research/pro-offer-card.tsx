@@ -4,6 +4,7 @@ import { useEffect, useState, type ReactNode } from "react";
 import styles from "./plan-cards.module.css";
 import { priceFont } from "./price-font";
 import AgreeButton, { CheckoutLines, PRO_CHECKOUT_LINE } from "../legal/agree-button";
+import { ConsentCheck, ConsentError, useConsent } from "../legal/consent-check";
 
 export type OfferCurrency = "JPY" | "USD";
 export type OfferPeriod = "month" | "year";
@@ -36,11 +37,12 @@ function remember(value: { currency: OfferCurrency | null; period: OfferPeriod |
  * First choice: monthly (owner decision, Nov 13: the lower price shows first); USD when the reader browses in English (the site's only overseas signal), otherwise JPY.
  */
 export default function ProOfferCard({ ja, onSubscribe, href, busy = false, disabled = false, notice, children }: {
-  ja: boolean; onSubscribe?: (currency: OfferCurrency, period: OfferPeriod) => void; href?: string; busy?: boolean; disabled?: boolean; notice?: ReactNode; children: ReactNode;
+  ja: boolean; onSubscribe?: (currency: OfferCurrency, period: OfferPeriod, consentAt: string) => void; href?: string; busy?: boolean; disabled?: boolean; notice?: ReactNode; children: ReactNode;
 }) {
   const t = (a: string, b: string) => ja ? a : b;
   const [pickedCurrency, setCurrency] = useState<OfferCurrency | null>(null);
   const [pickedPeriod, setPeriod] = useState<OfferPeriod | null>(null);
+  const consent = useConsent();
   useEffect(() => { const saved = remembered(); const id = setTimeout(() => { if (saved.currency) setCurrency(saved.currency); if (saved.period) setPeriod(saved.period); }, 0); return () => clearTimeout(id); }, []);
   const currency: OfferCurrency = pickedCurrency ?? (ja ? "JPY" : "USD");
   const period: OfferPeriod = pickedPeriod ?? "month";
@@ -66,7 +68,9 @@ export default function ProOfferCard({ ja, onSubscribe, href, busy = false, disa
     </p>
     {onSubscribe
       // The account page's button goes straight to PayPal, so it is the final one: the lawyer's wording and the renewal line above it.
-      ? <><CheckoutLines lines={[ja ? PRO_CHECKOUT_LINE.ja : PRO_CHECKOUT_LINE.en]} className={styles.agreeLine} /><AgreeButton en={!ja} className={styles.paypal} disabled={busy || disabled} busy={busy} busyLabel={label} onClick={() => onSubscribe(currency, period)} /></>
+      // The consent line sits right above it (lawyer review, Nov 24): without the tick, nothing starts and the red line shows under it.
+      ? <><CheckoutLines lines={[ja ? PRO_CHECKOUT_LINE.ja : PRO_CHECKOUT_LINE.en]} className={styles.agreeLine} /><ConsentCheck en={!ja} consent={consent} />
+        <AgreeButton en={!ja} className={styles.paypal} disabled={busy || disabled} busy={busy} busyLabel={label} onClick={() => { const at = consent.require(); if (at) onSubscribe(currency, period, at); }} /><ConsentError en={!ja} consent={consent} /></>
       : href && !disabled ? <Link className={styles.paypal} href={href} prefetch={false}>{label}</Link> : <button type="button" className={styles.paypal} disabled>{label}</button>}
     {notice}
     <p className={styles.includes}>{t("無料プランのすべての機能に加えて", "Everything in Free, plus")}</p>
