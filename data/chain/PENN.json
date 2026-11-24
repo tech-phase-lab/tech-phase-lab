@@ -1,0 +1,147 @@
+{
+  "root": {
+    "ticker": "PENN",
+    "name": "ペン・エンターテインメント",
+    "cik": 921738,
+    "name_en": "PENN Entertainment"
+  },
+  "rows": [
+    {
+      "ja": "不動産の貸し手",
+      "en": "Landlord",
+      "above": true
+    },
+    {
+      "ja": "合弁・提携",
+      "en": "Joint ventures & partners"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "GLPI",
+      "ticker": "GLPI",
+      "name": "ゲーミング&レジャー・プロパティーズ",
+      "name_en": "Gaming and Leisure Properties",
+      "sub": "カジノ不動産REIT",
+      "sub_en": "Casino REIT",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "カジノ不動産の大半を賃借する最大の貸し手",
+          "text_en": "Its most significant landlord under master leases",
+          "source": {
+            "label": "PENN Entertainment 10-K(2025年度)",
+            "label_en": "PENN Entertainment 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/921738/000092173826000008/penn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "the most significant of which are with Gaming and Leisure Properties, Inc. (Nasdaq: GLPI) (\"GLPI\"), a real estate investment trust"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ESPN",
+      "ticker": "ESPN",
+      "name": "ESPN",
+      "name_en": "ESPN",
+      "sub": "スポーツメディア",
+      "sub_en": "Sports media",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ESPNとの米スポーツベッティング契約を早期終了(2025年11月)",
+          "text_en": "Ended its U.S. sportsbook agreement with ESPN early (November 2025)",
+          "source": {
+            "label": "PENN Entertainment 10-K(2025年度)",
+            "label_en": "PENN Entertainment 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/921738/000092173826000008/penn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "On November 6, 2025, the Company announced the early termination of our U.S. sportsbook agreement with ESPN, Inc. and ESPN Enterprises Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NASCAR",
+      "ticker": "NASCAR",
+      "name": "NASCAR",
+      "name_en": "NASCAR",
+      "sub": "モータースポーツ",
+      "sub_en": "Motorsports",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "カンザス・スピードウェイのカジノを50%ずつの合弁で運営",
+          "text_en": "Runs the Hollywood Casino at Kansas Speedway as a 50/50 joint venture",
+          "source": {
+            "label": "PENN Entertainment 10-K(2025年度)",
+            "label_en": "PENN Entertainment 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/921738/000092173826000008/penn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Hollywood Casino at Kansas Speedway , our 50% joint venture with NASCAR, is located in Kansas City, Kansas."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Greenwood",
+      "ticker": "Greenwood Racing",
+      "name": "グリーンウッド・レーシング",
+      "name_en": "Greenwood Racing",
+      "sub": "競馬・カジノ",
+      "sub_en": "Racing & gaming",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "子会社との合弁",
+          "text_en": "Joint venture with its subsidiary",
+          "source": {
+            "label": "PENN Entertainment 10-K(2025年度)",
+            "label_en": "PENN Entertainment 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/921738/000092173826000008/penn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "(9) Pursuant to a joint venture with Greenwood Limited Jersey, Inc., a subsidiary of Greenwood Racing, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SHAK",
+      "ticker": "SHAK",
+      "name": "シェイク・シャック",
+      "name_en": "Shake Shack",
+      "sub": "外食",
+      "sub_en": "Restaurants",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "米国の10カ所のカジノにShake Shackを出店するライセンス契約",
+          "text_en": "Licensing deal to bring Shake Shack to 10 U.S. casino properties",
+          "source": {
+            "label": "Shake Shack 10-K(2025年度)",
+            "label_en": "Shake Shack 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1620533/000162053326000018/shak-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "also with PENN Entertainment to bring Shake Shack to 10 U.S. casino properties"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

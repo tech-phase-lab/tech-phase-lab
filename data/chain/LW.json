@@ -1,0 +1,222 @@
+{
+  "root": {
+    "ticker": "LW",
+    "name": "ラム・ウェストン",
+    "cik": 1679273,
+    "name_en": "Lamb Weston"
+  },
+  "rows": [
+    {
+      "ja": "最大の顧客・合弁・ライセンス",
+      "en": "Largest customer, JV & license"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in its 10-K)"
+    }
+  ],
+  "rivals": [
+    "McCain",
+    "Simplot",
+    "KHC"
+  ],
+  "companies": [
+    {
+      "id": "MCD",
+      "ticker": "MCD",
+      "name": "マクドナルド",
+      "name_en": "McDonald's",
+      "sub": "外食",
+      "sub_en": "Restaurants",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大の顧客(売上の約15%)",
+          "text_en": "Largest customer (about 15% of net sales)",
+          "source": {
+            "label": "Lamb Weston 10-K(2026年5月期)",
+            "label_en": "Lamb Weston 10-K (FY ended May 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1679273/000167927326000026/lw-20260531.htm",
+            "level": "official",
+            "date": "2026-07-24",
+            "quote": "Our largest customer, McDonald's Corporation, accounted for approximately 15%, 15%, and 14% of our consolidated net sales in fiscal 2026, 2025, and 2024, respectively."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RDO",
+      "ticker": "RDO Frozen",
+      "name": "RDOフローズン",
+      "name_en": "RDO Frozen",
+      "sub": "冷凍ポテト",
+      "sub_en": "Frozen potatoes",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "冷凍ポテトの合弁Lamb Weston RDO(50%)の相手",
+          "text_en": "Partner in the 50% Lamb Weston RDO joint venture",
+          "source": {
+            "label": "Lamb Weston 10-K(2026年5月期)",
+            "label_en": "Lamb Weston 10-K (FY ended May 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1679273/000167927326000026/lw-20260531.htm",
+            "level": "official",
+            "date": "2026-07-24",
+            "quote": "our 50 % ownership in Lamb-Weston/RDO Frozen (\"Lamb Weston RDO\"), our joint venture with RDO Frozen Co."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NATH",
+      "ticker": "NATH",
+      "name": "ネイサンズ・フェイマス",
+      "name_en": "Nathan's Famous",
+      "sub": "ホットドッグ",
+      "sub_en": "Hot dogs",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Nathan'sブランドのライセンスを2028年7月まで延長",
+          "text_en": "Extended its Nathan's brand license through July 2028",
+          "source": {
+            "label": "Nathan's Famous 10-K(2025年3月期)",
+            "label_en": "Nathan's Famous 10-K (FY ended Mar 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/69733/000143774925019916/nath20250331_10k.htm",
+            "level": "official",
+            "date": "2025-06-10",
+            "quote": "Lamb Weston, Inc. exercised its fourth option to extend the license agreement through July 2028"
+          }
+        }
+      ]
+    },
+    {
+      "id": "McCain",
+      "ticker": "McCain Foods",
+      "name": "マッケイン・フーズ",
+      "name_en": "McCain Foods",
+      "sub": "冷凍ポテト(カナダ)",
+      "sub_en": "Frozen potatoes (Canada)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主要な競合",
+          "text_en": "A significant competitor",
+          "source": {
+            "label": "Lamb Weston 10-K(2026年5月期)",
+            "label_en": "Lamb Weston 10-K (FY ended May 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1679273/000167927326000026/lw-20260531.htm",
+            "level": "official",
+            "date": "2026-07-24",
+            "quote": "Significant competitors include Agristo N.V., Aviko B.V., Cavendish Farms Corporation, Farm Frites International B.V., J.R. Simplot Company, The Kraft Heinz Company, and McCain Foods Limited."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Simplot",
+      "ticker": "Simplot",
+      "name": "J.R.シンプロット",
+      "name_en": "J.R. Simplot",
+      "sub": "冷凍ポテト",
+      "sub_en": "Frozen potatoes",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主要な競合",
+          "text_en": "A significant competitor",
+          "source": {
+            "label": "Lamb Weston 10-K(2026年5月期)",
+            "label_en": "Lamb Weston 10-K (FY ended May 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1679273/000167927326000026/lw-20260531.htm",
+            "level": "official",
+            "date": "2026-07-24",
+            "quote": "Significant competitors include Agristo N.V., Aviko B.V., Cavendish Farms Corporation, Farm Frites International B.V., J.R. Simplot Company, The Kraft Heinz Company, and McCain Foods Limited."
+          }
+        }
+      ]
+    },
+    {
+      "id": "KHC",
+      "ticker": "KHC",
+      "name": "クラフト・ハインツ",
+      "name_en": "Kraft Heinz",
+      "sub": "食品",
+      "sub_en": "Packaged foods",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主要な競合",
+          "text_en": "A significant competitor",
+          "source": {
+            "label": "Lamb Weston 10-K(2026年5月期)",
+            "label_en": "Lamb Weston 10-K (FY ended May 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1679273/000167927326000026/lw-20260531.htm",
+            "level": "official",
+            "date": "2026-07-24",
+            "quote": "Significant competitors include Agristo N.V., Aviko B.V., Cavendish Farms Corporation, Farm Frites International B.V., J.R. Simplot Company, The Kraft Heinz Company, and McCain Foods Limited."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Aviko",
+      "ticker": "Aviko",
+      "name": "アビコ",
+      "name_en": "Aviko",
+      "sub": "冷凍ポテト(オランダ)",
+      "sub_en": "Frozen potatoes (Netherlands)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主要な競合",
+          "text_en": "A significant competitor",
+          "source": {
+            "label": "Lamb Weston 10-K(2026年5月期)",
+            "label_en": "Lamb Weston 10-K (FY ended May 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1679273/000167927326000026/lw-20260531.htm",
+            "level": "official",
+            "date": "2026-07-24",
+            "quote": "Significant competitors include Agristo N.V., Aviko B.V., Cavendish Farms Corporation, Farm Frites International B.V., J.R. Simplot Company, The Kraft Heinz Company, and McCain Foods Limited."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Agristo",
+      "ticker": "Agristo",
+      "name": "アグリスト",
+      "name_en": "Agristo",
+      "sub": "冷凍ポテト(ベルギー)",
+      "sub_en": "Frozen potatoes (Belgium)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主要な競合",
+          "text_en": "A significant competitor",
+          "source": {
+            "label": "Lamb Weston 10-K(2026年5月期)",
+            "label_en": "Lamb Weston 10-K (FY ended May 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1679273/000167927326000026/lw-20260531.htm",
+            "level": "official",
+            "date": "2026-07-24",
+            "quote": "Significant competitors include Agristo N.V., Aviko B.V., Cavendish Farms Corporation, Farm Frites International B.V., J.R. Simplot Company, The Kraft Heinz Company, and McCain Foods Limited."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

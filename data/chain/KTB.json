@@ -1,0 +1,122 @@
+{
+  "root": {
+    "ticker": "KTB",
+    "name": "コンツール・ブランズ",
+    "cik": 1760965,
+    "name_en": "Kontoor Brands"
+  },
+  "rows": [
+    {
+      "ja": "最大の顧客",
+      "en": "Largest customer"
+    },
+    {
+      "ja": "分離元・買収・ライセンス先",
+      "en": "Former parent, acquisition & licensee"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "WMT",
+      "ticker": "WMT",
+      "name": "ウォルマート",
+      "name_en": "Walmart",
+      "sub": "小売",
+      "sub_en": "Retail",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大の顧客(売上の30%)",
+          "text_en": "Top customer (30% of net revenues)",
+          "source": {
+            "label": "Kontoor Brands 10-K(2025年度)",
+            "label_en": "Kontoor Brands 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1760965/000176096526000014/ktb-20260103.htm",
+            "level": "official",
+            "date": "2026-03-04",
+            "quote": "our top customer, Walmart, accounted for 30% of our total net revenues in 2025, 2024 and 2023."
+          }
+        }
+      ]
+    },
+    {
+      "id": "VFC",
+      "ticker": "VFC",
+      "name": "VFコーポレーション",
+      "name_en": "VF Corp",
+      "sub": "アパレル",
+      "sub_en": "Apparel",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "VFからスピンオフ。税務事項契約を結ぶ",
+          "text_en": "Spun off from VF under a tax matters agreement",
+          "source": {
+            "label": "VF Corp 10-K(2025年3月期)",
+            "label_en": "VF Corp 10-K (FY ended Mar 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/103379/000010337925000023/vfc-20250329.htm",
+            "level": "official",
+            "date": "2025-05-22",
+            "quote": "In connection with the spin-off, we entered into a tax matters agreement with Kontoor Brands"
+          }
+        }
+      ]
+    },
+    {
+      "id": "HellyHansen",
+      "ticker": "Helly Hansen",
+      "name": "ヘリー・ハンセン",
+      "name_en": "Helly Hansen",
+      "sub": "アウトドアウェア(ノルウェー)",
+      "sub_en": "Outdoor wear (Norway)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "アウトドアブランドのHelly Hansenを買収(2025年5月)",
+          "text_en": "Acquired outdoor brand Helly Hansen (May 2025)",
+          "source": {
+            "label": "Kontoor Brands 10-K(2025年度)",
+            "label_en": "Kontoor Brands 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1760965/000176096526000014/ktb-20260103.htm",
+            "level": "official",
+            "date": "2026-03-04",
+            "quote": "We completed the acquisition of Helly Hansen, the global outdoor and workwear brand on May 31, 2025 ."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GCO",
+      "ticker": "GCO",
+      "name": "ジェネスコ",
+      "name_en": "Genesco",
+      "sub": "靴の小売・ブランド",
+      "sub_en": "Footwear retail & brands",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Wranglerブランドの靴を手がける複数年のライセンス契約",
+          "text_en": "Multi-year license to make Wrangler footwear",
+          "source": {
+            "label": "Genesco 10-K(2026年1月期)",
+            "label_en": "Genesco 10-K (FY ended Jan 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/18498/000119312526123492/gco-20260131.htm",
+            "level": "official",
+            "date": "2026-03-25",
+            "quote": "we signed a multi-year licensing agreement with Kontoor Brands, Inc. to design, source, market and distribute footwear under the Wrangler ® brand."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

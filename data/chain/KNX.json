@@ -1,0 +1,124 @@
+{
+  "root": {
+    "ticker": "KNX",
+    "name": "ナイト・スウィフト・トランスポーテーション",
+    "cik": 1492691,
+    "name_en": "Knight-Swift Transportation"
+  },
+  "rows": [
+    {
+      "ja": "買収",
+      "en": "Acquisitions"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "ARCB"
+  ],
+  "companies": [
+    {
+      "id": "USXpress",
+      "ticker": "U.S. Xpress",
+      "name": "USエクスプレス",
+      "name_en": "U.S. Xpress",
+      "sub": "トラック輸送",
+      "sub_en": "Truckload carrier",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "大手トラック輸送のU.S. Xpressを買収(2023年7月)",
+          "text_en": "Acquired large truckload carrier U.S. Xpress (July 2023)",
+          "source": {
+            "label": "Knight-Swift 10-K(2025年度)",
+            "label_en": "Knight-Swift 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1492691/000149269126000016/knx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "On July 1, 2023 , the Company acquired Chattanooga, Tennessee-based U.S. Xpress Enterprises, Inc. (\"U.S. Xpress\")"
+          }
+        }
+      ]
+    },
+    {
+      "id": "DHE",
+      "ticker": "Dependable Highway Express",
+      "name": "ディペンダブル・ハイウェイ・エクスプレス",
+      "name_en": "Dependable Highway Express",
+      "sub": "LTL輸送",
+      "sub_en": "LTL trucking",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "DHEのLTL部門の資産を取得(2024年7月)",
+          "text_en": "Acquired DHE's LTL operating assets (July 2024)",
+          "source": {
+            "label": "Knight-Swift 10-K(2025年度)",
+            "label_en": "Knight-Swift 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1492691/000149269126000016/knx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "The operating assets, and assumption of certain liabilities, of DHE on July 30, 2024."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Eleos",
+      "ticker": "Eleos",
+      "name": "エレオス",
+      "name_en": "Eleos",
+      "sub": "運送向けソフト",
+      "sub_en": "Trucking software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Eleosの残り20.56%を取得(2024年)",
+          "text_en": "Bought the remaining 20.56% of Eleos (2024)",
+          "source": {
+            "label": "Knight-Swift 10-K(2025年度)",
+            "label_en": "Knight-Swift 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1492691/000149269126000016/knx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "In 2024, the Company acquired the remaining 20.56 % non-controlling interest of Eleos."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ARCB",
+      "ticker": "ARCB",
+      "name": "アークベスト",
+      "name_en": "ArcBest",
+      "sub": "LTL輸送・物流",
+      "sub_en": "LTL & logistics",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ArcBestが10-Kで、物流部門の競合として挙げる",
+          "text_en": "ArcBest names Knight-Swift's logistics segment among competitors",
+          "source": {
+            "label": "ArcBest 10-K(2025年度)",
+            "label_en": "ArcBest 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/894405/000110465926019699/arcb-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "the Logistics segment of Knight-Swift Transportation Holdings Inc."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

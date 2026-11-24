@@ -1,0 +1,222 @@
+{
+  "root": {
+    "ticker": "MIR",
+    "name": "ミリオン・テクノロジーズ",
+    "cik": 1809987,
+    "name_en": "Mirion Technologies"
+  },
+  "rows": [
+    {
+      "ja": "買収・提携",
+      "en": "Acquisitions & partner"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in its 10-K)"
+    }
+  ],
+  "rivals": [
+    "TMO",
+    "CW",
+    "AME"
+  ],
+  "companies": [
+    {
+      "id": "Paragon",
+      "ticker": "Paragon Energy Solutions",
+      "name": "パラゴン・エナジー・ソリューションズ",
+      "name_en": "Paragon Energy Solutions",
+      "sub": "原子力部品",
+      "sub_en": "Nuclear components",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "原子力部品のParagonを買収(2025年12月)",
+          "text_en": "Acquired nuclear components maker Paragon (December 2025)",
+          "source": {
+            "label": "Mirion 10-K(2025年度)",
+            "label_en": "Mirion 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1809987/000162828026009869/mir-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "On December 1, 2025, we acquired WCI-Gigawatt Intermediate Holdco, LLC, the indirect parent of Paragon Energy Solutions, LLC (\"Paragon\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Certrec",
+      "ticker": "Certrec",
+      "name": "サートレック",
+      "name_en": "Certrec",
+      "sub": "原子力規制対応サービス",
+      "sub_en": "Nuclear compliance services",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Certrecを買収(2025年7月)",
+          "text_en": "Acquired Certrec (July 2025)",
+          "source": {
+            "label": "Mirion 10-K(2025年度)",
+            "label_en": "Mirion 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1809987/000162828026009869/mir-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "In July 2025, we acquired Certrec Corporation."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HDRN",
+      "ticker": "HDRN",
+      "name": "ハドロン・エナジー",
+      "name_en": "Hadron Energy",
+      "sub": "小型原子炉",
+      "sub_en": "Microreactors",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "子会社Paragonと覚書を締結(2026年3月)",
+          "text_en": "Signed an MOU with its Paragon unit (March 2026)",
+          "source": {
+            "label": "Hadron Energy S-1(2026年6月)",
+            "label_en": "Hadron Energy S-1 (Jun 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2023730/000119312526271293/d141496ds1.htm",
+            "level": "official",
+            "date": "2026-06-15",
+            "quote": "Memorandum of Understanding with Paragon Energy Solutions (a Mirion Technologies Company) On March 17, 2026, the Company entered into a non-binding Memorandum of Understanding"
+          }
+        }
+      ]
+    },
+    {
+      "id": "TMO",
+      "ticker": "TMO",
+      "name": "サーモフィッシャー・サイエンティフィック",
+      "name_en": "Thermo Fisher Scientific",
+      "sub": "分析機器",
+      "sub_en": "Life science tools",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "原子力・安全部門の主な競合",
+          "text_en": "A primary Nuclear & Safety competitor",
+          "source": {
+            "label": "Mirion 10-K(2025年度)",
+            "label_en": "Mirion 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1809987/000162828026009869/mir-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Nuclear & Safety: Thermo Fisher Scientific, Curtiss-Wright, Ortec (Ametek), FLIR (Teledyne), Ludlum, Fuji Electric, Caen System, Fluke (Fortive), Berthold Technologies and Framatome"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CW",
+      "ticker": "CW",
+      "name": "カーチス・ライト",
+      "name_en": "Curtiss-Wright",
+      "sub": "防衛・原子力部品",
+      "sub_en": "Defense & nuclear components",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "原子力・安全部門の主な競合",
+          "text_en": "A primary Nuclear & Safety competitor",
+          "source": {
+            "label": "Mirion 10-K(2025年度)",
+            "label_en": "Mirion 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1809987/000162828026009869/mir-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Nuclear & Safety: Thermo Fisher Scientific, Curtiss-Wright, Ortec (Ametek), FLIR (Teledyne), Ludlum, Fuji Electric, Caen System, Fluke (Fortive), Berthold Technologies and Framatome"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AME",
+      "ticker": "AME",
+      "name": "アメテック",
+      "name_en": "AMETEK",
+      "sub": "電子計測機器",
+      "sub_en": "Electronic instruments",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "傘下のOrtecが原子力・安全部門の主な競合",
+          "text_en": "Its Ortec unit is a primary Nuclear & Safety competitor",
+          "source": {
+            "label": "Mirion 10-K(2025年度)",
+            "label_en": "Mirion 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1809987/000162828026009869/mir-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Nuclear & Safety: Thermo Fisher Scientific, Curtiss-Wright, Ortec (Ametek), FLIR (Teledyne), Ludlum, Fuji Electric, Caen System, Fluke (Fortive), Berthold Technologies and Framatome"
+          }
+        }
+      ]
+    },
+    {
+      "id": "TDY",
+      "ticker": "TDY",
+      "name": "テレダイン・テクノロジーズ",
+      "name_en": "Teledyne Technologies",
+      "sub": "計測・画像機器",
+      "sub_en": "Instrumentation & imaging",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "傘下のFLIRが原子力・安全部門の主な競合",
+          "text_en": "Its FLIR unit is a primary Nuclear & Safety competitor",
+          "source": {
+            "label": "Mirion 10-K(2025年度)",
+            "label_en": "Mirion 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1809987/000162828026009869/mir-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Nuclear & Safety: Thermo Fisher Scientific, Curtiss-Wright, Ortec (Ametek), FLIR (Teledyne), Ludlum, Fuji Electric, Caen System, Fluke (Fortive), Berthold Technologies and Framatome"
+          }
+        }
+      ]
+    },
+    {
+      "id": "FTV",
+      "ticker": "FTV",
+      "name": "フォーティブ",
+      "name_en": "Fortive",
+      "sub": "計測機器",
+      "sub_en": "Instrumentation",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "傘下のFlukeが原子力・安全部門の主な競合",
+          "text_en": "Its Fluke unit is a primary Nuclear & Safety competitor",
+          "source": {
+            "label": "Mirion 10-K(2025年度)",
+            "label_en": "Mirion 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1809987/000162828026009869/mir-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Nuclear & Safety: Thermo Fisher Scientific, Curtiss-Wright, Ortec (Ametek), FLIR (Teledyne), Ludlum, Fuji Electric, Caen System, Fluke (Fortive), Berthold Technologies and Framatome"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

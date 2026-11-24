@@ -1,0 +1,148 @@
+{
+  "root": {
+    "ticker": "KWR",
+    "name": "クエーカー・ホートン",
+    "cik": 81362,
+    "name_en": "Quaker Houghton"
+  },
+  "rows": [
+    {
+      "ja": "買収",
+      "en": "Acquisitions"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "ESI"
+  ],
+  "companies": [
+    {
+      "id": "Dipsol",
+      "ticker": "Dipsol",
+      "name": "ディップソール",
+      "name_en": "Dipsol Chemicals",
+      "sub": "表面処理薬品(日本)",
+      "sub_en": "Surface treatment chemicals (Japan)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "日本のディップソールを買収(2025年4月)",
+          "text_en": "Acquired Japan's Dipsol Chemicals (April 2025)",
+          "source": {
+            "label": "Quaker Houghton 10-K(2025年度)",
+            "label_en": "Quaker Houghton 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/81362/000162828026010694/kwr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "In April 2025, the Company acquired Dipsol Chemicals Co., Ltd. and its subsidiaries, (\"Dipsol\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Natech",
+      "ticker": "Natech",
+      "name": "ナテック",
+      "name_en": "Natech",
+      "sub": "工業用薬品",
+      "sub_en": "Industrial chemicals",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Natechを買収(2025年4月)",
+          "text_en": "Acquired Natech (April 2025)",
+          "source": {
+            "label": "Quaker Houghton 10-K(2025年度)",
+            "label_en": "Quaker Houghton 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/81362/000162828026010694/kwr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "In April 2025, the Company acquired Natech, Ltd., (\"Natech\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CSI",
+      "ticker": "Chemical Solutions & Innovations",
+      "name": "ケミカル・ソリューションズ&イノベーションズ",
+      "name_en": "Chemical Solutions & Innovations",
+      "sub": "工業用薬品(南アフリカ)",
+      "sub_en": "Industrial chemicals (South Africa)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "南アフリカのCSIを買収(2025年2月)",
+          "text_en": "Acquired South Africa's CSI (February 2025)",
+          "source": {
+            "label": "Quaker Houghton 10-K(2025年度)",
+            "label_en": "Quaker Houghton 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/81362/000162828026010694/kwr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "In February 2025, the Company acquired Chemical Solutions & Innovations (Pty) Ltd."
+          }
+        }
+      ]
+    },
+    {
+      "id": "IKV",
+      "ticker": "I.K.V.",
+      "name": "IKV",
+      "name_en": "I.K.V. Tribologie",
+      "sub": "潤滑剤(フランス)",
+      "sub_en": "Lubricants (France)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "I.K.V.を買収(2024年2月)",
+          "text_en": "Acquired I.K.V. (February 2024)",
+          "source": {
+            "label": "Quaker Houghton 10-K(2025年度)",
+            "label_en": "Quaker Houghton 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/81362/000162828026010694/kwr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "In February 2024, the Company acquired I.K.V."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ESI",
+      "ticker": "ESI",
+      "name": "エレメント・ソリューションズ",
+      "name_en": "Element Solutions",
+      "sub": "特殊化学品",
+      "sub_en": "Specialty chemicals",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Element Solutionsが10-Kで、最も重要な競合の一社として挙げる",
+          "text_en": "Element Solutions names Quaker Houghton among its most significant competitors",
+          "source": {
+            "label": "Element Solutions 10-K(2025年度)",
+            "label_en": "Element Solutions 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1590714/000159071426000018/esi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "our most significant competitors are MKS Instruments, Quaker Houghton, and Castrol."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
