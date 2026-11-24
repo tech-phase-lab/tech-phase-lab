@@ -1,0 +1,209 @@
+{
+  "root": {
+    "ticker": "BNTX",
+    "name": "ビオンテック",
+    "cik": 1776985,
+    "name_en": "BioNTech"
+  },
+  "rows": [
+    {
+      "ja": "技術のライセンス元",
+      "en": "Technology licensors",
+      "above": true
+    },
+    {
+      "ja": "共同開発・販売の相手",
+      "en": "Co-development & commercial partners"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "Acuitas",
+      "ticker": "Acuitas",
+      "name": "アキュイタス・セラピューティクス",
+      "name_en": "Acuitas Therapeutics",
+      "sub": "脂質ナノ粒子",
+      "sub_en": "Lipid nanoparticles",
+      "sub_short": "脂質技術",
+      "sub_short_en": "Lipids",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "COVID-19ワクチンの脂質技術の非独占ライセンスを受ける",
+          "text_en": "Holds a non-exclusive license to Acuitas lipid technology used in its COVID-19 vaccine",
+          "source": {
+            "label": "BioNTech 20-F(2025年度)",
+            "label_en": "BioNTech 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1776985/000177698526000017/bntx-20251231.htm",
+            "level": "official",
+            "date": "2026-03-10",
+            "quote": "relating to certain lipids and/or lipid nanoparticles and formulations used in BNT162b2, including a non-exclusive license from Acuitas"
+          }
+        }
+      ]
+    },
+    {
+      "id": "DualityBio",
+      "ticker": "9606",
+      "name": "デュアリティ・バイオ",
+      "name_en": "DualityBio",
+      "sub": "抗体薬物複合体(ADC)",
+      "sub_en": "Antibody-drug conjugates",
+      "sub_short": "ADC",
+      "sub_short_en": "ADC",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ADCの特許・ノウハウのライセンスを受け共同研究",
+          "text_en": "Licenses DualityBio patents and know-how and collaborates on ADCs",
+          "source": {
+            "label": "BioNTech 20-F(2025年度)",
+            "label_en": "BioNTech 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1776985/000177698526000017/bntx-20251231.htm",
+            "level": "official",
+            "date": "2026-03-10",
+            "quote": "Each of the three DualityBio Agreements relates to a license granted to us with respect to certain patents and know-how owned or otherwise controlled by DualityBio and our collaboration with DualityBio in the research and development of ADC"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PFE",
+      "ticker": "PFE",
+      "name": "ファイザー",
+      "name_en": "Pfizer",
+      "sub": "製薬",
+      "sub_en": "Pharmaceuticals",
+      "sub_short": "製薬",
+      "sub_short_en": "Pharma",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "COVID-19ワクチンを共同開発・販売",
+          "text_en": "Partner on its COVID-19 vaccine",
+          "source": {
+            "label": "BioNTech 20-F(2025年度)",
+            "label_en": "BioNTech 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1776985/000177698526000017/bntx-20251231.htm",
+            "level": "official",
+            "date": "2026-03-10",
+            "quote": "under our collaboration agreement with Pfizer for our COVID-19 vaccine"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BMY",
+      "ticker": "BMY",
+      "name": "ブリストル・マイヤーズ スクイブ",
+      "name_en": "Bristol Myers Squibb",
+      "sub": "製薬",
+      "sub_en": "Pharmaceuticals",
+      "sub_short": "製薬",
+      "sub_short_en": "Pharma",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "抗がん剤pumitamigを世界で共同開発・販売する契約(2025年6月)",
+          "text_en": "Global co-development and co-commercialization deal for pumitamig (Jun 2025)",
+          "source": {
+            "label": "BioNTech 20-F(2025年度)",
+            "label_en": "BioNTech 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1776985/000177698526000017/bntx-20251231.htm",
+            "level": "official",
+            "date": "2026-03-10",
+            "quote": "In June 2025, we entered into a global co- development and co-commercialization agreement with Bristol Myers Squibb Company, or Bristol Myers Squibb, to jointly develop, manufacture and commercialize pumitamig"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GMAB",
+      "ticker": "GMAB",
+      "name": "ジェンマブ",
+      "name_en": "Genmab",
+      "sub": "抗体医薬",
+      "sub_en": "Antibody drugs",
+      "sub_short": "抗体医薬",
+      "sub_short_en": "Antibody",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "抗体候補BNT314/GEN1059を共同開発",
+          "text_en": "Co-develops BNT314/GEN1059 with Genmab",
+          "source": {
+            "label": "BioNTech 20-F(2025年度)",
+            "label_en": "BioNTech 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1776985/000177698526000017/bntx-20251231.htm",
+            "level": "official",
+            "date": "2026-03-10",
+            "quote": "BNT314 /GEN1059 is being developed in collaboration with Genmab."
+          }
+        }
+      ]
+    },
+    {
+      "id": "REGN",
+      "ticker": "REGN",
+      "name": "リジェネロン",
+      "name_en": "Regeneron",
+      "sub": "バイオ医薬",
+      "sub_en": "Biotech",
+      "sub_short": "バイオ",
+      "sub_short_en": "Biotech",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "第2相臨床試験で協業",
+          "text_en": "Collaborates on a Phase 2 clinical trial",
+          "source": {
+            "label": "BioNTech 20-F(2025年度)",
+            "label_en": "BioNTech 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1776985/000177698526000017/bntx-20251231.htm",
+            "level": "official",
+            "date": "2026-03-10",
+            "quote": "A Phase 2 clinical trial (BNT111-01; NCT04526899) in collaboration with Regeneron Pharmaceuticals Inc., or Regeneron"
+          }
+        }
+      ]
+    },
+    {
+      "id": "FOSUN",
+      "ticker": "2196",
+      "name": "復星医薬(Fosun Pharma)",
+      "name_en": "Fosun Pharma",
+      "sub": "製薬(中国)",
+      "sub_en": "Pharmaceuticals (China)",
+      "sub_short": "製薬",
+      "sub_short_en": "Pharma",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "中国本土・香港などでの販売権を持つ提携先",
+          "text_en": "Holds marketing and distribution rights in Mainland China and Hong Kong",
+          "source": {
+            "label": "BioNTech 20-F(2025年度)",
+            "label_en": "BioNTech 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1776985/000177698526000017/bntx-20251231.htm",
+            "level": "official",
+            "date": "2026-03-10",
+            "quote": "Under our collaboration with Fosun Pharmaceutical Industrial Development, Co., Ltd, or Fosun Pharma, Fosun Pharma has marketing and distribution rights in Mainland China, Hong Kong Special Administrative Region"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

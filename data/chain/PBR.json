@@ -1,0 +1,183 @@
+{
+  "root": {
+    "ticker": "PBR",
+    "name": "ペトロブラス",
+    "cik": 1119639,
+    "name_en": "Petrobras"
+  },
+  "rows": [
+    {
+      "ja": "油田・鉱区の共同参加者",
+      "en": "Oilfield & block partners",
+      "above": true
+    },
+    {
+      "ja": "海外の合弁・再エネの提携先",
+      "en": "Overseas JV & renewables partner"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "SHEL",
+      "ticker": "SHEL",
+      "name": "シェル",
+      "name_en": "Shell",
+      "sub": "石油・ガス",
+      "sub_en": "Oil & gas",
+      "sub_short": "石油ガス",
+      "sub_short_en": "Oil & gas",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "メロ・アタプ鉱区の連合に20%で参加",
+          "text_en": "Partner (20%) in the consortium for the Mero and Atapu reservoirs",
+          "source": {
+            "label": "Petrobras 20-F(2025年度)",
+            "label_en": "Petrobras 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1119639/000129281426002168/pbrform20f_2025.htm",
+            "level": "official",
+            "date": "2026-04-09",
+            "quote": "The consortia formed by us, in partnership with Shell (20%), acquired the Federal Government's participation of production sharing agreement of the Mero shared reservoir and Atapu shared reservoir."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TTE",
+      "ticker": "TTE",
+      "name": "トタルエナジーズ",
+      "name_en": "TotalEnergies",
+      "sub": "石油・ガス",
+      "sub_en": "Oil & gas",
+      "sub_short": "石油ガス",
+      "sub_short_en": "Oil & gas",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "鉱区の共同取得(42.5%、操業者)",
+          "text_en": "Co-acquired a block, taking 42.5% as operator",
+          "source": {
+            "label": "Petrobras 20-F(2025年度)",
+            "label_en": "Petrobras 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1119639/000129281426002168/pbrform20f_2025.htm",
+            "level": "official",
+            "date": "2026-04-09",
+            "quote": "The transaction was carried out in partnership with TotalEnergies, which also acquired 42.5% and will act as the operator of the block."
+          }
+        }
+      ]
+    },
+    {
+      "id": "EQNR",
+      "ticker": "EQNR",
+      "name": "エクイノール",
+      "name_en": "Equinor",
+      "sub": "石油・ガス(ノルウェー)",
+      "sub_en": "Oil & gas (Norway)",
+      "sub_short": "石油ガス",
+      "sub_short_en": "Oil & gas",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Jaspe鉱区の共同参加者",
+          "text_en": "Partner in the Jaspe block",
+          "source": {
+            "label": "Petrobras 20-F(2025年度)",
+            "label_en": "Petrobras 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1119639/000129281426002168/pbrform20f_2025.htm",
+            "level": "official",
+            "date": "2026-04-09",
+            "quote": "Jaspe block, in partnership with Equinor, and Citrino block."
+          }
+        }
+      ]
+    },
+    {
+      "id": "EC",
+      "ticker": "EC",
+      "name": "エコペトロル",
+      "name_en": "Ecopetrol",
+      "sub": "石油・ガス(コロンビア)",
+      "sub_en": "Oil & gas (Colombia)",
+      "sub_short": "石油ガス",
+      "sub_short_en": "Oil & gas",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "コロンビア沖のGUA-OFF-0鉱区でガスを発見(ペトロブラスが操業)",
+          "text_en": "Found Colombia's largest offshore gas discovery together (Petrobras operates)",
+          "source": {
+            "label": "Petrobras 20-F(2025年度)",
+            "label_en": "Petrobras 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1119639/000129281426002168/pbrform20f_2025.htm",
+            "level": "official",
+            "date": "2026-04-09",
+            "quote": "Acting as operator in partnership with Ecopetrol, efforts in the GUA-OFF-0 block led to the most significant offshore natural gas discovery in Colombia"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MUR",
+      "ticker": "MUR",
+      "name": "マーフィー・オイル",
+      "name_en": "Murphy Oil",
+      "sub": "石油・ガス開発",
+      "sub_en": "Oil & gas producer",
+      "sub_short": "石油ガス",
+      "sub_short_en": "Oil & gas",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "メキシコ湾の合弁MPGOMに20%参加",
+          "text_en": "Holds 20% in the MPGOM joint venture in the Gulf of Mexico",
+          "source": {
+            "label": "Petrobras 20-F(2025年度)",
+            "label_en": "Petrobras 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1119639/000129281426002168/pbrform20f_2025.htm",
+            "level": "official",
+            "date": "2026-04-09",
+            "quote": "we focus on deepwater fields in the Gulf of Mexico, where we have non-consolidated production from the 20% participation of Petrobras America Inc. in our joint venture with Murphy Exploration & Production Company, the MPGOM LLC."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BP",
+      "ticker": "BP",
+      "name": "BP",
+      "name_en": "BP",
+      "sub": "石油・ガス",
+      "sub_en": "Oil & gas",
+      "sub_short": "石油ガス",
+      "sub_short_en": "Oil & gas",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Lightsource bpと陸上再エネで戦略提携(2025年12月)",
+          "text_en": "Strategic partnership in onshore renewables with Lightsource bp (Dec 2025)",
+          "source": {
+            "label": "Petrobras 20-F(2025年度)",
+            "label_en": "Petrobras 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1119639/000129281426002168/pbrform20f_2025.htm",
+            "level": "official",
+            "date": "2026-04-09",
+            "quote": "In December 2025, we signed an agreement with Lightsource bp to establish a strategic partnership in the onshore renewable energy segment."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
