@@ -1,0 +1,189 @@
+{
+  "root": {
+    "ticker": "PTGX",
+    "name": "プロタゴニスト・セラピューティクス",
+    "cik": 1377121,
+    "name_en": "Protagonist Therapeutics"
+  },
+  "rows": [
+    {
+      "ja": "ライセンス・共同開発の提携先",
+      "en": "License & co-development partners"
+    },
+    {
+      "ja": "競合(10-Kに記載、炎症性腸疾患)",
+      "en": "Competitors (named in its 10-K, IBD)"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "ABBV",
+    "LLY"
+  ],
+  "companies": [
+    {
+      "id": "JNJ",
+      "ticker": "JNJ",
+      "name": "ジョンソン・エンド・ジョンソン",
+      "name_en": "Johnson & Johnson",
+      "sub": "医薬品・医療機器",
+      "sub_en": "Pharma & medical devices",
+      "sub_short": "医療機器",
+      "sub_short_en": "Medtech",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "経口IL-23R阻害薬Icotydeのライセンス先(2017年からの提携)",
+          "text_en": "Licensee of Icotyde, its oral IL-23R antagonist (partnership since 2017)",
+          "source": {
+            "label": "Protagonist Therapeutics 10-K(2025年度)",
+            "label_en": "Protagonist Therapeutics 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1377121/000110465926019696/ptgx-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Icotyde is licensed to Janssen Biotech, Inc., a Johnson & Johnson company (\"JNJ\"), under a license and collaboration agreement initially entered into in 2017."
+          }
+        }
+      ]
+    },
+    {
+      "id": "4502",
+      "ticker": "4502",
+      "name": "武田薬品工業",
+      "name_en": "Takeda",
+      "sub": "医薬品",
+      "sub_en": "Pharmaceuticals",
+      "sub_short": "医薬品",
+      "sub_short_en": "Pharma",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "rusfertideを共同開発・共同販売(2024年1月の契約)",
+          "text_en": "Co-develops and co-commercializes rusfertide (agreement of January 2024)",
+          "source": {
+            "label": "Protagonist Therapeutics 10-K(2025年度)",
+            "label_en": "Protagonist Therapeutics 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1377121/000110465926019696/ptgx-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "We discovered rusfertide, advanced it into Phase 3 development, and in early 2024 entered into a co-development and co-commercialization arrangement with Takeda Pharmaceuticals, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ABBV",
+      "ticker": "ABBV",
+      "name": "アッヴィ",
+      "name_en": "AbbVie",
+      "sub": "医薬品",
+      "sub_en": "Pharmaceuticals",
+      "sub_short": "医薬品",
+      "sub_short_en": "Pharma",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "炎症性腸疾患の既存薬(Skyrizi)で競合",
+          "text_en": "Competes in IBD with Skyrizi",
+          "source": {
+            "label": "Protagonist Therapeutics 10-K(2025年度)",
+            "label_en": "Protagonist Therapeutics 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1377121/000110465926019696/ptgx-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "and anti-IL-12/23 agents, including Stelara® (Johnson & Johnson), Skyrizi® (AbbVie), Tremfya® (Johnson & Johnson), and Omvoh® (Eli Lilly)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "LLY",
+      "ticker": "LLY",
+      "name": "イーライリリー",
+      "name_en": "Eli Lilly",
+      "sub": "医薬品",
+      "sub_en": "Pharmaceuticals",
+      "sub_short": "医薬品",
+      "sub_short_en": "Pharma",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "炎症性腸疾患の既存薬(Omvoh)で競合",
+          "text_en": "Competes in IBD with Omvoh",
+          "source": {
+            "label": "Protagonist Therapeutics 10-K(2025年度)",
+            "label_en": "Protagonist Therapeutics 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1377121/000110465926019696/ptgx-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "and anti-IL-12/23 agents, including Stelara® (Johnson & Johnson), Skyrizi® (AbbVie), Tremfya® (Johnson & Johnson), and Omvoh® (Eli Lilly)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RANI",
+      "ticker": "RANI",
+      "name": "ラニ・セラピューティクス",
+      "name_en": "Rani Therapeutics",
+      "sub": "経口バイオ医薬",
+      "sub_en": "Oral biologics",
+      "sub_short": "経口薬",
+      "sub_short_en": "Oral",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Raniが10-Kで、経口バイオ医薬の競合として挙げる",
+          "text_en": "Rani names Protagonist among oral biologics competitors",
+          "source": {
+            "label": "Rani Therapeutics 10-K(2024年度)",
+            "label_en": "Rani Therapeutics 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1856725/000095017025047740/rani-20241231.htm",
+            "level": "official",
+            "date": "2025-03-31",
+            "quote": "Additionally, we face competition from companies that are pursuing the development and manufacture of oral biologics, including Oramed Pharmaceuticals, Inc., Entera Bio Ltd., Protagonist Therapeutics, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ARQT",
+      "ticker": "ARQT",
+      "name": "アーカティス・バイオセラピューティクス",
+      "name_en": "Arcutis Biotherapeutics",
+      "sub": "皮膚疾患薬",
+      "sub_en": "Dermatology",
+      "sub_short": "皮膚薬",
+      "sub_short_en": "Derm",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Arcutisが10-Kで、乾癬の競合候補にJ&JとProtagonistのicotrokinraを挙げる",
+          "text_en": "Arcutis names icotrokinra from J&J and Protagonist as a potential psoriasis competitor",
+          "source": {
+            "label": "Arcutis 10-K(2025年度)",
+            "label_en": "Arcutis 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1787306/000178730626000018/arqt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "lcotrokinra, under development through a collaboration between Johnson & Johnson and Protagonist Therapeutics"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

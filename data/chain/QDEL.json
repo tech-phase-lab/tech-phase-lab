@@ -1,0 +1,191 @@
+{
+  "root": {
+    "ticker": "QDEL",
+    "name": "クイデルオルソ",
+    "cik": 1906324,
+    "name_en": "QuidelOrtho"
+  },
+  "rows": [
+    {
+      "ja": "共同事業(肝炎・HIV診断)",
+      "en": "Joint business (hepatitis & HIV diagnostics)",
+      "above": true
+    },
+    {
+      "ja": "顧客(動物診断の消耗品)",
+      "en": "Customer (veterinary test consumables)"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "ABT",
+    "DHR",
+    "ROCHE"
+  ],
+  "companies": [
+    {
+      "id": "GRFS",
+      "ticker": "GRFS",
+      "name": "グリフォルス",
+      "name_en": "Grifols",
+      "sub": "血漿分画製剤・診断",
+      "sub_en": "Plasma medicines & diagnostics",
+      "sub_short": "血漿製剤",
+      "sub_short_en": "Plasma",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "肝炎・HIV診断の事業で協業(Ortho時代からの共同事業)",
+          "text_en": "Collaboration on its hepatitis and HIV diagnostics business (joint business from the Ortho era)",
+          "source": {
+            "label": "QuidelOrtho 10-K(2025年度)",
+            "label_en": "QuidelOrtho 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1906324/000190632426000008/qdel-20251228.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "The Company has the Joint Business between Ortho and Grifols, under which Ortho and Grifols agreed to pursue a collaboration relating to Ortho's Hepatitis and HIV diagnostics business."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ABT",
+      "ticker": "ABT",
+      "name": "アボット",
+      "name_en": "Abbott",
+      "sub": "医療機器・診断",
+      "sub_en": "Medical devices & diagnostics",
+      "sub_short": "血糖測定",
+      "sub_short_en": "CGM",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合",
+          "text_en": "A principal competitor",
+          "source": {
+            "label": "QuidelOrtho 10-K(2025年度)",
+            "label_en": "QuidelOrtho 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1906324/000190632426000008/qdel-20251228.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Some of our principal competitors include, among others, Abbott Laboratories, bioMérieux, Bio-Rad, Danaher, Diasorin, Hologic, Qiagen, Revvity, Roche, Siemens Healthineers, Thermo Fisher Scientific, Waters Corporation (acquired BD Diagnostics division) and Wermerson Immuncor."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DHR",
+      "ticker": "DHR",
+      "name": "ダナハー",
+      "name_en": "Danaher",
+      "sub": "ライフサイエンス・診断",
+      "sub_en": "Life sciences & diagnostics",
+      "sub_short": "生命科学",
+      "sub_short_en": "Lab tools",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合",
+          "text_en": "A principal competitor",
+          "source": {
+            "label": "QuidelOrtho 10-K(2025年度)",
+            "label_en": "QuidelOrtho 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1906324/000190632426000008/qdel-20251228.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Some of our principal competitors include, among others, Abbott Laboratories, bioMérieux, Bio-Rad, Danaher, Diasorin, Hologic, Qiagen, Revvity, Roche, Siemens Healthineers, Thermo Fisher Scientific, Waters Corporation (acquired BD Diagnostics division) and Wermerson Immuncor."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ROCHE",
+      "ticker": "Roche",
+      "name": "ロシュ",
+      "name_en": "Roche",
+      "sub": "医薬品・診断",
+      "sub_en": "Pharma & diagnostics",
+      "sub_short": "大手製薬",
+      "sub_short_en": "Pharma",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合",
+          "text_en": "A principal competitor",
+          "source": {
+            "label": "QuidelOrtho 10-K(2025年度)",
+            "label_en": "QuidelOrtho 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1906324/000190632426000008/qdel-20251228.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Some of our principal competitors include, among others, Abbott Laboratories, bioMérieux, Bio-Rad, Danaher, Diasorin, Hologic, Qiagen, Revvity, Roche, Siemens Healthineers, Thermo Fisher Scientific, Waters Corporation (acquired BD Diagnostics division) and Wermerson Immuncor."
+          }
+        }
+      ]
+    },
+    {
+      "id": "IDXX",
+      "ticker": "IDXX",
+      "name": "アイデックス・ラボラトリーズ",
+      "name_en": "IDEXX Laboratories",
+      "sub": "動物診断",
+      "sub_en": "Animal diagnostics",
+      "sub_short": "動物医療",
+      "sub_short_en": "Vet tests",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "IDEXXが、分析装置用ドライスライドの供給元として挙げる",
+          "text_en": "IDEXX names it as the supplier of dry slide consumables for its analyzers",
+          "source": {
+            "label": "IDEXX 10-K(2024年度)",
+            "label_en": "IDEXX 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/874716/000087471625000037/idxx-20241231.htm",
+            "level": "official",
+            "date": "2025-02-21",
+            "quote": "Ortho Ortho-Clinical Diagnostics, Inc., a subsidiary of QuidelOrtho Corporation, a supplier of dry slide consumables used in our Catalyst One and Catalyst Dx Chemistry Analyzers and VetTest Chemistry Analyzer."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BIO",
+      "ticker": "BIO",
+      "name": "バイオ・ラッド・ラボラトリーズ",
+      "name_en": "Bio-Rad Laboratories",
+      "sub": "研究機器・診断",
+      "sub_en": "Life science & diagnostics",
+      "sub_short": "診断機器",
+      "sub_short_en": "Lab tools",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Bio-Radが10-Kで、臨床診断の主な競合として挙げる",
+          "text_en": "Bio-Rad names QuidelOrtho among major clinical diagnostics competitors",
+          "source": {
+            "label": "Bio-Rad 10-K(2024年度)",
+            "label_en": "Bio-Rad 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/12208/000001220825000007/bio-20241231.htm",
+            "level": "official",
+            "date": "2025-02-14",
+            "quote": "Major competitors for our products in the Clinical Diagnostics segment include Abbott Laboratories, Becton Dickinson, bioMérieux, Danaher, DiaSorin, Werfen, QuidelOrtho, Roche, Siemens Healthineers, Thermo Fisher Scientific and Tosoh."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

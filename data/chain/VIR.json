@@ -1,0 +1,190 @@
+{
+  "root": {
+    "ticker": "VIR",
+    "name": "ヴィア・バイオテクノロジー",
+    "cik": 1706431,
+    "name_en": "Vir Biotechnology"
+  },
+  "rows": [
+    {
+      "ja": "導入元(ライセンス元)",
+      "en": "In-licensing source",
+      "above": true
+    },
+    {
+      "ja": "共同開発・販売の提携先",
+      "en": "Development & commercial partners"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "JANX",
+    "CTMX"
+  ],
+  "companies": [
+    {
+      "id": "SNY",
+      "ticker": "SNY",
+      "name": "サノフィ",
+      "name_en": "Sanofi",
+      "sub": "医薬品",
+      "sub_en": "Pharmaceuticals",
+      "sub_short": "医薬品",
+      "sub_short_en": "Pharma",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ライセンス元。契約締結時に一時金1億ドルを支払い",
+          "text_en": "Licensor; Vir paid $100 million upfront at closing",
+          "source": {
+            "label": "Vir Biotechnology 10-K(2025年度)",
+            "label_en": "Vir Biotechnology 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1706431/000162828026010749/vir-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "As part of the closing of the Sanofi Agreement, we made an upfront payment to Sanofi in the amount of $ 100.0 million and transferred $ 75.0 million to an escrow account that was due to former shareholders of Amunix upon VIR-5525 achieving \"first in human dosing\" by 2026."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GSK",
+      "ticker": "GSK",
+      "name": "GSK",
+      "name_en": "GSK",
+      "sub": "医薬品",
+      "sub_en": "Pharmaceuticals",
+      "sub_short": "製薬大手",
+      "sub_short_en": "Pharma",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "抗体薬sotrovimabなどで提携。GSKが製造・販売を主導",
+          "text_en": "Partner on sotrovimab and related antibodies; GSK leads manufacturing and sales",
+          "source": {
+            "label": "Vir Biotechnology 10-K(2025年度)",
+            "label_en": "Vir Biotechnology 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1706431/000162828026010749/vir-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "As the lead party for all manufacturing and commercialization activities, GSK incurs all of the manufacturing, sales and marketing expenses and is the principal on sales transactions with third parties."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ALNY",
+      "ticker": "ALNY",
+      "name": "アルナイラム・ファーマシューティカルズ",
+      "name_en": "Alnylam Pharmaceuticals",
+      "sub": "RNAi医薬",
+      "sub_en": "RNAi therapeutics",
+      "sub_short": "RNA医薬",
+      "sub_short_en": "RNAi",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "共同研究・ライセンス契約(2017年10月)",
+          "text_en": "Collaboration and license agreement (October 2017)",
+          "source": {
+            "label": "Vir Biotechnology 10-K(2025年度)",
+            "label_en": "Vir Biotechnology 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1706431/000162828026010749/vir-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "Collaboration and License Agreement with Alnylam In October 2017, we and Alnylam Pharmaceuticals, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "XNCR",
+      "ticker": "XNCR",
+      "name": "ゼンコア",
+      "name_en": "Xencor",
+      "sub": "抗体技術",
+      "sub_en": "Antibody engineering",
+      "sub_short": "導入元",
+      "sub_short_en": "Licensor",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "抗体改変技術Xtendの提携先としてVirの肝炎B治療候補を挙げる",
+          "text_en": "Names Vir's hepatitis B candidate among partner programs using its Xtend technology",
+          "source": {
+            "label": "Xencor 10-K/A(2023年度)",
+            "label_en": "Xencor 10-K/A (FY2023)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1326732/000132673225000015/xncr-20231231.htm",
+            "level": "official",
+            "date": "2025-02-24",
+            "quote": "In addition to these approved drugs, our partners are 11 advancing multiple clinical-stage programs with antibodies engineered with Xtend and/or Cytotoxic Fc Domains, including: • Vir Biotechnology, Inc.: Vir is advancing tobevibart (VIR-3434)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "JANX",
+      "ticker": "JANX",
+      "name": "ジャナックス・セラピューティクス",
+      "name_en": "Janux Therapeutics",
+      "sub": "バイオ医薬",
+      "sub_en": "Biotech",
+      "sub_short": "抗体",
+      "sub_short_en": "Antibody",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Januxが10-Kで、プロドラッグ型抗体の競合として挙げる",
+          "text_en": "Janux names Vir among biologic prodrug competitors",
+          "source": {
+            "label": "Janux Therapeutics 10-K(2025年度)",
+            "label_en": "Janux Therapeutics 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1817713/000119312526076918/janx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "We also face competition from biologic prodrug developers such as Adagene, Chugai Pharmaceutical Co./Roche Holding AG, CytomX Therapeutics, Merck & Co., Takeda and Vir Biotechnology."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CTMX",
+      "ticker": "CTMX",
+      "name": "サイトムX",
+      "name_en": "CytomX Therapeutics",
+      "sub": "バイオ医薬",
+      "sub_en": "Biotech",
+      "sub_short": "がん薬",
+      "sub_short_en": "Oncology",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "CytomXが10-Kで、抗体マスキング技術の競合として挙げる",
+          "text_en": "CytomX names Vir among antibody masking competitors",
+          "source": {
+            "label": "CytomX 10-K(2025年度)",
+            "label_en": "CytomX 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1501989/000119312526107146/ctmx-20251231.htm",
+            "level": "official",
+            "date": "2026-03-16",
+            "quote": "Several companies, including Adagene, Amgen, Sanofi, BioAtla, Halozyme, Janux Therapeutics, Roche, Takeda, Vir Biotechnology, Werewolf Therapeutics and Xilio are exploring antibody masking and/or conditional activation strategies"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
