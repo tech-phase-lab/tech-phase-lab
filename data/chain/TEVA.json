@@ -1,0 +1,183 @@
+{
+  "root": {
+    "ticker": "TEVA",
+    "name": "テバ・ファーマシューティカル",
+    "cik": 818686,
+    "name_en": "Teva Pharmaceutical"
+  },
+  "rows": [
+    {
+      "ja": "バイオシミラーの導入元",
+      "en": "Biosimilar partners (in-licensing)",
+      "above": true
+    },
+    {
+      "ja": "開発資金・共同開発の相手",
+      "en": "Funding & co-development partners"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "SamsungBioepis",
+      "ticker": "Samsung Bioepis",
+      "name": "サムスン・バイオエピス",
+      "name_en": "Samsung Bioepis",
+      "sub": "バイオシミラー",
+      "sub_en": "Biosimilars",
+      "sub_short": "後続薬",
+      "sub_short_en": "Biosimilar",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ソリリスのバイオシミラーEPYSQLIを米国で販売する提携(2025年1月)",
+          "text_en": "Partnership to sell EPYSQLI, a Soliris biosimilar, in the U.S. (Jan 2025)",
+          "source": {
+            "label": "Teva 10-K(2025年度)",
+            "label_en": "Teva 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/818686/000119312526034532/d93612d10k.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "On January 10, 2025, we announced that we entered into a strategic partnership with Samsung Bioepis for the commercialization of EPYSQLI ® (eculizumab), Samsung Bioepis's biosimilar to Soliris ® (eculizumab-aagh) in the U.S."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Formycon",
+      "ticker": "FYB",
+      "name": "フォーマイコン",
+      "name_en": "Formycon",
+      "sub": "バイオシミラー",
+      "sub_en": "Biosimilars",
+      "sub_short": "後続薬",
+      "sub_short_en": "Biosimilar",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "アイリーアのバイオシミラーを欧州などで販売する提携(2025年1月)",
+          "text_en": "Collaboration to sell an Eylea biosimilar in Europe and other markets (Jan 2025)",
+          "source": {
+            "label": "Teva 10-K(2025年度)",
+            "label_en": "Teva 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/818686/000119312526034532/d93612d10k.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "On January 13, 2025, we announced we entered into a collaboration agreement with Formycon for the commercialization of FYB203, Formycon's biosimilar candidate to Eylea ® (aflibercept) in Europe (excluding Italy)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Prestige",
+      "ticker": "950210",
+      "name": "プレステージ・バイオファーマ",
+      "name_en": "Prestige Biopharma",
+      "sub": "バイオシミラー",
+      "sub_en": "Biosimilars",
+      "sub_short": "後続薬",
+      "sub_short_en": "Biosimilar",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ハーセプチンのバイオシミラーを欧州で販売する提携(2025年10月)",
+          "text_en": "Collaboration to sell a Herceptin biosimilar in Europe (Oct 2025)",
+          "source": {
+            "label": "Teva 10-K(2025年度)",
+            "label_en": "Teva 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/818686/000119312526034532/d93612d10k.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "On October 20, 2025, we announced we entered into a collaboration agreement with Prestige Biopharma for the commercialization of Tuznue ® , Prestige's biosimilar to Herceptin ® (trastuzumab), across a majority of European markets."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ALVO",
+      "ticker": "ALVO",
+      "name": "アルボテック",
+      "name_en": "Alvotech",
+      "sub": "バイオシミラー",
+      "sub_en": "Biosimilars",
+      "sub_short": "後続薬",
+      "sub_short_en": "Biosimilar",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "バイオシミラー開発の提携先",
+          "text_en": "Biosimilar development partner",
+          "source": {
+            "label": "Teva 10-K(2025年度)",
+            "label_en": "Teva 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/818686/000119312526034532/d93612d10k.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "(e.g., the transactions with mAbxience, Launch Therapeutics, Alvotech, Modag, Sanofi, Royalty Pharma and Biolojic)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RPRX",
+      "ticker": "RPRX",
+      "name": "ロイヤルティ・ファーマ",
+      "name_en": "Royalty Pharma",
+      "sub": "医薬品ロイヤルティ",
+      "sub_en": "Drug royalties",
+      "sub_short": "ロイヤル",
+      "sub_short_en": "Royalties",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "新薬候補TEV-'749の開発資金契約(2023年11月)",
+          "text_en": "Funding agreement for drug candidate TEV-'749 (Nov 2023)",
+          "source": {
+            "label": "Teva 10-K(2025年度)",
+            "label_en": "Teva 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/818686/000119312526034532/d93612d10k.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "Royalty Pharma (TEV-'749) On November 9, 2023, Teva entered into a funding agreement with Royalty Pharma plc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SNY",
+      "ticker": "SNY",
+      "name": "サノフィ",
+      "name_en": "Sanofi",
+      "sub": "製薬",
+      "sub_en": "Pharmaceuticals",
+      "sub_short": "製薬",
+      "sub_short_en": "Pharma",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "新薬パイプラインの提携先",
+          "text_en": "Innovative pipeline partner",
+          "source": {
+            "label": "Teva 10-K(2025年度)",
+            "label_en": "Teva 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/818686/000119312526034532/d93612d10k.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "(e.g., the transactions with mAbxience, Launch Therapeutics, Alvotech, Modag, Sanofi, Royalty Pharma and Biolojic)"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

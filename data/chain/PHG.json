@@ -1,0 +1,157 @@
+{
+  "root": {
+    "ticker": "PHG",
+    "name": "フィリップス",
+    "cik": 313216,
+    "name_en": "Philips"
+  },
+  "rows": [
+    {
+      "ja": "技術・AIの提携先",
+      "en": "Technology & AI partners",
+      "above": true
+    },
+    {
+      "ja": "医療機関・保険の提携先",
+      "en": "Health system & payer partners"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "MASI",
+      "ticker": "MASI",
+      "name": "マシモ",
+      "name_en": "Masimo",
+      "sub": "生体モニタリング",
+      "sub_en": "Patient monitoring",
+      "sub_short": "生体監視",
+      "sub_short_en": "Medtech",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "患者モニターにMasimoの技術を統合する協業を更新",
+          "text_en": "Renewed collaboration to integrate Masimo technologies into its patient monitors",
+          "source": {
+            "label": "Philips 20-F(2025年度)",
+            "label_en": "Philips 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/313216/000162828026009470/phg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "A renewed collaboration with Masimo aims to integrate advanced technologies in Philips' multi-parameter patient monitoring platforms."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Epic",
+      "ticker": "Epic Systems",
+      "name": "エピック・システムズ",
+      "name_en": "Epic Systems",
+      "sub": "電子カルテ",
+      "sub_en": "Electronic health records",
+      "sub_short": "カルテ",
+      "sub_short_en": "EHR",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "心電図モニタリングをEpicの電子カルテと統合する協業",
+          "text_en": "Collaboration to integrate cardiac monitoring services with Epic",
+          "source": {
+            "label": "Philips 20-F(2025年度)",
+            "label_en": "Philips 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/313216/000162828026009470/phg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Philips announced a collaboration with Epic Systems, the leading electronic health record company, to integrate Philips' suite of cardiac ambulatory monitoring and diagnostics services with Epic Systems' specialty diagnostics suite."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Cortechs",
+      "ticker": "Cortechs.ai",
+      "name": "コーテックスAI",
+      "name_en": "Cortechs.ai",
+      "sub": "医用画像AI",
+      "sub_en": "Medical imaging AI",
+      "sub_short": "画像AI",
+      "sub_short_en": "AI",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "クラウド型AI読影ソリューションで提携",
+          "text_en": "Partner on cloud-based AI reading solutions",
+          "source": {
+            "label": "Philips 20-F(2025年度)",
+            "label_en": "Philips 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/313216/000162828026009470/phg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "the Smart Reading cloud-based AI solutions, in partnership with Cortechs.ai, aim to enable zero-click workflows."
+          }
+        }
+      ]
+    },
+    {
+      "id": "UNH",
+      "ticker": "UNH",
+      "name": "ユナイテッドヘルス(Optum)",
+      "name_en": "UnitedHealth (Optum)",
+      "sub": "医療保険・医療サービス",
+      "sub_en": "Health insurance & services",
+      "sub_short": "医療保険",
+      "sub_short_en": "Insurer",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "米国でOptumの推奨ネットワーク事業者に(心電図モニタリング)",
+          "text_en": "Preferred in-network provider for Optum in the US (cardiac monitoring)",
+          "source": {
+            "label": "Philips 20-F(2025年度)",
+            "label_en": "Philips 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/313216/000162828026009470/phg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "As part of a national agreement with Optum Healthcare in the US, Philips has become a preferred in-network provider for cardiac ambulatory monitoring services."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MGB",
+      "ticker": "Mass General Brigham",
+      "name": "マス・ジェネラル・ブリガム",
+      "name_en": "Mass General Brigham",
+      "sub": "病院グループ",
+      "sub_en": "Hospital system",
+      "sub_short": "病院",
+      "sub_short_en": "Hospitals",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "臨床現場のAIで協業",
+          "text_en": "Collaboration on AI solutions for clinicians",
+          "source": {
+            "label": "Philips 20-F(2025年度)",
+            "label_en": "Philips 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/313216/000162828026009470/phg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "we announced a collaboration with Mass General Brigham to advance AI solutions that help clinicians capture, analyze and act on data in real time."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

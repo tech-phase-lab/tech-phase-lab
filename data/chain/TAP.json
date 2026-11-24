@@ -1,0 +1,269 @@
+{
+  "root": {
+    "ticker": "TAP",
+    "name": "モルソン・クアーズ",
+    "cik": 24545,
+    "name_en": "Molson Coors"
+  },
+  "rows": [
+    {
+      "ja": "容器の合弁相手(上流)",
+      "en": "Packaging joint-venture partners (upstream)",
+      "above": true
+    },
+    {
+      "ja": "ブランドの提携先",
+      "en": "Brand partners"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in its 10-K)"
+    }
+  ],
+  "rivals": [
+    "BUD",
+    "STZ",
+    "Heineken"
+  ],
+  "companies": [
+    {
+      "id": "BALL",
+      "ticker": "BALL",
+      "name": "ボール",
+      "name_en": "Ball",
+      "sub": "アルミ缶",
+      "sub_en": "Aluminum cans",
+      "sub_short": "アルミ缶",
+      "sub_short_en": "Cans",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "缶の一部を合弁RMMCから調達",
+          "text_en": "Buys some cans from RMMC, its joint venture with Ball",
+          "source": {
+            "label": "Molson Coors 10-K(2025年度)",
+            "label_en": "Molson Coors 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/24545/000002454526000006/tap-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "In the Americas segment, a portion of our aluminum cans and ends are purchased from Rocky Mountain Metal Container (\"RMMC\"), our joint venture with Ball Corporation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "OI",
+      "ticker": "OI",
+      "name": "O-Iグラス",
+      "name_en": "O-I Glass",
+      "sub": "ガラス瓶",
+      "sub_en": "Glass containers",
+      "sub_short": "ガラス瓶",
+      "sub_short_en": "Glass",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ガラス瓶の一部を合弁RMBCから調達",
+          "text_en": "Buys some glass bottles from RMBC, its joint venture with Owens-Brockway",
+          "source": {
+            "label": "Molson Coors 10-K(2025年度)",
+            "label_en": "Molson Coors 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/24545/000002454526000006/tap-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "In the Americas segment, a portion of our glass bottles are purchased from Rocky Mountain Bottle Company (\"RMBC\"), our joint venture with Owens-Brockway Glass Container, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Yuengling",
+      "ticker": "Yuengling",
+      "name": "イングリング",
+      "name_en": "The Yuengling Company",
+      "sub": "ビール",
+      "sub_en": "Beer",
+      "sub_short": "ビール",
+      "sub_short_en": "Beer",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "米西部でYuenglingビールを広げる合弁",
+          "text_en": "Joint venture to expand Yuengling beer in the western U.S.",
+          "source": {
+            "label": "Molson Coors 10-K(2025年度)",
+            "label_en": "Molson Coors 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/24545/000002454526000006/tap-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "We have also entered into a joint venture with The Yuengling Company LLC to expand the distribution of Yuengling beer in the western U.S."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FEVR",
+      "ticker": "FEVR",
+      "name": "フィーバーツリー",
+      "name_en": "Fevertree Drinks",
+      "sub": "炭酸ミキサー",
+      "sub_en": "Premium mixers",
+      "sub_short": "ミキサー",
+      "sub_short_en": "Mixers",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "米国でFever-Treeの独占的な輸入・製造・販売権を取得(2025年)",
+          "text_en": "Obtained exclusive U.S. rights to import, make and sell Fever-Tree (2025)",
+          "source": {
+            "label": "Molson Coors 10-K(2025年度)",
+            "label_en": "Molson Coors 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/24545/000002454526000006/tap-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "During the first quarter of 2025, we obtained exclusive rights via a license agreement to import, produce, market, advertise, promote, sell and distribute Fever-Tree products in the U.S."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BUD",
+      "ticker": "BUD",
+      "name": "アンハイザー・ブッシュ・インベブ",
+      "name_en": "Anheuser-Busch InBev",
+      "sub": "ビール",
+      "sub_en": "Beer",
+      "sub_short": "ビール",
+      "sub_short_en": "Beer",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "最も直接的に競合",
+          "text_en": "One of its most direct competitors",
+          "source": {
+            "label": "Molson Coors 10-K(2025年度)",
+            "label_en": "Molson Coors 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/24545/000002454526000006/tap-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "we compete most directly with Anheuser-Busch InBev SA/NV (\"ABI\") and Constellation Brands, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "STZ",
+      "ticker": "STZ",
+      "name": "コンステレーション・ブランズ",
+      "name_en": "Constellation Brands",
+      "sub": "ビール・ワイン",
+      "sub_en": "Beer & wine",
+      "sub_short": "ビール",
+      "sub_short_en": "Beer",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "最も直接的に競合",
+          "text_en": "One of its most direct competitors",
+          "source": {
+            "label": "Molson Coors 10-K(2025年度)",
+            "label_en": "Molson Coors 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/24545/000002454526000006/tap-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "we compete most directly with Anheuser-Busch InBev SA/NV (\"ABI\") and Constellation Brands, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Heineken",
+      "ticker": "Heineken",
+      "name": "ハイネケン",
+      "name_en": "Heineken",
+      "sub": "ビール",
+      "sub_en": "Beer",
+      "sub_short": "ビール",
+      "sub_short_en": "Beer",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "欧州での主な競合",
+          "text_en": "Primary competitor in Europe",
+          "source": {
+            "label": "Molson Coors 10-K(2025年度)",
+            "label_en": "Molson Coors 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/24545/000002454526000006/tap-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "In the European countries where we currently operate, our primary competitors are Heineken, Asahi, Carlsberg and ABI."
+          }
+        }
+      ]
+    },
+    {
+      "id": "2502",
+      "ticker": "2502",
+      "name": "アサヒグループ",
+      "name_en": "Asahi Group",
+      "sub": "ビール",
+      "sub_en": "Beer",
+      "sub_short": "ビール",
+      "sub_short_en": "Beer",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "欧州での主な競合",
+          "text_en": "Primary competitor in Europe",
+          "source": {
+            "label": "Molson Coors 10-K(2025年度)",
+            "label_en": "Molson Coors 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/24545/000002454526000006/tap-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "In the European countries where we currently operate, our primary competitors are Heineken, Asahi, Carlsberg and ABI."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Carlsberg",
+      "ticker": "CARL-B",
+      "name": "カールスバーグ",
+      "name_en": "Carlsberg",
+      "sub": "ビール",
+      "sub_en": "Beer",
+      "sub_short": "ビール",
+      "sub_short_en": "Beer",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "欧州での主な競合",
+          "text_en": "Primary competitor in Europe",
+          "source": {
+            "label": "Molson Coors 10-K(2025年度)",
+            "label_en": "Molson Coors 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/24545/000002454526000006/tap-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "In the European countries where we currently operate, our primary competitors are Heineken, Asahi, Carlsberg and ABI."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

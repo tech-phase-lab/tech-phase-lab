@@ -1,0 +1,159 @@
+{
+  "root": {
+    "ticker": "EPC",
+    "name": "エッジウェル・パーソナルケア",
+    "cik": 1096752,
+    "name_en": "Edgewell Personal Care"
+  },
+  "rows": [
+    {
+      "ja": "主な顧客・ネット販売の提携先",
+      "en": "Main customers & e-commerce partner"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in its 10-K)"
+    }
+  ],
+  "rivals": [
+    "PG",
+    "BIC"
+  ],
+  "companies": [
+    {
+      "id": "WMT",
+      "ticker": "WMT",
+      "name": "ウォルマート",
+      "name_en": "Walmart",
+      "sub": "小売",
+      "sub_en": "Retail",
+      "sub_short": "量販店",
+      "sub_short_en": "Retail",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大の顧客(売上の約18.8%)",
+          "text_en": "Largest customer (about 18.8% of net sales)",
+          "source": {
+            "label": "Edgewell Personal Care 10-K(2026年9月期)",
+            "label_en": "Edgewell Personal Care 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1096752/000162828026073923/epc-20260930.htm",
+            "level": "official",
+            "date": "2026-11-13",
+            "quote": "The Company's largest customer, Walmart Inc. and its affiliates (collectively, \"Walmart\"), accounted for approximately 18.8 % of consolidated net sales in fiscal 2026."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TGT",
+      "ticker": "TGT",
+      "name": "ターゲット",
+      "name_en": "Target",
+      "sub": "小売",
+      "sub_en": "Retail",
+      "sub_short": "総合小売",
+      "sub_short_en": "Retail",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "日焼け止め・スキンケア部門の売上の約9.8%",
+          "text_en": "About 9.8% of Sun and Skin Care segment sales",
+          "source": {
+            "label": "Edgewell Personal Care 10-K(2026年9月期)",
+            "label_en": "Edgewell Personal Care 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1096752/000162828026073923/epc-20260930.htm",
+            "level": "official",
+            "date": "2026-11-13",
+            "quote": "Additionally, in fiscal 2026, Target Corporation represented approximately 9.8 % of consolidated net sales for the Sun and Skin Care segment."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BABA",
+      "ticker": "BABA",
+      "name": "アリババ",
+      "name_en": "Alibaba",
+      "sub": "EC・クラウド",
+      "sub_en": "E-commerce & cloud",
+      "sub_short": "EC",
+      "sub_short_en": "E-com",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "中国でT-Mallとの提携でネット販売を拡大",
+          "text_en": "Expanding e-commerce sales in China through a partnership with T-Mall",
+          "source": {
+            "label": "Edgewell Personal Care 10-K(2026年9月期)",
+            "label_en": "Edgewell Personal Care 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1096752/000162828026073923/epc-20260930.htm",
+            "level": "official",
+            "date": "2026-11-13",
+            "quote": "an acceleration of e-commerce sales in China through our partnership with T-Mall"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PG",
+      "ticker": "PG",
+      "name": "プロクター・アンド・ギャンブル",
+      "name_en": "Procter & Gamble",
+      "sub": "日用品",
+      "sub_en": "Consumer goods",
+      "sub_short": "日用品",
+      "sub_short_en": "Consumer",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "カミソリの主な競合(Gillette)",
+          "text_en": "Principal wet shave competitor (Gillette)",
+          "source": {
+            "label": "Edgewell Personal Care 10-K(2026年9月期)",
+            "label_en": "Edgewell Personal Care 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1096752/000162828026073923/epc-20260930.htm",
+            "level": "official",
+            "date": "2026-11-13",
+            "quote": "Our principal competitors in the global wet shave business are: The Procter & Gamble Company, which owns the Gillette brand and is the leading company in the global wet shave segment; The Bic Group"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BIC",
+      "ticker": "BB.PA",
+      "name": "ビック",
+      "name_en": "BIC",
+      "sub": "文具・ライター・カミソリ",
+      "sub_en": "Stationery, lighters & shavers",
+      "sub_short": "カミソリ",
+      "sub_short_en": "Shavers",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "カミソリの主な競合",
+          "text_en": "Principal wet shave competitor",
+          "source": {
+            "label": "Edgewell Personal Care 10-K(2026年9月期)",
+            "label_en": "Edgewell Personal Care 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1096752/000162828026073923/epc-20260930.htm",
+            "level": "official",
+            "date": "2026-11-13",
+            "quote": "Our principal competitors in the global wet shave business are: The Procter & Gamble Company, which owns the Gillette brand and is the leading company in the global wet shave segment; The Bic Group"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

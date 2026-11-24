@@ -1,0 +1,209 @@
+{
+  "root": {
+    "ticker": "E",
+    "name": "エニ",
+    "cik": 1002242,
+    "name_en": "Eni"
+  },
+  "rows": [
+    {
+      "ja": "LNGの調達先・ガス資産の統合相手",
+      "en": "LNG supplier & gas-asset partners",
+      "above": true
+    },
+    {
+      "ja": "LNGの販売先・事業の売却先",
+      "en": "LNG buyer & stake buyers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "VG",
+      "ticker": "VG",
+      "name": "ベンチャー・グローバル",
+      "name_en": "Venture Global",
+      "sub": "LNG",
+      "sub_en": "LNG",
+      "sub_short": "LNG",
+      "sub_short_en": "LNG",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "2030年から20年間、年200万トンのLNGを購入する契約",
+          "text_en": "Long-term deal to buy 2 MTPA of LNG for 20 years from 2030",
+          "source": {
+            "label": "Eni 20-F(2025年度)",
+            "label_en": "Eni 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1002242/000155485526000390/e-20251231.htm",
+            "level": "official",
+            "date": "2026-03-23",
+            "quote": "Eni signed a long-term liquefied natural gas (LNG) supply agreement with Venture Global, covering the purchase of 2 MTPA for 20 years from 2030."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Petronas",
+      "ticker": "Petronas",
+      "name": "ペトロナス",
+      "name_en": "Petronas",
+      "sub": "石油・ガス(マレーシア)",
+      "sub_en": "Oil & gas (Malaysia)",
+      "sub_short": "石油ガス",
+      "sub_short_en": "Oil & gas",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "インドネシア・マレーシアのガス資産を統合する拘束力のある契約",
+          "text_en": "Binding agreement to combine gas assets in Indonesia/Malaysia",
+          "source": {
+            "label": "Eni 20-F(2025年度)",
+            "label_en": "Eni 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1002242/000155485526000390/e-20251231.htm",
+            "level": "official",
+            "date": "2026-03-23",
+            "quote": "we signed a binding agreement with Petronas to combine the two shareholders' gas assets in Indonesia/Malaysia."
+          }
+        }
+      ]
+    },
+    {
+      "id": "YPF",
+      "ticker": "YPF",
+      "name": "YPF",
+      "name_en": "YPF",
+      "sub": "石油・ガス(アルゼンチン)",
+      "sub_en": "Oil & gas (Argentina)",
+      "sub_short": "石油ガス",
+      "sub_short_en": "Oil & gas",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "アルゼンチンLNG計画で合意(2025年6月)",
+          "text_en": "Agreement on the Argentina LNG project (Jun 2025)",
+          "source": {
+            "label": "Eni 20-F(2025年度)",
+            "label_en": "Eni 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1002242/000155485526000390/e-20251231.htm",
+            "level": "official",
+            "date": "2026-03-23",
+            "quote": "June 2025 - Eni signed an agreement with YPF for the massive Argentina LNG (ARGLNG) project"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PTTEP",
+      "ticker": "PTTEP",
+      "name": "PTT探査生産(PTTEP)",
+      "name_en": "PTTEP",
+      "sub": "石油・ガス(タイ)",
+      "sub_en": "Oil & gas (Thailand)",
+      "sub_short": "石油ガス",
+      "sub_short_en": "Oil & gas",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "アルジェリアのReggane II鉱区を共同で取得",
+          "text_en": "Won Algeria's Reggane II block together",
+          "source": {
+            "label": "Eni 20-F(2025年度)",
+            "label_en": "Eni 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1002242/000155485526000390/e-20251231.htm",
+            "level": "official",
+            "date": "2026-03-23",
+            "quote": "This new agreement follows the recent award, in the context of 2024 Algeria Bid Round, of the Reggane II block to Eni in partnership with PTTEP."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GULF",
+      "ticker": "GULF",
+      "name": "ガルフ・デベロップメント",
+      "name_en": "Gulf Development",
+      "sub": "発電(タイ)",
+      "sub_en": "Power (Thailand)",
+      "sub_short": "発電",
+      "sub_short_en": "Power",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "10年間、年80万トンのLNGを供給する契約(2025年12月)",
+          "text_en": "Long-term deal to supply 0.8 MTPA of LNG for 10 years (Dec 2025)",
+          "source": {
+            "label": "Eni 20-F(2025年度)",
+            "label_en": "Eni 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1002242/000155485526000390/e-20251231.htm",
+            "level": "official",
+            "date": "2026-03-23",
+            "quote": "December 2025 - Eni entered into a long-term LNG sale agreement with Thailand's Gulf Development Company to supply 0.8 MTPA of LNG for 10 years to Gulf"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ARES",
+      "ticker": "ARES",
+      "name": "アレス・マネジメント",
+      "name_en": "Ares Management",
+      "sub": "資産運用",
+      "sub_en": "Asset management",
+      "sub_short": "資産運用",
+      "sub_short_en": "Assets",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Plenitudeの株20%を約20億ユーロで売却する契約",
+          "text_en": "Agreed to sell 20% of Plenitude for about €2 billion",
+          "source": {
+            "label": "Eni 20-F(2025年度)",
+            "label_en": "Eni 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1002242/000155485526000390/e-20251231.htm",
+            "level": "official",
+            "date": "2026-03-23",
+            "quote": "Eni signed an agreement with Ares Management Alternative Credit funds (\"Ares\"), affiliates of leading global alternative investment manager Ares Management Corporation (NYSE: ARES), for the sale of a 20% stake in the share capital of Plenitude, for a purchase price of approximately €2 bln"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SOCAR",
+      "ticker": "SOCAR",
+      "name": "アゼルバイジャン国営石油(SOCAR)",
+      "name_en": "SOCAR",
+      "sub": "石油・ガス(アゼルバイジャン)",
+      "sub_en": "Oil & gas (Azerbaijan)",
+      "sub_short": "石油ガス",
+      "sub_short_en": "Oil & gas",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "コートジボワールのBaleine計画の10%を売却する契約(2026年1月)",
+          "text_en": "Agreed to sell 10% of the Baleine project in Côte d'Ivoire (Jan 2026)",
+          "source": {
+            "label": "Eni 20-F(2025年度)",
+            "label_en": "Eni 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1002242/000155485526000390/e-20251231.htm",
+            "level": "official",
+            "date": "2026-03-23",
+            "quote": "January 2026 - Eni signed a binding agreement with Socar, the State Oil Company of the Republic of Azerbaijan, for the sale of a 10% stake in the Baleine Project in Côte d'Ivoire."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

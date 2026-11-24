@@ -1,0 +1,240 @@
+{
+  "root": {
+    "ticker": "GME",
+    "name": "ゲームストップ",
+    "cik": 1326380,
+    "name_en": "GameStop"
+  },
+  "rows": [
+    {
+      "ja": "商品の仕入れ先・提携先(上流)",
+      "en": "Vendors & partner (upstream)",
+      "above": true
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in its 10-K)"
+    }
+  ],
+  "rivals": [
+    "AMZN",
+    "WMT",
+    "TGT",
+    "BBY"
+  ],
+  "companies": [
+    {
+      "id": "Nintendo",
+      "ticker": "Nintendo",
+      "name": "任天堂",
+      "name_en": "Nintendo",
+      "sub": "ゲーム機・ソフト",
+      "sub_en": "Video games",
+      "sub_short": "ゲーム",
+      "sub_short_en": "Games",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "最大の仕入れ先の一社(3社で新品仕入れの過半)",
+          "text_en": "One of its largest vendors (the three make up most new-product purchases)",
+          "source": {
+            "label": "GameStop 10-K(2025年度)",
+            "label_en": "GameStop 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1326380/000132638026000013/gme-20260131.htm",
+            "level": "official",
+            "date": "2026-03-24",
+            "quote": "Our largest vendors are Nintendo, Sony, and Pokemon, which collectively accounted for a majority of our new product purchases in fiscal 2025."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SONY",
+      "ticker": "SONY",
+      "name": "ソニーグループ",
+      "name_en": "Sony Group",
+      "sub": "電機・ゲーム",
+      "sub_en": "Electronics & games",
+      "sub_short": "電機",
+      "sub_short_en": "Sony",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "最大の仕入れ先の一社(3社で新品仕入れの過半)",
+          "text_en": "One of its largest vendors (the three make up most new-product purchases)",
+          "source": {
+            "label": "GameStop 10-K(2025年度)",
+            "label_en": "GameStop 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1326380/000132638026000013/gme-20260131.htm",
+            "level": "official",
+            "date": "2026-03-24",
+            "quote": "Our largest vendors are Nintendo, Sony, and Pokemon, which collectively accounted for a majority of our new product purchases in fiscal 2025."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Pokemon",
+      "ticker": "Pokemon",
+      "name": "ポケモン",
+      "name_en": "The Pokémon Company",
+      "sub": "ゲーム・カード",
+      "sub_en": "Games & trading cards",
+      "sub_short": "ゲーム",
+      "sub_short_en": "Games",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "最大の仕入れ先の一社(3社で新品仕入れの過半)",
+          "text_en": "One of its largest vendors (the three make up most new-product purchases)",
+          "source": {
+            "label": "GameStop 10-K(2025年度)",
+            "label_en": "GameStop 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1326380/000132638026000013/gme-20260131.htm",
+            "level": "official",
+            "date": "2026-03-24",
+            "quote": "Our largest vendors are Nintendo, Sony, and Pokemon, which collectively accounted for a majority of our new product purchases in fiscal 2025."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Collectors",
+      "ticker": "Collectors Holdings",
+      "name": "コレクターズ・ホールディングス",
+      "name_en": "Collectors Holdings",
+      "sub": "カード鑑定(PSA)",
+      "sub_en": "Card grading (PSA)",
+      "sub_short": "鑑定",
+      "sub_short_en": "Grading",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "PSA部門とカード取引サービスPower Packsを開始(2025年)",
+          "text_en": "Launched the Power Packs trading platform with its PSA division (2025)",
+          "source": {
+            "label": "GameStop 10-K(2025年度)",
+            "label_en": "GameStop 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1326380/000132638026000013/gme-20260131.htm",
+            "level": "official",
+            "date": "2026-03-24",
+            "quote": "In 2025, the Company launched Power Packs, a new digital trading platform in partnership with Collectors Holdings, Inc, through its Professional Sports Authenticator (\"PSA\") division."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン",
+      "name_en": "Amazon",
+      "sub": "EC・クラウド",
+      "sub_en": "E-commerce & cloud",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "米国での競合",
+          "text_en": "Competitor in the U.S.",
+          "source": {
+            "label": "GameStop 10-K(2025年度)",
+            "label_en": "GameStop 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1326380/000132638026000013/gme-20260131.htm",
+            "level": "official",
+            "date": "2026-03-24",
+            "quote": "In the United States, we compete with Walmart Stores, Inc. (\"Walmart\"), Target Corporation (\"Target\"), Best Buy Co., Inc. (\"Best Buy\") and Amazon.com, Inc. (\"Amazon.com\"), and other national and specialty retailers."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WMT",
+      "ticker": "WMT",
+      "name": "ウォルマート",
+      "name_en": "Walmart",
+      "sub": "小売",
+      "sub_en": "Retail",
+      "sub_short": "量販店",
+      "sub_short_en": "Retail",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "米国での競合",
+          "text_en": "Competitor in the U.S.",
+          "source": {
+            "label": "GameStop 10-K(2025年度)",
+            "label_en": "GameStop 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1326380/000132638026000013/gme-20260131.htm",
+            "level": "official",
+            "date": "2026-03-24",
+            "quote": "In the United States, we compete with Walmart Stores, Inc. (\"Walmart\"), Target Corporation (\"Target\"), Best Buy Co., Inc. (\"Best Buy\") and Amazon.com, Inc. (\"Amazon.com\"), and other national and specialty retailers."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TGT",
+      "ticker": "TGT",
+      "name": "ターゲット",
+      "name_en": "Target",
+      "sub": "小売",
+      "sub_en": "Retail",
+      "sub_short": "総合小売",
+      "sub_short_en": "Retail",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "米国での競合",
+          "text_en": "Competitor in the U.S.",
+          "source": {
+            "label": "GameStop 10-K(2025年度)",
+            "label_en": "GameStop 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1326380/000132638026000013/gme-20260131.htm",
+            "level": "official",
+            "date": "2026-03-24",
+            "quote": "In the United States, we compete with Walmart Stores, Inc. (\"Walmart\"), Target Corporation (\"Target\"), Best Buy Co., Inc. (\"Best Buy\") and Amazon.com, Inc. (\"Amazon.com\"), and other national and specialty retailers."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BBY",
+      "ticker": "BBY",
+      "name": "ベスト・バイ",
+      "name_en": "Best Buy",
+      "sub": "家電量販",
+      "sub_en": "Electronics retail",
+      "sub_short": "家電小売",
+      "sub_short_en": "Retail",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "米国での競合",
+          "text_en": "Competitor in the U.S.",
+          "source": {
+            "label": "GameStop 10-K(2025年度)",
+            "label_en": "GameStop 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1326380/000132638026000013/gme-20260131.htm",
+            "level": "official",
+            "date": "2026-03-24",
+            "quote": "In the United States, we compete with Walmart Stores, Inc. (\"Walmart\"), Target Corporation (\"Target\"), Best Buy Co., Inc. (\"Best Buy\") and Amazon.com, Inc. (\"Amazon.com\"), and other national and specialty retailers."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

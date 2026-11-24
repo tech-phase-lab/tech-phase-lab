@@ -1,0 +1,230 @@
+{
+  "root": {
+    "ticker": "NWL",
+    "name": "ニューウェル・ブランズ",
+    "cik": 814453,
+    "name_en": "Newell Brands"
+  },
+  "rows": [
+    {
+      "ja": "主な顧客(上位10社)",
+      "en": "Main customers (top ten)"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン",
+      "name_en": "Amazon",
+      "sub": "EC・クラウド",
+      "sub_en": "E-commerce & cloud",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大の顧客(売上の約17%)",
+          "text_en": "Largest customer (about 17% of net sales)",
+          "source": {
+            "label": "Newell Brands 10-K(2025年度)",
+            "label_en": "Newell Brands 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/814453/000081445326000008/nwl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "The Company's largest customer in 2025, Amazon, accounted for approximately 17%, 15% and 13% of net sales in 2025, 2024 and 2023, respectively."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WMT",
+      "ticker": "WMT",
+      "name": "ウォルマート",
+      "name_en": "Walmart",
+      "sub": "小売",
+      "sub_en": "Retail",
+      "sub_short": "量販店",
+      "sub_short_en": "Retail",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2番目の顧客(売上の約13%)",
+          "text_en": "Second-largest customer (about 13% of net sales)",
+          "source": {
+            "label": "Newell Brands 10-K(2025年度)",
+            "label_en": "Newell Brands 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/814453/000081445326000008/nwl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Walmart Inc. and subsidiaries (\"Walmart\"), the Company's second largest customer in 2025, accounted for approximately 13%, 14% and 15% of net sales in 2025, 2024 and 2023, respectively."
+          }
+        }
+      ]
+    },
+    {
+      "id": "COST",
+      "ticker": "COST",
+      "name": "コストコ",
+      "name_en": "Costco",
+      "sub": "会員制倉庫店",
+      "sub_en": "Warehouse clubs",
+      "sub_short": "量販店",
+      "sub_short_en": "Clubs",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "上位10顧客の一社",
+          "text_en": "One of its top-ten customers",
+          "source": {
+            "label": "Newell Brands 10-K(2025年度)",
+            "label_en": "Newell Brands 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/814453/000081445326000008/nwl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "The Company's top-ten customers in 2025 included (in alphabetical order): Amazon.com Inc., Costco Wholesale Corporation, Grainger Inc., Office Depot Inc., Staples Inc., Target Corporation, The Home Depot Inc., The Kroger Co., Uline Inc. and Walmart Inc. and subsidiaries."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TGT",
+      "ticker": "TGT",
+      "name": "ターゲット",
+      "name_en": "Target",
+      "sub": "小売",
+      "sub_en": "Retail",
+      "sub_short": "総合小売",
+      "sub_short_en": "Retail",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "上位10顧客の一社",
+          "text_en": "One of its top-ten customers",
+          "source": {
+            "label": "Newell Brands 10-K(2025年度)",
+            "label_en": "Newell Brands 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/814453/000081445326000008/nwl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "The Company's top-ten customers in 2025 included (in alphabetical order): Amazon.com Inc., Costco Wholesale Corporation, Grainger Inc., Office Depot Inc., Staples Inc., Target Corporation, The Home Depot Inc., The Kroger Co., Uline Inc. and Walmart Inc. and subsidiaries."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HD",
+      "ticker": "HD",
+      "name": "ホーム・デポ",
+      "name_en": "Home Depot",
+      "sub": "ホームセンター",
+      "sub_en": "Home improvement retail",
+      "sub_short": "住宅用品",
+      "sub_short_en": "Home",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "上位10顧客の一社",
+          "text_en": "One of its top-ten customers",
+          "source": {
+            "label": "Newell Brands 10-K(2025年度)",
+            "label_en": "Newell Brands 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/814453/000081445326000008/nwl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "The Company's top-ten customers in 2025 included (in alphabetical order): Amazon.com Inc., Costco Wholesale Corporation, Grainger Inc., Office Depot Inc., Staples Inc., Target Corporation, The Home Depot Inc., The Kroger Co., Uline Inc. and Walmart Inc. and subsidiaries."
+          }
+        }
+      ]
+    },
+    {
+      "id": "KR",
+      "ticker": "KR",
+      "name": "クローガー",
+      "name_en": "Kroger",
+      "sub": "スーパー",
+      "sub_en": "Grocery",
+      "sub_short": "スーパー",
+      "sub_short_en": "Grocery",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "上位10顧客の一社",
+          "text_en": "One of its top-ten customers",
+          "source": {
+            "label": "Newell Brands 10-K(2025年度)",
+            "label_en": "Newell Brands 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/814453/000081445326000008/nwl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "The Company's top-ten customers in 2025 included (in alphabetical order): Amazon.com Inc., Costco Wholesale Corporation, Grainger Inc., Office Depot Inc., Staples Inc., Target Corporation, The Home Depot Inc., The Kroger Co., Uline Inc. and Walmart Inc. and subsidiaries."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GWW",
+      "ticker": "GWW",
+      "name": "W.W.グレインジャー",
+      "name_en": "W.W. Grainger",
+      "sub": "産業用品卸",
+      "sub_en": "Industrial distribution",
+      "sub_short": "産業卸",
+      "sub_short_en": "MRO",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "上位10顧客の一社",
+          "text_en": "One of its top-ten customers",
+          "source": {
+            "label": "Newell Brands 10-K(2025年度)",
+            "label_en": "Newell Brands 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/814453/000081445326000008/nwl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "The Company's top-ten customers in 2025 included (in alphabetical order): Amazon.com Inc., Costco Wholesale Corporation, Grainger Inc., Office Depot Inc., Staples Inc., Target Corporation, The Home Depot Inc., The Kroger Co., Uline Inc. and Walmart Inc. and subsidiaries."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ODP",
+      "ticker": "ODP",
+      "name": "ODP(オフィス・デポ)",
+      "name_en": "ODP Corporation",
+      "sub": "事務用品",
+      "sub_en": "Office supplies",
+      "sub_short": "事務用品",
+      "sub_short_en": "Office",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "上位10顧客の一社(Office Depot)",
+          "text_en": "One of its top-ten customers (Office Depot)",
+          "source": {
+            "label": "Newell Brands 10-K(2025年度)",
+            "label_en": "Newell Brands 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/814453/000081445326000008/nwl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "The Company's top-ten customers in 2025 included (in alphabetical order): Amazon.com Inc., Costco Wholesale Corporation, Grainger Inc., Office Depot Inc., Staples Inc., Target Corporation, The Home Depot Inc., The Kroger Co., Uline Inc. and Walmart Inc. and subsidiaries."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

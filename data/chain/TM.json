@@ -1,0 +1,235 @@
+{
+  "root": {
+    "ticker": "TM",
+    "name": "トヨタ自動車",
+    "cik": 1094517,
+    "name_en": "Toyota Motor"
+  },
+  "rows": [
+    {
+      "ja": "電池・水素の共同開発先",
+      "en": "Battery & hydrogen partners",
+      "above": true
+    },
+    {
+      "ja": "中国の合弁・提携先",
+      "en": "China joint ventures & partners"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "5019",
+      "ticker": "5019",
+      "name": "出光興産",
+      "name_en": "Idemitsu Kosan",
+      "sub": "石油・素材",
+      "sub_en": "Oil & materials",
+      "sub_short": "石油素材",
+      "sub_short_en": "Oil",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "EV向け全固体電池の量産に向けて提携(2023年10月)",
+          "text_en": "Partnership toward mass production of all-solid-state batteries (Oct 2023)",
+          "source": {
+            "label": "Toyota 20-F(2026年3月期)",
+            "label_en": "Toyota 20-F (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1094517/000119312526264811/d101983d20f.htm",
+            "level": "official",
+            "date": "2026-06-10",
+            "quote": "In October 2023, Toyota announced a partnership with Idemitsu Kosan Co., Ltd. (\"Idemitsu\") to work toward the mass production of all-solid-state batteries for BEVs."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SMM",
+      "ticker": "5713",
+      "name": "住友金属鉱山",
+      "name_en": "Sumitomo Metal Mining",
+      "sub": "非鉄金属・電池材料",
+      "sub_en": "Nonferrous metals & battery materials",
+      "sub_short": "非鉄金属",
+      "sub_short_en": "Metals",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "全固体電池用の正極材の量産で協業(2025年10月)",
+          "text_en": "Collaboration on mass-producing cathode materials (Oct 2025)",
+          "source": {
+            "label": "Toyota 20-F(2026年3月期)",
+            "label_en": "Toyota 20-F (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1094517/000119312526264811/d101983d20f.htm",
+            "level": "official",
+            "date": "2026-06-10",
+            "quote": "In October 2025, we announced a collaboration with Sumitomo Metal Mining Co., Ltd. (\"Sumitomo Metal Mining\") aimed at mass production of cathode materials."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DTG",
+      "ticker": "Daimler Truck",
+      "name": "ダイムラー・トラック",
+      "name_en": "Daimler Truck",
+      "sub": "トラック",
+      "sub_en": "Trucks",
+      "sub_short": "トラック",
+      "sub_short_en": "Trucks",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "商用車での水素活用を協業",
+          "text_en": "Collaborates on hydrogen for commercial vehicles",
+          "source": {
+            "label": "Toyota 20-F(2026年3月期)",
+            "label_en": "Toyota 20-F (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1094517/000119312526264811/d101983d20f.htm",
+            "level": "official",
+            "date": "2026-06-10",
+            "quote": "For commercial vehicles, we are collaborating with Daimler Truck Holding AG, and for passenger vehicles, we are working with BMW"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BMW",
+      "ticker": "BMW",
+      "name": "BMW",
+      "name_en": "BMW",
+      "sub": "高級車",
+      "sub_en": "Luxury cars",
+      "sub_short": "高級車",
+      "sub_short_en": "Luxury",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "乗用車での水素活用を協業",
+          "text_en": "Works with BMW on hydrogen for passenger vehicles",
+          "source": {
+            "label": "Toyota 20-F(2026年3月期)",
+            "label_en": "Toyota 20-F (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1094517/000119312526264811/d101983d20f.htm",
+            "level": "official",
+            "date": "2026-06-10",
+            "quote": "For commercial vehicles, we are collaborating with Daimler Truck Holding AG, and for passenger vehicles, we are working with BMW"
+          }
+        }
+      ]
+    },
+    {
+      "id": "JOBY",
+      "ticker": "JOBY",
+      "name": "ジョビー・アビエーション",
+      "name_en": "Joby Aviation",
+      "sub": "空飛ぶクルマ(eVTOL)",
+      "sub_en": "eVTOL aircraft",
+      "sub_short": "eVTOL",
+      "sub_short_en": "eVTOL",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "電動垂直離着陸機(eVTOL)で協業",
+          "text_en": "Collaboration on Joby's eVTOL aircraft",
+          "source": {
+            "label": "Toyota 20-F(2026年3月期)",
+            "label_en": "Toyota 20-F (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1094517/000119312526264811/d101983d20f.htm",
+            "level": "official",
+            "date": "2026-06-10",
+            "quote": "Our collaboration with Joby Aviation, Inc. (\"Joby\") on Joby's electric vertical take-off and landing aircraft (eVTOL)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "FAW",
+      "ticker": "China FAW",
+      "name": "中国第一汽車集団(FAW)",
+      "name_en": "FAW Group",
+      "sub": "自動車(中国)",
+      "sub_en": "Automaker (China)",
+      "sub_short": "自動車",
+      "sub_short_en": "Autos",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "中国の合弁でカローラ・RAV4などを生産",
+          "text_en": "China JV making the Corolla, RAV4 and more",
+          "source": {
+            "label": "Toyota 20-F(2026年3月期)",
+            "label_en": "Toyota 20-F (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1094517/000119312526264811/d101983d20f.htm",
+            "level": "official",
+            "date": "2026-06-10",
+            "quote": "The joint venture with China FAW Group manufactures models such as the Avalon, Corolla, RAV4 and bZ3 and the joint venture with Guangzhou Automobile Group Co., Ltd. manufactures models such as the Camry"
+          }
+        }
+      ]
+    },
+    {
+      "id": "2238.HK",
+      "ticker": "GAC",
+      "name": "広州汽車集団(GAC)",
+      "name_en": "Guangzhou Automobile Group",
+      "sub": "自動車(中国)",
+      "sub_en": "Automaker (China)",
+      "sub_short": "自動車",
+      "sub_short_en": "Autos",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "中国の合弁でカムリなどを生産",
+          "text_en": "China JV making the Camry and more",
+          "source": {
+            "label": "Toyota 20-F(2026年3月期)",
+            "label_en": "Toyota 20-F (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1094517/000119312526264811/d101983d20f.htm",
+            "level": "official",
+            "date": "2026-06-10",
+            "quote": "The joint venture with China FAW Group manufactures models such as the Avalon, Corolla, RAV4 and bZ3 and the joint venture with Guangzhou Automobile Group Co., Ltd. manufactures models such as the Camry"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SinoHytec",
+      "ticker": "688339",
+      "name": "北京億華通(SinoHytec)",
+      "name_en": "Beijing SinoHytec",
+      "sub": "燃料電池(中国)",
+      "sub_en": "Fuel cells (China)",
+      "sub_short": "燃料電池",
+      "sub_short_en": "Fuel cell",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "中国で燃料電池の開発・生産拠点を共同設立",
+          "text_en": "Set up a fuel cell development and production base in China together",
+          "source": {
+            "label": "Toyota 20-F(2026年3月期)",
+            "label_en": "Toyota 20-F (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1094517/000119312526264811/d101983d20f.htm",
+            "level": "official",
+            "date": "2026-06-10",
+            "quote": "In China, we have already established a development and production base in collaboration with Beijing SinoHytec Co., Ltd."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
