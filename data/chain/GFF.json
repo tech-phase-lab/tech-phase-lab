@@ -1,0 +1,183 @@
+{
+  "root": {
+    "ticker": "GFF",
+    "name": "グリフォン",
+    "cik": 50725,
+    "name_en": "Griffon"
+  },
+  "rows": [
+    {
+      "ja": "事業の買収元",
+      "en": "Business seller",
+      "above": true
+    },
+    {
+      "ja": "販売先(顧客)",
+      "en": "Customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "TTC",
+      "ticker": "TTC",
+      "name": "トロ",
+      "name_en": "Toro",
+      "sub": "芝刈り機・散水",
+      "sub_en": "Turf & irrigation equipment",
+      "sub_short": "芝刈機",
+      "sub_short_en": "Mowers",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "傘下AMESがToroから豪州の散水用品事業Popeを買収(2024年)",
+          "text_en": "Its AMES unit bought Toro's Australian watering business Pope (2024)",
+          "source": {
+            "label": "Griffon 10-K(2025年9月期)",
+            "label_en": "Griffon 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/50725/000162828025053242/gff-20250930.htm",
+            "level": "official",
+            "date": "2025-11-19",
+            "quote": "acquiring substantially all the assets of Pope, a leading Australian provider of residential watering products, from The Toro Company (NYSE:TTC) for a purchase price of approximately AUD 21,800 (approximately $14,500) in cash."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HD",
+      "ticker": "HD",
+      "name": "ホーム・デポ",
+      "name_en": "Home Depot",
+      "sub": "ホームセンター",
+      "sub_en": "Home improvement retail",
+      "sub_short": "住宅用品",
+      "sub_short_en": "Home",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Clopayは住宅・商業用ガレージドアをHome Depotに独占供給(取引40年)",
+          "text_en": "Clopay is the exclusive garage door supplier to Home Depot (40-year relationship)",
+          "source": {
+            "label": "Griffon 10-K(2025年9月期)",
+            "label_en": "Griffon 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/50725/000162828025053242/gff-20250930.htm",
+            "level": "official",
+            "date": "2025-11-19",
+            "quote": "Clopay is currently the exclusive supplier of residential and commercial garage doors to Home Depot and Menards locations throughout North America, and has maintained long-standing relationships with Home Depot for 40 years and with Menards for over 30 years."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LOW",
+      "ticker": "LOW",
+      "name": "ロウズ",
+      "name_en": "Lowe's",
+      "sub": "ホームセンター",
+      "sub_en": "Home improvement retail",
+      "sub_short": "小売",
+      "sub_short_en": "Retail",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "CPP部門の重要顧客",
+          "text_en": "A significant customer of its Consumer and Professional Products segment",
+          "source": {
+            "label": "Griffon 10-K(2025年9月期)",
+            "label_en": "Griffon 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/50725/000162828025053242/gff-20250930.htm",
+            "level": "official",
+            "date": "2025-11-19",
+            "quote": "Home Depot, Lowe's and Bunnings are significant customers of CPP."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Wesfarmers",
+      "ticker": "Wesfarmers",
+      "name": "ウェスファーマーズ(Bunnings)",
+      "name_en": "Wesfarmers (Bunnings)",
+      "sub": "豪州の小売大手",
+      "sub_en": "Australian retail group",
+      "sub_short": "豪小売",
+      "sub_short_en": "Retail",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "傘下のBunningsがCPP部門の重要顧客",
+          "text_en": "Its Bunnings chain is a significant customer of the CPP segment",
+          "source": {
+            "label": "Griffon 10-K(2025年9月期)",
+            "label_en": "Griffon 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/50725/000162828025053242/gff-20250930.htm",
+            "level": "official",
+            "date": "2025-11-19",
+            "quote": "Home Depot, Lowe's and Bunnings are significant customers of CPP."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GWW",
+      "ticker": "GWW",
+      "name": "W.W.グレインジャー",
+      "name_en": "W.W. Grainger",
+      "sub": "産業用品卸",
+      "sub_en": "Industrial distribution",
+      "sub_short": "産業卸",
+      "sub_short_en": "MRO",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "販売先の産業卸の一社に挙げる",
+          "text_en": "Named among its industrial distributor customers",
+          "source": {
+            "label": "Griffon 10-K(2025年9月期)",
+            "label_en": "Griffon 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/50725/000162828025053242/gff-20250930.htm",
+            "level": "official",
+            "date": "2025-11-19",
+            "quote": "(3) industrial distributors, such as W.W. Grainger, Inc. and ORS Nasco;"
+          }
+        }
+      ]
+    },
+    {
+      "id": "DHI",
+      "ticker": "DHI",
+      "name": "D.R.ホートン",
+      "name_en": "D.R. Horton",
+      "sub": "住宅建設",
+      "sub_en": "Homebuilding",
+      "sub_short": "住宅建設",
+      "sub_short_en": "Homes",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "販売先の住宅建設会社の一社に挙げる",
+          "text_en": "Named among its homebuilder customers",
+          "source": {
+            "label": "Griffon 10-K(2025年9月期)",
+            "label_en": "Griffon 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/50725/000162828025053242/gff-20250930.htm",
+            "level": "official",
+            "date": "2025-11-19",
+            "quote": "(4) homebuilders, such as D.R. Horton, KB Home, Lennar and NVR, Inc.;"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,165 @@
+{
+  "root": {
+    "ticker": "TTC",
+    "name": "トロ",
+    "cik": 737758,
+    "name_en": "Toro"
+  },
+  "rows": [
+    {
+      "ja": "部品の仕入れ先(上流)",
+      "en": "Parts suppliers (upstream)",
+      "above": true
+    },
+    {
+      "ja": "事業の売却先",
+      "en": "Business buyer"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "DE",
+    "PLOW",
+    "GNRC"
+  ],
+  "companies": [
+    {
+      "id": "OTTR",
+      "ticker": "OTTR",
+      "name": "オッター・テイル",
+      "name_en": "Otter Tail",
+      "sub": "電力・製造",
+      "sub_en": "Utility & manufacturing",
+      "sub_short": "電力製造",
+      "sub_short_en": "Utility",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Otter Tailが10-Kで、製造部門の顧客の一社に挙げる",
+          "text_en": "Otter Tail names Toro among customers of its manufacturing businesses",
+          "source": {
+            "label": "Otter Tail 10-K(2025年度)",
+            "label_en": "Otter Tail 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1466593/000146659326000008/ottr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Our customers include some of the largest vehicle and equipment manufacturers operating in the U.S., including Caterpillar Inc., CNH Industrial N.V., Cummins Inc., Deere & Company, Honda Motor Co., Kawasaki Heavy Industries, Polaris Inc. and The Toro Company."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GFF",
+      "ticker": "GFF",
+      "name": "グリフォン",
+      "name_en": "Griffon",
+      "sub": "住宅用品・ガレージドア",
+      "sub_en": "Home products & garage doors",
+      "sub_short": "住宅用品",
+      "sub_short_en": "Home",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "豪州の散水用品事業PopeをGriffon傘下AMESに売却(2024年)",
+          "text_en": "Sold its Australian watering business Pope to Griffon's AMES (2024)",
+          "source": {
+            "label": "Griffon 10-K(2025年9月期)",
+            "label_en": "Griffon 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/50725/000162828025053242/gff-20250930.htm",
+            "level": "official",
+            "date": "2025-11-19",
+            "quote": "acquiring substantially all the assets of Pope, a leading Australian provider of residential watering products, from The Toro Company (NYSE:TTC) for a purchase price of approximately AUD 21,800 (approximately $14,500) in cash."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DE",
+      "ticker": "DE",
+      "name": "ディア",
+      "name_en": "Deere",
+      "sub": "農機・建機",
+      "sub_en": "Farm & construction equipment",
+      "sub_short": "農機",
+      "sub_short_en": "Farm",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Deereが10-Kで、農業・芝刈り機の競合に挙げる",
+          "text_en": "Deere names Toro a competitor in agriculture and turf",
+          "source": {
+            "label": "Deere 10-K(2024年度)",
+            "label_en": "Deere 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/315189/000155837024016169/de-20241027x10k.htm",
+            "level": "official",
+            "date": "2024-12-12",
+            "quote": "The competitive environment for the agriculture and turf operations includes some global competitors, such as AGCO Corporation, CLAAS KGaA mbH, CNH Industrial N.V., Kubota Tractor Corporation, Mahindra & Mahindra Limited, and The Toro Company."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PLOW",
+      "ticker": "PLOW",
+      "name": "ダグラス・ダイナミクス",
+      "name_en": "Douglas Dynamics",
+      "sub": "除雪機器",
+      "sub_en": "Snowplows",
+      "sub_short": "除雪機",
+      "sub_short_en": "Plows",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Douglas Dynamicsが10-Kで、除雪機器の最大の競合に挙げる",
+          "text_en": "Douglas Dynamics names Toro (Boss brand) its next-largest snowplow competitor",
+          "source": {
+            "label": "Douglas Dynamics 10-K(2025年度)",
+            "label_en": "Douglas Dynamics 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1287213/000143774926005316/plow20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "the next largest competitors in the market for snow and ice control equipment for light trucks are The Toro Company (the manufacturer of the Boss brand of snow and ice control equipment)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GNRC",
+      "ticker": "GNRC",
+      "name": "ジェネラック",
+      "name_en": "Generac",
+      "sub": "発電機",
+      "sub_en": "Generators",
+      "sub_short": "発電機",
+      "sub_short_en": "Power",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Generacが10-Kで、家庭用製品の競合に挙げる",
+          "text_en": "Generac names Toro among residential product competitors",
+          "source": {
+            "label": "Generac 10-K(2025年度)",
+            "label_en": "Generac 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1474735/000143774926004568/gnrc20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Husqvarna, Ariens, Tesla, Enphase, Solar Edge, Google, Resideo, The Toro Company, EcoFlow, and Emerson"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

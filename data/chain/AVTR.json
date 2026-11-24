@@ -1,0 +1,164 @@
+{
+  "root": {
+    "ticker": "AVTR",
+    "name": "アバンター",
+    "cik": 1722482,
+    "name_en": "Avantor"
+  },
+  "rows": [
+    {
+      "ja": "販売を受託する製品の供給元",
+      "en": "Products it distributes (upstream)",
+      "above": true
+    },
+    {
+      "ja": "顧客(相手の資料に記載)",
+      "en": "Customers (named in their filings)"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "GLW",
+    "APT"
+  ],
+  "companies": [
+    {
+      "id": "QSI",
+      "ticker": "QSI",
+      "name": "クアンタム・エスアイ",
+      "name_en": "Quantum-Si",
+      "sub": "タンパク質解析装置",
+      "sub_en": "Protein sequencing",
+      "sub_short": "解析装置",
+      "sub_short_en": "Protein",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "北米での装置と消耗品の販売代理契約をAvantorと締結(2024年11月)",
+          "text_en": "Signed a North American distribution agreement with Avantor (Nov 2024)",
+          "source": {
+            "label": "Quantum-Si 10-K(2024年度)",
+            "label_en": "Quantum-Si 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1816431/000181643125000014/qsi-20241231.htm",
+            "level": "official",
+            "date": "2025-03-03",
+            "quote": "Further, in November 2024 we announced a North American distribution agreement with Avantor to distribute the Platinum Pro and related consumables."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ESTA",
+      "ticker": "ESTA",
+      "name": "エスタブリッシュメント・ラブズ",
+      "name_en": "Establishment Labs",
+      "sub": "乳房インプラント",
+      "sub_en": "Breast implants",
+      "sub_short": "インプラ",
+      "sub_short_en": "Implants",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "医療用シリコーン(NuSil)をAvantorから調達(唯一の供給元)",
+          "text_en": "Sources NuSil medical-grade silicone from Avantor, a sole-source supplier",
+          "source": {
+            "label": "Establishment Labs 10-K(2025年度)",
+            "label_en": "Establishment Labs 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1688757/000168875726000022/esta-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "In particular, we obtain NuSil brand medical-grade silicone from Avantor, Inc. (formerly NuSil Technology LLC), or Avantor, which is a sole-source supplier of such products to the majority of the silicone breast implant industry."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CDNA",
+      "ticker": "CDNA",
+      "name": "ケアディーエックス",
+      "name_en": "CareDx",
+      "sub": "移植検査",
+      "sub_en": "Transplant diagnostics",
+      "sub_short": "移植検査",
+      "sub_short_en": "Dx",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "CareDxが10-Kで、Avantorを仕入れ先の一社に挙げる",
+          "text_en": "CareDx names Avantor among its suppliers",
+          "source": {
+            "label": "CareDx 10-K(2025年度)",
+            "label_en": "CareDx 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1217234/000121723426000018/cdna-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "We do not have guaranteed supply agreements with Thermo Fisher, Becton, Dickinson and Company or Avantor, which exposes us to the risk that these suppliers may choose to discontinue doing business with us at any time."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GLW",
+      "ticker": "GLW",
+      "name": "コーニング",
+      "name_en": "Corning",
+      "sub": "ガラス・素材",
+      "sub_en": "Glass & materials",
+      "sub_short": "ガラス",
+      "sub_short_en": "Glass",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Corningが10-Kで、ライフサイエンス製品の主な競合に挙げる",
+          "text_en": "Corning names Avantor among principal life sciences competitors",
+          "source": {
+            "label": "Corning 10-K(2024年度)",
+            "label_en": "Corning 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/24741/000162828025005347/glw-20241231.htm",
+            "level": "official",
+            "date": "2025-02-13",
+            "quote": "Our principal competitors include Thermo Fisher Scientific Inc., Avantor, Inc., Greiner AG, Eppendorf SE, Sarstedt AG & Co."
+          }
+        }
+      ]
+    },
+    {
+      "id": "APT",
+      "ticker": "APT",
+      "name": "アルファ・プロ・テック",
+      "name_en": "Alpha Pro Tech",
+      "sub": "防護服",
+      "sub_en": "Protective apparel",
+      "sub_short": "防護服",
+      "sub_short_en": "PPE",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Alpha Pro Techが10-Kで、元の最大の販売代理店VWRを主な競合に挙げる",
+          "text_en": "Alpha Pro Tech names VWR, its former largest distributor, a major competitor",
+          "source": {
+            "label": "Alpha Pro Tech 10-K(2025年度)",
+            "label_en": "Alpha Pro Tech 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/884269/000143774926007797/apt20251231_10k.htm",
+            "level": "official",
+            "date": "2026-03-11",
+            "quote": "Our major competitors in the industrial and cleanroom market are our former largest distributor, VWR International, LLC, Kimberly-Clark Corporation, 3M Company, Kappler, Inc"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

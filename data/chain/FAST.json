@@ -1,0 +1,160 @@
+{
+  "root": {
+    "ticker": "FAST",
+    "name": "ファステナル",
+    "cik": 815556,
+    "name_en": "Fastenal"
+  },
+  "rows": [
+    {
+      "ja": "商品の仕入れ先(上流)",
+      "en": "Product suppliers (upstream)",
+      "above": true
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "GPC",
+    "GlobalInd"
+  ],
+  "companies": [
+    {
+      "id": "INSG",
+      "ticker": "INSG",
+      "name": "インシーゴ",
+      "name_en": "Inseego",
+      "sub": "5G通信端末",
+      "sub_en": "5G devices",
+      "sub_short": "5G端末",
+      "sub_short_en": "5G",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Inseegoが10-Kで、5G製品の顧客の一社に挙げる",
+          "text_en": "Inseego names Fastenal among customers for its 5G products",
+          "source": {
+            "label": "Inseego 10-K(2024年度)",
+            "label_en": "Inseego 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1022652/000102265225000005/insg-20241231.htm",
+            "level": "official",
+            "date": "2025-02-20",
+            "quote": "Our customers for our 5G products include Verizon Wireless, T-Mobile, EnerNOC, Thermo Fisher Scientific, US Army and Fastenal, amongst others."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DFCO",
+      "ticker": "DFCO",
+      "name": "ダルラダ",
+      "name_en": "Dalrada",
+      "sub": "製造・技術の持株会社",
+      "sub_en": "Manufacturing & technology holding company",
+      "sub_short": "製造",
+      "sub_short_en": "Industrial",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Dalradaの製造子会社がFastenalからの発注で取引(訴訟の記載)",
+          "text_en": "Dalrada Manufacturing had a contractual relationship filling Fastenal purchase orders (per a lawsuit)",
+          "source": {
+            "label": "Dalrada Financial 10-K(2024年6月期)",
+            "label_en": "Dalrada Financial 10-K (FY ended Jun 2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/725394/000168316825000285/dalrada_i10k-063024.htm",
+            "level": "official",
+            "date": "2025-01-13",
+            "quote": "to steal Fastenal Company purchase orders and effectively try to cut Dalrada Manufacturing out of its contractual relationship."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LUCY",
+      "ticker": "LUCY",
+      "name": "イノベーティブ・アイウェア",
+      "name_en": "Innovative Eyewear",
+      "sub": "スマート眼鏡",
+      "sub_en": "Smart eyewear",
+      "sub_short": "眼鏡",
+      "sub_short_en": "Eyewear",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "安全用スマート眼鏡の販路として狙う大手PPE卸の一社に挙げる",
+          "text_en": "Names Fastenal among the PPE distributors its safety eyewear sales strategy targets",
+          "source": {
+            "label": "Innovative Eyewear 10-K(2025年度)",
+            "label_en": "Innovative Eyewear 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1808377/000182912626002695/innovativeeye_10k.htm",
+            "level": "official",
+            "date": "2026-03-25",
+            "quote": "Our distribution strategy targets major home improvement retailers including Home Depot, Lowe's, Ace Hardware, and Canadian Tire, as well as leading industrial PPE (personal protective equipment) distributors such as Grainger and Fastenal."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GPC",
+      "ticker": "GPC",
+      "name": "ジェニュイン・パーツ",
+      "name_en": "Genuine Parts",
+      "sub": "自動車・産業部品",
+      "sub_en": "Auto & industrial parts",
+      "sub_short": "車部品",
+      "sub_short_en": "Car parts",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Genuine Partsが10-Kで、産業部品流通の競合として挙げる",
+          "text_en": "Genuine Parts names Fastenal a competitor in industrial distribution",
+          "source": {
+            "label": "Genuine Parts 10-K(2025年度)",
+            "label_en": "Genuine Parts 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/40987/000004098726000003/gpc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "In industrial distribution, our main competitor is Applied Industrial Technologies, Inc., but we also compete against Fastenal Company, and W.W. Grainger, Inc, among many other smaller, regional competitors."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GlobalInd",
+      "ticker": "GIC",
+      "name": "グローバル・インダストリアル",
+      "name_en": "Global Industrial",
+      "sub": "産業用品通販",
+      "sub_en": "Industrial supplies",
+      "sub_short": "産業用品",
+      "sub_short_en": "MRO",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Global Industrialが10-Kで、大手MRO卸の競合として挙げる",
+          "text_en": "Global Industrial names Fastenal among large MRO distributor competitors",
+          "source": {
+            "label": "Global Industrial 10-K(2024年度)",
+            "label_en": "Global Industrial 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/945114/000094511425000012/gic-20241231.htm",
+            "level": "official",
+            "date": "2025-02-26",
+            "quote": "We face competition from large diversified MRO distributors such as Uline Inc, Grainger Inc., MSC Industrial Direct Inc., Fastenal Inc., and other large retailers, including Amazon."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
