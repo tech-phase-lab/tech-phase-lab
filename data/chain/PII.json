@@ -1,0 +1,154 @@
+{
+  "root": {
+    "ticker": "PII",
+    "name": "ポラリス",
+    "cik": 931015,
+    "name_en": "Polaris"
+  },
+  "rows": [
+    {
+      "ja": "部品の供給元・販売金融",
+      "en": "Suppliers & dealer finance",
+      "above": true
+    },
+    {
+      "ja": "販売店",
+      "en": "Dealers"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "MAMO",
+    "AYRO"
+  ],
+  "companies": [
+    {
+      "id": "LCII",
+      "ticker": "LCII",
+      "name": "LCIインダストリーズ",
+      "name_en": "LCI Industries",
+      "sub": "RV・船舶向け部品",
+      "sub_en": "RV & marine components",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "LCIの主要顧客の一社がPolaris",
+          "text_en": "Polaris is one of LCI's major customers",
+          "source": {
+            "label": "LCI Industries 10-K(2025年度)",
+            "label_en": "LCI Industries 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/763744/000076374426000011/lcii-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Major customers include Brunswick Corporation (symbol: BC), Polaris Inc. (symbol: PII)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "WFC",
+      "ticker": "WFC",
+      "name": "ウェルズ・ファーゴ",
+      "name_en": "Wells Fargo",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "販売店向け在庫金融の合弁Polaris AcceptanceをWells Fargoの子会社と組む",
+          "text_en": "Runs the Polaris Acceptance dealer floor-plan finance joint venture with a Wells Fargo subsidiary",
+          "source": {
+            "label": "Polaris 10-K(2025年度)",
+            "label_en": "Polaris 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/931015/000162828026008033/pii-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "We have arrangements with Polaris Acceptance (United States), a joint venture between Polaris and a subsidiary of Wells Fargo Bank, N.A."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RDNW",
+      "ticker": "RDNW",
+      "name": "ライドナウ・グループ",
+      "name_en": "RideNow Group",
+      "sub": "パワースポーツ販売店",
+      "sub_en": "Powersports dealerships",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "新車売上の多くをPolarisなど少数のメーカーに依存",
+          "text_en": "Much of its new powersports vehicle revenue comes from a few OEMs including Polaris",
+          "source": {
+            "label": "RideNow Group 10-K(2025年度)",
+            "label_en": "RideNow Group 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1596961/000159696126000015/rdnw-20251231.htm",
+            "level": "official",
+            "date": "2026-03-13",
+            "quote": "A significant portion of our new powersports vehicle revenue is concentrated among a small number of OEMs, including BRP, Polaris, Harley-Davidson, Yamaha and Kawasaki."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MAMO",
+      "ticker": "MAMO",
+      "name": "マッシモ・グループ",
+      "name_en": "Massimo Group",
+      "sub": "UTV・ボート",
+      "sub_en": "UTVs & boats",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Massimoが10-Kで、ATV・UTV市場の主要企業としてPolarisを挙げる",
+          "text_en": "Massimo names Polaris among the major players in ATVs and UTVs",
+          "source": {
+            "label": "Massimo Group 10-K(2025年度)",
+            "label_en": "Massimo Group 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1952853/000149315226013862/form10-k.htm",
+            "level": "official",
+            "date": "2026-03-31",
+            "quote": "Competition ATV and UTV Markets The major players in the market include Polaris, Bombardier Recreational Products (BRP), Honda and Yamaha."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AYRO",
+      "ticker": "AYRO",
+      "name": "AYRO",
+      "name_en": "AYRO",
+      "sub": "小型電気自動車",
+      "sub_en": "Low-speed EVs",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "AYROが10-Kで、低速EV市場の競合としてPolarisを挙げる",
+          "text_en": "AYRO names Polaris among competitors in low-speed EVs",
+          "source": {
+            "label": "AYRO 10-K(2025年提出)",
+            "label_en": "AYRO 10-K (filed 2025-03)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1086745/000164117225001705/form10-k.htm",
+            "level": "official",
+            "date": "2025-03-31",
+            "quote": "The most competitive companies in the global LSEV market include HDK Electric Vehicles, Bradshaw Electric Vehicles, Textron Inc., Polaris Industries"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,154 @@
+{
+  "root": {
+    "ticker": "PTON",
+    "name": "ペロトン・インタラクティブ",
+    "cik": 1639825,
+    "name_en": "Peloton Interactive"
+  },
+  "rows": [
+    {
+      "ja": "部品の供給元・特許のライセンス",
+      "en": "Component supplier & patent license",
+      "above": true
+    },
+    {
+      "ja": "音楽ライセンス",
+      "en": "Music licensing"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "FTEL",
+    "TRNR"
+  ],
+  "companies": [
+    {
+      "id": "MEC",
+      "ticker": "MEC",
+      "name": "メイビル・エンジニアリング",
+      "name_en": "Mayville Engineering",
+      "sub": "金属部品の受託製造",
+      "sub_en": "Contract metal fabrication",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "2021年の供給契約でPeloton向けの運動器具部品を製造(契約を巡り訴訟)",
+          "text_en": "Made custom parts for Peloton under a 2021 supply agreement, which became the subject of a lawsuit",
+          "source": {
+            "label": "Mayville Engineering 10-K(2025年提出)",
+            "label_en": "Mayville Engineering 10-K (filed 2025-03)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1766368/000155837025002369/tmb-20241231x10k.htm",
+            "level": "official",
+            "date": "2025-03-06",
+            "quote": "The lawsuit arose from a March 2021 Supply Agreement between the parties, pursuant to which MEC was to manufacture and supply custom component parts for Peloton's exercise"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SATS",
+      "ticker": "SATS",
+      "name": "エコスター",
+      "name_en": "EchoStar",
+      "sub": "衛星通信・有料TV",
+      "sub_en": "Satellite & pay TV",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "特許訴訟の和解として、Pelotonの運動器具を対象に7,500万ドルのライセンス契約を締結",
+          "text_en": "Signed a $75 million license covering Peloton exercise equipment to settle patent litigation",
+          "source": {
+            "label": "EchoStar 10-Q(2024年8月)",
+            "label_en": "EchoStar 10-Q (2024-08)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1415404/000155837024011672/tmb-20240630x10q.htm",
+            "level": "official",
+            "date": "2024-08-09",
+            "quote": "On May 1, 2023, we entered into a $75 million license agreement covering Peloton exercise equipment that resolves our litigation involving those products."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RSVR",
+      "ticker": "RSVR",
+      "name": "リザーバー・メディア",
+      "name_en": "Reservoir Media",
+      "sub": "音楽出版",
+      "sub_en": "Music publishing",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "楽曲を直接ライセンスする配信先の一社がPeloton",
+          "text_en": "Peloton is one of the platforms with which it has direct licensing agreements",
+          "source": {
+            "label": "Reservoir Media 10-K(2025年提出)",
+            "label_en": "Reservoir Media 10-K (filed 2025-05)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1824403/000141057825001379/rsvr-20250331x10k.htm",
+            "level": "official",
+            "date": "2025-05-28",
+            "quote": "Reservoir has direct licensing agreements with platforms including TikTok, Peloton, Meta and Snap."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FTEL",
+      "ticker": "FTEL",
+      "name": "フィテル",
+      "name_en": "Fitell",
+      "sub": "フィットネス機器",
+      "sub_en": "Fitness equipment",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Fitellが年次報告で、主な競合としてPelotonを挙げる",
+          "text_en": "Fitell names Peloton among its principal competitors",
+          "source": {
+            "label": "Fitell 年次報告(20-F)(2024年提出)",
+            "label_en": "Fitell annual report (20-F) (filed 2024-11)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1928581/000149315224046303/form20-f.htm",
+            "level": "official",
+            "date": "2024-11-15",
+            "quote": "Our principal competitors include Nautilus, Peloton, ICON Health & Fitness (NordicTrack)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "TRNR",
+      "ticker": "TRNR",
+      "name": "インタラクティブ・ストレングス",
+      "name_en": "Interactive Strength",
+      "sub": "スマートジム機器",
+      "sub_en": "Connected fitness equipment",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Interactive Strengthが上場届出書で、スマートホームジムの競合としてPelotonを挙げる",
+          "text_en": "Interactive Strength names Peloton among smart home gym competitors",
+          "source": {
+            "label": "Interactive Strength 上場届出書(S-1)(2024年6月)",
+            "label_en": "Interactive Strength registration statement (S-1) (2024-06)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1785056/000095017024076321/trnr_s-1_2024.htm",
+            "level": "official",
+            "date": "2024-06-21",
+            "quote": "In addition, we compete with other virtual or smart home gym providers such as Peloton Interactive, Inc."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

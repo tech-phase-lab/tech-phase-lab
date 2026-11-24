@@ -42,7 +42,7 @@ test('two full report lanes are 200 rows: more than the old one-page cap, within
  assert.deepEqual(seen,['/api/v1','/api/v1/category']);
  assert.equal(feed.reportUpdates.length,200);
  assert.ok(feed.reportUpdates.length>100,'the old reportUpdates cap (100) rejected every normal morning');
- assert.equal(REPORT_UPDATES_LIMIT,200);assert.equal(FEED_LIMITS.reportUpdates,REPORT_UPDATES_LIMIT);
+ assert.ok(REPORT_UPDATES_LIMIT>=200);assert.equal(FEED_LIMITS.reportUpdates,REPORT_UPDATES_LIMIT);
  const {diagnostics}=selectDailyCandidates(feed,now);
  assert.equal(diagnostics.reportCount,200);assert.equal(diagnostics.inspected,200+diagnostics.officialCount);
  assert.equal(diagnostics.reportMarketLane,true);assert.equal(diagnostics.reportPossiblyTruncated,true);
@@ -65,7 +65,7 @@ test('the morning run with both full lanes completes instead of failing at stage
 test('a feed above the bound still fails closed, and the log line names the check and counts only',async()=>{
  const db=await setup();const {lines,options}=quiet();
  const read=productionReader().read;
- const readFeed=withSourceRetry(async()=>{const feed=await read();return {...feed,reportUpdates:[...feed.reportUpdates,{...feed.reportUpdates[0],url:'https://publisher.example/extra?token=secret-ish'}]};},options);
+ const readFeed=withSourceRetry(async()=>{const feed=await read();return {...feed,reportUpdates:[...feed.reportUpdates,...Array.from({length:REPORT_UPDATES_LIMIT-feed.reportUpdates.length+1},(_,i)=>({...feed.reportUpdates[0],url:`https://publisher.example/extra/${i}?token=secret-ish`}))]};},options);
  try{
   const error=await prepareDailyReview({enabled:true,now,selectionPool:db,readFeed}).catch(e=>e);
   assert.equal(error.message,'PRIVATE_DAILY_REVIEW_FAILED');assert.equal(error.stage,'source');
@@ -73,7 +73,7 @@ test('a feed above the bound still fails closed, and the log line names the chec
   const outcome=dailyReviewFailure(error,readFeed.stats);
   assert.equal(outcome.exitCode,1);
   assert.deepEqual(JSON.parse(JSON.stringify(outcome.line)),{event:'RIZEL_DAILY_REVIEW_FAILED',stage:'source',error:'SOURCE_LIMIT',check:'reports-over-limit',
-   counts:{generalEnabled:false,generalCount:0,officialCount:outcome.line.counts.officialCount,reportCount:201,reportReturned:200,reportMarketLane:true},limit:200,sourceAttempts:1});
+   counts:{generalEnabled:false,generalCount:0,officialCount:outcome.line.counts.officialCount,reportCount:REPORT_UPDATES_LIMIT+1,reportReturned:200,reportMarketLane:true},limit:REPORT_UPDATES_LIMIT,sourceAttempts:1});
   assert.ok(Number.isSafeInteger(outcome.line.counts.officialCount));
   const text=JSON.stringify(outcome.line);
   for(const secret of [monitorToken,providerToken,'publisher.example','monitor.example','http'])assert.ok(!text.includes(secret));
@@ -86,9 +86,9 @@ test('every shape and size check has its own code',()=>{
  const cases=[[null,'SOURCE_UNAVAILABLE','feed-not-ok'],[{...base,ok:false},'SOURCE_UNAVAILABLE','feed-not-ok'],
   [{...base,enabled:'yes'},'SOURCE_UNAVAILABLE','enabled-not-boolean'],[{...base,items:{}},'SOURCE_UNAVAILABLE','items-not-array'],
   [{...base,items:Array(501).fill(null)},'SOURCE_LIMIT','items-over-limit'],[{...base,reportUpdates:{}},'SOURCE_UNAVAILABLE','reports-not-array'],
-  [{...base,reportUpdates:Array(201).fill(null)},'SOURCE_LIMIT','reports-over-limit'],[{...base,officialUpdates:{}},'SOURCE_UNAVAILABLE','official-not-array'],
+  [{...base,reportUpdates:Array(FEED_LIMITS.reportUpdates+1).fill(null)},'SOURCE_LIMIT','reports-over-limit'],[{...base,officialUpdates:{}},'SOURCE_UNAVAILABLE','official-not-array'],
   [{ok:true,enabled:false,items:[]},'SOURCE_UNAVAILABLE','general-disabled-without-official'],
-  [{...base,items:Array(500).fill(null),officialUpdates:Array(400).fill(null),reportUpdates:Array(200).fill(null)},'SOURCE_LIMIT','raw-over-limit']];
+  [{...base,items:Array(FEED_LIMITS.items).fill(null),officialUpdates:Array(FEED_LIMITS.raw-FEED_LIMITS.items-FEED_LIMITS.reportUpdates+1).fill(null),reportUpdates:Array(FEED_LIMITS.reportUpdates).fill(null)},'SOURCE_LIMIT','raw-over-limit']];
  const seen=new Set();
  for(const [feed,message,check] of cases){
   assert.throws(()=>inspectCandidateFeed(feed,now,{allowDateOnly:true}),e=>e.message===message&&e.check===check);seen.add(check);

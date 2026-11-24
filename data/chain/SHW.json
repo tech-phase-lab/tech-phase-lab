@@ -1,0 +1,228 @@
+{
+  "root": {
+    "ticker": "SHW",
+    "name": "シャーウィン・ウィリアムズ",
+    "cik": 89800,
+    "name_en": "Sherwin-Williams"
+  },
+  "rows": [
+    {
+      "ja": "買収",
+      "en": "Acquisition",
+      "above": true
+    },
+    {
+      "ja": "店舗の貸主(ネットリースREIT)",
+      "en": "Store landlords (net lease REITs)"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "PPG",
+    "AXTA",
+    "MAS",
+    "NGVT"
+  ],
+  "companies": [
+    {
+      "id": "Suvinil",
+      "ticker": "Suvinil",
+      "name": "スビニル",
+      "name_en": "Suvinil",
+      "sub": "建築用塗料(ブラジル)",
+      "sub_en": "Architectural paints (Brazil)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年10月に買収(年商約5.25億ドル)",
+          "text_en": "Acquired in October 2025; annual sales of about $525 million",
+          "source": {
+            "label": "Sherwin-Williams 10-K(2025年度)",
+            "label_en": "Sherwin-Williams 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/89800/000008980026000008/shw-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "In October 2025, we completed our acquisition of Suvinil, a leading provider of architectural paints in Brazil, with annual sales of approximately $525 million."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ADC",
+      "ticker": "ADC",
+      "name": "アグリー・リアルティ",
+      "name_en": "Agree Realty",
+      "sub": "ネットリースREIT",
+      "sub_en": "Net lease REIT",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "主要テナントの一社がSherwin-Williams(年間基本賃料の1.9%)",
+          "text_en": "Sherwin-Williams is one of its top tenants, 1.9% of annualized base rent",
+          "source": {
+            "label": "Agree Realty 8-K添付(2026年2月)",
+            "label_en": "Agree Realty 8-K exhibit (2026-02)",
+            "url": "https://www.sec.gov/Archives/edgar/data/917251/000091725126000012/adc20251231-exhibit991.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "Sherwin-Williams 13,947 1.9 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GIPR",
+      "ticker": "GIPR",
+      "name": "ジェネレーション・インカム・プロパティーズ",
+      "name_en": "Generation Income Properties",
+      "sub": "ネットリースREIT",
+      "sub_en": "Net lease REIT",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "タンパのSherwin-Williamsの単独テナント物件を取得",
+          "text_en": "Bought a single-tenant property in Tampa occupied by Sherwin-Williams",
+          "source": {
+            "label": "Generation Income Properties 10-K/A(2025年4月)",
+            "label_en": "Generation Income Properties 10-K/A (2025-04)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1651721/000095017025061249/gipr-20241231.htm",
+            "level": "official",
+            "date": "2025-04-30",
+            "quote": "The retail single tenant property occupied by The Sherwin-Williams Company in Tampa, Florida was acquired for approximately $1.8 million"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PPG",
+      "ticker": "PPG",
+      "name": "PPGインダストリーズ",
+      "name_en": "PPG Industries",
+      "sub": "塗料",
+      "sub_en": "Paints & coatings",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "PPGが年次報告で、競合としてSherwin-Williamsを挙げる",
+          "text_en": "PPG Industries names Sherwin-Williams as a competitor",
+          "source": {
+            "label": "Ppg Industries 10-K(2026年提出)",
+            "label_en": "Ppg Industries 10-K (filed 2026-02)",
+            "url": "https://www.sec.gov/Archives/edgar/data/79879/000007987926000046/ppg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Global Competitors Akzo Nobel N.V., Hempel A/S, Nippon Paint, the Jotun Group, The Sherwin-Williams Company"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AXTA",
+      "ticker": "AXTA",
+      "name": "アクサルタ",
+      "name_en": "Axalta Coating Systems",
+      "sub": "自動車・工業用塗料",
+      "sub_en": "Coatings",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Axaltaが年次報告で、競合としてSherwin-Williamsを挙げる",
+          "text_en": "Axalta Coating Systems names Sherwin-Williams as a competitor",
+          "source": {
+            "label": "Axalta Coating Systems 10-K(2026年提出)",
+            "label_en": "Axalta Coating Systems 10-K (filed 2026-02)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1616862/000162828026008008/axta-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "we compete against multi-national suppliers, such as AkzoNobel, PPG and Sherwin-Williams"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MAS",
+      "ticker": "MAS",
+      "name": "マスコ",
+      "name_en": "Masco",
+      "sub": "住宅設備・塗料",
+      "sub_en": "Home products & paint",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Mascoが年次報告で、競合としてSherwin-Williamsを挙げる",
+          "text_en": "Masco names Sherwin-Williams as a competitor",
+          "source": {
+            "label": "Masco 10-K(2026年提出)",
+            "label_en": "Masco 10-K (filed 2026-02)",
+            "url": "https://www.sec.gov/Archives/edgar/data/62996/000006299626000005/mas-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "The Sherwin‐Williams Company's Minwax, Sherwin-Williams, Thompson's Water Seal, Valspar and Purdy brands"
+          }
+        }
+      ]
+    },
+    {
+      "id": "NGVT",
+      "ticker": "NGVT",
+      "name": "インジェヴィティ",
+      "name_en": "Ingevity",
+      "sub": "特殊化学品",
+      "sub_en": "Specialty chemicals",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Ingevityが年次報告で、競合としてSherwin-Williamsを挙げる",
+          "text_en": "Ingevity names Sherwin-Williams as a competitor",
+          "source": {
+            "label": "Ingevity 10-K(2025年提出)",
+            "label_en": "Ingevity 10-K (filed 2025-02)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1653477/000165347725000015/ngvt-20241231.htm",
+            "level": "official",
+            "date": "2025-02-19",
+            "quote": "Our primary competitors in road technologies are Nouryon Chemicals B.V., Arkema S.A., Kao Specialties Americas LLC, Sherwin-Williams Company, and PPG Industries Traffic Solutions."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BRK-B",
+      "ticker": "BRK-B",
+      "name": "バークシャー・ハサウェイ(Benjamin Moore)",
+      "name_en": "Berkshire Hathaway (Benjamin Moore)",
+      "sub": "複合企業",
+      "sub_en": "Conglomerate",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Berkshire傘下のBenjamin Mooreの競合としてSherwin-Williamsを挙げる",
+          "text_en": "Berkshire names Sherwin-Williams among competitors of its Benjamin Moore unit",
+          "source": {
+            "label": "Berkshire Hathaway 10-K(2026年提出)",
+            "label_en": "Berkshire Hathaway 10-K (filed 2026-03)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526083899/brka-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "manufacturer-operated direct outlets, such as Sherwin-Williams Company, The Pittsburgh Paints Company, The Home Depot, Inc."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

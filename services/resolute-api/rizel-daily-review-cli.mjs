@@ -1,4 +1,4 @@
-import {createReportReader,withReportReader} from './rizel-report-source.mjs';
+import {createReportReader,withReportReader,reportMaxPages} from './rizel-report-source.mjs';
 import {Pool} from 'pg';
 import {resoluteDatabaseConfig} from '../../lib/resolute/database-config.ts';
 import {riskPool} from './risk-store.mjs';
@@ -16,7 +16,7 @@ if(process.env.RESOLUTE_RIZEL_DAILY_REVIEW_ENABLED!=='true'){
   if(new URL(config.connectionString).username!=='resolute_rizel_writer')throw Error('SCOPE');
   if(!process.env.RESOLUTE_OPENAI_API_KEY)throw Error('KEY_REQUIRED');
   // A short monitor restart or deploy at 07:01 JST must not crash the job: the read is retried (5 attempts, about 10 minutes).
-  readFeed=withSourceRetry(withReportReader(createNewsReader({origin:process.env.RESOLUTE_NEWS_ORIGIN,token:process.env.RESOLUTE_NEWS_READ_TOKEN}),createReportReader({enabled:process.env.RESOLUTE_REPORT_SOURCE_ENABLED==='true',token:process.env.RESOLUTE_REPORT_SOURCE_TOKEN,tickers:process.env.RESOLUTE_REPORT_SOURCE_TICKERS,marketWide:process.env.RESOLUTE_REPORT_MARKET_LANE!=='false'})));
+  readFeed=withSourceRetry(withReportReader(createNewsReader({origin:process.env.RESOLUTE_NEWS_ORIGIN,token:process.env.RESOLUTE_NEWS_READ_TOKEN}),createReportReader({enabled:process.env.RESOLUTE_REPORT_SOURCE_ENABLED==='true',token:process.env.RESOLUTE_REPORT_SOURCE_TOKEN,tickers:process.env.RESOLUTE_REPORT_SOURCE_TICKERS,marketWide:process.env.RESOLUTE_REPORT_MARKET_LANE!=='false',maxPages:reportMaxPages()})));
   // Optional read-only thermometer access: without it every story starts as 'waiting for the market' and the react job fills it.
   readMoves=createMovesReader();
   selectionPool=new Pool({...config,max:2});selectionPool.on('error',()=>{});budgetPool=riskPool();

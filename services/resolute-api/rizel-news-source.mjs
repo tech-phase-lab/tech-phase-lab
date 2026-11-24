@@ -28,11 +28,11 @@ export const SOURCE_RETRY_DELAYS_MS=[60000,120000,180000,240000];
  * (no URLs, tokens or response bodies). ``stats`` tells the caller how many attempts were made and whether they ran out. */
 export function withSourceRetry(read,{delaysMs=SOURCE_RETRY_DELAYS_MS,sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms)),log=line=>console.log(JSON.stringify(line))}={}){
  const stats={attempts:0,exhausted:false};
- const retrying=async()=>{
+ const retrying=async(...args)=>{
   const total=delaysMs.length+1;
   for(;;){
    stats.attempts++;
-   try{return await read();}
+   try{return await read(...args);}
    catch(error){
     const retryable=error?.retryable===true;
     const last=stats.attempts>=total;

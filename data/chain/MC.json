@@ -1,0 +1,246 @@
+{
+  "root": {
+    "ticker": "MC",
+    "name": "モーリス",
+    "cik": 1596967,
+    "name_en": "Moelis & Company"
+  },
+  "rows": [
+    {
+      "ja": "資金調達・再建の助言先(顧客)",
+      "en": "Clients (financing & restructuring advice)"
+    },
+    {
+      "ja": "モーリスを競合に挙げる会社",
+      "en": "Companies naming Moelis as a competitor"
+    }
+  ],
+  "rivals": [
+    "EVR",
+    "HLI",
+    "RILY"
+  ],
+  "companies": [
+    {
+      "id": "CVNA",
+      "ticker": "CVNA",
+      "name": "カーバナ",
+      "name_en": "Carvana",
+      "sub": "中古車EC",
+      "sub_en": "Online used cars",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "株式の随時売出し(ATM)の販売代理人",
+          "text_en": "Sales agent on its at-the-market equity program",
+          "source": {
+            "label": "Carvana 10-K(2024年度)",
+            "label_en": "Carvana 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1690820/000169082025000074/cvna-20241231.htm",
+            "level": "official",
+            "date": "2025-02-19",
+            "quote": "On July 19, 2023, the Company entered into a distribution agreement with Citigroup Global Markets Inc. and Moelis & Company LLC to establish an ATM Program"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MDIA",
+      "ticker": "MDIA",
+      "name": "メディアコ",
+      "name_en": "Mediaco",
+      "sub": "ラジオ・メディア",
+      "sub_en": "Radio & media",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "株式の随時売出しの販売代理人",
+          "text_en": "Sales agent on its at-the-market offering",
+          "source": {
+            "label": "Mediaco 10-K(2024年度)",
+            "label_en": "Mediaco 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1784254/000178425425000004/mdia-20241231.htm",
+            "level": "official",
+            "date": "2025-04-15",
+            "quote": "On December 12, 2024, the Company entered into an At-The-Market Sales Agreement with BTIG, LLC and Moelis & Company LLC"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BMNR",
+      "ticker": "BMNR",
+      "name": "ビットマイン",
+      "name_en": "BitMine Immersion Technologies",
+      "sub": "暗号資産",
+      "sub_en": "Crypto treasury",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "株式引受契約の引受会社(2026年6月)",
+          "text_en": "Underwriter in June 2026",
+          "source": {
+            "label": "BitMine 10-K(2026年8月期)",
+            "label_en": "BitMine 10-K (FY ended Aug 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1829311/000162828026072846/bmnr-20260831.htm",
+            "level": "official",
+            "date": "2026-11-10",
+            "quote": "Underwriting Agreement, dated June 4, 2026, by and among Bitmine Immersion Technologies, Inc., Moelis & Company, LLC and Cantor Fitzgerald & Co."
+          }
+        }
+      ]
+    },
+    {
+      "id": "OPI",
+      "ticker": "OPI",
+      "name": "オフィス・プロパティーズ・インカム・トラスト",
+      "name_en": "Office Properties Income Trust",
+      "sub": "オフィスREIT",
+      "sub_en": "Office REIT",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "債務の返済策を検討する財務アドバイザー",
+          "text_en": "Financial advisor on strategies for its upcoming debt",
+          "source": {
+            "label": "Office Properties Income Trust 10-K(2024年度)",
+            "label_en": "Office Properties Income Trust 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1456772/000145677225000013/opi-20241231.htm",
+            "level": "official",
+            "date": "2025-02-13",
+            "quote": "we continue to work with our financial advisor, Moelis & Company LLC, to evaluate strategies to address our upcoming debt obligations"
+          }
+        }
+      ]
+    },
+    {
+      "id": "VREOF",
+      "ticker": "VREOF",
+      "name": "ヴィレオ・グロース",
+      "name_en": "Vireo Growth",
+      "sub": "大麻",
+      "sub_en": "Cannabis",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "合併の唯一の投資銀行アドバイザー",
+          "text_en": "Sole investment banker on its merger",
+          "source": {
+            "label": "Vireo Growth 10-K 添付合併契約(2024年度)",
+            "label_en": "Vireo Growth 10-K merger agreement exhibit (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1771706/000155837025002130/vreof-20241231xex2d4.htm",
+            "level": "official",
+            "date": "2025-03-04",
+            "quote": "Except for Moelis & Company, no broker, finder or investment banker is entitled to any brokerage, finder's or other fee or commission"
+          }
+        }
+      ]
+    },
+    {
+      "id": "EVR",
+      "ticker": "EVR",
+      "name": "エバーコア",
+      "name_en": "Evercore",
+      "sub": "投資銀行(独立系)",
+      "sub_en": "Independent investment bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "独立系助言会社の競合にモーリスを挙げる",
+          "text_en": "Names Moelis among independent advisory competitors",
+          "source": {
+            "label": "Evercore 10-K(2024年度)",
+            "label_en": "Evercore 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1360901/000136090125000005/evr-20241231.htm",
+            "level": "official",
+            "date": "2025-02-21",
+            "quote": "independent advisory firms such as Centerview, Houlihan Lokey, Lazard, Moelis, Perella Weinberg, PJT Partners and Rothschild"
+          }
+        }
+      ]
+    },
+    {
+      "id": "HLI",
+      "ticker": "HLI",
+      "name": "フーリハン・ローキー",
+      "name_en": "Houlihan Lokey",
+      "sub": "投資銀行(独立系)",
+      "sub_en": "Independent investment bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "M&A助言と事業再生で競合",
+          "text_en": "Competitor in corporate finance and restructuring",
+          "source": {
+            "label": "Houlihan Lokey 10-K(2025年3月期)",
+            "label_en": "Houlihan Lokey 10-K (FY ended Mar 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1302215/000130221525000024/hli-20250331.htm",
+            "level": "official",
+            "date": "2025-05-15",
+            "quote": "for our FR practice, Evercore Inc., Lazard, Inc., Moelis & Company, Perella Weinberg Partners, PJT Partners Inc., and Rothschild & Co."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RILY",
+      "ticker": "RILY",
+      "name": "B.ライリー・ファイナンシャル",
+      "name_en": "B. Riley Financial",
+      "sub": "投資銀行・資産運用",
+      "sub_en": "Investment banking & asset management",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "投資銀行の競合にモーリスを挙げる",
+          "text_en": "Names Moelis among investment banking competitors",
+          "source": {
+            "label": "B. Riley Financial 10-K(2024年度)",
+            "label_en": "B. Riley Financial 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1464790/000146479025000011/rily-20241231.htm",
+            "level": "official",
+            "date": "2025-09-19",
+            "quote": "Houlihan Lokey Inc., Lazard Ltd., Moelis & Company, Oppenheimer Holdings Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Lincoln",
+      "ticker": "Lincoln International",
+      "name": "リンカーン・インターナショナル",
+      "name_en": "Lincoln International",
+      "sub": "M&A助言",
+      "sub_en": "M&A advisory",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合にモーリスを挙げる",
+          "text_en": "Names Moelis among its competitors",
+          "source": {
+            "label": "Lincoln International S-1/A(2026年4月)",
+            "label_en": "Lincoln International S-1/A (Apr 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1925283/000162828026027260/lincolninternational-sx1xa.htm",
+            "level": "official",
+            "date": "2026-04-24",
+            "quote": "Broadly, we compete with Harris Williams & Co., Houlihan Lokey, Inc., Jefferies LLC, Lazard Ltd, Moelis & Company"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

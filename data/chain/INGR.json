@@ -1,0 +1,203 @@
+{
+  "root": {
+    "ticker": "INGR",
+    "name": "イングレディオン",
+    "cik": 1046257,
+    "name_en": "Ingredion"
+  },
+  "rows": [
+    {
+      "ja": "事業売却・顧客",
+      "en": "Divestiture & customer",
+      "above": true
+    },
+    {
+      "ja": "でんぷん・甘味料の競合(10-Kに記載)",
+      "en": "Starch & sweetener competitors (named in the 10-K)"
+    },
+    {
+      "ja": "主な競合",
+      "en": "Main competitors"
+    }
+  ],
+  "rivals": [
+    "ADM",
+    "Cargill",
+    "TateLyle"
+  ],
+  "companies": [
+    {
+      "id": "Nishat",
+      "ticker": "Nishat Group",
+      "name": "ニシャット・グループ",
+      "name_en": "Nishat Group",
+      "sub": "複合企業(パキスタン)",
+      "sub_en": "Conglomerate (Pakistan)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "パキスタン事業の51%を売却する契約(2025年9月、追加取得の選択権付き)",
+          "text_en": "Agreed in September 2025 to buy 51% of its Pakistan business, with an option for more",
+          "source": {
+            "label": "Ingredion 10-K(2025年度)",
+            "label_en": "Ingredion 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1046257/000162828026008603/ingr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "We amended the agreement in December 2025 to grant Nishat Group an option to purchase additional shares for commensurate consideration per share."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ABEV",
+      "ticker": "ABEV",
+      "name": "アンベブ",
+      "name_en": "Ambev",
+      "sub": "ビール(伯)",
+      "sub_en": "Beer (Brazil)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "非麦芽穀物の主要な仕入先にイングレディオン",
+          "text_en": "Names Ingredion among its most relevant suppliers of non-malted cereals",
+          "source": {
+            "label": "Ambev 20-F(2025年度)",
+            "label_en": "Ambev 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1565025/000129281426000640/abevform20f_2025.htm",
+            "level": "official",
+            "date": "2026-03-03",
+            "quote": "Non-malted cereals are purchased from domestic suppliers, the most relevant of which are Ingredion , Cargill Agrícola and Arrozeira Pelotas ."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Roquette",
+      "ticker": "Roquette",
+      "name": "ロケット",
+      "name_en": "Roquette",
+      "sub": "でんぷん(仏、非上場)",
+      "sub_en": "Starches (France, private)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "食感・健康素材の世界的な競合",
+          "text_en": "Global competitor in texture and healthful solutions",
+          "source": {
+            "label": "Ingredion 10-K(2025年度)",
+            "label_en": "Ingredion 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1046257/000162828026008603/ingr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "T&HS faces competition globally from Archer-Daniels-Midland Company (\"ADM\"), Tate & Lyle, Cargill, and Roquette."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Primient",
+      "ticker": "Primient",
+      "name": "プライミエント",
+      "name_en": "Primient",
+      "sub": "でんぷん・甘味料(非上場)",
+      "sub_en": "Starch & sweeteners (private)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "米国・カナダの競合",
+          "text_en": "Competitor in the U.S. and Canada",
+          "source": {
+            "label": "Ingredion 10-K(2025年度)",
+            "label_en": "Ingredion 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1046257/000162828026008603/ingr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "F&II-U.S./Canada's competitors include, among others, ADM, Cargill, and Primient."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ADM",
+      "ticker": "ADM",
+      "name": "アーチャー・ダニエルズ・ミッドランド",
+      "name_en": "Archer-Daniels-Midland",
+      "sub": "穀物加工",
+      "sub_en": "Grain processing",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "世界および米国の主な競合",
+          "text_en": "Main competitor globally and in the U.S.",
+          "source": {
+            "label": "Ingredion 10-K(2025年度)",
+            "label_en": "Ingredion 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1046257/000162828026008603/ingr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "T&HS faces competition globally from Archer-Daniels-Midland Company (\"ADM\"), Tate & Lyle, Cargill, and Roquette."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Cargill",
+      "ticker": "Cargill",
+      "name": "カーギル",
+      "name_en": "Cargill",
+      "sub": "穀物(非上場)",
+      "sub_en": "Agribusiness (private)",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "世界および米国の主な競合",
+          "text_en": "Main competitor globally and in the U.S.",
+          "source": {
+            "label": "Ingredion 10-K(2025年度)",
+            "label_en": "Ingredion 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1046257/000162828026008603/ingr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "T&HS faces competition globally from Archer-Daniels-Midland Company (\"ADM\"), Tate & Lyle, Cargill, and Roquette."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TateLyle",
+      "ticker": "Tate & Lyle",
+      "name": "テート・アンド・ライル",
+      "name_en": "Tate & Lyle",
+      "sub": "食品素材(英)",
+      "sub_en": "Food ingredients (UK)",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "食感・健康素材の世界的な競合",
+          "text_en": "Global competitor in texture and healthful solutions",
+          "source": {
+            "label": "Ingredion 10-K(2025年度)",
+            "label_en": "Ingredion 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1046257/000162828026008603/ingr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "T&HS faces competition globally from Archer-Daniels-Midland Company (\"ADM\"), Tate & Lyle, Cargill, and Roquette."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

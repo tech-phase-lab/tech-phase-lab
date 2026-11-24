@@ -1,0 +1,153 @@
+{
+  "root": {
+    "ticker": "PFGC",
+    "name": "パフォーマンス・フード・グループ",
+    "cik": 1618673,
+    "name_en": "Performance Food Group"
+  },
+  "rows": [
+    {
+      "ja": "買収",
+      "en": "Acquisitions",
+      "above": true
+    },
+    {
+      "ja": "外食・給食の顧客、食品メーカー",
+      "en": "Restaurant customers & food brands"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "USFD"
+  ],
+  "companies": [
+    {
+      "id": "Cheney",
+      "ticker": "Cheney Bros",
+      "name": "チェイニー・ブラザーズ",
+      "name_en": "Cheney Bros",
+      "sub": "業務用食品卸(南東部)",
+      "sub_en": "Foodservice distribution (Southeast)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2024年10月に買収を完了",
+          "text_en": "Completed the acquisition in October 2024",
+          "source": {
+            "label": "Performance Food Group 8-K添付(2024年10月)",
+            "label_en": "Performance Food Group 8-K exhibit (2024-10)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1618673/000119312524234397/d838819d8k.htm",
+            "level": "official",
+            "date": "2024-10-08",
+            "quote": "On October 8, 2024 (the \" Closing Date \"), Performance Food Group Company (the \" Company \"), completed the previously announced acquisition of Cheney Bros"
+          }
+        }
+      ]
+    },
+    {
+      "id": "LOCO",
+      "ticker": "LOCO",
+      "name": "エル・ポヨ・ロコ",
+      "name_en": "El Pollo Loco",
+      "sub": "ファストフード",
+      "sub_en": "Fast casual chicken",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2025年3月から食材などのほぼ全てをPerformance Food傘下のPFG Customizedが配送",
+          "text_en": "PFG Customized became its primary distributor for substantially all food from March 2025",
+          "source": {
+            "label": "El Pollo Loco 10-K(2026年提出)",
+            "label_en": "El Pollo Loco 10-K (filed 2026-03)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1606366/000160636626000017/loco-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-03-13",
+            "quote": "Starting in March 2025, Performance Food Group Customized Distribution (\"PFG Customized\") was our new primary distributor"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ARMK",
+      "ticker": "ARMK",
+      "name": "アラマーク",
+      "name_en": "Aramark",
+      "sub": "給食・施設サービス",
+      "sub_en": "Food & facilities services",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "食品の多くをSysco・US Foods・Performance Foodなどの卸から購入",
+          "text_en": "Buys most food products through distributors including Performance Food Group",
+          "source": {
+            "label": "Aramark 10-K(2025年提出)",
+            "label_en": "Aramark 10-K (filed 2025-11)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1584509/000158450925000219/cik0-20251003.htm",
+            "level": "official",
+            "date": "2025-11-25",
+            "quote": "We purchase most products and other items through food service distribution companies, including Sysco Corporation (\"Sysco\"), US Foods, Performance Food Group"
+          }
+        }
+      ]
+    },
+    {
+      "id": "NATH",
+      "ticker": "NATH",
+      "name": "ネイサンズ・フェイマス",
+      "name_en": "Nathan's Famous",
+      "sub": "ホットドッグ・ブランド",
+      "sub_en": "Hot dog brand",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ブランド商品を配送する卸の一社がPerformance Food",
+          "text_en": "Performance Food Group is one of the distributors delivering its branded products",
+          "source": {
+            "label": "Nathans Famous 10-K(2024年提出)",
+            "label_en": "Nathans Famous 10-K (filed 2024-06)",
+            "url": "https://www.sec.gov/Archives/edgar/data/69733/000143774924020013/nath20240331_10k.htm",
+            "level": "official",
+            "date": "2024-06-12",
+            "quote": "SYSCO Corporation, Performance Food Group Company, McLane Company, Inc. and DOT Foods."
+          }
+        }
+      ]
+    },
+    {
+      "id": "USFD",
+      "ticker": "USFD",
+      "name": "USフーズ",
+      "name_en": "US Foods",
+      "sub": "業務用食品卸",
+      "sub_en": "Foodservice distribution",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "US FoodsとPerformance Foodが経営統合に向けた情報交換を打ち切り(2025年11月)",
+          "text_en": "US Foods and Performance Food Group ended their information-sharing process in November 2025",
+          "source": {
+            "label": "US Foods 8-K添付(2025年11月)",
+            "label_en": "US Foods 8-K exhibit (2025-11)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1665918/000166591825000148/usfdpressrelease-112425.htm",
+            "level": "official",
+            "date": "2025-11-24",
+            "quote": "US Foods and Performance Food Group Terminate Information Sharing Process"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

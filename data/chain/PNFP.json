@@ -1,0 +1,154 @@
+{
+  "root": {
+    "ticker": "PNFP",
+    "name": "ピナクル・ファイナンシャル・パートナーズ",
+    "cik": 2082866,
+    "name_en": "Pinnacle Financial Partners"
+  },
+  "rows": [
+    {
+      "ja": "合併・出資先",
+      "en": "Merger & equity stake",
+      "above": true
+    },
+    {
+      "ja": "融資の取引先(相手の資料に記載)",
+      "en": "Borrowers (named in their filings)"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "FHN",
+    "SFBS"
+  ],
+  "companies": [
+    {
+      "id": "Synovus",
+      "ticker": "Synovus Financial",
+      "name": "シノバス・ファイナンシャル",
+      "name_en": "Synovus Financial",
+      "sub": "銀行(ジョージア州)",
+      "sub_en": "Bank (Georgia)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2026年1月、旧PinnacleとSynovusが新会社に合併して統合",
+          "text_en": "Merged with Pinnacle into a new holding company in January 2026",
+          "source": {
+            "label": "Pinnacle Financial Partners 10-K(2025年度)",
+            "label_en": "Pinnacle Financial Partners 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2082866/000208286626000018/pnfp-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "Pinnacle Financial Partners, Inc., a Tennessee corporation (\"Legacy Pinnacle\") and Synovus Financial Corp. (\"Synovus\"), a Georgia corporation, have each merged with and into Pinnacle Financial Partners, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BHG",
+      "ticker": "Bankers Healthcare Group",
+      "name": "バンカーズ・ヘルスケア・グループ(BHG)",
+      "name_en": "Bankers Healthcare Group",
+      "sub": "医療従事者向け融資",
+      "sub_en": "Loans to healthcare professionals",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Pinnacle Bankが49%を出資",
+          "text_en": "Pinnacle Bank holds a 49% interest",
+          "source": {
+            "label": "Pinnacle Financial Partners 10-K(2025年度)",
+            "label_en": "Pinnacle Financial Partners 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2082866/000208286626000018/pnfp-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "Pinnacle Bank also holds a 49 % interest in Bankers Healthcare Group, LLC (BHG)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MBC",
+      "ticker": "MBC",
+      "name": "マスターブランド",
+      "name_en": "MasterBrand",
+      "sub": "キッチン収納家具",
+      "sub_en": "Kitchen cabinets",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2025年の融資契約改定で、Pinnacle Bankが貸し手の一行として署名",
+          "text_en": "Pinnacle Bank signed its 2025 credit agreement amendment as a lender",
+          "source": {
+            "label": "MasterBrand 10-Q添付 融資契約の第1次改定(2025年)",
+            "label_en": "MasterBrand 10-Q exhibit: First Amendment to Credit Agreement (2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1941365/000194136525000088/firstamendmenttoamendedand.htm",
+            "level": "official",
+            "date": "2025-11-05",
+            "quote": "Pinnacle Bank, a Tennessee bank, as a 2025 Delayed Draw Term Lender and Lender"
+          }
+        }
+      ]
+    },
+    {
+      "id": "FHN",
+      "ticker": "FHN",
+      "name": "ファースト・ホライゾン",
+      "name_en": "First Horizon",
+      "sub": "銀行(テネシー州)",
+      "sub_en": "Bank (Tennessee)",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "First Horizonが10-Kで、主な競合の一行としてPinnacle Bankを挙げる",
+          "text_en": "First Horizon names Pinnacle Bank among its key competitors",
+          "source": {
+            "label": "First Horizon 10-K(2025年度)",
+            "label_en": "First Horizon 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/36966/000003696626000051/fhn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Regions Bank, Pinnacle Bank, PNC Bank National Association, Truist Bank"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SFBS",
+      "ticker": "SFBS",
+      "name": "サービスファースト・バンクシェアーズ",
+      "name_en": "ServisFirst Bancshares",
+      "sub": "銀行(アラバマ州)",
+      "sub_en": "Bank (Alabama)",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ServisFirstが10-Kで、地域の最大競合5社の一社にPinnacleを挙げる",
+          "text_en": "ServisFirst names Pinnacle among its five largest competitors",
+          "source": {
+            "label": "ServisFirst Bancshares 10-K(2025年度)",
+            "label_en": "ServisFirst Bancshares 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1430723/000117184326001150/sfbs20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "our five largest competitors are Regions Financial Corporation, Wells Fargo & Company, PNC Financial Services Group, Inc., Truist Financial Corporation, and Pinnacle Financial Partners, Inc."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
