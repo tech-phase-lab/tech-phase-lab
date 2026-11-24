@@ -32,6 +32,8 @@
       "name_en": "Honeywell",
       "sub": "複合企業",
       "sub_en": "Conglomerate",
+      "sub_short": "複合企業",
+      "sub_short_en": "Conglomerate",
       "row": 0,
       "relations": [
         {
@@ -56,6 +58,8 @@
       "name_en": "General Atomics",
       "sub": "原子力・防衛",
       "sub_en": "Nuclear & defense",
+      "sub_short": "原子力・防衛",
+      "sub_short_en": "Nuclear, defense",
       "row": 0,
       "relations": [
         {
@@ -80,6 +84,8 @@
       "name_en": "Element Solutions",
       "sub": "特殊化学品",
       "sub_en": "Specialty chemicals",
+      "sub_short": "特殊化学品",
+      "sub_short_en": "Specialty chem",
       "row": 0,
       "relations": [
         {
@@ -104,6 +110,8 @@
       "name_en": "Hadron Energy",
       "sub": "小型原子炉",
       "sub_en": "Microreactors",
+      "sub_short": "小型原子炉",
+      "sub_short_en": "Microreactors",
       "row": 1,
       "relations": [
         {
@@ -128,6 +136,8 @@
       "name_en": "Uranium Energy",
       "sub": "ウラン",
       "sub_en": "Uranium",
+      "sub_short": "ウラン",
+      "sub_short_en": "Uranium",
       "row": 1,
       "relations": [
         {
@@ -152,6 +162,8 @@
       "name_en": "Chemours",
       "sub": "化学",
       "sub_en": "Chemicals",
+      "sub_short": "化学",
+      "sub_short_en": "Chemicals",
       "row": 2,
       "relations": [
         {
@@ -176,6 +188,8 @@
       "name_en": "Arkema",
       "sub": "化学(フランス)",
       "sub_en": "Chemicals (France)",
+      "sub_short": "化学",
+      "sub_short_en": "Chemicals",
       "row": 2,
       "relations": [
         {
@@ -200,6 +214,8 @@
       "name_en": "Daikin",
       "sub": "空調・化学",
       "sub_en": "Air conditioning & chemicals",
+      "sub_short": "空調・化学",
+      "sub_short_en": "HVAC & chemicals",
       "row": 2,
       "relations": [
         {
@@ -224,6 +240,8 @@
       "name_en": "Orbia",
       "sub": "化学",
       "sub_en": "Chemicals",
+      "sub_short": "化学",
+      "sub_short_en": "Chemicals",
       "row": 2,
       "relations": [
         {

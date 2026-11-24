@@ -30,6 +30,8 @@
       "name_en": "NYC Department of Transportation",
       "sub": "自治体",
       "sub_en": "City agency",
+      "sub_short": "自治体",
+      "sub_short_en": "City agency",
       "row": 0,
       "relations": [
         {
@@ -54,6 +56,8 @@
       "name_en": "Avis Budget Group",
       "sub": "レンタカー",
       "sub_en": "Car rental",
+      "sub_short": "レンタカー",
+      "sub_short_en": "Car rental",
       "row": 0,
       "relations": [
         {
@@ -78,6 +82,8 @@
       "name_en": "Enterprise Mobility",
       "sub": "レンタカー",
       "sub_en": "Car rental",
+      "sub_short": "レンタカー",
+      "sub_short_en": "Car rental",
       "row": 0,
       "relations": [
         {
@@ -102,6 +108,8 @@
       "name_en": "Hertz",
       "sub": "レンタカー",
       "sub_en": "Car rental",
+      "sub_short": "レンタカー",
+      "sub_short_en": "Car rental",
       "row": 0,
       "relations": [
         {
@@ -126,6 +134,8 @@
       "name_en": "Redflex",
       "sub": "交通取締カメラ",
       "sub_en": "Traffic enforcement cameras",
+      "sub_short": "交通カメラ",
+      "sub_short_en": "Traffic cameras",
       "row": 1,
       "relations": [
         {
@@ -150,6 +160,8 @@
       "name_en": "i3 Verticals",
       "sub": "行政向けソフト",
       "sub_en": "Public sector software",
+      "sub_short": "行政ソフト",
+      "sub_short_en": "Gov software",
       "row": 2,
       "relations": [
         {

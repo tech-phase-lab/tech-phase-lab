@@ -25,6 +25,8 @@
       "name_en": "HD Hyundai",
       "sub": "造船",
       "sub_en": "Shipbuilding",
+      "sub_short": "造船",
+      "sub_short_en": "Shipbuilding",
       "row": 0,
       "relations": [
         {
@@ -49,6 +51,8 @@
       "name_en": "Hanwha Ocean",
       "sub": "造船",
       "sub_en": "Shipbuilding",
+      "sub_short": "造船",
+      "sub_short_en": "Shipbuilding",
       "row": 0,
       "relations": [
         {
@@ -73,6 +77,8 @@
       "name_en": "Mitsui O.S.K. Lines",
       "sub": "海運",
       "sub_en": "Shipping",
+      "sub_short": "海運",
+      "sub_short_en": "Shipping",
       "row": 1,
       "relations": [
         {

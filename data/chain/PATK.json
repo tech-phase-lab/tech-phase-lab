@@ -24,6 +24,8 @@
       "name_en": "THOR Industries",
       "sub": "RV(キャンピングカー)",
       "sub_en": "Recreational vehicles",
+      "sub_short": "RV",
+      "sub_short_en": "RVs",
       "row": 0,
       "relations": [
         {
@@ -48,6 +50,8 @@
       "name_en": "Forest River",
       "sub": "RV(キャンピングカー)",
       "sub_en": "Recreational vehicles",
+      "sub_short": "RV",
+      "sub_short_en": "RVs",
       "row": 0,
       "relations": [
         {
@@ -72,6 +76,8 @@
       "name_en": "LCI Industries",
       "sub": "RV部品",
       "sub_en": "RV components",
+      "sub_short": "RV部品",
+      "sub_short_en": "RV components",
       "row": 1,
       "relations": [
         {

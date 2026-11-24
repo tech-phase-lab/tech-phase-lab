@@ -33,6 +33,8 @@
       "name_en": "Eli Lilly",
       "sub": "医薬品",
       "sub_en": "Pharmaceuticals",
+      "sub_short": "医薬品",
+      "sub_short_en": "Pharmaceuticals",
       "row": 0,
       "relations": [
         {
@@ -57,6 +59,8 @@
       "name_en": "Nanjing Anji Biotechnology",
       "sub": "バイオ医薬",
       "sub_en": "Biotech",
+      "sub_short": "バイオ医薬",
+      "sub_short_en": "Biotech",
       "row": 0,
       "relations": [
         {
@@ -81,6 +85,8 @@
       "name_en": "Nanjing Hanxin Pharmaceutical Technology",
       "sub": "医薬品開発",
       "sub_en": "Drug development",
+      "sub_short": "医薬品開発",
+      "sub_short_en": "Drug development",
       "row": 0,
       "relations": [
         {
@@ -105,6 +111,8 @@
       "name_en": "MannKind",
       "sub": "医薬品",
       "sub_en": "Pharmaceuticals",
+      "sub_short": "医薬品",
+      "sub_short_en": "Pharmaceuticals",
       "row": 1,
       "relations": [
         {
@@ -129,6 +137,8 @@
       "name_en": "Pfizer",
       "sub": "医薬品",
       "sub_en": "Pharmaceuticals",
+      "sub_short": "医薬品",
+      "sub_short_en": "Pharmaceuticals",
       "row": 2,
       "relations": [
         {
@@ -153,6 +163,8 @@
       "name_en": "Viatris",
       "sub": "医薬品",
       "sub_en": "Pharmaceuticals",
+      "sub_short": "医薬品",
+      "sub_short_en": "Pharmaceuticals",
       "row": 2,
       "relations": [
         {
@@ -177,6 +189,8 @@
       "name_en": "Hikma Pharmaceuticals",
       "sub": "後発医薬品",
       "sub_en": "Generic drugs",
+      "sub_short": "後発医薬品",
+      "sub_short_en": "Generic drugs",
       "row": 2,
       "relations": [
         {

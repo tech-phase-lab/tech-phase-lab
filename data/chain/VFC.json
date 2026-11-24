@@ -25,6 +25,8 @@
       "name_en": "Jerash Holdings",
       "sub": "衣料品製造",
       "sub_en": "Apparel manufacturing",
+      "sub_short": "衣料品製造",
+      "sub_short_en": "Apparel maker",
       "row": 0,
       "relations": [
         {
@@ -49,6 +51,8 @@
       "name_en": "Bluestar Alliance",
       "sub": "ブランド管理",
       "sub_en": "Brand management",
+      "sub_short": "ブランド管理",
+      "sub_short_en": "Brand management",
       "row": 1,
       "relations": [
         {
@@ -73,6 +77,8 @@
       "name_en": "EssilorLuxottica",
       "sub": "眼鏡(フランス)",
       "sub_en": "Eyewear (France)",
+      "sub_short": "眼鏡",
+      "sub_short_en": "Eyewear",
       "row": 1,
       "relations": [
         {
@@ -97,6 +103,8 @@
       "name_en": "Kontoor Brands",
       "sub": "ジーンズ",
       "sub_en": "Jeans",
+      "sub_short": "ジーンズ",
+      "sub_short_en": "Jeans",
       "row": 1,
       "relations": [
         {

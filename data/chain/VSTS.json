@@ -31,6 +31,8 @@
       "name_en": "Aramark",
       "sub": "給食・施設サービス",
       "sub_en": "Food & facilities services",
+      "sub_short": "給食・施設管理",
+      "sub_short_en": "Food services",
       "row": 0,
       "relations": [
         {
@@ -55,6 +57,8 @@
       "name_en": "Xos",
       "sub": "電動商用車",
       "sub_en": "Electric commercial vehicles",
+      "sub_short": "電動商用車",
+      "sub_short_en": "Electric trucks",
       "row": 1,
       "relations": [
         {
@@ -79,6 +83,8 @@
       "name_en": "Cintas",
       "sub": "ユニフォームレンタル",
       "sub_en": "Uniform rental",
+      "sub_short": "制服レンタル",
+      "sub_short_en": "Uniform rental",
       "row": 2,
       "relations": [
         {
@@ -103,6 +109,8 @@
       "name_en": "UniFirst",
       "sub": "ユニフォームレンタル",
       "sub_en": "Uniform rental",
+      "sub_short": "制服レンタル",
+      "sub_short_en": "Uniform rental",
       "row": 2,
       "relations": [
         {

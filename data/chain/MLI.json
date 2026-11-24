@@ -32,6 +32,8 @@
       "name_en": "Jungwoo-Mueller",
       "sub": "銅製接合部品",
       "sub_en": "Copper joining products",
+      "sub_short": "銅製継手",
+      "sub_short_en": "Copper fittings",
       "row": 0,
       "relations": [
         {
@@ -56,6 +58,8 @@
       "name_en": "Mueller Middle East",
       "sub": "銅管",
       "sub_en": "Copper tube",
+      "sub_short": "銅管",
+      "sub_short_en": "Copper tube",
       "row": 0,
       "relations": [
         {
@@ -80,6 +84,8 @@
       "name_en": "Elkhart Products",
       "sub": "銅継手",
       "sub_en": "Copper fittings",
+      "sub_short": "銅継手",
+      "sub_short_en": "Copper fittings",
       "row": 0,
       "relations": [
         {
@@ -104,6 +110,8 @@
       "name_en": "Watsco",
       "sub": "空調機器卸",
       "sub_en": "HVAC distribution",
+      "sub_short": "空調機器卸",
+      "sub_short_en": "HVAC wholesale",
       "row": 1,
       "relations": [
         {
@@ -128,6 +136,8 @@
       "name_en": "NIBCO",
       "sub": "配管部材",
       "sub_en": "Piping products",
+      "sub_short": "配管部材",
+      "sub_short_en": "Piping products",
       "row": 2,
       "relations": [
         {
@@ -152,6 +162,8 @@
       "name_en": "Prysmian",
       "sub": "電線",
       "sub_en": "Wire & cable",
+      "sub_short": "電線",
+      "sub_short_en": "Wire & cable",
       "row": 2,
       "relations": [
         {
@@ -176,6 +188,8 @@
       "name_en": "Southwire",
       "sub": "電線",
       "sub_en": "Wire & cable",
+      "sub_short": "電線",
+      "sub_short_en": "Wire & cable",
       "row": 2,
       "relations": [
         {
