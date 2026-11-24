@@ -1,0 +1,183 @@
+{
+  "root": {
+    "ticker": "VALE",
+    "name": "ヴァーレ",
+    "cik": 917851,
+    "name_en": "Vale"
+  },
+  "rows": [
+    {
+      "ja": "ニッケル・銅の合弁相手",
+      "en": "Nickel & copper joint-venture partners",
+      "above": true
+    },
+    {
+      "ja": "ストリーム契約・電力資産の相手",
+      "en": "Streaming & power-asset partners"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "Glencore",
+      "ticker": "Glencore",
+      "name": "グレンコア",
+      "name_en": "Glencore",
+      "sub": "資源・商品取引",
+      "sub_en": "Mining & trading",
+      "sub_short": "資源",
+      "sub_short_en": "Mining",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "サドベリーの合弁",
+          "text_en": "Joint venture in Sudbury",
+          "source": {
+            "label": "Vale 20-F(2025年度)",
+            "label_en": "Vale 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/917851/000129281426001844/valeform20f_2025.htm",
+            "level": "official",
+            "date": "2026-03-27",
+            "quote": "along with multiple standalone projects such as Alemão and our joint venture with Glencore in Sudbury."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Huayou",
+      "ticker": "603799",
+      "name": "華友コバルト(Huayou)",
+      "name_en": "Huayou Cobalt",
+      "sub": "ニッケル・コバルト(中国)",
+      "sub_en": "Nickel & cobalt (China)",
+      "sub_short": "ニッケル",
+      "sub_short_en": "Nickel",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "インドネシアのHPAL工場でニッケル鉱を処理する合弁",
+          "text_en": "JV processing nickel ore at an HPAL plant in Indonesia",
+          "source": {
+            "label": "Vale 20-F(2025年度)",
+            "label_en": "Vale 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/917851/000129281426001844/valeform20f_2025.htm",
+            "level": "official",
+            "date": "2026-03-27",
+            "quote": "In addition, mineralized limonite from Sorowako is sent to a feed preparation plant (FPP) of PT Huali Nickel Indonesia (HNI) HPAL plant for processing by a joint venture with Huayou Cobalt Co., Ltd, (Huayou)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GEM",
+      "ticker": "002340",
+      "name": "格林美(GEM)",
+      "name_en": "GEM Co.",
+      "sub": "電池材料(中国)",
+      "sub_en": "Battery materials (China)",
+      "sub_short": "電池材料",
+      "sub_short_en": "Battery",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "インドネシアのHPAL工場の合弁相手で、鉱石の販売先",
+          "text_en": "JV partner at an Indonesian HPAL plant and buyer of ore",
+          "source": {
+            "label": "Vale 20-F(2025年度)",
+            "label_en": "Vale 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/917851/000129281426001844/valeform20f_2025.htm",
+            "level": "official",
+            "date": "2026-03-27",
+            "quote": "For Bahodopi 2-3, mineralized limonite is sent to PT Bahodopi Nickel Smelter Indonesia (BNSI) HPAL Plant (joint venture with QMB GEM Co Ltd (GEM)) at Sambalagi, and mineralized saprolite ore is sold to GEM and to the domestic market."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WPM",
+      "ticker": "WPM",
+      "name": "ウィートン・プレシャス・メタルズ",
+      "name_en": "Wheaton Precious Metals",
+      "sub": "貴金属ストリーム",
+      "sub_en": "Precious metals streaming",
+      "sub_short": "貴金属",
+      "sub_short_en": "Streams",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Voisey's Bay鉱山のストリーム契約の相手",
+          "text_en": "Counterparty to the Voisey's Bay streaming agreement",
+          "source": {
+            "label": "Vale 20-F(2025年度)",
+            "label_en": "Vale 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/917851/000129281426001844/valeform20f_2025.htm",
+            "level": "official",
+            "date": "2026-03-27",
+            "quote": "The streaming test, a requirement under the Voisey's Bay streaming agreement with Wheaton Precious Metals Corp and APG Metals Limited"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Cemig",
+      "ticker": "CIG",
+      "name": "CEMIG",
+      "name_en": "Cemig",
+      "sub": "電力(ブラジル)",
+      "sub_en": "Power (Brazil)",
+      "sub_short": "電力",
+      "sub_short_en": "Power",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "発電会社Aliança Norte Energiaの合弁相手",
+          "text_en": "Joint venture partner in Aliança Norte Energia",
+          "source": {
+            "label": "Vale 20-F(2025年度)",
+            "label_en": "Vale 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/917851/000129281426001844/valeform20f_2025.htm",
+            "level": "official",
+            "date": "2026-03-27",
+            "quote": "We also have a joint venture with Cemig Geração e Transmissão S.A. in Aliança Norte Energia Participações S.A."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GlobalInfraPartners",
+      "ticker": "Global Infrastructure Partners",
+      "name": "グローバル・インフラストラクチャー・パートナーズ",
+      "name_en": "Global Infrastructure Partners",
+      "sub": "インフラ投資",
+      "sub_en": "Infrastructure investment",
+      "sub_short": "インフラ",
+      "sub_short_en": "Infra",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "発電資産Aliançaの持分70%を売却する契約(2025年3月)",
+          "text_en": "Agreed to sell 70% of its stake in Aliança energy assets (Mar 2025)",
+          "source": {
+            "label": "Vale 20-F(2025年度)",
+            "label_en": "Vale 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/917851/000129281426001844/valeform20f_2025.htm",
+            "level": "official",
+            "date": "2026-03-27",
+            "quote": "In March 2025, the Company signed a binding agreement with Global Infrastructure Partners for the sale of 70 % of its stake in Aliança"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
