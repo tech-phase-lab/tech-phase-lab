@@ -1,0 +1,183 @@
+{
+  "root": {
+    "ticker": "AZN",
+    "name": "アストラゼネカ",
+    "cik": 901832,
+    "name_en": "AstraZeneca"
+  },
+  "rows": [
+    {
+      "ja": "共同開発・権利の取得元",
+      "en": "Co-development partners & rights sellers",
+      "above": true
+    },
+    {
+      "ja": "提携先・出資先",
+      "en": "Partners & investee"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "DSNKY",
+      "ticker": "4568",
+      "name": "第一三共",
+      "name_en": "Daiichi Sankyo",
+      "sub": "製薬",
+      "sub_en": "Pharmaceuticals",
+      "sub_short": "製薬",
+      "sub_short_en": "Pharma",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "抗がん剤エンハーツの無形資産を第一三共から取得",
+          "text_en": "Holds Enhertu intangible assets acquired from Daiichi Sankyo",
+          "source": {
+            "label": "AstraZeneca 20-F(2025年度)",
+            "label_en": "AstraZeneca 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/901832/000110465926019130/azn-20251231x20f.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Enhertu intangible assets acquired from Daiichi Sankyo, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MRK",
+      "ticker": "MRK",
+      "name": "メルク",
+      "name_en": "Merck & Co.",
+      "sub": "製薬",
+      "sub_en": "Pharmaceuticals",
+      "sub_short": "製薬",
+      "sub_short_en": "Pharma",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "コセルゴの世界の権利の残り50%をMerckから取得(2025年)",
+          "text_en": "Acquired the remaining 50% of global rights to Koselugo from Merck (2025)",
+          "source": {
+            "label": "AstraZeneca 20-F(2025年度)",
+            "label_en": "AstraZeneca 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/901832/000110465926019130/azn-20251231x20f.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "In 2025, the Koselugo intangible asset was recognised on acquisition of the remaining 50 % of global rights from Merck & Co., Inc. (MSD) following the amendment of an existing global development and commercialisation arrangement."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMGN",
+      "ticker": "AMGN",
+      "name": "アムジェン",
+      "name_en": "Amgen",
+      "sub": "バイオ医薬",
+      "sub_en": "Biotech",
+      "sub_short": "バイオ",
+      "sub_short_en": "Biotech",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "喘息薬テゼスパイアをAmgenと共同開発",
+          "text_en": "Co-developed the asthma drug Tezspire with Amgen",
+          "source": {
+            "label": "AstraZeneca 20-F(2025年度)",
+            "label_en": "AstraZeneca 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/901832/000110465926019130/azn-20251231x20f.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Developed in collaboration with Amgen Inc. (Amgen)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SNY",
+      "ticker": "SNY",
+      "name": "サノフィ",
+      "name_en": "Sanofi",
+      "sub": "製薬",
+      "sub_en": "Pharmaceuticals",
+      "sub_short": "製薬",
+      "sub_short_en": "Pharma",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "RSV抗体ベイフォータスを共同開発・販売",
+          "text_en": "Jointly develops and sells the RSV antibody Beyfortus",
+          "source": {
+            "label": "AstraZeneca 20-F(2025年度)",
+            "label_en": "AstraZeneca 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/901832/000110465926019130/azn-20251231x20f.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Jointly developed and commercialised with Sanofi."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CLLS",
+      "ticker": "CLLS",
+      "name": "セレクティス",
+      "name_en": "Cellectis",
+      "sub": "遺伝子編集",
+      "sub_en": "Gene editing",
+      "sub_short": "遺伝子",
+      "sub_short_en": "Gene edit",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "次世代治療の開発を加速する契約(2023年11月)",
+          "text_en": "Agreement to accelerate next-generation therapeutics (Nov 2023)",
+          "source": {
+            "label": "AstraZeneca 20-F(2025年度)",
+            "label_en": "AstraZeneca 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/901832/000110465926019130/azn-20251231x20f.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "On 1 November 2023, AstraZeneca entered into an agreement with Cellectis S.A., a clinical-stage biotechnology company, to accelerate the development of next generation therapeutics in areas of high unmet medical need"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BondAvillion",
+      "ticker": "Bond Avillion",
+      "name": "ボンド・アビリオン",
+      "name_en": "Bond Avillion 2 Development",
+      "sub": "医薬品開発",
+      "sub_en": "Drug development",
+      "sub_short": "創薬",
+      "sub_short_en": "Biotech",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "吸入薬エアスプラの無形資産を取得",
+          "text_en": "Acquired the Airsupra intangible asset from it",
+          "source": {
+            "label": "AstraZeneca 20-F(2025年度)",
+            "label_en": "AstraZeneca 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/901832/000110465926019130/azn-20251231x20f.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Airsupra intangible asset acquired from Bond Avillion 2 Development LP"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

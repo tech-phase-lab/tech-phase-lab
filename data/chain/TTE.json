@@ -1,0 +1,183 @@
+{
+  "root": {
+    "ticker": "TTE",
+    "name": "トタルエナジーズ",
+    "cik": 879764,
+    "name_en": "TotalEnergies"
+  },
+  "rows": [
+    {
+      "ja": "権益・発電資産の取得元",
+      "en": "Sellers of stakes & power assets",
+      "above": true
+    },
+    {
+      "ja": "権益の売却先・合弁相手",
+      "en": "Buyers & joint-venture partners"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "GALP",
+      "ticker": "GALP",
+      "name": "ガルプ・エネルジア",
+      "name_en": "Galp",
+      "sub": "石油・ガス(ポルトガル)",
+      "sub_en": "Oil & gas (Portugal)",
+      "sub_short": "石油ガス",
+      "sub_short_en": "Oil & gas",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "PEL83鉱区(Mopane発見)の40%を取得する契約",
+          "text_en": "Agreed to acquire a 40% operated interest in the PEL83 license (Mopane)",
+          "source": {
+            "label": "TotalEnergies 20-F(2025年度)",
+            "label_en": "TotalEnergies 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/879764/000110465926035876/tot-20251231x20f.htm",
+            "level": "official",
+            "date": "2026-03-27",
+            "quote": "The Company signed an agreement with Galp to acquire a 40% operated interest in the prolific PEL83 license, which includes the Mopane discovery."
+          }
+        }
+      ]
+    },
+    {
+      "id": "EPH",
+      "ticker": "EPH",
+      "name": "EPH",
+      "name_en": "EPH",
+      "sub": "発電・エネルギー(チェコ)",
+      "sub_en": "Power & energy (Czech)",
+      "sub_short": "発電",
+      "sub_short_en": "Power",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "発電資産(14GW超)の50%を取得する契約",
+          "text_en": "Agreed to acquire 50% of a 14 GW+ flexible power portfolio",
+          "source": {
+            "label": "TotalEnergies 20-F(2025年度)",
+            "label_en": "TotalEnergies 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/879764/000110465926035876/tot-20251231x20f.htm",
+            "level": "official",
+            "date": "2026-03-27",
+            "quote": "TotalEnergies signed an agreement with EPH to acquire 50% of a portfolio of flexible power generation assets with more than 14 GW of gross capacity."
+          }
+        }
+      ]
+    },
+    {
+      "id": "YPF",
+      "ticker": "YPF",
+      "name": "YPF",
+      "name_en": "YPF",
+      "sub": "石油・ガス(アルゼンチン)",
+      "sub_en": "Oil & gas (Argentina)",
+      "sub_short": "石油ガス",
+      "sub_short_en": "Oil & gas",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Vaca Muertaの2鉱区の45%を5億ドルで売却",
+          "text_en": "Sold 45% interests in two Vaca Muerta blocks for $500 million",
+          "source": {
+            "label": "TotalEnergies 20-F(2025年度)",
+            "label_en": "TotalEnergies 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/879764/000110465926035876/tot-20251231x20f.htm",
+            "level": "official",
+            "date": "2026-03-27",
+            "quote": "its affiliate Total Austral has signed an agreement with YPF SA for the sale of its 45 % operated interest in two unconventional oil and gas blocks in Argentina, Rincon La Ceniza and La Escalonada, located in the Vaca Muerta area in the Neuquén Basin, for an amount of $ 500 million."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NEONEXT",
+      "ticker": "NEO NEXT",
+      "name": "NEO NEXTエナジー",
+      "name_en": "NEO NEXT Energy",
+      "sub": "石油・ガス(英国)",
+      "sub_en": "Oil & gas (UK)",
+      "sub_short": "石油ガス",
+      "sub_short_en": "Oil & gas",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "英国の上流事業を統合し、新会社の筆頭株主(47.5%)になる契約",
+          "text_en": "Agreed to merge its UK upstream business into NEO NEXT, becoming top shareholder (47.5%)",
+          "source": {
+            "label": "TotalEnergies 20-F(2025年度)",
+            "label_en": "TotalEnergies 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/879764/000110465926035876/tot-20251231x20f.htm",
+            "level": "official",
+            "date": "2026-03-27",
+            "quote": "TotalEnergies signed an agreement with NEO NEXT Energy Limited (NEO NEXT) under which the Company's upstream activities in the United Kingdom would be merged with NEO NEXT. TotalEnergies would become the main shareholder of the new enlarged entity, renamed NEO NEXT+, with a 47.5 % stake"
+          }
+        }
+      ]
+    },
+    {
+      "id": "EQNR",
+      "ticker": "EQNR",
+      "name": "エクイノール",
+      "name_en": "Equinor",
+      "sub": "石油・ガス(ノルウェー)",
+      "sub_en": "Oil & gas (Norway)",
+      "sub_short": "石油ガス",
+      "sub_short_en": "Oil & gas",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Kharyaga合弁の共同参加者(30%)",
+          "text_en": "Co-partner in the Kharyaga joint venture (30%)",
+          "source": {
+            "label": "TotalEnergies 20-F(2025年度)",
+            "label_en": "TotalEnergies 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/879764/000110465926035876/tot-20251231x20f.htm",
+            "level": "official",
+            "date": "2026-03-27",
+            "quote": "Kharyaga is a non-incorporated joint venture with Zarubezhneft (operator, 40%), Equinor (30%) and Nenets Oil Company (10%)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Zarubezhneft",
+      "ticker": "Zarubezhneft",
+      "name": "ザルベジネフチ",
+      "name_en": "Zarubezhneft",
+      "sub": "石油(ロシア国営)",
+      "sub_en": "Oil (Russian state-owned)",
+      "sub_short": "石油",
+      "sub_short_en": "Oil",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Kharyaga合弁の操業者(40%)",
+          "text_en": "Operator of the Kharyaga joint venture (40%)",
+          "source": {
+            "label": "TotalEnergies 20-F(2025年度)",
+            "label_en": "TotalEnergies 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/879764/000110465926035876/tot-20251231x20f.htm",
+            "level": "official",
+            "date": "2026-03-27",
+            "quote": "Kharyaga is a non-incorporated joint venture with Zarubezhneft (operator, 40%), Equinor (30%) and Nenets Oil Company (10%)."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

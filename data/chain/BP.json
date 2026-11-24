@@ -1,0 +1,183 @@
+{
+  "root": {
+    "ticker": "BP",
+    "name": "BP",
+    "cik": 313807,
+    "name_en": "BP"
+  },
+  "rows": [
+    {
+      "ja": "石油・ガスの合弁相手",
+      "en": "Oil & gas joint-venture partners",
+      "above": true
+    },
+    {
+      "ja": "低炭素事業の合弁・出資先",
+      "en": "Low-carbon partners & holdings"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "E",
+      "ticker": "E",
+      "name": "エニ",
+      "name_en": "Eni",
+      "sub": "石油・ガス",
+      "sub_en": "Oil & gas",
+      "sub_short": "石油ガス",
+      "sub_short_en": "Oil & gas",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "アンゴラ・ナミビアのAzule Energyを50:50で保有",
+          "text_en": "Owns Azule Energy 50:50 with Eni",
+          "source": {
+            "label": "BP 20-F(2025年度)",
+            "label_en": "BP 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/313807/000031380726000006/bp-20251231.htm",
+            "level": "official",
+            "date": "2026-03-06",
+            "quote": "as well as discoveries in Namibia and Angola through Azule Energy, our 50-50 joint venture with Eni."
+          }
+        }
+      ]
+    },
+    {
+      "id": "EOG",
+      "ticker": "EOG",
+      "name": "EOGリソーシズ",
+      "name_en": "EOG Resources",
+      "sub": "石油・ガス開発",
+      "sub_en": "Oil & gas producer",
+      "sub_short": "石油ガス",
+      "sub_short_en": "Oil & gas",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Mento合弁(5月に生産開始)",
+          "text_en": "Mento joint venture (first gas in May)",
+          "source": {
+            "label": "BP 20-F(2025年度)",
+            "label_en": "BP 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/313807/000031380726000006/bp-20251231.htm",
+            "level": "official",
+            "date": "2026-03-06",
+            "quote": "And Mento, a joint venture with EOG Resources, delivered first gas in May."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RELIANCE",
+      "ticker": "RELIANCE",
+      "name": "リライアンス・インダストリーズ",
+      "name_en": "Reliance Industries",
+      "sub": "石油化学・通信(インド)",
+      "sub_en": "Energy & telecom (India)",
+      "sub_short": "石化",
+      "sub_short_en": "Energy",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "インドのガス販売合弁India Gas Solutionsを50%保有",
+          "text_en": "Holds 50% of India Gas Solutions, a gas JV with RIL",
+          "source": {
+            "label": "BP 20-F(2025年度)",
+            "label_en": "BP 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/313807/000031380726000006/bp-20251231.htm",
+            "level": "official",
+            "date": "2026-03-06",
+            "quote": "bp also holds a 50% stake in India Gas Solutions Private Limited, a joint venture with RIL, for the sourcing and marketing of gas in India."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CTVA",
+      "ticker": "CTVA",
+      "name": "コルテバ",
+      "name_en": "Corteva",
+      "sub": "農業(種子・農薬)",
+      "sub_en": "Agriculture",
+      "sub_short": "農業",
+      "sub_short_en": "Agri",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "バイオ燃料用の植物油を作る合弁Etlasを50:50で設立(2026年1月)",
+          "text_en": "Launched Etlas, a 50:50 JV to produce crop oils for biofuels (Jan 2026)",
+          "source": {
+            "label": "BP 20-F(2025年度)",
+            "label_en": "BP 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/313807/000031380726000006/bp-20251231.htm",
+            "level": "official",
+            "date": "2026-03-06",
+            "quote": "In January 2026, we also announced the launch of Etlas, a new 50:50 joint venture with Corteva to produce oil from crops for use in the production of biofuels"
+          }
+        }
+      ]
+    },
+    {
+      "id": "JERA",
+      "ticker": "JERA",
+      "name": "JERA",
+      "name_en": "JERA",
+      "sub": "発電(日本)",
+      "sub_en": "Power generation (Japan)",
+      "sub_short": "発電",
+      "sub_short_en": "Power",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "洋上風力の合弁JERA Nex bpを50:50で設立",
+          "text_en": "Formed the 50:50 offshore wind JV JERA Nex bp",
+          "source": {
+            "label": "BP 20-F(2025年度)",
+            "label_en": "BP 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/313807/000031380726000006/bp-20251231.htm",
+            "level": "official",
+            "date": "2026-03-06",
+            "quote": "We formed JERA Nex bp, a 50:50 offshore wind joint venture between JERA and bp."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AkerBP",
+      "ticker": "Aker BP",
+      "name": "アーケルBP",
+      "name_en": "Aker BP",
+      "sub": "石油・ガス(ノルウェー)",
+      "sub_en": "Oil & gas (Norway)",
+      "sub_short": "石油ガス",
+      "sub_short_en": "Oil & gas",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "出資先(重要な会計判断の対象)",
+          "text_en": "Equity investment named among key accounting judgements",
+          "source": {
+            "label": "BP 20-F(2025年度)",
+            "label_en": "BP 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/313807/000031380726000006/bp-20251231.htm",
+            "level": "official",
+            "date": "2026-03-06",
+            "quote": "accounting for the investments in Rosneft and Aker BP"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
