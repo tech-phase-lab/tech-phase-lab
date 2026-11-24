@@ -1,0 +1,173 @@
+{
+  "root": {
+    "ticker": "LECO",
+    "name": "リンカーン・エレクトリック",
+    "cik": 59527,
+    "name_en": "Lincoln Electric"
+  },
+  "rows": [
+    {
+      "ja": "買収",
+      "en": "Acquisitions"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "ITW",
+    "ESAB"
+  ],
+  "companies": [
+    {
+      "id": "AlloySteel",
+      "ticker": "Alloy Steel",
+      "name": "アロイ・スチール",
+      "name_en": "Alloy Steel Australia",
+      "sub": "保守・補修材(豪州)",
+      "sub_en": "Maintenance & repair solutions (Australia)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "残り65%を取得し全株保有に(2025年8月)",
+          "text_en": "Acquired the remaining 65% for full ownership (August 2025)",
+          "source": {
+            "label": "Lincoln Electric 10-K(2025年度)",
+            "label_en": "Lincoln Electric 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/59527/000005952726000006/leco-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "On August 1, 2025, the Company acquired the remaining 65 % ownership interest in Alloy Steel."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Inrotech",
+      "ticker": "Inrotech",
+      "name": "インロテック",
+      "name_en": "Inrotech",
+      "sub": "溶接ロボット(デンマーク)",
+      "sub_en": "Welding robots (Denmark)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "溶接自動化のInrotechを買収",
+          "text_en": "Acquired welding automation company Inrotech",
+          "source": {
+            "label": "Lincoln Electric 10-K(2025年度)",
+            "label_en": "Lincoln Electric 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/59527/000005952726000006/leco-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Additions to International Welding reflect goodwill recognized in the acquisition of Inrotech."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Vanair",
+      "ticker": "Vanair",
+      "name": "バンエア",
+      "name_en": "Vanair",
+      "sub": "電源・空圧機器",
+      "sub_en": "Power & air systems",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Vanairを買収",
+          "text_en": "Acquired Vanair",
+          "source": {
+            "label": "Lincoln Electric 10-K(2025年度)",
+            "label_en": "Lincoln Electric 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/59527/000005952726000006/leco-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "(2) Decreases to Americas Welding reflects Vanair and RedViking purchase accounting adjustments."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RedViking",
+      "ticker": "RedViking",
+      "name": "レッドバイキング",
+      "name_en": "RedViking",
+      "sub": "自動化システム",
+      "sub_en": "Automation systems",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "自動化システムのRedVikingを買収",
+          "text_en": "Acquired automation systems company RedViking",
+          "source": {
+            "label": "Lincoln Electric 10-K(2025年度)",
+            "label_en": "Lincoln Electric 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/59527/000005952726000006/leco-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "(2) Decreases to Americas Welding reflects Vanair and RedViking purchase accounting adjustments."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ITW",
+      "ticker": "ITW",
+      "name": "イリノイ・ツール・ワークス",
+      "name_en": "Illinois Tool Works",
+      "sub": "産業機器",
+      "sub_en": "Industrial products",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ITWが10-Kで、溶接部門の世界的な競合として挙げる",
+          "text_en": "ITW names Lincoln Electric a global welding competitor",
+          "source": {
+            "label": "Illinois Tool Works 10-K(2024年度)",
+            "label_en": "Illinois Tool Works 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/49826/000004982625000007/itw-20241231.htm",
+            "level": "official",
+            "date": "2025-02-14",
+            "quote": "the Welding segment competes globally with Lincoln Electric Holdings, Inc. and ESAB Corporation."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ESAB",
+      "ticker": "ESAB",
+      "name": "エサブ",
+      "name_en": "ESAB",
+      "sub": "溶接機器",
+      "sub_en": "Welding equipment",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ESABが10-Kで、同じ市場の競合として挙げる",
+          "text_en": "ESAB names Lincoln Electric as serving its markets",
+          "source": {
+            "label": "ESAB 10-K(2025年度)",
+            "label_en": "ESAB 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1877322/000187732226000007/esab-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "The markets that we compete in are also served by Lincoln Electric and the welding business within Illinois Tool Works."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

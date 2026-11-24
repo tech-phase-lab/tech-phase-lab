@@ -1,0 +1,125 @@
+{
+  "root": {
+    "ticker": "POOL",
+    "name": "プール・コーポレーション",
+    "cik": 945841,
+    "name_en": "Pool Corporation"
+  },
+  "rows": [
+    {
+      "ja": "最大の仕入先",
+      "en": "Largest suppliers",
+      "above": true
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "SITE"
+  ],
+  "companies": [
+    {
+      "id": "PNR",
+      "ticker": "PNR",
+      "name": "ペンテア",
+      "name_en": "Pentair",
+      "sub": "水処理・プール機器",
+      "sub_en": "Water & pool equipment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "最大の仕入先(仕入原価の20%)",
+          "text_en": "Largest supplier (20% of cost of products sold)",
+          "source": {
+            "label": "Pool Corporation 10-K(2025年度)",
+            "label_en": "Pool Corporation 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/945841/000119312526074833/pool-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our largest suppliers are Pentair plc, Zodiac Pool Systems, Inc. and Hayward Holdings, Inc., which accounted for 20%, 12% and 11%, respectively, of the costs of products we sold in 2025."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Zodiac",
+      "ticker": "Zodiac Pool Systems",
+      "name": "ゾディアック・プール・システムズ",
+      "name_en": "Zodiac Pool Systems",
+      "sub": "プール機器",
+      "sub_en": "Pool equipment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "2番目の仕入先(12%)",
+          "text_en": "Second-largest supplier (12%)",
+          "source": {
+            "label": "Pool Corporation 10-K(2025年度)",
+            "label_en": "Pool Corporation 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/945841/000119312526074833/pool-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our largest suppliers are Pentair plc, Zodiac Pool Systems, Inc. and Hayward Holdings, Inc., which accounted for 20%, 12% and 11%, respectively, of the costs of products we sold in 2025."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HAYW",
+      "ticker": "HAYW",
+      "name": "ヘイワード",
+      "name_en": "Hayward Holdings",
+      "sub": "プール機器",
+      "sub_en": "Pool equipment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Haywardが最大の顧客をPoolと記載(Hayward売上の約33%)",
+          "text_en": "Hayward names Pool its largest customer (about 33% of its sales)",
+          "source": {
+            "label": "Hayward 10-K(2025年度)",
+            "label_en": "Hayward 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1834622/000183462226000008/hayw-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "including our largest customer, Pool Corporation, which represented approximately 33% of our net sales in Fiscal Year 2025"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SITE",
+      "ticker": "SITE",
+      "name": "サイトワン・ランドスケープ・サプライ",
+      "name_en": "SiteOne Landscape Supply",
+      "sub": "造園資材流通",
+      "sub_en": "Landscape supply",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "SiteOneが10-Kで、子会社Horizonを大手競合として挙げる",
+          "text_en": "SiteOne names Pool's Horizon Distributors among its largest competitors",
+          "source": {
+            "label": "SiteOne Landscape Supply 10-K(2025年度)",
+            "label_en": "SiteOne Landscape Supply 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1650729/000165072926000005/site-20251228.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Horizon Distributors (a subsidiary of Pool Corporation)"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

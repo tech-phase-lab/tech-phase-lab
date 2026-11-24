@@ -1,0 +1,154 @@
+{
+  "root": {
+    "ticker": "TREX",
+    "name": "トレックス",
+    "cik": 1069878,
+    "name_en": "Trex Company"
+  },
+  "rows": [
+    {
+      "ja": "販売先(流通)",
+      "en": "Distributor customer"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in its 10-K)"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "JHX",
+    "UFPI",
+    "FBIN"
+  ],
+  "companies": [
+    {
+      "id": "BCC",
+      "ticker": "BCC",
+      "name": "ボイシ・カスケード",
+      "name_en": "Boise Cascade",
+      "sub": "建材流通",
+      "sub_en": "Building materials distribution",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Boise CascadeがTrexを重要な仕入先と記載",
+          "text_en": "Boise Cascade calls Trex a significant supplier",
+          "source": {
+            "label": "Boise Cascade 10-K(2025年度)",
+            "label_en": "Boise Cascade 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1328581/000132858126000006/bcc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "In addition, AZEK produces products that compete with another significant supplier to us, Trex."
+          }
+        }
+      ]
+    },
+    {
+      "id": "JHX",
+      "ticker": "JHX",
+      "name": "ジェームズ・ハーディー",
+      "name_en": "James Hardie (Azek)",
+      "sub": "建材",
+      "sub_en": "Building products",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "傘下のAzekが主な競合",
+          "text_en": "Its Azek division is a principal competitor",
+          "source": {
+            "label": "Trex 10-K(2025年度)",
+            "label_en": "Trex 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1069878/000119312526068732/trex-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Our principal competitors include Azek (a division of James Hardie Industries PLC), Deckorators (a division of UFP Industries, Inc.), and Fiberon (a division of Fortune Brands, Inc.)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "UFPI",
+      "ticker": "UFPI",
+      "name": "UFPインダストリーズ",
+      "name_en": "UFP Industries (Deckorators)",
+      "sub": "木材製品",
+      "sub_en": "Wood products",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "傘下のDeckoratorsが主な競合",
+          "text_en": "Its Deckorators division is a principal competitor",
+          "source": {
+            "label": "Trex 10-K(2025年度)",
+            "label_en": "Trex 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1069878/000119312526068732/trex-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Our principal competitors include Azek (a division of James Hardie Industries PLC), Deckorators (a division of UFP Industries, Inc.), and Fiberon (a division of Fortune Brands, Inc.)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FBIN",
+      "ticker": "FBIN",
+      "name": "フォーチュン・ブランズ・イノベーションズ",
+      "name_en": "Fortune Brands (Fiberon)",
+      "sub": "住宅設備",
+      "sub_en": "Home products",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "傘下のFiberonが主な競合",
+          "text_en": "Its Fiberon division is a principal competitor",
+          "source": {
+            "label": "Trex 10-K(2025年度)",
+            "label_en": "Trex 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1069878/000119312526068732/trex-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Our principal competitors include Azek (a division of James Hardie Industries PLC), Deckorators (a division of UFP Industries, Inc.), and Fiberon (a division of Fortune Brands, Inc.)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WLK",
+      "ticker": "WLK",
+      "name": "ウエストレイク",
+      "name_en": "Westlake",
+      "sub": "化学・建材",
+      "sub_en": "Chemicals & building products",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Westlakeが10-Kで、住宅・インフラ製品の競合として挙げる",
+          "text_en": "Westlake names Trex among housing and infrastructure products competitors",
+          "source": {
+            "label": "Westlake 10-K(2025年度)",
+            "label_en": "Westlake 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1262823/000126282326000016/wlk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "JM Eagle Inc., Trex Company, Inc. and James Hardie"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
