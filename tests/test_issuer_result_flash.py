@@ -344,6 +344,15 @@ class Parsers(unittest.TestCase):
         # Results given out Oct 28, 2026 9:00 KST; the October 6-K was filed Nov 13. The calendar must not show them as Nov 14 news.
         parsed=flash.PROFILES['SKHY']['parse'](fixture('skhynix-prelim-q326.txt'))
         self.assertEqual(parsed['givenAt'],datetime(2026,10,28,0,0,tzinfo=timezone.utc))
+    def test_crwd_q3fy27_long_opening_and_tax_label(self):
+        # Nov 23, 2026: the Zscaler acquisition paragraph pushed "Total revenue was ... a 28% increase" past 2,500 characters and the
+        # tax row dropped "(benefit)"; the statement parser refused (revenue-growth-missing) and the Nov 24 self-check flagged CRWD.
+        text=fixture('crwd-results-q3fy27.txt'); parse=flash.PROFILES['CRWD']['parse']
+        parsed=parse(text)
+        self.assertEqual(parsed['period'],'Q3 FY2027')
+        self.assertEqual([(f[0],f[1],f[2]) for f in parsed['facts']],[('revenue','$1.583419B','$1.234244B'),('eps','$0.02','$-0.03'),('net-income','$24.856M','$-26.776M'),('operating-income','$-0.756M','$-62.222M')])
+        with self.assertRaises(ValueError): parse(text.replace('a 28% increase','a 38% increase'))
+        self.assertNotIn('net-income',[f[0] for f in parse(text.replace('Provision for income taxes 17,295','Provision for income taxes 18,295'))['facts']])
     def test_panw_first_quarter_two_column_statement(self):
         # Nov 18, 2026: a first fiscal quarter prints no year-to-date columns (two, not four), drops "(loss)" from the labels and
         # prints "Provision for (benefit from) income taxes"; the flash read nothing (revenue-row-unrecognized).

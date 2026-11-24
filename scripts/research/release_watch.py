@@ -8,7 +8,9 @@ event (release_schedule.json, generated from lib/research/calendar.ts):
   one minute before until fifteen minutes after a scheduled release;
 * alert: the owner's phone gets a push when the result is not public three
   minutes after the release (or by the start of an earnings call), and again
-  when it is published, with the delay from the scheduled time.
+  when it is published, with the delay from the scheduled time (an indicator
+  only: a published earnings result is recorded and logged, not pushed, since
+  the owner already gets the member earnings alert; Nov 25).
 
 Matching reads the same public payload the site renders. No model call and no
 source text is used; a notification names the event and a delay only.
@@ -248,7 +250,11 @@ def check(db, payload, now, transport=None, events=None):
         if not kind:
             continue
         delivered = 0
-        if transport is not None:
+        # Nov 25 (owner): an earnings result already reaches the owner's phone as the member alert (「決算速報」), so the
+        # 「✅ 掲載」 report for the same event was a second push about one thing (DELL, Nov 24: 21:06 and 21:07). It is now only recorded
+        # (here and in the service log, with its delay). A result missing from the site (「⚠ 未掲載」) and indicator results still push.
+        quiet = kind == 'published' and event['kind'] == 'earnings'
+        if transport is not None and not quiet:
             message = notification(event, kind, delay, result)
             for subscription in owner_devices(db):
                 try:
@@ -259,7 +265,7 @@ def check(db, payload, now, transport=None, events=None):
         with db:
             db.execute('INSERT OR IGNORE INTO release_watch_alerts VALUES(?,?,?,?,?)',
                        (event['id'], kind, now.isoformat(), delay, delivered))
-        sent.append({'event': event['id'], 'kind': kind, 'delaySeconds': delay, 'delivered': delivered})
+        sent.append({'event': event['id'], 'kind': kind, 'delaySeconds': delay, 'delivered': delivered, **({'pushed': False} if quiet else {})})
     return sent
 
 
