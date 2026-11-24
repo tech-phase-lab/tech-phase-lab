@@ -99,7 +99,7 @@ class ReleaseWatchTests(unittest.TestCase):
                                      'publishedAt': iso(AT - timedelta(hours=1)), 'publicAt': iso(AT - timedelta(minutes=58))}]}
         alerts = watch.check(self.db, payload, AT - timedelta(minutes=50), self.transport, [CALL])
         self.assertEqual([(a['kind'], a['delaySeconds']) for a in alerts], [('published', -3480)])
-        self.assertIn('前', self.sent[0][1]['body'])
+        self.assertIn('前', watch.notification(CALL, 'published', -3480)['body'])
         self.assertEqual(watch.check(self.db, {}, AT - timedelta(seconds=1), None, [{**CALL, 'id': 'other'}]), [])
         self.assertEqual([a['kind'] for a in watch.check(self.db, {}, AT, None, [{**CALL, 'id': 'other'}])], ['missing'])
 
@@ -109,7 +109,7 @@ class ReleaseWatchTests(unittest.TestCase):
                                      'publishedAt': iso(AT - timedelta(hours=8)), 'publicAt': iso(AT - timedelta(hours=8) + timedelta(seconds=56))}]}
         self.assertEqual(watch.match(CALL, payload), AT - timedelta(hours=8) + timedelta(seconds=56))
         self.assertEqual([a['kind'] for a in watch.check(self.db, payload, AT, self.transport, [CALL])], ['published'])
-        self.assertEqual(self.sent[-1][1]['title'][:1], '✅')
+        self.assertEqual(watch.notification(CALL, 'published', 0)['title'][:1], '✅')
         # A result from the previous day is still not this call's result.
         old = {'resultBriefs': [{**payload['resultBriefs'][0], 'publishedAt': iso(AT - timedelta(hours=13))}]}
         self.assertIsNone(watch.match(CALL, old))
@@ -141,6 +141,27 @@ class ReleaseWatchTests(unittest.TestCase):
         published = watch.notification(close, 'published', 125)
         self.assertIn('米国市場終了から2分05秒', published['body'])
 
+
+    def test_published_earnings_result_is_recorded_without_a_second_owner_push(self):
+        # Nov 24 (DELL): the owner got 「✅ 掲載」 at 21:06 and the member alert 「決算速報」 at 21:07 for one result. The earnings
+        # 掲載 report is now recorded only; 未掲載 (a failure) still pushes, and so does a published indicator result.
+        close = {'id': 'dell-call-close', 'kind': 'earnings', 'ticker': 'DELL', 'phase': 'release', 'at': AT,
+                 'titleJa': 'Dell 決算（米国市場終了後）', 'approximate': True}
+        payload = {'resultBriefs': [{'kind': 'earnings', 'ticker': 'DELL', 'titleEn': 'x', 'titleJa': 'x',
+                                     'publishedAt': iso(AT + timedelta(minutes=6)), 'publicAt': iso(AT + timedelta(minutes=6, seconds=6))}]}
+        alerts = watch.check(self.db, payload, AT + timedelta(minutes=7), self.transport, [close])
+        self.assertEqual(alerts, [{'event': 'dell-call-close', 'kind': 'published', 'delaySeconds': 366, 'delivered': 0, 'pushed': False}])
+        self.assertEqual(self.sent, [])
+        self.assertEqual(watch.check(self.db, payload, AT + timedelta(minutes=12), self.transport, [close]), [])
+        self.assertEqual([r[0] for r in self.db.execute('SELECT kind FROM release_watch_alerts')], ['published'])
+        late = {**close, 'id': 'dell-late'}
+        alerts = watch.check(self.db, {}, AT + timedelta(minutes=10), self.transport, [late])
+        self.assertEqual([(a['kind'], a['delivered']) for a in alerts], [('missing', 1)])
+        self.assertIn('未掲載', self.sent[-1][1]['title'])
+        owner_alert = {**CALL, 'id': 'owner-economic', 'kind': 'economic', 'indicator': 'cpi', 'phase': 'release'}
+        brief = {'kind': 'economic', 'titleEn': 'CPI MoM: actual 0.3%', 'titleJa': 'CPI', 'publishedAt': iso(AT), 'publicAt': iso(AT)}
+        alerts = watch.check(self.db, {'resultBriefs': [brief]}, AT + timedelta(minutes=1), self.transport, [owner_alert])
+        self.assertEqual([(a['kind'], a['delivered']) for a in alerts], [('published', 1)])
 
     def test_published_alert_carries_the_result_numbers(self):
         note = watch.notification(CPI, 'published', 43, '米国10月PPI：総合 前月比+0.3%')

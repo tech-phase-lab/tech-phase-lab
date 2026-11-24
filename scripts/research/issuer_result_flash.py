@@ -544,10 +544,11 @@ STATEMENT = {
                       'pretax': 'Income before provision for income taxes', 'tax': 'Provision for income taxes', 'net': 'Net income',
                       'eps': r'Earnings per share: Basic \$ [\d.]+ (?:\$ [\d.]+ ){3}Diluted', 'shares': r'Shares used in computing earnings per share: Basic [\d,]+ (?:[\d,]+ ){3}Diluted'}},
     'CRWD': {'identity': 'crowdstrike', 'heading': 'Condensed Consolidated Statements of Operations(in thousands', 'end': '_____', 'units': 'in thousands', 'scale': Decimal('0.001'),
-             'tol': Decimal(1), 'columns': 4, 'year-ago': 1, 'growth': r'Total revenue was \$[\d.]+ billion, a (\d+)% increase',
+             # 'window': Q3 FY27 (Nov 23, 2026) opened with a long Zscaler acquisition paragraph, pushing the revenue sentence past 2,500 characters
+             'tol': Decimal(1), 'columns': 4, 'year-ago': 1, 'window': 6000, 'growth': r'Total revenue was \$[\d.]+ billion, a (\d+)% increase',
              'period-re': r'Reports (First|Second|Third|Fourth) Quarter Fiscal Year (20\d\d) Financial Results', 'period': lambda q, y: f'Q{q} FY{y}',
              'rows': {'revenue': 'Total revenue', 'cost': 'Total cost of revenue', 'gross': 'Gross profit', 'opex': 'Total operating expenses',
-                      'operating': 'Loss from operations', 'pretax': r'Income \(loss\) before provision for income taxes', 'tax': r'Provision \(benefit\) for income taxes',
+                      'operating': 'Loss from operations', 'pretax': r'Income \(loss\) before provision for income taxes', 'tax': r'Provision (?:\(benefit\) )?for income taxes',  # Q3 FY27 dropped "(benefit)"
                       'net': r'Net income \(loss\)', 'nci': r'Net income \(loss\) attributable to non-controlling interest', 'attrib': r'Net income \(loss\) attributable to CrowdStrike',
                       'eps': r'common stockholders: Basic (?:\$ ' + AMT + r' ){4}Diluted', 'shares': r'common stockholders: Basic ' + (AMT + ' ') * 4 + 'Diluted'}},
     'SNOW': {'identity': 'snowflake', 'heading': 'Condensed Consolidated Statements of Operations(in thousands', 'units': 'in thousands', 'scale': Decimal('0.001'),
