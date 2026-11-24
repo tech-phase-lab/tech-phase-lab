@@ -84,7 +84,8 @@ test('client: every purchase button has the consent line right above it and the 
     assert.doesNotMatch(src, /disabled=\{!agreed/, file); // the button is never greyed out for want of the tick
   }
   assert.match(read('../app/research/pro-offer-card.tsx'), /<ConsentCheck en=\{!ja\} consent=\{consent\} \/>\n\s*<AgreeButton[^\n]*\/><ConsentError/);
-  assert.match(read('../app/resolute/checkout/live-screen.tsx'), /<ConsentCheck en=\{en\} consent=\{consent\} \/>\n\s*<AgreeButton en=\{en\} disabled=\{busy\} onClick=\{\(\)=>void act\("capture"\)\} \/>\n\s*<ConsentError/);
+  // RESOLUTE (owner, Nov 24): no button after PayPal; 「PayPalへ進む」 for an order not yet approved has its own line.
+  assert.match(read('../app/resolute/checkout/live-screen.tsx'), /<ConsentCheck en=\{en\} consent=\{consent\} \/>\n\s*<a className=\{styles\.button\} href=\{approval\}[^\n]*toPaypal\(approval\)[^\n]*\n\s*<ConsentError/);
   assert.match(read('../app/research/account/account-sheets.tsx'), /billingRequest\("create", \{ currency, period, acceptedTerms: [^}]*, consentAt \}/);
 });
 
@@ -105,7 +106,10 @@ test('server (RESOLUTE): no order or capture without a consent time; the time is
   assert.equal(stored, null);
   await engine.create('user_test', { ...body, consentAt: '2026-11-24T02:58:00.000Z' });
   assert.equal(stored.termsConsentAt, '2026-11-24T02:58:00.000Z'); assert.equal(stored.value, '7980');
-  await assert.rejects(engine.capture('user_test', { orderId: body.requestKey }), /INVALID_PAYMENT_INPUT/);
+  // One tick (owner, Nov 24): completing may omit the tick time and use the one stored with the order — which this
+  // order (made before the consent line) does not have, so it is refused.
+  await assert.rejects(engine.capture('user_test', { orderId: body.requestKey }), /CONSENT_REQUIRED/);
+  await assert.rejects(engine.capture('user_test', { orderId: body.requestKey, other: 1 }), /INVALID_PAYMENT_INPUT/);
   await assert.rejects(engine.capture('user_test', { orderId: body.requestKey, consentAt: '' }), /CONSENT_REQUIRED/);
   // An order without a stored consent (made before this change) cannot be paid.
   await assert.rejects(engine.capture('user_test', { orderId: body.requestKey, consentAt: '2026-11-24T02:59:00.000Z' }), /CONSENT_REQUIRED/);

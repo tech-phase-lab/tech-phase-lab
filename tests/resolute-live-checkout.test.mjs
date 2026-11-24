@@ -30,9 +30,9 @@ test('live UI client uses only live endpoint and rejects Sandbox or unsuccessful
 test('live reload can resume the same approval; viewing it never captures or changes ownership',async()=>{
  let approvals=0;
  const engine=paymentEngine({environment:'live',canCharge:()=>false,store:{get:async()=>({id,user_id:'user_owner',paypal_id:'PAYPAL123456',state:'created',quote:order.quote,expires_at:order.expiresAt})},
-  paypal:{approval:async token=>{approvals++;assert.equal(token,'PAYPAL123456');return 'https://www.paypal.com/checkoutnow?token='+token;},capture:async()=>{throw Error('must not capture');}}});
+  paypal:{get:async token=>{approvals++;assert.equal(token,'PAYPAL123456');return {id:token,status:'PAYER_ACTION_REQUIRED',links:[{rel:'payer-action',href:'https://www.paypal.com/checkoutnow?token='+token}]};},capture:async()=>{throw Error('must not capture');}}});
  await assert.rejects(engine.status('user_other',id));assert.equal(approvals,0);
- const result=await engine.status('user_owner',id);assert.equal(result.sandbox,false);assert.ok(result.approvalUrl);assert.equal(approvals,1);
+ const result=await engine.status('user_owner',id);assert.equal(result.sandbox,false);assert.equal(result.approvalUrl,'https://www.paypal.com/checkoutnow?token=PAYPAL123456');assert.equal(result.approved,undefined);assert.equal(approvals,1);
 });
 test('closed live screen renders no actionable PayPal link or enabled purchase control in either language',async()=>{
  const {build}=await import('esbuild');const {mkdtemp,rm}=await import('node:fs/promises');

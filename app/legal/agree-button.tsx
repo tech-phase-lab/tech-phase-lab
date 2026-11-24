@@ -15,6 +15,14 @@ export const RESOLUTE_CHECKOUT_LINES = {
 export const RESOLUTE_AUTO_RENEWAL_LINE = { ja: "1年後から自動で更新されます。更新日の前日までアカウント画面から止められます", en: "Renews automatically after one year. You can stop it on your account page until the day before the renewal date." } as const;
 /** Account screen, RESOLUTE section, under 「自動更新 オン」: the deadline (lawyer review, Nov 24). The renewal day is the expiry day shown above. */
 export const RESOLUTE_RENEWAL_STOP_NOTE = { ja: "自動更新は、更新日（有効期限の日）の前日までにここで止められます。", en: "You can stop auto-renewal here until the day before the renewal date (the expiry date)." } as const;
+/** RESOLUTE LP gold button (owner, Nov 24: one press, one tick): shown always, right above the consent line, so the buyer reads
+ * how and by when to stop before going to PayPal. Only orders made while signed in ask PayPal to save the payment method, so
+ * the line says so; a guest order is renewed by hand after a notice. */
+export const RESOLUTE_AUTO_RENEWAL_LP_LINE = { ja: "ログインしてご購入の場合、1年後から自動で更新されます。更新日の前日までアカウント画面から止められます", en: "If you buy while signed in, it renews automatically after one year. You can stop it on your account page until the day before the renewal date." } as const;
+/** The small lines right above the LP consent line: the auto-renewal line and the refund line. */
+export function resoluteBuyLines(en: boolean): readonly string[] {
+  return [RESOLUTE_AUTO_RENEWAL_LP_LINE[en ? "en" : "ja"], RESOLUTE_CHECKOUT_LINES[en ? "en" : "ja"][1]];
+}
 export function resoluteCheckoutLines(en: boolean, autoRenewal: boolean): readonly string[] {
   const lines = RESOLUTE_CHECKOUT_LINES[en ? "en" : "ja"];
   return autoRenewal ? [RESOLUTE_AUTO_RENEWAL_LINE[en ? "en" : "ja"], lines[1]] : lines;

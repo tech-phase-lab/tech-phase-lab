@@ -1,0 +1,107 @@
+{
+  "_comment": "Owner, Nov 24 (ハイテク速報「こういうニュースはいらない」): headlines that are not company news, by kind, and real news that must stay. Shared by tests/wire-stories.test.mjs and tests/test_company_wire.py.",
+  "dropped": {
+    "chartRecap": [
+      "Chip stocks led a $3 trillion comeback on Monday — now comes Turnaround Tuesday: Chart of the Day",
+      "Nvidia, Anthropic, Intel, HPE, Sanofi, and More Stocks That Explain Today’s Market",
+      "Today's Charts: Semis bounce as Nasdaq jumps 6%",
+      "Stock Market Today, Nov. 23: CoreWeave Surges 22% as Nvidia Reinstates Jensen Huang as CEO"
+    ],
+    "optionsQuote": [
+      "Astera Labs, Inc. (ALAB) Options Chain - Yahoo Finance",
+      "Microsoft Corporation (MSFT) Options Chain - Yahoo Finance",
+      "ASML Nov 2026 1345.000 call (ASML261127C01345000) interactive stock chart",
+      "ASML261120P01425000 Interactive Stock Chart | ASML Nov 2026 1425.000 put Stock",
+      "ASML Dec 2026 540.000 put (ASML261218P00540000) Seasonal returns chart",
+      "Micron Technology Options Spot-On: On November 23rd, 1.42 Million Contracts Were Traded, With 4.01 Million Open Interest",
+      "Nebius Group N.V. (NBIS.TO) Stock Price, News, Quote & History",
+      "Nebius Group NV (YDX.HA) Stock Forum & Discussion - Yahoo Finance",
+      "Broadcom Inc Share Price - AVGO, RNS News, Articles, Quotes, & Charts (NASDAQ:AVGO)"
+    ],
+    "socialInterview": [
+      "From seed to scale: why partnerships matter. @NVIDIAAI's startup program lead Jen Hoskins talks about what founders need",
+      "Huang on AI factories, with @nvidia and @Microsoft",
+      "Nvidia's Jen Hoskins in conversation with startup founders",
+      "Interview: Micron's HBM chief on the memory cycle",
+      "Inside the AI chip boom | Podcast",
+      "Broadcom webinar: VMware Cloud Foundation 9 deep dive",
+      "Social Buzz: Wallstreetbets Stocks Advance Premarket Monday; Nebius Group, Nvidia to Open Higher"
+    ],
+    "opinion": [
+      "ASML Stock What Changed After Nvidia CEO Return",
+      "What's behind Astera Labs' 21% surge",
+      "Astera Labs (ALAB) Stock Price Prediction: AI revenue surge meets a choppy tape near key support",
+      "Nebius Stock Price Forecast — NBIS ($103) $115 Upside Target on Huang Return & $38.7B Backlog",
+      "Rocket Lab and Nebius Are Each About 66% Below Their Highs. I'd Buy Both and Hold Through 2030.",
+      "Nvidia Stock Just Had Its Best Day in Over a Decade. I'd Still Buy It Now.",
+      "Wall Street Is Watching Nvidia. This AI Stock Deserves Attention Too",
+      "Watch these chip stocks for bargain buys after Nvidia’s post-reinstatement rally",
+      "Opinion | Nvidia proves nobody knows anything about the stock market",
+      "Should You Buy Micron Stock After Its 19% Rally?",
+      "Is Nvidia Stock a Buy Now?",
+      "Prediction: Micron Will Be Worth More Than Nvidia by 2030"
+    ],
+    "howTo": [
+      "Don't worry, Microsoft remembered you love vertical taskbars and is optimizing the new Search for them",
+      "Windows 11 tips and tricks: 12 settings to change today",
+      "Here's how to turn on the new Copilot key in Windows 11",
+      "Microsoft brings dark mode to more Windows 11 dialogs"
+    ]
+  },
+  "droppedJa": [
+    ["チップ株が3兆ドルの月曜反発を牽引、次はターンアラウンド・チューズデー：本日のチャート", "Chip stocks led a $3 trillion comeback on Monday — now comes Turnaround Tuesday: Chart of the Day"],
+    ["アステラ・ラボ (ALAB) のオプションチェーン", "Astera Labs, Inc. (ALAB) Options Chain - Yahoo Finance"],
+    ["シードから成長へ：なぜパートナーシップが重要なのか。@NVIDIAAIのスタートアップ責任者ジェン・ホスキンスが語る", "From seed to scale: why partnerships matter. @NVIDIAAI's startup program lead Jen Hoskins talks about what founders need"],
+    ["ASML株価、エヌビディアCEO復帰後に何が変わったか", "ASML Stock What Changed After Nvidia CEO Return"],
+    ["マイクロソフト、垂直タスクバー向けに新しい検索を最適化／好きなスタイルを忘れずに", "Don't worry, Microsoft remembered you love vertical taskbars and is optimizing the new Search for them"]
+  ],
+  "kept": [
+    "TSMC unit seeks Texas property tax limit for proposed $22.6 billion chip making facility",
+    "BNP Paribas Downgrades Micron Technology to Neutral, Price Target is $775",
+    "Goldman Sachs Cuts Samsung, SK hynix Price Targets by Up to 43%",
+    "Microsoft patches actively exploited vulnerability in Azure API Management",
+    "SK hynix to invest 100 billion won in supplier R&D, reward failed projects",
+    "US adds Megaspeed to trade blacklist as Nvidia’s Huang returns as CEO",
+    "Nvidia reinstates Jensen Huang after Trump speaks ‘directly’ to board",
+    "Micron Holds On-Site Interviews for South Korean Semiconductor Talent at COEX, Lowering Experience Bar From 8 to 5 Years",
+    "AMD Files 337M Share Resale: OpenAI, Meta Cash Out",
+    "Pinterest announces partnership with Microsoft Ads",
+    "Microsoft's Outlook outage came down to a perfect storm",
+    "TSMC Stock Just Had Its Best Day Since 2008",
+    "Nvidia shares fall over 5% in premarket after Huang comeback rally",
+    "Fujitsu sees stronger Monaka demand as buyers seek alternatives, Bloomberg reports",
+    "Microsoft launches new Start menu for Windows 11 with Copilot built in",
+    "Nvidia cuts revenue guidance; here's what changed in its China outlook",
+    "Astera Labs reports record revenue of $1.2 billion, raises guidance",
+    "Marvell agrees to buy Celestial AI for $3.25 billion",
+    "Commerce Department tightens export curbs on HBM shipments to China",
+    "Morgan Stanley upgrades Micron to Overweight, raises price target to $900",
+    "Nvidia CEO Huang says China market is worth $50 billion, in interview",
+    "ASML wins EU approval for new EUV export licences",
+    "Nebius signs $17.4 billion GPU capacity deal with Microsoft"
+  ],
+  "sources": {
+    "dropped": [
+      {"publisher": "LinkedIn", "source": "gnews", "url": "https://news.google.com/rss/articles/a"},
+      {"publisher": "X", "source": "gnews", "url": "https://news.google.com/rss/articles/b"},
+      {"publisher": "Windows Central", "source": "gnews", "url": "https://news.google.com/rss/articles/c"},
+      {"publisher": "24/7 Wall St.", "source": "gnews", "url": "https://news.google.com/rss/articles/d"},
+      {"publisher": "Blockchain News", "source": "gnews", "url": "https://news.google.com/rss/articles/e"},
+      {"publisher": "kalkine.ca", "source": "gnews", "url": "https://news.google.com/rss/articles/f"},
+      {"publisher": "", "source": "yahoo", "url": "https://finance.yahoo.com/quote/ALAB/options/"},
+      {"publisher": "", "source": "yahoo", "url": "https://www.nasdaq.com/market-activity/stocks/alab/option-chain"},
+      {"publisher": "", "source": "yahoo", "url": "https://www.linkedin.com/posts/nvidia-ai_startup-activity-1"},
+      {"publisher": "", "source": "yahoo", "url": "https://x.com/NVIDIAAI/status/1"}
+    ],
+    "kept": [
+      {"publisher": "Reuters", "source": "gnews", "url": "https://news.google.com/rss/articles/g"},
+      {"publisher": "Stocktwits", "source": "gnews", "url": "https://news.google.com/rss/articles/h"},
+      {"publisher": "Seeking Alpha", "source": "gnews", "url": "https://news.google.com/rss/articles/i"},
+      {"publisher": "Windows Central", "source": "yahoo", "url": "https://finance.yahoo.com/news/microsoft-123.html"},
+      {"publisher": "", "source": "yahoo", "url": "https://stocktwits.com/news-articles/markets/equity/us-futures-mixed/cNbs23VR9kf"},
+      {"publisher": "", "source": "yahoo", "url": "https://finance.yahoo.com/news/options-traders-bet-on-nvidia-123.html"},
+      {"publisher": "", "source": "yahoo", "url": "https://www.reuters.com/technology/nvidia-options-deal-2026-11-24/"},
+      {"publisher": "", "source": "yahoo", "url": "https://dexterity.com/news/1"}
+    ]
+  }
+}
