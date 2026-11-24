@@ -1,0 +1,161 @@
+{
+  "root": {
+    "ticker": "POWL",
+    "name": "パウエル・インダストリーズ",
+    "cik": 80420,
+    "name_en": "Powell Industries"
+  },
+  "rows": [
+    {
+      "ja": "買収",
+      "en": "Acquisition"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in its 10-K)"
+    }
+  ],
+  "rivals": [
+    "ABB",
+    "ETN",
+    "SU",
+    "SIE"
+  ],
+  "companies": [
+    {
+      "id": "Remsdaq",
+      "ticker": "Remsdaq",
+      "name": "レムズダック",
+      "name_en": "Remsdaq",
+      "sub": "遠隔監視機器",
+      "sub_en": "Remote monitoring",
+      "sub_short": "遠隔監視",
+      "sub_short_en": "Telemetry",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Remsdaqを買収(2025年8月)",
+          "text_en": "Acquired Remsdaq (August 2025)",
+          "source": {
+            "label": "Powell Industries 10-K(2026年9月期)",
+            "label_en": "Powell Industries 10-K (FY ended Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/80420/000008042026000143/powl-20260930.htm",
+            "level": "official",
+            "date": "2026-11-17",
+            "quote": "For example, in August 2025, we acquired Remsdaq Limited (Remsdaq), which included approximately $3 million of acquired technology."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ABB",
+      "ticker": "ABB",
+      "name": "ABB",
+      "name_en": "ABB",
+      "sub": "電機",
+      "sub_en": "Electrical equipment",
+      "sub_short": "ロボット",
+      "sub_short_en": "Robots",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合",
+          "text_en": "A principal competitor",
+          "source": {
+            "label": "Powell Industries 10-K(2026年9月期)",
+            "label_en": "Powell Industries 10-K (FY ended Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/80420/000008042026000143/powl-20260930.htm",
+            "level": "official",
+            "date": "2026-11-17",
+            "quote": "Our principal competitors include ABB, Eaton, Schneider Electric, and Siemens Industries, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ETN",
+      "ticker": "ETN",
+      "name": "イートン",
+      "name_en": "Eaton",
+      "sub": "電機",
+      "sub_en": "Electrical equipment",
+      "sub_short": "産業機器",
+      "sub_short_en": "Industrial",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合",
+          "text_en": "A principal competitor",
+          "source": {
+            "label": "Powell Industries 10-K(2026年9月期)",
+            "label_en": "Powell Industries 10-K (FY ended Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/80420/000008042026000143/powl-20260930.htm",
+            "level": "official",
+            "date": "2026-11-17",
+            "quote": "Our principal competitors include ABB, Eaton, Schneider Electric, and Siemens Industries, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SU",
+      "ticker": "Schneider",
+      "name": "シュナイダーエレクトリック",
+      "name_en": "Schneider Electric",
+      "sub": "電機",
+      "sub_en": "Electrical equipment",
+      "sub_short": "電機",
+      "sub_short_en": "Electrical",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合",
+          "text_en": "A principal competitor",
+          "source": {
+            "label": "Powell Industries 10-K(2026年9月期)",
+            "label_en": "Powell Industries 10-K (FY ended Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/80420/000008042026000143/powl-20260930.htm",
+            "level": "official",
+            "date": "2026-11-17",
+            "quote": "Our principal competitors include ABB, Eaton, Schneider Electric, and Siemens Industries, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SIE",
+      "ticker": "Siemens",
+      "name": "シーメンス",
+      "name_en": "Siemens",
+      "sub": "電機",
+      "sub_en": "Electrical equipment",
+      "sub_short": "ビル設備",
+      "sub_short_en": "Buildings",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合",
+          "text_en": "A principal competitor",
+          "source": {
+            "label": "Powell Industries 10-K(2026年9月期)",
+            "label_en": "Powell Industries 10-K (FY ended Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/80420/000008042026000143/powl-20260930.htm",
+            "level": "official",
+            "date": "2026-11-17",
+            "quote": "Our principal competitors include ABB, Eaton, Schneider Electric, and Siemens Industries, Inc."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

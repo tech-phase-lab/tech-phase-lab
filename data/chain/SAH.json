@@ -1,0 +1,75 @@
+{
+  "root": {
+    "ticker": "SAH",
+    "name": "ソニック・オートモーティブ",
+    "cik": 1043509,
+    "name_en": "Sonic Automotive"
+  },
+  "rows": [
+    {
+      "ja": "主なフランチャイズ元(自動車メーカー)",
+      "en": "Main franchisors (automakers)",
+      "above": true
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "BMW",
+      "ticker": "BMW",
+      "name": "BMW",
+      "name_en": "BMW",
+      "sub": "自動車",
+      "sub_en": "Automobiles",
+      "sub_short": "自動車",
+      "sub_short_en": "Autos",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "最大のブランド。ディーラー売上の19%(2025年)",
+          "text_en": "Largest brand: 19% of dealership revenue (2025)",
+          "source": {
+            "label": "Sonic Automotive 10-K(2025年度)",
+            "label_en": "Sonic Automotive 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1043509/000162828026010570/sah-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "BMW accounted for 19 %, 20 %, and 20 % of our total retail automotive dealership revenues as of December 31, 2025, 2024, and 2023, respectively, and Mercedes franchises accounted for 11 %, 11 %, and 11 % of our total retail automotive dealership revenues"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MBG",
+      "ticker": "MBG",
+      "name": "メルセデス・ベンツ",
+      "name_en": "Mercedes-Benz",
+      "sub": "自動車",
+      "sub_en": "Automobiles",
+      "sub_short": "自動車",
+      "sub_short_en": "Autos",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "メルセデスのフランチャイズがディーラー売上の11%(2025年)",
+          "text_en": "Mercedes franchises were 11% of dealership revenue (2025)",
+          "source": {
+            "label": "Sonic Automotive 10-K(2025年度)",
+            "label_en": "Sonic Automotive 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1043509/000162828026010570/sah-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "BMW accounted for 19 %, 20 %, and 20 % of our total retail automotive dealership revenues as of December 31, 2025, 2024, and 2023, respectively, and Mercedes franchises accounted for 11 %, 11 %, and 11 % of our total retail automotive dealership revenues"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

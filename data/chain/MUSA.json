@@ -1,0 +1,74 @@
+{
+  "root": {
+    "ticker": "MUSA",
+    "name": "マーフィーUSA",
+    "cik": 1573516,
+    "name_en": "Murphy USA"
+  },
+  "rows": [
+    {
+      "ja": "提携・分離元",
+      "en": "Partner & former parent"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "WMT",
+      "ticker": "WMT",
+      "name": "ウォルマート",
+      "name_en": "Walmart",
+      "sub": "小売",
+      "sub_en": "Retail",
+      "sub_short": "量販店",
+      "sub_short_en": "Retail",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Walmart+の燃料割引などで協業",
+          "text_en": "Collaborates on fuel discount programs such as Walmart+",
+          "source": {
+            "label": "Murphy USA 10-K(2025年度)",
+            "label_en": "Murphy USA 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1573516/000157351626000090/musa-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "We continue to collaborate with Walmart on fuel discount programs, mainly Walmart+, which we believe enhances the customer value proposition as well as the competitive position of both Murphy USA and Walmart."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MUR",
+      "ticker": "MUR",
+      "name": "マーフィー・オイル",
+      "name_en": "Murphy Oil",
+      "sub": "石油",
+      "sub_en": "Oil & gas",
+      "sub_short": "石油",
+      "sub_short_en": "Oil & gas",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2013年にMurphy Oilからスピンオフ",
+          "text_en": "Spun off from Murphy Oil in 2013",
+          "source": {
+            "label": "Murphy USA 10-K(2025年度)",
+            "label_en": "Murphy USA 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1573516/000157351626000090/musa-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Grow organically We intend for our evolving NTI real estate strategy to be a key driver of our organic growth over the next several years, which is demonstrated by the over 500 stores that have been added to Murphy USA since our 2013 spin-off from Murphy Oil Corporation."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "root": {
+    "ticker": "VSXY",
+    "name": "ヴィクトリアズ・シークレット",
+    "cik": 1856437,
+    "name_en": "Victoria's Secret"
+  },
+  "rows": [
+    {
+      "ja": "合弁(英国・アイルランド)",
+      "en": "Joint venture (UK & Ireland)"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "NXT",
+      "ticker": "NXT",
+      "name": "ネクスト",
+      "name_en": "Next",
+      "sub": "アパレル小売",
+      "sub_en": "Apparel retail",
+      "sub_short": "衣料小売",
+      "sub_short_en": "Apparel",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "英国・アイルランドの店舗を運営する合弁の相手",
+          "text_en": "Partner in the joint venture that runs its UK and Ireland stores",
+          "source": {
+            "label": "Victoria's Secret 10-K(2026年1月期)",
+            "label_en": "Victoria's Secret 10-K (FY ended Jan 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1856437/000185643726000004/vsco-20260131.htm",
+            "level": "official",
+            "date": "2026-03-20",
+            "quote": "United Kingdom / Ireland As a result of our joint venture with Next PLC, we no longer operate any stores in the United Kingdom (\"U.K.\") or Ireland."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,100 @@
+{
+  "root": {
+    "ticker": "TR",
+    "name": "トゥッツィー・ロール・インダストリーズ",
+    "cik": 98677,
+    "name_en": "Tootsie Roll Industries"
+  },
+  "rows": [
+    {
+      "ja": "主要顧客",
+      "en": "Major customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "WMT",
+      "ticker": "WMT",
+      "name": "ウォルマート",
+      "name_en": "Walmart",
+      "sub": "小売",
+      "sub_en": "Retail",
+      "sub_short": "量販店",
+      "sub_short_en": "Retail",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大の顧客(製品売上の約22.0%、2025年)",
+          "text_en": "Largest customer (about 22.0% of 2025 net product sales)",
+          "source": {
+            "label": "Tootsie Roll 10-K(2025年度)",
+            "label_en": "Tootsie Roll 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/98677/000110465926021621/tr-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our net product sales from Wal-Mart Stores, Inc. (\"Wal-Mart\") aggregated approximately 22.0%, 23.2%, and 22.2% of net product sales during the years ended December 31, 2025, 2024 and 2023, respectively."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DLTR",
+      "ticker": "DLTR",
+      "name": "ダラー・ツリー",
+      "name_en": "Dollar Tree",
+      "sub": "ディスカウント小売",
+      "sub_en": "Discount retail",
+      "sub_short": "安売り店",
+      "sub_short_en": "Discount",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "製品売上の約13.1%(2025年、Family Dollarを含む)",
+          "text_en": "About 13.1% of 2025 net product sales (including Family Dollar)",
+          "source": {
+            "label": "Tootsie Roll 10-K(2025年度)",
+            "label_en": "Tootsie Roll 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/98677/000110465926021621/tr-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "(\"Dollar Tree\", which includes net sales from Family Dollar which is owned by Dollar Tree) 4 Table of Contents aggregated approximately 13.1%, 12.6%, and 14.2% of net product sales during the years ended December 31, 2025, 2024 and 2023, respectively."
+          }
+        }
+      ]
+    },
+    {
+      "id": "McLane",
+      "ticker": "McLane",
+      "name": "マクレーン",
+      "name_en": "McLane Company",
+      "sub": "食品卸",
+      "sub_en": "Grocery wholesale",
+      "sub_short": "食品卸",
+      "sub_short_en": "Grocery",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Walmart・Dollar Treeなどへ納品する卸。製品売上の19.7%(2025年)",
+          "text_en": "Wholesaler delivering to Walmart, Dollar Tree and others; 19.7% of 2025 net product sales",
+          "source": {
+            "label": "Tootsie Roll 10-K(2025年度)",
+            "label_en": "Tootsie Roll 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/98677/000110465926021621/tr-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Net product sales revenues from McLane, which includes these Wal-Mart and Dollar Tree sales as well as sales and deliveries to other Company customers, were 19.7% in 2025 and 20.7% in 2024 and 20.1% in 2023."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

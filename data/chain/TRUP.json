@@ -1,0 +1,48 @@
+{
+  "root": {
+    "ticker": "TRUP",
+    "name": "トゥルーパニオン",
+    "cik": 1371285,
+    "name_en": "Trupanion"
+  },
+  "rows": [
+    {
+      "ja": "引受契約の提携先",
+      "en": "Underwriting partner"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "PetsBest",
+      "ticker": "Pets Best",
+      "name": "ペッツ・ベスト",
+      "name_en": "Pets Best",
+      "sub": "ペット保険",
+      "sub_en": "Pet insurance",
+      "sub_short": "動物保険",
+      "sub_short_en": "Pet cover",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "引受契約に基づく保険料が売上の30%(2025年)",
+          "text_en": "Premiums written for it were 30% of 2025 revenue",
+          "source": {
+            "label": "Trupanion 10-K(2025年度)",
+            "label_en": "Trupanion 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1371285/000137128526000018/trup-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "For the year ended December 31, 2025, premiums from policies written for Pets Best, pursuant to our agreements with them, accounted for 30% of our total revenue."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

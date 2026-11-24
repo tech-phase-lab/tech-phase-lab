@@ -1,0 +1,48 @@
+{
+  "root": {
+    "ticker": "MRTN",
+    "name": "マーテン・トランスポート",
+    "cik": 799167,
+    "name_en": "Marten Transport"
+  },
+  "rows": [
+    {
+      "ja": "最大の顧客",
+      "en": "Largest customer"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "WMT",
+      "ticker": "WMT",
+      "name": "ウォルマート",
+      "name_en": "Walmart",
+      "sub": "小売",
+      "sub_en": "Retail",
+      "sub_short": "量販店",
+      "sub_short_en": "Retail",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大の顧客(燃料サーチャージを除く売上の20%、2025年)",
+          "text_en": "Largest customer (20% of revenue excluding fuel surcharges, 2025)",
+          "source": {
+            "label": "Marten Transport 10-K(2025年度)",
+            "label_en": "Marten Transport 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/799167/000143774926005971/mrtn20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our largest customer, Walmart, accounted for 20 % of our revenue excluding fuel surcharges in 2025"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
