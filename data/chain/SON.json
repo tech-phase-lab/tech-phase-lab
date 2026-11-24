@@ -1,0 +1,175 @@
+{
+  "root": {
+    "ticker": "SON",
+    "name": "ソノコ・プロダクツ",
+    "cik": 91767,
+    "name_en": "Sonoco Products"
+  },
+  "rows": [
+    {
+      "ja": "買収",
+      "en": "Acquisitions",
+      "above": true
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "CCK",
+    "AMCR",
+    "SLGN"
+  ],
+  "companies": [
+    {
+      "id": "KPS",
+      "ticker": "KPS Capital Partners",
+      "name": "KPSキャピタル・パートナーズ",
+      "name_en": "KPS Capital Partners",
+      "sub": "投資会社",
+      "sub_en": "Private equity",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2024年12月、欧州の食品缶大手EviosysをKPSから買収",
+          "text_en": "Bought Eviosys, Europe's leading food can maker, from KPS in December 2024",
+          "source": {
+            "label": "Sonoco 10-K(2025年度)",
+            "label_en": "Sonoco 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/91767/000009176726000008/son-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "On December 4, 2024 , the Company completed the acquisition of Eviosys, Europe's leading food cans, ends and closures manufacturer, from KPS Capital Partners"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BALL",
+      "ticker": "BALL",
+      "name": "ボール",
+      "name_en": "Ball",
+      "sub": "アルミ缶",
+      "sub_en": "Aluminum cans",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2022年、Ballが持っていたBall Metalpackの残り49%をSonocoに売却",
+          "text_en": "Ball sold its remaining 49% stake in Ball Metalpack to Sonoco in 2022",
+          "source": {
+            "label": "Ball 10-K(2025年提出)",
+            "label_en": "Ball 10-K (filed 2025-02)",
+            "url": "https://www.sec.gov/Archives/edgar/data/9389/000155837025001190/ball-20241231x10k.htm",
+            "level": "official",
+            "date": "2025-02-20",
+            "quote": "Ball sold its remaining 49 percent owned equity method investment in Ball Metalpack to Sonoco"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CCK",
+      "ticker": "CCK",
+      "name": "クラウン・ホールディングス",
+      "name_en": "Crown Holdings",
+      "sub": "金属缶",
+      "sub_en": "Metal packaging",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Crownが10-Kで、競合の一社としてSonocoを挙げる",
+          "text_en": "Crown names Sonoco among its competitors",
+          "source": {
+            "label": "Crown 10-K(2026年提出)",
+            "label_en": "Crown 10-K (filed 2026-02)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1219601/000162828026012904/cck-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Metal Container Corporation, Silgan Holdings Inc., Sonoco, and Trivium Packaging."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMCR",
+      "ticker": "AMCR",
+      "name": "アムコア",
+      "name_en": "Amcor",
+      "sub": "包装材",
+      "sub_en": "Packaging",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Amcorが10-Kで、競合の一社としてSonocoを挙げる",
+          "text_en": "Amcor names Sonoco among its competitors",
+          "source": {
+            "label": "Amcor 10-K(2024年提出)",
+            "label_en": "Amcor 10-K (filed 2024-08)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1748790/000174879024000022/amcr-20240630.htm",
+            "level": "official",
+            "date": "2024-08-16",
+            "quote": "Sealed Air Corporation, Silgan Holdings Inc., and Sonoco Products Company"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SLGN",
+      "ticker": "SLGN",
+      "name": "シルガン",
+      "name_en": "Silgan",
+      "sub": "金属缶・キャップ",
+      "sub_en": "Metal containers & closures",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Silganが10-Kで、キャップ事業の主な競合としてSonocoを挙げる",
+          "text_en": "Silgan names Sonoco among primary competitors of its closures business",
+          "source": {
+            "label": "Silgan 10-K(2026年提出)",
+            "label_en": "Silgan 10-K (filed 2026-02)",
+            "url": "https://www.sec.gov/Archives/edgar/data/849869/000162828026012202/slgn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Crown Holdings, Inc., Sonoco Products Company, Guala Dispensing Mexico"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Unifoil",
+      "ticker": "Unifoil",
+      "name": "ユニフォイル",
+      "name_en": "Unifoil Holdings",
+      "sub": "包装材(箔・紙)",
+      "sub_en": "Foil & paper packaging",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Unifoilが上場届出書で、競合の一社としてSonocoを挙げる",
+          "text_en": "Unifoil names Sonoco among its competitors",
+          "source": {
+            "label": "Unifoil Holdings 上場届出書(S-1/A)(2024年6月)",
+            "label_en": "Unifoil Holdings registration statement (S-1/A) (2024-06)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1965671/000121390024049316/ea0205112-02.htm",
+            "level": "official",
+            "date": "2024-06-04",
+            "quote": "Dart Container Corporation, Huhtamäki Oyj, Berry Global Group, Inc., Genpak, LLC, Sonoco Products Company"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
