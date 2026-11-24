@@ -58,6 +58,14 @@ export const LOW_VALUE = new RegExp([
   String.raw`|\((?:NASDAQ|NYSE|NYSEAMERICAN|AMEX|NYSEARCA):[A-Z.]+\).{0,80}\s[-–—]\s+what.s next\b`,
   String.raw`|\bGF (?:Score|Value|Rating)\b`,
   String.raw`|^\s*(?:what\b.{0,40}\bmeans?\s+(?:for|to)|what to know|how to (?:read|play|think about|invest|buy|trade|value))\b`,
+  // Owner, Nov 24 (ハイテク速報「こういうニュースはいらない」): chart-of-the-day market recaps, options-chain and quote pages, social posts
+  // ("@NVIDIAAI"), podcasts and webinars, stock price predictions and "I'd buy" pieces, and how-to tips.
+  String.raw`|\bcharts? of the (?:day|week)\b|\btoday.s charts?\b|\bstocks that explain today.s market\b`,
+  String.raw`|\boptions? chains?\b|\boptions spot-on\b|\b[A-Z]{1,6}\d{6}[CP]\d{8}\b|\b(?:interactive stock|seasonal returns) chart\b`,
+  String.raw`|\bstock price,? news,? quote\b|\bquote (?:&|and) history\b|\bstock forum (?:&|and) discussion\b|\bquotes,? (?:&|and) charts\b`,
+  String.raw`|(?:^|[\s(\[])@[A-Za-z_][A-Za-z0-9_]{2,}|\bpodcast\b|\bwebinar\b|\bfireside chat\b|\bepisode \d+\b`,
+  String.raw`|\bstock (?:price )?(?:prediction|forecast)\b|\bI.d (?:still |also |happily |gladly )?(?:buy|sell|hold|own)\b|\bdeserves? (?:your )?attention\b|\bbargain buys?\b|^\s*(?:opinion|social buzz)\s*[:|]`,
+  String.raw`|^\s*don.t (?:worry|panic|forget)\b|\btips (?:and|&) tricks\b|\bhere.s how to\b|\bstep[- ]by[- ]step\b`,
 ].join(""), "i");
 /** Nov 20 review: explainers, "- live", "here's the" and bull/bear-case wording drop a headline only when it reports no concrete event
  * (CONCRETE_EVENT: a company that launches, names, invests, buys, wins, raises, cuts, reports, files, sues, surges ..., or a price target or
@@ -69,6 +77,11 @@ export const LOW_VALUE_SOFT = new RegExp([
   String.raw`|\bwhat (?:you|investors|shareholders|traders|buyers) (?:need|should|must|ought|have) to know\b|\bwhat to know\b|\beverything (?:you|investors) need to know\b`,
   String.raw`|\bhow to (?:read|play|think about|invest(?: in)?|buy|trade|value|approach|navigate|position)\b`,
   String.raw`|\b(?:bull|bear) case\b|\s[-–—]\s+what.s next\b`,
+  // Owner, Nov 24: "what changed / what's behind" teasers ("ASML Stock What Changed After Nvidia CEO Return"), interviews and Windows
+  // interface trivia ("… vertical taskbars …"), unless a concrete event is reported.
+  String.raw`|\bwhat(?:.s| has)? changed\b|\bwhat.s (?:behind|going on|driving)\b|\bwhat (?:sent|lifted|drove|pushed)\b`,
+  String.raw`|\binterview with\b|\binterview\s*[:|]|\|\s*interview\b|\bsits down with\b|\bin conversation with\b|\bchats with\b`,
+  String.raw`|\b(?:vertical )?taskbars?\b|\bstart menu\b|\bfile explorer\b|\bcontext menu\b|\bsnipping tool\b|\bwallpapers?\b|\bdark mode\b`,
 ].join(""), "i");
 export const CONCRETE_EVENT = new RegExp([
   String.raw`\b(?!(?:How|Time|What|Why|When|Where|Who|Here|Stock|Stocks|Shares|Has|Have|Had|Is|Are|Was|Were|Be|It|I|You|We|They|He|She)\b)[A-Z][\w&.'’-]*\s+(?:to\s+|will\s+)?(?:[Ll]aunch(?:es|ed)?|[Nn]ames|[Nn]amed|[Ii]nvest(?:s|ed)?|[Bb]uys|[Bb]uy|[Bb]ought|[Aa]cquires?|[Aa]cquired`,
@@ -78,7 +91,7 @@ export const CONCRETE_EVENT = new RegExp([
   String.raw`|\b(?:[Pp]rice [Tt]arget|[Tt]arget [Pp]rice|PT)\b|\b(?:[Uu]pgrade[sd]?|[Dd]owngrade[sd]?)\b`,
 ].join(""));
 /** The same kinds of headline in Japanese, for a translated title whose English wording differs (owner, Nov 20). */
-const LOW_VALUE_JA = /株式市場(?:本日|今日)|(?:本日|今日)の株式市場|[(（]\s*ライブ(?:中継|更新|ブログ)?\s*[)）]|ライブ(?:中継|更新|ブログ)\s*$|注目すべき.{0,30}(?:銘柄|株)|買うべき.{0,20}(?:銘柄|株)|(?:銘柄|株)\d+選|(?:意味|意義)(?:とは|するもの)|(?:意味|意義)すること\s*$|の読み方|知っておくべき(?:こと|点)|投資家が知るべき|(?:にとっての意味|に与える影響とは|が意味すること|は何を意味|にとって何を意味)\s*$/; // the last: teasers whose answer is in an article we do not carry (owner, Oct 26)
+const LOW_VALUE_JA = /株式市場(?:本日|今日)|(?:本日|今日)の株式市場|[(（]\s*ライブ(?:中継|更新|ブログ)?\s*[)）]|ライブ(?:中継|更新|ブログ)\s*$|注目すべき.{0,30}(?:銘柄|株)|買うべき.{0,20}(?:銘柄|株)|(?:銘柄|株)\d+選|(?:意味|意義)(?:とは|するもの)|(?:意味|意義)すること\s*$|の読み方|知っておくべき(?:こと|点)|投資家が知るべき|(?:にとっての意味|に与える影響とは|が意味すること|は何を意味|にとって何を意味)\s*$|オプション[・･]?チェーン|(?:本日|今日)のチャート|ポッドキャスト|ウェビナー|何が変わった|タスクバー|(?:^|[\s。、])@[A-Za-z_][A-Za-z0-9_]{2,}/; // the last: teasers whose answer is in an article we do not carry (owner, Oct 26)
 /** GuruFocus templates ("GF Score", "GF Value"), as they were translated (owner, Nov 21). */
 const GF_TEMPLATE_JA = /GF\s?(?:評価|スコア|バリュー|レーティング)/;
 const lowValueEn = (text: string) => LOW_VALUE.test(text) || (LOW_VALUE_SOFT.test(text) && !CONCRETE_EVENT.test(text));
@@ -127,6 +140,31 @@ const NOT_NEWS = [
   /\b(?:IDBI Capital|Motilal Oswal|ICICI Securities|Kotak Securities|Axis Securities|Nirmal Bang|Anand Rathi|HDFC Securities|Sharekhan|Emkay Global|Prabhudas Lilladher|Navin Fluorine|GE Vernova T&D India)\b|IDBIキャピタル|モティラル・オスワル|ICICIセキュリティーズ|コタック証券|ナビンフルオライド|(?:修正|改定)目標株価をチェック|\bcheck (?:out )?(?:the )?(?:revised|updated) target price\b/i, // Indian-market broker target pages, not news about the US company (owner, Nov 2)
   /(?:^|\s)#[A-Za-z0-9_]{3,}\s*$/, // a social-media hashtag glued on the end: promotional text, not a headline (owner, Nov 2)
 ];
+/** Owner, Nov 24 (ハイテク速報「こういうニュースはいらない」): Google News rows from social media and personal newsletters, opinion and
+ * prediction mills and consumer how-to blogs, and a link from any feed to GuruFocus, a social-media post or an options-chain page, are not
+ * company news. The same lists are GNEWS_DROP_PUBLISHERS and NOISE_URL_PATTERN in scripts/research/company_wire.py, which drops such rows
+ * before translation; keep them in step (a test compares them). Publishers are compared like publisher_key there (no case, spaces,
+ * punctuation or leading "The"). */
+export const NOISE_PUBLISHERS = [
+  "The Motley Fool", "Simply Wall St", "Trefis", "TradingKey", "Admirals", "Zacks Investment Research", "InvestorPlace",
+  "Insider Monkey", "GuruFocus", "GuruFocus.com",
+  "LinkedIn", "X", "X.com", "Twitter", "Facebook", "Instagram", "Threads", "YouTube", "TikTok", "Reddit",
+  "Substack", "Medium",
+  "24/7 Wall St.", "Kalkine", "Kalkine Media", "kalkine.ca", "kalkine.com", "Blockchain News", "TradingNEWS",
+  "Windows Central", "Windows Latest", "Neowin", "How-To Geek", "MakeUseOf", "XDA Developers", "XDA", "Android Authority",
+  "Android Police", "Search Engine Roundtable", "Lifehacker", "gHacks", "Laptop Mag", "Tom's Guide", "Pureinfotech",
+];
+export const NOISE_URL = new RegExp([
+  String.raw`^https?://(?:[\w-]+\.)*(?:gurufocus\.com|linkedin\.com|x\.com|twitter\.com|facebook\.com|instagram\.com|threads\.net`,
+  String.raw`|tiktok\.com|reddit\.com)(?:[:/?#]|$)`,
+  String.raw`|^https?://[^/?#]+/(?:[^?#]*/)?(?:options|option-chain|options-chain|option-chains)(?:[/?#]|$)`,
+].join(""), "i");
+const publisherKey = (name: string) => name.toLowerCase().replace(/\((?:video|articles)\)/g, "").replace(/^\W*the\s+/, "").replace(/[^a-z0-9]+/g, "");
+const NOISE_PUBLISHER_KEYS = new Set(NOISE_PUBLISHERS.map(publisherKey));
+/** A row whose outlet or link marks it as not news (above). Only Google News rows are judged by outlet; any row by its link. */
+export const noiseSource = (item: Pick<CompanyWireItem, "publisher" | "url" | "source">) =>
+  NOISE_URL.test(item.url) || (item.source === "gnews" && NOISE_PUBLISHER_KEYS.has(publisherKey(item.publisher)));
+
 /** A press-release label glued onto the headline ("2026年10月25日｜… ｜NYSE:BE｜プレスリリース") is not part of it (owner, Oct 26). */
 export function cleanTitle(title: string) {
   return title.replace(/\s*[(（]\s*[A-Z.]{1,6}\s*[:：]\s*(?:NYSE|NASDAQ|Nasdaq|AMEX|NYSEARCA|OTC)\s*[)）]\s*$/, "").replace(/\s*[(（]\s*(?:NYSE|NASDAQ|Nasdaq(?:GS|GM|CM)?|AMEX|NYSEARCA|NYSEAMERICAN|NYSEAM|NYSEMKT|OTC(?:QX|QB)?)\s*[:：]\s*[A-Z.]{1,6}\s*[)）]/g, "").replace(/^\s*(?:20\d\d年\d{1,2}月\d{1,2}日|[A-Z][a-z]{2,8}\.? \d{1,2}, 20\d\d)\s*[|｜]\s*/, "")
@@ -195,7 +233,7 @@ export function storyCandidates(wire: Record<string, CompanyWireItem[]>, lang: L
   const ja = lang === "ja";
   return Object.entries(wire).flatMap(([ticker, list]) => watched && !watched.has(ticker) ? [] : list.flatMap(item => {
     const title = ja ? (item.titleJa && tidyJapanese(cleanTitle(item.titleJa))) : cleanTitle(item.titleEn);
-    return title && !isNotNews(item.titleEn) && !isNotNews(title, item.titleEn) && !staleResults(ticker, item.titleEn, item.publishedAt) && !staleResults(ticker, title, item.publishedAt) ? [{ ticker, item, title }] : [];
+    return title && !noiseSource(item) && !isNotNews(item.titleEn) && !isNotNews(title, item.titleEn) && !staleResults(ticker, item.titleEn, item.publishedAt) && !staleResults(ticker, title, item.publishedAt) ? [{ ticker, item, title }] : [];
   })).sort((a, b) => Date.parse(a.item.publishedAt) - Date.parse(b.item.publishedAt));
 }
 /** One broker's action named in a headline (owner, Nov 20: 「MRVLは同じの2つある」 — "Stifel maintains Marvell Technology at Buy, lowers price
