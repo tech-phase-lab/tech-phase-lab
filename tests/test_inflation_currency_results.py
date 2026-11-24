@@ -56,7 +56,7 @@ class CurrencyTests(unittest.TestCase):
     def test_no_currency_is_assumed_and_words_are_not_units(self):
         self.assertIsNone(results.projection('$TSM Q3 results: Revenue 989.9B, EPS 17.40', ['TSM']))
         item = results.projection('$NVDA Q2 earnings: Revenue $46.7B, Adj. EPS $1.05 This beat estimates', ['NVDA'])
-        self.assertEqual(values(item), {'revenue': '$46.7B', 'eps': '$1.05'})
+        self.assertEqual(values(item), {'revenue': '$46.7B', 'adjusted-eps': '$1.05'})
 
 
 if __name__ == '__main__':
