@@ -1,0 +1,230 @@
+{
+  "root": {
+    "ticker": "BRX",
+    "name": "ブリックスモア・プロパティ・グループ",
+    "cik": 1581068,
+    "name_en": "Brixmor Property Group"
+  },
+  "rows": [
+    {
+      "ja": "主なテナント(賃料の多い順)",
+      "en": "Largest tenants (by rent)"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "TJX",
+      "ticker": "TJX",
+      "name": "TJXカンパニーズ",
+      "name_en": "The TJX Companies",
+      "sub": "衣料品のディスカウント小売",
+      "sub_en": "Off-price apparel",
+      "sub_short": "衣料小売",
+      "sub_short_en": "Apparel",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "90店舗を出店(賃料の3.2%)",
+          "text_en": "Major tenant (3.2% of base rent)",
+          "source": {
+            "label": "Brixmor 10-K(2025年度)",
+            "label_en": "Brixmor 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1581068/000158106826000007/brx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-09",
+            "quote": "The TJX Companies, Inc. 90 2,564,676 4.1 % $ 33,673 3.2 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "KR",
+      "ticker": "KR",
+      "name": "クローガー",
+      "name_en": "Kroger",
+      "sub": "スーパー",
+      "sub_en": "Grocery",
+      "sub_short": "スーパー",
+      "sub_short_en": "Grocery",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "44店舗を出店(賃料の2.3%)",
+          "text_en": "Major tenant (2.3% of base rent)",
+          "source": {
+            "label": "Brixmor 10-K(2025年度)",
+            "label_en": "Brixmor 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1581068/000158106826000007/brx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-09",
+            "quote": "The Kroger Co. 44 3,000,900 4.8 % 24,006 2.3 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BURL",
+      "ticker": "BURL",
+      "name": "バーリントン",
+      "name_en": "Burlington Stores",
+      "sub": "ディスカウント小売",
+      "sub_en": "Discount retail",
+      "sub_short": "安売り店",
+      "sub_short_en": "Discount",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "46店舗を出店(賃料の2.1%)",
+          "text_en": "Major tenant (2.1% of base rent)",
+          "source": {
+            "label": "Brixmor 10-K(2025年度)",
+            "label_en": "Brixmor 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1581068/000158106826000007/brx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-09",
+            "quote": "Burlington Stores, Inc. 46 1,725,367 2.8 % 21,564 2.1 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Publix",
+      "ticker": "Publix",
+      "name": "パブリックス",
+      "name_en": "Publix Super Markets",
+      "sub": "スーパー",
+      "sub_en": "Grocery",
+      "sub_short": "スーパー",
+      "sub_short_en": "Grocery",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "34店舗を出店(賃料の1.6%)",
+          "text_en": "Major tenant (1.6% of base rent)",
+          "source": {
+            "label": "Brixmor 10-K(2025年度)",
+            "label_en": "Brixmor 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1581068/000158106826000007/brx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-09",
+            "quote": "Publix Super Markets, Inc. 34 1,587,457 2.5 % 16,748 1.6 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ROST",
+      "ticker": "ROST",
+      "name": "ロス・ストアーズ",
+      "name_en": "Ross Stores",
+      "sub": "衣料品のディスカウント小売",
+      "sub_en": "Off-price apparel",
+      "sub_short": "衣料小売",
+      "sub_short_en": "Apparel",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "50店舗を出店(賃料の1.6%)",
+          "text_en": "Major tenant (1.6% of base rent)",
+          "source": {
+            "label": "Brixmor 10-K(2025年度)",
+            "label_en": "Brixmor 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1581068/000158106826000007/brx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-09",
+            "quote": "Ross Stores, Inc 50 1,246,499 2.0 % 16,422 1.6 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "DLTR",
+      "ticker": "DLTR",
+      "name": "ダラー・ツリー",
+      "name_en": "Dollar Tree",
+      "sub": "ディスカウント小売",
+      "sub_en": "Discount retail",
+      "sub_short": "安売り店",
+      "sub_short_en": "Discount",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "108店舗を出店(賃料の1.5%)",
+          "text_en": "Major tenant (1.5% of base rent)",
+          "source": {
+            "label": "Brixmor 10-K(2025年度)",
+            "label_en": "Brixmor 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1581068/000158106826000007/brx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-09",
+            "quote": "Dollar Tree Stores, Inc. 108 1,253,821 2.0 % 15,868 1.5 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "FIVE",
+      "ticker": "FIVE",
+      "name": "ファイブ・ビロウ",
+      "name_en": "Five Below",
+      "sub": "ディスカウント小売",
+      "sub_en": "Discount retail",
+      "sub_short": "安売り店",
+      "sub_short_en": "Discount",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "66店舗を出店(賃料の1.2%)",
+          "text_en": "Major tenant (1.2% of base rent)",
+          "source": {
+            "label": "Brixmor 10-K(2025年度)",
+            "label_en": "Brixmor 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1581068/000158106826000007/brx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-09",
+            "quote": "Five Below, Inc. 66 631,887 1.0 % 12,962 1.2 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン(ホールフーズ)",
+      "name_en": "Amazon (Whole Foods Market)",
+      "sub": "ネット通販・スーパー",
+      "sub_en": "E-commerce & grocery",
+      "sub_short": "スーパー",
+      "sub_short_en": "Grocery",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "19店舗を出店(賃料の1.2%)",
+          "text_en": "Major tenant (1.2% of base rent)",
+          "source": {
+            "label": "Brixmor 10-K(2025年度)",
+            "label_en": "Brixmor 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1581068/000158106826000007/brx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-09",
+            "quote": "Amazon.com, Inc. / Whole Foods Market Services, Inc. 19 658,464 1.1 % 12,371 1.2 %"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

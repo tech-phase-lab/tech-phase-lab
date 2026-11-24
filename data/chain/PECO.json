@@ -1,0 +1,204 @@
+{
+  "root": {
+    "ticker": "PECO",
+    "name": "フィリップス・エジソン",
+    "cik": 1476204,
+    "name_en": "Phillips Edison & Company"
+  },
+  "rows": [
+    {
+      "ja": "主なテナント(賃料の多い順)",
+      "en": "Largest tenants (by rent)"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "KR",
+      "ticker": "KR",
+      "name": "クローガー",
+      "name_en": "Kroger",
+      "sub": "スーパー",
+      "sub_en": "Grocery",
+      "sub_short": "スーパー",
+      "sub_short_en": "Grocery",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "食品スーパー中心の商業施設の核テナント(賃料の5.2%)",
+          "text_en": "Anchor tenant at its grocery-anchored centers (5.2% of base rent)",
+          "source": {
+            "label": "Phillips Edison 10-K(2025年度)",
+            "label_en": "Phillips Edison 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1476204/000147620426000005/cik0001476204-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "Kroger $ 28,327 5.2 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Publix",
+      "ticker": "Publix",
+      "name": "パブリックス",
+      "name_en": "Publix Super Markets",
+      "sub": "スーパー",
+      "sub_en": "Grocery",
+      "sub_short": "スーパー",
+      "sub_short_en": "Grocery",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "食品スーパー中心の商業施設の核テナント(賃料の4.9%)",
+          "text_en": "Anchor tenant at its grocery-anchored centers (4.9% of base rent)",
+          "source": {
+            "label": "Phillips Edison 10-K(2025年度)",
+            "label_en": "Phillips Edison 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1476204/000147620426000005/cik0001476204-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "Publix 27,013 4.9 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ACI",
+      "ticker": "ACI",
+      "name": "アルバートソンズ",
+      "name_en": "Albertsons Companies",
+      "sub": "スーパー",
+      "sub_en": "Grocery",
+      "sub_short": "スーパー",
+      "sub_short_en": "Grocery",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "食品スーパー中心の商業施設の核テナント(賃料の3.6%)",
+          "text_en": "Anchor tenant at its grocery-anchored centers (3.6% of base rent)",
+          "source": {
+            "label": "Phillips Edison 10-K(2025年度)",
+            "label_en": "Phillips Edison 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1476204/000147620426000005/cik0001476204-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "Albertsons 19,496 3.6 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AHOLD",
+      "ticker": "Ahold Delhaize",
+      "name": "アホールド・デレーズ",
+      "name_en": "Ahold Delhaize",
+      "sub": "スーパー",
+      "sub_en": "Grocery",
+      "sub_short": "スーパー",
+      "sub_short_en": "Grocery",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "食品スーパー中心の商業施設の核テナント(賃料の3.3%)",
+          "text_en": "Anchor tenant at its grocery-anchored centers (3.3% of base rent)",
+          "source": {
+            "label": "Phillips Edison 10-K(2025年度)",
+            "label_en": "Phillips Edison 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1476204/000147620426000005/cik0001476204-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "Ahold Delhaize 18,138 3.3 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "WMT",
+      "ticker": "WMT",
+      "name": "ウォルマート",
+      "name_en": "Walmart",
+      "sub": "総合小売",
+      "sub_en": "Retail",
+      "sub_short": "小売",
+      "sub_short_en": "Retail",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "食品スーパー中心の商業施設の核テナント(賃料の1.6%)",
+          "text_en": "Anchor tenant at its grocery-anchored centers (1.6% of base rent)",
+          "source": {
+            "label": "Phillips Edison 10-K(2025年度)",
+            "label_en": "Phillips Edison 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1476204/000147620426000005/cik0001476204-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "Walmart 8,483 1.6 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GiantEagle",
+      "ticker": "Giant Eagle",
+      "name": "ジャイアント・イーグル",
+      "name_en": "Giant Eagle",
+      "sub": "スーパー",
+      "sub_en": "Grocery",
+      "sub_short": "スーパー",
+      "sub_short_en": "Grocery",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "食品スーパー中心の商業施設の核テナント(賃料の1.4%)",
+          "text_en": "Anchor tenant at its grocery-anchored centers (1.4% of base rent)",
+          "source": {
+            "label": "Phillips Edison 10-K(2025年度)",
+            "label_en": "Phillips Edison 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1476204/000147620426000005/cik0001476204-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "Giant Eagle 7,419 1.4 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SFM",
+      "ticker": "SFM",
+      "name": "スプラウツ・ファーマーズ・マーケット",
+      "name_en": "Sprouts Farmers Market",
+      "sub": "スーパー",
+      "sub_en": "Grocery",
+      "sub_short": "スーパー",
+      "sub_short_en": "Grocery",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "食品スーパー中心の商業施設の核テナント(賃料の1.1%)",
+          "text_en": "Anchor tenant at its grocery-anchored centers (1.1% of base rent)",
+          "source": {
+            "label": "Phillips Edison 10-K(2025年度)",
+            "label_en": "Phillips Edison 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1476204/000147620426000005/cik0001476204-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "Sprouts Farmers Market 6,205 1.1 %"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

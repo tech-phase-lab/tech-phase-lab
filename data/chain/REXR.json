@@ -1,0 +1,230 @@
+{
+  "root": {
+    "ticker": "REXR",
+    "name": "レックスフォード・インダストリアル",
+    "cik": 1571283,
+    "name_en": "Rexford Industrial Realty"
+  },
+  "rows": [
+    {
+      "ja": "主なテナント(賃料の多い順)",
+      "en": "Largest tenants (by rent)"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "TIRECO",
+      "ticker": "TIRECO",
+      "name": "タイヤコ",
+      "name_en": "TIRECO",
+      "sub": "タイヤ卸",
+      "sub_en": "Tire distribution",
+      "sub_short": "タイヤ",
+      "sub_short_en": "Tires",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "南カリフォルニアの産業用不動産を借りる(賃料の2.4%)",
+          "text_en": "Leases industrial space in Southern California (2.4% of base rent)",
+          "source": {
+            "label": "Rexford 10-K(2025年度)",
+            "label_en": "Rexford 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1571283/000157128326000006/rexr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "TIRECO, Inc. Inland Empire West 1,101,840 2.4 % $ 19,251 2.4 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "LHX",
+      "ticker": "LHX",
+      "name": "L3ハリス・テクノロジーズ",
+      "name_en": "L3Harris Technologies (L3 Technologies)",
+      "sub": "防衛",
+      "sub_en": "Defense",
+      "sub_short": "防衛",
+      "sub_short_en": "Defense",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "南カリフォルニアの産業用不動産を借りる(賃料の1.6%)",
+          "text_en": "Leases industrial space in Southern California (1.6% of base rent)",
+          "source": {
+            "label": "Rexford 10-K(2025年度)",
+            "label_en": "Rexford 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1571283/000157128326000006/rexr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "L3 Technologies, Inc. Multiple Submarkets (5) 595,267 1.3 % 13,245 1.6 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Cubic",
+      "ticker": "Cubic",
+      "name": "キュービック",
+      "name_en": "Cubic Corporation",
+      "sub": "防衛・交通システム",
+      "sub_en": "Defense & transit systems",
+      "sub_short": "防衛",
+      "sub_short_en": "Defense",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "南カリフォルニアの産業用不動産を借りる(賃料の1.4%)",
+          "text_en": "Leases industrial space in Southern California (1.4% of base rent)",
+          "source": {
+            "label": "Rexford 10-K(2025年度)",
+            "label_en": "Rexford 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1571283/000157128326000006/rexr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Cubic Corporation Multiple Submarkets 315,227 0.7 % 11,443 1.4 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "FDX",
+      "ticker": "FDX",
+      "name": "フェデックス",
+      "name_en": "FedEx",
+      "sub": "物流",
+      "sub_en": "Logistics",
+      "sub_short": "物流",
+      "sub_short_en": "Logistics",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "南カリフォルニアの産業用不動産を借りる(賃料の1.3%)",
+          "text_en": "Leases industrial space in Southern California (1.3% of base rent)",
+          "source": {
+            "label": "Rexford 10-K(2025年度)",
+            "label_en": "Rexford 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1571283/000157128326000006/rexr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Federal Express Corporation Multiple Submarkets (8) 527,861 1.1 % 10,862 1.3 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GXO",
+      "ticker": "GXO",
+      "name": "GXOロジスティクス",
+      "name_en": "GXO Logistics",
+      "sub": "物流",
+      "sub_en": "Logistics",
+      "sub_short": "物流",
+      "sub_short_en": "Logistics",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "南カリフォルニアの産業用不動産を借りる(賃料の1.1%)",
+          "text_en": "Leases industrial space in Southern California (1.1% of base rent)",
+          "source": {
+            "label": "Rexford 10-K(2025年度)",
+            "label_en": "Rexford 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1571283/000157128326000006/rexr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "GXO Logistics Supply Chain, Inc. Mid-Counties 411,034 0.9 % 9,076 1.1 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BBY",
+      "ticker": "BBY",
+      "name": "ベスト・バイ",
+      "name_en": "Best Buy",
+      "sub": "家電量販",
+      "sub_en": "Electronics retail",
+      "sub_short": "家電",
+      "sub_short_en": "Retail",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "南カリフォルニアの産業用不動産を借りる(賃料の1.1%)",
+          "text_en": "Leases industrial space in Southern California (1.1% of base rent)",
+          "source": {
+            "label": "Rexford 10-K(2025年度)",
+            "label_en": "Rexford 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1571283/000157128326000006/rexr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Best Buy Stores, L.P. Inland Empire West 501,649 1.1 % 8,871 1.1 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "HTZ",
+      "ticker": "HTZ",
+      "name": "ハーツ",
+      "name_en": "Hertz",
+      "sub": "レンタカー",
+      "sub_en": "Car rental",
+      "sub_short": "車貸出",
+      "sub_short_en": "Car hire",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "南カリフォルニアの産業用不動産を借りる(賃料の1.1%)",
+          "text_en": "Leases industrial space in Southern California (1.1% of base rent)",
+          "source": {
+            "label": "Rexford 10-K(2025年度)",
+            "label_en": "Rexford 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1571283/000157128326000006/rexr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "The Hertz Corporation South Bay 38,680 0.1 % 8,579 1.1 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Orora",
+      "ticker": "Orora",
+      "name": "オローラ",
+      "name_en": "Orora",
+      "sub": "包装材",
+      "sub_en": "Packaging",
+      "sub_short": "包装材",
+      "sub_short_en": "Packing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "南カリフォルニアの産業用不動産を借りる(賃料の1.0%)",
+          "text_en": "Leases industrial space in Southern California (1.0% of base rent)",
+          "source": {
+            "label": "Rexford 10-K(2025年度)",
+            "label_en": "Rexford 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1571283/000157128326000006/rexr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Orora Packaging Solutions Multiple Submarkets (10) 476,065 1.0 % 8,150 1.0 %"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
