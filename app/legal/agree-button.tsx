@@ -5,14 +5,14 @@ import type { CSSProperties, MouseEvent, ReactNode } from "react";
 export const AGREE_LABEL = { ja: "利用規約に同意して申し込む", en: "Agree to the Terms and buy" } as const;
 /** The small lines right above the final button. */
 export const RESOLUTE_CHECKOUT_LINES = {
-  ja: ["通知機能は1年間。2年目からの更新（5,980円・PRO会員3,980円）は、更新時期にお知らせし、ご希望の方だけ更新します。", "お客様都合の返金はできません(二重課金・当方の不具合で使えない場合を除く)。"],
+  ja: ["通知機能は1年間。2年目からの更新（5,980円・PRO会員3,980円）は、更新時期にお知らせし、ご希望の方だけ更新します。", "お客様都合の返金はできません(二重課金・当方の不具合で使えない場合を除く)"],
   en: ["Alerts run for one year. For renewal from year two ($39, PRO $29), we'll let you know when it's time to renew; only those who choose to renew are renewed.", "No refunds for change of mind (except double charges or if a fault on our side stops it from working)."],
 } as const;
 // RESOLUTE automatic renewal (owner, Nov 19): replaces the first line ("…ご希望の方だけ更新します") for an order the server
 // created with automatic renewal (order.autoRenewal, flag RESOLUTE_AUTO_RENEWAL_ENABLED). With the flag off the lines stay as above.
 // Lawyer review (Nov 24): how to stop and by when. The renewal is charged from 00:00 JST of the renewal day
 // (services/resolute-api/payments/renewal.mjs), so the stop deadline is the day before it, on the account page.
-export const RESOLUTE_AUTO_RENEWAL_LINE = { ja: "1年後から自動で更新。更新日の前日までアカウント画面で止められます", en: "Renews automatically after one year. Stop it on your account page by the day before renewal." } as const;
+export const RESOLUTE_AUTO_RENEWAL_LINE = { ja: "1年後から自動で更新されます。更新日の前日までアカウント画面から止められます", en: "Renews automatically after one year. You can stop it on your account page until the day before the renewal date." } as const;
 /** Account screen, RESOLUTE section, under 「自動更新 オン」: the deadline (lawyer review, Nov 24). The renewal day is the expiry day shown above. */
 export const RESOLUTE_RENEWAL_STOP_NOTE = { ja: "自動更新は、更新日（有効期限の日）の前日までにここで止められます。", en: "You can stop auto-renewal here until the day before the renewal date (the expiry date)." } as const;
 export function resoluteCheckoutLines(en: boolean, autoRenewal: boolean): readonly string[] {

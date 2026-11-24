@@ -295,14 +295,14 @@ test('notices: the owner\'s wording word for word, date and price formats, email
 test('screens: exactly one checkout line behind the server flag, the account toggle, and the proxy allows stopping while sales are closed', async () => {
   const live = read('../app/resolute/checkout/live-screen.tsx'), agree = read('../app/legal/agree-button.tsx');
   // Lawyer review (Nov 24): the line also says how to stop and by when.
-  assert.ok(agree.includes('ja: "1年後から自動で更新。更新日の前日までアカウント画面で止められます"'));
-  assert.ok(agree.includes('en: "Renews automatically after one year. Stop it on your account page by the day before renewal."'));
+  assert.ok(agree.includes('ja: "1年後から自動で更新されます。更新日の前日までアカウント画面から止められます"'));
+  assert.ok(agree.includes('en: "Renews automatically after one year. You can stop it on your account page until the day before the renewal date."'));
   // The 「ご希望の方だけ更新します」 line is replaced (not added to) for an auto-renewal order; flag off = today's lines.
   assert.match(live, /<CheckoutLines lines=\{resoluteCheckoutLines\(en,order\.autoRenewal===true\)\} \/>\n    <ConsentCheck en=\{en\} consent=\{consent\} \/>\n    <AgreeButton/);
   const { resoluteCheckoutLines, RESOLUTE_CHECKOUT_LINES } = legalModule('../../legal/agree-button');
   assert.deepEqual(resoluteCheckoutLines(false, false), RESOLUTE_CHECKOUT_LINES.ja);
-  assert.deepEqual(resoluteCheckoutLines(false, true), ['1年後から自動で更新。更新日の前日までアカウント画面で止められます', RESOLUTE_CHECKOUT_LINES.ja[1]]);
-  assert.deepEqual(resoluteCheckoutLines(true, true), ['Renews automatically after one year. Stop it on your account page by the day before renewal.', RESOLUTE_CHECKOUT_LINES.en[1]]);
+  assert.deepEqual(resoluteCheckoutLines(false, true), ['1年後から自動で更新されます。更新日の前日までアカウント画面から止められます', RESOLUTE_CHECKOUT_LINES.ja[1]]);
+  assert.deepEqual(resoluteCheckoutLines(true, true), ['Renews automatically after one year. You can stop it on your account page until the day before the renewal date.', RESOLUTE_CHECKOUT_LINES.en[1]]);
   // Renew by hand from the account page: the existing 「通知サービスを更新」 button opens the renewal checkout (members only).
   assert.match(read('../app/research/account/account-view.tsx'), /"\/resolute\/checkout\?lang=ja&kind=renewal"[^\n]*通知サービスを更新/);
   assert.match(read('../app/resolute/checkout/page.tsx'), /renewal=\{params\.kind === "renewal" && !order\}/);
@@ -314,7 +314,7 @@ test('screens: exactly one checkout line behind the server flag, the account tog
   assert.match(view, /\/api\/resolute\/live-payments\/auto-renewal/);
   assert.throws(() => liveOrder({ orderId: randomUUID(), sandbox: false, state: 'created', expiresAt: new Date().toISOString(), autoRenewal: false,
     quote: { kind: 'initial', language: 'ja', currency: 'JPY', value: '7980', priceClass: 'launch' } }));
-  // The job is never scheduled by the repository; the worker prints only {"enabled":false} while the flag is off.
+  // The worker prints only {"enabled":false} while the flag is off (and exits 0, so the scheduled run stays green).
   assert.match(read('../services/resolute-api/payments/renewal-worker.mjs'), /RESOLUTE_AUTO_RENEWAL_ENABLED !== 'true'/);
 });
 
@@ -329,4 +329,14 @@ test('stop deadline: stopping by the day before the renewal date means no charge
   const k = await buy(t, { user: 'user_buyer4' });
   k.at(dayStart - 60000); await k.job(); assert.equal(k.paypal.charges, 0, 'nothing the day before');
   k.at(dayStart + 60000); await k.job(); assert.equal(k.paypal.charges, 1, 'charged on 12/16 JST');
+});
+
+test('schedule: the cron image runs the worker once; without the flag it prints only {"enabled":false} and exits 0', async () => {
+  const docker = read('../services/resolute-auto-renewal/Dockerfile');
+  assert.match(docker, /\nRUN node services\/resolute-api\/payments\/renewal-worker\.mjs\n/);
+  assert.match(docker, /\nCMD \["timeout", "--signal=TERM", "--kill-after=10s", "900s", "node", "services\/resolute-api\/payments\/renewal-worker\.mjs"\]\n?$/);
+  const { spawnSync } = await import('node:child_process');
+  const env = { ...process.env }; delete env.RESOLUTE_AUTO_RENEWAL_ENABLED;
+  const run = spawnSync(process.execPath, ['services/resolute-api/payments/renewal-worker.mjs'], { env, encoding: 'utf8', timeout: 30000 });
+  assert.equal(run.status, 0); assert.equal(run.stdout.trim(), '{"enabled":false}');
 });

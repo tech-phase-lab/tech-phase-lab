@@ -6,7 +6,7 @@ This is an English translation of the Japanese Privacy Policy. If the English an
 
 - Account information: email address, user ID and the information needed to sign in (sign-in is managed by Clerk's service)
 - Contract information: plan, contract start date and end date (payment status). We do not receive card numbers or PayPal account details
-- RESOLUTE purchase information: purchase date, payment method (PayPal) and when the Notification Features expire. We do not receive card numbers or bank account details
+- RESOLUTE purchase information: purchase date, payment method (PayPal), when the Notification Features expire, your automatic renewal setting, and the payment method identifier issued by PayPal (for automatic renewal). We do not receive the card or bank account numbers themselves
 - Settings: display language, notification settings and favorite stocks
 - Notification information: device identifiers needed for browser notifications (Web Push) and phone notifications
 - Access information: pages viewed, device and browser type, and error records
@@ -23,7 +23,7 @@ Holdings you enter or import (stocks, number of shares, purchase price and so on
 - To bill for the service
 - To send emails about prices and renewals
 - To improve the service
-- Providing the Service and the Product, signing in, managing contracts and purchases, saving and showing diagnosis results and rules, and notifications based on your rules
+- Providing the Service and the Product, signing in, managing contracts and purchases (including renewal notices and automatic renewal charges), saving and showing diagnosis results and rules, and notifications based on your rules
 - Sending notifications
 - Answering inquiries
 - Preventing misuse and investigating the causes of failures
@@ -51,7 +51,7 @@ We will announce changes to this policy in the Service.
 
 ## 9. Use of External Businesses
 
-We use the services of external businesses for sign-in (Clerk), payment (PayPal), and sending emails and notifications. Phone and browser notifications (Web Push) are delivered, depending on your device and browser, through Apple Push Notification service (Apple), Firebase Cloud Messaging (Google) or Mozilla's push service (Mozilla). We may have these businesses handle your information to the extent necessary. They include businesses in the United States and other countries outside Japan. We do not provide personal data to third parties without your consent, except as permitted by the Act on the Protection of Personal Information.
+We use the services of external businesses for sign-in (Clerk), payment and saving your payment method for automatic renewal (PayPal), and sending emails and notifications. Phone and browser notifications (Web Push) are delivered, depending on your device and browser, through Apple Push Notification service (Apple), Firebase Cloud Messaging (Google) or Mozilla's push service (Mozilla). We may have these businesses handle your information to the extent necessary. They include businesses in the United States and other countries outside Japan. We do not provide personal data to third parties without your consent, except as permitted by the Act on the Protection of Personal Information.
 
 ## 10. Operator and Contact
 

@@ -168,8 +168,9 @@ export default function Landing({ embedded = false }: { embedded?: boolean }) {
     <div className={s.faq}>
      <details><summary>投資を始めたばかりでも使えますか?</summary><p>使えます。診断はボタンを押していくだけの30問です。難しい言葉を知らなくても、最後まで進めるように作りました。</p></details>
      <details><summary>特定の銘柄や売買のタイミングを教えてくれますか?</summary><p>いいえ。RESOLUTEは売買をすすめるものではありません。あなたが自分で決めたルールを形にして、相場が動いた日にそこへ戻るための道具です。</p></details>
-     <details><summary>買い切りですか?</summary><p>アラート通知・翌朝のひとこと・衝撃度チェッカー・RIZELの一言は購入から1年間で、2年目以降は更新する形です。更新料金は5,980円、Tech Phase PRO会員は3,980円です。更新時期にお知らせし、ご希望の方だけ更新します。それ以外の機能は、一度の購入で、提供を続ける限り使えます。</p></details>
-     <details><summary>2年目の更新はいくらですか?</summary><p>5,980円です。Tech Phase PROの会員なら3,980円で更新できます。</p></details>
+     <details><summary>買い切りですか?</summary><p>アラート通知・翌朝のひとこと・衝撃度チェッカー・RIZELの一言は購入から1年間で、2年目以降は更新する形です。更新料金は5,980円、Tech Phase PRO会員は3,980円です。1年後から自動で更新され、更新日の30日前にメールでご案内します。自動更新は、更新日の前日までアカウント画面から止められます。それ以外の機能は、一度の購入で、提供を続ける限り使えます。</p></details>
+     <details><summary>2年目の更新はいくらですか?</summary><p>5,980円です。更新日にTech Phase PROの会員なら3,980円です。購入時に保存したPayPalで、更新日に自動でお支払いいただきます。</p></details>
+     <details><summary>自動更新を止めるには?</summary><p>更新日の前日までに、アカウント画面の「自動更新」から止められます。止めた後も、期限まで通知機能は使えます。</p></details>
      <details><summary>Tech Phase PROに入っていなくても使えますか?</summary><p>使えます。FREE会員の方でも、RESOLUTEを購入すればすべての機能を使えます。</p></details>
      <details><summary>支払い方法は?</summary><p>PayPal（クレジットカード・銀行口座払い）です。</p></details>
      <details><summary>銀行口座から払えますか?</summary><p>はい、PayPalを通じて払えます。PayPalの画面で「銀行」を選んでください。初めての方は、そこで口座を登録します。</p></details>
