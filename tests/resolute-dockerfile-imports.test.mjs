@@ -11,7 +11,7 @@ for (const name of readdirSync('lib/resolute').filter(f => f.endsWith('.ts'))) {
     outside.add(normalize(join('lib/resolute', m[1].endsWith('.ts') ? m[1] : m[1] + '.ts')));
   }
 }
-for (const file of ['services/resolute-api/Dockerfile', 'services/resolute-notifications/Dockerfile']) {
+for (const file of ['services/resolute-api/Dockerfile', 'services/resolute-notifications/Dockerfile', 'services/resolute-auto-renewal/Dockerfile']) {
   test(`${file} copies every module lib/resolute imports`, () => {
     const sources = [...readFileSync(file, 'utf8').matchAll(/^COPY\s+(.+)\s+\S+$/gm)].flatMap(m => m[1].split(/\s+/));
     for (const path of outside) {
