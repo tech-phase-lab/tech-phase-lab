@@ -3,6 +3,8 @@ export type LiveOrder = {
  orderId: string; sandbox: false; state: string; expiresAt: string; approvalUrl?: string | null; claimRequired?: boolean;
  /** The server asks PayPal to save the payment method for automatic renewal (RESOLUTE_AUTO_RENEWAL_ENABLED). */
  autoRenewal?: true;
+ /** Back from PayPal: PayPal says the buyer approved, so the checkout screen completes the payment by itself. */
+ approved?: true;
  quote: { kind: "initial" | "renewal"; language: CheckoutLanguage; currency: "JPY" | "USD"; value: string; priceClass: string };
 };
 export function checkoutUrl(language: CheckoutLanguage, orderId?: string | null, cancelled = false, guest = false, renewal = false) {
@@ -20,7 +22,7 @@ export function liveOrder(value: unknown): LiveOrder {
  const o = value as LiveOrder;
  if (!o || o.sandbox !== false || !/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(o.orderId) ||
   !["creating","created","capturing","paid","held","suspended","revoked","declined"].includes(o.state) || !Number.isFinite(Date.parse(o.expiresAt)) ||
-  (o.claimRequired !== undefined && typeof o.claimRequired !== "boolean") || (o.autoRenewal !== undefined && o.autoRenewal !== true) ||
+  (o.claimRequired !== undefined && typeof o.claimRequired !== "boolean") || (o.autoRenewal !== undefined && o.autoRenewal !== true) || (o.approved !== undefined && o.approved !== true) ||
   !o.quote || !["initial","renewal"].includes(o.quote.kind) || !["ja","en"].includes(o.quote.language) ||
   o.quote.currency !== (o.quote.language === "ja" ? "JPY" : "USD") ||
   typeof o.quote.value !== "string" || !/^\d+(?:\.\d{2})?$/.test(o.quote.value) || Number(o.quote.value) <= 0 ||

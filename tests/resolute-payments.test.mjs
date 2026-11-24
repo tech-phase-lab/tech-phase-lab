@@ -174,8 +174,9 @@ test('approval redirects are restricted to this Sandbox order and callbacks are 
  assert.equal(approvalUrl(approved(`https://www.sandbox.paypal.com/checkoutnow?token=${id}`),id),`https://www.sandbox.paypal.com/checkoutnow?token=${id}`);
  for(const href of ['https://www.paypal.com/checkoutnow?token='+id,'https://evil.test/checkoutnow?token='+id,
   'https://www.sandbox.paypal.com/checkoutnow?token=OTHERORDER12',
-  `https://www.sandbox.paypal.com/checkoutnow?token=${id}&redirect=https://evil.test`,
   `https://user@www.sandbox.paypal.com/checkoutnow?token=${id}`]) assert.throws(()=>approvalUrl(approved(href),id));
+ // Extra parameters are dropped: the redirect is always rebuilt as PayPal's standard approval page for this order.
+ assert.equal(approvalUrl(approved(`https://www.sandbox.paypal.com/checkoutnow?token=${id}&redirect=https://evil.test`),id),`https://www.sandbox.paypal.com/checkoutnow?token=${id}`);
  const calls=[];
  const api=createPaypal({base:'https://api-m.sandbox.paypal.com',clientId:'id',secret:'secret',merchantId:merchant},async(url,options)=>{
   calls.push({url,options}); return Response.json(url.endsWith('/token')?{access_token:'token',expires_in:300}:{id});

@@ -1,6 +1,17 @@
 import { PaymentError } from './policy.mjs';
 import { readJson } from './paypal.mjs';
 const json=(data,status=200)=>Response.json(data,{status,headers:{'Cache-Control':'private, no-store','X-Content-Type-Options':'nosniff'}});
+const short=v=>typeof v === 'string' && /^[A-Za-z0-9_.:-]{1,80}$/.test(v) ? v : undefined;
+export function paymentFailureLine(environment,method,route,e) {
+  const known=e instanceof PaymentError;
+  return { event:'RESOLUTE_PAYMENT_ERROR', environment, method, route:String(route).replace(/[0-9a-f]{8}-[0-9a-f-]{27}/gi,':id').replace(/^\/internal\/v1\//,''),
+    code:known ? e.code : 'PAYMENT_UNAVAILABLE', status:known ? e.status : 503,
+    ...(known && e.detail ? { paypal:e.detail } : {}),
+    ...(!known ? { error:short(e?.name), pg:short(e?.code), clerk:short(e?.errors?.[0]?.code), httpStatus:Number.isInteger(e?.status) ? e.status : undefined } : {}) };
+}
+function logFailure(environment,method,route,e) {
+  try { console.error(JSON.stringify(paymentFailureLine(environment,method,route,e))); } catch { /* logging never changes the answer */ }
+}
 export function paymentHttp({ engine, store, authenticate, enabled, allowedUsers, auditUsers = [], environment = 'sandbox', access = user => store.access(user), authenticateGuest = () => null, guestEnabled = () => false }) {
   if (!['sandbox','live'].includes(environment)) throw Error('Invalid payment environment');
   const base=environment === 'live' ? '/internal/v1/live-payments' : '/internal/v1/payments';
@@ -57,6 +68,9 @@ export function paymentHttp({ engine, store, authenticate, enabled, allowedUsers
         return json({error:'NOT_FOUND'},404);
       } finally {active--;}
     } catch(e) {
+      // One line per failed payment request so a failed purchase can be read from the service log (live, Nov 24):
+      // route shape, our code, and PayPal's / Clerk's / Postgres's short error codes. No ids, tokens, bodies or payer data.
+      logFailure(environment,request.method,route,e);
       try { await store.flag(null,e instanceof PaymentError ? e.code : 'PAYMENT_HANDLER_FAILED'); } catch { /* DB outage stays a retryable failure. */ }
       return json({error:e instanceof PaymentError ? e.code : 'PAYMENT_UNAVAILABLE'},e instanceof PaymentError ? e.status : 503);
     }

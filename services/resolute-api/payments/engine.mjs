@@ -1,6 +1,7 @@
 import { createHash } from 'node:crypto';
 import { isGuest } from './guest.mjs';
 import { paypalEnvironment } from './paypal-environments.mjs';
+import { approvalUrl } from './paypal.mjs';
 import { consentTime, identity, input, quote, sameQuote, verifyOrder, reject, minorUnits, PaymentError } from './policy.mjs';
 // The price was fixed when the order was created (see quote); fall back to now for rows without a creation time.
 const pricedAt = (order, now) => { const at=Date.parse(order.created_at); return Number.isFinite(at) && at <= now ? at : now; };
@@ -58,22 +59,30 @@ export function paymentEngine({ store, paypal, merchantId, getUser, now = Date.n
       let order=await store.create(userId,body.requestKey,rights=>({...quote(body.kind,body.language,m,rights,time),termsConsentAt:consentAt}),time);
       if(order.quote.kind !== body.kind || order.quote.language !== body.language) reject('IDEMPOTENCY_CONFLICT');
       if(Date.parse(order.expires_at) <= now()) reject('ORDER_EXPIRED');
+      let created=null;
       if(order.state === 'creating') {
         requireSales();
         if(renewals && autoRenewal() && !isGuest(userId) && order.quote.kind === 'initial') order=await renewals.offer(order);
         const remote=await paypal.create(order);
         if(!/^[A-Z0-9]{8,32}$/.test(remote.id ?? '')) reject('PAYPAL_UNAVAILABLE',503);
         order=await store.bind(order,remote.id);
+        // The approval link from PayPal's own create answer: no second PayPal round trip that could fail the purchase.
+        if(order.state === 'created' && order.paypal_id === remote.id) created=approvalUrl(remote,remote.id,environment);
       }
       return { orderId:order.id,paypalOrderId:order.paypal_id,state:order.state,claimRequired:isGuest(order.user_id),quote:order.quote,expiresAt:order.expires_at,...renewalFlag(order),
-        approvalUrl:order.state === 'created' ? await paypal.approval(order.paypal_id) : null,sandbox };
+        approvalUrl:order.state === 'created' ? created ?? await paypal.approval(order.paypal_id) : null,sandbox };
     },
     async capture(userId,body) {
       requireSales();
-      input(body,['orderId','consentAt']); const consentAt=consentTime(body.consentAt,now());
+      // One tick (owner, Nov 24): the consent ticked right above the buy button travels with the order (quote.termsConsentAt).
+      // Returning from PayPal captures with that consent; a screen that asks again may still send its own tick time.
+      const fresh=body && typeof body === 'object' && Object.hasOwn(body,'consentAt');
+      input(body,fresh ? ['orderId','consentAt'] : ['orderId']);
+      const captureConsentAt=fresh ? consentTime(body.consentAt,now()) : null;
       let order=await owned(userId,body.orderId);
       if(order.state === 'paid') return { state:'already-paid',sandbox };
       if(typeof order.quote?.termsConsentAt !== 'string') reject('CONSENT_REQUIRED',400);
+      const consentAt=captureConsentAt ?? consentTime(order.quote.termsConsentAt,now());
       const remote=await paypal.get(order.paypal_id);
       // A lost capture response is reconciled by reading PayPal, never by inventing a new capture.
       if(order.state === 'capturing') {
@@ -87,7 +96,7 @@ export function paymentEngine({ store, paypal, merchantId, getUser, now = Date.n
       order=await store.prepare(order,m,now(),(current,rights)=>{
         const time=now();
         if(!sameQuote(current.quote,quote(current.quote.kind,current.quote.language,m,rights,time,pricedAt(current,time)))) reject('PRICE_CHANGED');
-      },consentAt);
+      },captureConsentAt);
       // Fresh authoritative identity lookup immediately before the irreversible API operation.
       const finalMember=await buyer(userId), time=now();
       if(time >= Date.parse(order.expires_at) || !sameQuote(order.quote,quote(order.quote.kind,order.quote.language,finalMember,
@@ -95,8 +104,8 @@ export function paymentEngine({ store, paypal, merchantId, getUser, now = Date.n
         await store.flag(order,'CAPTURE_ELIGIBILITY_CHANGED'); reject('PRICE_CHANGED');
       }
       order=await store.refreshCapture(order,finalMember,now());
-      // The agree click on a screen that showed 「1年後から自動で更新されます。いつでも止められます」 is the consent.
-      if(renewals && order.auto_renewal_offered === true) await renewals.consent(order,now());
+      // The tick right above the buy button, under the auto-renewal line (how and by when to stop), is the consent.
+      if(renewals && order.auto_renewal_offered === true) await renewals.consent(order,Date.parse(consentAt));
       requireSales();
       const captured=await paypal.capture(order), completed=await paypal.get(order.paypal_id);
       const state=await settle(order,completed);
@@ -110,8 +119,12 @@ export function paymentEngine({ store, paypal, merchantId, getUser, now = Date.n
         if(remote.status === 'COMPLETED') await settle(order,remote);
       }
       const current=await owned(userId,id);
+      // Back from PayPal: approved tells the checkout screen to capture by itself (no second button).
+      const remote=!sandbox && current.state === 'created' ? await paypal.get(current.paypal_id) : null;
+      const approved=remote?.status === 'APPROVED';
       return { orderId:current.id,state:current.state,claimRequired:isGuest(current.user_id),quote:current.quote,expiresAt:current.expires_at,sandbox,...renewalFlag(current),
-        ...(!sandbox ? {approvalUrl:current.state === 'created' ? await paypal.approval(current.paypal_id) : null} : {}) };
+        ...(!sandbox ? {approvalUrl:current.state === 'created' && !approved ? approvalUrl(remote,current.paypal_id,environment) : null,
+          ...(approved ? {approved:true} : {})} : {}) };
     },
     async claim(userId,guest,body) {
       input(body,['orderId']);

@@ -58,8 +58,13 @@ test('live PayPal uses only live approval/cert hosts and server callback; Sandbo
  assert.equal(context.return_url,'https://shop.example.org/resolute/checkout?order=local-order&lang=ja');
  const id='PAYPAL123456',remote=href=>({id,links:[{rel:'approve',href}]});
  assert.equal(approvalUrl(remote(`https://www.paypal.com/checkoutnow?token=${id}`),id,'live'),`https://www.paypal.com/checkoutnow?token=${id}`);
- for(const href of [`https://www.sandbox.paypal.com/checkoutnow?token=${id}`,`https://www.paypal.com/checkoutnow?token=${id}&extra=1`])
-  assert.throws(()=>approvalUrl(remote(href),id,'live'));
+ // Live, Nov 24: PayPal's link shape (extra parameters, another path) no longer fails a purchase; the buyer always goes to
+ // PayPal's standard approval page for this order. A link to another host or another order still stops it.
+ for(const href of [`https://www.paypal.com/checkoutnow?token=${id}&extra=1`,`https://www.paypal.com/checkoutweb/signup?token=${id}&fundingSource=paypal`,`https://www.paypal.com/checkoutnow`])
+  assert.equal(approvalUrl(remote(href),id,'live'),`https://www.paypal.com/checkoutnow?token=${id}`,href);
+ for(const href of [`https://www.sandbox.paypal.com/checkoutnow?token=${id}`,`https://www.paypal.com/checkoutnow?token=OTHERORDER12`,`https://user@www.paypal.com/checkoutnow?token=${id}`,`https://www.paypal.com.evil.test/checkoutnow?token=${id}`,'not a url'])
+  assert.throws(()=>approvalUrl(remote(href),id,'live'),href);
+ assert.throws(()=>approvalUrl(remote(`https://www.paypal.com/checkoutnow?token=${id}`),'OTHERORDER12','live'));
 });
 
 test('closed sales prevent order and capture calls but verified refunds remain processable on the live ledger',async()=>{

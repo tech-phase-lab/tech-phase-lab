@@ -297,8 +297,8 @@ test('screens: exactly one checkout line behind the server flag, the account tog
   // Lawyer review (Nov 24): the line also says how to stop and by when.
   assert.ok(agree.includes('ja: "1年後から自動で更新されます。更新日の前日までアカウント画面から止められます"'));
   assert.ok(agree.includes('en: "Renews automatically after one year. You can stop it on your account page until the day before the renewal date."'));
-  // The 「ご希望の方だけ更新します」 line is replaced (not added to) for an auto-renewal order; flag off = today's lines.
-  assert.match(live, /<CheckoutLines lines=\{resoluteCheckoutLines\(en,order\.autoRenewal===true\)\} \/>\n    <ConsentCheck en=\{en\} consent=\{consent\} \/>\n    <AgreeButton/);
+  // One tick, one press (owner, Nov 24): the purchase screens show the LP's auto-renewal line above the consent line.
+  assert.match(live, /<CheckoutLines lines=\{resoluteBuyLines\(en\)\} \/>\n    <ConsentCheck en=\{en\} consent=\{consent\} \/>/);
   const { resoluteCheckoutLines, RESOLUTE_CHECKOUT_LINES } = legalModule('../../legal/agree-button');
   assert.deepEqual(resoluteCheckoutLines(false, false), RESOLUTE_CHECKOUT_LINES.ja);
   assert.deepEqual(resoluteCheckoutLines(false, true), ['1年後から自動で更新されます。更新日の前日までアカウント画面から止められます', RESOLUTE_CHECKOUT_LINES.ja[1]]);

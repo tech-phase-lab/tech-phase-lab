@@ -1,15 +1,29 @@
 import { PaymentError, reject } from './policy.mjs';
 import { paypalEnvironment, paypalEnvironmentForBase, liveReturnUrl } from './paypal-environments.mjs';
 export const SANDBOX_RETURN = 'https://tech-phase-lab-git-codex-research-preview-chehon7144-5412.vercel.app/resolute/checkout';
+// The buyer is always sent to PayPal's standard approval page for this order (checkoutnow?token=<order>), built from the
+// verified order id. PayPal's own link must be on PayPal's approval host and name this order; its exact shape (path, extra
+// parameters, which can differ for orders that save a payment method) no longer fails the purchase (live, Nov 24).
 export function approvalUrl(remote, orderId, environment = 'sandbox') {
   const selected=paypalEnvironment(environment);
   const link = remote?.links?.find(link => ['approve','payer-action'].includes(link.rel));
   if (!link) return null;
-  let url; try { url = new URL(link.href); } catch { reject('PAYPAL_UNAVAILABLE',503); }
-  if (remote.id !== orderId || url.origin !== selected.approvalOrigin ||
-      url.pathname !== '/checkoutnow' || url.username || url.password || url.hash ||
-      url.searchParams.get('token') !== orderId || [...url.searchParams].length !== 1) reject('PAYPAL_UNAVAILABLE',503);
-  return url.href;
+  let url; try { url = new URL(link.href); } catch { paypalFailure({stage:'approval-link',reason:'unparsable'}); }
+  const token=url.searchParams.get('token');
+  if (remote.id !== orderId || !/^[A-Z0-9]{8,32}$/.test(orderId ?? '')) paypalFailure({stage:'approval-link',reason:'order-id'});
+  if (url.origin !== selected.approvalOrigin || url.username || url.password) paypalFailure({stage:'approval-link',reason:'origin'});
+  if (token !== null && token !== orderId) paypalFailure({stage:'approval-link',reason:'token'});
+  return `${selected.approvalOrigin}/checkoutnow?token=${orderId}`;
+}
+// Only short PayPal codes (error name, issue, debug id) are kept for the service log: never bodies, tokens or payer data.
+const code = value => typeof value === 'string' && /^[A-Za-z0-9_.:-]{1,80}$/.test(value) ? value : undefined;
+export function paypalFailure(detail, status = 503, error = 'PAYPAL_UNAVAILABLE') {
+  const e = new PaymentError(error, status); e.detail = detail; throw e;
+}
+async function failureDetail(res, stage) {
+  let body = null;
+  try { const text = await res.text(); if (text.length <= 16384) body = JSON.parse(text); } catch { /* not JSON */ }
+  return { stage, status: res.status, name: code(body?.name) ?? code(body?.error), issue: code(body?.details?.[0]?.issue), debugId: code(body?.debug_id) };
 }
 export function paypalConfig(env) {
   // Live charging intentionally unavailable until Sandbox acceptance and rollout.
@@ -51,12 +65,13 @@ export function createPaypal(config, fetcher = fetch) {
   // definite: a 4xx answer (other than auth, idempotency-in-progress and rate limits) is PayPal's final refusal of a
   // merchant-initiated charge — nothing was captured — so the caller may record a decline instead of an unknown result.
   async function call(path, method = 'GET', body, key, definite = false) {
+    const stage = `${method} ${path.replace(/[A-Za-z0-9_-]{8,64}(?=\/|$)/g, m => /^(v\d|orders|checkout|payments|captures|vault|notifications|oauth2|token|payment-tokens|capture|verify-webhook-signature)$/.test(m) ? m : ':id')}`;
     try {
       if (!cached || Date.now() >= expires) {
         const res = await fetcher(`${config.base}/v1/oauth2/token`, { method: 'POST', redirect: 'error', cache: 'no-store',
           signal: AbortSignal.timeout(8000), headers: { Authorization: `Basic ${Buffer.from(`${config.clientId}:${config.secret}`).toString('base64')}`,
             'Content-Type': 'application/x-www-form-urlencoded' }, body: 'grant_type=client_credentials' });
-        if (!res.ok) { await res.body?.cancel(); reject('PAYPAL_UNAVAILABLE', 503); }
+        if (!res.ok) paypalFailure(await failureDetail(res, 'POST /v1/oauth2/token'));
         const data = await readJson(res);
         if (typeof data.access_token !== 'string' || !Number.isFinite(data.expires_in) || data.expires_in < 60) reject('PAYPAL_UNAVAILABLE', 503);
         cached = data.access_token; expires = Date.now() + (data.expires_in - 30) * 1000;
@@ -64,11 +79,16 @@ export function createPaypal(config, fetcher = fetch) {
       const res = await fetcher(config.base + path, { method, redirect: 'error', cache: 'no-store', signal: AbortSignal.timeout(10000),
         headers: { Authorization: `Bearer ${cached}`, 'Content-Type': 'application/json', Prefer: 'return=representation',
           ...(key ? { 'PayPal-Request-Id': key } : {}) }, ...(body === undefined ? {} : { body: JSON.stringify(body) }) });
-      if (!res.ok) { if (res.status === 401) cached = undefined; await res.body?.cancel();
-        if (definite && res.status >= 400 && res.status < 500 && ![401, 403, 408, 409, 429].includes(res.status)) reject('PAYPAL_DECLINED', 402);
-        reject('PAYPAL_UNAVAILABLE', 503); }
+      if (!res.ok) { if (res.status === 401) cached = undefined;
+        const detail = await failureDetail(res, stage);
+        if (definite && res.status >= 400 && res.status < 500 && ![401, 403, 408, 409, 429].includes(res.status)) paypalFailure(detail, 402, 'PAYPAL_DECLINED');
+        paypalFailure(detail); }
       return await readJson(res);
-    } catch (error) { if (error instanceof PaymentError && error.code === 'PAYPAL_DECLINED') throw error; reject('PAYPAL_UNAVAILABLE', 503); } // Never expose response bodies, tokens or payment PII.
+    } catch (error) { // Never expose response bodies, tokens or payment PII: only the short codes in detail reach the log.
+      if (error instanceof PaymentError && error.code === 'PAYPAL_DECLINED') throw error;
+      paypalFailure(error instanceof PaymentError && error.detail ? error.detail
+        : { stage, reason: error instanceof PaymentError ? error.code : error?.name === 'TimeoutError' ? 'timeout' : 'network' });
+    }
   }
   const id = value => { if (!/^[A-Z0-9]{8,32}$/.test(value ?? '')) reject('INVALID_PAYMENT_INPUT', 400); return value; };
   const token = value => { if (!/^[A-Za-z0-9_-]{1,64}$/.test(value ?? '')) reject('INVALID_PAYMENT_INPUT', 400); return value; };
