@@ -1,0 +1,176 @@
+{
+  "root": {
+    "ticker": "VRRM",
+    "name": "ヴェラ・モビリティ",
+    "cik": 1682745,
+    "name_en": "Verra Mobility"
+  },
+  "rows": [
+    {
+      "ja": "主要顧客",
+      "en": "Major customers"
+    },
+    {
+      "ja": "買収",
+      "en": "Acquisition"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "IIIV"
+  ],
+  "companies": [
+    {
+      "id": "NYCDOT",
+      "ticker": "NYCDOT",
+      "name": "ニューヨーク市交通局",
+      "name_en": "NYC Department of Transportation",
+      "sub": "自治体",
+      "sub_en": "City agency",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大の顧客(売上の17.9%)",
+          "text_en": "Largest customer (17.9% of revenue)",
+          "source": {
+            "label": "Verra Mobility 10-K(2025年度)",
+            "label_en": "Verra Mobility 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1682745/000119312526067293/vrrm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "The City of New York Department of Transportation (\" NYCDOT \") represented 17.9 %, 15.8 % and 16.9 % of total revenue"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CAR",
+      "ticker": "CAR",
+      "name": "エイビス・バジェット・グループ",
+      "name_en": "Avis Budget Group",
+      "sub": "レンタカー",
+      "sub_en": "Car rental",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "米3大レンタカー会社の一社として長年の取引",
+          "text_en": "Long-standing customer among the three largest US rental car companies",
+          "source": {
+            "label": "Verra Mobility 10-K(2025年度)",
+            "label_en": "Verra Mobility 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1682745/000119312526067293/vrrm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "We have long-standing relationships with, among others, the three largest RACs in the United States, Avis Budget Group, Enterprise Mobility, and The Hertz Corporation."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Enterprise",
+      "ticker": "Enterprise Mobility",
+      "name": "エンタープライズ・モビリティ",
+      "name_en": "Enterprise Mobility",
+      "sub": "レンタカー",
+      "sub_en": "Car rental",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "米3大レンタカー会社の一社として長年の取引",
+          "text_en": "Long-standing customer among the three largest US rental car companies",
+          "source": {
+            "label": "Verra Mobility 10-K(2025年度)",
+            "label_en": "Verra Mobility 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1682745/000119312526067293/vrrm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "We have long-standing relationships with, among others, the three largest RACs in the United States, Avis Budget Group, Enterprise Mobility, and The Hertz Corporation."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HTZ",
+      "ticker": "HTZ",
+      "name": "ハーツ",
+      "name_en": "Hertz",
+      "sub": "レンタカー",
+      "sub_en": "Car rental",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "米3大レンタカー会社の一社として長年の取引",
+          "text_en": "Long-standing customer among the three largest US rental car companies",
+          "source": {
+            "label": "Verra Mobility 10-K(2025年度)",
+            "label_en": "Verra Mobility 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1682745/000119312526067293/vrrm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "We have long-standing relationships with, among others, the three largest RACs in the United States, Avis Budget Group, Enterprise Mobility, and The Hertz Corporation."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Redflex",
+      "ticker": "Redflex",
+      "name": "レッドフレックス",
+      "name_en": "Redflex",
+      "sub": "交通取締カメラ",
+      "sub_en": "Traffic enforcement cameras",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Redflexを買収(2021年6月)",
+          "text_en": "Acquired Redflex (June 2021)",
+          "source": {
+            "label": "Verra Mobility 10-K(2025年度)",
+            "label_en": "Verra Mobility 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1682745/000119312526067293/vrrm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "The Company acquired Redflex Traffic Systems, Inc. as part of its June 2021 purchase of Redflex Holdings Limited."
+          }
+        }
+      ]
+    },
+    {
+      "id": "IIIV",
+      "ticker": "IIIV",
+      "name": "i3バーティカルズ",
+      "name_en": "i3 Verticals",
+      "sub": "行政向けソフト",
+      "sub_en": "Public sector software",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "i3 Verticalsが10-Kで、競合の一社として挙げる",
+          "text_en": "i3 Verticals names Verra Mobility among competitors",
+          "source": {
+            "label": "i3 Verticals 10-K(2025年9月期)",
+            "label_en": "i3 Verticals 10-K (FY ended Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1728688/000172868825000122/iiiv-20250930.htm",
+            "level": "official",
+            "date": "2025-11-21",
+            "quote": "Constellation Software, Inc., Verra Mobility Corp, EverCommerce Inc."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

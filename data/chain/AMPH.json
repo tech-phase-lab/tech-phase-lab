@@ -1,0 +1,203 @@
+{
+  "root": {
+    "ticker": "AMPH",
+    "name": "アンファスター・ファーマシューティカルズ",
+    "cik": 1297184,
+    "name_en": "Amphastar Pharmaceuticals"
+  },
+  "rows": [
+    {
+      "ja": "製品取得・ライセンス元",
+      "en": "Product acquisition & licensors",
+      "above": true
+    },
+    {
+      "ja": "供給先(原薬)",
+      "en": "Supply customer (API)"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in its 10-K)"
+    }
+  ],
+  "rivals": [
+    "PFE",
+    "VTRS",
+    "HIK"
+  ],
+  "companies": [
+    {
+      "id": "LLY",
+      "ticker": "LLY",
+      "name": "イーライリリー",
+      "name_en": "Eli Lilly",
+      "sub": "医薬品",
+      "sub_en": "Pharmaceuticals",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "BAQSIMIをLillyから取得(2023年)",
+          "text_en": "Acquired BAQSIMI from Lilly (2023)",
+          "source": {
+            "label": "Amphastar 10-K(2025年度)",
+            "label_en": "Amphastar 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1297184/000129718426000009/amph-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "For example, in 2023 we acquired BAQSIMI ® from Eli Lilly & Company."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Anji",
+      "ticker": "Anji",
+      "name": "南京安吉生物科技",
+      "name_en": "Nanjing Anji Biotechnology",
+      "sub": "バイオ医薬",
+      "sub_en": "Biotech",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ペプチド医薬の開発候補のライセンス元",
+          "text_en": "Licensor of peptide product candidates",
+          "source": {
+            "label": "Amphastar 10-K(2025年度)",
+            "label_en": "Amphastar 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1297184/000129718426000009/amph-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "We have licensed several peptide proprietary product candidates from Nanjing Anji Biotechnology Co., Ltd., or Anji, and Nanjing Hanxin Pharmaceutical Technology Co., Ltd., or Hanxin."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Hanxin",
+      "ticker": "Hanxin",
+      "name": "南京漢欣医薬科技",
+      "name_en": "Nanjing Hanxin Pharmaceutical Technology",
+      "sub": "医薬品開発",
+      "sub_en": "Drug development",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ペプチド医薬の開発候補のライセンス元",
+          "text_en": "Licensor of peptide product candidates",
+          "source": {
+            "label": "Amphastar 10-K(2025年度)",
+            "label_en": "Amphastar 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1297184/000129718426000009/amph-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "We have licensed several peptide proprietary product candidates from Nanjing Anji Biotechnology Co., Ltd., or Anji, and Nanjing Hanxin Pharmaceutical Technology Co., Ltd., or Hanxin."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MNKD",
+      "ticker": "MNKD",
+      "name": "マンカインド",
+      "name_en": "MannKind",
+      "sub": "医薬品",
+      "sub_en": "Pharmaceuticals",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "仏工場の能力の大部分でMannKind向けインスリン原薬を製造",
+          "text_en": "Uses much of its French plant to make insulin API for MannKind",
+          "source": {
+            "label": "Amphastar 10-K(2025年度)",
+            "label_en": "Amphastar 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1297184/000129718426000009/amph-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "For example, a significant portion of our manufacturing capacity in our facility in Éragny-sur-Epte, France is utilized for the manufacturing of insulin API for MannKind, and, until recently, a significant portion of our manufacturing capacity in Rancho Cucamonga was utilized for the manufacture of enoxaparin."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PFE",
+      "ticker": "PFE",
+      "name": "ファイザー",
+      "name_en": "Pfizer",
+      "sub": "医薬品",
+      "sub_en": "Pharmaceuticals",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "注射剤・吸入剤の競合",
+          "text_en": "An injectable and inhalation competitor",
+          "source": {
+            "label": "Amphastar 10-K(2025年度)",
+            "label_en": "Amphastar 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1297184/000129718426000009/amph-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "We face and will face significant competition for our products and product candidates from pharmaceutical companies that focus on proprietary and generic injectable and inhalation markets such as Pfizer, Inc., BPI Labs, Lupin Pharmaceuticals, Inc., Viatris Inc., Fresenius Kabi USA, Apotex Corp., American Regent, Inc., Hikma Pharmaceuticals USA Inc., Par Pharmaceuticals, Cipla USA Inc., Meitheal Pharmaceuticals, Dr."
+          }
+        }
+      ]
+    },
+    {
+      "id": "VTRS",
+      "ticker": "VTRS",
+      "name": "ヴィアトリス",
+      "name_en": "Viatris",
+      "sub": "医薬品",
+      "sub_en": "Pharmaceuticals",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "注射剤・吸入剤の競合",
+          "text_en": "An injectable and inhalation competitor",
+          "source": {
+            "label": "Amphastar 10-K(2025年度)",
+            "label_en": "Amphastar 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1297184/000129718426000009/amph-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "We face and will face significant competition for our products and product candidates from pharmaceutical companies that focus on proprietary and generic injectable and inhalation markets such as Pfizer, Inc., BPI Labs, Lupin Pharmaceuticals, Inc., Viatris Inc., Fresenius Kabi USA, Apotex Corp., American Regent, Inc., Hikma Pharmaceuticals USA Inc., Par Pharmaceuticals, Cipla USA Inc., Meitheal Pharmaceuticals, Dr."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HIK",
+      "ticker": "Hikma",
+      "name": "ヒクマ・ファーマシューティカルズ",
+      "name_en": "Hikma Pharmaceuticals",
+      "sub": "後発医薬品",
+      "sub_en": "Generic drugs",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "注射剤・吸入剤の競合",
+          "text_en": "An injectable and inhalation competitor",
+          "source": {
+            "label": "Amphastar 10-K(2025年度)",
+            "label_en": "Amphastar 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1297184/000129718426000009/amph-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "We face and will face significant competition for our products and product candidates from pharmaceutical companies that focus on proprietary and generic injectable and inhalation markets such as Pfizer, Inc., BPI Labs, Lupin Pharmaceuticals, Inc., Viatris Inc., Fresenius Kabi USA, Apotex Corp., American Regent, Inc., Hikma Pharmaceuticals USA Inc., Par Pharmaceuticals, Cipla USA Inc., Meitheal Pharmaceuticals, Dr."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

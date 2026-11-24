@@ -1,0 +1,202 @@
+{
+  "root": {
+    "ticker": "MLI",
+    "name": "ミューラー・インダストリーズ",
+    "cik": 89439,
+    "name_en": "Mueller Industries"
+  },
+  "rows": [
+    {
+      "ja": "合弁・買収",
+      "en": "Joint ventures & acquisition"
+    },
+    {
+      "ja": "販売先(卸)",
+      "en": "Distributor"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in its 10-K)"
+    }
+  ],
+  "rivals": [
+    "NIBCO",
+    "Prysmian",
+    "Southwire"
+  ],
+  "companies": [
+    {
+      "id": "JungwooMueller",
+      "ticker": "Jungwoo-Mueller",
+      "name": "ジョンウ・ミューラー",
+      "name_en": "Jungwoo-Mueller",
+      "sub": "銅製接合部品",
+      "sub_en": "Copper joining products",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "韓国の合弁会社。銅製の接合部品を製造",
+          "text_en": "South Korean joint venture making copper-based joining products",
+          "source": {
+            "label": "Mueller Industries 10-K(2025年度)",
+            "label_en": "Mueller Industries 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/89439/000008943926000008/mli-20251227.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Jungwoo-Mueller, our South Korean joint venture, manufactures copper-based joining products that are sold worldwide."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MuellerME",
+      "ticker": "Mueller Middle East",
+      "name": "ミューラー・ミドルイースト",
+      "name_en": "Mueller Middle East",
+      "sub": "銅管",
+      "sub_en": "Copper tube",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "バーレーンの合弁会社。持分を55%に引き上げ",
+          "text_en": "Bahraini joint venture; equity interest raised to 55%",
+          "source": {
+            "label": "Mueller Industries 10-K(2025年度)",
+            "label_en": "Mueller Industries 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/89439/000008943926000008/mli-20251227.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "We acquired Elkhart Products Corporation on August 2, 2024, and increased our equity interest in Mueller Middle East to 55 percent on December 7, 2021."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Elkhart",
+      "ticker": "Elkhart Products",
+      "name": "エルクハート・プロダクツ",
+      "name_en": "Elkhart Products",
+      "sub": "銅継手",
+      "sub_en": "Copper fittings",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Elkhart Productsを買収(2024年8月)",
+          "text_en": "Acquired Elkhart Products (August 2024)",
+          "source": {
+            "label": "Mueller Industries 10-K(2025年度)",
+            "label_en": "Mueller Industries 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/89439/000008943926000008/mli-20251227.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "We acquired Elkhart Products Corporation on August 2, 2024, and increased our equity interest in Mueller Middle East to 55 percent on December 7, 2021."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WSO",
+      "ticker": "WSO",
+      "name": "ワッツコ",
+      "name_en": "Watsco",
+      "sub": "空調機器卸",
+      "sub_en": "HVAC distribution",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Watscoが10-KでMuellerの製品を扱うと記載",
+          "text_en": "Watsco says it distributes Mueller products",
+          "source": {
+            "label": "Watsco 10-K(2025年度)",
+            "label_en": "Watsco 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/105016/000119312526082486/wso-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "We distribute products manufactured by Copeland Corporation, LLC (\"Copeland\"), The Chemours Company (\"Chemours\"), Mueller Industries, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NIBCO",
+      "ticker": "NIBCO",
+      "name": "ニブコ",
+      "name_en": "NIBCO",
+      "sub": "配管部材",
+      "sub_en": "Piping products",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "銅継手の国内競合",
+          "text_en": "A domestic copper fittings competitor",
+          "source": {
+            "label": "Mueller Industries 10-K(2025年度)",
+            "label_en": "Mueller Industries 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/89439/000008943926000008/mli-20251227.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "In the copper fittings market, our domestic competitors include NIBCO, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Prysmian",
+      "ticker": "Prysmian",
+      "name": "プリズミアン",
+      "name_en": "Prysmian",
+      "sub": "電線",
+      "sub_en": "Wire & cable",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "電線事業の競合",
+          "text_en": "A wire and cable competitor",
+          "source": {
+            "label": "Mueller Industries 10-K(2025年度)",
+            "label_en": "Mueller Industries 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/89439/000008943926000008/mli-20251227.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Our wire and cable business competitors include Prysmian S.p.A. and Southwire Company, LLC."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Southwire",
+      "ticker": "Southwire",
+      "name": "サウスワイヤー",
+      "name_en": "Southwire",
+      "sub": "電線",
+      "sub_en": "Wire & cable",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "電線事業の競合",
+          "text_en": "A wire and cable competitor",
+          "source": {
+            "label": "Mueller Industries 10-K(2025年度)",
+            "label_en": "Mueller Industries 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/89439/000008943926000008/mli-20251227.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Our wire and cable business competitors include Prysmian S.p.A. and Southwire Company, LLC."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
