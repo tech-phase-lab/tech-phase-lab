@@ -1,0 +1,161 @@
+{
+  "root": {
+    "ticker": "BURL",
+    "name": "バーリントン・ストアーズ",
+    "cik": 1579298,
+    "name_en": "Burlington Stores"
+  },
+  "rows": [
+    {
+      "ja": "商品の仕入れ先(上流)",
+      "en": "Merchandise suppliers (upstream)",
+      "above": true
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "ROST",
+    "KSS",
+    "CTRN"
+  ],
+  "companies": [
+    {
+      "id": "SHOO",
+      "ticker": "SHOO",
+      "name": "スティーブ・マデン",
+      "name_en": "Steve Madden",
+      "sub": "靴・バッグ",
+      "sub_en": "Footwear & accessories",
+      "sub_short": "靴",
+      "sub_short_en": "Shoes",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Steve Maddenが10-Kで、卸売の上位10顧客の一社に挙げる",
+          "text_en": "Steve Madden lists Burlington among its top ten wholesale customers",
+          "source": {
+            "label": "Steve Madden 10-K(2025年度)",
+            "label_en": "Steve Madden 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/913241/000162828026012995/shoo-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "For the year ended December 31, 2025, our top ten wholesale channel customers, in no particular order, included: Nordstrom, Macy's, Dillard's, Designer Brands, The TJX Companies, Ross Stores, Burlington Stores, Amazon, Walmart, and Target."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GES",
+      "ticker": "GES",
+      "name": "ゲス",
+      "name_en": "Guess",
+      "sub": "アパレル",
+      "sub_en": "Apparel",
+      "sub_short": "衣料",
+      "sub_short_en": "Apparel",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Guessが10-Kで、米州の卸売顧客の筆頭に挙げる",
+          "text_en": "Guess lists Burlington first among its Americas wholesale customers",
+          "source": {
+            "label": "Guess 10-K(2025年1月期)",
+            "label_en": "Guess 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/912463/000091246325000028/ges-20250201.htm",
+            "level": "official",
+            "date": "2025-04-11",
+            "quote": "In the Americas, our wholesale customers consist primarily of department stores, including Burlington Stores, Liverpool, Nordstrom, Macy's and Hudson's Bay"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ROST",
+      "ticker": "ROST",
+      "name": "ロス・ストアーズ",
+      "name_en": "Ross Stores",
+      "sub": "オフプライス小売",
+      "sub_en": "Off-price retail",
+      "sub_short": "安売り店",
+      "sub_short_en": "Off-price",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "RossがCEO雇用契約で、競合事業の筆頭に挙げる",
+          "text_en": "Ross names Burlington first among competing off-price retailers in its CEO agreement",
+          "source": {
+            "label": "Ross Stores 10-K(2024年度) 添付の雇用契約",
+            "label_en": "Ross Stores 10-K (FY2024), employment agreement exhibit",
+            "url": "https://www.sec.gov/Archives/edgar/data/745732/000074573225000010/a2024ceoexecutiveemploymen.htm",
+            "level": "official",
+            "date": "2025-04-01",
+            "quote": "any off-price retailer including, without limitation, Burlington Stores, Inc. and The TJX Companies, Inc.;"
+          }
+        }
+      ]
+    },
+    {
+      "id": "KSS",
+      "ticker": "KSS",
+      "name": "コールズ",
+      "name_en": "Kohl's",
+      "sub": "百貨店",
+      "sub_en": "Department stores",
+      "sub_short": "百貨店",
+      "sub_short_en": "Dept",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Kohl'sが契約で、競合の一社に挙げる",
+          "text_en": "Kohl's lists Burlington as a competitor in an agreement",
+          "source": {
+            "label": "Kohl's 10-K(2024年度) 添付の契約",
+            "label_en": "Kohl's 10-K (FY2024), agreement exhibit",
+            "url": "https://www.sec.gov/Archives/edgar/data/885639/000095017025042662/kss-ex10_41.htm",
+            "level": "official",
+            "date": "2025-03-20",
+            "quote": "The term \"Competitor\" means Amazon.com, Inc., Belk, Inc., Burlington Stores, Inc., Dillard's, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CTRN",
+      "ticker": "CTRN",
+      "name": "シティ・トレンズ",
+      "name_en": "Citi Trends",
+      "sub": "衣料品ディスカウント",
+      "sub_en": "Value apparel retail",
+      "sub_short": "衣料小売",
+      "sub_short_en": "Apparel",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Citi Trendsが契約で、競合の一社に挙げる",
+          "text_en": "Citi Trends lists Burlington as a competitor in an agreement",
+          "source": {
+            "label": "Citi Trends 10-K(2024年度) 添付の契約",
+            "label_en": "Citi Trends 10-K (FY2024), agreement exhibit",
+            "url": "https://www.sec.gov/Archives/edgar/data/1318484/000155837025004897/ctrn-20250201xex10d24.htm",
+            "level": "official",
+            "date": "2025-04-16",
+            "quote": "the term \" Competitor \" shall mean only the following businesses, commonly known as: Cato, TJX (including without limitation TJMAXX and Marshalls), Burlington Stores, Gabe's/Rugged Wearhouse, and Ross Stores."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

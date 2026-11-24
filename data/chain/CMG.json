@@ -1,0 +1,190 @@
+{
+  "root": {
+    "ticker": "CMG",
+    "name": "チポトレ・メキシカン・グリル",
+    "cik": 1058090,
+    "name_en": "Chipotle Mexican Grill"
+  },
+  "rows": [
+    {
+      "ja": "包装資材の仕入れ先(上流)",
+      "en": "Packaging suppliers (upstream)",
+      "above": true
+    },
+    {
+      "ja": "提携・出資先",
+      "en": "Partners & investments"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "SG",
+    "CAVA"
+  ],
+  "companies": [
+    {
+      "id": "KRT",
+      "ticker": "KRT",
+      "name": "カラット・パッケージング",
+      "name_en": "Karat Packaging",
+      "sub": "外食向け容器",
+      "sub_en": "Foodservice packaging",
+      "sub_short": "外食容器",
+      "sub_short_en": "Cups",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Karatが10-Kで、主要顧客の一社に挙げる",
+          "text_en": "Karat names Chipotle among its blue-chip customers",
+          "source": {
+            "label": "Karat Packaging 10-K(2025年度)",
+            "label_en": "Karat Packaging 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1758021/000175802126000010/krt-20251231.htm",
+            "level": "official",
+            "date": "2026-03-13",
+            "quote": "Our diverse and growing blue chip customer base includes well-known fast casual chains such as Applebee's Neighborhood Grill + Bar, Chili's Grill & Bar, PF Chang's China Bistro, Chipotle Mexican Grill, and Olive Garden"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GPK",
+      "ticker": "GPK",
+      "name": "グラフィック・パッケージング",
+      "name_en": "Graphic Packaging",
+      "sub": "紙製包装",
+      "sub_en": "Paper packaging",
+      "sub_short": "紙包装",
+      "sub_short_en": "Paper",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Graphic Packagingが10-Kで、外食の顧客の一社に挙げる",
+          "text_en": "Graphic Packaging names Chipotle among its quick-service restaurant customers",
+          "source": {
+            "label": "Graphic Packaging 10-K(2024年度)",
+            "label_en": "Graphic Packaging 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1408075/000140807525000007/gpk-20241231.htm",
+            "level": "official",
+            "date": "2025-02-12",
+            "quote": "Quick-service restaurant customers include Chick-fil-A, McDonald's, Wendy's, Panda Express, Dairy Queen, Chipotle, Panera and KFC."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ALSHAYA",
+      "ticker": "Alshaya Group",
+      "name": "アルシャヤ・グループ",
+      "name_en": "Alshaya Group",
+      "sub": "中東の小売・外食",
+      "sub_en": "Middle East retail & dining",
+      "sub_short": "中東外食",
+      "sub_short_en": "Partner",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "中東で提携先が運営するチポトレ店舗を展開(14店)",
+          "text_en": "Operates partner-run Chipotle restaurants in the Middle East (14)",
+          "source": {
+            "label": "Chipotle 10-K(2025年度)",
+            "label_en": "Chipotle 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1058090/000105809026000009/cmg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-04",
+            "quote": "As of December 31, 2025, we had 14 international partner-operated Chipotle restaurants in the Middle East in partnership with the Alshaya Group"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Hyphen",
+      "ticker": "Hyphen",
+      "name": "ハイフン",
+      "name_en": "Hyphen",
+      "sub": "調理ロボット",
+      "sub_en": "Kitchen automation",
+      "sub_short": "調理機",
+      "sub_short_en": "Robotics",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "優先株に出資(非上場)",
+          "text_en": "Holds Series B preferred stock (private company)",
+          "source": {
+            "label": "Chipotle 10-K(2025年度)",
+            "label_en": "Chipotle 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1058090/000105809026000009/cmg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-04",
+            "quote": "As of December 31, 2025, we held 5,819 shares of the Series B Preferred Stock of Hyphen."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SG",
+      "ticker": "SG",
+      "name": "スウィートグリーン",
+      "name_en": "Sweetgreen",
+      "sub": "サラダチェーン",
+      "sub_en": "Salad chain",
+      "sub_short": "サラダ",
+      "sub_short_en": "Salads",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Sweetgreenが10-Kで、競合の筆頭に挙げる",
+          "text_en": "Sweetgreen lists Chipotle first among its competitors",
+          "source": {
+            "label": "Sweetgreen 10-K(2024年度)",
+            "label_en": "Sweetgreen 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1477815/000162828025008367/sg-20241229.htm",
+            "level": "official",
+            "date": "2025-02-27",
+            "quote": "Among our competitors are a number of multi-unit, multi-market, fast-food, or fast-casual restaurant concepts, some of which are expanding nationally, including companies like Chipotle, CAVA, McDonald's, Panera Bread, and Shake Shack"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CAVA",
+      "ticker": "CAVA",
+      "name": "カバ・グループ",
+      "name_en": "CAVA Group",
+      "sub": "地中海料理チェーン",
+      "sub_en": "Mediterranean restaurants",
+      "sub_short": "地中海食",
+      "sub_short_en": "Bowls",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "CAVAが雇用契約で、競合の筆頭に挙げる",
+          "text_en": "CAVA lists Chipotle first among listed competitors in an employment agreement",
+          "source": {
+            "label": "CAVA 10-K(2024年度) 添付の雇用契約",
+            "label_en": "CAVA 10-K (FY2024), employment agreement exhibit",
+            "url": "https://www.sec.gov/Archives/edgar/data/1639438/000162828025007882/ex106.htm",
+            "level": "official",
+            "date": "2025-02-26",
+            "quote": "Attachment A: Listed Competitors • Chipotle • Starbucks • Sweetgreen"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
