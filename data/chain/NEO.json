@@ -1,0 +1,214 @@
+{
+  "root": {
+    "ticker": "NEO",
+    "name": "ネオジェノミクス",
+    "cik": 1077183,
+    "name_en": "NeoGenomics, Inc."
+  },
+  "rows": [
+    {
+      "ja": "総合検査会社の競合",
+      "en": "Large lab rivals"
+    },
+    {
+      "ja": "専門検査の競合(本人の10-Kで名指し)",
+      "en": "Specialized testing rivals (own 10-K)"
+    }
+  ],
+  "rivals": [
+    "DGX",
+    "LH",
+    "GH",
+    "NTRA",
+    "EXAS"
+  ],
+  "companies": [
+    {
+      "id": "DGX",
+      "ticker": "DGX",
+      "name": "クエスト・ダイアグノスティクス",
+      "name_en": "Quest Diagnostics",
+      "sub": "臨床検査",
+      "sub_en": "Lab testing",
+      "sub_short": "臨床検査",
+      "sub_short_en": "Lab test",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ゲノム検査で競合する大手検査会社",
+          "text_en": "Large lab rival in genomic profiling",
+          "source": {
+            "label": "NeoGenomics 10-K(2025年度)",
+            "label_en": "NeoGenomics 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1077183/000107718326000010/neo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Our competitors within the broader genomics profiling space include laboratory companies such as Quest Diagnostics, Laboratory Corporation of America and ARUP."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LH",
+      "ticker": "LH",
+      "name": "ラボコープ",
+      "name_en": "Laboratory Corporation of America",
+      "sub": "臨床検査",
+      "sub_en": "Lab testing",
+      "sub_short": "臨床検査",
+      "sub_short_en": "Lab test",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ゲノム検査で競合する大手検査会社",
+          "text_en": "Large lab rival in genomic profiling",
+          "source": {
+            "label": "NeoGenomics 10-K(2025年度)",
+            "label_en": "NeoGenomics 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1077183/000107718326000010/neo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Our competitors within the broader genomics profiling space include laboratory companies such as Quest Diagnostics, Laboratory Corporation of America and ARUP."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GH",
+      "ticker": "GH",
+      "name": "ガーダント・ヘルス",
+      "name_en": "Guardant Health",
+      "sub": "がん検査",
+      "sub_en": "Cancer diagnostics",
+      "sub_short": "がん検査",
+      "sub_short_en": "Cancer",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "リキッドバイオプシーで競合",
+          "text_en": "Liquid biopsy rival",
+          "source": {
+            "label": "NeoGenomics 10-K(2025年度)",
+            "label_en": "NeoGenomics 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1077183/000107718326000010/neo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "such as Guardant Health, Inc., Natera, Inc., Exact Sciences Corp, Caris Life Science, Tempus AI, Inc. and Myriad Genetics, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NTRA",
+      "ticker": "NTRA",
+      "name": "ナテラ",
+      "name_en": "Natera",
+      "sub": "遺伝子検査",
+      "sub_en": "Genetic testing",
+      "sub_short": "遺伝子",
+      "sub_short_en": "DNA tests",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "再発検査で競合(特許訴訟の相手でもある)",
+          "text_en": "Rival in recurrence testing (also a patent litigant)",
+          "source": {
+            "label": "NeoGenomics 10-K(2025年度)",
+            "label_en": "NeoGenomics 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1077183/000107718326000010/neo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "such as Guardant Health, Inc., Natera, Inc., Exact Sciences Corp, Caris Life Science, Tempus AI, Inc. and Myriad Genetics, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "EXAS",
+      "ticker": "EXAS",
+      "name": "イグザクト・サイエンシズ",
+      "name_en": "Exact Sciences",
+      "sub": "がん検査",
+      "sub_en": "Cancer diagnostics",
+      "sub_short": "がん検査",
+      "sub_short_en": "Cancer",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "がん遺伝子検査など専門検査の競合",
+          "text_en": "Rival in specialized cancer testing",
+          "source": {
+            "label": "NeoGenomics 10-K(2025年度)",
+            "label_en": "NeoGenomics 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1077183/000107718326000010/neo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "such as Guardant Health, Inc., Natera, Inc., Exact Sciences Corp, Caris Life Science, Tempus AI, Inc. and Myriad Genetics, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Tempus",
+      "ticker": "TEM",
+      "name": "テンパスAI",
+      "name_en": "Tempus AI",
+      "sub": "がん検査",
+      "sub_en": "Cancer diagnostics",
+      "sub_short": "がん検査",
+      "sub_short_en": "Cancer",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "がん遺伝子検査など専門検査の競合",
+          "text_en": "Rival in specialized cancer testing",
+          "source": {
+            "label": "NeoGenomics 10-K(2025年度)",
+            "label_en": "NeoGenomics 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1077183/000107718326000010/neo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "such as Guardant Health, Inc., Natera, Inc., Exact Sciences Corp, Caris Life Science, Tempus AI, Inc. and Myriad Genetics, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Myriad",
+      "ticker": "MYGN",
+      "name": "ミリアド・ジェネティクス",
+      "name_en": "Myriad Genetics",
+      "sub": "遺伝子検査",
+      "sub_en": "Genetic testing",
+      "sub_short": "遺伝子",
+      "sub_short_en": "DNA tests",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "がん遺伝子検査など専門検査の競合",
+          "text_en": "Rival in specialized cancer testing",
+          "source": {
+            "label": "NeoGenomics 10-K(2025年度)",
+            "label_en": "NeoGenomics 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1077183/000107718326000010/neo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "such as Guardant Health, Inc., Natera, Inc., Exact Sciences Corp, Caris Life Science, Tempus AI, Inc. and Myriad Genetics, Inc."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
