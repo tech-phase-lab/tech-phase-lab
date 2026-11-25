@@ -373,6 +373,29 @@ const HALT_LABEL: Record<string, string> = {
 
 export type ResultRow = { item: string; rule: string; meaning: string };
 
+const SUBSTITUTE_LABEL: Record<string, Record<string, string>> = {
+  q21alt: { index: "全世界・米国のインデックス", high_dividend: "高配当ETF", bond: "債券", gold: "金", theme: "半導体などのテーマ型", other: "その他" },
+  q26alt: { p20: "20%", p30: "30%", p50: "50%" },
+  q27alt: { d20: "20%", d30: "30%", d50: "50%" },
+};
+/** My Rules lines for the substitute answers (owner, Nov 25). Added after the seven fixed rows, only when answered,
+ * so plans saved before these questions existed read exactly as before. */
+export function substituteRows(i: DiagnosisInput): ResultRow[] {
+  const q21alt = a(i, "q21alt"), q25alt = a(i, "q25alt"), q26alt = a(i, "q26alt"), q27alt = a(i, "q27alt"), out: ResultRow[] = [];
+  if (Array.isArray(q21alt) && q21alt.length)
+    out.push({ item: "多い商品", rule: q21alt.map(x => SUBSTITUTE_LABEL.q21alt[x]).filter(Boolean).join(" / "), meaning: "投資の中心にしている商品です" });
+  if (typeof q25alt === "string")
+    out.push({ item: "下落中の積み立て", rule: q25alt === "continue" ? "下落中も積み立てを続ける" : q25alt === "pause" ? "下落中は積み立てをいったん止める" : "積み立てはしていない",
+      meaning: "下がった日に積み立てをどうするかの決めごとです" });
+  if (typeof q26alt === "string")
+    out.push({ item: "利益確定の目安", rule: q26alt === "undecided" ? "まだ決めていません" : `${SUBSTITUTE_LABEL.q26alt[q26alt]}上がったら利益確定を考える`,
+      meaning: "大きく上がったときに、一部を売るか考える目安です" });
+  if (typeof q27alt === "string")
+    out.push({ item: "売ることを考える下落", rule: q27alt === "never" ? "下落では売らない" : `${SUBSTITUTE_LABEL.q27alt[q27alt]}下がったら売ることを考える`,
+      meaning: q27alt === "never" ? "下がったことだけを理由に売りません" : "この下落に届いたら、売るかどうかをルールに照らして考えます" });
+  return out;
+}
+
 export function buildResultRows(i: DiagnosisInput, m: Amounts, lines: BuyLine[] = buildBuyLines(i, m)): ResultRow[] {
   const list = (ids: AnswerValue, labels: Record<string, string>, free: string[] | undefined): string => {
     const picked = Array.isArray(ids) ? ids.map((x) => labels[x]).filter(Boolean) : [];
@@ -426,6 +449,7 @@ export function buildResultRows(i: DiagnosisInput, m: Amounts, lines: BuyLine[] 
           ? "アメリカ株などは、為替で円の評価額が変わります。大きく動いた日は、このルールをもう一度開きます"
           : "為替では、ルールを読み直しません",
     },
+    ...substituteRows(i),
   ];
 }
 
