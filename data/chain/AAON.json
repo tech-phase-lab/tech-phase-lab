@@ -1,0 +1,214 @@
+{
+  "root": {
+    "ticker": "AAON",
+    "name": "AAON",
+    "cik": 824142,
+    "name_en": "AAON, Inc."
+  },
+  "rows": [
+    {
+      "ja": "空調機器の競合",
+      "en": "Comfort-cooling rivals"
+    },
+    {
+      "ja": "データセンター冷却の競合",
+      "en": "Data center cooling rivals"
+    }
+  ],
+  "rivals": [
+    "LII",
+    "TT",
+    "JCI",
+    "CARR",
+    "VRT"
+  ],
+  "companies": [
+    {
+      "id": "LII",
+      "ticker": "LII",
+      "name": "レノックス・インターナショナル",
+      "name_en": "Lennox International",
+      "sub": "空調",
+      "sub_en": "HVAC",
+      "sub_short": "空調",
+      "sub_short_en": "HVAC",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "業務用空調機器の主な競合",
+          "text_en": "Main rival in commercial HVAC",
+          "source": {
+            "label": "AAON 10-K(2025年度)",
+            "label_en": "AAON 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/824142/000082414226000005/aaon-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "The Company's comfort cooling products primarily compete with Lennox (Lennox International, Inc.), Trane (Trane Technologies plc), York Light Commercial (Bosch Home Comfort Group), Johnson Controls (Johnson Controls International PLC), Carrier (Carrier Global Corporation), and Daikin (Daikin Industries)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TT",
+      "ticker": "TT",
+      "name": "トレイン・テクノロジーズ",
+      "name_en": "Trane Technologies",
+      "sub": "空調",
+      "sub_en": "HVAC",
+      "sub_short": "空調",
+      "sub_short_en": "HVAC",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "業務用空調機器の主な競合",
+          "text_en": "Main rival in commercial HVAC",
+          "source": {
+            "label": "AAON 10-K(2025年度)",
+            "label_en": "AAON 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/824142/000082414226000005/aaon-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "The Company's comfort cooling products primarily compete with Lennox (Lennox International, Inc.), Trane (Trane Technologies plc), York Light Commercial (Bosch Home Comfort Group), Johnson Controls (Johnson Controls International PLC), Carrier (Carrier Global Corporation), and Daikin (Daikin Industries)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CARR",
+      "ticker": "CARR",
+      "name": "キヤリア・グローバル",
+      "name_en": "Carrier Global",
+      "sub": "空調",
+      "sub_en": "HVAC",
+      "sub_short": "空調",
+      "sub_short_en": "HVAC",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "業務用空調機器の主な競合",
+          "text_en": "Main rival in commercial HVAC",
+          "source": {
+            "label": "AAON 10-K(2025年度)",
+            "label_en": "AAON 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/824142/000082414226000005/aaon-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "The Company's comfort cooling products primarily compete with Lennox (Lennox International, Inc.), Trane (Trane Technologies plc), York Light Commercial (Bosch Home Comfort Group), Johnson Controls (Johnson Controls International PLC), Carrier (Carrier Global Corporation), and Daikin (Daikin Industries)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DKI",
+      "ticker": "Daikin Industries",
+      "name": "ダイキン工業",
+      "name_en": "Daikin Industries",
+      "sub": "空調",
+      "sub_en": "HVAC",
+      "sub_short": "空調",
+      "sub_short_en": "HVAC",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "業務用空調機器の主な競合",
+          "text_en": "Main rival in commercial HVAC",
+          "source": {
+            "label": "AAON 10-K(2025年度)",
+            "label_en": "AAON 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/824142/000082414226000005/aaon-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "The Company's comfort cooling products primarily compete with Lennox (Lennox International, Inc.), Trane (Trane Technologies plc), York Light Commercial (Bosch Home Comfort Group), Johnson Controls (Johnson Controls International PLC), Carrier (Carrier Global Corporation), and Daikin (Daikin Industries)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "JCI",
+      "ticker": "JCI",
+      "name": "ジョンソンコントロールズ・インターナショナル",
+      "name_en": "Johnson Controls",
+      "sub": "空調・ビル設備",
+      "sub_en": "HVAC & building systems",
+      "sub_short": "空調",
+      "sub_short_en": "HVAC",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "業務用空調とデータセンター冷却の両方で競合",
+          "text_en": "Rival in both commercial HVAC and data center cooling",
+          "source": {
+            "label": "AAON 10-K(2025年度)",
+            "label_en": "AAON 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/824142/000082414226000005/aaon-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "The Company's comfort cooling products primarily compete with Lennox (Lennox International, Inc.), Trane (Trane Technologies plc), York Light Commercial (Bosch Home Comfort Group), Johnson Controls (Johnson Controls International PLC), Carrier (Carrier Global Corporation), and Daikin (Daikin Industries)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "VRT",
+      "ticker": "VRT",
+      "name": "バーティブ",
+      "name_en": "Vertiv",
+      "sub": "データセンター電源・冷却",
+      "sub_en": "Data center power & cooling",
+      "sub_short": "DC冷却",
+      "sub_short_en": "Cooling",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "データセンター向け冷却装置の主な競合",
+          "text_en": "Main rival in data center cooling",
+          "source": {
+            "label": "AAON 10-K(2025年度)",
+            "label_en": "AAON 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/824142/000082414226000005/aaon-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "Our thermal management products primarily compete with Vertiv (Vertiv Holdings Co.), STULZ (STULZ Air Technology Systems, Inc.), Munters, Silent Aire (Johnson Controls International PLC), Nortek (Nortek Air Solutions), and Modine (Modine Manufacturing Co.)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MOD",
+      "ticker": "MOD",
+      "name": "モディーン",
+      "name_en": "Modine",
+      "sub": "冷却装置",
+      "sub_en": "Thermal management",
+      "sub_short": "冷却装置",
+      "sub_short_en": "Thermal",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "データセンター向け冷却装置の主な競合",
+          "text_en": "Main rival in data center cooling",
+          "source": {
+            "label": "AAON 10-K(2025年度)",
+            "label_en": "AAON 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/824142/000082414226000005/aaon-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "Our thermal management products primarily compete with Vertiv (Vertiv Holdings Co.), STULZ (STULZ Air Technology Systems, Inc.), Munters, Silent Aire (Johnson Controls International PLC), Nortek (Nortek Air Solutions), and Modine (Modine Manufacturing Co.)."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

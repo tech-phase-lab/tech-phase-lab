@@ -1,0 +1,187 @@
+{
+  "root": {
+    "ticker": "MWA",
+    "name": "ミューラー・ウォーター・プロダクツ",
+    "cik": 1350593,
+    "name_en": "Mueller Water Products, Inc."
+  },
+  "rows": [
+    {
+      "ja": "弁・消火栓の競合",
+      "en": "Valve & hydrant rivals"
+    },
+    {
+      "ja": "修理部材・メーターの競合",
+      "en": "Repair & metering rivals"
+    }
+  ],
+  "rivals": [
+    "McWane",
+    "ACIPCO",
+    "XYL",
+    "GeorgFischer"
+  ],
+  "companies": [
+    {
+      "id": "McWane",
+      "ticker": "McWane",
+      "name": "マクウェイン",
+      "name_en": "McWane",
+      "sub": "水道管・弁",
+      "sub_en": "Pipe & valves",
+      "sub_short": "水道管",
+      "sub_short_en": "Pipe",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "鉄製ゲート弁と消火栓の主な競合",
+          "text_en": "Main rival in iron gate valves and hydrants",
+          "source": {
+            "label": "Mueller Water 10-K(2026年9月期)",
+            "label_en": "Mueller Water 10-K (FY Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1350593/000135059326000050/mwa-20260930.htm",
+            "level": "official",
+            "date": "2026-11-18",
+            "quote": "Our principal competitors for fire hydrants are McWane, Inc. and American Cast Iron Pipe Company."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ACIPCO",
+      "ticker": "ACIPCO",
+      "name": "アメリカン・キャスト・アイアン・パイプ",
+      "name_en": "American Cast Iron Pipe",
+      "sub": "水道管・弁",
+      "sub_en": "Pipe & valves",
+      "sub_short": "水道管",
+      "sub_short_en": "Pipe",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "鉄製ゲート弁と消火栓の主な競合",
+          "text_en": "Main rival in iron gate valves and hydrants",
+          "source": {
+            "label": "Mueller Water 10-K(2026年9月期)",
+            "label_en": "Mueller Water 10-K (FY Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1350593/000135059326000050/mwa-20260930.htm",
+            "level": "official",
+            "date": "2026-11-18",
+            "quote": "Our principal competitors for fire hydrants are McWane, Inc. and American Cast Iron Pipe Company."
+          }
+        }
+      ]
+    },
+    {
+      "id": "XYL",
+      "ticker": "XYL",
+      "name": "ザイレム",
+      "name_en": "Xylem",
+      "sub": "水処理機器",
+      "sub_en": "Water technology",
+      "sub_short": "水処理",
+      "sub_short_en": "Water",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "水道管の修理部材で競合",
+          "text_en": "Rival in pipe repair products",
+          "source": {
+            "label": "Mueller Water 10-K(2026年9月期)",
+            "label_en": "Mueller Water 10-K (FY Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1350593/000135059326000050/mwa-20260930.htm",
+            "level": "official",
+            "date": "2026-11-18",
+            "quote": "Our primary competitors in the repair market are Romac Industries, Xylem Inc., Viking Johnson, AVK Group, JCM Industries, and Georg Fischer Ltd."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GeorgFischer",
+      "ticker": "GF.SW",
+      "name": "ゲオルグ・フィッシャー",
+      "name_en": "Georg Fischer",
+      "sub": "配管システム",
+      "sub_en": "Piping systems",
+      "sub_short": "配管",
+      "sub_short_en": "Piping",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "水道管の修理部材で競合",
+          "text_en": "Rival in pipe repair products",
+          "source": {
+            "label": "Mueller Water 10-K(2026年9月期)",
+            "label_en": "Mueller Water 10-K (FY Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1350593/000135059326000050/mwa-20260930.htm",
+            "level": "official",
+            "date": "2026-11-18",
+            "quote": "Our primary competitors in the repair market are Romac Industries, Xylem Inc., Viking Johnson, AVK Group, JCM Industries, and Georg Fischer Ltd."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BMI",
+      "ticker": "BMI",
+      "name": "バッジャー・メーター",
+      "name_en": "Badger Meter",
+      "sub": "水道メーター",
+      "sub_en": "Water meters",
+      "sub_short": "水道",
+      "sub_short_en": "Meters",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "水道メーターで競合",
+          "text_en": "Rival in water meters",
+          "source": {
+            "label": "Mueller Water 10-K(2026年9月期)",
+            "label_en": "Mueller Water 10-K (FY Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1350593/000135059326000050/mwa-20260930.htm",
+            "level": "official",
+            "date": "2026-11-18",
+            "quote": "Our principal competitors in water metering products and systems are Sensus, Neptune Technology Group Inc., Badger Meter, Inc., Itron, Inc. and Master Meter, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ITRI",
+      "ticker": "ITRI",
+      "name": "イトロン",
+      "name_en": "Itron",
+      "sub": "スマートメーター",
+      "sub_en": "Smart metering",
+      "sub_short": "電力計",
+      "sub_short_en": "Meters",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "水道メーターで競合",
+          "text_en": "Rival in water meters",
+          "source": {
+            "label": "Mueller Water 10-K(2026年9月期)",
+            "label_en": "Mueller Water 10-K (FY Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1350593/000135059326000050/mwa-20260930.htm",
+            "level": "official",
+            "date": "2026-11-18",
+            "quote": "Our principal competitors in water metering products and systems are Sensus, Neptune Technology Group Inc., Badger Meter, Inc., Itron, Inc. and Master Meter, Inc."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
