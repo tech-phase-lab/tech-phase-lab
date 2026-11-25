@@ -1,0 +1,217 @@
+{
+  "root": {
+    "ticker": "FTRE",
+    "name": "フォートレア",
+    "cik": 1965040,
+    "name_en": "Fortrea"
+  },
+  "rows": [
+    {
+      "ja": "分離元",
+      "en": "Former parent",
+      "above": true
+    },
+    {
+      "ja": "治験を任せる製薬会社(相手の資料に記載)",
+      "en": "Drug developers using it as CRO (named in their filings)"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "MEDP",
+    "ICLR",
+    "Tempus"
+  ],
+  "companies": [
+    {
+      "id": "LH",
+      "ticker": "LH",
+      "name": "ラボコープ",
+      "name_en": "Laboratory Corporation of America",
+      "sub": "臨床検査",
+      "sub_en": "Lab testing",
+      "sub_short": "臨床検査",
+      "sub_short_en": "Lab test",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Labcorpの治験受託事業が2023年6月にスピンオフして誕生。分離にともなう契約が続く",
+          "text_en": "Spun off from Labcorp in June 2023; separation agreements continue",
+          "source": {
+            "label": "Labcorp 10-K(2025年度)",
+            "label_en": "Labcorp 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/920148/000092014826000111/lh-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Additionally, the Spin-off presents risks that could affect the Company's business, including exposure to unexpected claims, liabilities, or costs under the Company's agreements with Fortrea in connection with the Spin-off."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LTRN",
+      "ticker": "LTRN",
+      "name": "ランターン・ファーマ",
+      "name_en": "Lantern Pharma",
+      "sub": "AI創薬",
+      "sub_en": "AI drug discovery",
+      "sub_short": "創薬",
+      "sub_short_en": "Biotech",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Lanternが10-Kで、第2相・第1相試験の主な受託機関(CRO)として契約したと記載",
+          "text_en": "Lantern hired it as lead CRO for its Phase 2 and Phase 1 trials",
+          "source": {
+            "label": "Lantern Pharma 10-K(2025年度)",
+            "label_en": "Lantern Pharma 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1763950/000149315226013612/form10-k.htm",
+            "level": "official",
+            "date": "2026-03-30",
+            "quote": "In May 2023, the Company entered into initial agreements with Fortrea Inc. (\"Fortrea\") to begin serving as the lead contract research organization (CRO) for the Company's Phase 2 clinical trial for LP-300 and the Company's Phase 1 clinical trial for LP-184."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SABS",
+      "ticker": "SABS",
+      "name": "SABバイオセラピューティクス",
+      "name_en": "SAB Biotherapeutics",
+      "sub": "抗体医薬",
+      "sub_en": "Antibody drugs",
+      "sub_short": "創薬",
+      "sub_short_en": "Biotech",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "SABが10-Kで、第2b相試験を監督するCROとして挙げる",
+          "text_en": "SAB says Fortrea is the CRO overseeing its Phase 2b study",
+          "source": {
+            "label": "SAB Biotherapeutics 10-K(2025年度)",
+            "label_en": "SAB Biotherapeutics 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1833214/000183321426000003/sabs-20251231.htm",
+            "level": "official",
+            "date": "2026-03-09",
+            "quote": "Fortrea will act as the CRO overseeing our Phase 2b efficacy and safety study for SAB-142."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GALT",
+      "ticker": "GALT",
+      "name": "ガレクチン・セラピューティクス",
+      "name_en": "Galectin Therapeutics",
+      "sub": "肝疾患薬",
+      "sub_en": "Liver disease drugs",
+      "sub_short": "創薬",
+      "sub_short_en": "Biotech",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Galectinが10-Kで、NAVIGATE試験の設計・運営を委託したと記載",
+          "text_en": "Galectin contracted it to help design and run its NAVIGATE trial",
+          "source": {
+            "label": "Galectin Therapeutics 10-K(2025年度)",
+            "label_en": "Galectin Therapeutics 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1133416/000114036126012155/ef20060823_10k.htm",
+            "level": "official",
+            "date": "2026-03-31",
+            "quote": "We have contracted with Covance (now known as Fortrea) for assistance with the design and conduct of our NAVIGATE trial."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MEDP",
+      "ticker": "MEDP",
+      "name": "メドペース",
+      "name_en": "Medpace",
+      "sub": "CRO",
+      "sub_en": "CRO",
+      "sub_short": "CRO",
+      "sub_short_en": "CRO",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Medpaceが10-Kで、主なCROの競合として挙げる",
+          "text_en": "Medpace names it among its major CRO competitors",
+          "source": {
+            "label": "Medpace 10-K(2025年度)",
+            "label_en": "Medpace 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1668397/000166839726000006/medp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "Our major CRO competitors include IQVIA Holdings Inc., ICON plc, PPD, Inc. (now part of Thermo Fisher Scientific Inc.), Fortrea, Inc., and numerous specialty and regional CROs."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ICLR",
+      "ticker": "ICLR",
+      "name": "アイコン",
+      "name_en": "ICON",
+      "sub": "CRO(アイルランド)",
+      "sub_en": "CRO (Ireland)",
+      "sub_short": "CRO",
+      "sub_short_en": "CRO",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ICONが20-Fで、大型案件の主な競合として挙げる",
+          "text_en": "ICON names it a main rival for large development programs",
+          "source": {
+            "label": "ICON 20-F(2025年度)",
+            "label_en": "ICON 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1060955/000162828026038487/iclr-20251231.htm",
+            "level": "official",
+            "date": "2026-05-27",
+            "quote": "When competing for large development programs, ICON competes primarily with IQVIA, PAREXEL, the PPD clinical research services brand of Thermo Fisher Scientific Inc., Fortrea and Syneos Health."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Tempus",
+      "ticker": "TEM",
+      "name": "テンパスAI",
+      "name_en": "Tempus AI",
+      "sub": "がんデータ・AI",
+      "sub_en": "Oncology data & AI",
+      "sub_short": "医療AI",
+      "sub_short_en": "Health AI",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Tempusが10-Kで、データ・治験マッチングの競合となるCROとして挙げる",
+          "text_en": "Tempus names it among CROs competing with its data and trial-matching products",
+          "source": {
+            "label": "Tempus AI 10-K(2025年度)",
+            "label_en": "Tempus AI 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1717115/000119312526066961/tem-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Our Data and applications products also face competition from CROs, such as Fortrea, ICON, Syneos, PPD, and others, who provide data and clinical trial matching services to pharmaceutical and biotechnology companies."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

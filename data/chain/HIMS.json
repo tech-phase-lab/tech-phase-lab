@@ -1,0 +1,187 @@
+{
+  "root": {
+    "ticker": "HIMS",
+    "name": "ヒムズ&ハーズ・ヘルス",
+    "cik": 1773751,
+    "name_en": "Hims & Hers Health"
+  },
+  "rows": [
+    {
+      "ja": "基盤・提携先",
+      "en": "Infrastructure & partners",
+      "above": true
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "MGRX",
+    "DRIO",
+    "DRMA"
+  ],
+  "companies": [
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン・ウェブ・サービス",
+      "name_en": "Amazon Web Services",
+      "sub": "クラウド基盤",
+      "sub_en": "Cloud infrastructure",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "米国のサービス基盤をAWSのクラウドで運用",
+          "text_en": "Runs its US platform on AWS cloud infrastructure",
+          "source": {
+            "label": "Hims & Hers 10-K(2025年度)",
+            "label_en": "Hims & Hers 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1773751/000177375126000022/hims-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "We currently host our platform, serve our customers and support our operations in the United States using Amazon Web Services (\"AWS\"), a provider of cloud infrastructure services"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Asda",
+      "ticker": "Asda",
+      "name": "アズダ",
+      "name_en": "Asda Stores",
+      "sub": "スーパー(英)",
+      "sub_en": "Supermarkets (UK)",
+      "sub_short": "スーパー",
+      "sub_short_en": "Grocery",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "買収した英Zavaを通じて提携。Asdaのサイトでオンライン診療を行い、薬はAsdaの薬局が出す",
+          "text_en": "Partner via its UK unit Zava: online doctor service on Asda's platform, with Asda pharmacies dispensing",
+          "source": {
+            "label": "Hims & Hers 10-K(2025年度)",
+            "label_en": "Hims & Hers 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1773751/000177375126000022/hims-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "As part of our acquisition of Zava, we have also acquired established partnerships with Asda Stores Limited and Superdrug Stores PLC in the United Kingdom."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Superdrug",
+      "ticker": "Superdrug",
+      "name": "スーパードラッグ",
+      "name_en": "Superdrug Stores",
+      "sub": "ドラッグストア(英)",
+      "sub_en": "Drugstores (UK)",
+      "sub_short": "薬局",
+      "sub_short_en": "Drugs",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "買収した英Zavaを通じて提携。Superdrugのサイトでオンライン診療を行い、薬はSuperdrugの薬局が出す",
+          "text_en": "Partner via its UK unit Zava: online doctor service on Superdrug's platform, with Superdrug pharmacies dispensing",
+          "source": {
+            "label": "Hims & Hers 10-K(2025年度)",
+            "label_en": "Hims & Hers 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1773751/000177375126000022/hims-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "As part of our acquisition of Zava, we have also acquired established partnerships with Asda Stores Limited and Superdrug Stores PLC in the United Kingdom."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MGRX",
+      "ticker": "MGRX",
+      "name": "マンゴーシューティカルズ",
+      "name_en": "Mangoceuticals",
+      "sub": "男性向け遠隔医療",
+      "sub_en": "Men's telehealth",
+      "sub_short": "遠隔医療",
+      "sub_short_en": "Telemed",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Mangoceuticalsが10-Kで、男性向け健康製品の主な競合として名指し",
+          "text_en": "Mangoceuticals names it a main competitor in men's wellness",
+          "source": {
+            "label": "Mangoceuticals 10-K(2025年度)",
+            "label_en": "Mangoceuticals 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1938046/000149315226014478/form10-k.htm",
+            "level": "official",
+            "date": "2026-04-01",
+            "quote": "We mainly compete with other companies offering men's compounded health and wellness products, including Hims & Hers Health, Inc., Roman, and Henry Meds"
+          }
+        }
+      ]
+    },
+    {
+      "id": "DRIO",
+      "ticker": "DRIO",
+      "name": "ダリオヘルス",
+      "name_en": "DarioHealth",
+      "sub": "デジタル慢性疾患ケア",
+      "sub_en": "Digital chronic care",
+      "sub_short": "遠隔医療",
+      "sub_short_en": "Telemed",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "DarioHealthが10-Kで、GLP-1・代謝疾患の分野で競合する消費者向け企業として挙げる",
+          "text_en": "DarioHealth names it a direct-to-consumer rival in cardiometabolic and GLP-1 care",
+          "source": {
+            "label": "DarioHealth 10-K(2025年度)",
+            "label_en": "DarioHealth 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1533998/000110465926031621/drio-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "And other D2C oriented companies such as Ro, Inc., Hims & Hers, Inc., Weight Watchers International, Inc., and Noom, Inc., that compete with us in the cardiometabolic and GLP-1 space."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DRMA",
+      "ticker": "DRMA",
+      "name": "ダーマタ・セラピューティクス",
+      "name_en": "Dermata Therapeutics",
+      "sub": "皮膚疾患薬",
+      "sub_en": "Dermatology",
+      "sub_short": "皮膚薬",
+      "sub_short_en": "Derm",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Dermataが10-Kで、ニキビ治療で競合するネット直販のスキンケアとして挙げる",
+          "text_en": "Dermata names it among digital-first skincare rivals in acne treatment",
+          "source": {
+            "label": "Dermata Therapeutics 10-K(2025年度)",
+            "label_en": "Dermata Therapeutics 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1853816/000149315226012992/form10-k.htm",
+            "level": "official",
+            "date": "2026-03-26",
+            "quote": "we compete with digital-first and DTC skincare companies, including brands such as Curology®, Apostrophe®, Hims & Hers®, and similar platforms"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

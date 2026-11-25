@@ -1,0 +1,213 @@
+{
+  "root": {
+    "ticker": "TXNM",
+    "name": "TXNMエナジー",
+    "cik": 1108426,
+    "name_en": "TXNM Energy"
+  },
+  "rows": [
+    {
+      "ja": "発電所の共同保有者",
+      "en": "Power plant co-owners",
+      "above": true
+    },
+    {
+      "ja": "電力の調達先・送電先(相手の資料に記載)",
+      "en": "Power suppliers & delivery customers (named in their filings)"
+    },
+    {
+      "ja": "買収契約",
+      "en": "Merger agreement"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "PNW",
+      "ticker": "PNW",
+      "name": "ピナクル・ウエスト・キャピタル",
+      "name_en": "Pinnacle West Capital",
+      "sub": "電力",
+      "sub_en": "Electric utility",
+      "sub_short": "電力",
+      "sub_short_en": "Utility",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "子会社APSが運営するフォーコーナーズ石炭火力・パロベルデ原発を共同保有(PNMはフォーコーナーズの13%)",
+          "text_en": "Co-owns the Four Corners and Palo Verde plants run by its unit APS (PNM holds 13% of Four Corners)",
+          "source": {
+            "label": "Pinnacle West 10-K(2025年度)",
+            "label_en": "Pinnacle West 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/764622/000076462226000011/pnw-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "(c) The other participants are Salt River Project (10%), Public Service Company of New Mexico (13%), Tucson Electric Power Company (7%) and NTEC (7%)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SRP",
+      "ticker": "Salt River Project",
+      "name": "ソルト・リバー・プロジェクト",
+      "name_en": "Salt River Project",
+      "sub": "電力事業者",
+      "sub_en": "Power utility",
+      "sub_short": "電力",
+      "sub_short_en": "Utility",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "フォーコーナーズ発電所の共同保有者",
+          "text_en": "Co-owner of the Four Corners plant",
+          "source": {
+            "label": "TXNM Energy 10-K(2025年度)",
+            "label_en": "TXNM Energy 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1108426/000110842626000006/pnm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "These units are jointly owned with APS, SRP, Tucson, and NTEC, and are operated by APS."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TEP",
+      "ticker": "Tucson Electric",
+      "name": "ツーソン・エレクトリック・パワー",
+      "name_en": "Tucson Electric Power",
+      "sub": "電力事業者",
+      "sub_en": "Power utility",
+      "sub_short": "電力",
+      "sub_short_en": "Utility",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "フォーコーナーズの共同保有者で、ルナ発電所の残りを韓国系と折半で持つ",
+          "text_en": "Co-owner of Four Corners and half-owner of the rest of the Luna plant",
+          "source": {
+            "label": "TXNM Energy 10-K(2025年度)",
+            "label_en": "TXNM Energy 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1108426/000110842626000006/pnm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "The remaining interests in Luna are owned equally by Tucson and Samchully Power & Utilities 1, LLC."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NTEC",
+      "ticker": "Navajo",
+      "name": "ナバホ・トランジショナル・エナジー",
+      "name_en": "Navajo Transitional Energy Company",
+      "sub": "石炭供給",
+      "sub_en": "Coal supply",
+      "sub_short": "石炭供給",
+      "sub_short_en": "Coal",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "フォーコーナーズ発電所の共同保有者",
+          "text_en": "Co-owner of the Four Corners plant",
+          "source": {
+            "label": "TXNM Energy 10-K(2025年度)",
+            "label_en": "TXNM Energy 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1108426/000110842626000006/pnm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "These units are jointly owned with APS, SRP, Tucson, and NTEC, and are operated by APS."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ENLT",
+      "ticker": "ENLT",
+      "name": "エンライト・リニューアブル・エナジー",
+      "name_en": "Enlight Renewable Energy",
+      "sub": "再エネ開発(イスラエル)",
+      "sub_en": "Renewables developer (Israel)",
+      "sub_short": "再エネ",
+      "sub_short_en": "Renew",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Enlightが20-Fで、Quail Ranch蓄電所はPNMとの20年の蓄電契約に支えられると記載(2026年1月稼働)",
+          "text_en": "Enlight says its Quail Ranch storage project is backed by a 20-year storage agreement with PNM (online January 2026)",
+          "source": {
+            "label": "Enlight Renewable Energy 20-F(2025年度)",
+            "label_en": "Enlight Renewable Energy 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1922641/000117891326001828/zk2634901.htm",
+            "level": "official",
+            "date": "2026-03-30",
+            "quote": "In January 2026, the Quail Ranch energy storage project achieved commercial operation and is backed by a 20-year energy storage agreement (ESA) with Public Service Company of New Mexico (PNM)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "IonicDigital",
+      "ticker": "Ionic Digital",
+      "name": "イオニック・デジタル",
+      "name_en": "Ionic Digital",
+      "sub": "ビットコイン採掘",
+      "sub_en": "Bitcoin mining",
+      "sub_short": "暗号資産",
+      "sub_short_en": "Crypto",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Ionic DigitalがS-1で、テキサスの拠点に電気を届ける送配電会社としてTNMPを挙げる",
+          "text_en": "Ionic Digital says TNMP delivers power to its Texas sites",
+          "source": {
+            "label": "Ionic Digital S-1/A(2026年7月)",
+            "label_en": "Ionic Digital S-1/A (July 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2007691/000118518526002919/ionicdigis1a1070926.htm",
+            "level": "official",
+            "date": "2026-07-13",
+            "quote": "Oncor Electric Delivery Company LLC (\"Oncor\"), and TNMP, for-profit electricity transmission and distribution businesses regulated by the Public Utility Commission of Texas, physically deliver electricity to our sites in Texas."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BX",
+      "ticker": "BX",
+      "name": "ブラックストーン",
+      "name_en": "Blackstone",
+      "sub": "投資会社",
+      "sub_en": "Investment firm",
+      "sub_short": "投資会社",
+      "sub_short_en": "Investing",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Blackstone Infrastructureが買収する合併契約(2025年5月)",
+          "text_en": "Merger agreement to be acquired by Blackstone Infrastructure (May 2025)",
+          "source": {
+            "label": "TXNM Energy 10-K(2025年度)",
+            "label_en": "TXNM Energy 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1108426/000110842626000006/pnm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Proposed Merger with Blackstone Infrastructure On May 18, 2025, TXNM, Parent, and Merger Sub (both Parent and Merger Sub are affiliates of Blackstone Infrastructure) entered into the Merger Agreement"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,161 @@
+{
+  "root": {
+    "ticker": "BRO",
+    "name": "ブラウン&ブラウン",
+    "cik": 79282,
+    "name_en": "Brown & Brown"
+  },
+  "rows": [
+    {
+      "ja": "保険仲介を頼む顧客(相手の資料に記載)",
+      "en": "Brokerage client (named in its filing)",
+      "above": true
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "AON",
+    "BWIN",
+    "GSHD"
+  ],
+  "companies": [
+    {
+      "id": "SBET",
+      "ticker": "SBET",
+      "name": "シャープリンク・ゲーミング",
+      "name_en": "SharpLink Gaming",
+      "sub": "暗号資産・ゲーミング",
+      "sub_en": "Crypto & gaming",
+      "sub_short": "暗号資産",
+      "sub_short_en": "Crypto",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "SharpLinkが10-K/Aで、保険の仲介を頼む会社として挙げる(2024年に40万ドル超を支払い)",
+          "text_en": "SharpLink says Brown & Brown brokers its insurance (over $400,000 paid in 2024)",
+          "source": {
+            "label": "SharpLink Gaming 10-K/A(2024年度)",
+            "label_en": "SharpLink Gaming 10-K/A (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1981535/000143774925007821/sbet20241231_10ka.htm",
+            "level": "official",
+            "date": "2025-03-17",
+            "quote": "The Company uses Brown & Brown (\"Brown\"), which acquired Hays Companies, as an insurance broker."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AON",
+      "ticker": "AON",
+      "name": "エーオン",
+      "name_en": "Aon",
+      "sub": "保険ブローカー",
+      "sub_en": "Insurance broker",
+      "sub_short": "保険仲介",
+      "sub_short_en": "Broker",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Aonが10-Kの付属契約で、競合する事業(Competitive Businesses)の一社として名指し",
+          "text_en": "Aon names it a \"Competitive Business\" in an agreement filed with its 10-K",
+          "source": {
+            "label": "Aon 10-K(2025年度、付属の雇用契約)",
+            "label_en": "Aon 10-K (FY2025, employment agreement exhibit)",
+            "url": "https://www.sec.gov/Archives/edgar/data/315293/000162828026008116/a1060.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "the following are Competitive Businesses as of the Effective Date: Marsh & McLennan Companies, Inc., Willis Towers Watson plc, Arthur J. Gallagher & Co., Alliant Insurance Services, Howden, Lockton, USI, and Brown & Brown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BWIN",
+      "ticker": "BWIN",
+      "name": "ボールドウィン・インシュアランス",
+      "name_en": "Baldwin Insurance Group",
+      "sub": "保険仲介",
+      "sub_en": "Insurance brokerage",
+      "sub_short": "保険仲介",
+      "sub_short_en": "Broker",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Baldwinが10-Kで、上場する競合の一社として挙げる",
+          "text_en": "Baldwin names it among public company competitors",
+          "source": {
+            "label": "Baldwin Insurance Group 10-K(2025年度)",
+            "label_en": "Baldwin Insurance Group 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1781755/000178175526000018/bwin-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Arthur J. Gallagher & Co. and Brown & Brown Inc.; private company participants, such as Hub International Limited and USI, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GSHD",
+      "ticker": "GSHD",
+      "name": "グースヘッド・インシュアランス",
+      "name_en": "Goosehead Insurance",
+      "sub": "個人向け保険代理",
+      "sub_en": "Personal lines agency",
+      "sub_short": "保険代理",
+      "sub_short_en": "Agency",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Gooseheadが10-Kで、法人向けを主とする大手保険代理店の一社に挙げる",
+          "text_en": "Goosehead lists it among the largest agencies focused on commercial lines",
+          "source": {
+            "label": "Goosehead Insurance 10-K(2025年度)",
+            "label_en": "Goosehead Insurance 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1726978/000172697826000010/gshd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Many of the largest insurance agencies, such as Aon plc, Arthur J."
+          }
+        }
+      ]
+    },
+    {
+      "id": "XZO",
+      "ticker": "XZO",
+      "name": "エクシーオ・グループ",
+      "name_en": "Exzeo Group",
+      "sub": "保険テック",
+      "sub_en": "Insurance technology",
+      "sub_short": "保険IT",
+      "sub_short_en": "Insurtech",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ExzeoがS-1で、競合となる引受サービス会社としてRyan Specialtyと並べて挙げる",
+          "text_en": "Exzeo names it with Ryan Specialty among competing underwriting service providers",
+          "source": {
+            "label": "Exzeo Group S-1/A(2025年10月)",
+            "label_en": "Exzeo Group S-1/A (October 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1873951/000119312525240868/d28749ds1a.htm",
+            "level": "official",
+            "date": "2025-10-16",
+            "quote": "Underwriting service providers include managing general underwriters (MGUs) and program administrators like Ryan Specialty and Brown & Brown that underwrite, price and manage insurance policies for carriers."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

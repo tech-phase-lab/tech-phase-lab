@@ -1,0 +1,193 @@
+{
+  "root": {
+    "ticker": "VFC",
+    "name": "VFコーポレーション",
+    "cik": 103379,
+    "name_en": "VF Corp"
+  },
+  "rows": [
+    {
+      "ja": "縫製の委託先",
+      "en": "Apparel manufacturer",
+      "above": true
+    },
+    {
+      "ja": "ブランド売却・分離",
+      "en": "Brand sales & spin-off"
+    },
+    {
+      "ja": "素材の協業",
+      "en": "Materials collaboration"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "CODI"
+  ],
+  "companies": [
+    {
+      "id": "JRSH",
+      "ticker": "JRSH",
+      "name": "ジェラッシュ・ホールディングス",
+      "name_en": "Jerash Holdings",
+      "sub": "衣料品製造",
+      "sub_en": "Apparel manufacturing",
+      "sub_short": "衣料製造",
+      "sub_short_en": "Apparel",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "JerashにとってVFは売上の64.6%を占める最大の顧客",
+          "text_en": "VF is Jerash's largest customer at 64.6% of its sales",
+          "source": {
+            "label": "Jerash Holdings 10-K(2025年3月期)",
+            "label_en": "Jerash Holdings 10-K (FY ended Mar 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1696558/000121390025057935/ea0245883-10k_jerash.htm",
+            "level": "official",
+            "date": "2025-06-26",
+            "quote": "VF Corporation (1) $ 94,151 64.6 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Bluestar",
+      "ticker": "Bluestar Alliance",
+      "name": "ブルースター・アライアンス",
+      "name_en": "Bluestar Alliance",
+      "sub": "ブランド管理",
+      "sub_en": "Brand management",
+      "sub_short": "ブランド",
+      "sub_short_en": "Brands",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Dickiesブランドの事業を売却する契約(2025年9月)",
+          "text_en": "Agreed to sell the Dickies brand business (September 2025)",
+          "source": {
+            "label": "VF Corp 10-K(2026年3月期)",
+            "label_en": "VF Corp 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/103379/000010337926000030/vfc-20260328.htm",
+            "level": "official",
+            "date": "2026-05-20",
+            "quote": "On September 15, 2025, VF entered into a definitive agreement with Bluestar Alliance LLC to sell the Dickies ® brand business (\"Dickies\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "EssilorLuxottica",
+      "ticker": "EssilorLuxottica",
+      "name": "エシロールルックスオティカ",
+      "name_en": "EssilorLuxottica",
+      "sub": "眼鏡(フランス)",
+      "sub_en": "Eyewear (France)",
+      "sub_short": "AIグラス",
+      "sub_short_en": "AI specs",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Supremeブランドの事業を売却する契約(2024年7月)",
+          "text_en": "Agreed to sell the Supreme brand business (July 2024)",
+          "source": {
+            "label": "VF Corp 10-K(2026年3月期)",
+            "label_en": "VF Corp 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/103379/000010337926000030/vfc-20260328.htm",
+            "level": "official",
+            "date": "2026-05-20",
+            "quote": "On July 16, 2024, VF entered into a definitive Stock and Asset Purchase Agreement with EssilorLuxottica S.A. to sell the Supreme ® brand business (\"Supreme\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "KTB",
+      "ticker": "KTB",
+      "name": "コンツール・ブランズ",
+      "name_en": "Kontoor Brands",
+      "sub": "ジーンズ",
+      "sub_en": "Jeans",
+      "sub_short": "ジーンズ",
+      "sub_short_en": "Jeans",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ジーンズ事業をKontoor Brandsとして分離(2019年5月)",
+          "text_en": "Spun off its jeans business as Kontoor Brands (May 2019)",
+          "source": {
+            "label": "VF Corp 10-K(2026年3月期)",
+            "label_en": "VF Corp 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/103379/000010337926000030/vfc-20260328.htm",
+            "level": "official",
+            "date": "2026-05-20",
+            "quote": "the May 22, 2019 spin-off of our Jeans business, Kontoor Brands, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Spinnova",
+      "ticker": "Spinnova",
+      "name": "スピノバ",
+      "name_en": "Spinnova",
+      "sub": "木材由来の繊維",
+      "sub_en": "Wood-based fiber",
+      "sub_short": "繊維",
+      "sub_short_en": "Fiber",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Spinnovaが、公表済みのブランド協業先としてVF傘下のIcebreakerを挙げる",
+          "text_en": "Spinnova lists VF's Icebreaker brand among its published brand collaborations",
+          "source": {
+            "label": "Spinnova F-1/A(2026年9月)",
+            "label_en": "Spinnova F-1/A (September 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2141512/000118518526004224/spinnovaf1a1092126.htm",
+            "level": "official",
+            "date": "2026-09-23",
+            "quote": "Our published brand collaborations today include Adidas, H&M, the VF Corporation brand Icebreaker, Marimekko, BESTSELLER, Bergans of Norway, Insider, Puma, Armedangels, PVH (Tommy Hilfiger) and ECCO."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CODI",
+      "ticker": "CODI",
+      "name": "コンパス・ダイバーシファイド",
+      "name_en": "Compass Diversified",
+      "sub": "事業投資会社",
+      "sub_en": "Diversified holding company",
+      "sub_short": "事業投資",
+      "sub_short_en": "Holding",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Compass Diversifiedが10-Kで、傘下の5.11の競合としてVFのThe North Faceを挙げる",
+          "text_en": "Compass Diversified names VF's The North Face among competitors of its 5.11 brand",
+          "source": {
+            "label": "Compass Diversified 10-K(2025年度)",
+            "label_en": "Compass Diversified 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1345126/000134512626000026/codi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "5.11 competes against activewear, outdoor and specialty apparel brands such as Nike, Under Armour, The North Face, Patagonia, Lululemon, Arc'teryx, Carhartt, Propper and Fecheimer Brothers."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
