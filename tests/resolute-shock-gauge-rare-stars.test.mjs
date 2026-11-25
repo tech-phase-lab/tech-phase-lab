@@ -38,7 +38,7 @@ test('today\'s three stories under the new rules: the two bare premarket recaps 
  assert.deepEqual(preview.selected,[{title:TODAY.cipher.en,publishedAt:new Date(runAt.getTime()-120*60000).toISOString(),scope:'company',index:'company',session:null,reading:null,marketStars:null}]);
 });
 
-test('a day with market-wide and chip-sector news: one move, one story — the story that best explains the move keeps it',()=>{
+test('a day with market-wide and chip-sector news: one move, one story — market-wide news first when the market moved',()=>{
  // runAt is Tue Nov 24 18:20 New York. Stories before the 09:30 open (more than 530 minutes before) are measured on Nov 24;
  // "Nvidia shares slide" (500, 10:00) and Cipher Digital (120) came after it, so Nov 24's move is never theirs.
  const items=[
@@ -51,15 +51,16 @@ test('a day with market-wide and chip-sector news: one move, one story — the s
   row('3 AI Stocks to Buy After the Sell-Off',60,{tickers:['NVDA'],sentiment:'positive'}),
  ];
  const {selected,reserve,diagnostics}=selectDailyCandidates(feedOf(items),runAt,{moves});
- // Nov 24 was a chip move: TP半導体40 −8.5% (3.8×, 39/40 down) ★4 against TP大型株100 −1.5% (2.0×, 47/99) ★2. The chip-sector
- // story explains it better than the market-wide ones, so it alone keeps Nov 24 (owner, Nov 25: one move, one story).
- assert.deepEqual(selected.map(c=>c.title),['Chip stocks tumble as Nvidia selloff spreads across AI hardware','Nvidia shares slide as investors question AI spending',TODAY.cipher.en]);
+ // Nov 24: TP大型株100 −1.5% (2.0×, 47/99) moved at least the ★2 line, so a market-wide story keeps Nov 24 (owner: market-wide
+ // news first) and shows the stronger index's ★4 (TP半導体40 −8.5%, 3.8×, 39/40 down). One move, one story.
+ assert.deepEqual(selected.map(c=>c.title),['Nasdaq falls as Treasury yields climb ahead of Fed minutes','Nvidia shares slide as investors question AI spending',TODAY.cipher.en]);
  const preview=previewSelection({selected,reserve,diagnostics},moves);
- assert.deepEqual(preview.selected.map(p=>[p.index,p.session,p.marketStars]),[['sox',session,4],['company','2026-11-25',null],['company',null,null]]);
+ assert.deepEqual(preview.selected.map(p=>[p.index,p.session,p.marketStars]),[['nas100',session,4],['company','2026-11-25',null],['company',null,null]]);
  assert.equal(preview.selected[1].company,'NVDA');
- assert.deepEqual(formatReading({index:'sox',session,reading:preview.selected[0].reading},'ja'),['TP半導体40 −8.5%（いつもの3.8倍・39/40社が下落）','TP大型株100 −1.5%（いつもの2.0倍・47/99社が下落）','恐怖指数 0%']);
- // The other chip-sector story and the market-wide ones on Nov 24 repeat the move already shown: reserve only.
+ assert.deepEqual(formatReading({index:'nas100',session,reading:preview.selected[0].reading},'ja'),['TP大型株100 −1.5%（いつもの2.0倍・47/99社が下落）','TP半導体40 −8.5%（いつもの3.8倍・39/40社が下落）','恐怖指数 0%']);
+ // The chip-sector stories and the other market-wide one on Nov 24 repeat the move already shown: reserve only.
  assert.ok(repeatsTaken(reserve.find(c=>c.title.startsWith('Semiconductor stocks')),selected));
+ assert.ok(repeatsTaken(reserve.find(c=>c.title.startsWith('Chip stocks tumble')),selected));
  assert.ok(repeatsTaken(reserve.find(c=>c.title.startsWith('Stocks slip')),selected));
  // One story per company: a second Nvidia story is not shown next to another Nvidia story.
  const nvda=selected.find(c=>c.title.startsWith('Nvidia shares slide'));
@@ -138,13 +139,13 @@ test('one-off re-selection of today: gated by RESOLUTE_SHOCK_GAUGE_RESELECT_DAY,
   assert.equal((await reselectStoredDay({...options,env:{RESOLUTE_SHOCK_GAUGE_RESELECT_DAY:'2026-11-25'},realNow:new Date('2026-11-24T23:40:00Z')})).state,'reselect-not-today','not during the morning run');
   const env={RESOLUTE_SHOCK_GAUGE_RESELECT_DAY:'2026-11-25'};
   const result=await reselectStoredDay({...options,env,realNow:later});
-  // Nov 24's chip move goes to the chip-sector story only; the market-wide story on the same session is not shown.
+  // Nov 24's move goes to the market-wide story only (the market moved); the chip-sector story on the same session is not shown.
   assert.equal(result.state,'reselected-ready');assert.equal(result.count,2);
   assert.ok(!tried.some(t=>t.startsWith('Wall Street slides')),'only what the morning run could read');
   assert.ok(!tried.includes(TODAY.pre56.en),'bare premarket recap dropped');
   const day=(await risk.query("SELECT state,articles FROM resolute.risk_days WHERE day='2026-11-25'")).rows[0];
   assert.equal(day.state,'ready');
-  assert.deepEqual(day.articles.map(a=>[a.market.index,a.market.reading?.sox?.changePercent??null,a.stars]),[['sox',-8.5,4],['company',null,null]]);
+  assert.deepEqual(day.articles.map(a=>[a.market.index,a.market.reading?.sox?.changePercent??null,a.stars]),[['nas100',-8.5,4],['company',null,null]]);
   assert.equal(breaksCurrentRules(day.articles),false);
   // The flag left in place never runs it again.
   const calls=tried.length;
