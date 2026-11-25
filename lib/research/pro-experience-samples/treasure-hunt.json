@@ -1,10 +1,10 @@
 {
- "_source": "The owner's mockup 01_体験_トレジャーハント.png (Nov 22) for the tickers, names, multiples and growth; the owner's decisions of Nov 22 for the rest: the Value Scores of ranks 1-7 take the magnitude production showed at the Nov 20 close (tech 93, 89, 86, 86, 84, 81, 79; all sectors 93, 89, 86, 86, 85, 84, 84), and the IN / OUT band follows production's rule (IN crosses 30 from below, OUT from above), so its stocks sit below the top seven and no list row carries IN. The 全セクター ranking is made up in the same style. The shape is the research monitor's value-check snapshot (scripts/research/value_check.py build_snapshot), read by lib/research/value-check.ts parseValueSnapshot. All scores, multiples, growth figures and dates are fictional sample values on a made-up 2035 timeline; they are not real data. basis stays trailing, as production computes it (the footer says 実績値).",
+ "_source": "The owner's mockup 01_体験_トレジャーハント.png (Nov 22) for the tickers, names, multiples and growth; the owner's decisions of Nov 22 for the rest: the Value Scores of ranks 1-7 take the magnitude production showed at the Nov 20 close (tech 93, 89, 86, 86, 84, 81, 79; all sectors 93, 89, 86, 86, 85, 84, 84), and the IN / OUT band follows production's rule (IN crosses 30 from below, OUT from above), so its stocks sit below the top seven and no list row carries IN. The 全セクター ranking is made up in the same style. The shape is the research monitor's value-check snapshot (scripts/research/value_check.py build_snapshot), read by lib/research/value-check.ts parseValueSnapshot. All scores, multiples, growth figures and dates are fictional sample values on the samples' shared made-up timeline (as of 2035/03/12 09:00 JST, so the ranking is that of the last U.S. close before it, 2035-03-09, SAMPLE_CLOSE_DAY in lib/research/pro-experience-samples.ts); they are not real data. basis stays trailing, as production computes it (the footer says 実績値).",
  "fictional": true,
  "ok": true,
  "basis": "trailing",
- "asOf": "2035-04-18",
- "computedAt": "2035-04-18T22:30:00Z",
+ "asOf": "2035-03-09",
+ "computedAt": "2035-03-09T22:30:00Z",
  "universes": {
   "tech": {
    "total": 152,

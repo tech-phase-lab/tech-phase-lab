@@ -169,7 +169,10 @@ export function extendedIsCurrent(extended: { asOf: string; session: "pre" | "po
 }
 
 export type MarketFacts = { eps: number | null; marketCap: number | null; dividendYield: number | null; nextEarnings: string | null };
-export function parseStatistics(raw: unknown, ticker: string): Omit<MarketFacts, "nextEarnings"> | null {
+export type StatFacts = Omit<MarketFacts, "nextEarnings">;
+/** True when the statistics carry at least one figure the card shows; an answer without any is never stored as a valid one (QA, Nov 25). */
+export const hasStatFacts = (value: StatFacts | null | undefined): value is StatFacts => !!value && (value.eps !== null || value.marketCap !== null || value.dividendYield !== null);
+export function parseStatistics(raw: unknown, ticker: string): StatFacts | null {
   const root = obj(raw), meta = obj(root.meta), s = obj(root.statistics);
   if (root.status === "error" || (typeof meta.symbol === "string" && meta.symbol.toUpperCase() !== ticker.toUpperCase())) return null;
   const valuations = obj(s.valuations_metrics), income = obj(obj(s.financials).income_statement), dividends = obj(s.dividends_and_splits);
