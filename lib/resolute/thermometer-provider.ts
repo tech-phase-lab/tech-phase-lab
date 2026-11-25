@@ -1,5 +1,5 @@
 import rosters from './thermometer-rosters.json' with { type: 'json' };
-import { dailyMove, equalWeightLevels, realizedVolatility, sessionFear, sessionShock, type ShockReading, type FearReading, type BasketSeries } from './thermometer-basket.ts';
+import { dailyMove, equalWeightLevels, realizedVolatility, sessionFear, sessionShock, stockShock, type ShockReading, type FearReading, type BasketSeries, type StockShock } from './thermometer-basket.ts';
 import { calculateTemperature, calculateVixContext, validSessionDate, type DailyClose } from './thermometer.ts';
 import { bigDrops, similarDays } from './similar-days.ts';
 
@@ -10,6 +10,8 @@ type ProviderFailure = { status: 'unavailable'; reason: 'not-configured' | 'prov
 const CHUNK = 10;
 export const SHOCK_SESSIONS = 10;
 export type ShockSession = { nas100: ShockReading | null; sox: ShockReading | null; fear: FearReading | null };
+/** Sessions for which each rostered stock's own move is kept (single-company news, owner Nov 25). Stored only, never served. */
+export const STOCK_SESSIONS = 3;
 /** Twelve Data treats a date-only end_date as exclusive, so ask for the day after the confirmed session. Later bars are dropped by the calculator. */
 function dayAfter(date: string): string { const next = new Date(`${date}T00:00:00Z`); next.setUTCDate(next.getUTCDate() + 1); return next.toISOString().slice(0, 10); }
 /** Parses a multi-symbol (or single-symbol) Twelve Data time_series reply into daily closes per ticker.
@@ -76,9 +78,20 @@ export async function collectThermometer(config: ThermometerProviderConfig, conf
     const dates = large.levels.map(bar => bar.date).filter(date => date <= confirmedSession).slice(-SHOCK_SESSIONS);
     for (const date of dates) shock[date] = { nas100: sessionShock(large.levels, large.series, date), sox: 'levels' in chips ? sessionShock(chips.levels, chips.series, date) : null, fear: sessionFear(large.levels, date) };
   }
+  // Single-company news (owner, Nov 25): every rostered stock's own move and usual move on the last STOCK_SESSIONS sessions,
+  // from the same daily closes (no extra provider calls). Kept apart from `shock` so the site's snapshot stays small.
+  const shockStocks: Record<string, Record<string, StockShock>> = {};
+  const allSeries: BasketSeries = { ...('series' in large ? large.series : {}), ...('series' in chips ? chips.series : {}) };
+  for (const date of Object.keys(shock).slice(-STOCK_SESSIONS)) {
+    const day: Record<string, StockShock> = {};
+    for (const [ticker, bars] of Object.entries(allSeries)) { const s = stockShock(bars, date); if (s) day[ticker] = s; }
+    if (Object.keys(day).length) shockStocks[date] = day;
+  }
+  
   // 今夜のひと息「今日と似た日」(Nov 25): the days in the past ten years that moved like tonight, and the past big falls, from the
   // same basket levels (no extra provider calls). Each basket on its own; a basket without ten years of levels gets none.
   const history = { nas100: 'levels' in large ? similarDays(large.levels, confirmedSession) : null, sox: 'levels' in chips ? similarDays(chips.levels, confirmedSession) : null };
   const drops = { nas100: 'levels' in large ? bigDrops(large.levels, confirmedSession) : null, sox: 'levels' in chips ? bigDrops(chips.levels, confirmedSession) : null };
-  return { asOf: confirmedSession, nas100, sox, vix, moves, shock, history, drops, missing: [...new Set(missing)].sort() };
+  
+  return { asOf: confirmedSession, nas100, sox, vix, moves, shock, shockStocks, history, drops, missing: [...new Set(missing)].sort() };
 }

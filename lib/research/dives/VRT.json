@@ -1,0 +1,596 @@
+{
+ "ticker": "VRT",
+ "name": "Vertiv",
+ "exchange": "NYSE",
+ "quoteTicker": "VRT",
+ "period": "Q3 2026",
+ "periodQuarter": 3,
+ "releasedOn": "2026-10-28",
+ "periodEnd": "2026-09-30",
+ "reviewedOn": "2026-11-25",
+ "currency": "USD",
+ "basis": {
+  "eps": "adjusted diluted",
+  "grossMargin": "not reported as a percentage; the text uses adjusted operating margin",
+  "guidance": "company range for Q4 net sales $4,313–4,513M; no gross margin guidance"
+ },
+ "sources": [
+  {
+   "url": "https://www.sec.gov/Archives/edgar/data/1674101/000162828026067707/q32026exhibit991vrt10282026.htm",
+   "title": "Vertiv Reports Strong Third Quarter 2026 (Form 8-K Exhibit 99.1, October 28, 2026)",
+   "location": "Third Quarter 2026 Results, Fourth Quarter 2026 Guidance, Statements of Earnings, Balance Sheets, Regional Segment Results"
+  },
+  {
+   "url": "https://www.sec.gov/Archives/edgar/data/1674101/000162828026050323/q22026exhibit991vrt07292026.htm",
+   "title": "Vertiv Reports Strong Second Quarter 2026 (Form 8-K Exhibit 99.1, July 29, 2026)",
+   "location": "Second Quarter 2026 Results, Statements of Earnings, Regional Segment Results"
+  },
+  {
+   "url": "https://www.sec.gov/Archives/edgar/data/1674101/000162828026026379/q12026exhibit991vrt04222026.htm",
+   "title": "Vertiv First Quarter 2026 Results (Form 8-K Exhibit 99.1, April 22, 2026)",
+   "location": "Statements of Earnings"
+  },
+  {
+   "url": "https://www.sec.gov/Archives/edgar/data/1674101/000167410126000006/exhibit991vrt02112026.htm",
+   "title": "Vertiv Fourth Quarter and Full Year 2025 Results (Form 8-K Exhibit 99.1, February 11, 2026)",
+   "location": "Statements of Earnings"
+  },
+  {
+   "url": "https://www.sec.gov/Archives/edgar/data/1674101/000162828026067393/vrt-20261027.htm",
+   "title": "Vertiv Holdings Co Form 8-K, Item 2.01 Completion of Acquisition (October 27, 2026)",
+   "location": "Item 2.01 Completion of Acquisition or Disposition of Assets"
+  }
+ ],
+ "evidence": [
+  {
+   "field": "numbers.revenue.current",
+   "url": "https://www.sec.gov/Archives/edgar/data/1674101/000162828026067707/q32026exhibit991vrt10282026.htm",
+   "quote": "Net sales 4,312.8 2,675.8 10,236.6 7,349.9"
+  },
+  {
+   "field": "numbers.revenue.yearAgo",
+   "url": "https://www.sec.gov/Archives/edgar/data/1674101/000162828026067707/q32026exhibit991vrt10282026.htm",
+   "quote": "Net sales 4,312.8 2,675.8 10,236.6 7,349.9"
+  },
+  {
+   "field": "numbers.revenue.previous",
+   "url": "https://www.sec.gov/Archives/edgar/data/1674101/000162828026050323/q22026exhibit991vrt07292026.htm",
+   "quote": "Net sales 3,274.3 2,638.1 5,923.8 4,674.1"
+  },
+  {
+   "field": "numbers.adjustedEPS",
+   "url": "https://www.sec.gov/Archives/edgar/data/1674101/000162828026067707/q32026exhibit991vrt10282026.htm",
+   "quote": "Diluted EPS grew 91% to $1.95 and adjusted diluted EPS (1) grew 78% to $2.21 compared to third quarter 2025."
+  },
+  {
+   "field": "numbers.guidance.low",
+   "url": "https://www.sec.gov/Archives/edgar/data/1674101/000162828026067707/q32026exhibit991vrt10282026.htm",
+   "quote": "Fourth Quarter 2026 Guidance Net sales $4,313M - $4,513M"
+  },
+  {
+   "field": "numbers.guidance.high",
+   "url": "https://www.sec.gov/Archives/edgar/data/1674101/000162828026067707/q32026exhibit991vrt10282026.htm",
+   "quote": "Fourth Quarter 2026 Guidance Net sales $4,313M - $4,513M"
+  },
+  {
+   "field": "numbers.segments[0].revenue",
+   "url": "https://www.sec.gov/Archives/edgar/data/1674101/000162828026067707/q32026exhibit991vrt10282026.htm",
+   "quote": "AMER $ 2,988.8 $ 1,712.4 $ 1,276.4 74.5 %"
+  },
+  {
+   "field": "numbers.segments[0].previous",
+   "url": "https://www.sec.gov/Archives/edgar/data/1674101/000162828026050323/q22026exhibit991vrt07292026.htm",
+   "quote": "AMER $ 2,070.8 $ 1,602.3 $ 468.5 29.2 %"
+  },
+  {
+   "field": "numbers.segments[0].operatingMargin",
+   "url": "https://www.sec.gov/Archives/edgar/data/1674101/000162828026067707/q32026exhibit991vrt10282026.htm",
+   "quote": "AMER 29.4 % 29.3 % 0.1 %"
+  },
+  {
+   "field": "numbers.segments[0].previousOperatingMargin",
+   "url": "https://www.sec.gov/Archives/edgar/data/1674101/000162828026050323/q22026exhibit991vrt07292026.htm",
+   "quote": "AMER 27.6 % 24.0 % 3.6 %"
+  },
+  {
+   "field": "numbers.segments[1].revenue",
+   "url": "https://www.sec.gov/Archives/edgar/data/1674101/000162828026067707/q32026exhibit991vrt10282026.htm",
+   "quote": "APAC 779.3 519.8 259.5 49.9 %"
+  },
+  {
+   "field": "numbers.segments[1].previous",
+   "url": "https://www.sec.gov/Archives/edgar/data/1674101/000162828026050323/q22026exhibit991vrt07292026.htm",
+   "quote": "APAC 719.9 560.2 159.7 28.5 %"
+  },
+  {
+   "field": "numbers.segments[1].operatingMargin",
+   "url": "https://www.sec.gov/Archives/edgar/data/1674101/000162828026067707/q32026exhibit991vrt10282026.htm",
+   "quote": "APAC 17.0 % 13.2 % 3.8 %"
+  },
+  {
+   "field": "numbers.segments[1].previousOperatingMargin",
+   "url": "https://www.sec.gov/Archives/edgar/data/1674101/000162828026050323/q22026exhibit991vrt07292026.htm",
+   "quote": "APAC 13.3 % 10.6 % 2.7 %"
+  },
+  {
+   "field": "numbers.segments[2].revenue",
+   "url": "https://www.sec.gov/Archives/edgar/data/1674101/000162828026067707/q32026exhibit991vrt10282026.htm",
+   "quote": "EMEA 544.7 443.6 101.1 22.8 %"
+  },
+  {
+   "field": "numbers.segments[2].previous",
+   "url": "https://www.sec.gov/Archives/edgar/data/1674101/000162828026050323/q22026exhibit991vrt07292026.htm",
+   "quote": "EMEA 483.6 475.6 8.0 1.7 %"
+  },
+  {
+   "field": "numbers.segments[2].operatingMargin",
+   "url": "https://www.sec.gov/Archives/edgar/data/1674101/000162828026067707/q32026exhibit991vrt10282026.htm",
+   "quote": "EMEA 28.0 % 18.8 % 9.2 %"
+  },
+  {
+   "field": "numbers.segments[2].previousOperatingMargin",
+   "url": "https://www.sec.gov/Archives/edgar/data/1674101/000162828026050323/q22026exhibit991vrt07292026.htm",
+   "quote": "EMEA 25.7 % 21.9 % 3.8 %"
+  },
+  {
+   "field": "history[0].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/1674101/000162828026067707/q32026exhibit991vrt10282026.htm",
+   "quote": "Net sales 4,312.8 2,675.8 10,236.6 7,349.9"
+  },
+  {
+   "field": "history[1].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/1674101/000167410126000006/exhibit991vrt02112026.htm",
+   "quote": "Net sales 2,880.0 2,346.4 10,229.9 8,011.8"
+  },
+  {
+   "field": "history[2].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/1674101/000162828026026379/q12026exhibit991vrt04222026.htm",
+   "quote": "Net sales 2,649.5 2,036.0"
+  },
+  {
+   "field": "history[3].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/1674101/000162828026050323/q22026exhibit991vrt07292026.htm",
+   "quote": "Net sales 3,274.3 2,638.1 5,923.8 4,674.1"
+  },
+  {
+   "field": "summary.cards.change.chips[2]",
+   "url": "https://www.sec.gov/Archives/edgar/data/1674101/000162828026050323/q22026exhibit991vrt07292026.htm",
+   "quote": "Diluted EPS grew 53% to $1.27 and adjusted diluted EPS grew 60% to $1.52"
+  },
+  {
+   "field": "summary.cards.change.sections[1]",
+   "url": "https://www.sec.gov/Archives/edgar/data/1674101/000162828026067707/q32026exhibit991vrt10282026.htm",
+   "quote": "driven by operational leverage on higher sales and by manufacturing productivity"
+  },
+  {
+   "field": "summary.conclusion[1]",
+   "url": "https://www.sec.gov/Archives/edgar/data/1674101/000162828026067707/q32026exhibit991vrt10282026.htm",
+   "quote": "give Vertiv the confidence to raise full year net sales guidance by $650 million"
+  },
+  {
+   "field": "summary.cards.caution.sections[0]",
+   "url": "https://www.sec.gov/Archives/edgar/data/1674101/000162828026067707/q32026exhibit991vrt10282026.htm",
+   "quote": "Net cash generated by operating activities in the third quarter was $794 million, and adjusted free cash flow was $652 million"
+  },
+  {
+   "field": "summary.cards.caution.sections[0]",
+   "url": "https://www.sec.gov/Archives/edgar/data/1674101/000162828026050323/q22026exhibit991vrt07292026.htm",
+   "quote": "Operating cash flow of $1,100 million and adjusted free cash flow of $925 million"
+  },
+  {
+   "field": "summary.cards.caution.sections[1]",
+   "url": "https://www.sec.gov/Archives/edgar/data/1674101/000162828026067707/q32026exhibit991vrt10282026.htm",
+   "quote": "Deferred revenue 4,120.5 1,814.7"
+  },
+  {
+   "field": "summary.cards.caution.sections[2]",
+   "url": "https://www.sec.gov/Archives/edgar/data/1674101/000162828026067393/vrt-20261027.htm",
+   "quote": "approximately $1.45 billion in upfront cash at closing"
+  },
+  {
+   "field": "summary.cards.caution.sections[2]",
+   "url": "https://www.sec.gov/Archives/edgar/data/1674101/000162828026067393/vrt-20261027.htm",
+   "quote": "additional potential cash consideration of up to $1.15 billion"
+  },
+  {
+   "field": "summary.cards.caution.sections[2]",
+   "url": "https://www.sec.gov/Archives/edgar/data/1674101/000162828026067707/q32026exhibit991vrt10282026.htm",
+   "quote": "Cash and cash equivalents $ 3,512.9 $ 1,728.4"
+  },
+  {
+   "field": "summary.cards.caution.sections[2]",
+   "url": "https://www.sec.gov/Archives/edgar/data/1674101/000162828026067707/q32026exhibit991vrt10282026.htm",
+   "quote": "Long-term debt, net 2,925.1 2,892.1"
+  },
+  {
+   "field": "summary.cards.next.sections[0]",
+   "url": "https://www.sec.gov/Archives/edgar/data/1674101/000162828026067707/q32026exhibit991vrt10282026.htm",
+   "quote": "Adjusted operating margin (2) 25.3% - 26.3%"
+  },
+  {
+   "field": "summary.cards.next.chips[2]",
+   "url": "https://www.sec.gov/Archives/edgar/data/1674101/000162828026067707/q32026exhibit991vrt10282026.htm",
+   "quote": "Adjusted diluted EPS (1) $2.22 - $2.28"
+  },
+  {
+   "field": "summary.cards.next.sections[1]",
+   "url": "https://www.sec.gov/Archives/edgar/data/1674101/000162828026067707/q32026exhibit991vrt10282026.htm",
+   "quote": "Net sales $14,450M - $14,850M"
+  },
+  {
+   "field": "tiles[0].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/1674101/000162828026067707/q32026exhibit991vrt10282026.htm",
+   "quote": "Vertiv reported third quarter net sales of $4,313 million, an increase of $1,637 million, or 61%, compared to third quarter 2025, reflecting 55% organic sales growth and approximately 6% contribution from acquisitions.",
+   "calc": "4313/1000",
+   "round": 2
+  },
+  {
+   "field": "tiles[0].note",
+   "url": "https://www.sec.gov/Archives/edgar/data/1674101/000162828026067707/q32026exhibit991vrt10282026.htm",
+   "quote": "Vertiv reported third quarter net sales of $4,313 million, an increase of $1,637 million, or 61%, compared to third quarter 2025, reflecting 55% organic sales growth and approximately 6% contribution from acquisitions."
+  },
+  {
+   "field": "tiles[1].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/1674101/000162828026067707/q32026exhibit991vrt10282026.htm",
+   "quote": "Vertiv 25.2 % 22.3 % 2.9 %"
+  },
+  {
+   "field": "tiles[1].note",
+   "url": "https://www.sec.gov/Archives/edgar/data/1674101/000162828026067707/q32026exhibit991vrt10282026.htm",
+   "quote": "Vertiv 25.2 % 22.3 % 2.9 %"
+  },
+  {
+   "field": "tiles[1].note",
+   "url": "https://www.sec.gov/Archives/edgar/data/1674101/000162828026050323/q22026exhibit991vrt07292026.htm",
+   "quote": "Vertiv 22.6 % 18.5 % 4.1 %"
+  },
+  {
+   "field": "tiles[2].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/1674101/000162828026067707/q32026exhibit991vrt10282026.htm",
+   "quote": "Our more than 100% organic orders growth year over year"
+  }
+ ],
+ "tiles": [
+  {
+   "label": {
+    "ja": "売上高",
+    "en": "Net sales"
+   },
+   "value": {
+    "ja": "43.13億ドル",
+    "en": "$4.31B"
+   },
+   "note": {
+    "ja": "前年同期比 +61%(既存事業で +55%)",
+    "en": "+61% YoY (+55% organic)"
+   }
+  },
+  {
+   "label": {
+    "ja": "調整後営業利益率",
+    "en": "Adjusted operating margin"
+   },
+   "value": {
+    "ja": "25.2%",
+    "en": "25.2%"
+   },
+   "note": {
+    "ja": "前年同期 22.3%・前四半期 22.6%",
+    "en": "Year ago 22.3%; prior quarter 22.6%"
+   }
+  },
+  {
+   "label": {
+    "ja": "受注の伸び(既存事業)",
+    "en": "Organic orders growth"
+   },
+   "value": {
+    "ja": "100%超",
+    "en": "over 100%"
+   },
+   "note": {
+    "ja": "前年同期比",
+    "en": "Year over year"
+   }
+  }
+ ],
+ "numbers": {
+  "revenue": {
+   "current": 4312.8,
+   "previous": 3274.3,
+   "yearAgo": 2675.8
+  },
+  "adjustedEPS": 2.21,
+  "epsEstimate": null,
+  "grossMargin": null,
+  "guidance": {
+   "low": 4313,
+   "high": 4513,
+   "grossMarginPercent": null
+  },
+  "segments": [
+   {
+    "key": "amer",
+    "nameJa": "米州",
+    "nameEn": "Americas",
+    "revenue": 2988.8,
+    "previous": 2070.8,
+    "operatingMargin": 29.4,
+    "previousOperatingMargin": 27.6
+   },
+   {
+    "key": "apac",
+    "nameJa": "アジア太平洋",
+    "nameEn": "Asia Pacific",
+    "revenue": 779.3,
+    "previous": 719.9,
+    "operatingMargin": 17.0,
+    "previousOperatingMargin": 13.3
+   },
+   {
+    "key": "emea",
+    "nameJa": "欧州・中東・アフリカ",
+    "nameEn": "EMEA",
+    "revenue": 544.7,
+    "previous": 483.6,
+    "operatingMargin": 28.0,
+    "previousOperatingMargin": 25.7
+   }
+  ]
+ },
+ "history": [
+  {
+   "label": "Q3",
+   "end": "2025-09-30",
+   "value": 2675.8
+  },
+  {
+   "label": "Q4",
+   "end": "2025-12-31",
+   "value": 2880.0
+  },
+  {
+   "label": "Q1",
+   "end": "2026-03-31",
+   "value": 2649.5
+  },
+  {
+   "label": "Q2",
+   "end": "2026-06-30",
+   "value": 3274.3
+  }
+ ],
+ "summary": {
+  "conclusion": [
+   {
+    "ja": "売上は43.13億ドルで、前四半期から31.7%、前年同期から61%増えました。伸びの中心は米州で、売上の約7割を占めます。調整後の営業利益率は25.2%に上がりました。",
+    "en": "Net sales were $4.31B, up 31.7% from the previous quarter and 61% from a year earlier. The Americas led and made up about 70% of sales. Adjusted operating margin rose to 25.2%."
+   },
+   {
+    "ja": "受注は前年同期の2倍を超え、会社は年間の売上見通しを6.5億ドル引き上げました。一方、次の四半期の売上見通しの下限は今回の実績と同じ水準で、前期比の伸びは小さくなる予定です。",
+    "en": "Organic orders more than doubled year over year, and the company raised its full-year sales outlook by $650M. But the low end of next quarter's outlook equals this quarter's sales, so sequential growth is set to slow."
+   }
+  ],
+  "cards": {
+   "growth": {
+    "headline": {
+     "ja": "米州の売上が前期比44%増",
+     "en": "Americas sales up 44% QoQ"
+    },
+    "chips": [
+     {
+      "tone": "up",
+      "text": {
+       "ja": "米州 前期比 +44.3%",
+       "en": "Americas +44.3% QoQ"
+      }
+     },
+     {
+      "tone": "up",
+      "text": {
+       "ja": "米州の利益率 27.6% → 29.4%",
+       "en": "Americas margin 27.6% → 29.4%"
+      }
+     }
+    ],
+    "sections": [
+     {
+      "key": "happened",
+      "text": {
+       "ja": "米州の売上は20.71億ドルから29.89億ドルへ9.18億ドル増えました。調整後の営業利益率は27.6%から29.4%に上がっています。",
+       "en": "Americas sales rose $918M from $2.07B to $2.99B. Its adjusted operating margin rose from 27.6% to 29.4%."
+      }
+     },
+     {
+      "key": "good",
+      "text": {
+       "ja": "会社全体の売上は前期から10.39億ドル増え、そのうち約88%が米州の増加分です。データセンター向けの電源・冷却装置の需要が強く、米州では売上と利益率がそろって上がりました。",
+       "en": "Total sales rose $1.04B from the previous quarter, and about 88% of that came from the Americas. Strong demand for data-center power and cooling gear lifted both sales and margin there."
+      }
+     },
+     {
+      "key": "watch",
+      "text": {
+       "ja": "伸びが米州に偏っています。欧州・中東・アフリカは前年同期比23%増と、米州(75%増)に比べて伸びが小さい地域です。",
+       "en": "Growth is concentrated in the Americas. EMEA grew 23% year over year, well behind the Americas at 75%."
+      }
+     }
+    ],
+    "segment": "amer"
+   },
+   "change": {
+    "headline": {
+     "ja": "売上は前期比 +31.7%、3地域とも利益率が上昇",
+     "en": "Sales up 31.7% QoQ; margins up in all three regions"
+    },
+    "chips": [
+     {
+      "tone": "up",
+      "text": {
+       "ja": "売上 前期比 +31.7%",
+       "en": "Sales +31.7% QoQ"
+      }
+     },
+     {
+      "tone": "up",
+      "text": {
+       "ja": "調整後営業利益率 22.6% → 25.2%",
+       "en": "Adj. operating margin 22.6% → 25.2%"
+      }
+     },
+     {
+      "tone": "up",
+      "text": {
+       "ja": "調整後EPS 1.52ドル → 2.21ドル",
+       "en": "Adj. EPS $1.52 → $2.21"
+      }
+     }
+    ],
+    "sections": [
+     {
+      "key": "happened",
+      "text": {
+       "ja": "売上は32.74億ドルから43.13億ドルへ10.39億ドル増えました。調整後の営業利益率は22.6%から25.2%に上がり、調整後EPSは1.52ドルから2.21ドルに増えています。",
+       "en": "Net sales rose $1.04B from $3.27B to $4.31B. Adjusted operating margin rose from 22.6% to 25.2%, and adjusted EPS rose from $1.52 to $2.21."
+      }
+     },
+     {
+      "key": "good",
+      "text": {
+       "ja": "米州・アジア太平洋・欧州の3地域すべてで、調整後の営業利益率が前四半期より上がりました。売上が増えて工場の稼働が上がり、生産性も改善したと会社は説明しています。",
+       "en": "Adjusted operating margins rose in all three regions from the previous quarter. The company cited operating leverage on higher sales and better manufacturing productivity."
+      }
+     },
+     {
+      "key": "watch",
+      "text": {
+       "ja": "前年比の伸び61%のうち、約6%分は買収した会社の売上です。既存事業だけの伸びは55%です。",
+       "en": "About 6 points of the 61% year-over-year growth came from acquisitions; organic growth was 55%."
+      }
+     },
+     {
+      "key": "view",
+      "text": {
+       "ja": "今年の売上は第1四半期にいったん減ったあと、2四半期続けて大きく増えました。受注の強さが売上に表れてきています。",
+       "en": "Sales dipped in the first quarter, then rose sharply two quarters in a row. Strong orders are now showing up in revenue."
+      }
+     }
+    ],
+    "segment": null
+   },
+   "caution": {
+    "headline": {
+     "ja": "現金の伸びが鈍り、買収で支出が増える",
+     "en": "Cash generation slowed, and an acquisition adds spending"
+    },
+    "chips": [
+     {
+      "tone": "down",
+      "text": {
+       "ja": "調整後フリーCF 9.25億 → 6.52億ドル",
+       "en": "Adj. free cash flow $925M → $652M"
+      }
+     },
+     {
+      "tone": "gold",
+      "text": {
+       "ja": "前受け金 18.15億 → 41.21億ドル",
+       "en": "Deferred revenue $1.81B → $4.12B"
+      }
+     },
+     {
+      "tone": "gold",
+      "text": {
+       "ja": "UIG買収 14.5億ドル+最大11.5億ドル",
+       "en": "UIG deal $1.45B + up to $1.15B"
+      }
+     }
+    ],
+    "sections": [
+     {
+      "key": "happened",
+      "text": {
+       "ja": "営業キャッシュフローは7.94億ドル、調整後フリーキャッシュフローは6.52億ドルで、前年同期よりは増えましたが、前四半期の11.00億ドル・9.25億ドルからは減りました。運転資金と設備投資が増えたためです。",
+       "en": "Operating cash flow was $794M and adjusted free cash flow $652M, up from a year earlier but down from $1.10B and $925M last quarter, due to more working capital and capex."
+      }
+     },
+     {
+      "key": "means",
+      "text": {
+       "ja": "顧客から先に受け取った前受け金は、昨年末の18.15億ドルから41.21億ドルに増えました。将来の売上の裏付けになる一方、まだ製品を渡していない約束でもあります。",
+       "en": "Deferred revenue, cash received from customers in advance, rose from $1.81B at the end of 2025 to $4.12B. It supports future sales, but it is also a promise not yet delivered."
+      }
+     },
+     {
+      "key": "watch",
+      "text": {
+       "ja": "10月27日にはUtility Innovation Holdings(UIG)の買収を完了し、14.5億ドルを現金で払い、条件を満たせば最大11.5億ドルを追加で払います。9月末の現金は35.13億ドル、長期借入は29.25億ドルです。",
+       "en": "On October 27 Vertiv closed the purchase of Utility Innovation Holdings (UIG) for about $1.45B in cash, plus up to $1.15B more if targets are met. At September 30 it had $3.51B of cash and $2.93B of long-term debt."
+      }
+     },
+     {
+      "key": "view",
+      "text": {
+       "ja": "受注と前受け金は強い一方で、増産のための投資と買収で現金の出も増えています。利益が現金としてどれだけ残るかを、売上と一緒に追います。",
+       "en": "Orders and advances are strong, but capacity spending and acquisitions also use more cash. Track how much profit turns into cash, alongside sales."
+      }
+     }
+    ],
+    "segment": null
+   },
+   "next": {
+    "headline": {
+     "ja": "次期の売上見通しは43.13〜45.13億ドル",
+     "en": "Next quarter sales outlook: $4.31–4.51B"
+    },
+    "chips": [
+     {
+      "tone": "gold",
+      "text": {
+       "ja": "売上 43.13〜45.13億ドル",
+       "en": "Sales $4.31–4.51B"
+      }
+     },
+     {
+      "tone": "gold",
+      "text": {
+       "ja": "調整後営業利益率 25.3〜26.3%",
+       "en": "Adj. operating margin 25.3–26.3%"
+      }
+     },
+     {
+      "tone": "gold",
+      "text": {
+       "ja": "調整後EPS 2.22〜2.28ドル",
+       "en": "Adj. EPS $2.22–2.28"
+      }
+     }
+    ],
+    "sections": [
+     {
+      "key": "happened",
+      "text": {
+       "ja": "会社は第4四半期の売上を43.13億〜45.13億ドル、調整後営業利益率を25.3〜26.3%と見込んでいます。下限は今回の売上と同じで、上限でも前期比約4.6%の増加です。",
+       "en": "The company expects fourth-quarter sales of $4.31B–$4.51B with an adjusted operating margin of 25.3–26.3%. The low end equals this quarter's sales; even the high end is only about 4.6% higher."
+      }
+     },
+     {
+      "key": "means",
+      "text": {
+       "ja": "前期比の伸びは今回の31.7%から大きく鈍る見通しです。一方、利益率はさらに少し上がる予定で、年間の売上見通しは144.5億〜148.5億ドルに引き上げられました。",
+       "en": "Sequential growth is set to slow sharply from 31.7%. Margins are guided slightly higher, and the full-year sales outlook was raised to $14.45B–$14.85B."
+      }
+     },
+     {
+      "key": "view",
+      "text": {
+       "ja": "次の決算では、売上が見通しの幅のどこに入るか、2倍を超えた受注がいつ売上になるか、UIG買収の費用がどう表れるかを確かめます。",
+       "en": "Next time, check where sales land in the range, when the doubled orders turn into revenue, and how the UIG deal shows up in costs."
+      }
+     }
+    ],
+    "segment": null
+   }
+  }
+ }
+}

@@ -7,10 +7,10 @@ import { livePaymentRuntime } from './payments/live-runtime.mjs';
 import { liveConfigSelfCheck } from './payments/live-config-check.mjs';
 import {riskRequest} from './risk-store.mjs';
 import {createThermometerRead} from './thermometer-read.mjs';
+import {createTodayPlanRead} from './today-plan-read.mjs';
 import { operateNotificationSettings } from '../../lib/resolute/notification-database.ts';
 import { operateLatestAlert } from '../../lib/resolute/latest-alert-database.ts';
 import { operateTonight } from '../../lib/resolute/tonight-database.ts';
-import { createTonightQuestionGenerator } from './tonight-questions.mjs';
 import { createApiServer } from './http-server.mjs';
 import { authConfig } from './auth.mjs';
 import { createHandler } from './handler.mjs';
@@ -27,11 +27,13 @@ const payments=paymentRuntime(process.env,config);
 const livePayments=livePaymentRuntime(process.env,config);
 // A wrong thermometer setting must not take the whole API down: the page stays 「準備中」.
 let thermometer;try{thermometer=createThermometerRead(process.env);}catch{console.error('RESOLUTE_THERMOMETER_READ_MISCONFIGURED');}
-// 今夜のひと息 (Nov 25): off unless RESOLUTE_TONIGHT_API_ENABLED=true (db/resolute/027_tonight.sql applied first); the AI questions
-// separately off unless RESOLUTE_TONIGHT_AI_ENABLED=true. Plan and settings are read through their own stores, as the member.
-const tonightDeps={readPlan:async(id,owner)=>(await operateResolutePlan(id,'GET',undefined,owner)).plan,readSettings:async(id,owner)=>(await operateNotificationSettings(id,'GET',undefined,owner)).settings,generate:createTonightQuestionGenerator()};
+// 「今日やること」: off unless RESOLUTE_TODAY_PLAN_ENABLED=true; a wrong setting answers 503 and the site shows the fixed sentence.
+let todayPlan;try{todayPlan=createTodayPlanRead(process.env);}catch{console.error('RESOLUTE_TODAY_PLAN_READ_MISCONFIGURED');}
+// 今夜のひと息 (Nov 25): off unless RESOLUTE_TONIGHT_API_ENABLED=true (db/resolute/028_tonight.sql applied first); the AI questions are
+// made by the daily member job (today-plan-job.mjs). Plan and settings are read through their own stores, as the member.
+const tonightDeps={readPlan:async(id,owner)=>(await operateResolutePlan(id,'GET',undefined,owner)).plan,readSettings:async(id,owner)=>(await operateNotificationSettings(id,'GET',undefined,owner)).settings};
 const tonight=(userId,input,ownerAccess)=>operateTonight(userId,input,ownerAccess,tonightDeps);
-const handler=createHandler(config,getResoluteEntitlementsForUser,undefined,operateResolutePlan,operateNotificationSettings,riskRequest,rizelReviewRequest,aiCheckRequest,mailStopRequest,operateLatestAlert,thermometer,tonight);
+const handler=createHandler(config,getResoluteEntitlementsForUser,undefined,operateResolutePlan,operateNotificationSettings,riskRequest,rizelReviewRequest,aiCheckRequest,mailStopRequest,operateLatestAlert,thermometer,todayPlan,tonight);
 const feedback=createMailFeedbackRuntime(process.env);
 const server=createApiServer(async request=>await feedback(request) ?? await livePayments(request) ?? await payments(request) ?? await handler(request));
 server.listen(Number(process.env.PORT || 3000),'::',()=>console.log('RESOLUTE_API_READY'));

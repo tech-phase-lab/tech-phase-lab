@@ -87,31 +87,34 @@ test('ranking: market-wide news first, then single-company news, opinion pieces 
  const lastReal=order.lastIndexOf('realistic'),firstOpinion=order.indexOf('opinion');
  assert.ok(firstOpinion===-1||lastReal<firstOpinion,order.join(','));
  assert.deepEqual(order.slice(0,3),['realistic','realistic','realistic']);
- // Nov 25: the market-wide story (Nasdaq futures, TP大型株100) leads, then the chip-sector one (memory chip prices, TP半導体40),
- // then single-company news; one story per index and close, one per company.
- assert.deepEqual(selected.map(c=>c.title),['Nasdaq futures drop as Treasury yields jump on inflation worries','Micron cuts production forecast as memory chip prices weaken','Broadcom shares slide after customer delays AI chip orders']);
- assert.deepEqual(diagnostics.scopes,{market:3,semis:2,company:6});
+ // Nov 25 (owner): only the move AFTER publication counts, and one move goes to one story. The market-wide story (Nasdaq futures,
+ // 06:20 New York, before Monday's open) holds Monday. Nvidia (12:20, during hours) is measured on Tuesday and holds it. Micron
+ // (named in its headline: single-company news) is also on Monday, which the market-wide story holds: shown without stars.
+ assert.deepEqual(selected.map(c=>c.title),['Nasdaq futures drop as Treasury yields jump on inflation worries','Nvidia shares fall 3% after report of tighter China export curbs','Micron cuts production forecast as memory chip prices weaken']);
+ assert.deepEqual(selected.map(c=>c.starred),[undefined,true,false]);
+ assert.deepEqual(diagnostics.scopes,{market:3,semis:1,company:7});
  assert.equal(new Set(selected.map(c=>c.tickers[0]??'market')).size,3);
  // The ASML story has no downside keyword in its headline: the provider's Negative sentiment and the roster admit it.
  assert.ok([...selected,...reserve].some(c=>c.title.startsWith('ASML')));
  assert.ok(candidateScore({title:'3 AI Stocks to Buy as Chip Shares Drop',headlineDownside:true,tickers:['NVDA']})<candidateScore({title:'Micron cuts production forecast',headlineDownside:true,providerNegative:true,tickers:['MU']}));
 });
 
-test('the Nov 24 morning, rerun with the fixes, publishes three different stories: market-wide and chip-sector ones with stars on their own index, one company without',async()=>{
+test('the Nov 24 morning, rerun with the fixes, publishes three different stories: one starred on Monday\'s move, one waiting for Tuesday, one company without',async()=>{
  const {read}=provider();
  const db=await setup(),pool=quietPool(),tried=[];
  try{
   const result=await prepareDailyReview({enabled:true,now,selectionPool:db,budgetPool:pool,publishPool:pool,readFeed:read,
    readMoves:async()=>fixture.moves,summarize:judge(tried),select});
-  assert.equal(result.state,'ready');assert.equal(result.count,3);assert.equal(result.waitingForMarket,0);assert.equal(result.companyNews,1);
+  assert.equal(result.state,'ready');assert.equal(result.count,3);assert.equal(result.waitingForMarket,1);assert.equal(result.companyNews,2);
   assert.equal(result.diagnostics.coverageComplete,true);assert.equal(result.diagnostics.attempts,3);
   assert.ok(tried.every(t=>kindOf(t)==='realistic'));
   assert.equal(pool.saved.length,1);assert.equal(pool.saved[0].state,'ready');
-  const [market,semis,company]=pool.saved[0].articles;
+  const [market,waiting,company]=pool.saved[0].articles;
   // Both indices are measured for each story (owner, Nov 25); the scope only decides which is listed first.
   const reading={from:'2026-11-21',nas100:{changePercent:-1.3,multiple:1.6,same:78,total:100},sox:{changePercent:-2.4,multiple:1.6,same:34,total:40},fearChange:6};
-  assert.deepEqual([market.market,market.stars],[{index:'nas100',session:fixture.knownSession,reading},2]);
-  assert.deepEqual([semis.market,semis.stars],[{index:'sox',session:fixture.knownSession,reading},2]);
+  assert.deepEqual([market.market,market.stars],[{index:'nas100',session:fixture.knownSession,reading,headline:'down'},2]);
+  // Nvidia came out during Monday's session: it waits for Tuesday (its stock and TP半導体40 must both move strongly).
+  assert.deepEqual([waiting.market,waiting.stars],[{index:'company',session:'2026-11-24',reading:null,company:{ticker:'NVDA',basket:'sox'},headline:'down'},null]);
   assert.deepEqual([company.market,company.stars],[{index:'company',session:null,reading:null},null]);
  }finally{await db.close();}
 });

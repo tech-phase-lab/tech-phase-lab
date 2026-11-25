@@ -20,7 +20,8 @@ import {prepareDailyReview} from '../services/resolute-api/rizel-daily-review.mj
 import {OWNER_ACCOUNT_ID} from '../lib/membership/entitlements.ts';
 
 const read=path=>readFileSync(new URL(path,import.meta.url),'utf8');
-const candidate={id:hash('https://investor.nvidia.com/shock'),url:'https://investor.nvidia.com/shock',title:'NVIDIA warns of export restrictions',body:'NVIDIA said on October 12 that export restrictions across the semiconductor sector are planned. Revenue was 57 billion dollars.',publishedAt:'2026-10-12T18:00:00.000Z',source:'official',tickers:['NVDA']};
+// Before the U.S. open (08:00 New York): measured on that session.
+const candidate={id:hash('https://investor.nvidia.com/shock'),url:'https://investor.nvidia.com/shock',title:'Chipmakers warn of export restrictions',body:'NVIDIA said on October 12 that export restrictions across the semiconductor sector are planned. Revenue was 57 billion dollars.',publishedAt:'2026-10-12T12:00:00.000Z',source:'official',tickers:['NVDA']};
 const clean={publishable:true,ja:{title:'NVIDIAが輸出規制について発表',source:'NVIDIAの公式発表',content:'NVIDIAが10月12日、半導体業界への輸出規制が計画段階にあると発表しました。',date:'10月12日の発表'},en:{title:'NVIDIA on export restrictions',source:'NVIDIA announcement',content:'NVIDIA said on October 12 that export restrictions across the semiconductor sector are planned.',date:'October 12'}};
 const banned={...clean,ja:{...clean.ja,content:'NVIDIAが輸出規制を発表しました。影響は小さいと見られ、一時的な下げになりそうです。'}};
 

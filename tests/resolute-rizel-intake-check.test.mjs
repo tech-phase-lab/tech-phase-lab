@@ -29,7 +29,8 @@ test('diagnostic rejects unavailable sources and CLI redacts configuration error
  test('daily window includes the previous US session; delayed, undated and future news never become today',async()=>{
  const times=['2026-10-19T14:59:59.999Z','2026-10-19T15:00:00Z','2026-10-19T11:00:00-04:00','2026-10-20T00:00:00Z','2026-10-20T00:00:00.001Z',undefined,'2026-10-20T01:00:00'];
  const report=await checkIntake({now,readFeed:async()=>({ok:true,enabled:true,items:times.map((publishedAt,i)=>({...article,title:article.title+' '+i,url:article.url+'/'+i,publishedAt,observedAt:now.toISOString(),updatedAt:now.toISOString(),publishedOn:'2026-10-19'}))})});
- assert.equal(report.diagnostics.scopes.semis,4);assert.equal(report.candidateCount,1);assert.equal(report.diagnostics.outsideDailyWindow,0);assert.equal(report.diagnostics.rejected.date,3);
+ // Nov 25: a headline naming one company (NVIDIA) is single-company news even with "export restrictions" in it.
+ assert.equal(report.diagnostics.scopes.company,4);assert.equal(report.candidateCount,1);assert.equal(report.diagnostics.outsideDailyWindow,0);assert.equal(report.diagnostics.rejected.date,3);
  });
 
 test('calendar overflow is not normalized into a fresh publication',async()=>{

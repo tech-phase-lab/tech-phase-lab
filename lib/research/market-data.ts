@@ -4,6 +4,7 @@ import { shapePeriod, periodSeries, isIntradayPeriod, type BoardPeriod } from ".
 import { FAST_QUOTE_TTL_MS } from "./quote-refresh-gate.ts";
 import { MAX_QUOTES_PER_REQUEST, MAX_SPARKLINES_PER_REQUEST, STALE_LIMIT_MS, barSlotMs, quoteSlotMs, stocksTrading, type ReadSpec, type Tier } from "./twelve-budget.ts";
 import { LEVERAGED_ETFS, leveragedDue, type LeveragedSnapshot } from "./leveraged-etfs.ts";
+import { BOARD_SNAPSHOT_PERIOD, boardDue, boardJobKey } from "./market-snapshot.ts";
 import { isBudgetError, sharedReader, twelveCall } from "./twelve-gateway";
 import { cachedStatistics } from "./twelve-store";
 import { easternToIso, chartSpec, nextEarningsFromSite, parseBars, parseNextEarnings, parseQuote, parseQuotes, parseStatistics, hasStatFacts, splitBars, type StatFacts, type Bar, type ChartRange, type MarketFacts, type MarketQuote } from "./market-quote";
@@ -72,7 +73,7 @@ const resolvedVariant = new Map<string, Variant>();
 const unresolved = new Map<string, number>();
 /** The first way of asking that answers. A symbol no way could serve is not asked again for twenty seconds (short: a rate-limit blip must not
  * hide a symbol for minutes); a refused minute is not a failure of the symbol and stops the attempts at once. */
-async function resolveFresh(id: string): Promise<Board> {
+async function resolveFresh(id: string, tier: Tier = "user"): Promise<Board> {
   if ((unresolved.get(id) ?? 0) > Date.now()) throw new Error(`unresolved ${id}`);
   const entry = MARKET_SYMBOLS[id], known = resolvedVariant.get(id);
   const tried: string[] = [];
@@ -80,7 +81,7 @@ async function resolveFresh(id: string): Promise<Board> {
   const attempt = async (variant: Variant): Promise<Board | null> => {
     const { symbol = id, ...extra } = variant;
     try {
-      const quote = parseQuote(await call("quote", { symbol, ...extra, prepost: "true" }), symbol);
+      const quote = parseQuote(await call("quote", { symbol, ...extra, prepost: "true" }, tier), symbol);
       if (!quote) throw new Error("no quote");
       resolvedVariant.set(id, variant);
       return { variant, quote };
@@ -90,7 +91,7 @@ async function resolveFresh(id: string): Promise<Board> {
   for (const variant of order) { if (refused) break; const got = await attempt(variant); if (got) return got; }
   if (entry.search && !refused) {
     try {
-      const body = await call("symbol_search", { symbol: entry.search, outputsize: "10" }) as { data?: { symbol?: unknown; instrument_name?: unknown; exchange?: unknown; instrument_type?: unknown }[] };
+      const body = await call("symbol_search", { symbol: entry.search, outputsize: "10" }, tier) as { data?: { symbol?: unknown; instrument_name?: unknown; exchange?: unknown; instrument_type?: unknown }[] };
       const list = (Array.isArray(body?.data) ? body.data : []).filter(item => typeof item.symbol === "string");
       console.warn(`market symbol ${id}: the provider's search for "${entry.search}" lists ${list.map(item => `${item.symbol} (${String(item.instrument_name)}, ${String(item.exchange)}, ${String(item.instrument_type)})`).join("; ") || "nothing"}`);
       for (const item of list.slice(0, 4)) { const got = await attempt({ symbol: String(item.symbol), ...(typeof item.exchange === "string" && item.exchange ? { exchange: item.exchange } : {}) }); if (got) return got; }
@@ -121,14 +122,14 @@ export function intradayParams(symbol: string, interval: string): { prepost?: "t
 }
 /** One bar series from the shared copy of its slot (one provider credit for everyone), else the last good copy. `fetch` false: copies only;
  * a function: asked only when the provider would really be read (no fresh copy), and false keeps the last good copy. */
-async function bars(ticker: string, interval: string, size: number, { slotMs, fetch = true }: { slotMs?: number; fetch?: boolean | (() => boolean) } = {}): Promise<Bar[]> {
+async function bars(ticker: string, interval: string, size: number, { slotMs, fetch = true, tier = "user" }: { slotMs?: number; fetch?: boolean | (() => boolean); tier?: Tier } = {}): Promise<Bar[]> {
   const spec: ReadSpec = { name: "md-bars-v1", slotMs: slotMs ?? barSlotMs(ticker, interval, Date.now()), staleMs: STALE_LIMIT_MS };
   const got = await sharedReader.read<Bar[]>(spec, `${ticker}|${interval}|${size}`, fetch ? async () => {
     if (typeof fetch === "function" && !fetch()) throw new Error("no-read-allowance");
     const base = { interval, outputsize: String(size), order: "desc" };
     const target = MARKET_SYMBOLS[ticker] ? await marketTarget(ticker) : null;
-    return parseBars(target ? await call("time_series", { symbol: target.symbol, ...base, ...intradayParams(ticker, interval), ...target.extra })
-      : await call("time_series", { symbol: ticker, ...base, ...intradayParams(ticker, interval) }));
+    return parseBars(target ? await call("time_series", { symbol: target.symbol, ...base, ...intradayParams(ticker, interval), ...target.extra }, tier)
+      : await call("time_series", { symbol: ticker, ...base, ...intradayParams(ticker, interval) }, tier));
   } : null);
   if (!got) throw new Error("bars-unavailable");
   return got.value;
@@ -227,11 +228,12 @@ export async function loadMarketFacts(ticker: string): Promise<MarketFacts & { c
  * panel reads the three ETFs that track them. The percentage is the ETF's and the column says so; never mix in an unchecked symbol. */
 /** The price board: one quote per requested symbol (those that cannot be read are simply absent, and logged). */
 export type BoardQuote = { id: string; price: number; change: number | null; percentChange: number | null; currency: string; asOf: string; marketOpen: boolean; extended: MarketQuote["extended"]; high: number | null; low: number | null; open: number | null; volume: number | null };
+const boardQuote = (id: string, quote: MarketQuote): BoardQuote => ({ id, price: quote.price, change: quote.change, percentChange: quote.percentChange, currency: quote.currency, asOf: quote.asOf, marketOpen: quote.marketOpen, extended: quote.extended, high: quote.high, low: quote.low, open: quote.open, volume: quote.volume });
 export async function loadBoard(ids: string[], fast = false): Promise<BoardQuote[]> {
   const out: BoardQuote[] = [];
   await Promise.all(ids.filter(isMarketChartSymbol).map(async id => {
     const quote = (await boardEntry(id, fast))?.quote;
-    if (quote) out.push({ id, price: quote.price, change: quote.change, percentChange: quote.percentChange, currency: quote.currency, asOf: quote.asOf, marketOpen: quote.marketOpen, extended: quote.extended, high: quote.high, low: quote.low, open: quote.open, volume: quote.volume });
+    if (quote) out.push(boardQuote(id, quote));
   }));
   return ids.flatMap(id => out.filter(item => item.id === id));
 }
@@ -281,4 +283,60 @@ export async function loadLeveragedSnapshot(): Promise<{ quotes: Record<string, 
     if (LEVERAGED_FUNDS.has(symbol)) at = at === null ? entry.at : Math.min(at, entry.at);
   }
   return { quotes, at, filled };
+}
+
+/** マーケット: every tab's cards and each tab's first chart in ONE shared snapshot (lib/research/market-snapshot.ts; owner, Nov 25: a tab not
+ * opened yet took seconds). The minute job (refreshBoardSnapshot, from app/api/research/compare/warm) reads what is due on the "warm" tier,
+ * through the same shared copies members' reads use — a copy someone already read this slot costs nothing — and writes the snapshot again.
+ * Members only read it (loadBoardSnapshot); only a new deployment's very first visitor fills it once. */
+const BOARD_SNAPSHOT_SPEC: ReadSpec = { name: "md-board-snap-v1", slotMs: 60_000, staleMs: STALE_LIMIT_MS };
+type BoardSnapshot = { at: number; entries: Record<string, { at: number; quote?: BoardQuote; bars?: Bar[] }> };
+async function currentBoardSnapshot(): Promise<BoardSnapshot | null> {
+  return (await sharedReader.read<BoardSnapshot>(BOARD_SNAPSHOT_SPEC, "all", null).catch(() => null))?.value ?? null;
+}
+let boardRun: Promise<{ spent: number; read: number; failed: number }> | null = null;
+/** One minute of the background refresh: the credits asked of the provider (spent), the entries stored and those refused or failed. */
+export function refreshBoardSnapshot(now = Date.now()): Promise<{ spent: number; read: number; failed: number }> {
+  return boardRun ??= (async () => {
+    const old = await currentBoardSnapshot();
+    const entries: BoardSnapshot["entries"] = { ...(old?.entries ?? {}) };
+    const due = boardDue(Object.fromEntries(Object.entries(entries).map(([key, entry]) => [key, now - entry.at])), stocksTrading(now));
+    const series = periodSeries(BOARD_SNAPSHOT_PERIOD);
+    let spent = 0, read = 0, failed = 0;
+    await Promise.all(due.map(async job => {
+      try {
+        if (job.kind === "quote") {
+          const got = await sharedReader.read<Board>(boardSpec(false), job.id, () => { spent++; return resolveFresh(job.id, "warm"); });
+          if (!got?.fresh) throw new Error("not-read");
+          resolvedVariant.set(job.id, got.value.variant);
+          entries[boardJobKey(job)] = { at: got.at, quote: boardQuote(job.id, got.value.quote) };
+        } else {
+          const at = Date.now();
+          const value = await bars(job.id, series.interval, series.size, { fetch: () => { spent++; return true; }, tier: "warm" });
+          if (!value.length) throw new Error("no-bars");
+          entries[boardJobKey(job)] = { at, bars: value };
+        }
+        read++;
+      } catch { failed++; }
+    }));
+    if (Object.keys(entries).length) await sharedReader.save(BOARD_SNAPSHOT_SPEC, "all", { value: { at: Date.now(), entries }, at: Date.now() });
+    return { spent, read, failed };
+  })().finally(() => { boardRun = null; });
+}
+/** Every card's quote and every tab's first chart (shaped as the chart answer is), from the snapshot. `at`: its oldest entry. */
+export async function loadBoardSnapshot(): Promise<{ quotes: Record<string, BoardQuote>; charts: Record<string, { bars: Bar[]; before: Bar[] }>; at: number | null; filled: boolean }> {
+  let snapshot = await currentBoardSnapshot(), filled = false;
+  if (!snapshot) { await refreshBoardSnapshot(); snapshot = await currentBoardSnapshot(); filled = true; }
+  const quotes: Record<string, BoardQuote> = {}, charts: Record<string, { bars: Bar[]; before: Bar[] }> = {};
+  let at: number | null = null;
+  for (const entry of Object.values(snapshot?.entries ?? {})) {
+    if (entry.quote) quotes[entry.quote.id] = entry.quote;
+    at = at === null ? entry.at : Math.min(at, entry.at);
+  }
+  for (const [key, entry] of Object.entries(snapshot?.entries ?? {})) {
+    if (!key.startsWith("chart:") || !entry.bars?.length) continue;
+    const shaped = shapePeriod(BOARD_SNAPSHOT_PERIOD, entry.bars);
+    if (shaped.bars.length) charts[key.slice("chart:".length)] = shaped;
+  }
+  return { quotes, charts, at, filled };
 }

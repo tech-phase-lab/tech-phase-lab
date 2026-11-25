@@ -1,0 +1,438 @@
+{
+ "ticker": "BE",
+ "name": "Bloom Energy",
+ "exchange": "NYSE",
+ "quoteTicker": "BE",
+ "period": "Q3 2026",
+ "periodQuarter": 3,
+ "releasedOn": "2026-10-22",
+ "periodEnd": "2026-09-30",
+ "reviewedOn": "2026-11-25",
+ "currency": "USD",
+ "basis": {
+  "eps": "non-GAAP diluted",
+  "grossMargin": "non-GAAP",
+  "guidance": "full-year 2026 only; no quarterly revenue guidance (null)"
+ },
+ "sources": [
+  {
+   "url": "https://www.sec.gov/Archives/edgar/data/1664703/000162828026066890/ex991_q326financialresults.htm",
+   "title": "Bloom Energy third quarter 2026 financial results (8-K Exhibit 99.1)",
+   "location": "Summary of Key Financial Metrics; revenue by type; balance sheet; cash flows"
+  },
+  {
+   "url": "https://www.sec.gov/Archives/edgar/data/1664703/000162828026027913/ex991_q126financialresults.htm",
+   "title": "Bloom Energy first quarter 2026 financial results (8-K Exhibit 99.1)",
+   "location": "Summary of GAAP Financial Information"
+  }
+ ],
+ "evidence": [
+  {
+   "field": "numbers.revenue.current",
+   "url": "https://www.sec.gov/Archives/edgar/data/1664703/000162828026066890/ex991_q326financialresults.htm",
+   "quote": "Q3'26 Q2'26 Q3'25 Revenue $ 1,235,837 $ 1,065,365 $ 519,048",
+   "calc": "1235837/1000"
+  },
+  {
+   "field": "numbers.revenue.previous",
+   "url": "https://www.sec.gov/Archives/edgar/data/1664703/000162828026066890/ex991_q326financialresults.htm",
+   "quote": "Q3'26 Q2'26 Q3'25 Revenue $ 1,235,837 $ 1,065,365 $ 519,048",
+   "calc": "1065365/1000"
+  },
+  {
+   "field": "numbers.revenue.yearAgo",
+   "url": "https://www.sec.gov/Archives/edgar/data/1664703/000162828026066890/ex991_q326financialresults.htm",
+   "quote": "Q3'26 Q2'26 Q3'25 Revenue $ 1,235,837 $ 1,065,365 $ 519,048",
+   "calc": "519048/1000"
+  },
+  {
+   "field": "numbers.adjustedEPS",
+   "url": "https://www.sec.gov/Archives/edgar/data/1664703/000162828026066890/ex991_q326financialresults.htm",
+   "quote": "Non-GAAP EPS, Diluted $ 0.94 $ 0.78 $ 0.15"
+  },
+  {
+   "field": "numbers.grossMargin.current",
+   "url": "https://www.sec.gov/Archives/edgar/data/1664703/000162828026066890/ex991_q326financialresults.htm",
+   "quote": "Gross Margin 34.5 % 34.3 % 30.4 %"
+  },
+  {
+   "field": "numbers.grossMargin.previous",
+   "url": "https://www.sec.gov/Archives/edgar/data/1664703/000162828026066890/ex991_q326financialresults.htm",
+   "quote": "Gross Margin 34.5 % 34.3 % 30.4 %"
+  },
+  {
+   "field": "history[0].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/1664703/000162828026066890/ex991_q326financialresults.htm",
+   "quote": "Q3'26 Q2'26 Q3'25 Revenue $ 1,235,837 $ 1,065,365 $ 519,048",
+   "calc": "519048/1000"
+  },
+  {
+   "field": "history[1].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/1664703/000162828026027913/ex991_q126financialresults.htm",
+   "quote": "Q1'26 Q4'25 Q1'25 Revenue $ 751,054 $ 777,683 $ 326,021",
+   "calc": "777683/1000"
+  },
+  {
+   "field": "history[2].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/1664703/000162828026027913/ex991_q126financialresults.htm",
+   "quote": "Q1'26 Q4'25 Q1'25 Revenue $ 751,054 $ 777,683 $ 326,021",
+   "calc": "751054/1000"
+  },
+  {
+   "field": "history[3].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/1664703/000162828026066890/ex991_q326financialresults.htm",
+   "quote": "Q3'26 Q2'26 Q3'25 Revenue $ 1,235,837 $ 1,065,365 $ 519,048",
+   "calc": "1065365/1000"
+  },
+  {
+   "field": "tiles[0].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/1664703/000162828026066890/ex991_q326financialresults.htm",
+   "quote": "•Revenue of $1,235.8 million increased 138.1%.",
+   "calc": "1235.8/1000",
+   "round": 2
+  },
+  {
+   "field": "tiles[1].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/1664703/000162828026066890/ex991_q326financialresults.htm",
+   "quote": "Operating Margin 23.1% 22.5% 8.9%"
+  },
+  {
+   "field": "tiles[2].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/1664703/000162828026066890/ex991_q326financialresults.htm",
+   "quote": "Net cash (used in) provided by operating activities (27,147) 226,432 19,669",
+   "calc": "27147/1000",
+   "round": 1
+  },
+  {
+   "field": "tiles[0].note",
+   "url": "https://www.sec.gov/Archives/edgar/data/1664703/000162828026066890/ex991_q326financialresults.htm",
+   "quote": "•Revenue of $1,235.8 million increased 138.1%."
+  },
+  {
+   "field": "tiles[1].note",
+   "url": "https://www.sec.gov/Archives/edgar/data/1664703/000162828026066890/ex991_q326financialresults.htm",
+   "quote": "Operating Margin 23.1% 22.5% 8.9%"
+  },
+  {
+   "field": "tiles[2].note",
+   "url": "https://www.sec.gov/Archives/edgar/data/1664703/000162828026066890/ex991_q326financialresults.htm",
+   "quote": "Net cash (used in) provided by operating activities (27,147) 226,432 19,669",
+   "calc": "226432/1000",
+   "round": 1
+  }
+ ],
+ "tiles": [
+  {
+   "label": {
+    "ja": "売上高",
+    "en": "Revenue"
+   },
+   "value": {
+    "ja": "12.36億ドル",
+    "en": "$1.24B"
+   },
+   "note": {
+    "ja": "前年同期比 +138.1%",
+    "en": "YoY +138.1%"
+   }
+  },
+  {
+   "label": {
+    "ja": "調整後営業利益率",
+    "en": "Non-GAAP operating margin"
+   },
+   "value": {
+    "ja": "23.1%",
+    "en": "23.1%"
+   },
+   "note": {
+    "ja": "前期 22.5%・前年同期 8.9%",
+    "en": "Prior quarter 22.5%, year ago 8.9%"
+   }
+  },
+  {
+   "label": {
+    "ja": "営業キャッシュフロー",
+    "en": "Operating cash flow"
+   },
+   "value": {
+    "ja": "−2,715万ドル",
+    "en": "−$27.1M"
+   },
+   "note": {
+    "ja": "前期 +2.26億ドル",
+    "en": "Prior quarter +$226.4M"
+   }
+  }
+ ],
+ "numbers": {
+  "revenue": {
+   "current": 1235.837,
+   "previous": 1065.365,
+   "yearAgo": 519.048
+  },
+  "adjustedEPS": 0.94,
+  "epsEstimate": null,
+  "grossMargin": {
+   "current": 34.5,
+   "previous": 34.3
+  },
+  "guidance": null,
+  "segments": null
+ },
+ "history": [
+  {
+   "label": "Q3",
+   "end": "2025-09-30",
+   "value": 519.048
+  },
+  {
+   "label": "Q4",
+   "end": "2025-12-31",
+   "value": 777.683
+  },
+  {
+   "label": "Q1",
+   "end": "2026-03-31",
+   "value": 751.054
+  },
+  {
+   "label": "Q2",
+   "end": "2026-06-30",
+   "value": 1065.365
+  }
+ ],
+ "summary": {
+  "conclusion": [
+   {
+    "ja": "売上は12.36億ドルで、前年同期の約2.4倍、前期比でも16%増えました。伸びの中心は燃料電池システムの製品売上(10.74億ドル)です。",
+    "en": "Revenue was $1.24B, about 2.4 times a year ago and up 16% from the previous quarter. Product sales of fuel-cell systems ($1.07B) drove the growth."
+   },
+   {
+    "ja": "利益は大きく改善し、GAAPの営業利益は2.25億ドル、調整後営業利益率は23.1%でした。",
+    "en": "Profit improved sharply: GAAP operating income was $225.4M and the non-GAAP operating margin was 23.1%."
+   },
+   {
+    "ja": "一方で、営業キャッシュフローは2,715万ドルの流出でした。利益が出ていても、現金はまだ入ってきていません。",
+    "en": "Operating cash flow, however, was an outflow of $27.1M. The profit has not yet turned into cash."
+   }
+  ],
+  "cards": {
+   "growth": {
+    "headline": {
+     "ja": "製品売上が前年同期の約2.8倍",
+     "en": "Product revenue about 2.8 times a year ago"
+    },
+    "chips": [
+     {
+      "tone": "up",
+      "text": {
+       "ja": "製品売上 前年同期比 +179.4%",
+       "en": "Product revenue +179.4% YoY"
+      }
+     },
+     {
+      "tone": "up",
+      "text": {
+       "ja": "製品売上 9.35億 → 10.74億ドル",
+       "en": "Product revenue $935M → $1,074M"
+      }
+     }
+    ],
+    "sections": [
+     {
+      "key": "happened",
+      "text": {
+       "ja": "製品売上は10.74億ドルで、前年同期の3.84億ドルから179.4%増え、前期の9.35億ドルからも15%増えました。売上全体の約87%が製品です。",
+       "en": "Product revenue was $1.07B, up 179.4% from $384M a year ago and 15% from $935M last quarter. Products are about 87% of total revenue."
+      }
+     },
+     {
+      "key": "good",
+      "text": {
+       "ja": "製品の採算も上がっています。製品売上から製品原価を引いた利益率は約37.9%で、前期の約36.5%より高くなりました。",
+       "en": "Product profitability also improved. Product revenue minus product cost gives a margin of about 37.9%, up from about 36.5% last quarter."
+      }
+     },
+     {
+      "key": "watch",
+      "text": {
+       "ja": "売上には四半期ごとの振れがあります。2026年第1四半期は、売上が前期の7.78億ドルから7.51億ドルに減りました。",
+       "en": "Revenue can swing from quarter to quarter. In Q1 2026 it fell from the prior quarter ($778M to $751M)."
+      }
+     },
+     {
+      "key": "view",
+      "text": {
+       "ja": "サービス売上は6,756万ドルで、前期の6,902万ドルとほぼ同じです。製品の伸びが、あとからサービス売上の伸びにつながるかが見どころです。",
+       "en": "Service revenue was $67.6M, about the same as $69.0M last quarter. Whether product growth later feeds service growth is worth watching."
+      }
+     }
+    ]
+   },
+   "change": {
+    "headline": {
+     "ja": "売上は前期比 +16.0%、調整後粗利益率はほぼ横ばい",
+     "en": "Revenue up 16.0% QoQ, adjusted gross margin about flat"
+    },
+    "chips": [
+     {
+      "tone": "gold",
+      "text": {
+       "ja": "調整後粗利益率 34.3% → 34.5%",
+       "en": "Adj. gross margin 34.3% → 34.5%"
+      }
+     },
+     {
+      "tone": "up",
+      "text": {
+       "ja": "調整後営業利益率 22.5% → 23.1%",
+       "en": "Adj. operating margin 22.5% → 23.1%"
+      }
+     }
+    ],
+    "sections": [
+     {
+      "key": "happened",
+      "text": {
+       "ja": "売上は10.65億ドルから12.36億ドルへ、1.70億ドル増えました。調整後粗利益率は34.3%から34.5%とほぼ横ばい、調整後営業利益率は22.5%から23.1%に上がりました。",
+       "en": "Revenue rose from $1.07B to $1.24B, up $170M. Adjusted gross margin was roughly flat at 34.5% (from 34.3%), while the adjusted operating margin rose from 22.5% to 23.1%."
+      }
+     },
+     {
+      "key": "good",
+      "text": {
+       "ja": "GAAPの純利益は2.50億ドルで、前年同期の2,309万ドルの赤字から黒字に変わりました。GAAPの1株利益は0.78ドル、調整後は0.94ドルです。",
+       "en": "GAAP net income was $250.3M, compared with a $23.1M loss a year ago. GAAP EPS was $0.78 and non-GAAP EPS $0.94."
+      }
+     },
+     {
+      "key": "watch",
+      "text": {
+       "ja": "粗利益率はほぼ横ばいで、増益の多くは売上の増加によるものです。会社の通年の調整後粗利益率の見通しも約34%です。",
+       "en": "The gross margin barely moved, so most of the profit gain came from higher sales. The company's full-year non-GAAP gross margin outlook is also about 34%."
+      }
+     },
+     {
+      "key": "means",
+      "text": {
+       "ja": "粗利益率が34%前後にとどまるなら、利益の伸びは売上の伸びにほぼ連動します。",
+       "en": "If the gross margin stays near 34%, profit will grow roughly in line with sales."
+      }
+     }
+    ]
+   },
+   "caution": {
+    "headline": {
+     "ja": "黒字でも営業キャッシュフローは流出",
+     "en": "Profitable, but operating cash flow was negative"
+    },
+    "chips": [
+     {
+      "tone": "down",
+      "text": {
+       "ja": "営業CF −2,715万ドル",
+       "en": "Operating cash flow −$27.1M"
+      }
+     },
+     {
+      "tone": "down",
+      "text": {
+       "ja": "契約資産 1.79億 → 7.93億ドル",
+       "en": "Contract assets $179M → $793M"
+      }
+     },
+     {
+      "tone": "gold",
+      "text": {
+       "ja": "設備投資 1.53億ドル",
+       "en": "Capex $153.5M"
+      }
+     }
+    ],
+    "sections": [
+     {
+      "key": "happened",
+      "text": {
+       "ja": "第3四半期の営業キャッシュフローは2,715万ドルの流出で、前期の2.26億ドルの流入から悪化しました。設備投資は1.53億ドルで、前期の0.52億ドルから増えています。",
+       "en": "Operating cash flow was an outflow of $27.1M, down from an inflow of $226.4M last quarter. Capital spending rose to $153.5M from $51.6M."
+      }
+     },
+     {
+      "key": "watch",
+      "text": {
+       "ja": "売上として計上したものの、まだ請求できていない「契約資産」が、2025年末の1.79億ドルから7.93億ドルに増えました。売掛金も3.72億ドルから6.35億ドルに増え、新たに「顧客対価資産」も計3.07億ドル計上されています。",
+       "en": "Contract assets (revenue booked but not yet billable) rose from $179M at the end of 2025 to $793M. Receivables rose from $372M to $635M, and a new \"customer consideration asset\" totals $307M."
+      }
+     },
+     {
+      "key": "means",
+      "text": {
+       "ja": "利益が現金として入ってくるのが遅れている状態です。これが続くと、成長に必要な資金を借入や株式で補う場面が増える可能性があります。",
+       "en": "Profit is reaching the bank later than it is reported. If that persists, more of the growth may need to be funded with debt or stock."
+      }
+     },
+     {
+      "key": "view",
+      "text": {
+       "ja": "現金は24.87億ドルあり、すぐに資金が足りなくなる状況ではありません。借入金は24.73億ドルです。次の決算で、契約資産が現金に変わり、営業キャッシュフローがプラスに戻るかを見ます。",
+       "en": "Cash of $2.49B means there is no near-term shortage (recourse debt is $2.47B). The next report will show whether contract assets convert to cash and operating cash flow turns positive."
+      }
+     }
+    ]
+   },
+   "next": {
+    "headline": {
+     "ja": "通年見通しを今年3回目の引き上げ",
+     "en": "Full-year outlook raised for the third time this year"
+    },
+    "chips": [
+     {
+      "tone": "gold",
+      "text": {
+       "ja": "2026年売上 44億〜46億ドル",
+       "en": "2026 revenue $4.4–4.6B"
+      }
+     },
+     {
+      "tone": "gold",
+      "text": {
+       "ja": "調整後粗利益率 約34%",
+       "en": "Non-GAAP gross margin ~34%"
+      }
+     },
+     {
+      "tone": "gold",
+      "text": {
+       "ja": "調整後EPS 3.10〜3.40ドル",
+       "en": "Non-GAAP EPS $3.10–3.40"
+      }
+     }
+    ],
+    "sections": [
+     {
+      "key": "happened",
+      "text": {
+       "ja": "会社は2026年の売上見通しを44億〜46億ドル、調整後営業利益を9.6億〜10.3億ドルに引き上げました。CFOは今年3回目の引き上げだと述べています。四半期ごとの見通しは出していません。",
+       "en": "The company raised its 2026 outlook to revenue of $4.4–4.6B and non-GAAP operating income of $960M–1,030M, the third raise this year according to the CFO. It gives no quarterly outlook."
+      }
+     },
+     {
+      "key": "means",
+      "text": {
+       "ja": "1〜9月の売上は約30.52億ドルなので、見通しどおりなら第4四半期の売上は約13.5億〜15.5億ドルになる計算です。",
+       "en": "Nine-month revenue was about $3.05B, so the outlook implies fourth-quarter revenue of roughly $1.35–1.55B."
+      }
+     },
+     {
+      "key": "view",
+      "text": {
+       "ja": "見通しは会社の予定で、実績ではありません。第4四半期の売上がこの範囲に入るかと、キャッシュフローの改善を合わせて見ます。",
+       "en": "The outlook is the company's plan, not a result. Watch Q4 revenue against this range together with the cash flow recovery."
+      }
+     }
+    ]
+   }
+  }
+ }
+}

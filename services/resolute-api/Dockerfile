@@ -13,5 +13,6 @@ USER node
 ENV NODE_ENV=production PORT=3000
 # Load the complete worker dependency graph without credentials, I/O or model calls.
 RUN RESOLUTE_RIZEL_DAILY_REVIEW_ENABLED=false node services/resolute-api/rizel-daily-review-cli.mjs
+RUN RESOLUTE_TODAY_PLAN_JOB_ENABLED=false node services/resolute-api/today-plan-job.mjs
 EXPOSE 3000
 CMD ["node", "services/resolute-api/index.mjs"]
