@@ -119,3 +119,28 @@
 .sampleLabel { font-size:11px; color:var(--sub); font-weight:400; }
 
 .headline { text-wrap:balance; overflow-wrap:break-word; }
+
+/* 今日やること (owner, Nov 25): gold-bordered card, gold headline, pale beige body, ✓ green / ! gold checks. Never orange text. */
+.todayCard { position:relative; display:flex; flex-direction:column; gap:14px; padding:22px 18px; border-radius:18px; border:1px solid rgba(216,179,106,.75);
+  background:radial-gradient(420px 220px at 20% 0%,rgba(216,179,106,.10),transparent 70%),linear-gradient(180deg,#141b26,#0c121b);
+  box-shadow:0 10px 30px rgba(0,0,0,.35),0 0 24px rgba(216,179,106,.10); }
+.todayCard, .todayCard * { word-break:auto-phrase; overflow-wrap:anywhere; }
+.todayEyebrow { font-size:12px; letter-spacing:.3em; color:var(--gold); }
+.todayHead { margin:0; font-family:var(--serif); font-weight:600; font-size:28px; line-height:1.35; color:var(--gold2); letter-spacing:.04em; }
+.todayBody { margin:0; font-size:14.5px; line-height:1.85; color:#d9cfbb; }
+.todayBody span { display:block; }
+.todayBody a { color:var(--gold); font-weight:600; }
+.checks { list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:10px; }
+.checks li { display:grid; grid-template-columns:28px minmax(0,1fr) auto; align-items:center; gap:12px; padding:12px 14px; border-radius:12px; border:1px solid #2a3547; background:rgba(10,15,24,.6); }
+.checks li > i { font-style:normal; width:26px; height:26px; border-radius:50%; display:grid; place-items:center; font-size:14px; line-height:1; }
+.checks li[data-state="ok"] > i { color:var(--ok); border:1px solid rgba(127,209,160,.55); background:rgba(127,209,160,.10); }
+.checks li[data-state="reached"] > i { color:var(--gold); border:1px solid rgba(216,179,106,.6); background:rgba(216,179,106,.16); font-weight:700; }
+.checks li > div { display:flex; flex-direction:column; min-width:0; }
+.checks small { font-size:12px; color:var(--sub); line-height:1.5; white-space:pre-line; }
+.checks b { font-weight:600; font-size:14px; color:var(--ink); line-height:1.6; }
+.checks b span { display:block; }
+.checkValue { font-family:var(--serif); font-size:18px; color:var(--gold2); white-space:nowrap; }
+.todayActions { display:flex; gap:10px; flex-wrap:wrap; }
+.todayActions a { flex:1 1 140px; min-height:46px; display:flex; align-items:center; justify-content:center; text-align:center!important; border-radius:999px; font-size:15px; font-weight:700; padding:10px 16px; }
+.todayPrimary { background:linear-gradient(135deg,var(--gold2),var(--gold)); color:var(--gold-ink)!important; box-shadow:0 6px 18px rgba(216,179,106,.25); }
+.todayGhost { border:1px solid #39455a; color:var(--gold2)!important; font-weight:500!important; background:rgba(255,255,255,.02); }
