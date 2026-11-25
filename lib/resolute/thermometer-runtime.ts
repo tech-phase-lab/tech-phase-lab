@@ -102,7 +102,10 @@ export async function refreshThermometer(db: ThermometerDatabase, config: Thermo
     const existing = await db.query('SELECT session_date FROM resolute_thermometer_snapshots WHERE session_date >= $1 LIMIT 1',[session]);
     if (existing.rows.length) { await db.query('COMMIT'); return {status:'already-attempted' as const,asOf:session}; }
     const collected = await collectThermometer(config,session,fetcher);
-    const snapshot = safeThermometerSnapshot(collected,session);
+    // The stocks' own moves (single-company Shock Gauge news) are stored beside the snapshot but never served (readThermometer
+    // re-sanitizes with safeThermometerSnapshot, which drops them).
+    const stocks = safeShockStocks((collected as {shockStocks?: unknown}).shockStocks, session);
+    const snapshot = {...safeThermometerSnapshot(collected,session), ...(stocks ? {shockStocks: stocks} : {})};
     await db.query('INSERT INTO resolute_thermometer_snapshots (session_date, snapshot) VALUES ($1, $2::jsonb)',[session,JSON.stringify(snapshot)]);
     await db.query('COMMIT');
     return {status:'stored' as const,asOf:session};
@@ -116,6 +119,23 @@ function safeShockReading(raw: unknown, date: string): ShockReadingView | null {
   const m = safeMove(raw, date), x = raw as ShockReadingView;
   if (!m || !finite(x.typicalPercent, 0.01, 50) || !count(x.up) || !count(x.down) || !count(x.total) || x.total < 10 || x.up + x.down > x.total) return null;
   return {...m, typicalPercent: x.typicalPercent, up: x.up, down: x.down, total: x.total};
+}
+/** Each rostered stock's own move per session (single-company news): at most 5 sessions on or before the snapshot's own,
+ * each move dated on its session with an earlier previous close at most 7 days before and a plausible typical move. */
+export type ShockStocks = Record<string, Record<string, {date: string; previousDate: string; changePercent: number; typicalPercent: number}>>;
+export function safeShockStocks(raw: unknown, expected: string): ShockStocks | undefined {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return undefined;
+  const out: ShockStocks = {};
+  for (const [date, value] of Object.entries(raw as Record<string, unknown>).slice(-5)) {
+    if (!validSessionDate(date) || date > expected || !value || typeof value !== 'object' || Array.isArray(value)) continue;
+    const day: ShockStocks[string] = {};
+    for (const [ticker, m] of Object.entries(value as Record<string, unknown>).slice(0, 300)) {
+      const move = /^[A-Z][A-Z0-9.]{0,9}$/.test(ticker) ? safeMove(m, date) : null, typical = (m as {typicalPercent?: unknown})?.typicalPercent;
+      if (move && finite(typical, 0.01, 50)) day[ticker] = {...move, typicalPercent: typical};
+    }
+    if (Object.keys(day).length) out[date] = day;
+  }
+  return Object.keys(out).length ? out : undefined;
 }
 /** The snapshot's shock map: at most 15 sessions, each dated on or before the snapshot's own session. */
 export function safeShock(raw: unknown, expected: string): ThermometerSnapshot['shock'] | undefined {

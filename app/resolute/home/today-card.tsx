@@ -6,7 +6,7 @@ import {fixedTodayPlan,parseTodayPlanResponse,type TodayInput,type TodayPlan} fr
 import {firstDropPct,FIRST_LINE_PRICE_MAX_AGE_MS} from '@/lib/resolute/first-line';
 import {usableFavoriteQuote,type FavoriteQuote} from '@/lib/research/favorite-lists';
 import {gaugeReading,type ThermometerSnapshot} from '@/lib/resolute/thermometer-view';
-import {storyChange,type RiskFeed} from '@/lib/resolute/risk';
+import type {RiskFeed} from '@/lib/resolute/risk';
 import s from './reference.module.css';
 import ds from '../diagnosis.module.css';
 
@@ -68,7 +68,9 @@ export function useTodayMember(enabled:boolean,withPrices:boolean):TodayMember|n
 
 /** The fixed plan's input from the day's Shock Gauge feed, the market gauge and the member's lines. */
 export function todayInput(feed:RiskFeed,snapshot:ThermometerSnapshot|undefined,member:TodayMember):TodayInput{
- const news=feed.articles.map(a=>({stars:a.stars,changePercent:storyChange(a.market)}));
+ // Single-company news is measured on its industry basket (TP半導体40 or TP大型株100), so that basket gives its direction.
+ const news=feed.articles.map(a=>{const r=a.market.reading,key=a.market.index==='company'?a.market.company?.basket??'nas100':a.market.index,own=key==='sox'?r?.sox:r?.nas100,other=key==='sox'?r?.nas100:r?.sox;
+  return {stars:a.stars,changePercent:(own??other)?.changePercent??null};});
  const top=feed.articles.filter(a=>a.stars!==null).sort((a,b)=>(b.stars??0)-(a.stars??0))[0];
  const index=top?.market.index==='sox'?'sox':'nas100',reading=gaugeReading(snapshot,index);
  const thermometer=reading?{index,band:reading.band,changePercent:snapshot?.moves?.[index]?.changePercent??null}as const:null;

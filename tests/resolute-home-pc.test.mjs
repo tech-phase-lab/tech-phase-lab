@@ -2,7 +2,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {homeReadingParts,readingParts,storyChange} from '../lib/resolute/risk.ts';
+import {readingParts} from '../lib/resolute/risk.ts';
 import {withRizelLine} from '../lib/resolute/rizel-line.ts';
 import {OWNER_ACCOUNT_ID,PRODUCTION_OWNER_ACCOUNT_ID} from '../lib/membership/entitlements.ts';
 import {safeTrail,safeThermometerSnapshot} from '../lib/resolute/thermometer-runtime.ts';
@@ -10,13 +10,12 @@ import {basketTrail,TRAIL_SESSIONS} from '../lib/resolute/thermometer-provider.t
 const read=p=>readFileSync(new URL('../'+p,import.meta.url),'utf8');
 
 const reading=(sox,nas,fear)=>({index:'sox',session:'2026-11-24',reading:{from:'2026-11-21',sox:{changePercent:sox,multiple:6.5,same:40,total:40},nas100:{changePercent:nas,multiple:7.9,same:89,total:99},fearChange:fear}});
-test('home: no fear index line on a day the story\'s index went up; the detail page keeps it',()=>{
- const up=reading(14.7,6,19),down=reading(-8.5,-1.5,0);
- assert.equal(storyChange(up),14.7);assert.equal(storyChange(down),-8.5);assert.equal(storyChange({index:'company',session:null,reading:null}),null);
- assert.ok(!homeReadingParts(up,'ja').some(l=>l.text.startsWith('恐怖指数')));
- assert.ok(readingParts(up,'ja').some(l=>l.text.startsWith('恐怖指数')),'the detail page is unchanged');
- assert.equal(homeReadingParts(down,'ja').at(-1).text,'恐怖指数 0%');
- assert.ok(!homeReadingParts(up,'en').some(l=>l.text.startsWith('Fear index')));
+test('home cards use the shared index lines (#873): no fear index line on an up move, kept on a down move',()=>{
+ assert.ok(!readingParts(reading(14.7,6,19),'ja').some(l=>l.text.startsWith('恐怖指数')));
+ assert.equal(readingParts(reading(-8.5,-1.5,0),'ja').at(-1).text,'恐怖指数 0%');
+ const section=read('app/resolute/home/shock-section.tsx');
+ assert.match(section,/lines=\[\.\.\.readingParts\(a\.market,locale\)/);assert.match(section,/<ShockStars article=\{a\} locale=\{locale\}\/>/);
+ assert.ok(!/homeReadingParts|storyChange/.test(section+read('lib/resolute/risk.ts')+read('app/resolute/home/today-card.tsx')));
 });
 
 test('リゼルの一言 on the home: title only, only when one is assigned, behind the published flag; owners always see it',()=>{

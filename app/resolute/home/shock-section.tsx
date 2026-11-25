@@ -1,6 +1,6 @@
 "use client";
 import {useState,type CSSProperties} from 'react';
-import {formatCause,homeReadingParts,noStarsLabel,type RiskArticle,type RiskFeed,type RizelQuote} from '@/lib/resolute/risk';
+import {formatCause,noStarsLabel,readingParts,type RiskArticle,type RiskFeed,type RizelQuote} from '@/lib/resolute/risk';
 import {RISK_PREVIEW_DETAILS} from '@/lib/resolute/risk-preview';
 import {ShockStars,STAR_COLORS} from '../features/shock-gauge';
 import {FirstLineMeter,useFirstLine} from '../news/first-line-meter';
@@ -23,7 +23,7 @@ export function RizelSay({quote,locale}:{quote:RizelQuote|undefined;locale:'ja'|
 /** Phone: each story with its stars, index lines and リゼルの一言. */
 export function ShockList({feed,locale,sample}:{feed:RiskFeed;locale:'ja'|'en';sample:boolean}){
  return <ul className={s.news}>{feed.articles.map(a=><li key={a.id} style={a.stars?{'--c':STAR_COLORS[a.stars]} as CSSProperties:undefined}>
-  <span className={s.headline}>{headline(a,locale,sample)}</span><ShockStars article={a} locale={locale} home/>
+  <span className={s.headline}>{headline(a,locale,sample)}</span><ShockStars article={a} locale={locale}/>
   <RizelSay quote={assignedQuote(feed,a,sample)} locale={locale}/>
  </li>)}</ul>;
 }
@@ -36,7 +36,7 @@ export function ShockCards({feed,locale,sample}:{feed:RiskFeed;locale:'ja'|'en';
  const firstLine=useFirstLine(!!article&&!sample);
  return <>
   <div className={s.shockGrid}>{feed.articles.slice(0,3).map(a=>{
-   const why=formatCause(a,locale),lines=[...homeReadingParts(a.market,locale),...(why?[{text:why}]:[])],q=assignedQuote(feed,a,sample),isOpen=a.id===open;
+   const why=formatCause(a,locale),lines=[...readingParts(a.market,locale),...(why?[{text:why}]:[])],q=assignedQuote(feed,a,sample),isOpen=a.id===open;
    return <article key={a.id} className={s.shockCard} data-open={isOpen||undefined} style={a.stars?{'--c':STAR_COLORS[a.stars]} as CSSProperties:undefined}>
     <div className={s.badgeRow}>{a.stars!==null?<><b className={s.badge}>★{a.stars}</b><span className={s.badgeStars} aria-label={`${a.stars}/5`}>{'★'.repeat(a.stars)}<i aria-hidden="true">{'★'.repeat(5-a.stars)}</i></span></>:<span className={s.waiting}>{noStarsLabel(a,locale)}</span>}</div>
     <h3 className={s.cardHead}>{headline(a,locale,sample)}</h3>

@@ -19,14 +19,16 @@ export const round1 = (n: number) => { const r = Math.round(n * 10) / 10; return
 const signed = (n: number) => `${n > 0 ? "+" : n < 0 ? "−" : ""}${Math.abs(n).toFixed(1)}%`;
 /** The day's Shock Gauge stories as the shared fixed plan reads them (the same mapping as the home card's todayInput,
  * app/resolute/home/today-card.tsx): stars, and the move of the story's own index (the other index when it has none). */
+/** A story's own index: its scope index, or a starred single-company story's industry basket (Shock Gauge, Nov 25). */
+const indexOf = (a: RiskArticle) => a.market.index === "company" ? a.market.company?.basket ?? "nas100" : a.market.index;
 export function newsOf(articles: readonly RiskArticle[]): TodayInput["news"] {
-  return articles.map(a => { const r = a.market.reading, own = a.market.index === "sox" ? r?.sox : r?.nas100, other = a.market.index === "sox" ? r?.nas100 : r?.sox;
+  return articles.map(a => { const r = a.market.reading, key = indexOf(a), own = key === "sox" ? r?.sox : r?.nas100, other = key === "sox" ? r?.nas100 : r?.sox;
     return { stars: a.stars, changePercent: (own ?? other)?.changePercent ?? null }; });
 }
 /** The gauge the fixed plan shows: the top-rated story's index (TP大型株100 when there is none), as the home card does. */
 export function gaugeOf(articles: readonly RiskArticle[], snapshot: ThermometerSnapshot | null | undefined): TodayInput["thermometer"] {
   const top = articles.filter(a => a.stars !== null).sort((a, b) => (b.stars ?? 0) - (a.stars ?? 0))[0];
-  const index = top?.market.index === "sox" ? "sox" : "nas100", reading = gaugeReading(snapshot ?? undefined, index);
+  const index = top && indexOf(top) === "sox" ? "sox" : "nas100", reading = gaugeReading(snapshot ?? undefined, index);
   return reading ? { index, band: reading.band, changePercent: snapshot?.moves?.[index]?.changePercent ?? null } : null;
 }
 /** Up / down / flat: the shared rule (today-plan.ts todayDirection), so the AI plan and the fixed plan always agree. */
@@ -52,7 +54,7 @@ export function thermometerFacts(snapshot: ThermometerSnapshot | null | undefine
 /** The day's Shock Gauge items (at most three): stars, headline, index moves, and the direction of the story's own index move. */
 export function shockItems(articles: readonly RiskArticle[]) {
   return articles.slice(0, 3).map(a => {
-    const r = a.market.reading, lead = a.market.index === "company" || !r ? null : r[a.market.index] ?? r[RISK_INDICES.find(i => r[i]) ?? "nas100"];
+    const r = a.market.reading, lead = !r || (a.market.index === "company" && !a.market.company) ? null : r[indexOf(a)] ?? r[RISK_INDICES.find(i => r[i]) ?? "nas100"];
     return { stars: a.stars, headline: { ja: a.ja.title, en: a.en.title },
       moves: { ja: formatReading(a.market, "ja"), en: formatReading(a.market, "en") },
       direction: lead ? (lead.changePercent > 0 ? "up" : lead.changePercent < 0 ? "down" : "flat") : null };

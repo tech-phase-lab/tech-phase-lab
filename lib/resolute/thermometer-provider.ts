@@ -1,5 +1,5 @@
 import rosters from './thermometer-rosters.json' with { type: 'json' };
-import { dailyMove, equalWeightLevels, realizedVolatility, sessionFear, sessionShock, type ShockReading, type FearReading, type BasketSeries } from './thermometer-basket.ts';
+import { dailyMove, equalWeightLevels, realizedVolatility, sessionFear, sessionShock, stockShock, type ShockReading, type FearReading, type BasketSeries, type StockShock } from './thermometer-basket.ts';
 import { calculateTemperature, calculateVixContext, validSessionDate, type DailyClose } from './thermometer.ts';
 
 export type ThermometerRosters = { nasdaq100: string[]; semiconductors: string[] };
@@ -15,6 +15,8 @@ export function basketTrail(levels: readonly DailyClose[], session: string): Dai
   return levels.filter(bar => bar.date <= session).slice(-TRAIL_SESSIONS).map(bar => ({ date: bar.date, close: Math.round(bar.close * 100) / 100 }));
 }
 export type ShockSession = { nas100: ShockReading | null; sox: ShockReading | null; fear: FearReading | null };
+/** Sessions for which each rostered stock's own move is kept (single-company news, owner Nov 25). Stored only, never served. */
+export const STOCK_SESSIONS = 3;
 /** Twelve Data treats a date-only end_date as exclusive, so ask for the day after the confirmed session. Later bars are dropped by the calculator. */
 function dayAfter(date: string): string { const next = new Date(`${date}T00:00:00Z`); next.setUTCDate(next.getUTCDate() + 1); return next.toISOString().slice(0, 10); }
 /** Parses a multi-symbol (or single-symbol) Twelve Data time_series reply into daily closes per ticker.
@@ -81,6 +83,15 @@ export async function collectThermometer(config: ThermometerProviderConfig, conf
     const dates = large.levels.map(bar => bar.date).filter(date => date <= confirmedSession).slice(-SHOCK_SESSIONS);
     for (const date of dates) shock[date] = { nas100: sessionShock(large.levels, large.series, date), sox: 'levels' in chips ? sessionShock(chips.levels, chips.series, date) : null, fear: sessionFear(large.levels, date) };
   }
+  // Single-company news (owner, Nov 25): every rostered stock's own move and usual move on the last STOCK_SESSIONS sessions,
+  // from the same daily closes (no extra provider calls). Kept apart from `shock` so the site's snapshot stays small.
+  const shockStocks: Record<string, Record<string, StockShock>> = {};
+  const allSeries: BasketSeries = { ...('series' in large ? large.series : {}), ...('series' in chips ? chips.series : {}) };
+  for (const date of Object.keys(shock).slice(-STOCK_SESSIONS)) {
+    const day: Record<string, StockShock> = {};
+    for (const [ticker, bars] of Object.entries(allSeries)) { const s = stockShock(bars, date); if (s) day[ticker] = s; }
+    if (Object.keys(day).length) shockStocks[date] = day;
+  }
   const trail = { nas100: 'levels' in large ? basketTrail(large.levels, confirmedSession) : null, sox: 'levels' in chips ? basketTrail(chips.levels, confirmedSession) : null };
-  return { asOf: confirmedSession, nas100, sox, vix, moves, shock, trail, missing: [...new Set(missing)].sort() };
+  return { asOf: confirmedSession, nas100, sox, vix, moves, shock, shockStocks, trail, missing: [...new Set(missing)].sort() };
 }
