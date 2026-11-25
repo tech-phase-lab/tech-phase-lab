@@ -143,20 +143,23 @@ test("samples: the owner's mockups (Nov 22), on a made-up 2035 timeline", () => 
 
   const w = whaleTracksSample;
   for (const key of ["institutional", "short", "insiders", "buybacks"]) assert.equal(w[key].length, 5, key);
-  assert.equal(whaleLib.asOfLine("institutions", w, true, true), "2035年3月末時点・13F（四半期ごとに更新）");
-  assert.equal(whaleLib.asOfLine("short", w, true, true), "2035年4月13日時点・FINRA（月2回更新）");
-  assert.equal(whaleLib.asOfLine("institutions", w, false, true), "As of end-Mar 2035 · 13F (updated quarterly)");
-  assert.equal(whaleLib.asOfLine("short", w, false, true), "As of Apr 13, 2035 · FINRA (updated twice a month)");
-  assert.equal(whaleLib.asOfLine("short", w, true), "4月13日時点・FINRA（月2回更新）", "the page keeps its short date");
+  assert.equal(whaleLib.asOfLine("institutions", w, true, true), "2034年12月末時点・13F（四半期ごとに更新）");
+  assert.equal(whaleLib.asOfLine("short", w, true, true), "2035年2月28日時点・FINRA（月2回更新）");
+  assert.equal(whaleLib.asOfLine("institutions", w, false, true), "As of end-Dec 2034 · 13F (updated quarterly)");
+  assert.equal(whaleLib.asOfLine("short", w, false, true), "As of Feb 28, 2035 · FINRA (updated twice a month)");
+  assert.equal(whaleLib.asOfLine("short", w, true), "2月28日時点・FINRA（月2回更新）", "the page keeps its short date");
   assert.deepEqual(w.institutional.map(r => [r.ticker, r.pct, r.change]), [["NBIS", 58.2, 6.4], ["NVDA", 69.7, 3.1], ["MU", 77.7, 3], ["MRVL", 84.1, 2.2], ["ARM", 21.4, 1.8]]);
   assert.deepEqual(w.short.map(r => [r.ticker, r.pct, r.change, r.days]), [["SMCI", 18.4, 2.1, 3.9], ["CRWV", 14.7, -1.2, 2.6], ["PLTR", 3.1, 0.4, 1.4], ["MU", 2.07, 0.3, 1.9], ["NVDA", 1.16, -0.1, 2.8]]);
   assert.deepEqual(w.insiders.map(r => [r.date.slice(5), r.ticker, whaleLib.roleLabel(r.role, true), r.side, r.planned, whaleLib.money(r.value, true)]), [
-    ["04-18", "MU", "CEO", "buy", false, "420万ドル"], ["04-17", "AMD", "CFO", "sell", true, "1,250万ドル"], ["04-16", "ORCL", "会長", "sell", true, "8,900万ドル"],
-    ["04-13", "INTC", "取締役", "buy", false, "110万ドル"], ["04-02", "NVDA", "取締役", "sell", true, "2.98億ドル"]]);
+    ["03-09", "MU", "CEO", "buy", false, "420万ドル"], ["03-08", "AMD", "CFO", "sell", true, "1,250万ドル"], ["03-07", "ORCL", "会長", "sell", true, "8,900万ドル"],
+    ["03-06", "INTC", "取締役", "buy", false, "110万ドル"], ["02-26", "NVDA", "取締役", "sell", true, "2.98億ドル"]]);
   assert.deepEqual(w.buybacks.map(r => [r.ticker, r.kind, r.kind === "quarter" ? whaleLib.quarterLabel(r.end, true) : r.date.slice(5), whaleLib.money(r.amount, true)]), [
-    ["AAPL", "authorization", "04-18", "1,100億ドル"], ["META", "authorization", "04-11", "500億ドル"], ["NVDA", "quarter", "1〜3月", "142億ドル"],
-    ["QCOM", "quarter", "1〜3月", "38億ドル"], ["AVGO", "quarter", "1〜3月", "25億ドル"]]);
-  for (const day of [w.institutionalAsOf, w.shortAsOf, ...w.insiders.map(r => r.date), ...w.buybacks.map(r => r.date)]) assert.match(day, /^2035-/);
+    ["AAPL", "authorization", "03-09", "1,100億ドル"], ["META", "authorization", "03-02", "500億ドル"], ["NVDA", "quarter", "10〜12月", "142億ドル"],
+    ["QCOM", "quarter", "10〜12月", "38億ドル"], ["AVGO", "quarter", "10〜12月", "25億ドル"]]);
+  // QA, Nov 25: every date lies on the tour's one made-up timeline, on or before the last U.S. close before 2035/03/12 09:00 JST.
+  for (const day of [w.institutionalAsOf, w.shortAsOf, ...w.insiders.map(r => r.date), ...w.buybacks.flatMap(r => [r.date, ...(r.kind === "quarter" ? [r.start, r.end] : [])])]) {
+    assert.match(day, /^203[45]-/); assert.ok(day <= samplesLib.SAMPLE_CLOSE_DAY, day);
+  }
   for (const name of ["treasure-hunt.json", "whale-tracks.json"]) {
     const file = JSON.parse(read(`../lib/research/pro-experience-samples/${name}`));
     assert.equal(file.fictional, true, name);
@@ -260,9 +263,9 @@ test("Whale Tracks sample: four tabs of five, every sort button reorders, the da
     const sorts = () => [...c.querySelectorAll('[role="tabpanel"] [role="group"] button')];
     const panel = () => text(c.querySelector('[role="tabpanel"]'));
     const expected = [
-      [ja ? "2035年3月末時点・13F（四半期ごとに更新）" : "As of end-Mar 2035 · 13F (updated quarterly)",
+      [ja ? "2034年12月末時点・13F（四半期ごとに更新）" : "As of end-Dec 2034 · 13F (updated quarterly)",
         [["NBIS", "NVDA", "MU", "MRVL", "ARM"], ["ARM", "MRVL", "MU", "NVDA", "NBIS"], ["MRVL", "MU", "NVDA", "NBIS", "ARM"]]],
-      [ja ? "2035年4月13日時点・FINRA（月2回更新）" : "As of Apr 13, 2035 · FINRA (updated twice a month)",
+      [ja ? "2035年2月28日時点・FINRA（月2回更新）" : "As of Feb 28, 2035 · FINRA (updated twice a month)",
         [["SMCI", "CRWV", "PLTR", "MU", "NVDA"], ["SMCI", "PLTR", "MU", "NVDA", "CRWV"], ["SMCI", "NVDA", "CRWV", "MU", "PLTR"]]],
       [ja ? "Form 4・提出から2営業日以内" : "Form 4 · filed within 2 business days",
         [["MU", "AMD", "ORCL", "INTC", "NVDA"], ["MU", "INTC"], ["AMD", "ORCL", "NVDA"]]],
@@ -283,8 +286,8 @@ test("Whale Tracks sample: four tabs of five, every sort button reorders, the da
     await click(tabs[2]);
     assert.match(panel(), ja ? /AMD ?CFO・計画売買/ : /AMD ?CFO · Planned/);
     await click(tabs[3]);
-    assert.match(panel(), ja ? /AAPL ?4\/18・新しい枠を発表 ?1,100億ドル/ : /AAPL ?Apr 18 · New authorization ?\$110B/);
-    assert.match(panel(), ja ? /NVDA ?1〜3月・買い戻した金額 ?142億ドル/ : /NVDA ?Jan–Mar · Repurchased ?\$14B/);
+    assert.match(panel(), ja ? /AAPL ?3\/9・新しい枠を発表 ?1,100億ドル/ : /AAPL ?Mar 9 · New authorization ?\$110B/);
+    assert.match(panel(), ja ? /NVDA ?10〜12月・買い戻した金額 ?142億ドル/ : /NVDA ?Oct–Dec · Repurchased ?\$14B/);
     assert.equal(c.querySelectorAll("[class~=goldCard]").length, 2);
     assert.equal(c.querySelector("[class~=sampleNote]").textContent, ja ? "※実際は約150銘柄のデータを見られます" : "*The full version covers about 150 stocks");
     assert.equal(c.querySelectorAll("a[href]").length, 0);
