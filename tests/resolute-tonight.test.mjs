@@ -7,7 +7,7 @@ import { tonightIndex, tonightMove, tonightVideo, recordView, alertLines, neares
 import { parseTonightInput, createTonightStore } from "../lib/resolute/tonight-database.ts";
 import { parseTonightResponse } from "../lib/resolute/tonight-transport.ts";
 import { safeThermometerSnapshot } from "../lib/resolute/thermometer-runtime.ts";
-import { createTonightQuestionGenerator } from "../services/resolute-api/tonight-questions.mjs";
+import { createTonightQuestionModel, generateTonightQuestions, createTonightJobHook } from "../services/resolute-api/tonight-questions.mjs";
 import { ownerAccessFromVerifiedSession } from "../lib/resolute/owner-access.ts";
 import { PRODUCTION_OWNER_ACCOUNT_ID } from "../lib/membership/entitlements.ts";
 import { NotificationAccessDenied } from "../lib/resolute/notification-database.ts";
@@ -149,20 +149,45 @@ test("AI questions: no digits of their own, tickers from the member's list, note
   assert.equal(parseTonightQuestions("{}", facts, "2026-11-24"), null);
 });
 
-test("the generator: one budgeted gpt-5.4-mini request, one retry, then null (the fixed three)", async () => {
-  const bodies = []; let reply = "not json";
-  const fetcher = async (url, init) => { bodies.push(JSON.parse(init.body)); return new Response(JSON.stringify({ status: "completed", usage: { input_tokens: 900, output_tokens: 200 }, output: [{ type: "message", content: [{ type: "output_text", text: reply }] }] }), { status: 200, headers: { "content-type": "application/json" } }); };
-  const env = { RESOLUTE_TONIGHT_AI_ENABLED: "true", RESOLUTE_OPENAI_API_KEY: "k" };
-  const generate = createTonightQuestionGenerator({ env, fetcher, poolFactory: () => ({}), reserve: async () => async () => {} });
-  assert.equal(await generate(facts, "2026-11-24"), null);
-  assert.equal(bodies.length, 2); assert.equal(bodies[0].model, "gpt-5.4-mini");
-  assert.match(bodies[0].input, /"notes"/);
-  reply = JSON.stringify({ questions: [{ ja: "NVDAを売りたくなっていませんか？", en: "Do you feel like selling NVDA?", note: "tolerance" }, { ja: "明日の朝も、同じ判断をしますか？", en: "Same decision tomorrow morning?", note: "morning" }, { ja: "暮らしのお金に影響しませんか？", en: "Will it touch your living money?", note: "reserve" }] });
-  assert.equal((await generate(facts, "2026-11-24")).source, "ai");
-  assert.equal(createTonightQuestionGenerator({ env: {} }), undefined, "off unless switched on");
+const good = JSON.stringify({ questions: [{ ja: "NVDAを売りたくなっていませんか？", en: "Do you feel like selling NVDA?", note: "tolerance" }, { ja: "明日の朝も、同じ判断をしますか？", en: "Same decision tomorrow morning?", note: "morning" }, { ja: "暮らしのお金に影響しませんか？", en: "Will it touch your living money?", note: "reserve" }] });
+
+test("the model: 「今日やること」's model, budget bucket and strict JSON; the questions: one regeneration, then null (the fixed three)", async () => {
+  const bodies = [], reserved = [];
+  const fetcher = async (url, init) => { bodies.push(JSON.parse(init.body)); return new Response(JSON.stringify({ status: "completed", usage: { input_tokens: 900, output_tokens: 200 }, output: [{ type: "message", content: [{ type: "output_text", text: good }] }] }), { status: 200, headers: { "content-type": "application/json" } }); };
+  // The real reservation runs against the today-plan bucket; a fake pool records the table it is asked for.
+  const pool = { query: async (sql, values) => { reserved.push(sql.replace(/\s+/g, " ").slice(0, 60)); return { rows: [{ reserved_usd: values?.[1] }] }; } };
+  const model = createTonightQuestionModel({ apiKey: "k", pool, fetcher, limit: 10 });
+  const reply = await model(facts);
+  assert.equal(bodies[0].model, "gpt-5.4-mini"); assert.equal(bodies[0].text.format.strict, true); assert.match(bodies[0].input, /"notes"/);
+  assert.ok(reserved[0].includes("resolute.today_plan_budget"), "the same monthly bucket as 「今日やること」");
+  assert.equal(parseTonightQuestions(reply.text, facts, "2026-11-24").source, "ai");
+  let calls = 0;
+  const bad = async () => { calls++; return { text: "not json", usage: null }; };
+  assert.equal((await generateTonightQuestions(facts, "2026-11-24", bad)).questions, null);
+  assert.equal(calls, 2, "one regeneration");
+  const budget = async () => { calls++; throw Error("BUDGET_LIMIT"); };
+  calls = 0; assert.deepEqual((await generateTonightQuestions(facts, "2026-11-24", budget)).reasons, ["BUDGET_LIMIT"]); assert.equal(calls, 1, "no retry when the budget refuses");
+  assert.equal((await generateTonightQuestions(facts, "2026-11-24", null)).questions, null);
 });
 
-test("the record store: rough nights only, the alert day from delivered alerts, one AI attempt per night, the owner always allowed", async () => {
+test("the daily job hook: one claimed attempt per member and night, stored for the page", async () => {
+  const writes = []; let claimed = false;
+  const pool = { query: async (sql, values) => {
+    if (sql.includes("INSERT INTO resolute.tonight_questions")) { if (claimed) return { rows: [] }; claimed = true; return { rows: [{}] }; }
+    writes.push(values); return { rows: [] };
+  } };
+  const hook = createTonightJobHook({ pool, model: async () => ({ text: good, usage: null }) });
+  const snapshot = { asOf: "2026-11-24", moves: { nas100: { date: "2026-11-24", previousDate: "2026-11-21", changePercent: -7.46 }, sox: null } };
+  assert.equal(await hook({ id: "user_a", session: "2026-11-24", snapshot, plan: { ...plan, answers: {} }, settings }), "ai");
+  assert.equal(writes[0][2], "ready"); assert.equal(JSON.parse(writes[0][3]).questions.length, 3);
+  assert.equal(await hook({ id: "user_a", session: "2026-11-24", snapshot, plan: { ...plan, answers: {} }, settings }), "existing");
+  assert.equal(await hook({ id: "user_a", session: "2026-11-24", snapshot: { asOf: "2026-11-24" }, plan: { ...plan, answers: {} }, settings }), "no-move");
+  const job = read("../services/resolute-api/today-plan-job.mjs");
+  assert.match(job, /if\(tonight\)\{try\{const t=await tonight\(\{id,session,snapshot,plan,settings\}\)/, "called from the 「今日やること」 member loop");
+  assert.match(job, /RESOLUTE_TONIGHT_AI_ENABLED==='true'\?createTonightJobHook/);
+});
+
+test("the record store: rough nights only, the alert day from delivered alerts, the owner always allowed", async () => {
   const calls = [];
   const pool = { query: async sql => {
     calls.push(sql.replace(/\s+/g, " ").trim().slice(0, 40));
@@ -174,13 +199,12 @@ test("the record store: rough nights only, the alert day from delivered alerts, 
     if (sql.includes("INSERT INTO resolute.tonight_questions")) return { rowCount: 1, rows: [{}] };
     return { rowCount: 1, rows: [] };
   } };
-  let generated = 0;
-  const store = createTonightStore(pool, "sandbox", { readPlan: async () => plan, readSettings: async () => settings, generate: async () => { generated++; return null; }, today: () => "2026-11-25" });
+  const store = createTonightStore(pool, "sandbox", { readPlan: async () => plan, readSettings: async () => settings, today: () => "2026-11-25" });
   const owner = ownerAccessFromVerifiedSession({ sub: PRODUCTION_OWNER_ACCOUNT_ID, iss: "https://clerk.techphase.app", azp: "https://techphase.app", fva: [0, 1], exp: Date.now() / 1000 + 600 });
   await assert.rejects(store("user_member1", { action: "open", night: "2026-11-24", stars: 5, direction: "down", index: "nas100", movePct: -7.5 }), NotificationAccessDenied);
   const out = await store(PRODUCTION_OWNER_ACCOUNT_ID, { action: "open", night: "2026-11-24", stars: 5, direction: "down", index: "nas100", movePct: -7.5 }, owner);
   assert.equal(out.record.total, 2); assert.equal(out.record.nights[0].answer, "done");
-  assert.equal(out.questions.source, "fixed"); assert.equal(generated, 1);
+  assert.equal(out.questions.source, "fixed", "no stored AI questions: the fixed three");
   assert.ok(calls.some(c => c.startsWith("INSERT INTO resolute.tonight_nights")), "★5: recorded");
   calls.length = 0;
   await store(PRODUCTION_OWNER_ACCOUNT_ID, { action: "open", night: "2026-11-24", stars: 2, direction: "down", index: "nas100", movePct: -1 }, owner);
@@ -212,7 +236,9 @@ test("the page: four panels, no loss amount or asset %, the removed sections are
   const css = read("../app/resolute/tonight/reference.module.css");
   assert.match(css, /\.pc \.grid \{ display:grid; grid-template-columns:minmax\(0,1\.3fr\) minmax\(0,1fr\); gap:24px; align-items:stretch; \}/);
   assert.doesNotMatch(css, /coverPlay/);
-  const sql = read("../db/resolute/027_tonight.sql");
+  const sql = read("../db/resolute/028_tonight.sql");
   assert.match(sql, /GRANT SELECT, INSERT, UPDATE ON resolute\.tonight_nights, resolute\.tonight_questions TO resolute_notification_writer;/);
-  assert.doesNotMatch(sql, /DELETE|DROP/);
+  assert.doesNotMatch(sql, /GRANT[^;]*DELETE|DROP TABLE/);
+  assert.match(sql, /GRANT SELECT, INSERT, UPDATE ON resolute\.tonight_questions TO resolute_today_plan_writer;/);
+  assert.match(sql, /CREATE TRIGGER resolute_forget_tonight AFTER INSERT OR UPDATE OF plan ON resolute\.plans/);
 });

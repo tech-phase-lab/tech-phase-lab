@@ -18,6 +18,7 @@ import {marketDirection,newsOf,gaugeOf,indexMoves,thermometerFacts,shockItems,ma
 import {validateTodayOutput,parseTodayPlan,TODAY_OUTPUT_SCHEMA,TODAY_REJECTIONS} from '../../lib/resolute/today-plan-validate.ts';
 import {reserveAiSpend,serializeBudgetedRequest,todayPlanMonthlyLimit,TODAY_PLAN_RESERVATION_USD} from './ai-budget.mjs';
 import {boundedJSON} from './risk-store.mjs';
+import {createTonightJobHook,createTonightQuestionModel} from './tonight-questions.mjs';
 
 /** RESOLUTE「今日やること」 daily job (owner, Nov 25; resolute-pc-1125 §4–§5).
  * Once each U.S.-market morning (JST), after the thermometer snapshot (resolute-thermometer-refresh, 08:00 JST) and the Shock Gauge
@@ -156,7 +157,7 @@ async function readShockGauge(pool,now){
 
 /** The whole run. Idempotent per (member, market date): a stored plan is never replaced; a crash resumes where it stopped. */
 export async function runTodayPlanJob({pool,now=new Date(),model=null,bars=createDailyBars(),splitLoader=null,source=entitlementSource(),
- onlyUserIds=null,maxMembers=5000,concurrency=3,log=line=>console.log(JSON.stringify(line))}){
+ onlyUserIds=null,maxMembers=5000,concurrency=3,log=line=>console.log(JSON.stringify(line)),tonight=null}){
  const session=thermometerSession(now);
  if(!session)return {state:'calendar-unavailable'};
  const snapRow=(await pool.query('SELECT snapshot FROM resolute.resolute_thermometer_snapshots WHERE session_date=$1',[session])).rows[0];
@@ -169,7 +170,7 @@ export async function runTodayPlanJob({pool,now=new Date(),model=null,bars=creat
  const rows=(await pool.query(`SELECT clerk_user_id,plan,updated_at FROM resolute.plans WHERE plan IS NOT NULL
   AND ($2::text[] IS NULL OR clerk_user_id=ANY($2::text[])) ORDER BY clerk_user_id LIMIT $1`,[maxMembers+1,onlyUserIds?.length?onlyUserIds:null])).rows;
  const report={state:'done',session,shock:shock.state,members:Math.min(rows.length,maxMembers),incomplete:rows.length>maxMembers,
-  ai:0,fixed:0,existing:0,notEntitled:0,invalidPlan:0,errors:0,regenerated:0,estimate:0,estimateMissing:{},rejections:{},inputTokens:0,outputTokens:0};
+  ai:0,fixed:0,existing:0,notEntitled:0,invalidPlan:0,errors:0,regenerated:0,estimate:0,estimateMissing:{},rejections:{},inputTokens:0,outputTokens:0,tonight:{}};
  const queue=rows.slice(0,maxMembers);
  const one=async row=>{
   const id=row.clerk_user_id;
@@ -179,6 +180,8 @@ export async function runTodayPlanJob({pool,now=new Date(),model=null,bars=creat
   const settingsRow=(await pool.query('SELECT settings,updated_at FROM resolute.notification_settings WHERE clerk_user_id=$1',[id])).rows[0];
   let settings=null;
   if(settingsRow){try{settings=(await adjust(parseNotificationSettings(settingsRow.settings),settingsRow.updated_at)).settings;}catch{settings=null;}}
+  // 今夜のひと息 (Nov 25): tonight's three questions for this member in the same run (tonight-questions.mjs). Never stops the plan.
+  if(tonight){try{const t=await tonight({id,session,snapshot,plan,settings});report.tonight[t]=(report.tonight[t]??0)+1;}catch{report.tonight.error=(report.tonight.error??0)+1;}}
   const closes=settings?.watchItems.length?await watchCloses(bars,settings.watchItems.map(i=>i.symbol),session):[];
   const est=await estimateRatio(plan,row.updated_at,session,{readSnapshots,bars});
   if(est.missing){
@@ -220,7 +223,8 @@ async function main(){
   const only=(process.env.RESOLUTE_TODAY_PLAN_ONLY_USER_IDS??'').split(',').map(s=>s.trim()).filter(Boolean);
   if(only.some(id=>!/^user_[A-Za-z0-9]{1,128}$/.test(id)))throw Error('CONFIG');
   const result=await runTodayPlanJob({pool,model:apiKey?createTodayModel({apiKey,pool,limit:todayPlanMonthlyLimit()}):null,
-   bars:createDailyBars({apiKey:twelve}),splitLoader:twelve?createSplitLoader({apiKey:twelve}):null,onlyUserIds:only.length?only:null});
+   bars:createDailyBars({apiKey:twelve}),splitLoader:twelve?createSplitLoader({apiKey:twelve}):null,onlyUserIds:only.length?only:null,
+   tonight:apiKey&&process.env.RESOLUTE_TONIGHT_AI_ENABLED==='true'?createTonightJobHook({pool,model:createTonightQuestionModel({apiKey,pool,limit:todayPlanMonthlyLimit()})}):null});
   console.log(JSON.stringify({event:'RESOLUTE_TODAY_PLAN',...result}));
   if(result.state!=='done'||result.errors)process.exitCode=1;
  }catch(error){

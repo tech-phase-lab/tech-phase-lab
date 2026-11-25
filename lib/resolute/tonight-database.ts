@@ -4,13 +4,13 @@ import { entitlementSource, readEntitlementSnapshot, type EntitlementSource } fr
 import { resoluteDatabaseConfig } from "./database-config.ts";
 import { NotificationAccessDenied } from "./notification-database.ts";
 import { validSessionDate } from "./thermometer.ts";
-import { fixedTonightQuestions, isRoughNight, TONIGHT_ANSWERS, tonightFacts, type TonightAnswer, type TonightFacts, type TonightNight,
+import { fixedTonightQuestions, isRoughNight, TONIGHT_ANSWERS, tonightFacts, type TonightAnswer, type TonightNight,
   type TonightQuestions, type TonightRecord } from "./tonight.ts";
 import type { PlanInput } from "./plan-data.ts";
 import type { NotificationSettings } from "./notification-settings.ts";
 
 /** 今夜のひと息 (owner, Nov 25): the member's own rough nights (opens of this page on ★4+ or alert days), the answer they chose in the
- * next morning note, and tonight's three questions. The member's own rows only, with the same right as the settings screen.
+ * next morning note, and tonight's three questions (made by the daily member job). The member's own rows only, with the same right as the settings screen.
  *
  * POST {action:"open", night, stars, direction, index, movePct}: records tonight when it is rough, returns the record and the questions.
  * POST {action:"answer", answer}: the morning note's answer (done / skipped / unsure), kept on the newest rough night of the last four days.
@@ -20,8 +20,6 @@ type Db = Pick<Pool, "query">;
 export type TonightDeps = {
   readPlan: (userId: string, ownerAccess?: OwnerAccess) => Promise<PlanInput | null>;
   readSettings: (userId: string, ownerAccess?: OwnerAccess) => Promise<NotificationSettings | null>;
-  /** One AI attempt set for these facts (tonight-questions.mjs); null when it is off, over budget or failed. */
-  generate?: (facts: TonightFacts, night: string) => Promise<TonightQuestions | null>;
   today?: () => string;
 };
 export type TonightOpen = { action: "open"; night: string; stars: number | null; direction: "down" | "up" | null; index: "nas100" | "sox"; movePct: number | null };
@@ -79,17 +77,9 @@ export function createTonightStore(pool: Db, source: EntitlementSource, deps: To
     const [plan, settings] = await Promise.all([deps.readPlan(userId, ownerAccess).catch(() => null), deps.readSettings(userId, ownerAccess).catch(() => null)]);
     const facts = tonightFacts({ direction: input.direction!, index: input.index, movePct: input.movePct!, plan, settings });
     const fixed = fixedTonightQuestions(input.night, facts);
+    // The AI's questions are made by the daily member job (today-plan-job.mjs → tonight-questions.mjs); this only reads them.
     const stored = (await pool.query(`SELECT state, questions FROM resolute.tonight_questions WHERE clerk_user_id=$1 AND night_date=$2`, [userId, input.night])).rows[0];
-    if (stored?.state === "ready" && stored.questions) return stored.questions as TonightQuestions;
-    if (stored || !deps.generate) return fixed;
-    // One attempt per member and night, claimed before the model is asked (no second call from a reload or another tab).
-    const claim = await pool.query(`INSERT INTO resolute.tonight_questions(clerk_user_id,night_date,state) VALUES($1,$2,'claimed')
-      ON CONFLICT(clerk_user_id,night_date) DO NOTHING RETURNING night_date`, [userId, input.night]);
-    if (claim.rowCount !== 1) return fixed;
-    const made = await deps.generate(facts, input.night).catch(() => null);
-    await pool.query(`UPDATE resolute.tonight_questions SET state=$3, questions=$4, updated_at=statement_timestamp() WHERE clerk_user_id=$1 AND night_date=$2`,
-      [userId, input.night, made ? "ready" : "failed", made ? JSON.stringify(made) : null]);
-    return made ?? fixed;
+    return stored?.state === "ready" && stored.questions ? stored.questions as TonightQuestions : fixed;
   }
 }
 let store: ReturnType<typeof createTonightStore> | undefined;

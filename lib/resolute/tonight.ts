@@ -3,6 +3,7 @@ import type { NotificationSettings } from './notification-settings.ts';
 import type { ThermometerSnapshot } from './thermometer-view.ts';
 import type { Copy } from '../research/data.ts';
 import { deliveryClock } from './delivery-time.ts';
+import { numberTokens } from './today-plan-validate.ts';
 
 /** 今夜のひと息 (owner, Nov 25: rebuilt). A place to calm down on a crash or surge night: only what changes from night to night.
  * Never today's loss amount or the share of the member's own assets lost. Pure functions; the page and resolute-api share them. */
@@ -132,6 +133,12 @@ export function tonightPrompt(facts: TonightFacts): string {
     JSON.stringify({ symbols: facts.symbols, notes: facts.notes }),
   ].join('\n');
 }
+/** The model's reply shape (strict JSON schema, like 「今日やること」's TODAY_OUTPUT_SCHEMA). Exactly three items is checked below. */
+export const TONIGHT_QUESTIONS_SCHEMA = {
+  type: 'object', additionalProperties: false, required: ['questions'],
+  properties: { questions: { type: 'array', items: { type: 'object', additionalProperties: false, required: ['ja', 'en', 'note'],
+    properties: { ja: { type: 'string' }, en: { type: 'string' }, note: { type: ['string', 'null'] } } } } },
+} as const;
 const BANNED = /買いましょう|売りましょう|買うべき|売るべき|買い時|売り時|今すぐ買|今すぐ売|必ず|絶対|上がります|下がります|you should (?:buy|sell)|buy now|sell now|will (?:rise|fall)/i;
 /** Number provenance and shape: exactly three questions, no digits at all in the AI's text (every number on the page comes from the
  * notes built above), tickers only from the member's own list, a note id from the list or null (each at most once), within length,
@@ -149,7 +156,7 @@ export function parseTonightQuestions(text: unknown, facts: TonightFacts, night:
     if (typeof q.ja !== 'string' || typeof q.en !== 'string') return null;
     const ja = q.ja.normalize('NFKC').trim().replace(/\?$/, '？'), en = q.en.trim();
     if (ja.length < 6 || ja.length > 32 || en.length < 8 || en.length > 90 || !ja.endsWith('？') || !en.endsWith('?')) return null;
-    if (/[0-9０-９]/.test(ja + en) || /…|\.\.\.|[\r\n]/.test(ja + en) || BANNED.test(ja + ' ' + en)) return null;
+    if (numberTokens(`${ja} ${en}`).length || /[0-9０-９]/.test(ja + en) || /…|\.\.\.|[\r\n]/.test(ja + en) || BANNED.test(ja + ' ' + en)) return null;
     for (const word of (ja.match(/[A-Za-z][A-Za-z.-]*/g) ?? [])) if (!symbols.has(word) && !allowedLatin.has(word)) return null;
     for (const word of (en.match(/\b[A-Z]{2,}[A-Z.-]*\b/g) ?? [])) if (!symbols.has(word) && !allowedLatin.has(word)) return null;
     let note: Copy | null = null;
