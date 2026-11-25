@@ -28,7 +28,7 @@ test("the English landing copy is the owner's wording, unchanged", () => {
     "Morning Note", "One short notification the morning after an alert, to read with a rested mind.", "Shows how cool or hot the market is on a five-point scale. Helps you put market moves in perspective.",
     "See all →", "US Commerce Dept. plans wider limits on AI chip exports to China", "A major cloud provider scales back its data center spending plan", "A Moment to Breathe", "From RIZEL", "1:40",
     "When the Market Tumbles", "A short video from RIZEL and the \"won't do\" list you made, on one screen. A reminder that you don't have to decide tonight.",
-    "Shock Gauge", "Picks the day’s notable news and shows, on a scale of 1 to 5 stars, how much the related TP index actually moved. No major news, no update.", "RIZEL's Take", "A one-line take from RIZEL on each story.",
+    "Shock Gauge", "Picks the day’s notable news and rates it 1–5 stars from the actual index moves and the article’s content. No major news, no update.", "RIZEL's Take", "A one-line take from RIZEL on each story.",
     "Before the next market storm,", "have your rules ready.", "Creator of RESOLUTE",
     "It’s easy to feel anxious when markets crash and get carried away when prices soar. Having your own rules in place before emotions run high can help you stay grounded.",
     "RESOLUTE brings together what I’ve learned about staying grounded in the market in a kit anyone can use. It won’t tell you when to buy or sell. I designed every part to help you think clearly when markets move sharply.",
