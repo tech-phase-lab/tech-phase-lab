@@ -3,7 +3,7 @@ import {reserveAiSpend,serializeBudgetedRequest} from './ai-budget.mjs';
 import {pathToFileURL} from 'node:url';
 import {riskPool,hash,boundedJSON} from './risk-store.mjs';
 import {parseRiskArticle,parseRiskCause,riskDate,isLegacyRiskArticle,SUMMARY_QUESTION,isDailyRunHour} from '../../lib/resolute/risk.ts';
-import {storyIndex,cleanTickers,waitingMarket,applyMarketReaction,firstCloseAfter,newsInstant} from '../../lib/resolute/risk-market.ts';
+import {cleanTickers,candidateMarket,applyMarketReaction,storySession,newsInstant} from '../../lib/resolute/risk-market.ts';
 import {summaryIssues,quoteIssues} from '../../lib/resolute/risk-copy-check.ts';
 import {RISK_POLICY} from '../../lib/resolute/risk-policy.ts';
 import {REPORT_UPDATES_LIMIT} from './rizel-report-source.mjs';
@@ -174,9 +174,10 @@ export function validateGeneration(output,candidate,why={}){
  const jaCopy={};for(const k of ['title','source','content','date']){const t=japaneseCopyText(output.ja[k],raw);if(t===null){why.reason='japanese-amount';return null;}jaCopy[k]=t;}
  why.reason='shape';
  const ja=withClosingQuestion(jaCopy,'ja'),en=withClosingQuestion(output.en,'en');
- // Nov 25: the index follows the source headline's scope (market-wide / chip sector / one company: no stars).
- const index=storyIndex(candidate.title);
- try{const article=parseRiskArticle({id:candidate.id,url:candidate.url,publishedAt:candidate.publishedAt,market:waitingMarket(index,candidate.publishedAt),stars:null,ja,en,quoteId:null,cause:index==='company'?null:causeOut});delete why.reason;return article;}catch{return null;}
+ // Nov 25: the index follows the source headline's scope (market-wide / chip sector / one company), and the session is the one
+ // after publication (risk-market.ts storySession). Single-company news is measured only with a rostered ticker.
+ const market=candidateMarket(candidate),measured=market.index!=='company'||!!market.company;
+ try{const article=parseRiskArticle({id:candidate.id,url:candidate.url,publishedAt:candidate.publishedAt,market,stars:null,ja,en,quoteId:null,cause:measured?causeOut:null});delete why.reason;return article;}catch{return null;}
 }
 async function callModel(input,instructions,pool,now,fetcher){
  const requestBody={model:'gpt-5.4-mini',store:false,reasoning:{effort:'none'},max_output_tokens:1800,instructions,
@@ -221,13 +222,15 @@ export function assignQuote(article,quotes,day){
  const matching=quotes.filter(q=>q.approved&&!quoteIssues(q).length&&article.stars>=q.minStars&&article.stars<=q.maxStars).sort((a,b)=>a.id.localeCompare(b.id));
  return {...article,quoteId:matching.length?matching[parseInt(hash(day+article.id).slice(0,6),16)%matching.length].id:null};
 }
-/** Sessions whose moves could fill these stories (first U.S. close after each story). */
-export function pendingSessions(articles){return [...new Set(articles.filter(a=>a.market.reading===null&&a.market.index!=='company').map(a=>a.market.session??firstCloseAfter(newsInstant(a.publishedAt))).filter(Boolean))];}
+/** True for a story that can still be measured: not yet read, and not unmeasurable company news. */
+const measurable=a=>a.market.reading===null&&(a.market.index!=='company'||!!a.market.company);
+/** Sessions whose moves could fill these stories (the session after each story's publication, storySession). */
+export function pendingSessions(articles){return [...new Set(articles.filter(measurable).map(a=>a.market.session??storySession(newsInstant(a.publishedAt))).filter(Boolean))];}
 /** Applies known moves and (re)assigns quotes for stories that just got stars. */
 export async function reactArticles(articles,readMoves,quotes,day){
  const sessions=pendingSessions(articles);if(!sessions.length||!readMoves)return articles;
  const moves=await readMoves(sessions);
- return articles.map(a=>{if(a.market.reading!==null||a.market.index==='company')return a;const next=applyMarketReaction(a,moves);return next.stars===null?next:assignQuote(next,quotes,day);});
+ return articles.map(a=>{if(!measurable(a))return a;const next=applyMarketReaction(a,moves);return next.stars===null?next:assignQuote(next,quotes,day);});
 }
 /** "Filled at the next update": stories still waiting for the market's reaction in recent ready days get their stars
  * once the thermometer snapshot of that close exists. Ready days only; failed/legacy rows are left as they are. */
