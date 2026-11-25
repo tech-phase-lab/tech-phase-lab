@@ -1,0 +1,182 @@
+{
+  "root": {
+    "ticker": "NOG",
+    "name": "ノーザン・オイル・アンド・ガス",
+    "cik": 1104485,
+    "name_en": "Northern Oil and Gas, Inc."
+  },
+  "rows": [
+    {
+      "ja": "共同買収の相手(現場の運営会社)",
+      "en": "Co-buyers that operate the assets"
+    },
+    {
+      "ja": "権益の売り手",
+      "en": "Asset sellers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "INR",
+      "ticker": "INR",
+      "name": "インフィニティ・ナチュラル・リソーシズ",
+      "name_en": "Infinity Natural Resources",
+      "sub": "天然ガス開発",
+      "sub_en": "Natural gas E&P",
+      "sub_short": "天然ガス",
+      "sub_short_en": "Gas",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "アンテロのオハイオ資産を共同買収(NOG40%・INR60%で運営)",
+          "text_en": "Co-bought Antero's Ohio assets; INR holds 60% and operates",
+          "source": {
+            "label": "Northern Oil and Gas 10-K(2025年度)",
+            "label_en": "Northern Oil and Gas 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1104485/000110448526000008/nog-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "At closing, the Company acquired a 40 % undivided working interest in the assets sold by Antero, with Infinity Natural Resources, LLC, an unaffiliated third party, acquiring the other 60 % and becoming the operator of the acquired assets."
+          }
+        }
+      ]
+    },
+    {
+      "id": "VTLE",
+      "ticker": "VTLE",
+      "name": "バイタル・エナジー",
+      "name_en": "Vital Energy",
+      "sub": "石油・ガス開発",
+      "sub_en": "Oil & gas producer",
+      "sub_short": "石油",
+      "sub_short_en": "Oil & gas",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "デラウェア盆地の資産を共同買収(NOG20%・Vital80%で運営)",
+          "text_en": "Co-bought Delaware Basin assets; Vital holds 80% and operates",
+          "source": {
+            "label": "Northern Oil and Gas 10-K(2025年度)",
+            "label_en": "Northern Oil and Gas 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1104485/000110448526000008/nog-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "At closing, the Company acquired a 20 % undivided working interest in the assets sold by Point, with Vital Energy, Inc., an unaffiliated third party, acquiring the other 80 % and becoming the operator of the acquired assets."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SM",
+      "ticker": "SM",
+      "name": "SMエナジー",
+      "name_en": "SM Energy",
+      "sub": "石油・ガス開発",
+      "sub_en": "Oil & gas producer",
+      "sub_short": "石油",
+      "sub_short_en": "Oil & gas",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ユインタ盆地の資産を共同買収(NOG20%・SM80%で運営)",
+          "text_en": "Co-bought Uinta Basin assets; SM holds 80% and operates",
+          "source": {
+            "label": "Northern Oil and Gas 10-K(2025年度)",
+            "label_en": "Northern Oil and Gas 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1104485/000110448526000008/nog-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "At closing, the Company acquired a 20 % undivided working interest in the assets sold by XCL, with SM Energy Company, an unaffiliated third party, acquiring the other 80 % and becoming the operator of the acquired assets."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AR",
+      "ticker": "AR",
+      "name": "アンテロ・リソーシズ",
+      "name_en": "Antero Resources",
+      "sub": "天然ガス開発",
+      "sub_en": "Natural gas E&P",
+      "sub_short": "天然ガス",
+      "sub_short_en": "Gas",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "オハイオ州ユーティカの開発・集送資産を買収(2026年2月)",
+          "text_en": "Bought its Ohio Utica upstream and midstream assets (Feb 2026)",
+          "source": {
+            "label": "Northern Oil and Gas 10-K(2025年度)",
+            "label_en": "Northern Oil and Gas 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1104485/000110448526000008/nog-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "in February 2026, the Company completed its acquisition of certain upstream and midstream assets in the state of Ohio from Antero Resources Corporation and certain affiliated entities (collectively, \"Antero\")"
+          }
+        }
+      ]
+    },
+    {
+      "id": "XCL",
+      "ticker": "XCL",
+      "name": "XCLリソーシズ",
+      "name_en": "XCL Resources",
+      "sub": "石油・ガス開発",
+      "sub_en": "Oil & gas producer",
+      "sub_short": "石油",
+      "sub_short_en": "Oil & gas",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ユインタ盆地の石油・ガス権益を買収(2024年10月)",
+          "text_en": "Bought its Uinta Basin properties (Oct 2024)",
+          "source": {
+            "label": "Northern Oil and Gas 10-K(2025年度)",
+            "label_en": "Northern Oil and Gas 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1104485/000110448526000008/nog-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "In October 2024, the Company completed its acquisition of certain oil and natural gas properties in the Uinta Basin from XCL Resources, LLC and certain affiliated entities (\"XCL\")"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PointEnergy",
+      "ticker": "Point",
+      "name": "ポイント・エナジー・パートナーズ",
+      "name_en": "Point Energy Partners",
+      "sub": "石油・ガス開発",
+      "sub_en": "Oil & gas producer",
+      "sub_short": "石油",
+      "sub_short_en": "Oil & gas",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "デラウェア盆地の石油・ガス権益を買収(2024年9月)",
+          "text_en": "Bought its Delaware Basin properties (Sep 2024)",
+          "source": {
+            "label": "Northern Oil and Gas 10-K(2025年度)",
+            "label_en": "Northern Oil and Gas 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1104485/000110448526000008/nog-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "In September 2024, the Company completed its acquisition of certain oil and natural gas properties located in the Delaware Basin from Point Energy Partners, LLC (\"Point\")"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
