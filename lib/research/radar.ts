@@ -79,8 +79,17 @@ export type RadarDotPro = RadarDotFree & { fcfMargin: number; growth: number | n
   prepaid?: boolean };
 /** Operating cash flow above this share of revenue cannot come from the business alone. */
 export const REVIEW_ABOVE = 100;
+/** What a FREE visitor receives (owner, Nov 25): each dot's place by its RANK inside the genre, never its figures. `x` is the earning-power
+ * rank and `y` the staying-power rank, both from 0 (lowest) to 1 (highest), evenly spaced and kept off the edges; no two dots share a place
+ * on either axis (a tie is broken by the genre's order). Colour and size as on the PRO chart. */
+export type RadarRankDot = { ticker: string; x: number; y: number; up: boolean | null; tone: Tone; size: SizeTier };
+/** Evenly spaced places for n ranks, centred so the middle line falls between the middle ranks: 0.5/n, 1.5/n, ... */
+export const rankPlaces = (values: { ticker: string; value: number }[]) => {
+  const order = values.map((item, i) => ({ ...item, i })).sort((a, b) => a.value - b.value || a.i - b.i);
+  return Object.fromEntries(order.map((item, rank) => [item.ticker, (rank + 0.5) / order.length])) as Record<string, number>;
+};
 export type RadarPayload =
-  | { tier: "free"; genre: RadarGenreId; dots: RadarDotFree[] }
+  | { tier: "free"; genre: RadarGenreId; dots: RadarRankDot[]; asOf: string | null }
   | { tier: "pro"; genre: RadarGenreId; dots: RadarDotPro[]; missing: string[]; asOf: string | null };
 
 const finite = (value: number) => Number.isFinite(value) ? value : 1000; // JSON cannot carry Infinity: 1000x is far beyond the 10x edge
@@ -104,7 +113,13 @@ export function buildRadar(genre: RadarGenreId, entries: { ticker: string; facts
     const tone: Tone = growth !== null ? (growth >= 0 ? "up" : "down") : sinceBefore > 0 ? "up" : sinceBefore < 0 ? "down" : null;
     return { ticker: entry.ticker, ocfMargin: entry.latest.ocfMargin, cover: finite(entry.latest.cover), up: growth === null ? null : growth >= 0, tone, size: sizes[entry.ticker], ...(entry.latest.noRevenue ? { noRevenue: true } : {}) };
   });
-  if (tier === "free") return { tier, genre, dots: base };
+  const asOf = ready.map(entry => entry.latest.end).sort().at(-1) ?? null;
+  if (tier === "free") {
+    // A company without revenue has no earning power: it takes the lowest earning-power rank.
+    const xs = rankPlaces(base.map(dot => ({ ticker: dot.ticker, value: dot.noRevenue ? -Infinity : dot.ocfMargin })));
+    const ys = rankPlaces(base.map(dot => ({ ticker: dot.ticker, value: dot.cover })));
+    return { tier, genre, asOf, dots: base.map(dot => ({ ticker: dot.ticker, x: xs[dot.ticker], y: ys[dot.ticker], up: dot.up, tone: dot.tone, size: dot.size })) };
+  }
   // Nov 24 (owner: "財務レーダーの順位外もできればどうにかしてほしい"): every company with revenue is ranked. Prepayments of years ahead are
   // taken out of the cash flow before this point (radar-facts.ts); a value still beyond the chart counts as the chart's edge, as any other.
   // Only a company without revenue has no earning power to score, and the screen says so in one line.
@@ -116,7 +131,6 @@ export function buildRadar(genre: RadarGenreId, entries: { ticker: string; facts
     score: fitnessScore(entry.latest.ocfMargin, finite(entry.latest.cover)), rank: unranked(entry) ? null : order.indexOf(entry.ticker) + 1,
     review: !entry.latest.noRevenue && entry.latest.ocfMargin > REVIEW_ABOVE, ...(entry.latest.prepaid ? { prepaid: true } : {}),
   }));
-  const asOf = ready.map(entry => entry.latest.end).sort().at(-1) ?? null;
   return { tier, genre, dots, missing: entries.filter(entry => !entry.facts.latest).map(entry => entry.ticker), asOf };
 }
 

@@ -3,7 +3,6 @@ import { BAR_STATE_KEY } from "@/lib/research/resolute-bar-state";
 import { ownedGuardScript } from "@/lib/resolute/landing-gate";
 import AlertSample from "./alert-sample";
 import Book from "./book";
-import AddToHomeSteps from "../add-to-home-steps";
 import OpenAtTop from "./open-at-top";
 import TechPhaseBack from "./tech-phase-back";
 import OwnedRedirect from "./owned-redirect";
@@ -128,14 +127,6 @@ export default function Landing({ embedded = false }: { embedded?: boolean }) {
      <Feature title="衝撃度チェッカー" text="その日の気になるニュースを選び、関連するTP指標が実際にどれだけ動いたかを★5段階で示します。大きなニュースがない日は公開しません。" />
      <Feature title="リゼルの一言" text="ニュースごとに、リゼル本人の見方をひと言添えて届けます。" />
     </div>
-   </section>
-
-   {/* 4.5 ホーム画面に置く */}
-   <section className={s.sec}>
-    <p className={s.eyebrow}>ON YOUR HOME SCREEN</p>
-    <h2 className={s.h2}>ホーム画面に置いて<br />1タップで開く</h2>
-    <p className={s.body}>買ったあとは、RESOLUTEだけをホーム画面に置けます。相場が荒れた夜も、探さずに開けます。</p>
-    <AddToHomeSteps className={s.homeSteps} />
    </section>
 
    {/* 5 購入 */}
