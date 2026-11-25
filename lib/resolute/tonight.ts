@@ -2,6 +2,7 @@ import type { PlanInput } from './plan-data.ts';
 import type { NotificationSettings } from './notification-settings.ts';
 import type { ThermometerSnapshot } from './thermometer-view.ts';
 import type { Copy } from '../research/data.ts';
+import { deliveryClock } from './delivery-time.ts';
 
 /** 今夜のひと息 (owner, Nov 25: rebuilt). A place to calm down on a crash or surge night: only what changes from night to night.
  * Never today's loss amount or the share of the member's own assets lost. Pure functions; the page and resolute-api share them. */
@@ -97,7 +98,7 @@ export function tonightFacts(input: { direction: TonightDirection; index: Tonigh
   if (plan?.tolerancePct) notes.push({ id: 'tolerance', ja: `あなたは−${plan.tolerancePct}%までは持ち続けると決めています`, en: `You decided to hold on down to −${plan.tolerancePct}%` });
   if (plan?.perStockCapPct) notes.push({ id: 'cap', ja: `1銘柄は資産の${plan.perStockCapPct}%までと決めています`, en: `You keep each stock to ${plan.perStockCapPct}% of your assets` });
   if (plan?.reserveMonths) notes.push({ id: 'reserve', ja: `生活費の現金は${plan.reserveMonths}か月分残すと決めています`, en: `You keep ${plan.reserveMonths} months of living costs in cash` });
-  if (settings?.morningEnabled) notes.push({ id: 'morning', ja: `翌朝のひとことは朝${settings.deliveryHourJst}:00に届きます`, en: `Your morning note arrives at ${settings.deliveryHourJst}:00 JST` });
+  if (settings?.morningEnabled) notes.push({ id: 'morning', ja: `翌朝のひとことは朝${settings.deliveryHourJst}:00に届きます`, en: `Your morning note arrives at ${deliveryClock(settings.deliveryHourJst, 'en')}` });
   const lines = alertLines(settings, plan);
   const seen = new Set<string>();
   for (const line of lines) {
@@ -150,7 +151,7 @@ export function parseTonightQuestions(text: unknown, facts: TonightFacts, night:
     if (ja.length < 6 || ja.length > 32 || en.length < 8 || en.length > 90 || !ja.endsWith('？') || !en.endsWith('?')) return null;
     if (/[0-9０-９]/.test(ja + en) || /…|\.\.\.|[\r\n]/.test(ja + en) || BANNED.test(ja + ' ' + en)) return null;
     for (const word of (ja.match(/[A-Za-z][A-Za-z.-]*/g) ?? [])) if (!symbols.has(word) && !allowedLatin.has(word)) return null;
-    for (const word of (en.match(/\b[A-Z]{2,}[A-Z.-]*\b/g) ?? [])) if (!symbols.has(word) && !allowedLatin.has(word) && word !== 'JST') return null;
+    for (const word of (en.match(/\b[A-Z]{2,}[A-Z.-]*\b/g) ?? [])) if (!symbols.has(word) && !allowedLatin.has(word)) return null;
     let note: Copy | null = null;
     if (q.note !== null && q.note !== undefined && q.note !== 'null') {
       const n = facts.notes.find(x => x.id === q.note);
