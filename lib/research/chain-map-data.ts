@@ -42,6 +42,7 @@ import c_akam from "../../data/chain/AKAM.json" with { type: "json" };
 import c_alab from "../../data/chain/ALAB.json" with { type: "json" };
 import c_alb from "../../data/chain/ALB.json" with { type: "json" };
 import c_algm from "../../data/chain/ALGM.json" with { type: "json" };
+import c_algt from "../../data/chain/ALGT.json" with { type: "json" };
 import c_alk from "../../data/chain/ALK.json" with { type: "json" };
 import c_alkt from "../../data/chain/ALKT.json" with { type: "json" };
 import c_all from "../../data/chain/ALL.json" with { type: "json" };
@@ -75,6 +76,7 @@ import c_apa from "../../data/chain/APA.json" with { type: "json" };
 import c_apd from "../../data/chain/APD.json" with { type: "json" };
 import c_aph from "../../data/chain/APH.json" with { type: "json" };
 import c_apld from "../../data/chain/APLD.json" with { type: "json" };
+import c_aple from "../../data/chain/APLE.json" with { type: "json" };
 import c_apo from "../../data/chain/APO.json" with { type: "json" };
 import c_app from "../../data/chain/APP.json" with { type: "json" };
 import c_appf from "../../data/chain/APPF.json" with { type: "json" };
@@ -184,6 +186,7 @@ import c_ccj from "../../data/chain/CCJ.json" with { type: "json" };
 import c_cck from "../../data/chain/CCK.json" with { type: "json" };
 import c_ccl from "../../data/chain/CCL.json" with { type: "json" };
 import c_ccoi from "../../data/chain/CCOI.json" with { type: "json" };
+import c_cde from "../../data/chain/CDE.json" with { type: "json" };
 import c_cdns from "../../data/chain/CDNS.json" with { type: "json" };
 import c_cdw from "../../data/chain/CDW.json" with { type: "json" };
 import c_ce from "../../data/chain/CE.json" with { type: "json" };
@@ -233,6 +236,7 @@ import c_cpay from "../../data/chain/CPAY.json" with { type: "json" };
 import c_cpb from "../../data/chain/CPB.json" with { type: "json" };
 import c_cprt from "../../data/chain/CPRT.json" with { type: "json" };
 import c_cqp from "../../data/chain/CQP.json" with { type: "json" };
+import c_crc from "../../data/chain/CRC.json" with { type: "json" };
 import c_crdo from "../../data/chain/CRDO.json" with { type: "json" };
 import c_crh from "../../data/chain/CRH.json" with { type: "json" };
 import c_crl from "../../data/chain/CRL.json" with { type: "json" };
@@ -407,6 +411,7 @@ import c_googl from "../../data/chain/GOOGL.json" with { type: "json" };
 import c_gpc from "../../data/chain/GPC.json" with { type: "json" };
 import c_gpk from "../../data/chain/GPK.json" with { type: "json" };
 import c_gpn from "../../data/chain/GPN.json" with { type: "json" };
+import c_grab from "../../data/chain/GRAB.json" with { type: "json" };
 import c_grmn from "../../data/chain/GRMN.json" with { type: "json" };
 import c_gs from "../../data/chain/GS.json" with { type: "json" };
 import c_gsk from "../../data/chain/GSK.json" with { type: "json" };
@@ -548,6 +553,7 @@ import c_low from "../../data/chain/LOW.json" with { type: "json" };
 import c_lrcx from "../../data/chain/LRCX.json" with { type: "json" };
 import c_lrn from "../../data/chain/LRN.json" with { type: "json" };
 import c_lscc from "../../data/chain/LSCC.json" with { type: "json" };
+import c_ltc from "../../data/chain/LTC.json" with { type: "json" };
 import c_lulu from "../../data/chain/LULU.json" with { type: "json" };
 import c_lumn from "../../data/chain/LUMN.json" with { type: "json" };
 import c_lunr from "../../data/chain/LUNR.json" with { type: "json" };
@@ -569,6 +575,7 @@ import c_mc from "../../data/chain/MC.json" with { type: "json" };
 import c_mcd from "../../data/chain/MCD.json" with { type: "json" };
 import c_mchp from "../../data/chain/MCHP.json" with { type: "json" };
 import c_mck from "../../data/chain/MCK.json" with { type: "json" };
+import c_mco from "../../data/chain/MCO.json" with { type: "json" };
 import c_mdb from "../../data/chain/MDB.json" with { type: "json" };
 import c_mdlz from "../../data/chain/MDLZ.json" with { type: "json" };
 import c_mdt from "../../data/chain/MDT.json" with { type: "json" };
@@ -611,6 +618,7 @@ import c_msi from "../../data/chain/MSI.json" with { type: "json" };
 import c_mstr from "../../data/chain/MSTR.json" with { type: "json" };
 import c_mt from "../../data/chain/MT.json" with { type: "json" };
 import c_mtb from "../../data/chain/MTB.json" with { type: "json" };
+import c_mtdr from "../../data/chain/MTDR.json" with { type: "json" };
 import c_mtn from "../../data/chain/MTN.json" with { type: "json" };
 import c_mtrn from "../../data/chain/MTRN.json" with { type: "json" };
 import c_mtsi from "../../data/chain/MTSI.json" with { type: "json" };
@@ -739,6 +747,7 @@ import c_ppl from "../../data/chain/PPL.json" with { type: "json" };
 import c_ppli from "../../data/chain/PPLI.json" with { type: "json" };
 import c_prgs from "../../data/chain/PRGS.json" with { type: "json" };
 import c_prim from "../../data/chain/PRIM.json" with { type: "json" };
+import c_prks from "../../data/chain/PRKS.json" with { type: "json" };
 import c_pru from "../../data/chain/PRU.json" with { type: "json" };
 import c_psa from "../../data/chain/PSA.json" with { type: "json" };
 import c_psn from "../../data/chain/PSN.json" with { type: "json" };
@@ -785,6 +794,7 @@ import c_rl from "../../data/chain/RL.json" with { type: "json" };
 import c_rmbs from "../../data/chain/RMBS.json" with { type: "json" };
 import c_rmd from "../../data/chain/RMD.json" with { type: "json" };
 import c_rng from "../../data/chain/RNG.json" with { type: "json" };
+import c_rnr from "../../data/chain/RNR.json" with { type: "json" };
 import c_road from "../../data/chain/ROAD.json" with { type: "json" };
 import c_roiv from "../../data/chain/ROIV.json" with { type: "json" };
 import c_rok from "../../data/chain/ROK.json" with { type: "json" };
@@ -904,6 +914,7 @@ import c_tjx from "../../data/chain/TJX.json" with { type: "json" };
 import c_tkr from "../../data/chain/TKR.json" with { type: "json" };
 import c_tln from "../../data/chain/TLN.json" with { type: "json" };
 import c_tm from "../../data/chain/TM.json" with { type: "json" };
+import c_tme from "../../data/chain/TME.json" with { type: "json" };
 import c_tmo from "../../data/chain/TMO.json" with { type: "json" };
 import c_tmus from "../../data/chain/TMUS.json" with { type: "json" };
 import c_tndm from "../../data/chain/TNDM.json" with { type: "json" };
@@ -992,6 +1003,7 @@ import c_wday from "../../data/chain/WDAY.json" with { type: "json" };
 import c_wdc from "../../data/chain/WDC.json" with { type: "json" };
 import c_wec from "../../data/chain/WEC.json" with { type: "json" };
 import c_well from "../../data/chain/WELL.json" with { type: "json" };
+import c_wes from "../../data/chain/WES.json" with { type: "json" };
 import c_wfc from "../../data/chain/WFC.json" with { type: "json" };
 import c_wgo from "../../data/chain/WGO.json" with { type: "json" };
 import c_wh from "../../data/chain/WH.json" with { type: "json" };
@@ -1027,12 +1039,14 @@ import c_xyz from "../../data/chain/XYZ.json" with { type: "json" };
 import c_yelp from "../../data/chain/YELP.json" with { type: "json" };
 import c_you from "../../data/chain/YOU.json" with { type: "json" };
 import c_yum from "../../data/chain/YUM.json" with { type: "json" };
+import c_yumc from "../../data/chain/YUMC.json" with { type: "json" };
 import c_zbh from "../../data/chain/ZBH.json" with { type: "json" };
 import c_zbra from "../../data/chain/ZBRA.json" with { type: "json" };
 import c_zd from "../../data/chain/ZD.json" with { type: "json" };
 import c_zeta from "../../data/chain/ZETA.json" with { type: "json" };
 import c_zm from "../../data/chain/ZM.json" with { type: "json" };
 import c_zs from "../../data/chain/ZS.json" with { type: "json" };
+import c_zto from "../../data/chain/ZTO.json" with { type: "json" };
 import c_zts from "../../data/chain/ZTS.json" with { type: "json" };
 
 import type { ChainMapData } from "./chain-map-core.ts";
@@ -1083,6 +1097,7 @@ const available: Record<string, ChainMapData> = {
   ALAB: c_alab as ChainMapData,
   ALB: c_alb as ChainMapData,
   ALGM: c_algm as ChainMapData,
+  ALGT: c_algt as ChainMapData,
   ALK: c_alk as ChainMapData,
   ALKT: c_alkt as ChainMapData,
   ALL: c_all as ChainMapData,
@@ -1116,6 +1131,7 @@ const available: Record<string, ChainMapData> = {
   APD: c_apd as ChainMapData,
   APH: c_aph as ChainMapData,
   APLD: c_apld as ChainMapData,
+  APLE: c_aple as ChainMapData,
   APO: c_apo as ChainMapData,
   APP: c_app as ChainMapData,
   APPF: c_appf as ChainMapData,
@@ -1225,6 +1241,7 @@ const available: Record<string, ChainMapData> = {
   CCK: c_cck as ChainMapData,
   CCL: c_ccl as ChainMapData,
   CCOI: c_ccoi as ChainMapData,
+  CDE: c_cde as ChainMapData,
   CDNS: c_cdns as ChainMapData,
   CDW: c_cdw as ChainMapData,
   CE: c_ce as ChainMapData,
@@ -1274,6 +1291,7 @@ const available: Record<string, ChainMapData> = {
   CPB: c_cpb as ChainMapData,
   CPRT: c_cprt as ChainMapData,
   CQP: c_cqp as ChainMapData,
+  CRC: c_crc as ChainMapData,
   CRDO: c_crdo as ChainMapData,
   CRH: c_crh as ChainMapData,
   CRL: c_crl as ChainMapData,
@@ -1448,6 +1466,7 @@ const available: Record<string, ChainMapData> = {
   GPC: c_gpc as ChainMapData,
   GPK: c_gpk as ChainMapData,
   GPN: c_gpn as ChainMapData,
+  GRAB: c_grab as ChainMapData,
   GRMN: c_grmn as ChainMapData,
   GS: c_gs as ChainMapData,
   GSK: c_gsk as ChainMapData,
@@ -1589,6 +1608,7 @@ const available: Record<string, ChainMapData> = {
   LRCX: c_lrcx as ChainMapData,
   LRN: c_lrn as ChainMapData,
   LSCC: c_lscc as ChainMapData,
+  LTC: c_ltc as ChainMapData,
   LULU: c_lulu as ChainMapData,
   LUMN: c_lumn as ChainMapData,
   LUNR: c_lunr as ChainMapData,
@@ -1610,6 +1630,7 @@ const available: Record<string, ChainMapData> = {
   MCD: c_mcd as ChainMapData,
   MCHP: c_mchp as ChainMapData,
   MCK: c_mck as ChainMapData,
+  MCO: c_mco as ChainMapData,
   MDB: c_mdb as ChainMapData,
   MDLZ: c_mdlz as ChainMapData,
   MDT: c_mdt as ChainMapData,
@@ -1652,6 +1673,7 @@ const available: Record<string, ChainMapData> = {
   MSTR: c_mstr as ChainMapData,
   MT: c_mt as ChainMapData,
   MTB: c_mtb as ChainMapData,
+  MTDR: c_mtdr as ChainMapData,
   MTN: c_mtn as ChainMapData,
   MTRN: c_mtrn as ChainMapData,
   MTSI: c_mtsi as ChainMapData,
@@ -1780,6 +1802,7 @@ const available: Record<string, ChainMapData> = {
   PPLI: c_ppli as ChainMapData,
   PRGS: c_prgs as ChainMapData,
   PRIM: c_prim as ChainMapData,
+  PRKS: c_prks as ChainMapData,
   PRU: c_pru as ChainMapData,
   PSA: c_psa as ChainMapData,
   PSN: c_psn as ChainMapData,
@@ -1826,6 +1849,7 @@ const available: Record<string, ChainMapData> = {
   RMBS: c_rmbs as ChainMapData,
   RMD: c_rmd as ChainMapData,
   RNG: c_rng as ChainMapData,
+  RNR: c_rnr as ChainMapData,
   ROAD: c_road as ChainMapData,
   ROIV: c_roiv as ChainMapData,
   ROK: c_rok as ChainMapData,
@@ -1945,6 +1969,7 @@ const available: Record<string, ChainMapData> = {
   TKR: c_tkr as ChainMapData,
   TLN: c_tln as ChainMapData,
   TM: c_tm as ChainMapData,
+  TME: c_tme as ChainMapData,
   TMO: c_tmo as ChainMapData,
   TMUS: c_tmus as ChainMapData,
   TNDM: c_tndm as ChainMapData,
@@ -2033,6 +2058,7 @@ const available: Record<string, ChainMapData> = {
   WDC: c_wdc as ChainMapData,
   WEC: c_wec as ChainMapData,
   WELL: c_well as ChainMapData,
+  WES: c_wes as ChainMapData,
   WFC: c_wfc as ChainMapData,
   WGO: c_wgo as ChainMapData,
   WH: c_wh as ChainMapData,
@@ -2068,12 +2094,14 @@ const available: Record<string, ChainMapData> = {
   YELP: c_yelp as ChainMapData,
   YOU: c_you as ChainMapData,
   YUM: c_yum as ChainMapData,
+  YUMC: c_yumc as ChainMapData,
   ZBH: c_zbh as ChainMapData,
   ZBRA: c_zbra as ChainMapData,
   ZD: c_zd as ChainMapData,
   ZETA: c_zeta as ChainMapData,
   ZM: c_zm as ChainMapData,
   ZS: c_zs as ChainMapData,
+  ZTO: c_zto as ChainMapData,
   ZTS: c_zts as ChainMapData,
 };
 export const chainDataFor = (root: string): ChainMapData | null => available[root] ?? null;

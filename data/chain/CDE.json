@@ -1,0 +1,182 @@
+{
+  "root": {
+    "ticker": "CDE",
+    "name": "コー・マイニング",
+    "cik": 215466,
+    "name_en": "Coeur Mining, Inc."
+  },
+  "rows": [
+    {
+      "ja": "ストリーム・ロイヤルティ",
+      "en": "Streams & royalties"
+    },
+    {
+      "ja": "買収・権益の取引",
+      "en": "Acquisitions & land deals"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "FNV",
+      "ticker": "FNV",
+      "name": "フランコ・ネバダ",
+      "name_en": "Franco-Nevada",
+      "sub": "権益",
+      "sub_en": "Royalties",
+      "sub_short": "権益",
+      "sub_short_en": "Royalties",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "パルマレホ金生産の50%を固定価格上限で売る契約",
+          "text_en": "Buys 50% of Palmarejo gold under a stream",
+          "source": {
+            "label": "Coeur Mining 10-K(2025年度)",
+            "label_en": "Coeur Mining 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/215466/000021546626000004/cde-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Coeur Mexicana is obligated to sell 50% of Palmarejo gold production (excluding production from certain properties acquired in 2015) to a subsidiary of Franco-Nevada Corporation (\"Franco-Nevada\") under a gold stream agreement for the lesser of $800 or spot price per ounce."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RGLD",
+      "ticker": "RGLD",
+      "name": "ロイヤル・ゴールド",
+      "name_en": "Royal Gold",
+      "sub": "権益",
+      "sub_en": "Streams",
+      "sub_short": "権益",
+      "sub_short_en": "Streams",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ワーフ鉱山の金に生産ロイヤルティを支払う",
+          "text_en": "Receives a production royalty on Wharf gold",
+          "source": {
+            "label": "Coeur Mining 10-K(2025年度)",
+            "label_en": "Coeur Mining 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/215466/000021546626000004/cde-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "• Wharf is obligated to pay a sliding scale production royalty of 0%-2% on the gross value of all gold in saleable form to Royal Gold, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NGD",
+      "ticker": "NGD",
+      "name": "ニュー・ゴールド",
+      "name_en": "New Gold",
+      "sub": "金鉱山",
+      "sub_en": "Gold",
+      "sub_short": "金鉱山",
+      "sub_short_en": "Gold",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "株式交換での買収で合意(2026年上期完了予定)",
+          "text_en": "Agreed all-share acquisition, expected to close in 1H 2026",
+          "source": {
+            "label": "Coeur Mining 10-K(2025年度)",
+            "label_en": "Coeur Mining 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/215466/000021546626000004/cde-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "On November 2, 2025, the Company entered into a definitive agreement (the \"Arrangement Agreement\") whereby, a wholly-owned subsidiary of Coeur (\"Canadian Sub\") would acquire all of the issued and outstanding shares of New Gold Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SilverCrest",
+      "ticker": "SilverCrest",
+      "name": "シルバークレスト・メタルズ",
+      "name_en": "SilverCrest Metals",
+      "sub": "銀鉱山",
+      "sub_en": "Silver",
+      "sub_short": "銀鉱山",
+      "sub_short_en": "Silver",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "メキシコのラスチスパス鉱山の運営会社を2025年に買収",
+          "text_en": "Acquired the Las Chispas mine operator in 2025",
+          "source": {
+            "label": "Coeur Mining 10-K(2025年度)",
+            "label_en": "Coeur Mining 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/215466/000021546626000004/cde-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "such as the acquisition of mining concessions from a subsidiary of Fresnillo plc that are located adjacent to the existing Palmarejo site, the acquisition of SilverCrest Metals Inc. (\"SilverCrest\") in February 2025, which operates the Las Chispas mine in Sonora, Mexico (the \"SilverCrest Transaction\")"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Fresnillo",
+      "ticker": "Fresnillo",
+      "name": "フレスニーヨ",
+      "name_en": "Fresnillo",
+      "sub": "銀鉱山",
+      "sub_en": "Silver",
+      "sub_short": "銀鉱山",
+      "sub_short_en": "Silver",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "パルマレホ隣接の鉱区を同社子会社から取得",
+          "text_en": "Bought concessions next to Palmarejo from its subsidiary",
+          "source": {
+            "label": "Coeur Mining 10-K(2025年度)",
+            "label_en": "Coeur Mining 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/215466/000021546626000004/cde-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "such as the acquisition of mining concessions from a subsidiary of Fresnillo plc that are located adjacent to the existing Palmarejo site, the acquisition of SilverCrest Metals Inc. (\"SilverCrest\") in February 2025, which operates the Las Chispas mine in Sonora, Mexico (the \"SilverCrest Transaction\")"
+          }
+        }
+      ]
+    },
+    {
+      "id": "HyakMining",
+      "ticker": "Hyak Mining",
+      "name": "ハイアック・マイニング",
+      "name_en": "Hyak Mining Company",
+      "sub": "鉱区",
+      "sub_en": "Mine land",
+      "sub_short": "鉱区",
+      "sub_short_en": "Land",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ケンジントン鉱山のジュアリン鉱区を賃借",
+          "text_en": "Leases the Jualin claims at Kensington",
+          "source": {
+            "label": "Coeur Mining 10-K(2025年度)",
+            "label_en": "Coeur Mining 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/215466/000021546626000004/cde-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "• The Company controls properties comprising the Jualin Group, under a lease agreement with Hyak Mining Company (\"Hyak\"), which is valid until August 5, 2035 and thereafter, provided mining and production are actively occurring within and from the leased premises."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

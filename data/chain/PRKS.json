@@ -1,0 +1,156 @@
+{
+  "root": {
+    "ticker": "PRKS",
+    "name": "ユナイテッド・パークス&リゾーツ",
+    "cik": 1564902,
+    "name_en": "United Parks & Resorts Inc."
+  },
+  "rows": [
+    {
+      "ja": "ブランド・キャラクターのライセンス元",
+      "en": "Brand & character licensors"
+    },
+    {
+      "ja": "海外提携・大株主",
+      "en": "Overseas partner & shareholder"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "BUD",
+      "ticker": "BUD",
+      "name": "アンハイザー・ブッシュ・インベブ",
+      "name_en": "Anheuser-Busch InBev",
+      "sub": "ビール",
+      "sub_en": "Beer",
+      "sub_short": "ビール",
+      "sub_short_en": "Beer",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "「ブッシュ・ガーデンズ」の商標ライセンス元",
+          "text_en": "Licenses the Busch Gardens trademark",
+          "source": {
+            "label": "United Parks & Resorts 10-K(2025年度)",
+            "label_en": "United Parks & Resorts 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1564902/000119312526088288/prks-20251231.htm",
+            "level": "official",
+            "date": "2026-03-03",
+            "quote": "Busch Gardens License Agreement Our subsidiary, SeaWorld Parks & Entertainment LLC, is a party to a trademark license agreement with ABI, which governs our use of the Busch Gardens name and logo."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SesameWorkshop",
+      "ticker": "Sesame Workshop",
+      "name": "セサミワークショップ",
+      "name_en": "Sesame Workshop",
+      "sub": "キャラクター",
+      "sub_en": "Characters",
+      "sub_short": "キャラ",
+      "sub_short_en": "Licensor",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "セサミストリートのキャラクター使用ライセンス",
+          "text_en": "Licenses the Sesame Street characters",
+          "source": {
+            "label": "United Parks & Resorts 10-K(2025年度)",
+            "label_en": "United Parks & Resorts 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1564902/000119312526088288/prks-20251231.htm",
+            "level": "official",
+            "date": "2026-03-03",
+            "quote": "In addition, we have certain rights to use Sesame Street ® marks, characters and related indicia through a license agreement with Sesame Workshop."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CharacterArts",
+      "ticker": "Character Arts",
+      "name": "キャラクター・アーツ",
+      "name_en": "Character Arts, LLC",
+      "sub": "キャラクター",
+      "sub_en": "Characters",
+      "sub_short": "キャラ",
+      "sub_short_en": "Licensor",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "「赤鼻のトナカイ ルドルフ」のライセンス(2029年まで)",
+          "text_en": "Licenses Rudolph the Red-Nosed Reindeer through 2029",
+          "source": {
+            "label": "United Parks & Resorts 10-K(2025年度)",
+            "label_en": "United Parks & Resorts 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1564902/000119312526088288/prks-20251231.htm",
+            "level": "official",
+            "date": "2026-03-03",
+            "quote": "We have also incorporated Rudolph the Red-Nosed ReindeerTM and other well-known characters into five of our park holiday programs under a license agreement with Character Arts, LLC, which currently runs through January 2029."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Miral",
+      "ticker": "Miral",
+      "name": "ミラル・アセット・マネジメント",
+      "name_en": "Miral Asset Management",
+      "sub": "観光開発",
+      "sub_en": "Tourism",
+      "sub_short": "観光開発",
+      "sub_short_en": "Tourism",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "シーワールド・アブダビの提携相手。売上連動のロイヤルティを受け取る",
+          "text_en": "SeaWorld Abu Dhabi partner; pays sales-based royalties",
+          "source": {
+            "label": "United Parks & Resorts 10-K(2025年度)",
+            "label_en": "United Parks & Resorts 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1564902/000119312526088288/prks-20251231.htm",
+            "level": "official",
+            "date": "2026-03-03",
+            "quote": "The first-of-its-kind marine life themed park was built through a partnership with Miral Asset Management LLC. As part of this partnership, we receive sales based royalties, certain incentive fees and other service based payments."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HillPath",
+      "ticker": "Hill Path Capital",
+      "name": "ヒルパス・キャピタル",
+      "name_en": "Hill Path Capital",
+      "sub": "投資会社",
+      "sub_en": "Investing",
+      "sub_short": "投資会社",
+      "sub_short_en": "Investing",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "経営判断に大きな影響力を持つ大株主",
+          "text_en": "Major shareholder with significant influence",
+          "source": {
+            "label": "United Parks & Resorts 10-K(2025年度)",
+            "label_en": "United Parks & Resorts 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1564902/000119312526088288/prks-20251231.htm",
+            "level": "official",
+            "date": "2026-03-03",
+            "quote": "• the ability of Hill Path Capital LP and its affiliates to significantly influence our decisions and their interests may conflict with ours or yours in the future;"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
