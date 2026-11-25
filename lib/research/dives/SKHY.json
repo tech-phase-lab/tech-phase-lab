@@ -1,0 +1,482 @@
+{
+ "ticker": "SKHY",
+ "name": "SK hynix",
+ "exchange": "KRX",
+ "quoteTicker": "SKHY",
+ "period": "Q3 2026",
+ "periodQuarter": 3,
+ "releasedOn": "2026-10-28",
+ "periodEnd": "2026-09-30",
+ "reviewedOn": "2026-11-25",
+ "currency": "KRW",
+ "basis": {
+  "eps": "not reported in the release (no adjusted EPS)",
+  "grossMargin": "not reported; the text uses operating margin",
+  "guidance": "no numeric guidance"
+ },
+ "sources": [
+  {
+   "url": "https://news.skhynix.com/en/q3-2026-business-results/",
+   "title": "SK hynix Announces 3Q26 Financial Results (official English earnings release, October 28, 2026)",
+   "location": "Highlights; body text; 3Q26 Financial Results (K-IFRS) table"
+  },
+  {
+   "url": "https://news.skhynix.com/en/q2-2026-business-results/",
+   "title": "SK hynix Announces 2Q26 Financial Results (official English earnings release, July 29, 2026)",
+   "location": "2Q26 Financial Results (K-IFRS) table"
+  },
+  {
+   "url": "https://news.skhynix.com/en/q1-2026-business-results/",
+   "title": "SK hynix Announces 1Q26 Financial Results (official English earnings release)",
+   "location": "1Q26 Financial Results (K-IFRS) table"
+  },
+  {
+   "url": "https://news.skhynix.com/en/sk-hynix-announces-fy25-financial-results/",
+   "title": "SK hynix Announces FY25 Financial Results (official English earnings release)",
+   "location": "4Q25 Financial Results (K-IFRS) table"
+  }
+ ],
+ "evidence": [
+  {
+   "field": "numbers.revenue.current",
+   "url": "https://news.skhynix.com/en/q3-2026-business-results/",
+   "quote": "Revenues 104,615.5 79,318.7 32% 24,448.9 328%",
+   "calc": "104615.5*1000"
+  },
+  {
+   "field": "numbers.revenue.previous",
+   "url": "https://news.skhynix.com/en/q3-2026-business-results/",
+   "quote": "Revenues 104,615.5 79,318.7 32% 24,448.9 328%",
+   "calc": "79318.7*1000"
+  },
+  {
+   "field": "numbers.revenue.yearAgo",
+   "url": "https://news.skhynix.com/en/q3-2026-business-results/",
+   "quote": "Revenues 104,615.5 79,318.7 32% 24,448.9 328%",
+   "calc": "24448.9*1000"
+  },
+  {
+   "field": "history[0].value",
+   "url": "https://news.skhynix.com/en/q3-2026-business-results/",
+   "quote": "Revenues 104,615.5 79,318.7 32% 24,448.9 328%",
+   "calc": "24448.9*1000"
+  },
+  {
+   "field": "history[1].value",
+   "url": "https://news.skhynix.com/en/sk-hynix-announces-fy25-financial-results/",
+   "quote": "Revenues 32,826.7 24,448.9 34% 19,767.0 66%",
+   "calc": "32826.7*1000"
+  },
+  {
+   "field": "history[2].value",
+   "url": "https://news.skhynix.com/en/q1-2026-business-results/",
+   "quote": "Revenue 52,576.3 32,826.7 60% 17,639.1 198%",
+   "calc": "52576.3*1000"
+  },
+  {
+   "field": "history[3].value",
+   "url": "https://news.skhynix.com/en/q2-2026-business-results/",
+   "quote": "Revenue 79,318.7 52,576.3 51% 22,232 257%",
+   "calc": "79318.7*1000"
+  },
+  {
+   "field": "summary.cards.growth.sections[0]",
+   "url": "https://news.skhynix.com/en/q3-2026-business-results/",
+   "quote": "By product, DRAM results were driven by a significant increase in sales of server DDR5 while HBM4 shipments began in earnest. In NAND, sales of 321-layer TLC eSSD expanded"
+  },
+  {
+   "field": "summary.cards.growth.sections[1]",
+   "url": "https://news.skhynix.com/en/q3-2026-business-results/",
+   "quote": "In a market environment in which prices of key products have risen on the back of growing demand for AI memory"
+  },
+  {
+   "field": "summary.cards.growth.sections[1]",
+   "url": "https://news.skhynix.com/en/q3-2026-business-results/",
+   "quote": "the company expects HBM4 to surpass HBM3E in both shipment volume and revenue in the fourth quarter"
+  },
+  {
+   "field": "summary.cards.change.sections[0]",
+   "url": "https://news.skhynix.com/en/q3-2026-business-results/",
+   "quote": "Operating Profit 83,333.8 60,542.6 38% 11,383.4 632%"
+  },
+  {
+   "field": "summary.cards.change.sections[1]",
+   "url": "https://news.skhynix.com/en/q3-2026-business-results/",
+   "quote": "Net Income 39,775.6 93,922.6 -58% 12,597.5 216%"
+  },
+  {
+   "field": "summary.cards.change.sections[1]",
+   "url": "https://news.skhynix.com/en/q2-2026-business-results/",
+   "quote": "93.9226 trillion won in net profit (with a net margin of 118%)"
+  },
+  {
+   "field": "summary.conclusion[1]",
+   "url": "https://news.skhynix.com/en/q3-2026-business-results/",
+   "quote": "Please note that the financial results discussed herein are preliminary"
+  },
+  {
+   "field": "summary.cards.caution.sections[0]",
+   "url": "https://news.skhynix.com/en/q3-2026-business-results/",
+   "quote": "The company has currently signed LTAs with 14 major customers"
+  },
+  {
+   "field": "summary.cards.caution.sections[0]",
+   "url": "https://news.skhynix.com/en/q3-2026-business-results/",
+   "quote": "The LTA volume secured to date corresponds to more than 50% of total production capacity for 2027 and 2028."
+  },
+  {
+   "field": "summary.cards.caution.sections[1]",
+   "url": "https://news.skhynix.com/en/q3-2026-business-results/",
+   "quote": "Next year, with the Yongin Phase 1 entering full-scale operation and domestic and overseas infrastructure investment gaining momentum, investment is expected to increase significantly."
+  },
+  {
+   "field": "summary.cards.caution.sections[3]",
+   "url": "https://news.skhynix.com/en/q3-2026-business-results/",
+   "quote": "For fiscal year 2026, the company will pursue shareholder returns totaling approximately 100 trillion won"
+  },
+  {
+   "field": "summary.cards.next.sections[0]",
+   "url": "https://news.skhynix.com/en/q3-2026-business-results/",
+   "quote": "the company will ramp up M15X to maximum capacity by the end of the year to increase HBM4 production"
+  },
+  {
+   "field": "summary.cards.next.sections[0]",
+   "url": "https://news.skhynix.com/en/q3-2026-business-results/",
+   "quote": "the company will raise the ratio of its 321-layer process to more than half of its domestic production capacity in the fourth quarter"
+  },
+  {
+   "field": "summary.cards.next.sections[1]",
+   "url": "https://news.skhynix.com/en/q3-2026-business-results/",
+   "quote": "it expects the structure in which demand exceeds supply to persist through 2030"
+  },
+  {
+   "field": "tiles[0].value",
+   "url": "https://news.skhynix.com/en/q3-2026-business-results/",
+   "quote": "Reports revenues of 104.6155 trillion won, operating profit of 83.3338 trillion won, net profit of 39.7756 trillion won; Quarterly sales surpass 100 trillion won for the first time",
+   "calc": "104.6155",
+   "round": 1
+  },
+  {
+   "field": "tiles[0].note",
+   "url": "https://news.skhynix.com/en/q3-2026-business-results/",
+   "quote": "Revenues 104,615.5 79,318.7 32% 24,448.9 328%"
+  },
+  {
+   "field": "tiles[1].value",
+   "url": "https://news.skhynix.com/en/q3-2026-business-results/",
+   "quote": "Operating Margin 80% 76% 3%p 47% 33%p"
+  },
+  {
+   "field": "tiles[1].note",
+   "url": "https://news.skhynix.com/en/q3-2026-business-results/",
+   "quote": "Operating Margin 80% 76% 3%p 47% 33%p"
+  },
+  {
+   "field": "tiles[2].value",
+   "url": "https://news.skhynix.com/en/q3-2026-business-results/",
+   "quote": "At the end of the third quarter, cash and cash equivalents stood at 114.5 trillion won, up 26.5 trillion won from the end of the previous quarter, while borrowings decreased by 2.8 trillion won to 15.8 trillion won. As a result, net cash increased to 98.7 trillion won."
+  },
+  {
+   "field": "tiles[2].note",
+   "url": "https://news.skhynix.com/en/q3-2026-business-results/",
+   "quote": "At the end of the third quarter, cash and cash equivalents stood at 114.5 trillion won, up 26.5 trillion won from the end of the previous quarter, while borrowings decreased by 2.8 trillion won to 15.8 trillion won. As a result, net cash increased to 98.7 trillion won."
+  }
+ ],
+ "tiles": [
+  {
+   "label": {
+    "ja": "売上高",
+    "en": "Revenue"
+   },
+   "value": {
+    "ja": "104.6兆ウォン",
+    "en": "₩104.6T"
+   },
+   "note": {
+    "ja": "前年同期比 +328%・初の100兆ウォン超え",
+    "en": "+328% YoY; first quarter above ₩100T"
+   }
+  },
+  {
+   "label": {
+    "ja": "営業利益率",
+    "en": "Operating margin"
+   },
+   "value": {
+    "ja": "80%",
+    "en": "80%"
+   },
+   "note": {
+    "ja": "前四半期 76%・前年同期 47%",
+    "en": "Prior quarter 76%; year ago 47%"
+   }
+  },
+  {
+   "label": {
+    "ja": "ネットキャッシュ",
+    "en": "Net cash"
+   },
+   "value": {
+    "ja": "98.7兆ウォン",
+    "en": "₩98.7T"
+   },
+   "note": {
+    "ja": "現金114.5兆ウォン−借入15.8兆ウォン",
+    "en": "Cash ₩114.5T minus borrowings ₩15.8T"
+   }
+  }
+ ],
+ "numbers": {
+  "revenue": {
+   "current": 104615500,
+   "previous": 79318700,
+   "yearAgo": 24448900
+  },
+  "adjustedEPS": null,
+  "epsEstimate": null,
+  "grossMargin": null,
+  "guidance": null,
+  "segments": null
+ },
+ "history": [
+  {
+   "label": "Q3",
+   "end": "2025-09-30",
+   "value": 24448900
+  },
+  {
+   "label": "Q4",
+   "end": "2025-12-31",
+   "value": 32826700
+  },
+  {
+   "label": "Q1",
+   "end": "2026-03-31",
+   "value": 52576300
+  },
+  {
+   "label": "Q2",
+   "end": "2026-06-30",
+   "value": 79318700
+  }
+ ],
+ "summary": {
+  "conclusion": [
+   {
+    "ja": "売上は104.6兆ウォンで、前四半期から32%、前年同期の約4.3倍に増え、初めて100兆ウォンを超えました。営業利益は83.3兆ウォン、営業利益率は80%で、どちらも過去最高です。",
+    "en": "Revenue was ₩104.6T, up 32% from the previous quarter and about 4.3 times a year earlier, topping ₩100T for the first time. Operating profit was ₩83.3T with an 80% margin, both records."
+   },
+   {
+    "ja": "AI向けのHBM4やサーバー向けDRAMの販売が伸びました。一方、純利益は39.8兆ウォンで、投資の売却益などが大きかった前四半期(93.9兆ウォン)から58%減っています。数字は監査前の速報値です。",
+    "en": "Sales of HBM4 for AI and server DRAM grew. Net income was ₩39.8T, down 58% from a previous quarter (₩93.9T) that was boosted by large non-operating gains. The figures are preliminary and unaudited."
+   }
+  ],
+  "cards": {
+   "growth": {
+    "headline": {
+     "ja": "HBM4とサーバー向けDRAMが伸びを牽引",
+     "en": "HBM4 and server DRAM drove growth"
+    },
+    "chips": [
+     {
+      "tone": "up",
+      "text": {
+       "ja": "売上 前期比 +32%",
+       "en": "Revenue +32% QoQ"
+      }
+     },
+     {
+      "tone": "up",
+      "text": {
+       "ja": "営業利益 前期比 +38%",
+       "en": "Operating profit +38% QoQ"
+      }
+     }
+    ],
+    "sections": [
+     {
+      "key": "happened",
+      "text": {
+       "ja": "売上は79.3兆ウォンから104.6兆ウォンへ25.3兆ウォン増えました。DRAMではサーバー向けDDR5の販売が大きく増え、HBM4の出荷が本格的に始まりました。NANDでは321層のデータセンター向けSSD(eSSD)が増えています。",
+       "en": "Revenue rose ₩25.3T from ₩79.3T to ₩104.6T. In DRAM, server DDR5 sales rose sharply and HBM4 shipments began in earnest. In NAND, 321-layer eSSD sales grew."
+      }
+     },
+     {
+      "key": "good",
+      "text": {
+       "ja": "AI向けメモリーの需要が強く、主要な製品の価格が上がっています。会社は第4四半期にHBM4の出荷量と売上がHBM3Eを上回ると見込んでいます。",
+       "en": "AI memory demand is strong and prices of key products have risen. The company expects HBM4 to overtake HBM3E in both volume and revenue in the fourth quarter."
+      }
+     },
+     {
+      "key": "watch",
+      "text": {
+       "ja": "伸びの多くは価格の上昇によるものです。メモリーは需要と供給で価格が大きく動く製品なので、価格が下がると売上も利益も大きく減る可能性があります。",
+       "en": "Much of the growth comes from higher prices. Memory prices swing with supply and demand, so falling prices could cut revenue and profit sharply."
+      }
+     }
+    ],
+    "segment": null
+   },
+   "change": {
+    "headline": {
+     "ja": "売上は前期比 +32%、営業利益率は80%",
+     "en": "Revenue up 32% QoQ; operating margin 80%"
+    },
+    "chips": [
+     {
+      "tone": "up",
+      "text": {
+       "ja": "営業利益率 76% → 80%",
+       "en": "Operating margin 76% → 80%"
+      }
+     },
+     {
+      "tone": "down",
+      "text": {
+       "ja": "純利益 前期比 −58%",
+       "en": "Net income −58% QoQ"
+      }
+     }
+    ],
+    "sections": [
+     {
+      "key": "happened",
+      "text": {
+       "ja": "営業利益は60.5兆ウォンから83.3兆ウォンへ38%増え、営業利益率は76%から80%に上がりました。売上100ウォンのうち80ウォンが本業の利益として残る計算です。",
+       "en": "Operating profit rose 38% from ₩60.5T to ₩83.3T, and operating margin rose from 76% to 80%. Of every ₩100 of sales, ₩80 stays as operating profit."
+      }
+     },
+     {
+      "key": "watch",
+      "text": {
+       "ja": "純利益は39.8兆ウォンで、営業利益の半分以下です。前四半期の純利益は93.9兆ウォンと営業利益を上回っており、本業以外の大きな損益で純利益が大きく振れています。発表文には、その内訳の説明はありません。",
+       "en": "Net income was ₩39.8T, less than half of operating profit. Last quarter's net income of ₩93.9T exceeded operating profit, so non-operating items are swinging the bottom line a lot. The release does not break them down."
+      }
+     },
+     {
+      "key": "means",
+      "text": {
+       "ja": "本業の稼ぐ力を見るときは営業利益、株主に残る利益を見るときは純利益と、分けて見る必要があります。",
+       "en": "Use operating profit to judge the core business and net income to judge what is left for shareholders; keep them separate."
+      }
+     },
+     {
+      "key": "view",
+      "text": {
+       "ja": "売上は4四半期続けて増え、前年同期の約4.3倍です。営業利益率は47%(前年同期)から80%に上がりました。",
+       "en": "Revenue has risen four quarters in a row and is about 4.3 times a year earlier. Operating margin rose from 47% a year ago to 80%."
+      }
+     }
+    ],
+    "segment": null
+   },
+   "caution": {
+    "headline": {
+     "ja": "利益率は過去にない高さ、来年は投資が大きく増える",
+     "en": "Record margins; investment will rise sharply next year"
+    },
+    "chips": [
+     {
+      "tone": "gold",
+      "text": {
+       "ja": "長期契約 2027〜28年の生産能力の50%超",
+       "en": "LTAs cover over 50% of 2027–28 capacity"
+      }
+     },
+     {
+      "tone": "down",
+      "text": {
+       "ja": "来年の投資は大幅増",
+       "en": "Much higher investment next year"
+      }
+     },
+     {
+      "tone": "gold",
+      "text": {
+       "ja": "株主還元 約100兆ウォン(2026年)",
+       "en": "Shareholder returns ~₩100T (2026)"
+      }
+     }
+    ],
+    "sections": [
+     {
+      "key": "happened",
+      "text": {
+       "ja": "会社は14の主要顧客と長期契約を結び、2027〜2028年の生産能力の50%超をカバーしたと説明しています。価格は合意した幅の中で市況を反映する仕組みです。",
+       "en": "The company has long-term agreements with 14 major customers covering over 50% of its 2027–2028 capacity, with prices that move with the market within an agreed range."
+      }
+     },
+     {
+      "key": "watch",
+      "text": {
+       "ja": "来年は龍仁(ヨンイン)工場の本格稼働などで、投資が大きく増える見通しです。メモリー業界全体で増産が進むと、将来の価格が下がる可能性もあります。",
+       "en": "Investment is expected to rise significantly next year as the Yongin Phase 1 fab ramps. If the whole industry adds capacity, prices could fall later."
+      }
+     },
+     {
+      "key": "means",
+      "text": {
+       "ja": "長期契約で需要の見通しは立ちやすくなりましたが、価格は市況に連動する部分があります。80%という利益率がずっと続く前提で見ないことが大切です。",
+       "en": "LTAs improve visibility, but prices still partly follow the market. Do not assume an 80% margin will last."
+      }
+     },
+     {
+      "key": "view",
+      "text": {
+       "ja": "一方、ネットキャッシュは98.7兆ウォンで財務は強く、2026年は約100兆ウォンの株主還元(配当と自社株買い)を予定しています。",
+       "en": "Meanwhile, net cash is ₩98.7T, so the balance sheet is strong, and the company plans about ₩100T of shareholder returns (dividends and buybacks) for 2026."
+      }
+     }
+    ],
+    "segment": null
+   },
+   "next": {
+    "headline": {
+     "ja": "第4四半期はHBM4が主力製品へ",
+     "en": "HBM4 to become the main product in Q4"
+    },
+    "chips": [
+     {
+      "tone": "gold",
+      "text": {
+       "ja": "数値の売上見通しは非開示",
+       "en": "No numeric revenue guidance"
+      }
+     },
+     {
+      "tone": "up",
+      "text": {
+       "ja": "M15Xを年末までにフル稼働",
+       "en": "M15X at full capacity by year-end"
+      }
+     }
+    ],
+    "sections": [
+     {
+      "key": "happened",
+      "text": {
+       "ja": "SK hynixは次の四半期の売上や利益の数字の見通しを出していません。会社は、M15X工場を年末までにフル稼働させてHBM4を増産し、NANDでは321層の比率を国内生産の半分超に上げるとしています。",
+       "en": "SK hynix does not give numeric revenue or profit guidance. It plans to run its M15X fab at full capacity by year-end to make more HBM4, and to raise the 321-layer share to over half of domestic NAND capacity."
+      }
+     },
+     {
+      "key": "means",
+      "text": {
+       "ja": "会社は、AI向けの需要が供給を上回る状態が2030年まで続くと見ています。これは会社の見方で、実績ではありません。",
+       "en": "The company expects demand to exceed supply through 2030. That is the company's view, not a result."
+      }
+     },
+     {
+      "key": "view",
+      "text": {
+       "ja": "次の決算では、売上と営業利益率が今回の水準を保てるか、HBM4が本当にHBM3Eを上回ったか、来年の投資額がどれだけになるかを確かめます。",
+       "en": "Next time, check whether revenue and operating margin hold at this level, whether HBM4 actually overtook HBM3E, and how large next year's investment will be."
+      }
+     }
+    ],
+    "segment": null
+   }
+  }
+ }
+}
