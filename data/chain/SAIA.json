@@ -1,0 +1,188 @@
+{
+  "root": {
+    "ticker": "SAIA",
+    "name": "サイア",
+    "cik": 1177702,
+    "name_en": "Saia"
+  },
+  "rows": [
+    {
+      "ja": "供給元・ターミナルの取得元",
+      "en": "Supplier & terminal seller",
+      "above": true
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "FDX",
+    "XPO",
+    "ARCB",
+    "FRGT"
+  ],
+  "companies": [
+    {
+      "id": "WNC",
+      "ticker": "WNC",
+      "name": "ワバッシュ",
+      "name_en": "Wabash",
+      "sub": "トレーラー・荷台",
+      "sub_en": "Trailers & truck bodies",
+      "sub_short": "受託製造",
+      "sub_short_en": "Trailers",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Wabashが10-Kで、トレーラーを納める大口顧客の混載(LTL)輸送会社として挙げる",
+          "text_en": "Wabash lists it among large LTL carrier customers for its trailers",
+          "source": {
+            "label": "Wabash 10-K(2025年度)",
+            "label_en": "Wabash 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/879526/000087952626000036/wnc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "▪ Less-Than-Truckload Carriers: Saia, Inc.; FedEx Freight, Inc; Old Dominion Freight Lines, Inc.; and R&L Carriers, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Yellow",
+      "ticker": "Yellow",
+      "name": "イエロー",
+      "name_en": "Yellow Corporation",
+      "sub": "混載輸送(破綻)",
+      "sub_en": "LTL trucking (bankrupt)",
+      "sub_short": "混載輸送",
+      "sub_short_en": "Trucking",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "破綻したYellowから、破産手続きで17のターミナルを買い取り、11拠点の賃借権を得た(2024年1月)",
+          "text_en": "Bought 17 terminals and took over leases on 11 more from bankrupt Yellow (January 2024)",
+          "source": {
+            "label": "Saia 10-K(2025年度)",
+            "label_en": "Saia 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1177702/000119312526067030/saia-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "In January 2024, we acquired 17 freight terminals and leases to operate an additional 11 freight terminals pursuant to a sale by Yellow Corporation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "FDX",
+      "ticker": "FDX",
+      "name": "フェデックス",
+      "name_en": "FedEx",
+      "sub": "運送・物流",
+      "sub_en": "Parcel & logistics",
+      "sub_short": "物流",
+      "sub_short_en": "Parcel",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "FedExが10-Kで、FedEx Freightの主な競合として挙げる",
+          "text_en": "FedEx names it a primary competitor of FedEx Freight",
+          "source": {
+            "label": "FedEx 10-K(2025年5月期)",
+            "label_en": "FedEx 10-K (FY ended May 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1048911/000104891125000011/fdx-20250531.htm",
+            "level": "official",
+            "date": "2025-07-21",
+            "quote": "FedEx Freight's primary competitors are XPO, Inc., Old Dominion Freight Line, Inc., ABF Freight (an ArcBest company), SAIA, Inc., and TFI International Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "XPO",
+      "ticker": "XPO",
+      "name": "XPO",
+      "name_en": "XPO",
+      "sub": "物流(LTL)",
+      "sub_en": "Less-than-truckload freight",
+      "sub_short": "混載輸送",
+      "sub_short_en": "Trucking",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "XPOが10-Kで、北米の混載輸送の競合として名指し",
+          "text_en": "XPO names it a North American LTL competitor",
+          "source": {
+            "label": "XPO 10-K(2025年度)",
+            "label_en": "XPO 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1166003/000116600326000016/xpo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-05",
+            "quote": "Our competitors in North America include local, regional and national LTL carriers that offer the same services we provide, such as Old Dominion Freight Line and Saia."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ARCB",
+      "ticker": "ARCB",
+      "name": "アークベスト",
+      "name_en": "ArcBest",
+      "sub": "LTL輸送・物流",
+      "sub_en": "LTL & logistics",
+      "sub_short": "混載輸送",
+      "sub_short_en": "Trucking",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ArcBestが10-Kで、最も直接に競合する混載輸送会社として挙げる",
+          "text_en": "ArcBest names it among the LTL carriers it competes with most directly",
+          "source": {
+            "label": "ArcBest 10-K(2025年度)",
+            "label_en": "ArcBest 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/894405/000110465926019699/arcb-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "The segment competes most directly with nonunion and union LTL carriers, including FedEx Freight Corporation, the LTL reporting segment of FedEx Corporation; the LTL segment of Knight-Swift Transportation Holdings Inc.; Old Dominion Freight Line, Inc.; Saia, Inc.; the U.S. LTL operating segment of TFI International Inc.; and the North American LTL segment of XPO, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FRGT",
+      "ticker": "FRGT",
+      "name": "フレイト・テクノロジーズ",
+      "name_en": "Freight Technologies",
+      "sub": "物流テック(メキシコ)",
+      "sub_en": "Freight tech (Mexico)",
+      "sub_short": "物流IT",
+      "sub_short_en": "Freight",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Freight Technologiesが20-Fで、メキシコの混載輸送の競合として挙げる",
+          "text_en": "Freight Technologies names it a Mexican LTL competitor",
+          "source": {
+            "label": "Freight Technologies 20-F(2025年度)",
+            "label_en": "Freight Technologies 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1687542/000149315226023206/form20-f.htm",
+            "level": "official",
+            "date": "2026-05-14",
+            "quote": "in our Fr8Now business we compete principally with Mexican LTL specialists including Saia, Inc., Penske Logistics, TIBA Group and Pak2Go"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

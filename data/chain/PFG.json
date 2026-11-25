@@ -1,0 +1,183 @@
+{
+  "root": {
+    "ticker": "PFG",
+    "name": "プリンシパル・ファイナンシャル・グループ",
+    "cik": 1126328,
+    "name_en": "Principal Financial Group"
+  },
+  "rows": [
+    {
+      "ja": "海外の合弁相手(銀行)",
+      "en": "Overseas joint venture partners (banks)",
+      "above": true
+    },
+    {
+      "ja": "事業の移管・売却・再保険",
+      "en": "Transfers, sale & reinsurance"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "939",
+      "ticker": "CCB",
+      "name": "中国建設銀行",
+      "name_en": "China Construction Bank",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "中国で投信・資産運用の合弁CCB Principal Asset Managementを運営(建設銀行が65%を保有)",
+          "text_en": "Runs mutual fund JV CCB Principal Asset Management in China; CCB owns 65%",
+          "source": {
+            "label": "Principal Financial 10-K(2025年度)",
+            "label_en": "Principal Financial 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1126328/000110465926017031/pfg-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "China Construction Bank (\"CCB\") is the majority partner with 65.0% ownership."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CIMB",
+      "ticker": "CIMB",
+      "name": "CIMBグループ",
+      "name_en": "CIMB Group",
+      "sub": "銀行(マレーシア)",
+      "sub_en": "Bank (Malaysia)",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "マレーシアの資産運用合弁の相手。CIMBの支店で投信・年金商品を売る",
+          "text_en": "Partner in its Malaysian asset management JV; products sold through CIMB branches",
+          "source": {
+            "label": "Principal Financial 10-K(2025年度)",
+            "label_en": "Principal Financial 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1126328/000110465926017031/pfg-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "The partner is CIMB Group (\"CIMB\"), a leading ASEAN universal bank that has strong presence in the region."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BancoDoBrasil",
+      "ticker": "Banco do Brasil",
+      "name": "ブラジル銀行",
+      "name_en": "Banco do Brasil",
+      "sub": "銀行(ブラジル)",
+      "sub_en": "Bank (Brazil)",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ブラジルの年金合弁Brasilprevを共同運営。2032年10月までBancoの店舗網で独占販売",
+          "text_en": "Co-runs Brazilian pension JV Brasilprev, with exclusive sales through Banco's network until October 2032",
+          "source": {
+            "label": "Principal Financial 10-K(2025年度)",
+            "label_en": "Principal Financial 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1126328/000110465926017031/pfg-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "We offer pension accumulation, income annuity and life insurance accumulation products through a co-managed joint venture Brasilprev Seguros e Previdencia S.A. (\"Brasilprev\") with our partner with Banco do Brasil (\"Banco\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BCT",
+      "ticker": "Bank Consortium Trust",
+      "name": "バンク・コンソーシアム・トラスト",
+      "name_en": "Bank Consortium Trust",
+      "sub": "年金受託(香港)",
+      "sub_en": "Pension trustee (Hong Kong)",
+      "sub_short": "年金受託",
+      "sub_short_en": "Pensions",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "香港の強制積立年金(MPF)の受託業務をBCTへ移す契約(2025年1月発表)",
+          "text_en": "Agreement to hand its Hong Kong MPF trustee roles to BCT (announced January 2025)",
+          "source": {
+            "label": "Principal Financial 10-K(2025年度)",
+            "label_en": "Principal Financial 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1126328/000110465926017031/pfg-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "On January 16, 2025, we announced the signing of an agreement with Bank Consortium Trust Company (\"BCT\") to expand our investment management capabilities and exit our sponsor and trustee (pension) roles in Hong Kong for MPF Schemes."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SAN",
+      "ticker": "SAN",
+      "name": "サンタンデール",
+      "name_en": "Santander",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "チリの年金保険子会社VidaをSantanderに売る契約(2026年1月発表)",
+          "text_en": "Agreed to sell its Chilean annuity unit Vida to Santander (announced January 2026)",
+          "source": {
+            "label": "Principal Financial 10-K(2025年度)",
+            "label_en": "Principal Financial 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1126328/000110465926017031/pfg-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "On January 19, 2026, an agreement with Banco Santander, S.A. (\"Santander\") was announced whereby Santander will acquire our annuities business in Chile"
+          }
+        }
+      ]
+    },
+    {
+      "id": "TALCOTT",
+      "ticker": "Talcott",
+      "name": "タルコット・レゾリューション・ライフ保険",
+      "name_en": "Talcott Resolution Life Insurance",
+      "sub": "生命保険の再保険",
+      "sub_en": "Life & annuity reinsurance",
+      "sub_short": "再保険",
+      "sub_short_en": "Reinsurer",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "米国の定額年金などの保有契約をTalcott(Sixth Street傘下)へ再保険で移した",
+          "text_en": "Ceded its in-force US fixed annuity and ULSG blocks to Talcott (a Sixth Street company) via reinsurance",
+          "source": {
+            "label": "Principal Financial 10-K(2025年度)",
+            "label_en": "Principal Financial 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1126328/000110465926017031/pfg-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "We have coinsurance with funds withheld reinsurance agreements with Talcott Life & Annuity Re, Ltd., a limited liability company organized under the laws of the Cayman Islands and an affiliate of Talcott Resolution Life, Inc., a subsidiary of Sixth Street"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
