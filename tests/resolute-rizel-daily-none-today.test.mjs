@@ -60,7 +60,7 @@ test('known-move ordering looks at every story in the window, not only the newes
  const feed={ok:true,enabled:true,items:[...weekend,...friday]};
  const first=selectDailyCandidates(feed,monday);
  assert.ok(first.sessions.includes('2026-11-20'),'Friday stories are read for their close');
- const ordered=selectDailyCandidates(feed,monday,{moves:{'2026-11-20':{sox:{changePercent:-2.1},nas100:{changePercent:-1}}}});
+ const ordered=selectDailyCandidates(feed,monday,{moves:{'2026-11-20':{sox:{changePercent:-2.1,typicalPercent:1,up:5,down:35,total:40},nas100:{changePercent:-1,typicalPercent:1,up:30,down:70,total:100}}}});
  assert.deepEqual(ordered.selected.slice(0,2).map(c=>c.title.split(' ').pop()),['f1','f2']);
  assert.equal(ordered.diagnostics.knownMove,2);
  const db=await setup();const asked=[];

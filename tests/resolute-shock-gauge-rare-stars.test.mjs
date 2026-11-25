@@ -5,7 +5,7 @@ import {PGlite} from '@electric-sql/pglite';
 import {selectDailyCandidates,breaksCurrentRules,reselectStoredDay,previewSelection,repeatsTaken} from '../services/resolute-api/rizel-daily-review.mjs';
 import {validateGeneration} from '../services/resolute-api/risk-job.mjs';
 import {storyScope,isBarePriceMove,titleSimilarity} from '../lib/resolute/risk-scope.ts';
-import {parseRiskArticle,starsFromMove,noStarsLabel} from '../lib/resolute/risk.ts';
+import {parseRiskArticle,starsFromShock,measureShock,formatShock,noStarsLabel} from '../lib/resolute/risk.ts';
 import {hash} from '../services/resolute-api/risk-store.mjs';
 
 // Owner, Nov 25 (JST): the first public Shock Gauge day listed three NVIDIA stories, each ★★★★★ with 「TP半導体40 −8.5%」:
@@ -17,7 +17,9 @@ const TODAY={
  pre3:{en:'Nvidia Stock Drops More Than 3% in Premarket Trading',ja:'Nvidia株がプレマーケットで3%以上下落しました',tickers:['NVDA']},
 };
 const runAt=new Date('2026-11-24T23:20:00Z'); // Wednesday Nov 25, 08:20 JST
-const session='2026-11-24',moves={[session]:{sox:{changePercent:-8.5},nas100:{changePercent:-1.8}}};
+// The Nov 24 close as the thermometer's formulas measure it (recomputed from the constituents' daily closes, Nov 25):
+// TP半導体40 −8.51%, typical move 2.24% (3.8×), 39 of 40 down; TP大型株100 −1.47%, typical move 0.74% (2.0×), 47 of 99 down; TP恐怖指数 −0.4%.
+const session='2026-11-24',moves={[session]:{sox:{changePercent:-8.51,typicalPercent:2.24,up:1,down:39,total:40},nas100:{changePercent:-1.47,typicalPercent:0.744,up:52,down:47,total:99},fear:{level:41.15,previousLevel:41.33}}};
 const body=t=>`${t}. Shares of AI infrastructure companies fell as investors sold Nvidia after the report; the decline extended into the session and weighed on semiconductor names across the market.`;
 const row=(title,minutesBefore,{tickers=[],lane='company',sentiment='negative'}={})=>({title,bodyEn:body(title),url:`https://news.example/${encodeURIComponent(title).slice(0,80)}`,
  publishedAt:new Date(runAt.getTime()-minutesBefore*60000).toISOString(),publisher:'Example Wire',tickers,lane,sentiment});
@@ -31,7 +33,7 @@ test('today\'s three stories under the new rules: the two bare premarket recaps 
  assert.deepEqual(selected.map(c=>c.title),[TODAY.cipher.en]);
  assert.equal(diagnostics.barePriceMove,2);
  const preview=previewSelection({selected,reserve:[],diagnostics},moves);
- assert.deepEqual(preview.selected,[{title:TODAY.cipher.en,scope:'company',index:'company',session:null,move:null,stars:null}]);
+ assert.deepEqual(preview.selected,[{title:TODAY.cipher.en,scope:'company',index:'company',session:null,move:null,shock:null,stars:null}]);
 });
 
 test('a day with market-wide and chip-sector news: three different stories, each on its own index, never three ★ on one move',()=>{
@@ -47,9 +49,10 @@ test('a day with market-wide and chip-sector news: three different stories, each
  const {selected,reserve,diagnostics}=selectDailyCandidates(feedOf(items),runAt,{moves});
  assert.deepEqual(selected.map(c=>c.title),['Nasdaq falls as Treasury yields climb ahead of Fed minutes','Chip stocks tumble as Nvidia selloff spreads across AI hardware','Nvidia shares slide as investors question AI spending']);
  // A headline that gives the cause ranks above a price-move recap ("… Falls Over 11% …") among single-company news.
- // Stars per story from its own index: TP大型株100 −1.8% ★2, TP半導体40 −8.5% ★4 (not ★5), the company story none.
+ // Stars per story from the measured shock of its own index: TP大型株100 −1.5% (2.0×, 47 of 99 down) ★2, TP半導体40 −8.5% (3.8×, 39/40) ★4, the company story none.
  const preview=previewSelection({selected,reserve,diagnostics},moves);
- assert.deepEqual(preview.selected.map(p=>[p.index,p.move,p.stars]),[['nas100',-1.8,2],['sox',-8.5,4],['company',null,null]]);
+ assert.deepEqual(preview.selected.map(p=>[p.index,p.move,p.stars]),[['nas100',-1.5,2],['sox',-8.5,4],['company',null,null]]);
+ assert.equal(formatShock({index:'sox',session,changePercent:-8.5,shock:preview.selected[1].shock},'ja'),'ふだんの3.8倍の下げ・40社中39社が下落・恐怖指数0%');
  // The second chip-sector story and the second market story repeat a move already shown: reserve only.
  assert.ok(repeatsTaken(reserve.find(c=>c.title.startsWith('Semiconductor stocks')),selected));
  assert.ok(repeatsTaken(reserve.find(c=>c.title.startsWith('Stocks slip')),selected));
@@ -61,9 +64,11 @@ test('a day with market-wide and chip-sector news: three different stories, each
  assert.ok(reserve.at(-1).title.startsWith('3 AI Stocks'),'opinion pieces go last');
 });
 
-test('the published rule: TP半導体40 −8.5% is ★4, ★5 only from −10%; TP大型株100 −5.4% (Nov 20) is ★5',()=>{
- assert.equal(starsFromMove(-8.5,'sox'),4);assert.equal(starsFromMove(-7,'sox'),4);assert.equal(starsFromMove(-10,'sox'),5);
- assert.equal(starsFromMove(-5.4,'nas100'),5);assert.equal(starsFromMove(-1.8,'nas100'),2);
+test('owner anchors under the published rule: Nov 20 TP大型株100 ★5, Nov 24 TP半導体40 ★4, an ordinary day ★1',()=>{
+ // Measured with the thermometer's formulas on the constituents' daily closes (see the PR): Nov 20 TP大型株100 −4.7%, typical 0.74% (6.3×), 81 of 99 down, fear index +12%.
+ assert.equal(starsFromShock(measureShock(-4.70,{typicalPercent:0.744,up:18,down:81,total:99},{level:34.70,previousLevel:30.87})),5);
+ assert.equal(starsFromShock(measureShock(-8.51,{typicalPercent:2.24,up:1,down:39,total:40},{level:41.15,previousLevel:41.33})),4);
+ assert.equal(starsFromShock(measureShock(-0.6,{typicalPercent:0.9,up:40,down:60,total:100},{level:20,previousLevel:20})),1);
  assert.ok(titleSimilarity('Nvidia Falls 5.6% in Premarket','Nvidia Falls 3.1% in Premarket')>=0.5,'same headline with another number');
 });
 
@@ -71,19 +76,21 @@ const copy={publishable:true,ja:{title:'Cipher Digital株が下落',source:'Exam
 test('a single-company story is stored without stars and labelled as such; it never waits for a close',()=>{
  const c=row(TODAY.cipher.en,120,{tickers:TODAY.cipher.tickers});
  const article=validateGeneration(copy,{...c,id:hash(c.url),body:c.bodyEn,source:'report'});
- assert.deepEqual(article.market,{index:'company',session:null,changePercent:null});assert.equal(article.stars,null);
+ assert.deepEqual(article.market,{index:'company',session:null,changePercent:null,shock:null});assert.equal(article.stars,null);
  assert.equal(noStarsLabel(article,'ja'),'個別企業のニュース（★はつけません）');assert.equal(noStarsLabel(article,'en'),'Single-company news (no stars)');
  assert.equal(parseRiskArticle(article).stars,null);
- assert.throws(()=>parseRiskArticle({...article,market:{index:'company',session,changePercent:-8.5}}));
+ assert.throws(()=>parseRiskArticle({...article,market:{index:'company',session,changePercent:-8.5,shock:null}}));
 });
 
 const stored=title=>({id:hash(title),url:`https://news.example/${hash(title).slice(0,8)}`,publishedAt:'2026-11-24T12:00:00.000Z',market:{index:'sox',session,changePercent:-8.5},stars:5,quoteId:null,
  ja:{title,source:'Example Wire',content:'本文\n'+'このニュースで、あなたのルールの条件に当てはまるものはありますか？',date:'2026年11月24日'},en:{title,source:'Example Wire',content:'Body\nDoes anything in this news meet a condition in your rules?',date:'November 24, 2026'}});
-test('breaksCurrentRules: today\'s stored day (three ★5 on one TP半導体40 move) breaks the rules; a day saved by them does not',()=>{
+test('breaksCurrentRules: today\'s stored day (three ★5 on one TP半導体40 move, no measured shock) breaks the rules; a day saved by them does not',()=>{
  const day=[stored(TODAY.cipher.ja),stored(TODAY.pre56.ja),stored(TODAY.pre3.ja)];
  assert.equal(breaksCurrentRules(day),true);
  assert.equal(breaksCurrentRules(day.map(a=>({...a,stars:4}))),true,'still three stories on one index and close');
- assert.equal(breaksCurrentRules([{...day[0],stars:4},{...day[1],market:{index:'company',session:null,changePercent:null},stars:null}]),false);
+ const measured={index:'sox',session,changePercent:-8.5,shock:{multiple:3.8,same:39,total:40,fearChange:0}};
+ assert.equal(breaksCurrentRules([{...day[0],market:measured,stars:4},{...day[1],market:{index:'company',session:null,changePercent:null,shock:null},stars:null}]),false);
+ assert.equal(breaksCurrentRules([{...day[0],market:measured,stars:5}]),true,'stars the rule does not give');
  assert.equal(breaksCurrentRules([]),false);
 });
 
@@ -119,7 +126,7 @@ test('one-off re-selection of today: gated by RESOLUTE_SHOCK_GAUGE_RESELECT_DAY,
   assert.ok(!tried.includes(TODAY.pre56.en),'bare premarket recap dropped');
   const day=(await risk.query("SELECT state,articles FROM resolute.risk_days WHERE day='2026-11-25'")).rows[0];
   assert.equal(day.state,'ready');
-  assert.deepEqual(day.articles.map(a=>[a.market.index,a.market.changePercent,a.stars]),[['nas100',-1.8,2],['sox',-8.5,4],['company',null,null]]);
+  assert.deepEqual(day.articles.map(a=>[a.market.index,a.market.changePercent,a.stars]),[['nas100',-1.5,2],['sox',-8.5,4],['company',null,null]]);
   assert.equal(breaksCurrentRules(day.articles),false);
   // The flag left in place never runs it again.
   const calls=tried.length;

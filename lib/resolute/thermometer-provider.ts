@@ -1,5 +1,5 @@
 import rosters from './thermometer-rosters.json' with { type: 'json' };
-import { dailyMove, equalWeightLevels, realizedVolatility } from './thermometer-basket.ts';
+import { dailyMove, equalWeightLevels, realizedVolatility, sessionFear, sessionShock, type ShockReading, type FearReading, type BasketSeries } from './thermometer-basket.ts';
 import { calculateTemperature, calculateVixContext, validSessionDate, type DailyClose } from './thermometer.ts';
 
 export type ThermometerRosters = { nasdaq100: string[]; semiconductors: string[] };
@@ -7,6 +7,8 @@ export const THERMOMETER_ROSTERS: ThermometerRosters = { nasdaq100: rosters.nasd
 export type ThermometerProviderConfig = { enabled: boolean; apiKey?: string; rosters?: ThermometerRosters };
 type ProviderFailure = { status: 'unavailable'; reason: 'not-configured' | 'provider-error' | 'invalid-data' };
 const CHUNK = 10;
+export const SHOCK_SESSIONS = 10;
+export type ShockSession = { nas100: ShockReading | null; sox: ShockReading | null; fear: FearReading | null };
 /** Twelve Data treats a date-only end_date as exclusive, so ask for the day after the confirmed session. Later bars are dropped by the calculator. */
 function dayAfter(date: string): string { const next = new Date(`${date}T00:00:00Z`); next.setUTCDate(next.getUTCDate() + 1); return next.toISOString().slice(0, 10); }
 /** Parses a multi-symbol (or single-symbol) Twelve Data time_series reply into daily closes per ticker.
@@ -39,7 +41,7 @@ export async function collectThermometer(config: ThermometerProviderConfig, conf
   if (!validSessionDate(confirmedSession)) throw new Error('invalid-confirmed-session');
   const lists = config.rosters ?? THERMOMETER_ROSTERS;
   const missing: string[] = [];
-  async function loadBasket(tickers: readonly string[]): Promise<{ levels: DailyClose[] } | ProviderFailure> {
+  async function loadBasket(tickers: readonly string[]): Promise<{ levels: DailyClose[]; series: BasketSeries } | ProviderFailure> {
     const series: Record<string, DailyClose[]> = {};
     let reached = false;
     for (let i = 0; i < tickers.length; i += CHUNK) {
@@ -56,7 +58,7 @@ export async function collectThermometer(config: ThermometerProviderConfig, conf
     }
     if (!reached) return { status: 'unavailable', reason: 'provider-error' };
     const levels = equalWeightLevels(series);
-    return levels.length ? { levels } : { status: 'unavailable', reason: 'invalid-data' };
+    return levels.length ? { levels, series } : { status: 'unavailable', reason: 'invalid-data' };
   }
   // Independent failures: the semiconductor basket never contaminates the large-cap one. Fear is derived from the large-cap basket.
   const large = await loadBasket(lists.nasdaq100), chips = await loadBasket(lists.semiconductors);
@@ -65,5 +67,13 @@ export async function collectThermometer(config: ThermometerProviderConfig, conf
   const vix = 'levels' in large ? calculateVixContext(realizedVolatility(large.levels), confirmedSession) : large;
   // Day-over-day basket moves for the Shock Gauge stars; independent of the 10-year history the temperature needs.
   const moves = { nas100: 'levels' in large ? dailyMove(large.levels, confirmedSession) : null, sox: 'levels' in chips ? dailyMove(chips.levels, confirmedSession) : null };
-  return { asOf: confirmedSession, nas100, sox, vix, moves, missing: [...new Set(missing)].sort() };
+  // Shock Gauge (Nov 25): how unusual and how broad each basket's move was, and the fear index change, for the last
+  // SHOCK_SESSIONS sessions (from the same data: no extra provider calls). Kept in every snapshot so a story's close is
+  // still measurable on the next morning even if one snapshot is missing.
+  const shock: Record<string, ShockSession> = {};
+  if ('levels' in large) {
+    const dates = large.levels.map(bar => bar.date).filter(date => date <= confirmedSession).slice(-SHOCK_SESSIONS);
+    for (const date of dates) shock[date] = { nas100: sessionShock(large.levels, large.series, date), sox: 'levels' in chips ? sessionShock(chips.levels, chips.series, date) : null, fear: sessionFear(large.levels, date) };
+  }
+  return { asOf: confirmedSession, nas100, sox, vix, moves, shock, missing: [...new Set(missing)].sort() };
 }

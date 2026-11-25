@@ -1,7 +1,7 @@
 import {inspectCandidateFeed,generate,isInDailyWindow,windowHours,FEED_CHECKS as INSPECT_CHECKS,reactArticles,fillMarketReactions} from './risk-job.mjs';
 import {REPORT_CHECKS} from './rizel-report-source.mjs';
 const FEED_CHECKS=[...INSPECT_CHECKS,...REPORT_CHECKS];
-import {riskDate,parseRiskArticle,isDailyRunHour,dailyRunStart,starsFromMove,roundMove} from '../../lib/resolute/risk.ts';
+import {riskDate,parseRiskArticle,isDailyRunHour,dailyRunStart,starsFromShock,measureShock,parseRiskShock,roundMove} from '../../lib/resolute/risk.ts';
 import {RISK_POLICY} from '../../lib/resolute/risk-policy.ts';
 import {storyIndex,firstCloseAfter,newsInstant} from '../../lib/resolute/risk-market.ts';
 import {storyScope,isBarePriceMove,companyKey,titleSimilarity,NEAR_DUPLICATE} from '../../lib/resolute/risk-scope.ts';
@@ -10,8 +10,8 @@ import {selectArticleForReview} from './rizel-worker.mjs';
 /** The first U.S. close after a candidate and its related TP index (the same rule that later fills the stars).
  * Single-company news has no index and no session: it never gets stars. */
 export function candidateSession(c){const index=storyIndex(c.title);return {session:index==='company'?null:firstCloseAfter(newsInstant(c.publishedAt)),index};}
-/** True when that close's move is already in the thermometer snapshots, so the story gets its stars in this run. */
-export function hasKnownMove(c,moves){const {session,index}=candidateSession(c);const m=session?moves?.[session]?.[index]:null;return !!m&&typeof m.changePercent==='number'&&Number.isFinite(m.changePercent);}
+/** True when that close's shock is already measured in the thermometer snapshots, so the story gets its stars in this run. */
+export function hasKnownMove(c,moves){const {session,index}=candidateSession(c);const m=session?moves?.[session]?.[index]:null;return !!m&&typeof m.changePercent==='number'&&Number.isFinite(m.changePercent)&&m.typicalPercent>0;}
 /** Stories a day and model attempts a day: RISK_POLICY defaults, lowered or raised (within the policy's hard caps) by
  * RESOLUTE_RIZEL_DAILY_STORIES and RESOLUTE_RIZEL_DAILY_ATTEMPTS. Anything malformed falls back to the default. */
 export function dailyLimits(env=process.env){
@@ -110,7 +110,8 @@ export async function prepareDailyReview({enabled=false,readFeed,selectionPool,b
   let market=null;
   if(readMoves){
    market={};
-   try{if(publishPool??budgetPool){const f=await fillMarketReactions(publishPool??budgetPool,readMoves,now);market.earlierDaysFilled=f.updated;market.earlierStoriesWaiting=f.waiting;}}catch{market.earlierDays='failed';}
+   // The one-off re-selection leaves stored days alone: it replaces only its own day, compare-and-set against what it read.
+   try{if(!replace&&(publishPool??budgetPool)){const f=await fillMarketReactions(publishPool??budgetPool,readMoves,now);market.earlierDaysFilled=f.updated;market.earlierStoriesWaiting=f.waiting;}}catch{market.earlierDays='failed';}
    try{const sessions=intake.sessions;
     if(sessions.length)intake=selectDailyCandidates(feed,now,{moves:await readMoves(sessions),limits});}catch{market.ordering='failed';}
   }
@@ -223,7 +224,7 @@ export function breaksCurrentRules(articles){
  const slots=new Set();
  for(const a of articles){
   const m=a?.market;if(!m||typeof m!=='object')return false;
-  const expected=m.index==='company'||m.changePercent===null?null:starsFromMove(m.changePercent,m.index);
+  let expected=null;if(m.index!=='company'&&m.shock){try{expected=starsFromShock(parseRiskShock(m.shock));}catch{return true;}}
   if(a.stars!==expected)return true;
   if(m.index!=='company'){const key=`${m.index}:${m.session}`;if(slots.has(key))return true;slots.add(key);}
  }
@@ -248,6 +249,7 @@ export async function reselectStoredDay({env=process.env,realNow=new Date(),publ
  * close and the stars that close gives. No model call, no writes. Headlines only (public text), never bodies or URLs. */
 export function previewSelection(intake,moves){
  const show=c=>{const {session,index}=candidateSession(c);const m=session?moves?.[session]?.[index]:null;
-  return {title:c.title,scope:storyScope(c.title),index,session,move:m?.changePercent??null,stars:index!=='company'&&typeof m?.changePercent==='number'?starsFromMove(roundMove(m.changePercent),index):null};};
+  let shock=null;try{if(index!=='company'&&m)shock=measureShock(m.changePercent,m,moves[session].fear??null);}catch{shock=null;}
+  return {title:c.title,scope:storyScope(c.title),index,session,move:shock?roundMove(m.changePercent):null,shock,stars:shock?starsFromShock(shock):null};};
  return {selected:intake.selected.map(show),next:intake.reserve.slice(0,6).map(show),diagnostics:intake.diagnostics};
 }

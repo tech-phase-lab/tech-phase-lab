@@ -1,5 +1,5 @@
 import { usMarketSession } from '../research/us-market-session.ts';
-import { roundMove, starsFromMove, type RiskArticle, type RiskIndex, type RiskMarket } from './risk.ts';
+import { roundMove, measureShock, starsFromShock, type RiskArticle, type RiskIndex, type RiskMarket } from './risk.ts';
 import { storyScope, scopeIndex } from './risk-scope.ts';
 /** Shock Gauge stars from actual market moves (server/worker only; no browser import).
  * 1. Pick ONE related TP index per story. 2. Find the first U.S. close after the news.
@@ -31,36 +31,52 @@ export function newsInstant(publishedAt: string): Date {
   return /^\d{4}-\d{2}-\d{2}$/.test(publishedAt) ? new Date(Date.parse(publishedAt + 'T00:00:00Z') + 36 * 3600000) : new Date(publishedAt);
 }
 export function waitingMarket(index: RiskIndex | 'company', publishedAt: string): RiskMarket {
-  if (index === 'company') return { index, session: null, changePercent: null };
-  return { index, session: firstCloseAfter(newsInstant(publishedAt)), changePercent: null };
+  if (index === 'company') return { index, session: null, changePercent: null, shock: null };
+  return { index, session: firstCloseAfter(newsInstant(publishedAt)), changePercent: null, shock: null };
 }
-export type SessionMoves = Record<string, Partial<Record<RiskIndex, { changePercent: number } | null>> | undefined>;
-/** Fills stars once that close's move is known; otherwise the story keeps waiting. Already-filled stories are unchanged. */
+/** One basket's close as the thermometer measured it: the move, its typical move and the constituents up / down. */
+export type SessionMove = { changePercent: number; typicalPercent: number; up: number; down: number; total: number };
+export type SessionEntry = Partial<Record<RiskIndex, SessionMove | null>> & { fear?: { level: number; previousLevel: number } | null };
+export type SessionMoves = Record<string, SessionEntry | undefined>;
+/** Fills stars once that close's shock is measured; otherwise the story keeps waiting. Already-filled stories are unchanged. */
 export function applyMarketReaction(article: RiskArticle, moves: SessionMoves): RiskArticle {
-  if (article.market.changePercent !== null || article.market.index === 'company') return article;
+  if (article.market.shock !== null || article.market.index === 'company') return article;
   const index = article.market.index;
   const session = article.market.session ?? firstCloseAfter(newsInstant(article.publishedAt));
-  const move = session ? moves[session]?.[index] : undefined;
-  if (!session || !move || typeof move.changePercent !== 'number' || !Number.isFinite(move.changePercent) || Math.abs(move.changePercent) >= 100) return { ...article, market: { ...article.market, session } };
-  const changePercent = roundMove(move.changePercent);
-  return { ...article, market: { index, session, changePercent }, stars: starsFromMove(changePercent, index) };
+  const entry = session ? moves[session] : undefined, move = entry?.[index];
+  if (!session || !move || !validMove(move)) return { ...article, market: { index, session, changePercent: null, shock: null } };
+  const changePercent = roundMove(move.changePercent), shock = measureShock(move.changePercent, move, entry?.fear ?? null);
+  return { ...article, market: { index, session, changePercent, shock }, stars: starsFromShock(shock) };
+}
+const finite = (v: unknown, min: number, max: number): v is number => typeof v === 'number' && Number.isFinite(v) && v >= min && v <= max;
+const count = (v: unknown): v is number => Number.isInteger(v) && (v as number) >= 0 && (v as number) <= 500;
+function validMove(m: Partial<SessionMove>): m is SessionMove {
+  return finite(m.changePercent, -99.99, 99.99) && finite(m.typicalPercent, 0.01, 50) && count(m.up) && count(m.down) && count(m.total) && m.total >= 10 && m.up + m.down <= m.total;
 }
 export interface MovesDatabase { query(sql: string, values?: unknown[]): Promise<{ rows: Record<string, unknown>[] }> }
-/** Reads the thermometer snapshots' daily moves for the given sessions (read-only role). Only moves dated on their own session count. */
+/** Reads the measured shock of the given sessions from the thermometer snapshots (read-only role). Each snapshot carries the
+ * last sessions up to its own (snapshot.shock, keyed by session); the earliest snapshot that has a session is used. Only a
+ * reading dated on its own session counts. Snapshots stored before Nov 25 have no shock map: those sessions keep waiting. */
 export async function readSessionMoves(db: MovesDatabase, sessions: readonly string[]): Promise<SessionMoves> {
-  const wanted = [...new Set(sessions.filter(s => /^\d{4}-\d{2}-\d{2}$/.test(s)))];
+  const wanted = [...new Set(sessions.filter(s => /^\d{4}-\d{2}-\d{2}$/.test(s)))].sort();
   if (!wanted.length) return {};
-  const { rows } = await db.query("SELECT session_date::text AS session, snapshot->'moves' AS moves FROM resolute_thermometer_snapshots WHERE session_date = ANY($1::date[])", [wanted]);
+  const { rows } = await db.query("SELECT session_date::text AS session, snapshot->'shock' AS shock FROM resolute_thermometer_snapshots WHERE session_date >= $1::date AND snapshot ? 'shock' ORDER BY session_date LIMIT 30", [wanted[0]]);
   const out: SessionMoves = {};
   for (const row of rows) {
-    const session = String(row.session), moves = row.moves as Record<string, { date?: unknown; changePercent?: unknown } | null> | null;
-    if (!moves || typeof moves !== 'object') continue;
-    const entry: Partial<Record<RiskIndex, { changePercent: number }>> = {};
-    for (const index of ['sox', 'nas100'] as const) {
-      const m = moves[index];
-      if (m && m.date === session && typeof m.changePercent === 'number' && Number.isFinite(m.changePercent) && Math.abs(m.changePercent) < 100) entry[index] = { changePercent: m.changePercent };
+    const map = row.shock as Record<string, Record<string, unknown> | null> | null;
+    if (!map || typeof map !== 'object') continue;
+    for (const session of wanted) {
+      const raw = map[session];
+      if (out[session] || !raw || typeof raw !== 'object') continue;
+      const entry: SessionEntry = {};
+      for (const index of ['sox', 'nas100'] as const) {
+        const m = raw[index] as (Partial<SessionMove> & { date?: unknown }) | null;
+        if (m && m.date === session && validMove(m)) entry[index] = { changePercent: m.changePercent, typicalPercent: m.typicalPercent, up: m.up, down: m.down, total: m.total };
+      }
+      const f = raw.fear as { date?: unknown; level?: unknown; previousLevel?: unknown } | null;
+      entry.fear = f && f.date === session && finite(f.level, 0.01, 1000) && finite(f.previousLevel, 0.01, 1000) ? { level: f.level, previousLevel: f.previousLevel } : null;
+      out[session] = entry;
     }
-    out[session] = entry;
   }
   return out;
 }

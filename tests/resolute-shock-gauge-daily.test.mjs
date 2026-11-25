@@ -12,7 +12,7 @@ import {RISK_POLICY} from '../lib/resolute/risk-policy.ts';
 const now=new Date('2026-10-14T23:20:00Z'); // Thursday 08:20 JST
 const body='AI semiconductor companies warned of possible earnings declines over several months. The reported risk affects the sector, and the company said revenue would be $5 billion.';
 const item=(n,publishedAt,extra={})=>({title:`AI semiconductor risk warning ${n}`,url:`https://example.com/news-${n}`,publishedAt,bodyEn:body,...extra});
-const moves={'2026-10-14':{sox:{changePercent:-3.2},nas100:{changePercent:-1.1}}};
+const moves={'2026-10-14':{sox:{changePercent:-3.2,typicalPercent:1.6,up:4,down:36,total:40},nas100:{changePercent:-1.1,typicalPercent:0.7,up:40,down:60,total:100},fear:{level:24,previousLevel:22}}};
 // Nov 25: the index follows the headline's scope, and one story per index and close / per company is kept.
 const titled=(n,publishedAt,title)=>({...item(n,publishedAt),title:`${title} ${n}`});
 const TITLES={market:'Nasdaq slides as Treasury yields jump',semisA:'Chip stocks drop after export rules tighten',semisB:'Semiconductor stocks fall as memory prices weaken',semisC:'Chipmakers tumble on AI order delays'};
@@ -84,7 +84,7 @@ test('the morning run shows stars from the known close, replaces a rejected stor
   assert.equal(result.state,'ready');assert.equal(result.count,3);assert.equal(result.waitingForMarket,1);
   // 3 (chip sector, known close) is rejected: its slot goes to 7, the next chip-sector story on that close, not to a company.
   assert.deepEqual(tried,['2','3','1','7']);assert.equal(result.diagnostics.attempts,4);
-  assert.deepEqual(saved[0].map(a=>[a.market.index,a.market.session,a.market.changePercent,a.stars]),[['nas100','2026-10-14',-1.1,2],['sox','2026-10-15',null,null],['sox','2026-10-14',-3.2,2]]);
+  assert.deepEqual(saved[0].map(a=>[a.market.index,a.market.session,a.market.changePercent,a.stars]),[['nas100','2026-10-14',-1.1,2],['sox','2026-10-15',null,null],['sox','2026-10-14',-3.2,3]]);
   assert.ok(asked.some(s=>s.includes('2026-10-14')));
  }finally{await db.close();}
 });
@@ -114,6 +114,6 @@ test('a failed snapshot read only drops the ordering; the day is still checked a
 
 test('a bearish chip-stock headline is a candidate (real Nov 20 example); its known close puts it first',()=>{
  const feed={ok:true,enabled:true,items:[{title:'A massive bearish trade just happened in the chip stocks',url:'https://example.com/chips',publishedAt:'2026-11-20T19:33:31Z',bodyEn:'The biggest options trade of the day was a bearish bet on the SMH. Traders are targeting an additional 8% decline.'}]};
- const r=selectDailyCandidates(feed,new Date('2026-11-22T23:20:00Z'),{moves:{'2026-11-20':{sox:{changePercent:-10.4},nas100:{changePercent:-4.6}}}});
+ const r=selectDailyCandidates(feed,new Date('2026-11-22T23:20:00Z'),{moves:{'2026-11-20':{sox:{changePercent:-10.4,typicalPercent:2.11,up:0,down:40,total:40},nas100:{changePercent:-4.6,typicalPercent:0.88,up:8,down:92,total:100}}}});
  assert.equal(r.selected.length,1);assert.equal(r.diagnostics.knownMove,1);
 });

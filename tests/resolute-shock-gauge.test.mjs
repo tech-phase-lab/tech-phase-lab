@@ -4,14 +4,14 @@ import {readFileSync} from 'node:fs';
 import {readFile} from 'node:fs/promises';
 import {PGlite} from '@electric-sql/pglite';
 import {firstCloseAfter,storyIndex,applyMarketReaction,readSessionMoves,waitingMarket} from '../lib/resolute/risk-market.ts';
-import {RIZEL_DISCLAIMER,SUMMARY_QUESTION,parseRiskArticle} from '../lib/resolute/risk.ts';
+import {RIZEL_DISCLAIMER,SUMMARY_QUESTION,parseRiskArticle,measureShock} from '../lib/resolute/risk.ts';
 import {RISK_POLICY} from '../lib/resolute/risk-policy.ts';
 import {summaryIssues,rizelCopyIssues,quoteIssues,RIZEL_REWRITES,rizelRewrite} from '../lib/resolute/risk-copy-check.ts';
 import {eligibleCopies} from '../lib/resolute/rizel-selection.ts';
 import {RISK_VISUAL_FIXTURE,RISK_PREVIEW_DETAILS} from '../lib/resolute/risk-preview.ts';
 import {RIZEL_QUOTE_DRAFTS} from '../lib/resolute/rizel-quote-drafts.ts';
 import {reviewScenarioFeed} from '../lib/resolute/review-scenarios.ts';
-import {dailyMove} from '../lib/resolute/thermometer-basket.ts';
+import {dailyMove,equalWeightLevels,sessionShock,sessionFear} from '../lib/resolute/thermometer-basket.ts';
 import {safeThermometerSnapshot} from '../lib/resolute/thermometer-runtime.ts';
 import {generate,validateGeneration,fillMarketReactions,SUMMARY_INSTRUCTIONS} from '../services/resolute-api/risk-job.mjs';
 import {riskRequest,publicRiskFeed,hash} from '../services/resolute-api/risk-store.mjs';
@@ -43,29 +43,35 @@ test('one related TP index per story, from the headline\'s scope: market-wide TP
  assert.equal(storyIndex('Chipmakers slide as export curbs widen'),'sox');
  assert.equal(storyIndex('Nasdaq tumbles as Treasury yields surge'),'nas100');
  assert.equal(storyIndex('Fed minutes show officials split on a December cut'),'nas100');
- assert.deepEqual(waitingMarket('nas100','2026-10-17T15:00:00Z'),{index:'nas100',session:'2026-10-19',changePercent:null});
- assert.deepEqual(waitingMarket('company','2026-10-17T15:00:00Z'),{index:'company',session:null,changePercent:null});
+ assert.deepEqual(waitingMarket('nas100','2026-10-17T15:00:00Z'),{index:'nas100',session:'2026-10-19',changePercent:null,shock:null});
+ assert.deepEqual(waitingMarket('company','2026-10-17T15:00:00Z'),{index:'company',session:null,changePercent:null,shock:null});
 });
 
-test('stars are filled from the snapshot move of that close only; before it the story waits',()=>{
+const mv=(changePercent,typicalPercent=1,down=35,total=40)=>({changePercent,typicalPercent,up:changePercent>0?down:total-down,down:changePercent>0?total-down:down,total});
+test('stars are filled from the measured shock of that close only; before it the story waits',()=>{
  const article=validateGeneration(clean,candidate);
- assert.deepEqual(article.market,{index:'sox',session:'2026-10-12',changePercent:null});assert.equal(article.stars,null);
+ assert.deepEqual(article.market,{index:'sox',session:'2026-10-12',changePercent:null,shock:null});assert.equal(article.stars,null);
  assert.equal(applyMarketReaction(article,{}).stars,null);
- assert.equal(applyMarketReaction(article,{'2026-10-13':{sox:{changePercent:-9}}}).stars,null); // a later close never counts
- assert.equal(applyMarketReaction(article,{'2026-10-12':{nas100:{changePercent:-9}}}).stars,null); // the other index never counts
- const filled=applyMarketReaction(article,{'2026-10-12':{sox:{changePercent:-3.24}}});
- assert.deepEqual(filled.market,{index:'sox',session:'2026-10-12',changePercent:-3.2});assert.equal(filled.stars,2);
- assert.equal(parseRiskArticle(filled).stars,2);
- assert.equal(applyMarketReaction(filled,{'2026-10-12':{sox:{changePercent:8}}}),filled); // never re-scored
+ assert.equal(applyMarketReaction(article,{'2026-10-13':{sox:mv(-9)}}).stars,null); // a later close never counts
+ assert.equal(applyMarketReaction(article,{'2026-10-12':{nas100:mv(-9)}}).stars,null); // the other index never counts
+ assert.equal(applyMarketReaction(article,{'2026-10-12':{sox:{changePercent:-9}}}).stars,null); // a move without its typical move and breadth is not measured
+ const filled=applyMarketReaction(article,{'2026-10-12':{sox:mv(-3.24,1.08,34,40),fear:{level:30,previousLevel:27}}});
+ assert.deepEqual(filled.market,{index:'sox',session:'2026-10-12',changePercent:-3.2,shock:{multiple:3,same:34,total:40,fearChange:11}});assert.equal(filled.stars,4);
+ assert.equal(parseRiskArticle(filled).stars,4);
+ assert.equal(applyMarketReaction(filled,{'2026-10-12':{sox:mv(8,0.5)}}),filled); // never re-scored
 });
 
-test('thermometer snapshots carry each basket\'s close-to-close move, sanitized and dated on the session',async()=>{
+test('thermometer snapshots carry each basket\'s move and the shock map (typical move, breadth, fear), sanitized and dated',async()=>{
  const levels=[{date:'2026-10-08',close:100},{date:'2026-10-09',close:110},{date:'2026-10-12',close:106.48}];
  const move=dailyMove(levels,'2026-10-12');assert.equal(move.date,'2026-10-12');assert.equal(move.previousDate,'2026-10-09');assert.ok(Math.abs(move.changePercent+3.2)<1e-9);
  assert.equal(dailyMove(levels,'2026-10-13'),null);assert.equal(dailyMove(levels.slice(0,1),'2026-10-08'),null);
  const absent={status:'unavailable',reason:'not-configured'};
- const safe=safeThermometerSnapshot({asOf:'2026-10-12',nas100:absent,sox:absent,vix:absent,moves:{sox:move,nas100:{date:'2026-10-09',previousDate:'2026-10-08',changePercent:1},extra:1}},'2026-10-12');
+ const reading={...move,typicalPercent:1.2,up:3,down:36,total:40};
+ const safe=safeThermometerSnapshot({asOf:'2026-10-12',nas100:absent,sox:absent,vix:absent,moves:{sox:move,nas100:{date:'2026-10-09',previousDate:'2026-10-08',changePercent:1},extra:1},
+  shock:{'2026-10-12':{sox:reading,nas100:{...reading,up:30,down:30},fear:{date:'2026-10-12',level:31,previousLevel:28}},'2026-10-13':{sox:reading},'2026-10-09':{sox:reading,nas100:null,fear:null}}},'2026-10-12');
  assert.deepEqual(safe.moves,{sox:move,nas100:null});
+ // A reading dated on another session, counts that do not add up, or a session after the snapshot are dropped.
+ assert.deepEqual(safe.shock,{'2026-10-12':{sox:reading,nas100:null,fear:{date:'2026-10-12',level:31,previousLevel:28}},'2026-10-09':{sox:null,nas100:null,fear:null}});
  assert.equal(safeThermometerSnapshot({asOf:'2026-10-12',nas100:absent,sox:absent,vix:absent},'2026-10-12').moves,undefined);
  const db=new PGlite();
  try{
@@ -73,8 +79,22 @@ test('thermometer snapshots carry each basket\'s close-to-close move, sanitized 
   await db.query('INSERT INTO resolute_thermometer_snapshots(session_date,snapshot) VALUES ($1,$2::jsonb)',['2026-10-12',JSON.stringify(safe)]);
   await db.query('INSERT INTO resolute_thermometer_snapshots(session_date,snapshot) VALUES ($1,$2::jsonb)',['2026-10-09',JSON.stringify({asOf:'2026-10-09'})]);
   const moves=await readSessionMoves(db,['2026-10-12','2026-10-09','2026-10-13','bad']);
-  assert.deepEqual(moves['2026-10-12'],{sox:{changePercent:move.changePercent}});assert.equal(moves['2026-10-09'],undefined);assert.equal(moves['2026-10-13'],undefined);
+  assert.deepEqual(moves['2026-10-12'],{sox:{changePercent:move.changePercent,typicalPercent:1.2,up:3,down:36,total:40},fear:{level:31,previousLevel:28}});
+  assert.deepEqual(moves['2026-10-09'],{fear:null});assert.equal(moves['2026-10-13'],undefined);
  }finally{await db.close();}
+});
+
+test('the thermometer measures the shock from its own baskets: median typical move over 60 sessions, constituents, fear index',()=>{
+ const dates=[];for(let d=new Date('2026-06-01T00:00:00Z');dates.length<80;d.setUTCDate(d.getUTCDate()+1))if(![0,6].includes(d.getUTCDay()))dates.push(d.toISOString().slice(0,10));
+ // Twelve stocks alternate +1% / −1% (typical move 1%), then on the last day ten fall 6% and two rise 1%.
+ const series={};for(let k=0;k<12;k++){let c=100;series['T'+k]=dates.map((date,i)=>{if(i){c*=i===dates.length-1?(k<10?0.94:1.01):(i%2?1.01:1/1.01);}return {date,close:c};});}
+ const levels=equalWeightLevels(series),last=dates.at(-1);
+ const shock=sessionShock(levels,series,last);
+ assert.equal(shock.down,10);assert.equal(shock.up,2);assert.equal(shock.total,12);assert.ok(Math.abs(shock.typicalPercent-1)<0.01,String(shock.typicalPercent));
+ assert.ok(Math.abs(shock.changePercent-(-4.83))<0.01,String(shock.changePercent));
+ assert.equal(sessionShock(levels,series,dates[30]),null,'fewer than 60 earlier sessions: not measured');
+ const fear=sessionFear(levels,last);assert.equal(fear.date,last);assert.ok(fear.level>fear.previousLevel);
+ const m=measureShock(shock.changePercent,shock,fear);assert.equal(m.multiple,4.9);assert.equal(m.same,10);
 });
 
 test('"filled at the next update": waiting stories in ready days get stars and an approved quote; legacy rows are left alone',async()=>{
@@ -89,12 +109,12 @@ test('"filled at the next update": waiting stories in ready days get stars and a
   const now=new Date('2026-10-13T23:00:00Z');let asked=[];
   const none=await fillMarketReactions(db,async s=>{asked=s;return {};},now);
   assert.deepEqual(asked,['2026-10-12']);assert.deepEqual(none,{days:2,updated:0,waiting:1});
-  const result=await fillMarketReactions(db,async()=>({'2026-10-12':{sox:{changePercent:10.04}}}),now);
+  const result=await fillMarketReactions(db,async()=>({'2026-10-12':{sox:mv(10.04,1.5,38,40),fear:{level:40,previousLevel:30}}}),now);
   assert.deepEqual(result,{days:2,updated:1,waiting:0});
   const [stored]=(await db.query("SELECT articles FROM resolute.risk_days WHERE day='2026-10-13'")).rows[0].articles;
-  assert.equal(stored.stars,5);assert.equal(stored.market.changePercent,10);assert.equal(stored.quoteId,'ok');
+  assert.equal(stored.stars,5);assert.equal(stored.market.changePercent,10);assert.deepEqual(stored.market.shock,{multiple:6.7,same:38,total:40,fearChange:33});assert.equal(stored.quoteId,'ok');
   assert.equal((await db.query("SELECT articles FROM resolute.risk_days WHERE day='2026-10-12'")).rows[0].articles[0].stars,3);
-  assert.deepEqual(await fillMarketReactions(db,async()=>({'2026-10-12':{sox:{changePercent:-1}}}),now),{days:2,updated:0,waiting:0});
+  assert.deepEqual(await fillMarketReactions(db,async()=>({'2026-10-12':{sox:mv(-1)}}),now),{days:2,updated:0,waiting:0});
   // The public feed never shows a legacy (rubric) day, and never offers a quote that needs re-approval.
   const before=process.env.RESOLUTE_RISK_PUBLISH_APPROVED;process.env.RESOLUTE_RISK_PUBLISH_APPROVED='true';
   try{

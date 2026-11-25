@@ -210,12 +210,12 @@ export function assignQuote(article,quotes,day){
  return {...article,quoteId:matching.length?matching[parseInt(hash(day+article.id).slice(0,6),16)%matching.length].id:null};
 }
 /** Sessions whose moves could fill these stories (first U.S. close after each story). */
-export function pendingSessions(articles){return [...new Set(articles.filter(a=>a.market.changePercent===null&&a.market.index!=='company').map(a=>a.market.session??firstCloseAfter(newsInstant(a.publishedAt))).filter(Boolean))];}
+export function pendingSessions(articles){return [...new Set(articles.filter(a=>a.market.shock===null&&a.market.index!=='company').map(a=>a.market.session??firstCloseAfter(newsInstant(a.publishedAt))).filter(Boolean))];}
 /** Applies known moves and (re)assigns quotes for stories that just got stars. */
 export async function reactArticles(articles,readMoves,quotes,day){
  const sessions=pendingSessions(articles);if(!sessions.length||!readMoves)return articles;
  const moves=await readMoves(sessions);
- return articles.map(a=>{if(a.market.changePercent!==null||a.market.index==='company')return a;const next=applyMarketReaction(a,moves);return next.stars===null?next:assignQuote(next,quotes,day);});
+ return articles.map(a=>{if(a.market.shock!==null||a.market.index==='company')return a;const next=applyMarketReaction(a,moves);return next.stars===null?next:assignQuote(next,quotes,day);});
 }
 /** "Filled at the next update": stories still waiting for the market's reaction in recent ready days get their stars
  * once the thermometer snapshot of that close exists. Ready days only; failed/legacy rows are left as they are. */

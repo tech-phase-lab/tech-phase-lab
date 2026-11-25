@@ -108,9 +108,9 @@ test('the Nov 24 morning, rerun with the fixes, publishes three different storie
   assert.ok(tried.every(t=>kindOf(t)==='realistic'));
   assert.equal(pool.saved.length,1);assert.equal(pool.saved[0].state,'ready');
   const [market,semis,company]=pool.saved[0].articles;
-  assert.deepEqual([market.market,market.stars],[{index:'nas100',session:fixture.knownSession,changePercent:-1.3},2]);
-  assert.deepEqual([semis.market,semis.stars],[{index:'sox',session:fixture.knownSession,changePercent:-2.4},2]);
-  assert.deepEqual([company.market,company.stars],[{index:'company',session:null,changePercent:null},null]);
+  assert.deepEqual([market.market,market.stars],[{index:'nas100',session:fixture.knownSession,changePercent:-1.3,shock:{multiple:1.6,same:78,total:100,fearChange:6}},2]);
+  assert.deepEqual([semis.market,semis.stars],[{index:'sox',session:fixture.knownSession,changePercent:-2.4,shock:{multiple:1.6,same:34,total:40,fearChange:6}},2]);
+  assert.deepEqual([company.market,company.stars],[{index:'company',session:null,changePercent:null,shock:null},null]);
  }finally{await db.close();}
 });
 

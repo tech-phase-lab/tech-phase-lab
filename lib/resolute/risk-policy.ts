@@ -3,25 +3,41 @@
  * change wording or thresholds HERE only; nothing else hard-codes them.
  * Plain values only (no imports) so the Railway worker can load it directly.
  *
- * Stars are mechanical (lawyer review, Nov 2026): no owner or AI judgment.
+ * Stars are mechanical (lawyer review, Nov 2026): no owner or AI judgment, no prediction.
  * Each story has a scope decided from its headline by fixed rules (lib/resolute/risk-scope.ts): market-wide news is measured
  * on TP大型株100, semiconductor-sector news on TP半導体40, and news about one company gets no stars (one stock's move is not
- * a market shock). The index's % change vs the previous close at the FIRST U.S. market close after the news decides the
- * stars from the absolute move, with thresholds per index. Before that close the story shows no stars ("waiting").
+ * a market shock). Before the first U.S. close after the news the story shows no stars ("waiting").
  *
- * Nov 25 recalibration (owner: 「星5なんて滅多に出なくて良い」; ★5 = an extreme, historic-scale move such as Nov 20's
- * Nasdaq drop, ★4 = a very large move such as a −7% semiconductor day). Share of sessions per star, measured on the
- * equal-weight proxies of the two baskets (QQEW for TP大型株100, Aug 2025–Nov 2026, 325 sessions; Nasdaq-100 Jan 2024–Nov
- * 2026, 724 sessions; XSD for TP半導体40, 325 sessions):
- *   TP大型株100: ★1 59% ★2 30% ★3 7% ★4 3% ★5 0.6–0.9%
- *   TP半導体40: ★1 55% ★2 25% ★3 13% ★4 5.5% ★5 0.9%
+ * Nov 25 (owner-approved method): the stars measure the SHOCK of that close, from three measured parts (thermometer data,
+ * the same daily closes the thermometer already reads: no extra provider calls):
+ *  - multiple: |index move| ÷ the index's typical daily move (the median of its absolute daily % moves over the 60 sessions
+ *    before), rounded to 0.1 — "ふだんの何倍の動きか". −3% in a calm market counts more than in a turbulent one. A median, so a
+ *    few crash days do not shrink every later move (thermometer-basket.ts sessionShock).
+ *  - breadth: constituents that moved the same way as the index ÷ constituents priced on both days — "40社中37社が下落".
+ *  - fear: change of TP恐怖指数 (20-session realized volatility of TP大型株100, annualized) that day vs the day before,
+ *    in whole % — "恐怖指数+18%". Only a rise counts.
+ * The stars are the highest level whose every condition holds. The levels are fixed by what they mean (owner, Nov 25), never
+ * tuned to a share of days: if nothing extreme happens for months there is no ★5; in a crisis there can be many.
  */
 export const RISK_POLICY = {
-  version: 3,
+  version: 4,
   stars: {
-    method: 'market-move',
-    /** Lower bounds (absolute % move, rounded to 0.1) for ★2..★5 per index. */
-    thresholds: { nas100: [1, 2, 3, 5], sox: [2, 4, 6, 10] },
+    method: 'shock',
+    /** Sessions in the typical-move window (median of absolute daily moves). */
+    typicalDays: 60,
+    /** Highest first. multiple: at least this many times the typical move; breadth: at least this % of constituents moved the
+     * same way; fear: TP恐怖指数 rose at least this many %. null = not required. A level below these is ★1. */
+    levels: [
+      // ★5 a historic-scale shock: five ordinary days in one, nearly the whole index the same way, and fear jumping
+      // (Nov 20: TP大型株100 about −5.4%, six times its typical move).
+      { stars: 5, multiple: 5, breadth: 80, fear: 10 },
+      // ★4 a very large, broad shock (a −7% to −8.5% semiconductor day in a turbulent market is about three to four times).
+      { stars: 4, multiple: 3, breadth: 80, fear: null },
+      // ★3 a large move shared by most of the index.
+      { stars: 3, multiple: 2, breadth: 70, fear: null },
+      // ★2 clearly bigger than an ordinary day.
+      { stars: 2, multiple: 1.5, breadth: null, fear: null },
+    ],
   },
   /** Names shown next to the stars (EN names match the thermometer page). */
   indices: {
