@@ -1,0 +1,189 @@
+{
+  "root": {
+    "ticker": "HCA",
+    "name": "HCAヘルスケア",
+    "cik": 860730,
+    "name_en": "HCA Healthcare"
+  },
+  "rows": [
+    {
+      "ja": "家主・提携(相手の資料に記載)",
+      "en": "Landlord & partners (named in their filings)",
+      "above": true
+    },
+    {
+      "ja": "保険者(相手の資料に記載)",
+      "en": "Health insurer (named in its filing)"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "SGRY"
+  ],
+  "companies": [
+    {
+      "id": "HealthpeakDOC",
+      "ticker": "DOC",
+      "name": "ヘルスピーク・プロパティーズ",
+      "name_en": "Healthpeak Properties",
+      "sub": "医療施設REIT",
+      "sub_en": "Healthcare REIT",
+      "sub_short": "REIT",
+      "sub_short_en": "REIT",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Healthpeakが10-Kで、最大のテナントとして挙げる(総収入の7%)",
+          "text_en": "Healthpeak names HCA its largest tenant (7% of total revenue)",
+          "source": {
+            "label": "Healthpeak 10-K(2025年度)",
+            "label_en": "Healthpeak 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/765880/000162828026005044/peak-20251231.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "two largest tenants, HCA Healthcare, Inc. and CommonSpirit, both of which are in the outpatient medical segment, represented 7 % and 3 %, respectively, of the Company's total revenues."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MCK",
+      "ticker": "MCK",
+      "name": "マッケソン",
+      "name_en": "McKesson",
+      "sub": "医療用品流通",
+      "sub_en": "Medical distribution",
+      "sub_short": "医療流通",
+      "sub_short_en": "Medtech",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "McKessonと、がん臨床研究の合弁SCRI Oncologyを設立(2022年10月、HCAのSarah Cannon研究所を統合)",
+          "text_en": "Formed oncology research venture SCRI Oncology with McKesson (October 2022), combining HCA's Sarah Cannon Research Institute",
+          "source": {
+            "label": "McKesson 10-K(2025年3月期)",
+            "label_en": "McKesson 10-K (FY ended Mar 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/927653/000092765325000036/mck-20250331.htm",
+            "level": "official",
+            "date": "2025-05-09",
+            "quote": "the Company completed a transaction with HCA Healthcare, Inc. (\"HCA\") to form SCRI Oncology, an oncology research business combining McKesson's U.S. Oncology Research (\"USOR\") and HCA's Sarah Cannon Research Institute (\"SCRI\")"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BKD",
+      "ticker": "BKD",
+      "name": "ブルックデール・シニアリビング",
+      "name_en": "Brookdale Senior Living",
+      "sub": "高齢者住宅",
+      "sub_en": "Senior living",
+      "sub_short": "高齢住宅",
+      "sub_short_en": "Seniors",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Brookdaleの在宅医療事業の80%を保有する合弁相手だった(2023年12月にBrookdaleが持ち分を売却)",
+          "text_en": "Held 80% of Brookdale's former health care services venture (Brookdale sold its stake in December 2023)",
+          "source": {
+            "label": "Brookdale 10-K(2025年度)",
+            "label_en": "Brookdale 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1332349/000133234926000032/bkd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Prior to December 2023, the Company held a 20 % equity interest in its former Health Care Services segment with the remaining 80 % equity interest held by affiliates of HCA Healthcare, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GRAL",
+      "ticker": "GRAL",
+      "name": "グレイル",
+      "name_en": "GRAIL",
+      "sub": "がん早期検査",
+      "sub_en": "Cancer early detection",
+      "sub_short": "がん検査",
+      "sub_short_en": "Cancer",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "GRAILが10-Kで、大規模研究の提携先の一つに挙げる",
+          "text_en": "GRAIL lists HCA among partners in its population-scale studies",
+          "source": {
+            "label": "GRAIL 10-K(2025年度)",
+            "label_en": "GRAIL 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1699031/000162828026017319/gral-20251231.htm",
+            "level": "official",
+            "date": "2026-03-12",
+            "quote": "These foundational population-scale studies involve partnerships with numerous leading academic and cancer institutions and large community networks, including, among others, Cancer Hope Network, the Cleveland Clinic, Dana-Farber Cancer Institute, Geisinger Health, Guardian Research Network, HCA Healthcare"
+          }
+        }
+      ]
+    },
+    {
+      "id": "OSCR",
+      "ticker": "OSCR",
+      "name": "オスカー・ヘルス",
+      "name_en": "Oscar Health",
+      "sub": "医療保険",
+      "sub_en": "Health insurance",
+      "sub_short": "医療保険",
+      "sub_short_en": "Insurer",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Oscarが10-Kで、医療費の支払先として大きい医療機関に挙げる(医療費の約8%、2025年)",
+          "text_en": "Oscar names HCA among its largest providers (about 8% of medical costs, 2025)",
+          "source": {
+            "label": "Oscar Health 10-K(2025年度)",
+            "label_en": "Oscar Health 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1568651/000156865126000011/oscr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "When aggregating the payments we make to each provider through its local affiliates, AdventHealth, HCA Healthcare, and Baptist Health South Florida accounted for a total of approximately 9%, 8% and 7%, respectively, of total allowable medical costs for the year ended December 31, 2025."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SGRY",
+      "ticker": "SGRY",
+      "name": "サージェリー・パートナーズ",
+      "name_en": "Surgery Partners",
+      "sub": "外来手術センター",
+      "sub_en": "Surgical facilities",
+      "sub_short": "外来手術",
+      "sub_short_en": "Surgery",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Surgery Partnersが10-Kで、手術施設を持つ大手としてTenetなどと並べて挙げる",
+          "text_en": "Surgery Partners names HCA among large national owners of surgical facilities",
+          "source": {
+            "label": "Surgery Partners 10-K(2025年度)",
+            "label_en": "Surgery Partners 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1638833/000163883326000008/sgry-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "Several large national companies own and/or manage surgical facilities, in some cases in connection with other lines of business with which we do not compete, including HCA Healthcare, Inc., AMSURG Corp., Tenet Healthcare Corporation and Optum, Inc."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

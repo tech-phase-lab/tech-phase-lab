@@ -1,0 +1,189 @@
+{
+  "root": {
+    "ticker": "KSS",
+    "name": "コールズ",
+    "cik": 885639,
+    "name_en": "Kohl's"
+  },
+  "rows": [
+    {
+      "ja": "仕入れ先・提携",
+      "en": "Suppliers & partners",
+      "above": true
+    },
+    {
+      "ja": "店舗の家主(相手の資料に記載)",
+      "en": "Store landlords (named in their filings)"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "DXLG"
+  ],
+  "companies": [
+    {
+      "id": "LVMH",
+      "ticker": "Sephora (LVMH)",
+      "name": "セフォラ(LVMH)",
+      "name_en": "Sephora (LVMH)",
+      "sub": "化粧品小売",
+      "sub_en": "Beauty retail",
+      "sub_short": "化粧品",
+      "sub_short_en": "Beauty",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2020年からの提携で、店内の美容売り場をSephoraが独占(1,100店超に出店)",
+          "text_en": "Exclusive beauty partner since 2020, with shop-in-shops in over 1,100 stores",
+          "source": {
+            "label": "Kohl's 10-K(2026年1月期)",
+            "label_en": "Kohl's 10-K (FY ended Jan 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/885639/000119312526115982/kss-20260131.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "In 2020, we entered into an arrangement with Sephora to be the exclusive beauty offering at Kohl's."
+          }
+        }
+      ]
+    },
+    {
+      "id": "KTB",
+      "ticker": "KTB",
+      "name": "コンツール・ブランズ",
+      "name_en": "Kontoor Brands",
+      "sub": "ジーンズ",
+      "sub_en": "Jeans",
+      "sub_short": "ジーンズ",
+      "sub_short_en": "Jeans",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Kontoor(Wrangler・Lee)が10-Kで、百貨店の顧客としてコールズを挙げる",
+          "text_en": "Kontoor (Wrangler, Lee) names Kohl's as a department store customer",
+          "source": {
+            "label": "Kontoor Brands 10-K(2024年度)",
+            "label_en": "Kontoor Brands 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1760965/000176096525000011/ktb-20241228.htm",
+            "level": "official",
+            "date": "2025-02-25",
+            "quote": "Our department store customers include national retailers such as Kohl's as well as other retail partners."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GIPR",
+      "ticker": "GIPR",
+      "name": "ジェネレーション・インカム・プロパティーズ",
+      "name_en": "Generation Income Properties",
+      "sub": "ネットリースREIT",
+      "sub_en": "Net lease REIT",
+      "sub_short": "REIT",
+      "sub_short_en": "REIT",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Generation Incomeが10-K/Aで、賃料の10%超を占めるテナント5社の一社に挙げる",
+          "text_en": "Generation Income lists Kohl's among five tenants each over 10% of its rent",
+          "source": {
+            "label": "Generation Income Properties 10-K/A(2025年度)",
+            "label_en": "Generation Income Properties 10-K/A (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1651721/000119312526140770/gipr-20251231.htm",
+            "level": "official",
+            "date": "2026-04-03",
+            "quote": "As of March 31, 2026, we have five tenants, that each account for more than 10% of our annualized rent: the General Service Administration, Dollar General, the City of San Antonio, Kohl's Corporation, and PRA Holdings"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SPG",
+      "ticker": "SPG",
+      "name": "サイモン・プロパティ・グループ",
+      "name_en": "Simon Property Group",
+      "sub": "ショッピングモールREIT",
+      "sub_en": "Mall REIT",
+      "sub_short": "REIT",
+      "sub_short_en": "Mall REIT",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Simonが10-Kで、モールの核テナントとしてコールズを挙げる(グリーンベイなど)",
+          "text_en": "Simon lists Kohl's as an anchor at malls such as Bay Park Square in Green Bay",
+          "source": {
+            "label": "Simon Property Group 10-K(2025年度)",
+            "label_en": "Simon Property Group 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1063761/000110465926019419/spg-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Bay Park Square WI Green Bay Fee 100.0 % Built 1980 93.1 % 690,122 Kohl's, Marcus Cinema 16, Dave & Buster's, Steinhafel Furniture, Hy-Vee"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MAC",
+      "ticker": "MAC",
+      "name": "メイスリッチ",
+      "name_en": "Macerich",
+      "sub": "ショッピングモールREIT",
+      "sub_en": "Mall REIT",
+      "sub_short": "REIT",
+      "sub_short_en": "Mall REIT",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Macerichが10-Kで、自社保有の店舗をコールズに貸していると記載",
+          "text_en": "Macerich says it owns a store leased to Kohl's",
+          "source": {
+            "label": "Macerich 10-K(2025年度)",
+            "label_en": "Macerich 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/912242/000091224226000016/mac-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "The Company owns one store located at a shopping center not owned by the Company, which is leased to Kohl's."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DXLG",
+      "ticker": "DXLG",
+      "name": "デスティネーションXL",
+      "name_en": "Destination XL Group",
+      "sub": "衣料品小売",
+      "sub_en": "Apparel retail",
+      "sub_short": "衣料小売",
+      "sub_short_en": "Apparel",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Destination XLが10-Kで、購買力の大きいディスカウント小売の競合としてWalmartと並べて挙げる",
+          "text_en": "Destination XL names Kohl's with Walmart as discount retailers with big buying power",
+          "source": {
+            "label": "Destination XL 10-K(2026年1月期)",
+            "label_en": "Destination XL 10-K (FY ended Jan 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/813298/000119312526115660/dxlg-20260131.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "Discount retailers with significant buying power, such as Walmart, Kohl's and J.C."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
