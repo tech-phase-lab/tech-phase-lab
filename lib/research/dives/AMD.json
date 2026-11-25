@@ -1,0 +1,146 @@
+{
+  "ticker": "AMD",
+  "name": "AMD",
+  "exchange": "NASDAQ",
+  "quoteTicker": "AMD",
+  "period": "Q3 2026",
+  "periodQuarter": 3,
+  "releasedOn": "2026-11-03",
+  "periodEnd": "2026-09-26",
+  "reviewedOn": "2026-11-25",
+  "currency": "USD",
+  "basis": {"eps": "non-GAAP diluted", "grossMargin": "non-GAAP"},
+  "sources": [
+    {"url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000188/q32026991.htm", "title": "AMD Reports Third Quarter 2026 Financial Results (Form 8-K, Exhibit 99.1)", "location": "Quarterly financial results tables, Segment Summary, Current Outlook, GAAP to non-GAAP reconciliation, Selected Corporate Data, cash flow statement"},
+    {"url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000014/q42025991.htm", "title": "AMD Reports Fourth Quarter and Full Year 2025 Financial Results (Form 8-K, Exhibit 99.1)", "location": "Condensed Consolidated Statements of Operations"},
+    {"url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000072/q12026991.htm", "title": "AMD Reports First Quarter 2026 Financial Results (Form 8-K, Exhibit 99.1)", "location": "Condensed Consolidated Statements of Operations"}
+  ],
+  "evidence": [
+    {"field": "numbers.revenue.current", "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000188/q32026991.htm", "quote": "Net revenue $ 13,377 $ 11,536 $ 9,246 $ 35,166 $ 24,369"},
+    {"field": "numbers.revenue.previous", "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000188/q32026991.htm", "quote": "Net revenue $ 13,377 $ 11,536 $ 9,246 $ 35,166 $ 24,369"},
+    {"field": "numbers.revenue.yearAgo", "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000188/q32026991.htm", "quote": "Net revenue $ 13,377 $ 11,536 $ 9,246 $ 35,166 $ 24,369"},
+    {"field": "numbers.adjustedEPS", "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000188/q32026991.htm", "quote": "Diluted earnings per share $2.09 $1.20 Up 74% $1.66 Up 26%"},
+    {"field": "numbers.grossMargin.current", "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000188/q32026991.htm", "quote": "Gross profit ($M) $7,483 $4,992 Up 50% $6,488 Up 15% Gross margin 56% 54% Up 2 ppts 56% Flat"},
+    {"field": "numbers.grossMargin.previous", "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000188/q32026991.htm", "quote": "Gross profit ($M) $7,483 $4,992 Up 50% $6,488 Up 15% Gross margin 56% 54% Up 2 ppts 56% Flat"},
+    {"field": "numbers.guidance.low", "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000188/q32026991.htm", "quote": "For the fourth quarter of 2026, AMD expects revenue to be approximately $17 billion, plus or minus 3%.", "calc": "17*1000*(100-3)/100"},
+    {"field": "numbers.guidance.high", "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000188/q32026991.htm", "quote": "For the fourth quarter of 2026, AMD expects revenue to be approximately $17 billion, plus or minus 3%.", "calc": "17*1000*(100+3)/100"},
+    {"field": "numbers.guidance.grossMarginPercent", "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000188/q32026991.htm", "quote": "Non-GAAP gross margin is expected to be approximately 55%."},
+    {"field": "numbers.segments[0].revenue", "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000188/q32026991.htm", "quote": "Net Revenue: Data Center Segment $ 8,546 $ 6,718 $ 4,341 $ 21,039 $ 11,255 Client and Gaming Segment Client 2,949 3,062 2,750 8,896 7,543 Gaming 773 779 1,298 2,272 3,067 Total Client and Gaming 3,722 3,841 4,048 11,168 10,610 Embedded Segment 1,109 977 857 2,959 2,504 Total net revenue $ 13,377 $ 11,536 $ 9,246 $ 35,166 $ 24,369 Operating Income (Loss): Data Center Segment $ 2,882 $ 2,103 $ 1,074 $ 6,584 $ 1,851 Client and Gaming Segment 573 582 867 1,730 2,130 Embedded Segment 453 386 283"},
+    {"field": "numbers.segments[0].previous", "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000188/q32026991.htm", "quote": "Net Revenue: Data Center Segment $ 8,546 $ 6,718 $ 4,341 $ 21,039 $ 11,255"},
+    {"field": "numbers.segments[0].operatingMargin", "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000188/q32026991.htm", "quote": "Net Revenue: Data Center Segment $ 8,546 $ 6,718 $ 4,341 $ 21,039 $ 11,255 Client and Gaming Segment Client 2,949 3,062 2,750 8,896 7,543 Gaming 773 779 1,298 2,272 3,067 Total Client and Gaming 3,722 3,841 4,048 11,168 10,610 Embedded Segment 1,109 977 857 2,959 2,504 Total net revenue $ 13,377 $ 11,536 $ 9,246 $ 35,166 $ 24,369 Operating Income (Loss): Data Center Segment $ 2,882 $ 2,103 $ 1,074 $ 6,584 $ 1,851 Client and Gaming Segment 573 582 867 1,730 2,130 Embedded Segment 453 386 283", "calc": "2882/8546*100", "round": 1},
+    {"field": "numbers.segments[0].previousOperatingMargin", "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000188/q32026991.htm", "quote": "Net Revenue: Data Center Segment $ 8,546 $ 6,718 $ 4,341 $ 21,039 $ 11,255 Client and Gaming Segment Client 2,949 3,062 2,750 8,896 7,543 Gaming 773 779 1,298 2,272 3,067 Total Client and Gaming 3,722 3,841 4,048 11,168 10,610 Embedded Segment 1,109 977 857 2,959 2,504 Total net revenue $ 13,377 $ 11,536 $ 9,246 $ 35,166 $ 24,369 Operating Income (Loss): Data Center Segment $ 2,882 $ 2,103 $ 1,074 $ 6,584 $ 1,851 Client and Gaming Segment 573 582 867 1,730 2,130 Embedded Segment 453 386 283", "calc": "2103/6718*100", "round": 1},
+    {"field": "numbers.segments[1].revenue", "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000188/q32026991.htm", "quote": "Total Client and Gaming 3,722 3,841 4,048 11,168 10,610"},
+    {"field": "numbers.segments[1].previous", "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000188/q32026991.htm", "quote": "Total Client and Gaming 3,722 3,841 4,048 11,168 10,610"},
+    {"field": "numbers.segments[1].operatingMargin", "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000188/q32026991.htm", "quote": "Net Revenue: Data Center Segment $ 8,546 $ 6,718 $ 4,341 $ 21,039 $ 11,255 Client and Gaming Segment Client 2,949 3,062 2,750 8,896 7,543 Gaming 773 779 1,298 2,272 3,067 Total Client and Gaming 3,722 3,841 4,048 11,168 10,610 Embedded Segment 1,109 977 857 2,959 2,504 Total net revenue $ 13,377 $ 11,536 $ 9,246 $ 35,166 $ 24,369 Operating Income (Loss): Data Center Segment $ 2,882 $ 2,103 $ 1,074 $ 6,584 $ 1,851 Client and Gaming Segment 573 582 867 1,730 2,130 Embedded Segment 453 386 283", "calc": "573/3722*100", "round": 1},
+    {"field": "numbers.segments[1].previousOperatingMargin", "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000188/q32026991.htm", "quote": "Net Revenue: Data Center Segment $ 8,546 $ 6,718 $ 4,341 $ 21,039 $ 11,255 Client and Gaming Segment Client 2,949 3,062 2,750 8,896 7,543 Gaming 773 779 1,298 2,272 3,067 Total Client and Gaming 3,722 3,841 4,048 11,168 10,610 Embedded Segment 1,109 977 857 2,959 2,504 Total net revenue $ 13,377 $ 11,536 $ 9,246 $ 35,166 $ 24,369 Operating Income (Loss): Data Center Segment $ 2,882 $ 2,103 $ 1,074 $ 6,584 $ 1,851 Client and Gaming Segment 573 582 867 1,730 2,130 Embedded Segment 453 386 283", "calc": "582/3841*100", "round": 1},
+    {"field": "numbers.segments[2].revenue", "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000188/q32026991.htm", "quote": "Embedded Segment 1,109 977 857 2,959 2,504"},
+    {"field": "numbers.segments[2].previous", "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000188/q32026991.htm", "quote": "Embedded Segment 1,109 977 857 2,959 2,504"},
+    {"field": "numbers.segments[2].operatingMargin", "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000188/q32026991.htm", "quote": "Net Revenue: Data Center Segment $ 8,546 $ 6,718 $ 4,341 $ 21,039 $ 11,255 Client and Gaming Segment Client 2,949 3,062 2,750 8,896 7,543 Gaming 773 779 1,298 2,272 3,067 Total Client and Gaming 3,722 3,841 4,048 11,168 10,610 Embedded Segment 1,109 977 857 2,959 2,504 Total net revenue $ 13,377 $ 11,536 $ 9,246 $ 35,166 $ 24,369 Operating Income (Loss): Data Center Segment $ 2,882 $ 2,103 $ 1,074 $ 6,584 $ 1,851 Client and Gaming Segment 573 582 867 1,730 2,130 Embedded Segment 453 386 283", "calc": "453/1109*100", "round": 1},
+    {"field": "numbers.segments[2].previousOperatingMargin", "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000188/q32026991.htm", "quote": "Net Revenue: Data Center Segment $ 8,546 $ 6,718 $ 4,341 $ 21,039 $ 11,255 Client and Gaming Segment Client 2,949 3,062 2,750 8,896 7,543 Gaming 773 779 1,298 2,272 3,067 Total Client and Gaming 3,722 3,841 4,048 11,168 10,610 Embedded Segment 1,109 977 857 2,959 2,504 Total net revenue $ 13,377 $ 11,536 $ 9,246 $ 35,166 $ 24,369 Operating Income (Loss): Data Center Segment $ 2,882 $ 2,103 $ 1,074 $ 6,584 $ 1,851 Client and Gaming Segment 573 582 867 1,730 2,130 Embedded Segment 453 386 283", "calc": "386/977*100", "round": 1},
+    {"field": "history[0].value", "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000188/q32026991.htm", "quote": "Net revenue $ 13,377 $ 11,536 $ 9,246 $ 35,166 $ 24,369"},
+    {"field": "history[1].value", "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000014/q42025991.htm", "quote": "Net revenue $ 10,270 $ 9,246 $ 7,658 $ 34,639 $ 25,785"},
+    {"field": "history[2].value", "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000072/q12026991.htm", "quote": "Net revenue $ 10,253 $ 10,270 $ 7,438"},
+    {"field": "history[3].value", "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000188/q32026991.htm", "quote": "Net revenue $ 13,377 $ 11,536 $ 9,246 $ 35,166 $ 24,369"},
+    {"field": "tiles[0].value", "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000188/q32026991.htm", "quote": "Net revenue $ 13,377 $ 11,536 $ 9,246 $ 35,166 $ 24,369", "calc": "13377/1000", "round": 2},
+    {"field": "tiles[0].note", "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000188/q32026991.htm", "quote": "Third quarter revenue grew 45% year-over-year to a record $13.4 billion"},
+    {"field": "tiles[1].value", "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000188/q32026991.htm", "quote": "Net Revenue: Data Center Segment $ 8,546 $ 6,718 $ 4,341 $ 21,039 $ 11,255", "calc": "8546/1000", "round": 2},
+    {"field": "tiles[1].note", "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000188/q32026991.htm", "quote": "Data Center segment revenue was a record $8.5 billion, up 97% year-over-year"},
+    {"field": "tiles[2].value", "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000188/q32026991.htm", "quote": "Diluted earnings per share $2.09 $1.20 Up 74% $1.66 Up 26%"},
+    {"field": "tiles[2].note", "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000188/q32026991.htm", "quote": "Diluted earnings per share $2.09 $1.20 Up 74% $1.66 Up 26%"},
+    {"field": "summary.cards.growth", "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000188/q32026991.htm", "quote": "Gaming business revenue was $773 million, down 40% year-over-year, due to lower semi-custom and graphics revenue."},
+    {"field": "summary.cards.change", "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000188/q32026991.htm", "quote": "Operating income ($M) $3,923 $2,238 Up 75% $3,094 Up 27%"},
+    {"field": "summary.cards.change", "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000188/q32026991.htm", "quote": "Change in fair value of warrant liability (3) 1,097 0.66"},
+    {"field": "summary.cards.change", "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000188/q32026991.htm", "quote": "(3) Change in fair value of warrant liability relating to the quarterly remeasurement of warrants issued to certain customers is driven by changes in AMD's stock price and other valuation assumptions."},
+    {"field": "summary.cards.caution", "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000188/q32026991.htm", "quote": "Free cash flow (3) $ 554 $ 1,558 $ 1,530 $ 4,678 $ 3,437 Total assets $ 94,812 $ 84,464 $ 76,891 $ 94,812 $ 76,891 Total debt $ 7,079 $ 3,226 $ 3,220"},
+    {"field": "summary.cards.caution", "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000188/q32026991.htm", "quote": "Free cash flow margin % 4 % 14 % 17 %"},
+    {"field": "summary.cards.caution", "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000188/q32026991.htm", "quote": "Accounts receivable, net (1,928) (1,085) (2,894) (7) Inventories (2,995) (636)"},
+    {"field": "summary.cards.next", "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000188/q32026991.htm", "quote": "The mid-point of the revenue range represents year-over-year growth of approximately 66% and a sequential increase of approximately 27%."}
+  ],
+  "numbers": {
+    "revenue": {"current": 13377, "previous": 11536, "yearAgo": 9246},
+    "adjustedEPS": 2.09,
+    "epsEstimate": null,
+    "grossMargin": {"current": 56, "previous": 56},
+    "guidance": {"low": 16490, "high": 17510, "grossMarginPercent": 55},
+    "segments": [
+      {"key": "datacenter", "nameJa": "データセンター", "nameEn": "Data Center", "revenue": 8546, "previous": 6718, "operatingMargin": 33.7, "previousOperatingMargin": 31.3},
+      {"key": "clientgaming", "nameJa": "クライアント・ゲーム", "nameEn": "Client and Gaming", "revenue": 3722, "previous": 3841, "operatingMargin": 15.4, "previousOperatingMargin": 15.2},
+      {"key": "embedded", "nameJa": "組み込み", "nameEn": "Embedded", "revenue": 1109, "previous": 977, "operatingMargin": 40.8, "previousOperatingMargin": 39.5}
+    ]
+  },
+  "history": [
+    {"label": "Q3", "end": "2025-09-27", "value": 9246},
+    {"label": "Q4", "end": "2025-12-27", "value": 10270},
+    {"label": "Q1", "end": "2026-03-28", "value": 10253},
+    {"label": "Q2", "end": "2026-06-27", "value": 11536}
+  ],
+  "tiles": [
+    {"label": {"ja": "売上高", "en": "Revenue"}, "value": {"ja": "133.77億ドル", "en": "$13.38B"}, "note": {"ja": "前年同期比 +45%", "en": "+45% YoY"}},
+    {"label": {"ja": "データセンター部門売上", "en": "Data Center segment revenue"}, "value": {"ja": "85.46億ドル", "en": "$8.55B"}, "note": {"ja": "前年同期比 +97%", "en": "+97% YoY"}},
+    {"label": {"ja": "非GAAP 1株利益", "en": "Non-GAAP EPS"}, "value": {"ja": "2.09ドル", "en": "$2.09"}, "note": {"ja": "前年同期比 +74%", "en": "+74% YoY"}}
+  ],
+  "summary": {
+    "conclusion": [
+      {"ja": "売上は133.77億ドルで、前期から約16%、前年同期から45%増えました。伸びのほとんどはデータセンター部門です。", "en": "Revenue was $13.38B, up about 16% from the previous quarter and 45% from a year ago. Almost all of the growth came from the Data Center segment."},
+      {"ja": "一方で、フリーキャッシュフローは5.54億ドルと前期の約3分の1に減りました。在庫と売掛金が大きく増えたためです。", "en": "Meanwhile, free cash flow fell to $554M, about a third of last quarter, because inventory and receivables rose sharply."},
+      {"ja": "会社は次期の売上を約170億ドル(±3%)と、今回より約27%多く見込んでいます。粗利益率の見通しは約55%です。", "en": "The company expects next-quarter revenue of about $17B (plus or minus 3%), about 27% above this quarter, with a gross margin of about 55%."}
+    ],
+    "cards": {
+      "growth": {
+        "headline": {"ja": "データセンター部門が最大の伸び", "en": "Data Center led the growth"},
+        "chips": [
+          {"tone": "up", "text": {"ja": "部門売上 +27.2%", "en": "Segment revenue +27.2%"}},
+          {"tone": "up", "text": {"ja": "部門営業利益率 31.3% → 33.7%", "en": "Segment operating margin 31.3% → 33.7%"}}
+        ],
+        "sections": [
+          {"key": "happened", "text": {"ja": "データセンター部門の売上は、67.18億ドルから85.46億ドルへ、18.28億ドル増えました。営業利益率は31.3%から33.7%に上がっています。", "en": "Data Center revenue rose from $6.72B to $8.55B, up $1.83B. Its operating margin rose from 31.3% to 33.7%."}},
+          {"key": "good", "text": {"ja": "会社全体の売上は前期から18.41億ドル増え、そのうち約99%がこの部門の増加分です。新しいGPU(Instinct MI450)の発売とサーバー用CPU(EPYC)の需要が伸びを支え、利益率も上がりました。", "en": "Total revenue rose $1.84B from the previous quarter, and about 99% of that came from this segment. The launch of Instinct MI450 GPUs and demand for EPYC CPUs drove it, and the margin also improved."}},
+          {"key": "watch", "text": {"ja": "伸びがデータセンター1部門に偏っています。ゲーム事業の売上は前年同期比40%減の7.73億ドルで、クライアント・ゲーム部門の売上は前期の38.41億ドルから37.22億ドルに減りました。", "en": "Growth is concentrated in Data Center. Gaming revenue fell 40% from a year ago to $773M, and Client and Gaming revenue slipped from $3.84B to $3.72B."}},
+          {"key": "means", "text": {"ja": "次期の大きな伸び(見通しの中央で前期比約27%増)も、この部門が引っ張る前提です。", "en": "The large increase expected next quarter (about 27% at the midpoint) also depends on this segment."}}
+        ],
+        "segment": "datacenter"
+      },
+      "change": {
+        "headline": {"ja": "売上は前期比 +16.0%、非GAAP粗利益率は56%で横ばい", "en": "Revenue up 16.0% QoQ, non-GAAP gross margin flat at 56%"},
+        "chips": [
+          {"tone": "up", "text": {"ja": "売上 前期比 +16.0%", "en": "Revenue +16.0% QoQ"}},
+          {"tone": "gold", "text": {"ja": "非GAAP粗利益率 56% → 56%", "en": "Non-GAAP gross margin 56% → 56%"}}
+        ],
+        "sections": [
+          {"key": "happened", "text": {"ja": "売上は115.36億ドルから133.77億ドルへ、18.41億ドル増えました。非GAAP粗利益率は56%のままです。", "en": "Revenue rose from $11.54B to $13.38B, up $1.84B. Non-GAAP gross margin stayed at 56%."}},
+          {"key": "good", "text": {"ja": "非GAAP営業利益は30.94億ドルから39.23億ドルへ約27%増え、売上の伸び(約16%)を上回りました。売上が増えるほど利益が大きく増える形になっています。", "en": "Non-GAAP operating income rose about 27%, from $3.09B to $3.92B, faster than revenue (about 16%). Profit is growing faster than sales."}},
+          {"key": "watch", "text": {"ja": "GAAPの1株利益は1.46ドルで、非GAAP(2.09ドル)との差が大きくなりました。一部の顧客に発行したワラント(株を買う権利)の評価替えで10.97億ドルの費用が出たためで、この費用はAMDの株価などで変わります。", "en": "GAAP EPS was $1.46, far below non-GAAP EPS of $2.09. Remeasuring warrants issued to certain customers cost $1,097M, and that charge moves with AMD's share price and other assumptions."}},
+          {"key": "view", "text": {"ja": "本業の利益は伸びています。ただ、GAAPと非GAAPの差がどこから来ているかは、四半期ごとに確かめる必要があります。", "en": "Core profit is growing, but the source of the gap between GAAP and non-GAAP results needs checking every quarter."}}
+        ],
+        "segment": null
+      },
+      "caution": {
+        "headline": {"ja": "フリーキャッシュフローが5.54億ドルに減少", "en": "Free cash flow fell to $554M"},
+        "chips": [
+          {"tone": "down", "text": {"ja": "FCF 15.58億 → 5.54億ドル", "en": "FCF $1,558M → $554M"}},
+          {"tone": "down", "text": {"ja": "在庫の増加 29.95億ドル(3か月)", "en": "Inventory up $2,995M in the quarter"}}
+        ],
+        "sections": [
+          {"key": "happened", "text": {"ja": "フリーキャッシュフローは前期の15.58億ドルから5.54億ドルに減り、売上に対する割合は14%から4%に下がりました。3か月で在庫が29.95億ドル、売掛金が19.28億ドル増えたためです。", "en": "Free cash flow fell from $1,558M to $554M, and its share of revenue dropped from 14% to 4%. In the quarter, inventory rose $2,995M and receivables rose $1,928M."}},
+          {"key": "watch", "text": {"ja": "利益が出ていても、在庫や売掛金にお金がとどまると手元の現金は増えません。借入金も32.26億ドルから70.79億ドルに増えています。", "en": "Even with profits, cash tied up in inventory and receivables does not reach the bank. Total debt also rose from $3,226M to $7,079M."}},
+          {"key": "means", "text": {"ja": "次期は売上が大きく伸びる見通しなので、積み上げた在庫が予定どおり売上に変わるかが焦点です。", "en": "Revenue is expected to jump next quarter, so the key is whether the inventory built up turns into sales as planned."}},
+          {"key": "view", "text": {"ja": "新製品の量産に向けた在庫であれば、次期以降の売上で現金として戻る形になります。次の決算で、在庫とフリーキャッシュフローの動きを確かめます。", "en": "If this is inventory for new product ramps, it should come back as cash through later sales. Check inventory and free cash flow in the next report."}}
+        ],
+        "segment": null
+      },
+      "next": {
+        "headline": {"ja": "次期の会社見通しを追う", "en": "Follow the company's outlook for next quarter"},
+        "chips": [
+          {"tone": "gold", "text": {"ja": "売上 164.9〜175.1億ドル", "en": "Revenue $16.5–17.5B"}},
+          {"tone": "gold", "text": {"ja": "非GAAP粗利益率 約55%", "en": "Non-GAAP gross margin ~55%"}}
+        ],
+        "sections": [
+          {"key": "happened", "text": {"ja": "会社は、次期の売上を約170億ドル±3%、つまり164.9億〜175.1億ドルと見込んでいます。非GAAP粗利益率は約55%の見通しです。今回の売上は133.77億ドルなので、下限でも約23%の増加です。", "en": "The company expects next-quarter revenue of about $17B plus or minus 3% ($16.49B to $17.51B) and a non-GAAP gross margin of about 55%. This quarter's revenue was $13.38B, so even the low end would be about 23% higher."}},
+          {"key": "watch", "text": {"ja": "粗利益率の見通し(約55%)は今回の56%を下回ります。売上が伸びても利益率が下がると、利益の伸びは小さくなります。", "en": "The margin outlook (about 55%) is below this quarter's 56%. If revenue grows but the margin falls, profit growth will be smaller."}},
+          {"key": "view", "text": {"ja": "次の決算で、実績がこの幅のどこに入るかと、新しいラック型製品(Helios)の量産が売上にどれだけ表れるかを見ます。", "en": "In the next report, check where results land in this range and how much the Helios rack-scale ramp shows up in revenue."}}
+        ],
+        "segment": null
+      }
+    }
+  }
+}

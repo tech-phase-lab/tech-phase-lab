@@ -51,6 +51,9 @@
 .page .perks li{display:flex;align-items:center;gap:10px;font-size:13px;color:#d5dde6;margin-top:9px}
 .page .kv{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:13px 0;border-bottom:1px solid #1d2733;font-size:13px}
 .page .kv:last-child{border-bottom:0}
+/* A row whose value is a button (RESOLUTE 「自動更新 オン（止める）」): the label stays on one line (owner, Nov 25). */
+.page .kv>span:first-child:has(+.link){flex:none;white-space:nowrap}
+.page .kv>.link{width:auto;margin:0;padding:0;text-align:right}
 .page .kv>span:first-child{color:#8697ab}
 .page .kv b{font-weight:700;font-size:14px;text-align:right}
 .page .kv small{font-size:11px;color:#7d8ca0;font-weight:500}
@@ -61,8 +64,9 @@
 .page .gbt{background:linear-gradient(120deg,var(--gold-l),var(--gold-d));color:#2a1f05;box-shadow:0 8px 24px rgba(217,181,106,.22)}
 .page .gbtO{background:transparent;border:1px solid #6b5a2e;color:#e7c982;box-shadow:none}
 .page .mbt{background:linear-gradient(120deg,#9fe8c8,#5fcca2);color:#05281d}
-.page .abt{background:linear-gradient(120deg,#f0b27c,#d98748);color:#2b1404;height:50px}
-.page .abtO{background:transparent;border:1px solid #6b4528;color:#f0b27c}
+/* RESOLUTE's buttons are gold, never orange (owner, Nov 25): the filled one like RESOLUTE's gold buttons, the outlined ones gold-edged. */
+.page .abt{background:linear-gradient(120deg,var(--gold-l),var(--gold-d));color:#2a1f05;height:50px}
+.page .abtO{background:transparent;border:1px solid #6b5a2e;color:#e7c982}
 .page .btn:disabled{opacity:.4;cursor:not-allowed;box-shadow:none}
 .page .btnS{height:48px;font-size:14px}
 .page .link{display:block;width:100%;margin-top:14px;padding:8px 0;border:0;background:none;text-align:center;font:inherit;font-size:13px;color:#a9b6c6;cursor:pointer}

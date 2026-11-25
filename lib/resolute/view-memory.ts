@@ -4,7 +4,7 @@
  *
  * Kept only in this tab's memory (gone on reload), never in storage, never on the server, and cleared as soon
  * as a different sign-in (or sign-out) is seen, so one account's plan is never shown to another. */
-export type ViewMemoryKey = "entitlement" | "locale" | "plan" | "risk" | "notifications";
+export type ViewMemoryKey = "entitlement" | "locale" | "plan" | "risk" | "notifications" | "today";
 
 let session: string | null | undefined;
 const values = new Map<ViewMemoryKey, unknown>();

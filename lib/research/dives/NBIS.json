@@ -1,0 +1,564 @@
+{
+ "ticker": "NBIS",
+ "name": "Nebius",
+ "exchange": "NASDAQ",
+ "quoteTicker": "NBIS",
+ "period": "Q3 2026",
+ "periodQuarter": 3,
+ "releasedOn": "2026-11-12",
+ "periodEnd": "2026-09-30",
+ "reviewedOn": "2026-11-25",
+ "currency": "USD",
+ "basis": {
+  "eps": "not reported (Nebius reports adjusted EBITDA and adjusted net income, not adjusted EPS)",
+  "grossMargin": "not reported",
+  "guidance": "annual only: 2026 revenue at the low end of $3.0–3.4B; no quarterly revenue guidance"
+ },
+ "sources": [
+  {
+   "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926126008/tm2629571d1_ex99-1.htm",
+   "title": "Nebius reports third quarter 2026 financial results (Form 6-K Exhibit 99.1, November 12, 2026)",
+   "location": "Q3 2026 Financial Highlights, Operating costs and expenses, Selected consolidated cash flow data, Condensed consolidated balance sheets"
+  },
+  {
+   "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926126238/nbis-ex99d1.htm",
+   "title": "Nebius Group Operating and Financial Review and Prospects, three and nine months ended September 30, 2026 (Form 6-K Exhibit 99.1, November 12, 2026)",
+   "location": "Results of Operations (interest expense); Liquidity and Capital Resources; Cash Flows"
+  },
+  {
+   "url": "https://assets.nebius.com/assets/24c6bfb3-c90e-4076-9fe9-c2ab736b51ec/Nebius-SHL-2026-Q3.pdf",
+   "title": "Nebius Q3 2026 letter to shareholders (nebius.com investor hub, November 12, 2026)",
+   "location": "CEO letter (2026 guidance, 2027 initial outlook); Capacity; Financial update (revenue)"
+  },
+  {
+   "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-1.htm",
+   "title": "Nebius reports second quarter 2026 financial results (Form 6-K Exhibit 99.1, August 12, 2026)",
+   "location": "Q2 2026 Financial Highlights"
+  },
+  {
+   "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926059872/tm2614392d1_ex99-1.htm",
+   "title": "Nebius reports first quarter 2026 financial results (Form 6-K Exhibit 99.1, May 13, 2026)",
+   "location": "Q1 2026 Financial Highlights"
+  },
+  {
+   "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926013946/tm266173d1_ex99-1.htm",
+   "title": "Nebius reports fourth quarter and full-year 2025 financial results (Form 6-K Exhibit 99.1, February 12, 2026)",
+   "location": "Q4 2025 Financial Highlights"
+  }
+ ],
+ "evidence": [
+  {
+   "field": "numbers.revenue.current",
+   "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926126008/tm2629571d1_ex99-1.htm",
+   "quote": "Revenues 146.1 980.8 571 % 302.1 1,962.1 549 %"
+  },
+  {
+   "field": "numbers.revenue.yearAgo",
+   "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926126008/tm2629571d1_ex99-1.htm",
+   "quote": "Revenues 146.1 980.8 571 % 302.1 1,962.1 549 %"
+  },
+  {
+   "field": "numbers.revenue.previous",
+   "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-1.htm",
+   "quote": "Revenues 105.1 582.3 454 %"
+  },
+  {
+   "field": "history[0].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926126008/tm2629571d1_ex99-1.htm",
+   "quote": "Revenues 146.1 980.8 571 % 302.1 1,962.1 549 %"
+  },
+  {
+   "field": "history[1].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926013946/tm266173d1_ex99-1.htm",
+   "quote": "Revenues 35.2 227.7 547 %"
+  },
+  {
+   "field": "history[2].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926059872/tm2614392d1_ex99-1.htm",
+   "quote": "Revenues 50.9 399.0 684 %"
+  },
+  {
+   "field": "history[3].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-1.htm",
+   "quote": "Revenues 105.1 582.3 454 %"
+  },
+  {
+   "field": "summary.conclusion[0]",
+   "url": "https://assets.nebius.com/assets/24c6bfb3-c90e-4076-9fe9-c2ab736b51ec/Nebius-SHL-2026-Q3.pdf",
+   "quote": "In Q3, we recognized approximately $325 million of non-recurring"
+  },
+  {
+   "field": "summary.conclusion[0]",
+   "url": "https://assets.nebius.com/assets/24c6bfb3-c90e-4076-9fe9-c2ab736b51ec/Nebius-SHL-2026-Q3.pdf",
+   "quote": "revenue as part of our asset-light model."
+  },
+  {
+   "field": "summary.cards.growth.sections[0]",
+   "url": "https://assets.nebius.com/assets/24c6bfb3-c90e-4076-9fe9-c2ab736b51ec/Nebius-SHL-2026-Q3.pdf",
+   "quote": "approximately 99"
+  },
+  {
+   "field": "summary.cards.growth.sections[1]",
+   "url": "https://assets.nebius.com/assets/24c6bfb3-c90e-4076-9fe9-c2ab736b51ec/Nebius-SHL-2026-Q3.pdf",
+   "quote": "Prices in Q3 rose on average more than"
+  },
+  {
+   "field": "summary.cards.growth.sections[1]",
+   "url": "https://assets.nebius.com/assets/24c6bfb3-c90e-4076-9fe9-c2ab736b51ec/Nebius-SHL-2026-Q3.pdf",
+   "quote": "20% per GPU-hour versus Q2."
+  },
+  {
+   "field": "summary.cards.change.sections[0]",
+   "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926126008/tm2629571d1_ex99-1.htm",
+   "quote": "Cost of revenues 42.9 219.7 412 % 97.7 457.1 368 % as a percentage of revenues 29 % 22 %"
+  },
+  {
+   "field": "summary.cards.change.sections[1]",
+   "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926126008/tm2629571d1_ex99-1.htm",
+   "quote": "Depreciation and amortization 99.0 354.7 258 %"
+  },
+  {
+   "field": "summary.cards.change.sections[1]",
+   "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926126238/nbis-ex99d1.htm",
+   "quote": "Interest expense was $14.7 million and $112.5 million in the third quarter of 2025 and 2026, respectively."
+  },
+  {
+   "field": "summary.cards.change.sections[1]",
+   "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926126008/tm2629571d1_ex99-1.htm",
+   "quote": "Net income / (loss) from continuing operations (119.6 ) (37.5 ) -69 %"
+  },
+  {
+   "field": "summary.cards.change.sections[1]",
+   "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926126008/tm2629571d1_ex99-1.htm",
+   "quote": "Adjusted net income / (loss) (100.4 ) 90.9 n/m"
+  },
+  {
+   "field": "summary.cards.change.sections[3]",
+   "url": "https://assets.nebius.com/assets/24c6bfb3-c90e-4076-9fe9-c2ab736b51ec/Nebius-SHL-2026-Q3.pdf",
+   "quote": "We expect to reach pre-tax breakeven by the end of 2027."
+  },
+  {
+   "field": "summary.cards.caution.sections[0]",
+   "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926126008/tm2629571d1_ex99-1.htm",
+   "quote": "Net cash provided by / (used in) operating activities – continuing operations (80.6 ) (273.0 ) 239 %"
+  },
+  {
+   "field": "summary.cards.caution.sections[0]",
+   "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926126008/tm2629571d1_ex99-1.htm",
+   "quote": "Debt, non-current 4,103.2 14,003.3 Deferred revenue, non-current 1,302.0 7,963.7"
+  },
+  {
+   "field": "summary.cards.caution.sections[1]",
+   "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926126238/nbis-ex99d1.htm",
+   "quote": "including convertible notes issued in June 2025, September 2025, March 2026 and August 2026, a senior secured Term Loan Facility entered into in July 2026, a public equity offering completed in September 2025, advances received under strategic customer contracts"
+  },
+  {
+   "field": "summary.cards.caution.sections[2]",
+   "url": "https://assets.nebius.com/assets/24c6bfb3-c90e-4076-9fe9-c2ab736b51ec/Nebius-SHL-2026-Q3.pdf",
+   "quote": "Capital expenditures: Approximately $27 billion, above our $20-25"
+  },
+  {
+   "field": "summary.cards.caution.sections[2]",
+   "url": "https://assets.nebius.com/assets/24c6bfb3-c90e-4076-9fe9-c2ab736b51ec/Nebius-SHL-2026-Q3.pdf",
+   "quote": "We anticipate capex of $40-45 billion"
+  },
+  {
+   "field": "summary.cards.caution.sections[3]",
+   "url": "https://assets.nebius.com/assets/24c6bfb3-c90e-4076-9fe9-c2ab736b51ec/Nebius-SHL-2026-Q3.pdf",
+   "quote": "capacity we expected to come online this year is now scheduled for the first half of 2027. The contracts behind that capacity remain in place."
+  },
+  {
+   "field": "summary.cards.caution.sections[3]",
+   "url": "https://assets.nebius.com/assets/24c6bfb3-c90e-4076-9fe9-c2ab736b51ec/Nebius-SHL-2026-Q3.pdf",
+   "quote": "remaining tranches now scheduled for 2Q27."
+  },
+  {
+   "field": "summary.cards.next.sections[0]",
+   "url": "https://assets.nebius.com/assets/24c6bfb3-c90e-4076-9fe9-c2ab736b51ec/Nebius-SHL-2026-Q3.pdf",
+   "quote": "we now expect 2026 revenue at the low end of our $3.0-3.4 billion range, with an adjusted EBITDA margin of ca. 40%."
+  },
+  {
+   "field": "summary.cards.next.chips[1]",
+   "url": "https://assets.nebius.com/assets/24c6bfb3-c90e-4076-9fe9-c2ab736b51ec/Nebius-SHL-2026-Q3.pdf",
+   "quote": "We expect revenue of $12-13 billion"
+  },
+  {
+   "field": "summary.cards.next.sections[2]",
+   "url": "https://assets.nebius.com/assets/24c6bfb3-c90e-4076-9fe9-c2ab736b51ec/Nebius-SHL-2026-Q3.pdf",
+   "quote": "Pre-tax profit: breakeven in Q4 2027."
+  },
+  {
+   "field": "tiles[0].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926126008/tm2629571d1_ex99-1.htm",
+   "quote": "Revenues 146.1 980.8 571 % 302.1 1,962.1 549 %"
+  },
+  {
+   "field": "tiles[0].note",
+   "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926126008/tm2629571d1_ex99-1.htm",
+   "quote": "Revenues 146.1 980.8 571 % 302.1 1,962.1 549 %"
+  },
+  {
+   "field": "tiles[0].note",
+   "url": "https://assets.nebius.com/assets/24c6bfb3-c90e-4076-9fe9-c2ab736b51ec/Nebius-SHL-2026-Q3.pdf",
+   "quote": "year, and up 68% compared to Q2."
+  },
+  {
+   "field": "tiles[1].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926126008/tm2629571d1_ex99-1.htm",
+   "quote": "Adjusted EBITDA / (loss) (5.2 ) 465.8 n/m"
+  },
+  {
+   "field": "tiles[1].note",
+   "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926126008/tm2629571d1_ex99-1.htm",
+   "quote": "Adjusted EBITDA / (loss) (5.2 ) 465.8 n/m"
+  },
+  {
+   "field": "tiles[2].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926126008/tm2629571d1_ex99-1.htm",
+   "quote": "Purchases of property and equipment and intangible assets (955.5 ) (7,300.4 ) 664 %",
+   "calc": "7300.4/1000",
+   "round": 2
+  },
+  {
+   "field": "tiles[2].note",
+   "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926126008/tm2629571d1_ex99-1.htm",
+   "quote": "Purchases of property and equipment and intangible assets (955.5 ) (7,300.4 ) 664 %",
+   "calc": "7300.4/980.8",
+   "round": 1
+  },
+  {
+   "field": "tiles[2].note",
+   "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926126008/tm2629571d1_ex99-1.htm",
+   "quote": "Revenues 146.1 980.8 571 %"
+  }
+ ],
+ "tiles": [
+  {
+   "label": {
+    "ja": "売上高",
+    "en": "Revenue"
+   },
+   "value": {
+    "ja": "9.81億ドル",
+    "en": "$980.8M"
+   },
+   "note": {
+    "ja": "前年同期比 +571%・前期比 +68%",
+    "en": "+571% YoY, +68% QoQ"
+   }
+  },
+  {
+   "label": {
+    "ja": "調整後EBITDA",
+    "en": "Adjusted EBITDA"
+   },
+   "value": {
+    "ja": "4.66億ドル",
+    "en": "$465.8M"
+   },
+   "note": {
+    "ja": "前年同期 −0.05億ドル",
+    "en": "Year ago −$5.2M"
+   }
+  },
+  {
+   "label": {
+    "ja": "設備投資(四半期)",
+    "en": "Capex (quarter)"
+   },
+   "value": {
+    "ja": "73.00億ドル",
+    "en": "$7.30B"
+   },
+   "note": {
+    "ja": "売上の約7.4倍・前年同期 9.56億ドル",
+    "en": "About 7.4x revenue; year ago $955.5M"
+   }
+  }
+ ],
+ "numbers": {
+  "revenue": {
+   "current": 980.8,
+   "previous": 582.3,
+   "yearAgo": 146.1
+  },
+  "adjustedEPS": null,
+  "epsEstimate": null,
+  "grossMargin": null,
+  "guidance": null,
+  "segments": null
+ },
+ "history": [
+  {
+   "label": "Q3",
+   "end": "2025-09-30",
+   "value": 146.1
+  },
+  {
+   "label": "Q4",
+   "end": "2025-12-31",
+   "value": 227.7
+  },
+  {
+   "label": "Q1",
+   "end": "2026-03-31",
+   "value": 399.0
+  },
+  {
+   "label": "Q2",
+   "end": "2026-06-30",
+   "value": 582.3
+  }
+ ],
+ "summary": {
+  "conclusion": [
+   {
+    "ja": "売上は9.81億ドルで、前四半期から68%、前年同期の約6.7倍に増えました。ただし、このうち約3.25億ドルは、他社の設備で自社の仕組みを使う「アセットライト」型の一時的な売上です。",
+    "en": "Revenue was $980.8M, up 68% from the previous quarter and about 6.7 times a year earlier. But about $325M of it was non-recurring revenue from the asset-light model, where partners run Nebius's platform on their own capacity."
+   },
+   {
+    "ja": "調整後EBITDAは4.66億ドルの黒字ですが、会計上(GAAP)の継続事業は0.38億ドルの赤字です。四半期の設備投資は73億ドルと売上の約7倍で、長期の借入は140億ドルに増えました。",
+    "en": "Adjusted EBITDA was a $465.8M profit, but continuing operations posted a $37.5M GAAP loss. Quarterly capex was $7.3B, about 7 times revenue, and long-term debt rose to $14.0B."
+   },
+   {
+    "ja": "会社は2026年の売上見通しを30億〜34億ドルの「下限」に下げ、設備投資の見通しは約270億ドルに引き上げました。",
+    "en": "The company cut 2026 revenue to the low end of its $3.0–3.4B range and raised 2026 capex to about $27B."
+   }
+  ],
+  "cards": {
+   "growth": {
+    "headline": {
+     "ja": "売上は前年同期の約6.7倍",
+     "en": "Revenue about 6.7x a year earlier"
+    },
+    "chips": [
+     {
+      "tone": "up",
+      "text": {
+       "ja": "前年同期比 +571%",
+       "en": "+571% YoY"
+      }
+     },
+     {
+      "tone": "gold",
+      "text": {
+       "ja": "うち一時的な売上 約3.25億ドル",
+       "en": "About $325M non-recurring"
+      }
+     },
+     {
+      "tone": "up",
+      "text": {
+       "ja": "AIクラウドが売上の約99%",
+       "en": "AI cloud ~99% of revenue"
+      }
+     }
+    ],
+    "sections": [
+     {
+      "key": "happened",
+      "text": {
+       "ja": "売上は前年同期の1.46億ドルから9.81億ドルへ増えました。前四半期の5.82億ドルからも68%増えています。売上のほぼすべて(約99%)がAIクラウド事業です。",
+       "en": "Revenue rose from $146.1M a year earlier to $980.8M, and 68% from $582.3M last quarter. Almost all of it (about 99%) came from the AI cloud business."
+      }
+     },
+     {
+      "key": "good",
+      "text": {
+       "ja": "新しいデータセンターの稼働が進み、GPUを貸し出す能力が増えています。会社によると、第3四半期の新しい契約は、前の四半期よりGPU1時間あたりの価格が平均で2割以上高くなりました。",
+       "en": "New data-center capacity is coming online. The company says Q3 deals were priced on average more than 20% higher per GPU-hour than Q2 deals."
+      }
+     },
+     {
+      "key": "watch",
+      "text": {
+       "ja": "約3.25億ドルは、提携先の設備にNebiusの仕組みを導入する際の一時的な売上です。これを除くと約6.56億ドルで、前四半期からの伸びは約13%にとどまります。",
+       "en": "About $325M was one-time revenue from enabling partners' capacity. Excluding it, revenue was about $656M, only about 13% above the previous quarter."
+      }
+     },
+     {
+      "key": "means",
+      "text": {
+       "ja": "一時的な売上は四半期ごとに大きく変わる可能性があります。次の四半期の売上を見るときは、繰り返し入る売上がどれだけ増えたかを分けて見る必要があります。",
+       "en": "One-time revenue can swing from quarter to quarter. When reading next quarter, separate how much recurring revenue grew."
+      }
+     }
+    ],
+    "segment": null
+   },
+   "change": {
+    "headline": {
+     "ja": "調整後EBITDAは黒字、GAAPでは赤字",
+     "en": "Adjusted EBITDA positive; GAAP loss remains"
+    },
+    "chips": [
+     {
+      "tone": "up",
+      "text": {
+       "ja": "調整後EBITDA −0.05億 → 4.66億ドル",
+       "en": "Adj. EBITDA −$5.2M → $465.8M"
+      }
+     },
+     {
+      "tone": "down",
+      "text": {
+       "ja": "継続事業の純損失 0.38億ドル",
+       "en": "Continuing net loss $37.5M"
+      }
+     },
+     {
+      "tone": "down",
+      "text": {
+       "ja": "支払利息 1.13億ドル",
+       "en": "Interest expense $112.5M"
+      }
+     }
+    ],
+    "sections": [
+     {
+      "key": "happened",
+      "text": {
+       "ja": "調整後EBITDAは前年同期の0.05億ドルの赤字から、4.66億ドルの黒字になりました。売上に対する原価の割合は29%から22%に下がっています。",
+       "en": "Adjusted EBITDA swung from a $5.2M loss a year earlier to a $465.8M profit. Cost of revenues fell from 29% to 22% of revenue."
+      }
+     },
+     {
+      "key": "watch",
+      "text": {
+       "ja": "一方、GPUなどの減価償却費が3.55億ドル、支払利息が1.13億ドルあり、会計上の継続事業は0.38億ドルの赤字でした。調整後純利益(0.91億ドルの黒字)とは見え方が違います。",
+       "en": "But depreciation of $354.7M and interest expense of $112.5M left continuing operations at a $37.5M GAAP loss, a different picture from the $90.9M adjusted net income."
+      }
+     },
+     {
+      "key": "means",
+      "text": {
+       "ja": "EBITDAは減価償却と利息を差し引く前の利益です。設備と借入が大きい会社では、EBITDAが黒字でも最終利益が赤字になることがあります。",
+       "en": "EBITDA is profit before depreciation and interest. For a company with heavy equipment and debt, EBITDA can be positive while the bottom line is negative."
+      }
+     },
+     {
+      "key": "view",
+      "text": {
+       "ja": "会社は2027年末までに税引前の損益を黒字(ちょうどゼロ以上)にする目標を示しています。それまでは、EBITDAと最終損益の差がどう縮むかを見ていきます。",
+       "en": "The company targets pre-tax breakeven by the end of 2027. Until then, watch how the gap between EBITDA and the bottom line narrows."
+      }
+     }
+    ],
+    "segment": null
+   },
+   "caution": {
+    "headline": {
+     "ja": "設備投資は売上の約7倍、借入も増加",
+     "en": "Capex is about 7x revenue, and debt is rising"
+    },
+    "chips": [
+     {
+      "tone": "down",
+      "text": {
+       "ja": "設備投資 73.00億ドル(四半期)",
+       "en": "Capex $7.30B (quarter)"
+      }
+     },
+     {
+      "tone": "down",
+      "text": {
+       "ja": "長期借入 41.03億 → 140.03億ドル",
+       "en": "Long-term debt $4.10B → $14.00B"
+      }
+     },
+     {
+      "tone": "down",
+      "text": {
+       "ja": "営業キャッシュフロー −2.73億ドル",
+       "en": "Operating cash flow −$273.0M"
+      }
+     }
+    ],
+    "sections": [
+     {
+      "key": "happened",
+      "text": {
+       "ja": "第3四半期の設備投資は73.00億ドルで、売上9.81億ドルの約7.4倍でした。営業キャッシュフローも2.73億ドルの赤字です。長期の借入は昨年末の41.03億ドルから140.03億ドルに増えました。",
+       "en": "Q3 capex was $7.30B, about 7.4 times revenue of $980.8M, and operating cash flow was −$273.0M. Long-term debt rose from $4.10B at the end of 2025 to $14.00B."
+      }
+     },
+     {
+      "key": "means",
+      "text": {
+       "ja": "資金は転換社債、借入、新株の売却、顧客からの前払いなどで集めています。顧客からの前受け金(長期分)は13.02億ドルから79.64億ドルに増えましたが、まだサービスを提供していない約束でもあります。",
+       "en": "Funding comes from convertible notes, loans, share sales and customer prepayments. Long-term deferred revenue rose from $1.30B to $7.96B, but that is service still to be delivered."
+      }
+     },
+     {
+      "key": "watch",
+      "text": {
+       "ja": "2026年の設備投資は、従来の200億〜250億ドルから約270億ドルに増える見通しで、2027年は400億〜450億ドルの計画です。追加の借入や株式の発行が続けば、利息の負担や株の希薄化が大きくなります。",
+       "en": "Capex is now planned at about $27B for 2026 (from $20–25B) and $40–45B for 2027. More debt or share issuance would add interest costs or dilution."
+      }
+     },
+     {
+      "key": "view",
+      "text": {
+       "ja": "提携先のデータセンターの一部の稼働が2027年前半にずれ込み、ニュージャージーのMicrosoft向け能力の残りも2027年第2四半期の予定になりました。投資の回収が予定どおり進むかが最大の注意点です。",
+       "en": "Some partner capacity slipped into the first half of 2027, and the rest of the New Jersey capacity for Microsoft is now scheduled for Q2 2027. Whether returns arrive on schedule is the main risk."
+      }
+     }
+    ],
+    "segment": null
+   },
+   "next": {
+    "headline": {
+     "ja": "2026年の売上は見通しの下限(30億ドル)へ",
+     "en": "2026 revenue now at the low end ($3.0B)"
+    },
+    "chips": [
+     {
+      "tone": "down",
+      "text": {
+       "ja": "2026年売上 30〜34億ドルの下限",
+       "en": "2026 revenue: low end of $3.0–3.4B"
+      }
+     },
+     {
+      "tone": "gold",
+      "text": {
+       "ja": "2027年売上 120〜130億ドル",
+       "en": "2027 revenue $12–13B"
+      }
+     },
+     {
+      "tone": "gold",
+      "text": {
+       "ja": "2026年設備投資 約270億ドル",
+       "en": "2026 capex ~$27B"
+      }
+     }
+    ],
+    "sections": [
+     {
+      "key": "happened",
+      "text": {
+       "ja": "会社は2026年の売上を30億〜34億ドルの下限と見込み直しました。一部の提携先の能力の稼働が2027年前半にずれたためで、契約自体は残っているとしています。調整後EBITDA率の見通しは約40%のままです。",
+       "en": "The company now expects 2026 revenue at the low end of $3.0–3.4B because some third-party capacity slipped into the first half of 2027; it says the contracts remain. The adjusted EBITDA margin outlook stays at about 40%."
+      }
+     },
+     {
+      "key": "means",
+      "text": {
+       "ja": "1〜9月の売上は19.62億ドルなので、年間30億ドルなら第4四半期は約10.4億ドルの計算です。今回の9.81億ドルには一時的な売上約3.25億ドルが入っているため、繰り返し入る売上はさらに伸びる必要があります。",
+       "en": "Revenue for January–September was $1.96B, so $3.0B for the year implies about $1.04B in Q4. Because this quarter's $980.8M included about $325M of one-time revenue, recurring revenue needs to keep growing."
+      }
+     },
+     {
+      "key": "view",
+      "text": {
+       "ja": "2027年は売上120億〜130億ドル、2027年第4四半期に税引前で黒字化という目標です。次の決算では、第4四半期の売上が約10億ドルに届くか、設備投資と資金調達の進み方を確かめます。",
+       "en": "For 2027 the company targets $12–13B of revenue and pre-tax breakeven in Q4 2027. Next time, check whether Q4 revenue reaches about $1.0B and how capex and funding are progressing."
+      }
+     }
+    ],
+    "segment": null
+   }
+  }
+ }
+}

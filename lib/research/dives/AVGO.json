@@ -1,0 +1,571 @@
+{
+  "ticker": "AVGO",
+  "name": "Broadcom",
+  "exchange": "NASDAQ",
+  "quoteTicker": "AVGO",
+  "period": "Q3 FY2026",
+  "periodQuarter": 3,
+  "releasedOn": "2026-09-02",
+  "periodEnd": "2026-08-02",
+  "reviewedOn": "2026-11-25",
+  "currency": "USD",
+  "basis": {
+    "eps": "non-GAAP diluted",
+    "grossMargin": "non-GAAP"
+  },
+  "sources": [
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000076/avgo-08022026x8kxex99.htm",
+      "title": "Broadcom Inc. Announces Third Quarter Fiscal Year 2026 Financial Results and Quarterly Dividend (Form 8-K, Exhibit 99.1)",
+      "location": "Headline bullets, Financial Highlights, Business Outlook, Statements of Operations, GAAP to non-GAAP reconciliation"
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000080/avgo-20260802.htm",
+      "title": "Broadcom Form 10-Q for the quarter ended August 2, 2026",
+      "location": "Segment information note; MD&A Net Revenue (customer concentration)"
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000054/avgo-20260503.htm",
+      "title": "Broadcom Form 10-Q for the quarter ended May 3, 2026",
+      "location": "Segment information note"
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000051/avgo-05032026x8kxex99.htm",
+      "title": "Broadcom Inc. Announces Second Quarter Fiscal Year 2026 Financial Results (Form 8-K, Exhibit 99.1)",
+      "location": "Net revenue by segment"
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016825000116/avgo-11022025x8kxex99.htm",
+      "title": "Broadcom Inc. Announces Fourth Quarter and Fiscal Year 2025 Financial Results (Form 8-K, Exhibit 99.1)",
+      "location": "Condensed Consolidated Statements of Operations"
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000011/avgo-02012026x8kxex99.htm",
+      "title": "Broadcom Inc. Announces First Quarter Fiscal Year 2026 Financial Results (Form 8-K, Exhibit 99.1)",
+      "location": "Condensed Consolidated Statements of Operations"
+    }
+  ],
+  "evidence": [
+    {
+      "field": "numbers.revenue.current",
+      "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000076/avgo-08022026x8kxex99.htm",
+      "quote": "Net revenue $ 29,591 $ 22,187 $ 15,952 $ 71,089 $ 45,872"
+    },
+    {
+      "field": "numbers.revenue.previous",
+      "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000076/avgo-08022026x8kxex99.htm",
+      "quote": "Net revenue $ 29,591 $ 22,187 $ 15,952 $ 71,089 $ 45,872"
+    },
+    {
+      "field": "numbers.revenue.yearAgo",
+      "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000076/avgo-08022026x8kxex99.htm",
+      "quote": "Net revenue $ 29,591 $ 22,187 $ 15,952 $ 71,089 $ 45,872"
+    },
+    {
+      "field": "numbers.adjustedEPS",
+      "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000076/avgo-08022026x8kxex99.htm",
+      "quote": "Earnings per common share - diluted $ 2.68 $ 0.85 +215 % $ 3.32 $ 1.69 +96 %"
+    },
+    {
+      "field": "numbers.grossMargin.current",
+      "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000076/avgo-08022026x8kxex99.htm",
+      "quote": "Gross margin on non-GAAP basis $ 22,191 $ 17,109 $ 12,499 $ 54,168 $ 36,206"
+    },
+    {
+      "field": "numbers.grossMargin.current",
+      "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000076/avgo-08022026x8kxex99.htm",
+      "quote": "Net revenue $ 29,591 $ 22,187 $ 15,952 $ 71,089 $ 45,872",
+      "calc": "22191/29591*100",
+      "round": 1
+    },
+    {
+      "field": "numbers.grossMargin.previous",
+      "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000076/avgo-08022026x8kxex99.htm",
+      "quote": "Gross margin on non-GAAP basis $ 22,191 $ 17,109 $ 12,499 $ 54,168 $ 36,206"
+    },
+    {
+      "field": "numbers.grossMargin.previous",
+      "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000076/avgo-08022026x8kxex99.htm",
+      "quote": "Net revenue $ 29,591 $ 22,187 $ 15,952 $ 71,089 $ 45,872",
+      "calc": "17109/22187*100",
+      "round": 1
+    },
+    {
+      "field": "numbers.guidance.low",
+      "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000076/avgo-08022026x8kxex99.htm",
+      "quote": "Fourth quarter revenue guidance of approximately $34.8 billion;",
+      "calc": "34.8*1000"
+    },
+    {
+      "field": "numbers.guidance.high",
+      "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000076/avgo-08022026x8kxex99.htm",
+      "quote": "Fourth quarter revenue guidance of approximately $34.8 billion;",
+      "calc": "34.8*1000"
+    },
+    {
+      "field": "numbers.segments[0].revenue",
+      "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000080/avgo-20260802.htm",
+      "quote": "(In millions) Semiconductor solutions: Net revenue $ 20,839 $ 9,166 $ 48,363 $ 25,786 Cost of revenue 6,892 2,988 15,414 8,235 Research and development 1,006 850 2,946 2,488 Selling, general and administrative 171 111 449 334 Operating income $ 12,770 $ 5,217 $ 29,554 $ 14,729 Infrastructure software: Net revenue $ 8,752 $ 6,786 $ 22,726 $ 20,086 Cost of revenue 508 465 1,507 1,431 Research and development 545 627 1,723 1,944 Selling, general and administrative 374 456 1,201 1,364 Operating income $ 7,325 $ 5,238 $ 18,295 $ 15,347"
+    },
+    {
+      "field": "numbers.segments[0].operatingMargin",
+      "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000080/avgo-20260802.htm",
+      "quote": "(In millions) Semiconductor solutions: Net revenue $ 20,839 $ 9,166 $ 48,363 $ 25,786 Cost of revenue 6,892 2,988 15,414 8,235 Research and development 1,006 850 2,946 2,488 Selling, general and administrative 171 111 449 334 Operating income $ 12,770 $ 5,217 $ 29,554 $ 14,729 Infrastructure software: Net revenue $ 8,752 $ 6,786 $ 22,726 $ 20,086 Cost of revenue 508 465 1,507 1,431 Research and development 545 627 1,723 1,944 Selling, general and administrative 374 456 1,201 1,364 Operating income $ 7,325 $ 5,238 $ 18,295 $ 15,347",
+      "calc": "12770/20839*100",
+      "round": 1
+    },
+    {
+      "field": "numbers.segments[1].revenue",
+      "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000080/avgo-20260802.htm",
+      "quote": "Infrastructure software: Net revenue $ 8,752 $ 6,786 $ 22,726 $ 20,086"
+    },
+    {
+      "field": "numbers.segments[1].operatingMargin",
+      "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000080/avgo-20260802.htm",
+      "quote": "(In millions) Semiconductor solutions: Net revenue $ 20,839 $ 9,166 $ 48,363 $ 25,786 Cost of revenue 6,892 2,988 15,414 8,235 Research and development 1,006 850 2,946 2,488 Selling, general and administrative 171 111 449 334 Operating income $ 12,770 $ 5,217 $ 29,554 $ 14,729 Infrastructure software: Net revenue $ 8,752 $ 6,786 $ 22,726 $ 20,086 Cost of revenue 508 465 1,507 1,431 Research and development 545 627 1,723 1,944 Selling, general and administrative 374 456 1,201 1,364 Operating income $ 7,325 $ 5,238 $ 18,295 $ 15,347",
+      "calc": "7325/8752*100",
+      "round": 1
+    },
+    {
+      "field": "numbers.segments[0].previous",
+      "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000054/avgo-20260503.htm",
+      "quote": "(In millions) Semiconductor solutions: Net revenue $ 15,009 $ 8,408 $ 27,524 $ 16,620 Cost of revenue 4,573 2,631 8,522 5,247 Research and development 999 847 1,940 1,638 Selling, general and administrative 156 124 278 223 Operating income $ 9,281 $ 4,806 $ 16,784 $ 9,512 Infrastructure software: Net revenue $ 7,178 $ 6,596 $ 13,974 $ 13,300 Cost of revenue 505 462 999 966 Research and development 601 677 1,178 1,317 Selling, general and administrative 425 470 827 908 Operating income $ 5,647 $ 4,987 $ 10,970 $ 10,109"
+    },
+    {
+      "field": "numbers.segments[0].previousOperatingMargin",
+      "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000054/avgo-20260503.htm",
+      "quote": "(In millions) Semiconductor solutions: Net revenue $ 15,009 $ 8,408 $ 27,524 $ 16,620 Cost of revenue 4,573 2,631 8,522 5,247 Research and development 999 847 1,940 1,638 Selling, general and administrative 156 124 278 223 Operating income $ 9,281 $ 4,806 $ 16,784 $ 9,512 Infrastructure software: Net revenue $ 7,178 $ 6,596 $ 13,974 $ 13,300 Cost of revenue 505 462 999 966 Research and development 601 677 1,178 1,317 Selling, general and administrative 425 470 827 908 Operating income $ 5,647 $ 4,987 $ 10,970 $ 10,109",
+      "calc": "9281/15009*100",
+      "round": 1
+    },
+    {
+      "field": "numbers.segments[1].previous",
+      "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000054/avgo-20260503.htm",
+      "quote": "Infrastructure software: Net revenue $ 7,178 $ 6,596 $ 13,974 $ 13,300"
+    },
+    {
+      "field": "numbers.segments[1].previousOperatingMargin",
+      "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000054/avgo-20260503.htm",
+      "quote": "(In millions) Semiconductor solutions: Net revenue $ 15,009 $ 8,408 $ 27,524 $ 16,620 Cost of revenue 4,573 2,631 8,522 5,247 Research and development 999 847 1,940 1,638 Selling, general and administrative 156 124 278 223 Operating income $ 9,281 $ 4,806 $ 16,784 $ 9,512 Infrastructure software: Net revenue $ 7,178 $ 6,596 $ 13,974 $ 13,300 Cost of revenue 505 462 999 966 Research and development 601 677 1,178 1,317 Selling, general and administrative 425 470 827 908 Operating income $ 5,647 $ 4,987 $ 10,970 $ 10,109",
+      "calc": "5647/7178*100",
+      "round": 1
+    },
+    {
+      "field": "history[0].value",
+      "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000076/avgo-08022026x8kxex99.htm",
+      "quote": "Net revenue $ 29,591 $ 22,187 $ 15,952 $ 71,089 $ 45,872"
+    },
+    {
+      "field": "history[1].value",
+      "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016825000116/avgo-11022025x8kxex99.htm",
+      "quote": "Net revenue $ 18,015 $ 15,952 $ 14,054"
+    },
+    {
+      "field": "history[2].value",
+      "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000011/avgo-02012026x8kxex99.htm",
+      "quote": "Net revenue $ 19,311 $ 18,015 $ 14,916"
+    },
+    {
+      "field": "history[3].value",
+      "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000076/avgo-08022026x8kxex99.htm",
+      "quote": "Net revenue $ 29,591 $ 22,187 $ 15,952 $ 71,089 $ 45,872"
+    },
+    {
+      "field": "tiles[0].value",
+      "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000076/avgo-08022026x8kxex99.htm",
+      "quote": "Revenue of $29.6 billion for the third quarter, up 86 percent from the prior year period"
+    },
+    {
+      "field": "tiles[0].note",
+      "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000076/avgo-08022026x8kxex99.htm",
+      "quote": "Revenue of $29.6 billion for the third quarter, up 86 percent from the prior year period"
+    },
+    {
+      "field": "tiles[1].value",
+      "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000076/avgo-08022026x8kxex99.htm",
+      "quote": "Q3 AI semiconductor revenue of $16.7 billion grew 221% year-over-year, and 54% quarter-over-quarter"
+    },
+    {
+      "field": "tiles[1].note",
+      "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000076/avgo-08022026x8kxex99.htm",
+      "quote": "Q3 AI semiconductor revenue of $16.7 billion grew 221% year-over-year, and 54% quarter-over-quarter"
+    },
+    {
+      "field": "tiles[2].value",
+      "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000080/avgo-20260802.htm",
+      "quote": "We believe aggregate sales to our top five end customers, through all channels, accounted for approximately 55% and 50% of our net revenue for the fiscal quarter and three fiscal quarters ended August 2, 2026, respectively, and approximately 40% of our net revenue for each of the fiscal quarter and three fiscal quarters ended August 3, 2025."
+    },
+    {
+      "field": "tiles[2].note",
+      "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000080/avgo-20260802.htm",
+      "quote": "We believe aggregate sales to our top five end customers, through all channels, accounted for approximately 55% and 50% of our net revenue for the fiscal quarter and three fiscal quarters ended August 2, 2026, respectively, and approximately 40% of our net revenue for each of the fiscal quarter and three fiscal quarters ended August 3, 2025."
+    },
+    {
+      "field": "summary.cards.change",
+      "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000076/avgo-08022026x8kxex99.htm",
+      "quote": "Operating income on non-GAAP basis $ 20,095 $ 14,928 $ 10,455 $ 47,849 $ 30,076"
+    },
+    {
+      "field": "summary.cards.change",
+      "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000076/avgo-08022026x8kxex99.htm",
+      "quote": "Free cash flow $ 13,665 $ 7,024 +95 %"
+    },
+    {
+      "field": "summary.cards.caution",
+      "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000080/avgo-20260802.htm",
+      "quote": "Direct sales to one semiconductor solutions customer, which is a distributor, accounted for 50% and 46% of our net revenue for the fiscal quarter and three fiscal quarters ended August 2, 2026, respectively"
+    },
+    {
+      "field": "summary.cards.change",
+      "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000051/avgo-05032026x8kxex99.htm",
+      "quote": "Semiconductor solutions $ 15,009 68 %"
+    },
+    {
+      "field": "summary.cards.change",
+      "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000076/avgo-08022026x8kxex99.htm",
+      "quote": "Semiconductor solutions $ 20,839 70 %"
+    },
+    {
+      "field": "summary.cards.caution",
+      "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000080/avgo-20260802.htm",
+      "quote": "This customer concentration increases the risk of quarterly fluctuations in our operating results"
+    },
+    {
+      "field": "summary.cards.next",
+      "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000076/avgo-08022026x8kxex99.htm",
+      "quote": "Fourth quarter non-GAAP operating income guidance of approximately 66 percent of projected revenue."
+    },
+    {
+      "field": "summary.cards.next",
+      "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000076/avgo-08022026x8kxex99.htm",
+      "quote": "we expect AI semiconductor revenue to accelerate to $21.7 billion, up 236% year-over-year."
+    }
+  ],
+  "numbers": {
+    "revenue": {
+      "current": 29591,
+      "previous": 22187,
+      "yearAgo": 15952
+    },
+    "adjustedEPS": 3.32,
+    "epsEstimate": null,
+    "grossMargin": {
+      "current": 75.0,
+      "previous": 77.1
+    },
+    "guidance": {
+      "low": 34800,
+      "high": 34800,
+      "grossMarginPercent": null
+    },
+    "segments": [
+      {
+        "key": "semis",
+        "nameJa": "半導体",
+        "nameEn": "Semiconductor solutions",
+        "revenue": 20839,
+        "previous": 15009,
+        "operatingMargin": 61.3,
+        "previousOperatingMargin": 61.8
+      },
+      {
+        "key": "software",
+        "nameJa": "インフラ・ソフトウェア",
+        "nameEn": "Infrastructure software",
+        "revenue": 8752,
+        "previous": 7178,
+        "operatingMargin": 83.7,
+        "previousOperatingMargin": 78.7
+      }
+    ]
+  },
+  "history": [
+    {
+      "label": "Q3",
+      "end": "2025-08-03",
+      "value": 15952
+    },
+    {
+      "label": "Q4",
+      "end": "2025-11-02",
+      "value": 18015
+    },
+    {
+      "label": "Q1",
+      "end": "2026-02-01",
+      "value": 19311
+    },
+    {
+      "label": "Q2",
+      "end": "2026-05-03",
+      "value": 22187
+    }
+  ],
+  "tiles": [
+    {
+      "label": {
+        "ja": "売上高",
+        "en": "Revenue"
+      },
+      "value": {
+        "ja": "296億ドル",
+        "en": "$29.6B"
+      },
+      "note": {
+        "ja": "前年同期比 +86%",
+        "en": "+86% YoY"
+      }
+    },
+    {
+      "label": {
+        "ja": "AI半導体の売上",
+        "en": "AI semiconductor revenue"
+      },
+      "value": {
+        "ja": "167億ドル",
+        "en": "$16.7B"
+      },
+      "note": {
+        "ja": "前年同期比 +221%",
+        "en": "+221% YoY"
+      }
+    },
+    {
+      "label": {
+        "ja": "上位5社への売上比率",
+        "en": "Top five end customers"
+      },
+      "value": {
+        "ja": "約55%",
+        "en": "~55% of revenue"
+      },
+      "note": {
+        "ja": "1年前は約40%",
+        "en": "About 40% a year earlier"
+      }
+    }
+  ],
+  "summary": {
+    "conclusion": [
+      {
+        "ja": "売上は295.91億ドルで、前期から約3割増えました。AI向け半導体(167億ドル、前期比+54%)が伸びを引っ張りました。",
+        "en": "Revenue was $29.59B, up about 30% from the previous quarter, led by AI semiconductors ($16.7B, up 54% QoQ)."
+      },
+      {
+        "ja": "一方で、非GAAP粗利益率は77.1%から75.0%に下がり、売上の約55%が上位5社の顧客に集中しています。",
+        "en": "Meanwhile, non-GAAP gross margin fell from 77.1% to 75.0%, and about 55% of revenue came from the top five end customers."
+      },
+      {
+        "ja": "会社は次期の売上を約348億ドル、AI半導体の売上を217億ドルと見込んでいます。",
+        "en": "The company expects next-quarter revenue of about $34.8B, including $21.7B of AI semiconductor revenue."
+      }
+    ],
+    "cards": {
+      "growth": {
+        "headline": {
+          "ja": "半導体部門が最大の伸び",
+          "en": "Semiconductor solutions led the growth"
+        },
+        "chips": [
+          {
+            "tone": "up",
+            "text": {
+              "ja": "部門売上 +38.8%",
+              "en": "Segment revenue +38.8%"
+            }
+          },
+          {
+            "tone": "down",
+            "text": {
+              "ja": "部門営業利益率 61.8% → 61.3%",
+              "en": "Segment operating margin 61.8% → 61.3%"
+            }
+          }
+        ],
+        "sections": [
+          {
+            "key": "happened",
+            "text": {
+              "ja": "半導体部門の売上は、150.09億ドルから208.39億ドルへ、58.3億ドル増えました。そのうちAI向け半導体は167億ドルで、前期から54%増えています。営業利益率は61.8%から61.3%とわずかに下がりました。",
+              "en": "Semiconductor solutions revenue rose from $15.01B to $20.84B, up $5.83B. AI semiconductor revenue within it was $16.7B, up 54% from the previous quarter. The segment operating margin slipped from 61.8% to 61.3%."
+            }
+          },
+          {
+            "key": "good",
+            "text": {
+              "ja": "会社全体の売上は前期から74.04億ドル増え、そのうちの約79%がこの部門の増加分です。ソフトウェア部門も売上が71.78億ドルから87.52億ドルに増え、営業利益率は78.7%から83.7%に上がりました。",
+              "en": "Total revenue rose $7.40B from the previous quarter, and about 79% of that came from this segment. Infrastructure software also grew from $7.18B to $8.75B, with its operating margin up from 78.7% to 83.7%."
+            }
+          },
+          {
+            "key": "watch",
+            "text": {
+              "ja": "伸びはAI向けのカスタム半導体とネットワーク製品に偏っています。売上が大きく増えても、部門の利益率は少し下がっています。",
+              "en": "Growth is concentrated in custom AI accelerators and networking. Even with much higher sales, the segment margin edged down."
+            }
+          }
+        ],
+        "segment": "semis"
+      },
+      "change": {
+        "headline": {
+          "ja": "売上は前期比 +33.4%、粗利益率は低下",
+          "en": "Revenue up 33.4% QoQ, gross margin lower"
+        },
+        "chips": [
+          {
+            "tone": "up",
+            "text": {
+              "ja": "売上 前期比 +33.4%",
+              "en": "Revenue +33.4% QoQ"
+            }
+          },
+          {
+            "tone": "down",
+            "text": {
+              "ja": "非GAAP粗利益率 77.1% → 75.0%",
+              "en": "Non-GAAP gross margin 77.1% → 75.0%"
+            }
+          }
+        ],
+        "sections": [
+          {
+            "key": "happened",
+            "text": {
+              "ja": "売上は221.87億ドルから295.91億ドルへ、74.04億ドル増えました。非GAAP粗利益率は77.1%から75.0%に下がっています。",
+              "en": "Revenue rose from $22.19B to $29.59B, up $7.40B. Non-GAAP gross margin fell from 77.1% to 75.0%."
+            }
+          },
+          {
+            "key": "good",
+            "text": {
+              "ja": "非GAAP営業利益は149.28億ドルから200.95億ドルへ約35%増えました。フリーキャッシュフローも136.65億ドルで、売上の46%が現金として残っています。",
+              "en": "Non-GAAP operating income rose about 35%, from $14.93B to $20.10B. Free cash flow was $13.67B, or 46% of revenue."
+            }
+          },
+          {
+            "key": "watch",
+            "text": {
+              "ja": "会社は理由を説明していませんが、売上に占める半導体部門の割合は68%から70%に上がりました。利益率の高いソフトウェアより半導体の割合が増えると、会社全体の粗利益率は下がりやすくなります。",
+              "en": "The company did not explain the decline, but semiconductors rose from 68% to 70% of revenue. When lower-margin semiconductors grow faster than higher-margin software, the overall gross margin tends to fall."
+            }
+          },
+          {
+            "key": "view",
+            "text": {
+              "ja": "売上と利益の額は大きく増えています。ただ、利益率は下がる方向なので、額と率を分けて見る必要があります。",
+              "en": "Revenue and profit dollars grew strongly, but margins are moving down, so amounts and rates need to be read separately."
+            }
+          }
+        ],
+        "segment": null
+      },
+      "caution": {
+        "headline": {
+          "ja": "売上の約55%が上位5社に集中",
+          "en": "About 55% of revenue comes from the top five customers"
+        },
+        "chips": [
+          {
+            "tone": "down",
+            "text": {
+              "ja": "上位5社 約40% → 約55%",
+              "en": "Top five ~40% → ~55%"
+            }
+          },
+          {
+            "tone": "down",
+            "text": {
+              "ja": "販売代理店1社が売上の50%",
+              "en": "One distributor: 50% of revenue"
+            }
+          }
+        ],
+        "sections": [
+          {
+            "key": "happened",
+            "text": {
+              "ja": "四半期報告書によると、上位5社の最終顧客への売上は全体の約55%で、1年前の約40%から上がりました。また、1社の販売代理店を通じた売上が全体の50%(1年前は32%)を占めています。",
+              "en": "According to the quarterly report, the top five end customers made up about 55% of revenue, up from about 40% a year earlier. Direct sales to one distributor accounted for 50% of revenue (32% a year earlier)."
+            }
+          },
+          {
+            "key": "watch",
+            "text": {
+              "ja": "少数の大口顧客の発注計画が変わると、売上が大きく動きます。会社自身も、この集中が四半期ごとの業績のぶれを大きくすると説明しています。",
+              "en": "A change in the ordering plans of a few large customers can move revenue sharply. The company itself says this concentration increases the risk of quarterly swings in its results."
+            }
+          },
+          {
+            "key": "means",
+            "text": {
+              "ja": "今の伸びは強い一方、伸びるほど集中度も上がっています。",
+              "en": "Growth is strong, but the more it grows, the higher the concentration becomes."
+            }
+          },
+          {
+            "key": "view",
+            "text": {
+              "ja": "次の報告書で、上位顧客の比率がさらに上がるかを確かめます。",
+              "en": "Check in the next report whether the top-customer share rises further."
+            }
+          }
+        ],
+        "segment": null
+      },
+      "next": {
+        "headline": {
+          "ja": "次期の会社見通しを追う",
+          "en": "Follow the company's outlook for next quarter"
+        },
+        "chips": [
+          {
+            "tone": "gold",
+            "text": {
+              "ja": "売上 約348億ドル",
+              "en": "Revenue ~$34.8B"
+            }
+          },
+          {
+            "tone": "gold",
+            "text": {
+              "ja": "AI半導体 217億ドル",
+              "en": "AI semiconductors $21.7B"
+            }
+          },
+          {
+            "tone": "gold",
+            "text": {
+              "ja": "非GAAP営業利益率 約66%",
+              "en": "Non-GAAP operating margin ~66%"
+            }
+          }
+        ],
+        "sections": [
+          {
+            "key": "happened",
+            "text": {
+              "ja": "会社は、次期の売上を約348億ドル、そのうちAI向け半導体を217億ドルと見込んでいます。今回の売上は295.91億ドルなので、約17.6%の増加です。",
+              "en": "The company expects next-quarter revenue of about $34.8B, including $21.7B of AI semiconductor revenue. This quarter's revenue was $29.59B, so that would be about 17.6% higher."
+            }
+          },
+          {
+            "key": "watch",
+            "text": {
+              "ja": "非GAAP営業利益率の見通しは約66%で、今回の約67.9%を下回ります。粗利益率の見通しは示されていません。",
+              "en": "The non-GAAP operating margin outlook is about 66%, below this quarter's roughly 67.9%. No gross margin outlook was given."
+            }
+          },
+          {
+            "key": "view",
+            "text": {
+              "ja": "次の決算で、売上とAI半導体の売上が見通しどおりかを確かめます。",
+              "en": "The next report will show whether revenue and AI semiconductor revenue meet the outlook."
+            }
+          }
+        ],
+        "segment": null
+      }
+    }
+  }
+}

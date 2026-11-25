@@ -82,7 +82,7 @@ test("one shared snapshot: refreshed by the site's minute job through the alloca
   assert.doesNotMatch(route, /getMembership|auth\(\)|isPro/, "FREE: nobody is turned away, the owner included");
   assert.match(read("tests/api-access-guard.test.mjs"), /'research\/market\/leveraged':/);
   const warm = read("app/api/research/compare/warm/route.ts");
-  assert.ok(warm.indexOf("await refreshLeveragedSnapshot()") < warm.indexOf("await warmMinute(Date.now(), lev.spent)"), "the snapshot first, the comparison yields its credits");
+  assert.ok(warm.indexOf("await refreshLeveragedSnapshot()") < warm.indexOf("await warmMinute(Date.now(), lev.spent + board.spent)"), "the snapshot first, the comparison yields its credits");
   assert.match(read("lib/research/comparison-warm.ts"), /if \(used !== null\) used \+= alreadySpent;/);
 });
 
