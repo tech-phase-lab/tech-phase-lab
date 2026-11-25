@@ -1,0 +1,208 @@
+{
+  "root": {
+    "ticker": "RNR",
+    "name": "ルネサンスRE",
+    "cik": 913144,
+    "name_en": "RenaissanceRe Holdings Ltd."
+  },
+  "rows": [
+    {
+      "ja": "主な保険ブローカー(引受保険料の割合)",
+      "en": "Main brokers (share of premiums)"
+    },
+    {
+      "ja": "合弁・出資・買収",
+      "en": "JVs, investments & acquisitions"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "AON",
+      "ticker": "AON",
+      "name": "エーオン",
+      "name_en": "Aon",
+      "sub": "保険仲介",
+      "sub_en": "Broker",
+      "sub_short": "保険仲介",
+      "sub_short_en": "Broker",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大の仲介先。2025年の元受保険料の34.5%",
+          "text_en": "Largest broker: 34.5% of 2025 gross premiums",
+          "source": {
+            "label": "RenaissanceRe 10-K(2025年度)",
+            "label_en": "RenaissanceRe 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/913144/000091314426000012/rnr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Year ended December 31, 2025 Property Casualty and Specialty Total Aon plc 44.2 % 27.4 % 34.5 % Marsh & McLennan Companies, Inc. 30.4 % 36.3 % 33.8 % Arthur J. Gallagher 6.9 % 17.5 % 13.0 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MMC",
+      "ticker": "Marsh McLennan",
+      "name": "マーシュ・マクレナン",
+      "name_en": "Marsh McLennan",
+      "sub": "保険仲介",
+      "sub_en": "Broker",
+      "sub_short": "保険仲介",
+      "sub_short_en": "Broker",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "仲介先。2025年の元受保険料の33.8%",
+          "text_en": "Broker: 33.8% of 2025 gross premiums",
+          "source": {
+            "label": "RenaissanceRe 10-K(2025年度)",
+            "label_en": "RenaissanceRe 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/913144/000091314426000012/rnr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Year ended December 31, 2025 Property Casualty and Specialty Total Aon plc 44.2 % 27.4 % 34.5 % Marsh & McLennan Companies, Inc. 30.4 % 36.3 % 33.8 % Arthur J. Gallagher 6.9 % 17.5 % 13.0 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AJG",
+      "ticker": "AJG",
+      "name": "アーサー・J・ギャラガー",
+      "name_en": "Arthur J. Gallagher",
+      "sub": "保険仲介",
+      "sub_en": "Broker",
+      "sub_short": "保険仲介",
+      "sub_short_en": "Broker",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "仲介先。2025年の元受保険料の13.0%",
+          "text_en": "Broker: 13.0% of 2025 gross premiums",
+          "source": {
+            "label": "RenaissanceRe 10-K(2025年度)",
+            "label_en": "RenaissanceRe 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/913144/000091314426000012/rnr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Year ended December 31, 2025 Property Casualty and Specialty Total Aon plc 44.2 % 27.4 % 34.5 % Marsh & McLennan Companies, Inc. 30.4 % 36.3 % 33.8 % Arthur J. Gallagher 6.9 % 17.5 % 13.0 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "StateFarm",
+      "ticker": "State Farm",
+      "name": "ステート・ファーム",
+      "name_en": "State Farm",
+      "sub": "保険",
+      "sub_en": "Insurance",
+      "sub_short": "保険",
+      "sub_short_en": "Insurance",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "再保険合弁トップレイヤーを50%ずつ保有",
+          "text_en": "50/50 owner of the Top Layer reinsurance JV",
+          "source": {
+            "label": "RenaissanceRe 10-K(2025年度)",
+            "label_en": "RenaissanceRe 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/913144/000091314426000012/rnr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Top Layer is owned 50% by State Farm and 50% by Renaissance Reinsurance, although State Farm provides the majority of Top Layer's underwriting capacity through a $3.9 billion stop-loss reinsurance agreement, and therefore, State Farm retains most of Top Layer's underwriting results."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AIG",
+      "ticker": "AIG",
+      "name": "アメリカン・インターナショナル・グループ",
+      "name_en": "American International Group",
+      "sub": "総合保険",
+      "sub_en": "Insurance",
+      "sub_short": "総合保険",
+      "sub_short_en": "Insurance",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "再保険会社バリダスをAIGから買収(2023年)",
+          "text_en": "Bought Validus from AIG in 2023",
+          "source": {
+            "label": "RenaissanceRe 10-K(2025年度)",
+            "label_en": "RenaissanceRe 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/913144/000091314426000012/rnr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "ACQUISITION OF VALIDUS On November 1, 2023, the Company completed its acquisition in accordance with the Stock Purchase Agreement, dated May 22, 2023 (as amended, the \"Stock Purchase Agreement\"), between RenaissanceRe and American International Group, Inc., (\"AIG\")"
+          }
+        }
+      ]
+    },
+    {
+      "id": "TowerHill",
+      "ticker": "Tower Hill",
+      "name": "タワーヒル",
+      "name_en": "Tower Hill Companies",
+      "sub": "住宅保険",
+      "sub_en": "Home ins.",
+      "sub_short": "住宅保険",
+      "sub_short_en": "Home ins",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "フロリダの住宅保険グループに戦略出資",
+          "text_en": "Strategic investment in the Florida home insurer group",
+          "source": {
+            "label": "RenaissanceRe 10-K(2025年度)",
+            "label_en": "RenaissanceRe 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/913144/000091314426000012/rnr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "For example, we have strategic investments in the Tower Hill Companies which grant us access to participants in the Florida homeowners insurance market."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TWFG",
+      "ticker": "TWFG",
+      "name": "TWFG",
+      "name_en": "TWFG",
+      "sub": "保険",
+      "sub_en": "Insurance",
+      "sub_short": "保険",
+      "sub_short_en": "Insurance",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "保険代理店網TWFGに戦略出資",
+          "text_en": "Strategic investment in the TWFG agency network",
+          "source": {
+            "label": "RenaissanceRe 10-K(2025年度)",
+            "label_en": "RenaissanceRe 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/913144/000091314426000012/rnr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Additionally, we have a strategic investment in TWFG, which distributes personal and commercial insurance across the United States."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

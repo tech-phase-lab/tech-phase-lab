@@ -1,0 +1,156 @@
+{
+  "root": {
+    "ticker": "YUMC",
+    "name": "ヤム・チャイナ",
+    "cik": 1673358,
+    "name_en": "Yum China Holdings, Inc."
+  },
+  "rows": [
+    {
+      "ja": "ブランド・合弁",
+      "en": "Brands & joint ventures"
+    },
+    {
+      "ja": "決済・出資先",
+      "en": "Payments & investments"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "YUM",
+      "ticker": "YUM",
+      "name": "ヤム・ブランズ",
+      "name_en": "Yum! Brands",
+      "sub": "外食",
+      "sub_en": "Restaurants",
+      "sub_short": "外食",
+      "sub_short_en": "Dining",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "KFC・ピザハットの中国ライセンス元。売上の3%を支払う",
+          "text_en": "Licensor of KFC and Pizza Hut in China; paid 3% of sales",
+          "source": {
+            "label": "Yum China 10-K(2025年度)",
+            "label_en": "Yum China 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1673358/000119312526082824/yumc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "In exchange, we pay a license fee to YUM equal to 3% of net system sales of the licensed brands."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Lavazza",
+      "ticker": "Lavazza",
+      "name": "ラバッツァ",
+      "name_en": "Luigi Lavazza S.p.A.",
+      "sub": "コーヒー",
+      "sub_en": "Coffee",
+      "sub_short": "コーヒー",
+      "sub_short_en": "Coffee",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "中国でラバッツァのカフェを展開する合弁",
+          "text_en": "JV running Lavazza coffee shops in China",
+          "source": {
+            "label": "Yum China 10-K(2025年度)",
+            "label_en": "Yum China 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1673358/000119312526082824/yumc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "In April 2020, we also partnered with Lavazza Group to explore and develop the Lavazza coffee concept in China to offer an authentic Italian coffee experience."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AntGroup",
+      "ticker": "Ant Group",
+      "name": "アント・グループ(アリペイ)",
+      "name_en": "Ant Group (Alipay)",
+      "sub": "決済",
+      "sub_en": "Payments",
+      "sub_short": "決済",
+      "sub_short_en": "Payment",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2015年からアリペイと決済で提携",
+          "text_en": "Alipay payments partner since 2015",
+          "source": {
+            "label": "Yum China 10-K(2025年度)",
+            "label_en": "Yum China 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1673358/000119312526082824/yumc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "As early as June 2015, we started to partner with Alipay on digital payment functionalities, making us among the first batch of restaurant chains in China to make mobile payment available to guests."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Tencent",
+      "ticker": "Tencent",
+      "name": "テンセント",
+      "name_en": "Tencent",
+      "sub": "ネット",
+      "sub_en": "Internet",
+      "sub_short": "ネット",
+      "sub_short_en": "Internet",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2016年からウィーチャットペイで決済協力",
+          "text_en": "WeChat Pay payments cooperation since 2016",
+          "source": {
+            "label": "Yum China 10-K(2025年度)",
+            "label_en": "Yum China 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1673358/000119312526082824/yumc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "We commenced mobile payment cooperation with WeChat Pay in 2016."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Sunner",
+      "ticker": "Fujian Sunner",
+      "name": "福建聖農発展",
+      "name_en": "Fujian Sunner Development",
+      "sub": "鶏肉",
+      "sub_en": "Poultry",
+      "sub_short": "鶏肉",
+      "sub_short_en": "Poultry",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "深セン上場の鶏肉大手に5%出資",
+          "text_en": "Owns 5% of the listed poultry producer",
+          "source": {
+            "label": "Yum China 10-K(2025年度)",
+            "label_en": "Yum China 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1673358/000119312526082824/yumc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "(\"Sunner\") Investment In the first quarter of 2021, the Company acquired a 5 % equity interest in Sunner, a Shenzhen Stock Exchange listed company."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,208 @@
+{
+  "root": {
+    "ticker": "WES",
+    "name": "ウエスタン・ミッドストリーム",
+    "cik": 1423902,
+    "name_en": "Western Midstream Partners, LP"
+  },
+  "rows": [
+    {
+      "ja": "親会社・買収先",
+      "en": "Sponsor & acquisitions"
+    },
+    {
+      "ja": "接続するパイプライン",
+      "en": "Connected pipelines"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "OXY",
+      "ticker": "OXY",
+      "name": "オキシデンタル・ペトロリアム",
+      "name_en": "Occidental Petroleum",
+      "sub": "石油",
+      "sub_en": "Oil",
+      "sub_short": "石油",
+      "sub_short_en": "Oil",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "無限責任パートナーを保有する親会社。ガス集送の顧客",
+          "text_en": "Owns the general partner; gas-gathering customer",
+          "source": {
+            "label": "Western Midstream 10-K(2025年度)",
+            "label_en": "Western Midstream 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1423902/000142390226000030/wes-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Our general partner is a wholly owned subsidiary of Occidental."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ArisWater",
+      "ticker": "Aris Water",
+      "name": "アリス・ウォーター・ソリューションズ",
+      "name_en": "Aris Water Solutions",
+      "sub": "水処理",
+      "sub_en": "Water",
+      "sub_short": "水処理",
+      "sub_short_en": "Water",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "産出水処理会社を2025年10月に買収",
+          "text_en": "Acquired the produced-water company in Oct 2025",
+          "source": {
+            "label": "Western Midstream 10-K(2025年度)",
+            "label_en": "Western Midstream 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1423902/000142390226000030/wes-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "The following list of abbreviations and terms are used in this document: Defined Term Definition Aris Aris Water Solutions, Inc., which was acquired by the Partnership on October 15, 2025."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Meritage",
+      "ticker": "Meritage Midstream",
+      "name": "メリテージ・ミッドストリーム",
+      "name_en": "Meritage Midstream Services II",
+      "sub": "ガス集送",
+      "sub_en": "Gathering",
+      "sub_short": "ガス集送",
+      "sub_short_en": "Pipes",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "パウダーリバーの集送会社を2023年に買収",
+          "text_en": "Acquired the Powder River gathering company in 2023",
+          "source": {
+            "label": "Western Midstream 10-K(2025年度)",
+            "label_en": "Western Midstream 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1423902/000142390226000030/wes-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Meritage Meritage Midstream Services II, LLC, which was acquired by the Partnership on October 13, 2023."
+          }
+        }
+      ]
+    },
+    {
+      "id": "EPD",
+      "ticker": "EPD",
+      "name": "エンタープライズ・プロダクツ",
+      "name_en": "Enterprise Products",
+      "sub": "中流",
+      "sub_en": "Pipeline",
+      "sub_short": "中流",
+      "sub_short_en": "Pipeline",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "モントベルビューの合弁持分25%を2024年に売却",
+          "text_en": "Sold its 25% of the Mont Belvieu JV in 2024",
+          "source": {
+            "label": "Western Midstream 10-K(2025年度)",
+            "label_en": "Western Midstream 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1423902/000142390226000030/wes-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Mont Belvieu JV Enterprise EF78 LLC, in which we owned a 25% interest that we sold in February 2024 (see Note 3-Acquisitions and Divestitures in the Notes to Consolidated Financial Statements under Part II, Item 8 of this Form 10-K)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WhiteWater",
+      "ticker": "WhiteWater",
+      "name": "ホワイトウォーター・ミッドストリーム",
+      "name_en": "WhiteWater Midstream",
+      "sub": "配管網",
+      "sub_en": "Pipelines",
+      "sub_short": "配管網",
+      "sub_short_en": "Pipelines",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "西テキサスの残余ガスを同社のアグアブランカ管へ送る",
+          "text_en": "Delivers residue gas into its Agua Blanca pipeline",
+          "source": {
+            "label": "Western Midstream 10-K(2025年度)",
+            "label_en": "Western Midstream 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1423902/000142390226000030/wes-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Residue gas from the West Texas complex is delivered to the Red Bluff Express pipeline, Whitewater Midstream, LLC's Agua Blanca pipeline, Oasis pipeline, Transwestern Pipeline Company LLC's pipeline (\"Transwestern pipeline\"), and Kinder Morgan, Inc.'s interstate pipeline system."
+          }
+        }
+      ]
+    },
+    {
+      "id": "KMI",
+      "ticker": "KMI",
+      "name": "キンダー・モルガン",
+      "name_en": "Kinder Morgan",
+      "sub": "配管網",
+      "sub_en": "Pipelines",
+      "sub_short": "配管網",
+      "sub_short_en": "Pipelines",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "残余ガスを同社の州際パイプラインへ送る",
+          "text_en": "Delivers residue gas into its interstate system",
+          "source": {
+            "label": "Western Midstream 10-K(2025年度)",
+            "label_en": "Western Midstream 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1423902/000142390226000030/wes-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Residue gas from the West Texas complex is delivered to the Red Bluff Express pipeline, Whitewater Midstream, LLC's Agua Blanca pipeline, Oasis pipeline, Transwestern Pipeline Company LLC's pipeline (\"Transwestern pipeline\"), and Kinder Morgan, Inc.'s interstate pipeline system."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ET",
+      "ticker": "ET",
+      "name": "エナジー・トランスファー",
+      "name_en": "Energy Transfer",
+      "sub": "配管網",
+      "sub_en": "Pipelines",
+      "sub_short": "配管網",
+      "sub_short_en": "Pipelines",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "希薄ガスが同社のオアシス管へ届く",
+          "text_en": "Lean gas reaches its Oasis pipeline",
+          "source": {
+            "label": "Western Midstream 10-K(2025年度)",
+            "label_en": "Western Midstream 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1423902/000142390226000030/wes-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Gas is dehydrated, compressed, and delivered within the West Texas complex and to the Mi Vida plant (see below) for processing, while lean gas is delivered into Enterprise GC, L.P.'s pipeline for ultimate delivery into Energy Transfer LP's (\"ET\") Oasis pipeline (the \"Oasis pipeline\")."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

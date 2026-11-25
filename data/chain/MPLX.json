@@ -1,0 +1,156 @@
+{
+  "root": {
+    "ticker": "MPLX",
+    "name": "MPLX",
+    "cik": 1552000,
+    "name_en": "MPLX LP"
+  },
+  "rows": [
+    {
+      "ja": "親会社・顧客",
+      "en": "Sponsor & customer"
+    },
+    {
+      "ja": "合弁・買収の相手",
+      "en": "JV partners & acquisitions"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "MPC",
+      "ticker": "MPC",
+      "name": "マラソン・ペトロリアム",
+      "name_en": "Marathon Petroleum",
+      "sub": "石油精製",
+      "sub_en": "Refining",
+      "sub_short": "石油精製",
+      "sub_short_en": "Refining",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "親会社で最大顧客。2025年の売上等の48%",
+          "text_en": "Sponsor and largest customer: 48% of 2025 revenues",
+          "source": {
+            "label": "MPLX 10-K(2025年度)",
+            "label_en": "MPLX 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1552000/000155200026000009/mplx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "In 2025, MPC accounted for 48 percent of our total revenues and other income, primarily within our Crude Oil and Products Logistics segment, and will continue to be an important source of our revenues and cash flows for the foreseeable future."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ENB",
+      "ticker": "ENB",
+      "name": "エンブリッジ",
+      "name_en": "Enbridge",
+      "sub": "配管網",
+      "sub_en": "Pipelines",
+      "sub_short": "配管網",
+      "sub_short_en": "Pipelines",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ガス管ホイッスラーの合弁に出資を迎えた相手",
+          "text_en": "Took a stake in the Whistler pipeline JV",
+          "source": {
+            "label": "MPLX 10-K(2025年度)",
+            "label_en": "MPLX 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1552000/000155200026000009/mplx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Whistler Joint Venture Transaction On May 29, 2024, MPLX and its joint venture partner contributed their respective membership interests in Whistler Pipeline, LLC to a newly formed joint venture, WPC Parent, LLC, and issued a 19 percent voting interest in WPC Parent, LLC to an affiliate of Enbridge Inc. in exchange for the contribution of cash and the Rio Bravo Pipeline project (collectively, the \"Whistler Joint Venture Transaction\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AnteroMid",
+      "ticker": "AM",
+      "name": "アンテロ・ミッドストリーム",
+      "name_en": "Antero Midstream",
+      "sub": "ガス集送",
+      "sub_en": "Gas gathering",
+      "sub_short": "ガス集送",
+      "sub_short_en": "Pipes",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "子会社マークウエストと処理・分留設備の合弁",
+          "text_en": "JV with MPLX unit MarkWest for processing and fractionation",
+          "source": {
+            "label": "Antero Resources 10-K(2025年度)",
+            "label_en": "Antero Resources 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1433270/000110465926013386/ar-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "The joint venture entered into on February 6, 2017 between Antero Midstream Partners, a wholly owned subsidiary of Antero Midstream and MarkWest, a wholly owned subsidiary of MPLX, LP, to develop processing and fractionation assets in Appalachia."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BANGL",
+      "ticker": "BANGL",
+      "name": "BANGL",
+      "name_en": "BANGL, LLC",
+      "sub": "NGL配管",
+      "sub_en": "NGL pipeline",
+      "sub_short": "NGL配管",
+      "sub_short_en": "NGL pipe",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "NGLパイプライン会社の残り55%を7億300万ドルで取得",
+          "text_en": "Bought the remaining 55% of the NGL pipeline for $703M",
+          "source": {
+            "label": "MPLX 10-K(2025年度)",
+            "label_en": "MPLX 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1552000/000155200026000009/mplx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "• Completed the acquisition of the remaining 55 percent interest in BANGL, LLC (\"BANGL\"), in July 2025 for $703 million in cash, plus an earnout provision of up to $275 million based on targeted EBITDA growth from 2026 to 2029 (the \"BANGL Acquisition\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NorthwindMid",
+      "ticker": "Northwind Midstream",
+      "name": "ノースウインド・ミッドストリーム",
+      "name_en": "Northwind Midstream",
+      "sub": "ガス処理",
+      "sub_en": "Gas treating",
+      "sub_short": "ガス処理",
+      "sub_short_en": "Gas",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ニューメキシコの酸性ガス処理会社を24億ドルで買収",
+          "text_en": "Acquired the New Mexico sour-gas treater for $2.4B",
+          "source": {
+            "label": "MPLX 10-K(2025年度)",
+            "label_en": "MPLX 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1552000/000155200026000009/mplx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "• Completed the acquisition of Northwind Midstream in August 2025 for $2.4 billion in cash (the \"Northwind Midstream Acquisition\")."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

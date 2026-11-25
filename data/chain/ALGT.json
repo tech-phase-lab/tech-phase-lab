@@ -1,0 +1,189 @@
+{
+  "root": {
+    "ticker": "ALGT",
+    "name": "アレジアント・トラベル",
+    "cik": 1362468,
+    "name_en": "Allegiant Travel Company"
+  },
+  "rows": [
+    {
+      "ja": "機材・エンジンの調達先",
+      "en": "Aircraft & engine suppliers"
+    },
+    {
+      "ja": "買収予定",
+      "en": "Pending acquisition"
+    },
+    {
+      "ja": "競合(路線の重なり)",
+      "en": "Rivals (route overlap)"
+    }
+  ],
+  "rivals": [
+    "LUV",
+    "ULCC"
+  ],
+  "companies": [
+    {
+      "id": "BA",
+      "ticker": "BA",
+      "name": "ボーイング",
+      "name_en": "The Boeing Company",
+      "sub": "航空機",
+      "sub_en": "Aircraft",
+      "sub_short": "航空機",
+      "sub_short_en": "Aircraft",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "737MAXを50機発注(追加80機のオプション付き)",
+          "text_en": "Ordered 50 737 MAX jets with options for 80 more",
+          "source": {
+            "label": "Allegiant 10-K(2025年度)",
+            "label_en": "Allegiant 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1362468/000136246826000008/algt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "In 2021, we opportunistically entered into an agreement with The Boeing Company (\"Boeing\") and CFM International to purchase 50 newly manufactured 737 MAX aircraft with options to purchase additional 737 MAX aircraft."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CFM",
+      "ticker": "CFM",
+      "name": "CFMインターナショナル",
+      "name_en": "CFM International",
+      "sub": "エンジン",
+      "sub_en": "Engines",
+      "sub_short": "エンジン",
+      "sub_short_en": "Engines",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "737MAX用エンジンの調達契約",
+          "text_en": "Engine supply for the 737 MAX order",
+          "source": {
+            "label": "Allegiant 10-K(2025年度)",
+            "label_en": "Allegiant 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1362468/000136246826000008/algt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "In 2021, we opportunistically entered into an agreement with The Boeing Company (\"Boeing\") and CFM International to purchase 50 newly manufactured 737 MAX aircraft with options to purchase additional 737 MAX aircraft."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Airbus",
+      "ticker": "Airbus",
+      "name": "エアバス",
+      "name_en": "Airbus",
+      "sub": "航空宇宙",
+      "sub_en": "Aero",
+      "sub_short": "航空宇宙",
+      "sub_short_en": "Aero",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "保有機の大半(106機)がA320系",
+          "text_en": "Most of its fleet (106 jets) is A320-family",
+          "source": {
+            "label": "Allegiant 10-K(2025年度)",
+            "label_en": "Allegiant 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1362468/000136246826000008/algt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "As of February 1, 2026, our operating fleet consisted of 16 Boeing 737 series aircraft and 106 Airbus A320 series aircraft."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SNCY",
+      "ticker": "SNCY",
+      "name": "サンカントリー航空",
+      "name_en": "Sun Country Airlines",
+      "sub": "航空",
+      "sub_en": "Airline",
+      "sub_short": "航空",
+      "sub_short_en": "Airline",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "現金と株式で買収することで合意(2026年1月発表)",
+          "text_en": "Agreed to acquire it for cash and stock (Jan 2026)",
+          "source": {
+            "label": "Allegiant 10-K(2025年度)",
+            "label_en": "Allegiant 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1362468/000136246826000008/algt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Proposed Acquisition of Sun Country Airlines On January 11, 2026, we announced that we plan to acquire Sun Country Airlines Holdings, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LUV",
+      "ticker": "LUV",
+      "name": "サウスウエスト航空",
+      "name_en": "Southwest Airlines",
+      "sub": "航空",
+      "sub_en": "Airline",
+      "sub_short": "航空",
+      "sub_short_en": "Airline",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "73路線で重なる最大の競合",
+          "text_en": "Biggest overlap: 73 routes",
+          "source": {
+            "label": "Allegiant 10-K(2025年度)",
+            "label_en": "Allegiant 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1362468/000136246826000008/algt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "We overlap with Southwest Airlines on 73 routes, Breeze Airways on 35 routes, Spirit Airlines on 26 routes, Frontier Airlines on 26 routes, American Airlines on 16 routes, United Airlines on 12 routes, JetBlue Airways on 11 routes, Delta Air Lines on nine routes, Alaska Airlines on two routes"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ULCC",
+      "ticker": "ULCC",
+      "name": "フロンティア航空",
+      "name_en": "Frontier Group",
+      "sub": "格安航空",
+      "sub_en": "Airline",
+      "sub_short": "格安航空",
+      "sub_short_en": "Airline",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "26路線で重なる格安航空",
+          "text_en": "Low-cost rival on 26 routes",
+          "source": {
+            "label": "Allegiant 10-K(2025年度)",
+            "label_en": "Allegiant 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1362468/000136246826000008/algt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "We overlap with Southwest Airlines on 73 routes, Breeze Airways on 35 routes, Spirit Airlines on 26 routes, Frontier Airlines on 26 routes, American Airlines on 16 routes, United Airlines on 12 routes, JetBlue Airways on 11 routes, Delta Air Lines on nine routes, Alaska Airlines on two routes"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
