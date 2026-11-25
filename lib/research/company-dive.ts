@@ -9,8 +9,34 @@ export const DIVE_TICKERS = ["NVDA", "AMD", "AVGO", "CRWV", "ARM", "TSM", "ASML"
 
 export type DiveSource = { url: string; title: string; location: string };
 export type DiveEvidence = { field: string; url: string; quote: string };
-/** Whether a margin or EPS is the issuer's GAAP / IFRS figure or its adjusted (non-GAAP) one; it decides the label. */
-export type DiveBasis = "gaap" | "adjusted";
+/** The file's own words on the accounting basis: e.g. {"eps": "non-GAAP diluted", "grossMargin": "TIFRS (no adjusted measure)",
+ * "guidance": "implied Q4 = full-year guidance minus nine months"}. */
+export type DiveBasis = { eps: string | null; grossMargin: string | null; guidance: string | null };
+/** The labels the page shows for the margin and EPS, read from `basis`, and the guidance note (English, as the file gives it). */
+export type DiveLabels = { margin: Copy; eps: Copy; guidanceNote: string | null };
+
+/** "non-GAAP …" / "adjusted …" → adjusted; otherwise the reported standard named in the text (TIFRS, IFRS, GAAP). */
+function standard(text: string | null): "adjusted" | "TIFRS" | "IFRS" | "GAAP" | null {
+  if (!text) return null;
+  // "TIFRS (no adjusted measure)" and "reports no adjusted EPS" are not adjusted figures.
+  if (/non-?GAAP|non-?IFRS/i.test(text) || (/\badjusted\b/i.test(text) && !/\bno adjusted\b/i.test(text))) return "adjusted";
+  if (/\bT-?IFRS\b/i.test(text)) return "TIFRS";
+  if (/\bIFRS\b/i.test(text)) return "IFRS";
+  if (/\bGAAP\b/i.test(text)) return "GAAP";
+  return null;
+}
+export function diveLabels(basis: DiveBasis | null): DiveLabels {
+  const margin = standard(basis?.grossMargin ?? null), eps = standard(basis?.eps ?? null);
+  const kind = (text: string | null): Copy | null => !text ? null : /\bbasic\b/i.test(text) ? { ja: "基本", en: "basic" } : /\bdiluted\b/i.test(text) ? { ja: "希薄化後", en: "diluted" } : null;
+  const k = kind(basis?.eps ?? null);
+  return {
+    margin: margin === "adjusted" ? { ja: "調整後粗利益率", en: "Adj. gross margin" } : margin ? { ja: `粗利益率(${margin})`, en: `${margin} gross margin` } : { ja: "粗利益率", en: "Gross margin" },
+    // No basis at all: the field is adjustedEPS, as MU's dive labels it. A basis that names a reported standard is labeled with it.
+    eps: eps === "adjusted" || (!basis?.eps) ? { ja: "調整後EPS", en: "Adjusted EPS" }
+      : eps ? { ja: `EPS(${eps}${k ? `・${k.ja}` : ""})`, en: `${eps}${k ? ` ${k.en}` : ""} EPS` } : { ja: "EPS", en: "EPS" },
+    guidanceNote: basis?.guidance ?? null,
+  };
+}
 /** One ticker's deep dive file, checked. `numbers` and `summary` are the same shapes MU's live dive uses. */
 export type CompanyDive = {
   ticker: string; name: string; exchange: string; quoteTicker: string;
@@ -22,7 +48,7 @@ export type CompanyDive = {
   numbers: DiveNumbers; history: DiveHistory[]; summary: DiveSummary;
   /** The top of the company page (直近決算). From the file when it gives them, otherwise derived from `numbers`. */
   tiles: WatchTile[];
-  grossMarginBasis: DiveBasis | null; epsBasis: DiveBasis | null;
+  basis: DiveBasis | null; labels: DiveLabels;
 };
 
 const DATE = /^20\d{2}-\d{2}-\d{2}$/;
@@ -44,8 +70,12 @@ const https = (value: unknown, at: string): string => {
 };
 const finite = (value: unknown, at: string): number => typeof value === "number" && Number.isFinite(value) ? value : fail(`${at} is not a number`);
 const copy = (value: unknown, at: string): Copy => { const r = record(value, at); return { ja: text(r.ja, `${at}.ja`), en: text(r.en, `${at}.en`) }; };
-const basis = (value: unknown, at: string): DiveBasis | null =>
-  value === undefined || value === null ? null : value === "gaap" || value === "adjusted" ? value : fail(`${at} must be "gaap" or "adjusted"`);
+const basisText = (value: unknown, at: string): string | null => value === undefined || value === null ? null : text(value, at, 400);
+const basis = (value: unknown): DiveBasis | null => {
+  if (value === undefined || value === null) return null;
+  const r = record(value, "basis");
+  return { eps: basisText(r.eps, "basis.eps"), grossMargin: basisText(r.grossMargin, "basis.grossMargin"), guidance: basisText(r.guidance, "basis.guidance") };
+};
 
 /** Every number in `numbers` and `history` that must be backed by a quoted source line, as "numbers.revenue.current",
  * "numbers.segments.<key>.revenue" and "history.<index>.value". */
@@ -66,7 +96,7 @@ function evidenceFields(numbers: DiveNumbers, history: DiveHistory[]): { field: 
 const normalField = (field: string) => field.replace(/\[(\w+)\]/g, ".$1").replace(/^\./, "");
 
 /** The three tiles at the top of the page when the file does not give its own. */
-export function derivedTiles(d: Pick<CompanyDive, "numbers" | "currency" | "grossMarginBasis" | "epsBasis">): WatchTile[] {
+export function derivedTiles(d: Pick<CompanyDive, "numbers" | "currency" | "labels">): WatchTile[] {
   const n = d.numbers, cur = d.currency;
   const money = (m: number): Copy => ({ ja: diveMoney(m, cur, "ja"), en: diveMoney(m, cur, "en") });
   const pct = (a: number, b: number) => { const v = (a / b - 1) * 100; return `${v >= 0 ? "+" : "−"}${Math.abs(v).toFixed(1)}%`; };
@@ -76,13 +106,11 @@ export function derivedTiles(d: Pick<CompanyDive, "numbers" | "currency" | "gros
       : { ja: `前四半期比 ${pct(n.revenue.current, n.revenue.previous)}`, en: `${pct(n.revenue.current, n.revenue.previous)} QoQ` },
   }];
   if (n.grossMargin) {
-    const adjusted = d.grossMarginBasis === "adjusted";
-    tiles.push({ label: adjusted ? { ja: "調整後粗利益率", en: "Adjusted gross margin" } : { ja: "粗利益率", en: "Gross margin" },
+    tiles.push({ label: d.labels.margin,
       value: { ja: `${n.grossMargin.current.toFixed(1)}%`, en: `${n.grossMargin.current.toFixed(1)}%` },
       note: { ja: `前四半期 ${n.grossMargin.previous.toFixed(1)}%`, en: `Prior quarter ${n.grossMargin.previous.toFixed(1)}%` } });
   } else if (n.adjustedEPS !== null) {
-    const gaap = d.epsBasis === "gaap";
-    tiles.push({ label: gaap ? { ja: "EPS", en: "EPS" } : { ja: "調整後EPS", en: "Adjusted EPS" },
+    tiles.push({ label: d.labels.eps,
       value: { ja: divePerShare(n.adjustedEPS, cur, "ja"), en: divePerShare(n.adjustedEPS, cur, "en") }, note: { ja: "1株あたり利益", en: "Earnings per share" } });
   }
   if (n.guidance) {
@@ -152,16 +180,16 @@ export function validateCompanyDive(raw: unknown, expectedTicker: string): Compa
   const missing = evidenceFields(numbers, history).filter(f => !given.has(f.field) && !f.alt.some(a => given.has(a))).map(f => f.field);
   if (missing.length) fail(`no evidence for ${missing.slice(0, 5).join(", ")}${missing.length > 5 ? ` (+${missing.length - 5})` : ""}`);
 
-  const grossMarginBasis = basis(r.grossMarginBasis, "grossMarginBasis"), epsBasis = basis(r.epsBasis, "epsBasis");
+  const basisRead = basis(r.basis), labels = diveLabels(basisRead);
   let tiles: WatchTile[];
-  if (r.tiles === undefined || r.tiles === null) tiles = derivedTiles({ numbers, currency, grossMarginBasis, epsBasis });
+  if (r.tiles === undefined || r.tiles === null) tiles = derivedTiles({ numbers, currency, labels });
   else {
     if (!Array.isArray(r.tiles) || r.tiles.length < 1 || r.tiles.length > 4) fail("tiles must list 1-4 tiles");
     tiles = (r.tiles as unknown[]).map((v, i) => { const t = record(v, `tiles[${i}]`); return { label: copy(t.label, `tiles[${i}].label`), value: copy(t.value, `tiles[${i}].value`), note: copy(t.note, `tiles[${i}].note`) }; });
   }
   return {
     ticker, name: text(r.name, "name", 80), exchange: text(r.exchange, "exchange", 20), quoteTicker: text(r.quoteTicker, "quoteTicker", 20),
-    period, periodQuarter: periodQuarter as number, releasedOn, periodEnd, reviewedOn, currency, sources, evidence, numbers, history, summary, tiles, grossMarginBasis, epsBasis,
+    period, periodQuarter: periodQuarter as number, releasedOn, periodEnd, reviewedOn, currency, sources, evidence, numbers, history, summary, tiles, basis: basisRead, labels,
   };
 }
 
@@ -173,7 +201,9 @@ export type CompanyDiveView = Omit<CompanyDive, "evidence" | "numbers" | "histor
 export function companyDiveView(dive: CompanyDive, paid: boolean): CompanyDiveView {
   const { evidence: _evidence, numbers, history, summary, ...facts } = dive;
   void _evidence;
-  return { ...facts, dive: paid ? { numbers, history, summary } : null };
+  if (paid) return { ...facts, dive: { numbers, history, summary } };
+  // The basis notes describe the paid figures (e.g. the outlook range), so they stay on the server too; the labels are kept.
+  return { ...facts, basis: null, labels: { ...facts.labels, guidanceNote: null }, dive: null };
 }
 
 /** The server boundary of a company page's dive: paid for a signed-in PRO member with unexpired access, and always for the owner

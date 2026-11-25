@@ -9,8 +9,10 @@
  "periodEnd": "2026-09-30",
  "reviewedOn": "2026-11-25",
  "currency": "TWD",
- "grossMarginBasis": "gaap",
- "epsBasis": "gaap",
+ "basis": {
+  "eps": "TIFRS diluted EPS per common share",
+  "grossMargin": "TIFRS (no adjusted measure)"
+ },
  "sources": [
   {
    "url": "https://example.com/fixtures/tsm-q3-2026",

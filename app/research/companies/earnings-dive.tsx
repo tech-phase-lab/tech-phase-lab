@@ -99,9 +99,11 @@ function Next({ card, numbers, currency, lang }: { card: DiveCard; numbers: Dive
       <div className={styles.rangeTrack}>
         <span className={styles.nowLabel} style={{ left: at(cur) }}>{lang === "ja" ? `今期 ${diveScaled(cur, currency, lang)}` : `This qtr ${diveScaled(cur, currency, lang)}`}</span>
         <i className={styles.now} style={{ left: at(cur) }} />
-        <i className={styles.span} style={{ left: at(guide.low), width: `${(guide.high - guide.low) / (hi - lo) * 100}%` }} />
-        <span className={styles.edge} style={{ left: at(guide.low) }}>{diveScaled(guide.low, currency, lang, edgePlaces)}</span>
-        <span className={styles.edge} style={{ left: at(guide.high) }}>{diveScaled(guide.high, currency, lang, edgePlaces)}</span>
+        {guide.low === guide.high
+          ? <><i className={styles.span} style={{ left: at(guide.low), width: "1.5%" }} /><span className={styles.edge} style={{ left: at(guide.low) }}>{diveScaled(guide.low, currency, lang, edgePlaces)}</span></>
+          : <><i className={styles.span} style={{ left: at(guide.low), width: `${(guide.high - guide.low) / (hi - lo) * 100}%` }} />
+            <span className={styles.edge} style={{ left: at(guide.low) }}>{diveScaled(guide.low, currency, lang, edgePlaces)}</span>
+            <span className={styles.edge} style={{ left: at(guide.high) }}>{diveScaled(guide.high, currency, lang, edgePlaces)}</span></>}
       </div>
     </figure>}
   </Shell>;
@@ -122,6 +124,7 @@ function EpsCard({ numbers, currency, lang }: { numbers: DiveNumbers; currency: 
   </section>;
 }
 
+const MU_MARGIN: Copy = { ja: "調整後粗利益率", en: "Adj. gross margin" }, MU_EPS: Copy = { ja: "調整後EPS", en: "Adjusted EPS" };
 /** What the dive needs from MU's live snapshot (WatchEarnings) or from a reviewed lib/research/dives/<TICKER>.json. */
 export type DiveLive = { period: string; releasedOn: string; publicAt?: string | null; dive: Dive | null };
 type Props = {
@@ -132,20 +135,19 @@ type Props = {
   periodQuarter?: number;
   /** A reviewed file: its review date stands in the status pills where MU shows the monitor's clock. */
   reviewedOn?: string;
-  /** "adjusted" (MU), "gaap", or null when the file does not say: the margin is then called just 粗利益率. */
-  marginBasis?: "adjusted" | "gaap" | null; epsBasis?: "adjusted" | "gaap" | null;
+  /** The margin and EPS labels from the file's `basis` (TIFRS, US GAAP, non-GAAP…). MU: 調整後粗利益率 / 調整後EPS. */
+  marginLabel?: Copy; epsLabel?: Copy;
 };
-export default function EarningsDive({ lang, name, ticker, live, unlocked, history = [], failed, currency = "USD", periodQuarter, reviewedOn, marginBasis = "adjusted", epsBasis = "adjusted" }: Props) {
+export default function EarningsDive({ lang, name, ticker, live, unlocked, history = [], failed, currency = "USD", periodQuarter, reviewedOn, marginLabel = MU_MARGIN, epsLabel = MU_EPS }: Props) {
   const ja = lang === "ja";
   const dive = live?.dive ?? null, numbers = dive?.numbers ?? null, summary = dive?.summary ?? null;
   const period = /^FQ([1-4]) (20\d{2})$/.exec(live?.period ?? "");
   const lastQuarter = periodQuarter ?? (period ? Number(period[1]) : 4);
-  const marginLabel: Copy = marginBasis === "adjusted" ? { ja: "調整後粗利益率", en: "Adj. gross margin" } : marginBasis === "gaap" ? { ja: "粗利益率(GAAP)", en: "GAAP gross margin" } : { ja: "粗利益率", en: "Gross margin" };
-  const epsLabel: Copy = epsBasis === "gaap" ? { ja: "EPS", en: "EPS" } : { ja: "調整後EPS", en: "Adjusted EPS" };
   const stamp = (iso: string | null | undefined) => reviewedOn ? checkedLabel(reviewedOn, lang) : clock(iso, lang);
   const perShare = (value: number) => divePerShare(value, currency, lang);
   /** "600〜630" (億ドル) / "$60–63B"; under $10B two places ("$0.62–0.65B"). */
   const range = (low: number, high: number) => {
+    if (low === high) return ja ? diveScaled(low, currency, lang) : diveMoney(low, currency, lang);
     if (ja) return `${diveScaled(low, currency, lang)}〜${diveScaled(high, currency, lang)}`;
     const places = high >= 10_000 && currency !== "KRW" ? 0 : 2, unit = diveUnit(currency, lang);
     return `${unit.slice(0, -1)}${diveScaled(low, currency, lang, places)}–${diveScaled(high, currency, lang, places)}${unit.slice(-1)}`;

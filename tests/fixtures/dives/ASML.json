@@ -9,8 +9,10 @@
  "periodEnd": "2026-09-27",
  "reviewedOn": "2026-11-25",
  "currency": "EUR",
- "grossMarginBasis": "gaap",
- "epsBasis": "gaap",
+ "basis": {
+  "eps": "US GAAP basic net income per ordinary share",
+  "grossMargin": "US GAAP (no adjusted measure)"
+ },
  "sources": [
   {
    "url": "https://example.com/fixtures/asml-q3-2026",

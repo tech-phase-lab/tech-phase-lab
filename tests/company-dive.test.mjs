@@ -4,7 +4,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import {loadCompanyDive,DIVES_DIR} from '../lib/research/company-dive-loader.ts';
-import {DIVE_TICKERS,validateCompanyDive,companyDiveForMember} from '../lib/research/company-dive.ts';
+import {DIVE_TICKERS,validateCompanyDive,companyDiveForMember,diveLabels} from '../lib/research/company-dive.ts';
 import {diveMoney,divePerShare,diveScaled,diveUnit} from '../lib/research/dive-money.ts';
 import {newerReport,knownReports} from '../lib/research/dive-staleness.ts';
 import {companyWatchForMember} from '../lib/research/company-watch.ts';
@@ -143,4 +143,29 @@ test('the company page reads the dive file first, keeps the legacy view as the f
  assert.match(view,/'前回の決算'/);assert.match(view,/<EarningsDive /);
  const config=fs.readFileSync(new URL('../next.config.ts',import.meta.url),'utf8');
  assert.match(config,/lib\/research\/dives\/\*\.json/);
+});
+
+test('basis labels: non-GAAP is 調整後, a reported standard is named (TIFRS, US GAAP, K-IFRS), and nothing else is called 調整後',()=>{
+ assert.deepEqual(diveLabels({eps:'non-GAAP diluted',grossMargin:'non-GAAP',guidance:null}).eps,{ja:'調整後EPS',en:'Adjusted EPS'});
+ assert.deepEqual(diveLabels({eps:'non-GAAP diluted',grossMargin:'non-GAAP',guidance:null}).margin,{ja:'調整後粗利益率',en:'Adj. gross margin'});
+ const tsm=loadCompanyDive('TSM',{dir:FIXTURES,...quiet}).labels;
+ assert.deepEqual(tsm.eps,{ja:'EPS(TIFRS・希薄化後)',en:'TIFRS diluted EPS'});assert.deepEqual(tsm.margin,{ja:'粗利益率(TIFRS)',en:'TIFRS gross margin'});
+ const asml=loadCompanyDive('ASML',{dir:FIXTURES,...quiet}).labels;
+ assert.deepEqual(asml.eps,{ja:'EPS(GAAP・基本)',en:'GAAP basic EPS'});assert.deepEqual(asml.margin,{ja:'粗利益率(GAAP)',en:'GAAP gross margin'});
+ const skhy=loadCompanyDive('SKHY',{dir:FIXTURES,...quiet});
+ assert.equal(skhy.labels.eps.ja,'EPS(IFRS・基本)');assert.equal(skhy.labels.margin.ja,'粗利益率');
+ assert.equal(diveLabels({eps:'none (no adjusted EPS)',grossMargin:'not reported',guidance:null}).eps.ja,'EPS');
+ for(const ticker of ['NBIS','ASML','TSM','SKHY'])assert.ok(!/調整後/.test(JSON.stringify(loadCompanyDive(ticker,{dir:FIXTURES,...quiet}).tiles)),ticker);
+ // The guidance note describes paid figures: it is left out with the dive.
+ const view=companyDiveForMember(skhy,{status:'signed-in',plan:'free'},100);
+ assert.equal(view.labels.guidanceNote,null);assert.equal(view.basis,null);
+ assert.equal(companyDiveForMember(skhy,{status:'signed-in',plan:'pro',accessExpiresAt:200},100).labels.guidanceNote,'no revenue guidance is given');
+});
+
+test('guidance with low == high is one figure, not a range',()=>{
+ const d=read('ASML');d.numbers.guidance.high=d.numbers.guidance.low;
+ const dive=validateCompanyDive(d,'ASML');
+ assert.equal(dive.tiles[2].value.ja,'92億ユーロ');assert.equal(dive.tiles[2].value.en,'€9.20B');
+ const view=fs.readFileSync(new URL('../app/research/companies/earnings-dive.tsx',import.meta.url),'utf8');
+ assert.match(view,/if \(low === high\) return/);assert.match(view,/guide\.low === guide\.high/);
 });

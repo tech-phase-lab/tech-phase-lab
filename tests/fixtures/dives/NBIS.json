@@ -9,8 +9,10 @@
  "periodEnd": "2026-09-30",
  "reviewedOn": "2026-11-25",
  "currency": "USD",
- "grossMarginBasis": "gaap",
- "epsBasis": "gaap",
+ "basis": {
+  "eps": "US GAAP diluted net loss per share",
+  "grossMargin": "US GAAP"
+ },
  "sources": [
   {
    "url": "https://example.com/fixtures/nbis-q3-2026",

@@ -44,7 +44,8 @@ function DiveEarnings({view,stale,ownerNotice,lang}:{view:CompanyDiveView;stale:
   <section className={styles.numbers} aria-label={ja?'今回の決算':'Quarterly results'}>{view.tiles.map(t=><div key={t.label.en}><span>{t.label[lang]}</span><strong>{t.value[lang]}</strong><small>{t.note[lang]}</small></div>)}</section>
   <EarningsDive lang={lang} name={view.name} ticker={view.ticker} unlocked={!!paid} failed={false} history={paid?.history??[]}
    live={{period:view.period,releasedOn:view.releasedOn,dive:paid?{numbers:paid.numbers,summary:paid.summary,summaryAt:null,failed:false}:null}}
-   currency={view.currency} periodQuarter={view.periodQuarter} reviewedOn={view.reviewedOn} marginBasis={view.grossMarginBasis} epsBasis={view.epsBasis}/>
+   currency={view.currency} periodQuarter={view.periodQuarter} reviewedOn={view.reviewedOn} marginLabel={view.labels.margin} epsLabel={view.labels.eps}/>
+  {paid&&view.labels.guidanceNote&&<p className={styles.dates}>{ja?'次期の見通しの算出方法（会社資料の記載・英語）':'How the outlook figures were derived'}：{view.labels.guidanceNote}</p>}
   <details className={styles.sources}><summary>{ja?'資料・更新について':'Sources & updates'}</summary><p>{ja?'数値・解説の資料確認日':'Figures and analysis reviewed'}：{view.reviewedOn}。{ja?'数字はすべて会社の公式決算資料から引用し、出典の文言と照合しています。':'Every figure is taken from the company\'s official results materials and checked against the quoted source text.'}</p>{view.sources.map(s=><p key={s.url}><a href={s.url} target="_blank" rel="noreferrer">{s.title} ↗</a></p>)}<p>{ja?`金額の単位は${view.currency==='USD'?'ドル':view.currency==='EUR'?'ユーロ':view.currency==='TWD'?'台湾ドル':'韓国ウォン'}です。実績と会社見通しを区別しています。買い・売りの判定は行っていません。`:`Amounts are in ${view.currency}. Actual results and company guidance are shown separately. No buy or sell rating is assigned.`}</p></details>
  </>;
 }
