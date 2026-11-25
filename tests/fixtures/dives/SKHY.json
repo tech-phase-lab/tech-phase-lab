@@ -1,0 +1,334 @@
+{
+ "ticker": "SKHY",
+ "name": "SK hynix",
+ "exchange": "NASDAQ",
+ "quoteTicker": "SKHY",
+ "period": "Q3 2026",
+ "periodQuarter": 3,
+ "releasedOn": "2026-10-29",
+ "periodEnd": "2026-09-30",
+ "reviewedOn": "2026-11-25",
+ "currency": "KRW",
+ "epsBasis": "gaap",
+ "sources": [
+  {
+   "url": "https://example.com/fixtures/skhy-q3-2026",
+   "title": "Fixture earnings release",
+   "location": "Q3 results"
+  }
+ ],
+ "numbers": {
+  "revenue": {
+   "current": 24448900.0,
+   "previous": 22232000.0,
+   "yearAgo": 17573100.0
+  },
+  "adjustedEPS": 15782.0,
+  "epsEstimate": null,
+  "grossMargin": null,
+  "guidance": null,
+  "segments": null
+ },
+ "history": [
+  {
+   "label": "Q3",
+   "end": "2025-09-30",
+   "value": 17573100.0
+  },
+  {
+   "label": "Q4",
+   "end": "2025-12-31",
+   "value": 19767000.0
+  },
+  {
+   "label": "Q1",
+   "end": "2026-03-31",
+   "value": 17639100.0
+  },
+  {
+   "label": "Q2",
+   "end": "2026-06-30",
+   "value": 22232000.0
+  }
+ ],
+ "tiles": [
+  {
+   "label": {
+    "ja": "売上高",
+    "en": "Revenue"
+   },
+   "value": {
+    "ja": "24.45兆ウォン",
+    "en": "₩24.45T"
+   },
+   "note": {
+    "ja": "前年同期比 +39.1%",
+    "en": "+39.1% YoY"
+   }
+  },
+  {
+   "label": {
+    "ja": "EPS",
+    "en": "EPS"
+   },
+   "value": {
+    "ja": "15,782ウォン",
+    "en": "₩15,782"
+   },
+   "note": {
+    "ja": "1株あたり利益",
+    "en": "Earnings per share"
+   }
+  },
+  {
+   "label": {
+    "ja": "前四半期の売上高",
+    "en": "Prior-quarter revenue"
+   },
+   "value": {
+    "ja": "22.23兆ウォン",
+    "en": "₩22.23T"
+   },
+   "note": {
+    "ja": "比較対象",
+    "en": "Comparison base"
+   }
+  }
+ ],
+ "summary": {
+  "conclusion": [
+   {
+    "ja": "売上は24.45兆ウォンで、前年同期比で約39%増えました。",
+    "en": "Revenue was ₩24.45T, up about 39% year over year."
+   },
+   {
+    "ja": "AI向けの高性能メモリ(HBM)が売上を押し上げました。",
+    "en": "High-bandwidth memory (HBM) for AI lifted revenue."
+   }
+  ],
+  "cards": {
+   "growth": {
+    "headline": {
+     "ja": "HBMの出荷が増えた",
+     "en": "HBM shipments rose"
+    },
+    "chips": [
+     {
+      "tone": "up",
+      "text": {
+       "ja": "前年同期比 +39%",
+       "en": "+39% YoY"
+      }
+     }
+    ],
+    "sections": [
+     {
+      "key": "happened",
+      "text": {
+       "ja": "売上は24.45兆ウォンで、前年同期の17.57兆ウォンから増えました。",
+       "en": "Revenue was ₩24.45T, up from ₩17.57T."
+      }
+     },
+     {
+      "key": "good",
+      "text": {
+       "ja": "AI向けのHBMとサーバー向けDRAMが伸びました。",
+       "en": "HBM and server DRAM grew."
+      }
+     },
+     {
+      "key": "watch",
+      "text": {
+       "ja": "メモリの価格は需要しだいで大きく変わります。",
+       "en": "Memory prices swing with demand."
+      }
+     },
+     {
+      "key": "means",
+      "text": {
+       "ja": "HBMの新製品の量産が次の伸びを左右します。",
+       "en": "The next HBM ramp shapes growth."
+      }
+     }
+    ]
+   },
+   "change": {
+    "headline": {
+     "ja": "売上は前四半期から約10%増",
+     "en": "Revenue up about 10% from the previous quarter"
+    },
+    "chips": [
+     {
+      "tone": "up",
+      "text": {
+       "ja": "前期比 +10%",
+       "en": "+10% QoQ"
+      }
+     }
+    ],
+    "sections": [
+     {
+      "key": "happened",
+      "text": {
+       "ja": "前四半期の22.23兆ウォンから増えました。",
+       "en": "Revenue rose from ₩22.23T."
+      }
+     },
+     {
+      "key": "good",
+      "text": {
+       "ja": "4四半期続けて高い水準を保っています。",
+       "en": "It stayed high for four quarters."
+      }
+     },
+     {
+      "key": "watch",
+      "text": {
+       "ja": "前年に比べて伸び率は落ち着いてきています。",
+       "en": "Growth rates are moderating."
+      }
+     },
+     {
+      "key": "means",
+      "text": {
+       "ja": "価格が保たれるかが次の確認点です。",
+       "en": "Whether prices hold is the next check."
+      }
+     }
+    ]
+   },
+   "caution": {
+    "headline": {
+     "ja": "価格と設備投資の動きに注意",
+     "en": "Watch pricing and capex"
+    },
+    "chips": [
+     {
+      "tone": "down",
+      "text": {
+       "ja": "価格の変動",
+       "en": "Price swings"
+      }
+     }
+    ],
+    "sections": [
+     {
+      "key": "happened",
+      "text": {
+       "ja": "メモリの価格は過去にも大きく下がったことがあります。",
+       "en": "Memory prices have fallen sharply before."
+      }
+     },
+     {
+      "key": "good",
+      "text": {
+       "ja": "今は需要が供給を上回っています。",
+       "en": "Demand now exceeds supply."
+      }
+     },
+     {
+      "key": "watch",
+      "text": {
+       "ja": "各社の増産で供給が増えると価格が下がる可能性があります。",
+       "en": "Industry capacity additions could pressure prices."
+      }
+     },
+     {
+      "key": "means",
+      "text": {
+       "ja": "在庫と価格の動きを毎四半期確認します。",
+       "en": "Check inventory and pricing each quarter."
+      }
+     }
+    ]
+   },
+   "next": {
+    "headline": {
+     "ja": "次の確認点はHBMの供給計画",
+     "en": "Next: HBM supply plans"
+    },
+    "chips": [
+     {
+      "tone": "gold",
+      "text": {
+       "ja": "次回の決算",
+       "en": "Next report"
+      }
+     }
+    ],
+    "sections": [
+     {
+      "key": "happened",
+      "text": {
+       "ja": "この資料に次期の売上見通しの数字はありません。",
+       "en": "This fixture has no revenue guidance."
+      }
+     },
+     {
+      "key": "good",
+      "text": {
+       "ja": "HBMの供給契約は来年分まで決まっていると説明されています。",
+       "en": "HBM supply is described as committed into next year."
+      }
+     },
+     {
+      "key": "watch",
+      "text": {
+       "ja": "契約の条件は公表されていません。",
+       "en": "Contract terms are not disclosed."
+      }
+     },
+     {
+      "key": "means",
+      "text": {
+       "ja": "次回は新製品の出荷時期を確認します。",
+       "en": "Next time, check new-product shipment timing."
+      }
+     }
+    ]
+   }
+  }
+ },
+ "evidence": [
+  {
+   "field": "numbers.revenue.current",
+   "url": "https://example.com/fixtures/skhy-q3-2026",
+   "quote": "fixture numbers.revenue.current: 24448900.0"
+  },
+  {
+   "field": "numbers.revenue.previous",
+   "url": "https://example.com/fixtures/skhy-q3-2026",
+   "quote": "fixture numbers.revenue.previous: 22232000.0"
+  },
+  {
+   "field": "numbers.revenue.yearAgo",
+   "url": "https://example.com/fixtures/skhy-q3-2026",
+   "quote": "fixture numbers.revenue.yearAgo: 17573100.0"
+  },
+  {
+   "field": "numbers.adjustedEPS",
+   "url": "https://example.com/fixtures/skhy-q3-2026",
+   "quote": "fixture numbers.adjustedEPS: 15782.0"
+  },
+  {
+   "field": "history[0].value",
+   "url": "https://example.com/fixtures/skhy-q3-2026",
+   "quote": "fixture history[0].value: 17573100.0"
+  },
+  {
+   "field": "history[1].value",
+   "url": "https://example.com/fixtures/skhy-q3-2026",
+   "quote": "fixture history[1].value: 19767000.0"
+  },
+  {
+   "field": "history[2].value",
+   "url": "https://example.com/fixtures/skhy-q3-2026",
+   "quote": "fixture history[2].value: 17639100.0"
+  },
+  {
+   "field": "history[3].value",
+   "url": "https://example.com/fixtures/skhy-q3-2026",
+   "quote": "fixture history[3].value: 22232000.0"
+  }
+ ]
+}

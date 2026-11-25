@@ -1,0 +1,356 @@
+{
+ "ticker": "NBIS",
+ "name": "Nebius",
+ "exchange": "NASDAQ",
+ "quoteTicker": "NBIS",
+ "period": "Q3 2026",
+ "periodQuarter": 3,
+ "releasedOn": "2026-11-12",
+ "periodEnd": "2026-09-30",
+ "reviewedOn": "2026-11-25",
+ "currency": "USD",
+ "grossMarginBasis": "gaap",
+ "epsBasis": "gaap",
+ "sources": [
+  {
+   "url": "https://example.com/fixtures/nbis-q3-2026",
+   "title": "Fixture earnings release",
+   "location": "Financial highlights"
+  }
+ ],
+ "numbers": {
+  "revenue": {
+   "current": 1250.4,
+   "previous": 582.3,
+   "yearAgo": 156.1
+  },
+  "adjustedEPS": -0.31,
+  "epsEstimate": null,
+  "grossMargin": {
+   "current": 71.2,
+   "previous": 68.4
+  },
+  "guidance": {
+   "low": 1400,
+   "high": 1550,
+   "grossMarginPercent": null
+  },
+  "segments": [
+   {
+    "key": "ai-cloud",
+    "nameJa": "AIクラウド",
+    "nameEn": "AI cloud",
+    "revenue": 1190.2,
+    "previous": 541.0,
+    "operatingMargin": 12.4,
+    "previousOperatingMargin": 8.1
+   }
+  ]
+ },
+ "history": [
+  {
+   "label": "Q3",
+   "end": "2025-09-30",
+   "value": 156.1
+  },
+  {
+   "label": "Q4",
+   "end": "2025-12-31",
+   "value": 228.7
+  },
+  {
+   "label": "Q1",
+   "end": "2026-03-31",
+   "value": 399.0
+  },
+  {
+   "label": "Q2",
+   "end": "2026-06-30",
+   "value": 582.3
+  }
+ ],
+ "summary": {
+  "conclusion": [
+   {
+    "ja": "売上は前年同期の約8倍に増えましたが、純損失は続いています。",
+    "en": "Revenue rose to about 8x the prior year, while the net loss continued."
+   },
+   {
+    "ja": "次の四半期の売上見通しは14億〜15.5億ドルです。",
+    "en": "The next-quarter revenue outlook is $1.4–1.55B."
+   }
+  ],
+  "cards": {
+   "growth": {
+    "headline": {
+     "ja": "AIクラウドの売上が前四半期の約2.2倍",
+     "en": "AI cloud revenue about 2.2x the previous quarter"
+    },
+    "chips": [
+     {
+      "tone": "up",
+      "text": {
+       "ja": "AIクラウド +120%",
+       "en": "AI cloud +120%"
+      }
+     }
+    ],
+    "sections": [
+     {
+      "key": "happened",
+      "text": {
+       "ja": "AIクラウドの売上は11.9億ドルで、前四半期の5.41億ドルから増えました。",
+       "en": "AI cloud revenue was $1.19B, up from $541M."
+      }
+     },
+     {
+      "key": "good",
+      "text": {
+       "ja": "新しいデータセンターが稼働し、売上の大半を占めるようになりました。",
+       "en": "New data centers came online and now drive most revenue."
+      }
+     },
+     {
+      "key": "watch",
+      "text": {
+       "ja": "増えた売上の多くが少数の大口顧客によるものです。",
+       "en": "Much of the increase came from a few large customers."
+      }
+     },
+     {
+      "key": "means",
+      "text": {
+       "ja": "稼働する設備が増えるほど、次の四半期も売上が伸びやすくなります。",
+       "en": "More capacity in service should support next-quarter revenue."
+      }
+     }
+    ],
+    "segment": "ai-cloud"
+   },
+   "change": {
+    "headline": {
+     "ja": "売上は前四半期の約2.1倍",
+     "en": "Revenue about 2.1x the previous quarter"
+    },
+    "chips": [
+     {
+      "tone": "up",
+      "text": {
+       "ja": "前期比 +115%",
+       "en": "+115% QoQ"
+      }
+     },
+     {
+      "tone": "gold",
+      "text": {
+       "ja": "粗利益率 71.2%",
+       "en": "Gross margin 71.2%"
+      }
+     }
+    ],
+    "sections": [
+     {
+      "key": "happened",
+      "text": {
+       "ja": "売上は12.5億ドルで、前四半期の5.82億ドルから増えました。",
+       "en": "Revenue was $1.25B, up from $582M."
+      }
+     },
+     {
+      "key": "good",
+      "text": {
+       "ja": "粗利益率も68.4%から71.2%に上がりました。",
+       "en": "Gross margin rose from 68.4% to 71.2%."
+      }
+     },
+     {
+      "key": "watch",
+      "text": {
+       "ja": "設備の減価償却費が増えるため、利益率は四半期ごとに上下します。",
+       "en": "Rising depreciation can move margins quarter to quarter."
+      }
+     },
+     {
+      "key": "means",
+      "text": {
+       "ja": "売上の伸びと利益率の両方が続くかが次の確認点です。",
+       "en": "Whether growth and margins both hold is the next check."
+      }
+     }
+    ]
+   },
+   "caution": {
+    "headline": {
+     "ja": "純損失と設備投資が続く",
+     "en": "Net loss and heavy capex continue"
+    },
+    "chips": [
+     {
+      "tone": "down",
+      "text": {
+       "ja": "EPS −0.31ドル",
+       "en": "EPS −$0.31"
+      }
+     }
+    ],
+    "sections": [
+     {
+      "key": "happened",
+      "text": {
+       "ja": "1株あたりの損益は−0.31ドルで、赤字が続いています。",
+       "en": "EPS was −$0.31, still a loss."
+      }
+     },
+     {
+      "key": "good",
+      "text": {
+       "ja": "損失の幅は売上の伸びに比べて小さくなっています。",
+       "en": "The loss is small relative to revenue growth."
+      }
+     },
+     {
+      "key": "watch",
+      "text": {
+       "ja": "データセンター建設のための借入と株式発行が増える可能性があります。",
+       "en": "Borrowing and share issuance for data centers may rise."
+      }
+     },
+     {
+      "key": "means",
+      "text": {
+       "ja": "黒字化の時期は、設備の稼働率と資金調達の条件しだいです。",
+       "en": "The path to profit depends on utilization and funding terms."
+      }
+     }
+    ]
+   },
+   "next": {
+    "headline": {
+     "ja": "次期の売上見通しは14億〜15.5億ドル",
+     "en": "Next-quarter revenue outlook $1.4–1.55B"
+    },
+    "chips": [
+     {
+      "tone": "gold",
+      "text": {
+       "ja": "会社見通し",
+       "en": "Company outlook"
+      }
+     }
+    ],
+    "sections": [
+     {
+      "key": "happened",
+      "text": {
+       "ja": "会社は次の四半期の売上を14億〜15.5億ドルと見込んでいます。",
+       "en": "The company expects $1.4–1.55B next quarter."
+      }
+     },
+     {
+      "key": "good",
+      "text": {
+       "ja": "見通しの下限でも今回の売上を上回ります。",
+       "en": "Even the low end is above this quarter."
+      }
+     },
+     {
+      "key": "watch",
+      "text": {
+       "ja": "新しい設備の稼働が遅れると見通しに届かない可能性があります。",
+       "en": "Delays in new capacity could miss the range."
+      }
+     },
+     {
+      "key": "means",
+      "text": {
+       "ja": "実績が見通しの範囲のどこに着地するかを確認します。",
+       "en": "Check where the result lands in the range."
+      }
+     }
+    ]
+   }
+  }
+ },
+ "evidence": [
+  {
+   "field": "numbers.revenue.current",
+   "url": "https://example.com/fixtures/nbis-q3-2026",
+   "quote": "fixture numbers.revenue.current: 1250.4"
+  },
+  {
+   "field": "numbers.revenue.previous",
+   "url": "https://example.com/fixtures/nbis-q3-2026",
+   "quote": "fixture numbers.revenue.previous: 582.3"
+  },
+  {
+   "field": "numbers.revenue.yearAgo",
+   "url": "https://example.com/fixtures/nbis-q3-2026",
+   "quote": "fixture numbers.revenue.yearAgo: 156.1"
+  },
+  {
+   "field": "numbers.adjustedEPS",
+   "url": "https://example.com/fixtures/nbis-q3-2026",
+   "quote": "fixture numbers.adjustedEPS: -0.31"
+  },
+  {
+   "field": "numbers.grossMargin.current",
+   "url": "https://example.com/fixtures/nbis-q3-2026",
+   "quote": "fixture numbers.grossMargin.current: 71.2"
+  },
+  {
+   "field": "numbers.grossMargin.previous",
+   "url": "https://example.com/fixtures/nbis-q3-2026",
+   "quote": "fixture numbers.grossMargin.previous: 68.4"
+  },
+  {
+   "field": "numbers.guidance.low",
+   "url": "https://example.com/fixtures/nbis-q3-2026",
+   "quote": "fixture numbers.guidance.low: 1400"
+  },
+  {
+   "field": "numbers.guidance.high",
+   "url": "https://example.com/fixtures/nbis-q3-2026",
+   "quote": "fixture numbers.guidance.high: 1550"
+  },
+  {
+   "field": "numbers.segments.ai-cloud.revenue",
+   "url": "https://example.com/fixtures/nbis-q3-2026",
+   "quote": "fixture numbers.segments.ai-cloud.revenue: 1190.2"
+  },
+  {
+   "field": "numbers.segments.ai-cloud.previous",
+   "url": "https://example.com/fixtures/nbis-q3-2026",
+   "quote": "fixture numbers.segments.ai-cloud.previous: 541.0"
+  },
+  {
+   "field": "numbers.segments.ai-cloud.operatingMargin",
+   "url": "https://example.com/fixtures/nbis-q3-2026",
+   "quote": "fixture numbers.segments.ai-cloud.operatingMargin: 12.4"
+  },
+  {
+   "field": "numbers.segments.ai-cloud.previousOperatingMargin",
+   "url": "https://example.com/fixtures/nbis-q3-2026",
+   "quote": "fixture numbers.segments.ai-cloud.previousOperatingMargin: 8.1"
+  },
+  {
+   "field": "history[0].value",
+   "url": "https://example.com/fixtures/nbis-q3-2026",
+   "quote": "fixture history[0].value: 156.1"
+  },
+  {
+   "field": "history[1].value",
+   "url": "https://example.com/fixtures/nbis-q3-2026",
+   "quote": "fixture history[1].value: 228.7"
+  },
+  {
+   "field": "history[2].value",
+   "url": "https://example.com/fixtures/nbis-q3-2026",
+   "quote": "fixture history[2].value: 399.0"
+  },
+  {
+   "field": "history[3].value",
+   "url": "https://example.com/fixtures/nbis-q3-2026",
+   "quote": "fixture history[3].value: 582.3"
+  }
+ ]
+}
