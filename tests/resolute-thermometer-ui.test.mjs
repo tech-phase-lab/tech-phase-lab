@@ -46,6 +46,29 @@ test('actual gauge switches indices immediately, clears missing readings and iso
    state.review={scenario:'sample'};r=render(locale,snapshot());assert.match(r.html,locale==='ja'?/表示見本・実際の相場ではありません/:/Not actual market data/);assert.doesNotMatch(r.html,/-12.5%/);
    state.review={scenario:'live'};r=render(locale,undefined);assert.doesNotMatch(r.html,/rotate\(/);assert.doesNotMatch(r.html,/Not actual market data|表示見本・実際/);
   }
+  // TP恐怖指数 card (owner spec, Nov 25): heading, % value with one decimal, glowing band, ▼ and ticks; no 10-year position.
+  for(const locale of ['ja','en']){
+   state.review=null;
+   const bands=locale==='ja'?['落ち着いている','ふつう','荒れ始めている','大きく荒れている']:['Calm','Normal','Getting rough','Very rough'];
+   for(const [level,band,left] of [[12.3,0,20.5],[15,1,25],[18.6,1,43],[20,2,50],[25,2,62.5],[30,3,100],[41,3,100]]){
+    state.values=[];
+    const html=render(locale,{...snapshot(),vix:{status:'ready',asOf:'2026-10-23',level,percentile:57}}).html;
+    assert.ok(html.includes(locale==='ja'?'>TP恐怖指数</h2>':'>TP Fear Index</h2>'));
+    assert.doesNotMatch(html,/市場の警戒度|Market caution|過去10年内の位置|Position over the past 10 years|57 \/ 100|…/);
+    assert.ok(html.includes(`>${level.toFixed(1)}%</p>`));assert.ok(!html.includes(level.toFixed(2)));
+    assert.ok(html.includes(locale==='ja'?'2026-10-23 米国市場の終値':'2026-10-23 US market close'));
+    assert.equal((html.match(/data-active="true"/g)||[]).length,1);
+    assert.match(html,new RegExp(`data-band="${band}" data-active="true"`));
+    assert.ok(html.includes(`left:clamp(10px, ${left}%, calc(100% - 10px))`));
+    for(const tick of ['15%','20%','30%'])assert.ok(html.includes(`>${tick}</span>`));
+    assert.ok(html.includes(locale==='ja'?'相場がどれだけ荒れているかを表す数字です。VIX指数と同じ目盛りで見られて、数字が大きいほど荒れています。':'Shows how rough the market is. It reads on the same scale as the VIX — the higher the number, the rougher the market.'));
+    assert.ok(html.includes(locale==='ja'?'温度の判定には含めません。':'Not included in the temperature score.'));
+    const text=html.replace(/<[^>]+>/g,'');for(const label of bands)assert.ok(text.includes(label),label);
+   }
+   state.values=[];
+   const empty=render(locale,snapshot()).html;
+   assert.doesNotMatch(empty,/data-active="true"|left:clamp/);assert.ok(empty.includes(locale==='ja'?'確定したデータの取得後に表示します。':'Shown once confirmed data is available.'));
+  }
   for(const locale of ['ja','en']) {
    state.review=null;
    const home=value=>renderToStaticMarkup(React.createElement(HomeCard,{locale,snapshot:value}));

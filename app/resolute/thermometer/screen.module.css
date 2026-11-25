@@ -1,3 +1,23 @@
 .indexSwitch{width:min(100%,250px)}
 .indexSwitch button{font-size:13px;padding:10px 12px;white-space:nowrap}
 .reading .explanation{font-size:13px;line-height:1.6;color:var(--sub);margin:8px 0}
+/* TP恐怖指数 card (owner spec, Nov 25): heading top left, % value, four equal bands with a gold ▼ and 15/20/30% ticks. */
+.fearCard{text-align:left;align-items:stretch;gap:16px}
+.fearReading{display:flex;flex-direction:column;gap:4px}
+.fearNumber{font-family:var(--font-resolute-serif),"Hiragino Mincho ProN","Yu Mincho",serif;font-size:44px;font-weight:700;line-height:1.25;color:var(--gold2);font-variant-numeric:lining-nums tabular-nums}
+.fearScale{display:flex;flex-direction:column;gap:6px;padding-top:4px}
+.fearMarkerTrack{position:relative;height:20px}
+.fearMarker{position:absolute;top:0;width:0;height:0;transform:translateX(-50%);border-left:10px solid transparent;border-right:10px solid transparent;border-top:16px solid var(--gold2);filter:drop-shadow(0 0 5px #f3dfaeaa) drop-shadow(0 0 2px #d8b36a)}
+.fearBands{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px}
+.fearBands li{display:flex;flex-wrap:wrap;align-content:center;justify-content:center;text-align:center;min-height:40px;padding:6px 3px;border-radius:8px;border:2px solid transparent;font-size:12px;line-height:1.35;color:#e6e0d2;opacity:.8;overflow-wrap:anywhere}
+.fearBands li span{display:inline-block;max-width:100%}
+.fearBands li[data-band="0"]{background:#2c4669}
+.fearBands li[data-band="1"]{background:#5c5733}
+.fearBands li[data-band="2"]{background:#6a4a2b}
+.fearBands li[data-band="3"]{background:#6b2a33}
+.fearBands li[data-active=true]{opacity:1;color:#fff6dc;font-weight:700;border-color:var(--gold2);box-shadow:0 0 12px #d8b36a99,0 0 2px #f3dfae inset}
+.fearTicks{position:relative;height:18px;font-size:11px;color:var(--sub);font-variant-numeric:tabular-nums}
+.fearTicks span{position:absolute;top:0;transform:translateX(-50%);white-space:nowrap}
+.fearDescription{font-size:14px;line-height:1.8;color:var(--ink)}
+.fearNote{text-align:left;padding-top:14px;border-top:1px solid var(--line)}
+@media(min-width:1024px){.fearCard{width:100%;max-width:520px;align-self:flex-start}.fearBands li{font-size:13px;min-height:36px}}
