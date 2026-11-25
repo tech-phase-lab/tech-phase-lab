@@ -1,0 +1,156 @@
+{
+  "root": {
+    "ticker": "APLE",
+    "name": "アップル・ホスピタリティREIT",
+    "cik": 1418121,
+    "name_en": "Apple Hospitality REIT, Inc."
+  },
+  "rows": [
+    {
+      "ja": "ホテルブランド(フランチャイズ元)",
+      "en": "Hotel brands (franchisors)"
+    },
+    {
+      "ja": "運営会社",
+      "en": "Hotel managers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "MAR",
+      "ticker": "MAR",
+      "name": "マリオット",
+      "name_en": "Marriott International",
+      "sub": "ホテル",
+      "sub_en": "Hotels",
+      "sub_short": "ホテル",
+      "sub_short_en": "Hotels",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ほぼ全ホテルがマリオットかヒルトンのブランドで営業",
+          "text_en": "Nearly all hotels run under Marriott or Hilton brands",
+          "source": {
+            "label": "Apple Hospitality REIT 10-K(2025年度)",
+            "label_en": "Apple Hospitality REIT 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1418121/000119312526064008/aple-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "Substantially all of the Company's hotels operate under brands owned by Marriott or Hilton."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HLT",
+      "ticker": "HLT",
+      "name": "ヒルトン",
+      "name_en": "Hilton",
+      "sub": "ホテル",
+      "sub_en": "Hotels",
+      "sub_short": "ホテル",
+      "sub_short_en": "Hotels",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ほぼ全ホテルがマリオットかヒルトンのブランドで営業",
+          "text_en": "Nearly all hotels run under Marriott or Hilton brands",
+          "source": {
+            "label": "Apple Hospitality REIT 10-K(2025年度)",
+            "label_en": "Apple Hospitality REIT 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1418121/000119312526064008/aple-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "Substantially all of the Company's hotels operate under brands owned by Marriott or Hilton."
+          }
+        }
+      ]
+    },
+    {
+      "id": "H",
+      "ticker": "H",
+      "name": "ハイアット",
+      "name_en": "Hyatt Hotels",
+      "sub": "ホテル",
+      "sub_en": "Hotels",
+      "sub_short": "ホテル",
+      "sub_short_en": "Hotels",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ハイアット系ブランドのフランチャイズ契約",
+          "text_en": "Franchise agreements for Hyatt-branded hotels",
+          "source": {
+            "label": "Apple Hospitality REIT 10-K(2025年度)",
+            "label_en": "Apple Hospitality REIT 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1418121/000119312526064008/aple-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "The remainder of the Company's hotels are also managed by companies that are not affiliated with Marriott, Hilton or Hyatt, and as a result, the branded hotels are required to obtain and maintain separate franchise agreements with each respective franchisor."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Crestline",
+      "ticker": "Crestline",
+      "name": "クレストライン・ホテルズ",
+      "name_en": "Crestline Hotels & Resorts",
+      "sub": "ホテル運営",
+      "sub_en": "Hotel mgmt",
+      "sub_short": "運営会社",
+      "sub_short_en": "Hotel ops",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "マリオットから運営を引き継いだ運営会社",
+          "text_en": "Took over management of a hotel from Marriott",
+          "source": {
+            "label": "Apple Hospitality REIT 10-K(2025年度)",
+            "label_en": "Apple Hospitality REIT 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1418121/000119312526064008/aple-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "In January 2026, management responsibility of this property was transferred from Marriott to Crestline."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Dimension",
+      "ticker": "Dimension",
+      "name": "ディメンション・ディベロップメント",
+      "name_en": "Dimension Development",
+      "sub": "ホテル運営",
+      "sub_en": "Hotel mgmt",
+      "sub_short": "運営会社",
+      "sub_short_en": "Hotel ops",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "マリオットから運営を引き継いだ運営会社",
+          "text_en": "Took over management of a hotel from Marriott",
+          "source": {
+            "label": "Apple Hospitality REIT 10-K(2025年度)",
+            "label_en": "Apple Hospitality REIT 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1418121/000119312526064008/aple-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "In January 2026, management responsibility of this property was transferred from Marriott to Dimension."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

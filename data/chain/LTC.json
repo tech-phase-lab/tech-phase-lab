@@ -1,0 +1,182 @@
+{
+  "root": {
+    "ticker": "LTC",
+    "name": "LTCプロパティーズ",
+    "cik": 887905,
+    "name_en": "LTC Properties, Inc."
+  },
+  "rows": [
+    {
+      "ja": "主な賃借人(運営会社)",
+      "en": "Main tenants (operators)"
+    },
+    {
+      "ja": "合弁の相手",
+      "en": "JV partners"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "HMGHealthcare",
+      "ticker": "HMG Healthcare",
+      "name": "HMGヘルスケア",
+      "name_en": "HMG Healthcare",
+      "sub": "介護施設",
+      "sub_en": "Nursing",
+      "sub_short": "介護施設",
+      "sub_short_en": "Nursing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大の賃借人。2025年賃料収入の12.5%",
+          "text_en": "Largest tenant: 12.5% of 2025 rental revenue",
+          "source": {
+            "label": "LTC Properties 10-K(2025年度)",
+            "label_en": "LTC Properties 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/887905/000110465926019178/ltc-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "HMG Healthcare, LLC SNF 12.5 % 9.8 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Carespring",
+      "ticker": "Carespring",
+      "name": "ケアスプリング",
+      "name_en": "Carespring Healthcare Management",
+      "sub": "介護施設",
+      "sub_en": "Nursing",
+      "sub_short": "介護施設",
+      "sub_short_en": "Nursing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "賃借人。2025年賃料収入の11.9%",
+          "text_en": "Tenant: 11.9% of 2025 rental revenue",
+          "source": {
+            "label": "LTC Properties 10-K(2025年度)",
+            "label_en": "LTC Properties 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/887905/000110465926019178/ltc-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Carespring Healthcare Management, LLC SNF 11.9 % 9.9 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "EncoreSL",
+      "ticker": "Encore Senior Living",
+      "name": "アンコール・シニアリビング",
+      "name_en": "Encore Senior Living",
+      "sub": "高齢住宅",
+      "sub_en": "Seniors",
+      "sub_short": "高齢住宅",
+      "sub_short_en": "Seniors",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "賃借人。2025年賃料収入の11.0%",
+          "text_en": "Tenant: 11.0% of 2025 rental revenue",
+          "source": {
+            "label": "LTC Properties 10-K(2025年度)",
+            "label_en": "LTC Properties 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/887905/000110465926019178/ltc-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Encore Senior Living SH 11.0 % 8.6 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BKD",
+      "ticker": "BKD",
+      "name": "ブルックデール・シニアリビング",
+      "name_en": "Brookdale Senior Living",
+      "sub": "高齢住宅",
+      "sub_en": "Seniors",
+      "sub_short": "高齢住宅",
+      "sub_short_en": "Seniors",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "賃借人。2025年賃料収入の11.0%",
+          "text_en": "Tenant: 11.0% of 2025 rental revenue",
+          "source": {
+            "label": "LTC Properties 10-K(2025年度)",
+            "label_en": "LTC Properties 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/887905/000110465926019178/ltc-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Brookdale Senior Living Communities, Inc. SH 11.0 % 8.8 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Genesis",
+      "ticker": "Genesis Healthcare",
+      "name": "ジェネシス・ヘルスケア",
+      "name_en": "Genesis Healthcare",
+      "sub": "介護",
+      "sub_en": "Care",
+      "sub_short": "介護",
+      "sub_short_en": "Care",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "6施設の賃借人。2025年に破産法申請",
+          "text_en": "Leases six SNFs; filed Chapter 11 in 2025",
+          "source": {
+            "label": "LTC Properties 10-K(2025年度)",
+            "label_en": "LTC Properties 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/887905/000110465926019178/ltc-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Affiliates of Genesis lease six SNFs in New Mexico (five) and Alabama (one) with a total of 782 beds under a master lease with LTC."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ALGSenior",
+      "ticker": "ALG Senior",
+      "name": "ALGシニア",
+      "name_en": "ALG Senior",
+      "sub": "高齢住宅",
+      "sub_en": "Seniors",
+      "sub_short": "高齢住宅",
+      "sub_short_en": "Seniors",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "融資を出資に切り替えた合弁(LTCが53%)",
+          "text_en": "JV formed from a loan swap (LTC holds 53%)",
+          "source": {
+            "label": "LTC Properties 10-K(2025年度)",
+            "label_en": "LTC Properties 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/887905/000110465926019178/ltc-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "We then entered into a newly formed $122,460 JV with ALG, whereby we exchanged our $64,450 mortgage loan receivable for a 53% controlling interest in the JV."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
