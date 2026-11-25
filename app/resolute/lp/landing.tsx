@@ -6,7 +6,7 @@ import Book from "./book";
 import OpenAtTop from "./open-at-top";
 import TechPhaseBack from "./tech-phase-back";
 import OwnedRedirect from "./owned-redirect";
-import { Anchor, Feature, stars } from "./parts";
+import { Anchor, Feature, PcBar, stars } from "./parts";
 import s from "./lp.module.css";
 import Disclaimer from "../disclaimer";
 import BuyButton from "./buy-button";
@@ -22,8 +22,8 @@ function Price({ price }: { price: ResolutePrice }) {
   <p className={s.amount}><del>¥9,800</del><b>¥7,980</b><small>税込</small></p>
  </div>;
 }
-function Buy({ price, small = false }: { price: ResolutePrice; small?: boolean }) {
- return <div className={s.buy}>
+function Buy({ price, small = false, id }: { price: ResolutePrice; small?: boolean; id?: string }) {
+ return <div className={s.buy} id={id}>
   <BuyButton language="ja" shownValue={price.value} className={small ? `${s.cta} ${s.ctaSmall}` : s.cta}>RESOLUTEを手に入れる</BuyButton>
   <p className={s.guest}>ログインなしでも購入できます</p>
  </div>;
@@ -35,12 +35,13 @@ export default function Landing({ embedded = false }: { embedded?: boolean }) {
   <OpenAtTop />
   <TechPhaseBack en={false} />
   {embedded ? null : <><script dangerouslySetInnerHTML={{ __html: ownedGuardScript(BAR_STATE_KEY) }} /><OwnedRedirect /></>}
+  <PcBar en={false} embedded={embedded} />
   <main className={s.lp}>
    {/* 1 ファーストビュー */}
-   <section className={s.hero}>
+   <section className={s.hero} id="top">
     <div className={s.mark}><Anchor className={s.anchor} /><span className={s.wordmark}>RESOLUTE</span></div>
     <p className={s.kana}>レゾリュート</p>
-    <h1 className={s.catch}>暴落の夜も<br />急騰の夜も<br /><em>自分のルールを守る</em></h1>
+    <h1 className={s.catch}>暴落の夜も<br /><span className={s.catchSecond}>急騰の夜も</span><br /><em>自分のルールを守る</em></h1>
     <p className={s.lead}>相場が荒れた日に立ち戻る場所を<br />あなたのスマホに置いておくキットです。</p>
     <div className={s.phone} aria-hidden="true"><div className={s.screen}>
      <p className={s.miniBrand}>RESOLUTE</p>
@@ -49,11 +50,11 @@ export default function Landing({ embedded = false }: { embedded?: boolean }) {
      <div className={s.miniTiles}><span>迷った日の一冊</span><span>ルールのお守り</span></div>
     </div></div>
     <Price price={price} />
-    <Buy price={price} />
+    <Buy price={price} id="buy" />
    </section>
 
    {/* 2 TWO NIGHTS */}
-   <section className={s.sec}>
+   <section className={`${s.sec} ${s.nights}`} id="nights">
     <p className={s.eyebrow}>TWO NIGHTS</p>
     <h2 className={s.h2}>相場には判断を誤りやすい<br />夜が2つあります。</h2>
     <article className={`${s.night} ${s.crash}`}><p className={s.tag}>CRASH</p><h3>暴落の夜</h3><p>含み損が気になって眠れない。SNSを何度も開いては不安が大きくなる。気づけば朝まで売るかどうか迷っている。</p></article>
@@ -62,7 +63,7 @@ export default function Landing({ embedded = false }: { embedded?: boolean }) {
    </section>
 
    {/* 3 WHAT IS RESOLUTE */}
-   <section className={s.sec}>
+   <section className={`${s.sec} ${s.what}`}>
     <p className={s.eyebrow}>WHAT IS RESOLUTE</p>
     <h2 className={s.h2}>どんな相場でも<br /><span className={s.hang}>冷静に立ち回れる自分へ。</span></h2>
     <p className={`${s.body} ${s.lines}`}>{WHAT.replace("置いておく。", "置いておく。\n")}</p>
@@ -76,7 +77,7 @@ export default function Landing({ embedded = false }: { embedded?: boolean }) {
    </section>
 
    {/* 4 FEATURES */}
-   <section className={s.sec}>
+   <section className={s.sec} id="features">
     <p className={s.eyebrow}>FEATURES</p>
     <h2 className={s.h2}><span className={s.big}>11</span> の機能を<br />ひとつのキットに。</h2>
 
@@ -87,9 +88,11 @@ export default function Landing({ embedded = false }: { embedded?: boolean }) {
       <p className={s.qText}>持っている株が1か月で20%下がりました。あなたはどうしますか?</p>
       <ul className={s.choices}><li>何もしない</li><li className={s.picked}>決めていた分だけ買い増す</li><li>一部を売って様子を見る</li></ul>
      </div>
-     <Feature title="ルール診断" text="ボタンを押すだけの30問。終わるとあなた専用の投資ルールができあがります。" />
-     <Feature title="資産シミュレーション" text="下落した場合も上昇した場合も、資産がどう動くかを先に試せます。" />
-     <Feature title="税金の目安" text="急騰で利益を確定する前に、手取りがいくらになるかが分かります。NISAと特定口座の違いや損失の繰り越しまで計算します。" />
+     <div className={s.featureGrid}>
+      <Feature title="ルール診断" text="ボタンを押すだけの30問。終わるとあなた専用の投資ルールができあがります。" />
+      <Feature title="資産シミュレーション" text="下落した場合も上昇した場合も、資産がどう動くかを先に試せます。" />
+      <Feature title="税金の目安" text="急騰で利益を確定する前に、手取りがいくらになるかが分かります。NISAと特定口座の違いや損失の繰り越しまで計算します。" />
+     </div>
     </div>
 
     <div className={s.group}>
@@ -98,19 +101,27 @@ export default function Landing({ embedded = false }: { embedded?: boolean }) {
       <div className={s.lock} aria-hidden="true"><p className={s.clock}>9:41</p><p className={s.lockBrand}>RESOLUTE</p><dl><dt>許容できる下落</dt><dd>−30%</dd><dt>1銘柄の上限</dt><dd>資産の10%</dd></dl><p className={s.lockRule}>−10%までは何もしない</p></div>
       <div className={s.wallNote}><p>ロック画面を開くたびに自分のルールが目に入ります。</p><small>タイプ3種 ・ 大きさ ・ 背景色<br />自分の写真も使えます</small></div>
      </div>
-     <Feature title="ルールのお守り" text="あなたのルールをロック画面の壁紙にして持ち歩けます。" />
-     <Book />
-     <p className={s.bookNote}>診断の答えから、あなただけの一冊ができます</p>
-     <Feature title="迷った日の一冊" text="診断で決めたルールを一冊にまとめました。迷った日に読み返す場所です。" />
+     <div className={s.featureGrid}>
+      <Feature title="ルールのお守り" text="あなたのルールをロック画面の壁紙にして持ち歩けます。" />
+      <div className={s.bookCard}>
+       <Book />
+       <p className={s.bookNote}>診断の答えから、あなただけの一冊ができます</p>
+       <Feature title="迷った日の一冊" text="診断で決めたルールを一冊にまとめました。迷った日に読み返す場所です。" />
+      </div>
+     </div>
     </div>
 
-    <div className={s.group}>
+    <div className={`${s.group} ${s.groupWide}`}>
      <p className={s.groupNo}>03 <b>知らせる</b></p>
-     <AlertSample />
-     <div className={s.thermo} aria-hidden="true"><p className={s.thermoWord}>やや熱い</p><p className={s.thermoIdx}>TP大型株100</p><div className={s.track}><i style={{ left: "66%" }} /></div><p className={s.thermoEnds}><span>冷えている</span><span>熱い</span></p></div>
-     <Feature title="終値アラート" text="自分で決めたラインに到達すると、選んだ朝の時間にスマホ通知でお知らせします。画面を見張る必要はありません。" />
-     <Feature title="翌朝のひとこと" text="アラートが届いた翌朝に1通だけ。ひと晩おいた頭で読み返せます。" />
-     <Feature title="相場の温度計" text="いまの相場が冷えているか熱いかを5段階で表示します。急騰で浮かれそうな日にも役立ちます。" />
+     <div className={s.visualPair}>
+      <AlertSample />
+      <div className={s.thermo} aria-hidden="true"><p className={s.thermoWord}>やや熱い</p><p className={s.thermoIdx}>TP大型株100</p><div className={s.track}><i style={{ left: "66%" }} /></div><p className={s.thermoEnds}><span>冷えている</span><span>熱い</span></p></div>
+     </div>
+     <div className={s.featureGrid}>
+      <Feature title="終値アラート" text="自分で決めたラインに到達すると、選んだ朝の時間にスマホ通知でお知らせします。画面を見張る必要はありません。" />
+      <Feature title="翌朝のひとこと" text="アラートが届いた翌朝に1通だけ。ひと晩おいた頭で読み返せます。" />
+      <Feature title="相場の温度計" text="いまの相場が冷えているか熱いかを5段階で表示します。急騰で浮かれそうな日にも役立ちます。" />
+     </div>
     </div>
 
     <div className={s.group}>
@@ -123,9 +134,11 @@ export default function Landing({ embedded = false }: { embedded?: boolean }) {
       </ul>
       <div className={s.video}><span className={s.play} /><div><b>今夜のひと息</b><small>リゼルから</small></div><em>1:40</em></div>
      </div>
-     <Feature title="暴落の夜に開く" text="リゼルの短い動画と、あなたが決めた「やらないこと」を1画面に。今夜は決めなくていいと思い出せます。" />
-     <Feature title="衝撃度チェッカー" text="その日の気になるニュースを選び、指標の実際の動きと記事の内容から★5段階の目安を出します。大きなニュースがない日は公開しません。" />
-     <Feature title="リゼルの一言" text="ニュースごとに、リゼル本人の見方をひと言添えて届けます。" />
+     <div className={s.featureGrid}>
+      <Feature title="暴落の夜に開く" text="リゼルの短い動画と、あなたが決めた「やらないこと」を1画面に。今夜は決めなくていいと思い出せます。" />
+      <Feature title="衝撃度チェッカー" text="その日の気になるニュースを選び、指標の実際の動きと記事の内容から★5段階の目安を出します。大きなニュースがない日は公開しません。" />
+      <Feature title="リゼルの一言" text="ニュースごとに、リゼル本人の見方をひと言添えて届けます。" />
+     </div>
     </div>
    </section>
 
@@ -138,7 +151,7 @@ export default function Landing({ embedded = false }: { embedded?: boolean }) {
    </section>
 
    {/* 6 MESSAGE */}
-   <section className={s.sec}>
+   <section className={`${s.sec} ${s.message}`} id="message">
     <p className={s.eyebrow}>MESSAGE</p>
     <div className={s.author}>
      {/* eslint-disable-next-line @next/next/no-img-element -- the photo is swapped for the owner's own file later */}
@@ -153,7 +166,7 @@ export default function Landing({ embedded = false }: { embedded?: boolean }) {
    </section>
 
    {/* 7 よくある質問 */}
-   <section className={s.sec}>
+   <section className={`${s.sec} ${s.faqSec}`} id="faq">
     <p className={s.eyebrow}>FAQ</p>
     <h2 className={s.h2}>よくある質問</h2>
     <div className={s.faq}>

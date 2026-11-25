@@ -89,8 +89,10 @@ test('display after the switch: no launch line, no strike-through, only ¥9,800 
     assert.equal(jaBefore.match(/<label[^>]*data-consent=""[^>]*><input type="checkbox"[^>]*\/><span><a href="\/terms"[^>]*>利用規約<\/a>と<a href="\/privacy"[^>]*>プライバシーポリシー<\/a>に同意する<\/span><\/label><a href="\/resolute\/checkout/g).length, 3);
     assert.equal(enBefore.match(/<span>I agree to the <a href="\/terms\?lang=en"[^>]*>Terms of Service<\/a> and <a href="\/privacy\?lang=en"[^>]*>Privacy Policy<\/a><\/span><\/label><a href="\/resolute\/checkout/g).length, 3);
     assert.ok(!jaBefore.includes('に同意のうえお進みください') && !enBefore.includes('By continuing, you agree'));
-    assert.equal(jaBefore.match(/>RESOLUTEを手に入れる<\/a>/g).length, 3);
-    assert.equal(enBefore.match(/>Get RESOLUTE<\/a>/g).length, 3);
+    // Three buy buttons; the PC top menu (Nov 25) adds a link with the same words that only scrolls to the first one.
+    assert.equal(jaBefore.match(/data-buy="paypal">RESOLUTEを手に入れる<\/a>/g).length, 3);
+    assert.equal(enBefore.match(/data-buy="paypal">Get RESOLUTE<\/a>/g).length, 3);
+    assert.equal(jaBefore.match(/<a href="#buy"[^>]*>RESOLUTEを手に入れる<\/a>/g).length, 1);
   } finally { Date.now = realNow; await rm(dir, { recursive: true, force: true }); }
   for (const page of ['../app/resolute/lp/page.tsx', '../app/resolute/lp/en/page.tsx']) assert.match(read(page), /export const dynamic = "force-dynamic";/);
 });

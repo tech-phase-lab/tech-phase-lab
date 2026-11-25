@@ -123,10 +123,11 @@ export default function ToolShell({ identityReady=true, home=false, pc=false, ch
  </div></main>;
  // Phone (owner, Nov 25 §A/§B): the shared RESOLUTE look (styles.mobile) with the top bar and the menu.
  return <main className={`${styles.page} ${styles.mobile} ${home?styles.homePage:""}`} lang={locale}><div className={`${home?styles.homeWrap:styles.wrap} ${h.shell}`}>
-  <ResoluteHeader locale={locale} setLocale={setLocale} home={home} />
-  {home ? null : <HomeLink en={en} />}
-  {body}
-  {reviewNote}
+  {/* A page with a PC layout keeps its content at the same place in the tree on the phone (inside a box-less wrapper), so
+   crossing 1024px (a window resized, a screenshot) does not remount the page and lose what was typed, such as quiz answers. */}
+  <><ResoluteHeader locale={locale} setLocale={setLocale} home={home} />
+  {home ? null : <HomeLink en={en} />}</>
+  {pc ? <div className={styles.shellBody}>{body}{reviewNote}</div> : <>{body}{reviewNote}</>}
   {home && !reviewing ? <AddToHomeCard en={en} /> : null}
  </div></main>;
 }
