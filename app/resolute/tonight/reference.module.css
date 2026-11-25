@@ -5,11 +5,10 @@
 .root * { box-sizing:border-box; }
 .root { margin:0; padding:0; width:100%; color:var(--ink); font-family:var(--font); font-size:16px; line-height:1.8; word-break:auto-phrase; }
 .wrap { max-width:600px; margin:0 auto; display:flex; flex-direction:column; gap:18px; }
-.root h1 { font-family:var(--serif); font-size:30px; line-height:1.4; margin:0; text-align:center; color:var(--gold2); }
-.lead { margin:0; text-align:center; color:var(--sub); font-size:15px; text-wrap:balance; }
 .phrase { display:inline-block; white-space:nowrap; }
 .grid { display:flex; flex-direction:column; gap:16px; }
-.card { min-width:0; background:linear-gradient(180deg,var(--panel),var(--bg2)) padding-box,linear-gradient(135deg,rgba(243,223,174,.7),rgba(216,179,106,.18) 45%,rgba(216,179,106,.18) 55%,rgba(243,223,174,.6)) border-box; border:1px solid transparent; border-radius:22px; padding:22px 18px; display:flex; flex-direction:column; gap:14px; box-shadow:0 12px 40px rgba(0,0,0,.3); }
+/* Panels use the shared RESOLUTE tokens (diagnosis.module.css .page: --rz-panel-fill / --rz-panel-edge), on the phone and on PC. */
+.card { min-width:0; background:var(--rz-panel-fill) padding-box,var(--rz-panel-edge) border-box; border:1px solid transparent; border-radius:22px; padding:22px 18px; display:flex; flex-direction:column; gap:14px; box-shadow:0 12px 40px rgba(0,0,0,.3); }
 .root h2 { font-family:var(--serif); font-size:19px; font-weight:500; margin:-8px 0 0; color:var(--ink); }
 .eyebrow { font-size:11px; color:var(--gold); letter-spacing:.3em; }
 .muted { margin:0; color:var(--sub); font-size:14px; }
@@ -99,5 +98,4 @@
 .pc .grid { display:grid; grid-template-columns:minmax(0,1.3fr) minmax(0,1fr); gap:24px; align-items:stretch; }
 .pc .card { padding:22px 24px; }
 .pc .videoCard { padding:18px; }
-.pc h1 { text-align:left; font-size:34px; color:var(--ink); }
 .pc .disc { margin-top:4px; }

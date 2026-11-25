@@ -14,6 +14,8 @@ import {ANSWER_LABEL,alertLines,fixedTonightQuestions,money,nearestLine,recordVi
 import {parseTonightResponse,requestTonight} from '@/lib/resolute/tonight-transport';
 import {usableFavoriteQuote,type FavoriteQuote} from '@/lib/research/favorite-lists';
 import type {NotificationSettings} from '@/lib/resolute/notification-settings';
+import SectionHeading from '../section-heading';
+import styles from '../diagnosis.module.css';
 import pc from '../pc.module.css';
 import s from './reference.module.css';
 
@@ -78,13 +80,13 @@ function Tonight({locale,snapshot:initial}:{locale:'ja'|'en';snapshot?:Thermomet
   <TonightVideo key={video.url} url={video.url!} poster={video.poster} title={video.title} en={en}/>
   <div className={s.picks} role="group" aria-label={t('動画','Videos')}>{TONIGHT_VIDEOS.map((v,i)=><button key={v.id} type="button" className={s.pick} aria-pressed={videoIndex===i} onClick={()=>setChosen(i)}><span>{v[language].title}</span><small>{clock(v[language].seconds)}</small></button>)}</div>
   <div className={s.pickFoot}>{videoIndex===picked&&move?<p className={s.picked}>{t('今夜はこの1本を選んでいます','We picked this one for tonight')}</p>:<span/>}
-   <div className={s.lang} role="group" aria-label={t('動画の言語','Video language')}>{(['ja','en'] as const).map(l=><button key={l} type="button" className={s.chip} aria-pressed={language===l} onClick={()=>setVideoLanguage(l)}>{l==='ja'?'日本語':'English'}</button>)}</div></div>
+   <div className={s.lang} role="group" aria-label={t('動画の言語','Video language')}>{(['ja','en'] as const).map(l=><button key={l} type="button" className={`${styles.pill} ${s.chip}`} aria-pressed={language===l} onClick={()=>setVideoLanguage(l)}>{l==='ja'?'日本語':'English'}</button>)}</div></div>
  </section>;
 
  const questionPanel=<section className={s.card}>
   <div className={s.eyebrow}>TONIGHT’S QUESTIONS</div><h2>{t('今夜の3つの質問','Three questions for tonight')}</h2>
   {questions?<ol className={s.qs}>{questions.questions.map((q,i)=><li key={i}><span>{q.ask[locale]}</span>{q.note?<small>{q.note[locale]}</small>:null}</li>)}</ol>:<ol className={s.qs} aria-busy="true">{[0,1,2].map(i=><li key={i} className={s.skeleton}/>)}</ol>}
-  <div className={s.qFoot}><button className={s.primary} onClick={()=>setWait(true)}>{t('今夜は決めない','Leave the decision until tomorrow')}</button>
+  <div className={s.qFoot}><button className={`${styles.primary} ${s.primary}`} onClick={()=>setWait(true)}>{t('今夜は決めない','Leave the decision until tomorrow')}</button>
    <p aria-live="polite" className={`${s.after} ${wait?s.on:''}`}>{t('決めなくて大丈夫です。','You don’t have to decide now.')}<br/>{t('ルールは、明日も同じです。','Your rules will still be here tomorrow.')}</p></div>
  </section>;
 
@@ -106,7 +108,7 @@ function Tonight({locale,snapshot:initial}:{locale:'ja'|'en';snapshot?:Thermomet
  </section>;
 
  const header=desktop?<header><p className={pc.eyebrow}><b>TONIGHT</b>{t('今夜のひと息','A moment to breathe')}</p><h1 className={pc.title}>{t('今夜のひと息','A moment to breathe')}</h1><p className={pc.lead}>{t('お知らせの内容はもう読みましたね。ひと息つきましょう。','You’ve read the alert. Now take a breath.')}</p></header>
-  :<><h1>{t('今夜のひと息','A moment to breathe')}</h1><p className={s.lead}>{en?'You’ve read the alert. Now take a breath.':<><span className={s.phrase}>お知らせの内容はもう読みましたね。</span><wbr/><span className={s.phrase}>ひと息つきましょう。</span></>}</p></>;
+  :<SectionHeading title={t('今夜のひと息','A moment to breathe')} description={en?'You’ve read the alert. Now take a breath.':<><span className={s.phrase}>お知らせの内容はもう読みましたね。</span><wbr/><span className={s.phrase}>ひと息つきましょう。</span></>}/>;
  return <div className={`${s.root} ${desktop?s.pc:''}`}><div className={desktop?pc.content:s.wrap}>
   {header}
   <div className={s.grid}>{videoPanel}{questionPanel}{similarPanel}{recordPanel}</div>
