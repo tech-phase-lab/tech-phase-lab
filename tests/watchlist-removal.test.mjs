@@ -27,6 +27,7 @@ function harness(lang='ja', editable=true, ready=true, status='synced') {
   if(id==='@/lib/research/watchlist-freshness')return freshness;
   if(id==='@/lib/research/watchlist-session')return {quoteForSession:()=>null};
   if(id==='./use-quote-clock')return {useQuoteClock:()=>Date.now()};
+  if(id==='./use-watchlist-snapshot')return {useWatchlistSnapshot:()=>({quotes:{},owner:null,lists:null}),saveWatchlistQuotes:()=>{}};
   if(id==='./use-watchlist-sectors')return {useWatchlistSectors:()=>({})};
   if(id==='@/lib/research/watchlist-sector')return {watchlistSector:()=>null};
   if(id==='@/lib/research/display-time')return require('../lib/research/display-time.ts');
