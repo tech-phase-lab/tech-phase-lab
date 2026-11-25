@@ -1,0 +1,134 @@
+{
+  "ticker": "ASML",
+  "name": "ASML",
+  "exchange": "NASDAQ",
+  "quoteTicker": "ASML",
+  "period": "Q3 2026",
+  "periodQuarter": 3,
+  "releasedOn": "2026-10-14",
+  "periodEnd": "2026-09-27",
+  "reviewedOn": "2026-11-25",
+  "currency": "EUR",
+  "basis": {"eps": "US GAAP basic net income per ordinary share, EUR (diluted €12.93)", "grossMargin": "US GAAP (no adjusted measure)"},
+  "sources": [
+    {"url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026065813/pressreleasefinancialresul.htm", "title": "ASML reports €11.7 billion total net sales and €5.0 billion net income in Q3 2026 (Form 6-K, Exhibit 99.1)", "location": "Key figures table, CEO statement and outlook, share buyback"},
+    {"url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026065813/a2026_10x14xpresentation.htm", "title": "ASML 2026 third-quarter results presentation (Form 6-K, Exhibit 99.2)", "location": "Outlook; Consolidated statements of operations and cash flows, quarter on quarter"},
+    {"url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026065813/financial_statementsxusx.htm", "title": "ASML Financial Statements US GAAP Q3 2026 (Form 6-K, Exhibit 99.3)", "location": "Consolidated Statements of Operations; Consolidated Balance Sheets"}
+  ],
+  "evidence": [
+    {"field": "numbers.revenue.current", "url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026065813/pressreleasefinancialresul.htm", "quote": "Q2 2026 Q3 2026 Total net sales 9,326 11,662"},
+    {"field": "numbers.revenue.previous", "url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026065813/pressreleasefinancialresul.htm", "quote": "Q2 2026 Q3 2026 Total net sales 9,326 11,662"},
+    {"field": "numbers.revenue.yearAgo", "url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026065813/a2026_10x14xpresentation.htm", "quote": "Total net sales 7,516 9,718 8,767 9,326 11,662"},
+    {"field": "numbers.adjustedEPS", "url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026065813/pressreleasefinancialresul.htm", "quote": "EPS (basic; in euros) 7.59 12.95"},
+    {"field": "numbers.grossMargin.current", "url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026065813/pressreleasefinancialresul.htm", "quote": "Gross margin (%) 54.0 57.5"},
+    {"field": "numbers.grossMargin.previous", "url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026065813/pressreleasefinancialresul.htm", "quote": "Gross margin (%) 54.0 57.5"},
+    {"field": "numbers.guidance.low", "url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026065813/pressreleasefinancialresul.htm", "quote": "We expect fourth-quarter 2026 total net sales between €14.2 billion and €15.2 billion, with a gross margin around 57%.", "calc": "14.2*1000"},
+    {"field": "numbers.guidance.high", "url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026065813/pressreleasefinancialresul.htm", "quote": "We expect fourth-quarter 2026 total net sales between €14.2 billion and €15.2 billion, with a gross margin around 57%.", "calc": "15.2*1000"},
+    {"field": "numbers.guidance.grossMarginPercent", "url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026065813/pressreleasefinancialresul.htm", "quote": "We expect fourth-quarter 2026 total net sales between €14.2 billion and €15.2 billion, with a gross margin around 57%."},
+    {"field": "history[0].value", "url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026065813/a2026_10x14xpresentation.htm", "quote": "Total net sales 7,516 9,718 8,767 9,326 11,662"},
+    {"field": "history[1].value", "url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026065813/a2026_10x14xpresentation.htm", "quote": "Total net sales 7,516 9,718 8,767 9,326 11,662"},
+    {"field": "history[2].value", "url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026065813/a2026_10x14xpresentation.htm", "quote": "Total net sales 7,516 9,718 8,767 9,326 11,662"},
+    {"field": "history[3].value", "url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026065813/a2026_10x14xpresentation.htm", "quote": "Total net sales 7,516 9,718 8,767 9,326 11,662"},
+    {"field": "tiles[0].value", "url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026065813/a2026_10x14xpresentation.htm", "quote": "Total net sales 7,516 9,718 8,767 9,326 11,662", "calc": "11662/1000", "round": 2},
+    {"field": "tiles[0].note", "url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026065813/a2026_10x14xpresentation.htm", "quote": "Total net sales 7,516 9,718 8,767 9,326 11,662", "calc": "(11662/7516-1)*100", "round": 0},
+    {"field": "tiles[1].value", "url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026065813/pressreleasefinancialresul.htm", "quote": "Gross margin (%) 54.0 57.5"},
+    {"field": "tiles[1].note", "url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026065813/pressreleasefinancialresul.htm", "quote": "Gross margin (%) 54.0 57.5"},
+    {"field": "tiles[2].value", "url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026065813/pressreleasefinancialresul.htm", "quote": "Net income 2,918 4,960", "calc": "4960/1000", "round": 2},
+    {"field": "tiles[2].note", "url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026065813/financial_statementsxusx.htm", "quote": "Gain (loss) on equity investments — 509.7 — 509.7", "calc": "509.7/1000", "round": 2},
+    {"field": "summary.cards.growth", "url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026065813/pressreleasefinancialresul.htm", "quote": "Q2 2026 Q3 2026 Total net sales 9,326 11,662 ...of which Installed Base Management sales 1 2,762 3,289 New lithography systems sold (units) 86 113"},
+    {"field": "summary.cards.growth", "url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026065813/pressreleasefinancialresul.htm", "quote": "Installed Base Management sales 1 came in above guidance at €3.3 billion"},
+    {"field": "summary.cards.change", "url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026065813/a2026_10x14xpresentation.htm", "quote": "Income from operations as a percentage of net sales 32.8 35.3 36.0 37.1 44.4"},
+    {"field": "summary.cards.change", "url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026065813/pressreleasefinancialresul.htm", "quote": "Net income 2,918 4,960"},
+    {"field": "summary.cards.change", "url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026065813/financial_statementsxusx.htm", "quote": "Gain (loss) on equity investments — 509.7 — 509.7"},
+    {"field": "summary.cards.caution", "url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026065813/pressreleasefinancialresul.htm", "quote": "we now expect that our supply as currently planned for both 2027 and 2028 will not fully meet the demand of our customers"},
+    {"field": "summary.cards.caution", "url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026065813/pressreleasefinancialresul.htm", "quote": "we are investigating ways to increase capacity for 2028 beyond the 30% increase we previously communicated"},
+    {"field": "summary.cards.caution", "url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026065813/pressreleasefinancialresul.htm", "quote": "some customers are expressing an interest in placing orders with us for 2029 and even 2030"},
+    {"field": "summary.cards.caution", "url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026065813/a2026_10x14xpresentation.htm", "quote": "Free cash flow 1 244 10,940 (2,608) 1,317 11,351"},
+    {"field": "summary.cards.caution", "url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026065813/financial_statementsxusx.htm", "quote": "Contract liabilities 3,366.3 9,300.6"},
+    {"field": "summary.cards.next", "url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026065813/a2026_10x14xpresentation.htm", "quote": "of which Installed Base Management1 sales around €3.7 billion"},
+    {"field": "summary.cards.next", "url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026065813/pressreleasefinancialresul.htm", "quote": "We expect total net sales for 2026 to be between €44 billion and €45 billion, with a gross margin around 56%"},
+    {"field": "summary.cards.next", "url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026065813/pressreleasefinancialresul.htm", "quote": "In the third quarter, we purchased around €4.1 billion worth of shares"}
+  ],
+  "numbers": {
+    "revenue": {"current": 11662, "previous": 9326, "yearAgo": 7516},
+    "adjustedEPS": 12.95,
+    "epsEstimate": null,
+    "grossMargin": {"current": 57.5, "previous": 54.0},
+    "guidance": {"low": 14200, "high": 15200, "grossMarginPercent": 57},
+    "segments": null
+  },
+  "history": [
+    {"label": "Q3", "end": "2025-09-28", "value": 7516},
+    {"label": "Q4", "end": "2025-12-31", "value": 9718},
+    {"label": "Q1", "end": "2026-03-29", "value": 8767},
+    {"label": "Q2", "end": "2026-06-28", "value": 9326}
+  ],
+  "tiles": [
+    {"label": {"ja": "売上高", "en": "Total net sales"}, "value": {"ja": "116.62億ユーロ", "en": "€11.66B"}, "note": {"ja": "前年同期比 +55%", "en": "+55% YoY"}},
+    {"label": {"ja": "粗利益率", "en": "Gross margin"}, "value": {"ja": "57.5%", "en": "57.5%"}, "note": {"ja": "前期は54.0%", "en": "54.0% last quarter"}},
+    {"label": {"ja": "純利益", "en": "Net income"}, "value": {"ja": "49.6億ユーロ", "en": "€4.96B"}, "note": {"ja": "株式投資の評価益5.1億ユーロを含む", "en": "Includes a €0.51B equity investment gain"}}
+  ],
+  "summary": {
+    "conclusion": [
+      {"ja": "売上は116.62億ユーロで、前期から25%、前年同期から55%増えました。粗利益率も54.0%から57.5%に上がりました。", "en": "Total net sales were €11.66B, up 25% from the previous quarter and 55% from a year ago. Gross margin rose from 54.0% to 57.5%."},
+      {"ja": "ただし純利益49.6億ユーロには、株式投資の評価益約5.1億ユーロが含まれています。", "en": "However, net income of €4.96B includes a gain of about €0.51B on equity investments."},
+      {"ja": "会社は、2027年と2028年は今の計画では供給が顧客の需要に追いつかないとして、生産能力をさらに増やす方法を検討しています。", "en": "The company says its currently planned supply for 2027 and 2028 will not fully meet customer demand, and it is investigating ways to add more capacity."}
+    ],
+    "cards": {
+      "growth": {
+        "headline": {"ja": "装置の販売台数が86台から113台に", "en": "New systems sold rose from 86 to 113"},
+        "chips": [
+          {"tone": "up", "text": {"ja": "新規の露光装置 86台 → 113台", "en": "New lithography systems 86 → 113"}},
+          {"tone": "up", "text": {"ja": "保守・アップグレード 27.62億 → 32.89億ユーロ", "en": "Installed Base €2.76B → €3.29B"}}
+        ],
+        "sections": [
+          {"key": "happened", "text": {"ja": "新しい露光装置の販売台数は前期の86台から113台に増えました。保守・アップグレードなどの売上(Installed Base Management)も27.62億ユーロから32.89億ユーロに増え、会社の見通しを上回りました。", "en": "New lithography systems sold rose from 86 to 113. Installed Base Management sales (service and upgrades) rose from €2.76B to €3.29B, above the company's guidance."}},
+          {"key": "good", "text": {"ja": "装置の売上と、すでに納めた装置からの保守・アップグレード収入の両方が伸びています。会社は、生産性を上げるアップグレードの需要が強いと説明しています。", "en": "Both new systems and service on installed machines grew. The company points to strong demand for productivity upgrades."}},
+          {"key": "watch", "text": {"ja": "装置の売上は、納める台数と時期で四半期ごとに大きく動きます。前年同期は75.16億ユーロ、第4四半期は97.18億ユーロ、第1四半期は87.67億ユーロと、増減をくり返してきました。", "en": "System sales move a lot with the number and timing of shipments. Over the past year sales went €7.52B, €9.72B, €8.77B and €9.33B, rising and falling."}}
+        ],
+        "segment": null
+      },
+      "change": {
+        "headline": {"ja": "売上は前期比 +25.0%、粗利益率も上昇", "en": "Revenue up 25.0% QoQ, gross margin also higher"},
+        "chips": [
+          {"tone": "up", "text": {"ja": "売上 前期比 +25.0%", "en": "Revenue +25.0% QoQ"}},
+          {"tone": "up", "text": {"ja": "粗利益率 54.0% → 57.5%", "en": "Gross margin 54.0% → 57.5%"}}
+        ],
+        "sections": [
+          {"key": "happened", "text": {"ja": "売上は93.26億ユーロから116.62億ユーロへ、23.36億ユーロ増えました。粗利益率も54.0%から57.5%に上がっています。", "en": "Total net sales rose from €9.33B to €11.66B, up €2.34B. Gross margin also rose, from 54.0% to 57.5%."}},
+          {"key": "good", "text": {"ja": "営業利益率は37.1%から44.4%に上がりました。売上の伸びと利益率の上昇が重なり、本業の利益が大きく増えています。", "en": "Operating margin rose from 37.1% to 44.4%. Higher sales and higher margins together lifted operating profit sharply."}},
+          {"key": "watch", "text": {"ja": "純利益は29.18億ユーロから49.6億ユーロに増えましたが、この中には株式投資の評価益約5.1億ユーロが入っています。毎期くり返す利益ではありません。", "en": "Net income rose from €2.92B to €4.96B, but that includes a gain of about €0.51B on equity investments, which does not recur every quarter."}},
+          {"key": "view", "text": {"ja": "本業の伸びは強い内容です。純利益の伸び率は評価益の分だけ大きく見えるので、営業利益と分けて見ます。", "en": "The core business grew strongly. Net income growth looks larger because of the gain, so read it alongside operating profit."}}
+        ],
+        "segment": null
+      },
+      "caution": {
+        "headline": {"ja": "2027・2028年は供給が需要に届かない見通し", "en": "Supply for 2027 and 2028 is not expected to meet demand"},
+        "chips": [
+          {"tone": "down", "text": {"ja": "今の計画では2027・2028年の供給が不足", "en": "Planned 2027–28 supply short of demand"}},
+          {"tone": "gold", "text": {"ja": "FCF 前期13.17億 → 113.51億ユーロ", "en": "FCF €1.32B → €11.35B"}}
+        ],
+        "sections": [
+          {"key": "happened", "text": {"ja": "会社は、2027年と2028年は今の生産計画では顧客の需要を満たせないと説明しました。2028年については、すでに示していた30%増を超える能力増強を検討しています。2029年や2030年の注文を出したいという顧客もいます。", "en": "The company said its currently planned supply for 2027 and 2028 will not fully meet customer demand, and it is investigating capacity for 2028 beyond the 30% increase announced earlier. Some customers want to place orders for 2029 and even 2030."}},
+          {"key": "watch", "text": {"ja": "需要があっても、作れる台数で売上の上限が決まります。能力を増やすには時間と投資が必要です。また長期の前払い金(契約負債)は昨年末の33.66億ユーロから93.01億ユーロに増え、フリーキャッシュフローは第1四半期の−26.08億ユーロから第3四半期の113.51億ユーロまで大きく振れています。", "en": "Even with demand, revenue is capped by how many machines can be built, and adding capacity takes time and investment. Long-term customer prepayments (contract liabilities) rose from €3.37B at the end of last year to €9.30B, and free cash flow swung from −€2.61B in Q1 to €11.35B in Q3."}},
+          {"key": "means", "text": {"ja": "前払い金は、装置を納める前に受け取るお金です。四半期ごとの現金の動きは受け取りの時期で大きく変わるので、それだけで判断しないことが大切です。", "en": "Prepayments are received before machines are delivered, so quarterly cash flow swings with their timing and should not be read on its own."}},
+          {"key": "view", "text": {"ja": "需要の強さは確認できますが、それを売上にできるかは生産能力しだいです。次の決算で、能力増強の計画がどう具体化するかを見ます。", "en": "Demand is clearly strong, but turning it into sales depends on capacity. Check in the next report how the capacity plans take shape."}}
+        ],
+        "segment": null
+      },
+      "next": {
+        "headline": {"ja": "次期の会社見通しを追う", "en": "Follow the company's outlook for next quarter"},
+        "chips": [
+          {"tone": "gold", "text": {"ja": "売上 142〜152億ユーロ", "en": "Sales €14.2–15.2B"}},
+          {"tone": "gold", "text": {"ja": "粗利益率 約57%", "en": "Gross margin ~57%"}}
+        ],
+        "sections": [
+          {"key": "happened", "text": {"ja": "会社は、次期の売上を142億〜152億ユーロ(うち保守・アップグレード約37億ユーロ)、粗利益率を約57%と見込んでいます。今回の116.62億ユーロより、下限でも約22%多い水準です。", "en": "The company expects next-quarter sales of €14.2B to €15.2B (including about €3.7B of Installed Base Management) and a gross margin of about 57%. Even the low end is about 22% above this quarter's €11.66B."}},
+          {"key": "watch", "text": {"ja": "粗利益率の見通し(約57%)は今回の57.5%をわずかに下回ります。2026年通年の粗利益率は約56%の見通しです。", "en": "The margin outlook (about 57%) is slightly below this quarter's 57.5%. The full-year 2026 gross margin outlook is about 56%."}},
+          {"key": "view", "text": {"ja": "次の決算で、売上がこの幅のどこに入るかと、通年で440億〜450億ユーロの見通しに届くかを確かめます。", "en": "In the next report, check where sales land in this range and whether the full-year outlook of €44B to €45B is met."}}
+        ],
+        "segment": null
+      }
+    }
+  }
+}
