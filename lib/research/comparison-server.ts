@@ -2,7 +2,7 @@ import "server-only";
 import { unstable_cache } from "next/cache";
 import { comparisonCatalog } from "./comparison-catalog";
 import providers from "./providers.json";
-import { COMPARISON_EXCLUSIONS, comparisonExclusion, tickersByCik } from "./comparison-exclusions";
+import { COMPARISON_EXCLUSIONS, comparableEntries, comparisonExclusion, tickersByCik } from "./comparison-exclusions";
 import { parseSecDirectory } from "./stock-directory";
 import { emptyFinancials } from "./comparison";
 import { prepareComparisonAnalysis, currentComparisonAnalysis } from "./comparison-analysis";
@@ -175,8 +175,11 @@ export async function prewarmComparison(ticker: string): Promise<boolean> {
   return (await loadSecFinancials(ticker)).status !== "unavailable";
 }
 
-/** The SEC's list of listed companies (cached for a day), for the background job's universe. */
-export const comparisonDirectory = () => directory();
+/** The SEC's list of listed companies (cached for a day), for the background job's universe: only the tickers the comparison offers
+ * (comparison-exclusions.ts). Production log, Nov 25: the job spent 51 credits a day on each of ~910 funds, preferreds, notes and ETNs
+ * that no member can compare (CFTR-PA, BHFAP, GOOGN, PDI, ...), many of them answered 404 by the provider; leaving them out takes the job
+ * from five companies a minute to four and gives those credits to members. */
+export const comparisonDirectory = async () => comparableEntries(await directory(), COMPARISON_EXCLUSIONS);
 
 const STATEMENT_FACTORS = ["growth", "profitability", "cash", "financial", "stability"] as const;
 /** For the background job, about once a week per company: does this company's filing leave a figure that only the provider's statements can

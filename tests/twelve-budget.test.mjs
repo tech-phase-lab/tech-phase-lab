@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { ALLOCATOR_RETRY_MS, CEILING, PLAN_CREDITS_PER_MINUTE, STALE_LIMIT_MS, createGovernor, createLeaseGovernor, createReader, creditCost, quoteSlotMs, barSlotMs, stocksTrading } from "../lib/research/twelve-budget.ts";
+import { ALLOCATOR_RETRY_MS, CEILING, MEMBER_RESERVE_FACTOR, MEMBER_RESERVE_MIN, MEMBER_WINDOW, PLAN_CREDITS_PER_MINUTE, createAllocatorModel, memberReserve, tierCeiling, STALE_LIMIT_MS, createGovernor, createLeaseGovernor, createReader, creditCost, quoteSlotMs, barSlotMs, stocksTrading } from "../lib/research/twelve-budget.ts";
 import { T0, clockAt, memoryStore, simulate } from "./support/twelve-load-sim.mjs";
 
 
@@ -27,6 +27,26 @@ test("tiers: background yields first, then members' pages; price alerts keep roo
   assert.equal(py("TWELVE_MAX_USED"), CEILING.background);
   const valueCheck = Number(/^CREDIT_CEILING = (\d+)/m.exec(readFileSync(new URL("../scripts/research/value_check.py", import.meta.url), "utf8"))[1]);
   assert.ok(valueCheck <= CEILING.background);
+});
+
+test("members first: the warm and background jobs yield to what members asked for (Nov 25: the job left members ~25 credits a minute)", () => {
+  const allocator = readFileSync(new URL("../scripts/research/twelve_allocator.py", import.meta.url), "utf8");
+  const py = name => Number(new RegExp(`^${name} = (\\d+)`, "m").exec(allocator)[1]);
+  assert.deepEqual([py("MEMBER_RESERVE_MIN"), py("MEMBER_RESERVE_FACTOR"), py("MEMBER_WINDOW")], [MEMBER_RESERVE_MIN, MEMBER_RESERVE_FACTOR, MEMBER_WINDOW]);
+  assert.ok(CEILING.warm + MEMBER_RESERVE_MIN <= CEILING.user);
+  const none = new Map();
+  assert.equal(tierCeiling("warm", memberReserve(none, none, 100)), CEILING.warm);
+  assert.equal(tierCeiling("warm", memberReserve(new Map([[99, 150]]), none, 100)), CEILING.user - 300);
+  assert.equal(tierCeiling("background", memberReserve(new Map([[99, 300]]), none, 100)), 0);
+  assert.equal(tierCeiling("warm", memberReserve(new Map([[90, 300]]), none, 100)), CEILING.warm); // older than the window
+  assert.equal(tierCeiling("warm", memberReserve(none, new Map([[100, 1]]), 100)), 0); // a member refused: the jobs stop
+  assert.equal(tierCeiling("user", 480), CEILING.user); assert.equal(tierCeiling("critical", 480), CEILING.critical);
+  // The allocator model: members asking 120 in one minute leave the job 480 - 240 in the next.
+  let t = Date.UTC(2026, 10, 25, 15, 0, 5);
+  const model = createAllocatorModel({ readMeter: () => 0, now: () => t });
+  for (let i = 0; i < 10; i++) assert.equal(model.grant(12, "user"), true);
+  t += 60_000;
+  assert.equal(model.grant(200, "warm"), true); assert.equal(model.grant(50, "warm"), false);
 });
 
 test("slots: a minute while stocks trade (4:00-20:00 New York, weekdays), fifteen minutes otherwise; currencies always a minute", () => {
@@ -199,7 +219,7 @@ test("load: 1,000 members at once (500 watchlists polled every 15 s, 500 browsin
   assert.equal(run.errors, 0);
   assert.equal(run.served, run.lookups, "every lookup is answered, fresh or with the last good copy");
   assert.ok(run.fresh / run.lookups > 0.5, `fresh ${(run.fresh / run.lookups).toFixed(2)}`);
-  console.log(`new design: peak ${run.peak}/min, per minute ${run.minutes.join(",")}, fresh ${(100 * run.fresh / run.lookups).toFixed(1)}%, oldest copy ${(run.maxAgeMs / 60_000).toFixed(0)} min`);
+  console.log(`new design: peak ${run.peak}/min, per minute ${run.minutes.join(",")}, site ${run.site}, monitor jobs ${run.monitor}, fresh ${(100 * run.fresh / run.lookups).toFixed(1)}%, oldest copy ${(run.maxAgeMs / 60_000).toFixed(0)} min`);
 });
 
 test("load: the owner's example (200 active members, 5 pages a minute each) stays inside the plan even spread over 150 server instances", { timeout: 120_000 }, async () => {
