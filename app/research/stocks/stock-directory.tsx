@@ -254,6 +254,8 @@ export default function StockDirectory({ sectors }: { sectors?: Record<string, S
   // A chosen stock folds the search screen away (owner, Nov 25): the heading, history, results and their time are hidden, not removed, so
   // 「‹ 検索結果」 and Back find the same list (and its prices) at the same scroll position.
   const detail = Boolean(selectedResultKey);
+  // The slim field names the chosen stock (sheet: 「⌕ NVDA ×」); the search itself (e.g. 「NV」) is kept for 「‹ 検索結果」 and Back.
+  const selectedTicker = directQuote?.ticker ?? profile?.ticker ?? selectedResultKey?.split(":")[0] ?? "";
   const asOfNote = asOf ? <time dateTime={asOf}>{asOfLabel(displayClock(asOf, lang), lang)}</time> : null;
 
   return <div className={base.app} lang={lang}>
@@ -267,8 +269,8 @@ export default function StockDirectory({ sectors }: { sectors?: Record<string, S
         <button type="button" className={searchStyles.backButton} onClick={showSearchResults}><span aria-hidden="true">‹</span>{t("検索結果", "Results")}</button>
         <div className={searchStyles.slimField}>
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" /><path d="m16 16 5 5" /></svg>
-          <input autoComplete="off" autoCapitalize="characters" spellCheck={false} inputMode="search" value={query} onChange={(event) => { themeSelection.current = null; changeQuery(event.target.value); }} aria-label={t("米国株を検索", "Search U.S. stocks")} />
-          {query && <button type="button" aria-label={t("入力を消す", "Clear")} onClick={() => { themeSelection.current = null; changeQuery(""); }}><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" aria-hidden="true"><path d="M3 3l6 6M9 3l-6 6" /></svg></button>}
+          <input autoComplete="off" autoCapitalize="characters" spellCheck={false} inputMode="search" value={selectedTicker} onChange={(event) => { themeSelection.current = null; changeQuery(event.target.value); }} aria-label={t("米国株を検索", "Search U.S. stocks")} />
+          <button type="button" aria-label={t("入力を消す", "Clear")} onClick={() => { themeSelection.current = null; changeQuery(""); }}><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" aria-hidden="true"><path d="M3 3l6 6M9 3l-6 6" /></svg></button>
         </div>
       </div>}
       <div hidden={detail}>

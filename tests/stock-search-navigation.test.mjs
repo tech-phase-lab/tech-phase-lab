@@ -76,6 +76,7 @@ test('typing an exact ticker shows its one result instead of opening it',async t
 test('the slim field: typing returns to results, × clears to the first screen',async t=>{
  const h=harness(t);await h.runSearch();h.open();
  const slim=()=>h.nodes().filter(n=>n.type==='input').at(0);
+ assert.equal(slim().props.value,'VST','the slim field shows the chosen ticker, not the query');
  slim().props.onChange({target:{value:'VSX'}});h.render();
  assert.equal(new URL(h.url(),'https://example.test').searchParams.get('stock'),null);
  assert.equal(h.nodes().filter(n=>n.type==='div'&&n.props.hidden===true).length,0,'typing switches back to the results screen');
