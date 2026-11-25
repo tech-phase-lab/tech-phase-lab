@@ -105,7 +105,8 @@ test("PC layout: 1024px and wider, the menu on the left, the phone layout unchan
   const shell = read("../app/resolute/tool-shell.tsx");
   assert.match(shell, /if\(pc && desktop\) return/);
   for (const file of ["simulation/screen.tsx", "alerts/latest/screen.tsx"]) assert.match(read(`../app/resolute/${file}`), /<ToolShell identityReady=\{identityReady\} pc>/);
-  assert.match(read("../app/resolute/notifications-screen.tsx"), /pc=\{mode==="alerts"\}/);
+  // ③ and ④ both have a PC layout (④ since the 11/25 morning-thermo sheet).
+  assert.match(read("../app/resolute/notifications-screen.tsx"), /<ToolShell identityReady=\{identityReady\} pc>/);
   // Delivery is not running yet, so the sentence stays (owner, Nov 25, B).
   assert.match(read("../app/resolute/notifications-screen.tsx"), /通知の配信は準備中です。この画面の試算で通知は送信されません。/);
   // One × per watched stock (the row's remove button), none inside the symbol field.

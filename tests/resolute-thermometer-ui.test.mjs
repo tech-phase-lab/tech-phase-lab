@@ -23,8 +23,8 @@ test('actual gauge switches indices immediately, clears missing readings and iso
   const outfile=join(dir,'screen.cjs');
   await build({entryPoints:['app/resolute/thermometer/screen.tsx'],outfile,bundle:true,platform:'node',format:'cjs',jsx:'automatic',external:['react','react/jsx-runtime'],loader:{'.css':'empty'},plugins:[{name:'isolated-gauge',setup(b){
    b.onLoad({filter:/thermometer\/screen\.tsx$/},async args=>({contents:(await readFile(args.path,'utf8')).replace('import { useState } from "react";','const useState = initial => globalThis.__gaugeUI.useState(initial);'),loader:'tsx'}));
-   b.onResolve({filter:/^\.\.\/(tool-shell|review-context|flow-navigation)$/},args=>({path:args.path,namespace:'gauge-stub'}));
-   b.onLoad({filter:/.*/,namespace:'gauge-stub'},()=>({contents:'export default function Stub(){return null};export const useReview=()=>globalThis.__gaugeUI.review;',loader:'js'}));
+   b.onResolve({filter:/^\.\.\/(tool-shell|review-context|flow-navigation|use-desktop)$/},args=>({path:args.path,namespace:'gauge-stub'}));
+   b.onLoad({filter:/.*/,namespace:'gauge-stub'},()=>({contents:'export default function Stub(){return null};export const useReview=()=>globalThis.__gaugeUI.review;export const useDesktop=()=>false;',loader:'js'}));
   }}]});
   const homefile=join(dir,'home.cjs');
   await build({entryPoints:['app/resolute/home/market-gauge-card.tsx'],outfile:homefile,bundle:true,platform:'node',format:'cjs',jsx:'automatic',external:['react','react/jsx-runtime'],loader:{'.css':'empty'},plugins:[{name:'home-link',setup(b){
