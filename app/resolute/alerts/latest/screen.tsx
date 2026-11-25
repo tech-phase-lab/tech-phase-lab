@@ -1,15 +1,18 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import ToolShell from "../../tool-shell";
-import { ReviewLink as Link, useNotificationClient, usePlanClient } from "../../review-context";
+import { ReviewLink as Link, useNotificationClient, usePlanClient, useReview } from "../../review-context";
 import { latestAlertView, parseLatestAlert, type LatestAlert, type LatestAlertContext } from "@/lib/resolute/latest-alert";
 import { ruleFacts } from "@/lib/resolute/plan-rules";
+import { parseTodayPlanSnapshot } from "@/lib/resolute/today-plan-transport";
+import type { TodayPlan } from "@/lib/resolute/today-plan";
 import type { PlanSnapshot } from "@/lib/resolute/plan-data";
 import type { NotificationSnapshot } from "@/lib/resolute/notification-settings";
 import { useRemembered } from "../../features/use-remembered";
 import { useDesktop } from "../../use-desktop";
 import styles from "../../diagnosis.module.css";
 import pc from "../../pc.module.css";
+import SectionHeading from "../../section-heading";
 import s from "./latest.module.css";
 
 /** 「今日のお知らせ」(owner, Nov 17; wording Nov 25): the page a ③ phone notification opens. Heading, the sentence 「…の終値で、
@@ -51,19 +54,20 @@ export function LatestAlertContent({ locale, state, onRetry, context, wide = fal
       </section>
     </div>
   </div>;
-  return <div className={s.root}><div className={s.wrap}>
-    <div className={s.brand}>{v.eyebrow}</div>
-    <h1>{v.title}</h1>
-    <p className={s.date}>{v.lead}</p>
-    <ul className={s.cards}>{v.cards.map(card => <li key={card.symbol} className={s.card}>
-      <div className={s.cardHead}><b className={s.symbol}>{card.symbol}</b><span className={`${s.chip} ${card.rise ? s.rise : ""}`}>{card.chip}</span></div>
-      <p className={s.close}>{card.text}</p>
-      {card.rule ? <p className={s.rule}><small>{v.rulesLabel}</small>{card.rule}</p> : null}
+  // Phone (resolute-mobile-all-1125 09): 「今日やること」 first, then the cards (red for a drop line, green for the rise level).
+  return <div className={pc.content}>
+    <SectionHeading label="TODAY'S NOTICE" title={v.title} description={v.lead} />
+    <section className={`${styles.card} ${pc.panel} ${pc.todo}`}>
+      <p className={pc.todoLabel}>{v.todoLabel}</p><h2 className={pc.todoTitle}>{v.todo.title}</h2>
+      <p className={pc.todoText}>{v.todo.sentences.map(text => <span key={text}>{text}</span>)}</p>
+      <div className={pc.todoRow}><Link className={styles.primary} href="/resolute/notebook">{v.openBook} →</Link><Link className={styles.secondary} href="/resolute/tonight">{v.tonight}</Link></div>
+    </section>
+    <ul className={pc.notices}>{v.cards.map(card => <li key={card.symbol} className={`${pc.notice} ${card.rise ? pc.noticeRise : ""}`}>
+      <div className={pc.noticeHead}><b>{card.symbol}</b><span>{card.label}</span></div>
+      <p className={pc.noticePrice}>{card.price}</p><p className={pc.noticeChange}>{card.change}</p>
+      {card.rule ? <div className={pc.noticeRule}><small>{v.rulesLabel}</small><p>{card.rule}</p></div> : null}
     </li>)}</ul>
-    <div className={s.todo}><small>{v.todoLabel}</small><b>{v.todo.title}</b><p>{v.todo.sentences.join("")}</p></div>
-    <Link className={s.primary} href="/resolute/notebook">{v.openPlan}</Link>
-    <Link className={s.ghost} href="/resolute/tonight">{v.tonight}</Link>
-  </div></div>;
+  </div>;
 }
 function Latest({ locale, deny }: { locale: "ja" | "en"; deny: () => void }) {
   const [state, setState] = useState<State>({ status: "loading" });
@@ -73,14 +77,19 @@ function Latest({ locale, deny }: { locale: "ja" | "en"; deny: () => void }) {
   const requestPlan = usePlanClient(), requestSettings = useNotificationClient();
   const knownPlan = useRemembered<PlanSnapshot>("plan"), knownSettings = useRemembered<NotificationSnapshot>("notifications");
   const [plan, setPlan] = useState(knownPlan?.plan ?? null), [settings, setSettings] = useState(knownSettings?.settings ?? null);
+  const review = useReview() !== null, [todayPlan, setTodayPlan] = useState<TodayPlan | null>(null);
   const denyRef = useRef(deny);
   useEffect(() => { denyRef.current = deny; }, [deny]);
   useEffect(() => {
     const controller = new AbortController();
     void requestPlan(undefined, controller.signal).then(p => { if (!controller.signal.aborted) setPlan(p.plan); }, () => {});
     void requestSettings(undefined, controller.signal).then(n => { if (!controller.signal.aborted) setSettings(n.settings); }, () => {});
+    // The AI-written 「今日やること」 (resolute-pc-1125 §4). Off (503), {plan:null} or any failure: the fixed sentences are shown.
+    if (!review) void fetch("/api/resolute/today-plan", { cache: "no-store", credentials: "same-origin", redirect: "error", signal: AbortSignal.any([controller.signal, AbortSignal.timeout(20000)]) })
+      .then(async r => { if (!r.ok) return; const text = await r.text(); if (text.length > 16384) return; const { plan } = parseTodayPlanSnapshot(JSON.parse(text)); if (!controller.signal.aborted) setTodayPlan(plan); })
+      .catch(() => {});
     return () => controller.abort();
-  }, [requestPlan, requestSettings]);
+  }, [requestPlan, requestSettings, review]);
   useEffect(() => {
     const controller = new AbortController();
     void (async () => {
@@ -98,7 +107,7 @@ function Latest({ locale, deny }: { locale: "ja" | "en"; deny: () => void }) {
     })();
     return () => controller.abort();
   }, [attempt]);
-  const context: LatestAlertContext = { rules: plan ? ruleFacts(plan) : null,
+  const context: LatestAlertContext = { rules: plan ? ruleFacts(plan) : null, plan: todayPlan,
     references: Object.fromEntries((settings?.watchItems ?? []).map(i => [i.symbol, i.referencePrice])) };
   return <LatestAlertContent locale={locale} state={state} context={context} wide={desktop} onRetry={() => { setState({ status: "loading" }); setAttempt(v => v + 1); }} />;
 }

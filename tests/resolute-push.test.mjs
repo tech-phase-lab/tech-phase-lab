@@ -229,7 +229,8 @@ test("copy: phone notification wording across RESOLUTE screens, LP, diagnosis an
     "Email alerts based on", "you get an email at your chosen", "One short email the morning", "alerts email you", "Sending notification emails", "Emails for the Notification"];
   for (const phrase of gone) for (const [name, text] of Object.entries(files)) assert.ok(!text.includes(phrase), `${name}: ${phrase}`);
   const present = [[files.alerts, "ラインに届いた日に、スマホ通知でお知らせ"], [files.alerts, "Get a phone notification on the day a line is hit"],
-    [files.alerts, "届く通知の例を見る"], [files.alerts, "届く通知の例"], [files.tonight, "お知らせの内容はもう読みましたね。"], [files.tonight, "You’ve read the alert. Now take a breath."],
+    // The example is shown open on the phone too since Nov 25 (resolute-mobile-all-1125 08), so 「届く通知の例を見る」 is gone.
+    [files.alerts, "届く通知の例"], [files.tonight, "お知らせの内容はもう読みましたね。"], [files.tonight, "You’ve read the alert. Now take a breath."],
     [files.lp, "選んだ朝の時間にスマホ通知でお知らせします。"], [files.diagnosis, "スマホ通知が届くので"],
     // The legal pages are the lawyer-reviewed full texts since Nov 17; their notification wording is checked here.
     [files.privacy, "ブラウザ通知(Web Push)やスマートフォンへの通知に必要な端末の識別情報"], [files.terms, "ブラウザ通知やスマートフォンへの通知などは"]];
