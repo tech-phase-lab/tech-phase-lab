@@ -1,0 +1,152 @@
+{
+  "root": {
+    "ticker": "RF",
+    "name": "リージョンズ・ファイナンシャル",
+    "cik": 1281761,
+    "name_en": "Regions Financial"
+  },
+  "rows": [
+    {
+      "ja": "融資先(相手の資料に記載)",
+      "en": "Borrowers (named in their filings)"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "TBRG",
+      "ticker": "TBRG",
+      "name": "トゥルーブリッジ",
+      "name_en": "TruBridge",
+      "sub": "医療ITサービス",
+      "sub_en": "Healthcare IT services",
+      "sub_short": "医療IT",
+      "sub_short_en": "Health IT",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "TruBridgeが10-Kで、1.25億ドルの期限付き融資などの幹事行として挙げる",
+          "text_en": "TruBridge names Regions Bank the administrative agent of its term loan and revolver",
+          "source": {
+            "label": "TruBridge 10-K(2025年度)",
+            "label_en": "TruBridge 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1169445/000116944526000006/tbrg-20251231.htm",
+            "level": "official",
+            "date": "2026-03-31",
+            "quote": "we entered into a syndicated credit agreement with Regions Bank (\"Regions\") serving as administrative agent, which provided for a $ 125 million term loan facility and a $ 50 million revolv"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GRDN",
+      "ticker": "GRDN",
+      "name": "ガーディアン・ファーマシー・サービシズ",
+      "name_en": "Guardian Pharmacy Services",
+      "sub": "高齢者向け薬局",
+      "sub_en": "Care pharmacy",
+      "sub_short": "薬局",
+      "sub_short_en": "Drugs",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Guardian Pharmacyが10-Kで、借入枠(ローン・セキュリティ契約)の相手として挙げる",
+          "text_en": "Guardian Pharmacy's credit facility is with Regions Bank",
+          "source": {
+            "label": "Guardian Pharmacy Services 10-K(2025年度)",
+            "label_en": "Guardian Pharmacy Services 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1802255/000119312526102172/d16111d10k.htm",
+            "level": "official",
+            "date": "2026-03-11",
+            "quote": "On May 13, 2024, the Company entered into the Sixth Amendment to the Third Amended and Restated Loan and Security Agreement (the \"2024 Amendment\") to the existing credit facility with Regions Bank (the \"Credit Facility\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ROAD",
+      "ticker": "ROAD",
+      "name": "コンストラクション・パートナーズ",
+      "name_en": "Construction Partners",
+      "sub": "道路舗装",
+      "sub_en": "Road paving",
+      "sub_short": "道路舗装",
+      "sub_short_en": "Paving",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Construction Partnersが10-Kで、期限付き融資の主な取りまとめ役の一社に挙げる(Regions Capital Markets)",
+          "text_en": "Construction Partners names Regions Capital Markets among lead arrangers of its Term Loan B",
+          "source": {
+            "label": "Construction Partners 10-K(2026年9月期)",
+            "label_en": "Construction Partners 10-K (FY ended Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1718227/000162828026075744/road-20260930.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "The Company and certain of its subsidiaries are parties to a Term Loan Credit Agreement with Bank of America, N.A., as administrative agent, BofA Securities, Inc., PNC Capital Markets LLC, Regions Capital Markets, a division of Regions Bank"
+          }
+        }
+      ]
+    },
+    {
+      "id": "VMDViemed",
+      "ticker": "VMD",
+      "name": "ヴィーメッド・ヘルスケア",
+      "name_en": "Viemed Healthcare",
+      "sub": "在宅呼吸器ケア",
+      "sub_en": "Home respiratory care",
+      "sub_short": "在宅医療",
+      "sub_short_en": "Oxygen",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Viemedが10-Kで、2022年の借入枠の幹事行・担保代理人として挙げる",
+          "text_en": "Viemed names Regions Bank administrative and collateral agent of its 2022 credit facilities",
+          "source": {
+            "label": "Viemed Healthcare 10-K(2025年度)",
+            "label_en": "Viemed Healthcare 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1729149/000172914926000009/vmd-20251231.htm",
+            "level": "official",
+            "date": "2026-03-04",
+            "quote": "Credit Agreement, dated November 29, 2022, among Viemed, Inc., as borrower, certain subsidiaries of Viemed, Inc., as guarantors, the lenders from time to time party thereto, and Regions Bank, as administrative agent and collateral agent"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMR",
+      "ticker": "AMR",
+      "name": "アルファ・メタラジカル・リソーシズ",
+      "name_en": "Alpha Metallurgical Resources",
+      "sub": "原料炭",
+      "sub_en": "Metallurgical coal",
+      "sub_short": "石炭",
+      "sub_short_en": "Coal",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Alpha Metallurgicalが10-Kで、2023年の借入契約の幹事行として挙げる",
+          "text_en": "Alpha Metallurgical names Regions Bank the administrative agent of its 2023 credit agreement",
+          "source": {
+            "label": "Alpha Metallurgical Resources 10-K(2025年度)",
+            "label_en": "Alpha Metallurgical Resources 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1704715/000170471526000010/amr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "the lenders party thereto from time to time and Regions Bank, as administrative agent, collateral agent, swingline lender and LC issuer (the \"Agent\")"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

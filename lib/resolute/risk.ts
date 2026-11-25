@@ -90,17 +90,20 @@ export function noStarsLabel(article:{stars:number|null;market:RiskMarket},local
 /** Waiting stories (no stars yet) never trigger the "reread your rules" action. */
 export const riskAction=(stars:number|null)=>{if(stars===null)return 'none';if(!Number.isInteger(stars)||stars<1||stars>5)throw Error('INVALID_STARS');return stars>=RISK_POLICY.reviewMinStars?'review':'none';};
 const signed=(n:number,digits:number)=>`${n>0?'+':n<0?'−':''}${Math.abs(n).toFixed(digits)}%`;
-/** The lines under the stars, the story's index first, then the fear index:
- * 「TP半導体40 −8.5%（いつもの3.8倍・40社中39社が下落）」「TP大型株100 −1.5%（いつもの2.0倍・99社中47社が下落）」「恐怖指数 0%」. */
-export function formatReading(m:RiskMarket,locale:'ja'|'en'):string[]{
+/** The lines under the stars, the story's index first, then the fear index. Each index line is split into the move and its
+ * parenthetical, which the screens set in slightly smaller type so the line fits on one phone line (owner, Nov 25):
+ * 「TP半導体40 −8.5%」+「（いつもの3.8倍・39/40社が下落）」, 「TP大型株100 −1.5%」+「（いつもの2.0倍・47/99社が下落）」, 「恐怖指数 0%」. */
+export function readingParts(m:RiskMarket,locale:'ja'|'en'):{text:string;detail?:string}[]{
  const r=m.reading;if(!r||m.index==='company'||readingStars(r)===null)return [];
  const order:RiskIndex[]=m.index==='sox'?['sox','nas100']:['nas100','sox'];
- const lines=order.flatMap(i=>{const x=r[i];if(!x)return [];const name=RISK_POLICY.indices[i][locale],down=x.changePercent<0;
-  return locale==='ja'?[`${name} ${signed(x.changePercent,1)}（いつもの${x.multiple.toFixed(1)}倍・${x.total}社中${x.same}社が${down?'下落':'上昇'}）`]
-   :[`${name} ${signed(x.changePercent,1)} (${x.multiple.toFixed(1)}× usual · ${x.same} of ${x.total} ${down?'down':'up'})`];});
- if(r.fearChange!==null)lines.push(locale==='ja'?`恐怖指数 ${signed(r.fearChange,0)}`:`Fear index ${signed(r.fearChange,0)}`);
+ const lines:{text:string;detail?:string}[]=order.flatMap(i=>{const x=r[i];if(!x)return [];const name=RISK_POLICY.indices[i][locale],down=x.changePercent<0;
+  return [{text:`${name} ${signed(x.changePercent,1)}`,detail:locale==='ja'?`（いつもの${x.multiple.toFixed(1)}倍・${x.same}/${x.total}社が${down?'下落':'上昇'}）`
+   :` (${x.multiple.toFixed(1)}× usual · ${x.same}/${x.total} ${down?'down':'up'})`}];});
+ if(r.fearChange!==null)lines.push({text:locale==='ja'?`恐怖指数 ${signed(r.fearChange,0)}`:`Fear index ${signed(r.fearChange,0)}`});
  return lines;
 }
+/** The same lines as plain text: 「TP半導体40 −8.5%（いつもの3.8倍・39/40社が下落）」「TP大型株100 −1.5%（いつもの2.0倍・47/99社が下落）」「恐怖指数 0%」. */
+export function formatReading(m:RiskMarket,locale:'ja'|'en'):string[]{return readingParts(m,locale).map(l=>l.text+(l.detail??''));}
 /** The cause line under the stars: 「一過性とみられる要因（システム障害）→ ★−1」 / 「長引きやすい要因（輸出規制の強化）→ ★+1」. */
 export function formatCause(article:{stars:number|null;market:RiskMarket;cause?:RiskCause|null},locale:'ja'|'en'){
  const c=article.cause,base=marketStars(article.market);if(!c||base===null||article.stars===null)return null;
