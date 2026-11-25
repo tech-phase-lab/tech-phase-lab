@@ -87,11 +87,11 @@ export async function collectThermometer(config: ThermometerProviderConfig, conf
     for (const [ticker, bars] of Object.entries(allSeries)) { const s = stockShock(bars, date); if (s) day[ticker] = s; }
     if (Object.keys(day).length) shockStocks[date] = day;
   }
-  
+
   // 今夜のひと息「今日と似た日」(Nov 25): the days in the past ten years that moved like tonight, and the past big falls, from the
   // same basket levels (no extra provider calls). Each basket on its own; a basket without ten years of levels gets none.
   const history = { nas100: 'levels' in large ? similarDays(large.levels, confirmedSession) : null, sox: 'levels' in chips ? similarDays(chips.levels, confirmedSession) : null };
   const drops = { nas100: 'levels' in large ? bigDrops(large.levels, confirmedSession) : null, sox: 'levels' in chips ? bigDrops(chips.levels, confirmedSession) : null };
-  
+
   return { asOf: confirmedSession, nas100, sox, vix, moves, shock, shockStocks, history, drops, missing: [...new Set(missing)].sort() };
 }
