@@ -4,8 +4,11 @@ import {formatReading,formatCause,noStarsLabel,starCriteria,starSummary,STAR_INF
 export const SHOCK_GAUGE_NAME={ja:'衝撃度チェッカー',en:'Shock Gauge'} as const;
 const faint:CSSProperties={fontFamily:'inherit',fontSize:'.5em',fontWeight:500,letterSpacing:'.2em',opacity:.5,whiteSpace:'nowrap',marginLeft:'auto'};
 /** JA: 「衝撃度チェッカー」 left and a small faint 「SHOCK GAUGE」 at the right end of the same line (no extra line). EN: "Shock Gauge". */
-export function ShockGaugeTitle({locale}:{locale:'ja'|'en'}){
- return locale==='en'?<>{SHOCK_GAUGE_NAME.en}</>:<span style={{display:'flex',alignItems:'baseline',gap:'0.75em',width:'100%'}}><span>{SHOCK_GAUGE_NAME.ja}</span><small style={faint}>SHOCK GAUGE</small></span>;
+/** compact (the home card): the name always on one line; the small 「SHOCK GAUGE」 goes on its own line above it when the row is
+ * too narrow for both (owner, Nov 25: the name must never wrap on a phone). */
+export function ShockGaugeTitle({locale,compact=false}:{locale:'ja'|'en';compact?:boolean}){
+ if(locale==='en')return <span style={{whiteSpace:'nowrap'}}>{SHOCK_GAUGE_NAME.en}</span>;
+ return <span style={{display:'flex',alignItems:'baseline',gap:compact?'0 0.75em':'0.75em',width:'100%',...(compact?{flexWrap:'wrap-reverse'}:{})}}><span style={{whiteSpace:'nowrap'}}>{SHOCK_GAUGE_NAME.ja}</span><small style={compact?{...faint,marginLeft:0}:faint}>SHOCK GAUGE</small></span>;
 }
 export const STAR_COLORS=['','#7fb6e0','#e0c070','#f0a24a','#ee7a3c','#ff4d55'];
 const small:CSSProperties={fontSize:12,letterSpacing:'.02em',fontWeight:400,color:'var(--sub, #8c98ab)',textShadow:'none',whiteSpace:'nowrap'};

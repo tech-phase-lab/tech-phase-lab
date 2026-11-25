@@ -23,6 +23,10 @@
 .news b { color:var(--c,var(--gold2)); text-shadow:0 0 10px color-mix(in srgb,var(--c,#d8b36a) 55%,transparent); }
 .lv1 { --c:#7fb6e0; } .lv2 { --c:#e0c070; } .lv3 { --c:#f0a24a; } .lv4 { --c:#ee7a3c; } .lv5 { --c:#ff4d55; }
 .today.warn { color:#ffb454; }
+.ruleBox { border:1px solid rgba(255,180,84,.45); border-radius:12px; padding:12px 14px; font-size:14px; line-height:1.6; }
+.ruleBox b,.today b { display:block; margin-bottom:4px; }
+.today p { margin:2px 0; }
+.ruleBox a { display:inline-block; margin-top:6px; font-weight:600; }
 .high { border-color:rgba(255,77,85,.55); box-shadow:0 10px 30px rgba(0,0,0,.28), 0 0 26px rgba(255,77,85,.16); }
 .today { font-size:13px; color:var(--ok); }
 .temp { display:flex; flex-direction:column; gap:8px; }

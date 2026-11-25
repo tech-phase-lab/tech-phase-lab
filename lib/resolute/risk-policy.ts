@@ -49,10 +49,10 @@ export const RISK_POLICY = {
   reviewMinStars: 4,
   /** Shown instead of stars until the first U.S. close after the news. */
   waiting: { ja: '市場の反応待ち', en: 'Waiting for the market’s reaction' },
-  /** Note under the stars (lawyer-reviewed wording, Nov 2026). */
+  /** Note under the stars: the same wording as Terms 第20条4項 (owner, Nov 25), no longer than the note it replaced. */
   note: {
-    ja: '★は、ニュースのあとに関連するTP指標が実際にどれだけ動いたかで決めています。今後の値動きを示すものではありません。売買の判断は、あなた自身でおこなってください。',
-    en: 'Stars show how much the related TP index actually moved after the news. They don’t predict future prices. Any decision to buy or sell is yours.',
+    ja: '★は、ニュースのあとの実際の指標の動きと記事の内容から、一過性かどうかを吟味して算出した目安であり、今後の値動きや売買の時期を示すものではありません。',
+    en: 'Stars weigh actual index moves after the news and whether the article’s cause looks one-off. They don’t show future prices or when to trade.',
   },
   /** Shown instead of stars for news about a single company (no index measures one company's news). */
   company: { ja: '個別企業のニュース（★はつけません）', en: 'Single-company news (no stars)' },

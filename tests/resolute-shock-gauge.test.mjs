@@ -191,8 +191,12 @@ test('RIZEL lines: impact evaluation, outlook and trading actions need re-approv
 });
 
 test('wording: names, note under the stars, waiting text and the disclaimer are the reviewed texts in both languages',()=>{
- assert.equal(RISK_POLICY.note.ja,'★は、ニュースのあとに関連するTP指標が実際にどれだけ動いたかで決めています。今後の値動きを示すものではありません。売買の判断は、あなた自身でおこなってください。');
- assert.equal(RISK_POLICY.note.en,'Stars show how much the related TP index actually moved after the news. They don’t predict future prices. Any decision to buy or sell is yours.');
+ // Owner, Nov 25: the note under the stars uses the Terms 第20条4項 wording, and is no longer than the note it replaced.
+ assert.equal(RISK_POLICY.note.ja,'★は、ニュースのあとの実際の指標の動きと記事の内容から、一過性かどうかを吟味して算出した目安であり、今後の値動きや売買の時期を示すものではありません。');
+ assert.ok(readFileSync(new URL('../content/legal/terms.ja.md',import.meta.url),'utf8').includes('4. 衝撃度チェッカーの'+RISK_POLICY.note.ja.slice(0,-'ありません。'.length)));
+ assert.ok([...RISK_POLICY.note.ja].length<=[...'★は、ニュースのあとに関連するTP指標が実際にどれだけ動いたかで決めています。今後の値動きを示すものではありません。売買の判断は、あなた自身でおこなってください。'].length);
+ assert.equal(RISK_POLICY.note.en,'Stars weigh actual index moves after the news and whether the article’s cause looks one-off. They don’t show future prices or when to trade.');
+ assert.ok(RISK_POLICY.note.en.length<='Stars show how much the related TP index actually moved after the news. They don’t predict future prices. Any decision to buy or sell is yours.'.length);
  assert.equal(RISK_POLICY.waiting.ja,'市場の反応待ち');assert.equal(RISK_POLICY.waiting.en,'Waiting for the market’s reaction');
  assert.equal(RIZEL_DISCLAIMER.ja,'本サービスと本商品は、情報の提供とご自身で決めたルールの管理を目的としたもので、特定の銘柄の売買や売買の時期をすすめるものではありません。投資の判断は、ご自身でおこなってください。');
  assert.deepEqual(RISK_POLICY.indices,{sox:{ja:'TP半導体40',en:'TP Semiconductor 40'},nas100:{ja:'TP大型株100',en:'TP Large Cap 100'}});
