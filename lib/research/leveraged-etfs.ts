@@ -1,3 +1,4 @@
+import { displayClock, formatDisplay, zoneLabel } from "./display-time.ts";
 /** マーケット「レバETF」tab (owner, Nov 25): long 2x / 3x ETFs on the stocks Tech Phase follows. Every ticker below was checked against the
  * provider on Nov 25, 2026 (Twelve Data's own fund name says "2X Long <underlying>" / "Bull 2X" / "UltraPro"); one that the provider cannot serve is
  * simply absent from the screen. Only long (bull) funds: no inverse ETF is listed.
@@ -21,8 +22,10 @@ export const LEVERAGED_ETFS: readonly LeveragedEtf[] = [
   two("CRWL", "CRWD"), two("ASTX", "ASTS"), two("LLYX", "LLY"), two("CEGX", "CEG"), two("SMU", "SMR"), two("COHX", "COHR"), two("IREX", "IREN"),
   two("APLX", "APLD"),
 ];
-/** Every symbol the tab reads: the funds and the stocks under them, once each. */
-export const LEVERAGED_SYMBOLS: readonly string[] = [...new Set(LEVERAGED_ETFS.flatMap(item => [item.etf, item.underlying]))];
+/** Every symbol the tab reads, once each: the funds first, then the stocks under them. A cold read is spread over several requests (at most 48
+ * symbols each, every 12-symbol batch leased separately), so the funds — the rows themselves — come first and a stock's change fills in after
+ * (Nov 25: interleaved, a first answer could hold the stocks but not their funds and show nothing). */
+export const LEVERAGED_SYMBOLS: readonly string[] = [...new Set([...LEVERAGED_ETFS.map(item => item.etf), ...LEVERAGED_ETFS.map(item => item.underlying)])];
 
 export type LeveragedQuote = { price: number; percentChange: number | null; volume: number | null;
   extended?: { price: number; percentChange: number | null; session: "pre" | "post"; live?: boolean } | null };
@@ -59,3 +62,45 @@ export function sortLeveraged(rows: readonly LeveragedRow[], sort: LeveragedSort
 /** Prices: three decimals under $100 as the sheet shows them (4.100, 13.330), two above. */
 export const leveragedPrice = (value: number) => value.toFixed(Math.abs(value) < 100 ? 3 : 2);
 export const leveragedPercent = (value: number, digits = 2) => `${value > 0 ? "+" : value < 0 ? "-" : ""}${Math.abs(value).toFixed(digits)}%`;
+
+/** The shared snapshot (owner, Nov 25: "all rows at once from the first load"). The site's minute job (app/api/research/compare/warm, run
+ * every minute by the Railway monitor) refreshes it in the background through the allocator; a member's request only reads it and never asks the
+ * provider. Every symbol keeps its own time, so a refused or failed batch leaves that symbol's last good quote in place. */
+export type LeveragedSnapshot<Q> = { at: number; quotes: Record<string, { value: Q; at: number }> };
+/** A symbol is read again once this old: every ~2 minutes while U.S. stocks trade (04:00–20:00 New York, pre-market and after-hours included),
+ * every 15 minutes otherwise. At most LEVERAGED_PER_RUN symbols a minute (four 12-symbol batches), oldest first, so the 89 symbols spread over two
+ * minutes (~45 credits a minute) instead of 89 in one. A symbol never read yet is always read at once (the first fill is the whole list). */
+export const LEVERAGED_TRADING_AGE_MS = 90_000, LEVERAGED_CLOSED_AGE_MS = 15 * 60_000, LEVERAGED_PER_RUN = 48;
+export function leveragedDue(ages: Record<string, number | undefined>, trading: boolean, symbols: readonly string[] = LEVERAGED_SYMBOLS): string[] {
+  const never = symbols.filter(symbol => ages[symbol] === undefined);
+  const limit = trading ? LEVERAGED_TRADING_AGE_MS : LEVERAGED_CLOSED_AGE_MS;
+  const old = symbols.filter(symbol => ages[symbol] !== undefined && ages[symbol]! >= limit).sort((a, b) => ages[b]! - ages[a]!);
+  return [...never, ...old.slice(0, Math.max(0, LEVERAGED_PER_RUN - never.length))];
+}
+/** Credits a day (one credit per symbol a read): 16 trading hours at one read per symbol every two minutes, 8 closed hours at one per 15 minutes. */
+export function leveragedCreditsPerDay(symbols = LEVERAGED_SYMBOLS.length) {
+  const weekday = symbols * (16 * 60 / 2 + 8 * 60 / 15), weekend = symbols * (24 * 60 / 15);
+  return { weekday, weekend, perTradingMinute: symbols / 2, peakMinute: LEVERAGED_PER_RUN };
+}
+/** The time beside the list once the snapshot is older than this (the refresh stopped): the full last list stays, with 「〇〇時点」. */
+export const LEVERAGED_STALE_MS = 5 * 60_000;
+
+/** What the レバETF list shows while it reads (owner, Nov 25: "読み込み中…" must never stay forever). `rows` null: nothing answered yet.
+ * Each answer is the whole list; a failed read keeps the list on the screen. 「データを取得できませんでした」 only when an answer holds no fund,
+ * or LEVERAGED_GIVE_UP reads in a row (errors and timeouts included) brought none. */
+export type LeveragedView = { rows: LeveragedRow[] | null; at: number | null; failed: boolean; empty: number };
+export const LEVERAGED_GIVE_UP = 3;
+export const LEVERAGED_START: LeveragedView = { rows: null, at: null, failed: false, empty: 0 };
+/** `answer` null: the request failed or timed out. */
+export function nextLeveragedView(view: LeveragedView, answer: { rows: LeveragedRow[]; at: number | null } | null): LeveragedView {
+  if (answer?.rows.length) return { rows: answer.rows, at: answer.at, failed: false, empty: 0 };
+  if (view.rows?.length) return view;
+  const empty = view.empty + 1, done = view.failed || answer !== null || empty >= LEVERAGED_GIVE_UP;
+  return { rows: done ? [] : null, at: null, failed: done, empty };
+}
+
+/** 「11/25 19:12 JST 時点」 / "As of 11/25 05:12 ET". */
+export function leveragedAsOf(at: number, ja: boolean) {
+  const lang = ja ? "ja" : "en", day = formatDisplay(at, lang, { month: "numeric", day: "numeric" });
+  return ja ? `${day} ${displayClock(at, lang)} ${zoneLabel(lang)} 時点` : `As of ${day} ${displayClock(at, lang)} ${zoneLabel(lang)}`;
+}
