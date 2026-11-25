@@ -4,9 +4,10 @@
  * Plain values only (no imports) so the Railway worker can load it directly.
  *
  * Stars are mechanical (lawyer review, Nov 2026): no owner or AI judgment, no prediction.
- * Each story has a scope decided from its headline by fixed rules (lib/resolute/risk-scope.ts): market-wide news is measured
- * on TP大型株100, semiconductor-sector news on TP半導体40, and news about one company gets no stars (one stock's move is not
- * a market shock). Before the first U.S. close after the news the story shows no stars ("waiting").
+ * Each story has a scope decided from its headline by fixed rules (lib/resolute/risk-scope.ts): market-wide or
+ * semiconductor-sector news is measured on BOTH TP大型株100 and TP半導体40 (owner, Nov 25) and its stars are the stronger of the
+ * two; the scope only decides which index is listed first. News about one company gets no stars (one stock's move is not a
+ * market shock). Before the first U.S. close after the news the story shows no stars ("waiting").
  *
  * Nov 25 (owner-approved method): the stars measure the SHOCK of that close, from three measured parts (thermometer data,
  * the same daily closes the thermometer already reads: no extra provider calls):

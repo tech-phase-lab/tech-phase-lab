@@ -1,7 +1,8 @@
 import {inspectCandidateFeed,generate,isInDailyWindow,windowHours,FEED_CHECKS as INSPECT_CHECKS,reactArticles,fillMarketReactions} from './risk-job.mjs';
 import {REPORT_CHECKS} from './rizel-report-source.mjs';
 const FEED_CHECKS=[...INSPECT_CHECKS,...REPORT_CHECKS];
-import {riskDate,parseRiskArticle,isDailyRunHour,dailyRunStart,starsFromShock,measureShock,parseRiskShock,roundMove} from '../../lib/resolute/risk.ts';
+import {riskDate,parseRiskArticle,parseRiskMarket,parseRiskCause,causeStars,isDailyRunHour,dailyRunStart,marketStars,readingStars} from '../../lib/resolute/risk.ts';
+import {applyMarketReaction} from '../../lib/resolute/risk-market.ts';
 import {RISK_POLICY} from '../../lib/resolute/risk-policy.ts';
 import {storyIndex,firstCloseAfter,newsInstant} from '../../lib/resolute/risk-market.ts';
 import {storyScope,isBarePriceMove,companyKey,titleSimilarity,NEAR_DUPLICATE} from '../../lib/resolute/risk-scope.ts';
@@ -224,7 +225,7 @@ export function breaksCurrentRules(articles){
  const slots=new Set();
  for(const a of articles){
   const m=a?.market;if(!m||typeof m!=='object')return false;
-  let expected=null;if(m.index!=='company'&&m.shock){try{expected=starsFromShock(parseRiskShock(m.shock));}catch{return true;}}
+  let expected=null;try{expected=causeStars(marketStars(parseRiskMarket(m)),parseRiskCause(a.cause));}catch{return true;}
   if(a.stars!==expected)return true;
   if(m.index!=='company'){const key=`${m.index}:${m.session}`;if(slots.has(key))return true;slots.add(key);}
  }
@@ -248,8 +249,9 @@ export async function reselectStoredDay({env=process.env,realNow=new Date(),publ
 /** Read-only preview for the owner (RIZEL_DAILY_REVIEW_DRY_RUN): what the selection would pick, with each story's scope, index,
  * close and the stars that close gives. No model call, no writes. Headlines only (public text), never bodies or URLs. */
 export function previewSelection(intake,moves){
- const show=c=>{const {session,index}=candidateSession(c);const m=session?moves?.[session]?.[index]:null;
-  let shock=null;try{if(index!=='company'&&m)shock=measureShock(m.changePercent,m,moves[session].fear??null);}catch{shock=null;}
-  return {title:c.title,scope:storyScope(c.title),index,session,move:shock?roundMove(m.changePercent):null,shock,stars:shock?starsFromShock(shock):null};};
+ // marketStars: before the model's cause step (no model call here), so the published star can differ by one.
+ const show=c=>{const {session,index}=candidateSession(c);
+  let reading=null;try{if(index!=='company'&&session)reading=applyMarketReaction({publishedAt:c.publishedAt,market:{index,session,reading:null},stars:null},moves??{}).market.reading;}catch{reading=null;}
+  return {title:c.title,scope:storyScope(c.title),index,session,reading,marketStars:readingStars(reading)};};
  return {selected:intake.selected.map(show),next:intake.reserve.slice(0,6).map(show),diagnostics:intake.diagnostics};
 }

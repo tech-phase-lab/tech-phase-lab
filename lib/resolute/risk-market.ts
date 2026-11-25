@@ -1,5 +1,5 @@
 import { usMarketSession } from '../research/us-market-session.ts';
-import { roundMove, measureShock, starsFromShock, type RiskArticle, type RiskIndex, type RiskMarket } from './risk.ts';
+import { measureDay, fearChangeOf, readingStars, causeStars, type RiskArticle, type RiskIndex, type RiskMarket } from './risk.ts';
 import { storyScope, scopeIndex } from './risk-scope.ts';
 /** Shock Gauge stars from actual market moves (server/worker only; no browser import).
  * 1. Pick ONE related TP index per story. 2. Find the first U.S. close after the news.
@@ -31,27 +31,30 @@ export function newsInstant(publishedAt: string): Date {
   return /^\d{4}-\d{2}-\d{2}$/.test(publishedAt) ? new Date(Date.parse(publishedAt + 'T00:00:00Z') + 36 * 3600000) : new Date(publishedAt);
 }
 export function waitingMarket(index: RiskIndex | 'company', publishedAt: string): RiskMarket {
-  if (index === 'company') return { index, session: null, changePercent: null, shock: null };
-  return { index, session: firstCloseAfter(newsInstant(publishedAt)), changePercent: null, shock: null };
+  if (index === 'company') return { index, session: null, reading: null };
+  return { index, session: firstCloseAfter(newsInstant(publishedAt)), reading: null };
 }
 /** One basket's close as the thermometer measured it: the move, its typical move and the constituents up / down. */
-export type SessionMove = { changePercent: number; typicalPercent: number; up: number; down: number; total: number };
+export type SessionMove = { previousDate: string; changePercent: number; typicalPercent: number; up: number; down: number; total: number };
 export type SessionEntry = Partial<Record<RiskIndex, SessionMove | null>> & { fear?: { level: number; previousLevel: number } | null };
 export type SessionMoves = Record<string, SessionEntry | undefined>;
-/** Fills stars once that close's shock is measured; otherwise the story keeps waiting. Already-filled stories are unchanged. */
+/** Measures BOTH indices on the story's first close once the thermometer has them (owner, Nov 25: the stars are the stronger of
+ * the two); otherwise the story keeps waiting. Already-measured stories are unchanged. */
 export function applyMarketReaction(article: RiskArticle, moves: SessionMoves): RiskArticle {
-  if (article.market.shock !== null || article.market.index === 'company') return article;
+  if (article.market.reading !== null || article.market.index === 'company') return article;
   const index = article.market.index;
   const session = article.market.session ?? firstCloseAfter(newsInstant(article.publishedAt));
-  const entry = session ? moves[session] : undefined, move = entry?.[index];
-  if (!session || !move || !validMove(move)) return { ...article, market: { index, session, changePercent: null, shock: null } };
-  const changePercent = roundMove(move.changePercent), shock = measureShock(move.changePercent, move, entry?.fear ?? null);
-  return { ...article, market: { index, session, changePercent, shock }, stars: starsFromShock(shock) };
+  const entry = session ? moves[session] : undefined;
+  const nas100 = entry?.nas100 && validMove(entry.nas100) ? entry.nas100 : null, sox = entry?.sox && validMove(entry.sox) ? entry.sox : null;
+  const from = nas100?.previousDate ?? sox?.previousDate;
+  if (!session || !from || (nas100 && sox && nas100.previousDate !== sox.previousDate)) return { ...article, market: { index, session, reading: null } };
+  const reading = { from, nas100: nas100 ? measureDay(nas100) : null, sox: sox ? measureDay(sox) : null, fearChange: fearChangeOf(entry?.fear ?? null) };
+  return { ...article, market: { index, session, reading }, stars: causeStars(readingStars(reading), article.cause) };
 }
 const finite = (v: unknown, min: number, max: number): v is number => typeof v === 'number' && Number.isFinite(v) && v >= min && v <= max;
 const count = (v: unknown): v is number => Number.isInteger(v) && (v as number) >= 0 && (v as number) <= 500;
 function validMove(m: Partial<SessionMove>): m is SessionMove {
-  return finite(m.changePercent, -99.99, 99.99) && finite(m.typicalPercent, 0.01, 50) && count(m.up) && count(m.down) && count(m.total) && m.total >= 10 && m.up + m.down <= m.total;
+  return typeof m.previousDate === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(m.previousDate) && finite(m.changePercent, -99.99, 99.99) && finite(m.typicalPercent, 0.01, 50) && count(m.up) && count(m.down) && count(m.total) && m.total >= 10 && m.up + m.down <= m.total;
 }
 export interface MovesDatabase { query(sql: string, values?: unknown[]): Promise<{ rows: Record<string, unknown>[] }> }
 /** Reads the measured shock of the given sessions from the thermometer snapshots (read-only role). Each snapshot carries the
@@ -71,7 +74,7 @@ export async function readSessionMoves(db: MovesDatabase, sessions: readonly str
       const entry: SessionEntry = {};
       for (const index of ['sox', 'nas100'] as const) {
         const m = raw[index] as (Partial<SessionMove> & { date?: unknown }) | null;
-        if (m && m.date === session && validMove(m)) entry[index] = { changePercent: m.changePercent, typicalPercent: m.typicalPercent, up: m.up, down: m.down, total: m.total };
+        if (m && m.date === session && validMove(m)) entry[index] = { previousDate: m.previousDate, changePercent: m.changePercent, typicalPercent: m.typicalPercent, up: m.up, down: m.down, total: m.total };
       }
       const f = raw.fear as { date?: unknown; level?: unknown; previousLevel?: unknown } | null;
       entry.fear = f && f.date === session && finite(f.level, 0.01, 1000) && finite(f.previousLevel, 0.01, 1000) ? { level: f.level, previousLevel: f.previousLevel } : null;
