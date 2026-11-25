@@ -21,16 +21,20 @@ import DeviceNotifications from "@/app/research/notification-settings";
 import PushSample from "./push-sample";
 import { LatestAlertContent } from "./alerts/latest/screen";
 import { deliveryClock,deliveryZone } from "@/lib/resolute/delivery-time";
+import { ruleFacts } from "@/lib/resolute/plan-rules";
+import pc from "./pc.module.css";
+import { useDesktop,useTouchDevice } from "./use-desktop";
 
 const tips={
  ja:{done:"計画どおりに動けた夜は、そのまま記録しておく価値があります。ルールに書いたことと実際にやったことが同じだったか、1行だけ見直してみてください。次の下落でも、迷いにくくなります。",skipped:"見送ることも、ルールの中の選択肢のひとつです。見送った理由が「買わない条件」に入っているか確かめてみてください。入っていなければ、足しておくと次に迷いません。",unsure:"迷っているのは、ルールとその夜の気持ちがずれているサインかもしれません。急いで決めなくて大丈夫です。計画を開いて、ラインと買い増しの額をもう一度読んでみてください。"},
  en:{done:"You stuck to your plan. Take a moment to record it. Write one line about whether your actions matched your rules. It can make the next drop easier to face.",skipped:"Holding off is a choice too. Check whether your reason is already in your conditions for not buying. If not, add it so you have a clearer rule next time.",unsure:"Feeling unsure may mean your rules and how you felt didn't quite match. There's no rush. Open your plan and reread your purchase levels and amounts."}
 };
 export default function NotificationScreen({identityReady=true,mode}:{identityReady?:boolean;mode:"alerts"|"morning"}) {
- return <ToolShell identityReady={identityReady}>{(locale,deny)=><Notifications locale={locale} deny={deny} mode={mode}/>}</ToolShell>;
+ return <ToolShell identityReady={identityReady} pc={mode==="alerts"}>{(locale,deny)=><Notifications locale={locale} deny={deny} mode={mode}/>}</ToolShell>;
 }
 function Notifications({locale,deny,mode}:{locale:DiagnosisLocale;deny:()=>void;mode:"alerts"|"morning"}) {
  const requestPlan = usePlanClient();
+ const desktop=useDesktop(),touch=useTouchDevice();
  const reviewPath=useReview()?.path;
  const requestNotificationSettings = useNotificationClient();
  // Settings and rules already loaded in this tab are shown at once and refreshed behind them (owner, Nov 17).
@@ -78,6 +82,7 @@ function Notifications({locale,deny,mode}:{locale:DiagnosisLocale;deny:()=>void;
   return()=>c.abort();
  },[reviewPath,requestPlan]);
  const en=locale==="en",t=(ja:string,eng:string)=>en?eng:ja,isMorning=mode==="morning";
+ const mailText=t("スマホ通知をオンにしていない場合はメールで届きます","If phone notifications aren’t on, you’ll get an email instead");
  function update(patch:Partial<NotificationSettings>){setDraft(s=>({...s,...patch}));setMessage("");}
  async function save(){
   if(mutex.current||!snapshot||locked)return;
@@ -106,13 +111,76 @@ function Notifications({locale,deny,mode}:{locale:DiagnosisLocale;deny:()=>void;
  const sample=events.length?latestAlertFromDigest({date:"2027-02-03",items:events}):null;
  const usd=(v:number)=>new Intl.NumberFormat(en?"en-US":"ja-JP",{style:"currency",currency:"USD"}).format(v);
  const timeButtons=<div className={styles.timeGrid}>{DELIVERY_HOURS.map(h=><button type="button" key={h} aria-pressed={draft.deliveryHourJst===h} onClick={()=>update({deliveryHourJst:h})}>{deliveryClock(h,locale)}</button>)}</div>;
- const alertExample=sample?<><PushSample body={resoluteAlertPushBody(events,locale)} locale={locale}/><p className={styles.muted}>{t("押すと「今日のお知らせ」が開きます","Tap it to open Today's alert")}</p><div className={styles.mailPreview}><LatestAlertContent locale={locale} state={{status:"ready",alert:sample}}/></div></>:null;
  const lineColors=["#ecd48f","#eba85a","#e5744f","#cf4a52","#b03a62"];
  const picks=[t("計画どおり動いた","I followed my plan"),t("見送った","I held off"),t("まだ迷っている","I'm still unsure")];
+ const rules=plan?ruleFacts(plan):null;
+ const references=Object.fromEntries(validItems.map(i=>[i.symbol,i.referencePrice]));
+ const alertExample=sample?<><PushSample body={resoluteAlertPushBody(events,locale)} locale={locale}/><p className={styles.muted}>{t("押すと「今日のお知らせ」が開きます","Tap it to open Today's alert")}</p><div className={styles.mailPreview}><LatestAlertContent locale={locale} state={{status:"ready",alert:sample}} context={{rules,references}}/></div></>:null;
+ const status=<>
+  {snapshot&&JSON.stringify(snapshot.settings)!==JSON.stringify(draft)?<p className={styles.status}>{t("変更はまだ保存していません。","You have unsaved changes.")}</p>:null}
+  {message?<p role="status" className={message==="saved"?styles.status:styles.error}>{messages[message]}</p>:null}
+  {locked&&message!=="preparing"?<button className={styles.secondary} disabled={busy||loading} onClick={()=>{setLoading(true);setAttempt(v=>v+1);}}>{t("保存済みの設定を読み込む（現在の入力を置き換えます）","Load saved settings (replaces your current changes)")}</button>:null}
+ </>;
+ const saveButton=(className:string)=><button type="button" className={className} onClick={()=>void save()} disabled={!snapshot||busy||loading||locked}>{busy?t("保存しています…","Saving…"):t("通知設定を保存する","Save notification settings")}</button>;
+ const deliveryNote=<p className={styles.disclaimer}>{snapshot?.delivery?t("この画面の試算で通知は送信されません。","Using this screen will not send a notification."):t("通知の配信は準備中です。この画面の試算で通知は送信されません。","Notification delivery is not available yet. Using this screen will not send a notification.")}</p>;
+ if(desktop&&!isMorning) {
+  // PC (owner, Nov 25, 02_終値アラート_PC 1): settings on the left; the lines as a table and TRY IT on the right; both columns end level.
+  const columns=[...lines.map((l,i)=>({key:`d${l}`,label:`−${l}%`,color:lineColors[Math.min(i,lineColors.length-1)],price:(r:number)=>r*(100-l)/100})),
+   ...(draft.surgeCapPct!==null?[{key:"surge",label:`+${draft.surgeCapPct}%`,color:"#8fd6a8",price:(r:number)=>r*(100+(draft.surgeCapPct??0))/100}]:[])];
+  const grid={gridTemplateColumns:`minmax(84px,1fr) repeat(${Math.max(1,columns.length)},minmax(0,1fr))`};
+  return <div className={pc.content}>
+   <header className={pc.head}><div><p className={pc.eyebrow}><b>CLOSING ALERT</b>{t("終値アラート","Closing-price alerts")}</p><h1 className={pc.title}>{t("終値アラート","Closing-price alerts")}</h1>
+    <p className={pc.lead}>{t("ラインに届いた日に、スマホ通知でお知らせ","Get a phone notification on the day a line is hit")}</p></div></header>
+   {loading?<p role="status">{t("設定を読み込んでいます…","Loading your settings…")}</p>:null}
+   <div className={pc.columns}>
+    <fieldset className={`${styles.settingsFields} ${pc.column}`} disabled={loading||busy||locked}>
+     <section className={`${styles.card} ${pc.panel} ${pc.settings}`}><h2>{t("見る銘柄","Stocks to watch")}</h2><p className={styles.muted}>{t("カタカナでも会社名を検索できます", "You can search by company name too")}</p>
+      <div className={pc.watchHead} aria-hidden="true"><span>{t("銘柄","Symbol")}</span><span>{t("基準","Reference")}</span><span /></div>
+      {displayItems.map((item,i)=><div className={`${styles.stockRow} ${pc.watchRow}`} key={i}>
+       <StockInput value={item.symbol} index={i} en={en} onChange={symbol=>changeItem(i,{symbol})}/>
+       <label className={styles.referencePrice}><span>{t("基準","Reference")}</span><span className={styles.dollarInput}><i>$</i><NumberInput aria-label={t("基準価格","Reference price")+` ${i+1}`} decimal value={item.referencePrice||""} onValueChange={value=>changeItem(i,{referencePrice:value===""?0:Number(value)})}/></span></label>
+       <button type="button" className={styles.removeButton} aria-label={t("銘柄を削除","Remove symbol")+` ${i+1}`} onClick={()=>update({watchItems:draft.watchItems.filter((_,k)=>k!==i)})}>×</button>
+      </div>)}
+      {draft.watchItems.length<5?<button type="button" className={styles.addButton} onClick={()=>update({watchItems:[...draft.watchItems,{symbol:"",referencePrice:0}]})}>{t("＋ 銘柄を追加","＋ Add a stock")}</button>:null}
+     </section>
+     <section className={`${styles.card} ${pc.panel} ${pc.settings}`}><h2>{t("知らせるライン","Alert levels")}</h2><p className={styles.muted}>{t("あなたのルールの買い増しラインです","These are the purchase levels from your rules")}</p>
+      {lines.length?<div className={styles.lineChips}>{lines.map(l=><span key={l}>−{l}%</span>)}</div>:<p className={styles.muted}>{planState==="preparing"?t("保存したラインは、準備ができ次第、ここに自動で表示されます。","Your saved levels will appear here automatically once saving is switched on."):planState==="error"?t("保存済みのラインを読み込めませんでした。","Couldn’t load your saved levels."):t("買い増しラインはまだ設定されていません。","No purchase levels are set yet.")}</p>}
+      <label className={`${styles.switchRow} ${pc.lined}`}><span>{t("上昇の目安も知らせる","Also alert me on a rise")}</span><input type="checkbox" role="switch" checked={draft.surgeCapPct!==null} onChange={e=>update({surgeCapPct:e.target.checked?50:null})}/></label>
+      {draft.surgeCapPct!==null?<label className={`${styles.compactField} ${pc.lined}`}><span>{t("基準からの上昇率","Rise from reference price")}</span><span><NumberInput decimal value={draft.surgeCapPct} onValueChange={value=>update({surgeCapPct:Number(value)})}/> %</span></label>:null}
+     </section>
+     <section className={`${styles.card} ${pc.panel} ${pc.settings} ${pc.grow}`}><h2>{t("届く時間と届け先","Delivery time and where it goes")}</h2><p className={styles.muted}>{t("前の夜の終値をもとに、この時間にお知らせします(日本時間)","We check the U.S. closing prices and send alerts at this time (ET).")}</p>{timeButtons}
+      <label className={`${styles.switchRow} ${pc.lined}`}><span>{t("終値アラートを受け取る","Receive closing-price alerts")}</span><input type="checkbox" role="switch" checked={draft.alertsEnabled} onChange={e=>update({alertsEnabled:e.target.checked})}/></label>
+      {touch?<div className={pc.thisDevice}><DeviceNotifications lang={locale} scope="resolute" initiallyOpen/><p className={styles.muted}>{mailText}</p></div>
+       :<div className={pc.destinations}><div className={pc.destination}><b>{t("スマホ通知","Phone notifications")}</b><span>{t("スマホでこの画面を開くと、オンにできます","Open this page on your phone to turn them on")}</span></div>
+        <div className={pc.destination}><b>{t("メール","Email")}</b><span>{mailText}</span></div></div>}
+     </section>
+    </fieldset>
+    <div className={pc.column}>
+     <section className={`${styles.card} ${pc.panel} ${pc.grow}`}>
+      <span className={styles.eyebrow}>LINES</span><h2 className={pc.panelTitle}>{t("あなたのライン","Your alert levels")}</h2>
+      {validItems.length&&columns.length?<div className={pc.lineTable}>
+       <div className={pc.lineHead} style={grid}><span>{t("銘柄","Symbol")}</span>{columns.map(c=><span key={c.key}><i style={{background:c.color}}>{c.label}</i></span>)}</div>
+       {validItems.map(item=><div className={pc.lineRow} style={grid} key={item.symbol}><span><b>{item.symbol}</b><small>{t(`基準 ${usd(item.referencePrice).replace(/\.00$/,"")}`,`Ref. ${usd(item.referencePrice).replace(/\.00$/,"")}`)}</small></span>{columns.map(c=><strong key={c.key} style={{color:c.color}}>{usd(c.price(item.referencePrice))}</strong>)}</div>)}
+      </div>:null}
+      {!validItems.length?<p className={styles.muted}>{t("銘柄と基準価格を入れてください","Enter a symbol and reference price")}</p>:null}
+     </section>
+     <section className={`${styles.card} ${pc.panel} ${pc.tryIt}`}>
+      <div className={pc.tryLeft}><span className={styles.eyebrow}>TRY IT</span><p className={styles.muted}>{t("もしも、ある日の終値が基準から","What if a closing price moved")}</p><p className={`${styles.percentNumber} ${pc.tryPercent}`}>{change>=0?"+":"−"}{Math.abs(change)}%</p><p className={styles.muted}>{t("だったら？","from your reference price?")}</p><input type="range" min="-50" max="100" value={change} aria-label={t("終値の変化","Closing-price change")} onChange={e=>setChange(Number(e.target.value))}/></div>
+      <div className={pc.tryRight}><p className={pc.small}>{t("届く通知の例","Example notification")}</p>
+       {sample?<div className={pc.push} role="img" aria-label={`RESOLUTE: ${resoluteAlertPushBody(events,locale)}`}><span className={pc.pushHead}><b>RESOLUTE</b><time>{deliveryClock(draft.deliveryHourJst,locale)}</time></span><strong>{resoluteAlertPushBody(events,locale)}</strong><small>{t("押すと「今日のお知らせ」が開きます","Tap it to open Today's alert")}</small></div>:<p className={styles.muted}>{t("この条件では通知に該当しません。","No alert would be sent in this example.")}</p>}
+       <p className={pc.small}>{t("通知は、米国市場の終値が確定したあとに送ります。","Alerts are sent after US closing prices are final.")}</p></div>
+     </section>
+    </div>
+   </div>
+   {status}
+   <FlowNavigation step={3} locale={locale} wide extra={saveButton(`${styles.secondary} ${pc.save}`)}/>
+   <div className={pc.notes}><p className={styles.disclaimer}>{t("情報の提供であり、投資助言ではありません。","For information only. Not investment advice.")}</p>{deliveryNote}</div>
+  </div>;
+ }
  return <div className={styles.section}>
   <header className={styles.toolHeading}><h1>{isMorning?t("翌朝のひとこと","Morning note"):t("終値アラート","Closing-price alerts")}</h1><p className={styles.muted}>{isMorning?t("お知らせの翌朝に、1通だけ届きます","One short notification the morning after an alert"):t("ラインに届いた日に、スマホ通知でお知らせ","Get a phone notification on the day a line is hit")}</p></header>
   {/* Owner, Nov 17: ③④ arrive as phone notifications (the same part as Tech Phase's notification settings). */}
-  <section className={styles.card}><DeviceNotifications lang={locale} scope="resolute" initiallyOpen/>{isMorning?null:<p className={styles.muted}>{t("スマホ通知をオンにしていない場合はメールで届きます","If phone notifications aren’t on, you’ll get an email instead")}</p>}</section>
+  <section className={styles.card}><DeviceNotifications lang={locale} scope="resolute" initiallyOpen/>{isMorning?null:<p className={styles.muted}>{mailText}</p>}</section>
   {loading?<p role="status">{t("設定を読み込んでいます…","Loading your settings…")}</p>:null}
   <fieldset className={styles.settingsFields} disabled={loading||busy||locked}>
    {isMorning?<section className={styles.card}>
@@ -138,11 +206,9 @@ function Notifications({locale,deny,mode}:{locale:DiagnosisLocale;deny:()=>void;
      <label className={styles.switchRow}><span>{t("終値アラートを受け取る","Receive closing-price alerts")}</span><input type="checkbox" role="switch" checked={draft.alertsEnabled} onChange={e=>update({alertsEnabled:e.target.checked})}/></label>
     </section>
    </>}
-   <button type="button" className={styles.primary} onClick={()=>void save()} disabled={!snapshot||busy||loading||locked}>{busy?t("保存しています…","Saving…"):t("通知設定を保存する","Save notification settings")}</button>
+   {saveButton(styles.primary)}
   </fieldset>
-  {snapshot&&JSON.stringify(snapshot.settings)!==JSON.stringify(draft)?<p className={styles.status}>{t("変更はまだ保存していません。","You have unsaved changes.")}</p>:null}
-  {message?<p role="status" className={message==="saved"?styles.status:styles.error}>{messages[message]}</p>:null}
-  {locked&&message!=="preparing"?<button className={styles.secondary} disabled={busy||loading} onClick={()=>{setLoading(true);setAttempt(v=>v+1);}}>{t("保存済みの設定を読み込む（現在の入力を置き換えます）","Load saved settings (replaces your current changes)")}</button>:null}
+  {status}
   {isMorning?<>
    {!draft.morningEnabled?<section className={`${styles.card} ${styles.hero}`}><p className={styles.muted}>{snapshot?t("通知を受け取らない設定です。","Notifications are turned off."):message==="preparing"?t("準備中です。準備ができたら、ここで受け取りの設定ができます。","Not ready yet. You’ll be able to turn this on here once it is."):t("保存済みの設定はまだ確認できていません。","We haven’t been able to check your saved settings yet.")}</p></section>:<section className={`${styles.card} ${styles.hero}`}>
     <span className={styles.eyebrow}>GOOD MORNING</span>
@@ -160,7 +226,7 @@ function Notifications({locale,deny,mode}:{locale:DiagnosisLocale;deny:()=>void;
    </section>}
   {!isMorning?<p className={styles.disclaimer}>{t("通知は、米国市場の終値が確定したあとに送ります。","Alerts are sent after US closing prices are final.")}<br/>{t("情報の提供であり、投資助言ではありません。","For information only. Not investment advice.")}</p>:null}
   {/* Shown only until resolute-api reports that delivery is switched on (lib/resolute/notification-delivery-state.ts). */}
-  <p className={styles.disclaimer}>{snapshot?.delivery?t("この画面の試算で通知は送信されません。","Using this screen will not send a notification."):t("通知の配信は準備中です。この画面の試算で通知は送信されません。","Notification delivery is not available yet. Using this screen will not send a notification.")}</p>
+  {deliveryNote}
   <dialog ref={planDialog} className={styles.planDialog} onClose={()=>setPlanOpen(false)} onCancel={()=>setPlanOpen(false)} aria-labelledby="morning-plan-title">
    <h2 id="morning-plan-title">{t("あなたの計画", "Your plan")}</h2>
    {plan?<dl className={styles.ruleCards}>

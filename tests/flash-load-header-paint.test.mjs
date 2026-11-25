@@ -22,7 +22,7 @@ test("RESOLUTE's 「確認中…」 screen and the tool shell have no disclaimer
   const shell = read("../app/resolute/tool-shell.tsx");
   assert.match(shell, /const shown=reviewing \? identityReady : access==="allowed";/);
   assert.match(shell, /const checking=!shown && \(!identityReady \|\| access==="loading"\);/);
-  assert.match(shell, /\{shown \? children\(/);
+  assert.match(shell, /const body=shown \? children\(/);
   assert.match(shell, /: checking \? <section className=\{styles\.loadingBrand\}/);
   // Owner, Nov 21: the disclaimer is on the home screen only (and the RESOLUTE landing page), never in the tool shell.
   assert.doesNotMatch(shell, /Disclaimer/);
