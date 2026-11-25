@@ -43,7 +43,8 @@ function compileComponent(file, extra = {}) {
 const networkComponent = compileComponent('company-network', {'@/lib/research/company-network':networkHelpers});
 // Retain the historical biography/map fixture assertions. The live quoted map
 // has its own cap/evidence tests and real-browser interaction checks.
-const panel = compileComponent('company-introduction', {'./chain-map':networkComponent});
+const sourceList = compileComponent('source-list');
+const panel = compileComponent('company-introduction', {'./chain-map':networkComponent,'./source-list':sourceList});
 const {renderToStaticMarkup} = require('react-dom/server');
 const {createElement} = require('react');
 test('renders all six localized answers with expandable source links', () => {

@@ -3,6 +3,7 @@ import type { CompanyIntroduction } from "@/lib/research/company-introductions";
 import type { CompanyNetwork } from "@/lib/research/company-network";
 import { CompanyIntroductionPanel } from "./company-introduction";
 import { CompanyNetworkMap } from "./chain-map";
+import { MergedSources } from "./source-list";
 import QuoteCard from "../price/quote-card";
 import styles from "./market-workspace.module.css";
 
@@ -26,7 +27,8 @@ export function MarketWorkspace({ ticker, name, lang, introduction, network, asO
       {asOf && <p className={styles.asOf}>{asOf}</p>}
     </div>
 
-    {introduction && <CompanyIntroductionPanel introduction={introduction} network={network} lang={lang} />}
-    {!introduction && network && <CompanyNetworkMap key={network.root} graph={network} lang={lang} />}
+    {/* The stock search footer below carries the one note, so neither the profile nor the map repeats it (owner, Nov 25). */}
+    {introduction && <CompanyIntroductionPanel introduction={introduction} network={network} lang={lang} note={false} />}
+    {!introduction && network && <MergedSources lang={lang}><CompanyNetworkMap key={network.root} graph={network} lang={lang} /></MergedSources>}
   </section>;
 }

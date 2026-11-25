@@ -1,6 +1,7 @@
 import type { CompanyIntroduction, CompanyIntroductionField } from "@/lib/research/company-introductions";
 import type { CompanyNetwork } from "@/lib/research/company-network";
 import { CompanyNetworkMap } from "./chain-map";
+import { MergedSources } from "./source-list";
 import styles from "./company-introduction.module.css";
 
 const headings: [CompanyIntroductionField, string, string][] = [
@@ -31,7 +32,8 @@ function LiteMaps({ introduction, lang }: { introduction: CompanyIntroduction; l
   </div>;
 }
 
-export function CompanyIntroductionPanel({ introduction, network, lang }: { introduction: CompanyIntroduction; network?: CompanyNetwork | null; lang: "ja" | "en" }) {
+/** `note`: the one closing note under 「出典」. The stock search page leaves it out because its footer carries the same note (owner, Nov 25). */
+export function CompanyIntroductionPanel({ introduction, network, lang, note = true }: { introduction: CompanyIntroduction; network?: CompanyNetwork | null; lang: "ja" | "en"; note?: boolean }) {
   return <section className={styles.introduction} aria-label={lang === "ja" ? `${introduction.name}の企業紹介` : `About ${introduction.name}`}>
     <header><h2>{lang === "ja" ? "企業を知る" : "Get to know the company"}</h2></header>
     <dl className={styles.grid}>
@@ -40,15 +42,14 @@ export function CompanyIntroductionPanel({ introduction, network, lang }: { intr
         <dd>{introduction[lang][field]}</dd>
       </div>)}
     </dl>
-    {network ? <CompanyNetworkMap key={network.root} graph={network} lang={lang} /> : !introduction[lang].relationships ? <LiteMaps introduction={introduction} lang={lang} /> : mapHeadings.some(([topic]) => introduction[lang][topic]) && <div className={styles.maps}>
-      {mapHeadings.map(([topic, ja, en], index) => introduction[lang][topic] && <section key={topic} className={styles.mapCard} data-topic={topic}>
-        <h3><span>0{index + 5}</span>{lang === "ja" ? ja : en}</h3><p>{introduction[lang][topic]}</p>
-      </section>)}
-    </div>}
-    <details className={styles.sources}>
-      <summary>{lang === "ja" ? "出典・確認日" : "Sources & last reviewed date"}</summary>
-      <p>{lang === "ja" ? "内容確認" : "Reviewed"}: <time dateTime={introduction.reviewedOn}>{introduction.reviewedOn}</time></p>
-      <ul>{introduction.sources.map(source => <li key={source.url}><a href={source.url} target="_blank" rel="noreferrer">{source.label} ↗</a></li>)}</ul>
-    </details>
+    {/* One 「出典」 for the whole profile: the relationship map's sources and the profile's own, with its 確認日 (owner, Nov 25). */}
+    <MergedSources lang={lang} reviewedOn={introduction.reviewedOn} note={note}
+      extra={introduction.sources.map(source => ({ url: source.url, label: source.label, notes: [], rows: [] }))}>
+      {network ? <CompanyNetworkMap key={network.root} graph={network} lang={lang} /> : !introduction[lang].relationships ? <LiteMaps introduction={introduction} lang={lang} /> : mapHeadings.some(([topic]) => introduction[lang][topic]) && <div className={styles.maps}>
+        {mapHeadings.map(([topic, ja, en], index) => introduction[lang][topic] && <section key={topic} className={styles.mapCard} data-topic={topic}>
+          <h3><span>0{index + 5}</span>{lang === "ja" ? ja : en}</h3><p>{introduction[lang][topic]}</p>
+        </section>)}
+      </div>}
+    </MergedSources>
   </section>;
 }

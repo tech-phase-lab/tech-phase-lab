@@ -18,6 +18,7 @@ import styles from "./stocks.module.css";
 import polish from "./stock-polish.module.css";
 import filingStyles from "./filings.module.css";
 import { MarketWorkspace } from "./market-workspace";
+import { SOURCES_NOTE } from "./source-list";
 import SearchRows from "./search-rows";
 import { WatchToast } from "../price/star-button";
 import searchStyles from "./search-redesign.module.css";
@@ -323,7 +324,7 @@ export default function StockDirectory({ sectors }: { sectors?: Record<string, S
           <a href={profile.secProfileUrl} target="_blank" rel="noreferrer">{t("公式資料をすべて見る（SEC）↗", "All official filings (SEC) ↗")}</a>
         </div>
       </details>}
-      <footer className={styles.footer}><span>TECH PHASE RESEARCH</span><p>{t("SECは名簿の正確性・網羅性を保証していません。検索結果は企業識別用で、売買推奨ではありません。", "The SEC does not guarantee directory accuracy or scope. Results identify issuers and are not investment recommendations.")}</p></footer>
+      <footer className={styles.footer}><span>TECH PHASE RESEARCH</span><p>{t(SOURCES_NOTE.ja, SOURCES_NOTE.en)}</p></footer>
     </main>
     </div>
   </div>;

@@ -127,7 +127,8 @@ function compile(file, extra) {
   new Function('require', 'module', 'exports', compiled)(name => name.endsWith('.css') ? { default: {} } : extra[name] ?? require(name), mod, mod.exports);
   return mod.exports;
 }
-const { StockChainMap } = compile('stock-chain-map', { '@/lib/research/chain-map-core': chain });
+const sourceList = compile('source-list', {});
+const { StockChainMap, chainSourceBlocks } = compile('stock-chain-map', { '@/lib/research/chain-map-core': chain, './source-list': sourceList });
 const { renderToStaticMarkup } = require('react-dom/server');
 const { createElement } = require('react');
 
@@ -140,12 +141,19 @@ test('the map shows suppliers first, no range buttons, a card per company and ev
     // Owner, Nov 25: no per-card 「出典・引用・発表日」; one closed 「出典」 after the footer note lists every relation's and far link's source.
     assert.equal((html.match(/<details/g) ?? []).length, 1);
     assert.ok(html.indexOf('data-chain-sources') > html.indexOf(lang === 'ja' ? '投資判断を勧めるものではありません' : 'Not investment advice'));
-    assert.equal((html.match(/<li[^>]*><span><b>/g) ?? []).length, data.companies.reduce((sum, company) => sum + company.relations.length, 0) + data.far.length);
+    // Owner, Nov 25: the same document and quote is one block; its companies are listed under the quote once each.
+    const blocks = chainSourceBlocks(data, lang);
+    assert.equal((html.slice(html.indexOf('data-chain-sources')).match(/<li[ >]/g) ?? []).length, blocks.length);
+    assert.equal((html.match(/role="listitem"/g) ?? []).length, blocks.reduce((sum, block) => sum + block.rows.length, 0));
+    assert.ok(blocks.length < data.companies.reduce((sum, company) => sum + company.relations.length, 0) + data.far.length);
+    assert.ok(html.includes(lang === 'ja' ? `${blocks.length}件` : `Sources <span`));
     assert.ok(html.indexOf(lang === 'ja' ? '供給元(上流)' : 'Suppliers (upstream)') < html.indexOf('NVDA</b>'));
     assert.ok(html.includes(lang === 'ja' ? '22社 · 31の関係' : '22 companies · 31 relationships'));
     assert.ok(html.includes(lang === 'ja' ? 'さらに先の関係' : 'Related connections'));
     assert.ok(!html.includes('出典・引用・発表日') && !html.includes('Sources, quotes &amp; dates') && !html.includes('3段先以降'));
-    assert.ok(html.includes(lang === 'ja' ? '報道' : 'Media report'));
+    // 「SiliconANGLE の報道 報道」: a press label that already says 報道 / report gets no second mark.
+    assert.ok(html.includes(lang === 'ja' ? 'SiliconANGLE の報道</a>' : 'SiliconANGLE report</a>'));
+    assert.ok(!/報道<\/a> <em>報道|report<\/a> <em>Media report/i.test(html));
     assert.equal((html.match(/id="chain-card-/g) ?? []).length, 22);
     // The Japanese view never shows English-only copy; the English view never shows Japanese.
     const visible = html.replace(/<q[^>]*>.*?<\/q>/g, '').replace(/<a [^>]*>/g, '<a>');
