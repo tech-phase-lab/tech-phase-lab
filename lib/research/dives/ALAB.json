@@ -1,0 +1,458 @@
+{
+ "ticker": "ALAB",
+ "name": "Astera Labs",
+ "exchange": "NASDAQ",
+ "quoteTicker": "ALAB",
+ "period": "Q3 2026",
+ "periodQuarter": 3,
+ "releasedOn": "2026-11-03",
+ "periodEnd": "2026-09-30",
+ "reviewedOn": "2026-11-25",
+ "currency": "USD",
+ "basis": {
+  "eps": "non-GAAP diluted",
+  "grossMargin": "non-GAAP",
+  "guidance": "next-quarter revenue range and non-GAAP gross margin as stated"
+ },
+ "sources": [
+  {
+   "url": "https://www.sec.gov/Archives/edgar/data/1736297/000173629726000044/q326exhibit991.htm",
+   "title": "Astera Labs third quarter 2026 financial results (8-K Exhibit 99.1)",
+   "location": "Financial Highlights; Fourth Quarter Outlook; statements of operations; GAAP to non-GAAP reconciliation; balance sheet; cash flows"
+  },
+  {
+   "url": "https://www.sec.gov/Archives/edgar/data/1736297/000173629726000017/q126exhibit991.htm",
+   "title": "Astera Labs first quarter 2026 financial results (8-K Exhibit 99.1)",
+   "location": "Condensed consolidated statements of operations"
+  }
+ ],
+ "evidence": [
+  {
+   "field": "numbers.revenue.current",
+   "url": "https://www.sec.gov/Archives/edgar/data/1736297/000173629726000044/q326exhibit991.htm",
+   "quote": "September 30, 2026 June 30, 2026 September 30, 2025 September 30, 2026 September 30, 2025 Revenue $ 584,899 $ 392,400 $ 230,575",
+   "calc": "584899/1000"
+  },
+  {
+   "field": "numbers.revenue.previous",
+   "url": "https://www.sec.gov/Archives/edgar/data/1736297/000173629726000044/q326exhibit991.htm",
+   "quote": "September 30, 2026 June 30, 2026 September 30, 2025 September 30, 2026 September 30, 2025 Revenue $ 584,899 $ 392,400 $ 230,575",
+   "calc": "392400/1000"
+  },
+  {
+   "field": "numbers.revenue.yearAgo",
+   "url": "https://www.sec.gov/Archives/edgar/data/1736297/000173629726000044/q326exhibit991.htm",
+   "quote": "September 30, 2026 June 30, 2026 September 30, 2025 September 30, 2026 September 30, 2025 Revenue $ 584,899 $ 392,400 $ 230,575",
+   "calc": "230575/1000"
+  },
+  {
+   "field": "numbers.adjustedEPS",
+   "url": "https://www.sec.gov/Archives/edgar/data/1736297/000173629726000044/q326exhibit991.htm",
+   "quote": "•Non-GAAP diluted net income per share of $1.32"
+  },
+  {
+   "field": "numbers.grossMargin.current",
+   "url": "https://www.sec.gov/Archives/edgar/data/1736297/000173629726000044/q326exhibit991.htm",
+   "quote": "Non-GAAP gross margin(1) 72.4 % 73.7 % 76.4 %"
+  },
+  {
+   "field": "numbers.grossMargin.previous",
+   "url": "https://www.sec.gov/Archives/edgar/data/1736297/000173629726000044/q326exhibit991.htm",
+   "quote": "Non-GAAP gross margin(1) 72.4 % 73.7 % 76.4 %"
+  },
+  {
+   "field": "numbers.guidance.low",
+   "url": "https://www.sec.gov/Archives/edgar/data/1736297/000173629726000044/q326exhibit991.htm",
+   "quote": "•Revenue within a range of $730 million to $750 million"
+  },
+  {
+   "field": "numbers.guidance.high",
+   "url": "https://www.sec.gov/Archives/edgar/data/1736297/000173629726000044/q326exhibit991.htm",
+   "quote": "•Revenue within a range of $730 million to $750 million"
+  },
+  {
+   "field": "numbers.guidance.grossMarginPercent",
+   "url": "https://www.sec.gov/Archives/edgar/data/1736297/000173629726000044/q326exhibit991.htm",
+   "quote": "•Non-GAAP gross margin of approximately 72%"
+  },
+  {
+   "field": "history[0].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/1736297/000173629726000044/q326exhibit991.htm",
+   "quote": "September 30, 2026 June 30, 2026 September 30, 2025 September 30, 2026 September 30, 2025 Revenue $ 584,899 $ 392,400 $ 230,575",
+   "calc": "230575/1000"
+  },
+  {
+   "field": "history[1].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/1736297/000173629726000017/q126exhibit991.htm",
+   "quote": "Three Months Ended March 31, 2026 December 31, 2025 March 31, 2025 Revenue $ 308,361 $ 270,583 $ 159,442",
+   "calc": "270583/1000"
+  },
+  {
+   "field": "history[2].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/1736297/000173629726000017/q126exhibit991.htm",
+   "quote": "Three Months Ended March 31, 2026 December 31, 2025 March 31, 2025 Revenue $ 308,361 $ 270,583 $ 159,442",
+   "calc": "308361/1000"
+  },
+  {
+   "field": "history[3].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/1736297/000173629726000044/q326exhibit991.htm",
+   "quote": "September 30, 2026 June 30, 2026 September 30, 2025 September 30, 2026 September 30, 2025 Revenue $ 584,899 $ 392,400 $ 230,575",
+   "calc": "392400/1000"
+  },
+  {
+   "field": "tiles[0].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/1736297/000173629726000044/q326exhibit991.htm",
+   "quote": "•Record quarterly revenue of $584.9 million, up 49% QoQ and up 154% year-over-year"
+  },
+  {
+   "field": "tiles[1].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/1736297/000173629726000044/q326exhibit991.htm",
+   "quote": "•Non-GAAP operating margin of 44.7%"
+  },
+  {
+   "field": "tiles[2].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/1736297/000173629726000044/q326exhibit991.htm",
+   "quote": "•Revenue within a range of $730 million to $750 million"
+  },
+  {
+   "field": "tiles[0].note",
+   "url": "https://www.sec.gov/Archives/edgar/data/1736297/000173629726000044/q326exhibit991.htm",
+   "quote": "•Record quarterly revenue of $584.9 million, up 49% QoQ and up 154% year-over-year"
+  },
+  {
+   "field": "tiles[1].note",
+   "url": "https://www.sec.gov/Archives/edgar/data/1736297/000173629726000044/q326exhibit991.htm",
+   "quote": "•GAAP operating margin of 30.6%"
+  },
+  {
+   "field": "tiles[2].note",
+   "url": "https://www.sec.gov/Archives/edgar/data/1736297/000173629726000044/q326exhibit991.htm",
+   "quote": "•Revenue within a range of $730 million to $750 million",
+   "calc": "(730*1000/584899-1)*100",
+   "round": 0
+  },
+  {
+   "field": "tiles[2].note",
+   "url": "https://www.sec.gov/Archives/edgar/data/1736297/000173629726000044/q326exhibit991.htm",
+   "quote": "September 30, 2026 June 30, 2026 September 30, 2025 September 30, 2026 September 30, 2025 Revenue $ 584,899 $ 392,400 $ 230,575"
+  }
+ ],
+ "tiles": [
+  {
+   "label": {
+    "ja": "売上高",
+    "en": "Revenue"
+   },
+   "value": {
+    "ja": "5.85億ドル",
+    "en": "$584.9M"
+   },
+   "note": {
+    "ja": "前期比 +49%・前年同期比 +154%",
+    "en": "QoQ +49%, YoY +154%"
+   }
+  },
+  {
+   "label": {
+    "ja": "調整後営業利益率",
+    "en": "Non-GAAP operating margin"
+   },
+   "value": {
+    "ja": "44.7%",
+    "en": "44.7%"
+   },
+   "note": {
+    "ja": "GAAPでは30.6%",
+    "en": "GAAP 30.6%"
+   }
+  },
+  {
+   "label": {
+    "ja": "次期の売上見通し",
+    "en": "Next-quarter revenue outlook"
+   },
+   "value": {
+    "ja": "7.3億〜7.5億ドル",
+    "en": "$730–750M"
+   },
+   "note": {
+    "ja": "今期比 約+25〜28%",
+    "en": "About +25–28% vs. this quarter"
+   }
+  }
+ ],
+ "numbers": {
+  "revenue": {
+   "current": 584.899,
+   "previous": 392.4,
+   "yearAgo": 230.575
+  },
+  "adjustedEPS": 1.32,
+  "epsEstimate": null,
+  "grossMargin": {
+   "current": 72.4,
+   "previous": 73.7
+  },
+  "guidance": {
+   "low": 730,
+   "high": 750,
+   "grossMarginPercent": 72
+  },
+  "segments": null
+ },
+ "history": [
+  {
+   "label": "Q3",
+   "end": "2025-09-30",
+   "value": 230.575
+  },
+  {
+   "label": "Q4",
+   "end": "2025-12-31",
+   "value": 270.583
+  },
+  {
+   "label": "Q1",
+   "end": "2026-03-31",
+   "value": 308.361
+  },
+  {
+   "label": "Q2",
+   "end": "2026-06-30",
+   "value": 392.4
+  }
+ ],
+ "summary": {
+  "conclusion": [
+   {
+    "ja": "売上は5.85億ドルで前期比49%増、前年同期の約2.5倍でした。ファブリックスイッチ「Scorpio」が売上で最大の製品群になりました。",
+    "en": "Revenue was $584.9M, up 49% from the previous quarter and about 2.5 times a year ago. Scorpio fabric switches became the largest product family."
+   },
+   {
+    "ja": "調整後粗利益率は72.4%と高い水準ですが、前期の73.7%、前年同期の76.4%から下がっています。",
+    "en": "Non-GAAP gross margin remained high at 72.4%, but was down from 73.7% last quarter and 76.4% a year ago."
+   },
+   {
+    "ja": "会社は次の四半期の売上を7.3億〜7.5億ドル、調整後粗利益率を約72%と見込んでいます。",
+    "en": "The company expects next-quarter revenue of $730–750M with a non-GAAP gross margin of about 72%."
+   }
+  ],
+  "cards": {
+   "growth": {
+    "headline": {
+     "ja": "Scorpioスイッチが最大の製品群に",
+     "en": "Scorpio switches became the largest product family"
+    },
+    "chips": [
+     {
+      "tone": "up",
+      "text": {
+       "ja": "売上 前期比 +49%",
+       "en": "Revenue +49% QoQ"
+      }
+     },
+     {
+      "tone": "up",
+      "text": {
+       "ja": "売上 前年同期比 +154%",
+       "en": "Revenue +154% YoY"
+      }
+     }
+    ],
+    "sections": [
+     {
+      "key": "happened",
+      "text": {
+       "ja": "売上は3.92億ドルから5.85億ドルへ、1.93億ドル増えました。会社は、320レーンのScorpio X-Seriesの量産が始まり、Scorpioが売上で最大の製品群になったと説明しています。",
+       "en": "Revenue rose from $392.4M to $584.9M, up $192.5M. The company says volume production of the 320-lane Scorpio X-Series made Scorpio its largest product family by revenue."
+      }
+     },
+     {
+      "key": "good",
+      "text": {
+       "ja": "利益もしっかり出ています。調整後営業利益は2.62億ドル(利益率44.7%)で、GAAPでも営業利益は1.79億ドル(利益率30.6%)で、純利益は1.83億ドルでした。",
+       "en": "Profit is solid: non-GAAP operating income was $261.6M (44.7% margin), and on a GAAP basis operating income was $179.1M (30.6%) and net income $182.9M."
+      }
+     },
+     {
+      "key": "watch",
+      "text": {
+       "ja": "リリースには製品別・顧客別の売上の内訳がありません。AI向けの大口顧客にどれだけ頼っているかは、10-Qなどで確かめる必要があります。",
+       "en": "The release gives no revenue split by product or customer. How much the company relies on a few large AI customers needs to be checked in the 10-Q."
+      }
+     },
+     {
+      "key": "view",
+      "text": {
+       "ja": "新製品のうち、Aries 7はサンプル出荷が2026年第4四半期から、Orionは2027年第1四半期から提供の予定です。今の伸びはScorpioの立ち上がりによる部分が大きいと読めます。",
+       "en": "Among the new products, Aries 7 begins sampling in Q4 2026 and Orion becomes available from Q1 2027. Current growth appears to come largely from the Scorpio ramp."
+      }
+     }
+    ]
+   },
+   "change": {
+    "headline": {
+     "ja": "売上は前期比 +49.1%、粗利益率は低下",
+     "en": "Revenue up 49.1% QoQ, gross margin lower"
+    },
+    "chips": [
+     {
+      "tone": "down",
+      "text": {
+       "ja": "調整後粗利益率 73.7% → 72.4%",
+       "en": "Adj. gross margin 73.7% → 72.4%"
+      }
+     },
+     {
+      "tone": "up",
+      "text": {
+       "ja": "調整後EPS 1.32ドル",
+       "en": "Adj. EPS $1.32"
+      }
+     }
+    ],
+    "sections": [
+     {
+      "key": "happened",
+      "text": {
+       "ja": "売上は3.92億ドルから5.85億ドルへ、1.93億ドル増えました。調整後粗利益率は73.7%から72.4%に下がりました。",
+       "en": "Revenue rose from $392.4M to $584.9M, up $192.5M. Non-GAAP gross margin fell from 73.7% to 72.4%."
+      }
+     },
+     {
+      "key": "good",
+      "text": {
+       "ja": "粗利益率が少し下がっても、売上が大きく増えたので利益は増えています。GAAPの1株利益は0.99ドル、調整後は1.32ドルでした。",
+       "en": "Even with a slightly lower gross margin, the jump in sales lifted profit. GAAP EPS was $0.99 and non-GAAP EPS $1.32."
+      }
+     },
+     {
+      "key": "watch",
+      "text": {
+       "ja": "調整後粗利益率は、2026年第1四半期の76.4%から2四半期で4ポイント下がりました。会社はこのリリースで低下の理由を説明していません。",
+       "en": "Non-GAAP gross margin has fallen 4 points in two quarters, from 76.4% in Q1 2026. The release does not explain why."
+      }
+     },
+     {
+      "key": "means",
+      "text": {
+       "ja": "次の四半期の見通しも約72%なので、会社は粗利益率がこの水準で落ち着くと見ています。",
+       "en": "The outlook for next quarter is also about 72%, so the company expects the margin to settle around this level."
+      }
+     }
+    ]
+   },
+   "caution": {
+    "headline": {
+     "ja": "売掛金と在庫が急増",
+     "en": "Receivables and inventory jumped"
+    },
+    "chips": [
+     {
+      "tone": "down",
+      "text": {
+       "ja": "売掛金 0.83億 → 2.84億ドル",
+       "en": "Receivables $83M → $284M"
+      }
+     },
+     {
+      "tone": "down",
+      "text": {
+       "ja": "在庫 0.59億 → 2.01億ドル",
+       "en": "Inventory $59M → $201M"
+      }
+     },
+     {
+      "tone": "gold",
+      "text": {
+       "ja": "株式報酬 売上の14.1%",
+       "en": "Stock compensation 14.1% of revenue"
+      }
+     }
+    ],
+    "sections": [
+     {
+      "key": "happened",
+      "text": {
+       "ja": "2025年末から2026年9月末までに、売掛金は0.83億ドルから2.84億ドルへ、在庫は0.59億ドルから2.01億ドルへ増えました。それでも、1〜9月の営業キャッシュフローは3.41億ドルのプラスです。",
+       "en": "From the end of 2025 to the end of September 2026, receivables rose from $83M to $284M and inventory from $59M to $201M. Operating cash flow for the nine months was still positive at $341.5M."
+      }
+     },
+     {
+      "key": "means",
+      "text": {
+       "ja": "売上が急に増えると、代金の回収待ちや在庫も増えます。ただ、売上の伸び以上に増え続けると、現金が入りにくくなります。",
+       "en": "Fast sales growth naturally raises receivables and inventory. But if they keep growing faster than sales, cash collection suffers."
+      }
+     },
+     {
+      "key": "watch",
+      "text": {
+       "ja": "第3四半期の株式報酬は8,259万ドルで、売上の14.1%にあたります。GAAPと調整後の営業利益の差は、ほぼすべてこの株式報酬です。株式報酬は株数の増加にもつながります。",
+       "en": "Stock-based compensation was $82.6M in Q3, 14.1% of revenue, and accounts for almost all of the gap between GAAP and non-GAAP operating income. It also adds to the share count."
+      }
+     },
+     {
+      "key": "view",
+      "text": {
+       "ja": "次の決算で、売掛金と在庫が売上に見合った水準に落ち着くかを見ます。",
+       "en": "The next report will show whether receivables and inventory settle in line with sales."
+      }
+     }
+    ]
+   },
+   "next": {
+    "headline": {
+     "ja": "次期の会社見通しを追う",
+     "en": "Follow the company's outlook for next quarter"
+    },
+    "chips": [
+     {
+      "tone": "gold",
+      "text": {
+       "ja": "売上 7.3億〜7.5億ドル",
+       "en": "Revenue $730–750M"
+      }
+     },
+     {
+      "tone": "gold",
+      "text": {
+       "ja": "調整後粗利益率 約72%",
+       "en": "Adj. gross margin ~72%"
+      }
+     },
+     {
+      "tone": "gold",
+      "text": {
+       "ja": "調整後EPS 1.62〜1.66ドル",
+       "en": "Adj. EPS $1.62–1.66"
+      }
+     }
+    ],
+    "sections": [
+     {
+      "key": "happened",
+      "text": {
+       "ja": "会社は第4四半期の売上を7.3億〜7.5億ドル、調整後粗利益率を約72%と見込んでいます。今回の売上は5.85億ドルなので、見通しの下限でも約24.8%の増加です。",
+       "en": "The company expects fourth-quarter revenue of $730–750M and a non-GAAP gross margin of about 72%. Against $584.9M this quarter, even the low end would be about 24.8% higher."
+      }
+     },
+     {
+      "key": "watch",
+      "text": {
+       "ja": "粗利益率の見通し(約72%)は、今回の72.4%をわずかに下回ります。売上が伸びても粗利益率が下がり続けると、利益の伸びは小さくなります。",
+       "en": "The margin outlook (about 72%) is slightly below this quarter's 72.4%. If the margin keeps slipping, profit will grow more slowly than sales."
+      }
+     },
+     {
+      "key": "view",
+      "text": {
+       "ja": "次の決算で、実績がこの幅のどこに入るかを見ます。",
+       "en": "What matters is where actual results land within this range in the next report."
+      }
+     }
+    ]
+   }
+  }
+ }
+}
