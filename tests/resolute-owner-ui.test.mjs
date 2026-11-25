@@ -149,7 +149,11 @@ test("while access is being checked RESOLUTE shows its logo and 確認中…, ne
 });
 
 test("the RESOLUTE menu always offers the way back to Tech Phase", async () => {
-  assert.match(await read("../app/resolute/tool-shell.tsx"), /href="\/research" prefetch=\{false\}>[\s\S]*\{en\?"Tech Phase":"Tech Phaseへ"\}/);
+  // Owner, Nov 25 §02: a large 「Tech Phaseへ戻る（マーケット・銘柄検索・速報）」 at the top of the menu, and 「‹ Tech Phase」 in the bar.
+  const shell = await read("../app/resolute/tool-shell.tsx");
+  assert.match(shell, /className=\{h\.tpCard\}>[\s\S]*?\{en\?"Back to Tech Phase":"Tech Phaseへ戻る"\}[\s\S]*?"マーケット・銘柄検索・速報"/);
+  assert.match(shell, /className=\{h\.tpBack\}[^>]*>[\s\S]*?Tech Phase<\/Link>/);
+  assert.match(await read("../lib/resolute/tech-phase-back.ts"), /TECH_PHASE_HOME = "\/research"/);
 });
 
 test("RESOLUTE can measure the top inset (viewport-fit=cover), asks again quietly before showing a sign-in message, and explains adding to the home screen in settings (Nov 1)", async () => {
@@ -167,7 +171,9 @@ test("RESOLUTE header and menu are the same on every page, with no bottom bar (N
   const shell = await read("../app/resolute/tool-shell.tsx");
   assert.doesNotMatch(shell, /<footer/, "the bottom band and its small links are gone");
   assert.match(shell, /<header className=\{`\$\{h\.bar\}/);
-  assert.match(shell, /\{home \? <span \/> : <Link href="\/resolute" className=\{h\.brand\}/, "home keeps the centre empty, inner pages show a small RESOLUTE that returns home");
+  // Owner, Nov 25 §B: 「‹ Tech Phase」 and 「☰ メニュー」 on the left, JA/EN on the right; purchase pages show the logo and JA/EN only.
+  assert.match(shell, /<div className=\{h\.left\}>/);
+  assert.match(shell, /if\(variant==="purchase"\) return <header className=\{`\$\{h\.bar\} \$\{h\.purchase\}`\}>/);
   assert.match(shell, /menuOpen\?\(en\?"Close":"閉じる"\)/);
   const steps = shell.slice(shell.indexOf("const STEPS"), shell.indexOf("const TOOLS"));
   assert.deepEqual([...steps.matchAll(/"(\/resolute\/[a-z]+)","([^"]+)"/g)].map(m => [m[1], m[2]]), [["/resolute/diagnosis","投資ルール診断"],["/resolute/simulation","シミュレーション"],["/resolute/alerts","終値アラート"],["/resolute/morning","翌朝のひとこと"],["/resolute/thermometer","相場の温度計"],["/resolute/tax","税金の目安"]]);

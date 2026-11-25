@@ -5,6 +5,7 @@ import type { CheckoutProps } from "./screen";
 import LiveCheckoutScreen from "./live-screen";
 import styles from "./styles.module.css";
 import PurchaseBar from "./purchase-bar";
+import theme from "../diagnosis.module.css";
 export default function LiveCheckoutIdentity(props: CheckoutProps & {salesEnabled:boolean;guestEnabled?:boolean;guestOrder?:boolean;signingUp?:boolean;renewal?:boolean}) {
  const {isLoaded,isSignedIn,sessionId}=useAuth();
  const {user}=useUser();
@@ -17,7 +18,7 @@ export default function LiveCheckoutIdentity(props: CheckoutProps & {salesEnable
    return props.signingUp ? <SignUp routing="hash" forceRedirectUrl={target} signInUrl={target}/>
     : <SignIn routing="hash" forceRedirectUrl={target} signUpForceRedirectUrl={target} signUpUrl={`${target}&signup=1`}/>;
   }}/>;
- if(!isLoaded || !isSignedIn)return <main className={styles.shell} lang={props.language}>
+ if(!isLoaded || !isSignedIn)return <main className={`${theme.page} ${theme.mobile} ${styles.shell}`} lang={props.language}>
   <PurchaseBar language={props.language} hrefFor={next=>checkoutUrl(next,props.orderId,props.cancelled,props.guestOrder,Boolean(props.renewal && !props.orderId))}/>
   <section className={styles.gate}>
   <h1>RESOLUTE</h1><p>{en?"Sign in to connect your purchase to your account.":"購入と利用権をアカウントに紐づけるため、ログインしてください。"}</p>

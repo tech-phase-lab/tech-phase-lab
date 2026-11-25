@@ -7,6 +7,7 @@ import { CheckoutLines, resoluteBuyLines, termsHref } from "../../legal/agree-bu
 import { ConsentCheck, ConsentError, useConsent } from "../../legal/consent-check";
 import { resolutePrice } from "@/lib/resolute/price";
 import PurchaseBar from "./purchase-bar";
+import theme from "../diagnosis.module.css";
 const errors: Record<string,[string,string]> = {
  GUEST_SESSION_REQUIRED:["購入時と同じブラウザで開いてください。解決しない場合は注文番号を添えてお問い合わせください。","Open this page in the browser you used to purchase. If you still need help, contact support with your order number."],
  PAYMENT_DISABLED:["現在、購入の受付を停止しています。","Checkout is currently closed."],
@@ -96,11 +97,11 @@ export default function LiveCheckoutScreen({orderId,language:initialLanguage,can
  const paid=order?.state==="paid",held=order && ["held","suspended","revoked"].includes(order.state);
  const approval=liveApprovalUrl(order?.approvalUrl);
  const completingNow=Boolean(order && order.state==="created" && order.approved===true && !error && salesEnabled && !cancelled);
- const bar=<PurchaseBar language={language} onLanguage={switchLanguage} disabled={busy}/>;
+ const bar=<PurchaseBar language={language} onLanguage={switchLanguage}/>;
  // Guest receipt (owner, Nov 25): sign in on the left, or create an account on the right. The account form shows in one of
  // the two at a time (Clerk keeps one form per page); the other offers the way to switch, with the same addresses as before.
  const receiveTarget=id ? checkoutUrl(language,id,false,true) : "";
- if(paid && order) return <main className={styles.shell} lang={language}>{bar}
+ if(paid && order) return <main className={`${theme.page} ${theme.mobile} ${styles.shell}`} lang={language}>{bar}
   <section className={styles.done}>
    <span className={styles.checkmark} aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 12.5l4 4 8-9"/></svg></span>
    <h1>{en?"Thank you":"ご購入ありがとうございます"}</h1>
@@ -130,7 +131,7 @@ export default function LiveCheckoutScreen({orderId,language:initialLanguage,can
    <p className={styles.orderNo}>{en?"Order ID":"注文番号"}: {order.orderId}</p>
   </section>
  </main>;
- return <main className={styles.shell} lang={language}>{bar}
+ return <main className={`${theme.page} ${theme.mobile} ${styles.shell}`} lang={language}>{bar}
   <div className={styles.wrap}>
   <h1 className={styles.title}>{kind==="renewal"?(en?"Renew RESOLUTE":"RESOLUTEを更新する"):(en?"Checkout":"購入手続き")}</h1>
   <div className={`${styles.pair} ${styles.checkout}`}>

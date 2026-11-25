@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { SignIn, SignUp, useAuth, useUser } from "@clerk/nextjs";
 import styles from "../checkout/styles.module.css";
 import PurchaseBar from "../checkout/purchase-bar";
+import theme from "../diagnosis.module.css";
 
 export default function ReceiveScreen({ language, hasLink, signingUp, orderId }: { orderId: string | null; language: "ja" | "en"; hasLink: boolean; signingUp: boolean }) {
   const [expectedOrder, setExpectedOrder] = useState(orderId);
@@ -55,7 +56,7 @@ export default function ReceiveScreen({ language, hasLink, signingUp, orderId }:
     ALREADY_PURCHASED: en ? "This account already owns RESOLUTE. Contact support before connecting another purchase." : "このアカウントはRESOLUTEを購入済みです。別の購入を紐づける前にお問い合わせください。",
   };
   const panels = !claimed;
-  return <main className={styles.shell} lang={language}>
+  return <main className={`${theme.page} ${theme.mobile} ${styles.shell}`} lang={language}>
     <PurchaseBar language={language} hrefFor={next => `/resolute/receive?lang=${next}${expectedOrder ? `&order=${expectedOrder}` : ""}${signingUp ? "&signup=1" : ""}`} />
     <div className={styles.wrap}>
     <h1 className={styles.title}>{en ? "Receive your purchase" : "購入したRESOLUTEを受け取る"}</h1>

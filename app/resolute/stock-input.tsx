@@ -24,7 +24,7 @@ export default function StockInput({value,onChange,index,en}:{value:string;onCha
    onFocus={e=>e.currentTarget.select()} onClick={e=>e.currentTarget.select()}
    onCompositionStart={()=>setComposing(true)} onCompositionEnd={e=>{setComposing(false);onChange(e.currentTarget.value.normalize("NFKC").toUpperCase());}}
    onChange={e=>onChange(composing?e.target.value:e.target.value.normalize("NFKC").toUpperCase())}/>
-  {value?<button type="button" className={styles.clearInput} aria-label={`${en?"Clear stock":"銘柄入力をクリア"} ${index+1}`} onClick={()=>onChange("")}>×</button>:null}
+  {/* No clear × inside the field (owner review, Nov 25): each row already ends with its own × that removes the stock. */}
  </div>
  {needsSearch&&!composing?<div className={styles.stockSuggestions} role="group" aria-label={en?"Matching stocks":"銘柄の候補"}>
   {current?.items.map(item=><button key={item.ticker} type="button" onClick={()=>onChange(item.ticker)}><strong>{item.ticker}</strong><span>{item.name}</span></button>)}
