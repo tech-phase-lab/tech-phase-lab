@@ -103,7 +103,7 @@
 .page .card::before{content:"";position:absolute;left:0;top:10px;bottom:10px;width:4px;border-radius:0 3px 3px 0;background:var(--c)}
 .page .card header{display:flex;align-items:baseline;gap:10px}
 .page .card header b{font:700 20px ui-monospace,monospace;color:var(--c);letter-spacing:.03em}
-.page .card header span{flex:1;min-width:0;font-size:13px;color:var(--mute);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.page .card header span{flex:1;min-width:0;font-size:13px;color:var(--mute);overflow-wrap:break-word}
 .page .card header em{font-style:normal;font-size:14px;color:#aeb9c8}
 .page .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0 0}
 .page .grid3 div{min-width:0}
@@ -124,7 +124,7 @@
 .page .rrow.flag{border-color:rgba(201,162,87,.7);background:#16120a}
 .page .rrow header{display:flex;align-items:center;gap:10px}
 .page .rrow header b{font:700 19px ui-monospace,monospace;letter-spacing:.03em}
-.page .rrow header span{flex:1;min-width:0;font-size:13px;color:var(--mute);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.page .rrow header span{flex:1;min-width:0;font-size:13px;color:var(--mute);overflow-wrap:break-word}
 
 .page .rrow header button{display:grid;place-items:center;width:42px;height:42px;border-radius:50%;border:1px solid #2a3547;background:transparent;color:#cbd5e1;cursor:pointer;flex:none;margin-left:auto}
 .page .tickerInput{flex:1;min-width:0;min-height:44px;padding:0 12px;border-radius:12px;border:1px solid #2f3b50;background:#0a0f17;color:var(--ink);font:700 17px ui-monospace,monospace;text-transform:uppercase}
