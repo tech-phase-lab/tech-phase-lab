@@ -1,14 +1,16 @@
-.root{margin:4px 0 6px;color:var(--muted);font-size:.72rem}
-.heading{display:flex;align-items:center;justify-content:space-between;min-height:32px}
-.heading strong{font-weight:500}
-.heading button{border:0;background:none;color:var(--muted);font:inherit;min-width:44px;min-height:32px;padding:4px 0;text-align:right;cursor:pointer}
-/* One row, scrolled sideways (owner, Nov 25); the right edge fades while chips lie beyond it. */
-.list{display:flex;flex-wrap:nowrap;gap:6px;list-style:none;padding:0 0 2px;margin:0;min-width:0;overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:none;-webkit-overflow-scrolling:touch}
-.list::-webkit-scrollbar{display:none}
-.list[data-more]{-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 56px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 56px),transparent)}
+/* Recent stocks (owner, Nov 26): one line under the search field, 22px below its glowing line so the glow does not reach it. Pills that do
+ * not fit wrap onto lines the row clips (one line, never a sideways scroll). */
+.root{display:flex;align-items:center;gap:7px;margin:22px 0 0;min-width:0;height:38px}
+.label{flex:none;display:inline-flex;align-items:center;gap:5px;color:#7d8a9c;font:600 11px/1 "IBM Plex Mono",ui-monospace,monospace;letter-spacing:.12em}
+.label:lang(ja){font-family:inherit;letter-spacing:.08em}
+.list{flex:1;display:flex;flex-wrap:wrap;gap:6px;height:36px;min-width:0;margin:0;padding:0;list-style:none;overflow:hidden}
 .list li{flex:none}
-.chip{box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;border:0;border-radius:18px;background:#14212b;color:#a5dfc7;font:inherit!important;line-height:1.2!important;padding:0 12px;height:36px;cursor:pointer}
-.chip:hover{background:#203b31}
-.empty{padding:6px 0}
-.root+div{padding-top:4px}
-.root+section{margin-top:12px}
+.chip{box-sizing:border-box;display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 10px 0 4px;border:1px solid rgba(127,227,192,.42);border-radius:18px;background:linear-gradient(180deg,#123328,#0b1f1a);color:#e6f6ef;font:inherit;cursor:pointer}
+.chip b{font:700 13px/1 "IBM Plex Mono",ui-monospace,monospace;letter-spacing:.02em}
+.chip:hover{border-color:#7fe3c0}
+.chip:focus-visible,.clear:focus-visible{outline:2px solid #7fe3c0;outline-offset:2px}
+/* Round logo: the circle is the tile's own ground (its corner enlarged); the whole tile sits inside, corners on the circle. */
+.logo{flex:none;position:relative;display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:#1b2531 0 0/4000% no-repeat;color:#dff5ec;font:700 12px/1 "IBM Plex Mono",ui-monospace,monospace;overflow:hidden}
+.logo img{display:block;width:71%;height:71%}
+.clear{flex:none;display:grid;place-items:center;width:34px;height:34px;margin-left:auto;padding:0;border:1px solid rgba(140,152,171,.4);border-radius:50%;background:transparent;color:#a3aec0;cursor:pointer}
+.root+section{margin-top:24px}
