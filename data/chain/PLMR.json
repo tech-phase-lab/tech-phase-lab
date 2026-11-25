@@ -1,0 +1,214 @@
+{
+  "root": {
+    "ticker": "PLMR",
+    "name": "パロマー・ホールディングス",
+    "cik": 1761312,
+    "name_en": "Palomar Holdings, Inc."
+  },
+  "rows": [
+    {
+      "ja": "特殊保険の競合",
+      "en": "Specialty insurance rivals"
+    },
+    {
+      "ja": "連邦作物保険の競合",
+      "en": "Federal crop insurance rivals"
+    }
+  ],
+  "rivals": [
+    "KNSL",
+    "RLI",
+    "SKWD",
+    "WRB",
+    "BOW"
+  ],
+  "companies": [
+    {
+      "id": "KNSL",
+      "ticker": "KNSL",
+      "name": "キンセール・キャピタル",
+      "name_en": "Kinsale Capital",
+      "sub": "特殊保険",
+      "sub_en": "Specialty insurance",
+      "sub_short": "特殊保険",
+      "sub_short_en": "Insurance",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "全国規模の特殊保険の競合",
+          "text_en": "National specialty insurance rival",
+          "source": {
+            "label": "Palomar 10-K(2025年度)",
+            "label_en": "Palomar 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1761312/000119312526067364/plmr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Our primary competitors include national specialty insurance companies, including Kinsale Capital Group, Inc., RLI Corp., Skyward Specialty Insurance Group, Inc., W.R. Berkley, and Bowhead Specialty Holdings Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RLI",
+      "ticker": "RLI",
+      "name": "RLI",
+      "name_en": "RLI",
+      "sub": "特殊保険",
+      "sub_en": "Specialty insurance",
+      "sub_short": "特殊保険",
+      "sub_short_en": "Insurance",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "全国規模の特殊保険の競合",
+          "text_en": "National specialty insurance rival",
+          "source": {
+            "label": "Palomar 10-K(2025年度)",
+            "label_en": "Palomar 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1761312/000119312526067364/plmr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Our primary competitors include national specialty insurance companies, including Kinsale Capital Group, Inc., RLI Corp., Skyward Specialty Insurance Group, Inc., W.R. Berkley, and Bowhead Specialty Holdings Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SKWD",
+      "ticker": "SKWD",
+      "name": "スカイワード・スペシャルティ",
+      "name_en": "Skyward Specialty Insurance",
+      "sub": "特殊保険",
+      "sub_en": "Specialty insurance",
+      "sub_short": "特殊保険",
+      "sub_short_en": "Insurance",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "全国規模の特殊保険の競合",
+          "text_en": "National specialty insurance rival",
+          "source": {
+            "label": "Palomar 10-K(2025年度)",
+            "label_en": "Palomar 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1761312/000119312526067364/plmr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Our primary competitors include national specialty insurance companies, including Kinsale Capital Group, Inc., RLI Corp., Skyward Specialty Insurance Group, Inc., W.R. Berkley, and Bowhead Specialty Holdings Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WRB",
+      "ticker": "WRB",
+      "name": "W・R・バークレー",
+      "name_en": "W. R. Berkley",
+      "sub": "特殊保険",
+      "sub_en": "Specialty insurance",
+      "sub_short": "特殊保険",
+      "sub_short_en": "Insurance",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "全国規模の特殊保険の競合",
+          "text_en": "National specialty insurance rival",
+          "source": {
+            "label": "Palomar 10-K(2025年度)",
+            "label_en": "Palomar 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1761312/000119312526067364/plmr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Our primary competitors include national specialty insurance companies, including Kinsale Capital Group, Inc., RLI Corp., Skyward Specialty Insurance Group, Inc., W.R. Berkley, and Bowhead Specialty Holdings Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BOW",
+      "ticker": "BOW",
+      "name": "ボウヘッド・スペシャルティ",
+      "name_en": "Bowhead Specialty",
+      "sub": "特殊保険",
+      "sub_en": "Specialty insurance",
+      "sub_short": "特殊保険",
+      "sub_short_en": "Insurance",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "全国規模の特殊保険の競合",
+          "text_en": "National specialty insurance rival",
+          "source": {
+            "label": "Palomar 10-K(2025年度)",
+            "label_en": "Palomar 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1761312/000119312526067364/plmr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Our primary competitors include national specialty insurance companies, including Kinsale Capital Group, Inc., RLI Corp., Skyward Specialty Insurance Group, Inc., W.R. Berkley, and Bowhead Specialty Holdings Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CB",
+      "ticker": "CB",
+      "name": "チャブ",
+      "name_en": "Chubb",
+      "sub": "損害保険",
+      "sub_en": "P&C insurance",
+      "sub_short": "損保",
+      "sub_short_en": "Insurance",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "連邦作物保険で競合",
+          "text_en": "Federal crop insurance rival",
+          "source": {
+            "label": "Palomar 10-K(2025年度)",
+            "label_en": "Palomar 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1761312/000119312526067364/plmr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "we compete with 11 other insurance carriers in the federal crop market, including The Chubb Corporation and American Financial Group, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AFG",
+      "ticker": "AFG",
+      "name": "アメリカン・ファイナンシャル・グループ",
+      "name_en": "American Financial Group",
+      "sub": "損害保険",
+      "sub_en": "Property casualty insurance",
+      "sub_short": "損害保険",
+      "sub_short_en": "P&C",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "連邦作物保険で競合",
+          "text_en": "Federal crop insurance rival",
+          "source": {
+            "label": "Palomar 10-K(2025年度)",
+            "label_en": "Palomar 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1761312/000119312526067364/plmr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "we compete with 11 other insurance carriers in the federal crop market, including The Chubb Corporation and American Financial Group, Inc."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
