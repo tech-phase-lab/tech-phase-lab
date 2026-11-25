@@ -9,7 +9,8 @@ import {validateSnapshot} from '@/lib/resolute/transport';
 import {formatDisplay} from '@/lib/research/display-time';
 import s from './reference.module.css';
 import MarketGaugeCard from './market-gauge-card';
-import TodayCard from './today-card';
+import TodayCard,{useTodayMember} from './today-card';
+import loading from '../diagnosis.module.css';
 import { useThermometerSnapshot } from '../use-thermometer-snapshot';
 import type { ThermometerSnapshot } from '@/lib/resolute/thermometer-view';
 import type { NotificationSnapshot } from '@/lib/resolute/notification-settings';
@@ -30,6 +31,11 @@ export function Home({locale,entitlement,thermometerSnapshot}:{thermometerSnapsh
  const previewExpired=review?.scenario==='expired';
  const locked=previewExpired||!review&&entitlement!==null&&!entitlement.canReceiveNotifications;
  const requestSettings=useNotificationClient();
+ // First paint (owner, Nov 25: the old screen showed for a moment, then 今日やること popped in above it): the home is drawn once,
+ // in its final order, when the day's feed and the member's own lines are known. Until then the RESOLUTE loader stays, the same
+ // one the access check shows, so nothing is replaced on screen. What this tab already knows is used at once.
+ const member=useTodayMember(!locked,!displaySample);
+ const firstPaint=status!=='loading'&&(locked||!available||member!==undefined);
  // What this tab already knows is shown at once instead of a dash (owner, Nov 17); both are refreshed right after.
  const knownSettings=useRemembered<NotificationSnapshot>('notifications');
  const [morning,setMorning]=useState<boolean|null>(knownSettings?.settings.morningEnabled??null),[date,setDate]=useState<string|null>(()=>typeof window==='undefined'?null:formatDisplay(new Date(),en?'en':'ja',{dateStyle:'full'}));
@@ -48,11 +54,14 @@ export function Home({locale,entitlement,thermometerSnapshot}:{thermometerSnapsh
   ['simulation','資産シミュ','Portfolio simulator','下落と上昇を試す','Explore ups and downs','M8 8v32h32M13 31l8-9 7 5 11-14M33 13h6v6'],
   ['tax','税金の目安','Tax estimate','手取りの目安','Estimate what you keep','M17 15l7 10 7-10M17 25h14M17 31h14M24 25v10'],
  ];
+ if(!firstPaint)return <section className={loading.loadingBrand} role="status" aria-live="polite">
+  <svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="9" r="4" /><path d="M24 13v28M17 19h14M9 31c0 7 7 11 15 11s15-4 15-11M5 33l4-4 4 4M35 33l4-4 4 4" /></svg>
+  <b>RESOLUTE</b><span>{en?"Checking…":"確認中…"}</span></section>;
  return <div className={s.root}><div className={s.wrap}>
   <h1><svg className={s.anc} viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="9" r="4"/><path d="M24 13v28M17 19h14M9 31c0 7 7 11 15 11s15-4 15-11M5 33l4-4 4 4M35 33l4-4 4 4"/></svg><span>RESOLUTE</span></h1>
   <div className={s.date}>{date??'—'}</div>
   <section className={s.sec}><div className={s.lab}>TODAY</div>
-   {!locked&&available?<TodayCard locale={locale} feed={feed} snapshot={thermometerSnapshot} sample={displaySample}/>:null}
+   {!locked&&available?<TodayCard locale={locale} feed={feed} snapshot={thermometerSnapshot} member={member}/>:null}
    <div className={`${s.card} ${high&&!locked?s.high:''}`}><div className={s.row}><h2 style={{flex:1,minWidth:0}}><ShockGaugeTitle locale={locale} compact/></h2>{!locked&&available&&feed.articles.length>0?<Link className={s.more} href="/resolute/news">{en?'Details →':'詳細 →'}</Link>:null}</div>
     {locked?<div className={s.lock}><p>🔒 {en?'The Shock Gauge is included while your alerts access is active.':'衝撃度チェッカーは、アラートの利用期間中に見られます。'}</p><p className={s.sub}>{en?'Renew for another year of the daily Shock Gauge.':'更新すると、また毎朝の衝撃度チェッカーを確認できます。'}</p><Link className={s.primary} href={renewalHref(locale)}>{en?'Renew for one year':'1年分を更新する'}{displayOffer?`　${en?'$'+displayOffer.en:displayOffer.ja.toLocaleString('ja-JP')+'円'}`:''}</Link></div>:<>
      {available&&feed.articles.length>0?<ul className={s.news}>{feed.articles.slice(0,2).map(a=><li key={a.id} style={a.stars?{'--c':colors[a.stars]} as CSSProperties:undefined}><span className={s.headline}>{displaySample?(RISK_PREVIEW_DETAILS[a.id]?.[en?'homeEn':'homeJa']??a[locale].title):a[locale].title}</span><ShockStars article={a} locale={locale}/></li>)}</ul>:<p role="status">{riskStatus(en,status,feed?.state)}</p>}

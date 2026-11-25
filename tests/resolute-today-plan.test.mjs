@@ -66,3 +66,15 @@ test('home: the 今日やること card replaces 「あなたのルール」; me
  assert.match(css,/\.todayCard, \.todayCard \* \{ word-break:auto-phrase;/);
  assert.doesNotMatch(css.slice(css.indexOf('.todayCard')),/#ffb454/,'no orange text in the card');
 });
+
+test('home first paint: drawn once, in its final order, when the feed and the member\'s lines are known (owner, Nov 25)',()=>{
+ const home=readFileSync(new URL('../app/resolute/home/screen.tsx',import.meta.url),'utf8');
+ const card=readFileSync(new URL('../app/resolute/home/today-card.tsx',import.meta.url),'utf8');
+ assert.match(home,/const firstPaint=status!=='loading'&&\(locked\|\|!available\|\|member!==undefined\);/);
+ assert.match(home,/if\(!firstPaint\)return <section className=\{loading\.loadingBrand\}/);
+ assert.match(card,/Promise\.allSettled\(\[requestPlan\(undefined,c\.signal\),requestSettings\(undefined,c\.signal\)\]\)/);
+ assert.match(card,/recall<TodayMember\|null>\('today'\)/);assert.match(card,/TODAY_PRICE_WAIT_MS=2500/);
+ assert.match(readFileSync(new URL('../lib/resolute/view-memory.ts',import.meta.url),'utf8'),/\| "today";/);
+ // The push service worker never answers page requests, so it cannot serve an old screen.
+ assert.doesNotMatch(readFileSync(new URL('../public/research-sw.js',import.meta.url),'utf8'),/addEventListener\(["']fetch["']/);
+});

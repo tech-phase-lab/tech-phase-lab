@@ -1,0 +1,493 @@
+{
+ "ticker": "GOOGL",
+ "name": "Alphabet",
+ "exchange": "NASDAQ",
+ "quoteTicker": "GOOGL",
+ "period": "Q3 2026",
+ "periodQuarter": 3,
+ "releasedOn": "2026-10-28",
+ "periodEnd": "2026-09-30",
+ "reviewedOn": "2026-11-25",
+ "currency": "USD",
+ "basis": {
+  "eps": "GAAP diluted only (adjustedEPS null)",
+  "grossMargin": "not reported (null)",
+  "segmentMargin": "segment operating income / segment revenue, calculated",
+  "guidance": "not given (null)"
+ },
+ "sources": [
+  {
+   "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000080/googexhibit991q32026.htm",
+   "title": "Alphabet third quarter 2026 results (8-K Exhibit 99.1)",
+   "location": "Q3 2026 Financial Highlights; Supplemental Information; Segment Operating Results; free cash flow; balance sheet"
+  },
+  {
+   "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000066/googexhibit991q22026.htm",
+   "title": "Alphabet second quarter 2026 results (8-K Exhibit 99.1)",
+   "location": "Financial Highlights; Supplemental Information; Segment Operating Results"
+  },
+  {
+   "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000043/googexhibit991q12026.htm",
+   "title": "Alphabet first quarter 2026 results (8-K Exhibit 99.1)",
+   "location": "Financial Highlights"
+  },
+  {
+   "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000012/googexhibit991q42025.htm",
+   "title": "Alphabet fourth quarter 2025 results (8-K Exhibit 99.1)",
+   "location": "Segment results"
+  }
+ ],
+ "evidence": [
+  {
+   "field": "numbers.revenue.current",
+   "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000080/googexhibit991q32026.htm",
+   "quote": "Quarter Ended September 30, 2025 2026 Revenues $ 102,346 $ 127,577"
+  },
+  {
+   "field": "numbers.revenue.yearAgo",
+   "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000080/googexhibit991q32026.htm",
+   "quote": "Quarter Ended September 30, 2025 2026 Revenues $ 102,346 $ 127,577"
+  },
+  {
+   "field": "numbers.revenue.previous",
+   "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000066/googexhibit991q22026.htm",
+   "quote": "Quarter Ended June 30, 2025 2026 Revenues $ 96,428 $ 119,796"
+  },
+  {
+   "field": "numbers.segments[0].revenue",
+   "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000080/googexhibit991q32026.htm",
+   "quote": "Google Services total 87,052 96,302 Google Cloud 15,157 30,709"
+  },
+  {
+   "field": "numbers.segments[0].operatingMargin",
+   "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000080/googexhibit991q32026.htm",
+   "quote": "Operating income (loss): Google Services $ 33,527 $ 39,157 Google Cloud 3,594 11,121",
+   "calc": "39157/96302*100",
+   "round": 1
+  },
+  {
+   "field": "numbers.segments[0].operatingMargin",
+   "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000080/googexhibit991q32026.htm",
+   "quote": "Google Services total 87,052 96,302 Google Cloud 15,157 30,709"
+  },
+  {
+   "field": "numbers.segments[0].previous",
+   "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000066/googexhibit991q22026.htm",
+   "quote": "Google Services total 82,543 94,540 Google Cloud 13,624 24,768"
+  },
+  {
+   "field": "numbers.segments[0].previousOperatingMargin",
+   "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000066/googexhibit991q22026.htm",
+   "quote": "Operating income (loss): Google Services $ 33,063 $ 39,544 Google Cloud 2,826 8,814",
+   "calc": "39544/94540*100",
+   "round": 1
+  },
+  {
+   "field": "numbers.segments[0].previousOperatingMargin",
+   "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000066/googexhibit991q22026.htm",
+   "quote": "Google Services total 82,543 94,540 Google Cloud 13,624 24,768"
+  },
+  {
+   "field": "numbers.segments[1].revenue",
+   "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000080/googexhibit991q32026.htm",
+   "quote": "Google Services total 87,052 96,302 Google Cloud 15,157 30,709"
+  },
+  {
+   "field": "numbers.segments[1].operatingMargin",
+   "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000080/googexhibit991q32026.htm",
+   "quote": "Operating income (loss): Google Services $ 33,527 $ 39,157 Google Cloud 3,594 11,121",
+   "calc": "11121/30709*100",
+   "round": 1
+  },
+  {
+   "field": "numbers.segments[1].operatingMargin",
+   "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000080/googexhibit991q32026.htm",
+   "quote": "Google Services total 87,052 96,302 Google Cloud 15,157 30,709"
+  },
+  {
+   "field": "numbers.segments[1].previous",
+   "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000066/googexhibit991q22026.htm",
+   "quote": "Google Services total 82,543 94,540 Google Cloud 13,624 24,768"
+  },
+  {
+   "field": "numbers.segments[1].previousOperatingMargin",
+   "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000066/googexhibit991q22026.htm",
+   "quote": "Operating income (loss): Google Services $ 33,063 $ 39,544 Google Cloud 2,826 8,814",
+   "calc": "8814/24768*100",
+   "round": 1
+  },
+  {
+   "field": "numbers.segments[1].previousOperatingMargin",
+   "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000066/googexhibit991q22026.htm",
+   "quote": "Google Services total 82,543 94,540 Google Cloud 13,624 24,768"
+  },
+  {
+   "field": "history[0].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000080/googexhibit991q32026.htm",
+   "quote": "Quarter Ended September 30, 2025 2026 Revenues $ 102,346 $ 127,577"
+  },
+  {
+   "field": "history[1].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000012/googexhibit991q42025.htm",
+   "quote": "Quarter Ended December 31, 2024 2025 Revenues: Google Services $ 84,094 $ 95,862 Google Cloud 11,955 17,664 Other Bets 400 370 Hedging gains (losses) 20 (68) Total revenues $ 96,469 $ 113,828"
+  },
+  {
+   "field": "history[2].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000043/googexhibit991q12026.htm",
+   "quote": "Quarter Ended March 31, 2025 2026 Revenues $ 90,234 $ 109,896"
+  },
+  {
+   "field": "history[3].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000066/googexhibit991q22026.htm",
+   "quote": "Quarter Ended June 30, 2025 2026 Revenues $ 96,428 $ 119,796"
+  },
+  {
+   "field": "tiles[0].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000080/googexhibit991q32026.htm",
+   "quote": "Quarter Ended September 30, 2025 2026 Revenues $ 102,346 $ 127,577",
+   "calc": "127577/1000",
+   "round": 2
+  },
+  {
+   "field": "tiles[1].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000080/googexhibit991q32026.htm",
+   "quote": "Google Services total 87,052 96,302 Google Cloud 15,157 30,709",
+   "calc": "30709/1000",
+   "round": 2
+  },
+  {
+   "field": "tiles[2].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000080/googexhibit991q32026.htm",
+   "quote": "Free cash flow $ 24,551 $ 10,116 $ (5,855) $ (9,065) $ 19,747",
+   "calc": "9065/1000",
+   "round": 2
+  },
+  {
+   "field": "tiles[0].note",
+   "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000080/googexhibit991q32026.htm",
+   "quote": "Consolidated Alphabet revenues increased 25% to $127.6 billion"
+  },
+  {
+   "field": "tiles[1].note",
+   "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000080/googexhibit991q32026.htm",
+   "quote": "Google Cloud delivered record growth as revenues increased 103% to $30.7 billion"
+  }
+ ],
+ "tiles": [
+  {
+   "label": {
+    "ja": "売上高",
+    "en": "Revenue"
+   },
+   "value": {
+    "ja": "1,275.77億ドル",
+    "en": "$127.58B"
+   },
+   "note": {
+    "ja": "前年同期比 +25%",
+    "en": "YoY +25%"
+   }
+  },
+  {
+   "label": {
+    "ja": "Google Cloud 売上",
+    "en": "Google Cloud revenue"
+   },
+   "value": {
+    "ja": "307.09億ドル",
+    "en": "$30.71B"
+   },
+   "note": {
+    "ja": "前年同期比 +103%",
+    "en": "YoY +103%"
+   }
+  },
+  {
+   "label": {
+    "ja": "フリーキャッシュフロー",
+    "en": "Free cash flow"
+   },
+   "value": {
+    "ja": "−90.65億ドル",
+    "en": "−$9.07B"
+   },
+   "note": {
+    "ja": "2四半期連続のマイナス",
+    "en": "Negative for a second quarter"
+   }
+  }
+ ],
+ "numbers": {
+  "revenue": {
+   "current": 127577,
+   "previous": 119796,
+   "yearAgo": 102346
+  },
+  "adjustedEPS": null,
+  "epsEstimate": null,
+  "grossMargin": null,
+  "guidance": null,
+  "segments": [
+   {
+    "key": "services",
+    "nameJa": "Googleサービス",
+    "nameEn": "Google Services",
+    "revenue": 96302,
+    "previous": 94540,
+    "operatingMargin": 40.7,
+    "previousOperatingMargin": 41.8
+   },
+   {
+    "key": "cloud",
+    "nameJa": "Googleクラウド",
+    "nameEn": "Google Cloud",
+    "revenue": 30709,
+    "previous": 24768,
+    "operatingMargin": 36.2,
+    "previousOperatingMargin": 35.6
+   }
+  ]
+ },
+ "history": [
+  {
+   "label": "Q3",
+   "end": "2025-09-30",
+   "value": 102346
+  },
+  {
+   "label": "Q4",
+   "end": "2025-12-31",
+   "value": 113828
+  },
+  {
+   "label": "Q1",
+   "end": "2026-03-31",
+   "value": 109896
+  },
+  {
+   "label": "Q2",
+   "end": "2026-06-30",
+   "value": 119796
+  }
+ ],
+ "summary": {
+  "conclusion": [
+   {
+    "ja": "売上は1,275.77億ドルで前年同期比25%増でした。Google Cloudは307.09億ドルと、前年同期の約2倍(+103%)になりました。",
+    "en": "Revenue was $127.58B, up 25% from a year ago. Google Cloud reached $30.71B, about double a year ago (+103%)."
+   },
+   {
+    "ja": "一方、設備投資は513.55億ドルに膨らみ、フリーキャッシュフローは2四半期続けてマイナス(−90.65億ドル)でした。",
+    "en": "Capital spending, however, swelled to $51.36B, and free cash flow was negative for a second straight quarter (−$9.07B)."
+   },
+   {
+    "ja": "不足分は社債(287億ドル)や新株の発行(約124億ドル)でも集めており、長期借入金は2025年末の465.47億ドルから1,251.02億ドルに増えました。",
+    "en": "The gap was partly funded with $28.7B of bonds and about $12.4B of new shares, and long-term debt rose from $46.55B at the end of 2025 to $125.10B."
+   }
+  ],
+  "cards": {
+   "growth": {
+    "headline": {
+     "ja": "Google Cloudの売上が前年同期の約2倍",
+     "en": "Google Cloud revenue about doubled YoY"
+    },
+    "segment": "cloud",
+    "chips": [
+     {
+      "tone": "up",
+      "text": {
+       "ja": "Cloud 前期比 +24.0%",
+       "en": "Cloud +24.0% QoQ"
+      }
+     },
+     {
+      "tone": "up",
+      "text": {
+       "ja": "Cloud 営業利益率 35.6% → 36.2%",
+       "en": "Cloud operating margin 35.6% → 36.2%"
+      }
+     }
+    ],
+    "sections": [
+     {
+      "key": "happened",
+      "text": {
+       "ja": "Google Cloudの売上は247.68億ドルから307.09億ドルへ、前期比で59.41億ドル増えました。前年同期の151.57億ドルと比べると103%増です。営業利益率も35.6%から36.2%に上がりました。",
+       "en": "Google Cloud revenue rose from $24.77B to $30.71B, up $5.94B from the previous quarter and 103% from $15.16B a year ago. Its operating margin rose from 35.6% to 36.2%."
+      }
+     },
+     {
+      "key": "good",
+      "text": {
+       "ja": "会社全体の前期比の増収(77.81億ドル)のうち、約76%がCloudの増加分です。会社は、AIインフラとAIソリューションの需要に加え、TPUシステムの販売も伸びに大きく貢献したと説明しています。",
+       "en": "About 76% of the company's $7.78B sequential increase came from Cloud. The company credits demand for AI infrastructure and AI solutions, with TPU system sales also a meaningful contributor."
+      }
+     },
+     {
+      "key": "watch",
+      "text": {
+       "ja": "会社全体の伸びがCloudに偏ってきています。AIインフラの需要が落ち着いたときは、会社全体の成長率への影響も大きくなります。",
+       "en": "Company growth is increasingly concentrated in Cloud. If AI infrastructure demand cools, the effect on overall growth would be large."
+      }
+     },
+     {
+      "key": "view",
+      "text": {
+       "ja": "Cloudは売上が伸びながら利益率も上がっており、規模が大きくなるほど稼ぐ力が増しています。",
+       "en": "Cloud is growing while its margin rises, so its earning power is increasing with scale."
+      }
+     }
+    ]
+   },
+   "change": {
+    "headline": {
+     "ja": "売上は前期比 +6.5%、Googleサービスの利益率は低下",
+     "en": "Revenue up 6.5% QoQ, Google Services margin lower"
+    },
+    "chips": [
+     {
+      "tone": "up",
+      "text": {
+       "ja": "売上 前期比 +6.5%",
+       "en": "Revenue +6.5% QoQ"
+      }
+     },
+     {
+      "tone": "down",
+      "text": {
+       "ja": "Googleサービス 営業利益率 41.8% → 40.7%",
+       "en": "Google Services operating margin 41.8% → 40.7%"
+      }
+     }
+    ],
+    "sections": [
+     {
+      "key": "happened",
+      "text": {
+       "ja": "売上は1,197.96億ドルから1,275.77億ドルへ、77.81億ドル増えました。営業利益は405.76億ドルで前年同期比30%増、営業利益率は31.8%でした。",
+       "en": "Revenue rose from $119.80B to $127.58B, up $7.78B. Operating income was $40.58B, up 30% from a year ago, for an operating margin of 31.8%."
+      }
+     },
+     {
+      "key": "good",
+      "text": {
+       "ja": "主力の検索広告(Google Search & other)も633.5億ドルで前年同期比12%増でした。会社は、検索クエリの伸びが過去5年で最も高いと説明しています。",
+       "en": "Core search (Google Search & other) grew 12% to $63.35B. The company says search query growth is the highest in five years."
+      }
+     },
+     {
+      "key": "watch",
+      "text": {
+       "ja": "純利益は261.7億ドルで、前年同期の349.79億ドルから減りました。その他の損益が、前年同期の127.59億ドルの利益から82.21億ドルの損失に変わったためで、本業の営業利益は30%増えています。",
+       "en": "Net income fell to $26.17B from $34.98B a year ago because other income swung from a $12.76B gain to an $8.22B loss; operating income itself rose 30%."
+      }
+     },
+     {
+      "key": "means",
+      "text": {
+       "ja": "Googleサービス部門の営業利益率は41.8%から40.7%に下がりました。全社共通のAI研究開発費(Alphabet-level activities)も76.55億ドルと、前年同期の44.67億ドルから増えています。",
+       "en": "The Google Services operating margin slipped from 41.8% to 40.7%. Company-level AI research costs (Alphabet-level activities) rose to $7.66B from $4.47B a year ago."
+      }
+     }
+    ]
+   },
+   "caution": {
+    "headline": {
+     "ja": "設備投資が膨らみ、フリーキャッシュフローはマイナス",
+     "en": "Capex swelled and free cash flow turned negative"
+    },
+    "chips": [
+     {
+      "tone": "down",
+      "text": {
+       "ja": "設備投資 513.55億ドル",
+       "en": "Capex $51.36B"
+      }
+     },
+     {
+      "tone": "down",
+      "text": {
+       "ja": "FCF −90.65億ドル",
+       "en": "Free cash flow −$9.07B"
+      }
+     },
+     {
+      "tone": "down",
+      "text": {
+       "ja": "長期借入金 465億 → 1,251億ドル",
+       "en": "Long-term debt $46.5B → $125.1B"
+      }
+     }
+    ],
+    "sections": [
+     {
+      "key": "happened",
+      "text": {
+       "ja": "営業キャッシュフロー422.9億ドルに対し、設備投資は513.55億ドルで、フリーキャッシュフローは90.65億ドルのマイナスでした。第2四半期(−58.55億ドル)に続く2四半期連続のマイナスです。営業キャッシュフローも前年同期の484.14億ドルから減っています。",
+       "en": "Operating cash flow of $42.29B fell short of $51.36B of capex, so free cash flow was −$9.07B, after −$5.86B in Q2. Operating cash flow was also down from $48.41B a year ago."
+      }
+     },
+     {
+      "key": "watch",
+      "text": {
+       "ja": "不足分は外部から集めています。第3四半期には社債で287億ドル、市場での新株発行(ATM)で約124億ドルを調達し、長期借入金は2025年末の465.47億ドルから1,251.02億ドルに増えました。新株の発行は、1株あたりの価値を薄める要因です。",
+       "en": "The shortfall is being financed externally: $28.7B of notes and about $12.4B of at-the-market share sales in Q3, with long-term debt up from $46.55B to $125.10B since the end of 2025. Issuing shares dilutes existing holders."
+      }
+     },
+     {
+      "key": "means",
+      "text": {
+       "ja": "現金・有価証券は2,650.98億ドルあり、すぐに資金が足りなくなる状況ではありません。ただ、投資が売上と利益で回収されるまでは、借入の増加と株式の希薄化が続く可能性があります。",
+       "en": "Cash and marketable securities of $265.10B rule out a near-term shortage. But until the spending is recovered through sales and profit, more debt and dilution are possible."
+      }
+     },
+     {
+      "key": "view",
+      "text": {
+       "ja": "直近12か月のフリーキャッシュフローは197.47億ドルのプラスです。四半期のマイナスが続くか、Cloudの伸びが投資に追いつくかを見ます。",
+       "en": "Trailing-twelve-month free cash flow is still positive at $19.75B. Watch whether quarterly free cash flow stays negative and whether Cloud growth keeps pace with the spending."
+      }
+     }
+    ]
+   },
+   "next": {
+    "headline": {
+     "ja": "売上見通しの公表なし",
+     "en": "No revenue outlook published"
+    },
+    "chips": [
+     {
+      "tone": "gold",
+      "text": {
+       "ja": "会社の売上見通しなし",
+       "en": "No company revenue outlook"
+      }
+     }
+    ],
+    "sections": [
+     {
+      "key": "happened",
+      "text": {
+       "ja": "アルファベットはリリースで次の四半期の売上見通しを出していません。このため、ここでは見通しの数字を載せていません。",
+       "en": "Alphabet does not give a next-quarter revenue outlook in its release, so no outlook figures are shown here."
+      }
+     },
+     {
+      "key": "watch",
+      "text": {
+       "ja": "今回はその他の損益が82.21億ドルの損失でした。保有株式などの評価で純利益が大きく動くので、営業利益と合わせて見る必要があります。",
+       "en": "Other income was an $8.22B loss this quarter. Because valuation changes on holdings can swing net income, read it alongside operating income."
+      }
+     },
+     {
+      "key": "view",
+      "text": {
+       "ja": "次の決算では、Cloudの伸び(今回は+103%)が続くか、設備投資の額、フリーキャッシュフローがプラスに戻るか、借入と新株発行がさらに増えるかを見ます。",
+       "en": "Next time, watch Cloud growth (+103% this quarter), the level of capex, whether free cash flow turns positive again, and whether borrowing and share issuance keep rising."
+      }
+     }
+    ]
+   }
+  }
+ }
+}

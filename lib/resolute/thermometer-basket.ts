@@ -102,3 +102,19 @@ export function sessionFear(largeLevels: readonly DailyClose[], session: string)
   if (i < 1 || !(vol[i].close > 0) || !(vol[i - 1].close > 0)) return null;
   return { date: session, level: vol[i].close, previousLevel: vol[i - 1].close };
 }
+/** Shock Gauge single-company news (owner, Nov 25): one stock's own close-to-close move on a session and its typical daily move
+ * (the median of its absolute daily % moves over the `window` sessions before), the same concept as a basket's. Never guessed:
+ * null without the session's close, a previous close at most 7 days earlier, or a full typical-move window. */
+export type StockShock = { date: string; previousDate: string; changePercent: number; typicalPercent: number };
+export function stockShock(bars: readonly DailyClose[], session: string, window = SHOCK_TYPICAL_DAYS): StockShock | null {
+  const sorted = bars.filter(bar => bar.date <= session && Number.isFinite(bar.close) && bar.close > 0).slice().sort((a, b) => a.date.localeCompare(b.date));
+  const move = dailyMove(sorted, session);
+  if (!move) return null;
+  const returns: number[] = [];
+  for (let i = 1; i < sorted.length - 1; i++) returns.push(100 * (sorted[i].close / sorted[i - 1].close - 1));
+  if (returns.length < window) return null;
+  const slice = returns.slice(-window).map(Math.abs).sort((a, b) => a - b);
+  const typicalPercent = window % 2 ? slice[(window - 1) / 2] : (slice[window / 2 - 1] + slice[window / 2]) / 2;
+  if (!(typicalPercent > 0) || !Number.isFinite(typicalPercent)) return null;
+  return { date: session, previousDate: move.previousDate, changePercent: Math.round(move.changePercent * 1000) / 1000, typicalPercent: Math.round(typicalPercent * 10000) / 10000 };
+}
