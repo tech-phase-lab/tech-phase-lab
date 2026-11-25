@@ -1,0 +1,524 @@
+{
+ "ticker": "GEV",
+ "name": "GE Vernova",
+ "exchange": "NYSE",
+ "quoteTicker": "GEV",
+ "period": "Q3 2026",
+ "periodQuarter": 3,
+ "releasedOn": "2026-10-28",
+ "periodEnd": "2026-09-30",
+ "reviewedOn": "2026-11-25",
+ "currency": "USD",
+ "basis": {
+  "eps": "GAAP diluted (no adjusted EPS is reported, so adjustedEPS is null)",
+  "grossMargin": "not reported (null)",
+  "segmentMargin": "segment EBITDA margin as reported by the company",
+  "guidance": "full-year 2026 only; no quarterly revenue guidance (null)"
+ },
+ "sources": [
+  {
+   "url": "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000162/gevpressrelease3q26.htm",
+   "title": "GE Vernova third quarter 2026 press release (8-K Exhibit 99)",
+   "location": "Highlights; Total Company Results; Results by Reporting Segment; organic reconciliation"
+  },
+  {
+   "url": "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000147/gevpressrelease2q26.htm",
+   "title": "GE Vernova second quarter 2026 press release (8-K Exhibit 99)",
+   "location": "Total Company Results; organic revenues and EBITDA by segment"
+  },
+  {
+   "url": "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000063/gevpressrelease1q26.htm",
+   "title": "GE Vernova first quarter 2026 press release (8-K Exhibit 99)",
+   "location": "Total Company Results"
+  },
+  {
+   "url": "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000012/gevpressrelease4q25.htm",
+   "title": "GE Vernova fourth quarter 2025 press release (8-K Exhibit 99)",
+   "location": "Total Company Results"
+  }
+ ],
+ "evidence": [
+  {
+   "field": "numbers.revenue.current",
+   "url": "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000162/gevpressrelease3q26.htm",
+   "quote": "Total revenues $12,642 $9,969 27%"
+  },
+  {
+   "field": "numbers.revenue.yearAgo",
+   "url": "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000162/gevpressrelease3q26.htm",
+   "quote": "Total revenues $12,642 $9,969 27%"
+  },
+  {
+   "field": "numbers.revenue.previous",
+   "url": "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000147/gevpressrelease2q26.htm",
+   "quote": "Total revenues $11,104 $9,111"
+  },
+  {
+   "field": "numbers.segments[0].revenue",
+   "url": "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000162/gevpressrelease3q26.htm",
+   "quote": "Power (GAAP) $6,067 $4,863 25% $1,297 $651 99% 21.4% 13.4% 800bps"
+  },
+  {
+   "field": "numbers.segments[0].operatingMargin",
+   "url": "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000162/gevpressrelease3q26.htm",
+   "quote": "Power (GAAP) $6,067 $4,863 25% $1,297 $651 99% 21.4% 13.4% 800bps"
+  },
+  {
+   "field": "numbers.segments[0].previous",
+   "url": "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000147/gevpressrelease2q26.htm",
+   "quote": "Power (GAAP) $5,477 $4,785 14% $1,031 $785 31% 18.8% 16.4% 240bps"
+  },
+  {
+   "field": "numbers.segments[0].previousOperatingMargin",
+   "url": "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000147/gevpressrelease2q26.htm",
+   "quote": "Power (GAAP) $5,477 $4,785 14% $1,031 $785 31% 18.8% 16.4% 240bps"
+  },
+  {
+   "field": "numbers.segments[1].revenue",
+   "url": "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000162/gevpressrelease3q26.htm",
+   "quote": "Electrification (GAAP) $3,862 $2,565 51% $739 $387 91% 19.1% 15.1% 400bps"
+  },
+  {
+   "field": "numbers.segments[1].operatingMargin",
+   "url": "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000162/gevpressrelease3q26.htm",
+   "quote": "Electrification (GAAP) $3,862 $2,565 51% $739 $387 91% 19.1% 15.1% 400bps"
+  },
+  {
+   "field": "numbers.segments[1].previous",
+   "url": "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000147/gevpressrelease2q26.htm",
+   "quote": "Electrification (GAAP) $3,637 $2,162 68% $671 $314 F 18.4% 14.5% 390bps"
+  },
+  {
+   "field": "numbers.segments[1].previousOperatingMargin",
+   "url": "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000147/gevpressrelease2q26.htm",
+   "quote": "Electrification (GAAP) $3,637 $2,162 68% $671 $314 F 18.4% 14.5% 390bps"
+  },
+  {
+   "field": "numbers.segments[2].revenue",
+   "url": "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000162/gevpressrelease3q26.htm",
+   "quote": "Wind (GAAP) $2,741 $2,647 4% $72 $(61) F 2.6% (2.3)% 490 bps"
+  },
+  {
+   "field": "numbers.segments[2].operatingMargin",
+   "url": "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000162/gevpressrelease3q26.htm",
+   "quote": "Wind (GAAP) $2,741 $2,647 4% $72 $(61) F 2.6% (2.3)% 490 bps"
+  },
+  {
+   "field": "numbers.segments[2].previous",
+   "url": "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000147/gevpressrelease2q26.htm",
+   "quote": "Wind (GAAP) $2,026 $2,245 (10)% $(275) $(165) (67)% (13.6)% (7.3)% (630) bps"
+  },
+  {
+   "field": "numbers.segments[2].previousOperatingMargin",
+   "url": "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000147/gevpressrelease2q26.htm",
+   "quote": "Wind (GAAP) $2,026 $2,245 (10)% $(275) $(165) (67)% (13.6)% (7.3)% (630) bps"
+  },
+  {
+   "field": "history[0].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000162/gevpressrelease3q26.htm",
+   "quote": "Total revenues $12,642 $9,969 27%"
+  },
+  {
+   "field": "history[1].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000012/gevpressrelease4q25.htm",
+   "quote": "Total revenues $10,956 $10,559"
+  },
+  {
+   "field": "history[2].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000063/gevpressrelease1q26.htm",
+   "quote": "Total revenues $9,339 $8,032"
+  },
+  {
+   "field": "history[3].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000147/gevpressrelease2q26.htm",
+   "quote": "Total revenues $11,104 $9,111"
+  },
+  {
+   "field": "tiles[0].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000162/gevpressrelease3q26.htm",
+   "quote": "Total revenues $12,642 $9,969 27%",
+   "calc": "12642/1000",
+   "round": 2
+  },
+  {
+   "field": "tiles[1].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000162/gevpressrelease3q26.htm",
+   "quote": "In the quarter, orders of $29.3 billion increased +96% organically"
+  },
+  {
+   "field": "tiles[2].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000162/gevpressrelease3q26.htm",
+   "quote": "Adjusted EBITDA margin 15.4% 8.1% 730 bps"
+  },
+  {
+   "field": "tiles[0].note",
+   "url": "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000162/gevpressrelease3q26.htm",
+   "quote": "Total revenues $12,642 $9,969 27%"
+  },
+  {
+   "field": "tiles[1].note",
+   "url": "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000162/gevpressrelease3q26.htm",
+   "quote": "In the quarter, orders of $29.3 billion increased +96% organically"
+  },
+  {
+   "field": "tiles[2].note",
+   "url": "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000162/gevpressrelease3q26.htm",
+   "quote": "Adjusted EBITDA margin 15.4% 8.1% 730 bps"
+  }
+ ],
+ "tiles": [
+  {
+   "label": {
+    "ja": "売上高",
+    "en": "Revenue"
+   },
+   "value": {
+    "ja": "126.42億ドル",
+    "en": "$12.64B"
+   },
+   "note": {
+    "ja": "前年同期比 +27%(オーガニック +18%)",
+    "en": "YoY +27% (organic +18%)"
+   }
+  },
+  {
+   "label": {
+    "ja": "受注",
+    "en": "Orders"
+   },
+   "value": {
+    "ja": "293億ドル",
+    "en": "$29.3B"
+   },
+   "note": {
+    "ja": "オーガニックで前年同期比 +96%",
+    "en": "Up 96% YoY organically"
+   }
+  },
+  {
+   "label": {
+    "ja": "調整後EBITDA利益率",
+    "en": "Adjusted EBITDA margin"
+   },
+   "value": {
+    "ja": "15.4%",
+    "en": "15.4%"
+   },
+   "note": {
+    "ja": "前年同期 8.1%",
+    "en": "Prior-year quarter 8.1%"
+   }
+  }
+ ],
+ "numbers": {
+  "revenue": {
+   "current": 12642,
+   "previous": 11104,
+   "yearAgo": 9969
+  },
+  "adjustedEPS": null,
+  "epsEstimate": null,
+  "grossMargin": null,
+  "guidance": null,
+  "segments": [
+   {
+    "key": "power",
+    "nameJa": "パワー",
+    "nameEn": "Power",
+    "revenue": 6067,
+    "previous": 5477,
+    "operatingMargin": 21.4,
+    "previousOperatingMargin": 18.8
+   },
+   {
+    "key": "electrification",
+    "nameJa": "電化",
+    "nameEn": "Electrification",
+    "revenue": 3862,
+    "previous": 3637,
+    "operatingMargin": 19.1,
+    "previousOperatingMargin": 18.4
+   },
+   {
+    "key": "wind",
+    "nameJa": "風力",
+    "nameEn": "Wind",
+    "revenue": 2741,
+    "previous": 2026,
+    "operatingMargin": 2.6,
+    "previousOperatingMargin": -13.6
+   }
+  ]
+ },
+ "history": [
+  {
+   "label": "Q3",
+   "end": "2025-09-30",
+   "value": 9969
+  },
+  {
+   "label": "Q4",
+   "end": "2025-12-31",
+   "value": 10956
+  },
+  {
+   "label": "Q1",
+   "end": "2026-03-31",
+   "value": 9339
+  },
+  {
+   "label": "Q2",
+   "end": "2026-06-30",
+   "value": 11104
+  }
+ ],
+ "summary": {
+  "conclusion": [
+   {
+    "ja": "売上は126.42億ドルで、前期から約14%、前年同期から27%増えました。受注は293億ドル(オーガニックで前年同期比+96%)と売上を大きく上回り、受注残は1,970億ドルになりました。",
+    "en": "Revenue was $12.64B, up about 14% from the previous quarter and 27% from a year ago. Orders of $29.3B (up 96% organically) far exceeded revenue, lifting backlog to $197B."
+   },
+   {
+    "ja": "調整後EBITDA利益率は15.4%で、前年同期の8.1%から大きく上がりました。一方、風力部門の利益率は2.6%と低く、1〜9月の累計では赤字です。",
+    "en": "Adjusted EBITDA margin rose to 15.4% from 8.1% a year ago. The Wind segment, however, earned only a 2.6% margin and is still loss-making for the first nine months."
+   },
+   {
+    "ja": "会社は2026年の売上見通しを465億〜475億ドル、フリーキャッシュフローを160億〜170億ドルに引き上げました。",
+    "en": "The company raised its 2026 outlook to revenue of $46.5–47.5B and free cash flow of $16–17B."
+   }
+  ],
+  "cards": {
+   "growth": {
+    "headline": {
+     "ja": "ガス発電を中心にパワー部門が伸びた",
+     "en": "Power grew, led by gas turbines"
+    },
+    "segment": "power",
+    "chips": [
+     {
+      "tone": "up",
+      "text": {
+       "ja": "パワー売上 前年同期比 +25%",
+       "en": "Power revenue +25% YoY"
+      }
+     },
+     {
+      "tone": "up",
+      "text": {
+       "ja": "部門EBITDA利益率 18.8% → 21.4%",
+       "en": "Segment EBITDA margin 18.8% → 21.4%"
+      }
+     },
+     {
+      "tone": "up",
+      "text": {
+       "ja": "パワー受注 オーガニック +178%",
+       "en": "Power orders +178% organic"
+      }
+     }
+    ],
+    "sections": [
+     {
+      "key": "happened",
+      "text": {
+       "ja": "パワー部門の売上は60.67億ドルで、前期の54.77億ドルから増え、前年同期比では25%増でした。受注は217.8億ドルで、オーガニックで前年同期比178%増です。",
+       "en": "Power revenue was $6.07B, up from $5.48B last quarter and 25% higher than a year ago. Orders reached $21.78B, up 178% organically."
+      }
+     },
+     {
+      "key": "good",
+      "text": {
+       "ja": "部門EBITDA利益率は21.4%で、前期の18.8%、前年同期の13.4%から上がりました。会社は、値上げと出荷台数の増加が理由だと説明しています。",
+       "en": "The segment EBITDA margin was 21.4%, up from 18.8% last quarter and 13.4% a year ago. The company credits higher prices and volume."
+      }
+     },
+     {
+      "key": "watch",
+      "text": {
+       "ja": "伸びはガス発電設備に大きく頼っています。会社はインフレの影響も挙げており、コストの上昇が値上げを上回ると利益率は下がりえます。",
+       "en": "Growth depends heavily on gas power equipment. The company also cites inflation; if costs rise faster than prices, the margin could fall."
+      }
+     },
+     {
+      "key": "view",
+      "text": {
+       "ja": "受注が売上を大きく上回っていて、受注残が将来の売上の土台になります。受注が売上に変わるペースを見ます。",
+       "en": "Orders far exceed revenue, so backlog underpins future sales. The pace at which orders turn into revenue is what to follow."
+      }
+     }
+    ]
+   },
+   "change": {
+    "headline": {
+     "ja": "売上は前期比 +13.9%、調整後EBITDA利益率は15.4%",
+     "en": "Revenue up 13.9% QoQ, adjusted EBITDA margin 15.4%"
+    },
+    "chips": [
+     {
+      "tone": "up",
+      "text": {
+       "ja": "売上 前期比 +13.9%",
+       "en": "Revenue +13.9% QoQ"
+      }
+     },
+     {
+      "tone": "up",
+      "text": {
+       "ja": "調整後EBITDA利益率 11.3% → 15.4%",
+       "en": "Adj. EBITDA margin 11.3% → 15.4%"
+      }
+     }
+    ],
+    "sections": [
+     {
+      "key": "happened",
+      "text": {
+       "ja": "売上は111.04億ドルから126.42億ドルへ、15.38億ドル増えました。調整後EBITDA利益率は前期の11.3%から15.4%に上がりました。",
+       "en": "Revenue rose from $11.10B to $12.64B, up $1.54B. Adjusted EBITDA margin rose from 11.3% last quarter to 15.4%."
+      }
+     },
+     {
+      "key": "good",
+      "text": {
+       "ja": "現金を生む力も強く、営業キャッシュフローは60.57億ドル、フリーキャッシュフローは54.09億ドルでした。手元の現金は約168億ドルあります。",
+       "en": "Cash generation was strong: operating cash flow was $6.06B and free cash flow $5.41B. Cash on hand is about $16.8B."
+      }
+     },
+     {
+      "key": "watch",
+      "text": {
+       "ja": "前年同期比27%増のうち、オーガニック(買収や為替の影響を除いた数字)では18%増です。差の多くは、電化部門に加わったProlec GEの売上(9.45億ドル)によるものです。",
+       "en": "Of the 27% YoY growth, organic growth (excluding acquisitions and currency) was 18%. Much of the gap is the $945M of revenue from the acquired Prolec GE in Electrification."
+      }
+     },
+     {
+      "key": "means",
+      "text": {
+       "ja": "前期比の増収15.38億ドルのうち7.15億ドルは風力部門です。風力は利益率が低いので、売上の伸びほどには利益は増えません。",
+       "en": "Of the $1.54B sequential increase, $715M came from Wind. Because Wind earns a thin margin, profit does not rise as fast as revenue."
+      }
+     }
+    ]
+   },
+   "caution": {
+    "headline": {
+     "ja": "風力部門は利益率2.6%、1〜9月は赤字",
+     "en": "Wind margin 2.6%, loss-making year to date"
+    },
+    "segment": "wind",
+    "chips": [
+     {
+      "tone": "gold",
+      "text": {
+       "ja": "風力 部門EBITDA利益率 2.6%",
+       "en": "Wind segment EBITDA margin 2.6%"
+      }
+     },
+     {
+      "tone": "down",
+      "text": {
+       "ja": "風力 1〜9月EBITDA −5.85億ドル",
+       "en": "Wind 9-month EBITDA −$585M"
+      }
+     },
+     {
+      "tone": "down",
+      "text": {
+       "ja": "2026年の風力損失見通し 4億〜5億ドル",
+       "en": "2026 Wind loss outlook $400–500M"
+      }
+     }
+    ],
+    "sections": [
+     {
+      "key": "happened",
+      "text": {
+       "ja": "風力部門の売上は27.41億ドル、部門EBITDA利益率は2.6%でした。前年同期の−2.3%からは改善しましたが、1〜9月の累計では5.85億ドルの赤字です。",
+       "en": "Wind revenue was $2.74B with a 2.6% segment EBITDA margin. That improved from −2.3% a year ago, but the segment lost $585M over the first nine months."
+      }
+     },
+     {
+      "key": "watch",
+      "text": {
+       "ja": "今回の改善には、洋上風力のコスト減に加えて、関税コストの回収の影響も含まれています。会社は2026年の風力損失見通しを約4億ドルから4億〜5億ドルに広げました。",
+       "en": "This quarter's improvement included lower offshore project costs and tariff recoveries. The company widened its 2026 Wind loss outlook from about $400M to $400–500M."
+      }
+     },
+     {
+      "key": "means",
+      "text": {
+       "ja": "1〜9月ですでに5.85億ドルの赤字なので、年間4億〜5億ドルの赤字という見通しは、第4四半期に風力が黒字になる前提です。",
+       "en": "With $585M already lost in nine months, a full-year loss of $400–500M assumes Wind turns profitable in the fourth quarter."
+      }
+     },
+     {
+      "key": "view",
+      "text": {
+       "ja": "風力は売上の約2割を占めますが、利益への貢献は小さい部門です。第4四半期に本当に黒字になるかが、次の決算での確認点です。",
+       "en": "Wind is about a fifth of revenue but contributes little profit. Whether it actually turns profitable in Q4 is the point to check in the next report."
+      }
+     }
+    ]
+   },
+   "next": {
+    "headline": {
+     "ja": "2026年の会社見通しを引き上げ",
+     "en": "Company raised its 2026 outlook"
+    },
+    "chips": [
+     {
+      "tone": "gold",
+      "text": {
+       "ja": "2026年売上 465億〜475億ドル",
+       "en": "2026 revenue $46.5–47.5B"
+      }
+     },
+     {
+      "tone": "gold",
+      "text": {
+       "ja": "調整後EBITDA利益率 13.5〜14.5%",
+       "en": "Adj. EBITDA margin 13.5–14.5%"
+      }
+     },
+     {
+      "tone": "gold",
+      "text": {
+       "ja": "フリーキャッシュフロー 160億〜170億ドル",
+       "en": "Free cash flow $16–17B"
+      }
+     }
+    ],
+    "sections": [
+     {
+      "key": "happened",
+      "text": {
+       "ja": "会社は2026年の売上見通しを455億〜465億ドルから465億〜475億ドルに、フリーキャッシュフローを115億〜125億ドルから160億〜170億ドルに引き上げました。四半期ごとの売上見通しは出していません。",
+       "en": "The company raised 2026 revenue guidance from $45.5–46.5B to $46.5–47.5B and free cash flow from $11.5–12.5B to $16–17B. It does not give a quarterly revenue outlook."
+      }
+     },
+     {
+      "key": "means",
+      "text": {
+       "ja": "1〜9月の売上は330.84億ドルなので、見通しどおりなら第4四半期の売上は約134億〜144億ドルになる計算です。",
+       "en": "Nine-month revenue was $33.08B, so the outlook implies fourth-quarter revenue of roughly $13.4–14.4B."
+      }
+     },
+     {
+      "key": "watch",
+      "text": {
+       "ja": "10月にはトレンチ・グループを90億ドルで買収する契約を結び、自社株買いの枠も200億ドルに広げました。買収の完了は2027年後半の予定です。大きな資金の使い道が重なる点も見ておきます。",
+       "en": "In October it agreed to acquire Trench Group for $9.0B (closing expected in late 2027) and raised its buyback authorization to $20B. These large uses of cash are worth tracking."
+      }
+     },
+     {
+      "key": "view",
+      "text": {
+       "ja": "見通しは会社の予定で、実績ではありません。第4四半期の売上がこの計算の範囲に入るか、風力が黒字になるかを見ます。",
+       "en": "The outlook is the company's plan, not a result. Watch whether Q4 revenue lands in this range and whether Wind turns profitable."
+      }
+     }
+    ]
+   }
+  }
+ }
+}
