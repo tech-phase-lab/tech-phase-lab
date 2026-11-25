@@ -203,7 +203,9 @@ test('wording: names, note under the stars, waiting text and the disclaimer are 
  const gauge=read('../app/resolute/features/shock-gauge.tsx');assert.ok(gauge.includes("'衝撃度チェッカー'"));assert.ok(gauge.includes('>SHOCK GAUGE</small>'));assert.ok(gauge.includes("'Shock Gauge'"));
  const news=read('../app/resolute/news/screen.tsx');assert.ok(news.includes('<ShockGaugeTitle locale={locale}/>'));assert.ok(news.includes('RISK_POLICY.note'));assert.ok(!news.includes('RIZEL_DISCLAIMER'));assert.ok(news.includes('<ShockStars'));
  const owner=read('../app/resolute/news/owner/screen.tsx');assert.ok(owner.includes('<h1>衝撃度チェッカーの管理</h1>'));assert.ok(!/action:'(?:stars|setStars|rate)'/.test(owner));assert.ok(owner.includes('手で変える操作はありません'));
- for(const file of ['../app/resolute/home/screen.tsx','../app/resolute/tonight/screen.tsx'])assert.ok(read(file).includes('<ShockGaugeTitle locale={locale}/>'),file);
+ // The home card keeps the name on one line (compact: 「SHOCK GAUGE」 moves above when the row is narrow).
+ assert.ok(read('../app/resolute/home/screen.tsx').includes('<ShockGaugeTitle locale={locale} compact/>'));
+ assert.ok(read('../app/resolute/tonight/screen.tsx').includes('<ShockGaugeTitle locale={locale}/>'));
  assert.ok(read('../app/resolute/tool-shell.tsx').includes('["/resolute/news","衝撃度チェッカー","Shock Gauge",'));
  for(const file of ['home/screen.tsx','news/screen.tsx','news/owner/screen.tsx','news/page.tsx','review/screen.tsx','tonight/screen.tsx','tool-shell.tsx','checkout/live-screen.tsx','lp/landing.tsx','lp/landing-en.tsx'])
   assert.ok(!/危険度|News Risk|news risk|Risk Checker|Risk level/.test(read('../app/resolute/'+file)),file);
