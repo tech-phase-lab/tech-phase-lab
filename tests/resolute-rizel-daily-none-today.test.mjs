@@ -55,11 +55,12 @@ test('genuine failures still exit 1: a source that refuses the read, a database 
 test('known-move ordering looks at every story in the window, not only the newest five (Monday after a weekend)',async()=>{
  const monday=new Date('2026-11-22T23:20:00Z'); // Monday 08:20 JST; Friday Nov 20's close is known
  const weekend=[1,2,3,4,5,6].map(n=>item(`w${n}`,`2026-11-21T1${n}:00:00Z`));
- const friday=[item('f1','2026-11-20T18:00:00Z'),item('f2','2026-11-20T17:00:00Z')];
+ // Nov 25: one story per index and close, so Friday's two are a market-wide and a chip-sector story.
+ const friday=[{...item('f1','2026-11-20T18:00:00Z'),title:'Nasdaq slides as AI semiconductor risk warning spreads f1'},{...item('f2','2026-11-20T17:00:00Z'),title:'Chip stocks drop on AI semiconductor risk warning f2'}];
  const feed={ok:true,enabled:true,items:[...weekend,...friday]};
  const first=selectDailyCandidates(feed,monday);
  assert.ok(first.sessions.includes('2026-11-20'),'Friday stories are read for their close');
- const ordered=selectDailyCandidates(feed,monday,{moves:{'2026-11-20':{sox:{changePercent:-2.1},nas100:{changePercent:-1}}}});
+ const ordered=selectDailyCandidates(feed,monday,{moves:{'2026-11-20':{sox:{previousDate:'2026-11-19',changePercent:-2.1,typicalPercent:1,up:5,down:35,total:40},nas100:{previousDate:'2026-11-19',changePercent:-1,typicalPercent:1,up:30,down:70,total:100}}}});
  assert.deepEqual(ordered.selected.slice(0,2).map(c=>c.title.split(' ').pop()),['f1','f2']);
  assert.equal(ordered.diagnostics.knownMove,2);
  const db=await setup();const asked=[];

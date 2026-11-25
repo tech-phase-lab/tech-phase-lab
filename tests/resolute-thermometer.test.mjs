@@ -87,6 +87,9 @@ test('disabled collector makes zero calls; one failed ticker is logged and the r
  const result=await collectThermometer({...config,enabled:true},asOf,fetcher);
  assert.equal(calls,4);assert.equal(result.nas100.status,'ready');assert.equal(result.sox.status,'ready');assert.equal(result.vix.status,'unavailable'); // flat synthetic prices have zero volatility, which is never shown as a reading
  assert.deepEqual(result.missing,['T3']);assert.ok(!JSON.stringify(result).includes('synthetic-secret'));
+ // Shock Gauge inputs for the last ten sessions, from the same data (no extra calls). Flat synthetic prices have no typical
+ // move, so none is measured: never guessed.
+ assert.equal(Object.keys(result.shock).length,10);assert.ok(Object.keys(result.shock).every(d=>d<=asOf));assert.ok(Object.values(result.shock).every(v=>v.nas100===null&&v.sox===null));
  const failed=await collectThermometer({...config,enabled:true},asOf,async()=>{throw new Error('synthetic-secret');});
  assert.equal(failed.nas100.reason,'provider-error');assert.equal(failed.sox.reason,'provider-error');assert.ok(!JSON.stringify(failed).includes('synthetic-secret'));
 });

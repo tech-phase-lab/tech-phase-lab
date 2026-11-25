@@ -123,7 +123,7 @@ export default function LandingEn({ embedded = false }: { embedded?: boolean }) 
       <div className={s.video}><span className={s.play} /><div><b>A Moment to Breathe</b><small>From RIZEL</small></div><em>1:40</em></div>
      </div>
      <Feature title="When the Market Tumbles" text={'A short video from RIZEL and the "won\'t do" list you made, on one screen. A reminder that you don\'t have to decide tonight.'} />
-     <Feature title="Shock Gauge" text="Picks the day’s notable news and shows, on a scale of 1 to 5 stars, how much the related TP index actually moved. No major news, no update." />
+     <Feature title="Shock Gauge" text="Picks the day’s notable news and rates it 1–5 stars from the actual index moves and the article’s content. No major news, no update." />
      <Feature title="RIZEL's Take" text="A one-line take from RIZEL on each story." />
     </div>
    </section>
