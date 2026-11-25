@@ -1,0 +1,171 @@
+/* RESOLUTE PC layout (owner, Nov 25: 01_シミュレーション_PC / 02_終値アラート_PC). Used only at 1024px and wider (use-desktop.ts);
+ * the phone layout stays in diagnosis.module.css. Colours come from .page there. Never cut words with "…". */
+.page { padding: 0; min-height: 100vh; background: radial-gradient(900px 360px at 45% -120px, #2a2414, transparent 70%), linear-gradient(180deg, #0b1220, #07090e); }
+.frame { display: grid; grid-template-columns: 240px minmax(0, 1fr); min-height: 100vh; background: linear-gradient(90deg, #0d1522 0 239px, #1d2738 239px 240px, transparent 240px); }
+
+/* The menu on the left: ホーム, the six steps and the tools. */
+.side { position: sticky; top: 0; align-self: start; height: 100vh; overflow-y: auto; display: flex; flex-direction: column; gap: 14px; padding: 40px 18px 24px; }
+.logo { display: flex; flex-direction: column; align-items: center; gap: 4px; padding-bottom: 18px; color: var(--gold2); text-decoration: none; }
+.logoMark { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-resolute-serif), serif; font-size: 19px; letter-spacing: .3em; }
+.logoMark svg { width: 20px; height: 20px; fill: none; stroke: var(--gold); stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+.logo small { font-size: 10px; letter-spacing: .3em; color: #8d7442; }
+.nav { display: flex; flex-direction: column; gap: 2px; }
+.sec { display: flex; align-items: center; gap: 10px; margin: 18px 0 8px 4px; font-size: 11px; font-weight: 400; letter-spacing: .2em; color: #b8975a; }
+.sec::after { content: ""; flex: 1; height: 1px; background: linear-gradient(90deg, #6b5629, transparent); }
+.item { display: flex; align-items: center; gap: 12px; min-height: 38px; padding: 4px 10px; border: 0; border-radius: 10px; background: none; color: var(--ink); font: inherit; font-size: 14px; text-align: left; text-decoration: none; cursor: pointer; }
+.item svg { flex: none; width: 17px; height: 17px; fill: none; stroke: var(--gold); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.item span { flex: 1; min-width: 0; }
+.stepItem i:first-child { flex: none; display: grid; place-items: center; width: 22px; height: 22px; border: 1px solid #8d7442; border-radius: 50%; color: var(--gold2); font-style: normal; font-size: 12px; }
+.item[aria-current="page"] { background: linear-gradient(90deg, #3a2f17, #1a1710 70%, transparent); box-shadow: inset 2px 0 0 var(--gold); color: var(--gold2); }
+.item:hover { background-color: #ffffff08; }
+.item > i:last-child { flex: none; width: 6px; height: 6px; border-radius: 50%; }
+.langs { margin-top: auto; align-self: flex-start; display: inline-flex; padding: 3px; border: 1px solid var(--line); border-radius: 999px; background: #0d1520; }
+.langs button { min-width: 40px; height: 28px; border: 0; border-radius: 999px; background: none; color: var(--sub); font: inherit; font-size: 13px; }
+.langs button[aria-pressed="true"] { background: #1e2a3e; color: var(--gold2); }
+.main { min-width: 0; padding: 44px 48px 56px; word-break: auto-phrase; }
+
+/* Page heading: the eyebrow, the title and the lead (one sentence per line), with the tabs on the right. */
+.content { max-width: 1120px; display: flex; flex-direction: column; gap: 22px; }
+.head { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; }
+.eyebrow { margin: 0 0 14px; display: flex; gap: 14px; align-items: baseline; font-size: 12px; letter-spacing: .2em; color: var(--gold2); }
+.eyebrow b { font-weight: 500; letter-spacing: .3em; color: var(--gold); }
+.title { margin: 0 0 10px; font-family: var(--font-resolute-serif), serif; font-size: 34px; font-weight: 500; line-height: 1.35; letter-spacing: .06em; color: var(--ink); }
+.lead { margin: 0; color: var(--sub); font-size: 14px; line-height: 1.75; }
+.lead span { display: block; }
+.tabs { flex: none; width: 200px; }
+.tabs button { padding: 6px 10px; min-height: 36px; font-size: 14px; }
+
+/* Two panels side by side, the same height. */
+.pair { display: grid; gap: 24px; align-items: stretch; }
+.pairDrop { grid-template-columns: minmax(0, 0.62fr) minmax(0, 1fr); }
+.pairSurge { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr); }
+.panel { padding: 30px 32px; gap: 16px; border-color: #d8b36a55; border-radius: 22px; min-width: 0; }
+.percent { font-size: 64px; line-height: 1.15; }
+.rule { width: 100%; height: 1px; margin: 6px 0 2px; border: 0; background: var(--line); }
+.holding { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 12px; font-size: 14px; color: var(--ink); }
+.holding input { width: 100%; max-width: 140px; justify-self: end; font-weight: 700; }
+.holding small { font-size: 13px; color: var(--sub); }
+.note { color: var(--sub); font-size: 12px; line-height: 1.7; }
+.holdings { display: flex; flex-direction: column; gap: 10px; }
+.holdingsTitle { font-size: 14px; color: var(--ink); }
+.holdingRow { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 10px; }
+.holdingRow > input { width: 100%; }
+.amount { position: relative; display: flex; align-items: center; }
+.amount input { width: 100%; padding-right: 44px !important; }
+.amount small { position: absolute; right: 12px; font-size: 13px; color: var(--ink); pointer-events: none; }
+.addHolding { align-self: flex-start; border: 0; background: none; color: var(--gold); font: inherit; font-size: 13px; padding: 4px 0; }
+
+/* The result: the words on the left, the drop gauge on the right (inside the panel, longer past −50%). */
+.result { display: grid; grid-template-columns: minmax(0, 1fr) 200px; align-items: stretch; gap: 20px; text-align: left; }
+.resultText { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.big { margin: 0; font-family: var(--font-resolute-serif), serif; font-size: 40px; font-weight: 600; line-height: 1.3; color: var(--gold2); }
+.sum { display: flex; gap: 14px; flex-wrap: wrap; font-size: 13px; color: var(--sub); }
+.sum b { color: var(--gold2); }
+.gauge { position: relative; min-width: 0; min-height: 270px; padding: 10px 0 12px; }
+.gaugeArea { position: relative; height: 100%; min-height: 248px; }
+.tick { position: absolute; left: 0; right: 96px; height: 0; border-top: 1px dashed #ffffff1c; }
+.tick b { position: absolute; left: 0; top: 0; transform: translateY(-50%); width: 40px; font-size: 11px; font-weight: 400; text-align: right; color: var(--sub); }
+.tick:first-child { border-top-color: transparent; }
+.gaugeTrack, .gaugeFill { position: absolute; left: 50px; width: 16px; top: 0; border-radius: 2px; }
+.gaugeTrack { bottom: 0; background: #ffffff0d; }
+.gaugeFill { background: linear-gradient(180deg, #5a2630, #e0505c); }
+.mark { position: absolute; left: 46px; width: 54px; height: 0; border-top: 2px solid var(--gold); }
+.markLabel { position: absolute; left: 104px; right: 0; transform: translateY(-50%); font-size: 11px; line-height: 1.35; color: var(--sub); overflow-wrap: anywhere; }
+.mark.markRed { border-top-color: #e5505c; }
+.markLabel.markRed { color: #f0a3a3; }
+
+/* The rise result: the cap, a bar per holding with the cap as a dotted line, the warning at the bottom. */
+.surge { display: flex; flex-direction: column; gap: 8px; }
+.bars { position: relative; display: flex; flex-direction: column; gap: 12px; margin-top: 12px; --name: 64px; --value: 96px; }
+.capLabel { position: relative; height: 18px; margin: 0 var(--value) -4px var(--name); }
+.capLabel span { position: absolute; left: var(--cap); transform: translateX(-50%); white-space: nowrap; font-size: 11px; color: var(--sub); }
+.bar { display: grid; grid-template-columns: var(--name) minmax(0, 1fr) var(--value); align-items: center; gap: 12px; font-size: 13px; }
+.bar strong { font-weight: 500; overflow-wrap: anywhere; }
+.bar b { text-align: right; color: var(--ink); }
+.barTrack { position: relative; height: 20px; border-radius: 3px; background: #ffffff0a; }
+.barTrack span { display: block; height: 100%; border-radius: 3px; background: linear-gradient(90deg, #a98345, #e8c77f); }
+.barTrack::after { content: ""; position: absolute; left: var(--cap); top: -6px; bottom: -6px; border-left: 2px dotted var(--ink); }
+.bar[data-over="true"] .barTrack span { background: linear-gradient(90deg, #a98345, #e8c77f 55%, #ec5a64); }
+.bar[data-over="true"] b { color: #f0868c; }
+.capVerdict { margin-top: auto; }
+.capOver { border-color: #e5505c88; background: #3a1418aa; }
+.capOver strong { color: #f0868c; }
+
+/* The rules, four cards in a row. */
+.rules { display: flex; flex-direction: column; gap: 14px; }
+.sectionTitle { display: flex; align-items: center; gap: 16px; margin: 4px 0 0; font-size: 12px; font-weight: 400; letter-spacing: .3em; color: var(--gold); }
+.sectionTitle::after { content: ""; flex: 1; height: 1px; background: linear-gradient(90deg, #6b5629, transparent); }
+.ruleRow { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; margin: 0; }
+.ruleCard { padding: 18px 20px; border: 1px solid var(--line); border-radius: 14px; background: linear-gradient(180deg, #131d2b, #0f1724); min-width: 0; }
+.ruleCard dt { font-size: 12px; color: var(--gold); }
+.ruleCard dd { margin: 6px 0 0; font-family: var(--font-resolute-serif), serif; font-size: 22px; line-height: 1.4; color: var(--gold2); overflow-wrap: anywhere; }
+.ruleCard dd.ruleNote { margin-top: 6px; font-family: inherit; font-size: 12px; color: var(--sub); }
+
+/* The way back on the left, the next step on the right. */
+.flow { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding-top: 6px; }
+.flowEnd { display: flex; align-items: center; gap: 14px; }
+.flow a, .flow button { white-space: nowrap; }
+.flowEnd > a, .flowEnd > button:last-child { padding: 12px 28px; box-shadow: 0 8px 26px #d8b36a33; }
+
+/* ③ Closing alert settings (02 part 1): two columns whose bottoms line up; the last panel of each column grows. */
+.columns { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.04fr); gap: 24px; align-items: stretch; }
+.column { display: flex; flex-direction: column; gap: 22px; min-width: 0; }
+.grow { flex: 1 1 auto; }
+.settings { gap: 12px; }
+.settings h2, .panelHeading { margin: 0; font-family: var(--font-resolute-serif), serif; font-size: 20px; font-weight: 500; color: var(--ink); }
+.panelTitle { margin: -6px 0 6px; font-family: var(--font-resolute-serif), serif; font-size: 24px; font-weight: 500; color: var(--ink); }
+.watchHead { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr) 28px; gap: 8px; font-size: 12px; color: var(--sub); }
+.watchRow { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr) 28px; align-items: center; }
+.watchRow label > span:first-child, .watchRow div > label:first-child { display: none; }
+.lined { padding-top: 12px; border-top: 1px solid var(--line); }
+.destinations { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.destination { display: flex; flex-direction: column; gap: 4px; padding: 14px 16px; border: 1px solid var(--line); border-radius: 12px; background: #ffffff04; font-size: 12px; color: var(--sub); line-height: 1.6; }
+.destination b { font-size: 14px; color: var(--ink); }
+.thisDevice { display: flex; flex-direction: column; gap: 8px; }
+.lineTable { flex: 1 1 auto; display: flex; flex-direction: column; gap: 12px; }
+.lineHead, .lineRow { display: grid; align-items: center; gap: 8px; }
+.lineHead { padding: 0 16px; font-size: 12px; color: var(--ink); }
+.lineHead > span:not(:first-child), .lineRow > strong { text-align: right; }
+.lineHead i { display: inline-block; padding: 1px 10px; border-radius: 999px; color: #1a1306; font-style: normal; font-weight: 700; font-size: 12px; }
+.lineRow { flex: 1 1 auto; min-height: 84px; padding: 14px 16px; border: 1px solid var(--line); border-radius: 12px; background: #ffffff03; }
+.lineRow > span { display: flex; flex-direction: column; min-width: 0; }
+.lineRow > span b { font-size: 15px; letter-spacing: .04em; }
+.lineRow > span small { font-size: 11px; color: var(--sub); }
+.lineRow > strong { font-family: var(--font-resolute-serif), serif; font-size: clamp(16px, 1.6vw, 24px); font-weight: 500; overflow-wrap: anywhere; }
+.tryIt { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 20px; align-items: stretch; }
+.tryLeft { display: flex; flex-direction: column; gap: 4px; justify-content: center; }
+.tryPercent { font-size: 52px; text-align: left; }
+.tryRight { display: flex; flex-direction: column; gap: 8px; justify-content: space-between; }
+.small { font-size: 11px; color: var(--sub); line-height: 1.7; }
+.push { display: flex; flex-direction: column; gap: 4px; padding: 12px 16px; border: 1px solid #2c3a52; border-radius: 14px; background: linear-gradient(180deg, #19243a, #131c2d); }
+.pushHead { display: flex; justify-content: space-between; font-size: 11px; color: var(--sub); }
+.pushHead b { color: var(--ink); letter-spacing: .04em; }
+.push strong { font-size: 13px; line-height: 1.55; color: var(--ink); }
+.push small { font-size: 11px; color: var(--gold); }
+.save { min-height: 44px; padding: 10px 24px; color: var(--ink); }
+.notes { display: flex; flex-direction: column; gap: 4px; }
+
+/* 「今日のお知らせ」 (02 part 2): the cards on the left, 「今日やること」 on the right, the same height. */
+.noticePair { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr); gap: 24px; align-items: stretch; }
+.notices { list-style: none; margin: 4px 0 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; }
+.noticesTwo { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.notice { display: flex; flex-direction: column; gap: 2px; padding: 18px 22px; border: 1px solid #e5505c66; border-radius: 16px; background: linear-gradient(180deg, #231520, #171521); min-width: 0; }
+.noticeRise { border-color: #8fd6a866; background: linear-gradient(180deg, #142420, #121c22); }
+.noticeHead { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.noticeHead b { font-size: 19px; letter-spacing: .04em; }
+.noticeHead span { padding: 1px 12px; border: 1px solid #e5505caa; border-radius: 999px; font-size: 12px; color: #f0868c; white-space: nowrap; }
+.noticeRise .noticeHead span { border-color: #8fd6a8aa; color: #8fd6a8; }
+.noticePrice { margin-top: 8px !important; font-family: var(--font-resolute-serif), serif; font-size: 30px; color: var(--gold2); }
+.noticeChange { font-size: 12px; color: var(--sub); }
+.noticeRule { margin-top: 12px; padding-top: 12px; border-top: 1px solid #ffffff14; }
+.noticeRule small { display: block; font-size: 11px; color: var(--gold); letter-spacing: .08em; }
+.noticeRule p { font-size: 13px; line-height: 1.7; color: var(--ink); overflow-wrap: anywhere; }
+.todo { gap: 12px; }
+.todoLabel { font-size: 11px; letter-spacing: .3em; color: var(--gold); }
+.todoTitle { margin: 0; font-family: var(--font-resolute-serif), serif; font-size: 28px; font-weight: 500; line-height: 1.45; color: var(--gold2); }
+.todoText { font-size: 14px; line-height: 1.9; color: var(--ink); }
+.todoText span { display: block; }
+.todoActions { margin-top: auto; display: flex; flex-direction: column; gap: 12px; }
+.todoActions a { display: block; text-align: center; text-decoration: none; border-radius: 999px; padding: 12px 20px; font-size: 15px; font-weight: 700; }
+.todoActions a:first-child { background: linear-gradient(90deg, var(--gold2), #c9a04f); color: #2a1d06; }
+.todoActions a:last-child { border: 1px solid #ffffff26; color: var(--ink); font-weight: 400; }

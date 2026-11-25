@@ -1,6 +1,6 @@
 "use client";
 import { ReviewLink as Link, usePlanClient } from "../review-context";
-import { useEffect,useRef,useState } from "react";
+import { useEffect,useRef,useState,type CSSProperties } from "react";
 import ToolShell from "../tool-shell";
 import NumberInput from "../number-input";
 import {scaledNumberInput} from "@/lib/resolute/number-input";
@@ -11,8 +11,11 @@ import type { PlanInput, PlanSnapshot } from "@/lib/resolute/plan-data";
 import { useRemembered } from "../features/use-remembered";
 import { simulateDrop,simulateSurge } from "@/lib/resolute/simulate";
 import type { DiagnosisLocale } from "@/lib/resolute/diagnosis-copy";
+import pc from "../pc.module.css";
+import { useDesktop } from "../use-desktop";
+import { capBars, dropGauge, formatMoney, ruleFacts, toleranceVerdict } from "@/lib/resolute/plan-rules";
 export default function SimulationScreen({identityReady=true}:{identityReady?:boolean}) {
- return <ToolShell identityReady={identityReady}>{(locale,deny)=><Simulation locale={locale} deny={deny}/>}</ToolShell>;
+ return <ToolShell identityReady={identityReady} pc>{(locale,deny)=><Simulation locale={locale} deny={deny}/>}</ToolShell>;
 }
 function Simulation({locale,deny}:{locale:DiagnosisLocale;deny:()=>void}) {
  const requestPlan = usePlanClient();
@@ -33,10 +36,8 @@ function Simulation({locale,deny}:{locale:DiagnosisLocale;deny:()=>void}) {
  const en=locale==="en",t=(ja:string,eng:string)=>en?eng:ja;
  const currency=plan?.currency??"JPY",scale=currency==="USD"?100:1;
  const unit=currency==="JPY"?10000:1,unitLabel=currency==="JPY"?t("万円","× ¥10,000"):"USD";
- const cash=(v:number)=>{
-  if(!en&&currency==="JPY") {const n=Math.floor(v),m=Math.floor(n/10000),r=n%10000;return n>=10000?(r?`${m.toLocaleString("ja-JP")}万${r.toLocaleString("ja-JP")}円`:`${m.toLocaleString("ja-JP")}万円`):`${n.toLocaleString("ja-JP")}円`;}
-  return new Intl.NumberFormat(en?"en-US":"ja-JP",{style:"currency",currency,maximumFractionDigits:currency==="JPY"?0:2}).format(v);
- };
+ const desktop=useDesktop();
+ const cash=(v:number)=>formatMoney(v,currency,en);
  const minor=(value:string)=>scaledNumberInput(value,currency==="JPY"?4:2);
  const amount=(value:string)=>(minor(value)??NaN)/scale;
  const number=(v:string,max:number,money=false)=>/^\d+(\.\d+)?$/.test(v)&&Number.isFinite(Number(v))&&Number(v)>=0&&Number(v)<=max&&
@@ -48,9 +49,85 @@ function Simulation({locale,deny}:{locale:DiagnosisLocale;deny:()=>void}) {
  const up=p&&valid?simulateSurge(p,holdings.map((h,i)=>({name:`holding-${i}`,value:amount(h.value)})),Number(rise)):null;
  const stockName=(i:number)=>holdings[i].name.trim()||t(`銘柄${String.fromCharCode(65+i)}`,`Stock ${String.fromCharCode(65+i)}`);
  const holdingField=(label:string,value:string,onValueChange:(v:string)=>void)=><label className={styles.compactField}><span>{label}</span><span><NumberInput decimal value={value} onValueChange={onValueChange}/><small>{unitLabel}</small></span></label>;
+ // Within / exactly at / over the loss limit. Exactly at it has its own words (owner, Nov 25), on the phone and on PC.
+ const limit=plan&&plan.toleranceDrop!==null?plan.toleranceDrop/scale:null;
+ const verdict=loss&&limit!==null?toleranceVerdict(loss,limit,currency):null;
+ // PC breaks the line at each sentence (owner, Nov 25); the phone keeps one running text.
+ const sentences=(text:string)=>desktop?text.split(en?/(?<=\.) /:/(?<=。)/).filter(Boolean).map(s=><span key={s}>{s}</span>):text;
+ const verdictBox=loss&&plan?<div className={`${styles.verdict} ${loss.withinTolerance?styles.verdictOk:styles.verdictWarning}`}><strong>{Number(holding)===0?t("保有額を入力して確かめましょう。","Enter your holdings to try it out."):limit===null?t("許容できる下落額は未設定です。","Your loss limit is not set."):verdict==="exact"?(en?"Exactly at your loss limit":<><span className={styles.phrase}>ちょうど許容できる</span><span className={styles.phrase}>下落額です</span></>):verdict==="within"?(en?"Within your loss limit":<><span className={styles.phrase}>許容できる下落額の</span><span className={styles.phrase}>範囲内です</span></>):(en?"Above your loss limit":<><span className={styles.phrase}>許容できる下落額を</span><span className={styles.phrase}>超えています</span></>)}</strong>
+  {limit!==null&&Number(holding)>0?<span>{sentences(verdict==="exact"?t("これより下がったら、新しく買うのをやめてルールを読み直します","If it falls any further, stop buying and reread your rules."):verdict==="within"?t(`許容額まで、あと${cash(limit-loss.lossAmount)}の余裕があります。`,`You have ${cash(limit-loss.lossAmount)} left before your limit.`):t(`許容額を${cash(loss.lossAmount-limit)}超えます。ルールを読み直す目安です。`,`This is ${cash(loss.lossAmount-limit)} over your limit. Time to reread your rules.`))}</span>:null}
+ </div>:null;
+ const intro=t("相場が上下に急変動したら資産はどれぐらい動くのか？現在の保有額を入れて実際に検証してみましょう。将来の予測ではありません。","How would a sudden market drop or rally affect your portfolio? Enter your current holdings and try it out. This is not a forecast.");
+ if(desktop&&plan) {
+  // PC (owner, Nov 25, 01_シミュレーション_PC): the controls on the left, the result on the right at the same height, the rules in a row.
+  const facts=ruleFacts(plan);
+  const holdingValue=amount(holding);
+  const tolerancePct=limit!==null&&holdingValue>0?Math.round(limit/holdingValue*1000)/10:null;
+  const gauge=loss?dropGauge(Number(drop),plan.buyLines.map(l=>({dropPct:l.dropPct,amount:l.amount/scale})),tolerancePct):null;
+  const bars=up?capBars(up.items.map((item,i)=>({name:stockName(i),valueAfter:item.valueAfter})),facts.capAmount===null?null:facts.capAmount/scale,plan.perStockCapPct):null;
+  const overBars=bars?.bars.filter(b=>b.over>1e-9)??[];
+  const sameAmount=plan.buyLines.length>0&&plan.buyLines.every(l=>l.amount===plan.buyLines[0].amount);
+  const rules:[string,string,string][]=[
+   [t("毎月の生活費","Monthly living costs"),cash(plan.monthlyLivingCost/scale),t("診断の答えから","From your answers")],
+   [t("許容できる下落","Loss limit"),limit===null?t("未設定","Not set"):cash(limit),plan.tolerancePct===null?"":t(`投資額の−${plan.tolerancePct}%`,`−${plan.tolerancePct}% of your investments`)],
+   [t("1銘柄の上限","Single-stock cap"),facts.capAmount===null?`${plan.perStockCapPct}%`:cash(facts.capAmount/scale),t(`投資額の${plan.perStockCapPct}%`,`${plan.perStockCapPct}% of your investments`)],
+   [t("買い増し","Buying more"),plan.buyLines.length?plan.buyLines.map(l=>`−${l.dropPct}%`).join(en?" · ":"・"):t("なし","None"),plan.buyLines.length?(sameAmount?t(`各${cash(plan.buyLines[0].amount/scale)}`,`${cash(plan.buyLines[0].amount/scale)} each`):plan.buyLines.map(l=>cash(l.amount/scale)).join(en?" · ":"・")):""],
+  ];
+  const [introFirst,...introRest]=en?intro.split(/(?<=\?) /):intro.split(/(?<=？)/);
+  return <div className={pc.content}>
+   <header className={pc.head}>
+    <div><p className={pc.eyebrow}><b>SIMULATION</b>{t("資産額シミュレーション","Portfolio simulator")}</p><h1 className={pc.title}>{t("資産額シミュレーション","Portfolio simulator")}</h1>
+     <p className={pc.lead}><span>{introFirst}</span><span>{introRest.join(" ")}</span></p></div>
+    <div className={`${styles.tabs} ${pc.tabs}`} role="group" aria-label={t("試算の種類","Scenario")}><button aria-pressed={tab==="drop"} onClick={()=>setTab("drop")}>{t("下落時","If it falls")}</button><button aria-pressed={tab==="surge"} onClick={()=>setTab("surge")}>{t("上昇時","If it rises")}</button></div>
+   </header>
+   <div className={`${pc.pair} ${tab==="drop"?pc.pairDrop:pc.pairSurge}`}>
+    <section className={`${styles.card} ${pc.panel}`}>
+     <div className={styles.scenario}><p className={styles.muted}>{t("もしも、持っている株が",tab==="drop"?"What if your stocks fell":"What if your stocks rose")}</p><p className={`${styles.percentNumber} ${pc.percent}`}>{tab==="drop"?"−"+drop:"+"+rise}%</p><p className={styles.muted}>{t(tab==="drop"?"下がったら？":"上がったら？","from their current value?")}</p></div>
+     <input type="range" min="0" max={tab==="drop"?100:200} step="1" value={tab==="drop"?drop:Math.min(200,Number(rise))} aria-label={t(tab==="drop"?"下落率のスライダー":"上昇率のスライダー",tab==="drop"?"Drop slider":"Rise slider")} onChange={e=>tab==="drop"?setDrop(e.target.value):setRise(e.target.value)}/>
+     <div className={styles.chips}>{(tab==="drop"?[10,20,30,50]:[10,30,50,100]).map(v=><button key={v} aria-pressed={Number(tab==="drop"?drop:rise)===v} onClick={()=>tab==="drop"?setDrop(String(v)):setRise(String(v))}>{tab==="drop"?"−":"+"}{v}%</button>)}</div>
+     <hr className={pc.rule}/>
+     {tab==="drop"?<><label className={pc.holding}><span>{t("いまの保有額","Current holdings")}</span><NumberInput decimal value={holding} onValueChange={setHolding}/><small>{unitLabel}</small></label><p className={pc.note}>{t("①で入力した投資済みの金額を表示しています。現金や預金は含めずに試算できます", "Starts with the invested amount from your answers. Keep cash and savings out of this scenario.")}</p></>:<div className={pc.holdings}>
+      <p className={pc.holdingsTitle}>{t("いまの保有","Current holdings")}</p>
+      {holdings.map((h,i)=><div className={pc.holdingRow} key={i}><input aria-label={t("銘柄名","Stock name")+` ${i+1}`} type="text" maxLength={40} placeholder={stockName(i)} value={h.name} onChange={e=>setHoldings(hs=>hs.map((x,k)=>k===i?{...x,name:e.target.value}:x))}/><label className={pc.amount}><NumberInput aria-label={t("保有額","Holding value")+` ${i+1}`} decimal value={h.value} onValueChange={value=>setHoldings(hs=>hs.map((x,k)=>k===i?{...x,value}:x))}/><small>{unitLabel}</small></label></div>)}
+      {holdings.length<10?<button type="button" className={pc.addHolding} onClick={()=>setHoldings(hs=>[...hs,{name:"",value:"0"}])}>{t("＋ 銘柄を足す","＋ Add a stock")}</button>:null}
+     </div>}
+    </section>
+    {tab==="drop"?(loss&&gauge?<section className={`${styles.card} ${pc.panel} ${pc.result}`} aria-live="polite">
+     <div className={pc.resultText}>
+      <span className={styles.eyebrow}>RESULT</span><p className={styles.muted}>{t("あなたの資産は","Your portfolio would fall by")}</p><p className={pc.big}>{cash(loss.lossAmount)}{en?"":"減ります"}</p>
+      {loss.monthsOfExpenses!==null?<p className={styles.muted}>{t(`生活費の${loss.monthsOfExpenses}か月分です`,`That's ${loss.monthsOfExpenses} months of living costs`)}</p>:null}
+      {verdictBox}
+      {plan.buyLines.map(l=><div key={l.dropPct} className={styles.valueRow} data-reached={Number(drop)>=l.dropPct}><span><i className={styles.reachedBadge}>{Number(drop)>=l.dropPct?t("到達","Reached"):t("まだ先","Not reached")}</i>−{l.dropPct}%</span><strong>{cash(l.amount/scale)}</strong></div>)}
+      <p className={pc.sum}>{t("到達したラインの買い増し予定額","Planned purchases at levels reached")}<b>{cash(loss.plannedBuyTotal)}</b></p>
+     </div>
+     <div className={pc.gauge} aria-hidden="true">
+      <div className={pc.gaugeArea}>
+       {gauge.ticks.map(v=><span key={v} className={pc.tick} style={{top:`${v/gauge.max*100}%`}}><b>{v?`−${v}%`:"0%"}</b></span>)}
+       <span className={pc.gaugeTrack}/><span className={pc.gaugeFill} style={{height:`${gauge.fill*100}%`}}/>
+       {gauge.marks.map(m=><span key={`${m.kind}${m.pct}`} className={`${pc.mark} ${m.kind==="tolerance"?pc.markRed:""}`} style={{top:`${m.at*100}%`}}/>)}
+       {gauge.marks.map(m=><span key={`l${m.kind}${m.pct}`} className={`${pc.markLabel} ${m.kind==="tolerance"?pc.markRed:""}`} style={{top:`${m.labelAt*100}%`}}>{m.kind==="buy"?t(`買い増し ${cash(m.amount??0)}`,`Buy ${cash(m.amount??0)}`):t("許容できる下落","Loss limit")}</span>)}
+      </div>
+     </div>
+    </section>:<p className={styles.error}>{t("金額とルールの数値を確認してください。","Check your amounts and the numbers in your rules.")}</p>):(up&&bars?<section className={`${styles.card} ${pc.panel} ${pc.result} ${pc.surge}`} aria-live="polite">
+     <span className={styles.eyebrow}>RESULT</span><p className={styles.muted}>{t("1銘柄の上限は","Your single-stock cap is")}</p><p className={pc.big}>{cash(bars.cap)}</p><p className={styles.muted}>{t("縦の線が、1銘柄の上限です。","The vertical line is your single-stock cap.")}</p>
+     <div className={pc.bars} style={{"--cap":`${bars.capAt*100}%`} as CSSProperties}>
+      <p className={pc.capLabel}><span>{t(`上限 ${cash(bars.cap)}`,`Cap ${cash(bars.cap)}`)}</span></p>
+      {bars.bars.map((b,i)=><div className={pc.bar} key={i} data-over={b.over>1e-9}><strong>{b.name}</strong><span className={pc.barTrack}><span style={{width:`${b.width*100}%`}}/></span><b>{cash(b.valueAfter)}</b></div>)}
+     </div>
+     <div className={`${styles.verdict} ${pc.capVerdict} ${overBars.length?pc.capOver:styles.verdictOk}`}><strong>{up.totalAfter===0?t("保有額を入力して確かめましょう。","Enter your holdings to try it out."):overBars.length?t("1銘柄の上限を超える銘柄があります","Some holdings exceed your single-stock cap"):t("すべて上限の範囲内です","All within your single-stock cap")}</strong>
+      {overBars.length&&up.totalAfter>0?<span>{overBars.map((b,i)=><span key={i}>{t(`${b.name}が上限を${cash(b.over)}超えます。`,`${b.name} is ${cash(b.over)} over the cap.`)}</span>)}<span>{t("ルールでは、上限を超えた銘柄は買い増しません","Your rules don’t add to a holding above the cap.")}</span></span>:null}</div>
+    </section>:<p className={styles.error}>{t("金額とルールの数値を確認してください。","Check your amounts and the numbers in your rules.")}</p>)}
+   </div>
+   <section className={pc.rules} aria-label={t("あなたのルール","Your rules")}>
+    <h2 className={pc.sectionTitle}>{t("あなたのルール","Your rules")}</h2>
+    <dl className={pc.ruleRow}>{rules.map(([k,v,note])=><div key={k} className={pc.ruleCard}><dt>{k}</dt><dd>{v}</dd>{note?<dd className={pc.ruleNote}>{note}</dd>:null}</div>)}</dl>
+   </section>
+   <FlowNavigation step={2} locale={locale} wide/>
+  </div>;
+ }
  return <div className={styles.section}>
   <header className={styles.toolHeading}><h1>{t("資産額シミュレーション","Portfolio simulator")}</h1></header>
-  <p className={styles.muted}>{t("相場が上下に急変動したら資産はどれぐらい動くのか？現在の保有額を入れて実際に検証してみましょう。将来の予測ではありません。","How would a sudden market drop or rally affect your portfolio? Enter your current holdings and try it out. This is not a forecast.")}</p>
+  <p className={styles.muted}>{intro}</p>
   {state!=="ready"?<section className={styles.card}><p role="status">{state==="loading"?t("保存済みの計画を読み込んでいます…","Loading your saved plan…"):state==="empty"?t("先にルールを保存してください。","Save your rules first."):t("計画を読み込めませんでした。","Couldn’t load your plan.")}</p>
    {state==="error"?<button className={styles.secondary} onClick={()=>{setState("loading");setAttempt(n=>n+1);}}>{t("再読込","Try again")}</button>:null}
    <Link href="/resolute/diagnosis" prefetch={false} className={styles.secondary}>{t("① ルール診断へ戻る","① Back to your rules")}</Link>
@@ -69,9 +146,7 @@ function Simulation({locale,deny}:{locale:DiagnosisLocale;deny:()=>void}) {
    {tab==="drop"?(loss?<section className={`${styles.card} ${styles.hero}`} aria-live="polite"><span className={styles.eyebrow}>RESULT</span><p className={styles.muted}>{t("あなたの資産は","Your portfolio would fall by")}</p><p className={styles.bigNumber}>{cash(loss.lossAmount)}{en?"":"減ります"}</p>
     {loss.monthsOfExpenses!==null?<p className={styles.muted}>{t(`生活費の${loss.monthsOfExpenses}か月分です`,`That's ${loss.monthsOfExpenses} months of living costs`)}</p>:null}
     <div className={styles.resultStack}>
-     <div className={`${styles.verdict} ${loss.withinTolerance?styles.verdictOk:styles.verdictWarning}`}><strong>{Number(holding)===0?t("保有額を入力して確かめましょう。","Enter your holdings to try it out."):plan.toleranceDrop===null?t("許容できる下落額は未設定です。","Your loss limit is not set."):loss.withinTolerance?(en?"Within your loss limit":<><span className={styles.phrase}>許容できる下落額の</span><span className={styles.phrase}>範囲内です</span></>):(en?"Above your loss limit":<><span className={styles.phrase}>許容できる下落額を</span><span className={styles.phrase}>超えています</span></>)}</strong>
-      {plan.toleranceDrop!==null&&Number(holding)>0?<span>{loss.withinTolerance?t(`許容額まで、あと${cash(plan.toleranceDrop/scale-loss.lossAmount)}の余裕があります。`,`You have ${cash(plan.toleranceDrop/scale-loss.lossAmount)} left before your limit.`):t(`許容額を${cash(loss.lossAmount-plan.toleranceDrop/scale)}超えます。ルールを読み直す目安です。`,`This is ${cash(loss.lossAmount-plan.toleranceDrop/scale)} over your limit. Time to reread your rules.`)}</span>:null}
-     </div>
+     {verdictBox}
      {plan.buyLines.map(l=><div key={l.dropPct} className={styles.valueRow} data-reached={Number(drop)>=l.dropPct}><span><i className={styles.reachedBadge}>{Number(drop)>=l.dropPct?t("到達","Reached"):t("まだ先","Not reached")}</i>−{l.dropPct}%</span><strong>{cash(l.amount/scale)}</strong></div>)}
      <p className={styles.muted}>{t("到達したラインの買い増し予定額","Planned purchases at levels reached")}: {cash(loss.plannedBuyTotal)}</p>
     </div>
