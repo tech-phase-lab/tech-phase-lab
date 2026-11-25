@@ -1,0 +1,208 @@
+{
+  "root": {
+    "ticker": "ENB",
+    "name": "エンブリッジ",
+    "cik": 895728,
+    "name_en": "Enbridge Inc."
+  },
+  "rows": [
+    {
+      "ja": "パイプライン合弁の相手",
+      "en": "Pipeline JV partners"
+    },
+    {
+      "ja": "買収したガス会社",
+      "en": "Acquired gas utilities"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "ET",
+      "ticker": "ET",
+      "name": "エナジー・トランスファー",
+      "name_en": "Energy Transfer",
+      "sub": "配管網",
+      "sub_en": "Pipelines",
+      "sub_short": "配管網",
+      "sub_short_en": "Pipelines",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "原油管ETCOに27.6%出資、新パイプを50%ずつ共同保有へ",
+          "text_en": "27.6% of the ETCO crude line; 50/50 owner of a new connector",
+          "source": {
+            "label": "Enbridge 10-K(2025年度)",
+            "label_en": "Enbridge 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/895728/000119312526049810/enb-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "3 Includes amounts for the construction of the Southern Illinois Connector Pipeline, which is expected to be 50% jointly-owned with Energy Transfer, costs to upgrade the Energy Transfer Crude Oil Pipeline, in which we have a 27.6% ownership interest,"
+          }
+        }
+      ]
+    },
+    {
+      "id": "WhiteWater",
+      "ticker": "WhiteWater",
+      "name": "ホワイトウォーター・ミッドストリーム",
+      "name_en": "WhiteWater Midstream",
+      "sub": "配管網",
+      "sub_en": "Pipelines",
+      "sub_short": "配管網",
+      "sub_short_en": "Pipelines",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ガス管ホイッスラーの合弁(50.6%)の筆頭パートナー",
+          "text_en": "Lead partner (50.6%) in the Whistler gas pipeline JV",
+          "source": {
+            "label": "Enbridge 10-K(2025年度)",
+            "label_en": "Enbridge 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/895728/000119312526049810/enb-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "The Whistler Parent JV is owned by WhiteWater/I Squared ( 50.6 %), MPLX ( 30.4 %) and Enbridge ( 19.0 %) and is accounted for as an equity method investment."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MPLX",
+      "ticker": "MPLX",
+      "name": "MPLXエルピー",
+      "name_en": "MPLX LP",
+      "sub": "配管網",
+      "sub_en": "Pipeline",
+      "sub_short": "配管網",
+      "sub_short_en": "Pipeline",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ホイッスラー合弁(30.4%)とマッターホーン合弁の相手",
+          "text_en": "Partner in the Whistler (30.4%) and Matterhorn JVs",
+          "source": {
+            "label": "Enbridge 10-K(2025年度)",
+            "label_en": "Enbridge 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/895728/000119312526049810/enb-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "The Whistler Parent JV is owned by WhiteWater/I Squared ( 50.6 %), MPLX ( 30.4 %) and Enbridge ( 19.0 %) and is accounted for as an equity method investment."
+          }
+        }
+      ]
+    },
+    {
+      "id": "OKE",
+      "ticker": "OKE",
+      "name": "ワンオーク",
+      "name_en": "ONEOK",
+      "sub": "中流",
+      "sub_en": "Midstream",
+      "sub_short": "中流",
+      "sub_short_en": "Pipeline",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ガス管マッターホーン・エクスプレスの合弁相手",
+          "text_en": "Partner in the Matterhorn Express gas pipeline JV",
+          "source": {
+            "label": "Enbridge 10-K(2025年度)",
+            "label_en": "Enbridge 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/895728/000119312526049810/enb-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "The MXP Parent JV, a joint venture formed by Enbridge, WhiteWater Midstream, ONEOK, Inc and MPLX LP, holds (i) a 100% interest in MXP, which owns the Matterhorn Express Pipeline, an approximately 580 mile intrastate pipeline with associated compressor stations that extends from the Permian Basin to the Katy, Texas area with a capacity of 2.5 bcf/d; and (ii) a 70% equity interest in the 3.7 bcf/d Eiger Express Pipeline"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PSX",
+      "ticker": "PSX",
+      "name": "フィリップス66",
+      "name_en": "Phillips 66",
+      "sub": "石油精製",
+      "sub_en": "Refining",
+      "sub_short": "石油精製",
+      "sub_short_en": "Refining",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "DCPミッドストリームを50%ずつ共同保有していた",
+          "text_en": "Co-owned DCP Midstream 50/50",
+          "source": {
+            "label": "Phillips 66 10-K(2025年度)",
+            "label_en": "Phillips 66 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1534701/000153470126000006/psx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Prior to the DCP Midstream Merger, we and Enbridge each held a 50 % interest and jointly governed DCP Midstream, whose primary assets are its general partner and limited partner interests in DCP Midstream, LP (DCP LP), and we each held indirect economic interests in DCP LP of 28.26 %."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PSNC",
+      "ticker": "PSNC",
+      "name": "ノースカロライナ公益ガス(PSNC)",
+      "name_en": "Public Service Company of North Carolina",
+      "sub": "ガス公益",
+      "sub_en": "Gas utility",
+      "sub_short": "ガス公益",
+      "sub_short_en": "Gas",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ノースカロライナのガス会社を20億ドルで買収",
+          "text_en": "Bought the North Carolina gas utility for US$2.0B",
+          "source": {
+            "label": "Enbridge 10-K(2025年度)",
+            "label_en": "Enbridge 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/895728/000119312526049810/enb-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Public Service Company of North Carolina, Incorporated On September 30, 2024, through a wholly-owned US subsidiary, we acquired all of the membership interests of Fall North Carolina Holdco LLC, which owns 100 % of Public Service Company of North Carolina, Incorporated (PSNC), for cash consideration of $ 2.7 billion (US$ 2.0 billion) (the PSNC Acquisition)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "QuestarGas",
+      "ticker": "Questar Gas",
+      "name": "クエスター・ガス",
+      "name_en": "Questar Gas Company",
+      "sub": "ガス公益",
+      "sub_en": "Gas utility",
+      "sub_short": "ガス公益",
+      "sub_short_en": "Gas",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ユタ州などのガス会社を30億ドルで買収",
+          "text_en": "Bought the Utah-based gas utility for US$3.0B",
+          "source": {
+            "label": "Enbridge 10-K(2025年度)",
+            "label_en": "Enbridge 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/895728/000119312526049810/enb-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Questar Gas Company On May 31, 2024, through a wholly-owned US subsidiary, we acquired all of the membership interests of Fall West Holdco LLC which owns 100 % of Questar and Wexpro for cash consideration of $ 4.1 billion (US$ 3.0 billion) (the Questar Acquisition)."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

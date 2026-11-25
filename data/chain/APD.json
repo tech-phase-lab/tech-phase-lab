@@ -1,0 +1,156 @@
+{
+  "root": {
+    "ticker": "APD",
+    "name": "エアープロダクツ",
+    "cik": 2969,
+    "name_en": "Air Products and Chemicals, Inc."
+  },
+  "rows": [
+    {
+      "ja": "合弁パートナー",
+      "en": "Joint-venture partners"
+    },
+    {
+      "ja": "顧客・販売先",
+      "en": "Customers & offtakers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "ACWA",
+      "ticker": "ACWA Power",
+      "name": "アクワ・パワー",
+      "name_en": "ACWA Power",
+      "sub": "電力",
+      "sub_en": "Power",
+      "sub_short": "電力",
+      "sub_short_en": "Power",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "NEOMグリーン水素合弁を3分の1ずつ保有",
+          "text_en": "Equal partner in the NEOM green hydrogen JV",
+          "source": {
+            "label": "Air Products 10-K(2026年9月期)",
+            "label_en": "Air Products 10-K (FY ended Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2969/000000296926000050/apd-20260930.htm",
+            "level": "official",
+            "date": "2026-11-19",
+            "quote": "Air Products is an equal owner in NGHC with our joint venture partners, ACWA Power and NEOM Company."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NEOMCo",
+      "ticker": "NEOM Company",
+      "name": "NEOMカンパニー",
+      "name_en": "NEOM Company",
+      "sub": "都市開発",
+      "sub_en": "City dev.",
+      "sub_short": "都市開発",
+      "sub_short_en": "City dev",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "NEOMグリーン水素合弁を3分の1ずつ保有",
+          "text_en": "Equal partner in the NEOM green hydrogen JV",
+          "source": {
+            "label": "Air Products 10-K(2026年9月期)",
+            "label_en": "Air Products 10-K (FY ended Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2969/000000296926000050/apd-20260930.htm",
+            "level": "official",
+            "date": "2026-11-19",
+            "quote": "Air Products is an equal owner in NGHC with our joint venture partners, ACWA Power and NEOM Company."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Aramco",
+      "ticker": "Aramco",
+      "name": "サウジアラムコ",
+      "name_en": "Saudi Aramco",
+      "sub": "石油",
+      "sub_en": "Oil",
+      "sub_short": "石油",
+      "sub_short_en": "Oil",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ジャザンの合弁が製油所に電力・水素などを25年供給",
+          "text_en": "Jazan JV supplies power and hydrogen to its refinery for 25 years",
+          "source": {
+            "label": "Air Products 10-K(2026年9月期)",
+            "label_en": "Air Products 10-K (FY ended Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2969/000000296926000050/apd-20260930.htm",
+            "level": "official",
+            "date": "2026-11-19",
+            "quote": "JIGPC entered into project financing to purchase power blocks, gasifiers, air separation units, syngas cleanup assets, and utilities to supply electricity, steam, hydrogen, and utilities to Aramco's refinery and terminal complex under a 25 -year agreement, which commenced in the first quarter of fiscal year 2022."
+          }
+        }
+      ]
+    },
+    {
+      "id": "YARA",
+      "ticker": "Yara International",
+      "name": "ヤラ・インターナショナル",
+      "name_en": "Yara International",
+      "sub": "肥料",
+      "sub_en": "Fertilizer",
+      "sub_short": "肥料",
+      "sub_short_en": "Fertilizer",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "NEOMのグリーンアンモニアの長期販売契約",
+          "text_en": "Long-term marketing deal for NEOM green ammonia",
+          "source": {
+            "label": "Air Products 10-K(2026年9月期)",
+            "label_en": "Air Products 10-K (FY ended Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2969/000000296926000050/apd-20260930.htm",
+            "level": "official",
+            "date": "2026-11-19",
+            "quote": "We also strengthened our backlog, including significant new electronics projects, and advanced the NEOM Green Hydrogen Project through a long-term marketing and distribution agreement with Yara International ASA (\"Yara\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WorldEnergy",
+      "ticker": "World Energy",
+      "name": "ワールド・エナジー",
+      "name_en": "World Energy, LLC",
+      "sub": "航空燃料",
+      "sub_en": "SAF",
+      "sub_short": "航空燃料",
+      "sub_short_en": "SAF",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "持続可能な航空燃料の拡張計画から撤退し債権を引当",
+          "text_en": "Exited its sustainable aviation fuel project; receivable reserved",
+          "source": {
+            "label": "Air Products 10-K(2026年9月期)",
+            "label_en": "Air Products 10-K (FY ended Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2969/000000296926000050/apd-20260930.htm",
+            "level": "official",
+            "date": "2026-11-19",
+            "quote": "We have no equity interest in World Energy, LLC (\"World Energy\"), but hold a variable interest through a financing receivable that was fully reserved in connection with our exit from the sustainable aviation fuel expansion project during the second quarter of fiscal year 2025."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
