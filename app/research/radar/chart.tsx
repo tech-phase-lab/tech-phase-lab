@@ -1,6 +1,6 @@
 "use client";
 import { useMemo } from "react";
-import { X_TICKS, Y_TICKS, beyondDirections, beyondText, isBeyond, placeLabels, previousBeyondText, spreadEdgeDots, xPosition, yPosition, zoneLabel, zoneOf, type RadarDotFree, type RadarDotPro, type Zone } from "@/lib/research/radar";
+import { X_TICKS, Y_TICKS, beyondDirections, beyondText, isBeyond, placeLabels, previousBeyondText, spreadEdgeDots, xPosition, yPosition, zoneLabel, zoneOf, type RadarDotFree, type RadarDotPro, type RadarRankDot, type Zone } from "@/lib/research/radar";
 import styles from "./radar.module.css";
 
 const W = 340, H = 316, L = 46, T = 10, R = 330, B = 282;
@@ -101,4 +101,43 @@ export default function RadarChart({ dots, selected, onSelect, lang = "ja" }: { 
       {selectedDot.review && <span>{ja ? "前受け金を含む値" : "Includes customer prepayments"}</span>}<i>{zoneLabel(zoneOf(selectedDot.ocfMargin, selectedDot.cover), lang)}</i>
     </p>}
   </>;
+}
+
+// ---- FREE chart (owner, Nov 25): dots placed by rank inside the genre, no figures, nothing to tap ----
+const FW = 340, FH = 300, FL = 4, FT = 4, FR = 336, FB = 296, PAD_X = 24, PAD_Y = 30;
+const rx = (x: number) => FL + PAD_X + x * (FR - FL - 2 * PAD_X);
+const ry = (y: number) => FB - PAD_Y - y * (FB - FT - 2 * PAD_Y);
+
+export function RankChart({ dots, lang = "ja" }: { dots: RadarRankDot[]; lang?: "ja" | "en" }) {
+  const ja = lang === "ja";
+  const xm = (FL + FR) / 2, ym = (FT + FB) / 2;
+  const zones = useMemo(() => ([
+    { zone: "guard", top: true, left: true }, { zone: "solid", top: true, left: false },
+    { zone: "thin", top: false, left: true }, { zone: "lever", top: false, left: false },
+  ] as { zone: Zone; top: boolean; left: boolean }[]).map(spec => {
+    const w = ja ? zoneLabel(spec.zone, "ja").length * 10 + 2 : Math.round(zoneLabel(spec.zone, "en").length * 6.2 + 4), h = 13;
+    return { ...spec, box: { x: spec.left ? FL + 6 : FR - 6 - w, y: spec.top ? FT + 5 : FB - 5 - h, w, h } };
+  }), [ja]);
+  const labels = useMemo(() => placeLabels(dots.map(dot => ({ id: dot.ticker, x: rx(dot.x), y: ry(dot.y), r: RADIUS[dot.size], w: dot.ticker.length * 6.3 + 2 })),
+    { left: FL + 2, top: FT + 2, right: FR - 2, bottom: FB - 2 }, 11, zones.map(zone => zone.box)), [dots, zones]);
+  return <svg className={styles.svg} viewBox={`0 0 ${FW} ${FH}`} role="img" aria-label={ja ? "ジャンルの中の順位で並べた散布図。横が稼ぐ力、縦が守る力" : "Scatter plot by rank within the genre: earning power across, financial cushion up"}>
+    <defs><clipPath id="rank-frame"><rect x={FL} y={FT} width={FR - FL} height={FB - FT} rx="10" /></clipPath></defs>
+    <g clipPath="url(#rank-frame)">
+      <rect x={xm} y={FT} width={FR - xm} height={ym - FT} fill={ZONE_FILL.solid} />
+      <rect x={xm} y={ym} width={FR - xm} height={FB - ym} fill={ZONE_FILL.lever} />
+      <rect x={FL} y={FT} width={xm - FL} height={ym - FT} fill={ZONE_FILL.guard} />
+      <rect x={FL} y={ym} width={xm - FL} height={FB - ym} fill={ZONE_FILL.thin} />
+    </g>
+    <line x1={xm} x2={xm} y1={FT} y2={FB} className={styles.base} />
+    <line x1={FL} x2={FR} y1={ym} y2={ym} className={styles.base} />
+    {zones.map(zone => <text key={zone.zone} x={zone.box.x} y={zone.box.y + 10} className={styles.zone} fill={ZONE_INK[zone.zone]}>{zoneLabel(zone.zone, lang)}</text>)}
+    {dots.map(dot => { const box = labels[dot.ticker]; return box?.shifted && <line key={`l-${dot.ticker}`} x1={rx(dot.x)} y1={ry(dot.y)} x2={box.anchor.x} y2={box.anchor.y} className={styles.leader} />; })}
+    {dots.map(dot => {
+      const r = RADIUS[dot.size], cx = rx(dot.x), cy = ry(dot.y);
+      return dot.up === null
+        ? <circle key={dot.ticker} cx={cx} cy={cy} r={r - 0.75} fill={BACKGROUND} stroke={toneColor(dot.tone)} strokeWidth="1.8" />
+        : <circle key={dot.ticker} cx={cx} cy={cy} r={r} fill={toneColor(dot.tone)} stroke={BACKGROUND} strokeWidth="2" />;
+    })}
+    {dots.map(dot => { const box = labels[dot.ticker]; return box && <text key={`t-${dot.ticker}`} x={box.x} y={box.y + box.h - 2} className={styles.name}>{dot.ticker}</text>; })}
+  </svg>;
 }

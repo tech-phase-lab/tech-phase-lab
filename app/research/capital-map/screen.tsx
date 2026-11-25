@@ -118,7 +118,9 @@ function CapitalMapContent({ portfolios = emptyPortfolios, mode = "sample" }: { 
   const knownTickers = new Set(allHolders.map(row => row.ticker));
   const holders = allHolders.filter(row => (!inputTickers.length || inputTickers.some(term => knownTickers.has(term) ? row.ticker === term : row.name.toUpperCase().includes(term))) && (!watchOnly || watched.has(row.ticker))).toSorted((a, b) => b.weight - a.weight);
   const searching = (inputTickers.length > 0 || watchOnly);
-  const labels = { new: t("新規保有", "New"), increased: t("保有増加", "Increased"), reduced: t("保有減少", "Reduced"), exited: t("保有解消", "Exited"), unchanged: t("株数変化なし", "No change in shares held"), unknown: t("—", "—") };
+  // Owner, Nov 25: no "unchanged" word on every row, and no increased/reduced word under a coloured signed % that already says it.
+  // Only 新規保有 and 保有解消 keep a word; an unchanged holding shows its 0% alone.
+  const labels: Partial<Record<string, string>> = { new: t("新規保有", "New"), exited: t("保有解消", "Exited") };
   function choosePortfolio(id: string) { setActiveSlice(null); setSelectedId(id); setHoldingQuery(""); setRowLimit(50); setChangedOnly(false); setPositionGroup("current"); setSearchOpen(false); }
   function chooseView(value: View) { setView(value); choosePortfolio(portfolios.find(item => item.kind === value)?.id ?? ""); }
 
@@ -213,7 +215,7 @@ function CapitalMapContent({ portfolios = emptyPortfolios, mode = "sample" }: { 
               <div className={styles.positionStock}><span className={styles.positionColor} style={{ background: colorIndex >= 0 ? sliceColor(colorIndex) : "#536072" }} /><StockLogo ticker={row.ticker} /><div className={styles.stock}><strong title={row.name}>{row.name}</strong><small>{row.ticker || `CUSIP ${row.securityId}`}{row.instrument !== "stock" && <b className={styles.option}>{row.instrument.toUpperCase()}</b>}</small></div></div>
               <span className={styles.positionWeight}><strong>{percent(row.weight)}</strong><i style={{ width: `${Math.min(100, row.weight)}%`, background: colorIndex >= 0 ? sliceColor(colorIndex) : "#536072" }} /></span>
               <span className={styles.positionValue} title={hasValues ? `$${row.value.toLocaleString("en-US")}` : t("評価額は未収録", "Value not included")}>{hasValues ? money(row.value) : "—"}</span>
-              <span className={styles.positionChange} data-change={row.change} title={row.change === "unknown" ? t("比較できる前回データがありません", "No comparable prior data") : `${row.shares.toLocaleString("en-US")} ${row.instrument === "bond" ? t("USD（元本）", "USD principal") : t("株", "shares")}`}><strong>{row.shareChangePercent === null ? labels[row.change] : signed(row.shareChangePercent)}</strong>{row.shareChangePercent !== null && <small>{labels[row.change]}</small>}</span>
+              <span className={styles.positionChange} data-change={row.change} title={row.change === "unknown" ? t("比較できる前回データがありません", "No comparable prior data") : `${row.shares.toLocaleString("en-US")} ${row.instrument === "bond" ? t("USD（元本）", "USD principal") : t("株", "shares")}`}><strong>{row.shareChangePercent === null ? labels[row.change] ?? "—" : signed(row.shareChangePercent)}</strong>{row.shareChangePercent !== null && labels[row.change] && <small>{labels[row.change]}</small>}</span>
             </a>;
           })}{!visibleRows.length && <p className={styles.empty}>{t("該当する銘柄がありません。", "No matching holdings.")}</p>}</div>
           {!baseline && <p className={styles.missingHistory}>{t("前回比の「—」は比較データ未収録です。", "A dash means data for the previous period isn't available.")}</p>}
