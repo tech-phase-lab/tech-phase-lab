@@ -60,19 +60,24 @@ export function repeatsTaken(c,taken){
  if(storyScope(c.title)==='company'){const k=companyOf(c);if(taken.some(t=>storyScope(t.title)==='company'&&companyOf(t)===k))return true;}
  return taken.some(t=>titleSimilarity(t.title,c.title)>=NEAR_DUPLICATE);
 }
-/** One move, one story (owner, Nov 25): of the candidates measured on the same session, the one that best explains its move keeps
- * the session. Measured sessions: the highest explainsMove (scope fit: market-wide news by TP大型株100, chip-sector news by
- * TP半導体40, single-company news only when it passes the two-move test), then a headline that names a cause ("as", "after",
- * "amid" …) over a bare one, then the ranking. Sessions not yet measured: the ranking (market-wide, chip sector, company).
- * Returns the holder of each session. The model's cause reading still moves the holder's stars by one. */
+/** One move, one story (owner, Nov 25): of the candidates measured on the same session, one keeps the session.
+ * Market-wide news first (owner, Nov 24 and again Nov 25: "where are the market-wide ones?"): a market-wide story holds a
+ * measured session whenever the market actually moved after it (TP大型株100 at least the ★2 line, MARKET_MOVED), and an
+ * unmeasured session by the ranking (market-wide, chip sector, company). Otherwise the best explainer: the highest
+ * explainsMove (chip-sector news by TP半導体40, single-company news only when it passes the two-move test), then a headline
+ * that names a cause ("as", "after", "amid" …) over a bare one, then the ranking. Opinion pieces only when nothing else is on
+ * the session. Returns the holder of each session. The model's cause reading still moves the holder's stars by one. */
+/** TP大型株100's stars after a market-wide story at or above which "the market actually moved" (the ★2 line: ≥1.5× usual). */
+export const MARKET_MOVED=2;
 export function sessionHolders(ranked,moves){
  const groups=new Map();
  for(const c of ranked){const s=claimedSession({...c,starred:true});if(s){if(!groups.has(s))groups.set(s,[]);groups.get(s).push(c);}}
  const holders=new Map();
  for(const [s,group] of groups){
   const fit=new Map(group.map(c=>[c,explainsMove(c,moves)]));
+  const marketFirst=c=>storyScope(c.title)==='market'&&fit.get(c)>=MARKET_MOVED?1:0;
   // Opinion / ranking pieces hold a session only when nothing else is on it (the model withholds them).
-  holders.set(s,[...group].sort((a,b)=>(isOpinion(a.title)-isOpinion(b.title))||(fit.get(b)-fit.get(a))||(headlineCause(b.title)-headlineCause(a.title))||(ranked.indexOf(a)-ranked.indexOf(b)))[0]);
+  holders.set(s,[...group].sort((a,b)=>(isOpinion(a.title)-isOpinion(b.title))||(marketFirst(b)-marketFirst(a))||(fit.get(b)-fit.get(a))||(headlineCause(b.title)-headlineCause(a.title))||(ranked.indexOf(a)-ranked.indexOf(b)))[0]);
  }
  return holders;
 }

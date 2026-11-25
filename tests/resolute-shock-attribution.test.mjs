@@ -101,10 +101,14 @@ test('up days stay eligible; the fear rise counts on down days only, and the car
  assert.deepEqual(formatReading(down,'ja').at(-1),'恐怖指数 +5%');
 });
 
+test('market-wide headlines are market scope even with words before the move verb; "Shares of X" stays one company',()=>{
+ for(const t of ['Stocks give back part of Monday rally as tariff worries return','U.S. stock futures slip after hot CPI report','Wall Street slides as Fed minutes show officials wary of cuts','Stock futures fall as jobless claims jump'])assert.equal(storyScope(t),'market',t);
+ for(const t of ['Shares of Nvidia fall after export report','Micron cuts production forecast as memory chip prices weaken'])assert.equal(storyScope(t),'company',t);
+});
 const feedOf=items=>({ok:true,enabled:false,items:[],officialUpdates:[],reportUpdates:items,reportCoverage:{configured:true,marketLane:true}});
 const row=(title,publishedAt,{tickers=[],lane='company'}={})=>({title,bodyEn:`${title}. Shares of semiconductor and technology companies fell after the report, and the decline weighed on the market across the session.`,
  url:`https://news.example/${encodeURIComponent(title).slice(0,80)}`,publishedAt,publisher:'Example Wire',tickers,lane,sentiment:'negative'});
-test('at most 3 stories, never two with stars on the same session: the best explainer keeps the move',()=>{
+test('at most 3 stories, never two with stars on the same session; market-wide news first whenever the market moved after it',()=>{
  const runAt=new Date('2026-11-24T23:20:00Z'); // Wed Nov 25 08:20 JST: Tuesday's close is known
  const items=[
   row('Chip stocks tumble as export curbs widen','2026-11-24T12:00:00.000Z',{tickers:['NVDA','AMD']}), // 07:00 ET → Tue
@@ -117,27 +121,29 @@ test('at most 3 stories, never two with stars on the same session: the best expl
  const {selected,reserve,diagnostics}=selectDailyCandidates(feedOf(items),runAt,{moves});
  assert.ok(selected.length<=3);
  const preview=previewSelection({selected,reserve,diagnostics},moves);
- // Tue: the chip-sector headlines and SK hynix (SKHY 3.6× with TP半導体40 3.8×) all explain it at ★4, the market-wide headline only
- // at TP大型株100's ★2. Every headline names a cause, so the ranking decides: chip-sector news before single-company news, the newer
- // first. Wed (not measured yet): the market-wide story holds it.
+ // Tue: TP大型株100 moved −1.5% (2.0×: at least the ★2 line), so the market-wide story keeps Tuesday (owner: market-wide news
+ // first) even though the chip headlines and SK hynix fit TP半導体40's ★4; its stars are the stronger index's, ★4.
+ // Wed (not measured yet): the market-wide story holds it by the ranking. SK hynix is shown without stars.
  const sessions=preview.selected.filter(p=>p.marketStars!==null||p.reading===null&&p.session).map(p=>p.session);
  assert.equal(new Set(sessions).size,sessions.length,'no session twice');
  assert.deepEqual(preview.selected.map(p=>[p.title.split(' ').slice(0,2).join(' '),p.session,p.marketStars]),[
-  ['Stocks drop','2026-11-25',null],['Semiconductor stocks',TUE,4],['US opens',null,null]]);
+  ['Nasdaq falls',TUE,4],['Stocks drop','2026-11-25',null],['US opens',null,null]]);
  // The SK hynix story lost Tuesday to the chip-sector story (same fit, market and chip-sector news first): shown without stars.
  assert.equal(preview.selected[2].starred,false);
  // The others on Tuesday wait in reserve; picking one of them next to the chip story would repeat the move.
- for(const t of ['Chip stocks','Nasdaq falls'])assert.ok(repeatsTaken(reserve.find(c=>c.title.startsWith(t)),selected),t);
+ for(const t of ['Chip stocks','Semiconductor stocks'])assert.ok(repeatsTaken(reserve.find(c=>c.title.startsWith(t)),selected),t);
  assert.equal(diagnostics.sessionsHeld,2);
 });
 
-test('when the company explains the session better than the market-wide headline, the company keeps it',()=>{
+test('when the market did not move after the market-wide headline, the company that explains the session keeps it',()=>{
  const runAt=new Date('2026-11-24T23:20:00Z');
+ // TP大型株100 only −0.5% (0.7×, ★1): the market did not move; TP半導体40 −8.5% and SKHY −11.2% did.
+ const calm={[TUE]:{...tuesday,nas100:{...tuesday.nas100,changePercent:-0.5}}};
  const items=[row('Nasdaq falls as Treasury yields climb','2026-11-24T11:00:00.000Z',{lane:'market'}),
   row('US opens probe into SK hynix over chip exports','2026-11-23T19:00:00.000Z',{tickers:['SKHY']})];
- const {selected,reserve,diagnostics}=selectDailyCandidates(feedOf(items),runAt,{moves});
- const preview=previewSelection({selected,reserve,diagnostics},moves);
- // TP大型株100 fits the market headline with ★2; SK hynix passes the two-move test with TP半導体40's ★4.
+ const {selected,reserve,diagnostics}=selectDailyCandidates(feedOf(items),runAt,{moves:calm});
+ const preview=previewSelection({selected,reserve,diagnostics},calm);
+ // SK hynix passes the two-move test with TP半導体40's ★4.
  assert.deepEqual(preview.selected.map(p=>[p.index,p.company??null,p.session,p.marketStars]),[['company','SKHY',TUE,4]]);
  assert.deepEqual(reserve.map(c=>c.title),['Nasdaq falls as Treasury yields climb']);
 });

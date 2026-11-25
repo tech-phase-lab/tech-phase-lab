@@ -14,6 +14,9 @@ export type StoryScope = 'market' | 'semis' | 'company';
 const MOVE = /\b(?:fell|falls?|falling|drops?|dropped|dropping|slides?|slid|sliding|sinks?|sank|sinking|tumbl(?:e|es|ed|ing)|plung(?:e|es|ed|ing)|slump(?:s|ed|ing)?|declin(?:e|es|ed|ing)|los(?:e|es|t|ing)|retreat(?:s|ed|ing)?|tank(?:s|ed|ing)?|crash(?:es|ed|ing)?|rall(?:y|ies|ied|ying)|ris(?:e|es|ing)|rose|jump(?:s|ed|ing)?|soar(?:s|ed|ing)?|surg(?:e|es|ed|ing)|gain(?:s|ed|ing)?|climb(?:s|ed|ing)?|rebound(?:s|ed|ing)?|(?:is|are|was|were|trades?|trading|moves?|moving|ends?|ended|closes?|closed|opens?|opened|edges?|edged) (?:down|up|lower|higher|mixed)|sell-?offs?|selloffs?)\b|急落|暴落|続落|反落|下落|急騰|上昇|反発|続伸/i;
 // Market-wide subjects: indexes, "stocks" / "Wall Street", broad tech and megacaps.
 const MARKET = /\b(?:Nasdaq(?:-100| 100| Composite)?|S&P(?: 500)?|Dow(?: Jones)?|Wall Street|Russell 2000|stock markets?|equity markets?|Magnificent Seven|Mag(?:nificent)? 7|megacaps?|big tech|VIX)\b|^(?:the )?(?:U\.?S\.? |US |American |global |world |Asian |European |tech(?:nology)? |growth |large-?cap )?(?:stocks?|equities|shares|markets?|stock futures|futures|indexes|indices)$|米国株|米株|株式市場|ナスダック|ダウ平均|ハイテク株|米国市場/i;
+// A headline that LEADS with the market as its subject ("Stocks give back part of Monday rally …", "U.S. stock futures slip …"):
+// market-wide even when more words follow before the move verb. "Shares of X" is one company, never this.
+const MARKET_LEAD = /^(?:the )?(?:U\.?S\.? |US |American |global |world |Asian |European |tech(?:nology)? |growth |large-?cap )?(?:stocks?|equities|stock markets?|markets?|stock futures|equity futures|futures|indexes|indices)\b(?! of\b)/i;
 // The semiconductor sector as a whole (never one company whose name contains "Semiconductor").
 const SEMIS = /\b(?:chip ?stocks?|chip shares|chip ?makers?|chip sector|chip(?:-making)? equipment|semiconductor (?:stocks?|shares|sector|index|industry|equipment|tariffs?|names)|semis|SOX|Philadelphia Semiconductor|AI (?:chip|infrastructure|hardware) (?:stocks?|shares|names|sector|trade)|memory (?:chip )?(?:stocks?|makers|prices|shortage)|HBM (?:shortage|prices|supply)|export (?:controls?|curbs?|restrictions?|bans?|rules?)|chip (?:exports?|curbs?|tariffs?|bans?))\b|半導体株|半導体関連株|半導体指数|半導体業界|半導体関税|AIインフラ株|輸出規制|対中規制|半導体規制/i;
 // Market-wide drivers: central bank, rates, macro data, trade policy, broad AI spending.
@@ -35,14 +38,14 @@ export function storyScope(title: string): StoryScope {
   const t = typeof title === 'string' ? title.normalize('NFKC').replace(COMPANY_SEMICONDUCTOR, 'Company') : '';
   const subject = headlineSubject(t);
   if (subject) {
-    if (MARKET.test(subject)) return 'market';
+    if (MARKET.test(subject) || MARKET_LEAD.test(subject)) return 'market';
     if (SEMIS.test(subject)) return 'semis';
     if (namedCompanies(subject).length) return 'company';
     if (MACRO.test(subject)) return 'market';
     return 'company';
   }
   if (namedCompanies(title).length) return 'company';
-  if (MARKET.test(t)) return 'market';
+  if (MARKET.test(t) || MARKET_LEAD.test(t)) return 'market';
   if (SEMIS.test(t)) return 'semis';
   if (MACRO.test(t)) return 'market';
   return 'company';
