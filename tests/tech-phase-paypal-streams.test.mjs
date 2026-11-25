@@ -32,3 +32,19 @@ test('non-JSON provider response is cancelled without exposing its body',async()
  await assert.rejects(api.get('I-ABCDEFGHIJKL'),{message:'PAYPAL_UNAVAILABLE'});
  assert.equal(cancelled,1);assert.equal(response.body.locked,false);
 });
+test('PAYPAL_UNAVAILABLE carries only the failing stage and bare HTTP status',async()=>{
+ for(const status of [401,403,422,429,500,503]){
+  const api=createPaypal(config,async url=>url.endsWith('/token')?Response.json({access_token:'fixture',expires_in:300}):new Response('private-provider-data',{status}));
+  const error=await api.get('I-ABCDEFGHIJKL').catch(e=>e);
+  assert.equal(error.message,'PAYPAL_UNAVAILABLE');assert.deepEqual({...error.detail},{stage:'request',status});
+ }
+ const auth=await createPaypal(config,async()=>new Response('private-token-error',{status:401})).get('I-ABCDEFGHIJKL').catch(e=>e);
+ assert.deepEqual({message:auth.message,...auth.detail},{message:'PAYPAL_UNAVAILABLE',stage:'auth',status:401});
+ const slow=await createPaypal(config,async url=>{if(url.endsWith('/token'))return Response.json({access_token:'fixture',expires_in:300});throw new DOMException('timed out','TimeoutError');}).get('I-ABCDEFGHIJKL').catch(e=>e);
+ assert.deepEqual({message:slow.message,...slow.detail},{message:'PAYPAL_UNAVAILABLE',stage:'timeout'});
+ const down=await createPaypal(config,async()=>{throw Error('private-network-detail');}).get('I-ABCDEFGHIJKL').catch(e=>e);
+ assert.deepEqual({message:down.message,...down.detail},{message:'PAYPAL_UNAVAILABLE',stage:'network'});
+ const badJson=await createPaypal(config,async url=>url.endsWith('/token')?Response.json({access_token:'fixture',expires_in:300}):new Response('private',{headers:{'content-type':'text/html'}})).get('I-ABCDEFGHIJKL').catch(e=>e);
+ assert.deepEqual({message:badJson.message,...badJson.detail},{message:'PAYPAL_UNAVAILABLE',stage:'response',status:200});
+ assert.doesNotMatch(JSON.stringify([auth.detail,slow.detail,down.detail,badJson.detail]),/private|fixture|I-ABC/);
+});
