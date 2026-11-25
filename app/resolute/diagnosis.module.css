@@ -433,3 +433,4 @@
 .diagActions{display:flex;flex-direction:column;gap:12px;text-align:center}
 .diagActions>.muted{font-size:12px}
 .shellBody{display:contents}
+.diag .card[aria-labelledby=question-heading]{padding-bottom:22px}
