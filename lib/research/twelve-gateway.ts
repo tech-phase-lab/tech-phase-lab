@@ -32,14 +32,14 @@ const sharedMeter = unstable_cache(meterCallback, ["twelve-meter-v1"], { revalid
 
 /** The monitor's allocator (scripts/research/twelve_allocator.py, POST /twelve/lease) with the site's existing monitor address and server
  * token (RESEARCH_MONITOR_URL / RESEARCH_MONITOR_TOKEN). null: not configured or not reachable. */
-async function lease(cost: number, tier: Tier): Promise<boolean | null> {
+async function lease(cost: number, tier: Tier, caller?: string): Promise<boolean | null> {
   const base = process.env.RESEARCH_MONITOR_URL, token = process.env.RESEARCH_MONITOR_TOKEN;
   if (!base || !token) return null;
   try {
     const url = new URL(base);
     if (url.username || url.password || (url.protocol !== "https:" && !(process.env.NODE_ENV !== "production" && ["localhost", "127.0.0.1"].includes(url.hostname)))) return null;
     url.pathname = `${url.pathname.replace(/\/$/, "")}/twelve/lease`; url.search = ""; url.hash = "";
-    const response = await fetch(url, { method: "POST", headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" }, body: JSON.stringify({ cost, tier }), cache: "no-store", signal: AbortSignal.timeout(1_500) });
+    const response = await fetch(url, { method: "POST", headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" }, body: JSON.stringify({ cost, tier, ...(caller ? { caller } : {}) }), cache: "no-store", signal: AbortSignal.timeout(1_500) });
     if (!response.ok) return null;
     const body = await response.json().catch(() => null) as { ok?: unknown; granted?: unknown } | null;
     return body?.ok === true ? body.granted === true : null;
@@ -60,9 +60,10 @@ export async function sharedMeterUsage(): Promise<number | null> {
   try { return (await sharedMeter(Math.floor(Date.now() / METER_SLOT_MS))).used; } catch { return null; }
 }
 
-/** Throws TwelveBudgetError unless the credits may be spent now under `tier`. */
-export async function reserveCredits(cost: number, tier: Tier = "user") {
-  if (!await governor.acquire(cost, tier)) throw new TwelveBudgetError();
+/** Throws TwelveBudgetError unless the credits may be spent now under `tier`. `caller` (the provider path) labels the allocator's
+ * per-minute summary, the measurement of credits by caller. */
+export async function reserveCredits(cost: number, tier: Tier = "user", caller?: string) {
+  if (!await governor.acquire(cost, tier, caller)) throw new TwelveBudgetError();
 }
 /** Call after a 429 from the provider. */
 export const providerLimited = () => governor.limited();
@@ -71,7 +72,7 @@ export const providerLimited = () => governor.limited();
 export async function twelveCall(path: string, params: Record<string, string>, { tier = "user", timeoutMs = 12_000 }: { tier?: Tier; timeoutMs?: number } = {}): Promise<unknown> {
   const key = process.env.TWELVE_DATA_API_KEY;
   if (!key) throw new Error("not-configured");
-  await reserveCredits(creditCost(path, params), tier);
+  await reserveCredits(creditCost(path, params), tier, path);
   const url = new URL(`${BASE()}/${path}`);
   for (const [k, v] of Object.entries(params)) url.searchParams.set(k, v);
   url.searchParams.set("apikey", key);

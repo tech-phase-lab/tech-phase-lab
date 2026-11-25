@@ -14,13 +14,16 @@ const STATEMENTS_MAX_AGE = 6.5 * 86_400_000;
 /** `filings`: companies whose SEC figures were read into the comparison cache this minute (no provider credits). */
 export type WarmReport = { minute: string; tickers: string[]; spent: number; skipped: string[]; usedAtStart: number | null; filings?: number };
 
-export async function warmMinute(now = Date.now()): Promise<WarmReport> {
+/** `alreadySpent`: credits this minute's request has just asked for elsewhere (the レバETF snapshot, read first): counted as used even if the
+ * provider's meter has not seen them yet, so the comparison yields that much of its room. */
+export async function warmMinute(now = Date.now(), alreadySpent = 0): Promise<WarmReport> {
   const report: WarmReport = { minute: new Date(now).toISOString().slice(0, 16), tickers: [], spent: 0, skipped: [], usedAtStart: null };
   if (!providerConfigured()) return report;
   const universe = warmUniverse(await comparisonDirectory(), providers.map(p => p.ticker));
   const due = tickersForMinute(universe, now);
   report.tickers = due.map(d => d.ticker);
   let used = report.usedAtStart = await minuteUsage(0);
+  if (used !== null) used += alreadySpent;
   const spend = async (ticker: string, kind: string, cost: number, run: () => Promise<unknown>) => {
     if (!hasRoom(used, cost, WARM_CEILING)) { report.skipped.push(`${ticker}:${kind}`); return; }
     used! += cost; report.spent += cost;

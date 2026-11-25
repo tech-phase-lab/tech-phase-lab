@@ -5,6 +5,7 @@ import {layoutCompanyNetwork,networkLayers,networkEdgePath} from '@/lib/research
 import type {CompanyNetwork,NetworkEdge,NetworkMode} from '@/lib/research/company-network';
 import {GatedChainMap} from './gated-chain-map';
 import {CHAIN_NOTE} from './stock-chain-map';
+import {groupSources,SourceList,useSourcesSlot} from './source-list';
 import styles from './company-network.module.css';
 type Props={graph:CompanyNetwork;lang:'ja'|'en'};
 export function CompanyNetworkMap(props:Props){
@@ -27,6 +28,11 @@ export function ChainCompanyNetworkMap({graph,lang}:Props){
  const primary=(edges:NetworkEdge[])=>edges.find(e=>e.kind==='supply'&&e.to===graph.root)??edges.find(e=>e.kind==='supply'&&e.from===graph.root)??edges.find(e=>e.kind==='competition')??edges.find(e=>e.from===graph.root||e.to===graph.root)??edges[0];
  const tag=(e:NetworkEdge)=>({competition:t('競合','Competitor'),upstream:t('供給','Supplier'),downstream:t('納入','Customer'),indirect:t('間接','Indirect'),partner:e.evidence.some(v=>v.label.ja.includes('出資'))?t('出資','Investment'):t('提携','Partner')}[tone(e)]);
  const {positions,height,layers}=layoutCompanyNetwork(focus.nodes,width);
+ const sources=useMemo(()=>groupSources(focus.edges.flatMap(e=>e.evidence.flatMap(v=>v.sources.map(s=>({url:s.url,label:s.label,date:v.reviewedOn,dateKind:'checked' as const,quote:v.evidence_quote,
+  row:{who:`${byId.get(e.from)?.ticker??byId.get(e.from)?.name} × ${byId.get(e.to)?.ticker??byId.get(e.to)?.name}`,tone:{upstream:'up',downstream:'down',partner:'tie',indirect:'far',competition:'rival'}[tone(e)],tag:tag(e),text:v.label[lang]||v.label.ja}}))))),
+  // eslint-disable-next-line react-hooks/exhaustive-deps -- tone, tag and byId only read graph and lang
+  [focus,graph,lang]);
+ const merged=useSourcesSlot(sources);
  const edgePath=(edge:NetworkEdge,index:number)=>{const peers=focus.edges.filter(e=>(e.from===edge.from&&e.to===edge.to)||(e.from===edge.to&&e.to===edge.from));const shift=(peers.indexOf(edge)-(peers.length-1)/2)*5;return networkEdgePath({...positions[edge.from],x:positions[edge.from].x+shift},{...positions[edge.to],x:positions[edge.to].x+shift},index%4*2)};
  const groups=new Map<string,NetworkEdge[]>();
  for(const n of focus.nodes){if(n.id===graph.root)continue;const edges=focus.edges.filter(e=>e.from===n.id||e.to===n.id);if(edges.length)groups.set(n.id,edges);}
@@ -55,8 +61,7 @@ export function ChainCompanyNetworkMap({graph,lang}:Props){
    </li>)}</ul></section>})}</div>
    <div className={styles.allControl}><button type="button" onClick={()=>setMode(mode==='all'?'direct':'all')}>{mode==='all'?t('直接の関係に戻る','Back to direct relationships'):t('全体を見る','See everything')}</button></div>
   </>}
-  <p className={styles.footnote}>{t(CHAIN_NOTE.ja,CHAIN_NOTE.en)}</p>
-  {/* Every source, quote and date in one closed 「出典」 at the very bottom (owner, Nov 25). */}
-  {focus.edges.length>0&&<details className={styles.evidence} data-chain-sources=""><summary>{t('出典','Sources')}</summary>{focus.edges.map(e=><div key={e.id}><strong>{byId.get(e.from)?.ticker??byId.get(e.from)?.name} × {byId.get(e.to)?.ticker??byId.get(e.to)?.name}</strong>{e.evidence.map((v,i)=><div key={i}><p className={styles.relationshipText}>{v.label[lang]||v.label.ja}</p><time dateTime={v.reviewedOn}>{v.reviewedOn}</time><blockquote>{v.evidence_quote}</blockquote>{v.sources.map(s=><a key={s.url} href={s.url} target="_blank" rel="noreferrer">{t('公式資料を開く ↗','Open official source ↗')}</a>)}</div>)}</div>)}</details>}
+  {/* Every source once, with the companies it backs; on the stock page it joins the one 「出典」 below the profile (owner, Nov 25). */}
+  {!merged&&<><p className={styles.footnote}>{t(CHAIN_NOTE.ja,CHAIN_NOTE.en)}</p><SourceList blocks={sources} lang={lang}/></>}
  </section>;
 }

@@ -1,0 +1,161 @@
+{
+  "root": {
+    "ticker": "CR",
+    "name": "クレーン・カンパニー",
+    "cik": 1944013,
+    "name_en": "Crane Company"
+  },
+  "rows": [
+    {
+      "ja": "分離・事業の買い取り",
+      "en": "Separation & business purchase",
+      "above": true
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "PH",
+    "FLS",
+    "DOV"
+  ],
+  "companies": [
+    {
+      "id": "CXT",
+      "ticker": "CXT",
+      "name": "クレーンNXT",
+      "name_en": "Crane NXT",
+      "sub": "決済・通貨技術",
+      "sub_en": "Payment & currency tech",
+      "sub_short": "決済技術",
+      "sub_short_en": "Payment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2023年4月に旧Crane Holdingsが2社に分かれた相手。分離・移行サービスなどの契約が続く",
+          "text_en": "Sister company from the April 2023 split of Crane Holdings; separation and transition services agreements continue",
+          "source": {
+            "label": "Crane NXT 10-K(2025年度)",
+            "label_en": "Crane NXT 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/25445/000002544526000009/cxt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "We and Crane Company entered into certain agreements in connection with the separation transaction, including a separation and distribution agreement, a transition services agreement"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BKR",
+      "ticker": "BKR",
+      "name": "ベーカー・ヒューズ",
+      "name_en": "Baker Hughes",
+      "sub": "油田サービス",
+      "sub_en": "Oilfield services",
+      "sub_short": "油田",
+      "sub_short_en": "Oilfield",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Baker Hughesから計測機器事業(Druck・Panametricsなど)を約11.5億ドルで買い取った(2026年1月)",
+          "text_en": "Bought Baker Hughes' sensing business (Druck, Panametrics and more) for about $1.15 billion (January 2026)",
+          "source": {
+            "label": "Baker Hughes 10-K(2025年度)",
+            "label_en": "Baker Hughes 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1701605/000170160526000007/bkr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-05",
+            "quote": "During 2025, the Company entered into an agreement with Crane Company, a diversified manufacturer of engineered industrial products, to sell its Precision Sensors & Instrumentation (\"PSI\") business"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PH",
+      "ticker": "PH",
+      "name": "パーカー・ハネフィン",
+      "name_en": "Parker-Hannifin",
+      "sub": "油圧・航空機部品",
+      "sub_en": "Motion control & aerospace",
+      "sub_short": "油圧",
+      "sub_short_en": "Motion",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Parker-Hannifinが10-Kで、航空機部品の主な競合の筆頭に挙げる",
+          "text_en": "Parker-Hannifin lists it first among primary competitors in aerospace products",
+          "source": {
+            "label": "Parker-Hannifin 10-K(2026年6月期)",
+            "label_en": "Parker-Hannifin 10-K (FY ended Jun 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/76334/000007633426000105/ph-20260630.htm",
+            "level": "official",
+            "date": "2026-08-21",
+            "quote": "primary global competitors for these products include Crane Co., Eaton Corporation plc, Honeywell Aerospace Inc., Moog Inc., RTX Corporation, Safran S.A., Senior plc, Triumph Group, Inc., and Woodward, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FLS",
+      "ticker": "FLS",
+      "name": "フローサーブ",
+      "name_en": "Flowserve",
+      "sub": "ポンプ・バルブ",
+      "sub_en": "Pumps & valves",
+      "sub_short": "バルブ",
+      "sub_short_en": "Valves",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Flowserveが10-Kで、バルブ業界の大手競合として挙げる",
+          "text_en": "Flowserve names it among the largest valve industry competitors",
+          "source": {
+            "label": "Flowserve 10-K(2025年度)",
+            "label_en": "Flowserve 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/30625/000003062526000003/fls-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Some of the largest valve industry competitors include Emerson Electric Co., Cameron International Corp. (a Schlumberger company), Baker Hughes, Rotork plc, Valmet, IMI Plc and Crane Co."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DOV",
+      "ticker": "DOV",
+      "name": "ドーバー",
+      "name_en": "Dover",
+      "sub": "産業機器",
+      "sub_en": "Industrial equipment",
+      "sub_short": "産業機器",
+      "sub_short_en": "Industrial",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Doverが10-Kで、燃料・クリーンエネルギー機器の競合として挙げる(Cryoflo)",
+          "text_en": "Dover names it a clean energy and fueling competitor (Cryoflo)",
+          "source": {
+            "label": "Dover 10-K(2025年度)",
+            "label_en": "Dover 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/29905/000002990526000009/dov-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Dixon Valve & Coupling Company, Crane Company (Cryoflo)"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

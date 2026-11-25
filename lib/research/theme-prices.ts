@@ -40,7 +40,7 @@ async function fetchChunk(symbols: string[], key: string): Promise<CloseSeries[]
   url.searchParams.set("apikey", key);
   // The site's share of the plan's minute (lib/research/twelve-budget.ts): a refused or rate-limited chunk fails like any other and is not
   // cached; it is never retried (a retry spends the credits again). The cache below keeps the last reading for everyone.
-  await reserveCredits(symbols.length);
+  await reserveCredits(symbols.length, "user", "theme-series");
   const response = await fetch(url, { cache: "no-store", signal: AbortSignal.timeout(20_000) });
   if (response.status === 429) { providerLimited(); throw new Error("Twelve Data 429"); }
   if (!response.ok) throw new Error(`Twelve Data ${response.status}`);

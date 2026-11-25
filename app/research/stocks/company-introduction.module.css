@@ -13,13 +13,7 @@
 .mapCard { --accent: #edc18a; padding: 18px 16px 12px; background: linear-gradient(135deg, #201f20, #101923 60%); }
 .mapCard[data-topic="relationships"] { --accent: #82ccda; background: linear-gradient(135deg, #122830, #101923 60%); }
 .introduction summary:focus-visible, .introduction a:focus-visible { outline: 2px solid #8ed7c0; outline-offset: 3px; }
-.sources { color: #a2b5c1; font-size: 12px; line-height: 1.7; }
-.sources summary { cursor: pointer; width: fit-content; min-height: 36px; padding: 7px 0; }
 .mapCard p { color: #c7d4dd; font-size: 14px; line-height: 1.8; }
-.sources { margin-top: 14px; }
-.sources p { margin: 5px 0; }
-.sources ul { margin: 5px 0 0; padding-left: 18px; }
-.sources a { color: #a8cbe5; overflow-wrap: anywhere; }
 @media (max-width: 1050px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .maps { grid-template-columns: minmax(0, 1fr); } }
 @media (max-width: 600px) {
   .introduction { padding: 18px 12px 12px; }

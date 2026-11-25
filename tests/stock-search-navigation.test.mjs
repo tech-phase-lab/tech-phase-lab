@@ -31,6 +31,7 @@ function harness(t, initial='/research/stocks?q=VS') {
     if(name==='./use-stock-history')return {useStockHistory:()=>({history:[],remember:()=>{},clear:()=>{}})};
     if(name==='@/lib/research/stock-search-navigation')return {stockSearchUrl,stockSearchReturnPosition};
     if(name==='react/jsx-runtime')return require(name);
+    if(name==='./source-list')return {SOURCES_NOTE:{ja:'',en:''}};
     return {default:()=>null,MarketWorkspace:()=>null};
   },mod,mod.exports);
   function nodes(node=tree){if(!node||typeof node!=='object')return [];return [node,...[].concat(node.props?.children??[]).flat(Infinity).filter(child=>child!=null).flatMap(child=>nodes(child))];}

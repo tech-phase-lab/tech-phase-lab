@@ -2,6 +2,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { CHAIN_KINDS, chainAbove, chainCounts, chainGroup, chainKinds, chainText } from "@/lib/research/chain-map-core";
 import type { ChainCompany, ChainKind, ChainMapData, ChainSource, ChainTone } from "@/lib/research/chain-map-core";
+import { groupSources, needsPressMark, SourceList, useSourcesSlot } from "./source-list";
+import type { SourceBlock, SourceInput, SourceRow } from "./source-list";
 import styles from "./stock-chain-map.module.css";
 
 type Line = { d: string; tone: ChainTone; on: boolean };
@@ -18,17 +20,6 @@ function foldRivals(members: ChainCompany[], main: string[], keep: number) {
   const rest = members.filter(company => !main.includes(company.id));
   const shown = [...first, ...rest.slice(0, Math.max(0, keep - first.length))];
   return { shown, more: members.filter(company => !shown.includes(company)) };
-}
-
-function Source({ source, lang }: { source: ChainSource; lang: "ja" | "en" }) {
-  const ja = lang === "ja";
-  const note = ja ? source.note : source.note_en;
-  return <div className={styles.src}>
-    {source.date && <span>{ja ? "発表日" : "Published"} {source.date.replace(/-/g, "/")}</span>}
-    <span><a href={source.url} target="_blank" rel="noopener noreferrer">{ja ? source.label : source.label_en}</a>{source.level === "press" && <> <em>{ja ? "報道" : "Media report"}</em></>}</span>
-    {source.quote && <q lang="en">{source.quote}</q>}
-    {note && <span>{note}</span>}
-  </div>;
 }
 
 /** A card is one company and its one-line text; every source is gathered in the one 「出典」 at the bottom (owner, Nov 25). */
@@ -49,24 +40,20 @@ function Card({ company, lang, root, anchor = true }: { company: ChainCompany; l
 /** The one footer line under every relationship map (owner, Nov 25). */
 export const CHAIN_NOTE = { ja: "公式資料で確認できた関係のみ。投資判断を勧めるものではありません。", en: "Only relationships confirmed in official materials. Not investment advice." } as const;
 
-/** Every relation's source, quote and date in one closed 「出典」 at the very bottom of the map (owner, Nov 25). */
-function AllSources({ data, lang }: { data: ChainMapData; lang: "ja" | "en" }) {
+/** Every relation's and far link's source as blocks: one per document and quote, listing each company it backs (owner, Nov 25). */
+export function chainSourceBlocks(data: ChainMapData, lang: "ja" | "en"): SourceBlock[] {
   const ja = lang === "ja";
   const byId = new Map(data.companies.map(company => [company.id, company]));
-  const rows = [
-    ...data.companies.flatMap(company => company.relations.map(relation => ({ who: company.ticker, type: relation.type as ChainTone,
-      text: standardRival(relation, data.root, ja) ? "" : ja ? relation.text : relation.text_en, source: relation.source }))),
-    ...data.far.map(link => ({ who: `${byId.get(link.from)?.ticker ?? link.from} × ${byId.get(link.to)?.ticker ?? link.to}`, type: "far" as ChainTone,
-      text: ja ? link.text : link.text_en, source: link.source })),
-  ];
-  if (!rows.length) return null;
-  return <details className={styles.allSources} data-chain-sources="">
-    <summary>{ja ? "出典" : "Sources"} <small>{ja ? `${rows.length}件` : rows.length}</small></summary>
-    <ol>{rows.map((row, index) => <li key={index} className={styles.srcBlock}>
-      <span><b>{row.who}</b> <span className={styles.tg} data-tone={row.type}>{chainText(row.type, "tag", lang)}</span>{row.text ? ` ${row.text}` : ""}</span>
-      <Source source={row.source} lang={lang} />
-    </li>)}</ol>
-  </details>;
+  const input = (source: ChainSource, row: SourceRow): SourceInput => {
+    const label = ja ? source.label : source.label_en;
+    return { url: source.url, label, press: source.level === "press" && needsPressMark(label, lang), date: source.date, dateKind: "published", quote: source.quote, note: (ja ? source.note : source.note_en) || undefined, row };
+  };
+  return groupSources([
+    ...data.companies.flatMap(company => company.relations.map(relation => input(relation.source, { who: company.ticker, tone: relation.type, tag: chainText(relation.type, "tag", lang),
+      text: standardRival(relation, data.root, ja) ? "" : ja ? relation.text : relation.text_en }))),
+    ...data.far.map(link => input(link.source, { who: `${byId.get(link.from)?.ticker ?? link.from} × ${byId.get(link.to)?.ticker ?? link.to}`, tone: "far", tag: chainText("far", "tag", lang),
+      text: ja ? link.text : link.text_en })),
+  ]);
 }
 
 /** `sample`: the PRO feature tour leaves out the rival chips (the map shows them) and numbers the map heading 05; the stock page is unchanged. */
@@ -82,6 +69,8 @@ export function StockChainMap({ data, lang, sample = false }: { data: ChainMapDa
   const root = data.root.ticker;
   const byId = useMemo(() => new Map(data.companies.map(company => [company.id, company])), [data]);
   const counts = chainCounts(data);
+  const sources = useMemo(() => chainSourceBlocks(data, lang), [data, lang]);
+  const merged = useSourcesSlot(sources);
   const picked = sel ? byId.get(sel) ?? null : null;
   const related = (id: string) => !!sel && (id === sel || data.far.some(link => (link.from === sel && link.to === id) || (link.to === sel && link.from === id)));
 
@@ -218,7 +207,8 @@ export function StockChainMap({ data, lang, sample = false }: { data: ChainMapDa
         </div>}
       </div>
     </div>
-    <p className={styles.note}>{t(CHAIN_NOTE.ja, CHAIN_NOTE.en)}</p>
-    <AllSources data={data} lang={lang} />
+    {/* On the stock page the one 「出典」 and the one note sit below the profile (owner, Nov 25); the PRO tour keeps both here. */}
+    {!merged && <><p className={styles.note}>{t(CHAIN_NOTE.ja, CHAIN_NOTE.en)}</p>
+      <SourceList blocks={sources} lang={lang} /></>}
   </section>;
 }

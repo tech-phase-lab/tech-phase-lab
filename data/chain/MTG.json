@@ -1,0 +1,215 @@
+{
+  "root": {
+    "ticker": "MTG",
+    "name": "MGICインベストメント",
+    "cik": 876437,
+    "name_en": "MGIC Investment"
+  },
+  "rows": [
+    {
+      "ja": "保険の需要元(住宅金融公社)",
+      "en": "Demand source (GSEs)",
+      "above": true
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "ESNT",
+    "ACT",
+    "NMIH",
+    "RDN",
+    "ACGL"
+  ],
+  "companies": [
+    {
+      "id": "FNMA",
+      "ticker": "FNMA",
+      "name": "ファニーメイ",
+      "name_en": "Fannie Mae",
+      "sub": "住宅金融",
+      "sub_en": "Housing finance",
+      "sub_short": "住宅金融",
+      "sub_short_en": "Mortgage",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Fannie Maeが10-Kで、住宅ローン保険の取引先として最大の割合を占める会社に挙げる(19%)",
+          "text_en": "Fannie Mae lists MGIC as its largest mortgage insurer counterparty (19% of coverage)",
+          "source": {
+            "label": "Fannie Mae 10-K(2025年度)",
+            "label_en": "Fannie Mae 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/310522/000031052226000015/fnm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Counterparty: (1) Mortgage Guaranty Insurance Corp. 19 % 19 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "FMCC",
+      "ticker": "FMCC",
+      "name": "フレディマック",
+      "name_en": "Freddie Mac",
+      "sub": "住宅金融",
+      "sub_en": "Housing finance",
+      "sub_short": "住宅金融",
+      "sub_short_en": "Mortgage",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Freddie Macが10-Kで、保険の割合が最も大きい保険会社の一社に挙げる(18%)",
+          "text_en": "Freddie Mac lists MGIC as its top mortgage insurer counterparty (18% of coverage)",
+          "source": {
+            "label": "Freddie Mac 10-K(2025年度)",
+            "label_en": "Freddie Mac 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1026214/000102621426000021/fmcc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Mortgage Insurer December 31, 2025 Mortgage Guaranty Insurance Corporation 18 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ESNT",
+      "ticker": "ESNT",
+      "name": "エッセント・グループ",
+      "name_en": "Essent Group",
+      "sub": "住宅ローン保険",
+      "sub_en": "Mortgage insurance",
+      "sub_short": "保険",
+      "sub_short_en": "Mortgage",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Essentが10-Kで、GSE認定の民間住宅ローン保険6社の一社に挙げる",
+          "text_en": "Essent lists it among the six GSE-approved private mortgage insurers",
+          "source": {
+            "label": "Essent 10-K(2025年度)",
+            "label_en": "Essent 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1448893/000144889326000009/esnt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "The private mortgage insurance industry currently consists of six active private mortgage insurers approved by the GSEs: Essent Guaranty, Arch Mortgage Insurance Company, Enact Mortgage Insurance Corporation, Mortgage Guaranty Insurance Corporation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ACT",
+      "ticker": "ACT",
+      "name": "イナクト・ホールディングス",
+      "name_en": "Enact Holdings",
+      "sub": "住宅ローン保険",
+      "sub_en": "Mortgage insurance",
+      "sub_short": "保険",
+      "sub_short_en": "Mortgage",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Enactが10-Kで、民間住宅ローン保険の競合として挙げる",
+          "text_en": "Enact names it a private mortgage insurance competitor",
+          "source": {
+            "label": "Enact 10-K(2025年度)",
+            "label_en": "Enact 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1823529/000182352926000060/act-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Private mortgage insurance competitors include Arch Capital Group Ltd., Essent Group Ltd., MGIC Investment Corporation, NMI Holdings, Inc. and Radian Group Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NMIH",
+      "ticker": "NMIH",
+      "name": "NMIホールディングス",
+      "name_en": "NMI Holdings",
+      "sub": "住宅ローン保険",
+      "sub_en": "Mortgage insurance",
+      "sub_short": "保険",
+      "sub_short_en": "Mortgage",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "NMIが10-Kで、競争の激しい民間住宅ローン保険の参加者として挙げる",
+          "text_en": "NMI names it among the approved participants in a highly competitive market",
+          "source": {
+            "label": "NMI Holdings 10-K(2025年度)",
+            "label_en": "NMI Holdings 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1547903/000154790326000011/nmih-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "The private MI industry is highly competitive and currently consists of six approved participants, including us, Arch Capital Group Ltd., Essent Group Ltd. (Essent), Enact Holdings, Inc., MGIC Investment Corporation (MGIC), and Radian Group Inc. (Radian)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RDN",
+      "ticker": "RDN",
+      "name": "レイディアン・グループ",
+      "name_en": "Radian Group",
+      "sub": "住宅ローン保険",
+      "sub_en": "Mortgage insurance",
+      "sub_short": "保険",
+      "sub_short_en": "Mortgage",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Radianが10-Kで、GSE認定のほかの参加者として挙げる",
+          "text_en": "Radian lists it among the other GSE-approved participants",
+          "source": {
+            "label": "Radian 10-K(2025年度)",
+            "label_en": "Radian 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/890926/000119312526061383/rdn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "▪ Enact Holdings, Inc.; ▪ Essent Group Ltd.; ▪ MGIC Investment Corporation; and ▪ NMI Holdings, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ACGL",
+      "ticker": "ACGL",
+      "name": "アーチ・キャピタル・グループ",
+      "name_en": "Arch Capital Group",
+      "sub": "保険・再保険",
+      "sub_en": "Insurance & reinsurance",
+      "sub_short": "保険",
+      "sub_short_en": "Insurance",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Arch Capitalが10-Kで、住宅ローン保険の競合として挙げる",
+          "text_en": "Arch Capital names it a mortgage insurance competitor",
+          "source": {
+            "label": "Arch Capital 10-K(2025年度)",
+            "label_en": "Arch Capital 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/947484/000094748426000017/acgl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "In our mortgage business, we compete with insurers and reinsurers that provide mortgage insurance, including the U.S mortgage insurance subsidiaries of Essent Group Ltd., Enact Holdings Inc., MGIC Investment Corp., NMI Holdings Inc. and Radian Group Inc."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,192 @@
+{
+  "root": {
+    "ticker": "FIZZ",
+    "name": "ナショナル・ビバレッジ",
+    "cik": 69891,
+    "name_en": "National Beverage"
+  },
+  "rows": [
+    {
+      "ja": "供給元(上流)",
+      "en": "Suppliers (upstream)",
+      "above": true
+    },
+    {
+      "ja": "経営契約",
+      "en": "Management agreement"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "KO",
+    "PEP",
+    "KDP",
+    "ZVIA"
+  ],
+  "companies": [
+    {
+      "id": "AMBP",
+      "ticker": "AMBP",
+      "name": "アルダー・メタル・パッケージング",
+      "name_en": "Ardagh Metal Packaging",
+      "sub": "飲料缶",
+      "sub_en": "Beverage cans",
+      "sub_short": "飲料缶",
+      "sub_short_en": "Cans",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Ardagh Metal Packagingが20-Fで、主要顧客の一社に挙げる(製品の8割超が缶入り)",
+          "text_en": "Ardagh Metal Packaging lists it among its major customers (over 80% of its drinks are sold in cans)",
+          "source": {
+            "label": "Ardagh Metal Packaging 20-F(2025年度)",
+            "label_en": "Ardagh Metal Packaging 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1845097/000110465926024068/ambp-20251231x20f.htm",
+            "level": "official",
+            "date": "2026-03-05",
+            "quote": "Some of our major customers include AB InBev, Carlsberg (including the recently acquired Britvic), Celsius Holdings (which recently acquired Alani Nu and Rockstar Energy), Cidade Imperial, Coca-Cola, Heineken, Keuring Dr. Pepper, Mark Anthony Brands, Molson Coors, Monster Beverage, National Beverage Company and PepsiCo, among others."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CMAdvisors",
+      "ticker": "Corporate Management Advisors",
+      "name": "コーポレート・マネジメント・アドバイザーズ",
+      "name_en": "Corporate Management Advisors",
+      "sub": "経営サービス",
+      "sub_en": "Management services",
+      "sub_short": "経営支援",
+      "sub_short_en": "Mgmt",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "会長兼CEOが保有する会社と経営契約を結び、年1,180万ドルの手数料を払う(2026年5月期)",
+          "text_en": "Management agreement with a company owned by its Chairman and CEO; $11.8 million in fees (FY2026)",
+          "source": {
+            "label": "National Beverage 10-K(2026年5月期)",
+            "label_en": "National Beverage 10-K (FY ended May 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/69891/000143774926022315/fizz20260502_10k.htm",
+            "level": "official",
+            "date": "2026-07-01",
+            "quote": "Pursuant to a management agreement, we incurred fees to Corporate Management Advisors, Inc. (\"CMA\") of $11.8 million and $12.0 million for Fiscal 2026 and Fiscal 2025, respectively."
+          }
+        }
+      ]
+    },
+    {
+      "id": "KO",
+      "ticker": "KO",
+      "name": "コカ・コーラ",
+      "name_en": "Coca-Cola",
+      "sub": "飲料",
+      "sub_en": "Beverages",
+      "sub_short": "飲料",
+      "sub_short_en": "Drinks",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "10-Kで、業界を支配する大手の競合として名指し",
+          "text_en": "Named in its 10-K as a larger competitor that dominates the beverage industry",
+          "source": {
+            "label": "National Beverage 10-K(2026年5月期)",
+            "label_en": "National Beverage 10-K (FY ended May 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/69891/000143774926022315/fizz20260502_10k.htm",
+            "level": "official",
+            "date": "2026-07-01",
+            "quote": "Several competitors, including those that dominate the beverage industry, such as The Coca-Cola Company, PepsiCo, Keurig Dr. Pepper, and Nestlé S.A., are larger and have greater financial resources."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PEP",
+      "ticker": "PEP",
+      "name": "ペプシコ",
+      "name_en": "PepsiCo",
+      "sub": "飲料・スナック",
+      "sub_en": "Beverages & snacks",
+      "sub_short": "飲料",
+      "sub_short_en": "Drinks",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "10-Kで、業界を支配する大手の競合として名指し",
+          "text_en": "Named in its 10-K as a larger competitor that dominates the beverage industry",
+          "source": {
+            "label": "National Beverage 10-K(2026年5月期)",
+            "label_en": "National Beverage 10-K (FY ended May 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/69891/000143774926022315/fizz20260502_10k.htm",
+            "level": "official",
+            "date": "2026-07-01",
+            "quote": "Several competitors, including those that dominate the beverage industry, such as The Coca-Cola Company, PepsiCo, Keurig Dr. Pepper, and Nestlé S.A., are larger and have greater financial resources."
+          }
+        }
+      ]
+    },
+    {
+      "id": "KDP",
+      "ticker": "KDP",
+      "name": "キューリグ・ドクターペッパー",
+      "name_en": "Keurig Dr Pepper",
+      "sub": "飲料",
+      "sub_en": "Beverages",
+      "sub_short": "飲料",
+      "sub_short_en": "Drinks",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "10-Kで、業界を支配する大手の競合として名指し",
+          "text_en": "Named in its 10-K as a larger competitor that dominates the beverage industry",
+          "source": {
+            "label": "National Beverage 10-K(2026年5月期)",
+            "label_en": "National Beverage 10-K (FY ended May 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/69891/000143774926022315/fizz20260502_10k.htm",
+            "level": "official",
+            "date": "2026-07-01",
+            "quote": "Several competitors, including those that dominate the beverage industry, such as The Coca-Cola Company, PepsiCo, Keurig Dr. Pepper, and Nestlé S.A., are larger and have greater financial resources."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ZVIA",
+      "ticker": "ZVIA",
+      "name": "ゼビア",
+      "name_en": "Zevia",
+      "sub": "ゼロカロリー炭酸飲料",
+      "sub_en": "Zero-sugar soda",
+      "sub_short": "炭酸飲料",
+      "sub_short_en": "Soda",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Zeviaが10-Kで、飲料市場の競合としてCoca-ColaやPepsiCoと並べて挙げる",
+          "text_en": "Zevia names it among its beverage competitors alongside Coca-Cola and PepsiCo",
+          "source": {
+            "label": "Zevia 10-K(2025年度)",
+            "label_en": "Zevia 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1854139/000143774926005601/zvia20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Our competitors in the beverage market include category leaders such as The Coca-Cola Company, Keurig Dr. Pepper, PepsiCo, Inc., National Beverage Corp., Monster Energy, and Red Bull"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

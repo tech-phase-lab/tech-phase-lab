@@ -104,5 +104,5 @@ export async function simulate({ legacy = false, mode = "allocator", members = 1
     const settled = await Promise.allSettled(jobs);
     stats.errors += settled.filter(r => r.status === "rejected").length;
   }
-  return { peak: p.finish(), refused: p.refused, minutes: p.byMinute, site: p.site ?? 0, ...stats };
+  return { peak: p.finish(), refused: p.refused, minutes: p.byMinute, site: p.site ?? 0, monitor: p.monitor ?? 0, ...stats };
 }

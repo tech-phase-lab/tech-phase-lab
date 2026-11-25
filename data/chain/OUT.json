@@ -1,0 +1,217 @@
+{
+  "root": {
+    "ticker": "OUT",
+    "name": "アウトフロント・メディア",
+    "cik": 1579877,
+    "name_en": "OUTFRONT Media"
+  },
+  "rows": [
+    {
+      "ja": "交通広告の契約先",
+      "en": "Transit franchise partner",
+      "above": true
+    },
+    {
+      "ja": "競合(本人の10-Kに記載)",
+      "en": "Competitors (named in its 10-K)"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "LAMR",
+    "CCO",
+    "BOC"
+  ],
+  "companies": [
+    {
+      "id": "NYMTA",
+      "ticker": "NY MTA",
+      "name": "ニューヨーク都市交通公社(MTA)",
+      "name_en": "New York Metropolitan Transportation Authority",
+      "sub": "公共交通",
+      "sub_en": "Public transit",
+      "sub_short": "交通局",
+      "sub_short_en": "Transit",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ニューヨークの地下鉄・バスなどの交通広告の契約(フランチャイズ)を持つ",
+          "text_en": "Holds the transit advertising franchise for the New York MTA",
+          "source": {
+            "label": "OUTFRONT Media 10-K(2025年度)",
+            "label_en": "OUTFRONT Media 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1579877/000157987726000008/out-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our annual costs with respect to the New York Metropolitan Transportation Authority (the \"MTA\") transit franchise will be primarily focused on maintenance of existing MTA display locations"
+          }
+        }
+      ]
+    },
+    {
+      "id": "JCDecaux",
+      "ticker": "JCDecaux",
+      "name": "JCドゥコー",
+      "name_en": "JCDecaux",
+      "sub": "屋外広告(仏)",
+      "sub_en": "Outdoor advertising (France)",
+      "sub_short": "屋外広告",
+      "sub_short_en": "Outdoor",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "10-Kで、全国規模の屋外広告会社として名指し",
+          "text_en": "Named in its 10-K as a national outdoor advertising company",
+          "source": {
+            "label": "OUTFRONT Media 10-K(2025年度)",
+            "label_en": "OUTFRONT Media 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1579877/000157987726000008/out-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "The outdoor advertising industry is fragmented, consisting of a few companies operating on a national basis, such as our company, Lamar, Clear Channel Outdoor, JCDecaux and Intersection"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Intersection",
+      "ticker": "Intersection",
+      "name": "インターセクション",
+      "name_en": "Intersection",
+      "sub": "交通・街頭広告",
+      "sub_en": "Transit & street advertising",
+      "sub_short": "交通広告",
+      "sub_short_en": "Transit",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "10-Kで、全国規模の屋外広告会社として名指し",
+          "text_en": "Named in its 10-K as a national outdoor advertising company",
+          "source": {
+            "label": "OUTFRONT Media 10-K(2025年度)",
+            "label_en": "OUTFRONT Media 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1579877/000157987726000008/out-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "The outdoor advertising industry is fragmented, consisting of a few companies operating on a national basis, such as our company, Lamar, Clear Channel Outdoor, JCDecaux and Intersection"
+          }
+        }
+      ]
+    },
+    {
+      "id": "LAMR",
+      "ticker": "LAMR",
+      "name": "ラマー・アドバタイジング",
+      "name_en": "Lamar Advertising",
+      "sub": "屋外広告",
+      "sub_en": "Outdoor advertising",
+      "sub_short": "屋外広告",
+      "sub_short_en": "Outdoor",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Lamarが10-Kで、大手の屋外広告の競合として名指し(本人の10-KもLamarを挙げる)",
+          "text_en": "Lamar names it a larger outdoor advertising rival (its own 10-K names Lamar too)",
+          "source": {
+            "label": "Lamar Advertising 10-K(2025年度)",
+            "label_en": "Lamar Advertising 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1090425/000109042526000008/lamr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Larger outdoor advertising providers, such as (i) Clear Channel Outdoor Holdings, Inc., which operates billboards, street furniture displays, transit displays and other out-of-home advertising displays and (ii) Outfront Media, Inc., which operates traditional outdoor, street furniture and transit advertising properties."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "10-Kで、全国規模の屋外広告会社として名指し",
+          "text_en": "Named in its 10-K as a national outdoor advertising company",
+          "source": {
+            "label": "OUTFRONT Media 10-K(2025年度)",
+            "label_en": "OUTFRONT Media 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1579877/000157987726000008/out-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "The outdoor advertising industry is fragmented, consisting of a few companies operating on a national basis, such as our company, Lamar, Clear Channel Outdoor, JCDecaux and Intersection"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CCO",
+      "ticker": "CCO",
+      "name": "クリア・チャンネル・アウトドア",
+      "name_en": "Clear Channel Outdoor",
+      "sub": "屋外広告",
+      "sub_en": "Outdoor advertising",
+      "sub_short": "屋外広告",
+      "sub_short_en": "Outdoor",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Clear Channel Outdoorが10-Kで、大手の競合として名指し(本人の10-KもClear Channelを挙げる)",
+          "text_en": "Clear Channel Outdoor names it a large rival operator (its own 10-K names Clear Channel too)",
+          "source": {
+            "label": "Clear Channel Outdoor 10-K(2025年度)",
+            "label_en": "Clear Channel Outdoor 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1334978/000133497826000010/cco-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "OOH advertising industry is fragmented and highly competitive, consisting of other large operators such as Lamar Advertising Company and Outfront Media Inc., as well as numerous regional and local participants."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "10-Kで、全国規模の屋外広告会社として名指し",
+          "text_en": "Named in its 10-K as a national outdoor advertising company",
+          "source": {
+            "label": "OUTFRONT Media 10-K(2025年度)",
+            "label_en": "OUTFRONT Media 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1579877/000157987726000008/out-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "The outdoor advertising industry is fragmented, consisting of a few companies operating on a national basis, such as our company, Lamar, Clear Channel Outdoor, JCDecaux and Intersection"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BOC",
+      "ticker": "BOC",
+      "name": "ボストン・オマハ",
+      "name_en": "Boston Omaha",
+      "sub": "看板広告・ブロードバンド",
+      "sub_en": "Billboards & broadband",
+      "sub_short": "看板広告",
+      "sub_short_en": "Billboards",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Boston Omahaが10-Kで、看板の大半を持つ大手3社の一社として挙げる",
+          "text_en": "Boston Omaha names it among the three companies that own most US billboards",
+          "source": {
+            "label": "Boston Omaha 10-K(2025年度)",
+            "label_en": "Boston Omaha 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1494582/000143774926010341/bomn20251231_10k.htm",
+            "level": "official",
+            "date": "2026-03-30",
+            "quote": "The outdoor advertising industry in the United States consists of several large companies, and three companies, Clear Channel Outdoor, Outfront Media and Lamar Advertising Company, own a majority of all outdoor billboards."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

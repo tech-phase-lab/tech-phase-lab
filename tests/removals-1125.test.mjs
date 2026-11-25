@@ -66,11 +66,11 @@ test("relationship maps: one closed 「出典」 at the bottom, short footer, no
   const stock = read("app/research/stocks/stock-chain-map.tsx"), network = read("app/research/stocks/chain-map.tsx");
   for (const source of [stock, network]) {
     assert.doesNotMatch(source, /出典・引用・発表日/);
-    assert.match(source, /data-chain-sources=""/);
+    assert.match(source, /<SourceList /);
   }
   assert.doesNotMatch(stock, /3段先以降/);
   assert.match(stock, /ja: "公式資料で確認できた関係のみ。投資判断を勧めるものではありません。"/);
-  assert.ok(stock.indexOf("<AllSources") > stock.indexOf("CHAIN_NOTE.ja, CHAIN_NOTE.en"));
+  assert.ok(stock.indexOf("<SourceList") > stock.indexOf("CHAIN_NOTE.ja, CHAIN_NOTE.en"));
   assert.match(network, /t\(CHAIN_NOTE\.ja,CHAIN_NOTE\.en\)/);
   // The 無料サンプル box no longer pulls up over the footer line above it.
   const badge = read("app/research/stocks/map-lock.module.css").match(/\.badge \{[^}]*\}/)[0];

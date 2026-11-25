@@ -37,7 +37,7 @@ export default function Rulebook({plan,locale}:{plan:NonNullable<PlanSnapshot["p
    onPointerUp={event=>{const start=touch.current;touch.current=null;if(!start||event.pointerType!=="touch")return;const dx=event.clientX-start.x,dy=event.clientY-start.y;if(Math.abs(dx)>70&&Math.abs(dx)>Math.abs(dy)*2)move(current+(dx<0?1:-1));}}>
    <div className={styles.bookRibbon} aria-hidden="true"/>
    <div className={styles.bookStill}>{page(visible)}</div>
-   {turn?<div className={`${styles.turningLeaf} ${turn.to>turn.from?styles.leafForward:styles.leafBack}`} aria-hidden="true">{page(turn.to>turn.from?turn.from:turn.to)}</div>:null}
+   {turn?<div className={`${styles.turningLeaf} ${turn.to>turn.from?styles.leafForward:styles.leafBack}`} aria-hidden="true">{page(turn.from)}</div>:null}
   </article>
   <nav className={styles.readerControls} aria-label={en?"Turn pages":"ページをめくる"}>
    <button type="button" disabled={current===0||turn!==null} onClick={()=>move(current-1)} aria-label={en?"Previous page":"前のページ"}>←</button>

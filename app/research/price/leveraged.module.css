@@ -20,4 +20,5 @@
 .price small,.change small{display:inline-flex;align-items:center;gap:5px;font:400 11.5px/1.2 "IBM Plex Mono",ui-monospace,monospace;color:#8c98ab;white-space:nowrap}
 .mark{padding:0 4px;border:1px solid #5b6676;border-radius:4px;color:#a3aec0;font:400 10px/1.35 "Zen Kaku Gothic New",sans-serif;font-style:normal}
 .up{color:#4fe3a6}.down{color:#ff7b7b}.flat{color:#8c98ab}
+.asOf{margin:0;padding:0 4px 8px;color:#8c98ab;font-size:11.5px}
 .note{margin:0;padding:14px 4px;color:#8c98ab;font-size:12px}
