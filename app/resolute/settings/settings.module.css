@@ -30,3 +30,13 @@
 .homeCard ol { margin:0; padding-left:1.4em; font-size:14px; line-height:1.9; color:#d6dde7; }
 .homeCard li b { color:#e4c98c; font-weight:600; }
 .homeCard p { margin:10px 0 0; font-size:13px; color:#9aa6b6; }
+.page:lang(ja) { word-break:auto-phrase; }
+
+/* PC (owner, Nov 25): the language and time zone panel in the middle, about 640px wide; no 「ホーム画面に追加する方法」. */
+@media (min-width:1024px) {
+  .page { max-width:none; padding:40px 32px 64px; }
+  .top { max-width:1240px; margin:0 auto 56px; }
+  .card { max-width:640px; margin:0 auto; padding:40px 44px; }
+  .homeCard { display:none; }
+  .back { display:block; width:max-content; margin:28px auto 0; }
+}
