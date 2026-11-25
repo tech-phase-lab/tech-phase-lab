@@ -1,0 +1,29 @@
+/* The one closed 「出典」 under a relationship map (owner, Nov 25): each document and quote once, with the companies it backs below it. */
+.sources { --line: #2c3a4d; --muted: #93a7ba; --up: #6fb6ea; --down: #ffb35c; --tie: #6fe0b0; --rival: #b9a4e6; --far: #8f9db3;
+  margin-top: 14px; border: 1px solid var(--line); border-radius: 12px; background: #0f1724; padding: 0 14px; color: #e9eef5; }
+.sources [data-tone="up"] { --tone: var(--up); } .sources [data-tone="down"] { --tone: var(--down); } .sources [data-tone="tie"] { --tone: var(--tie); }
+.sources [data-tone="rival"] { --tone: var(--rival); } .sources [data-tone="far"] { --tone: var(--far); }
+.sources > summary { list-style: none; cursor: pointer; min-height: 44px; display: flex; align-items: center; gap: 10px; font-size: 13.5px; }
+.sources > summary::-webkit-details-marker { display: none; }
+.sources > summary:focus-visible { outline: 2px solid #e7c889; outline-offset: 2px; }
+.title { display: flex; align-items: center; gap: 6px; font-weight: 700; }
+.title::before { content: "▸"; font-size: 11px; color: var(--muted); }
+.sources[open] .title::before { content: "▾"; }
+.count { font-weight: 700; }
+.reviewed { margin-left: auto; font-size: 11.5px; color: var(--muted); white-space: nowrap; }
+.sources > ol { list-style: none; margin: 0; padding: 0 0 6px; border-top: 1px dashed var(--line); }
+.block { padding: 10px 0; font-size: 12px; line-height: 1.55; overflow-wrap: anywhere; display: grid; gap: 4px; }
+.block + .block { border-top: 1px dashed var(--line); }
+.doc { margin: 0; display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 10px; }
+.doc a { color: #9cc3ea; font-size: 12.5px; }
+.doc em { font-style: normal; color: #e9c27a; }
+.doc small { font-size: 11px; color: var(--muted); white-space: nowrap; }
+.block q { color: #b9c3d3; quotes: "「" "」"; font-style: normal; }
+.note { margin: 0; color: var(--muted); }
+/* Name, tag and description line up in every block (one name width for the whole list, set as --who); only the description wraps. */
+.rows { display: grid; grid-template-columns: max-content max-content minmax(0, 1fr); column-gap: 8px; row-gap: 5px; margin-top: 2px; }
+.row { display: contents; }
+.row b { font: 600 12.5px var(--font-mono), ui-monospace, monospace; width: calc(var(--who, 6) * 1ch); overflow-wrap: anywhere; }
+.tg { justify-self: start; align-self: start; font-size: 11px; padding: 0 7px; border-radius: 99px; border: 1px solid; line-height: 1.6; white-space: nowrap; color: var(--tone, var(--muted)); }
+.text { min-width: 0; color: #dfe6f0; }
+.footnote { margin: 10px 0 0; font-size: 12px; line-height: 1.7; color: var(--muted, #93a7ba); }

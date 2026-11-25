@@ -303,7 +303,8 @@ test("stock search UI separates free identity data from licensed prices and news
   assert.match(page, /evidenceIds=\{point.evidenceIds\}/);
   assert.match(page, /businessRequest\.current \+= 1/);
   assert.match(page, /profileRequest\.current \+= 1/);
-  assert.match(page, /SECは名簿の正確性・網羅性を保証していません/);
+  // Owner, Nov 25: the footer carries the page's one note (SOURCES_NOTE, checked in sources-merge-1125.test.mjs).
+  assert.match(page, /<p>\{t\(SOURCES_NOTE\.ja, SOURCES_NOTE\.en\)\}<\/p><\/footer>/);
   assert.match(styles, /\.hero h1\{[^}]*font-weight:650/);
   assert.match(styles, /\.main \.search input:focus-visible\{outline:0\}/);
   assert.match(page, /銘柄検索/);
