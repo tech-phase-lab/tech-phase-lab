@@ -1,0 +1,132 @@
+{
+  "ticker": "TSM",
+  "name": "TSMC",
+  "exchange": "NYSE",
+  "quoteTicker": "TSM",
+  "period": "Q3 2026",
+  "periodQuarter": 3,
+  "releasedOn": "2026-10-15",
+  "periodEnd": "2026-09-30",
+  "reviewedOn": "2026-11-25",
+  "currency": "TWD",
+  "basis": {"eps": "TIFRS diluted EPS per common share, NT$ (US$4.60 per ADR unit)", "grossMargin": "TIFRS (no adjusted measure)", "guidance": "company guidance is in US dollars (US$52.3B to US$54.3B); converted here at the company's own assumption of 1 US dollar to 31.8 NT dollars"},
+  "sources": [
+    {"url": "https://www.sec.gov/Archives/edgar/data/1046179/000104617926000726/a3q26e_withguidancexfinal.htm", "title": "TSMC Reports Third Quarter EPS of NT$29.43 (Form 6-K, Exhibit 99.1)", "location": "Earnings release text, fourth quarter 2026 outlook, consolidated results table"},
+    {"url": "https://www.sec.gov/Archives/edgar/data/1046179/000104617926000726/a3q26presentatione.htm", "title": "TSMC 2026 Third Quarter Earnings Conference presentation (Form 6-K, Exhibit 99.2)", "location": "Statements of Comprehensive Income, Cash Flows, Future Outlook"},
+    {"url": "https://www.sec.gov/Archives/edgar/data/1046179/000104617926000008/a4q25e_withguidancexfinal.htm", "title": "TSMC fourth quarter 2025 earnings release (Form 6-K, Exhibit 99.1)", "location": "Consolidated results table"},
+    {"url": "https://www.sec.gov/Archives/edgar/data/1046179/000104617926000199/a1q26e_withguidancexfinal.htm", "title": "TSMC first quarter 2026 earnings release (Form 6-K, Exhibit 99.1)", "location": "Consolidated results table"}
+  ],
+  "evidence": [
+    {"field": "numbers.revenue.current", "url": "https://www.sec.gov/Archives/edgar/data/1046179/000104617926000726/a3q26e_withguidancexfinal.htm", "quote": "Net sales 1,494,243 989,918 50.9 1,270,381 17.6"},
+    {"field": "numbers.revenue.previous", "url": "https://www.sec.gov/Archives/edgar/data/1046179/000104617926000726/a3q26e_withguidancexfinal.htm", "quote": "Net sales 1,494,243 989,918 50.9 1,270,381 17.6"},
+    {"field": "numbers.revenue.yearAgo", "url": "https://www.sec.gov/Archives/edgar/data/1046179/000104617926000726/a3q26e_withguidancexfinal.htm", "quote": "Net sales 1,494,243 989,918 50.9 1,270,381 17.6"},
+    {"field": "numbers.adjustedEPS", "url": "https://www.sec.gov/Archives/edgar/data/1046179/000104617926000726/a3q26e_withguidancexfinal.htm", "quote": "EPS (NT$) 29.43"},
+    {"field": "numbers.grossMargin.current", "url": "https://www.sec.gov/Archives/edgar/data/1046179/000104617926000726/a3q26presentatione.htm", "quote": "Gross Margin 66.4% 65.0%-67.0% 67.7% 59.5% -1.3 ppts +6.9 ppts"},
+    {"field": "numbers.grossMargin.previous", "url": "https://www.sec.gov/Archives/edgar/data/1046179/000104617926000726/a3q26presentatione.htm", "quote": "Gross Margin 66.4% 65.0%-67.0% 67.7% 59.5% -1.3 ppts +6.9 ppts"},
+    {"field": "numbers.guidance.low", "url": "https://www.sec.gov/Archives/edgar/data/1046179/000104617926000726/a3q26e_withguidancexfinal.htm", "quote": "Revenue is expected to be between US$52.3 billion and US$54.3 billion; And, based on the exchange rate assumption of 1 US dollar to 31.8 NT dollars, • Gross profit margin is expected to be between 65% and 67%;", "calc": "52.3*1000*31.8"},
+    {"field": "numbers.guidance.high", "url": "https://www.sec.gov/Archives/edgar/data/1046179/000104617926000726/a3q26e_withguidancexfinal.htm", "quote": "Revenue is expected to be between US$52.3 billion and US$54.3 billion; And, based on the exchange rate assumption of 1 US dollar to 31.8 NT dollars, • Gross profit margin is expected to be between 65% and 67%;", "calc": "54.3*1000*31.8"},
+    {"field": "numbers.guidance.grossMarginPercent", "url": "https://www.sec.gov/Archives/edgar/data/1046179/000104617926000726/a3q26e_withguidancexfinal.htm", "quote": "Revenue is expected to be between US$52.3 billion and US$54.3 billion; And, based on the exchange rate assumption of 1 US dollar to 31.8 NT dollars, • Gross profit margin is expected to be between 65% and 67%;", "calc": "(65+67)/2"},
+    {"field": "history[0].value", "url": "https://www.sec.gov/Archives/edgar/data/1046179/000104617926000726/a3q26e_withguidancexfinal.htm", "quote": "Net sales 1,494,243 989,918 50.9 1,270,381 17.6"},
+    {"field": "history[1].value", "url": "https://www.sec.gov/Archives/edgar/data/1046179/000104617926000008/a4q25e_withguidancexfinal.htm", "quote": "Net sales 1,046,090 868,461 20.5 989,918 5.7"},
+    {"field": "history[2].value", "url": "https://www.sec.gov/Archives/edgar/data/1046179/000104617926000199/a1q26e_withguidancexfinal.htm", "quote": "Net sales 1,134,103 839,254 35.1 1,046,090 8.4"},
+    {"field": "history[3].value", "url": "https://www.sec.gov/Archives/edgar/data/1046179/000104617926000726/a3q26e_withguidancexfinal.htm", "quote": "Net sales 1,494,243 989,918 50.9 1,270,381 17.6"},
+    {"field": "tiles[0].value", "url": "https://www.sec.gov/Archives/edgar/data/1046179/000104617926000726/a3q26e_withguidancexfinal.htm", "quote": "consolidated revenue of NT$1,494.24 billion"},
+    {"field": "tiles[0].note", "url": "https://www.sec.gov/Archives/edgar/data/1046179/000104617926000726/a3q26e_withguidancexfinal.htm", "quote": "Year-over-year, third quarter revenue increased 50.9%"},
+    {"field": "tiles[1].value", "url": "https://www.sec.gov/Archives/edgar/data/1046179/000104617926000726/a3q26e_withguidancexfinal.htm", "quote": "In US dollars, third quarter revenue was $46.72 billion, which increased 41.2% year-over-year and increased 16.2% from the previous quarter."},
+    {"field": "tiles[1].note", "url": "https://www.sec.gov/Archives/edgar/data/1046179/000104617926000726/a3q26e_withguidancexfinal.htm", "quote": "In US dollars, third quarter revenue was $46.72 billion, which increased 41.2% year-over-year and increased 16.2% from the previous quarter."},
+    {"field": "tiles[2].value", "url": "https://www.sec.gov/Archives/edgar/data/1046179/000104617926000726/a3q26e_withguidancexfinal.htm", "quote": "Advanced technologies, defined as 7-nanometer and more advanced technologies, accounted for 79% of total wafer revenue."},
+    {"field": "tiles[2].note", "url": "https://www.sec.gov/Archives/edgar/data/1046179/000104617926000726/a3q26e_withguidancexfinal.htm", "quote": "shipments of 2-nanometer accounted for 8% of total wafer revenue; 3-nanometer accounted for 33%; 5-nanometer accounted for 28%; and 7-nanometer accounted for 10%."},
+    {"field": "summary.cards.growth", "url": "https://www.sec.gov/Archives/edgar/data/1046179/000104617926000726/a3q26presentatione.htm", "quote": "Shipment (Kpcs, 12\"-equiv. Wafer) 4,476 4,336 4,085 +3.2% +9.6%"},
+    {"field": "summary.cards.change", "url": "https://www.sec.gov/Archives/edgar/data/1046179/000104617926000726/a3q26e_withguidancexfinal.htm", "quote": "Compared to second quarter 2026, third quarter results represented a 17.6% increase in revenue and an 8.0% increase in net income."},
+    {"field": "summary.cards.change", "url": "https://www.sec.gov/Archives/edgar/data/1046179/000104617926000726/a3q26presentatione.htm", "quote": "Non-Operating Items 34.59 95.83 24.68 -63.9% +40.1%"},
+    {"field": "summary.cards.change", "url": "https://www.sec.gov/Archives/edgar/data/1046179/000104617926000726/a3q26presentatione.htm", "quote": "Net Profit Margin 51.1% 55.6% 45.7% -4.5 ppts +5.4 ppts"},
+    {"field": "summary.cards.change", "url": "https://www.sec.gov/Archives/edgar/data/1046179/000104617926000726/a3q26presentatione.htm", "quote": "Cash from operating activities 919.77 783.36 426.83 Capital expenditures (443.21) (496.00) (287.45)"},
+    {"field": "summary.cards.change", "url": "https://www.sec.gov/Archives/edgar/data/1046179/000104617926000726/a3q26presentatione.htm", "quote": "Free Cash Flow * 476.56 287.36 139.38"},
+    {"field": "summary.cards.caution", "url": "https://www.sec.gov/Archives/edgar/data/1046179/000104617926000726/a3q26presentatione.htm", "quote": "Operating Margin 58.7% 56.0%-58.0% 60.3% 50.6% -1.6 ppts +8.1 ppts"},
+    {"field": "summary.cards.caution", "url": "https://www.sec.gov/Archives/edgar/data/1046179/000104617926000726/a3q26e_withguidancexfinal.htm", "quote": "Operating profit margin is expected to be between 56.5% and 58.5%."},
+    {"field": "summary.cards.next", "url": "https://www.sec.gov/Archives/edgar/data/1046179/000104617926000726/a3q26e_withguidancexfinal.htm", "quote": "including the steep ramp-up of our 2-nanometer technology"},
+    {"field": "summary.cards.next", "url": "https://www.sec.gov/Archives/edgar/data/1046179/000104617926000726/a3q26presentatione.htm", "quote": "2026 revenue to increase by around 44% in US dollar terms"}
+  ],
+  "numbers": {
+    "revenue": {"current": 1494243, "previous": 1270381, "yearAgo": 989918},
+    "adjustedEPS": 29.43,
+    "epsEstimate": null,
+    "grossMargin": {"current": 66.4, "previous": 67.7},
+    "guidance": {"low": 1663140, "high": 1726740, "grossMarginPercent": 66},
+    "segments": null
+  },
+  "history": [
+    {"label": "Q3", "end": "2025-09-30", "value": 989918},
+    {"label": "Q4", "end": "2025-12-31", "value": 1046090},
+    {"label": "Q1", "end": "2026-03-31", "value": 1134103},
+    {"label": "Q2", "end": "2026-06-30", "value": 1270381}
+  ],
+  "tiles": [
+    {"label": {"ja": "売上高(台湾ドル)", "en": "Revenue (NT$)"}, "value": {"ja": "1兆4,942億台湾ドル", "en": "NT$1,494.24B"}, "note": {"ja": "前年同期比 +50.9%", "en": "+50.9% YoY"}},
+    {"label": {"ja": "売上高(ドル換算)", "en": "Revenue (US$)"}, "value": {"ja": "467.2億ドル", "en": "$46.72B"}, "note": {"ja": "前年同期比 +41.2%", "en": "+41.2% YoY"}},
+    {"label": {"ja": "7nm以下の先端品の比率", "en": "Advanced nodes (7nm and below)"}, "value": {"ja": "79%", "en": "79% of wafer revenue"}, "note": {"ja": "2nmが8%に", "en": "8% from 2-nanometer"}}
+  ],
+  "summary": {
+    "conclusion": [
+      {"ja": "売上は1兆4,942億台湾ドルで、前期から17.6%、前年同期から50.9%増えました。ドル換算では467.2億ドルです。", "en": "Revenue was NT$1,494.2B, up 17.6% from the previous quarter and 50.9% from a year ago. In US dollars it was $46.72B."},
+      {"ja": "一方で、粗利益率は67.7%から66.4%に下がり、純利益の伸びは前期比8.0%にとどまりました。", "en": "Meanwhile, gross margin fell from 67.7% to 66.4%, and net income rose only 8.0% from the previous quarter."},
+      {"ja": "会社は次期の売上を523億〜543億ドル、粗利益率を65〜67%と見込んでいます。2nmの量産拡大が続く見通しです。", "en": "The company expects next-quarter revenue of US$52.3B to US$54.3B with a gross margin of 65–67%, as its 2-nanometer ramp continues."}
+    ],
+    "cards": {
+      "growth": {
+        "headline": {"ja": "7nm以下の先端品がウエハー売上の79%", "en": "Advanced nodes reached 79% of wafer revenue"},
+        "chips": [
+          {"tone": "up", "text": {"ja": "3nm 33%・5nm 28%・2nm 8%", "en": "3nm 33% · 5nm 28% · 2nm 8%"}},
+          {"tone": "gold", "text": {"ja": "出荷枚数 前期比 +3.2%", "en": "Wafer shipments +3.2% QoQ"}}
+        ],
+        "sections": [
+          {"key": "happened", "text": {"ja": "ウエハー売上のうち、7nm以下の先端品が79%を占めました。内訳は3nmが33%、5nmが28%、7nmが10%で、最新の2nmも8%になりました。", "en": "Advanced nodes (7nm and below) made up 79% of wafer revenue: 3nm 33%, 5nm 28%, 7nm 10%, and the newest 2nm reached 8%."}},
+          {"key": "good", "text": {"ja": "ウエハーの出荷枚数は前期比3.2%増でしたが、売上は17.6%増えました。1枚あたりの売上が大きい先端品の比率が上がっていることを示しています。", "en": "Wafer shipments rose 3.2% from the previous quarter, but revenue rose 17.6%. That points to a higher share of advanced wafers that bring in more revenue per wafer."}},
+          {"key": "watch", "text": {"ja": "伸びは最先端の製造技術への需要に支えられています。AI向けなど最先端品の需要が弱まると、伸びも鈍ります。", "en": "Growth depends on demand for leading-edge processes. If demand for leading-edge chips such as AI processors weakens, growth would slow."}}
+        ],
+        "segment": null
+      },
+      "change": {
+        "headline": {"ja": "売上は前期比 +17.6%、粗利益率は低下", "en": "Revenue up 17.6% QoQ, gross margin lower"},
+        "chips": [
+          {"tone": "up", "text": {"ja": "売上 前期比 +17.6%", "en": "Revenue +17.6% QoQ"}},
+          {"tone": "down", "text": {"ja": "粗利益率 67.7% → 66.4%", "en": "Gross margin 67.7% → 66.4%"}}
+        ],
+        "sections": [
+          {"key": "happened", "text": {"ja": "売上は1兆2,704億台湾ドルから1兆4,942億台湾ドルへ、2,239億台湾ドル増えました。粗利益率は67.7%から66.4%に下がっています。", "en": "Revenue rose from NT$1,270.4B to NT$1,494.2B, up NT$223.9B. Gross margin fell from 67.7% to 66.4%."}},
+          {"key": "good", "text": {"ja": "営業キャッシュフローは9,198億台湾ドルに増え、設備投資(4,432億台湾ドル)を差し引いたフリーキャッシュフローは4,766億台湾ドルと、前期の2,874億台湾ドルから大きく増えました。", "en": "Operating cash flow rose to NT$919.8B, and after capex of NT$443.2B, free cash flow was NT$476.6B, up sharply from NT$287.4B last quarter."}},
+          {"key": "watch", "text": {"ja": "純利益は前期比8.0%増と、売上の伸び(17.6%)より小さくなりました。本業以外の利益(営業外損益)が958億台湾ドルから346億台湾ドルに減り、純利益率は55.6%から51.1%に下がっています。", "en": "Net income rose only 8.0%, less than revenue (17.6%). Non-operating items fell from NT$95.8B to NT$34.6B, and net profit margin dropped from 55.6% to 51.1%."}},
+          {"key": "view", "text": {"ja": "本業の売上は強く伸びています。純利益の伸びが小さかったのは主に本業以外の利益が減ったためなので、本業と営業外を分けて見ます。", "en": "Core revenue grew strongly. Net income lagged mainly because non-operating gains shrank, so read core operations and non-operating items separately."}}
+        ],
+        "segment": null
+      },
+      "caution": {
+        "headline": {"ja": "粗利益率・営業利益率がともに前期から低下", "en": "Gross and operating margins both fell from last quarter"},
+        "chips": [
+          {"tone": "down", "text": {"ja": "粗利益率 −1.3pt", "en": "Gross margin −1.3pt"}},
+          {"tone": "down", "text": {"ja": "営業利益率 60.3% → 58.7%", "en": "Operating margin 60.3% → 58.7%"}}
+        ],
+        "sections": [
+          {"key": "happened", "text": {"ja": "粗利益率は67.7%から66.4%、営業利益率は60.3%から58.7%に下がりました。どちらも会社の事前見通し(粗利益率65〜67%、営業利益率56〜58%)の範囲内か上回る水準です。", "en": "Gross margin fell from 67.7% to 66.4% and operating margin from 60.3% to 58.7%. Both were within or above the company's earlier guidance (gross 65–67%, operating 56–58%)."}},
+          {"key": "watch", "text": {"ja": "次期の見通しも粗利益率65〜67%、営業利益率56.5〜58.5%で、今回と同じか少し低い水準です。売上が増えても利益率は上がらない見通しです。", "en": "Next quarter's guidance of 65–67% gross margin and 56.5–58.5% operating margin is at or slightly below this quarter. Revenue is set to grow, but margins are not expected to rise."}},
+          {"key": "means", "text": {"ja": "見通しは1ドル=31.8台湾ドルを前提にしています。台湾ドル高になると、台湾ドルでの売上と利益率は押し下げられます。", "en": "The guidance assumes 1 US dollar = 31.8 NT dollars. A stronger NT dollar would lower revenue and margins in NT dollar terms."}},
+          {"key": "view", "text": {"ja": "利益率は60%前後の高い水準ですが、2nmの量産拡大が進む次期に、どこまで保てるかを確かめます。", "en": "Margins remain high, around 60%, but check how well they hold as the 2-nanometer ramp accelerates next quarter."}}
+        ],
+        "segment": null
+      },
+      "next": {
+        "headline": {"ja": "次期の会社見通しを追う", "en": "Follow the company's outlook for next quarter"},
+        "chips": [
+          {"tone": "gold", "text": {"ja": "売上 523〜543億ドル", "en": "Revenue US$52.3–54.3B"}},
+          {"tone": "gold", "text": {"ja": "粗利益率 65〜67%", "en": "Gross margin 65–67%"}}
+        ],
+        "sections": [
+          {"key": "happened", "text": {"ja": "会社は次期の売上を523億〜543億ドル(1ドル=31.8台湾ドルで約1兆6,631億〜1兆7,267億台湾ドル)と見込んでいます。今回の467.2億ドルと比べると、下限でも約12%の増加です。", "en": "The company expects next-quarter revenue of US$52.3B to US$54.3B (about NT$1,663.1B to NT$1,726.7B at 31.8 NT dollars per US dollar). Compared with this quarter's US$46.72B, even the low end would be about 12% higher."}},
+          {"key": "means", "text": {"ja": "会社は次期について、2nmの急速な量産拡大を含む最先端品の強い需要を見込んでいます。2026年通年の売上はドルで約44%増える見通しです。", "en": "The company expects continued strong demand for leading-edge processes next quarter, including a steep 2-nanometer ramp. It expects 2026 revenue to grow about 44% in US dollar terms."}},
+          {"key": "view", "text": {"ja": "次の決算で、売上がこの幅のどこに入るかと、粗利益率が65〜67%のどこに着地するかを見ます。", "en": "In the next report, check where revenue lands in this range and where gross margin ends up within 65–67%."}}
+        ],
+        "segment": null
+      }
+    }
+  }
+}

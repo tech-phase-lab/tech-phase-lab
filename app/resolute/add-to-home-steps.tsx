@@ -16,8 +16,9 @@ export const ADD_TO_HOME_EN: ReactNode[] = [
 export const ADD_TO_HOME_ANDROID_JA = "Androidは、Chromeの右上のメニュー(︙)から「ホーム画面に追加」を選びます。";
 export const ADD_TO_HOME_ANDROID_EN = "On Android, use the Chrome menu (⋮) and choose Add to Home screen.";
 
-export default function AddToHomeSteps({ en = false, className }: { en?: boolean; className?: string }) {
-  const steps = en ? ADD_TO_HOME_EN : ADD_TO_HOME_JA;
+/** `steps` limits the list to the first steps (settings shows the three numbered steps, owner Nov 25 §19). */
+export default function AddToHomeSteps({ en = false, className, steps: count }: { en?: boolean; className?: string; steps?: number }) {
+  const steps = (en ? ADD_TO_HOME_EN : ADD_TO_HOME_JA).slice(0, count);
   return <div className={className}>
     <ol>{steps.map((step, index) => <li key={index}>{step}</li>)}</ol>
     <p>{en ? ADD_TO_HOME_ANDROID_EN : ADD_TO_HOME_ANDROID_JA}</p>

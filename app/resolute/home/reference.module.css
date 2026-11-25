@@ -65,8 +65,7 @@
   background:
     radial-gradient(600px 420px at 12% 6%, rgba(216,179,106,.22), transparent 70%),
     radial-gradient(520px 520px at 95% 38%, rgba(70,110,190,.22), transparent 70%),
-    radial-gradient(560px 420px at 8% 92%, rgba(216,179,106,.16), transparent 70%),
-    repeating-linear-gradient(135deg, rgba(216,179,106,.045) 0 1px, transparent 1px 16px);
+    radial-gradient(560px 420px at 8% 92%, rgba(216,179,106,.16), transparent 70%);
   animation:drift 14s ease-in-out infinite alternate; }
  .root::after { content:""; position:absolute; inset:0; z-index:0; pointer-events:none;
   background:

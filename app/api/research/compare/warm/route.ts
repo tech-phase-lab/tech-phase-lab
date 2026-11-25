@@ -1,13 +1,14 @@
 import { validSyncToken } from "@/lib/membership/sync-auth";
 import { warmMinute } from "@/lib/research/comparison-warm";
-import { refreshLeveragedSnapshot } from "@/lib/research/market-data";
+import { refreshBoardSnapshot, refreshLeveragedSnapshot } from "@/lib/research/market-data";
 export const dynamic = "force-dynamic";
 export const maxDuration = 60;
 const headers = { "Cache-Control": "private, no-store" };
 
 /** The comparison's background job: one minute's share of the daily provider refresh (lib/research/comparison-warm.ts). Called once a minute by
  * the Railway monitor (COMPARISON_WARM_URL) or a Vercel Cron, with `Authorization: Bearer <COMPARISON_WARM_SECRET or CRON_SECRET>`.
- * The same minute first refreshes the マーケット「レバETF」 snapshot (lib/research/market-data.ts refreshLeveragedSnapshot).
+ * The same minute first refreshes the マーケット「レバETF」 snapshot and the snapshot of the other tabs' cards and first charts
+ * (lib/research/market-data.ts refreshLeveragedSnapshot, refreshBoardSnapshot).
  * The answer carries tickers and credit counts only, never data or keys. */
 export async function GET(request: Request) {
   const auth = request.headers.get("authorization");
@@ -16,10 +17,14 @@ export async function GET(request: Request) {
   // than 48), then the comparison with what is left of the minute. A failure here never stops the comparison.
   const lev = await refreshLeveragedSnapshot().catch(() => ({ spent: 0, read: 0, failed: -1 }));
   console.info(`leveraged snapshot spent=${lev.spent} read=${lev.read} failed=${lev.failed}`);
+  // Owner, Nov 25: every マーケット tab at once. ~12 credits a minute while U.S. stocks trade (~8 otherwise), never more than 25, on the warm
+  // tier (it yields to the member reserve); a copy members already read this minute costs nothing.
+  const board = await refreshBoardSnapshot().catch(() => ({ spent: 0, read: 0, failed: -1 }));
+  console.info(`board snapshot spent=${board.spent} read=${board.read} failed=${board.failed}`);
   try {
-    const report = await warmMinute(Date.now(), lev.spent);
+    const report = await warmMinute(Date.now(), lev.spent + board.spent);
     console.info(`comparison warm ${report.minute} spent=${report.spent} filings=${report.filings ?? 0} tickers=${report.tickers.join(",")} skipped=${report.skipped.join(",") || "-"}`);
-    return Response.json({ ok: true, ...report, leveraged: lev }, { headers });
+    return Response.json({ ok: true, ...report, leveraged: lev, board }, { headers });
   } catch (error) {
     console.warn(`comparison warm failed: ${error instanceof Error ? error.message : "error"}`);
     return Response.json({ ok: false }, { status: 503, headers });

@@ -1,0 +1,139 @@
+{
+  "ticker": "CRWV",
+  "name": "CoreWeave",
+  "exchange": "NASDAQ",
+  "quoteTicker": "CRWV",
+  "period": "Q3 2026",
+  "periodQuarter": 3,
+  "releasedOn": "2026-11-10",
+  "periodEnd": "2026-09-30",
+  "reviewedOn": "2026-11-25",
+  "currency": "USD",
+  "basis": {"eps": "none (the company reports no adjusted EPS; GAAP net loss per share was -$1.27)", "grossMargin": "not reported", "guidance": "implied Q4 2026 revenue = full-year 2026 revenue guidance minus nine-month revenue"},
+  "sources": [
+    {"url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000461/coreweave3q26earningspress.htm", "title": "CoreWeave Reports Strong Third Quarter 2026 Results (Form 8-K, Exhibit 99.1)", "location": "Financial highlights, Third Quarter 2026 Highlights, Business Outlook, statements of operations, balance sheets, cash flows, non-GAAP reconciliations"},
+    {"url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000465/crwv-20260930.htm", "title": "CoreWeave Form 10-Q for the quarter ended September 30, 2026", "location": "Significant Customers"},
+    {"url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000362/coreweave2q26earningspress.htm", "title": "CoreWeave Second Quarter 2026 results (Form 8-K, Exhibit 99.1)", "location": "Financial highlights, revenue backlog"},
+    {"url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000220/coreweave1q26earningspress.htm", "title": "CoreWeave First Quarter 2026 results (Form 8-K, Exhibit 99.1)", "location": "Financial highlights"},
+    {"url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000094/coreweave4q25earningspress.htm", "title": "CoreWeave Fourth Quarter 2025 results (Form 8-K, Exhibit 99.1)", "location": "Financial highlights"}
+  ],
+  "evidence": [
+    {"field": "numbers.revenue.current", "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000461/coreweave3q26earningspress.htm", "quote": "Revenue $ 3,661 $ 1,365 $ 8,314 $ 3,559"},
+    {"field": "numbers.revenue.yearAgo", "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000461/coreweave3q26earningspress.htm", "quote": "Revenue $ 3,661 $ 1,365 $ 8,314 $ 3,559"},
+    {"field": "numbers.revenue.previous", "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000362/coreweave2q26earningspress.htm", "quote": "Revenue $ 2,575 $ 1,212"},
+    {"field": "numbers.guidance.low", "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000461/coreweave3q26earningspress.htm", "quote": "We are raising our full year 2026 revenue guidance to a range of $13.0 billion to $13.3 billion."},
+    {"field": "numbers.guidance.low", "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000461/coreweave3q26earningspress.htm", "quote": "Revenue $ 3,661 $ 1,365 $ 8,314 $ 3,559", "calc": "13.0*1000-8314"},
+    {"field": "numbers.guidance.high", "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000461/coreweave3q26earningspress.htm", "quote": "We are raising our full year 2026 revenue guidance to a range of $13.0 billion to $13.3 billion."},
+    {"field": "numbers.guidance.high", "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000461/coreweave3q26earningspress.htm", "quote": "Revenue $ 3,661 $ 1,365 $ 8,314 $ 3,559", "calc": "13.3*1000-8314"},
+    {"field": "history[0].value", "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000461/coreweave3q26earningspress.htm", "quote": "Revenue $ 3,661 $ 1,365 $ 8,314 $ 3,559"},
+    {"field": "history[1].value", "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000094/coreweave4q25earningspress.htm", "quote": "Revenue $ 1,572 $ 747"},
+    {"field": "history[2].value", "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000220/coreweave1q26earningspress.htm", "quote": "Revenue $ 2,078 $ 982"},
+    {"field": "history[3].value", "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000362/coreweave2q26earningspress.htm", "quote": "Revenue $ 2,575 $ 1,212"},
+    {"field": "tiles[0].value", "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000461/coreweave3q26earningspress.htm", "quote": "Revenue $ 3,661 $ 1,365 $ 8,314 $ 3,559", "calc": "3661/1000", "round": 2},
+    {"field": "tiles[0].note", "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000461/coreweave3q26earningspress.htm", "quote": "Revenue $ 3,661 $ 1,365 $ 8,314 $ 3,559", "calc": "(3661/1365-1)*100", "round": 0},
+    {"field": "tiles[1].value", "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000461/coreweave3q26earningspress.htm", "quote": "Revenue backlog 1 was approximately $132.5 billion as of September 30, 2026."},
+    {"field": "tiles[1].note", "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000362/coreweave2q26earningspress.htm", "quote": "Revenue backlog 1 was approximately $104 billion as of June 30, 2026."},
+    {"field": "tiles[2].value", "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000461/coreweave3q26earningspress.htm", "quote": "Net loss $ (709) $ (110) Net loss margin (19) % (8) %"},
+    {"field": "tiles[2].note", "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000461/coreweave3q26earningspress.htm", "quote": "Net loss $ (709) $ (110) Net loss margin (19) % (8) %"},
+    {"field": "summary.cards.growth", "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000461/coreweave3q26earningspress.htm", "quote": "Added more than 200 MWs of active power to reach over 1.7 GW"},
+    {"field": "summary.cards.growth", "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000461/coreweave3q26earningspress.htm", "quote": "Grew total contracted power more than 900 MW to over 4.6 GW"},
+    {"field": "summary.cards.growth", "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000465/crwv-20260930.htm", "quote": "Customer A 24 % 67 % 33 % 70 % Customer B 30 % * 26 % *"},
+    {"field": "summary.cards.growth", "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000465/crwv-20260930.htm", "quote": "For each of the three months ended September 30, 2026 and 2025, committed contracts accounted for 98% of our revenue."},
+    {"field": "summary.cards.change", "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000461/coreweave3q26earningspress.htm", "quote": "Adjusted operating income $ 379 $ 217 Adjusted operating income margin 10 % 16 %"},
+    {"field": "summary.cards.change", "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000362/coreweave2q26earningspress.htm", "quote": "Adjusted operating income $ 128 $ 200 Adjusted operating income margin 5 % 16 %"},
+    {"field": "summary.cards.change", "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000461/coreweave3q26earningspress.htm", "quote": "Adjusted EBITDA $ 2,256 $ 838 Adjusted EBITDA margin 62 % 61 %"},
+    {"field": "summary.cards.change", "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000461/coreweave3q26earningspress.htm", "quote": "Interest expense, net $ (846) $ (310)"},
+    {"field": "summary.cards.change", "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000461/coreweave3q26earningspress.htm", "quote": "Operating income 207 52"},
+    {"field": "summary.cards.caution", "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000461/coreweave3q26earningspress.htm", "quote": "Purchases of property and equipment, including capitalized internal-use software (9,441) (3,279)"},
+    {"field": "summary.cards.caution", "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000461/coreweave3q26earningspress.htm", "quote": "Recourse debt, current 9,183 6,118 Non-recourse debt, current 1,389 590"},
+    {"field": "summary.cards.caution", "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000461/coreweave3q26earningspress.htm", "quote": "Recourse debt, non-current 32,417 14,608 Non-recourse debt, non-current 3,884 57"},
+    {"field": "summary.cards.caution", "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000461/coreweave3q26earningspress.htm", "quote": "Raised approximately $4.2 billion through an upsized offering of convertible senior notes"},
+    {"field": "summary.cards.caution", "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000461/coreweave3q26earningspress.htm", "quote": "Established inaugural at-the-market equity program for up to 35 million shares of Class A common stock"},
+    {"field": "summary.cards.next", "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000461/coreweave3q26earningspress.htm", "quote": "We now expect full year 2026 capital expenditures of $37 billion to $39 billion"},
+    {"field": "summary.cards.next", "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000461/coreweave3q26earningspress.htm", "quote": "We expect interest expense for Q4 2026 in the range of $1.05 to $1.15 billion."},
+    {"field": "summary.cards.next", "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000461/coreweave3q26earningspress.htm", "quote": "approximately $9 billion in customer prepayments and deposits expected in the next three months alone"}
+  ],
+  "numbers": {
+    "revenue": {"current": 3661, "previous": 2575, "yearAgo": 1365},
+    "adjustedEPS": null,
+    "epsEstimate": null,
+    "grossMargin": null,
+    "guidance": {"low": 4686, "high": 4986, "grossMarginPercent": null},
+    "segments": null
+  },
+  "history": [
+    {"label": "Q3", "end": "2025-09-30", "value": 1365},
+    {"label": "Q4", "end": "2025-12-31", "value": 1572},
+    {"label": "Q1", "end": "2026-03-31", "value": 2078},
+    {"label": "Q2", "end": "2026-06-30", "value": 2575}
+  ],
+  "tiles": [
+    {"label": {"ja": "売上高", "en": "Revenue"}, "value": {"ja": "36.61億ドル", "en": "$3.66B"}, "note": {"ja": "前年同期比 +168%", "en": "+168% YoY"}},
+    {"label": {"ja": "受注残高", "en": "Revenue backlog"}, "value": {"ja": "約1,325億ドル", "en": "$132.5B"}, "note": {"ja": "6月末は約1,040億ドル", "en": "$104B at June 30"}},
+    {"label": {"ja": "純損失(GAAP)", "en": "Net loss (GAAP)"}, "value": {"ja": "−7.09億ドル", "en": "−$709M"}, "note": {"ja": "前年同期は−1.10億ドル", "en": "−$110M a year earlier"}}
+  ],
+  "summary": {
+    "conclusion": [
+      {"ja": "売上は36.61億ドルで、前期から約4割、前年同期の約2.7倍に増えました。受注残高も約1,325億ドルに増えています。", "en": "Revenue was $3.66B, up about 40% from the previous quarter and about 2.7 times the year-ago level. Revenue backlog rose to about $132.5B."},
+      {"ja": "一方で、純損失は7.09億ドルに広がりました。借入を増やして設備を買っているため、支払利息(8.46億ドル)が営業利益(2.07億ドル)を大きく上回っています。", "en": "Meanwhile, the net loss widened to $709M. Because equipment is bought with borrowed money, interest expense ($846M) far exceeded operating income ($207M)."},
+      {"ja": "通期の売上見通しから計算すると、第4四半期の売上は46.86億〜49.86億ドルになります。", "en": "The full-year revenue guidance implies fourth-quarter revenue of $4.69B to $4.99B."}
+    ],
+    "cards": {
+      "growth": {
+        "headline": {"ja": "受注残高は約1,325億ドルに", "en": "Revenue backlog reached about $132.5B"},
+        "chips": [
+          {"tone": "up", "text": {"ja": "受注残高 約1,040億 → 1,325億ドル", "en": "Backlog ~$104B → $132.5B"}},
+          {"tone": "up", "text": {"ja": "稼働中の電力 1.7GW超", "en": "Active power over 1.7 GW"}}
+        ],
+        "sections": [
+          {"key": "happened", "text": {"ja": "受注残高(契約済みで、これから売上になる金額)は、6月末の約1,040億ドルから9月末の約1,325億ドルに増えました。稼働中の電力は200MW以上増えて1.7GWを超え、契約済みの電力は4.6GWを超えました。", "en": "Revenue backlog (contracted amounts still to be recognized) rose from about $104B at June 30 to about $132.5B at September 30. Active power grew by more than 200 MW to over 1.7 GW, and contracted power exceeded 4.6 GW."}},
+          {"key": "good", "text": {"ja": "売上の大部分は期間の決まった契約によるもので、受注残高は今の四半期売上の約36倍あります。設備が動き出せば、売上になる見込みの金額が大きい状態です。", "en": "Most revenue comes from committed contracts, and backlog is about 36 times this quarter's revenue. Once capacity comes online, a large amount is lined up to become revenue."}},
+          {"key": "watch", "text": {"ja": "顧客の集中は大きいままです。今期は2社(顧客Aと顧客B)だけで売上の24%と30%を占めました。", "en": "Customer concentration remains high: two customers (A and B) accounted for 24% and 30% of revenue this quarter."}},
+          {"key": "means", "text": {"ja": "受注残高が売上になるには、データセンターの電力と設備を予定どおり用意する必要があります。", "en": "Turning backlog into revenue depends on getting power and equipment ready on schedule."}}
+        ],
+        "segment": null
+      },
+      "change": {
+        "headline": {"ja": "売上は前期比 +42.2%、調整後営業利益率は5%から10%へ", "en": "Revenue up 42.2% QoQ, adjusted operating margin from 5% to 10%"},
+        "chips": [
+          {"tone": "up", "text": {"ja": "売上 前期比 +42.2%", "en": "Revenue +42.2% QoQ"}},
+          {"tone": "up", "text": {"ja": "調整後営業利益率 5% → 10%", "en": "Adj. operating margin 5% → 10%"}}
+        ],
+        "sections": [
+          {"key": "happened", "text": {"ja": "売上は25.75億ドルから36.61億ドルへ、10.86億ドル増えました。調整後営業利益率は5%から10%に上がっています。", "en": "Revenue rose from $2.58B to $3.66B, up $1.09B. Adjusted operating margin rose from 5% to 10%."}},
+          {"key": "good", "text": {"ja": "調整後EBITDA(減価償却などを除いた利益)は22.56億ドルで、売上の62%です。設備から生まれる現金の力は大きくなっています。", "en": "Adjusted EBITDA (profit before depreciation and similar items) was $2.26B, or 62% of revenue, so the cash-generating power of the equipment is growing."}},
+          {"key": "watch", "text": {"ja": "GAAPの純損失は7.09億ドルで、前年同期の1.10億ドルから広がりました。支払利息が8.46億ドルと、営業利益2.07億ドルの約4倍あるためです。", "en": "The GAAP net loss widened to $709M from $110M a year ago, because interest expense of $846M was about four times operating income of $207M."}},
+          {"key": "view", "text": {"ja": "売上と調整後の利益は伸びていますが、最終的な損益は借入の利息で赤字です。調整後の数字と最終損益を分けて見ます。", "en": "Revenue and adjusted profit are growing, but interest on debt keeps the bottom line negative. Read adjusted figures and net results separately."}}
+        ],
+        "segment": null
+      },
+      "caution": {
+        "headline": {"ja": "設備投資は売上の約2.6倍、借入は約2.2倍に", "en": "Capex was about 2.6× revenue; debt roughly doubled"},
+        "chips": [
+          {"tone": "down", "text": {"ja": "3か月の設備投資 94.41億ドル", "en": "Quarterly capex $9.44B"}},
+          {"tone": "down", "text": {"ja": "借入 213.73億 → 468.73億ドル", "en": "Debt $21.37B → $46.87B"}}
+        ],
+        "sections": [
+          {"key": "happened", "text": {"ja": "3か月の設備投資(有形固定資産の購入)は94.41億ドルで、売上36.61億ドルの約2.6倍でした。借入金の合計は昨年末の213.73億ドルから468.73億ドルに増えています。", "en": "Capital spending (purchases of property and equipment) was $9.44B in the quarter, about 2.6 times revenue of $3.66B. Total debt rose from $21.37B at the end of last year to $46.87B."}},
+          {"key": "watch", "text": {"ja": "今期は約42億ドルの転換社債を発行し、最大3,500万株を市場で売り出せる仕組み(ATM)も作りました。社債の転換や新株の発行が進むと、1株あたりの価値は薄まります。", "en": "This quarter the company issued about $4.2B of convertible notes and set up an at-the-market program for up to 35 million new shares. Conversions or new share sales dilute existing holders."}},
+          {"key": "means", "text": {"ja": "設備にお金を先に使い、売上はあとから入る形です。金利の負担は次期も大きく、会社は第4四半期の支払利息を10.5億〜11.5億ドルと見込んでいます。", "en": "Money is spent on equipment first and revenue comes later. The interest burden stays heavy: the company expects fourth-quarter interest expense of $1.05B to $1.15B."}},
+          {"key": "view", "text": {"ja": "受注残高が大きくても、資金を借り続けられるかが前提になります。次の決算で、借入・利息・新株発行の動きを確かめます。", "en": "A large backlog still depends on continued access to financing. Check debt, interest and share issuance in the next report."}}
+        ],
+        "segment": null
+      },
+      "next": {
+        "headline": {"ja": "通期見通しから見た第4四半期", "en": "Fourth quarter implied by the full-year outlook"},
+        "chips": [
+          {"tone": "gold", "text": {"ja": "第4四半期売上(計算) 46.86〜49.86億ドル", "en": "Implied Q4 revenue $4.69–4.99B"}},
+          {"tone": "gold", "text": {"ja": "通期設備投資 370〜390億ドル", "en": "FY capex $37–39B"}}
+        ],
+        "sections": [
+          {"key": "happened", "text": {"ja": "会社は2026年通期の売上を130億〜133億ドルに引き上げました。1〜9月の売上は83.14億ドルなので、第4四半期は46.86億〜49.86億ドルになる計算です。今回の36.61億ドルより約28%以上多い水準です。", "en": "The company raised its 2026 revenue guidance to $13.0B to $13.3B. Revenue for the first nine months was $8.31B, which implies fourth-quarter revenue of $4.69B to $4.99B, at least about 28% above this quarter's $3.66B."}},
+          {"key": "watch", "text": {"ja": "通期の設備投資は370億〜390億ドルと、下限を引き上げました。会社は今後3か月で約90億ドルの前払い金などを顧客から受け取る見込みとしていますが、投資の大きさは変わりません。", "en": "Full-year capex guidance is $37B to $39B, with the low end raised. The company expects about $9B in customer prepayments and deposits over the next three months, but the spending remains very large."}},
+          {"key": "view", "text": {"ja": "次の決算で、売上がこの幅に入るかと、支払利息・損失の大きさがどう変わるかを見ます。", "en": "In the next report, check whether revenue lands in this range and how interest expense and losses change."}}
+        ],
+        "segment": null
+      }
+    }
+  }
+}
