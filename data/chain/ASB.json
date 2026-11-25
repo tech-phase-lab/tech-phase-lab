@@ -1,0 +1,152 @@
+{
+  "root": {
+    "ticker": "ASB",
+    "name": "アソシエイテッド・バンク・コープ",
+    "cik": 7789,
+    "name_en": "Associated Banc-Corp"
+  },
+  "rows": [
+    {
+      "ja": "融資先(相手の資料に記載)",
+      "en": "Borrowers (named in their filings)"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "TULP",
+      "ticker": "TULP",
+      "name": "ブルーミア・ホールディングス",
+      "name_en": "Bloomia Holdings",
+      "sub": "生花(チューリップ)",
+      "sub_en": "Fresh-cut tulips",
+      "sub_short": "生花",
+      "sub_short_en": "Flowers",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Bloomiaが10-Kで、借入枠の相手として挙げる",
+          "text_en": "Bloomia borrows under a credit agreement with Associated Bank",
+          "source": {
+            "label": "Bloomia Holdings 10-K(2026年6月期)",
+            "label_en": "Bloomia Holdings 10-K (FY ended Jun 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/875355/000110465926109274/tulp-20260630x10k.htm",
+            "level": "official",
+            "date": "2026-09-21",
+            "quote": "Borrowings under our credit agreement with Associated Bank, N.A."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NSYS",
+      "ticker": "NSYS",
+      "name": "ノーテック・システムズ",
+      "name_en": "Nortech Systems",
+      "sub": "電子機器の受託製造",
+      "sub_en": "Electronics manufacturing",
+      "sub_short": "受託製造",
+      "sub_short_en": "EMS",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Nortechが10-K/Aで、1,500万ドルの新しい信用枠の相手として挙げる(2026年3月)",
+          "text_en": "Nortech signed a new $15 million revolving facility with Associated Bank (March 2026)",
+          "source": {
+            "label": "Nortech Systems 10-K/A(2025年度)",
+            "label_en": "Nortech Systems 10-K/A (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/722313/000149315226016795/form10-ka.htm",
+            "level": "official",
+            "date": "2026-04-15",
+            "quote": "On March 20, 2026, we entered into a new Credit and Security Agreement with Associated Bank, National Association, which provides for a revolving credit facility of up to $15,000"
+          }
+        }
+      ]
+    },
+    {
+      "id": "KBSR",
+      "ticker": "KBSR",
+      "name": "KBSリアル・エステート・インベストメント・トラストIII",
+      "name_en": "KBS Real Estate Investment Trust III",
+      "sub": "オフィスREIT",
+      "sub_en": "Office REIT",
+      "sub_short": "REIT",
+      "sub_short_en": "Office",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "KBS REIT IIIが10-Kで、物件の借入枠の貸し手の一社に挙げる",
+          "text_en": "KBS REIT III lists Associated Bank among its portfolio revolving loan lenders",
+          "source": {
+            "label": "KBS Real Estate Investment Trust III 10-K(2025年度)",
+            "label_en": "KBS Real Estate Investment Trust III 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1482430/000148243026000014/kbsriii-20251231.htm",
+            "level": "official",
+            "date": "2026-03-27",
+            "quote": "Bank National Association, Regions Bank, Citizens Bank, City National Bank and Associated Bank, National Association (the \"Modified Portfolio Revolving Loan Lenders\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BFS",
+      "ticker": "BFS",
+      "name": "サウル・センターズ",
+      "name_en": "Saul Centers",
+      "sub": "商業施設REIT",
+      "sub_en": "Shopping center REIT",
+      "sub_short": "REIT",
+      "sub_short_en": "Retail",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Saul Centersが10-Kで、2025年7月の借入枠の貸し手の一社に挙げる",
+          "text_en": "Saul Centers lists Associated Bank among the lenders on its July 2025 credit agreement",
+          "source": {
+            "label": "Saul Centers 10-K(2025年度)",
+            "label_en": "Saul Centers 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/907254/000090725426000006/bfs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "The Huntington National Bank, as Documentation Agent and Joint Lead Arranger; and Wells Fargo, Capital One, US Bank, Truist, Huntington, Associated Bank, National Association, and Atlantic Union Bank, as Lenders (the \"Credit Agreement\")"
+          }
+        }
+      ]
+    },
+    {
+      "id": "WEYS",
+      "ticker": "WEYS",
+      "name": "ウェイコ・グループ",
+      "name_en": "Weyco Group",
+      "sub": "靴",
+      "sub_en": "Footwear",
+      "sub_short": "靴",
+      "sub_short_en": "Footwear",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Weycoが10-Kで、借入契約の相手として挙げる",
+          "text_en": "Weyco lists its credit agreement with Associated Bank among its exhibits",
+          "source": {
+            "label": "Weyco Group 10-K(2025年度)",
+            "label_en": "Weyco Group 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/106532/000110465926027690/weys-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-03-13",
+            "quote": "Credit Agreement, dated as of November 4, 2020, between Weyco Group, Inc. and Associated Bank National Ass"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

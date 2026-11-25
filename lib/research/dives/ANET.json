@@ -1,0 +1,511 @@
+{
+ "ticker": "ANET",
+ "name": "Arista Networks",
+ "exchange": "NYSE",
+ "quoteTicker": "ANET",
+ "period": "Q3 2026",
+ "periodQuarter": 3,
+ "releasedOn": "2026-11-03",
+ "periodEnd": "2026-09-30",
+ "reviewedOn": "2026-11-25",
+ "currency": "USD",
+ "basis": {
+  "eps": "non-GAAP diluted",
+  "grossMargin": "non-GAAP",
+  "guidance": "company range $3.9–4.0B; no gross margin guidance (non-GAAP operating margin 48–49% only)"
+ },
+ "sources": [
+  {
+   "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000252/ex991q326-earningsrelease.htm",
+   "title": "Arista Networks, Inc. Reports Third Quarter 2026 Financial Results (Form 8-K Exhibit 99.1, November 3, 2026)",
+   "location": "Third Quarter Financial Highlights, Financial Outlook, Condensed Consolidated Income Statements, GAAP to non-GAAP reconciliation, Balance Sheets"
+  },
+  {
+   "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000174/ex991q226-earningsrelease.htm",
+   "title": "Arista Networks, Inc. Reports Second Quarter 2026 Financial Results (Form 8-K Exhibit 99.1, August 4, 2026)",
+   "location": "Condensed Consolidated Income Statements; GAAP to non-GAAP reconciliation"
+  },
+  {
+   "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000074/ex991q126-earningsrelease.htm",
+   "title": "Arista Networks, Inc. Reports First Quarter 2026 Financial Results (Form 8-K Exhibit 99.1, May 5, 2026)",
+   "location": "Condensed Consolidated Income Statements"
+  },
+  {
+   "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000010/ex991q425-earningsrelease.htm",
+   "title": "Arista Networks, Inc. Reports Fourth Quarter and Year End 2025 Financial Results (Form 8-K Exhibit 99.1, February 12, 2026)",
+   "location": "Condensed Consolidated Income Statements"
+  },
+  {
+   "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000254/anet-20260930.htm",
+   "title": "Arista Networks, Inc. Form 10-Q for the quarter ended September 30, 2026",
+   "location": "Purchase Commitments (notes); Management's Discussion and Analysis: customer concentration"
+  }
+ ],
+ "evidence": [
+  {
+   "field": "numbers.revenue.current",
+   "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000252/ex991q326-earningsrelease.htm",
+   "quote": "Total revenue 3,657.6 2,308.3 9,402.3 6,517.9"
+  },
+  {
+   "field": "numbers.revenue.yearAgo",
+   "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000252/ex991q326-earningsrelease.htm",
+   "quote": "Total revenue 3,657.6 2,308.3 9,402.3 6,517.9"
+  },
+  {
+   "field": "numbers.revenue.previous",
+   "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000174/ex991q226-earningsrelease.htm",
+   "quote": "Total revenue 3,035.7 2,204.8 5,744.7 4,209.6"
+  },
+  {
+   "field": "numbers.adjustedEPS",
+   "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000252/ex991q326-earningsrelease.htm",
+   "quote": "Non-GAAP diluted net income per share (1) $ 1.20 $ 0.77"
+  },
+  {
+   "field": "numbers.grossMargin.current",
+   "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000252/ex991q326-earningsrelease.htm",
+   "quote": "Non-GAAP gross margin 64.0 % 65.2 % 63.4 % 65.0 %"
+  },
+  {
+   "field": "numbers.grossMargin.previous",
+   "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000174/ex991q226-earningsrelease.htm",
+   "quote": "Non-GAAP gross margin 63.4 % 65.6 % 62.9 % 64.9 %"
+  },
+  {
+   "field": "numbers.guidance.low",
+   "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000252/ex991q326-earningsrelease.htm",
+   "quote": "Revenue of $3.9 - $4.0 billion;",
+   "calc": "3.9*1000"
+  },
+  {
+   "field": "numbers.guidance.high",
+   "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000252/ex991q326-earningsrelease.htm",
+   "quote": "Revenue of $3.9 - $4.0 billion;",
+   "calc": "4.0*1000"
+  },
+  {
+   "field": "history[0].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000252/ex991q326-earningsrelease.htm",
+   "quote": "Total revenue 3,657.6 2,308.3 9,402.3 6,517.9"
+  },
+  {
+   "field": "history[1].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000010/ex991q425-earningsrelease.htm",
+   "quote": "Total revenue 2,487.8 1,930.4 9,005.7 7,003.1"
+  },
+  {
+   "field": "history[2].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000074/ex991q126-earningsrelease.htm",
+   "quote": "Total revenue 2,709.0 2,004.8"
+  },
+  {
+   "field": "history[3].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000174/ex991q226-earningsrelease.htm",
+   "quote": "Total revenue 3,035.7 2,204.8 5,744.7 4,209.6"
+  },
+  {
+   "field": "summary.cards.growth.sections[0]",
+   "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000252/ex991q326-earningsrelease.htm",
+   "quote": "Product $ 3,190.0 $ 1,911.7 $ 8,106.5 $ 5,481.2 Service 467.6 396.6 1,295.8 1,036.7"
+  },
+  {
+   "field": "summary.cards.growth.sections[1]",
+   "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000252/ex991q326-earningsrelease.htm",
+   "quote": "Deferred revenue 5,102.2 4,002.6"
+  },
+  {
+   "field": "summary.cards.growth.sections[1]",
+   "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000252/ex991q326-earningsrelease.htm",
+   "quote": "Deferred revenue, non-current 1,737.3 1,369.8"
+  },
+  {
+   "field": "summary.cards.growth.sections[2]",
+   "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000254/anet-20260930.htm",
+   "quote": "Sales to one end customer represented 16%, 15%, and 21% of our total revenue, and sales to the other end customer represented 26%, 20%, and 18% of our total revenue for the years ended December 31, 2025, 2024, and 2023, respectively."
+  },
+  {
+   "field": "summary.cards.change.sections[2]",
+   "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000252/ex991q326-earningsrelease.htm",
+   "quote": "(Gains)/losses on strategic investments (134.5)"
+  },
+  {
+   "field": "summary.cards.change.sections[2]",
+   "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000252/ex991q326-earningsrelease.htm",
+   "quote": "GAAP and non-GAAP diluted earnings per share of $1.22 and $1.20, respectively"
+  },
+  {
+   "field": "summary.cards.caution.sections[0]",
+   "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000252/ex991q326-earningsrelease.htm",
+   "quote": "Inventories 3,209.8 2,247.1"
+  },
+  {
+   "field": "summary.cards.caution.sections[1]",
+   "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000254/anet-20260930.htm",
+   "quote": "we expect inventory and purchase commitments to remain elevated and subject to volatility as a result of new product introductions, shifts in customer demand, tightening supply conditions and fluctuations in supplier lead times. This volatility creates a heightened risk of excess or obsolete inventory"
+  },
+  {
+   "field": "summary.cards.caution.sections[2]",
+   "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000252/ex991q326-earningsrelease.htm",
+   "quote": "Non-GAAP operating margin of 48 - 49%; and"
+  },
+  {
+   "field": "summary.cards.next.chips[1]",
+   "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000252/ex991q326-earningsrelease.htm",
+   "quote": "Non-GAAP diluted net income per share of $1.26 - $1.30."
+  },
+  {
+   "field": "tiles[0].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000252/ex991q326-earningsrelease.htm",
+   "quote": "Revenue of $3.66 billion, an increase of 20.5% compared to the second quarter of 2026, and an increase of 58.5% from the third quarter of 2025."
+  },
+  {
+   "field": "tiles[0].note",
+   "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000252/ex991q326-earningsrelease.htm",
+   "quote": "Revenue of $3.66 billion, an increase of 20.5% compared to the second quarter of 2026, and an increase of 58.5% from the third quarter of 2025."
+  },
+  {
+   "field": "tiles[0].note",
+   "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000252/ex991q326-earningsrelease.htm",
+   "quote": "exceeding guidance of $3.3 billion while growing 58.5%, the highest year-over-year revenue growth since our IPO."
+  },
+  {
+   "field": "tiles[1].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000252/ex991q326-earningsrelease.htm",
+   "quote": "GAAP and non-GAAP operating margin of 44.9% and 49.1%, respectively, compared to GAAP and non-GAAP operating margin of 42.4% and 48.6% in the third quarter of 2025."
+  },
+  {
+   "field": "tiles[1].note",
+   "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000252/ex991q326-earningsrelease.htm",
+   "quote": "GAAP and non-GAAP operating margin of 44.9% and 49.1%, respectively, compared to GAAP and non-GAAP operating margin of 42.4% and 48.6% in the third quarter of 2025."
+  },
+  {
+   "field": "tiles[2].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000254/anet-20260930.htm",
+   "quote": "As of September 30, 2026, we had non-cancellable purchase commitments not recorded on our balance sheet of $ 11.4 billion, of which $ 9.3 billion have expected receipt dates within 12 months"
+  },
+  {
+   "field": "tiles[2].note",
+   "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000254/anet-20260930.htm",
+   "quote": "As of September 30, 2026, we had non-cancellable purchase commitments not recorded on our balance sheet of $ 11.4 billion, of which $ 9.3 billion have expected receipt dates within 12 months"
+  }
+ ],
+ "tiles": [
+  {
+   "label": {
+    "ja": "売上高",
+    "en": "Revenue"
+   },
+   "value": {
+    "ja": "36.58億ドル",
+    "en": "$3.66B"
+   },
+   "note": {
+    "ja": "前年同期比 +58.5%・上場来最大の伸び",
+    "en": "+58.5% YoY, fastest since IPO"
+   }
+  },
+  {
+   "label": {
+    "ja": "調整後(non-GAAP)営業利益率",
+    "en": "Non-GAAP operating margin"
+   },
+   "value": {
+    "ja": "49.1%",
+    "en": "49.1%"
+   },
+   "note": {
+    "ja": "前年同期 48.6%",
+    "en": "Prior-year quarter 48.6%"
+   }
+  },
+  {
+   "label": {
+    "ja": "取り消せない部品などの発注残",
+    "en": "Non-cancellable purchase commitments"
+   },
+   "value": {
+    "ja": "114億ドル",
+    "en": "$11.4B"
+   },
+   "note": {
+    "ja": "9月末・うち93億ドルは12か月以内",
+    "en": "Sept. 30; $9.3B due within 12 months"
+   }
+  }
+ ],
+ "numbers": {
+  "revenue": {
+   "current": 3657.6,
+   "previous": 3035.7,
+   "yearAgo": 2308.3
+  },
+  "adjustedEPS": 1.2,
+  "epsEstimate": null,
+  "grossMargin": {
+   "current": 64.0,
+   "previous": 63.4
+  },
+  "guidance": {
+   "low": 3900,
+   "high": 4000,
+   "grossMarginPercent": null
+  },
+  "segments": null
+ },
+ "history": [
+  {
+   "label": "Q3",
+   "end": "2025-09-30",
+   "value": 2308.3
+  },
+  {
+   "label": "Q4",
+   "end": "2025-12-31",
+   "value": 2487.8
+  },
+  {
+   "label": "Q1",
+   "end": "2026-03-31",
+   "value": 2709.0
+  },
+  {
+   "label": "Q2",
+   "end": "2026-06-30",
+   "value": 3035.7
+  }
+ ],
+ "summary": {
+  "conclusion": [
+   {
+    "ja": "売上は36.58億ドルで、前四半期から20.5%、前年同期から58.5%増えました。会社は上場以来で最も大きい前年比の伸びだとしています。",
+    "en": "Revenue was $3.66B, up 20.5% from the previous quarter and 58.5% from a year earlier, the fastest year-over-year growth since the IPO."
+   },
+   {
+    "ja": "調整後の粗利益率は63.4%から64.0%に戻り、調整後の営業利益率は49.1%と高い水準です。一方で、在庫と部品などの発注残が大きく積み上がっており、需要の読み違いには注意が必要です。",
+    "en": "Non-GAAP gross margin recovered from 63.4% to 64.0%, and non-GAAP operating margin was a high 49.1%. Inventory and purchase commitments have built up a lot, so a demand misjudgment would hurt."
+   }
+  ],
+  "cards": {
+   "growth": {
+    "headline": {
+     "ja": "製品売上が前年同期比67%増",
+     "en": "Product revenue up 67% year over year"
+    },
+    "chips": [
+     {
+      "tone": "up",
+      "text": {
+       "ja": "製品 31.90億ドル",
+       "en": "Product $3.19B"
+      }
+     },
+     {
+      "tone": "up",
+      "text": {
+       "ja": "サービス 4.68億ドル",
+       "en": "Service $468M"
+      }
+     },
+     {
+      "tone": "gold",
+      "text": {
+       "ja": "前受け収益 計68億ドル",
+       "en": "Deferred revenue $6.8B total"
+      }
+     }
+    ],
+    "sections": [
+     {
+      "key": "happened",
+      "text": {
+       "ja": "製品の売上は31.90億ドルで、前年同期の19.12億ドルから67%増えました。保守などのサービス売上は4.68億ドルで、前年同期の3.97億ドルから18%増えています。",
+       "en": "Product revenue was $3.19B, up 67% from $1.91B a year earlier. Service revenue, mostly support contracts, was $468M, up 18% from $397M."
+      }
+     },
+     {
+      "key": "good",
+      "text": {
+       "ja": "AI向けのデータセンターで使うネットワーク機器の需要が伸びています。代金を先に受け取って、まだ売上にしていない「前受け収益」は、9月末で計68.4億ドルと、昨年末の53.7億ドルから増えました。",
+       "en": "Demand for networking gear in AI data centers is growing. Deferred revenue, cash collected but not yet booked as revenue, reached $6.84B at September 30, up from $5.37B at the end of 2025."
+      }
+     },
+     {
+      "key": "watch",
+      "text": {
+       "ja": "売上の多くを少数の大口顧客が占めます。2025年は、2社がそれぞれ売上の26%と16%でした。大口顧客が投資を減らすと、売上への影響は大きくなります。",
+       "en": "A few large customers account for much of revenue. In 2025, two customers made up 26% and 16% of revenue. If they cut spending, the impact would be large."
+      }
+     }
+    ],
+    "segment": null
+   },
+   "change": {
+    "headline": {
+     "ja": "売上は前期比 +20.5%、粗利益率も上昇",
+     "en": "Revenue up 20.5% QoQ; gross margin higher"
+    },
+    "chips": [
+     {
+      "tone": "up",
+      "text": {
+       "ja": "売上 前期比 +20.5%",
+       "en": "Revenue +20.5% QoQ"
+      }
+     },
+     {
+      "tone": "up",
+      "text": {
+       "ja": "調整後粗利益率 63.4% → 64.0%",
+       "en": "Non-GAAP gross margin 63.4% → 64.0%"
+      }
+     },
+     {
+      "tone": "gold",
+      "text": {
+       "ja": "調整後EPS 1.20ドル",
+       "en": "Non-GAAP EPS $1.20"
+      }
+     }
+    ],
+    "sections": [
+     {
+      "key": "happened",
+      "text": {
+       "ja": "売上は30.36億ドルから36.58億ドルへ6.22億ドル増え、会社の見通し(33億ドル)を大きく上回りました。調整後粗利益率は63.4%から64.0%に上がっています。",
+       "en": "Revenue rose $622M from $3.04B to $3.66B, well above the $3.3B guidance. Non-GAAP gross margin rose from 63.4% to 64.0%."
+      }
+     },
+     {
+      "key": "good",
+      "text": {
+       "ja": "調整後の営業利益率は49.1%で、売上100ドルのうち約49ドルが本業の利益として残る計算です。前年同期の48.6%から少し上がりました。",
+       "en": "Non-GAAP operating margin was 49.1%, so about $49 of every $100 of sales stays as operating profit, up slightly from 48.6% a year earlier."
+      }
+     },
+     {
+      "key": "watch",
+      "text": {
+       "ja": "今回は会計上(GAAP)のEPS 1.22ドルが、調整後の1.20ドルを上回りました。投資先の株の評価益1.35億ドルが会計上の利益を押し上げたためで、本業の伸びとは分けて見ます。",
+       "en": "GAAP EPS of $1.22 was above non-GAAP EPS of $1.20 because a $135M gain on strategic investments lifted GAAP profit. Keep that separate from the core business."
+      }
+     },
+     {
+      "key": "view",
+      "text": {
+       "ja": "粗利益率は前年同期の65.2%よりはまだ低い水準です。売上の急増と利益率の回復が両立するかが、今後の見どころです。",
+       "en": "Gross margin is still below the 65.2% of a year earlier. Whether fast growth and margin recovery can go together is the question ahead."
+      }
+     }
+    ],
+    "segment": null
+   },
+   "caution": {
+    "headline": {
+     "ja": "在庫と発注残が大きく増加",
+     "en": "Inventory and purchase commitments are much higher"
+    },
+    "chips": [
+     {
+      "tone": "down",
+      "text": {
+       "ja": "在庫 22.47億 → 32.10億ドル",
+       "en": "Inventory $2.25B → $3.21B"
+      }
+     },
+     {
+      "tone": "down",
+      "text": {
+       "ja": "発注残 114億ドル",
+       "en": "Purchase commitments $11.4B"
+      }
+     },
+     {
+      "tone": "gold",
+      "text": {
+       "ja": "次期の営業利益率 48〜49%",
+       "en": "Next quarter op. margin 48–49%"
+      }
+     }
+    ],
+    "sections": [
+     {
+      "key": "happened",
+      "text": {
+       "ja": "在庫は昨年末の22.47億ドルから9月末に32.10億ドルへ、約43%増えました。さらに、取り消せない部品などの発注が114億ドルあり、そのうち93億ドルは12か月以内に受け取る予定です。",
+       "en": "Inventory rose about 43%, from $2.25B at the end of 2025 to $3.21B at September 30. On top of that, Arista has $11.4B of non-cancellable purchase commitments, $9.3B of them due within 12 months."
+      }
+     },
+     {
+      "key": "means",
+      "text": {
+       "ja": "部品不足に備えて先に確保している面があります。ただ、需要が予想より弱いと、在庫が売れ残って評価損が出るおそれがあると、会社自身も説明しています。",
+       "en": "Part of this is stocking up against component shortages. But the company itself warns that weaker demand could leave excess inventory and lead to write-downs."
+      }
+     },
+     {
+      "key": "watch",
+      "text": {
+       "ja": "次の四半期の調整後営業利益率の見通しは48〜49%で、今回の49.1%をわずかに下回ります。",
+       "en": "Next quarter's non-GAAP operating margin is guided at 48–49%, slightly below this quarter's 49.1%."
+      }
+     },
+     {
+      "key": "view",
+      "text": {
+       "ja": "今は需要が強く、在庫の積み増しは成長の準備とも読めます。在庫の伸びが売上の伸びを上回り続けないかを、四半期ごとに確かめます。",
+       "en": "With strong demand, the build can be read as preparing for growth. Check each quarter that inventory does not keep growing faster than sales."
+      }
+     }
+    ],
+    "segment": null
+   },
+   "next": {
+    "headline": {
+     "ja": "次期の売上見通しは39〜40億ドル",
+     "en": "Next quarter revenue outlook: $3.9–4.0B"
+    },
+    "chips": [
+     {
+      "tone": "gold",
+      "text": {
+       "ja": "売上 39〜40億ドル",
+       "en": "Revenue $3.9–4.0B"
+      }
+     },
+     {
+      "tone": "gold",
+      "text": {
+       "ja": "調整後EPS 1.26〜1.30ドル",
+       "en": "Non-GAAP EPS $1.26–1.30"
+      }
+     }
+    ],
+    "sections": [
+     {
+      "key": "happened",
+      "text": {
+       "ja": "会社は第4四半期の売上を39億〜40億ドルと見込んでいます。今回の36.58億ドルから、下限でも約6.6%、上限なら約9.4%の増加です。",
+       "en": "The company expects fourth-quarter revenue of $3.9B–$4.0B, about 6.6% above this quarter at the low end and 9.4% at the high end."
+      }
+     },
+     {
+      "key": "means",
+      "text": {
+       "ja": "見通しどおりなら、2026年の年間売上は約133億〜134億ドルになる計算です。ただ、前期比の伸びは今回の20.5%より小さくなります。",
+       "en": "If met, 2026 revenue would be about $13.3B–$13.4B. Quarter-over-quarter growth, though, would be smaller than this quarter's 20.5%."
+      }
+     },
+     {
+      "key": "view",
+      "text": {
+       "ja": "今回は見通しを大きく上回りました。次の決算では、売上が見通しの幅のどこに入るかと、在庫・発注残の動きをあわせて見ます。",
+       "en": "This quarter beat guidance by a wide margin. Next time, watch where revenue lands in the range together with inventory and purchase commitments."
+      }
+     }
+    ],
+    "segment": null
+   }
+  }
+ }
+}

@@ -1,0 +1,455 @@
+{
+ "ticker": "PLTR",
+ "name": "Palantir Technologies",
+ "exchange": "NASDAQ",
+ "quoteTicker": "PLTR",
+ "period": "Q3 2026",
+ "periodQuarter": 3,
+ "releasedOn": "2026-11-02",
+ "periodEnd": "2026-09-30",
+ "reviewedOn": "2026-11-25",
+ "currency": "USD",
+ "basis": {
+  "eps": "adjusted diluted",
+  "grossMargin": "GAAP, calculated as gross profit / revenue",
+  "guidance": "next-quarter revenue range as stated; no gross margin guidance"
+ },
+ "sources": [
+  {
+   "url": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000045/a2026q3ex991pressrelease.htm",
+   "title": "Palantir third quarter 2026 results (8-K Exhibit 99.1)",
+   "location": "Q3 2026 Highlights; Financial Summary; Outlook; statements of operations; stock-based compensation"
+  },
+  {
+   "url": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000039/a2026q2ex991pressrelease.htm",
+   "title": "Palantir second quarter 2026 results (8-K Exhibit 99.1)",
+   "location": "Condensed consolidated statements of operations"
+  },
+  {
+   "url": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000026/a2026q1ex991pressrelease.htm",
+   "title": "Palantir first quarter 2026 results (8-K Exhibit 99.1)",
+   "location": "Condensed consolidated statements of operations"
+  },
+  {
+   "url": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000004/a2025q4ex991earningsrelease.htm",
+   "title": "Palantir fourth quarter and full year 2025 results (8-K Exhibit 99.1)",
+   "location": "Q4 and FY 2025 Financial Summary"
+  }
+ ],
+ "evidence": [
+  {
+   "field": "numbers.revenue.current",
+   "url": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000045/a2026q3ex991pressrelease.htm",
+   "quote": "Three Months Ended September 30, Nine Months Ended September 30, 2026 2025 2026 2025 Revenue $ 2,313,411 $ 1,181,092 $ 5,881,458 $ 3,068,644 Cost of revenue (1) 383,286 207,307 895,954 573,211 Gross profit 1,930,125 973,785",
+   "calc": "2313411/1000"
+  },
+  {
+   "field": "numbers.revenue.yearAgo",
+   "url": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000045/a2026q3ex991pressrelease.htm",
+   "quote": "Three Months Ended September 30, Nine Months Ended September 30, 2026 2025 2026 2025 Revenue $ 2,313,411 $ 1,181,092 $ 5,881,458 $ 3,068,644 Cost of revenue (1) 383,286 207,307 895,954 573,211 Gross profit 1,930,125 973,785",
+   "calc": "1181092/1000"
+  },
+  {
+   "field": "numbers.revenue.previous",
+   "url": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000039/a2026q2ex991pressrelease.htm",
+   "quote": "Three Months Ended June 30, Six Months Ended June 30, 2026 2025 2026 2025 Revenue $ 1,935,464 $ 1,003,697 $ 3,568,047 $ 1,887,552 Cost of revenue (1) 296,870 192,934 512,668 365,904 Gross profit 1,638,594",
+   "calc": "1935464/1000"
+  },
+  {
+   "field": "numbers.adjustedEPS",
+   "url": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000045/a2026q3ex991pressrelease.htm",
+   "quote": "Adjusted EPS, Diluted $ 0.44"
+  },
+  {
+   "field": "numbers.grossMargin.current",
+   "url": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000045/a2026q3ex991pressrelease.htm",
+   "quote": "Three Months Ended September 30, Nine Months Ended September 30, 2026 2025 2026 2025 Revenue $ 2,313,411 $ 1,181,092 $ 5,881,458 $ 3,068,644 Cost of revenue (1) 383,286 207,307 895,954 573,211 Gross profit 1,930,125 973,785",
+   "calc": "1930125/2313411*100",
+   "round": 1
+  },
+  {
+   "field": "numbers.grossMargin.previous",
+   "url": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000039/a2026q2ex991pressrelease.htm",
+   "quote": "Three Months Ended June 30, Six Months Ended June 30, 2026 2025 2026 2025 Revenue $ 1,935,464 $ 1,003,697 $ 3,568,047 $ 1,887,552 Cost of revenue (1) 296,870 192,934 512,668 365,904 Gross profit 1,638,594",
+   "calc": "1638594/1935464*100",
+   "round": 1
+  },
+  {
+   "field": "numbers.guidance.low",
+   "url": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000045/a2026q3ex991pressrelease.htm",
+   "quote": "•Revenue of between $2.649 - $2.653 billion.",
+   "calc": "2.649*1000"
+  },
+  {
+   "field": "numbers.guidance.high",
+   "url": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000045/a2026q3ex991pressrelease.htm",
+   "quote": "•Revenue of between $2.649 - $2.653 billion.",
+   "calc": "2.653*1000"
+  },
+  {
+   "field": "history[0].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000045/a2026q3ex991pressrelease.htm",
+   "quote": "Three Months Ended September 30, Nine Months Ended September 30, 2026 2025 2026 2025 Revenue $ 2,313,411 $ 1,181,092 $ 5,881,458 $ 3,068,644 Cost of revenue (1) 383,286 207,307 895,954 573,211 Gross profit 1,930,125 973,785",
+   "calc": "1181092/1000"
+  },
+  {
+   "field": "history[1].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000004/a2025q4ex991earningsrelease.htm",
+   "quote": "Fourth Quarter Full Year 2025 Amount Amount Revenue $ 1,406,802 $ 4,475,446",
+   "calc": "1406802/1000"
+  },
+  {
+   "field": "history[2].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000026/a2026q1ex991pressrelease.htm",
+   "quote": "Three Months Ended March 31, 2026 2025 Revenue $ 1,632,583 $ 883,855",
+   "calc": "1632583/1000"
+  },
+  {
+   "field": "history[3].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000039/a2026q2ex991pressrelease.htm",
+   "quote": "Three Months Ended June 30, Six Months Ended June 30, 2026 2025 2026 2025 Revenue $ 1,935,464 $ 1,003,697 $ 3,568,047 $ 1,887,552 Cost of revenue (1) 296,870 192,934 512,668 365,904 Gross profit 1,638,594",
+   "calc": "1935464/1000"
+  },
+  {
+   "field": "tiles[0].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000045/a2026q3ex991pressrelease.htm",
+   "quote": "•Revenue grew 96% year-over-year and 20% quarter-over-quarter to $2.313 billion"
+  },
+  {
+   "field": "tiles[1].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000045/a2026q3ex991pressrelease.htm",
+   "quote": "◦U.S. commercial revenue grew 148% year-over-year and 29% quarter-over-quarter to $984 million"
+  },
+  {
+   "field": "tiles[2].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000045/a2026q3ex991pressrelease.htm",
+   "quote": "•Adjusted income from operations of $1.427 billion, representing a 62% margin"
+  },
+  {
+   "field": "tiles[0].note",
+   "url": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000045/a2026q3ex991pressrelease.htm",
+   "quote": "•Revenue grew 96% year-over-year and 20% quarter-over-quarter to $2.313 billion"
+  },
+  {
+   "field": "tiles[1].note",
+   "url": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000045/a2026q3ex991pressrelease.htm",
+   "quote": "◦U.S. commercial revenue grew 148% year-over-year and 29% quarter-over-quarter to $984 million"
+  },
+  {
+   "field": "tiles[2].note",
+   "url": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000045/a2026q3ex991pressrelease.htm",
+   "quote": "•Adjusted income from operations of $1.427 billion, representing a 62% margin"
+  }
+ ],
+ "tiles": [
+  {
+   "label": {
+    "ja": "売上高",
+    "en": "Revenue"
+   },
+   "value": {
+    "ja": "23.13億ドル",
+    "en": "$2.313B"
+   },
+   "note": {
+    "ja": "前年同期比 +96%・前期比 +20%",
+    "en": "YoY +96%, QoQ +20%"
+   }
+  },
+  {
+   "label": {
+    "ja": "米国商業売上",
+    "en": "U.S. commercial revenue"
+   },
+   "value": {
+    "ja": "9.84億ドル",
+    "en": "$984M"
+   },
+   "note": {
+    "ja": "前年同期比 +148%",
+    "en": "YoY +148%"
+   }
+  },
+  {
+   "label": {
+    "ja": "調整後営業利益",
+    "en": "Adjusted operating income"
+   },
+   "value": {
+    "ja": "14.27億ドル",
+    "en": "$1.427B"
+   },
+   "note": {
+    "ja": "利益率 62%(GAAPは47%)",
+    "en": "62% margin (GAAP 47%)"
+   }
+  }
+ ],
+ "numbers": {
+  "revenue": {
+   "current": 2313.411,
+   "previous": 1935.464,
+   "yearAgo": 1181.092
+  },
+  "adjustedEPS": 0.44,
+  "epsEstimate": null,
+  "grossMargin": {
+   "current": 83.4,
+   "previous": 84.7
+  },
+  "guidance": {
+   "low": 2649,
+   "high": 2653,
+   "grossMarginPercent": null
+  },
+  "segments": null
+ },
+ "history": [
+  {
+   "label": "Q3",
+   "end": "2025-09-30",
+   "value": 1181.092
+  },
+  {
+   "label": "Q4",
+   "end": "2025-12-31",
+   "value": 1406.802
+  },
+  {
+   "label": "Q1",
+   "end": "2026-03-31",
+   "value": 1632.583
+  },
+  {
+   "label": "Q2",
+   "end": "2026-06-30",
+   "value": 1935.464
+  }
+ ],
+ "summary": {
+  "conclusion": [
+   {
+    "ja": "売上は23.13億ドルで前年同期比96%増、前期比でも20%増えました。米国の商業(企業向け)売上が9.84億ドルとなり、初めて米国の政府向け売上を上回りました。",
+    "en": "Revenue was $2.313B, up 96% from a year ago and 20% from the previous quarter. U.S. commercial revenue reached $984M and exceeded U.S. government revenue for the first time."
+   },
+   {
+    "ja": "GAAPの営業利益率は47%、調整後は62%と高い利益率です。",
+    "en": "Margins are high: 47% GAAP operating margin and 62% adjusted."
+   },
+   {
+    "ja": "一方で、この四半期に結んだ契約の総額(TCV)は29.18億ドルと前年同期比6%増にとどまり、売上の伸びとの差が開いています。",
+    "en": "Total contract value signed in the quarter, however, was $2.918B, up only 6% from a year ago, well below revenue growth."
+   }
+  ],
+  "cards": {
+   "growth": {
+    "headline": {
+     "ja": "米国商業売上が前年同期の約2.5倍",
+     "en": "U.S. commercial revenue about 2.5 times a year ago"
+    },
+    "chips": [
+     {
+      "tone": "up",
+      "text": {
+       "ja": "米国商業 前年同期比 +148%",
+       "en": "U.S. commercial +148% YoY"
+      }
+     },
+     {
+      "tone": "up",
+      "text": {
+       "ja": "米国商業 前期比 +29%",
+       "en": "U.S. commercial +29% QoQ"
+      }
+     },
+     {
+      "tone": "up",
+      "text": {
+       "ja": "米国政府 前年同期比 +96%",
+       "en": "U.S. government +96% YoY"
+      }
+     }
+    ],
+    "sections": [
+     {
+      "key": "happened",
+      "text": {
+       "ja": "米国の商業売上は9.84億ドルで、前年同期比148%増、前期比29%増でした。米国の政府向け売上も9.53億ドルで96%増えています。米国全体では19.37億ドルで、売上の8割強です。",
+       "en": "U.S. commercial revenue was $984M, up 148% YoY and 29% QoQ. U.S. government revenue rose 96% to $953M. Total U.S. revenue was $1.937B, more than 80% of the company total."
+      }
+     },
+     {
+      "key": "good",
+      "text": {
+       "ja": "大型契約も増えています。この四半期に、100万ドル以上の契約を212件、1,000万ドル以上の契約を64件結びました。",
+       "en": "Large deals are growing too: the company closed 212 deals of at least $1M and 64 of at least $10M in the quarter."
+      }
+     },
+     {
+      "key": "watch",
+      "text": {
+       "ja": "米国以外の売上は約3.76億ドル(全体23.13億ドルから米国19.37億ドルを引いた額)で、伸びは米国に偏っています。",
+       "en": "Revenue outside the U.S. was about $376M ($2.313B total minus $1.937B U.S.), so growth is concentrated in the U.S."
+      }
+     },
+     {
+      "key": "view",
+      "text": {
+       "ja": "売上の大半が米国なので、米国の企業と政府の予算の動きが、そのまま業績に響きやすい構造です。",
+       "en": "With most revenue in the U.S., shifts in U.S. corporate and government budgets feed straight into results."
+      }
+     }
+    ]
+   },
+   "change": {
+    "headline": {
+     "ja": "売上は前期比 +19.5%、粗利益率は少し低下",
+     "en": "Revenue up 19.5% QoQ, gross margin slightly lower"
+    },
+    "chips": [
+     {
+      "tone": "down",
+      "text": {
+       "ja": "粗利益率 84.7% → 83.4%",
+       "en": "Gross margin 84.7% → 83.4%"
+      }
+     },
+     {
+      "tone": "gold",
+      "text": {
+       "ja": "調整後営業利益率 62%(前期も62%)",
+       "en": "Adj. operating margin 62% (also 62% last quarter)"
+      }
+     }
+    ],
+    "sections": [
+     {
+      "key": "happened",
+      "text": {
+       "ja": "売上は19.35億ドルから23.13億ドルへ、3.78億ドル増えました。粗利益率(GAAP)は84.7%から83.4%へ少し下がりました。調整後営業利益は14.27億ドルで、利益率は前期と同じ62%です。",
+       "en": "Revenue rose from $1.935B to $2.313B, up $378M. GAAP gross margin eased from 84.7% to 83.4%. Adjusted operating income was $1.427B, a 62% margin, the same as last quarter."
+      }
+     },
+     {
+      "key": "good",
+      "text": {
+       "ja": "現金もよく残っています。営業キャッシュフローは12.05億ドル、調整後フリーキャッシュフローは12.16億ドルで、売上の5割以上です。現金・米国債は104億ドルあります。",
+       "en": "Cash conversion is strong: operating cash flow was $1.205B and adjusted free cash flow $1.216B, over half of revenue. Cash and U.S. Treasuries total $10.4B."
+      }
+     },
+     {
+      "key": "watch",
+      "text": {
+       "ja": "株式報酬は3.19億ドルで、前年同期の1.72億ドルからほぼ倍増し、売上の約14%にあたります。調整後の利益には、この費用が含まれていません。",
+       "en": "Stock-based compensation nearly doubled to $318.9M from $172.3M, about 14% of revenue. Adjusted profit excludes this cost."
+      }
+     },
+     {
+      "key": "means",
+      "text": {
+       "ja": "GAAPの営業利益率(47%)と調整後(62%)の差の多くは株式報酬です。株式報酬は、株数が増えて1株あたりの価値が薄まる形で株主の負担になります。",
+       "en": "Most of the gap between the GAAP (47%) and adjusted (62%) operating margins is stock compensation, which shareholders bear through dilution."
+      }
+     }
+    ]
+   },
+   "caution": {
+    "headline": {
+     "ja": "新規契約額(TCV)の伸びは前年同期比6%",
+     "en": "Total contract value grew only 6% YoY"
+    },
+    "chips": [
+     {
+      "tone": "down",
+      "text": {
+       "ja": "TCV 29.18億ドル(+6%)",
+       "en": "TCV $2.918B (+6%)"
+      }
+     },
+     {
+      "tone": "gold",
+      "text": {
+       "ja": "米国商業の残存契約額 前期比 +4%",
+       "en": "U.S. commercial RDV +4% QoQ"
+      }
+     }
+    ],
+    "sections": [
+     {
+      "key": "happened",
+      "text": {
+       "ja": "この四半期に結んだ契約の総額(TCV)は29.18億ドルで、前年同期比6%増でした。米国商業の残存契約額(RDV)は65.17億ドルで、前年同期比79%増、前期比では4%増です。",
+       "en": "Total contract value signed in the quarter was $2.918B, up 6% YoY. U.S. commercial remaining deal value was $6.517B, up 79% YoY but only 4% QoQ."
+      }
+     },
+     {
+      "key": "means",
+      "text": {
+       "ja": "売上は96%増えていますが、将来の売上のもとになる新しい契約の伸びは、それよりずっと小さくなっています。契約の伸びが鈍いままだと、いずれ売上の伸びも緩やかになる可能性があります。",
+       "en": "Revenue grew 96%, but new contracts that feed future revenue grew far less. If contract growth stays slow, revenue growth could eventually slow too."
+      }
+     },
+     {
+      "key": "watch",
+      "text": {
+       "ja": "米国商業の残存契約額は前年同期比では79%増えていますが、前期比では4%増にとどまります。売上の伸び(前期比29%)に比べて、積み上がるペースが遅くなっています。",
+       "en": "U.S. commercial remaining deal value is up 79% from a year ago but only 4% from last quarter, far slower than the 29% sequential growth in U.S. commercial revenue."
+      }
+     },
+     {
+      "key": "view",
+      "text": {
+       "ja": "TCVは大型契約の時期で四半期ごとに大きく動く数字で、1四半期だけでは傾向とは言えません。次の決算でも契約額の伸びが小さいかを見ます。",
+       "en": "TCV swings with the timing of large deals, so one quarter is not a trend. The next report will show whether contract growth stays low."
+      }
+     }
+    ]
+   },
+   "next": {
+    "headline": {
+     "ja": "次期の会社見通しを追う",
+     "en": "Follow the company's outlook for next quarter"
+    },
+    "chips": [
+     {
+      "tone": "gold",
+      "text": {
+       "ja": "売上 26.49億〜26.53億ドル",
+       "en": "Revenue $2.649–2.653B"
+      }
+     },
+     {
+      "tone": "gold",
+      "text": {
+       "ja": "調整後営業利益 16.40億〜16.44億ドル",
+       "en": "Adj. operating income $1.640–1.644B"
+      }
+     }
+    ],
+    "sections": [
+     {
+      "key": "happened",
+      "text": {
+       "ja": "会社は第4四半期の売上を26.49億〜26.53億ドル、調整後営業利益を16.40億〜16.44億ドルと見込んでいます。今回の売上は23.13億ドルなので、見通しの下限でも約14.5%の増加です。",
+       "en": "The company expects fourth-quarter revenue of $2.649–2.653B and adjusted operating income of $1.640–1.644B. Against $2.313B this quarter, even the low end would be about 14.5% higher."
+      }
+     },
+     {
+      "key": "means",
+      "text": {
+       "ja": "見通しどおりなら、調整後営業利益率は約62%で、今回と同じ水準です。前期比の伸び(今回は約20%)は少し小さくなる見込みです。",
+       "en": "If met, the adjusted operating margin would be about 62%, the same as now. Sequential growth (about 20% this quarter) would slow somewhat."
+      }
+     },
+     {
+      "key": "view",
+      "text": {
+       "ja": "見通しは会社の予定で、実績ではありません。次の決算で、実績がこの幅に入るかと、新規契約額(TCV)の伸びが戻るかを見ます。",
+       "en": "The outlook is the company's plan, not a result. Watch whether results land in this range and whether TCV growth picks up."
+      }
+     }
+    ]
+   }
+  }
+ }
+}

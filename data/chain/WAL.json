@@ -1,0 +1,204 @@
+{
+  "root": {
+    "ticker": "WAL",
+    "name": "ウエスタン・アライアンス・バンコープ",
+    "cik": 1212545,
+    "name_en": "Western Alliance Bancorporation"
+  },
+  "rows": [
+    {
+      "ja": "融資・口座の取引先(相手の資料に記載)",
+      "en": "Borrowers & deposit customers (named in their filings)"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "MNTN",
+      "ticker": "MNTN",
+      "name": "MNTN",
+      "name_en": "MNTN",
+      "sub": "コネクテッドTV広告",
+      "sub_en": "Connected TV advertising",
+      "sub_short": "TV広告",
+      "sub_short_en": "Ad tech",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "MNTNが10-Kで、借入枠の相手として挙げる。7,500万ドル以上の預金・決済口座を置く義務もある",
+          "text_en": "MNTN's revolving credit is with Western Alliance Bank, and it must keep at least $75 million on deposit there",
+          "source": {
+            "label": "MNTN 10-K(2025年度)",
+            "label_en": "MNTN 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1891027/000189102726000019/mntn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "In addition, we are required to maintain no less than $75 million of our depository and operating accounts with Western Alliance Bank, subject to certain limited exceptions."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TDUP",
+      "ticker": "TDUP",
+      "name": "スレッドアップ",
+      "name_en": "ThredUp",
+      "sub": "中古衣料のネット販売",
+      "sub_en": "Online resale",
+      "sub_short": "中古衣料",
+      "sub_short_en": "Resale",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ThredUpが10-Kで、借入枠(ローン・セキュリティ契約)の相手として挙げる",
+          "text_en": "ThredUp's loan and security agreement is with Western Alliance Bank",
+          "source": {
+            "label": "ThredUp 10-K(2025年度)",
+            "label_en": "ThredUp 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1484778/000148477826000007/tdup-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "We are party to an amended and restated loan and security agreement with Western Alliance Bank, which was amended on January 30, 2026"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AEYE",
+      "ticker": "AEYE",
+      "name": "オーディオアイ",
+      "name_en": "AudioEye",
+      "sub": "ウェブ・アクセシビリティ",
+      "sub_en": "Web accessibility",
+      "sub_short": "ウェブ",
+      "sub_short_en": "Web tech",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "AudioEyeが10-Kで、2025年3月に新しい借入枠を結んだ相手として挙げる",
+          "text_en": "AudioEye entered a new credit facility with Western Alliance Bank in March 2025",
+          "source": {
+            "label": "AudioEye 10-K(2025年度)",
+            "label_en": "AudioEye 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1362190/000110465926027159/aeye-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-03-12",
+            "quote": "On March 31, 2025, we entered into a Loan and Security Agreement (the \"Credit Facility Agreement\") with Western Alliance Bank (the \"Lender\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NAGE",
+      "ticker": "NAGE",
+      "name": "ナイアジェン・バイオサイエンス",
+      "name_en": "Niagen Bioscience",
+      "sub": "NAD+サプリメント",
+      "sub_en": "NAD+ supplements",
+      "sub_short": "サプリ",
+      "sub_short_en": "Vitamins",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Niagenが10-Kで、1,000万ドルの借入枠の相手として挙げる",
+          "text_en": "Niagen's $10 million credit line is with Western Alliance Bank",
+          "source": {
+            "label": "Niagen Bioscience 10-K(2025年度)",
+            "label_en": "Niagen Bioscience 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1386570/000138657026000013/cdxc-20251231.htm",
+            "level": "official",
+            "date": "2026-03-04",
+            "quote": "We are subject to financial and operating covenants in our business financing agreement with Western Alliance Bank, as amended (Credit Agreement)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BARK",
+      "ticker": "BARK",
+      "name": "バーク",
+      "name_en": "BARK",
+      "sub": "犬用品",
+      "sub_en": "Dog products",
+      "sub_short": "犬用品",
+      "sub_short_en": "Dog gear",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "BARKが10-Kで、2017年からの借入枠(新株予約権つき)の相手として挙げる",
+          "text_en": "BARK's revolving credit, with warrants, dates to 2017 with Western Alliance",
+          "source": {
+            "label": "BARK 10-K(2026年3月期)",
+            "label_en": "BARK 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1819574/000162828026042242/bark-20260331.htm",
+            "level": "official",
+            "date": "2026-06-10",
+            "quote": "In October 2017, the Company entered into a loan and security agreement with and issued a warrant to purchase preferred stock (\"Initial Western Alliance Warrant\") to Western"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CVU",
+      "ticker": "CVU",
+      "name": "CPIエアロストラクチャーズ",
+      "name_en": "CPI Aerostructures",
+      "sub": "航空機構造部品",
+      "sub_en": "Aerostructures",
+      "sub_short": "航空部品",
+      "sub_short_en": "Aero",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "CPI Aerostructuresが10-K/Aで、2025年12月のローン・セキュリティ契約の相手として挙げる",
+          "text_en": "CPI Aerostructures signed a loan and security agreement with Western Alliance Bank in December 2025",
+          "source": {
+            "label": "CPI Aerostructures 10-K/A(2025年度)",
+            "label_en": "CPI Aerostructures 10-K/A (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/889348/000199937126007731/cvu-10ka_123125.htm",
+            "level": "official",
+            "date": "2026-04-07",
+            "quote": "We are subject to financial and other covenants under our Loan and Security Agreement with Western Alliance Bank, dated December 12, 2025 (the \"Loan and Security Agreement\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SCKT",
+      "ticker": "SCKT",
+      "name": "ソケット・モバイル",
+      "name_en": "Socket Mobile",
+      "sub": "バーコード読み取り機",
+      "sub_en": "Barcode scanners",
+      "sub_short": "読取機",
+      "sub_short_en": "Scanners",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Socket Mobileが10-Kで、優先する信用枠の相手として挙げる(社債はこれに劣後)",
+          "text_en": "Socket Mobile's senior credit facility is with Western Alliance Bank",
+          "source": {
+            "label": "Socket Mobile 10-K(2025年度)",
+            "label_en": "Socket Mobile 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/944075/000094407526000027/k10-2025.htm",
+            "level": "official",
+            "date": "2026-03-30",
+            "quote": "The Notes are secured by substantially all of the Company's assets and are subordinated to the Company's obligations under its senior credit facility with Western Alliance Bank."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

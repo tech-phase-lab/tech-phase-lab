@@ -12,7 +12,7 @@ import { PlanAccessDenied, PlanConflict } from '../../lib/resolute/plan-database
 const headers={'Cache-Control':'private, no-store','Content-Type':'application/json',
   'X-Content-Type-Options':'nosniff'};
 const json=(value,status=200,extra={})=>Response.json(value,{status,headers:{...headers,...extra}});
-export function createHandler(config, read, verify=authenticatePrincipal, plans, notifications, risk, rizel, aiCheck, mailStop, latestAlert, thermometer) {
+export function createHandler(config, read, verify=authenticatePrincipal, plans, notifications, risk, rizel, aiCheck, mailStop, latestAlert, thermometer, todayPlan) {
   const windows=new Map(); let active=0;
   return async request => {
     const url=new URL(request.url);
@@ -35,10 +35,12 @@ export function createHandler(config, read, verify=authenticatePrincipal, plans,
     const isLatestAlert=url.pathname==='/internal/v1/latest-alert';
     // 相場の温度計: the stored daily snapshot, read only (Postgres has no public proxy).
     const isThermometer=url.pathname==='/internal/v1/thermometer';
+    // 「今日やること」 (Nov 25): the member's own stored TodayPlan, read only.
+    const isTodayPlan=url.pathname==='/internal/v1/today-plan';
     if(!((isRisk || isRizel || isAiCheck ? ['GET','POST'] : isPlan ? ['GET','PUT','DELETE'] : isNotification ? ['GET','PUT'] : ['GET']).includes(request.method)))
       return json({error:'METHOD_NOT_ALLOWED'},405,{Allow:isPlan?'GET, PUT, DELETE':isNotification?'GET, PUT':'GET'});
     if(url.pathname==='/healthz' && !url.search)return json({status:'ok'});
-    if((url.pathname!=='/internal/v1/entitlements' && !isPlan && !isNotification && !isLatestAlert && !isThermometer && !isRisk && !isRizel && !isAiCheck) || url.search)return json({error:'NOT_FOUND'},404);
+    if((url.pathname!=='/internal/v1/entitlements' && !isPlan && !isNotification && !isLatestAlert && !isThermometer && !isTodayPlan && !isRisk && !isRizel && !isAiCheck) || url.search)return json({error:'NOT_FOUND'},404);
     const principal=await verify(request.headers,config);
     const userId=typeof principal==='string'?principal:principal?.userId;
     const ownerAccess=typeof principal==='object'?principal?.ownerAccess:undefined;
@@ -56,6 +58,7 @@ export function createHandler(config, read, verify=authenticatePrincipal, plans,
       if(isAiCheck){if(!aiCheck)return json({error:'CHECK_UNAVAILABLE'},503);return await aiCheck(request,userId);}
       if(isRizel){if(!rizel)return json({error:'RIZEL_UNAVAILABLE'},503);return await rizel(request,userId,readAccess);}
       if(isRisk){if(!risk)return json({error:"RISK_UNAVAILABLE"},503);return await risk(request,userId,readAccess);}
+      if(isTodayPlan){if(!todayPlan)return json({error:'TODAY_PLAN_UNAVAILABLE'},503);return await todayPlan(request,userId,readAccess);}
       if(isThermometer){if(!thermometer)return json({error:'THERMOMETER_UNAVAILABLE'},503);return await thermometer(request,userId,readAccess);}
       if(isLatestAlert){if(!latestAlert)return json({error:'LATEST_ALERT_UNAVAILABLE'},503);return json(await latestAlert(userId,ownerAccess));}
       if(isNotification){
@@ -70,6 +73,7 @@ export function createHandler(config, read, verify=authenticatePrincipal, plans,
     } catch(error){
       if(isRisk)return json({error:error?.message?.startsWith("INVALID_")?"INVALID_RISK_INPUT":"RISK_UNAVAILABLE"},error?.message?.startsWith("INVALID_")?400:503);
       if(isThermometer)return json({error:'THERMOMETER_UNAVAILABLE'},503);
+      if(isTodayPlan)return json({error:'TODAY_PLAN_UNAVAILABLE'},503);
       if(isLatestAlert)return error instanceof NotificationAccessDenied?json({error:'NOTIFICATION_ACCESS_DENIED'},403):json({error:'LATEST_ALERT_UNAVAILABLE'},503);
       if(isNotification){
         if(error instanceof NotificationConflict)return json(error.snapshot,409,{[NOTIFICATION_DELIVERY_HEADER]:notificationDeliveryLive(process.env,userId)?'on':'off'});

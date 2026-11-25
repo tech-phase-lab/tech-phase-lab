@@ -266,10 +266,12 @@
 .chapterKicker{font-family:Georgia,serif;letter-spacing:.08em;color:#8c6c35;font-size:9px}
 .paperPage h2{font-family:var(--font-resolute-serif),serif;font-size:clamp(22px,5vw,28px);font-weight:600;line-height:1.6;margin:10px 0 18px;text-wrap:balance;color:#202e40}
 .chapterLead{font-family:var(--font-resolute-serif),serif;color:#82622d;font-size:15px;line-height:1.9;margin:0 0 20px;text-wrap:pretty}
-.chapterMetrics{display:grid;grid-template-columns:1fr 1fr;gap:18px 14px;margin:22px 0;padding:20px 0;border-top:1px solid #ab976952;border-bottom:1px solid #ab976952}
-.chapterMetrics>div:only-child{grid-column:1/-1}
+/* Two values per row, but a value never breaks inside a word or number (owner, Nov 25: 「まだ決めていな／い」): keep-all makes
+   the whole value the narrowest a cell may be, so a value too wide for half the page takes the full row instead. */
+.chapterMetrics{display:flex;flex-wrap:wrap;gap:18px 14px;margin:22px 0;padding:20px 0;border-top:1px solid #ab976952;border-bottom:1px solid #ab976952}
+.chapterMetrics>div{flex:1 1 40%}
 .chapterMetrics dt{font-size:10px;line-height:1.7;color:#6e6b60}
-.chapterMetrics dd{font-family:var(--font-resolute-serif),serif;font-size:clamp(18px,4.3vw,23px);font-weight:600;margin:5px 0 0;line-height:1.6;color:#3d453f;overflow-wrap:anywhere}
+.chapterMetrics dd{font-family:var(--font-resolute-serif),serif;font-size:clamp(18px,4.3vw,23px);font-weight:600;margin:5px 0 0;line-height:1.6;color:#3d453f;overflow-wrap:normal;word-break:keep-all;line-break:strict}
 .chapterMetrics .metricDetail{font-family:inherit;font-size:10px;font-weight:400;color:#797568;margin-top:2px}
 .chapterProse p{font-family:var(--font-resolute-serif),serif;font-size:13px;line-height:2.05;margin:0 0 15px;overflow-wrap:anywhere;text-wrap:pretty}
 .chapterClosing{border-top:1px solid #ad96635c;padding-top:17px;margin-top:22px;font-family:var(--font-resolute-serif),serif;font-size:13px;line-height:2;color:#85662d;white-space:pre-line;text-wrap:balance}
@@ -285,9 +287,11 @@
 .turningLeaf{position:absolute;inset:0;z-index:4;pointer-events:none;transform-origin:left center;transform-style:preserve-3d;backface-visibility:hidden;overflow:hidden;border-radius:4px 12px 12px 4px;background:#ece1c9;filter:drop-shadow(12px 4px 12px #0005)}
 .turningLeaf>div{min-height:100%}
 .leafForward{animation:leafForward .58s cubic-bezier(.3,.1,.3,1) both}
-.leafBack{animation:leafBack .58s cubic-bezier(.3,.1,.3,1) both}
+/* Both directions turn the page being left (owner, Nov 25): forward it lifts away to the left over the spine, back it lifts
+   away to the right, so the page underneath (the one being opened, e.g. the navy cover) is revealed — never cover over cover. */
+.leafBack{transform-origin:right center;filter:drop-shadow(-12px 4px 12px #0005);animation:leafBack .58s cubic-bezier(.3,.1,.3,1) both}
 @keyframes leafForward{0%{transform:rotateY(0);filter:brightness(1)}55%{filter:brightness(.65)}100%{transform:rotateY(-165deg);filter:brightness(.8)}}
-@keyframes leafBack{0%{transform:rotateY(-165deg);filter:brightness(.7)}65%{filter:brightness(.9)}100%{transform:rotateY(0);filter:brightness(1)}}
+@keyframes leafBack{0%{transform:rotateY(0);filter:brightness(1)}55%{filter:brightness(.65)}100%{transform:rotateY(165deg);filter:brightness(.8)}}
 .readerControls{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:23px;padding:0 4px}
 .readerControls button{border:1px solid #a8894c6b;background:linear-gradient(#24303c,#101a27);color:#dec58f;min-width:58px;min-height:44px;padding:6px 15px;border-radius:5px;font:14px var(--font-resolute-serif),serif;cursor:pointer;box-shadow:0 2px 3px #0005;transition:transform .15s,box-shadow .15s}
 .readerControls button:active{transform:translateY(2px);box-shadow:inset 0 2px 3px #0005}
@@ -311,8 +315,8 @@
 @media(hover:hover) and (pointer:fine){.primary.continueButton:hover{background:linear-gradient(135deg,#2c4b68,#203850);box-shadow:0 5px 20px #8db8ee20}}
 
 /* Text answers need their own measure; do not squeeze them into amount-sized cells. */
-.chapterMetrics>div[data-text=true]{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.7fr);align-items:baseline;gap:8px 12px}
-.chapterMetrics>div[data-text=true] dd{font-size:17px;line-height:1.65;margin:0;text-wrap:balance;overflow-wrap:normal;word-break:normal;line-break:strict}
+.chapterMetrics>div[data-text=true]{flex-basis:100%;display:grid;grid-template-columns:minmax(0,1fr) minmax(min-content,1.7fr);align-items:baseline;gap:8px 12px}
+.chapterMetrics>div[data-text=true] dd{font-size:17px;line-height:1.65;margin:0;text-wrap:balance;overflow-wrap:normal;word-break:keep-all;line-break:strict}
 .chapterPractice{margin-top:24px;padding-top:18px;border-top:1px solid #ad96635c}
 .chapterPractice h3{font-family:var(--font-resolute-serif),serif;font-size:14px;font-weight:600;color:#85662d;margin:0 0 12px}
 .chapterPractice ol{margin:0;padding-left:1.4em;font-family:var(--font-resolute-serif),serif;font-size:13px;line-height:2;text-wrap:pretty}
@@ -339,3 +343,50 @@
 .homeGuide li b{color:var(--gold2);font-weight:600}
 .homeGuide div>p{margin:8px 0 0;font-size:12.5px;color:var(--sub)}
 @media (display-mode: standalone){.homeGuide{display:none}}
+
+/* ── RESOLUTE shared look, phone layout (owner, Nov 25 §A: resolute-mobile-all-1125). ─────────────────────────────
+ * Applies inside `.page.mobile` (ToolShell's phone layout and the other phone pages), never inside the PC frame (pc.module.css).
+ * Tokens: other stylesheets use these through var() so every panel, button and pill matches.
+ *   --rz-panel-fill / --rz-panel-edge : panel fill and gold edge; use as `background: var(--rz-panel-fill) padding-box, var(--rz-panel-edge) border-box; border: 1px solid transparent;`
+ *   --rz-gold-grad : primary button / selected tab fill.   --rz-serif : the Mincho stack.   --rz-pill-on : selected pill fill.
+ * Shared classes: .card / .panel (panel), .toolHeading + .headLabel (SectionHeading), .primary / .secondary / .ghost (buttons),
+ *   .pill / .option / .chips button / .accountChoices button / .currencyChoice button (choices), .bigNumber / .bigGold (numbers),
+ *   .flowNavigation (NextBack), .starsBand (the home's stars band at the top: the only place with a patterned background). */
+.page{--rz-panel-fill:linear-gradient(165deg,#17233b 0%,#101a2c 55%,#0c1423 100%);--rz-panel-edge:linear-gradient(135deg,#f3dfaee6 0%,#d8b36a59 24%,#d8b36a1c 50%,#d8b36a59 76%,#f3dfaed9 100%);--rz-gold-grad:linear-gradient(135deg,#f7e5b8 0%,#e2c27c 45%,#c79c4c 100%);--rz-serif:var(--font-resolute-serif),"Hiragino Mincho ProN","Yu Mincho",serif;--rz-pill-on:#d8b36a1f}
+.page.mobile{--line:#25324a;background:radial-gradient(140% 380px at 50% -120px,#d8b36a33,#d8b36a0f 45%,transparent 75%) no-repeat,linear-gradient(180deg,#0c1528 0,#091120 480px,#070b14 100%);background-color:#070b14;word-break:auto-phrase;line-break:strict}
+.mobile .card,.mobile .hero,.panel{border:1px solid transparent;border-radius:22px;background:var(--rz-panel-fill) padding-box,var(--rz-panel-edge) border-box;box-shadow:0 18px 40px #0007,inset 0 1px 0 #f3dfae12}
+.mobile .hero{background:radial-gradient(520px 220px at 50% 0,#d8b36a24,transparent 70%) padding-box,var(--rz-panel-fill) padding-box,var(--rz-panel-edge) border-box}
+.panel{display:flex;flex-direction:column;gap:14px;padding:20px 18px;min-width:0}
+/* Heading: small gold spaced English label, Mincho heading, one or two lines of description, centred. */
+.headLabel{display:block;font-size:11px;font-weight:500;letter-spacing:.34em;padding-left:.34em;color:var(--gold);text-transform:uppercase;line-height:1.6}
+.mobile .toolHeading{align-items:center;text-align:center;gap:6px;padding:10px 0 2px}
+.mobile .toolHeading h1,.mobile .toolHeading h2{font-family:var(--rz-serif);font-weight:500;color:#f3e8cc;letter-spacing:.06em;line-height:1.45;margin:0}
+.mobile .toolHeading h2{font-size:21px}
+.mobile .toolHeading .muted{font-size:14px;line-height:1.75;max-width:30em;text-wrap:balance}
+.headingSection{padding-top:0}
+/* Buttons: the main one is a round gold gradient; the second one is an outline with gold text. No orange. */
+.mobile .primary{border:0;border-radius:999px;background:var(--rz-gold-grad);color:#1a1306!important;box-shadow:0 8px 22px #d8b36a2b,inset 0 1px 0 #fff7}
+.mobile .secondary,.mobile .primary.continueButton,.mobile .questionNav .secondary{border:1px solid #d8b36a8f;border-radius:999px;background:#d8b36a08;color:var(--gold2)!important;box-shadow:none;font-weight:500}
+.mobile .ghost{color:var(--sub);font-size:13px;letter-spacing:.02em}
+.mobile .flowNavigation{align-items:stretch;gap:2px}
+.mobile .flowNavigation .primary{font-size:15px}
+.mobile .flowNavigation .ghost{align-self:center}
+/* Choices: round; the chosen one has a gold edge, gold text and a pale gold fill. */
+.pill,.mobile .chips button,.mobile .timeGrid button,.mobile .accountChoices button,.mobile .currencyChoice button{border:1px solid var(--line);border-radius:999px;background:#ffffff05;color:var(--ink);font:inherit}
+.pill{min-height:44px;padding:8px 18px;cursor:pointer}
+.pill[aria-pressed=true],.pill[aria-checked=true],.mobile .chips button[aria-pressed=true],.mobile .timeGrid button[aria-pressed=true],.mobile .accountChoices button[aria-pressed=true],.mobile .currencyChoice button[aria-pressed=true]{border-color:var(--gold);color:var(--gold2);background:var(--rz-pill-on);font-weight:500}
+.mobile .option{border-radius:14px;background:#ffffff05}
+.mobile .option[aria-pressed=true]{border-color:var(--gold);color:var(--gold2);background:var(--rz-pill-on)}
+.mobile .tabs{border-color:#ffffff1a;border-radius:999px;background:#0b1322}
+.mobile .tabs button{border-radius:999px}
+.mobile .tabs button[aria-pressed=true]{background:var(--rz-gold-grad);color:#1a1306}
+/* Big numbers are gold Mincho. */
+.bigGold,.mobile .bigNumber,.mobile .percentNumber{font-family:var(--rz-serif);font-weight:500;color:var(--gold2);background:none;-webkit-text-fill-color:currentColor}
+.bigGold{font-size:34px;line-height:1.3;font-variant-numeric:lining-nums}
+.mobile .eyebrow{font-size:11px;letter-spacing:.3em}
+.mobile input:not([type=range]):not([type=checkbox]),.mobile textarea,.mobile select{background:#060a12;border-color:#ffffff1c;border-radius:12px}
+/* The stars band at the top of the home (the home screen owns its content). */
+.starsBand{position:relative;isolation:isolate;background:radial-gradient(120% 100% at 50% 0,#d8b36a24,transparent 70%)}
+.starsBand::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(1.4px 1.4px at 12% 22%,#f3dfae,transparent),radial-gradient(1px 1px at 28% 64%,#fff3cf,transparent),radial-gradient(1.2px 1.2px at 46% 18%,#f3dfae,transparent),radial-gradient(1px 1px at 63% 48%,#fff3cf,transparent),radial-gradient(1.5px 1.5px at 78% 26%,#f3dfae,transparent),radial-gradient(1px 1px at 90% 70%,#fff3cf,transparent),radial-gradient(1.1px 1.1px at 6% 80%,#f3dfae,transparent);animation:starsTwinkle 5s ease-in-out infinite alternate}
+@keyframes starsTwinkle{from{opacity:.45}to{opacity:1}}
+@media(prefers-reduced-motion:reduce){.starsBand::before{animation:none}}

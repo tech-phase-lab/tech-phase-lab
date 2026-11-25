@@ -1,0 +1,139 @@
+{
+  "ticker": "NVDA",
+  "name": "NVIDIA",
+  "exchange": "NASDAQ",
+  "quoteTicker": "NVDA",
+  "period": "Q3 FY2027",
+  "periodQuarter": 3,
+  "releasedOn": "2026-11-17",
+  "periodEnd": "2026-10-25",
+  "reviewedOn": "2026-11-25",
+  "currency": "USD",
+  "basis": {"eps": "non-GAAP diluted", "grossMargin": "non-GAAP"},
+  "sources": [
+    {"url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000088/q3fy27pr.htm", "title": "NVIDIA Announces Financial Results for Third Quarter Fiscal 2027 (Form 8-K, Exhibit 99.1)", "location": "Headline bullets, Outlook, Condensed Consolidated Statements of Income, GAAP to non-GAAP reconciliation"},
+    {"url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000088/q3fy27cfocommentary.htm", "title": "CFO Commentary on Third Quarter Fiscal 2027 Results (Form 8-K, Exhibit 99.2)", "location": "Revenue by Market Platform, Revenue, Commitments, Guarantees, Balance Sheet and Cash Flow, Outlook"},
+    {"url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000088/supplementalfinancialinfor.htm", "title": "NVIDIA Supplemental Financial Information, Q3 FY2027 (Form 8-K, Exhibit 99.3)", "location": "Customer Concentration"},
+    {"url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000073/q2fy27cfocommentary.htm", "title": "CFO Commentary on Second Quarter Fiscal 2027 Results (Form 8-K, Exhibit 99.2)", "location": "Q2 Fiscal 2027 Summary (GAAP, $ in millions)"},
+    {"url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000019/q4fy26pr.htm", "title": "NVIDIA Announces Financial Results for Fourth Quarter and Fiscal 2026 (Form 8-K, Exhibit 99.1)", "location": "Condensed Consolidated Statements of Income"},
+    {"url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000082/nvda-20261111.htm", "title": "NVIDIA Form 8-K dated November 11, 2026", "location": "Item 5.02"},
+    {"url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000090/nvda-20261122.htm", "title": "NVIDIA Form 8-K dated November 22, 2026", "location": "Item 5.02"}
+  ],
+  "evidence": [
+    {"field": "numbers.revenue.current", "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000088/q3fy27pr.htm", "quote": "Revenue $ 115,844 $ 57,006 $ 293,681 $ 147,811"},
+    {"field": "numbers.revenue.yearAgo", "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000088/q3fy27pr.htm", "quote": "Revenue $ 115,844 $ 57,006 $ 293,681 $ 147,811"},
+    {"field": "numbers.revenue.previous", "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000073/q2fy27cfocommentary.htm", "quote": "Q2 FY27 Q1 FY27 Q2 FY26 Q/Q Y/Y Revenue $96,221 $81,615 $46,743 18 % 106 %"},
+    {"field": "numbers.adjustedEPS", "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000088/q3fy27pr.htm", "quote": "Non-GAAP* $ 2.68 $ 2.22 $ 1.27 $ 6.77 $ 3.05"},
+    {"field": "numbers.grossMargin.current", "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000088/q3fy27pr.htm", "quote": "Non-GAAP gross margin* 74.9 % 75.0 % 73.5 %"},
+    {"field": "numbers.grossMargin.previous", "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000088/q3fy27pr.htm", "quote": "Non-GAAP gross margin* 74.9 % 75.0 % 73.5 %"},
+    {"field": "numbers.guidance.low", "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000088/q3fy27pr.htm", "quote": "Revenue is expected to be $130.0 billion, plus or minus 3%.", "calc": "130.0*1000*(100-3)/100"},
+    {"field": "numbers.guidance.high", "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000088/q3fy27pr.htm", "quote": "Revenue is expected to be $130.0 billion, plus or minus 3%.", "calc": "130.0*1000*(100+3)/100"},
+    {"field": "numbers.guidance.grossMarginPercent", "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000088/q3fy27pr.htm", "quote": "GAAP and non-GAAP gross margins are expected to be between 71.0% and 72.0%.", "calc": "(71.0+72.0)/2"},
+    {"field": "history[0].value", "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000088/q3fy27pr.htm", "quote": "Revenue $ 115,844 $ 57,006 $ 293,681 $ 147,811"},
+    {"field": "history[1].value", "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000019/q4fy26pr.htm", "quote": "Revenue $ 68,127 $ 39,331 $ 215,938 $ 130,497"},
+    {"field": "history[2].value", "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000073/q2fy27cfocommentary.htm", "quote": "Q2 FY27 Q1 FY27 Q2 FY26 Q/Q Y/Y Revenue $96,221 $81,615 $46,743 18 % 106 %"},
+    {"field": "history[3].value", "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000073/q2fy27cfocommentary.htm", "quote": "Q2 FY27 Q1 FY27 Q2 FY26 Q/Q Y/Y Revenue $96,221 $81,615 $46,743 18 % 106 %"},
+    {"field": "tiles[0].value", "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000088/q3fy27pr.htm", "quote": "Revenue of $115.8 billion, up 103% from a year ago"},
+    {"field": "tiles[0].note", "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000088/q3fy27pr.htm", "quote": "Revenue of $115.8 billion, up 103% from a year ago"},
+    {"field": "tiles[1].value", "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000088/q3fy27pr.htm", "quote": "Data Center revenue of $107.6 billion, up 110% from a year ago"},
+    {"field": "tiles[1].note", "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000088/q3fy27pr.htm", "quote": "Data Center revenue of $107.6 billion, up 110% from a year ago"},
+    {"field": "tiles[2].value", "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000088/q3fy27pr.htm", "quote": "Non-GAAP gross margin* 74.9 % 75.0 % 73.5 %"},
+    {"field": "tiles[2].note", "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000088/q3fy27pr.htm", "quote": "GAAP and non-GAAP gross margins are expected to be between 71.0% and 72.0%."},
+    {"field": "summary.cards.growth", "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000088/q3fy27cfocommentary.htm", "quote": "Data Center $107.6 $89.0 $51.2 21 % 110 % Hyperscale 60.1 48.7 35.1 23 % 71 % AI Clouds, Industrial, & Enterprise 47.5 40.3 16.1 18 % 195 %"},
+    {"field": "summary.cards.growth", "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000088/supplementalfinancialinfor.htm", "quote": "For the third quarter of fiscal year 2027, three direct customers represented 14%, 11%, and 11% of total revenue"},
+    {"field": "summary.cards.growth", "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000088/q3fy27cfocommentary.htm", "quote": "Shipments of Data Center Hopper products to China during the quarter were $2.4 billion."},
+    {"field": "summary.cards.change", "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000088/q3fy27pr.htm", "quote": "Operating income $77.9 $64.0 $36.1 22 % 116 %"},
+    {"field": "summary.cards.change", "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000088/q3fy27cfocommentary.htm", "quote": "Accounts receivable was $81.0 billion with 64 days sales outstanding (DSO), up from 60 days sequentially"},
+    {"field": "summary.cards.change", "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000088/q3fy27cfocommentary.htm", "quote": "Inventory was $39.7 billion, up from $31.6 billion sequentially, to support our Rubin product ramp. Cash flow from operating activities was $48.3 billion, up from $23.8 billion a year ago and up from $24.1 billion a quarter ago."},
+    {"field": "summary.cards.change", "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000088/q3fy27cfocommentary.htm", "quote": "Our supply commitments increased from $279 billion last quarter to $390 billion, primarily related to the multi-year procurement of memory supply."},
+    {"field": "summary.cards.change", "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000088/q3fy27cfocommentary.htm", "quote": "up to a maximum of $105 billion, and then declines over each 20-year lease term as OpenAI makes lease payments."},
+    {"field": "summary.cards.caution", "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000082/nvda-20261111.htm", "quote": "On November 11, 2026, the Board of Directors, or the Board, of NVIDIA Corporation accepted the resignation of Jen-Hsun Huang, as NVIDIA's President, Chief Executive Officer and member of the Board, effective immediately."},
+    {"field": "summary.cards.caution", "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000090/nvda-20261122.htm", "quote": "On November 22, 2026, the Board of Directors of NVIDIA Corporation reinstated Jen-Hsun Huang as NVIDIA's President, Chief Executive Officer and member of the Board of Directors, effective immediately."},
+    {"field": "summary.cards.caution", "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000088/q3fy27pr.htm", "quote": "expectations with respect to the ongoing investigation by an independent committee of NVIDIA's board of directors and related matters"},
+    {"field": "summary.cards.caution", "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000088/q3fy27cfocommentary.htm", "quote": "We plan to file our 10-Q in the coming weeks."},
+    {"field": "summary.cards.next", "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000088/q3fy27cfocommentary.htm", "quote": "which includes an additional week, is as follows: • Revenue is expected to be $130.0 billion, plus or minus 3%. We are not assuming any Data Center compute revenue from China in our outlook."}
+  ],
+  "numbers": {
+    "revenue": {"current": 115844, "previous": 96221, "yearAgo": 57006},
+    "adjustedEPS": 2.68,
+    "epsEstimate": null,
+    "grossMargin": {"current": 74.9, "previous": 75.0},
+    "guidance": {"low": 126100, "high": 133900, "grossMarginPercent": 71.5},
+    "segments": null
+  },
+  "history": [
+    {"label": "Q3", "end": "2025-10-26", "value": 57006},
+    {"label": "Q4", "end": "2026-01-25", "value": 68127},
+    {"label": "Q1", "end": "2026-04-26", "value": 81615},
+    {"label": "Q2", "end": "2026-07-26", "value": 96221}
+  ],
+  "tiles": [
+    {"label": {"ja": "売上高", "en": "Revenue"}, "value": {"ja": "1,158億ドル", "en": "$115.8B"}, "note": {"ja": "前年同期比 +103%", "en": "+103% YoY"}},
+    {"label": {"ja": "データセンター売上", "en": "Data Center revenue"}, "value": {"ja": "1,076億ドル", "en": "$107.6B"}, "note": {"ja": "前年同期比 +110%", "en": "+110% YoY"}},
+    {"label": {"ja": "非GAAP粗利益率", "en": "Non-GAAP gross margin"}, "value": {"ja": "74.9%", "en": "74.9%"}, "note": {"ja": "次期の見通しは71〜72%", "en": "Next-quarter outlook 71–72%"}}
+  ],
+  "summary": {
+    "conclusion": [
+      {"ja": "売上は1,158億ドルで、前期から約2割、前年同期の約2倍に増えました。増えた分のほとんどはデータセンター(1,076億ドル)です。", "en": "Revenue was $115.8B, up about 20% from the previous quarter and about double the year-ago quarter. Almost all of the increase came from Data Center ($107.6B)."},
+      {"ja": "一方で、次期の粗利益率の見通し(71〜72%)は今回の74.9%を下回ります。新製品Vera Rubinの立ち上げ初期にあたるためです。", "en": "Meanwhile, the gross margin outlook for next quarter (71–72%) is below this quarter's 74.9%, as the new Vera Rubin products are in their early ramp."},
+      {"ja": "決算発表の前後に、CEOの辞任(11月11日)と復帰(11月22日)があり、取締役会の独立委員会による調査も続いています。", "en": "Around the report, the CEO resigned (Nov 11) and was reinstated (Nov 22), and an investigation by an independent committee of the board is ongoing."}
+    ],
+    "cards": {
+      "growth": {
+        "headline": {"ja": "データセンター売上が1,076億ドルに", "en": "Data Center revenue reached $107.6B"},
+        "chips": [
+          {"tone": "up", "text": {"ja": "データセンター 前年同期比 +110%", "en": "Data Center +110% YoY"}},
+          {"tone": "up", "text": {"ja": "AIクラウド・産業・企業向け +195%", "en": "AI Clouds, Industrial & Enterprise +195% YoY"}}
+        ],
+        "sections": [
+          {"key": "happened", "text": {"ja": "データセンター売上は前期の890億ドルから1,076億ドルへ増え、前年同期(512億ドル)の約2.1倍になりました。会社全体の売上1,158億ドルのうち約93%を占めます。", "en": "Data Center revenue rose from $89.0B last quarter to $107.6B, about 2.1 times the year-ago $51.2B. It made up about 93% of total revenue of $115.8B."}},
+          {"key": "good", "text": {"ja": "大手クラウド向け(601億ドル)だけでなく、AIクラウド・産業・企業向け(475億ドル、前年同期比+195%)も大きく伸びました。買い手の幅が広がっています。", "en": "Not only Hyperscale ($60.1B) but also AI Clouds, Industrial & Enterprise ($47.5B, +195% YoY) grew strongly, so the customer base is broadening."}},
+          {"key": "watch", "text": {"ja": "直接の取引先3社だけで、売上の14%・11%・11%を占めています。大口の買い手が投資を減らすと、影響は大きくなります。中国向けのHopper製品の出荷は24億ドルありました。", "en": "Three direct customers accounted for 14%, 11% and 11% of revenue. If large buyers cut spending, the impact would be large. Shipments of Hopper products to China were $2.4B."}},
+          {"key": "means", "text": {"ja": "次期の見通しも、データセンターの伸びが続くことが前提です。会社は、中国向けのデータセンター演算製品の売上を見通しに入れていません。", "en": "The outlook also assumes continued Data Center growth. The company does not include any Data Center compute revenue from China in it."}}
+        ],
+        "segment": null
+      },
+      "change": {
+        "headline": {"ja": "売上は前期比 +20.4%、粗利益率はほぼ横ばい", "en": "Revenue up 20.4% QoQ, gross margin about flat"},
+        "chips": [
+          {"tone": "up", "text": {"ja": "売上 前期比 +20.4%", "en": "Revenue +20.4% QoQ"}},
+          {"tone": "gold", "text": {"ja": "非GAAP粗利益率 75.0% → 74.9%", "en": "Non-GAAP gross margin 75.0% → 74.9%"}}
+        ],
+        "sections": [
+          {"key": "happened", "text": {"ja": "売上は962.21億ドルから1,158.44億ドルへ、196.23億ドル増えました。非GAAP粗利益率は75.0%から74.9%で、ほぼ変わっていません。", "en": "Revenue rose from $96.22B to $115.84B, up $19.62B. Non-GAAP gross margin was about the same, from 75.0% to 74.9%."}},
+          {"key": "good", "text": {"ja": "費用の増え方は売上より小さく、非GAAP営業利益は640億ドルから779億ドルへ約22%増えました。営業キャッシュフローも483億ドルと、前期(241億ドル)の約2倍です。", "en": "Costs grew more slowly than revenue: non-GAAP operating income rose about 22%, from $64.0B to $77.9B. Operating cash flow was $48.3B, about double last quarter's $24.1B."}},
+          {"key": "watch", "text": {"ja": "売掛金は810億ドルに増え、回収日数は60日から64日に延びました。在庫も316億ドルから397億ドルに増えています。部品などの購入の約束は2,790億ドルから3,900億ドルに膨らみ、OpenAI向けデータセンターの債務保証は最大1,050億ドルです。", "en": "Receivables rose to $81.0B and days sales outstanding went from 60 to 64. Inventory grew from $31.6B to $39.7B. Supply commitments rose from $279B to $390B, and a credit guarantee tied to OpenAI data centers can reach $105B."}},
+          {"key": "view", "text": {"ja": "新製品の立ち上げ初期でも粗利益率がほとんど下がらなかった点は強い内容です。ただ、売上が現金として入るまでの時間と、将来の約束の大きさは別に追う必要があります。", "en": "Keeping the margin nearly flat during a new product ramp is a strong result. But the time it takes to collect cash and the size of future commitments need to be followed separately."}}
+        ],
+        "segment": null
+      },
+      "caution": {
+        "headline": {"ja": "CEOが辞任し11日後に復帰、取締役会の調査が続く", "en": "CEO resigned and was reinstated 11 days later; a board investigation is ongoing"},
+        "chips": [
+          {"tone": "down", "text": {"ja": "11/11 CEO辞任 → 11/22 復帰", "en": "CEO resigned Nov 11 → reinstated Nov 22"}},
+          {"tone": "gold", "text": {"ja": "10-Qは「数週間以内」に提出予定", "en": "10-Q to be filed \"in the coming weeks\""}}
+        ],
+        "sections": [
+          {"key": "happened", "text": {"ja": "11月11日、ジェンスン・フアン氏がCEOと取締役を辞任し、CFOのコレット・クレス氏が暫定CEOになりました。決算はこの体制で11月17日に発表され、11月22日にフアン氏はCEOに復帰しました。", "en": "On Nov 11, Jen-Hsun Huang resigned as CEO and director, and CFO Colette Kress became interim CEO. Results were released under that arrangement on Nov 17, and Huang was reinstated as CEO on Nov 22."}},
+          {"key": "watch", "text": {"ja": "決算資料では、取締役会の独立委員会による調査が「進行中」とされています。四半期報告書(10-Q)は決算と同時には出ておらず、「数週間以内」に提出する予定です。", "en": "The release describes an ongoing investigation by an independent committee of the board. The quarterly report (10-Q) was not filed with the results; the company plans to file it in the coming weeks."}},
+          {"key": "means", "text": {"ja": "数字そのものは強くても、経営体制と調査の結果が分かるまでは、判断材料が足りない部分が残ります。", "en": "Even with strong numbers, some information is missing until the leadership situation and the investigation's outcome are clear."}},
+          {"key": "view", "text": {"ja": "10-Qの提出時期と、その中で調査について何が書かれるかを確かめます。", "en": "Check when the 10-Q is filed and what it says about the investigation."}}
+        ],
+        "segment": null
+      },
+      "next": {
+        "headline": {"ja": "次期の会社見通しを追う", "en": "Follow the company's outlook for next quarter"},
+        "chips": [
+          {"tone": "gold", "text": {"ja": "売上 1,261〜1,339億ドル", "en": "Revenue $126.1–133.9B"}},
+          {"tone": "gold", "text": {"ja": "粗利益率 71〜72%", "en": "Gross margin 71–72%"}}
+        ],
+        "sections": [
+          {"key": "happened", "text": {"ja": "会社は次期(第4四半期)の売上を1,300億ドル±3%、つまり1,261億〜1,339億ドルと見込んでいます。下限でも今回の1,158.44億ドルより約8.9%多い水準です。", "en": "The company expects next quarter (Q4) revenue of $130.0B plus or minus 3%, or $126.1B to $133.9B. Even the low end is about 8.9% above this quarter's $115.84B."}},
+          {"key": "watch", "text": {"ja": "粗利益率の見通しは71〜72%で、今回の74.9%より約3ポイント低くなります。また次期は通常より1週間長い四半期なので、その分だけ売上が増えやすい点も考えに入れます。", "en": "The gross margin outlook of 71–72% is about 3 points below this quarter's 74.9%. Next quarter also includes an additional week, which by itself lifts revenue."}},
+          {"key": "view", "text": {"ja": "次の決算で、売上がこの幅のどこに入るか、粗利益率がどこまで下がるかを見ます。", "en": "In the next report, check where revenue lands in this range and how far the gross margin falls."}}
+        ],
+        "segment": null
+      }
+    }
+  }
+}

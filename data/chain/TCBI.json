@@ -1,0 +1,204 @@
+{
+  "root": {
+    "ticker": "TCBI",
+    "name": "テキサス・キャピタル・バンクシェアーズ",
+    "cik": 1077428,
+    "name_en": "Texas Capital Bancshares"
+  },
+  "rows": [
+    {
+      "ja": "融資先(相手の資料に記載)",
+      "en": "Borrowers (named in their filings)"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "NGS",
+      "ticker": "NGS",
+      "name": "ナチュラル・ガス・サービシズ",
+      "name_en": "Natural Gas Services Group",
+      "sub": "ガス圧縮機",
+      "sub_en": "Gas compression",
+      "sub_short": "圧縮機",
+      "sub_short_en": "Compress",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "NGSが10-Kで、借入枠の幹事行(administrative agent)として挙げる",
+          "text_en": "NGS names Texas Capital Bank the administrative agent of its revolving credit facility",
+          "source": {
+            "label": "Natural Gas Services Group 10-K(2025年度)",
+            "label_en": "Natural Gas Services Group 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1084991/000108499126000015/ngs-20251231.htm",
+            "level": "official",
+            "date": "2026-03-16",
+            "quote": "We have a senior secured revolving credit agreement, as amended, or the Credit Facility, with Texas Capital Bank, National Association as administrative agent (the \"Administrative Agent\")"
+          }
+        }
+      ]
+    },
+    {
+      "id": "APLD",
+      "ticker": "APLD",
+      "name": "アプライド・デジタル",
+      "name_en": "Applied Digital",
+      "sub": "AIデータセンター",
+      "sub_en": "AI data centers",
+      "sub_short": "AI向けDC",
+      "sub_short_en": "AI DCs",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Applied Digitalが10-Kで、5,850万ドルのローン契約の相手として挙げる(2026年6月)",
+          "text_en": "Applied Digital signed a $58.5 million loan agreement with Texas Capital (June 2026)",
+          "source": {
+            "label": "Applied Digital 10-K(2026年5月期)",
+            "label_en": "Applied Digital 10-K (FY ended May 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1144879/000114487926000048/apld-20260531.htm",
+            "level": "official",
+            "date": "2026-07-29",
+            "quote": "On June 30, 2026, the Company entered into a Loan and Security Agreement (the \"Texas Capital Loan Agreement\") with Texas Capital Bank (\"Texas Capital\") and a related Promissory Note in favor of Texas Capital in the stated principal amount of $58.5 million"
+          }
+        }
+      ]
+    },
+    {
+      "id": "QRHC",
+      "ticker": "QRHC",
+      "name": "クエスト・リソース",
+      "name_en": "Quest Resource",
+      "sub": "廃棄物・リサイクル管理",
+      "sub_en": "Waste & recycling management",
+      "sub_short": "廃棄物",
+      "sub_short_en": "Waste",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Quest Resourceが10-Kで、2026年3月のローン・セキュリティ契約の相手として挙げる",
+          "text_en": "Quest Resource entered a loan and security agreement with Texas Capital Bank (March 2026)",
+          "source": {
+            "label": "Quest Resource 10-K(2025年度)",
+            "label_en": "Quest Resource 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1442236/000119312526104675/qrhc-20251231.htm",
+            "level": "official",
+            "date": "2026-03-13",
+            "quote": "On March 12, 2026, we and certain of our domestic subsidiaries entered into a Loan and Security Agreement with Texas Capital Bank (the \"TCB Loan Agreement\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "EPSN",
+      "ticker": "EPSN",
+      "name": "エプシロン・エナジー",
+      "name_en": "Epsilon Energy",
+      "sub": "石油・ガス開発",
+      "sub_en": "Oil & gas",
+      "sub_short": "石油ガス",
+      "sub_short_en": "Oil & gas",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Epsilon Energyが10-Kで、2025年10月に組んだ借入枠の貸し手として挙げる",
+          "text_en": "Epsilon Energy names Texas Capital Bank a lender on its October 2025 credit facility",
+          "source": {
+            "label": "Epsilon Energy 10-K(2025年度)",
+            "label_en": "Epsilon Energy 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1726126/000110465926035794/epsn-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-03-27",
+            "quote": "The Company closed a new senior secured reserve based revolving credit facility on October 10, 2025 with Frost Bank as administrative agent and Frost Bank and Texas Capital Bank as lenders."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PRO",
+      "ticker": "PRO",
+      "name": "プロス・ホールディングス",
+      "name_en": "PROS Holdings",
+      "sub": "価格設定ソフト",
+      "sub_en": "Pricing software",
+      "sub_short": "ソフト",
+      "sub_short_en": "Software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "PROSが10-Kで、2023年7月の借入契約の幹事行として挙げる",
+          "text_en": "PROS names Texas Capital Bank the administrative agent of its 2023 credit agreement",
+          "source": {
+            "label": "PROS Holdings 10-K(2024年度)",
+            "label_en": "PROS Holdings 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1392972/000139297225000019/pro-20241231.htm",
+            "level": "official",
+            "date": "2025-02-12",
+            "quote": "entered into a three-year secured credit agreement (\"Credit Agreement\") with the lenders from time to time party thereto and Texas Capital Bank as administrative agent for the lenders party thereto."
+          }
+        }
+      ]
+    },
+    {
+      "id": "QTWO",
+      "ticker": "QTWO",
+      "name": "Q2ホールディングス",
+      "name_en": "Q2 Holdings",
+      "sub": "銀行向けソフト",
+      "sub_en": "Banking software",
+      "sub_short": "銀行IT",
+      "sub_short_en": "Bank IT",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Q2 Holdingsが10-Kで、5年の借入枠の相手としてWells Fargoと並べて挙げる",
+          "text_en": "Q2 Holdings names Texas Capital Bank in its five-year revolving credit agreement",
+          "source": {
+            "label": "Q2 Holdings 10-K(2025年度)",
+            "label_en": "Q2 Holdings 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1410384/000141038426000006/qtwo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "On July 29, 2024, the Company entered into a five-year secured Revolving Credit Agreement with Wells Fargo Bank, National Association, Wells Fargo Securities, LLC and Texas Capital Bank."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HNRG",
+      "ticker": "HNRG",
+      "name": "ハラドール・エナジー",
+      "name_en": "Hallador Energy",
+      "sub": "石炭・発電",
+      "sub_en": "Coal & power",
+      "sub_short": "石炭",
+      "sub_short_en": "Coal",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Halladorが10-Kで、PNCに代わる新しい借入枠の相手として挙げる(2026年3月)",
+          "text_en": "Hallador replaced its PNC facility with one from Texas Capital Bank and Old National (March 2026)",
+          "source": {
+            "label": "Hallador Energy 10-K(2025年度)",
+            "label_en": "Hallador Energy 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/788965/000110465926027174/hnrg-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-03-12",
+            "quote": "On March 5, 2026, Hallador entered into a credit agreement with Texas Capital Bank and Old National Bank, among others, that replaces the Credit Agreement with PNC Bank"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

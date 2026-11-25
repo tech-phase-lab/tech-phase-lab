@@ -1,0 +1,178 @@
+{
+  "root": {
+    "ticker": "VLY",
+    "name": "バレー・ナショナル・バンコープ",
+    "cik": 714310,
+    "name_en": "Valley National Bancorp"
+  },
+  "rows": [
+    {
+      "ja": "融資先(相手の資料に記載)",
+      "en": "Borrowers (named in their filings)"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "GIPR",
+      "ticker": "GIPR",
+      "name": "ジェネレーション・インカム・プロパティーズ",
+      "name_en": "Generation Income Properties",
+      "sub": "ネットリースREIT",
+      "sub_en": "Net lease REIT",
+      "sub_short": "REIT",
+      "sub_short_en": "REIT",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Generation Incomeが10-K/Aで、物件のローン契約の貸し手として挙げる(2025年6月)",
+          "text_en": "Generation Income names Valley National Bank the lender on a June 2025 property loan",
+          "source": {
+            "label": "Generation Income Properties 10-K/A(2025年度)",
+            "label_en": "Generation Income Properties 10-K/A (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1651721/000119312526163934/gipr-20251231.htm",
+            "level": "official",
+            "date": "2026-04-20",
+            "quote": "Loan Agreement, dated June 13, 2025, between GIPDC 3707 14th St, LLC, as borrower and Valley National Bank, as le"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CLPR",
+      "ticker": "CLPR",
+      "name": "クリッパー・リアルティ",
+      "name_en": "Clipper Realty",
+      "sub": "賃貸住宅REIT",
+      "sub_en": "Apartment REIT",
+      "sub_short": "住宅REIT",
+      "sub_short_en": "Housing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Clipper Realtyが10-Kで、1,000万ドルの信用枠と最大8,000万ドルの住宅ローンの相手として挙げる",
+          "text_en": "Clipper Realty has a $10 million line of credit and an up-to-$80 million mortgage with Valley National Bank",
+          "source": {
+            "label": "Clipper Realty 10-K(2025年度)",
+            "label_en": "Clipper Realty 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1649096/000143774926005856/clpr20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "On April 30, 2025, the Company entered into a $10,000 corporate line of credit with Valley National Bank."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BRT",
+      "ticker": "BRT",
+      "name": "BRTアパートメンツ",
+      "name_en": "BRT Apartments",
+      "sub": "賃貸住宅REIT",
+      "sub_en": "Apartment REIT",
+      "sub_short": "住宅REIT",
+      "sub_short_en": "Housing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "BRTが10-Kで、最大4,000万ドルの借入枠の相手として挙げる",
+          "text_en": "BRT's credit facility of up to $40 million is with a Valley National Bank affiliate",
+          "source": {
+            "label": "BRT Apartments 10-K(2025年度)",
+            "label_en": "BRT Apartments 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/14846/000001484626000007/brt-20251231.htm",
+            "level": "official",
+            "date": "2026-03-13",
+            "quote": "Our credit facility with VNB New York, LLC, an affiliate of Valley National Bank (collectively, \"VNB\"), allows us to borrow"
+          }
+        }
+      ]
+    },
+    {
+      "id": "VLGEA",
+      "ticker": "VLGEA",
+      "name": "ビレッジ・スーパー・マーケット",
+      "name_en": "Village Super Market",
+      "sub": "スーパー",
+      "sub_en": "Supermarkets",
+      "sub_short": "スーパー",
+      "sub_short_en": "Grocery",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Village Super Marketが10-Kで、新店の建設資金の税額控除つき融資の相手として挙げる(2025年12月)",
+          "text_en": "Village Super Market financed a replacement store through a Valley National Bank tax-credit fund (December 2025)",
+          "source": {
+            "label": "Village Super Market 10-K(2026年7月期)",
+            "label_en": "Village Super Market 10-K (FY ended Jul 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/103595/000010359526000018/vlgea-20260725.htm",
+            "level": "official",
+            "date": "2026-10-08",
+            "quote": "On December 19, 2025, the Company entered into a financing transaction with Valley National Bank Community Investment Fund, LLC (\"Valley Bank\") under a qualified New Markets Tax Credit (\"NMTC\") program"
+          }
+        }
+      ]
+    },
+    {
+      "id": "LOANMBC",
+      "ticker": "LOAN",
+      "name": "マンハッタン・ブリッジ・キャピタル",
+      "name_en": "Manhattan Bridge Capital",
+      "sub": "不動産つなぎ融資",
+      "sub_en": "Real estate bridge lending",
+      "sub_short": "融資",
+      "sub_short_en": "Lending",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Manhattan Bridge Capitalが10-Kで、子会社に1,000万ドルの信用枠を出す相手として挙げる",
+          "text_en": "Manhattan Bridge Capital says Valley provides its MBC Funding II unit a $10 million credit line",
+          "source": {
+            "label": "Manhattan Bridge Capital 10-K(2025年度)",
+            "label_en": "Manhattan Bridge Capital 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1080340/000149315226013241/form10-k.htm",
+            "level": "official",
+            "date": "2026-03-27",
+            "quote": "We are also party to a letter agreement with Valley National Bank (\"Valley\"), pursuant to which Valley has provided MBC Funding II with a $10.0 million credit line."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RDI",
+      "ticker": "RDI",
+      "name": "リーディング・インターナショナル",
+      "name_en": "Reading International",
+      "sub": "映画館・不動産",
+      "sub_en": "Cinemas & real estate",
+      "sub_short": "映画館",
+      "sub_short_en": "Cinemas",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Reading Internationalが10-Kで、返済期限を延ばしたローンの相手として挙げる(2025年11月)",
+          "text_en": "Reading International extended the maturity of its Valley National Bank loan (November 2025)",
+          "source": {
+            "label": "Reading International 10-K(2025年度)",
+            "label_en": "Reading International 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/716634/000071663426000005/rdi-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-03-31",
+            "quote": "In November 2025, we extended the maturity of our National Australia Bank (\"NAB\") loan to July 31, 2030, and modified the principal repayment schedule and extended the maturity of our Valley National Bank Loan to October 1, 2026."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
