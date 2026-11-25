@@ -1,0 +1,443 @@
+{
+ "ticker": "MSFT",
+ "name": "Microsoft",
+ "exchange": "NASDAQ",
+ "quoteTicker": "MSFT",
+ "period": "Q1 FY2027",
+ "periodQuarter": 1,
+ "releasedOn": "2026-10-28",
+ "periodEnd": "2026-09-30",
+ "reviewedOn": "2026-11-25",
+ "currency": "USD",
+ "basis": {
+  "eps": "non-GAAP diluted (excluding the impact from investments in OpenAI)",
+  "grossMargin": "GAAP, calculated as gross margin dollars / total revenue",
+  "guidance": "not in the release (given on the earnings call); null"
+ },
+ "sources": [
+  {
+   "url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526436122/msft-ex99_1.htm",
+   "title": "Microsoft first quarter fiscal 2027 results (8-K Exhibit 99.1)",
+   "location": "Highlights; income statements; cash flows; segment results; product and service revenue"
+  },
+  {
+   "url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323632/msft-ex99_1.htm",
+   "title": "Microsoft fourth quarter fiscal 2026 results (8-K Exhibit 99.1)",
+   "location": "Income statements"
+  },
+  {
+   "url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526191457/msft-ex99_1.htm",
+   "title": "Microsoft third quarter fiscal 2026 results (8-K Exhibit 99.1)",
+   "location": "Income statements"
+  },
+  {
+   "url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526027198/msft-ex99_1.htm",
+   "title": "Microsoft second quarter fiscal 2026 results (8-K Exhibit 99.1)",
+   "location": "Income statements"
+  }
+ ],
+ "evidence": [
+  {
+   "field": "numbers.revenue.current",
+   "url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526436122/msft-ex99_1.htm",
+   "quote": "Total revenue 92,279 77,673 Cost of revenue: Product 2,471 2,922 Service and other 27,249 21,121 Total cost of revenue 29,720 24,043 Gross margin 62,559 53,630"
+  },
+  {
+   "field": "numbers.revenue.yearAgo",
+   "url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526436122/msft-ex99_1.htm",
+   "quote": "Total revenue 92,279 77,673 Cost of revenue: Product 2,471 2,922 Service and other 27,249 21,121 Total cost of revenue 29,720 24,043 Gross margin 62,559 53,630"
+  },
+  {
+   "field": "numbers.revenue.previous",
+   "url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323632/msft-ex99_1.htm",
+   "quote": "Three Months Ended June 30, Twelve Months Ended June 30, 2026 2025 2026 2025 Revenue: Product $17,234 $17,136 $64,696 $63,946 Service and other 72,773 59,305 267,143 217,778 Total revenue 90,007 76,441 331,839 281,724"
+  },
+  {
+   "field": "numbers.adjustedEPS",
+   "url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526436122/msft-ex99_1.htm",
+   "quote": "Diluted earnings per share $4.92 $(0.03) $4.89"
+  },
+  {
+   "field": "numbers.grossMargin.current",
+   "url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526436122/msft-ex99_1.htm",
+   "quote": "Total revenue 92,279 77,673 Cost of revenue: Product 2,471 2,922 Service and other 27,249 21,121 Total cost of revenue 29,720 24,043 Gross margin 62,559 53,630",
+   "calc": "62559/92279*100",
+   "round": 1
+  },
+  {
+   "field": "numbers.grossMargin.previous",
+   "url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323632/msft-ex99_1.htm",
+   "quote": "Gross margin 60,482 52,427 225,465 193,893",
+   "calc": "60482/90007*100",
+   "round": 1
+  },
+  {
+   "field": "numbers.grossMargin.previous",
+   "url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323632/msft-ex99_1.htm",
+   "quote": "Three Months Ended June 30, Twelve Months Ended June 30, 2026 2025 2026 2025 Revenue: Product $17,234 $17,136 $64,696 $63,946 Service and other 72,773 59,305 267,143 217,778 Total revenue 90,007 76,441 331,839 281,724"
+  },
+  {
+   "field": "history[0].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526436122/msft-ex99_1.htm",
+   "quote": "Total revenue 92,279 77,673 Cost of revenue: Product 2,471 2,922 Service and other 27,249 21,121 Total cost of revenue 29,720 24,043 Gross margin 62,559 53,630"
+  },
+  {
+   "field": "history[1].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526027198/msft-ex99_1.htm",
+   "quote": "Three Months Ended December 31, Six Months Ended December 31, 2025 2024 2025 2024 Revenue: Product $16,451 $16,219 $32,373 $31,491 Service and other 64,822 53,413 126,573 103,726 Total revenue 81,273 69,632 158,946 135,217"
+  },
+  {
+   "field": "history[2].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526191457/msft-ex99_1.htm",
+   "quote": "Three Months Ended March 31, Nine Months Ended March 31, 2026 2025 2026 2025 Revenue: Product $15,089 $15,319 $47,462 $46,810 Service and other 67,797 54,747 194,370 158,473 Total revenue 82,886 70,066 241,832 205,283"
+  },
+  {
+   "field": "history[3].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323632/msft-ex99_1.htm",
+   "quote": "Three Months Ended June 30, Twelve Months Ended June 30, 2026 2025 2026 2025 Revenue: Product $17,234 $17,136 $64,696 $63,946 Service and other 72,773 59,305 267,143 217,778 Total revenue 90,007 76,441 331,839 281,724"
+  },
+  {
+   "field": "tiles[0].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526436122/msft-ex99_1.htm",
+   "quote": "Total revenue 92,279 77,673 Cost of revenue: Product 2,471 2,922 Service and other 27,249 21,121 Total cost of revenue 29,720 24,043 Gross margin 62,559 53,630",
+   "calc": "92279/1000",
+   "round": 2
+  },
+  {
+   "field": "tiles[1].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526436122/msft-ex99_1.htm",
+   "quote": "Microsoft Cloud revenue was $63.9 billion and increased 30%"
+  },
+  {
+   "field": "tiles[2].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526436122/msft-ex99_1.htm",
+   "quote": "Additions to property and equipment (39,367) (19,394)",
+   "calc": "39367/1000",
+   "round": 2
+  },
+  {
+   "field": "tiles[0].note",
+   "url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526436122/msft-ex99_1.htm",
+   "quote": "Revenue was $92.3 billion and increased 19%"
+  },
+  {
+   "field": "tiles[1].note",
+   "url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526436122/msft-ex99_1.htm",
+   "quote": "Microsoft Cloud revenue was $63.9 billion and increased 30%"
+  },
+  {
+   "field": "tiles[2].note",
+   "url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526436122/msft-ex99_1.htm",
+   "quote": "Additions to property and equipment (39,367) (19,394)",
+   "calc": "19394/1000",
+   "round": 2
+  }
+ ],
+ "tiles": [
+  {
+   "label": {
+    "ja": "売上高",
+    "en": "Revenue"
+   },
+   "value": {
+    "ja": "922.79億ドル",
+    "en": "$92.28B"
+   },
+   "note": {
+    "ja": "前年同期比 +19%",
+    "en": "YoY +19%"
+   }
+  },
+  {
+   "label": {
+    "ja": "Microsoft Cloud 売上",
+    "en": "Microsoft Cloud revenue"
+   },
+   "value": {
+    "ja": "639億ドル",
+    "en": "$63.9B"
+   },
+   "note": {
+    "ja": "前年同期比 +30%(Azure +48%)",
+    "en": "YoY +30% (Azure +48%)"
+   }
+  },
+  {
+   "label": {
+    "ja": "設備投資",
+    "en": "Capital expenditure"
+   },
+   "value": {
+    "ja": "393.67億ドル",
+    "en": "$39.37B"
+   },
+   "note": {
+    "ja": "前年同期 193.94億ドル",
+    "en": "Prior-year quarter $19.39B"
+   }
+  }
+ ],
+ "numbers": {
+  "revenue": {
+   "current": 92279,
+   "previous": 90007,
+   "yearAgo": 77673
+  },
+  "adjustedEPS": 4.89,
+  "epsEstimate": null,
+  "grossMargin": {
+   "current": 67.8,
+   "previous": 67.2
+  },
+  "guidance": null,
+  "segments": null
+ },
+ "history": [
+  {
+   "label": "Q1",
+   "end": "2025-09-30",
+   "value": 77673
+  },
+  {
+   "label": "Q2",
+   "end": "2025-12-31",
+   "value": 81273
+  },
+  {
+   "label": "Q3",
+   "end": "2026-03-31",
+   "value": 82886
+  },
+  {
+   "label": "Q4",
+   "end": "2026-06-30",
+   "value": 90007
+  }
+ ],
+ "summary": {
+  "conclusion": [
+   {
+    "ja": "売上は922.79億ドルで前年同期比19%増でした。Azureは48%増、Microsoft Cloudは639億ドルで30%増と、伸びが加速しています。",
+    "en": "Revenue was $92.28B, up 19% from a year ago. Azure grew 48% and Microsoft Cloud reached $63.9B, up 30%, with growth accelerating."
+   },
+   {
+    "ja": "一方、設備投資は393.67億ドルと前年同期の約2倍になり、フリーキャッシュフロー(営業キャッシュフロー−設備投資)は約186億ドルにとどまりました。",
+    "en": "Capital spending, however, roughly doubled to $39.37B, leaving free cash flow (operating cash flow minus capex) at about $18.6B."
+   },
+   {
+    "ja": "今期から事業区分が2つ(Agents and Infra / Devices and Consumer)に変わりました。Devices and Consumerは3%の減収です。",
+    "en": "Reporting moved to two segments this quarter (Agents and Infra / Devices and Consumer). Devices and Consumer revenue fell 3%."
+   }
+  ],
+  "cards": {
+   "growth": {
+    "headline": {
+     "ja": "Azureの売上が前年同期比48%増",
+     "en": "Azure revenue up 48% YoY"
+    },
+    "chips": [
+     {
+      "tone": "up",
+      "text": {
+       "ja": "Azure 223.84億 → 331.65億ドル",
+       "en": "Azure $22.38B → $33.17B"
+      }
+     },
+     {
+      "tone": "up",
+      "text": {
+       "ja": "Agents and Infra 売上 +25%",
+       "en": "Agents and Infra revenue +25%"
+      }
+     },
+     {
+      "tone": "gold",
+      "text": {
+       "ja": "同部門の営業利益率 53.1% → 52.8%(前年比)",
+       "en": "Segment operating margin 53.1% → 52.8% (YoY)"
+      }
+     }
+    ],
+    "sections": [
+     {
+      "key": "happened",
+      "text": {
+       "ja": "Azureの売上は331.65億ドルで、前年同期の223.84億ドルから48%増えました。Azureを含むAgents and Infra部門の売上は767.95億ドル(25%増)で、会社全体の売上の8割強を占めます。",
+       "en": "Azure revenue was $33.17B, up 48% from $22.38B a year ago. The Agents and Infra segment, which includes Azure, had revenue of $76.80B (+25%), over 80% of the company total."
+      }
+     },
+     {
+      "key": "good",
+      "text": {
+       "ja": "Agents and Infra部門の営業利益は405.58億ドルで、前年同期の327.18億ドルから24%増えました。商業向けの受注残(残存履行義務)は73%増の6,770億ドルです。",
+       "en": "Agents and Infra operating income rose 24% to $40.56B from $32.72B. Commercial remaining performance obligation grew 73% to $677B."
+      }
+     },
+     {
+      "key": "watch",
+      "text": {
+       "ja": "この部門の売上原価は177.01億ドルから238.87億ドルへ35%増え、売上の伸び(25%)を上回りました。営業利益率は前年同期の53.1%から52.8%にわずかに下がっています。",
+       "en": "The segment's cost of revenue rose 35%, from $17.70B to $23.89B, faster than its 25% revenue growth. Its operating margin edged down from 53.1% to 52.8%."
+      }
+     },
+     {
+      "key": "view",
+      "text": {
+       "ja": "AIの需要が売上を押し上げる一方で、データセンターの費用も同時に増えています。売上の伸びと原価の伸びの差を見ます。",
+       "en": "AI demand is lifting revenue, but data-center costs are rising alongside it. The gap between revenue growth and cost growth is what to follow."
+      }
+     }
+    ]
+   },
+   "change": {
+    "headline": {
+     "ja": "売上は前期比 +2.5%、粗利益率は67.8%",
+     "en": "Revenue up 2.5% QoQ, gross margin 67.8%"
+    },
+    "chips": [
+     {
+      "tone": "up",
+      "text": {
+       "ja": "粗利益率 67.2% → 67.8%",
+       "en": "Gross margin 67.2% → 67.8%"
+      }
+     },
+     {
+      "tone": "up",
+      "text": {
+       "ja": "営業利益 前年同期比 +21%",
+       "en": "Operating income +21% YoY"
+      }
+     }
+    ],
+    "sections": [
+     {
+      "key": "happened",
+      "text": {
+       "ja": "売上は900.07億ドルから922.79億ドルへ、22.72億ドル増えました。粗利益率(売上総利益÷売上)は67.2%から67.8%に上がりました。前年同期比では19%増です。",
+       "en": "Revenue rose from $90.01B to $92.28B, up $2.27B. Gross margin (gross profit divided by revenue) rose from 67.2% to 67.8%. Year over year, revenue grew 19%."
+      }
+     },
+     {
+      "key": "good",
+      "text": {
+       "ja": "営業利益は459.15億ドルで前年同期比21%増と、売上の伸び(19%)を上回りました。営業利益率は約49.8%です。",
+       "en": "Operating income rose 21% to $45.92B, faster than revenue (19%). The operating margin was about 49.8%."
+      }
+     },
+     {
+      "key": "watch",
+      "text": {
+       "ja": "GAAPの純利益は32%増ですが、前年同期にOpenAIへの投資で31億ドルの損失が出ていた影響です。OpenAIの影響を除くと、純利益は18%増、1株利益は4.89ドルです。",
+       "en": "GAAP net income rose 32%, but the prior-year quarter included a $3.1B loss from OpenAI investments. Excluding OpenAI, net income grew 18% and EPS was $4.89."
+      }
+     },
+     {
+      "key": "means",
+      "text": {
+       "ja": "Devices and Consumer部門は154.84億ドルで3%の減収、Windows OEM・デバイスは22%減でした。成長はクラウドとAI関連に大きく頼っています。",
+       "en": "Devices and Consumer revenue fell 3% to $15.48B, with Windows OEM and devices down 22%. Growth depends heavily on cloud and AI."
+      }
+     }
+    ]
+   },
+   "caution": {
+    "headline": {
+     "ja": "設備投資が前年同期の約2倍に",
+     "en": "Capital spending roughly doubled"
+    },
+    "chips": [
+     {
+      "tone": "down",
+      "text": {
+       "ja": "設備投資 193.94億 → 393.67億ドル",
+       "en": "Capex $19.39B → $39.37B"
+      }
+     },
+     {
+      "tone": "gold",
+      "text": {
+       "ja": "フリーキャッシュフロー 約186億ドル",
+       "en": "Free cash flow about $18.6B"
+      }
+     },
+     {
+      "tone": "down",
+      "text": {
+       "ja": "減価償却費等 +44%",
+       "en": "Depreciation and amortization +44%"
+      }
+     }
+    ],
+    "sections": [
+     {
+      "key": "happened",
+      "text": {
+       "ja": "有形固定資産の取得額は393.67億ドルで、前年同期の193.94億ドルから約2倍になりました。営業キャッシュフローは580億ドルあり、差し引いたフリーキャッシュフローは約186億ドルです。",
+       "en": "Additions to property and equipment were $39.37B, about double the $19.39B a year ago. Operating cash flow was $58.0B, leaving free cash flow of about $18.6B."
+      }
+     },
+     {
+      "key": "means",
+      "text": {
+       "ja": "前年同期のフリーキャッシュフロー(約257億ドル)より少なくなっています。データセンターへの投資が利益として戻るまでには時間差があり、その間は現金の余裕が小さくなります。",
+       "en": "That is less than the roughly $25.7B a year ago. Data-center investment pays back with a lag, and cash headroom is thinner in the meantime."
+      }
+     },
+     {
+      "key": "watch",
+      "text": {
+       "ja": "減価償却費等は117.44億ドルで、前年同期の81.47億ドルから44%増えました。設備が増えるほど毎年の費用も増え、利益率を押し下げる要因になります。",
+       "en": "Depreciation, amortization and other rose 44% to $11.74B from $8.15B. More equipment means higher annual costs, which weigh on margins."
+      }
+     },
+     {
+      "key": "view",
+      "text": {
+       "ja": "商業向け受注残6,770億ドルは、投資に見合う需要がある材料です。投資額とクラウド売上の伸びが釣り合っているかを、次の決算でも見ます。",
+       "en": "The $677B commercial backlog supports the case that demand justifies the spending. Whether capex and cloud revenue growth stay in balance is the thing to check next time."
+      }
+     }
+    ]
+   },
+   "next": {
+    "headline": {
+     "ja": "数字の見通しは決算説明会で公表",
+     "en": "Outlook is given on the earnings call"
+    },
+    "chips": [
+     {
+      "tone": "gold",
+      "text": {
+       "ja": "リリースに売上見通しなし",
+       "en": "No revenue outlook in the release"
+      }
+     }
+    ],
+    "sections": [
+     {
+      "key": "happened",
+      "text": {
+       "ja": "マイクロソフトは、次の四半期の見通しをリリースではなく決算説明会で示すとしています。このため、ここでは見通しの数字を載せていません。",
+       "en": "Microsoft gives forward-looking guidance on its earnings call rather than in the release, so no outlook figures are shown here."
+      }
+     },
+     {
+      "key": "watch",
+      "text": {
+       "ja": "純利益は、投資先の評価損益で大きく動くことがあります。前年同期はOpenAI関連で31億ドルの損失でした。次の決算でも、OpenAIの影響を除いた数字と合わせて見ます。",
+       "en": "Net income can swing with gains and losses on investments (a $3.1B OpenAI-related loss a year ago). Next time, read it together with the figures excluding OpenAI."
+      }
+     },
+     {
+      "key": "view",
+      "text": {
+       "ja": "次の決算では、Azureの伸び(今回48%)が続くか、設備投資の増え方、Devices and Consumerの減収が止まるかを見ます。",
+       "en": "Next time, watch whether Azure growth (48% this quarter) holds, how fast capex keeps rising, and whether the Devices and Consumer decline stops."
+      }
+     }
+    ]
+   }
+  }
+ }
+}

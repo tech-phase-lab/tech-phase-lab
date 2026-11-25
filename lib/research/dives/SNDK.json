@@ -1,0 +1,530 @@
+{
+ "ticker": "SNDK",
+ "name": "Sandisk",
+ "exchange": "NASDAQ",
+ "quoteTicker": "SNDK",
+ "period": "Q1 FY2027",
+ "periodQuarter": 1,
+ "releasedOn": "2026-10-29",
+ "periodEnd": "2026-10-02",
+ "reviewedOn": "2026-11-25",
+ "currency": "USD",
+ "basis": {
+  "eps": "non-GAAP diluted, pre-split (before the 8-for-1 split effective November 19, 2026)",
+  "grossMargin": "non-GAAP",
+  "guidance": "company range $12.2–12.6B; gross margin = midpoint of the 84.5–85.5% non-GAAP range"
+ },
+ "sources": [
+  {
+   "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026068243/sndkq1-27ex991xpressrelease.htm",
+   "title": "Sandisk Reports Fiscal First Quarter 2027 Financial Results (Form 8-K Exhibit 99.1, October 29, 2026)",
+   "location": "News Summary, Q1 2027 Financial Highlights, End Market Summary, Business Outlook for Fiscal Second Quarter of 2027, Balance Sheets, GAAP to non-GAAP reconciliation and cash flows"
+  },
+  {
+   "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026004121/sndkq2fy26ex991-pressrelea.htm",
+   "title": "Sandisk Reports Fiscal Second Quarter 2026 Financial Results (Form 8-K Exhibit 99.1, January 29, 2026)",
+   "location": "Q2 2026 Financial Highlights"
+  },
+  {
+   "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026028879/sndkq3-26ex991xpressrelease.htm",
+   "title": "Sandisk Reports Fiscal Third Quarter 2026 Financial Results (Form 8-K Exhibit 99.1, April 30, 2026)",
+   "location": "Q3 2026 Financial Highlights"
+  }
+ ],
+ "evidence": [
+  {
+   "field": "numbers.revenue.current",
+   "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026068243/sndkq1-27ex991xpressrelease.htm",
+   "quote": "Revenue $11,031 $8,965 up 23% $11,031 $8,965 up 23%"
+  },
+  {
+   "field": "numbers.revenue.previous",
+   "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026068243/sndkq1-27ex991xpressrelease.htm",
+   "quote": "Revenue $11,031 $8,965 up 23% $11,031 $8,965 up 23%"
+  },
+  {
+   "field": "numbers.revenue.yearAgo",
+   "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026068243/sndkq1-27ex991xpressrelease.htm",
+   "quote": "Revenue $11,031 $2,308 up 378% $11,031 $2,308 up 378%"
+  },
+  {
+   "field": "numbers.adjustedEPS",
+   "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026068243/sndkq1-27ex991xpressrelease.htm",
+   "quote": "First quarter Non-GAAP diluted net income per share was $49.51."
+  },
+  {
+   "field": "numbers.grossMargin.current",
+   "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026068243/sndkq1-27ex991xpressrelease.htm",
+   "quote": "Gross Margin 85.0% 84.6% up 0.4 ppt 85.1% 84.6% up 0.5 ppt"
+  },
+  {
+   "field": "numbers.grossMargin.previous",
+   "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026068243/sndkq1-27ex991xpressrelease.htm",
+   "quote": "Gross Margin 85.0% 84.6% up 0.4 ppt 85.1% 84.6% up 0.5 ppt"
+  },
+  {
+   "field": "numbers.guidance.low",
+   "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026068243/sndkq1-27ex991xpressrelease.htm",
+   "quote": "Revenue $12,200 - $12,600 $12,200 - $12,600"
+  },
+  {
+   "field": "numbers.guidance.high",
+   "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026068243/sndkq1-27ex991xpressrelease.htm",
+   "quote": "Revenue $12,200 - $12,600 $12,200 - $12,600"
+  },
+  {
+   "field": "numbers.guidance.grossMarginPercent",
+   "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026068243/sndkq1-27ex991xpressrelease.htm",
+   "quote": "Gross Margin 84.4% - 85.4% 84.5% - 85.5%",
+   "calc": "(84.5+85.5)/2"
+  },
+  {
+   "field": "history[0].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026068243/sndkq1-27ex991xpressrelease.htm",
+   "quote": "Revenue $11,031 $2,308 up 378% $11,031 $2,308 up 378%"
+  },
+  {
+   "field": "history[1].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026004121/sndkq2fy26ex991-pressrelea.htm",
+   "quote": "Revenue $3,025 $2,308 up 31% $3,025 $2,308 up 31%"
+  },
+  {
+   "field": "history[2].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026028879/sndkq3-26ex991xpressrelease.htm",
+   "quote": "Revenue $5,950 $3,025 up 97% $5,950 $3,025 up 97%"
+  },
+  {
+   "field": "history[3].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026068243/sndkq1-27ex991xpressrelease.htm",
+   "quote": "Revenue $11,031 $8,965 up 23% $11,031 $8,965 up 23%"
+  },
+  {
+   "field": "summary.cards.growth.sections[0]",
+   "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026068243/sndkq1-27ex991xpressrelease.htm",
+   "quote": "Edge $5,832 $5,432 up 7% $1,387 up 320% Consumer $397 $556 down 29% $652 down 39%"
+  },
+  {
+   "field": "summary.cards.growth.sections[1]",
+   "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026068243/sndkq1-27ex991xpressrelease.htm",
+   "quote": "robust and growing demand for our products driving outpaced growth in our data center business"
+  },
+  {
+   "field": "summary.cards.change.chips[2]",
+   "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026068243/sndkq1-27ex991xpressrelease.htm",
+   "quote": "Non-GAAP $ 49.51 $ 39.25 $ 1.22"
+  },
+  {
+   "field": "summary.cards.change.sections[1]",
+   "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026068243/sndkq1-27ex991xpressrelease.htm",
+   "quote": "Operating Income $8,780 $7,037 up 25% $8,871 $7,104 up 25%"
+  },
+  {
+   "field": "summary.cards.change.sections[2]",
+   "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026068243/sndkq1-27ex991xpressrelease.htm",
+   "quote": "Gain on equity securities, net (513) (804) —"
+  },
+  {
+   "field": "summary.cards.caution.sections[1]",
+   "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026068243/sndkq1-27ex991xpressrelease.htm",
+   "quote": "Cash flow from operating activities $ 6,363 $ 7,126 $ 488"
+  },
+  {
+   "field": "summary.cards.caution.sections[1]",
+   "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026068243/sndkq1-27ex991xpressrelease.htm",
+   "quote": "Operating cash flow margin (2) 57.7 % 79.5 % 21.1 %"
+  },
+  {
+   "field": "summary.cards.caution.sections[1]",
+   "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026068243/sndkq1-27ex991xpressrelease.htm",
+   "quote": "Accounts receivable, net 6,585 4,708"
+  },
+  {
+   "field": "summary.cards.caution.sections[2]",
+   "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026068243/sndkq1-27ex991xpressrelease.htm",
+   "quote": "Returned $5.0 billion to stockholders through the repurchase of approximately 3.2 million shares during the quarter."
+  },
+  {
+   "field": "summary.cards.caution.sections[2]",
+   "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026068243/sndkq1-27ex991xpressrelease.htm",
+   "quote": "Cash and cash equivalents $ 5,136 $ 4,762"
+  },
+  {
+   "field": "summary.cards.next.chips[2]",
+   "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026068243/sndkq1-27ex991xpressrelease.htm",
+   "quote": "Diluted Net Income Per Share N/A $55.00 - $57.00"
+  },
+  {
+   "field": "summary.cards.next.sections[1]",
+   "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026068243/sndkq1-27ex991xpressrelease.htm",
+   "quote": "Operating Expenses $677 - $745 $540 - $560"
+  },
+  {
+   "field": "summary.conclusion[2]",
+   "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026068243/sndkq1-27ex991xpressrelease.htm",
+   "quote": "Announced today an eight-for-one forward stock split, effective November 19, 2026"
+  },
+  {
+   "field": "tiles[0].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026068243/sndkq1-27ex991xpressrelease.htm",
+   "quote": "Revenue $11,031 $8,965 up 23% $11,031 $8,965 up 23%",
+   "calc": "11031/1000",
+   "round": 2
+  },
+  {
+   "field": "tiles[0].note",
+   "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026068243/sndkq1-27ex991xpressrelease.htm",
+   "quote": "Revenue $11,031 $2,308 up 378% $11,031 $2,308 up 378%"
+  },
+  {
+   "field": "tiles[1].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026068243/sndkq1-27ex991xpressrelease.htm",
+   "quote": "Gross Margin 85.0% 29.8% up 55.2 ppt 85.1% 29.9% up 55.2 ppt"
+  },
+  {
+   "field": "tiles[1].note",
+   "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026068243/sndkq1-27ex991xpressrelease.htm",
+   "quote": "Gross Margin 85.0% 84.6% up 0.4 ppt 85.1% 84.6% up 0.5 ppt"
+  },
+  {
+   "field": "tiles[2].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026068243/sndkq1-27ex991xpressrelease.htm",
+   "quote": "Datacenter $4,802 $2,977 up 61% $269 *",
+   "calc": "4802/1000",
+   "round": 2
+  },
+  {
+   "field": "tiles[2].note",
+   "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026068243/sndkq1-27ex991xpressrelease.htm",
+   "quote": "Datacenter $4,802 $2,977 up 61% $269 *"
+  }
+ ],
+ "tiles": [
+  {
+   "label": {
+    "ja": "売上高",
+    "en": "Revenue"
+   },
+   "value": {
+    "ja": "110.31億ドル",
+    "en": "$11.03B"
+   },
+   "note": {
+    "ja": "前年同期比 +378%・前期比 +23%",
+    "en": "+378% YoY, +23% QoQ"
+   }
+  },
+  {
+   "label": {
+    "ja": "調整後(non-GAAP)粗利益率",
+    "en": "Non-GAAP gross margin"
+   },
+   "value": {
+    "ja": "85.1%",
+    "en": "85.1%"
+   },
+   "note": {
+    "ja": "前四半期 84.6%・前年同期 29.9%",
+    "en": "Prior quarter 84.6%; year ago 29.9%"
+   }
+  },
+  {
+   "label": {
+    "ja": "データセンター売上",
+    "en": "Datacenter revenue"
+   },
+   "value": {
+    "ja": "48.02億ドル",
+    "en": "$4.80B"
+   },
+   "note": {
+    "ja": "前期比 +61%",
+    "en": "+61% QoQ"
+   }
+  }
+ ],
+ "numbers": {
+  "revenue": {
+   "current": 11031,
+   "previous": 8965,
+   "yearAgo": 2308
+  },
+  "adjustedEPS": 49.51,
+  "epsEstimate": null,
+  "grossMargin": {
+   "current": 85.1,
+   "previous": 84.6
+  },
+  "guidance": {
+   "low": 12200,
+   "high": 12600,
+   "grossMarginPercent": 85.0
+  },
+  "segments": null
+ },
+ "history": [
+  {
+   "label": "Q1",
+   "end": "2025-10-03",
+   "value": 2308
+  },
+  {
+   "label": "Q2",
+   "end": "2026-01-02",
+   "value": 3025
+  },
+  {
+   "label": "Q3",
+   "end": "2026-04-03",
+   "value": 5950
+  },
+  {
+   "label": "Q4",
+   "end": "2026-07-03",
+   "value": 8965
+  }
+ ],
+ "summary": {
+  "conclusion": [
+   {
+    "ja": "売上は110.31億ドルで、前四半期から23%、前年同期の約4.8倍に増えました。伸びの中心はデータセンター向けで、前四半期から61%増えています。",
+    "en": "Revenue was $11.03B, up 23% from the previous quarter and about 4.8 times a year earlier. Datacenter led, up 61% from the previous quarter."
+   },
+   {
+    "ja": "調整後の粗利益率は85.1%と、前年同期の29.9%から大きく上がりました。メモリーの価格が高い局面の数字で、次の四半期の見通しもほぼ同じ水準(84.5〜85.5%)です。",
+    "en": "Non-GAAP gross margin was 85.1%, up from 29.9% a year earlier. These are numbers from a period of high memory prices, and next quarter is guided at about the same level (84.5–85.5%)."
+   },
+   {
+    "ja": "1株あたりの数字は株式分割(1株→8株、11月19日実施)前の基準です。",
+    "en": "Per-share figures are before the 8-for-1 stock split that took effect on November 19."
+   }
+  ],
+  "cards": {
+   "growth": {
+    "headline": {
+     "ja": "データセンター売上が前期比61%増",
+     "en": "Datacenter revenue up 61% QoQ"
+    },
+    "chips": [
+     {
+      "tone": "up",
+      "text": {
+       "ja": "データセンター 48.02億ドル",
+       "en": "Datacenter $4.80B"
+      }
+     },
+     {
+      "tone": "up",
+      "text": {
+       "ja": "エッジ 前期比 +7%",
+       "en": "Edge +7% QoQ"
+      }
+     },
+     {
+      "tone": "down",
+      "text": {
+       "ja": "消費者向け 前期比 −29%",
+       "en": "Consumer −29% QoQ"
+      }
+     }
+    ],
+    "sections": [
+     {
+      "key": "happened",
+      "text": {
+       "ja": "データセンター向けの売上は29.77億ドルから48.02億ドルへ61%増え、全体の約44%になりました。パソコンやスマホ向けの「エッジ」は58.32億ドルで7%増、消費者向けは3.97億ドルで29%減でした。",
+       "en": "Datacenter revenue rose 61% from $2.98B to $4.80B, about 44% of the total. Edge (PCs and phones) was $5.83B (+7%), and Consumer was $397M (−29%)."
+      }
+     },
+     {
+      "key": "good",
+      "text": {
+       "ja": "AIのデータセンターで使う大容量のSSDの需要が強く、会社も「データセンター事業が全体を上回って伸びた」としています。売上の増加20.66億ドルのうち、約9割がデータセンター向けの増加分です。",
+       "en": "Demand for high-capacity SSDs in AI data centers is strong; the company said its data center business outgrew the rest. About 90% of the $2.07B revenue increase came from Datacenter."
+      }
+     },
+     {
+      "key": "watch",
+      "text": {
+       "ja": "消費者向け(メモリーカードやUSBメモリーなど)は前年同期から39%減っています。データセンター向けの比率が高まるほど、AI向け投資の動きに業績が左右されやすくなります。",
+       "en": "Consumer (memory cards, USB drives and similar) is down 39% from a year earlier. The more the mix tilts to data centers, the more results depend on AI spending."
+      }
+     }
+    ],
+    "segment": null
+   },
+   "change": {
+    "headline": {
+     "ja": "売上は前期比 +23%、粗利益率は85%台",
+     "en": "Revenue up 23% QoQ; gross margin above 85%"
+    },
+    "chips": [
+     {
+      "tone": "up",
+      "text": {
+       "ja": "売上 前期比 +23%",
+       "en": "Revenue +23% QoQ"
+      }
+     },
+     {
+      "tone": "up",
+      "text": {
+       "ja": "調整後粗利益率 84.6% → 85.1%",
+       "en": "Non-GAAP gross margin 84.6% → 85.1%"
+      }
+     },
+     {
+      "tone": "up",
+      "text": {
+       "ja": "調整後EPS 39.25ドル → 49.51ドル",
+       "en": "Non-GAAP EPS $39.25 → $49.51"
+      }
+     }
+    ],
+    "sections": [
+     {
+      "key": "happened",
+      "text": {
+       "ja": "売上は89.65億ドルから110.31億ドルへ20.66億ドル増えました。調整後EPSは39.25ドルから49.51ドルに増えています。どちらも株式分割前の基準の数字です。",
+       "en": "Revenue rose $2.07B from $8.97B to $11.03B. Non-GAAP EPS rose from $39.25 to $49.51 (pre-split basis)."
+      }
+     },
+     {
+      "key": "good",
+      "text": {
+       "ja": "売上100ドルのうち約85ドルが粗利益として残る計算です。調整後の営業利益は88.71億ドルで、売上の8割を超えています。",
+       "en": "About $85 of every $100 of sales stays as gross profit. Non-GAAP operating income was $8.87B, more than 80% of revenue."
+      }
+     },
+     {
+      "key": "watch",
+      "text": {
+       "ja": "会計上(GAAP)の純利益81.01億ドルには、保有する株の評価益など5.13億ドルが含まれます。本業の利益とは分けて見ます。",
+       "en": "GAAP net income of $8.10B includes a $513M net gain on equity securities. Keep that separate from operating profit."
+      }
+     },
+     {
+      "key": "view",
+      "text": {
+       "ja": "1年前の売上は23.08億ドル、粗利益率は約30%でした。メモリー価格の上昇で、同じ会社でも利益の水準がまったく変わっています。",
+       "en": "A year ago revenue was $2.31B with a gross margin near 30%. Higher memory prices have completely changed the company's profit level."
+      }
+     }
+    ],
+    "segment": null
+   },
+   "caution": {
+    "headline": {
+     "ja": "粗利益率は過去にない高さ、価格次第で大きく動く",
+     "en": "Margins are at unusual highs and depend on prices"
+    },
+    "chips": [
+     {
+      "tone": "gold",
+      "text": {
+       "ja": "粗利益率の見通し 84.5〜85.5%",
+       "en": "Gross margin outlook 84.5–85.5%"
+      }
+     },
+     {
+      "tone": "down",
+      "text": {
+       "ja": "営業キャッシュフロー率 79.5% → 57.7%",
+       "en": "Operating cash flow margin 79.5% → 57.7%"
+      }
+     },
+     {
+      "tone": "gold",
+      "text": {
+       "ja": "自社株買い 50億ドル",
+       "en": "Buybacks $5.0B"
+      }
+     }
+    ],
+    "sections": [
+     {
+      "key": "watch",
+      "text": {
+       "ja": "前年同期の粗利益率は約30%でした。メモリーは需要と供給で価格が大きく動く製品で、今の85%前後は価格が非常に高い状態を反映しています。価格が下がれば、利益率も大きく下がる可能性があります。",
+       "en": "A year ago gross margin was about 30%. Memory prices swing with supply and demand, and today's ~85% reflects very high prices. If prices fall, margins could drop sharply."
+      }
+     },
+     {
+      "key": "happened",
+      "text": {
+       "ja": "営業キャッシュフローは63.63億ドルで、売上に対する割合は前四半期の79.5%から57.7%に下がりました。売掛金が47.08億ドルから65.85億ドルへ増えたことが響いています。",
+       "en": "Operating cash flow was $6.36B, falling from 79.5% to 57.7% of revenue, as accounts receivable rose from $4.71B to $6.59B."
+      }
+     },
+     {
+      "key": "means",
+      "text": {
+       "ja": "一方で、四半期に約50億ドルの自社株買いを行いました。稼いだ現金の多くを株主に戻しているため、手元の現金は51.36億ドルと大きくは増えていません。",
+       "en": "It also bought back about $5.0B of stock in the quarter. Much of the cash earned went back to shareholders, so cash only rose to $5.14B."
+      }
+     },
+     {
+      "key": "view",
+      "text": {
+       "ja": "利益率の高さそのものより、それがどれだけ続くかが大事です。次の決算で、粗利益率が見通しの85%前後を保てるかを確かめます。",
+       "en": "What matters is not how high margins are but how long they last. The next report will show whether margins hold near the guided 85%."
+      }
+     }
+    ],
+    "segment": null
+   },
+   "next": {
+    "headline": {
+     "ja": "次期の売上見通しは122〜126億ドル",
+     "en": "Next quarter revenue outlook: $12.2–12.6B"
+    },
+    "chips": [
+     {
+      "tone": "gold",
+      "text": {
+       "ja": "売上 122〜126億ドル",
+       "en": "Revenue $12.2–12.6B"
+      }
+     },
+     {
+      "tone": "gold",
+      "text": {
+       "ja": "調整後粗利益率 84.5〜85.5%",
+       "en": "Non-GAAP gross margin 84.5–85.5%"
+      }
+     },
+     {
+      "tone": "gold",
+      "text": {
+       "ja": "調整後EPS 55〜57ドル(分割前)",
+       "en": "Non-GAAP EPS $55–57 (pre-split)"
+      }
+     }
+    ],
+    "sections": [
+     {
+      "key": "happened",
+      "text": {
+       "ja": "会社は第2四半期の売上を122億〜126億ドル、調整後粗利益率を84.5〜85.5%と見込んでいます。今回の110.31億ドルから、下限でも約10.6%の増加です。",
+       "en": "The company expects second-quarter revenue of $12.2B–$12.6B with a non-GAAP gross margin of 84.5–85.5%. Even the low end is about 10.6% above this quarter's $11.03B."
+      }
+     },
+     {
+      "key": "means",
+      "text": {
+       "ja": "粗利益率の見通しの中央は85.0%で、今回の85.1%とほぼ同じです。調整後の営業費用は5.40億〜5.60億ドルと、今回の5.13億ドルから増える予定です。",
+       "en": "The margin midpoint of 85.0% is about the same as this quarter's 85.1%. Non-GAAP operating expenses are guided at $540M–$560M, up from $513M."
+      }
+     },
+     {
+      "key": "view",
+      "text": {
+       "ja": "次の決算では、売上が見通しの幅に入るか、データセンター向けの伸びが続くか、粗利益率が85%前後を保てるかを見ます。分割後はEPSの数字が約8分の1になる点にも注意します。",
+       "en": "Next time, check whether revenue lands in the range, Datacenter keeps growing, and margins stay near 85%. After the split, EPS figures will be about one-eighth of the pre-split numbers."
+      }
+     }
+    ],
+    "segment": null
+   }
+  }
+ }
+}
