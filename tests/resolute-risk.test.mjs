@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {PGlite} from '@electric-sql/pglite';
-import {starsFromShock,measureDay,fearChangeOf,readingStars,causeStars,riskAction,parseRiskFeed,latestRiskDate,formatReading,formatCause,SUMMARY_QUESTION,starCriteria,starSummary,STAR_INFO_LABEL,noStarsLabel} from '../lib/resolute/risk.ts';
+import {starsFromShock,measureDay,fearChangeOf,readingStars,causeStars,riskAction,parseRiskFeed,latestRiskDate,formatReading,readingParts,formatCause,SUMMARY_QUESTION,starCriteria,starSummary,STAR_INFO_LABEL,noStarsLabel} from '../lib/resolute/risk.ts';
 import {candidatesFromFeed,validateGeneration,collect,publish,isInDailyWindow} from '../services/resolute-api/risk-job.mjs';
 import {saveRiskDay} from '../services/resolute-api/rizel-daily-review.mjs';
 import {RISK_POLICY} from '../lib/resolute/risk-policy.ts';
@@ -54,8 +54,12 @@ test('the published criteria text is plain, generated from the levels, in both l
  assert.match(gauge,/aria-expanded=\{open\}[^]*\{open\?<span role="note"[^]*\{starSummary\(locale\)\+'\\n\\n'\+starCriteria\(locale\)\}/);
  assert.equal(STAR_INFO_LABEL.ja,'★のつけ方');
  const m={index:'sox',session:'2026-11-24',reading:{from:'2026-11-23',nas100:{changePercent:-1.5,multiple:2,same:47,total:99},sox:{changePercent:-8.5,multiple:3.8,same:39,total:40},fearChange:0}};
- assert.deepEqual(formatReading(m,'ja'),['TP半導体40 −8.5%（いつもの3.8倍・40社中39社が下落）','TP大型株100 −1.5%（いつもの2.0倍・99社中47社が下落）','恐怖指数 0%']);
- assert.deepEqual(formatReading({...m,index:'nas100'},'en'),['TP Large Cap 100 −1.5% (2.0× usual · 47 of 99 down)','TP Semiconductor 40 −8.5% (3.8× usual · 39 of 40 down)','Fear index 0%']);
+ assert.deepEqual(formatReading(m,'ja'),['TP半導体40 −8.5%（いつもの3.8倍・39/40社が下落）','TP大型株100 −1.5%（いつもの2.0倍・47/99社が下落）','恐怖指数 0%']);
+ assert.deepEqual(formatReading({...m,index:'nas100'},'en'),['TP Large Cap 100 −1.5% (2.0× usual · 47/99 down)','TP Semiconductor 40 −8.5% (3.8× usual · 39/40 down)','Fear index 0%']);
+ // Owner, Nov 25: each index line fits on one phone line, its parenthetical set a little smaller and never broken inside.
+ assert.deepEqual(readingParts({...m,index:'nas100'},'ja'),[{text:'TP大型株100 −1.5%',detail:'（いつもの2.0倍・47/99社が下落）'},{text:'TP半導体40 −8.5%',detail:'（いつもの3.8倍・39/40社が下落）'},{text:'恐怖指数 0%'}]);
+ assert.match(gauge,/readingParts\(article\.market,locale\)/);
+ assert.match(gauge,/const detail:CSSProperties=\{whiteSpace:'nowrap',fontSize:'\.8em'/);
  assert.equal(formatCause({market:m,stars:3,cause:{kind:'one-off',ja:'システム障害',en:'system outage'}},'ja'),'一過性とみられる要因（システム障害）→ ★−1');
  assert.equal(formatCause({market:m,stars:5,cause:{kind:'lasting',ja:'輸出規制の強化',en:'tighter export controls'}},'en'),'Likely to last (tighter export controls) → ★+1');
  assert.equal(formatCause({market:m,stars:4,cause:null},'ja'),null);

@@ -8,6 +8,9 @@ import { parsePreferences } from "@/lib/resolute/preferences-data";
 import { PreferencesError, requestPreferences } from "@/lib/resolute/preferences-client";
 import AddToHomeSteps from "../add-to-home-steps";
 import styles from "./settings.module.css";
+import d from "../diagnosis.module.css";
+import { ResoluteHeader } from "../tool-shell";
+import SectionHeading from "../section-heading";
 
 const copy = {
   ja: { title: "言語とタイムゾーン", intro: "RESOLUTEで使う言語と、日時を表示する地域を設定します。",
@@ -19,8 +22,7 @@ const copy = {
     loadError: "設定を読み込めませんでした。時間をおいて再読込してください。",
     saveError: "保存を確認できませんでした。保存済みの設定を再読込して確認してください。",
     reload: "保存済みの設定を再読込", login: "設定を保存するにはログインしてください。",
-    account: "ログイン画面へ", afterLogin: "ログイン後にこの画面へ戻り、設定を再読込してください。",
-    note: "設定の保存だけでは通知の配信は始まりません。", back: "Tech Phaseへ戻る" },
+    account: "ログイン画面へ", afterLogin: "ログイン後にこの画面へ戻り、設定を再読込してください。" },
   en: { title: "Language and time zone", intro: "Choose the language for RESOLUTE and the time zone used to display dates and times.",
     language: "Language", choose: "Please select", zone: "Time zone", zoneHint: "For example: Asia/Tokyo (Japan) or America/New_York (US Eastern)",
     device: "Use this device’s time zone", deviceError: "We couldn’t detect your time zone. Please enter it.",
@@ -30,8 +32,7 @@ const copy = {
     loadError: "We couldn’t load your settings. Try again in a moment.",
     saveError: "We couldn’t confirm your settings were saved. Reload them to check.",
     reload: "Reload saved settings", login: "Sign in to save your settings.", account: "Go to sign-in",
-    afterLogin: "After signing in, return here and reload your settings.",
-    note: "Saving these settings won’t turn on notifications.", back: "Back to Tech Phase" },
+    afterLogin: "After signing in, return here and reload your settings." },
 };
 type Phase = "loading" | "ready" | "saving" | "saved" | "signed-out" | "error";
 type Message = "unset" | "saved" | "changed" | "invalid" | "loadError" | "saveError" | "deviceError" | null;
@@ -104,45 +105,43 @@ export default function SettingsScreen({ identityReady = true }: { identityReady
     setTimezone(value.timezone); setMessage("changed");
   }
 
-  return <main className={styles.page} lang={viewLocale}>
+  const en = viewLocale === "en";
+  // Phone design (owner, Nov 25 §19): the shared top bar, the heading, language as round buttons, the time zone and save;
+  // adding to the home screen as three numbered steps.
+  return <main className={`${d.page} ${d.mobile}`} lang={viewLocale}><div className={d.wrap}>
+    <ResoluteHeader locale={viewLocale} setLocale={setViewLocale} />
     <HomeLink en={viewLocale === "en"} />
-    <div className={styles.top}><span className={styles.brand}>RESOLUTE</span>
-      <div className={styles.languages} aria-label="Display language">
-        <button type="button" aria-pressed={viewLocale === "ja"} onClick={() => setViewLocale("ja")}>日本語</button>
-        <button type="button" aria-pressed={viewLocale === "en"} onClick={() => setViewLocale("en")}>English</button>
-      </div></div>
-    <section className={styles.card} aria-labelledby="settings-heading" aria-busy={busy}>
-      <h1 id="settings-heading">{c.title}</h1><p className={styles.intro}>{c.intro}</p>
-      {phase === "loading" || !identityReady ? <p role="status">{c.loading}</p> : null}
+    <SectionHeading label="SETTINGS" title={c.title} description={c.intro} id="settings-heading" />
+    <section className={d.card} aria-labelledby="settings-heading" aria-busy={busy}>
+      {phase === "loading" || !identityReady ? <p role="status" className={styles.hint}>{c.loading}</p> : null}
       {phase === "signed-out" ? <div className={styles.notice}><p>{c.login}</p>
         <Link href="/research/account" prefetch={false}>{c.account}</Link><p>{c.afterLogin}</p></div> : null}
       <form onSubmit={save}>
         <fieldset disabled={!loaded || busy} className={styles.fields}>
           <legend className={styles.srOnly}>{c.title}</legend>
-          <label htmlFor="resolute-locale">{c.language}</label>
-          <select id="resolute-locale" name="locale" required value={locale}
-            onChange={event => { setLocale(event.target.value); setMessage("changed"); }}>
-            <option value="">{c.choose}</option><option value="ja">日本語</option><option value="en">English</option>
-          </select>
-          <label htmlFor="resolute-timezone">{c.zone}</label>
+          <span id="resolute-locale" className={styles.label}>{c.language}</span>
+          <div role="radiogroup" aria-labelledby="resolute-locale" className={styles.pills}>
+            {([["ja", "日本語"], ["en", "English"]] as const).map(([value, name]) =>
+              <button key={value} type="button" role="radio" aria-checked={locale === value} className={d.pill}
+                onClick={() => { setLocale(value); setMessage("changed"); }}>{name}</button>)}
+          </div>
+          <label htmlFor="resolute-timezone" className={styles.label}>{c.zone}</label>
           <input id="resolute-timezone" name="timezone" required maxLength={100} list="resolute-zones"
             autoComplete="off" spellCheck={false} value={timezone} aria-describedby="zone-hint"
             onChange={event => { setTimezone(event.target.value); setMessage("changed"); }} />
           <datalist id="resolute-zones"><option value="Asia/Tokyo" /><option value="America/New_York" />
             <option value="America/Los_Angeles" /><option value="Europe/London" /><option value="UTC" /></datalist>
           <p id="zone-hint" className={styles.hint}>{c.zoneHint}</p>
-          <button type="button" className={styles.secondary} onClick={useDeviceZone}>{c.device}</button>
-          <button type="submit" className={styles.save}>{phase === "saving" ? c.saving : c.save}</button>
+          <button type="button" className={d.secondary} onClick={useDeviceZone}>{c.device}</button>
+          <button type="submit" className={d.primary}>{phase === "saving" ? c.saving : c.save}</button>
         </fieldset>
       </form>
-      <p role="status" aria-live="polite" className={styles.status}>{message ? c[message] : ""}</p>
-      <button type="button" className={styles.secondary} disabled={busy} onClick={reload}>{c.reload}</button>
-      <p className={styles.note}>{c.note}</p>
+      <p role="status" aria-live="polite" className={message ? styles.status : styles.srOnly}>{message ? c[message] : ""}</p>
+      {phase === "error" ? <button type="button" className={d.secondary} onClick={reload}>{c.reload}</button> : null}
     </section>
-    <section id="home-screen" className={`${styles.card} ${styles.homeCard}`} aria-labelledby="home-screen-heading">
-      <h2 id="home-screen-heading">{viewLocale === "en" ? "Add RESOLUTE to your Home Screen" : "ホーム画面に追加する方法"}</h2>
-      <AddToHomeSteps en={viewLocale === "en"} />
+    <section id="home-screen" className={`${d.card} ${styles.homeCard}`} aria-labelledby="home-screen-heading">
+      <h2 id="home-screen-heading">{en ? "Add RESOLUTE to your Home Screen" : "ホーム画面に追加する方法"}</h2>
+      <AddToHomeSteps en={en} steps={3} className={styles.steps} />
     </section>
-    <Link className={styles.back} href="/research" prefetch={false}>{c.back}</Link>
-  </main>;
+  </div></main>;
 }
