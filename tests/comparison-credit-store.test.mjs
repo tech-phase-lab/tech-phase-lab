@@ -13,7 +13,8 @@ const here = name => new URL(`../lib/research/${name}`, import.meta.url).href;
 // ---------- the plan ----------
 test("every listed company has one minute a day; no minute costs more than the job's share of the plan", () => {
   const rows = [];
-  for (let i = 0; i < 6462; i++) rows.push({ ticker: `T${i}`, cik: i, exchange: i % 2 ? "NYSE" : "Nasdaq" });
+  // About 5,540 companies the comparison offers (Nov 25: funds, preferreds, notes and ETNs are left out of the job, comparison-server.ts).
+  for (let i = 0; i < 5538; i++) rows.push({ ticker: `T${i}`, cik: i, exchange: i % 2 ? "NYSE" : "Nasdaq" });
   rows.push({ ticker: "OTCX", cik: 99999, exchange: "OTC" }, { ticker: "T1-PA", cik: 1, exchange: "NYSE" }, { ticker: "ABCDW", cik: 2, exchange: "Nasdaq" }, { ticker: "GOOG", cik: 3, exchange: "Nasdaq" });
   const universe = warmUniverse(rows, ["T5", "ASML"]);
   assert.ok(!universe.includes("OTCX") && !universe.includes("T1-PA") && !universe.includes("ABCDW"));
@@ -22,12 +23,13 @@ test("every listed company has one minute a day; no minute costs more than the j
   for (let m = 0; m < MINUTES_PER_DAY; m++) for (const { ticker } of tickersForMinute(universe, Date.UTC(2026, 10, 15) + m * 60_000)) seen.set(ticker, (seen.get(ticker) ?? 0) + 1);
   assert.equal(seen.size, universe.length); assert.ok([...seen.values()].every(n => n === 1));
   const cost = dailyCost(universe.length, 0.3);
-  assert.equal(cost.perMinute, 5); assert.equal(cost.regularPerMinute, 255);
-  assert.ok(cost.regularPerMinute + COST.statements <= WARM_CEILING && WARM_CEILING + 150 <= PLAN_CREDITS_PER_MINUTE);
+  assert.equal(cost.perMinute, 4); assert.equal(cost.regularPerMinute, 204);
+  // Four companies and one company's statements fit under the warm tier, which leaves members at least 60 below their own ceiling (480).
+  assert.ok(cost.regularPerMinute + COST.statements <= WARM_CEILING && WARM_CEILING + 60 <= USER_SERIES_CEILING && WARM_CEILING + 150 <= PLAN_CREDITS_PER_MINUTE);
   assert.ok(cost.averagePerMinute <= 300, `average ${cost.averagePerMinute}`);
   assert.ok(USER_SERIES_CEILING < PLAN_CREDITS_PER_MINUTE && BACKGROUND_CEILING < WARM_CEILING);
   assert.equal(hasRoom(null, 50, WARM_CEILING), false); assert.equal(hasRoom(null, 1, USER_SERIES_CEILING, true), true);
-  assert.equal(hasRoom(410, 50, WARM_CEILING), true); assert.equal(hasRoom(411, 50, WARM_CEILING), false);
+  assert.equal(hasRoom(370, 50, WARM_CEILING), true); assert.equal(hasRoom(371, 50, WARM_CEILING), false);
 });
 
 // ---------- the store, with a simulated provider and meter ----------
@@ -136,17 +138,17 @@ async function loadWarm(clock, { directory, needs }) {
   return { warm: await import("data:text/javascript;base64," + Buffer.from(stripTypeScriptTypes(text)).toString("base64") + `#${Math.random()}`), store: mod, cache };
 }
 
-test("one minute of the job: five companies' statistics and series, statements only where the filing falls short, under the ceiling", () => withClock(Date.UTC(2026, 10, 15, 0, 0, 30), async clock => {
+test("one minute of the job: four companies' statistics and series, statements only where the filing falls short, under the ceiling", () => withClock(Date.UTC(2026, 10, 15, 0, 0, 30), async clock => {
   const p = provider(clock); p.site = 2;
-  const directory = Array.from({ length: 6462 }, (_, i) => ({ ticker: `C${i}`, cik: i, exchange: "NYSE" }));
+  const directory = Array.from({ length: 5541 }, (_, i) => ({ ticker: `C${i}`, cik: i, exchange: "NYSE" }));
   const { warm } = await loadWarm(clock, { directory, needs: t => t === "C1440" || t === "C2880" });
   const report = await warm.warmMinute(clock.now());
-  assert.deepEqual(report.tickers, ["C0", "C1440", "C2880", "C4320", "C5760"]);
-  // The same five companies' SEC figures are read into the comparison cache (no provider credits).
-  assert.equal(report.filings, 5); assert.deepEqual(globalThis.__prewarmed.slice(0, 5), report.tickers); delete globalThis.__prewarmed;
-  assert.equal(p.calls.filter(c => c.startsWith("statistics:")).length, 5);
-  assert.equal(p.calls.filter(c => c.startsWith("time_series:")).length, 5);
-  // 255 + one company's statements (200) fits under 460; the second company's statements wait for its minute tomorrow, when the order has
+  assert.deepEqual(report.tickers, ["C0", "C1440", "C2880", "C4320"]);
+  // The same four companies' SEC figures are read into the comparison cache (no provider credits).
+  assert.equal(report.filings, 4); assert.deepEqual(globalThis.__prewarmed.slice(0, 4), report.tickers); delete globalThis.__prewarmed;
+  assert.equal(p.calls.filter(c => c.startsWith("statistics:")).length, 4);
+  assert.equal(p.calls.filter(c => c.startsWith("time_series:")).length, 4);
+  // 204 + one company's statements (200) fits under 420; the second company's statements wait for its minute tomorrow, when the order has
   // turned (statementOrder), so the same company is not skipped every day.
   const [first, second] = statementOrder(report.tickers, clock.now()).filter(t => t === "C1440" || t === "C2880");
   assert.deepEqual(p.calls.filter(c => c.startsWith("income_statement:")), [`income_statement:${first}`]);
@@ -164,7 +166,7 @@ test("a busy site minute: the job sends nothing that would take the minute over 
   const { warm } = await loadWarm(clock, { directory, needs: () => false });
   const report = await warm.warmMinute(clock.now());
   assert.ok(p.peak <= WARM_CEILING, `peak ${p.peak}`);
-  assert.equal(p.calls.filter(c => c.startsWith("statistics:")).length, 3); // 301 + 3 × 50 + series; the other two wait for tomorrow
+  assert.equal(p.calls.filter(c => c.startsWith("statistics:")).length, 2); // 301 + 2 × 50 + series under 420; the others wait for tomorrow
   assert.ok(report.skipped.some(s => s.endsWith(":statistics")));
 }));
 

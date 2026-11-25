@@ -1,0 +1,160 @@
+{
+  "root": {
+    "ticker": "AEO",
+    "name": "アメリカン・イーグル・アウトフィッターズ",
+    "cik": 919012,
+    "name_en": "American Eagle Outfitters"
+  },
+  "rows": [
+    {
+      "ja": "店舗の家主(相手の資料に記載)",
+      "en": "Store landlords (named in their filings)",
+      "above": true
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "BKE",
+    "TLYS"
+  ],
+  "companies": [
+    {
+      "id": "CBL",
+      "ticker": "CBL",
+      "name": "CBL&アソシエイツ",
+      "name_en": "CBL & Associates",
+      "sub": "ショッピングモールREIT",
+      "sub_en": "Mall REIT",
+      "sub_short": "REIT",
+      "sub_short_en": "Mall REIT",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "CBLが10-Kで、収入の多いテナントの3位に挙げる(59店、収入の2.45%)",
+          "text_en": "CBL lists it as its No. 3 tenant (59 stores, 2.45% of revenue)",
+          "source": {
+            "label": "CBL & Associates 10-K(2025年度)",
+            "label_en": "CBL & Associates 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/910612/000119312526087049/cbl-20251231.htm",
+            "level": "official",
+            "date": "2026-03-03",
+            "quote": "3 American Eagle Outfitters, Inc. 59 361,167 2.45 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "TangerSKT",
+      "ticker": "SKT",
+      "name": "タンガー",
+      "name_en": "Tanger",
+      "sub": "アウトレットREIT",
+      "sub_en": "Outlet REIT",
+      "sub_short": "REIT",
+      "sub_short_en": "Outlets",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Tangerが10-Kで、主要テナントとして挙げる(53店、賃料の3.1%)",
+          "text_en": "Tanger lists it among its top tenants (53 stores, 3.1% of rent)",
+          "source": {
+            "label": "Tanger 10-K(2025年度)",
+            "label_en": "Tanger 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/899715/000162828026012252/skt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "American Eagle Outfitters, Inc. Aerie, American Eagle Outfitters, Offline by Aerie 53 337,174 2.4 % 3.1 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MAC",
+      "ticker": "MAC",
+      "name": "メイスリッチ",
+      "name_en": "Macerich",
+      "sub": "ショッピングモールREIT",
+      "sub_en": "Mall REIT",
+      "sub_short": "REIT",
+      "sub_short_en": "Mall REIT",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Macerichが10-Kで、主要テナントとして挙げる(40店、賃料の1.5%)",
+          "text_en": "Macerich lists it among its top tenants (40 stores, 1.5% of rent)",
+          "source": {
+            "label": "Macerich 10-K(2025年度)",
+            "label_en": "Macerich 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/912242/000091224226000016/mac-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "AE Outfitters Retail Co. Aerie, Offline by Aerie, American Eagle Outfitters 40 1.5 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BKE",
+      "ticker": "BKE",
+      "name": "バックル",
+      "name_en": "Buckle",
+      "sub": "衣料小売",
+      "sub_en": "Apparel retail",
+      "sub_short": "衣料小売",
+      "sub_short_en": "Apparel",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Buckleが10-Kで、主に競合する専門店として挙げる",
+          "text_en": "Buckle names it among the specialty retailers it mainly competes with",
+          "source": {
+            "label": "Buckle 10-K(2026年1月期)",
+            "label_en": "Buckle 10-K (FY ended Jan 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/885245/000088524526000012/bke-20260131.htm",
+            "level": "official",
+            "date": "2026-04-01",
+            "quote": "In the men's merchandise area, the Company competes primarily with specialty retailers such as Abercrombie & Fitch, American Eagle Outfitters, Boot Barn, Dick's Sporting Goods, Gap, Hollister, Journey's PacSun, Scheels, and Tilly's."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TLYS",
+      "ticker": "TLYS",
+      "name": "ティリーズ",
+      "name_en": "Tilly's",
+      "sub": "衣料品小売",
+      "sub_en": "Apparel retail",
+      "sub_short": "衣料小売",
+      "sub_short_en": "Apparel",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Tilly'sが10-Kで、若者向け衣料の競合として挙げる",
+          "text_en": "Tilly's names it among teen apparel competitors",
+          "source": {
+            "label": "Tilly's 10-K(2026年1月期)",
+            "label_en": "Tilly's 10-K (FY ended Jan 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1524025/000162828026024440/tlys-20260131.htm",
+            "level": "official",
+            "date": "2026-04-09",
+            "quote": "We compete with various publicly-traded and privately-held teen-oriented apparel retailers for customers, store locations, store associates and management personnel, including but not limited to Abercrombie & Fitch, Aeropostale, American Eagle Outfitters"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

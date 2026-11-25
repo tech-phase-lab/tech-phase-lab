@@ -85,8 +85,85 @@ class Allocator(unittest.TestCase):
     def test_price_alerts_and_value_check_clients_go_through_it(self):
         for name in ('price_alerts.py', 'value_check.py'):
             source = (Path(__file__).resolve().parents[1] / 'scripts/research' / name).read_text()
-            self.assertIn('twelve_allocator.intercept(path, params)', source, name)
+            self.assertRegex(source, r"twelve_allocator\.intercept\(path, params(, tier='background')?\)", name)
             self.assertIn('twelve_allocator.spent(path, params)', source, name)
+
+
+class MembersFirst(unittest.TestCase):
+    """Production log, Nov 25: the comparison's job took ~455 credits at the start of every minute and left members ~25 under 480."""
+
+    def test_the_jobs_always_leave_members_the_minimum_reserve(self):
+        a = ta.Allocator(read_meter=lambda: 0, clock=Clock())
+        self.assertEqual(a.ceiling('warm'), ta.CEILING['user'] - ta.MEMBER_RESERVE_MIN)
+        for _ in range(4):
+            self.assertTrue(a.grant(100, 'warm'))  # 1 + 400
+        self.assertFalse(a.grant(50, 'warm'))     # 451 > 420
+        self.assertTrue(a.grant(79, 'user'))      # members still have 480 - 401 = 79
+        self.assertLessEqual(ta.CEILING['warm'] + ta.MEMBER_RESERVE_MIN, ta.CEILING['user'])
+
+    def test_the_warm_job_yields_to_what_members_asked_for_in_the_last_minutes(self):
+        clock = Clock()
+        a = ta.Allocator(read_meter=lambda: 0, clock=clock)
+        for _ in range(10):
+            self.assertTrue(a.grant(12, 'user'))   # members asked 120 credits this minute
+        clock.t += 60                               # the next minute: a reserve of 2 × 120 for members
+        self.assertEqual(a.ceiling('warm'), ta.CEILING['user'] - 240)
+        self.assertEqual(a.ceiling('background'), ta.CEILING['user'] - 240)
+        self.assertEqual(a.ceiling('critical'), ta.CEILING['critical'])
+        self.assertTrue(a.grant(100, 'warm'))
+        self.assertTrue(a.grant(100, 'warm'))
+        self.assertFalse(a.grant(50, 'warm'))       # 201 + 50 > 240
+        clock.t += 60 * ta.MEMBER_WINDOW            # members gone for five minutes: back to the minimum reserve
+        self.assertEqual(a.ceiling('warm'), ta.CEILING['warm'])
+
+    def test_a_refused_member_stops_the_jobs_for_the_next_minutes(self):
+        clock = Clock()
+        a = ta.Allocator(read_meter=lambda: 470, clock=clock)
+        self.assertFalse(a.grant(24, 'user'))
+        self.assertEqual(a.ceiling('warm'), 0)
+        clock.t += 60
+        self.assertFalse(a.grant(1, 'warm'))
+        self.assertFalse(a.grant(1, 'background'))
+        self.assertTrue(a.grant(5, 'user'))
+        clock.t += 60 * ta.MEMBER_WINDOW
+        self.assertGreater(a.ceiling('warm'), 0)
+
+    def test_the_optional_fast_refresh_is_not_counted_as_members_need(self):
+        clock = Clock()
+        a = ta.Allocator(read_meter=lambda: 0, clock=clock)
+        self.assertTrue(a.grant(100, 'fast'))
+        self.assertFalse(a.grant(100, 'fast'))
+        clock.t += 60
+        self.assertEqual(a.ceiling('warm'), ta.CEILING['warm'])
+
+    def test_the_monitors_background_jobs_see_the_lowered_ceiling(self):
+        clock = Clock()
+        a = ta.install(ta.Allocator(read_meter=lambda: 100, clock=clock))
+        self.addCleanup(lambda: setattr(ta, '_installed', None))
+        self.assertEqual(ta.intercept('api_usage', {}, tier='background'), {'current_usage': 101})
+        for _ in range(10):
+            a.grant(15, 'user')                     # 150 asked: reserve 300, background ceiling 480 - 300 = 180
+        self.assertEqual(ta.intercept('api_usage', {}), {'current_usage': 251})
+        self.assertEqual(ta.intercept('api_usage', {}, tier='background'), {'current_usage': 251 + 400 - 180})
+
+    def test_one_summary_line_a_minute_by_tier_and_caller_without_keys(self):
+        clock, lines = Clock(), []
+        a = ta.Allocator(read_meter=lambda: 10, clock=clock)
+        a.log = lambda text, flush=False: lines.append(json.loads(text))
+        a.grant(12, 'user', 'quote')
+        a.grant(50, 'warm', 'compare-statistics')
+        a.grant(100, 'user', 'https://api.twelvedata.com/x?apikey=secret')  # not a label: counted under its tier
+        a.record(7)
+        self.assertEqual(lines, [])
+        clock.t += 60
+        a.grant(1, 'user', 'quote')
+        self.assertEqual(len(lines), 1)
+        line = lines[0]
+        self.assertEqual(line['event'], 'twelve-minute')
+        self.assertEqual(line['granted'], {'user:quote': 12, 'warm:compare-statistics': 50, 'user': 100})
+        self.assertEqual(line['monitor'], 7)
+        self.assertEqual(line['meter'], 10)
+        self.assertNotIn('secret', json.dumps(line))
 
 
 class Endpoint(unittest.TestCase):
@@ -103,7 +180,7 @@ class Endpoint(unittest.TestCase):
                 with self.assertRaises(HTTPError) as error:
                     post({'cost': 1, 'tier': 'user'}, auth='Bearer wrong')
                 self.assertEqual(error.exception.code, 401)
-                with post({'cost': 5, 'tier': 'user'}) as response:
+                with post({'cost': 5, 'tier': 'user', 'caller': 'quote'}) as response:
                     self.assertEqual(json.loads(response.read()), {'ok': True, 'granted': True})
                 with post({'cost': 50, 'tier': 'user'}) as response:
                     self.assertEqual(json.loads(response.read()), {'ok': True, 'granted': False})

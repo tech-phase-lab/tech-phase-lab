@@ -159,7 +159,8 @@ function Notifications({locale,deny,mode}:{locale:DiagnosisLocale;deny:()=>void;
     <details className={styles.mailDetails}><summary>{t("届く通知の例を見る","See an example notification")}</summary>{alertExample??<p className={styles.muted}>{t("この条件では通知に該当しません。","No alert would be sent in this example.")}</p>}</details>
    </section>}
   {!isMorning?<p className={styles.disclaimer}>{t("通知は、米国市場の終値が確定したあとに送ります。","Alerts are sent after US closing prices are final.")}<br/>{t("情報の提供であり、投資助言ではありません。","For information only. Not investment advice.")}</p>:null}
-  <p className={styles.disclaimer}>{t("通知の配信は準備中です。この画面の試算で通知は送信されません。","Notification delivery is not available yet. Using this screen will not send a notification.")}</p>
+  {/* Shown only until resolute-api reports that delivery is switched on (lib/resolute/notification-delivery-state.ts). */}
+  <p className={styles.disclaimer}>{snapshot?.delivery?t("この画面の試算で通知は送信されません。","Using this screen will not send a notification."):t("通知の配信は準備中です。この画面の試算で通知は送信されません。","Notification delivery is not available yet. Using this screen will not send a notification.")}</p>
   <dialog ref={planDialog} className={styles.planDialog} onClose={()=>setPlanOpen(false)} onCancel={()=>setPlanOpen(false)} aria-labelledby="morning-plan-title">
    <h2 id="morning-plan-title">{t("あなたの計画", "Your plan")}</h2>
    {plan?<dl className={styles.ruleCards}>

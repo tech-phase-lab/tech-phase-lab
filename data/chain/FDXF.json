@@ -1,0 +1,245 @@
+{
+  "root": {
+    "ticker": "FDXF",
+    "name": "フェデックス・フレイト",
+    "cik": 2082247,
+    "name_en": "FedEx Freight"
+  },
+  "rows": [
+    {
+      "ja": "分離元・供給元",
+      "en": "Former parent & supplier",
+      "above": true
+    },
+    {
+      "ja": "利用者(相手の資料に記載)",
+      "en": "Shipper (named in its filing)"
+    },
+    {
+      "ja": "競合(元親会社FedExの10-Kに記載)",
+      "en": "Competitors (named in FedEx's 10-K)"
+    }
+  ],
+  "rivals": [
+    "XPO",
+    "ODFL",
+    "SAIA",
+    "ARCB",
+    "TFII"
+  ],
+  "companies": [
+    {
+      "id": "FDX",
+      "ticker": "FDX",
+      "name": "フェデックス",
+      "name_en": "FedEx",
+      "sub": "運送・物流",
+      "sub_en": "Parcel & logistics",
+      "sub_short": "物流",
+      "sub_short_en": "Parcel",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2026年6月にFedExからスピンオフ。受注・顧客データなどの移行サービスを最長2年ほど受ける",
+          "text_en": "Spun off from FedEx in June 2026; receives transition services such as order creation and customer data for up to about two years",
+          "source": {
+            "label": "FedEx Freight 10-K(2026年5月期)",
+            "label_en": "FedEx Freight 10-K (FY ended May 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2082247/000162828026053359/fdxf-20260531.htm",
+            "level": "official",
+            "date": "2026-08-05",
+            "quote": "The Company will receive certain transition services from FedEx following the Spin-Off, including support functions, such as order creation, customer data management, clearance, data and analytics"
+          }
+        }
+      ]
+    },
+    {
+      "id": "WNC",
+      "ticker": "WNC",
+      "name": "ワバッシュ",
+      "name_en": "Wabash",
+      "sub": "トレーラー・荷台",
+      "sub_en": "Trailers & truck bodies",
+      "sub_short": "受託製造",
+      "sub_short_en": "Trailers",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Wabashが10-Kで、トレーラーを納める大口顧客の混載(LTL)輸送会社として挙げる",
+          "text_en": "Wabash lists FedEx Freight among large LTL carrier customers for its trailers",
+          "source": {
+            "label": "Wabash 10-K(2025年度)",
+            "label_en": "Wabash 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/879526/000087952626000036/wnc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "▪ Less-Than-Truckload Carriers: Saia, Inc.; FedEx Freight, Inc; Old Dominion Freight Lines, Inc.; and R&L Carriers, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TKNO",
+      "ticker": "TKNO",
+      "name": "アルファ・テクノバ",
+      "name_en": "Alpha Teknova",
+      "sub": "研究用試薬",
+      "sub_en": "Lab reagents",
+      "sub_short": "試薬",
+      "sub_short_en": "Reagents",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Alpha Teknovaが10-Kで、製品の配送に使う会社として挙げる",
+          "text_en": "Alpha Teknova ships much of its products via FedEx Freight among others",
+          "source": {
+            "label": "Alpha Teknova 10-K(2025年度)",
+            "label_en": "Alpha Teknova 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1850902/000185090226000002/tkno-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "We ship a significant portion of our products to our customers through independent package delivery companies, such as FedEx, UPS, and FedEx Freight."
+          }
+        }
+      ]
+    },
+    {
+      "id": "XPO",
+      "ticker": "XPO",
+      "name": "XPO",
+      "name_en": "XPO",
+      "sub": "物流(LTL)",
+      "sub_en": "Less-than-truckload freight",
+      "sub_short": "混載輸送",
+      "sub_short_en": "Trucking",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "FedExが10-Kで、FedEx Freightの主な競合として挙げる",
+          "text_en": "FedEx names it a primary competitor of FedEx Freight",
+          "source": {
+            "label": "FedEx 10-K(2025年5月期)",
+            "label_en": "FedEx 10-K (FY ended May 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1048911/000104891125000011/fdx-20250531.htm",
+            "level": "official",
+            "date": "2025-07-21",
+            "quote": "FedEx Freight's primary competitors are XPO, Inc., Old Dominion Freight Line, Inc., ABF Freight (an ArcBest company), SAIA, Inc., and TFI International Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ODFL",
+      "ticker": "ODFL",
+      "name": "オールド・ドミニオン",
+      "name_en": "Old Dominion Freight Line",
+      "sub": "混載トラック輸送(LTL)",
+      "sub_en": "Less-than-truckload",
+      "sub_short": "混載輸送",
+      "sub_short_en": "Trucking",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "FedExが10-Kで、FedEx Freightの主な競合として挙げる",
+          "text_en": "FedEx names it a primary competitor of FedEx Freight",
+          "source": {
+            "label": "FedEx 10-K(2025年5月期)",
+            "label_en": "FedEx 10-K (FY ended May 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1048911/000104891125000011/fdx-20250531.htm",
+            "level": "official",
+            "date": "2025-07-21",
+            "quote": "FedEx Freight's primary competitors are XPO, Inc., Old Dominion Freight Line, Inc., ABF Freight (an ArcBest company), SAIA, Inc., and TFI International Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SAIA",
+      "ticker": "SAIA",
+      "name": "サイア",
+      "name_en": "Saia",
+      "sub": "混載トラック輸送(LTL)",
+      "sub_en": "Less-than-truckload",
+      "sub_short": "混載輸送",
+      "sub_short_en": "Trucking",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "FedExが10-Kで、FedEx Freightの主な競合として挙げる",
+          "text_en": "FedEx names it a primary competitor of FedEx Freight",
+          "source": {
+            "label": "FedEx 10-K(2025年5月期)",
+            "label_en": "FedEx 10-K (FY ended May 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1048911/000104891125000011/fdx-20250531.htm",
+            "level": "official",
+            "date": "2025-07-21",
+            "quote": "FedEx Freight's primary competitors are XPO, Inc., Old Dominion Freight Line, Inc., ABF Freight (an ArcBest company), SAIA, Inc., and TFI International Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ARCB",
+      "ticker": "ARCB",
+      "name": "アークベスト",
+      "name_en": "ArcBest",
+      "sub": "LTL輸送・物流",
+      "sub_en": "LTL & logistics",
+      "sub_short": "混載輸送",
+      "sub_short_en": "Trucking",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "FedExが10-Kで、FedEx Freightの主な競合として挙げる(ABF Freight)",
+          "text_en": "FedEx names it a primary competitor of FedEx Freight (ABF Freight)",
+          "source": {
+            "label": "FedEx 10-K(2025年5月期)",
+            "label_en": "FedEx 10-K (FY ended May 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1048911/000104891125000011/fdx-20250531.htm",
+            "level": "official",
+            "date": "2025-07-21",
+            "quote": "FedEx Freight's primary competitors are XPO, Inc., Old Dominion Freight Line, Inc., ABF Freight (an ArcBest company), SAIA, Inc., and TFI International Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TFII",
+      "ticker": "TFII",
+      "name": "TFIインターナショナル",
+      "name_en": "TFI International",
+      "sub": "トラック輸送(カナダ)",
+      "sub_en": "Trucking (Canada)",
+      "sub_short": "トラック",
+      "sub_short_en": "Trucking",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "FedExが10-Kで、FedEx Freightの主な競合として挙げる",
+          "text_en": "FedEx names it a primary competitor of FedEx Freight",
+          "source": {
+            "label": "FedEx 10-K(2025年5月期)",
+            "label_en": "FedEx 10-K (FY ended May 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1048911/000104891125000011/fdx-20250531.htm",
+            "level": "official",
+            "date": "2025-07-21",
+            "quote": "FedEx Freight's primary competitors are XPO, Inc., Old Dominion Freight Line, Inc., ABF Freight (an ArcBest company), SAIA, Inc., and TFI International Inc."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -14,7 +14,7 @@ const one = (ticker: string) => unstable_cache(async (): Promise<{ splits: Stock
   if (!key) throw new Error("not-configured");
   const url = new URL(`${BASE()}/splits`);
   url.searchParams.set("symbol", ticker); url.searchParams.set("range", "full"); url.searchParams.set("apikey", key);
-  await reserveCredits(20); // inside the site's share of the plan's minute; a refusal is a failed read (not cached, the lots are left alone)
+  await reserveCredits(20, "user", "portfolio-splits"); // inside the site's share of the plan's minute; a refusal is a failed read (not cached, the lots are left alone)
   const response = await fetch(url, { cache: "no-store", signal: AbortSignal.timeout(12_000) });
   if (response.status === 429) providerLimited();
   if (!response.ok) throw new Error(`splits ${response.status}`);

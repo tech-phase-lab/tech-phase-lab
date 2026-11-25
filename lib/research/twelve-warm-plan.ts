@@ -6,15 +6,17 @@
  *
  * - A user's comparison never calls statistics or statements. It reads what the background job stored, the free SEC filing, and at most one
  *   one-credit price series per company (only while the minute has plenty of room, never waiting).
- * - The background job takes every US-listed company (Nasdaq, NYSE, Cboe, TXSE; one ticker per company, about 6,460) once a day: minute m of
- *   the day takes the companies at positions m, m + 1440, m + 2880, ... (5 of them), statistics and price series each: 5 × 51 = 255 credits.
+ * - The background job takes every US-listed company the comparison offers (Nasdaq, NYSE, Cboe, TXSE; one ticker per company, about 5,540
+ *   after the funds, preferreds, notes and ETNs are left out) once a day: minute m of the day takes the companies at positions m, m + 1440,
+ *   m + 2880, ... (4 of them), statistics and price series each: 4 × 51 = 204 credits.
  * - The statements (200 credits) are read only for a company whose filing cannot give every figure (IFRS, 20-F/6-K, a missing quarter or
  *   factor), once a week, in that company's own minute, and only while the minute stays under the job's ceiling. */
 
 export const PLAN_CREDITS_PER_MINUTE = 610;
 export const COST = { statistics: 50, statements: 200, series: 1, usage: 1 } as const;
-/** The background job sends a call only while the minute's usage plus the call stays at or under this (leaves 150 for the rest of the site). */
-export const WARM_CEILING = 460;
+/** The background job sends a call only while the minute's usage plus the call stays at or under this (= the allocator's warm tier,
+ * lib/research/twelve-budget.ts CEILING.warm; the allocator lowers it further while members use the site). */
+export const WARM_CEILING = 420;
 /** A read started after a user's comparison missed the cache (in the background, after the answer was sent): only with this much room. */
 export const BACKGROUND_CEILING = 400;
 /** A user's one-credit price series: only while the minute is under this. */

@@ -4403,7 +4403,7 @@ class Handler(BaseHTTPRequestHandler):
                 return
             try:
                 payload = self.read_json(1024)
-                granted = allocator.grant(payload.get("cost"), payload.get("tier"))
+                granted = allocator.grant(payload.get("cost"), payload.get("tier"), payload.get("caller"))
             except Exception:
                 self.send_json(400, {"ok": False})
                 return

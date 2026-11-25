@@ -1,0 +1,221 @@
+{
+  "root": {
+    "ticker": "PVH",
+    "name": "PVH",
+    "cik": 78239,
+    "name_en": "PVH Corp."
+  },
+  "rows": [
+    {
+      "ja": "ライセンス先・合弁",
+      "en": "Licensees & joint venture"
+    },
+    {
+      "ja": "オフィス・店舗の家主(相手の資料に記載)",
+      "en": "Office & store landlords (named in their filings)"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "GIII",
+      "ticker": "GIII",
+      "name": "G-IIIアパレル",
+      "name_en": "G-III Apparel",
+      "sub": "衣料品",
+      "sub_en": "Apparel",
+      "sub_short": "衣料",
+      "sub_short_en": "Apparel",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Calvin Klein・Tommy Hilfigerの北米ライセンス先。契約延長をめぐりG-IIIがPVHを提訴(2025年6月)",
+          "text_en": "North American licensee for Calvin Klein and Tommy Hilfiger; G-III sued PVH over license extensions (June 2025)",
+          "source": {
+            "label": "G-III Apparel 10-K(2026年1月期)",
+            "label_en": "G-III Apparel 10-K (FY ended Jan 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/821002/000110465926033891/giii-20260131x10k.htm",
+            "level": "official",
+            "date": "2026-03-24",
+            "quote": "On June 13, 2025, we filed a complaint against PVH Corp. and two of its subsidiaries (\"Defendants\") in the New York County Commercial Division of the Supreme Court of the State of New York for breach of contract"
+          }
+        },
+        {
+          "type": "tie",
+          "text": "2022年11月に北米の女性服などのライセンス契約を延長(多くを自社運営に切り替え中)",
+          "text_en": "Extended most North American licenses in November 2022, mostly women's apparel (PVH is taking much of it in-house)",
+          "source": {
+            "label": "PVH 10-K(2026年1月期)",
+            "label_en": "PVH 10-K (FY ended Jan 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/78239/000007823926000021/pvh-20260201.htm",
+            "level": "official",
+            "date": "2026-03-31",
+            "quote": "We extended in November 2022 most of our licensing agreements with G-III Apparel Group, Ltd. (\"G-III\") for Calvin Klein and TOMMY HILFIGER in the United States and Canada"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MOV",
+      "ticker": "MOV",
+      "name": "モバード",
+      "name_en": "Movado",
+      "sub": "腕時計",
+      "sub_en": "Watches",
+      "sub_short": "腕時計",
+      "sub_short_en": "Watches",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Tommy Hilfigerの主なライセンス先(腕時計・宝飾、全世界)",
+          "text_en": "Key Tommy Hilfiger licensee (watches and jewelry, worldwide)",
+          "source": {
+            "label": "PVH 10-K(2026年1月期)",
+            "label_en": "PVH 10-K (FY ended Jan 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/78239/000007823926000021/pvh-20260201.htm",
+            "level": "official",
+            "date": "2026-03-31",
+            "quote": "Movado Group, Inc. / Swissam Products Limited Men's and women's watches and jewelry (worldwide)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Safilo",
+      "ticker": "Safilo",
+      "name": "サフィロ",
+      "name_en": "Safilo",
+      "sub": "アイウェア",
+      "sub_en": "Eyewear",
+      "sub_short": "眼鏡",
+      "sub_short_en": "Eyewear",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Tommy Hilfigerの主なライセンス先(眼鏡・サングラス、インドを除く全世界)",
+          "text_en": "Key Tommy Hilfiger licensee (eyewear, worldwide excluding India)",
+          "source": {
+            "label": "PVH 10-K(2026年1月期)",
+            "label_en": "PVH 10-K (FY ended Jan 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/78239/000007823926000021/pvh-20260201.htm",
+            "level": "official",
+            "date": "2026-03-31",
+            "quote": "Safilo S.p.A. Men's, women's and children's eyeglasses and non-ophthalmic sunglasses (worldwide, excluding India)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "HandsomeCorp",
+      "ticker": "Handsome",
+      "name": "ハンドサム",
+      "name_en": "Handsome Corporation",
+      "sub": "衣料品(韓国)",
+      "sub_en": "Apparel (South Korea)",
+      "sub_short": "衣料",
+      "sub_short_en": "Apparel",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Tommy Hilfigerの主なライセンス先(韓国の衣料品など)",
+          "text_en": "Key Tommy Hilfiger licensee (apparel and more in South Korea)",
+          "source": {
+            "label": "PVH 10-K(2026年1月期)",
+            "label_en": "PVH 10-K (FY ended Jan 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/78239/000007823926000021/pvh-20260201.htm",
+            "level": "official",
+            "date": "2026-03-31",
+            "quote": "Handsome Corporation Men's, women's and children's apparel, sportswear, socks and accessories and men's and women's outerwear and golf products (South Korea)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Arvind",
+      "ticker": "Arvind",
+      "name": "アルビンド",
+      "name_en": "Arvind",
+      "sub": "繊維・衣料(インド)",
+      "sub_en": "Textiles & apparel (India)",
+      "sub_short": "繊維",
+      "sub_short_en": "Textiles",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "インドの合弁PVH Arvind Fashionの50%を保有",
+          "text_en": "Owns 50% of Indian joint venture PVH Arvind Fashion",
+          "source": {
+            "label": "PVH 10-K(2026年1月期)",
+            "label_en": "PVH 10-K (FY ended Jan 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/78239/000007823926000021/pvh-20260201.htm",
+            "level": "official",
+            "date": "2026-03-31",
+            "quote": "The Company owns a 50 % economic interest in PVH Arvind Fashion Private Limited (\"PVH India\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ESRT",
+      "ticker": "ESRT",
+      "name": "エンパイア・ステート・リアルティ・トラスト",
+      "name_en": "Empire State Realty Trust",
+      "sub": "オフィスREIT",
+      "sub_en": "Office REIT",
+      "sub_short": "REIT",
+      "sub_short_en": "Office",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Empire State Realtyが10-Kで、大口のオフィステナントとして挙げる(501 Seventh Avenue)",
+          "text_en": "Empire State Realty lists PVH among its top office tenants (501 Seventh Avenue)",
+          "source": {
+            "label": "Empire State Realty Trust 10-K(2025年度)",
+            "label_en": "Empire State Realty Trust 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1541401/000154140126000008/esrt-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "PVH Corp. 501 Seventh Avenue Jan. 2026 - Oct. 2028 3.4 % 2.9 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "TangerSKT",
+      "ticker": "SKT",
+      "name": "タンガー",
+      "name_en": "Tanger",
+      "sub": "アウトレットREIT",
+      "sub_en": "Outlet REIT",
+      "sub_short": "REIT",
+      "sub_short_en": "Outlets",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Tangerが10-Kで、主要テナントとして挙げる(35店、賃料の2.3%)",
+          "text_en": "Tanger lists it among its top tenants (35 stores, 2.3% of rent)",
+          "source": {
+            "label": "Tanger 10-K(2025年度)",
+            "label_en": "Tanger 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/899715/000162828026012252/skt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "PVH Corp. Calvin Klein, Tommy Hilfiger 35 264,546 1.9 % 2.3 %"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

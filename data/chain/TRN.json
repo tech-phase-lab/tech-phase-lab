@@ -1,0 +1,177 @@
+{
+  "root": {
+    "ticker": "TRN",
+    "name": "トリニティ・インダストリーズ",
+    "cik": 99780,
+    "name_en": "Trinity Industries"
+  },
+  "rows": [
+    {
+      "ja": "分離・投資パートナー",
+      "en": "Spin-off & investment partner",
+      "above": true
+    },
+    {
+      "ja": "貨車の買い手・借り手(相手の資料に記載)",
+      "en": "Railcar buyers & lessees (named in their filings)"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "GATX",
+    "LINE"
+  ],
+  "companies": [
+    {
+      "id": "ACA",
+      "ticker": "ACA",
+      "name": "アルコサ",
+      "name_en": "Arcosa",
+      "sub": "骨材・建設資材",
+      "sub_en": "Aggregates & construction",
+      "sub_short": "骨材",
+      "sub_short_en": "Gravel",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2018年にTrinityから分離。分離時の知的財産契約などが続く",
+          "text_en": "Spun off from Trinity in 2018; separation agreements such as an IP matters agreement remain",
+          "source": {
+            "label": "Arcosa 10-K(2025年度)",
+            "label_en": "Arcosa 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1739445/000173944526000029/aca-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Intellectual Property Matters Agreement, dated as of October 31, 2018, by and between Trinity Industries, Inc. and Arcosa, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NapierPark",
+      "ticker": "Napier Park",
+      "name": "ネイピア・パーク",
+      "name_en": "Napier Park Global Capital",
+      "sub": "オルタナティブ投資",
+      "sub_en": "Alternative credit",
+      "sub_short": "投資",
+      "sub_short_en": "Investing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2013年からの貨車投資パートナー。持ち分を交換して貨車リース子会社を再編(2025年12月)",
+          "text_en": "Railcar investment partner since 2013; swapped stakes to restructure leasing partnerships (December 2025)",
+          "source": {
+            "label": "Trinity Industries 10-K(2025年度)",
+            "label_en": "Trinity Industries 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/99780/000009978026000014/trn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "TILC completed a Sale and Exchange Agreement (the \"Exchange Agreement\") with Napier Park Railcar Lease Fund LLC (\"Napier Park\"), a subsidiary of Napier Park Global Capital, one of our railcar investment partners since 2013"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GATX",
+      "ticker": "GATX",
+      "name": "GATX",
+      "name_en": "GATX",
+      "sub": "貨車リース",
+      "sub_en": "Railcar leasing",
+      "sub_short": "リース",
+      "sub_short_en": "Leasing",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "GATXが10-Kで、新しい貨車の購入先メーカーとして挙げる",
+          "text_en": "GATX buys new railcars from Trinity Rail",
+          "source": {
+            "label": "GATX 10-K(2025年度)",
+            "label_en": "GATX 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/40211/000004021126000018/gmt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Rail North America purchases new railcars from a number of manufacturers, including Trinity Rail Group, LLC (\"Trinity\"), a subsidiary of Trinity Industries, Inc."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "GATXが10-Kで、貨車リースの主な競合として挙げる",
+          "text_en": "GATX names Trinity's leasing unit a primary railcar leasing competitor",
+          "source": {
+            "label": "GATX 10-K(2025年度)",
+            "label_en": "GATX 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/40211/000004021126000018/gmt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Rail North America's primary competitors in railcar leasing are Union Tank Car Company, CIT Rail, Trinity Industries Leasing Company, and American Industrial Transport."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HighwaterEthanol",
+      "ticker": "Highwater Ethanol",
+      "name": "ハイウォーター・エタノール",
+      "name_en": "Highwater Ethanol",
+      "sub": "エタノール",
+      "sub_en": "Ethanol",
+      "sub_short": "燃料",
+      "sub_short_en": "Ethanol",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Highwater Ethanolが10-Kで、Trinityの貨車リース子会社との貨車リース契約を重要契約に挙げる",
+          "text_en": "Highwater Ethanol lists a railcar lease agreement with Trinity's leasing unit among its exhibits",
+          "source": {
+            "label": "Highwater Ethanol 10-K(2025年10月期)",
+            "label_en": "Highwater Ethanol 10-K (FY ended Oct 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1371451/000162828026002999/highwater-20251031.htm",
+            "level": "official",
+            "date": "2026-01-22",
+            "quote": "Trinity Industries Leasing Company Railroad Car Lease Agreement dated July 1, 2009."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LINE",
+      "ticker": "LINE",
+      "name": "リネージ",
+      "name_en": "Lineage",
+      "sub": "低温物流",
+      "sub_en": "Cold storage",
+      "sub_short": "低温物流",
+      "sub_short_en": "Storage",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Lineageが10-Kで、冷蔵貨車リースの主な競合として挙げる",
+          "text_en": "Lineage names Trinity Rail its main competitor in refrigerated railcar leasing",
+          "source": {
+            "label": "Lineage 10-K(2025年度)",
+            "label_en": "Lineage 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1868159/000186815926000012/line-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "in refrigerated rail car leasing, our main competitor is Trinity Rail."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

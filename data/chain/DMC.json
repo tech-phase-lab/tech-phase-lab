@@ -1,0 +1,189 @@
+{
+  "root": {
+    "ticker": "DMC",
+    "name": "フレッシュ・デルモンテ・プロデュース",
+    "cik": 1047340,
+    "name_en": "Fresh Del Monte Produce"
+  },
+  "rows": [
+    {
+      "ja": "ブランド・提携",
+      "en": "Brand & partners",
+      "above": true
+    },
+    {
+      "ja": "主要顧客・合弁",
+      "en": "Customers & joint venture"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "DOLE"
+  ],
+  "companies": [
+    {
+      "id": "DelMonteFoods",
+      "ticker": "Del Monte Foods",
+      "name": "デルモンテ・フーズ",
+      "name_en": "Del Monte Foods",
+      "sub": "加工食品・商標",
+      "sub_en": "Packaged foods & brand",
+      "sub_short": "商標",
+      "sub_short_en": "Brand",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "「デルモンテ」商標の持ち主から、生鮮品向けに無償・永久の使用許諾を受ける",
+          "text_en": "Royalty-free, perpetual license to the Del Monte brand for fresh produce",
+          "source": {
+            "label": "Fresh Del Monte 10-K(2025年度)",
+            "label_en": "Fresh Del Monte 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1047340/000104734026000015/fdp-20251226.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "under a worldwide, perpetual license from Del Monte Foods Corporation II Inc., an unaffiliated company that owns the Del Monte"
+          }
+        },
+        {
+          "type": "tie",
+          "text": "破産手続きの競売で、デルモンテ・フーズの資産を約2.85億ドルで買う権利を得た(2026年1月)",
+          "text_en": "Won the bankruptcy auction for select Del Monte Foods assets for about $285 million (January 2026)",
+          "source": {
+            "label": "Fresh Del Monte 10-K(2025年度)",
+            "label_en": "Fresh Del Monte 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1047340/000104734026000015/fdp-20251226.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "we were selected as the successful bidder by the United States Bankruptcy Court for the District of New Jersey (the \"Court\") to acquire select assets of Del Monte Foods Corporation II Inc. and its affiliates (\"Del Monte Foods\") for approximately $285 million"
+          }
+        }
+      ]
+    },
+    {
+      "id": "DelMontePacific",
+      "ticker": "Del Monte Pacific",
+      "name": "デルモンテ・パシフィック",
+      "name_en": "Del Monte Pacific",
+      "sub": "加工食品",
+      "sub_en": "Packaged foods",
+      "sub_short": "加工食品",
+      "sub_short_en": "Foods",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "契約にもとづき、北米で「デルモンテ」ブランドの加工食品を製造・販売できる",
+          "text_en": "Agreement lets it make and sell Del Monte-branded prepared foods in North America",
+          "source": {
+            "label": "Fresh Del Monte 10-K(2025年度)",
+            "label_en": "Fresh Del Monte 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1047340/000104734026000015/fdp-20251226.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "We can also produce, market and distribute certain prepared food products in North America based on an agreement with Del Monte Pacific utilizing the Del Monte"
+          }
+        }
+      ]
+    },
+    {
+      "id": "WMT",
+      "ticker": "WMT",
+      "name": "ウォルマート",
+      "name_en": "Walmart",
+      "sub": "小売",
+      "sub_en": "Retail",
+      "sub_short": "小売",
+      "sub_short_en": "Retail",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大の顧客で、売上の約7%(2025年)",
+          "text_en": "Largest customer, about 7% of net sales (2025)",
+          "source": {
+            "label": "Fresh Del Monte 10-K(2025年度)",
+            "label_en": "Fresh Del Monte 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1047340/000104734026000015/fdp-20251226.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "During 2025, one customer, Walmart, Inc. (including its affiliates), accounted for approximately 7% of our total net sales."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Managro",
+      "ticker": "Managro",
+      "name": "マナグロ(イスコル・インベストメンツ)",
+      "name_en": "Managro (Iscol Investments)",
+      "sub": "アボカド・ライム集荷",
+      "sub_en": "Avocado & lime packing",
+      "sub_short": "青果集荷",
+      "sub_short_en": "Packing",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "コロンビアのアボカド・ライム集荷場に投資する合弁を設立(2025年8月)",
+          "text_en": "Joint venture to expand an avocado and lime packing house in Colombia (August 2025)",
+          "source": {
+            "label": "Fresh Del Monte 10-K(2025年度)",
+            "label_en": "Fresh Del Monte 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1047340/000104734026000015/fdp-20251226.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "we announced our entrance into a joint venture with Iscol Investments S.A.S. (\"Managro\") to invest and expand an avocado and lime packing house in Colombia."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DOLE",
+      "ticker": "DOLE",
+      "name": "ドール",
+      "name_en": "Dole",
+      "sub": "青果",
+      "sub_en": "Fresh produce",
+      "sub_short": "青果",
+      "sub_short_en": "Produce",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Doleが10-Kで、米国のパイナップルの主な競合として名指し",
+          "text_en": "Dole names it its primary competitor in pineapples in the US",
+          "source": {
+            "label": "Dole 10-K(2025年度)",
+            "label_en": "Dole 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1857475/000185747526000028/dole-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "Our primary competitor in pineapples, particularly in the U.S. market, is Fresh Del Monte Produce"
+          }
+        },
+        {
+          "type": "rival",
+          "text": "Doleが10-Kで、国際的なバナナ事業の主な競合の一社に挙げる",
+          "text_en": "Dole lists it among its main competitors in the international banana business",
+          "source": {
+            "label": "Dole 10-K(2025年度)",
+            "label_en": "Dole 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1857475/000185747526000028/dole-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "Our main competitors in the international banana business include Chiquita Brands International, Fresh Del Monte Produce, One Banana and Fyffes."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
