@@ -112,11 +112,16 @@ export default function ToolShell({ identityReady=true, home=false, pc=false, ch
     <h2 className={pc_.sec}>{en?"Six steps":"6つのステップ"}</h2>
     {STEPS.map(([href,ja,eng],index)=><Link key={href} href={href} prefetch={false} className={`${pc_.item} ${pc_.stepItem}`} aria-current={current===href?"page":undefined}><i>{index+1}</i><span>{en?eng:ja}</span><Pending /></Link>)}
     <h2 className={pc_.sec}>{en?"Tools":"道具"}</h2>
-    {TOOLS.map(([href,ja,eng,icon])=><Link key={href} href={href} prefetch={false} className={pc_.item} aria-current={current===href?"page":undefined}><svg viewBox="0 0 24 24" aria-hidden="true">{icon}</svg><span>{en?eng:ja}</span><Pending /></Link>)}
+    {/* 衝撃度チェッカー has no detail page on a PC: it moves to the home's Shock Gauge section (owner, Nov 25). */}
+    {TOOLS.map(([href,ja,eng,icon])=>{const to=href==="/resolute/news"?"/resolute#shock-gauge":href;return <Link key={href} href={to} prefetch={false} className={pc_.item} aria-current={current===href?"page":undefined}><svg viewBox="0 0 24 24" aria-hidden="true">{icon}</svg><span>{en?eng:ja}</span><Pending /></Link>;})}
    </nav>
    <div className={pc_.langs} role="group" aria-label={en?"Display language":"表示言語"}>
     <button type="button" aria-pressed={locale==="ja"} onClick={()=>setLocale("ja")}>JA</button>
     <button type="button" aria-pressed={en} onClick={()=>setLocale("en")}>EN</button>
+   </div>
+   <div className={pc_.sideFoot}>
+    <Link href="/resolute/settings" prefetch={false} className={pc_.item} aria-current={current==="/resolute/settings"?"page":undefined}><span>{en?"Language and time zone":"言語とタイムゾーン"}</span></Link>
+    <Link href="/research" prefetch={false} className={pc_.item}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg><span>{en?"Tech Phase":"Tech Phaseへ"}</span></Link>
    </div>
   </aside>
   <div className={pc_.main}>{body}{reviewNote}</div>

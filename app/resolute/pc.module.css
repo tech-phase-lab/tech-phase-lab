@@ -19,6 +19,8 @@
 .item[aria-current="page"] { background: linear-gradient(90deg, #3a2f17, #1a1710 70%, transparent); box-shadow: inset 2px 0 0 var(--gold); color: var(--gold2); }
 .item:hover { background-color: #ffffff08; }
 .item > i:last-child { flex: none; width: 6px; height: 6px; border-radius: 50%; }
+.sideFoot { display: flex; flex-direction: column; gap: 2px; padding-top: 10px; border-top: 1px solid #1d2738; }
+.sideFoot .item { font-size: 13px; color: var(--sub); }
 .langs { margin-top: auto; align-self: flex-start; display: inline-flex; padding: 3px; border: 1px solid var(--line); border-radius: 999px; background: #0d1520; }
 .langs button { min-width: 40px; height: 28px; border: 0; border-radius: 999px; background: none; color: var(--sub); font: inherit; font-size: 13px; }
 .langs button[aria-pressed="true"] { background: #1e2a3e; color: var(--gold2); }

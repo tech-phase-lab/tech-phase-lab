@@ -127,3 +127,25 @@ export function fixedTodayPlan(input: TodayInput): TodayPlan {
   }
   return { date: input.date, source: "fixed", direction, headline, body, checks: picked, estimate };
 }
+
+const copy = (v: unknown): v is Copy => !!v && typeof v === "object" && (["ja", "en"] as const).every(k => {
+  const s = (v as Record<string, unknown>)[k];
+  return typeof s === "string" && s.length > 0 && s.length <= 400 && !/[<>\u0000]|…/.test(s);
+});
+const finitePct = (v: unknown) => typeof v === "number" && Number.isFinite(v) && Math.abs(v) < 1000;
+/** The site route's answer (GET /api/resolute/today-plan: {plan: TodayPlan | null}), checked again on the screen. Anything else,
+ * or a plan that breaks the card's rules (headline ≤ 12 JA chars, 2–4 body lines, ≤ 3 checks, no "…"), is null: the fixed plan. */
+export function parseTodayPlanResponse(value: unknown): TodayPlan | null {
+  if (!value || typeof value !== "object" || Array.isArray(value) || Object.keys(value).join() !== "plan") return null;
+  const p = (value as { plan: unknown }).plan as TodayPlan | null;
+  if (!p || typeof p !== "object") return null;
+  if (typeof p.date !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(p.date) || !["ai", "fixed"].includes(p.source) || !["up", "down", "flat"].includes(p.direction)) return null;
+  if (!copy(p.headline) || [...p.headline.ja].length > 12 || !copy(p.body)) return null;
+  const lines = p.body.ja.split("\n").length;
+  if (lines < 2 || lines > 4 || !Array.isArray(p.checks) || p.checks.length > 3) return null;
+  if (!p.checks.every(c => c && copy(c.label) && copy(c.rule) && copy(c.today) && (c.state === "ok" || c.state === "reached"))) return null;
+  const e = p.estimate;
+  if (!(e === undefined || e === null || finitePct(e.allowedDropPct) && finitePct(e.estimatedChangePct) && finitePct(e.remainingPct))) return null;
+  return { date: p.date, source: p.source, direction: p.direction, headline: { ja: p.headline.ja, en: p.headline.en }, body: { ja: p.body.ja, en: p.body.en },
+    checks: p.checks.map(c => ({ label: { ...c.label }, rule: { ...c.rule }, today: { ...c.today }, state: c.state })), estimate: e ?? null };
+}
