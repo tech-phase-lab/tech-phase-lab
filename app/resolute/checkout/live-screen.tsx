@@ -122,9 +122,9 @@ export default function LiveCheckoutScreen({orderId,language:initialLanguage,can
      </div>}
     </div>
    </section> : <>
-    <p className={styles.lead}>{en?"Open RESOLUTE and start with the 30-question check to build your own rules.":"RESOLUTEを開き、まずは30問の診断で自分だけのルールを作りましょう。"}</p>
+    <p className={styles.lead}>{en?"Start with the 30-question check to build your own rules.":"まずは30問の診断で、あなただけのルールを作りましょう。"}</p>
     <ol className={styles.steps}>{(en?NEXT_EN:NEXT_JA).map(([title,text],i)=><li key={title}><i>{`0${i+1}`}</i><b>{title}</b><span>{text}</span></li>)}</ol>
-    <a className={styles.button} href={`/resolute?lang=${language}`}>{en?"Open RESOLUTE":"RESOLUTEを開く"}</a>
+    <a className={styles.button} href={`/resolute/diagnosis?lang=${language}`}>{en?"Start the rules quiz →":"ルール診断をはじめる →"}</a>
    </>}
    {busy && <p role="status">{en?"Checking…":"確認しています…"}</p>}
    {error && <p role="alert" className={styles.reason}>{errors[error]?.[en?1:0] ?? (en?"We couldn’t confirm the result. Please try again.":"結果を確認できませんでした。もう一度お試しください。")}</p>}
@@ -151,7 +151,7 @@ export default function LiveCheckoutScreen({orderId,language:initialLanguage,can
    {kind==="initial" && <LaunchPrice en={en} />}
    {salesEnabled && <PaymentRows en={en} initial={kind==="initial"} />}
    {salesEnabled && <ConsentCheck en={en} consent={consent} />}
-   <button className={styles.pay} disabled={busy || !salesEnabled} onClick={()=>void act("create")}>{en?"Check price and continue":"価格を確認して進む"}</button>
+   <button className={styles.pay} disabled={busy || !salesEnabled} onClick={()=>void act("create")}>{kind==="renewal"?(en?"Check price and continue":"価格を確認して進む"):(en?"Pay with PayPal":"PayPalで支払う")}</button>
    {salesEnabled && <p className={styles.note}>{en?"You’ll go to PayPal. After paying, you’ll come back here.":"PayPalの画面に移ります。お支払い後、この画面に戻ります。"}</p>}
    <ConsentError en={en} consent={consent} />
   </>}

@@ -41,12 +41,12 @@ test('guest screen: create goes straight to PayPal; back from PayPal it complete
   assert.equal(document.querySelector('select'),null);
   assert.ok(!/renewal eligibility|Sign in for annual renewal|Purchase type/.test(document.body.textContent));
   // Lawyer review (Nov 24): without the consent tick nothing is sent and the red line shows under the button.
-  await click('Check price and continue');
+  await click('Pay with PayPal');
   assert.deepEqual(calls,[]);
   assert.equal(document.querySelector('[data-consent-error]').textContent,'Please check the box to agree');
   await React.act(async()=>{document.querySelector('[data-consent] input').click();});
   assert.equal(document.querySelector('[data-consent-error]'),null);
-  await click('Check price and continue');
+  await click('Pay with PayPal');
   assert.deepEqual(calls,['/api/resolute/live-payments/guest/session','/api/resolute/live-payments/guest/orders']);
   assert.equal(new URL(window.location.href).searchParams.get('order'),id);
   assert.equal(new URL(window.location.href).searchParams.get('guest'),'1');
@@ -70,7 +70,7 @@ test('guest screen: create goes straight to PayPal; back from PayPal it complete
   assert.equal(calls.filter(x=>x.endsWith('/capture')).length,1);
   await click('Connect to this account');
   assert.equal(claimed,true);
-  assert.ok([...document.querySelectorAll('a')].some(a=>a.textContent==='Open RESOLUTE'));
+  assert.ok([...document.querySelectorAll('a')].some(a=>a.textContent==='Start the rules quiz →'));
  } finally {
   if(root)await React.act(async()=>root.unmount());dom.window.close();
   for(const [key,descriptor] of before)if(descriptor)Object.defineProperty(globalThis,key,descriptor);else delete globalThis[key];
