@@ -1,0 +1,230 @@
+{
+  "root": {
+    "ticker": "OTTR",
+    "name": "オッターテイル",
+    "cik": 1466593,
+    "name_en": "Otter Tail Corporation"
+  },
+  "rows": [
+    {
+      "ja": "製造部門の主な顧客(車両・機械メーカー)",
+      "en": "Main manufacturing customers (vehicle & equipment makers)"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "CAT",
+      "ticker": "CAT",
+      "name": "キャタピラー",
+      "name_en": "Caterpillar",
+      "sub": "建機",
+      "sub_en": "Construction equipment",
+      "sub_short": "建機",
+      "sub_short_en": "Machines",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "金属加工・樹脂部品の顧客",
+          "text_en": "Customer for metal and plastic parts",
+          "source": {
+            "label": "Otter Tail 10-K(2025年度)",
+            "label_en": "Otter Tail 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1466593/000146659326000008/ottr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Our customers include some of the largest vehicle and equipment manufacturers operating in the U.S., including Caterpillar Inc., CNH Industrial N.V., Cummins Inc., Deere & Company, Honda Motor Co., Kawasaki Heavy Industries, Polaris Inc. and The Toro Company."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DE",
+      "ticker": "DE",
+      "name": "ディア",
+      "name_en": "Deere",
+      "sub": "農機・建機",
+      "sub_en": "Farm & construction equipment",
+      "sub_short": "農機",
+      "sub_short_en": "Farm",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "金属加工・樹脂部品の顧客",
+          "text_en": "Customer for metal and plastic parts",
+          "source": {
+            "label": "Otter Tail 10-K(2025年度)",
+            "label_en": "Otter Tail 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1466593/000146659326000008/ottr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Our customers include some of the largest vehicle and equipment manufacturers operating in the U.S., including Caterpillar Inc., CNH Industrial N.V., Cummins Inc., Deere & Company, Honda Motor Co., Kawasaki Heavy Industries, Polaris Inc. and The Toro Company."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CNH",
+      "ticker": "CNH",
+      "name": "CNHインダストリアル",
+      "name_en": "CNH Industrial",
+      "sub": "農機",
+      "sub_en": "Farm equipment",
+      "sub_short": "農機",
+      "sub_short_en": "Farm",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "金属加工・樹脂部品の顧客",
+          "text_en": "Customer for metal and plastic parts",
+          "source": {
+            "label": "Otter Tail 10-K(2025年度)",
+            "label_en": "Otter Tail 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1466593/000146659326000008/ottr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Our customers include some of the largest vehicle and equipment manufacturers operating in the U.S., including Caterpillar Inc., CNH Industrial N.V., Cummins Inc., Deere & Company, Honda Motor Co., Kawasaki Heavy Industries, Polaris Inc. and The Toro Company."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CMI",
+      "ticker": "CMI",
+      "name": "カミンズ",
+      "name_en": "Cummins",
+      "sub": "エンジン",
+      "sub_en": "Engines",
+      "sub_short": "エンジン",
+      "sub_short_en": "Engines",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "金属加工・樹脂部品の顧客",
+          "text_en": "Customer for metal and plastic parts",
+          "source": {
+            "label": "Otter Tail 10-K(2025年度)",
+            "label_en": "Otter Tail 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1466593/000146659326000008/ottr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Our customers include some of the largest vehicle and equipment manufacturers operating in the U.S., including Caterpillar Inc., CNH Industrial N.V., Cummins Inc., Deere & Company, Honda Motor Co., Kawasaki Heavy Industries, Polaris Inc. and The Toro Company."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HMC",
+      "ticker": "HMC",
+      "name": "ホンダ",
+      "name_en": "Honda",
+      "sub": "自動車",
+      "sub_en": "Autos",
+      "sub_short": "自動車",
+      "sub_short_en": "Autos",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "金属加工・樹脂部品の顧客",
+          "text_en": "Customer for metal and plastic parts",
+          "source": {
+            "label": "Otter Tail 10-K(2025年度)",
+            "label_en": "Otter Tail 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1466593/000146659326000008/ottr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Our customers include some of the largest vehicle and equipment manufacturers operating in the U.S., including Caterpillar Inc., CNH Industrial N.V., Cummins Inc., Deere & Company, Honda Motor Co., Kawasaki Heavy Industries, Polaris Inc. and The Toro Company."
+          }
+        }
+      ]
+    },
+    {
+      "id": "KHI",
+      "ticker": "7012.T",
+      "name": "川崎重工業",
+      "name_en": "Kawasaki Heavy Industries",
+      "sub": "重工業",
+      "sub_en": "Heavy industry",
+      "sub_short": "重工業",
+      "sub_short_en": "Heavy",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "金属加工・樹脂部品の顧客",
+          "text_en": "Customer for metal and plastic parts",
+          "source": {
+            "label": "Otter Tail 10-K(2025年度)",
+            "label_en": "Otter Tail 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1466593/000146659326000008/ottr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Our customers include some of the largest vehicle and equipment manufacturers operating in the U.S., including Caterpillar Inc., CNH Industrial N.V., Cummins Inc., Deere & Company, Honda Motor Co., Kawasaki Heavy Industries, Polaris Inc. and The Toro Company."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PII",
+      "ticker": "PII",
+      "name": "ポラリス",
+      "name_en": "Polaris",
+      "sub": "オフロード車",
+      "sub_en": "Powersports",
+      "sub_short": "レジャー",
+      "sub_short_en": "Rec cars",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "金属加工・樹脂部品の顧客",
+          "text_en": "Customer for metal and plastic parts",
+          "source": {
+            "label": "Otter Tail 10-K(2025年度)",
+            "label_en": "Otter Tail 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1466593/000146659326000008/ottr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Our customers include some of the largest vehicle and equipment manufacturers operating in the U.S., including Caterpillar Inc., CNH Industrial N.V., Cummins Inc., Deere & Company, Honda Motor Co., Kawasaki Heavy Industries, Polaris Inc. and The Toro Company."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TTC",
+      "ticker": "TTC",
+      "name": "トロ",
+      "name_en": "Toro",
+      "sub": "芝刈り機",
+      "sub_en": "Turf equipment",
+      "sub_short": "芝刈り機",
+      "sub_short_en": "Mowers",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "金属加工・樹脂部品の顧客",
+          "text_en": "Customer for metal and plastic parts",
+          "source": {
+            "label": "Otter Tail 10-K(2025年度)",
+            "label_en": "Otter Tail 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1466593/000146659326000008/ottr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Our customers include some of the largest vehicle and equipment manufacturers operating in the U.S., including Caterpillar Inc., CNH Industrial N.V., Cummins Inc., Deere & Company, Honda Motor Co., Kawasaki Heavy Industries, Polaris Inc. and The Toro Company."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

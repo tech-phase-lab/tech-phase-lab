@@ -1,0 +1,257 @@
+{
+  "root": {
+    "ticker": "PMT",
+    "name": "ペニーマック・モーゲージ・インベストメント・トラスト",
+    "cik": 1464423,
+    "name_en": "PennyMac Mortgage Investment Trust"
+  },
+  "rows": [
+    {
+      "ja": "運用・ローン管理の委託先",
+      "en": "Manager & loan servicer"
+    },
+    {
+      "ja": "ローンの売り先(政府系)",
+      "en": "Agency loan buyers"
+    },
+    {
+      "ja": "競合(本人の10-Kで名指し)",
+      "en": "Named rivals (own 10-K)"
+    }
+  ],
+  "rivals": [
+    "RITM",
+    "RocketCos",
+    "CIM",
+    "RWT",
+    "AGNC"
+  ],
+  "companies": [
+    {
+      "id": "PFSI",
+      "ticker": "PFSI",
+      "name": "ペニーマック・フィナンシャル",
+      "name_en": "PennyMac Financial Services",
+      "sub": "住宅ローン",
+      "sub_en": "Mortgage",
+      "sub_short": "住宅金融",
+      "sub_short_en": "Mortgage",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "子会社PCMが運用を受託(外部運用)",
+          "text_en": "Its unit PCM manages PMT externally",
+          "source": {
+            "label": "PennyMac Mortgage 10-K(2025年度)",
+            "label_en": "PennyMac Mortgage 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1464423/000119312526057041/pmt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "We are externally managed by Pennymac Capital Management, LLC (\"PCM\" or our \"Manager\"), a wholly-owned subsidiary of PFSI"
+          }
+        },
+        {
+          "type": "up",
+          "text": "子会社PLSがローンとMSRの管理を受託",
+          "text_en": "Its unit PLS services PMT's loans and MSRs",
+          "source": {
+            "label": "PennyMac Mortgage 10-K(2025年度)",
+            "label_en": "PennyMac Mortgage 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1464423/000119312526057041/pmt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "We also have a loan servicing agreement with PLS, pursuant to which PLS provides primary and special servicing for our portfolio of residential loans and MSRs."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FNMA",
+      "ticker": "FNMA",
+      "name": "ファニーメイ",
+      "name_en": "Fannie Mae",
+      "sub": "住宅金融",
+      "sub_en": "Housing finance",
+      "sub_short": "住宅金融",
+      "sub_short_en": "Mortgage",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "買い取ったローンを政府系MBSにまとめて売却",
+          "text_en": "Pools bought loans into agency MBS",
+          "source": {
+            "label": "PennyMac Mortgage 10-K(2025年度)",
+            "label_en": "PennyMac Mortgage 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1464423/000119312526057041/pmt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Correspondent production activities may include purchasing residential loans, pooling Fannie Mae and Freddie Mac loans into Agency MBS securities and selling or securitizing the loans."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FMCC",
+      "ticker": "FMCC",
+      "name": "フレディマック",
+      "name_en": "Freddie Mac",
+      "sub": "住宅金融",
+      "sub_en": "Housing finance",
+      "sub_short": "住宅金融",
+      "sub_short_en": "Mortgage",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "買い取ったローンを政府系MBSにまとめて売却",
+          "text_en": "Pools bought loans into agency MBS",
+          "source": {
+            "label": "PennyMac Mortgage 10-K(2025年度)",
+            "label_en": "PennyMac Mortgage 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1464423/000119312526057041/pmt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Correspondent production activities may include purchasing residential loans, pooling Fannie Mae and Freddie Mac loans into Agency MBS securities and selling or securitizing the loans."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RocketCos",
+      "ticker": "RKT",
+      "name": "ロケット・カンパニーズ",
+      "name_en": "Rocket Companies",
+      "sub": "住宅ローン",
+      "sub_en": "Mortgage",
+      "sub_short": "住宅金融",
+      "sub_short_en": "Mortgage",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "コレスポンデント(買い取り)事業の競合",
+          "text_en": "Rival in correspondent lending",
+          "source": {
+            "label": "PennyMac Mortgage 10-K(2025年度)",
+            "label_en": "PennyMac Mortgage 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1464423/000119312526057041/pmt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "such as Rocket Mortgage, Rithm Capital Corp., Freedom Mortgage, Truist Financial Corporation, Western Alliance Bank and Onity Group Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RITM",
+      "ticker": "RITM",
+      "name": "リズム・キャピタル",
+      "name_en": "Rithm Capital",
+      "sub": "住宅ローン",
+      "sub_en": "Mortgage",
+      "sub_short": "住宅金融",
+      "sub_short_en": "Mortgage",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ローン買い取りと投資の両方で競合",
+          "text_en": "Rival in both lending and investing",
+          "source": {
+            "label": "PennyMac Mortgage 10-K(2025年度)",
+            "label_en": "PennyMac Mortgage 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1464423/000119312526057041/pmt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "mortgage REITs such as Chimera Investment Corporation, Invesco Mortgage Capital Inc., Rithm Capital Corp., Ellington Financial, Inc., MFA Financial, Inc., Adamas Trust, Inc., Redwood Trust Inc. Two Harbors Investment Corp., AGNC Investments Corp., and Annaly Capital Management Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CIM",
+      "ticker": "CIM",
+      "name": "キメラ・インベストメント",
+      "name_en": "Chimera Investment",
+      "sub": "住宅ローンREIT",
+      "sub_en": "Mortgage REIT",
+      "sub_short": "REIT",
+      "sub_short_en": "REIT",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "住宅ローン資産への投資で競合",
+          "text_en": "Rival in mortgage-asset investing",
+          "source": {
+            "label": "PennyMac Mortgage 10-K(2025年度)",
+            "label_en": "PennyMac Mortgage 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1464423/000119312526057041/pmt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "mortgage REITs such as Chimera Investment Corporation, Invesco Mortgage Capital Inc., Rithm Capital Corp., Ellington Financial, Inc., MFA Financial, Inc., Adamas Trust, Inc., Redwood Trust Inc. Two Harbors Investment Corp., AGNC Investments Corp., and Annaly Capital Management Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RWT",
+      "ticker": "RWT",
+      "name": "レッドウッド・トラスト",
+      "name_en": "Redwood Trust",
+      "sub": "住宅ローンREIT",
+      "sub_en": "Mortgage REIT",
+      "sub_short": "REIT",
+      "sub_short_en": "REIT",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "住宅ローン資産への投資で競合",
+          "text_en": "Rival in mortgage-asset investing",
+          "source": {
+            "label": "PennyMac Mortgage 10-K(2025年度)",
+            "label_en": "PennyMac Mortgage 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1464423/000119312526057041/pmt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "mortgage REITs such as Chimera Investment Corporation, Invesco Mortgage Capital Inc., Rithm Capital Corp., Ellington Financial, Inc., MFA Financial, Inc., Adamas Trust, Inc., Redwood Trust Inc. Two Harbors Investment Corp., AGNC Investments Corp., and Annaly Capital Management Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AGNC",
+      "ticker": "AGNC",
+      "name": "AGNCインベストメント",
+      "name_en": "AGNC Investment",
+      "sub": "住宅ローンREIT",
+      "sub_en": "Mortgage REIT",
+      "sub_short": "REIT",
+      "sub_short_en": "REIT",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "住宅ローン資産への投資で競合",
+          "text_en": "Rival in mortgage-asset investing",
+          "source": {
+            "label": "PennyMac Mortgage 10-K(2025年度)",
+            "label_en": "PennyMac Mortgage 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1464423/000119312526057041/pmt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "mortgage REITs such as Chimera Investment Corporation, Invesco Mortgage Capital Inc., Rithm Capital Corp., Ellington Financial, Inc., MFA Financial, Inc., Adamas Trust, Inc., Redwood Trust Inc. Two Harbors Investment Corp., AGNC Investments Corp., and Annaly Capital Management Inc."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

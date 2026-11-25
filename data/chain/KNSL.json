@@ -1,0 +1,211 @@
+{
+  "root": {
+    "ticker": "KNSL",
+    "name": "キンセール・キャピタル",
+    "cik": 1669162,
+    "name_en": "Kinsale Capital Group, Inc."
+  },
+  "rows": [
+    {
+      "ja": "E&S保険の競合(本人の10-Kで名指し)",
+      "en": "E&S insurance rivals (own 10-K)"
+    }
+  ],
+  "rivals": [
+    "RLI",
+    "MKL",
+    "WRB",
+    "AIG",
+    "CB",
+    "FFH"
+  ],
+  "companies": [
+    {
+      "id": "RLI",
+      "ticker": "RLI",
+      "name": "RLI",
+      "name_en": "RLI",
+      "sub": "特殊保険",
+      "sub_en": "Specialty insurance",
+      "sub_short": "特殊保険",
+      "sub_short_en": "Insurance",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "E&S(非標準)保険の主な競合",
+          "text_en": "Main E&S insurance rival",
+          "source": {
+            "label": "Kinsale 10-K(2025年度)",
+            "label_en": "Kinsale 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1669162/000166916226000015/knsl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "our primary competitors in the E&S sector inc lude American International Group, Inc., Berkshire Hathaway Inc ., Chubb Limited, Fairfax Financial Holdings Limited, Lloyds of London, Markel Group Inc., RLI Corp. and W. R. Berkley Corporation."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MKL",
+      "ticker": "MKL",
+      "name": "マーケル",
+      "name_en": "Markel Group",
+      "sub": "特殊保険",
+      "sub_en": "Specialty insurance",
+      "sub_short": "特殊保険",
+      "sub_short_en": "Insurance",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "E&S(非標準)保険の主な競合",
+          "text_en": "Main E&S insurance rival",
+          "source": {
+            "label": "Kinsale 10-K(2025年度)",
+            "label_en": "Kinsale 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1669162/000166916226000015/knsl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "our primary competitors in the E&S sector inc lude American International Group, Inc., Berkshire Hathaway Inc ., Chubb Limited, Fairfax Financial Holdings Limited, Lloyds of London, Markel Group Inc., RLI Corp. and W. R. Berkley Corporation."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WRB",
+      "ticker": "WRB",
+      "name": "W・R・バークレー",
+      "name_en": "W. R. Berkley",
+      "sub": "特殊保険",
+      "sub_en": "Specialty insurance",
+      "sub_short": "特殊保険",
+      "sub_short_en": "Insurance",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "E&S(非標準)保険の主な競合",
+          "text_en": "Main E&S insurance rival",
+          "source": {
+            "label": "Kinsale 10-K(2025年度)",
+            "label_en": "Kinsale 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1669162/000166916226000015/knsl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "our primary competitors in the E&S sector inc lude American International Group, Inc., Berkshire Hathaway Inc ., Chubb Limited, Fairfax Financial Holdings Limited, Lloyds of London, Markel Group Inc., RLI Corp. and W. R. Berkley Corporation."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AIG",
+      "ticker": "AIG",
+      "name": "アメリカン・インターナショナル・グループ",
+      "name_en": "American International Group",
+      "sub": "総合保険",
+      "sub_en": "Insurance",
+      "sub_short": "総合保険",
+      "sub_short_en": "Insurance",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "E&S(非標準)保険の主な競合",
+          "text_en": "Main E&S insurance rival",
+          "source": {
+            "label": "Kinsale 10-K(2025年度)",
+            "label_en": "Kinsale 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1669162/000166916226000015/knsl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "our primary competitors in the E&S sector inc lude American International Group, Inc., Berkshire Hathaway Inc ., Chubb Limited, Fairfax Financial Holdings Limited, Lloyds of London, Markel Group Inc., RLI Corp. and W. R. Berkley Corporation."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CB",
+      "ticker": "CB",
+      "name": "チャブ",
+      "name_en": "Chubb",
+      "sub": "損害保険",
+      "sub_en": "P&C insurance",
+      "sub_short": "損保",
+      "sub_short_en": "Insurance",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "E&S(非標準)保険の主な競合",
+          "text_en": "Main E&S insurance rival",
+          "source": {
+            "label": "Kinsale 10-K(2025年度)",
+            "label_en": "Kinsale 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1669162/000166916226000015/knsl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "our primary competitors in the E&S sector inc lude American International Group, Inc., Berkshire Hathaway Inc ., Chubb Limited, Fairfax Financial Holdings Limited, Lloyds of London, Markel Group Inc., RLI Corp. and W. R. Berkley Corporation."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FFH",
+      "ticker": "FFH",
+      "name": "フェアファックス・フィナンシャル",
+      "name_en": "Fairfax Financial",
+      "sub": "損害保険",
+      "sub_en": "P&C insurance",
+      "sub_short": "損保",
+      "sub_short_en": "Insurance",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "E&S(非標準)保険の主な競合",
+          "text_en": "Main E&S insurance rival",
+          "source": {
+            "label": "Kinsale 10-K(2025年度)",
+            "label_en": "Kinsale 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1669162/000166916226000015/knsl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "our primary competitors in the E&S sector inc lude American International Group, Inc., Berkshire Hathaway Inc ., Chubb Limited, Fairfax Financial Holdings Limited, Lloyds of London, Markel Group Inc., RLI Corp. and W. R. Berkley Corporation."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Lloyds",
+      "ticker": "Lloyd's",
+      "name": "ロイズ",
+      "name_en": "Lloyd's of London",
+      "sub": "保険市場",
+      "sub_en": "Insurance market",
+      "sub_short": "保険市場",
+      "sub_short_en": "Market",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "E&S(非標準)保険の主な競合",
+          "text_en": "Main E&S insurance rival",
+          "source": {
+            "label": "Kinsale 10-K(2025年度)",
+            "label_en": "Kinsale 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1669162/000166916226000015/knsl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "our primary competitors in the E&S sector inc lude American International Group, Inc., Berkshire Hathaway Inc ., Chubb Limited, Fairfax Financial Holdings Limited, Lloyds of London, Markel Group Inc., RLI Corp. and W. R. Berkley Corporation."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

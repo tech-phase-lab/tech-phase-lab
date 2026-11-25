@@ -1,0 +1,213 @@
+{
+  "root": {
+    "ticker": "CNXC",
+    "name": "コンセントリックス",
+    "cik": 1803599,
+    "name_en": "Concentrix Corporation"
+  },
+  "rows": [
+    {
+      "ja": "旧親会社(2020年に分離)",
+      "en": "Former parent (2020 spin-off)"
+    },
+    {
+      "ja": "競合(本人の10-Kで名指し)",
+      "en": "Named rivals (own 10-K)"
+    }
+  ],
+  "rivals": [
+    "Teleperformance",
+    "ACN",
+    "CTSH",
+    "G"
+  ],
+  "companies": [
+    {
+      "id": "SNX",
+      "ticker": "SNX",
+      "name": "TDシネックス",
+      "name_en": "TD Synnex",
+      "sub": "IT卸",
+      "sub_en": "IT distribution",
+      "sub_short": "IT卸",
+      "sub_short_en": "IT",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2020年12月にTDシネックスからスピンオフで独立",
+          "text_en": "Spun off from TD SYNNEX in December 2020",
+          "source": {
+            "label": "Concentrix 10-K(2025年度)",
+            "label_en": "Concentrix 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1803599/000180359926000027/cnxc-20251130.htm",
+            "level": "official",
+            "date": "2026-01-28",
+            "quote": "In December 2020, Concentrix was separated from TD SYNNEX through a tax-free distribution of all of the issued and outstanding shares of our common stock to TD SYNNEX stockholders"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Teleperformance",
+      "ticker": "Teleperformance",
+      "name": "テレパフォーマンス",
+      "name_en": "Teleperformance",
+      "sub": "顧客対応受託",
+      "sub_en": "CX outsourcing",
+      "sub_short": "CX受託",
+      "sub_short_en": "CX",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "顧客対応(CX)受託の世界最大手どうし",
+          "text_en": "Global CX outsourcing peer",
+          "source": {
+            "label": "Concentrix 10-K(2025年度)",
+            "label_en": "Concentrix 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1803599/000180359926000027/cnxc-20251130.htm",
+            "level": "official",
+            "date": "2026-01-28",
+            "quote": "Our major competitors include Accenture plc, Capgemini SE, Cognizant Technology Solutions Corporation, Endava UK Ltd., EPAM Systems, Inc., ExlService Holdings, Inc., Foundever Group, Genpact Limited, Globant S.A., HCL Technologies Limited, Infosys Limited, TaskUs Inc., Tata Consultancy Services, Teleperformance S.A., TELUS Digital, Thoughtworks Holding, Inc., and TTEC Holdings, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TTEC",
+      "ticker": "TTEC",
+      "name": "TTEC",
+      "name_en": "TTEC",
+      "sub": "顧客対応受託",
+      "sub_en": "CX outsourcing",
+      "sub_short": "顧客対応",
+      "sub_short_en": "CX",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "顧客対応(CX)受託で競合",
+          "text_en": "Rival in CX outsourcing",
+          "source": {
+            "label": "Concentrix 10-K(2025年度)",
+            "label_en": "Concentrix 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1803599/000180359926000027/cnxc-20251130.htm",
+            "level": "official",
+            "date": "2026-01-28",
+            "quote": "Our major competitors include Accenture plc, Capgemini SE, Cognizant Technology Solutions Corporation, Endava UK Ltd., EPAM Systems, Inc., ExlService Holdings, Inc., Foundever Group, Genpact Limited, Globant S.A., HCL Technologies Limited, Infosys Limited, TaskUs Inc., Tata Consultancy Services, Teleperformance S.A., TELUS Digital, Thoughtworks Holding, Inc., and TTEC Holdings, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TASK",
+      "ticker": "TASK",
+      "name": "タスカス",
+      "name_en": "TaskUs",
+      "sub": "顧客対応受託",
+      "sub_en": "CX outsourcing",
+      "sub_short": "CX受託",
+      "sub_short_en": "CX",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "顧客対応・コンテンツ審査の受託で競合",
+          "text_en": "Rival in CX and moderation outsourcing",
+          "source": {
+            "label": "Concentrix 10-K(2025年度)",
+            "label_en": "Concentrix 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1803599/000180359926000027/cnxc-20251130.htm",
+            "level": "official",
+            "date": "2026-01-28",
+            "quote": "Our major competitors include Accenture plc, Capgemini SE, Cognizant Technology Solutions Corporation, Endava UK Ltd., EPAM Systems, Inc., ExlService Holdings, Inc., Foundever Group, Genpact Limited, Globant S.A., HCL Technologies Limited, Infosys Limited, TaskUs Inc., Tata Consultancy Services, Teleperformance S.A., TELUS Digital, Thoughtworks Holding, Inc., and TTEC Holdings, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ACN",
+      "ticker": "ACN",
+      "name": "アクセンチュア",
+      "name_en": "Accenture",
+      "sub": "コンサル・IT",
+      "sub_en": "Consulting & IT",
+      "sub_short": "コンサル",
+      "sub_short_en": "Advisory",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "デジタル・業務受託で競合",
+          "text_en": "Rival in digital and operations services",
+          "source": {
+            "label": "Concentrix 10-K(2025年度)",
+            "label_en": "Concentrix 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1803599/000180359926000027/cnxc-20251130.htm",
+            "level": "official",
+            "date": "2026-01-28",
+            "quote": "Our major competitors include Accenture plc, Capgemini SE, Cognizant Technology Solutions Corporation, Endava UK Ltd., EPAM Systems, Inc., ExlService Holdings, Inc., Foundever Group, Genpact Limited, Globant S.A., HCL Technologies Limited, Infosys Limited, TaskUs Inc., Tata Consultancy Services, Teleperformance S.A., TELUS Digital, Thoughtworks Holding, Inc., and TTEC Holdings, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CTSH",
+      "ticker": "CTSH",
+      "name": "コグニザント",
+      "name_en": "Cognizant",
+      "sub": "ITサービス",
+      "sub_en": "IT services",
+      "sub_short": "IT",
+      "sub_short_en": "IT",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ITと業務受託で競合",
+          "text_en": "Rival in IT and operations services",
+          "source": {
+            "label": "Concentrix 10-K(2025年度)",
+            "label_en": "Concentrix 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1803599/000180359926000027/cnxc-20251130.htm",
+            "level": "official",
+            "date": "2026-01-28",
+            "quote": "Our major competitors include Accenture plc, Capgemini SE, Cognizant Technology Solutions Corporation, Endava UK Ltd., EPAM Systems, Inc., ExlService Holdings, Inc., Foundever Group, Genpact Limited, Globant S.A., HCL Technologies Limited, Infosys Limited, TaskUs Inc., Tata Consultancy Services, Teleperformance S.A., TELUS Digital, Thoughtworks Holding, Inc., and TTEC Holdings, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "G",
+      "ticker": "G",
+      "name": "ジェンパクト",
+      "name_en": "Genpact",
+      "sub": "業務受託",
+      "sub_en": "Business process services",
+      "sub_short": "業務受託",
+      "sub_short_en": "BPO",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "業務プロセス受託で競合",
+          "text_en": "Rival in business process services",
+          "source": {
+            "label": "Concentrix 10-K(2025年度)",
+            "label_en": "Concentrix 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1803599/000180359926000027/cnxc-20251130.htm",
+            "level": "official",
+            "date": "2026-01-28",
+            "quote": "Our major competitors include Accenture plc, Capgemini SE, Cognizant Technology Solutions Corporation, Endava UK Ltd., EPAM Systems, Inc., ExlService Holdings, Inc., Foundever Group, Genpact Limited, Globant S.A., HCL Technologies Limited, Infosys Limited, TaskUs Inc., Tata Consultancy Services, Teleperformance S.A., TELUS Digital, Thoughtworks Holding, Inc., and TTEC Holdings, Inc."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

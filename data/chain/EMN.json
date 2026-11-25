@@ -1,0 +1,240 @@
+{
+  "root": {
+    "ticker": "EMN",
+    "name": "イーストマン・ケミカル",
+    "cik": 915389,
+    "name_en": "Eastman Chemical Company"
+  },
+  "rows": [
+    {
+      "ja": "合弁",
+      "en": "Joint venture"
+    },
+    {
+      "ja": "競合(本人の10-Kで名指し)",
+      "en": "Named rivals (own 10-K)"
+    }
+  ],
+  "rivals": [
+    "CE",
+    "BASF",
+    "DOW",
+    "Daicel",
+    "Sekisui"
+  ],
+  "companies": [
+    {
+      "id": "CNTC",
+      "ticker": "CNTC",
+      "name": "中国煙草総公司",
+      "name_en": "China National Tobacco",
+      "sub": "たばこ(中国国営)",
+      "sub_en": "Tobacco (China state)",
+      "sub_short": "たばこ",
+      "sub_short_en": "Tobacco",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "アセテート・トウの合弁(中国・合肥)を45%保有",
+          "text_en": "Owns 45% of an acetate tow JV in Hefei, China",
+          "source": {
+            "label": "Eastman 10-K(2025年度)",
+            "label_en": "Eastman 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/915389/000091538926000013/emn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "The Company also owns a 45 percent interest in a joint venture with China National Tobacco Corporation that manufactures acetate tow in Hefei, China."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CE",
+      "ticker": "CE",
+      "name": "セラニーズ",
+      "name_en": "Celanese",
+      "sub": "化学",
+      "sub_en": "Chemicals",
+      "sub_short": "化学",
+      "sub_short_en": "Chem",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "アセテート・トウや塗料用添加剤で競合",
+          "text_en": "Rival in acetate tow and coatings additives",
+          "source": {
+            "label": "Eastman 10-K(2025年度)",
+            "label_en": "Eastman 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/915389/000091538926000013/emn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Acetate Tow Estron TM cellulose acetate tow Celanese Corporation Cerdia International Daicel Corporation Jinan Acetate Chemical"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Daicel",
+      "ticker": "Daicel",
+      "name": "ダイセル",
+      "name_en": "Daicel",
+      "sub": "化学",
+      "sub_en": "Chemicals",
+      "sub_short": "化学",
+      "sub_short_en": "Chem",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "たばこフィルター用アセテート・トウで競合",
+          "text_en": "Rival in acetate tow for filters",
+          "source": {
+            "label": "Eastman 10-K(2025年度)",
+            "label_en": "Eastman 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/915389/000091538926000013/emn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Acetate Tow Estron TM cellulose acetate tow Celanese Corporation Cerdia International Daicel Corporation Jinan Acetate Chemical"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BASF",
+      "ticker": "BASF",
+      "name": "BASF",
+      "name_en": "BASF",
+      "sub": "化学(独)",
+      "sub_en": "Chemicals (Germany)",
+      "sub_short": "化学",
+      "sub_short_en": "Chem",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "塗料用添加剤・溶剤で競合",
+          "text_en": "Rival in coatings additives and solvents",
+          "source": {
+            "label": "Eastman 10-K(2025年度)",
+            "label_en": "Eastman 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/915389/000091538926000013/emn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "specialty coalescents specialty solvents paint additives specialty polymers BASF SE Dow Inc. OXEA Celanese Corporation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "DOW",
+      "ticker": "DOW",
+      "name": "ダウ",
+      "name_en": "Dow",
+      "sub": "化学",
+      "sub_en": "Chemicals",
+      "sub_short": "化学",
+      "sub_short_en": "Chem",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "塗料用添加剤・溶剤で競合",
+          "text_en": "Rival in coatings additives and solvents",
+          "source": {
+            "label": "Eastman 10-K(2025年度)",
+            "label_en": "Eastman 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/915389/000091538926000013/emn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "specialty coalescents specialty solvents paint additives specialty polymers BASF SE Dow Inc. OXEA Celanese Corporation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Sekisui",
+      "ticker": "4204.T",
+      "name": "積水化学工業",
+      "name_en": "Sekisui Chemical",
+      "sub": "化学・樹脂",
+      "sub_en": "Chemicals & plastics",
+      "sub_short": "化学",
+      "sub_short_en": "Chem",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "合わせガラス用中間膜(PVB)で競合",
+          "text_en": "Rival in PVB interlayers for laminated glass",
+          "source": {
+            "label": "Eastman 10-K(2025年度)",
+            "label_en": "Eastman 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/915389/000091538926000013/emn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "standard PVB sheet premium PVB sheet Sekisui Chemical Co., Ltd. Kuraray Co., Ltd."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Kuraray",
+      "ticker": "Kuraray",
+      "name": "クラレ",
+      "name_en": "Kuraray",
+      "sub": "化学・活性炭",
+      "sub_en": "Chemicals & activated carbon",
+      "sub_short": "化学",
+      "sub_short_en": "Chem",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "合わせガラス用中間膜(PVB)で競合",
+          "text_en": "Rival in PVB interlayers for laminated glass",
+          "source": {
+            "label": "Eastman 10-K(2025年度)",
+            "label_en": "Eastman 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/915389/000091538926000013/emn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "standard PVB sheet premium PVB sheet Sekisui Chemical Co., Ltd. Kuraray Co., Ltd."
+          }
+        }
+      ]
+    },
+    {
+      "id": "XPEL",
+      "ticker": "XPEL",
+      "name": "XPEL",
+      "name_en": "XPEL",
+      "sub": "保護フィルム",
+      "sub_en": "Protective films",
+      "sub_short": "フィルム",
+      "sub_short_en": "Films",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "車の窓用・塗装保護フィルムで競合",
+          "text_en": "Rival in car window and paint-protection films",
+          "source": {
+            "label": "Eastman 10-K(2025年度)",
+            "label_en": "Eastman 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/915389/000091538926000013/emn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "aftermarket applied films XPEL, Inc. 3M Company Saint-Gobain S.A."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

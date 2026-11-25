@@ -1,0 +1,161 @@
+{
+  "root": {
+    "ticker": "INSP",
+    "name": "インスパイア・メディカル・システムズ",
+    "cik": 1609550,
+    "name_en": "Inspire Medical Systems, Inc."
+  },
+  "rows": [
+    {
+      "ja": "特許のライセンス元",
+      "en": "Patent licensor"
+    },
+    {
+      "ja": "競合(本人の10-Kで名指し)",
+      "en": "Named rivals (own 10-K)"
+    }
+  ],
+  "rivals": [
+    "NYXH",
+    "RMD",
+    "PHG",
+    "FisherPaykel"
+  ],
+  "companies": [
+    {
+      "id": "MDT",
+      "ticker": "MDT",
+      "name": "メドトロニック",
+      "name_en": "Medtronic",
+      "sub": "医療機器",
+      "sub_en": "Medical devices",
+      "sub_short": "医療機器",
+      "sub_short_en": "Medtech",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "2007年に特許・商標の譲渡と無償ライセンスを受けた",
+          "text_en": "Assigned patents and trademarks and granted a royalty-free license in 2007",
+          "source": {
+            "label": "Inspire Medical 10-K(2025年度)",
+            "label_en": "Inspire Medical 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1609550/000160955026000016/insp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "In 2007, we entered into an assignment and license agreement with Medtronic (\"the Assignment and License Agreement\") pursuant to which Medtronic assigned certain patents and trademarks to us and granted to us a worldwide, royalty-free license"
+          }
+        }
+      ]
+    },
+    {
+      "id": "NYXH",
+      "ticker": "NYXH",
+      "name": "ナイキソア",
+      "name_en": "Nyxoah",
+      "sub": "睡眠時無呼吸治療",
+      "sub_en": "Sleep apnea therapy",
+      "sub_short": "神経刺激",
+      "sub_short_en": "Nerve",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "米国で唯一の舌下神経刺激の直接競合",
+          "text_en": "Only direct US nerve-stimulation rival",
+          "source": {
+            "label": "Inspire Medical 10-K(2025年度)",
+            "label_en": "Inspire Medical 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1609550/000160955026000016/insp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Currently, we have only one direct neurostimulation competitor in the US for the treatment of OSA, Nyxoah SA and its subsidiary Nyxoah, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RMD",
+      "ticker": "RMD",
+      "name": "レスメド",
+      "name_en": "ResMed",
+      "sub": "睡眠時無呼吸機器",
+      "sub_en": "Sleep apnea devices",
+      "sub_short": "睡眠機器",
+      "sub_short_en": "Sleep",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "CPAP(持続陽圧呼吸)装置の競合",
+          "text_en": "CPAP device rival",
+          "source": {
+            "label": "Inspire Medical 10-K(2025年度)",
+            "label_en": "Inspire Medical 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1609550/000160955026000016/insp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Our specific PAP-related competitors include ResMed Inc., Philips BV, Fisher & Paykel Healthcare Corporation Limited, and various regional and new-entrant manufacturers."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PHG",
+      "ticker": "PHG",
+      "name": "フィリップス",
+      "name_en": "Philips",
+      "sub": "医療機器",
+      "sub_en": "Medical devices",
+      "sub_short": "医療機器",
+      "sub_short_en": "Medtech",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "CPAP(持続陽圧呼吸)装置の競合",
+          "text_en": "CPAP device rival",
+          "source": {
+            "label": "Inspire Medical 10-K(2025年度)",
+            "label_en": "Inspire Medical 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1609550/000160955026000016/insp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Our specific PAP-related competitors include ResMed Inc., Philips BV, Fisher & Paykel Healthcare Corporation Limited, and various regional and new-entrant manufacturers."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FisherPaykel",
+      "ticker": "Fisher & Paykel",
+      "name": "フィッシャー&パイケル・ヘルスケア",
+      "name_en": "Fisher & Paykel Healthcare",
+      "sub": "呼吸ケア機器",
+      "sub_en": "Respiratory devices",
+      "sub_short": "呼吸器",
+      "sub_short_en": "Lung",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "CPAP(持続陽圧呼吸)装置の競合",
+          "text_en": "CPAP device rival",
+          "source": {
+            "label": "Inspire Medical 10-K(2025年度)",
+            "label_en": "Inspire Medical 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1609550/000160955026000016/insp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Our specific PAP-related competitors include ResMed Inc., Philips BV, Fisher & Paykel Healthcare Corporation Limited, and various regional and new-entrant manufacturers."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
