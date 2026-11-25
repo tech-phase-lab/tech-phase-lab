@@ -20,8 +20,8 @@ test("the wall page has a PC layout: preview on the left, settings on the right,
 test("「スマホで開く」 QR code: this page's address, drawn locally, PC only, with the owner's sentence", () => {
   const screen = read("../app/resolute/wall/screen.tsx");
   assert.match(screen, /\$\{window\.location\.origin\}\/resolute\/wall/);
-  assert.match(screen, /!touch&&here\?<div className=\{s\.qr\}>/, "not on a touch screen");
-  assert.match(screen, /if\(desktop\)\{/, "only in the PC layout");
+  assert.match(screen, /const qr=desktop&&!touch&&here;/, "only in the PC layout, never on a touch screen (so never on the phone)");
+  assert.match(screen, /\{qr\?<div className=\{s\.qr\}>/);
   assert.match(screen, /スマホのカメラで読み取ると、この画面がスマホで開きます。<\/span><span>スマホで保存すると、そのままロック画面に設定できます。/);
   const qr = read("../app/resolute/wall/qr-code.tsx");
   assert.match(qr, /from "qrcode-generator"/);
@@ -41,4 +41,13 @@ test("signing in from a RESOLUTE page comes back to it (the QR code opens /resol
   assert.equal(readAccountReturn(storage, 4000), "/resolute/wall", "an unsafe path is not stored");
   const shell = read("../app/resolute/tool-shell.tsx");
   assert.match(shell, /href="\/research\/account" prefetch=\{false\} onClick=\{\(\)=>\{ try \{ rememberAccountReturn\(window\.sessionStorage,window\.location\.pathname\+window\.location\.search\)/);
+});
+
+test("phone (resolute-mobile-all-1125 §14): the shared heading, the preview and the settings with round swatches, no QR code", () => {
+  const screen = read("../app/resolute/wall/screen.tsx");
+  assert.match(screen, /<SectionHeading label="RULE CHARM" title=\{title\} description=\{lead\}\/>/);
+  assert.match(screen, /\{desktop\?s\.pc:s\.phoneLayout\}/);
+  const css = read("../app/resolute/wall/reference.module.css");
+  assert.match(css, /\.pcPreview, \.pcSettings \{[^}]*var\(--rz-panel-fill\) padding-box,var\(--rz-panel-edge\) border-box/);
+  assert.match(css, /\.phoneLayout \.pcPair \{ grid-template-columns:minmax\(0,1fr\);/);
 });
