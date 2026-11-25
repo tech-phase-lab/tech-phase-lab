@@ -57,11 +57,12 @@ export default function RadarScreen({ initial }: { initial: RadarPayload | null 
         <p>{t("数字は米SECの開示資料から計算しています。範囲を超える値はグラフの端に表示します。売買をすすめるものではありません。", "Figures are calculated from U.S. SEC filings. Values outside the chart range appear at the edge. This is not a recommendation to buy or sell.")}</p>
         <p>{t("前受け金(顧客からの前払い)が大きい会社は、営業キャッシュフローが膨らんで見えます。1年間に受け取った前受け金が1年分の売上を超える会社は、その分を除いた営業キャッシュフローで稼ぐ力を計算し、「前受け金除く」と表示します。請求したまま未回収の分は、除く額から差し引きます。", "Large customer prepayments can make operating cash flow look inflated. When the prepayments received in a year exceed a full year of revenue, cash generation is calculated without them and marked \"Excl. prepayments\" (amounts billed but not yet collected are not taken out).")}</p>
         <p>{t("稼ぐ力は営業キャッシュフローの売上に対する割合です。守る力の現金は現金同等物と短期の投資、借入は短期・長期の借入とリース負債の合計です。売上や現金の流れは、年の決算の日は1年分、それ以外は直近4四半期分を使います。", "Cash generation is operating cash flow divided by revenue. Financial resilience compares cash (cash equivalents plus short-term investments) with debt (short- and long-term borrowings plus lease liabilities). Revenue and cash flow use the full year for annual reports and the latest four quarters otherwise.")}</p>
-        <p>{t("FREEのグラフは、ジャンルの中の順位で点を並べています。", "On the free chart, dots are placed by their rank within the genre.")}</p>
       </div>}
       <GenrePicker lang={lang} value={genre} onChange={id => { setGenre(id); setSelected(null); }} />
       {!radar && failed === genre ? <p className={styles.note} role="alert">{t("数値を取得できませんでした。しばらくしてからもう一度お試しください。", "We couldn't load the figures. Please try again in a moment.")}</p>
-        : !radar ? <section className={styles.card} aria-hidden="true"><div className={styles.skeleton} /></section>
+        // Until the API has said whether the visitor is PRO, a plain skeleton: a PRO member never sees the FREE rank chart jump to the
+        // figures chart (owner, Nov 25). If that answer cannot be had, the public rank chart the page arrived with is shown.
+        : !radar || (!confirmed && failed !== genre) ? <section className={styles.card} aria-hidden="true"><div className={styles.skeleton} /></section>
         : <>
           {pro ? <section className={styles.card}>
             <p className={styles.axisY}>{t("↑ 守る力 ｜ 現金÷(借入+リース)", "↑ Financial resilience | Cash ÷ (debt + leases)")}</p>

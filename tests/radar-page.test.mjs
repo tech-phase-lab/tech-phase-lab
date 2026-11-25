@@ -92,6 +92,9 @@ test("the page opens with the first genre's dots already in it, and the screen n
   assert.ok(!screen.includes("読み込み中"));
   assert.match(screen, /for \(const item of radarGenres\) await request\(item\.id\)/); // other tabs fetched quietly, one at a time
   assert.match(screen, /!confirmed \? <section className=\{styles\.rankWait\} aria-hidden="true" \/>/); // no lock flashed at a PRO visitor
+  // no FREE rank chart flashed at a PRO visitor either: a skeleton until the plan is known (owner, Nov 25)
+  assert.match(screen, /: !radar \|\| \(!confirmed && failed !== genre\) \? <section className=\{styles\.card\} aria-hidden="true"><div className=\{styles\.skeleton\} \/><\/section>/);
+  assert.ok(!screen.includes("FREEのグラフは、ジャンルの中の順位で点を並べています。"));
   const route = read("../app/api/research/radar/route.ts");
   assert.match(route, /await loadGenreEntries\(genre\.id\)/);
   assert.match(route, /after\(\(\) => afterRadar\(genre\.id\)\)/);
