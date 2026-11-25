@@ -1,0 +1,210 @@
+{
+  "root": {
+    "ticker": "RLI",
+    "name": "RLI",
+    "cik": 84246,
+    "name_en": "RLI Corp."
+  },
+  "rows": [
+    {
+      "ja": "特殊保険の競合(本人の10-Kで名指し)",
+      "en": "Specialty insurance rivals (own 10-K)"
+    }
+  ],
+  "rivals": [
+    "KNSL",
+    "MKL",
+    "WRB",
+    "AIG",
+    "CB"
+  ],
+  "companies": [
+    {
+      "id": "KNSL",
+      "ticker": "KNSL",
+      "name": "キンセール・キャピタル",
+      "name_en": "Kinsale Capital",
+      "sub": "特殊保険",
+      "sub_en": "Specialty insurance",
+      "sub_short": "特殊保険",
+      "sub_short_en": "Insurance",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "賠償責任保険(カジュアルティ)の競合",
+          "text_en": "Casualty rival",
+          "source": {
+            "label": "RLI 10-K(2025年度)",
+            "label_en": "RLI 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/84246/000110465926018013/rli-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Our primary competitors in the casualty segment include AIG, Allianz, Arch, Aspen, AXA/XL, Beazley, Berkley, Berkshire/National Indemnity, Chubb, CNA, Great American, Great West, Hartford, Hudson, James River, Kinsale, Lancer, Liberty, Markel, Nationwide, Progressive, RSUI, Sompo, Tokio Marine/HCC, Travelers, USLI, Westchester and Zurich."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MKL",
+      "ticker": "MKL",
+      "name": "マーケル",
+      "name_en": "Markel Group",
+      "sub": "特殊保険",
+      "sub_en": "Specialty insurance",
+      "sub_short": "特殊保険",
+      "sub_short_en": "Insurance",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "賠償責任・保証保険の競合",
+          "text_en": "Rival in casualty and surety",
+          "source": {
+            "label": "RLI 10-K(2025年度)",
+            "label_en": "RLI 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/84246/000110465926018013/rli-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Our primary competitors in the casualty segment include AIG, Allianz, Arch, Aspen, AXA/XL, Beazley, Berkley, Berkshire/National Indemnity, Chubb, CNA, Great American, Great West, Hartford, Hudson, James River, Kinsale, Lancer, Liberty, Markel, Nationwide, Progressive, RSUI, Sompo, Tokio Marine/HCC, Travelers, USLI, Westchester and Zurich."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WRB",
+      "ticker": "WRB",
+      "name": "W・R・バークレー",
+      "name_en": "W. R. Berkley",
+      "sub": "特殊保険",
+      "sub_en": "Specialty insurance",
+      "sub_short": "特殊保険",
+      "sub_short_en": "Insurance",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "賠償責任・保証保険の競合",
+          "text_en": "Rival in casualty and surety",
+          "source": {
+            "label": "RLI 10-K(2025年度)",
+            "label_en": "RLI 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/84246/000110465926018013/rli-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Our primary competitors in the casualty segment include AIG, Allianz, Arch, Aspen, AXA/XL, Beazley, Berkley, Berkshire/National Indemnity, Chubb, CNA, Great American, Great West, Hartford, Hudson, James River, Kinsale, Lancer, Liberty, Markel, Nationwide, Progressive, RSUI, Sompo, Tokio Marine/HCC, Travelers, USLI, Westchester and Zurich."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AIG",
+      "ticker": "AIG",
+      "name": "アメリカン・インターナショナル・グループ",
+      "name_en": "American International Group",
+      "sub": "総合保険",
+      "sub_en": "Insurance",
+      "sub_short": "総合保険",
+      "sub_short_en": "Insurance",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "賠償責任・保証保険の競合",
+          "text_en": "Rival in casualty and surety",
+          "source": {
+            "label": "RLI 10-K(2025年度)",
+            "label_en": "RLI 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/84246/000110465926018013/rli-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Our primary competitors in the surety segment are AIG, Arch, Beazley, Berkley, Chubb, CNA, Great American, Hartford, Intact, Liberty Mutual, Markel, Merchants, Philadelphia, Sompo, Swiss Re, Travelers and Zurich."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CB",
+      "ticker": "CB",
+      "name": "チャブ",
+      "name_en": "Chubb",
+      "sub": "損害保険",
+      "sub_en": "P&C insurance",
+      "sub_short": "損保",
+      "sub_short_en": "Insurance",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "賠償責任・保証保険の競合",
+          "text_en": "Rival in casualty and surety",
+          "source": {
+            "label": "RLI 10-K(2025年度)",
+            "label_en": "RLI 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/84246/000110465926018013/rli-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Our primary competitors in the surety segment are AIG, Arch, Beazley, Berkley, Chubb, CNA, Great American, Hartford, Intact, Liberty Mutual, Markel, Merchants, Philadelphia, Sompo, Swiss Re, Travelers and Zurich."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TRV",
+      "ticker": "TRV",
+      "name": "トラベラーズ・カンパニーズ",
+      "name_en": "Travelers Companies",
+      "sub": "損害保険",
+      "sub_en": "P&C insurance",
+      "sub_short": "損保",
+      "sub_short_en": "Insurance",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "賠償責任・保証保険の競合",
+          "text_en": "Rival in casualty and surety",
+          "source": {
+            "label": "RLI 10-K(2025年度)",
+            "label_en": "RLI 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/84246/000110465926018013/rli-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Our primary competitors in the surety segment are AIG, Arch, Beazley, Berkley, Chubb, CNA, Great American, Hartford, Intact, Liberty Mutual, Markel, Merchants, Philadelphia, Sompo, Swiss Re, Travelers and Zurich."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ACGL",
+      "ticker": "ACGL",
+      "name": "アーチ・キャピタル・グループ",
+      "name_en": "Arch Capital Group",
+      "sub": "保険・再保険",
+      "sub_en": "Insurance & reinsurance",
+      "sub_short": "再保険",
+      "sub_short_en": "Reinsurer",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "賠償責任・保証保険の競合",
+          "text_en": "Rival in casualty and surety",
+          "source": {
+            "label": "RLI 10-K(2025年度)",
+            "label_en": "RLI 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/84246/000110465926018013/rli-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Our primary competitors in the surety segment are AIG, Arch, Beazley, Berkley, Chubb, CNA, Great American, Hartford, Intact, Liberty Mutual, Markel, Merchants, Philadelphia, Sompo, Swiss Re, Travelers and Zurich."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,240 @@
+{
+  "root": {
+    "ticker": "WEX",
+    "name": "WEX",
+    "cik": 1309108,
+    "name_en": "WEX Inc."
+  },
+  "rows": [
+    {
+      "ja": "提携・決済ネットワーク",
+      "en": "Partners & card networks"
+    },
+    {
+      "ja": "競合(本人の10-Kで名指し)",
+      "en": "Named rivals (own 10-K)"
+    }
+  ],
+  "rivals": [
+    "CPAY",
+    "HQY",
+    "GPN",
+    "ADYEN",
+    "Stripe"
+  ],
+  "companies": [
+    {
+      "id": "BP",
+      "ticker": "BP",
+      "name": "BP",
+      "name_en": "BP",
+      "sub": "石油",
+      "sub_en": "Oil",
+      "sub_short": "石油",
+      "sub_short_en": "Oil",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "bpの法人向け提携フリートカードの発行会社に(2025年7月から7年)",
+          "text_en": "Became issuer of bp's co-branded fleet card (7-year term from July 2025)",
+          "source": {
+            "label": "WEX 10-K(2025年度)",
+            "label_en": "WEX 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1309108/000130910826000010/wex-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "During July 2025, the Company became the co-branded card issuer for the BP Products North America, Inc. (\"bp\") Co-branded Commercial Fleet Card program for an initial term of 7 years"
+          }
+        }
+      ]
+    },
+    {
+      "id": "V",
+      "ticker": "V",
+      "name": "ビザ",
+      "name_en": "Visa",
+      "sub": "カードネットワーク",
+      "sub_en": "Card network",
+      "sub_short": "カード",
+      "sub_short_en": "Cards",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "バーチャルカードの決済網",
+          "text_en": "Network for its virtual cards",
+          "source": {
+            "label": "WEX 10-K(2025年度)",
+            "label_en": "WEX 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1309108/000130910826000010/wex-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Each transaction is assigned a unique virtual card number (VCN) on either of the Mastercard or Visa third-party networks, with a customized spend limit, expiration date, and various other purchase controls."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MA",
+      "ticker": "MA",
+      "name": "マスターカード",
+      "name_en": "Mastercard",
+      "sub": "カードネットワーク",
+      "sub_en": "Card network",
+      "sub_short": "カード",
+      "sub_short_en": "Cards",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "バーチャルカードの決済網",
+          "text_en": "Network for its virtual cards",
+          "source": {
+            "label": "WEX 10-K(2025年度)",
+            "label_en": "WEX 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1309108/000130910826000010/wex-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Each transaction is assigned a unique virtual card number (VCN) on either of the Mastercard or Visa third-party networks, with a customized spend limit, expiration date, and various other purchase controls."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CPAY",
+      "ticker": "CPAY",
+      "name": "コーペイ",
+      "name_en": "Corpay",
+      "sub": "法人決済",
+      "sub_en": "Corporate payments",
+      "sub_short": "法人決済",
+      "sub_short_en": "Payment",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "フリート(車両燃料)カードで競合",
+          "text_en": "Fleet-card rival",
+          "source": {
+            "label": "WEX 10-K(2025年度)",
+            "label_en": "WEX 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1309108/000130910826000010/wex-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "We also compete against similar, more specialized offerings from Corpay, U.S. Bank Voyager, Radius Payment Solutions, DKV, and Edenred"
+          }
+        }
+      ]
+    },
+    {
+      "id": "HQY",
+      "ticker": "HQY",
+      "name": "ヘルスエクイティ",
+      "name_en": "HealthEquity",
+      "sub": "医療貯蓄口座",
+      "sub_en": "HSA services",
+      "sub_short": "医療口座",
+      "sub_short_en": "HSA",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "医療費口座(HSA等)の管理で競合",
+          "text_en": "Rival in health-account administration",
+          "source": {
+            "label": "WEX 10-K(2025年度)",
+            "label_en": "WEX 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1309108/000130910826000010/wex-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "we compete with specialist providers like Alegeus Technologies and HealthEquity"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GPN",
+      "ticker": "GPN",
+      "name": "グローバル・ペイメンツ",
+      "name_en": "Global Payments",
+      "sub": "決済",
+      "sub_en": "Payments",
+      "sub_short": "決済",
+      "sub_short_en": "Payment",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "決済処理基盤で競合",
+          "text_en": "Rival in payment processing",
+          "source": {
+            "label": "WEX 10-K(2025年度)",
+            "label_en": "WEX 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1309108/000130910826000010/wex-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "We compete against specialized financial technology firms that are focused on delivering processing capabilities to the marketplace, such as I2C, Global Payments, and Marqeta"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ADYEN",
+      "ticker": "Adyen",
+      "name": "アディエン",
+      "name_en": "Adyen",
+      "sub": "決済処理",
+      "sub_en": "Payment processing",
+      "sub_short": "決済処理",
+      "sub_short_en": "Payment",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "組み込み決済・支払管理で競合",
+          "text_en": "Rival in embedded payments",
+          "source": {
+            "label": "WEX 10-K(2025年度)",
+            "label_en": "WEX 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1309108/000130910826000010/wex-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "We also compete with financial technology firms focused on embedded payments, accounts payable and spend management, such as Adyen, ConnexPay, and Stripe."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Stripe",
+      "ticker": "Stripe",
+      "name": "ストライプ",
+      "name_en": "Stripe",
+      "sub": "決済",
+      "sub_en": "Payments",
+      "sub_short": "決済",
+      "sub_short_en": "Payment",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "組み込み決済・支払管理で競合",
+          "text_en": "Rival in embedded payments",
+          "source": {
+            "label": "WEX 10-K(2025年度)",
+            "label_en": "WEX 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1309108/000130910826000010/wex-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "We also compete with financial technology firms focused on embedded payments, accounts payable and spend management, such as Adyen, ConnexPay, and Stripe."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
