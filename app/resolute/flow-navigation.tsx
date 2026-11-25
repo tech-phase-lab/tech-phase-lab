@@ -15,8 +15,13 @@ export default function FlowNavigation({step,locale,wide=false,extra}:{step:numb
  const forward=next ? <Link href={next[0]} className={styles.primary} prefetch={false}>{next[en?2:1]}{en?" →":"へ進む →"}</Link> : <Link href="/resolute/notebook" className={styles.primary} prefetch={false}>{en?"Finish my rulebook":"マイルールを仕上げる"}</Link>;
  const back=previous ? <Link href={previous[0]} className={styles.ghost} prefetch={false}>{en?"← "+previous[2]:"← "+previous[1]+"へ戻る"}</Link>:null;
  if(wide) return <nav className={pc.flow} aria-label={en?"Continue through RESOLUTE":"次のツールへ"}>{back??<span />}<div className={pc.flowEnd}>{extra}{forward}</div></nav>;
- return <nav className={styles.flowNavigation} aria-label={en?"Continue through RESOLUTE":"次のツールへ"}>
- {forward}
+ return <NextBack label={en?"Continue through RESOLUTE":"次のツールへ"} next={forward} back={back} />;
+}
+/** The phone next/back pattern (owner, Nov 25 §A): the main gold button 「⑤ ◯◯へ進む →」 with a small 「← ③ ◯◯へ戻る」 under it.
+ * Pass the two links (or buttons) already made; give the forward one `styles.primary` and the back one `styles.ghost`. */
+export function NextBack({next,back,label}:{next:ReactNode;back?:ReactNode;label?:string}) {
+ return <nav className={styles.flowNavigation} aria-label={label}>
+ {next}
  {back}
  </nav>;
 }

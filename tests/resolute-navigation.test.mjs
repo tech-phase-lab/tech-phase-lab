@@ -69,8 +69,8 @@ test("every RESOLUTE page except the home has a prefetched way back to the home,
   assert.match(css, /\.home \{[^}]*min-height: 44px/);
   const shell = await read("../app/resolute/tool-shell.tsx");
   assert.match(shell, /\{home \? null : <HomeLink en=\{en\} \/>\}/);
-  // The brand still goes home too.
-  assert.match(shell, /<Link href="\/resolute" className=\{h\.brand\} prefetch>RESOLUTE<\/Link>/);
+  // The top bar (owner, Nov 25 §B) always offers one tap back to Tech Phase while the menu is closed.
+  assert.match(shell, /\{menuOpen \? null : <Link href=\{TECH_PHASE_HOME\} prefetch=\{false\} className=\{h\.tpBack\}/);
   // Settings is reached from the RESOLUTE menu, so it leads back as well.
   assert.match(await read("../app/resolute/settings/screen.tsx"), /<HomeLink en=\{viewLocale === "en"\} \/>/);
 });
