@@ -56,7 +56,8 @@ export function useTodayMember(enabled:boolean,withPrices:boolean):TodayMember|n
 
 /** The fixed plan's input from the day's Shock Gauge feed, the market gauge and the member's lines. */
 export function todayInput(feed:RiskFeed,snapshot:ThermometerSnapshot|undefined,member:TodayMember):TodayInput{
- const news=feed.articles.map(a=>{const r=a.market.reading,own=a.market.index==='sox'?r?.sox:r?.nas100,other=a.market.index==='sox'?r?.nas100:r?.sox;
+ // Single-company news is measured on its industry basket (TP半導体40 or TP大型株100), so that basket gives its direction.
+ const news=feed.articles.map(a=>{const r=a.market.reading,key=a.market.index==='company'?a.market.company?.basket??'nas100':a.market.index,own=key==='sox'?r?.sox:r?.nas100,other=key==='sox'?r?.nas100:r?.sox;
   return {stars:a.stars,changePercent:(own??other)?.changePercent??null};});
  const top=feed.articles.filter(a=>a.stars!==null).sort((a,b)=>(b.stars??0)-(a.stars??0))[0];
  const index=top?.market.index==='sox'?'sox':'nas100',reading=gaugeReading(snapshot,index);
