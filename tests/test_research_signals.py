@@ -1128,8 +1128,9 @@ class SignalTests(unittest.TestCase):
             plan = signals.x_api_request_plan(sources)
         # Oct 16: the lower-value routes were slowed (Hardik Shah 600 s, Nebius 300 s, Barchart 600 s,
         # TrendSpider 900 s) and the Trade The News results route sped up to 60 s, so the daily budget
-        # goes to earnings and results first.
-        self.assertEqual(plan["configuredMaxRequestsPerDay"], 4992)
+        # goes to earnings and results first. Nov 25 (owner): Hardik Shah's target changes arrived in
+        # ten-minute batches, so that route is back to 60 s (the daily limit is raised to match).
+        self.assertEqual(plan["configuredMaxRequestsPerDay"], 6288)
         self.assertTrue(plan["budgetCapped"])
         self.assertTrue(plan["pacingEnabled"])
         source = sources[0]
