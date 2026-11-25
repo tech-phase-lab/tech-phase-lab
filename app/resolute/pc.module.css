@@ -169,3 +169,52 @@
 .todoActions a { display: block; text-align: center; text-decoration: none; border-radius: 999px; padding: 12px 20px; font-size: 15px; font-weight: 700; }
 .todoActions a:first-child { background: linear-gradient(90deg, var(--gold2), #c9a04f); color: #2a1d06; }
 .todoActions a:last-child { border: 1px solid #ffffff26; color: var(--ink); font-weight: 400; }
+
+/* ── Phone (resolute-mobile-all-1125 06–09): the same screens in one column, inside the shared phone theme (.page.mobile). ── */
+@media (max-width: 1023.98px) {
+  .content { gap: 18px; }
+  .tabs { width: auto; }
+  .tabs button { min-height: 44px; padding: 10px; font-size: 15px; }
+  .pair, .pairDrop, .pairSurge, .columns, .noticePair { grid-template-columns: minmax(0, 1fr); gap: 18px; }
+  .panel { padding: 22px 18px; }
+  .percent { font-size: 52px; }
+  .holding input { max-width: none; }
+  .result { display: flex; flex-direction: column; gap: 14px; }
+  .big { font-size: 32px; }
+  .sum { justify-content: space-between; align-items: center; padding: 14px 16px; border: 1px solid #d8b36a55; border-radius: 14px; background: #d8b36a0a; color: var(--ink); }
+  .sum b { font-family: var(--rz-serif, serif); font-size: 22px; font-weight: 500; }
+  .gauge { min-height: 214px; padding: 6px 0 8px; }
+  .gaugeArea { min-height: 196px; }
+  .bars { --name: 52px; --value: 84px; }
+  .rules { padding: 20px 18px; border: 1px solid transparent; border-radius: 22px; background: var(--rz-panel-fill) padding-box, var(--rz-panel-edge) border-box; }
+  .sectionTitle::after { display: none; }
+  .ruleRow { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .ruleCard { padding: 12px 14px; }
+  .ruleCard dd { font-size: 19px; }
+  .ruleCard dd.ruleNote { display: none; }
+}
+
+/* Phone ③: the thin gold banner while this phone's notifications are off (resolute-mobile-all-1125 08). */
+.offBanner { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border: 1px solid #d8b36a8f; border-radius: 16px; background: linear-gradient(135deg, #2a2312, #16140f); }
+.offBanner p { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; font-size: 12px; line-height: 1.6; color: var(--sub); }
+.offBanner b { font-size: 14px; color: var(--gold2); }
+.offBanner button { flex: none; min-height: 40px; padding: 8px 16px; font-size: 13px; }
+/* Phone 「今日のお知らせ」: the two buttons side by side under 「今日やること」. */
+.todoRow { display: flex; gap: 10px; }
+.todoRow > a { flex: 1; min-width: 0; min-height: 46px; padding: 10px 12px; font-size: 14px; text-align: center; }
+@media (max-width: 1023.98px) {
+  .watchHead { display: none; }
+  .watchRow { grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) 24px; gap: 8px; }
+  .lineHead { padding: 0 12px; }
+  .lineRow { flex: none; min-height: 0; padding: 10px 12px; }
+  .lineRow > strong { font-size: 16px; }
+  .panelTitle { font-size: 21px; margin: -4px 0 4px; }
+  .tryIt { grid-template-columns: minmax(0, 1fr); gap: 12px; text-align: center; }
+  .tryLeft { align-items: center; }
+  .tryPercent { text-align: center; }
+  .tryRight { text-align: left; }
+  .todoTitle { font-size: 24px; }
+  .notices { margin: 0; }
+  .notice { padding: 16px 18px; }
+  .noticePrice { font-size: 28px; }
+}

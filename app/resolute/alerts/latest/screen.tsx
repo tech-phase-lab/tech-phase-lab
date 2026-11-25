@@ -10,6 +10,7 @@ import { useRemembered } from "../../features/use-remembered";
 import { useDesktop } from "../../use-desktop";
 import styles from "../../diagnosis.module.css";
 import pc from "../../pc.module.css";
+import SectionHeading from "../../section-heading";
 import s from "./latest.module.css";
 
 /** 「今日のお知らせ」(owner, Nov 17; wording Nov 25): the page a ③ phone notification opens. Heading, the sentence 「…の終値で、
@@ -51,19 +52,20 @@ export function LatestAlertContent({ locale, state, onRetry, context, wide = fal
       </section>
     </div>
   </div>;
-  return <div className={s.root}><div className={s.wrap}>
-    <div className={s.brand}>{v.eyebrow}</div>
-    <h1>{v.title}</h1>
-    <p className={s.date}>{v.lead}</p>
-    <ul className={s.cards}>{v.cards.map(card => <li key={card.symbol} className={s.card}>
-      <div className={s.cardHead}><b className={s.symbol}>{card.symbol}</b><span className={`${s.chip} ${card.rise ? s.rise : ""}`}>{card.chip}</span></div>
-      <p className={s.close}>{card.text}</p>
-      {card.rule ? <p className={s.rule}><small>{v.rulesLabel}</small>{card.rule}</p> : null}
+  // Phone (resolute-mobile-all-1125 09): 「今日やること」 first, then the cards (red for a drop line, green for the rise level).
+  return <div className={pc.content}>
+    <SectionHeading label="TODAY'S NOTICE" title={v.title} description={v.lead} />
+    <section className={`${styles.card} ${pc.panel} ${pc.todo}`}>
+      <p className={pc.todoLabel}>{v.todoLabel}</p><h2 className={pc.todoTitle}>{v.todo.title}</h2>
+      <p className={pc.todoText}>{v.todo.sentences.map(text => <span key={text}>{text}</span>)}</p>
+      <div className={pc.todoRow}><Link className={styles.primary} href="/resolute/notebook">{v.openBook} →</Link><Link className={styles.secondary} href="/resolute/tonight">{v.tonight}</Link></div>
+    </section>
+    <ul className={pc.notices}>{v.cards.map(card => <li key={card.symbol} className={`${pc.notice} ${card.rise ? pc.noticeRise : ""}`}>
+      <div className={pc.noticeHead}><b>{card.symbol}</b><span>{card.label}</span></div>
+      <p className={pc.noticePrice}>{card.price}</p><p className={pc.noticeChange}>{card.change}</p>
+      {card.rule ? <div className={pc.noticeRule}><small>{v.rulesLabel}</small><p>{card.rule}</p></div> : null}
     </li>)}</ul>
-    <div className={s.todo}><small>{v.todoLabel}</small><b>{v.todo.title}</b><p>{v.todo.sentences.join("")}</p></div>
-    <Link className={s.primary} href="/resolute/notebook">{v.openPlan}</Link>
-    <Link className={s.ghost} href="/resolute/tonight">{v.tonight}</Link>
-  </div></div>;
+  </div>;
 }
 function Latest({ locale, deny }: { locale: "ja" | "en"; deny: () => void }) {
   const [state, setState] = useState<State>({ status: "loading" });
