@@ -1,8 +1,12 @@
 import type { RiskIndex } from './risk.ts';
+import { namedCompanies, industryOf } from './risk-companies.ts';
 /** Shock Gauge story scope (owner, Nov 25): which index a story is measured on, decided from its headline by fixed rules.
  * market  → TP大型株100 (market-wide: indexes, rates, macro data, tariffs, broad tech moves)
  * semis   → TP半導体40 (the semiconductor / AI-chip sector as a whole, export controls)
- * company → no stars (one company's news; one stock's move says nothing about the market)
+ * company → one company's news: measured on that company's stock AND its industry basket (risk-companies.ts), and starred
+ *           only when both moved strongly (risk.ts companyQualifies). A headline that names one company is company news
+ *           even when it mentions export controls or chip exports (Nov 25: 「SK hynixを巡る調査」 had been read as the sector).
+ * The scope is a hint for which index to read and how to rank; the stars always come from measured moves.
  * Pure functions, plain regular expressions only: the same headline always gets the same scope. */
 export type StoryScope = 'market' | 'semis' | 'company';
 
@@ -22,9 +26,9 @@ export function headlineSubject(title: string): string {
 }
 
 /** Fixed rule, in this order. A headline whose subject moved ("X falls 5%") is about that subject: an index or "stocks" is market,
- * the chip sector is semis, a rate / yield / macro subject is market, and any other subject (a company) is company.
- * A headline without a move verb is market when it names an index or a macro driver first, semis when it names the chip sector,
- * otherwise company. */
+ * the chip sector is semis, a named company is company, a rate / yield / macro subject is market, and any other subject is
+ * company. A headline without a move verb is company when it names a company, else market when it names an index or a macro
+ * driver, semis when it names the chip sector, otherwise company. */
 // A company whose name ends in "Semiconductor" (Navitas Semiconductor, Taiwan Semiconductor) is one company, not the sector.
 const COMPANY_SEMICONDUCTOR = /\b(?!(?:Philadelphia|US|U\.S\.|Global|Asian|European|Japanese|Korean|Taiwanese|Chinese|The)\b)[A-Z][\w.&-]*(?: [A-Z][\w.&-]*)* Semiconductors?\b/g;
 export function storyScope(title: string): StoryScope {
@@ -33,9 +37,11 @@ export function storyScope(title: string): StoryScope {
   if (subject) {
     if (MARKET.test(subject)) return 'market';
     if (SEMIS.test(subject)) return 'semis';
+    if (namedCompanies(subject).length) return 'company';
     if (MACRO.test(subject)) return 'market';
     return 'company';
   }
+  if (namedCompanies(title).length) return 'company';
   if (MARKET.test(t)) return 'market';
   if (SEMIS.test(t)) return 'semis';
   if (MACRO.test(t)) return 'market';
@@ -47,6 +53,9 @@ export function scopeIndex(scope: StoryScope): RiskIndex | 'company' {
 
 // A cause in the headline: "as …", "after …", "amid …", "on <noun>", a colon or dash clause, a Japanese clause after 、.
 const CAUSE = /\b(?:as|after|amid|following|over|despite|because|due to|ahead of|while|since|post|on (?!(?:Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday|the day|heavy volume)\b)\w)\b|[:;—–]|\s-\s|、|を受け|受けて|ため|により|懸念/i;
+/** 1 when the headline names a cause ("as …", "after …", "amid …", a colon clause), else 0: a tie-break between stories on the
+ * same move (the one that says why it moved explains it better). */
+export function headlineCause(title: string): number { return CAUSE.test(typeof title === 'string' ? title.normalize('NFKC') : '') ? 1 : 0; }
 const MOVE_SIZE = /\d+(?:\.\d+)?\s*%|\bpre-?market\b|\bafter-?hours\b|\bpremarket\b|プレマーケット|時間外|寄り付き前/i;
 /** "Nvidia falls 5.6% in premarket" (owner, Nov 25: 「NVDA3つもいらん」): a price move with a size or a premarket / after-hours
  * label and no cause. Such a recap says only that a price moved, and is never shown. */
@@ -55,6 +64,17 @@ export function isBarePriceMove(title: string): boolean {
   return MOVE.test(t) && MOVE_SIZE.test(t) && !CAUSE.test(t);
 }
 
+/** The measurable company of a single-company story (owner, Nov 25), or null when it is not one the thermometer prices:
+ * 1. a rostered company named in the headline's subject ("Nvidia shares slide …");
+ * 2. else the source's primary ticker (its first), when rostered ("Cipher Digital … as Nvidia selloff …" is CIFR: not measured);
+ * 3. else, without tickers, the first rostered company the headline names (「SKハイニックスを巡る調査」 → SKHY). */
+export function storyTicker(story: { title: string; tickers?: readonly string[] }): string | null {
+  const title = typeof story.title === 'string' ? story.title.normalize('NFKC') : '';
+  const inSubject = namedCompanies(headlineSubject(title))[0];
+  if (inSubject) return inSubject;
+  if (story.tickers?.length) return industryOf(story.tickers[0]) ? story.tickers[0] : null;
+  return namedCompanies(title)[0] ?? null;
+}
 /** The company a single-company story is about: its first listed ticker, else the headline subject's first word. */
 export function companyKey(story: { title: string; tickers?: readonly string[] }): string {
   if (story.tickers?.length) return story.tickers[0];
