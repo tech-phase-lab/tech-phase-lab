@@ -1,18 +1,31 @@
 import {inspectCandidateFeed,generate,isInDailyWindow,windowHours,FEED_CHECKS as INSPECT_CHECKS,reactArticles,fillMarketReactions} from './risk-job.mjs';
 import {REPORT_CHECKS} from './rizel-report-source.mjs';
 const FEED_CHECKS=[...INSPECT_CHECKS,...REPORT_CHECKS];
-import {riskDate,parseRiskArticle,parseRiskMarket,parseRiskCause,causeStars,isDailyRunHour,dailyRunStart,marketStars,readingStars} from '../../lib/resolute/risk.ts';
-import {applyMarketReaction} from '../../lib/resolute/risk-market.ts';
+import {riskDate,parseRiskArticle,parseRiskMarket,parseRiskCause,causeStars,isDailyRunHour,dailyRunStart,marketStars,starsFromShock,directionMismatch} from '../../lib/resolute/risk.ts';
+import {applyMarketReaction,candidateMarket,storySession,newsInstant} from '../../lib/resolute/risk-market.ts';
 import {RISK_POLICY} from '../../lib/resolute/risk-policy.ts';
-import {storyIndex,firstCloseAfter,newsInstant} from '../../lib/resolute/risk-market.ts';
-import {storyScope,isBarePriceMove,companyKey,titleSimilarity,NEAR_DUPLICATE} from '../../lib/resolute/risk-scope.ts';
+import {storyScope,isBarePriceMove,headlineCause,companyKey,storyTicker,titleSimilarity,NEAR_DUPLICATE} from '../../lib/resolute/risk-scope.ts';
 import {selectArticleForReview} from './rizel-worker.mjs';
 
-/** The first U.S. close after a candidate and its related TP index (the same rule that later fills the stars).
- * Single-company news has no index and no session: it never gets stars. */
-export function candidateSession(c){const index=storyIndex(c.title);return {session:index==='company'?null:firstCloseAfter(newsInstant(c.publishedAt)),index};}
-/** True when that close's shock is already measured in the thermometer snapshots, so the story gets its stars in this run. */
-export function hasKnownMove(c,moves){const {session,index}=candidateSession(c);const m=session?moves?.[session]?.[index]:null;return !!m&&typeof m.changePercent==='number'&&Number.isFinite(m.changePercent)&&m.typicalPercent>0;}
+/** The session a candidate is measured on (risk-market.ts storySession: the move AFTER publication) and its index: the same
+ * rule that later fills the stars. Single-company news is measured on its rostered company and industry basket (`basket`);
+ * without a rostered ticker it has no session and never gets stars. */
+export function candidateSession(c){const m=candidateMarket({...c,starred:true});return {session:m.session,index:m.index,basket:m.company?.basket??null,ticker:m.company?.ticker??null};}
+/** True when that session's shock is already measured in the thermometer snapshots, so the story gets its stars in this run. */
+export function hasKnownMove(c,moves){const {session,index,basket}=candidateSession(c);const m=session?moves?.[session]?.[index==='company'?basket:index]:null;return !!m&&typeof m.changePercent==='number'&&Number.isFinite(m.changePercent)&&m.typicalPercent>0;}
+/** How well a candidate explains its session's move (owner, Nov 25), from measured moves only: market-wide news by
+ * TP大型株100's stars, chip-sector news by TP半導体40's, single-company news by its industry basket's stars when it passes the
+ * two-move test (else 0). 0 while the session is not measured. */
+const measuredMarket=(c,moves)=>{try{return applyMarketReaction({publishedAt:c.publishedAt,market:candidateMarket({...c,starred:true}),stars:null,cause:null},moves).market;}catch{return null;}};
+/** True when the candidate's session is measured and moved against its headline's direction (owner, Nov 25: no stars). */
+export function movedAgainst(c,moves){const m=moves?measuredMarket(c,moves):null;return !!m&&directionMismatch(m);}
+export function explainsMove(c,moves){
+ if(!moves)return 0;
+ const market=measuredMarket(c,moves);if(!market||directionMismatch(market))return 0;
+ const r=market.reading;if(!r)return 0;
+ if(market.index==='company')return marketStars(market)??0;
+ const x=r[market.index];return x?starsFromShock({...x,fearChange:r.fearChange}):0;
+}
 /** Stories a day and model attempts a day: RISK_POLICY defaults, lowered or raised (within the policy's hard caps) by
  * RESOLUTE_RIZEL_DAILY_STORIES and RESOLUTE_RIZEL_DAILY_ATTEMPTS. Anything malformed falls back to the default. */
 export function dailyLimits(env=process.env){
@@ -28,7 +41,7 @@ const isOpinion=title=>OPINION.test(title)||/\?\s*$/.test(title);
 /** Ranking hint (Nov 24): how likely a story is the day's market-moving downside news. Never a reason to publish. */
 export function candidateScore(c){
  let score=0;
- if(c.headlineDownside)score+=2;
+ if(c.headlineDownside||c.headlineUpside)score+=2;
  if(c.providerNegative)score+=2;
  if(PRICE_MOVE.test(c.title))score-=1;
  if(c.source==='official'||c.rostered||c.tickers?.length)score+=1;
@@ -38,20 +51,49 @@ export function candidateScore(c){
 }
 /** Scope order (owner, Nov 25): market-wide news first, then the chip sector, and single-company news only to fill what is left. */
 const SCOPE_ORDER={market:0,semis:1,company:2};
-/** What one story occupies: its index and U.S. close (at most RISK_POLICY.perIndexSession stories show the same move), or, for
- * single-company news, that company (at most one story per company a day). */
-export function slotKey(c){const {session,index}=candidateSession(c);return index==='company'?`company:${companyKey(c)}`:`${index}:${session??'unknown'}`;}
-/** True when `c` would repeat a story already taken: the same slot (index and close, or company), or a near-duplicate headline. */
+/** The session a story would take its stars from: every measured market / chip-sector story, and single-company news with a
+ * rostered ticker unless the selection marked it `starred: false` (its session is better explained by another story). */
+export function claimedSession(c){const {session,index}=candidateSession(c);return session&&(index!=='company'||c.starred!==false)?session:null;}
+const companyOf=c=>storyTicker(c)??companyKey(c);
+/** True when `c` would repeat a story already taken (owner, Nov 25: one move, one story): the same session as a story taken with
+ * stars (at most RISK_POLICY.perSession), the same company, or a near-duplicate headline. */
 export function repeatsTaken(c,taken){
- const key=slotKey(c),same=taken.filter(t=>slotKey(t)===key).length;
- return (key.startsWith('company:')?same>=1:same>=RISK_POLICY.perIndexSession)||taken.some(t=>titleSimilarity(t.title,c.title)>=NEAR_DUPLICATE);
+ const session=claimedSession(c);
+ if(session&&taken.filter(t=>claimedSession(t)===session).length>=RISK_POLICY.perSession)return true;
+ if(storyScope(c.title)==='company'){const k=companyOf(c);if(taken.some(t=>storyScope(t.title)==='company'&&companyOf(t)===k))return true;}
+ return taken.some(t=>titleSimilarity(t.title,c.title)>=NEAR_DUPLICATE);
+}
+/** One move, one story (owner, Nov 25): of the candidates measured on the same session, one keeps the session.
+ * Market-wide news first (owner, Nov 24 and again Nov 25: "where are the market-wide ones?"): a market-wide story holds a
+ * measured session whenever the market actually moved after it (TP大型株100 at least the ★2 line, MARKET_MOVED), and an
+ * unmeasured session by the ranking (market-wide, chip sector, company). Otherwise the best explainer: the highest
+ * explainsMove (chip-sector news by TP半導体40, single-company news only when it passes the two-move test), then a headline
+ * that names a cause ("as", "after", "amid" …) over a bare one, then the ranking. Opinion pieces only when nothing else is on
+ * the session. Returns the holder of each session. The model's cause reading still moves the holder's stars by one. */
+/** TP大型株100's stars after a market-wide story at or above which "the market actually moved" (the ★2 line: ≥1.5× usual). */
+export const MARKET_MOVED=2;
+export function sessionHolders(ranked,moves){
+ const groups=new Map();
+ for(const c of ranked){const s=claimedSession({...c,starred:true});if(s){if(!groups.has(s))groups.set(s,[]);groups.get(s).push(c);}}
+ const holders=new Map();
+ for(const [s,all] of groups){
+  // A story whose measured session moved against its headline never holds it (owner, Nov 25).
+  const group=all.filter(c=>!movedAgainst(c,moves));if(!group.length)continue;
+  const fit=new Map(group.map(c=>[c,explainsMove(c,moves)]));
+  const marketFirst=c=>storyScope(c.title)==='market'&&fit.get(c)>=MARKET_MOVED?1:0;
+  // Opinion / ranking pieces hold a session only when nothing else is on it (the model withholds them).
+  holders.set(s,[...group].sort((a,b)=>(isOpinion(a.title)-isOpinion(b.title))||(marketFirst(b)-marketFirst(a))||(fit.get(b)-fit.get(a))||(headlineCause(b.title)-headlineCause(a.title))||(ranked.indexOf(a)-ranked.indexOf(b)))[0]);
+ }
+ return holders;
 }
 /** Pure intake shared by the paid worker and read-only diagnostics.
  * Every in-window story gets a scope from its headline (lib/resolute/risk-scope.ts). Bare price-move recaps about one company
- * ("Nvidia falls 5.6% in premarket", no cause) are dropped. The rest are ranked: scope (market, semis, company), then stories whose
- * U.S. close is already known (with `moves`), then candidateScore, then the newest. `selected` takes up to `limits.stories` of them
- * in that order, skipping any that repeats one already taken (repeatsTaken); `reserve` keeps the others in order, tried only when
- * a selected one fails the checks (the worker re-applies repeatsTaken and stops at `limits.attempts` model calls). */
+ * ("Nvidia falls 5.6% in premarket", no cause) are dropped. The rest are ranked: scope (market, semis, company), the holder of
+ * its session first (sessionHolders: one move, one story), then stories whose session is already measured (with `moves`), then
+ * candidateScore, then the newest. A market-wide or chip-sector story whose session another story holds waits in reserve; a
+ * single-company story in that case may still be shown, without stars (`starred: false`). `selected` takes up to
+ * `limits.stories` in that order, skipping any that repeats one already taken (repeatsTaken); `reserve` keeps the others in
+ * order, tried only when a selected one fails the checks (the worker re-applies repeatsTaken and stops at `limits.attempts`). */
 export function selectDailyCandidates(feed,now=new Date(),{moves=null,limits=dailyLimits()}={}){
  if(!(now instanceof Date)||!Number.isFinite(now.getTime()))throw Error('INVALID_CLOCK');
  const intake=inspectCandidateFeed(feed,now,{allowDateOnly:true});
@@ -71,11 +113,22 @@ export function selectDailyCandidates(feed,now=new Date(),{moves=null,limits=dai
  const known=new Set(moves?ranked.filter(c=>hasKnownMove(c,moves)):[]);if(moves)diagnostics.knownMove=known.size;
  // Opinion / ranking pieces go behind every scope (they are withheld by the model, so they must not take a market-wide slot).
  const scores=new Map(ranked.map(c=>[c,candidateScore(c)])),order=new Map(ranked.map(c=>[c,isOpinion(c.title)?3:SCOPE_ORDER[storyScope(c.title)]]));
- ranked.sort((a,b)=>(order.get(a)-order.get(b))||(known.has(b)-known.has(a))||(scores.get(b)-scores.get(a))||b.publishedAt.localeCompare(a.publishedAt));
+ const byRank=(a,b)=>(order.get(a)-order.get(b))||(known.has(b)-known.has(a))||(scores.get(b)-scores.get(a))||b.publishedAt.localeCompare(a.publishedAt);
+ ranked.sort(byRank);
+ // One move, one story: each session's best explainer holds it. Other single-company stories on it lose their stars (they may
+ // still fill a slot as plain company news); other market-wide and chip-sector stories on it wait in reserve.
+ const holders=sessionHolders(ranked,moves),held=new Set([...holders.values()].map(c=>c.id)),rankOf=new Map(ranked.map((c,i)=>[c.id,i])),orderOf=new Map(ranked.map(c=>[c.id,order.get(c)]));
+ // Scope order first, then each session's holder, then the ranking.
+ const pool=ranked.map(c=>claimedSession({...c,starred:true})&&storyScope(c.title)==='company'?{...c,starred:held.has(c.id)}:c)
+  .sort((a,b)=>(orderOf.get(a.id)-orderOf.get(b.id))||(held.has(b.id)-held.has(a.id))||(rankOf.get(a.id)-rankOf.get(b.id)));
+ diagnostics.sessionsHeld=holders.size;
  const selected=[],reserve=[];
- for(const c of ranked){
-  if(selected.length<limits.stories&&!repeatsTaken(c,selected))selected.push(c);
-  else{if(repeatsTaken(c,selected))diagnostics.repeated++;if(reserve.length<RESERVE_MAX)reserve.push(c);}
+ for(const c of pool){
+  // Owner, Nov 25: a story whose measured session moved against its headline is never shown: no slot, not even in reserve.
+  if(movedAgainst(c,moves)){diagnostics.movedAgainst=(diagnostics.movedAgainst??0)+1;continue;}
+  const lostSession=!!claimedSession({...c,starred:true})&&storyScope(c.title)!=='company'&&!held.has(c.id);
+  if(selected.length<limits.stories&&!lostSession&&!repeatsTaken(c,selected))selected.push(c);
+  else{if(lostSession||repeatsTaken(c,selected))diagnostics.repeated++;if(reserve.length<RESERVE_MAX)reserve.push(c);}
  }
  diagnostics.overDailyLimit=Math.max(0,ranked.length-selected.length);
  // A quiet day may be claimed only when every configured lane was actually read.
@@ -136,6 +189,8 @@ export async function prepareDailyReview({enabled=false,readFeed,selectionPool,b
    if(parsed.id!==candidate.id||parsed.url!==candidate.url||parsed.publishedAt!==candidate.publishedAt)throw Error('ARTICLE_MISMATCH');
    // Shock Gauge: stars only from the related TP index's move at the first U.S. close after the news (may still be waiting).
    const [article]=(await reactArticles([parsed],readMoves,quotes,day)).map(parseRiskArticle);
+   // Moved against its headline (owner, Nov 25): not shown; the next story fills the slot.
+   if(directionMismatch(article.market)){kept.pop();refill();continue;}
    // A story still waiting for the market has no stars yet, so no RIZEL line is chosen for it now.
    if(article.stars===null){articles.push(article);continue;}
    // Model classification is not verified evidence for D's factual conditions.
@@ -161,7 +216,7 @@ export async function prepareDailyReview({enabled=false,readFeed,selectionPool,b
   await selectionPool.query("UPDATE public.resolute_rizel_daily_runs SET state='ready',finished_at=$2 WHERE day=$1",[day,new Date().toISOString()]);
   const saved=(await selectionPool.query('SELECT state,candidate_count,selection_refs,publication FROM public.resolute_rizel_daily_runs WHERE day=$1',[day])).rows[0];
   if(saved?.state!=='ready'||saved.candidate_count!==selected.length||saved.publication!=='withheld'||!Array.isArray(saved.selection_refs)||saved.selection_refs.length!==refs.length||refs.some((ref,i)=>saved.selection_refs[i]?.articleId!==ref.articleId||saved.selection_refs[i]?.articleRevision!==ref.articleRevision))throw Error('READBACK_MISMATCH');
-  return {state:articles.length?'ready':noneQualified?'none-today':'no-candidates',day,count:articles.length,rizelSelections:refs.length,waitingForMarket:articles.filter(a=>a.stars===null&&a.market.index!=='company').length,companyNews:articles.filter(a=>a.market.index==='company').length,publication:'withheld',storageVerified:true,diagnostics};
+  return {state:articles.length?'ready':noneQualified?'none-today':'no-candidates',day,count:articles.length,rizelSelections:refs.length,waitingForMarket:articles.filter(a=>a.stars===null&&!a.market.reading&&!!a.market.session).length,companyNews:articles.filter(a=>a.market.index==='company').length,publication:'withheld',storageVerified:true,diagnostics};
  }catch(cause){
   await selectionPool.query("UPDATE public.resolute_rizel_daily_runs SET state='failed',finished_at=$2 WHERE day=$1",[day,now.toISOString()]);
   // A real failure is recorded so the app can say "couldn't update" (never "quiet day").
@@ -218,16 +273,20 @@ export async function saveRiskDay(pool,day,articles,now=new Date()){
 }
 
 /** True when a stored day breaks the current rules (Nov 25): a stored star that the published thresholds no longer give, a story
- * measured on the wrong scope's index is not detectable from the copy, so this checks stars and repeats: two stories on the same
- * index and close, or two on the same company. A day saved by the current rules never matches, so the one-off runs once. */
+ * measured on a session other than the one after its publication (storySession: the move before the news never counts), or two
+ * stories taking stars from the same session. A story measured on the wrong scope's index is not detectable from the copy.
+ * A day saved by the current rules never matches, so the one-off runs once. */
 export function breaksCurrentRules(articles){
  if(!Array.isArray(articles)||!articles.length)return false;
  const slots=new Set();
  for(const a of articles){
   const m=a?.market;if(!m||typeof m!=='object')return false;
-  let expected=null;try{expected=causeStars(marketStars(parseRiskMarket(m)),parseRiskCause(a.cause));}catch{return true;}
+  let expected=null,market;try{market=parseRiskMarket(m);expected=causeStars(marketStars(market),parseRiskCause(a.cause));}catch{return true;}
   if(a.stars!==expected)return true;
-  if(m.index!=='company'){const key=`${m.index}:${m.session}`;if(slots.has(key))return true;slots.add(key);}
+  if(market.session&&(market.index!=='company'||market.company)){
+   if(market.session!==storySession(newsInstant(a.publishedAt)))return true;
+   if(slots.has(market.session))return true;slots.add(market.session);
+  }
  }
  return false;
 }
@@ -250,8 +309,9 @@ export async function reselectStoredDay({env=process.env,realNow=new Date(),publ
  * close and the stars that close gives. No model call, no writes. Headlines only (public text), never bodies or URLs. */
 export function previewSelection(intake,moves){
  // marketStars: before the model's cause step (no model call here), so the published star can differ by one.
- const show=c=>{const {session,index}=candidateSession(c);
-  let reading=null;try{if(index!=='company'&&session)reading=applyMarketReaction({publishedAt:c.publishedAt,market:{index,session,reading:null},stars:null},moves??{}).market.reading;}catch{reading=null;}
-  return {title:c.title,scope:storyScope(c.title),index,session,reading,marketStars:readingStars(reading)};};
+ const show=c=>{let market=candidateMarket(c);
+  try{market=applyMarketReaction({publishedAt:c.publishedAt,market,stars:null,cause:null},moves??{}).market;}catch{/* stays waiting */}
+  return {title:c.title,publishedAt:c.publishedAt,scope:storyScope(c.title),index:market.index,...(market.company?{company:market.company.ticker,basket:market.company.basket}:{}),
+   ...(c.starred===false?{starred:false}:{}),session:market.session,reading:market.reading,marketStars:marketStars(market)};};
  return {selected:intake.selected.map(show),next:intake.reserve.slice(0,6).map(show),diagnostics:intake.diagnostics};
 }
