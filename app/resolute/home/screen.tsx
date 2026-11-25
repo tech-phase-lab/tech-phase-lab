@@ -15,6 +15,7 @@ import { useThermometerSnapshot } from '../use-thermometer-snapshot';
 import type { ThermometerSnapshot } from '@/lib/resolute/thermometer-view';
 import type { NotificationSnapshot } from '@/lib/resolute/notification-settings';
 import { useRemembered } from '../features/use-remembered';
+import { renewalHref } from '@/lib/resolute/renewal-link';
 type Snapshot=ReturnType<typeof validateSnapshot>;
 const colors=['','#7fb6e0','#e0c070','#f0a24a','#ee7a3c','#ff4d55'];
 export default function HomeScreen({identityReady=true,snapshot}:{identityReady?:boolean;snapshot?:ThermometerSnapshot}) {
@@ -58,7 +59,7 @@ export function Home({locale,entitlement,thermometerSnapshot}:{thermometerSnapsh
   <div className={s.date}>{date??'—'}</div>
   <section className={s.sec}><div className={s.lab}>TODAY</div>
    <div className={`${s.card} ${high&&!locked?s.high:''}`}><div className={s.row}><h2 style={{flex:1,minWidth:0}}><ShockGaugeTitle locale={locale} compact/></h2>{!locked&&available&&feed.articles.length>0?<Link className={s.more} href="/resolute/news">{en?'Details →':'詳細 →'}</Link>:null}</div>
-    {locked?<div className={s.lock}><p>🔒 {en?'The Shock Gauge is included while your alerts access is active.':'衝撃度チェッカーは、アラートの利用期間中に見られます。'}</p><p className={s.sub}>{en?'Renew for another year of the daily Shock Gauge.':'更新すると、また毎朝の衝撃度チェッカーを確認できます。'}</p><button className={s.primary} disabled>{en?'Renew for one year':'1年分を更新する'}{displayOffer?`　${en?'$'+displayOffer.en:displayOffer.ja.toLocaleString('ja-JP')+'円'}`:''}</button><p className={s.sub}>{en?'Renewal checkout is not open yet.':'更新の受付は準備中です。'}</p></div>:<>
+    {locked?<div className={s.lock}><p>🔒 {en?'The Shock Gauge is included while your alerts access is active.':'衝撃度チェッカーは、アラートの利用期間中に見られます。'}</p><p className={s.sub}>{en?'Renew for another year of the daily Shock Gauge.':'更新すると、また毎朝の衝撃度チェッカーを確認できます。'}</p><Link className={s.primary} href={renewalHref(locale)}>{en?'Renew for one year':'1年分を更新する'}{displayOffer?`　${en?'$'+displayOffer.en:displayOffer.ja.toLocaleString('ja-JP')+'円'}`:''}</Link></div>:<>
      {available&&feed.articles.length>0?<><ul className={s.news}>{feed.articles.slice(0,2).map(a=><li key={a.id} style={a.stars?{'--c':colors[a.stars]} as CSSProperties:undefined}><span className={s.headline}>{displaySample?(RISK_PREVIEW_DETAILS[a.id]?.[en?'homeEn':'homeJa']??a[locale].title):a[locale].title}</span><ShockStars article={a} locale={locale}/></li>)}</ul>{rule?.kind==='quiet'?<div className={s.today}>{en?'What to do today: ':'今日やること: '}{en?'Nothing for now':'なし'}</div>
      :rule?.kind==='rules'?<div className={`${s.today} ${rule.prominent?`${s.warn} ${s.ruleBox}`:''}`}><b>{en?'Your rules':'あなたのルール'}</b>{rule.lines.map(l=><p key={l}>{l}</p>)}{rule.prominent?<Link href="/resolute/notebook">{en?'Open your rulebook →':'一冊を開く →'}</Link>:null}</div>
      :rule?.kind==='missing'?<div className={`${s.today} ${rule.prominent?`${s.warn} ${s.ruleBox}`:''}`}>{en?'You haven’t set a rule for a day like this yet. ':'この日のためのルールがまだありません。'}<Link href="/resolute/diagnosis">{en?'Set your rules →':'ルールを決める →'}</Link></div>

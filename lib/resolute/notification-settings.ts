@@ -9,7 +9,8 @@ export type NotificationSettings = {
  watchItems: { symbol: string; referencePrice: number; priceDay?: string }[];
  surgeCapPct: number | null;
 };
-export type NotificationSnapshot = { settings: NotificationSettings; revision: number };
+/** `delivery: true` only when resolute-api reports that notifications are really being sent (notification-delivery-state.ts). */
+export type NotificationSnapshot = { settings: NotificationSettings; revision: number; delivery?: true };
 export const defaultNotificationSettings = (): NotificationSettings => ({
  deliveryHourJst: 7, alertsEnabled: false, morningEnabled: false, watchItems: [], surgeCapPct: null,
 });
@@ -50,7 +51,9 @@ export function parseNotificationMutation(value: unknown) {
  return {settings:parseNotificationSettings(v.settings),baseRevision:v.baseRevision as number};
 }
 export function parseNotificationSnapshot(value: unknown): NotificationSnapshot {
- const v=object(value,["settings","revision"]);
+ const live=!!value&&typeof value==="object"&&Object.hasOwn(value,"delivery");
+ if(live&&(value as {delivery:unknown}).delivery!==true) throw new NotificationInputError();
+ const v=object(value,live?["settings","revision","delivery"]:["settings","revision"]);
  if(!Number.isSafeInteger(v.revision) || (v.revision as number)<0) throw new NotificationInputError();
- return {settings:parseNotificationSettings(v.settings),revision:v.revision as number};
+ return {settings:parseNotificationSettings(v.settings),revision:v.revision as number,...(live?{delivery:true as const}:{})};
 }
