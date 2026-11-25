@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {PGlite} from '@electric-sql/pglite';
-import {starsFromMove,riskAction,parseRiskFeed,latestRiskDate,formatMove,SUMMARY_QUESTION} from '../lib/resolute/risk.ts';
+import {starsFromMove,riskAction,parseRiskFeed,latestRiskDate,formatMove,SUMMARY_QUESTION,starCriteria,noStarsLabel} from '../lib/resolute/risk.ts';
 import {candidatesFromFeed,validateGeneration,collect,publish,isInDailyWindow} from '../services/resolute-api/risk-job.mjs';
 import {saveRiskDay} from '../services/resolute-api/rizel-daily-review.mjs';
 import {RISK_POLICY} from '../lib/resolute/risk-policy.ts';
@@ -13,20 +13,33 @@ const body='NVIDIA warned that export restrictions across the semiconductor sect
 const candidate={id:hash('https://investor.nvidia.com/test'),title:'NVIDIA warns of export restrictions',body,url:'https://investor.nvidia.com/test',publishedAt:'2026-10-12T20:00:00Z',source:'official'};
 const generated={publishable:true,ja:{title:'NVIDIAが輸出規制について警告',source:'NVIDIAの公式発表',content:'NVIDIAが、半導体業界への輸出規制が計画段階にあると発表しました。',date:'2026年10月12日の発表'},en:{title:'NVIDIA warns of export restrictions',source:'NVIDIA announcement',content:'NVIDIA said export restrictions across the semiconductor sector are planned, not completed.',date:'Announced on October 12, 2026'}};
 const article=validateGeneration(generated,candidate);
-test('Shock Gauge stars are mechanical: |TP index move| <1 ★1, 1–2 ★2, 2–3 ★3, 3–5 ★4, ≥5 ★5; high stars mean "reread your rules", never a trade',()=>{
- for(const [move,stars] of [[0,1],[0.94,1],[-0.95,2],[1,2],[-1.94,2],[2,3],[2.94,3],[-3,4],[-3.2,4],[4.94,4],[4.96,5],[5,5],[-12.3,5]])assert.equal(starsFromMove(move),stars,String(move));
+test('Shock Gauge stars are mechanical, per index: TP大型株100 <1 ★1, 1 ★2, 2 ★3, 3 ★4, 5 ★5; TP半導体40 <2 ★1, 2 ★2, 4 ★3, 6 ★4, 10 ★5',()=>{
+ for(const [move,stars] of [[0,1],[0.94,1],[-0.95,2],[1,2],[-1.94,2],[2,3],[2.94,3],[-3,4],[-3.2,4],[4.94,4],[4.96,5],[5,5],[-5.4,5],[-12.3,5]])assert.equal(starsFromMove(move,'nas100'),stars,'nas100 '+move);
+ // Owner anchors (Nov 25): a −7% semiconductor day is ★4; today's −8.5% is ★4, not ★5; ★5 needs a historic move.
+ for(const [move,stars] of [[0,1],[-1.94,1],[-1.95,2],[-3.9,2],[4,3],[-5.94,3],[-6,4],[-7,4],[-8.5,4],[-9.94,4],[-9.96,5],[-12.1,5]])assert.equal(starsFromMove(move,'sox'),stars,'sox '+move);
+ assert.throws(()=>starsFromMove(-3,'company'));
  assert.equal(riskAction(4),'review');assert.equal(riskAction(3),'none');assert.equal(riskAction(null),'none');assert.throws(()=>riskAction(0));
- assert.deepEqual(RISK_POLICY.stars.thresholds,[1,2,3,5]);assert.equal(RISK_POLICY.reviewMinStars,4);
+ assert.deepEqual(RISK_POLICY.stars.thresholds,{nas100:[1,2,3,5],sox:[2,4,6,10]});assert.equal(RISK_POLICY.reviewMinStars,4);
+});
+test('the published criteria text is generated from the thresholds, in both languages',()=>{
+ assert.equal(starCriteria('ja'),'★の基準：市場全体のニュースはTP大型株100、半導体のニュースはTP半導体40で測り、ニュースのあと最初の米国市場の終値が前日の終値から何%動いたか（上げ下げを問わず、小数第1位まで）で決めます。TP大型株100：1%未満★1、1%以上★2、2%以上★3、3%以上★4、5%以上★5。TP半導体40：2%未満★1、2%以上★2、4%以上★3、6%以上★4、10%以上★5。1社だけのニュースには★をつけません。');
+ assert.equal(starCriteria('en'),'How stars are set: market-wide news is measured on TP Large Cap 100 and semiconductor news on TP Semiconductor 40, by how far the index closed from the previous close at the first U.S. close after the news (up or down, to one decimal place). TP Large Cap 100: under 1% ★1, 1% or more ★2, 2% or more ★3, 3% or more ★4, 5% or more ★5. TP Semiconductor 40: under 2% ★1, 2% or more ★2, 4% or more ★3, 6% or more ★4, 10% or more ★5. News about a single company gets no stars.');
+ // Shown on the Shock Gauge page under the note.
+ assert.match(readFileSync(new URL('../app/resolute/news/screen.tsx',import.meta.url),'utf8'),/starCriteria\(en\?'en':'ja'\)/);
 });
 test('a new story waits for the market: no stars, its index and the first U.S. close after the news are recorded',()=>{
  // 2026-10-12T20:00Z is 16:00 New York time: exactly at the close, so it belongs to the next close.
  assert.equal(article.stars,null);assert.deepEqual(article.market,{index:'sox',session:'2026-10-13',changePercent:null});
  assert.equal(formatMove(article.market,'ja'),null);
- // Stars and move must agree: a stored story cannot carry stars without a move, or the wrong stars for its move.
- assert.throws(()=>parseRiskFeed({state:'ready',date:'2026-10-13',articles:[{...article,stars:5}],quotes:[]}));
- assert.throws(()=>parseRiskFeed({state:'ready',date:'2026-10-13',articles:[{...article,market:{...article.market,changePercent:-3.2},stars:2}],quotes:[]}));
- const filled={...article,market:{...article.market,changePercent:-3.2},stars:4};
- assert.equal(parseRiskFeed({state:'ready',date:'2026-10-13',articles:[filled],quotes:[]}).articles[0].stars,4);
+ // Stars always follow the current published rule for the stored move: none without a move, and a stored day saved under
+ // older thresholds shows the stars the current criteria give (its RIZEL line, chosen for other stars, is dropped).
+ assert.equal(parseRiskFeed({state:'ready',date:'2026-10-13',articles:[{...article,stars:5}],quotes:[]}).articles[0].stars,null);
+ const old={...article,market:{...article.market,changePercent:-8.5},stars:5,quoteId:'calm'};
+ assert.deepEqual((({stars,quoteId})=>({stars,quoteId}))(parseRiskFeed({state:'ready',date:'2026-10-13',articles:[old],quotes:[]}).articles[0]),{stars:4,quoteId:null});
+ assert.throws(()=>parseRiskFeed({state:'ready',date:'2026-10-13',articles:[{...article,stars:7}],quotes:[]}));
+ const filled={...article,market:{...article.market,changePercent:-3.2},stars:2,quoteId:'calm'};
+ assert.deepEqual((({stars,quoteId})=>({stars,quoteId}))(parseRiskFeed({state:'ready',date:'2026-10-13',articles:[filled],quotes:[]}).articles[0]),{stars:2,quoteId:'calm'});
+ assert.equal(noStarsLabel(article,'ja'),'市場の反応待ち');
  assert.equal(formatMove(filled.market,'ja'),'TP半導体40 −3.2%');assert.equal(formatMove(filled.market,'en'),'TP Semiconductor 40 −3.2%');
  assert.equal(formatMove({index:'nas100',session:'2026-10-13',changePercent:0.4},'en'),'TP Large Cap 100 +0.4%');
  // Legacy rubric fields are gone.

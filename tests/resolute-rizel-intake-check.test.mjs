@@ -8,8 +8,10 @@ test('read-only diagnostic shares daily age, deduplication and limit rules witho
  let reads=0;
  const items=[article,{...article,url:article.url+'/duplicate'},...Array.from({length:4},(_,i)=>({...article,title:article.title+' '+i,url:article.url+'/'+i})),{...article,title:article.title+' old',url:article.url+'/old',publishedAt:'2026-10-14T00:00:00Z'}];
  const report=await checkIntake({now,readFeed:async()=>{reads++;return {ok:true,enabled:true,items};}});
- assert.equal(reads,1);assert.equal(report.candidateCount,3);assert.equal(report.state,'candidates-available');
- assert.equal(report.diagnostics.duplicateHeadline,1);assert.equal(report.diagnostics.outsideDailyWindow,1);assert.equal(report.diagnostics.overDailyLimit,2);
+ assert.equal(reads,1);assert.equal(report.state,'candidates-available');
+ // Nov 25: the five in-window stories are one story told five times (same chip-sector move, near-identical headlines): shown once.
+ assert.equal(report.candidateCount,1);assert.equal(report.diagnostics.repeated,4);
+ assert.equal(report.diagnostics.duplicateHeadline,1);assert.equal(report.diagnostics.outsideDailyWindow,1);assert.equal(report.diagnostics.overDailyLimit,4);
  assert.equal(report.aiCalls,0);assert.equal(report.writes,0);assert.equal(report.historicalReplay,false);
  for(const privateText of [article.title,article.bodyEn,article.url])assert.equal(JSON.stringify(report).includes(privateText),false);
  const empty=await checkIntake({now,readFeed:async()=>({ok:true,enabled:false,items:[article],officialUpdates:[]})});
@@ -27,7 +29,7 @@ test('diagnostic rejects unavailable sources and CLI redacts configuration error
  test('daily window includes the previous US session; delayed, undated and future news never become today',async()=>{
  const times=['2026-10-19T14:59:59.999Z','2026-10-19T15:00:00Z','2026-10-19T11:00:00-04:00','2026-10-20T00:00:00Z','2026-10-20T00:00:00.001Z',undefined,'2026-10-20T01:00:00'];
  const report=await checkIntake({now,readFeed:async()=>({ok:true,enabled:true,items:times.map((publishedAt,i)=>({...article,title:article.title+' '+i,url:article.url+'/'+i,publishedAt,observedAt:now.toISOString(),updatedAt:now.toISOString(),publishedOn:'2026-10-19'}))})});
- assert.equal(report.candidateCount,3);assert.equal(report.diagnostics.outsideDailyWindow,0);assert.equal(report.diagnostics.rejected.date,3);
+ assert.equal(report.diagnostics.scopes.semis,4);assert.equal(report.candidateCount,1);assert.equal(report.diagnostics.outsideDailyWindow,0);assert.equal(report.diagnostics.rejected.date,3);
  });
 
 test('calendar overflow is not normalized into a fresh publication',async()=>{

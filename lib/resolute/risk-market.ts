@@ -1,22 +1,17 @@
-import rosters from './thermometer-rosters.json' with { type: 'json' };
 import { usMarketSession } from '../research/us-market-session.ts';
 import { roundMove, starsFromMove, type RiskArticle, type RiskIndex, type RiskMarket } from './risk.ts';
+import { storyScope, scopeIndex } from './risk-scope.ts';
 /** Shock Gauge stars from actual market moves (server/worker only; no browser import).
  * 1. Pick ONE related TP index per story. 2. Find the first U.S. close after the news.
  * 3. Read that index's close-to-close move from the thermometer snapshot of that session.
  */
-const SEMIS: ReadonlySet<string> = new Set(rosters.semiconductors.tickers);
-// Semiconductor / AI-chip topics, and the largest TP半導体40 constituents by name (general news carries no ticker list).
-const SEMI_TOPIC = /\b(?:semiconductors?|chips?|chipmakers?|chip-?making|AI accelerators?|GPUs?|HBM|foundr(?:y|ies)|wafers?|lithography|NVIDIA|TSMC|Taiwan Semiconductor|Broadcom|SK ?hynix|AMD|Advanced Micro Devices|Micron|ASML|Intel|Applied Materials|Lam Research|KLA|Texas Instruments|Qualcomm|Arm Holdings|Marvell|Analog Devices|NXP|GlobalFoundries)\b|半導体|AIチップ|AI向けチップ|エヌビディア|マイクロン|TSMC|台湾積体電路/i;
 const TICKER = /^[A-Z][A-Z0-9.]{0,9}$/;
 export function cleanTickers(value: unknown): string[] {
   return Array.isArray(value) ? [...new Set(value.filter((t): t is string => typeof t === 'string' && TICKER.test(t)))].slice(0, 30) : [];
 }
-/** TP半導体40 when a ticker is a constituent or the story is about semiconductors / AI chips; otherwise TP大型株100. */
-export function chooseRiskIndex({ tickers = [], texts = [] }: { tickers?: readonly string[]; texts?: readonly string[] }): RiskIndex {
-  if (tickers.some(t => SEMIS.has(t))) return 'sox';
-  return texts.some(t => typeof t === 'string' && SEMI_TOPIC.test(t)) ? 'sox' : 'nas100';
-}
+/** Nov 25 (owner): the index follows the story's scope (risk-scope.ts): market-wide → TP大型株100, the chip sector → TP半導体40,
+ * one company → no index (no stars). Tickers no longer decide it: a story about one chip company is still one company's news. */
+export function storyIndex(title: string): RiskIndex | 'company' { return scopeIndex(storyScope(title)); }
 const STEP = 15 * 60000;
 const etDate = (at: Date) => new Intl.DateTimeFormat('en-CA', { timeZone: 'America/New_York', year: 'numeric', month: '2-digit', day: '2-digit' }).format(at);
 /** ET date of the first regular-session close strictly after `at` (a story at exactly 16:00 belongs to the next close).
@@ -35,18 +30,20 @@ export function firstCloseAfter(at: Date): string | null {
 export function newsInstant(publishedAt: string): Date {
   return /^\d{4}-\d{2}-\d{2}$/.test(publishedAt) ? new Date(Date.parse(publishedAt + 'T00:00:00Z') + 36 * 3600000) : new Date(publishedAt);
 }
-export function waitingMarket(index: RiskIndex, publishedAt: string): RiskMarket {
+export function waitingMarket(index: RiskIndex | 'company', publishedAt: string): RiskMarket {
+  if (index === 'company') return { index, session: null, changePercent: null };
   return { index, session: firstCloseAfter(newsInstant(publishedAt)), changePercent: null };
 }
 export type SessionMoves = Record<string, Partial<Record<RiskIndex, { changePercent: number } | null>> | undefined>;
 /** Fills stars once that close's move is known; otherwise the story keeps waiting. Already-filled stories are unchanged. */
 export function applyMarketReaction(article: RiskArticle, moves: SessionMoves): RiskArticle {
-  if (article.market.changePercent !== null) return article;
+  if (article.market.changePercent !== null || article.market.index === 'company') return article;
+  const index = article.market.index;
   const session = article.market.session ?? firstCloseAfter(newsInstant(article.publishedAt));
-  const move = session ? moves[session]?.[article.market.index] : undefined;
+  const move = session ? moves[session]?.[index] : undefined;
   if (!session || !move || typeof move.changePercent !== 'number' || !Number.isFinite(move.changePercent) || Math.abs(move.changePercent) >= 100) return { ...article, market: { ...article.market, session } };
   const changePercent = roundMove(move.changePercent);
-  return { ...article, market: { index: article.market.index, session, changePercent }, stars: starsFromMove(changePercent) };
+  return { ...article, market: { index, session, changePercent }, stars: starsFromMove(changePercent, index) };
 }
 export interface MovesDatabase { query(sql: string, values?: unknown[]): Promise<{ rows: Record<string, unknown>[] }> }
 /** Reads the thermometer snapshots' daily moves for the given sessions (read-only role). Only moves dated on their own session count. */

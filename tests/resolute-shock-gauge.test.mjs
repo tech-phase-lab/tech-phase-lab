@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {readFile} from 'node:fs/promises';
 import {PGlite} from '@electric-sql/pglite';
-import {firstCloseAfter,chooseRiskIndex,applyMarketReaction,readSessionMoves,waitingMarket} from '../lib/resolute/risk-market.ts';
+import {firstCloseAfter,storyIndex,applyMarketReaction,readSessionMoves,waitingMarket} from '../lib/resolute/risk-market.ts';
 import {RIZEL_DISCLAIMER,SUMMARY_QUESTION,parseRiskArticle} from '../lib/resolute/risk.ts';
 import {RISK_POLICY} from '../lib/resolute/risk-policy.ts';
 import {summaryIssues,rizelCopyIssues,quoteIssues,RIZEL_REWRITES,rizelRewrite} from '../lib/resolute/risk-copy-check.ts';
@@ -36,13 +36,15 @@ test('the first U.S. close after the news: weekends, exactly at the close, early
   ['2028-01-05T15:00:00Z',null],['bad',null]])assert.equal(firstCloseAfter(new Date(at)),expected,at);
 });
 
-test('one related TP index per story: TP半導体40 constituents or chip topics, otherwise TP大型株100',()=>{
- assert.equal(chooseRiskIndex({tickers:['NVDA']}),'sox');
- assert.equal(chooseRiskIndex({tickers:['AAPL'],texts:['Apple faces a probe in Europe']}),'nas100');
- assert.equal(chooseRiskIndex({texts:['米商務省がAI半導体の対中規制を拡大へ']}),'sox');
- assert.equal(chooseRiskIndex({texts:['Chipmakers slide as export curbs widen']}),'sox');
- assert.equal(chooseRiskIndex({texts:['Nasdaq tumbles as Treasury yields surge']}),'nas100');
+test('one related TP index per story, from the headline\'s scope: market-wide TP大型株100, the chip sector TP半導体40, one company none',()=>{
+ assert.equal(storyIndex('Apple faces a probe in Europe'),'company');
+ assert.equal(storyIndex('Nvidia falls 3% as rivals gain'),'company'); // one chip company is still one company's news
+ assert.equal(storyIndex('米商務省がAI半導体の対中規制を拡大へ'),'sox');
+ assert.equal(storyIndex('Chipmakers slide as export curbs widen'),'sox');
+ assert.equal(storyIndex('Nasdaq tumbles as Treasury yields surge'),'nas100');
+ assert.equal(storyIndex('Fed minutes show officials split on a December cut'),'nas100');
  assert.deepEqual(waitingMarket('nas100','2026-10-17T15:00:00Z'),{index:'nas100',session:'2026-10-19',changePercent:null});
+ assert.deepEqual(waitingMarket('company','2026-10-17T15:00:00Z'),{index:'company',session:null,changePercent:null});
 });
 
 test('stars are filled from the snapshot move of that close only; before it the story waits',()=>{
@@ -52,8 +54,8 @@ test('stars are filled from the snapshot move of that close only; before it the 
  assert.equal(applyMarketReaction(article,{'2026-10-13':{sox:{changePercent:-9}}}).stars,null); // a later close never counts
  assert.equal(applyMarketReaction(article,{'2026-10-12':{nas100:{changePercent:-9}}}).stars,null); // the other index never counts
  const filled=applyMarketReaction(article,{'2026-10-12':{sox:{changePercent:-3.24}}});
- assert.deepEqual(filled.market,{index:'sox',session:'2026-10-12',changePercent:-3.2});assert.equal(filled.stars,4);
- assert.equal(parseRiskArticle(filled).stars,4);
+ assert.deepEqual(filled.market,{index:'sox',session:'2026-10-12',changePercent:-3.2});assert.equal(filled.stars,2);
+ assert.equal(parseRiskArticle(filled).stars,2);
  assert.equal(applyMarketReaction(filled,{'2026-10-12':{sox:{changePercent:8}}}),filled); // never re-scored
 });
 
@@ -87,10 +89,10 @@ test('"filled at the next update": waiting stories in ready days get stars and a
   const now=new Date('2026-10-13T23:00:00Z');let asked=[];
   const none=await fillMarketReactions(db,async s=>{asked=s;return {};},now);
   assert.deepEqual(asked,['2026-10-12']);assert.deepEqual(none,{days:2,updated:0,waiting:1});
-  const result=await fillMarketReactions(db,async()=>({'2026-10-12':{sox:{changePercent:5.04}}}),now);
+  const result=await fillMarketReactions(db,async()=>({'2026-10-12':{sox:{changePercent:10.04}}}),now);
   assert.deepEqual(result,{days:2,updated:1,waiting:0});
   const [stored]=(await db.query("SELECT articles FROM resolute.risk_days WHERE day='2026-10-13'")).rows[0].articles;
-  assert.equal(stored.stars,5);assert.equal(stored.market.changePercent,5);assert.equal(stored.quoteId,'ok');
+  assert.equal(stored.stars,5);assert.equal(stored.market.changePercent,10);assert.equal(stored.quoteId,'ok');
   assert.equal((await db.query("SELECT articles FROM resolute.risk_days WHERE day='2026-10-12'")).rows[0].articles[0].stars,3);
   assert.deepEqual(await fillMarketReactions(db,async()=>({'2026-10-12':{sox:{changePercent:-1}}}),now),{days:2,updated:0,waiting:0});
   // The public feed never shows a legacy (rubric) day, and never offers a quote that needs re-approval.
@@ -132,7 +134,7 @@ test('summary prompt: facts only, banned wording is rewritten once, then the sto
 test('daily review stores a story that is still waiting for the market without choosing a RIZEL line',async()=>{
  const db=new PGlite();await db.exec('CREATE ROLE resolute_rizel_writer');await db.exec(await readFile(new URL('../db/resolute/013_rizel_daily_review.sql',import.meta.url),'utf8'));
  const saved=[];let selections=0,asked=null;
- const feed={ok:true,enabled:true,items:[{title:'AI semiconductor risk warning',url:'https://example.com/shock',publishedAt:'2026-10-14T21:30:00Z',tickers:['NVDA'],bodyEn:'AI semiconductor companies warned of possible earnings declines over several months. The reported risk affects the sector, but the impact remains uncertain.'}]};
+ const feed={ok:true,enabled:true,items:[{title:'Chip stocks face AI semiconductor risk warning',url:'https://example.com/shock',publishedAt:'2026-10-14T21:30:00Z',tickers:['NVDA'],bodyEn:'AI semiconductor companies warned of possible earnings declines over several months. The reported risk affects the sector, but the impact remains uncertain.'}]};
  try{
   const result=await prepareDailyReview({enabled:true,now:new Date('2026-10-14T23:00:00Z'),selectionPool:db,budgetPool:{query:async()=>({rows:[]})},publishPool:{query:async(sql,args)=>{if(sql.includes('risk_days'))saved.push(JSON.parse(args[2]));return {rows:[]};}},
    readFeed:async()=>feed,readMoves:async s=>{asked=s;return {};},

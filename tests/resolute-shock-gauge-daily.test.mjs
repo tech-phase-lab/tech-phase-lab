@@ -13,6 +13,9 @@ const now=new Date('2026-10-14T23:20:00Z'); // Thursday 08:20 JST
 const body='AI semiconductor companies warned of possible earnings declines over several months. The reported risk affects the sector, and the company said revenue would be $5 billion.';
 const item=(n,publishedAt,extra={})=>({title:`AI semiconductor risk warning ${n}`,url:`https://example.com/news-${n}`,publishedAt,bodyEn:body,...extra});
 const moves={'2026-10-14':{sox:{changePercent:-3.2},nas100:{changePercent:-1.1}}};
+// Nov 25: the index follows the headline's scope, and one story per index and close / per company is kept.
+const titled=(n,publishedAt,title)=>({...item(n,publishedAt),title:`${title} ${n}`});
+const TITLES={market:'Nasdaq slides as Treasury yields jump',semisA:'Chip stocks drop after export rules tighten',semisB:'Semiconductor stocks fall as memory prices weaken',semisC:'Chipmakers tumble on AI order delays'};
 
 test('the morning run is 08:00 JST on weekdays, after the thermometer stores the previous close',()=>{
  assert.equal(RISK_POLICY.runHourJst,8);
@@ -50,16 +53,19 @@ test('a Japanese amount counts as a source figure only when it is the exact unit
  assert.equal(validateGeneration({publishable:false},candidate,why),null);assert.equal(why.reason,'not-publishable');
 });
 
-test('stories whose U.S. close is already known come first; the rest wait in reserve within the daily bound',()=>{
- const feed={ok:true,enabled:true,items:[item(1,'2026-10-14T21:30:00Z'),item(2,'2026-10-14T21:20:00Z'),item(3,'2026-10-14T15:00:00Z'),item(4,'2026-10-14T14:00:00Z'),item(5,'2026-10-14T21:10:00Z'),item(6,'2026-10-14T21:00:00Z'),item(7,'2026-10-14T20:50:00Z')]};
+test('market-wide first, then the chip sector with known closes first, then single companies; repeats wait in reserve',()=>{
+ // 3: chip sector, known close (Oct 14). 8: chip sector after that close (Oct 15, unknown). 4: market-wide, known.
+ // 1, 2, 5: single companies. 9: the chip sector again on the known close (same index and close as 3).
+ const feed={ok:true,enabled:true,items:[item(1,'2026-10-14T21:30:00Z'),item(2,'2026-10-14T21:20:00Z'),titled(3,'2026-10-14T15:00:00Z',TITLES.semisA),titled(4,'2026-10-14T14:00:00Z',TITLES.market),
+  {...item(5,'2026-10-14T21:10:00Z'),title:'Acme warns of AI semiconductor risk 5'},titled(8,'2026-10-14T21:40:00Z',TITLES.semisB),titled(9,'2026-10-14T13:00:00Z',TITLES.semisC)]};
  const limits={stories:3,attempts:5};
  const plain=selectDailyCandidates(feed,now,{limits});
- assert.deepEqual(plain.selected.map(c=>c.title.slice(-1)),['1','2','5']);
+ assert.deepEqual(plain.selected.map(c=>c.title.slice(-1)),['4','8','3']);
  const ordered=selectDailyCandidates(feed,now,{moves,limits});
- assert.deepEqual(ordered.selected.map(c=>c.title.slice(-1)),['3','4','1']);
- assert.deepEqual(ordered.reserve.map(c=>c.title.slice(-1)),['2','5']);
- assert.equal(ordered.diagnostics.knownMove,2);
- assert.equal(ordered.selected.length+ordered.reserve.length,limits.attempts);
+ assert.deepEqual(ordered.selected.map(c=>c.title.slice(-1)),['4','3','8']);
+ assert.deepEqual(ordered.reserve.map(c=>c.title.slice(-1)),['9','1','2','5']);
+ assert.equal(ordered.diagnostics.knownMove,3);assert.equal(ordered.diagnostics.repeated,1);
+ assert.deepEqual(ordered.diagnostics.scopes,{market:1,semis:3,company:3});
 });
 
 async function setup(){const db=new PGlite();await db.exec('CREATE ROLE resolute_rizel_writer');await db.exec(await readFile(new URL('../db/resolute/013_rizel_daily_review.sql',import.meta.url),'utf8'));return db;}
@@ -67,16 +73,18 @@ const verified=c=>validateGeneration({publishable:true,ja:{title:'AI半導体企
 
 test('the morning run shows stars from the known close, replaces a rejected story from reserve, and never exceeds the attempt bound',async()=>{
  const db=await setup(),saved=[],tried=[];let asked=[];
- const feed={ok:true,enabled:true,items:[item(1,'2026-10-14T21:30:00Z'),item(2,'2026-10-14T15:00:00Z'),item(3,'2026-10-14T14:00:00Z'),item(4,'2026-10-14T13:00:00Z'),item(5,'2026-10-14T12:00:00Z'),item(6,'2026-10-14T11:00:00Z')]};
+ const feed={ok:true,enabled:true,items:[titled(1,'2026-10-14T21:30:00Z',TITLES.semisC),titled(2,'2026-10-14T15:00:00Z',TITLES.market),titled(3,'2026-10-14T14:00:00Z',TITLES.semisA),titled(7,'2026-10-14T10:00:00Z',TITLES.semisB),
+  {...item(4,'2026-10-14T13:00:00Z'),title:'Acme warns of AI semiconductor risk 4'},{...item(5,'2026-10-14T12:00:00Z'),title:'Globex cuts AI chip outlook 5'}]};
  const publishPool={query:async(sql,args)=>{if(sql.includes('INSERT INTO resolute.risk_days'))saved.push(JSON.parse(args[2]));return {rows:[]};}};
  try{
   const result=await prepareDailyReview({enabled:true,now,selectionPool:db,budgetPool:publishPool,publishPool,readFeed:async()=>feed,
    readMoves:async s=>{asked.push(s);return moves;},
    summarize:async c=>{tried.push(c.title.slice(-1));return c.title.endsWith('3')?null:verified(c);},
    select:async x=>({state:'selected',publication:'withheld',articleId:x.article.id,articleRevision:'r'})});
-  assert.equal(result.state,'ready');assert.equal(result.count,3);assert.equal(result.waitingForMarket,0);
-  assert.deepEqual(tried,['2','3','4','5']);assert.equal(result.diagnostics.attempts,4);
-  assert.deepEqual(saved[0].map(a=>[a.market.index,a.market.session,a.market.changePercent,a.stars]),[['sox','2026-10-14',-3.2,4],['sox','2026-10-14',-3.2,4],['sox','2026-10-14',-3.2,4]]);
+  assert.equal(result.state,'ready');assert.equal(result.count,3);assert.equal(result.waitingForMarket,1);
+  // 3 (chip sector, known close) is rejected: its slot goes to 7, the next chip-sector story on that close, not to a company.
+  assert.deepEqual(tried,['2','3','1','7']);assert.equal(result.diagnostics.attempts,4);
+  assert.deepEqual(saved[0].map(a=>[a.market.index,a.market.session,a.market.changePercent,a.stars]),[['nas100','2026-10-14',-1.1,2],['sox','2026-10-15',null,null],['sox','2026-10-14',-3.2,2]]);
   assert.ok(asked.some(s=>s.includes('2026-10-14')));
  }finally{await db.close();}
 });
@@ -96,7 +104,7 @@ test('a failed snapshot read only drops the ordering; the day is still checked a
  const publishPool={query:async(sql,args)=>{if(sql.includes('INSERT INTO resolute.risk_days'))saved.push(JSON.parse(args[2]));if(sql.includes('FROM resolute.risk_days'))throw Error('db');return {rows:[]};}};
  let reads=0;
  try{
-  const result=await prepareDailyReview({enabled:true,now,selectionPool:db,budgetPool:publishPool,publishPool,readFeed:async()=>({ok:true,enabled:true,items:[item(1,'2026-10-14T21:30:00Z')]}),
+  const result=await prepareDailyReview({enabled:true,now,selectionPool:db,budgetPool:publishPool,publishPool,readFeed:async()=>({ok:true,enabled:true,items:[titled(1,'2026-10-14T21:30:00Z',TITLES.semisA)]}),
    readMoves:async()=>{reads++;if(reads===1)throw Error('down');return {};},summarize:async c=>verified(c),select:async()=>{throw Error('must not select a waiting story');}});
   assert.equal(result.state,'ready');assert.equal(result.waitingForMarket,1);
   assert.equal(result.diagnostics.market.earlierDays,'failed');assert.equal(result.diagnostics.market.ordering,'failed');

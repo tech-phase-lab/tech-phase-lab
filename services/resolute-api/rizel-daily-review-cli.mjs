@@ -3,7 +3,8 @@ import {Pool} from 'pg';
 import {resoluteDatabaseConfig} from '../../lib/resolute/database-config.ts';
 import {riskPool} from './risk-store.mjs';
 import {createNewsReader,withSourceRetry} from './rizel-news-source.mjs';
-import {prepareDailyReview,dailyReviewFailure} from './rizel-daily-review.mjs';
+import {prepareDailyReview,dailyReviewFailure,reselectStoredDay,selectDailyCandidates,previewSelection} from './rizel-daily-review.mjs';
+import {windowHours} from './risk-job.mjs';
 import {createMovesReader} from './risk-moves.mjs';
 
 // Standalone worker, disabled by default. Never start an HTTP listener or timer.
@@ -20,9 +21,21 @@ if(process.env.RESOLUTE_RIZEL_DAILY_REVIEW_ENABLED!=='true'){
   // Optional read-only thermometer access: without it every story starts as 'waiting for the market' and the react job fills it.
   readMoves=createMovesReader();
   selectionPool=new Pool({...config,max:2});selectionPool.on('error',()=>{});budgetPool=riskPool();
+  if(process.env.RIZEL_DAILY_REVIEW_DRY_RUN==='true'){
+   // Read-only preview (owner check): what today's selection picks under the current rules. No model call, no writes.
+   const now=new Date(),feed=await readFeed({since:now.getTime()-windowHours(now)*3600000});
+   let intake=selectDailyCandidates(feed,now);const moves=readMoves&&intake.sessions.length?await readMoves(intake.sessions):null;
+   if(moves)intake=selectDailyCandidates(feed,now,{moves});
+   console.log(JSON.stringify({event:'RIZEL_DAILY_REVIEW_PREVIEW',...previewSelection(intake,moves)}));
+  }else{
+  // One-off (owner, Nov 25): re-select today's stored day under the current rules, once (reselectStoredDay).
+  try{const r=await reselectStoredDay({publishPool:budgetPool,selectionPool,budgetPool,apiKey:process.env.RESOLUTE_OPENAI_API_KEY,readFeed,readMoves});
+   if(r.state!=='reselect-off')console.log(JSON.stringify({event:'RIZEL_SHOCK_GAUGE_RESELECT',...r}));}
+  catch(error){const outcome=dailyReviewFailure(error,readFeed?.stats);console.error(JSON.stringify({...outcome.line,event:'RIZEL_SHOCK_GAUGE_RESELECT_FAILED'}));}
   const result=await prepareDailyReview({enabled:true,selectionPool,budgetPool,apiKey:process.env.RESOLUTE_OPENAI_API_KEY,
    readFeed,publishPool:budgetPool,readMoves});
   console.log(JSON.stringify({event:'RIZEL_DAILY_REVIEW',...result,...(readFeed.stats.attempts?{sourceAttempts:readFeed.stats.attempts}:{})}));
+  }
  }catch(error){
   const outcome=dailyReviewFailure(error,readFeed?.stats);
   (outcome.exitCode?console.error:console.log)(JSON.stringify(outcome.line));if(outcome.exitCode)process.exitCode=outcome.exitCode;

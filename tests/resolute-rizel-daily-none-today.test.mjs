@@ -55,7 +55,8 @@ test('genuine failures still exit 1: a source that refuses the read, a database 
 test('known-move ordering looks at every story in the window, not only the newest five (Monday after a weekend)',async()=>{
  const monday=new Date('2026-11-22T23:20:00Z'); // Monday 08:20 JST; Friday Nov 20's close is known
  const weekend=[1,2,3,4,5,6].map(n=>item(`w${n}`,`2026-11-21T1${n}:00:00Z`));
- const friday=[item('f1','2026-11-20T18:00:00Z'),item('f2','2026-11-20T17:00:00Z')];
+ // Nov 25: one story per index and close, so Friday's two are a market-wide and a chip-sector story.
+ const friday=[{...item('f1','2026-11-20T18:00:00Z'),title:'Nasdaq slides as AI semiconductor risk warning spreads f1'},{...item('f2','2026-11-20T17:00:00Z'),title:'Chip stocks drop on AI semiconductor risk warning f2'}];
  const feed={ok:true,enabled:true,items:[...weekend,...friday]};
  const first=selectDailyCandidates(feed,monday);
  assert.ok(first.sessions.includes('2026-11-20'),'Friday stories are read for their close');
