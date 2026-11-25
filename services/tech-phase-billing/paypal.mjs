@@ -40,6 +40,17 @@ const fail = (code = 'PAYPAL_UNAVAILABLE') => { throw new Error(code); };
 class ProviderSubscriptionNotFound extends Error {
   constructor() { super('PAYPAL_SUBSCRIPTION_NOT_FOUND'); }
 }
+// Same PAYPAL_UNAVAILABLE as before, plus where it failed (auth | request | timeout | network | response)
+// and the bare HTTP status. Never the provider body, headers, ids or credentials. Recovery logs only these
+// allowlisted fields so a failed reconciliation can be explained without a diagnostic redeploy.
+class ProviderUnavailable extends Error {
+  constructor(stage, status) {
+    super('PAYPAL_UNAVAILABLE');
+    this.detail = Object.freeze({ stage, ...(Number.isInteger(status) && status >= 100 && status <= 599 ? { status } : {}) });
+  }
+}
+const unavailable = (stage, status) => { throw new ProviderUnavailable(stage, status); };
+const failureStage = error => error?.name === 'TimeoutError' || error?.name === 'AbortError' ? 'timeout' : 'network';
 const matches = (value, pattern) => typeof value === 'string' && pattern.test(value);
 const yearlyPlans = (jpy, usd) => ({ ...(jpy === undefined || jpy === '' ? {} : { JPY_YEAR: planId(jpy) }),
   ...(usd === undefined || usd === '' ? {} : { USD_YEAR: planId(usd) }) });
@@ -132,9 +143,9 @@ export function createPaypal(config, fetcher = fetch) {
       const res = await fetcher(base + '/v1/oauth2/token', { method: 'POST', redirect: 'error', cache: 'no-store',
         signal: AbortSignal.timeout(8000), headers: { Authorization: 'Basic ' + Buffer.from(`${clientId}:${secret}`).toString('base64'),
           'Content-Type': 'application/x-www-form-urlencoded' }, body: 'grant_type=client_credentials' });
-      if (!res.ok) { await res.body?.cancel(); fail(); }
-      const data = await json(res);
-      if (typeof data.access_token !== 'string' || !data.access_token || !Number.isFinite(data.expires_in) || data.expires_in <= 30) fail();
+      if (!res.ok) { await res.body?.cancel(); unavailable('auth', res.status); }
+      let data; try { data = await json(res); } catch { unavailable('auth', res.status); }
+      if (typeof data.access_token !== 'string' || !data.access_token || !Number.isFinite(data.expires_in) || data.expires_in <= 30) unavailable('auth', res.status);
       token = data.access_token; expires = Date.now() + (data.expires_in - 30) * 1000;
       return token;
     })().finally(() => { tokenRequest = undefined; });
@@ -151,13 +162,13 @@ export function createPaypal(config, fetcher = fetch) {
         if (res.status === 401 && token === credential) token = undefined;
         await res.body?.cancel();
         if (subscriptionRead && res.status === 404) throw new ProviderSubscriptionNotFound();
-        fail();
+        unavailable('request', res.status);
       }
       if (res.status === 204) return null;
-      return await json(res);
+      try { return await json(res); } catch { unavailable('response', res.status); }
     } catch (error) {
-      if (error instanceof ProviderSubscriptionNotFound) throw error;
-      fail();
+      if (error instanceof ProviderSubscriptionNotFound || error instanceof ProviderUnavailable) throw error;
+      unavailable(failureStage(error));
     } // Never expose provider error bodies, credentials or buyer details.
   }
   return {

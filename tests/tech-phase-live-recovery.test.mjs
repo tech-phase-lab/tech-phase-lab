@@ -87,3 +87,82 @@ test('Live runner stops at time budget or cancellation and rejects cross-environ
  let timeCalls=0;const bounded=await runLiveRecovery({env,services,now:()=>timeCalls++===0?0:180001,wait:async()=>{}});
  assert.equal(bounded.checked,0);assert.equal(bounded.outcome,'bounded');
 });
+test('a failed item is logged with an allowlisted code, PayPal stage/status and local state only (incident 2026-11-25)',async()=>{
+ const {describeFailure}=await import('../services/tech-phase-billing/live-recovery.mjs');
+ const provider=Object.assign(Error('PAYPAL_UNAVAILABLE'),{detail:{stage:'request',status:503}});
+ const leaky=Object.assign(Error('user_Secret I-ABCDEFGHIJKL private-provider-body'),{detail:{stage:'token user_Secret',status:'503'}});
+ const rows=[[provider,{state:'approval_pending',has_payments:false}],[leaky,{state:'weird',has_payments:'no'}]];
+ let n=0;const outcomes=[];
+ const services=async()=>({recoveryQueue:{async claim(){const r=rows[n++];return r?{id:'fixture-'+n,user_id:'user_Secret',token:'LEASEVALUE',state:r[1].state,has_payments:r[1].has_payments}:null;},async finish(i,o){outcomes.push(o);return true;}},
+  reconciliation:{async reconcile(user,id){throw rows[Number(id.slice(8))-1][0];}}});
+ const result=await runLiveRecovery({env:{...env,TECH_PHASE_BILLING_LIVE_RECOVERY_LIMIT:'5'},services,wait:async()=>{}});
+ assert.equal(result.outcome,'partial-failure');assert.equal(result.failed,2);assert.deepEqual(outcomes,['failed','failed']);
+ assert.deepEqual(result.errors,[{code:'PAYPAL_UNAVAILABLE',stage:'request',status:503,state:'approval_pending',paid:false},{code:'OTHER'}]);
+ assert.doesNotMatch(JSON.stringify(result),/user_|I-[A-Z]|private|fixture|LEASEVALUE|token/);
+ assert.deepEqual(describeFailure(Error('SETTLEMENT_REVIEW_REQUIRED'),{state:'active',has_payments:true}),{code:'SETTLEMENT_REVIEW_REQUIRED',state:'active',paid:true});
+});
+test('a successful or review-only run keeps the original log shape (no errors field)',async()=>fixture(async({store,queue})=>{
+ await attach(store,1);const time=Date.now()+1000;
+ const services=async()=>({recoveryQueue:queue,reconciliation:{async reconcile(){throw Error('PAYPAL_SUBSCRIPTION_NOT_FOUND');}}});
+ const result=await runLiveRecovery({env,services,now:()=>time,wait:async()=>{}});
+ assert.deepEqual(result,{outcome:'completed',checked:1,failed:0,reviewRequired:1,leaseLost:0,bounded:false});
+}));
+const DAY=86400000;
+const age=(db,id,ms)=>db.query(`UPDATE tech_phase_billing_live.subscriptions SET created_at=now()-($2::text||' milliseconds')::interval WHERE id=$1`,[id,String(ms)]);
+const stateOf=async(db,id)=>(await db.query('SELECT state FROM tech_phase_billing_live.subscriptions WHERE id=$1',[id])).rows[0].state;
+const countOf=async(db,t)=>(await db.query(`SELECT count(*)::int n FROM tech_phase_billing_live.${t}`)).rows[0].n;
+const failing=(queue,message,detail)=>async()=>({recoveryQueue:queue,reconciliation:{async reconcile(){throw Object.assign(Error(message),detail?{detail}:{});}}});
+test('an abandoned sign-up (72h+, unapproved, unpaid) that PayPal does not know is closed as expired, never rechecked, and the member can start again',async()=>fixture(async({db,store,queue})=>{
+ const row=await attach(store,1);await age(db,row.id,26*DAY);
+ const time=Date.now()+1000;
+ const result=await runLiveRecovery({env,services:failing(queue,'PAYPAL_SUBSCRIPTION_NOT_FOUND'),now:()=>time,wait:async()=>{}});
+ assert.deepEqual(result,{outcome:'completed',checked:1,failed:0,reviewRequired:0,leaseLost:0,bounded:false,abandoned:1});
+ assert.equal(await stateOf(db,row.id),'expired');
+ assert.equal(await countOf(db,'payments'),0);assert.equal(await countOf(db,'periods'),0);assert.equal(await countOf(db,'recovery_queue'),1);
+ assert.equal(await queue.claim(time+30*DAY),null,'a closed, never-paid sign-up is not claimed again');
+ assert.equal((await store.entitlement('user_Member1')).plan,'free');
+ const again=await store.reserve('user_Member1','JPY','pro-live-v1','month',CONSENT);
+ assert.notEqual(again.id,row.id);assert.equal(again.state,'creating');
+}));
+test('PayPal unavailable for an abandoned sign-up is deferred (no alert, no change); a young, paid, held or active one still fails',async()=>fixture(async({db,store,queue})=>{
+ const old=await attach(store,1);await age(db,old.id,4*DAY);
+ const time=Date.now()+1000;
+ const result=await runLiveRecovery({env,services:failing(queue,'PAYPAL_UNAVAILABLE',{stage:'request',status:503}),now:()=>time,wait:async()=>{}});
+ assert.deepEqual(result,{outcome:'completed',checked:1,failed:0,reviewRequired:1,leaseLost:0,bounded:false,
+  deferred:[{code:'PAYPAL_UNAVAILABLE',stage:'request',status:503,state:'approval_pending',paid:false}]});
+ assert.equal(await stateOf(db,old.id),'approval_pending');
+ const q=(await db.query('SELECT last_outcome,failures,next_attempt_at FROM tech_phase_billing_live.recovery_queue')).rows[0];
+ assert.equal(q.last_outcome,'review-required');assert.equal(q.failures,0);assert.equal(new Date(q.next_attempt_at).getTime(),time+6*3600000);
+ // After PayPal answers 404 at the next check, the sign-up closes.
+ const later=time+6*3600000;
+ const closed=await runLiveRecovery({env,services:failing(queue,'PAYPAL_SUBSCRIPTION_NOT_FOUND'),now:()=>later,wait:async()=>{}});
+ assert.equal(closed.abandoned,1);assert.equal(await stateOf(db,old.id),'expired');
+}));
+test('never closes or defers a sign-up that is young, has a payment, an event, a review hold or is no longer pending',async()=>{
+ const cases={
+  young:async(db,id)=>age(db,id,70*3600000),
+  paid:async(db,id)=>{await age(db,id,4*DAY);await db.query(`INSERT INTO tech_phase_billing_live.payments(transaction_id,subscription_id,currency,minor,paid_at) VALUES('TX-1',$1,'JPY',2980,now())`,[id]);},
+  event:async(db,id)=>{await age(db,id,4*DAY);await db.query(`INSERT INTO tech_phase_billing_live.events(event_id,event_type,transaction_id,subscription_id) VALUES('E-1','PAYMENT.SALE.COMPLETED','TX-1',$1)`,[id]);},
+  held:async(db,id)=>{await age(db,id,4*DAY);await db.query(`INSERT INTO tech_phase_billing_live.review_holds(subscription_id,reason) VALUES($1,'REFUNDED')`,[id]);},
+  active:async(db,id)=>{await age(db,id,4*DAY);await db.query(`UPDATE tech_phase_billing_live.subscriptions SET state='active' WHERE id=$1`,[id]);},
+ };
+ for(const [name,prepare] of Object.entries(cases))for(const message of ['PAYPAL_SUBSCRIPTION_NOT_FOUND','PAYPAL_UNAVAILABLE'])await fixture(async({db,store,queue})=>{
+  const row=await attach(store,1);await prepare(db,row.id);const before=await stateOf(db,row.id);
+  const result=await runLiveRecovery({env,services:failing(queue,message),now:()=>Date.now()+1000,wait:async()=>{}});
+  assert.equal(result.abandoned,undefined,name);assert.equal(result.deferred,undefined,name);
+  assert.equal(await stateOf(db,row.id),before,name);
+  const pendingUnpaid404=message==='PAYPAL_SUBSCRIPTION_NOT_FOUND'&&before==='approval_pending'&&name!=='paid';
+  assert.equal(result.failed,pendingUnpaid404?0:1,`${name} ${message}`);
+ });
+});
+test('closing re-checks in SQL: a payment or lost lease between claim and close keeps the sign-up open',async()=>fixture(async({db,store,queue})=>{
+ const row=await attach(store,1);await age(db,row.id,4*DAY);
+ const time=Date.now()+1000,item=await queue.claim(time);assert.equal(item.abandoned,true);
+ await db.query(`INSERT INTO tech_phase_billing_live.payments(transaction_id,subscription_id,currency,minor,paid_at) VALUES('TX-2',$1,'JPY',2980,now())`,[row.id]);
+ assert.equal(await queue.closeAbandoned(item,time),false);assert.equal(await stateOf(db,row.id),'approval_pending');
+ await db.query('DELETE FROM tech_phase_billing_live.payments');
+ assert.equal(await queue.closeAbandoned({...item,token:randomUUIDForTest()},time),false);
+ assert.equal(await queue.closeAbandoned(item,time+300001),false,'expired lease');
+ assert.equal(await queue.closeAbandoned(item,time),true);assert.equal(await stateOf(db,row.id),'expired');
+}));
+function randomUUIDForTest(){return '00000000-0000-4000-8000-000000000000';}
