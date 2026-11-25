@@ -14,13 +14,16 @@ type MarketWorkspaceProps = {
   favoriteControl?: ReactNode;
   network?: CompanyNetwork | null;
   introduction?: CompanyIntroduction | null;
+  /** 「15:16 時点」 / "As of 15:16", small under the quote card's right edge (stock search, owner Nov 25). */
+  asOf?: ReactNode;
 };
 
-export function MarketWorkspace({ ticker, name, lang, introduction, network }: MarketWorkspaceProps) {
+export function MarketWorkspace({ ticker, name, lang, introduction, network, asOf }: MarketWorkspaceProps) {
   return <section className={styles.workspace} aria-label={`${name} ${ticker}`}>
 
     <div className={styles.chartSlot}>
       <QuoteCard ticker={ticker} variant="dial" from="search" name={name} star />
+      {asOf && <p className={styles.asOf}>{asOf}</p>}
     </div>
 
     {introduction && <CompanyIntroductionPanel introduction={introduction} network={network} lang={lang} />}

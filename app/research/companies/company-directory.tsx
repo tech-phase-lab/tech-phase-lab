@@ -5,11 +5,16 @@ import type { Language } from '@/lib/research/data';
 import base from '../research.module.css';
 import styles from './company-directory.module.css';
 import { useFreshCompanies } from './use-fresh-companies';
+import { useMemberDisplay, useOwnerAccount } from '../member-display-provider';
+import { companyHref } from '@/lib/research/company-href';
 export type DirectoryCompany = {ticker:string;name:string;sector:{ja:string;en:string};verified:boolean};
 /** `onOpen` (the PRO feature tour's fixed sample): the tiles stay on the page and report the tap; no feed is read and no page is linked. */
 export default function CompanyDirectory({companies,lang,onOpen}:{companies:DirectoryCompany[];lang:Language;onOpen?:(ticker:string)=>void}) {
  const ja=lang==='ja';
  const fresh=useFreshCompanies(lang,!onOpen);
+ // The company pages are PRO only (owner, Nov 25): without PRO a tile opens the stock's FREE page.
+ const ownerAccount=useOwnerAccount(),plan=useMemberDisplay();
+ const pro=ownerAccount||plan==='pro';
  const freshCompanies=companies.filter(company=>fresh.has(company.ticker)).length;
  const groups=new Map<string,DirectoryCompany[]>();
  for(const company of companies){const key=company.sector[lang];groups.set(key,[...(groups.get(key)??[]),company]);}
@@ -24,7 +29,7 @@ export default function CompanyDirectory({companies,lang,onOpen}:{companies:Dire
   </>;return onOpen
    // An anchor with no address keeps the tile's look (.tiles a) but cannot leave the page.
    ?<a key={company.ticker} role="button" tabIndex={0} aria-label={label} onClick={()=>onOpen(company.ticker)} onKeyDown={event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();onOpen(company.ticker);}}}>{content}</a>
-   :<Link key={company.ticker} href={`/research/companies/${company.ticker}`} aria-label={label}>{content}</Link>;})}</div></section>;})}</div>)}</div>)}
+   :<Link key={company.ticker} href={companyHref(company.ticker,pro)} aria-label={label}>{content}</Link>;})}</div></section>;})}</div>)}</div>)}
   <details className={base.directoryInfo}><summary>{ja?'掲載状況について':'About coverage'}</summary><p>{ja?'緑の印は数値を照合したリサーチがある銘柄です。速報配信や全資料の分析完了を示すものではありません。':'Green marks indicate source-checked research, not live delivery or complete analysis of every release.'}</p></details>
  </section>;
 }

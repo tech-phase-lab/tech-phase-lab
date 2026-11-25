@@ -4,8 +4,11 @@ import { buildCompanyProfiles } from '@/lib/research/companies';
 import { providers,sectorNames,sectorNamesEn } from '@/lib/research/intake';
 import { companyWatches } from '@/lib/research/company-watch';
 import DirectoryPage from './directory-page';
+import { requireProPage } from '@/lib/membership/pro-page';
+import { companyFreeHref } from '@/lib/research/company-href';
 export const metadata:Metadata={title:'Company watch | Tech Phase Research',robots:{index:false,follow:false}};
-export default function CompaniesPage() {
+export default async function CompaniesPage() {
+ await requireProPage(companyFreeHref()); // PRO only (owner, Nov 25): everyone else goes to stock search.
  const verified=new Set([...buildCompanyProfiles(events).map(p=>p.ticker),...companyWatches.map(p=>p.ticker)]);
  return <DirectoryPage companies={providers.map(p=>({ticker:p.ticker,name:p.name,sector:{ja:sectorNames[p.sector],en:sectorNamesEn[p.sector]},verified:verified.has(p.ticker)}))}/>;
 }

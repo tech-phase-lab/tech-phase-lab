@@ -31,26 +31,42 @@ function Source({ source, lang }: { source: ChainSource; lang: "ja" | "en" }) {
   </div>;
 }
 
-/** A card is one company: a one-line text and its sources behind a tap. Several relations share one card. */
+/** A card is one company and its one-line text; every source is gathered in the one 「出典」 at the bottom (owner, Nov 25). */
 /** The stock page's only rival sentence in every map ("X competes with <root>") adds nothing beside the tag and the source, so it is not shown (owner, Oct 20). */
 const standardRival = (relation: ChainCompany["relations"][number], root: ChainMapData["root"], ja: boolean) =>
   relation.type === "rival" && (ja ? relation.text === `${root.name}と競合する` : relation.text_en === `Competes with ${root.name_en ?? root.name}`);
 
 function Card({ company, lang, root, anchor = true }: { company: ChainCompany; lang: "ja" | "en"; root: ChainMapData["root"]; anchor?: boolean }) {
   const ja = lang === "ja";
-  const many = company.relations.length > 1;
   const line = company.relations.find(relation => !standardRival(relation, root, ja));
   return <div className={styles.it} id={anchor ? CARD + company.id : undefined} data-tone={company.relations[0].type}>
     <div className={styles.itHead}><b>{company.ticker}</b><span>{ja ? company.name : (company.name_en ?? company.name).replace(/([A-Za-z0-9])\(/g, "$1 (")}</span>
       {chainKinds(company).map(kind => <span key={kind} className={styles.tg} data-tone={kind}>{chainText(kind, "tag", lang)}</span>)}</div>
     {line && <p className={styles.ln}>{ja ? line.text : line.text_en}</p>}
-    <details><summary>{ja ? "出典・引用・発表日" : "Sources, quotes & dates"}{many ? (ja ? `(${company.relations.length}件)` : ` (${company.relations.length})`) : ""}</summary>
-      {company.relations.map((relation, index) => <div key={index} className={styles.srcBlock}>
-        {many && <span><span className={styles.tg} data-tone={relation.type}>{chainText(relation.type, "tag", lang)}</span>{standardRival(relation, root, ja) ? "" : ` ${ja ? relation.text : relation.text_en}`}</span>}
-        <Source source={relation.source} lang={lang} />
-      </div>)}
-    </details>
   </div>;
+}
+
+/** The one footer line under every relationship map (owner, Nov 25). */
+export const CHAIN_NOTE = { ja: "公式資料で確認できた関係のみ。投資判断を勧めるものではありません。", en: "Only relationships confirmed in official materials. Not investment advice." } as const;
+
+/** Every relation's source, quote and date in one closed 「出典」 at the very bottom of the map (owner, Nov 25). */
+function AllSources({ data, lang }: { data: ChainMapData; lang: "ja" | "en" }) {
+  const ja = lang === "ja";
+  const byId = new Map(data.companies.map(company => [company.id, company]));
+  const rows = [
+    ...data.companies.flatMap(company => company.relations.map(relation => ({ who: company.ticker, type: relation.type as ChainTone,
+      text: standardRival(relation, data.root, ja) ? "" : ja ? relation.text : relation.text_en, source: relation.source }))),
+    ...data.far.map(link => ({ who: `${byId.get(link.from)?.ticker ?? link.from} × ${byId.get(link.to)?.ticker ?? link.to}`, type: "far" as ChainTone,
+      text: ja ? link.text : link.text_en, source: link.source })),
+  ];
+  if (!rows.length) return null;
+  return <details className={styles.allSources} data-chain-sources="">
+    <summary>{ja ? "出典" : "Sources"} <small>{ja ? `${rows.length}件` : rows.length}</small></summary>
+    <ol>{rows.map((row, index) => <li key={index} className={styles.srcBlock}>
+      <span><b>{row.who}</b> <span className={styles.tg} data-tone={row.type}>{chainText(row.type, "tag", lang)}</span>{row.text ? ` ${row.text}` : ""}</span>
+      <Source source={row.source} lang={lang} />
+    </li>)}</ol>
+  </details>;
 }
 
 /** `sample`: the PRO feature tour leaves out the rival chips (the map shows them) and numbers the map heading 05; the stock page is unchanged. */
@@ -198,12 +214,11 @@ export function StockChainMap({ data, lang, sample = false }: { data: ChainMapDa
           <div className={styles.items}>{data.far.map((link, index) => <div className={styles.it} key={index}>
             <div className={styles.itHead}><b>{byId.get(link.from)?.ticker ?? link.from}</b><span>×</span><b>{byId.get(link.to)?.ticker ?? link.to}</b><span className={styles.tg} data-tone="far">{chainText("far", "tag", lang)}</span></div>
             <p className={styles.ln}>{ja ? link.text : link.text_en}</p>
-            <details><summary>{t("出典・引用・発表日", "Sources, quotes & dates")}</summary><div className={styles.srcBlock}><Source source={link.source} lang={lang} /></div></details>
           </div>)}</div>
-          <p className={styles.empty}>{t(`${root}から見て3段先以降は、公式の資料で確認できた関係がありません。`, `No relationships three or more steps from ${root} have been confirmed in official materials.`)}</p>
         </div>}
       </div>
     </div>
-    <p className={styles.note}>{data.note[lang]}</p>
+    <p className={styles.note}>{t(CHAIN_NOTE.ja, CHAIN_NOTE.en)}</p>
+    <AllSources data={data} lang={lang} />
   </section>;
 }

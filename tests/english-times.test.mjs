@@ -53,9 +53,13 @@ test("news/flash: rows are grouped by the ET day in English and the JST day in J
   assert.equal(dayHeading("2026-11-04", false), "11/4 Wed");
   assert.equal(dayHeading("2026-11-04", true), "11/4（水）");
   const source = read("../app/research/news/flash-page.tsx");
-  // Each row already prints its time with JST / ET, so the page no longer adds a note under the list (owner, Nov 19).
+  // The page no longer adds a note under the list (owner, Nov 19), and the 「発表 … JST」 line under each item is gone (owner, Nov 25):
+  // the left column keeps the clock and each day heading names the zone (JST / ET).
   assert.doesNotMatch(source, /時刻は日本時間です。/);
-  assert.match(source, /displayDateTime\(row\.at, lang\)/);
+  assert.doesNotMatch(source, /"発表"/);
+  assert.match(source, /publication=""/);
+  assert.match(source, /displayClock\(row\.at, lang\)/);
+  assert.match(source, /<small>\{zoneLabel\(lang\)\}<\/small><\/h3>/);
 });
 
 test("news timeline row: the clock is ET in English (EST and EDT) and JST in Japanese", () => {
@@ -117,7 +121,7 @@ test("the changed screens take their times from the display-time helper", () => 
     "../app/research/watchlist/watchlist.tsx": /<CurrentTime lang=\{lang\} \/> \{zoneLabel\(lang\)\}/,
     "../app/research/columns/columns.tsx": /zoneLabel\(lang\)/,
     "../app/research/compare/screen.tsx": /displayDateTime\(result\.generatedAt, lang\)/,
-    "../app/research/stocks/stock-directory.tsx": /zoneLabel\(lang\)/,
+    "../app/research/stocks/stock-directory.tsx": /asOfLabel\(displayClock\(asOf, lang\), lang\)/,
     "../app/research/deep-analysis-panel.tsx": /zoneLabel\(lang\)/,
     "../app/research/freshness-notice.tsx": /zoneLabel\(lang\)/,
     "../app/research/account/billing/screen.tsx": /zoneLabel/,

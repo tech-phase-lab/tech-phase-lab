@@ -137,7 +137,8 @@ test("RESOLUTE has its own home-screen app: manifest, icons, scope and a hint to
   assert.match(tech, /id: "\/research"/, "the Tech Phase app keeps its own identity"); assert.match(tech, /scope: "\/"/, "both apps cover the whole site (owner, Nov 17)");
   assert.match(await read("../app/resolute/add-to-home-steps.tsx"), /ホーム画面に追加/);
   assert.match(await read("../app/resolute/tool-shell.tsx"), /<AddToHomeCard en=\{en\} \/>/);
-  assert.match(await read("../app/resolute/lp/landing.tsx"), /<AddToHomeSteps className=\{s\.homeSteps\} \/>/);
+  // Owner, Nov 25: the five steps are no longer on the sales page; they stay in settings (below).
+  assert.doesNotMatch(await read("../app/resolute/lp/landing.tsx"), /AddToHomeSteps|ホーム画面に置いて/);
 });
 
 test("while access is being checked RESOLUTE shows its logo and 確認中…, never an empty framed card", async () => {

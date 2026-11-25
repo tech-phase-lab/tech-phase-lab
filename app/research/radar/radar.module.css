@@ -36,20 +36,35 @@ div.page h1 { margin: 0 0 10px; font-size: 26px; line-height: 1.25; font-weight:
 .lever { color: #e0c27a; border-color: rgba(224, 194, 122, .45); background: rgba(224, 194, 122, .08); }
 .guard { color: #8fbfe6; border-color: rgba(143, 191, 230, .45); background: rgba(143, 191, 230, .08); }
 .thin { color: #f19a9a; border-color: rgba(241, 154, 154, .45); background: rgba(241, 154, 154, .08); }
-.bar { display: grid; grid-template-columns: 44px 1fr 100px; align-items: center; gap: 10px; font-size: 12px; color: #9aa8b8; }
+.bar { display: grid; grid-template-columns: 66px minmax(0, 1fr) 76px; align-items: center; gap: 10px; font-size: 12px; color: #9aa8b8; }
+.bar > span { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; line-height: 1.3; }
+.bar > span .review { margin: 0; width: max-content; max-width: 66px; font-size: 8.5px; color: #e0c27a; white-space: normal; line-height: 1.35; }
 .bar div { height: 6px; border-radius: 4px; background: #17212d; overflow: hidden; }
 .bar u { display: block; height: 100%; border-radius: 4px; }
 .fcf { background: linear-gradient(90deg, #2f9f7c, #59d6a6); }
 .cover { background: linear-gradient(90deg, #4d79b8, #86b3e6); }
-.bar strong { text-align: right; font-family: var(--font-geist-mono, monospace); font-weight: 600; color: #e8eef5; font-size: 12.5px; white-space: nowrap; }
+.bar strong { text-align: right; font-family: var(--font-geist-mono, monospace); font-weight: 600; color: #e8eef5; font-size: 12.5px; white-space: nowrap; overflow: hidden; }
 .up { color: #59d6a6; font-style: normal; } .down { color: #f08a8a; font-style: normal; } .flat { color: #98a5b6; }
 .missing { margin: 0; padding: 12px 16px; border: 1px dashed #2a3647; border-radius: 12px; font-size: 12.5px; color: #8a97a8; }
 .missing summary { cursor: pointer; }
 .missing p { margin: 8px 0 0; font-family: var(--font-geist-mono, monospace); letter-spacing: .04em; }
-.locked { margin-top: 24px; display: flex; align-items: center; justify-content: center; gap: 10px; min-height: 150px; border: 1px solid #1b2533; border-radius: 16px; background: #04070b; color: #8a97a8; }
-.locked svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
-.locked span { font-size: 14px; letter-spacing: .12em; }
-.foot { margin: 16px 2px 0; font-size: 11.5px; line-height: 1.8; color: #7b8897; }
+.headRow { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 0 0 10px; }
+div.page .headRow h1 { margin: 0; }
+.info { flex: none; width: 32px; height: 32px; border-radius: 50%; border: 1px solid #3a4758; background: transparent; color: #c3ccd8; font: italic 600 15px Georgia, serif; cursor: pointer; }
+.info[aria-expanded="true"] { background: #1a2532; color: #fff; }
+.about { margin: -6px 0 16px; padding: 12px 14px; border: 1px solid #243040; border-radius: 12px; background: #0e151e; font-size: 12px; line-height: 1.8; color: #98a5b6; }
+.about p { margin: 0; }
+.about p + p { margin-top: 8px; }
+.axisRow { display: grid; grid-template-columns: auto 1fr auto; gap: 8px; margin: 4px 6px 0; font-size: 10.5px; color: #8392a5; }
+.axisRow span:nth-child(2) { text-align: center; }
+.legendLine { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px; margin: 10px 6px 0; font-size: 11px; color: #9aa8b8; }
+.legendLine span { display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; }
+.legendLine i { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+.lockedRest { position: relative; overflow: hidden; border-radius: 14px; }
+.ghosts { display: flex; flex-direction: column; gap: 10px; filter: blur(7px); opacity: .55; pointer-events: none; user-select: none; }
+.lockCta { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; padding: 16px; text-align: center; }
+.lockCta b { font-size: 16px; letter-spacing: .04em; color: #e8eef5; }
+.lockCta p { margin: 0; font-size: 13px; line-height: 1.75; color: #c3ccd8; }
 .leader { stroke: #7f90a6; stroke-width: .7; opacity: .9; }
 .beyond { font-size: 8px; fill: #9fb0c2; font-weight: 500; }
 .order { margin: -4px 0 2px; font-size: 11px; color: #7b8897; }

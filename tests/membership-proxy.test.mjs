@@ -15,7 +15,10 @@ test('Clerk proxy supplies identity to research pages and membership APIs',()=>{
  for(const url of ['/research','/research/news','/research/watchlist','/research/stocks','/research/market','/research/calendar','/research/learn','/research/general-news','/research/faq','/research/capital-map','/research/capital-map/sample']) assert.equal(matches(url),false,url);
  // Pages that read membership on the server stay behind the proxy.
  const server=url=>readFileSync(new URL('../app/research/'+url,import.meta.url),'utf8');
- for(const file of ['companies/[ticker]/page.tsx','account/page.tsx','account/sign-up/page.tsx']) assert.match(server(file),/getMembership/,file);
+ for(const file of ['account/page.tsx','account/sign-up/page.tsx']) assert.match(server(file),/getMembership/,file);
+ // The 監視22銘柄 pages read membership through the PRO page gate (owner, Nov 25).
+ for(const file of ['companies/[ticker]/page.tsx','companies/page.tsx']) assert.match(server(file),/requireProPage/,file);
+ assert.equal(matches('/research/companies'),true);
  for(const dir of ['news','watchlist','stocks','market','calendar','learn','general-news','faq','capital-map']) for(const file of ['page.tsx']) { try { assert.doesNotMatch(server(dir+'/'+file),/getMembership|@clerk\/nextjs\/server/,dir); } catch (error) { if (error.code==='ENOENT') continue; throw error; } }
  assert.doesNotMatch(server('page.tsx'),/getMembership|@clerk\/nextjs\/server/);
  assert.doesNotMatch(server('layout.tsx'),/initialMemberDisplay|auth\(/);

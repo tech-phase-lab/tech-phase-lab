@@ -20,3 +20,23 @@ export function tickConsent(checked: boolean, now = Date.now()): ConsentState {
 export function pressPurchase(state: ConsentState): { consentAt: string | null; state: ConsentState } {
   return state.agreedAt ? { consentAt: state.agreedAt, state: { ...state, missing: false } } : { consentAt: null, state: { agreedAt: null, missing: true } };
 }
+
+/**
+ * A tick given on a card whose button only leads to the purchase screen (the PRO card on the Tech Phase PRO page, owner Nov 25):
+ * the time travels with the link (?consentAt=) and in this tab's sessionStorage (it survives the sign-in step), and the
+ * purchase screen starts with the tick on and sends that time, so the subscription row records it (terms_consent_at).
+ */
+export const CARRIED_CONSENT_KEY = "tech-phase:pro-consent:v1";
+/** A carried tick older than this is not reused: the purchase screen asks again. */
+export const CARRIED_CONSENT_MAX_AGE = 24 * 60 * 60 * 1000;
+/** The carried time, or null when it is missing, malformed, from the future (10 minutes of skew) or too old. */
+export function carriedConsent(value: unknown, now = Date.now()): string | null {
+  if (typeof value !== "string" || !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,3})?Z$/.test(value)) return null;
+  const at = Date.parse(value);
+  return Number.isFinite(at) && at <= now + 600_000 && now - at <= CARRIED_CONSENT_MAX_AGE ? new Date(at).toISOString() : null;
+}
+/** The link with the tick time added (?consentAt=…), keeping its other parameters and hash. */
+export function withConsent(href: string, consentAt: string) {
+  const [path, hash = ""] = href.split("#");
+  return `${path}${path.includes("?") ? "&" : "?"}consentAt=${encodeURIComponent(consentAt)}${hash ? `#${hash}` : ""}`;
+}
