@@ -45,7 +45,7 @@ export async function providerCall(path: string, params: Record<string, string>,
   const key = process.env.TWELVE_DATA_API_KEY;
   if (!key) return null;
   const cost = path === "statistics" ? COST.statistics : path === "income_statement" || path === "cash_flow" ? COST.statements / 2 : COST.series;
-  try { await reserveCredits(cost, mode.getStore()?.tier ?? "background"); } catch { throw new ProviderLimited(); }
+  try { await reserveCredits(cost, mode.getStore()?.tier ?? "background", `compare-${path}`); } catch { throw new ProviderLimited(); }
   const url = new URL(`${BASE()}/${path}`);
   for (const [k, v] of Object.entries(params)) url.searchParams.set(k, v);
   url.searchParams.set("apikey", key);

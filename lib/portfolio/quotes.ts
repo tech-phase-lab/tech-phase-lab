@@ -16,7 +16,7 @@ async function series(symbols: string[], key: string) {
   url.searchParams.set("interval", "1day");
   url.searchParams.set("outputsize", "3");
   url.searchParams.set("apikey", key);
-  await reserveCredits(symbols.length); // one credit per symbol, inside the site's share of the plan's minute
+  await reserveCredits(symbols.length, "user", "portfolio-quote"); // one credit per symbol, inside the site's share of the plan's minute
   const response = await fetch(url, { cache: "no-store", signal: AbortSignal.timeout(12_000) });
   if (response.status === 429) providerLimited();
   if (!response.ok) throw new Error(`Twelve Data ${response.status}`);

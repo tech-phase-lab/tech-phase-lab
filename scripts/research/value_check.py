@@ -41,7 +41,7 @@ ROOT = Path(__file__).resolve().parents[2]
 UNIVERSE_FILE = ROOT / 'lib' / 'research' / 'value-check-universe.json'
 EASTERN = ZoneInfo('America/New_York')
 
-CREDIT_CEILING = 450          # the whole key's usage this minute, ours included, stays at or below this
+CREDIT_CEILING = 400          # the whole key's usage this minute, ours included, stays at or below this
 OWN_PER_MINUTE = 120          # this job's own spending per minute
 CHUNK = 8                     # symbols per Twelve Data request
 HISTORY_BARS = 1300           # a little over five years of trading days
@@ -340,7 +340,7 @@ def sec_fetch(cik, user_agent, opener=urllib.request.urlopen):
 # ---- Twelve Data ------------------------------------------------------------------------------------------------------------------
 
 def td_get(path, params, env=None, timeout=60):
-    answered = twelve_allocator.intercept(path, params)  # inside the monitor: the allocator's view of the minute
+    answered = twelve_allocator.intercept(path, params, tier='background')  # the allocator's view of the minute; yields to members
     if answered is not None:
         return answered
     twelve_allocator.spent(path, params)  # counted before it is sent
