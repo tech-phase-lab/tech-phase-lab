@@ -1,0 +1,176 @@
+{
+  "root": {
+    "ticker": "CHRW",
+    "name": "C.H.ロビンソン",
+    "cik": 1043277,
+    "name_en": "C.H. Robinson Worldwide"
+  },
+  "rows": [
+    {
+      "ja": "買収契約",
+      "en": "Merger agreement",
+      "above": true
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "RXO",
+    "UBER",
+    "MATX",
+    "LINE",
+    "FRGT"
+  ],
+  "companies": [
+    {
+      "id": "RXO",
+      "ticker": "RXO",
+      "name": "RXO",
+      "name_en": "RXO",
+      "sub": "トラック仲介",
+      "sub_en": "Truck brokerage",
+      "sub_short": "トラック",
+      "sub_short_en": "Broker",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "RXOを買収する合併契約を結んだ(2026年10月)",
+          "text_en": "Signed a merger agreement to acquire RXO (October 2026)",
+          "source": {
+            "label": "C.H. Robinson 8-K(2026年11月)",
+            "label_en": "C.H. Robinson 8-K (November 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1043277/000104327726000051/chrw-20261118.htm",
+            "level": "official",
+            "date": "2026-11-18",
+            "quote": "(\"RXO\") pursuant to the Agreement and Plan of Merger, dated as of October 4, 2026 (the \"Merger Agreement\" and such acquisition, the \"RXO Acquisition\"), and the related financing transactions."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "RXOが10-Kで、主な競合の筆頭に挙げる",
+          "text_en": "RXO lists it first among its primary competitors",
+          "source": {
+            "label": "RXO 10-K(2025年度)",
+            "label_en": "RXO 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1929561/000192956126000013/rxo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-09",
+            "quote": "Our primary competitors include C.H. Robinson, Echo Global Logistics, Expeditors, Forward Air, Flexport, J.B. Hunt, Landstar System, Total Quality Logistics, and Uber Freight."
+          }
+        }
+      ]
+    },
+    {
+      "id": "UBER",
+      "ticker": "UBER",
+      "name": "ウーバー",
+      "name_en": "Uber",
+      "sub": "配車",
+      "sub_en": "Ride-hailing",
+      "sub_short": "配車",
+      "sub_short_en": "Rides",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Uberが10-Qで、Uber Freightの競合となる貨物仲介の筆頭に挙げる",
+          "text_en": "Uber lists it first among freight brokers competing with Uber Freight",
+          "source": {
+            "label": "Uber 10-Q(2026年7〜9月期)",
+            "label_en": "Uber 10-Q (Q3 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1543151/000154315126000041/uber-20260930.htm",
+            "level": "official",
+            "date": "2026-11-04",
+            "quote": "Our Freight offering competes with global and North American freight brokers and managed transportation providers such as C.H. Robinson, Total Quality Logistics, RXO, XPO, Echo Global Logistics, and DHL."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MATX",
+      "ticker": "MATX",
+      "name": "マトソン",
+      "name_en": "Matson",
+      "sub": "海運・物流",
+      "sub_en": "Shipping & logistics",
+      "sub_short": "海運",
+      "sub_short_en": "Shipping",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Matsonが10-Kで、物流子会社の仲介事業と最も直接に競合する相手に挙げる",
+          "text_en": "Matson names it the most direct rival of its logistics brokerage",
+          "source": {
+            "label": "Matson 10-K(2025年度)",
+            "label_en": "Matson 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/3453/000110465926020944/matx-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Matson Logistics' Transportation Brokerage services compete most directly with C.H. Robinson Worldwide, Hub Group, RXO and other freight brokers and intermodal marketing companies"
+          }
+        }
+      ]
+    },
+    {
+      "id": "LINE",
+      "ticker": "LINE",
+      "name": "リネージ",
+      "name_en": "Lineage",
+      "sub": "低温物流",
+      "sub_en": "Cold storage",
+      "sub_short": "低温物流",
+      "sub_short_en": "Storage",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Lineageが10-Kで、低温輸送の主な競合として挙げる",
+          "text_en": "Lineage names it a main rival in temperature-controlled transportation",
+          "source": {
+            "label": "Lineage 10-K(2025年度)",
+            "label_en": "Lineage 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1868159/000186815926000012/line-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Our main competitors in temperature-controlled transportation include Americold, US Cold, and CH Robinson"
+          }
+        }
+      ]
+    },
+    {
+      "id": "FRGT",
+      "ticker": "FRGT",
+      "name": "フレイト・テクノロジーズ",
+      "name_en": "Freight Technologies",
+      "sub": "物流テック(メキシコ)",
+      "sub_en": "Freight tech (Mexico)",
+      "sub_short": "物流IT",
+      "sub_short_en": "Freight",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Freight Technologiesが20-Fで、北米の大手物流仲介の競合として挙げる",
+          "text_en": "Freight Technologies names it among established North American brokers it competes with",
+          "source": {
+            "label": "Freight Technologies 20-F(2025年度)",
+            "label_en": "Freight Technologies 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1687542/000149315226023206/form20-f.htm",
+            "level": "official",
+            "date": "2026-05-14",
+            "quote": "Established North American asset-light brokers and 3PLs, including C.H. Robinson Worldwide, Inc., XPO Logistics, Inc., RXO"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

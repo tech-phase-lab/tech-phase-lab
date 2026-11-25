@@ -1,0 +1,189 @@
+{
+  "root": {
+    "ticker": "WERN",
+    "name": "ワーナー・エンタープライゼズ",
+    "cik": 793074,
+    "name_en": "Werner Enterprises"
+  },
+  "rows": [
+    {
+      "ja": "供給元・技術の提携(相手の資料に記載)",
+      "en": "Suppliers & tech partners (named in their filings)",
+      "above": true
+    },
+    {
+      "ja": "最大の顧客・買収",
+      "en": "Largest customer & acquisition"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "FRGT"
+  ],
+  "companies": [
+    {
+      "id": "WNC",
+      "ticker": "WNC",
+      "name": "ワバッシュ",
+      "name_en": "Wabash",
+      "sub": "トレーラー・荷台",
+      "sub_en": "Trailers & truck bodies",
+      "sub_short": "受託製造",
+      "sub_short_en": "Trailers",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Wabashが10-Kで、トレーラーを納める大口顧客の長距離トラック会社として挙げる",
+          "text_en": "Wabash lists it among large truckload carrier customers for its trailers",
+          "source": {
+            "label": "Wabash 10-K(2025年度)",
+            "label_en": "Wabash 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/879526/000087952626000036/wnc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Truckload Carriers: Crete Carrier Corp.; J.B. Hunt Transport, Inc.; Werner Enterprises, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "KDK",
+      "ticker": "KDK",
+      "name": "コディアックAI",
+      "name_en": "Kodiak AI",
+      "sub": "自動運転トラック",
+      "sub_en": "Autonomous trucking",
+      "sub_short": "自動運転",
+      "sub_short_en": "AV trucks",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Kodiak AIがS-1で、一緒に取り組む米国最大級の車両運用会社として挙げる",
+          "text_en": "Kodiak AI names it among the largest US fleets it works with",
+          "source": {
+            "label": "Kodiak AI S-1(2026年5月)",
+            "label_en": "Kodiak AI S-1 (May 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1853138/000162828026039200/kdk-20260529.htm",
+            "level": "official",
+            "date": "2026-05-29",
+            "quote": "Additionally, we work with some of the largest fleets in the United States, including J.B. Hunt, Werner Enterprises, C.R. England and Martin Brower."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DFLI",
+      "ticker": "DFLI",
+      "name": "ドラゴンフライ・エナジー",
+      "name_en": "Dragonfly Energy",
+      "sub": "リチウム電池",
+      "sub_en": "Lithium batteries",
+      "sub_short": "電池",
+      "sub_short_en": "Batteries",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Dragonflyが10-Kで、電池の採用を広げた大手トラック会社として挙げる",
+          "text_en": "Dragonfly names it among large fleets expanding use of its batteries",
+          "source": {
+            "label": "Dragonfly Energy 10-K(2025年度)",
+            "label_en": "Dragonfly Energy 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1847986/000149315226013635/form10-k.htm",
+            "level": "official",
+            "date": "2026-03-30",
+            "quote": "This strategic approach has led to expanded adoption of our products by large fleet operators, including Highway Transport, Stevens Transport, and Werner Enterprises"
+          }
+        }
+      ]
+    },
+    {
+      "id": "DG",
+      "ticker": "DG",
+      "name": "ダラー・ジェネラル",
+      "name_en": "Dollar General",
+      "sub": "ディスカウント小売",
+      "sub_en": "Discount retail",
+      "sub_short": "安売り店",
+      "sub_short_en": "Discount",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大の顧客で、売上の11%(2025年)",
+          "text_en": "Largest customer, 11% of revenue (2025)",
+          "source": {
+            "label": "Werner 10-K(2025年度)",
+            "label_en": "Werner 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/793074/000079307426000071/wern-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our largest customer, Dollar General, accounted for 11% of our total revenues in 2025."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FirstFleet",
+      "ticker": "FirstFleet",
+      "name": "ファーストフリート",
+      "name_en": "FirstFleet",
+      "sub": "専属輸送",
+      "sub_en": "Dedicated trucking",
+      "sub_short": "トラック",
+      "sub_short_en": "Trucking",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "専属輸送のFirstFleetを2.45億ドルで買収(2026年1月)",
+          "text_en": "Acquired dedicated carrier FirstFleet for $245 million (January 2026)",
+          "source": {
+            "label": "Werner 10-K(2025年度)",
+            "label_en": "Werner 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/793074/000079307426000071/wern-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "On January 27, 2026, we acquired 100% of the equity interests of FirstFleet for $245 million"
+          }
+        }
+      ]
+    },
+    {
+      "id": "FRGT",
+      "ticker": "FRGT",
+      "name": "フレイト・テクノロジーズ",
+      "name_en": "Freight Technologies",
+      "sub": "物流テック(メキシコ)",
+      "sub_en": "Freight tech (Mexico)",
+      "sub_short": "物流IT",
+      "sub_short_en": "Freight",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Freight Technologiesが20-Fで、米墨国境輸送の競合として挙げる",
+          "text_en": "Freight Technologies names it a cross-border trucking competitor",
+          "source": {
+            "label": "Freight Technologies 20-F(2025年度)",
+            "label_en": "Freight Technologies 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1687542/000149315226023206/form20-f.htm",
+            "level": "official",
+            "date": "2026-05-14",
+            "quote": "Asset-based carriers with cross-border operations, including J.B. Hunt Transport Services, Inc., Schneider National, Inc., Werner Enterprises, Inc., Knight-Swift Transportation Holdings Inc."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

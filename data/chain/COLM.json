@@ -1,0 +1,160 @@
+{
+  "root": {
+    "ticker": "COLM",
+    "name": "コロンビア・スポーツウェア",
+    "cik": 1050797,
+    "name_en": "Columbia Sportswear"
+  },
+  "rows": [
+    {
+      "ja": "販売先の小売(相手の資料に記載)",
+      "en": "Retailers carrying it (named in their filings)"
+    },
+    {
+      "ja": "店舗の家主(相手の資料に記載)",
+      "en": "Store landlords (named in their filings)"
+    },
+    {
+      "ja": "その他の取引(相手の資料に記載)",
+      "en": "Other dealings (named in their filings)"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "ASO",
+      "ticker": "ASO",
+      "name": "アカデミー・スポーツ&アウトドアーズ",
+      "name_en": "Academy Sports + Outdoors",
+      "sub": "スポーツ用品店",
+      "sub_en": "Sporting goods retail",
+      "sub_short": "用品店",
+      "sub_short_en": "Retail",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Academyが10-Kで、品ぞろえに欠かせない有名ブランドの一つに挙げる",
+          "text_en": "Academy names Columbia among well-known brands critical to its market penetration",
+          "source": {
+            "label": "Academy Sports 10-K(2026年1月期)",
+            "label_en": "Academy Sports 10-K (FY ended Jan 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1817358/000181735826000031/aso-20260131.htm",
+            "level": "official",
+            "date": "2026-03-17",
+            "quote": "Columbia Sportswear, The North Face, Brooks, Skechers, Yeti, Stanley and Carhartt, which are critical to our market penetration."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SPWH",
+      "ticker": "SPWH",
+      "name": "スポーツマンズ・ウェアハウス",
+      "name_en": "Sportsman's Warehouse",
+      "sub": "アウトドア用品店",
+      "sub_en": "Outdoor retail",
+      "sub_short": "用品店",
+      "sub_short_en": "Retail",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Sportsman's Warehouseが10-Kで、扱う有名メーカーの一社に挙げる",
+          "text_en": "Sportsman's Warehouse lists Columbia among well-known brands it carries",
+          "source": {
+            "label": "Sportsman's Warehouse 10-K(2026年1月期)",
+            "label_en": "Sportsman's Warehouse 10-K (FY ended Jan 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1132105/000119312526134702/spwh-20260131.htm",
+            "level": "official",
+            "date": "2026-03-31",
+            "quote": "carry a deep selection of branded merchandise from well-known manufacturers, such as Browning, Carhartt, Yeti, Columbia Sportswear"
+          }
+        }
+      ]
+    },
+    {
+      "id": "TangerSKT",
+      "ticker": "SKT",
+      "name": "タンガー",
+      "name_en": "Tanger",
+      "sub": "アウトレットREIT",
+      "sub_en": "Outlet REIT",
+      "sub_short": "REIT",
+      "sub_short_en": "Outlets",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Tangerが10-Kで、主要テナントとして挙げる(24店、賃料の1.9%)",
+          "text_en": "Tanger lists it among its top tenants (24 stores, 1.9% of rent)",
+          "source": {
+            "label": "Tanger 10-K(2025年度)",
+            "label_en": "Tanger 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/899715/000162828026012252/skt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Columbia Sportswear Company Columbia Sportswear 24 182,250 1.3 % 1.9 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SPG",
+      "ticker": "SPG",
+      "name": "サイモン・プロパティ・グループ",
+      "name_en": "Simon Property Group",
+      "sub": "ショッピングモールREIT",
+      "sub_en": "Mall REIT",
+      "sub_short": "REIT",
+      "sub_short_en": "Mall REIT",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Simonが10-Kで、アウトレットの主なテナントとして挙げる(アレン・プレミアム・アウトレットなど)",
+          "text_en": "Simon lists it as a key tenant at outlets such as Allen Premium Outlets",
+          "source": {
+            "label": "Simon Property Group 10-K(2025年度)",
+            "label_en": "Simon Property Group 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1063761/000110465926019419/spg-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Allen Premium Outlets TX Allen (Dallas) Fee 100.0 % Acquired 2004 100.0 % 548,490 Adidas, Armani Outlet, Calvin Klein, Coach, Columbia Sportswear"
+          }
+        }
+      ]
+    },
+    {
+      "id": "LUNR",
+      "ticker": "LUNR",
+      "name": "インテュイティブ・マシーンズ",
+      "name_en": "Intuitive Machines",
+      "sub": "宇宙開発",
+      "sub_en": "Space systems",
+      "sub_short": "宇宙",
+      "sub_short_en": "Space",
+      "row": 2,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Intuitive Machinesが10-Kで、月面への貨物輸送の商業顧客の一社に挙げる",
+          "text_en": "Intuitive Machines lists Columbia among commercial customers of its lunar cargo missions",
+          "source": {
+            "label": "Intuitive Machines 10-K(2025年度)",
+            "label_en": "Intuitive Machines 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1844452/000162828026019865/lunr-20251231.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "Our lunar cargo delivery missions include commercial customers including, Columbia Sportswear Company, Nokia Corporation, Aegis Aerospace"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

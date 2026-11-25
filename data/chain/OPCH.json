@@ -1,0 +1,218 @@
+{
+  "root": {
+    "ticker": "OPCH",
+    "name": "オプション・ケア・ヘルス",
+    "cik": 1014739,
+    "name_en": "Option Care Health"
+  },
+  "rows": [
+    {
+      "ja": "事業の出どころ",
+      "en": "Business origin",
+      "above": true
+    },
+    {
+      "ja": "競合(本人の10-Kに記載)",
+      "en": "Competitors (named in its 10-K)"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "UNH",
+    "CVS",
+    "BTSG",
+    "DCGO"
+  ],
+  "companies": [
+    {
+      "id": "WBA",
+      "ticker": "Walgreens",
+      "name": "ウォルグリーン",
+      "name_en": "Walgreens",
+      "sub": "ドラッグストア",
+      "sub_en": "Pharmacy chain",
+      "sub_short": "薬局",
+      "sub_short_en": "Drugstore",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "前身のOption CareはWalgreensの点滴事業を2015年に買い取って生まれた",
+          "text_en": "Its predecessor Option Care was formed from Walgreens Infusion Services, bought in 2015",
+          "source": {
+            "label": "Option Care Health 10-K(2025年度)",
+            "label_en": "Option Care Health 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1014739/000101473926000008/bios-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "collectively acquired Walgreens Infusion Services, Inc. and its subsidiaries from Walgreen Co., and the business was rebranded as Option Care, Inc. (\"Option Care\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "UNH",
+      "ticker": "UNH",
+      "name": "ユナイテッドヘルス(Optum)",
+      "name_en": "UnitedHealth (Optum)",
+      "sub": "医療保険・医療サービス",
+      "sub_en": "Health insurance & services",
+      "sub_short": "医療保険",
+      "sub_short_en": "Insurer",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "10-Kで、在宅点滴の競合として名指し(Optum Infusion Pharmacy)",
+          "text_en": "Named in its 10-K as a home infusion competitor (Optum Infusion Pharmacy)",
+          "source": {
+            "label": "Option Care Health 10-K(2025年度)",
+            "label_en": "Option Care Health 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1014739/000101473926000008/bios-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "The Company's competitors within the home infusion market include Optum Infusion Pharmacy (a unit of UnitedHealth Group), Coram CVS/specialty infusion services (a division of CVS Health), Amerita Specialty Pharmacy (a division of BrightSpring Health), KabaFusion, Soleo Health, Vital Care"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CVS",
+      "ticker": "CVS",
+      "name": "CVSヘルス",
+      "name_en": "CVS Health",
+      "sub": "薬局",
+      "sub_en": "Drugstore",
+      "sub_short": "薬局",
+      "sub_short_en": "Drugstore",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "10-Kで、在宅点滴の競合として名指し(Coram)",
+          "text_en": "Named in its 10-K as a home infusion competitor (Coram)",
+          "source": {
+            "label": "Option Care Health 10-K(2025年度)",
+            "label_en": "Option Care Health 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1014739/000101473926000008/bios-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "The Company's competitors within the home infusion market include Optum Infusion Pharmacy (a unit of UnitedHealth Group), Coram CVS/specialty infusion services (a division of CVS Health), Amerita Specialty Pharmacy (a division of BrightSpring Health), KabaFusion, Soleo Health, Vital Care"
+          }
+        }
+      ]
+    },
+    {
+      "id": "KabaFusion",
+      "ticker": "KabaFusion",
+      "name": "カバフュージョン",
+      "name_en": "KabaFusion",
+      "sub": "在宅点滴",
+      "sub_en": "Home infusion",
+      "sub_short": "在宅点滴",
+      "sub_short_en": "Infusion",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "10-Kで、在宅点滴の競合として名指し",
+          "text_en": "Named in its 10-K as a home infusion competitor",
+          "source": {
+            "label": "Option Care Health 10-K(2025年度)",
+            "label_en": "Option Care Health 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1014739/000101473926000008/bios-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "The Company's competitors within the home infusion market include Optum Infusion Pharmacy (a unit of UnitedHealth Group), Coram CVS/specialty infusion services (a division of CVS Health), Amerita Specialty Pharmacy (a division of BrightSpring Health), KabaFusion, Soleo Health, Vital Care"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SoleoHealth",
+      "ticker": "Soleo Health",
+      "name": "ソレオ・ヘルス",
+      "name_en": "Soleo Health",
+      "sub": "在宅点滴",
+      "sub_en": "Home infusion",
+      "sub_short": "在宅点滴",
+      "sub_short_en": "Infusion",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "10-Kで、在宅点滴の競合として名指し",
+          "text_en": "Named in its 10-K as a home infusion competitor",
+          "source": {
+            "label": "Option Care Health 10-K(2025年度)",
+            "label_en": "Option Care Health 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1014739/000101473926000008/bios-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "The Company's competitors within the home infusion market include Optum Infusion Pharmacy (a unit of UnitedHealth Group), Coram CVS/specialty infusion services (a division of CVS Health), Amerita Specialty Pharmacy (a division of BrightSpring Health), KabaFusion, Soleo Health, Vital Care"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BTSG",
+      "ticker": "BTSG",
+      "name": "ブライトスプリング・ヘルス・サービシズ",
+      "name_en": "BrightSpring Health Services",
+      "sub": "在宅医療・薬局",
+      "sub_en": "Home health & pharmacy",
+      "sub_short": "在宅医療",
+      "sub_short_en": "Care",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "BrightSpringが10-Kで、在宅点滴・専門薬局の競合の筆頭に挙げる(本人の10-KもBrightSpring傘下のAmeritaを挙げる)",
+          "text_en": "BrightSpring lists it first among home infusion rivals (its own 10-K names BrightSpring's Amerita too)",
+          "source": {
+            "label": "BrightSpring 10-K(2025年度)",
+            "label_en": "BrightSpring 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1865782/000119312526079454/btsg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "In our infusion and specialty pharmacy services, we compete in the large and fragmented home infusion and specialty pharmacy markets including Option Care Health, Inc., Coram CVS/specialty infusion services (a division of CVS Health), Accredo Health Group, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DCGO",
+      "ticker": "DCGO",
+      "name": "ドックゴー",
+      "name_en": "DocGo",
+      "sub": "移動医療",
+      "sub_en": "Mobile health",
+      "sub_short": "移動医療",
+      "sub_short_en": "Mobile",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "DocGoが10-Kで、大手の在宅・遠隔医療の競合として挙げる",
+          "text_en": "DocGo names it among larger in-home and telehealth competitors",
+          "source": {
+            "label": "DocGo 10-K(2025年度)",
+            "label_en": "DocGo 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1822359/000162828026018214/dcgo-20251231.htm",
+            "level": "official",
+            "date": "2026-03-16",
+            "quote": "Major competitors (in each case relative to only some of our products or services) include much larger, national or regional telehealth or in-home healthcare service providers such as DispatchHealth, Modivcare, Option Care Health"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

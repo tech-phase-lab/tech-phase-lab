@@ -1,0 +1,243 @@
+{
+  "root": {
+    "ticker": "JBHT",
+    "name": "J.B.ハント・トランスポート・サービシズ",
+    "cik": 728535,
+    "name_en": "J.B. Hunt Transport Services"
+  },
+  "rows": [
+    {
+      "ja": "鉄道の提携先・供給元",
+      "en": "Rail partners & supplier",
+      "above": true
+    },
+    {
+      "ja": "荷主(相手の資料に記載)",
+      "en": "Shipper (named in its filing)"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "RXO",
+    "MATX",
+    "FRGT"
+  ],
+  "companies": [
+    {
+      "id": "BNSF",
+      "ticker": "BNSF Railway",
+      "name": "BNSF鉄道",
+      "name_en": "BNSF Railway",
+      "sub": "鉄道",
+      "sub_en": "Railroad",
+      "sub_short": "鉄道",
+      "sub_short_en": "Railroad",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "1989年に始めた鉄道・トラックの複合輸送の提携相手。輸送の大半はBNSFとNorfolk Southernに載る",
+          "text_en": "Intermodal partner since 1989; most of its intermodal freight moves on BNSF and Norfolk Southern",
+          "source": {
+            "label": "J.B. Hunt 10-K(2025年度)",
+            "label_en": "J.B. Hunt 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/728535/000143774926005294/jbht20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Our JBI segment began operations in 1989, forming a unique partnership with what is now the BNSF Railway Company (BNSF); this was a watershed event in the industry and the first agreement that linked major rail and truckload carriers in a joint service environment."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NSC",
+      "ticker": "NSC",
+      "name": "ノーフォーク・サザン",
+      "name_en": "Norfolk Southern",
+      "sub": "鉄道",
+      "sub_en": "Railroad",
+      "sub_short": "鉄道",
+      "sub_short_en": "Railroad",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "複合輸送の大半を運ぶ鉄道の一つ",
+          "text_en": "One of the railroads carrying most of its intermodal business",
+          "source": {
+            "label": "J.B. Hunt 10-K(2025年度)",
+            "label_en": "J.B. Hunt 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/728535/000143774926005294/jbht20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "While we have agreements with a number of Class I railroads, the majority of our business travels on the BNSF and the Norfolk Southern railways."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WNC",
+      "ticker": "WNC",
+      "name": "ワバッシュ",
+      "name_en": "Wabash",
+      "sub": "トレーラー・荷台",
+      "sub_en": "Trailers & truck bodies",
+      "sub_short": "受託製造",
+      "sub_short_en": "Trailers",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Wabashが10-Kで、トレーラーを納める大口顧客の長距離トラック会社として挙げる",
+          "text_en": "Wabash lists it among large truckload carrier customers for its trailers",
+          "source": {
+            "label": "Wabash 10-K(2025年度)",
+            "label_en": "Wabash 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/879526/000087952626000036/wnc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Truckload Carriers: Crete Carrier Corp.; J.B. Hunt Transport, Inc.; Werner Enterprises, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "KDK",
+      "ticker": "KDK",
+      "name": "コディアックAI",
+      "name_en": "Kodiak AI",
+      "sub": "自動運転トラック",
+      "sub_en": "Autonomous trucking",
+      "sub_short": "自動運転",
+      "sub_short_en": "AV trucks",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Kodiak AIがS-1で、一緒に取り組む米国最大級の車両運用会社として挙げる",
+          "text_en": "Kodiak AI names it among the largest US fleets it works with",
+          "source": {
+            "label": "Kodiak AI S-1(2026年5月)",
+            "label_en": "Kodiak AI S-1 (May 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1853138/000162828026039200/kdk-20260529.htm",
+            "level": "official",
+            "date": "2026-05-29",
+            "quote": "Additionally, we work with some of the largest fleets in the United States, including J.B. Hunt, Werner Enterprises, C.R. England and Martin Brower."
+          }
+        }
+      ]
+    },
+    {
+      "id": "JHX",
+      "ticker": "JHX",
+      "name": "ジェームズ・ハーディー",
+      "name_en": "James Hardie (Azek)",
+      "sub": "建材",
+      "sub_en": "Building products",
+      "sub_short": "建材",
+      "sub_short_en": "Building",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "James Hardieが10-Kで、北米の貨物輸送に4,050万ドルを払ったと記載(2026年3月期、取締役の兼任あり)",
+          "text_en": "James Hardie paid it $40.5 million for North American freight (FY ended Mar 2026; the companies share a director)",
+          "source": {
+            "label": "James Hardie 10-K(2026年3月期)",
+            "label_en": "James Hardie 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1159152/000115915226000045/jhx-20260331.htm",
+            "level": "official",
+            "date": "2026-05-19",
+            "quote": "For fiscal years ended March 31, 2026, 2025 and 2024, the Company paid $ 40.5 million, $ 38.0 million and $ 36.6 million, respectively, to JB Hunt for freight services in North America."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RXO",
+      "ticker": "RXO",
+      "name": "RXO",
+      "name_en": "RXO",
+      "sub": "トラック仲介",
+      "sub_en": "Truck brokerage",
+      "sub_short": "トラック",
+      "sub_short_en": "Broker",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "RXOが10-Kで、主な競合の一社に挙げる",
+          "text_en": "RXO lists it among its primary competitors",
+          "source": {
+            "label": "RXO 10-K(2025年度)",
+            "label_en": "RXO 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1929561/000192956126000013/rxo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-09",
+            "quote": "Our primary competitors include C.H. Robinson, Echo Global Logistics, Expeditors, Forward Air, Flexport, J.B. Hunt, Landstar System, Total Quality Logistics, and Uber Freight."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MATX",
+      "ticker": "MATX",
+      "name": "マトソン",
+      "name_en": "Matson",
+      "sub": "海運・物流",
+      "sub_en": "Shipping & logistics",
+      "sub_short": "海運",
+      "sub_short_en": "Shipping",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Matsonが10-Kで、物流仲介の競合となる大手として挙げる",
+          "text_en": "Matson names it an asset-invested leader competing with its logistics brokerage",
+          "source": {
+            "label": "Matson 10-K(2025年度)",
+            "label_en": "Matson 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/3453/000110465926020944/matx-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Matson Logistics' Transportation Brokerage services compete most directly with C.H. Robinson Worldwide, Hub Group, RXO and other freight brokers and intermodal marketing companies, and asset-invested market leaders such as J.B. Hunt."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FRGT",
+      "ticker": "FRGT",
+      "name": "フレイト・テクノロジーズ",
+      "name_en": "Freight Technologies",
+      "sub": "物流テック(メキシコ)",
+      "sub_en": "Freight tech (Mexico)",
+      "sub_short": "物流IT",
+      "sub_short_en": "Freight",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Freight Technologiesが20-Fで、米墨国境輸送の競合として挙げる",
+          "text_en": "Freight Technologies names it a cross-border trucking competitor",
+          "source": {
+            "label": "Freight Technologies 20-F(2025年度)",
+            "label_en": "Freight Technologies 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1687542/000149315226023206/form20-f.htm",
+            "level": "official",
+            "date": "2026-05-14",
+            "quote": "Asset-based carriers with cross-border operations, including J.B. Hunt Transport Services, Inc., Schneider National, Inc., Werner Enterprises, Inc., Knight-Swift Transportation Holdings Inc."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
