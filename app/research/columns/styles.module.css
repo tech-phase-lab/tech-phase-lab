@@ -69,3 +69,5 @@
 .article.note .meta{flex:1 1 auto;min-width:0;min-height:32px;flex-wrap:wrap;align-content:center;column-gap:10px;row-gap:6px}
 .stamp{white-space:nowrap}
 .article.note .newTag{flex:none;white-space:nowrap}
+.article aside.postLock{margin-top:12px;padding-top:10px;font-size:18px;line-height:1;color:#b7ae9e}
+.listLock{display:flex;flex-wrap:wrap;align-items:center;gap:4px 12px;margin:18px 0 4px;font-size:13px;color:#c9d6d2}.listLock a{color:#a4dfcf}

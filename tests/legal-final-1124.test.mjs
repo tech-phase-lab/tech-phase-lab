@@ -73,7 +73,7 @@ test('client: the RESOLUTE LP button starts nothing without the tick, shows the 
 
 test('client: every purchase button has the consent line right above it and the red line right under it', () => {
   const expect = {
-    '../app/research/pro-offer-card.tsx': 1, '../app/research/account/account-sheets.tsx': 1, '../app/research/account/billing/screen.tsx': 2,
+    '../app/research/pro-offer-card.tsx': 2, '../app/research/account/account-sheets.tsx': 1, '../app/research/account/billing/screen.tsx': 2,
     '../app/resolute/checkout/live-screen.tsx': 2, '../app/resolute/checkout/screen.tsx': 2, '../app/resolute/lp/buy-button.tsx': 1,
   };
   for (const [file, n] of Object.entries(expect)) {

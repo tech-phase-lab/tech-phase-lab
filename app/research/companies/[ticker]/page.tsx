@@ -1,6 +1,6 @@
 import "server-only";
-import { connection } from "next/server";
-import { getMembership } from "@/lib/membership/server";
+import { requireProPage } from "@/lib/membership/pro-page";
+import { companyFreeHref } from "@/lib/research/company-href";
 import { muWatchForMember, muWatchTitles, muWatchFacts, muWatchSource } from "@/lib/research/mu-watch";
 import MuWatch from "../mu-watch";
 import { publicEvent } from "@/lib/research/access";
@@ -32,6 +32,10 @@ export async function generateMetadata({ params }: { params: Promise<{ ticker: s
 
 export default async function CompanyPage({ params }: { params: Promise<{ ticker: string }> }) {
   const { ticker } = await params;
+  // PRO only (owner, Nov 25): FREE and signed-out readers go to the stock's FREE page before anything is read or rendered.
+  const verified = await requireProPage(companyFreeHref(ticker));
+  // Past the gate the reader is PRO or an owner account; the owner sees every card also while trying the app as FREE.
+  const member = { ...verified, status: "signed-in", plan: "pro", accessExpiresAt: Number.MAX_SAFE_INTEGER };
   const coverage = coverageCompanies.find((item) => item.ticker === ticker);
   if (!coverage) notFound();
   const snapshotProblems = snapshotIssues(snapshot);
@@ -39,12 +43,8 @@ export default async function CompanyPage({ params }: { params: Promise<{ ticker
   if (snapshotProblems.length || coverageProblems.length) throw new Error(`Invalid coverage data: ${[...snapshotProblems, ...coverageProblems].join(", ")}`);
   const companyOptions = coverageCompanies.map(({ ticker, name }) => ({ ticker, name }));
   if (ticker === "MU") {
-    await connection();
-    const member = await getMembership().catch(() => ({status:"unavailable",plan:"free"}));
     return <MuWatch companies={companyOptions} cards={muWatchForMember(member)} titles={muWatchTitles} facts={muWatchFacts} source={muWatchSource}/>;
   }
-  await connection();
-  const member = await getMembership().catch(() => ({status:"unavailable",plan:"free"}));
   const watch=companyWatchForMember(ticker,member);
   if(!watch) notFound();
   return <CompanyWatch key={ticker} companies={companyOptions} watch={watch} titles={watchTitles}/>;
