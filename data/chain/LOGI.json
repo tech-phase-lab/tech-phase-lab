@@ -1,0 +1,239 @@
+{
+  "root": {
+    "ticker": "LOGI",
+    "name": "ロジクール(ロジテック)",
+    "cik": 1032975,
+    "name_en": "Logitech"
+  },
+  "rows": [
+    {
+      "ja": "主な販売先(売上の10%超)",
+      "en": "Main customers (over 10% of gross sales)"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in its 10-K)"
+    }
+  ],
+  "rivals": [
+    "AAPL",
+    "SONY",
+    "DELL",
+    "HPQ"
+  ],
+  "companies": [
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン",
+      "name_en": "Amazon",
+      "sub": "EC・クラウド",
+      "sub_en": "E-commerce & cloud",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "売上の18%を占める最大の販売先",
+          "text_en": "Largest customer at 18% of gross sales",
+          "source": {
+            "label": "Logitech 10-K(2026年3月期)",
+            "label_en": "Logitech 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1032975/000103297526000021/logi-20260331.htm",
+            "level": "official",
+            "date": "2026-05-21",
+            "quote": "In fiscal years 2026, 2025 and 2024, Amazon Inc. and its affiliated entities together accounted for 18% , 19% and 18% of our gross sales, respectively."
+          }
+        }
+      ]
+    },
+    {
+      "id": "INGM",
+      "ticker": "INGM",
+      "name": "イングラム・マイクロ",
+      "name_en": "Ingram Micro",
+      "sub": "IT製品卸",
+      "sub_en": "IT distribution",
+      "sub_short": "IT卸",
+      "sub_short_en": "IT",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "売上の14%を占める販売先(卸)",
+          "text_en": "Distributor at 14% of gross sales",
+          "source": {
+            "label": "Logitech 10-K(2026年3月期)",
+            "label_en": "Logitech 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1032975/000103297526000021/logi-20260331.htm",
+            "level": "official",
+            "date": "2026-05-21",
+            "quote": "In fiscal years 2026, 2025 and 2024, Ingram Micro Inc. and its affiliated entities together accounted for 14% , 14% and 13% of our gross sales, respectively."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SNX",
+      "ticker": "SNX",
+      "name": "TDシネックス",
+      "name_en": "TD Synnex",
+      "sub": "IT製品卸",
+      "sub_en": "IT distribution",
+      "sub_short": "IT卸",
+      "sub_short_en": "IT",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "売上の12%を占める販売先(卸)",
+          "text_en": "Distributor at 12% of gross sales",
+          "source": {
+            "label": "Logitech 10-K(2026年3月期)",
+            "label_en": "Logitech 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1032975/000103297526000021/logi-20260331.htm",
+            "level": "official",
+            "date": "2026-05-21",
+            "quote": "TD Synnex and its affiliated entities together accounted for 12% , 12%, and 14% of our gross sales in fiscal years 2026, 2025, and 2024, respectively."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AAPL",
+      "ticker": "AAPL",
+      "name": "アップル",
+      "name_en": "Apple",
+      "sub": "スマホ・PC",
+      "sub_en": "Smartphones & PCs",
+      "sub_short": "スマホ",
+      "sub_short_en": "Phones",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "キーボードの主な競合",
+          "text_en": "Main competitor in keyboards and combos",
+          "source": {
+            "label": "Logitech 10-K(2026年3月期)",
+            "label_en": "Logitech 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1032975/000103297526000021/logi-20260331.htm",
+            "level": "official",
+            "date": "2026-05-21",
+            "quote": "Keyboards & Combos Apple Inc. (\"Apple\"), Dell Technologies (\"Dell\"), HP, Lenovo Group Ltd. (\"Lenovo\")"
+          }
+        }
+      ]
+    },
+    {
+      "id": "DELL",
+      "ticker": "DELL",
+      "name": "デル・テクノロジーズ",
+      "name_en": "Dell Technologies",
+      "sub": "PC・サーバー",
+      "sub_en": "PCs & servers",
+      "sub_short": "PC",
+      "sub_short_en": "PCs",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "キーボードの主な競合",
+          "text_en": "Main competitor in keyboards and combos",
+          "source": {
+            "label": "Logitech 10-K(2026年3月期)",
+            "label_en": "Logitech 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1032975/000103297526000021/logi-20260331.htm",
+            "level": "official",
+            "date": "2026-05-21",
+            "quote": "Keyboards & Combos Apple Inc. (\"Apple\"), Dell Technologies (\"Dell\"), HP, Lenovo Group Ltd. (\"Lenovo\")"
+          }
+        }
+      ]
+    },
+    {
+      "id": "HPQ",
+      "ticker": "HPQ",
+      "name": "HP",
+      "name_en": "HP",
+      "sub": "PC・プリンター",
+      "sub_en": "PCs & printers",
+      "sub_short": "PC",
+      "sub_short_en": "PCs",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "キーボードの主な競合",
+          "text_en": "Main competitor in keyboards and combos",
+          "source": {
+            "label": "Logitech 10-K(2026年3月期)",
+            "label_en": "Logitech 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1032975/000103297526000021/logi-20260331.htm",
+            "level": "official",
+            "date": "2026-05-21",
+            "quote": "Keyboards & Combos Apple Inc. (\"Apple\"), Dell Technologies (\"Dell\"), HP, Lenovo Group Ltd. (\"Lenovo\")"
+          }
+        }
+      ]
+    },
+    {
+      "id": "LNVGY",
+      "ticker": "0992",
+      "name": "レノボ",
+      "name_en": "Lenovo",
+      "sub": "PC",
+      "sub_en": "PCs",
+      "sub_short": "PC",
+      "sub_short_en": "PCs",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "キーボードの主な競合",
+          "text_en": "Main competitor in keyboards and combos",
+          "source": {
+            "label": "Logitech 10-K(2026年3月期)",
+            "label_en": "Logitech 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1032975/000103297526000021/logi-20260331.htm",
+            "level": "official",
+            "date": "2026-05-21",
+            "quote": "Keyboards & Combos Apple Inc. (\"Apple\"), Dell Technologies (\"Dell\"), HP, Lenovo Group Ltd. (\"Lenovo\")"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SONY",
+      "ticker": "SONY",
+      "name": "ソニーグループ",
+      "name_en": "Sony Group",
+      "sub": "電機・ゲーム",
+      "sub_en": "Electronics & games",
+      "sub_short": "電機",
+      "sub_short_en": "Sony",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "イヤホンの競合",
+          "text_en": "Competitor in in-ear headphones",
+          "source": {
+            "label": "Logitech 10-K(2026年3月期)",
+            "label_en": "Logitech 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1032975/000103297526000021/logi-20260331.htm",
+            "level": "official",
+            "date": "2026-05-21",
+            "quote": "In-ear headphones competitors include Beats, Bose, Apple, Sony Corporation, JBL and Sennheiser, among others."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

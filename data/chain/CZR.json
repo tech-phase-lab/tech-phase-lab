@@ -1,0 +1,208 @@
+{
+  "root": {
+    "ticker": "CZR",
+    "name": "シーザーズ・エンターテインメント",
+    "cik": 1590895,
+    "name_en": "Caesars Entertainment, Inc."
+  },
+  "rows": [
+    {
+      "ja": "カジノ施設の貸し手",
+      "en": "Casino landlords"
+    },
+    {
+      "ja": "合弁・提携・ライセンス",
+      "en": "JVs, partners & licenses"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "VICI",
+      "ticker": "VICI",
+      "name": "VICIプロパティーズ",
+      "name_en": "VICI Properties",
+      "sub": "カジノREIT",
+      "sub_en": "Gaming REIT",
+      "sub_short": "REIT",
+      "sub_short_en": "REIT",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "18カジノを賃借(ラスベガス・地方・ジョリエット)",
+          "text_en": "Leases 18 casinos (Las Vegas, regional, Joliet leases)",
+          "source": {
+            "label": "Caesars Entertainment 10-K(2025年度)",
+            "label_en": "Caesars Entertainment 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1590895/000159089526000011/czr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "We lease 18 casinos from VICI Properties L.P., a Delaware limited partnership (\"VICI\") pursuant to a regional lease, a Las Vegas lease and a Joliet lease (the \"VICI Leases\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GLPI",
+      "ticker": "GLPI",
+      "name": "ゲーミング&レジャー・プロパティーズ",
+      "name_en": "Gaming and Leisure Properties",
+      "sub": "カジノREIT",
+      "sub_en": "Gaming REIT",
+      "sub_short": "REIT",
+      "sub_short_en": "REIT",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "6カジノを賃借(マスターリースほか)",
+          "text_en": "Leases six casinos (Master Lease and Lumière lease)",
+          "source": {
+            "label": "Caesars Entertainment 10-K(2025年度)",
+            "label_en": "Caesars Entertainment 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1590895/000159089526000011/czr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "In addition, we lease six casinos from GLP Capital, L.P., the operating partnership of Gaming and Leisure Properties, Inc. (\"GLPI\"), pursuant to a Master Lease (as amended, the \"GLPI Master Lease\") and a Lumière lease (together with the GLPI Master Lease, the \"GLPI Leases\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "EBCI",
+      "ticker": "Eastern Band of Cherokee Indians",
+      "name": "チェロキー・インディアン東部バンド",
+      "name_en": "Eastern Band of Cherokee Indians",
+      "sub": "先住民部族",
+      "sub_en": "Native American tribe",
+      "sub_short": "部族",
+      "sub_short_en": "Tribe",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "バージニア州ダンビルのカジノを合弁で建設・運営",
+          "text_en": "JV to build and run the Danville, Virginia casino",
+          "source": {
+            "label": "Caesars Entertainment 10-K(2025年度)",
+            "label_en": "Caesars Entertainment 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1590895/000159089526000011/czr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "In May 2023, the Company entered into a joint venture, CVA Holdco, LLC, with the Eastern Band of Cherokee Indians, to construct, own and operate a gaming facility in Danville, Virginia (\"Caesars Virginia\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Cordish",
+      "ticker": "Cordish",
+      "name": "コーディッシュ・カンパニーズ",
+      "name_en": "Cordish Companies",
+      "sub": "不動産開発",
+      "sub_en": "Real estate developer",
+      "sub_short": "開発",
+      "sub_short_en": "Developer",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ポンパノの隣接地で複合施設を合弁開発",
+          "text_en": "JV for a mixed-use destination next to the Pompano casino",
+          "source": {
+            "label": "Caesars Entertainment 10-K(2025年度)",
+            "label_en": "Caesars Entertainment 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1590895/000159089526000011/czr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "In April 2018, we entered into a joint venture with Cordish Companies (\"Cordish\") to plan and develop a mixed-use entertainment and hospitality destination expected to be located on unused land adjacent to our Pompano property."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NSUS",
+      "ticker": "NSUS Group",
+      "name": "NSUSグループ",
+      "name_en": "NSUS Group Inc.",
+      "sub": "オンラインポーカー",
+      "sub_en": "Online poker",
+      "sub_short": "ポーカー",
+      "sub_short_en": "Poker",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "WSOP商標を売却し、米国での利用ライセンスを受ける",
+          "text_en": "Sold the WSOP trademark and licenses it back for U.S. use",
+          "source": {
+            "label": "Caesars Entertainment 10-K(2025年度)",
+            "label_en": "Caesars Entertainment 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1590895/000159089526000011/czr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Concurrent with signing the sale agreement, the Company entered into licensing agreements with NSUS that allow the Company to continue its current operations within the United States, including the WSOP's live tournament series in Las Vegas for the next 20 years."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NYRABets",
+      "ticker": "NYRA Bets",
+      "name": "NYRAベッツ",
+      "name_en": "NYRABets LLC",
+      "sub": "競馬投票",
+      "sub_en": "Horse race wagering",
+      "sub_short": "競馬",
+      "sub_short_en": "Racing",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ニューヨーク競馬協会の公式投票サービスと提携",
+          "text_en": "Partnership with the New York Racing Association's official wagering platform",
+          "source": {
+            "label": "Caesars Entertainment 10-K(2025年度)",
+            "label_en": "Caesars Entertainment 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1590895/000159089526000011/czr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "In addition to the Caesars Sportsbook app, we have a partnership with NYRABets LLC, the official online wagering platform of the New York Racing Association, Inc., and operate the Caesars Racebook app in 22 states."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AGYS",
+      "ticker": "AGYS",
+      "name": "アジリシス",
+      "name_en": "Agilysys",
+      "sub": "ホテル向けソフト",
+      "sub_en": "Hospitality software",
+      "sub_short": "ソフト",
+      "sub_short_en": "Software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ホテル・カジノ向けソフトを導入(同社が代表的な顧客として明記)",
+          "text_en": "Uses its hospitality software (named as a representative client)",
+          "source": {
+            "label": "Agilysys 10-K(2026年3月期)",
+            "label_en": "Agilysys 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/78749/000119312526234423/agys-20260331.htm",
+            "level": "official",
+            "date": "2026-05-21",
+            "quote": "Representative Agilysys clients include: 7 Cedars Casino Golden Nugget Lake Charles Resorts World Bimini AVI Foodsystems, Inc. Grand Sierra Resort and Casino Rosen Hotels & Resorts Boyd Gaming Corporation Hialeah Park Rosewood Castiglion Del Bosco Caesars Entertainment"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

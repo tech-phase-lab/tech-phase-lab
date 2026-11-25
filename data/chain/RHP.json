@@ -1,0 +1,156 @@
+{
+  "root": {
+    "ticker": "RHP",
+    "name": "ライマン・ホスピタリティ・プロパティーズ",
+    "cik": 1040829,
+    "name_en": "Ryman Hospitality Properties, Inc."
+  },
+  "rows": [
+    {
+      "ja": "ホテル運営の委託先",
+      "en": "Hotel manager"
+    },
+    {
+      "ja": "出資・提携先",
+      "en": "Investors & partners"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "MAR",
+      "ticker": "MAR",
+      "name": "マリオット",
+      "name_en": "Marriott International",
+      "sub": "ホテル",
+      "sub_en": "Hotels",
+      "sub_short": "ホテル",
+      "sub_short_en": "Hotels",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ゲイロード・ホテルズとJWマリオットの全施設を運営受託",
+          "text_en": "Manages all Gaylord Hotels and JW Marriott properties",
+          "source": {
+            "label": "Ryman Hospitality 10-K(2025年度)",
+            "label_en": "Ryman Hospitality 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1040829/000110465926019035/rhp-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Marriott is responsible for the day-to-day management of our Gaylord Hotels properties, our JW Marriott properties, the Inn at Opryland, and the AC Hotel."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Atairos",
+      "ticker": "Atairos",
+      "name": "アテイロス",
+      "name_en": "Atairos Group",
+      "sub": "投資会社",
+      "sub_en": "Investment firm",
+      "sub_short": "投資",
+      "sub_short_en": "Investor",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "娯楽事業OEGの少数株主",
+          "text_en": "Minority investor in the OEG entertainment business",
+          "source": {
+            "label": "Ryman Hospitality 10-K(2025年度)",
+            "label_en": "Ryman Hospitality 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1040829/000110465926019035/rhp-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Further, in 2022, we completed a strategic transaction to sell a minority interest in OEG to an affiliate of Atairos Group, Inc. (\"Atairos\") and its strategic partner NBCUniversal Media, LLC, who we believe will continue to help us expand the distribution of our OEG brands."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NBCU",
+      "ticker": "NBCUniversal",
+      "name": "NBCユニバーサル",
+      "name_en": "NBCUniversal Media",
+      "sub": "メディア",
+      "sub_en": "Media",
+      "sub_short": "メディア",
+      "sub_short_en": "Media",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "OEGのブランド展開を支える戦略パートナー",
+          "text_en": "Strategic partner helping distribute OEG brands",
+          "source": {
+            "label": "Ryman Hospitality 10-K(2025年度)",
+            "label_en": "Ryman Hospitality 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1040829/000110465926019035/rhp-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Further, in 2022, we completed a strategic transaction to sell a minority interest in OEG to an affiliate of Atairos Group, Inc. (\"Atairos\") and its strategic partner NBCUniversal Media, LLC, who we believe will continue to help us expand the distribution of our OEG brands."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SIRI",
+      "ticker": "SIRI",
+      "name": "シリウスXM",
+      "name_en": "Sirius XM",
+      "sub": "衛星ラジオ",
+      "sub_en": "Satellite radio",
+      "sub_short": "ラジオ",
+      "sub_short_en": "Radio",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "「グランド・オール・オプリ」を毎週生放送",
+          "text_en": "Broadcasts the Grand Ole Opry live each week",
+          "source": {
+            "label": "Ryman Hospitality 10-K(2025年度)",
+            "label_en": "Ryman Hospitality 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1040829/000110465926019035/rhp-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Each week, the Grand Ole Opry is broadcast live to millions of country lifestyle consumers on radio via WSM-AM and Sirius/XM Radio and streamed on the Internet."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Simpsonville",
+      "ticker": "City of Simpsonville",
+      "name": "シンプソンビル市",
+      "name_en": "City of Simpsonville, SC",
+      "sub": "自治体",
+      "sub_en": "Municipality",
+      "sub_short": "自治体",
+      "sub_short_en": "City",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "CCNB円形劇場の運営事業者に選定(11年契約の予定)",
+          "text_en": "Selected to run the CCNB Amphitheatre (11-year agreement expected)",
+          "source": {
+            "label": "Ryman Hospitality 10-K(2025年度)",
+            "label_en": "Ryman Hospitality 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1040829/000110465926019035/rhp-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "We expect to enter into an initial eleven-year management agreement with the City of Simpsonville to manage the venue."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

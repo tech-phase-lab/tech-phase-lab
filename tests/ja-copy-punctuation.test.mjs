@@ -4,7 +4,8 @@ import { extname, join } from "node:path";
 import test from "node:test";
 
 // Owner, Nov 19: no 「。」「、」 right after a closing parenthesis, and amounts are written 「20ドル」, not 「20米ドル」.
-// The currency name 「米ドル」 (tabs, 「米ドル建て」) is fine; the unit is 「百万ドル」, not 「百万米ドル」 (owner, Nov 20).
+// The unit is 「百万ドル」, not 「百万米ドル」 (owner, Nov 20). Since the Nov 24 production QA the research pages say 「ドル」
+// everywhere (currency tab, 「ドル建て」, 「ドル換算」): no 「米ドル」 at all in research-facing copy (checked below).
 // Legal pages (owner, Nov 24): docs/COPY-PAREN-DOLLAR-LEGAL-PROPOSAL-2026-11-19.md applied; no 「米ドル」 at all there (checked below).
 const ROOTS = ["app", "lib"];
 const SKIP_DIRS = new Set(["lib/legal", "node_modules"]);
@@ -121,4 +122,20 @@ test("legal pages: no 「米ドル」 and no 「。」「、」 after a closing 
   const commerce = readFileSync("content/legal/commerce.ja.md", "utf8"), terms = readFileSync("content/legal/terms.ja.md", "utf8");
   assert.ok(commerce.includes("日本国外の利用者は月額20ドル、年額200ドル。"));
   assert.ok(terms.includes("日本国外の利用者には、月額20ドルまたは年額200ドルで提供します。"));
+});
+
+// Production QA, Nov 24: research-facing copy (pages, data and the relationship-map files) says 「ドル」, never 「米ドル」.
+// RESOLUTE (app/resolute, lib/resolute) has its own tax copy and is checked by its own tests.
+test("research-facing copy: no 「米ドル」", () => {
+  const skip = new Set(["app/resolute", "lib/resolute", "node_modules"]);
+  const walk = dir => skip.has(dir) ? [] : readdirSync(dir, { withFileTypes: true }).flatMap(entry => {
+    const path = `${dir}/${entry.name}`;
+    if (entry.isDirectory()) return walk(path);
+    return CODE.has(extname(entry.name)) || [".json", ".md"].includes(extname(entry.name)) ? [path] : [];
+  });
+  const found = ["app", "lib", "data", "content"].flatMap(walk).filter(file => {
+    const source = readFileSync(file, "utf8");
+    return (CODE.has(extname(file)) ? stripComments(source) : source).includes("米ドル");
+  });
+  assert.deepEqual(found, []);
 });

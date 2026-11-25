@@ -64,3 +64,31 @@
 .xPost > summary::-webkit-details-marker { display: none; }
 .credit { margin: 6px 0 0; font-size: 11px; color: var(--muted); }
 @media(max-width:600px){ .resultTable { font-size: 11.5px; } .resultTable th, .resultTable td { padding-right: 4px; } }
+/* Economic releases (owner, Nov 24): the number at a glance, the opened row with useful figures only. */
+.releaseLine{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 8px;margin-top:3px}
+.releaseLabel{color:var(--muted);font-size:11px;white-space:nowrap}
+.releaseValue{color:var(--text);font-size:15px;font-weight:700;white-space:nowrap;font-variant-numeric:tabular-nums}
+.releasePrevious{color:var(--muted);font-size:11px;white-space:nowrap;font-variant-numeric:tabular-nums}
+.nowrap{white-space:nowrap}
+.releaseBadge{display:inline-block;padding:1px 6px;border-radius:4px;border:1px solid #3a4b52;font-size:10px;line-height:1.5;white-space:nowrap;color:var(--muted)}
+.releaseBadge[data-vs="above"]{color:#7fe0c2;border-color:#2f6b5c}.releaseBadge[data-vs="below"]{color:#f0b37e;border-color:#7a5434}
+.releaseDetails{color:var(--text)}
+.releaseFigures{display:flex;gap:8px;margin:0 0 10px}
+.releaseFigures div{flex:1 1 0;min-width:0;padding:7px 9px;border:1px solid var(--line);border-radius:6px;background:#0c161d}
+.releaseFigures dt{color:var(--muted);font-size:10px;line-height:1.4}
+.releaseFigures dd{margin:2px 0 0;font-size:14px;font-weight:700;white-space:nowrap;font-variant-numeric:tabular-nums}
+.releaseChange{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px}
+.releaseDetails .facts{color:var(--muted)}
+.releaseDetails .facts li::before{content:"・"}
+.releaseAbout{color:var(--muted)}
+.releaseHistory{margin:4px 0 10px}.releaseHistory>span{display:block;color:var(--muted);font-size:10px;margin-bottom:4px}
+.releaseHistory ol{display:flex;align-items:flex-end;gap:6px;list-style:none;margin:0;padding:0}
+.releaseHistory li{flex:1 1 0;min-width:0;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10px;color:var(--muted)}
+.releaseHistory i{display:block;width:100%;max-width:28px;border-radius:2px 2px 0 0;background:#2f5a60}.releaseHistory i[data-negative]{background:#7a5434}
+.releaseHistory li[data-current] i{background:var(--mint)}.releaseHistory li[data-current] b{color:var(--text)}
+.releaseHistory b{font-weight:600;white-space:nowrap;font-variant-numeric:tabular-nums}.releaseHistory small{font-size:10px}
+.releaseNote{font-size:10px;color:var(--muted)}
+.releaseDetails p.releaseFoot{display:flex;flex-wrap:wrap;align-items:center;gap:4px 14px;margin:6px 0 0;font-size:11px;color:var(--muted)}
+.releaseDetails .releaseFoot a{min-height:32px;margin:0;font-size:11px}
+.withdraw{margin-left:auto;padding:2px 8px;min-height:28px;border:1px solid #4a3434;border-radius:4px;background:transparent;color:#c99;font:inherit;font-size:10px;cursor:pointer}
+@media(max-width:600px){.releaseValue{font-size:14px}.releaseFigures{gap:6px}.releaseFigures div{padding:6px 7px}.releaseFigures dd{font-size:13px}}

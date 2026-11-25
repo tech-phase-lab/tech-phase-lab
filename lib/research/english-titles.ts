@@ -19,6 +19,11 @@ export const ENGLISH_TITLES: Record<string, string> = {
   "/research/pro-experience": "PRO feature tour",
   "/research/notifications": "Notifications",
   "/research/news": "Tech Alerts",
+  "/research/market": "Markets",
+  "/research/general-news": "Top Topics",
+  "/research/price-targets": "Price targets",
+  "/research/columns": "RIZEL’S DESK",
+  "/research/notes": "RIZEL’s Notes",
   "/terms": "Terms of Service",
   "/privacy": "Privacy Policy",
 };

@@ -873,7 +873,7 @@ def normalize_result(item):
 
 
 # Nov 23 (owner: "unusable"): one alert per earnings event, the one with the figures, written the same way for every company:
-# 「CRWD Q3 FY2027決算：売上高$1.58B（+22%）、調整後EPS$0.34、次期売上予想$1.52B〜$1.53B」. Only the brief's own figures.
+# 「DELL Q3 FY2027決算：売上高$54.9B（+103%）、EPS$8.82」 (the diluted EPS, as on the site). Only the brief's own figures.
 _AMOUNT = re.compile(r'^\$(-?\d+(?:\.\d+)?)([BM]?)$')
 
 
@@ -928,7 +928,9 @@ def figure_titles(ticker, period, facts):
         growth = _growth(revenue)
         ja.append(f"売上高{_compact(revenue['value'])}" + (f'（{growth}）' if growth else ''))
         en.append(f"revenue {_compact(revenue['value'])}" + (f' ({growth} y/y)' if growth else ''))
-    eps_key = 'adjusted-eps' if 'adjusted-eps' in by_key else 'eps' if 'eps' in by_key else None
+    # Nov 25 (owner): the alert shows the EPS the site shows, the diluted (GAAP) one; an adjusted EPS only when it is the only one,
+    # and then always named 調整後EPS (DELL Q3 FY27: 「EPS$9.45」 was the non-GAAP figure; the site showed diluted EPS $8.82).
+    eps_key = 'eps' if 'eps' in by_key else 'adjusted-eps' if 'adjusted-eps' in by_key else None
     if eps_key and _compact(by_key[eps_key]['value']):
         ja.append(('調整後EPS' if eps_key == 'adjusted-eps' else 'EPS') + _compact(by_key[eps_key]['value']))
         en.append(('adj. EPS ' if eps_key == 'adjusted-eps' else 'EPS ') + _compact(by_key[eps_key]['value']))

@@ -139,12 +139,12 @@ test("genres after the reclassification", () => {
   for (const [ticker, formers] of Object.entries(formerGenres)) { assert.ok(all.includes(ticker)); for (const former of formers) assert.ok(!radarGenre(former).tickers.includes(ticker)); }
 });
 
-test("a company with no revenue sits at the left edge, says so, and stays out of the ranking", () => {
+test("a company with no revenue sits at the left edge, says so, and stays out of the ranking (the only one, Nov 24)", () => {
   const pre = { end: "2026-03-31", basis: "ttm", revenue: 0, ocfMargin: -1000, fcfMargin: -1000, cover: 600, revenueGrowth: null, noRevenue: true };
   const entries = [{ ticker: "A", facts: { latest: snap("2026-06-30", 20, 2), previous: null } }, { ticker: "OKLO", facts: { latest: pre, previous: snap("2025-12-31", 10, 3) } }];
   const pro = buildRadar("power", entries, "pro");
   const dot = pro.dots.find(d => d.ticker === "OKLO");
-  assert.equal(dot.noRevenue, true); assert.equal(dot.rank, null); assert.equal(dot.review, true); assert.equal(dot.previous, null);
+  assert.equal(dot.noRevenue, true); assert.equal(dot.rank, null); assert.equal(dot.review, false); assert.equal(dot.previous, null);
   assert.equal(pro.dots.find(d => d.ticker === "A").rank, 1);
   assert.equal(xPosition(dot.ocfMargin), 0);
   assert.ok(beyondText(dot.ocfMargin, dot.cover, true).includes("売上なし"));
@@ -171,7 +171,9 @@ test("crowded labels are moved apart so that none covers another, and the tapped
   assert.equal(boxes.AMAT.shifted, false);
 });
 
-test("earning power above 100% is flagged and left out of the ranking, and stays on the chart", () => {
+// Nov 24 (owner: "財務レーダーの順位外もできればどうにかしてほしい"): no separate 要確認 block. Prepayments of years ahead are taken out
+// before this point (radar-facts.ts); a value still above 100% is ranked with its score stopped at the chart's edge and says why.
+test("every company with revenue is ranked: earning power above 100% counts as the chart's edge and is marked", () => {
   const entries = [
     { ticker: "A", facts: { latest: snap("2026-06-30", 40, 2), previous: null } },
     { ticker: "B", facts: { latest: snap("2026-06-30", 297, 0.7), previous: null } },
@@ -179,9 +181,20 @@ test("earning power above 100% is flagged and left out of the ranking, and stays
     { ticker: "D", facts: { latest: snap("2026-06-30", 20, 0.5), previous: null } },
   ];
   const pro = buildRadar("semis", entries, "pro");
-  assert.deepEqual(pro.dots.map(d => [d.ticker, d.rank, d.review]), [["A", 2, false], ["B", null, true], ["C", 1, false], ["D", 3, false]]);
+  assert.deepEqual(pro.dots.map(d => [d.ticker, d.rank, d.review]), [["A", 2, false], ["B", 3, true], ["C", 1, false], ["D", 4, false]]);
+  assert.equal(pro.dots.find(d => d.ticker === "B").score, fitnessScore(60, 0.7));
   assert.equal(pro.dots.length, 4);
   assert.ok(!JSON.stringify(buildRadar("semis", entries, "free")).includes("review"));
+});
+
+test("a company whose prepayments were taken out is ranked and marked; FREE is not told", () => {
+  const entries = [
+    { ticker: "NBIS", facts: { latest: { ...snap("2026-09-30", -16.4, 0.47), prepaid: true }, previous: null } },
+    { ticker: "CRWV", facts: { latest: snap("2026-09-30", 73, 0.06), previous: null } },
+  ];
+  const pro = buildRadar("ai-cloud", entries, "pro");
+  assert.deepEqual(pro.dots.map(d => [d.ticker, d.rank, d.review, d.prepaid ?? false]), [["NBIS", 2, false, true], ["CRWV", 1, false, false]]);
+  assert.ok(!JSON.stringify(buildRadar("ai-cloud", entries, "free")).includes("prepaid"));
 });
 
 test("dots stopped at an edge that land on each other are spread so both show; dots inside keep their place", () => {

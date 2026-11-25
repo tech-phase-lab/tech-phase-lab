@@ -158,9 +158,11 @@ class ResultTests(unittest.TestCase):
         self.assertEqual(r['period'],'Q4 2026')
         values={f['key']:f['value'] for f in r['facts']}
         self.assertEqual(values['revenue'],'$54.23B')
-        self.assertEqual(values['eps'],'$33.42')
+        # "Adjusted EPS" is the adjusted figure, never the EPS (Nov 25)
+        self.assertEqual(values['adjusted-eps'],'$33.42')
+        self.assertNotIn('eps',values)
         self.assertEqual(values['guidance-revenue'],'$61.5B ± $1.5B')
-        self.assertEqual(values['guidance-eps'],'$38.15 ± $1.00')
+        self.assertEqual(values['guidance-adjusted-eps'],'$38.15 ± $1.00')
         self.assertNotIn('31.61',json.dumps(r))
         self.assertIsNone(results.projection('$MU earnings preview Q4 Revenue: $54B',['MU']))
         # Another company's results that only name the monitored company are not its flash.
@@ -210,7 +212,7 @@ class ResultTests(unittest.TestCase):
             with monitor.connect(path) as db:
                 items=results.public_feed(db,reference)
                 self.assertEqual(len(items),3)
-                self.assertEqual({next(f['value'] for f in item['facts'] if f['key']=='eps') for item in items},{'$-1.21'})
+                self.assertEqual({next(f['value'] for f in item['facts'] if f['key']=='adjusted-eps') for item in items},{'$-1.21'})
                 self.assertEqual({item['publisher']:next(f['value'] for f in item['facts'] if f['key']=='revenue') for item in items},
                                  {'TipRanks':'$10B','Wall St Engine':'$11B','FabyΔ':'$10B'})
                 self.assertTrue(all('pendingFacts' not in item for item in items))
@@ -269,7 +271,7 @@ class ResultTests(unittest.TestCase):
         public = results.latest_source_posts([eps, revenue])
         self.assertEqual(len(public), 2)
         self.assertEqual({f['key']: f['value'] for item in public for f in item['facts']},
-                         {'revenue': '$54.23B', 'eps': '$33.42'})
+                         {'revenue': '$54.23B', 'adjusted-eps': '$33.42'})
 
     def test_separate_disagreeing_post_is_not_an_assumed_retraction(self):
         items = []

@@ -7,6 +7,7 @@ import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import HoldingDetail from "./holding-detail";
 import { capitalRows, etfOverlap, type CapitalPortfolio } from "@/lib/research/capital-map";
+import { compactUsd } from "@/lib/research/compact-usd";
 import PageHeading from "../page-heading";
 import ResearchToolShell from "../research-tool-shell";
 import { useResearchLanguage } from "../use-research-language";
@@ -93,7 +94,7 @@ function CapitalMapContent({ portfolios = emptyPortfolios, mode = "sample" }: { 
   // Japanese mode: the English filed name stays visible, small, under the katakana firm name.
   const selectedSubtitle = selected && selected.kind !== "etf" && portfolioLabel(selected) !== selected.name ? selected.name : "";
   const totalValue = selected?.current.holdings.reduce((sum, row) => sum + row.value, 0) ?? 0;
-  const money = (value: number) => new Intl.NumberFormat(lang === "ja" ? "ja-JP" : "en-US", { style: "currency", currency: "USD", notation: "compact", maximumFractionDigits: 2 }).format(value);
+  const money = (value: number) => compactUsd(value, lang === "ja" ? "ja" : "en");
   const hasValues = totalValue > 0;
   const watched = new Set(lists.flatMap(list => list.tickers));
   const inputTickers = [...new Set(query.toUpperCase().split(/[,、;]+/).map(value => stockAliases[value.trim()] ?? value.trim()).filter(Boolean))];
@@ -168,7 +169,7 @@ function CapitalMapContent({ portfolios = emptyPortfolios, mode = "sample" }: { 
           </div>
           <div className={styles.metrics}>
             <div><small>{t("基準日", "AS OF")}{hasUpdate && <span className={styles.updateBadge} title={t("前回開いたときから保有データが更新されました", "Holdings updated since your last visit")}>NEW</span>}</small><strong>{selected.current.asOf}<span>{t("時点", "")}</span></strong></div>
-            <div><small>{t("保有銘柄数", "HOLDINGS")}</small><strong>{selected.current.holdings.length.toLocaleString()}<span>{t("銘柄", selected.current.holdings.length === 1 ? "holding" : "holdings")}</span></strong></div>
+            <div><small>{t("保有銘柄数", "HOLDINGS")}</small><strong>{selected.current.holdings.length.toLocaleString("en-US")}<span>{t("銘柄", selected.current.holdings.length === 1 ? "holding" : "holdings")}</span></strong></div>
             <div><small>{t("上位5銘柄の構成比", "TOP 5 HOLDINGS · COMBINED WEIGHT")}</small><strong>{percent(top.slice(0, 5).reduce((sum, row) => sum + row.weight, 0))}</strong></div>
           </div>
           <div className={styles.portfolioBody}>
@@ -182,7 +183,7 @@ function CapitalMapContent({ portfolios = emptyPortfolios, mode = "sample" }: { 
                     const activate = () => setActiveSlice(index);
                     return <g key={index} role="button" tabIndex={0} aria-label={`${slice.label} ${percent(slice.weight)}`} aria-pressed={activeSlice === index} onClick={activate} onMouseEnter={activate} onMouseLeave={() => setActiveSlice(null)} onFocus={activate} onBlur={() => setActiveSlice(null)} onKeyDown={event => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); activate(); } }} className={styles.slice}>
                       <circle cx="200" cy="200" r="148" fill="none" stroke={slice.color} strokeWidth="76" pathLength="100" strokeDasharray={`${Math.max(0, slice.weight - Math.min(.18, slice.weight * .15))} ${100 - Math.max(0, slice.weight - Math.min(.18, slice.weight * .15))}`} strokeDashoffset={-start} transform="rotate(-90 200 200)" />
-                      <title>{slice.label}: {percent(slice.weight)}</title>
+                      <title>{`${slice.label}: ${percent(slice.weight)}`}</title>
                       {slice.weight >= 5 ? <text x={200 + 148 * Math.cos(angle)} y={200 + 148 * Math.sin(angle) - 5} textAnchor="middle" className={styles.sliceLabel}><tspan>{slice.label.length > 8 ? slice.label.slice(0, 7) + "…" : slice.label}</tspan><tspan x={200 + 148 * Math.cos(angle)} dy="18">{slice.weight.toFixed(1)}%</tspan></text> : slice.weight >= 1.2 && <text x={200 + 148 * Math.cos(angle)} y={200 + 148 * Math.sin(angle)} textAnchor="middle" dominantBaseline="central" transform={`rotate(${angle * 180 / Math.PI + (Math.cos(angle) < 0 ? 180 : 0)} ${200 + 148 * Math.cos(angle)} ${200 + 148 * Math.sin(angle)})`} className={styles.smallSliceLabel}>{slice.label.length > 6 ? slice.label.slice(0, 5) + "…" : slice.label}</text>}
                     </g>;
                   })}

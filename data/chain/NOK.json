@@ -1,0 +1,183 @@
+{
+  "root": {
+    "ticker": "NOK",
+    "name": "ノキア",
+    "cik": 924613,
+    "name_en": "Nokia"
+  },
+  "rows": [
+    {
+      "ja": "出資者・提携先",
+      "en": "Investor & partners",
+      "above": true
+    },
+    {
+      "ja": "ライセンス・事業の売却先",
+      "en": "Licensees & business buyer"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "NVDA",
+      "ticker": "NVDA",
+      "name": "エヌビディア",
+      "name_en": "NVIDIA",
+      "sub": "GPU・AI半導体",
+      "sub_en": "GPUs & AI chips",
+      "sub_short": "AI半導体",
+      "sub_short_en": "AI chips",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "戦略提携の一環でNVIDIAがNokiaに10億ドルを出資",
+          "text_en": "NVIDIA to invest $1 billion in Nokia as part of a strategic partnership",
+          "source": {
+            "label": "Nokia 20-F(2025年度)",
+            "label_en": "Nokia 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/924613/000162828026015034/nok-20251231.htm",
+            "level": "official",
+            "date": "2026-03-05",
+            "quote": "We announced that NVIDIA will invest $1 billion in Nokia as part of a strategic partnership between our two companies."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Nscale",
+      "ticker": "Nscale",
+      "name": "エヌスケール",
+      "name_en": "Nscale",
+      "sub": "AIクラウド",
+      "sub_en": "AI cloud",
+      "sub_short": "AI基盤",
+      "sub_short_en": "AI cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "AIクラウド基盤で提携・出資",
+          "text_en": "Partnership with and investment in Nscale for AI cloud infrastructure",
+          "source": {
+            "label": "Nokia 20-F(2025年度)",
+            "label_en": "Nokia 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/924613/000162828026015034/nok-20251231.htm",
+            "level": "official",
+            "date": "2026-03-05",
+            "quote": "Recent examples of this approach include partnership and investment in Nscale for AI cloud infrastructure"
+          }
+        }
+      ]
+    },
+    {
+      "id": "LUNR",
+      "ticker": "LUNR",
+      "name": "インテュイティブ・マシーンズ",
+      "name_en": "Intuitive Machines",
+      "sub": "月面輸送",
+      "sub_en": "Lunar missions",
+      "sub_short": "月面輸送",
+      "sub_short_en": "Lunar",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "NASAなどと協力し月面に初の携帯通信網を設置(2025年3月)",
+          "text_en": "Deployed the first cellular network on the Moon together (Mar 2025)",
+          "source": {
+            "label": "Nokia 20-F(2025年度)",
+            "label_en": "Nokia 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/924613/000162828026015034/nok-20251231.htm",
+            "level": "official",
+            "date": "2026-03-05",
+            "quote": "In March 2025, in collaboration with NASA, Intuitive Machines and Lunar Outpost, we deployed the first cellular network on the Moon."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン",
+      "name_en": "Amazon",
+      "sub": "EC・クラウド",
+      "sub_en": "E-commerce & cloud",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "特許契約を締結(2025年3月)",
+          "text_en": "Signed a patent agreement (Mar 2025)",
+          "source": {
+            "label": "Nokia 20-F(2025年度)",
+            "label_en": "Nokia 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/924613/000162828026015034/nok-20251231.htm",
+            "level": "official",
+            "date": "2026-03-05",
+            "quote": "In March 2025, Nokia announced it had signed a patent agreement with Amazon."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HMD",
+      "ticker": "HMD",
+      "name": "HMDグローバル",
+      "name_en": "HMD Global",
+      "sub": "携帯電話",
+      "sub_en": "Mobile phones",
+      "sub_short": "携帯",
+      "sub_short_en": "Phones",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Nokiaブランドの携帯電話を作る10年間の独占ライセンス(2016年)",
+          "text_en": "Exclusive 10-year license to make Nokia-branded phones (2016)",
+          "source": {
+            "label": "Nokia 20-F(2025年度)",
+            "label_en": "Nokia 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/924613/000162828026015034/nok-20251231.htm",
+            "level": "official",
+            "date": "2026-03-05",
+            "quote": "In 2016, Nokia entered into a strategic agreement with HMD Global Oy (HMD) granting HMD an exclusive global license to create Nokia branded mobile phones and tablets for 10 years ."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "マイクロソフト",
+      "name_en": "Microsoft",
+      "sub": "ソフトウェア・クラウド",
+      "sub_en": "Software & cloud",
+      "sub_short": "ソフト",
+      "sub_short_en": "Software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "携帯端末事業を売却した相手(税負担の補償義務が残る)",
+          "text_en": "Bought its Devices & Services business; Nokia still indemnifies certain taxes",
+          "source": {
+            "label": "Nokia 20-F(2025年度)",
+            "label_en": "Nokia 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/924613/000162828026015034/nok-20251231.htm",
+            "level": "official",
+            "date": "2026-03-05",
+            "quote": "In the context of our sale of the Devices & Services business to Microsoft, we are required to indemnify Microsoft for certain tax liabilities"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

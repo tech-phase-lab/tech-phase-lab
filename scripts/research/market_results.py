@@ -444,8 +444,13 @@ def projection(text, tickers):
                 continue
             unit = {'billion':'B','million':'M','thousand':'K','trillion':'T'}.get(unit.lower(),unit.upper() if unit != '%' else '%')
             value = (symbol if key != 'gross-margin' else '') + number + unit
+            name = key
             if re.search(r'adjusted|adj\.?|non[- ]?GAAP|調整後', m[1], re.I):
                 ja, en = '調整後' + ja, 'Adjusted ' + en
+                # Nov 25 (owner, DELL Q3 FY27: the alert said 「EPS$9.45」 while the site showed diluted EPS $8.82): an adjusted /
+                # non-GAAP EPS is its own figure, never the EPS.
+                if key == 'eps':
+                    name = 'adjusted-eps'
             elif re.search(r'\bGAAP\b', m[1], re.I):
                 ja, en = 'GAAP ' + ja, 'GAAP ' + en
             if section:
@@ -457,8 +462,8 @@ def projection(text, tickers):
             if spread and currency_symbol(spread[1]) in ('', symbol):
                 spread_unit = {'billion':'B','million':'M','thousand':'K','trillion':'T'}.get((spread[3] or '').lower(), (spread[3] or '').upper()) or unit
                 value += ' ± ' + (symbol if key != 'gross-margin' else '') + spread[2] + spread_unit
-            facts.append({'key':('guidance-' if section else '')+key, 'ja':ja, 'en':en, 'value':value})
-    if not any(f['key'] in {'revenue','eps'} for f in facts):
+            facts.append({'key':('guidance-' if section else '')+name, 'ja':ja, 'en':en, 'value':value})
+    if not any(f['key'] in {'revenue','eps','adjusted-eps'} for f in facts):
         return None
     quarter = 'Q' + period[2] + (' ' + (period[1] or period[3]) if period[1] or period[3] else '')
     first = [f for f in facts if not f['key'].startswith('guidance-')][:2]

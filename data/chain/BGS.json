@@ -1,0 +1,157 @@
+{
+  "root": {
+    "ticker": "BGS",
+    "name": "B&Gフーズ",
+    "cik": 1278027,
+    "name_en": "B&G Foods"
+  },
+  "rows": [
+    {
+      "ja": "ブランドのライセンス元",
+      "en": "Brand licensors",
+      "above": true
+    },
+    {
+      "ja": "最大の顧客",
+      "en": "Largest customer"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "GIS",
+      "ticker": "GIS",
+      "name": "ゼネラル・ミルズ",
+      "name_en": "General Mills",
+      "sub": "食品",
+      "sub_en": "Packaged food",
+      "sub_short": "食品",
+      "sub_short_en": "Food",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "子会社とのライセンスでCinnamon Toast Crunchのシーズニングを販売",
+          "text_en": "Sells Cinnamon Toast Crunch seasoning under license from a General Mills unit",
+          "source": {
+            "label": "B&G Foods 10-K(2025年度)",
+            "label_en": "B&G Foods 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1278027/000110465926022961/bgs-20260103x10k.htm",
+            "level": "official",
+            "date": "2026-03-03",
+            "quote": "Cinnamon Toast Crunch Cinnadust seasoning blend pursuant to a license agreement with a subsidiary of General Mills, Inc., Einstein Bros. everything bagel seasoning blend pursuant to a license agreement with Einstein Noah Restaurant"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Weber",
+      "ticker": "Weber",
+      "name": "ウェーバー・スティーブン",
+      "name_en": "Weber-Stephen Products",
+      "sub": "グリル",
+      "sub_en": "Grills",
+      "sub_short": "グリル",
+      "sub_short_en": "Grills",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ライセンスでWeberブランドのシーズニングを販売",
+          "text_en": "Sells Weber seasonings under license",
+          "source": {
+            "label": "B&G Foods 10-K(2025年度)",
+            "label_en": "B&G Foods 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1278027/000110465926022961/bgs-20260103x10k.htm",
+            "level": "official",
+            "date": "2026-03-03",
+            "quote": "we sell Weber seasonings and other flavor enhancers pursuant to a licensing agreement with Weber-Stephen Products LLC, Crockpot seasoning mixes pursuant to a license agreement with Sunbeam Products, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Sunbeam",
+      "ticker": "Sunbeam",
+      "name": "サンビーム・プロダクツ",
+      "name_en": "Sunbeam Products",
+      "sub": "家電",
+      "sub_en": "Home appliances",
+      "sub_short": "家電",
+      "sub_short_en": "Appliance",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ライセンスでCrockpotブランドのシーズニングを販売",
+          "text_en": "Sells Crockpot seasoning mixes under license",
+          "source": {
+            "label": "B&G Foods 10-K(2025年度)",
+            "label_en": "B&G Foods 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1278027/000110465926022961/bgs-20260103x10k.htm",
+            "level": "official",
+            "date": "2026-03-03",
+            "quote": "we sell Weber seasonings and other flavor enhancers pursuant to a licensing agreement with Weber-Stephen Products LLC, Crockpot seasoning mixes pursuant to a license agreement with Sunbeam Products, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "EinsteinNoah",
+      "ticker": "Einstein Noah",
+      "name": "アインシュタイン・ノア・レストラン",
+      "name_en": "Einstein Noah Restaurant Group",
+      "sub": "ベーグル店",
+      "sub_en": "Bagel chain",
+      "sub_short": "ベーグル",
+      "sub_short_en": "Bagels",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ライセンスでEinstein Bros.のシーズニングを販売",
+          "text_en": "Sells Einstein Bros. seasoning under license",
+          "source": {
+            "label": "B&G Foods 10-K(2025年度)",
+            "label_en": "B&G Foods 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1278027/000110465926022961/bgs-20260103x10k.htm",
+            "level": "official",
+            "date": "2026-03-03",
+            "quote": "Cinnamon Toast Crunch Cinnadust seasoning blend pursuant to a license agreement with a subsidiary of General Mills, Inc., Einstein Bros. everything bagel seasoning blend pursuant to a license agreement with Einstein Noah Restaurant"
+          }
+        }
+      ]
+    },
+    {
+      "id": "WMT",
+      "ticker": "WMT",
+      "name": "ウォルマート",
+      "name_en": "Walmart",
+      "sub": "小売",
+      "sub_en": "Retail",
+      "sub_short": "量販店",
+      "sub_short_en": "Retail",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大の顧客(売上の約31.0%)",
+          "text_en": "Largest customer (about 31.0% of net sales)",
+          "source": {
+            "label": "B&G Foods 10-K(2025年度)",
+            "label_en": "B&G Foods 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1278027/000110465926022961/bgs-20260103x10k.htm",
+            "level": "official",
+            "date": "2026-03-03",
+            "quote": "Our largest customer, Walmart, accounted for approximately 31.0% of our fiscal 2025 net sales"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

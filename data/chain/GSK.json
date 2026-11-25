@@ -1,0 +1,183 @@
+{
+  "root": {
+    "ticker": "GSK",
+    "name": "GSK",
+    "cik": 1131399,
+    "name_en": "GSK"
+  },
+  "rows": [
+    {
+      "ja": "開発の提携元・薬の取得元",
+      "en": "Development partners & asset sellers",
+      "above": true
+    },
+    {
+      "ja": "合弁の株主・販売提携・事業の売却先",
+      "en": "JV shareholders, distributor & asset buyer"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "Hengrui",
+      "ticker": "600276",
+      "name": "恒瑞医薬",
+      "name_en": "Hengrui Pharma",
+      "sub": "製薬(中国)",
+      "sub_en": "Pharmaceuticals (China)",
+      "sub_short": "製薬",
+      "sub_short_en": "Pharma",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "最大12の新薬を共同開発する契約",
+          "text_en": "Agreement to develop up to 12 innovative medicines",
+          "source": {
+            "label": "GSK 20-F(2025年度)",
+            "label_en": "GSK 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1131399/000113139926000004/gsk-20251231.htm",
+            "level": "official",
+            "date": "2026-03-06",
+            "quote": "Our agreement with Hengrui Pharma to develop up to 12 innovative medicines across RI&I and oncology included HRS-9821"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BostonPharma",
+      "ticker": "Boston Pharmaceuticals",
+      "name": "ボストン・ファーマシューティカルズ",
+      "name_en": "Boston Pharmaceuticals",
+      "sub": "創薬",
+      "sub_en": "Biotech",
+      "sub_short": "創薬",
+      "sub_short_en": "Biotech",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "候補薬efimosferminを取得(2025年)",
+          "text_en": "Acquired efimosfermin from Boston Pharmaceuticals (2025)",
+          "source": {
+            "label": "GSK 20-F(2025年度)",
+            "label_en": "GSK 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1131399/000113139926000004/gsk-20251231.htm",
+            "level": "official",
+            "date": "2026-03-06",
+            "quote": "efimosfermin acquired from Boston Pharmaceuticals in Q3 2025"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PFE",
+      "ticker": "PFE",
+      "name": "ファイザー",
+      "name_en": "Pfizer",
+      "sub": "製薬",
+      "sub_en": "Pharmaceuticals",
+      "sub_short": "製薬",
+      "sub_short_en": "Pharma",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "HIV事業ViiV Healthcareの株主",
+          "text_en": "Shareholder in its HIV business ViiV Healthcare",
+          "source": {
+            "label": "GSK 20-F(2025年度)",
+            "label_en": "GSK 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1131399/000113139926000004/gsk-20251231.htm",
+            "level": "official",
+            "date": "2026-03-06",
+            "quote": "Our work on HIV is led by ViiV Healthcare, which we majority-own, with Pfizer and Shionogi as shareholders."
+          }
+        }
+      ]
+    },
+    {
+      "id": "4507",
+      "ticker": "4507",
+      "name": "塩野義製薬",
+      "name_en": "Shionogi",
+      "sub": "製薬",
+      "sub_en": "Pharmaceuticals",
+      "sub_short": "製薬",
+      "sub_short_en": "Pharma",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "HIV事業ViiV Healthcareの株主",
+          "text_en": "Shareholder in its HIV business ViiV Healthcare",
+          "source": {
+            "label": "GSK 20-F(2025年度)",
+            "label_en": "GSK 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1131399/000113139926000004/gsk-20251231.htm",
+            "level": "official",
+            "date": "2026-03-06",
+            "quote": "Our work on HIV is led by ViiV Healthcare, which we majority-own, with Pfizer and Shionogi as shareholders."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Zhifei",
+      "ticker": "300122",
+      "name": "重慶智飛生物製品",
+      "name_en": "Chongqing Zhifei Biological Products",
+      "sub": "ワクチン販売(中国)",
+      "sub_en": "Vaccine distribution (China)",
+      "sub_short": "ワクチン",
+      "sub_short_en": "Vaccines",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "中国で帯状疱疹ワクチン「シングリックス」を独占的に販売",
+          "text_en": "Exclusive distributor of Shingrix in China",
+          "source": {
+            "label": "GSK 20-F(2025年度)",
+            "label_en": "GSK 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1131399/000113139926000004/gsk-20251231.htm",
+            "level": "official",
+            "date": "2026-03-06",
+            "quote": "We supply China through our exclusive agreement with Chongqing Zhifei Biological Products, Ltd. to distribute and promote Shingrix"
+          }
+        }
+      ]
+    },
+    {
+      "id": "207940",
+      "ticker": "207940",
+      "name": "サムスンバイオロジクス",
+      "name_en": "Samsung Biologics",
+      "sub": "バイオ医薬の受託製造",
+      "sub_en": "Biologics CDMO",
+      "sub_short": "受託製造",
+      "sub_short_en": "CDMO",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "米ロックビルの製造拠点を含む子会社を売却する契約(2025年12月)",
+          "text_en": "Agreed to sell Human Genome Sciences, incl. the Rockville site (Dec 2025)",
+          "source": {
+            "label": "GSK 20-F(2025年度)",
+            "label_en": "GSK 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1131399/000113139926000004/gsk-20251231.htm",
+            "level": "official",
+            "date": "2026-03-06",
+            "quote": "On 22 December 2025, GSK entered into a definitive agreement with Samsung Biologics for the sale of 100% of its equity investment in Human Genome Sciences, principally including the Rockville site"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

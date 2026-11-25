@@ -3,9 +3,11 @@
 import { noBreakUnits } from "@/lib/research/no-break-units";
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import type { ResultBrief } from "@/lib/research/market-results";
-import { calendarDateKey } from "@/lib/research/calendar";
+import { calendarDateKey, calendarEvents, dateOnlyEvents } from "@/lib/research/calendar";
 import { publicNewsPayload, type EventResult, type OfficialUpdate } from "@/lib/research/general-news";
 import { mergeEconomicResults } from "@/lib/research/pce-results";
+import { releaseView, type Scheduled } from "@/lib/research/economic-release-view";
+import EconomicReleaseItem from "./economic-release-item";
 import { earningsResults } from "@/lib/research/earnings-results";
 import { checkedBriefs, oneResultPerQuarter } from "@/lib/research/earnings-results-history";
 import { createNewsPoller } from "@/lib/research/news-poller";
@@ -13,12 +15,18 @@ import { observePageActivity } from "@/lib/research/page-activity";
 import styles from "../research-tools.module.css";
 import calendarStyles from "./event-calendar.module.css";
 import DeepAnalysisPanel from "../deep-analysis-panel";
-import { useOwnerAccount, useOwnerMode } from "../member-display-provider";
+import { useOwnerAccount } from "../member-display-provider";
 import XPostCopyButton from "./x-post-copy-button";
 import EarningsReaction from "./earnings-reaction";
 import EarningsResultTable from "./earnings-result-table";
 import { headline } from "@/lib/research/earnings-table";
 import { japaneseMoney } from "@/lib/research/money-ja";
+
+// Scheduled economic releases, for the "next release" line. A day-only date (FOMC) is placed at noon New York time so it keeps its day.
+const economicSchedule: Scheduled[] = [
+  ...calendarEvents.filter(event => event.kind === "economic").map(event => ({ id: event.id, at: event.startsAt })),
+  ...dateOnlyEvents.filter(event => event.kind === "economic").map(event => ({ id: event.id, at: `${event.date}T12:00:00-05:00`, dateOnly: true })),
+];
 
 function ResultList({ rows, lang }: { rows: ReactNode[]; lang: "ja" | "en" }) {
   const [limit, setLimit] = useState(3);
@@ -36,8 +44,9 @@ export default function EconomicResultsPanel({ lang, zone, period, kind = "all",
   const [history, setHistory] = useState<Record<string, ResultBrief[]>>({});
   const ownerAccount = useOwnerAccount();
   const [events, setEvents] = useState<EventResult[]>([]);
-  const ownerMode = useOwnerMode();
   const [failed, setFailed] = useState(false);
+  // "Next release" is the next scheduled date after the page opened.
+  const [openedAt] = useState(() => Date.now());
   const [loaded, setLoaded] = useState(false);
   useEffect(() => {
     const poller = createNewsPoller({
@@ -87,7 +96,10 @@ export default function EconomicResultsPanel({ lang, zone, period, kind = "all",
     if (loaded) onSettled?.();
   }, [updates, briefs, events, ja, onReported, onSettled, loaded]);
   if (!active) return null;
-  const results = mergeEconomicResults(updates, briefs, events).filter(event => period === "all" || calendarDateKey(event.releasedAt, zone).startsWith(period));
+  // Every stored release, not only this period's: the previous release, the history and the forecast are read from them.
+  const allEconomic = mergeEconomicResults(updates, briefs, events);
+  const expectations = events.filter(item => item.id.startsWith("expected-")).map(item => ({ id: item.id, resultJa: item.resultJa, resultEn: item.resultEn }));
+  const results = allEconomic.filter(event => period === "all" || calendarDateKey(event.releasedAt, zone).startsWith(period));
   const zoneLabel = zone === "Asia/Tokyo" ? "JST" : "ET";
   const inPeriod = (at: string) => period === "all" || calendarDateKey(at, zone).startsWith(period);
   // Japanese view never shows English: a release without a checked Japanese title is left out there.
@@ -130,14 +142,13 @@ export default function EconomicResultsPanel({ lang, zone, period, kind = "all",
   <section className={styles.section} aria-label={ja ? "経済指標の結果" : "Economic releases"}>
     <h2>{ja ? "経済指標の結果" : "Economic releases"}</h2>
     {failed && <p role="status" className={styles.description}>{ja ? "最新の結果を取得できません。保存済みの公式確認結果を表示しています。" : "Latest results are unavailable. Showing saved, verified results."}</p>}
-    <ResultList key={`${lang}:${zone}:${period}:${kind}`} lang={lang} rows={results.map(event => <li key={event.id}><details>
-      <summary><time dateTime={event.releasedAt}>{calendarDateKey(event.releasedAt, zone).slice(5).replace("-", "/")}<small>{new Intl.DateTimeFormat(ja ? "ja-JP" : "en-US", { timeZone: zone, hour: "2-digit", minute: "2-digit", hour12: false }).format(new Date(event.releasedAt))} {zoneLabel}</small></time><span className={calendarStyles.eventName}>{event.title[lang]}<small>{event.result[lang]}</small></span><span className={calendarStyles.expand} aria-hidden="true">＋</span></summary>
-      <div className={calendarStyles.eventDetails}><p>{event.detail[lang]}</p>{(() => {
-        const auto = events.find(item => item.id === event.id);
-        // An automatic result shows every outlet that reported it; the owner can take it down.
-        if (auto) return <>{auto.sources.map(source => <a key={source.url} href={source.url} target="_blank" rel="noreferrer">{source.publisher} ↗</a>)}{ownerMode && <button type="button" onClick={() => { if (window.confirm(ja ? "この結果を取り下げます。もう自動では載りません。よろしいですか?" : "Withdraw this result? It will not be published again.")) void fetch("/api/research/event-results", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id: auto.id }) }).then(response => { if (response.ok) setEvents(current => current.filter(item => item.id !== auto.id)); }); }}>{ja ? "この結果を取り下げる" : "Withdraw this result"}</button>}</>;
-        return !event.sourceUrl.startsWith("https://x.com/") ? <a href={event.sourceUrl} target="_blank" rel="noreferrer">{!ja && "sourceNameEn" in event && typeof event.sourceNameEn === "string" ? event.sourceNameEn : event.sourceName} ↗</a> : null;
-      })()}</div>
-    </details></li>)} />
+    <ResultList key={`${lang}:${zone}:${period}:${kind}`} lang={lang} rows={results.map(event => {
+      const auto = events.find(item => item.id === event.id);
+      // Withdrawing an automatic result is an operator action: the owner accounts only, never members (owner, Nov 24).
+      const withdraw = auto && ownerAccount ? () => { if (window.confirm(ja ? "この結果を取り下げます。もう自動では載りません。よろしいですか?" : "Withdraw this result? It will not be published again.")) void fetch("/api/research/event-results", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id: auto.id }) }).then(response => { if (response.ok) setEvents(current => current.filter(item => item.id !== auto.id)); }); } : undefined;
+      return <EconomicReleaseItem key={event.id} lang={lang} title={event.title[lang]} time={time(event.releasedAt)} withdraw={withdraw}
+        view={releaseView(event, allEconomic, expectations, economicSchedule, openedAt, lang)}
+        when={(at, dateOnly) => new Intl.DateTimeFormat(ja ? "ja-JP" : "en-US", { timeZone: zone, month: "numeric", day: "numeric", weekday: "short", ...(dateOnly ? {} : { hour: "2-digit", minute: "2-digit", hour12: false }) }).format(new Date(at)) + (dateOnly ? "" : ` ${zoneLabel}`)} />;
+    })} />
   </section></>;
 }

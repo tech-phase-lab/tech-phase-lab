@@ -1,0 +1,209 @@
+{
+  "root": {
+    "ticker": "NVS",
+    "name": "ノバルティス",
+    "cik": 1114448,
+    "name_en": "Novartis"
+  },
+  "rows": [
+    {
+      "ja": "薬の権利・研究の提携元",
+      "en": "Licensors & research partners",
+      "above": true
+    },
+    {
+      "ja": "買収した企業",
+      "en": "Acquisitions"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "ALNY",
+      "ticker": "ALNY",
+      "name": "アルナイラム",
+      "name_en": "Alnylam Pharmaceuticals",
+      "sub": "核酸医薬",
+      "sub_en": "RNAi drugs",
+      "sub_short": "核酸医薬",
+      "sub_short_en": "RNAi",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "コレステロール薬レクビオの世界の権利をライセンス取得",
+          "text_en": "Licensed global rights to the cholesterol drug Leqvio",
+          "source": {
+            "label": "Novartis 20-F(2025年度)",
+            "label_en": "Novartis 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1114448/000111444826000004/nvs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-04",
+            "quote": "Novartis obtained global rights to develop, manufacture and commercialize Leqvio under a license and collaboration agreement with Alnylam Pharmaceuticals."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ROCHE",
+      "ticker": "Roche",
+      "name": "ロシュ(ジェネンテック)",
+      "name_en": "Roche (Genentech)",
+      "sub": "製薬",
+      "sub_en": "Pharmaceuticals",
+      "sub_short": "製薬",
+      "sub_short_en": "Pharma",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "眼科薬ルセンティスをGenentechからライセンス(米国外で販売)",
+          "text_en": "Licenses Lucentis from Genentech and sells it outside the US",
+          "source": {
+            "label": "Novartis 20-F(2025年度)",
+            "label_en": "Novartis 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1114448/000111444826000004/nvs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-04",
+            "quote": "Lucentis is licensed from Genentech, and Novartis holds the rights to commercialize the product outside the US."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GSK",
+      "ticker": "GSK",
+      "name": "GSK",
+      "name_en": "GSK",
+      "sub": "製薬",
+      "sub_en": "Pharmaceuticals",
+      "sub_short": "製薬",
+      "sub_short_en": "Pharma",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "MS薬ケシンプタ(オファツムマブ)の権利をGSKから取得",
+          "text_en": "Obtained rights to ofatumumab (Kesimpta) from GSK",
+          "source": {
+            "label": "Novartis 20-F(2025年度)",
+            "label_en": "Novartis 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1114448/000111444826000004/nvs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-04",
+            "quote": "Ofatumumab was originally developed by Genmab and licensed to GlaxoSmithKline (GSK). Novartis obtained the rights to ofatumumab from GSK across all indications."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Astex",
+      "ticker": "Astex",
+      "name": "アステックス・ファーマシューティカルズ",
+      "name_en": "Astex Pharmaceuticals",
+      "sub": "創薬",
+      "sub_en": "Drug discovery",
+      "sub_short": "創薬",
+      "sub_short_en": "Biotech",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "乳がん薬キスカリを研究提携のもとで開発",
+          "text_en": "Developed the breast cancer drug Kisqali under a research collaboration with Astex",
+          "source": {
+            "label": "Novartis 20-F(2025年度)",
+            "label_en": "Novartis 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1114448/000111444826000004/nvs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-04",
+            "quote": "Kisqali was developed by our Biomedical Research organizational unit (formerly the Novartis Institutes for BioMedical Research) under a research collaboration with Astex Pharmaceuticals."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RGLS",
+      "ticker": "RGLS",
+      "name": "レギュラス・セラピューティクス",
+      "name_en": "Regulus Therapeutics",
+      "sub": "核酸医薬",
+      "sub_en": "RNA drugs",
+      "sub_short": "核酸医薬",
+      "sub_short_en": "RNA",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年に買収完了",
+          "text_en": "Acquisition closed in 2025",
+          "source": {
+            "label": "Novartis 20-F(2025年度)",
+            "label_en": "Novartis 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1114448/000111444826000004/nvs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-04",
+            "quote": "in 2025, we closed the acquisitions of Anthos Therapeutics, Regulus Therapeutics, and Tourmaline Bio, announced the proposed acquisition of Avidity Biosciences"
+          }
+        }
+      ]
+    },
+    {
+      "id": "TRML",
+      "ticker": "TRML",
+      "name": "トルマリン・バイオ",
+      "name_en": "Tourmaline Bio",
+      "sub": "バイオ医薬",
+      "sub_en": "Biotech",
+      "sub_short": "バイオ",
+      "sub_short_en": "Biotech",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年に買収完了",
+          "text_en": "Acquisition closed in 2025",
+          "source": {
+            "label": "Novartis 20-F(2025年度)",
+            "label_en": "Novartis 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1114448/000111444826000004/nvs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-04",
+            "quote": "in 2025, we closed the acquisitions of Anthos Therapeutics, Regulus Therapeutics, and Tourmaline Bio, announced the proposed acquisition of Avidity Biosciences"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RNA",
+      "ticker": "RNA",
+      "name": "アビディティ・バイオサイエンシズ",
+      "name_en": "Avidity Biosciences",
+      "sub": "核酸医薬",
+      "sub_en": "RNA drugs",
+      "sub_short": "核酸医薬",
+      "sub_short_en": "RNA",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "買収を発表",
+          "text_en": "Announced acquisition",
+          "source": {
+            "label": "Novartis 20-F(2025年度)",
+            "label_en": "Novartis 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1114448/000111444826000004/nvs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-04",
+            "quote": "in 2025, we closed the acquisitions of Anthos Therapeutics, Regulus Therapeutics, and Tourmaline Bio, announced the proposed acquisition of Avidity Biosciences"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

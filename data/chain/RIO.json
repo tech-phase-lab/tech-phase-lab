@@ -1,0 +1,183 @@
+{
+  "root": {
+    "ticker": "RIO",
+    "name": "リオ・ティント",
+    "cik": 863064,
+    "name_en": "Rio Tinto"
+  },
+  "rows": [
+    {
+      "ja": "鉄鉱石の合弁相手(シマンドゥ・ピルバラ)",
+      "en": "Iron ore partners (Simandou & Pilbara)",
+      "above": true
+    },
+    {
+      "ja": "銅・アルミの合弁相手",
+      "en": "Copper & aluminium partners"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "Chinalco",
+      "ticker": "Chinalco",
+      "name": "チャイナルコ(中国アルミ)",
+      "name_en": "Chinalco",
+      "sub": "アルミ・資源(中国)",
+      "sub_en": "Aluminium & mining (China)",
+      "sub_short": "アルミ",
+      "sub_short_en": "Metals",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ギニアのシマンドゥ鉄鉱山の提携相手",
+          "text_en": "Partner in the Simandou iron ore project in Guinea",
+          "source": {
+            "label": "Rio Tinto 20-F(2025年度)",
+            "label_en": "Rio Tinto 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/863064/000162828026009531/rio-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "In November, I joined the celebrations to mark first ore at Simandou in Guinea. This massive achievement was made possible by a unique partnership, consisting of the Government of Guinea, Chinalco, Baowu and WCS."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ChinaBaowu",
+      "ticker": "China Baowu",
+      "name": "中国宝武鋼鉄集団",
+      "name_en": "China Baowu Group",
+      "sub": "鉄鋼(中国)",
+      "sub_en": "Steel (China)",
+      "sub_short": "鉄鋼",
+      "sub_short_en": "Steel",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "豪州Western Range鉄鉱山の合弁相手",
+          "text_en": "JV partner in Australia's Western Range mine",
+          "source": {
+            "label": "Rio Tinto 20-F(2025年度)",
+            "label_en": "Rio Tinto 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/863064/000162828026009531/rio-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "we opened the Western Range iron ore mine in Australia, which we developed with our joint venture partner China Baowu Group"
+          }
+        }
+      ]
+    },
+    {
+      "id": "WCS",
+      "ticker": "Winning Consortium Simandou",
+      "name": "ウィニング・コンソーシアム・シマンドゥ",
+      "name_en": "Winning Consortium Simandou",
+      "sub": "鉄鉱石開発(ギニア)",
+      "sub_en": "Iron ore development (Guinea)",
+      "sub_short": "鉄鉱石",
+      "sub_short_en": "Iron ore",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "シマンドゥの鉄道・港湾を共同開発",
+          "text_en": "Co-develops Simandou's rail and port",
+          "source": {
+            "label": "Rio Tinto 20-F(2025年度)",
+            "label_en": "Rio Tinto 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/863064/000162828026009531/rio-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "In November, I joined the celebrations to mark first ore at Simandou in Guinea. This massive achievement was made possible by a unique partnership, consisting of the Government of Guinea, Chinalco, Baowu and WCS."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Codelco",
+      "ticker": "Codelco",
+      "name": "コデルコ",
+      "name_en": "Codelco",
+      "sub": "銅(チリ国営)",
+      "sub_en": "Copper (Chile state-owned)",
+      "sub_short": "銅",
+      "sub_short_en": "Copper",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "チリのNuevo Cobre銅プロジェクトを共同で探鉱",
+          "text_en": "Partner in the Nuevo Cobre copper project in Chile",
+          "source": {
+            "label": "Rio Tinto 20-F(2025年度)",
+            "label_en": "Rio Tinto 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/863064/000162828026009531/rio-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "we advanced the drill program and early studies at the Nuevo Cobre project in Chile, in partnership with Codelco."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FM",
+      "ticker": "FM",
+      "name": "ファースト・クォンタム・ミネラルズ",
+      "name_en": "First Quantum Minerals",
+      "sub": "銅",
+      "sub_en": "Copper",
+      "sub_short": "銅",
+      "sub_short_en": "Copper",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "La Granja銅プロジェクトの合弁",
+          "text_en": "La Granja copper project joint venture",
+          "source": {
+            "label": "Rio Tinto 20-F(2025年度)",
+            "label_en": "Rio Tinto 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/863064/000162828026009531/rio-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "In August 2023, we completed a transaction to form a joint venture with First Quantum Minerals (FQM) that will work to unlock the development of the La Granja project"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MitsubishiCorp",
+      "ticker": "8058",
+      "name": "三菱商事",
+      "name_en": "Mitsubishi Corporation",
+      "sub": "総合商社",
+      "sub_en": "Trading house",
+      "sub_short": "商社",
+      "sub_short_en": "Trading",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "フィンランドの低炭素アルミ構想Arctialの提携相手",
+          "text_en": "Partner in the Arctial low-carbon aluminium study in Finland",
+          "source": {
+            "label": "Rio Tinto 20-F(2025年度)",
+            "label_en": "Rio Tinto 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/863064/000162828026009531/rio-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Partnership agreement with the Swedish investment company Vargas, Mitsubishi Corporation and other international and local industry partners to study a low carbon aluminium greenfield opportunity in Finland."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

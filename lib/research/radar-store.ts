@@ -5,7 +5,7 @@ import type { RadarFacts } from "./radar-facts";
  * Until all three settings exist, the radar keeps computing from SEC as before. */
 export type StoredRow = {
   genre: string; ticker: string; ocf_margin: number; cover: number; revenue_growth: number | null; revenue_usd: number;
-  period_end: string; previous_ocf_margin: number | null; previous_cover: number | null; needs_review: boolean;
+  period_end: string; previous_ocf_margin: number | null; previous_cover: number | null; /** See toRow. */ needs_review: boolean;
   calculated_at: string; fcf_margin: number | null; basis: "annual" | "ttm" | null; previous_period_end: string | null;
 };
 export type StoreConfig = { url: string; write: string; read: string };
@@ -24,6 +24,9 @@ export function storeConfig(env: Record<string, string | undefined> = process.en
 
 const finite = (value: number) => Number.isFinite(value) ? value : 1000; // same stand-in for "no borrowing" as the chart
 
+/** Above this earning power a stored figure is the unadjusted one (radar.ts REVIEW_ABOVE; kept here so the store needs no screen code). */
+const RAW_ABOVE = 100;
+
 /** The row to save, or null when the calculation did not succeed (then nothing is saved and the last good values stay). */
 export function toRow(genre: string, ticker: string, facts: RadarFacts, calculatedAt: number, reviewAbove: number): StoredRow | null {
   const latest = facts.latest;
@@ -37,15 +40,19 @@ export function toRow(genre: string, ticker: string, facts: RadarFacts, calculat
     revenue_growth: latest.revenueGrowth !== null && Number.isFinite(latest.revenueGrowth) ? latest.revenueGrowth : null,
     revenue_usd: latest.revenue, period_end: latest.end,
     previous_ocf_margin: hasBefore ? before.ocfMargin : null, previous_cover: hasBefore ? finite(before.cover) : null,
-    needs_review: latest.ocfMargin > reviewAbove, calculated_at: new Date(calculatedAt).toISOString().replace(/\.\d{3}Z$/, "Z"),
+    // The storage service's columns are fixed (Railway), so `needs_review` carries "the cash flow figure needed checking": true when
+    // prepayments of years ahead were taken out (Nov 24), or when the figure is still above `reviewAbove` (rows written before Nov 24).
+    needs_review: latest.prepaid === true || latest.ocfMargin > reviewAbove, calculated_at: new Date(calculatedAt).toISOString().replace(/\.\d{3}Z$/, "Z"),
     fcf_margin: latest.fcfMargin, basis: latest.basis, previous_period_end: hasBefore ? before.end : null,
   };
 }
 
-/** Back from a stored row to what the chart builder takes. The previous earnings' revenue is not stored; the colour then comes from year-on-year growth. */
+/** Back from a stored row to what the chart builder takes. The previous earnings' revenue is not stored; the colour then comes from year-on-year growth.
+ * A flagged row within 100% is one whose prepayments were taken out; a flagged row above it was stored before that (it is replaced within six hours). */
 export function factsFromRow(row: StoredRow): RadarFacts {
   return {
-    latest: { end: row.period_end, basis: row.basis ?? "ttm", revenue: row.revenue_usd, ocfMargin: row.ocf_margin, fcfMargin: row.fcf_margin ?? 0, cover: row.cover, revenueGrowth: row.revenue_growth },
+    latest: { end: row.period_end, basis: row.basis ?? "ttm", revenue: row.revenue_usd, ocfMargin: row.ocf_margin, fcfMargin: row.fcf_margin ?? 0, cover: row.cover, revenueGrowth: row.revenue_growth,
+      ...(row.needs_review === true && row.ocf_margin <= RAW_ABOVE ? { prepaid: true } : {}) },
     previous: row.previous_ocf_margin !== null && row.previous_cover !== null && row.previous_period_end
       ? { end: row.previous_period_end, basis: row.basis ?? "ttm", revenue: 0, ocfMargin: row.previous_ocf_margin, fcfMargin: 0, cover: row.previous_cover, revenueGrowth: null }
       : null,

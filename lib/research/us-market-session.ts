@@ -45,13 +45,23 @@ export function marketBanner(phase: MarketPhase): { ja: string; en: string; lit:
   return phase === "pre" ? { ja: "プレ取引中", en: "Pre-market", lit: true } : phase === "regular" ? { ja: "取引中", en: "Open", lit: true }
     : phase === "post" ? { ja: "アフター取引中", en: "After-hours", lit: true } : { ja: "取引終了", en: "Closed", lit: false };
 }
-/** "取引中 ・ 06:20:35 JST" / "Open · 16:20:35 ET": the state word and the time (to the second; Japan time in Japanese, U.S. Eastern in English,
- * owner Nov 17) of the last successful read; no time before the first one. */
-export function bannerLine(phase: MarketPhase, ja: boolean, fetchedAt: number | null): string {
+/** "取引中 ・ 06:20:35 JST" / "Open · 16:20:35 ET": the state word and a running clock (to the second; Japan time in Japanese, U.S. Eastern in English,
+ * owner Nov 17). `clockAt` is the current time, ticking every second on the page (owner, Nov 24: the time stood still at the last read); no time before
+ * the page has a clock. How old the prices are is said separately (freshnessNote), never by stopping the clock. */
+export function bannerLine(phase: MarketPhase, ja: boolean, clockAt: number | null): string {
   const lang = ja ? "ja" : "en";
   const word = marketBanner(phase)[lang];
-  if (fetchedAt === null) return word;
-  return `${word}${ja ? " ・ " : " · "}${displayClock(fetchedAt, lang, true)} ${zoneLabel(lang)}`;
+  if (clockAt === null) return word;
+  return `${word}${ja ? " ・ " : " · "}${displayClock(clockAt, lang, true)} ${zoneLabel(lang)}`;
+}
+/** The board reads its prices every 15 seconds; a read older than this means the updates have stopped (provider or network trouble). */
+export const BOARD_STALE_MS = 60_000;
+/** "株価 22:23:50 時点の取得" / "prices as of 08:23:50": shown next to the running clock only when the last successful read is older than
+ * BOARD_STALE_MS, so a stopped feed is never hidden behind a moving clock. null while the prices are current, or before the first read. */
+export function freshnessNote(ja: boolean, fetchedAt: number | null, now: number | null): string | null {
+  if (fetchedAt === null || now === null || now - fetchedAt < BOARD_STALE_MS) return null;
+  const lang = ja ? "ja" : "en";
+  return ja ? `株価は ${displayClock(fetchedAt, lang, true)} 時点（更新が止まっています）` : `prices as of ${displayClock(fetchedAt, lang, true)} (updates paused)`;
 }
 
 /** The U.S. trading day whose close the board shows while the market is shut for the day (owner, Nov 15): from 00:00 New York time on a Saturday,

@@ -97,7 +97,8 @@ export default function RadarChart({ dots, selected, onSelect, lang = "ja" }: { 
       <b>{selectedDot.ticker}</b><span>{ja ? "稼ぐ力" : "Cash generation"} {selectedDot.noRevenue ? (ja ? "売上なし" : "No revenue") : fmtPercent(selectedDot.ocfMargin)}</span><span>{ja ? "守る力" : "Resilience"} {fmtCover(selectedDot.cover, lang)}</span>
       <span>{ja ? "売上の前年比" : "Revenue YoY"} {selectedDot.growth === null ? "—" : `${selectedDot.growth > 0 ? "+" : ""}${selectedDot.growth.toFixed(0)}%`}</span><span>{ja ? "決算日" : "Earnings date"} {selectedDot.asOf}</span>
       {!selectedDot.noRevenue && <span>{ja ? "フリーキャッシュフロー率" : "Free cash flow margin"} {fmtPercent(selectedDot.fcfMargin)}</span>}
-      {selectedDot.review && !selectedDot.noRevenue && <span>{ja ? "要確認" : "Needs review"}</span>}<i>{zoneLabel(zoneOf(selectedDot.ocfMargin, selectedDot.cover), lang)}</i>
+      {selectedDot.prepaid && <span>{ja ? "前受け金を除いた値" : "Excluding customer prepayments"}</span>}
+      {selectedDot.review && <span>{ja ? "前受け金を含む値" : "Includes customer prepayments"}</span>}<i>{zoneLabel(zoneOf(selectedDot.ocfMargin, selectedDot.cover), lang)}</i>
     </p>}
   </>;
 }
