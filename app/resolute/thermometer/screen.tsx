@@ -4,6 +4,7 @@ import { useThermometerSnapshot } from "../use-thermometer-snapshot";
 import ToolShell from "../tool-shell";
 import {useReview} from "../review-context";
 import FlowNavigation from "../flow-navigation";
+import SectionHeading from "../section-heading";
 import { useDesktop } from "../use-desktop";
 import type { DiagnosisLocale } from "@/lib/resolute/diagnosis-copy";
 import styles from "../diagnosis.module.css";
@@ -97,7 +98,7 @@ export function MarketGauge({ locale, snapshot }: { locale: DiagnosisLocale; sna
   </section>;
   // 4つの位置 (owner, Nov 25; PC and mobile 11): rows 上向き/下向き, columns 冷えている/熱い; the current cell glows with 「いま」.
   // PC shows each meaning in its cell; on the phone a cell shows its meaning below when tapped.
-  const positionsCard = (current: number | null) => <section className={`${styles.card} ${pc.panel} ${gaugeStyles.positions}`} aria-labelledby="market-positions-heading">
+  const positionsCard = (current: number | null) => <section className={`${styles.card} ${desktop ? pc.panel : ""} ${gaugeStyles.positions}`} aria-labelledby="market-positions-heading">
     <h2 id="market-positions-heading">{t("4つの位置", "Four ways the market can look")}</h2>
     <p className={styles.muted}>{t("トレンドと相場の温度の組み合わせです。いまの位置が光ります。", "How the trend and the market temperature combine. The current position glows.")}</p>
     <div className={gaugeStyles.positionGrid} role="group" aria-label={t("トレンドと相場の温度", "Trend and market temperature")}>
@@ -148,7 +149,7 @@ export function MarketGauge({ locale, snapshot }: { locale: DiagnosisLocale; sna
     </div>;
   }
   return <div className={styles.section}>
-    <header className={styles.toolHeading}><span className={styles.eyebrow}>MARKET THERMOMETER</span><h1>{t("相場の温度計", "Market gauge")}</h1><p className={styles.muted}>{t("いまの相場の位置を、ひと目でつかむ", "See where the market stands at a glance")}</p></header>
+    <SectionHeading label="MARKET THERMOMETER" title={t("相場の温度計", "Market gauge")} description={t("いまの相場の位置を、ひと目でつかむ", "See where the market stands at a glance")}/>
     <section className={`${styles.card} ${styles.hero} ${styles.gaugeHero}`}>
       <div className={`${styles.tabs} ${gaugeStyles.indexSwitch}`} role="group" aria-label={t("対象指数", "Market index")}>
         <button type="button" aria-pressed={index === "nas100"} onClick={() => setIndex("nas100")}>{t("TP大型株100", "TP Large Cap 100")}</button>

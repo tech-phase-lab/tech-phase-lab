@@ -181,6 +181,6 @@
 .morningPanel > p { text-align: center; }
 .morningPanel > div { width: 100%; text-align: left; }
 .morningOnce { margin-top: auto !important; }
-.phoneSave { width: 100%; color: var(--gold2); }
+.phoneSave { width: 100%; }
 /* Phone (mobile 10): the same panels one above the other. */
 @media (max-width: 1023px) { .morningPanel, .morningSettings { padding: 24px 20px; } }

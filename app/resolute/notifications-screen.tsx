@@ -6,6 +6,7 @@ import { useUnsavedChanges } from "./use-unsaved-changes";
 import StockInput from "./stock-input";
 import NumberInput from "./number-input";
 import FlowNavigation from "./flow-navigation";
+import SectionHeading from "./section-heading";
 import { useRemembered } from "./features/use-remembered";
 import styles from "./diagnosis.module.css";
 import type { DiagnosisLocale } from "@/lib/resolute/diagnosis-copy";
@@ -148,13 +149,13 @@ function Notifications({locale,deny,mode}:{locale:DiagnosisLocale;deny:()=>void;
   // 「受け取り方」 below it, then save and the way on.
   const heading=desktop?<header className={pc.head}><div><p className={pc.eyebrow}><b>GOOD MORNING</b>{t("翌朝のひとこと","Morning note")}</p><h1 className={pc.title}>{t("翌朝のひとこと","Morning note")}</h1>
     <p className={pc.lead}>{t("お知らせの翌朝に、1通だけ届きます","One short notification the morning after an alert")}</p></div></header>
-   :<header className={styles.toolHeading}><span className={styles.eyebrow}>GOOD MORNING</span><h1>{t("翌朝のひとこと","Morning note")}</h1><p className={styles.muted}>{t("お知らせの翌朝に、1通だけ届きます","One short notification the morning after an alert")}</p></header>;
-  const goodMorning=<section className={`${styles.card} ${styles.hero} ${pc.panel} ${pc.morningPanel}`}>
+   :<SectionHeading label="GOOD MORNING" title={t("翌朝のひとこと","Morning note")} description={t("お知らせの翌朝に、1通だけ届きます","One short notification the morning after an alert")}/>;
+  const goodMorning=<section className={`${styles.card} ${styles.hero} ${desktop?pc.panel:""} ${pc.morningPanel}`}>
    {draft.morningEnabled?morningPicker:<><span className={styles.eyebrow}>GOOD MORNING</span>{morningOff}</>}
    <p className={`${styles.disclaimer} ${pc.morningOnce}`}>{t("この通知は、昨日のお知らせについて1回だけ届きます。","We send this once per alert.")}</p>
   </section>;
   const howYouGetIt=<fieldset className={`${styles.settingsFields} ${pc.column}`} disabled={loading||busy||locked}>
-   <section className={`${styles.card} ${pc.panel} ${pc.settings} ${pc.grow} ${pc.morningSettings}`}>
+   <section className={`${styles.card} ${desktop?pc.panel:""} ${pc.settings} ${pc.grow} ${pc.morningSettings}`}>
     <h2>{t("受け取り方","How you get it")}</h2>
     <label className={`${styles.switchRow} ${pc.lined}`}><span className={pc.switchText}><span>{en?"Get the morning note":<><span className={styles.phrase}>翌朝のひとことを</span><span className={styles.phrase}>受け取る</span></>}</span><small>{t("オンにするとお知らせと同じ時間に届きます","Turn it on to receive a note at the same time as your alerts.")}</small></span><input type="checkbox" role="switch" checked={draft.morningEnabled} onChange={e=>update({morningEnabled:e.target.checked})}/></label>
     <div className={`${pc.lined} ${pc.morningBlock}`}><h3 className={pc.blockTitle}>{t("届く時間","Delivery time")}<small>{deliveryZone(locale)}</small></h3>{timeButtons}</div>
