@@ -8,11 +8,12 @@ import NumberInput from "./number-input";
 import QuestionTitle from "./question-title";
 import styles from "./diagnosis.module.css";
 import { questions, emptyDiagnosisDraft, isQuestionVisible, selectAnswer, numericLimits, questionCopy,
- validateQuestion, draftToInput, draftToPlan, draftFromPlan, type DiagnosisDraft } from "@/lib/resolute/diagnosis-form";
+ validateQuestion, draftToInput, draftToPlan, draftFromPlan, questionNumber, QUESTION_TOTAL, type DiagnosisDraft } from "@/lib/resolute/diagnosis-form";
 import { diagnose } from "@/lib/resolute/diagnosis";
 import { localizeDiagnosis, type DiagnosisLocale } from "@/lib/resolute/diagnosis-copy";
 import { PlanClientError } from "@/lib/resolute/plan-client";
 import type { PlanSnapshot } from "@/lib/resolute/plan-data";
+import type { PlanQuestionId } from "@/lib/resolute/plan-answers";
 const messages = {
  ja: { title:"あなただけの投資ルールを30問の質問でつくる", intro:"暴落の夜も、上昇の朝も、自分のルールに立ち戻るためのキット。",
  closingFirst:"マイルールを定めれば", closingLast:"暴落も上昇も怖くない",
@@ -54,6 +55,7 @@ function DiagnosisForm({locale,deny,draftSession}:{locale:DiagnosisLocale;deny:(
  const [draft,setDraft]=useState<DiagnosisDraft>(emptyDiagnosisDraft), [mode,setMode]=useState<"intro"|"questions"|"result">("intro"),[index,setIndex]=useState(0);
  const [snapshot,setSnapshot]=useState<PlanSnapshot|null>(null),[busy,setBusy]=useState(false),[loading,setLoading]=useState(true),[saved,setSaved]=useState(false);
  const [message,setMessage]=useState<keyof typeof messages.ja|null>(null),[formError,setFormError]=useState<"answer"|"text"|null>(null),[locked,setLocked]=useState(false);
+ const [swapped,setSwapped]=useState<PlanQuestionId[]>([]);
  const pending=useRef<AbortController|null>(null),mutex=useRef(false), heading=useRef<HTMLHeadingElement>(null), c=messages[locale], en=locale==="en";
  const [savedDraft,setSavedDraft]=useState(()=>JSON.stringify(emptyDiagnosisDraft()));
  const dirty=JSON.stringify(draft)!==savedDraft;
@@ -74,7 +76,7 @@ function DiagnosisForm({locale,deny,draftSession}:{locale:DiagnosisLocale;deny:(
   expiresAt.current=Date.now()+DIAGNOSIS_SESSION_TTL;
   setSnapshot(p);setLocked(false);setSaved(false);
   const nextDraft=p.plan ? draftFromPlan(p.plan) : emptyDiagnosisDraft();
-  setSavedDraft(JSON.stringify(nextDraft));setDraft(nextDraft);setMessage(p.plan?"existing":null);setMode("intro");setIndex(0);
+  setSavedDraft(JSON.stringify(nextDraft));setDraft(nextDraft);setMessage(p.plan?"existing":null);setMode("intro");setIndex(0);setSwapped([]);
  }
  const restore=useCallback((p?:PlanSnapshot) => {
   if(!resume)return;
@@ -123,9 +125,17 @@ function DiagnosisForm({locale,deny,draftSession}:{locale:DiagnosisLocale;deny:(
   }finally{mutex.current=false;if(!controller.signal.aborted)setBusy(false);}
  }
  const visible=questions.filter(q=>isQuestionVisible(q.id,draft.answers)), q=visible[Math.min(index,visible.length-1)];
+ // A changed answer that swaps a question for its substitute asks only the swapped-in question again; every other
+ // answer is kept (owner, Nov 25). Once those are answered and nothing else is missing, the result opens.
+ const pendingSwap=swapped.filter(id=>id!==q.id), swapTarget=visible.findIndex((x,k)=>k>index&&pendingSwap.includes(x.id));
+ let complete=false;
+ if(swapped.includes(q.id)&&swapTarget<0)try{draftToPlan(draft);complete=true;}catch{/* Something is still unanswered. */}
+ const finishing=index===visible.length-1||complete;
  function next() {
   try{validateQuestion(q,draft);setFormError(null);
-   if(index===visible.length-1){draftToPlan(draft);setMode("result");}else setIndex(i=>i+1);
+   setSwapped(pendingSwap);
+   if(swapTarget>=0)setIndex(swapTarget);
+   else if(finishing){draftToPlan(draft);setMode("result");}else setIndex(i=>i+1);
   }catch(e){setFormError(e instanceof Error && e.message==="INVALID_TEXT"?"text":"answer");}
  }
  const draftNotice=dirty && draftSession ? <div>
@@ -134,8 +144,10 @@ function DiagnosisForm({locale,deny,draftSession}:{locale:DiagnosisLocale;deny:(
    : en?"Unfinished answers are kept in this tab for up to 12 hours so you can resume after reloading. They are not saved to the server.":"途中の回答はこのタブ内で最大12時間だけ一時保存し、再読み込み後も再開できます。サーバーには保存していません。"}</p>
   <button type="button" className={styles.secondary} disabled={loading||busy} onClick={discard}>{en?"Discard unfinished answers":"途中の回答を破棄する"}</button>
  </div> : null;
- const bodyMessage=<>{loading?<p role="status" className={styles.status}>{c.loading}</p>:null}
-  {message?<p role="status" className={message==="saved" || message==="existing"?styles.status:styles.error}>{c[message]}</p>:null}</>;
+ // 「保存済みのルールがあります…」 belongs to the start screen only, not the result being read (owner, Nov 25).
+ const messageView=(shown:typeof message)=><>{loading?<p role="status" className={styles.status}>{c.loading}</p>:null}
+  {shown?<p role="status" className={shown==="saved" || shown==="existing"?styles.status:styles.error}>{c[shown]}</p>:null}</>;
+ const bodyMessage=messageView(message);
  const reloadButton=<button type="button" className={styles.secondary} disabled={loading||busy} onClick={()=>void reload()}>{c.reload}</button>;
  if(mode==="intro") return <section className={`${styles.card} ${styles.introCard}`}>
   <span className={styles.eyebrow}>RULE DIAGNOSIS</span>
@@ -152,19 +164,22 @@ function DiagnosisForm({locale,deny,draftSession}:{locale:DiagnosisLocale;deny:(
  if(mode==="questions") {
   const text=questionCopy(q,locale,draft.currency), answer=draft.answers[q.id], option=q.o.find(o=>o.id===answer),limits=numericLimits(q,draft.answers,draft.currency);
   return <div className={styles.section}>
-   <div className={styles.progress}><div className={styles.meta}><span>{sections[q.s][en?1:0]}</span><span>{index+1} / {visible.length}</span></div><progress value={index+1} max={visible.length} aria-label={en?"Progress":"進み具合"}/></div>
+   <div className={styles.progress}><div className={styles.meta}><span>{sections[q.s][en?1:0]}</span><span>{index+1} / {QUESTION_TOTAL}</span></div><progress value={index+1} max={QUESTION_TOTAL} aria-label={en?"Progress":"進み具合"}/></div>
 
    <section className={styles.card} aria-labelledby="question-heading">
-    <span className={styles.eyebrow}>{q.id.toUpperCase()}</span><h1 id="question-heading" aria-label={text.text} ref={heading} tabIndex={-1} className={styles.questionTitle}><QuestionTitle id={q.id} text={text.text} locale={locale}/></h1>
+    <span className={styles.eyebrow}>{questionNumber(index)}</span><h1 id="question-heading" aria-label={text.text} ref={heading} tabIndex={-1} className={styles.questionTitle}><QuestionTitle id={q.id} text={text.text} locale={locale}/></h1>
     {text.note?<p className={styles.muted}>{text.note}</p>:null}
     <div className={styles.options}>{text.options.map(o=><button key={o.id} type="button" className={styles.option}
      aria-pressed={Array.isArray(answer)?(answer as string[]).includes(o.id):answer===o.id}
-     onClick={()=>{setFormError(null);setSaved(false);setDraft(d=>{
-      const selected = d.answers[q.id];
+     onClick={()=>{setFormError(null);setSaved(false);
+      const selected = draft.answers[q.id];
       const current: string[] = Array.isArray(selected) ? selected : [];
-      const next = current.includes(o.id) ? current.filter(x=>x!==o.id) : [...current,o.id];
-      return selectAnswer(d,q.id,q.multi ? next.length ? next : null : o.id);
-     });}}>{o.label}</button>)}</div>
+      const picked = current.includes(o.id) ? current.filter(x=>x!==o.id) : [...current,o.id];
+      const changed = selectAnswer(draft,q.id,q.multi ? picked.length ? picked : null : o.id);
+      const shown = questions.filter(x=>isQuestionVisible(x.id,changed.answers)&&!isQuestionVisible(x.id,draft.answers)).map(x=>x.id);
+      setSwapped(list=>[...list.filter(id=>isQuestionVisible(id,changed.answers)),...shown]);
+      setDraft(changed);
+     }}>{o.label}</button>)}</div>
     {option?.input?<label className={styles.field} htmlFor={`number-${q.id}`}>{en?"Enter a number":"数字を入力"} ({limits.money?draft.currency==="USD"?"USD":en?"JPY":"円":q.id==="q30"?en?"yen":"円":q.id==="q04"||q.id==="q05"?en?"months":"か月":"%"})
      <NumberInput id={`number-${q.id}`} decimal={!limits.money||draft.currency==="USD"} min={limits.min} max={limits.max} step={limits.step} value={draft.numbers[q.id]??""}
       aria-describedby={`range-${q.id}`} onValueChange={value=>{setFormError(null);setDraft(d=>({...d,numbers:{...d.numbers,[q.id]:value}}));}}/>
@@ -174,7 +189,7 @@ function DiagnosisForm({locale,deny,draftSession}:{locale:DiagnosisLocale;deny:(
     {draftNotice}
     {formError?<p className={styles.error} role="alert">{c[formError]}</p>:null}
     <div className={`${styles.nav} ${styles.questionNav}`}><button type="button" className={styles.secondary} onClick={()=>{setFormError(null);if(index===0)setMode("intro");else setIndex(i=>i-1);}}>{c.back}</button>
-     <button type="button" className={styles.primary} onClick={next}>{index===visible.length-1?c.result:c.next}</button></div>
+     <button type="button" className={styles.primary} onClick={next}>{finishing?c.result:c.next}</button></div>
    </section>
   </div>;
  }
@@ -187,7 +202,7 @@ function DiagnosisForm({locale,deny,draftSession}:{locale:DiagnosisLocale;deny:(
   <p className={styles.closing}><span>{c.closingFirst}</span><span>{c.closingLast}</span></p>
   <section className={styles.card}><p className={styles.muted}>{result.disclaimer}</p>
    {!result.buyLines.length&&draft.answers.q24!=="none"?<p className={styles.muted}>{c.later}</p>:null}
-   {bodyMessage}{draftNotice}<button type="button" className={styles.primary} disabled={busy||loading||locked||!snapshot||saved} onClick={()=>void save()}>{busy?c.saving:c.save}</button>
+   {messageView(message==="existing"?null:message)}{draftNotice}<button type="button" className={styles.primary} disabled={busy||loading||locked||!snapshot||saved} onClick={()=>void save()}>{busy?c.saving:c.save}</button>
    {saved?<Link className={styles.secondary} href="/resolute/wall" prefetch={false}>{locale==="en"?"Make your rules wallpaper":"ルールのお守りを作る"}</Link>:null}
    {saved?<Link className={`${styles.primary} ${styles.continueButton}`} href="/resolute/simulation" prefetch={false}>{c.simulation}</Link>:null}
    <button type="button" className={styles.secondary} disabled={busy||loading} onClick={()=>{setMode("questions");setSaved(false);setMessage(null);}}>{c.edit}</button>

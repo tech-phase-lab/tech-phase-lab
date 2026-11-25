@@ -17,6 +17,9 @@ test('all 30 exact IDs, agreed options and null unanswered values round-trip wit
   const answers={...empty,[id]:['q21','q28','q29'].includes(id)?[option]:option};
   if(id==='q21')answers.q20='stock';
   if(['q25','q26','q27'].includes(id))answers.q24='steps2';
+  // Substitutes (Nov 25) are answered only where they replace q21 / q25 / q26 / q27.
+  if(id==='q21alt'){answers.q20='bond';answers.q21alt=[option];}
+  if(['q25alt','q26alt','q27alt'].includes(id))answers.q24='none';
   assert.deepEqual(parsePlanAnswers(answers),answers);
  }
  const omitted={...empty};delete omitted.q30;
