@@ -1,6 +1,7 @@
 import rosters from './thermometer-rosters.json' with { type: 'json' };
 import { dailyMove, equalWeightLevels, realizedVolatility, sessionFear, sessionShock, type ShockReading, type FearReading, type BasketSeries } from './thermometer-basket.ts';
 import { calculateTemperature, calculateVixContext, validSessionDate, type DailyClose } from './thermometer.ts';
+import { bigDrops, similarDays } from './similar-days.ts';
 
 export type ThermometerRosters = { nasdaq100: string[]; semiconductors: string[] };
 export const THERMOMETER_ROSTERS: ThermometerRosters = { nasdaq100: rosters.nasdaq100.tickers, semiconductors: rosters.semiconductors.tickers };
@@ -75,5 +76,9 @@ export async function collectThermometer(config: ThermometerProviderConfig, conf
     const dates = large.levels.map(bar => bar.date).filter(date => date <= confirmedSession).slice(-SHOCK_SESSIONS);
     for (const date of dates) shock[date] = { nas100: sessionShock(large.levels, large.series, date), sox: 'levels' in chips ? sessionShock(chips.levels, chips.series, date) : null, fear: sessionFear(large.levels, date) };
   }
-  return { asOf: confirmedSession, nas100, sox, vix, moves, shock, missing: [...new Set(missing)].sort() };
+  // 今夜のひと息「今日と似た日」(Nov 25): the days in the past ten years that moved like tonight, and the past big falls, from the
+  // same basket levels (no extra provider calls). Each basket on its own; a basket without ten years of levels gets none.
+  const history = { nas100: 'levels' in large ? similarDays(large.levels, confirmedSession) : null, sox: 'levels' in chips ? similarDays(chips.levels, confirmedSession) : null };
+  const drops = { nas100: 'levels' in large ? bigDrops(large.levels, confirmedSession) : null, sox: 'levels' in chips ? bigDrops(chips.levels, confirmedSession) : null };
+  return { asOf: confirmedSession, nas100, sox, vix, moves, shock, history, drops, missing: [...new Set(missing)].sort() };
 }

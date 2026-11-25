@@ -14,6 +14,7 @@ import type { PlanInput, PlanSnapshot } from "@/lib/resolute/plan-data";
 import { PlanClientError } from "@/lib/resolute/plan-client";
 import { DELIVERY_HOURS,defaultNotificationSettings,parseNotificationSettings,type NotificationSettings,type NotificationSnapshot } from "@/lib/resolute/notification-settings";
 import { NotificationClientError } from "@/lib/resolute/notification-client";
+import { requestTonight } from "@/lib/resolute/tonight-transport";
 import { judge } from "@/lib/resolute/alert-judge";
 import { resoluteAlertPushBody,resoluteMorningPushBody } from "@/lib/resolute/push-notice";
 import { latestAlertFromDigest } from "@/lib/resolute/latest-alert";
@@ -52,6 +53,9 @@ function Notifications({locale,deny,mode}:{locale:DiagnosisLocale;deny:()=>void;
   if(value==="done"||value==="skipped"||value==="unsure")queueMicrotask(()=>{if(active)setPick(value);});
   return()=>{active=false;};
  },[mode]);
+ // 今夜のひと息「これまでのあなた」 (Nov 25): the morning answer (from the mail link or a tap) is kept on the newest rough night.
+ // Never from the owner preview. A failure changes nothing on this screen.
+ useEffect(()=>{if(mode!=="morning"||!pick||reviewPath!==undefined)return;void requestTonight({action:"answer",answer:pick}).catch(()=>{});},[mode,pick,reviewPath]);
  const controllerRef=useRef<AbortController|null>(null),mutex=useRef(false),denyRef=useRef(deny);
  useEffect(()=>{denyRef.current=deny;},[deny]);
  useEffect(()=>{const c=new AbortController();controllerRef.current=c;

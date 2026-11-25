@@ -205,7 +205,8 @@ test('wording: names, note under the stars, waiting text and the disclaimer are 
  const owner=read('../app/resolute/news/owner/screen.tsx');assert.ok(owner.includes('<h1>衝撃度チェッカーの管理</h1>'));assert.ok(!/action:'(?:stars|setStars|rate)'/.test(owner));assert.ok(owner.includes('手で変える操作はありません'));
  // The home card keeps the name on one line (compact: 「SHOCK GAUGE」 moves above when the row is narrow).
  assert.ok(read('../app/resolute/home/screen.tsx').includes('<ShockGaugeTitle locale={locale} compact/>'));
- assert.ok(read('../app/resolute/tonight/screen.tsx').includes('<ShockGaugeTitle locale={locale}/>'));
+ // 今夜のひと息 no longer lists the news (owner, Nov 25: TODAY'S NEWS removed).
+ assert.ok(!read('../app/resolute/tonight/screen.tsx').includes('ShockGaugeTitle'));
  assert.ok(read('../app/resolute/tool-shell.tsx').includes('["/resolute/news","衝撃度チェッカー","Shock Gauge",'));
  for(const file of ['home/screen.tsx','news/screen.tsx','news/owner/screen.tsx','news/page.tsx','review/screen.tsx','tonight/screen.tsx','tool-shell.tsx','checkout/live-screen.tsx','lp/landing.tsx','lp/landing-en.tsx'])
   assert.ok(!/危険度|News Risk|news risk|Risk Checker|Risk level/.test(read('../app/resolute/'+file)),file);
