@@ -1,12 +1,11 @@
 import "server-only";
-import { unstable_cache } from "next/cache";
 import { calendarEvents, dateOnlyEarnings } from "./calendar";
 import { shapePeriod, periodSeries, isIntradayPeriod, type BoardPeriod } from "./market-board-periods.ts";
 import { FAST_QUOTE_TTL_MS } from "./quote-refresh-gate.ts";
 import { MAX_QUOTES_PER_REQUEST, MAX_SPARKLINES_PER_REQUEST, STALE_LIMIT_MS, barSlotMs, quoteSlotMs, type ReadSpec, type Tier } from "./twelve-budget.ts";
 import { isBudgetError, sharedReader, twelveCall } from "./twelve-gateway";
 import { cachedStatistics } from "./twelve-store";
-import { easternToIso, chartSpec, nextEarningsFromSite, parseBars, parseNextEarnings, parseQuote, parseQuotes, parseStatistics, splitBars, type Bar, type ChartRange, type MarketFacts, type MarketQuote } from "./market-quote";
+import { easternToIso, chartSpec, nextEarningsFromSite, parseBars, parseNextEarnings, parseQuote, parseQuotes, parseStatistics, hasStatFacts, splitBars, type StatFacts, type Bar, type ChartRange, type MarketFacts, type MarketQuote } from "./market-quote";
 
 /** Server-side Twelve Data reads for the price screens. The key (TWELVE_DATA_API_KEY) never leaves the server.
  * Owner, Nov 23: members opening 銘柄比較 and stock pages had used up the plan's minute before. Every read now goes through the shared reader
@@ -178,34 +177,49 @@ export async function loadIntraday(quotes: MarketQuote[]): Promise<Record<string
   return out;
 }
 
-class FactsRefused extends Error { constructor() { super("facts-refused"); } }
 /** Statistics: the comparison's daily copy of every US-listed company first (no credit); the provider (50 credits) only for one it lacks. */
 async function statisticsFor(ticker: string): Promise<unknown> {
   const stored = await cachedStatistics(ticker).catch(() => null);
   if (stored) return stored.payload;
   return call("statistics", { symbol: ticker });
 }
-const factsRunning = new Map<string, Promise<MarketFacts>>();
-const facts = (ticker: string) => unstable_cache(async (): Promise<MarketFacts> => {
+/** Production QA, Nov 25 (NVDA, AMD and TSM showed — for EPS, market cap, dividend yield and next earnings while MU did not): the four facts
+ * were one cached answer, so a refused 20-credit earnings read threw away NVDA's statistics although the comparison had stored them for
+ * free, and a failed or unparseable statistics read was cached for six hours as an empty answer. The statistics and the earnings date are
+ * now read separately through the shared reader: a fresh copy for six hours (a day for the date), one read for everyone, and when a read is
+ * refused, fails or comes back empty, the last good copy. An empty answer is never stored as a valid one. */
+const STATS_SPEC: ReadSpec = { name: "md-facts-stats-v2", slotMs: 6 * 3600_000, staleMs: 14 * 86_400_000 };
+const EARNINGS_SPEC: ReadSpec = { name: "md-facts-next-earnings-v2", slotMs: 24 * 3600_000, staleMs: 7 * 86_400_000 };
+/** A ticker whose provider read just failed is not asked again by this instance for a while (each statistics read costs 50 credits). */
+const FACTS_RETRY_MS = 10 * 60_000;
+const factsFailed = new Map<string, number>();
+const failedLately = (key: string) => Date.now() - (factsFailed.get(key) ?? 0) < FACTS_RETRY_MS;
+const noteFailure = (key: string) => { factsFailed.set(key, Date.now()); if (factsFailed.size > 5_000) factsFailed.delete(factsFailed.keys().next().value!); };
+async function readStatFacts(ticker: string): Promise<StatFacts> {
+  const parsed = parseStatistics(await statisticsFor(ticker), ticker);
+  if (!hasStatFacts(parsed)) throw new Error("facts-empty");
+  return parsed;
+}
+async function readNextEarnings(ticker: string, today: string): Promise<string | null> {
+  // No period=next: Twelve Data answers it with a 404 ("No earning were found") whenever it lists no future date, so every stock page paid
+  // 20 credits for an error. The plain list is a valid answer; a future date in it is the next one, none is a valid "not known yet".
+  return parseNextEarnings(await call("earnings", { symbol: ticker }), today);
+}
+/** EPS, market cap, dividend yield and the next earnings date. The site's own calendar wins over the provider's. A failed, refused or empty
+ * read is never stored; the last good copy stands in for it, and members asking for the same company at once share one read. */
+export async function loadMarketFacts(ticker: string): Promise<MarketFacts & { complete: boolean }> {
   const today = new Date().toISOString().slice(0, 10);
   const own = nextEarningsFromSite(ticker, [...calendarEvents, ...dateOnlyEarnings], today);
-  // The provider's earnings date (20 credits) only when the site's own calendar has none.
-  const [stats, earnings] = await Promise.allSettled([statisticsFor(ticker), own ? Promise.resolve(null) : call("earnings", { symbol: ticker, period: "next" })]);
-  // A refused read is never stored for six hours: the next request (or the comparison's daily job) fills it.
-  if ((stats.status === "rejected" && isBudgetError(stats.reason)) || (earnings.status === "rejected" && isBudgetError(earnings.reason))) throw new FactsRefused();
-  const parsed = stats.status === "fulfilled" ? parseStatistics(stats.value, ticker) : null;
-  const provider = earnings.status === "fulfilled" && earnings.value ? parseNextEarnings(earnings.value, today) : null;
-  if (!parsed && stats.status === "rejected" && earnings.status === "rejected") throw new Error("facts-unavailable");
-  return { eps: parsed?.eps ?? null, marketCap: parsed?.marketCap ?? null, dividendYield: parsed?.dividendYield ?? null, nextEarnings: own ?? provider };
-}, ["market-facts-v1", ticker], { revalidate: 6 * 3600 })();
-/** EPS, market cap, dividend yield and the next earnings date. The site's own calendar wins over the provider's. A failed or refused read is
- * never cached; members asking for the same company at once share one read. */
-export async function loadMarketFacts(ticker: string): Promise<MarketFacts> {
-  try {
-    let job = factsRunning.get(ticker);
-    if (!job) { job = facts(ticker).finally(() => factsRunning.delete(ticker)); factsRunning.set(ticker, job); }
-    return await job;
-  } catch { return { eps: null, marketCap: null, dividendYield: null, nextEarnings: nextEarningsFromSite(ticker, [...calendarEvents, ...dateOnlyEarnings], new Date().toISOString().slice(0, 10)) }; }
+  const guarded = <T>(name: string, work: () => Promise<T>) => failedLately(`${name}:${ticker}`) ? null
+    : async () => { try { return await work(); } catch (error) { noteFailure(`${name}:${ticker}`); throw error; } };
+  const [stats, earnings] = await Promise.all([
+    sharedReader.read<StatFacts>(STATS_SPEC, ticker, guarded("stats", () => readStatFacts(ticker))).catch(() => null),
+    own ? Promise.resolve(null) : sharedReader.read<string | null>(EARNINGS_SPEC, ticker, guarded("earnings", () => readNextEarnings(ticker, today))).catch(() => null),
+  ]);
+  const value = stats && hasStatFacts(stats.value) ? stats.value : null;
+  // A stored date that has passed is not "next" any more.
+  const provider = earnings?.value && earnings.value >= today ? earnings.value : null;
+  return { eps: value?.eps ?? null, marketCap: value?.marketCap ?? null, dividendYield: value?.dividendYield ?? null, nextEarnings: own ?? provider, complete: value !== null };
 }
 
 /** Owner, Nov 11: the index symbols (DJI / NDX / SPX) answered with other securities on this plan (a $21 and a $0.1 quote), so the
