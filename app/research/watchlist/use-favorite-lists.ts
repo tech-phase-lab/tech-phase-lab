@@ -4,6 +4,7 @@ import { favoriteStocksKey } from "@/lib/research/favorites";
 import { favoriteListsKey, parseFavoriteLists, type FavoriteLists } from "@/lib/research/favorite-lists";
 import { useIdentityRefresh, useIdentitySignedIn } from "../identity-provider";
 import { createFavoriteSync, favoriteDisplayDocument, type CloudFavorites, type FavoriteSyncStatus } from "@/lib/research/favorite-sync";
+import { saveWatchlistLists, useSignInHint, useWatchlistSnapshot } from "./use-watchlist-snapshot";
 const eventName = "tech-phase:favorite-lists";
 function snapshot() {
   try { return JSON.stringify([localStorage.getItem(favoriteListsKey), localStorage.getItem(favoriteStocksKey)]); }
@@ -38,7 +39,10 @@ function useLocalFavoriteLists() {
   return { ...state, update, error };
 }
 
-export function useFavoriteLists() {
+/** `early` (the watchlist, owner Nov 25: rows at once): while the identity SDK and the saved lists are still loading, show this device's lists
+ * when the browser is signed out, or the lists this device last showed for the same sign-in (use-watchlist-snapshot.ts). Nothing can be
+ * edited until the real answer arrives. */
+export function useFavoriteLists({ early = false }: { early?: boolean } = {}) {
   const local = useLocalFavoriteLists();
   const signedIn = useIdentitySignedIn();
   const [syncedCloud, setCloud] = useState<CloudFavorites | null>(null);
@@ -91,7 +95,15 @@ export function useFavoriteLists() {
   function update(change: (state: FavoriteLists) => FavoriteLists) {
     return status === "guest" ? local.update(change) : sync.current?.update(change) ?? false;
   }
-  const displayed = favoriteDisplayDocument(cloud, status, local);
+  const hint = useSignInHint();
+  const snapshot = useWatchlistSnapshot();
+  useEffect(() => {
+    if (!early) return;
+    if (signedIn === true && syncedCloud && hint && hint !== "out") saveWatchlistLists(hint, syncedCloud.document);
+    else if (signedIn === false) saveWatchlistLists(null, null);
+  }, [early, signedIn, syncedCloud, hint]);
+  const earlyLists = early && status === "loading" ? (hint === "out" ? local : hint && snapshot.owner === hint ? snapshot.lists : null) : null;
+  const displayed = favoriteDisplayDocument(cloud, status, local) ?? earlyLists;
   return { ...(displayed ?? { lists: [{ id: "default", name: "", tickers: [] }], names: {}, alerts: [] }), ready: displayed !== null, update, error: status === "guest" && local.error, status,
     retry: () => { void sync.current?.retry(); },
     discardPending: () => { void sync.current?.discardPending(); },

@@ -109,7 +109,8 @@ test("4 (owner decision 案B): one payment method — PayPal (credit card or ban
   assert.ok(lp.includes(`<details><summary>支払い方法は?</summary><p>${PM}です。</p></details>`));
   assert.ok(lpEn.includes(`<details><summary>How can I pay?</summary><p>${PE}.</p></details>`));
   const live = read("../app/resolute/checkout/live-screen.tsx");
-  assert.ok(live.includes(`お支払いは${PM}です。`) && live.includes(`Payment is by ${PE}.`));
+  // Owner, Nov 25 (PC purchase screens): the payment method moved from the intro sentence into the PAYMENT panel's 「お支払い」 row.
+  assert.ok(live.includes(`[en?"Payment":"お支払い",en?"${PE}":"${PM}"]`));
   assert.ok(live.includes(`<dt>{en?"Payment method":"お支払い方法"}</dt><dd>{en?"${PE}":"${PM}"}</dd>`));
   assert.ok(termsJa.includes(`3. 支払方法は、${PM}です。`) && termsJa.includes(`PROプランの料金は、${PM}で支払います。`));
   assert.ok(termsEn.includes(`3. You can pay with ${PE}.`));
