@@ -2,6 +2,8 @@
 import { useEffect, useRef, useState } from "react";
 import { SignIn, SignUp, useAuth, useUser } from "@clerk/nextjs";
 import styles from "../checkout/styles.module.css";
+import PurchaseBar from "../checkout/purchase-bar";
+import theme from "../diagnosis.module.css";
 
 export default function ReceiveScreen({ language, hasLink, signingUp, orderId }: { orderId: string | null; language: "ja" | "en"; hasLink: boolean; signingUp: boolean }) {
   const [expectedOrder, setExpectedOrder] = useState(orderId);
@@ -53,17 +55,31 @@ export default function ReceiveScreen({ language, hasLink, signingUp, orderId }:
     RECOVERY_EXPIRED: en ? "This link has expired. Contact support with your order number. Do not purchase again." : "リンクの期限が切れています。再購入せず、注文番号を添えてお問い合わせください。",
     ALREADY_PURCHASED: en ? "This account already owns RESOLUTE. Contact support before connecting another purchase." : "このアカウントはRESOLUTEを購入済みです。別の購入を紐づける前にお問い合わせください。",
   };
-  return <main className={styles.page}><section className={styles.card}>
-    <p className={styles.badge}>RESOLUTE</p><h1>{en ? "Receive your purchase" : "購入したRESOLUTEを受け取る"}</h1>
-    {claimed ? <><p role="status">{en ? "Your purchase is connected to your account." : "このアカウントで受け取りが完了しました。"}</p><a className={styles.button} href={`/resolute?lang=${language}`}>{en ? "Open RESOLUTE" : "RESOLUTEを開く"}</a></> : <>
-      <p>{en ? "Sign in or create an account, then confirm the account that will receive your purchase. Your included year starts on the payment date." : "ログインまたはアカウントを作成し、受け取るアカウントを確認してください。1年間の対象期間は決済日から始まります。"}</p>
-      {expectedOrder && <p className={styles.orderId}>{en ? "Order: " : "注文番号："}{expectedOrder}</p>}
-      {ready && isLoaded && (isSignedIn ? <><p>{user?.primaryEmailAddress?.emailAddress}</p><button disabled={busy} onClick={() => void claim()}>{en ? "Connect to this account" : "このアカウントで受け取る"}</button></> : signingUp ?
-        <SignUp routing="hash" forceRedirectUrl={target} signInUrl={target}/> :
-        <SignIn routing="hash" forceRedirectUrl={target} signUpForceRedirectUrl={target} signUpUrl={`${target}&signup=1`}/>)}
-      {(!ready || !isLoaded) && !error && <p role="status">{en ? "Preparing your purchase…" : "受け取りの準備をしています…"}</p>}
-    </>}
-    {busy && <p role="status">{en ? "Connecting…" : "受け取りを確認しています…"}</p>}
-    {error && <p role="alert">{errors[error] ?? (en ? "We couldn’t connect this purchase. Check that you’re using the correct account. Do not purchase again; contact support with your order number if this continues." : "受け取りを確認できませんでした。ログイン中のアカウントを確認してください。解決しない場合は再購入せず、注文番号を添えてお問い合わせください。")}</p>}
-  </section></main>;
+  const panels = !claimed;
+  return <main className={`${theme.page} ${theme.mobile} ${styles.shell}`} lang={language}>
+    <PurchaseBar language={language} hrefFor={next => `/resolute/receive?lang=${next}${expectedOrder ? `&order=${expectedOrder}` : ""}${signingUp ? "&signup=1" : ""}`} />
+    <div className={styles.wrap}>
+    <h1 className={styles.title}>{en ? "Receive your purchase" : "購入したRESOLUTEを受け取る"}</h1>
+    {/* Without the email link (owner, Nov 25): the reason in one line above the two panels. */}
+    {error && <p role="alert" className={styles.above}>{errors[error] ?? (en ? "We couldn’t connect this purchase. Check that you’re using the correct account. Do not purchase again; contact support with your order number if this continues." : "受け取りを確認できませんでした。ログイン中のアカウントを確認してください。解決しない場合は再購入せず、注文番号を添えてお問い合わせください。")}</p>}
+    {claimed ? <section className={`${styles.panel} ${styles.single}`}><p role="status">{en ? "Your purchase is connected to your account." : "このアカウントで受け取りが完了しました。"}</p><a className={styles.button} href={`/resolute?lang=${language}`}>{en ? "Open RESOLUTE" : "RESOLUTEを開く"}</a></section> : null}
+    {panels && <div className={styles.pair}>
+      <section className={styles.panel} aria-labelledby="receive-sign-in">
+        <h2 id="receive-sign-in">{en ? "Sign in to receive" : "ログインして受け取る"}</h2>
+        <p className={styles.small}>{en ? "Sign in or create an account, then confirm the account that will receive your purchase. Your included year starts on the payment date." : "ログインまたはアカウントを作成し、受け取るアカウントを確認してください。1年間の対象期間は決済日から始まります。"}</p>
+        {ready && isLoaded && (isSignedIn ? <><p className={styles.field}>{user?.primaryEmailAddress?.emailAddress}</p><button className={styles.pay} disabled={busy} onClick={() => void claim()}>{en ? "Connect to this account" : "このアカウントで受け取る"}</button></> : signingUp ?
+          <a className={styles.ghost} href={target}>{en ? "Sign in to receive" : "ログインして受け取る"}</a> :
+          <SignIn routing="hash" forceRedirectUrl={target} signUpForceRedirectUrl={target} signUpUrl={`${target}&signup=1`}/>)}
+        {(!ready || !isLoaded) && !error && <p role="status" className={styles.small}>{en ? "Preparing your purchase…" : "受け取りの準備をしています…"}</p>}
+        {busy && <p role="status" className={styles.small}>{en ? "Connecting…" : "受け取りを確認しています…"}</p>}
+      </section>
+      {!(ready && isLoaded && isSignedIn) && <section className={styles.panel} aria-labelledby="receive-sign-up">
+        <h2 id="receive-sign-up">{en ? "Don’t have an account?" : "アカウントをお持ちでない方"}</h2>
+        {ready && isLoaded && (signingUp ? <SignUp routing="hash" forceRedirectUrl={target} signInUrl={target}/> :
+          <a className={styles.ghost} href={`${target}&signup=1`}>{en ? "Create an account and receive" : "アカウントを作って受け取る"}</a>)}
+      </section>}
+    </div>}
+    {expectedOrder && <p className={styles.orderNo}>{en ? "Order: " : "注文番号："}{expectedOrder}</p>}
+    </div>
+  </main>;
 }

@@ -17,3 +17,6 @@
 .steps li::before { content:counter(step); position:absolute; left:0; top:13px; display:grid; place-items:center; width:26px; height:26px; border-radius:50%; background:var(--rz-gold-grad); color:#1a1306; font-size:13px; font-weight:700; }
 .steps li b { color:var(--gold2); font-weight:600; }
 .steps p { margin:8px 0 0; font-size:13px; line-height:1.7; color:var(--sub); }
+
+/* PC (owner, Nov 25): the language and time zone panel stays in the middle (the page column is 600px); no 「ホーム画面に追加する方法」. */
+@media (min-width:1024px) { .homeCard { display:none; } }
