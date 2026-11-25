@@ -1,0 +1,234 @@
+{
+  "root": {
+    "ticker": "NFG",
+    "name": "ナショナル・フューエル・ガス",
+    "cik": 70145,
+    "name_en": "National Fuel Gas Company"
+  },
+  "rows": [
+    {
+      "ja": "都市ガス部門のガス調達先(2026年度)",
+      "en": "Utility gas suppliers (FY2026)"
+    },
+    {
+      "ja": "買収(オハイオのガス事業)",
+      "en": "Acquisition (Ohio gas utility)"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "DTEEnergy",
+      "ticker": "DTE",
+      "name": "DTEエナジー",
+      "name_en": "DTE Energy",
+      "sub": "電力・ガス",
+      "sub_en": "Power & gas utility",
+      "sub_short": "電力ガス",
+      "sub_short_en": "Utility",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "最大の調達先(都市ガス部門の購入量の21%)",
+          "text_en": "Largest supplier: 21% of utility gas purchases",
+          "source": {
+            "label": "National Fuel Gas 10-K(2026年9月期)",
+            "label_en": "National Fuel Gas 10-K (FY Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/70145/000007014526000042/nfg-20260930.htm",
+            "level": "official",
+            "date": "2026-11-20",
+            "quote": "Purchases from DTE Energy Trading, Inc. (21%), Expand Energy Marketing, LLC (14%), Emera Energy Services, Inc. (12%), Chevron Natural Gas (10%), South Jersey Resources (9%), EQT Energy, LLC (7%), BP Energy Company (5%), and Vitol Inc. (5%) accounted for nearly 83% of the Utility segment's 2026 gas purchases."
+          }
+        }
+      ]
+    },
+    {
+      "id": "EXE",
+      "ticker": "EXE",
+      "name": "エクスパンド・エナジー",
+      "name_en": "Expand Energy",
+      "sub": "天然ガス生産者",
+      "sub_en": "Gas producer",
+      "sub_short": "天然ガス",
+      "sub_short_en": "Gas",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "調達先(購入量の14%)",
+          "text_en": "Supplier: 14% of utility gas purchases",
+          "source": {
+            "label": "National Fuel Gas 10-K(2026年9月期)",
+            "label_en": "National Fuel Gas 10-K (FY Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/70145/000007014526000042/nfg-20260930.htm",
+            "level": "official",
+            "date": "2026-11-20",
+            "quote": "Purchases from DTE Energy Trading, Inc. (21%), Expand Energy Marketing, LLC (14%), Emera Energy Services, Inc. (12%), Chevron Natural Gas (10%), South Jersey Resources (9%), EQT Energy, LLC (7%), BP Energy Company (5%), and Vitol Inc. (5%) accounted for nearly 83% of the Utility segment's 2026 gas purchases."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Emera",
+      "ticker": "EMA.TO",
+      "name": "エメラ",
+      "name_en": "Emera",
+      "sub": "電力・ガス",
+      "sub_en": "Power & gas utility",
+      "sub_short": "電力ガス",
+      "sub_short_en": "Utility",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "調達先(購入量の12%)",
+          "text_en": "Supplier: 12% of utility gas purchases",
+          "source": {
+            "label": "National Fuel Gas 10-K(2026年9月期)",
+            "label_en": "National Fuel Gas 10-K (FY Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/70145/000007014526000042/nfg-20260930.htm",
+            "level": "official",
+            "date": "2026-11-20",
+            "quote": "Purchases from DTE Energy Trading, Inc. (21%), Expand Energy Marketing, LLC (14%), Emera Energy Services, Inc. (12%), Chevron Natural Gas (10%), South Jersey Resources (9%), EQT Energy, LLC (7%), BP Energy Company (5%), and Vitol Inc. (5%) accounted for nearly 83% of the Utility segment's 2026 gas purchases."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CVX",
+      "ticker": "CVX",
+      "name": "シェブロン",
+      "name_en": "Chevron",
+      "sub": "石油・エネルギー",
+      "sub_en": "Oil & energy",
+      "sub_short": "石油",
+      "sub_short_en": "Oil",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "調達先(購入量の10%)",
+          "text_en": "Supplier: 10% of utility gas purchases",
+          "source": {
+            "label": "National Fuel Gas 10-K(2026年9月期)",
+            "label_en": "National Fuel Gas 10-K (FY Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/70145/000007014526000042/nfg-20260930.htm",
+            "level": "official",
+            "date": "2026-11-20",
+            "quote": "Purchases from DTE Energy Trading, Inc. (21%), Expand Energy Marketing, LLC (14%), Emera Energy Services, Inc. (12%), Chevron Natural Gas (10%), South Jersey Resources (9%), EQT Energy, LLC (7%), BP Energy Company (5%), and Vitol Inc. (5%) accounted for nearly 83% of the Utility segment's 2026 gas purchases."
+          }
+        }
+      ]
+    },
+    {
+      "id": "EQT",
+      "ticker": "EQT",
+      "name": "EQT",
+      "name_en": "EQT Corporation",
+      "sub": "天然ガス生産者",
+      "sub_en": "Gas producer",
+      "sub_short": "天然ガス",
+      "sub_short_en": "Gas",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "調達先(購入量の7%)",
+          "text_en": "Supplier: 7% of utility gas purchases",
+          "source": {
+            "label": "National Fuel Gas 10-K(2026年9月期)",
+            "label_en": "National Fuel Gas 10-K (FY Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/70145/000007014526000042/nfg-20260930.htm",
+            "level": "official",
+            "date": "2026-11-20",
+            "quote": "Purchases from DTE Energy Trading, Inc. (21%), Expand Energy Marketing, LLC (14%), Emera Energy Services, Inc. (12%), Chevron Natural Gas (10%), South Jersey Resources (9%), EQT Energy, LLC (7%), BP Energy Company (5%), and Vitol Inc. (5%) accounted for nearly 83% of the Utility segment's 2026 gas purchases."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BP",
+      "ticker": "BP",
+      "name": "BP",
+      "name_en": "BP",
+      "sub": "石油",
+      "sub_en": "Oil",
+      "sub_short": "石油",
+      "sub_short_en": "Oil",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "調達先(購入量の5%)",
+          "text_en": "Supplier: 5% of utility gas purchases",
+          "source": {
+            "label": "National Fuel Gas 10-K(2026年9月期)",
+            "label_en": "National Fuel Gas 10-K (FY Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/70145/000007014526000042/nfg-20260930.htm",
+            "level": "official",
+            "date": "2026-11-20",
+            "quote": "Purchases from DTE Energy Trading, Inc. (21%), Expand Energy Marketing, LLC (14%), Emera Energy Services, Inc. (12%), Chevron Natural Gas (10%), South Jersey Resources (9%), EQT Energy, LLC (7%), BP Energy Company (5%), and Vitol Inc. (5%) accounted for nearly 83% of the Utility segment's 2026 gas purchases."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Vitol",
+      "ticker": "Vitol",
+      "name": "ビトル",
+      "name_en": "Vitol",
+      "sub": "石油トレーディング",
+      "sub_en": "Oil trading",
+      "sub_short": "石油商社",
+      "sub_short_en": "Oil trade",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "調達先(購入量の5%)",
+          "text_en": "Supplier: 5% of utility gas purchases",
+          "source": {
+            "label": "National Fuel Gas 10-K(2026年9月期)",
+            "label_en": "National Fuel Gas 10-K (FY Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/70145/000007014526000042/nfg-20260930.htm",
+            "level": "official",
+            "date": "2026-11-20",
+            "quote": "Purchases from DTE Energy Trading, Inc. (21%), Expand Energy Marketing, LLC (14%), Emera Energy Services, Inc. (12%), Chevron Natural Gas (10%), South Jersey Resources (9%), EQT Energy, LLC (7%), BP Energy Company (5%), and Vitol Inc. (5%) accounted for nearly 83% of the Utility segment's 2026 gas purchases."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CNP",
+      "ticker": "CNP",
+      "name": "センターポイント・エナジー",
+      "name_en": "CenterPoint Energy",
+      "sub": "電力・ガス",
+      "sub_en": "Power & gas utility",
+      "sub_short": "電力ガス",
+      "sub_short_en": "Utility",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "オハイオ州のガス配給会社を同社から買収(2026年10月)",
+          "text_en": "Bought its Ohio gas utility (Oct 2026)",
+          "source": {
+            "label": "National Fuel Gas 10-K(2026年9月期)",
+            "label_en": "National Fuel Gas 10-K (FY Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/70145/000007014526000042/nfg-20260930.htm",
+            "level": "official",
+            "date": "2026-11-20",
+            "quote": "The Company completed its acquisition of Vectren Energy Delivery of Ohio, LLC (\"CenterPoint Ohio\"), a former subsidiary of CenterPoint Energy Resources Corp. (the \"Seller\"), on October 1, 2026."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
