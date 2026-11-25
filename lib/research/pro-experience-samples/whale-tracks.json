@@ -1,9 +1,9 @@
 {
- "_source": "The owner's mockup 02_体験_クジラの足あと.png (Nov 22): five rows per tab with the tickers, names, figures and dates copied from it (holder counts are not shown and are made up). The shape is the research monitor's ownership snapshot (scripts/research/ownership_data.py), read by lib/research/whale-moves.ts parseWhaleSnapshot. All holdings, short interest, filings, buyback amounts and dates are fictional sample values on a made-up 2035 timeline; they are not real data.",
+ "_source": "The owner's mockup 02_体験_クジラの足あと.png (Nov 22): five rows per tab with the tickers, names, figures and dates copied from it (holder counts are not shown and are made up). The shape is the research monitor's ownership snapshot (scripts/research/ownership_data.py), read by lib/research/whale-moves.ts parseWhaleSnapshot. All holdings, short interest, filings, buyback amounts and dates are fictional sample values on the samples' shared made-up timeline (as of 2035/03/12 09:00 JST: every date is on or before the last U.S. close, 2035-03-09, SAMPLE_CLOSE_DAY in lib/research/pro-experience-samples.ts); they are not real data.",
  "fictional": true,
  "ok": true,
- "institutionalAsOf": "2035-03-31",
- "shortAsOf": "2035-04-13",
+ "institutionalAsOf": "2034-12-31",
+ "shortAsOf": "2035-02-28",
  "institutional": [
   { "ticker": "NBIS", "ja": "ネビウス", "en": "Nebius", "pct": 58.2, "change": 6.4, "holders": 640, "holdersChange": 58 },
   { "ticker": "NVDA", "ja": "エヌビディア", "en": "NVIDIA", "pct": 69.7, "change": 3.1, "holders": 5210, "holdersChange": 94 },
@@ -19,17 +19,17 @@
   { "ticker": "NVDA", "ja": "エヌビディア", "en": "NVIDIA", "pct": 1.16, "change": -0.1, "days": 2.8 }
  ],
  "insiders": [
-  { "ticker": "MU", "ja": "マイクロン", "en": "Micron", "date": "2035-04-18", "role": "Chief Executive Officer", "side": "buy", "planned": false, "value": 4200000 },
-  { "ticker": "AMD", "ja": "AMD", "en": "AMD", "date": "2035-04-17", "role": "Chief Financial Officer", "side": "sell", "planned": true, "value": 12500000 },
-  { "ticker": "ORCL", "ja": "オラクル", "en": "Oracle", "date": "2035-04-16", "role": "Chairman", "side": "sell", "planned": true, "value": 89000000 },
-  { "ticker": "INTC", "ja": "インテル", "en": "Intel", "date": "2035-04-13", "role": "Director", "side": "buy", "planned": false, "value": 1100000 },
-  { "ticker": "NVDA", "ja": "エヌビディア", "en": "NVIDIA", "date": "2035-04-02", "role": "Director", "side": "sell", "planned": true, "value": 298000000 }
+  { "ticker": "MU", "ja": "マイクロン", "en": "Micron", "date": "2035-03-09", "role": "Chief Executive Officer", "side": "buy", "planned": false, "value": 4200000 },
+  { "ticker": "AMD", "ja": "AMD", "en": "AMD", "date": "2035-03-08", "role": "Chief Financial Officer", "side": "sell", "planned": true, "value": 12500000 },
+  { "ticker": "ORCL", "ja": "オラクル", "en": "Oracle", "date": "2035-03-07", "role": "Chairman", "side": "sell", "planned": true, "value": 89000000 },
+  { "ticker": "INTC", "ja": "インテル", "en": "Intel", "date": "2035-03-06", "role": "Director", "side": "buy", "planned": false, "value": 1100000 },
+  { "ticker": "NVDA", "ja": "エヌビディア", "en": "NVIDIA", "date": "2035-02-26", "role": "Director", "side": "sell", "planned": true, "value": 298000000 }
  ],
  "buybacks": [
-  { "ticker": "AAPL", "ja": "アップル", "en": "Apple", "kind": "authorization", "date": "2035-04-18", "amount": 110000000000 },
-  { "ticker": "META", "ja": "メタ", "en": "Meta", "kind": "authorization", "date": "2035-04-11", "amount": 50000000000 },
-  { "ticker": "NVDA", "ja": "エヌビディア", "en": "NVIDIA", "kind": "quarter", "date": "2035-04-10", "start": "2034-12-31", "end": "2035-03-30", "amount": 14200000000 },
-  { "ticker": "QCOM", "ja": "クアルコム", "en": "Qualcomm", "kind": "quarter", "date": "2035-04-09", "start": "2034-12-31", "end": "2035-03-30", "amount": 3800000000 },
-  { "ticker": "AVGO", "ja": "ブロードコム", "en": "Broadcom", "kind": "quarter", "date": "2035-04-08", "start": "2034-12-31", "end": "2035-03-30", "amount": 2500000000 }
+  { "ticker": "AAPL", "ja": "アップル", "en": "Apple", "kind": "authorization", "date": "2035-03-09", "amount": 110000000000 },
+  { "ticker": "META", "ja": "メタ", "en": "Meta", "kind": "authorization", "date": "2035-03-02", "amount": 50000000000 },
+  { "ticker": "NVDA", "ja": "エヌビディア", "en": "NVIDIA", "kind": "quarter", "date": "2035-02-28", "start": "2034-09-30", "end": "2034-12-29", "amount": 14200000000 },
+  { "ticker": "QCOM", "ja": "クアルコム", "en": "Qualcomm", "kind": "quarter", "date": "2035-02-27", "start": "2034-09-30", "end": "2034-12-29", "amount": 3800000000 },
+  { "ticker": "AVGO", "ja": "ブロードコム", "en": "Broadcom", "kind": "quarter", "date": "2035-02-26", "start": "2034-09-30", "end": "2034-12-29", "amount": 2500000000 }
  ]
 }
