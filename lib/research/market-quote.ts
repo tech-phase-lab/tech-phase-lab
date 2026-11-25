@@ -141,21 +141,30 @@ export function easternToIso(text: string): string {
 }
 /** FavoriteQuote (the watchlist's own contract) from a quote and the same session's 5-minute closes. */
 export function toFavoriteQuote(q: MarketQuote, intraday: Bar[] = [], now = Date.now()): FavoriteQuote {
+  // A pre-market / after-hours price without the provider's percentage (it sometimes leaves extended_percent_change empty) is measured from the
+  // regular close itself, rather than dropped: the row lost its 「時間外」 then (owner, Nov 25: MRVL).
+  let extended = q.extended ? { ...q.extended, percentChange: q.extended.percentChange ?? (q.price > 0 ? (q.extended.price - q.price) / q.price * 100 : null) } : null;
+  // The provider's extended_timestamp / price can stand still for hours for some stocks while their 5-minute bars go on (owner, Nov 25: GOOGL's
+  // after-hours print was three hours old while its bars ran to the minute). A newer pre-market / after-hours bar of the row's own chart is then
+  // the session's price; it is the same series the chart draws, so the price and the chart's last point agree.
+  const lastBar = intraday[intraday.length - 1], barIso = lastBar && isExtendedBar(lastBar) ? easternToIso(lastBar.at) : "";
+  if (barIso && q.price > 0 && lastBar.close > 0 && (!extended || Date.parse(barIso) > Date.parse(extended.asOf))) {
+    const minutes = Number(lastBar.at.slice(11, 13)) * 60 + Number(lastBar.at.slice(14, 16));
+    extended = { price: lastBar.close, change: lastBar.close - q.price, percentChange: (lastBar.close - q.price) / q.price * 100, asOf: barIso, session: minutes < 9 * 60 + 30 ? "pre" : "post" };
+  }
   const history = intraday.map(b => ({ at: easternToIso(b.at), price: b.close })).filter(p => Number.isFinite(Date.parse(p.at)));
   return { ticker: q.ticker, price: q.price, change: q.change, percentChange: q.percentChange, currency: q.currency, asOf: q.asOf,
     session: q.marketOpen ? "regular" : "closed", delayed: false, source: "twelve-data", ...(history.length > 1 ? { history } : {}),
-    ...(q.extended && q.extended.percentChange !== null ? { extended: { price: q.extended.price, percentChange: q.extended.percentChange, asOf: q.extended.asOf, session: q.extended.session, live: extendedIsCurrent(q.extended, now) } } : {}) };
+    ...(extended && extended.percentChange !== null && Number.isFinite(extended.percentChange) ? { extended: { price: extended.price, percentChange: extended.percentChange, asOf: extended.asOf, session: extended.session, live: extendedIsCurrent(extended, now) } } : {}) };
 }
 
 const easternDay = new Intl.DateTimeFormat("en-CA", { timeZone: "America/New_York", year: "numeric", month: "2-digit", day: "2-digit" });
-/** How old the session's last print may be and still stand for "now". Twelve Data's extended_timestamp trails the clock by several minutes
- * (MU and SNDK, Nov 18, 09:27 ET: 6 and 4 minutes), and a thinly traded stock can go longer without a print. */
-export const EXTENDED_CURRENT_MS = 30 * 60_000;
-/** True while the pre-market / after-hours session the price belongs to is the one under way now (New York clock, same day), and the print is
- * from within the last half hour. The old four-minute cutoff split one list: one row showed "プレ" and the next its regular close (owner, Nov 18). */
+/** True while the pre-market / after-hours session the price belongs to is the one under way now (New York clock, same day). However old the print
+ * (the provider's time trails the clock, and a stock can go long without a print), it is still that session's latest price, so every row of a list
+ * shows 「プレ」/「時間外」 during that session (owner, Nov 18: SNDK; Nov 25: MRVL, then GOOGL with a print three hours old). */
 export function extendedIsCurrent(extended: { asOf: string; session: "pre" | "post" }, now = Date.now()): boolean {
   const at = Date.parse(extended.asOf);
-  if (!Number.isFinite(at) || !Number.isFinite(now) || at > now + 60_000 || now - at > EXTENDED_CURRENT_MS) return false;
+  if (!Number.isFinite(at) || !Number.isFinite(now) || at > now + 60_000) return false;
   return marketPhase(new Date(now)) === extended.session && easternDay.format(at) === easternDay.format(now);
 }
 

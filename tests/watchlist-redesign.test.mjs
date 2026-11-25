@@ -9,16 +9,16 @@ const read = path => readFileSync(new URL(`../${path}`, import.meta.url), "utf8"
 function load(path, mocks) {
   const compiled = ts.transpileModule(read(path), { compilerOptions: { module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX } }).outputText;
   const mod = { exports: {} };
-  new Function("require", "module", "exports", compiled)(id => id in mocks ? mocks[id] : id === "@/lib/research/display-time" ? require("../lib/research/display-time.ts") : id.endsWith(".css") ? { default: new Proxy({}, { get: (_, key) => String(key) }) } : /^(\.|@\/)/.test(id) ? { default: id } : require(id), mod, mod.exports);
+  new Function("require", "module", "exports", compiled)(id => id in mocks ? mocks[id] : id === "@/lib/research/display-time" ? require("../lib/research/display-time.ts") : id === "@/lib/research/company-short-name" ? require("../lib/research/company-short-name.ts") : id.endsWith(".css") ? { default: new Proxy({}, { get: (_, key) => String(key) }) } : /^(\.|@\/)/.test(id) ? { default: id } : require(id), mod, mod.exports);
   return mod.exports;
 }
 const nodes = tree => tree && typeof tree === "object" ? [tree, ...[].concat(tree.props?.children ?? []).flat(Infinity).flatMap(nodes)] : [];
 
-test("the row chart: 84×52, dotted previous close, mint above / red below, fade from the left, dot with halo and ring, high and low", () => {
+test("the row chart: 84×40 (compact, Nov 25), dotted previous close, mint above / red below, fade from the left, dot with halo and ring, high and low", () => {
   const { default: AreaChart } = load("app/research/watchlist/area-chart.tsx", { react: { useId: () => ":r1:" } });
   const tree = AreaChart({ values: [100, 101.5, 99.2, 102.25], reference: 100.5, label: "MU" });
   const all = nodes(tree);
-  assert.equal(tree.props.width, 84); assert.equal(tree.props.height, 52);
+  assert.equal(tree.props.width, 84); assert.equal(tree.props.height, 40);
   const dotted = all.find(n => n.type === "line");
   assert.equal(dotted.props.strokeDasharray, "1.5 3");
   const fills = all.filter(n => n.type === "path" && n.props.fillOpacity === "0.16").map(n => n.props.fill);
@@ -28,7 +28,7 @@ test("the row chart: 84×52, dotted previous close, mint above / red below, fade
   const stops = all.filter(n => n.type === "stop").map(n => n.props.stopOpacity);
   assert.equal(stops[0], "0.12"); assert.equal(stops.at(-1), "1");
   const circles = all.filter(n => n.type === "circle");
-  assert.deepEqual(circles.map(n => n.props.r), ["7", "2.6", "2.6"]);
+  assert.deepEqual(circles.map(n => n.props.r), ["5", "2.2", "2.2"]);
   assert.equal(circles[0].props.fillOpacity, "0.18");
   assert.equal(circles[0].props.fill, "#5fe0aa"); // the last value is above the previous close
   assert.deepEqual(all.filter(n => n.type === "text").map(n => n.props.children), ["102.25", "99.20"]);
@@ -61,11 +61,16 @@ test("the watchlist screen follows the Nov 13 design", () => {
   assert.match(css, /\.eyebrow \{ margin:0;font-size:11px;font-weight:600;letter-spacing:\.16em;[^}]*color:#8e9aaa;/);
   assert.match(css, /\.heading h1 \{ margin:0;font-size:26px;font-weight:700;/);
   assert.match(css, /\.listButton \{[^}]*height:32px;[^}]*border:1px solid #2a3646;[^}]*background:#121a24;[^}]*font-size:12px;font-weight:700;/);
-  assert.match(css, /\.rowMain \{[^}]*height:68px;/);
-  assert.match(css, /\.priceValue \{ font-size:20px;font-weight:700;/);
-  assert.match(css, /\.rate \{[^}]*font-size:12\.5px;/);
+  // Owner, Nov 25: the same row, about 62% as tall; fixed columns so every chart has the same width and place; the session mark never wraps.
+  assert.match(css, /\.rowMain \{[^}]*grid-template-columns:24px minmax\(0,1fr\) 84px 104px;[^}]*height:46px;/);
+  assert.match(css, /\.rowLogo \{ width:24px;height:24px;/);
+  assert.match(source, /<StockLogo ticker=\{ticker\} className=\{styles\.rowLogo\} \/>/);
+  assert.match(css, /\.priceValue \{ font-size:17px;font-weight:700;/);
+  assert.match(css, /\.rate \{[^}]*flex-wrap:nowrap;[^}]*font-size:11\.5px;[^}]*white-space:nowrap;/);
+  assert.match(css, /\.sessionTag \{ flex:none;[^}]*white-space:nowrap;/);
+  assert.match(read("app/research/watchlist/area-chart.module.css"), /\.chart \{ display:block;flex:none;width:84px;height:40px;/);
   assert.doesNotMatch(css.match(/\.rate[^{]*\{[^}]*\}/g).join(""), /background/);
-  assert.match(css, /\.sessionTag \{[^}]*border:1px solid #3f6b5d;[^}]*font-size:9\.5px;/);
+  assert.match(css, /\.sessionTag \{[^}]*border:1px solid #3f6b5d;[^}]*font-size:9px;/);
 });
 
 test("a list name saved longer than nine characters shows its first nine, with no ellipsis; editing shows it all", () => {

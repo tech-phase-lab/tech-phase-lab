@@ -13,6 +13,7 @@ const PUBLIC = {
   'research/market/period-bases': 'public closes a stock page measures its period change from',
   'research/market/facts': 'public market facts',
   'research/market/quotes': 'public market quotes',
+  'research/market/leveraged': 'public quotes of long 2x / 3x ETFs for the マーケット レバETF tab (Twelve Data display licence)',
   'research/news/stream': 'change signal only, short-lived origin-bound ticket',
   'research/price-targets/stream': 'change signal only, short-lived origin-bound ticket',
   'research/news': 'public news feed (FREE limits are applied by the feed builder)',
