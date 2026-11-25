@@ -1,0 +1,186 @@
+{
+  "root": {
+    "ticker": "TALO",
+    "name": "タロス・エナジー",
+    "cik": 1724965,
+    "name_en": "Talos Energy Inc."
+  },
+  "rows": [
+    {
+      "ja": "主な販売先(売上の10%以上)",
+      "en": "Main buyers (10%+ of revenue)"
+    },
+    {
+      "ja": "メキシコ・ザマ油田の共同保有",
+      "en": "Zama field partners (Mexico)"
+    },
+    {
+      "ja": "生産設備の運営",
+      "en": "Production vessel operator"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "SHEL",
+      "ticker": "SHEL",
+      "name": "シェル",
+      "name_en": "Shell",
+      "sub": "石油",
+      "sub_en": "Oil & gas",
+      "sub_short": "石油",
+      "sub_short_en": "Oil & gas",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大の販売先(2025年の石油・ガス売上の35%)",
+          "text_en": "Largest buyer: 35% of 2025 oil and gas revenue",
+          "source": {
+            "label": "Talos 10-K(2025年度)",
+            "label_en": "Talos 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1724965/000119312526067807/talo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "For the year ended December 31, 2025, 35%, 23% and 12% of our oil, natural gas and NGL revenues were attributable to Shell Trading (US) Company, Exxon Mobil Corporation and Chevron Corporation, respectively"
+          }
+        }
+      ]
+    },
+    {
+      "id": "XOM",
+      "ticker": "XOM",
+      "name": "エクソンモービル",
+      "name_en": "ExxonMobil",
+      "sub": "石油",
+      "sub_en": "Oil & gas",
+      "sub_short": "石油",
+      "sub_short_en": "Oil & gas",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "販売先(2025年の石油・ガス売上の23%)",
+          "text_en": "Buyer: 23% of 2025 oil and gas revenue",
+          "source": {
+            "label": "Talos 10-K(2025年度)",
+            "label_en": "Talos 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1724965/000119312526067807/talo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "For the year ended December 31, 2025, 35%, 23% and 12% of our oil, natural gas and NGL revenues were attributable to Shell Trading (US) Company, Exxon Mobil Corporation and Chevron Corporation, respectively"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CVX",
+      "ticker": "CVX",
+      "name": "シェブロン",
+      "name_en": "Chevron",
+      "sub": "石油・エネルギー",
+      "sub_en": "Oil & energy",
+      "sub_short": "石油",
+      "sub_short_en": "Oil",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "販売先(2025年の石油・ガス売上の12%)",
+          "text_en": "Buyer: 12% of 2025 oil and gas revenue",
+          "source": {
+            "label": "Talos 10-K(2025年度)",
+            "label_en": "Talos 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1724965/000119312526067807/talo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "For the year ended December 31, 2025, 35%, 23% and 12% of our oil, natural gas and NGL revenues were attributable to Shell Trading (US) Company, Exxon Mobil Corporation and Chevron Corporation, respectively"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Harbour",
+      "ticker": "HBR.L",
+      "name": "ハーバー・エナジー",
+      "name_en": "Harbour Energy",
+      "sub": "石油・ガス開発",
+      "sub_en": "Oil & gas producer",
+      "sub_short": "石油",
+      "sub_short_en": "Oil & gas",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ザマ油田を共同保有(32.22%)し、運営も引き継ぐ",
+          "text_en": "Zama co-owner (32.22%) and new operator",
+          "source": {
+            "label": "Talos 10-K(2025年度)",
+            "label_en": "Talos 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1724965/000119312526067807/talo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Talos Mexico, the Mexican affiliates of Harbour Energy (\"Harbour Energy\"), and PEMEX hold gross interests of 17.35%, 32.22%, and 50.43%, respectively, in the unitized Zama Field."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PEMEX",
+      "ticker": "PEMEX",
+      "name": "ペメックス",
+      "name_en": "Petróleos Mexicanos",
+      "sub": "石油(メキシコ国営)",
+      "sub_en": "Oil (Mexico state)",
+      "sub_short": "石油",
+      "sub_short_en": "Oil",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ザマ油田の最大保有者(50.43%)",
+          "text_en": "Largest Zama owner (50.43%)",
+          "source": {
+            "label": "Talos 10-K(2025年度)",
+            "label_en": "Talos 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1724965/000119312526067807/talo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Talos Mexico, the Mexican affiliates of Harbour Energy (\"Harbour Energy\"), and PEMEX hold gross interests of 17.35%, 32.22%, and 50.43%, respectively, in the unitized Zama Field."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HLX",
+      "ticker": "HLX",
+      "name": "ヘリックス・エナジー・ソリューションズ",
+      "name_en": "Helix Energy Solutions",
+      "sub": "坑井介入",
+      "sub_en": "Well intervention",
+      "sub_short": "坑井介入",
+      "sub_short_en": "Wells",
+      "row": 2,
+      "relations": [
+        {
+          "type": "up",
+          "text": "フェニックス油田の生産船HP-Iを運営",
+          "text_en": "Operates the HP-I vessel that produces the Phoenix Field",
+          "source": {
+            "label": "Talos 10-K(2025年度)",
+            "label_en": "Talos 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1724965/000119312526067807/talo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "We produce the Phoenix Field through the Helix Producer I (\"HP-I\") that is operated by Helix Energy Solutions Group, Inc (\"Helix\")."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

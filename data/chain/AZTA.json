@@ -1,0 +1,187 @@
+{
+  "root": {
+    "ticker": "AZTA",
+    "name": "アゼンタ",
+    "cik": 933974,
+    "name_en": "Azenta, Inc."
+  },
+  "rows": [
+    {
+      "ja": "技術ライセンス・供給契約",
+      "en": "Technology license & supply"
+    },
+    {
+      "ja": "競合(本人の10-Kで名指し)",
+      "en": "Named rivals (own 10-K)"
+    }
+  ],
+  "rivals": [
+    "TMO",
+    "LH",
+    "TWST",
+    "Eurofins"
+  ],
+  "companies": [
+    {
+      "id": "Elegen",
+      "ticker": "Elegen",
+      "name": "エレジェン",
+      "name_en": "Elegen",
+      "sub": "合成DNA",
+      "sub_en": "Synthetic DNA",
+      "sub_short": "合成DNA",
+      "sub_short_en": "DNA",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "独占・無償の技術ライセンスと受託・供給契約を締結",
+          "text_en": "Exclusive royalty-free technology license plus services and supply agreement",
+          "source": {
+            "label": "Azenta 10-K(2026年9月期)",
+            "label_en": "Azenta 10-K (FY Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/933974/000162828026075072/azta-20260930.htm",
+            "level": "official",
+            "date": "2026-11-19",
+            "quote": "entered into an exclusive, royalty-free technology license agreement and a master services and supply agreement with Elegen Corp."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TMO",
+      "ticker": "TMO",
+      "name": "サーモフィッシャー・サイエンティフィック",
+      "name_en": "Thermo Fisher Scientific",
+      "sub": "分析機器",
+      "sub_en": "Life science tools",
+      "sub_short": "分析機器",
+      "sub_short_en": "Lab tools",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "検体保管・消耗品で競合",
+          "text_en": "Rival in sample storage and consumables",
+          "source": {
+            "label": "Azenta 10-K(2026年9月期)",
+            "label_en": "Azenta 10-K (FY Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/933974/000162828026075072/azta-20260930.htm",
+            "level": "official",
+            "date": "2026-11-19",
+            "quote": "In the Sample Management Solutions segment, our main competitors include Hamilton Company and Liconic AG for automation systems and Laboratory Corporation of America Holdings and Thermo Fisher Scientific Inc. for storage, consumables and services."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LH",
+      "ticker": "LH",
+      "name": "ラボコープ",
+      "name_en": "Laboratory Corporation of America",
+      "sub": "臨床検査",
+      "sub_en": "Lab testing",
+      "sub_short": "臨床検査",
+      "sub_short_en": "Lab test",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "検体保管サービスで競合",
+          "text_en": "Rival in sample storage services",
+          "source": {
+            "label": "Azenta 10-K(2026年9月期)",
+            "label_en": "Azenta 10-K (FY Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/933974/000162828026075072/azta-20260930.htm",
+            "level": "official",
+            "date": "2026-11-19",
+            "quote": "In the Sample Management Solutions segment, our main competitors include Hamilton Company and Liconic AG for automation systems and Laboratory Corporation of America Holdings and Thermo Fisher Scientific Inc. for storage, consumables and services."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TWST",
+      "ticker": "TWST",
+      "name": "ツイスト・バイオサイエンス",
+      "name_en": "Twist Bioscience",
+      "sub": "合成DNA",
+      "sub_en": "Synthetic DNA",
+      "sub_short": "合成DNA",
+      "sub_short_en": "DNA",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "遺伝子合成・解析(マルチオミクス)で競合",
+          "text_en": "Rival in gene synthesis and multiomics",
+          "source": {
+            "label": "Azenta 10-K(2026年9月期)",
+            "label_en": "Azenta 10-K (FY Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/933974/000162828026075072/azta-20260930.htm",
+            "level": "official",
+            "date": "2026-11-19",
+            "quote": "In the Multiomics segment, our main competitors include BGI Genomics Co., Ltd., Eurofins Scientific S.E., GenScript Biotech Corporation, Integrated DNA Technologies, Inc., Novogene Co., Ltd., and Twist Bioscience Corporation."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Eurofins",
+      "ticker": "ERF.PA",
+      "name": "ユーロフィン・サイエンティフィック",
+      "name_en": "Eurofins Scientific",
+      "sub": "検査受託",
+      "sub_en": "Testing services",
+      "sub_short": "検査受託",
+      "sub_short_en": "Testing",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "遺伝子解析受託で競合",
+          "text_en": "Rival in genomics services",
+          "source": {
+            "label": "Azenta 10-K(2026年9月期)",
+            "label_en": "Azenta 10-K (FY Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/933974/000162828026075072/azta-20260930.htm",
+            "level": "official",
+            "date": "2026-11-19",
+            "quote": "In the Multiomics segment, our main competitors include BGI Genomics Co., Ltd., Eurofins Scientific S.E., GenScript Biotech Corporation, Integrated DNA Technologies, Inc., Novogene Co., Ltd., and Twist Bioscience Corporation."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GenScript",
+      "ticker": "1548.HK",
+      "name": "ジェンスクリプト",
+      "name_en": "GenScript Biotech",
+      "sub": "遺伝子合成",
+      "sub_en": "Gene synthesis",
+      "sub_short": "遺伝子",
+      "sub_short_en": "Genes",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "遺伝子合成受託で競合",
+          "text_en": "Rival in gene synthesis services",
+          "source": {
+            "label": "Azenta 10-K(2026年9月期)",
+            "label_en": "Azenta 10-K (FY Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/933974/000162828026075072/azta-20260930.htm",
+            "level": "official",
+            "date": "2026-11-19",
+            "quote": "In the Multiomics segment, our main competitors include BGI Genomics Co., Ltd., Eurofins Scientific S.E., GenScript Biotech Corporation, Integrated DNA Technologies, Inc., Novogene Co., Ltd., and Twist Bioscience Corporation."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

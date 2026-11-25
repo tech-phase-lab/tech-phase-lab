@@ -1,0 +1,293 @@
+{
+  "root": {
+    "ticker": "CRI",
+    "name": "カーターズ",
+    "cik": 1060822,
+    "name_en": "Carter's, Inc."
+  },
+  "rows": [
+    {
+      "ja": "専用ブランドを売る大手小売",
+      "en": "Retailers with exclusive brands"
+    },
+    {
+      "ja": "主な卸売先",
+      "en": "Main wholesale customers"
+    },
+    {
+      "ja": "競合(本人の10-Kで名指し)",
+      "en": "Named rivals (own 10-K)"
+    }
+  ],
+  "rivals": [
+    "GAP",
+    "PLCE"
+  ],
+  "companies": [
+    {
+      "id": "WMT",
+      "ticker": "WMT",
+      "name": "ウォルマート",
+      "name_en": "Walmart",
+      "sub": "小売",
+      "sub_en": "Retail",
+      "sub_short": "量販店",
+      "sub_short_en": "Retail",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "専用ブランド「Child of Mine」を販売(会員制のサムズ・クラブも卸売先)",
+          "text_en": "Sells the exclusive Child of Mine brand (Sam's Club also buys wholesale)",
+          "source": {
+            "label": "Carter's 10-K(2025年度)",
+            "label_en": "Carter's 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1060822/000106082226000016/cri-20260103.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Additionally, our Child of Mine exclusive brand is sold at Walmart, our Just One You exclusive brand is sold at Target, and our Simple Joys exclusive brand is available on Amazon."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TGT",
+      "ticker": "TGT",
+      "name": "ターゲット",
+      "name_en": "Target",
+      "sub": "小売",
+      "sub_en": "Retail",
+      "sub_short": "総合小売",
+      "sub_short_en": "Retail",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "専用ブランド「Just One You」を販売",
+          "text_en": "Sells the exclusive Just One You brand",
+          "source": {
+            "label": "Carter's 10-K(2025年度)",
+            "label_en": "Carter's 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1060822/000106082226000016/cri-20260103.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Additionally, our Child of Mine exclusive brand is sold at Walmart, our Just One You exclusive brand is sold at Target, and our Simple Joys exclusive brand is available on Amazon."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン",
+      "name_en": "Amazon",
+      "sub": "ネット通販",
+      "sub_en": "E-commerce",
+      "sub_short": "通販",
+      "sub_short_en": "Online",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "専用ブランド「Simple Joys」を販売",
+          "text_en": "Sells the exclusive Simple Joys brand",
+          "source": {
+            "label": "Carter's 10-K(2025年度)",
+            "label_en": "Carter's 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1060822/000106082226000016/cri-20260103.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Additionally, our Child of Mine exclusive brand is sold at Walmart, our Just One You exclusive brand is sold at Target, and our Simple Joys exclusive brand is available on Amazon."
+          }
+        }
+      ]
+    },
+    {
+      "id": "COST",
+      "ticker": "COST",
+      "name": "コストコ",
+      "name_en": "Costco",
+      "sub": "会員制倉庫店",
+      "sub_en": "Warehouse clubs",
+      "sub_short": "量販店",
+      "sub_short_en": "Clubs",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "カーターズ・ブランドの卸売先",
+          "text_en": "Wholesale customer for the Carter's brand",
+          "source": {
+            "label": "Carter's 10-K(2025年度)",
+            "label_en": "Carter's 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1060822/000106082226000016/cri-20260103.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our Carter's brand wholesale customers in the United States include major retailers, such as Costco, JCPenney, Kohl's, Macy's, Marshalls, Ross Stores, Sam's Club, and T.J. Maxx."
+          }
+        }
+      ]
+    },
+    {
+      "id": "KSS",
+      "ticker": "KSS",
+      "name": "コールズ",
+      "name_en": "Kohl's",
+      "sub": "百貨店",
+      "sub_en": "Department stores",
+      "sub_short": "百貨店",
+      "sub_short_en": "Stores",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "カーターズ・ブランドの卸売先",
+          "text_en": "Wholesale customer for the Carter's brand",
+          "source": {
+            "label": "Carter's 10-K(2025年度)",
+            "label_en": "Carter's 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1060822/000106082226000016/cri-20260103.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our Carter's brand wholesale customers in the United States include major retailers, such as Costco, JCPenney, Kohl's, Macy's, Marshalls, Ross Stores, Sam's Club, and T.J. Maxx."
+          }
+        }
+      ]
+    },
+    {
+      "id": "M",
+      "ticker": "M",
+      "name": "メイシーズ",
+      "name_en": "Macy's",
+      "sub": "百貨店",
+      "sub_en": "Department stores",
+      "sub_short": "百貨店",
+      "sub_short_en": "Stores",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "カーターズ・ブランドの卸売先",
+          "text_en": "Wholesale customer for the Carter's brand",
+          "source": {
+            "label": "Carter's 10-K(2025年度)",
+            "label_en": "Carter's 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1060822/000106082226000016/cri-20260103.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our Carter's brand wholesale customers in the United States include major retailers, such as Costco, JCPenney, Kohl's, Macy's, Marshalls, Ross Stores, Sam's Club, and T.J. Maxx."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TJX",
+      "ticker": "TJX",
+      "name": "TJXカンパニーズ",
+      "name_en": "The TJX Companies",
+      "sub": "ディスカウント小売",
+      "sub_en": "Off-price retail",
+      "sub_short": "格安小売",
+      "sub_short_en": "Off-price",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "傘下のマーシャルズ・T.J.マックスが卸売先",
+          "text_en": "Its Marshalls and T.J. Maxx stores buy wholesale",
+          "source": {
+            "label": "Carter's 10-K(2025年度)",
+            "label_en": "Carter's 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1060822/000106082226000016/cri-20260103.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our Carter's brand wholesale customers in the United States include major retailers, such as Costco, JCPenney, Kohl's, Macy's, Marshalls, Ross Stores, Sam's Club, and T.J. Maxx."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ROST",
+      "ticker": "ROST",
+      "name": "ロス・ストアーズ",
+      "name_en": "Ross Stores",
+      "sub": "ディスカウント小売",
+      "sub_en": "Off-price retail",
+      "sub_short": "格安小売",
+      "sub_short_en": "Off-price",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "カーターズ・ブランドの卸売先",
+          "text_en": "Wholesale customer for the Carter's brand",
+          "source": {
+            "label": "Carter's 10-K(2025年度)",
+            "label_en": "Carter's 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1060822/000106082226000016/cri-20260103.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our Carter's brand wholesale customers in the United States include major retailers, such as Costco, JCPenney, Kohl's, Macy's, Marshalls, Ross Stores, Sam's Club, and T.J. Maxx."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GAP",
+      "ticker": "GAP",
+      "name": "ギャップ",
+      "name_en": "Gap Inc.",
+      "sub": "衣料品小売",
+      "sub_en": "Apparel retail",
+      "sub_short": "衣料小売",
+      "sub_short_en": "Apparel",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "子ども服で競合(ギャップ・オールドネイビー)",
+          "text_en": "Kids apparel rival (Gap and Old Navy)",
+          "source": {
+            "label": "Carter's 10-K(2025年度)",
+            "label_en": "Carter's 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1060822/000106082226000016/cri-20260103.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our primary competitors include (in alphabetical order): Gap, Old Navy, and The Children's Place;"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PLCE",
+      "ticker": "PLCE",
+      "name": "チルドレンズ・プレイス",
+      "name_en": "The Children's Place",
+      "sub": "子ども服小売",
+      "sub_en": "Kids apparel retail",
+      "sub_short": "子ども服",
+      "sub_short_en": "Kidswear",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "子ども服で競合",
+          "text_en": "Kids apparel rival",
+          "source": {
+            "label": "Carter's 10-K(2025年度)",
+            "label_en": "Carter's 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1060822/000106082226000016/cri-20260103.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our primary competitors include (in alphabetical order): Gap, Old Navy, and The Children's Place;"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

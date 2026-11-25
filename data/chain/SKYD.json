@@ -1,0 +1,162 @@
+{
+  "root": {
+    "ticker": "SKYD",
+    "name": "パラマウント・スカイダンス",
+    "cik": 2041610,
+    "name_en": "Paramount Skydance Corporation"
+  },
+  "rows": [
+    {
+      "ja": "買収提案の相手",
+      "en": "Takeover target"
+    },
+    {
+      "ja": "合弁",
+      "en": "Joint ventures"
+    },
+    {
+      "ja": "出資者・対抗する買い手",
+      "en": "Investor & rival bidder"
+    }
+  ],
+  "rivals": [
+    "NFLX"
+  ],
+  "companies": [
+    {
+      "id": "WBD",
+      "ticker": "WBD",
+      "name": "ワーナー・ブラザース・ディスカバリー",
+      "name_en": "Warner Bros. Discovery",
+      "sub": "メディア",
+      "sub_en": "Media",
+      "sub_short": "メディア",
+      "sub_short_en": "Media",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年12月に1株30ドルで全株式の買付け(TOB)を発表",
+          "text_en": "Launched a $30-per-share cash tender offer in Dec 2025",
+          "source": {
+            "label": "Paramount Skydance 10-K(2025年度)",
+            "label_en": "Paramount Skydance 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2041610/000204161026000011/psky-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "we announced a cash tender offer for all of the outstanding shares of Series A Common Stock, par value $0.01 per share (the \"Warner Bros. Shares\"), of Warner Bros. Discovery, Inc., a Delaware corporation (\"Warner Bros.\"), at $30.00 per Warner Bros. Share (the \"Offer\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "beIN",
+      "ticker": "beIN",
+      "name": "beINメディア・グループ",
+      "name_en": "beIN Media Group",
+      "sub": "メディア(カタール)",
+      "sub_en": "Media (Qatar)",
+      "sub_short": "メディア",
+      "sub_short_en": "Media",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "映画スタジオ「ミラマックス」を共同保有",
+          "text_en": "Co-owns the Miramax film studio",
+          "source": {
+            "label": "Paramount Skydance 10-K(2025年度)",
+            "label_en": "Paramount Skydance 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2041610/000204161026000011/psky-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Miramax, a joint venture with beIN Media Group, is a global film and television studio with an extensive content library."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NBCU",
+      "ticker": "NBCUniversal",
+      "name": "NBCユニバーサル",
+      "name_en": "NBCUniversal Media",
+      "sub": "メディア",
+      "sub_en": "Media",
+      "sub_short": "メディア",
+      "sub_short_en": "Media",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "海外の映画配給会社UIPを共同運営(ユニバーサル・スタジオ)",
+          "text_en": "Runs the UIP international film distributor with Universal Studios",
+          "source": {
+            "label": "Paramount Skydance 10-K(2025年度)",
+            "label_en": "Paramount Skydance 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2041610/000204161026000011/psky-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "through United International Pictures, our joint venture with Universal Studios"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RedBird",
+      "ticker": "RedBird",
+      "name": "レッドバード・キャピタル",
+      "name_en": "RedBird Capital Partners",
+      "sub": "投資会社",
+      "sub_en": "Investment firm",
+      "sub_short": "投資",
+      "sub_short_en": "Investor",
+      "row": 2,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ワーナー買収の資金をエリソン家とともに出資すると約束",
+          "text_en": "Committed equity for the Warner bid alongside the Ellison family",
+          "source": {
+            "label": "Paramount Skydance 10-K(2025年度)",
+            "label_en": "Paramount Skydance 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2041610/000204161026000011/psky-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "We have secured commitments for debt financing of up to $57.5 billion and equity commitments from entities controlled by Lawrence Ellison and David Ellison (the \"Ellison Family\"), and affiliates of RedBird Capital Partners, of $46.6 billion."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NFLX",
+      "ticker": "NFLX",
+      "name": "ネットフリックス",
+      "name_en": "Netflix",
+      "sub": "動画配信",
+      "sub_en": "Video streaming",
+      "sub_short": "動画配信",
+      "sub_short_en": "Video",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ワーナー買収をめぐる対抗の買い手(ワーナーと合併契約)",
+          "text_en": "Rival bidder that signed a merger deal with Warner Bros.",
+          "source": {
+            "label": "Paramount Skydance 10-K(2025年度)",
+            "label_en": "Paramount Skydance 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2041610/000204161026000011/psky-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "a prepayment of the $2.8 billion termination fee payable by Warner Bros. to Netflix, Inc., a Delaware corporation (\"Netflix\"), upon termination of the merger agreement between Warner Bros. and Netflix."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,292 @@
+{
+  "root": {
+    "ticker": "KNF",
+    "name": "ナイフ・リバー",
+    "cik": 1955520,
+    "name_en": "Knife River Corporation"
+  },
+  "rows": [
+    {
+      "ja": "旧親会社(2023年に分離)",
+      "en": "Former parent (2023 spin-off)"
+    },
+    {
+      "ja": "骨材・建設資材の競合(本人の10-Kで名指し)",
+      "en": "Aggregates rivals (own 10-K)"
+    }
+  ],
+  "rivals": [
+    "VMC",
+    "MLM",
+    "CRH",
+    "AMRZ",
+    "CX"
+  ],
+  "companies": [
+    {
+      "id": "MDU",
+      "ticker": "MDU",
+      "name": "MDUリソーシズ",
+      "name_en": "MDU Resources",
+      "sub": "電力会社",
+      "sub_en": "Utility",
+      "sub_short": "電力会社",
+      "sub_short_en": "Utility",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2023年5月にMDUリソーシズからスピンオフで独立",
+          "text_en": "Spun off from MDU Resources in May 2023",
+          "source": {
+            "label": "Knife River 10-K(2025年度)",
+            "label_en": "Knife River 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1955520/000195552026000003/knf-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "On May 31, 2023, the Separation of Knife River from MDU Resources was completed as a tax-free spin-off for U.S. federal income tax purposes."
+          }
+        }
+      ]
+    },
+    {
+      "id": "VMC",
+      "ticker": "VMC",
+      "name": "バルカン・マテリアルズ",
+      "name_en": "Vulcan Materials",
+      "sub": "骨材・建設資材",
+      "sub_en": "Aggregates",
+      "sub_short": "骨材",
+      "sub_short_en": "Gravel",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "一部の地域で骨材の競合",
+          "text_en": "Aggregates rival in some markets",
+          "source": {
+            "label": "Knife River 10-K(2025年度)",
+            "label_en": "Knife River 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1955520/000195552026000003/knf-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "we also face competition in some markets from large, publicly traded United States aggregates producers, including Amrize Ltd, Cemex S.A.B. de C.V., CRH plc, Eagle Materials, Inc., Granite Construction, Inc., Heidelberg Materials, Martin Marietta Materials, Inc., Construction Partners, Inc., and Vulcan Materials Company."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MLM",
+      "ticker": "MLM",
+      "name": "マーティン・マリエッタ",
+      "name_en": "Martin Marietta Materials",
+      "sub": "建設用骨材",
+      "sub_en": "Construction aggregates",
+      "sub_short": "骨材",
+      "sub_short_en": "Gravel",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "一部の地域で骨材の競合",
+          "text_en": "Aggregates rival in some markets",
+          "source": {
+            "label": "Knife River 10-K(2025年度)",
+            "label_en": "Knife River 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1955520/000195552026000003/knf-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "we also face competition in some markets from large, publicly traded United States aggregates producers, including Amrize Ltd, Cemex S.A.B. de C.V., CRH plc, Eagle Materials, Inc., Granite Construction, Inc., Heidelberg Materials, Martin Marietta Materials, Inc., Construction Partners, Inc., and Vulcan Materials Company."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CRH",
+      "ticker": "CRH",
+      "name": "CRH",
+      "name_en": "CRH",
+      "sub": "建設資材",
+      "sub_en": "Building materials",
+      "sub_short": "建材",
+      "sub_short_en": "Building",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "一部の地域で骨材の競合",
+          "text_en": "Aggregates rival in some markets",
+          "source": {
+            "label": "Knife River 10-K(2025年度)",
+            "label_en": "Knife River 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1955520/000195552026000003/knf-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "we also face competition in some markets from large, publicly traded United States aggregates producers, including Amrize Ltd, Cemex S.A.B. de C.V., CRH plc, Eagle Materials, Inc., Granite Construction, Inc., Heidelberg Materials, Martin Marietta Materials, Inc., Construction Partners, Inc., and Vulcan Materials Company."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMRZ",
+      "ticker": "AMRZ",
+      "name": "アムライズ",
+      "name_en": "Amrize",
+      "sub": "建材(屋根・セメント)",
+      "sub_en": "Building materials",
+      "sub_short": "建材",
+      "sub_short_en": "Building",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "一部の地域で骨材の競合",
+          "text_en": "Aggregates rival in some markets",
+          "source": {
+            "label": "Knife River 10-K(2025年度)",
+            "label_en": "Knife River 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1955520/000195552026000003/knf-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "we also face competition in some markets from large, publicly traded United States aggregates producers, including Amrize Ltd, Cemex S.A.B. de C.V., CRH plc, Eagle Materials, Inc., Granite Construction, Inc., Heidelberg Materials, Martin Marietta Materials, Inc., Construction Partners, Inc., and Vulcan Materials Company."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CX",
+      "ticker": "CX",
+      "name": "セメックス",
+      "name_en": "Cemex",
+      "sub": "セメント(メキシコ)",
+      "sub_en": "Cement (Mexico)",
+      "sub_short": "セメント",
+      "sub_short_en": "Cement",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "一部の地域で骨材の競合",
+          "text_en": "Aggregates rival in some markets",
+          "source": {
+            "label": "Knife River 10-K(2025年度)",
+            "label_en": "Knife River 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1955520/000195552026000003/knf-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "we also face competition in some markets from large, publicly traded United States aggregates producers, including Amrize Ltd, Cemex S.A.B. de C.V., CRH plc, Eagle Materials, Inc., Granite Construction, Inc., Heidelberg Materials, Martin Marietta Materials, Inc., Construction Partners, Inc., and Vulcan Materials Company."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HeidelbergMaterials",
+      "ticker": "Heidelberg",
+      "name": "ハイデルベルク・マテリアルズ",
+      "name_en": "Heidelberg Materials",
+      "sub": "セメント・骨材",
+      "sub_en": "Cement & aggregates",
+      "sub_short": "セメント",
+      "sub_short_en": "Cement",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "一部の地域で骨材の競合",
+          "text_en": "Aggregates rival in some markets",
+          "source": {
+            "label": "Knife River 10-K(2025年度)",
+            "label_en": "Knife River 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1955520/000195552026000003/knf-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "we also face competition in some markets from large, publicly traded United States aggregates producers, including Amrize Ltd, Cemex S.A.B. de C.V., CRH plc, Eagle Materials, Inc., Granite Construction, Inc., Heidelberg Materials, Martin Marietta Materials, Inc., Construction Partners, Inc., and Vulcan Materials Company."
+          }
+        }
+      ]
+    },
+    {
+      "id": "EXP",
+      "ticker": "EXP",
+      "name": "イーグル・マテリアルズ",
+      "name_en": "Eagle Materials",
+      "sub": "セメント・建材",
+      "sub_en": "Cement & wallboard",
+      "sub_short": "セメント",
+      "sub_short_en": "Cement",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "一部の地域で骨材の競合",
+          "text_en": "Aggregates rival in some markets",
+          "source": {
+            "label": "Knife River 10-K(2025年度)",
+            "label_en": "Knife River 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1955520/000195552026000003/knf-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "we also face competition in some markets from large, publicly traded United States aggregates producers, including Amrize Ltd, Cemex S.A.B. de C.V., CRH plc, Eagle Materials, Inc., Granite Construction, Inc., Heidelberg Materials, Martin Marietta Materials, Inc., Construction Partners, Inc., and Vulcan Materials Company."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GVA",
+      "ticker": "GVA",
+      "name": "グラナイト・コンストラクション",
+      "name_en": "Granite Construction",
+      "sub": "道路建設",
+      "sub_en": "Road construction",
+      "sub_short": "道路建設",
+      "sub_short_en": "Roads",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "一部の地域で骨材の競合",
+          "text_en": "Aggregates rival in some markets",
+          "source": {
+            "label": "Knife River 10-K(2025年度)",
+            "label_en": "Knife River 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1955520/000195552026000003/knf-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "we also face competition in some markets from large, publicly traded United States aggregates producers, including Amrize Ltd, Cemex S.A.B. de C.V., CRH plc, Eagle Materials, Inc., Granite Construction, Inc., Heidelberg Materials, Martin Marietta Materials, Inc., Construction Partners, Inc., and Vulcan Materials Company."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ROAD",
+      "ticker": "ROAD",
+      "name": "コンストラクション・パートナーズ",
+      "name_en": "Construction Partners",
+      "sub": "道路舗装",
+      "sub_en": "Road paving",
+      "sub_short": "道路舗装",
+      "sub_short_en": "Paving",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "一部の地域で骨材の競合",
+          "text_en": "Aggregates rival in some markets",
+          "source": {
+            "label": "Knife River 10-K(2025年度)",
+            "label_en": "Knife River 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1955520/000195552026000003/knf-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "we also face competition in some markets from large, publicly traded United States aggregates producers, including Amrize Ltd, Cemex S.A.B. de C.V., CRH plc, Eagle Materials, Inc., Granite Construction, Inc., Heidelberg Materials, Martin Marietta Materials, Inc., Construction Partners, Inc., and Vulcan Materials Company."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

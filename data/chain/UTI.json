@@ -1,0 +1,290 @@
+{
+  "root": {
+    "ticker": "UTI",
+    "name": "ユニバーサル・テクニカル・インスティテュート",
+    "cik": 1261654,
+    "name_en": "Universal Technical Institute, Inc."
+  },
+  "rows": [
+    {
+      "ja": "メーカー提携の研修プログラム",
+      "en": "Manufacturer-partner training programs"
+    },
+    {
+      "ja": "競合(本人の10-Kで名指し)",
+      "en": "Named rivals (own 10-K)"
+    }
+  ],
+  "rivals": [
+    "LINC",
+    "ATGE",
+    "PRDO"
+  ],
+  "companies": [
+    {
+      "id": "BMW",
+      "ticker": "BMW",
+      "name": "BMW",
+      "name_en": "BMW",
+      "sub": "自動車(独)",
+      "sub_en": "Autos (Germany)",
+      "sub_short": "自動車",
+      "sub_short_en": "Autos",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "整備士養成「BMW FastTrack」を7校で実施",
+          "text_en": "Runs the BMW FastTrack program at seven campuses",
+          "source": {
+            "label": "Universal Technical Institute 10-K(2025年9月期)",
+            "label_en": "Universal Technical Institute 10-K (FY Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1261654/000126165425000025/uti-20250930.htm",
+            "level": "official",
+            "date": "2025-11-26",
+            "quote": "Advanced Training BMW FastTrack Avondale, Arizona; Exton, Pennsylvania; Houston, Texas; Long Beach, California; Orlando, Florida; Lisle, Illinois; Miramar, Florida"
+          }
+        }
+      ]
+    },
+    {
+      "id": "F",
+      "ticker": "F",
+      "name": "フォード",
+      "name_en": "Ford",
+      "sub": "自動車",
+      "sub_en": "Automaker",
+      "sub_short": "自動車",
+      "sub_short_en": "Cars",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "整備士養成「FACT」を9校で実施",
+          "text_en": "Runs Ford Accelerated Credential Training at nine campuses",
+          "source": {
+            "label": "Universal Technical Institute 10-K(2025年9月期)",
+            "label_en": "Universal Technical Institute 10-K (FY Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1261654/000126165425000025/uti-20250930.htm",
+            "level": "official",
+            "date": "2025-11-26",
+            "quote": "Ford Accelerated Credential Training (FACT) Avondale, Arizona"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GM",
+      "ticker": "GM",
+      "name": "ゼネラル・モーターズ",
+      "name_en": "General Motors",
+      "sub": "自動車",
+      "sub_en": "Automaker",
+      "sub_short": "自動車",
+      "sub_short_en": "Cars",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "車両・機材・カリキュラムの提供を受ける研修プログラム",
+          "text_en": "Training program using its vehicles, tools and curricula",
+          "source": {
+            "label": "Universal Technical Institute 10-K(2025年9月期)",
+            "label_en": "Universal Technical Institute 10-K (FY Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1261654/000126165425000025/uti-20250930.htm",
+            "level": "official",
+            "date": "2025-11-26",
+            "quote": "General Motors Technician Career Training Avondale, Arizona"
+          }
+        }
+      ]
+    },
+    {
+      "id": "TM",
+      "ticker": "TM",
+      "name": "トヨタ自動車",
+      "name_en": "Toyota Motor Corporation",
+      "sub": "自動車メーカー",
+      "sub_en": "Automaker",
+      "sub_short": "自動車",
+      "sub_short_en": "Cars",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "整備士養成「TPAT」を実施",
+          "text_en": "Runs the Toyota TPAT program",
+          "source": {
+            "label": "Universal Technical Institute 10-K(2025年9月期)",
+            "label_en": "Universal Technical Institute 10-K (FY Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1261654/000126165425000025/uti-20250930.htm",
+            "level": "official",
+            "date": "2025-11-26",
+            "quote": "Toyota Professional Automotive Technician (TPAT) Rancho Cucamonga, California"
+          }
+        }
+      ]
+    },
+    {
+      "id": "STLA",
+      "ticker": "STLA",
+      "name": "ステランティス",
+      "name_en": "Stellantis",
+      "sub": "自動車",
+      "sub_en": "Automaker",
+      "sub_short": "自動車",
+      "sub_short_en": "Cars",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "整備士養成「Mopar TEC」を実施",
+          "text_en": "Runs the Mopar TEC program",
+          "source": {
+            "label": "Universal Technical Institute 10-K(2025年9月期)",
+            "label_en": "Universal Technical Institute 10-K (FY Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1261654/000126165425000025/uti-20250930.htm",
+            "level": "official",
+            "date": "2025-11-26",
+            "quote": "Mopar TEC by Fiat Chrysler Automobiles US LLC Mooresville, North Carolina"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CMI",
+      "ticker": "CMI",
+      "name": "カミンズ",
+      "name_en": "Cummins",
+      "sub": "エンジン",
+      "sub_en": "Engines",
+      "sub_short": "エンジン",
+      "sub_short_en": "Engines",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "エンジン・発電機の研修プログラム",
+          "text_en": "Engine and power-generation training programs",
+          "source": {
+            "label": "Universal Technical Institute 10-K(2025年9月期)",
+            "label_en": "Universal Technical Institute 10-K (FY Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1261654/000126165425000025/uti-20250930.htm",
+            "level": "official",
+            "date": "2025-11-26",
+            "quote": "Cummins Engines Avondale, Arizona; Exton, Pennsylvania; Houston, Texas Cummins Power Generation Avondale, Arizona"
+          }
+        }
+      ]
+    },
+    {
+      "id": "DTG",
+      "ticker": "Daimler Truck",
+      "name": "ダイムラー・トラック",
+      "name_en": "Daimler Truck",
+      "sub": "トラック(ドイツ)",
+      "sub_en": "Trucks (Germany)",
+      "sub_short": "トラック",
+      "sub_short_en": "Trucks",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "トラック整備士養成「Finish First」を実施",
+          "text_en": "Runs the Daimler Trucks Finish First program",
+          "source": {
+            "label": "Universal Technical Institute 10-K(2025年9月期)",
+            "label_en": "Universal Technical Institute 10-K (FY Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1261654/000126165425000025/uti-20250930.htm",
+            "level": "official",
+            "date": "2025-11-26",
+            "quote": "Daimler Trucks Finish First Program Avondale, Arizona; Lisle, Illinois; Orlando, Florida"
+          }
+        }
+      ]
+    },
+    {
+      "id": "LINC",
+      "ticker": "LINC",
+      "name": "リンカーン・エデュケーショナル",
+      "name_en": "Lincoln Educational Services",
+      "sub": "職業訓練校",
+      "sub_en": "Vocational schools",
+      "sub_short": "職業訓練",
+      "sub_short_en": "Schools",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "技能系の職業訓練校で競合",
+          "text_en": "Rival in skilled-trades schooling",
+          "source": {
+            "label": "Universal Technical Institute 10-K(2025年9月期)",
+            "label_en": "Universal Technical Institute 10-K (FY Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1261654/000126165425000025/uti-20250930.htm",
+            "level": "official",
+            "date": "2025-11-26",
+            "quote": "some of our public company competitors are Adtalem Global Education, Inc., American Public Education, Inc., Legacy Education, Lincoln Educational Services Corporation, Perdoceo Education Corporation, and Strategic Education, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ATGE",
+      "ticker": "ATGE",
+      "name": "アドタレム・グローバル・エデュケーション",
+      "name_en": "Adtalem Global Education",
+      "sub": "教育",
+      "sub_en": "Education",
+      "sub_short": "教育",
+      "sub_short_en": "Education",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "営利教育の上場競合",
+          "text_en": "Listed for-profit education rival",
+          "source": {
+            "label": "Universal Technical Institute 10-K(2025年9月期)",
+            "label_en": "Universal Technical Institute 10-K (FY Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1261654/000126165425000025/uti-20250930.htm",
+            "level": "official",
+            "date": "2025-11-26",
+            "quote": "some of our public company competitors are Adtalem Global Education, Inc., American Public Education, Inc., Legacy Education, Lincoln Educational Services Corporation, Perdoceo Education Corporation, and Strategic Education, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PRDO",
+      "ticker": "PRDO",
+      "name": "ペルドセオ・エデュケーション",
+      "name_en": "Perdoceo Education",
+      "sub": "教育",
+      "sub_en": "Education",
+      "sub_short": "教育",
+      "sub_short_en": "Education",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "営利教育の上場競合",
+          "text_en": "Listed for-profit education rival",
+          "source": {
+            "label": "Universal Technical Institute 10-K(2025年9月期)",
+            "label_en": "Universal Technical Institute 10-K (FY Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1261654/000126165425000025/uti-20250930.htm",
+            "level": "official",
+            "date": "2025-11-26",
+            "quote": "some of our public company competitors are Adtalem Global Education, Inc., American Public Education, Inc., Legacy Education, Lincoln Educational Services Corporation, Perdoceo Education Corporation, and Strategic Education, Inc."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
