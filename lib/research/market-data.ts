@@ -2,7 +2,8 @@ import "server-only";
 import { calendarEvents, dateOnlyEarnings } from "./calendar";
 import { shapePeriod, periodSeries, isIntradayPeriod, type BoardPeriod } from "./market-board-periods.ts";
 import { FAST_QUOTE_TTL_MS } from "./quote-refresh-gate.ts";
-import { MAX_QUOTES_PER_REQUEST, MAX_SPARKLINES_PER_REQUEST, STALE_LIMIT_MS, barSlotMs, quoteSlotMs, type ReadSpec, type Tier } from "./twelve-budget.ts";
+import { MAX_QUOTES_PER_REQUEST, MAX_SPARKLINES_PER_REQUEST, STALE_LIMIT_MS, barSlotMs, quoteSlotMs, stocksTrading, type ReadSpec, type Tier } from "./twelve-budget.ts";
+import { LEVERAGED_ETFS, leveragedDue, type LeveragedSnapshot } from "./leveraged-etfs.ts";
 import { isBudgetError, sharedReader, twelveCall } from "./twelve-gateway";
 import { cachedStatistics } from "./twelve-store";
 import { easternToIso, chartSpec, nextEarningsFromSite, parseBars, parseNextEarnings, parseQuote, parseQuotes, parseStatistics, hasStatFacts, splitBars, type StatFacts, type Bar, type ChartRange, type MarketFacts, type MarketQuote } from "./market-quote";
@@ -235,15 +236,49 @@ export async function loadBoard(ids: string[], fast = false): Promise<BoardQuote
   return ids.flatMap(id => out.filter(item => item.id === id));
 }
 
-/** マーケット「レバETF」(owner, Nov 25): the funds and the stocks under them (lib/research/leveraged-etfs.ts), about 90 symbols. They are read in
- * batched quotes (12 symbols a call, one credit each) through the same lease as every other read, and kept two minutes for everyone (fifteen while
- * stocks do not trade), so the tab costs at most ~45 credits a minute however many members look at it. One request reads at most 48 of them from
- * the provider; the others show their last good copy, or come with the next poll (`missing` counts them). */
-const LEVERAGED_SLOT_MS = 2 * 60_000, LEVERAGED_MAX_FETCH = 48;
-const leveragedSpec = (now: number): ReadSpec => ({ name: "md-lev-v1", slotMs: Math.max(LEVERAGED_SLOT_MS, quoteSlotMs("AAPL", now)), staleMs: STALE_LIMIT_MS });
-export async function loadLeveragedQuotes(symbols: readonly string[]): Promise<{ quotes: Record<string, MarketQuote>; missing: number }> {
-  const got = await sharedReader.readMany<MarketQuote>(leveragedSpec(Date.now()), [...symbols], group => fetchQuotes(group), { maxFetch: LEVERAGED_MAX_FETCH });
+/** マーケット「レバETF」(owner, Nov 25): the funds and the stocks under them (lib/research/leveraged-etfs.ts, 89 symbols) in ONE shared snapshot.
+ * Owner, Nov 25: the list must show every row at once from the first load. Members' requests only read the snapshot; the site's minute job
+ * (refreshLeveragedSnapshot, from app/api/research/compare/warm, which the Railway monitor calls once a minute) reads the symbols that are due
+ * in 12-symbol batches through the allocator's lease and writes the snapshot again every minute, so the newest copy is always in the current
+ * or the previous minute's slot for every instance. */
+const LEVERAGED_FUNDS = new Set(LEVERAGED_ETFS.map(item => item.etf));
+const LEVERAGED_SNAPSHOT_SPEC: ReadSpec = { name: "md-lev-snap-v1", slotMs: 60_000, staleMs: STALE_LIMIT_MS };
+type LevSnapshot = LeveragedSnapshot<MarketQuote>;
+async function currentLeveragedSnapshot(): Promise<LevSnapshot | null> {
+  return (await sharedReader.read<LevSnapshot>(LEVERAGED_SNAPSHOT_SPEC, "all", null).catch(() => null))?.value ?? null;
+}
+let leveragedRun: Promise<{ spent: number; read: number; failed: number }> | null = null;
+/** One minute of the background refresh. Returns the credits asked for (spent), the symbols stored and those whose batch was refused or failed. */
+export function refreshLeveragedSnapshot(now = Date.now()): Promise<{ spent: number; read: number; failed: number }> {
+  return leveragedRun ??= (async () => {
+    const old = await currentLeveragedSnapshot();
+    const quotes: LevSnapshot["quotes"] = { ...(old?.quotes ?? {}) };
+    const ages = Object.fromEntries(Object.entries(quotes).map(([symbol, entry]) => [symbol, now - entry.at]));
+    const due = leveragedDue(ages, stocksTrading(now));
+    let spent = 0, read = 0, failed = 0;
+    const groups: string[][] = [];
+    for (let i = 0; i < due.length; i += 12) groups.push(due.slice(i, i + 12));
+    await Promise.all(groups.map(async group => {
+      try {
+        spent += group.length;
+        const values = await fetchQuotes(group), at = Date.now();
+        for (const symbol of group) { const value = values.get(symbol); if (value) { quotes[symbol] = { value, at }; read++; } }
+      } catch (error) { failed += group.length; if (isBudgetError(error)) spent -= group.length; }
+    }));
+    if (Object.keys(quotes).length) await sharedReader.save(LEVERAGED_SNAPSHOT_SPEC, "all", { value: { at: Date.now(), quotes }, at: Date.now() });
+    return { spent, read, failed };
+  })().finally(() => { leveragedRun = null; });
+}
+/** The list's quotes from the snapshot, and the time of its oldest fund quote. No snapshot at all (a new deployment before the minute job has
+ * run once): this request fills it once (shared by concurrent requests), so the very first visitor still gets the whole list. */
+export async function loadLeveragedSnapshot(): Promise<{ quotes: Record<string, MarketQuote>; at: number | null; filled: boolean }> {
+  let snapshot = await currentLeveragedSnapshot(), filled = false;
+  if (!snapshot) { await refreshLeveragedSnapshot(); snapshot = await currentLeveragedSnapshot(); filled = true; }
   const quotes: Record<string, MarketQuote> = {};
-  for (const symbol of symbols) { const value = got[symbol]?.value; if (value) quotes[symbol] = value; }
-  return { quotes, missing: symbols.filter(symbol => !got[symbol]).length };
+  let at: number | null = null;
+  for (const [symbol, entry] of Object.entries(snapshot?.quotes ?? {})) {
+    quotes[symbol] = entry.value;
+    if (LEVERAGED_FUNDS.has(symbol)) at = at === null ? entry.at : Math.min(at, entry.at);
+  }
+  return { quotes, at, filled };
 }
