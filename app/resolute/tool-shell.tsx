@@ -8,6 +8,7 @@ import { useOpenAtTop } from "./use-open-at-top";
 import AddToHomeCard from "./add-to-home-card";
 import h from "./tool-shell.module.css";
 import { validateSnapshot } from "@/lib/resolute/transport";
+import { rememberAccountReturn } from "@/lib/research/account-return";
 import { requestPreferences } from "@/lib/resolute/preferences-client";
 import { requestPlan } from "@/lib/resolute/plan-client";
 import type { DiagnosisLocale } from "@/lib/resolute/diagnosis-copy";
@@ -100,7 +101,7 @@ export default function ToolShell({ identityReady=true, home=false, pc=false, ch
    <svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="9" r="4" /><path d="M24 13v28M17 19h14M9 31c0 7 7 11 15 11s15-4 15-11M5 33l4-4 4 4M35 33l4-4 4 4" /></svg>
    <b>RESOLUTE</b><span>{en?"Checking…":"確認中…"}</span></section> : <section className={styles.card}>
    <h1>{en?"Your investing rules":"自分の投資ルール"}</h1><p role="status">{message}</p>
-   {access==="signed-out" ? <Link href="/research/account" prefetch={false}>{en?"Sign in":"ログイン"}</Link> : null}
+   {access==="signed-out" ? <Link href="/research/account" prefetch={false} onClick={()=>{ try { rememberAccountReturn(window.sessionStorage,window.location.pathname+window.location.search); } catch { /* Storage is optional. */ } }}>{en?"Sign in":"ログイン"}</Link> : null}
    {access==="mfa" ? <Link href="/research/account/security" prefetch={false}>{en?"Open security settings":"セキュリティ設定を開く"}</Link> : null}
    <button type="button" className={styles.secondary} onClick={()=>setAttempt(n=>n+1)}>{en?"Check again":"再確認"}</button>
   </section>;
