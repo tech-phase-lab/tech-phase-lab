@@ -1,0 +1,182 @@
+{
+  "root": {
+    "ticker": "FLG",
+    "name": "フラッグスター・フィナンシャル",
+    "cik": 910073,
+    "name_en": "Flagstar Financial"
+  },
+  "rows": [
+    {
+      "ja": "融資先(相手の資料に記載)",
+      "en": "Borrowers (named in their filings)"
+    },
+    {
+      "ja": "紹介の提携先(相手の資料に記載)",
+      "en": "Referral partner (named in its filing)"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "UHG",
+      "ticker": "UHG",
+      "name": "ユナイテッド・ホームズ・グループ",
+      "name_en": "United Homes Group",
+      "sub": "住宅建設",
+      "sub_en": "Homebuilding",
+      "sub_short": "住宅建設",
+      "sub_short_en": "Homes",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "United Homesが10-Kで、共同の信用枠の貸し手の一社に挙げる",
+          "text_en": "United Homes lists Flagstar Bank among lenders on its syndicated line of credit",
+          "source": {
+            "label": "United Homes Group 10-K(2025年度)",
+            "label_en": "United Homes Group 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1830188/000183018826000009/uhg-20251231.htm",
+            "level": "official",
+            "date": "2026-03-13",
+            "quote": "Syndicated line of credit: Wells Fargo Bank 7.48 % $ 21,177 Regions Bank 7.48 % 17,920 Flagstar Bank 7"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SPFX",
+      "ticker": "SPFX",
+      "name": "スタンダード・プレミアム・ファイナンス",
+      "name_en": "Standard Premium Finance",
+      "sub": "保険料の分割払い金融",
+      "sub_en": "Insurance premium finance",
+      "sub_short": "保険金融",
+      "sub_short_en": "Premium",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Standard Premiumが10-Kで、7,500万ドルに増えた信用枠に加わった貸し手として挙げる",
+          "text_en": "Standard Premium added Flagstar Bank as a lender when its line grew to $75 million",
+          "source": {
+            "label": "Standard Premium Finance 10-K(2025年度)",
+            "label_en": "Standard Premium Finance 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1807893/000107997326000349/spfx_10k-123125.htm",
+            "level": "official",
+            "date": "2026-03-20",
+            "quote": "syndicated the line of credit between two additional lenders, Flagstar Bank and Cadence Bank."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CLPR",
+      "ticker": "CLPR",
+      "name": "クリッパー・リアルティ",
+      "name_en": "Clipper Realty",
+      "sub": "賃貸住宅REIT",
+      "sub_en": "Apartment REIT",
+      "sub_short": "住宅REIT",
+      "sub_short_en": "Housing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Clipper Realtyが10-Kで、3,120万ドルの住宅ローンの相手として挙げる(完済)",
+          "text_en": "Clipper Realty repaid a $31.2 million mortgage note held by Flagstar Bank",
+          "source": {
+            "label": "Clipper Realty 10-K(2025年度)",
+            "label_en": "Clipper Realty 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1649096/000143774926005856/clpr20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "At closing, the Company repaid in full its $31.2 million mortgage note (the \"Mortgage\") with Flagstar Bank (\"Flagstar\") (see note 4 below)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BZH",
+      "ticker": "BZH",
+      "name": "ビーザー・ホームズ",
+      "name_en": "Beazer Homes",
+      "sub": "住宅建設",
+      "sub_en": "Homebuilding",
+      "sub_short": "住宅建設",
+      "sub_short_en": "Homes",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Beazer Homesが10-Kで、借入枠の貸し手の一社に挙げる",
+          "text_en": "Beazer Homes lists Flagstar Bank among the lenders on its credit facility",
+          "source": {
+            "label": "Beazer Homes 10-K(2025年9月期)",
+            "label_en": "Beazer Homes 10-K (FY ended Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/915840/000091584025000075/bzh-20250930.htm",
+            "level": "official",
+            "date": "2025-11-13",
+            "quote": "Flagstar Bank, N.A. and JPMorgan Chase Bank, N.A., as administrative agent and issuing lender"
+          }
+        }
+      ]
+    },
+    {
+      "id": "VRE",
+      "ticker": "VRE",
+      "name": "ベリス・レジデンシャル",
+      "name_en": "Veris Residential",
+      "sub": "賃貸住宅REIT",
+      "sub_en": "Apartment REIT",
+      "sub_short": "住宅REIT",
+      "sub_short_en": "Housing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Veris Residentialが10-Kで、物件ローンの貸し手として挙げる(2031年満期)",
+          "text_en": "Veris Residential lists Flagstar Bank as a property lender (maturing 2031)",
+          "source": {
+            "label": "Veris Residential 10-K(2025年度)",
+            "label_en": "Veris Residential 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/924901/000162828026010572/vre-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "Flagstar Bank 3.21 % - 70,653 01/01/31"
+          }
+        }
+      ]
+    },
+    {
+      "id": "NEWT",
+      "ticker": "NEWT",
+      "name": "ニューテックワン",
+      "name_en": "NewtekOne",
+      "sub": "中小企業向け金融",
+      "sub_en": "Small business finance",
+      "sub_short": "中小金融",
+      "sub_short_en": "Lending",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "NewtekOneが10-Kで、案件を紹介し合う提携先の一社に挙げる",
+          "text_en": "NewtekOne lists Flagstar Bank among the alliance partners that refer business",
+          "source": {
+            "label": "NewtekOne 10-K(2025年度)",
+            "label_en": "NewtekOne 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1587987/000162828026016503/newt-20251231.htm",
+            "level": "official",
+            "date": "2026-03-10",
+            "quote": "We market our business and financial solutions through referrals from our alliance partners such as Credit Union National Association, ENT Federal Credit Union, Morgan Stanley Smith Barney, Flagstar Bank"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

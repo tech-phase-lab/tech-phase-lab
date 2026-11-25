@@ -266,10 +266,12 @@
 .chapterKicker{font-family:Georgia,serif;letter-spacing:.08em;color:#8c6c35;font-size:9px}
 .paperPage h2{font-family:var(--font-resolute-serif),serif;font-size:clamp(22px,5vw,28px);font-weight:600;line-height:1.6;margin:10px 0 18px;text-wrap:balance;color:#202e40}
 .chapterLead{font-family:var(--font-resolute-serif),serif;color:#82622d;font-size:15px;line-height:1.9;margin:0 0 20px;text-wrap:pretty}
-.chapterMetrics{display:grid;grid-template-columns:1fr 1fr;gap:18px 14px;margin:22px 0;padding:20px 0;border-top:1px solid #ab976952;border-bottom:1px solid #ab976952}
-.chapterMetrics>div:only-child{grid-column:1/-1}
+/* Two values per row, but a value never breaks inside a word or number (owner, Nov 25: 「まだ決めていな／い」): keep-all makes
+   the whole value the narrowest a cell may be, so a value too wide for half the page takes the full row instead. */
+.chapterMetrics{display:flex;flex-wrap:wrap;gap:18px 14px;margin:22px 0;padding:20px 0;border-top:1px solid #ab976952;border-bottom:1px solid #ab976952}
+.chapterMetrics>div{flex:1 1 40%}
 .chapterMetrics dt{font-size:10px;line-height:1.7;color:#6e6b60}
-.chapterMetrics dd{font-family:var(--font-resolute-serif),serif;font-size:clamp(18px,4.3vw,23px);font-weight:600;margin:5px 0 0;line-height:1.6;color:#3d453f;overflow-wrap:anywhere}
+.chapterMetrics dd{font-family:var(--font-resolute-serif),serif;font-size:clamp(18px,4.3vw,23px);font-weight:600;margin:5px 0 0;line-height:1.6;color:#3d453f;overflow-wrap:normal;word-break:keep-all;line-break:strict}
 .chapterMetrics .metricDetail{font-family:inherit;font-size:10px;font-weight:400;color:#797568;margin-top:2px}
 .chapterProse p{font-family:var(--font-resolute-serif),serif;font-size:13px;line-height:2.05;margin:0 0 15px;overflow-wrap:anywhere;text-wrap:pretty}
 .chapterClosing{border-top:1px solid #ad96635c;padding-top:17px;margin-top:22px;font-family:var(--font-resolute-serif),serif;font-size:13px;line-height:2;color:#85662d;white-space:pre-line;text-wrap:balance}
@@ -285,9 +287,11 @@
 .turningLeaf{position:absolute;inset:0;z-index:4;pointer-events:none;transform-origin:left center;transform-style:preserve-3d;backface-visibility:hidden;overflow:hidden;border-radius:4px 12px 12px 4px;background:#ece1c9;filter:drop-shadow(12px 4px 12px #0005)}
 .turningLeaf>div{min-height:100%}
 .leafForward{animation:leafForward .58s cubic-bezier(.3,.1,.3,1) both}
-.leafBack{animation:leafBack .58s cubic-bezier(.3,.1,.3,1) both}
+/* Both directions turn the page being left (owner, Nov 25): forward it lifts away to the left over the spine, back it lifts
+   away to the right, so the page underneath (the one being opened, e.g. the navy cover) is revealed — never cover over cover. */
+.leafBack{transform-origin:right center;filter:drop-shadow(-12px 4px 12px #0005);animation:leafBack .58s cubic-bezier(.3,.1,.3,1) both}
 @keyframes leafForward{0%{transform:rotateY(0);filter:brightness(1)}55%{filter:brightness(.65)}100%{transform:rotateY(-165deg);filter:brightness(.8)}}
-@keyframes leafBack{0%{transform:rotateY(-165deg);filter:brightness(.7)}65%{filter:brightness(.9)}100%{transform:rotateY(0);filter:brightness(1)}}
+@keyframes leafBack{0%{transform:rotateY(0);filter:brightness(1)}55%{filter:brightness(.65)}100%{transform:rotateY(165deg);filter:brightness(.8)}}
 .readerControls{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:23px;padding:0 4px}
 .readerControls button{border:1px solid #a8894c6b;background:linear-gradient(#24303c,#101a27);color:#dec58f;min-width:58px;min-height:44px;padding:6px 15px;border-radius:5px;font:14px var(--font-resolute-serif),serif;cursor:pointer;box-shadow:0 2px 3px #0005;transition:transform .15s,box-shadow .15s}
 .readerControls button:active{transform:translateY(2px);box-shadow:inset 0 2px 3px #0005}
@@ -311,8 +315,8 @@
 @media(hover:hover) and (pointer:fine){.primary.continueButton:hover{background:linear-gradient(135deg,#2c4b68,#203850);box-shadow:0 5px 20px #8db8ee20}}
 
 /* Text answers need their own measure; do not squeeze them into amount-sized cells. */
-.chapterMetrics>div[data-text=true]{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.7fr);align-items:baseline;gap:8px 12px}
-.chapterMetrics>div[data-text=true] dd{font-size:17px;line-height:1.65;margin:0;text-wrap:balance;overflow-wrap:normal;word-break:normal;line-break:strict}
+.chapterMetrics>div[data-text=true]{flex-basis:100%;display:grid;grid-template-columns:minmax(0,1fr) minmax(min-content,1.7fr);align-items:baseline;gap:8px 12px}
+.chapterMetrics>div[data-text=true] dd{font-size:17px;line-height:1.65;margin:0;text-wrap:balance;overflow-wrap:normal;word-break:keep-all;line-break:strict}
 .chapterPractice{margin-top:24px;padding-top:18px;border-top:1px solid #ad96635c}
 .chapterPractice h3{font-family:var(--font-resolute-serif),serif;font-size:14px;font-weight:600;color:#85662d;margin:0 0 12px}
 .chapterPractice ol{margin:0;padding-left:1.4em;font-family:var(--font-resolute-serif),serif;font-size:13px;line-height:2;text-wrap:pretty}

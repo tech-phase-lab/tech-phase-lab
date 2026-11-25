@@ -1,0 +1,152 @@
+{
+  "root": {
+    "ticker": "ONB",
+    "name": "オールド・ナショナル・バンコープ",
+    "cik": 707179,
+    "name_en": "Old National Bancorp"
+  },
+  "rows": [
+    {
+      "ja": "融資先(相手の資料に記載)",
+      "en": "Borrowers (named in their filings)"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "HNRG",
+      "ticker": "HNRG",
+      "name": "ハラドール・エナジー",
+      "name_en": "Hallador Energy",
+      "sub": "石炭・発電",
+      "sub_en": "Coal & power",
+      "sub_short": "石炭",
+      "sub_short_en": "Coal",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Halladorが10-Kで、PNCに代わる新しい借入枠の相手として挙げる(2026年3月)",
+          "text_en": "Hallador's new credit agreement, replacing PNC, includes Old National Bank (March 2026)",
+          "source": {
+            "label": "Hallador Energy 10-K(2025年度)",
+            "label_en": "Hallador Energy 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/788965/000110465926027174/hnrg-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-03-12",
+            "quote": "On March 5, 2026, Hallador entered into a credit agreement with Texas Capital Bank and Old National Bank, among others, that replaces the Credit Agreement with PNC Bank"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ESCA",
+      "ticker": "ESCA",
+      "name": "エスカレード",
+      "name_en": "Escalade",
+      "sub": "スポーツ用品",
+      "sub_en": "Sporting goods",
+      "sub_short": "スポーツ",
+      "sub_short_en": "Sports",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Escaladeが10-Kで、2022年の借入契約に貸し手として加わったと記載",
+          "text_en": "Escalade says Old National Bank was added as a lender under its 2022 restated credit agreement",
+          "source": {
+            "label": "Escalade 10-K(2025年度)",
+            "label_en": "Escalade 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/33488/000143774926006094/esca20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Under the terms of the 2022 Restated Credit Agreement, Old National Bank was added as a Lender."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AIRT",
+      "ticker": "AIRT",
+      "name": "エア・T",
+      "name_en": "Air T",
+      "sub": "航空貨物・部品",
+      "sub_en": "Air cargo & parts",
+      "sub_short": "航空貨物",
+      "sub_short_en": "Air cargo",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Air Tが10-Kで、子会社の約束手形・事業ローン契約の相手として挙げる",
+          "text_en": "Air T names Old National Bank on a subsidiary promissory note and business loan agreement",
+          "source": {
+            "label": "Air T 10-K(2026年3月期)",
+            "label_en": "Air T 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/353184/000035318426000054/airt-20260331.htm",
+            "level": "official",
+            "date": "2026-06-29",
+            "quote": "Promissory Note and Business Loan Agreement executed as of March 7, 2018 between Contrail Aviation Support, LLC as Borrower, and Old National Bank"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SRET",
+      "ticker": "Sterling Real Estate Trust",
+      "name": "スターリング・リアル・エステート・トラスト",
+      "name_en": "Sterling Real Estate Trust",
+      "sub": "不動産投資信託",
+      "sub_en": "Real estate trust",
+      "sub_short": "不動産",
+      "sub_short_en": "Property",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Sterlingが10-Kで、2本の信用枠の相手として挙げる(旧ブレマー銀行)",
+          "text_en": "Sterling has two lines of credit with Old National Bank (formerly Bremer Bank)",
+          "source": {
+            "label": "Sterling Real Estate Trust 10-K(2025年度)",
+            "label_en": "Sterling Real Estate Trust 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1412502/000110465926026323/sret-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-03-11",
+            "quote": "The Trust maintains a $ 4,915 variable rate (floating SOFR plus 2.00 %) line of credit agreement with Old National Bank (formerly Bremer Bank), which expires in December 2026"
+          }
+        }
+      ]
+    },
+    {
+      "id": "FortressNL",
+      "ticker": "Fortress Net Lease",
+      "name": "フォートレス・ネットリースREIT",
+      "name_en": "Fortress Net Lease REIT",
+      "sub": "ネットリースREIT",
+      "sub_en": "Net lease REIT",
+      "sub_short": "REIT",
+      "sub_short_en": "REIT",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Fortress Net Leaseが10-Kで、借入枠に新しい貸し手として加わったと記載",
+          "text_en": "Fortress Net Lease says Old National Bank joined its credit facility as a new lender",
+          "source": {
+            "label": "Fortress Net Lease REIT 10-K(2025年度)",
+            "label_en": "Fortress Net Lease REIT 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1966394/000119312526126080/ck0001966394-20251231.htm",
+            "level": "official",
+            "date": "2026-03-26",
+            "quote": "Old National Bank also joined as a new lender."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

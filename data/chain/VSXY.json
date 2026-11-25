@@ -1,0 +1,185 @@
+{
+  "root": {
+    "ticker": "VSXY",
+    "name": "ヴィクトリアズ・シークレット",
+    "cik": 1856437,
+    "name_en": "Victoria's Secret & Co."
+  },
+  "rows": [
+    {
+      "ja": "店舗の家主(相手の資料に記載)",
+      "en": "Store landlords (named in their filings)",
+      "above": true
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitor (named in its filing)"
+    }
+  ],
+  "rivals": [
+    "AEO"
+  ],
+  "companies": [
+    {
+      "id": "CBL",
+      "ticker": "CBL",
+      "name": "CBL&アソシエイツ",
+      "name_en": "CBL & Associates",
+      "sub": "ショッピングモールREIT",
+      "sub_en": "Mall REIT",
+      "sub_short": "REIT",
+      "sub_short_en": "Mall REIT",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "CBLが10-Kで、収入の多いテナントの1位に挙げる(46店、収入の2.67%)",
+          "text_en": "CBL lists it as its No. 1 tenant (46 stores, 2.67% of revenue)",
+          "source": {
+            "label": "CBL & Associates 10-K(2025年度)",
+            "label_en": "CBL & Associates 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/910612/000119312526087049/cbl-20251231.htm",
+            "level": "official",
+            "date": "2026-03-03",
+            "quote": "1 Victoria's Secret & Co. 46 379,689 2.67 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MAC",
+      "ticker": "MAC",
+      "name": "メイスリッチ",
+      "name_en": "Macerich",
+      "sub": "ショッピングモールREIT",
+      "sub_en": "Mall REIT",
+      "sub_short": "REIT",
+      "sub_short_en": "Mall REIT",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Macerichが10-Kで、主要テナントとして挙げる(37店、賃料の2.2%)",
+          "text_en": "Macerich lists it among its top tenants (37 stores, 2.2% of rent)",
+          "source": {
+            "label": "Macerich 10-K(2025年度)",
+            "label_en": "Macerich 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/912242/000091224226000016/mac-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Victoria's Secret & Co. Pink, Victoria's Secret 37 2.2 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "TangerSKT",
+      "ticker": "SKT",
+      "name": "タンガー",
+      "name_en": "Tanger",
+      "sub": "アウトレットREIT",
+      "sub_en": "Outlet REIT",
+      "sub_short": "REIT",
+      "sub_short_en": "Outlets",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Tangerが10-Kで、主要テナントとして挙げる(21店、賃料の1.4%)",
+          "text_en": "Tanger lists it among its top tenants (21 stores, 1.4% of rent)",
+          "source": {
+            "label": "Tanger 10-K(2025年度)",
+            "label_en": "Tanger 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/899715/000162828026012252/skt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Victoria's Secret & Co. Pink by Victoria's Secret, Victoria's Secret 21 146,021 1.0 % 1.4 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BPY",
+      "ticker": "BPY",
+      "name": "ブルックフィールド・プロパティ・パートナーズ",
+      "name_en": "Brookfield Property Partners",
+      "sub": "商業不動産",
+      "sub_en": "Commercial real estate",
+      "sub_short": "不動産",
+      "sub_short_en": "Property",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Brookfield Propertyが20-Fで、主要テナントとして挙げる(賃料の2.1%)",
+          "text_en": "Brookfield Property lists it among its top tenants (2.1% of rent)",
+          "source": {
+            "label": "Brookfield Property Partners 20-F(2025年度)",
+            "label_en": "Brookfield Property Partners 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1545772/000154577226000006/bpy-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Victoria's Secret, PINK 2.1 %"
+          }
+        }
+      ]
+    },
+    {
+      "id": "LVS",
+      "ticker": "LVS",
+      "name": "ラスベガス・サンズ",
+      "name_en": "Las Vegas Sands",
+      "sub": "カジノリゾート",
+      "sub_en": "Casino resorts",
+      "sub_short": "カジノ",
+      "sub_short_en": "Casinos",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Las Vegas Sandsが10-Kで、運営するモールの主なテナントに挙げる(Shoppes at Venetian)",
+          "text_en": "Las Vegas Sands lists it among significant tenants of its Shoppes at Venetian mall",
+          "source": {
+            "label": "Las Vegas Sands 10-K(2024年度)",
+            "label_en": "Las Vegas Sands 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1300514/000130051425000040/lvs-20241231.htm",
+            "level": "official",
+            "date": "2025-02-07",
+            "quote": "Shoppes at Venetian 822,424 (2) Zara, Victoria's Secret, Uniqlo, Tiffany & Co."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AEO",
+      "ticker": "AEO",
+      "name": "アメリカン・イーグル・アウトフィッターズ",
+      "name_en": "American Eagle Outfitters",
+      "sub": "衣料小売",
+      "sub_en": "Apparel retail",
+      "sub_short": "衣料小売",
+      "sub_short_en": "Apparel",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "American Eagleが10-Kで、株価比較の対象とする同業グループに挙げる",
+          "text_en": "American Eagle includes it in the apparel peer group of its 10-K",
+          "source": {
+            "label": "American Eagle Outfitters 10-K(2026年1月期)",
+            "label_en": "American Eagle Outfitters 10-K (FY ended Jan 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/919012/000119312526132097/aeo-20260131.htm",
+            "level": "official",
+            "date": "2026-03-30",
+            "quote": "Corporation; and Victoria's Secret & Co."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
