@@ -1,0 +1,137 @@
+{
+  "ticker": "ARM",
+  "name": "Arm Holdings",
+  "exchange": "NASDAQ",
+  "quoteTicker": "ARM",
+  "period": "Q2 FY2027",
+  "periodQuarter": 2,
+  "releasedOn": "2026-11-04",
+  "periodEnd": "2026-09-30",
+  "reviewedOn": "2026-11-25",
+  "currency": "USD",
+  "basis": {"eps": "non-GAAP fully diluted", "grossMargin": "non-GAAP"},
+  "sources": [
+    {"url": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000141/exhibit992fye27q230-sepx26.htm", "title": "Arm Holdings plc shareholder letter, Q2 FYE27 (Form 6-K, Exhibit 99.2)", "location": "Q2 FYE27 Financial Overview, Guidance and Results, Key Financial and Operating Metrics, Condensed Consolidated Income Statements"},
+    {"url": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000113/exhibit992fye27q130-junx26.htm", "title": "Arm Holdings plc shareholder letter, Q1 FYE27 (Form 6-K, Exhibit 99.2)", "location": "Key Financial and Operating Metrics"},
+    {"url": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000062/exhibit992fye26q431-marx26.htm", "title": "Arm Holdings plc shareholder letter, Q4 FYE26 (Form 6-K, Exhibit 99.2)", "location": "Key Financial and Operating Metrics"},
+    {"url": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000005/exhibit992fye26q331-decx25.htm", "title": "Arm Holdings plc shareholder letter, Q3 FYE26 (Form 6-K, Exhibit 99.2)", "location": "Key Financial and Operating Metrics"}
+  ],
+  "evidence": [
+    {"field": "numbers.revenue.current", "url": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000141/exhibit992fye27q230-sepx26.htm", "quote": "Total revenue (2) $1,443 $1,135 27%"},
+    {"field": "numbers.revenue.yearAgo", "url": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000141/exhibit992fye27q230-sepx26.htm", "quote": "Total revenue (2) $1,443 $1,135 27%"},
+    {"field": "numbers.revenue.previous", "url": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000113/exhibit992fye27q130-junx26.htm", "quote": "Total revenue (2) $1,289 $1,053 22%"},
+    {"field": "numbers.adjustedEPS", "url": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000141/exhibit992fye27q230-sepx26.htm", "quote": "Diluted earnings (loss) per share ($) $0.12 $0.22 (45)% $0.52 $0.39 33%"},
+    {"field": "numbers.grossMargin.current", "url": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000141/exhibit992fye27q230-sepx26.htm", "quote": "Gross margin (%) 97.1% 97.4% 97.9% 98.2%"},
+    {"field": "numbers.grossMargin.previous", "url": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000113/exhibit992fye27q130-junx26.htm", "quote": "Gross margin (%) 97.2% 97.2% 98.1% 97.9%"},
+    {"field": "numbers.guidance.low", "url": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000141/exhibit992fye27q230-sepx26.htm", "quote": "Revenue $1.38bn +/- $50m $1.443bn $1.54bn +/- $50m", "calc": "1.54*1000-50"},
+    {"field": "numbers.guidance.high", "url": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000141/exhibit992fye27q230-sepx26.htm", "quote": "Revenue $1.38bn +/- $50m $1.443bn $1.54bn +/- $50m", "calc": "1.54*1000+50"},
+    {"field": "history[0].value", "url": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000141/exhibit992fye27q230-sepx26.htm", "quote": "Total revenue (2) $1,443 $1,135 27%"},
+    {"field": "history[1].value", "url": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000005/exhibit992fye26q331-decx25.htm", "quote": "Total revenue (2) $1,242 $983 26%"},
+    {"field": "history[2].value", "url": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000062/exhibit992fye26q431-marx26.htm", "quote": "Total revenue (2) $1,490 $1,241 20%"},
+    {"field": "history[3].value", "url": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000113/exhibit992fye27q130-junx26.htm", "quote": "Total revenue (2) $1,289 $1,053 22%"},
+    {"field": "tiles[0].value", "url": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000141/exhibit992fye27q230-sepx26.htm", "quote": "Total revenue (2) $1,443 $1,135 27%", "calc": "1443/1000", "round": 2},
+    {"field": "tiles[0].note", "url": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000141/exhibit992fye27q230-sepx26.htm", "quote": "Total revenue (2) $1,443 $1,135 27%"},
+    {"field": "tiles[1].value", "url": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000141/exhibit992fye27q230-sepx26.htm", "quote": "License and other revenue increased 50% year-over-year to $773 million"},
+    {"field": "tiles[1].note", "url": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000141/exhibit992fye27q230-sepx26.htm", "quote": "License and other revenue increased 50% year-over-year to $773 million"},
+    {"field": "tiles[2].value", "url": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000141/exhibit992fye27q230-sepx26.htm", "quote": "Royalty revenue increased 8% year-over-year to $670 million"},
+    {"field": "tiles[2].note", "url": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000141/exhibit992fye27q230-sepx26.htm", "quote": "Royalty revenue increased 8% year-over-year to $670 million"},
+    {"field": "summary.cards.growth", "url": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000141/exhibit992fye27q230-sepx26.htm", "quote": "Annualized contract value (ACV), a metric for normalized license and other revenue, increased 12% year-over-year to $1,790 million"},
+    {"field": "summary.cards.growth", "url": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000141/exhibit992fye27q230-sepx26.htm", "quote": "data center royalties doubling year over year"},
+    {"field": "summary.cards.growth", "url": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000141/exhibit992fye27q230-sepx26.htm", "quote": "License and other revenue 773 515 50%"},
+    {"field": "summary.cards.growth", "url": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000141/exhibit992fye27q230-sepx26.htm", "quote": "as well as fluctuation in the timing and size of multiple high-value license agreements and contributions from backlog"},
+    {"field": "summary.cards.change", "url": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000141/exhibit992fye27q230-sepx26.htm", "quote": "Operating margin (%) 13.9% 14.4% 44.2% 41.1%"},
+    {"field": "summary.cards.change", "url": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000113/exhibit992fye27q130-junx26.htm", "quote": "Operating margin (%) 7.1% 10.8% 41.2% 39.1%"},
+    {"field": "summary.cards.change", "url": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000141/exhibit992fye27q230-sepx26.htm", "quote": "Net income (loss) 130 238 (45)% 566 417 36%"},
+    {"field": "summary.cards.change", "url": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000141/exhibit992fye27q230-sepx26.htm", "quote": "Net cash provided by (used for) operating activities 207 567 (63)% Non-GAAP free cash flow 110 411 (73)%"},
+    {"field": "summary.cards.change", "url": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000141/exhibit992fye27q230-sepx26.htm", "quote": "Revenue $1.38bn +/- $50m $1.443bn $1.54bn +/- $50m"},
+    {"field": "summary.cards.caution", "url": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000141/exhibit992fye27q230-sepx26.htm", "quote": "Royalty revenue 670 620 8%"},
+    {"field": "summary.cards.caution", "url": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000113/exhibit992fye27q130-junx26.htm", "quote": "Royalty revenue 715 585 22%"},
+    {"field": "summary.cards.caution", "url": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000141/exhibit992fye27q230-sepx26.htm", "quote": "This was partially offset by the impact of memory pricing on the smartphone market."},
+    {"field": "summary.cards.caution", "url": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000141/exhibit992fye27q230-sepx26.htm", "quote": "Revenue from external customers $ 1,019 $ 713 $ 1,920 $ 1,438 Revenue from related parties 424 422 812 750 Total revenue 1,443 1,135"},
+    {"field": "summary.cards.next", "url": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000141/exhibit992fye27q230-sepx26.htm", "quote": "Non-GAAP fully diluted earnings per share (1) $0.47 +/- $0.04 $0.52 $0.56 +/- $0.04"},
+    {"field": "summary.cards.next", "url": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000141/exhibit992fye27q230-sepx26.htm", "quote": "first commercial deliveries on track for fiscal Q4'27"},
+    {"field": "summary.cards.next", "url": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000141/exhibit992fye27q230-sepx26.htm", "quote": "up to $2 billion in Arm AGI CPU revenue"}
+  ],
+  "numbers": {
+    "revenue": {"current": 1443, "previous": 1289, "yearAgo": 1135},
+    "adjustedEPS": 0.52,
+    "epsEstimate": null,
+    "grossMargin": {"current": 97.9, "previous": 98.1},
+    "guidance": {"low": 1490, "high": 1590, "grossMarginPercent": null},
+    "segments": null
+  },
+  "history": [
+    {"label": "Q2", "end": "2025-09-30", "value": 1135},
+    {"label": "Q3", "end": "2025-12-31", "value": 1242},
+    {"label": "Q4", "end": "2026-03-31", "value": 1490},
+    {"label": "Q1", "end": "2026-06-30", "value": 1289}
+  ],
+  "tiles": [
+    {"label": {"ja": "売上高", "en": "Revenue"}, "value": {"ja": "14.43億ドル", "en": "$1.44B"}, "note": {"ja": "前年同期比 +27%", "en": "+27% YoY"}},
+    {"label": {"ja": "ライセンス等の収入", "en": "License and other revenue"}, "value": {"ja": "7.73億ドル", "en": "$773M"}, "note": {"ja": "前年同期比 +50%", "en": "+50% YoY"}},
+    {"label": {"ja": "ロイヤルティ収入", "en": "Royalty revenue"}, "value": {"ja": "6.70億ドル", "en": "$670M"}, "note": {"ja": "前年同期比 +8%", "en": "+8% YoY"}}
+  ],
+  "summary": {
+    "conclusion": [
+      {"ja": "売上は14.43億ドルで、前期から約12%、前年同期から27%増えました。伸びを引っ張ったのはライセンス等の収入(+50%)です。", "en": "Revenue was $1.44B, up about 12% from the previous quarter and 27% from a year ago, led by license and other revenue (+50%)."},
+      {"ja": "一方で、チップの出荷に応じて入るロイヤルティ収入は6.70億ドルと前期の7.15億ドルから減りました。会社はスマートフォン市場でのメモリー価格の影響を挙げています。", "en": "Meanwhile, royalty revenue, which follows chip shipments, fell to $670M from $715M last quarter. The company cited the impact of memory pricing on the smartphone market."},
+      {"ja": "会社は次期の売上を15.4億ドル±5,000万ドルと見込んでいます。", "en": "The company expects next-quarter revenue of $1.54B plus or minus $50M."}
+    ],
+    "cards": {
+      "growth": {
+        "headline": {"ja": "ライセンス等の収入が前年同期比 +50%", "en": "License and other revenue up 50% YoY"},
+        "chips": [
+          {"tone": "up", "text": {"ja": "ライセンス等 5.15億 → 7.73億ドル", "en": "License $515M → $773M"}},
+          {"tone": "up", "text": {"ja": "データセンター向けロイヤルティ 約2倍", "en": "Data center royalties doubled"}}
+        ],
+        "sections": [
+          {"key": "happened", "text": {"ja": "ライセンス等の収入は、前年同期の5.15億ドルから7.73億ドルへ50%増えました。年間の契約額を表すACVも12%増えて17.9億ドルです。データセンター向けのロイヤルティは前年同期の約2倍になりました。", "en": "License and other revenue rose 50%, from $515M a year ago to $773M. Annualized contract value (ACV) grew 12% to $1.79B, and data center royalties roughly doubled from a year ago."}},
+          {"key": "good", "text": {"ja": "ライセンスは、顧客がArmの設計を使って新しいチップを作り始めた合図です。そのチップが量産されると、あとからロイヤルティ収入として入ってきます。", "en": "License deals show customers starting new chip designs on Arm. When those chips reach volume production, they bring in royalty revenue later."}},
+          {"key": "watch", "text": {"ja": "会社は、今回の伸びに大型ライセンス契約の時期と規模のぶれも含まれると説明しています。ライセンス収入は四半期ごとに大きく上下しやすい収入です。", "en": "The company says the increase also reflects the timing and size of several high-value license agreements. License revenue can swing widely from quarter to quarter."}}
+        ],
+        "segment": null
+      },
+      "change": {
+        "headline": {"ja": "売上は前期比 +11.9%、粗利益率はほぼ横ばい", "en": "Revenue up 11.9% QoQ, gross margin about flat"},
+        "chips": [
+          {"tone": "up", "text": {"ja": "売上 前期比 +11.9%", "en": "Revenue +11.9% QoQ"}},
+          {"tone": "down", "text": {"ja": "非GAAP粗利益率 98.1% → 97.9%", "en": "Non-GAAP gross margin 98.1% → 97.9%"}}
+        ],
+        "sections": [
+          {"key": "happened", "text": {"ja": "売上は12.89億ドルから14.43億ドルへ、1.54億ドル増えました。会社見通し(13.8億ドル±5,000万ドル)の上限も上回りました。非GAAP粗利益率は98.1%から97.9%で、ほぼ変わっていません。", "en": "Revenue rose from $1.29B to $1.44B, up $0.15B, above the top of the company's $1.38B plus or minus $50M outlook. Non-GAAP gross margin was about the same, from 98.1% to 97.9%."}},
+          {"key": "good", "text": {"ja": "非GAAP営業利益率は前期の41.2%から44.2%に上がり、非GAAPの1株利益は0.52ドルと前年同期の0.39ドルから33%増えました。", "en": "Non-GAAP operating margin rose from 41.2% to 44.2%, and non-GAAP EPS was $0.52, up 33% from $0.39 a year ago."}},
+          {"key": "watch", "text": {"ja": "GAAPでは純利益が1.30億ドルと前年同期の2.38億ドルから45%減り、営業利益率は13.9%にとどまります。フリーキャッシュフロー(非GAAP)も1.10億ドルと前年同期の4.11億ドルから73%減りました。", "en": "On a GAAP basis, net income fell 45% to $130M from $238M a year ago, and the operating margin was only 13.9%. Non-GAAP free cash flow fell 73% to $110M from $411M."}},
+          {"key": "view", "text": {"ja": "売上と調整後の利益は伸びていますが、GAAPの利益と現金の流れは弱くなっています。どちらの数字で語られているかを分けて見る必要があります。", "en": "Revenue and adjusted profit grew, but GAAP profit and cash flow weakened. Keep track of which basis each figure uses."}}
+        ],
+        "segment": null
+      },
+      "caution": {
+        "headline": {"ja": "ロイヤルティ収入が前期から減少", "en": "Royalty revenue fell from the previous quarter"},
+        "chips": [
+          {"tone": "down", "text": {"ja": "ロイヤルティ 7.15億 → 6.70億ドル", "en": "Royalty $715M → $670M"}},
+          {"tone": "down", "text": {"ja": "前年同期比 +22% → +8%", "en": "YoY growth +22% → +8%"}}
+        ],
+        "sections": [
+          {"key": "happened", "text": {"ja": "ロイヤルティ収入は前期の7.15億ドルから6.70億ドルに減りました。前年同期比の伸びも、前期の22%から8%に小さくなっています。会社はスマートフォン市場でのメモリー価格の影響を理由に挙げています。", "en": "Royalty revenue fell from $715M to $670M. Year-over-year growth slowed from 22% last quarter to 8%. The company cited the impact of memory pricing on the smartphone market."}},
+          {"key": "watch", "text": {"ja": "ロイヤルティはArmの売上の土台となる収入です。スマートフォンの出荷が弱いと、新しい設計の採用が進んでも伸びが抑えられます。また売上14.43億ドルのうち4.24億ドルは関連当事者(会社と特別な関係にある取引先)からの売上です。", "en": "Royalties are the base of Arm's revenue. Weak smartphone shipments can hold back growth even as newer designs are adopted. Also, $424M of the $1.44B in revenue came from related parties."}},
+          {"key": "means", "text": {"ja": "今期は大型ライセンスが伸びを補いましたが、ライセンスは四半期ごとのぶれが大きい収入です。", "en": "Large license deals made up for it this quarter, but license revenue is volatile from quarter to quarter."}},
+          {"key": "view", "text": {"ja": "1四半期の減少だけでは傾向とは言えません。次の決算でロイヤルティが前期比で戻るかどうかが、見るところです。", "en": "One quarter's decline is not a trend. What matters is whether royalties recover sequentially in the next report."}}
+        ],
+        "segment": null
+      },
+      "next": {
+        "headline": {"ja": "次期の会社見通しを追う", "en": "Follow the company's outlook for next quarter"},
+        "chips": [
+          {"tone": "gold", "text": {"ja": "売上 14.9〜15.9億ドル", "en": "Revenue $1.49–1.59B"}},
+          {"tone": "gold", "text": {"ja": "非GAAP 1株利益 0.56ドル±0.04ドル", "en": "Non-GAAP EPS $0.56 ± $0.04"}}
+        ],
+        "sections": [
+          {"key": "happened", "text": {"ja": "会社は、次期の売上を15.4億ドル±5,000万ドル、つまり14.9億〜15.9億ドルと見込んでいます。非GAAPの1株利益は0.56ドル±0.04ドルの見通しです。今回の売上は14.43億ドルなので、下限でも約3.3%の増加です。", "en": "The company expects next-quarter revenue of $1.54B plus or minus $50M ($1.49B to $1.59B) and non-GAAP EPS of $0.56 plus or minus $0.04. This quarter's revenue was $1.44B, so even the low end would be about 3.3% higher."}},
+          {"key": "means", "text": {"ja": "自社で設計したチップ(Arm AGI CPU)の最初の商用出荷は、今年度の第4四半期の予定です。会社は2027〜2028年度で最大20億ドルの売上を見込んでいます。", "en": "First commercial deliveries of Arm's own chip (Arm AGI CPU) are on track for fiscal Q4'27. The company sees up to $2B of revenue from it across fiscal 2027 and 2028."}},
+          {"key": "view", "text": {"ja": "次の決算で、売上がこの幅のどこに入るかと、ロイヤルティが再び伸びるかを見ます。", "en": "In the next report, check where revenue lands in this range and whether royalties grow again."}}
+        ],
+        "segment": null
+      }
+    }
+  }
+}
