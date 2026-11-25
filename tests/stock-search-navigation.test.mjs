@@ -56,12 +56,31 @@ test('typing replaces stale URL query, without adding one Back step per keystrok
 });
 test('a directly opened detail restores its selection and can return without leaving the site',async t=>{
  const h=harness(t,stockSearchUrl('VS','VST:2:NYSE'));await h.runSearch();assert.match(h.requests.at(-1).url,/ticker=VST/);
- h.nodes().find(n=>n.type==='button'&&n.props.children==='← 検索結果に戻る').props.onClick();h.render();assert.equal(h.url(),'/research/stocks?q=VS');
+ h.nodes().find(n=>n.type==='button'&&[].concat(n.props.children).includes('検索結果')).props.onClick();h.render();assert.equal(h.url(),'/research/stocks?q=VS');
 });
 
-test('opening a stock leaves the return control below the fixed header, including after loading',async t=>{
+test('opening a stock folds the search away and starts the stock page at the top (owner, Nov 25)',async t=>{
  const h=harness(t);await h.runSearch();h.open();
- assert.equal(window.scrollY,392,'detail starts 12px below the 96px header');
+ assert.equal(window.scrollY,0,'the page scrolls to the top when a stock is chosen');
+ const hiddenWrappers=h.nodes().filter(n=>n.type==='div'&&n.props.hidden===true);
+ assert.ok(hiddenWrappers.length>=2,'heading, history and results are hidden, not removed');
+ assert.ok(h.nodes().some(n=>n.type==='button'&&[].concat(n.props.children).includes('検索結果')),'the thin bar has 「‹ 検索結果」');
  await h.answer(h.requests.at(-1),{ok:true,profile:{ticker:'VST',name:'Vistra',exchange:'NYSE',recentFilings:[]}});
- assert.equal(window.scrollY,392,'loaded detail retains the header clearance');
+ assert.equal(window.scrollY,0,'loaded detail stays at the top');
+});
+test('typing an exact ticker shows its one result instead of opening it',async t=>{
+ const h=harness(t,'/research/stocks?q=VST');await h.runSearch();
+ assert.doesNotMatch(h.url(),/stock=/);assert.equal(h.requests.filter(r=>/ticker=/.test(r.url)).length,0);
+ assert.equal(h.nodes().filter(n=>n.type==='div'&&n.props.hidden===true).length,0,'the results screen is showing');
+});
+test('the slim field: typing returns to results, × clears to the first screen',async t=>{
+ const h=harness(t);await h.runSearch();h.open();
+ const slim=()=>h.nodes().filter(n=>n.type==='input').at(0);
+ slim().props.onChange({target:{value:'VSX'}});h.render();
+ assert.equal(new URL(h.url(),'https://example.test').searchParams.get('stock'),null);
+ assert.equal(h.nodes().filter(n=>n.type==='div'&&n.props.hidden===true).length,0,'typing switches back to the results screen');
+ await h.runSearch();h.open();
+ const clear=h.nodes().find(n=>n.type==='button'&&n.props['aria-label']==='入力を消す');clear.props.onClick();h.render();
+ assert.equal(h.url(),'/research/stocks');
+ assert.equal(h.nodes().filter(n=>n.props?.results&&n.props?.onSelect).length,0,'no results under an empty query');
 });

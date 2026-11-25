@@ -23,12 +23,15 @@ function smooth(points: [number, number][]) {
 /** The watchlist row's chart (owner, Nov 13; compact Nov 25): 84×40, a dotted line at the previous close, the line mint above it and red below, the space
  * between the line and the dotted line tinted the same colour (0.16), the line fading in from the left (0.12 → 1), a dot on the latest value
  * with a faint halo and a ring that spreads every two seconds, and the day's high and low (of the drawn data) at the top and bottom left. */
-export default function AreaChart({ values, reference, label, className = "" }: { values: number[]; reference: number; label: string; className?: string }) {
+/** `levels={false}` (stock search cards, owner Nov 25): the same line, dotted line, tint and glowing dot without the high / low figures, the line
+ * using the full height the figures took. */
+export default function AreaChart({ values, reference, label, className = "", levels = true }: { values: number[]; reference: number; label: string; className?: string; levels?: boolean }) {
   const id = useId().replace(/[^a-zA-Z0-9_-]/g, "");
   if (values.length < 2 || !Number.isFinite(reference) || reference <= 0 || values.some(value => !Number.isFinite(value) || value <= 0)) return null;
   const high = Math.max(...values), low = Math.min(...values);
   const top = Math.max(high, reference), bottom = Math.min(low, reference), span = top - bottom || 1;
-  const y = (value: number) => BOTTOM - (value - bottom) / span * (BOTTOM - TOP);
+  const lineTop = levels ? TOP : 5, lineBottom = levels ? BOTTOM : H - 5;
+  const y = (value: number) => lineBottom - (value - bottom) / span * (lineBottom - lineTop);
   const x = (index: number) => LEFT + index * (RIGHT - LEFT) / (values.length - 1);
   const points = values.map((value, index) => [x(index), y(value)] as [number, number]);
   const line = smooth(points), base = y(reference).toFixed(1);
@@ -52,7 +55,7 @@ export default function AreaChart({ values, reference, label, className = "" }: 
     <circle cx={last[0]} cy={last[1]} r="5" fill={color} fillOpacity="0.18" />
     <circle className={styles.ring} cx={last[0]} cy={last[1]} r="2.2" fill={color} />
     <circle cx={last[0]} cy={last[1]} r="2.2" fill={color} stroke="#0a0e14" strokeWidth="1.2" />
-    <text className={styles.level} x="0" y="8.5">{price(high)}</text>
-    <text className={styles.level} x="0" y="40">{price(low)}</text>
+    {levels && <text className={styles.level} x="0" y="8.5">{price(high)}</text>}
+    {levels && <text className={styles.level} x="0" y="40">{price(low)}</text>}
   </svg>;
 }

@@ -25,7 +25,9 @@ import StockThemeDiscovery from "./stock-theme-discovery";
 import StockSearchHistory from "./stock-search-history";
 import { useStockHistory } from "./use-stock-history";
 import { stockSearchReturnPosition, stockSearchUrl } from "@/lib/research/stock-search-navigation";
-import { formatDisplay, zoneLabel } from "@/lib/research/display-time";
+import { displayClock } from "@/lib/research/display-time";
+import { asOfLabel } from "@/lib/research/search-result-card";
+import type { SectorLabel } from "@/lib/research/watchlist-sector";
 
 type SearchResponse = { ok: boolean; results?: StockDirectoryEntry[]; error?: string; source?: string; asOf?: string };
 type IntroducedStockProfile = StockProfile & { introduction?: CompanyIntroduction | null; network?: CompanyNetwork | null };
@@ -60,7 +62,8 @@ function filingLabel(form: string, lang: "ja" | "en") {
   return form.endsWith("/A") ? `${label}${lang === "ja" ? "（訂正）" : " (amended)"}` : label;
 }
 
-export default function StockDirectory() {
+/** `sectors`: the research roster's sector per ticker, the same registered tag the watchlist shows (page.tsx). */
+export default function StockDirectory({ sectors }: { sectors?: Record<string, SectorLabel> } = {}) {
   const [lang, setLang] = useResearchLanguage();
   const searchParams = useSearchParams();
   const routeQuery = searchParams.get("q") ?? "";
@@ -84,28 +87,32 @@ export default function StockDirectory() {
   const businessRequest = useRef(0);
   const marketTarget = useRef<HTMLDivElement>(null);
   const resultsTarget = useRef<HTMLElement>(null);
-  const marketTicker = profile?.ticker ?? directQuote?.ticker ?? null;
   const t = (ja: string, en: string) => lang === "ja" ? ja : en;
 
+  // Owner, Nov 25: choosing a stock folds the search away and the stock's page starts at the top of the screen.
   useEffect(() => {
-    if (!selectedResultKey || (!profileLoading && !marketTicker)) return;
-    const frame = window.requestAnimationFrame(() => {
-      const target = marketTarget.current;
-      if (!target) return;
-      const headerBottom = document.querySelector("header")?.getBoundingClientRect().bottom ?? 0;
-      window.scrollTo({
-        top: Math.max(0, window.scrollY + target.getBoundingClientRect().top - headerBottom - 12),
-        behavior: "smooth",
-      });
-    });
+    if (!selectedResultKey) return;
+    const frame = window.requestAnimationFrame(() => window.scrollTo({ top: 0, behavior: "instant" }));
     return () => window.cancelAnimationFrame(frame);
-  }, [marketTicker, profileLoading, selectedResultKey]);
+  }, [selectedResultKey]);
 
   const openThemeResult = useEffectEvent((entry: StockDirectoryEntry) => { void selectStock(entry); });
 
   function changeQuery(value: string) {
     setQuery(value);
     window.history.replaceState(null, "", stockSearchUrl(value));
+  }
+
+  function closeDetail() {
+    profileRequest.current += 1;
+    businessRequest.current += 1;
+    setSelectedResultKey(null);
+    setProfile(null);
+    setDirectQuote(null);
+    setProfileLoading(false);
+    setBrief(null);
+    setBriefStatus("idle");
+    setError(null);
   }
 
   const restoreRoute = useEffectEvent(() => {
@@ -116,15 +123,7 @@ export default function StockDirectory() {
       return;
     }
     if (!selectedResultKey) return;
-    profileRequest.current += 1;
-    businessRequest.current += 1;
-    setSelectedResultKey(null);
-    setProfile(null);
-    setDirectQuote(null);
-    setProfileLoading(false);
-    setBrief(null);
-    setBriefStatus("idle");
-    setError(null);
+    closeDetail();
     requestAnimationFrame(() => {
       const y = stockSearchReturnPosition(window.history.state, routeQuery);
       if (y !== null) window.scrollTo({ top: y, behavior: "instant" });
@@ -134,9 +133,11 @@ export default function StockDirectory() {
 
   useEffect(() => { restoreRoute(); }, [routeQuery, routeSelection, results]);
 
+  /** 「‹ 検索結果」: the results as they were (query, list, scroll position), the same as the browser's Back. */
   function showSearchResults() {
-    if (stockSearchReturnPosition(window.history.state, query) !== null && routeSelection) window.history.back();
-    else window.history.replaceState(null, "", stockSearchUrl(query));
+    if (stockSearchReturnPosition(window.history.state, query) !== null && routeSelection) { window.history.back(); return; }
+    window.history.replaceState(null, "", stockSearchUrl(query));
+    closeDetail();
   }
 
   useEffect(() => {
@@ -250,9 +251,10 @@ export default function StockDirectory() {
   }
 
   const errorMessage = error ? t("銘柄情報を取得できませんでした。少し待って再検索してください。", "Company data is unavailable. Please try again shortly.") : null;
-  const visibleResults = selectedResultKey
-    ? results.filter((entry) => `${entry.ticker}:${entry.cik}:${entry.exchange}` === selectedResultKey)
-    : results;
+  // A chosen stock folds the search screen away (owner, Nov 25): the heading, history, results and their time are hidden, not removed, so
+  // 「‹ 検索結果」 and Back find the same list (and its prices) at the same scroll position.
+  const detail = Boolean(selectedResultKey);
+  const asOfNote = asOf ? <time dateTime={asOf}>{asOfLabel(displayClock(asOf, lang), lang)}</time> : null;
 
   return <div className={base.app} lang={lang}>
     <a className={base.skip} href="#stock-search-main">{t("本文へ移動", "Skip to content")}</a>
@@ -261,6 +263,15 @@ export default function StockDirectory() {
     <aside className={shell.toolSidebar}><HomeSidebar lang={lang} tab="home" standalone pathname="/research/stocks" /></aside>
     <WatchToast />
     <main id="stock-search-main" className={`${styles.main} ${styles.sidebarMain}`}>
+      {detail && <div className={searchStyles.detailBar}>
+        <button type="button" className={searchStyles.backButton} onClick={showSearchResults}><span aria-hidden="true">‹</span>{t("検索結果", "Results")}</button>
+        <div className={searchStyles.slimField}>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" /><path d="m16 16 5 5" /></svg>
+          <input autoComplete="off" autoCapitalize="characters" spellCheck={false} inputMode="search" value={query} onChange={(event) => { themeSelection.current = null; changeQuery(event.target.value); }} aria-label={t("米国株を検索", "Search U.S. stocks")} />
+          {query && <button type="button" aria-label={t("入力を消す", "Clear")} onClick={() => { themeSelection.current = null; changeQuery(""); }}><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" aria-hidden="true"><path d="M3 3l6 6M9 3l-6 6" /></svg></button>}
+        </div>
+      </div>}
+      <div hidden={detail}>
       <section className={searchStyles.hero}>
         <p className={searchStyles.eyebrow}>STOCK DISCOVERY</p>
         <h1 className={searchStyles.title}>{t("銘柄検索", "Stock search")}</h1>
@@ -276,23 +287,23 @@ export default function StockDirectory() {
       {!query.trim() && !profile && <StockThemeDiscovery lang={lang} onSelect={ticker => { themeSelection.current = ticker; changeQuery(ticker); }} />}
 
       {historyError && <p className={polish.resultHint} role="status">{t("このブラウザーで履歴を保存・消去できませんでした。", "Could not update history in this browser.")}</p>}
+      </div>
 
-      {(query.trim() || errorMessage) && !directQuote && <div className={`${styles.layout} ${polish.resultLayout}`}>
+      {(query.trim() || errorMessage) && !directQuote && <div className={`${styles.layout} ${polish.resultLayout}`} hidden={detail}>
         <section ref={resultsTarget} className={`${styles.results} ${polish.searchResults}`} aria-labelledby="results-title" aria-busy={loading}>
           <div className={searchStyles.listHead}><h2 id="results-title" style={{ margin: 0, fontSize: 13, fontWeight: 400, color: "#8c98ab" }}>{t("検索結果", "Search results")}</h2><span aria-live="polite">{loading ? t("検索中…", "Searching…") : `${results.length}${t("件", results.length === 1 ? " result" : " results")}`}</span></div>
           {errorMessage && <div className={styles.error} role="alert"><strong>{t("取得経路を確認中", "Source unavailable")}</strong><p>{errorMessage}</p></div>}
           {!error && query.trim() && !loading && results.length === 0 && <div className={styles.empty}><strong>{t("該当銘柄が見つかりません", "No matching ticker")}</strong><p>{t("英語の企業名またはティッカーで検索してください。SEC名簿は全銘柄を保証するものではありません。", "Try an English company name or ticker. The SEC does not guarantee complete coverage.")}</p></div>}
-          <SearchRows results={visibleResults} lang={lang} onSelect={selectStock} />
-          {asOf && <p className={styles.asOf}>{t("表示取得時刻", "Retrieved")}: <time dateTime={asOf}>{formatDisplay(asOf, lang, { dateStyle: "medium", timeStyle: "short" })} {zoneLabel(lang)}</time></p>}
+          <SearchRows results={results} lang={lang} onSelect={selectStock} sectors={sectors} />
+          {asOf && <p className={styles.asOf}><time dateTime={asOf}>{asOfLabel(displayClock(asOf, lang), lang)}</time></p>}
         </section>
 
       </div>}
 
       {(selectedResultKey || profileLoading || profile || directQuote) && <div ref={marketTarget} className={polish.marketTarget}>
-        {selectedResultKey && !directQuote && <div className={polish.resultGuide}><button type="button" onClick={showSearchResults}>{t("← 検索結果に戻る", "← Back to results")}</button></div>}
         {profileLoading && <div className={polish.profileLoading} role="status"><span className={styles.loader} /><strong>{t("銘柄情報を読み込み中…", "Loading company…")}</strong></div>}
-        {directQuote && !profile && <MarketWorkspace key={`${directQuote.ticker}:${lang}`} {...directQuote} lang={lang} />}
-        {profile && <MarketWorkspace key={`${profile.exchange}:${profile.ticker}`} ticker={profile.ticker} exchange={profile.exchange} name={profile.name} lang={lang} introduction={profile.introduction} network={profile.network} />}
+        {directQuote && !profile && <MarketWorkspace key={`${directQuote.ticker}:${lang}`} {...directQuote} lang={lang} asOf={asOfNote} />}
+        {profile && <MarketWorkspace key={`${profile.exchange}:${profile.ticker}`} ticker={profile.ticker} exchange={profile.exchange} name={profile.name} lang={lang} introduction={profile.introduction} network={profile.network} asOf={asOfNote} />}
       </div>}
 
       {profile && !profile.introduction && briefStatus === "approved" && brief && <section className={filingStyles.brief} aria-labelledby="annual-brief-title">
