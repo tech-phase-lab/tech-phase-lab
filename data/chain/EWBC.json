@@ -1,0 +1,178 @@
+{
+  "root": {
+    "ticker": "EWBC",
+    "name": "イースト・ウエスト・バンコープ",
+    "cik": 1069157,
+    "name_en": "East West Bancorp"
+  },
+  "rows": [
+    {
+      "ja": "融資先(相手の資料に記載)",
+      "en": "Borrowers (named in their filings)"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "LVO",
+      "ticker": "LVO",
+      "name": "ライブワン",
+      "name_en": "LiveOne",
+      "sub": "音楽配信",
+      "sub_en": "Music streaming",
+      "sub_short": "音楽配信",
+      "sub_short_en": "Music",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "LiveOneが10-Kで、2021年からの借入枠(ビジネス・ローン契約)の相手として挙げる",
+          "text_en": "LiveOne's senior secured revolving line comes from a 2021 business loan agreement with East West Bank",
+          "source": {
+            "label": "LiveOne 10-K(2026年3月期)",
+            "label_en": "LiveOne 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1491419/000143774926021987/lvo20260331_10k.htm",
+            "level": "official",
+            "date": "2026-06-29",
+            "quote": "On June 2, 2021, the Company entered into a Business Loan Agreement with East West Bank (the \"Sen"
+          }
+        }
+      ]
+    },
+    {
+      "id": "FGI",
+      "ticker": "FGI",
+      "name": "FGIインダストリーズ",
+      "name_en": "FGI Industries",
+      "sub": "浴室・キッチン用品",
+      "sub_en": "Kitchen & bath products",
+      "sub_short": "浴室用品",
+      "sub_short_en": "Bath",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "FGI Industriesが10-Kで、2026年3月に結び直した借入契約の相手として挙げる",
+          "text_en": "FGI Industries amended and restated its credit agreement with East West Bank in March 2026",
+          "source": {
+            "label": "FGI Industries 10-K(2025年度)",
+            "label_en": "FGI Industries 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1864943/000162828026024682/fgi-20251231.htm",
+            "level": "official",
+            "date": "2026-04-10",
+            "quote": "In March 2026, the Company amended and restated its Credit Agreement with East West Bank and is currently in compliance with all covenants."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DRCT",
+      "ticker": "DRCT",
+      "name": "ダイレクト・デジタル・ホールディングス",
+      "name_en": "Direct Digital Holdings",
+      "sub": "広告テクノロジー",
+      "sub_en": "Advertising technology",
+      "sub_short": "広告IT",
+      "sub_short_en": "Ad tech",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Direct Digitalが10-Kで、2023年7月の信用枠の相手として挙げる",
+          "text_en": "Direct Digital's 2023 revolving line of credit is with East West Bank",
+          "source": {
+            "label": "Direct Digital Holdings 10-K(2025年度)",
+            "label_en": "Direct Digital Holdings 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1880613/000188061326000032/drct-20251231.htm",
+            "level": "official",
+            "date": "2026-03-31",
+            "quote": "2023 Revolving Line of Credit - East West Bank On July 7, 2023, the Company entered into a Credi"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SIEB",
+      "ticker": "SIEB",
+      "name": "シーバート・ファイナンシャル",
+      "name_en": "Siebert Financial",
+      "sub": "証券",
+      "sub_en": "Brokerage",
+      "sub_short": "証券",
+      "sub_short_en": "Broker",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Siebertが10-Kで、2,000万ドルの借入枠の相手として挙げる(2024年8月)",
+          "text_en": "Siebert signed a $20 million revolving credit facility with East West Bank (August 2024)",
+          "source": {
+            "label": "Siebert Financial 10-K(2025年度)",
+            "label_en": "Siebert Financial 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/65596/000121390026036500/ea0281594-10k_siebert.htm",
+            "level": "official",
+            "date": "2026-03-30",
+            "quote": "On August 15, 2024, we entered into the EWB Credit Agreement with East West Bank providing a $20 million revolving credit facility."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CNVS",
+      "ticker": "CNVS",
+      "name": "シネバース",
+      "name_en": "Cineverse",
+      "sub": "映像配信",
+      "sub_en": "Film & TV streaming",
+      "sub_short": "映像配信",
+      "sub_short_en": "Film",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Cineverseが10-Kで、1,250万ドルの信用枠の相手として挙げる",
+          "text_en": "Cineverse's line of credit facility of up to $12.5 million is with East West Bank",
+          "source": {
+            "label": "Cineverse 10-K(2026年3月期)",
+            "label_en": "Cineverse 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1173204/000119312526284027/cnvs-20260331.htm",
+            "level": "official",
+            "date": "2026-06-26",
+            "quote": "The Company is party to a Loan, Guaranty, and Security Agreement, as amended on April 8, 2025 , with East West Bank (the \"Line of Credit Facility\") currently provides for borrowings of up to $ 12.5 million"
+          }
+        }
+      ]
+    },
+    {
+      "id": "StarMountain",
+      "ticker": "Star Mountain",
+      "name": "スター・マウンテン",
+      "name_en": "Star Mountain Lower Middle-Market Capital",
+      "sub": "中小企業向け融資ファンド",
+      "sub_en": "Lower middle-market lending fund",
+      "sub_short": "融資",
+      "sub_short_en": "Lending",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Star Mountainが10-Kで、2,500万ドルの信用枠の相手として挙げる",
+          "text_en": "Star Mountain's $25 million revolving credit line is with East West Bank",
+          "source": {
+            "label": "Star Mountain Lower Middle-Market Capital 10-K(2025年度)",
+            "label_en": "Star Mountain Lower Middle-Market Capital 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1786835/000114036126012276/ef20060634_10k.htm",
+            "level": "official",
+            "date": "2026-03-31",
+            "quote": "On June 22, 2022 the Company entered into a Loan and Security Agreement with East West Bank, which provides for cash or credit advances of up to $25 million (the \"Revolving Credit Line\")"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

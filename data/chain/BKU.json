@@ -1,0 +1,182 @@
+{
+  "root": {
+    "ticker": "BKU",
+    "name": "バンクユナイテッド",
+    "cik": 1504008,
+    "name_en": "BankUnited"
+  },
+  "rows": [
+    {
+      "ja": "融資・口座の取引先(相手の資料に記載)",
+      "en": "Borrowers & account clients (named in their filings)"
+    },
+    {
+      "ja": "資金の借入元(相手の資料に記載)",
+      "en": "Its own funding source (named in its filing)"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "PFX",
+      "ticker": "PFX",
+      "name": "フェニックスFIN",
+      "name_en": "PhenixFIN",
+      "sub": "事業融資ファンド",
+      "sub_en": "Business development company",
+      "sub_short": "融資",
+      "sub_short_en": "Lending",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "PhenixFINが10-Kで、1億ドルに増えた借入枠の幹事行として挙げる",
+          "text_en": "PhenixFIN names BankUnited the agent of its $100 million credit facility",
+          "source": {
+            "label": "PhenixFIN 10-K(2025年9月期)",
+            "label_en": "PhenixFIN 10-K (FY ended Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1490349/000121390025120913/ea0264791-10k_phenixfin.htm",
+            "level": "official",
+            "date": "2025-12-12",
+            "quote": "The Third Amendment increased the principal amount of the loan available under the Credit Facility by $ 12.5 million to $ 100.0 million (with potential access to up to an additional $ 50.0 million pursuant to an uncommitted accordion provision) and appointed BankUnited, N.A. to assume all agency and syndication respons"
+          }
+        }
+      ]
+    },
+    {
+      "id": "DLPN",
+      "ticker": "DLPN",
+      "name": "ドルフィン・エンターテインメント",
+      "name_en": "Dolphin Entertainment",
+      "sub": "PR・マーケティング",
+      "sub_en": "Entertainment marketing",
+      "sub_short": "PR",
+      "sub_short_en": "Ad firm",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Dolphinが10-Kで、2023年9月のローン契約の相手として挙げる(旧ローンの借り換え)",
+          "text_en": "Dolphin refinanced an earlier term loan with a 2023 BankUnited loan agreement",
+          "source": {
+            "label": "Dolphin Entertainment 10-K(2025年度)",
+            "label_en": "Dolphin Entertainment 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1282224/000107997326000368/dlpn_10k.htm",
+            "level": "official",
+            "date": "2026-03-27",
+            "quote": "On September 29, 2023, we entered into a loan agreement with BankUnited (\"BankUnited Loan Agreement\") in which an existing term loan with BankProv was repaid (the \"Refinancing Transaction\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GHI",
+      "ticker": "GHI",
+      "name": "グレイストーン・ハウジング・インパクト",
+      "name_en": "Greystone Housing Impact Investors",
+      "sub": "住宅債券投資",
+      "sub_en": "Affordable housing bonds",
+      "sub_short": "住宅債券",
+      "sub_short_en": "Housing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Greystoneが10-Kで、信用枠の単独幹事・幹事行として挙げる",
+          "text_en": "Greystone says BankUnited is the sole lead arranger and administrative agent of its line of credit",
+          "source": {
+            "label": "Greystone Housing Impact Investors 10-K(2025年度)",
+            "label_en": "Greystone Housing Impact Investors 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1059142/000119312526108471/ghi-20251231.htm",
+            "level": "official",
+            "date": "2026-03-16",
+            "quote": "General LOC - A general secured line of credit with three financial institutions where BankUnited serves as the sole lead arranger and administrative agent."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LafayetteSq",
+      "ticker": "Lafayette Square",
+      "name": "ラファイエット・スクエア",
+      "name_en": "Lafayette Square USA",
+      "sub": "事業融資ファンド",
+      "sub_en": "Business development company",
+      "sub_short": "融資",
+      "sub_short_en": "Lending",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Lafayette Squareが10-Kで、貸し手として加わった銀行に挙げる",
+          "text_en": "Lafayette Square names BankUnited as an additional lender joining its facility",
+          "source": {
+            "label": "Lafayette Square USA 10-K(2025年度)",
+            "label_en": "Lafayette Square USA 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1849089/000162828026020991/ls-20251231.htm",
+            "level": "official",
+            "date": "2026-03-25",
+            "quote": "The parties to the First Lender Joinder Agreement include the Company, BankUnited, N.A., as additional lender, the Subsidiary Guarantors party to such agreement and the Administrative Agent."
+          }
+        }
+      ]
+    },
+    {
+      "id": "KDM",
+      "ticker": "Korth Direct Mortgage",
+      "name": "コース・ダイレクト・モーゲージ",
+      "name_en": "Korth Direct Mortgage",
+      "sub": "商業用不動産融資",
+      "sub_en": "Commercial mortgage lending",
+      "sub_short": "不動産",
+      "sub_short_en": "Mortgage",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Korth Direct Mortgageが10-Kで、資金を分別管理する預金先の一つに挙げる",
+          "text_en": "Korth Direct Mortgage holds segregated loan funds in accounts at BankUnited",
+          "source": {
+            "label": "Korth Direct Mortgage 10-K(2025年度)",
+            "label_en": "Korth Direct Mortgage 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1695963/000121465926006969/kdm32026010k.htm",
+            "level": "official",
+            "date": "2026-06-01",
+            "quote": "We hold all funds received from CM Loans in a segregated account titled In-Trust For 2 at BankUnited bank."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FHLBA",
+      "ticker": "FHLB Atlanta",
+      "name": "アトランタ連邦住宅貸付銀行",
+      "name_en": "Federal Home Loan Bank of Atlanta",
+      "sub": "住宅金融",
+      "sub_en": "Housing finance",
+      "sub_short": "住宅金融",
+      "sub_short_en": "Lender",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "FHLBアトランタが10-Kで、資金の借り手上位10社の一社に挙げる(15.5億ドル)",
+          "text_en": "FHLB Atlanta lists BankUnited among its 10 largest borrowers ($1.55 billion)",
+          "source": {
+            "label": "Federal Home Loan Bank of Atlanta 10-K(2025年度)",
+            "label_en": "Federal Home Loan Bank of Atlanta 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1331465/000133146526000047/fhlba-20251231.htm",
+            "level": "official",
+            "date": "2026-03-06",
+            "quote": "BankUnited, National Association Florida 1,555 1.64 3.86"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

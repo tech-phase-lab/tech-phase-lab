@@ -1,0 +1,261 @@
+{
+  "root": {
+    "ticker": "BFS",
+    "name": "サウル・センターズ",
+    "cik": 907254,
+    "name_en": "Saul Centers"
+  },
+  "rows": [
+    {
+      "ja": "主なテナント",
+      "en": "Key tenants"
+    },
+    {
+      "ja": "借入枠の貸し手",
+      "en": "Credit facility lenders",
+      "above": true
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "AHOLD",
+      "ticker": "Ahold Delhaize",
+      "name": "アホールド・デレーズ",
+      "name_en": "Ahold Delhaize",
+      "sub": "スーパー",
+      "sub_en": "Grocery",
+      "sub_short": "スーパー",
+      "sub_short_en": "Grocery",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "傘下のGiant Foodが最大の核テナント(収入の4.5%、11か所)",
+          "text_en": "Its Giant Food chain is the largest anchor tenant (4.5% of revenue, 11 centers)",
+          "source": {
+            "label": "Saul Centers 10-K(2025年度)",
+            "label_en": "Saul Centers 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/907254/000090725426000006/bfs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our largest shopping center anchor tenant by revenue is Giant Food, which accounted for 4.5% of our total revenue for the year ended December 31, 2025."
+          }
+        }
+      ]
+    },
+    {
+      "id": "KSS",
+      "ticker": "KSS",
+      "name": "コールズ",
+      "name_en": "Kohl's",
+      "sub": "百貨店",
+      "sub_en": "Department stores",
+      "sub_short": "百貨店",
+      "sub_short_en": "Retail",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Severna Park Marketplaceの核テナント",
+          "text_en": "Anchor tenant at Severna Park Marketplace",
+          "source": {
+            "label": "Saul Centers 10-K(2025年度)",
+            "label_en": "Saul Centers 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/907254/000090725426000006/bfs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Giant Food, Kohl's, Office Depot, Goodyear, Chipotle, McDonald's, Five Guys"
+          }
+        }
+      ]
+    },
+    {
+      "id": "KR",
+      "ticker": "KR",
+      "name": "クローガー",
+      "name_en": "Kroger",
+      "sub": "食品スーパー",
+      "sub_en": "Grocery",
+      "sub_short": "スーパー",
+      "sub_short_en": "Grocery",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Orchard Park(ジョージア州)の核テナント",
+          "text_en": "Anchor tenant at Orchard Park in Georgia",
+          "source": {
+            "label": "Saul Centers 10-K(2025年度)",
+            "label_en": "Saul Centers 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/907254/000090725426000006/bfs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "99% 99% 99% 100% 100% Kroger, Jett Fer"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CVS",
+      "ticker": "CVS",
+      "name": "CVSヘルス",
+      "name_en": "CVS Health",
+      "sub": "薬局",
+      "sub_en": "Drugstore",
+      "sub_short": "薬局",
+      "sub_short_en": "Drugstore",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "1500/1580 Rockville Pikeなど複数の物件のテナント",
+          "text_en": "Tenant at 1500/1580 Rockville Pike and other centers",
+          "source": {
+            "label": "Saul Centers 10-K(2025年度)",
+            "label_en": "Saul Centers 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/907254/000090725426000006/bfs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "1500/1580 Rockville Pike Rockville, MD 64,781 2012/2014 10.2 100% 100% 100% 98% 100% CVS Pharmacy"
+          }
+        }
+      ]
+    },
+    {
+      "id": "WFC",
+      "ticker": "WFC",
+      "name": "ウェルズ・ファーゴ",
+      "name_en": "Wells Fargo",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "2025年7月の借入枠(クレジット契約)の貸し手の一社(店舗のテナントでもある)",
+          "text_en": "One of the lenders on its July 2025 credit agreement (also a retail tenant)",
+          "source": {
+            "label": "Saul Centers 10-K(2025年度)",
+            "label_en": "Saul Centers 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/907254/000090725426000006/bfs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "The Huntington National Bank, as Documentation Agent and Joint Lead Arranger; and Wells Fargo, Capital One, US Bank, Truist, Huntington, Associated Bank, National Association, and Atlantic Union Bank, as Lenders (the \"Credit Agreement\")"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PNC",
+      "ticker": "PNC",
+      "name": "PNCフィナンシャル・サービシズ",
+      "name_en": "PNC Financial Services",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "2021年の借入枠(クレジット契約)の貸し手の一社",
+          "text_en": "One of the lenders on its 2021 credit agreement",
+          "source": {
+            "label": "Saul Centers 10-K(2025年度)",
+            "label_en": "Saul Centers 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/907254/000090725426000006/bfs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Bank, Regions Bank, PNC Bank and Associated Bank, National Association, as Lenders"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ASB",
+      "ticker": "ASB",
+      "name": "アソシエイテッド・バンク・コープ",
+      "name_en": "Associated Banc-Corp",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "2025年7月の借入枠(クレジット契約)の貸し手の一社",
+          "text_en": "One of the lenders on its July 2025 credit agreement",
+          "source": {
+            "label": "Saul Centers 10-K(2025年度)",
+            "label_en": "Saul Centers 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/907254/000090725426000006/bfs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "The Huntington National Bank, as Documentation Agent and Joint Lead Arranger; and Wells Fargo, Capital One, US Bank, Truist, Huntington, Associated Bank, National Association, and Atlantic Union Bank, as Lenders (the \"Credit Agreement\")"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AUB",
+      "ticker": "AUB",
+      "name": "アトランティック・ユニオン・バンクシェアーズ",
+      "name_en": "Atlantic Union Bankshares",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "2025年7月の借入枠(クレジット契約)の貸し手の一社",
+          "text_en": "One of the lenders on its July 2025 credit agreement",
+          "source": {
+            "label": "Saul Centers 10-K(2025年度)",
+            "label_en": "Saul Centers 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/907254/000090725426000006/bfs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "The Huntington National Bank, as Documentation Agent and Joint Lead Arranger; and Wells Fargo, Capital One, US Bank, Truist, Huntington, Associated Bank, National Association, and Atlantic Union Bank, as Lenders (the \"Credit Agreement\")"
+          }
+        }
+      ]
+    },
+    {
+      "id": "COF",
+      "ticker": "COF",
+      "name": "キャピタル・ワン",
+      "name_en": "Capital One",
+      "sub": "銀行・カード",
+      "sub_en": "Bank & cards",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "2025年7月の借入枠(クレジット契約)の貸し手の一社",
+          "text_en": "One of the lenders on its July 2025 credit agreement",
+          "source": {
+            "label": "Saul Centers 10-K(2025年度)",
+            "label_en": "Saul Centers 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/907254/000090725426000006/bfs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "The Huntington National Bank, as Documentation Agent and Joint Lead Arranger; and Wells Fargo, Capital One, US Bank, Truist, Huntington, Associated Bank, National Association, and Atlantic Union Bank, as Lenders (the \"Credit Agreement\")"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
