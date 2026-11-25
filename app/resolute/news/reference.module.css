@@ -73,3 +73,4 @@
 .s i:nth-child(4) { --offset:.36s; }
 .s i:nth-child(5) { --offset:.48s; }
 @media(prefers-reduced-motion:reduce){.s i{animation:none!important}}
+.renew{display:block;text-align:center;text-decoration:none;background:linear-gradient(135deg,var(--gold2),var(--gold));color:var(--gold-ink);font-weight:700;font-size:15px;padding:13px 24px;border-radius:999px}

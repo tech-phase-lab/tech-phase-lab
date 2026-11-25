@@ -4,6 +4,7 @@ import { NotificationInputError } from '../../lib/resolute/notification-settings
 import { NotificationHttpError, readNotificationMutation } from '../../lib/resolute/notification-http.ts';
 import { NotificationAccessDenied, NotificationConflict } from '../../lib/resolute/notification-database.ts';
 import { authenticatePrincipal, serviceTokenMatches } from './auth.mjs';
+import { NOTIFICATION_DELIVERY_HEADER, notificationDeliveryLive } from '../../lib/resolute/notification-delivery-state.ts';
 import { readPlanMutation, PlanBodyError } from '../../lib/resolute/plan-http.ts';
 import { PlanInputError } from '../../lib/resolute/plan-data.ts';
 import { PlanAccessDenied, PlanConflict } from '../../lib/resolute/plan-database.ts';
@@ -60,7 +61,7 @@ export function createHandler(config, read, verify=authenticatePrincipal, plans,
       if(isNotification){
         if(!notifications)return json({error:'NOTIFICATION_UNAVAILABLE'},503);
         const mutation=request.method==='PUT'?await readNotificationMutation(request):undefined;
-        return json(await notifications(userId,request.method,mutation,ownerAccess));
+        return json(await notifications(userId,request.method,mutation,ownerAccess),200,{[NOTIFICATION_DELIVERY_HEADER]:notificationDeliveryLive(process.env,userId)?'on':'off'});
       }
       if(!isPlan)return json(await readAccess(userId));
       if(!plans)return json({error:'PLAN_UNAVAILABLE'},503);
@@ -71,7 +72,7 @@ export function createHandler(config, read, verify=authenticatePrincipal, plans,
       if(isThermometer)return json({error:'THERMOMETER_UNAVAILABLE'},503);
       if(isLatestAlert)return error instanceof NotificationAccessDenied?json({error:'NOTIFICATION_ACCESS_DENIED'},403):json({error:'LATEST_ALERT_UNAVAILABLE'},503);
       if(isNotification){
-        if(error instanceof NotificationConflict)return json(error.snapshot,409);
+        if(error instanceof NotificationConflict)return json(error.snapshot,409,{[NOTIFICATION_DELIVERY_HEADER]:notificationDeliveryLive(process.env,userId)?'on':'off'});
         if(error instanceof NotificationAccessDenied)return json({error:'NOTIFICATION_ACCESS_DENIED'},403);
         if(error instanceof NotificationInputError)return json({error:'INVALID_NOTIFICATION_SETTINGS'},400);
         if(error instanceof NotificationHttpError)return json({error:error.status===413?'BODY_TOO_LARGE':error.status===415?'JSON_REQUIRED':'INVALID_NOTIFICATION_SETTINGS'},error.status);
