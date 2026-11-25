@@ -21,6 +21,8 @@
 .tiles>div:first-child{padding-left:0}.tiles>div:last-child{border:0}
 .tiles span{font-size:12.5px;color:#8c98ab}
 .tiles strong{font:700 clamp(15px,4.6vw,23px)/1.15 var(--font-geist-mono),ui-monospace,monospace;color:#fff;white-space:nowrap}
+/* A long non-USD range (NT$1,663–1,727B) wraps inside its column instead of widening the phone page. */
+@media(max-width:520px){.tiles strong{white-space:normal;overflow-wrap:anywhere}}
 .tiles small{font-size:11px;color:#6b7589}
 .tiles em{font-style:normal;font-size:12.5px;color:#8c98ab}
 .t_up{color:#4fe0a8!important}.t_down{color:#f0a98a!important}

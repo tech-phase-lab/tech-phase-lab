@@ -11,7 +11,7 @@ const require = createRequire(import.meta.url);
 function load(path, stubs = {}) {
   const out = ts.transpileModule(readFileSync(new URL(path, import.meta.url), "utf8"), { compilerOptions: { module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX, target: ts.ScriptTarget.ES2022 } }).outputText;
   const mod = { exports: {} };
-  new Function("require", "module", "exports", out)(id => id.endsWith(".module.css") ? { default: new Proxy({}, { get: (_, key) => String(key) }) } : id in stubs ? stubs[id] : require(id === "@/lib/research/display-time" ? "../lib/research/display-time.ts" : id), mod, mod.exports);
+  new Function("require", "module", "exports", out)(id => id.endsWith(".module.css") ? { default: new Proxy({}, { get: (_, key) => String(key) }) } : id in stubs ? stubs[id] : require(id === "@/lib/research/display-time" ? "../lib/research/display-time.ts" : id === "@/lib/research/dive-money" ? "../lib/research/dive-money.ts" : id), mod, mod.exports);
   return mod.exports;
 }
 const EarningsDive = load("../app/research/companies/earnings-dive.tsx", {

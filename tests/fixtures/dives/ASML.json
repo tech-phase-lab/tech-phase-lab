@@ -1,0 +1,321 @@
+{
+ "ticker": "ASML",
+ "name": "ASML",
+ "exchange": "NASDAQ",
+ "quoteTicker": "ASML",
+ "period": "Q3 2026",
+ "periodQuarter": 3,
+ "releasedOn": "2026-10-14",
+ "periodEnd": "2026-09-27",
+ "reviewedOn": "2026-11-25",
+ "currency": "EUR",
+ "basis": {
+  "eps": "US GAAP basic net income per ordinary share",
+  "grossMargin": "US GAAP (no adjusted measure)"
+ },
+ "sources": [
+  {
+   "url": "https://example.com/fixtures/asml-q3-2026",
+   "title": "Fixture press release",
+   "location": "Key financials"
+  }
+ ],
+ "numbers": {
+  "revenue": {
+   "current": 9326.0,
+   "previous": 7692.0,
+   "yearAgo": 7517.0
+  },
+  "adjustedEPS": 6.42,
+  "epsEstimate": null,
+  "grossMargin": {
+   "current": 53.6,
+   "previous": 53.7
+  },
+  "guidance": {
+   "low": 9200,
+   "high": 9800,
+   "grossMarginPercent": 52.0
+  },
+  "segments": null
+ },
+ "history": [
+  {
+   "label": "Q3",
+   "end": "2025-09-28",
+   "value": 7517.0
+  },
+  {
+   "label": "Q4",
+   "end": "2025-12-31",
+   "value": 9718.0
+  },
+  {
+   "label": "Q1",
+   "end": "2026-03-29",
+   "value": 7742.0
+  },
+  {
+   "label": "Q2",
+   "end": "2026-06-28",
+   "value": 7692.0
+  }
+ ],
+ "summary": {
+  "conclusion": [
+   {
+    "ja": "売上は93.26億ユーロで、前四半期から約21%増えました。",
+    "en": "Revenue was €9.33B, up about 21% from the previous quarter."
+   }
+  ],
+  "cards": {
+   "growth": {
+    "headline": {
+     "ja": "EUV装置の出荷が増えた",
+     "en": "EUV shipments increased"
+    },
+    "chips": [
+     {
+      "tone": "up",
+      "text": {
+       "ja": "前期比 +21%",
+       "en": "+21% QoQ"
+      }
+     }
+    ],
+    "sections": [
+     {
+      "key": "happened",
+      "text": {
+       "ja": "装置の売上が増え、全体の売上は93.26億ユーロになりました。",
+       "en": "System sales rose and total revenue reached €9.33B."
+      }
+     },
+     {
+      "key": "good",
+      "text": {
+       "ja": "先端の半導体向けの需要が続いています。",
+       "en": "Demand for leading-edge chips continues."
+      }
+     },
+     {
+      "key": "watch",
+      "text": {
+       "ja": "出荷の時期によって四半期ごとの売上は大きく変わります。",
+       "en": "Shipment timing makes quarters lumpy."
+      }
+     },
+     {
+      "key": "means",
+      "text": {
+       "ja": "次の四半期も同じ水準の売上を見込んでいます。",
+       "en": "The next quarter is guided at a similar level."
+      }
+     }
+    ]
+   },
+   "change": {
+    "headline": {
+     "ja": "売上は前年同期比で約24%増",
+     "en": "Revenue up about 24% year over year"
+    },
+    "chips": [
+     {
+      "tone": "up",
+      "text": {
+       "ja": "前年同期比 +24%",
+       "en": "+24% YoY"
+      }
+     }
+    ],
+    "sections": [
+     {
+      "key": "happened",
+      "text": {
+       "ja": "前年同期の75.17億ユーロから93.26億ユーロに増えました。",
+       "en": "Revenue rose from €7.52B a year ago to €9.33B."
+      }
+     },
+     {
+      "key": "good",
+      "text": {
+       "ja": "粗利益率は53.6%で、ほぼ横ばいでした。",
+       "en": "Gross margin held at 53.6%."
+      }
+     },
+     {
+      "key": "watch",
+      "text": {
+       "ja": "新しい装置は立ち上げ期に利益率が低くなりがちです。",
+       "en": "New tools tend to carry lower margins early."
+      }
+     },
+     {
+      "key": "means",
+      "text": {
+       "ja": "売上の伸びが利益率を保ったまま続くかを見ます。",
+       "en": "Watch whether growth continues at steady margins."
+      }
+     }
+    ]
+   },
+   "caution": {
+    "headline": {
+     "ja": "次期の粗利益率見通しは今回を下回る",
+     "en": "Next-quarter margin outlook is below this quarter"
+    },
+    "chips": [
+     {
+      "tone": "down",
+      "text": {
+       "ja": "見通し 約52%",
+       "en": "Outlook ~52%"
+      }
+     }
+    ],
+    "sections": [
+     {
+      "key": "happened",
+      "text": {
+       "ja": "次の四半期の粗利益率は約52%の見通しです。",
+       "en": "Next-quarter gross margin is guided at about 52%."
+      }
+     },
+     {
+      "key": "good",
+      "text": {
+       "ja": "売上の見通し自体は高い水準を保っています。",
+       "en": "The revenue outlook itself remains high."
+      }
+     },
+     {
+      "key": "watch",
+      "text": {
+       "ja": "新製品の比率が上がると利益率が下がります。",
+       "en": "A higher mix of new products lowers margins."
+      }
+     },
+     {
+      "key": "means",
+      "text": {
+       "ja": "利益率の低下が一時的かどうかを確認します。",
+       "en": "Check whether the dip is temporary."
+      }
+     }
+    ]
+   },
+   "next": {
+    "headline": {
+     "ja": "次期の売上見通しは92億〜98億ユーロ",
+     "en": "Next-quarter revenue outlook €9.2–9.8B"
+    },
+    "chips": [
+     {
+      "tone": "gold",
+      "text": {
+       "ja": "会社見通し",
+       "en": "Company outlook"
+      }
+     }
+    ],
+    "sections": [
+     {
+      "key": "happened",
+      "text": {
+       "ja": "会社は次の四半期の売上を92億〜98億ユーロと見込んでいます。",
+       "en": "The company expects €9.2–9.8B next quarter."
+      }
+     },
+     {
+      "key": "good",
+      "text": {
+       "ja": "今回とほぼ同じ高い水準です。",
+       "en": "That is close to this quarter's high level."
+      }
+     },
+     {
+      "key": "watch",
+      "text": {
+       "ja": "顧客の投資計画の変更で出荷がずれることがあります。",
+       "en": "Customer capex changes can shift shipments."
+      }
+     },
+     {
+      "key": "means",
+      "text": {
+       "ja": "受注の動きとあわせて確認します。",
+       "en": "Check it together with bookings."
+      }
+     }
+    ]
+   }
+  }
+ },
+ "evidence": [
+  {
+   "field": "numbers.revenue.current",
+   "url": "https://example.com/fixtures/asml-q3-2026",
+   "quote": "fixture numbers.revenue.current: 9326.0"
+  },
+  {
+   "field": "numbers.revenue.previous",
+   "url": "https://example.com/fixtures/asml-q3-2026",
+   "quote": "fixture numbers.revenue.previous: 7692.0"
+  },
+  {
+   "field": "numbers.revenue.yearAgo",
+   "url": "https://example.com/fixtures/asml-q3-2026",
+   "quote": "fixture numbers.revenue.yearAgo: 7517.0"
+  },
+  {
+   "field": "numbers.adjustedEPS",
+   "url": "https://example.com/fixtures/asml-q3-2026",
+   "quote": "fixture numbers.adjustedEPS: 6.42"
+  },
+  {
+   "field": "numbers.grossMargin.current",
+   "url": "https://example.com/fixtures/asml-q3-2026",
+   "quote": "fixture numbers.grossMargin.current: 53.6"
+  },
+  {
+   "field": "numbers.grossMargin.previous",
+   "url": "https://example.com/fixtures/asml-q3-2026",
+   "quote": "fixture numbers.grossMargin.previous: 53.7"
+  },
+  {
+   "field": "numbers.guidance.low",
+   "url": "https://example.com/fixtures/asml-q3-2026",
+   "quote": "fixture numbers.guidance.low: 9200"
+  },
+  {
+   "field": "numbers.guidance.high",
+   "url": "https://example.com/fixtures/asml-q3-2026",
+   "quote": "fixture numbers.guidance.high: 9800"
+  },
+  {
+   "field": "numbers.guidance.grossMarginPercent",
+   "url": "https://example.com/fixtures/asml-q3-2026",
+   "quote": "fixture numbers.guidance.grossMarginPercent: 52.0"
+  },
+  {
+   "field": "history[0].value",
+   "url": "https://example.com/fixtures/asml-q3-2026",
+   "quote": "fixture history[0].value: 7517.0"
+  },
+  {
+   "field": "history[1].value",
+   "url": "https://example.com/fixtures/asml-q3-2026",
+   "quote": "fixture history[1].value: 9718.0"
+  },
+  {
+   "field": "history[2].value",
+   "url": "https://example.com/fixtures/asml-q3-2026",
+   "quote": "fixture history[2].value: 7742.0"
+  },
+  {
+   "field": "history[3].value",
+   "url": "https://example.com/fixtures/asml-q3-2026",
+   "quote": "fixture history[3].value: 7692.0"
+  }
+ ]
+}
