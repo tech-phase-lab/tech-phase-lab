@@ -1,0 +1,186 @@
+{
+  "root": {
+    "ticker": "CWST",
+    "name": "カセラ・ウェイスト・システムズ",
+    "cik": 911177,
+    "name_en": "Casella Waste Systems, Inc."
+  },
+  "rows": [
+    {
+      "ja": "出資・取引・買収",
+      "en": "Investment, deals & acquisitions"
+    },
+    {
+      "ja": "競合(本人の10-Kで名指し)",
+      "en": "Named rivals (own 10-K)"
+    }
+  ],
+  "rivals": [
+    "WM",
+    "RSG",
+    "WCN"
+  ],
+  "companies": [
+    {
+      "id": "EvergreenNI",
+      "ticker": "Evergreen",
+      "name": "エバーグリーン・ナショナル・インデムニティ",
+      "name_en": "Evergreen National Indemnity",
+      "sub": "保証保険",
+      "sub_en": "Surety",
+      "sub_short": "保証",
+      "sub_short_en": "Surety",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "19.9%を出資し、履行保証・保証証券を調達",
+          "text_en": "19.9%-owned surety that bonds its contracts",
+          "source": {
+            "label": "Casella 10-K(2025年度)",
+            "label_en": "Casella 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/911177/000091117726000008/cwst-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "We currently obtain performance and surety bonds from Evergreen National Indemnity Company, in which we hold a 19.9% equity interest."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GP",
+      "ticker": "Georgia-Pacific",
+      "name": "ジョージア・パシフィック",
+      "name_en": "Georgia-Pacific",
+      "sub": "紙・パルプ",
+      "sub_en": "Paper & pulp",
+      "sub_short": "段ボール",
+      "sub_short_en": "Boxes",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "旧所有のジュニパーリッジ処分場を州に移し、カセラが30年運営する取引(2004年)",
+          "text_en": "2004 deal that moved its Juniper Ridge landfill to Maine, with Casella as 30-year operator",
+          "source": {
+            "label": "Casella 10-K(2025年度)",
+            "label_en": "Casella 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/911177/000091117726000008/cwst-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "In 2004, we completed transactions with the State of Maine and Georgia-Pacific Corporation (\"Georgia Pacific\"), pursuant to which the State of Maine took ownership of the Juniper Ridge Landfill, formerly owned by Georgia Pacific, and we became the operator under a 30-year operating and services agreement"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GFL",
+      "ticker": "GFL",
+      "name": "GFLエンバイロメンタル",
+      "name_en": "GFL Environmental",
+      "sub": "廃棄物処理(カナダ)",
+      "sub_en": "Waste management (Canada)",
+      "sub_short": "廃棄物",
+      "sub_short_en": "Waste",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "同社の子会社4社を買収(2023年度)",
+          "text_en": "Bought four of its subsidiaries (FY2023)",
+          "source": {
+            "label": "Casella 10-K(2025年度)",
+            "label_en": "Casella 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/911177/000091117726000008/cwst-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "with the acquisition of the equity interests of four wholly-owned subsidiaries of GFL Environmental Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WM",
+      "ticker": "WM",
+      "name": "ウェイスト・マネジメント",
+      "name_en": "Waste Management",
+      "sub": "廃棄物処理",
+      "sub_en": "Waste services",
+      "sub_short": "廃棄物",
+      "sub_short_en": "Waste",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "人口の多い市場で競合する全国大手",
+          "text_en": "National rival in larger markets",
+          "source": {
+            "label": "Casella 10-K(2025年度)",
+            "label_en": "Casella 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/911177/000091117726000008/cwst-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "we typically compete against one or more of the large national solid waste companies, including Waste Management, Inc., Republic Services, Inc. and Waste Connections, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RSG",
+      "ticker": "RSG",
+      "name": "リパブリック・サービシズ",
+      "name_en": "Republic Services",
+      "sub": "廃棄物処理",
+      "sub_en": "Waste services",
+      "sub_short": "廃棄物",
+      "sub_short_en": "Waste",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "人口の多い市場で競合する全国大手",
+          "text_en": "National rival in larger markets",
+          "source": {
+            "label": "Casella 10-K(2025年度)",
+            "label_en": "Casella 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/911177/000091117726000008/cwst-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "we typically compete against one or more of the large national solid waste companies, including Waste Management, Inc., Republic Services, Inc. and Waste Connections, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WCN",
+      "ticker": "WCN",
+      "name": "ウェイスト・コネクションズ",
+      "name_en": "Waste Connections",
+      "sub": "廃棄物処理",
+      "sub_en": "Waste services",
+      "sub_short": "廃棄物",
+      "sub_short_en": "Waste",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "人口の多い市場で競合する全国大手",
+          "text_en": "National rival in larger markets",
+          "source": {
+            "label": "Casella 10-K(2025年度)",
+            "label_en": "Casella 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/911177/000091117726000008/cwst-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "we typically compete against one or more of the large national solid waste companies, including Waste Management, Inc., Republic Services, Inc. and Waste Connections, Inc."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

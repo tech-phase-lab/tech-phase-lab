@@ -1,0 +1,156 @@
+{
+  "root": {
+    "ticker": "POR",
+    "name": "ポートランド・ゼネラル・エレクトリック",
+    "cik": 784977,
+    "name_en": "Portland General Electric Company"
+  },
+  "rows": [
+    {
+      "ja": "買収と出資パートナー",
+      "en": "Acquisition & investment partner"
+    },
+    {
+      "ja": "再エネ・蓄電の調達先",
+      "en": "Renewable & storage suppliers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "PacifiCorp",
+      "ticker": "PacifiCorp",
+      "name": "パシフィコープ",
+      "name_en": "PacifiCorp",
+      "sub": "電力会社",
+      "sub_en": "Utility",
+      "sub_short": "電力会社",
+      "sub_short_en": "Utility",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ワシントン州の規制電力事業を買収予定(資金19億ドル)",
+          "text_en": "Pending purchase of its Washington utility business ($1.9 billion)",
+          "source": {
+            "label": "Portland General Electric 10-K(2025年度)",
+            "label_en": "Portland General Electric 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/784977/000119312526052750/por-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "The pending Acquisition to acquire PacifiCorp's Washington state regulated utility business will require financing of $1.9 billion."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Manulife",
+      "ticker": "MFC",
+      "name": "マニュライフ",
+      "name_en": "Manulife",
+      "sub": "保険・資産運用",
+      "sub_en": "Insurance & asset management",
+      "sub_short": "保険",
+      "sub_short_en": "Insurance",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "買収するワシントン事業の少数株主(合弁パートナー)",
+          "text_en": "Minority partner in the Washington utility deal",
+          "source": {
+            "label": "Portland General Electric 10-K(2025年度)",
+            "label_en": "Portland General Electric 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/784977/000119312526052750/por-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "its minority investment partner, Manulife Infrastructure Fund III L.P. (\"Manulife\") and its affiliates including John Hancock Life Insurance Company (USA)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AGR",
+      "ticker": "Avangrid",
+      "name": "アバングリッド",
+      "name_en": "Avangrid",
+      "sub": "再エネ・送電",
+      "sub_en": "Renewables & grid",
+      "sub_short": "再エネ",
+      "sub_short_en": "Grid",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "オレゴン州の太陽光発電所4件から電力を長期購入",
+          "text_en": "Long-term power contracts from four Oregon solar farms",
+          "source": {
+            "label": "Portland General Electric 10-K(2025年度)",
+            "label_en": "Portland General Electric 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/784977/000119312526052750/por-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "a 15-year contract with Avangrid Renewables representing 162 MW from a renewable solar facility in Gilliam County, Oregon"
+          }
+        }
+      ]
+    },
+    {
+      "id": "NEE",
+      "ticker": "NEE",
+      "name": "ネクステラ・エナジー",
+      "name_en": "NextEra Energy",
+      "sub": "電力会社",
+      "sub_en": "Utility",
+      "sub_short": "電力会社",
+      "sub_short_en": "Utility",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "トラウトデールの200MW蓄電池の容量を20年間購入",
+          "text_en": "Buys capacity from a 200 MW battery in Troutdale for 20 years",
+          "source": {
+            "label": "Portland General Electric 10-K(2025年度)",
+            "label_en": "Portland General Electric 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/784977/000119312526052750/por-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "NextEra Energy Resources, LLC owns the resource and sells the capacity to PGE under a 20-year agreement."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CIP",
+      "ticker": "CIP",
+      "name": "コペンハーゲン・インフラストラクチャー・パートナーズ",
+      "name_en": "Copenhagen Infrastructure Partners",
+      "sub": "インフラ投資",
+      "sub_en": "Infrastructure investor",
+      "sub_short": "インフラ",
+      "sub_short_en": "Infra",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "200MW蓄電池(メドウラーク)の容量を20年契約で購入",
+          "text_en": "20-year capacity deal for the 200 MW Meadowlark battery it will own",
+          "source": {
+            "label": "Portland General Electric 10-K(2025年度)",
+            "label_en": "Portland General Electric 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/784977/000119312526052750/por-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Meadowlark BESS-a 20-year storage capacity agreement for a 200 MW BESS located in Washington County, Oregon. This project will be owned by Copenhagen Infrastructure Partners, LLC"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
