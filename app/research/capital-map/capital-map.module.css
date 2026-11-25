@@ -70,7 +70,7 @@
 .positionColor { width:4px; height:28px; border-radius:2px; flex-shrink:0; }
 .positionStock>span:not(.positionColor) { width:26px; height:26px; flex-shrink:0; }
 .stock { min-width:0; }
-.stock strong { display:block; font-size:.76rem; line-height:1.35; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.stock strong { display:block; font-size:.76rem; line-height:1.35; overflow-wrap:break-word; } /* company names wrap, never 「…」 (owner, Nov 25) */
 .stock small { display:flex; align-items:center; gap:5px; color:var(--muted); font-size:.66rem; margin-top:3px; }
 .positionWeight,.positionValue,.positionChange { text-align:right; font-variant-numeric:tabular-nums; }
 .positionWeight { position:relative; padding-bottom:8px; font-size:.84rem; }
