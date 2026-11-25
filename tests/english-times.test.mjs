@@ -121,7 +121,7 @@ test("the changed screens take their times from the display-time helper", () => 
     "../app/research/watchlist/watchlist.tsx": /<CurrentTime lang=\{lang\} \/> \{zoneLabel\(lang\)\}/,
     "../app/research/columns/columns.tsx": /zoneLabel\(lang\)/,
     "../app/research/compare/screen.tsx": /displayDateTime\(result\.generatedAt, lang\)/,
-    "../app/research/stocks/stock-directory.tsx": /zoneLabel\(lang\)/,
+    "../app/research/stocks/stock-directory.tsx": /asOfLabel\(displayClock\(asOf, lang\), lang\)/,
     "../app/research/deep-analysis-panel.tsx": /zoneLabel\(lang\)/,
     "../app/research/freshness-notice.tsx": /zoneLabel\(lang\)/,
     "../app/research/account/billing/screen.tsx": /zoneLabel/,

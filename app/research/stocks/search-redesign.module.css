@@ -9,22 +9,40 @@
 .clear{flex:none;display:grid;place-items:center;width:34px;height:34px;border:1px solid rgba(140,152,171,.45);border-radius:50%;background:transparent;color:#a3aec0;cursor:pointer}
 .clear:focus-visible,.glass:focus-visible{outline:2px solid #7fe3c0;outline-offset:2px}
 .listHead{display:flex;align-items:baseline;justify-content:space-between;margin:22px 0 10px;color:#8c98ab;font-size:13px}
-.list{margin:0 0 18px;padding:0;list-style:none;border:1px solid rgba(127,227,192,.28);border-radius:18px;overflow:hidden;background:linear-gradient(170deg,#101a26,#0a0f16)}
-.row{display:flex;align-items:center;gap:10px;padding:0 14px 0 0}
-.row+.row{border-top:1px solid rgba(127,227,192,.14)}
-.row:first-child{background:rgba(127,227,192,.08)}
-.main{flex:1;min-width:0;display:flex;align-items:center;gap:12px;padding:14px 0 14px 14px;border:0;background:transparent;color:inherit;text-align:left;cursor:pointer;font:inherit}
-.main:focus-visible{outline:2px solid #7fe3c0;outline-offset:-3px}
-.tile{flex:none;display:grid;place-items:center;width:44px;height:44px;border-radius:12px;border:1px solid rgba(127,227,192,.4);background:#102a26;color:#7fe3c0;font:600 10.5px "IBM Plex Mono",ui-monospace,monospace;overflow:hidden}
+/* Result cards (owner, Nov 25; sheet 01_銘柄検索_検索結果): one card per stock, all the same height (88px) however many results there are. */
+.list{display:grid;gap:10px;margin:0 0 18px;padding:0;list-style:none}
+.row{box-sizing:border-box;display:flex;align-items:center;gap:2px;height:88px;padding:0 6px 0 0;border:1px solid rgba(127,227,192,.26);border-radius:16px;background:linear-gradient(170deg,#101a26,#0a0f16);overflow:hidden}
+.main{flex:1;min-width:0;align-self:stretch;display:grid;grid-template-columns:40px minmax(0,1fr) 54px 92px;align-items:center;column-gap:9px;padding:0 0 0 12px;border:0;background:transparent;color:inherit;text-align:left;cursor:pointer;font:inherit}
+.main:focus-visible{outline:2px solid #7fe3c0;outline-offset:-3px;border-radius:15px}
+.tile{flex:none;display:grid;place-items:center;width:40px;height:40px;border-radius:11px;border:1px solid rgba(127,227,192,.4);background:#102a26;color:#7fe3c0;font:600 10.5px "IBM Plex Mono",ui-monospace,monospace;overflow:hidden}
 .tile img{width:100%;height:100%;border-radius:inherit}
-.names{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
-.names b{font:700 16px "IBM Plex Mono",ui-monospace,monospace;color:#eef2f8}
-.names span{font-size:12px;color:#8c98ab;overflow-wrap:anywhere}
-.quote{flex:none;display:flex;flex-direction:column;align-items:flex-end;gap:2px;font-family:"IBM Plex Mono",ui-monospace,monospace}
-.quote b{font-size:16px;font-weight:700}
-.quote span{font-size:12px;font-weight:600}
+/* The name and the tag share a line when both fit; otherwise the tag wraps to its own line, whole (never "…", never under the chart). */
+.names{min-width:0;max-height:86px;display:flex;flex-direction:column;justify-content:center;gap:2px;overflow:hidden}
+.names b{font:700 17px/1.05 "IBM Plex Mono",ui-monospace,monospace;color:#eef2f8;letter-spacing:.01em}
+.nameLine{display:flex;flex-wrap:wrap;align-items:center;gap:3px 5px;min-width:0}
+.name{min-width:0;font-size:12px;line-height:1.2;color:#a3aec0;overflow-wrap:anywhere}
+.nameLine[data-long] .name{font-size:11px}
+.tag{max-width:100%;box-sizing:border-box;padding:0 5px;border:1px solid #33475a;border-radius:5px;font-size:10px;line-height:1.45;color:#a9b8c8;white-space:normal;overflow-wrap:anywhere}
+.spark{display:grid;place-items:center;width:54px;height:30px}
+.spark .sparkChart{width:54px;height:26px}
+.quote{display:flex;flex-direction:column;align-items:flex-end;justify-content:center;gap:2px;font-family:"IBM Plex Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+.quote b{font-size:16px;font-weight:700;line-height:1.15;color:#eef2f8}
+.quote>span{font-size:12.5px;font-weight:600;line-height:1.2}
+.extended{display:flex;align-items:center;gap:4px}
+.extTag{padding:0 4px;border:1px solid #3f6b5d;border-radius:4px;font:700 9.5px/1.35 "Zen Kaku Gothic New",system-ui,sans-serif;color:#8fe3c0}
 .up{color:#4fe3a6}.down{color:#ff7b7b}.flat{color:#8c98ab}
 .star{flex:none;display:grid;place-items:center;width:34px;height:34px;border:0;background:transparent;color:#7fe3c0;cursor:pointer}
 .star[aria-pressed="true"]{color:#f3d98b}
 .star:focus-visible{outline:2px solid #7fe3c0;outline-offset:2px}
 .toast{position:fixed;left:50%;bottom:calc(96px + env(safe-area-inset-bottom));transform:translateX(-50%);z-index:90;display:flex;align-items:center;gap:8px;padding:12px 20px;border:1px solid rgba(217,180,106,.55);border-radius:999px;background:#17130a;color:#f3d98b;font:700 14px "Zen Kaku Gothic New",sans-serif;box-shadow:0 12px 30px -12px #000;white-space:nowrap;pointer-events:none}
+/* After a stock is chosen (owner, Nov 25): one thin bar, 「‹ 検索結果」 on the left and a slim search field on the right; the quote card follows. */
+.detailBar{display:flex;align-items:center;gap:8px;margin:2px 0 12px}
+.backButton{flex:none;display:inline-flex;align-items:center;gap:4px;height:38px;padding:0 12px 0 10px;border:1px solid rgba(127,227,192,.4);border-radius:12px;background:rgba(127,227,192,.06);color:#9ce8ca;font:600 13px/1 inherit;cursor:pointer}
+.backButton span{font-size:18px;line-height:1;margin-top:-2px}
+.backButton:focus-visible{outline:2px solid #7fe3c0;outline-offset:2px}
+.slimField{flex:1;min-width:0;display:flex;align-items:center;gap:8px;height:38px;padding:0 4px 0 12px;border:1px solid rgba(127,227,192,.5);border-radius:12px;background:linear-gradient(180deg,rgba(127,227,192,.04),rgba(127,227,192,.1));color:#7fe3c0}
+.slimField svg{flex:none}
+.slimField:focus-within{border-color:#7fe3c0;box-shadow:0 0 0 3px rgba(127,227,192,.15)}
+.slimField input,.slimField input:focus,.slimField input:focus-visible{flex:1;min-width:0;width:auto;height:auto;min-height:0;padding:0 !important;border:0 !important;outline:0 !important;box-shadow:none !important;background:transparent !important;color:#eef2f8;caret-color:#7fe3c0;font:700 15px/1.2 "IBM Plex Mono",ui-monospace,monospace !important;letter-spacing:.03em;text-transform:uppercase}
+.slimField button{flex:none;display:grid;place-items:center;width:30px;height:30px;border:0;border-radius:50%;background:transparent;color:#a3aec0;cursor:pointer}
+.slimField button:focus-visible{outline:2px solid #7fe3c0;outline-offset:1px}
