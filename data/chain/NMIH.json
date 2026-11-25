@@ -1,0 +1,213 @@
+{
+  "root": {
+    "ticker": "NMIH",
+    "name": "NMIホールディングス",
+    "cik": 1547903,
+    "name_en": "NMI Holdings, Inc."
+  },
+  "rows": [
+    {
+      "ja": "保険の需要元(政府系住宅金融)",
+      "en": "Source of demand (housing GSEs)"
+    },
+    {
+      "ja": "民間住宅ローン保険の競合(6社中の他5社)",
+      "en": "Private MI rivals (the other five of six)"
+    }
+  ],
+  "rivals": [
+    "ESNT",
+    "MTG",
+    "RDN",
+    "ACT"
+  ],
+  "companies": [
+    {
+      "id": "FNMA",
+      "ticker": "FNMA",
+      "name": "ファニーメイ",
+      "name_en": "Fannie Mae",
+      "sub": "住宅金融",
+      "sub_en": "Housing finance",
+      "sub_short": "住宅金融",
+      "sub_short_en": "Mortgage",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "頭金の少ないローンを買うには承認された保険会社の保険が必要",
+          "text_en": "Needs approved mortgage insurance to buy high-LTV loans",
+          "source": {
+            "label": "NMI Holdings 10-K(2025年度)",
+            "label_en": "NMI Holdings 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1547903/000154790326000011/nmih-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "The GSEs' charters prohibit them from purchasing or guaranteeing high-LTV loans unless such loans are covered by an authorized form of credit enhancement, including insurance from a GSE-approved MI company"
+          }
+        }
+      ]
+    },
+    {
+      "id": "FMCC",
+      "ticker": "FMCC",
+      "name": "フレディマック",
+      "name_en": "Freddie Mac",
+      "sub": "住宅金融",
+      "sub_en": "Housing finance",
+      "sub_short": "住宅金融",
+      "sub_short_en": "Mortgage",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "頭金の少ないローンを買うには承認された保険会社の保険が必要",
+          "text_en": "Needs approved mortgage insurance to buy high-LTV loans",
+          "source": {
+            "label": "NMI Holdings 10-K(2025年度)",
+            "label_en": "NMI Holdings 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1547903/000154790326000011/nmih-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "The GSEs' charters prohibit them from purchasing or guaranteeing high-LTV loans unless such loans are covered by an authorized form of credit enhancement, including insurance from a GSE-approved MI company"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ESNT",
+      "ticker": "ESNT",
+      "name": "エッセント・グループ",
+      "name_en": "Essent Group",
+      "sub": "住宅ローン保険",
+      "sub_en": "Mortgage insurance",
+      "sub_short": "保険",
+      "sub_short_en": "Mortgage",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "民間住宅ローン保険の競合",
+          "text_en": "Private mortgage insurance rival",
+          "source": {
+            "label": "NMI Holdings 10-K(2025年度)",
+            "label_en": "NMI Holdings 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1547903/000154790326000011/nmih-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "The private MI industry is highly competitive and currently consists of six approved participants, including us, Arch Capital Group Ltd., Essent Group Ltd. (Essent), Enact Holdings, Inc., MGIC Investment Corporation (MGIC), and Radian Group Inc. (Radian)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MTG",
+      "ticker": "MTG",
+      "name": "MGICインベストメント",
+      "name_en": "MGIC Investment",
+      "sub": "住宅ローン保険",
+      "sub_en": "Mortgage insurance",
+      "sub_short": "保険",
+      "sub_short_en": "Mortgage",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "民間住宅ローン保険の競合",
+          "text_en": "Private mortgage insurance rival",
+          "source": {
+            "label": "NMI Holdings 10-K(2025年度)",
+            "label_en": "NMI Holdings 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1547903/000154790326000011/nmih-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "The private MI industry is highly competitive and currently consists of six approved participants, including us, Arch Capital Group Ltd., Essent Group Ltd. (Essent), Enact Holdings, Inc., MGIC Investment Corporation (MGIC), and Radian Group Inc. (Radian)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RDN",
+      "ticker": "RDN",
+      "name": "レイディアン・グループ",
+      "name_en": "Radian Group",
+      "sub": "住宅ローン保険",
+      "sub_en": "Mortgage insurance",
+      "sub_short": "保険",
+      "sub_short_en": "Mortgage",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "民間住宅ローン保険の競合",
+          "text_en": "Private mortgage insurance rival",
+          "source": {
+            "label": "NMI Holdings 10-K(2025年度)",
+            "label_en": "NMI Holdings 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1547903/000154790326000011/nmih-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "The private MI industry is highly competitive and currently consists of six approved participants, including us, Arch Capital Group Ltd., Essent Group Ltd. (Essent), Enact Holdings, Inc., MGIC Investment Corporation (MGIC), and Radian Group Inc. (Radian)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ACT",
+      "ticker": "ACT",
+      "name": "イナクト・ホールディングス",
+      "name_en": "Enact Holdings",
+      "sub": "住宅ローン保険",
+      "sub_en": "Mortgage insurance",
+      "sub_short": "保険",
+      "sub_short_en": "Mortgage",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "民間住宅ローン保険の競合",
+          "text_en": "Private mortgage insurance rival",
+          "source": {
+            "label": "NMI Holdings 10-K(2025年度)",
+            "label_en": "NMI Holdings 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1547903/000154790326000011/nmih-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "The private MI industry is highly competitive and currently consists of six approved participants, including us, Arch Capital Group Ltd., Essent Group Ltd. (Essent), Enact Holdings, Inc., MGIC Investment Corporation (MGIC), and Radian Group Inc. (Radian)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ACGL",
+      "ticker": "ACGL",
+      "name": "アーチ・キャピタル・グループ",
+      "name_en": "Arch Capital Group",
+      "sub": "保険・再保険",
+      "sub_en": "Insurance & reinsurance",
+      "sub_short": "再保険",
+      "sub_short_en": "Reinsurer",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "民間住宅ローン保険の競合",
+          "text_en": "Private mortgage insurance rival",
+          "source": {
+            "label": "NMI Holdings 10-K(2025年度)",
+            "label_en": "NMI Holdings 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1547903/000154790326000011/nmih-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "The private MI industry is highly competitive and currently consists of six approved participants, including us, Arch Capital Group Ltd., Essent Group Ltd. (Essent), Enact Holdings, Inc., MGIC Investment Corporation (MGIC), and Radian Group Inc. (Radian)."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

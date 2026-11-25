@@ -1,0 +1,182 @@
+{
+  "root": {
+    "ticker": "MTDR",
+    "name": "マタドール・リソーシズ",
+    "cik": 1520006,
+    "name_en": "Matador Resources Company"
+  },
+  "rows": [
+    {
+      "ja": "合弁・買収の相手",
+      "en": "JV partners & sellers"
+    },
+    {
+      "ja": "輸送・処理の取引先",
+      "en": "Transport & processing"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "FivePoint",
+      "ticker": "Five Point",
+      "name": "ファイブポイント・インフラ",
+      "name_en": "Five Point Infrastructure",
+      "sub": "中流投資",
+      "sub_en": "Midstream",
+      "sub_short": "中流投資",
+      "sub_short_en": "Pipeline",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "中流子会社サンマテオの49%を持つ合弁相手",
+          "text_en": "Owns 49% of the San Mateo midstream JV",
+          "source": {
+            "label": "Matador 10-K(2025年度)",
+            "label_en": "Matador 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1520006/000152000626000002/mtdr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Midstream Highlights Matador conducts its midstream operations primarily through San Mateo, which is owned 51% by us and 49% by our joint venture partner, Five Point."
+          }
+        }
+      ]
+    },
+    {
+      "id": "EnCap",
+      "ticker": "EnCap",
+      "name": "エンキャップ・インベストメンツ",
+      "name_en": "EnCap Investments",
+      "sub": "投資会社",
+      "sub_en": "Investing",
+      "sub_short": "投資会社",
+      "sub_short_en": "Investing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "傘下のアメアデブを同社関連から買収",
+          "text_en": "Bought Ameredev from EnCap affiliates",
+          "source": {
+            "label": "Matador 10-K(2025年度)",
+            "label_en": "Matador 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1520006/000152000626000002/mtdr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "(iii) references to the \"Ameredev Acquisition\" refer to the acquisition of Ameredev Stateline II, LLC from affiliates of EnCap Investments L.P."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PAA",
+      "ticker": "PAA",
+      "name": "プレインズ・オール・アメリカン",
+      "name_en": "Plains All American",
+      "sub": "配管網",
+      "sub_en": "Pipelines",
+      "sub_short": "配管網",
+      "sub_short_en": "Pipelines",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "原油集油の共同開発区域(40万エーカー)",
+          "text_en": "400,000-acre joint oil-gathering area",
+          "source": {
+            "label": "Matador 10-K(2025年度)",
+            "label_en": "Matador 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1520006/000152000626000002/mtdr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "as well as a 400,000-acre joint development area with Plains Marketing, L.P. (\"Plains\") to gather our and other producers' oil production in Eddy County, New Mexico;"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ET",
+      "ticker": "ET",
+      "name": "エナジー・トランスファー",
+      "name_en": "Energy Transfer",
+      "sub": "配管網",
+      "sub_en": "Pipelines",
+      "sub_short": "配管網",
+      "sub_short_en": "Pipelines",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "新ガス管の輸送枠(日量50万MMBtu)を確保",
+          "text_en": "Firm capacity on its new Hugh Brinson gas pipeline",
+          "source": {
+            "label": "Matador 10-K(2025年度)",
+            "label_en": "Matador 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1520006/000152000626000002/mtdr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "We also secured firm transportation on Energy Transfer's Hugh Brinson Pipeline, which is expected to come online in the fourth quarter of 2026, to move 500,000 MMBtu per day of natural gas production out of the Permian Basin to East Texas and markets along the Gulf Coast where demand and pricing have historically been significantly higher"
+          }
+        }
+      ]
+    },
+    {
+      "id": "NorthwindMid",
+      "ticker": "Northwind Midstream",
+      "name": "ノースウインド・ミッドストリーム",
+      "name_en": "Northwind Midstream",
+      "sub": "ガス処理",
+      "sub_en": "Gas treating",
+      "sub_short": "ガス処理",
+      "sub_short_en": "Gas",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "サンマテオが集めた酸性ガスの処理を委託",
+          "text_en": "Treats sour gas gathered by San Mateo",
+          "source": {
+            "label": "Matador 10-K(2025年度)",
+            "label_en": "Matador 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1520006/000152000626000002/mtdr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "In addition, San Mateo entered into certain agreements with Northwind Midstream Partners LLC (\"Northwind\"), previously an affiliate of Five Point, whereby Northwind will treat certain sour gas gathered and delivered by San Mateo in northern Lea County, New Mexico."
+          }
+        }
+      ]
+    },
+    {
+      "id": "EPD",
+      "ticker": "EPD",
+      "name": "エンタープライズ・プロダクツ",
+      "name_en": "Enterprise Products",
+      "sub": "中流",
+      "sub_en": "Pipeline",
+      "sub_short": "中流",
+      "sub_short_en": "Pipeline",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ブラックリバー処理場でNGL管と接続",
+          "text_en": "NGL pipeline connection at the Black River plant",
+          "source": {
+            "label": "Matador 10-K(2025年度)",
+            "label_en": "Matador 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1520006/000152000626000002/mtdr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "In addition, at December 31, 2025, San Mateo had NGL pipeline connections at the Black River Processing Plant to the NGL pipelines owned by EPIC Y-Grade Pipeline LP and Enterprise Products Partners L.P."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,182 @@
+{
+  "root": {
+    "ticker": "MCO",
+    "name": "ムーディーズ",
+    "cik": 1059556,
+    "name_en": "Moody's Corporation"
+  },
+  "rows": [
+    {
+      "ja": "買収した会社",
+      "en": "Acquisitions"
+    },
+    {
+      "ja": "出資先",
+      "en": "Investments"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "GCR",
+      "ticker": "GCR",
+      "name": "グローバル・クレジット・レーティング(GCR)",
+      "name_en": "Global Credit Rating Company",
+      "sub": "格付け",
+      "sub_en": "Ratings",
+      "sub_short": "格付け",
+      "sub_short_en": "Ratings",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "アフリカの格付け会社の支配権を2024年に取得",
+          "text_en": "Took control of the African rating agency in 2024",
+          "source": {
+            "label": "Moody's 10-K(2025年度)",
+            "label_en": "Moody's 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1059556/000162828026009136/mco-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "GCR (Global Credit Rating Company Limited and subsidiaries) A domestic credit rating agency with operations spanning Africa; the Company acquired a controlling financial interest in GCR in July 2024"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ICRChile",
+      "ticker": "ICR Chile",
+      "name": "ICRチリ",
+      "name_en": "ICR Chile",
+      "sub": "格付け",
+      "sub_en": "Ratings",
+      "sub_short": "格付け",
+      "sub_short_en": "Ratings",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "チリの格付け会社を2025年に買収",
+          "text_en": "Acquired the Chilean rating agency in 2025",
+          "source": {
+            "label": "Moody's 10-K(2025年度)",
+            "label_en": "Moody's 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1059556/000162828026009136/mco-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "ICR Chile A domestic credit rating agency with operations in Chile; the Company acquired ICR Chile in Q3 2025"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Numerated",
+      "ticker": "Numerated",
+      "name": "ニューメレイテッド",
+      "name_en": "Numerated",
+      "sub": "融資ソフト",
+      "sub_en": "Lending SW",
+      "sub_short": "融資",
+      "sub_short_en": "Lending",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "法人融資プラットフォーム会社を2024年に買収",
+          "text_en": "Acquired the commercial-lending platform in 2024",
+          "source": {
+            "label": "Moody's 10-K(2025年度)",
+            "label_en": "Moody's 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1059556/000162828026009136/mco-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Numerated A provider of commercial lending platforms; the Company acquired Numerated in November 2024"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Praedicat",
+      "ticker": "Praedicat",
+      "name": "プレディキャット",
+      "name_en": "Praedicat",
+      "sub": "保険分析",
+      "sub_en": "Insurance",
+      "sub_short": "保険分析",
+      "sub_short_en": "Insurance",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "損害保険向け分析会社の支配権を2024年に取得",
+          "text_en": "Took control of the casualty-insurance analytics firm in 2024",
+          "source": {
+            "label": "Moody's 10-K(2025年度)",
+            "label_en": "Moody's 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1059556/000162828026009136/mco-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Praedicat A provider of casualty insurance analytics; the Company acquired a controlling financial interest in Praedicat in September 2024"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RMS",
+      "ticker": "RMS",
+      "name": "RMS(リスク・マネジメント・ソリューションズ)",
+      "name_en": "RMS",
+      "sub": "災害モデル",
+      "sub_en": "Cat models",
+      "sub_short": "災害",
+      "sub_short_en": "Cat risk",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "気候・自然災害リスクのモデル会社を2021年に買収",
+          "text_en": "Acquired the catastrophe-risk modeler in 2021",
+          "source": {
+            "label": "Moody's 10-K(2025年度)",
+            "label_en": "Moody's 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1059556/000162828026009136/mco-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "RMS A global provider of climate and natural disaster risk modeling and analytics; acquired by the Company in September 2021"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BitSight",
+      "ticker": "BitSight",
+      "name": "ビットサイト",
+      "name_en": "BitSight",
+      "sub": "サイバー",
+      "sub_en": "Cyber",
+      "sub_short": "サイバー",
+      "sub_short_en": "Cyber",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "サイバーリスク格付け会社に少数出資",
+          "text_en": "Minority investor in the cyber-risk ratings firm",
+          "source": {
+            "label": "Moody's 10-K(2025年度)",
+            "label_en": "Moody's 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1059556/000162828026009136/mco-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "BitSight A provider that helps global market participants understand cyber risk through ratings, analytics, and performance management tools; the Company acquired a minority investment in BitSight in 2021"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,182 @@
+{
+  "root": {
+    "ticker": "PSX",
+    "name": "フィリップス66",
+    "cik": 1534701,
+    "name_en": "Phillips 66"
+  },
+  "rows": [
+    {
+      "ja": "合弁・出資パートナー",
+      "en": "Joint-venture partners"
+    },
+    {
+      "ja": "売却・買収の相手",
+      "en": "Deal counterparties"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "CPChem",
+      "ticker": "Chevron Phillips",
+      "name": "シェブロン・フィリップス・ケミカル",
+      "name_en": "Chevron Phillips Chemical",
+      "sub": "石油化学",
+      "sub_en": "Petrochemicals",
+      "sub_short": "石油化学",
+      "sub_short_en": "Petchem",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "石油化学の合弁会社に50%出資",
+          "text_en": "Holds 50% of the petrochemicals joint venture",
+          "source": {
+            "label": "Phillips 66 10-K(2025年度)",
+            "label_en": "Phillips 66 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1534701/000153470126000006/psx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "The Chemicals segment consists of our 50% equity investment in Chevron Phillips Chemical Company LLC (CPChem)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CVX",
+      "ticker": "CVX",
+      "name": "シェブロン",
+      "name_en": "Chevron",
+      "sub": "石油",
+      "sub_en": "Oil",
+      "sub_short": "石油",
+      "sub_short_en": "Oil",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "CPChemの共同出資者。支配権変更時の買取権を持つ",
+          "text_en": "CPChem co-owner with a buyout right on change of control",
+          "source": {
+            "label": "Phillips 66 10-K(2025年度)",
+            "label_en": "Phillips 66 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1534701/000153470126000006/psx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "For example, Phillips 66's agreement with Chevron Corporation (Chevron) regarding CPChem permits Chevron to buy Phillips 66's 50% interest in CPChem for fair market value if Phillips 66 experiences a change in control or if both Standard & Poor's Financial Services LLC and Moody's Investors Service, Inc. lower their credit ratings below investment grade and the credit rating from either rating agency remains below investment grade for 365 days thereafter, with fair market value determined by agreement or by nationally recognized investment banks."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ENB",
+      "ticker": "ENB",
+      "name": "エンブリッジ",
+      "name_en": "Enbridge",
+      "sub": "配管網",
+      "sub_en": "Pipelines",
+      "sub_short": "配管網",
+      "sub_short_en": "Pipelines",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "DCPミッドストリームを50%ずつ共同保有していた",
+          "text_en": "Co-owned DCP Midstream 50/50",
+          "source": {
+            "label": "Phillips 66 10-K(2025年度)",
+            "label_en": "Phillips 66 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1534701/000153470126000006/psx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Prior to the DCP Midstream Merger, we and Enbridge each held a 50 % interest and jointly governed DCP Midstream, whose primary assets are its general partner and limited partner interests in DCP Midstream, LP (DCP LP), and we each held indirect economic interests in DCP LP of 28.26 %."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ET",
+      "ticker": "ET",
+      "name": "エナジー・トランスファー",
+      "name_en": "Energy Transfer",
+      "sub": "配管網",
+      "sub_en": "Pipelines",
+      "sub_short": "配管網",
+      "sub_short_en": "Pipelines",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "原油パイプライン「バイユー・ブリッジ」の合弁相手",
+          "text_en": "Partner in the Bayou Bridge crude pipeline JV",
+          "source": {
+            "label": "Energy Transfer 10-K(2025年度)",
+            "label_en": "Energy Transfer 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1276187/000127618726000013/et-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "The Bayou Bridge Pipeline is a joint venture between Energy Transfer and a subsidiary of Phillips 66, in which we have a 60% ownership interest and serve as the operator of the pipeline."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CVE",
+      "ticker": "CVE",
+      "name": "セノバス・エナジー",
+      "name_en": "Cenovus Energy",
+      "sub": "石油",
+      "sub_en": "Oil",
+      "sub_short": "石油",
+      "sub_short_en": "Oil",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "製油所合弁WRBの残り50%をセノバスから取得",
+          "text_en": "Bought Cenovus's remaining 50% of the WRB refining JV",
+          "source": {
+            "label": "Phillips 66 10-K(2025年度)",
+            "label_en": "Phillips 66 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1534701/000153470126000006/psx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "On October 1, 2025, we acquired the remaining 50% equity interest in WRB Refining LP (WRB), a joint venture that owned the Wood River and Borger refineries, from subsidiaries of Cenovus Energy Inc. (Cenovus)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CoopMineraloel",
+      "ticker": "Coop Mineraloel",
+      "name": "コープ・ミネラルエール",
+      "name_en": "Coop Mineraloel AG",
+      "sub": "燃料販売",
+      "sub_en": "Fuel retail",
+      "sub_short": "燃料販売",
+      "sub_short_en": "Fuel",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "スイスの燃料販売合弁の49%を売却",
+          "text_en": "Sold its 49% of the Swiss fuel-marketing JV",
+          "source": {
+            "label": "Phillips 66 10-K(2025年度)",
+            "label_en": "Phillips 66 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1534701/000153470126000006/psx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "On January 31, 2025, we sold our 49% ownership interest in Coop Mineraloel AG, a joint venture that markets refined petroleum products in Switzerland."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

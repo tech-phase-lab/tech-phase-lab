@@ -1,7 +1,9 @@
 "use client";
 import {useEffect,useState,type CSSProperties} from 'react';
 import ToolShell from '../tool-shell';
-import {ReviewLink as Link,useReview,useNotificationClient} from '../review-context';
+import {ReviewLink as Link,useReview,useNotificationClient,usePlanClient} from '../review-context';
+import {shockRuleView} from '@/lib/resolute/shock-rule';
+import type {PlanInput} from '@/lib/resolute/plan-data';
 import {useRisk,riskStatus} from '../features/use-risk';
 import {RISK_PREVIEW_DETAILS} from '@/lib/resolute/risk-preview';
 import {ShockGaugeTitle,ShockStars} from '../features/shock-gauge';
@@ -27,7 +29,12 @@ export function Home({locale,entitlement,thermometerSnapshot}:{thermometerSnapsh
  const displaySample=!!review&&review.scenario!=='live';
  const previewExpired=review?.scenario==='expired';
  const locked=previewExpired||!review&&entitlement!==null&&!entitlement.canReceiveNotifications;
- const requestSettings=useNotificationClient();
+ const requestSettings=useNotificationClient(),requestPlan=usePlanClient();
+ // The member's own rules for a shaken market (lib/resolute/shock-rule.ts), read only on a ★3+ day.
+ const topStars=available?feed.articles.reduce<number|null>((m,a)=>a.stars===null?m:Math.max(m??0,a.stars),null):null;
+ const [plan,setPlan]=useState<{value:PlanInput|null}|'error'|null>(null);
+ useEffect(()=>{if(topStars===null||topStars<3)return;const c=new AbortController();void requestPlan(undefined,c.signal).then(p=>{if(!c.signal.aborted)setPlan({value:p.plan});},()=>{if(!c.signal.aborted)setPlan('error');});return()=>c.abort();},[topStars,requestPlan]);
+ const rule=plan&&plan!=='error'?shockRuleView(plan.value,topStars,locale):topStars===null||topStars<3?shockRuleView(null,topStars,locale):null;
  // What this tab already knows is shown at once instead of a dash (owner, Nov 17); both are refreshed right after.
  const knownSettings=useRemembered<NotificationSnapshot>('notifications');
  const [morning,setMorning]=useState<boolean|null>(knownSettings?.settings.morningEnabled??null),[date,setDate]=useState<string|null>(()=>typeof window==='undefined'?null:formatDisplay(new Date(),en?'en':'ja',{dateStyle:'full'}));
@@ -50,9 +57,12 @@ export function Home({locale,entitlement,thermometerSnapshot}:{thermometerSnapsh
   <h1><svg className={s.anc} viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="9" r="4"/><path d="M24 13v28M17 19h14M9 31c0 7 7 11 15 11s15-4 15-11M5 33l4-4 4 4M35 33l4-4 4 4"/></svg><span>RESOLUTE</span></h1>
   <div className={s.date}>{date??'—'}</div>
   <section className={s.sec}><div className={s.lab}>TODAY</div>
-   <div className={`${s.card} ${high&&!locked?s.high:''}`}><div className={s.row}><h2 style={{flex:1,minWidth:0}}><ShockGaugeTitle locale={locale}/></h2>{!locked&&available&&feed.articles.length>0?<Link className={s.more} href="/resolute/news">{en?`See all ${feed.articles.length} →`:`${feed.articles.length}件すべて見る →`}</Link>:null}</div>
+   <div className={`${s.card} ${high&&!locked?s.high:''}`}><div className={s.row}><h2 style={{flex:1,minWidth:0}}><ShockGaugeTitle locale={locale} compact/></h2>{!locked&&available&&feed.articles.length>0?<Link className={s.more} href="/resolute/news">{en?'Details →':'詳細 →'}</Link>:null}</div>
     {locked?<div className={s.lock}><p>🔒 {en?'The Shock Gauge is included while your alerts access is active.':'衝撃度チェッカーは、アラートの利用期間中に見られます。'}</p><p className={s.sub}>{en?'Renew for another year of the daily Shock Gauge.':'更新すると、また毎朝の衝撃度チェッカーを確認できます。'}</p><button className={s.primary} disabled>{en?'Renew for one year':'1年分を更新する'}{displayOffer?`　${en?'$'+displayOffer.en:displayOffer.ja.toLocaleString('ja-JP')+'円'}`:''}</button><p className={s.sub}>{en?'Renewal checkout is not open yet.':'更新の受付は準備中です。'}</p></div>:<>
-     {available&&feed.articles.length>0?<><ul className={s.news}>{feed.articles.slice(0,2).map(a=><li key={a.id} style={a.stars?{'--c':colors[a.stars]} as CSSProperties:undefined}><span className={s.headline}>{displaySample?(RISK_PREVIEW_DETAILS[a.id]?.[en?'homeEn':'homeJa']??a[locale].title):a[locale].title}</span><ShockStars article={a} locale={locale}/></li>)}</ul><div className={`${s.today} ${high?s.warn:''}`}>{en?'What to do today: ':'今日やること: '}{high?<Link href="/resolute/notebook">{en?'Reread your rules':'ルールを読み返す'}</Link>:displaySample?<Link href="/resolute/notebook">{en?'Check your first price level':'最初のラインを確認する'}</Link>:(en?'Nothing for now':'なし')}</div></>:<p role="status">{riskStatus(en,status,feed?.state)}</p>}
+     {available&&feed.articles.length>0?<><ul className={s.news}>{feed.articles.slice(0,2).map(a=><li key={a.id} style={a.stars?{'--c':colors[a.stars]} as CSSProperties:undefined}><span className={s.headline}>{displaySample?(RISK_PREVIEW_DETAILS[a.id]?.[en?'homeEn':'homeJa']??a[locale].title):a[locale].title}</span><ShockStars article={a} locale={locale}/></li>)}</ul>{rule?.kind==='quiet'?<div className={s.today}>{en?'What to do today: ':'今日やること: '}{en?'Nothing for now':'なし'}</div>
+     :rule?.kind==='rules'?<div className={`${s.today} ${rule.prominent?`${s.warn} ${s.ruleBox}`:''}`}><b>{en?'Your rules':'あなたのルール'}</b>{rule.lines.map(l=><p key={l}>{l}</p>)}{rule.prominent?<Link href="/resolute/notebook">{en?'Open your rulebook →':'一冊を開く →'}</Link>:null}</div>
+     :rule?.kind==='missing'?<div className={`${s.today} ${rule.prominent?`${s.warn} ${s.ruleBox}`:''}`}>{en?'You haven’t set a rule for a day like this yet. ':'この日のためのルールがまだありません。'}<Link href="/resolute/diagnosis">{en?'Set your rules →':'ルールを決める →'}</Link></div>
+     :plan==='error'?<div className={s.today}><Link href="/resolute/notebook">{en?'Open your rulebook →':'一冊を開く →'}</Link></div>:null}</>:<p role="status">{riskStatus(en,status,feed?.state)}</p>}
      {displaySample?<p className={s.notice}>{feed?.date} · {en?'Display sample':'表示見本'}</p>:null}
     </>}
    </div>

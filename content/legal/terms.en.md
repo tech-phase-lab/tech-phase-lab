@@ -120,7 +120,7 @@ The Japanese version of these Terms is the original, and if the English version 
 1. The gauge measures (TP Large Cap 100, TP Semiconductor 40 and the TP Fear Index) are reference values the Operator calculates on its own from stock prices supplied by external data providers. They do not match other indices or figures shown by brokers, and they are not related to any index provider. An outline of how they are calculated is shown in the Product.
 2. The Operator may change the constituents and calculation methods of the measures. TP Semiconductor 40's constituents are reviewed four times a year.
 3. Alerts and the Shock Gauge may be late or may not arrive because of your device, connection or data delays.
-4. The Shock Gauge's levels show, according to criteria the Operator sets and publishes in advance, how much the related measure actually moved after the news; they do not show future price movements or when to trade. AI may be used to summarize news, and summaries may contain errors.
+4. The Shock Gauge's stars are a guide calculated from the actual index moves after the news and from the article's content, weighing whether the cause looks one-off; they do not indicate future price moves or when to buy or sell. AI may be used to summarize news, and summaries may contain errors.
 5. The Operator is liable for investment results based on these measures and guides, and for damage caused by late or undelivered notifications, as set out in Article 15.
 
 ## Article 21 (Period of Use and Renewal of Notifications)

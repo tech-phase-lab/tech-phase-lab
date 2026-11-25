@@ -1,0 +1,240 @@
+{
+  "root": {
+    "ticker": "SEIC",
+    "name": "SEIインベストメンツ",
+    "cik": 350894,
+    "name_en": "SEI Investments Company"
+  },
+  "rows": [
+    {
+      "ja": "持分法の関連会社",
+      "en": "Unconsolidated affiliate"
+    },
+    {
+      "ja": "競合(本人の10-Kで名指し)",
+      "en": "Named rivals (own 10-K)"
+    }
+  ],
+  "rivals": [
+    "FIS",
+    "SSNC",
+    "STT",
+    "BK",
+    "NTRS"
+  ],
+  "companies": [
+    {
+      "id": "LSV",
+      "ticker": "LSV",
+      "name": "LSVアセット・マネジメント",
+      "name_en": "LSV Asset Management",
+      "sub": "資産運用",
+      "sub_en": "Asset management",
+      "sub_short": "資産運用",
+      "sub_short_en": "Assets",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "持分法の関連会社(運用資産992億ドル)",
+          "text_en": "Unconsolidated affiliate managing $99.2 billion",
+          "source": {
+            "label": "SEI 10-K(2025年度)",
+            "label_en": "SEI 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/350894/000035089426000013/seic-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "An additional $99.2 billion in assets is managed by our unconsolidated affiliate LSV Asset Management (LSV)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "FIS",
+      "ticker": "FIS",
+      "name": "フィデリティ・インフォメーション・サービシズ",
+      "name_en": "Fidelity Information Services",
+      "sub": "銀行システム",
+      "sub_en": "Banking systems",
+      "sub_short": "銀行IT",
+      "sub_short_en": "Bank IT",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "銀行・資産管理向けシステムで競合",
+          "text_en": "Rival in wealth-management technology",
+          "source": {
+            "label": "SEI 10-K(2025年度)",
+            "label_en": "SEI 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/350894/000035089426000013/seic-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "wealth management technology service providers such as Fidelity National Information Services, Inc. (FIS)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SSNC",
+      "ticker": "SSNC",
+      "name": "SS&Cテクノロジーズ",
+      "name_en": "SS&C Technologies",
+      "sub": "金融向けソフト",
+      "sub_en": "Financial software",
+      "sub_short": "金融IT",
+      "sub_short_en": "Finance",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ファンド事務代行で競合",
+          "text_en": "Rival in fund administration",
+          "source": {
+            "label": "SEI 10-K(2025年度)",
+            "label_en": "SEI 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/350894/000035089426000013/seic-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "They include SS&C Technologies, State Street, BNY Mellon, Northern Trust, and Citco."
+          }
+        }
+      ]
+    },
+    {
+      "id": "STT",
+      "ticker": "STT",
+      "name": "ステート・ストリート",
+      "name_en": "State Street",
+      "sub": "資産管理・カストディ",
+      "sub_en": "Custody & asset servicing",
+      "sub_short": "資産管理",
+      "sub_short_en": "Custody",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ファンド事務代行で競合",
+          "text_en": "Rival in fund administration",
+          "source": {
+            "label": "SEI 10-K(2025年度)",
+            "label_en": "SEI 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/350894/000035089426000013/seic-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "They include SS&C Technologies, State Street, BNY Mellon, Northern Trust, and Citco."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BK",
+      "ticker": "BK",
+      "name": "BNYメロン",
+      "name_en": "BNY",
+      "sub": "金融サービス",
+      "sub_en": "Financial services",
+      "sub_short": "金融",
+      "sub_short_en": "Finance",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ファンド事務代行で競合",
+          "text_en": "Rival in fund administration",
+          "source": {
+            "label": "SEI 10-K(2025年度)",
+            "label_en": "SEI 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/350894/000035089426000013/seic-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "They include SS&C Technologies, State Street, BNY Mellon, Northern Trust, and Citco."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NTRS",
+      "ticker": "NTRS",
+      "name": "ノーザン・トラスト",
+      "name_en": "Northern Trust",
+      "sub": "資産管理・カストディ",
+      "sub_en": "Custody & asset servicing",
+      "sub_short": "資産管理",
+      "sub_short_en": "Custody",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ファンド事務代行で競合",
+          "text_en": "Rival in fund administration",
+          "source": {
+            "label": "SEI 10-K(2025年度)",
+            "label_en": "SEI 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/350894/000035089426000013/seic-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "They include SS&C Technologies, State Street, BNY Mellon, Northern Trust, and Citco."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SCHW",
+      "ticker": "SCHW",
+      "name": "チャールズ・シュワブ",
+      "name_en": "Charles Schwab",
+      "sub": "証券・カストディ",
+      "sub_en": "Brokerage & custody",
+      "sub_short": "証券",
+      "sub_short_en": "Broker",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "投資顧問向けの資産管理(カストディ)で競合",
+          "text_en": "Rival in custody for advisers",
+          "source": {
+            "label": "SEI 10-K(2025年度)",
+            "label_en": "SEI 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/350894/000035089426000013/seic-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "diversified firms that focus on custody operations, such as Charles Schwab & Co., Inc., and Fidelity Investments."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BLK",
+      "ticker": "BLK",
+      "name": "ブラックロック",
+      "name_en": "BlackRock",
+      "sub": "資産運用",
+      "sub_en": "Asset management",
+      "sub_short": "資産運用",
+      "sub_short_en": "Assets",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "資産運用サービスで競合",
+          "text_en": "Rival in asset management",
+          "source": {
+            "label": "SEI 10-K(2025年度)",
+            "label_en": "SEI 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/350894/000035089426000013/seic-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "global asset management firms, such as LPL Financial and BlackRock."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,286 @@
+{
+  "root": {
+    "ticker": "SHOO",
+    "name": "スティーブ・マデン",
+    "cik": 913241,
+    "name_en": "Steven Madden, Ltd."
+  },
+  "rows": [
+    {
+      "ja": "上位10社の卸売先(2025年)",
+      "en": "Top-10 wholesale customers (2025)"
+    },
+    {
+      "ja": "ブランドのライセンス元",
+      "en": "Brand licensor"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "Nordstrom",
+      "ticker": "Nordstrom",
+      "name": "ノードストローム",
+      "name_en": "Nordstrom",
+      "sub": "百貨店",
+      "sub_en": "Department stores",
+      "sub_short": "百貨店",
+      "sub_short_en": "Stores",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "上位10社に入る卸売先",
+          "text_en": "One of its top-10 wholesale customers",
+          "source": {
+            "label": "Steve Madden 10-K(2025年度)",
+            "label_en": "Steve Madden 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/913241/000162828026012995/shoo-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "For the year ended December 31, 2025, our top ten wholesale channel customers, in no particular order, included: Nordstrom, Macy's, Dillard's, Designer Brands, The TJX Companies, Ross Stores, Burlington Stores, Amazon, Walmart, and Target."
+          }
+        }
+      ]
+    },
+    {
+      "id": "M",
+      "ticker": "M",
+      "name": "メイシーズ",
+      "name_en": "Macy's",
+      "sub": "百貨店",
+      "sub_en": "Department stores",
+      "sub_short": "百貨店",
+      "sub_short_en": "Stores",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "上位10社に入る卸売先",
+          "text_en": "One of its top-10 wholesale customers",
+          "source": {
+            "label": "Steve Madden 10-K(2025年度)",
+            "label_en": "Steve Madden 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/913241/000162828026012995/shoo-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "For the year ended December 31, 2025, our top ten wholesale channel customers, in no particular order, included: Nordstrom, Macy's, Dillard's, Designer Brands, The TJX Companies, Ross Stores, Burlington Stores, Amazon, Walmart, and Target."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DDS",
+      "ticker": "DDS",
+      "name": "ディラーズ",
+      "name_en": "Dillard's",
+      "sub": "百貨店",
+      "sub_en": "Department stores",
+      "sub_short": "百貨店",
+      "sub_short_en": "Stores",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "上位10社に入る卸売先",
+          "text_en": "One of its top-10 wholesale customers",
+          "source": {
+            "label": "Steve Madden 10-K(2025年度)",
+            "label_en": "Steve Madden 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/913241/000162828026012995/shoo-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "For the year ended December 31, 2025, our top ten wholesale channel customers, in no particular order, included: Nordstrom, Macy's, Dillard's, Designer Brands, The TJX Companies, Ross Stores, Burlington Stores, Amazon, Walmart, and Target."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DBI",
+      "ticker": "DBI",
+      "name": "デザイナー・ブランズ",
+      "name_en": "Designer Brands",
+      "sub": "靴の小売",
+      "sub_en": "Footwear retail",
+      "sub_short": "靴小売",
+      "sub_short_en": "Shoes",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "上位10社に入る卸売先(靴専門店DSW)",
+          "text_en": "Top-10 wholesale customer (DSW shoe stores)",
+          "source": {
+            "label": "Steve Madden 10-K(2025年度)",
+            "label_en": "Steve Madden 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/913241/000162828026012995/shoo-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "For the year ended December 31, 2025, our top ten wholesale channel customers, in no particular order, included: Nordstrom, Macy's, Dillard's, Designer Brands, The TJX Companies, Ross Stores, Burlington Stores, Amazon, Walmart, and Target."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TJX",
+      "ticker": "TJX",
+      "name": "TJXカンパニーズ",
+      "name_en": "The TJX Companies",
+      "sub": "ディスカウント小売",
+      "sub_en": "Off-price retail",
+      "sub_short": "格安小売",
+      "sub_short_en": "Off-price",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "上位10社に入る卸売先",
+          "text_en": "One of its top-10 wholesale customers",
+          "source": {
+            "label": "Steve Madden 10-K(2025年度)",
+            "label_en": "Steve Madden 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/913241/000162828026012995/shoo-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "For the year ended December 31, 2025, our top ten wholesale channel customers, in no particular order, included: Nordstrom, Macy's, Dillard's, Designer Brands, The TJX Companies, Ross Stores, Burlington Stores, Amazon, Walmart, and Target."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ROST",
+      "ticker": "ROST",
+      "name": "ロス・ストアーズ",
+      "name_en": "Ross Stores",
+      "sub": "ディスカウント小売",
+      "sub_en": "Off-price retail",
+      "sub_short": "格安小売",
+      "sub_short_en": "Off-price",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "上位10社に入る卸売先",
+          "text_en": "One of its top-10 wholesale customers",
+          "source": {
+            "label": "Steve Madden 10-K(2025年度)",
+            "label_en": "Steve Madden 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/913241/000162828026012995/shoo-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "For the year ended December 31, 2025, our top ten wholesale channel customers, in no particular order, included: Nordstrom, Macy's, Dillard's, Designer Brands, The TJX Companies, Ross Stores, Burlington Stores, Amazon, Walmart, and Target."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン",
+      "name_en": "Amazon",
+      "sub": "ネット通販",
+      "sub_en": "E-commerce",
+      "sub_short": "通販",
+      "sub_short_en": "Online",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "上位10社に入る卸売先",
+          "text_en": "One of its top-10 wholesale customers",
+          "source": {
+            "label": "Steve Madden 10-K(2025年度)",
+            "label_en": "Steve Madden 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/913241/000162828026012995/shoo-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "For the year ended December 31, 2025, our top ten wholesale channel customers, in no particular order, included: Nordstrom, Macy's, Dillard's, Designer Brands, The TJX Companies, Ross Stores, Burlington Stores, Amazon, Walmart, and Target."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WMT",
+      "ticker": "WMT",
+      "name": "ウォルマート",
+      "name_en": "Walmart",
+      "sub": "小売",
+      "sub_en": "Retail",
+      "sub_short": "量販店",
+      "sub_short_en": "Retail",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "上位10社に入る卸売先",
+          "text_en": "One of its top-10 wholesale customers",
+          "source": {
+            "label": "Steve Madden 10-K(2025年度)",
+            "label_en": "Steve Madden 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/913241/000162828026012995/shoo-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "For the year ended December 31, 2025, our top ten wholesale channel customers, in no particular order, included: Nordstrom, Macy's, Dillard's, Designer Brands, The TJX Companies, Ross Stores, Burlington Stores, Amazon, Walmart, and Target."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TGT",
+      "ticker": "TGT",
+      "name": "ターゲット",
+      "name_en": "Target",
+      "sub": "小売",
+      "sub_en": "Retail",
+      "sub_short": "総合小売",
+      "sub_short_en": "Retail",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "上位10社に入る卸売先",
+          "text_en": "One of its top-10 wholesale customers",
+          "source": {
+            "label": "Steve Madden 10-K(2025年度)",
+            "label_en": "Steve Madden 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/913241/000162828026012995/shoo-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "For the year ended December 31, 2025, our top ten wholesale channel customers, in no particular order, included: Nordstrom, Macy's, Dillard's, Designer Brands, The TJX Companies, Ross Stores, Burlington Stores, Amazon, Walmart, and Target."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WHP",
+      "ticker": "WHP Global",
+      "name": "WHPグローバル",
+      "name_en": "WHP Global",
+      "sub": "ブランド管理",
+      "sub_en": "Brand management",
+      "sub_short": "ブランド",
+      "sub_short_en": "Brands",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "アンクラインの商標を使う靴・小物のライセンス契約(2018年から)",
+          "text_en": "Licenses the Anne Klein marks for footwear and accessories (since 2018)",
+          "source": {
+            "label": "Steve Madden 10-K(2025年度)",
+            "label_en": "Steve Madden 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/913241/000162828026012995/shoo-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "In January 2018, we entered into a license agreement with WHP Global to use the Anne Klein ® , AK Sport ® , AK Anne Klein Sport ® , and Lion Head Design ® (collectively \"Anne Klein ® \") trademarks"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

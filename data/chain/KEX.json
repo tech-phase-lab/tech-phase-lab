@@ -1,0 +1,230 @@
+{
+  "root": {
+    "ticker": "KEX",
+    "name": "カービー",
+    "cik": 56047,
+    "name_en": "Kirby Corporation"
+  },
+  "rows": [
+    {
+      "ja": "販売・整備を任されているメーカー",
+      "en": "Makers it distributes and services"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "CAT",
+      "ticker": "CAT",
+      "name": "キャタピラー",
+      "name_en": "Caterpillar",
+      "sub": "建機",
+      "sub_en": "Construction equipment",
+      "sub_short": "建機",
+      "sub_short_en": "Machines",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "複数の州でキャタピラー舶用ディーゼルエンジンの正規ディーラー",
+          "text_en": "Authorized marine dealer for Caterpillar diesel engines in several states",
+          "source": {
+            "label": "Kirby 10-K(2025年度)",
+            "label_en": "Kirby 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/56047/000119312526054016/kex-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "The Company serves as a factory-authorized marine dealer for Caterpillar diesel engines in multiple states."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CMI",
+      "ticker": "CMI",
+      "name": "カミンズ",
+      "name_en": "Cummins",
+      "sub": "エンジン",
+      "sub_en": "Engines",
+      "sub_short": "エンジン",
+      "sub_short_en": "Engines",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "舶用エンジンの正規販売・整備",
+          "text_en": "Authorized marine distributor and dealer",
+          "source": {
+            "label": "Kirby 10-K(2025年度)",
+            "label_en": "Kirby 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/56047/000119312526054016/kex-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "The Company also operates factory-authorized full service marine distributorships/dealerships for Cummins, Detroit Diesel, John Deere, MTU, and Volvo Penta, and Kohler diesel engines, as well as Falk, Lufkin and Twin Disc marine gears."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DE",
+      "ticker": "DE",
+      "name": "ディア",
+      "name_en": "Deere",
+      "sub": "農機・建機",
+      "sub_en": "Farm & construction equipment",
+      "sub_short": "農機",
+      "sub_short_en": "Farm",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "舶用エンジンの正規販売・整備",
+          "text_en": "Authorized marine distributor and dealer",
+          "source": {
+            "label": "Kirby 10-K(2025年度)",
+            "label_en": "Kirby 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/56047/000119312526054016/kex-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "The Company also operates factory-authorized full service marine distributorships/dealerships for Cummins, Detroit Diesel, John Deere, MTU, and Volvo Penta, and Kohler diesel engines, as well as Falk, Lufkin and Twin Disc marine gears."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ALSN",
+      "ticker": "ALSN",
+      "name": "アリソン・トランスミッション",
+      "name_en": "Allison Transmission",
+      "sub": "変速機",
+      "sub_en": "Transmissions",
+      "sub_short": "変速機",
+      "sub_short_en": "Gearbox",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "路上車向けで最大の販売代理店",
+          "text_en": "Its largest on-highway distributor",
+          "source": {
+            "label": "Kirby 10-K(2025年度)",
+            "label_en": "Kirby 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/56047/000119312526054016/kex-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "The Company is the largest on-highway distributor for Allison Transmission and Detroit Diesel/Daimler Truck North America"
+          }
+        }
+      ]
+    },
+    {
+      "id": "DTG",
+      "ticker": "Daimler Truck",
+      "name": "ダイムラー・トラック",
+      "name_en": "Daimler Truck",
+      "sub": "トラック(ドイツ)",
+      "sub_en": "Trucks (Germany)",
+      "sub_short": "トラック",
+      "sub_short_en": "Trucks",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "デトロイト・ディーゼル製品の路上車向け最大の代理店",
+          "text_en": "Largest on-highway distributor of Detroit Diesel products",
+          "source": {
+            "label": "Kirby 10-K(2025年度)",
+            "label_en": "Kirby 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/56047/000119312526054016/kex-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "The Company is the largest on-highway distributor for Allison Transmission and Detroit Diesel/Daimler Truck North America"
+          }
+        }
+      ]
+    },
+    {
+      "id": "TT",
+      "ticker": "TT",
+      "name": "トレイン・テクノロジーズ",
+      "name_en": "Trane Technologies",
+      "sub": "空調",
+      "sub_en": "HVAC",
+      "sub_short": "空調",
+      "sub_short_en": "HVAC",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "サーモキング冷凍装置のディーラー(テキサス・コロラド)",
+          "text_en": "Thermo King refrigeration dealer in Texas and Colorado",
+          "source": {
+            "label": "Kirby 10-K(2025年度)",
+            "label_en": "Kirby 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/56047/000119312526054016/kex-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Lastly, the Company is a dealer for Thermo King refrigeration systems for trucks, railroad cars and other land transportation markets in Texas and Colorado."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WWD",
+      "ticker": "WWD",
+      "name": "ウッドワード",
+      "name_en": "Woodward",
+      "sub": "航空・産業部品",
+      "sub_en": "Aerospace & industrial parts",
+      "sub_short": "航空部品",
+      "sub_short_en": "Parts",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "原子力向けにウッドワード製品を世界で販売",
+          "text_en": "Worldwide distributor of Woodward products to the nuclear industry",
+          "source": {
+            "label": "Kirby 10-K(2025年度)",
+            "label_en": "Kirby 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/56047/000119312526054016/kex-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "the worldwide distributor for Woodward, Inc. products to the nuclear industry"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AlfaLaval",
+      "ticker": "ALFA.ST",
+      "name": "アルファ・ラバル",
+      "name_en": "Alfa Laval",
+      "sub": "産業機器",
+      "sub_en": "Industrial equipment",
+      "sub_short": "産業機器",
+      "sub_short_en": "Machines",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "一部地域でアルファ・ラバル製品の販売代理",
+          "text_en": "Distributor for certain Alfa Laval products",
+          "source": {
+            "label": "Kirby 10-K(2025年度)",
+            "label_en": "Kirby 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/56047/000119312526054016/kex-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "The Company is also a distributor and representative for certain Alfa Laval products in the Midwest and on the East Coast, Gulf Coast, and West Coast."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,214 @@
+{
+  "root": {
+    "ticker": "ESE",
+    "name": "ESCOテクノロジーズ",
+    "cik": 866706,
+    "name_en": "ESCO Technologies Inc."
+  },
+  "rows": [
+    {
+      "ja": "航空宇宙・防衛部門の競合",
+      "en": "Aerospace & defense rivals"
+    },
+    {
+      "ja": "電力網計測部門の競合",
+      "en": "Utility solutions rivals"
+    }
+  ],
+  "rivals": [
+    "DHR",
+    "MOG.A",
+    "Safran",
+    "TDG",
+    "PH"
+  ],
+  "companies": [
+    {
+      "id": "DHR",
+      "ticker": "DHR",
+      "name": "ダナハー",
+      "name_en": "Danaher Corporation",
+      "sub": "ライフサイエンス機器",
+      "sub_en": "Life science tools",
+      "sub_short": "生命科学",
+      "sub_short_en": "Lab tools",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "傘下のポールが航空機用フィルターで競合",
+          "text_en": "Its Pall unit is an aircraft filtration rival",
+          "source": {
+            "label": "ESCO 10-K(2025年9月期)",
+            "label_en": "ESCO 10-K (FY Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/866706/000110465925117276/ese-20250930x10k.htm",
+            "level": "official",
+            "date": "2025-12-01",
+            "quote": "Significant competitors of our A&D segment include Pall Corporation (a subsidiary of Danaher Corporation), Moog, Inc., Safran (Sofrance), CLARCOR Inc., TransDigm (PneuDraulics), Parker Hannifin, Collins Aerospace, L3 Harris and Leonardo DRS."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MOG.A",
+      "ticker": "MOG.A",
+      "name": "ムーグ",
+      "name_en": "Moog",
+      "sub": "航空機の操縦系",
+      "sub_en": "Flight controls",
+      "sub_short": "航空部品",
+      "sub_short_en": "Aircraft",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "航空機用フィルター・部品で競合",
+          "text_en": "Rival in aircraft filtration and components",
+          "source": {
+            "label": "ESCO 10-K(2025年9月期)",
+            "label_en": "ESCO 10-K (FY Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/866706/000110465925117276/ese-20250930x10k.htm",
+            "level": "official",
+            "date": "2025-12-01",
+            "quote": "Significant competitors of our A&D segment include Pall Corporation (a subsidiary of Danaher Corporation), Moog, Inc., Safran (Sofrance), CLARCOR Inc., TransDigm (PneuDraulics), Parker Hannifin, Collins Aerospace, L3 Harris and Leonardo DRS."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Safran",
+      "ticker": "Safran",
+      "name": "サフラン",
+      "name_en": "Safran",
+      "sub": "航空機部品(仏)",
+      "sub_en": "Aerospace (France)",
+      "sub_short": "航空部品",
+      "sub_short_en": "Aero",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "航空機用フィルター・部品で競合",
+          "text_en": "Rival in aircraft filtration and components",
+          "source": {
+            "label": "ESCO 10-K(2025年9月期)",
+            "label_en": "ESCO 10-K (FY Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/866706/000110465925117276/ese-20250930x10k.htm",
+            "level": "official",
+            "date": "2025-12-01",
+            "quote": "Significant competitors of our A&D segment include Pall Corporation (a subsidiary of Danaher Corporation), Moog, Inc., Safran (Sofrance), CLARCOR Inc., TransDigm (PneuDraulics), Parker Hannifin, Collins Aerospace, L3 Harris and Leonardo DRS."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TDG",
+      "ticker": "TDG",
+      "name": "トランスダイム",
+      "name_en": "TransDigm",
+      "sub": "航空機部品",
+      "sub_en": "Aircraft parts",
+      "sub_short": "航空部品",
+      "sub_short_en": "Aero",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "航空機用フィルター・部品で競合",
+          "text_en": "Rival in aircraft filtration and components",
+          "source": {
+            "label": "ESCO 10-K(2025年9月期)",
+            "label_en": "ESCO 10-K (FY Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/866706/000110465925117276/ese-20250930x10k.htm",
+            "level": "official",
+            "date": "2025-12-01",
+            "quote": "Significant competitors of our A&D segment include Pall Corporation (a subsidiary of Danaher Corporation), Moog, Inc., Safran (Sofrance), CLARCOR Inc., TransDigm (PneuDraulics), Parker Hannifin, Collins Aerospace, L3 Harris and Leonardo DRS."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PH",
+      "ticker": "PH",
+      "name": "パーカー・ハネフィン",
+      "name_en": "Parker-Hannifin",
+      "sub": "油圧・航空機部品",
+      "sub_en": "Motion control & aerospace",
+      "sub_short": "油圧",
+      "sub_short_en": "Motion",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "航空機用フィルター・部品で競合",
+          "text_en": "Rival in aircraft filtration and components",
+          "source": {
+            "label": "ESCO 10-K(2025年9月期)",
+            "label_en": "ESCO 10-K (FY Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/866706/000110465925117276/ese-20250930x10k.htm",
+            "level": "official",
+            "date": "2025-12-01",
+            "quote": "Significant competitors of our A&D segment include Pall Corporation (a subsidiary of Danaher Corporation), Moog, Inc., Safran (Sofrance), CLARCOR Inc., TransDigm (PneuDraulics), Parker Hannifin, Collins Aerospace, L3 Harris and Leonardo DRS."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RTX",
+      "ticker": "RTX",
+      "name": "RTXコーポレーション",
+      "name_en": "RTX",
+      "sub": "航空宇宙・防衛",
+      "sub_en": "Aerospace & defense",
+      "sub_short": "航空宇宙",
+      "sub_short_en": "Aero",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "傘下のコリンズ・エアロスペースが競合",
+          "text_en": "Its Collins Aerospace unit is a rival",
+          "source": {
+            "label": "ESCO 10-K(2025年9月期)",
+            "label_en": "ESCO 10-K (FY Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/866706/000110465925117276/ese-20250930x10k.htm",
+            "level": "official",
+            "date": "2025-12-01",
+            "quote": "Significant competitors of our A&D segment include Pall Corporation (a subsidiary of Danaher Corporation), Moog, Inc., Safran (Sofrance), CLARCOR Inc., TransDigm (PneuDraulics), Parker Hannifin, Collins Aerospace, L3 Harris and Leonardo DRS."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RAL",
+      "ticker": "RAL",
+      "name": "ラリアント",
+      "name_en": "Ralliant",
+      "sub": "計測機器",
+      "sub_en": "Test & measurement",
+      "sub_short": "計測機器",
+      "sub_short_en": "Testing",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "傘下のクオリトロールが電力設備の監視機器で競合",
+          "text_en": "Its Qualitrol unit is a utility-monitoring rival",
+          "source": {
+            "label": "ESCO 10-K(2025年9月期)",
+            "label_en": "ESCO 10-K (FY Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/866706/000110465925117276/ese-20250930x10k.htm",
+            "level": "official",
+            "date": "2025-12-01",
+            "quote": "Significant competitors of our USG segment include OMICRON Electronics Corp., Megger Group Limited, Vaisala, and Qualitrol Company LLC (a subsidiary of Ralliant Corporation)."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

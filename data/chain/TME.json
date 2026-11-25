@@ -1,0 +1,208 @@
+{
+  "root": {
+    "ticker": "TME",
+    "name": "テンセント・ミュージック",
+    "cik": 1744676,
+    "name_en": "Tencent Music Entertainment Group"
+  },
+  "rows": [
+    {
+      "ja": "支配株主・大株主",
+      "en": "Controlling & principal shareholders"
+    },
+    {
+      "ja": "楽曲の権利元・提携",
+      "en": "Music labels & partners"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "Tencent",
+      "ticker": "Tencent",
+      "name": "テンセント",
+      "name_en": "Tencent",
+      "sub": "ネット",
+      "sub_en": "Internet",
+      "sub_short": "ネット",
+      "sub_short_en": "Internet",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "支配株主。議決権の93.6%を保有し事業協力契約も結ぶ",
+          "text_en": "Controlling holder with 93.6% of votes; business cooperation pact",
+          "source": {
+            "label": "TME 20-F(2025年度)",
+            "label_en": "TME 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1744676/000119312526160257/tme-20251231.htm",
+            "level": "official",
+            "date": "2026-04-17",
+            "quote": "As of March 31, 2026, Tencent beneficially owned 10.8% of our outstanding Class A ordinary shares and 98.5% of our outstanding Class B ordinary shares, and held in the aggregate 93.6% of our total voting power."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SPOT",
+      "ticker": "SPOT",
+      "name": "スポティファイ",
+      "name_en": "Spotify",
+      "sub": "音楽配信",
+      "sub_en": "Audio",
+      "sub_short": "音楽配信",
+      "sub_short_en": "Audio",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "主要株主の一社",
+          "text_en": "One of its principal shareholders",
+          "source": {
+            "label": "TME 20-F(2025年度)",
+            "label_en": "TME 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1744676/000119312526160257/tme-20251231.htm",
+            "level": "official",
+            "date": "2026-04-17",
+            "quote": "• \"Spotify\" refers to Spotify Technology S.A., one of our principal shareholders;"
+          }
+        }
+      ]
+    },
+    {
+      "id": "UMG",
+      "ticker": "Universal Music",
+      "name": "ユニバーサル・ミュージック・グループ",
+      "name_en": "Universal Music Group",
+      "sub": "レーベル",
+      "sub_en": "Music",
+      "sub_short": "レーベル",
+      "sub_short_en": "Music",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "テンセント主導の連合でUMG株10%を取得",
+          "text_en": "Joined the Tencent-led consortium buying 10% of UMG",
+          "source": {
+            "label": "TME 20-F(2025年度)",
+            "label_en": "TME 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1744676/000119312526160257/tme-20251231.htm",
+            "level": "official",
+            "date": "2026-04-17",
+            "quote": "Transaction with UMG In March 2020, we joined a consortium led by Tencent to acquire a 10% equity stake in Universal Music Group, or UMG, from its parent company, Vivendi S.A."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SONY",
+      "ticker": "SONY",
+      "name": "ソニーグループ",
+      "name_en": "Sony Group",
+      "sub": "電機",
+      "sub_en": "Sony",
+      "sub_short": "電機",
+      "sub_short_en": "Sony",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "傘下ソニー・ミュージックと楽曲ライセンス契約を更新",
+          "text_en": "Renewed music licensing with Sony Music Entertainment",
+          "source": {
+            "label": "TME 20-F(2025年度)",
+            "label_en": "TME 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1744676/000119312526160257/tme-20251231.htm",
+            "level": "official",
+            "date": "2026-04-17",
+            "quote": "For example, we renewed contracts with Sony Music Entertainment, Warner Music Group, and Bin-music in 2025 to enhance our timeless and classic music offerings."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WMG",
+      "ticker": "WMG",
+      "name": "ワーナー・ミュージック・グループ",
+      "name_en": "Warner Music Group",
+      "sub": "レーベル",
+      "sub_en": "Music",
+      "sub_short": "レーベル",
+      "sub_short_en": "Music",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "楽曲ライセンス契約を2025年に更新",
+          "text_en": "Renewed music licensing contracts in 2025",
+          "source": {
+            "label": "TME 20-F(2025年度)",
+            "label_en": "TME 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1744676/000119312526160257/tme-20251231.htm",
+            "level": "official",
+            "date": "2026-04-17",
+            "quote": "For example, we renewed contracts with Sony Music Entertainment, Warner Music Group, and Bin-music in 2025 to enhance our timeless and classic music offerings."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Ximalaya",
+      "ticker": "Ximalaya",
+      "name": "シマラヤ(喜馬拉雅)",
+      "name_en": "Ximalaya",
+      "sub": "音声配信",
+      "sub_en": "Audio app",
+      "sub_short": "音声配信",
+      "sub_short_en": "Audio",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "中国の音声配信大手の買収を発表",
+          "text_en": "Announced the acquisition of the Chinese audio platform",
+          "source": {
+            "label": "TME 20-F(2025年度)",
+            "label_en": "TME 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1744676/000119312526160257/tme-20251231.htm",
+            "level": "official",
+            "date": "2026-04-17",
+            "quote": "Proposed Acquisition of Ximalaya In June 2025, we announced our proposed acquisition of Ximalaya Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "KakaoEnt",
+      "ticker": "Kakao Entertainment",
+      "name": "カカオエンターテインメント",
+      "name_en": "Kakao Entertainment",
+      "sub": "エンタメ",
+      "sub_en": "Entertain",
+      "sub_short": "エンタメ",
+      "sub_short_en": "Media",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "K-POPチャートの共同立ち上げで事業協力",
+          "text_en": "Co-launching a K-pop artist chart",
+          "source": {
+            "label": "TME 20-F(2025年度)",
+            "label_en": "TME 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1744676/000119312526160257/tme-20251231.htm",
+            "level": "official",
+            "date": "2026-04-17",
+            "quote": "In December 2025, we signed business cooperation agreements with Kakao Entertainment, LINE MUSIC, and others to jointly launch the \"K‐pop Artist Chart.\" The new chart, to be introduced on Melon, will reflect objectively user activity and platform data from participating music services and is scheduled to officially launch in the first half of 2026."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

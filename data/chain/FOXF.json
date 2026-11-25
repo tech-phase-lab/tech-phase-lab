@@ -1,0 +1,264 @@
+{
+  "root": {
+    "ticker": "FOXF",
+    "name": "フォックス・ファクトリー",
+    "cik": 1424929,
+    "name_en": "Fox Factory Holding Corp."
+  },
+  "rows": [
+    {
+      "ja": "主な完成車メーカーの顧客",
+      "en": "Main OEM customers"
+    },
+    {
+      "ja": "競合(本人の10-Kで名指し)",
+      "en": "Named rivals (own 10-K)"
+    }
+  ],
+  "rivals": [
+    "SRAM",
+    "Shimano",
+    "ZF"
+  ],
+  "companies": [
+    {
+      "id": "F",
+      "ticker": "F",
+      "name": "フォード",
+      "name_en": "Ford",
+      "sub": "自動車",
+      "sub_en": "Automaker",
+      "sub_short": "自動車",
+      "sub_short_en": "Cars",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ピックアップ等の純正サスペンション・架装の顧客",
+          "text_en": "OEM customer for suspension and upfits",
+          "source": {
+            "label": "Fox Factory 10-K(2025年度)",
+            "label_en": "Fox Factory 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1424929/000142492926000012/foxf-20260102.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Many of our OEM customers, including Specialized, Trek Bicycles, Giant, Cube, Orbea, Canyon Bicycles, Santa Cruz Bicycles, and Yeti Cycles in Specialty Sports and BRP, Ford Motor Company (\"Ford\"), Polaris, Toyota, 4 Wheel Parts, Kawasaki, Yamaha, Stellantis, CF Moto, Honda, BMW, Ducati, Triumph, Moto Morini, and MV Agusta in Powered Vehicles and Aftermarket Applications"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PII",
+      "ticker": "PII",
+      "name": "ポラリス",
+      "name_en": "Polaris",
+      "sub": "オフロード車",
+      "sub_en": "Powersports",
+      "sub_short": "レジャー",
+      "sub_short_en": "Rec cars",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ATV・サイドバイサイド車の純正部品の顧客",
+          "text_en": "OEM customer for ATVs and side-by-sides",
+          "source": {
+            "label": "Fox Factory 10-K(2025年度)",
+            "label_en": "Fox Factory 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1424929/000142492926000012/foxf-20260102.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Many of our OEM customers, including Specialized, Trek Bicycles, Giant, Cube, Orbea, Canyon Bicycles, Santa Cruz Bicycles, and Yeti Cycles in Specialty Sports and BRP, Ford Motor Company (\"Ford\"), Polaris, Toyota, 4 Wheel Parts, Kawasaki, Yamaha, Stellantis, CF Moto, Honda, BMW, Ducati, Triumph, Moto Morini, and MV Agusta in Powered Vehicles and Aftermarket Applications"
+          }
+        }
+      ]
+    },
+    {
+      "id": "DOOO",
+      "ticker": "DOOO",
+      "name": "BRP",
+      "name_en": "BRP",
+      "sub": "レジャー車両",
+      "sub_en": "Powersports",
+      "sub_short": "レジャー",
+      "sub_short_en": "Rec cars",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "オフロード車・スノーモービルの純正部品の顧客",
+          "text_en": "OEM customer for off-road vehicles and snowmobiles",
+          "source": {
+            "label": "Fox Factory 10-K(2025年度)",
+            "label_en": "Fox Factory 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1424929/000142492926000012/foxf-20260102.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Many of our OEM customers, including Specialized, Trek Bicycles, Giant, Cube, Orbea, Canyon Bicycles, Santa Cruz Bicycles, and Yeti Cycles in Specialty Sports and BRP, Ford Motor Company (\"Ford\"), Polaris, Toyota, 4 Wheel Parts, Kawasaki, Yamaha, Stellantis, CF Moto, Honda, BMW, Ducati, Triumph, Moto Morini, and MV Agusta in Powered Vehicles and Aftermarket Applications"
+          }
+        }
+      ]
+    },
+    {
+      "id": "TM",
+      "ticker": "TM",
+      "name": "トヨタ自動車",
+      "name_en": "Toyota Motor Corporation",
+      "sub": "自動車メーカー",
+      "sub_en": "Automaker",
+      "sub_short": "自動車",
+      "sub_short_en": "Cars",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "純正サスペンションの顧客",
+          "text_en": "OEM suspension customer",
+          "source": {
+            "label": "Fox Factory 10-K(2025年度)",
+            "label_en": "Fox Factory 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1424929/000142492926000012/foxf-20260102.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Many of our OEM customers, including Specialized, Trek Bicycles, Giant, Cube, Orbea, Canyon Bicycles, Santa Cruz Bicycles, and Yeti Cycles in Specialty Sports and BRP, Ford Motor Company (\"Ford\"), Polaris, Toyota, 4 Wheel Parts, Kawasaki, Yamaha, Stellantis, CF Moto, Honda, BMW, Ducati, Triumph, Moto Morini, and MV Agusta in Powered Vehicles and Aftermarket Applications"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Specialized",
+      "ticker": "Specialized",
+      "name": "スペシャライズド",
+      "name_en": "Specialized Bicycle Components",
+      "sub": "自転車",
+      "sub_en": "Bicycles",
+      "sub_short": "自転車",
+      "sub_short_en": "Bikes",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "自転車用サスペンションの主要顧客",
+          "text_en": "Key bike-suspension customer",
+          "source": {
+            "label": "Fox Factory 10-K(2025年度)",
+            "label_en": "Fox Factory 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1424929/000142492926000012/foxf-20260102.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Many of our OEM customers, including Specialized, Trek Bicycles, Giant, Cube, Orbea, Canyon Bicycles, Santa Cruz Bicycles, and Yeti Cycles in Specialty Sports and BRP, Ford Motor Company (\"Ford\"), Polaris, Toyota, 4 Wheel Parts, Kawasaki, Yamaha, Stellantis, CF Moto, Honda, BMW, Ducati, Triumph, Moto Morini, and MV Agusta in Powered Vehicles and Aftermarket Applications"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Trek",
+      "ticker": "Trek",
+      "name": "トレック",
+      "name_en": "Trek Bicycle",
+      "sub": "自転車",
+      "sub_en": "Bicycles",
+      "sub_short": "自転車",
+      "sub_short_en": "Bikes",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "自転車用サスペンションの主要顧客",
+          "text_en": "Key bike-suspension customer",
+          "source": {
+            "label": "Fox Factory 10-K(2025年度)",
+            "label_en": "Fox Factory 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1424929/000142492926000012/foxf-20260102.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Many of our OEM customers, including Specialized, Trek Bicycles, Giant, Cube, Orbea, Canyon Bicycles, Santa Cruz Bicycles, and Yeti Cycles in Specialty Sports and BRP, Ford Motor Company (\"Ford\"), Polaris, Toyota, 4 Wheel Parts, Kawasaki, Yamaha, Stellantis, CF Moto, Honda, BMW, Ducati, Triumph, Moto Morini, and MV Agusta in Powered Vehicles and Aftermarket Applications"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SRAM",
+      "ticker": "SRAM",
+      "name": "SRAM",
+      "name_en": "SRAM",
+      "sub": "自転車部品",
+      "sub_en": "Bike components",
+      "sub_short": "パーツ",
+      "sub_short_en": "Parts",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "傘下のロックショックスと自転車サスペンションで競合",
+          "text_en": "Rival in bike suspension via RockShox",
+          "source": {
+            "label": "Fox Factory 10-K(2025年度)",
+            "label_en": "Fox Factory 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1424929/000142492926000012/foxf-20260102.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "we compete with several companies that manufacture front and rear suspension products, including RockShox (a subsidiary of SRAM Corp.)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Shimano",
+      "ticker": "7309.T",
+      "name": "シマノ",
+      "name_en": "Shimano",
+      "sub": "自転車部品",
+      "sub_en": "Bike components",
+      "sub_short": "パーツ",
+      "sub_short_en": "Parts",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "自転車部品で競合",
+          "text_en": "Rival in bike components",
+          "source": {
+            "label": "Fox Factory 10-K(2025年度)",
+            "label_en": "Fox Factory 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1424929/000142492926000012/foxf-20260102.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "In the market for other bike components, we compete with SRAM, Truvativ and Zipp (all subsidiaries of SRAM Corp.), DT Swiss (a subsidiary of Vereinigte Drahtwerke AG), Mavic (a subsidiary of Bourrelier), and Shimano, as well as others."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ZF",
+      "ticker": "ZF",
+      "name": "ZF",
+      "name_en": "ZF Friedrichshafen",
+      "sub": "自動車部品(ドイツ)",
+      "sub_en": "Auto parts (Germany)",
+      "sub_short": "車部品",
+      "sub_short_en": "Car parts",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ATV・サイドバイサイド車の純正サスペンションで競合",
+          "text_en": "OEM suspension rival for ATVs and side-by-sides",
+          "source": {
+            "label": "Fox Factory 10-K(2025年度)",
+            "label_en": "Fox Factory 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1424929/000142492926000012/foxf-20260102.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "In the ATV and side-by-side markets, outside of vertically-integrated OEMs, we compete with ZF Sachs (ZF Friedrichshafen AG)"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
