@@ -123,7 +123,7 @@
           {"tone": "gold", "text": {"ja": "粗利益率 約57%", "en": "Gross margin ~57%"}}
         ],
         "sections": [
-          {"key": "happened", "text": {"ja": "会社は、次期の売上を142億〜152億ユーロ(うち保守・アップグレード約37億ユーロ)、粗利益率を約57%と見込んでいます。今回の116.62億ユーロより、下限でも約22%多い水準です。", "en": "The company expects next-quarter sales of €14.2B to €15.2B (including about €3.7B of Installed Base Management) and a gross margin of about 57%. Even the low end is about 22% above this quarter's €11.66B."}},
+          {"key": "happened", "text": {"ja": "会社は、次期の売上を142億〜152億ユーロ、粗利益率を約57%と見込んでいます。売上のうち保守・アップグレードは約37億ユーロの見通しです。今回の116.62億ユーロより、下限でも約22%多い水準です。", "en": "The company expects next-quarter sales of €14.2B to €15.2B (including about €3.7B of Installed Base Management) and a gross margin of about 57%. Even the low end is about 22% above this quarter's €11.66B."}},
           {"key": "watch", "text": {"ja": "粗利益率の見通し(約57%)は今回の57.5%をわずかに下回ります。2026年通年の粗利益率は約56%の見通しです。", "en": "The margin outlook (about 57%) is slightly below this quarter's 57.5%. The full-year 2026 gross margin outlook is about 56%."}},
           {"key": "view", "text": {"ja": "次の決算で、売上がこの幅のどこに入るかと、通年で440億〜450億ユーロの見通しに届くかを確かめます。", "en": "In the next report, check where sales land in this range and whether the full-year outlook of €44B to €45B is met."}}
         ],

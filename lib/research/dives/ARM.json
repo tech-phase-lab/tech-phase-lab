@@ -126,7 +126,7 @@
           {"tone": "gold", "text": {"ja": "非GAAP 1株利益 0.56ドル±0.04ドル", "en": "Non-GAAP EPS $0.56 ± $0.04"}}
         ],
         "sections": [
-          {"key": "happened", "text": {"ja": "会社は、次期の売上を15.4億ドル±5,000万ドル(14.9億〜15.9億ドル)、非GAAPの1株利益を0.56ドル±0.04ドルと見込んでいます。今回の売上は14.43億ドルなので、下限でも約3.3%の増加です。", "en": "The company expects next-quarter revenue of $1.54B plus or minus $50M ($1.49B to $1.59B) and non-GAAP EPS of $0.56 plus or minus $0.04. This quarter's revenue was $1.44B, so even the low end would be about 3.3% higher."}},
+          {"key": "happened", "text": {"ja": "会社は、次期の売上を15.4億ドル±5,000万ドル、つまり14.9億〜15.9億ドルと見込んでいます。非GAAPの1株利益は0.56ドル±0.04ドルの見通しです。今回の売上は14.43億ドルなので、下限でも約3.3%の増加です。", "en": "The company expects next-quarter revenue of $1.54B plus or minus $50M ($1.49B to $1.59B) and non-GAAP EPS of $0.56 plus or minus $0.04. This quarter's revenue was $1.44B, so even the low end would be about 3.3% higher."}},
           {"key": "means", "text": {"ja": "自社で設計したチップ(Arm AGI CPU)の最初の商用出荷は、今年度の第4四半期の予定です。会社は2027〜2028年度で最大20億ドルの売上を見込んでいます。", "en": "First commercial deliveries of Arm's own chip (Arm AGI CPU) are on track for fiscal Q4'27. The company sees up to $2B of revenue from it across fiscal 2027 and 2028."}},
           {"key": "view", "text": {"ja": "次の決算で、売上がこの幅のどこに入るかと、ロイヤルティが再び伸びるかを見ます。", "en": "In the next report, check where revenue lands in this range and whether royalties grow again."}}
         ],

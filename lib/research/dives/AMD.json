@@ -135,7 +135,7 @@
           {"tone": "gold", "text": {"ja": "非GAAP粗利益率 約55%", "en": "Non-GAAP gross margin ~55%"}}
         ],
         "sections": [
-          {"key": "happened", "text": {"ja": "会社は、次期の売上を約170億ドル±3%(164.9億〜175.1億ドル)、非GAAP粗利益率を約55%と見込んでいます。今回の売上は133.77億ドルなので、下限でも約23%の増加です。", "en": "The company expects next-quarter revenue of about $17B plus or minus 3% ($16.49B to $17.51B) and a non-GAAP gross margin of about 55%. This quarter's revenue was $13.38B, so even the low end would be about 23% higher."}},
+          {"key": "happened", "text": {"ja": "会社は、次期の売上を約170億ドル±3%、つまり164.9億〜175.1億ドルと見込んでいます。非GAAP粗利益率は約55%の見通しです。今回の売上は133.77億ドルなので、下限でも約23%の増加です。", "en": "The company expects next-quarter revenue of about $17B plus or minus 3% ($16.49B to $17.51B) and a non-GAAP gross margin of about 55%. This quarter's revenue was $13.38B, so even the low end would be about 23% higher."}},
           {"key": "watch", "text": {"ja": "粗利益率の見通し(約55%)は今回の56%を下回ります。売上が伸びても利益率が下がると、利益の伸びは小さくなります。", "en": "The margin outlook (about 55%) is below this quarter's 56%. If revenue grows but the margin falls, profit growth will be smaller."}},
           {"key": "view", "text": {"ja": "次の決算で、実績がこの幅のどこに入るかと、新しいラック型製品(Helios)の量産が売上にどれだけ表れるかを見ます。", "en": "In the next report, check where results land in this range and how much the Helios rack-scale ramp shows up in revenue."}}
         ],

@@ -160,6 +160,9 @@ class Checker:
         ja, en = value['ja'], value['en']
         if '$' in ja or re.search(r'billion|million|\d\s*(?:bn|mn)\b', ja, re.I):
             self.err(f'{where}: Japanese text must use Japanese money units (億ドル), not $ or English scale words')
+        # the site's Japanese copy rules (tests/ja-copy-punctuation.test.mjs): 「ドル」 never 「米ドル」, no 「。」「、」 after a parenthesis
+        if '米ドル' in ja or re.search(r'[)）][。、]', ja):
+            self.err(f'{where}: Japanese copy must say ドル (not 米ドル) and must not put 。 or 、 right after a closing parenthesis')
         if re.search(r'[ぁ-んァ-ン一-龥]', en):
             self.err(f'{where}: English text contains Japanese')
         for text in (ja, en):

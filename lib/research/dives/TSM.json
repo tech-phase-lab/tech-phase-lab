@@ -63,14 +63,14 @@
   ],
   "tiles": [
     {"label": {"ja": "売上高(台湾ドル)", "en": "Revenue (NT$)"}, "value": {"ja": "1兆4,942億台湾ドル", "en": "NT$1,494.24B"}, "note": {"ja": "前年同期比 +50.9%", "en": "+50.9% YoY"}},
-    {"label": {"ja": "売上高(米ドル換算)", "en": "Revenue (US$)"}, "value": {"ja": "467.2億ドル", "en": "$46.72B"}, "note": {"ja": "前年同期比 +41.2%", "en": "+41.2% YoY"}},
+    {"label": {"ja": "売上高(ドル換算)", "en": "Revenue (US$)"}, "value": {"ja": "467.2億ドル", "en": "$46.72B"}, "note": {"ja": "前年同期比 +41.2%", "en": "+41.2% YoY"}},
     {"label": {"ja": "7nm以下の先端品の比率", "en": "Advanced nodes (7nm and below)"}, "value": {"ja": "79%", "en": "79% of wafer revenue"}, "note": {"ja": "2nmが8%に", "en": "8% from 2-nanometer"}}
   ],
   "summary": {
     "conclusion": [
-      {"ja": "売上は1兆4,942億台湾ドルで、前期から17.6%、前年同期から50.9%増えました。米ドルでは467.2億ドルです。", "en": "Revenue was NT$1,494.2B, up 17.6% from the previous quarter and 50.9% from a year ago. In US dollars it was $46.72B."},
+      {"ja": "売上は1兆4,942億台湾ドルで、前期から17.6%、前年同期から50.9%増えました。ドル換算では467.2億ドルです。", "en": "Revenue was NT$1,494.2B, up 17.6% from the previous quarter and 50.9% from a year ago. In US dollars it was $46.72B."},
       {"ja": "一方で、粗利益率は67.7%から66.4%に下がり、純利益の伸びは前期比8.0%にとどまりました。", "en": "Meanwhile, gross margin fell from 67.7% to 66.4%, and net income rose only 8.0% from the previous quarter."},
-      {"ja": "会社は次期の売上を523億〜543億米ドル、粗利益率を65〜67%と見込んでいます。2nmの量産拡大が続く見通しです。", "en": "The company expects next-quarter revenue of US$52.3B to US$54.3B with a gross margin of 65–67%, as its 2-nanometer ramp continues."}
+      {"ja": "会社は次期の売上を523億〜543億ドル、粗利益率を65〜67%と見込んでいます。2nmの量産拡大が続く見通しです。", "en": "The company expects next-quarter revenue of US$52.3B to US$54.3B with a gross margin of 65–67%, as its 2-nanometer ramp continues."}
     ],
     "cards": {
       "growth": {
@@ -109,7 +109,7 @@
         "sections": [
           {"key": "happened", "text": {"ja": "粗利益率は67.7%から66.4%、営業利益率は60.3%から58.7%に下がりました。どちらも会社の事前見通し(粗利益率65〜67%、営業利益率56〜58%)の範囲内か上回る水準です。", "en": "Gross margin fell from 67.7% to 66.4% and operating margin from 60.3% to 58.7%. Both were within or above the company's earlier guidance (gross 65–67%, operating 56–58%)."}},
           {"key": "watch", "text": {"ja": "次期の見通しも粗利益率65〜67%、営業利益率56.5〜58.5%で、今回と同じか少し低い水準です。売上が増えても利益率は上がらない見通しです。", "en": "Next quarter's guidance of 65–67% gross margin and 56.5–58.5% operating margin is at or slightly below this quarter. Revenue is set to grow, but margins are not expected to rise."}},
-          {"key": "means", "text": {"ja": "見通しは1米ドル=31.8台湾ドルを前提にしています。台湾ドル高になると、台湾ドルでの売上と利益率は押し下げられます。", "en": "The guidance assumes 1 US dollar = 31.8 NT dollars. A stronger NT dollar would lower revenue and margins in NT dollar terms."}},
+          {"key": "means", "text": {"ja": "見通しは1ドル=31.8台湾ドルを前提にしています。台湾ドル高になると、台湾ドルでの売上と利益率は押し下げられます。", "en": "The guidance assumes 1 US dollar = 31.8 NT dollars. A stronger NT dollar would lower revenue and margins in NT dollar terms."}},
           {"key": "view", "text": {"ja": "利益率は60%前後の高い水準ですが、2nmの量産拡大が進む次期に、どこまで保てるかを確かめます。", "en": "Margins remain high, around 60%, but check how well they hold as the 2-nanometer ramp accelerates next quarter."}}
         ],
         "segment": null
@@ -117,12 +117,12 @@
       "next": {
         "headline": {"ja": "次期の会社見通しを追う", "en": "Follow the company's outlook for next quarter"},
         "chips": [
-          {"tone": "gold", "text": {"ja": "売上 523〜543億米ドル", "en": "Revenue US$52.3–54.3B"}},
+          {"tone": "gold", "text": {"ja": "売上 523〜543億ドル", "en": "Revenue US$52.3–54.3B"}},
           {"tone": "gold", "text": {"ja": "粗利益率 65〜67%", "en": "Gross margin 65–67%"}}
         ],
         "sections": [
-          {"key": "happened", "text": {"ja": "会社は次期の売上を523億〜543億米ドル(1米ドル=31.8台湾ドルで約1兆6,631億〜1兆7,267億台湾ドル)と見込んでいます。今回の467.2億米ドルと比べると、下限でも約12%の増加です。", "en": "The company expects next-quarter revenue of US$52.3B to US$54.3B (about NT$1,663.1B to NT$1,726.7B at 31.8 NT dollars per US dollar). Compared with this quarter's US$46.72B, even the low end would be about 12% higher."}},
-          {"key": "means", "text": {"ja": "会社は次期について、2nmの急速な量産拡大を含む最先端品の強い需要を見込んでいます。2026年通年の売上は米ドルで約44%増える見通しです。", "en": "The company expects continued strong demand for leading-edge processes next quarter, including a steep 2-nanometer ramp. It expects 2026 revenue to grow about 44% in US dollar terms."}},
+          {"key": "happened", "text": {"ja": "会社は次期の売上を523億〜543億ドル(1ドル=31.8台湾ドルで約1兆6,631億〜1兆7,267億台湾ドル)と見込んでいます。今回の467.2億ドルと比べると、下限でも約12%の増加です。", "en": "The company expects next-quarter revenue of US$52.3B to US$54.3B (about NT$1,663.1B to NT$1,726.7B at 31.8 NT dollars per US dollar). Compared with this quarter's US$46.72B, even the low end would be about 12% higher."}},
+          {"key": "means", "text": {"ja": "会社は次期について、2nmの急速な量産拡大を含む最先端品の強い需要を見込んでいます。2026年通年の売上はドルで約44%増える見通しです。", "en": "The company expects continued strong demand for leading-edge processes next quarter, including a steep 2-nanometer ramp. It expects 2026 revenue to grow about 44% in US dollar terms."}},
           {"key": "view", "text": {"ja": "次の決算で、売上がこの幅のどこに入るかと、粗利益率が65〜67%のどこに着地するかを見ます。", "en": "In the next report, check where revenue lands in this range and where gross margin ends up within 65–67%."}}
         ],
         "segment": null
