@@ -108,11 +108,15 @@ test("samples: the owner's mockups (Nov 22), on a made-up 2035 timeline", () => 
   assert.equal(samplesLib.hasSample("treasure-hunt"), true);
   assert.equal(samplesLib.hasSample("whale-tracks"), true);
   const t = treasureHuntSample;
-  assert.equal(t.asOf, "2035-04-18");
+  // QA, Nov 25: the sample shares the tour's one made-up moment (2035/03/12 09:00 JST), so its close is the last one before it.
+  assert.equal(t.asOf, samplesLib.SAMPLE_CLOSE_DAY);
+  assert.equal(t.asOf, "2035-03-09");
+  assert.ok(Date.parse(t.computedAt) < Date.parse("2035-03-12T00:00:00.000Z"), "computed before the sample moment");
+  assert.ok(t.computedAt.startsWith(t.asOf), "computed on the close day it shows");
   // Production computes trailing multiples, so the sample says 実績値 like the page (the mockup's 予想値 would misdescribe it).
   assert.equal(t.basis, "trailing");
-  assert.equal(valueLib.footerLine(t.asOf, t.basis, true, true), "2035年4月18日の終値で更新・PERとPSRは実績値・売上は前年比");
-  assert.equal(valueLib.footerLine(t.asOf, t.basis, false, true), "As of Apr 18, 2035 close · Trailing P/E and P/S · Revenue growth YoY");
+  assert.equal(valueLib.footerLine(t.asOf, t.basis, true, true), "2035年3月9日の終値で更新・PERとPSRは実績値・売上は前年比");
+  assert.equal(valueLib.footerLine(t.asOf, t.basis, false, true), "As of Mar 9, 2035 close · Trailing P/E and P/S · Revenue growth YoY");
   assert.equal(valueLib.footerLine("2026-11-20", "trailing", true), "11/20の終値で更新・PERとPSRは実績値・売上は前年比", "the page keeps its short date");
   const tech = t.universes.tech;
   assert.deepEqual(tech.items.map(i => [i.ticker, i.score, i.pe, i.ps, i.revenueGrowth]), [
@@ -224,8 +228,8 @@ test("Treasure Hunt sample: サンプル・PRO機能体験 on top, the switch wo
     assert.deepEqual(switchButtons.map(b => b.textContent), ja ? ["ハイテク", "全セクター"] : ["Tech", "All sectors"]);
     const tickers = () => [...c.querySelectorAll("[data-logo]")].map(el => el.getAttribute("data-logo"));
     assert.deepEqual(tickers(), ["QCOM", "MU", "AMAT", "ADBE", "INTC", "MRVL", "TXN"], "podium: 2nd, 1st, 3rd; then 4th to 7th");
-    assert.match(text(c), ja ? /※実際は約150銘柄のランキングです ?2035年4月18日の終値で更新・PERとPSRは実績値・売上は前年比 ?提供：Twelve Data/
-      : /\*The full ranking covers about 150 stocks ?As of Apr 18, 2035 close · Trailing P\/E and P\/S · Revenue growth YoY ?Data: Twelve Data/);
+    assert.match(text(c), ja ? /※実際は約150銘柄のランキングです ?2035年3月9日の終値で更新・PERとPSRは実績値・売上は前年比 ?提供：Twelve Data/
+      : /\*The full ranking covers about 150 stocks ?As of Mar 9, 2035 close · Trailing P\/E and P\/S · Revenue growth YoY ?Data: Twelve Data/);
     assert.ok(![...c.querySelectorAll("button")].some(b => /すべて見る|See all/.test(b.textContent)));
     assert.match(text(c), /IN ?ARM ?27→37/);
     assert.match(text(c), /OUT ?CSCO ?33→28/);

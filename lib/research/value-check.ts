@@ -84,7 +84,7 @@ export const ratio = (value: number | null) => value === null ? "—" : value >=
 export const growth = (value: number) => `${value >= 0 ? "+" : ""}${Math.round(value)}%`;
 export const stockHref = (ticker: string) => `/research/stocks?q=${encodeURIComponent(ticker)}`;
 
-/** "2035年4月18日" / "Apr 18, 2035": the day with its year (the PRO feature tour's sample, whose made-up year must show). */
+/** "2035年3月9日" / "Mar 9, 2035": the day with its year (the PRO feature tour's sample, whose made-up year must show). */
 export const fullDay = (iso: string, ja = true) => ja ? `${iso.slice(0, 4)}年${Number(iso.slice(5, 7))}月${Number(iso.slice(8, 10))}日` : `${monthDay(iso, false)}, ${iso.slice(0, 4)}`;
 
 /** The footer line under the list (owner's wording; 実績値 when the history is the trailing one). withYear: the tour's sample (owner, Nov 22). */

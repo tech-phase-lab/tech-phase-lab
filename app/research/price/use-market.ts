@@ -13,25 +13,29 @@ type State<T> = { data: T | null; failed: boolean; loaded: boolean; /** when the
 /** Reads a JSON endpoint now and again every `every` ms while the tab is visible. The server caches for about a minute.
  * `keep`: when the address changes (a stock added to the watchlist), the last answer stays on the screen until the new one arrives, instead of
  * every row going blank for a moment (owner, Nov 25); only what the old answer did not have (the added stock) waits. */
-export function usePolled<T>(url: string | null, pick: (body: Record<string, unknown>) => T | null, every: number, keep = false, merge?: (old: T | null, next: T) => T): State<T> {
+export function usePolled<T>(url: string | null, pick: (body: Record<string, unknown>) => T | null, every: number, keep = false, merge?: (old: T | null, next: T) => T,
+  /** Asks again after `ms` instead of `every` when the answer was not usable or `when` says it is incomplete. */
+  retry?: { ms: number; when: (body: Record<string, unknown>) => boolean }): State<T> {
   const [state, setState] = useState<State<T> & { url: string | null }>({ data: null, failed: false, loaded: false, url });
   useEffect(() => {
     if (!url) return;
     let stopped = false, timer: ReturnType<typeof setTimeout> | undefined, controller: AbortController | undefined;
     const run = async () => {
       controller = new AbortController();
+      let wait = every;
       try {
         const response = await fetch(url, { signal: controller.signal, cache: "no-store" });
         const body = await response.json() as Record<string, unknown>;
         if (stopped) return;
         const picked = response.ok && body.ok === true ? pick(body) : null;
+        if (retry && (picked === null || retry.when(body))) wait = retry.ms;
         const at = Date.now();
         setState(old => {
           const data = picked && merge ? merge(old.url === url || keep ? old.data : null, picked) : picked;
           return { url, data: data ?? (old.url === url || keep ? old.data : null), failed: data === null, loaded: true, at: data ? at : old.url === url ? old.at : null };
         });
-      } catch { if (!stopped) setState(old => ({ url, data: old.url === url || keep ? old.data : null, failed: true, loaded: true })); }
-      if (!stopped) timer = setTimeout(() => { if (document.visibilityState === "visible") void run(); else timer = setTimeout(run, every); }, every);
+      } catch { if (retry) wait = retry.ms; if (!stopped) setState(old => ({ url, data: old.url === url || keep ? old.data : null, failed: true, loaded: true })); }
+      if (!stopped) timer = setTimeout(() => { if (document.visibilityState === "visible") void run(); else timer = setTimeout(run, every); }, wait);
     };
     void run();
     return () => { stopped = true; clearTimeout(timer); controller?.abort(); };
@@ -42,11 +46,16 @@ export function usePolled<T>(url: string | null, pick: (body: Record<string, unk
 }
 const pickQuotes = (body: Record<string, unknown>) => body.quotes as Record<string, CardQuote>;
 
-const pickFacts = (body: Record<string, unknown>) => body.facts as MarketFacts;
+/** An answer whose statistics are missing (`complete: false`) keeps the last facts this page had and asks again in a minute, not in six hours. */
+const pickFacts = (body: Record<string, unknown>) => {
+  const facts = body.facts as MarketFacts | undefined;
+  return facts && (body.complete !== false || facts.nextEarnings) ? facts : null;
+};
+const factsRetry = { ms: 60_000, when: (body: Record<string, unknown>) => body.complete === false };
 /** `fast` (the watchlist and a stock's page): asked every 15 seconds; the server reads the provider again only while the plan's minute leaves room. */
 export const useQuotes = (tickers: string[], history = false, fast = false, keep = false) => usePolled<Record<string, CardQuote>>(
   tickers.length ? `/api/research/market/quotes?tickers=${encodeURIComponent(tickers.join(","))}${history ? "&history=1" : ""}${fast ? "&fast=1" : ""}` : null, pickQuotes, fast ? 15_000 : 60_000, keep, history ? keepHistory : undefined);
-export const useFacts = (ticker: string) => usePolled<MarketFacts>(`/api/research/market/facts?ticker=${encodeURIComponent(ticker)}`, pickFacts, 6 * 3600_000);
+export const useFacts = (ticker: string) => usePolled<MarketFacts>(`/api/research/market/facts?ticker=${encodeURIComponent(ticker)}`, pickFacts, 6 * 3600_000, false, undefined, factsRetry);
 
 const key = "tech-phase:quote-numbers-hidden:v1", event = "tech-phase:quote-numbers-hidden";
 const subscribe = (notify: () => void) => { window.addEventListener("storage", notify); window.addEventListener(event, notify); return () => { window.removeEventListener("storage", notify); window.removeEventListener(event, notify); }; };
