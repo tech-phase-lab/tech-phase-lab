@@ -67,7 +67,8 @@ export function companyQualifies(m:RiskMarket){
  return dir!==0&&dir===Math.sign(basket.changePercent)&&stock.multiple>=minMultiple&&basket.multiple>=industryMinMultiple;
 }
 /** Owner, Nov 25: a headline that clearly states a direction ("… rally", "… tumble") gets no stars from a session that moved the
- * other way (the move that set the stars: the stronger index, or the company's own stock). */
+ * other way (the move that set the stars: the stronger index, or the company's own stock), and is not shown at all (no extra
+ * text on screen): the selection never picks it, a stored day drops it once its session is measured, and the feed hides it. */
 export function directionMismatch(m:RiskMarket){
  const r=m.reading;if(!m.headline||!r)return false;
  const x=m.index==='company'?r.company:decidingMeasure({...m,headline:undefined});
@@ -118,7 +119,6 @@ export function starCriteria(locale:'ja'|'en'){
 }
 /** What is shown in place of stars: single-company news, or still waiting for the first close. Null when there are stars. */
 export function noStarsLabel(article:{stars:number|null;market:RiskMarket},locale:'ja'|'en'){if(article.stars!==null)return null;const m=article.market;
- if(directionMismatch(m))return RISK_POLICY.oppositeMove[locale];
  // A measurable company story waits for its session like any other; once measured without passing the test it is company news.
  return m.index==='company'&&!(m.company&&m.session&&!m.reading)?RISK_POLICY.company[locale]:RISK_POLICY.waiting[locale];}
 /** Waiting stories (no stars yet) never trigger the "reread your rules" action. */
@@ -201,4 +201,4 @@ export function parseRiskArticle(v:unknown):RiskArticle{if(!v||typeof v!=='objec
 /** Rows written before the Shock Gauge (rubric stars, no market move) are never shown. */
 export const isLegacyRiskArticle=(v:unknown)=>!!v&&typeof v==='object'&&!('market' in v);
 export function parseQuote(v:unknown):RizelQuote{const x=v as RizelQuote;if(!x||!/^[a-z0-9_-]{1,60}$/.test(x.id)||typeof x.approved!=='boolean'||!Number.isInteger(x.minStars)||!Number.isInteger(x.maxStars)||x.minStars<1||x.maxStars>5||x.minStars>x.maxStars)throw Error('INVALID_QUOTE');for(const locale of ['ja','en'] as const){const c=x[locale];if(!c||typeof c.title!=='string'||!c.title.trim()||c.title.length>200||!Array.isArray(c.reasons)||c.reasons.length>5||!c.reasons.every(t=>typeof t==='string'&&t.length<=400))throw Error('INVALID_QUOTE');}return x;}
-export function parseRiskFeed(v:unknown):RiskFeed{const x=v as RiskFeed;if(!x||!['ready','failed','stopped','preparing'].includes(x.state)||!(x.date===null||/^\d{4}-\d{2}-\d{2}$/.test(x.date)&&Number.isFinite(Date.parse(x.date+'T00:00:00Z')))||!Array.isArray(x.articles)||x.articles.length>3||!Array.isArray(x.quotes)||x.quotes.length>100)throw Error('INVALID_FEED');const articles=x.articles.map(parseRiskArticle),quotes=x.quotes.map(parseQuote).filter(q=>q.approved);if(new Set(articles.map(a=>a.id)).size!==articles.length||x.state!=='ready'&&articles.length)throw Error('INVALID_FEED');return{state:x.state,date:x.date,articles,quotes};}
+export function parseRiskFeed(v:unknown):RiskFeed{const x=v as RiskFeed;if(!x||!['ready','failed','stopped','preparing'].includes(x.state)||!(x.date===null||/^\d{4}-\d{2}-\d{2}$/.test(x.date)&&Number.isFinite(Date.parse(x.date+'T00:00:00Z')))||!Array.isArray(x.articles)||x.articles.length>3||!Array.isArray(x.quotes)||x.quotes.length>100)throw Error('INVALID_FEED');const articles=x.articles.map(parseRiskArticle).filter(a=>!directionMismatch(a.market)),quotes=x.quotes.map(parseQuote).filter(q=>q.approved);if(new Set(articles.map(a=>a.id)).size!==articles.length||x.state!=='ready'&&articles.length)throw Error('INVALID_FEED');return{state:x.state,date:x.date,articles,quotes};}

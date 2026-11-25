@@ -124,6 +124,8 @@ export function selectDailyCandidates(feed,now=new Date(),{moves=null,limits=dai
  diagnostics.sessionsHeld=holders.size;
  const selected=[],reserve=[];
  for(const c of pool){
+  // Owner, Nov 25: a story whose measured session moved against its headline is never shown: no slot, not even in reserve.
+  if(movedAgainst(c,moves)){diagnostics.movedAgainst=(diagnostics.movedAgainst??0)+1;continue;}
   const lostSession=!!claimedSession({...c,starred:true})&&storyScope(c.title)!=='company'&&!held.has(c.id);
   if(selected.length<limits.stories&&!lostSession&&!repeatsTaken(c,selected))selected.push(c);
   else{if(lostSession||repeatsTaken(c,selected))diagnostics.repeated++;if(reserve.length<RESERVE_MAX)reserve.push(c);}
@@ -187,6 +189,8 @@ export async function prepareDailyReview({enabled=false,readFeed,selectionPool,b
    if(parsed.id!==candidate.id||parsed.url!==candidate.url||parsed.publishedAt!==candidate.publishedAt)throw Error('ARTICLE_MISMATCH');
    // Shock Gauge: stars only from the related TP index's move at the first U.S. close after the news (may still be waiting).
    const [article]=(await reactArticles([parsed],readMoves,quotes,day)).map(parseRiskArticle);
+   // Moved against its headline (owner, Nov 25): not shown; the next story fills the slot.
+   if(directionMismatch(article.market)){kept.pop();refill();continue;}
    // A story still waiting for the market has no stars yet, so no RIZEL line is chosen for it now.
    if(article.stars===null){articles.push(article);continue;}
    // Model classification is not verified evidence for D's factual conditions.

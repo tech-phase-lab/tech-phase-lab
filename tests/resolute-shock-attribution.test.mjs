@@ -191,7 +191,11 @@ test('a headline whose direction is clear gets no stars from a session that move
  assert.equal(article.market.headline,'up');
  const filled=applyMarketReaction(article,moves);
  assert.notEqual(filled.market.reading,null);assert.equal(filled.stars,null);assert.equal(parseRiskArticle(filled).stars,null);
- assert.equal(noStarsLabel(filled,'ja'),'見出しと逆の向きに動いたため、★はつけません');assert.deepEqual(formatReading(filled.market,'ja'),[]);
+ // No extra text on screen (owner): the story is simply not shown — the feed drops it.
+ assert.deepEqual(formatReading(filled.market,'ja'),[]);
+ const {parseRiskFeed}=await import('../lib/resolute/risk.ts');
+ assert.deepEqual(parseRiskFeed({state:'ready',date:'2026-11-25',articles:[filled],quotes:[]}).articles,[]);
+ assert.ok(!JSON.stringify((await import('../lib/resolute/risk-policy.ts')).RISK_POLICY).includes('見出しと逆'));
  // The same headline measured on an up session keeps its stars.
  assert.equal(applyMarketReaction(article,{[TUE]:{...tuesday,sox:{...tuesday.sox,changePercent:8.51,up:39,down:1},nas100:{...tuesday.nas100,changePercent:1.47,up:47,down:52}}}).stars,4);
  // Company news: the company's own move decides (a "soar" headline on a falling stock gets none).
@@ -200,8 +204,10 @@ test('a headline whose direction is clear gets no stars from a session that move
  // In the selection, a mismatched story never holds its session: the next story on it does.
  const runAt=new Date('2026-11-24T23:20:00Z');
  const items=[row('Stocks rally as chipmakers rebound after Friday rout','2026-11-24T12:00:00.000Z',{lane:'market'}),row('Chip stocks tumble as export curbs widen','2026-11-24T12:30:00.000Z',{tickers:['NVDA']})];
- const {selected}=selectDailyCandidates(feedOf(items),runAt,{moves});
+ const {selected,reserve,diagnostics}=selectDailyCandidates(feedOf(items),runAt,{moves});
+ // The mismatched story takes no slot, not even in reserve; the next story fills it.
  assert.deepEqual(selected.map(c=>c.title),['Chip stocks tumble as export curbs widen']);
+ assert.deepEqual(reserve.map(c=>c.title),[]);assert.equal(diagnostics.movedAgainst,1);
 });
 
 test('rally news reaches the intake on the same bar as downside news; positive sentiment alone does not',async()=>{

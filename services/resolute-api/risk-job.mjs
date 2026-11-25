@@ -2,7 +2,7 @@ import {hasConcreteBodyDownside} from './risk-body-signals.mjs';
 import {reserveAiSpend,serializeBudgetedRequest} from './ai-budget.mjs';
 import {pathToFileURL} from 'node:url';
 import {riskPool,hash,boundedJSON} from './risk-store.mjs';
-import {parseRiskArticle,parseRiskCause,riskDate,isLegacyRiskArticle,SUMMARY_QUESTION,isDailyRunHour} from '../../lib/resolute/risk.ts';
+import {directionMismatch,parseRiskArticle,parseRiskCause,riskDate,isLegacyRiskArticle,SUMMARY_QUESTION,isDailyRunHour} from '../../lib/resolute/risk.ts';
 import {cleanTickers,candidateMarket,applyMarketReaction,storySession,newsInstant} from '../../lib/resolute/risk-market.ts';
 import {summaryIssues,quoteIssues} from '../../lib/resolute/risk-copy-check.ts';
 import {RISK_POLICY} from '../../lib/resolute/risk-policy.ts';
@@ -248,7 +248,8 @@ export async function fillMarketReactions(pool,readMoves,now=new Date(),{days=6}
  for(const row of rows){
   if(!Array.isArray(row.articles)||!row.articles.length||row.articles.some(isLegacyRiskArticle))continue;
   const before=row.articles.map(parseRiskArticle);
-  const after=(await reactArticles(before,readMoves,quotes,row.day)).map(parseRiskArticle);
+  // A story whose session turned out to move against its headline is dropped from the day (owner, Nov 25: not shown).
+  const after=(await reactArticles(before,readMoves,quotes,row.day)).map(parseRiskArticle).filter(a=>!directionMismatch(a.market));
   waiting+=after.filter(a=>a.stars===null).length;
   if(JSON.stringify(after)===JSON.stringify(before))continue;
   // Compare-and-set: a concurrent writer wins and this run leaves the row for the next update.
