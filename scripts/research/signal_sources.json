@@ -918,7 +918,7 @@
     "allowedHosts": [
       "x.com"
     ],
-    "intervalSeconds": 600,
+    "intervalSeconds": 60,
     "maxResults": 30,
     "reuse": "review-required",
     "streamExcluded": true,
