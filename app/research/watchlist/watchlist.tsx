@@ -17,6 +17,7 @@ import SwipeRow from "./swipe-row";
 import { quoteForSession, type WatchlistSession } from "@/lib/research/watchlist-session";
 import { quoteFreshness, freshnessLabel } from "@/lib/research/watchlist-freshness";
 import { useQuoteClock } from "./use-quote-clock";
+import { saveWatchlistQuotes, useWatchlistSnapshot } from "./use-watchlist-snapshot";
 import StockLogo from "./stock-logo";
 import WatchMenu from "./watch-menu";
 import FlashValue from "../price/flash-value";
@@ -50,7 +51,8 @@ function CurrentTime({ lang }: { lang: Language }) {
 export default function Watchlist({ companies, quotes = {} }: { companies: Company[]; quotes?: Record<string, FavoriteQuote> }) {
   const [lang, setLang] = useResearchLanguage();
   const quoteNow = useQuoteClock();
-  const { lists, names, update, error, status, retry, discardPending, canImport, importLocal, editable, ready } = useFavoriteLists();
+  const { lists, names, update, error, status, retry, discardPending, canImport, importLocal, editable, ready } = useFavoriteLists({ early: true });
+  const lastScreen = useWatchlistSnapshot();
   const [listId, setListId] = useWatchlistSelection();
   const slots = watchlistSlots(lists);
   const list = slots.find(item => item.id === listId) ?? slots[0];
@@ -73,6 +75,9 @@ export default function Watchlist({ companies, quotes = {} }: { companies: Compa
   // `keep` (owner, Nov 25): adding a stock changes the request, and the rows already shown keep their prices and charts while it is answered.
   const { data: fetchedQuotes } = useQuotes(favorites.slice(0, 100), true, true, true);
   const liveQuotes: Record<string, FavoriteQuote> = fetchedQuotes ?? {};
+  // Owner, Nov 25: rows show their price and chart at once. Until the server's answer for a row arrives, the row shows what this device showed
+  // last (use-watchlist-snapshot.ts); each answer is kept for the next visit. No extra request: the same polls as before.
+  useEffect(() => { if (fetchedQuotes) saveWatchlistQuotes(fetchedQuotes); }, [fetchedQuotes]);
   const router = useRouter();
   const [sessionView, setSessionView] = useState<WatchlistSession>("auto");
   const [revealed, setRevealed] = useState("");
@@ -111,7 +116,9 @@ export default function Watchlist({ companies, quotes = {} }: { companies: Compa
   const t = (ja: string, en: string) => lang === "ja" ? ja : en;
   const displayedQuotes: Record<string, FavoriteQuote> = {};
   for (const ticker of favorites) {
-    const quote = quoteForSession(liveQuotes[ticker] ?? quotes[ticker], ticker, sessionView);
+    const live = liveQuotes[ticker], last = lastScreen.quotes[ticker];
+    const shown = live ? (!live.history?.length && last?.history?.length ? { ...live, history: last.history } : live) : last ?? quotes[ticker];
+    const quote = quoteForSession(shown, ticker, sessionView);
     if (quote && quoteFreshness(quote, quoteNow) !== "invalid") displayedQuotes[ticker] = quote;
   }
   const quoteSessions = [...new Set(Object.values(displayedQuotes).map(quote => quote.session))];
@@ -200,7 +207,7 @@ export default function Watchlist({ companies, quotes = {} }: { companies: Compa
               <span className={styles.company}><strong>{shortCompanyName(item?.name ?? names[ticker] ?? ticker)}</strong><span className={styles.tickerLine}>{ticker}{sector && <span className={styles.sector} title={sectorSource}>{sector}</span>}</span></span>
               {chart && values ? <AreaChart className={styles.chart} values={values} reference={chart.reference} label={t(`${ticker}の当日の値動き`, `${ticker} intraday trend`)} /> : <span className={styles.noChart} aria-label={t("当日チャート未取得", "Intraday chart unavailable")}>—</span>}
               <span className={styles.price}>
-                <FlashValue scope={`${list.id}:${ticker}:${sessionView}`} value={quote?.price ?? null} className={styles.priceValue}>{quote ? number(quote.price) : "—"}</FlashValue>
+                <FlashValue scope={`${list.id}:${ticker}:${sessionView}:${liveQuotes[ticker] ? "live" : "last"}`} value={quote?.price ?? null} className={styles.priceValue}>{quote ? number(quote.price) : "—"}</FlashValue>
                 <span className={styles.rate} data-direction={direction}>
                   {oldLabel ? <small className={styles.oldLabel}>{oldLabel}</small> : extendedTag && <small className={styles.sessionTag}>{extendedTag}</small>}
                   {quote?.percentChange == null ? "—" : <>{direction === "up" ? "▲" : direction === "down" ? "▼" : ""}{direction !== "flat" && " "}{percent(quote.percentChange)}</>}
