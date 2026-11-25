@@ -1,0 +1,157 @@
+{
+  "root": {
+    "ticker": "NI",
+    "name": "ナイソース",
+    "cik": 1111711,
+    "name_en": "NiSource"
+  },
+  "rows": [
+    {
+      "ja": "工事を請け負う会社(相手の資料に記載)",
+      "en": "Contractors naming it a customer (their filings)",
+      "above": true
+    },
+    {
+      "ja": "電力の供給先・出資者",
+      "en": "Power customer & investor"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "PWR",
+      "ticker": "PWR",
+      "name": "クアンタ・サービシズ",
+      "name_en": "Quanta Services",
+      "sub": "送配電の建設",
+      "sub_en": "Utility construction",
+      "sub_short": "送電工事",
+      "sub_short_en": "Utility",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Quantaが10-Kで、代表的な顧客の一社に挙げる",
+          "text_en": "Quanta lists NiSource among its representative customers",
+          "source": {
+            "label": "Quanta Services 10-K(2025年度)",
+            "label_en": "Quanta Services 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1050915/000105091526000006/pwr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Representative customers include: l American Electric Power Company, Inc. l National Grid plc l CenterPoint Energy, Inc. l NextEra Energy, Inc. l Comcast Corporation l NiSource, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CTRI",
+      "ticker": "CTRI",
+      "name": "センチュリ・ホールディングス",
+      "name_en": "Centuri Holdings",
+      "sub": "ガス・電力インフラ工事",
+      "sub_en": "Utility infrastructure services",
+      "sub_short": "インフラ",
+      "sub_short_en": "Utility",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Centuriが10-Kで、顧客の一社に挙げる",
+          "text_en": "Centuri lists NiSource among its customers",
+          "source": {
+            "label": "Centuri Holdings 10-K(2025年度)",
+            "label_en": "Centuri Holdings 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1981599/000198159926000020/ctri-20251228.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our customers include American Electric Power, Enbridge, Entergy, Exelon, NiSource, National Grid, Sempra Energy and Southern Company, among others."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ESOA",
+      "ticker": "ESOA",
+      "name": "エナジー・サービシズ・オブ・アメリカ",
+      "name_en": "Energy Services of America",
+      "sub": "パイプライン工事",
+      "sub_en": "Pipeline construction",
+      "sub_short": "配管工事",
+      "sub_short_en": "Pipeline",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Energy Services of Americaが10-Kで、主な顧客の一社に挙げる",
+          "text_en": "Energy Services of America lists NiSource among its leading customers",
+          "source": {
+            "label": "Energy Services of America 10-K(2025年9月期)",
+            "label_en": "Energy Services of America 10-K (FY ended Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1357971/000110465925121185/esoa-20250930x10k.htm",
+            "level": "official",
+            "date": "2025-12-15",
+            "quote": "Energy Services' customers include many of the leading companies in the industries it serves, including: TransCanada Corporation NiSource, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン",
+      "name_en": "Amazon.com",
+      "sub": "データセンター",
+      "sub_en": "Data centers",
+      "sub_short": "データ",
+      "sub_short_en": "Data",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "子会社NIPSCOがAmazon Data Servicesにデータセンター用の電気を供給する契約(2025年9月)。親会社Amazonが支払いを保証",
+          "text_en": "Its NIPSCO unit agreed in September 2025 to supply electricity to Amazon Data Services' data centers, with Amazon.com guaranteeing payment",
+          "source": {
+            "label": "NiSource 10-K(2025年度)",
+            "label_en": "NiSource 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1111711/000111171126000027/nix-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "In September 2025, NIPSCO entered into an agreement with ADS, a wholly-owned subsidiary of Amazon.com, Inc., under which NIPSCO will provide electricity to ADS' data centers."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BX",
+      "ticker": "BX",
+      "name": "ブラックストーン",
+      "name_en": "Blackstone",
+      "sub": "投資会社",
+      "sub_en": "Investment firm",
+      "sub_short": "投資会社",
+      "sub_short_en": "Investing",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "発電子会社やNIPSCOの少数持ち分をBlackstone系の投資家に売り、資本を入れた",
+          "text_en": "Sold minority stakes in its generation unit and NIPSCO to Blackstone-affiliated investors",
+          "source": {
+            "label": "NiSource 10-K(2025年度)",
+            "label_en": "NiSource 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1111711/000111171126000027/nix-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Blackstone Investor pursuant to a purchase and sale agreement entered into in October 2025, that offered equity interests in Generation Holdings II in exchange for capital contributions by the parties."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
