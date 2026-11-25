@@ -1,6 +1,6 @@
 import { usMarketSession } from '../research/us-market-session.ts';
 import { measureDay, fearChangeOf, marketStars, causeStars, roundMove, type RiskArticle, type RiskIndex, type RiskMarket, type RiskStock } from './risk.ts';
-import { storyScope, scopeIndex, storyTicker } from './risk-scope.ts';
+import { storyScope, scopeIndex, storyTicker, headlineDirection } from './risk-scope.ts';
 import { industryOf } from './risk-companies.ts';
 /** Shock Gauge stars from actual market moves (server/worker only; no browser import).
  * 1. Pick ONE related TP index per story (single-company news: its company and industry basket).
@@ -62,7 +62,10 @@ export function waitingMarket(index: RiskIndex | 'company', publishedAt: string,
  * `starred: false` (set by the daily selection) marks company news whose session another story explains better. */
 export function candidateMarket(c: { title: string; tickers?: readonly string[]; publishedAt: string; starred?: boolean }): RiskMarket {
   const index = storyIndex(c.title);
-  return waitingMarket(index, c.publishedAt, index === 'company' && c.starred !== false ? storyTicker(c) : null);
+  const market = waitingMarket(index, c.publishedAt, index === 'company' && c.starred !== false ? storyTicker(c) : null);
+  // The headline's own direction (owner, Nov 25): a measured move the other way gives no stars (risk.ts directionMismatch).
+  const direction = market.session ? headlineDirection(c.title) : null;
+  return direction ? { ...market, headline: direction } : market;
 }
 /** One basket's close as the thermometer measured it: the move, its typical move and the constituents up / down. */
 export type SessionMove = { previousDate: string; changePercent: number; typicalPercent: number; up: number; down: number; total: number };
@@ -80,12 +83,12 @@ export function measureStock(m: StockMove): RiskStock { return { changePercent: 
 export function applyMarketReaction(article: RiskArticle, moves: SessionMoves): RiskArticle {
   const m = article.market;
   if (m.reading !== null || (m.index === 'company' && !m.company)) return article;
-  const { index, company } = m;
+  const { index, company, headline } = m;
   const session = m.session ?? storySession(newsInstant(article.publishedAt));
   const entry = session ? moves[session] : undefined;
   const nas100 = entry?.nas100 && validMove(entry.nas100) ? entry.nas100 : null, sox = entry?.sox && validMove(entry.sox) ? entry.sox : null;
   const from = nas100?.previousDate ?? sox?.previousDate;
-  const keep = company ? { company } : {};
+  const keep = { ...(company ? { company } : {}), ...(headline ? { headline } : {}) };
   if (!session || !from || (nas100 && sox && nas100.previousDate !== sox.previousDate)) return { ...article, market: { index, session, reading: null, ...keep } };
   const reading: NonNullable<RiskMarket['reading']> = { from, nas100: nas100 ? measureDay(nas100) : null, sox: sox ? measureDay(sox) : null, fearChange: fearChangeOf(entry?.fear ?? null) };
   if (company) { const s = entry?.stocks?.[company.ticker]; reading.company = s && validStock(s) && s.previousDate === from ? measureStock(s) : null; }

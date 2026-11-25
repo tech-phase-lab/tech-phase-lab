@@ -39,18 +39,18 @@ test('Shock Gauge stars are mechanical: the highest level whose every condition 
 });
 test('the published criteria text is plain, generated from the levels, in both languages, and shown on the Shock Gauge page',()=>{
  assert.equal(starCriteria('ja'),['★のつけ方',
-  '・ニュースのあとの動きだけを見ます。アメリカの通常取引が始まる前のニュースはその日、取引中や取引後のニュースは次の取引日の、前の日の終値からの動きです。TP大型株100とTP半導体40の両方を見て、大きく動いたほうで★を決めます。',
+  '・ニュースのあと、アメリカの市場が閉まったときの値で、TP大型株100とTP半導体40の両方を見ます（取引中や取引後に出たニュースは、次の取引日の値で見ます）。大きく動いたほうで★を決めます。',
   '・★5：いつもの5倍以上動いた、8割以上の会社が同じ向きに動いた、下落のときは恐怖指数も1割以上上がった',
   '・★4：いつもの3倍以上動いた、8割以上の会社が同じ向きに動いた',
   '・★3：いつもの2倍以上動いた、7割以上の会社が同じ向きに動いた',
   '・★2：いつもの1.5倍以上動いた','・★1：それより小さい動き',
   '・「いつもの」は、市場が開いていた直前の60日の、1日の動きの大きさのまん中の値です。',
   '・そのうえで、AIが記事の内容だけを読み、原因が一過性とみられるときは★を1つ下げ、長引きやすいとみられるときは1つ上げます。★5になるのは、市場の動きだけで★4以上のときだけです。どちらとも言えないときは変えません。',
-  '・1社だけのニュースは、その会社の株価がいつもの3倍以上、業界の指標（半導体の会社はTP半導体40、ほかはTP大型株100）もいつもの1.5倍以上、同じ向きに動いたときだけ、業界の指標の動きで★を決めます。',
-  '・同じ取引日の動きには、それをいちばんよく説明するニュース1つにだけ★をつけます。'].join('\n'));
- assert.match(starCriteria('en'),/^How stars are set\n- Only the move after the news counts: news before the U\.S\. regular open is measured on that day, news during or after regular hours on the next trading day.* We look at both TP Large Cap 100 and TP Semiconductor 40.*\n- ★5: moved 5 times its usual move or more, 80% or more of its stocks moved the same way, on a fall, the fear index also rose 10% or more\n/s);
+  '・1社だけのニュースは、その会社の株価がいつもの3倍以上、業界の指標もいつもの1.5倍以上、同じ向きに動いたときだけ、業界の指標で★を決めます。',
+  '・同じ取引日の動きには、ニュース1つにだけ★をつけます。見出しと逆の向きに動いたときは★をつけません。'].join('\n'));
+ assert.match(starCriteria('en'),/^How stars are set\n- After the news, we look at both TP Large Cap 100 and TP Semiconductor 40 at the U\.S\. market close \(news during or after trading hours: the next trading day's close\)\. The bigger shock sets the stars\.\n- ★5: moved 5 times its usual move or more, 80% or more of its stocks moved the same way, on a fall, the fear index also rose 10% or more\n/s);
  // Owner, Nov 25: no extra visible text. The short explanation and the levels open only from one small 「i」 next to 「衝撃度」.
- assert.equal(starSummary('ja'),'★は、ニュースのあとのTP大型株100とTP半導体40の実際の動き（いつもの何倍動いたか・同じ向きに動いた会社の割合・下落時の恐怖指数）と、記事の内容から一過性かどうかを吟味して算出しています。1社だけのニュースは、その会社と業界の指標がどちらも大きく動いたときだけ★をつけます。');
+ assert.equal(starSummary('ja'),'★は、ニュースのあとのTP大型株100とTP半導体40の実際の動き（いつもの何倍動いたか・同じ向きに動いた会社の割合・恐怖指数）と、記事の内容から一過性かどうかを吟味して算出しています。1社だけのニュースは、その会社と業界の指標の両方が大きく動いたときだけ★をつけます。');
  assert.match(starSummary('en'),/^Stars are calculated from how TP Large Cap 100 and TP Semiconductor 40 actually moved after the news .* weighing whether the cause looks one-off\. News about a single company gets stars only when both the company and its industry index moved strongly\.$/);
  const screen=readFileSync(new URL('../app/resolute/news/screen.tsx',import.meta.url),'utf8'),gauge=readFileSync(new URL('../app/resolute/features/shock-gauge.tsx',import.meta.url),'utf8');
  assert.ok(screen.includes("<span className={s.k}>{en?'Shock':'衝撃度'}<StarInfo locale={locale}/></span>"));
@@ -213,5 +213,7 @@ test('market-wide stress headlines become candidates even without AI/semiconduct
  const macro='Investors worried that the Federal Reserve may keep interest rates high for longer, pressuring technology stocks and equity valuations across the market for months.';
  const select=(title,bodyEn=macro)=>candidatesFromFeed({ok:true,enabled:true,items:[{...candidate,title,bodyEn}]},now);
  for(const title of ['Nasdaq tumbles as Treasury yields surge','Wall Street sell-off deepens on tariff fears','Fed signals rate hikes could return, stocks slide'])assert.equal(select(title).length,1,title);
- for(const title of ['Fed holds rates steady as expected','Nasdaq hits record high','Local bakery opens new store'])assert.equal(select(title).length,0,title);
+ for(const title of ['Fed holds rates steady as expected','Local bakery opens new store'])assert.equal(select(title).length,0,title);
+ // Owner, Nov 25: up days are eligible (「暴落の夜も 急騰の夜も」): a broad rally or record high is a candidate too.
+ assert.equal(select('Nasdaq hits record high').length,1);
 });

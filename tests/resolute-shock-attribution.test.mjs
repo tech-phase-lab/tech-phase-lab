@@ -179,3 +179,47 @@ test('the thermometer keeps each rostered stock\'s own move for the stored snaps
  assert.deepEqual(reading[TUE].stocks,{SKHY:{previousDate:MON,changePercent:-11.2,typicalPercent:3.1}});
  assert.deepEqual(namedCompanies('ASX listing as Nvidia and SK hynix rally'),['NVDA','SKHY']);
 });
+
+test('a headline whose direction is clear gets no stars from a session that moved the other way',async()=>{
+ const {headlineDirection}=await import('../lib/resolute/risk-scope.ts');
+ for(const [t,d] of [['Stocks rally as chipmakers rebound after Friday rout','up'],['Chip stocks soar as Nvidia leads AI rebound','up'],['Nasdaq falls as Treasury yields climb','down'],
+  ['Chip stocks tumble as export curbs widen','down'],['Stocks give back part of Monday rally as tariff worries return','down'],['Stocks end mixed ahead of Fed minutes',null],['US opens probe into SK hynix over chip exports',null]])assert.equal(headlineDirection(t),d,t);
+ // Mon 11:00 ET "rally" story → measured on Tuesday, which fell (TP半導体40 −8.5%): no stars, and the label says why.
+ const rally=story('Stocks rally as chipmakers rebound after Friday rout','2026-11-23T16:00:00.000Z');
+ const market=candidateMarket(rally);assert.equal(market.headline,'up');assert.equal(market.session,TUE);
+ const article=validateGeneration(copy,{...rally,body:'Stocks rallied on Monday as chipmakers rebounded after Friday rout, the report said, with the Nasdaq leading gains across the session.'});
+ assert.equal(article.market.headline,'up');
+ const filled=applyMarketReaction(article,moves);
+ assert.notEqual(filled.market.reading,null);assert.equal(filled.stars,null);assert.equal(parseRiskArticle(filled).stars,null);
+ assert.equal(noStarsLabel(filled,'ja'),'見出しと逆の向きに動いたため、★はつけません');assert.deepEqual(formatReading(filled.market,'ja'),[]);
+ // The same headline measured on an up session keeps its stars.
+ assert.equal(applyMarketReaction(article,{[TUE]:{...tuesday,sox:{...tuesday.sox,changePercent:8.51,up:39,down:1},nas100:{...tuesday.nas100,changePercent:1.47,up:47,down:52}}}).stars,4);
+ // Company news: the company's own move decides (a "soar" headline on a falling stock gets none).
+ const soar=validateGeneration(copy,story('SK hynix shares soar after HBM deal','2026-11-23T19:00:00.000Z',{tickers:['SKHY']}));
+ assert.equal(soar.market.headline,'up');assert.equal(applyMarketReaction(soar,moves).stars,null);
+ // In the selection, a mismatched story never holds its session: the next story on it does.
+ const runAt=new Date('2026-11-24T23:20:00Z');
+ const items=[row('Stocks rally as chipmakers rebound after Friday rout','2026-11-24T12:00:00.000Z',{lane:'market'}),row('Chip stocks tumble as export curbs widen','2026-11-24T12:30:00.000Z',{tickers:['NVDA']})];
+ const {selected}=selectDailyCandidates(feedOf(items),runAt,{moves});
+ assert.deepEqual(selected.map(c=>c.title),['Chip stocks tumble as export curbs widen']);
+});
+
+test('rally news reaches the intake on the same bar as downside news; positive sentiment alone does not',async()=>{
+ const {inspectCandidateFeed,SUMMARY_INSTRUCTIONS}=await import('../services/resolute-api/risk-job.mjs');
+ const now=new Date('2026-11-24T23:20:00Z'),at='2026-11-24T15:00:00.000Z';
+ const item=(title,extra={})=>({title,bodyEn:`${title}. The report said the move followed the announcement and was among the largest of the session for technology companies.`,url:'https://news.example/'+encodeURIComponent(title).slice(0,60),publishedAt:at,...extra});
+ const {candidates}=inspectCandidateFeed({ok:true,enabled:true,items:[item('Nvidia shares soar after raising its revenue outlook'),item('Stocks rally as Fed signals rate cuts'),
+  item('Wall Street hits record high on cooling inflation'),item('Nvidia unveils new developer tools',{sentiment:'positive'}),item('Apple holds annual shareholder meeting')]},now);
+ assert.deepEqual(candidates.map(c=>c.title).sort(),['Nvidia shares soar after raising its revenue outlook','Stocks rally as Fed signals rate cuts','Wall Street hits record high on cooling inflation']);
+ assert.ok(candidates.every(c=>c.headlineUpside));
+ assert.match(SUMMARY_INSTRUCTIONS,/A concrete sharp rise qualifies the same way/);
+ assert.match(SUMMARY_INSTRUCTIONS,/opinion, ranking or promotional pieces/);
+});
+
+test('the terms §20-4 sentence is unchanged, word for word, in the terms and under the stars',async()=>{
+ const {readFile}=await import('node:fs/promises');
+ const {RISK_POLICY}=await import('../lib/resolute/risk-policy.ts');
+ const sentence='★は、ニュースのあとの実際の指標の動きと記事の内容から、一過性かどうかを吟味して算出した目安であり、今後の値動きや売買の時期を示すものではありません。';
+ assert.equal(RISK_POLICY.note.ja,sentence);
+ assert.ok((await readFile(new URL('../content/legal/terms.ja.md',import.meta.url),'utf8')).includes('衝撃度チェッカーの'+sentence));
+});

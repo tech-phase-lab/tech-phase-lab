@@ -1,7 +1,7 @@
 import {inspectCandidateFeed,generate,isInDailyWindow,windowHours,FEED_CHECKS as INSPECT_CHECKS,reactArticles,fillMarketReactions} from './risk-job.mjs';
 import {REPORT_CHECKS} from './rizel-report-source.mjs';
 const FEED_CHECKS=[...INSPECT_CHECKS,...REPORT_CHECKS];
-import {riskDate,parseRiskArticle,parseRiskMarket,parseRiskCause,causeStars,isDailyRunHour,dailyRunStart,marketStars,starsFromShock} from '../../lib/resolute/risk.ts';
+import {riskDate,parseRiskArticle,parseRiskMarket,parseRiskCause,causeStars,isDailyRunHour,dailyRunStart,marketStars,starsFromShock,directionMismatch} from '../../lib/resolute/risk.ts';
 import {applyMarketReaction,candidateMarket,storySession,newsInstant} from '../../lib/resolute/risk-market.ts';
 import {RISK_POLICY} from '../../lib/resolute/risk-policy.ts';
 import {storyScope,isBarePriceMove,headlineCause,companyKey,storyTicker,titleSimilarity,NEAR_DUPLICATE} from '../../lib/resolute/risk-scope.ts';
@@ -16,9 +16,12 @@ export function hasKnownMove(c,moves){const {session,index,basket}=candidateSess
 /** How well a candidate explains its session's move (owner, Nov 25), from measured moves only: market-wide news by
  * TP大型株100's stars, chip-sector news by TP半導体40's, single-company news by its industry basket's stars when it passes the
  * two-move test (else 0). 0 while the session is not measured. */
+const measuredMarket=(c,moves)=>{try{return applyMarketReaction({publishedAt:c.publishedAt,market:candidateMarket({...c,starred:true}),stars:null,cause:null},moves).market;}catch{return null;}};
+/** True when the candidate's session is measured and moved against its headline's direction (owner, Nov 25: no stars). */
+export function movedAgainst(c,moves){const m=moves?measuredMarket(c,moves):null;return !!m&&directionMismatch(m);}
 export function explainsMove(c,moves){
  if(!moves)return 0;
- let market;try{market=applyMarketReaction({publishedAt:c.publishedAt,market:candidateMarket({...c,starred:true}),stars:null,cause:null},moves).market;}catch{return 0;}
+ const market=measuredMarket(c,moves);if(!market||directionMismatch(market))return 0;
  const r=market.reading;if(!r)return 0;
  if(market.index==='company')return marketStars(market)??0;
  const x=r[market.index];return x?starsFromShock({...x,fearChange:r.fearChange}):0;
@@ -38,7 +41,7 @@ const isOpinion=title=>OPINION.test(title)||/\?\s*$/.test(title);
 /** Ranking hint (Nov 24): how likely a story is the day's market-moving downside news. Never a reason to publish. */
 export function candidateScore(c){
  let score=0;
- if(c.headlineDownside)score+=2;
+ if(c.headlineDownside||c.headlineUpside)score+=2;
  if(c.providerNegative)score+=2;
  if(PRICE_MOVE.test(c.title))score-=1;
  if(c.source==='official'||c.rostered||c.tickers?.length)score+=1;
@@ -73,7 +76,9 @@ export function sessionHolders(ranked,moves){
  const groups=new Map();
  for(const c of ranked){const s=claimedSession({...c,starred:true});if(s){if(!groups.has(s))groups.set(s,[]);groups.get(s).push(c);}}
  const holders=new Map();
- for(const [s,group] of groups){
+ for(const [s,all] of groups){
+  // A story whose measured session moved against its headline never holds it (owner, Nov 25).
+  const group=all.filter(c=>!movedAgainst(c,moves));if(!group.length)continue;
   const fit=new Map(group.map(c=>[c,explainsMove(c,moves)]));
   const marketFirst=c=>storyScope(c.title)==='market'&&fit.get(c)>=MARKET_MOVED?1:0;
   // Opinion / ranking pieces hold a session only when nothing else is on it (the model withholds them).

@@ -14,7 +14,7 @@ export type RiskReading={from:string;nas100:RiskMeasure|null;sox:RiskMeasure|nul
  * for news before the regular open, otherwise the next full session). reading: both indices measured on it (null = waiting).
  * index: the story's scope index, shown first; 'company' = one company's news. company (single-company news only): the
  * rostered ticker and its industry basket; without it the story is never measured (no stars). */
-export type RiskMarket={index:RiskIndex|'company';session:string|null;reading:RiskReading|null;company?:{ticker:string;basket:RiskIndex}};
+export type RiskMarket={index:RiskIndex|'company';session:string|null;reading:RiskReading|null;company?:{ticker:string;basket:RiskIndex};headline?:'up'|'down'};
 /** The inputs of one level check. changePercent: the move's direction (the fear condition applies to a down move only). */
 export type RiskShock={changePercent:number;multiple:number;same:number;total:number;fearChange:number|null};
 export type RiskCopy={title:string;source:string;content:string;date:string};
@@ -66,9 +66,17 @@ export function companyQualifies(m:RiskMarket){
  const {minMultiple,industryMinMultiple}=RISK_POLICY.companyTest,dir=Math.sign(stock.changePercent);
  return dir!==0&&dir===Math.sign(basket.changePercent)&&stock.multiple>=minMultiple&&basket.multiple>=industryMinMultiple;
 }
+/** Owner, Nov 25: a headline that clearly states a direction ("… rally", "… tumble") gets no stars from a session that moved the
+ * other way (the move that set the stars: the stronger index, or the company's own stock). */
+export function directionMismatch(m:RiskMarket){
+ const r=m.reading;if(!m.headline||!r)return false;
+ const x=m.index==='company'?r.company:decidingMeasure({...m,headline:undefined});
+ return !!x&&x.changePercent!==0&&(x.changePercent>0?'up':'down')!==m.headline;
+}
 /** The market's stars: the stronger of the two indices on the story's session. Single-company news: its industry basket's stars,
- * only when it passes the two-move test (companyQualifies). None while waiting. */
+ * only when it passes the two-move test (companyQualifies). None while waiting, or when the session moved against the headline. */
 export const marketStars=(m:RiskMarket)=>{
+ if(directionMismatch(m))return null;
  if(m.index!=='company')return readingStars(m.reading);
  if(!m.company||!m.reading||!companyQualifies(m))return null;
  const basket=m.reading[m.company.basket];return basket?starsFromShock({...basket,fearChange:m.reading.fearChange}):null;
@@ -81,8 +89,8 @@ export function causeStars(market:number|null,cause:RiskCause|null|undefined){
 }
 /** The short, plain explanation behind the small 「i」 next to the stars (owner, Nov 25), above the exact levels (starCriteria). */
 export function starSummary(locale:'ja'|'en'){const {nas100,sox}=RISK_POLICY.indices;return locale==='ja'
- ?`★は、ニュースのあとの${nas100.ja}と${sox.ja}の実際の動き（いつもの何倍動いたか・同じ向きに動いた会社の割合・下落時の恐怖指数）と、記事の内容から一過性かどうかを吟味して算出しています。1社だけのニュースは、その会社と業界の指標がどちらも大きく動いたときだけ★をつけます。`
- :`Stars are calculated from how ${nas100.en} and ${sox.en} actually moved after the news (how many times their usual move, the share of stocks moving the same way, the fear index on a fall) and from the article, weighing whether the cause looks one-off. News about a single company gets stars only when both the company and its industry index moved strongly.`;}
+ ?`★は、ニュースのあとの${nas100.ja}と${sox.ja}の実際の動き（いつもの何倍動いたか・同じ向きに動いた会社の割合・恐怖指数）と、記事の内容から一過性かどうかを吟味して算出しています。1社だけのニュースは、その会社と業界の指標の両方が大きく動いたときだけ★をつけます。`
+ :`Stars are calculated from how ${nas100.en} and ${sox.en} actually moved after the news (how many times their usual move, the share of stocks moving the same way, the fear index) and from the article, weighing whether the cause looks one-off. News about a single company gets stars only when both the company and its industry index moved strongly.`;}
 /** The accessible name of the small 「i」 that opens the criteria. */
 export const STAR_INFO_LABEL={ja:'★のつけ方',en:'How stars are set'} as const;
 const wari=(n:number)=>n%10===0?`${n/10}割`:`${n}%`;
@@ -92,24 +100,25 @@ export function starCriteria(locale:'ja'|'en'){
  if(locale==='ja'){
   const part=(l:typeof levels[number])=>[`いつもの${l.multiple}倍以上動いた`,l.breadth!==null?`${wari(l.breadth)}以上の会社が同じ向きに動いた`:null,l.fear!==null?`下落のときは恐怖指数も${wari(l.fear)}以上上がった`:null].filter(Boolean).join('、');
   return [`★のつけ方`,
-   `・ニュースのあとの動きだけを見ます。アメリカの通常取引が始まる前のニュースはその日、取引中や取引後のニュースは次の取引日の、前の日の終値からの動きです。${nas100.ja}と${sox.ja}の両方を見て、大きく動いたほうで★を決めます。`,
+   `・ニュースのあと、アメリカの市場が閉まったときの値で、${nas100.ja}と${sox.ja}の両方を見ます（取引中や取引後に出たニュースは、次の取引日の値で見ます）。大きく動いたほうで★を決めます。`,
    ...levels.map(l=>`・★${l.stars}：${part(l)}`),`・★1：それより小さい動き`,
    `・「いつもの」は、市場が開いていた直前の${typicalDays}日の、1日の動きの大きさのまん中の値です。`,
    `・そのうえで、AIが記事の内容だけを読み、原因が一過性とみられるときは★を1つ下げ、長引きやすいとみられるときは1つ上げます。★5になるのは、市場の動きだけで★4以上のときだけです。どちらとも言えないときは変えません。`,
-   `・1社だけのニュースは、その会社の株価がいつもの${minMultiple}倍以上、業界の指標（半導体の会社は${sox.ja}、ほかは${nas100.ja}）もいつもの${industryMinMultiple}倍以上、同じ向きに動いたときだけ、業界の指標の動きで★を決めます。`,
-   `・同じ取引日の動きには、それをいちばんよく説明するニュース1つにだけ★をつけます。`].join('\n');
+   `・1社だけのニュースは、その会社の株価がいつもの${minMultiple}倍以上、業界の指標もいつもの${industryMinMultiple}倍以上、同じ向きに動いたときだけ、業界の指標で★を決めます。`,
+   `・同じ取引日の動きには、ニュース1つにだけ★をつけます。見出しと逆の向きに動いたときは★をつけません。`].join('\n');
  }
  const part=(l:typeof levels[number])=>[`moved ${l.multiple} times its usual move or more`,l.breadth!==null?`${l.breadth}% or more of its stocks moved the same way`:null,l.fear!==null?`on a fall, the fear index also rose ${l.fear}% or more`:null].filter(Boolean).join(', ');
  return [`How stars are set`,
-  `- Only the move after the news counts: news before the U.S. regular open is measured on that day, news during or after regular hours on the next trading day, each from the previous close. We look at both ${nas100.en} and ${sox.en}; the bigger shock sets the stars.`,
+  `- After the news, we look at both ${nas100.en} and ${sox.en} at the U.S. market close (news during or after trading hours: the next trading day's close). The bigger shock sets the stars.`,
   ...levels.map(l=>`- ★${l.stars}: ${part(l)}`),`- ★1: anything smaller`,
   `- "Usual" is the middle size of its daily moves over the previous ${typicalDays} trading days.`,
   `- Then AI reads only the article: if the cause looks one-off, the stars go down by one; if it looks lasting, up by one (★5 only when the market move alone is ★4 or more). If neither is clear, nothing changes.`,
-  `- News about a single company gets stars only when its stock moved ${minMultiple} times its usual move or more and its industry index (${sox.en} for chip companies, ${nas100.en} otherwise) ${industryMinMultiple} times or more, the same way; the industry index's move sets the stars.`,
-  `- One trading day's move gives stars to only one story: the one that best explains it.`].join('\n');
+  `- News about a single company gets stars only when its stock moved ${minMultiple} times its usual move or more and its industry index ${industryMinMultiple} times or more, the same way; the industry index sets the stars.`,
+  `- One trading day's move gives stars to one story only. No stars when the market moved against the headline.`].join('\n');
 }
 /** What is shown in place of stars: single-company news, or still waiting for the first close. Null when there are stars. */
 export function noStarsLabel(article:{stars:number|null;market:RiskMarket},locale:'ja'|'en'){if(article.stars!==null)return null;const m=article.market;
+ if(directionMismatch(m))return RISK_POLICY.oppositeMove[locale];
  // A measurable company story waits for its session like any other; once measured without passing the test it is company news.
  return m.index==='company'&&!(m.company&&m.session&&!m.reading)?RISK_POLICY.company[locale]:RISK_POLICY.waiting[locale];}
 /** Waiting stories (no stars yet) never trigger the "reread your rules" action. */
@@ -170,6 +179,8 @@ const COMPANY_TICKER=/^[A-Z][A-Z0-9.]{0,9}$/;
 /** A story stored before Nov 25 (one index's move, no measured shock) is read as still waiting: it is measured again.
  * Single-company news stored before Nov 25 (no company) stays unmeasured company news. */
 export function parseRiskMarket(v:unknown):RiskMarket{const x=v as RiskMarket;if(!x||typeof x!=='object')throw Error('INVALID_MARKET');
+ if(x.headline!==undefined&&x.headline!=='up'&&x.headline!=='down')throw Error('INVALID_MARKET');const m=parseMarketBody(x);return x.headline&&m.session?{...m,headline:x.headline}:m;}
+function parseMarketBody(x:RiskMarket):RiskMarket{
  if(x.index==='company'){
   if(x.company===undefined){if(x.session!==null||x.reading)throw Error('INVALID_MARKET');return {index:'company',session:null,reading:null};}
   const c=x.company;if(!c||typeof c!=='object'||typeof c.ticker!=='string'||!COMPANY_TICKER.test(c.ticker)||!RISK_INDICES.includes(c.basket)||!(x.session===null||validSession(x.session)))throw Error('INVALID_MARKET');

@@ -19,6 +19,11 @@ const negative=/\b(?:risks?|risky|falls?|falling|fell|fallen|cuts?|cutting(?![- 
 // decides publishability from verbatim evidence. This only screens candidates.
 const marketWide=/\b(?:Nasdaq|S&P 500|Dow Jones|Wall Street|stock market|equit(?:y|ies) markets?|tech(?:nology)? (?:stocks?|shares|sector|selloff|sell-off)|chip ?stocks?|Treasury yields?|bond yields?|Fed(?:eral Reserve)?|FOMC|interest rates?|rate (?:hikes?|cuts?)|inflation|tariffs?|trade war|recession|oil prices?|sanctions?|export controls?|AI bubble)\b|株式市場|米株|ナスダック|ハイテク株|利上げ|関税|景気後退|インフレ|長期金利|米金利/i;
 const marketDownside=/\b(?:recession|tariffs?|trade war|sell-?off|rate hikes?|higher for longer|inflation (?:surges?|jumps?|rises?|accelerat\w+)|yields? (?:surge|jump|spike|climb|rise)\w*|volatility|bubble|crisis|turmoil|slump\w*|plung\w+|tumbl\w+|crash\w*|sink(?:s|ing)?|sank|slid\w*|fall(?:s|ing)?|fell|drop(?:s|ped)?|rout|fears?|worr(?:y|ies)|warn\w*)\b|利上げ|関税|景気後退|急落|暴落|警戒|懸念|下落/i;
+// Up moves (owner, Nov 25: up days are eligible; the LP promises 「暴落の夜も 急騰の夜も」). The same bar as the downside screen: a
+// headline that states a concrete sharp rise (shares soar / surge / jump / rally, a raised outlook, an upgrade, a record high), or a
+// market-wide subject with a broad rally. The provider's Positive sentiment alone never admits a story (opinion pieces carry it).
+const upside=/\b(?:soar(?:s|ed|ing)?|surg(?:e|es|ed|ing)|jump(?:s|ed|ing)?|rall(?:y|ies|ied|ying)|rocket(?:s|ed|ing)?|skyrocket(?:s|ed|ing)?|spik(?:e|es|ed|ing)|rebound(?:s|ed|ing)?|record highs?|all-time highs?|rais(?:e|es|ed|ing) (?:its |their )?(?:guidance|outlook|forecast)|upgrad(?:e|es|ed|ing)|beats? (?:expectations?|estimates?|forecasts?))\b|急騰|急伸|最高値|上方修正|格上げ|大幅高/i;
+const marketUpside=/\b(?:rall(?:y|ies|ied|ying)|surg(?:e|es|ed|ing)|soar(?:s|ed|ing)?|jump(?:s|ed|ing)?|rebound(?:s|ed|ing)?|record highs?|all-time highs?|best day)\b|急騰|急伸|最高値|大幅高|反発/i;
 // Date-only intake is opt-in for private review. Keep the original date string;
 // bounds cover all UTC offsets rather than pretending the source published at midnight.
 export function publicationBounds(value){
@@ -77,7 +82,7 @@ export function inspectCandidateFeed(feed,now=new Date(),{allowDateOnly=false}={
  const rejected={partial:0,body:0,unrelated:0,noDownsideHeadline:0,date:0,url:0,duplicateUrl:0};
  for(const a of raw){if(!a||a.pendingResearch||a.brief||a.confidence==='low'){rejected.partial++;continue;}const title=a.title,body=[a.bodyJa,a.bodyEn].filter(Boolean).join('\n')||[a.summaryJa,a.summaryEn].filter(Boolean).join('\n');
  if(typeof title!=='string'||!body||body.length<100||body.length>24000){rejected.body++;continue;}
- const marketHeadline=marketWide.test(title)&&marketDownside.test(title);
+ const marketHeadline=marketWide.test(title)&&(marketDownside.test(title)||marketUpside.test(title)),headlineUp=upside.test(title)||marketWide.test(title)&&marketUpside.test(title);
  // Nov 24: a company-lane story already names a rostered (high-tech) ticker, and the provider's own Negative sentiment is a
  // downside signal; without these, stories such as "Dell shares slide after outlook" never reached the model. Screening only:
  // the model still decides publishability from the text.
@@ -85,7 +90,7 @@ export function inspectCandidateFeed(feed,now=new Date(),{allowDateOnly=false}={
  // Nov 25 (owner: market-wide news first): a headline about the whole market or the chip sector (risk-scope.ts) is relevant too.
  // The downside screen below still applies, and the model still decides publishability from the text.
  if(!relevant.test(title+' '+body)&&!marketHeadline&&!rostered&&storyScope(title)==='company'){rejected.unrelated++;continue;}
- if(!negative.test(title)&&!marketHeadline&&!providerNegative&&!hasConcreteBodyDownside(body)){rejected.noDownsideHeadline++;continue;}
+ if(!negative.test(title)&&!headlineUp&&!marketHeadline&&!providerNegative&&!hasConcreteBodyDownside(body)){rejected.noDownsideHeadline++;continue;}
  const publishedAt=a.publishedAt??(allowDateOnly?a.publishedOn:undefined),bounds=publicationBounds(publishedAt);
  if(!bounds||!allowDateOnly&&publishedAt.length===10||bounds.latest>now.getTime()||now.getTime()-bounds.earliest>7*86400000){rejected.date++;continue;}
  let u;try{u=new URL(a.url);}catch{rejected.url++;continue;}if(u.protocol!=='https:'||u.username||u.password||u.href.length>2048){rejected.url++;continue;}u.hash='';for(const key of [...u.searchParams.keys()])if(key.startsWith('utm_'))u.searchParams.delete(key);
@@ -96,7 +101,7 @@ export function inspectCandidateFeed(feed,now=new Date(),{allowDateOnly=false}={
  if(unique.has(id))rejected.duplicateUrl++;
  const publisher=typeof a.publisher==='string'&&a.publisher.trim()&&a.publisher.length<=200?a.publisher.trim():null;
  unique.set(id,{id,url:u.href,title,body:body.slice(0,12000),publishedAt:publishedAt.length===10?publishedAt:new Date(publishedAt).toISOString(),source:primary?'official':sns?'sns':'report',fingerprint,tickers:cleanTickers(a.tickers),
-  ...(publisher?{publisher}:{}),...(providerNegative?{providerNegative:true}:{}),...(a.video===true?{video:true}:{}),...(rostered?{rostered:true}:{}),headlineDownside:negative.test(title)||marketHeadline});
+  ...(publisher?{publisher}:{}),...(providerNegative?{providerNegative:true}:{}),...(a.video===true?{video:true}:{}),...(rostered?{rostered:true}:{}),headlineDownside:negative.test(title)||marketHeadline,...(headlineUp?{headlineUpside:true}:{})});
  }return {candidates:[...unique.values()].sort((a,b)=>b.publishedAt.localeCompare(a.publishedAt)),diagnostics:{reportConfigured:feed.reportCoverage?.configured===true,reportCount:feed.reportUpdates?.length??0,reportPossiblyTruncated:feed.reportCoverage?.possiblyTruncated===true,...(Number.isSafeInteger(feed.reportCoverage?.pages)?{reportPages:feed.reportCoverage.pages}:{}),reportOldestPublishedAt:typeof feed.reportCoverage?.oldestPublishedAt==='string'?feed.reportCoverage.oldestPublishedAt:null,reportMarketLane:feed.reportCoverage?.marketLane===true,reportSkipped:Number.isSafeInteger(feed.reportCoverage?.skipped)?feed.reportCoverage.skipped:0,generalEnabled:feed.enabled,generalCount:feed.items.length,officialCount:feed.officialUpdates?.length??0,inspected:raw.length,rejected,coverage:'configured-feed-only',unconsumedMarketCount:feed.marketUpdates?.length??0,unconsumedAnalystCount:feed.analystUpdates?.length??0}};
 }
 export function candidatesFromFeed(feed,now=new Date(),options={}){return inspectCandidateFeed(feed,now,options).candidates;}
@@ -119,10 +124,11 @@ export const SUMMARY_INSTRUCTIONS='Summarize the supplied article only, in natur
  +'The input may be a short news summary rather than the full article; that is enough. Summarize only what it states and leave out what it does not give (an exact price move, figures or an event date are not required). '
  +'The source field names who announced or reported it: use the publisher given in the input; when none is given, name the organization the text says announced it. '
  +'Decide publishable from the text only. publishable is true when the text reports a concrete negative development for AI, semiconductor or other high-technology companies or their shares, '
- +'or a market-wide event (economic data, interest rates, tariffs, export controls, sanctions, policy, a broad stock sell-off) that the text ties to stocks or technology companies. '
+ +'or a market-wide event (economic data, interest rates, tariffs, export controls, sanctions, policy, a broad stock sell-off or a broad stock rally) that the text ties to stocks or technology companies. '
+ +'A concrete sharp rise qualifies the same way: shares surged or rallied on a stated event, a raised forecast or guidance, strong results, an analyst upgrade, a broad market rally on economic data or policy. '
  +'Examples that qualify: shares fell or were sold off, a lowered forecast or guidance, weak or missed results, an analyst downgrade or price-target cut, export restrictions, a probe, lawsuit or fine, '
  +'supply shortages or production delays, cancelled or cut orders, financing or debt stress, falling stock indexes. A mixed story (good results but the shares fell) qualifies; describe the negative part as reported. '
- +'publishable is false only for: opinion, ranking or promotional pieces (stocks to buy, price predictions, should-you-buy questions), stories with no negative development, '
+ +'publishable is false only for: opinion, ranking or promotional pieces (stocks to buy, price predictions, should-you-buy questions), stories with no concrete development (neither a negative one nor a sharp rise tied to an event), '
  +'subjects unrelated to technology companies or the stock market, and text too unclear to tell what happened. '
  +'cause: classify the cause of the development, from the supplied text only. kind is one-off when the text itself shows the cause is clearly one-off '
  +'(a technical glitch or outage, a single report later corrected, options expiry or index rebalancing, a rumor that was denied, short-lived positioning); '

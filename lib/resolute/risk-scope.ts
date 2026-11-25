@@ -23,6 +23,18 @@ const SEMIS = /\b(?:chip ?stocks?|chip shares|chip ?makers?|chip sector|chip(?:-
 const MACRO = /\b(?:Fed|Federal Reserve|FOMC|Powell|rate (?:cuts?|hikes?|decision|path|outlook)|interest rates?|Treasur(?:y|ies)|bond yields?|yields|inflation|CPI|PCE|PPI|jobs report|payrolls|jobless claims|unemployment|GDP|retail sales|consumer (?:confidence|sentiment|spending)|recession|tariffs?|trade (?:war|deal|talks)|sanctions?|government shutdown|debt ceiling|oil prices?|crude|dollar|geopolitic\w*|AI bubble|AI (?:capex|spending)|hyperscalers?(?:'|’)? (?:capex|spending)|capex)\b|利上げ|利下げ|政策金利|長期金利|インフレ|雇用統計|消費者物価|関税|景気後退|米国債|FRB|FOMC/i;
 
 /** The headline's subject: the words before its first move verb (empty when there is none). */
+// The direction a headline states (owner, Nov 25): its first move verb. "Give back", "pare", "erase" a gain is a fall.
+const UP_MOVE = /^(?:rall(?:y|ies|ied|ying)|ris(?:e|es|ing)|rose|jump(?:s|ed|ing)?|soar(?:s|ed|ing)?|surg(?:e|es|ed|ing)|gain(?:s|ed|ing)?|climb(?:s|ed|ing)?|rebound(?:s|ed|ing)?|.* (?:up|higher)|急騰|上昇|反発|続伸)$/i;
+const GIVE_BACK = /\b(?:gives? back|giving back|gave back|pares?|pared|paring|erases?|erased|erasing|wipes? out|wiped out)\b/i;
+/** 'up' / 'down' when the headline clearly states a direction (its first move verb), else null ("… ends mixed", no move verb). */
+export function headlineDirection(title: string): 'up' | 'down' | null {
+  const t = typeof title === 'string' ? title.normalize('NFKC') : '';
+  const m = MOVE.exec(t);
+  if (!m) return null;
+  if (GIVE_BACK.test(t.slice(0, m.index + m[0].length))) return 'down';
+  if (/mixed$/i.test(m[0])) return null;
+  return UP_MOVE.test(m[0]) ? 'up' : 'down';
+}
 export function headlineSubject(title: string): string {
   const m = MOVE.exec(title);
   return m ? title.slice(0, m.index).replace(/[\s,:'’-]+$/, '').trim() : '';

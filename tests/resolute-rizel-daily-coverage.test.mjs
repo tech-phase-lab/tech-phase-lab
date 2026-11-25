@@ -112,9 +112,9 @@ test('the Nov 24 morning, rerun with the fixes, publishes three different storie
   const [market,waiting,company]=pool.saved[0].articles;
   // Both indices are measured for each story (owner, Nov 25); the scope only decides which is listed first.
   const reading={from:'2026-11-21',nas100:{changePercent:-1.3,multiple:1.6,same:78,total:100},sox:{changePercent:-2.4,multiple:1.6,same:34,total:40},fearChange:6};
-  assert.deepEqual([market.market,market.stars],[{index:'nas100',session:fixture.knownSession,reading},2]);
+  assert.deepEqual([market.market,market.stars],[{index:'nas100',session:fixture.knownSession,reading,headline:'down'},2]);
   // Nvidia came out during Monday's session: it waits for Tuesday (its stock and TP半導体40 must both move strongly).
-  assert.deepEqual([waiting.market,waiting.stars],[{index:'company',session:'2026-11-24',reading:null,company:{ticker:'NVDA',basket:'sox'}},null]);
+  assert.deepEqual([waiting.market,waiting.stars],[{index:'company',session:'2026-11-24',reading:null,company:{ticker:'NVDA',basket:'sox'},headline:'down'},null]);
   assert.deepEqual([company.market,company.stars],[{index:'company',session:null,reading:null},null]);
  }finally{await db.close();}
 });

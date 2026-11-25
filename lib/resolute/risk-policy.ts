@@ -71,6 +71,8 @@ export const RISK_POLICY = {
   },
   /** Shown instead of stars for single-company news that did not pass the two-move test (or cannot be measured). */
   company: { ja: '個別企業のニュース（★はつけません）', en: 'Single-company news (no stars)' },
+  /** Shown instead of stars when the session moved against the headline's own direction (owner, Nov 25). */
+  oppositeMove: { ja: '見出しと逆の向きに動いたため、★はつけません', en: 'The market moved against the headline (no stars)' },
   /** Single-company news (owner, Nov 25): stars only when, on the story's session, the company's own stock moved at least
    * minMultiple times its usual daily move (the median of its absolute daily % moves over the typicalDays sessions before)
    * AND its industry basket moved at least industryMinMultiple times its usual move, both the same way. */
