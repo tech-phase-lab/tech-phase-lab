@@ -90,6 +90,7 @@ test("a list name saved longer than nine characters shows its first nine, with n
     "@/lib/research/watchlist-session": { quoteForSession: () => null },
     "@/lib/research/watchlist-chart": { favoriteIntradayChart: () => null },
     "./use-quote-clock": { useQuoteClock: () => Date.now() },
+    "./use-watchlist-snapshot": { useWatchlistSnapshot: () => ({ quotes: {}, owner: null, lists: null }), saveWatchlistQuotes: () => {} },
     "./use-watchlist-sectors": { useWatchlistSectors: () => ({}) },
     "@/lib/research/watchlist-sector": { watchlistSector: () => null },
     "./watch-menu": { default: "watch-menu" }, "../price/flash-value": { default: "flash" }, "./watch-menu.module.css": {},

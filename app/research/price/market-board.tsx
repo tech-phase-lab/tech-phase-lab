@@ -73,7 +73,7 @@ function useFittedLabels(dep: string) {
   }, [dep]);
   return box;
 }
-const STORE = "tp-market-board";
+const STORE = "tp-market-board", SNAPSHOT_STORE = "tp-market-snapshot:v1";
 const FAST_MS = 15_000, SLOW_MS = 60_000;
 
 /** Prices the way the sheet writes them: yen pairs 154.32, other pairs 1.0842, dollars $98,420 / $3,215 / $182.4 / $2.41, ETFs 749.90. */
@@ -102,6 +102,37 @@ function useBoard(ids: string[], every: number, fast: boolean) {
     }, every);
   }, [key, every, fast]);
   return state.key === key ? { items: state.items, at: state.at } : { items: null, at: null };
+}
+type Snapshot = { quotes: Record<string, BoardQuote>; charts: Record<string, { bars: Bar[]; before: Bar[] }> };
+/** Every tab's cards and first chart from the shared snapshot (owner, Nov 25: a tab not opened yet must show at once, like レバETF). Read once
+ * when the page opens and every two minutes after; the provider is never asked for it (app/api/research/market/snapshot). */
+function useMarketSnapshot() {
+  const [snapshot, setSnapshot] = useState<Snapshot | null>(null);
+  useEffect(() => {
+    // The copy this browser received last draws the page the moment it is ready, until the server's answer (or a read of its own) replaces it.
+    try {
+      const kept = JSON.parse(localStorage.getItem(SNAPSHOT_STORE) ?? "null") as Snapshot | null;
+      // Read once after mount (reading it during render would not match the server's page).
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      if (kept && typeof kept.quotes === "object" && typeof kept.charts === "object") setSnapshot(old => old ?? kept);
+    } catch { /* storage unavailable or unreadable: wait for the server */ }
+    return startPolling(async () => {
+      try {
+        const response = await fetch("/api/research/market/snapshot", { cache: "no-store" }), body = await response.json();
+        if (!response.ok || !body.ok) return;
+        const next: Snapshot = { quotes: body.quotes ?? {}, charts: body.charts ?? {} };
+        setSnapshot(next);
+        try { localStorage.setItem(SNAPSHOT_STORE, JSON.stringify(next)); } catch { /* full or blocked: the next visit waits for the server */ }
+      } catch { /* the cards and chart are read as before */ }
+    }, 120_000);
+  }, []);
+  return snapshot;
+}
+/** The live answer where there is one, the snapshot's copy for the rest; null while neither has anything (the loading word). */
+function withSnapshot(ids: string[], live: Record<string, BoardQuote> | null, snapshot: Snapshot | null): Record<string, BoardQuote> | null {
+  const kept = Object.fromEntries(ids.filter(id => !live?.[id] && snapshot?.quotes[id]).map(id => [id, snapshot!.quotes[id]]));
+  if (live) return { ...kept, ...live };
+  return Object.keys(kept).length ? kept : null;
 }
 
 /** A number that glows green when it rises and red when it falls (never on the first value, nor when `scope` changes). Reduced motion: a colour tint only (CSS). */
@@ -183,7 +214,8 @@ export default function MarketBoard() {
   const board = useBoard(INDEX_ETFS.map(item => item.id), FAST_MS, true);
   const watched = useBoard(index || lev ? [] : [selected], FAST_MS, true);
   const rows = useBoard(current.items.map(item => item.id), SLOW_MS, false);
-  const indexQuotes = board.items, itemQuotes = rows.items;
+  const snapshot = useMarketSnapshot();
+  const indexQuotes = withSnapshot(INDEX_ETFS.map(item => item.id), board.items, snapshot), itemQuotes = withSnapshot(current.items.map(item => item.id), rows.items, snapshot);
   const entry = ALL.find(item => item.id === selected)!;
   const quote = indexQuotes?.[selected] ?? watched.items?.[selected] ?? itemQuotes?.[selected];
   const key = `${selected}:${period}`;
@@ -209,10 +241,15 @@ export default function MarketBoard() {
         if (attempt < 2 && !have) await new Promise(done => setTimeout(done, 1200));
         if (controller.signal.aborted) return;
       }
-      if (!have) put(key, { bars: [], before: [], failed: true });
+      if (!have && !fresh(key)) put(key, { bars: [], before: [], failed: true });
     }, intraday ? FAST_MS : SLOW_MS);
     return () => { stop(); controller.abort(); };
   }, [selected, period, key, reload, intraday, put, fresh, lev]);
+  // Each tab's first chart (15 minutes) from the snapshot, until a read of its own arrives; a series already read is never replaced by it.
+  useEffect(() => {
+    if (!snapshot) return;
+    for (const [id, series] of Object.entries(snapshot.charts)) if (!fresh(`${id}:${DEFAULT_PERIOD}`)) put(`${id}:${DEFAULT_PERIOD}`, series);
+  }, [snapshot, put, fresh]);
   const loading = store.shown === null;
   const chart = store.shown ?? { bars: [], before: [] };
   // Until a new period comes, the chart on the screen is drawn with its own period's rules.
