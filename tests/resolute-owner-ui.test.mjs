@@ -178,3 +178,17 @@ test("RESOLUTE header and menu are the same on every page, with no bottom bar (N
   assert.match(css, /\.step\[aria-current="page"\]/);
   assert.match(await read("../app/resolute/diagnosis.module.css"), /env\(safe-area-inset-top, 0px\) \+ 56px/);
 });
+
+test("RESOLUTE book turns the page being left, and its values never break mid-word (owner, Nov 25)", async () => {
+  const book = await read("../app/resolute/notebook/book.tsx");
+  // Backward from the first white page shows that white page turning away to reveal the cover, not cover over cover.
+  assert.match(book, /styles\.leafBack\}`\} aria-hidden="true">\{page\(turn\.from\)\}/);
+  assert.match(book, /<div className=\{styles\.bookStill\}>\{page\(visible\)\}<\/div>/);
+  const css = await read("../app/resolute/diagnosis.module.css");
+  assert.match(css, /\.leafBack\{transform-origin:right center;/);
+  assert.match(css, /@keyframes leafBack\{0%\{transform:rotateY\(0\)[^]*100%\{transform:rotateY\(165deg\)/);
+  // 「まだ決めていない」 stays on one line: values are kept whole and take the full row when half the page is too narrow.
+  assert.match(css, /\.chapterMetrics dd\{[^}]*overflow-wrap:normal;word-break:keep-all;line-break:strict\}/);
+  assert.match(css, /\.chapterMetrics>div\{flex:1 1 40%\}/);
+  assert.doesNotMatch(css, /\.chapterMetrics[^{]*\{[^}]*(text-overflow:ellipsis|overflow-wrap:anywhere)/);
+});
