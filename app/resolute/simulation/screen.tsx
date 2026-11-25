@@ -58,14 +58,15 @@ function Simulation({locale,deny}:{locale:DiagnosisLocale;deny:()=>void}) {
   {limit!==null&&Number(holding)>0?<span>{sentences(verdict==="exact"?t("これより下がったら、新しく買うのをやめてルールを読み直します","If it falls any further, stop buying and reread your rules."):verdict==="within"?t(`許容額まで、あと${cash(limit-loss.lossAmount)}の余裕があります。`,`You have ${cash(limit-loss.lossAmount)} left before your limit.`):t(`許容額を${cash(loss.lossAmount-limit)}超えます。ルールを読み直す目安です。`,`This is ${cash(loss.lossAmount-limit)} over your limit. Time to reread your rules.`))}</span>:null}
  </div>:null;
  const intro=t("相場が上下に急変動したら資産はどれぐらい動くのか？現在の保有額を入れて実際に検証してみましょう。将来の予測ではありません。","How would a sudden market drop or rally affect your portfolio? Enter your current holdings and try it out. This is not a forecast.");
- if(desktop&&plan) {
+ // The single-stock cap is judged by amount (invested × cap%, as in the diagnosis result) on the phone and on PC alike (owner, Nov 25).
+ const facts=plan?ruleFacts(plan):null;
+ const bars=up&&facts&&plan?capBars(up.items.map((item,i)=>({name:stockName(i),valueAfter:item.valueAfter})),facts.capAmount===null?null:facts.capAmount/scale,plan.perStockCapPct):null;
+ const overBars=bars?.bars.filter(b=>b.over>1e-9)??[];
+ if(desktop&&plan&&facts) {
   // PC (owner, Nov 25, 01_シミュレーション_PC): the controls on the left, the result on the right at the same height, the rules in a row.
-  const facts=ruleFacts(plan);
   const holdingValue=amount(holding);
   const tolerancePct=limit!==null&&holdingValue>0?Math.round(limit/holdingValue*1000)/10:null;
   const gauge=loss?dropGauge(Number(drop),plan.buyLines.map(l=>({dropPct:l.dropPct,amount:l.amount/scale})),tolerancePct):null;
-  const bars=up?capBars(up.items.map((item,i)=>({name:stockName(i),valueAfter:item.valueAfter})),facts.capAmount===null?null:facts.capAmount/scale,plan.perStockCapPct):null;
-  const overBars=bars?.bars.filter(b=>b.over>1e-9)??[];
   const sameAmount=plan.buyLines.length>0&&plan.buyLines.every(l=>l.amount===plan.buyLines[0].amount);
   const rules:[string,string,string][]=[
    [t("毎月の生活費","Monthly living costs"),cash(plan.monthlyLivingCost/scale),t("診断の答えから","From your answers")],
@@ -151,8 +152,8 @@ function Simulation({locale,deny}:{locale:DiagnosisLocale;deny:()=>void}) {
      <p className={styles.muted}>{t("到達したラインの買い増し予定額","Planned purchases at levels reached")}: {cash(loss.plannedBuyTotal)}</p>
     </div>
    </section>:<p className={styles.error}>{t("金額とルールの数値を確認してください。","Check your amounts and the numbers in your rules.")}</p>):(up?<section className={`${styles.card} ${styles.hero}`} aria-live="polite"><span className={styles.eyebrow}>RESULT</span><p className={styles.muted}>{t("あなたの資産は","Your holdings after the rise")}</p><p className={styles.bigNumber}>{en?cash(up.totalAfter):`合計${cash(up.totalAfter)}になります`}</p>
-    <div className={styles.resultStack}><div className={`${styles.verdict} ${up.overCapNames.length?styles.verdictWarning:styles.verdictOk}`}><strong>{up.totalAfter===0?t("保有額を入力して確かめましょう。","Enter your holdings to try it out."):up.overCapNames.length?t("1銘柄の上限を超える銘柄があります","Some holdings exceed your single-stock cap"):t("すべて上限の範囲内です","All within your single-stock cap")}</strong><span>{t(`1銘柄の上限は${plan.perStockCapPct}%です。`,`Your single-stock cap is ${plan.perStockCapPct}%.`)}</span></div>
-     {up.items.map((item,i)=><div className={styles.shareCard} key={i}><div className={styles.shareCaption}><strong>{stockName(i)}</strong><span>{item.sharePct}%</span></div><div className={styles.shareTrack}><span data-over={item.overCap} style={{width:`${Math.min(100,item.sharePct)}%`}}/><i style={{left:`${plan.perStockCapPct}%`}}/></div><span>{cash(item.valueAfter)}</span></div>)}<p className={styles.disclaimer}>{t("縦の線が、1銘柄の上限です。","The vertical line is your single-stock cap.")}</p>
+    <div className={styles.resultStack}><div className={`${styles.verdict} ${overBars.length?styles.verdictWarning:styles.verdictOk}`}><strong>{up.totalAfter===0?t("保有額を入力して確かめましょう。","Enter your holdings to try it out."):overBars.length?t("1銘柄の上限を超える銘柄があります","Some holdings exceed your single-stock cap"):t("すべて上限の範囲内です","All within your single-stock cap")}</strong><span>{facts?.capAmount!=null?t(`1銘柄の上限は${cash(bars?.cap??0)}（投資額の${plan.perStockCapPct}%）です。`,`Your single-stock cap is ${cash(bars?.cap??0)} (${plan.perStockCapPct}% of your investments).`):t(`1銘柄の上限は${plan.perStockCapPct}%です。`,`Your single-stock cap is ${plan.perStockCapPct}%.`)}</span></div>
+     {bars?.bars.map((b,i)=><div className={styles.shareCard} key={i}><div className={styles.shareCaption}><strong>{b.name}</strong><span>{cash(b.valueAfter)}</span></div><div className={styles.shareTrack}><span data-over={b.over>1e-9} style={{width:`${b.width*100}%`}}/><i style={{left:`${bars.capAt*100}%`}}/></div></div>)}<p className={styles.disclaimer}>{t("縦の線が、1銘柄の上限です。","The vertical line is your single-stock cap.")}</p>
     </div>
    </section>:<p className={styles.error}>{t("金額とルールの数値を確認してください。","Check your amounts and the numbers in your rules.")}</p>)}
    <details className={`${styles.card} ${styles.disclosure}`}><summary>{t("あなたのルール","Your rules")}</summary><div className={styles.section}>

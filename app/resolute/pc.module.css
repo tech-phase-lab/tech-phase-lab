@@ -1,6 +1,6 @@
 /* RESOLUTE PC layout (owner, Nov 25: 01_シミュレーション_PC / 02_終値アラート_PC). Used only at 1024px and wider (use-desktop.ts);
  * the phone layout stays in diagnosis.module.css. Colours come from .page there. Never cut words with "…". */
-.page { padding: 0; min-height: 100vh; background: radial-gradient(900px 360px at 45% -120px, #2a2414, transparent 70%), linear-gradient(180deg, #0b1220, #07090e); }
+.page.page { padding: 0; min-height: 100vh; background: radial-gradient(900px 360px at 45% -120px, #2a2414, transparent 70%), linear-gradient(180deg, #0b1220, #07090e); }
 .frame { display: grid; grid-template-columns: 240px minmax(0, 1fr); min-height: 100vh; background: linear-gradient(90deg, #0d1522 0 239px, #1d2738 239px 240px, transparent 240px); }
 
 /* The menu on the left: ホーム, the six steps and the tools. */

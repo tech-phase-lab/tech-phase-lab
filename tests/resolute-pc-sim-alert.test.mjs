@@ -60,6 +60,22 @@ test("the rise bars use the single-stock cap as an amount, as in the diagnosis r
   assert.equal(formatMoney(75000, "JPY", false), "7万5,000円");
 });
 
+test("phone and PC judge the single-stock cap by amount with one shared check, so they agree", () => {
+  const screen = read("../app/resolute/simulation/screen.tsx");
+  // One computation, made before the PC/phone branch, read by both layouts.
+  assert.equal((screen.match(/capBars\(/g) ?? []).length, 1);
+  assert.ok(screen.indexOf("const bars=up&&facts&&plan?capBars(") < screen.indexOf("if(desktop&&plan&&facts)"));
+  assert.doesNotMatch(screen, /overCapNames|item\.overCap|item\.sharePct/);
+  assert.equal((screen.match(/overBars\.length\?styles\.verdictWarning/g) ?? []).length, 1, "phone verdict");
+  assert.match(screen, /overBars\.length\?pc\.capOver/);
+  // The same inputs give the same answer: 300万円 invested, 10% cap = 30万円. NVDA 18万 is 23% of the total but under the
+  // 30万円 cap (not over); AAPL 37.5万 is over by 7.5万.
+  const items = [{ name: "NVDA", valueAfter: 180000 }, { name: "MU", valueAfter: 225000 }, { name: "AAPL", valueAfter: 375000 }];
+  const check = capBars(items, facts.capAmount, plan.perStockCapPct);
+  assert.deepEqual(check.overNames, ["AAPL"]);
+  assert.deepEqual(capBars(items, facts.capAmount, plan.perStockCapPct), check);
+});
+
 test("「今日のお知らせ」: no 「あなたの計画では…」 on the page, a lead sentence, each stock's own rule, and 「今日やること」", () => {
   const alert = { date: "2026-11-24", items: [
     { kind: "line_reached", symbol: "NVDA", close: 161.4, dropPct: 10.3, newLines: [10] },
@@ -92,6 +108,8 @@ test("PC layout: 1024px and wider, the menu on the left, the phone layout unchan
   assert.match(read("../app/resolute/notifications-screen.tsx"), /pc=\{mode==="alerts"\}/);
   // Delivery is not running yet, so the sentence stays (owner, Nov 25, B).
   assert.match(read("../app/resolute/notifications-screen.tsx"), /通知の配信は準備中です。この画面の試算で通知は送信されません。/);
+  // One × per watched stock (the row's remove button), none inside the symbol field.
+  assert.doesNotMatch(read("../app/resolute/stock-input.tsx"), /clearInput|onChange\(""\)/);
   // Never cut words with an ellipsis on PC.
   assert.doesNotMatch(read("../app/resolute/pc.module.css"), /text-overflow:\s*ellipsis/);
 });

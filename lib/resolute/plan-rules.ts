@@ -70,13 +70,14 @@ export function dropGauge(drop: number, buyLines: { dropPct: number; amount: num
 }
 
 export type CapBar = { name: string; valueAfter: number; width: number; over: number };
-/** The ② rise bars (PC): each holding after the rise against the single-stock cap as an amount (major units).
- * Without an amount (no invested amount in the plan) the cap is that share of the total after the rise. */
+/** The ② rise check, the one used by the phone and the PC (owner, Nov 25): each holding after the rise against the single-stock
+ * cap as an amount (major units), the same amount as the diagnosis result. Without an amount (no invested amount in the plan)
+ * the cap is that share of the total after the rise. `overNames` are the holdings above the cap. */
 export function capBars(items: { name: string; valueAfter: number }[], capAmount: number | null, capPct: number) {
   const total = items.reduce((s, i) => s + i.valueAfter, 0);
   const cap = capAmount ?? Math.floor(total * capPct) / 100;
   const top = Math.max(cap, ...items.map(i => i.valueAfter));
   const span = top > 0 ? top / 0.85 : 1;
   const bars: CapBar[] = items.map(i => ({ name: i.name, valueAfter: i.valueAfter, width: Math.min(1, i.valueAfter / span), over: Math.max(0, i.valueAfter - cap) }));
-  return { cap, capAt: Math.min(1, cap / span), bars };
+  return { cap, capAt: Math.min(1, cap / span), bars, overNames: bars.filter(b => b.over > 1e-9).map(b => b.name) };
 }
