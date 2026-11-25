@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { arrow, beyondText, buildRadar, isBeyond, placeLabels, radarGenre, radarGenres, rankByScore, fitnessScore, earningScore, stayingScore, beyondDirections, formerGenres, sizeTiers, spreadEdgeDots, xPosition, yPosition, zoneOf } from "../lib/research/radar.ts";
+import { arrow, beyondText, buildRadar, isBeyond, placeLabels, radarGenre, radarGenres, rankByScore, fitnessScore, earningScore, stayingScore, beyondDirections, formerGenres, sizeTiers, spreadEdgeDots, xPosition, yPosition, zoneOf, rankPlaces } from "../lib/research/radar.ts";
 
 const snap = (end, ocfMargin, cover, revenue = 1e9, revenueGrowth = 10) => ({ end, basis: "ttm", revenue, ocfMargin, fcfMargin: ocfMargin - 5, cover, revenueGrowth });
 
@@ -48,13 +48,28 @@ test("arrows compare with the previous earnings", () => {
   assert.equal(arrow(3.2, 3.95), "down");
 });
 
-test("a FREE payload holds positions, colours and sizes only", () => {
+test("a FREE payload holds rank places, colours and sizes only: never a figure (owner, Nov 25)", () => {
   const entries = [{ ticker: "A", facts: { latest: snap("2026-06-30", 20, 2, 5e9, 12), previous: snap("2026-03-31", 15, 3) } }, { ticker: "B", facts: { latest: snap("2026-06-30", -30, 0.4, 1e9, -3), previous: null } }, { ticker: "C", facts: { latest: null, previous: null } }];
   const free = buildRadar("semis", entries, "free");
   assert.equal(free.tier, "free");
-  const text = JSON.stringify(free);
-  for (const secret of ["previous", "growth", "asOf", "basis", "missing", "rank", "2026", "fcfMargin"]) assert.ok(!text.includes(secret), secret);
-  assert.deepEqual(free.dots.map(d => [d.ticker, d.up, d.tone, d.size]), [["A", true, "up", 2], ["B", false, "down", 1]]);
+  const text = JSON.stringify(free.dots);
+  for (const secret of ["previous", "growth", "asOf", "basis", "missing", "rank", "2026", "fcfMargin", "ocfMargin", "cover", "noRevenue", "score", "review", "prepaid"]) assert.ok(!text.includes(secret), secret);
+  assert.deepEqual(free.dots.map(d => [d.ticker, d.up, d.tone, d.size, d.x, d.y]), [["A", true, "up", 2, 0.75, 0.75], ["B", false, "down", 1, 0.25, 0.25]]);
+  assert.equal(free.asOf, "2026-06-30"); // only the date of the latest results, for the ranking heading
+  assert.deepEqual(Object.keys(free).sort(), ["asOf", "dots", "genre", "tier"]);
+});
+
+test("FREE places spread evenly by rank, ties are split by the genre's order, and a company without revenue earns the lowest rank", () => {
+  const entries = [
+    { ticker: "A", facts: { latest: snap("2026-06-30", 70, 0.05), previous: null } },
+    { ticker: "B", facts: { latest: snap("2026-06-30", 70, 0.05), previous: null } },
+    { ticker: "C", facts: { latest: snap("2026-06-30", -200, 30), previous: null } },
+    { ticker: "D", facts: { latest: { ...snap("2026-06-30", -40, 3), noRevenue: true }, previous: null } },
+  ];
+  const dots = Object.fromEntries(buildRadar("semis", entries, "free").dots.map(d => [d.ticker, d]));
+  assert.deepEqual(["A", "B", "C", "D"].map(t => dots[t].x), [0.625, 0.875, 0.375, 0.125]);
+  assert.deepEqual(["A", "B", "C", "D"].map(t => dots[t].y), [0.125, 0.375, 0.875, 0.625]);
+  assert.deepEqual(rankPlaces([{ ticker: "X", value: 1 }]), { X: 0.5 });
 });
 
 test("a PRO payload adds movement, numbers, ranking order and the missing list", () => {
@@ -148,8 +163,8 @@ test("a company with no revenue sits at the left edge, says so, and stays out of
   assert.equal(pro.dots.find(d => d.ticker === "A").rank, 1);
   assert.equal(xPosition(dot.ocfMargin), 0);
   assert.ok(beyondText(dot.ocfMargin, dot.cover, true).includes("売上なし"));
-  assert.equal(buildRadar("power", entries, "free").dots.find(d => d.ticker === "OKLO").noRevenue, true);
-  assert.ok(!("noRevenue" in buildRadar("power", entries, "free").dots[0]));
+  // FREE: no flag, the company simply takes the lowest earning-power rank (owner, Nov 25).
+  assert.deepEqual(buildRadar("power", entries, "free").dots.map(d => [d.ticker, d.x, "noRevenue" in d]), [["A", 0.75, false], ["OKLO", 0.25, false]]);
 });
 
 test("arrows point the way a dot was stopped", () => {
@@ -184,7 +199,7 @@ test("every company with revenue is ranked: earning power above 100% counts as t
   assert.deepEqual(pro.dots.map(d => [d.ticker, d.rank, d.review]), [["A", 2, false], ["B", 3, true], ["C", 1, false], ["D", 4, false]]);
   assert.equal(pro.dots.find(d => d.ticker === "B").score, fitnessScore(60, 0.7));
   assert.equal(pro.dots.length, 4);
-  assert.ok(!JSON.stringify(buildRadar("semis", entries, "free")).includes("review"));
+  assert.ok(!JSON.stringify(buildRadar("semis", entries, "free").dots).includes("review"));
 });
 
 test("a company whose prepayments were taken out is ranked and marked; FREE is not told", () => {
@@ -194,7 +209,7 @@ test("a company whose prepayments were taken out is ranked and marked; FREE is n
   ];
   const pro = buildRadar("ai-cloud", entries, "pro");
   assert.deepEqual(pro.dots.map(d => [d.ticker, d.rank, d.review, d.prepaid ?? false]), [["NBIS", 2, false, true], ["CRWV", 1, false, false]]);
-  assert.ok(!JSON.stringify(buildRadar("ai-cloud", entries, "free")).includes("prepaid"));
+  assert.ok(!JSON.stringify(buildRadar("ai-cloud", entries, "free").dots).includes("prepaid"));
 });
 
 test("dots stopped at an edge that land on each other are spread so both show; dots inside keep their place", () => {

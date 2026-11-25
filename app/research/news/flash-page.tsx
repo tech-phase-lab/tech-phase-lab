@@ -18,7 +18,7 @@ import timeline from "../companies/company-activity.module.css";
 import tabStyles from "./news-feed.module.css";
 import styles from "./flash-page.module.css";
 import FeedPagination from "./feed-pagination";
-import { displayClock, displayDateTime, displayDayKey } from "@/lib/research/display-time";
+import { displayClock, displayDayKey, zoneLabel } from "@/lib/research/display-time";
 import NewsStory from "./news-story";
 
 const PAGE = 20;
@@ -140,14 +140,13 @@ export default function FlashPage({ lang, onReady }: { lang: Language; onReady?:
   const marked = (row: FlashRow) => unread.has(row.id) || (seenAtLoad !== null && checkedAt > 0 && row.timeKind === "published" && isFreshItem(row.at, "published", row.observedAt, seenAtLoad, checkedAt));
   const today = displayDayKey(checkedAt || Date.now(), lang);
   const kindLabel = { news: ja ? "ニュース" : "News", earnings: ja ? "決算" : "Earnings" };
-  const publication = (row: FlashRow) => row.timeKind === "date" ? `${ja ? "発表" : "Published"} ${row.at}`
-    : `${ja ? "発表" : "Published"} ${displayDateTime(row.at, lang)}`;
   const item = (row: FlashRow) => <article key={row.id} className={`${timeline.item} ${marked(row) ? timeline.unread : ""}`}>
     <span className={timeline.when}>{timeCell(row, lang)}</span><span className={timeline.node} aria-hidden="true" />
     <div className={timeline.entry}>
       <div className={timeline.meta}><span className={styles.ticker}>{row.tickers.join(" · ")}</span><span className={`${timeline.tag} ${row.kind === "earnings" ? styles.earnings : timeline.news}`}>{kindLabel[row.kind]}</span>{marked(row) && <span className={timeline.newMark}>NEW</span>}</div>
-      {/* A long headline shows two lines and the ＋ opens the whole text, never a cut-off "…" (owner, Oct 18). */}
-      <NewsStory lang={lang} label="" title={row.title} body={full ? row.body : undefined} publication={publication(row)} capDetail />
+      {/* A long headline shows two lines and the ＋ opens the whole text, never a cut-off "…" (owner, Oct 18). The left column carries the
+          time, so no 「発表 …」 line under each item (owner, Nov 25). */}
+      <NewsStory lang={lang} label="" title={row.title} body={full ? row.body : undefined} publication="" capDetail />
     </div>
   </article>;
   return <section className={styles.flash} aria-label={ja ? "速報" : "Alerts"}>
@@ -172,7 +171,7 @@ export default function FlashPage({ lang, onReady }: { lang: Language; onReady?:
       {!!shown.length && <div className={timeline.timeline}>{shown.flatMap((row, index) => {
         const key = flashDayKey(row, lang);
         const heading: ReactNode[] = key !== flashDayKey(shown[index - 1] ?? row, lang) || index === 0
-          ? [<h3 key={`day-${key}`} className={styles.day}>{dayHeading(key, ja)}{key === today && <span>{ja ? "今日" : "Today"}</span>}</h3>] : [];
+          ? [<h3 key={`day-${key}`} className={styles.day}>{dayHeading(key, ja)}{key === today && <span>{ja ? "今日" : "Today"}</span>}<small>{zoneLabel(lang)}</small></h3>] : [];
         return [...heading, item(row)];
       })}</div>}
     </div>

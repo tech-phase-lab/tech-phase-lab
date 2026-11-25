@@ -15,6 +15,7 @@
 .sourcesPanel li span{min-width:0;overflow-wrap:anywhere}
 .day{display:flex;align-items:center;gap:10px;margin:14px 0 2px;padding:0 0 0 2px;font:600 13px ui-monospace,monospace;letter-spacing:.06em;color:#c3ccda}
 .day span{font:500 10.5px sans-serif;letter-spacing:.1em;color:#5dffb4}
+.day small{margin-left:auto;font:500 10px ui-monospace,monospace;letter-spacing:.08em;color:#6f7b8c}
 .panel{--live:#5dffb4;--live-soft:rgba(93,255,180,.14);--hair:rgba(255,255,255,.07);border:1px solid #26334a;border-radius:20px;background:linear-gradient(180deg,#111826 0%,#0e131c 38%);padding:8px 0}
 .ticker{font:600 12px ui-monospace,monospace;letter-spacing:.08em;color:#d6e0f0}
 .earnings{color:#d9b46a}
