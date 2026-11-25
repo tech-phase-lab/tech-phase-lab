@@ -1,0 +1,156 @@
+{
+  "root": {
+    "ticker": "ORI",
+    "name": "オールド・リパブリック・インターナショナル",
+    "cik": 74260,
+    "name_en": "Old Republic International"
+  },
+  "rows": [
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "FNF",
+    "FAF",
+    "STC"
+  ],
+  "companies": [
+    {
+      "id": "FNF",
+      "ticker": "FNF",
+      "name": "フィデリティ・ナショナル・ファイナンシャル",
+      "name_en": "Fidelity National Financial",
+      "sub": "権原保険",
+      "sub_en": "Title insurance",
+      "sub_short": "権原保険",
+      "sub_short_en": "Title",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "FNFが10-Kで、主な市場の大手競合の一社に挙げる",
+          "text_en": "FNF lists it among competing major title underwriters",
+          "source": {
+            "label": "Fidelity National Financial 10-K(2025年度)",
+            "label_en": "Fidelity National Financial 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1331875/000133187526000026/fnf-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "In our principal markets, competitors include other major title underwriters such as First American Financial Corporation, Old Republic International Corporation, Stewart Information Services Corporation , Westcor Land Title Insurance"
+          }
+        }
+      ]
+    },
+    {
+      "id": "FAF",
+      "ticker": "FAF",
+      "name": "ファースト・アメリカン・フィナンシャル",
+      "name_en": "First American Financial",
+      "sub": "権原保険",
+      "sub_en": "Title insurance",
+      "sub_short": "権原保険",
+      "sub_short_en": "Title",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Stewartが10-Kで、FAFと並ぶ最大の競合の一社に挙げる(Old Republic Title)",
+          "text_en": "Stewart names it among its largest competitors alongside First American",
+          "source": {
+            "label": "Stewart Information Services 10-K(2025年度)",
+            "label_en": "Stewart Information Services 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/94344/000009434426000007/stc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "and Old Republic Title Insurance Group (Old Republic) which includes Old Republic National Title Insurance"
+          }
+        }
+      ]
+    },
+    {
+      "id": "STC",
+      "ticker": "STC",
+      "name": "スチュワート・インフォメーション・サービシズ",
+      "name_en": "Stewart Information Services",
+      "sub": "権原保険",
+      "sub_en": "Title insurance",
+      "sub_short": "権原保険",
+      "sub_short_en": "Title",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "HG Holdingsが10-Kで、大手の権原保険の競合として並べて挙げる",
+          "text_en": "HG Holdings lists it with Stewart among major title underwriter competitors",
+          "source": {
+            "label": "HG Holdings 10-K(2025年度)",
+            "label_en": "HG Holdings 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/797465/000143774926009993/stly20251231_10k.htm",
+            "level": "official",
+            "date": "2026-03-27",
+            "quote": "In our principal market, competitors include major title underwriters such as Fidelity National Financial, Inc., First American Financial Corporation, Old Republic International Corporation, Stewart Information Services Corporation, We"
+          }
+        }
+      ]
+    },
+    {
+      "id": "LRHC",
+      "ticker": "LRHC",
+      "name": "ラ・ローザ・ホールディングス",
+      "name_en": "La Rosa Holdings",
+      "sub": "不動産仲介",
+      "sub_en": "Real estate brokerage",
+      "sub_short": "不動産",
+      "sub_short_en": "Property",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "La Rosaが10-Kで、権原保険の主な競合の一社に挙げる",
+          "text_en": "La Rosa names Old Republic National Title among its key competitors",
+          "source": {
+            "label": "La Rosa Holdings 10-K(2025年度)",
+            "label_en": "La Rosa Holdings 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1879403/000121390026065276/ea0285141-10k_larosa.htm",
+            "level": "official",
+            "date": "2026-06-04",
+            "quote": "Key competitors include First American Title Insurance Company, Fidelity National Title Group, and Old Republic National Title Insurance Company."
+          }
+        }
+      ]
+    },
+    {
+      "id": "STLY",
+      "ticker": "STLY",
+      "name": "HGホールディングス",
+      "name_en": "HG Holdings",
+      "sub": "権原保険",
+      "sub_en": "Title insurance",
+      "sub_short": "権原保険",
+      "sub_short_en": "Title",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "HG Holdingsが10-Kで、主な市場の大手競合の一社に挙げる",
+          "text_en": "HG Holdings names it among major title underwriters it competes with",
+          "source": {
+            "label": "HG Holdings 10-K(2025年度)",
+            "label_en": "HG Holdings 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/797465/000143774926009993/stly20251231_10k.htm",
+            "level": "official",
+            "date": "2026-03-27",
+            "quote": "In our principal market, competitors include other major title underwriters such as Fidelity National Financial, Inc., First American Financial Corporation, Old Republic International Corporation, Stewart Information Services Corporati"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

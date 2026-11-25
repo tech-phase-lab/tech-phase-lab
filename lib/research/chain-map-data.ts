@@ -33,6 +33,7 @@ import c_aem from "../../data/chain/AEM.json" with { type: "json" };
 import c_aeo from "../../data/chain/AEO.json" with { type: "json" };
 import c_aep from "../../data/chain/AEP.json" with { type: "json" };
 import c_aes from "../../data/chain/AES.json" with { type: "json" };
+import c_afg from "../../data/chain/AFG.json" with { type: "json" };
 import c_afl from "../../data/chain/AFL.json" with { type: "json" };
 import c_ag from "../../data/chain/AG.json" with { type: "json" };
 import c_agco from "../../data/chain/AGCO.json" with { type: "json" };
@@ -115,6 +116,7 @@ import c_avtr from "../../data/chain/AVTR.json" with { type: "json" };
 import c_avy from "../../data/chain/AVY.json" with { type: "json" };
 import c_awi from "../../data/chain/AWI.json" with { type: "json" };
 import c_awk from "../../data/chain/AWK.json" with { type: "json" };
+import c_ax from "../../data/chain/AX.json" with { type: "json" };
 import c_axon from "../../data/chain/AXON.json" with { type: "json" };
 import c_axp from "../../data/chain/AXP.json" with { type: "json" };
 import c_axta from "../../data/chain/AXTA.json" with { type: "json" };
@@ -372,6 +374,7 @@ import c_expe from "../../data/chain/EXPE.json" with { type: "json" };
 import c_exr from "../../data/chain/EXR.json" with { type: "json" };
 import c_extr from "../../data/chain/EXTR.json" with { type: "json" };
 import c_f from "../../data/chain/F.json" with { type: "json" };
+import c_faf from "../../data/chain/FAF.json" with { type: "json" };
 import c_fast from "../../data/chain/FAST.json" with { type: "json" };
 import c_fbin from "../../data/chain/FBIN.json" with { type: "json" };
 import c_fcx from "../../data/chain/FCX.json" with { type: "json" };
@@ -682,6 +685,7 @@ import c_nfg from "../../data/chain/NFG.json" with { type: "json" };
 import c_nflx from "../../data/chain/NFLX.json" with { type: "json" };
 import c_ngvt from "../../data/chain/NGVT.json" with { type: "json" };
 import c_nhi from "../../data/chain/NHI.json" with { type: "json" };
+import c_ni from "../../data/chain/NI.json" with { type: "json" };
 import c_nice from "../../data/chain/NICE.json" with { type: "json" };
 import c_nke from "../../data/chain/NKE.json" with { type: "json" };
 import c_nmih from "../../data/chain/NMIH.json" with { type: "json" };
@@ -732,6 +736,7 @@ import c_onto from "../../data/chain/ONTO.json" with { type: "json" };
 import c_opch from "../../data/chain/OPCH.json" with { type: "json" };
 import c_ora from "../../data/chain/ORA.json" with { type: "json" };
 import c_orcl from "../../data/chain/ORCL.json" with { type: "json" };
+import c_ori from "../../data/chain/ORI.json" with { type: "json" };
 import c_orly from "../../data/chain/ORLY.json" with { type: "json" };
 import c_osis from "../../data/chain/OSIS.json" with { type: "json" };
 import c_osk from "../../data/chain/OSK.json" with { type: "json" };
@@ -884,6 +889,7 @@ import c_schw from "../../data/chain/SCHW.json" with { type: "json" };
 import c_scsc from "../../data/chain/SCSC.json" with { type: "json" };
 import c_sdgr from "../../data/chain/SDGR.json" with { type: "json" };
 import c_sedg from "../../data/chain/SEDG.json" with { type: "json" };
+import c_sei from "../../data/chain/SEI.json" with { type: "json" };
 import c_seic from "../../data/chain/SEIC.json" with { type: "json" };
 import c_sfbs from "../../data/chain/SFBS.json" with { type: "json" };
 import c_sfm from "../../data/chain/SFM.json" with { type: "json" };
@@ -1169,6 +1175,7 @@ const available: Record<string, ChainMapData> = {
   AEO: c_aeo as ChainMapData,
   AEP: c_aep as ChainMapData,
   AES: c_aes as ChainMapData,
+  AFG: c_afg as ChainMapData,
   AFL: c_afl as ChainMapData,
   AG: c_ag as ChainMapData,
   AGCO: c_agco as ChainMapData,
@@ -1251,6 +1258,7 @@ const available: Record<string, ChainMapData> = {
   AVY: c_avy as ChainMapData,
   AWI: c_awi as ChainMapData,
   AWK: c_awk as ChainMapData,
+  AX: c_ax as ChainMapData,
   AXON: c_axon as ChainMapData,
   AXP: c_axp as ChainMapData,
   AXTA: c_axta as ChainMapData,
@@ -1508,6 +1516,7 @@ const available: Record<string, ChainMapData> = {
   EXR: c_exr as ChainMapData,
   EXTR: c_extr as ChainMapData,
   F: c_f as ChainMapData,
+  FAF: c_faf as ChainMapData,
   FAST: c_fast as ChainMapData,
   FBIN: c_fbin as ChainMapData,
   FCX: c_fcx as ChainMapData,
@@ -1818,6 +1827,7 @@ const available: Record<string, ChainMapData> = {
   NFLX: c_nflx as ChainMapData,
   NGVT: c_ngvt as ChainMapData,
   NHI: c_nhi as ChainMapData,
+  NI: c_ni as ChainMapData,
   NICE: c_nice as ChainMapData,
   NKE: c_nke as ChainMapData,
   NMIH: c_nmih as ChainMapData,
@@ -1868,6 +1878,7 @@ const available: Record<string, ChainMapData> = {
   OPCH: c_opch as ChainMapData,
   ORA: c_ora as ChainMapData,
   ORCL: c_orcl as ChainMapData,
+  ORI: c_ori as ChainMapData,
   ORLY: c_orly as ChainMapData,
   OSIS: c_osis as ChainMapData,
   OSK: c_osk as ChainMapData,
@@ -2020,6 +2031,7 @@ const available: Record<string, ChainMapData> = {
   SCSC: c_scsc as ChainMapData,
   SDGR: c_sdgr as ChainMapData,
   SEDG: c_sedg as ChainMapData,
+  SEI: c_sei as ChainMapData,
   SEIC: c_seic as ChainMapData,
   SFBS: c_sfbs as ChainMapData,
   SFM: c_sfm as ChainMapData,
