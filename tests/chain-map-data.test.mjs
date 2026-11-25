@@ -131,17 +131,20 @@ const { StockChainMap } = compile('stock-chain-map', { '@/lib/research/chain-map
 const { renderToStaticMarkup } = require('react-dom/server');
 const { createElement } = require('react');
 
-test('the map shows suppliers first, no range buttons, a card per company with sources behind a tap', () => {
+test('the map shows suppliers first, no range buttons, a card per company and every source in one closed 「出典」 at the bottom', () => {
   for (const lang of ['ja', 'en']) {
     const html = renderToStaticMarkup(createElement(StockChainMap, { data, lang }));
     // 22 company chips + the root, minus the ones folded behind a row's "＋" chip (plus that chip).
     assert.equal((html.match(/<button/g) ?? []).length, 21);
     assert.ok(!html.includes('直接の関係') && !html.includes('2段先まで'));
-    assert.equal((html.match(/<details/g) ?? []).length, 25);
+    // Owner, Nov 25: no per-card 「出典・引用・発表日」; one closed 「出典」 after the footer note lists every relation's and far link's source.
+    assert.equal((html.match(/<details/g) ?? []).length, 1);
+    assert.ok(html.indexOf('data-chain-sources') > html.indexOf(lang === 'ja' ? '投資判断を勧めるものではありません' : 'Not investment advice'));
+    assert.equal((html.match(/<li[^>]*><span><b>/g) ?? []).length, data.companies.reduce((sum, company) => sum + company.relations.length, 0) + data.far.length);
     assert.ok(html.indexOf(lang === 'ja' ? '供給元(上流)' : 'Suppliers (upstream)') < html.indexOf('NVDA</b>'));
     assert.ok(html.includes(lang === 'ja' ? '22社 · 31の関係' : '22 companies · 31 relationships'));
     assert.ok(html.includes(lang === 'ja' ? 'さらに先の関係' : 'Related connections'));
-    assert.ok(html.includes(lang === 'ja' ? '出典・引用・発表日' : 'Sources, quotes &amp; dates'));
+    assert.ok(!html.includes('出典・引用・発表日') && !html.includes('Sources, quotes &amp; dates') && !html.includes('3段先以降'));
     assert.ok(html.includes(lang === 'ja' ? '報道' : 'Media report'));
     assert.equal((html.match(/id="chain-card-/g) ?? []).length, 22);
     // The Japanese view never shows English-only copy; the English view never shows Japanese.

@@ -7,6 +7,8 @@ import CompanyDirectory from "./companies/company-directory";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
 import SiteHeader from "./site-header";
+import { useMemberDisplay, useOwnerAccount } from "./member-display-provider";
+import { companyHref } from "@/lib/research/company-href";
 import type { Language, ResearchEvent } from "@/lib/research/data";
 import { metricNames } from "@/lib/research/data";
 import { compareMetrics } from "@/lib/research/quality";
@@ -54,6 +56,9 @@ type MonitoredCompany = {
 };
 
 export default function ResearchDashboard({ events, monitoredCompanies, initialNews }: { events: ResearchEvent[]; monitoredCompanies: MonitoredCompany[]; initialNews?: InitialNewsSnapshot | null }) {
+  // The company pages are PRO only (owner, Nov 25): without PRO the ticker link opens the stock's FREE page.
+  const ownerAccount = useOwnerAccount(), plan = useMemberDisplay();
+  const proReader = ownerAccount || plan === "pro";
   const [lang, setLang] = useResearchLanguage();
   const restoredView = useSyncExternalStore(subscribeView, viewSnapshot, () => null);
   const tab = restoredView ?? "home";
@@ -307,7 +312,7 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
               </div>}
               <ResearchNotebook key={`${collection.scope}:${active.id}:${lang}:${Boolean(active.locked)}`} raw={JSON.stringify(collection.document.notebooks[notebookKey(active.id, lang)] ?? [])} onCommit={(raw, marks) => collection.commitMarks(active.id, lang, raw, marks)} editable={collection.editable} lang={lang} title={active.title[lang]} enabled={tab === "saved" || saved.includes(active.id)}>
               <div className={styles.detailTop} data-pdf="meta"><span className={styles.eyebrow}>RESEARCH NOTE</span><span className={styles.version}>{active.analysisAsOf ? "v3" : active.analysis ? "v2" : "v1"} · {(active.id === "mu-q4-2026" || active.id.startsWith("x-result-") || active.id.startsWith("ir-flash-")) ? t("決算速報", "Earnings update") : active.id.startsWith("ir-result-") ? t("公式発表", "Company update") : active.analysisAsOf ? t("分析更新", "Updated analysis") : t("過去事例", "Historical")}</span></div>
-              <div className={styles.detailCompany} data-pdf="company"><Link className={styles.detailTicker} href={`/research/companies/${active.ticker}`} aria-label={t(`${active.ticker}の銘柄ページ`, `${active.ticker} company research`)}>{activeCompanyName}{activeCompanyName !== active.ticker && `（${active.ticker}）`}</Link></div>
+              <div className={styles.detailCompany} data-pdf="company"><Link className={styles.detailTicker} href={companyHref(active.ticker, proReader)} aria-label={t(`${active.ticker}の銘柄ページ`, `${active.ticker} company research`)}>{activeCompanyName}{activeCompanyName !== active.ticker && `（${active.ticker}）`}</Link></div>
               <h2 data-pdf="title">{active.title[lang]}</h2>{active.id === "mu-q3-2026" && <p>{t("PRO分析の無料サンプルです。ほかの詳細分析はPRO会員向けです。", "A free sample of PRO research. Other in-depth analysis requires PRO membership.")}</p>}
               <dl className={styles.announcementContext} data-pdf="facts">
                 {active.analysisAsOf && <div><dt>{t("分析基準日", "Analysis as of")}</dt><dd>{dateLabel(active.analysisAsOf, lang)}</dd></div>}

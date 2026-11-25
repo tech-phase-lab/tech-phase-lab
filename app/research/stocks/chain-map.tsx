@@ -4,6 +4,7 @@ import {chainFocus} from '@/lib/research/chain-network';
 import {layoutCompanyNetwork,networkLayers,networkEdgePath} from '@/lib/research/company-network';
 import type {CompanyNetwork,NetworkEdge,NetworkMode} from '@/lib/research/company-network';
 import {GatedChainMap} from './gated-chain-map';
+import {CHAIN_NOTE} from './stock-chain-map';
 import styles from './company-network.module.css';
 type Props={graph:CompanyNetwork;lang:'ja'|'en'};
 export function CompanyNetworkMap(props:Props){
@@ -50,10 +51,12 @@ export function ChainCompanyNetworkMap({graph,lang}:Props){
    </div>
    <div className={styles.inspector}><h3>{ja?<>{root.ticker??root.name}{mode==='direct'?'との関係':'を起点とした関係'}</>:<>{mode==='direct'?'Relationships with ':'Relationships starting from '}{root.ticker??root.name}</>}</h3>{sections.map(([color,label])=>{const members=[...groups].filter(([,edges])=>tone(primary(edges))===color);return members.length>0&&<section className={styles.relationshipGroup} data-relationship-group={color} data-tone={color} key={color}><h4>{label} <span>{ja?`${members.length}社`:members.length}</span></h4><ul>{members.map(([id,edges])=><li key={id} data-company-detail={id} data-tone={tone(primary(edges))}>
     <div className={styles.connectionTitle}><strong>{byId.get(id)?.ticker??byId.get(id)?.name}</strong><div className={styles.tags}>{[...new Map(edges.map(e=>[tag(e),tone(e)])).entries()].map(([label,color])=><span key={label} data-tone={color}>{label}</span>)}</div></div>
-    <p className={styles.relationshipText}>{primary(edges).evidence[0].label[lang]||primary(edges).evidence[0].label.ja}</p><details className={styles.evidence}><summary>{t('出典・引用・発表日','Sources, quotes & dates')}</summary>{edges.map(e=><div key={e.id}>{e.evidence.map((v,i)=><div key={i}><p className={styles.relationshipText}>{v.label[lang]||v.label.ja}</p><time dateTime={v.reviewedOn}>{v.reviewedOn}</time><blockquote>{v.evidence_quote}</blockquote>{v.sources.map(s=><a key={s.url} href={s.url} target="_blank" rel="noreferrer">{t('公式資料を開く ↗','Open official source ↗')}</a>)}</div>)}</div>)}</details>
+    <p className={styles.relationshipText}>{primary(edges).evidence[0].label[lang]||primary(edges).evidence[0].label.ja}</p>
    </li>)}</ul></section>})}</div>
    <div className={styles.allControl}><button type="button" onClick={()=>setMode(mode==='all'?'direct':'all')}>{mode==='all'?t('直接の関係に戻る','Back to direct relationships'):t('全体を見る','See everything')}</button></div>
   </>}
-  <p className={styles.footnote}>{t('公式資料の引用で確認できた関係のみ表示しています。2段先は直接取引を意味しません。','Only relationships confirmed by quotes from official sources are shown. Two steps away does not mean a direct business relationship.')}</p>
+  <p className={styles.footnote}>{t(CHAIN_NOTE.ja,CHAIN_NOTE.en)}</p>
+  {/* Every source, quote and date in one closed 「出典」 at the very bottom (owner, Nov 25). */}
+  {focus.edges.length>0&&<details className={styles.evidence} data-chain-sources=""><summary>{t('出典','Sources')}</summary>{focus.edges.map(e=><div key={e.id}><strong>{byId.get(e.from)?.ticker??byId.get(e.from)?.name} × {byId.get(e.to)?.ticker??byId.get(e.to)?.name}</strong>{e.evidence.map((v,i)=><div key={i}><p className={styles.relationshipText}>{v.label[lang]||v.label.ja}</p><time dateTime={v.reviewedOn}>{v.reviewedOn}</time><blockquote>{v.evidence_quote}</blockquote>{v.sources.map(s=><a key={s.url} href={s.url} target="_blank" rel="noreferrer">{t('公式資料を開く ↗','Open official source ↗')}</a>)}</div>)}</div>)}</details>}
  </section>;
 }

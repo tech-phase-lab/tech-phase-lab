@@ -345,7 +345,7 @@ test("stock search UI separates free identity data from licensed prices and news
   assert.match(directory, /監視\$\{companies\.length\}銘柄リスト/);
   assert.match(directory, /決算リサーチを公開済み/);
   assert.match(directory, /速報配信や全資料の分析完了を示すものではありません/);
-  assert.match(directory, /\/research\/companies\/\$\{company\.ticker\}/);
+  assert.match(directory, /href=\{companyHref\(company\.ticker,pro\)\}/); // PRO only (owner, Nov 25): FREE tiles open the quote page
   assert.match(researchStyles, /\.companyGroups \{/);
   assert.match(researchStyles, /@media\(max-width:760px\)[\s\S]*\.companyGroups \{\s*column-count:1/);
   assert.match(researchStyles, /\.primaryNav \{\s*display:none/);

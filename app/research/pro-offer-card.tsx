@@ -5,6 +5,7 @@ import styles from "./plan-cards.module.css";
 import { priceFont } from "./price-font";
 import AgreeButton, { CheckoutLines, PRO_CHECKOUT_LINE } from "../legal/agree-button";
 import { ConsentCheck, ConsentError, useConsent } from "../legal/consent-check";
+import { CARRIED_CONSENT_KEY, carriedConsent, withConsent } from "@/lib/legal/consent";
 
 export type OfferCurrency = "JPY" | "USD";
 export type OfferPeriod = "month" | "year";
@@ -44,6 +45,18 @@ export default function ProOfferCard({ ja, onSubscribe, href, busy = false, disa
   const [pickedPeriod, setPeriod] = useState<OfferPeriod | null>(null);
   const consent = useConsent();
   useEffect(() => { const saved = remembered(); const id = setTimeout(() => { if (saved.currency) setCurrency(saved.currency); if (saved.period) setPeriod(saved.period); }, 0); return () => clearTimeout(id); }, []);
+  // The purchase screen (account page) starts ticked when the reader ticked on the PRO page's card just before (owner, Nov 25).
+  const restore = consent.restore, purchase = Boolean(onSubscribe);
+  useEffect(() => {
+    if (!purchase) return;
+    let stored: string | null = null;
+    try { stored = sessionStorage.getItem(CARRIED_CONSENT_KEY); } catch { /* optional */ }
+    const at = carriedConsent(new URLSearchParams(window.location.search).get("consentAt")) ?? carriedConsent(stored);
+    if (!at) return;
+    const id = setTimeout(() => restore(at), 0);
+    return () => clearTimeout(id);
+  // eslint-disable-next-line react-hooks/exhaustive-deps -- once, on arrival
+  }, [purchase]);
   const currency: OfferCurrency = pickedCurrency ?? (ja ? "JPY" : "USD");
   const period: OfferPeriod = pickedPeriod ?? "month";
   const pick = (c: OfferCurrency | null, p: OfferPeriod | null) => { const nextC = c ?? pickedCurrency ?? currency, nextP = p ?? pickedPeriod ?? period; setCurrency(nextC); setPeriod(nextP); remember({ currency: nextC, period: nextP }); };
@@ -71,7 +84,15 @@ export default function ProOfferCard({ ja, onSubscribe, href, busy = false, disa
       // The consent line sits right above it (lawyer review, Nov 24): without the tick, nothing starts and the red line shows under it.
       ? <><CheckoutLines lines={[ja ? PRO_CHECKOUT_LINE.ja : PRO_CHECKOUT_LINE.en]} className={styles.agreeLine} /><ConsentCheck en={!ja} consent={consent} />
         <AgreeButton en={!ja} className={styles.paypal} disabled={busy || disabled} busy={busy} busyLabel={label} onClick={() => { const at = consent.require(); if (at) onSubscribe(currency, period, at); }} /><ConsentError en={!ja} consent={consent} /></>
-      : href && !disabled ? <Link className={styles.paypal} href={href} prefetch={false}>{label}</Link> : <button type="button" className={styles.paypal} disabled>{label}</button>}
+      // A card that only links on to the purchase screen has the same tick right above its button (lawyer: every purchase
+      // button; owner, Nov 25). Unticked, the link does not move; ticked, the time goes with it to the account page.
+      : href && !disabled ? <><ConsentCheck en={!ja} consent={consent} />
+        <Link className={styles.paypal} href={consent.agreedAt ? withConsent(href, consent.agreedAt) : href} prefetch={false} onClick={event => {
+          const at = consent.require();
+          if (!at) { event.preventDefault(); return; }
+          try { sessionStorage.setItem(CARRIED_CONSENT_KEY, at); } catch { /* the link still carries it */ }
+        }}>{label}</Link><ConsentError en={!ja} consent={consent} /></>
+      : <button type="button" className={styles.paypal} disabled>{label}</button>}
     {notice}
     <p className={styles.includes}>{t("無料プランのすべての機能に加えて", "Everything in Free, plus")}</p>
     {children}

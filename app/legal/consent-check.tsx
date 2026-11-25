@@ -8,6 +8,8 @@ const termsLink = (en: boolean) => en ? "/terms?lang=en" : "/terms";
  * null means stop (and the red line shows). */
 export function consentControls(state: ConsentState, setState: (next: ConsentState) => void) {
   return { ...state, set: (checked: boolean) => setState(tickConsent(checked)),
+    /** Starts ticked with a time carried from the previous screen's tick (see carriedConsent). */
+    restore: (agreedAt: string) => setState({ agreedAt, missing: false }),
     require: () => { const r = pressPurchase(state); setState(r.state); return r.consentAt; } };
 }
 /** One consent per purchase screen. */

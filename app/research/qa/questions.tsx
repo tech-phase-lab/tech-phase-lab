@@ -106,6 +106,8 @@ export default function Questions({ initial, standby = false }: { initial?: Ques
 
   const description = ownerMode
     ? (ja ? "集まった質問です。回答する質問を選べます。" : "The questions that came in. Choose which to answer.")
+    // FREE (locked) view: no subtitle; the lock notice says it once (owner, Nov 25).
+    : state !== "ready" ? ""
     : (ja ? "PRO会員の質問から、リゼルが選んで回答します。すべてには答えられません。" : "Rizel answers selected questions from PRO members. We can't promise an answer to every question.");
   const rules = [
     ja ? "質問は、PRO会員全員に公開されます。" : "Questions are visible to all PRO members.",
@@ -116,7 +118,7 @@ export default function Questions({ initial, standby = false }: { initial?: Ques
     ...(!ownerMode && ja ? ["消しても、その日の残り件数は戻りません。"] : []),
   ];
   return <ResearchToolShell desk lang={lang} setLang={setLang} title={ja ? "リゼルに聞く" : "Ask Rizel"} description={description}>
-    {(state === "signed-out" || state === "pro-required") && <section className={styles.askNotice}><h2>{ja ? "閲覧・投稿はPRO会員限定です" : "PRO membership required"}</h2><p>{ja ? "PRO会員になると質問の投稿と閲覧ができます。すべての質問への回答はお約束していません。" : "PRO members can post and read questions. Not every question will receive an answer."}</p><Link href="/research/account">{ja ? "ログイン・会員情報" : "Sign in or view plans"}</Link></section>}
+    {(state === "signed-out" || state === "pro-required") && <section className={styles.askNotice}><h2>{ja ? "質問の投稿・閲覧はPRO会員限定です。" : "Posting and reading questions is for PRO members."}</h2><Link href="/research/account">{ja ? "ログイン・会員情報" : "Sign in or view plans"}</Link></section>}
     {state === "error" && <p role="status">{ja ? "質問機能に接続できませんでした。時間をおいて再読み込みしてください。" : "We couldn't load the questions. Please try again later."}</p>}
     {(state === "ready" || state === "loading") && <>
       {(open
