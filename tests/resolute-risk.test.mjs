@@ -39,7 +39,7 @@ test('Shock Gauge stars are mechanical: the highest level whose every condition 
 });
 test('the published criteria text is plain, generated from the levels, in both languages, and shown on the Shock Gauge page',()=>{
  assert.equal(starCriteria('ja'),['★のつけ方',
-  '・ニュースのあと、アメリカの市場が閉まったときの値で、TP大型株100とTP半導体40の両方を見ます（取引中や取引後に出たニュースは、次の取引日の値で見ます）。大きく動いたほうで★を決めます。',
+  '・ニュースのあと、アメリカの市場が閉まったときの値で、TP大型株100とTP半導体40の両方を見ます。取引中や取引後に出たニュースは、次の取引日の値で見ます。大きく動いたほうで★を決めます。',
   '・★5：いつもの5倍以上動いた、8割以上の会社が同じ向きに動いた、下落のときは恐怖指数も1割以上上がった',
   '・★4：いつもの3倍以上動いた、8割以上の会社が同じ向きに動いた',
   '・★3：いつもの2倍以上動いた、7割以上の会社が同じ向きに動いた',
