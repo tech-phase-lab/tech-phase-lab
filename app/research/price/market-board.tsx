@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { useResearchLanguage } from "../use-research-language";
 import PriceChart from "./price-chart";
 import { useMinute, useSecond } from "./use-minute";
@@ -40,6 +40,39 @@ const CATEGORIES: { id: string; ja: string; en: string; items: Entry[] }[] = [
 const ALL = [...INDEX_ETFS, ...CATEGORIES.flatMap(c => c.items)];
 /** The last tab (owner, Nov 25): long 2x / 3x funds, a list of its own (app/research/price/leveraged-list.tsx) instead of the cards and chart. */
 const LEVERAGED = { id: "lev", ja: "レバETF", en: "Leveraged ETFs" } as const;
+/** The type switcher (owner, Nov 25): 3 columns × 2 rows of underline tabs, a small line icon beside each word. Row 1 為替・暗号資産・金属, row 2
+ * 債券ETF・半導体ETF・レバETF. 24-unit strokes in currentColor, so the chosen tab's icon turns mint with its word. */
+const TAB_ICONS: Record<string, ReactNode> = {
+  fx: <path d="M4 8h15M15 4l4 4-4 4M20 16H5M9 12l-4 4 4 4" />,
+  crypto: <><circle cx="12" cy="12" r="8.5" /><path d="M10 7.5v9M10 8h3.2a2 2 0 0 1 0 4H10h3.6a2 2 0 0 1 0 4H10M12 6.5v1.5M12 16v1.5" /></>,
+  metal: <path d="M7.5 8h9l3.5 9H4zM9.5 8l-1 9" />,
+  bond: <><rect x="5" y="4" width="14" height="16" rx="2" /><path d="M8.5 9h7M8.5 12.5h7M8.5 16h4" /></>,
+  semi: <><rect x="7" y="7" width="10" height="10" rx="1.5" /><path d="M10 3.5V7M14 3.5V7M10 17v3.5M14 17v3.5M3.5 10H7M3.5 14H7M17 10h3.5M17 14h3.5" /></>,
+  lev: <path d="M3.5 17l6-6 4 4 7-7.5M15 7.5h5.5V13" />,
+};
+function TabIcon({ id }: { id: string }) {
+  return <svg className={styles.tabIcon} viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" focusable="false">{TAB_ICONS[id]}</svg>;
+}
+/** English words that do not fit their column at the regular size are drawn a little smaller, all six alike (never cut, never on two lines). */
+function useFittedLabels(dep: string) {
+  const box = useRef<HTMLDivElement>(null);
+  useLayoutEffect(() => {
+    const group = box.current;
+    if (!group) return;
+    const fit = () => {
+      group.style.removeProperty("--tab-font");
+      let size = parseFloat(getComputedStyle(group).getPropertyValue("--tab-font-max")) || 13.5;
+      const labels = [...group.querySelectorAll<HTMLElement>("[data-tab-label]")];
+      const over = () => labels.some(label => { const button = label.parentElement!; return button.scrollWidth > button.clientWidth + 0.5; });
+      while (over() && size > 9.5) { size -= 0.5; group.style.setProperty("--tab-font", `${size}px`); }
+    };
+    fit();
+    const watch = new ResizeObserver(fit);
+    watch.observe(group);
+    return () => watch.disconnect();
+  }, [dep]);
+  return box;
+}
 const STORE = "tp-market-board";
 const FAST_MS = 15_000, SLOW_MS = 60_000;
 
@@ -206,6 +239,7 @@ export default function MarketBoard() {
   const tag = shownPrice === null ? undefined : { price: shownPrice, text: num(shownPrice), tone };
   const pick = (id: string) => { setSelected(id); setActive(null); };
   const name = (p: BoardPeriod) => PERIOD_LABEL[p][ja ? "ja" : "en"];
+  const tabs = useFittedLabels(lang);
   return <div className={styles.wrap}>
     <section className={styles.indices} aria-label={t("主要3指数に連動するETF", "ETFs tracking the three major indices")}>
       {/* Not a live region: a clock read aloud every second would drown a screen reader. Only the loading / failure words are announced. */}
@@ -221,8 +255,8 @@ export default function MarketBoard() {
         </button>;
       })}</div>
     </section>
-    <div className={styles.tabs} role="group" aria-label={t("種類", "Category")}>{CATEGORIES.map(item => <button key={item.id} type="button" aria-pressed={category === item.id} onClick={() => { setCategory(item.id); pick(item.items[0].id); }}>{ja ? item.ja : item.en}</button>)}
-      <button type="button" aria-pressed={lev} onClick={() => { setCategory(LEVERAGED.id); setActive(null); }}>{ja ? LEVERAGED.ja : LEVERAGED.en}</button></div>
+    <div className={styles.tabs} ref={tabs} role="group" aria-label={t("種類", "Category")}>{CATEGORIES.map(item => <button key={item.id} type="button" aria-pressed={category === item.id} onClick={() => { setCategory(item.id); pick(item.items[0].id); }}><TabIcon id={item.id} /><span data-tab-label>{ja ? item.ja : item.en}</span></button>)}
+      <button type="button" aria-pressed={lev} onClick={() => { setCategory(LEVERAGED.id); setActive(null); }}><TabIcon id={LEVERAGED.id} /><span data-tab-label>{ja ? LEVERAGED.ja : LEVERAGED.en}</span></button></div>
     {lev ? <LeveragedList ja={ja} /> : <>
     <div className={styles.items} style={{ gridTemplateColumns: `repeat(${current.items.length},minmax(0,1fr))` }}>{current.items.map(item => {
       const q = itemQuotes?.[item.id], tn = toneOf(q?.percentChange ?? null);

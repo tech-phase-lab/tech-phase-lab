@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { LEVERAGED_ETFS, LEVERAGED_SYMBOLS, leveragedRows, sortLeveraged, leveragedPrice, leveragedPercent } from "../lib/research/leveraged-etfs.ts";
+import { LEVERAGED_ETFS, LEVERAGED_GIVE_UP, LEVERAGED_START, LEVERAGED_SYMBOLS, leveragedRows, mergeLeveragedRows, nextLeveragedView, sortLeveraged, leveragedPrice, leveragedPercent } from "../lib/research/leveraged-etfs.ts";
 import { providers } from "../lib/research/intake.ts";
 import { STOCK_LOGOS } from "../lib/research/stock-logos.ts";
 import { existsSync } from "node:fs";
@@ -54,7 +54,7 @@ test("上昇率 (first), 下落率 and 出来高 order the rows; a row without t
 test("the tab comes after 半導体ETF, draws no chart, credits Twelve Data at the bottom, and uses no gold (FREE page)", () => {
   const board = read("app/research/price/market-board.tsx");
   assert.ok(board.indexOf('{ id: "semi", ja: "半導体ETF"') < board.indexOf('const LEVERAGED = { id: "lev", ja: "レバETF", en: "Leveraged ETFs" }'));
-  assert.match(board, /CATEGORIES\.map\(item => <button[^\n]*\n\s*<button type="button" aria-pressed=\{lev\}[^\n]*LEVERAGED\.ja : LEVERAGED\.en/);
+  assert.match(board, /CATEGORIES\.map\(item => <button[^\n]*\n\s*<button type="button" aria-pressed=\{lev\}[^\n]*<TabIcon id=\{LEVERAGED\.id\} \/><span data-tab-label>\{ja \? LEVERAGED\.ja : LEVERAGED\.en\}/);
   assert.match(board, /\{lev \? <LeveragedList ja=\{ja\} \/> : <>/);
   assert.match(board, /if \(lev\) return;/, "no chart read while the list is shown");
   assert.match(board, /lev \? t\("提供：Twelve Data", "Data: Twelve Data"\)/);
@@ -105,4 +105,55 @@ test("an after-hours price without the provider's percentage keeps its row's 「
   assert.equal(fav.extended.session, "post");
   assert.equal(fav.extended.live, true, "a print 50 minutes old is still the after-hours price");
   assert.ok(Math.abs(fav.extended.percentChange - (131.01 - 131.57) / 131.57 * 100) < 1e-9);
+});
+
+test("the type switcher (owner, Nov 25): 3 × 2 underline tabs with a line icon beside each word, no box, mint glow on the chosen one, one line each", () => {
+  const board = read("app/research/price/market-board.tsx");
+  const order = ['{ id: "fx", ja: "為替"', '{ id: "crypto", ja: "暗号資産"', '{ id: "metal", ja: "金属"', '{ id: "bond", ja: "債券ETF"', '{ id: "semi", ja: "半導体ETF"', 'const LEVERAGED = { id: "lev", ja: "レバETF"'].map(text => board.indexOf(text));
+  assert.ok(order.every((at, i) => at > 0 && (i === 0 || at > order[i - 1])), "row 1 為替・暗号資産・金属, row 2 債券ETF・半導体ETF・レバETF");
+  for (const id of ["fx", "crypto", "metal", "bond", "semi", "lev"]) assert.match(board, new RegExp(`\\n  ${id}: <`), `${id} icon`);
+  assert.match(board, /fill="none" stroke="currentColor"/, "line icons in the word's colour");
+  assert.match(board, /<TabIcon id=\{item\.id\} \/><span data-tab-label>/);
+  assert.match(board, /while \(over\(\) && size > 9\.5\)/, "English words shrink to fit instead of being cut");
+  const css = read("app/research/price/board.module.css");
+  const tabs = css.slice(css.indexOf(".tabs{"), css.indexOf(".items{"));
+  assert.match(tabs, /\.tabs\{[^}]*display:grid;grid-template-columns:repeat\(3,minmax\(0,1fr\)\)/);
+  assert.doesNotMatch(tabs, /overflow-x:auto|border-radius:999px|border:1px solid/, "no scroll strip, no pill, no frame");
+  assert.match(tabs, /\.tabs button\{[^}]*justify-content:center;[^}]*border:0;background:transparent;[^}]*white-space:nowrap/);
+  assert.match(tabs, /\.tabs button::after\{[^}]*height:1\.5px;[^}]*background:#273140/, "a thin dark-grey underline");
+  assert.match(tabs, /\.tabs button\[aria-pressed="true"\]::after\{height:3px;background:#7fe3c0;box-shadow:/, "a thicker glowing mint underline");
+  assert.match(tabs, /\.tabs button\[aria-pressed="true"\] \.tabIcon\{color:#7fe3c0;filter:drop-shadow/);
+  assert.doesNotMatch(tabs, /ellipsis|#d9b46a/);
+});
+
+test("レバETF never stays on 「読み込み中…」: rows that arrive show at once and are kept; 「データを取得できませんでした」 only when nothing comes", () => {
+  const row = (etf, percentChange = 1) => ({ ...LEVERAGED_ETFS.find(item => item.etf === etf), price: 10, percentChange, volume: 1, underlyingChange: null, extended: null });
+  // A partial first answer is shown, not held back.
+  let view = nextLeveragedView(LEVERAGED_START, { rows: [row("SOXL")], missing: 40 });
+  assert.deepEqual(view.rows.map(r => r.etf), ["SOXL"]);
+  // The next one adds to it; a later failure keeps what is there.
+  view = nextLeveragedView(view, { rows: [row("MUU"), row("SOXL", 5)], missing: 0 });
+  assert.deepEqual(view.rows.map(r => [r.etf, r.percentChange]), [["MUU", 1], ["SOXL", 5]], "the list's order, the newer figure");
+  assert.equal(nextLeveragedView(view, null).rows.length, 2);
+  // Nothing at all: still loading while the server is reading, then the failure words; a complete empty answer at once.
+  let empty = LEVERAGED_START;
+  for (let i = 1; i < LEVERAGED_GIVE_UP; i++) { empty = nextLeveragedView(empty, i % 2 ? null : { rows: [], missing: 30 }); assert.equal(empty.rows, null); }
+  empty = nextLeveragedView(empty, null);
+  assert.deepEqual([empty.rows, empty.failed], [[], true]);
+  assert.equal(nextLeveragedView(empty, null).failed, true, "stays on the failure words, no flicker back to loading");
+  assert.deepEqual(nextLeveragedView(empty, { rows: [row("TQQQ")], missing: 0 }).rows.map(r => r.etf), ["TQQQ"], "a later answer still shows");
+  assert.equal(nextLeveragedView(LEVERAGED_START, { rows: [], missing: 0 }).failed, true);
+  assert.deepEqual(mergeLeveragedRows([row("TQQQ")], [row("MUU")]).map(r => r.etf), ["MUU", "TQQQ"]);
+  const list = read("app/research/price/leveraged-list.tsx");
+  assert.match(list, /setTimeout\(\(\) => own\.abort\(\), READ_TIMEOUT_MS\)/, "a read never waits forever");
+  assert.match(list, /READ_TIMEOUT_MS = 15_000/);
+  assert.match(list, /\(answer === null \|\| answer\.missing > 0\) && quick < QUICK_TRIES/, "a failed or partial read is asked again soon");
+  assert.match(list, /t\("データを取得できませんでした", "Data could not be loaded"\)/);
+});
+
+test("レバETF server: the funds are read before the stocks under them, and a partial answer is never kept by the CDN", () => {
+  const funds = LEVERAGED_ETFS.map(item => item.etf);
+  assert.deepEqual(LEVERAGED_SYMBOLS.slice(0, funds.length), funds, "the 45 rows' own quotes first (they fill the first request's 48)");
+  const route = read("app/api/research/market/leveraged/route.ts");
+  assert.match(route, /"Cache-Control": missing > 0 \? "no-store" : "public, s-maxage=30, stale-while-revalidate=30"/);
 });

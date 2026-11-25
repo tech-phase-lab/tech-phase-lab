@@ -21,8 +21,10 @@ export const LEVERAGED_ETFS: readonly LeveragedEtf[] = [
   two("CRWL", "CRWD"), two("ASTX", "ASTS"), two("LLYX", "LLY"), two("CEGX", "CEG"), two("SMU", "SMR"), two("COHX", "COHR"), two("IREX", "IREN"),
   two("APLX", "APLD"),
 ];
-/** Every symbol the tab reads: the funds and the stocks under them, once each. */
-export const LEVERAGED_SYMBOLS: readonly string[] = [...new Set(LEVERAGED_ETFS.flatMap(item => [item.etf, item.underlying]))];
+/** Every symbol the tab reads, once each: the funds first, then the stocks under them. A cold read is spread over several requests (at most 48
+ * symbols each, every 12-symbol batch leased separately), so the funds — the rows themselves — come first and a stock's change fills in after
+ * (Nov 25: interleaved, a first answer could hold the stocks but not their funds and show nothing). */
+export const LEVERAGED_SYMBOLS: readonly string[] = [...new Set([...LEVERAGED_ETFS.map(item => item.etf), ...LEVERAGED_ETFS.map(item => item.underlying)])];
 
 export type LeveragedQuote = { price: number; percentChange: number | null; volume: number | null;
   extended?: { price: number; percentChange: number | null; session: "pre" | "post"; live?: boolean } | null };
@@ -59,3 +61,23 @@ export function sortLeveraged(rows: readonly LeveragedRow[], sort: LeveragedSort
 /** Prices: three decimals under $100 as the sheet shows them (4.100, 13.330), two above. */
 export const leveragedPrice = (value: number) => value.toFixed(Math.abs(value) < 100 ? 3 : 2);
 export const leveragedPercent = (value: number, digits = 2) => `${value > 0 ? "+" : value < 0 ? "-" : ""}${Math.abs(value).toFixed(digits)}%`;
+
+/** What the レバETF list shows while it reads (owner, Nov 25: "読み込み中…" must never stay forever). `rows` null: nothing answered yet.
+ * Rows that arrive are shown at once and kept (merged by fund) while the rest are still being read; 「データを取得できませんでした」 only when
+ * the server has answered completely with no fund, or LEVERAGED_GIVE_UP answers in a row (errors and timeouts included) brought none. */
+export type LeveragedView = { rows: LeveragedRow[] | null; failed: boolean; empty: number };
+export const LEVERAGED_GIVE_UP = 3;
+export const LEVERAGED_START: LeveragedView = { rows: null, failed: false, empty: 0 };
+/** `answer` null: the request failed or timed out. */
+export function nextLeveragedView(view: LeveragedView, answer: { rows: LeveragedRow[]; missing: number } | null): LeveragedView {
+  const merged = answer ? mergeLeveragedRows(view.rows ?? [], answer.rows) : view.rows ?? [];
+  if (merged.length) return { rows: merged, failed: false, empty: 0 };
+  const empty = view.empty + 1, done = view.failed || (answer !== null && answer.missing === 0) || empty >= LEVERAGED_GIVE_UP;
+  return { rows: done ? [] : null, failed: done, empty };
+}
+/** The newer answer wins for a fund it holds; a fund it lacks keeps the row already on the screen. The list's own order. */
+export function mergeLeveragedRows(old: readonly LeveragedRow[], incoming: readonly LeveragedRow[]): LeveragedRow[] {
+  const by = new Map(old.map(row => [row.etf, row]));
+  for (const row of incoming) by.set(row.etf, row);
+  return LEVERAGED_ETFS.flatMap(item => by.get(item.etf) ?? []);
+}
