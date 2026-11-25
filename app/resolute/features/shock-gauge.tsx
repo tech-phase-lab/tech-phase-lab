@@ -16,7 +16,7 @@ const small:CSSProperties={fontSize:12,letterSpacing:'.02em',fontWeight:400,colo
  * parenthetical is set a little smaller. Only on a screen too narrow for both does the parenthetical move down whole. */
 const nowrap:CSSProperties={whiteSpace:'nowrap',letterSpacing:0};
 const detail:CSSProperties={whiteSpace:'nowrap',fontSize:'.8em',letterSpacing:0,fontFeatureSettings:'"palt"',display:'inline-block'};
-/** Stars and, small next to them, both indices measured on the story's first close and the fear index (例: TP半導体40 −8.5%（いつもの3.8倍・39/40社が下落）). Before the first U.S. close: 「市場の反応待ち」; single-company news: 「個別企業のニュース（★はつけません）」. */
+/** Stars and, small next to them, both indices measured on the story's session and, on a down move, the fear index (例: TP半導体40 −8.5%（いつもの3.8倍・39/40社が下落）); single-company news with stars first shows its own move (例: SKHY −8.2%（いつもの3.1倍）). Before the session's close: 「市場の反応待ち」; single-company news without stars: 「個別企業のニュース（★はつけません）」. */
 /** wide: the stars join the parent's wrapping flex row (the news screen's 「衝撃度」 row) and the lines take that row's full
  * width underneath, instead of the narrower column beside its label. */
 export function ShockStars({article,locale,className,starStyle,wide=false}:{article:RiskArticle;locale:'ja'|'en';className?:string;starStyle?:CSSProperties;wide?:boolean}){
