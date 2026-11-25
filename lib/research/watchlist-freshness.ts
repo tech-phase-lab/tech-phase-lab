@@ -1,5 +1,7 @@
 import type { FavoriteQuote } from "./favorite-lists.ts";
 import { displayClock, displayDayKey, formatDisplay, zoneLabel } from "./display-time.ts";
+import { marketPhase } from "./us-market-session.ts";
+const easternDay = new Intl.DateTimeFormat("en-CA", { timeZone: "America/New_York", year: "numeric", month: "2-digit", day: "2-digit" });
 
 // Display guardrails, not an exchange calendar or a provider outage diagnosis.
 // Revisit these tolerances against the licensed feed cadence before connecting it.
@@ -12,9 +14,11 @@ export function quoteFreshness(quote: Pick<FavoriteQuote, "asOf" | "session" | "
   if (at > now + MINUTE) return "invalid";
   // A confirmed close remains a dated close across weekends and holidays.
   if (quote.session === "closed") return "closed";
-  // Pre-market and after-hours prints can be many minutes apart and the provider's time trails the clock, so a session price keeps its "プレ" /
-  // "時間外" label for two hours, as the server does (EXTENDED_CURRENT_MS; it already dropped it if that session is over); regular-session prices keep the 5-minute check.
-  const tolerance = quote.delayed ? 20 : quote.session === "pre" || quote.session === "post" ? 120 : 5;
+  // A pre-market / after-hours price keeps its "プレ" / "時間外" label for as long as that session is the one under way the same day, however old
+  // its print (owner, Nov 25: MRVL, GOOGL); the server already dropped it if that session is over. Regular-session prices keep the 5-minute check.
+  if (!quote.delayed && (quote.session === "pre" || quote.session === "post"))
+    return marketPhase(new Date(now)) === quote.session && easternDay.format(at) === easternDay.format(now) ? "recent" : "stale";
+  const tolerance = quote.delayed ? 20 : 5;
   if (now - at > tolerance * MINUTE) return "stale";
   return quote.delayed ? "delayed" : "recent";
 }

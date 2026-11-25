@@ -44,7 +44,7 @@
 .page .choices button:disabled { opacity:.55;cursor:default; }
 .choices button>span:first-child { min-width:0; }
 .choices strong { font-size:15px; }
-.choices small { display:block;margin-top:3px;color:#8e9aaa;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
+.choices small { display:block;margin-top:3px;color:#8e9aaa;font-size:12px;overflow-wrap:break-word; }
 .choiceAction { flex-shrink:0;font-size:12px;color:#8fe3c0; }
 /* The empty list's search box (Oct 30 design): full width, glowing mint edge, a small ＋ at the right. */
 .searchEmpty .searchRow { height:46px;padding:0 9px 0 14px;border:1.5px solid #4fae8c;border-radius:14px;background:linear-gradient(180deg,#10222a,#0d1a20);box-shadow:0 0 26px rgba(93,224,176,.16); }
@@ -58,19 +58,21 @@
 .marketState { display:flex;align-items:center;gap:6px;margin-left:auto;font-size:11.5px;color:#8e9aaa;white-space:nowrap; }
 .marketState i { width:7px;height:7px;border-radius:50%;background:#8fe3c0; }
 
-/* Rows: logo / name, ticker, sector / chart / price and change. 42px high (owner, Nov 25: the same design, about 62% of the old 68px): smaller logo,
- * name and price, a chart half as tall. Fixed columns, so the chart has the same width and place on every row (MRVL's had moved), and the
+/* Rows: logo / name, ticker, sector / chart / price and change. 46px high (owner, Nov 25: the same design, about 62% of the old 68px, then 4px
+ * more for the chart): smaller logo, name and price, a shorter chart. Fixed columns, so the chart has the same width and place on every row (MRVL's had moved), and the
  * 「時間外」 mark stays on the change's line. */
 .quoteRows { list-style:none;margin:-4px 0 0;padding:0;border-top:1px solid #1c2633; }
 .quoteRow { border-bottom:1px solid #1c2633; }
-.page .rowMain { display:grid;grid-template-columns:24px minmax(0,1fr) 84px 104px;align-items:center;column-gap:10px;width:100%;height:42px;padding:0;box-sizing:border-box;text-align:left;background:transparent;border:0;color:inherit;cursor:pointer;font:inherit; }
+.page .rowMain { display:grid;grid-template-columns:24px minmax(0,1fr) 84px 104px;align-items:center;column-gap:10px;width:100%;height:46px;padding:0;box-sizing:border-box;text-align:left;background:transparent;border:0;color:inherit;cursor:pointer;font:inherit; }
 .page .rowMain:hover { background:#0f151e; }
 .logo { flex:none;width:30px;height:30px;display:grid;place-items:center;border-radius:8px;background:#1b2531;color:#aab6c4;font-size:10px;font-weight:700;overflow:hidden; }
-.logo img { width:24px;height:24px;object-fit:contain; }
+.logo img { width:100%;height:100%;display:block; }
+/* Logos (owner, Nov 25): every one the same rounded square; the tile image carries its own uniform padding (public/logos). */
 .rowLogo { width:24px;height:24px;display:grid;place-items:center;border-radius:6px;background:#1b2531;color:#aab6c4;font-size:9px;font-weight:700;overflow:hidden; }
-.rowLogo img { width:24px;height:24px;object-fit:cover; }
-.company { min-width:0;display:flex;flex-direction:column;gap:2px;overflow:hidden; }
-.company strong { font-size:13px;font-weight:700;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
+.rowLogo img { width:100%;height:100%;display:block; }
+.company { min-width:0;display:flex;flex-direction:column;gap:1px;overflow:hidden; }
+/* Never cut with 「…」 (owner, Nov 25): the short name, and a second line when even that does not fit. */
+.company strong { font-size:13px;font-weight:700;line-height:1.15;overflow-wrap:break-word; }
 .tickerLine { display:flex;align-items:center;gap:5px;min-width:0;font-size:10.5px;color:#8e9aaa;line-height:1.2;white-space:nowrap; }
 .sector { min-width:0;padding:0 4px;border:1px solid #2c3a4a;border-radius:4px;font-size:9.5px;line-height:1.3;color:#9fb0c2;overflow:hidden;text-overflow:ellipsis; }
 .chart { flex:none;justify-self:start; }
@@ -83,7 +85,7 @@
 .sessionTag { flex:none;margin-right:5px;padding:0 4px;border:1px solid #3f6b5d;border-radius:4px;font-size:9px;font-weight:700;line-height:1.3;color:#8fe3c0;white-space:nowrap; }
 .oldLabel { flex:none;white-space:nowrap;margin-right:5px;font-size:9.5px;font-weight:600;color:#8e9aaa; }
 
-/* The rows' outline while the saved lists are read: same 42px rows, no text. */
+/* The rows' outline while the saved lists are read: same 46px rows, no text. */
 .page .rowOutline { display:flex;gap:10px; }
 .rowOutline i { flex:none;width:24px;height:24px;border-radius:6px;background:#141c27; }
 .rowOutline b { flex:1;height:14px;max-width:150px;border-radius:5px;background:#141c27; }

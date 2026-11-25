@@ -119,10 +119,12 @@ async function marketTarget(id: string): Promise<{ symbol: string; extra: Varian
 export function intradayParams(symbol: string, interval: string): { prepost?: "true" } {
   return (interval === "5min" || interval === "15min" || interval === "30min") && !symbol.includes("/") ? { prepost: "true" } : {};
 }
-/** One bar series from the shared copy of its slot (one provider credit for everyone), else the last good copy. `fetch` false: copies only. */
-async function bars(ticker: string, interval: string, size: number, { slotMs, fetch = true }: { slotMs?: number; fetch?: boolean } = {}): Promise<Bar[]> {
+/** One bar series from the shared copy of its slot (one provider credit for everyone), else the last good copy. `fetch` false: copies only;
+ * a function: asked only when the provider would really be read (no fresh copy), and false keeps the last good copy. */
+async function bars(ticker: string, interval: string, size: number, { slotMs, fetch = true }: { slotMs?: number; fetch?: boolean | (() => boolean) } = {}): Promise<Bar[]> {
   const spec: ReadSpec = { name: "md-bars-v1", slotMs: slotMs ?? barSlotMs(ticker, interval, Date.now()), staleMs: STALE_LIMIT_MS };
   const got = await sharedReader.read<Bar[]>(spec, `${ticker}|${interval}|${size}`, fetch ? async () => {
+    if (typeof fetch === "function" && !fetch()) throw new Error("no-read-allowance");
     const base = { interval, outputsize: String(size), order: "desc" };
     const target = MARKET_SYMBOLS[ticker] ? await marketTarget(ticker) : null;
     return parseBars(target ? await call("time_series", { symbol: target.symbol, ...base, ...intradayParams(ticker, interval), ...target.extra })
@@ -132,7 +134,7 @@ async function bars(ticker: string, interval: string, size: number, { slotMs, fe
   return got.value;
 }
 /** Every bar fetched for a range (the drawn ones and the ones before them). Pre-market and after-hours bars are included for 1D / 1W. */
-const readAll = (ticker: string, range: ChartRange, options?: { slotMs?: number; fetch?: boolean }) => { const spec = chartSpec(range); return bars(ticker, spec.interval, spec.size, options); };
+const readAll = (ticker: string, range: ChartRange, options?: { slotMs?: number; fetch?: boolean | (() => boolean) }) => { const spec = chartSpec(range); return bars(ticker, spec.interval, spec.size, options); };
 /** The bars of one board period (see market-board-periods.ts) and the bars before them. Intraday candles are shared a minute (the live price
  * comes from the quote), daily and longer at least ten minutes. */
 export async function loadPeriodSet(ticker: string, period: BoardPeriod): Promise<{ bars: Bar[]; before: Bar[] }> {
@@ -167,7 +169,9 @@ export async function loadIntraday(quotes: MarketQuote[]): Promise<Record<string
   await Promise.all(quotes.map(async q => {
     try {
       const days = new Set([easternDay.format(Date.parse(q.asOf)), ...(q.extended ? [easternDay.format(Date.parse(q.extended.asOf))] : [])]);
-      const all = await readAll(q.ticker, "1d", { slotMs: 5 * 60_000, fetch: allowance-- > 0 });
+      // Owner, Nov 25 (NVDA, TSM, AMD without a chart): the allowance is spent only by a real provider read, not by a sparkline already shared
+      // by everyone, so a longer list is not left without charts after its first eight rows.
+      const all = await readAll(q.ticker, "1d", { slotMs: 5 * 60_000, fetch: () => allowance-- > 0 });
       out[q.ticker] = all.filter(bar => { const iso = easternToIso(bar.at); return iso !== "" && days.has(easternDay.format(Date.parse(iso))); });
     } catch { out[q.ticker] = []; }
   }));

@@ -9,6 +9,7 @@ import WatchlistFrame from "./watchlist-frame";
 import ResearchToolShell from "../research-tool-shell";
 import { useRouter } from "next/navigation";
 import { useQuotes } from "../price/use-market";
+import { shortCompanyName } from "@/lib/research/company-short-name";
 import { detailHref } from "../price/quote-card";
 import { favoriteIntradayChart } from "@/lib/research/watchlist-chart";
 import AreaChart from "./area-chart";
@@ -196,7 +197,7 @@ export default function Watchlist({ companies, quotes = {} }: { companies: Compa
             <SwipeRow key={`${list.id}:${ticker}`} open={revealed === ticker} onOpenChange={open => setRevealed(open ? ticker : "")} onRemove={() => remove(ticker)} disabled={!editable} removeLabel={t(`${ticker}をこのリストから削除`, `Remove ${ticker} from this list`)}>
             <button className={styles.rowMain} onClick={() => router.push(detailHref(ticker, "watchlist"))}>
               <StockLogo ticker={ticker} className={styles.rowLogo} />
-              <span className={styles.company}><strong>{item?.name ?? names[ticker] ?? ticker}</strong><span className={styles.tickerLine}>{ticker}{sector && <span className={styles.sector} title={sectorSource}>{sector}</span>}</span></span>
+              <span className={styles.company}><strong>{shortCompanyName(item?.name ?? names[ticker] ?? ticker)}</strong><span className={styles.tickerLine}>{ticker}{sector && <span className={styles.sector} title={sectorSource}>{sector}</span>}</span></span>
               {chart && values ? <AreaChart className={styles.chart} values={values} reference={chart.reference} label={t(`${ticker}の当日の値動き`, `${ticker} intraday trend`)} /> : <span className={styles.noChart} aria-label={t("当日チャート未取得", "Intraday chart unavailable")}>—</span>}
               <span className={styles.price}>
                 <FlashValue scope={`${list.id}:${ticker}:${sessionView}`} value={quote?.price ?? null} className={styles.priceValue}>{quote ? number(quote.price) : "—"}</FlashValue>

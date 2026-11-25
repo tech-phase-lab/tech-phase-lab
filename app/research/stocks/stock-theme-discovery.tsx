@@ -1,5 +1,5 @@
 "use client";
-import { logoSrc } from "../watchlist/stock-logo";
+import { hasLogo, logoSrc } from "../watchlist/stock-logo";
 import CompactPicker from "../compact-picker";
 import { useState } from "react";
 import type { Language } from "@/lib/research/data";
@@ -26,7 +26,7 @@ const themes = [
 ];
 function StockLogo({ticker}:{ticker:string}) {
  const [failed,setFailed]=useState(false);
- return <span className={styles.logo} aria-hidden="true">{!failed ?
+ return <span className={styles.logo} aria-hidden="true">{!failed && hasLogo(ticker) ?
   // The site's logo route (owner, Nov 25); the adjacent text remains the accessible name.
   // eslint-disable-next-line @next/next/no-img-element
   <img src={logoSrc(ticker)} width={24} height={24} alt="" loading="lazy" onError={()=>setFailed(true)} /> : ticker.slice(0,1)}</span>;

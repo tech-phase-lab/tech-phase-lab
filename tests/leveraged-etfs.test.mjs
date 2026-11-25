@@ -3,7 +3,8 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { LEVERAGED_ETFS, LEVERAGED_SYMBOLS, leveragedRows, sortLeveraged, leveragedPrice, leveragedPercent } from "../lib/research/leveraged-etfs.ts";
 import { providers } from "../lib/research/intake.ts";
-import { logoSources } from "../lib/research/stock-logo-sources.ts";
+import { STOCK_LOGOS } from "../lib/research/stock-logos.ts";
+import { existsSync } from "node:fs";
 import { parseQuote, toFavoriteQuote } from "../lib/research/market-quote.ts";
 
 const read = path => readFileSync(new URL(`../${path}`, import.meta.url), "utf8");
@@ -78,16 +79,17 @@ test("the quotes are batched, leased and shared: one cached copy for everyone, a
   assert.match(read("tests/api-access-guard.test.mjs"), /'research\/market\/leveraged':/);
 });
 
-test("logos come from the site's logo route (provider logo by domain, then by ticker); a stock without one shows its letters", () => {
-  assert.deepEqual(logoSources("MU", "micron.com"), ["https://api.twelvedata.com/logo/micron.com", "https://financialmodelingprep.com/image-stock/MU.png"]);
-  assert.deepEqual(logoSources("NBIS"), ["https://financialmodelingprep.com/image-stock/NBIS.png"]);
+test("logos: one normalized tile per ticker in public/logos (same size and padding); a ticker without a readable logo shows its letters (owner, Nov 25)", () => {
+  for (const t of ["MU", "SNDK", "MRVL", "NVDA", "AMD", "GOOGL", "NBIS"]) { assert.ok(STOCK_LOGOS.has(t), t); assert.ok(existsSync(new URL(`../public/logos/${t}.png`, import.meta.url)), t); }
+  for (const t of ["TSM", "LITE", "SMCI", "ASTS"]) assert.ok(!STOCK_LOGOS.has(t), `${t} shows its letters`);
+  for (const t of STOCK_LOGOS) assert.ok(existsSync(new URL(`../public/logos/${t}.png`, import.meta.url)), t);
   const logo = read("app/research/watchlist/stock-logo.tsx");
-  assert.match(logo, /\/api\/research\/market\/logo\/\$\{encodeURIComponent\(ticker\)\}/);
-  assert.match(logo, /onError=\{\(\) => setFailed\(ticker\)\}/);
+  assert.match(logo, /const usable = hasLogo\(ticker\) && failed !== ticker;/);
+  assert.match(logo, /`\/logos\/\$\{encodeURIComponent\(ticker\)\}\.png`/);
   assert.match(logo, /: full \? <span style=\{fullSize\(ticker\)\}>\{ticker\}<\/span> : ticker\.slice\(0, 2\)/);
   for (const path of ["app/research/watchlist/stock-logo.tsx", "app/research/stocks/stock-theme-discovery.tsx"]) assert.doesNotMatch(read(path), /s2\/favicons/);
-  const route = read("app/api/research/market/logo/[ticker]/route.ts");
-  assert.match(route, /status: 404/); assert.match(route, /\^image\\\/\(png\|jpeg\|webp\|gif\|svg\\\+xml\)/);
+  assert.match(read("app/research/watchlist/watchlist.module.css"), /\.rowLogo img \{ width:100%;height:100%;display:block; \}/);
+  assert.match(read("scripts/logos/normalize_logos.py"), /SIZE, PAD = 72, 11/);
 });
 
 test("adding a stock keeps the other rows' prices and charts on the screen while the new request is answered", () => {

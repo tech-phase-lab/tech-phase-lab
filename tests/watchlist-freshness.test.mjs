@@ -10,13 +10,14 @@ test('live snapshots age out in an open tab and recover when replaced',()=>{
  assert.equal(quoteFreshness(quote(0),now+120_000),'recent');
  assert.equal(quoteFreshness(quote(6),now),'stale');
 });
-test('a pre-market / after-hours print keeps its session label for two hours (thin trading, provider time lag; owner, Nov 25: MRVL)',()=>{
- for(const session of ['pre','post']){
-  assert.equal(quoteFreshness(quote(6,{session}),now),'recent');
-  assert.equal(quoteFreshness(quote(45,{session}),now),'recent');
-  assert.equal(quoteFreshness(quote(119,{session}),now),'recent');
-  assert.equal(quoteFreshness(quote(121,{session}),now),'stale');
- }
+test('a pre-market / after-hours print keeps its session label while that session lasts the same day, however old (owner, Nov 25: MRVL, GOOGL)',()=>{
+ const post=Date.parse('2026-11-25T00:50:00Z'), pre=Date.parse('2026-11-18T14:20:00Z');
+ const at=(t,minutes,session)=>({asOf:new Date(t-minutes*60_000).toISOString(),session,delayed:false});
+ assert.equal(quoteFreshness(at(post,6,'post'),post),'recent');
+ assert.equal(quoteFreshness(at(post,187,'post'),post),'recent');
+ assert.equal(quoteFreshness(at(pre,300,'pre'),pre),'recent');
+ assert.equal(quoteFreshness(at(pre,6,'post'),pre),'stale', 'not the session under way');
+ assert.equal(quoteFreshness(at(post,26*60,'post'),post),'stale', "yesterday's");
 });
 test('delayed feed has a separate tolerance; dated closes survive holidays',()=>{
  assert.equal(quoteFreshness(quote(15,{delayed:true}),now),'delayed');
