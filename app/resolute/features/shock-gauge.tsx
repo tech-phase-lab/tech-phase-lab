@@ -1,5 +1,5 @@
-import type {CSSProperties} from 'react';
-import {formatReading,formatCause,noStarsLabel,type RiskArticle} from '@/lib/resolute/risk';
+import {useState,type CSSProperties} from 'react';
+import {formatReading,formatCause,noStarsLabel,starCriteria,starSummary,STAR_INFO_LABEL,type RiskArticle} from '@/lib/resolute/risk';
 /** Shock Gauge (衝撃度チェッカー) shared pieces: one-line heading, and stars with the TP index move (or "waiting"). */
 export const SHOCK_GAUGE_NAME={ja:'衝撃度チェッカー',en:'Shock Gauge'} as const;
 const faint:CSSProperties={fontFamily:'inherit',fontSize:'.5em',fontWeight:500,letterSpacing:'.2em',opacity:.5,whiteSpace:'nowrap',marginLeft:'auto'};
@@ -15,4 +15,15 @@ export function ShockStars({article,locale,className,starStyle}:{article:RiskArt
  if(article.stars===null)return <span className={className} style={{...small,fontSize:13}}>{noStarsLabel(article,locale)}</span>;
  const n=article.stars;
  return <span style={{display:'inline-flex',alignItems:'baseline',gap:10,flexWrap:'wrap'}}><b className={className} style={starStyle} aria-label={`${n}/5`}>{Array.from({length:n},(_,i)=><i key={i} aria-hidden="true" style={{fontStyle:'normal'}}>★</i>)}<span aria-hidden="true">{'☆'.repeat(5-n)}</span></b>{lines.length?<small style={{...small,whiteSpace:'normal',display:'flex',flexDirection:'column',gap:2}}>{lines.map(l=><span key={l}>{l}</span>)}</small>:null}</span>;
+}
+/** One small 「i」 next to the ★ label (owner, Nov 25: no extra visible text). Tapping it opens how the stars are set:
+ * the short explanation and the exact levels, both generated from the published rule. The panel spans the nearest positioned
+ * row (the news screen's star row), so it never widens a phone screen. */
+export function StarInfo({locale}:{locale:'ja'|'en'}){
+ const [open,setOpen]=useState(false);
+ return <span style={{display:'inline-block',marginLeft:6,verticalAlign:'middle'}}>
+  <button type="button" aria-label={STAR_INFO_LABEL[locale]} aria-expanded={open} onClick={()=>setOpen(v=>!v)}
+   style={{width:18,height:18,borderRadius:'50%',border:'1px solid currentColor',background:'transparent',color:'inherit',opacity:.6,font:'600 11px/16px inherit',padding:0,cursor:'pointer'}}>i</button>
+  {open?<span role="note" style={{position:'absolute',left:0,right:0,top:'calc(100% + 6px)',zIndex:5,boxSizing:'border-box',padding:'10px 12px',borderRadius:10,background:'var(--card, #10151d)',border:'1px solid var(--line, #2a3340)',color:'var(--text, #e8edf3)',fontSize:12,lineHeight:1.6,fontWeight:400,letterSpacing:0,whiteSpace:'pre-line',textAlign:'left',boxShadow:'0 8px 24px rgba(0,0,0,.35)'}}>{starSummary(locale)+'\n\n'+starCriteria(locale)}</span>:null}
+ </span>;
 }

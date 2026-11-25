@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {PGlite} from '@electric-sql/pglite';
-import {starsFromShock,measureDay,fearChangeOf,readingStars,causeStars,riskAction,parseRiskFeed,latestRiskDate,formatReading,formatCause,SUMMARY_QUESTION,starCriteria,noStarsLabel} from '../lib/resolute/risk.ts';
+import {starsFromShock,measureDay,fearChangeOf,readingStars,causeStars,riskAction,parseRiskFeed,latestRiskDate,formatReading,formatCause,SUMMARY_QUESTION,starCriteria,starSummary,STAR_INFO_LABEL,noStarsLabel} from '../lib/resolute/risk.ts';
 import {candidatesFromFeed,validateGeneration,collect,publish,isInDailyWindow} from '../services/resolute-api/risk-job.mjs';
 import {saveRiskDay} from '../services/resolute-api/rizel-daily-review.mjs';
 import {RISK_POLICY} from '../lib/resolute/risk-policy.ts';
@@ -45,7 +45,14 @@ test('the published criteria text is plain, generated from the levels, in both l
   '・そのうえで、AIが記事の内容だけを読み、原因が一過性とみられるときは★を1つ下げ、長引きやすいとみられるときは1つ上げます。★5になるのは、市場の動きだけで★4以上のときだけです。どちらとも言えないときは変えません。',
   '・1社だけのニュースには★をつけません。'].join('\n'));
  assert.match(starCriteria('en'),/^How stars are set\n- After the news, we look at both TP Large Cap 100 and TP Semiconductor 40 .*\n- ★5: moved 5 times its usual move or more, 80% or more of its stocks moved the same way, the fear index rose 10% or more\n/s);
- assert.match(readFileSync(new URL('../app/resolute/news/screen.tsx',import.meta.url),'utf8'),/starCriteria\(en\?'en':'ja'\)/);
+ // Owner, Nov 25: no extra visible text. The short explanation and the levels open only from one small 「i」 next to 「衝撃度」.
+ assert.equal(starSummary('ja'),'★は、ニュースのあとのTP大型株100とTP半導体40の実際の動き（いつもの何倍動いたか・同じ向きに動いた会社の割合・恐怖指数）と、記事の内容から一過性かどうかを吟味して算出しています。1社だけのニュースには★をつけません。');
+ assert.match(starSummary('en'),/^Stars are calculated from how TP Large Cap 100 and TP Semiconductor 40 actually moved after the news .* weighing whether the cause looks one-off\. News about a single company gets no stars\.$/);
+ const screen=readFileSync(new URL('../app/resolute/news/screen.tsx',import.meta.url),'utf8'),gauge=readFileSync(new URL('../app/resolute/features/shock-gauge.tsx',import.meta.url),'utf8');
+ assert.ok(screen.includes("<span className={s.k}>{en?'Shock':'衝撃度'}<StarInfo locale={locale}/></span>"));
+ assert.ok(!/starCriteria|starSummary/.test(screen),'nothing else on the page');
+ assert.match(gauge,/aria-expanded=\{open\}[^]*\{open\?<span role="note"[^]*\{starSummary\(locale\)\+'\\n\\n'\+starCriteria\(locale\)\}/);
+ assert.equal(STAR_INFO_LABEL.ja,'★のつけ方');
  const m={index:'sox',session:'2026-11-24',reading:{from:'2026-11-23',nas100:{changePercent:-1.5,multiple:2,same:47,total:99},sox:{changePercent:-8.5,multiple:3.8,same:39,total:40},fearChange:0}};
  assert.deepEqual(formatReading(m,'ja'),['TP半導体40 −8.5%（いつもの3.8倍・40社中39社が下落）','TP大型株100 −1.5%（いつもの2.0倍・99社中47社が下落）','恐怖指数 0%']);
  assert.deepEqual(formatReading({...m,index:'nas100'},'en'),['TP Large Cap 100 −1.5% (2.0× usual · 47 of 99 down)','TP Semiconductor 40 −8.5% (3.8× usual · 39 of 40 down)','Fear index 0%']);

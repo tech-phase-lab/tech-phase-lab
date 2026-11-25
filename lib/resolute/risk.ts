@@ -58,6 +58,12 @@ export function causeStars(market:number|null,cause:RiskCause|null|undefined){
  if(market===null)return null;if(!cause)return market;
  return cause.kind==='one-off'?Math.max(1,market-1):Math.min(5,market+1);
 }
+/** The short, plain explanation behind the small 「i」 next to the stars (owner, Nov 25), above the exact levels (starCriteria). */
+export function starSummary(locale:'ja'|'en'){const {nas100,sox}=RISK_POLICY.indices;return locale==='ja'
+ ?`★は、ニュースのあとの${nas100.ja}と${sox.ja}の実際の動き（いつもの何倍動いたか・同じ向きに動いた会社の割合・恐怖指数）と、記事の内容から一過性かどうかを吟味して算出しています。1社だけのニュースには★をつけません。`
+ :`Stars are calculated from how ${nas100.en} and ${sox.en} actually moved after the news (how many times their usual move, the share of stocks moving the same way, the fear index) and from the article, weighing whether the cause looks one-off. News about a single company gets no stars.`;}
+/** The accessible name of the small 「i」 that opens the criteria. */
+export const STAR_INFO_LABEL={ja:'★のつけ方',en:'How stars are set'} as const;
 const wari=(n:number)=>n%10===0?`${n/10}割`:`${n}%`;
 /** The star criteria as published in the app, in plain words, generated from the levels so the text always matches the rule. */
 export function starCriteria(locale:'ja'|'en'){
