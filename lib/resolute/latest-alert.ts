@@ -3,6 +3,7 @@
 import { formatDate } from "./mail-templates.ts";
 import { DISCLAIMER } from "../legal/disclaimer.ts";
 import { formatMoney, type RuleFacts } from "./plan-rules.ts";
+import type { TodayPlan } from "./today-plan.ts";
 
 export type LatestAlertItem = {
   kind: "line_reached" | "surge_cap"; symbol: string; close: number;
@@ -54,8 +55,8 @@ export function latestAlertFromDigest(digest: unknown): LatestAlert | null {
 
 const usd = (n: number) => `$${n.toFixed(2)}`;
 
-/** What the page knows besides the alert: the member's rules and saved reference prices (both optional). */
-export type LatestAlertContext = { rules?: RuleFacts | null; references?: Record<string, number> };
+/** What the page knows besides the alert: the member's rules, saved reference prices and the AI-written 「今日やること」 (all optional). */
+export type LatestAlertContext = { rules?: RuleFacts | null; references?: Record<string, number>; plan?: TodayPlan | null };
 
 /** The page's words, as in screens 02_alert_page_*. `date`, `notes` and `check` are the alert email's sentences
  * (mail-templates.ts renderAlertMail), still used by the LP sample. The page itself shows `lead`, the cards with the member's
@@ -91,7 +92,7 @@ export function latestAlertView(alert: LatestAlert, locale: "ja" | "en", context
     lead: ja ? `${formatDate(alert.date, "ja")}（米国市場）の終値で、あなたのラインに届いた銘柄です。` : `These stocks reached your levels at the ${formatDate(alert.date, "en")} close (US market).`,
     rulesLabel: ja ? "あなたのルール" : "Your rule",
     todoLabel: ja ? "今日やること" : "What to do today",
-    notes, cards, todo: todayTodo(alert, rules, locale),
+    notes, cards, todo: aiTodo(alert, context.plan ?? null, locale) ?? todayTodo(alert, rules, locale),
     check: ja ? `計画に書いた買い増し額と買わない条件を確認してください${hasSurge ? "。上昇時は1銘柄の上限も確認できます" : ""}`
       : `Check your planned purchase amounts and conditions for not buying.${hasSurge ? " After a rise, check your single-stock cap too." : ""}`,
     openPlan: ja ? "計画を開く" : "Open your plan",
@@ -114,8 +115,16 @@ function capRule(rules: RuleFacts, ja: boolean): string {
   return ja ? `1銘柄の上限　${cap}　持ち分の偏りを確かめる` : `Single-stock cap: ${cap}. Check your balance.`;
 }
 
-/** 「今日やること」. Fixed sentences built from the lines reached and the member's own rules. The AI-written version
- * (resolute-pc-1125 sheet, item 4) is not built yet, so this is what every day shows for now. Only the member's own rule, never advice. */
+/** The AI-written 「今日やること」 (resolute-pc-1125 §4, lib/resolute/today-plan.ts) as it is: heading and lines. Only the plan for this
+ * alert's close and only an AI one; otherwise the fixed sentences below are shown (owner, Nov 25). */
+export function aiTodo(alert: LatestAlert, plan: TodayPlan | null, locale: "ja" | "en"): { title: string; sentences: string[] } | null {
+  if (!plan || plan.source !== "ai" || plan.date !== alert.date) return null;
+  const sentences = plan.body[locale].split(/\n+/).map(s => s.trim()).filter(Boolean);
+  return plan.headline[locale].trim() && sentences.length ? { title: plan.headline[locale].trim(), sentences } : null;
+}
+
+/** 「今日やること」 fixed sentences, for days without the AI-written plan (it is off unless RESOLUTE_TODAY_PLAN_ENABLED=true):
+ * built from the lines reached and the member's own rules. Only the member's own rule, never advice. */
 export function todayTodo(alert: LatestAlert, rules: RuleFacts | null, locale: "ja" | "en"): { title: string; sentences: string[] } {
   const ja = locale === "ja";
   const drops = alert.items.filter(i => i.kind === "line_reached").map(i => ({ symbol: i.symbol, line: Math.max(...(i.newLines ?? [0])) }));

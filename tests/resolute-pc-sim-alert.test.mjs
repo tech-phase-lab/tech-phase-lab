@@ -113,6 +113,18 @@ test("PC layout: 1024px and wider, the menu on the left, the phone layout unchan
   assert.doesNotMatch(read("../app/resolute/pc.module.css"), /text-overflow:\s*ellipsis/);
 });
 
+test("「今日やること」 on 今日のお知らせ shows the AI plan for that close as it is, and the fixed sentences otherwise", () => {
+  const alert = { date: "2026-11-24", items: [{ kind: "line_reached", symbol: "NVDA", close: 161.4, dropPct: 10.3, newLines: [10] }] };
+  const ai = { date: "2026-11-24", source: "ai", direction: "down", headline: { ja: "決めた額だけ買う日", en: "Buy what you planned" },
+    body: { ja: "NVDAが−10%に届きました。\n決めておいた30万円だけです。", en: "NVDA reached −10%.\nOnly the 300k you planned." }, checks: [] };
+  assert.deepEqual(latestAlertView(alert, "ja", { rules: facts, plan: ai }).todo, { title: "決めた額だけ買う日", sentences: ["NVDAが−10%に届きました。", "決めておいた30万円だけです。"] });
+  const fixed = latestAlertView(alert, "ja", { rules: facts }).todo;
+  assert.deepEqual(latestAlertView(alert, "ja", { rules: facts, plan: { ...ai, date: "2026-11-21" } }).todo, fixed, "another day's plan");
+  assert.deepEqual(latestAlertView(alert, "ja", { rules: facts, plan: { ...ai, source: "fixed" } }).todo, fixed, "not an AI plan");
+  assert.equal(fixed.title, "決めていた買い増しの日");
+  assert.match(read("../app/resolute/alerts/latest/screen.tsx"), /fetch\("\/api\/resolute\/today-plan"/);
+});
+
 test("phone (resolute-mobile-all-1125 06–09): the same screens in one column, with the shared phone theme", () => {
   const sim = read("../app/resolute/simulation/screen.tsx");
   // One layout for both widths: the old phone-only branch and its folded 「あなたのルール」 are gone; the rules are 2×2 on the phone.

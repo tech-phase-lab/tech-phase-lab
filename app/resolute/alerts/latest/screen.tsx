@@ -1,9 +1,11 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import ToolShell from "../../tool-shell";
-import { ReviewLink as Link, useNotificationClient, usePlanClient } from "../../review-context";
+import { ReviewLink as Link, useNotificationClient, usePlanClient, useReview } from "../../review-context";
 import { latestAlertView, parseLatestAlert, type LatestAlert, type LatestAlertContext } from "@/lib/resolute/latest-alert";
 import { ruleFacts } from "@/lib/resolute/plan-rules";
+import { parseTodayPlanSnapshot } from "@/lib/resolute/today-plan-transport";
+import type { TodayPlan } from "@/lib/resolute/today-plan";
 import type { PlanSnapshot } from "@/lib/resolute/plan-data";
 import type { NotificationSnapshot } from "@/lib/resolute/notification-settings";
 import { useRemembered } from "../../features/use-remembered";
@@ -75,14 +77,19 @@ function Latest({ locale, deny }: { locale: "ja" | "en"; deny: () => void }) {
   const requestPlan = usePlanClient(), requestSettings = useNotificationClient();
   const knownPlan = useRemembered<PlanSnapshot>("plan"), knownSettings = useRemembered<NotificationSnapshot>("notifications");
   const [plan, setPlan] = useState(knownPlan?.plan ?? null), [settings, setSettings] = useState(knownSettings?.settings ?? null);
+  const review = useReview() !== null, [todayPlan, setTodayPlan] = useState<TodayPlan | null>(null);
   const denyRef = useRef(deny);
   useEffect(() => { denyRef.current = deny; }, [deny]);
   useEffect(() => {
     const controller = new AbortController();
     void requestPlan(undefined, controller.signal).then(p => { if (!controller.signal.aborted) setPlan(p.plan); }, () => {});
     void requestSettings(undefined, controller.signal).then(n => { if (!controller.signal.aborted) setSettings(n.settings); }, () => {});
+    // The AI-written 「今日やること」 (resolute-pc-1125 §4). Off (503), {plan:null} or any failure: the fixed sentences are shown.
+    if (!review) void fetch("/api/resolute/today-plan", { cache: "no-store", credentials: "same-origin", redirect: "error", signal: AbortSignal.any([controller.signal, AbortSignal.timeout(20000)]) })
+      .then(async r => { if (!r.ok) return; const text = await r.text(); if (text.length > 16384) return; const { plan } = parseTodayPlanSnapshot(JSON.parse(text)); if (!controller.signal.aborted) setTodayPlan(plan); })
+      .catch(() => {});
     return () => controller.abort();
-  }, [requestPlan, requestSettings]);
+  }, [requestPlan, requestSettings, review]);
   useEffect(() => {
     const controller = new AbortController();
     void (async () => {
@@ -100,7 +107,7 @@ function Latest({ locale, deny }: { locale: "ja" | "en"; deny: () => void }) {
     })();
     return () => controller.abort();
   }, [attempt]);
-  const context: LatestAlertContext = { rules: plan ? ruleFacts(plan) : null,
+  const context: LatestAlertContext = { rules: plan ? ruleFacts(plan) : null, plan: todayPlan,
     references: Object.fromEntries((settings?.watchItems ?? []).map(i => [i.symbol, i.referencePrice])) };
   return <LatestAlertContent locale={locale} state={state} context={context} wide={desktop} onRetry={() => { setState({ status: "loading" }); setAttempt(v => v + 1); }} />;
 }
