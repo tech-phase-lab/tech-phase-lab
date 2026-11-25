@@ -29,6 +29,7 @@ import { stockSearchReturnPosition, stockSearchUrl } from "@/lib/research/stock-
 import { displayClock } from "@/lib/research/display-time";
 import { asOfLabel } from "@/lib/research/search-result-card";
 import type { SectorLabel } from "@/lib/research/watchlist-sector";
+import type { FocusView } from "@/lib/research/search-focus-server";
 
 type SearchResponse = { ok: boolean; results?: StockDirectoryEntry[]; error?: string; source?: string; asOf?: string };
 type IntroducedStockProfile = StockProfile & { introduction?: CompanyIntroduction | null; network?: CompanyNetwork | null };
@@ -63,8 +64,9 @@ function filingLabel(form: string, lang: "ja" | "en") {
   return form.endsWith("/A") ? `${label}${lang === "ja" ? "（訂正）" : " (amended)"}` : label;
 }
 
-/** `sectors`: the research roster's sector per ticker, the same registered tag the watchlist shows (page.tsx). */
-export default function StockDirectory({ sectors }: { sectors?: Record<string, SectorLabel> } = {}) {
+/** `sectors`: the research roster's sector per ticker, the same registered tag the watchlist shows (page.tsx). `focus`: 「今日の注目」 and the
+ * theme rows' day change from the shared snapshot, read by the page on the server (lib/research/search-focus-server.ts). */
+export default function StockDirectory({ sectors, focus }: { sectors?: Record<string, SectorLabel>; focus?: FocusView | null } = {}) {
   const [lang, setLang] = useResearchLanguage();
   const searchParams = useSearchParams();
   const routeQuery = searchParams.get("q") ?? "";
@@ -258,8 +260,11 @@ export default function StockDirectory({ sectors }: { sectors?: Record<string, S
   // The slim field names the chosen stock (sheet: 「⌕ NVDA ×」); the search itself (e.g. 「NV」) is kept for 「‹ 検索結果」 and Back.
   const selectedTicker = directQuote?.ticker ?? profile?.ticker ?? selectedResultKey?.split(":")[0] ?? "";
   const asOfNote = asOf ? <time dateTime={asOf}>{asOfLabel(displayClock(asOf, lang), lang)}</time> : null;
+  // The first screen (owner, Nov 26): nothing typed and no stock chosen. It fits one phone screen, so the page's footer is left out there.
+  const start = !query.trim() && !detail && !profile && !errorMessage;
+  const openTicker = (ticker: string) => { themeSelection.current = ticker; changeQuery(ticker); };
 
-  return <div className={base.app} lang={lang}>
+  return <div className={start ? `${base.app} ${searchStyles.fit}` : base.app} lang={lang}>
     <a className={base.skip} href="#stock-search-main">{t("本文へ移動", "Skip to content")}</a>
     <SiteHeader lang={lang} setLang={setLang} nav={<nav className={base.primaryNav} aria-label={t("メインメニュー", "Main navigation")}><Link href="/research/capital-map"><NavigationIcon name="changes" />{t("資本マップ", "CAPITAL MAP")}</Link><Link href="/research/stocks" aria-current="page"><NavigationIcon name="search" />{t("米国株を探す", "Find stocks")}</Link><Link href="/research#metrics"><NavigationIcon name="metrics" />{t("決算・指標", "Financials")}</Link></nav>} />
     <div className={shell.withSidebar}>
@@ -280,14 +285,16 @@ export default function StockDirectory({ sectors }: { sectors?: Record<string, S
         <h1 className={searchStyles.title}>{t("銘柄検索", "Stock search")}</h1>
         <div className={searchStyles.bar}>
           <span className={searchStyles.glass} aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" /><path d="m16 16 5 5" /></svg></span>
-          <input className={searchStyles.input} autoComplete="off" autoCapitalize="characters" spellCheck={false} inputMode="search" value={query} onChange={(event) => { themeSelection.current = null; changeQuery(event.target.value); }} placeholder={t("例  NVDA  NVIDIA", "e.g.  NVDA  NVIDIA")} aria-label={t("米国株を検索", "Search U.S. stocks")} />
+          <input className={searchStyles.input} autoComplete="off" autoCapitalize="characters" spellCheck={false} inputMode="search" value={query} onChange={(event) => { themeSelection.current = null; changeQuery(event.target.value); }} aria-label={t("米国株を検索", "Search U.S. stocks")} />
+          {/* The placeholder (owner, Nov 26), drawn over the empty field so a slowly blinking caret can follow it; the field's own caret takes over on focus. */}
+          {!query && <span className={searchStyles.hint} aria-hidden="true">{t("会社名・ティッカー", "Company or ticker")}<i /></span>}
           {query && <button type="button" className={searchStyles.clear} aria-label={t("入力を消す", "Clear")} onClick={() => { themeSelection.current = null; changeQuery(""); }}><svg width="14" height="14" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" aria-hidden="true"><path d="M3 3l6 6M9 3l-6 6" /></svg></button>}
         </div>
       </section>
 
-      <StockSearchHistory lang={lang} history={history} onSelect={changeQuery} onClear={clearHistory} />
+      <StockSearchHistory lang={lang} history={history} onSelect={openTicker} onClear={clearHistory} />
 
-      {!query.trim() && !profile && <StockThemeDiscovery lang={lang} onSelect={ticker => { themeSelection.current = ticker; changeQuery(ticker); }} />}
+      {!query.trim() && !profile && <StockThemeDiscovery lang={lang} focus={focus} onSelect={openTicker} />}
 
       {historyError && <p className={polish.resultHint} role="status">{t("このブラウザーで履歴を保存・消去できませんでした。", "Could not update history in this browser.")}</p>}
       </div>
@@ -324,7 +331,7 @@ export default function StockDirectory({ sectors }: { sectors?: Record<string, S
           <a href={profile.secProfileUrl} target="_blank" rel="noreferrer">{t("公式資料をすべて見る（SEC）↗", "All official filings (SEC) ↗")}</a>
         </div>
       </details>}
-      <footer className={styles.footer}><span>TECH PHASE RESEARCH</span><p>{t(SOURCES_NOTE.ja, SOURCES_NOTE.en)}</p></footer>
+      {!start && <footer className={styles.footer}><span>TECH PHASE RESEARCH</span><p>{t(SOURCES_NOTE.ja, SOURCES_NOTE.en)}</p></footer>}
     </main>
     </div>
   </div>;

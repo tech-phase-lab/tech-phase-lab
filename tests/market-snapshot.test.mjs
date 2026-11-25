@@ -42,7 +42,7 @@ test("members only read the snapshot; the warm job refreshes it on the warm tier
   assert.match(data, /bars\(job\.id, series\.interval, series\.size, \{ fetch: \(\) => \{ spent\+\+; return true; \}, tier: "warm" \}\)/);
   assert.match(data, /if \(!snapshot\) \{ await refreshBoardSnapshot\(\); snapshot = await currentBoardSnapshot\(\); filled = true; \}/);
   const warm = read("app/api/research/compare/warm/route.ts");
-  assert.ok(warm.indexOf("await refreshBoardSnapshot()") < warm.indexOf("await warmMinute(Date.now(), lev.spent + board.spent)"));
+  assert.ok(warm.indexOf("await refreshBoardSnapshot()") < warm.indexOf("await warmMinute(Date.now(), lev.spent + board.spent"));
 });
 
 test("the page draws every tab from the snapshot until its own read arrives, and a read series is never replaced by it", () => {
