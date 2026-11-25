@@ -124,7 +124,7 @@ export default function Landing({ embedded = false }: { embedded?: boolean }) {
       <div className={s.video}><span className={s.play} /><div><b>今夜のひと息</b><small>リゼルから</small></div><em>1:40</em></div>
      </div>
      <Feature title="暴落の夜に開く" text="リゼルの短い動画と、あなたが決めた「やらないこと」を1画面に。今夜は決めなくていいと思い出せます。" />
-     <Feature title="衝撃度チェッカー" text="その日の気になるニュースを選び、関連するTP指標が実際にどれだけ動いたかを★5段階で示します。大きなニュースがない日は公開しません。" />
+     <Feature title="衝撃度チェッカー" text="その日の気になるニュースを選び、指標の実際の動きと記事の内容から★5段階の目安を出します。大きなニュースがない日は公開しません。" />
      <Feature title="リゼルの一言" text="ニュースごとに、リゼル本人の見方をひと言添えて届けます。" />
     </div>
    </section>

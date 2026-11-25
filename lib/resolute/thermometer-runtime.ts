@@ -1,7 +1,7 @@
 import { usMarketSession } from '../research/us-market-session.ts';
 import { collectThermometer, type ThermometerProviderConfig } from './thermometer-provider.ts';
 import { THERMOMETER_VERSION, validSessionDate } from './thermometer.ts';
-import { gaugeReading, type DailyMoveReading, type ThermometerSnapshot } from './thermometer-view.ts';
+import { gaugeReading, type DailyMoveReading, type ShockReadingView, type ThermometerSnapshot } from './thermometer-view.ts';
 
 /** The calendar is deliberately bounded; no weekday-only guesses beyond its coverage.
  * A close becomes eligible one hour after the regular/shortened session ends.
@@ -38,8 +38,8 @@ export function safeThermometerSnapshot(raw: unknown, expected: string): Thermom
   const v = source.vix;
   if (v?.status === 'ready' && v.asOf === expected && Number.isFinite(v.level) && v.level > 0 && Number.isFinite(v.percentile) && v.percentile >= 0 && v.percentile <= 100) empty.vix = {status:'ready',asOf:expected,level:v.level,percentile:v.percentile};
   else if (v?.status === 'unavailable') empty.vix = {status:'unavailable',reason:reasons.has(v.reason)?v.reason:'invalid-data'};
-  const moves = safeMoves(source.moves, expected);
-  return moves ? {...empty, moves} : empty;
+  const moves = safeMoves(source.moves, expected), shock = safeShock((source as {shock?: unknown}).shock, expected);
+  return {...empty, ...(moves ? {moves} : {}), ...(shock ? {shock} : {})};
 }
 /** Only a move dated on the snapshot's own session, with a plausible earlier previous close, is kept. */
 function safeMove(raw: unknown, expected: string): DailyMoveReading | null {
@@ -90,4 +90,25 @@ export async function refreshThermometer(db: ThermometerDatabase, config: Thermo
     await db.query('COMMIT');
     return {status:'stored' as const,asOf:session};
   } catch { await db.query('ROLLBACK'); throw new Error('thermometer-refresh-failed'); }
+}
+
+const finite = (v: unknown, min: number, max: number): v is number => typeof v === 'number' && Number.isFinite(v) && v >= min && v <= max;
+const count = (v: unknown): v is number => Number.isInteger(v) && (v as number) >= 0 && (v as number) <= 500;
+/** One basket's shock reading for `date`: its move (as safeMove), typical move, and constituent counts. */
+function safeShockReading(raw: unknown, date: string): ShockReadingView | null {
+  const m = safeMove(raw, date), x = raw as ShockReadingView;
+  if (!m || !finite(x.typicalPercent, 0.01, 50) || !count(x.up) || !count(x.down) || !count(x.total) || x.total < 10 || x.up + x.down > x.total) return null;
+  return {...m, typicalPercent: x.typicalPercent, up: x.up, down: x.down, total: x.total};
+}
+/** The snapshot's shock map: at most 15 sessions, each dated on or before the snapshot's own session. */
+export function safeShock(raw: unknown, expected: string): ThermometerSnapshot['shock'] | undefined {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return undefined;
+  const out: NonNullable<ThermometerSnapshot['shock']> = {};
+  for (const [date, value] of Object.entries(raw as Record<string, unknown>).slice(-15)) {
+    if (!validSessionDate(date) || date > expected || !value || typeof value !== 'object') continue;
+    const v = value as Record<string, unknown>, f = v.fear as {date?: unknown; level?: unknown; previousLevel?: unknown} | null;
+    out[date] = {nas100: safeShockReading(v.nas100, date), sox: safeShockReading(v.sox, date),
+      fear: f && f.date === date && finite(f.level, 0.01, 1000) && finite(f.previousLevel, 0.01, 1000) ? {date, level: f.level, previousLevel: f.previousLevel} : null};
+  }
+  return Object.keys(out).length ? out : undefined;
 }

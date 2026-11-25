@@ -207,3 +207,12 @@ test('no page says RESOLUTE is never charged or renewed automatically any more',
   for (const dir of ['app', 'lib', 'content', 'public']) walk(new URL(`../${dir}`, import.meta.url).pathname);
   for (const file of files) assert.doesNotMatch(readFileSync(file, 'utf8'), /自動で課金することはありません|never charged automatically|ご希望の方だけ行います/i, file);
 });
+
+// Owner decision, Nov 25 (published without a further lawyer check): Terms 第20条4項 describes the Shock Gauge stars as a guide
+// calculated from the actual index moves and the article's content, weighing whether the cause looks one-off.
+test('Terms 20(4): the Shock Gauge stars are a guide from actual index moves and the article, never a forecast', () => {
+  const ja = readFileSync(new URL('../content/legal/terms.ja.md', import.meta.url), 'utf8'), en = readFileSync(new URL('../content/legal/terms.en.md', import.meta.url), 'utf8');
+  assert.ok(ja.includes('4. 衝撃度チェッカーの★は、ニュースのあとの実際の指標の動きと記事の内容から、一過性かどうかを吟味して算出した目安であり、今後の値動きや売買の時期を示すものではありません。ニュースの要約にAIを使うことがあり、誤りが含まれることがあります。'));
+  assert.ok(en.includes("4. The Shock Gauge's stars are a guide calculated from the actual index moves after the news and from the article's content, weighing whether the cause looks one-off; they do not indicate future price moves or when to buy or sell. AI may be used to summarize news, and summaries may contain errors."));
+  assert.ok(!ja.includes('運営者があらかじめ定めて公表する基準') && !en.includes('criteria the Operator sets and publishes in advance'));
+});

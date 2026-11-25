@@ -1,0 +1,263 @@
+{
+  "root": {
+    "ticker": "VIRT",
+    "name": "バーチュ・ファイナンシャル",
+    "cik": 1592386,
+    "name_en": "Virtu Financial, Inc."
+  },
+  "rows": [
+    {
+      "ja": "主な取引の場(取引所・市場)",
+      "en": "Main trading venues"
+    },
+    {
+      "ja": "マーケットメイクの競合(本人の10-Kで名指し)",
+      "en": "Market-making rivals (own 10-K)"
+    }
+  ],
+  "rivals": [
+    "CITADEL",
+    "Susquehanna"
+  ],
+  "companies": [
+    {
+      "id": "ICE",
+      "ticker": "ICE",
+      "name": "インターコンチネンタル取引所",
+      "name_en": "Intercontinental Exchange",
+      "sub": "取引所",
+      "sub_en": "Exchange",
+      "sub_short": "取引所",
+      "sub_short_en": "Exchange",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ICEの原油・天然ガスなどの先物で売買",
+          "text_en": "Trades oil and gas futures on ICE",
+          "source": {
+            "label": "Virtu 10-K(2025年度)",
+            "label_en": "Virtu 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1592386/000159238626000009/virt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Our Commodities market making takes place on the CME, ICE, and Nasdaq Futures in crude oil, natural gas, heating oil, and gasoline futures."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NDAQ",
+      "ticker": "NDAQ",
+      "name": "ナスダック",
+      "name_en": "Nasdaq",
+      "sub": "取引所",
+      "sub_en": "Exchange",
+      "sub_short": "取引所",
+      "sub_short_en": "Exchange",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "株式と先物の取引の場",
+          "text_en": "Equity and futures venue",
+          "source": {
+            "label": "Virtu 10-K(2025年度)",
+            "label_en": "Virtu 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1592386/000159238626000009/virt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "including the New York Stock Exchange (\"NYSE\"), the Nasdaq Stock Market LLC (\"Nasdaq\"), NYSE Arca, Cboe BATS"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CBOE",
+      "ticker": "CBOE",
+      "name": "Cboeグローバル・マーケッツ",
+      "name_en": "Cboe Global Markets",
+      "sub": "取引所",
+      "sub_en": "Exchange",
+      "sub_short": "取引所",
+      "sub_short_en": "Exchange",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "米国株の取引の場(Cboe BATS)",
+          "text_en": "US equities venue (Cboe BATS)",
+          "source": {
+            "label": "Virtu 10-K(2025年度)",
+            "label_en": "Virtu 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1592386/000159238626000009/virt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "including the New York Stock Exchange (\"NYSE\"), the Nasdaq Stock Market LLC (\"Nasdaq\"), NYSE Arca, Cboe BATS"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CME",
+      "ticker": "CME",
+      "name": "CMEグループ",
+      "name_en": "CME Group",
+      "sub": "先物取引所",
+      "sub_en": "Futures exchange",
+      "sub_short": "先物",
+      "sub_short_en": "Futures",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "原油・天然ガスなど商品先物の取引の場",
+          "text_en": "Venue for oil and gas futures",
+          "source": {
+            "label": "Virtu 10-K(2025年度)",
+            "label_en": "Virtu 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1592386/000159238626000009/virt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Our Commodities market making takes place on the CME, ICE, and Nasdaq Futures in crude oil, natural gas, heating oil, and gasoline futures."
+          }
+        }
+      ]
+    },
+    {
+      "id": "OTCM",
+      "ticker": "OTCM",
+      "name": "OTCマーケッツ・グループ",
+      "name_en": "OTC Markets Group",
+      "sub": "店頭市場",
+      "sub_en": "OTC market",
+      "sub_short": "店頭市場",
+      "sub_short_en": "OTC",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "運営するOTC Link ATSで特殊な注文を執行",
+          "text_en": "Handles specialized orders on its OTC Link ATS",
+          "source": {
+            "label": "Virtu 10-K(2025年度)",
+            "label_en": "Virtu 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1592386/000159238626000009/virt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "our cash trading business handles specialized orders and transacts on the OTC Link ATS operated by OTC Markets Group Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CITADEL",
+      "ticker": "Citadel Securities",
+      "name": "シタデル・セキュリティーズ",
+      "name_en": "Citadel Securities",
+      "sub": "マーケットメイカー",
+      "sub_en": "Market maker",
+      "sub_short": "証券",
+      "sub_short_en": "Trading",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "マーケットメイクで競合",
+          "text_en": "Market-making rival",
+          "source": {
+            "label": "Virtu 10-K(2025年度)",
+            "label_en": "Virtu 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1592386/000159238626000009/virt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "including market participants, such as Citadel Securities, Susquehanna International Group LLP, Two Sigma, Jane Street, DRW Holdings, IMC, and Optiver."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Susquehanna",
+      "ticker": "Susquehanna",
+      "name": "サスケハナ・インターナショナル・グループ",
+      "name_en": "Susquehanna International Group",
+      "sub": "トレーディング",
+      "sub_en": "Trading firm",
+      "sub_short": "取引",
+      "sub_short_en": "Trading",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "マーケットメイクで競合",
+          "text_en": "Market-making rival",
+          "source": {
+            "label": "Virtu 10-K(2025年度)",
+            "label_en": "Virtu 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1592386/000159238626000009/virt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "including market participants, such as Citadel Securities, Susquehanna International Group LLP, Two Sigma, Jane Street, DRW Holdings, IMC, and Optiver."
+          }
+        }
+      ]
+    },
+    {
+      "id": "JaneStreet",
+      "ticker": "Jane Street",
+      "name": "ジェーン・ストリート",
+      "name_en": "Jane Street",
+      "sub": "トレーディング",
+      "sub_en": "Trading firm",
+      "sub_short": "取引",
+      "sub_short_en": "Trading",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "マーケットメイクで競合",
+          "text_en": "Market-making rival",
+          "source": {
+            "label": "Virtu 10-K(2025年度)",
+            "label_en": "Virtu 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1592386/000159238626000009/virt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "including market participants, such as Citadel Securities, Susquehanna International Group LLP, Two Sigma, Jane Street, DRW Holdings, IMC, and Optiver."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Optiver",
+      "ticker": "Optiver",
+      "name": "オプティバー",
+      "name_en": "Optiver",
+      "sub": "トレーディング",
+      "sub_en": "Trading firm",
+      "sub_short": "取引",
+      "sub_short_en": "Trading",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "マーケットメイクで競合",
+          "text_en": "Market-making rival",
+          "source": {
+            "label": "Virtu 10-K(2025年度)",
+            "label_en": "Virtu 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1592386/000159238626000009/virt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "including market participants, such as Citadel Securities, Susquehanna International Group LLP, Two Sigma, Jane Street, DRW Holdings, IMC, and Optiver."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

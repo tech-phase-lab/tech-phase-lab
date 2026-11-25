@@ -51,7 +51,7 @@ test('review scenarios preserve news text and never mutate the source',()=>{
  assert.deepEqual(reviewScenarioFeed('high').articles.map(a=>a.stars),[4,5,4]);
  assert.deepEqual(reviewScenarioFeed('low').articles.map(a=>a.stars),[1,2,1]);
  assert.deepEqual(reviewScenarioFeed('medium').articles.map(a=>a.stars),[3,3,3]);
- assert.deepEqual(reviewScenarioFeed('sample').articles.map(a=>a.stars),[4,2,null]);
+ assert.deepEqual(reviewScenarioFeed('sample').articles.map(a=>a.stars),[3,3,null]); // one sample close for both: TP半導体40 2.1× with 33/40 ★3 is the stronger
  assert.equal(reviewScenarioFeed('failed').articles.length,0);assert.equal(reviewScenarioFeed('live'),null);
  assert.deepEqual(reviewScenarioFeed('high').articles.map(a=>a.ja),reviewScenarioFeed('sample').articles.map(a=>a.ja));
 });

@@ -3,18 +3,42 @@
  * change wording or thresholds HERE only; nothing else hard-codes them.
  * Plain values only (no imports) so the Railway worker can load it directly.
  *
- * Stars are mechanical (lawyer review, Nov 2026): no owner or AI judgment.
- * One related TP index per story (TP半導体40 when the story names a constituent or is about
- * semiconductors / AI chips, otherwise TP大型株100). Its % change vs the previous close at the
- * FIRST U.S. market close after the news decides the stars from the absolute move.
- * Before that close the story shows no stars ("waiting for the market's reaction").
+ * Stars are mechanical (lawyer review, Nov 2026): no owner or AI judgment, no prediction.
+ * Each story has a scope decided from its headline by fixed rules (lib/resolute/risk-scope.ts): market-wide or
+ * semiconductor-sector news is measured on BOTH TP大型株100 and TP半導体40 (owner, Nov 25) and its stars are the stronger of the
+ * two; the scope only decides which index is listed first. News about one company gets no stars (one stock's move is not a
+ * market shock). Before the first U.S. close after the news the story shows no stars ("waiting").
+ *
+ * Nov 25 (owner-approved method): the stars measure the SHOCK of that close, from three measured parts (thermometer data,
+ * the same daily closes the thermometer already reads: no extra provider calls):
+ *  - multiple: |index move| ÷ the index's typical daily move (the median of its absolute daily % moves over the 60 sessions
+ *    before), rounded to 0.1 — "ふだんの何倍の動きか". −3% in a calm market counts more than in a turbulent one. A median, so a
+ *    few crash days do not shrink every later move (thermometer-basket.ts sessionShock).
+ *  - breadth: constituents that moved the same way as the index ÷ constituents priced on both days — "40社中37社が下落".
+ *  - fear: change of TP恐怖指数 (20-session realized volatility of TP大型株100, annualized) that day vs the day before,
+ *    in whole % — "恐怖指数+18%". Only a rise counts.
+ * The stars are the highest level whose every condition holds. The levels are fixed by what they mean (owner, Nov 25), never
+ * tuned to a share of days: if nothing extreme happens for months there is no ★5; in a crisis there can be many.
  */
 export const RISK_POLICY = {
-  version: 2,
+  version: 4,
   stars: {
-    method: 'market-move',
-    /** Lower bounds (absolute % move, rounded to 0.1) for ★2..★5: <1 ★1, 1–2 ★2, 2–3 ★3, 3–5 ★4, ≥5 ★5. */
-    thresholds: [1, 2, 3, 5],
+    method: 'shock',
+    /** Sessions in the typical-move window (median of absolute daily moves). */
+    typicalDays: 60,
+    /** Highest first. multiple: at least this many times the typical move; breadth: at least this % of constituents moved the
+     * same way; fear: TP恐怖指数 rose at least this many %. null = not required. A level below these is ★1. */
+    levels: [
+      // ★5 a historic-scale shock: five ordinary days in one, nearly the whole index the same way, and fear jumping
+      // (Nov 20: TP大型株100 about −5.4%, six times its typical move).
+      { stars: 5, multiple: 5, breadth: 80, fear: 10 },
+      // ★4 a very large, broad shock (a −7% to −8.5% semiconductor day in a turbulent market is about three to four times).
+      { stars: 4, multiple: 3, breadth: 80, fear: null },
+      // ★3 a large move shared by most of the index.
+      { stars: 3, multiple: 2, breadth: 70, fear: null },
+      // ★2 clearly bigger than an ordinary day.
+      { stars: 2, multiple: 1.5, breadth: null, fear: null },
+    ],
   },
   /** Names shown next to the stars (EN names match the thermometer page). */
   indices: {
@@ -25,11 +49,15 @@ export const RISK_POLICY = {
   reviewMinStars: 4,
   /** Shown instead of stars until the first U.S. close after the news. */
   waiting: { ja: '市場の反応待ち', en: 'Waiting for the market’s reaction' },
-  /** Note under the stars (lawyer-reviewed wording, Nov 2026). */
+  /** Note under the stars: the same wording as Terms 第20条4項 (owner, Nov 25), no longer than the note it replaced. */
   note: {
-    ja: '★は、ニュースのあとに関連するTP指標が実際にどれだけ動いたかで決めています。今後の値動きを示すものではありません。売買の判断は、あなた自身でおこなってください。',
-    en: 'Stars show how much the related TP index actually moved after the news. They don’t predict future prices. Any decision to buy or sell is yours.',
+    ja: '★は、ニュースのあとの実際の指標の動きと記事の内容から、一過性かどうかを吟味して算出した目安であり、今後の値動きや売買の時期を示すものではありません。',
+    en: 'Stars weigh actual index moves after the news and whether the article’s cause looks one-off. They don’t show future prices or when to trade.',
   },
+  /** Shown instead of stars for news about a single company (no index measures one company's news). */
+  company: { ja: '個別企業のニュース（★はつけません）', en: 'Single-company news (no stars)' },
+  /** At most this many stories per index and U.S. close (owner, Nov 25: never three stories on the same move). */
+  perIndexSession: 1,
   /** Status lines shown when there are no stories to list. */
   status: {
     preparing: { ja: '準備中です', en: 'Coming soon.' },

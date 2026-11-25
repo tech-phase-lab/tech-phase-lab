@@ -1,0 +1,227 @@
+{
+  "root": {
+    "ticker": "RXO",
+    "name": "RXO",
+    "cik": 1929561,
+    "name_en": "RXO"
+  },
+  "rows": [
+    {
+      "ja": "買収・統合",
+      "en": "Acquisitions & merger"
+    },
+    {
+      "ja": "競合(本人の10-Kで名指し)",
+      "en": "Named rivals (own 10-K)"
+    }
+  ],
+  "rivals": [
+    "CHRW",
+    "EXPD",
+    "JBHT",
+    "LSTR",
+    "UBER"
+  ],
+  "companies": [
+    {
+      "id": "CHRW",
+      "ticker": "CHRW",
+      "name": "C.H.ロビンソン",
+      "name_en": "C.H. Robinson",
+      "sub": "物流",
+      "sub_en": "Logistics",
+      "sub_short": "物流",
+      "sub_short_en": "Logistics",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "C.H. RobinsonがRXOを買収する合併契約(2026年10月)",
+          "text_en": "C.H. Robinson agreed to acquire RXO (merger agreement, October 2026)",
+          "source": {
+            "label": "C.H. Robinson 8-K(2026年11月)",
+            "label_en": "C.H. Robinson 8-K (Nov 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1043277/000104327726000051/chrw-20261118.htm",
+            "level": "official",
+            "date": "2026-11-18",
+            "quote": "(\"RXO\") pursuant to the Agreement and Plan of Merger, dated as of October 4, 2026 (the \"Merger Agreement\" and such acquisition, the \"RXO Acquisition\"), and the related financing transactions."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "トラック仲介の最大手で、主な競合",
+          "text_en": "Largest freight broker and main rival",
+          "source": {
+            "label": "RXO 10-K(2025年度)",
+            "label_en": "RXO 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1929561/000192956126000013/rxo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-09",
+            "quote": "Our primary competitors include C.H. Robinson, Echo Global Logistics, Expeditors, Forward Air, Flexport, J.B. Hunt, Landstar System, Total Quality Logistics, and Uber Freight."
+          }
+        }
+      ]
+    },
+    {
+      "id": "UPS",
+      "ticker": "UPS",
+      "name": "UPS",
+      "name_en": "UPS",
+      "sub": "物流",
+      "sub_en": "Logistics",
+      "sub_short": "物流",
+      "sub_short_en": "Parcel",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "トラック仲介事業CoyoteをUPSから10.38億ドルで買収(2024年9月)",
+          "text_en": "Bought the Coyote truck brokerage business from UPS for $1.038 billion (September 2024)",
+          "source": {
+            "label": "RXO 10-K(2025年度)",
+            "label_en": "RXO 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1929561/000192956126000013/rxo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-09",
+            "quote": "On September 16, 2024, the Company acquired the technology-driven, asset-light truckload freight brokerage services business, as well as certain assets used to conduct haulage, dedicated transport and warehousing services in the United Kingdom (collectively, \"Coyote\"), from United Parcel Service of America, Inc. (\"UPS\") and certain subsidiaries of UPS."
+          }
+        }
+      ]
+    },
+    {
+      "id": "EXPD",
+      "ticker": "EXPD",
+      "name": "エクスペディターズ",
+      "name_en": "Expeditors",
+      "sub": "国際物流",
+      "sub_en": "Global logistics",
+      "sub_short": "物流",
+      "sub_short_en": "Logistics",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "トラック仲介・物流で競合",
+          "text_en": "Rival in freight brokerage and logistics",
+          "source": {
+            "label": "RXO 10-K(2025年度)",
+            "label_en": "RXO 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1929561/000192956126000013/rxo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-09",
+            "quote": "Our primary competitors include C.H. Robinson, Echo Global Logistics, Expeditors, Forward Air, Flexport, J.B. Hunt, Landstar System, Total Quality Logistics, and Uber Freight."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FWRD",
+      "ticker": "FWRD",
+      "name": "フォワード・エア",
+      "name_en": "Forward Air",
+      "sub": "物流",
+      "sub_en": "Logistics",
+      "sub_short": "物流",
+      "sub_short_en": "Logistics",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "トラック仲介・物流で競合",
+          "text_en": "Rival in freight brokerage and logistics",
+          "source": {
+            "label": "RXO 10-K(2025年度)",
+            "label_en": "RXO 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1929561/000192956126000013/rxo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-09",
+            "quote": "Our primary competitors include C.H. Robinson, Echo Global Logistics, Expeditors, Forward Air, Flexport, J.B. Hunt, Landstar System, Total Quality Logistics, and Uber Freight."
+          }
+        }
+      ]
+    },
+    {
+      "id": "JBHT",
+      "ticker": "JBHT",
+      "name": "J.B.ハント",
+      "name_en": "J.B. Hunt",
+      "sub": "トラック輸送",
+      "sub_en": "Trucking",
+      "sub_short": "トラック",
+      "sub_short_en": "Trucking",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "トラック仲介・物流で競合",
+          "text_en": "Rival in freight brokerage and logistics",
+          "source": {
+            "label": "RXO 10-K(2025年度)",
+            "label_en": "RXO 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1929561/000192956126000013/rxo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-09",
+            "quote": "Our primary competitors include C.H. Robinson, Echo Global Logistics, Expeditors, Forward Air, Flexport, J.B. Hunt, Landstar System, Total Quality Logistics, and Uber Freight."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LSTR",
+      "ticker": "LSTR",
+      "name": "ランドスター・システム",
+      "name_en": "Landstar System",
+      "sub": "トラック仲介",
+      "sub_en": "Freight brokerage",
+      "sub_short": "物流",
+      "sub_short_en": "Logistics",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "トラック仲介・物流で競合",
+          "text_en": "Rival in freight brokerage and logistics",
+          "source": {
+            "label": "RXO 10-K(2025年度)",
+            "label_en": "RXO 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1929561/000192956126000013/rxo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-09",
+            "quote": "Our primary competitors include C.H. Robinson, Echo Global Logistics, Expeditors, Forward Air, Flexport, J.B. Hunt, Landstar System, Total Quality Logistics, and Uber Freight."
+          }
+        }
+      ]
+    },
+    {
+      "id": "UBER",
+      "ticker": "UBER",
+      "name": "ウーバー",
+      "name_en": "Uber",
+      "sub": "配車",
+      "sub_en": "Ride-hailing",
+      "sub_short": "配車",
+      "sub_short_en": "Rides",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ウーバー・フレイトがトラック仲介で競合",
+          "text_en": "Its Uber Freight arm is a brokerage rival",
+          "source": {
+            "label": "RXO 10-K(2025年度)",
+            "label_en": "RXO 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1929561/000192956126000013/rxo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-09",
+            "quote": "Our primary competitors include C.H. Robinson, Echo Global Logistics, Expeditors, Forward Air, Flexport, J.B. Hunt, Landstar System, Total Quality Logistics, and Uber Freight."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

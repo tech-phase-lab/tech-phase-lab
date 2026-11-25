@@ -3,7 +3,7 @@
   "runAt": "2026-11-23T23:23:00Z",
   "roster": "NVDA,AMD,MU,TSM,ASML,AVGO,NBIS",
   "knownSession": "2026-11-23",
-  "moves": {"2026-11-23": {"sox": {"changePercent": -2.4}, "nas100": {"changePercent": -1.3}}},
+  "moves": {"2026-11-23": {"sox": {"previousDate": "2026-11-21", "changePercent": -2.4, "typicalPercent": 1.5, "up": 6, "down": 34, "total": 40}, "nas100": {"previousDate": "2026-11-21", "changePercent": -1.3, "typicalPercent": 0.8, "up": 22, "down": 78, "total": 100}, "fear": {"level": 31.2, "previousLevel": 29.4}}},
   "stories": [
     {"key": "o1", "kind": "opinion", "lane": "company", "minutesBefore": 30, "sentiment": "Neutral", "tickers": ["NVDA"],
      "title": "Nvidia Stock Falls After Earnings: Is It Time to Buy the Dip?",

@@ -8,8 +8,11 @@ export type ThermometerSnapshot = {
  vix: {status: 'ready'; asOf: string; level: number; percentile: number} | {status: 'unavailable'; reason: string};
  /** Close-to-close basket moves on asOf (Shock Gauge stars). Absent on snapshots stored before Nov 2026. */
  moves?: {nas100: DailyMoveReading | null; sox: DailyMoveReading | null};
+ /** Shock Gauge inputs for the last sessions up to asOf (Nov 25): typical move, constituents up/down, fear index. */
+ shock?: Record<string, {nas100: ShockReadingView | null; sox: ShockReadingView | null; fear: {date: string; level: number; previousLevel: number} | null}>;
 };
 export type DailyMoveReading = {date: string; previousDate: string; changePercent: number};
+export type ShockReadingView = DailyMoveReading & {typicalPercent: number; up: number; down: number; total: number};
 export const temperatureLabels = {
  ja: ['冷えている', 'やや冷え', '平常', 'やや熱い', '熱い'],
  en: ['Cool', 'Slightly cool', 'Normal', 'Slightly hot', 'Hot'],

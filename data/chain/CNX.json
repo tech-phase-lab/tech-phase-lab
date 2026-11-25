@@ -1,0 +1,186 @@
+{
+  "root": {
+    "ticker": "CNX",
+    "name": "CNXリソーシズ",
+    "cik": 1070412,
+    "name_en": "CNX Resources Corporation"
+  },
+  "rows": [
+    {
+      "ja": "主な販売先(売上の10%超)",
+      "en": "Main buyers (over 10% of revenue)"
+    },
+    {
+      "ja": "ガスを流す主なパイプライン",
+      "en": "Main pipelines it sells through"
+    },
+    {
+      "ja": "買収",
+      "en": "Acquisition"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "NRG",
+      "ticker": "NRG",
+      "name": "NRGエナジー",
+      "name_en": "NRG Energy",
+      "sub": "電力",
+      "sub_en": "Power",
+      "sub_short": "電力",
+      "sub_short_en": "Power",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大の販売先(2025年に2.23億ドル)",
+          "text_en": "Largest buyer: $223 million in 2025",
+          "source": {
+            "label": "CNX 10-K(2025年度)",
+            "label_en": "CNX 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1070412/000107041226000038/cnx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "During the year ended December 31, 2025, sales to NRG Business Marketing LLC were $ 223,210 , sales to DTE Energy Trading, Inc were $ 208,775 , and sales to Citadel Energy Marketing LLC were $ 205,993 , each of which comprised over 10 % of the Company's revenue"
+          }
+        }
+      ]
+    },
+    {
+      "id": "DTEEnergy",
+      "ticker": "DTE",
+      "name": "DTEエナジー",
+      "name_en": "DTE Energy",
+      "sub": "電力・ガス",
+      "sub_en": "Power & gas utility",
+      "sub_short": "電力ガス",
+      "sub_short_en": "Utility",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "販売先(2025年に2.09億ドル)",
+          "text_en": "Buyer: $209 million in 2025",
+          "source": {
+            "label": "CNX 10-K(2025年度)",
+            "label_en": "CNX 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1070412/000107041226000038/cnx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "During the year ended December 31, 2025, sales to NRG Business Marketing LLC were $ 223,210 , sales to DTE Energy Trading, Inc were $ 208,775 , and sales to Citadel Energy Marketing LLC were $ 205,993 , each of which comprised over 10 % of the Company's revenue"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Citadel",
+      "ticker": "Citadel",
+      "name": "シタデル",
+      "name_en": "Citadel",
+      "sub": "ヘッジファンド",
+      "sub_en": "Hedge fund",
+      "sub_short": "ファンド",
+      "sub_short_en": "Fund",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "エネルギー取引部門が販売先(2025年に2.06億ドル)",
+          "text_en": "Its energy-marketing arm bought $206 million in 2025",
+          "source": {
+            "label": "CNX 10-K(2025年度)",
+            "label_en": "CNX 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1070412/000107041226000038/cnx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "During the year ended December 31, 2025, sales to NRG Business Marketing LLC were $ 223,210 , sales to DTE Energy Trading, Inc were $ 208,775 , and sales to Citadel Energy Marketing LLC were $ 205,993 , each of which comprised over 10 % of the Company's revenue"
+          }
+        }
+      ]
+    },
+    {
+      "id": "TexasEastern",
+      "ticker": "Texas Eastern",
+      "name": "テキサス・イースタン・トランスミッション",
+      "name_en": "Texas Eastern Transmission",
+      "sub": "パイプライン",
+      "sub_en": "Pipelines",
+      "sub_short": "配管網",
+      "sub_short_en": "Pipelines",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ガスの多くを流す3つのパイプラインの1つ",
+          "text_en": "One of three pipelines carrying much of its gas",
+          "source": {
+            "label": "CNX 10-K(2025年度)",
+            "label_en": "CNX 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1070412/000107041226000038/cnx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "A significant portion of our natural gas is sold on or through three pipeline systems, Texas Eastern Transmission, Columbia Gas Transmission, and Eastern Gas Transmission & Storage"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ColumbiaGasTrans",
+      "ticker": "Columbia Gas Trans.",
+      "name": "コロンビア・ガス・トランスミッション",
+      "name_en": "Columbia Gas Transmission",
+      "sub": "パイプライン",
+      "sub_en": "Pipelines",
+      "sub_short": "配管網",
+      "sub_short_en": "Pipelines",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ガスの多くを流す3つのパイプラインの1つ",
+          "text_en": "One of three pipelines carrying much of its gas",
+          "source": {
+            "label": "CNX 10-K(2025年度)",
+            "label_en": "CNX 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1070412/000107041226000038/cnx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "A significant portion of our natural gas is sold on or through three pipeline systems, Texas Eastern Transmission, Columbia Gas Transmission, and Eastern Gas Transmission & Storage"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ApexEnergy",
+      "ticker": "Apex Energy II",
+      "name": "エイペックス・エナジーII",
+      "name_en": "Apex Energy II",
+      "sub": "天然ガス開発",
+      "sub_en": "Natural gas E&P",
+      "sub_short": "天然ガス",
+      "sub_short_en": "Gas",
+      "row": 2,
+      "relations": [
+        {
+          "type": "up",
+          "text": "天然ガスの開発・集送事業を約5.18億ドルで買収(2025年1月)",
+          "text_en": "Bought its gas upstream and midstream business for about $518 million (Jan 2025)",
+          "source": {
+            "label": "CNX 10-K(2025年度)",
+            "label_en": "CNX 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1070412/000107041226000038/cnx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "On January 27, 2025, the Company completed the acquisition of the natural gas upstream and associated midstream business of Apex Energy II, LLC for total cash consideration of approximately $518 million."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

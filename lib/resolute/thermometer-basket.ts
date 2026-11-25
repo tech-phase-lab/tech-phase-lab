@@ -66,3 +66,39 @@ export function dailyMove(levels: readonly DailyClose[], session: string): Daily
   const changePercent = 100 * (last.close / previous.close - 1);
   return Number.isFinite(changePercent) && Math.abs(changePercent) < 100 ? { date: last.date, previousDate: previous.date, changePercent } : null;
 }
+
+/** Shock Gauge (Nov 25, owner-approved method): how unusual and how broad one basket's close-to-close move was.
+ * typicalPercent: the basket's typical daily move: the MEDIAN of the absolute daily % moves over the SHOCK_TYPICAL_DAYS sessions
+ * before it (a median, so one or two crash days do not make every later move look small).
+ * up / down / total: constituents that closed higher / lower than on the basket's previous day (total = with both prices).
+ * Never guessed: null without the session, its previous day, a full typical-move window, or enough constituents.
+ */
+export const SHOCK_TYPICAL_DAYS = 60;
+export type ShockReading = DailyMove & { typicalPercent: number; up: number; down: number; total: number };
+export function sessionShock(levels: readonly DailyClose[], series: BasketSeries, session: string, window = SHOCK_TYPICAL_DAYS): ShockReading | null {
+  const move = dailyMove(levels, session);
+  if (!move) return null;
+  const sorted = levels.filter(bar => bar.date < session && bar.close > 0).slice().sort((a, b) => a.date.localeCompare(b.date));
+  const returns: number[] = [];
+  for (let i = 1; i < sorted.length; i++) returns.push(100 * (sorted[i].close / sorted[i - 1].close - 1));
+  if (returns.length < window) return null;
+  const slice = returns.slice(-window).map(Math.abs).sort((a, b) => a - b);
+  const typicalPercent = window % 2 ? slice[(window - 1) / 2] : (slice[window / 2 - 1] + slice[window / 2]) / 2;
+  if (!(typicalPercent > 0) || !Number.isFinite(typicalPercent)) return null;
+  let up = 0, down = 0, total = 0;
+  for (const bars of Object.values(series)) {
+    const now = bars.find(bar => bar.date === session)?.close, before = bars.find(bar => bar.date === move.previousDate)?.close;
+    if (!(now! > 0) || !(before! > 0)) continue;
+    total++; if (now! > before!) up++; else if (now! < before!) down++;
+  }
+  if (total < MIN_TICKERS_PER_DAY) return null;
+  return { ...move, typicalPercent, up, down, total };
+}
+/** TP恐怖指数 (realized volatility of the large-cap basket) on the session and on the day before. */
+export type FearReading = { date: string; level: number; previousLevel: number };
+export function sessionFear(largeLevels: readonly DailyClose[], session: string): FearReading | null {
+  const vol = realizedVolatility(largeLevels);
+  const i = vol.findIndex(bar => bar.date === session);
+  if (i < 1 || !(vol[i].close > 0) || !(vol[i - 1].close > 0)) return null;
+  return { date: session, level: vol[i].close, previousLevel: vol[i - 1].close };
+}
