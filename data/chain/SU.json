@@ -1,0 +1,208 @@
+{
+  "root": {
+    "ticker": "SU",
+    "name": "サンコール・エナジー",
+    "cik": 311337,
+    "name_en": "Suncor Energy Inc."
+  },
+  "rows": [
+    {
+      "ja": "共同事業・権益取引",
+      "en": "Joint projects & stake deals"
+    },
+    {
+      "ja": "輸送・販売",
+      "en": "Transport & marketing"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "TECK",
+      "ticker": "TECK",
+      "name": "テック・リソーシズ",
+      "name_en": "Teck Resources",
+      "sub": "銅",
+      "sub_en": "Copper",
+      "sub_short": "銅",
+      "sub_short_en": "Copper",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "フォートヒルズ権益14.65%をテックから7億1200万ドルで取得",
+          "text_en": "Bought 14.65% of Fort Hills from Teck for $712M",
+          "source": {
+            "label": "Suncor 年次情報書(40-F添付、2025年度)",
+            "label_en": "Suncor Annual Information Form (40-F exhibit, FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/311337/000110465926020411/su-20251231xex99d1.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "On February 2, 2023, Suncor completed the acquisition of an additional 14.65% working interest in Fort Hills for $712 million from Teck Resources Limited, bringing the company's working interest to 68.76%."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TTE",
+      "ticker": "TTE",
+      "name": "トタルエナジーズ",
+      "name_en": "TotalEnergies",
+      "sub": "石油",
+      "sub_en": "Oil major",
+      "sub_short": "石油",
+      "sub_short_en": "Oil major",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "フォートヒルズ残り31.23%を持つ現地法人を買収",
+          "text_en": "Bought the unit holding the last 31.23% of Fort Hills",
+          "source": {
+            "label": "Suncor 年次情報書(40-F添付、2025年度)",
+            "label_en": "Suncor Annual Information Form (40-F exhibit, FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/311337/000110465926020411/su-20251231xex99d1.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "(TotalEnergies Canada), which held the remaining 31.23% working interest in Fort Hills, for $1.468 billion before closing adjustments and other closing costs, making Suncor the sole owner of Fort Hills."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CVE",
+      "ticker": "CVE",
+      "name": "セノバス・エナジー",
+      "name_en": "Cenovus Energy",
+      "sub": "石油",
+      "sub_en": "Oil",
+      "sub_short": "石油",
+      "sub_short_en": "Oil",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "セノバスが操業する沖合油田ホワイトローズに40%出資",
+          "text_en": "Holds 40% of the Cenovus-operated White Rose field",
+          "source": {
+            "label": "Suncor 年次情報書(40-F添付、2025年度)",
+            "label_en": "Suncor Annual Information Form (40-F exhibit, FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/311337/000110465926020411/su-20251231xex99d1.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "White Rose and the White Rose Extensions White Rose is approximately 350 kilometres southeast of St. John's and is operated by Cenovus Energy Inc., White Rose began production in 2005 and uses the SeaRose FPSO. Suncor holds a 40% working interest in the field."
+          }
+        }
+      ]
+    },
+    {
+      "id": "XOM",
+      "ticker": "XOM",
+      "name": "エクソンモービル",
+      "name_en": "ExxonMobil",
+      "sub": "石油",
+      "sub_en": "Oil & gas",
+      "sub_short": "石油",
+      "sub_short_en": "Oil & gas",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "エクソンモービルが操業するヘブロン油田に21%出資",
+          "text_en": "Holds 21% of the ExxonMobil-operated Hebron field",
+          "source": {
+            "label": "Suncor 年次情報書(40-F添付、2025年度)",
+            "label_en": "Suncor Annual Information Form (40-F exhibit, FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/311337/000110465926020411/su-20251231xex99d1.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Hebron Suncor holds a 21.034% interest in the Hebron oilfield, located approximately 340 kilometres southeast of St. John's and operated by ExxonMobil."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ENB",
+      "ticker": "ENB",
+      "name": "エンブリッジ",
+      "name_en": "Enbridge",
+      "sub": "配管網",
+      "sub_en": "Pipelines",
+      "sub_short": "配管網",
+      "sub_short_en": "Pipelines",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "オイルサンド産品をエンブリッジの管で輸送",
+          "text_en": "Ships oil-sands output on Enbridge pipelines",
+          "source": {
+            "label": "Suncor 年次情報書(40-F添付、2025年度)",
+            "label_en": "Suncor Annual Information Form (40-F exhibit, FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/311337/000110465926020411/su-20251231xex99d1.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "To Hardisty, Alberta, on the Enbridge Athabasca Pipeline or the Enbridge Wood Buffalo Pipeline and the Enbridge Wood Buffalo Pipeline Extension."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PBA",
+      "ticker": "PBA",
+      "name": "ペンビナ・パイプライン",
+      "name_en": "Pembina Pipeline",
+      "sub": "配管網",
+      "sub_en": "Pipelines",
+      "sub_short": "配管網",
+      "sub_short_en": "Pipelines",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "シンクルードの産油をペンビナの管で出荷",
+          "text_en": "Syncrude output moves on Pembina's pipeline",
+          "source": {
+            "label": "Suncor 年次情報書(40-F添付、2025年度)",
+            "label_en": "Suncor Annual Information Form (40-F exhibit, FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/311337/000110465926020411/su-20251231xex99d1.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Distribution of Products Production from Suncor's Oil Sands segment is gathered into facilities at the Enbridge Athabasca Terminal or the East Tank Farm, except for production from Syncrude, which is moved to market via the Pembina Alberta Oil Sands Pipeline."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SHEL",
+      "ticker": "SHEL",
+      "name": "シェル",
+      "name_en": "Shell",
+      "sub": "石油",
+      "sub_en": "Oil & gas",
+      "sub_short": "石油",
+      "sub_short_en": "Oil & gas",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "米コロラド・ワイオミングのシェル看板94店に燃料を供給",
+          "text_en": "Supplies fuel to 94 Shell-branded sites in Colorado and Wyoming",
+          "source": {
+            "label": "Suncor 年次情報書(40-F添付、2025年度)",
+            "label_en": "Suncor Annual Information Form (40-F exhibit, FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/311337/000110465926020411/su-20251231xex99d1.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Suncor also has product supply agreements with 94 Shell-branded sites in both Colorado and Wyoming, and with 55 Exxon and Mobil-branded sites in Colorado."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,215 @@
+{
+  "root": {
+    "ticker": "ARGX",
+    "name": "アルジェニクス",
+    "cik": 1697862,
+    "name_en": "argenx SE"
+  },
+  "rows": [
+    {
+      "ja": "提携・ライセンス",
+      "en": "Partners & licenses"
+    },
+    {
+      "ja": "製造委託先",
+      "en": "Manufacturing partners"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "AZN",
+    "AMGN"
+  ],
+  "companies": [
+    {
+      "id": "ZLAB",
+      "ticker": "ZLAB",
+      "name": "ザイ・ラボ",
+      "name_en": "Zai Lab",
+      "sub": "バイオ",
+      "sub_en": "Pharma",
+      "sub_short": "バイオ",
+      "sub_short_en": "Pharma",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "中華圏でのエフガルチギモドの独占開発・販売権を供与",
+          "text_en": "Exclusive license for efgartigimod in Greater China",
+          "source": {
+            "label": "argenx 20-F(2025年度)",
+            "label_en": "argenx 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1697862/000169786226000032/argx-20251231.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "In January 2021, we entered into an exclusive out-license agreement with Zai Lab ( Zai Lab Agreement ), a commercial-stage biopharmaceutical company, for the development and commercialization of efgartigimod in Greater China, (which includes Mainland China, Hong Kong, Taiwan and Macau, Greater China )."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HALO",
+      "ticker": "HALO",
+      "name": "ハロザイム",
+      "name_en": "Halozyme",
+      "sub": "送達技術",
+      "sub_en": "Delivery",
+      "sub_short": "送達技術",
+      "sub_short_en": "Delivery",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "皮下注射技術ENHANZEのライセンスを導入",
+          "text_en": "In-licenses the ENHANZE subcutaneous technology",
+          "source": {
+            "label": "argenx 20-F(2025年度)",
+            "label_en": "argenx 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1697862/000169786226000032/argx-20251231.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "Our first therapeutic target for which we received an exclusive license from Halozyme was FcRn, which allows us to apply ENHANZE ® to efgartigimod and any other product candidates selective and specific for FcRn."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ABBV",
+      "ticker": "ABBV",
+      "name": "アッヴィ",
+      "name_en": "AbbVie",
+      "sub": "医薬品",
+      "sub_en": "Pharma",
+      "sub_short": "医薬品",
+      "sub_short_en": "Pharma",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "共同研究の提携先(抗GARP抗体など)",
+          "text_en": "Research collaborator (e.g. the anti-GARP antibody)",
+          "source": {
+            "label": "argenx 20-F(2025年度)",
+            "label_en": "argenx 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1697862/000169786226000032/argx-20251231.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "We currently have collaborative research relationships with various pharmaceutical companies such as AbbVie, Zai Lab and with various academic and research institutions worldwide for the development of product candidates resulting from such collaborations."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LONZA",
+      "ticker": "Lonza",
+      "name": "ロンザ",
+      "name_en": "Lonza",
+      "sub": "受託製造",
+      "sub_en": "CDMO",
+      "sub_short": "受託製造",
+      "sub_short_en": "CDMO",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "英米・シンガポール・スイスの拠点で原薬製造を委託",
+          "text_en": "Contracts drug-substance manufacturing at four sites",
+          "source": {
+            "label": "argenx 20-F(2025年度)",
+            "label_en": "argenx 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1697862/000169786226000032/argx-20251231.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "Most notably, we contract with Lonza for their manufacturing sites in Slough, UK, Portsmouth, U.S., Singapore and Visp, Switzerland as well as with Fujifilm, based in Denmark, for activities relating to the development of cell banks, development of our manufacturing processes and the manufacturing of drug substance."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FUJI",
+      "ticker": "Fujifilm",
+      "name": "富士フイルム",
+      "name_en": "Fujifilm",
+      "sub": "受託製造",
+      "sub_en": "CDMO",
+      "sub_short": "受託製造",
+      "sub_short_en": "CDMO",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "デンマークと米国で原薬の大規模製造を委託",
+          "text_en": "Large-scale drug-substance manufacturing in Denmark and the U.S.",
+          "source": {
+            "label": "argenx 20-F(2025年度)",
+            "label_en": "argenx 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1697862/000169786226000032/argx-20251231.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "In 2025, we expanded our partnership with Fujifilm to include new manufacturing site in North Carolina, U.S., strengthening our global supply chain and supporting anticipated growth in efgartigimod and pipeline assets."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AZN",
+      "ticker": "AZN",
+      "name": "アストラゼネカ",
+      "name_en": "AstraZeneca",
+      "sub": "医薬品",
+      "sub_en": "Pharma",
+      "sub_short": "医薬品",
+      "sub_short_en": "Pharma",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "自己免疫疾患の治療薬で競合",
+          "text_en": "Autoimmune-drug competitor",
+          "source": {
+            "label": "argenx 20-F(2025年度)",
+            "label_en": "argenx 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1697862/000169786226000032/argx-20251231.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "Competition in the autoimmune field is intense and involves multiple mAbs, other biologics and small molecules either already marketed or in development by many different companies including, but not limited to, large pharmaceutical companies such as AstraZeneca plc, AbbVie, Inc., Amgen, Inc., Biogen Inc., GlaxoSmithKline plc, F."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMGN",
+      "ticker": "AMGN",
+      "name": "アムジェン",
+      "name_en": "Amgen",
+      "sub": "バイオ",
+      "sub_en": "Biotech",
+      "sub_short": "バイオ",
+      "sub_short_en": "Biotech",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "自己免疫疾患の治療薬で競合",
+          "text_en": "Autoimmune-drug competitor",
+          "source": {
+            "label": "argenx 20-F(2025年度)",
+            "label_en": "argenx 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1697862/000169786226000032/argx-20251231.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "Competition in the autoimmune field is intense and involves multiple mAbs, other biologics and small molecules either already marketed or in development by many different companies including, but not limited to, large pharmaceutical companies such as AstraZeneca plc, AbbVie, Inc., Amgen, Inc., Biogen Inc., GlaxoSmithKline plc, F."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
