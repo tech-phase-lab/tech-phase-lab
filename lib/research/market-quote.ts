@@ -141,18 +141,23 @@ export function easternToIso(text: string): string {
 }
 /** FavoriteQuote (the watchlist's own contract) from a quote and the same session's 5-minute closes. */
 export function toFavoriteQuote(q: MarketQuote, intraday: Bar[] = [], now = Date.now()): FavoriteQuote {
+  // A pre-market / after-hours price without the provider's percentage (it sometimes leaves extended_percent_change empty) is measured from the
+  // regular close itself, rather than dropped: the row lost its 「時間外」 then (owner, Nov 25: MRVL).
+  const extPercent = q.extended ? q.extended.percentChange ?? (q.price > 0 ? (q.extended.price - q.price) / q.price * 100 : null) : null;
   const history = intraday.map(b => ({ at: easternToIso(b.at), price: b.close })).filter(p => Number.isFinite(Date.parse(p.at)));
   return { ticker: q.ticker, price: q.price, change: q.change, percentChange: q.percentChange, currency: q.currency, asOf: q.asOf,
     session: q.marketOpen ? "regular" : "closed", delayed: false, source: "twelve-data", ...(history.length > 1 ? { history } : {}),
-    ...(q.extended && q.extended.percentChange !== null ? { extended: { price: q.extended.price, percentChange: q.extended.percentChange, asOf: q.extended.asOf, session: q.extended.session, live: extendedIsCurrent(q.extended, now) } } : {}) };
+    ...(q.extended && extPercent !== null && Number.isFinite(extPercent) ? { extended: { price: q.extended.price, percentChange: extPercent, asOf: q.extended.asOf, session: q.extended.session, live: extendedIsCurrent(q.extended, now) } } : {}) };
 }
 
 const easternDay = new Intl.DateTimeFormat("en-CA", { timeZone: "America/New_York", year: "numeric", month: "2-digit", day: "2-digit" });
 /** How old the session's last print may be and still stand for "now". Twelve Data's extended_timestamp trails the clock by several minutes
- * (MU and SNDK, Nov 18, 09:27 ET: 6 and 4 minutes), and a thinly traded stock can go longer without a print. */
-export const EXTENDED_CURRENT_MS = 30 * 60_000;
+ * (MU and SNDK, Nov 18, 09:27 ET: 6 and 4 minutes), and a stock can go much longer without an after-hours print: within the same session the last
+ * print IS that session's price. Owner, Nov 25: MRVL alone lost its 「時間外」 mark (and showed the regular close) while the others had it, so the
+ * half-hour cutoff became two hours. */
+export const EXTENDED_CURRENT_MS = 2 * 3600_000;
 /** True while the pre-market / after-hours session the price belongs to is the one under way now (New York clock, same day), and the print is
- * from within the last half hour. The old four-minute cutoff split one list: one row showed "プレ" and the next its regular close (owner, Nov 18). */
+ * from within EXTENDED_CURRENT_MS. The old four-minute cutoff split one list: one row showed "プレ" and the next its regular close (owner, Nov 18). */
 export function extendedIsCurrent(extended: { asOf: string; session: "pre" | "post" }, now = Date.now()): boolean {
   const at = Date.parse(extended.asOf);
   if (!Number.isFinite(at) || !Number.isFinite(now) || at > now + 60_000 || now - at > EXTENDED_CURRENT_MS) return false;

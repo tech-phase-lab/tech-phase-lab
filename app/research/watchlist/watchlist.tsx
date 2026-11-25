@@ -69,7 +69,8 @@ export default function Watchlist({ companies, quotes = {} }: { companies: Compa
     return saved && added;
   }
   // Every 15 seconds; the server reads the provider again only while the plan's minute leaves room (lib/research/quote-refresh-gate.ts).
-  const { data: fetchedQuotes } = useQuotes(favorites.slice(0, 100), true, true);
+  // `keep` (owner, Nov 25): adding a stock changes the request, and the rows already shown keep their prices and charts while it is answered.
+  const { data: fetchedQuotes } = useQuotes(favorites.slice(0, 100), true, true, true);
   const liveQuotes: Record<string, FavoriteQuote> = fetchedQuotes ?? {};
   const router = useRouter();
   const [sessionView, setSessionView] = useState<WatchlistSession>("auto");
@@ -194,7 +195,7 @@ export default function Watchlist({ companies, quotes = {} }: { companies: Compa
           return <li key={ticker} className={styles.quoteRow}>
             <SwipeRow key={`${list.id}:${ticker}`} open={revealed === ticker} onOpenChange={open => setRevealed(open ? ticker : "")} onRemove={() => remove(ticker)} disabled={!editable} removeLabel={t(`${ticker}をこのリストから削除`, `Remove ${ticker} from this list`)}>
             <button className={styles.rowMain} onClick={() => router.push(detailHref(ticker, "watchlist"))}>
-              <StockLogo ticker={ticker} />
+              <StockLogo ticker={ticker} className={styles.rowLogo} />
               <span className={styles.company}><strong>{item?.name ?? names[ticker] ?? ticker}</strong><span className={styles.tickerLine}>{ticker}{sector && <span className={styles.sector} title={sectorSource}>{sector}</span>}</span></span>
               {chart && values ? <AreaChart className={styles.chart} values={values} reference={chart.reference} label={t(`${ticker}の当日の値動き`, `${ticker} intraday trend`)} /> : <span className={styles.noChart} aria-label={t("当日チャート未取得", "Intraday chart unavailable")}>—</span>}
               <span className={styles.price}>

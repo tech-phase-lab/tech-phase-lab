@@ -3,7 +3,9 @@
 import { useId } from "react";
 import styles from "./area-chart.module.css";
 
-const W = 84, H = 52, LEFT = 1, RIGHT = 77, TOP = 13, BOTTOM = 40;
+// Owner, Nov 25 (rows about 62% as tall): the line's band is about half as tall as before (17px instead of 27px) and the high / low figures sit
+// right above and below it in smaller type. The width (84) is the same on every row.
+const W = 84, H = 36, LEFT = 1, RIGHT = 77, TOP = 10, BOTTOM = 27;
 const MINT = "#5fe0aa", RED = "#ff7a7a";
 
 /** A smooth line through the points (Catmull-Rom as cubic Béziers). */
@@ -18,7 +20,7 @@ function smooth(points: [number, number][]) {
   return d;
 }
 
-/** The watchlist row's chart (owner, Nov 13): 84×52, a dotted line at the previous close, the line mint above it and red below, the space
+/** The watchlist row's chart (owner, Nov 13; compact Nov 25): 84×36, a dotted line at the previous close, the line mint above it and red below, the space
  * between the line and the dotted line tinted the same colour (0.16), the line fading in from the left (0.12 → 1), a dot on the latest value
  * with a faint halo and a ring that spreads every two seconds, and the day's high and low (of the drawn data) at the top and bottom left. */
 export default function AreaChart({ values, reference, label, className = "" }: { values: number[]; reference: number; label: string; className?: string }) {
@@ -47,10 +49,10 @@ export default function AreaChart({ values, reference, label, className = "" }: 
       <path d={line} fill="none" stroke={MINT} strokeWidth="2" strokeLinejoin="round" strokeLinecap="round" clipPath={`url(#${id}a)`} />
       <path d={line} fill="none" stroke={RED} strokeWidth="2" strokeLinejoin="round" strokeLinecap="round" clipPath={`url(#${id}u)`} />
     </g>
-    <circle cx={last[0]} cy={last[1]} r="7" fill={color} fillOpacity="0.18" />
-    <circle className={styles.ring} cx={last[0]} cy={last[1]} r="2.6" fill={color} />
-    <circle cx={last[0]} cy={last[1]} r="2.6" fill={color} stroke="#0a0e14" strokeWidth="1.2" />
-    <text className={styles.level} x="0" y="8">{price(high)}</text>
-    <text className={styles.level} x="0" y="51">{price(low)}</text>
+    <circle cx={last[0]} cy={last[1]} r="5" fill={color} fillOpacity="0.18" />
+    <circle className={styles.ring} cx={last[0]} cy={last[1]} r="2.2" fill={color} />
+    <circle cx={last[0]} cy={last[1]} r="2.2" fill={color} stroke="#0a0e14" strokeWidth="1.2" />
+    <text className={styles.level} x="0" y="7.5">{price(high)}</text>
+    <text className={styles.level} x="0" y="35.5">{price(low)}</text>
   </svg>;
 }

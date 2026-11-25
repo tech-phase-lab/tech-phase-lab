@@ -9,8 +9,10 @@ export type CardQuote = FavoriteQuote & {
 };
 type State<T> = { data: T | null; failed: boolean; loaded: boolean; /** when the last good answer arrived (ms) */ at?: number | null };
 
-/** Reads a JSON endpoint now and again every `every` ms while the tab is visible. The server caches for about a minute. */
-function usePolled<T>(url: string | null, pick: (body: Record<string, unknown>) => T | null, every: number): State<T> {
+/** Reads a JSON endpoint now and again every `every` ms while the tab is visible. The server caches for about a minute.
+ * `keep`: when the address changes (a stock added to the watchlist), the last answer stays on the screen until the new one arrives, instead of
+ * every row going blank for a moment (owner, Nov 25); only what the old answer did not have (the added stock) waits. */
+export function usePolled<T>(url: string | null, pick: (body: Record<string, unknown>) => T | null, every: number, keep = false): State<T> {
   const [state, setState] = useState<State<T> & { url: string | null }>({ data: null, failed: false, loaded: false, url });
   useEffect(() => {
     if (!url) return;
@@ -23,22 +25,22 @@ function usePolled<T>(url: string | null, pick: (body: Record<string, unknown>) 
         if (stopped) return;
         const data = response.ok && body.ok === true ? pick(body) : null;
         const at = Date.now();
-        setState(old => ({ url, data: data ?? (old.url === url ? old.data : null), failed: data === null, loaded: true, at: data ? at : old.url === url ? old.at : null }));
-      } catch { if (!stopped) setState(old => ({ url, data: old.url === url ? old.data : null, failed: true, loaded: true })); }
+        setState(old => ({ url, data: data ?? (old.url === url || keep ? old.data : null), failed: data === null, loaded: true, at: data ? at : old.url === url ? old.at : null }));
+      } catch { if (!stopped) setState(old => ({ url, data: old.url === url || keep ? old.data : null, failed: true, loaded: true })); }
       if (!stopped) timer = setTimeout(() => { if (document.visibilityState === "visible") void run(); else timer = setTimeout(run, every); }, every);
     };
     void run();
     return () => { stopped = true; clearTimeout(timer); controller?.abort(); };
   // `pick` is a module-level function at every call site.
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [url, every]);
-  return state.url === url ? state : { data: null, failed: false, loaded: false };
+  }, [url, every, keep]);
+  return state.url === url ? state : { data: keep ? state.data : null, failed: false, loaded: false };
 }
 const pickQuotes = (body: Record<string, unknown>) => body.quotes as Record<string, CardQuote>;
 const pickFacts = (body: Record<string, unknown>) => body.facts as MarketFacts;
 /** `fast` (the watchlist and a stock's page): asked every 15 seconds; the server reads the provider again only while the plan's minute leaves room. */
-export const useQuotes = (tickers: string[], history = false, fast = false) => usePolled<Record<string, CardQuote>>(
-  tickers.length ? `/api/research/market/quotes?tickers=${encodeURIComponent(tickers.join(","))}${history ? "&history=1" : ""}${fast ? "&fast=1" : ""}` : null, pickQuotes, fast ? 15_000 : 60_000);
+export const useQuotes = (tickers: string[], history = false, fast = false, keep = false) => usePolled<Record<string, CardQuote>>(
+  tickers.length ? `/api/research/market/quotes?tickers=${encodeURIComponent(tickers.join(","))}${history ? "&history=1" : ""}${fast ? "&fast=1" : ""}` : null, pickQuotes, fast ? 15_000 : 60_000, keep);
 export const useFacts = (ticker: string) => usePolled<MarketFacts>(`/api/research/market/facts?ticker=${encodeURIComponent(ticker)}`, pickFacts, 6 * 3600_000);
 
 const key = "tech-phase:quote-numbers-hidden:v1", event = "tech-phase:quote-numbers-hidden";

@@ -93,7 +93,7 @@ test("a pre-market price that is current replaces the close in the watchlist row
   assert.equal(base.extended.live, true);
   const row = quoteForSession(base, "MU", "auto");
   assert.equal(row.price, 722.8); assert.equal(row.session, "post" === row.session ? "post" : row.session); assert.ok(Math.abs(row.change - (722.8 - 715.41)) < 1e-9);
-  const stale = toFavoriteQuote(parseQuote({ ...quote, is_market_open: false, extended_price: "722.80", extended_percent_change: "1.04", extended_timestamp: NOW / 1000 - 3600 }, "MU"), [], NOW);
+  const stale = toFavoriteQuote(parseQuote({ ...quote, is_market_open: false, extended_price: "722.80", extended_percent_change: "1.04", extended_timestamp: NOW / 1000 - 3 * 3600 }, "MU"), [], NOW);
   assert.equal(quoteForSession(stale, "MU", "auto").price, 715.41);
 });
 
@@ -116,7 +116,10 @@ test("every row of a list gets the pre-market label while pre-market is under wa
   assert.equal(extendedIsCurrent({ asOf: "2026-11-18T14:26:00Z", session: "pre" }, Date.parse("2026-11-18T14:31:00Z")), false);
   assert.equal(extendedIsCurrent({ asOf: "2026-11-17T23:50:00Z", session: "post" }, Date.parse("2026-11-18T09:10:00Z")), false);
   assert.equal(extendedIsCurrent({ asOf: "2026-11-18T22:10:00Z", session: "post" }, Date.parse("2026-11-18T22:30:00Z")), true);
-  assert.equal(extendedIsCurrent({ asOf: "2026-11-18T13:00:00Z", session: "pre" }, Date.parse("2026-11-18T14:20:00Z")), false);
+  // Owner, Nov 25 (MRVL): a print 80 minutes old is still that session's price while the session lasts; one older than two hours is not.
+  assert.equal(extendedIsCurrent({ asOf: "2026-11-18T13:00:00Z", session: "pre" }, Date.parse("2026-11-18T14:20:00Z")), true);
+  assert.equal(extendedIsCurrent({ asOf: "2026-11-18T23:10:00Z", session: "post" }, Date.parse("2026-11-19T00:40:00Z")), true);
+  assert.equal(extendedIsCurrent({ asOf: "2026-11-18T10:00:00Z", session: "pre" }, Date.parse("2026-11-18T14:20:00Z")), false);
 });
 
 const bar = (at, close = 100) => ({ at, open: close, high: close + 1, low: close - 1, close, volume: 10 });

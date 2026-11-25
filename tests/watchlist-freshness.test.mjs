@@ -10,11 +10,12 @@ test('live snapshots age out in an open tab and recover when replaced',()=>{
  assert.equal(quoteFreshness(quote(0),now+120_000),'recent');
  assert.equal(quoteFreshness(quote(6),now),'stale');
 });
-test('a pre-market / after-hours print keeps its session label for half an hour (thin trading, provider time lag)',()=>{
+test('a pre-market / after-hours print keeps its session label for two hours (thin trading, provider time lag; owner, Nov 25: MRVL)',()=>{
  for(const session of ['pre','post']){
   assert.equal(quoteFreshness(quote(6,{session}),now),'recent');
-  assert.equal(quoteFreshness(quote(29,{session}),now),'recent');
-  assert.equal(quoteFreshness(quote(31,{session}),now),'stale');
+  assert.equal(quoteFreshness(quote(45,{session}),now),'recent');
+  assert.equal(quoteFreshness(quote(119,{session}),now),'recent');
+  assert.equal(quoteFreshness(quote(121,{session}),now),'stale');
  }
 });
 test('delayed feed has a separate tolerance; dated closes survive holidays',()=>{

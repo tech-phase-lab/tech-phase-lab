@@ -4,6 +4,8 @@ import { useResearchLanguage } from "../use-research-language";
 import PriceChart from "./price-chart";
 import { useMinute, useSecond } from "./use-minute";
 import { useChartStore } from "./use-chart-store";
+import { startPolling } from "./polling";
+import LeveragedList from "./leveraged-list";
 import { signedPercent, type Bar } from "@/lib/research/market-quote";
 import { bannerLine, closedDayClose, closedDayLine, freshnessNote, marketBanner, marketPhase } from "@/lib/research/us-market-session";
 import { DEFAULT_PERIOD, OTHER_PERIODS, PERIOD_LABEL, PRIMARY_PERIODS, drawnSeries, isBoardPeriod, isIntradayPeriod, periodInterval, type BoardPeriod } from "@/lib/research/market-board-periods";
@@ -36,6 +38,8 @@ const CATEGORIES: { id: string; ja: string; en: string; items: Entry[] }[] = [
     { id: "SMH", ja: "SMH", en: "SMH", short: "SMH", kind: "etf" }, { id: "SOXX", ja: "SOXX", en: "SOXX", short: "SOXX", kind: "etf" }] },
 ];
 const ALL = [...INDEX_ETFS, ...CATEGORIES.flatMap(c => c.items)];
+/** The last tab (owner, Nov 25): long 2x / 3x funds, a list of its own (app/research/price/leveraged-list.tsx) instead of the cards and chart. */
+const LEVERAGED = { id: "lev", ja: "レバETF", en: "Leveraged ETFs" } as const;
 const STORE = "tp-market-board";
 const FAST_MS = 15_000, SLOW_MS = 60_000;
 
@@ -48,22 +52,6 @@ export function formatPrice(value: number, kind: Kind): string {
   return `$${a >= 1000 ? Math.round(value).toLocaleString("en-US") : a >= 100 ? value.toFixed(1) : value.toFixed(2)}`;
 }
 const toneOf = (value: number | null): "up" | "down" | "flat" => value === null || value === 0 ? "flat" : value > 0 ? "up" : "down";
-
-/** Runs `task` now and then every `every` ms, but only while the tab is visible: a hidden tab asks for nothing, and asks again the moment it is shown. */
-function startPolling(task: () => Promise<void>, every: number): () => void {
-  let stopped = false, idle = false, timer: ReturnType<typeof setTimeout> | undefined;
-  const run = async () => {
-    idle = false;
-    await task();
-    if (stopped) return;
-    if (document.visibilityState === "hidden") { idle = true; return; }
-    timer = setTimeout(run, every);
-  };
-  const shown = () => { if (!stopped && idle && document.visibilityState === "visible") void run(); };
-  document.addEventListener("visibilitychange", shown);
-  if (document.visibilityState === "hidden") idle = true; else void run();
-  return () => { stopped = true; clearTimeout(timer); document.removeEventListener("visibilitychange", shown); };
-}
 
 /** Reads quotes for the given ids now and every `every` ms (`fast`: the server keeps them 15 seconds, not a minute). A symbol the server cannot read is simply
  * missing from the answer. `at` is the time of the last successful read. */
@@ -148,17 +136,19 @@ export default function MarketBoard() {
       const cat = CATEGORIES.find(item => item.id === saved.category);
       // Reads this browser's saved choices once after mount (reading them during render would not match the server's page).
       // eslint-disable-next-line react-hooks/set-state-in-effect
-      if (cat && (saved.selected === undefined || cat.items.some(item => item.id === saved.selected) || INDEX_ETFS.some(item => item.id === saved.selected))) { setCategory(cat.id); if (saved.selected) setSelected(saved.selected); }
+      if (saved.category === LEVERAGED.id) setCategory(LEVERAGED.id);
+      else if (cat && (saved.selected === undefined || cat.items.some(item => item.id === saved.selected) || INDEX_ETFS.some(item => item.id === saved.selected))) { setCategory(cat.id); if (saved.selected) setSelected(saved.selected); }
       if (isBoardPeriod(saved.period)) setPeriod(saved.period);
       if (saved.mode === "candles" || saved.mode === "line") setMode(saved.mode);
     } catch { /* storage unavailable: the defaults stay */ }
   }, []);
   useEffect(() => { try { localStorage.setItem(STORE, JSON.stringify({ category, selected, period, mode })); } catch { /* ignore */ } }, [category, selected, period, mode]);
-  const current = CATEGORIES.find(item => item.id === category)!;
+  const lev = category === LEVERAGED.id;
+  const current = CATEGORIES.find(item => item.id === category) ?? { id: LEVERAGED.id, ja: LEVERAGED.ja, en: LEVERAGED.en, items: [] as Entry[] };
   const index = INDEX_ETFS.find(item => item.id === selected);
   // 15 seconds: the three index cards and the chart being looked at. Everything else on the board stays at a minute.
   const board = useBoard(INDEX_ETFS.map(item => item.id), FAST_MS, true);
-  const watched = useBoard(index ? [] : [selected], FAST_MS, true);
+  const watched = useBoard(index || lev ? [] : [selected], FAST_MS, true);
   const rows = useBoard(current.items.map(item => item.id), SLOW_MS, false);
   const indexQuotes = board.items, itemQuotes = rows.items;
   const entry = ALL.find(item => item.id === selected)!;
@@ -171,6 +161,8 @@ export default function MarketBoard() {
   const store = useChartStore(key);
   const { put, fresh } = store;
   useEffect(() => {
+    // The レバETF tab draws no chart: nothing is read for it.
+    if (lev) return;
     let have = fresh(key), controller = new AbortController();
     const stop = startPolling(async () => {
       controller = new AbortController();
@@ -187,7 +179,7 @@ export default function MarketBoard() {
       if (!have) put(key, { bars: [], before: [], failed: true });
     }, intraday ? FAST_MS : SLOW_MS);
     return () => { stop(); controller.abort(); };
-  }, [selected, period, key, reload, intraday, put, fresh]);
+  }, [selected, period, key, reload, intraday, put, fresh, lev]);
   const loading = store.shown === null;
   const chart = store.shown ?? { bars: [], before: [] };
   // Until a new period comes, the chart on the screen is drawn with its own period's rules.
@@ -221,7 +213,7 @@ export default function MarketBoard() {
         : <><span key={board.at} className={styles.dot} data-open={banner.lit} data-pulse={banner.lit ? "1" : undefined} /><StatusClock ja={ja} fetchedAt={board.at} /></> : <span role="status">{indexQuotes === null ? t("読み込み中…", "Loading…") : t("株価を取得できませんでした", "Prices unavailable")}</span>}</div>
       <div className={styles.cols}>{INDEX_ETFS.map(item => {
         const q = indexQuotes?.[item.id], tn = toneOf(q?.percentChange ?? null), itemExt = q?.extended;
-        return <button type="button" key={item.id} className={styles.col} aria-pressed={selected === item.id} onClick={() => { setSelected(item.id); setActive(null); }} aria-label={`${item.short} ${ja ? item.sub.ja : item.sub.en}`}>
+        return <button type="button" key={item.id} className={styles.col} aria-pressed={selected === item.id} onClick={() => { setSelected(item.id); setActive(null); if (lev) setCategory(CATEGORIES[0].id); }} aria-label={`${item.short} ${ja ? item.sub.ja : item.sub.en}`}>
           <span className={styles.colName}>{item.short}</span><span className={styles.colSub}>{ja ? item.sub.ja : item.sub.en}</span>
           <span className={styles.colPrice}>{q ? q.price.toFixed(1) : "—"}</span>
           <span className={`${styles.chip} ${styles[tn]}`}>{q?.percentChange == null ? "—" : `${tn === "up" ? "▲" : tn === "down" ? "▼" : "–"} ${signedPercent(q.percentChange)}`}</span>
@@ -229,7 +221,9 @@ export default function MarketBoard() {
         </button>;
       })}</div>
     </section>
-    <div className={styles.tabs} role="group" aria-label={t("種類", "Category")}>{CATEGORIES.map(item => <button key={item.id} type="button" aria-pressed={category === item.id} onClick={() => { setCategory(item.id); pick(item.items[0].id); }}>{ja ? item.ja : item.en}</button>)}</div>
+    <div className={styles.tabs} role="group" aria-label={t("種類", "Category")}>{CATEGORIES.map(item => <button key={item.id} type="button" aria-pressed={category === item.id} onClick={() => { setCategory(item.id); pick(item.items[0].id); }}>{ja ? item.ja : item.en}</button>)}
+      <button type="button" aria-pressed={lev} onClick={() => { setCategory(LEVERAGED.id); setActive(null); }}>{ja ? LEVERAGED.ja : LEVERAGED.en}</button></div>
+    {lev ? <LeveragedList ja={ja} /> : <>
     <div className={styles.items} style={{ gridTemplateColumns: `repeat(${current.items.length},minmax(0,1fr))` }}>{current.items.map(item => {
       const q = itemQuotes?.[item.id], tn = toneOf(q?.percentChange ?? null);
       return <button type="button" key={item.id} className={styles.item} aria-pressed={selected === item.id} onClick={() => pick(item.id)}>
@@ -252,7 +246,7 @@ export default function MarketBoard() {
         : <PriceChart defaultVolume={day ? day.volume : undefined} bars={drawn.bars} jst={shownIntraday && ja} tag={tag} live={shownIntraday ? { phase } : undefined} sessionTicks={shownPeriod === "15m"} busy={store.busy} before={drawn.before} mode={mode} interval={periodInterval(shownPeriod)} variant="board" ja={ja} maPeriods={[25, 75]} accent="#7fe3c0" lineColor="#7fe3c0" onActive={setActive} />}</div>
       <div className={styles.ranges} role="group" aria-label={t("チャートの期間", "Chart range")}>{PRIMARY_PERIODS.map(p => <button key={p} type="button" aria-pressed={period === p} onClick={() => setPeriod(p)}>{name(p)}</button>)}
         <MoreMenu period={period} onPick={setPeriod} ja={ja} /></div>
-    </section>
-    <p className={styles.credit}>{t("提供：Twelve Data ・ SPY・QQQ・DIAと債券・半導体ETFはETFの価格です。上の3つを押すと、チャートがその銘柄に切り替わります。", "Data: Twelve Data. SPY, QQQ, DIA and the bond and semiconductor ETFs show ETF prices. Press one of the top three to chart it.")}</p>
+    </section></>}
+    <p className={styles.credit}>{lev ? t("提供：Twelve Data", "Data: Twelve Data") : t("提供：Twelve Data ・ SPY・QQQ・DIAと債券・半導体ETFはETFの価格です。上の3つを押すと、チャートがその銘柄に切り替わります。", "Data: Twelve Data. SPY, QQQ, DIA and the bond and semiconductor ETFs show ETF prices. Press one of the top three to chart it.")}</p>
   </div>;
 }
