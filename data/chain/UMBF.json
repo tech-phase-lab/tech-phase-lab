@@ -1,0 +1,178 @@
+{
+  "root": {
+    "ticker": "UMBF",
+    "name": "UMBフィナンシャル",
+    "cik": 101382,
+    "name_en": "UMB Financial"
+  },
+  "rows": [
+    {
+      "ja": "融資・受託の取引先(相手の資料に記載)",
+      "en": "Borrowers & trustee clients (named in their filings)"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "PDEX",
+      "ticker": "PDEX",
+      "name": "プロデックス",
+      "name_en": "Pro-Dex",
+      "sub": "手術用電動工具",
+      "sub_en": "Surgical power tools",
+      "sub_short": "医療工具",
+      "sub_short_en": "Tools",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Pro-Dexが10-Kで、買収資金665万ドルを借りた相手として挙げる",
+          "text_en": "Pro-Dex borrowed $6.65 million from UMB Bank for an acquisition",
+          "source": {
+            "label": "Pro-Dex 10-K(2026年6月期)",
+            "label_en": "Pro-Dex 10-K (FY ended Jun 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/788920/000107997326001215/pdex_10k-063026.htm",
+            "level": "official",
+            "date": "2026-09-03",
+            "quote": "The aggregate purchase price was $ 8,650,000 of which $ 6,650,000 was paid in cash through a new term loan (Term Loan D) we borrowed from UMB Bank, N.A."
+          }
+        }
+      ]
+    },
+    {
+      "id": "VATE",
+      "ticker": "VATE",
+      "name": "イノベート",
+      "name_en": "INNOVATE",
+      "sub": "複合企業",
+      "sub_en": "Diversified holding company",
+      "sub_short": "複合企業",
+      "sub_short_en": "Holding",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "INNOVATEが10-Kで、鉄骨子会社DBMGの借入契約の相手として挙げる(2025年5月)",
+          "text_en": "INNOVATE names UMB Bank in the May 2025 credit agreement of its DBMG unit",
+          "source": {
+            "label": "INNOVATE 10-K(2025年度)",
+            "label_en": "INNOVATE 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1006837/000100683726000014/vate-20251231.htm",
+            "level": "official",
+            "date": "2026-03-06",
+            "quote": "On May 20, 2025, DBMG entered into an Amended and Restated Credit agreement (the \"DBMG Credit Agreement\"), with the lenders which are party thereto from time to time (each a \"Lender\" and collectively the \"Lenders\") and UMB BANK, N.A. (\"UMB\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BAER",
+      "ticker": "BAER",
+      "name": "ブリッジャー・エアロスペース",
+      "name_en": "Bridger Aerospace",
+      "sub": "消火飛行機",
+      "sub_en": "Aerial firefighting",
+      "sub_short": "消火機",
+      "sub_short_en": "Firefight",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Bridger Aerospaceが10-Kで、消火機4機の購入資金を借りた相手として挙げる",
+          "text_en": "Bridger Aerospace financed four Kodiak aircraft with a UMB credit facility",
+          "source": {
+            "label": "Bridger Aerospace 10-K(2025年度)",
+            "label_en": "Bridger Aerospace 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1941536/000194153626000005/baer-20251231.htm",
+            "level": "official",
+            "date": "2026-03-06",
+            "quote": "On February 3, 2020, the Company entered into a credit facility with UMB to finance in part the purchase of four Daher Kodiak aircraft."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ASYS",
+      "ticker": "ASYS",
+      "name": "アムテック・システムズ",
+      "name_en": "Amtech Systems",
+      "sub": "半導体製造装置",
+      "sub_en": "Semiconductor equipment",
+      "sub_short": "半導体",
+      "sub_short_en": "Semis",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Amtechが10-Kで、2024年9月まで使っていた借入枠の相手として挙げる",
+          "text_en": "Amtech paid off and ended its UMB Bank credit facility in September 2024",
+          "source": {
+            "label": "Amtech Systems 10-K(2025年9月期)",
+            "label_en": "Amtech Systems 10-K (FY ended Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/720500/000119312525314147/asys-20250930.htm",
+            "level": "official",
+            "date": "2025-12-10",
+            "quote": "We paid off and terminated our existing credit facility with UMB Bank in September 2024."
+          }
+        }
+      ]
+    },
+    {
+      "id": "OPFI",
+      "ticker": "OPFI",
+      "name": "オップファイ",
+      "name_en": "OppFi",
+      "sub": "消費者金融",
+      "sub_en": "Consumer lending",
+      "sub_short": "金融",
+      "sub_short_en": "Lending",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "OppFiが10-Kで、1.5億ドルの借入枠の相手として挙げる(入金の受け皿もUMBの口座)",
+          "text_en": "OppFi had a $150 million revolving facility with UMB Bank, which also held its collection account",
+          "source": {
+            "label": "OppFi 10-K(2025年度)",
+            "label_en": "OppFi 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1818502/000181850226000019/opfi-20251231.htm",
+            "level": "official",
+            "date": "2026-03-12",
+            "quote": "On December 14, 2022, Opportunity Funding SPE IX, LLC entered into the Prior SPV IX Agreement with UMB Bank N.A. that provided maximum borrowings of $ 150.0 million."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DEC",
+      "ticker": "DEC",
+      "name": "ダイバーシファイド・エナジー",
+      "name_en": "Diversified Energy",
+      "sub": "天然ガス生産",
+      "sub_en": "Natural gas production",
+      "sub_short": "天然ガス",
+      "sub_short_en": "Gas",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Diversified Energyが10-Kで、証券化債券の受託銀行として挙げる",
+          "text_en": "Diversified Energy names UMB Bank indenture trustee of its securitization notes",
+          "source": {
+            "label": "Diversified Energy 20-F(2024年度)",
+            "label_en": "Diversified Energy 20-F (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1922446/000192244625000003/dec-20241231.htm",
+            "level": "official",
+            "date": "2025-03-17",
+            "quote": "• Indenture, dated October 27, 2022, among Diversified ABS Phase VI LLC, as issuer, Diversified ABS VI Upstream LLC and Oaktree ABS VI Upstream LLC, as guarantors and UMB Bank, N.A., as indenture trustee and securities intermediary."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

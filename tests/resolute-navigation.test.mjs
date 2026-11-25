@@ -80,7 +80,7 @@ test("moving between RESOLUTE pages draws the page once with what the tab alread
   assert.match(shell, /useState<Access>\(\(\)=>recall\("entitlement"\)\?"allowed":"loading"\)/);
   assert.match(shell, /recall<DiagnosisLocale>\("locale"\)/);
   assert.match(shell, /const shown=reviewing \? identityReady : access==="allowed";/);
-  assert.match(shell, /\{shown \? children\(/);
+  assert.match(shell, /const body=shown \? children\(/);
   // A refusal or failed check forgets the remembered access.
   assert.match(shell, /r\.status===401\) \{if\(!retryLater\(\)\) \{forget\(\);setAccess\("signed-out"\);\}/);
   assert.match(shell, /if\(value\.canUseTools\) remember\("entitlement",value\); else forget\("entitlement"\);/);
@@ -100,7 +100,8 @@ test("the menu stays up until the next page replaces it, with a pending mark on 
   assert.match(shell, /const leave=\(href:string\)=>reviewing \|\| current===href \? close : undefined;/);
   assert.doesNotMatch(shell, /onClick=\{close\}/);
   assert.match(shell, /useLinkStatus\(\)/);
-  assert.equal((shell.match(/<Pending \/>/g) ?? []).length, 2);
+  // The phone menu and the PC menu (owner, Nov 25) each mark the steps and the tools.
+  assert.equal((shell.match(/<Pending \/>/g) ?? []).length, 4);
 });
 
 test("the owner keeps full RESOLUTE access when the page is drawn from memory", async () => {

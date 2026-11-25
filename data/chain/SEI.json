@@ -1,0 +1,157 @@
+{
+  "root": {
+    "ticker": "SEI",
+    "name": "ソラリス・エナジー・インフラストラクチャー",
+    "cik": 1697500,
+    "name_en": "Solaris Energy Infrastructure"
+  },
+  "rows": [
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "PUMP",
+    "ACDC",
+    "RNGR",
+    "SND"
+  ],
+  "companies": [
+    {
+      "id": "PUMP",
+      "ticker": "PUMP",
+      "name": "プロペトロ",
+      "name_en": "ProPetro",
+      "sub": "水圧破砕",
+      "sub_en": "Hydraulic fracturing",
+      "sub_short": "水圧破砕",
+      "sub_short_en": "Fracking",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ProPetroが10-Kで、主な競合の一社に挙げる",
+          "text_en": "ProPetro names it among its major competitors",
+          "source": {
+            "label": "ProPetro 10-K(2024年度)",
+            "label_en": "ProPetro 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1680247/000168024725000030/pump-20241231.htm",
+            "level": "official",
+            "date": "2025-02-20",
+            "quote": "Our major competitors include Halliburton Company, Liberty Energy Inc., Patterson‐UTI Energy Inc., ProFrac Holding Corp., Solaris Energy Infrastructure, Inc., RPC, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ACDC",
+      "ticker": "ACDC",
+      "name": "プロフラック",
+      "name_en": "ProFrac Holding",
+      "sub": "水圧破砕",
+      "sub_en": "Hydraulic fracturing",
+      "sub_short": "水圧破砕",
+      "sub_short_en": "Fracking",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ProFracが10-Kで、発電事業の競合の一社に挙げる",
+          "text_en": "ProFrac names it a competitor in mobile power generation",
+          "source": {
+            "label": "ProFrac Holding 10-K(2025年度)",
+            "label_en": "ProFrac Holding 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1881487/000119312526106120/acdc-20251231.htm",
+            "level": "official",
+            "date": "2026-03-13",
+            "quote": "Competitors include Life Cycle Power, Voltagrid LLC, Solaris Energy Infrastructure, Inc., Liberty Energy Inc. and Gensystems Power Solutions, among others."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RNGR",
+      "ticker": "RNGR",
+      "name": "レンジャー・エナジー・サービシズ",
+      "name_en": "Ranger Energy Services",
+      "sub": "油井サービス",
+      "sub_en": "Oilfield services",
+      "sub_short": "油井",
+      "sub_short_en": "Oilfield",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Ranger Energyが10-Kで、今の市場で最大の競合の一社に挙げる",
+          "text_en": "Ranger Energy names it among its largest competitors in the current market",
+          "source": {
+            "label": "Ranger Energy Services 10-K(2025年度)",
+            "label_en": "Ranger Energy Services 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1699039/000162828026015248/rngr-20251231.htm",
+            "level": "official",
+            "date": "2026-03-05",
+            "quote": "Our largest competitors in the current market include RPC, Inc., ProPetro Holding Corp., Select Water Solutions, Inc., Oil States International, Inc., KLX Energy Services Holdings, Inc., Innovex International, Inc., Solaris E"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SND",
+      "ticker": "SND",
+      "name": "スマート・サンド",
+      "name_en": "Smart Sand",
+      "sub": "フラック砂",
+      "sub_en": "Frac sand",
+      "sub_short": "採掘砂",
+      "sub_short_en": "Frac sand",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Smart Sandが10-Kで、砂事業の競合の一社に挙げる",
+          "text_en": "Smart Sand names it among its frac sand competitors",
+          "source": {
+            "label": "Smart Sand 10-K(2025年度)",
+            "label_en": "Smart Sand 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1529628/000152962826000006/snd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Silica Holdings, Inc., Capital Sand Company, Source Energy Services and Solaris Energy Infrastructure, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ITXP",
+      "ticker": "ITXP",
+      "name": "インディペンデンス・パワー・ホールディングス",
+      "name_en": "Independence Power Holdings",
+      "sub": "電力管理ソフト",
+      "sub_en": "Energy management software",
+      "sub_short": "電力IT",
+      "sub_short_en": "Power IT",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Independence Powerが10-Kで、主に競合する会社の一社に挙げる",
+          "text_en": "Independence Power names it among the companies it primarily competes with",
+          "source": {
+            "label": "Independence Power Holdings 10-K(2025年度)",
+            "label_en": "Independence Power Holdings 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2025878/000147793226001878/itxp_10k.htm",
+            "level": "official",
+            "date": "2026-03-31",
+            "quote": "We primarily compete with companies engaged in developing software to monitor and manage energy storage consumption, such as Solaris Energy Infrastructure, Crusoe Energy Systems, Liberty Energy, Atlas Energy Solutions, ProPet"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

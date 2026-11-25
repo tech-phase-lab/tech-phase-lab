@@ -19,7 +19,7 @@ const TODAY={
 };
 const runAt=new Date('2026-11-24T23:20:00Z'); // Wednesday Nov 25, 08:20 JST
 // The Nov 24 close as the thermometer's formulas measure it (recomputed from the constituents' daily closes, Nov 25):
-// TP半導体40 −8.51%, typical move 2.24% (3.8×), 39 of 40 down; TP大型株100 −1.47%, typical move 0.74% (2.0×), 47 of 99 down; TP恐怖指数 −0.4%.
+// TP半導体40 −8.51%, typical move 2.24% (3.8×), 39/40 down; TP大型株100 −1.47%, typical move 0.74% (2.0×), 47/99 down; TP恐怖指数 −0.4%.
 const session='2026-11-24',moves={[session]:{sox:{previousDate:'2026-11-23',changePercent:-8.51,typicalPercent:2.24,up:1,down:39,total:40},nas100:{previousDate:'2026-11-23',changePercent:-1.47,typicalPercent:0.744,up:52,down:47,total:99},fear:{level:41.15,previousLevel:41.33}}};
 const body=t=>`${t}. Shares of AI infrastructure companies fell as investors sold Nvidia after the report; the decline extended into the session and weighed on semiconductor names across the market.`;
 const row=(title,minutesBefore,{tickers=[],lane='company',sentiment='negative'}={})=>({title,bodyEn:body(title),url:`https://news.example/${encodeURIComponent(title).slice(0,80)}`,
@@ -50,11 +50,11 @@ test('a day with market-wide and chip-sector news: three different stories, each
  const {selected,reserve,diagnostics}=selectDailyCandidates(feedOf(items),runAt,{moves});
  assert.deepEqual(selected.map(c=>c.title),['Nasdaq falls as Treasury yields climb ahead of Fed minutes','Chip stocks tumble as Nvidia selloff spreads across AI hardware','Nvidia shares slide as investors question AI spending']);
  // A headline that gives the cause ranks above a price-move recap ("… Falls Over 11% …") among single-company news.
- // Both indices are measured for every story (owner, Nov 25): TP大型株100 −1.5% (2.0×, 47 of 99 down) ★2, TP半導体40 −8.5% (3.8×, 39 of 40
+ // Both indices are measured for every story (owner, Nov 25): TP大型株100 −1.5% (2.0×, 47/99 down) ★2, TP半導体40 −8.5% (3.8×, 39 of 40
  // down) ★4; the stronger, ★4, is the market's star for both stories on that close. The company story has none.
  const preview=previewSelection({selected,reserve,diagnostics},moves);
  assert.deepEqual(preview.selected.map(p=>[p.index,p.marketStars]),[['nas100',4],['sox',4],['company',null]]);
- assert.deepEqual(formatReading({index:'nas100',session,reading:preview.selected[0].reading},'ja'),['TP大型株100 −1.5%（いつもの2.0倍・99社中47社が下落）','TP半導体40 −8.5%（いつもの3.8倍・40社中39社が下落）','恐怖指数 0%']);
+ assert.deepEqual(formatReading({index:'nas100',session,reading:preview.selected[0].reading},'ja'),['TP大型株100 −1.5%（いつもの2.0倍・47/99社が下落）','TP半導体40 −8.5%（いつもの3.8倍・39/40社が下落）','恐怖指数 0%']);
  // The second chip-sector story and the second market story repeat a move already shown: reserve only.
  assert.ok(repeatsTaken(reserve.find(c=>c.title.startsWith('Semiconductor stocks')),selected));
  assert.ok(repeatsTaken(reserve.find(c=>c.title.startsWith('Stocks slip')),selected));

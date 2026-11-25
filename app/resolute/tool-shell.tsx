@@ -14,6 +14,8 @@ import type { DiagnosisLocale } from "@/lib/resolute/diagnosis-copy";
 import styles from "./diagnosis.module.css";
 import { forget, recall, remember } from "@/lib/resolute/view-memory";
 import HomeLink from "./home-link";
+import pc_ from "./pc.module.css";
+import { useDesktop } from "./use-desktop";
 type Access = "loading"|"allowed"|"denied"|"signed-out"|"unavailable"|"mfa";
 const STEPS: [string,string,string][] = [["/resolute/diagnosis","投資ルール診断","Rules quiz"],["/resolute/simulation","シミュレーション","Simulator"],["/resolute/alerts","終値アラート","Closing-price alerts"],["/resolute/morning","翌朝のひとこと","Morning note"],["/resolute/thermometer","相場の温度計","Market gauge"],["/resolute/tax","税金の目安","Tax estimate"]];
 const TOOLS: [string,string,string,ReactNode][] = [
@@ -21,9 +23,12 @@ const TOOLS: [string,string,string,ReactNode][] = [
  ["/resolute/wall","ルールのお守り","Rules wallpaper",<path key="b" d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/>],
  ["/resolute/tonight","今夜のひと息","A moment to breathe",<path key="c" d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/>],
  ["/resolute/news","衝撃度チェッカー","Shock Gauge",<path key="d" d="M12 4l9 16H3zM12 10v4M12 17v.5"/>]];
-export default function ToolShell({ identityReady=true, home=false, children }: { identityReady?: boolean; home?: boolean;
+export default function ToolShell({ identityReady=true, home=false, pc=false, children }: { identityReady?: boolean; home?: boolean;
+ /** The page has a PC layout (owner, Nov 25): at 1024px and wider it is drawn in the PC shell with the menu on the left. */
+ pc?: boolean;
  children: (locale: DiagnosisLocale, deny: () => void, entitlement: ReturnType<typeof validateSnapshot> | null) => ReactNode }) {
  useOpenAtTop();
+ const desktop=useDesktop();
  // Moving between RESOLUTE pages draws the new page once with the access already confirmed in this tab, and checks again quietly
  // behind it, instead of "Checking…" first (owner, Nov 17). See lib/resolute/view-memory.ts.
  const [entitlement,setEntitlement]=useState<ReturnType<typeof validateSnapshot>|null>(()=>recall("entitlement")??null);
@@ -91,6 +96,35 @@ export default function ToolShell({ identityReady=true, home=false, children }: 
  const shown=reviewing ? identityReady : access==="allowed";
  // While access is being checked the page shows only the RESOLUTE loader: the disclaimer belongs under real content (owner, Nov 18).
  const checking=!shown && (!identityReady || access==="loading");
+ const body=shown ? children(locale,()=>{forget("entitlement");setAccess("denied");},entitlement) : checking ? <section className={styles.loadingBrand} role="status" aria-live="polite">
+   <svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="9" r="4" /><path d="M24 13v28M17 19h14M9 31c0 7 7 11 15 11s15-4 15-11M5 33l4-4 4 4M35 33l4-4 4 4" /></svg>
+   <b>RESOLUTE</b><span>{en?"Checking…":"確認中…"}</span></section> : <section className={styles.card}>
+   <h1>{en?"Your investing rules":"自分の投資ルール"}</h1><p role="status">{message}</p>
+   {access==="signed-out" ? <Link href="/research/account" prefetch={false}>{en?"Sign in":"ログイン"}</Link> : null}
+   {access==="mfa" ? <Link href="/research/account/security" prefetch={false}>{en?"Open security settings":"セキュリティ設定を開く"}</Link> : null}
+   <button type="button" className={styles.secondary} onClick={()=>setAttempt(n=>n+1)}>{en?"Check again":"再確認"}</button>
+  </section>;
+ const reviewNote=review ? <p className={styles.reviewNote}>{en ? "Owner preview · You can choose to save on this device. No notifications are sent." : "運営者専用の確認画面です。端末への保存は上の設定で選べます。通知は送信しません。"}</p> : null;
+ // PC (owner, Nov 25): the menu stays open on the left (ホーム, the six steps, the tools) and the page fills the rest.
+ if(pc && desktop) return <main className={`${styles.page} ${pc_.page}`} lang={locale}><div className={pc_.frame}>
+  <aside className={pc_.side}>
+   <Link href="/resolute" prefetch className={pc_.logo} aria-label="RESOLUTE">
+    <span className={pc_.logoMark}><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="9" r="4" /><path d="M24 13v28M17 19h14M9 31c0 7 7 11 15 11s15-4 15-11M5 33l4-4 4 4M35 33l4-4 4 4" /></svg>RESOLUTE</span>
+    <small>YOUR PERSONAL KIT</small></Link>
+   <nav className={pc_.nav} aria-label={en?"RESOLUTE menu":"RESOLUTEのメニュー"}>
+    <Link href="/resolute" prefetch className={pc_.item} aria-current={current==="/resolute"?"page":undefined}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11l8-7 8 7v9h-5v-6H9v6H4z"/></svg><span>{en?"Home":"ホーム"}</span></Link>
+    <h2 className={pc_.sec}>{en?"Six steps":"6つのステップ"}</h2>
+    {STEPS.map(([href,ja,eng],index)=><Link key={href} href={href} prefetch={false} className={`${pc_.item} ${pc_.stepItem}`} aria-current={current===href?"page":undefined}><i>{index+1}</i><span>{en?eng:ja}</span><Pending /></Link>)}
+    <h2 className={pc_.sec}>{en?"Tools":"道具"}</h2>
+    {TOOLS.map(([href,ja,eng,icon])=><Link key={href} href={href} prefetch={false} className={pc_.item} aria-current={current===href?"page":undefined}><svg viewBox="0 0 24 24" aria-hidden="true">{icon}</svg><span>{en?eng:ja}</span><Pending /></Link>)}
+   </nav>
+   <div className={pc_.langs} role="group" aria-label={en?"Display language":"表示言語"}>
+    <button type="button" aria-pressed={locale==="ja"} onClick={()=>setLocale("ja")}>JA</button>
+    <button type="button" aria-pressed={en} onClick={()=>setLocale("en")}>EN</button>
+   </div>
+  </aside>
+  <div className={pc_.main}>{body}{reviewNote}</div>
+ </div></main>;
  return <main className={`${styles.page} ${home?styles.homePage:""}`} lang={locale}><div className={`${home?styles.homeWrap:styles.wrap} ${h.shell}`}>
   <header className={`${h.bar} ${home?h.inHome:""}`}>
    <button type="button" className={h.menuBtn} aria-expanded={menuOpen} aria-controls="resolute-tools" onClick={()=>setMenuOpen(open=>!open)}>
@@ -114,15 +148,8 @@ export default function ToolShell({ identityReady=true, home=false, children }: 
     <Link href="/resolute/settings" prefetch={false} className={h.lang}>{en?"Language and time zone":"言語とタイムゾーン"} ›</Link>
    </div> : null}
   </nav> : null}
-  {shown ? children(locale,()=>{forget("entitlement");setAccess("denied");},entitlement) : checking ? <section className={styles.loadingBrand} role="status" aria-live="polite">
-   <svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="9" r="4" /><path d="M24 13v28M17 19h14M9 31c0 7 7 11 15 11s15-4 15-11M5 33l4-4 4 4M35 33l4-4 4 4" /></svg>
-   <b>RESOLUTE</b><span>{en?"Checking…":"確認中…"}</span></section> : <section className={styles.card}>
-   <h1>{en?"Your investing rules":"自分の投資ルール"}</h1><p role="status">{message}</p>
-   {access==="signed-out" ? <Link href="/research/account" prefetch={false}>{en?"Sign in":"ログイン"}</Link> : null}
-   {access==="mfa" ? <Link href="/research/account/security" prefetch={false}>{en?"Open security settings":"セキュリティ設定を開く"}</Link> : null}
-   <button type="button" className={styles.secondary} onClick={()=>setAttempt(n=>n+1)}>{en?"Check again":"再確認"}</button>
-  </section>}
-  {review ? <p className={styles.reviewNote}>{en ? "Owner preview · You can choose to save on this device. No notifications are sent." : "運営者専用の確認画面です。端末への保存は上の設定で選べます。通知は送信しません。"}</p> : null}
+  {body}
+  {reviewNote}
   {home && !reviewing ? <AddToHomeCard en={en} /> : null}
  </div></main>;
 }
