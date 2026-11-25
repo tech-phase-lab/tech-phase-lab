@@ -8,6 +8,12 @@ export type ThermometerProviderConfig = { enabled: boolean; apiKey?: string; ros
 type ProviderFailure = { status: 'unavailable'; reason: 'not-configured' | 'provider-error' | 'invalid-data' };
 const CHUNK = 10;
 export const SHOCK_SESSIONS = 10;
+/** About three months of sessions for the home chart line (owner, Nov 25: 01 ホーム). */
+export const TRAIL_SESSIONS = 63;
+/** The basket's level for the last TRAIL_SESSIONS sessions up to the confirmed session, rounded to 0.01 (same data, no extra calls). */
+export function basketTrail(levels: readonly DailyClose[], session: string): DailyClose[] {
+  return levels.filter(bar => bar.date <= session).slice(-TRAIL_SESSIONS).map(bar => ({ date: bar.date, close: Math.round(bar.close * 100) / 100 }));
+}
 export type ShockSession = { nas100: ShockReading | null; sox: ShockReading | null; fear: FearReading | null };
 /** Twelve Data treats a date-only end_date as exclusive, so ask for the day after the confirmed session. Later bars are dropped by the calculator. */
 function dayAfter(date: string): string { const next = new Date(`${date}T00:00:00Z`); next.setUTCDate(next.getUTCDate() + 1); return next.toISOString().slice(0, 10); }
@@ -75,5 +81,6 @@ export async function collectThermometer(config: ThermometerProviderConfig, conf
     const dates = large.levels.map(bar => bar.date).filter(date => date <= confirmedSession).slice(-SHOCK_SESSIONS);
     for (const date of dates) shock[date] = { nas100: sessionShock(large.levels, large.series, date), sox: 'levels' in chips ? sessionShock(chips.levels, chips.series, date) : null, fear: sessionFear(large.levels, date) };
   }
-  return { asOf: confirmedSession, nas100, sox, vix, moves, shock, missing: [...new Set(missing)].sort() };
+  const trail = { nas100: 'levels' in large ? basketTrail(large.levels, confirmedSession) : null, sox: 'levels' in chips ? basketTrail(chips.levels, confirmedSession) : null };
+  return { asOf: confirmedSession, nas100, sox, vix, moves, shock, trail, missing: [...new Set(missing)].sort() };
 }

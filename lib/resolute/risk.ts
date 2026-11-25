@@ -102,6 +102,10 @@ export function readingParts(m:RiskMarket,locale:'ja'|'en'):{text:string;detail?
  if(r.fearChange!==null)lines.push({text:locale==='ja'?`恐怖指数 ${signed(r.fearChange,0)}`:`Fear index ${signed(r.fearChange,0)}`});
  return lines;
 }
+/** The story's own index move on its first close (the other index when its own was not measured); null while waiting. */
+export function storyChange(m:RiskMarket):number|null{const r=m.reading;if(!r||m.index==='company')return null;const own=m.index==='sox'?r.sox:r.nas100,other=m.index==='sox'?r.nas100:r.sox;return (own??other)?.changePercent??null;}
+/** Home (owner, Nov 25: 01 ホーム): on a day the story's index went UP, the fear index line is left out. */
+export function homeReadingParts(m:RiskMarket,locale:'ja'|'en'){const parts=readingParts(m,locale);return (storyChange(m)??0)>0&&m.reading?.fearChange!=null?parts.slice(0,-1):parts;}
 /** The same lines as plain text: 「TP半導体40 −8.5%（いつもの3.8倍・39/40社が下落）」「TP大型株100 −1.5%（いつもの2.0倍・47/99社が下落）」「恐怖指数 0%」. */
 export function formatReading(m:RiskMarket,locale:'ja'|'en'):string[]{return readingParts(m,locale).map(l=>l.text+(l.detail??''));}
 /** The cause line under the stars: 「一過性とみられる要因（システム障害）→ ★−1」 / 「長引きやすい要因（輸出規制の強化）→ ★+1」. */

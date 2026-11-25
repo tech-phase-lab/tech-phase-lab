@@ -71,8 +71,8 @@ test('home first paint: drawn once, in its final order, when the feed and the me
  const home=readFileSync(new URL('../app/resolute/home/screen.tsx',import.meta.url),'utf8');
  const card=readFileSync(new URL('../app/resolute/home/today-card.tsx',import.meta.url),'utf8');
  assert.match(home,/const firstPaint=status!=='loading'&&\(locked\|\|!available\|\|member!==undefined\);/);
- assert.match(home,/if\(!firstPaint\)return <section className=\{loading\.loadingBrand\}/);
- assert.match(card,/Promise\.allSettled\(\[requestPlan\(undefined,c\.signal\),requestSettings\(undefined,c\.signal\)\]\)/);
+ assert.match(home,/if\(!firstPaint\)return <section className=\{ds\.loadingBrand\}/);
+ assert.match(card,/Promise\.allSettled\(\[requestPlan\(undefined,c\.signal\),requestSettings\(undefined,c\.signal\),reviewing\?Promise\.resolve\(null\):requestTodayPlan\(c\.signal\)\]\)/,"the AI plan is asked together with the plan and settings: no second wait");
  assert.match(card,/recall<TodayMember\|null>\('today'\)/);assert.match(card,/TODAY_PRICE_WAIT_MS=2500/);
  assert.match(readFileSync(new URL('../lib/resolute/view-memory.ts',import.meta.url),'utf8'),/\| "today";/);
  // The push service worker never answers page requests, so it cannot serve an old screen.

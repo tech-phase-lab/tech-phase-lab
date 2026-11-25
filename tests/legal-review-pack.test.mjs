@@ -56,7 +56,7 @@ test("2: the gauge's one-line note (JA/EN) and the collapsible method outline si
   const screen = read("../app/resolute/thermometer/screen.tsx");
   assert.match(screen, /<p className=\{styles\.disclaimer\}>\{THERMOMETER_NOTE\[locale\]\}<\/p>\n    <\/section>/);
   assert.match(screen, /<details[^>]*><summary>\{t\("計算方法の概要", "How it is calculated"\)\}<\/summary>/);
-  assert.match(read("../app/resolute/home/market-gauge-card.tsx"), /\{THERMOMETER_NOTE\[locale\]\}/);
+  assert.match(read("../app/resolute/home/market-chart-card.tsx"), /\{THERMOMETER_NOTE\[locale\]\}/);
   const method = THERMOMETER_METHOD.map(row => `${row.ja.term}:${row.ja.text}`).join("\n");
   // What the code does (thermometer-basket.ts / thermometer-provider.ts): 100 and 40 stocks, equal-weight daily returns chained
   // from 100 with at least 10 stocks a day, split-adjusted closes, 20-day annualised volatility of the large-cap basket, 10 years.
