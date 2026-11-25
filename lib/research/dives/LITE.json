@@ -1,0 +1,450 @@
+{
+ "ticker": "LITE",
+ "name": "Lumentum",
+ "exchange": "NASDAQ",
+ "quoteTicker": "LITE",
+ "period": "Q1 FY2027",
+ "periodQuarter": 1,
+ "releasedOn": "2026-11-02",
+ "periodEnd": "2026-09-26",
+ "reviewedOn": "2026-11-25",
+ "currency": "USD",
+ "basis": {
+  "eps": "non-GAAP diluted",
+  "grossMargin": "non-GAAP",
+  "guidance": "next-quarter net revenue range as stated; no gross margin guidance"
+ },
+ "sources": [
+  {
+   "url": "https://www.sec.gov/Archives/edgar/data/1633978/000162828026068655/lite_ex991xq1fy27.htm",
+   "title": "Lumentum first quarter fiscal 2027 results (8-K Exhibit 99.1)",
+   "location": "Financial Overview; Net Revenue by Product Type; Business Outlook; balance sheet"
+  },
+  {
+   "url": "https://www.sec.gov/Archives/edgar/data/1633978/000162828026030530/lite_ex991xq3fy26.htm",
+   "title": "Lumentum third quarter fiscal 2026 results (8-K Exhibit 99.1)",
+   "location": "Financial Overview (GAAP Results)"
+  }
+ ],
+ "evidence": [
+  {
+   "field": "numbers.revenue.current",
+   "url": "https://www.sec.gov/Archives/edgar/data/1633978/000162828026068655/lite_ex991xq1fy27.htm",
+   "quote": "GAAP Results ($ in millions) Q1 Q4 Q1 Change FY 2027 FY 2026 FY 2026 Q/Q Y/Y Net revenue $ 1,262.6 $ 1,006.3 $ 533.8 25.5% 136.5%"
+  },
+  {
+   "field": "numbers.revenue.previous",
+   "url": "https://www.sec.gov/Archives/edgar/data/1633978/000162828026068655/lite_ex991xq1fy27.htm",
+   "quote": "GAAP Results ($ in millions) Q1 Q4 Q1 Change FY 2027 FY 2026 FY 2026 Q/Q Y/Y Net revenue $ 1,262.6 $ 1,006.3 $ 533.8 25.5% 136.5%"
+  },
+  {
+   "field": "numbers.revenue.yearAgo",
+   "url": "https://www.sec.gov/Archives/edgar/data/1633978/000162828026068655/lite_ex991xq1fy27.htm",
+   "quote": "GAAP Results ($ in millions) Q1 Q4 Q1 Change FY 2027 FY 2026 FY 2026 Q/Q Y/Y Net revenue $ 1,262.6 $ 1,006.3 $ 533.8 25.5% 136.5%"
+  },
+  {
+   "field": "numbers.adjustedEPS",
+   "url": "https://www.sec.gov/Archives/edgar/data/1633978/000162828026068655/lite_ex991xq1fy27.htm",
+   "quote": "Non-GAAP net income for the first quarter of fiscal year 2027 was $461.1 million, or $4.57 per diluted share."
+  },
+  {
+   "field": "numbers.grossMargin.current",
+   "url": "https://www.sec.gov/Archives/edgar/data/1633978/000162828026068655/lite_ex991xq1fy27.htm",
+   "quote": "Non-GAAP gross margin 53.2 % 50.4 % 39.4 %"
+  },
+  {
+   "field": "numbers.grossMargin.previous",
+   "url": "https://www.sec.gov/Archives/edgar/data/1633978/000162828026068655/lite_ex991xq1fy27.htm",
+   "quote": "Non-GAAP gross margin 53.2 % 50.4 % 39.4 %"
+  },
+  {
+   "field": "numbers.guidance.low",
+   "url": "https://www.sec.gov/Archives/edgar/data/1633978/000162828026068655/lite_ex991xq1fy27.htm",
+   "quote": "•Net revenue in the range of $1.575 billion to $1.625 billion",
+   "calc": "1.575*1000"
+  },
+  {
+   "field": "numbers.guidance.high",
+   "url": "https://www.sec.gov/Archives/edgar/data/1633978/000162828026068655/lite_ex991xq1fy27.htm",
+   "quote": "•Net revenue in the range of $1.575 billion to $1.625 billion",
+   "calc": "1.625*1000"
+  },
+  {
+   "field": "history[0].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/1633978/000162828026068655/lite_ex991xq1fy27.htm",
+   "quote": "GAAP Results ($ in millions) Q1 Q4 Q1 Change FY 2027 FY 2026 FY 2026 Q/Q Y/Y Net revenue $ 1,262.6 $ 1,006.3 $ 533.8 25.5% 136.5%"
+  },
+  {
+   "field": "history[1].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/1633978/000162828026030530/lite_ex991xq3fy26.htm",
+   "quote": "GAAP Results ($ in millions) Q3 Q2 Q3 Change FY 2026 FY 2026 FY 2025 Q/Q Y/Y Net revenue $ 808.4 $ 665.5 $ 425.2"
+  },
+  {
+   "field": "history[2].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/1633978/000162828026030530/lite_ex991xq3fy26.htm",
+   "quote": "GAAP Results ($ in millions) Q3 Q2 Q3 Change FY 2026 FY 2026 FY 2025 Q/Q Y/Y Net revenue $ 808.4 $ 665.5 $ 425.2"
+  },
+  {
+   "field": "history[3].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/1633978/000162828026068655/lite_ex991xq1fy27.htm",
+   "quote": "GAAP Results ($ in millions) Q1 Q4 Q1 Change FY 2027 FY 2026 FY 2026 Q/Q Y/Y Net revenue $ 1,262.6 $ 1,006.3 $ 533.8 25.5% 136.5%"
+  },
+  {
+   "field": "tiles[0].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/1633978/000162828026068655/lite_ex991xq1fy27.htm",
+   "quote": "GAAP Results ($ in millions) Q1 Q4 Q1 Change FY 2027 FY 2026 FY 2026 Q/Q Y/Y Net revenue $ 1,262.6 $ 1,006.3 $ 533.8 25.5% 136.5%",
+   "calc": "1262.6/1000",
+   "round": 2
+  },
+  {
+   "field": "tiles[1].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/1633978/000162828026068655/lite_ex991xq1fy27.htm",
+   "quote": "Non-GAAP operating margin 42.3 % 36.6 % 18.7 %"
+  },
+  {
+   "field": "tiles[2].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/1633978/000162828026068655/lite_ex991xq1fy27.htm",
+   "quote": "•Net revenue in the range of $1.575 billion to $1.625 billion"
+  },
+  {
+   "field": "tiles[0].note",
+   "url": "https://www.sec.gov/Archives/edgar/data/1633978/000162828026068655/lite_ex991xq1fy27.htm",
+   "quote": "GAAP Results ($ in millions) Q1 Q4 Q1 Change FY 2027 FY 2026 FY 2026 Q/Q Y/Y Net revenue $ 1,262.6 $ 1,006.3 $ 533.8 25.5% 136.5%"
+  },
+  {
+   "field": "tiles[1].note",
+   "url": "https://www.sec.gov/Archives/edgar/data/1633978/000162828026068655/lite_ex991xq1fy27.htm",
+   "quote": "Non-GAAP operating margin 42.3 % 36.6 % 18.7 %"
+  },
+  {
+   "field": "tiles[2].note",
+   "url": "https://www.sec.gov/Archives/edgar/data/1633978/000162828026068655/lite_ex991xq1fy27.htm",
+   "quote": "•Net revenue in the range of $1.575 billion to $1.625 billion",
+   "calc": "(1.575*1000/1262.6-1)*100",
+   "round": 0
+  },
+  {
+   "field": "tiles[2].note",
+   "url": "https://www.sec.gov/Archives/edgar/data/1633978/000162828026068655/lite_ex991xq1fy27.htm",
+   "quote": "GAAP Results ($ in millions) Q1 Q4 Q1 Change FY 2027 FY 2026 FY 2026 Q/Q Y/Y Net revenue $ 1,262.6 $ 1,006.3 $ 533.8 25.5% 136.5%"
+  }
+ ],
+ "tiles": [
+  {
+   "label": {
+    "ja": "売上高",
+    "en": "Revenue"
+   },
+   "value": {
+    "ja": "12.63億ドル",
+    "en": "$1.26B"
+   },
+   "note": {
+    "ja": "前年同期比 +136.5%・前期比 +25.5%",
+    "en": "YoY +136.5%, QoQ +25.5%"
+   }
+  },
+  {
+   "label": {
+    "ja": "調整後営業利益率",
+    "en": "Non-GAAP operating margin"
+   },
+   "value": {
+    "ja": "42.3%",
+    "en": "42.3%"
+   },
+   "note": {
+    "ja": "前期 36.6%・前年同期 18.7%",
+    "en": "Prior quarter 36.6%, year ago 18.7%"
+   }
+  },
+  {
+   "label": {
+    "ja": "次期の売上見通し",
+    "en": "Next-quarter revenue outlook"
+   },
+   "value": {
+    "ja": "15.75億〜16.25億ドル",
+    "en": "$1.575–1.625B"
+   },
+   "note": {
+    "ja": "今期比 約+25〜29%",
+    "en": "About +25–29% vs. this quarter"
+   }
+  }
+ ],
+ "numbers": {
+  "revenue": {
+   "current": 1262.6,
+   "previous": 1006.3,
+   "yearAgo": 533.8
+  },
+  "adjustedEPS": 4.57,
+  "epsEstimate": null,
+  "grossMargin": {
+   "current": 53.2,
+   "previous": 50.4
+  },
+  "guidance": {
+   "low": 1575,
+   "high": 1625,
+   "grossMarginPercent": null
+  },
+  "segments": null
+ },
+ "history": [
+  {
+   "label": "Q1",
+   "end": "2025-09-27",
+   "value": 533.8
+  },
+  {
+   "label": "Q2",
+   "end": "2025-12-27",
+   "value": 665.5
+  },
+  {
+   "label": "Q3",
+   "end": "2026-03-28",
+   "value": 808.4
+  },
+  {
+   "label": "Q4",
+   "end": "2026-06-27",
+   "value": 1006.3
+  }
+ ],
+ "summary": {
+  "conclusion": [
+   {
+    "ja": "売上は12.63億ドルで前期比25.5%増、前年同期の約2.4倍でした。部品(Components)とシステム(Systems)の両方が伸びています。",
+    "en": "Revenue was $1.26B, up 25.5% from the previous quarter and about 2.4 times a year ago. Both Components and Systems grew."
+   },
+   {
+    "ja": "調整後粗利益率は53.2%、調整後営業利益率は42.3%で、どちらも前期より上がりました。",
+    "en": "Non-GAAP gross margin rose to 53.2% and non-GAAP operating margin to 42.3%, both higher than last quarter."
+   },
+   {
+    "ja": "一方で、手元の現金・短期投資は20億ドルと、前期末から7.59億ドル減りました。会社は次の四半期の売上を15.75億〜16.25億ドルと見込んでいます。",
+    "en": "Cash and short-term investments, however, fell $758.8M from last quarter to $2.0B. The company expects next-quarter revenue of $1.575–1.625B."
+   }
+  ],
+  "cards": {
+   "growth": {
+    "headline": {
+     "ja": "システム製品が前期比42%増",
+     "en": "Systems revenue up 42% QoQ"
+    },
+    "chips": [
+     {
+      "tone": "up",
+      "text": {
+       "ja": "Systems 前期比 +42.4%",
+       "en": "Systems +42.4% QoQ"
+      }
+     },
+     {
+      "tone": "up",
+      "text": {
+       "ja": "Components 前期比 +16.1%",
+       "en": "Components +16.1% QoQ"
+      }
+     }
+    ],
+    "sections": [
+     {
+      "key": "happened",
+      "text": {
+       "ja": "システム製品の売上は3.57億ドルから5.08億ドルへ42.4%増え、部品の売上も6.49億ドルから7.54億ドルへ16.1%増えました。CEOは、伸びの中心はポンプレーザーと光回路スイッチ(OCS)だと説明しています。",
+       "en": "Systems revenue rose 42.4% from $357M to $508M, and Components rose 16.1% from $649M to $754M. The CEO named pump lasers and optical circuit switches (OCS) as the leading contributors."
+      }
+     },
+     {
+      "key": "good",
+      "text": {
+       "ja": "前期比の増収2.56億ドルのうち、約6割(1.52億ドル)がシステム製品によるものです。CEOは、NPO/CPO向けで2件目の大型案件(購入約束は50億ドル超)を獲得したとも述べています。",
+       "en": "About 60% ($152M) of the $256M sequential increase came from Systems. The CEO also said the company won a second major NPO/CPO program, backed by purchase commitments of more than $5B."
+      }
+     },
+     {
+      "key": "watch",
+      "text": {
+       "ja": "伸びはAIデータセンター向けに集中しています。会社自身も、製品の組み合わせが変わると利益率が大きく動くこと、顧客の注文の延期や取り消しをリスクとして挙げています。",
+       "en": "Growth is concentrated in AI data centers. The company itself lists product-mix swings, which move margins, and customer order delays or cancellations as risks."
+      }
+     },
+     {
+      "key": "view",
+      "text": {
+       "ja": "売上の約6割が部品、約4割がシステムです。どちらの伸びが続くかで、今後の利益率の動きも変わります。",
+       "en": "About 60% of revenue is Components and 40% Systems. Which of the two keeps growing will also shape where margins go."
+      }
+     }
+    ]
+   },
+   "change": {
+    "headline": {
+     "ja": "売上は前期比 +25.5%、調整後粗利益率も上昇",
+     "en": "Revenue up 25.5% QoQ, adjusted gross margin also higher"
+    },
+    "chips": [
+     {
+      "tone": "up",
+      "text": {
+       "ja": "調整後粗利益率 50.4% → 53.2%",
+       "en": "Adj. gross margin 50.4% → 53.2%"
+      }
+     },
+     {
+      "tone": "up",
+      "text": {
+       "ja": "調整後営業利益率 36.6% → 42.3%",
+       "en": "Adj. operating margin 36.6% → 42.3%"
+      }
+     }
+    ],
+    "sections": [
+     {
+      "key": "happened",
+      "text": {
+       "ja": "売上は10.06億ドルから12.63億ドルへ、2.56億ドル増えました。調整後粗利益率は50.4%から53.2%に、調整後営業利益率は36.6%から42.3%に上がりました。",
+       "en": "Revenue rose from $1.01B to $1.26B, up $256M. Non-GAAP gross margin rose from 50.4% to 53.2% and non-GAAP operating margin from 36.6% to 42.3%."
+      }
+     },
+     {
+      "key": "good",
+      "text": {
+       "ja": "売上が増えながら利益率も上がったので、利益は売上より速く伸びています。調整後の1株利益は4.57ドルで、前期の3.23ドルから増えました。",
+       "en": "Because margins rose with sales, profit grew faster than revenue. Non-GAAP EPS was $4.57, up from $3.23 last quarter."
+      }
+     },
+     {
+      "key": "watch",
+      "text": {
+       "ja": "GAAPの営業利益率は28.5%で、調整後(42.3%)とは約14ポイントの差があります。差には株式報酬や買収関連の費用などが含まれます。",
+       "en": "The GAAP operating margin was 28.5%, about 14 points below the adjusted 42.3%. The gap includes stock-based compensation and acquisition-related costs."
+      }
+     },
+     {
+      "key": "means",
+      "text": {
+       "ja": "前期のGAAP純損失72億ドルは、転換社債の株式化に伴う一時的な損失(78億ドル、現金の支出なし)によるものでした。今期はGAAPでも3.60億ドルの黒字に戻っています。",
+       "en": "Last quarter's $7.2B GAAP net loss came from a one-time, non-cash $7.8B loss on converting notes into equity. This quarter GAAP net income was back to $360.3M."
+      }
+     }
+    ]
+   },
+   "caution": {
+    "headline": {
+     "ja": "手元資金が前期末から7.59億ドル減少",
+     "en": "Cash fell $758.8M from last quarter"
+    },
+    "chips": [
+     {
+      "tone": "down",
+      "text": {
+       "ja": "現金・短期投資 −7.59億ドル",
+       "en": "Cash & investments −$758.8M"
+      }
+     },
+     {
+      "tone": "gold",
+      "text": {
+       "ja": "1年内返済の借入金 13.60億ドル",
+       "en": "Current debt $1.36B"
+      }
+     },
+     {
+      "tone": "gold",
+      "text": {
+       "ja": "有形固定資産 11.59億 → 14.10億ドル",
+       "en": "PP&E $1.16B → $1.41B"
+      }
+     }
+    ],
+    "sections": [
+     {
+      "key": "happened",
+      "text": {
+       "ja": "期末の現金・現金同等物・短期投資は20億ドルで、前期末から7.59億ドル減りました。同じ期間に、有形固定資産は11.59億ドルから14.10億ドル、在庫は6.92億ドルから8.08億ドル、売掛金は5.20億ドルから6.26億ドルに増え、1年以内に返済する借入金は15.97億ドルから13.60億ドルに減っています。",
+       "en": "Cash, equivalents and short-term investments ended at $2.0B, down $758.8M. Over the same period PP&E rose from $1.16B to $1.41B, inventory from $692M to $808M and receivables from $520M to $626M, while the current portion of debt fell from $1.60B to $1.36B."
+      }
+     },
+     {
+      "key": "means",
+      "text": {
+       "ja": "生産能力の拡大、在庫の積み増し、借入金の返済などに現金が使われている形です。利益が出ていても、急成長の間は手元の現金が減りやすくなります。",
+       "en": "Cash appears to be going into capacity, inventory and debt repayment. Even with strong profit, cash can shrink while the company grows this fast."
+      }
+     },
+     {
+      "key": "watch",
+      "text": {
+       "ja": "リリースには四半期のキャッシュフロー計算書が載っていないため、現金が減った内訳はこの資料だけでは確定できません。1年以内に返済期限が来る借入金も13.60億ドル残っています。",
+       "en": "The release has no quarterly cash flow statement, so the exact reasons for the decline cannot be confirmed from it. $1.36B of debt is also due within a year."
+      }
+     },
+     {
+      "key": "view",
+      "text": {
+       "ja": "現金は20億ドルあり、すぐに資金が足りなくなる状況ではありません。次の決算で、現金の減少が止まるかを見ます。",
+       "en": "With $2.0B of cash there is no near-term shortage. The next report will show whether the decline stops."
+      }
+     }
+    ]
+   },
+   "next": {
+    "headline": {
+     "ja": "次期の会社見通しを追う",
+     "en": "Follow the company's outlook for next quarter"
+    },
+    "chips": [
+     {
+      "tone": "gold",
+      "text": {
+       "ja": "売上 15.75億〜16.25億ドル",
+       "en": "Revenue $1.575–1.625B"
+      }
+     },
+     {
+      "tone": "gold",
+      "text": {
+       "ja": "調整後営業利益率 45.0〜46.0%",
+       "en": "Adj. operating margin 45.0–46.0%"
+      }
+     },
+     {
+      "tone": "gold",
+      "text": {
+       "ja": "調整後EPS 5.90〜6.20ドル",
+       "en": "Adj. EPS $5.90–6.20"
+      }
+     }
+    ],
+    "sections": [
+     {
+      "key": "happened",
+      "text": {
+       "ja": "会社は次の四半期の売上を15.75億〜16.25億ドル、調整後営業利益率を45.0〜46.0%と見込んでいます。今回の売上は12.63億ドルなので、見通しの下限でも約24.7%の増加です。",
+       "en": "The company expects next-quarter revenue of $1.575–1.625B and a non-GAAP operating margin of 45.0–46.0%. Against $1.26B this quarter, even the low end would be about 24.7% higher."
+      }
+     },
+     {
+      "key": "means",
+      "text": {
+       "ja": "CEOは約3.5億ドルの増収を見込み、営業利益率は45%を超えるとしています。売上と利益率が同時に上がる見通しです。",
+       "en": "The CEO expects about $350M of sequential growth and an operating margin above 45%, so both sales and margin are guided higher."
+      }
+     },
+     {
+      "key": "view",
+      "text": {
+       "ja": "見通しは会社の予定で、実績ではありません。次の決算で、実績がこの幅のどこに入るかと、手元資金の動きを見ます。",
+       "en": "The outlook is the company's plan, not a result. Watch where actual results land in this range, and how cash moves."
+      }
+     }
+    ]
+   }
+  }
+ }
+}

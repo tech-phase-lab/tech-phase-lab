@@ -1,0 +1,302 @@
+{
+ "ticker": "TSM",
+ "name": "TSMC",
+ "exchange": "NYSE",
+ "quoteTicker": "TSM",
+ "period": "Q3 2026",
+ "periodQuarter": 3,
+ "releasedOn": "2026-10-15",
+ "periodEnd": "2026-09-30",
+ "reviewedOn": "2026-11-25",
+ "currency": "TWD",
+ "basis": {
+  "eps": "TIFRS diluted EPS per common share",
+  "grossMargin": "TIFRS (no adjusted measure)"
+ },
+ "sources": [
+  {
+   "url": "https://example.com/fixtures/tsm-q3-2026",
+   "title": "Fixture management report",
+   "location": "Summary"
+  }
+ ],
+ "numbers": {
+  "revenue": {
+   "current": 1046090.0,
+   "previous": 933790.0,
+   "yearAgo": 759690.0
+  },
+  "adjustedEPS": 17.45,
+  "epsEstimate": null,
+  "grossMargin": {
+   "current": 59.5,
+   "previous": 58.6
+  },
+  "guidance": null,
+  "segments": null
+ },
+ "history": [
+  {
+   "label": "Q3",
+   "end": "2025-09-30",
+   "value": 759690.0
+  },
+  {
+   "label": "Q4",
+   "end": "2025-12-31",
+   "value": 868460.0
+  },
+  {
+   "label": "Q1",
+   "end": "2026-03-31",
+   "value": 839250.0
+  },
+  {
+   "label": "Q2",
+   "end": "2026-06-30",
+   "value": 933790.0
+  }
+ ],
+ "summary": {
+  "conclusion": [
+   {
+    "ja": "売上は1兆台湾ドルを超え、前年同期比で約38%増えました。",
+    "en": "Revenue topped NT$1 trillion, up about 38% year over year."
+   }
+  ],
+  "cards": {
+   "growth": {
+    "headline": {
+     "ja": "先端プロセスの売上が伸びた",
+     "en": "Advanced-node revenue grew"
+    },
+    "chips": [
+     {
+      "tone": "up",
+      "text": {
+       "ja": "前年同期比 +38%",
+       "en": "+38% YoY"
+      }
+     }
+    ],
+    "sections": [
+     {
+      "key": "happened",
+      "text": {
+       "ja": "売上は10,460.9億台湾ドルで、前年同期の7,596.9億台湾ドルから増えました。",
+       "en": "Revenue was NT$1,046.1B, up from NT$759.7B."
+      }
+     },
+     {
+      "key": "good",
+      "text": {
+       "ja": "AI向けの半導体の生産が増えています。",
+       "en": "Production for AI chips is rising."
+      }
+     },
+     {
+      "key": "watch",
+      "text": {
+       "ja": "一部の大口顧客への依存が高まっています。",
+       "en": "Reliance on a few large customers is rising."
+      }
+     },
+     {
+      "key": "means",
+      "text": {
+       "ja": "新工場の立ち上げが次の売上を左右します。",
+       "en": "New fab ramps shape the next quarter."
+      }
+     }
+    ]
+   },
+   "change": {
+    "headline": {
+     "ja": "売上は前四半期から約12%増",
+     "en": "Revenue up about 12% from the previous quarter"
+    },
+    "chips": [
+     {
+      "tone": "up",
+      "text": {
+       "ja": "前期比 +12%",
+       "en": "+12% QoQ"
+      }
+     }
+    ],
+    "sections": [
+     {
+      "key": "happened",
+      "text": {
+       "ja": "前四半期の9,337.9億台湾ドルから増えました。",
+       "en": "Revenue rose from NT$933.8B."
+      }
+     },
+     {
+      "key": "good",
+      "text": {
+       "ja": "粗利益率は58.6%から59.5%に上がりました。",
+       "en": "Gross margin rose from 58.6% to 59.5%."
+      }
+     },
+     {
+      "key": "watch",
+      "text": {
+       "ja": "為替の動きで台湾ドル建ての数字が変わります。",
+       "en": "Currency moves change the NT$ figures."
+      }
+     },
+     {
+      "key": "means",
+      "text": {
+       "ja": "利益率を保ったまま伸びるかを見ます。",
+       "en": "Watch whether growth keeps margins."
+      }
+     }
+    ]
+   },
+   "caution": {
+    "headline": {
+     "ja": "海外工場の費用が利益率を押し下げる",
+     "en": "Overseas fabs weigh on margins"
+    },
+    "chips": [
+     {
+      "tone": "down",
+      "text": {
+       "ja": "海外工場の負担",
+       "en": "Overseas fab costs"
+      }
+     }
+    ],
+    "sections": [
+     {
+      "key": "happened",
+      "text": {
+       "ja": "海外の新工場は費用が高く、利益率を下げる要因です。",
+       "en": "New overseas fabs cost more and lower margins."
+      }
+     },
+     {
+      "key": "good",
+      "text": {
+       "ja": "それでも全体の粗利益率は上がりました。",
+       "en": "Overall gross margin still rose."
+      }
+     },
+     {
+      "key": "watch",
+      "text": {
+       "ja": "新工場の比率が上がると影響が大きくなります。",
+       "en": "The effect grows as those fabs ramp."
+      }
+     },
+     {
+      "key": "means",
+      "text": {
+       "ja": "会社が示す利益率の影響の幅を確認します。",
+       "en": "Check the margin impact the company gives."
+      }
+     }
+    ]
+   },
+   "next": {
+    "headline": {
+     "ja": "次の確認点は先端プロセスの比率",
+     "en": "Next: the share of advanced nodes"
+    },
+    "chips": [
+     {
+      "tone": "gold",
+      "text": {
+       "ja": "次回の決算",
+       "en": "Next report"
+      }
+     }
+    ],
+    "sections": [
+     {
+      "key": "happened",
+      "text": {
+       "ja": "今回の資料に次期の売上見通しの数字は含めていません。",
+       "en": "This fixture has no revenue guidance."
+      }
+     },
+     {
+      "key": "good",
+      "text": {
+       "ja": "先端プロセスの比率は上がり続けています。",
+       "en": "The advanced-node share keeps rising."
+      }
+     },
+     {
+      "key": "watch",
+      "text": {
+       "ja": "需要の変化は数四半期遅れて売上に出ます。",
+       "en": "Demand shifts reach revenue with a lag."
+      }
+     },
+     {
+      "key": "means",
+      "text": {
+       "ja": "次回は先端プロセスの売上比率を確認します。",
+       "en": "Next time, check the advanced-node share."
+      }
+     }
+    ]
+   }
+  }
+ },
+ "evidence": [
+  {
+   "field": "numbers.revenue.current",
+   "url": "https://example.com/fixtures/tsm-q3-2026",
+   "quote": "fixture numbers.revenue.current: 1046090.0"
+  },
+  {
+   "field": "numbers.revenue.previous",
+   "url": "https://example.com/fixtures/tsm-q3-2026",
+   "quote": "fixture numbers.revenue.previous: 933790.0"
+  },
+  {
+   "field": "numbers.revenue.yearAgo",
+   "url": "https://example.com/fixtures/tsm-q3-2026",
+   "quote": "fixture numbers.revenue.yearAgo: 759690.0"
+  },
+  {
+   "field": "numbers.adjustedEPS",
+   "url": "https://example.com/fixtures/tsm-q3-2026",
+   "quote": "fixture numbers.adjustedEPS: 17.45"
+  },
+  {
+   "field": "numbers.grossMargin.current",
+   "url": "https://example.com/fixtures/tsm-q3-2026",
+   "quote": "fixture numbers.grossMargin.current: 59.5"
+  },
+  {
+   "field": "numbers.grossMargin.previous",
+   "url": "https://example.com/fixtures/tsm-q3-2026",
+   "quote": "fixture numbers.grossMargin.previous: 58.6"
+  },
+  {
+   "field": "history[0].value",
+   "url": "https://example.com/fixtures/tsm-q3-2026",
+   "quote": "fixture history[0].value: 759690.0"
+  },
+  {
+   "field": "history[1].value",
+   "url": "https://example.com/fixtures/tsm-q3-2026",
+   "quote": "fixture history[1].value: 868460.0"
+  },
+  {
+   "field": "history[2].value",
+   "url": "https://example.com/fixtures/tsm-q3-2026",
+   "quote": "fixture history[2].value: 839250.0"
+  },
+  {
+   "field": "history[3].value",
+   "url": "https://example.com/fixtures/tsm-q3-2026",
+   "quote": "fixture history[3].value: 933790.0"
+  }
+ ]
+}

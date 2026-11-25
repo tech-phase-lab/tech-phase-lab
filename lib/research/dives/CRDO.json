@@ -1,0 +1,515 @@
+{
+ "ticker": "CRDO",
+ "name": "Credo",
+ "exchange": "NASDAQ",
+ "quoteTicker": "CRDO",
+ "period": "Q1 FY2027",
+ "periodQuarter": 1,
+ "releasedOn": "2026-09-01",
+ "periodEnd": "2026-08-01",
+ "reviewedOn": "2026-11-25",
+ "currency": "USD",
+ "basis": {
+  "eps": "non-GAAP diluted",
+  "grossMargin": "non-GAAP",
+  "guidance": "company range $525–535M; gross margin = midpoint of the 67.0–69.0% non-GAAP range"
+ },
+ "sources": [
+  {
+   "url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026059795/credoq12027ex-991.htm",
+   "title": "Credo Technology Group Holding Ltd Reports First Quarter of Fiscal Year 2027 Financial Results (Form 8-K Exhibit 99.1, September 1, 2026)",
+   "location": "Financial Highlights, Second Quarter of Fiscal 2027 Financial Outlook, Statements of Operations, Balance Sheets, GAAP to non-GAAP reconciliation"
+  },
+  {
+   "url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026013205/credoq32026ex-9911.htm",
+   "title": "Credo Reports Third Quarter of Fiscal Year 2026 Financial Results (Form 8-K Exhibit 99.1, March 2, 2026)",
+   "location": "Condensed Consolidated Statements of Operations (three months ended January 31, 2026 and November 1, 2025)"
+  },
+  {
+   "url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026060111/crdo-20260801.htm",
+   "title": "Credo Technology Group Holding Ltd Form 10-Q for the quarter ended August 1, 2026",
+   "location": "Note 3 Concentrations; business combination note (DustPhotonics)"
+  }
+ ],
+ "evidence": [
+  {
+   "field": "numbers.revenue.current",
+   "url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026059795/credoq12027ex-991.htm",
+   "quote": "Revenue $ 479,003 $ 437,003 $ 223,074",
+   "calc": "479003/1000",
+   "round": 1
+  },
+  {
+   "field": "numbers.revenue.previous",
+   "url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026059795/credoq12027ex-991.htm",
+   "quote": "Revenue $ 479,003 $ 437,003 $ 223,074",
+   "calc": "437003/1000",
+   "round": 1
+  },
+  {
+   "field": "numbers.revenue.yearAgo",
+   "url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026059795/credoq12027ex-991.htm",
+   "quote": "Revenue $ 479,003 $ 437,003 $ 223,074",
+   "calc": "223074/1000",
+   "round": 1
+  },
+  {
+   "field": "numbers.adjustedEPS",
+   "url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026059795/credoq12027ex-991.htm",
+   "quote": "GAAP diluted net income per share of $0.67 and non-GAAP diluted net income per share of $1.20"
+  },
+  {
+   "field": "numbers.grossMargin.current",
+   "url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026059795/credoq12027ex-991.htm",
+   "quote": "Non-GAAP gross margin 68.0% 68.3% 67.6%"
+  },
+  {
+   "field": "numbers.grossMargin.previous",
+   "url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026059795/credoq12027ex-991.htm",
+   "quote": "Non-GAAP gross margin 68.0% 68.3% 67.6%"
+  },
+  {
+   "field": "numbers.guidance.low",
+   "url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026059795/credoq12027ex-991.htm",
+   "quote": "Revenue is expected to be between $525 million and $535 million"
+  },
+  {
+   "field": "numbers.guidance.high",
+   "url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026059795/credoq12027ex-991.htm",
+   "quote": "Revenue is expected to be between $525 million and $535 million"
+  },
+  {
+   "field": "numbers.guidance.grossMarginPercent",
+   "url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026059795/credoq12027ex-991.htm",
+   "quote": "non-GAAP gross margin is expected to be between 67.0% and 69.0%",
+   "calc": "(67.0+69.0)/2"
+  },
+  {
+   "field": "history[0].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026059795/credoq12027ex-991.htm",
+   "quote": "Revenue $ 479,003 $ 437,003 $ 223,074",
+   "calc": "223074/1000",
+   "round": 1
+  },
+  {
+   "field": "history[1].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026013205/credoq32026ex-9911.htm",
+   "quote": "Revenue 407,012 268,027 135,002",
+   "calc": "268027/1000",
+   "round": 1
+  },
+  {
+   "field": "history[2].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026013205/credoq32026ex-9911.htm",
+   "quote": "Revenue 407,012 268,027 135,002",
+   "calc": "407012/1000",
+   "round": 1
+  },
+  {
+   "field": "history[3].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026059795/credoq12027ex-991.htm",
+   "quote": "Revenue $ 479,003 $ 437,003 $ 223,074",
+   "calc": "437003/1000",
+   "round": 1
+  },
+  {
+   "field": "summary.cards.growth.sections[0]",
+   "url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026059795/credoq12027ex-991.htm",
+   "quote": "Non-GAAP net income $ 236,262 $ 226,680 $ 98,281"
+  },
+  {
+   "field": "summary.cards.change.sections[0]",
+   "url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026059795/credoq12027ex-991.htm",
+   "quote": "Non-GAAP diluted net income per share $ 1.20 $ 1.16 $ 0.52"
+  },
+  {
+   "field": "summary.cards.change.sections[0]",
+   "url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026059795/credoq12027ex-991.htm",
+   "quote": "GAAP diluted net income per share $ 0.67 $ 0.88 $ 0.34"
+  },
+  {
+   "field": "summary.cards.change.sections[1]",
+   "url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026059795/credoq12027ex-991.htm",
+   "quote": "GAAP gross margin 64.5% 68.2% 67.4%"
+  },
+  {
+   "field": "summary.cards.change.sections[1]",
+   "url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026059795/credoq12027ex-991.htm",
+   "quote": "Amortization of acquired intangible assets 11,000"
+  },
+  {
+   "field": "summary.cards.change.sections[1]",
+   "url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026059795/credoq12027ex-991.htm",
+   "quote": "Share-based compensation 87,979 49,698 35,455"
+  },
+  {
+   "field": "summary.cards.change.chips[2]",
+   "url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026059795/credoq12027ex-991.htm",
+   "quote": "GAAP operating income margin 25.2% 35.7% 27.2%"
+  },
+  {
+   "field": "summary.conclusion[1]",
+   "url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026059795/credoq12027ex-991.htm",
+   "quote": "Operating income 120,700 155,845 60,742"
+  },
+  {
+   "field": "summary.cards.caution.sections[0]",
+   "url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026060111/crdo-20260801.htm",
+   "quote": "On May 28, 2026, the Company acquired 100 % of the equity interest of DustPhotonics Ltd. (DustPhotonics), a developer of Silicon Photonics Photonic Integrated Circuit technology for optical transceivers, for a total purchase consideration of $ 1.3 billion"
+  },
+  {
+   "field": "summary.cards.caution.sections[0]",
+   "url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026059795/credoq12027ex-991.htm",
+   "quote": "Cash and cash equivalents $ 466,869 $ 1,164,952 Short-term investments 297,389 278,334"
+  },
+  {
+   "field": "summary.cards.caution.sections[0]",
+   "url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026059795/credoq12027ex-991.htm",
+   "quote": "Goodwill 986,447 92,798"
+  },
+  {
+   "field": "summary.cards.caution.sections[1]",
+   "url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026059795/credoq12027ex-991.htm",
+   "quote": "Total operating expenses 188,380 142,222 89,626"
+  },
+  {
+   "field": "summary.cards.next.sections[1]",
+   "url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026059795/credoq12027ex-991.htm",
+   "quote": "non-GAAP operating expenses are expected to be between $100 million and $105 million"
+  },
+  {
+   "field": "tiles[0].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026059795/credoq12027ex-991.htm",
+   "quote": "Revenue of $479.0 million, grew by 9.6% quarter over quarter and 114.7% year over year"
+  },
+  {
+   "field": "tiles[0].note",
+   "url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026059795/credoq12027ex-991.htm",
+   "quote": "Revenue of $479.0 million, grew by 9.6% quarter over quarter and 114.7% year over year"
+  },
+  {
+   "field": "tiles[1].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026059795/credoq12027ex-991.htm",
+   "quote": "GAAP gross margin of 64.5% and non-GAAP gross margin of 68.0%"
+  },
+  {
+   "field": "tiles[1].note",
+   "url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026059795/credoq12027ex-991.htm",
+   "quote": "Non-GAAP gross margin 68.0% 68.3% 67.6%"
+  },
+  {
+   "field": "tiles[2].value",
+   "url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026060111/crdo-20260801.htm",
+   "quote": "Revenue August 1, 2026 August 2, 2025 Customer A 43 % 50 % Customer B 28 % 35 %"
+  },
+  {
+   "field": "tiles[2].note",
+   "url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026060111/crdo-20260801.htm",
+   "quote": "Revenue August 1, 2026 August 2, 2025 Customer A 43 % 50 % Customer B 28 % 35 %"
+  }
+ ],
+ "tiles": [
+  {
+   "label": {
+    "ja": "売上高",
+    "en": "Revenue"
+   },
+   "value": {
+    "ja": "4.79億ドル",
+    "en": "$479.0M"
+   },
+   "note": {
+    "ja": "前年同期比 +114.7%・前期比 +9.6%",
+    "en": "+114.7% YoY, +9.6% QoQ"
+   }
+  },
+  {
+   "label": {
+    "ja": "調整後(non-GAAP)粗利益率",
+    "en": "Non-GAAP gross margin"
+   },
+   "value": {
+    "ja": "68.0%",
+    "en": "68.0%"
+   },
+   "note": {
+    "ja": "前四半期 68.3%",
+    "en": "Prior quarter 68.3%"
+   }
+  },
+  {
+   "label": {
+    "ja": "最大顧客の売上比率",
+    "en": "Largest customer share of revenue"
+   },
+   "value": {
+    "ja": "43%",
+    "en": "43%"
+   },
+   "note": {
+    "ja": "2番目の顧客は28%",
+    "en": "Second-largest: 28%"
+   }
+  }
+ ],
+ "numbers": {
+  "revenue": {
+   "current": 479.0,
+   "previous": 437.0,
+   "yearAgo": 223.1
+  },
+  "adjustedEPS": 1.2,
+  "epsEstimate": null,
+  "grossMargin": {
+   "current": 68.0,
+   "previous": 68.3
+  },
+  "guidance": {
+   "low": 525,
+   "high": 535,
+   "grossMarginPercent": 68.0
+  },
+  "segments": null
+ },
+ "history": [
+  {
+   "label": "Q1",
+   "end": "2025-08-02",
+   "value": 223.1
+  },
+  {
+   "label": "Q2",
+   "end": "2025-11-01",
+   "value": 268.0
+  },
+  {
+   "label": "Q3",
+   "end": "2026-01-31",
+   "value": 407.0
+  },
+  {
+   "label": "Q4",
+   "end": "2026-05-02",
+   "value": 437.0
+  }
+ ],
+ "summary": {
+  "conclusion": [
+   {
+    "ja": "売上は4.79億ドルで、前年同期の約2.1倍、前四半期から9.6%増えました。調整後の粗利益率は68.0%と高い水準を保っています。",
+    "en": "Revenue was $479.0M, about 2.1 times a year earlier and up 9.6% from the previous quarter. Non-GAAP gross margin stayed high at 68.0%."
+   },
+   {
+    "ja": "一方、5月のDustPhotonics買収(総額13億ドル)の費用が加わり、会計上(GAAP)の営業利益は1.56億ドルから1.21億ドルに減りました。売上の7割強を2社が占める顧客の偏りも続いています。",
+    "en": "But costs from the $1.3B DustPhotonics acquisition in May pushed GAAP operating income down from $156M to $121M. Two customers still account for over 70% of revenue."
+   }
+  ],
+  "cards": {
+   "growth": {
+    "headline": {
+     "ja": "売上は前年同期の約2.1倍",
+     "en": "Revenue about 2.1x a year earlier"
+    },
+    "chips": [
+     {
+      "tone": "up",
+      "text": {
+       "ja": "前年同期比 +114.7%",
+       "en": "+114.7% YoY"
+      }
+     },
+     {
+      "tone": "up",
+      "text": {
+       "ja": "調整後純利益 2.36億ドル",
+       "en": "Non-GAAP net income $236M"
+      }
+     }
+    ],
+    "sections": [
+     {
+      "key": "happened",
+      "text": {
+       "ja": "売上は前年同期の2.23億ドルから4.79億ドルへ増えました。調整後の純利益は0.98億ドルから2.36億ドルへ、約2.4倍になっています。",
+       "en": "Revenue rose from $223.1M a year earlier to $479.0M. Non-GAAP net income grew about 2.4 times, from $98M to $236M."
+      }
+     },
+     {
+      "key": "good",
+      "text": {
+       "ja": "データセンターのサーバー同士をつなぐケーブル(AEC)などの需要が、AI向けの設備投資とともに伸びています。調整後で売上の約半分が純利益として残る、利益率の高い事業です。",
+       "en": "Demand for its active electrical cables and other links between data-center servers is growing with AI spending. About half of revenue stays as non-GAAP net income, a very profitable business."
+      }
+     },
+     {
+      "key": "watch",
+      "text": {
+       "ja": "10-Qによると、この四半期の売上の43%が最大の顧客、28%が2番目の顧客でした。2社で約7割を占めるため、どちらかが注文を減らすと業績が大きく動きます。",
+       "en": "Per the 10-Q, the largest customer was 43% of revenue this quarter and the second-largest 28%. Together they make up about 70%, so an order cut from either would move results sharply."
+      }
+     }
+    ],
+    "segment": null
+   },
+   "change": {
+    "headline": {
+     "ja": "売上は前期比 +9.6%、GAAP利益は減少",
+     "en": "Revenue up 9.6% QoQ; GAAP profit fell"
+    },
+    "chips": [
+     {
+      "tone": "up",
+      "text": {
+       "ja": "売上 前期比 +9.6%",
+       "en": "Revenue +9.6% QoQ"
+      }
+     },
+     {
+      "tone": "gold",
+      "text": {
+       "ja": "調整後粗利益率 68.3% → 68.0%",
+       "en": "Non-GAAP gross margin 68.3% → 68.0%"
+      }
+     },
+     {
+      "tone": "down",
+      "text": {
+       "ja": "GAAP営業利益率 35.7% → 25.2%",
+       "en": "GAAP operating margin 35.7% → 25.2%"
+      }
+     }
+    ],
+    "sections": [
+     {
+      "key": "happened",
+      "text": {
+       "ja": "売上は4.37億ドルから4.79億ドルへ0.42億ドル増えました。調整後EPSは1.16ドルから1.20ドルに増えましたが、会計上(GAAP)のEPSは0.88ドルから0.67ドルに減っています。",
+       "en": "Revenue rose $42M from $437.0M to $479.0M. Non-GAAP EPS rose from $1.16 to $1.20, but GAAP EPS fell from $0.88 to $0.67."
+      }
+     },
+     {
+      "key": "watch",
+      "text": {
+       "ja": "会計上の粗利益率は68.2%から64.5%に下がりました。買収で得た技術などの償却費(0.11億ドル)と株式報酬が原価に入ったためです。株式報酬は全体で0.50億ドルから0.88億ドルに増えています。",
+       "en": "GAAP gross margin fell from 68.2% to 64.5% as amortization of acquired intangibles ($11M) and stock compensation hit cost of revenue. Total stock compensation rose from $50M to $88M."
+      }
+     },
+     {
+      "key": "means",
+      "text": {
+       "ja": "調整後の数字は買収や株式報酬の費用を除いているため、本業の稼ぐ力は保たれています。ただ、株式報酬は株主にとって実際の負担(株数の増加)です。",
+       "en": "Non-GAAP figures exclude deal and stock-based costs, so core earning power held up. But stock compensation is a real cost to shareholders through more shares."
+      }
+     },
+     {
+      "key": "view",
+      "text": {
+       "ja": "伸び率は前の四半期(+7.4%)より少し上がりました。売上の伸びは保たれており、変化の中心は買収に伴う費用です。",
+       "en": "Growth picked up slightly from the previous quarter (+7.4%). Sales momentum held; the main change is acquisition-related cost."
+      }
+     }
+    ],
+    "segment": null
+   },
+   "caution": {
+    "headline": {
+     "ja": "買収で手元資金が減り、費用が増加",
+     "en": "The acquisition cut cash and raised costs"
+    },
+    "chips": [
+     {
+      "tone": "down",
+      "text": {
+       "ja": "現金・短期投資 14.43億 → 7.64億ドル",
+       "en": "Cash & ST investments $1.44B → $764M"
+      }
+     },
+     {
+      "tone": "down",
+      "text": {
+       "ja": "のれん 0.93億 → 9.86億ドル",
+       "en": "Goodwill $93M → $986M"
+      }
+     },
+     {
+      "tone": "down",
+      "text": {
+       "ja": "営業費用 前期比 +32%",
+       "en": "Operating expenses +32% QoQ"
+      }
+     }
+    ],
+    "sections": [
+     {
+      "key": "happened",
+      "text": {
+       "ja": "5月28日、光通信向けシリコンフォトニクス技術のDustPhotonicsを総額13億ドルで買収しました。現金と短期投資は14.43億ドルから7.64億ドルに減り、のれんは0.93億ドルから9.86億ドルに増えました。",
+       "en": "On May 28, Credo bought DustPhotonics, a silicon-photonics developer for optical transceivers, for $1.3B. Cash and short-term investments fell from $1.44B to $764M, and goodwill rose from $93M to $986M."
+      }
+     },
+     {
+      "key": "means",
+      "text": {
+       "ja": "会計上の営業費用は1.42億ドルから1.88億ドルへ32%増えました。光の製品を自社でそろえる狙いですが、買収した事業が売上と利益に貢献するまでは費用が先に出ます。",
+       "en": "GAAP operating expenses rose 32% from $142M to $188M. The aim is a full in-house optical lineup, but costs come before the acquired business adds revenue and profit."
+      }
+     },
+     {
+      "key": "watch",
+      "text": {
+       "ja": "のれんは、買収した会社が期待どおりに稼げないと減損(損失)になる可能性があります。光の製品の売上がどれだけ立ち上がるかが、買収の成否を測る目安です。",
+       "en": "Goodwill can be written down if the acquired business underperforms. How fast optical product sales ramp is the measure of the deal."
+      }
+     }
+    ],
+    "segment": null
+   },
+   "next": {
+    "headline": {
+     "ja": "次期の売上見通しは5.25〜5.35億ドル",
+     "en": "Next quarter revenue outlook: $525–535M"
+    },
+    "chips": [
+     {
+      "tone": "gold",
+      "text": {
+       "ja": "売上 5.25〜5.35億ドル",
+       "en": "Revenue $525–535M"
+      }
+     },
+     {
+      "tone": "gold",
+      "text": {
+       "ja": "調整後粗利益率 67〜69%",
+       "en": "Non-GAAP gross margin 67–69%"
+      }
+     }
+    ],
+    "sections": [
+     {
+      "key": "happened",
+      "text": {
+       "ja": "会社は第2四半期(10月末まで)の売上を5.25億〜5.35億ドル、調整後粗利益率を67.0〜69.0%と見込んでいます。今回の売上4.79億ドルから、下限でも約9.6%の増加です。",
+       "en": "The company expects second-quarter revenue (through October) of $525M–$535M with a non-GAAP gross margin of 67.0–69.0%. Even the low end is about 9.6% above this quarter."
+      }
+     },
+     {
+      "key": "means",
+      "text": {
+       "ja": "粗利益率の見通しの中央は68.0%で、今回とほぼ同じです。調整後の営業費用は1.00億〜1.05億ドルと、今回の0.95億ドルから増える予定です。",
+       "en": "The margin midpoint of 68.0% is about the same as this quarter. Non-GAAP operating expenses are guided at $100M–$105M, up from $95M."
+      }
+     },
+     {
+      "key": "view",
+      "text": {
+       "ja": "この四半期(10月31日まで)の決算は、11月25日時点ではまだ発表されていません。売上が見通しの幅に入るか、上位2社への依存が下がるか、光の製品の売上が出てくるかを確かめます。",
+       "en": "That quarter (ended October 31) had not been reported as of November 25. Check whether revenue lands in the range, whether reliance on the top two customers eases, and whether optical sales show up."
+      }
+     }
+    ],
+    "segment": null
+   }
+  }
+ }
+}
