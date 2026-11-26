@@ -27,6 +27,7 @@ import OriginalPreviewCard from "./original-preview-card";
 import TopicsList from "./topics-list";
 /** Stories on the home list: five pages of five. */
 const HOME_STORIES = 25;
+const UPDATE_BLINK_MS = 900;
 let snapshot: { data: GeneralNewsFeed; at: string; time: number } | null = null;
 const recent = () => snapshot && Date.now() - snapshot.time < 120_000 ? snapshot : null;
 let lastFailedAt = 0;
@@ -79,18 +80,25 @@ export default function GeneralNewsPanel({ lang, officialOnly = false, generalOn
   // 注目トピック (owner, Nov 15): the page has no top band to fetch the company headlines, so it asks for them itself, each time the
   // news feed is checked (about every five seconds), the way the home band does.
   const [wireAt, setWireAt] = useState<string | null>(null);
+  const wireChecked = useRef(false);
   useEffect(() => {
     if (!generalOnly) return;
     let alive = true;
+    const started = Date.now();
     void (async () => {
       try {
         const response = await fetch("/api/research/company-wire", { cache: "no-store", signal: AbortSignal.timeout(10_000) });
         if (response.ok) { const items = parseCompanyWire(await response.json()).items; if (alive) publishWire(items); }
       } catch { /* keep the previous list */ }
-      finally { if (alive) setWireAt(new Date().toISOString()); }
+      // Owner, Nov 26: the dot beside 自動で更新中 blinks while this check runs, for at least one blink (UPDATE_BLINK_MS) so it is seen.
+      if (wireChecked.current && Date.now() - started < UPDATE_BLINK_MS) await new Promise(done => setTimeout(done, UPDATE_BLINK_MS - (Date.now() - started)));
+      wireChecked.current = true;
+      if (alive) setWireAt(new Date().toISOString());
     })();
     return () => { alive = false; };
   }, [generalOnly, receivedAt]);
+  // Checking: the company headlines were last asked for before the news feed's latest check (or never).
+  const updating = generalOnly && (!wireAt || (!!receivedAt && Date.parse(wireAt) < Date.parse(receivedAt)));
   useEffect(() => {
     const cached = refresh === 0 ? initialSnapshot(initialNews) : null;
     if (cached) {
@@ -165,7 +173,7 @@ export default function GeneralNewsPanel({ lang, officialOnly = false, generalOn
     ? { positive: "プラス", negative: "マイナス", mixed: "両面", neutral: "中立", uncertain: "不明" }
     : { positive: "Positive", negative: "Negative", mixed: "Mixed", neutral: "Neutral", uncertain: "Uncertain" };
   const confidenceLabels = lang === "ja" ? { high: "高", medium: "中", low: "低" } : { high: "High", medium: "Medium", low: "Low" };
-  if (generalOnly) return <TopicsList lang={lang} data={data} wire={wire} wireReady={!!wireAt} error={error} receivedAt={receivedAt ?? wireAt} page={page} onPage={setPage} />;
+  if (generalOnly) return <TopicsList lang={lang} data={data} wire={wire} wireReady={!!wireAt} updating={updating} error={error} receivedAt={receivedAt ?? wireAt} page={page} onPage={setPage} />;
   return <section ref={panel} className={styles.panel} aria-label={lang === "ja" ? "ニュース一覧" : "News list"}>
     {!officialOnly && !!originalPreview.length && data?.originalPreviewWindow && <p className={styles.note}>{lang === "ja"
       ? "原文テスト掲載: 直近7日・最大30件。"
