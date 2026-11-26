@@ -7,7 +7,7 @@ import type { GeneralNewsFeed } from "@/lib/research/general-news";
 import { summaryToggle, topicCards, topicCredit, topicImpact, type TopicImpact } from "@/lib/research/topics";
 import { dayKey, dayLabel, pageWindow, withDayDividers } from "@/lib/research/news-day";
 import { displayClock } from "@/lib/research/display-time";
-import FeedPagination from "./feed-pagination";
+import FeedPagination, { turnPageInPlace } from "./feed-pagination";
 import styles from "./general-news.module.css";
 
 const IMPACT_CLASS: Record<TopicImpact, string> = { positive: "topicPositive", negative: "topicNegative", neutral: "topicNeutral" };
@@ -65,7 +65,7 @@ export default function TopicsList({ lang, data, wire, wireReady, updating = fal
         </article>;
         return rule ? [rule, row] : row;
       })}</div>}
-    <FeedPagination page={current} pages={pages} ja={ja} onChange={n => { onPage(n); top.current?.scrollIntoView({ block: "start", behavior: "instant" }); }} />
+    <FeedPagination page={current} pages={pages} ja={ja} onChange={n => { turnPageInPlace(top.current?.closest("main")?.querySelector("h1")?.closest("header") ?? top.current, top.current); onPage(n); }} />
     {cards.length > 0 && <p className={styles.topicCredit}>{topicCredit(ja)}</p>}
   </section>;
 }
