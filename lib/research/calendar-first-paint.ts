@@ -25,9 +25,12 @@ async function load(): Promise<FirstCalendar> {
   const feed = buildPublicNews(raw);
   const free = projectFreeNews(feed, freeTechSelection(feed, {}, now));
   // Only what the results rows read; no story items are sent.
-  return { now: Math.floor(now / 60_000) * 60_000, news: { ok: true, enabled: free.enabled, items: [], officialUpdates: free.officialUpdates ?? [], resultBriefs: free.resultBriefs ?? [], eventResults: free.eventResults ?? [] },
+  return { now: drawnMinute(now), news: { ok: true, enabled: free.enabled, items: [], officialUpdates: free.officialUpdates ?? [], resultBriefs: free.resultBriefs ?? [], eventResults: free.eventResults ?? [] },
     history: history && { month: "recent", resultBriefs: history.resultBriefs, months: history.months } };
 }
+
+/** The minute the page is drawn at (the rows' places are kept from it when the results could not be read in time). */
+export const drawnMinute = (now = Date.now()) => Math.floor(now / 60_000) * 60_000;
 
 export function firstCalendarWithin(wait = 1_500): Promise<FirstCalendar | null> {
   return Promise.race([load().catch(() => null), new Promise<null>(resolve => setTimeout(() => resolve(null), wait))]);
