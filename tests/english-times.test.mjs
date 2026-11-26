@@ -50,6 +50,9 @@ test("news/flash: rows are grouped by the ET day in English and the JST day in J
   assert.equal(flashDayKey(summer, "en"), "2026-07-09");
   assert.equal(flashDayKey({ at: "2026-07-10T04:00:00Z", timeKind: "published" }, "en"), "2026-07-10");
   assert.equal(flashDayKey({ at: "2026-11-03", timeKind: "date" }, "en"), "2026-11-03", "a date-only source keeps its date");
+  // A date-only release shown at its first-seen time sits under that time's day (owner, Nov 26).
+  assert.equal(flashDayKey({ at: "2026-11-24T21:05:00.000Z", timeKind: "found" }, "ja"), "2026-11-25");
+  assert.equal(flashDayKey({ at: "2026-11-24T21:05:00.000Z", timeKind: "found" }, "en"), "2026-11-24");
   assert.equal(dayHeading("2026-11-04", false), "11/4 Wed");
   assert.equal(dayHeading("2026-11-04", true), "11/4（水）");
   const source = read("../app/research/news/flash-page.tsx");

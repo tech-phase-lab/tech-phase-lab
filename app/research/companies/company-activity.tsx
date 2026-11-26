@@ -5,7 +5,7 @@ import type { Language } from "@/lib/research/data";
 import { availableNewsPayload, type GeneralNewsFeed, type GeneralNewsItem } from "@/lib/research/general-news";
 import { officialNewsDisplay, shownInLanguage } from "@/lib/research/news-presentation";
 import { analystNewsDisplay } from "@/lib/research/analyst-news";
-import { officialTime } from "@/lib/research/news-time";
+import { firstSeenOnDay, officialTime } from "@/lib/research/news-time";
 import { isFreshItem, markSeen, readSeen } from "@/lib/research/company-freshness";
 import { createNewsPoller } from "@/lib/research/news-poller";
 import { observePageActivity } from "@/lib/research/page-activity";
@@ -26,6 +26,8 @@ type Row = {
   label?: string; title: string; body?: string; wire?: CompanyWireItem;
 };
 
+/** Sort key: a date-only source sorts by when it was first seen that day (owner, Nov 26), else at the start of its day. */
+const rowInstant = (row: Pick<Row, "at" | "kind" | "observedAt">) => Date.parse(row.kind === "date" ? firstSeenOnDay(row.at, row.observedAt) ?? `${row.at}T00:00:00Z` : row.at);
 // Japan time in Japanese, U.S. Eastern in English (owner, Nov 17).
 const clock = (at: string, lang: Language) => displayClock(at, lang);
 /** Time column: today shows HH:mm, an earlier day shows its date over the time. A date-only source shows just the date. */
@@ -121,8 +123,7 @@ export default function CompanyActivity({ ticker, lang, sample }: { ticker: stri
     ...(data?.analystUpdates ?? []).filter(item => item.ticker === ticker).map(item => ({ id: `analyst-${item.id}`, observedAt: item.observedAt, tag: "analyst" as Tag, ...analystNewsDisplay(item, lang), at: item.publishedAt, kind: "published" })),
     ...(data?.items ?? []).filter(item => item.tickers.includes(ticker)).map(item => ({ id: `news-${item.id}`, observedAt: item.observedAt, tag: "news" as Tag, label: ja ? "企業ニュース" : "Company news", title: (ja ? item.summaryJa : item.summaryEn) ?? "", body: ja ? item.impactJa : item.impactEn, at: item.publishedAt, kind: "published" })),
     ...wireRows.map(item => ({ id: `wire-${item.id}`, tag: "news" as Tag, title: (ja ? item.titleJa : item.titleEn) ?? "", at: item.publishedAt, kind: "published", wire: item })),
-  ].sort((a, b) => Date.parse(b.at) - Date.parse(a.at));
-  const rowInstant = (row: Row) => Date.parse(row.kind === "date" ? `${row.at}T00:00:00Z` : row.at);
+  ].sort((a, b) => rowInstant(b) - rowInstant(a));
   const rows = full ? allRows : freeWindow(allRows, rowInstant, clockNow).map(row => ({ ...row, body: undefined }));
   const tagText: Record<Tag, string> = ja ? { flash: "速報", analyst: "アナリスト", news: "ニュース" } : { flash: "Flash", analyst: "Analyst", news: "News" };
   const newest = rows[0];

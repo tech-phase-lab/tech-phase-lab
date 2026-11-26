@@ -327,7 +327,12 @@ def sync(db, reference):
     if not db.execute("SELECT 1 FROM sqlite_master WHERE name='release_events'").fetchone():
         return
     cutoff = (reference - timedelta(days=7)).isoformat()
-    rows = db.execute('''SELECT e.detected_at,s.url,s.ticker,s.title,s.sha256,s.published_on,s.evidence_kind,r.extracted_text
+    # The publisher's stated clock time, kept beside its date when the feed or
+    # article states one (owner, Nov 26). Older databases have no such column.
+    stated_time = ('s.published_at' if 'published_at' in {column[1] for column in db.execute('PRAGMA table_info(sources)')}
+                   else 'NULL')
+    rows = db.execute(f'''SELECT e.detected_at,s.url,s.ticker,s.title,s.sha256,s.published_on,{stated_time} AS published_at,
+      s.evidence_kind,r.extracted_text
       FROM release_events e JOIN sources s ON s.url=e.url
       JOIN source_revisions r ON r.url=s.url AND r.sha256=s.sha256
       WHERE e.detected_at>=? AND r.extracted_chars>0 AND s.status NOT IN ('rejected','held') ORDER BY e.id DESC LIMIT 500''', (cutoff,)).fetchall()
@@ -379,9 +384,16 @@ def sync(db, reference):
                 continue
         except (KeyError, ValueError, TypeError):
             continue
+        published_at = monitor.consistent_publication_time(monitor.original_publication_time(row['published_at']), published_on)
+        sha = revision(title, row['sha256'], published_on)
         db.execute('''INSERT OR IGNORE INTO signal_events(
           source_id,url,sha,previous_sha,title,tickers_json,matches_json,event_kind,
-          published_on,observed_at,excerpt,diff,truncated)
-          VALUES(?,?,?,'',?,?, '{}','new',?,?,'','',0)''',
-                   (PREFIX + row['ticker'], row['url'], revision(title, row['sha256'], published_on),
-                    title, json.dumps([row['ticker']]), published_on, row['detected_at']))
+          published_at,published_on,observed_at,excerpt,diff,truncated)
+          VALUES(?,?,?,'',?,?, '{}','new',?,?,?,'','',0)''',
+                   (PREFIX + row['ticker'], row['url'], sha,
+                    title, json.dumps([row['ticker']]), published_at, published_on, row['detected_at']))
+        if published_at:
+            # A row projected before its source carried a clock time gets it now.
+            db.execute('''UPDATE signal_events SET published_at=?
+              WHERE source_id=? AND url=? AND sha=? AND previous_sha='' AND published_at IS NULL''',
+                       (published_at, PREFIX + row['ticker'], row['url'], sha))

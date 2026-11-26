@@ -526,7 +526,7 @@ def discovery_signature(result, links):
         candidate = links[url]
         if isinstance(candidate, dict):
             for key in (
-                "title", "publishedOn", "contentType", "contentBytes", "inlineText",
+                "title", "publishedOn", "publishedAt", "contentType", "contentBytes", "inlineText",
                 "secForm", "secAccession", "secCik", "secFilingDate", "secAcceptanceDateTime",
             ):
                 add(candidate.get(key))
