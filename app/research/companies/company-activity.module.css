@@ -27,7 +27,6 @@
 .meta{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:3px}
 .tag{font-size:10.5px;letter-spacing:.14em;color:#8c98ab}
 .news{color:#9aa8c8}.analyst{color:var(--live)}.flash{color:#ff7b7b}
-.newMark{font-family:ui-monospace,monospace;font-size:10px;letter-spacing:.12em;color:var(--live);text-shadow:0 0 8px rgba(93,255,180,.8)}
 .headline{font-size:14.5px;font-weight:500;line-height:1.6;margin:0;overflow-wrap:anywhere}
 .headline a{color:inherit;text-decoration:none}.headline a:hover{text-decoration:underline}
 .src{font-size:11.5px;color:#586376;margin:2px 0 0;letter-spacing:.04em}

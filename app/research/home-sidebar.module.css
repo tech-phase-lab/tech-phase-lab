@@ -10,7 +10,8 @@
 .item.on::before{content:"";position:absolute;left:-14px;top:9px;bottom:9px;width:3px;border-radius:0 3px 3px 0;background:#7fd6b0;box-shadow:0 0 12px #7fd6b0}
 .item:focus-visible,.pro:focus-visible,.rz:focus-visible{outline:2px solid #7fd6b0;outline-offset:2px}
 .count{font:11px var(--font-geist-mono),monospace;font-style:normal;color:#566174;background:#141c29;border:1px solid #1a2332;border-radius:999px;padding:0 8px;line-height:18px}
-.count.fresh{color:#5dffb4;border-color:rgba(93,255,180,.4);font-size:9.5px;letter-spacing:.1em}
+/* Unread 速報: a green dot like the phone's bottom bar, never a NEW label (owner, 11/26). */
+.freshDot{flex:none;width:8px;height:8px;border-radius:50%;background:#5dffb4;box-shadow:0 0 8px rgba(93,255,180,.6)}
 .tag{font:9px var(--font-geist-mono),monospace;letter-spacing:.14em;color:#d9b46a;border:1px solid rgba(217,180,106,.45);border-radius:5px;padding:0 6px;line-height:16px;font-weight:400}
 
 .foot{margin-top:auto;display:flex;flex-direction:column;gap:14px}

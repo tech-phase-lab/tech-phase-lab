@@ -727,12 +727,29 @@
       "titleJa": "米国雇用統計"
     },
     {
+      "id": "avgo-fq4-2026-call-close",
+      "kind": "earnings",
+      "ticker": "AVGO",
+      "phase": "release",
+      "at": "2026-12-09T21:00:00.000Z",
+      "titleJa": "Broadcom 決算（米国市場終了後）",
+      "approximate": true
+    },
+    {
       "id": "adbe-fq4-2026-call",
       "kind": "earnings",
       "ticker": "ADBE",
       "phase": "call",
       "at": "2026-12-09T22:00:00.000Z",
       "titleJa": "Adobe 決算説明会（2026年度Q4・通期）"
+    },
+    {
+      "id": "avgo-fq4-2026-call",
+      "kind": "earnings",
+      "ticker": "AVGO",
+      "phase": "call",
+      "at": "2026-12-09T22:00:00.000Z",
+      "titleJa": "Broadcom 決算説明会（2026年度Q4）"
     },
     {
       "id": "cpi-2026-12-10",
@@ -749,6 +766,14 @@
       "phase": "release",
       "at": "2026-12-15T13:30:00.000Z",
       "titleJa": "米国PPI（生産者物価指数）"
+    },
+    {
+      "id": "mu-fq1-2027-call",
+      "kind": "earnings",
+      "ticker": "MU",
+      "phase": "call",
+      "at": "2026-12-17T21:30:00.000Z",
+      "titleJa": "MU 決算説明会（2027年度Q1）"
     },
     {
       "id": "pce-2026-11",

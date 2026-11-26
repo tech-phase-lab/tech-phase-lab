@@ -49,7 +49,7 @@ const pickQuotes = (body: Record<string, unknown>) => body.quotes as Record<stri
 /** An answer whose statistics are missing (`complete: false`) keeps the last facts this page had and asks again in a minute, not in six hours. */
 const pickFacts = (body: Record<string, unknown>) => {
   const facts = body.facts as MarketFacts | undefined;
-  return facts && (body.complete !== false || facts.nextEarnings) ? facts : null;
+  return facts && (body.complete !== false || facts.nextEarnings || facts.nextEarningsKnown) ? facts : null;
 };
 const factsRetry = { ms: 60_000, when: (body: Record<string, unknown>) => body.complete === false };
 /** `fast` (the watchlist and a stock's page): asked every 15 seconds; the server reads the provider again only while the plan's minute leaves room. */

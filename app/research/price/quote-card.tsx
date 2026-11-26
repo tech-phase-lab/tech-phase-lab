@@ -3,7 +3,7 @@ import { useState } from "react";
 import Link from "next/link";
 import StockLogo from "../watchlist/stock-logo";
 import { useFacts, useNumbersHidden, useQuotes, shortName, type CardQuote } from "./use-market";
-import { compact, dateJa, type MarketFacts, plain, rangePosition, signedBoth, signedMoney, signedPercent } from "@/lib/research/market-quote";
+import { compact, type MarketFacts, nextEarningsText, plain, rangePosition, signedBoth, signedMoney, signedPercent } from "@/lib/research/market-quote";
 import { useResearchLanguage } from "../use-research-language";
 import StarButton from "./star-button";
 import { displayClock, zoneLabel } from "@/lib/research/display-time";
@@ -122,7 +122,7 @@ export function QuoteCardView({ ticker, variant, from, name, star = false, quote
           <div className={styles.statRow}><span>EPS</span><span>{eps(facts?.eps)}</span></div>
           <div className={styles.statRow}><span>{ja ? "時価総額" : "Mkt cap"}</span><span>{facts?.marketCap ? compact(facts.marketCap) : "—"}</span></div>
           <div className={styles.statRow}><span>{ja ? "配当利回り" : "Div. yield"}</span><span>{facts?.dividendYield == null ? "—" : `${facts.dividendYield.toFixed(2)}%`}</span></div>
-          <div className={styles.statRow}><span>{ja ? "次回決算" : "Next earnings"}</span><span>{dateJa(facts?.nextEarnings ?? null, ja ? "ja" : "en")}</span></div>
+          <div className={styles.statRow}><span>{ja ? "次回決算" : "Next earnings"}</span><span>{nextEarningsText(facts, ja ? "ja" : "en")}</span></div>
         </div>
       </div>
     </> : <>
@@ -138,7 +138,7 @@ export function QuoteCardView({ ticker, variant, from, name, star = false, quote
         <div><dt>EPS</dt><dd>{eps(facts?.eps)}</dd></div>
         <div><dt>{ja ? "時価総額" : "Mkt cap"}</dt><dd>{facts?.marketCap ? compact(facts.marketCap) : "—"}</dd></div>
         <div><dt>{ja ? "配当利回り" : "Div. yield"}</dt><dd>{facts?.dividendYield == null ? "—" : `${facts.dividendYield.toFixed(2)}%`}</dd></div>
-        <div><dt>{ja ? "次回決算" : "Next earnings"}</dt><dd>{dateJa(facts?.nextEarnings ?? null, ja ? "ja" : "en")}</dd></div>
+        <div><dt>{ja ? "次回決算" : "Next earnings"}</dt><dd>{nextEarningsText(facts, ja ? "ja" : "en")}</dd></div>
       </dl>
     </>}
   </section><p className={styles.credit}>{ja ? "提供：Twelve Data" : "Data: Twelve Data"}</p></>;

@@ -413,6 +413,7 @@ Use only names, tickers and Latin-script words that appear in the headline; writ
 Do not turn "a", "one" or "per share" into a digit (1株, 1社, 1カ所) unless the headline gives that number.
 Keep every number exactly as written (convert units only exactly, e.g. $1.2 billion = 12億ドル); never add, drop or round a figure.
 Keep negation and direction (rise/fall, beat/miss, raise/cut) exactly. When an item has previousRejection, that was why the last translation was rejected; avoid it.
+A rating or label tag after a colon or in brackets at the end of a headline (": Buy", ": Strong Sell", ": Hold", "(Rating Upgrade)", "(NASDAQ:NBIS)") is a separate label, not part of the sentence: never join it to the sentence (no ので/から/だから/ため/so-clauses such as 「〜ので買いだ」); translate the sentence on its own and, if the tag is kept, write it after a full-width colon (「〜：買い」). Such a contributor's own rating call, or a first-person "I'm buying/selling" piece, is kind "not-news" (opinion); a brokerage's rating or price-target change stays "news".
 Also write shortJa: the same headline as one short Japanese line of at most 22 characters, for a one-line news band. Keep the subject (company or ticker) and the single most important fact; keep any number you use exactly as in titleJa; never add a fact or a number that titleJa does not have; no trailing punctuation; do not cut a sentence off mid-word.
 Also judge each headline (kind). "news" states a concrete fact about the company's business or its stock: results, guidance, a deal, order, investment, product, partnership, lawsuit, regulatory step, executive change, an analyst rating or price-target change, or a market move together with its stated cause.
 "not-news" is everything else, for example: investment advice or opinion ("should you buy", "which stock is better", "X vs Y", "a buying opportunity", "buy the dip"); comparisons and listicles; price predictions and forecasts; any headline that asks a question or starts with "Why" or "What" without giving the answer; teasers that hide their answer ("here is why"); what-if or past-returns pieces; human-interest, hiring, workplace, lifestyle, culture, entertainment or feature stories (for example a vocational graduate getting a job, an employee's life story, a TV programme); and promotional or community posts.
@@ -620,6 +621,14 @@ LOW_VALUE_EN = (
     r".{0,60}\b(?:welcome[sd]?|congratulate[sd]?|celebrate[sd]?|honou?r(?:s|ed)?|salute[sd]?|toast(?:s|ed)?|troll(?:s|ed)?|roast(?:s|ed)?|thank(?:s|ed)?"
     r"|invite[sd]?|pays? tribute|shouts? out|gives?|offers?)\b(?! (?:its |a |the )?new (?:CEO|chief))"
     r".{0,100}\b(?:CEO|founder|co-founder|chief executive|billionaire)\b"
+    # Owner, Nov 26 (audit): investor-conference appearances, earnings-date notices, option grants, leveraged-ETF promotions, awards,
+    # TV show segment tags and mining-company financings.
+    r"|\b(?:to|will) (?:present|participate|speak|host a fireside)\b.{0,20}\b(?:at|in)\b.{0,80}\bconferences?\b|\bannounces? participation (?:at|in)\b|\bparticipat(?:e|es|ion) (?:at|in) (?:the )?upcoming\b|\bupcoming (?:investor |industry )?conferences?\b"
+    r"|\b(?:to|will) (?:report|announce|release)\b.{0,80}\b(?:results|earnings)\b.{0,40}\bon\s+(?:(?:Mon|Tues|Wednes|Thurs|Fri|Satur|Sun)day,?\s+)?(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\.?\s+\d{1,2}\b|\bannounces? (?:the )?(?:timing|date) of\b.{0,60}\b(?:results|earnings)\b"
+    r"|\bgrant of (?:incentive )?(?:stock )?options\b|\bgrants? (?:incentive )?stock options\b|\bleverage shares\b|\b[-−]?[1-3]X (?:long|short)\b"
+    r"|\bpartner of the year\b|\b(?:wins?|won|receives?|received|earns?|earned|named (?:a |the )?(?:winner|recipient) of) (?:the |a |an )?(?:\d{4} )?(?:[\w&'’-]+ ){0,5}(?<!contract )awards?\b"
+    r"|[|]\s*(?:closing bell|opening bell|bloomberg (?:tech|markets|surveillance|businessweek)|the close|balance of power|squawk box|power lunch)\s*$"
+    r"|\b(?:Gold|Silver|Mining|Minerals|Metals|Lithium|Uranium|Copper|Exploration)\s+(?:Corp|Corporation|Inc|Ltd|Limited)\b|\bflow-through\b|\bFT (?:offering|units?)\b"
 )
 LOW_VALUE_SOFT_EN = (
     r"[(\[]\s*live(?: updates?| coverage| blog)?\s*[)\]]|\blive (?:updates|coverage|blog)\b|[-–—:|]\s*(?:business |markets? |stock market )?live\s*$"
@@ -636,6 +645,12 @@ LOW_VALUE_SOFT_EN = (
     r"|\b(?:another|(?:the|his|her|its|their) other|one more|(?:a |the )?(?:hidden|secret|little-known|unexpected|surprising|curious|strange|odd))\s+"
     r"(?:[\w'’-]+\s+){0,2}(?:connections?|links?|ties|relationships?|side)\b|.s other (?:[\w'’-]+ )?(?:connections?|links?|ties|relationships?)\b"
     r"|\b(?:leather jackets?|autographs?|selfies?)\b"
+    # Owner, Nov 26 (audit): local human-interest stories, a former employee's opinion, game sequels, "key reasons" teasers, market
+    # commentary and TV soundbites, unless a concrete event is reported.
+    r"|^\s*(?:a|an|one) (?:man|woman|teen(?:ager)?|boy|girl|person|driver|couple|family|student|grandmother|grandfather|mom|dad) (?:in|from) [A-Z]"
+    r"|^\s*(?:a )?former [\w&.'’-]+ (?:engineer|employee|executive|exec|staffer|worker|insider|manager|designer|researcher|intern)s? (?:says|warns|thinks|believes|explains|predicts|claims)\b"
+    r"|\bsequel\b|\bremaster(?:s|ed)?\b|\bkey reasons?\b|\breasons? behind\b|^\s*where (?:the )?(?:market|markets|investors|stocks)\b"
+    r"|^\s*(?!(?:exclusive|breaking|update|updated|report|sources?|watch|live)\b)[A-Z][A-Za-z'’.-]+(?:[- ][A-Z][A-Za-z'’.-]+)?\s*:\s.{0,80}[‘“'\x22][^‘’“”\x22]{3,60}[’”'\x22]"
 )
 CONCRETE_EVENT_EN = (
     r"\b(?!(?:How|Time|What|Why|When|Where|Who|Here|Stock|Stocks|Shares|Has|Have|Had|Is|Are|Was|Were|Be|It|I|You|We|They|He|She)\b)[A-Z][\w&.'’-]*\s+(?:to\s+|will\s+)?(?:[Ll]aunch(?:es|ed)?|[Nn]ames|[Nn]amed|[Ii]nvest(?:s|ed)?|[Bb]uys|[Bb]uy|[Bb]ought|[Aa]cquires?|[Aa]cquired"
@@ -644,21 +659,42 @@ CONCRETE_EVENT_EN = (
     r"|[Ss]ues|[Ss]ued|[Aa]grees|[Aa]greed|[Ss]urges|[Ss]urged|[Pp]lunges|[Pp]lunged)\b"
     r"|\b(?:[Pp]rice [Tt]arget|[Tt]arget [Pp]rice|PT)\b|\b(?:[Uu]pgrade[sd]?|[Dd]owngrade[sd]?)\b"
 )
+# Owner, Nov 26 (速報 showed the GOOGL row 「ジェミニ4ネオンを使って5社のビルダーが作っているものを見てみよう」): company-blog marketing and
+# customer showcases ("see what X are building with", "5 ways to use", "tips for", "how creators use", "meet the builders", "behind the
+# scenes", customer spotlights) carry no business fact; dropped, like LOW_VALUE_SOFT_EN, only when no concrete event is reported. The same
+# pattern is MARKETING_SHOWCASE_EN in lib/research/marketing-showcase.ts; keep the two in step (a test compares them).
+MARKETING_SHOWCASE_EN = (
+    r"\bsee (?:what|how)\b.{0,80}\b(?:build(?:s|ing)?|built|mak(?:e|es|ing)|made|creat(?:e|es|ed|ing)|doing|us(?:e|es|ed|ing))\b"
+    r"|^\s*(?:\d{1,2}|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve)\s+(?:new |more |easy |simple |fun |creative |great |helpful |smart |quick )?(?:ways|tips|ideas|tricks|things you can do)\b"
+    r"|\btips (?:for|to|on)\b|\btips\s*$"
+    r"|\bhow (?:\d+ |these |our |real |some )?(?:[\w'’-]+ ){0,2}(?:creators|builders|developers|artists|filmmakers|students|teachers|educators|small businesses|businesses"
+    r"|customers|teams|people|musicians|designers|founders|startups|nonprofits|researchers|scientists|doctors|farmers|kids|families|fans)"
+    r" (?:are |is )?(?:us(?:e|es|ing)|build(?:s|ing)?|mak(?:e|es|ing)|creat(?:e|es|ing))\b"
+    r"|^\s*meet (?:the |our |these )?(?:[\w'’-]+ ){0,3}(?:team|teams|people|builders|creators|developers|founders|winners|finalists|students|artists|women|engineers"
+    r"|researchers|scientists|startups|class|cohort|recipients|honorees|fellows|makers)\b"
+    r"|\bbehind[- ]the[- ]scenes\b|\bcustomer (?:stor(?:y|ies)|spotlights?|showcases?)\b|\b(?:builder|creator|developer|customer|partner|startup|community) spotlights?\b"
+    r"|^\s*spotlight\s*[:|]|\bin their own words\b"
+    r"|\bbrings? (?:[\w'’-]+ ){0,5}(?:to life|magic)\b|\bholiday magic\b"
+    r"|\bhow [A-Z][\w&.'’-]*(?: [A-Z][\w&.'’-]*){0,3} (?:uses|is using|used|built|builds|is building|scaled|scales|transformed|transforms|cut|saved|boosted)\b"
+    r"|\b(?:builds?|built|creates?|created|makes?|made|scales?|scaled|powers?|powered|transforms?|transformed|reimagines?|reimagined) (?:[\w'’-]+ ){1,5}with (?:Gemini|Vertex AI|Google Cloud|Google Flow|Flow|Veo|Imagen|NotebookLM|Azure(?: AI)?|Copilot|Microsoft Foundry|Amazon Bedrock|AWS|Omniverse|NVIDIA (?:AI Enterprise|Omniverse|NIM)|NIM|Llama|Meta AI|ChatGPT|Claude)\b"
+)
 LOW_VALUE = re.compile(LOW_VALUE_EN, re.I)
 LOW_VALUE_SOFT = re.compile(LOW_VALUE_SOFT_EN, re.I)
 CONCRETE_EVENT = re.compile(CONCRETE_EVENT_EN)
+MARKETING_SHOWCASE = re.compile(MARKETING_SHOWCASE_EN, re.I)
 
 
 def low_value(title):
-    """True for a headline that is not news about the company (LOW_VALUE, or LOW_VALUE_SOFT without a concrete event)."""
-    return bool(LOW_VALUE.search(title) or (LOW_VALUE_SOFT.search(title) and not CONCRETE_EVENT.search(title)))
+    """True for a headline that is not news about the company (LOW_VALUE, or LOW_VALUE_SOFT or MARKETING_SHOWCASE without a concrete
+    event)."""
+    return bool(LOW_VALUE.search(title) or ((LOW_VALUE_SOFT.search(title) or MARKETING_SHOWCASE.search(title)) and not CONCRETE_EVENT.search(title)))
 
 
 def hidden_title(title):
     """True for a headline the site never shows: cut off, noise (NOISE) or not news by the site's own English patterns (NOT_NEWS_EN,
-    low_value)."""
+    low_value, contributor_opinion)."""
     return (truncated(title) or bool(NOISE.search(title)) or any(pattern.search(title) for pattern in NOT_NEWS_EN)
-            or low_value(title))
+            or low_value(title) or contributor_opinion(title))
 
 
 # Owner, Nov 20 (「MRVLは同じの2つある」): "Stifel maintains Marvell Technology at Buy, lowers price target to $280 from $370" (TradingView)
@@ -682,6 +718,30 @@ RATING_CHANGE = re.compile(r'\b(?:upgrade[sd]?|downgrade[sd]?|initiate[sd]?|star
                            r'|in[- ]line|underperform|underweight|reduce|sell)\b', re.I)
 
 
+# Owner, Nov 26 (銘柄手帳 and 速報 showed the NBIS row 「ネビウスの設備投資は誤解されていたので買いだ」, from the Seeking Alpha contributor
+# article "Nebius' CapEx Was Misread, So I'm Buying"): a contributor's own rating call is opinion, not news. Matched: a rating tag ending the
+# headline (": Buy", ": Strong Sell", ": Hold", ": Upgrade To Buy"), "(Rating Upgrade)" / "(Rating Downgrade)", and the author's
+# first-person buying or selling ("So I'm Buying"). A brokerage's rating or price-target change is kept: a headline naming a known broker
+# (BROKER) is never matched. The same pattern is CONTRIBUTOR_OPINION_EN in lib/research/contributor-opinion.ts; keep the two in step (a
+# test compares them).
+CONTRIBUTOR_OPINION_EN = (
+    r"(?::\s*(?:(?:upgrad(?:e|ed|ing)|downgrad(?:e|ed|ing)|reiterat(?:e|ed|ing)|maintain(?:ed|ing)?)\s+(?:to\s+|at\s+|as\s+)?(?:an?\s+)?)?"
+    r"(?:(?:strong|speculative)\s+)?(?:buy|sell|hold)(?:\s+rating)?\s*[.!]?"
+    r"|\((?:rating\s+|double\s+)?(?:upgrade|downgrade|reiteration|reiterated)\))"
+    r"\s*(?:\((?:(?:NASDAQ|NYSE|NYSEARCA|NYSEAMERICAN|AMEX|OTC[A-Z]*|TSX|TSXV|LSE)\s*:\s*)?[A-Z.]{1,8}\)\s*)?(?:[-–—|]\s*Seeking Alpha\s*)?$"
+    r"|(?:^|[,;:.!]\s+|\b(?:so|and|but|why|how)\s+)I.m\s+(?:(?:still|now|also|finally|happily|aggressively|cautiously|not|done|\w+ly)\s+)?"
+    r"(?:buying|selling|adding|accumulating|loading up|doubling down|a buyer|a seller|staying long|staying away|bullish|bearish)\b"
+    r"|(?:^|\b(?:why|so|and|but)\s+)I\s+(?:just\s+|finally\s+)?(?:bought|sold|added|doubled down)\b"
+    r"|\bI (?:think|believe) (?:it.s|it is|this is|they.re|they are) an? (?:strong )?(?:buy|sell)\b|\bis an? strong (?:buy|sell)\b"
+)
+CONTRIBUTOR_OPINION = re.compile(CONTRIBUTOR_OPINION_EN, re.I)
+
+
+def contributor_opinion(title):
+    """True for a contributor's own rating call (CONTRIBUTOR_OPINION) that names no known broker."""
+    return bool(CONTRIBUTOR_OPINION.search(title or '')) and not BROKER.search(title or '')
+
+
 def analyst_actions(title):
     """The broker actions a headline reports, as keys: (broker, 'pt', new target) and (broker, 'rating', new rating). Empty for a
     headline that names no known broker with a new target or rating. Two headlines that share a key report the same action."""
@@ -701,9 +761,35 @@ def analyst_actions(title):
     return frozenset(keys)
 
 
-def locally_rejected(row):
-    """A row that is never sent to the model: its title is hidden by the site anyway, or its Stock News publisher is not taken."""
-    return hidden_title(row['title']) or dropped_publisher(row)
+# Owner, Nov 26 (「エヌビディア、ロンドンのキングスクロス拠点を拡大へ」 under GOOGL): a company feed's search hit can be a story about
+# another company that only mentions this one in the article. A headline filed under a company is not that company's when it names
+# another company of the roster and none of this company's names; its copy under the company it names is kept. The names are
+# lib/research/company-subjects.json, shared with offSubject in lib/research/company-subjects.ts (whole words, case-sensitive). Only
+# rows from the search feeds (Google News, Yahoo) are judged: the Stock News API files a story under the companies it is about.
+SEARCH_FEEDS = frozenset({'gnews', 'yahoo'})
+def _subject_pattern(names):
+    return re.compile(r'(?<![A-Za-z0-9])(?:' + '|'.join(re.escape(name) for name in names) + r')(?![A-Za-z0-9])')
+
+
+SUBJECTS = json.loads((monitor.ROOT / 'lib/research/company-subjects.json').read_text(encoding='utf-8'))
+SUBJECT_OWN = {ticker: _subject_pattern(names) for ticker, names in SUBJECTS.items()}
+SUBJECT_OTHERS = {ticker: _subject_pattern([name for other in SUBJECTS.values() for name in other if name not in names])
+                  for ticker, names in SUBJECTS.items()}
+
+
+def off_subject(ticker, title):
+    """True when ``title``, filed under ``ticker``, names another roster company and none of this one's names."""
+    own = SUBJECT_OWN.get(ticker)
+    return bool(own) and not own.search(title or '') and bool(SUBJECT_OTHERS[ticker].search(title or ''))
+
+
+def locally_rejected(row, ticker=None):
+    """A row that is never sent to the model: its title is hidden by the site anyway, its Stock News publisher is not taken, or it is
+    a search-feed copy filed under a company it is not about (off_subject; judged when the row or the caller names the ticker)."""
+    if ticker is None and 'ticker' in row.keys():
+        ticker = row['ticker']
+    return (hidden_title(row['title']) or dropped_publisher(row)
+            or bool(ticker and 'source' in row.keys() and row['source'] in SEARCH_FEEDS and off_subject(ticker, row['title'])))
 
 
 MAJOR = re.compile(r'reuters|bloomberg|cnbc|wall street journal|\bwsj\b|barron|financial times|marketwatch|associated press|'
@@ -1115,7 +1201,7 @@ def public_feed(db, now_ts=None):
           WHERE w.ticker=? AND w.published_at>=? AND COALESCE(a.reason,'') NOT IN ('not-news','off-topic')
           AND COALESCE(a.reason,'') NOT LIKE 'not-event:%' ORDER BY w.published_at DESC LIMIT 120''',
                           (ticker, since)).fetchall()
-        rows = [r for r in rows if not locally_rejected(r) and not LAW_FIRM_SOLICITATION.search(r['title_ja'] or '')]
+        rows = [r for r in rows if not locally_rejected(r, ticker) and not LAW_FIRM_SOLICITATION.search(r['title_ja'] or '')]
         # Oct 16: the Japanese view shows only translated headlines, so a company whose newest ten were
         # all still untranslated (or rejected) looked stale. Keep the newest translated ones in their own
         # allowance, plus a few untranslated ones for the English view.
