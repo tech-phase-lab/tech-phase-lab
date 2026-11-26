@@ -9,6 +9,10 @@
     {
       "ja": "提携・顧客",
       "en": "Partners & customers"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
     }
   ],
   "rivals": [],
@@ -142,6 +146,32 @@
         }
       ],
       "name_en": "Atkore"
+    },
+    {
+      "id": "WLK",
+      "ticker": "WLK",
+      "name": "ウエストレイク",
+      "name_en": "Westlake",
+      "sub": "化学",
+      "sub_en": "Chemicals",
+      "sub_short": "化学",
+      "sub_short_en": "Chem",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "エチレン・ポリエチレンの競合に挙げる",
+          "text_en": "Names LyondellBasell as an ethylene and polyethylene competitor",
+          "source": {
+            "label": "Westlake 10-K(2025年度)",
+            "label_en": "Westlake 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1262823/000126282326000016/wlk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our competitors in the ethylene and PE markets are some of the world's largest chemical companies, including Chevron Phillips Chemical Company, Dow Inc., ExxonMobil Chemical Company, Formosa Plastics Corporation, LyondellBasell Industries, N.V."
+          }
+        }
+      ]
     }
   ],
   "far": [],

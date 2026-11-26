@@ -116,6 +116,84 @@
         }
       ],
       "name_en": "Chariot Reinsurance"
+    },
+    {
+      "id": "GTY",
+      "ticker": "GTY",
+      "name": "ゲッティ・リアルティ",
+      "name_en": "Getty Realty",
+      "sub": "不動産投資信託",
+      "sub_en": "REIT",
+      "sub_short": "REIT",
+      "sub_short_en": "REIT",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "MetLifeから社債で資金調達",
+          "text_en": "Borrows from MetLife under a note agreement",
+          "source": {
+            "label": "Getty Realty 10-K付属の契約(2025年度)",
+            "label_en": "Getty Realty agreement filed with its 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1052752/000119312526048965/gty-ex10_20.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "the \"MetLife Note Agreement\"), by and among Getty Realty Corp."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LAND",
+      "ticker": "LAND",
+      "name": "グラッドストーン・ランド",
+      "name_en": "Gladstone Land",
+      "sub": "農地REIT",
+      "sub_en": "Farmland REIT",
+      "sub_short": "農地",
+      "sub_short_en": "Farmland",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "MetLifeの融資枠で借り入れ",
+          "text_en": "Borrows under a MetLife credit facility",
+          "source": {
+            "label": "Gladstone Land 10-K(2025年度)",
+            "label_en": "Gladstone Land 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1495240/000149524026000011/land-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Under the MetLife Facility, we are generally allowed to borrow up to 60% of the aggregate of the lower of cost or the appraised value of the pool of agricultural real estate pledged as collateral."
+          }
+        }
+      ]
+    },
+    {
+      "id": "COKE",
+      "ticker": "COKE",
+      "name": "コカ・コーラ・コンソリデーテッド",
+      "name_en": "Coca-Cola Consolidated",
+      "sub": "飲料",
+      "sub_en": "Beverages",
+      "sub_short": "飲料",
+      "sub_short_en": "Drinks",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "MetLife系と社債の購入契約",
+          "text_en": "Has a note purchase agreement with MetLife Investment Management",
+          "source": {
+            "label": "Coca-Cola Consolidated 10-K付属の契約(2025年度)",
+            "label_en": "Coca-Cola Consolidated agreement filed with its 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/317540/000162828026009057/a109firstamendmenttonotepu.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "by and among COCA-COLA CONSOLIDATED, INC., a Delaware corporation (the \"Company\"), MetLife Investment Management, LLC"
+          }
+        }
+      ]
     }
   ],
   "far": [],

@@ -128,3 +128,16 @@ test('a first-seen time on 速報 is labelled 取得 / Found above the clock, in
   const company = await readFile(new URL('../app/research/companies/company-activity.tsx', import.meta.url), 'utf8');
   assert.match(company, /styles\.found\}>\{lang === "ja" \? "取得" : "Found"\}/);
 });
+
+test('new rows on 速報 and on the home news list pulse like the fresh monitor dot, and hold still with reduced motion (owner, Nov 26)', async () => {
+  const flash = await readFile(new URL('../app/research/news/flash-page.tsx', import.meta.url), 'utf8');
+  assert.match(flash, /marked\(row\) \? timeline\.unread : ""/);
+  const css = await readFile(new URL('../app/research/companies/company-activity.module.css', import.meta.url), 'utf8');
+  assert.match(css, /\.unread \.node\{animation:nodeFlash \.9s infinite\}/);
+  assert.match(css, /@keyframes nodeFlash\{0%\{box-shadow:0 0 0 0 rgba\(93,255,180,\.8\)[^}]*\}70%\{box-shadow:0 0 0 11px rgba\(93,255,180,0\)/);
+  assert.match(css, /@media\(prefers-reduced-motion:reduce\)\{[^}]*\.unread \.node\{animation:none\}/);
+  const home = await readFile(new URL('../app/research/news/general-news.module.css', import.meta.url), 'utf8');
+  assert.match(home, /\.tlFresh \.tlRail i\{animation:newBlink \.9s infinite\}/);
+  assert.match(home, /@keyframes newBlink\{0%\{box-shadow:0 0 0 0 rgba\(93,255,180,\.8\)[^}]*\}70%\{box-shadow:0 0 0 11px rgba\(93,255,180,0\)/);
+  assert.match(home, /@media\(prefers-reduced-motion:reduce\)\{\.tlFresh \.tlRail i\{animation:none\}\}/);
+});

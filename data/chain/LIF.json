@@ -14,6 +14,10 @@
     {
       "ja": "提携・顧客",
       "en": "Partners & customers"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
     }
   ],
   "rivals": [],
@@ -121,6 +125,32 @@
         }
       ],
       "name_en": "Hubble Network Inc."
+    },
+    {
+      "id": "GEN",
+      "ticker": "GEN",
+      "name": "ジェン・デジタル",
+      "name_en": "Gen Digital",
+      "sub": "セキュリティ",
+      "sub_en": "Cyber safety",
+      "sub_short": "防御",
+      "sub_short_en": "Security",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合する専業企業の1社に挙げる",
+          "text_en": "Names Life360 among competing pure-play providers",
+          "source": {
+            "label": "Gen Digital 10-K(2026年3月期)",
+            "label_en": "Gen Digital 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/849399/000084939926000017/gen-20260403.htm",
+            "level": "official",
+            "date": "2026-05-21",
+            "quote": "These include 'pure play' providers such as 1Password, Bark, Dashlane, LastPass, Life360, and Truecaller"
+          }
+        }
+      ]
     }
   ],
   "far": [],

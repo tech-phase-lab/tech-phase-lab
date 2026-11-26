@@ -134,6 +134,58 @@
         }
       ],
       "name_en": "Centuri Holdings"
+    },
+    {
+      "id": "BRK.B",
+      "ticker": "BRK.B",
+      "name": "バークシャー・ハザウェイ・エナジー",
+      "name_en": "Berkshire Hathaway Energy",
+      "sub": "電力・送電",
+      "sub_en": "Utilities & transmission",
+      "sub_short": "エネ",
+      "sub_short_en": "Energy",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "テキサスの送電会社ETTを共同所有",
+          "text_en": "Co-owns the Texas transmission venture ETT",
+          "source": {
+            "label": "AEP 10-K(2025年度)",
+            "label_en": "AEP 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/4904/000000490426000013/aep-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Electric Transmission Texas, LLC, an equity interest joint venture between AEP Transmission Holdco and Berkshire Hathaway Energy Company"
+          }
+        }
+      ]
+    },
+    {
+      "id": "OVEC",
+      "ticker": "OVEC",
+      "name": "オハイオ・バレー・エレクトリック",
+      "name_en": "Ohio Valley Electric",
+      "sub": "発電",
+      "sub_en": "Power generation",
+      "sub_short": "発電",
+      "sub_short_en": "Power",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "AEPが43.47%を保有",
+          "text_en": "AEP owns 43.47%",
+          "source": {
+            "label": "AEP 10-K(2025年度)",
+            "label_en": "AEP 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/4904/000000490426000013/aep-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Ohio Valley Electric Corporation, which is 43.47% owned by AEP"
+          }
+        }
+      ]
     }
   ],
   "far": [],

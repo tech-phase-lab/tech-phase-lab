@@ -144,6 +144,58 @@
         }
       ],
       "name_en": "Union Pacific"
+    },
+    {
+      "id": "JBHT",
+      "ticker": "JBHT",
+      "name": "J.B.ハント",
+      "name_en": "J.B. Hunt",
+      "sub": "トラック・複合輸送",
+      "sub_en": "Trucking & intermodal",
+      "sub_short": "運送",
+      "sub_short_en": "Trucking",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "複合輸送の大半がBNSFとNSの鉄道を使う",
+          "text_en": "Most of its intermodal business travels on BNSF and Norfolk Southern",
+          "source": {
+            "label": "J.B. Hunt 10-K(2025年度)",
+            "label_en": "J.B. Hunt 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/728535/000143774926005294/jbht20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "While we have agreements with a number of Class I railroads, the majority of our business travels on the BNSF and the Norfolk Southern railways."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMR",
+      "ticker": "AMR",
+      "name": "アルファ・メタラジカル・リソーシズ",
+      "name_en": "Alpha Metallurgical Resources",
+      "sub": "原料炭",
+      "sub_en": "Metallurgical coal",
+      "sub_short": "石炭",
+      "sub_short_en": "Coal",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "石炭をノーフォーク・サザンの線路で出荷",
+          "text_en": "Ships coal on a Norfolk Southern rail line",
+          "source": {
+            "label": "Alpha Metallurgical Resources 10-K付属の技術報告(2025年度)",
+            "label_en": "Alpha Metallurgical Resources technical report filed with its 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1704715/000170471526000010/finalkeplerasof12-31x25.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Alpha's Kepler preparation plant services consumers with washed coal, which is transported via the adjacent Norfolk Southern rail line at the Kepler loadout"
+          }
+        }
+      ]
     }
   ],
   "far": [],

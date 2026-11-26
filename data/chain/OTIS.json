@@ -9,6 +9,10 @@
     {
       "ja": "競合・提携",
       "en": "Competitors & partners"
+    },
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
     }
   ],
   "rivals": [],
@@ -116,6 +120,32 @@
         }
       ],
       "name_en": "Xizi Elevator Group"
+    },
+    {
+      "id": "CARR",
+      "ticker": "CARR",
+      "name": "キャリア・グローバル",
+      "name_en": "Carrier Global",
+      "sub": "空調",
+      "sub_en": "HVAC",
+      "sub_short": "空調",
+      "sub_short_en": "HVAC",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "旧UTCからの分離後の関係を定める契約を結ぶ",
+          "text_en": "Has agreements with Otis governing their relationship after the UTC separation",
+          "source": {
+            "label": "Carrier Global 10-K(2025年度)",
+            "label_en": "Carrier Global 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1783180/000178318026000008/carr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-05",
+            "quote": "we entered into several agreements with UTC and Otis Worldwide Corporation (\"Otis\") that govern various aspects of the relationship among us, UTC and Otis following the Separation"
+          }
+        }
+      ]
     }
   ],
   "far": [],

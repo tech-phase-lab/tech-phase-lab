@@ -127,6 +127,32 @@
           }
         }
       ]
+    },
+    {
+      "id": "WEX",
+      "ticker": "WEX",
+      "name": "WEX",
+      "name_en": "WEX",
+      "sub": "法人決済・福利厚生",
+      "sub_en": "Payments & benefits",
+      "sub_short": "法人決済",
+      "sub_short_en": "Payment",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "医療口座の管理で競合に挙げる",
+          "text_en": "Names HealthEquity as a competitor in consumer-driven healthcare",
+          "source": {
+            "label": "WEX 10-K(2025年度)",
+            "label_en": "WEX 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1309108/000130910826000010/wex-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "In consumer-driven healthcare and COBRA administration, we compete with specialist providers like Alegeus Technologies and HealthEquity"
+          }
+        }
+      ]
     }
   ],
   "far": [],

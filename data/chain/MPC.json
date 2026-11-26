@@ -116,6 +116,58 @@
         }
       ],
       "name_en": "CrossAmerica Partners"
+    },
+    {
+      "id": "MPLX",
+      "ticker": "MPLX",
+      "name": "MPLXエルピー",
+      "name_en": "MPLX LP",
+      "sub": "導管・物流",
+      "sub_en": "Midstream",
+      "sub_short": "配管網",
+      "sub_short_en": "Pipeline",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "MPCがGPと約64%を保有。売上の48%がMPC向け",
+          "text_en": "MPC owns its general partner and about 64% of its units; MPC was 48% of its revenue",
+          "source": {
+            "label": "MPLX 10-K(2025年度)",
+            "label_en": "MPLX 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1552000/000155200026000009/mplx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "As of December 31, 2025, MPC owned our general partner and approximately 64 percent of our outstanding common units. In 2025, MPC accounted for 48 percent of our total revenues and other income"
+          }
+        }
+      ]
+    },
+    {
+      "id": "LODE",
+      "ticker": "LODE",
+      "name": "コムストック",
+      "name_en": "Comstock Inc.",
+      "sub": "再生燃料",
+      "sub_en": "Renewable fuels",
+      "sub_short": "燃料",
+      "sub_short_en": "Fuels",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "MPC子会社が燃料子会社に1,400万ドル出資",
+          "text_en": "MPC units agreed to invest $14 million in Comstock Fuels",
+          "source": {
+            "label": "Comstock 10-K(2024年度)",
+            "label_en": "Comstock 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1120970/000143774925006453/lode20241231_10k.htm",
+            "level": "official",
+            "date": "2025-03-06",
+            "quote": "Comstock Fuels entered into a series of definitive agreements with subsidiaries of Marathon Petroleum Corporation (\"Marathon\"), involving the purchase of $14,000,000 in Comstock Fuels equity"
+          }
+        }
+      ]
     }
   ],
   "far": [],

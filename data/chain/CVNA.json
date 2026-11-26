@@ -9,6 +9,10 @@
     {
       "ja": "提携・顧客",
       "en": "Partners & customers"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
     }
   ],
   "rivals": [],
@@ -155,6 +159,32 @@
         }
       ],
       "name_en": "Root, Inc."
+    },
+    {
+      "id": "OPLN",
+      "ticker": "OPLN",
+      "name": "オープンレーン",
+      "name_en": "Openlane",
+      "sub": "中古車オークション",
+      "sub_en": "Used-car auctions",
+      "sub_short": "競売",
+      "sub_short_en": "Auctions",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "旧ADESA米国事業を売却。Carvanaを競合に挙げる",
+          "text_en": "Sold ADESA U.S. to Carvana and names it as a competitor",
+          "source": {
+            "label": "OPENLANE 10-K(2025年度)",
+            "label_en": "OPENLANE 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1395942/000139594226000006/opln-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "large, established competitors (e.g., Manheim, ADESA U.S. (Carvana), America's Auto Auction, ACV Auctions, EBlock and NextGear Capital)"
+          }
+        }
+      ]
     }
   ],
   "far": [],

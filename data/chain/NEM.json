@@ -142,6 +142,58 @@
         }
       ],
       "name_en": "SSR Mining"
+    },
+    {
+      "id": "XPL",
+      "ticker": "XPL",
+      "name": "ソリタリオ・リソーシズ",
+      "name_en": "Solitario Resources",
+      "sub": "探鉱",
+      "sub_en": "Exploration",
+      "sub_short": "探鉱",
+      "sub_short_en": "Mining",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Newmontが第三者割当で株式を取得(2025年6月)",
+          "text_en": "Newmont bought shares in a private placement (June 2025)",
+          "source": {
+            "label": "Solitario 10-K/A(2025年度)",
+            "label_en": "Solitario 10-K/A (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/917225/000165495426002156/xpl_10ka.htm",
+            "level": "official",
+            "date": "2026-03-11",
+            "quote": "On June 18, 2025, Solitario closed on a private placement of 1,587,300 shares of Solitario common stock (the \"Newmont Shares\"), pursuant to a Stock Purchase Agreement (the \"SPA\") with Newmont Overseas Exploration Ltd."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FNV",
+      "ticker": "FNV",
+      "name": "フランコ・ネバダ",
+      "name_en": "Franco-Nevada",
+      "sub": "ロイヤルティ",
+      "sub_en": "Royalties",
+      "sub_short": "権益",
+      "sub_short_en": "Royalties",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Newmontのヤナコチャ鉱山のロイヤルティを取得",
+          "text_en": "Acquired a royalty on Newmont's Yanacocha operations",
+          "source": {
+            "label": "Franco-Nevada 40-F(2025年度)",
+            "label_en": "Franco-Nevada 40-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1456346/000110465926032133/fnv-20251231xex99d1.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "Acquisition of Royalty on Newmont Corporation's Yanacocha Operations"
+          }
+        }
+      ]
     }
   ],
   "far": [],
