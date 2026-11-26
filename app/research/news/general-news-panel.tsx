@@ -20,6 +20,7 @@ import styles from "./general-news.module.css";
 
 import { takeNewsStartup } from "@/lib/research/news-startup";
 import { publishNews } from "@/lib/research/news-snapshot";
+import { readLastView, writeLastView } from "@/lib/research/member-last-view";
 import FeedPagination, { turnPageInPlace } from "./feed-pagination";
 import TimelineRow from "./timeline-row";
 import NewsStory from "./news-story";
@@ -107,6 +108,11 @@ export default function GeneralNewsPanel({ lang, officialOnly = false, generalOn
       snapshot = cached;
       publishNews(cached.data);
     }
+    // 注目トピック: a PRO member's last view on this device, shown at once and then refreshed (lib/research/member-last-view.ts).
+    const kept = generalOnly && !cached ? readLastView<GeneralNewsFeed>("topics") : null;
+    // Read once after mount (reading it during render would not match the server's page).
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    if (kept) { setData(kept.data); setReceivedAt(new Date(kept.at).toISOString()); }
     const poller = createNewsPoller({
       push: true,
       load: async signal => {
@@ -125,6 +131,7 @@ export default function GeneralNewsPanel({ lang, officialOnly = false, generalOn
         const at = new Date().toISOString();
         snapshot = { data: payload, at, time: Date.now() };
         setData(payload); publishNews(payload); setError(false); setReceivedAt(at);
+        if (generalOnly) writeLastView("topics", payload);
       },
       onFailure: () => {
         // A failed check must not let a stale module snapshot reappear after remount.
@@ -139,7 +146,7 @@ export default function GeneralNewsPanel({ lang, officialOnly = false, generalOn
       stopObserving();
       poller.stop();
     };
-  }, [refresh, initialNews]);
+  }, [refresh, initialNews, generalOnly]);
   // An item with no time stated by its source is not listed: showing the time
   // it was found would pass a guess off as the publication time (owner, Oct 10).
   // The home list shows the Stock News API stories only (owner, Nov 15): never the Tech Alerts (ハイテク速報) items, which are another

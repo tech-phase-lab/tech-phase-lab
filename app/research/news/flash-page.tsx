@@ -14,6 +14,7 @@ import { createNewsPoller, NEWS_POLL_INTERVAL_MS } from "@/lib/research/news-pol
 import { createWatchTracker } from "@/lib/research/watch-new-items";
 import { observePageActivity } from "@/lib/research/page-activity";
 import { readVisitStart } from "../use-alerts-unread";
+import { forgetLastView, readLastView, writeLastView } from "@/lib/research/member-last-view";
 import timeline from "../companies/company-activity.module.css";
 import tabStyles from "./news-feed.module.css";
 import styles from "./flash-page.module.css";
@@ -68,6 +69,19 @@ export default function FlashPage({ lang, onReady, initial = null }: { lang: Lan
   const memberSettled = useMemberSettled();
   // Until the browser's own check answers, the server's verdict on this session (it sent the full feed only to PRO or an owner account).
   const full = (!memberSettled && initial?.full === true) || memberPlan === "pro" || ownerAccount || ownerRole;
+  // A PRO member's last view on this device (lib/research/member-last-view.ts): shown the moment the page opens, then refreshed.
+  useEffect(() => {
+    if (initial) return;
+    const kept = readLastView<{ feed: GeneralNewsFeed; wire: Record<string, CompanyWireItem[]>; checkedAt: number }>("alerts");
+    if (!kept) return;
+    // Read once after mount (reading it during render would not match the server's page).
+    setFeed(old => old ?? kept.data.feed); setWire(old => Object.keys(old).length ? old : kept.data.wire);
+    setCheckedAt(old => old || kept.data.checkedAt); setWireSettled(true); setWireLoaded(true);
+  }, [initial]);
+  useEffect(() => {
+    if (memberSettled && !full) { forgetLastView("alerts"); return; }
+    if (full && feed && wireLoaded && checkedAt) writeLastView("alerts", { feed, wire, checkedAt });
+  }, [memberSettled, full, feed, wire, wireLoaded, checkedAt]);
   const tracker = useRef(createWatchTracker());
   const wireTracker = useRef(createWatchTracker());
   const list = useRef<HTMLDivElement>(null);

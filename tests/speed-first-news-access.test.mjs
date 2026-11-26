@@ -1,6 +1,7 @@
 // Speed, Nov 26: ハイテク速報 and 注目トピック draw this viewer's feed into the first HTML (lib/research/news-first-paint.ts). The loader is run here
 // with the session, the membership and the monitor replaced: signed-out visitors and FREE members get only the FREE projection (30 minutes
-// behind, the latest five, headlines only), PRO and the owner's accounts the full feed, and an unverifiable signed-in browser nothing.
+// behind, the latest five, headlines only), PRO and the owner's accounts the full feed where the server can verify them, and an unverifiable
+// signed-in browser (these pages run without the identity proxy) nothing.
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
@@ -94,8 +95,9 @@ test("nothing member-only can be kept by a shared cache: the pages are rendered 
     assert.match(source, /export const dynamic = "force-dynamic";/);
     assert.doesNotMatch(source, /revalidate|"force-static"|unstable_cache|Cache-Control/);
   }
-  // Both pages run the identity middleware, so the server can verify PRO, FREE and the owner's accounts.
+  // Owner, Oct 21: public pages open without the identity proxy (no session handshake on a cold open). A signed-in browser therefore cannot
+  // be verified here and gets nothing drawn; members see their own last view from this device instead (lib/research/member-last-view.ts).
   const matcher = read("proxy.ts").match(/"\/research\/\(\(\?!\(\?:([^)]*)\)/)[1].split("|");
-  assert.ok(!matcher.includes("news") && !matcher.includes("general-news"), matcher.join("|"));
+  assert.ok(matcher.includes("news") && matcher.includes("general-news"), matcher.join("|"));
   assert.doesNotMatch(read("lib/research/news-first-paint.ts"), /unstable_cache|"use cache"/);
 });

@@ -14,9 +14,7 @@ test('Clerk proxy supplies identity to research pages and membership APIs',()=>{
  // Twelve Data (Nov 26): the public price routes read who is asking (owner: everything; visitors: known symbols and a per-address limit).
  for(const url of ['/api/research/market/quotes','/api/research/market/facts','/api/research/market/chart','/api/research/market/period-bases','/api/research/earnings-consensus']) assert.equal(matches(url),true,url);
  // Public pages open without the identity proxy (no session handshake on a cold open, owner Oct 21); their member checks go through the APIs above.
- // Speed, Nov 26: ハイテク速報 and 注目トピック draw the viewer's own feed into the first HTML, so they verify the session on the server.
- for(const url of ['/research/news','/research/general-news']) assert.equal(matches(url),true,url);
- for(const url of ['/research','/research/watchlist','/research/stocks','/research/market','/research/calendar','/research/learn','/research/faq','/research/capital-map','/research/capital-map/sample']) assert.equal(matches(url),false,url);
+ for(const url of ['/research','/research/news','/research/watchlist','/research/stocks','/research/market','/research/calendar','/research/learn','/research/general-news','/research/faq','/research/capital-map','/research/capital-map/sample']) assert.equal(matches(url),false,url);
  // Pages that read membership on the server stay behind the proxy.
  const server=url=>readFileSync(new URL('../app/research/'+url,import.meta.url),'utf8');
  for(const file of ['account/page.tsx','account/sign-up/page.tsx']) assert.match(server(file),/getMembership/,file);
