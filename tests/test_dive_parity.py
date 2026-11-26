@@ -44,7 +44,8 @@ FILINGS = {
     'GEV': {'prior': ('https://www.sec.gov/Archives/edgar/data/1996810/000199681026000147/gevpressrelease2q26.htm', 'GEV-release-q2-2026')},
     'BE': {},
     # the results-day 6-Ks: the year's shareholder-return plan and the quarter's dividend (Korean fair disclosures filed with the SEC)
-    'SKHY': {'events': [('https://www.sec.gov/Archives/edgar/data/2120882/000119312526435008/d236990d6k.htm', 'SKHY-6k-returns',
+    'SKHY': {'exhibits': [('https://news.skhynix.com/en/q3-2026-business-results/', 'SKHY-newsroom-3q26')],
+             'events': [('https://www.sec.gov/Archives/edgar/data/2120882/000119312526435008/d236990d6k.htm', 'SKHY-6k-returns',
                          datetime(2026, 10, 28, 10, 6, 14, tzinfo=timezone.utc)),
                         ('https://www.sec.gov/Archives/edgar/data/2120882/000119312526435015/d236994d6k.htm', 'SKHY-6k-dividend',
                          datetime(2026, 10, 28, 10, 9, 24, tzinfo=timezone.utc))]},
@@ -71,20 +72,15 @@ GAPS = {  # what is still different from the hand-made file with every filing in
     'PLTR': {},
     'ALAB': {}, 'LITE': {}, 'SNDK': {},
     'VRT': {}, 'GEV': {}, 'BE': {},
-    # The hand-made file read SK hynix's newsroom release; on EDGAR there are only the preliminary-results 6-K and the results-day 6-Ks.
-    'SKHY': {'tiles[2].label': 'net cash (cash ₩114.5T minus borrowings ₩15.8T) is only in the newsroom release; the tile shows the year\'s '
-                               'shareholder-return plan from its own 6-K (about ₩100T)',
-             'cards.text': 'HBM4, server DDR5, 321-layer NAND, the LTAs with 14 customers, next year\'s investment, M15X and the demand view to '
-                           '2030 are only in the newsroom release; those sections use the filings\' figures (operating profit, pre-tax and net income, '
-                           'the dividend and the return plan)',
-             'tiles[0].note': '"first quarter above ₩100T" needs the full revenue history; the note gives the 6-K\'s own +327.9% year-over-year'},
+    'SKHY': {},
     'ARM': {}, 'CRWV': {},
     'NBIS': {'sources': 'interest expense and the funding sources come from the release\'s own statements (the hand-made file quoted them from the '
                         'separate Operating and Financial Review 6-K); the shareholder letter is its SEC copy (EX-99.2) instead of the nebius.com PDF'},
     'MSFT': {}, 'GOOGL': {}, 'NVDA': {},
 }
 CHIP_GAPS = {}
-EVENT_FORMS = {'SKHY': '6-K'}   # a foreign issuer's other filings of the quarter are 6-Ks
+EVENT_FORMS = {'SKHY': '6-K'}
+RELEASE_URLS = {'SKHY': 'https://www.sec.gov/Archives/edgar/data/2120882/000119312526434994/d162547d6k.htm'}   # a foreign issuer's other filings of the quarter are 6-Ks
 FILINGS_DIR = ROOT / 'tests/fixtures/dive-filings'
 
 
@@ -117,7 +113,8 @@ def previous_file(dive):
 def generated(ticker, filings=True):
     dive = json.loads((ROOT / f'lib/research/dives/{ticker}.json').read_text(encoding='utf-8'))
     text = gzip.open(ROOT / f'tests/fixtures/latest-releases/{ticker}.txt.gz', 'rt').read()
-    url = dive['sources'][0]['url']
+    # the release the patrol reads (an SEC filing); SK hynix's hand-made file listed its newsroom release first
+    url = RELEASE_URLS.get(ticker, dive['sources'][0]['url'])
     release = patrol.latest_release(ticker, {'filings': {'recent': {'form': ['8-K'], 'acceptanceDateTime': [dive['releasedOn'] + 'T21:00:00.000Z'],
                                     'items': ['2.02'], 'accessionNumber': ['a-1'], 'primaryDocument': ['x']}}},
                                     datetime(2026, 11, 26, tzinfo=timezone.utc), exhibit=lambda *a: (url, text), primary=lambda *a: None)
@@ -211,7 +208,7 @@ class DepthParity(unittest.TestCase):
 
     def test_without_its_other_exhibits_a_multi_exhibit_company_is_held(self):
         import dive_figures
-        for ticker in ('TSM', 'ASML', 'NBIS', 'NVDA'):
+        for ticker in ('TSM', 'ASML', 'NBIS', 'NVDA', 'SKHY'):
             dive = json.loads((ROOT / f'lib/research/dives/{ticker}.json').read_text(encoding='utf-8'))
             text = gzip.open(ROOT / f'tests/fixtures/latest-releases/{ticker}.txt.gz', 'rt').read()
             figures = dive_figures.read_docs(ticker, [(dive['sources'][0]['url'], text)])

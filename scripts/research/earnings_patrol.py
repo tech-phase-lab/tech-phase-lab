@@ -471,6 +471,8 @@ def prefetch_filings(results, filings_by_ticker, env=None):
                     exhibits = [{'url': u, 'text': t} for u, t in filing_exhibits(ticker, release['accession'], release.get('url'))]
                 except Exception:  # noqa: BLE001
                     exhibits = []
+                if ticker in dive_figures.NEWSROOM:  # the company's own results release, read with the filing (SK hynix)
+                    exhibits += newsroom_release(ticker, release.get('period'))
                 out[ticker] = out[ticker] + (exhibits,)
             if ticker in dive_figures.PRIOR:  # the previous quarter's release, for the figures this release prints without that quarter
                 out[ticker] = out[ticker] + (None,) * (3 - len(out[ticker])) + (prior_release(dives.previous_dive(ticker)),)
@@ -482,6 +484,22 @@ def whole_text(content):
     would merge two equal cells side by side ("97.2% 97.2%") and shift a row."""
     import check_dives
     return check_dives.html_text(content.decode('utf-8', 'replace'))
+
+
+def newsroom_release(ticker, period, get=None):
+    """[{'url', 'text', 'title'}] of the company's own results release of `period` on its own site (dive_figures.NEWSROOM), the first
+    candidate address that answers with that page; [] when none does (the dive then holds and the patrol tries again)."""
+    import dive_figures
+    get = get or (lambda url: urllib.request.urlopen(urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0 (compatible; TechPhaseResearch)'}),
+                                                     timeout=30).read(5_000_000))
+    for url in dive_figures.NEWSROOM[ticker](period):
+        try:
+            text = whole_text(get(url))
+        except Exception:  # noqa: BLE001 - the next address, or the next patrol
+            continue
+        if text:
+            return [{'url': url, 'text': text, 'title': f'{ticker} {period} results release (company newsroom)'}]
+    return []
 
 
 def prior_release(previous):

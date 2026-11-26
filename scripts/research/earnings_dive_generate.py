@@ -431,7 +431,8 @@ def company_dive(ticker, release, previous, writer, text, url, period, end, toda
             extra_sources.append({'url': release['report']['url'], 'title': f"{previous['name']} Form {release['report'].get('form', '10-Q')} for {period}",
                                   'location': 'Notes to the financial statements and risk factors'})
     for exhibit in release.get('exhibits') or []:  # the other exhibits of the results filing (a presentation, statements, a letter)
-        extra_sources.append({'url': exhibit['url'], 'title': f"{previous['name']} {period} results, another exhibit of the same filing", 'location': 'Exhibit'})
+        extra_sources.append({'url': exhibit['url'], 'title': exhibit.get('title') or f"{previous['name']} {period} results, another exhibit of the same filing",
+                              'location': 'Results release' if exhibit.get('title') else 'Exhibit'})
     events = []
     for event in release.get('events') or []:  # other 8-Ks of the quarter: a deal, a preliminary result
         found = {**dive_figures.deal(event['text']), **dive_figures.read_event(ticker, event['text'])}

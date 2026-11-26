@@ -177,6 +177,20 @@ class QuarterFilings(unittest.TestCase):
                                            exhibit=lambda *a: (None, None), document=lambda url: 'notice text')
         self.assertEqual(events, [])   # a company whose dive reads no other 6-K
 
+    def test_sk_hynix_newsroom_release_is_read_from_its_own_site(self):
+        tried = []
+        page = b'<html><body>SK hynix Newsroom 3Q26 Financial Results</body></html>'
+        got = patrol.newsroom_release('SKHY', 'Q3 2026', get=lambda url: tried.append(url) or page)
+        self.assertEqual(tried, ['https://news.skhynix.com/en/q3-2026-business-results/'])
+        self.assertIn('3Q26 Financial Results', got[0]['text'])
+
+        def blocked(url):
+            tried.append(url)
+            raise OSError('403')
+        tried.clear()
+        self.assertEqual(patrol.newsroom_release('SKHY', 'Q4 2026', get=blocked), [])   # held, read again at the next patrol
+        self.assertEqual(tried, ['https://news.skhynix.com/en/q4-2026-business-results/', 'https://news.skhynix.com/en/sk-hynix-announces-fy26-financial-results/'])
+
     def test_a_leadership_8k_is_read_from_its_cover_document_for_a_dive_that_reports_it(self):
         sub = filings(('8-K', '2026-11-23T01:00:00.000Z', '5.02,9.01', 'ceo-back'), ('8-K', '2026-11-11T21:30:00.000Z', '5.02', 'ceo-out'), NVDA_8K)
         read = []

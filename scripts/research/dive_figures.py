@@ -667,7 +667,7 @@ def alphabet(t):
     }
 
 
-SPECS = {'CRDO': credo, 'MRVL': marvell, 'AVGO': broadcom, 'AMD': amd, 'ANET': arista, 'PLTR': palantir, 'ALAB': astera, 'LITE': lumentum, 'SNDK': sandisk, 'VRT': vertiv, 'GEV': vernova, 'BE': bloom, 'SKHY': skhynix, 'ARM': arm, 'CRWV': coreweave, 'MSFT': microsoft, 'GOOGL': alphabet}
+SPECS = {'CRDO': credo, 'MRVL': marvell, 'AVGO': broadcom, 'AMD': amd, 'ANET': arista, 'PLTR': palantir, 'ALAB': astera, 'LITE': lumentum, 'SNDK': sandisk, 'VRT': vertiv, 'GEV': vernova, 'BE': bloom, 'ARM': arm, 'CRWV': coreweave, 'MSFT': microsoft, 'GOOGL': alphabet}
 
 
 # ---- foreign issuers whose results come as several exhibits of one 6-K (release, presentation, financial statements) ---------
@@ -825,7 +825,61 @@ def nvidia(docs):
     return out
 
 
-DOC_SPECS = {'TSM': tsmc, 'ASML': asml, 'NBIS': nebius, 'NVDA': nvidia}
+QUARTER_WORDS = {'First': 1, 'Second': 2, 'Third': 3, 'Fourth': 4}
+
+
+def skhynix_docs(docs):
+    """SK hynix: the preliminary-results 6-K (the figures, in millions of won) and the company's own newsroom release of the same quarter
+    (net cash, the long-term agreements, products, capacity; owner, Nov 26: as deep as the hand-made dive, which read that release). The
+    newsroom page is read only when its results table is headed with the 6-K's own quarter ("3Q26 Financial Results")."""
+    u1, t1 = pick(docs, 'Preliminary Results of Operations')
+    u2, t2 = pick(docs, 'SK hynix Newsroom')
+    out = located(u1, skhynix(t1))
+    m = re.search(r'Current Period \((First|Second|Third|Fourth) quarter\(1\) of 20(\d\d)\)', t1)
+    head = f'{QUARTER_WORDS[m.group(1)]}Q{m.group(2)} Financial Results (K-IFRS)' if m else None
+    if not head or t2.count(head) != 1:
+        return out
+    table = between(t2, head, '※')
+    out.update(located(u2, {
+        'newsTable': sentence(table, r'Revenues ([\d,.]+) [\d,.]+ -?\d+% [\d,.]+ -?\d+% Operating Profit ([\d,.]+) [\d,.]+ -?\d+% [\d,.]+ -?\d+% '
+                                     r'Operating Margin (\d+)% (\d+)% -?[\d.]+%p (\d+)% -?[\d.]+%p', (1, 2, 3, 4, 5), unit='text'),
+        'first': sentence(t2, r'Quarterly sales surpass (\d+) trillion won for the (first) time', (1, 2), unit='text'),
+        'netCash': sentence(t2, r'cash and cash equivalents stood at ([\d.]+) trillion won, (up|down) ([\d.]+) trillion won from the end of the previous quarter, '
+                                r'while borrowings (decreased|increased) by ([\d.]+) trillion won to ([\d.]+) trillion won\. As a result, net cash (?:increased|decreased) to ([\d.]+) trillion won',
+                            (1, 2, 3, 4, 5, 6, 7), unit='text'),
+        'products': sentence(t2, r'DRAM results were driven by a significant increase in sales of ([\w ]+?) while (HBM\w*) shipments began in earnest\. In NAND, sales of ([\w -]+?) expanded',
+                             (1, 2, 3), unit='text'),
+        'prices': sentence(t2, r'(prices of key products have risen) on the back of growing demand for AI memory', (1,), unit='text'),
+        'hbm': sentence(t2, r'expects (HBM\w*) to surpass (HBM\w*) in both shipment volume and revenue in the (first|second|third|fourth) quarter', (1, 2, 3), unit='text'),
+        'ltaCustomers': sentence(t2, r'has currently signed LTAs with (\d+) major customers', (1,), unit='text'),
+        'ltaShare': sentence(t2, r'LTA volume secured to date corresponds to more than (\d+)% of total production capacity for (20\d\d) and (20\d\d)', (1, 2, 3), unit='text'),
+        'ltaPricing': sentence(t2, r'a mechanism that reflects (market conditions) within a price range agreed upon with customers', (1,), unit='text'),
+        'investment': sentence(t2, r'Next year, with the ([\w ]+?) entering full-scale operation .{0,120}?investment is expected to (increase significantly)', (1, 2), unit='text'),
+        'fab': sentence(t2, r'ramp up (M\d+\w*) to maximum capacity by the end of the year to increase (HBM\w*) production', (1, 2), unit='text'),
+        'layers': sentence(t2, r'raise the ratio of its (\d+)-layer process to more than (half) of its domestic production capacity', (1, 2), unit='text'),
+        'shortage': sentence(t2, r'demand exceeds supply to persist through (20\d\d)', (1,), unit='text'),
+        'returns': sentence(t2, r'shareholder returns totaling approximately (\d+) trillion won, comprising cash dividends of (\d+) trillion won or more and share repurchases and cancellations of (\d+) trillion won or more',
+                            (1, 2, 3), unit='text'),
+    }))
+    return out
+
+
+def skhynix_newsroom(period):
+    """The newsroom release of a quarter ("Q3 2026"): its usual address, and the year-end one's."""
+    m = re.match(r'Q([1-4]) (20(\d\d))', period or '')
+    if not m:
+        return []
+    urls = [f'https://news.skhynix.com/en/q{m.group(1)}-{m.group(2)}-business-results/']
+    if m.group(1) == '4':
+        urls.append(f'https://news.skhynix.com/en/sk-hynix-announces-fy{m.group(3)}-financial-results/')
+    return urls
+
+
+# a company's own results release on its own site, read with the filing when the hand-made dive was built from it (SK hynix files only a
+# preliminary table with the SEC): {ticker: period -> candidate addresses}
+NEWSROOM = {'SKHY': skhynix_newsroom}
+
+DOC_SPECS = {'TSM': tsmc, 'ASML': asml, 'NBIS': nebius, 'NVDA': nvidia, 'SKHY': skhynix_docs}
 
 
 def read_docs(ticker, docs):
