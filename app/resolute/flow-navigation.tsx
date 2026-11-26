@@ -12,7 +12,7 @@ const steps=[
 /** `wide` (PC, owner Nov 25): one row, the way back on the left and the next step on the right, with `extra` just before it. */
 export default function FlowNavigation({step,locale,wide=false,extra}:{step:number;locale:DiagnosisLocale;wide?:boolean;extra?:ReactNode}) {
  const en=locale==="en",previous=steps[step-2],next=steps[step];
- const forward=next ? <Link href={next[0]} className={styles.primary} prefetch={false}>{next[en?2:1]}{en?" →":"へ進む →"}</Link> : <Link href="/resolute/notebook" className={styles.primary} prefetch={false}>{en?"Finish my rulebook":"マイルールを仕上げる"}</Link>;
+ const forward=next ? <Link href={next[0]} className={styles.primary} prefetch={false}>{next[en?2:1]}{en?" →":"へ進む →"}</Link> : <Link href="/resolute/notebook" className={styles.primary} prefetch={false}>{en?"Finish my rulebook":"マイルールを仕上げる"}{wide?" →":""}</Link>;
  const back=previous ? <Link href={previous[0]} className={styles.ghost} prefetch={false}>{en?"← "+previous[2]:"← "+previous[1]+"へ戻る"}</Link>:null;
  if(wide) return <nav className={pc.flow} aria-label={en?"Continue through RESOLUTE":"次のツールへ"}>{back??<span />}<div className={pc.flowEnd}>{extra}{forward}</div></nav>;
  return <NextBack label={en?"Continue through RESOLUTE":"次のツールへ"} next={forward} back={back} />;

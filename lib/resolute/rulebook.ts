@@ -54,5 +54,16 @@ export function rulebookChapters(plan:PlanInput,locale:DiagnosisLocale):BookChap
  const rallyAction:Record<string,string>={hold:t("大きく上がっても保有を続けると回答している。毎日の値動きだけで投資期間を短くしない。","You chose to keep holding after a strong rise. Daily price moves alone do not shorten your investment horizon."),sell_some:t("大きく上がったら一部を売ると回答している。いつどれだけ売るかはまだこの診断では決めていない。勢いだけで決めず先に条件を整理する。","You chose to sell some after a strong rise. The quiz has not set when or how much. Set those conditions before you get caught up in the rally."),buy_more:t("大きく上がったら買い増したいと回答している。上昇していることだけを理由に1銘柄の上限を超えない。","You chose to add after a strong rise. Rising prices alone do not override your limit per stock."),undecided:t("上昇したときの行動はまだ決めていない。決まっていないことを周りの利益やニュースの勢いに任せない。","Your response to a rally is not decided yet. Don’t let other people’s gains or the latest headlines decide for you.")};
  const rally:BookChapter={id:"rally",kicker:"07 / WHEN THE MARKET RISES",title:t("上昇した日にも開く","Read this on an up day, too"),lead:t("利益が出ても自分のルールを小さくしない","My rules still matter when I’m ahead"),paragraphs:[rallyAction[a.q15??"undecided"]??rallyAction.undecided,a.q14==="often"||a.q14==="once"?t("乗り遅れたくて買った経験を覚えておく。注文する前に今の金額が予定していた配分かを確認する。","Remember the times you bought to avoid missing out. Before ordering, check whether the amount still fits your planned allocation."):t("値上がり後の保有比率を確かめる。買い足さなくても1銘柄への偏りは変わる。","Check the holding’s share after a rise. Concentration can change even without another purchase.")],metrics:[{label:t("守る上限","The limit I keep"),value:`${plan.perStockCapPct}%`,detail:t("1銘柄あたり","Per stock")},...(profit?[{label:profit.item,value:profit.rule,text:true}]:[]) ]};
  const closing:BookChapter={id:"pledge",kicker:"08 / RETURN TO YOUR RULES",title:t("迷ったらこの一冊へ","When in doubt, return here"),lead:t("相場の気分より自分の約束を","My own rules before the market’s mood"),paragraphs:[t("いまの値動きは決めたラインに届いているか。買わない条件や手を止める条件に当てはまっていないか。行動する前にこの2つを確かめる。","Has the move reached a level I chose? Do any hold-off or pause conditions apply? Check both before acting."),t("ルールを守ることと変化を無視することは違う。暮らしや投資の前提が変わったら落ち着いた時間に見直す。","Keeping a rule does not mean ignoring change. If life or the investment case changes, review the rule at a calm moment.")],metrics:[],closing:t("マイルールを定めれば\n暴落も上昇も怖くない","With rules of your own,\ncrashes and rallies lose their grip.")};
- return [portrait,habits,foundation,decline,exit,...buys,...conditions,rally,closing];
+ return numberChapters([portrait,habits,foundation,decline,exit,...buys,...conditions,rally,closing]);
+}
+/** The chapter a page belongs to: a chapter that runs over several pages ("purchases-1", "hold-off-1") keeps its first page's. */
+export function chapterGroup(chapter:Pick<BookChapter,"id">):string {return chapter.id.replace(/-\d+$/,"");}
+/** Chapter numbers run 01, 02, 03… in the order the chapters appear, the same in Japanese and English (owner, Nov 25:
+ * two chapters were both 01). Pages that continue a chapter keep its number. */
+export function numberChapters(chapters:BookChapter[]):BookChapter[] {
+ const order:string[]=[];
+ return chapters.map(chapter=>{
+  const group=chapterGroup(chapter);if(!order.includes(group))order.push(group);
+  return {...chapter,kicker:`${String(order.indexOf(group)+1).padStart(2,"0")} / ${chapter.kicker.replace(/^\d+\s*\/\s*/,"")}`};
+ });
 }

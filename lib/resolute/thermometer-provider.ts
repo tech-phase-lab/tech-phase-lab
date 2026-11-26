@@ -8,6 +8,12 @@ export type ThermometerProviderConfig = { enabled: boolean; apiKey?: string; ros
 type ProviderFailure = { status: 'unavailable'; reason: 'not-configured' | 'provider-error' | 'invalid-data' };
 const CHUNK = 10;
 export const SHOCK_SESSIONS = 10;
+/** About three months of sessions for the home chart line (owner, Nov 25: 01 ホーム). */
+export const TRAIL_SESSIONS = 63;
+/** The basket's level for the last TRAIL_SESSIONS sessions up to the confirmed session, rounded to 0.01 (same data, no extra calls). */
+export function basketTrail(levels: readonly DailyClose[], session: string): DailyClose[] {
+  return levels.filter(bar => bar.date <= session).slice(-TRAIL_SESSIONS).map(bar => ({ date: bar.date, close: Math.round(bar.close * 100) / 100 }));
+}
 export type ShockSession = { nas100: ShockReading | null; sox: ShockReading | null; fear: FearReading | null };
 /** Sessions for which each rostered stock's own move is kept (single-company news, owner Nov 25). Stored only, never served. */
 export const STOCK_SESSIONS = 3;
@@ -86,5 +92,6 @@ export async function collectThermometer(config: ThermometerProviderConfig, conf
     for (const [ticker, bars] of Object.entries(allSeries)) { const s = stockShock(bars, date); if (s) day[ticker] = s; }
     if (Object.keys(day).length) shockStocks[date] = day;
   }
-  return { asOf: confirmedSession, nas100, sox, vix, moves, shock, shockStocks, missing: [...new Set(missing)].sort() };
+  const trail = { nas100: 'levels' in large ? basketTrail(large.levels, confirmedSession) : null, sox: 'levels' in chips ? basketTrail(chips.levels, confirmedSession) : null };
+  return { asOf: confirmedSession, nas100, sox, vix, moves, shock, shockStocks, trail, missing: [...new Set(missing)].sort() };
 }
