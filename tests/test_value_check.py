@@ -18,6 +18,11 @@ def facts(revenue_rows, income_rows=None, shares=None):
                       'dei': {'EntityCommonStockSharesOutstanding': {'units': {'shares': shares or []}}}}}
 
 
+def quarterly_shares(first, value, years=6):
+    """A share count filed every quarter from a little before `first` (an ordinal day): no count is ever MAX_SHARE_AGE old."""
+    return [{'end': first - 10 + q * 91, 'value': value} for q in range(years * 4 + 1)]
+
+
 def trading_days(first, count):
     out, day = [], date.fromisoformat(first)
     while len(out) < count:
@@ -53,6 +58,59 @@ class TwelveMonths(unittest.TestCase):
     def test_a_share_count_off_by_a_thousand_in_one_filing_is_left_out(self):
         points = [{'end': 1, 'value': 90e6}, {'end': 2, 'value': 89e9}, {'end': 3, 'value': 89e6}, {'end': 4, 'value': 180e6}]
         self.assertEqual([p['end'] for p in vc.clean_shares(points)], [1, 3, 4])  # a real doubling (a split) stays
+
+    def test_multi_class_company_whose_cover_counts_stop_uses_its_weighted_count(self):
+        # Workday, Comcast, Accenture (owner's check, Nov 26): the company facts' cover counts stop in 2009-2018 (later ones are filed by
+        # class only). The diluted weighted count of each later period fills in, instead of a count years old.
+        data = facts([], shares=[{'val': 220, 'end': '2018-11-30', 'filed': '2018-12-01', 'form': '10-Q', 'accn': 'x'}])
+        data['facts']['us-gaap']['WeightedAverageNumberOfDilutedSharesOutstanding'] = {'units': {'shares': [
+            fact(222, '2018-11-01', '2019-01-31', '2019-03-01'),  # within COVER_GAP of a cover count: the cover count stays
+            fact(260, '2026-08-01', '2026-10-31', '2026-11-25'), fact(0.26, '2026-08-01', '2026-10-31', '2026-11-25')]}}
+        points = vc.share_points(data)
+        self.assertEqual([(date.fromordinal(p['end']).isoformat(), p['value'], p['kind']) for p in points],
+                         [('2018-11-30', 220, 'cover'), ('2026-10-31', 260, 'weighted')])  # of two counts in one filing, the larger
+
+    def test_weighted_counts_not_on_the_cover_basis_are_left_out(self):
+        # Astera Labs / Credo: the pre-IPO weighted count (a third of the listed shares); Nutanix: counts filed a thousand times too small.
+        # A count from before a split is on the cover's basis once brought to today's shares, and stays.
+        points = [{'end': 10, 'value': 15.0, 'kind': 'weighted'},    # before a 10-for-1 split: 150 on today's basis, kept
+                  {'end': 20, 'value': 0.015, 'kind': 'weighted'},   # a thousand times too small
+                  {'end': 30, 'value': 50.0, 'kind': 'weighted'},    # pre-IPO: a third of the listed shares
+                  {'end': 40, 'value': 150.0, 'kind': 'cover'},
+                  {'end': 50, 'value': 400.0, 'kind': 'weighted'}]   # filling a gap after the covers: not compared
+        split = lambda day: 10.0 if day < 25 else 1.0  # noqa: E731 - raw / adjusted close on a day
+        self.assertEqual([p['end'] for p in vc.same_basis(points, split)], [10, 40, 50])
+        self.assertEqual(vc.same_basis([{'end': 1, 'value': 5.0, 'kind': 'weighted'}], split)[0]['value'], 5.0)  # no cover: as before
+
+    def test_a_share_count_years_old_is_not_used(self):
+        # GoDaddy files no share count for 2017-2023 in the company facts: its 2016 count (half of today's) is not used for those years.
+        days = trading_days('2021-01-04', 900)
+        first = date.fromisoformat(days[0]).toordinal()
+        closes = [(d, 10.0, 10.0) for d in days]
+        record = {'shares': [{'end': first - 1500, 'value': 80.0, 'kind': 'cover'}, {'end': first + 700, 'value': 150.0, 'kind': 'cover'}],
+                  'revenue': [{'end': first - 30, 'filed': first - 10, 'value': 100.0}] +
+                             [{'end': first + 60 + q * 91, 'filed': first + 80 + q * 91, 'value': 100.0} for q in range(14)],
+                  'income': []}
+        ratios = vc.daily_ratios(closes, record)
+        stale = [r for r in ratios if r[0] < first + 700]
+        self.assertTrue(stale and all(r[2] is None for r in stale))  # no ratios rather than a seven-year-old count
+        self.assertAlmostEqual(ratios[-1][2], 15.0)  # 10 x 150 / 100
+        recent = {**record, 'shares': [{'end': first - 300, 'value': 80.0, 'kind': 'cover'}]}
+        self.assertAlmostEqual(vc.daily_ratios(closes, recent)[0][2], 8.0)  # a count under MAX_SHARE_AGE old is used
+
+    def test_records_of_the_earlier_shape_are_read_again(self):
+        db = sqlite3.connect(':memory:')
+        vc.schema(db)
+        now = datetime(2026, 11, 26, 23, 0, tzinfo=timezone.utc)
+        for ticker, payload in (('OLD', {'revenue': [], 'shares': []}), ('NEW', {'revenue': [], 'shares': [], 'v': vc.FACTS_VERSION}),
+                                ('ERR', {'error': 'no-sec-data'})):
+            db.execute('INSERT INTO value_check_facts(ticker,fetched_at,payload) VALUES(?,?,?)', (ticker, now.timestamp() - 60, json.dumps(payload)))
+        read, checks = [], iter(range(1, 100))
+        universe = {'tech': ['OLD', 'NEW', 'ERR'], 'all': ['OLD', 'NEW', 'ERR'], 'companies': {t: {'cik': 1, 'en': t} for t in ('OLD', 'NEW', 'ERR')}}
+        vc.run_once(db, universe=universe, transport=lambda path, params: {'current_usage': 0} if path == 'api_usage' else {}, sec=lambda cik: read.append(cik) or None, sec_pause=0, now=now,
+                    sleep=lambda s: None, should_stop=lambda: next(checks) > 3)  # stops after the three company-facts checks
+        self.assertEqual(len(read), 1)  # only OLD: NEW is a day old, ERR keeps its weekly read
+        db.close()
 
     def test_revenue_takes_the_widest_name(self):
         rows = {'facts': {'us-gaap': {
@@ -121,7 +179,7 @@ class Snapshot(unittest.TestCase):
         def record(revenue_now=200.0, income=10.0):
             # revenue reported each quarter, growing; known from the start of the price history
             revenue = [{'end': first - 400 + q * 91, 'filed': first - 380 + q * 91, 'value': 100.0 + q * (revenue_now - 100.0) / 25} for q in range(26)]
-            return {'revenue': revenue, 'income': [{**p, 'value': income} for p in revenue], 'shares': [{'end': first - 10, 'value': 1.0}]}
+            return {'revenue': revenue, 'income': [{**p, 'value': income} for p in revenue], 'shares': quarterly_shares(first, 1.0)}
 
         # UP falls steadily, so today is its cheapest day (100); DOWN rises, so today is its dearest (0).
         up = [(d, 100.0 - i * 0.05, 100.0 - i * 0.05) for i, d in enumerate(days)]
@@ -191,7 +249,7 @@ class ForeignAndShort(unittest.TestCase):
         days = trading_days('2025-06-02', 300)
         first = date.fromisoformat(days[0]).toordinal()
         revenue = [{'end': first - 400 + q * 91, 'filed': first - 380 + q * 91, 'value': 100.0 + q} for q in range(12)]
-        record = {'shares': [{'end': first - 5, 'value': 1.0}], 'income': [{**p, 'value': 5.0} for p in revenue], 'revenue': revenue}
+        record = {'shares': quarterly_shares(first, 1.0), 'income': [{**p, 'value': 5.0} for p in revenue], 'revenue': revenue}
         closes = [(d, 100.0 - i * 0.1, 100.0 - i * 0.1) for i, d in enumerate(days)]
         row = vc.evaluate('NEW', closes, record, days[-1])
         self.assertEqual(row['period'], 'listed')
@@ -207,7 +265,7 @@ class ForeignAndShort(unittest.TestCase):
         closes = [(d, 50.0, 50.0) for d in days]
 
         def row(income_of):
-            record = {'shares': [{'end': first - 10, 'value': 100.0}], 'revenue': revenue,
+            record = {'shares': quarterly_shares(first, 100.0), 'revenue': revenue,
                       'income': [{**p, 'value': income_of(q)} for q, p in enumerate(revenue)]}
             return vc.evaluate('X', closes, record, days[-1])
 
