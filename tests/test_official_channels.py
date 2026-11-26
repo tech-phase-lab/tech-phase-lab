@@ -36,7 +36,7 @@ class SandiskNewsroomBesideSec(unittest.TestCase):
         newsroom = monitor.monitoring_sources("SNDK", scope="supplemental")[0]
         links = monitor.discover_links(SEARCH.read_bytes(), "application/json", "SNDK", newsroom)
         self.assertEqual(links[RESULTS], {"title": "Sandisk Reports Fiscal First Quarter 2027 Financial Results",
-                                          "publishedOn": "2026-10-29"})
+                                          "publishedOn": "2026-10-29", "publishedAt": "2026-10-29T13:30:00+00:00"})
         self.assertEqual(len(links), 4)
         self.assertTrue(all(monitor.article_url(url, "SNDK") == url for url in links))
 

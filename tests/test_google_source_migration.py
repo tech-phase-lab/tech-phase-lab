@@ -7,6 +7,7 @@ These tests make no network requests and do not invoke a generation provider.
 from copy import deepcopy
 from datetime import datetime, timezone
 import json
+from email.utils import parsedate_to_datetime
 from pathlib import Path
 import sys
 import tempfile
@@ -80,8 +81,10 @@ class GoogleDiscoveryMigrationTests(unittest.TestCase):
                      'Unapproved host', 'Fri, 02 Oct 2026 15:00:00 GMT', '2026-10-02')
         links = monitor.feed_links(rss([*GOOGLE_ITEMS, malicious]), 'GOOGL')
         self.assertEqual(set(links), {item[0] for item in GOOGLE_ITEMS})
-        for url, title, _, date in GOOGLE_ITEMS:
-            self.assertEqual(links[url], {'title': title, 'publishedOn': date})
+        for url, title, stamp, date in GOOGLE_ITEMS:
+            # The feed's stated clock time is kept beside its date (owner, Nov 26).
+            published_at = parsedate_to_datetime(stamp).astimezone(timezone.utc).isoformat()
+            self.assertEqual(links[url], {'title': title, 'publishedOn': date, 'publishedAt': published_at})
 
     def test_rule_change_invalidates_pre_migration_cache(self):
         old_provider = deepcopy(monitor.PROVIDERS['GOOGL'])
@@ -124,7 +127,7 @@ class GoogleDiscoveryMigrationTests(unittest.TestCase):
                 self.assertEqual([item['url'] for item in feed], [url])
                 self.assertEqual(feed[0]['publishedOn'], published_on)
                 self.assertEqual(datetime.fromisoformat(feed[0]['observedAt']), NOW)
-                self.assertNotIn('publishedAt', feed[0])
+                self.assertEqual(feed[0]['publishedAt'], '2026-09-30T20:00:00+00:00')
                 self.assertNotIn('test evidence', json.dumps(feed))
                 saved = db.execute('SELECT * FROM sources WHERE url=?', (url,)).fetchone()
                 for field, value in (('status', 'held'), ('sha256', 'unfetched-revision'),
