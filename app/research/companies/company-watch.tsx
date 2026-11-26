@@ -6,6 +6,7 @@ import CompanySwitcher, {type CompanyOption} from './company-switcher';
 import type { WatchView } from '@/lib/research/company-watch';
 import type { CompanyDiveView } from '@/lib/research/company-dive';
 import type { NewerReport } from '@/lib/research/dive-staleness';
+import type { LiveRelease } from '@/lib/research/company-earnings-live';
 import type { Copy } from '@/lib/research/data';
 import QuoteCard from '../price/quote-card';
 import CompanyActivity from './company-activity';
@@ -15,7 +16,7 @@ import ProTag from '../pro-experience/pro-tag';
 
 type Facts={ticker:string;name:string;quoteTicker:string};
 /** A company page: the reviewed deep dive from lib/research/dives/<TICKER>.json when it exists, else the legacy cards (the fallback). */
-export default function CompanyWatch({companies,watch,dive,titles,stale=null,ownerNotice=false}:{companies:CompanyOption[];watch:WatchView|null;dive?:CompanyDiveView|null;titles:Copy[];stale?:NewerReport|null;ownerNotice?:boolean}) {
+export default function CompanyWatch({companies,watch,dive,live=null,titles,stale=null,ownerNotice=false}:{companies:CompanyOption[];watch:WatchView|null;dive?:CompanyDiveView|null;live?:LiveRelease|null;titles:Copy[];stale?:NewerReport|null;ownerNotice?:boolean}) {
  const [lang,setLang]=useResearchLanguage();
  const facts:Facts=(dive??watch)!;const name=`${facts.name}（${facts.ticker}）`;
  return <ResearchToolShell lang={lang} setLang={setLang} title={name} description="" showTools={false} showHeading={false}>
@@ -23,7 +24,7 @@ export default function CompanyWatch({companies,watch,dive,titles,stale=null,own
   <header className={styles.heading}><h1>{name}</h1></header>
   <QuoteCard ticker={facts.quoteTicker||facts.ticker} variant="gauge" from="watch" name={facts.name}/>
   <CompanyActivity key={facts.ticker} ticker={facts.ticker} lang={lang}/>
-  {dive?<DiveEarnings view={dive} lang={lang} stale={stale} ownerNotice={ownerNotice}/>:watch&&<WatchEarnings watch={watch} titles={titles} lang={lang} stale={stale} ownerNotice={ownerNotice}/>}
+  {dive?<DiveEarnings view={dive} live={live} lang={lang} stale={stale} ownerNotice={ownerNotice}/>:watch&&<WatchEarnings watch={watch} titles={titles} lang={lang} stale={stale} ownerNotice={ownerNotice}/>}
  </ResearchToolShell>;
 }
 const day=(iso:string,lang:'ja'|'en')=>{const [y,m,d]=iso.split('-').map(Number);return lang==='ja'?`${y}年${m}月${d}日`:new Date(Date.UTC(y,m-1,d)).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric',timeZone:'UTC'});};
@@ -36,17 +37,21 @@ function LatestHeading({period,stale,ownerNotice,ticker,lang}:{period:string;sta
   {stale&&ownerNotice&&<p className={styles.dates}>{ja?`オーナー確認：lib/research/dives/${ticker}.json を ${stale.period??'最新の四半期'} に更新してください。${stale.source==='calendar'?'決算カレンダー':'SEC決算データ'}で確認しました。`:`Owner check: update lib/research/dives/${ticker}.json to ${stale.period??'the latest quarter'} (seen in the ${stale.source==='calendar'?'earnings calendar':'SEC results data'}).`}</p>}
  </>;
 }
-function DiveEarnings({view,stale,ownerNotice,lang}:{view:CompanyDiveView;stale:NewerReport|null;ownerNotice:boolean;lang:'ja'|'en'}){
+/** `live`: a newer quarter read from the company's release (lib/research/company-earnings-live.ts) for the top of the section; the
+ * deep dive below keeps the file's quarter, which its own header names. */
+function DiveEarnings({view,live,stale,ownerNotice,lang}:{view:CompanyDiveView;live:LiveRelease|null;stale:NewerReport|null;ownerNotice:boolean;lang:'ja'|'en'}){
  const ja=lang==='ja';const paid=view.dive;
+ const top=live?{period:live.period,releasedOn:live.releasedOn,periodEnd:null,tiles:live.tiles}:view;
+ const sources=live?[{url:live.sourceUrl,title:live.publisher},...view.sources.filter(s=>s.url!==live.sourceUrl)]:view.sources;
  return <>
-  <LatestHeading period={view.period} stale={stale} ownerNotice={ownerNotice} ticker={view.ticker} lang={lang}/>
-  <p className={styles.dates}>{ja?'決算発表':'Released'} {view.releasedOn} <span>{view.period} · {ja?'決算期末':'Period ended'} {view.periodEnd}</span></p>
-  <section className={styles.numbers} aria-label={ja?'今回の決算':'Quarterly results'}>{view.tiles.map(t=><div key={t.label.en}><span>{t.label[lang]}</span><strong>{t.value[lang]}</strong><small>{t.note[lang]}</small></div>)}</section>
+  <LatestHeading period={top.period} stale={stale} ownerNotice={ownerNotice} ticker={view.ticker} lang={lang}/>
+  <p className={styles.dates}>{ja?'決算発表':'Released'} {top.releasedOn} <span>{top.period}{top.periodEnd?` · ${ja?'決算期末':'Period ended'} ${top.periodEnd}`:''}</span></p>
+  <section className={styles.numbers} aria-label={ja?'今回の決算':'Quarterly results'}>{top.tiles.map(t=><div key={t.label.en}><span>{t.label[lang]}</span><strong>{t.value[lang]}</strong><small>{t.note[lang]}</small></div>)}</section>
   <EarningsDive lang={lang} name={view.name} ticker={view.ticker} unlocked={!!paid} failed={false} history={paid?.history??[]}
    live={{period:view.period,releasedOn:view.releasedOn,dive:paid?{numbers:paid.numbers,summary:paid.summary,summaryAt:null,failed:false}:null}}
    currency={view.currency} periodQuarter={view.periodQuarter} reviewedOn={view.reviewedOn} marginLabel={view.labels.margin} epsLabel={view.labels.eps}/>
   {paid&&view.labels.guidanceNote&&<p className={styles.dates}>{ja?'次期の見通しの算出方法（会社資料の記載・英語）':'How the outlook figures were derived'}：{view.labels.guidanceNote}</p>}
-  <details className={styles.sources}><summary>{ja?'資料・更新について':'Sources & updates'}</summary><p>{ja?'数値・解説の資料確認日':'Figures and analysis reviewed'}：{view.reviewedOn}。{ja?'数字はすべて会社の公式決算資料から引用し、出典の文言と照合しています。':'Every figure is taken from the company\'s official results materials and checked against the quoted source text.'}</p>{view.sources.map(s=><p key={s.url}><a href={s.url} target="_blank" rel="noreferrer">{s.title} ↗</a></p>)}<p>{ja?`金額の単位は${view.currency==='USD'?'ドル':view.currency==='EUR'?'ユーロ':view.currency==='TWD'?'台湾ドル':'韓国ウォン'}です。実績と会社見通しを区別しています。買い・売りの判定は行っていません。`:`Amounts are in ${view.currency}. Actual results and company guidance are shown separately. No buy or sell rating is assigned.`}</p></details>
+  <details className={styles.sources}><summary>{ja?'資料・更新について':'Sources & updates'}</summary><p>{ja?'数値・解説の資料確認日':'Figures and analysis reviewed'}：{view.reviewedOn}。{ja?'数字はすべて会社の公式決算資料から引用し、出典の文言と照合しています。':'Every figure is taken from the company\'s official results materials and checked against the quoted source text.'}</p>{sources.map(s=><p key={s.url}><a href={s.url} target="_blank" rel="noreferrer">{s.title} ↗</a></p>)}<p>{ja?`金額の単位は${view.currency==='USD'?'ドル':view.currency==='EUR'?'ユーロ':view.currency==='TWD'?'台湾ドル':'韓国ウォン'}です。実績と会社見通しを区別しています。買い・売りの判定は行っていません。`:`Amounts are in ${view.currency}. Actual results and company guidance are shown separately. No buy or sell rating is assigned.`}</p></details>
  </>;
 }
 /** The latest results and the earnings deep dive (also shown by the PRO feature tour's fixed sample). */

@@ -280,7 +280,8 @@ class ResearchServiceTests(unittest.TestCase):
             # Nov 22: the ownership-data clock (returns at once unless OWNERSHIP_DATA_ENABLED=true).
             # Nov 22: the 割安判別ツール daily run.
             # Nov 23: the official-channel reachability probe (idle unless OFFICIAL_CHANNEL_PROBE_ENABLED=true).
-            self.assertEqual(len(observed), 32 + app.translation_workers)
+            # Nov 26: the 監視22銘柄 earnings patrol (returns at once when EARNINGS_PATROL=false).
+            self.assertEqual(len(observed), 33 + app.translation_workers)
             self.assertTrue(all(observed))
 
     def test_release_watch_alerts_from_the_public_payload_and_reports_in_health(self):
