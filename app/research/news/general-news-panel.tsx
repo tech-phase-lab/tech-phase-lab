@@ -20,7 +20,7 @@ import styles from "./general-news.module.css";
 
 import { takeNewsStartup } from "@/lib/research/news-startup";
 import { publishNews } from "@/lib/research/news-snapshot";
-import FeedPagination from "./feed-pagination";
+import FeedPagination, { turnPageInPlace } from "./feed-pagination";
 import TimelineRow from "./timeline-row";
 import NewsStory from "./news-story";
 import OriginalPreviewCard from "./original-preview-card";
@@ -208,7 +208,7 @@ export default function GeneralNewsPanel({ lang, officialOnly = false, generalOn
       {receivedAt && <p className={styles.note}>{lang === "ja" ? "画面取得" : "Fetched"} {format(receivedAt)} · {lang === "ja" ? `約${NEWS_POLL_INTERVAL_MS / 1000}秒ごとに更新` : `Refreshes about every ${NEWS_POLL_INTERVAL_MS / 1000} seconds`}</p>}
     </>}
     </>}
-    <FeedPagination page={current} pages={pages} ja={lang === "ja"} onChange={n => { setPage(n); panel.current?.scrollIntoView({ block: "start", behavior: "instant" }); }} />
+    <FeedPagination page={current} pages={pages} ja={lang === "ja"} onChange={n => { turnPageInPlace(panel.current?.closest<HTMLElement>("#home-news") ?? panel.current, panel.current); setPage(n); }} />
     {!generalOnly && <Link className={styles.seeAll} href="/research/general-news">{lang === "ja" ? "注目トピックですべて見る" : "See all in Top Topics"} <span aria-hidden="true">›</span></Link>}
   </section>;
 }
