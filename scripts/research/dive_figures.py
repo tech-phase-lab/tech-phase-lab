@@ -12,7 +12,7 @@ from dataclasses import dataclass, field
 from decimal import Decimal
 import re
 
-CELL = re.compile(r'(?:\$\s?)?\(?[+-]?\$?\s?\d[\d,]*(?:\.\d+)?\)?(?:\s?%|\sppts?\b)?|—')
+CELL = re.compile(r'(?:\$\s?)?\(?[+-]?\$?\s?\d[\d,]*(?:\.\d+)?\)?(?:\s?%|\s(?:ppts?|bps)\b)?|—')
 
 
 @dataclass
@@ -32,7 +32,7 @@ class Figure:
 
 
 def _number(cell):
-    text = cell.strip().replace('$', '').replace('%', '').replace('ppts', '').replace('ppt', '').replace(',', '').replace(' ', '').lstrip('+')
+    text = cell.strip().replace('$', '').replace('%', '').replace('ppts', '').replace('ppt', '').replace('bps', '').replace(',', '').replace(' ', '').lstrip('+')
     if text == '—':
         return Decimal(0), '0'
     negative = text.startswith('(') and text.endswith(')')
@@ -312,7 +312,36 @@ def astera(t):
     }
 
 
-SPECS = {'CRDO': credo, 'MRVL': marvell, 'AVGO': broadcom, 'AMD': amd, 'ANET': arista, 'PLTR': palantir, 'ALAB': astera}
+def lumentum(t):
+    gaap, non, mix = 'GAAP Results', 'Non-GAAP Results', 'Net Revenue by Product Type'
+    bs, rec = 'CONDENSED CONSOLIDATED BALANCE SHEETS', 'RECONCILIATION OF GAAP MEASURES TO NON-GAAP MEASURES'
+    return {   # this quarter, the previous quarter, a year earlier, then the two changes
+        'revenue': row(t, 'Net revenue', 3, gaap, non, width=5),
+        'gmGaap': row(t, 'GAAP gross margin', 3, gaap, non, unit='percent', width=5),
+        'opMarginGaap': row(t, 'GAAP operating margin', 3, gaap, non, unit='percent', width=5),
+        'gm': row(t, 'Non-GAAP gross margin', 3, non, mix, unit='percent', width=5),
+        'opMargin': row(t, 'Non-GAAP operating margin', 3, non, mix, unit='percent', width=5),
+        'components': row(t, 'Components', 6, mix, 'Systems'),       # this quarter, % of revenue, previous quarter, a year earlier, changes
+        'systems': row(t, 'Systems', 6, mix, 'Total'),
+        'eps': row(t, 'Net income per share on non-GAAP basis', 3, rec, 'Shares used in per share calculation', unit='per-share'),
+        'netIncome': row(t, 'Net income (loss) on GAAP basis', 3, rec, 'Net income on non-GAAP basis'),
+        'debtLoss': row(t, 'Loss on debt extinguishment', 3, 'Total other income (expense), net on GAAP basis', 'Inducement expense'),
+        'cashChange': sentence(t, r'held \$([\d.]+) billion in total cash, cash equivalents, and short-term investments at the end of the [^,]{0,80}, a (decrease|increase) of \$([\d.,]+) million',
+                               (1, 2, 3), unit='text'),
+        'ppe': row(t, 'Property, plant and equipment, net', 2, bs, 'Operating lease'),
+        'inventories': row(t, 'Inventories', 2, bs, 'Prepayments'),
+        'receivables': row(t, 'Accounts receivable, net', 2, bs, 'Accrued accounts receivable'),
+        'debtCurrent': row(t, 'Current portion of long-term debt', 2, bs, 'Operating lease liabilities, current'),
+        'leaders': sentence(t, r'with ([a-z ]+?) and ([a-z ]+?) \((OCS)\) being the leading contributors', (1, 2, 3), unit='text'),
+        'win': sentence(t, r'secured our (first|second|third|fourth) major (NPO/CPO) win, backed by purchase commitments exceeding \$([\d.]+) billion', (1, 2, 3), unit='text'),
+        'sequential': sentence(t, r'we anticipate adding approximately \$([\d,]+) million in sequential growth', (1,), unit='text'),
+        'guidanceRevenue': sentence(t, r'Net revenue in the range of \$([\d.]+) billion to \$([\d.]+) billion', (1, 2), multipliers=[1000, 1000]),
+        'guidanceOpMargin': sentence(t, r'Non-GAAP operating margin of ([\d.]+)% to ([\d.]+)%', (1, 2), unit='percent'),
+        'guidanceEps': sentence(t, r'Non-GAAP diluted earnings per share of \$([\d.]+) to \$([\d.]+)', (1, 2), unit='per-share'),
+    }
+
+
+SPECS = {'CRDO': credo, 'MRVL': marvell, 'AVGO': broadcom, 'AMD': amd, 'ANET': arista, 'PLTR': palantir, 'ALAB': astera, 'LITE': lumentum}
 
 
 # ---- foreign issuers whose results come as several exhibits of one 6-K (release, presentation, financial statements) ---------
