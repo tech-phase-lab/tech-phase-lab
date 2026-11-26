@@ -23,7 +23,7 @@ export default function ResoluteIdentity({ simulation=false, notification, extra
  const sessionId=isLoaded ? loadedSession : known;
  if(extra==="home")return <HomeScreen snapshot={thermometerSnapshot} key={sessionId ?? "signed-out"} identityReady={isLoaded}/>;
  if(extra==="wall")return <WallScreen key={sessionId ?? "signed-out"} identityReady={isLoaded}/>;
- if(extra==="tonight")return <TonightScreen key={sessionId ?? "signed-out"} identityReady={isLoaded}/>;
+ if(extra==="tonight")return <TonightScreen key={sessionId ?? "signed-out"} identityReady={isLoaded} snapshot={thermometerSnapshot}/>;
  if(extra==="news")return <NewsScreen key={sessionId ?? "signed-out"} identityReady={isLoaded}/>;
  // Session replacement discards all private answers and in-flight writes.
  if(extra==="notebook")return <NotebookScreen key={sessionId ?? "signed-out"} identityReady={isLoaded}/>;

@@ -1,4 +1,5 @@
 import type { Temperature, ThermometerIndex } from './thermometer.ts';
+import type { BigDrop, SimilarHistory } from './similar-days.ts';
 
 export type ThermometerSnapshot = {
  asOf: string;
@@ -12,6 +13,10 @@ export type ThermometerSnapshot = {
  /** About three months of each basket's daily level up to asOf (home chart line, Nov 25). Absent on older snapshots. */
  trail?: {nas100: {date: string; close: number}[] | null; sox: {date: string; close: number}[] | null};
  shock?: Record<string, {nas100: ShockReadingView | null; sox: ShockReadingView | null; fear: {date: string; level: number; previousLevel: number} | null}>;
+ /** 今夜のひと息「今日と似た日」(Nov 25): days in the past ten years that moved like asOf, per basket (similar-days.ts). */
+ history?: {nas100: SimilarHistory | null; sox: SimilarHistory | null};
+ /** The past ten years' big falls and the time each took to recover (first open of 今夜のひと息). */
+ drops?: {nas100: BigDrop[] | null; sox: BigDrop[] | null};
 };
 export type DailyMoveReading = {date: string; previousDate: string; changePercent: number};
 export type ShockReadingView = DailyMoveReading & {typicalPercent: number; up: number; down: number; total: number};

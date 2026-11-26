@@ -37,8 +37,8 @@ test("変えないもの: PRO card copy, the LP's 「もう暴落は怖くない
   // Diagnosis: the drop % is the reader's choice or their own number.
   assert.equal(sha("../lib/resolute/diagnosis-questions-ja.ts"), "a961e67a5c46ea1d687e760999e92ed2be585209eb6c9facf7aa04589cfcc776");
   assert.ok(read("../lib/resolute/diagnosis-questions-ja.ts").includes("自分で数字を入れる"));
-  // Tonight's videos.
-  assert.equal(sha("../lib/resolute/tonight-videos.ts"), "9267d692f1495e1fdc1b3c8a60071bbf1f07221565b28c148affd703b5ff22f4");
+  // Tonight's videos (Nov 25: each entry also carries its length in seconds for the video buttons; the files are unchanged).
+  assert.equal(sha("../lib/resolute/tonight-videos.ts"), "edfc4f35a25e93f31f4fbaedc4fac23768fa19e9a52a8ec28f03b3db397bc38d");
   for (const id of ["breathe", "steady", "history"]) for (const lang of ["ja", "en"]) assert.ok(existsSync(new URL(`../public/media/resolute-tonight/${id}-${lang}.mp4`, import.meta.url)), `${id}-${lang}`);
 });
 
