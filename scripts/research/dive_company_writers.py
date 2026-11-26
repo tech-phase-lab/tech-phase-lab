@@ -732,4 +732,124 @@ def lite(f, url, before_previous, report=None, events=None, previous=None):
     return {'tiles': tiles, 'numbers': numbers, 'evidence': ev.items, 'summary': summary(conclusion, growth, changes, caution, nxt)}
 
 
-WRITERS = {'AMD': amd, 'ANET': anet, 'PLTR': pltr, 'ALAB': alab, 'LITE': lite}
+
+# ---- Sandisk (SNDK) -----------------------------------------------------------------------------------------------------------------
+
+def sndk(f, url, before_previous, report=None, events=None, previous=None):
+    need(f, 'revenue', 'revenueYoy', 'gm', 'gmYoy', 'opex', 'opIncome', 'netIncome', 'eps', 'datacenter', 'edge', 'consumer', 'cfo', 'cfoMargin',
+         'receivables', 'cash', 'buyback', 'guidanceRevenue', 'guidanceGm', 'guidanceOpex', 'guidanceEps')
+    ev = Evidence(url)
+    rq, ry, gm, gy, eps = f['revenue'], f['revenueYoy'], f['gm'], f['gmYoy'], f['eps']
+    r0, r1, r2 = rq.values[0], rq.values[1], ry.values[1]
+    qoq, yoy = change(r0, r1), change(r0, r2)
+    ev.add('numbers.revenue.current', rq)
+    ev.add('numbers.revenue.previous', rq)
+    ev.add('numbers.revenue.yearAgo', ry)
+    ev.add('numbers.adjustedEPS', eps)
+    ev.add('numbers.grossMargin.current', gm)
+    ev.add('numbers.grossMargin.previous', gm)
+    g, ggm = f['guidanceRevenue'], f['guidanceGm']
+    low, high = range_guidance(ev, g)
+    gmid = (ggm.values[0] + ggm.values[1]) / 2
+    ev.add('numbers.guidance.grossMarginPercent', ggm, calc=f'({ggm.raws[0]} + {ggm.raws[1]}) / 2')
+    g0, g1, g2 = gm.values[2], gm.values[3], gy.values[3]
+    e0, e1 = eps.values[2], eps.values[3]
+    numbers = {'revenue': {'current': float(r0), 'previous': float(r1), 'yearAgo': float(r2)}, 'adjustedEPS': float(e0), 'epsEstimate': None,
+               'grossMargin': {'current': float(g0), 'previous': float(g1)},
+               'guidance': {'low': float(low), 'high': float(high), 'grossMarginPercent': float(gmid)}, 'segments': None}
+    dcf, edf, cof = f['datacenter'], f['edge'], f['consumer']
+    dc, ed, co = dcf.values, edf.values, cof.values
+    tiles = [tile('売上高', 'Revenue', money_tile(ev, 0, rq, 0, None), f'前年同期比 {sign(yoy, 0)}、前期比 {sign(qoq, 0)}', f'{sign(yoy, 0)} YoY, {sign(qoq, 0)} QoQ'),
+             text_tile('調整後(non-GAAP)粗利益率', 'Non-GAAP gross margin', pc(g0), pc(g0), f'前期 {pc(g1)}、前年同期 {pc(g2)}', f'Prior quarter {pc(g1)}; year ago {pc(g2)}'),
+             tile('データセンター向け売上', 'Datacenter revenue', money_tile(ev, 2, dcf, 0, None), f'前期比 {sign(change(dc[0], dc[1]), 0)}', f'{sign(change(dc[0], dc[1]), 0)} QoQ')]
+    ev.add('tiles[0].note', ry, calc=growth_calc(ry, 0, 1), rnd=0)
+    ev.add('tiles[1].value', gm)
+    ev.add('tiles[1].note', gm)
+    ev.add('tiles[2].note', dcf, calc=growth_calc(dcf, 0, 1), rnd=0)
+    d = r0 - r1
+    dcd = dc[0] - dc[1]
+    demand = f.get('dataCenterDemand')
+    ev.add('summary.cards.growth.sections[0]', edf)
+    ev.add('summary.cards.growth.sections[0]', cof)
+    if demand:
+        ev.add('summary.cards.growth.sections[1]', demand)
+    growth = card(f'データセンター向け売上が前期比 {sign(change(dc[0], dc[1]), 0)}', f'Datacenter revenue {sign(change(dc[0], dc[1]), 0)} QoQ', [
+        chip(tone(dcd), f'データセンター {usd(dc[0])["ja"]}', f'Datacenter {usd(dc[0])["en"]}'),
+        chip(tone(ed[0] - ed[1]), f'エッジ 前期比 {sign(change(ed[0], ed[1]), 0)}', f'Edge {sign(change(ed[0], ed[1]), 0)} QoQ'),
+        chip(tone(co[0] - co[1]), f'コンシューマー 前期比 {sign(change(co[0], co[1]), 0)}', f'Consumer {sign(change(co[0], co[1]), 0)} QoQ')], [
+        sec('happened', f'データセンター向け売上は{usd(dc[1])["ja"]}から{usd(dc[0])["ja"]}へ{sign(change(dc[0], dc[1]), 0)}で、全体の約{q(dc[0] / r0 * 100, 0)}%です。PCやスマートフォン向けのエッジは{usd(ed[0])["ja"]}で前期比{sign(change(ed[0], ed[1]), 0)}、コンシューマーは{usd(co[0])["ja"]}で前期比{sign(change(co[0], co[1]), 0)}でした。',
+            f'Datacenter revenue went from {usd(dc[1])["en"]} to {usd(dc[0])["en"]}, {sign(change(dc[0], dc[1]), 0)}, about {q(dc[0] / r0 * 100, 0)}% of the total. Edge (PCs and phones) was {usd(ed[0])["en"]} ({sign(change(ed[0], ed[1]), 0)}), and Consumer was {usd(co[0])["en"]} ({sign(change(co[0], co[1]), 0)}).'),
+        sec('good', ('AIデータセンター向けの大容量SSDの需要が強く、会社はデータセンター事業がほかより速く伸びたとしています。' if demand else '')
+            + (f'売上の増加分{usd(d)["ja"]}のうち約{q(dcd / d * 100, 0)}%がデータセンター向けです。' if d > 0 and dcd > 0 else f'売上は前期から{usd(abs(d))["ja"]}{rose(d, True)}ました。'),
+            ('Demand for high-capacity SSDs in AI data centers is strong; the company said its data center business outgrew the rest. ' if demand else '')
+            + (f'About {q(dcd / d * 100, 0)}% of the {usd(d)["en"]} revenue increase came from Datacenter.' if d > 0 and dcd > 0 else f'Revenue {rose(d)} {usd(abs(d))["en"]} from the previous quarter.')),
+        sec('watch', f'コンシューマー(メモリーカードやUSBメモリーなど)は前年同期比{sign(change(co[0], co[2]), 0)}です。データセンター向けの比率が高まるほど、業績はAI投資の動きに左右されます。',
+            f'Consumer (memory cards, USB drives and similar) is {sign(change(co[0], co[2]), 0)} from a year earlier. The more the mix tilts to data centers, the more results depend on AI spending.')])
+    oi, ni, gain = f['opIncome'], f['netIncome'], f.get('equityGain')
+    ev.add('summary.cards.change.chips[2]', eps)
+    ev.add('summary.cards.change.sections[1]', oi)
+    if gain:
+        ev.add('summary.cards.change.sections[2]', gain)
+    changes = card(f'売上は前期比 {sign(qoq, 0)}、粗利益率は{pc(g0)}', f'Revenue {sign(qoq, 0)} QoQ; gross margin {pc(g0)}', [
+        chip(tone(qoq), f'売上 前期比 {sign(qoq, 0)}', f'Revenue {sign(qoq, 0)} QoQ'),
+        chip(tone(g0 - g1), f'調整後粗利益率 {pc(g1)} → {pc(g0)}', f'Non-GAAP gross margin {pc(g1)} → {pc(g0)}'),
+        chip(tone(e0 - e1), f'調整後EPS {ps(e1)["ja"]} → {ps(e0)["ja"]}', f'Non-GAAP EPS {ps(e1)["en"]} → {ps(e0)["en"]}')], [
+        sec('happened', f'売上は{usd(r1)["ja"]}から{usd(r0)["ja"]}へ、{usd(abs(d))["ja"]}{rose(d, True)}ました。調整後EPSは{ps(e1)["ja"]}から{ps(e0)["ja"]}になりました。',
+            f'Revenue {rose(d)} {usd(abs(d))["en"]} from {usd(r1)["en"]} to {usd(r0)["en"]}. Non-GAAP EPS went from {ps(e1)["en"]} to {ps(e0)["en"]}.'),
+        sec('good', f'売上100ドルのうち約{q(g0, 0)}ドルが粗利益として残ります。調整後の営業利益は{usd(oi.values[2])["ja"]}で、売上の約{q(oi.values[2] / r0 * 100, 0)}%です。',
+            f'About ${q(g0, 0)} of every $100 of sales stays as gross profit. Non-GAAP operating income was {usd(oi.values[2])["en"]}, about {q(oi.values[2] / r0 * 100, 0)}% of revenue.'),
+        sec('watch', f'GAAPの純利益{usd(ni.values[0])["ja"]}には、' + (f'保有株式の評価益など{usd(gain.values[0])["ja"]}が含まれます。営業による利益とは分けて見る必要があります。' if gain and gain.values[0] > 0 else '本業以外の損益も含まれます。'),
+            f'GAAP net income of {usd(ni.values[0])["en"]} includes ' + (f'a {usd(gain.values[0])["en"]} net gain on equity securities. Keep that separate from operating profit.' if gain and gain.values[0] > 0 else 'items outside operations.')),
+        sec('view', f'前年同期は売上{usd(r2)["ja"]}、粗利益率{pc(g2)}でした。メモリー価格の変化で、利益の水準が大きく変わっています。',
+            f'A year ago revenue was {usd(r2)["en"]} with a gross margin of {pc(g2)}. Memory prices have changed the profit level a lot.')])
+    cfo, cm, ar, cash, bb = f['cfo'], f['cfoMargin'], f['receivables'], f['cash'], f['buyback']
+    ev.add('summary.cards.caution.chips[0]', ggm)
+    for k in ('cfo', 'cfoMargin', 'receivables'):
+        ev.add('summary.cards.caution.sections[1]', f[k])
+    ev.add('summary.cards.caution.sections[2]', bb)
+    ev.add('summary.cards.caution.sections[2]', cash)
+    caution = card('利益率は異例の高さで、価格しだい', 'Margins are at unusual highs and depend on prices', [
+        chip('gold', f'粗利益率の見通し {ggm.raws[0]}〜{ggm.raws[1]}%', f'Gross margin outlook {ggm.raws[0]}–{ggm.raws[1]}%'),
+        chip(tone(cm.values[0] - cm.values[1]), f'営業CFの売上比 {pc(cm.values[1])} → {pc(cm.values[0])}', f'Operating cash flow margin {pc(cm.values[1])} → {pc(cm.values[0])}'),
+        chip('gold', f'自社株買い {usd(Decimal(bb.values[0]) * 1000)["ja"]}', f'Buybacks ${bb.values[0]}B')], [
+        sec('watch', f'前年同期の粗利益率は{pc(g2)}でした。メモリーの価格は需給で大きく動き、今の約{q(g0, 0)}%は価格が非常に高いことを反映しています。価格が下がれば、利益率も大きく下がる可能性があります。',
+            f"A year ago gross margin was {pc(g2)}. Memory prices swing with supply and demand, and today's ~{q(g0, 0)}% reflects very high prices. If prices fall, margins could drop sharply."),
+        sec('happened', f'営業キャッシュフローは{usd(cfo.values[0])["ja"]}で、売上に対する比率は{pc(cm.values[1])}から{pc(cm.values[0])}になりました。売掛金は{usd(ar.values[1])["ja"]}から{usd(ar.values[0])["ja"]}になっています。',
+            f'Operating cash flow was {usd(cfo.values[0])["en"]}, going from {pc(cm.values[1])} to {pc(cm.values[0])} of revenue, as accounts receivable went from {usd(ar.values[1])["en"]} to {usd(ar.values[0])["en"]}.'),
+        sec('means', f'この四半期に約{usd(Decimal(bb.values[0]) * 1000)["ja"]}の自社株買いもしました。稼いだ現金の多くを株主に返したため、現金は{usd(cash.values[1])["ja"]}から{usd(cash.values[0])["ja"]}になりました。',
+            f'It also bought back about ${bb.values[0]}B of stock in the quarter. Much of the cash earned went back to shareholders, so cash went from {usd(cash.values[1])["en"]} to {usd(cash.values[0])["en"]}.'),
+        sec('view', f'大事なのは利益率の高さより、それがどれだけ続くかです。次の決算で、見通しの約{pc(gmid)}近くを保てるかを確かめます。',
+            f'What matters is not how high margins are but how long they last. The next report will show whether margins hold near the guided {pc(gmid)}.')])
+    go, ge, split = f['guidanceOpex'], f['guidanceEps'], f.get('split')
+    ev.add('summary.cards.next.chips[2]', ge)
+    ev.add('summary.cards.next.sections[1]', go)
+    ev.add('summary.cards.next.sections[1]', f['opex'])
+    pre = '(分割前)' if split else ''
+    nxt = card(f'次期の売上見通し {usd(low)["ja"]}〜{usd(high)["ja"]}', f'Next quarter revenue outlook: ${bn(low)}–{bn(high)}B', [
+        chip('gold', f'売上 {usd(low)["ja"]}〜{usd(high)["ja"]}', f'Revenue ${bn(low)}–{bn(high)}B'),
+        chip('gold', f'調整後粗利益率 {ggm.raws[0]}〜{ggm.raws[1]}%', f'Non-GAAP gross margin {ggm.raws[0]}–{ggm.raws[1]}%'),
+        chip('gold', f'調整後EPS {ps(ge.values[0])["ja"]}〜{ps(ge.values[1])["ja"]}{pre}', f'Non-GAAP EPS ${q(ge.values[0], 0)}–{q(ge.values[1], 0)}' + (' (pre-split)' if split else ''))], [
+        sec('happened', f'会社は次期の売上を{usd(low)["ja"]}〜{usd(high)["ja"]}、調整後粗利益率を{ggm.raws[0]}〜{ggm.raws[1]}%と見込んでいます。下限でも今回の{usd(r0)["ja"]}より約{q(change(low, r0), 1)}%多くなります。',
+            f"The company expects next-quarter revenue of ${bn(low)}B–${bn(high)}B with a non-GAAP gross margin of {ggm.raws[0]}–{ggm.raws[1]}%. Even the low end is about {q(change(low, r0), 1)}% above this quarter's {usd(r0)['en']}."),
+        sec('means', f'粗利益率の見通しの中央値{pc(gmid)}は、今回の{pc(g0)}とほぼ同じです。調整後の営業費用は{usd(go.values[0])["ja"]}〜{usd(go.values[1])["ja"]}の見通しで、今回は{usd(f["opex"].values[2])["ja"]}でした。',
+            f"The margin midpoint of {pc(gmid)} compares with this quarter's {pc(g0)}. Non-GAAP operating expenses are guided at {usd(go.values[0])['en']}–{usd(go.values[1])['en']}, versus {usd(f['opex'].values[2])['en']} this quarter."),
+        sec('view', '次の決算で、売上が見通しの幅に入るか、データセンター向けが伸び続けるか、利益率が見通しの近くに残るかを確かめます。' + ('株式分割の後は、1株あたりの数字は分割前の約8分の1になります。' if split and split.values[0] == 'eight' else ''),
+            'Next time, check whether revenue lands in the range, Datacenter keeps growing, and margins stay near the outlook.' + (' After the split, EPS figures will be about one-eighth of the pre-split numbers.' if split and split.values[0] == 'eight' else ''))])
+    times = q(r0 / r2, 1)
+    if split:
+        ev.add('summary.conclusion[2]', split)
+        day = datetime.strptime(f'{split.values[1]} {split.values[2]}', '%B %d %Y')
+        n = {'two': 2, 'three': 3, 'four': 4, 'five': 5, 'ten': 10, 'eight': 8}.get(split.values[0], split.values[0])
+        last = c(f'1株あたりの数字は、{day.month}月{day.day}日付の1株を{n}株にする株式分割の前の基準です。', f'Per-share figures are before the {n}-for-1 stock split effective {day.strftime("%B")} {day.day}.')
+    else:
+        last = c(f'調整後EPSは{ps(e0)["ja"]}で、前期の{ps(e1)["ja"]}から{"増え" if e0 > e1 else "減り"}ました。', f'Non-GAAP EPS was {ps(e0)["en"]}, {"up" if e0 > e1 else "down"} from {ps(e1)["en"]}.')
+    conclusion = [
+        c(f'売上は{usd(r0)["ja"]}で、前期比{sign(qoq, 0)}、前年同期の約{times}倍でした。データセンター向けが前期比{sign(change(dc[0], dc[1]), 0)}と伸びをけん引しました。',
+          f'Revenue was {usd(r0)["en"]}, {sign(qoq, 0)} from the previous quarter and about {times} times a year earlier. Datacenter led, {sign(change(dc[0], dc[1]), 0)} from the previous quarter.'),
+        c(f'調整後粗利益率は{pc(g0)}で、前年同期の{pc(g2)}から大きく変わりました。メモリー価格が高い時期の数字で、次期の見通しも{ggm.raws[0]}〜{ggm.raws[1]}%です。',
+          f'Non-GAAP gross margin was {pc(g0)}, versus {pc(g2)} a year earlier. These are numbers from a period of high memory prices, and next quarter is guided at {ggm.raws[0]}–{ggm.raws[1]}%.'),
+        last]
+    return {'tiles': tiles, 'numbers': numbers, 'evidence': ev.items, 'summary': summary(conclusion, growth, changes, caution, nxt)}
+
+
+WRITERS = {'AMD': amd, 'ANET': anet, 'PLTR': pltr, 'ALAB': alab, 'LITE': lite, 'SNDK': sndk}

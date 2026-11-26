@@ -341,7 +341,59 @@ def lumentum(t):
     }
 
 
-SPECS = {'CRDO': credo, 'MRVL': marvell, 'AVGO': broadcom, 'AMD': amd, 'ANET': arista, 'PLTR': palantir, 'ALAB': astera, 'LITE': lumentum}
+WORDED = r'(?:(?:up|down) [\d.,]+ ?(?:%|ppts?)|flat|\*)'
+VALUE = r'(\$?\(?-?[\d,]+(?:\.\d+)?\)? ?%?)'
+
+
+def worded(area, label, groups, unit='million'):
+    """A row whose comparisons are words ("up 23%", "down 0.4 ppt", "*"): `groups` is the row's shape after the label, V for a figure and
+    W for a worded change (e.g. 'VVWVVW'); the figures in order, once in `area`."""
+    pattern = r'(?<![A-Za-z-])' + re.escape(label) + ''.join(' ' + (VALUE if g == 'V' else WORDED) for g in groups) + r'(?= |$)'
+    found = list(re.finditer(pattern, area))
+    if len(found) != 1 or len(re.findall(r'(?<![A-Za-z-])' + re.escape(label) + r' [$\d(]', area)) != 1:
+        return None
+    m = found[0]
+    parsed = [_number(x) for x in m.groups()]
+    return Figure(values=[v for v, _ in parsed], quote=m.group(0), raws=[r for _, r in parsed], unit=unit)
+
+
+def sandisk(t):
+    head = 'GAAP Non-GAAP ($ in millions, except per share amounts)'
+    parts = t.split(head)
+    ok = len(parts) == 3 and re.match(r' Q[1-4] 20\d\d Q[1-4] 20\d\d Q/Q Q[1-4] 20\d\d Q[1-4] 20\d\d Q/Q ', parts[1]) and \
+        re.match(r' Q[1-4] 20\d\d Q[1-4] 20\d\d Y/Y Q[1-4] 20\d\d Q[1-4] 20\d\d Y/Y ', parts[2])
+    qq, yy = (parts[1], parts[2].split('End Market Summary')[0]) if ok else ('', '')
+    ends = between(t, 'End Market Summary', 'Total Revenue')
+    out = between(t, 'Business Outlook', 'Investor Communications')
+    ops, bs = 'CONDENSED CONSOLIDATED STATEMENTS OF OPERATIONS', 'CONDENSED CONSOLIDATED BALANCE SHEETS'
+    return {   # the two highlight tables: GAAP this quarter, the other quarter, change, then non-GAAP the same
+        'revenue': worded(qq, 'Revenue', 'VVWVVW'),
+        'revenueYoy': worded(yy, 'Revenue', 'VVWVVW'),
+        'gm': worded(qq, 'Gross Margin', 'VVWVVW', unit='percent'),
+        'gmYoy': worded(yy, 'Gross Margin', 'VVWVVW', unit='percent'),
+        'opex': worded(qq, 'Operating Expenses', 'VVWVVW'),
+        'opIncome': worded(qq, 'Operating Income', 'VVWVVW'),
+        'netIncome': worded(qq, 'Net Income', 'VVWVVW'),
+        'eps': worded(qq, 'Diluted Net Income Per Share', 'VVWVVW', unit='per-share'),
+        'datacenter': worded(ends, 'Datacenter', 'VVWVW'),     # this quarter, previous quarter, change, a year earlier, change
+        'edge': worded(ends, 'Edge', 'VVWVW'),
+        'consumer': worded(ends, 'Consumer', 'VVWVW'),
+        'equityGain': row(t, 'Gain on equity securities, net', 2, ops, 'Interest income'),
+        'cfo': row(t, 'Cash flow from operating activities', 3, 'Diluted weighted average shares outstanding', 'Purchases of property'),
+        'cfoMargin': row(t, ('Operating cash flow margin(2)', 'Operating cash flow margin (2)'), 3, 'Adjusted free cash flow', 'Adjusted free cash flow margin', unit='percent'),
+        'receivables': row(t, 'Accounts receivable, net', 2, bs, 'Inventories'),
+        'cash': row(t, 'Cash and cash equivalents', 2, bs, 'Accounts receivable'),
+        'buyback': sentence(t, r'Returned \$([\d.]+) billion to stockholders through the repurchase of approximately ([\d.]+) million shares during the quarter', (1, 2), unit='text'),
+        'split': sentence(t, r'Announced today an (\w+)-for-one forward stock split, effective (' + MONTHS + r' \d{1,2}), (20\d\d)', (1, 2, 3), unit='text'),
+        'dataCenterDemand': sentence(t, r'(outpaced growth) in our data center business', (1,), unit='text'),
+        'guidanceRevenue': sentence(out, r'Revenue \$([\d,]+) - \$([\d,]+)', (1, 2)),
+        'guidanceGm': sentence(out, r'Gross Margin [\d.]+% - [\d.]+% ([\d.]+)% - ([\d.]+)%', (1, 2), unit='percent'),
+        'guidanceOpex': sentence(out, r'Operating Expenses \$[\d,]+ - \$[\d,]+ \$([\d,]+) - \$([\d,]+)', (1, 2)),
+        'guidanceEps': sentence(out, r'Diluted Net Income Per Share N/A \$([\d.]+) - \$([\d.]+)', (1, 2), unit='per-share'),
+    }
+
+
+SPECS = {'CRDO': credo, 'MRVL': marvell, 'AVGO': broadcom, 'AMD': amd, 'ANET': arista, 'PLTR': palantir, 'ALAB': astera, 'LITE': lumentum, 'SNDK': sandisk}
 
 
 # ---- foreign issuers whose results come as several exhibits of one 6-K (release, presentation, financial statements) ---------
