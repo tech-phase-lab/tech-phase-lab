@@ -1786,5 +1786,119 @@ def nbis(f, url, before_previous, report=None, events=None, previous=None):
     return {'tiles': tiles, 'numbers': numbers, 'evidence': ev.items, 'summary': summary(conclusion, growth, changes, caution, nxt)}
 
 
+
+# ---- Microsoft (MSFT): this quarter and a year earlier; the previous quarter from the previous file; no outlook in the release --------
+
+def msft(f, url, before_previous, report=None, events=None, previous=None):
+    need(f, 'revenue', 'grossProfit', 'opIncome', 'netIncome', 'adjNetIncome', 'adjEps', 'cloud', 'azureGrowth', 'azure', 'rpo', 'infraRevenue', 'infraCost',
+         'infraOp', 'devicesRevenue', 'capex', 'cfo', 'depreciation')
+    ev = Evidence(url)
+    rev, gp, eps = f['revenue'], f['grossProfit'], f['adjEps']
+    r0, r2 = rev.values[0], rev.values[1]
+    ev.add('numbers.revenue.current', rev)
+    ev.add('numbers.revenue.yearAgo', rev)
+    r1 = carried(ev, previous, 'numbers.revenue.current', 'numbers.revenue.previous')
+    gm0 = q(gp.values[0] / r0 * 100)
+    ev.add('numbers.grossMargin.current', rev, calc=f'{gp.raws[0]} / {rev.raws[0]} * 100', rnd=1)
+    ev.add('numbers.grossMargin.current', gp)
+    gm1 = carried(ev, previous, 'numbers.grossMargin.current', 'numbers.grossMargin.previous')
+    ev.add('numbers.adjustedEPS', eps)
+    numbers = {'revenue': {'current': float(r0), 'previous': float(r1), 'yearAgo': float(r2)}, 'adjustedEPS': float(eps.values[2]), 'epsEstimate': None,
+               'grossMargin': {'current': float(gm0), 'previous': float(gm1)}, 'guidance': None, 'segments': None}
+    yoy, qoq = change(r0, r2), change(r0, r1)
+    cloud, az, azg, cx = f['cloud'], f['azure'], f['azureGrowth'], f['capex']
+    tiles = [tile('売上高', 'Revenue', money_tile(ev, 0, rev, 0, None), f'前年同期比 {sign(yoy, 0)}', f'YoY {sign(yoy, 0)}'),
+             text_tile('Microsoft Cloudの売上', 'Microsoft Cloud revenue', usd(Decimal(cloud.values[0]) * 1000)['ja'], f'${cloud.values[0]}B',
+                       f'前年同期比 +{cloud.values[1]}%(Azureは+{azg.values[0]}%)', f'YoY +{cloud.values[1]}% (Azure +{azg.values[0]}%)'),
+             tile('設備投資', 'Capital expenditure', None, f'前年同期 {usd(-cx.values[1])["ja"]}', f'Prior-year quarter {usd(-cx.values[1])["en"]}')]
+    tiles[2]['value'] = usd(-cx.values[0])
+    ev.add('tiles[0].note', rev, calc=growth_calc(rev, 0, 1), rnd=0)
+    ev.add('tiles[1].value', cloud)
+    ev.add('tiles[1].note', cloud)
+    ev.add('tiles[1].note', azg)
+    ev.add('tiles[2].value', cx, calc=f'{cx.raws[0]} / 1000', rnd=2)
+    ev.add('tiles[2].note', cx, calc=f'{cx.raws[1]} / 1000', rnd=2)
+    ir, ic, io, rpo = f['infraRevenue'], f['infraCost'], f['infraOp'], f['rpo']
+    m0, m1 = q(io.values[0] / ir.values[0] * 100), q(io.values[1] / ir.values[1] * 100)
+    for x in (az, ir):
+        ev.add('summary.cards.growth.sections[0]', x)
+    ev.add('summary.cards.growth.sections[1]', io)
+    ev.add('summary.cards.growth.sections[1]', rpo)
+    ev.add('summary.cards.growth.sections[2]', ic)
+    irg, icg = change(ir.values[0], ir.values[1]), change(ic.values[0], ic.values[1])
+    growth = card(f'Azureの売上が前年同期比 +{azg.values[0]}%', f'Azure revenue up {azg.values[0]}% YoY', [
+        chip(tone(az.values[0] - az.values[1]), f'Azure {usd(az.values[1])["ja"]} → {usd(az.values[0])["ja"]}', f'Azure {usd(az.values[1])["en"]} → {usd(az.values[0])["en"]}'),
+        chip(tone(irg), f'Agents and Infraの売上 {sign(irg, 0)}', f'Agents and Infra revenue {sign(irg, 0)}'),
+        chip(tone(m0 - m1), f'部門の営業利益率 {pc(m1)} → {pc(m0)}(前年同期比)', f'Segment operating margin {pc(m1)} → {pc(m0)} (YoY)')], [
+        sec('happened', f'Azureの売上は{usd(az.values[0])["ja"]}で、前年同期の{usd(az.values[1])["ja"]}から+{azg.values[0]}%でした。Azureを含むAgents and Infra部門の売上は{usd(ir.values[0])["ja"]}({sign(irg, 0)})で、会社全体の約{q(ir.values[0] / r0 * 100, 0)}%です。',
+            f'Azure revenue was {usd(az.values[0])["en"]}, up {azg.values[0]}% from {usd(az.values[1])["en"]} a year ago. The Agents and Infra segment, which includes Azure, had revenue of {usd(ir.values[0])["en"]} ({sign(irg, 0)}), about {q(ir.values[0] / r0 * 100, 0)}% of the company total.'),
+        sec('good', f'Agents and Infraの営業利益は{usd(io.values[1])["ja"]}から{usd(io.values[0])["ja"]}へ{sign(change(io.values[0], io.values[1]), 0)}でした。商用の残りの履行義務(受注残)は+{rpo.values[0]}%の{usd(Decimal(rpo.values[1]) * 1000)["ja"]}です。',
+            f'Agents and Infra operating income went from {usd(io.values[1])["en"]} to {usd(io.values[0])["en"]}, {sign(change(io.values[0], io.values[1]), 0)}. Commercial remaining performance obligation grew {rpo.values[0]}% to ${rpo.values[1]}B.'),
+        sec('watch', f'部門の売上原価は{usd(ic.values[1])["ja"]}から{usd(ic.values[0])["ja"]}へ{sign(icg, 0)}で、売上の伸び({sign(irg, 0)})' + ('を上回りました。' if icg > irg else 'と比べられます。') + f'営業利益率は{pc(m1)}から{pc(m0)}になりました。',
+            f"The segment's cost of revenue went from {usd(ic.values[1])['en']} to {usd(ic.values[0])['en']}, {sign(icg, 0)}, " + ('faster than' if icg > irg else 'versus') + f' its {sign(irg, 0)} revenue growth. Its operating margin went from {pc(m1)} to {pc(m0)}.'),
+        sec('view', 'AIの需要が売上を押し上げる一方、データセンターの費用も一緒に増えています。売上の伸びと費用の伸びの差を追います。',
+            'AI demand is lifting revenue, but data-center costs are rising alongside it. The gap between revenue growth and cost growth is what to follow.')])
+    oi, ani, dv, dg, win = f['opIncome'], f['adjNetIncome'], f['devicesRevenue'], f.get('devicesGrowth'), f.get('windows')
+    d = r0 - r1
+    oig = change(oi.values[0], oi.values[1])
+    ev.add('summary.cards.change.sections[1]', oi)
+    ev.add('summary.cards.change.sections[2]', ani)
+    ev.add('summary.cards.change.sections[3]', dv)
+    if win:
+        ev.add('summary.cards.change.sections[3]', win)
+    openai_ago = ani.values[4]
+    changes = card(f'売上は前期比 {sign(qoq)}、粗利益率は{pc(gm0)}', f'Revenue {sign(qoq)} QoQ, gross margin {pc(gm0)}', [
+        chip(tone(gm0 - gm1), f'粗利益率 {pc(gm1)} → {pc(gm0)}', f'Gross margin {pc(gm1)} → {pc(gm0)}'),
+        chip(tone(oig), f'営業利益 前年同期比 {sign(oig, 0)}', f'Operating income {sign(oig, 0)} YoY')], [
+        sec('happened', f'売上は{usd(r1)["ja"]}から{usd(r0)["ja"]}へ、{usd(abs(d))["ja"]}{rose(d, True)}ました。粗利益率(粗利益÷売上)は{pc(gm1)}から{pc(gm0)}になりました。前年同期比では{sign(yoy, 0)}です。',
+            f'Revenue {rose(d)} from {usd(r1)["en"]} to {usd(r0)["en"]}, a change of {usd(abs(d))["en"]}. Gross margin (gross profit divided by revenue) went from {pc(gm1)} to {pc(gm0)}. Year over year, revenue grew {format(q(yoy, 0), "f")}%.'),
+        sec('good', f'営業利益は{sign(oig, 0)}の{usd(oi.values[0])["ja"]}で、売上の伸び({sign(yoy, 0)})' + ('を上回りました。' if oig > yoy else 'と比べられます。') + f'営業利益率は約{pc(q(oi.values[0] / r0 * 100))}です。',
+            f'Operating income went to {usd(oi.values[0])["en"]}, {sign(oig, 0)}, ' + ('faster than revenue' if oig > yoy else 'versus revenue') + f' ({sign(yoy, 0)}). The operating margin was about {pc(q(oi.values[0] / r0 * 100))}.'),
+        sec('watch', f'GAAPの純利益は{sign(change(ani.values[0], ani.values[3]), 0)}でした。' + (f'前年同期にはOpenAIへの投資による損失{usd(openai_ago)["ja"]}が含まれていました。' if openai_ago > 0 else '')
+            + f'OpenAIの影響を除くと、純利益は{sign(change(ani.values[2], ani.values[5]), 0)}、EPSは{ps(eps.values[2])["ja"]}です。',
+            f'GAAP net income changed {sign(change(ani.values[0], ani.values[3]), 0)}' + (f', but the prior-year quarter included a {usd(openai_ago)["en"]} loss from OpenAI investments' if openai_ago > 0 else '')
+            + f'. Excluding OpenAI, net income changed {sign(change(ani.values[2], ani.values[5]), 0)} and EPS was {ps(eps.values[2])["en"]}.'),
+        sec('means', f'Devices and Consumerの売上は{usd(dv.values[0])["ja"]}で前年同期比{sign(change(dv.values[0], dv.values[1]), 0)}でした。' + (f'Windows OEMとデバイスは{"−" if win.values[0] == "decreased" else "+"}{win.values[1]}%です。' if win else '') + '伸びはクラウドとAIに大きく頼っています。',
+            f'Devices and Consumer revenue was {usd(dv.values[0])["en"]}, {sign(change(dv.values[0], dv.values[1]), 0)} YoY' + (f', with Windows OEM and devices {"down" if win.values[0] == "decreased" else "up"} {win.values[1]}%' if win else '') + '. Growth depends heavily on cloud and AI.')])
+    cfo, dep = f['cfo'], f['depreciation']
+    fcf0, fcf1 = cfo.values[0] + cx.values[0], cfo.values[1] + cx.values[1]
+    for x in (cx, cfo):
+        ev.add('summary.cards.caution.sections[0]', x)
+    ev.add('summary.cards.caution.sections[2]', dep)
+    ev.add('summary.cards.caution.sections[3]', rpo)
+    double = -cx.values[0] >= -cx.values[1] * Decimal('1.8')
+    caution = card('設備投資がほぼ倍増' if double else '設備投資が増加', 'Capital spending roughly doubled' if double else 'Capital spending rose', [
+        chip('down', f'設備投資 {usd(-cx.values[1])["ja"]} → {usd(-cx.values[0])["ja"]}', f'Capex {usd(-cx.values[1])["en"]} → {usd(-cx.values[0])["en"]}'),
+        chip('gold', f'フリーキャッシュフロー 約{usd(fcf0)["ja"]}', f'Free cash flow about {usd(fcf0)["en"]}'),
+        chip('down', f'減価償却など {sign(change(dep.values[0], dep.values[1]), 0)}', f'Depreciation and amortization {sign(change(dep.values[0], dep.values[1]), 0)}')], [
+        sec('happened', f'設備の取得は{usd(-cx.values[0])["ja"]}で、前年同期の{usd(-cx.values[1])["ja"]}の約{q(cx.values[0] / cx.values[1], 1)}倍でした。営業キャッシュフローは{usd(cfo.values[0])["ja"]}で、フリーキャッシュフローは約{usd(fcf0)["ja"]}です。',
+            f'Additions to property and equipment were {usd(-cx.values[0])["en"]}, about {q(cx.values[0] / cx.values[1], 1)} times the {usd(-cx.values[1])["en"]} a year ago. Operating cash flow was {usd(cfo.values[0])["en"]}, leaving free cash flow of about {usd(fcf0)["en"]}.'),
+        sec('means', f'前年同期の約{usd(fcf1)["ja"]}' + ('より少なくなりました。' if fcf0 < fcf1 else 'と比べられます。') + 'データセンターへの投資は回収までに時間がかかり、その間は手元の現金の余裕が小さくなります。',
+            f'That compares with roughly {usd(fcf1)["en"]} a year ago. Data-center investment pays back with a lag, and cash headroom is thinner in the meantime.'),
+        sec('watch', f'減価償却などは{usd(dep.values[1])["ja"]}から{usd(dep.values[0])["ja"]}へ{sign(change(dep.values[0], dep.values[1]), 0)}でした。設備が増えるほど毎年の費用が増え、利益率の重しになります。',
+            f'Depreciation, amortization and other went from {usd(dep.values[1])["en"]} to {usd(dep.values[0])["en"]} ({sign(change(dep.values[0], dep.values[1]), 0)}). More equipment means higher annual costs, which weigh on margins.'),
+        sec('view', f'商用の受注残{usd(Decimal(rpo.values[1]) * 1000)["ja"]}は、需要が投資に見合うことを支える材料です。設備投資とクラウドの売上の伸びがつり合うかを、次の決算で確かめます。',
+            f'The ${rpo.values[1]}B commercial backlog supports the case that demand justifies the spending. Whether capex and cloud revenue growth stay in balance is the thing to check next time.')])
+    oc = f.get('outlookOnCall')
+    if oc:
+        ev.add('summary.cards.next.sections[0]', oc)
+    nxt = card('見通しは決算説明会で示される', 'Outlook is given on the earnings call', [
+        chip('gold', '決算発表に売上の見通しなし', 'No revenue outlook in the release')], [
+        sec('happened', 'マイクロソフトは見通しを決算発表ではなく決算説明会で示すため、ここには見通しの数字はありません。',
+            'Microsoft gives forward-looking guidance on its earnings call rather than in the release, so no outlook figures are shown here.'),
+        sec('watch', '純利益は投資の評価損益で振れることがあります。' + (f'前年同期にはOpenAI関連の損失{usd(openai_ago)["ja"]}がありました。' if openai_ago > 0 else '') + '次も、OpenAIの影響を除いた数字と合わせて読みます。',
+            'Net income can swing with gains and losses on investments' + (f' (a {usd(openai_ago)["en"]} OpenAI-related loss a year ago)' if openai_ago > 0 else '') + '. Next time, read it together with the figures excluding OpenAI.'),
+        sec('view', f'次の決算で、Azureの伸び(今期+{azg.values[0]}%)が続くか、設備投資がどこまで増えるか、Devices and Consumerの減少が止まるかを確かめます。',
+            f'Next time, watch whether Azure growth ({azg.values[0]}% this quarter) holds, how fast capex keeps rising, and where Devices and Consumer goes.')])
+    conclusion = [
+        c(f'売上は{usd(r0)["ja"]}で、前年同期比{sign(yoy, 0)}でした。Azureは+{azg.values[0]}%、Microsoft Cloudは+{cloud.values[1]}%の{usd(Decimal(cloud.values[0]) * 1000)["ja"]}です。',
+          f'Revenue was {usd(r0)["en"]}, {sign(yoy, 0)} from a year ago. Azure grew {azg.values[0]}% and Microsoft Cloud reached ${cloud.values[0]}B, up {cloud.values[1]}%.'),
+        c(f'一方、設備投資は{usd(-cx.values[0])["ja"]}に増え、フリーキャッシュフロー(営業キャッシュフロー−設備投資)は約{usd(fcf0)["ja"]}でした。',
+          f'Capital spending, however, rose to {usd(-cx.values[0])["en"]}, leaving free cash flow (operating cash flow minus capex) at about {usd(fcf0)["en"]}.'),
+        c(f'報告は2つの部門(Agents and Infra/Devices and Consumer)に分かれています。Devices and Consumerの売上は{sign(change(dv.values[0], dv.values[1]), 0)}でした。',
+          f'Reporting is in two segments (Agents and Infra / Devices and Consumer). Devices and Consumer revenue changed {sign(change(dv.values[0], dv.values[1]), 0)}.')]
+    return {'tiles': tiles, 'numbers': numbers, 'evidence': ev.items, 'summary': summary(conclusion, growth, changes, caution, nxt)}
+
+
 WRITERS = {'AMD': amd, 'ANET': anet, 'PLTR': pltr, 'ALAB': alab, 'LITE': lite, 'SNDK': sndk, 'VRT': vrt, 'GEV': gev, 'BE': be, 'SKHY': skhy, 'ARM': arm, 'CRWV': crwv,
-           'NBIS': nbis}
+           'NBIS': nbis, 'MSFT': msft}

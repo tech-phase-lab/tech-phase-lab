@@ -600,7 +600,40 @@ def coreweave(t):
     }
 
 
-SPECS = {'CRDO': credo, 'MRVL': marvell, 'AVGO': broadcom, 'AMD': amd, 'ANET': arista, 'PLTR': palantir, 'ALAB': astera, 'LITE': lumentum, 'SNDK': sandisk, 'VRT': vertiv, 'GEV': vernova, 'BE': bloom, 'SKHY': skhynix, 'ARM': arm, 'CRWV': coreweave}
+def microsoft(t):
+    ops = between(t, 'Revenue: Product', 'Earnings per share:')
+    wide = 4 if re.search(r'(?:Six|Nine|Twelve) Months Ended', between(t, 'INCOME STATEMENTS', 'Revenue: Product')) else 2   # Q2-Q4 add year to date
+    adj = between(t, 'The following table adjusts for the impact from investments in OpenAI', 'Business Highlights')
+    seg = between(t, 'SEGMENT RESULTS', 'Total Revenue')
+    infra, devices = between(seg, 'Agents and Infra', 'Devices and Consumer'), between(seg, 'Devices and Consumer', None)
+    cash = between(t, 'CASH FLOWS STATEMENTS', 'Cash and cash equivalents')
+    return {   # this quarter and a year earlier (then year to date in Q2-Q4)
+        'revenue': row(ops, 'Total revenue', 2, None, None, width=wide),
+        'grossProfit': row(ops, 'Gross margin', 2, None, None, width=wide),
+        'opIncome': row(ops, 'Operating income', 2, None, None, width=wide),
+        'netIncome': row(ops, 'Net income', 2, None, None, width=wide),
+        # GAAP, the OpenAI impact, non-GAAP; the same a year earlier; then the changes
+        'adjNetIncome': row(adj, 'Net income', 6, None, None, width=11),
+        'adjEps': row(adj, 'Diluted earnings per share', 6, None, None, unit='per-share', width=11),
+        'cloud': sentence(t, r'Microsoft Cloud revenue was \$([\d.]+) billion and increased (\d+)%', (1, 2), unit='text'),
+        'azureGrowth': sentence(t, r'Azure revenue increased (\d+)%', (1,), unit='text'),
+        'azure': row(between(t, 'REVENUE (In millions)', 'We have recast'), 'Azure', 2, None, None),
+        'rpo': sentence(t, r'Commercial remaining performance obligation increased (\d+)% to \$(\d+) billion', (1, 2), unit='text'),
+        'infraRevenue': row(infra, 'Revenue', 2, None, None, width=wide),
+        'infraCost': row(infra, 'Cost of revenue', 2, None, None, width=wide),
+        'infraOp': row(infra, 'Operating income', 2, None, None, width=wide),
+        'devicesRevenue': row(devices, 'Revenue', 2, None, None, width=wide),
+        'devicesOp': row(devices, 'Operating income', 2, None, None, width=wide),
+        'devicesGrowth': sentence(t, r'Revenue in Devices and Consumer was \$([\d.]+) billion and (increased|decreased) (\d+)%', (1, 2, 3), unit='text'),
+        'windows': sentence(t, r'Windows OEM and Devices revenue (increased|decreased) (\d+)%', (1, 2), unit='text'),
+        'capex': row(cash, 'Additions to property and equipment', 2, None, None, width=wide),
+        'cfo': row(cash, 'Net cash from operations', 2, None, None, width=wide),
+        'depreciation': row(cash, 'Depreciation, amortization, and other', 2, None, None, width=wide),
+        'outlookOnCall': sentence(t, r'will provide (forward-looking guidance) in connection with this quarterly earnings announcement on its earnings conference call', (1,), unit='text'),
+    }
+
+
+SPECS = {'CRDO': credo, 'MRVL': marvell, 'AVGO': broadcom, 'AMD': amd, 'ANET': arista, 'PLTR': palantir, 'ALAB': astera, 'LITE': lumentum, 'SNDK': sandisk, 'VRT': vertiv, 'GEV': vernova, 'BE': bloom, 'SKHY': skhynix, 'ARM': arm, 'CRWV': coreweave, 'MSFT': microsoft}
 
 
 # ---- foreign issuers whose results come as several exhibits of one 6-K (release, presentation, financial statements) ---------
