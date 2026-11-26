@@ -30,7 +30,7 @@ test("a row keeps its chart when one answer comes without it; the sparkline allo
   const { keepHistory } = await import("../lib/research/quote-history.ts");
   const source = read("lib/research/quote-history.ts") + read("app/research/price/use-market.ts");
   assert.match(source, /if \(!quote\.history\?\.length && before\?\.length\) out\[ticker\] = \{ \.\.\.quote, history: before \};/);
-  assert.match(source, /pickQuotes, fast \? 15_000 : 60_000, keep, history \? keepHistory : undefined\)/);
+  assert.match(source, /pickQuotes, fast \? 15_000 : 60_000, keep, history \? keepHistory : undefined[,)]/);
   {
     const path = [{ at: "2026-11-24T15:00:00Z", price: 1 }, { at: "2026-11-24T15:05:00Z", price: 2 }];
     const kept = keepHistory({ NVDA: { ticker: "NVDA", price: 1, history: path } }, { NVDA: { ticker: "NVDA", price: 3 } });

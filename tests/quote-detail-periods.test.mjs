@@ -52,7 +52,7 @@ test("the page: seven evenly spaced buttons, mint selection, the line only for 1
   assert.match(line, /prefers-reduced-motion: reduce\) \{ \.glow \{ animation:none/);
   const detail = read("app/research/price/quote-detail.tsx");
   assert.match(detail, /isChangePeriod\(range\) && periodBases && <PeriodChangeLine/);
-  assert.match(detail, /useQuotes\(\[ticker\], false, true\)/);
+  assert.match(detail, /useQuotes\(\[ticker\], false, true[,)]/);
   assert.match(detail, /<FlashValue scope=\{ticker\}/);
   assert.match(read("app/research/price/detail.module.css"), /\.mode button\[aria-pressed="true"\]\{background:#8fe3c0;color:#07120d;/);
   assert.match(read("app/api/research/market/chart/route.ts"), /TICKER_RE\.test\(ticker\) \|\| isMarketChartSymbol\(ticker\)/);

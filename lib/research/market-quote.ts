@@ -233,3 +233,8 @@ export function splitExtendedBars(bars: Bar[]): { regular: Bar[]; extended: Bar[
   while (cut > 0 && bars[cut - 1].at.slice(0, 10) === lastDay && isExtendedBar(bars[cut - 1])) cut--;
   return cut === 0 ? { regular: bars, extended: [] } : { regular: bars.slice(0, cut), extended: bars.slice(cut) };
 }
+
+/** The quotes as /api/research/market/quotes answers them (`quotes`), also drawn into a stock page's first HTML (app/research/quote/[ticker]). */
+export function quoteAnswer(quotes: Record<string, MarketQuote>, history: Record<string, Bar[]> = {}) {
+  return Object.fromEntries(Object.values(quotes).map(q => [q.ticker, { ...toFavoriteQuote(q, history[q.ticker]), name: q.name, exchange: q.exchange, open: q.open, high: q.high, low: q.low, previousClose: q.previousClose, volume: q.volume, week52Low: q.week52Low, week52High: q.week52High }]));
+}

@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useMemo, useRef, useState } from "react";
+import type { FirstQuote } from "@/lib/research/quote-first-paint";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import ResearchToolShell from "../research-tool-shell";
@@ -76,12 +77,13 @@ function AlertSheet({ ticker, currency, ja, onClose }: { ticker: string; currenc
 }
 
 /** `title` + `plain` make the same page serve an index (no company tabs, no star; the back link says where it came from). */
-export default function QuoteDetail({ ticker, from, title: fixedTitle, plain: bare = false }: { ticker: string; from: DetailOrigin; title?: string; plain?: boolean }) {
+/** `initial`: the quote and the default period's chart from the server's shared copies (lib/research/quote-first-paint.ts), shown at once. */
+export default function QuoteDetail({ ticker, from, title: fixedTitle, plain: bare = false, initial = null }: { ticker: string; from: DetailOrigin; title?: string; plain?: boolean; initial?: FirstQuote | null }) {
   const [lang, setLang] = useResearchLanguage();
   const router = useRouter();
   const ja = lang === "ja", t = (a: string, b: string) => ja ? a : b;
   const origin = ORIGINS[from];
-  const { data: quotes, loaded, failed, at: receivedAt } = useQuotes([ticker], false, true);
+  const { data: quotes, loaded, failed, at: receivedAt } = useQuotes([ticker], false, true, false, initial);
   const quote = quotes?.[ticker];
   const facts = useFacts(ticker).data;
   const [range, setRange] = useState<DetailPeriod>(DETAIL_DEFAULT_PERIOD);
@@ -95,7 +97,7 @@ export default function QuoteDetail({ ticker, from, title: fixedTitle, plain: ba
   const key = `${ticker}:${range}`;
   // Each period's series is kept while the page is open (owner, Nov 15): a period read once comes back at once, and while a new one is on its way the chart
   // on the screen stays, with a small spinner at its top right. A read is not cut off by another switch, so it is kept for when that period is picked again.
-  const store = useChartStore(key);
+  const store = useChartStore(key, initial?.chart ? { [`${ticker}:${initial.chart.period}`]: { bars: initial.chart.bars, before: initial.chart.before } } : null);
   const { put, fresh } = store;
   const reads = useRef(new Map<string, AbortController>());
   useEffect(() => {

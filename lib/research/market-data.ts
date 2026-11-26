@@ -140,6 +140,21 @@ export async function loadPeriodSet(ticker: string, period: BoardPeriod): Promis
   return shapePeriod(period, await bars(ticker, series.interval, series.size, isIntradayPeriod(period) ? {} : { slotMs: Math.max(10 * 60_000, barSlotMs(ticker, series.interval, Date.now())) }));
 }
 
+/** A stock page's first paint (speed, Nov 26): the shared copies only, never the provider (no credit, no per-request allowance). `quote`:
+ * this slot's copy or the last good one (its own time travels in asOf); `chart`: the default period's bars only when this slot's copy is
+ * there (an older chart is read by the page as before). */
+export async function peekQuote(ticker: string): Promise<MarketQuote | null> {
+  const got = await sharedReader.readMany<MarketQuote>(quoteSpec(Date.now()), [ticker], null).catch(() => ({} as Record<string, Result<MarketQuote | null>>));
+  return got[ticker]?.value ?? null;
+}
+export async function peekPeriodSet(ticker: string, period: BoardPeriod): Promise<{ bars: Bar[]; before: Bar[] } | null> {
+  const series = periodSeries(period);
+  const got = await barsEntry(ticker, series.interval, series.size, { fetch: false, ...(isIntradayPeriod(period) ? {} : { slotMs: Math.max(10 * 60_000, barSlotMs(ticker, series.interval, Date.now())) }) }).catch(() => null);
+  if (!got?.fresh || !got.value.length) return null;
+  const shaped = shapePeriod(period, got.value);
+  return shaped.bars.length ? shaped : null;
+}
+
 /** 銘柄検索「今日の注目」's daily bars (lib/research/search-focus-server.ts), read by the minute job the way refreshBoardSnapshot reads its
  * charts: the shared bar copy members' reads use, on the "warm" tier; `spend` is called only when the provider is really asked. */
 export function loadSnapshotDailyBars(ticker: string, size: number, spend: () => void): Promise<Result<Bar[]>> {
