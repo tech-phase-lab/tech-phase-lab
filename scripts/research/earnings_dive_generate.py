@@ -204,17 +204,28 @@ def _amount(value):
     return patrol.amount(value)
 
 
-PERIOD_END = re.compile(r'(?:quarter|three months|period|3Q|2Q|1Q|4Q)\s+ended\s+(?:on\s+)?((?:January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2},\s+20\d\d)', re.I)
+MONTH_DATE = re.compile(r'(January|February|March|April|May|June|July|August|September|October|November|December)\s+(\d{1,2}),\s+(20\d\d)')
+ENDED = re.compile(r'\b(?:ended|ending|as of)\b', re.I)
 
 
-def period_end(text):
-    m = PERIOD_END.search(text or '')
-    if not m:
-        return None
-    try:
-        return datetime.strptime(re.sub(r'\s+', ' ', m[1]), '%B %d, %Y').date().isoformat()
-    except ValueError:
-        return None
+def period_end(text, after=None, before=None):
+    """The quarter's end date as the release's tables state it: of the dates written right after "ended" (column headers, "the quarter
+    ended …"), the one between the previous quarter's end and the release date that the release repeats most. None when none fits."""
+    counts = {}
+    for m in ENDED.finditer(text or ''):
+        # Only a full date right after the word ("Three Months Ended August 1, 2026"); a header that lists several month-days before one
+        # year ("Ended October 25, October 26, … 2026 2025") is ambiguous and never read.
+        window = text[m.end():m.end() + 60].lstrip()
+        d = MONTH_DATE.match(window)
+        if not d:
+            continue
+        try:
+            day = datetime.strptime(f'{d[1]} {d[2]} {d[3]}', '%B %d %Y').date().isoformat()
+        except ValueError:
+            continue
+        if (after is None or day > after) and (before is None or day < before):
+            counts[day] = counts.get(day, 0) + 1
+    return max(counts, key=lambda k: (counts[k], k)) if counts else None
 
 
 def build(ticker, release, previous, note, today):
@@ -227,9 +238,17 @@ def build(ticker, release, previous, note, today):
     period = normalize_period(release.get('period'))
     if not period:
         raise ValueError('period-unreadable')
-    end = period_end(text)
-    if not end or not previous['periodEnd'] < end < release['releasedOn']:
+    end = period_end(text, previous['periodEnd'], release['releasedOn'])
+    if not end:
         raise ValueError('period-end-unreadable')
+    writer = None
+    try:
+        import dive_writers
+        writer = dive_writers.WRITERS.get(ticker)
+    except ImportError:
+        writer = None
+    if writer:
+        return company_dive(ticker, release, previous, writer, text, url, period, end, today)
     evidence, missing = [], []
 
     def need(entry, what):
@@ -357,8 +376,18 @@ def build(ticker, release, previous, note, today):
     elif year_ago_value is not None and len(tiles) < 3:
         amount_tile({'ja': '前年同期の売上高', 'en': 'Year-ago revenue'}, year_ago_value,
                     [e for e in evidence if e['field'] == 'numbers.revenue.yearAgo'][0])
+    # AMD (Nov 26): no outlook sentence the parser reads and a non-GAAP EPS basis the release table does not give: the release's own
+    # operating income or net income fills the tiles, from the same table, quoted like every figure.
+    for key, label in (('operating-income', {'ja': '営業利益(GAAP)', 'en': 'GAAP operating income'}), ('net-income', {'ja': '純利益(GAAP)', 'en': 'GAAP net income'})):
+        if len(tiles) >= 3:
+            break
+        read = _amount(facts.get(key, {}).get('value'))
+        if read and read[0] == currency and read[1] > 0:
+            entry = amount_evidence(f'tiles.{key}', read[1], text, url, r'operating income' if key == 'operating-income' else r'net income')
+            if entry:
+                amount_tile(label, read[1], entry)
     if len(tiles) < 3:
-        missing.append('a third figure for the tiles (guidance, margin or year-ago revenue)')
+        missing.append('a third figure for the tiles (guidance, margin, year-ago revenue or a profit line)')
     if missing:
         raise ValueError('missing: ' + '; '.join(missing))
 
@@ -372,6 +401,32 @@ def build(ticker, release, previous, note, today):
             'period': period, 'periodQuarter': int(period[1]), 'releasedOn': release['releasedOn'], 'periodEnd': end, 'reviewedOn': today,
             'currency': currency, 'basis': previous.get('basis'), 'sources': sources, 'evidence': evidence, 'tiles': tiles[:3],
             'numbers': numbers, 'history': history, 'summary': summary}
+
+
+def company_dive(ticker, release, previous, writer, text, url, period, end, today):
+    """A company with its own writer (dive_writers): the hand-made file's cards and figure kinds, from the release's tables."""
+    import dive_figures
+    figures = dive_figures.read(ticker, release['text'])
+    old = previous['history']
+    written = writer(figures, url, Decimal(str(old[-1]['value'])) if old else None)
+    history = [dict(h) for h in old[1:]] + [{'label': f"Q{previous['periodQuarter']}", 'end': previous['periodEnd'],
+                                             'value': previous['numbers']['revenue']['current']}]
+    evidence = list(written['evidence'])
+    quotes = {e['field']: e for e in previous.get('evidence') or []}
+    used = set()
+    for i in range(len(history)):
+        source = quotes.get(f'history[{i + 1}].value') if i < len(history) - 1 else quotes.get('numbers.revenue.current')
+        if not source:
+            raise ValueError(f'missing: history[{i}] quote in the previous file')
+        used.add(source['url'])
+        evidence.append({**source, 'field': f'history[{i}].value'})
+    sources = [{'url': url, 'title': f"{previous['name']} {period} results release (Form {release.get('form', '8-K')}, SEC)",
+                'location': 'Results release, financial tables and outlook'}]
+    sources += [s for s in previous.get('sources') or [] if s['url'] in used and s['url'] != url]
+    return {'ticker': ticker, 'name': previous['name'], 'exchange': previous['exchange'], 'quoteTicker': previous['quoteTicker'],
+            'period': period, 'periodQuarter': int(period[1]), 'releasedOn': release['releasedOn'], 'periodEnd': end, 'reviewedOn': today,
+            'currency': previous['currency'], 'basis': previous.get('basis'), 'sources': sources, 'evidence': evidence,
+            'tiles': written['tiles'], 'numbers': written['numbers'], 'history': history, 'summary': written['summary']}
 
 
 # ---- the summary: MU's own template first, then the stored deep analysis ----------------------------------------------------
