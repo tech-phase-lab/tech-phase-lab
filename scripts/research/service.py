@@ -4356,8 +4356,9 @@ class Handler(BaseHTTPRequestHandler):
                 self.send_json(503, {"ok": False, "error": "question-list-unavailable"})
             return
         if path == "/company-dives":
-            # Nov 26 (owner): earnings deep dives drafted for a new quarter that passed every check (earnings_dive_generate.py; off
-            # unless EARNINGS_DIVE_AI=true, so normally {}). Same token as /earnings-results; read only.
+            # Nov 26 (owner): earnings deep dives built for a new quarter, without any model call (earnings_dive_generate.py: MU's
+            # template over the parsed figures and the release's existing deep analysis), that passed every check. Same token as
+            # /earnings-results; read only.
             if not self.authorized():
                 self.send_json(401, {"ok": False, "error": "unauthorized"})
                 return
