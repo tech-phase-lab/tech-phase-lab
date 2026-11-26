@@ -261,8 +261,13 @@ def judge(ticker, release, section, now):
 
 # ---- the production pages ----------------------------------------------------------------------------------------------------
 
+ROUTE_DOWN = '_route-down'
+SITE_SUBJECT = 'SITE'
+
+
 def production_sections(site=None, fetch_json=None):
-    """{ticker: section} as production serves it; a company missing from the answer is None (site-unreadable)."""
+    """{ticker: section} as production serves it; a company missing from the answer is None (site-unreadable). When the route itself does
+    not answer (not deployed yet, or down), the key ROUTE_DOWN is set: one problem for the site, not one per company."""
     fetch_json = fetch_json or get_json
     site = (site or os.environ.get('EARNINGS_SITE_URL') or SITE).rstrip('/')
     sections = {}
@@ -272,7 +277,7 @@ def production_sections(site=None, fetch_json=None):
             if company.get('section'):
                 sections[company['ticker']] = {**company['section'], 'checks': company.get('checks'), 'hold': company.get('hold')}
     except Exception:  # noqa: BLE001
-        pass
+        sections[ROUTE_DOWN] = True
     try:
         mu = (fetch_json(site + '/api/research/watch-earnings') or {}).get('snapshot')
         if mu:
@@ -308,8 +313,14 @@ def patrol(now=None, tickers=None, fetch_json=None, read_release=None, sections=
         except Exception:  # noqa: BLE001 - one company's fetch error never stops the others
             results[ticker] = ['source-fetch-failed']
             continue
-        results[ticker] = judge(ticker, release, sections.get(ticker), now)
+        section = sections.get(ticker)
+        if section is None and sections.get(ROUTE_DOWN) and ticker != 'MU':
+            results[ticker] = []  # nothing to compare: reported once below, never as 21 separate problems
+        else:
+            results[ticker] = judge(ticker, release, section, now)
         results[ticker + ':release'] = release
+    # Nov 26: the patrol reached production before the site's route did; 21 "site-unreadable" alerts for one missing route was noise.
+    results[SITE_SUBJECT] = ['site-route-unavailable'] if sections.get(ROUTE_DOWN) else []
     return results, filings_by_ticker
 
 
@@ -318,8 +329,10 @@ def record(db, results, now, trigger):
     schema(db)
     at = now.isoformat(timespec='seconds')
     problems = {t: codes for t, codes in results.items() if not t.endswith(':release') and codes}
-    checked = [t for t in results if not t.endswith(':release')]
-    for ticker in checked:
+    subjects = [t for t in results if not t.endswith(':release')]
+    checked = [t for t in subjects if t != SITE_SUBJECT]  # the companies; the site route is its own subject
+    clean = len([t for t in checked if not results[t]])
+    for ticker in subjects:
         key = INCIDENT_PREFIX + ticker
         codes = results[ticker]
         if codes:
@@ -329,15 +342,15 @@ def record(db, results, now, trigger):
             monitor.resolve_operational_incident(db, key, resolved_at=at)
     with db:
         db.execute('INSERT INTO earnings_patrol_runs VALUES(?,?,?,?,?)',
-                   (at, trigger, len(checked), len(checked) - len(problems), json.dumps(problems, sort_keys=True)))
-    line = {'event': 'earnings-patrol', 'trigger': trigger, 'checked': len(checked), 'clean': len(checked) - len(problems),
+                   (at, trigger, len(checked), clean, json.dumps(problems, sort_keys=True)))
+    line = {'event': 'earnings-patrol', 'trigger': trigger, 'checked': len(checked), 'clean': clean,
             'problems': problems, 'at': at}
     day = now.astimezone(JST).date().isoformat()
     daily = None
     if not db.execute('SELECT 1 FROM earnings_patrol_days WHERE day=?', (day,)).fetchone():
         runs = db.execute('SELECT count(*) FROM earnings_patrol_runs WHERE julianday(at)>=julianday(?)',
                           ((now - timedelta(days=1)).isoformat(),)).fetchone()[0]
-        daily = {'event': 'earnings-patrol-daily', 'day': day, 'companies': len(checked), 'clean': len(checked) - len(problems),
+        daily = {'event': 'earnings-patrol-daily', 'day': day, 'companies': len(checked), 'clean': clean,
                  'stale': sorted(t for t, c in problems.items() if {'section-stale', 'dive-stale'} & set(c)),
                  'mismatch': sorted(t for t, c in problems.items() if CRITICAL & set(c) - {'section-stale'}),
                  'other': sorted(t for t, c in problems.items() if not (CRITICAL | {'dive-stale'}) & set(c)), 'runsLast24h': runs}
