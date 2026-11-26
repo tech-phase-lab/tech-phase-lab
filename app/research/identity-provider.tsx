@@ -6,7 +6,8 @@ import { jaJP, enUS } from "@clerk/localizations";
 import { clerkAppearance } from "@/lib/clerk-appearance";
 import { createContext, useCallback, useContext, useRef, type ReactNode } from "react";
 
-const IdentityRefresh = createContext<(force?: boolean) => Promise<void>>(async () => {});
+/** Renews the session; resolves false when the SDK has loaded and nobody is signed in (true once a signed-in session is renewed). */
+const IdentityRefresh = createContext<(force?: boolean) => Promise<void | boolean>>(async () => {});
 export function useIdentityRefresh() { return useContext(IdentityRefresh); }
 const IdentitySignedIn = createContext<boolean | null>(false);
 /** Whether a visitor is signed in: null while the identity SDK is still loading, false when sign-in is not configured.
@@ -19,12 +20,12 @@ function IdentitySession({ children }: { children: ReactNode }) {
   const pending = useRef<{ sessionId: string | null | undefined; task: Promise<void> } | null>(null);
   const refresh = useCallback(async (force = false) => {
     if (!isLoaded) throw Error("identity-loading");
-    if (!isSignedIn) return;
+    if (!isSignedIn) return false;
     // Never reuse a token refresh belonging to a previous signed-in session.
-    if (pending.current && pending.current.sessionId === sessionId) return pending.current.task;
+    if (pending.current && pending.current.sessionId === sessionId) return pending.current.task.then(() => true);
     const task = waitForIdentity(getToken({ skipCache: force }), AbortSignal.timeout(10_000)).then(() => {});
     pending.current = { sessionId, task };
-    try { await task; } finally { if (pending.current?.task === task) pending.current = null; }
+    try { await task; return true; } finally { if (pending.current?.task === task) pending.current = null; }
   }, [isLoaded, isSignedIn, getToken, sessionId]);
   return <IdentityRefresh.Provider value={refresh}><IdentitySignedIn.Provider value={isLoaded ? isSignedIn === true : null}>{children}</IdentitySignedIn.Provider></IdentityRefresh.Provider>;
 }

@@ -14,7 +14,7 @@ export const THEME_REQUEST_MS = 55_000;
 type Deps = {
   fetch: (url: string, init: RequestInit) => Promise<Response>;
   /** Renews the sign-in session before the request (`force` skips the cached token). Failure is not fatal: the request still goes. */
-  refresh: (force?: boolean) => Promise<void>;
+  refresh: (force?: boolean) => Promise<unknown>;
   signal: AbortSignal;
 };
 
