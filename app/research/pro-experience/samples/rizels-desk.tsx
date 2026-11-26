@@ -157,11 +157,10 @@ export default function RizelsDeskSample({ lang }: { lang: Lang }) {
   </div>;
 }
 
-/** One note as on the real page: Rizel's icon, the date line with NEW and the face button, the text, the badge with the counts. */
+/** One note as on the real page: Rizel's icon, the date line and the face button, the text, the badge with the counts. */
 function NoteCard({ note, lang, fresh, reactions }: { note: Note; lang: Lang; fresh: boolean; reactions: Reactions }) {
   const ja = lang === "ja";
-  const meta = <p className={columnStyles.meta}><span className={columnStyles.stamp}><time dateTime={note.publishedAt}>{note.date[lang]}</time><small className={columnStyles.zone}> JST</small></span>
-    {fresh && <span className={columnStyles.newTag}>NEW</span>}</p>;
+  const meta = <p className={columnStyles.meta}><span className={columnStyles.stamp}><time dateTime={note.publishedAt}>{note.date[lang]}</time><small className={columnStyles.zone}> JST</small></span></p>;
   return <article className={`${columnStyles.article} ${columnStyles.note} ${styles.note}`} data-note={note.id} data-fresh={fresh || undefined}>
     <div className={columnStyles.noteHeader}><div className={columnStyles.noteAvatar}><Avatar size={46} alt={ja ? "リゼル" : "RIZEL"} /></div></div>
     <div className={`${columnStyles.noteBubble} ${styles.bubble}`}>

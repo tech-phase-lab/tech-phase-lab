@@ -5,7 +5,7 @@ import type { Language } from "@/lib/research/data";
 import { availableNewsPayload, type GeneralNewsFeed, type GeneralNewsItem } from "@/lib/research/general-news";
 import { officialNewsDisplay, shownInLanguage } from "@/lib/research/news-presentation";
 import { analystNewsDisplay } from "@/lib/research/analyst-news";
-import { officialTime } from "@/lib/research/news-time";
+import { firstSeenOnDay, officialTime } from "@/lib/research/news-time";
 import { isFreshItem, markSeen, readSeen } from "@/lib/research/company-freshness";
 import { createNewsPoller } from "@/lib/research/news-poller";
 import { observePageActivity } from "@/lib/research/page-activity";
@@ -26,6 +26,8 @@ type Row = {
   label?: string; title: string; body?: string; wire?: CompanyWireItem;
 };
 
+/** Sort key: a date-only source sorts by when it was first seen that day (owner, Nov 26), else at the start of its day. */
+const rowInstant = (row: Pick<Row, "at" | "kind" | "observedAt">) => Date.parse(row.kind === "date" ? firstSeenOnDay(row.at, row.observedAt) ?? `${row.at}T00:00:00Z` : row.at);
 // Japan time in Japanese, U.S. Eastern in English (owner, Nov 17).
 const clock = (at: string, lang: Language) => displayClock(at, lang);
 /** Time column: today shows HH:mm, an earlier day shows its date over the time. A date-only source shows just the date. */
@@ -53,10 +55,10 @@ export default function CompanyActivity({ ticker, lang, sample }: { ticker: stri
   const [checkedAt, setCheckedAt] = useState<string | null>(sample?.checkedAt ?? null);
   const ja = lang === "ja";
   const [open, setOpen] = useState(false);
-  // NEW marks and the blinking dot/badge follow two rules: an item that appeared
+  // New-row dots (no NEW label, owner 11/26) and the blinking dot/badge follow two rules: an item that appeared
   // after the page opened, or one published within the hour and found promptly
   // (owner, Oct 14: MU showed many fresh items but nothing blinked). Opening
-  // clears the blink and badge; closing clears the NEW marks.
+  // clears the blink and badge; closing clears the new-row dots.
   const [unread, setUnread] = useState<ReadonlySet<string>>(new Set());
   const [dismissed, setDismissed] = useState<ReadonlySet<string>>(new Set());
   const [acknowledged, setAcknowledged] = useState<ReadonlySet<string>>(new Set());
@@ -121,8 +123,7 @@ export default function CompanyActivity({ ticker, lang, sample }: { ticker: stri
     ...(data?.analystUpdates ?? []).filter(item => item.ticker === ticker).map(item => ({ id: `analyst-${item.id}`, observedAt: item.observedAt, tag: "analyst" as Tag, ...analystNewsDisplay(item, lang), at: item.publishedAt, kind: "published" })),
     ...(data?.items ?? []).filter(item => item.tickers.includes(ticker)).map(item => ({ id: `news-${item.id}`, observedAt: item.observedAt, tag: "news" as Tag, label: ja ? "企業ニュース" : "Company news", title: (ja ? item.summaryJa : item.summaryEn) ?? "", body: ja ? item.impactJa : item.impactEn, at: item.publishedAt, kind: "published" })),
     ...wireRows.map(item => ({ id: `wire-${item.id}`, tag: "news" as Tag, title: (ja ? item.titleJa : item.titleEn) ?? "", at: item.publishedAt, kind: "published", wire: item })),
-  ].sort((a, b) => Date.parse(b.at) - Date.parse(a.at));
-  const rowInstant = (row: Row) => Date.parse(row.kind === "date" ? `${row.at}T00:00:00Z` : row.at);
+  ].sort((a, b) => rowInstant(b) - rowInstant(a));
   const rows = full ? allRows : freeWindow(allRows, rowInstant, clockNow).map(row => ({ ...row, body: undefined }));
   const tagText: Record<Tag, string> = ja ? { flash: "速報", analyst: "アナリスト", news: "ニュース" } : { flash: "Flash", analyst: "Analyst", news: "News" };
   const newest = rows[0];
@@ -135,7 +136,7 @@ export default function CompanyActivity({ ticker, lang, sample }: { ticker: stri
   const status = hasFresh ? (ja ? "新着あり" : "New") : failed ? (ja ? "再接続中" : "Reconnecting") : paused ? (ja ? "一時停止" : "Paused") : data ? (ja ? "自動更新" : "Auto-updating") : (ja ? "接続中" : "Connecting");
   const toggle = () => {
     if (!open) { setAcknowledged(new Set(marked)); if (live) markSeen(ticker); }                          // opening: blink and badge go
-    else { setDismissed(previous => new Set([...previous, ...marked])); setUnread(new Set()); } // closing: NEW marks go
+    else { setDismissed(previous => new Set([...previous, ...marked])); setUnread(new Set()); } // closing: the new-row dots go
     setOpen(!open);
   };
   // A time the source never stated is never shown as a publication time.
@@ -144,7 +145,7 @@ export default function CompanyActivity({ ticker, lang, sample }: { ticker: stri
   const item = (row: Row) => <article key={row.id} className={`${styles.item} ${marked.has(row.id) ? styles.unread : ""}`}>
     <span className={styles.when}>{timeCell(row, lang)}</span><span className={styles.node} aria-hidden="true"/>
     <div className={styles.entry}>
-      <div className={styles.meta}><span className={`${styles.tag} ${styles[row.tag]}`}>{tagText[row.tag]}</span>{marked.has(row.id) && <span className={styles.newMark}>NEW</span>}</div>
+      <div className={styles.meta}><span className={`${styles.tag} ${styles[row.tag]}`}>{tagText[row.tag]}</span></div>
       {row.wire
         ? <><p className={styles.headline} lang={lang}>{full ? <a href={row.wire.url} target="_blank" rel="noopener noreferrer nofollow">{row.title}</a> : row.title}</p><p className={styles.src}>{wireLabel(row.wire)}</p></>
         : <NewsStory lang={lang} label={row.label ?? ""} title={row.title} body={row.body} publication={detected(row, ja)}/>}

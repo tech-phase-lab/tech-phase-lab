@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { radarGenre, type RadarPayload } from "@/lib/research/radar";
 import sample from "@/lib/research/pro-experience-samples/radar.json";
-import RadarChart from "../../radar/chart";
+import RadarChart, { PickedDot } from "../../radar/chart";
 import { StrengthRanking } from "../../radar/screen";
 import radarStyles from "../../radar/radar.module.css";
 import styles from "./samples.module.css";
@@ -23,6 +23,7 @@ export default function FinancialRadarSample({ lang }: { lang: "ja" | "en" }) {
       <p className={radarStyles.axisY}>{ja ? "↑ 守る力 ｜ 現金÷(借入+リース)" : "↑ Financial resilience | Cash ÷ (debt + leases)"}</p>
       <RadarChart dots={radar.dots} selected={selected} onSelect={setSelected} lang={lang} />
       <p className={radarStyles.axisX}>{ja ? "稼ぐ力 ｜ 売上に対する営業キャッシュフロー →" : "Cash generation | Operating cash flow as % of revenue →"}</p>
+      <PickedDot dots={radar.dots} selected={selected} lang={lang} />
     </section>
   </div>;
 }

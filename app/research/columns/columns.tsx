@@ -135,10 +135,10 @@ export function ColumnArticle({ item, ja, ownerMode, access, fresh, reactions: p
   const lang = ja ? "ja" : "en";
   const date = <time dateTime={item.publishedAt!}>{formatDisplay(item.publishedAt!, lang, { dateStyle: "medium", ...(item.kind !== "weekly" ? { timeStyle: "short", hourCycle: "h23" } as const : {}) })}</time>;
   const answerLabel = <div className={styles.answerLabel}><Image src="/rizel-avatar.webp" alt={ja ? "リゼル" : "RIZEL"} width={32} height={32} unoptimized /><div><span>{ja ? "リゼル" : "RIZEL"}</span><small>{date} {zoneLabel(lang)}</small></div></div>;
-  // Only the newest note, for 30 minutes after posting, carries the gold NEW tag. The date, time and zone (JST / ET) never
-  // break apart; when the row is too narrow, NEW moves under them and the pencil and trash stay on the right.
-  const noteMeta = <p className={styles.meta}><span className={styles.stamp}>{date}<small className={styles.zone}> {zoneLabel(lang)}</small></span>{item.kind === "notes" && fresh && <span className={styles.newTag}>NEW</span>}</p>;
-  return <article className={`${styles.article} ${editing ? styles.editing : ""} ${item.kind === "notes" ? styles.note : item.kind === "qa" ? styles.qaArticle : ""}`} id={item.id}>
+  // The date, time and zone (JST / ET) never break apart; the pencil and trash stay on the right. The newest note (30 minutes after
+  // posting) is marked with data-fresh only: no NEW tag (owner, 11/26).
+  const noteMeta = <p className={styles.meta}><span className={styles.stamp}>{date}<small className={styles.zone}> {zoneLabel(lang)}</small></span></p>;
+  return <article className={`${styles.article} ${editing ? styles.editing : ""} ${item.kind === "notes" ? styles.note : item.kind === "qa" ? styles.qaArticle : ""}`} id={item.id} data-fresh={(item.kind === "notes" && fresh) || undefined}>
     {item.kind === "notes" ? <div className={styles.noteHeader}><div className={styles.noteAvatar}><Image src="/rizel-avatar.webp" alt={ja ? "リゼル" : "RIZEL"} width={46} height={46} unoptimized /></div></div> : item.kind === "weekly" ? <p className={styles.meta}>{postNames[item.kind][lang]} · {date}</p> : null}
     <div className={item.kind === "notes" ? styles.noteBubble : undefined}>
       {/* Nov 17 (owner): the right end of the date line is the pencil and trash for the owner, the face button for a PRO member. */}

@@ -2428,7 +2428,7 @@ class IntakeTests(unittest.TestCase):
         ]}).encode()
         self.assertEqual(m.news_json_links(body, "ASML", source), {
             "https://mfn.se/one/a/asml-holding/asml-reports-q3-2026-results-ab12cd34":
-                {"title": "ASML reports Q3 2026 results", "publishedOn": "2026-10-14"}})
+                {"title": "ASML reports Q3 2026 results", "publishedOn": "2026-10-14", "publishedAt": "2026-10-14T05:00:00+00:00"}})
         # The article page itself is not readable by our server; the release text comes inline.
         self.assertEqual(source["bodyKey"], "content.html")
         text = "<p>" + "ASML reports its third quarter results with total net sales and net income. " * 4 + "</p>"

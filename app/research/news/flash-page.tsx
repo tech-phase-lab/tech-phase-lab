@@ -17,7 +17,7 @@ import { readVisitStart } from "../use-alerts-unread";
 import timeline from "../companies/company-activity.module.css";
 import tabStyles from "./news-feed.module.css";
 import styles from "./flash-page.module.css";
-import FeedPagination from "./feed-pagination";
+import FeedPagination, { turnPageInPlace } from "./feed-pagination";
 import { displayClock, displayDayKey, zoneLabel } from "@/lib/research/display-time";
 import NewsStory from "./news-story";
 
@@ -35,12 +35,15 @@ export function dayHeading(key: string, ja: boolean) {
 function timeCell(row: FlashRow, lang: Language) {
   // A source that states only the day sits under that day's heading with no clock (owner, Oct 15: "時刻なし" removed).
   if (row.timeKind === "date") return null;
+  // A source that states no time shows when it was first seen, labelled 取得 / Found as on the company timeline: a found
+  // time is never shown as if it were the publication time (owner, Oct 10; label added Nov 26).
+  if (row.timeKind === "found") return <time dateTime={row.at}><span className={timeline.found}>{lang === "ja" ? "取得" : "Found"}</span>{displayClock(row.at, lang)}</time>;
   return <time dateTime={row.at}>{displayClock(row.at, lang)}</time>;
 }
 
 /** 速報: the watched companies' live monitor and earnings results as one
- * newest-first timeline. New rows look like the live monitor's: a mint dot,
- * NEW, and they stay marked until the page is left (owner, Oct 14). */
+ * newest-first timeline. New rows look like the live monitor's: a mint dot
+ * (no NEW label, owner 11/26), and they stay marked until the page is left (owner, Oct 14). */
 export default function FlashPage({ lang, onReady }: { lang: Language; onReady?: () => void }) {
   const ja = lang === "ja";
   const [feed, setFeed] = useState<GeneralNewsFeed | null>(null);
@@ -143,7 +146,7 @@ export default function FlashPage({ lang, onReady }: { lang: Language; onReady?:
   const item = (row: FlashRow) => <article key={row.id} className={`${timeline.item} ${marked(row) ? timeline.unread : ""}`}>
     <span className={timeline.when}>{timeCell(row, lang)}</span><span className={timeline.node} aria-hidden="true" />
     <div className={timeline.entry}>
-      <div className={timeline.meta}><span className={styles.ticker}>{row.tickers.join(" · ")}</span><span className={`${timeline.tag} ${row.kind === "earnings" ? styles.earnings : timeline.news}`}>{kindLabel[row.kind]}</span>{marked(row) && <span className={timeline.newMark}>NEW</span>}</div>
+      <div className={timeline.meta}><span className={styles.ticker}>{row.tickers.join(" · ")}</span><span className={`${timeline.tag} ${row.kind === "earnings" ? styles.earnings : timeline.news}`}>{kindLabel[row.kind]}</span></div>
       {/* A long headline shows two lines and the ＋ opens the whole text, never a cut-off "…" (owner, Oct 18). The left column carries the
           time, so no 「発表 …」 line under each item (owner, Nov 25). */}
       <NewsStory lang={lang} label="" title={row.title} body={full ? row.body : undefined} publication="" capDetail />
@@ -152,7 +155,7 @@ export default function FlashPage({ lang, onReady }: { lang: Language; onReady?:
   return <section className={styles.flash} aria-label={ja ? "速報" : "Alerts"}>
     <div className={styles.controls}>
       <div className={tabStyles.tabs} role="group" aria-label={ja ? "表示する速報" : "Alert filter"}>
-        {(["all", "earnings"] as const).map(key => <button key={key} type="button" aria-pressed={key === view} onClick={() => { setView(key); setPage(1); }}>{key === "all" ? (ja ? "すべて" : "All") : (ja ? "決算" : "Earnings")}</button>)}
+        {(["all", "earnings"] as const).map(key => <button key={key} type="button" aria-pressed={key === view} onClick={() => { if (list.current) list.current.style.minHeight = ""; setView(key); setPage(1); }}>{key === "all" ? (ja ? "すべて" : "All") : (ja ? "決算" : "Earnings")}</button>)}
       </div>
       <details className={styles.sources} ref={sources}>
         <summary>{ja ? "ニュース取得リスト" : "Stocks covered"}<span aria-hidden="true">▾</span></summary>
@@ -175,6 +178,6 @@ export default function FlashPage({ lang, onReady }: { lang: Language; onReady?:
         return [...heading, item(row)];
       })}</div>}
     </div>
-    <FeedPagination page={current} pages={pages} ja={ja} onChange={next => { setPage(next); list.current?.scrollIntoView({ block: "start", behavior: "instant" }); }} />
+    <FeedPagination page={current} pages={pages} ja={ja} onChange={next => { turnPageInPlace(list.current); setPage(next); }} />
   </section>;
 }

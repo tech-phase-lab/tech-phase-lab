@@ -71,3 +71,27 @@ test("facts reader: a later failed or empty read shows the earlier figures inste
   const later = await other.read(spec, "NVDA", readStats(NVDA));
   assert.equal(later.fresh, true);
 });
+
+// Owner, 11/26: 次回決算 showed "—" on NVDA's cards. A lookup that found no announced date says 未発表 / TBA; "—" is kept only for a date
+// that could not be read. Broadcom (Dec 9) and Micron (Dec 17) had announced dates the provider's list does not carry; they are now in the
+// reviewed calendar, which the facts read first.
+test("次回決算: a date when announced, 未発表 / TBA when none is announced, — only when the date could not be read", async () => {
+  const { nextEarningsText } = await import("../lib/research/market-quote.ts");
+  assert.equal(nextEarningsText({ nextEarnings: "2026-12-09", nextEarningsKnown: true }, "ja"), "12月9日");
+  assert.equal(nextEarningsText({ nextEarnings: "2026-12-09", nextEarningsKnown: true }, "en"), "Dec 9");
+  assert.equal(nextEarningsText({ nextEarnings: null, nextEarningsKnown: true }, "ja"), "未発表");
+  assert.equal(nextEarningsText({ nextEarnings: null, nextEarningsKnown: true }, "en"), "TBA");
+  assert.equal(nextEarningsText({ nextEarnings: null, nextEarningsKnown: false }, "ja"), "—");
+  assert.equal(nextEarningsText({ nextEarnings: null }, "en"), "—");
+  assert.equal(nextEarningsText(null, "ja"), "—");
+  assert.match(facts(), /nextEarningsKnown: own !== null \|\| earnings !== null/);
+  for (const file of ["app/research/price/quote-card.tsx", "app/research/price/quote-detail.tsx"]) {
+    const ui = read(file);
+    assert.doesNotMatch(ui, /dateJa\(facts/, file);
+    assert.match(ui, /nextEarningsText\(facts, ja \? "ja" : "en"\)/, file);
+  }
+  const { calendarEvents } = await import("../lib/research/calendar.ts");
+  const { nextEarningsFromSite } = await import("../lib/research/market-quote.ts");
+  assert.equal(nextEarningsFromSite("AVGO", calendarEvents, "2026-11-26"), "2026-12-09");
+  assert.equal(nextEarningsFromSite("MU", calendarEvents, "2026-11-26"), "2026-12-17");
+});

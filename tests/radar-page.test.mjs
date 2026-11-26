@@ -9,9 +9,10 @@ test("the page carries the owner's wording", () => {
   for (const text of ["FINANCIAL RADAR", "財務レーダー", "稼ぐ力と守る力を、ジャンルの中で比べます",
     "↑ 守る力　借金に対する手元の現金", "稼ぐ力　売上のうち現金で残る割合 →", "低い", "高い", "売上が増加", "売上が減少", "点の大きさ＝売上の規模",
     "各銘柄の稼ぐ力・守る力の数字と", "体力ランキング、前の決算からの動きが見られます", "🔒 PRO",
-    "↑ 守る力 ｜ 現金÷(借入+リース)", "稼ぐ力 ｜ 売上に対する営業キャッシュフロー →", "売上が前年より増加", "減少", "大きさ=売上規模", "白抜き=売上の比較なし", "点線=前の決算から", "フリーキャッシュフロー率", "稼ぐ力は営業キャッシュフローの売上に対する割合です。", "並び順:稼ぐ力と守る力の点数の平均。グラフの右上ほど上位です", "前受け金除く", "前受け金(顧客からの前払い)が大きい会社は、営業キャッシュフローが膨らんで見えます。", "1年間に受け取った前受け金が1年分の売上を超える会社は、その分を除いた営業キャッシュフローで稼ぐ力を計算し", "売上がまだないため順位なし",
+    "白抜き＝売上の比較なし", "点線＝前の決算から", "前の決算から", "フリーキャッシュフロー率", "稼ぐ力は営業キャッシュフローの売上に対する割合です。", "並び順:稼ぐ力と守る力の点数の平均。グラフの右上ほど上位です", "前受け金除く", "前受け金(顧客からの前払い)が大きい会社は、営業キャッシュフローが膨らんで見えます。", "1年間に受け取った前受け金が1年分の売上を超える会社は、その分を除いた営業キャッシュフローで稼ぐ力を計算し", "売上がまだないため順位なし",
     "体力ランキング", "最新の決算", "データが足りない銘柄 ・", "稼ぐ力", "守る力",
-    "数字は米SECの開示資料から計算しています。範囲を超える値はグラフの端に表示します。売買をすすめるものではありません。"]) assert.ok(screen.includes(text), text);
+    "数字は米SECの開示資料から計算しています。点はジャンルの中の順位で置いています。", "数字は点を押すと見られます。", "売買をすすめるものではありません。"]) assert.ok(screen.includes(text), text);
+  for (const text of ["範囲を超える値はグラフの端に表示します。", "Values outside the chart range appear at the edge."]) assert.ok(!screen.includes(text), text);
   for (const text of ["盤石", "借入で攻める", "守りで耐える", "余力が小さい"]) assert.ok(read("../lib/research/radar.ts").includes(text), text);
   for (const tab of ["AIクラウド", "半導体", "メモリ", "通信", "光・フォトニクス", "ソフトウェア", "電力・設備", "サイバーセキュリティ"]) assert.ok(read("../lib/research/radar.ts").includes(tab), tab);
 });
@@ -29,8 +30,8 @@ test("FREE sees a chart by rank and three blurred sample cards under 「🔒 PRO
   const locked = screen.slice(screen.indexOf("function LockedRanking"), screen.indexOf("/** 体力ランキング"));
   assert.ok(!/gold|#e7c77e|#c9a24f|#d8b36a/i.test(locked + css.slice(css.indexOf(".lockedRest"), css.indexOf(".lockCta p"))), "no gold on FREE");
   assert.match(screen, /\{pro \? <section className=\{styles\.card\}>/);
-  assert.match(screen, /<li><b aria-hidden="true">┈<\/b>\{t\("点線=前の決算から", "Dotted = since the previous report"\)\}<\/li>/);
-  assert.match(chart, /!isPro\(dot\) \|\| !dot\.previous/);
+  assert.match(screen, /<span><b aria-hidden="true">┈<\/b>\{t\("点線＝前の決算から", "Dotted = since the previous report"\)\}<\/span>/);
+  assert.match(chart, /if \(!dot\.previous \|\| !before\) return null;/);
 });
 
 test("the notes and the disclaimer open from the 「i」 beside the heading, for FREE and PRO alike (owner, Nov 25)", () => {
@@ -101,9 +102,10 @@ test("the page opens with the first genre's dots already in it, and the screen n
 });
 
 test("the English view has no Japanese left in the radar page (owner, Nov 6)", () => {
-  for (const text of ["Financial Radar", "Cash generation", "Financial resilience", "Financial strength ranking", "Financial cushion — cash vs. debt", "Cash earning power — cash kept from sales", "Compare earning power and financial cushion within each genre.", "See each stock's numbers, the strength ranking, and changes since the last report.", "Excl. prepayments", "Not ranked: no revenue yet", "Revenue up from a year earlier"]) assert.ok(screen.includes(text), text);
+  for (const text of ["Financial Radar", "Cash generation", "Financial resilience", "Financial strength ranking", "Financial cushion — cash vs. debt", "Cash earning power — cash kept from sales", "Compare earning power and financial cushion within each genre.", "See each stock's numbers, the strength ranking, and changes since the last report.", "Excl. prepayments", "Not ranked: no revenue yet", "Revenue up", "Hollow = no revenue comparison", "Dotted = since the previous report", "Since the previous report",
+    "Dots are placed by rank within the genre.", " Tap a dot to see its figures."]) assert.ok(screen.includes(text), text);
   const chart = read("../app/research/radar/chart.tsx");
-  assert.match(chart, /ja \? "横軸が稼ぐ力、縦軸が守る力の散布図" : "Scatter plot/);
+  assert.equal((chart.match(/ja \? "ジャンルの中の順位で並べた散布図。横が稼ぐ力、縦が守る力" : "Scatter plot by rank within the genre/g) ?? []).length, 2); // PRO and FREE (Nov 26)
   assert.match(read("../lib/research/radar.ts"), /zoneNameEn/);
 });
 
@@ -129,4 +131,32 @@ test("the owner's accounts always get the full PRO radar (figures, ranking, trai
   for (const id of [OWNER_ACCOUNT_ID, PRODUCTION_OWNER_ACCOUNT_ID]) assert.equal(comparisonAccess({ status: "signed-in", plan: "free", userId: id, ownerAccount: true }), 200);
   assert.equal(comparisonAccess({ status: "signed-in", plan: "free", userId: "user_someone_else", ownerAccount: false }), 403);
   assert.match(read("../app/api/research/radar/route.ts"), /comparisonAccess\(member\) === 200 \? "pro" : "free"/);
+});
+
+// Owner, Nov 26 (#842 follow-up): the PRO chart is placed by rank exactly as FREE; ticks and edge arrows are gone.
+test("PRO chart: rank places like FREE, no ticks or edge arrows, gold ring and gold frame, FREE's axis names and a 2-line legend", () => {
+  const chart = read("../app/research/radar/chart.tsx"), screen = read("../app/research/radar/screen.tsx"), css = read("../app/research/radar/radar.module.css");
+  const pro = chart.slice(chart.indexOf("export default function RadarChart"), chart.indexOf("export function RankChart"));
+  assert.match(pro, /proRankPlaces\(dots\)/);
+  for (const gone of ["X_TICKS", "Y_TICKS", "beyondDirections", "beyondText", "previousBeyondText", "spreadEdgeDots", "styles.tick", "data-beyond", "xPosition", "yPosition"]) assert.ok(!chart.includes(gone), gone);
+  assert.match(pro, /stroke=\{GOLD\}/);
+  assert.match(pro, /rankText\(place\.earnRank, layout\.count, ja\)/);
+  assert.match(pro, /rankText\(place\.coverRank, layout\.count, ja\)/);
+  assert.match(chart, /ja \? `\$\{count\}社中\$\{rank\}位`/);
+  assert.match(chart, /"変わらず"/);
+  assert.match(css, /\.picked \{[^}]*border: 1px solid rgba\(217, 181, 106/);
+  const proCard = screen.slice(screen.indexOf("{pro ? <section className={styles.card}>"), screen.indexOf("radar.tier === \"free\""));
+  const freeCard = screen.slice(screen.indexOf("radar.tier === \"free\""), screen.indexOf("<StrengthRanking pro={pro}"));
+  for (const line of ['t("↑ 守る力　借金に対する手元の現金", "↑ Financial cushion — cash vs. debt")', 't("稼ぐ力　売上のうち現金で残る割合 →", "Cash earning power — cash kept from sales →")',
+    't("売上が増加", "Revenue up")', 't("売上が減少", "Revenue down")', 't("点の大きさ＝売上の規模", "Dot size = revenue")']) { assert.ok(proCard.includes(line), line); assert.ok(freeCard.includes(line), line); }
+  assert.equal((proCard.match(/styles\.legendLine/g) ?? []).length, 2);
+});
+
+test("ranking tags use the zone of the dot on the chart; the order of the cards is unchanged; FREE's blurred samples keep theirs", () => {
+  const screen = read("../app/research/radar/screen.tsx");
+  assert.match(screen, /const zones = proRankPlaces\(pro\.dots\)\.places;/);
+  assert.match(screen, /<RankCard key=\{dot\.ticker\} dot=\{dot\} zone=\{zones\[dot\.ticker\]\?\.zone\} lang=\{lang\} \/>/);
+  assert.match(screen, /const ranked = pro\.dots\.filter\(dot => dot\.rank !== null\)\.sort\(\(a, b\) => a\.rank! - b\.rank!\);/);
+  assert.match(screen, /LOCKED_SAMPLE\.map\(dot => <RankCard key=\{dot\.ticker\} dot=\{dot\} lang=\{lang\} \/>\)/);
+  assert.match(screen, /グラフの右上ほど上位です/);
 });

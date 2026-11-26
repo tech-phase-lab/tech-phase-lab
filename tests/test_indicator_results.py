@@ -199,6 +199,20 @@ CLAIMS_TEXT = ("1 News Release Connect with DOL at https://blog.dol.gov TRANSMIS
 CLAIMS_NOW = datetime(2026, 11, 19, 13, 31, tzinfo=timezone.utc)  # Thursday 8:31 a.m. EST
 
 
+# The opening of the Nov 25, 2026 release (Wednesday, before Thanksgiving), as the PDF reader gives it.
+CLAIMS_FULL = ("1 News Release Connect with DOL at https://blog.dol.gov TRANSMISSION OF MATERIALS IN THIS RELEASE IS EMBARGOED UNTIL 8:30 A.M. (Eastern) "
+               "Wednesday, November 25, 2026 UNEMPLOYMENT INSURANCE WEEKLY CLAIMS SEASONALLY ADJUSTED DATA In the week ending November 21, the advance "
+               "figure for seasonally adjusted initial claims was 189,000, a decrease of 13,000 from the previous week's revised level. The previous week's level "
+               "was revised down by 1,000 from 203,000 to 202,000. The 4-week moving average was 196,000, a decrease of 1,500 from the previous week's revised "
+               "average. The previous week's average was revised down by 250 from 197,750 to 197,500. The advance seasonally adjusted insured unemployment rate "
+               "was 1.1 percent for the week ending November 14, a decrease of 0.1 percentage point from the previous week's revised rate. The previous week's "
+               "rate was revised up by 0.1 from 1.1 to 1.2 percent. The advance number for seasonally adjusted insured unemployment during the week ending "
+               "November 14 was 1,697,000, a decrease of 95,000 from the previous week's revised level. The previous week's level was revised up 29,000 from "
+               "1,763,000 to 1,792,000. The 4-week moving average was 1,724,750, an increase of 500 from the previous week's revised average. The previous "
+               "week's average was revised up by 7,250 from 1,717,000 to 1,724,250.")
+CLAIMS_FULL_NOW = datetime(2026, 11, 25, 13, 31, tzinfo=timezone.utc)
+
+
 class Claims(unittest.TestCase):
     """Weekly jobless claims from DOL's release PDF (Nov 21). The fixture is the opening of the Nov 19, 2026 release."""
 
@@ -270,6 +284,76 @@ class Claims(unittest.TestCase):
                 row = db.execute("SELECT ok,error FROM event_feed_status WHERE publisher=?", (ind.CLAIMS_SOURCE,)).fetchone()
             self.assertEqual((row["ok"], row["error"]), (0, "HTTPError:403"))
         self.assertIn("TechPhaseResearch", ind.USER_AGENT, "a plainly named reader, never a browser's name")
+
+    def test_the_4_week_average_and_continuing_claims_are_read_with_the_advance_figure(self):
+        r = ind.parse_claims(CLAIMS_FULL)
+        self.assertEqual(r["average"], {"value": 196000, "change": -1500, "before": 197750})
+        self.assertEqual(r["insured"], {"value": 1697000, "change": -95000, "week": date(2026, 11, 14), "before": 1763000})
+        p = ind.claims_payload(r, ind.CLAIMS_URL, CLAIMS_FULL_NOW)
+        self.assertEqual(p["resultJa"], "189,000件（前週改定値から13,000件減）", "the result line and its notification stay as they were")
+        self.assertTrue(p["detailJa"].startswith("4週平均：196,000件（前週比1,500件減）。継続受給者数：1,697,000人（11月14日終了週・前週比95,000人減）。"))
+        self.assertTrue(p["detailEn"].startswith("4-week average: 196,000 (down 1,500 from the previous week). Continuing claims: 1,697,000 (week ending November 14, down 95,000 from the previous week)."))
+        self.assertTrue(p["detailsRead"])
+
+    def test_a_figure_we_cannot_read_is_left_out(self):
+        r = ind.parse_claims(CLAIMS_FULL.replace("The 4-week moving average was 196,000", "The four-week average was 196,000")
+                             .replace("week ending November 14 was 1,697,000", "week ending November 7 was 1,697,000"))
+        self.assertNotIn("average", r, "odd wording")
+        self.assertNotIn("insured", r, "continuing claims are for the week before the initial claims")
+        self.assertEqual(r["value"], 189000)
+        p = ind.claims_payload(r, ind.CLAIMS_URL, CLAIMS_FULL_NOW)
+        self.assertNotIn("4週平均", p["detailJa"])
+        self.assertNotIn("継続受給者数", p["detailJa"])
+        self.assertEqual(ind.parse_claims(CLAIMS_TEXT)["average"], {"value": 197750, "change": 2000}, "the average of the Nov 19 release, with no revision sentence")
+
+    def test_results_stored_before_the_extra_figures_get_them_once_from_the_current_release(self):
+        calls = []
+        def fetch_pdf(url):
+            calls.append(url)
+            return b"%PDF"
+        old = lambda week, at, ja: {"id": f"claims-{week}", "titleJa": "t", "titleEn": "t", "sourceName": "DOL", "releasedAt": at, "resultJa": ja, "resultEn": "r",
+                                    "detailJa": ind.CLAIMS_NOTE_JA, "detailEn": ind.CLAIMS_NOTE_EN, "sourceUrl": ind.CLAIMS_URL, "sources": [], "verifiedOn": at[:10]}
+        later = datetime(2026, 11, 26, 5, 0, tzinfo=timezone.utc)  # Thanksgiving, outside the release window
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "t.sqlite"
+            with events.connect(path) as db:
+                events._store(db, "claims-2026-11-14", "published", old("2026-11-14", "2026-11-19T13:30:00+00:00", "203,000件（前週改定値から1,000件増）"), CLAIMS_NOW)
+                events._store(db, "claims-2026-11-21", "published", old("2026-11-21", "2026-11-25T13:30:00+00:00", "189,000件（前週改定値から13,000件減）"), CLAIMS_FULL_NOW)
+            run = lambda when: ind.run_once(path, now=when, config={"version": 1, "fomcMeetings": []}, transport=lambda url: "",
+                                            fetch_pdf=fetch_pdf, read_pdf=lambda content: CLAIMS_FULL)
+            self.assertEqual(run(later), 0, "nothing new is stored")
+            self.assertEqual(calls, [ind.CLAIMS_URL])
+            self.assertEqual(run(later + timedelta(hours=2)), 0)
+            self.assertEqual(len(calls), 1, "once the figures are added the PDF is not asked for again")
+            with events.connect(path) as db:
+                rows = {r["id"]: (r["published_at"], json.loads(r["payload"])) for r in db.execute("SELECT id,published_at,payload FROM event_results")}
+            self.assertEqual(rows["claims-2026-11-21"][0], events.stamp(CLAIMS_FULL_NOW), "the time it was published stays")
+            this, before = rows["claims-2026-11-21"][1], rows["claims-2026-11-14"][1]
+            self.assertEqual(this["resultJa"], "189,000件（前週改定値から13,000件減）")
+            self.assertIn("4週平均：196,000件（前週比1,500件減）。", this["detailJa"])
+            # The figures this release says the week before was revised from are the ones that week's own release gave.
+            self.assertTrue(before["detailJa"].startswith("4週平均：197,750件。継続受給者数：1,763,000人（11月7日終了週）。"))
+            self.assertTrue(this["detailsRead"] and before["detailsRead"])
+
+    def test_a_stored_result_without_figures_is_retried_at_most_hourly_and_only_for_a_week(self):
+        calls = []
+        def fetch_pdf(url):
+            calls.append(url)
+            return b"%PDF"
+        stale = {"id": "claims-2026-11-21", "releasedAt": "2026-11-25T13:30:00+00:00", "resultJa": "189,000件（前週改定値から13,000件減）", "detailJa": "", "detailEn": ""}
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "t.sqlite"
+            with events.connect(path) as db:
+                events._store(db, stale["id"], "published", stale, CLAIMS_FULL_NOW)
+            run = lambda when: ind.run_once(path, now=when, config={"version": 1, "fomcMeetings": []}, transport=lambda url: "",
+                                            fetch_pdf=fetch_pdf, read_pdf=lambda content: "an unrecognised page")
+            start = datetime(2026, 11, 26, 5, 0, tzinfo=timezone.utc)
+            run(start); run(start + timedelta(minutes=30))
+            self.assertEqual(len(calls), 1, "not again within the hour")
+            run(start + timedelta(minutes=61))
+            self.assertEqual(len(calls), 2)
+            run(datetime(2026, 12, 4, 5, 0, tzinfo=timezone.utc))
+            self.assertEqual(len(calls), 2, "more than eight days after the release, the PDF holds another week")
 
     def test_claims_are_offered_to_the_notification_sender(self):
         import web_push
