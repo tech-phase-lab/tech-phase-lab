@@ -6,7 +6,6 @@ import styles from "./price-targets-panel.module.css";
 import { EventStreamParser, abortableDelay, createSnapshotRevisionGuard } from "@/lib/research/event-stream";
 import { observePageActivity } from "@/lib/research/page-activity";
 
-import { formatTargetTime } from "@/lib/research/price-target-time";
 import { publicPriceTargets, type PriceTarget as Target } from "@/lib/research/price-targets";
 import { publishPriceTargets } from "@/lib/research/price-target-snapshot";
 
@@ -19,8 +18,8 @@ let snapshot: { items: Target[]; at: string; time: number } | null = null;
 const recent = () => snapshot && Date.now() - snapshot.time < 120_000 ? snapshot : null;
 
 /** sample: the owner's filming row (price-targets page, ?demo=nvda only; lib/research/price-target-sample.ts), shown first, never shared.
- * heading: the ANALYST / 目標株価の変更 / 過去1週間 block. The 目標株価 page turns it off (owner, Nov 26): its page title carries
- * 「アナリストによる変更・過去1週間」 instead, and the pager then brings that page title back into view.
+ * heading: the PRICE TARGETS / 目標株価の変更 block (the one-week span line went, owner Nov 27). The 目標株価 page turns it off (owner, Nov 26): its page title carries
+ * its own one-line description instead, and the pager then brings that page title back into view.
  * `initial`: the feed the server drew into the first HTML (app/research/price-targets/page.tsx; the same for every visitor). */
 export default function PriceTargetsPanel({ lang, sample = null, heading = true, initial = null }: { lang: Language; sample?: Target | null; heading?: boolean; initial?: { items: Target[]; at: string } | null }) {
   const panelRef = useRef<HTMLElement>(null);
@@ -28,7 +27,8 @@ export default function PriceTargetsPanel({ lang, sample = null, heading = true,
   const now = useCalendarClock();
   const [items, setItems] = useState<Target[]>(() => initial?.items ?? recent()?.items ?? []);
   const [status, setStatus] = useState<"loading" | "ready" | "error">(() => initial || recent() ? "ready" : "loading");
-  const [updatedAt, setUpdatedAt] = useState<string | null>(() => initial?.at ?? recent()?.at ?? null);
+  // The dot beside 新着を自動表示 blinks for a moment each time new data arrives (owner, Nov 27).
+  const [flash, setFlash] = useState(0);
   const [delivery, setDelivery] = useState<"connecting" | "live" | "polling">("connecting");
   const [page, setPage] = useState(1);
   useEffect(() => {
@@ -42,7 +42,7 @@ export default function PriceTargetsPanel({ lang, sample = null, heading = true,
       const data = publicPriceTargets(value);
       if (active && !signal.aborted) {
         const at = new Date().toISOString(); snapshot = { items: data.items, at, time: Date.now() };
-        setItems(data.items); publishPriceTargets(data.items); setStatus("ready"); setUpdatedAt(at);
+        setItems(data.items); publishPriceTargets(data.items); setStatus("ready"); setFlash(n => n + 1);
       }
     };
     const readFallback = async (signal: AbortSignal) => {
@@ -168,13 +168,12 @@ export default function PriceTargetsPanel({ lang, sample = null, heading = true,
     return () => { active = false; lifetime.abort(); pause(); observer?.disconnect(); stopObserving(); };
   }, []);
   const t = (ja: string, en: string) => lang === "ja" ? ja : en;
-  const time = (date: string) => formatTargetTime(date, lang);
   // The sample row (if any) first; paging counts it.
   const shown = withPriceTargetSample(items, sample);
   const pages = Math.max(1, Math.ceil(shown.length / 4));
   const current = Math.min(page, pages);
   return <section ref={panelRef} id="home-price-targets" className={styles.panel} aria-label={t("目標株価の速報", "Price target updates")}>
-    {heading && <div className={styles.head}><p className={styles.eyebrow}>ANALYST</p><h2>{t("目標株価の変更", "Price target changes")}</h2><p className={styles.period}>{t("過去1週間", "Past week")}</p></div>}
+    {heading && <div className={styles.head}><p className={styles.eyebrow}>PRICE TARGETS</p><h2>{t("目標株価の変更", "Price target changes")}</h2></div>}
     {status === "error" && <p role="status" className={styles.state}>{t("現在、目標株価の更新を取得できません。表示内容は最新とは限りません。", "Price target updates are temporarily unavailable. Displayed items may be stale.")}</p>}
     {status === "loading" && <div aria-busy="true" aria-label={t("目標株価を取得中", "Fetching price targets")} className={styles.pending} />}
     {status === "ready" && shown.length === 0 && <p className={styles.state}>{t("条件に合う目標株価の投稿はまだありません。", "No matching price target posts yet.")}</p>}
@@ -184,8 +183,7 @@ export default function PriceTargetsPanel({ lang, sample = null, heading = true,
     <FeedPagination page={current} pages={pages} ja={lang === "ja"} onChange={n => { turnPageInPlace((heading ? null : panelRef.current?.closest("main")?.querySelector("h1")?.closest("header")) ?? panelRef.current, listRef.current); setPage(n); }} />
     <div className={styles.footer}>
       <div className={styles.syncMeta}>
-        {updatedAt && <p className={styles.updated}>{t("表示データの取得日時", "Last updated")}: <time dateTime={updatedAt} title={time(updatedAt)}>{time(updatedAt)}</time></p>}
-        <span className={styles.refresh}>{delivery === "live" ? t("新着を自動表示", "Live updates") : delivery === "polling" ? t("再接続中…", "Reconnecting…") : t("接続中…", "Connecting…")}</span>
+        <span className={styles.refresh}>{delivery === "live" && <i aria-hidden="true" key={flash} className={styles.liveDot} />}{delivery === "live" ? t("新着を自動表示", "Live updates") : delivery === "polling" ? t("再接続中…", "Reconnecting…") : t("接続中…", "Connecting…")}</span>
       </div>
     </div>
   </section>;

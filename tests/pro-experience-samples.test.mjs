@@ -183,8 +183,8 @@ test("Stock Comparison: every factor of every pair has a score and a figure (割
   assert.equal(metric("NVDA")("momentum"), "約3か月 +14.6%");
   assert.equal(metric("ARM")("stability"), "営業黒字 4/4四半期");
   assert.equal(metric("ARM")("cash"), "簡易FCF率 17.6%");
-  // Nothing is left blank, so the sample leaves out the 「— 未取得…」 legend (the real screen keeps it).
-  assert.match(read(`${SAMPLES}compare.tsx`), /<ScoreOverview [^>]*missingNote=\{false\}/);
+  // The 「— 未取得…」 legend is gone everywhere (owner, Nov 27).
+  assert.doesNotMatch(read(`${SAMPLES}compare.tsx`), /missingNote/);
   assert.match(read("../app/research/compare/screen.tsx"), /<ScoreOverview companies=\{result.companies\} lang=\{lang\} now=\{now\}\/>/);
 });
 

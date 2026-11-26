@@ -85,7 +85,6 @@
 .detailButtons button span{color:#a7c9b9;font-size:16px}
 .detailPanels .analysisDetails{border-top:0;padding-top:0}
 .detailPanels>div[role="region"]:not([hidden]){margin-top:14px;padding:0 14px;border:1px solid #78908726;border-radius:8px;background:#0d171e}
-.sampleFootnote{font-size:10px;color:#8b9fa7;text-align:right}
 @media(max-width:600px){.detailButtons{gap:8px}.detailButtons button{font-size:12px}.scoreOverview[data-count="2"] .snapshotTable th:first-child{width:30%}}
 
 /* PRO result palette: charcoal, ivory and restrained champagne accents. */
