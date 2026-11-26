@@ -8,7 +8,7 @@
  *  - No revenue in the last twelve months (pre-revenue, or sales that stopped):
  *      cash generation -> cash runway: (cash + short-term investments) ÷ the average quarterly operating cash outflow of up to four quarters;
  *      growth          -> net-loss trend: the last four quarters' net income against the four before (else the last two fiscal years);
- *      profitability   -> R&D intensity: R&D expense ÷ operating expenses of the same period (else ÷ R&D plus general and administrative);
+ *      profitability   -> not scored (no revenue, no margin); the R&D share of operating expenses (else of R&D plus G&A) is shown as a fact;
  *      stability       -> share dilution: weighted-average shares of the latest period against the same period a year earlier, both as
  *                         presented in the same filing (its comparatives are restated for splits, so a reverse split is not a buyback).
  *  - Banks, insurers, brokers and BDCs (finance SIC), where current ratio and free cash flow say nothing:
@@ -64,6 +64,7 @@ const NET_INCOME = ["NetIncomeLoss", "ProfitLoss", "ProfitLossAttributableToOwne
 const RD = ["ResearchAndDevelopmentExpense", "ResearchAndDevelopmentExpenseExcludingAcquiredInProcessCost", "ResearchAndDevelopmentExpense"];
 const OPEX = ["OperatingExpenses", "CostsAndExpenses"];
 const GA = ["GeneralAndAdministrativeExpense", "SellingGeneralAndAdministrativeExpense", "AdministrativeExpense"];
+const EQUITY = ["StockholdersEquity", "StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest", "EquityAttributableToOwnersOfParent", "Equity"];
 const WEIGHTED = ["WeightedAverageNumberOfSharesOutstandingBasic", "WeightedAverageNumberOfDilutedSharesOutstanding", "WeightedAverageShares", "AdjustedWeightedAverageShares"];
 
 export type PreRevenueMetrics = {
@@ -143,8 +144,12 @@ export function sectorMetrics(facts: Facts, unit: string, end: string, equity: n
     const q = standaloneQuarters(ni), ends = chain([...q.keys()], end);
     if (ends.length === 4 && ends[0] === end) roe = { pct: ends.reduce((a, e) => a + q.get(e)!, 0) / equity * 100, basis: "quarters" };
     else {
-      const year = ni.filter(f => f.end === end && duration(f) >= 350 && duration(f) <= 380).sort((a, b) => b.filed.localeCompare(a.filed))[0];
-      if (year) roe = { pct: year.val / equity * 100, basis: "year" };
+      // Else the latest fiscal year (at most 500 days old): its net income over the equity at that same year end, both as filed.
+      const years = ni.filter(f => duration(f) >= 350 && duration(f) <= 380 && f.end <= end && day(end) - day(f.end) <= 500).sort((a, b) => b.end.localeCompare(a.end) || b.filed.localeCompare(a.filed));
+      const year = years[0];
+      const equityThen = year ? rows(facts, EQUITY, unit, true).filter(f => f.end === year.end).sort((a, b) => b.filed.localeCompare(a.filed))[0] : undefined;
+      const base = year && year.end === end ? equity : equityThen?.val;
+      if (year && base && base > 0) roe = { pct: year.val / base * 100, basis: "year" };
     }
   }
   let niiMargin: number | null = null;

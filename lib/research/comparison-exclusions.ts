@@ -22,13 +22,13 @@ import exclusionLists from "./comparison-exclusions.json" with { type: "json" };
 export type EtnIssuer = { name: string; shares: string[] };
 /** instrument: ticker -> kind, from the provider's free reference list (scripts/research/comparison-audit/instruments.py): a preferred or
  *  baby bond, an exchange-traded note, a warrant, a unit or a royalty/grantor trust that no ticker rule recognises (SOJD, KTN, OPENZ, PBT). */
-export type InstrumentKind = "preferred" | "etn" | "warrant" | "unit" | "trust";
+export type InstrumentKind = "preferred" | "etn" | "warrant" | "unit" | "right" | "trust";
 export type ExclusionLists = { spac: Record<string, string>; fund: Record<string, string>; etn: Record<string, EtnIssuer>; instrument?: Record<string, string> };
 export type ExclusionKind = "spac" | "fund" | "etn" | "preferred" | "warrant" | "unit" | "right" | "trust" | "unlisted";
 /** The exchanges the comparison offers (owner, Nov 26: individual company stocks listed on an exchange only; NYSE American is listed by
  *  the SEC as NYSE). Over-the-counter tickers and a ticker with no exchange yet are not offered. */
 export const COMPARISON_EXCHANGES: readonly string[] = ["Nasdaq", "NYSE", "CBOE", "TXSE"];
-const INSTRUMENT_KINDS: readonly string[] = ["preferred", "etn", "warrant", "unit", "trust"];
+const INSTRUMENT_KINDS: readonly string[] = ["preferred", "etn", "warrant", "unit", "right", "trust"];
 type Entry = { ticker: string; cik: number | string; name: string; exchange?: string };
 
 const SUFFIX: [RegExp, ExclusionKind][] = [[/-P[A-Z]?$/, "preferred"], [/-(?:WTA?|WS|W)$/, "warrant"], [/-(?:UN|U)$/, "unit"], [/-(?:RI|R)$/, "right"]];

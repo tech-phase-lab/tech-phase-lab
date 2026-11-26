@@ -8,10 +8,27 @@ export const ALTERNATIVE_LABELS = {
     months: (m: number): Copy => ({ ja: `資金の持ち期間 約${m >= 100 ? "100+" : m.toFixed(m < 10 ? 1 : 0)}か月`, en: `Cash runway ~${m >= 100 ? "100+" : m.toFixed(m < 10 ? 1 : 0)} months` }),
     positive: { ja: "資金の持ち期間 営業キャッシュフロー黒字", en: "Cash runway: operating cash flow positive" } as Copy,
   },
-  lossTrend: (pct: number, basis: "quarters" | "years"): Copy => ({
-    ja: `${basis === "quarters" ? "直近4四半期" : "直近期"}の純損益 前年比${signed(pct)}%`,
-    en: `Net income vs a year earlier ${signed(pct)}% (${basis === "quarters" ? "last 4 quarters" : "fiscal year"})` }),
-  rdIntensity: (share: number): Copy => ({ ja: `研究開発費の比率 ${share.toFixed(0)}%`, en: `R&D share of spending ${share.toFixed(0)}%` }),
+  /** Net income now against a year earlier, said plainly (owner's review, Nov 26: 「純損益 前年比-24.5%」 did not say whether the loss grew). */
+  lossTrend: (now: number, before: number, basis: "quarters" | "years"): Copy => {
+    const when = basis === "quarters" ? { ja: "直近4四半期の", en: " (last 4 quarters vs the 4 before)" } : { ja: "直近期の", en: " (fiscal year vs the year before)" };
+    const pct = before !== 0 ? Math.abs((Math.abs(now) - Math.abs(before)) / Math.abs(before) * 100).toFixed(1) : "";
+    if (now < 0 && before < 0) return Math.abs(now) > Math.abs(before)
+      ? { ja: `${when.ja}赤字が前年より${pct}%拡大`, en: `Loss ${pct}% larger than a year earlier${when.en}` }
+      : { ja: `${when.ja}赤字が前年より${pct}%縮小`, en: `Loss ${pct}% smaller than a year earlier${when.en}` };
+    if (now >= 0 && before < 0) return { ja: `${when.ja}損益が黒字に転換`, en: `Turned profitable${when.en}` };
+    if (now < 0 && before >= 0) return { ja: `${when.ja}損益が赤字に転落`, en: `Turned to a loss${when.en}` };
+    return { ja: `${when.ja}純利益 前年比${signed((now - before) / Math.abs(before || 1) * 100)}%`, en: `Net income vs a year earlier ${signed((now - before) / Math.abs(before || 1) * 100)}%${when.en}` };
+  },
+  /** Profitability of a company with no revenue: no margin exists, so no score; the line says so and gives the R&D share of spending as a
+   *  fact (owner's review, Nov 26: R&D intensity scored as profitability was a stretch). */
+  noMargin: (share: number | null): Copy => share === null ? { ja: "売上が無く利益率は出せません", en: "No revenue: no margin" }
+    : { ja: `売上が無く利益率は出せません（研究開発費は費用の${share.toFixed(0)}%）`, en: `No revenue: no margin (R&D is ${share.toFixed(0)}% of spending)` },
+  /** A bank's, insurer's or broker's cash generation when no net income can be matched to its equity. */
+  noRoe: { ja: "ROEの計算に必要な純利益が未開示", en: "Net income for ROE not available" } as Copy,
+  /** An operating income above the revenue line: the margin is not scored. */
+  marginWithheld: { ja: "営業利益が売上を上回るため利益率を出しません", en: "Operating income exceeds revenue: margin not scored" } as Copy,
+  /** Free cash flow above the revenue itself (an upfront licence payment, customer deposits): not scored as cash generation. */
+  fcfAboveRevenue: { ja: "営業キャッシュフローが売上を上回る（前受金など）ため簡易FCF率を出しません", en: "Cash flow exceeds revenue (e.g. upfront payments): FCF margin not scored" } as Copy,
   dilution: (pct: number): Copy => ({ ja: `株数の増加 前年比${signed(pct)}%`, en: `Share count vs a year earlier ${signed(pct)}%` }),
   capitalRatio: (pct: number): Copy => ({ ja: `自己資本比率 ${pct.toFixed(1)}%`, en: `Equity ÷ assets ${pct.toFixed(1)}%` }),
   roe: (pct: number): Copy => ({ ja: `ROE ${signed(pct)}%`, en: `Return on equity ${signed(pct)}%` }),
@@ -26,7 +43,6 @@ export const ALTERNATIVE_LABELS = {
   missing: {
     cash: { ja: "営業キャッシュフローの記載なし", en: "No operating cash flow reported" } as Copy,
     growth: { ja: "比べる前年の純損益が未開示", en: "No year-earlier net income to compare" } as Copy,
-    profitability: { ja: "研究開発費の記載なし", en: "No R&D expense reported" } as Copy,
     stability: { ja: "前年同期の株数が未開示", en: "No year-earlier share count" } as Copy,
   },
   /** Why a company has no current figures (Financials.gapReason): the availability note, and the line beside each filing-based score. */
@@ -42,9 +58,9 @@ export const ALTERNATIVE_LABELS = {
       line: { ja: "売上の記載を読み取れません", en: "Revenue line not readable" } as Copy },
   },
   /** The availability note for a company whose newest quarter's revenue is filed as zero. */
-  zeroQuarterNote: { ja: "直近四半期の売上がゼロの会社です。資金の持ち期間・損益の推移・研究開発費・株数の増加で比べます。", en: "No revenue in the latest quarter: compared on cash runway, net-income trend, R&D share and share dilution." } as Copy,
+  zeroQuarterNote: { ja: "直近四半期の売上がゼロの会社です。資金の持ち期間・赤字の推移・株数の増加で比べます。売上が無いため利益率は出しません。", en: "No revenue in the latest quarter: compared on cash runway, loss trend and share dilution; no margin without revenue." } as Copy,
   /** The availability note for a pre-revenue company now compared on its own metrics. */
-  preRevenueNote: { ja: "売上がまだ無い会社です。資金の持ち期間・損益の推移・研究開発費・株数の増加で比べます。", en: "No revenue yet: compared on cash runway, net-income trend, R&D share and share dilution." } as Copy,
+  preRevenueNote: { ja: "売上がまだ無い会社です。資金の持ち期間・赤字の推移・株数の増加で比べます。売上が無いため利益率は出しません。", en: "No revenue yet: compared on cash runway, loss trend and share dilution; no margin without revenue." } as Copy,
 };
 
 /** What each new metric measures, for the factor notes (method text), in the same voice as twelveFactorMethods. */
@@ -53,8 +69,8 @@ export const ALTERNATIVE_METHODS: Record<string, Copy> = {
     en: "For a company with no revenue yet, cash generation is its cash runway: cash and short-term investments divided by the average quarterly operating cash outflow (up to four quarters). 0 months scores 0, 24 months or more scores 10." },
   lossTrend: { ja: "売上がまだ無い会社の成長性は、直近4四半期の純損益をその前の4四半期と比べた変化で見ます。4四半期分が無ければ直近2期で比べます。変化なし＝5点、損失50%縮小＝10点、50%拡大＝0点。",
     en: "For a company with no revenue yet, growth is the change in net income over the last four quarters against the four before (else the last two fiscal years). Unchanged scores 5, a loss 50% smaller scores 10, 50% larger scores 0." },
-  rdIntensity: { ja: "売上がまだ無い会社の収益性の欄は、費用のうち研究開発費の比率です。利益の指標ではありません。0%＝0点、80%以上＝10点。",
-    en: "For a company with no revenue yet, the profitability row shows R&D as a share of operating expenses (not a profit measure). 0% scores 0, 80% or more scores 10." },
+  rdIntensity: { ja: "売上がまだ無い会社には利益率が無いため、収益性は点を付けず、費用のうち研究開発費の比率を参考に表示します。",
+    en: "A company with no revenue has no margin: profitability is not scored, and its R&D share of operating expenses is shown for reference." },
   dilution: { ja: "売上がまだ無い会社の安定性は、株数（加重平均）の前年同期比の増加で見ます。増加なし＝10点、+50%以上＝0点。株式併合は同じ書類の修正後の数字で比べます。",
     en: "For a company with no revenue yet, stability is the year-on-year increase in its weighted-average share count, both figures from the same filing (split-adjusted). No increase scores 10, +50% or more scores 0." },
   capitalRatio: { ja: "銀行・保険・証券・BDCの財務健全性は、自己資本÷総資産（自己資本比率）で見ます。0%＝0点、20%以上＝10点。",

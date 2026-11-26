@@ -48,10 +48,11 @@ test("a drug developer's runway, net-loss trend, R&D share and dilution, read fr
   assert.equal(m.dilution.pct.toFixed(1), "120.7");          // 42.80m vs 19.39m, both in the Sep 30, 2026 10-Q (split-restated)
   const scores = Object.fromEntries(comparisonScores(c, now).map(s => [s.id, s.value]));
   assert.deepEqual({ growth: scores.growth, profitability: scores.profitability, cash: scores.cash, stability: scores.stability },
-    { growth: 2.5, profitability: 6.9, cash: 6.9, stability: 0 });
+    { growth: 2.5, profitability: null, cash: 6.9, stability: 0 });
   assert.equal(comparisonMetric(c, "cash", "ja", now), "資金の持ち期間 約17か月");
-  assert.equal(comparisonMetric(c, "growth", "ja", now), "直近4四半期の純損益 前年比-24.5%");
-  assert.equal(comparisonMetric(c, "profitability", "ja", now), "研究開発費の比率 55%");
+  assert.equal(comparisonMetric(c, "growth", "ja", now), "直近4四半期の赤字が前年より24.5%拡大");
+  // No revenue, no margin: profitability is not scored; the R&D share is shown as a fact (owner's review, Nov 26).
+  assert.equal(comparisonMetric(c, "profitability", "ja", now), "売上が無く利益率は出せません（研究開発費は費用の55%）");
   assert.equal(comparisonMetric(c, "stability", "ja", now), "株数の増加 前年比+120.7%");
   assert.match(comparisonAvailability(c, "ja", now), /資金の持ち期間/);
 });
@@ -59,7 +60,7 @@ test("a drug developer's runway, net-loss trend, R&D share and dilution, read fr
 test("a company whose sales stopped years ago is compared like a drug developer (ALXO: last revenue 2020)", () => {
   const c = extractFinancials("ALXO", "1280776", drugDeveloper({ ticker: "ALXO", lastRevenue: 5_000_000 }), now);
   assert.equal(c.preRevenue, true);
-  assert.ok(comparisonScores(c, now).filter(s => ["growth", "profitability", "cash", "stability"].includes(s.id)).every(s => s.value !== null));
+  assert.ok(comparisonScores(c, now).filter(s => ["growth", "cash", "stability"].includes(s.id)).every(s => s.value !== null));
 });
 
 test("the scales are fixed: the same figure always gives the same score", () => {

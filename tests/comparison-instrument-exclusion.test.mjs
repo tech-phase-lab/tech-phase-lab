@@ -52,3 +52,21 @@ test("only exchange-listed stocks are offered (owner, Nov 26): an over-the-count
   assert.equal(one(e("EXMPF", "OTC")), "unlisted");
   assert.equal(one(e("EXMP", "IPO")), "unlisted");   // parseSecDirectory's name for a ticker with no exchange yet
 });
+
+// Nov 26 data-quality audit: listings the provider types "Common Stock" whose names say otherwise, tickers it does not list at all (each
+// checked against the issuer's SEC filings), and a company that became a registered closed-end fund.
+test("notes, preferreds and rights typed as common stock, equity units and a converted fund are not offered; the common stock is", () => {
+  const more = [
+    { ticker: "AGNC", cik: 1423689, name: "AGNC Investment Corp.", exchange: "Nasdaq" }, { ticker: "AGNCZ", cik: 1423689, name: "AGNC Investment Corp.", exchange: "Nasdaq" },
+    { ticker: "RWAY", cik: 1653384, name: "Runway Growth Finance Corp.", exchange: "Nasdaq" }, { ticker: "RWAYI", cik: 1653384, name: "Runway Growth Finance Corp.", exchange: "Nasdaq" },
+    { ticker: "AMPG", cik: 1518461, name: "AmpliTech Group, Inc.", exchange: "Nasdaq" }, { ticker: "AMPGZ", cik: 1518461, name: "AmpliTech Group, Inc.", exchange: "Nasdaq" },
+    { ticker: "DUK", cik: 1326160, name: "Duke Energy CORP", exchange: "NYSE" }, { ticker: "DUKU", cik: 1326160, name: "Duke Energy CORP", exchange: "NYSE" },
+    { ticker: "VOC", cik: 1505413, name: "VOC Energy Trust", exchange: "NYSE" },
+    { ticker: "EARN", cik: 1560672, name: "Ellington Credit Co", exchange: "NYSE" },
+    { ticker: "PFBC", cik: 1492165, name: "PREFERRED BANK", exchange: "Nasdaq" },
+  ];
+  const k = ticker => comparisonExclusion(more.find(r => r.ticker === ticker), tickersByCik(more), lists);
+  assert.equal(k("AGNCZ"), "preferred"); assert.equal(k("RWAYI"), "preferred"); assert.equal(k("AMPGZ"), "right");
+  assert.equal(k("DUKU"), "unit"); assert.equal(k("VOC"), "trust"); assert.equal(k("EARN"), "fund");
+  for (const t of ["AGNC", "RWAY", "AMPG", "DUK", "PFBC"]) assert.equal(k(t), null, t);
+});

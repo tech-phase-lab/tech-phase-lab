@@ -66,7 +66,9 @@ export function comparisonScores(c: Financials, now = Date.now()): ComparisonSco
   const recent = hasRecentQuarter(c, now), balanceOnly = !recent && hasRecentBalance(c, now);
   // No revenue a year earlier (a new product line, ACHR): growth against the previous quarter, labelled as such.
   const growth = recent && finite(c.quarterRevenueGrowth) ? clamp(5+c.quarterRevenueGrowth/10) : recent && finite(c.quarterRevenueQoq) ? clamp(5+c.quarterRevenueQoq/10) : null;
-  const profitability = recent && finite(c.quarterOperatingMargin) ? clamp(c.quarterOperatingMargin/5) : null;
+  // A margin above 100% (operating income above revenue) or free cash flow above revenue is no measure of the business: never scored,
+  // whatever source gave it (the filing withholds them itself: marginWithheld, fcfWithheld; Nov 26 data-quality audit).
+  const profitability = recent && finite(c.quarterOperatingMargin) && c.quarterOperatingMargin <= 100 ? clamp(c.quarterOperatingMargin/5) : null;
   const balance=c.balance;
   // Financial strength needs a current balance plus debt disclosures. Missing
   // debt is unknown, never zero; an annual snapshot cannot fill this score.
@@ -75,7 +77,7 @@ export function comparisonScores(c: Financials, now = Date.now()): ComparisonSco
   // Banks and brokers have no current assets or liabilities: cash against debt alone, on the full ten-point scale, labelled as such.
   const financial = balanced && finite(balance!.currentRatio) ? clamp(5*Math.min(balance!.currentRatio,2)/2 + 5*Math.min(balance!.cash!.value/Math.max(debt!,1),1))
     : balanced ? clamp(10*Math.min(balance!.cash!.value/Math.max(debt!,1),1)) : null;
-  const cash = recent && finite(c.quarterFcfMargin) ? clamp(5+c.quarterFcfMargin/5) : null;
+  const cash = recent && finite(c.quarterFcfMargin) && c.quarterFcfMargin <= 100 ? clamp(5+c.quarterFcfMargin/5) : null;
   const extra=c.twelveData ? twelveExtraFactors(c.twelveData,now) : null;
   // Company-type metrics where the standard one has no meaning (comparison-alternatives.ts), each on its own fixed scale; a standard score
   // that exists is never replaced.
@@ -105,7 +107,8 @@ export function alternativeScores(c: Financials, recent: boolean, balanceOnly: b
   const S = ALTERNATIVE_SCALES;
   if (balanceOnly && c.preRevenueMetrics) {
     const m = c.preRevenueMetrics, trend = lossTrendPct(m);
-    return { cash: S.runway(runway(m)), growth: trend === null ? null : S.lossTrend(trend), profitability: m.rd ? S.rdIntensity(m.rd.share) : null,
+    // Profitability has no stand-in: with no revenue there is no margin (the line says so and shows the R&D share as a fact).
+    return { cash: S.runway(runway(m)), growth: trend === null ? null : S.lossTrend(trend), profitability: null,
       stability: m.dilution ? S.dilution(m.dilution.pct) : null };
   }
   const s = c.sectorMetrics;
@@ -117,13 +120,13 @@ export function alternativeScores(c: Financials, recent: boolean, balanceOnly: b
 function alternativeMetric(c: Financials, id: ScoreId, lang: "ja"|"en", recent: boolean, balanceOnly: boolean): string | null {
   const alt = alternativeScores(c, recent, balanceOnly)[id];
   const L = ALTERNATIVE_LABELS;
-  if (alt === null && balanceOnly && c.preRevenueMetrics && (id === "cash" || id === "growth" || id === "profitability" || id === "stability")) return L.missing[id][lang];
+  if (balanceOnly && c.preRevenueMetrics && id === "profitability") return L.noMargin(c.preRevenueMetrics.rd?.share ?? null)[lang];
+  if (alt === null && balanceOnly && c.preRevenueMetrics && (id === "cash" || id === "growth" || id === "stability")) return L.missing[id][lang];
   if (alt === null || alt === undefined) return null;
   if (balanceOnly && c.preRevenueMetrics) {
     const m = c.preRevenueMetrics;
     if (id === "cash") { const r = runway(m); return (r.cashPositive ? L.runway.positive : L.runway.months(r.months!))[lang]; }
-    if (id === "growth") return L.lossTrend(lossTrendPct(m)!, m.netIncome!.basis)[lang];
-    if (id === "profitability") return L.rdIntensity(m.rd!.share)[lang];
+    if (id === "growth") return L.lossTrend(m.netIncome!.now, m.netIncome!.before, m.netIncome!.basis)[lang];
     if (id === "stability") return L.dilution(m.dilution!.pct)[lang];
     return null;
   }
@@ -161,8 +164,8 @@ export function comparisonMetric(c: Financials, id: ScoreId, lang: "ja"|"en", no
   if(providerMetric)return providerMetric;
   if(id==="growth" && finite(c.quarterRevenueGrowth)) return `${ja?"売上前年比":"Revenue growth (YoY)"} ${c.quarterRevenueGrowth>0?"+":""}${c.quarterRevenueGrowth.toFixed(1)}%`;
   if(id==="growth" && finite(c.quarterRevenueQoq)) return `${ja?"売上前四半期比":"Revenue growth (QoQ)"} ${c.quarterRevenueQoq>0?"+":""}${c.quarterRevenueQoq.toFixed(1)}%`;
-  if(id==="profitability" && finite(c.quarterOperatingMargin)) return `${c.quarterOperatingIncome?.tag==="TechPhasePretaxIncome" ? (ja?"税引前利益率":"Pre-tax margin") : (ja?"営業利益率":"Operating margin")} ${c.quarterOperatingMargin.toFixed(1)}%`;
-  if(id==="cash" && finite(c.quarterFcfMargin)) return c.fcfPeriod==="annual" ? ALTERNATIVE_LABELS.annualFcf(c.quarterFcfMargin)[lang] : `${ja?"簡易FCF率":"Simple FCF margin"} ${c.quarterFcfMargin.toFixed(1)}%`;
+  if(id==="profitability" && finite(c.quarterOperatingMargin) && c.quarterOperatingMargin <= 100) return `${c.quarterOperatingIncome?.tag==="TechPhasePretaxIncome" ? (ja?"税引前利益率":"Pre-tax margin") : (ja?"営業利益率":"Operating margin")} ${c.quarterOperatingMargin.toFixed(1)}%`;
+  if(id==="cash" && finite(c.quarterFcfMargin) && c.quarterFcfMargin <= 100) return c.fcfPeriod==="annual" ? ALTERNATIVE_LABELS.annualFcf(c.quarterFcfMargin)[lang] : `${ja?"簡易FCF率":"Simple FCF margin"} ${c.quarterFcfMargin.toFixed(1)}%`;
   const ownBalance=c.balance?.end===c.quarterRevenue?.end || (!!c.balance && c.balance.end===c.balanceFromQuarter) || balanceOnly;
   if(id==="financial" && ownBalance && !finite(c.balance?.currentRatio) && c.balance?.cash && balanceDebt(c)!==null) {
     const debt=balanceDebt(c)!;
@@ -184,7 +187,10 @@ function missingReason(c: Financials, id: ScoreId, ja: boolean): string {
   const noRevenue=!c.quarterRevenue || c.quarterRevenue.value<=0;
   if(noRevenue && (id==="growth"||id==="profitability"||id==="cash"||id==="stability")) return r("売上がまだ無い会社です","No revenue yet");
   if(id==="growth") return r("前年同期の売上が未開示","Year-ago revenue not available");
+  if(id==="profitability" && (c.marginWithheld || (finite(c.quarterOperatingMargin) && c.quarterOperatingMargin > 100))) return ALTERNATIVE_LABELS.marginWithheld[ja?"ja":"en"];
   if(id==="profitability") return r("営業利益の記載なし","No operating income reported");
+  if(id==="cash" && (c.fcfWithheld==="aboveRevenue" || (finite(c.quarterFcfMargin) && c.quarterFcfMargin > 100))) return ALTERNATIVE_LABELS.fcfAboveRevenue[ja?"ja":"en"];
+  if(id==="cash" && c.sectorMetrics && !c.sectorMetrics.roe && c.quarterFcfMargin===null) return ALTERNATIVE_LABELS.noRoe[ja?"ja":"en"];
   if(id==="cash") return r("キャッシュフロー未開示","Cash flow not available");
   if(id==="stability") return r("4四半期分の利益率がそろいません","Four quarters of margins not available");
   if(id==="financial") return r("借入の記載を読み取れません","Debt figures not readable");

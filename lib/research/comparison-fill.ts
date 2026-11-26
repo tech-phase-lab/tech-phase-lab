@@ -29,7 +29,7 @@ export function fillFromProvider(sec: Financials, provider: Financials | null | 
   const supplemented = new Set(sec.supplemented ?? []);
   const before = supplemented.size;
   if (lagging) {
-    if ((!finite(out.quarterFcfMargin) || out.fcfPeriod === "annual") && finite(provider.quarterFcfMargin)) { out.quarterFcfMargin = provider.quarterFcfMargin; delete out.fcfPeriod; supplemented.add("cash"); }
+    if (fcfFillable(out, provider)) { out.quarterFcfMargin = provider.quarterFcfMargin; delete out.fcfPeriod; supplemented.add("cash"); }
     fillMarket(out, provider, supplemented, now);
     out.supplemented = [...supplemented];
     if (supplemented.size > before) out.supplementedFromQuarter = provider.quarterRevenue!.end;
@@ -38,14 +38,21 @@ export function fillFromProvider(sec: Financials, provider: Financials | null | 
   if (!finite(out.quarterRevenueGrowth) && finite(provider.quarterRevenueGrowth)) {
     out.quarterRevenueGrowth = provider.quarterRevenueGrowth; out.previousQuarterRevenue = provider.previousQuarterRevenue; supplemented.add("growth");
   }
-  if (!finite(out.quarterOperatingMargin) && finite(provider.quarterOperatingMargin)) {
+  // A margin the filing withholds (operating income above revenue) is not taken from the provider either; nor is any margin above 100%.
+  if (!finite(out.quarterOperatingMargin) && !out.marginWithheld && finite(provider.quarterOperatingMargin) && provider.quarterOperatingMargin <= 100) {
     out.quarterOperatingMargin = provider.quarterOperatingMargin; out.quarterOperatingIncome = provider.quarterOperatingIncome; supplemented.add("profitability");
   }
   // A fiscal year's figure that stood in for the quarter (fcfPeriod, marginPeriod "annual") gives way to the provider's same quarter.
-  if ((!finite(out.quarterFcfMargin) || out.fcfPeriod === "annual") && finite(provider.quarterFcfMargin)) { out.quarterFcfMargin = provider.quarterFcfMargin; delete out.fcfPeriod; supplemented.add("cash"); }
+  if (fcfFillable(out, provider)) { out.quarterFcfMargin = provider.quarterFcfMargin; delete out.fcfPeriod; supplemented.add("cash"); }
   fillMarket(out, provider, supplemented, now);
   out.supplemented = [...supplemented];
   return out;
+}
+
+/** Cash generation from the provider: only where the filing gives none (or only a fiscal year's), never where the filing withholds it on
+ *  purpose (a bank's free cash flow, cash flow above revenue: fcfWithheld), and never a figure above 100% of revenue. */
+function fcfFillable(out: Financials, provider: Financials): boolean {
+  return (!finite(out.quarterFcfMargin) || out.fcfPeriod === "annual") && !out.fcfWithheld && finite(provider.quarterFcfMargin) && provider.quarterFcfMargin <= 100;
 }
 
 function fillMarket(out: Financials, provider: Financials, supplemented: Set<string>, now: number) {

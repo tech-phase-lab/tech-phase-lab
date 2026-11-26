@@ -35,6 +35,14 @@ FUND_FORMS = re.compile(r"^(N-CSRS?|NPORT-P|N-CEN)$")
 FUND_NAME = re.compile(r"\bETF\b|\bETFs\b|\bTrust\b|\bFund\b|iShares|SPDR|ProShares|Grayscale", re.I)
 SPAC_NAME = re.compile(r"Acquisitions?(?: [IVX0-9]+)? (?:Corp|Co\b|Company|Inc|Ltd|Holdings)|\bSPAC\b|Merger Corp|Blank Check", re.I)
 EXCHANGE = {"Nasdaq": "NASDAQ", "NYSE": "NYSE", "CBOE": "CBOE", "OTC": "OTC"}
+# Twelve Data types some notes, preferreds and rights "Common Stock" (Nov 26 data-quality audit: AGNCZ "Depositary Shs Repr 1/1000th Cum Conv
+# Red Perp Pfd", RWAYI "7.25% Notes due 2031", ADAMH/ADAML/ADAMZ, AMPGZ "Series B Right"): the name decides when it says so plainly.
+NOT_COMMON = [(re.compile(r"\bNotes? due\b|\bSenior Notes\b|\bSubordinated Notes\b|\bDebentures?\b|\bBaby Bonds?\b", re.I), "preferred"),
+              (re.compile(r"\bPreferred Stock\b|\bPfd\b|\bPerpetual Preferred\b", re.I), "preferred"),
+              (re.compile(r"\bRights?$|\bSeries [A-Z] Rights?\b", re.I), "right")]
+# Exchange tickers absent from Twelve Data's list, each checked by hand against the issuer's SEC filings (Nov 26): a royalty trust, two
+# utilities' equity units (mandatory convertible units, not their common stock DUK and PPL) and a REIT's convertible notes.
+VERIFIED = {"VOC": "trust", "DUKU": "unit", "PPLC": "unit", "WHLRL": "preferred"}
 provider_symbol = lambda t: re.sub(r"^([A-Z]{1,6})-([A-OQ-Z])$", r"\1.\2", t)
 
 root = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../.."))
@@ -61,6 +69,9 @@ for r in rows:
     types = {x.get("type") for x in same}
     kind = next((KINDS[t] for t in ("Exchange-Traded Note", "Warrant", "Unit", "Preferred Stock", "Trust") if t in types), None)
     if kind == "trust" and not re.search(r"\bTrust\b", name, re.I): kind = None
+    if not kind and types <= {"Common Stock"}:
+        kind = next((k for x in same for pattern, k in NOT_COMMON if pattern.search(str(x.get("name", "")))), None)
+    if not kind and not listed: kind = VERIFIED.get(ticker)
     if kind: instrument[ticker] = kind; continue
     if cik in seen_cik: continue
     sub = cached(f"https://data.sec.gov/submissions/CIK{cik:010d}.json")
@@ -70,6 +81,12 @@ for r in rows:
     periodic = any(f.startswith(("10-K", "10-Q")) for f in forms)
     sic = str(sub.get("sic") or "")
     if any(FUND_FORMS.match(f) for f in forms) and not periodic: fund[str(cik)] = name; continue
+    # A company that became a registered closed-end fund (Ellington Credit, EARN, in 2025): its newest report is a fund report (N-CSR,
+    # N-CSRS, NPORT-P), filed after its last 10-K or 10-Q.
+    ordered = (sub.get("filings", {}).get("recent", {}) or {}).get("form", [])
+    first = lambda test: next((i for i, f in enumerate(ordered) if test(f)), None)
+    newest_fund, newest_periodic = first(lambda f: bool(FUND_FORMS.match(f))), first(lambda f: f.startswith(("10-K", "10-Q")))
+    if newest_fund is not None and newest_periodic is not None and newest_fund < newest_periodic: fund[str(cik)] = name; continue
     if (sic == "6221" and re.search(r"\bL\.?P\.?$", name)) or sic in ("6221", "6199", "") and FUND_NAME.search(name) and (sic or not any(f.startswith("10-Q") for f in forms)):
         fund[str(cik)] = name; continue
     # A blank-check company files the SIC code of the industry it hopes to buy into (BCCQ 3760, IPXG 7373): its name and its trust account
