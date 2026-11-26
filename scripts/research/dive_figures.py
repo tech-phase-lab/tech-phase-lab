@@ -255,7 +255,37 @@ def arista(t):
     }
 
 
-SPECS = {'CRDO': credo, 'MRVL': marvell, 'AVGO': broadcom, 'AMD': amd, 'ANET': arista}
+AMOUNT = r'\$([\d.,]+) (billion|million)'
+
+
+def palantir(t):
+    ops = 'Condensed Consolidated Statements of Operations'
+    grew = r' grew (\d+)% year-over-year and (\d+)% quarter-over-quarter to ' + AMOUNT
+    return {   # three months this year and last, then nine months (in thousands); the previous quarter is in the previous file
+        'revenue': row(t, 'Revenue', 2, ops, 'Cost of revenue', thousands=True, width=4),
+        'grossProfit': row(t, 'Gross profit', 2, ops, 'Operating expenses', thousands=True, width=4),
+        'sbc': row(t, 'Total stock-based compensation', 2, ops, 'Condensed Consolidated Balance Sheets', thousands=True, width=4),
+        'eps': sentence(t, r'Adjusted EPS, Diluted \$ ([\d.]+)', (1,), unit='per-share'),
+        'total': sentence(t, r'•Revenue' + grew, (1, 2, 3, 4), unit='text'),
+        'us': sentence(t, r'•U\.S\. revenue' + grew, (1, 2, 3, 4), unit='text'),
+        'usCommercial': sentence(t, r'U\.S\. commercial revenue' + grew, (1, 2, 3, 4), unit='text'),
+        'usGovernment': sentence(t, r'U\.S\. government revenue' + grew, (1, 2, 3, 4), unit='text'),
+        'deals': sentence(t, r'Closed (\d+) deals of at least \$1 million, (\d+) deals of at least \$5 million, and (\d+) deals of at least \$10 million', (1, 2, 3), unit='text'),
+        'tcv': sentence(t, r'Closed total contract value \(.TCV.\) of ' + AMOUNT + r', (up|down) (\d+)% year-over-year', (1, 2, 3, 4), unit='text'),
+        'rdv': sentence(t, r'U\.S\. commercial remaining deal value \(.RDV.\) of ' + AMOUNT + r', (up|down) (\d+)% year-over-year and (?:up )?(\d+)% quarter-over-quarter',
+                        (1, 2, 3, 4, 5), unit='text'),
+        'gaapOp': sentence(t, r'GAAP income from operations of ' + AMOUNT + r', representing a (\d+)% margin', (1, 2, 3), unit='text'),
+        'adjOp': sentence(t, r'Adjusted income from operations of ' + AMOUNT + r', representing a (\d+)% margin', (1, 2, 3), unit='text'),
+        'cfo': sentence(t, r'Cash from operations of ' + AMOUNT + r', representing a (\d+)% margin', (1, 2, 3), unit='text'),
+        'fcf': sentence(t, r'Adjusted free cash flow of ' + AMOUNT + r', representing a (\d+)% margin', (1, 2, 3), unit='text'),
+        'cash': sentence(t, r'Cash, cash equivalents, and U\.S\. Treasury securities of ' + AMOUNT, (1, 2), unit='text'),
+        'firstTime': sentence(t, r'U\.S\. commercial revenue surpassed U\.S\. government revenue for the (first) time', (1,), unit='text'),
+        'guidanceRevenue': sentence(t, r'For Q[1-4] 20\d\d, we expect: ?•Revenue of between \$([\d.]+) - \$([\d.]+) billion', (1, 2), multipliers=[1000, 1000]),
+        'guidanceAdjOp': sentence(t, r'•Adjusted income from operations of between \$([\d.]+) - \$([\d.]+) billion\.?•?For full year', (1, 2), multipliers=[1000, 1000]),
+    }
+
+
+SPECS = {'CRDO': credo, 'MRVL': marvell, 'AVGO': broadcom, 'AMD': amd, 'ANET': arista, 'PLTR': palantir}
 
 
 # ---- foreign issuers whose results come as several exhibits of one 6-K (release, presentation, financial statements) ---------

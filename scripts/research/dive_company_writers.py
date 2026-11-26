@@ -372,4 +372,142 @@ def anet(f, url, before_previous, report=None, events=None, previous=None):
     return {'tiles': tiles, 'numbers': numbers, 'evidence': ev.items, 'summary': summary(conclusion, growth, changes, caution, nxt)}
 
 
-WRITERS = {'AMD': amd, 'ANET': anet}
+# ---- amounts written in a sentence ("$2.313 billion", "$984 million") ---------------------------------------------------------
+
+def amt(figure, i):
+    """(millions, en as printed, ja) of the amount at raws[i] with its unit word at raws[i + 1]."""
+    raw, unit = figure.values[i], figure.values[i + 1]
+    million = Decimal(raw) * (1000 if unit == 'billion' else 1)
+    return million, f'${raw}{"B" if unit == "billion" else "M"}', usd(million)['ja']
+
+
+def pct_sign(direction, value):
+    return ('−' if direction == 'down' else '+') + str(value) + '%'
+
+
+# ---- Palantir (PLTR) -------------------------------------------------------------------------------------------------------------
+
+def pltr(f, url, before_previous, report=None, events=None, previous=None):
+    need(f, 'revenue', 'grossProfit', 'sbc', 'eps', 'total', 'us', 'usCommercial', 'usGovernment', 'deals', 'tcv', 'rdv', 'gaapOp', 'adjOp', 'cfo', 'fcf',
+         'cash', 'guidanceRevenue', 'guidanceAdjOp')
+    ev = Evidence(url)
+    rev, gp, eps = f['revenue'], f['grossProfit'], f['eps']
+    r0, r2 = rev.values
+    ev.add('numbers.revenue.current', rev, 0)
+    ev.add('numbers.revenue.yearAgo', rev, 1)
+    r1 = carried(ev, previous, 'numbers.revenue.current', 'numbers.revenue.previous')
+    gm0 = q(gp.values[0] / r0 * 100)
+    ev.add('numbers.grossMargin.current', rev, calc=f'{gp.raws[0]} / {rev.raws[0]} * 100', rnd=1)
+    ev.add('numbers.grossMargin.current', gp)
+    gm1 = carried(ev, previous, 'numbers.grossMargin.current', 'numbers.grossMargin.previous')
+    ev.add('numbers.adjustedEPS', eps)
+    g, gop = f['guidanceRevenue'], f['guidanceAdjOp']
+    low, high = range_guidance(ev, g)
+    numbers = {'revenue': {'current': float(r0), 'previous': float(r1), 'yearAgo': float(r2)}, 'adjustedEPS': float(eps.values[0]), 'epsEstimate': None,
+               'grossMargin': {'current': float(gm0), 'previous': float(gm1)},
+               'guidance': {'low': float(low), 'high': float(high), 'grossMarginPercent': None}, 'segments': None}
+    total, us, uc, ug = f['total'], f['us'], f['usCommercial'], f['usGovernment']
+    tm, ten, tja = amt(total, 2)
+    ucm, ucen, ucja = amt(uc, 2)
+    ugm, ugen, ugja = amt(ug, 2)
+    usm, usen, usja = amt(us, 2)
+    gop_m, gop_en, gop_ja = amt(f['gaapOp'], 0)
+    aop_m, aop_en, aop_ja = amt(f['adjOp'], 0)
+    gom, aom = f['gaapOp'].values[2], f['adjOp'].values[2]
+    tiles = [text_tile('売上高', 'Revenue', tja, ten, f'前年同期比 +{total.values[0]}%、前期比 +{total.values[1]}%', f'YoY +{total.values[0]}%, QoQ +{total.values[1]}%'),
+             text_tile('米国の民間企業向け売上', 'U.S. commercial revenue', ucja, ucen, f'前年同期比 +{uc.values[0]}%', f'YoY +{uc.values[0]}%'),
+             text_tile('調整後の営業利益', 'Adjusted operating income', aop_ja, aop_en, f'利益率 {aom}%(GAAPは{gom}%)', f'{aom}% margin (GAAP {gom}%)')]
+    for i, fig in enumerate((total, uc, f['adjOp'])):
+        ev.add(f'tiles[{i}].value', fig)
+        ev.add(f'tiles[{i}].note', fig)
+    times = q(Decimal(1) + Decimal(uc.values[0]) / 100, 1)
+    us_share = q(usm / r0 * 100, 0)
+    rest = r0 - usm
+    deals = f['deals'].values
+    ev.add('summary.cards.growth.sections[0]', us)
+    ev.add('summary.cards.growth.sections[0]', ug)
+    ev.add('summary.cards.growth.sections[1]', f['deals'])
+    passed = ucm > ugm
+    if passed and f.get('firstTime'):
+        ev.add('summary.conclusion[0]', f['firstTime'])
+    growth = card(f'米国の民間企業向け売上は前年同期の約{times}倍', f'U.S. commercial revenue about {times} times a year ago', [
+        chip('up', f'米国民間 前年同期比 +{uc.values[0]}%', f'U.S. commercial +{uc.values[0]}% YoY'),
+        chip('up', f'米国民間 前期比 +{uc.values[1]}%', f'U.S. commercial +{uc.values[1]}% QoQ'),
+        chip('up', f'米国政府 前年同期比 +{ug.values[0]}%', f'U.S. government +{ug.values[0]}% YoY')], [
+        sec('happened', f'米国の民間企業向け売上は{ucja}で、前年同期比+{uc.values[0]}%、前期比+{uc.values[1]}%でした。米国政府向けは+{ug.values[0]}%の{ugja}です。'
+            + (f'民間企業向けが政府向けを上回りました。' if passed else '') + f'米国全体の売上は{usja}で、会社全体の約{us_share}%です。',
+            f'U.S. commercial revenue was {ucen}, up {uc.values[0]}% YoY and {uc.values[1]}% QoQ. U.S. government revenue rose {ug.values[0]}% to {ugen}.'
+            + (' Commercial now exceeds government.' if passed else '') + f' Total U.S. revenue was {usen}, about {us_share}% of the company total.'),
+        sec('good', f'大型契約も増えています。この四半期に100万ドル以上の契約を{deals[0]}件、1,000万ドル以上を{deals[2]}件結びました。',
+            f'Large deals are growing too: the company closed {deals[0]} deals of at least $1M and {deals[2]} of at least $10M in the quarter.'),
+        sec('watch', f'米国以外の売上は約{usd(rest)["ja"]}(全体{tja}−米国{usja})で、伸びは米国に集中しています。',
+            f'Revenue outside the U.S. was about {usd(rest)["en"]} ({ten} total minus {usen} U.S.), so growth is concentrated in the U.S.'),
+        sec('view', '売上の大半が米国なので、米国の企業や政府の予算の変化が業績にそのまま響きます。',
+            'With most revenue in the U.S., shifts in U.S. corporate and government budgets feed straight into results.')])
+
+    qoq = change(r0, r1)
+    d = r0 - r1
+    sbc = f['sbc']
+    cfo_m, cfo_en, cfo_ja = amt(f['cfo'], 0)
+    fcf_m, fcf_en, fcf_ja = amt(f['fcf'], 0)
+    cash_m, cash_en, cash_ja = amt(f['cash'], 0)
+    ev.add('summary.cards.change.sections[0]', f['adjOp'])
+    ev.add('summary.cards.change.sections[1]', f['cfo'])
+    ev.add('summary.cards.change.sections[1]', f['fcf'])
+    ev.add('summary.cards.change.sections[2]', sbc)
+    gm_word = ('やや低下', 'slightly lower') if gm0 < gm1 else ('上昇', 'higher') if gm0 > gm1 else ('横ばい', 'flat')
+    changes = card(f'売上は前期比 {sign(qoq)}、粗利益率は{gm_word[0]}', f'Revenue {sign(qoq)} QoQ, gross margin {gm_word[1]}', [
+        chip(tone(gm0 - gm1), f'粗利益率 {pc(gm1)} → {pc(gm0)}', f'Gross margin {pc(gm1)} → {pc(gm0)}'),
+        chip('gold', f'調整後営業利益率 {aom}%(GAAPは{gom}%)', f'Adj. operating margin {aom}% (GAAP {gom}%)')], [
+        sec('happened', f'売上は{usd(r1)["ja"]}から{usd(r0)["ja"]}へ、{usd(abs(d))["ja"]}{rose(d, True)}ました。GAAPの粗利益率は{pc(gm1)}から{pc(gm0)}になりました。調整後の営業利益は{aop_ja}で、利益率は{aom}%です。',
+            f'Revenue {rose(d)} from {usd(r1)["en"]} to {usd(r0)["en"]}, a change of {usd(abs(d))["en"]}. GAAP gross margin went from {pc(gm1)} to {pc(gm0)}. Adjusted operating income was {aop_en}, a {aom}% margin.'),
+        sec('good', f'現金を生む力は強く、営業キャッシュフローは{cfo_ja}、調整後フリーキャッシュフローは{fcf_ja}(売上の{f["fcf"].values[2]}%)でした。現金と米国債の合計は{cash_ja}です。',
+            f'Cash conversion is strong: operating cash flow was {cfo_en} and adjusted free cash flow {fcf_en} ({f["fcf"].values[2]}% of revenue). Cash and U.S. Treasuries total {cash_en}.'),
+        sec('watch', f'株式報酬は前年同期の{usd(sbc.values[1])["ja"]}から{usd(sbc.values[0])["ja"]}になり、売上の約{q(sbc.values[0] / r0 * 100, 0)}%です。調整後の利益はこの費用を除いています。',
+            f'Stock-based compensation went from {usd(sbc.values[1])["en"]} a year earlier to {usd(sbc.values[0])["en"]}, about {q(sbc.values[0] / r0 * 100, 0)}% of revenue. Adjusted profit excludes this cost.'),
+        sec('means', f'GAAPの営業利益率({gom}%)と調整後({aom}%)の差の多くは株式報酬で、株主は株数の増加という形で負担します。',
+            f'Most of the gap between the GAAP ({gom}%) and adjusted ({aom}%) operating margins is stock compensation, which shareholders bear through dilution.')])
+
+    tcv, rdv = f['tcv'], f['rdv']
+    tcv_m, tcv_en, tcv_ja = amt(tcv, 0)
+    rdv_m, rdv_en, rdv_ja = amt(rdv, 0)
+    tg = pct_sign(tcv.values[2], tcv.values[3])
+    ev.add('summary.cards.caution.sections[0]', tcv)
+    ev.add('summary.cards.caution.sections[0]', rdv)
+    slow = int(tcv.values[3]) < int(total.values[0]) or tcv.values[2] == 'down'
+    caution = card(f'契約総額の伸びは前年同期比 {tg}', f'Total contract value {tg} YoY', [
+        chip('down' if slow else 'up', f'TCV {tcv_ja}({tg})', f'TCV {tcv_en} ({tg})'),
+        chip('gold', f'米国民間RDV 前期比 +{rdv.values[4]}%', f'U.S. commercial RDV +{rdv.values[4]}% QoQ')], [
+        sec('happened', f'この四半期に結んだ契約の総額(TCV)は{tcv_ja}で、前年同期比{tg}でした。米国の民間企業向けの残りの契約額(RDV)は{rdv_ja}で、前年同期比{pct_sign(rdv.values[2], rdv.values[3])}、前期比+{rdv.values[4]}%です。',
+            f'Total contract value signed in the quarter was {tcv_en}, {tg} YoY. U.S. commercial remaining deal value was {rdv_en}, {pct_sign(rdv.values[2], rdv.values[3])} YoY and +{rdv.values[4]}% QoQ.'),
+        sec('means', f'売上は+{total.values[0]}%伸びましたが、将来の売上のもとになる新しい契約は' + ('それほど伸びていません。契約の伸びが低いままだと、いずれ売上の伸びも鈍る可能性があります。' if slow else 'それ以上に伸びています。'),
+            f'Revenue grew {total.values[0]}%, but new contracts that feed future revenue grew ' + ('far less. If contract growth stays slow, revenue growth could eventually slow too.' if slow else 'even faster.')),
+        sec('watch', f'米国民間のRDVは前年同期比では{pct_sign(rdv.values[2], rdv.values[3])}ですが、前期比では+{rdv.values[4]}%で、米国民間の売上の前期比+{uc.values[1]}%と比べてください。',
+            f'U.S. commercial remaining deal value is {pct_sign(rdv.values[2], rdv.values[3])} from a year ago and +{rdv.values[4]}% from last quarter, versus +{uc.values[1]}% sequential growth in U.S. commercial revenue.'),
+        sec('view', 'TCVは大型契約の時期で振れやすく、1四半期だけでは傾向とは言えません。次の決算で、契約の伸びがどうなるかを確かめます。',
+            'TCV swings with the timing of large deals, so one quarter is not a trend. The next report will show where contract growth goes.')])
+
+    gm_lo, gm_hi = gop.values
+    ev.add('summary.cards.next.chips[1]', gop)
+    next_margin = q((gm_lo + gm_hi) / (low + high) * 100, 0)
+    nxt = card('次期の会社見通しを追う', "Follow the company's outlook for next quarter", [
+        chip('gold', f'売上 {usd(low)["ja"]}〜{usd(high)["ja"]}', f'Revenue ${g.raws[0]}–{g.raws[1]}B'),
+        chip('gold', f'調整後営業利益 {usd(gm_lo)["ja"]}〜{usd(gm_hi)["ja"]}', f'Adj. operating income ${gop.raws[0]}–{gop.raws[1]}B')], [
+        sec('happened', f'会社は次期の売上を{usd(low)["ja"]}〜{usd(high)["ja"]}、調整後の営業利益を{usd(gm_lo)["ja"]}〜{usd(gm_hi)["ja"]}と見込んでいます。今回の{tja}と比べると、下限でも約{q(change(low, r0), 1)}%の増加です。',
+            f'The company expects next-quarter revenue of ${g.raws[0]}–{g.raws[1]}B and adjusted operating income of ${gop.raws[0]}–{gop.raws[1]}B. Against {ten} this quarter, even the low end would be about {q(change(low, r0), 1)}% higher.'),
+        sec('means', f'見通しどおりなら、調整後の営業利益率は約{next_margin}%で、今回の{aom}%と比べられます。前期比の伸び(今回は約{total.values[1]}%)は'
+            + ('やや鈍る見込みです。' if change(high, r0) < Decimal(total.values[1]) else '保たれる見込みです。'),
+            f'If met, the adjusted operating margin would be about {next_margin}%, versus {aom}% now. Sequential growth (about {total.values[1]}% this quarter) would '
+            + ('slow somewhat.' if change(high, r0) < Decimal(total.values[1]) else 'hold.')),
+        sec('view', '見通しは会社の計画で、実績ではありません。結果がこの幅に入るか、TCVの伸びが戻るかを確かめます。',
+            "The outlook is the company's plan, not a result. Watch whether results land in this range and how TCV growth develops.")])
+    conclusion = [
+        c(f'売上は{tja}で、前年同期比+{total.values[0]}%、前期比+{total.values[1]}%でした。米国の民間企業向け売上は{ucja}で、' + (('初めて' if f.get('firstTime') else '') + '米国政府向けを上回りました。' if passed else f'米国政府向けは{ugja}でした。'),
+          f'Revenue was {ten}, up {total.values[0]}% from a year ago and {total.values[1]}% from the previous quarter. U.S. commercial revenue reached {ucen}' + (' and exceeded U.S. government revenue' + (' for the first time.' if f.get('firstTime') else '.') if passed else f'; U.S. government revenue was {ugen}.')),
+        c(f'利益率は高く、GAAPの営業利益率は{gom}%、調整後は{aom}%です。', f'Margins are high: {gom}% GAAP operating margin and {aom}% adjusted.'),
+        c(f'ただし、この四半期に結んだ契約の総額は{tcv_ja}で、前年同期比{tg}' + ('にとどまり、売上の伸びを大きく下回りました。' if slow else 'でした。'),
+          f'Total contract value signed in the quarter, however, was {tcv_en}, {tg} from a year ago' + (', well below revenue growth.' if slow else '.'))]
+    return {'tiles': tiles, 'numbers': numbers, 'evidence': ev.items, 'summary': summary(conclusion, growth, changes, caution, nxt)}
+
+
+WRITERS = {'AMD': amd, 'ANET': anet, 'PLTR': pltr}
