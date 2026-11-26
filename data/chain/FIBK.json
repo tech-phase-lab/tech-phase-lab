@@ -1,0 +1,156 @@
+{
+  "root": {
+    "ticker": "FIBK",
+    "name": "ファースト・インターステート・バンクシステム",
+    "cik": 860413,
+    "name_en": "First Interstate BancSystem"
+  },
+  "rows": [
+    {
+      "ja": "顧客・取引先",
+      "en": "Customers & clients"
+    },
+    {
+      "ja": "買収・売却",
+      "en": "Acquisitions & sales"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "GAIA",
+      "ticker": "GAIA",
+      "name": "ガイア",
+      "name_en": "Gaia",
+      "sub": "動画配信",
+      "sub_en": "Streaming",
+      "sub_short": "配信",
+      "sub_short_en": "Stream",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ファースト・インターステート銀行と融資契約",
+          "text_en": "Has a loan agreement with First Interstate Bank",
+          "source": {
+            "label": "Gaia 10-Q(2026年9月期)",
+            "label_en": "Gaia 10-Q (quarter ended Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1089872/000119312526443659/gaia-20260930.htm",
+            "level": "official",
+            "date": "2026-11-02",
+            "quote": "On December 28, 2020, Boulder Road and Westside (collectively, the \"Borrower\") entered into a loan agreement with First Interstate Bank (formerly Great Western Bank), as lender, providing for a mortgage loan in the principal amount of $13.0 million (the \"2020 Mortgage Loan\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GLGI",
+      "ticker": "GLGI",
+      "name": "グレイストーン・ロジスティクス",
+      "name_en": "Greystone Logistics",
+      "sub": "プラスチック製パレット",
+      "sub_en": "Plastic pallets",
+      "sub_short": "パレット",
+      "sub_short_en": "Pallets",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ファースト・インターステート銀行と融資契約",
+          "text_en": "Has a loan agreement with First Interstate Bank",
+          "source": {
+            "label": "Greystone Logistics 10-Q(2026年8月期)",
+            "label_en": "Greystone Logistics 10-Q (quarter ended Aug 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1088413/000143774926032694/glgi20260831_10q.htm",
+            "level": "official",
+            "date": "2026-10-15",
+            "quote": "Loan Agreement with First Interstate Bank, formerly Great Western Bank On August 23, 2021, Greystone and First Interstate Bank entered into a loan agreement (the \"FIB Loan Agreement\") in connection with certain prior loans and a mortgage loan to refinance certain land and buildings located in Bettendorf, IA."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BAER",
+      "ticker": "BAER",
+      "name": "ブリッジャー・エアロスペース",
+      "name_en": "Bridger Aerospace",
+      "sub": "空中消火",
+      "sub_en": "Aerial firefighting",
+      "sub_short": "航空",
+      "sub_short_en": "Aviation",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "車両購入の融資を受ける",
+          "text_en": "Has vehicle term loans through First Interstate Bank",
+          "source": {
+            "label": "Bridger Aerospace Group Holdings 10-Q(2024年9月期)",
+            "label_en": "Bridger Aerospace Group Holdings 10-Q (quarter ended Sep 2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1941536/000162828024047665/baer-20240930.htm",
+            "level": "official",
+            "date": "2024-11-13",
+            "quote": "The Company also entered into various term loan agreements for the purchase of vehicles through First Interstate Bank with the earliest date of September 9, 2021."
+          }
+        }
+      ]
+    },
+    {
+      "id": "EFSC",
+      "ticker": "EFSC",
+      "name": "エンタープライズ・ファイナンシャル",
+      "name_en": "Enterprise Financial Services",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "アリゾナ・カンザスの支店を売却(2025年10月)",
+          "text_en": "Bought its Arizona and Kansas branches (October 2025)",
+          "source": {
+            "label": "First Interstate BancSystem 10-K(2025年度)",
+            "label_en": "First Interstate BancSystem 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/860413/000086041326000011/fibk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Sale of Arizona and Kansas Branches On October 10, 2025, the Bank closed the previously disclosed transaction with Enterprise Bank & Trust (\"Enterprise Bank\"), a wholly-owned subsidiary of Enterprise Financial Services Corp, pursuant to which Enterprise Bank acquired twelve branches from the Bank, including approximately $641.6 million in deposits and certain commercially-oriented loans with outstanding balances of $291.5 million, and the owned real estate and fixed and"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GREATWESTERN",
+      "ticker": "GREATWESTERN",
+      "name": "グレート・ウエスタン・バンコープ",
+      "name_en": "Great Western Bancorp",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "買収した銀行",
+          "text_en": "An acquired bank",
+          "source": {
+            "label": "First Interstate BancSystem 10-K(2025年度)",
+            "label_en": "First Interstate BancSystem 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/860413/000086041326000011/fibk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "The Company acquired the GWB Capital Trust VI (\"Trust VIII\") with the acquisition of Great Western in February 2022."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

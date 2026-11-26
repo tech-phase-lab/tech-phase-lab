@@ -1,0 +1,160 @@
+{
+  "root": {
+    "ticker": "TFIN",
+    "name": "トライアンフ・ファイナンシャル",
+    "cik": 1539638,
+    "name_en": "Triumph Financial"
+  },
+  "rows": [
+    {
+      "ja": "顧客・取引先",
+      "en": "Customers & clients"
+    },
+    {
+      "ja": "提携・出資・買収",
+      "en": "Partners, stakes & deals"
+    },
+    {
+      "ja": "買収・売却",
+      "en": "Acquisitions & sales"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "ENVA",
+      "ticker": "ENVA",
+      "name": "エノバ・インターナショナル",
+      "name_en": "Enova International",
+      "sub": "オンライン融資",
+      "sub_en": "Online lending",
+      "sub_short": "金融",
+      "sub_short_en": "Finance",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "借入契約の幹事行",
+          "text_en": "TBK Bank is administrative agent on its credit agreement",
+          "source": {
+            "label": "Enova International 10-K(2025年度)",
+            "label_en": "Enova International 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1529864/000119312526060461/enva-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "The Credit Agreement amended and restated the existing credit agreement, dated as of June 30, 2017, by and among the Company, certain of its subsidiaries, the lenders from time to time party thereto, and TBK Bank, SSB, as administrative agent, in its entirety."
+          }
+        }
+      ]
+    },
+    {
+      "id": "UNQL",
+      "ticker": "UNQL",
+      "name": "ユニーク・ロジスティクス",
+      "name_en": "Unique Logistics International",
+      "sub": "物流",
+      "sub_en": "Logistics",
+      "sub_short": "物流",
+      "sub_short_en": "Logistic",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "TBK銀行から運転資金の融資枠",
+          "text_en": "Has an operating line of credit with TBK Bank",
+          "source": {
+            "label": "Unique Logistics International 10-Q(2025年2月期)",
+            "label_en": "Unique Logistics International 10-Q (quarter ended Feb 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1281845/000164117225006183/form10-q.htm",
+            "level": "official",
+            "date": "2025-04-25",
+            "quote": "As of February 28, 2025, the Company had cash and cash equivalents of approximately $4.2 million, negative working capital of $23.0 million, and $10.0 million available to draw under its operating line of credit with TBK Bank, SSB (the \"TBK Facility\") based on the amount of its accounts receivable on February 28, 2025."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GREENSCREENS",
+      "ticker": "GREENSCREENS",
+      "name": "グリーンスクリーンズAI",
+      "name_en": "Greenscreens AI",
+      "sub": "運賃予測AI",
+      "sub_en": "Freight pricing AI",
+      "sub_short": "AI",
+      "sub_short_en": "AI",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年5月に買収",
+          "text_en": "Acquired in May 2025",
+          "source": {
+            "label": "Triumph Financial 10-K(2025年度)",
+            "label_en": "Triumph Financial 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1539638/000153963826000007/tfin-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Greenscreens.ai On May 8, 2025, we, through our wholly-owned subsidiary TBK Bank, SSB, acquired Greenscreens AI, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HUBTRAN",
+      "ticker": "HUBTRAN",
+      "name": "ハブトラン",
+      "name_en": "HubTran",
+      "sub": "運送請求処理",
+      "sub_en": "Freight invoice software",
+      "sub_short": "ソフト",
+      "sub_short_en": "Software",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2021年に買収",
+          "text_en": "Acquired in 2021",
+          "source": {
+            "label": "Triumph Financial 10-K(2025年度)",
+            "label_en": "Triumph Financial 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1539638/000153963826000007/tfin-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "During 2021, we acquired HubTran, Inc., a software platform that offers workflow solutions for the processing and approval of Carrier Invoices for approval by Brokers or purchase by the factoring businesses providing working capital to Carriers (\"Factors\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TRAX",
+      "ticker": "TRAX",
+      "name": "トラックス・グループ",
+      "name_en": "Trax Group",
+      "sub": "運賃管理",
+      "sub_en": "Freight audit",
+      "sub_short": "ソフト",
+      "sub_short_en": "Software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "少数出資(2023年)",
+          "text_en": "Took a minority stake (2023)",
+          "source": {
+            "label": "Triumph Financial 10-K(2025年度)",
+            "label_en": "Triumph Financial 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1539638/000153963826000007/tfin-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "On June 22, 2023, the Company made a minority investment in Trax Group, Inc."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
