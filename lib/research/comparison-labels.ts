@@ -37,7 +37,8 @@ export const ALTERNATIVE_LABELS = {
       line: { ja: "決算書類に数値データなし", en: "No XBRL figures in its reports" } as Copy },
     stale: { note: (date: string): Copy => ({ ja: `決算書類の提出が${date}を最後に止まっています。`, en: `Its last report was filed on ${date}.` }),
       line: { ja: "決算書類の提出が止まっています", en: "Reports have stopped" } as Copy },
-    unreadable: { note: { ja: "売上が会社独自の項目名で記載されており、他社と比べられる形で読み取れません。", en: "Its revenue is filed under the company's own line items, which cannot be compared." } as Copy,
+    // Revenue under a company-specific or bank/insurer line the comparison does not read (APA, VIV, KB): said without guessing which.
+    unreadable: { note: { ja: "決算書類の売上の記載を、他社と比べられる形（標準の売上項目）で読み取れません。", en: "Its filings do not state revenue in a standard line that can be compared." } as Copy,
       line: { ja: "売上の記載を読み取れません", en: "Revenue line not readable" } as Copy },
   },
   /** The availability note for a company whose newest quarter's revenue is filed as zero. */
