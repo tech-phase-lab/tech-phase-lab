@@ -47,9 +47,17 @@ test('checks: at most three, ✓ until a line is reached, numbers only from the 
  assert.equal(p.checks.length,3);
  assert.deepEqual(p.checks.map(c=>[c.label.ja,c.rule.ja,c.today.ja,c.state]),[
   ['相場の温度計　TP半導体40','熱い','+14.7%','reached'],
-  ['上昇の目安 +50%','MUが届きました','+52%','reached'],
-  ['買い増しライン −10%','どの銘柄も届いていません','—','ok'],
+  ['上昇の目安 +50%　MU','基準からの位置','+52%','reached'],
+  ['買い増しライン −10%　NVDA','基準からの位置\n線まであと7%','−3%','ok'],
  ]);
+ // Row shape (owner, Nov 26 §3): the right side is the number alone; the bold lines say what it is and how far the line is.
+ const e=fixedTodayPlan({...base,news:[down3],stocks:[{symbol:'NVDA',fromReferencePct:24.4}],estimate:{allowedDropPct:30,estimatedChangePct:-0.1,remainingPct:29.9}});
+ assert.deepEqual(e.checks.map(c=>[c.label.ja,c.rule.ja,c.today.ja,c.label.en,c.rule.en,c.today.en]),[
+  ['買い増しライン −10%　NVDA','基準からの位置\n線まであと34.4%','+24.4%','Buy-more line −10% · NVDA','Position vs. your base\n34.4% to go','+24.4%'],
+  ['許容できる下落 −30%','いまの資産の下落\n線まであと29.9%','−0.1%','Loss you can accept −30%','Drop in your assets now\n29.9% to go','−0.1%'],
+  ['上昇の目安 +50%　NVDA','基準からの位置\n線まであと25.6%','+24.4%','Up target +50% · NVDA','Position vs. your base\n25.6% to go','+24.4%'],
+ ]);
+ assert.ok(e.checks.every(c=>!/推定|estimate/.test(c.label.ja+c.label.en+c.rule.ja+c.rule.en)));
  assert.deepEqual(fixedTodayPlan(base).checks,[],'no stocks and no gauge: no rows');
 });
 

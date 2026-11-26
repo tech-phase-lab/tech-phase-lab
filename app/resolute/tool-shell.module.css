@@ -5,11 +5,9 @@
 .bar { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin: 0 -16px; padding: 0 16px 12px; background: linear-gradient(180deg, #d8b36a14, transparent 80%), linear-gradient(90deg, transparent, #d8b36a55 20%, #d8b36a55 80%, transparent) bottom / 100% 1px no-repeat; }
 .inHome { width: 100%; max-width: 600px; margin: 0 auto; padding: 16px 16px 12px; box-sizing: border-box; }
 .left { display: flex; align-items: center; gap: 8px; min-width: 0; }
-.tpBack, .menuBtn { display: inline-flex; align-items: center; gap: 5px; height: 38px; border-radius: 999px; font: inherit; font-size: 14px; letter-spacing: .03em; white-space: nowrap; text-decoration: none; -webkit-tap-highlight-color: transparent; }
-.tpBack { padding: 0 13px 0 8px; border: 1px solid #ffffff1f; background: #ffffff06; color: #d7dbe2; }
-.tpBack svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.menuBtn { display: inline-flex; align-items: center; gap: 5px; height: 38px; border-radius: 999px; font: inherit; font-size: 14px; letter-spacing: .03em; white-space: nowrap; text-decoration: none; -webkit-tap-highlight-color: transparent; }
 .menuBtn { gap: 7px; padding: 0 16px 0 13px; border: 1px solid #d8b36a99; background: linear-gradient(180deg, #1d1b18, #121214); color: var(--gold2); }
-.tpBack:active, .menuBtn:active { opacity: .7; }
+.menuBtn:active { opacity: .7; }
 .langs { flex: none; display: inline-flex; padding: 3px; border: 1px solid #ffffff1a; border-radius: 999px; background: #0d1520; }
 .langs button { min-width: 40px; height: 30px; border: 0; border-radius: 999px; background: none; color: var(--sub); font: inherit; font-size: 13px; letter-spacing: .04em; }
 .langs button[aria-pressed="true"] { background: #1e2a3e; color: var(--gold2); }
@@ -21,12 +19,13 @@
 /* The menu: one gold-edged panel. */
 .menu { display: block; margin: 14px 0 4px; padding: 16px 14px 14px; border: 1px solid transparent; border-radius: 22px; background: var(--rz-panel-fill) padding-box, var(--rz-panel-edge) border-box; box-shadow: 0 18px 40px #0008; }
 .inHome + .menu { width: calc(100% - 32px); max-width: 568px; margin-left: auto; margin-right: auto; box-sizing: border-box; }
-.tpCard { display: flex; align-items: center; gap: 12px; min-height: 64px; margin-bottom: 18px; padding: 10px 12px; border: 1px solid #d8b36a66; border-radius: 16px; background: linear-gradient(180deg, #1a2540, #121a2e); color: var(--ink); text-decoration: none; }
-.tpCard > i { flex: none; display: grid; place-items: center; width: 34px; height: 34px; border-radius: 9px; background: #22304c; color: var(--gold2); font-style: normal; font-size: 12px; font-weight: 700; letter-spacing: .04em; }
+/* Owner, Nov 26 §1: the way back to Tech Phase stands out in Tech Phase green, with the Tech Phase logo. */
+.tpCard { display: flex; align-items: center; gap: 12px; min-height: 64px; margin-bottom: 18px; padding: 10px 12px; border: 1px solid #3fbf8a; border-radius: 16px; background: linear-gradient(180deg, #12362c, #0f2a24); color: var(--ink); text-decoration: none; }
+.tpCard > img { flex: none; display: block; width: 34px; height: 34px; border-radius: 9px; }
 .tpCard > span { flex: 1; min-width: 0; display: flex; flex-direction: column; line-height: 1.45; }
 .tpCard b { font-size: 16px; font-weight: 700; }
-.tpCard small { font-size: 12px; color: var(--sub); }
-.tpCard svg.chev { flex: none; width: 18px; height: 18px; fill: none; stroke: #8d98aa; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.tpCard small { font-size: 12px; color: #a9cbbd; }
+.tpCard svg.chev { flex: none; width: 18px; height: 18px; fill: none; stroke: #5fd4a2; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 .sec { display: flex; align-items: center; gap: 12px; margin: 4px 0 10px 4px; font-size: 12px; font-weight: 400; letter-spacing: .24em; color: #b8975a; }
 .sec::after { content: ""; flex: 1; height: 1px; margin-right: 8px; background: linear-gradient(90deg, #6b5629, transparent); }
 .steps { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 18px; }
@@ -48,7 +47,7 @@
 .home { display: inline-flex; align-items: center; gap: 4px; min-height: 44px; min-width: 88px; margin-left: -8px; padding: 0 12px 0 6px; color: var(--gold2, #e9cf95); font-size: 14px; letter-spacing: .06em; text-decoration: none; -webkit-tap-highlight-color: transparent; }
 .home svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 .home:active { opacity: .6; }
-@media (max-width: 359px) { .tpBack { padding: 0 10px 0 6px; } .menuBtn { padding: 0 12px 0 10px; } .langs button { min-width: 34px; } }
+@media (max-width: 359px) { .menuBtn { padding: 0 12px 0 10px; } .langs button { min-width: 34px; } }
 /* Tapped menu item while its page is on the way (owner, Nov 17: the menu stays up until the next page replaces it). */
 .step i.pending, .tool i.pending { flex: none; width: 7px; height: 7px; margin-left: auto; border: 0; border-radius: 50%; background: transparent; }
 /* In a step tile the dot sits in the corner, so it never takes room from the label. */

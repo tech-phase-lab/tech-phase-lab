@@ -3,6 +3,7 @@ import { AsyncLocalStorage } from "node:async_hooks";
 import { unstable_cache } from "next/cache";
 import { EMERGENCY_BURST, EMERGENCY_PER_MINUTE, createGovernor, createLeaseGovernor, createReader, creditCost, type Entry, type SlotStore, type Tier } from "./twelve-budget.ts";
 import { parseUsage } from "./quote-refresh-gate.ts";
+import { durableCopies, monitorEndpoint } from "./twelve-copies";
 
 /** The website's one door to Twelve Data for what members open (price screens, a stock's page, the portfolio, theme ranking). Every call
  * asks the governor first (lib/research/twelve-budget.ts) and is never retried; a refused or failed call throws, and the readers behind it
@@ -33,12 +34,10 @@ const sharedMeter = unstable_cache(meterCallback, ["twelve-meter-v1"], { revalid
 /** The monitor's allocator (scripts/research/twelve_allocator.py, POST /twelve/lease) with the site's existing monitor address and server
  * token (RESEARCH_MONITOR_URL / RESEARCH_MONITOR_TOKEN). null: not configured or not reachable. */
 async function lease(cost: number, tier: Tier, caller?: string): Promise<boolean | null> {
-  const base = process.env.RESEARCH_MONITOR_URL, token = process.env.RESEARCH_MONITOR_TOKEN;
-  if (!base || !token) return null;
+  const target = monitorEndpoint("/twelve/lease");
+  if (!target) return null;
   try {
-    const url = new URL(base);
-    if (url.username || url.password || (url.protocol !== "https:" && !(process.env.NODE_ENV !== "production" && ["localhost", "127.0.0.1"].includes(url.hostname)))) return null;
-    url.pathname = `${url.pathname.replace(/\/$/, "")}/twelve/lease`; url.search = ""; url.hash = "";
+    const { url, token } = target;
     const response = await fetch(url, { method: "POST", headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" }, body: JSON.stringify({ cost, tier, ...(caller ? { caller } : {}) }), cache: "no-store", signal: AbortSignal.timeout(1_500) });
     if (!response.ok) return null;
     const body = await response.json().catch(() => null) as { ok?: unknown; granted?: unknown } | null;
@@ -104,4 +103,5 @@ const dataCache: SlotStore = {
   },
   async put(name, key, slot, entry) { await handing.run({ entry }, () => storeFor(name)(key, slot)); },
 };
-export const sharedReader = createReader(dataCache);
+// Specs marked `durable` are also kept by the monitor (lib/research/twelve-copies.ts): the runtime cache loses copies within hours.
+export const sharedReader = createReader(dataCache, Date.now, durableCopies);

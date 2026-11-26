@@ -3,7 +3,8 @@ import type {ReactNode} from 'react';
 import {ReviewLink as Link} from '../review-context';
 import s from './reference.module.css';
 
-/** YOUR RULES (owner, Nov 25): four picture tiles (the rulebook's cover, a lock-screen preview, a gold line chart, a gold coin),
+/** YOUR RULES (owner, Nov 25): four picture tiles (the rulebook's cover, a lock-screen preview, a gold line chart, a receipt drawn
+ * in thin gold lines: owner, Nov 26 §5, in place of the gold ¥ coin),
  * all the same height: 2×2 on a phone, four across on a PC. The lock-screen preview shows the member's own saved numbers
  * when this tab already knows them, otherwise only the time and the name. */
 export function RuleTiles({locale,lockNumbers}:{locale:'ja'|'en';lockNumbers:{tolerancePct:number|null;perStockCapPct:number}|null}){
@@ -12,7 +13,7 @@ export function RuleTiles({locale,lockNumbers}:{locale:'ja'|'en';lockNumbers:{to
   ['notebook','迷った日の一冊','Your rulebook','ルールを一冊に','Your rules in one place',<span key="b" className={s.picBook}><b>RESOLUTE</b><i>R</i></span>],
   ['wall','ルールのお守り','Rules wallpaper','壁紙をつくる','Make your wallpaper',<span key="w" className={s.picPhone}><b>9:41</b><small>RESOLUTE</small>{lockNumbers?<>{lockNumbers.tolerancePct!==null?<><em>{en?'Loss you can accept':'許容できる下落'}</em><strong>−{lockNumbers.tolerancePct}%</strong></>:null}<em>{en?'Per-stock cap':'1銘柄の上限'}</em><strong>{en?`${lockNumbers.perStockCapPct}% of assets`:`資産の${lockNumbers.perStockCapPct}%`}</strong></>:null}</span>],
   ['simulation','資産シミュ','Portfolio simulator','下落と上昇を試す','Explore ups and downs',<svg key="c" className={s.picChart} viewBox="0 0 120 70" aria-hidden="true"><defs><linearGradient id="tile-fill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#d8b36a" stopOpacity=".35"/><stop offset="1" stopColor="#d8b36a" stopOpacity="0"/></linearGradient></defs><path d="M4 48 C20 50 26 64 42 58 S64 30 78 36 98 22 116 6 L116 70 L4 70Z" fill="url(#tile-fill)"/><path d="M4 48 C20 50 26 64 42 58 S64 30 78 36 98 22 116 6" fill="none" stroke="#f3dfae" strokeWidth="1.8"/><path d="M4 50 C30 60 60 64 116 66" fill="none" stroke="#8aa0c8" strokeWidth="1" strokeDasharray="3 3"/><circle cx="116" cy="6" r="2.6" fill="#fff3cf"/></svg>],
-  ['tax','税金の目安','Tax estimate','手取りの目安','Estimate what you keep',<span key="t" className={s.picCoin}>¥</span>],
+  ['tax','税金の目安','Tax estimate','手取りの目安','Estimate what you keep',<svg key="t" className={s.picReceipt} viewBox="0 0 60 80" aria-hidden="true"><path d="M8 4H52V70L47.6 74 43.2 70 38.8 74 34.4 70 30 74 25.6 70 21.2 74 16.8 70 12.4 74 8 70Z" fill="#141a2b" stroke="#e3c17a" strokeWidth="1.6" strokeLinejoin="round"/><path d="M16 18H44M16 27H38M16 36H44" stroke="#e3c17a" strokeWidth="1.6" strokeLinecap="round"/><path d="M31 54H44" stroke="#e3c17a" strokeWidth="2.6" strokeLinecap="round"/></svg>],
  ];
  return <div className={s.ruleGrid}>{tiles.map(([path,ja,eng,sub,subEn,pic])=><Link key={path} className={s.ruleTile} href={`/resolute/${path}`}>
   <span className={s.pic} aria-hidden="true">{pic}</span><b>{en?eng:ja}</b><span>{en?subEn:sub}</span></Link>)}</div>;
