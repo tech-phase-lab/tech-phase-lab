@@ -3,10 +3,11 @@
 import Link from "next/link";
 import Image from "next/image";
 import { capitalPortfolioName, capitalProfiles } from "@/lib/research/capital-map-profiles";
-import { Suspense, useEffect, useMemo, useRef, useState } from "react";
+import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import HoldingDetail from "./holding-detail";
 import { capitalRows, etfOverlap, type CapitalPortfolio } from "@/lib/research/capital-map";
+import type { CapitalHoldings } from "@/lib/research/capital-map-data";
 import { compactUsd } from "@/lib/research/compact-usd";
 import PageHeading from "../page-heading";
 import ResearchToolShell from "../research-tool-shell";
@@ -44,7 +45,8 @@ const percent = (value: number) => value > 0 && value < .01 ? "<0.01%" : `${valu
 const signed = (value: number) => `${value > 0 ? "+" : ""}${value.toFixed(2)}%`;
 type View = CapitalPortfolio["kind"] | "lookup" | "overlap";
 
-function CapitalMapContent({ portfolios = emptyPortfolios, mode = "sample" }: { portfolios?: CapitalPortfolio[]; mode?: "sample" | "reports" }) {
+/** `isLoaded` / `request`: whether a portfolio's holdings are here, and asking for those that are not (CapitalMapLoader below). */
+function CapitalMapContent({ portfolios = emptyPortfolios, mode = "sample", isLoaded = everyLoaded, request = askNothing }: { portfolios?: CapitalPortfolio[]; mode?: "sample" | "reports"; isLoaded?: (id: string) => boolean; request?: (ids: string[]) => void }) {
   const searchParams = useSearchParams();
   const detailId = searchParams.get("holding");
   const detailPortfolio = portfolios.find(p => p.id === searchParams.get("portfolio"));
@@ -111,8 +113,14 @@ function CapitalMapContent({ portfolios = emptyPortfolios, mode = "sample" }: { 
   const highlighted = activeSlice === null ? undefined : slices[activeSlice];
   const left = etfs.find(item => item.id === leftId);
   const right = etfs.find(item => item.id === rightId);
-  const overlap = left && right && left.id !== right.id ? etfOverlap(left.current, right.current) : null;
+  const overlapLoading = !!left && !!right && left.id !== right.id && !(isLoaded(left.id) && isLoaded(right.id));
+  const overlap = left && right && left.id !== right.id && !overlapLoading ? etfOverlap(left.current, right.current) : null;
   const allHolders = useMemo(() => portfolios.flatMap(item => capitalRows(item.current).filter(row => row.shares > 0 && row.instrument === "stock").map(row => ({ ...row, portfolio: item }))), [portfolios]);
+  const lookupLoading = view === "lookup" && portfolios.some(item => !isLoaded(item.id));
+  // The holdings this view shows: the chosen portfolio, the one a holding link names, the two ETFs compared, or every one for the lookup.
+  const needed = [selected?.id, detailPortfolio?.id, ...(view === "overlap" ? [left?.id, right?.id] : []), ...(view === "lookup" ? portfolios.map(item => item.id) : [])]
+    .filter((id): id is string => !!id && !isLoaded(id)).join(",");
+  useEffect(() => { if (needed) request(needed.split(",")); }, [needed, request]);
   const knownTickers = new Set(allHolders.map(row => row.ticker));
   const holders = allHolders.filter(row => (!inputTickers.length || inputTickers.some(term => knownTickers.has(term) ? row.ticker === term : row.name.toUpperCase().includes(term))) && (!watchOnly || watched.has(row.ticker))).toSorted((a, b) => b.weight - a.weight);
   const searching = (inputTickers.length > 0 || watchOnly);
@@ -131,7 +139,8 @@ function CapitalMapContent({ portfolios = emptyPortfolios, mode = "sample" }: { 
     : searchParams.get("baseline") === "unknown" ? undefined : detailPortfolio?.previous;
   return <ResearchToolShell lang={lang} setLang={setLang} title="CAPITAL MAP" description="" showHeading={false}>
     <div className={styles.page}>
-      {detailId && hasData && <HoldingDetail portfolio={detailPortfolio} securityId={detailId} instrument={searchParams.get("instrument") ?? "stock"} baseline={detailBaseline} lang={lang} sample={!reported} onBack={backToList} />}
+      {detailId && hasData && detailPortfolio && !isLoaded(detailPortfolio.id) && <div className={styles.portfolio} aria-busy="true" style={{ minHeight: "70vh" }} />}
+      {detailId && hasData && (!detailPortfolio || isLoaded(detailPortfolio.id)) && <HoldingDetail portfolio={detailPortfolio} securityId={detailId} instrument={searchParams.get("instrument") ?? "stock"} baseline={detailBaseline} lang={lang} sample={!reported} onBack={backToList} />}
       <div hidden={Boolean(detailId) && hasData}>
       {lang === "ja" ? <PageHeading eyebrow="CAPITAL MAP" title="資本マップ" description="投資先から、資金の流れを知る。" /> : <header className={styles.heading}><p className={styles.eyebrow}>TECH PHASE RESEARCH{!reported && hasData && <span className={styles.edition}>SAMPLE</span>}</p><div className={styles.titleRow}><h1>CAPITAL MAP</h1></div><p>{t("投資先から、資金の流れを知る。", "See who owns what.")}</p></header>}
       {!hasData ? <section className={styles.preparing}>
@@ -158,12 +167,14 @@ function CapitalMapContent({ portfolios = emptyPortfolios, mode = "sample" }: { 
           <div className={styles.searchBar}><label><span>{t("調べたい銘柄", "Find a stock")}</span><input type="search" autoCapitalize="off" autoCorrect="off" spellCheck={false} value={query} maxLength={200} placeholder={t("例：エヌビディア、NVDA", "e.g. NVIDIA or NVDA")} onChange={event => { setQuery(event.target.value); setRowLimit(50); }} /></label></div>
           <div className={styles.lookupOptions}><label><input type="checkbox" checked={watchOnly} disabled={!editable} onChange={event => { setWatchOnly(event.target.checked); setRowLimit(50); }} />{t("ウォッチリストの銘柄に絞る", "Only stocks in my watchlists")}</label></div>
           {watchOnly && !watched.size && <p className={styles.empty}>{t("ウォッチリストに登録銘柄がありません。", "Your watchlists are empty.")}</p>}
-          {searching && <><h3 className={styles.resultCount}>{t("検索結果", "Results")} <span>{holders.length}{t("件", " holders")}</span></h3>
+          {searching && lookupLoading && <div className={styles.holderResults} aria-busy="true" style={{ minHeight: 240 }} />}
+          {searching && !lookupLoading && <><h3 className={styles.resultCount}>{t("検索結果", "Results")} <span>{holders.length}{t("件", " holders")}</span></h3>
             {holders.length > 0 && <div className={styles.holderHead}><span>{t("保有者", "Holder")}</span><span>{t("保有内の割合", "Portfolio weight")}</span><span>{t("保有評価額", "Holding value")}</span></div>}
             <div className={styles.holderResults}>{holders.slice(0, rowLimit).map(row => <div className={styles.holderRow} key={`${row.portfolio.id}-${row.securityId}-${row.instrument}`}><div><small className={styles.holderKind}>{row.portfolio.kind === "etf" ? "ETFs" : row.portfolio.kind === "corporate" ? t("企業", "Company") : t("運用会社", "Manager")}</small><button className={styles.holderLink} onClick={() => { setView(row.portfolio.kind); choosePortfolio(row.portfolio.id); }}>{portfolioLabel(row.portfolio)} →</button><small>{row.ticker} · {t(`${row.portfolio.current.asOf}時点`, `As of ${row.portfolio.current.asOf}`)}</small></div><strong>{percent(row.weight)}</strong><span>{row.value > 0 ? money(row.value) : "—"}</span></div>)}</div>
             {!holders.length && <p className={styles.empty}>{t("該当する保有者が見つかりません。企業名やティッカーを変えて検索してください。", "No holders found. Try another company name or ticker.")}</p>}{holders.length > rowLimit && <button className={styles.more} onClick={() => setRowLimit(value => value + 50)}>{t("さらに表示", "Show more")}</button>}</>}
         </section>}
-        {selected && isPortfolio && <section className={styles.portfolio} aria-label={portfolioLabel(selected)}>
+        {selected && isPortfolio && !isLoaded(selected.id) && <section className={styles.portfolio} aria-label={portfolioLabel(selected)} aria-busy="true" style={{ minHeight: "70vh" }} />}
+        {selected && isPortfolio && isLoaded(selected.id) && <section className={styles.portfolio} aria-label={portfolioLabel(selected)}>
           <div className={styles.identity}>
             {profile ? <><div className={styles.person}>{profile.portrait && portraitError !== selected.id ? <span className={styles.portrait}><Image unoptimized src={profile.portrait.url} alt={t(...profile.person)} width={64} height={64} className={selected.id.startsWith("bridgewater") ? styles.rayPortrait : undefined} onError={() => setPortraitError(selected.id)} /></span> : <span className={styles.managerMark} data-tone={managerMark?.tone ?? "violet"} aria-hidden="true"><svg viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="27" /><path d="M7 32a25 25 0 0 1 25-25M57 32a25 25 0 0 1-25 25" /><path d="M16 49h32M20 53h24" /></svg><span>{managerMark?.initials ?? selected.name.split(" ").slice(0, 2).map(word => word[0]).join("")}</span></span>}<div><strong>{t(...profile.person)}</strong><small>{t(...profile.role)}{profile.leadership && ` · ${t(...profile.leadership)}`}</small></div></div><p>{t(...profile.description)}</p></> : <p>{selected.kind === "etf" ? selected.subtitle : t("企業が公開している株式の保有ポートフォリオ。", "Equity investments disclosed by the company.")}</p>}
           </div>
@@ -235,7 +246,7 @@ function CapitalMapContent({ portfolios = emptyPortfolios, mode = "sample" }: { 
           <div className={styles.compare}><label>{t("投資先 1", "ETF 1")}<select aria-label={t("比較するETF 1", "First ETF")} value={leftId} onChange={event => setLeftId(event.target.value)}>{etfs.map(item => <option key={item.id} value={item.id}>{fundLabel(item)}</option>)}</select></label><span>＋</span><label>{t("投資先 2", "ETF 2")}<select aria-label={t("比較するETF 2", "Second ETF")} value={rightId} onChange={event => setRightId(event.target.value)}>{etfs.map(item => <option key={item.id} value={item.id}>{fundLabel(item)}</option>)}</select></label></div>
           {(left?.name === "ACWI" || right?.name === "ACWI") && <p className={styles.comparisonScope}>{t("全世界株式は米国ETF「ACWI」の保有データです。国内投信の「オルカン」そのものではありません。", "Global stocks are represented by the U.S.-listed ACWI ETF, rather than a Japanese mutual fund.")}</p>}
           <p className={styles.footnote}>{left?.name} {t(`${left?.current.asOf}時点`, `As of ${left?.current.asOf}`)} · {right?.name} {t(`${right?.current.asOf}時点`, `As of ${right?.current.asOf}`)}</p>
-          {!overlap ? <p className={styles.empty}>{t("異なるETFを選んでください。", "Choose two different ETFs.")}</p> : <>
+          {overlapLoading ? <div className={styles.overlapResult} aria-busy="true" style={{ minHeight: 240 }} /> : !overlap ? <p className={styles.empty}>{t("異なるETFを選んでください。", "Choose two different ETFs.")}</p> : <>
             <div className={styles.overlapResult}><div><small>{t("共通する銘柄", "Shared stocks")}</small><strong>{overlap.rows.length}<small>{t("銘柄", overlap.rows.length === 1 ? "stock" : "stocks")}</small></strong></div><div><small>{t("同じ銘柄への配分が重なる割合", "Portfolio overlap")}</small><strong>{percent(overlap.percent)}</strong></div></div>
             <div className={styles.overlapBar}><span style={{ width: `${overlap.percent}%` }} /></div>
             {overlap.rows[0] && <p className={styles.overlapExample}>{t(`例えば${overlap.rows[0].ticker || overlap.rows[0].name}は、${left?.name}に${percent(overlap.rows[0].left)}、${right?.name}に${percent(overlap.rows[0].right)}。小さい方の${percent(overlap.rows[0].shared)}が共通する配分です。`, `For example, ${overlap.rows[0].ticker || overlap.rows[0].name} is ${percent(overlap.rows[0].left)} of ${left?.name} and ${percent(overlap.rows[0].right)} of ${right?.name}. The smaller weight, ${percent(overlap.rows[0].shared)}, is the shared allocation.`)}</p>}
@@ -251,6 +262,31 @@ function CapitalMapContent({ portfolios = emptyPortfolios, mode = "sample" }: { 
   </ResearchToolShell>;
 }
 
-export default function CapitalMap(props: { portfolios?: CapitalPortfolio[]; mode?: "sample" | "reports" }) {
-  return <Suspense fallback={<p>CAPITAL MAP</p>}><CapitalMapContent {...props} /></Suspense>;
+const everyLoaded = () => true;
+const askNothing = () => {};
+/** `loaded`: the portfolios whose holdings came with the page (lib/research/capital-map-data.ts); absent, all of them did (the sample).
+ * The others are read from /api/research/capital-map when a view needs them and merged in; until then that part of the screen keeps its
+ * place, empty (speed, Nov 26: the page had carried every holding of every portfolio, 5.8 MB). */
+function CapitalMapLoader({ portfolios = emptyPortfolios, loaded, mode }: { portfolios?: CapitalPortfolio[]; loaded?: string[]; mode?: "sample" | "reports" }) {
+  const [extra, setExtra] = useState<Record<string, CapitalHoldings>>({});
+  const merged = useMemo(() => Object.keys(extra).length ? portfolios.map(item => extra[item.id] ? { ...item, ...extra[item.id] } : item) : portfolios, [portfolios, extra]);
+  const ready = useMemo(() => loaded === undefined ? null : new Set([...loaded, ...Object.keys(extra)]), [loaded, extra]);
+  const isLoaded = useCallback((id: string) => !ready || ready.has(id), [ready]);
+  const asking = useRef(new Set<string>());
+  const request = useCallback((ids: string[]) => {
+    const missing = ids.filter(id => !isLoaded(id) && !asking.current.has(id));
+    if (!missing.length) return;
+    missing.forEach(id => asking.current.add(id));
+    const all = portfolios.every(item => isLoaded(item.id) || missing.includes(item.id));
+    fetch(`/api/research/capital-map?ids=${all ? "all" : missing.map(encodeURIComponent).join(",")}`)
+      .then(response => response.ok ? response.json() : Promise.reject(new Error("unavailable")))
+      .then((body: { holdings?: Record<string, CapitalHoldings> }) => { if (body.holdings) setExtra(old => ({ ...old, ...body.holdings })); })
+      .catch(() => { /* the part stays empty; choosing it again asks again */ })
+      .finally(() => missing.forEach(id => asking.current.delete(id)));
+  }, [isLoaded, portfolios]);
+  return <CapitalMapContent portfolios={merged} mode={mode} isLoaded={isLoaded} request={request} />;
+}
+
+export default function CapitalMap(props: { portfolios?: CapitalPortfolio[]; mode?: "sample" | "reports"; loaded?: string[] }) {
+  return <Suspense fallback={<p>CAPITAL MAP</p>}><CapitalMapLoader {...props} /></Suspense>;
 }

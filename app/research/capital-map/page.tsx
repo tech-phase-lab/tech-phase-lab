@@ -1,17 +1,11 @@
 import CapitalMap from "./screen";
-import type { CapitalPortfolio, CapitalSnapshot } from "@/lib/research/capital-map";
+import { firstView, loadCapitalPortfolios, withoutHoldings } from "@/lib/research/capital-map-data";
 export const dynamic = "force-dynamic";
 export const metadata = { title: "資本マップ | CAPITAL MAP | Tech Phase Research", robots: { index: false, follow: false } };
-export default async function Page() {
-  const [{ default: disclosures }, { default: acwi }, { default: corporate }, { default: history }, { default: additional }, { default: additionalCorporate }] = await Promise.all([
-    import("@/lib/research/capital-map-disclosures.json"),
-    import("@/lib/research/capital-map-acwi.json"),
-    import("@/lib/research/capital-map-corporate.json"),
-    import("@/lib/research/capital-map-history.json"),
-    import("@/lib/research/capital-map-additional-managers.json"),
-    import("@/lib/research/capital-map-additional-corporate.json"),
-  ]);
-  const previous = history as Record<string, CapitalSnapshot>;
-  const portfolios = ([...disclosures, ...corporate, ...additionalCorporate, acwi, ...additional] as CapitalPortfolio[]).map(portfolio => ({ ...portfolio, previous: previous[portfolio.id] ?? portfolio.previous }));
-  return <CapitalMap portfolios={portfolios} mode="reports" />;
+/** The list of every portfolio, with the holdings of the first view only (lib/research/capital-map-data.ts); the rest load when chosen. */
+export default async function Page({ searchParams }: { searchParams?: Promise<{ portfolio?: string | string[] }> } = {}) {
+  const requested = (await searchParams)?.portfolio;
+  const portfolios = await loadCapitalPortfolios();
+  const loaded = firstView(portfolios, typeof requested === "string" ? requested : null);
+  return <CapitalMap portfolios={portfolios.map(item => loaded.includes(item.id) ? item : withoutHoldings(item))} loaded={loaded} mode="reports" />;
 }

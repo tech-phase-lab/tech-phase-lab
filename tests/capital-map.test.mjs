@@ -236,8 +236,22 @@ test('the public Capital Map returns actual reports without membership or a paid
   assert.equal(result.props.portfolios.length, 33);
   assert.equal(result.props.portfolios.filter(p => p.kind === 'corporate').length, 14);
   assert.equal(result.props.portfolios.filter(p => p.kind === 'manager').length, 13);
-  assert.ok(result.props.portfolios.every(p => p.current.holdings.length > 0 && p.current.source.url.startsWith('https://')));
+  assert.ok(result.props.portfolios.every(p => p.current.source.url.startsWith('https://')));
   assert.ok(result.props.portfolios.filter(p => p.kind !== 'etf').every(p => p.previous?.asOf === '2026-03-31'));
+  // Speed, Nov 26: the first HTML carries the first fund manager's holdings only; the others come from /api/research/capital-map.
+  assert.deepEqual(result.props.loaded, [result.props.portfolios.find(p => p.kind === 'manager').id]);
+  for (const p of result.props.portfolios) assert.equal(p.current.holdings.length > 0, result.props.loaded.includes(p.id), p.id);
+  const route = await build({ entryPoints: [new URL('../app/api/research/capital-map/route.ts', import.meta.url).pathname], bundle: true, write: false, platform: 'node', format: 'cjs', packages: 'external' });
+  const routeModule = { exports: {} };
+  new Function('require', 'module', 'exports', route.outputFiles[0].text)(require, routeModule, routeModule.exports);
+  const all = await routeModule.exports.GET(new Request('https://techphase.app/api/research/capital-map?ids=all'));
+  assert.match(all.headers.get('cache-control'), /^public, max-age=3600, s-maxage=86400/);
+  const { holdings } = await all.json();
+  assert.equal(Object.keys(holdings).length, 33);
+  assert.ok(Object.values(holdings).every(h => h.current.holdings.length > 0));
+  const one = await (await routeModule.exports.GET(new Request(`https://techphase.app/api/research/capital-map?ids=${result.props.portfolios[5].id}`))).json();
+  assert.deepEqual(Object.keys(one.holdings), [result.props.portfolios[5].id]);
+  assert.equal((await routeModule.exports.GET(new Request('https://techphase.app/api/research/capital-map?ids=nope'))).status, 404);
   const screen = readFileSync(new URL('../app/research/capital-map/screen.tsx', import.meta.url), 'utf8');
   assert.doesNotMatch(screen, /TECH PHASE PRO|Sign in \/ View plan/);
   const dashboard = readFileSync(new URL('../app/research/research-dashboard.tsx', import.meta.url), 'utf8');
