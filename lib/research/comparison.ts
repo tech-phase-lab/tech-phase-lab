@@ -474,7 +474,16 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
   const capex = capexRaw && capexRaw.value >= 0 ? capexRaw : zeroCapex(operatingCash);
   const stockCompensationRaw = metric("stockCompensation");
   const stockCompensation = stockCompensationRaw && stockCompensationRaw.value >= 0 ? stockCompensationRaw : null;
-  const unique = (values: Fact[]) => values.length && new Set(values.map(f => `${f.start}/${f.end}/${f.value}/${f.unit}`)).size === 1 ? values[0] : null;
+  // One figure, as filed once or several times: the same figure shown both in full and rounded (Eversource: $2,978,890 thousand on the
+  // statement, $2,978.9 million in a note) is one figure, kept at its full precision; any other difference is a conflict and stays held.
+  const unique = (values: Fact[]) => {
+    if (!values.length || new Set(values.map(f => `${f.start}/${f.end}/${f.unit}`)).size !== 1) return null;
+    const amounts = values.map(f => f.value), top = Math.max(...amounts.map(Math.abs));
+    if (new Set(amounts).size === 1) return values[0];
+    if (top === 0 || (Math.max(...amounts) - Math.min(...amounts)) / top > 0.0005) return null;
+    const precision = (n: number) => { let p = 0; while (p < 15 && n % 10 ** (p + 1) === 0) p++; return p; };   // trailing zeros: fewer = more precise
+    return [...values].sort((a, b) => precision(a.value) - precision(b.value))[0];
+  };
   const shares = collect(basis, tags[basis].dilutedShares, false, "annual", true).filter(f => f.accession === revenue.accession && f.value > 0);
   const dilutedShares = unique(shares.filter(f => f.start === revenue.start && f.end === revenue.end));
   const previousDilutedShares = dilutedShares && previousRevenue ? unique(shares.filter(f => f.start === previousRevenue.start && f.end === previousRevenue.end && f.tag === dilutedShares.tag)) : null;
@@ -498,7 +507,15 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
     if (!wanted) return null;
     // The same fiscal year's nine months: a 52/53-week year may start a few days before the calendar date its 10-Qs use (FUBO: the 10-K's
     // year runs from Sep 28, its 10-Qs' year-to-date from Oct 1), so the starts may differ by up to a week.
-    const ytd = collect(basis, [tag], false, "ytd9").filter(f => f.unit === wanted.unit && !!f.start && !!wanted.start && Math.abs(day(f.start) - day(wanted.start)) <= 7 && day(wanted.end) - day(f.end) >= 75 && day(wanted.end) - day(f.end) <= 120);
+    const nineMonths = (name: string) => collect(basis, [name], false, "ytd9").filter(f => f.unit === wanted.unit && !!f.start && !!wanted.start && Math.abs(day(f.start) - day(wanted.start)) <= 7 && day(wanted.end) - day(f.end) >= 75 && day(wanted.end) - day(f.end) <= 120);
+    let ytd = nineMonths(tag);
+    // The 10-Qs may tag the same line under another name than the 10-K's total (BellRing: "Revenues" in the 10-K, contract revenue in its
+    // 10-Qs). That name is used only when the annual report itself states it for the same year with the very same value.
+    if (!ytd.length && wanted.accession) {
+      const aliases = Object.keys(obj(facts[basis])).filter(name => name !== tag && Object.values(obj(obj(obj(facts[basis])[name]).units)).some(values => Array.isArray(values)
+        && values.some(raw => { const r = obj(raw); return r.accn === wanted.accession && r.start === wanted.start && r.end === wanted.end && r.val === wanted.value; })));
+      for (const name of aliases) { ytd = nineMonths(name); if (ytd.length) break; }
+    }
     const best = ytd.sort((a, b) => b.filed.localeCompare(a.filed))[0];
     const same = best ? ytd.filter(f => f.filed === best.filed && f.end === best.end) : [];
     if (!best || new Set(same.map(f => f.value)).size !== 1) return null;

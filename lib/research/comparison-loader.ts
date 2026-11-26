@@ -24,7 +24,10 @@ export async function loadSecComparison(ticker: string, cik: string, fetchText: 
   // An amendment that only adds Part III or exhibits (MO's 10-K/A of May 2026) carries no figures: the original report anchors freshness,
   // and figures an amendment restates arrive in companyfacts under it anyway. Before, MO's amendment was read on every load and flagged.
   const annual = filings.find(f => annualForm.test(f.form) && !f.form.endsWith("/A")) ?? filings.find(f => annualForm.test(f.form));
-  const quarter = filings.find(f => (/^(?:10-Q)(?:\/A)?$/.test(f.form) || (/^6-K(?:\/A)?$/.test(f.form) && fiscalQuarterEnd(f.end, annual?.end))) && f.inline && (!annual || f.end > annual.end));
+  // An amendment that only adds exhibits (BETA's and AZZ's 10-Q/A) carries no figures: the original report of that quarter is read.
+  const quarterly = (f: FinancialFiling) => (/^(?:10-Q)(?:\/A)?$/.test(f.form) || (/^6-K(?:\/A)?$/.test(f.form) && fiscalQuarterEnd(f.end, annual?.end))) && f.inline && (!annual || f.end > annual.end);
+  const newestQuarterly = filings.find(quarterly);
+  const quarter = newestQuarterly && /\/A$/.test(newestQuarterly.form) ? filings.find(f => quarterly(f) && !/\/A$/.test(f.form) && f.end === newestQuarterly.end) ?? newestQuarterly : newestQuarterly;
   // TSM's untagged earnings exhibits have a separate, verified actuals parser.
   const tsmRelease = ticker === "TSM" && Number(cik) === 1046179 ? filings.find(f => f.form.startsWith("6-K") && /\/tsm-\d{8}x6k\.htm$/.test(f.url) && ["03-31","06-30","09-30","12-31"].includes(f.end.slice(5)) && (!annual || f.end > annual.end)) : undefined;
   const tsmStatement = ticker === "TSM" && Number(cik) === 1046179 ? filings.find(f => f.form.startsWith("6-K") && /\/tsm-fsx\d{8}x6k\.htm$/.test(f.url) && (!annual || f.end > annual.end)) : undefined;
@@ -82,7 +85,9 @@ export async function loadSecComparison(ticker: string, cik: string, fetchText: 
   const dataWarnings = [];
   if (annual && (!result.revenue || result.revenue.end < annual.end || (result.revenue.filed ?? "") < annual.filed)) dataWarnings.push(warning(`${annual.end}期の年次提出書類から数値を取得できていません。`, `Figures from the annual filing for ${annual.end} are unavailable.`));
   const latestQuarter = [quarter,tsmRelease,tsmStatement].filter((f): f is FinancialFiling=>!!f).sort((a,b)=>b.end.localeCompare(a.end)||b.filed.localeCompare(a.filed))[0];
-  if (latestQuarter && (!result.quarterRevenue || result.quarterRevenue.end < latestQuarter.end || (result.quarterRevenue.filed ?? "") < latestQuarter.filed)) dataWarnings.push(warning(`${latestQuarter.end}期の四半期提出書類から数値を取得できていません。`, `Figures from the quarterly filing for ${latestQuarter.end} are unavailable.`));
+  // The figures read from that very filing are current, whatever period date the SEC's index gives it (SAH: its 10-Q for the quarter to
+  // Sep 30 is indexed as Oct 29).
+  if (latestQuarter && result.quarterRevenue?.accession !== latestQuarter.accession && (!result.quarterRevenue || result.quarterRevenue.end < latestQuarter.end || (result.quarterRevenue.filed ?? "") < latestQuarter.filed)) dataWarnings.push(warning(`${latestQuarter.end}期の四半期提出書類から数値を取得できていません。`, `Figures from the quarterly filing for ${latestQuarter.end} are unavailable.`));
   const earnings=filings.filter(f=>f.earnings).sort((a,b)=>b.filed.localeCompare(a.filed))[0];
   const newestFigures=[result.revenue?.filed,result.quarterRevenue?.filed].filter((d):d is string=>!!d).sort().at(-1);
   if(earnings && (!newestFigures || earnings.filed>newestFigures)) dataWarnings.push(warning(`${earnings.filed}の新しい決算発表は数値の反映が未確認です。`, `Figures from the newer earnings release on ${earnings.filed} are not verified.`));
