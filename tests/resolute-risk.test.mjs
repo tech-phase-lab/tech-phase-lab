@@ -60,7 +60,7 @@ test('the published criteria text is plain, generated from the levels, in both l
  assert.deepEqual(readingParts(swing,'ja'),[{text:'TP大型株100　−0.6%',detail:'取引中は −4.6% まで下落'},{text:'TP半導体40　−8.5%'},{text:'恐怖指数　0%'}]);
  assert.deepEqual(readingParts(swing,'en')[0],{text:'TP Large Cap 100  −0.6%',detail:'Intraday low −4.6%'});
  assert.match(gauge,/readingParts\(article\.market,locale\)/);
- assert.match(gauge,/const detail:CSSProperties=\{whiteSpace:'nowrap',fontSize:'\.85em'[^}]*display:'block'/);
+ assert.match(gauge,/const detail:CSSProperties=\{whiteSpace:'nowrap',fontSize:'\.87em'[^}]*display:'block'/);
  assert.equal(formatCause({market:m,stars:3,cause:{kind:'one-off',ja:'システム障害',en:'system outage'}},'ja'),'一過性とみられる要因（システム障害）→ ★−1');
  assert.equal(formatCause({market:m,stars:5,cause:{kind:'lasting',ja:'輸出規制の強化',en:'tighter export controls'}},'en'),'Likely to last (tighter export controls) → ★+1');
  assert.equal(formatCause({market:m,stars:4,cause:null},'ja'),null);
