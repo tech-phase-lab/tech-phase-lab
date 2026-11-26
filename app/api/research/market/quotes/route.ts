@@ -5,6 +5,8 @@ export const dynamic = "force-dynamic";
 export const maxDuration = 30;
 const headers = { "Cache-Control": "public, s-maxage=30, stale-while-revalidate=30" };
 const fastHeaders = { "Cache-Control": "public, s-maxage=10, stale-while-revalidate=5" };
+/** An answer holding an earlier copy (its slot is being read, or the plan's minute had no room): kept by the shared cache one second only. */
+const staleHeaders = { "Cache-Control": "public, s-maxage=1" };
 /** Quotes for up to 100 tickers (the watchlist and the cards). `history=1` adds the day's 5-minute closes for the sparklines.
  * `fast=1` (the watchlist and a stock's page, polled every 15 seconds): a quote older than 15 seconds is read again while the plan's minute
  * leaves room (lib/research/quote-refresh-gate.ts), otherwise it is kept a minute as before. `X-Quote-Refresh` says which (15s / 60s).
@@ -22,7 +24,9 @@ export async function GET(request: Request) {
   try {
     const fast = params.get("fast") === "1";
     const { quotes, fast: granted, stale } = readable.length ? await loadMarketQuotesWithRefresh(readable, { fast }) : { quotes: {}, fast: false, stale: 0 };
+    // Every quote an earlier copy: no refresh happened, so none is reported.
+    const allStale = stale > 0 && stale >= Object.keys(quotes).length;
     const history = params.get("history") === "1" ? await loadIntraday(Object.values(quotes).slice(0, 30)) : {};
-    return Response.json({ ok: true, quotes: quoteAnswer(quotes, history) }, { headers: { ...(partial ? { "Cache-Control": "no-store" } : fast ? fastHeaders : headers), "X-Quote-Refresh": granted ? "15s" : "60s", "X-Quote-Stale": String(stale) } });
+    return Response.json({ ok: true, quotes: quoteAnswer(quotes, history) }, { headers: { ...(partial ? { "Cache-Control": "no-store" } : stale ? staleHeaders : fast ? fastHeaders : headers), ...(allStale ? {} : { "X-Quote-Refresh": granted ? "15s" : "60s" }), "X-Quote-Stale": String(stale) } });
   } catch { return Response.json({ ok: false, error: "unavailable" }, { status: 503, headers: { "Cache-Control": "no-store" } }); }
 }

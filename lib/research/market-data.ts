@@ -18,7 +18,8 @@ import { easternToIso, chartSpec, nextEarningsFromSite, parseBars, parseNextEarn
 export const marketDataConfigured = () => !!process.env.TWELVE_DATA_API_KEY;
 
 const call = (path: string, params: Record<string, string>, tier: Tier = "user") => twelveCall(path, params, { tier });
-const quoteSpec = (now: number): ReadSpec => ({ name: "md-quote-v1", slotMs: quoteSlotMs("AAPL", now), staleMs: STALE_LIMIT_MS });
+// swr (speed, Nov 26): the first request of a new slot gets the previous slot's copy at once; the slot's one read runs in the background.
+const quoteSpec = (now: number): ReadSpec => ({ name: "md-quote-v1", slotMs: quoteSlotMs("AAPL", now), staleMs: STALE_LIMIT_MS, swr: true });
 
 async function fetchQuotes(group: string[], tier: Tier = "user"): Promise<Map<string, MarketQuote | null>> {
   const parsed = parseQuotes(await call("quote", { symbol: group.join(","), prepost: "true" }, tier), group);
@@ -94,11 +95,12 @@ async function resolveFresh(id: string, tier: Tier = "user"): Promise<Board> {
   throw new Error(`unresolved ${id}`);
 }
 /** `fast` (the three index cards and the chart being looked at) keeps a quote 15 seconds; everything else on the board a minute. */
-const boardSpec = (fast: boolean): ReadSpec => ({ name: "md-board-v1", slotMs: fast ? 15_000 : 60_000, staleMs: STALE_LIMIT_MS });
-async function boardEntry(id: string, fast: boolean): Promise<Board | null> {
+const boardSpec = (fast: boolean): ReadSpec => ({ name: "md-board-v1", slotMs: fast ? 15_000 : 60_000, staleMs: STALE_LIMIT_MS, swr: true });
+async function boardEntry(id: string, fast: boolean): Promise<Board | null> { return (await boardRead(id, fast))?.value ?? null; }
+async function boardRead(id: string, fast: boolean) {
   const got = await sharedReader.read<Board>(boardSpec(fast), id, () => resolveFresh(id));
   if (got) resolvedVariant.set(id, got.value.variant);
-  return got?.value ?? null;
+  return got;
 }
 async function marketTarget(id: string): Promise<{ symbol: string; extra: Variant }> {
   const variant = resolvedVariant.get(id) ?? (await boardEntry(id, false))?.variant;
@@ -287,13 +289,17 @@ export function refreshMonitoredFacts(now = Date.now()): Promise<{ spent: number
 /** The price board: one quote per requested symbol (those that cannot be read are simply absent, and logged). */
 export type BoardQuote = { id: string; price: number; change: number | null; percentChange: number | null; currency: string; asOf: string; marketOpen: boolean; extended: MarketQuote["extended"]; high: number | null; low: number | null; open: number | null; volume: number | null };
 const boardQuote = (id: string, quote: MarketQuote): BoardQuote => ({ id, price: quote.price, change: quote.change, percentChange: quote.percentChange, currency: quote.currency, asOf: quote.asOf, marketOpen: quote.marketOpen, extended: quote.extended, high: quote.high, low: quote.low, open: quote.open, volume: quote.volume });
-export async function loadBoard(ids: string[], fast = false): Promise<BoardQuote[]> {
+export async function loadBoard(ids: string[], fast = false): Promise<BoardQuote[]> { return (await loadBoardWithState(ids, fast)).items; }
+/** `stale`: how many answers are an earlier slot's copy (the route then keeps the answer out of the shared cache). */
+export async function loadBoardWithState(ids: string[], fast = false): Promise<{ items: BoardQuote[]; stale: number }> {
   const out: BoardQuote[] = [];
+  let stale = 0;
   await Promise.all(ids.filter(isMarketChartSymbol).map(async id => {
-    const quote = (await boardEntry(id, fast))?.quote;
-    if (quote) out.push(boardQuote(id, quote));
+    const got = await boardRead(id, fast);
+    const quote = got?.value.quote;
+    if (quote) { out.push(boardQuote(id, quote)); if (!got.fresh) stale++; }
   }));
-  return ids.flatMap(id => out.filter(item => item.id === id));
+  return { items: ids.flatMap(id => out.filter(item => item.id === id)), stale };
 }
 
 /** マーケット「レバETF」(owner, Nov 25): the funds and the stocks under them (lib/research/leveraged-etfs.ts, 89 symbols) in ONE shared snapshot.
@@ -364,7 +370,7 @@ export function refreshBoardSnapshot(now = Date.now()): Promise<{ spent: number;
     await Promise.all(due.map(async job => {
       try {
         if (job.kind === "quote") {
-          const got = await sharedReader.read<Board>(boardSpec(false), job.id, () => { spent++; return resolveFresh(job.id, "warm"); });
+          const got = await sharedReader.read<Board>({ ...boardSpec(false), swr: false }, job.id, () => { spent++; return resolveFresh(job.id, "warm"); });
           if (!got?.fresh) throw new Error("not-read");
           resolvedVariant.set(job.id, got.value.variant);
           entries[boardJobKey(job)] = { at: got.at, quote: boardQuote(job.id, got.value.quote) };
