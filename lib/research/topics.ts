@@ -70,7 +70,14 @@ function better(a: Entry, b: Entry) {
   return a.rank - b.rank || Number(b.reviewed) - Number(a.reviewed) || Number(!!b.card.summary) - Number(!!a.card.summary) || a.time - b.time;
 }
 
+/** Owner, Nov 26 (seven companies' quarterly results shown as one card): stories filed under different companies are two stories,
+ * however alike their headlines read ("BuildDirect Reports Third Quarter 2026 Results" / "LICT Corporation Reports Third Quarter 2026
+ * Results"). The market stream (MKT) names no company, so it is not counted. */
+const companies = (entry: Entry) => entry.tickers.filter(ticker => ticker !== "MKT");
+
 function sameStory(a: Entry, b: Entry) {
+  const x = companies(a), y = companies(b);
+  if (x.length && y.length && !x.some(ticker => y.includes(ticker))) return false;
   if (a.key === b.key || similarStory(a.words, b.words)) return true;
   const shared = a.tickers.length ? a.tickers.some(ticker => b.tickers.includes(ticker)) : !b.tickers.length;
   return shared && sameTopic(a.titleEn, b.titleEn);

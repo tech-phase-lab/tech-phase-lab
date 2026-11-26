@@ -195,6 +195,21 @@ test("the same story from different publishers is one card, the most reputable p
   assert.equal(topicCards(null, later, "ja").length, 2);
 });
 
+test("different companies' look-alike headlines are separate cards; the same article filed under two companies is one", () => {
+  // Owner, Nov 26: seven companies' "Reports Third Quarter 2026 Results" were shown as one card dated at the first of them.
+  const items = parseCompanyWire({ ok: true, items: {
+    GDS: [meta("q1", "GDS Holdings Limited Reports Third Quarter 2026 Results", "GDSホールディングス、2026年第3四半期決算を発表", "GlobeNewsWire", 300)],
+    LICT: [meta("q2", "LICT Corporation Reports Third Quarter 2026 Results", "LICT、2026年第3四半期決算を発表", "Business Wire", 60)],
+    DBX: [meta("c1", "Dropbox to Present at the 2026 UBS Global Technology and AI Conference", "Dropbox、UBS会議で発表", "Business Wire", 20)],
+    CTSH: [meta("c2", "Cognizant to Present at the 30th Annual UBS Global Technology and AI Conference", "コグニザント、UBS会議で発表", "PRNewsWire", 50)],
+    MKT: [meta("k1", "Kioxia and NVIDIA Collaborate to Expand Effective HBM Capacity", "キオクシアとエヌビディアが協業", "Business Wire", 10, { url: "https://news.example/k" })],
+    NVDA: [meta("k2", "Kioxia and NVIDIA Collaborate to Expand Effective HBM Capacity", "キオクシアとエヌビディアが協業", "Business Wire", 10, { url: "https://news.example/k" })],
+  } }).items;
+  const ja = topicCards(null, items, "ja");
+  assert.deepEqual(ja.map(card => card.tickers), ["市場 · NVDA", "DBX", "CTSH", "LICT", "GDS"]);
+  assert.equal(ja.find(card => card.tickers === "LICT").at, iso(60), "each card keeps its own time");
+});
+
 test("the same-story rule and the publisher order", () => {
   assert.equal(sameTopic("Italy fines Meta 887 mln euros over WhatsApp AI chatbots", "Meta fined $887 million by Italian antitrust regulator"), true);
   assert.equal(sameTopic("Nvidia shares rise after earnings beat", "Nvidia shares fall after earnings miss"), false);
