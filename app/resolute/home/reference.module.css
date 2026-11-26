@@ -97,6 +97,9 @@
 .checks b { font-weight:600; font-size:14px; color:var(--ink); line-height:1.6; }
 .checks b span { display:block; }
 .checkValue { font-family:var(--serif); font-size:18px; color:var(--gold2); white-space:nowrap; }
+/* Check rows (owner, Nov 26 §3): the number alone on the right never wraps; the left words take all the rest. On a narrow phone the
+   row gives the words a little more room so no line is left with a word or two. */
+@media (max-width: 400px) { .checks li { grid-template-columns:24px minmax(0,1fr) auto; gap:9px; padding:11px 11px; } .checks li > i { width:24px; height:24px; } .checks b { font-size:13.5px; } .checkValue { font-size:17px; } }
 .todayActions { display:flex; gap:10px; flex-wrap:wrap; }
 .todayActions a { flex:1 1 140px; min-height:46px; display:flex; align-items:center; justify-content:center; text-align:center!important; border-radius:999px; font-size:15px; font-weight:700; padding:10px 16px; }
 .todayPrimary { background:linear-gradient(135deg,var(--gold2),var(--gold)); color:var(--gold-ink)!important; box-shadow:0 6px 18px rgba(216,179,106,.25); }
@@ -120,8 +123,9 @@
 .picPhone em { font-style:normal; font-size:5px; color:var(--sub); margin-top:3px; }
 .picPhone strong { font-family:var(--serif); font-size:9px; color:var(--gold2); font-weight:500; }
 .picChart { width:100%; height:90px; }
-.picCoin { width:76px; height:76px; border-radius:50%; display:grid; place-items:center; font-family:var(--serif); font-size:32px; font-weight:700; color:#6b4f17;
-  background:radial-gradient(circle at 35% 30%,#fff1c2,#e2bc62 45%,#a87d2c 100%); box-shadow:0 0 0 4px #2a2210,0 6px 18px rgba(0,0,0,.55),0 0 22px rgba(216,179,106,.35); }
+/* 税金の目安 (owner, Nov 26 §5): a receipt in thin gold lines (#e3c17a, 1.6px, navy paper, zigzag bottom), no glow; the shadow is
+   the rulebook cover's. */
+.picReceipt { width:58px; height:78px; overflow:visible; filter:drop-shadow(4px 6px 7px rgba(0,0,0,.55)); }
 
 /* ALERTS: one panel, three rows. */
 .alerts { display:flex; flex-direction:column; padding:4px 0; }

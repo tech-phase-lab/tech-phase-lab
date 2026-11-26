@@ -14,7 +14,7 @@ const chars = (s: string) => [...s].length;
 const cleanText = (s: unknown): s is string => typeof s === "string" && s.isWellFormed() && !/[<>\u0000-\u0009\u000b-\u001f]/.test(s);
 
 /** Fixed rejection codes (logged; never the text). */
-export const TODAY_REJECTIONS = Object.freeze(["shape", "headline-length", "body-lines", "too-many-checks", "unknown-check", "new-number", "ellipsis", "advice", "direction"] as const);
+export const TODAY_REJECTIONS = Object.freeze(["shape", "headline-length", "body-lines", "too-many-checks", "unknown-check", "new-number", "ellipsis", "advice", "direction", "day-move", "distance"] as const);
 export type TodayRejection = typeof TODAY_REJECTIONS[number];
 
 /** Buying or selling recommendations beyond the member's own rules. The member's planned buy-more (買い増し) is their rule, so
@@ -25,6 +25,21 @@ const ELLIPSIS = /…|\.\.\.|‥|。。。/;
 /** Down-day / up-day wording that must not appear on the opposite day (contract: never a down-day rule on an up day). */
 const DOWN_DAY = /むやみに動かない|下がった日|下落した日|急落|暴落|\bdown day\b|\bsell-?off\b/i;
 const UP_DAY = /浮かれて|上がった日|上昇した日|急騰|\bup day\b|\brally\b/i;
+
+/** Wording of the body (owner, Nov 26 §4). A same-day move is always written with 「今日」 / "today", and the distance to a line is
+ * written only with the "from base" numbers of the rows: a line that carries a day move may not speak of a distance. */
+const TODAY_WORD = { ja: /今日/, en: /\btoday(?:'s|’s)?\b/i } as const;
+const DISTANCE_WORD = { ja: /線まで|ラインまで|あと|届/, en: /\bto go\b|\baway from\b|\bfrom (?:your|the) line\b|\breach/i } as const;
+export function wordingIssue(lines: { ja: readonly string[]; en: readonly string[] }, dayMoves: readonly number[]): "day-move" | "distance" | null {
+  const moves = new Set(dayMoves.map(n => String(Math.abs(n))));
+  if (!moves.size) return null;
+  for (const l of ["ja", "en"] as const) for (const line of lines[l]) {
+    if (!numberTokens(line).some(n => moves.has(n))) continue;
+    if (!TODAY_WORD[l].test(line)) return "day-move";
+    if (DISTANCE_WORD[l].test(line)) return "distance";
+  }
+  return null;
+}
 
 /** Digits as they are compared: NFKC (full-width → ASCII), thousands separators removed, sign dropped. */
 export function numberTokens(text: string): string[] {
@@ -103,7 +118,7 @@ export const TODAY_OUTPUT_SCHEMA = {
 } as const;
 
 /** The model's output → TodayPlan, or the reason it cannot be used. `inputs` is everything the model was given (numbers allowed). */
-export function validateTodayOutput(output: unknown, ctx: { date: string; direction: TodayPlan["direction"]; checks: readonly CheckFact[]; estimate: TodayPlan["estimate"]; inputs: unknown[] }):
+export function validateTodayOutput(output: unknown, ctx: { date: string; direction: TodayPlan["direction"]; checks: readonly CheckFact[]; estimate: TodayPlan["estimate"]; inputs: unknown[]; dayMoves?: readonly number[] }):
   { ok: true; plan: TodayPlan } | { ok: false; reason: TodayRejection } {
   const o = output as ModelTodayOutput;
   if (!o || typeof o !== "object" || !o.headline || !o.body || !Array.isArray(o.checks) || !Array.isArray(o.body.ja) || !Array.isArray(o.body.en)) return { ok: false, reason: "shape" };
@@ -119,8 +134,8 @@ export function validateTodayOutput(output: unknown, ctx: { date: string; direct
     const fact = typeof c?.id === "string" ? facts.get(c.id) : undefined;
     if (!fact || seen.has(c.id)) return { ok: false, reason: "unknown-check" };
     seen.add(c.id);
-    checks.push({ label: { ja: String(c.label?.ja ?? "").trim(), en: String(c.label?.en ?? "").trim() }, rule: { ja: String(c.rule?.ja ?? "").trim(), en: String(c.rule?.en ?? "").trim() },
-      today: { ja: String(c.today?.ja ?? "").trim(), en: String(c.today?.en ?? "").trim() }, state: fact.state });
+    // The row's words are the candidate's own (owner, Nov 26 §3: one fixed layout, the same numbers as the body); the model only picks.
+    checks.push({ label: { ...fact.label }, rule: { ...fact.rule }, today: { ...fact.today }, state: fact.state });
   }
   const texts = [headline.ja, headline.en, ...lines.ja, ...lines.en, ...checks.flatMap(c => [c.label.ja, c.label.en, c.rule.ja, c.rule.en, c.today.ja, c.today.en])];
   if (texts.some(t => ELLIPSIS.test(t))) return { ok: false, reason: "ellipsis" };
@@ -128,6 +143,8 @@ export function validateTodayOutput(output: unknown, ctx: { date: string; direct
   const all = texts.join("\n");
   if (ctx.direction === "up" && DOWN_DAY.test(all) || ctx.direction === "down" && UP_DAY.test(all)) return { ok: false, reason: "direction" };
   if (unknownNumbers(all, allowedNumbers(...ctx.inputs)).length) return { ok: false, reason: "new-number" };
+  const wording = wordingIssue({ ja: [headline.ja, ...lines.ja], en: [headline.en, ...lines.en] }, ctx.dayMoves ?? []);
+  if (wording) return { ok: false, reason: wording };
   const plan = { date: ctx.date, source: "ai" as const, direction: ctx.direction, headline, body: { ja: lines.ja.join("\n"), en: lines.en.join("\n") }, checks,
     ...(ctx.estimate !== undefined ? { estimate: ctx.estimate } : {}) };
   try { return { ok: true, plan: parseTodayPlan(plan) }; } catch { return { ok: false, reason: "shape" }; }

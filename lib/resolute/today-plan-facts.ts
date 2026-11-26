@@ -164,31 +164,53 @@ export function reachedLines(watch: readonly WatchFact[], plan: PlanInput, estim
   };
 }
 
-/** Candidate rows for the check list (項目名・その人のルール・今日の数字). The state is decided here, never by the model. */
+/** Candidate rows for the check list. The state and every word are decided here, never by the model (the job keeps these texts).
+ * Row shape (owner, Nov 26 §3): a small label 「買い増しライン −5%　NVDA」, two bold lines 「基準からの位置」「線まであと29.4%」, and
+ * the number alone on the right 「+24.4%」 (the same "from base" number the body uses, §4). No 「推定」 in the rows. */
 export type CheckFact = TodayCheck & { id: string };
 const pct = (n: number) => `${n.toFixed(1).replace(/\.0$/, "")}%`;
+const POSITION = { ja: "基準からの位置", en: "Position vs. your base" }, ASSETS = { ja: "いまの資産の下落", en: "Drop in your assets now" };
+/** The bold lines: what the number is, then the distance to the line while it is not reached. */
+const ruleLines = (what: { ja: string; en: string }, distancePct: number | null) => distancePct === null ? { ...what }
+  : { ja: `${what.ja}\n線まであと${pct(distancePct)}`, en: `${what.en}\n${pct(distancePct)} to go` };
 export function checkFacts(watch: readonly WatchFact[], plan: PlanInput, estimate: TodayPlan["estimate"]): CheckFact[] {
   const out: CheckFact[] = [];
-  if (estimate && plan.stopLossPct != null) {
+  const now = estimate ? { ja: signed(estimate.estimatedChangePct), en: signed(estimate.estimatedChangePct) } : null;
+  if (estimate && now && plan.stopLossPct != null) {
     const reached = estimate.estimatedChangePct <= -plan.stopLossPct;
-    out.push({ id: "stop-loss", state: reached ? "reached" : "ok", label: { ja: "損切りのライン", en: "Exit line" },
-      rule: { ja: `−${pct(plan.stopLossPct)}`, en: `−${pct(plan.stopLossPct)}` },
-      today: { ja: `推定 約${signed(estimate.estimatedChangePct)}`, en: `Est. about ${signed(estimate.estimatedChangePct)}` } });
+    out.push({ id: "stop-loss", state: reached ? "reached" : "ok", label: { ja: `損切りのライン −${pct(plan.stopLossPct)}`, en: `Exit line −${pct(plan.stopLossPct)}` },
+      rule: ruleLines(ASSETS, reached ? null : round1(plan.stopLossPct + estimate.estimatedChangePct)), today: { ...now } });
   }
   for (const w of watch) {
-    if (w.buyLine) out.push({ id: `buy:${w.symbol}`, state: w.buyLine.reached ? "reached" : "ok", label: { ja: `${w.symbol} 買い増し`, en: `${w.symbol} buy-more` },
-      rule: { ja: `基準から −${pct(w.buyLine.dropPct)}`, en: `−${pct(w.buyLine.dropPct)} from reference` },
-      today: w.buyLine.reached ? { ja: `基準から ${signed(w.fromReferencePct)}`, en: `${signed(w.fromReferencePct)} from reference` }
-        : { ja: `${signed(w.fromReferencePct)}（あと${pct(w.buyLine.distancePct)}）`, en: `${signed(w.fromReferencePct)} (${pct(w.buyLine.distancePct)} to go)` } });
-    if (w.upTarget) out.push({ id: `up:${w.symbol}`, state: w.upTarget.reached ? "reached" : "ok", label: { ja: `${w.symbol} 上昇の目安`, en: `${w.symbol} rise level` },
-      rule: { ja: `基準から +${pct(w.upTarget.risePct)}`, en: `+${pct(w.upTarget.risePct)} from reference` },
-      today: { ja: `基準から ${signed(w.fromReferencePct)}`, en: `${signed(w.fromReferencePct)} from reference` } });
+    const from = { ja: signed(w.fromReferencePct), en: signed(w.fromReferencePct) };
+    if (w.buyLine) out.push({ id: `buy:${w.symbol}`, state: w.buyLine.reached ? "reached" : "ok",
+      label: { ja: `買い増しライン −${pct(w.buyLine.dropPct)}　${w.symbol}`, en: `Buy-more line −${pct(w.buyLine.dropPct)} · ${w.symbol}` },
+      rule: ruleLines(POSITION, w.buyLine.reached ? null : w.buyLine.distancePct), today: { ...from } });
+    if (w.upTarget) out.push({ id: `up:${w.symbol}`, state: w.upTarget.reached ? "reached" : "ok",
+      label: { ja: `上昇の目安 +${pct(w.upTarget.risePct)}　${w.symbol}`, en: `Rise level +${pct(w.upTarget.risePct)} · ${w.symbol}` },
+      rule: ruleLines(POSITION, w.upTarget.reached ? null : w.upTarget.distancePct), today: { ...from } });
   }
-  if (estimate) out.push({ id: "tolerance", state: estimate.remainingPct <= 0 ? "reached" : "ok", label: { ja: "許容できる下落", en: "Drop you can accept" },
-    rule: { ja: `−${pct(estimate.allowedDropPct)}（推定の目安）`, en: `−${pct(estimate.allowedDropPct)} (estimate)` },
-    today: { ja: `約${signed(estimate.estimatedChangePct)}（あと${pct(estimate.remainingPct)}）`, en: `About ${signed(estimate.estimatedChangePct)} (${pct(estimate.remainingPct)} to go)` } });
+  if (estimate && now) out.push({ id: "tolerance", state: estimate.remainingPct <= 0 ? "reached" : "ok",
+    label: { ja: `許容できる下落 −${pct(estimate.allowedDropPct)}`, en: `Drop you can accept −${pct(estimate.allowedDropPct)}` },
+    rule: ruleLines(ASSETS, estimate.remainingPct <= 0 ? null : estimate.remainingPct), today: { ...now } });
   // Reached lines first (they are what the day is about), then in the order above.
   return [...out.filter(c => c.state === "reached"), ...out.filter(c => c.state === "ok")];
+}
+/** The body's wording rules (owner, Nov 26 §4), as numbers the validator can check: each same-day move (a watched stock's day change,
+ * a TP index's move on the session) and the numbers that may stand for a distance or a position (from base, the lines, the
+ * distances, the estimate). A day move equal to one of the latter cannot be told apart and is not checked. */
+export function wordingFacts(facts: Pick<TodayFacts, "watch" | "indexMoves" | "estimate" | "checks">): { dayMoves: number[]; positions: number[] } {
+  const positions = new Set<number>();
+  const add = (n: number | null | undefined) => { if (typeof n === "number" && Number.isFinite(n)) positions.add(Math.abs(round1(n))); };
+  for (const w of facts.watch) {
+    add(w.fromReferencePct); add(Math.round(w.fromReferencePct)); add(w.buyLine?.dropPct); add(w.buyLine?.distancePct); add(w.upTarget?.risePct); add(w.upTarget?.distancePct);
+  }
+  if (facts.estimate) { add(facts.estimate.allowedDropPct); add(facts.estimate.estimatedChangePct); add(facts.estimate.remainingPct); }
+  for (const c of facts.checks) for (const t of [c.label.en, c.rule.en, c.today.en]) for (const m of t.match(/\d+(?:\.\d+)?/g) ?? []) add(Number(m));
+  const moves = new Set<number>();
+  for (const w of facts.watch) if (w.dayChangePct !== null && w.dayChangePct !== 0) moves.add(Math.abs(w.dayChangePct));
+  for (const m of facts.indexMoves) { const n = /(\d+(?:\.\d+)?)%$/.exec(m.en); if (n && Number(n[1]) !== 0) moves.add(Number(n[1])); }
+  return { dayMoves: [...moves].filter(n => !positions.has(n)), positions: [...positions] };
 }
 export const publicCheck = ({ label, rule, today, state }: CheckFact): TodayCheck => ({ label, rule, today, state });
 
@@ -210,7 +232,7 @@ export function modelInput(facts: TodayFacts, plan: PlanInput, recentHeadlines: 
     marketDate: facts.date, direction: facts.direction, highestStars: facts.stars,
     shockGauge: facts.shock, tpIndexMoves: facts.indexMoves, thermometer: facts.thermometer.stages, thermometerHot: facts.thermometer.hot,
     watched: facts.watch.map(w => ({ symbol: w.symbol, close: w.close, dayChangePct: w.dayChangePct, fromReferencePct: w.fromReferencePct,
-      buyLine: w.buyLine, upTarget: w.upTarget })),
+      fromReferenceRoundedPct: Math.round(w.fromReferencePct), buyLine: w.buyLine, upTarget: w.upTarget })),
     linesReached: facts.reached,
     estimate: facts.estimate ? { ...facts.estimate, note: "estimate only (推定の目安)" } : null,
     checkCandidates: facts.checks.map(c => ({ id: c.id, state: c.state, label: c.label, rule: c.rule, today: c.today })),
