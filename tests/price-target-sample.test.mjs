@@ -72,7 +72,7 @@ test("the 目標株価 page shows one line under its title instead of the panel'
   for (const lang of ["ja", "en"]) {
     const home = renderToStaticMarkup(React.createElement(Panel, { lang }));
     const page = renderToStaticMarkup(React.createElement(Panel, { lang, heading: false }));
-    for (const text of ["ANALYST", lang === "ja" ? "目標株価の変更" : "Price target changes", lang === "ja" ? "過去1週間" : "Past week"]) {
+    for (const text of ["PRICE TARGETS", lang === "ja" ? "目標株価の変更" : "Price target changes", lang === "ja" ? "過去1週間" : "Past week"]) {
       assert.ok(home.includes(text), text);
       assert.ok(!page.includes(text), text);
     }

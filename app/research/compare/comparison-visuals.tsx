@@ -74,8 +74,7 @@ function StatusOverlay({companies,lang,now}: {companies:ComparisonResult["compan
     <p className={styles.snapshotNote}>{ja ? "未取得・評価保留は描画しません" : "Unavailable or unscored factors are not plotted"}</p>
   </section>;
 }
-/** missingNote: the 「— 未取得…」 legend; the PRO tour's sample, where every factor is filled, leaves it out. */
-function ScoreOverview({companies,lang,now,missingNote=true}: {companies:ComparisonResult["companies"];lang:"ja"|"en";now:number;missingNote?:boolean}) {
+function ScoreOverview({companies,lang,now}: {companies:ComparisonResult["companies"];lang:"ja"|"en";now:number}) {
   const scoreSets=companies.map(c=>comparisonScores(c,now)), factors=scoreSets[0], ja=lang==="ja";
   const columns={gridTemplateColumns:`repeat(${companies.length},minmax(0,1fr))`} as React.CSSProperties;
   return <section className={styles.scoreOverview} data-count={companies.length}><div className={styles.scoreHeading}><h2>{ja ? "比較スナップショット" : "Comparison snapshot"}</h2><small>{ja ? "参考スコア / 10" : "Reference score (out of 10)"}</small></div>
@@ -88,7 +87,6 @@ function ScoreOverview({companies,lang,now,missingNote=true}: {companies:Compari
           <div className={styles.snapValue}><span className={styles.scoreTrack} aria-hidden="true">{score.value!==null && <i data-company={i} style={{width:`${score.value*10}%`,background:colorOf(i),opacity:winner ? 1 : .6}}/>}</span><strong style={winner ? {color:colorOf(i)} : undefined}>{score.value===null ? "—" : score.value.toFixed(1)}</strong></div>
           <small className={styles.factorMetric}>{comparisonMetric(c,score.id,lang,now)}</small></div>;})}</div>
     </div>)}
-    {missingNote && <p className={styles.snapshotNote}>{ja ? "— 未取得・評価保留（0点ではありません）" : "— means data or a score isn't available. It doesn't mean zero."}</p>}
   </section>;
 }
 /** Bullets saved before Nov 15 used long forms; they are shown in the short form that fits one line at 360px. */

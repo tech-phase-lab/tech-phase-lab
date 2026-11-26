@@ -65,7 +65,7 @@ test("the snapshot gives each company a bar of the same width track; only the hi
   assert.equal((html.match(/class="scoreTrack"/g) ?? []).length, 14);
   assert.equal((html.match(/data-winner="true"/g) ?? []).length, 7, "one winner for each of the seven factors");
   assert.match(html, /grid-template-columns:repeat\(2,minmax\(0,1fr\)\)/);
-  assert.match(html, /未取得・評価保留（0点ではありません）/);
+  assert.doesNotMatch(html, /0点ではありません/, "owner, Nov 27: the 「— 未取得…」 legend is removed");
 });
 
 test("each company card keeps its strengths, weaknesses and status; every item is exactly one line", () => {

@@ -19,7 +19,7 @@ let snapshot: { items: Target[]; at: string; time: number } | null = null;
 const recent = () => snapshot && Date.now() - snapshot.time < 120_000 ? snapshot : null;
 
 /** sample: the owner's filming row (price-targets page, ?demo=nvda only; lib/research/price-target-sample.ts), shown first, never shared.
- * heading: the ANALYST / 目標株価の変更 / 過去1週間 block. The 目標株価 page turns it off (owner, Nov 26): its page title carries
+ * heading: the PRICE TARGETS / 目標株価の変更 / 過去1週間 block. The 目標株価 page turns it off (owner, Nov 26): its page title carries
  * 「アナリストによる変更・過去1週間」 instead, and the pager then brings that page title back into view.
  * `initial`: the feed the server drew into the first HTML (app/research/price-targets/page.tsx; the same for every visitor). */
 export default function PriceTargetsPanel({ lang, sample = null, heading = true, initial = null }: { lang: Language; sample?: Target | null; heading?: boolean; initial?: { items: Target[]; at: string } | null }) {
@@ -174,7 +174,7 @@ export default function PriceTargetsPanel({ lang, sample = null, heading = true,
   const pages = Math.max(1, Math.ceil(shown.length / 4));
   const current = Math.min(page, pages);
   return <section ref={panelRef} id="home-price-targets" className={styles.panel} aria-label={t("目標株価の速報", "Price target updates")}>
-    {heading && <div className={styles.head}><p className={styles.eyebrow}>ANALYST</p><h2>{t("目標株価の変更", "Price target changes")}</h2><p className={styles.period}>{t("過去1週間", "Past week")}</p></div>}
+    {heading && <div className={styles.head}><p className={styles.eyebrow}>PRICE TARGETS</p><h2>{t("目標株価の変更", "Price target changes")}</h2><p className={styles.period}>{t("過去1週間", "Past week")}</p></div>}
     {status === "error" && <p role="status" className={styles.state}>{t("現在、目標株価の更新を取得できません。表示内容は最新とは限りません。", "Price target updates are temporarily unavailable. Displayed items may be stale.")}</p>}
     {status === "loading" && <div aria-busy="true" aria-label={t("目標株価を取得中", "Fetching price targets")} className={styles.pending} />}
     {status === "ready" && shown.length === 0 && <p className={styles.state}>{t("条件に合う目標株価の投稿はまだありません。", "No matching price target posts yet.")}</p>}
