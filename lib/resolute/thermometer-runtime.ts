@@ -39,9 +39,9 @@ export function safeThermometerSnapshot(raw: unknown, expected: string): Thermom
   const v = source.vix;
   if (v?.status === 'ready' && v.asOf === expected && Number.isFinite(v.level) && v.level > 0 && Number.isFinite(v.percentile) && v.percentile >= 0 && v.percentile <= 100) empty.vix = {status:'ready',asOf:expected,level:v.level,percentile:v.percentile};
   else if (v?.status === 'unavailable') empty.vix = {status:'unavailable',reason:reasons.has(v.reason)?v.reason:'invalid-data'};
-  const moves = safeMoves(source.moves, expected), shock = safeShock((source as {shock?: unknown}).shock, expected);
+  const moves = safeMoves(source.moves, expected), shock = safeShock((source as {shock?: unknown}).shock, expected), trail = safeTrail(source.trail, expected);
   const history = safePair(source.history, h => safeHistory(h, expected)), drops = safePair(source.drops, d => safeDrops(d, expected));
-  return {...empty, ...(moves ? {moves} : {}), ...(shock ? {shock} : {}), ...(history ? {history} : {}), ...(drops ? {drops} : {})};
+  return {...empty, ...(moves ? {moves} : {}), ...(shock ? {shock} : {}), ...(trail ? {trail} : {}), ...(history ? {history} : {}), ...(drops ? {drops} : {})};
 }
 /** Only a move dated on the snapshot's own session, with a plausible earlier previous close, is kept. */
 function safeMove(raw: unknown, expected: string): DailyMoveReading | null {
@@ -55,6 +55,23 @@ export function safeMoves(raw: unknown, expected: string): ThermometerSnapshot['
   if (!raw || typeof raw !== 'object') return undefined;
   const source = raw as Record<string, unknown>;
   return {nas100: safeMove(source.nas100, expected), sox: safeMove(source.sox, expected)};
+}
+/** The home chart line: at most 70 ascending sessions, positive levels, the last one on the snapshot's own session. */
+function safeLine(raw: unknown, expected: string): {date: string; close: number}[] | null {
+  if (!Array.isArray(raw) || raw.length < 2 || raw.length > 70) return null;
+  const out: {date: string; close: number}[] = [];
+  for (const bar of raw) {
+    const b = bar as {date?: unknown; close?: unknown};
+    if (!b || !validSessionDate(b.date) || typeof b.close !== 'number' || !Number.isFinite(b.close) || b.close <= 0 || b.close > 1e7) return null;
+    if (out.length && b.date <= out[out.length - 1].date) return null;
+    out.push({date: b.date, close: b.close});
+  }
+  return out[out.length - 1].date === expected ? out : null;
+}
+export function safeTrail(raw: unknown, expected: string): ThermometerSnapshot['trail'] | undefined {
+  if (!raw || typeof raw !== 'object') return undefined;
+  const source = raw as Record<string, unknown>, nas100 = safeLine(source.nas100, expected), sox = safeLine(source.sox, expected);
+  return nas100 || sox ? {nas100, sox} : undefined;
 }
 export interface ThermometerDatabase {
   query(sql: string, values?: unknown[]): Promise<{rows: Record<string,unknown>[]}>;

@@ -10,6 +10,8 @@ export type ThermometerSnapshot = {
  /** Close-to-close basket moves on asOf (Shock Gauge stars). Absent on snapshots stored before Nov 2026. */
  moves?: {nas100: DailyMoveReading | null; sox: DailyMoveReading | null};
  /** Shock Gauge inputs for the last sessions up to asOf (Nov 25): typical move, constituents up/down, fear index. */
+ /** About three months of each basket's daily level up to asOf (home chart line, Nov 25). Absent on older snapshots. */
+ trail?: {nas100: {date: string; close: number}[] | null; sox: {date: string; close: number}[] | null};
  shock?: Record<string, {nas100: ShockReadingView | null; sox: ShockReadingView | null; fear: {date: string; level: number; previousLevel: number} | null}>;
  /** 今夜のひと息「今日と似た日」(Nov 25): days in the past ten years that moved like asOf, per basket (similar-days.ts). */
  history?: {nas100: SimilarHistory | null; sox: SimilarHistory | null};

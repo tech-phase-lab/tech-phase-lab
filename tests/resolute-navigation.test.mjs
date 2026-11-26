@@ -90,7 +90,7 @@ test("moving between RESOLUTE pages draws the page once with what the tab alread
   const remembered = await read("../app/resolute/features/use-remembered.ts");
   assert.match(remembered, /review \? undefined : recall<T>\(key\)/);
   assert.match(await read("../app/resolute/features/use-plan.tsx"), /useRemembered<PlanSnapshot>\('plan'\)/);
-  assert.match(await read("../app/resolute/features/use-risk.tsx"), /reviewing\?null:recall<RiskFeed>\('risk'\)/);
+  assert.match(await read("../app/resolute/features/use-risk.tsx"), /reviewing\?null:currentFeed\(\)[^]*function currentFeed\(\)\{const f=recall<RiskFeed>\('risk'\)|function currentFeed\(\)\{const f=recall<RiskFeed>\('risk'\)[^]*reviewing\?null:currentFeed\(\)/);
   for (const screen of ["notebook/screen.tsx", "simulation/screen.tsx", "../resolute/notifications-screen.tsx", "home/screen.tsx"])
     assert.match(await read(`../app/resolute/${screen}`), /useRemembered</);
 });

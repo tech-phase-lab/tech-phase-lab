@@ -50,7 +50,7 @@ test("the time line is 「14:59 時点」 / \"As of 14:59\"", () => {
   assert.match(page, /asOfLabel\(displayClock\(asOf, lang\), lang\)/);
 });
 
-test("result cards reuse the watchlist's sparkline, tag, logo and quotes path; history is one scrolling row", () => {
+test("result cards reuse the watchlist's sparkline, tag, logo and quotes path; history is one line", () => {
   const rows = read("../app/research/stocks/search-rows.tsx"), css = read("../app/research/stocks/search-redesign.module.css");
   const history = read("../app/research/stocks/stock-search-history.tsx"), historyCss = read("../app/research/stocks/stock-search-history.module.css");
   assert.match(rows, /<AreaChart [^>]*levels=\{false\}/);
@@ -65,8 +65,9 @@ test("result cards reuse the watchlist's sparkline, tag, logo and quotes path; h
   assert.match(css, /\.nameLine\{[^}]*flex-wrap:wrap/);
   assert.doesNotMatch(css, /\.tag\{[^}]*text-overflow:ellipsis/);
   assert.doesNotMatch(history, /aria-expanded|ResizeObserver\(update\);\s*observer\.observe\(element\);\s*for/);
-  assert.match(historyCss, /\.list\{[^}]*flex-wrap:nowrap[^}]*overflow-x:auto/);
-  assert.match(historyCss, /\.list\[data-more\]\{[^}]*mask-image:linear-gradient/);
+  // Owner, Nov 26: one line of as many pills as fit (no sideways scroll); the rest are not drawn.
+  assert.match(historyCss, /\.list\{[^}]*flex-wrap:wrap[^}]*height:36px[^}]*overflow:hidden/);
+  assert.doesNotMatch(historyCss, /overflow-x:auto/);
   const chart = read("../app/research/watchlist/area-chart.tsx");
   assert.match(chart, /\{levels && <text/);
 });

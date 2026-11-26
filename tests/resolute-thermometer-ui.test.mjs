@@ -27,9 +27,10 @@ test('actual gauge switches indices immediately, clears missing readings and iso
    b.onLoad({filter:/.*/,namespace:'gauge-stub'},()=>({contents:'export default function Stub(){return null};export const useReview=()=>globalThis.__gaugeUI.review;',loader:'js'}));
   }}]});
   const homefile=join(dir,'home.cjs');
-  await build({entryPoints:['app/resolute/home/market-gauge-card.tsx'],outfile:homefile,bundle:true,platform:'node',format:'cjs',jsx:'automatic',external:['react','react/jsx-runtime'],loader:{'.css':'empty'},plugins:[{name:'home-link',setup(b){
+  await build({entryPoints:['app/resolute/home/market-chart-card.tsx'],outfile:homefile,bundle:true,platform:'node',format:'cjs',jsx:'automatic',external:['react','react/jsx-runtime'],loader:{'.css':'empty'},plugins:[{name:'home-link',setup(b){
    b.onResolve({filter:/review-context$/},args=>({path:args.path,namespace:'home-stub'}));
    b.onLoad({filter:/.*/,namespace:'home-stub'},()=>({contents:'import React from "react"; export const ReviewLink=props=>React.createElement("a",props);',loader:'js'}));
+   b.onLoad({filter:/market-chart-card\.tsx$/},async args=>({contents:(await readFile(args.path,'utf8')).replace("import {useState} from 'react';","const useState = initial => [initial, () => {}];"),loader:'tsx'}));
   }}]});
   const HomeCard=require(homefile).default;
   const {MarketGauge}=require(outfile);
@@ -46,6 +47,29 @@ test('actual gauge switches indices immediately, clears missing readings and iso
    state.review={scenario:'sample'};r=render(locale,snapshot());assert.match(r.html,locale==='ja'?/表示見本・実際の相場ではありません/:/Not actual market data/);assert.doesNotMatch(r.html,/-12.5%/);
    state.review={scenario:'live'};r=render(locale,undefined);assert.doesNotMatch(r.html,/rotate\(/);assert.doesNotMatch(r.html,/Not actual market data|表示見本・実際/);
   }
+  // TP恐怖指数 card (owner spec, Nov 25): heading, % value with one decimal, glowing band, ▼ and ticks; no 10-year position.
+  for(const locale of ['ja','en']){
+   state.review=null;
+   const bands=locale==='ja'?['落ち着いている','ふつう','荒れ始めている','大きく荒れている']:['Calm','Normal','Getting rough','Very rough'];
+   for(const [level,band,left] of [[12.3,0,20.5],[15,1,25],[18.6,1,43],[20,2,50],[25,2,62.5],[30,3,100],[41,3,100]]){
+    state.values=[];
+    const html=render(locale,{...snapshot(),vix:{status:'ready',asOf:'2026-10-23',level,percentile:57}}).html;
+    assert.ok(html.includes(locale==='ja'?'>TP恐怖指数</h2>':'>TP Fear Index</h2>'));
+    assert.doesNotMatch(html,/市場の警戒度|Market caution|過去10年内の位置|Position over the past 10 years|57 \/ 100|…/);
+    assert.ok(html.includes(`>${level.toFixed(1)}%</p>`));assert.ok(!html.includes(level.toFixed(2)));
+    assert.ok(html.includes(locale==='ja'?'2026-10-23 米国市場の終値':'2026-10-23 US market close'));
+    assert.equal((html.match(/data-active="true"/g)||[]).length,1);
+    assert.match(html,new RegExp(`data-band="${band}" data-active="true"`));
+    assert.ok(html.includes(`left:clamp(10px, ${left}%, calc(100% - 10px))`));
+    for(const tick of ['15%','20%','30%'])assert.ok(html.includes(`>${tick}</span>`));
+    assert.ok(html.includes(locale==='ja'?'相場がどれだけ荒れているかを表す数字です。VIX指数と同じ目盛りで見られて、数字が大きいほど荒れています。':'Shows how rough the market is. It reads on the same scale as the VIX — the higher the number, the rougher the market.'));
+    assert.ok(html.includes(locale==='ja'?'温度の判定には含めません。':'Not included in the temperature score.'));
+    const text=html.replace(/<[^>]+>/g,'');for(const label of bands)assert.ok(text.includes(label),label);
+   }
+   state.values=[];
+   const empty=render(locale,snapshot()).html;
+   assert.doesNotMatch(empty,/data-active="true"|left:clamp/);assert.ok(empty.includes(locale==='ja'?'確定したデータの取得後に表示します。':'Shown once confirmed data is available.'));
+  }
   for(const locale of ['ja','en']) {
    state.review=null;
    const home=value=>renderToStaticMarkup(React.createElement(HomeCard,{locale,snapshot:value}));
@@ -55,8 +79,8 @@ test('actual gauge switches indices immediately, clears missing readings and iso
     const detail=render(locale,value).html,card=home(value);
     const label=(locale==='ja'?['冷えている','やや冷え','平常','やや熱い','熱い']:['Cool','Slightly cool','Normal','Slightly hot','Hot'])[Math.min(4,Math.floor(score/20))];
     assert.ok(detail.includes(label));assert.ok(card.includes(label));
-    assert.match(detail,/2026-10-23/);assert.match(card,/2026-10-23/);
-    assert.ok(card.includes(`left:${score}%`));assert.match(card,/TP大型株100/);
+    assert.match(detail,/2026-10-23/);assert.match(card,locale==='ja'?/10\/23 終値/:/Oct 23 close/);
+    assert.match(card,/TP大型株100|TP Large Cap 100/);
    }
    const value={...snapshot(),validUntil:1000};
    assert.equal(expireThermometerSnapshot(value,999),value);
@@ -65,10 +89,10 @@ test('actual gauge switches indices immediately, clears missing readings and iso
    const detail=render(locale,expired).html,card=home(expired);
    const waiting=gaugeStatus(expired,'nas100',locale==='en');
    assert.ok(detail.includes(waiting));assert.ok(card.includes(waiting));
-   assert.doesNotMatch(card,/left:|2026-10-23/);assert.doesNotMatch(detail,/rotate\(/);
-   assert.doesNotMatch(home({...snapshot(),nas100:unavailable}),/left:|2026-10-23/);
+   assert.doesNotMatch(card,/\d 終値|\d close/);assert.doesNotMatch(detail,/rotate\(/);
+   assert.doesNotMatch(home({...snapshot(),nas100:unavailable}),/\d 終値|\d close/);
    const sample=renderToStaticMarkup(React.createElement(HomeCard,{locale,snapshot:value,sample:true}));
-   assert.match(sample,/left:86%/);assert.doesNotMatch(sample,/2026-10-23/);
+   assert.ok(sample.includes(locale==='ja'?'熱い':'Hot'));assert.doesNotMatch(sample,/\d 終値|\d close/);
    assert.ok(sample.includes(locale==='ja'?'表示見本':'Display sample'));
   }
  }finally{delete globalThis.__gaugeUI;await rm(dir,{recursive:true,force:true});}

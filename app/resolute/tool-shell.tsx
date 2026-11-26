@@ -8,6 +8,7 @@ import { useOpenAtTop } from "./use-open-at-top";
 import AddToHomeCard from "./add-to-home-card";
 import h from "./tool-shell.module.css";
 import { validateSnapshot } from "@/lib/resolute/transport";
+import { rememberAccountReturn } from "@/lib/research/account-return";
 import { requestPreferences } from "@/lib/resolute/preferences-client";
 import { requestPlan } from "@/lib/resolute/plan-client";
 import type { DiagnosisLocale } from "@/lib/resolute/diagnosis-copy";
@@ -96,7 +97,7 @@ export default function ToolShell({ identityReady=true, home=false, pc=false, ch
    <svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="9" r="4" /><path d="M24 13v28M17 19h14M9 31c0 7 7 11 15 11s15-4 15-11M5 33l4-4 4 4M35 33l4-4 4 4" /></svg>
    <b>RESOLUTE</b><span>{en?"Checking…":"確認中…"}</span></section> : <section className={styles.card}>
    <h1>{en?"Your investing rules":"自分の投資ルール"}</h1><p role="status">{message}</p>
-   {access==="signed-out" ? <Link href="/research/account" prefetch={false}>{en?"Sign in":"ログイン"}</Link> : null}
+   {access==="signed-out" ? <Link href="/research/account" prefetch={false} onClick={()=>{ try { rememberAccountReturn(window.sessionStorage,window.location.pathname+window.location.search); } catch { /* Storage is optional. */ } }}>{en?"Sign in":"ログイン"}</Link> : null}
    {access==="mfa" ? <Link href="/research/account/security" prefetch={false}>{en?"Open security settings":"セキュリティ設定を開く"}</Link> : null}
    <button type="button" className={styles.secondary} onClick={()=>setAttempt(n=>n+1)}>{en?"Check again":"再確認"}</button>
   </section>;
@@ -112,11 +113,16 @@ export default function ToolShell({ identityReady=true, home=false, pc=false, ch
     <h2 className={pc_.sec}>{en?"Six steps":"6つのステップ"}</h2>
     {STEPS.map(([href,ja,eng],index)=><Link key={href} href={href} prefetch={false} className={`${pc_.item} ${pc_.stepItem}`} aria-current={current===href?"page":undefined}><i>{index+1}</i><span>{en?eng:ja}</span><Pending /></Link>)}
     <h2 className={pc_.sec}>{en?"Tools":"道具"}</h2>
-    {TOOLS.map(([href,ja,eng,icon])=><Link key={href} href={href} prefetch={false} className={pc_.item} aria-current={current===href?"page":undefined}><svg viewBox="0 0 24 24" aria-hidden="true">{icon}</svg><span>{en?eng:ja}</span><Pending /></Link>)}
+    {/* 衝撃度チェッカー has no detail page on a PC: it moves to the home's Shock Gauge section (owner, Nov 25). */}
+    {TOOLS.map(([href,ja,eng,icon])=>{const to=href==="/resolute/news"?"/resolute#shock-gauge":href;return <Link key={href} href={to} prefetch={false} className={pc_.item} aria-current={current===href?"page":undefined}><svg viewBox="0 0 24 24" aria-hidden="true">{icon}</svg><span>{en?eng:ja}</span><Pending /></Link>;})}
    </nav>
    <div className={pc_.langs} role="group" aria-label={en?"Display language":"表示言語"}>
     <button type="button" aria-pressed={locale==="ja"} onClick={()=>setLocale("ja")}>JA</button>
     <button type="button" aria-pressed={en} onClick={()=>setLocale("en")}>EN</button>
+   </div>
+   <div className={pc_.sideFoot}>
+    <Link href="/resolute/settings" prefetch={false} className={pc_.item} aria-current={current==="/resolute/settings"?"page":undefined}><span>{en?"Language and time zone":"言語とタイムゾーン"}</span></Link>
+    <Link href="/research" prefetch={false} className={pc_.item}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg><span>{en?"Tech Phase":"Tech Phaseへ"}</span></Link>
    </div>
   </aside>
   <div className={pc_.main}>{body}{reviewNote}</div>

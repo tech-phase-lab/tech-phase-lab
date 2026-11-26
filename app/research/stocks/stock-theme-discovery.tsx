@@ -1,43 +1,67 @@
 "use client";
-import { hasLogo, logoSrc } from "../watchlist/stock-logo";
-import CompactPicker from "../compact-picker";
-import { useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
+import StockLogo from "../watchlist/stock-logo";
 import type { Language } from "@/lib/research/data";
+import { SEARCH_THEMES, THEME_NAMES } from "@/lib/research/search-themes";
+import { closeLabel } from "@/lib/research/search-focus";
+import type { FocusView } from "@/lib/research/search-focus-server";
 import styles from "./stock-theme-discovery.module.css";
-const themes = [
-  {id:"all", ja:"すべて", en:"All themes", stocks:[["NVDA","NVIDIA"],["MSFT","Microsoft"],["AMZN","Amazon"],["JPM","JPMorgan Chase"],["LLY","Eli Lilly"],["XOM","Exxon Mobil"]]},
-  {id:"finance", ja:"金融", en:"Financials", stocks:[["JPM","JPMorgan Chase"],["V","Visa"],["MA","Mastercard"]]},
-  {id:"health", ja:"ヘルスケア", en:"Healthcare", stocks:[["LLY","Eli Lilly"],["JNJ","Johnson & Johnson"],["ABBV","AbbVie"]]},
-  {id:"consumer", ja:"消費・小売", en:"Consumer & retail", stocks:[["AMZN","Amazon"],["COST","Costco"],["WMT","Walmart"],["PM","Philip Morris International"]]},
-  {id:"energy", ja:"エネルギー", en:"Energy", stocks:[["XOM","Exxon Mobil"],["CVX","Chevron"],["COP","ConocoPhillips"]]},
-  {id:"memory", ja:"メモリ", en:"Memory", stocks:[["MU","Micron"],["SKHY","SK hynix"],["DRAM","Roundhill Memory ETF"],["SNDK","SanDisk"],["WDC","Western Digital"],["STX","Seagate"]]},
-  {id:"cloud", ja:"AIクラウド", en:"AI cloud", stocks:[["NBIS","Nebius"],["CRWV","CoreWeave"],["IREN","IREN"]]},
-  {id:"chips", ja:"AI半導体", en:"AI chips", stocks:[["NVDA","NVIDIA"],["AMD","AMD"],["AVGO","Broadcom"],["MRVL","Marvell"],["CBRS","Cerebras"],["ARM","Arm"]]},
-  {id:"manufacturing", ja:"半導体製造・検査", en:"Chip manufacturing & testing", stocks:[["ASML","ASML"],["TSM","TSMC"],["AEHR","Aehr Test Systems"]]},
-  {id:"network", ja:"ネットワーク・接続", en:"Networking & connectivity", stocks:[["ALAB","Astera Labs"],["ANET","Arista Networks"],["APH","Amphenol"]]},
-  {id:"optical", ja:"光通信", en:"Optical links", stocks:[["LITE","Lumentum"],["COHR","Coherent"],["CRDO","Credo"],["GLW","Corning"],["AAOI","Applied Optoelectronics"],["CIEN","Ciena"]]},
-  {id:"power", ja:"電力・冷却", en:"Power & cooling", stocks:[["VRT","Vertiv"],["GEV","GE Vernova"],["BE","Bloom Energy"],["VST","Vistra"]]},
-  {id:"security", ja:"サイバーセキュリティ", en:"Cybersecurity", stocks:[["CRWD","CrowdStrike"],["PANW","Palo Alto Networks"],["ZS","Zscaler"],["FTNT","Fortinet"]]},
-  {id:"gold", ja:"金・金鉱山", en:"Gold & miners", stocks:[["NEM","Newmont"],["AEM","Agnico Eagle"],["KGC","Kinross Gold"],["GLDM","SPDR Gold MiniShares ETF"]]},
-  {id:"software", ja:"ソフトウェア", en:"Software", stocks:[["MSFT","Microsoft"],["CRM","Salesforce"],["NOW","ServiceNow"],["ADBE","Adobe"],["PLTR","Palantir"],["APP","AppLovin"]]},
-  {id:"space", ja:"宇宙関連", en:"Space", stocks:[["RKLB","Rocket Lab"],["ASTS","AST SpaceMobile"],["IRDM","Iridium"],["SPCX","SpaceX"],["PL","Planet Labs"]]},
-  {id:"drones", ja:"ドローン", en:"Drones", stocks:[["AVAV","AeroVironment"],["ONDS","Ondas"],["RCAT","Red Cat"]]},
-  {id:"quantum", ja:"量子コンピュータ", en:"Quantum computing", stocks:[["IONQ","IonQ"],["RGTI","Rigetti Computing"],["QBTS","D-Wave Quantum"]]},
-];
-function StockLogo({ticker}:{ticker:string}) {
- const [failed,setFailed]=useState(false);
- return <span className={styles.logo} aria-hidden="true">{!failed && hasLogo(ticker) ?
-  // The site's logo route (owner, Nov 25); the adjacent text remains the accessible name.
-  // eslint-disable-next-line @next/next/no-img-element
-  <img src={logoSrc(ticker)} width={24} height={24} alt="" loading="lazy" onError={()=>setFailed(true)} /> : ticker.slice(0,1)}</span>;
+
+const ALL = "all";
+const percent = (value: number) => `${value > 0 ? "+" : value < 0 ? "−" : ""}${Math.abs(value).toFixed(2)}%`;
+
+function Row({ ticker, name, change, onSelect }: { ticker: string; name: string; change: number | null | undefined; onSelect: (ticker: string) => void }) {
+  const tone = change == null || change === 0 ? styles.flat : change > 0 ? styles.up : styles.down;
+  return <li><button type="button" className={styles.row} onClick={() => onSelect(ticker)}>
+    <StockLogo ticker={ticker} className={styles.logo} />
+    <span className={styles.names}><b>{ticker}</b><span data-fit="">{name}</span></span>
+    {change != null && <span className={`${styles.change} ${tone}`}>{percent(change)}</span>}
+  </button></li>;
 }
-export default function StockThemeDiscovery({lang,onSelect}:{lang:Language;onSelect:(ticker:string)=>void}) {
- const [id,setId]=useState("all");
- const selected=themes.find(theme=>theme.id===id)!;
- return <section className={styles.root} aria-labelledby="stock-themes-title">
-  <div className={styles.heading}><h2 id="stock-themes-title">{lang==="ja"?"テーマから探す":"Explore by theme"}</h2>
-   <CompactPicker lang={lang} label={lang === "ja" ? "銘柄のテーマ" : "Stock theme"} value={id} options={themes.map(theme => ({ value: theme.id, label: theme[lang] }))} onChange={setId} />
-  </div>
-  <ul className={styles.stocks}>{selected.stocks.map(([ticker,name])=><li key={ticker}><button onClick={()=>onSelect(ticker)}><StockLogo ticker={ticker} /><strong>{ticker}</strong><span>{name}</span><span className={styles.open} aria-hidden="true">›</span></button></li>)}</ul>
- </section>;
+
+/** 「テーマから探す」 (owner, Nov 26; sheet 01_銘柄検索_最初の画面): one panel of a fixed height. On the left 「すべて」 and the 17 themes, the only
+ * part that scrolls, its lower edge darkened while more lie below; on the right the chosen theme's stocks, or for 「すべて」 「今日の注目」:
+ * six stocks of the last close from the shared snapshot (lib/research/search-focus-server.ts). Nothing on this screen grows the page. */
+export default function StockThemeDiscovery({ lang, onSelect, focus }: { lang: Language; onSelect: (ticker: string) => void; focus?: FocusView | null }) {
+  const ja = lang === "ja";
+  const [id, setId] = useState(ALL);
+  const [end, setEnd] = useState(false);
+  const list = useRef<HTMLUListElement>(null);
+  const panel = useRef<HTMLDivElement>(null);
+  const theme = SEARCH_THEMES.find(item => item.id === id);
+  // A theme or company name that would not fit its line is set a little smaller (one line, never 「…」).
+  useLayoutEffect(() => {
+    for (const label of panel.current?.querySelectorAll<HTMLElement>("[data-name],[data-fit]") ?? []) {
+      label.removeAttribute("data-tight");
+      if (label.scrollWidth > label.clientWidth + 0.5) label.setAttribute("data-tight", "");
+    }
+  }, [lang, id, focus]);
+  useLayoutEffect(() => {
+    const element = list.current;
+    if (!element) return;
+    const update = () => setEnd(element.scrollTop + element.clientHeight >= element.scrollHeight - 2);
+    update();
+    element.addEventListener("scroll", update, { passive: true });
+    return () => element.removeEventListener("scroll", update);
+  }, []);
+  const themes = [{ id: ALL, label: ja ? "すべて" : "All" }, ...SEARCH_THEMES.map(item => ({ id: item.id, label: ja ? item.ja : item.short ?? item.en }))];
+  const changes = focus?.changes ?? {};
+  return <section className={styles.root} aria-labelledby="stock-themes-title">
+    <div className={styles.heading}><h2 id="stock-themes-title">{ja ? "テーマから探す" : "Explore by theme"}</h2><span>{ja ? `${SEARCH_THEMES.length}テーマ` : `${SEARCH_THEMES.length} themes`}</span></div>
+    <div ref={panel} className={styles.panel}>
+      <div className={styles.themes} data-end={end || undefined}>
+        <ul ref={list} aria-label={ja ? "テーマ" : "Themes"}>{themes.map(item => <li key={item.id}>
+          <button type="button" aria-pressed={item.id === id} onClick={() => setId(item.id)}><span data-name="">{item.label}</span></button>
+        </li>)}</ul>
+      </div>
+      <div className={styles.stocks}>
+        {theme ? <ul className={styles.rows}>{theme.stocks.map(([ticker, name]) => <Row key={ticker} ticker={ticker} name={name} change={changes[ticker]} onSelect={onSelect} />)}</ul>
+          : <>
+            <div className={styles.focusHead}><h3>{ja ? "今日の注目" : "In focus today"}</h3>{focus?.session && <span>{closeLabel(focus.session, lang)}</span>}</div>
+            {focus && focus.session && !focus.rows.length ? <p className={styles.quiet}>{ja ? "今日は大きな動きはありませんでした" : "No big moves today"}</p>
+              : <ul className={`${styles.rows} ${styles.focusRows}`}>{(focus?.rows ?? []).map(row => <Row key={row.ticker} ticker={row.ticker} name={THEME_NAMES[row.ticker] ?? row.name} change={row.change} onSelect={onSelect} />)}</ul>}
+          </>}
+      </div>
+    </div>
+  </section>;
 }

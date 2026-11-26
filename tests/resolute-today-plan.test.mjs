@@ -71,10 +71,23 @@ test('home first paint: drawn once, in its final order, when the feed and the me
  const home=readFileSync(new URL('../app/resolute/home/screen.tsx',import.meta.url),'utf8');
  const card=readFileSync(new URL('../app/resolute/home/today-card.tsx',import.meta.url),'utf8');
  assert.match(home,/const firstPaint=status!=='loading'&&\(locked\|\|!available\|\|member!==undefined\);/);
- assert.match(home,/if\(!firstPaint\)return <section className=\{loading\.loadingBrand\}/);
- assert.match(card,/Promise\.allSettled\(\[requestPlan\(undefined,c\.signal\),requestSettings\(undefined,c\.signal\)\]\)/);
- assert.match(card,/recall<TodayMember\|null>\('today'\)/);assert.match(card,/TODAY_PRICE_WAIT_MS=2500/);
+ assert.match(home,/if\(!firstPaint\)return <section className=\{ds\.loadingBrand\}/);
+ assert.match(card,/Promise\.allSettled\(\[requestPlan\(undefined,c\.signal\),requestSettings\(undefined,c\.signal\),reviewing\?Promise\.resolve\(null\):requestTodayPlan\(c\.signal\)\]\)/,"the AI plan is asked together with the plan and settings: no second wait");
+ assert.match(card,/recall<\{at:number;member:TodayMember\|null\}>\('today'\)/);assert.match(card,/TODAY_PRICE_WAIT_MS=2500/);
  assert.match(readFileSync(new URL('../lib/resolute/view-memory.ts',import.meta.url),'utf8'),/\| "today";/);
  // The push service worker never answers page requests, so it cannot serve an old screen.
  assert.doesNotMatch(readFileSync(new URL('../public/research-sw.js',import.meta.url),'utf8'),/addEventListener\(["']fetch["']/);
+});
+
+test('coming back to a home kept open (overnight, back/forward cache): loader, then today\'s home, never yesterday\'s first',()=>{
+ const fresh=readFileSync(new URL('../app/resolute/home/use-fresh-home.ts',import.meta.url),'utf8');
+ const home=readFileSync(new URL('../app/resolute/home/screen.tsx',import.meta.url),'utf8');
+ const risk=readFileSync(new URL('../app/resolute/features/use-risk.tsx',import.meta.url),'utf8');
+ const card=readFileSync(new URL('../app/resolute/home/today-card.tsx',import.meta.url),'utf8');
+ assert.match(fresh,/HOME_STALE_AFTER_MS=10\*60_000/);
+ assert.match(fresh,/const redraw=\(\)=>\{forget\('risk'\);forget\('today'\);router\.refresh\(\);setEpoch\(e=>e\+1\);\};/);
+ assert.match(fresh,/if\(away\|\|today!==day\)/);assert.match(fresh,/if\(e\.persisted\)/);
+ assert.match(home,/<Home key=\{epoch\} /);
+ assert.match(risk,/f\.date===null\|\|f\.date===latestRiskDate\(\)/,'a feed kept from an earlier Shock Gauge day is not shown');
+ assert.match(card,/Date\.now\(\)-kept\.at<HOME_STALE_AFTER_MS\?kept\.member:undefined/);
 });
