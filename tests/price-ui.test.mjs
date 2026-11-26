@@ -8,7 +8,7 @@ const read = path => readFile(new URL(`../${path}`, import.meta.url), "utf8");
 test("TradingView is gone: no widget routes, no embed code, no mention on screen", async () => {
   for (const gone of ["app/research/market/widget", "app/research/market/ticker-widget", "app/research/market/themes-widget", "app/research/stocks/widget", "app/research/stocks/tradingview-chart.tsx", "app/research/market/themes.tsx"])
     assert.equal(existsSync(new URL(`../${gone}`, import.meta.url)), false, gone);
-  for (const file of ["app/research/market/page.tsx", "app/research/watchlist/watchlist.tsx", "app/research/stocks/market-workspace.tsx", "app/research/price/quote-card.tsx", "app/research/price/quote-detail.tsx"])
+  for (const file of ["app/research/market/screen.tsx", "app/research/watchlist/watchlist.tsx", "app/research/stocks/market-workspace.tsx", "app/research/price/quote-card.tsx", "app/research/price/quote-detail.tsx"])
     assert.doesNotMatch(await read(file), /tradingview|<iframe/i, file);
 });
 test("Twelve Data is called only from the server routes; the browser reads our own API", async () => {
@@ -45,8 +45,8 @@ test("the detail page has the owner's ranges, chart types, tabs, alert band and 
   assert.match(await read("app/research/companies/company-watch.tsx"), /from="watch"/);
 });
 test("the market page is the design's board: SPY / QQQ / DIA cards, five categories, chart with volume, FRED cards below", async () => {
-  const page = await read("app/research/market/page.tsx"), board = await read("app/research/price/market-board.tsx");
-  assert.match(page, /eyebrow="MARKET"/); assert.match(page, /<MarketBoard \/>/); assert.match(page, /<MacroCards/);
+  const page = await read("app/research/market/screen.tsx"), board = await read("app/research/price/market-board.tsx");
+  assert.match(page, /eyebrow="MARKET"/); assert.match(page, /<MarketBoard initialSnapshot=\{initialSnapshot\} \/>/); assert.match(page, /<MacroCards/);
   assert.doesNotMatch(page, /セクター別騰落率|ヒートマップ|Heatmap/);
   for (const label of ["為替", "暗号資産", "金属", "債券ETF", "半導体ETF"]) assert.match(board, new RegExp(label));
   for (const id of ["SPY", "QQQ", "DIA", "USD/JPY", "EUR/JPY", "EUR/USD", "GBP/USD", "BTC/USD", "ETH/USD", "SOL/USD", "XRP/USD", "XAU/USD", "XAG/USD", "XCU/USD", "XPT/USD", "SHY", "IEF", "TLT", "SMH", "SOXX"]) assert.ok(board.includes(`"${id}"`), id);

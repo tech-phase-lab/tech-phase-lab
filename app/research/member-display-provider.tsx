@@ -15,8 +15,18 @@ function readHint(): InitialDisplay | null {
     return (hint?.plan === "pro" || hint?.ownerAccount === true) && Number.isFinite(hint.accessExpiresAt) && hint.accessExpiresAt > Date.now() ? hint : null;
   } catch { return null; }
 }
+const LAST_VIEW_PREFIX = "tech-phase:last-view:";
+function forgetLastViews() {
+  try {
+    const keys: string[] = [];
+    for (let i = 0; i < window.localStorage.length; i++) { const k = window.localStorage.key(i); if (k?.startsWith(LAST_VIEW_PREFIX)) keys.push(k); }
+    keys.forEach(k => window.localStorage.removeItem(k));
+  } catch { /* storage may be blocked */ }
+}
 function writeHint(hint: InitialDisplay | null) {
   try { if (hint) window.localStorage.setItem(HINT_KEY, JSON.stringify(hint)); else window.localStorage.removeItem(HINT_KEY); } catch { /* storage may be blocked */ }
+  // The news pages' kept PRO views go with the hint (lib/research/member-last-view.ts, same key prefix).
+  if (!hint) forgetLastViews();
   showHint(hint);
 }
 /** Keeps <html data-member-hint> (set before the first paint by member-hint-boot) in step with the stored hint: put back if React
