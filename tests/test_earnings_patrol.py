@@ -177,6 +177,17 @@ class QuarterFilings(unittest.TestCase):
                                            exhibit=lambda *a: (None, None), document=lambda url: 'notice text')
         self.assertEqual(events, [])   # a company whose dive reads no other 6-K
 
+    def test_a_leadership_8k_is_read_from_its_cover_document_for_a_dive_that_reports_it(self):
+        sub = filings(('8-K', '2026-11-23T01:00:00.000Z', '5.02,9.01', 'ceo-back'), ('8-K', '2026-11-11T21:30:00.000Z', '5.02', 'ceo-out'), NVDA_8K)
+        read = []
+        _, events = patrol.quarter_filings('NVDA', sub, nvda_release(), {'releasedOn': '2026-08-26'}, fetch=lambda url: None,
+                                           exhibit=lambda *a: (None, None), document=lambda url: read.append(url) or 'notice text')
+        self.assertEqual([e['accession'] for e in events], ['ceo-out', 'ceo-back'])
+        self.assertEqual(len(read), 2)
+        _, events = patrol.quarter_filings('AMD', sub, nvda_release(), {'releasedOn': '2026-08-26'}, fetch=lambda url: None,
+                                           exhibit=lambda *a: (None, None), document=lambda url: 'notice text')
+        self.assertEqual(events, [])   # Item 5.02 alone is not read for a company whose dive does not report it
+
 
 class Records(unittest.TestCase):
     def setUp(self):

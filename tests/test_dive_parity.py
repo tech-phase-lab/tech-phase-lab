@@ -225,5 +225,25 @@ class DepthParity(unittest.TestCase):
             dive_writers.crdo(__import__('dive_figures').read('CRDO', text), dive['sources'][0]['url'], None)
 
 
+class StrictReading(unittest.TestCase):
+    """A value is read only when its row is in the table once, with exactly the table's number of cells (owner, Nov 26)."""
+    def test_a_row_is_read_only_once_and_only_at_its_width(self):
+        import dive_figures as d
+        table = 'Revenue $ 100 $ 90 $ 80 Cost of revenue 50 45 40'
+        self.assertEqual(d.row(table, 'Revenue', 3, None, 'Cost').values, [100, 90, 80])
+        self.assertIsNone(d.row(table, 'Revenue', 2, None, 'Cost'))            # a cell more than the table's columns
+        self.assertIsNone(d.row(table, 'Revenue', 4, None, 'Cost'))            # a cell missing
+        self.assertIsNone(d.row(table + ' Revenue $ 7 $ 6 $ 5', 'Revenue', 3, None, None))   # the label twice
+        self.assertEqual(d.row(table, 'Revenue', 2, None, 'Cost', width=3).values, [100, 90])
+        self.assertEqual(d.row('Net loss (5.2 ) 465.8', 'Net loss', 2).raws, ['5.2', '465.8'])
+        self.assertLess(d.row('Net loss (5.2 ) 465.8', 'Net loss', 2).values[0], 0)   # a negative printed "(5.2 )"
+
+    def test_differing_restatements_of_a_sentence_are_not_read(self):
+        import dive_figures as d
+        p = r'revenue of \$([\d.]+) billion'
+        self.assertEqual(d.sentence('Q3 revenue of $1.2 billion. Again, revenue of $1.2 billion.', p, (1,), unit='text').values, ['1.2'])
+        self.assertIsNone(d.sentence('Q3 revenue of $1.2 billion. Q2 revenue of $1.1 billion.', p, (1,), unit='text'))
+
+
 if __name__ == '__main__':
     unittest.main()
