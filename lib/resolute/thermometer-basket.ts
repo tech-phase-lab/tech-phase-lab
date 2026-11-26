@@ -94,6 +94,40 @@ export function sessionShock(levels: readonly DailyClose[], series: BasketSeries
   if (total < MIN_TICKERS_PER_DAY) return null;
   return { ...move, typicalPercent, up, down, total };
 }
+/** Shock Gauge intraday extreme (owner, Nov 26: NASDAQ-100 fell more than 4.5% intraday and closed −0.6%; the close alone called
+ * it a quiet day). For each basket day: the equal-weight average of the constituents' intraday low and high against their own
+ * previous close; the day's extreme is the deeper of the two (signed). Constituents do not all bottom at the same minute, so this
+ * reads somewhat deeper than the basket's true intraday low; the usual move is measured the same way (the median over the
+ * `window` days before), so the multiple stays comparable. same: constituents that went beyond their previous close by more
+ * than that usual extreme in the day's direction. Never guessed: null without the session, its previous day, a full window of
+ * days with intraday ranges, or enough constituents. */
+export type IntradayReading = { date: string; previousDate: string; changePercent: number; typicalPercent: number; same: number; total: number };
+export function sessionIntraday(levels: readonly DailyClose[], series: BasketSeries, session: string, window = SHOCK_TYPICAL_DAYS): IntradayReading | null {
+  const dates = levels.map(bar => bar.date).filter(date => date <= session).sort();
+  const at = dates.length - 1;
+  if (at < window + 1 || dates[at] !== session) return null;
+  const maps = Object.values(series).map(bars => new Map(bars.map(bar => [bar.date, bar])));
+  const day = (i: number) => {
+    const downs: number[] = [], ups: number[] = [];
+    for (const map of maps) {
+      const now = map.get(dates[i]), before = map.get(dates[i - 1])?.close;
+      if (!now || !(before! > 0) || !(now.low! > 0) || !(now.high! > 0)) continue;
+      downs.push(100 * (now.low! / before! - 1)); ups.push(100 * (now.high! / before! - 1));
+    }
+    if (downs.length < MIN_TICKERS_PER_DAY) return null;
+    const down = downs.reduce((a, b) => a + b, 0) / downs.length, up = ups.reduce((a, b) => a + b, 0) / ups.length;
+    return { extreme: Math.abs(down) >= Math.abs(up) ? down : up, downs, ups };
+  };
+  const today = day(at);
+  if (!today) return null;
+  const past: number[] = [];
+  for (let i = at - window; i < at; i++) { const d = day(i); if (!d) return null; past.push(Math.abs(d.extreme)); }
+  past.sort((a, b) => a - b);
+  const typicalPercent = window % 2 ? past[(window - 1) / 2] : (past[window / 2 - 1] + past[window / 2]) / 2;
+  if (!(typicalPercent > 0) || !Number.isFinite(typicalPercent)) return null;
+  const same = today.extreme < 0 ? today.downs.filter(x => x <= -typicalPercent).length : today.ups.filter(x => x >= typicalPercent).length;
+  return { date: session, previousDate: dates[at - 1], changePercent: Math.round(today.extreme * 1000) / 1000, typicalPercent: Math.round(typicalPercent * 10000) / 10000, same, total: today.downs.length };
+}
 /** TP恐怖指数 (realized volatility of the large-cap basket) on the session and on the day before. */
 export type FearReading = { date: string; level: number; previousLevel: number };
 export function sessionFear(largeLevels: readonly DailyClose[], session: string): FearReading | null {

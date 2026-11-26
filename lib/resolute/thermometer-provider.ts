@@ -1,5 +1,5 @@
 import rosters from './thermometer-rosters.json' with { type: 'json' };
-import { dailyMove, equalWeightLevels, realizedVolatility, sessionFear, sessionShock, stockShock, type ShockReading, type FearReading, type BasketSeries, type StockShock } from './thermometer-basket.ts';
+import { dailyMove, equalWeightLevels, realizedVolatility, sessionFear, sessionShock, sessionIntraday, stockShock, type ShockReading, type FearReading, type IntradayReading, type BasketSeries, type StockShock } from './thermometer-basket.ts';
 import { calculateTemperature, calculateVixContext, validSessionDate, type DailyClose } from './thermometer.ts';
 
 export type ThermometerRosters = { nasdaq100: string[]; semiconductors: string[] };
@@ -8,6 +8,9 @@ export type ThermometerProviderConfig = { enabled: boolean; apiKey?: string; ros
 type ProviderFailure = { status: 'unavailable'; reason: 'not-configured' | 'provider-error' | 'invalid-data' };
 const CHUNK = 10;
 export const SHOCK_SESSIONS = 10;
+/** Daily bars read per symbol: about 20 years (Twelve Data's maximum is 5000), so the gauge's reference reaches back past 2008
+ * (owner, Nov 26: only a historic crash may put the needle at the far left). Credits are charged per symbol, not per bar. */
+export const HISTORY_BARS = 5000;
 /** About three months of sessions for the home chart line (owner, Nov 25: 01 ホーム). */
 export const TRAIL_SESSIONS = 63;
 /** The basket's level for the last TRAIL_SESSIONS sessions up to the confirmed session, rounded to 0.01 (same data, no extra calls). */
@@ -31,8 +34,10 @@ export function parseStockHistories(payload: unknown, tickers: readonly string[]
     const bars: DailyClose[] = [];
     for (const item of values ?? []) {
       const row = (item ?? {}) as Record<string, unknown>;
-      const close = Number(row.close);
-      if (validSessionDate(row.datetime) && Number.isFinite(close) && close > 0) bars.push({ date: row.datetime, close });
+      const close = Number(row.close), high = Number(row.high), low = Number(row.low);
+      // The intraday range is kept only when it is consistent with the close (Shock Gauge intraday extreme, owner Nov 26).
+      const range = Number.isFinite(high) && Number.isFinite(low) && low > 0 && low <= close * 1.0001 && high >= close * 0.9999 ? { high, low } : {};
+      if (validSessionDate(row.datetime) && Number.isFinite(close) && close > 0) bars.push({ date: row.datetime, close, ...range });
     }
     if (bars.length) series[ticker] = bars; else missing.push(ticker);
   }
@@ -55,7 +60,7 @@ export async function collectThermometer(config: ThermometerProviderConfig, conf
     for (let i = 0; i < tickers.length; i += CHUNK) {
       const chunk = tickers.slice(i, i + CHUNK);
       const url = new URL('https://api.twelvedata.com/time_series');
-      for (const [key, value] of Object.entries({ symbol: chunk.join(','), interval: '1day', outputsize: '2900', adjust: 'splits', end_date: dayAfter(confirmedSession), apikey: config.apiKey! })) url.searchParams.set(key, value);
+      for (const [key, value] of Object.entries({ symbol: chunk.join(','), interval: '1day', outputsize: String(HISTORY_BARS), adjust: 'splits', end_date: dayAfter(confirmedSession), apikey: config.apiKey! })) url.searchParams.set(key, value);
       try {
         const response = await fetcher(url, { cache: 'no-store', redirect: 'error', signal: AbortSignal.timeout(30000) });
         if (!response.ok) { missing.push(...chunk); continue; }
@@ -93,5 +98,12 @@ export async function collectThermometer(config: ThermometerProviderConfig, conf
     if (Object.keys(day).length) shockStocks[date] = day;
   }
   const trail = { nas100: 'levels' in large ? basketTrail(large.levels, confirmedSession) : null, sox: 'levels' in chips ? basketTrail(chips.levels, confirmedSession) : null };
-  return { asOf: confirmedSession, nas100, sox, vix, moves, shock, shockStocks, trail, missing: [...new Set(missing)].sort() };
+  // Shock Gauge intraday extreme (owner, Nov 26): each basket's deepest intraday fall or highest rise against the previous close,
+  // from the same daily bars (high / low). Stored beside the snapshot, never served to the site.
+  const shockIntraday: Record<string, { nas100: IntradayReading | null; sox: IntradayReading | null }> = {};
+  for (const date of Object.keys(shock)) {
+    const day = { nas100: 'levels' in large ? sessionIntraday(large.levels, large.series, date) : null, sox: 'levels' in chips ? sessionIntraday(chips.levels, chips.series, date) : null };
+    if (day.nas100 || day.sox) shockIntraday[date] = day;
+  }
+  return { asOf: confirmedSession, nas100, sox, vix, moves, shock, shockStocks, shockIntraday, trail, missing: [...new Set(missing)].sort() };
 }

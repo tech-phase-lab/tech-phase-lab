@@ -1,6 +1,6 @@
 import { usMarketSession } from '../research/us-market-session.ts';
 import { collectThermometer, type ThermometerProviderConfig } from './thermometer-provider.ts';
-import { THERMOMETER_VERSION, validSessionDate } from './thermometer.ts';
+import { THERMOMETER_VERSIONS, validSessionDate } from './thermometer.ts';
 import { gaugeReading, type DailyMoveReading, type ShockReadingView, type ThermometerSnapshot } from './thermometer-view.ts';
 
 /** The calendar is deliberately bounded; no weekday-only guesses beyond its coverage.
@@ -31,7 +31,7 @@ export function safeThermometerSnapshot(raw: unknown, expected: string): Thermom
     const r = source[id];
     if (r?.status === 'unavailable') { empty[id] = {status:'unavailable',reason:reasons.has(r.reason)?r.reason:'invalid-data'}; continue; }
     const reading = gaugeReading(source,id);
-    if (!reading || reading.version !== THERMOMETER_VERSION || !validSessionDate(reading.referenceFrom) || reading.referenceFrom >= expected || !Number.isInteger(reading.observations) || reading.observations < 2400 || reading.drawdownPercent > 0 || reading.drawdownPercent <= -100 || reading.deviationPercent <= -100 || [reading.drawdownPercentile,reading.deviationPercentile].some(v=>!Number.isFinite(v)||v<0||v>100)) continue;
+    if (!reading || !THERMOMETER_VERSIONS.includes(reading.version) || !validSessionDate(reading.referenceFrom) || reading.referenceFrom >= expected || !Number.isInteger(reading.observations) || reading.observations < 2400 || reading.drawdownPercent > 0 || reading.drawdownPercent <= -100 || reading.deviationPercent <= -100 || [reading.drawdownPercentile,reading.deviationPercentile].some(v=>!Number.isFinite(v)||v<0||v>100)) continue;
     const {version,index,asOf,referenceFrom,observations,score,band,drawdownPercent,deviationPercent,drawdownPercentile,deviationPercentile} = reading;
     empty[id] = {status:'ready',version,index,asOf,referenceFrom,observations,score,band,drawdownPercent,deviationPercent,drawdownPercentile,deviationPercentile};
   }
@@ -105,7 +105,8 @@ export async function refreshThermometer(db: ThermometerDatabase, config: Thermo
     // The stocks' own moves (single-company Shock Gauge news) are stored beside the snapshot but never served (readThermometer
     // re-sanitizes with safeThermometerSnapshot, which drops them).
     const stocks = safeShockStocks((collected as {shockStocks?: unknown}).shockStocks, session);
-    const snapshot = {...safeThermometerSnapshot(collected,session), ...(stocks ? {shockStocks: stocks} : {})};
+    const intraday = safeShockIntraday((collected as {shockIntraday?: unknown}).shockIntraday, session);
+    const snapshot = {...safeThermometerSnapshot(collected,session), ...(stocks ? {shockStocks: stocks} : {}), ...(intraday ? {shockIntraday: intraday} : {})};
     await db.query('INSERT INTO resolute_thermometer_snapshots (session_date, snapshot) VALUES ($1, $2::jsonb)',[session,JSON.stringify(snapshot)]);
     await db.query('COMMIT');
     return {status:'stored' as const,asOf:session};
@@ -123,6 +124,25 @@ function safeShockReading(raw: unknown, date: string): ShockReadingView | null {
 /** Each rostered stock's own move per session (single-company news): at most 5 sessions on or before the snapshot's own,
  * each move dated on its session with an earlier previous close at most 7 days before and a plausible typical move. */
 export type ShockStocks = Record<string, Record<string, {date: string; previousDate: string; changePercent: number; typicalPercent: number}>>;
+/** Each basket's intraday extreme per session (Shock Gauge, owner Nov 26): stored only, never served. Same date rules as the
+ * shock map; a reading is kept only when dated on its session with plausible numbers and counts. */
+export type ShockIntraday = Record<string, {nas100: IntradayView | null; sox: IntradayView | null}>;
+type IntradayView = {date: string; previousDate: string; changePercent: number; typicalPercent: number; same: number; total: number};
+function safeIntraday(raw: unknown, date: string): IntradayView | null {
+  const m = safeMove(raw, date), x = raw as IntradayView;
+  if (!m || !finite(x.typicalPercent, 0.01, 50) || !count(x.same) || !count(x.total) || x.total < 10 || x.same > x.total) return null;
+  return {...m, typicalPercent: x.typicalPercent, same: x.same, total: x.total};
+}
+export function safeShockIntraday(raw: unknown, expected: string): ShockIntraday | undefined {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return undefined;
+  const out: ShockIntraday = {};
+  for (const [date, value] of Object.entries(raw as Record<string, unknown>).slice(-15)) {
+    if (!validSessionDate(date) || date > expected || !value || typeof value !== 'object') continue;
+    const v = value as Record<string, unknown>, day = {nas100: safeIntraday(v.nas100, date), sox: safeIntraday(v.sox, date)};
+    if (day.nas100 || day.sox) out[date] = day;
+  }
+  return Object.keys(out).length ? out : undefined;
+}
 export function safeShockStocks(raw: unknown, expected: string): ShockStocks | undefined {
   if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return undefined;
   const out: ShockStocks = {};

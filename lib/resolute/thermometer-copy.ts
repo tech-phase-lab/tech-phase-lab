@@ -24,7 +24,7 @@ export const THERMOMETER_METHOD: readonly { ja: Row; en: Row }[] = [
     en: { term: "Volatility (TP Fear Index)", text: "The spread (standard deviation) of TP Large Cap 100's daily moves (log returns) over the last 20 trading days, annualised and shown in percent. We also show where it sits against the past 10 years. It is not part of the temperature." },
   },
   {
-    ja: { term: "温度", text: "高値からの下落率と200日移動平均からの離れ具合を、それぞれ過去10年と比べ、同じ重みでまとめて5段階で示します。" },
-    en: { term: "Temperature", text: "The fall from the high and the distance from the 200-day moving average are each compared with the past 10 years, combined with equal weight, and shown in five bands." },
+    ja: { term: "温度", text: "高値からの下落率と200日移動平均からの離れ具合を、それぞれ2008年を含む過去約20年と比べ、同じ重みでまとめて5段階で示します。" },
+    en: { term: "Temperature", text: "The fall from the high and the distance from the 200-day moving average are each compared with about the past 20 years (including 2008), combined with equal weight, and shown in five bands." },
   },
 ];

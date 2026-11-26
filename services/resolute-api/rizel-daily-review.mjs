@@ -1,7 +1,7 @@
 import {inspectCandidateFeed,generate,isInDailyWindow,windowHours,FEED_CHECKS as INSPECT_CHECKS,reactArticles,fillMarketReactions} from './risk-job.mjs';
 import {REPORT_CHECKS} from './rizel-report-source.mjs';
 const FEED_CHECKS=[...INSPECT_CHECKS,...REPORT_CHECKS];
-import {riskDate,parseRiskArticle,parseRiskMarket,parseRiskCause,causeStars,isDailyRunHour,dailyRunStart,marketStars,starsFromShock,directionMismatch} from '../../lib/resolute/risk.ts';
+import {riskDate,parseRiskArticle,parseRiskMarket,parseRiskCause,causeStars,isDailyRunHour,dailyRunStart,marketStars,measureStars,directionMismatch} from '../../lib/resolute/risk.ts';
 import {applyMarketReaction,candidateMarket,storySession,newsInstant} from '../../lib/resolute/risk-market.ts';
 import {RISK_POLICY} from '../../lib/resolute/risk-policy.ts';
 import {storyScope,isBarePriceMove,headlineCause,companyKey,storyTicker,titleSimilarity,NEAR_DUPLICATE} from '../../lib/resolute/risk-scope.ts';
@@ -19,12 +19,15 @@ export function hasKnownMove(c,moves){const {session,index,basket}=candidateSess
 const measuredMarket=(c,moves)=>{try{return applyMarketReaction({publishedAt:c.publishedAt,market:candidateMarket({...c,starred:true}),stars:null,cause:null},moves).market;}catch{return null;}};
 /** True when the candidate's session is measured and moved against its headline's direction (owner, Nov 25: no stars). */
 export function movedAgainst(c,moves){const m=moves?measuredMarket(c,moves):null;return !!m&&directionMismatch(m);}
+/** True when the candidate's session is measured and it would get no stars (owner, Nov 26: below the ★2 line, against its
+ * headline, or single-company news without the two-move test): it would never be shown, so it never takes a slot. */
+export function measuredWithoutStars(c,moves){const m=moves?measuredMarket(c,moves):null;return !!m?.reading&&marketStars(m)===null;}
 export function explainsMove(c,moves){
  if(!moves)return 0;
  const market=measuredMarket(c,moves);if(!market||directionMismatch(market))return 0;
  const r=market.reading;if(!r)return 0;
  if(market.index==='company')return marketStars(market)??0;
- const x=r[market.index];return x?starsFromShock({...x,fearChange:r.fearChange}):0;
+ const x=r[market.index];return x?measureStars(x,r.fearChange):0;
 }
 /** Stories a day and model attempts a day: RISK_POLICY defaults, lowered or raised (within the policy's hard caps) by
  * RESOLUTE_RIZEL_DAILY_STORIES and RESOLUTE_RIZEL_DAILY_ATTEMPTS. Anything malformed falls back to the default. */
@@ -78,7 +81,7 @@ export function sessionHolders(ranked,moves){
  const holders=new Map();
  for(const [s,all] of groups){
   // A story whose measured session moved against its headline never holds it (owner, Nov 25).
-  const group=all.filter(c=>!movedAgainst(c,moves));if(!group.length)continue;
+  const group=all.filter(c=>!measuredWithoutStars(c,moves));if(!group.length)continue;
   const fit=new Map(group.map(c=>[c,explainsMove(c,moves)]));
   const marketFirst=c=>storyScope(c.title)==='market'&&fit.get(c)>=MARKET_MOVED?1:0;
   // Opinion / ranking pieces hold a session only when nothing else is on it (the model withholds them).
@@ -126,6 +129,10 @@ export function selectDailyCandidates(feed,now=new Date(),{moves=null,limits=dai
  for(const c of pool){
   // Owner, Nov 25: a story whose measured session moved against its headline is never shown: no slot, not even in reserve.
   if(movedAgainst(c,moves)){diagnostics.movedAgainst=(diagnostics.movedAgainst??0)+1;continue;}
+  // Owner, Nov 26: members see only measured stories with stars, so a story whose measured session is below the ★2 line takes no
+  // slot. Stories that cannot get stars (single-company news without a measurable stock, or whose session another story holds)
+  // come after every session holder in this order, so they never take a slot from a story that explains a move.
+  if(measuredWithoutStars(c,moves)){diagnostics.belowLine=(diagnostics.belowLine??0)+1;continue;}
   const lostSession=!!claimedSession({...c,starred:true})&&storyScope(c.title)!=='company'&&!held.has(c.id);
   if(selected.length<limits.stories&&!lostSession&&!repeatsTaken(c,selected))selected.push(c);
   else{if(lostSession||repeatsTaken(c,selected))diagnostics.repeated++;if(reserve.length<RESERVE_MAX)reserve.push(c);}
@@ -190,7 +197,8 @@ export async function prepareDailyReview({enabled=false,readFeed,selectionPool,b
    // Shock Gauge: stars only from the related TP index's move at the first U.S. close after the news (may still be waiting).
    const [article]=(await reactArticles([parsed],readMoves,quotes,day)).map(parseRiskArticle);
    // Moved against its headline (owner, Nov 25): not shown; the next story fills the slot.
-   if(directionMismatch(article.market)){kept.pop();refill();continue;}
+   // Measured without stars (below the ★2 line or against its headline; owner, Nov 25–26): not shown, the next story fills it.
+   if(article.market.reading!==null&&article.stars===null){kept.pop();refill();continue;}
    // A story still waiting for the market has no stars yet, so no RIZEL line is chosen for it now.
    if(article.stars===null){articles.push(article);continue;}
    // Model classification is not verified evidence for D's factual conditions.

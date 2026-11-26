@@ -68,7 +68,7 @@ export function candidateMarket(c: { title: string; tickers?: readonly string[];
   return direction ? { ...market, headline: direction } : market;
 }
 /** One basket's close as the thermometer measured it: the move, its typical move and the constituents up / down. */
-export type SessionMove = { previousDate: string; changePercent: number; typicalPercent: number; up: number; down: number; total: number };
+export type SessionMove = { previousDate: string; changePercent: number; typicalPercent: number; up: number; down: number; total: number; intraday?: { changePercent: number; typicalPercent: number; same: number } | null };
 /** One stock's close-to-close move on a session and its usual move (single-company news). */
 export type StockMove = { previousDate: string; changePercent: number; typicalPercent: number };
 export type SessionEntry = Partial<Record<RiskIndex, SessionMove | null>> & { fear?: { level: number; previousLevel: number } | null; stocks?: Record<string, StockMove> };
@@ -111,7 +111,7 @@ export interface MovesDatabase { query(sql: string, values?: unknown[]): Promise
 export async function readSessionMoves(db: MovesDatabase, sessions: readonly string[]): Promise<SessionMoves> {
   const wanted = [...new Set(sessions.filter(s => /^\d{4}-\d{2}-\d{2}$/.test(s)))].sort();
   if (!wanted.length) return {};
-  const { rows } = await db.query("SELECT session_date::text AS session, snapshot->'shock' AS shock, snapshot->'shockStocks' AS stocks FROM resolute_thermometer_snapshots WHERE session_date >= $1::date AND snapshot ? 'shock' ORDER BY session_date LIMIT 30", [wanted[0]]);
+  const { rows } = await db.query("SELECT session_date::text AS session, snapshot->'shock' AS shock, snapshot->'shockStocks' AS stocks, snapshot->'shockIntraday' AS intraday FROM resolute_thermometer_snapshots WHERE session_date >= $1::date AND snapshot ? 'shock' ORDER BY session_date LIMIT 30", [wanted[0]]);
   const out: SessionMoves = {};
   for (const row of rows) {
     const map = row.shock as Record<string, Record<string, unknown> | null> | null;
@@ -122,7 +122,12 @@ export async function readSessionMoves(db: MovesDatabase, sessions: readonly str
       const entry: SessionEntry = {};
       for (const index of ['sox', 'nas100'] as const) {
         const m = raw[index] as (Partial<SessionMove> & { date?: unknown }) | null;
-        if (m && m.date === session && validMove(m)) entry[index] = { previousDate: m.previousDate, changePercent: m.changePercent, typicalPercent: m.typicalPercent, up: m.up, down: m.down, total: m.total };
+        if (!(m && m.date === session && validMove(m))) continue;
+        // The intraday extreme (owner, Nov 26), when stored for the same session and previous close.
+        const im = row.intraday && typeof row.intraday === 'object' ? ((row.intraday as Record<string, Record<string, Record<string, unknown> | null> | null>)[session]?.[index] ?? null) : null;
+        const intraday = im && im.date === session && im.previousDate === m.previousDate && finite(im.changePercent, -99.99, 99.99) && finite(im.typicalPercent, 0.01, 50) && count(im.same) && (im.same as number) <= m.total
+          ? { changePercent: im.changePercent as number, typicalPercent: im.typicalPercent as number, same: im.same as number } : null;
+        entry[index] = { previousDate: m.previousDate, changePercent: m.changePercent, typicalPercent: m.typicalPercent, up: m.up, down: m.down, total: m.total, ...(intraday ? { intraday } : {}) };
       }
       const f = raw.fear as { date?: unknown; level?: unknown; previousLevel?: unknown } | null;
       entry.fear = f && f.date === session && finite(f.level, 0.01, 1000) && finite(f.previousLevel, 0.01, 1000) ? { level: f.level, previousLevel: f.previousLevel } : null;

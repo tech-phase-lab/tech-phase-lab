@@ -2,12 +2,18 @@
  * The caller supplies the last CONFIRMED US session (never today's unfinished bar).
  * TP大型株100 (nas100) and TP半導体40 (sox) are calculated independently. The fear number (vix key) is not part of temperature.
  */
-export const THERMOMETER_VERSION = 'daily-close-v1';
+/** v2 (owner, Nov 26): the reference is the basket's whole history (about 20 years, from the 5000 daily bars the provider gives,
+ * so it includes the 2008 crash), not the last 10 years. With only 10 years the deepest point of the reference was 2020 / 2022,
+ * and a sharp but ordinary semiconductor sell-off could sit at the far left; now only a 2008-like fall reaches it. */
+export const THERMOMETER_VERSION = 'daily-close-v2';
+/** Versions a stored snapshot may carry (a v1 snapshot stays readable until the next daily refresh). */
+export const THERMOMETER_VERSIONS: readonly string[] = ['daily-close-v1', THERMOMETER_VERSION];
 export type ThermometerIndex = 'nas100' | 'sox';
-export type DailyClose = { date: string; close: number };
+/** high / low (optional): the session's intraday range, kept for the Shock Gauge's intraday extreme (owner, Nov 26). */
+export type DailyClose = { date: string; close: number; high?: number; low?: number };
 export type GaugeUnavailable = { status: 'unavailable'; reason: 'invalid-data' | 'insufficient-history' | 'stale-data' };
 export type Temperature = {
-  status: 'ready'; version: typeof THERMOMETER_VERSION; index: ThermometerIndex;
+  status: 'ready'; version: string; index: ThermometerIndex;
   asOf: string; referenceFrom: string; observations: number;
   score: number; band: 0 | 1 | 2 | 3 | 4;
   drawdownPercent: number; deviationPercent: number;
@@ -53,10 +59,11 @@ export function calculateTemperature(index: ThermometerIndex, input: readonly Da
   if (!bars) return unavailable('invalid-data');
   if (!bars.length) return unavailable('insufficient-history');
   if (bars.at(-1)!.date !== asOf) return unavailable('stale-data');
-  const referenceFrom = tenYearsBefore(asOf);
-  const first = bars.findIndex(bar => bar.date >= referenceFrom);
-  // Full ten calendar years plus the rolling-high warm-up; no short-history fallback.
-  if (first < 251 || !bars[first - 1] || bars[first - 1].date >= referenceFrom) return unavailable('insufficient-history');
+  // The whole available history after the 252-day rolling-high warm-up (v2). At least ten calendar years are still required;
+  // no short-history fallback.
+  const first = 251;
+  if (bars.length <= first + 1 || bars[first].date > tenYearsBefore(asOf)) return unavailable('insufficient-history');
+  const referenceFrom = bars[first].date;
   const metrics: { drawdown: number; deviation: number }[] = [];
   for (let i = first; i < bars.length; i++) {
     const mean = bars.slice(i - 199, i + 1).reduce((sum, bar) => sum + bar.close, 0) / 200;

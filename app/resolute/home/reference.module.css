@@ -175,7 +175,7 @@
 .readings { font-size:12px; color:var(--sub); line-height:1.7; }
 .readings p { margin:0; }
 .readings span { display:block; }
-.readings .detail { white-space:nowrap; letter-spacing:0; font-feature-settings:"palt"; }
+.readings .detail { display:block; font-size:.85em; white-space:nowrap; letter-spacing:0; font-feature-settings:"palt"; }
 .sayCell .say { margin-top:0; }
 .moreBtn { align-self:end; justify-self:start; border:0; background:none; padding:4px 0; color:var(--gold); font-size:13px; }
 .shockCard[data-open] .moreBtn { color:var(--ink); }

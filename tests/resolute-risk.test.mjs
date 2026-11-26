@@ -43,7 +43,7 @@ test('the published criteria text is plain, generated from the levels, in both l
   '・★5：いつもの5倍以上動いた、8割以上の会社が同じ向きに動いた、下落のときは恐怖指数も1割以上上がった',
   '・★4：いつもの3倍以上動いた、8割以上の会社が同じ向きに動いた',
   '・★3：いつもの2倍以上動いた、7割以上の会社が同じ向きに動いた',
-  '・★2：いつもの1.5倍以上動いた','・★1：それより小さい動き',
+  '・★2：いつもの1.5倍以上動いた','・それより小さい動きのときは、★をつけず、表示もしません。',
   '・「いつもの」は、市場が開いていた直前の60日の、1日の動きの大きさのまん中の値です。',
   '・そのうえで、AIが記事の内容だけを読み、原因が一過性とみられるときは★を1つ下げ、長引きやすいとみられるときは1つ上げます。★5になるのは、市場の動きだけで★4以上のときだけです。どちらとも言えないときは変えません。',
   '・1社だけのニュースは、その会社の株価がいつもの3倍以上、業界の指標もいつもの1.5倍以上、同じ向きに動いたときだけ、業界の指標で★を決めます。',
@@ -74,8 +74,11 @@ test('a new story waits for the market: no stars, its index and the session afte
  assert.deepEqual(formatReading(article.market,'ja'),[]);
  // Stars always follow the current published rule for the stored readings: none without one. A day saved before Nov 25 (one
  // index's move, no measured shock) reads as waiting again and is measured on the next update; its RIZEL line is dropped.
- assert.equal(parseRiskFeed({state:'ready',date:'2026-10-13',articles:[{...article,stars:5}],quotes:[]}).articles[0].stars,null);
- const old=parseRiskFeed({state:'ready',date:'2026-10-13',articles:[{...article,market:{index:'sox',session:'2026-10-13',changePercent:-8.5},stars:5,quoteId:'calm'}],quotes:[]}).articles[0];
+ const all={shownOnly:false};
+ assert.equal(parseRiskFeed({state:'ready',date:'2026-10-13',articles:[{...article,stars:5}],quotes:[]},all).articles[0].stars,null);
+ // Owner, Nov 26: members never see a waiting story; the feed shows only measured stories with stars.
+ assert.deepEqual(parseRiskFeed({state:'ready',date:'2026-10-13',articles:[{...article,stars:5}],quotes:[]}).articles,[]);
+ const old=parseRiskFeed({state:'ready',date:'2026-10-13',articles:[{...article,market:{index:'sox',session:'2026-10-13',changePercent:-8.5},stars:5,quoteId:'calm'}],quotes:[]},all).articles[0];
  assert.deepEqual([old.market,old.stars,old.quoteId],[{index:'sox',session:'2026-10-13',reading:null},null,null]);
  assert.throws(()=>parseRiskFeed({state:'ready',date:'2026-10-13',articles:[{...article,stars:7}],quotes:[]}));
  const reading={from:'2026-10-12',nas100:null,sox:{changePercent:-3.2,multiple:2.1,same:33,total:40},fearChange:6};
@@ -114,7 +117,8 @@ test('risk store enforces notification ownership, owner identity, publication st
  await collect(pool,{ok:true,enabled:true,items:[],officialUpdates:[{...candidate,bodyEn:body},{...candidate,title:'AI previous-day warning',url:candidate.url+'/previous',publishedAt:'2026-10-12T14:59:59Z',bodyEn:body}]},now);
  assert.equal((await pool.query('SELECT count(*)::int AS count FROM resolute.risk_candidates')).rows[0].count,2);
  let calls=0;const model=async()=>{calls++;return article;};assert.equal(await publish(pool,now,model),'ready');assert.equal(await publish(pool,now,model),'already-claimed');assert.equal(calls,1);
- assert.equal((await publicRiskFeed(pool,false,now)).articles.length,1);
+ // The published story is still waiting for its session: the owner sees it, members do not (owner, Nov 26).
+ assert.equal((await publicRiskFeed(pool,true,now)).articles.length,1);assert.equal((await publicRiskFeed(pool,false,now)).articles.length,0);
  const hidden=await riskRequest(req('/owner','POST',{action:'hide',id:article.id}),OWNER_ACCOUNT_ID,async()=>({}),pool);assert.equal(hidden.status,200);assert.equal((await publicRiskFeed(pool,false,now)).state,'stopped');
  await db.exec('SET ROLE resolute_risk_writer');await assert.rejects(()=>db.query('UPDATE resolute.entitlements SET revoked_at=now()'),e=>e.code==='42501');await db.exec('RESET ROLE');
  const next=new Date('2026-10-13T23:00:00Z');await assert.rejects(()=>publish(pool,next,model),/RISK_JOB_FAILED/);assert.equal((await publicRiskFeed(pool,false,next)).state,'failed');
