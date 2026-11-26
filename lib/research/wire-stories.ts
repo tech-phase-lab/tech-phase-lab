@@ -2,6 +2,7 @@ import type { Language } from "./data";
 import type { CompanyWireItem } from "./company-wire.ts";
 import { tidyJapanese } from "./ja-text.ts";
 import { calendarEvents, dateOnlyEarnings } from "./calendar.ts";
+import { CONTRIBUTOR_OPINION_EN } from "./contributor-opinion.ts";
 
 /** Company headlines as stories (owner, Oct 17): the same story arrives for several companies and from
  * several publishers, and the lists showed it five times. One story is one row, listing every company it
@@ -194,7 +195,9 @@ export function cleanTitle(title: string) {
 }
 /** News filed by the market rather than by a company (the Stock News API's general market feed) is stored under MKT (owner, Nov 10). */
 export const tickerLabel = (ticker: string, ja: boolean) => ticker === "MKT" ? (ja ? "市場" : "Market") : ticker;
-export const isNotNews = (text: string, english = text) => NOT_NEWS.some(pattern => pattern.test(text)) || lowValue(text, english);
+/** A contributor's own rating call (": Buy", "(Rating Upgrade)", "So I'm Buying"), unless a brokerage is named (owner, Nov 26). */
+export const contributorOpinion = (text: string) => CONTRIBUTOR_OPINION_EN.test(text) && !BROKER.test(text);
+export const isNotNews = (text: string, english = text) => NOT_NEWS.some(pattern => pattern.test(text)) || lowValue(text, english) || contributorOpinion(english);
 
 /** "X reports third-quarter results" read days after the release is an old story (owner, Oct 26: ASML, 12 days late).
  * Only a headline that announces results is judged, and only against a release date we know for that company. */

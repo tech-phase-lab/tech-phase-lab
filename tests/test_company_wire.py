@@ -682,3 +682,35 @@ class TechAlertsNoiseTests(unittest.TestCase):
                                              'published': published}], 'Nebius Group', seen_at=published)
                 feed = company_wire.public_feed(db, now.timestamp())
         self.assertEqual([r['titleEn'] for r in feed['items'].get('NBIS', [])], ['Nebius signs $17.4 billion GPU capacity deal with Microsoft'])
+
+
+class ContributorOpinionTests(unittest.TestCase):
+    # Owner, Nov 26: the NBIS row 「ネビウスの設備投資は誤解されていたので買いだ」 was the Seeking Alpha contributor article
+    # "Nebius' CapEx Was Misread, So I'm Buying". Contributor rating calls are never translated; brokerage actions are.
+    OPINIONS = ("Nebius' CapEx Was Misread, So I'm Buying (NASDAQ:NBIS)", "Nebius' CapEx Is Misunderstood: Buy",
+                'Micron: The Memory Supercycle Has Legs: Strong Buy', 'Oracle: Debt Is Piling Up: Sell',
+                'Intel: Turnaround Takes Time: Hold (NASDAQ:INTC)', 'Sandisk: This Is Not Over (Rating Upgrade)',
+                'Palantir: Priced For Perfection (Rating Downgrade)', 'AMD: Upgrading To Strong Buy', 'Why I Sold All My Nvidia Shares',
+                'Micron: Pounding The Buy Table (Double Upgrade)', "Nebius: Why I'm Extremely Bullish After The Crash (NASDAQ:NBIS)",
+                "Broadcom Stock Hasn't Traded This Low Since July 2025. I Think It's a Buy.")
+    KEPT = ('Morgan Stanley upgrades Nebius to Buy, raises price target to $150', 'Nebius initiated at Buy by Citi with $140 target',
+            'Rosenblatt on Nebius: Buy', 'Analyst reiterates Strong Buy on Nebius Group',
+            'Nebius Group drops 11% amid broad technology selloff (NBIS:NASDAQ)', 'Nvidia: Sell-off deepens as export curbs widen',
+            'SoftBank sold its entire Nvidia stake for $5.8 billion', 'Nebius signs $17.4 billion GPU capacity deal with Microsoft',
+            'Freedom Capital Markets maintains Nebius Group at Buy, keeps price target at $314', 'Broadcom Inc. : Bernstein keeps its Buy rating')
+
+    def test_contributor_rating_calls_are_hidden_and_broker_actions_kept(self):
+        self.assertEqual([t for t in self.OPINIONS if not company_wire.hidden_title(t)], [])
+        self.assertEqual([t for t in self.KEPT if company_wire.contributor_opinion(t)], [])
+
+    def test_the_pattern_matches_lib_research_contributor_opinion(self):
+        import os, re
+        ts = open(os.path.join(os.path.dirname(__file__), '..', 'lib', 'research', 'contributor-opinion.ts'), encoding='utf-8').read()
+        block = re.search(r'export const CONTRIBUTOR_OPINION_EN = new RegExp\(\[(.*?)\]\.join', ts, re.S).group(1)
+        self.assertEqual(''.join(re.findall(r'String\.raw`([^`]*)`', block)), company_wire.CONTRIBUTOR_OPINION_EN)
+
+    def test_translators_keep_a_rating_tag_apart_from_the_sentence(self):
+        import headline_translation
+        for text in (company_wire.POLICY, headline_translation.POLICY):
+            self.assertIn('(Rating Upgrade)', text)
+            self.assertIn('「〜：買い」', text)
