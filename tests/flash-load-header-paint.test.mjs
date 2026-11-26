@@ -15,7 +15,7 @@ test("the shared research loader has no footer, so no disclaimer under 「読み
   // Owner, Nov 21: the disclaimer is on the home screen only, so the shared shell has none at all.
   assert.doesNotMatch(read("../app/research/research-tool-shell.tsx"), /Disclaimer/);
   // The alerts page, the watchlist and stock search all use this loader while they load.
-  assert.match(read("../app/research/news/page.tsx"), /\{!ready && <ResearchLoading \/>\}/);
+  assert.match(read("../app/research/news/screen.tsx"), /\{!ready && <ResearchLoading \/>\}/);
 });
 
 test("RESOLUTE's 「確認中…」 screen and the tool shell have no disclaimer", () => {

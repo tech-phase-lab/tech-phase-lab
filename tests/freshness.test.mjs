@@ -34,7 +34,7 @@ test('the notice is small, quiet when up to date, and on the pages that show mon
   assert.doesNotMatch(route, /snapshot/);
   const notice = await readFile(new URL('../app/research/freshness-notice.tsx', import.meta.url), 'utf8');
   assert.match(notice, /freshness\.status === "ok" \|\| bad < 2\) return null/);
-  for (const page of ['news/page.tsx', 'price-targets/page.tsx', 'calendar/event-calendar.tsx', 'general-news/page.tsx', 'market/page.tsx']) {
+  for (const page of ['news/screen.tsx', 'price-targets/screen.tsx', 'calendar/event-calendar.tsx', 'general-news/screen.tsx', 'market/screen.tsx']) {
     assert.match(await readFile(new URL(`../app/research/${page}`, import.meta.url), 'utf8'), /freshness>/, page);
   }
   assert.match(await readFile(new URL('../app/research/research-dashboard.tsx', import.meta.url), 'utf8'), /<FreshnessNotice lang=\{lang\} \/>/);

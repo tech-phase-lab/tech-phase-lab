@@ -11,7 +11,7 @@ export async function viewerHasFullNews(): Promise<boolean> {
 export const PRIVATE_HEADERS = { "Cache-Control": "private, no-store", Vary: "Cookie", "X-Content-Type-Options": "nosniff" } as const;
 
 /** One read from the monitor, same checks as the public routes. */
-export async function readMonitor(path: "news" | "company-wire" | "earnings-results", maxBytes: number, timeoutMs: number, search: Record<string, string> = {}): Promise<unknown> {
+export async function readMonitor(path: "news" | "company-wire" | "earnings-results" | "price-targets", maxBytes: number, timeoutMs: number, search: Record<string, string> = {}): Promise<unknown> {
   const base = process.env.RESEARCH_MONITOR_URL;
   const token = process.env.RESEARCH_MONITOR_TOKEN;
   if (!base || !token) throw new Error("Not configured");

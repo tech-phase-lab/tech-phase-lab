@@ -19,13 +19,14 @@ let snapshot: { items: Target[]; at: string; time: number } | null = null;
 const recent = () => snapshot && Date.now() - snapshot.time < 120_000 ? snapshot : null;
 
 /** sample: the owner's filming row (price-targets page, ?demo=nvda only; lib/research/price-target-sample.ts), shown first, never shared. */
-export default function PriceTargetsPanel({ lang, sample = null }: { lang: Language; sample?: Target | null }) {
+/** `initial`: the feed the server drew into the first HTML (app/research/price-targets/page.tsx; the same for every visitor). */
+export default function PriceTargetsPanel({ lang, sample = null, initial = null }: { lang: Language; sample?: Target | null; initial?: { items: Target[]; at: string } | null }) {
   const panelRef = useRef<HTMLElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
   const now = useCalendarClock();
-  const [items, setItems] = useState<Target[]>(() => recent()?.items ?? []);
-  const [status, setStatus] = useState<"loading" | "ready" | "error">(() => recent() ? "ready" : "loading");
-  const [updatedAt, setUpdatedAt] = useState<string | null>(() => recent()?.at ?? null);
+  const [items, setItems] = useState<Target[]>(() => initial?.items ?? recent()?.items ?? []);
+  const [status, setStatus] = useState<"loading" | "ready" | "error">(() => initial || recent() ? "ready" : "loading");
+  const [updatedAt, setUpdatedAt] = useState<string | null>(() => initial?.at ?? recent()?.at ?? null);
   const [delivery, setDelivery] = useState<"connecting" | "live" | "polling">("connecting");
   const [page, setPage] = useState(1);
   useEffect(() => {

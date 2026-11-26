@@ -1,12 +1,10 @@
-"use client";
+import { firstNewsWithin } from "@/lib/research/news-first-paint";
+import GeneralNewsScreen from "./screen";
 
-import ResearchToolShell from "../research-tool-shell";
-import { useResearchLanguage } from "../use-research-language";
-import GeneralNewsPanel from "../news/general-news-panel";
+export const dynamic = "force-dynamic";
 
-export default function GeneralNewsPage() {
-  const [lang, setLang] = useResearchLanguage();
-  return <ResearchToolShell lang={lang} setLang={setLang} eyebrow="TOPICS" title={lang === "ja" ? "注目トピック" : "Top Topics"} description="" freshness>
-    <GeneralNewsPanel lang={lang} generalOnly />
-  </ResearchToolShell>;
+/** 注目トピック: this viewer's feed in the first HTML (same rules as ハイテク速報, lib/research/news-first-paint.ts). */
+export default async function GeneralNewsPage() {
+  const first = await firstNewsWithin();
+  return <GeneralNewsScreen initialNews={first ? { data: first.feed, checkedAt: first.checkedAt } : null} />;
 }

@@ -1,21 +1,12 @@
-"use client";
-import { useState } from "react";
-import ResearchLoading from "../loading";
-import ResearchToolShell from "../research-tool-shell";
+import { firstNewsWithin } from "@/lib/research/news-first-paint";
+import NewsScreen from "./screen";
 
-import { useResearchLanguage } from "../use-research-language";
-import FlashPage from "./flash-page";
+export const dynamic = "force-dynamic";
 
-export default function NewsPage() {
-  const [lang, setLang] = useResearchLanguage();
-  const [ready, setReady] = useState(false);
-  // The alerts load behind the same branded loader as every other page, then appear in place (owner, Oct 20).
-  return <>
-    {!ready && <ResearchLoading />}
-    <div hidden={!ready}>
-      <ResearchToolShell lang={lang} setLang={setLang} eyebrow="TECH ALERTS" title={lang === "ja" ? "ハイテク速報" : "Tech Alerts"} description="" freshness>
-        <FlashPage lang={lang} onReady={() => setReady(true)} />
-      </ResearchToolShell>
-    </div>
-  </>;
+/** ハイテク速報. Speed, Nov 26: the page had waited for its script, then for /api/research/news and /api/research/company-wire, behind the
+ * loader. The server now checks the session and draws this viewer's alerts into the first HTML (lib/research/news-first-paint.ts: FREE
+ * gets only the FREE projection, PRO data never reaches anyone else); the screen then keeps them current as before. */
+export default async function NewsPage() {
+  const first = await firstNewsWithin();
+  return <NewsScreen initial={first} />;
 }
