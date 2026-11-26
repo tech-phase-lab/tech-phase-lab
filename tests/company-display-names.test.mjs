@@ -71,8 +71,9 @@ test("Japanese names come from the site's maps; Latin names in the map stay Lati
 });
 
 test("the API routes and both PRO samples carry the resolved names; scores and order stay as sent", () => {
-  for (const route of ["../app/api/research/value-check/route.ts", "../app/api/research/whales/route.ts"])
-    assert.match(read(route), /Response\.json\((?:valueSnapshotWithNames|whaleSnapshotWithNames)\(parse(?:Value|Whale)Snapshot\(JSON\.parse\(body\)\)\)/);
+  // Treasure Hunt: the route and the page answer from the shared copy, which carries the names (lib/research/value-check-server.ts).
+  assert.match(read("../lib/research/value-check-server.ts"), /return valueSnapshotWithNames\(parseValueSnapshot\(JSON\.parse\(body\)\)\)/);
+  assert.match(read("../app/api/research/whales/route.ts"), /Response\.json\(whaleSnapshotWithNames\(parseWhaleSnapshot\(JSON\.parse\(body\)\)\)/);
   const snapshot = { ...treasureHuntSample, universes: { ...treasureHuntSample.universes, tech: { ...treasureHuntSample.universes.tech,
     items: [{ ...treasureHuntSample.universes.tech.items[0], ticker: "HUBS", ja: "HUBSPOT INC", en: "HUBSPOT INC" }, ...treasureHuntSample.universes.tech.items.slice(1)] } } };
   const named = valueSnapshotWithNames(snapshot);

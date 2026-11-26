@@ -39,7 +39,7 @@ test("names: トレジャーハント / Treasure Hunt and Whale Tracks everywher
 
 test("names: production keeps its internal names (switches, API, monitor route, Python module)", () => {
   assert.match(read("../app/research/treasure-hunt/screen.tsx"), /fetch\("\/api\/research\/value-check"/);
-  assert.match(read("../app/api/research/value-check/route.ts"), /\/value-check`/);
+  assert.match(read("../lib/research/value-check-server.ts"), /\/value-check`/);
   assert.match(read("../lib/research/value-check.ts"), /NEXT_PUBLIC_VALUE_CHECK_ENABLED: process\.env\.NEXT_PUBLIC_VALUE_CHECK_ENABLED/);
   assert.match(read("../lib/research/whale-moves.ts"), /NEXT_PUBLIC_WHALE_MOVES_ENABLED: process\.env\.NEXT_PUBLIC_WHALE_MOVES_ENABLED/);
   const service = read("../scripts/research/service.py");
@@ -320,4 +320,43 @@ test("Whale Tracks trial page: the gold note replaces the summary line under the
   assert.ok(count >= 125 && count < 175, `about 150 stocks, got ${count}`);
   const css = read("../app/research/pro-experience/samples/samples.module.css");
   assert.match(css, /\.sampleNote\{[^}]*color:var\(--gold\)[^}]*font-size:14px/);
+});
+
+// Owner, Nov 26: the page took seconds (page, then the browser's membership check, then the API, then the monitor, one after the other).
+test("Treasure Hunt opens with the day's ranking drawn by the server: no waiting for the browser's membership check, no request of its own", async () => {
+  const unsettled = { ...shared, "../member-display-provider": { useMemberDisplay: () => null, useMemberSettled: () => false, useOwnerAccount: () => false } };
+  const Screen = load("../app/research/treasure-hunt/screen.tsx", { ...unsettled, "@/lib/research/value-check": valueLib }).default;
+  const calls = [];
+  const realFetch = globalThis.fetch;
+  globalThis.fetch = async (...args) => { calls.push(String(args[0])); return new Response("{}", { status: 503 }); };
+  try {
+    const ui = await mount(h(Screen, { initial: treasureHuntSample }));
+    assert.doesNotMatch(text(ui.container), /会員情報を確認中|データを読み込み中/);
+    assert.deepEqual([...ui.container.querySelectorAll("[data-logo]")].map(el => el.getAttribute("data-logo")).slice(0, 3), ["QCOM", "MU", "AMAT"], "podium: 2nd, 1st, 3rd");
+    assert.deepEqual(calls, [], "the screen does not ask the API when the server drew the ranking");
+    await ui.done();
+    // Without a ranking from the server (FREE, signed out, or the copy not ready in time), the screen waits for the check as before.
+    const later = await mount(h(Screen, {}));
+    assert.match(text(later.container), /会員情報を確認中/);
+    await later.done();
+  } finally { globalThis.fetch = realFetch; }
+});
+
+test("Treasure Hunt: one shared copy of the daily ranking (stale-while-revalidate), read only after the server confirms the member", () => {
+  const server = read("../lib/research/value-check-server.ts");
+  assert.match(server, /^import "server-only";/);
+  assert.match(server, /unstable_cache\(readShared, \["value-check-snapshot-v1"\], \{ revalidate: VALUE_SNAPSHOT_REVALIDATE_SECONDS \}\)/);
+  assert.match(server, /readShared\.toString = \(\) => "value-check-snapshot-v1"/, "a fixed key keeps the copy across deployments");
+  assert.match(server, /VALUE_SNAPSHOT_REVALIDATE_SECONDS = 600;/);
+  const route = read("../app/api/research/value-check/route.ts");
+  assert.match(route, /if \(access !== 200\) return fail[^\n]*\n\s*return Response\.json\(await loadValueSnapshot\(\), \{ headers \}\);/);
+  assert.doesNotMatch(route, /fetch\(|RESEARCH_MONITOR/, "no per-request read of the monitor");
+  assert.match(route, /"Cache-Control": "private, no-store"/, "PRO data is never kept by a shared cache in front of the site");
+  const page = read("../app/research/treasure-hunt/page.tsx");
+  assert.match(page, /if \(member && valueCheckAccess\(member, valueCheckEnabled\(\)\) === 200\) \{\n\s*const ready = loadValueSnapshot\(\)/, "PRO data only for a member the server confirmed");
+  assert.match(page, /notFound\(\)/);
+  assert.match(page, /<TreasureHuntScreen initial=\{initial\} \/>/);
+  // The owner's accounts always get it (AGENTS.md, operator access), with the switch off too.
+  for (const owner of [{ ownerAccount: true }, { ownerMode: true }]) assert.equal(valueLib.valueCheckAccess({ status: "signed-in", plan: "free", ...owner }, false), 200);
+  for (const member of [{ status: "signed-out", plan: "free" }, { status: "signed-in", plan: "free" }]) assert.notEqual(valueLib.valueCheckAccess(member, true), 200);
 });
