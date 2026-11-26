@@ -1,5 +1,6 @@
 import "server-only";
 import type { DurableStore, Entry } from "./twelve-budget.ts";
+import { decodeValue, encodeValue } from "./twelve-copies-wire.ts";
 
 /** Durable copies of the costly Twelve Data answers, kept by the Railway monitor (scripts/research/twelve_copies.py, POST /twelve/copies/get
  * and /twelve/copies/put) at the site's existing monitor address and server token (RESEARCH_MONITOR_URL / RESEARCH_MONITOR_TOKEN).
@@ -11,7 +12,7 @@ import type { DurableStore, Entry } from "./twelve-budget.ts";
  * first read; these copies are what is left when it has lost one. Any failure here is a miss and never an error. */
 
 /** The kinds kept here (scripts/research/twelve_copies.py KINDS; a test keeps them equal). */
-export const DURABLE_KINDS = ["compare-statistics", "md-facts-stats-v2", "md-facts-next-earnings-v2"] as const;
+export const DURABLE_KINDS = ["compare-statistics", "compare-statements", "md-facts-stats-v2", "md-facts-next-earnings-v2", "portfolio-splits"] as const;
 export type DurableKind = (typeof DURABLE_KINDS)[number];
 const isKind = (name: string): name is DurableKind => (DURABLE_KINDS as readonly string[]).includes(name);
 
@@ -47,15 +48,25 @@ export async function durableGet(kind: DurableKind, keys: string[]): Promise<Rec
   const out: Record<string, Entry<unknown>> = {};
   if (!copies || typeof copies !== "object") return out;
   for (const [key, copy] of Object.entries(copies as Record<string, { at?: unknown; value?: unknown }>)) {
-    if (copy && typeof copy.at === "number" && Number.isFinite(copy.at) && "value" in copy) out[key] = { at: copy.at, value: copy.value };
+    if (!copy || typeof copy.at !== "number" || !Number.isFinite(copy.at) || !("value" in copy)) continue;
+    try { out[key] = { at: copy.at, value: decodeValue(copy.value) }; } catch { /* an unreadable copy is a miss */ }
   }
   return out;
 }
 
 /** Stores a copy (the monitor keeps the newest per kind and key). false when it could not be stored. */
 export async function durablePut(kind: DurableKind, key: string, entry: Entry<unknown>): Promise<boolean> {
-  const answer = await post("/twelve/copies/put", { kind, key, at: Math.round(entry.at), value: entry.value });
-  return answer?.stored === true;
+  const at = Math.round(entry.at), wire = encodeValue(entry.value);
+  if (!wire) return false;
+  if ("value" in wire) return (await post("/twelve/copies/put", { kind, key, at, value: wire.value }))?.stored === true;
+  // In order; the monitor stores the value once the last part has arrived.
+  let stored = false;
+  for (const [part, chunk] of wire.chunks.entries()) {
+    const answer = await post("/twelve/copies/put", { kind, key, at, part, parts: wire.chunks.length, chunk });
+    if (!answer) return false;
+    stored = answer.stored === true;
+  }
+  return stored;
 }
 
 /** The shared reader's durable side (lib/research/twelve-budget.ts createReader): only for a ReadSpec marked `durable`. */

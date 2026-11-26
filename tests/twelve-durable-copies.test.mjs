@@ -89,3 +89,36 @@ test("wiring: the facts specs are durable, the shared reader uses the monitor, a
   assert.match(copies, /"\/twelve\/copies\/get"/);
   assert.match(copies, /"\/twelve\/copies\/put"/);
 });
+
+test("wire: small copies go as they are, large ones gzip-compressed, and ones still over the gateway's limit in parts", async () => {
+  const { encodeValue, decodeValue, COMPRESS_AT, PART_BYTES, MAX_PARTS } = await import("../lib/research/twelve-copies-wire.ts");
+  const small = { eps: 1.2 };
+  assert.deepEqual(encodeValue(small), { value: small });
+  assert.deepEqual(encodeValue(null), { value: null });
+  assert.deepEqual(decodeValue(small), small);
+  // Quarterly statements: repetitive JSON, far over the limit raw, small once compressed.
+  const statements = { income: { income_statement: Array.from({ length: 200 }, (_, i) => ({ fiscal_date: `20${10 + (i >> 2)}-0${1 + (i % 4) * 3}-30`, sales: 1e9 + i, cost_of_goods: 4e8 + i, gross_profit: 6e8 + i, operating_income: 2e8 + i, net_income: 1e8 + i, eps_diluted: 1.1 + i / 100 })) }, cashFlow: { cash_flow: [] } };
+  assert.ok(JSON.stringify(statements).length > COMPRESS_AT);
+  const packed = encodeValue(statements);
+  assert.ok("value" in packed && typeof packed.value.$gz === "string" && packed.value.$gz.length <= PART_BYTES);
+  assert.deepEqual(decodeValue(packed.value), statements);
+  // Incompressible data over the limit even when packed: parts, each under the gateway's body limit, put together by the monitor.
+  const { randomBytes } = await import("node:crypto");
+  const noise = randomBytes(60_000).toString("hex");
+  const parted = encodeValue({ noise });
+  assert.ok("chunks" in parted && parted.chunks.length >= 2 && parted.chunks.every(c => c.length <= PART_BYTES));
+  assert.deepEqual(decodeValue({ $gz: parted.chunks.join("") }), { noise });
+  const huge = randomBytes(1_200_000).toString("hex");
+  assert.equal(encodeValue({ huge }), null, `over ${MAX_PARTS} parts is not sent at all`);
+  assert.throws(() => decodeValue({ $gz: "not-gzip" }));
+});
+
+test("wiring: the statements (200 credits) and portfolio splits (20 a ticker a day) are kept by the monitor too", () => {
+  const store = read("lib/research/twelve-store.ts");
+  assert.match(store, /await durablePut\("compare-statements", ticker, \{ at: Date\.parse\(statements\.retrievedAt\), value: \{ income: statements\.income, cashFlow: statements\.cashFlow \} \}\)/);
+  assert.match(store, /return await peek\(statementsWeek, ticker, \[w, w - 1\]\) \?\? keptStatements\(ticker, now\);/);
+  const splits = read("lib/portfolio/split-feed.ts");
+  assert.match(splits, /if \(kept && Array\.isArray\(kept\.value\) && etDay\(kept\.at\) === etDay\(\)\) return \{ splits: kept\.value as StockSplit\[\], at: kept\.at \};/);
+  assert.ok(splits.indexOf('durableGet("portfolio-splits"') < splits.indexOf("await reserveCredits(20"), "today's kept copy is read before any credit is asked");
+  assert.match(splits, /await durablePut\("portfolio-splits", ticker, \{ at: read\.at, value: read\.splits \}\)/);
+});

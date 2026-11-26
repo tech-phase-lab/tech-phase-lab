@@ -97,8 +97,18 @@ const statementsWeek = sharedCache("comparison-store-statements-week-v1", 21 * 8
     providerCall("income_statement", { symbol: providerSymbol(ticker), period: "quarterly" }),
     providerCall("cash_flow", { symbol: providerSymbol(ticker), period: "quarterly" }),
   ]);
-  return { income: required(income, "statements-unavailable"), cashFlow, retrievedAt: stamp() };
+  const statements = { income: required(income, "statements-unavailable"), cashFlow, retrievedAt: stamp() };
+  // 200 credits a company: kept by the monitor as well (compressed; lib/research/twelve-copies.ts), like the statistics above.
+  await durablePut("compare-statements", ticker, { at: Date.parse(statements.retrievedAt), value: { income: statements.income, cashFlow: statements.cashFlow } }).catch(() => false);
+  return statements;
 });
+/** The monitor's copy of a company's statements, at most two weeks old (the weekly slots read below hold this week's and last week's). */
+async function keptStatements(ticker: string, now: number): Promise<Statements | null> {
+  const kept = (await durableGet("compare-statements", [ticker]).catch(() => ({})) as Record<string, { at: number; value: unknown }>)[ticker];
+  const value = kept?.value as { income?: unknown; cashFlow?: unknown } | null | undefined;
+  if (!kept || !value || value.income === undefined || value.income === null || now - kept.at > 14 * 86400_000) return null;
+  return { income: value.income, cashFlow: value.cashFlow ?? null, retrievedAt: new Date(kept.at).toISOString() };
+}
 
 async function peek<T>(store: (ticker: string, slot: number) => Promise<T>, ticker: string, slots: number[]): Promise<T | null> {
   for (const slot of slots) {
@@ -142,7 +152,7 @@ export async function cachedStatistics(ticker: string, now = Date.now()): Promis
 /** The stored quarterly statements, this week's or last week's; never fetched for a user. */
 export async function cachedStatements(ticker: string, now = Date.now()): Promise<Statements | null> {
   const w = weekSlot(now);
-  return peek(statementsWeek, ticker, [w, w - 1]);
+  return await peek(statementsWeek, ticker, [w, w - 1]) ?? keptStatements(ticker, now);
 }
 /** The daily price series: this hour's shared copy, else the background job's copy from today (it holds every completed daily close up to
  * yesterday, which is all the momentum factor reads), else one credit now if the minute has plenty of room (four seconds at most, no wait),

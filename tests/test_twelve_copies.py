@@ -1,4 +1,6 @@
 """Durable copies of the site's costly Twelve Data answers (scripts/research/twelve_copies.py) and POST /twelve/copies/get and /put."""
+import base64
+import gzip
 import json
 import os
 from pathlib import Path
@@ -63,6 +65,31 @@ class Store(unittest.TestCase):
         tc.put(self.db, {'kind': 'compare-statistics', 'key': 'NEW', 'at': int(later * 1000), 'value': 2}, now=later)
         self.assertEqual(list(tc.get(self.db, {'kind': 'compare-statistics', 'keys': ['OLD', 'NEW']}, now=later)), ['NEW'])
         self.assertEqual(self.db.execute('SELECT COUNT(*) FROM copies').fetchone()[0], 1)
+
+    def test_a_large_value_arrives_in_parts_and_is_stored_once_every_part_is_there(self):
+        statements = {'income': {'income_statement': [{'fiscal_date': f'2026-{i:04d}', 'sales': i} for i in range(4000)]}}
+        packed = base64.b64encode(gzip.compress(os.urandom(70_000) + json.dumps(statements).encode())).decode()
+        chunks = [packed[i:i + 40 * 1024] for i in range(0, len(packed), 40 * 1024)]
+        self.assertGreaterEqual(len(chunks), 2)
+        base = {'kind': 'compare-statements', 'key': 'ASML', 'at': MS, 'parts': len(chunks)}
+        for part, chunk in list(enumerate(chunks))[:-1]:
+            self.assertFalse(tc.put(self.db, {**base, 'part': part, 'chunk': chunk}, now=NOW))
+        self.assertEqual(tc.get(self.db, {'kind': 'compare-statements', 'keys': ['ASML']}, now=NOW), {}, 'nothing until the last part')
+        self.assertTrue(tc.put(self.db, {**base, 'part': len(chunks) - 1, 'chunk': chunks[-1]}, now=NOW))
+        got = tc.get(self.db, {'kind': 'compare-statements', 'keys': ['ASML']}, now=NOW)['ASML']
+        self.assertEqual(got['value'], {'$gz': packed})
+        self.assertEqual(self.db.execute('SELECT COUNT(*) FROM parts').fetchone()[0], 0, 'the parts are removed once put together')
+
+    def test_bad_parts_are_refused_and_parts_that_never_complete_are_removed(self):
+        base = {'kind': 'compare-statements', 'key': 'ASML', 'at': MS}
+        for extra in ({'part': 0, 'parts': 1, 'chunk': 'QQ=='}, {'part': 2, 'parts': 2, 'chunk': 'QQ=='}, {'part': 0, 'parts': tc.MAX_PARTS + 1, 'chunk': 'QQ=='},
+                      {'part': 0, 'parts': 2, 'chunk': 'not base64!'}, {'part': 0, 'parts': 2, 'chunk': 'A' * (tc.MAX_VALUE_BYTES + 1)}, {'part': 0, 'parts': 2}):
+            with self.assertRaises(ValueError, msg=str(extra)[:60]):
+                tc.put(self.db, {**base, **extra}, now=NOW)
+        self.assertFalse(tc.put(self.db, {**base, 'part': 0, 'parts': 2, 'chunk': 'QUJD'}, now=NOW))
+        later = NOW + tc.PART_SECONDS + 1
+        tc.put(self.db, {**base, 'key': 'TSM', 'part': 0, 'parts': 2, 'chunk': 'QUJD'}, now=later)
+        self.assertEqual([r[0] for r in self.db.execute('SELECT key FROM parts')], ['TSM'])
 
     def test_the_file_sits_beside_the_monitors_database(self):
         self.assertEqual(tc.path_for('/data/automatic.sqlite'), Path('/data/twelve-copies.sqlite'))

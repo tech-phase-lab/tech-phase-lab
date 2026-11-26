@@ -145,6 +145,20 @@ test("a statistics copy the runtime cache has lost is read back from the monitor
   assert.equal(state.calls.filter(c => c === "statistics:ASML").length, 1);
 }));
 
+test("the statements (200 credits) a runtime cache has lost are read back from the monitor; the job does not buy them again", () => withClock(NOW, async clock => {
+  const state = provider(clock), kept = new Map();
+  const { mod, cache } = await loadStore(kept);
+  await mod.warmStatements("ASML", clock.now());
+  const bought = state.calls.filter(c => c.endsWith(":ASML")).length;
+  assert.ok(kept.has("compare-statements|ASML"));
+  clock.advance(5 * 86400_000);
+  cache.clear();
+  const got = await mod.cachedStatements("ASML");
+  assert.ok(got, "read back from the monitor");
+  assert.deepEqual(got.income, { status: "ok", meta: { symbol: "ASML", currency: "USD" }, income_statement: [] });
+  assert.equal(state.calls.filter(c => c.endsWith(":ASML")).length, bought, "no new provider call");
+}));
+
 // ---------- the background job ----------
 async function loadWarm(clock, { directory, needs }) {
   const { mod, cache } = await loadStore();
