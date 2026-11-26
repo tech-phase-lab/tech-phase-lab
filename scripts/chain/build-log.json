@@ -2,10 +2,10 @@
  "about": "Per-ticker build log for the relationship maps (data/chain). Universe: company introductions (lib/research/company-introductions.data.json). Rule (#806): a map is published only with five or more companies whose relationship is quoted from an official filing or document. Statuses: ready, below_five (published before the rule; kept until the owner decides), skipped (tried; fewer than five verified companies; reason recorded), not_attempted.",
  "updated": "2026-11-26",
  "counts": {
-  "ready": 1040,
+  "ready": 1071,
   "below_five": 9,
   "skipped": 7,
-  "not_attempted": 321
+  "not_attempted": 290
  },
  "tickers": {
   "A": {
@@ -79,9 +79,53 @@
    "in_universe": true
   },
   "ACA": {
-   "status": "not_attempted",
+   "status": "ready",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
+   "companies": 6,
+   "added_2026_11_26": [
+    {
+     "id": "STAVOLA",
+     "name": "Stavola",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1739445/000173944526000029/aca-20251231.htm",
+     "label": "Arcosa 10-K (FY2025)"
+    },
+    {
+     "id": "AMERON",
+     "name": "Ameron Pole Products",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1739445/000173944526000029/aca-20251231.htm",
+     "label": "Arcosa 10-K (FY2025)"
+    },
+    {
+     "id": "LAKEPOINT",
+     "name": "Lake Point",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1739445/000173944526000029/aca-20251231.htm",
+     "label": "Arcosa 10-K (FY2025)"
+    },
+    {
+     "id": "WYNNCHURCH",
+     "name": "Wynnchurch Capital",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1739445/000173944526000029/aca-20251231.htm",
+     "label": "Arcosa 10-K (FY2025)"
+    },
+    {
+     "id": "CRH",
+     "name": "CRH",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1739445/000114036126040596/ef20084131_8k.htm",
+     "label": "Arcosa 8-K (October 2026)"
+    },
+    {
+     "id": "JPM",
+     "name": "JPMorgan Chase",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1739445/000173944526000029/aca-20251231.htm",
+     "label": "Arcosa 10-K (FY2025)"
+    }
+   ]
   },
   "ACAD": {
    "companies": 7,
@@ -183,12 +227,102 @@
    "in_universe": true
   },
   "ADUS": {
-   "status": "not_attempted",
-   "in_universe": true
+   "status": "ready",
+   "in_universe": true,
+   "companies": 7,
+   "added_2026_11_26": [
+    {
+     "id": "GOLDHORSES",
+     "name": "Gold Horses",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1468328/000143774926005352/adus20251231_10k.htm",
+     "label": "Addus HomeCare 10-K (FY2025)"
+    },
+    {
+     "id": "HELPINGHANDS",
+     "name": "Helping Hands Home Care Service",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1468328/000143774926005352/adus20251231_10k.htm",
+     "label": "Addus HomeCare 10-K (FY2025)"
+    },
+    {
+     "id": "GREATLAKESHC",
+     "name": "Great Lakes Home Care",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1468328/000143774926005352/adus20251231_10k.htm",
+     "label": "Addus HomeCare 10-K (FY2025)"
+    },
+    {
+     "id": "GENTIVA",
+     "name": "Curo Health Services (Gentiva)",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1468328/000143774926005352/adus20251231_10k.htm",
+     "label": "Addus HomeCare 10-K (FY2025)"
+    },
+    {
+     "id": "ACCENTCARE",
+     "name": "AccentCare",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1468328/000143774926030348/adus20260914_8k.htm",
+     "label": "Addus HomeCare 8-K (September 2026)"
+    },
+    {
+     "id": "DCGO",
+     "name": "DocGo",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/1822359/000182235925000018/dcgo-20241231.htm",
+     "label": "DocGo 10-K (FY2024)"
+    },
+    {
+     "id": "COF",
+     "name": "Capital One",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1468328/000143774926005352/adus20251231_10k.htm",
+     "label": "Addus HomeCare 10-K (FY2025)"
+    }
+   ]
   },
   "AEE": {
-   "status": "not_attempted",
-   "in_universe": true
+   "status": "ready",
+   "in_universe": true,
+   "companies": 5,
+   "added_2026_11_26": [
+    {
+     "id": "ATEX",
+     "name": "Anterix",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1304492/000130449226000027/atex-20260331.htm",
+     "label": "Anterix 10-K (FY ended Mar 2026)"
+    },
+    {
+     "id": "SHEL",
+     "name": "Shell",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1306965/000130696525000007/shel-20241231.htm",
+     "label": "Shell 20-F (FY2024)"
+    },
+    {
+     "id": "JPM",
+     "name": "JPMorgan Chase",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1002910/000110465925119977/tm2533090d1_8k.htm",
+     "label": "Ameren 8-K (December 2025)"
+    },
+    {
+     "id": "WFC",
+     "name": "Wells Fargo",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1002910/000110465925048603/tm2515070d1_8k.htm",
+     "label": "Ameren 8-K (May 2025)"
+    },
+    {
+     "id": "BCS",
+     "name": "Barclays",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1002910/000110465925048603/tm2515070d1_8k.htm",
+     "label": "Ameren 8-K (May 2025)"
+    }
+   ]
   },
   "AEHR": {
    "companies": 1,
@@ -358,9 +492,53 @@
    "in_universe": true
   },
   "ALG": {
-   "status": "not_attempted",
+   "status": "ready",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
+   "companies": 6,
+   "added_2026_11_26": [
+    {
+     "id": "TIGERCORP",
+     "name": "Tiger Corporation",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/897077/000089707726000016/alg-20251231.htm",
+     "label": "Alamo Group 10-K (FY2025)"
+    },
+    {
+     "id": "SCHWARZE",
+     "name": "Schwarze Industries",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/897077/000089707726000016/alg-20251231.htm",
+     "label": "Alamo Group 10-K (FY2025)"
+    },
+    {
+     "id": "BAC",
+     "name": "Bank of America",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/897077/000089707726000078/alg-20260527.htm",
+     "label": "Alamo Group 8-K (May 2026)"
+    },
+    {
+     "id": "WFC",
+     "name": "Wells Fargo",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/897077/000089707726000016/alg-20251231.htm",
+     "label": "Alamo Group 10-K (FY2025)"
+    },
+    {
+     "id": "PNC",
+     "name": "PNC Financial",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/897077/000089707726000016/alg-20251231.htm",
+     "label": "Alamo Group 10-K (FY2025)"
+    },
+    {
+     "id": "TD",
+     "name": "TD Bank",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/897077/000089707726000016/alg-20251231.htm",
+     "label": "Alamo Group 10-K (FY2025)"
+    }
+   ]
   },
   "ALGM": {
    "companies": 5,
@@ -383,7 +561,45 @@
     "Own 10-K (FY2025): no named competitors (only a Straumann/ClearCorrect lawsuit)",
     "Full-text search: Solventum 10-K names Align as a competitor; other mentions are peer lists or biographies"
    ],
-   "reason": "Fewer than five verified companies found"
+   "reason": "Fewer than five verified companies found",
+   "companies": 5,
+   "added_2026_11_26": [
+    {
+     "id": "HEARTLAND",
+     "name": "Heartland Dental",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1097149/000109714926000014/algn-20251231.htm",
+     "label": "Align Technology 10-K (FY2025)"
+    },
+    {
+     "id": "SMILEDOCTORS",
+     "name": "Smile Doctors",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1097149/000109714926000014/algn-20251231.htm",
+     "label": "Align Technology 10-K (FY2025)"
+    },
+    {
+     "id": "SOLV",
+     "name": "Solventum",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/1964738/000196473826000007/solv-20251231.htm",
+     "label": "Solventum 10-K (FY2025)"
+    },
+    {
+     "id": "C",
+     "name": "Citigroup",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1097149/000109714926000014/algn-20251231.htm",
+     "label": "Align Technology 10-K (FY2025)"
+    },
+    {
+     "id": "GS",
+     "name": "Goldman Sachs",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1097149/000109714926000085/algn-20261105.htm",
+     "label": "Align Technology 8-K (November 2026)"
+    }
+   ]
   },
   "ALGT": {
    "companies": 6,
@@ -476,9 +692,60 @@
    "in_universe": true
   },
   "AMG": {
-   "status": "not_attempted",
+   "status": "ready",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
+   "companies": 7,
+   "added_2026_11_26": [
+    {
+     "id": "NORTHBRIDGE",
+     "name": "NorthBridge Partners",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1004434/000162828026008665/amg-20251231.htm",
+     "label": "Affiliated Managers Group 10-K (FY2025)"
+    },
+    {
+     "id": "GARDA",
+     "name": "Garda Capital Partners",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1004434/000162828026008665/amg-20251231.htm",
+     "label": "Affiliated Managers Group 10-K (FY2025)"
+    },
+    {
+     "id": "MFC",
+     "name": "Manulife",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1004434/000162828026008665/amg-20251231.htm",
+     "label": "Affiliated Managers Group 10-K (FY2025)"
+    },
+    {
+     "id": "TPG",
+     "name": "TPG",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1004434/000162828026008665/amg-20251231.htm",
+     "label": "Affiliated Managers Group 10-K (FY2025)"
+    },
+    {
+     "id": "BAC",
+     "name": "Bank of America",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1004434/000119312526263845/d155271d8k.htm",
+     "label": "Affiliated Managers Group 8-K (June 2026)"
+    },
+    {
+     "id": "WFC",
+     "name": "Wells Fargo",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1004434/000119312525316053/d933301d8k.htm",
+     "label": "Affiliated Managers Group 8-K (December 2025)"
+    },
+    {
+     "id": "C",
+     "name": "Citigroup",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1004434/000119312525316053/d933301d8k.htm",
+     "label": "Affiliated Managers Group 8-K (December 2025)"
+    }
+   ]
   },
   "AMGN": {
    "companies": 17,
@@ -666,9 +933,53 @@
    "in_universe": false
   },
   "APOG": {
-   "status": "not_attempted",
+   "status": "ready",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
+   "companies": 6,
+   "added_2026_11_26": [
+    {
+     "id": "UWSOLUTIONS",
+     "name": "UW Solutions",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/6845/000000684526000023/apog-20260228.htm",
+     "label": "Apogee Enterprises 10-K (FY ended Feb 2026)"
+    },
+    {
+     "id": "KALWALL",
+     "name": "Kalwall",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/6845/000000684526000068/apog-20260701.htm",
+     "label": "Apogee Enterprises 8-K (July 2026)"
+    },
+    {
+     "id": "KELLER",
+     "name": "Keller Companies",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/6845/000000684526000044/apog-20260527.htm",
+     "label": "Apogee Enterprises 8-K (May 2026)"
+    },
+    {
+     "id": "BAC",
+     "name": "Bank of America",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/6845/000000684526000023/apog-20260228.htm",
+     "label": "Apogee Enterprises 10-K (FY ended Feb 2026)"
+    },
+    {
+     "id": "WFC",
+     "name": "Wells Fargo",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/6845/000000684526000023/apog-20260228.htm",
+     "label": "Apogee Enterprises 10-K (FY ended Feb 2026)"
+    },
+    {
+     "id": "BMO",
+     "name": "BMO Financial Group",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/6845/000000684526000023/apog-20260228.htm",
+     "label": "Apogee Enterprises 10-K (FY ended Feb 2026)"
+    }
+   ]
   },
   "APP": {
    "companies": 7,
@@ -915,9 +1226,46 @@
    "in_universe": true
   },
   "AWR": {
-   "status": "not_attempted",
+   "status": "ready",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
+   "companies": 5,
+   "added_2026_11_26": [
+    {
+     "id": "AWK",
+     "name": "American Water Works",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/1410636/000141063626000034/awk-20251231.htm",
+     "label": "American Water Works Company 10-K (FY2025)"
+    },
+    {
+     "id": "JANNEY",
+     "name": "Janney Montgomery Scott",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1056903/000110465926018151/tm266217d2_8k.htm",
+     "label": "American States Water 8-K (February 2026)"
+    },
+    {
+     "id": "WFC",
+     "name": "Wells Fargo",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1056903/000110465926018151/tm266217d2_8k.htm",
+     "label": "American States Water 8-K (February 2026)"
+    },
+    {
+     "id": "HBAN",
+     "name": "Huntington Bancshares",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1056903/000110465926018151/tm266217d2_8k.htm",
+     "label": "American States Water 8-K (February 2026)"
+    },
+    {
+     "id": "RY",
+     "name": "Royal Bank of Canada",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1056903/000110465926018151/tm266217d2_8k.htm",
+     "label": "American States Water 8-K (February 2026)"
+    }
+   ]
   },
   "AX": {
    "companies": 5,
@@ -960,9 +1308,46 @@
    "in_universe": true
   },
   "AZZ": {
-   "status": "not_attempted",
+   "status": "ready",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
+   "companies": 5,
+   "added_2026_11_26": [
+    {
+     "id": "FERNWEH",
+     "name": "Fernweh Group",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/8947/000000894726000068/azz-20260228.htm",
+     "label": "AZZ 10-K (FY ended Feb 2026)"
+    },
+    {
+     "id": "PELICANEP",
+     "name": "Pelican Energy Partners",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/8947/000000894726000068/azz-20260228.htm",
+     "label": "AZZ 10-K (FY ended Feb 2026)"
+    },
+    {
+     "id": "CANTONGALV",
+     "name": "Canton Galvanizing",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/8947/000000894726000068/azz-20260228.htm",
+     "label": "AZZ 10-K (FY ended Feb 2026)"
+    },
+    {
+     "id": "WFC",
+     "name": "Wells Fargo",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/8947/000000894726000068/azz-20260228.htm",
+     "label": "AZZ 10-K (FY ended Feb 2026)"
+    },
+    {
+     "id": "C",
+     "name": "Citigroup",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/8947/000000894726000068/azz-20260228.htm",
+     "label": "AZZ 10-K (FY ended Feb 2026)"
+    }
+   ]
   },
   "BA": {
    "companies": 10,
@@ -1225,9 +1610,53 @@
    ]
   },
   "BKH": {
-   "status": "not_attempted",
+   "status": "ready",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
+   "companies": 6,
+   "added_2026_11_26": [
+    {
+     "id": "NWE",
+     "name": "NorthWestern Energy Group",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1130464/000110465926127601/tm2629827d1_8k.htm",
+     "label": "Bright Horizon (formerly Black Hills) 8-K (November 2026)"
+    },
+    {
+     "id": "BAC",
+     "name": "Bank of America",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1130464/000110465925046204/tm2514279d1_8k.htm",
+     "label": "Bright Horizon (formerly Black Hills) 8-K (May 2025)"
+    },
+    {
+     "id": "BMO",
+     "name": "BMO Financial Group",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1130464/000110465925046204/tm2514279d1_8k.htm",
+     "label": "Bright Horizon (formerly Black Hills) 8-K (May 2025)"
+    },
+    {
+     "id": "RY",
+     "name": "Royal Bank of Canada",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1130464/000110465925046204/tm2514279d1_8k.htm",
+     "label": "Bright Horizon (formerly Black Hills) 8-K (May 2025)"
+    },
+    {
+     "id": "MUFG",
+     "name": "Mitsubishi UFJ Financial Group",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1130464/000110465925046204/tm2514279d1_8k.htm",
+     "label": "Bright Horizon (formerly Black Hills) 8-K (May 2025)"
+    },
+    {
+     "id": "MFG",
+     "name": "Mizuho Financial Group",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1130464/000110465925046204/tm2514279d1_8k.htm",
+     "label": "Bright Horizon (formerly Black Hills) 8-K (May 2025)"
+    }
+   ]
   },
   "BKNG": {
    "companies": 6,
@@ -1774,9 +2203,67 @@
    "in_universe": true
   },
   "CINF": {
-   "status": "not_attempted",
+   "status": "ready",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
+   "companies": 8,
+   "added_2026_11_26": [
+    {
+     "id": "HANNOVERRE",
+     "name": "Hannover Re",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/20286/000002028626000008/cinf-20251231.htm",
+     "label": "Cincinnati Financial 10-K (FY2025)"
+    },
+    {
+     "id": "CB",
+     "name": "Chubb",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/20286/000002028626000008/cinf-20251231.htm",
+     "label": "Cincinnati Financial 10-K (FY2025)"
+    },
+    {
+     "id": "FITB",
+     "name": "Fifth Third Bancorp",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/20286/000002028626000052/cinf-20260925.htm",
+     "label": "Cincinnati Financial 8-K (September 2026)"
+    },
+    {
+     "id": "HBAN",
+     "name": "Huntington Bancshares",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/20286/000002028626000052/cinf-20260925.htm",
+     "label": "Cincinnati Financial 8-K (September 2026)"
+    },
+    {
+     "id": "SWISSRE",
+     "name": "Swiss Re",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/20286/000002028626000008/cinf-20251231.htm",
+     "label": "Cincinnati Financial 10-K (FY2025)"
+    },
+    {
+     "id": "MUNICHRE",
+     "name": "Munich Re",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/20286/000002028626000008/cinf-20251231.htm",
+     "label": "Cincinnati Financial 10-K (FY2025)"
+    },
+    {
+     "id": "PARTNERRE",
+     "name": "PartnerRe",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/20286/000002028626000008/cinf-20251231.htm",
+     "label": "Cincinnati Financial 10-K (FY2025)"
+    },
+    {
+     "id": "TRANSRE",
+     "name": "TransRe",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/20286/000002028626000008/cinf-20251231.htm",
+     "label": "Cincinnati Financial 10-K (FY2025)"
+    }
+   ]
   },
   "CL": {
    "companies": 8,
@@ -1829,9 +2316,46 @@
    "in_universe": true
   },
   "CMS": {
-   "status": "not_attempted",
+   "status": "ready",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
+   "companies": 5,
+   "added_2026_11_26": [
+    {
+     "id": "NEWCOVERT",
+     "name": "New Covert Generating Company",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/811156/000081115626000004/cms-20251231.htm",
+     "label": "CMS Energy 10-K (FY2025)"
+    },
+    {
+     "id": "XTIA",
+     "name": "XTI Aerospace",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1529113/000121390026043794/ea028631601ex99-2.htm",
+     "label": "XTI Aerospace 8-K (April 2026)"
+    },
+    {
+     "id": "BCS",
+     "name": "Barclays",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/811156/000081115626000004/cms-20251231.htm",
+     "label": "CMS Energy 10-K (FY2025)"
+    },
+    {
+     "id": "JPM",
+     "name": "JPMorgan Chase",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/811156/000081115626000004/cms-20251231.htm",
+     "label": "CMS Energy 10-K (FY2025)"
+    },
+    {
+     "id": "BNS",
+     "name": "Scotiabank",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/811156/000110465925114875/tm2531890d1_8k.htm",
+     "label": "CMS Energy 8-K (November 2025)"
+    }
+   ]
   },
   "CNC": {
    "companies": 8,
@@ -1919,9 +2443,46 @@
    "in_universe": true
   },
   "CON": {
-   "status": "not_attempted",
+   "status": "ready",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
+   "companies": 5,
+   "added_2026_11_26": [
+    {
+     "id": "PIVOTOH",
+     "name": "Pivot Occupational Health",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/2014596/000201459626000029/cghp-20251231.htm",
+     "label": "Concentra Group 10-K (FY2025)"
+    },
+    {
+     "id": "NOVAMED",
+     "name": "Nova Medical Centers",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/2014596/000201459625000009/cghp-20250301.htm",
+     "label": "Concentra Group 8-K (March 2025)"
+    },
+    {
+     "id": "SEM",
+     "name": "Select Medical",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/2014596/000201459626000029/cghp-20251231.htm",
+     "label": "Concentra Group 10-K (FY2025)"
+    },
+    {
+     "id": "PJA",
+     "name": "Perry Johnson & Associates",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/2014596/000201459626000029/cghp-20251231.htm",
+     "label": "Concentra Group 10-K (FY2025)"
+    },
+    {
+     "id": "JPM",
+     "name": "JPMorgan Chase",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/2014596/000201459625000009/cghp-20250301.htm",
+     "label": "Concentra Group 8-K (March 2025)"
+    }
+   ]
   },
   "COO": {
    "companies": 8,
@@ -1974,9 +2535,67 @@
    "in_universe": true
   },
   "CPT": {
-   "status": "not_attempted",
+   "status": "ready",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
+   "companies": 8,
+   "added_2026_11_26": [
+    {
+     "id": "TRSTEXAS",
+     "name": "Teacher Retirement System of Texas",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/906345/000162828026007697/cpt-20251231.htm",
+     "label": "Camden Property Trust 10-K (FY2025)"
+    },
+    {
+     "id": "BAC",
+     "name": "Bank of America",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/906345/000119312526115667/d900833d8k.htm",
+     "label": "Camden Property Trust 8-K (March 2026)"
+    },
+    {
+     "id": "TFC",
+     "name": "Truist Financial",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/906345/000119312526115667/d900833d8k.htm",
+     "label": "Camden Property Trust 8-K (March 2026)"
+    },
+    {
+     "id": "DB",
+     "name": "Deutsche Bank",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/906345/000119312526115667/d900833d8k.htm",
+     "label": "Camden Property Trust 8-K (March 2026)"
+    },
+    {
+     "id": "JPM",
+     "name": "JPMorgan Chase",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/906345/000119312526115667/d900833d8k.htm",
+     "label": "Camden Property Trust 8-K (March 2026)"
+    },
+    {
+     "id": "PNC",
+     "name": "PNC Financial",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/906345/000119312526115667/d900833d8k.htm",
+     "label": "Camden Property Trust 8-K (March 2026)"
+    },
+    {
+     "id": "RF",
+     "name": "Regions Financial",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/906345/000119312526115667/d900833d8k.htm",
+     "label": "Camden Property Trust 8-K (March 2026)"
+    },
+    {
+     "id": "USB",
+     "name": "U.S. Bancorp",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/906345/000119312526115667/d900833d8k.htm",
+     "label": "Camden Property Trust 8-K (March 2026)"
+    }
+   ]
   },
   "CQP": {
    "companies": 8,
@@ -2188,9 +2807,53 @@
    "in_universe": true
   },
   "CWT": {
-   "status": "not_attempted",
+   "status": "ready",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
+   "companies": 6,
+   "added_2026_11_26": [
+    {
+     "id": "NEXUS",
+     "name": "Nexus Water Group",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1035201/000162828026012444/cwt-20251231.htm",
+     "label": "California Water Service Group 10-K (FY2025)"
+    },
+    {
+     "id": "AWK",
+     "name": "American Water Works",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/1410636/000141063626000034/awk-20251231.htm",
+     "label": "American Water Works Company 10-K (FY2025)"
+    },
+    {
+     "id": "BAC",
+     "name": "Bank of America",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1035201/000162828026012444/cwt-20251231.htm",
+     "label": "California Water Service Group 10-K (FY2025)"
+    },
+    {
+     "id": "USB",
+     "name": "U.S. Bancorp",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1035201/000162828026012444/cwt-20251231.htm",
+     "label": "California Water Service Group 10-K (FY2025)"
+    },
+    {
+     "id": "WFC",
+     "name": "Wells Fargo",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1035201/000110465925048724/tm2514576d4_8k.htm",
+     "label": "California Water Service Group 8-K (May 2025)"
+    },
+    {
+     "id": "RY",
+     "name": "Royal Bank of Canada",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1035201/000110465925048724/tm2514576d4_8k.htm",
+     "label": "California Water Service Group 8-K (May 2025)"
+    }
+   ]
   },
   "CXM": {
    "companies": 11,
@@ -2352,9 +3015,46 @@
    "in_universe": true
   },
   "DHI": {
-   "status": "not_attempted",
+   "status": "ready",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
+   "companies": 5,
+   "added_2026_11_26": [
+    {
+     "id": "FNMA",
+     "name": "Fannie Mae",
+     "type": "down",
+     "source": "https://www.sec.gov/Archives/edgar/data/882184/000088218426000157/dhi-20260930.htm",
+     "label": "D.R. Horton 10-K (FY ended Sep 2026)"
+    },
+    {
+     "id": "FMCC",
+     "name": "Freddie Mac",
+     "type": "down",
+     "source": "https://www.sec.gov/Archives/edgar/data/882184/000088218426000157/dhi-20260930.htm",
+     "label": "D.R. Horton 10-K (FY ended Sep 2026)"
+    },
+    {
+     "id": "GNMA",
+     "name": "Ginnie Mae",
+     "type": "down",
+     "source": "https://www.sec.gov/Archives/edgar/data/882184/000088218426000157/dhi-20260930.htm",
+     "label": "D.R. Horton 10-K (FY ended Sep 2026)"
+    },
+    {
+     "id": "MFG",
+     "name": "Mizuho Financial Group",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/882184/000088218426000157/dhi-20260930.htm",
+     "label": "D.R. Horton 10-K (FY ended Sep 2026)"
+    },
+    {
+     "id": "JPM",
+     "name": "JPMorgan Chase",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/882184/000088218426000157/dhi-20260930.htm",
+     "label": "D.R. Horton 10-K (FY ended Sep 2026)"
+    }
+   ]
   },
   "DINO": {
    "companies": 5,
@@ -2392,9 +3092,46 @@
    "in_universe": true
   },
   "DLX": {
-   "status": "not_attempted",
+   "status": "ready",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
+   "companies": 5,
+   "added_2026_11_26": [
+    {
+     "id": "FAPS",
+     "name": "First American Payment Systems",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/27996/000002799626000037/dlx-20251231.htm",
+     "label": "Deluxe 10-K (FY2025)"
+    },
+    {
+     "id": "CELERO",
+     "name": "Celero",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/27996/000110465926075414/tm2618004d1_8k.htm",
+     "label": "Deluxe 8-K (June 2026)"
+    },
+    {
+     "id": "PFGVENTURES",
+     "name": "PFG Ventures",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/27996/000110465926012727/tm265641d1_8k.htm",
+     "label": "Deluxe 8-K (February 2026)"
+    },
+    {
+     "id": "JPM",
+     "name": "JPMorgan Chase",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/27996/000110465926089269/tm2621737d1_8k.htm",
+     "label": "Deluxe 8-K (July 2026)"
+    },
+    {
+     "id": "MUFG",
+     "name": "Mitsubishi UFJ Financial Group",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/27996/000110465925121857/tm2533634d1_8k.htm",
+     "label": "Deluxe 8-K (December 2025)"
+    }
+   ]
   },
   "DMC": {
    "companies": 5,
@@ -2407,9 +3144,60 @@
    "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "DOC": {
-   "status": "not_attempted",
+   "status": "ready",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
+   "companies": 7,
+   "added_2026_11_26": [
+    {
+     "id": "HCA",
+     "name": "HCA Healthcare",
+     "type": "down",
+     "source": "https://www.sec.gov/Archives/edgar/data/765880/000162828026005044/peak-20251231.htm",
+     "label": "Healthpeak Properties 10-K (FY2025)"
+    },
+    {
+     "id": "COMMONSPIRIT",
+     "name": "CommonSpirit Health",
+     "type": "down",
+     "source": "https://www.sec.gov/Archives/edgar/data/765880/000162828026005044/peak-20251231.htm",
+     "label": "Healthpeak Properties 10-K (FY2025)"
+    },
+    {
+     "id": "PHYSREALTY",
+     "name": "Physicians Realty Trust",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/765880/000162828026005044/peak-20251231.htm",
+     "label": "Healthpeak Properties 10-K (FY2025)"
+    },
+    {
+     "id": "WELL",
+     "name": "Welltower",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/766704/000076670426000010/exhibit19-10xk2025.htm",
+     "label": "Welltower exhibit to its 10-K (FY2025)"
+    },
+    {
+     "id": "ALLO",
+     "name": "Allogene Therapeutics",
+     "type": "down",
+     "source": "https://www.sec.gov/Archives/edgar/data/1737287/000162828026017242/allo-20251231.htm",
+     "label": "Allogene Therapeutics 10-K (FY2025)"
+    },
+    {
+     "id": "BAC",
+     "name": "Bank of America",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/765880/000162828026005044/peak-20251231.htm",
+     "label": "Healthpeak Properties 10-K (FY2025)"
+    },
+    {
+     "id": "KEY",
+     "name": "KeyCorp",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/765880/000162828026005044/peak-20251231.htm",
+     "label": "Healthpeak Properties 10-K (FY2025)"
+    }
+   ]
   },
   "DOCN": {
    "companies": 7,
@@ -2452,9 +3240,53 @@
    "in_universe": true
   },
   "DRI": {
-   "status": "not_attempted",
+   "status": "ready",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
+   "companies": 6,
+   "added_2026_11_26": [
+    {
+     "id": "CHUYS",
+     "name": "Chuy's Holdings",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/940944/000094094426000025/dri-20260531.htm",
+     "label": "Darden Restaurants 10-K (FY ended May 2026)"
+    },
+    {
+     "id": "RUTHS",
+     "name": "Ruth's Hospitality Group",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/940944/000094094426000025/dri-20260531.htm",
+     "label": "Darden Restaurants 10-K (FY ended May 2026)"
+    },
+    {
+     "id": "GIS",
+     "name": "General Mills",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/940944/000094094426000025/dri-20260531.htm",
+     "label": "Darden Restaurants 10-K (FY ended May 2026)"
+    },
+    {
+     "id": "FCPT",
+     "name": "Four Corners Property Trust",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1650132/000119312526048898/fcpt-20251231.htm",
+     "label": "Four Corners Property Trust 10-K (FY2025)"
+    },
+    {
+     "id": "CBL",
+     "name": "CBL & Associates Properties",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/910612/000119312526087049/cbl-20251231.htm",
+     "label": "CBL & Associates Properties 10-K (FY2025)"
+    },
+    {
+     "id": "BAC",
+     "name": "Bank of America",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/940944/000094094426000060/dri-20261022.htm",
+     "label": "Darden Restaurants 8-K (October 2026)"
+    }
+   ]
   },
   "DT": {
    "companies": 12,
@@ -2538,9 +3370,53 @@
    "in_universe": true
   },
   "DXPE": {
-   "status": "not_attempted",
+   "status": "ready",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
+   "companies": 6,
+   "added_2026_11_26": [
+    {
+     "id": "PREMIERFLOW",
+     "name": "PREMIERflow",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1020710/000162828026012382/dxpe-20251231.htm",
+     "label": "DXP Enterprises 10-K (FY2025)"
+    },
+    {
+     "id": "MIDATLANTICSS",
+     "name": "Mid Atlantic Storage Systems",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1020710/000162828026012382/dxpe-20251231.htm",
+     "label": "DXP Enterprises 10-K (FY2025)"
+    },
+    {
+     "id": "AMBIENTEH2O",
+     "name": "Ambiente H2O",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1020710/000162828026012382/dxpe-20251231.htm",
+     "label": "DXP Enterprises 10-K (FY2025)"
+    },
+    {
+     "id": "GS",
+     "name": "Goldman Sachs",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1020710/000162828026012382/dxpe-20251231.htm",
+     "label": "DXP Enterprises 10-K (FY2025)"
+    },
+    {
+     "id": "BAC",
+     "name": "Bank of America",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1020710/000162828026047831/dxpe-20260702.htm",
+     "label": "DXP Enterprises 8-K (July 2026)"
+    },
+    {
+     "id": "BMO",
+     "name": "BMO Financial Group",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1020710/000162828026012382/dxpe-20251231.htm",
+     "label": "DXP Enterprises 10-K (FY2025)"
+    }
+   ]
   },
   "DY": {
    "companies": 8,
@@ -2588,9 +3464,46 @@
    "in_universe": true
   },
   "EFC": {
-   "status": "not_attempted",
+   "status": "ready",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
+   "companies": 5,
+   "added_2026_11_26": [
+    {
+     "id": "ARLINGTON",
+     "name": "Arlington Asset Investment",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1411342/000162828026013279/efc-20251231.htm",
+     "label": "Ellington Financial 10-K (FY2025)"
+    },
+    {
+     "id": "LENDSURE",
+     "name": "LendSure Mortgage",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1411342/000162828026013279/efc-20251231.htm",
+     "label": "Ellington Financial 10-K (FY2025)"
+    },
+    {
+     "id": "NMR",
+     "name": "Nomura Holdings",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1411342/000162828026013279/efc-20251231.htm",
+     "label": "Ellington Financial 10-K (FY2025)"
+    },
+    {
+     "id": "CITADELSEC",
+     "name": "Citadel Securities",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1411342/000162828025059006/efc-20251223.htm",
+     "label": "Ellington Financial 8-K (December 2025)"
+    },
+    {
+     "id": "CFG",
+     "name": "Citizens Financial Group",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1411342/000162828025059006/efc-20251223.htm",
+     "label": "Ellington Financial 8-K (December 2025)"
+    }
+   ]
   },
   "EFOR": {
    "companies": 9,
@@ -2732,9 +3645,53 @@
    "in_universe": true
   },
   "EQH": {
-   "status": "not_attempted",
+   "status": "ready",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
+   "companies": 6,
+   "added_2026_11_26": [
+    {
+     "id": "AB",
+     "name": "AllianceBernstein",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1333986/000133398626000012/eqh-20251231.htm",
+     "label": "Equitable Holdings 10-K (FY2025)"
+    },
+    {
+     "id": "JPM",
+     "name": "JPMorgan Chase",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1333986/000133398626000012/eqh-20251231.htm",
+     "label": "Equitable Holdings 10-K (FY2025)"
+    },
+    {
+     "id": "BAC",
+     "name": "Bank of America",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1333986/000133398626000012/eqh-20251231.htm",
+     "label": "Equitable Holdings 10-K (FY2025)"
+    },
+    {
+     "id": "WFC",
+     "name": "Wells Fargo",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1333986/000133398626000012/eqh-20251231.htm",
+     "label": "Equitable Holdings 10-K (FY2025)"
+    },
+    {
+     "id": "C",
+     "name": "Citigroup",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1333986/000133398626000012/eqh-20251231.htm",
+     "label": "Equitable Holdings 10-K (FY2025)"
+    },
+    {
+     "id": "MS",
+     "name": "Morgan Stanley",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1333986/000133398626000012/eqh-20251231.htm",
+     "label": "Equitable Holdings 10-K (FY2025)"
+    }
+   ]
   },
   "EQIX": {
    "companies": 15,
@@ -2828,9 +3785,67 @@
    "in_universe": true
   },
   "EVRG": {
-   "status": "not_attempted",
+   "status": "ready",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
+   "companies": 8,
+   "added_2026_11_26": [
+    {
+     "id": "AEP",
+     "name": "American Electric Power",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1711269/000171126926000017/evrg-20251231.htm",
+     "label": "Evergy 10-K (FY2025)"
+    },
+    {
+     "id": "BRK.B",
+     "name": "Berkshire Hathaway Energy",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1711269/000171126926000017/evrg-20251231.htm",
+     "label": "Evergy 10-K (FY2025)"
+    },
+    {
+     "id": "ATEX",
+     "name": "Anterix",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1304492/000130449226000027/atex-20260331.htm",
+     "label": "Anterix 10-K (FY ended Mar 2026)"
+    },
+    {
+     "id": "WFC",
+     "name": "Wells Fargo",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1711269/000119312526292565/d82314d8k.htm",
+     "label": "Evergy 8-K (July 2026)"
+    },
+    {
+     "id": "BAC",
+     "name": "Bank of America",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1711269/000171126926000017/evrg-20251231.htm",
+     "label": "Evergy 10-K (FY2025)"
+    },
+    {
+     "id": "C",
+     "name": "Citigroup",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1711269/000171126926000017/evrg-20251231.htm",
+     "label": "Evergy 10-K (FY2025)"
+    },
+    {
+     "id": "TD",
+     "name": "TD Bank",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1711269/000171126926000017/evrg-20251231.htm",
+     "label": "Evergy 10-K (FY2025)"
+    },
+    {
+     "id": "MUFG",
+     "name": "Mitsubishi UFJ Financial Group",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1711269/000171126926000017/evrg-20251231.htm",
+     "label": "Evergy 10-K (FY2025)"
+    }
+   ]
   },
   "EW": {
    "companies": 5,
@@ -2843,9 +3858,74 @@
    "in_universe": true
   },
   "EXC": {
-   "status": "not_attempted",
+   "status": "ready",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
+   "companies": 9,
+   "added_2026_11_26": [
+    {
+     "id": "CEG",
+     "name": "Constellation Energy",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1868275/000186827526000032/ceg-20251231.htm",
+     "label": "Constellation Energy 10-K (FY2025)"
+    },
+    {
+     "id": "CTRI",
+     "name": "Centuri Holdings",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1981599/000198159926000020/ctri-20251228.htm",
+     "label": "Centuri Holdings 10-K (FY2025)"
+    },
+    {
+     "id": "PWR",
+     "name": "Quanta Services",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1050915/000105091526000006/pwr-20251231.htm",
+     "label": "Quanta Services 10-K (FY2025)"
+    },
+    {
+     "id": "NVVE",
+     "name": "Nuvve Holding",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1836875/000183687525000039/to-av90851001xnuvveholdi.htm",
+     "label": "Nuvve Holding 8-K (February 2025)"
+    },
+    {
+     "id": "BAC",
+     "name": "Bank of America",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1109357/000110935725000050/exc-20250221.htm",
+     "label": "Exelon 8-K (February 2025)"
+    },
+    {
+     "id": "BCS",
+     "name": "Barclays",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1109357/000110935725000050/exc-20250221.htm",
+     "label": "Exelon 8-K (February 2025)"
+    },
+    {
+     "id": "C",
+     "name": "Citigroup",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1109357/000110935725000118/exc-20250502.htm",
+     "label": "Exelon 8-K (May 2025)"
+    },
+    {
+     "id": "GS",
+     "name": "Goldman Sachs",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1109357/000110935725000118/exc-20250502.htm",
+     "label": "Exelon 8-K (May 2025)"
+    },
+    {
+     "id": "WFC",
+     "name": "Wells Fargo",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1109357/000110935726000018/exc-20251231.htm",
+     "label": "Exelon exhibit to its 10-K (FY2025)"
+    }
+   ]
   },
   "EXE": {
    "companies": 5,
@@ -3015,9 +4095,53 @@
    "in_universe": true
   },
   "FELE": {
-   "status": "not_attempted",
+   "status": "ready",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
+   "companies": 6,
+   "added_2026_11_26": [
+    {
+     "id": "PUMPENG",
+     "name": "PumpEng",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/38725/000003872526000009/fele-20251231.htm",
+     "label": "Franklin Electric 10-K (FY2025)"
+    },
+    {
+     "id": "BARNESCO",
+     "name": "Barnes de Colombia",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/38725/000003872526000009/fele-20251231.htm",
+     "label": "Franklin Electric 10-K (FY2025)"
+    },
+    {
+     "id": "NEWYORKLIFE",
+     "name": "New York Life",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/38725/000003872526000009/fele-20251231.htm",
+     "label": "Franklin Electric 10-K (FY2025)"
+    },
+    {
+     "id": "PRU",
+     "name": "Prudential Financial",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/38725/000003872526000009/fele-20251231.htm",
+     "label": "Franklin Electric 10-K (FY2025)"
+    },
+    {
+     "id": "JPM",
+     "name": "JPMorgan Chase",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/38725/000003872526000009/fele-20251231.htm",
+     "label": "Franklin Electric 10-K (FY2025)"
+    },
+    {
+     "id": "BAC",
+     "name": "Bank of America",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/38725/000003872526000009/fele-20251231.htm",
+     "label": "Franklin Electric 10-K (FY2025)"
+    }
+   ]
   },
   "FERG": {
    "companies": 5,
@@ -3450,9 +4574,53 @@
    "in_universe": true
   },
   "GTES": {
-   "status": "not_attempted",
+   "status": "ready",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
+   "companies": 6,
+   "added_2026_11_26": [
+    {
+     "id": "TKR",
+     "name": "Timken",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/98362/000009836226000012/tkr-20251231.htm",
+     "label": "Timken 10-K (FY2025)"
+    },
+    {
+     "id": "SKF",
+     "name": "SKF Group",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/98362/000009836226000012/tkr-20251231.htm",
+     "label": "Timken 10-K (FY2025)"
+    },
+    {
+     "id": "RBC",
+     "name": "RBC Bearings",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/98362/000009836226000012/tkr-20251231.htm",
+     "label": "Timken 10-K (FY2025)"
+    },
+    {
+     "id": "C",
+     "name": "Citigroup",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1718512/000162828026007719/gtes-20251231.htm",
+     "label": "Gates Industrial 10-K (FY2025)"
+    },
+    {
+     "id": "JPM",
+     "name": "JPMorgan Chase",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1718512/000162828026007719/gtes-20251231.htm",
+     "label": "Gates Industrial 10-K (FY2025)"
+    },
+    {
+     "id": "BAC",
+     "name": "Bank of America",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1718512/000162828026007719/gtes-20251231.htm",
+     "label": "Gates Industrial 10-K (FY2025)"
+    }
+   ]
   },
   "GTLB": {
    "companies": 7,
@@ -3519,9 +4687,60 @@
    "in_universe": true
   },
   "HASI": {
-   "status": "not_attempted",
+   "status": "ready",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
+   "companies": 7,
+   "added_2026_11_26": [
+    {
+     "id": "AES",
+     "name": "AES",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/874761/000087476126000063/aes-20251231.htm",
+     "label": "AES 10-K (FY2025)"
+    },
+    {
+     "id": "KKR",
+     "name": "KKR",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1561894/000156189426000007/hasi-20251231.htm",
+     "label": "HA Sustainable Infrastructure Capital 10-K (FY2025)"
+    },
+    {
+     "id": "JPM",
+     "name": "JPMorgan Chase",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1561894/000110465926084887/tm2620682d1_8k.htm",
+     "label": "HA Sustainable Infrastructure Capital 8-K (July 2026)"
+    },
+    {
+     "id": "BAC",
+     "name": "Bank of America",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1561894/000119312526064334/d115499d8k.htm",
+     "label": "HA Sustainable Infrastructure Capital 8-K (February 2026)"
+    },
+    {
+     "id": "GS",
+     "name": "Goldman Sachs",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1561894/000119312526064334/d115499d8k.htm",
+     "label": "HA Sustainable Infrastructure Capital 8-K (February 2026)"
+    },
+    {
+     "id": "SMFG",
+     "name": "Sumitomo Mitsui Financial Group",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1561894/000119312526064334/d115499d8k.htm",
+     "label": "HA Sustainable Infrastructure Capital 8-K (February 2026)"
+    },
+    {
+     "id": "MFG",
+     "name": "Mizuho Financial Group",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1561894/000119312525286912/d78759d8k.htm",
+     "label": "HA Sustainable Infrastructure Capital 8-K (November 2025)"
+    }
+   ]
   },
   "HAYW": {
    "status": "skipped",
@@ -3531,7 +4750,45 @@
     "Pool Corporation 10-K names Hayward as a top supplier",
     "Full-text search 'Hayward': unrelated places and people"
    ],
-   "reason": "3 verified companies"
+   "reason": "3 verified companies",
+   "companies": 5,
+   "added_2026_11_26": [
+    {
+     "id": "POOL",
+     "name": "Pool Corporation",
+     "type": "down",
+     "source": "https://www.sec.gov/Archives/edgar/data/1834622/000183462226000008/hayw-20251231.htm",
+     "label": "Hayward Holdings 10-K (FY2025)"
+    },
+    {
+     "id": "HERITAGEPOOL",
+     "name": "Heritage Pool Supply Group",
+     "type": "down",
+     "source": "https://www.sec.gov/Archives/edgar/data/1834622/000183462226000008/hayw-20251231.htm",
+     "label": "Hayward Holdings 10-K (FY2025)"
+    },
+    {
+     "id": "BAYSTATEPOOL",
+     "name": "Baystate Pool Supplies",
+     "type": "down",
+     "source": "https://www.sec.gov/Archives/edgar/data/1834622/000183462226000008/hayw-20251231.htm",
+     "label": "Hayward Holdings 10-K (FY2025)"
+    },
+    {
+     "id": "CHLORKING",
+     "name": "ChlorKing",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1834622/000183462226000008/hayw-20251231.htm",
+     "label": "Hayward Holdings 10-K (FY2025)"
+    },
+    {
+     "id": "BAC",
+     "name": "Bank of America",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1834622/000183462226000041/hayw-20260623.htm",
+     "label": "Hayward Holdings 8-K (June 2026)"
+    }
+   ]
   },
   "HBAN": {
    "companies": 10,
@@ -3569,9 +4826,53 @@
    "in_universe": false
   },
   "HIG": {
-   "status": "not_attempted",
+   "status": "ready",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
+   "companies": 6,
+   "added_2026_11_26": [
+    {
+     "id": "BRK",
+     "name": "Berkshire Hathaway",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/874766/000087476626000012/hig-20251231.htm",
+     "label": "The Hartford 10-K (FY2025)"
+    },
+    {
+     "id": "PRU",
+     "name": "Prudential Financial",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1137774/000113777426000048/pru-20251231.htm",
+     "label": "Prudential Financial 10-K (FY2025)"
+    },
+    {
+     "id": "GBLI",
+     "name": "Global Indemnity Group",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/1494904/000119312526100467/gbli-20251231.htm",
+     "label": "Global Indemnity Group 10-K (FY2025)"
+    },
+    {
+     "id": "BAC",
+     "name": "Bank of America",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/874766/000087476626000012/hig-20251231.htm",
+     "label": "The Hartford 10-K (FY2025)"
+    },
+    {
+     "id": "JPM",
+     "name": "JPMorgan Chase",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/874766/000087476625000094/hig-20250924.htm",
+     "label": "The Hartford 8-K (September 2025)"
+    },
+    {
+     "id": "C",
+     "name": "Citigroup",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/874766/000087476625000094/hig-20250924.htm",
+     "label": "The Hartford 8-K (September 2025)"
+    }
+   ]
   },
   "HII": {
    "companies": 9,
@@ -3803,9 +5104,46 @@
    "in_universe": true
   },
   "IBKR": {
-   "status": "not_attempted",
+   "status": "ready",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
+   "companies": 5,
+   "added_2026_11_26": [
+    {
+     "id": "FRHC",
+     "name": "Freedom Holding",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/924805/000092480526000012/ex415prospectus2ndbondprog.htm",
+     "label": "Freedom Holding exhibit to its 10-K (FY ended Mar 2026)"
+    },
+    {
+     "id": "TIGR",
+     "name": "UP Fintech Holding",
+     "type": "down",
+     "source": "https://www.sec.gov/Archives/edgar/data/1756699/000119312526174855/tigr-20251231.htm",
+     "label": "UP Fintech Holding 20-F (FY2025)"
+    },
+    {
+     "id": "TECTONIC",
+     "name": "Tectonic Financial",
+     "type": "down",
+     "source": "https://www.sec.gov/Archives/edgar/data/1766526/000118518525000251/tectp10k123124.htm",
+     "label": "Tectonic Financial 10-K (FY2024)"
+    },
+    {
+     "id": "ZEROHASH",
+     "name": "Zero Hash",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1381197/000138119726000062/ibkr-20251231.htm",
+     "label": "Interactive Brokers 10-K (FY2025)"
+    },
+    {
+     "id": "PAXOS",
+     "name": "Paxos Trust Company",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1381197/000138119726000062/ibkr-20251231.htm",
+     "label": "Interactive Brokers 10-K (FY2025)"
+    }
+   ]
   },
   "IBM": {
    "companies": 29,
@@ -3864,9 +5202,67 @@
    "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "IEX": {
-   "status": "not_attempted",
+   "status": "ready",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
+   "companies": 8,
+   "added_2026_11_26": [
+    {
+     "id": "MOTT",
+     "name": "Mott Corporation",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/832101/000083210126000003/iex-20251231.htm",
+     "label": "IDEX 10-K (FY2025)"
+    },
+    {
+     "id": "MICROLAM",
+     "name": "Micro-LAM",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/832101/000083210126000003/iex-20251231.htm",
+     "label": "IDEX 10-K (FY2025)"
+    },
+    {
+     "id": "IR",
+     "name": "Ingersoll Rand",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/1699150/000162828026008617/iri-20251231.htm",
+     "label": "Ingersoll Rand 10-K (FY2025)"
+    },
+    {
+     "id": "BAC",
+     "name": "Bank of America",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/832101/000119312526381880/d421581d8k.htm",
+     "label": "IDEX 8-K (September 2026)"
+    },
+    {
+     "id": "JPM",
+     "name": "JPMorgan Chase",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/832101/000119312526381880/d421581d8k.htm",
+     "label": "IDEX 8-K (September 2026)"
+    },
+    {
+     "id": "WFC",
+     "name": "Wells Fargo",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/832101/000119312526381880/d421581d8k.htm",
+     "label": "IDEX 8-K (September 2026)"
+    },
+    {
+     "id": "PNC",
+     "name": "PNC Financial",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/832101/000119312526381880/d421581d8k.htm",
+     "label": "IDEX 8-K (September 2026)"
+    },
+    {
+     "id": "HSBC",
+     "name": "HSBC",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/832101/000119312526381880/d421581d8k.htm",
+     "label": "IDEX 8-K (September 2026)"
+    }
+   ]
   },
   "IFF": {
    "companies": 7,
@@ -4443,9 +5839,67 @@
    "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "LNT": {
-   "status": "not_attempted",
+   "status": "ready",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
+   "companies": 8,
+   "added_2026_11_26": [
+    {
+     "id": "WEC",
+     "name": "WEC Energy Group",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/352541/000035254126000007/lnt-20251231.htm",
+     "label": "Alliant Energy 10-K (FY2025)"
+    },
+    {
+     "id": "MGEE",
+     "name": "MGE Energy",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/352541/000035254126000007/lnt-20251231.htm",
+     "label": "Alliant Energy 10-K (FY2025)"
+    },
+    {
+     "id": "ATCHOLDINGS",
+     "name": "ATC Holdings",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/352541/000035254126000007/lnt-20251231.htm",
+     "label": "Alliant Energy 10-K (FY2025)"
+    },
+    {
+     "id": "USB",
+     "name": "U.S. Bancorp",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/352541/000035254125000025/lnt-20250303.htm",
+     "label": "Alliant Energy 8-K (March 2025)"
+    },
+    {
+     "id": "BAC",
+     "name": "Bank of America",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/352541/000119312526116244/d131241d8k.htm",
+     "label": "Alliant Energy 8-K (March 2026)"
+    },
+    {
+     "id": "GS",
+     "name": "Goldman Sachs",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/352541/000119312526116244/d131241d8k.htm",
+     "label": "Alliant Energy 8-K (March 2026)"
+    },
+    {
+     "id": "JPM",
+     "name": "JPMorgan Chase",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/352541/000119312526116244/d131241d8k.htm",
+     "label": "Alliant Energy 8-K (March 2026)"
+    },
+    {
+     "id": "WFC",
+     "name": "Wells Fargo",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/352541/000119312526116244/d131241d8k.htm",
+     "label": "Alliant Energy 8-K (March 2026)"
+    }
+   ]
   },
   "LNTH": {
    "companies": 10,
@@ -5080,9 +6534,46 @@
    "in_universe": true
   },
   "MTD": {
-   "status": "not_attempted",
+   "status": "ready",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
+   "companies": 5,
+   "added_2026_11_26": [
+    {
+     "id": "IDXG",
+     "name": "Interpace Biosciences",
+     "type": "down",
+     "source": "https://www.sec.gov/Archives/edgar/data/1054102/000149315226013646/form10-k.htm",
+     "label": "Interpace Biosciences 10-K (FY2025)"
+    },
+    {
+     "id": "MET",
+     "name": "MetLife",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1037646/000103764626000011/mtd-20251231.htm",
+     "label": "Mettler-Toledo 10-K (FY2025)"
+    },
+    {
+     "id": "MM",
+     "name": "Massachusetts Mutual Life Insurance Company",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1037646/000103764626000011/mtd-20251231.htm",
+     "label": "Mettler-Toledo 10-K (FY2025)"
+    },
+    {
+     "id": "CI",
+     "name": "Cigna",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1037646/000103764626000011/mtd-20251231.htm",
+     "label": "Mettler-Toledo 10-K (FY2025)"
+    },
+    {
+     "id": "TIAA",
+     "name": "Teachers Insurance and Annuity Association",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1037646/000103764626000011/mtd-20251231.htm",
+     "label": "Mettler-Toledo 10-K (FY2025)"
+    }
+   ]
   },
   "MTDR": {
    "companies": 6,
@@ -6166,7 +7657,6 @@
   "PNC": {
    "status": "ready",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found",
    "companies": 5,
    "added_2026_11_26": [
     {
@@ -7880,7 +9370,6 @@
   "USB": {
    "status": "ready",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found",
    "companies": 5,
    "added_2026_11_26": [
     {
@@ -8621,7 +10110,6 @@
   "ZION": {
    "status": "ready",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found",
    "companies": 5,
    "added_2026_11_26": [
     {

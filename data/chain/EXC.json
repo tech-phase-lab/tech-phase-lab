@@ -1,0 +1,264 @@
+{
+  "root": {
+    "ticker": "EXC",
+    "name": "エクセロン",
+    "cik": 1109357,
+    "name_en": "Exelon"
+  },
+  "rows": [
+    {
+      "ja": "供給元・取引先",
+      "en": "Suppliers & providers"
+    },
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "提携・出資・買収",
+      "en": "Partners, stakes & deals"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "CEG",
+      "ticker": "CEG",
+      "name": "Constellation Energy",
+      "name_en": "Constellation Energy",
+      "sub": "発電",
+      "sub_en": "Power generation",
+      "sub_short": "発電",
+      "sub_short_en": "Power",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "エクセロンから分離した旧子会社",
+          "text_en": "Spun off from Exelon",
+          "source": {
+            "label": "Constellation Energy 10-K(2025年度)",
+            "label_en": "Constellation Energy 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1868275/000186827526000032/ceg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "CEG Parent, a Pennsylvania corporation and a direct, wholly owned subsidiary of Exelon, was newly formed for the purpose of separation and had not engaged in any activities except in preparation for the distribution."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CTRI",
+      "ticker": "CTRI",
+      "name": "センチュリ・ホールディングス",
+      "name_en": "Centuri Holdings",
+      "sub": "公益工事",
+      "sub_en": "Utility services",
+      "sub_short": "工事",
+      "sub_short_en": "Services",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "顧客の1社に挙げる",
+          "text_en": "Lists Exelon among its customers",
+          "source": {
+            "label": "Centuri Holdings 10-K(2025年度)",
+            "label_en": "Centuri Holdings 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1981599/000198159926000020/ctri-20251228.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our customers include American Electric Power, Enbridge, Entergy, Exelon, NiSource, National Grid, Sempra Energy and Southern Company, among others."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PWR",
+      "ticker": "PWR",
+      "name": "クアンタ・サービシズ",
+      "name_en": "Quanta Services",
+      "sub": "電力インフラ工事",
+      "sub_en": "Utility infrastructure",
+      "sub_short": "工事",
+      "sub_short_en": "Services",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "主な顧客の1社に挙げる",
+          "text_en": "Lists Exelon among its customers",
+          "source": {
+            "label": "Quanta Services 10-K(2025年度)",
+            "label_en": "Quanta Services 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1050915/000105091526000006/pwr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Grid plc l CenterPoint Energy, Inc. l NextEra Energy, Inc. l Comcast Corporation l NiSource, Inc. l Duke Energy Corporation l Pattern Energy l Engie IR Holdings LLC l PG&E Corporation l Entergy Corporation l Puget Sound Energy, Inc. l Exelon Corporation l RWE AG l FirstEnergy Corp. l Santos Limited l Hydro One Incorporated l Sempra Energy l Iberdrola Group l The Southern Company l Idaho Power Company l The Williams Companies, Inc. l Invenergy LLC l Turner Construction"
+          }
+        }
+      ]
+    },
+    {
+      "id": "NVVE",
+      "ticker": "NVVE",
+      "name": "ヌーブ",
+      "name_en": "Nuvve Holding",
+      "sub": "V2G充電",
+      "sub_en": "Vehicle-to-grid",
+      "sub_short": "充電",
+      "sub_short_en": "Charging",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "子会社ComEdから業務を受注",
+          "text_en": "Has a task order from Exelon's ComEd",
+          "source": {
+            "label": "Nuvve Holding 8-K(2025年2月)",
+            "label_en": "Nuvve Holding 8-K (February 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1836875/000183687525000039/to-av90851001xnuvveholdi.htm",
+            "level": "official",
+            "date": "2025-02-05",
+            "quote": "(\"Contractor\" or \"Nuvve\") TASK ORDER IDENTIFICATION INFORMATION Project Name and Project Number: ComEd BE School Bus V2G Operator 611806.FY25.001 Client Name: Commonwealth Edison Company (\"ComEd\"), acting by and through its agent, Exelon Business Services Company, LLC This Task Order will be administered under the terms of the Master Services Agreement between Resource Innovations and the Contractor which is incorporated herein by reference. 1."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BAC",
+      "ticker": "BAC",
+      "name": "バンク・オブ・アメリカ",
+      "name_en": "Bank of America",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "社債などの引受会社",
+          "text_en": "Underwriter of its securities offering",
+          "source": {
+            "label": "Exelon 8-K(2025年2月)",
+            "label_en": "Exelon 8-K (February 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1109357/000110935725000050/exc-20250221.htm",
+            "level": "official",
+            "date": "2025-02-21",
+            "quote": "A copy of the Underwriting Agreement dated February 18, 2025 among the Company, Barclays Capital Inc., BNP Paribas Securities Corp., BofA Securities, Inc., J.P."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BCS",
+      "ticker": "BCS",
+      "name": "Barclays",
+      "name_en": "Barclays",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "社債などの引受会社",
+          "text_en": "Underwriter of its securities offering",
+          "source": {
+            "label": "Exelon 8-K(2025年2月)",
+            "label_en": "Exelon 8-K (February 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1109357/000110935725000050/exc-20250221.htm",
+            "level": "official",
+            "date": "2025-02-21",
+            "quote": "A copy of the Underwriting Agreement dated February 18, 2025 among the Company, Barclays Capital Inc., BNP Paribas Securities Corp., BofA Securities, Inc., J.P."
+          }
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "ticker": "C",
+      "name": "シティグループ",
+      "name_en": "Citigroup",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "株式売出しの販売代理人",
+          "text_en": "Sales agent for its share offering program",
+          "source": {
+            "label": "Exelon 8-K(2025年5月)",
+            "label_en": "Exelon 8-K (May 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1109357/000110935725000118/exc-20250502.htm",
+            "level": "official",
+            "date": "2025-05-02",
+            "quote": "Entry into a Material Definitive Agreement On May 2, 2025, Exelon Corporation (the \"Company\") entered into an Equity Distribution Agreement (the \"Equity Distribution Agreement\") with Barclays Capital Inc., BNP Paribas Securities Corp., BofA Securities, Inc., Citigroup Global Markets Inc., Credit Agricole Securities (USA) Inc., Goldman Sachs & Co."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GS",
+      "ticker": "GS",
+      "name": "Goldman Sachs",
+      "name_en": "Goldman Sachs",
+      "sub": "証券",
+      "sub_en": "Securities",
+      "sub_short": "証券",
+      "sub_short_en": "Broker",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "株式売出しの販売代理人",
+          "text_en": "Sales agent for its share offering program",
+          "source": {
+            "label": "Exelon 8-K(2025年5月)",
+            "label_en": "Exelon 8-K (May 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1109357/000110935725000118/exc-20250502.htm",
+            "level": "official",
+            "date": "2025-05-02",
+            "quote": "Entry into a Material Definitive Agreement On May 2, 2025, Exelon Corporation (the \"Company\") entered into an Equity Distribution Agreement (the \"Equity Distribution Agreement\") with Barclays Capital Inc., BNP Paribas Securities Corp., BofA Securities, Inc., Citigroup Global Markets Inc., Credit Agricole Securities (USA) Inc., Goldman Sachs & Co."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WFC",
+      "ticker": "WFC",
+      "name": "ウェルズ・ファーゴ",
+      "name_en": "Wells Fargo",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "株式の先渡し契約の相手方",
+          "text_en": "Forward counterparty in its share offering program",
+          "source": {
+            "label": "Exelon 10-Kの添付資料(2025年度)",
+            "label_en": "Exelon exhibit to its 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1109357/000110935726000018/exc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "LLC, MUFG Securities EMEA plc, Royal Bank of Canada, The Bank of Nova Scotia and Wells Fargo Bank, National Association, each as forward purchasers."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

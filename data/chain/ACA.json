@@ -1,0 +1,182 @@
+{
+  "root": {
+    "ticker": "ACA",
+    "name": "アルコサ",
+    "cik": 1739445,
+    "name_en": "Arcosa"
+  },
+  "rows": [
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "買収・売却",
+      "en": "Acquisitions & sales"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "STAVOLA",
+      "ticker": "STAVOLA",
+      "name": "スタボラ",
+      "name_en": "Stavola",
+      "sub": "建設資材",
+      "sub_en": "Construction materials",
+      "sub_short": "建材",
+      "sub_short_en": "Materials",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "建設資材事業を2024年10月に買収",
+          "text_en": "Bought its construction materials business in October 2024",
+          "source": {
+            "label": "Arcosa 10-K(2025年度)",
+            "label_en": "Arcosa 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1739445/000173944526000029/aca-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "On October 1, 2024, we completed the acquisition of the construction materials business of Stavola Holding Corporation and its affiliated entities (\"Stavola\") for $1.2 billion in cash."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMERON",
+      "ticker": "AMERON",
+      "name": "アメロン・ポール・プロダクツ",
+      "name_en": "Ameron Pole Products",
+      "sub": "コンクリート柱",
+      "sub_en": "Concrete & steel poles",
+      "sub_short": "柱",
+      "sub_short_en": "Poles",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2024年に買収",
+          "text_en": "Acquired in 2024",
+          "source": {
+            "label": "Arcosa 10-K(2025年度)",
+            "label_en": "Arcosa 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1739445/000173944526000029/aca-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "In April 2024, we completed the acquisition of Ameron Pole Products LLC (\"Ameron\"), a leading manufacturer of highly engineered, premium concrete and steel poles for a broad range of infrastructure applications, including lighting, traffic, electric distribution, and small-cell telecom, for a total purchase price of $180.0 million."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LAKEPOINT",
+      "ticker": "LAKEPOINT",
+      "name": "レイクポイント",
+      "name_en": "Lake Point",
+      "sub": "建設資材",
+      "sub_en": "Construction materials",
+      "sub_short": "建材",
+      "sub_short_en": "Materials",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2023年12月に資産を買収",
+          "text_en": "Bought its assets in December 2023",
+          "source": {
+            "label": "Arcosa 10-K(2025年度)",
+            "label_en": "Arcosa 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1739445/000173944526000029/aca-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "The acquired goodwill, which is tax-deductible, primarily relates to Ameron's market position and existing workforce. 2023 Acquisitions In December 2023, we completed the acquisition of certain assets and liabilities of Lake Point Holdings, LLC and Lake Point Restoration LLC, (collectively \"Lake Point\") a Florida based natural aggregates business in our Construction Products segment, for a total purchase price of $65.1 million."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WYNNCHURCH",
+      "ticker": "WYNNCHURCH",
+      "name": "ウィンチャーチ・キャピタル",
+      "name_en": "Wynnchurch Capital",
+      "sub": "投資会社",
+      "sub_en": "Private equity",
+      "sub_short": "投資",
+      "sub_short_en": "PE",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "系列会社にはしけ事業を売却する契約",
+          "text_en": "Agreed to buy its barge business",
+          "source": {
+            "label": "Arcosa 10-K(2025年度)",
+            "label_en": "Arcosa 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1739445/000173944526000029/aca-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Executive Overview Recent Developments On February 24, 2026, the Company entered into a Stock Purchase Agreement to sell its barge business to an affiliate of Wynnchurch Capital, L.P., for a cash purchase price of approximately $450 million, subject to customary purchase price adjustments."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CRH",
+      "ticker": "CRH",
+      "name": "CRH",
+      "name_en": "CRH",
+      "sub": "建設資材",
+      "sub_en": "Building materials",
+      "sub_short": "建材",
+      "sub_short_en": "Materials",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2026年10月に合併契約(CRHによる買収)",
+          "text_en": "Agreed to acquire Arcosa in an October 2026 merger agreement",
+          "source": {
+            "label": "Arcosa 8-K(2026年10月)",
+            "label_en": "Arcosa 8-K (October 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1739445/000114036126040596/ef20084131_8k.htm",
+            "level": "official",
+            "date": "2026-10-23",
+            "quote": "period for complying with any new or revised financial accounting standards provided pursuant to Section 13(a) of the Exchange Act. ☐ Introduction As previously disclosed, on June 21, 2026, Arcosa, Inc., a Delaware corporation (the \"Company\"), entered into an Agreement and Plan of Merger (the \"Merger Agreement\") with CRH Americas, Inc., a Delaware corporation (\"Parent\"), and Neon Merger Sub, Inc., a Delaware corporation and a wholly owned subsidiary of Parent (\"Merger Sub\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "JPM",
+      "ticker": "JPM",
+      "name": "JPMorgan Chase",
+      "name_en": "JPMorgan Chase",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の幹事行",
+          "text_en": "Administrative agent on its credit agreement",
+          "source": {
+            "label": "Arcosa 10-K(2025年度)",
+            "label_en": "Arcosa 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1739445/000173944526000029/aca-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Restated Credit Agreement dated as of August 23, 2023, among Arcosa, Inc., as borrower, the lenders thereto, JPMorgan Chase Bank, N.A., as administrative agent, and the other parties thereto"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

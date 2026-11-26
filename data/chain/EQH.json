@@ -1,0 +1,182 @@
+{
+  "root": {
+    "ticker": "EQH",
+    "name": "エクイタブル・ホールディングス",
+    "cik": 1333986,
+    "name_en": "Equitable Holdings"
+  },
+  "rows": [
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "提携・出資・買収",
+      "en": "Partners, stakes & deals"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "AB",
+      "ticker": "AB",
+      "name": "アライアンス・バーンスタイン",
+      "name_en": "AllianceBernstein",
+      "sub": "資産運用",
+      "sub_en": "Asset management",
+      "sub_short": "運用",
+      "sub_short_en": "Asset mgr",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "約68%を持つ資産運用子会社",
+          "text_en": "Its asset management unit (about 68% owned)",
+          "source": {
+            "label": "Equitable Holdings 10-K(2025年度)",
+            "label_en": "Equitable Holdings 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1333986/000133398626000012/eqh-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "As of December 31, 2025, the ownership structure of ABLP, including AB Units outstanding as well as the General Partner's 1% interest, was as follows: Owner Percentage Ownership EQH and its subsidiaries 68.2 % AB Holding 31.1 Unaffiliated holders 0.7 Total 100.0 % Including both the general partnership and limited partnership interests in AB Holding and ABLP, Holdings and its subsidiaries had an approximate 68.3% economic interest in AB as of December 31, 2025."
+          }
+        }
+      ]
+    },
+    {
+      "id": "JPM",
+      "ticker": "JPM",
+      "name": "JPMorgan Chase",
+      "name_en": "JPMorgan Chase",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の幹事行",
+          "text_en": "Administrative agent on its credit agreement",
+          "source": {
+            "label": "Equitable Holdings 10-K(2025年度)",
+            "label_en": "Equitable Holdings 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1333986/000133398626000012/eqh-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Restated Revolving Credit Agreement, dated as of June 24, 2021, by and among the Company, the Subsidiary Account Parties party thereto, the banks party thereto and JPMorgan Chase Bank, N.A., as Administrative Agent"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BAC",
+      "ticker": "BAC",
+      "name": "バンク・オブ・アメリカ",
+      "name_en": "Bank of America",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の幹事行",
+          "text_en": "Administrative agent on its credit agreement",
+          "source": {
+            "label": "Equitable Holdings 10-K(2025年度)",
+            "label_en": "Equitable Holdings 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1333986/000133398626000012/eqh-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Restated Revolving Credit Agreement, originally dated October 13, 2021, and amended August 5, 2025, among AllianceBernstein, L.P., as Borrower, Bank of America, N.A., as Administrative Agent, and the banks and financial institutions named therein"
+          }
+        }
+      ]
+    },
+    {
+      "id": "WFC",
+      "ticker": "WFC",
+      "name": "ウェルズ・ファーゴ",
+      "name_en": "Wells Fargo",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "社債などの引受会社",
+          "text_en": "Underwriter of its securities offering",
+          "source": {
+            "label": "Equitable Holdings 10-K(2025年度)",
+            "label_en": "Equitable Holdings 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1333986/000133398626000012/eqh-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Underwriting Agreement, dated March 12, 2025, among Equitable Holdings, Inc. and Citigroup Global Markets, Inc., Morgan Stanley & Co., LLC, Truist Securities, Inc. and Wells Fargo Securities, LLC"
+          }
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "ticker": "C",
+      "name": "シティグループ",
+      "name_en": "Citigroup",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "社債などの引受会社",
+          "text_en": "Underwriter of its securities offering",
+          "source": {
+            "label": "Equitable Holdings 10-K(2025年度)",
+            "label_en": "Equitable Holdings 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1333986/000133398626000012/eqh-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Underwriting Agreement, dated March 12, 2025, among Equitable Holdings, Inc. and Citigroup Global Markets, Inc., Morgan Stanley & Co., LLC, Truist Securities, Inc. and Wells Fargo Securities, LLC"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MS",
+      "ticker": "MS",
+      "name": "モルガン・スタンレー",
+      "name_en": "Morgan Stanley",
+      "sub": "証券",
+      "sub_en": "Securities",
+      "sub_short": "証券",
+      "sub_short_en": "Broker",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "社債などの引受会社",
+          "text_en": "Underwriter of its securities offering",
+          "source": {
+            "label": "Equitable Holdings 10-K(2025年度)",
+            "label_en": "Equitable Holdings 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1333986/000133398626000012/eqh-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Underwriting Agreement, dated March 12, 2025, among Equitable Holdings, Inc. and Citigroup Global Markets, Inc., Morgan Stanley & Co., LLC, Truist Securities, Inc. and Wells Fargo Securities, LLC"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

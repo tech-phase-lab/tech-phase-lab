@@ -188,7 +188,7 @@
       "row": 0,
       "relations": [
         {
-          "type": "down",
+          "type": "up",
           "text": "売上の大半がBooking系などの大手OTAの広告",
           "text_en": "Earns most of its revenue from large OTA advertisers including Booking brands",
           "source": {
