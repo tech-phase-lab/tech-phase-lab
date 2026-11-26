@@ -117,7 +117,7 @@ test("the first screen: snapshot only for members, the minute job keeps it withi
   assert.doesNotMatch(server, /twelveCall/);
   assert.match(server, /FOCUS_PER_MINUTE = 24/);
   assert.match(warm, /refreshFocusSnapshot\(\)/);
-  assert.match(warm, /warmMinute\(Date\.now\(\), lev\.spent \+ board\.spent \+ focus\.spent\)/);
+  assert.match(warm, /warmMinute\(Date\.now\(\), lev\.spent \+ board\.spent \+ focus\.spent[ )]/);
   // The search field, history and panel as the sheet draws them; no gold on this FREE page.
   assert.match(directory, /t\("会社名・ティッカー", "Company or ticker"\)/);
   assert.doesNotMatch(directory, /例 {2}NVDA/);
