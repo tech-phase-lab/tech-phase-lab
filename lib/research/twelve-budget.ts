@@ -349,6 +349,31 @@ export function barSlotMs(symbol: string, interval: string, now: number): number
   const open = symbol.includes("/") || stocksTrading(now);
   return intraday ? (open ? 60_000 : CLOSED_SLOT_MS) : (open ? 10 * 60_000 : 60 * 60_000);
 }
+/** The optional 15-second quote refresh (the watchlist and a stock's page, fast=1): a copy older than 15 seconds is read again through
+ * the shared reader with its own 15-second slot, so one provider read per symbol and slot serves every member and instance (before, each
+ * request read its own up to 12 symbols again). The instance that reads also stores the quote as the one-minute copy, so the minute's
+ * readers do not read it again. At most FAST_MAX_PER_REQUEST symbols a request. `granted`: every symbol asked got this slot's copy. */
+export const FAST_SLOT_MS = 15_000;
+export const FAST_MAX_PER_REQUEST = 12;
+export const fastQuoteSpec: ReadSpec = { name: "md-quote-fast-v1", slotMs: FAST_SLOT_MS, staleMs: 60_000 };
+export async function fastRefresh<T>(reader: ReturnType<typeof createReader>, mainSpec: ReadSpec, got: Record<string, Result<T | null>>,
+  fetchFast: (keys: string[]) => Promise<Map<string, T | null>>, now: () => number = Date.now): Promise<{ got: Record<string, Result<T | null>>; granted: boolean }> {
+  const older = Object.keys(got).filter(t => got[t].fresh && got[t].value && now() - got[t].at >= FAST_SLOT_MS).slice(0, FAST_MAX_PER_REQUEST);
+  if (!older.length) return { got, granted: true };
+  const read = await reader.readMany<T>(fastQuoteSpec, older, async keys => {
+    const values = await fetchFast(keys), at = now();
+    await Promise.all(keys.map(k => { const value = values.get(k); return value ? reader.save(mainSpec, k, { value, at }) : null; }));
+    return values;
+  }, { chunk: FAST_MAX_PER_REQUEST, maxFetch: FAST_MAX_PER_REQUEST });
+  const out = { ...got };
+  let granted = true;
+  for (const t of older) {
+    const hit = read[t];
+    if (hit?.fresh && hit.value && now() - hit.at < FAST_SLOT_MS) { if (hit.at > out[t].at) out[t] = { value: hit.value, at: hit.at, fresh: true }; }
+    else granted = false;
+  }
+  return { got: out, granted };
+}
 /** At most this many quote symbols / bar series a single request may send to the provider; the rest show their last good copy. */
 export const MAX_QUOTES_PER_REQUEST = 24;
 export const MAX_SPARKLINES_PER_REQUEST = 8;

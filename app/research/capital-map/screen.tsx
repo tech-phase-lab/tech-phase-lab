@@ -13,7 +13,6 @@ import ResearchToolShell from "../research-tool-shell";
 import { useResearchLanguage } from "../use-research-language";
 import { useStockFavorites } from "../use-stock-favorites";
 import StockLogo from "../watchlist/stock-logo";
-import { useCapitalUpdate } from "./use-capital-preferences";
 import styles from "./capital-map.module.css";
 
 const managerMarks: Record<string, { initials: string; tone: string }> = {
@@ -100,7 +99,6 @@ function CapitalMapContent({ portfolios = emptyPortfolios, mode = "sample" }: { 
   const inputTickers = [...new Set(query.toUpperCase().split(/[,、;]+/).map(value => stockAliases[value.trim()] ?? value.trim()).filter(Boolean))];
 
   const baseline = selected?.previous;
-  const hasUpdate = useCapitalUpdate(selected?.id, selected?.current.id, mode);
   const rows = selected ? capitalRows(selected.current, baseline) : [];
   const exitedCount = rows.filter(row => row.change === "exited").length;
   const visibleRows = rows.filter(row => (positionGroup === "exited" ? row.change === "exited" : row.change !== "exited") && (!holdingQuery.trim() || `${row.name} ${row.ticker} ${row.securityId}`.toLowerCase().includes(holdingQuery.trim().toLowerCase())) && (!baseline || !changedOnly || !["unchanged", "unknown"].includes(row.change)));
@@ -170,7 +168,7 @@ function CapitalMapContent({ portfolios = emptyPortfolios, mode = "sample" }: { 
             {profile ? <><div className={styles.person}>{profile.portrait && portraitError !== selected.id ? <span className={styles.portrait}><Image unoptimized src={profile.portrait.url} alt={t(...profile.person)} width={64} height={64} className={selected.id.startsWith("bridgewater") ? styles.rayPortrait : undefined} onError={() => setPortraitError(selected.id)} /></span> : <span className={styles.managerMark} data-tone={managerMark?.tone ?? "violet"} aria-hidden="true"><svg viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="27" /><path d="M7 32a25 25 0 0 1 25-25M57 32a25 25 0 0 1-25 25" /><path d="M16 49h32M20 53h24" /></svg><span>{managerMark?.initials ?? selected.name.split(" ").slice(0, 2).map(word => word[0]).join("")}</span></span>}<div><strong>{t(...profile.person)}</strong><small>{t(...profile.role)}{profile.leadership && ` · ${t(...profile.leadership)}`}</small></div></div><p>{t(...profile.description)}</p></> : <p>{selected.kind === "etf" ? selected.subtitle : t("企業が公開している株式の保有ポートフォリオ。", "Equity investments disclosed by the company.")}</p>}
           </div>
           <div className={styles.metrics}>
-            <div><small>{t("基準日", "AS OF")}{hasUpdate && <span className={styles.updateBadge} title={t("前回開いたときから保有データが更新されました", "Holdings updated since your last visit")}>NEW</span>}</small><strong>{selected.current.asOf}<span>{t("時点", "")}</span></strong></div>
+            <div><small>{t("基準日", "AS OF")}</small><strong>{selected.current.asOf}<span>{t("時点", "")}</span></strong></div>
             <div><small>{t("保有銘柄数", "HOLDINGS")}</small><strong>{selected.current.holdings.length.toLocaleString("en-US")}<span>{t("銘柄", selected.current.holdings.length === 1 ? "holding" : "holdings")}</span></strong></div>
             <div><small>{t("上位5銘柄の構成比", "TOP 5 HOLDINGS · COMBINED WEIGHT")}</small><strong>{percent(top.slice(0, 5).reduce((sum, row) => sum + row.weight, 0))}</strong></div>
           </div>
@@ -246,7 +244,7 @@ function CapitalMapContent({ portfolios = emptyPortfolios, mode = "sample" }: { 
             <details className={styles.source}><summary>{t("計算方法", "Method")}</summary><p>{t("共通する株式ごとに小さい方の構成比を合計します。株式クラスが違う場合は別銘柄として扱います。現金・先物等は含みません。", "For each stock held by both ETFs, we take the smaller portfolio weight and add these weights together. Different share classes are counted separately. Cash and futures are excluded.")}</p></details>
           </>}
         </section>}
-        <details className={styles.usage}><summary>{t("使い方", "How it works")}</summary><p>{t("NEWは前回開いたときから保有データが更新された場合に表示します。検索は収録対象の公開保有情報を参照します。", "NEW marks holdings updated since your last visit in this browser. Search includes only the publicly disclosed holdings available in Capital Map.")}</p></details>
+        <details className={styles.usage}><summary>{t("使い方", "How it works")}</summary><p>{t("検索は収録対象の公開保有情報を参照します。", "Search includes only the publicly disclosed holdings available in Capital Map.")}</p></details>
       </>}
       </div>
     </div>

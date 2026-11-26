@@ -1835,7 +1835,9 @@
 .legalLinks a { color:var(--muted,#8a95a3); text-decoration:underline; text-underline-offset:3px; }
 
 /* ---- 保存したリサーチ / 記事選び / 記事ページ (Oct 29 design) ---- */
-.ribbon { position:absolute; top:-6px; right:18px; width:22px; height:46px; background:#b8975a; clip-path:polygon(0 0,100% 0,100% 100%,50% 76%,0 100%); }
+/* The ribbon hangs from the header's gold line, as on 銘柄手帳 (owner, Nov 26): it reaches up under the opaque sticky header, which cuts it off
+   exactly at the line at every width; its bottom end and notch stay where they were. */
+.ribbon { --ribbon-reach:48px; position:absolute; top:calc(-6px - var(--ribbon-reach)); right:var(--ribbon-right,18px); width:var(--ribbon-width,22px); height:calc(46px + var(--ribbon-reach)); background:#b8975a; clip-path:polygon(0 0,100% 0,100% 100%,50% calc(100% - 11px),0 100%); }
 .savedHeader { position:relative; flex-direction:column; align-items:flex-start; justify-content:flex-start; gap:16px; padding:8px 0 0; margin-bottom:22px; border-bottom:0; background:none; }
 .savedEyebrow { color:#d9b56a; font:600 10.5px var(--font-geist-mono),"JetBrains Mono",monospace; letter-spacing:.3em; }
 .savedHeader h1 { margin:10px 0 8px; font:600 28px "Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif; letter-spacing:.06em; line-height:1.35; color:#f2f5f8; }
@@ -1893,6 +1895,8 @@ span.savedMark { cursor:default; }
 
 /* Owner, Nov 11: the saved count sits at the top right of the research-note header (left of the ribbon), not in a row of its own under the description. */
 .savedHeader { position:relative; }
-.savedHeader .savedCount { position:absolute; top:2px; right:44px; padding:5px 12px; gap:6px; }
+/* Owner, Nov 26: 20px between the count's right edge and the ribbon's left edge (the ribbon does not move). */
+.savedHeader { --ribbon-right:18px; --ribbon-width:22px; }
+.savedHeader .savedCount { position:absolute; top:2px; right:calc(var(--ribbon-right) + var(--ribbon-width) + 20px); padding:5px 12px; gap:6px; }
 .savedHeader .savedCount strong { font-size:14px; }
 .savedHeader .savedCount span { font-size:12px; }

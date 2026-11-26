@@ -52,10 +52,9 @@ test('compact targets use real payload values for other companies, brokers and d
 });
 
 
-test('new badges follow the current clock and reject unknown, future or stale times', () => {
+test('no NEW badge at any time, even right after publication (owner, 11/26)', () => {
   const render = asOf => renderToStaticMarkup(React.createElement(Card, { item: target, lang: 'ja', now: asOf ? Date.parse(asOf) : null }));
-  assert.match(render('2026-10-02T10:02:00Z'), /NEW/);
-  for (const asOf of [null, '2026-10-01T10:02:00Z', '2026-10-03T10:02:00Z']) assert.doesNotMatch(render(asOf), /NEW/);
+  for (const asOf of ['2026-10-02T10:02:00Z', null, '2026-10-01T10:02:00Z', '2026-10-03T10:02:00Z']) assert.doesNotMatch(render(asOf), /NEW/);
 });
 
 test('SNDK 8-for-1: a pre-split old target is shown on the new basis and is not a cut; a pre-split action gets the converted figures', () => {

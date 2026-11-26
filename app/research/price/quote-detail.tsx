@@ -11,7 +11,7 @@ import { CompanyIntroductionPanel } from "../stocks/company-introduction";
 import { CompanyNetworkMap } from "../stocks/chain-map";
 import type { CompanyIntroduction } from "@/lib/research/company-introductions";
 import type { CompanyNetwork } from "@/lib/research/company-network";
-import { compact, dateJa, plain, rangePosition, signedMoney, signedPercent } from "@/lib/research/market-quote";
+import { compact, nextEarningsText, plain, rangePosition, signedMoney, signedPercent } from "@/lib/research/market-quote";
 import { drawnSeries, isIntradayPeriod, periodInterval } from "@/lib/research/market-board-periods";
 import { marketPhase } from "@/lib/research/us-market-session";
 import { isChangePeriod, type ChangePeriod, type PeriodBase } from "@/lib/research/period-change";
@@ -179,7 +179,7 @@ export default function QuoteDetail({ ticker, from, title: fixedTitle, plain: ba
             <div className={styles.row} style={{ borderTop: "1px solid rgba(217,180,106,.14)" }}><dt>{t("出来高", "Volume")}</dt><dd>{quote.volume ? compact(quote.volume) : "—"}</dd></div>
             <div className={styles.row}><dt>{t("時価総額", "Market cap")}</dt><dd>{facts?.marketCap ? compact(facts.marketCap) : "—"}</dd></div>
             <div className={styles.row}><dt>EPS</dt><dd>{facts?.eps == null ? "—" : facts.eps < 0 ? `−${plain(Math.abs(facts.eps))}` : plain(facts.eps)}</dd></div>
-            <div className={styles.row}><dt>{t("次回決算", "Next earnings")}</dt><dd>{dateJa(facts?.nextEarnings ?? null, ja ? "ja" : "en")}</dd></div></>}
+            <div className={styles.row}><dt>{t("次回決算", "Next earnings")}</dt><dd>{nextEarningsText(facts, ja ? "ja" : "en")}</dd></div></>}
         </dl>}
       </section>
       {!bare && <>
