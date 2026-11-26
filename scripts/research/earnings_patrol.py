@@ -198,7 +198,8 @@ def latest_release(ticker, filings, now, exhibit=None, primary=None):
             return {**base, 'unreadable': code}
         facts = {}
         for fact in parsed['facts']:
-            facts.setdefault(fact[0], {'value': fact[1], 'label': (fact[3] if len(fact) > 3 and fact[3] else flash.LABELS.get(fact[0], ('', '')))[1]})
+            facts.setdefault(fact[0], {'value': fact[1], 'label': (fact[3] if len(fact) > 3 and fact[3] else flash.LABELS.get(fact[0], ('', '')))[1],
+                                       **({'yearAgo': fact[2]} if len(fact) > 2 and fact[2] else {})})
         return {**base, 'period': parsed['period'], 'facts': facts}
     return None
 
@@ -366,28 +367,21 @@ def run_once(path, now=None, trigger='schedule', lock=None, **kwargs):
     return line
 
 
-def draft_dives(db, results, now, transport=None, env=None):
-    """The next quarter's 決算の深掘り for each company whose page now shows a newer release than its dive (earnings_dive_generate.py).
-    Does nothing unless EARNINGS_DIVE_AI=true (the owner's cost approval)."""
+def draft_dives(db, results, now, env=None):
+    """The next quarter's 決算の深掘り for each company whose page now shows a newer release than its dive (earnings_dive_generate.py):
+    built from the release's parsed figures, the previous dive and the release's existing deep analysis. Never a model call: the AI
+    spent on a release stays the one approved deep analysis. Off with EARNINGS_DIVE_AUTO=false."""
     import earnings_dive_generate as dives
     if not dives.enabled(env):
         return []
-    import brief_generator
-    import deep_analysis
-    config = deep_analysis.configuration(env)
-    if not config:
-        return []
-    key, model, _limit = config
-    transport = transport or (lambda payload: brief_generator.request_response(payload, key, timeout=180))
     done = []
     for ticker in dives.due(results, db):
         release = dict(results[ticker + ':release'])
         if not release.get('url') or not release.get('text'):
             continue
         release['releasedOn'] = release_day(release['accepted']).isoformat()
-        release['facts'] = {k: v for k, v in release['facts'].items()}
         try:
-            state = dives.generate(db, ticker, release, transport, model, now)
+            state = dives.generate(db, ticker, release, now)
         except Exception as exc:  # noqa: BLE001 - one company's failure never stops the others
             state = 'error-' + type(exc).__name__
         print(json.dumps({'event': 'earnings-dive', 'ticker': ticker, 'state': state}, separators=(',', ':')), flush=True)
