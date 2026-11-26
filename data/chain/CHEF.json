@@ -1,0 +1,186 @@
+{
+  "root": {
+    "ticker": "CHEF",
+    "name": "シェフズ・ウェアハウス",
+    "cik": 1517175,
+    "name_en": "The Chefs' Warehouse"
+  },
+  "rows": [
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "提携・出資・買収",
+      "en": "Partners, stakes & deals"
+    },
+    {
+      "ja": "買収・売却",
+      "en": "Acquisitions & sales"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "GREENLEAF",
+      "ticker": "GREENLEAF",
+      "name": "グリーンリーフ",
+      "name_en": "GreenLeaf (Oakville Produce Partners)",
+      "sub": "青果卸",
+      "sub_en": "Produce distribution",
+      "sub_short": "食品卸",
+      "sub_short_en": "Food",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2023年度に買収",
+          "text_en": "Acquired in fiscal 2023",
+          "source": {
+            "label": "The Chefs' Warehouse 10-K(2025年度)",
+            "label_en": "The Chefs' Warehouse 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1517175/000151717526000005/chef-20251226.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "In April 2025, the unsecured note issued in connection with our acquisition of Oakville Produce Partners, LLC (\"GreenLeaf\") in fiscal 2023 (the \"GreenLeaf Note\") matured and we made the final principal payment of $5.0 million."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HARDIES",
+      "ticker": "HARDIES",
+      "name": "ハーディーズ・フレッシュ・フーズ",
+      "name_en": "Hardie's Fresh Foods",
+      "sub": "青果卸",
+      "sub_en": "Produce distribution",
+      "sub_short": "食品卸",
+      "sub_short_en": "Food",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2023年3月に資産を買収",
+          "text_en": "Bought its assets in March 2023",
+          "source": {
+            "label": "The Chefs' Warehouse 10-K(2025年度)",
+            "label_en": "The Chefs' Warehouse 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1517175/000151717526000005/chef-20251226.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Hardie's Fresh Foods On March 20, 2023, pursuant to an asset purchase agreement, the Company acquired substantially all of the assets of Hardie's F&V, LLC (\"Hardie's\"), a specialty produce distributor with operations in Texas."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LEGION",
+      "ticker": "LEGION",
+      "name": "リージョン・パートナーズ",
+      "name_en": "Legion Partners",
+      "sub": "投資会社",
+      "sub_en": "Investment firm",
+      "sub_short": "投資",
+      "sub_short_en": "Investor",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "株主として協力協定を結ぶ(2024年)",
+          "text_en": "Signed a cooperation agreement as a shareholder (2024)",
+          "source": {
+            "label": "The Chefs' Warehouse 10-K(2025年度)",
+            "label_en": "The Chefs' Warehouse 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1517175/000151717526000005/chef-20251226.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Kiper, and Raymond White (incorporated by reference to Exhibit 10.1 to the Company's Form 8-K filed on January 16, 2018). 10.35 Cooperation Agreement dated March 1, 2024, among The Chefs' Warehouse, Inc., Legion Partners Asset Management, LLC, Legion Partners, L.P."
+          }
+        }
+      ]
+    },
+    {
+      "id": "JEF",
+      "ticker": "JEF",
+      "name": "ジェフリーズ",
+      "name_en": "Jefferies Financial Group",
+      "sub": "証券",
+      "sub_en": "Securities",
+      "sub_short": "証券",
+      "sub_short_en": "Broker",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の幹事行",
+          "text_en": "Administrative agent on its credit agreement",
+          "source": {
+            "label": "The Chefs' Warehouse 8-K(2026年10月)",
+            "label_en": "The Chefs' Warehouse 8-K (October 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1517175/000151717526000030/chef-20261019.htm",
+            "level": "official",
+            "date": "2026-10-19",
+            "quote": "(the \"Company\") and certain other subsidiaries of the Company, as guarantors, entered into a new credit agreement (the \"New Term Loan Credit Agreement\") with a group of lenders for which Jefferies Finance LLC (\"Jefferies\") acts as administrative agent and collateral agent, and Jefferies Finance LLC, BMO Capital Markets Corp., JPMorgan Chase Bank, N.A. and BofA Securities, Inc. act as joint lead arrangers and joint bookrunners."
+          }
+        }
+      ]
+    },
+    {
+      "id": "JPM",
+      "ticker": "JPM",
+      "name": "JPMorgan Chase",
+      "name_en": "JPMorgan Chase",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の貸し手",
+          "text_en": "A lender under its credit agreement",
+          "source": {
+            "label": "The Chefs' Warehouse 8-K(2026年10月)",
+            "label_en": "The Chefs' Warehouse 8-K (October 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1517175/000151717526000030/chef-20261019.htm",
+            "level": "official",
+            "date": "2026-10-19",
+            "quote": "(the \"Company\") and certain other subsidiaries of the Company, as guarantors, entered into a new credit agreement (the \"New Term Loan Credit Agreement\") with a group of lenders for which Jefferies Finance LLC (\"Jefferies\") acts as administrative agent and collateral agent, and Jefferies Finance LLC, BMO Capital Markets Corp., JPMorgan Chase Bank, N.A. and BofA Securities, Inc. act as joint lead arrangers and joint bookrunners."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BAC",
+      "ticker": "BAC",
+      "name": "バンク・オブ・アメリカ",
+      "name_en": "Bank of America",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の貸し手",
+          "text_en": "A lender under its credit agreement",
+          "source": {
+            "label": "The Chefs' Warehouse 8-K(2026年10月)",
+            "label_en": "The Chefs' Warehouse 8-K (October 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1517175/000151717526000030/chef-20261019.htm",
+            "level": "official",
+            "date": "2026-10-19",
+            "quote": "(the \"Company\") and certain other subsidiaries of the Company, as guarantors, entered into a new credit agreement (the \"New Term Loan Credit Agreement\") with a group of lenders for which Jefferies Finance LLC (\"Jefferies\") acts as administrative agent and collateral agent, and Jefferies Finance LLC, BMO Capital Markets Corp., JPMorgan Chase Bank, N.A. and BofA Securities, Inc. act as joint lead arrangers and joint bookrunners."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

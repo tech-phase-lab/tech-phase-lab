@@ -1,0 +1,156 @@
+{
+  "root": {
+    "ticker": "VCTR",
+    "name": "ビクトリー・キャピタル",
+    "cik": 1570827,
+    "name_en": "Victory Capital"
+  },
+  "rows": [
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "買収・売却",
+      "en": "Acquisitions & sales"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "AMUNDI",
+      "ticker": "AMUNDI",
+      "name": "アムンディ",
+      "name_en": "Amundi",
+      "sub": "資産運用",
+      "sub_en": "Asset management",
+      "sub_short": "運用",
+      "sub_short_en": "Asset mgr",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "米国事業を統合",
+          "text_en": "Combined its US business into Victory",
+          "source": {
+            "label": "Victory Capital 10-K(2025年度)",
+            "label_en": "Victory Capital 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1570827/000119312526077057/vctr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "On July 8, 2024, the Company, Amundi Asset Management S.A.S (\"Amundi\"), and, solely for certain provisions thereof, Amundi S.A., (\"Amundi Parent,\" and together with Amundi, the \"Amundi Parties\") entered into the Contribution Agreement (the \"Contribution Agreement\") to combine Amundi's U.S. business (\"Amundi US\"), into the Company."
+          }
+        }
+      ]
+    },
+    {
+      "id": "OBDC",
+      "ticker": "OBDC",
+      "name": "ブルー・アウル・キャピタル",
+      "name_en": "Blue Owl Capital Corp.",
+      "sub": "融資",
+      "sub_en": "Private credit",
+      "sub_short": "融資",
+      "sub_short_en": "Lender",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "タームローンの保有者",
+          "text_en": "Holds its first-lien term loan",
+          "source": {
+            "label": "Blue Owl Capital Corp II 10-K(2025年度)",
+            "label_en": "Blue Owl Capital Corp II 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1655887/000165588726000010/blueowlcreditslfllc-123120.htm",
+            "level": "official",
+            "date": "2026-03-05",
+            "quote": "(dba IQ-EQ)(7) First lien senior secured loan S + 3.00 % - % 07/2028 19,474 19,474 19,583 TMF Sapphire Bidco B.V.(6) First lien senior secured loan S + 2.75 % - % 05/2028 2,231 2,229 2,241 Victory Capital Holdings Inc(6) First lien senior secured loan S + 2.00 % - % 09/2032 7,090 7,082 7,121 192,366 193,300 31.5 % Food and beverage 1011778 BC / NEW RED FIN (dba Restaurant Brands)(5) First lien senior secured loan S + 1.75 % - % 09/2030 1,898 1,890 1,898 Aramark Services"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BAC",
+      "ticker": "BAC",
+      "name": "バンク・オブ・アメリカ",
+      "name_en": "Bank of America",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の幹事行",
+          "text_en": "Administrative agent on its credit agreement",
+          "source": {
+            "label": "Victory Capital 8-K(2026年8月)",
+            "label_en": "Victory Capital 8-K (August 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1570827/000110465926103936/tm2624030d6_8k.htm",
+            "level": "official",
+            "date": "2026-08-31",
+            "quote": "The Incremental Term Loan Facility and the New Revolving Facility will be documented as incremental facilities under the Company's existing Credit Agreement, dated as of July 1, 2019 (as amended, supplemented or otherwise modified from time to time, the \"Existing Credit Agreement\"), among the Company, the lenders and other financial institutions from time to time party thereto and Bank of America, N.A., as administrative agent."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RY",
+      "ticker": "RY",
+      "name": "Royal Bank of Canada",
+      "name_en": "Royal Bank of Canada",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の幹事行",
+          "text_en": "Administrative agent on its credit agreement",
+          "source": {
+            "label": "Victory Capital 10-K(2025年度)",
+            "label_en": "Victory Capital 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1570827/000119312526077057/vctr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Credit Agreement, dated as of February 12, 2018, among Victory Capital Holdings, Inc., as borrower, the lenders from time to time party thereto and Royal Bank of Canada, as administrative agent and collateral agent (Filed as Exhibit"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BCS",
+      "ticker": "BCS",
+      "name": "Barclays",
+      "name_en": "Barclays",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の貸し手",
+          "text_en": "A lender under its credit agreement",
+          "source": {
+            "label": "Victory Capital 10-K(2025年度)",
+            "label_en": "Victory Capital 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1570827/000119312526077057/vctr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "On July 1, 2024, the Company executed an agency succession agreement, by and among Barclays Bank PLC as the resigning administrative agent and collateral agent under the 2019 Credit Agreement and Royal Bank of Canada, as the successor administrative agent and collateral agent."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

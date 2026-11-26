@@ -1,0 +1,164 @@
+{
+  "root": {
+    "ticker": "LSTR",
+    "name": "ランドスター・システム",
+    "cik": 853816,
+    "name_en": "Landstar System"
+  },
+  "rows": [
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "顧客・取引先",
+      "en": "Customers & clients"
+    },
+    {
+      "ja": "提携・出資・買収",
+      "en": "Partners, stakes & deals"
+    },
+    {
+      "ja": "買収・売却",
+      "en": "Acquisitions & sales"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "FLETESAVELLA",
+      "ticker": "FLETESAVELLA",
+      "name": "フレテス・アベジャ",
+      "name_en": "Fletes Avella",
+      "sub": "物流",
+      "sub_en": "Logistics",
+      "sub_short": "物流",
+      "sub_short_en": "Logistic",
+      "row": 3,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "物流事業の資産をほぼすべて買収",
+          "text_en": "Bought substantially all of its logistics business assets",
+          "source": {
+            "label": "Landstar System 10-K(2025年度)",
+            "label_en": "Landstar System 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/853816/000119312526064756/d66072d10k.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "(\"Landstar Metro\"), which acquired substantially all of the assets of the asset-light transportation logistics business of Fletes Avella, S.A. de C.V."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CAVNUE",
+      "ticker": "CAVNUE",
+      "name": "キャブニュー",
+      "name_en": "Cavnue",
+      "sub": "自動運転向け道路",
+      "sub_en": "Smart roads",
+      "sub_short": "道路",
+      "sub_short_en": "Roads",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "少数出資(2022年)",
+          "text_en": "Took a minority equity stake (2022)",
+          "source": {
+            "label": "Landstar System 10-K(2025年度)",
+            "label_en": "Landstar System 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/853816/000119312526064756/d66072d10k.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "(16) Impairment of Equity Investment In 2022, the Company acquired a minority equity investment in Cavnue, LLC (\"Cavnue\"), a privately held start-up company focused on combining technology and road infrastructure to unlock the full potential of connected and autonomous vehicles."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DUOT",
+      "ticker": "DUOT",
+      "name": "デュオス・テクノロジーズ",
+      "name_en": "Duos Technologies Group",
+      "sub": "データセンター",
+      "sub_en": "Edge data centers",
+      "sub_short": "DC",
+      "sub_short_en": "DCs",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "データセンターの輸送をLandstarに委託",
+          "text_en": "Used Landstar to ship an edge data center",
+          "source": {
+            "label": "Duos Technologies Group 10-K(2025年度)",
+            "label_en": "Duos Technologies Group 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1396536/000107997326000405/duos_10k-123125.htm",
+            "level": "official",
+            "date": "2026-03-31",
+            "quote": "Most recently, Landstar was the designated vendor involved in shipping an Edge Data Center to an Amtrak site in Secaucus, New Jersey."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RCEL",
+      "ticker": "RCEL",
+      "name": "アビタ・メディカル",
+      "name_en": "AVITA Medical",
+      "sub": "医療機器",
+      "sub_en": "Medical devices",
+      "sub_short": "医療",
+      "sub_short_en": "Medtech",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "国内輸送の運送会社として正式契約",
+          "text_en": "Has a formal shipping agreement with Landstar",
+          "source": {
+            "label": "AVITA Medical 10-Q(2026年6月期)",
+            "label_en": "AVITA Medical 10-Q (quarter ended Jun 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1762303/000119312526338101/rcel-ex10_1.htm",
+            "level": "official",
+            "date": "2026-08-06",
+            "quote": "Formal agreement with the following shipping carriers for domestic shipments: • Air Shipments: UPS and FedEx, Landstar • Ground Shipments: UPS, FedEx, LTL Select, Uber Freight, Landstar D.3.3.2."
+          }
+        }
+      ]
+    },
+    {
+      "id": "JPM",
+      "ticker": "JPM",
+      "name": "JPMorgan Chase",
+      "name_en": "JPMorgan Chase",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の幹事行",
+          "text_en": "Administrative agent on its credit agreement",
+          "source": {
+            "label": "Landstar System 8-K(2026年7月)",
+            "label_en": "Landstar System 8-K (July 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/853816/000119312526296288/d110858d8k.htm",
+            "level": "official",
+            "date": "2026-07-06",
+            "quote": "(\"LSHI\"), entered into a Third Amended and Restated Credit Agreement among the Company, LSHI, certain subsidiaries of LSHI as subsidiary guarantors, the lenders named therein and JPMorgan Chase Bank, N.A. as administrative agent (the \"Restated Credit Agreement\")."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

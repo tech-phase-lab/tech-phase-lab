@@ -1,0 +1,182 @@
+{
+  "root": {
+    "ticker": "PK",
+    "name": "パーク・ホテルズ&リゾーツ",
+    "cik": 1617406,
+    "name_en": "Park Hotels & Resorts"
+  },
+  "rows": [
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "提携・出資・買収",
+      "en": "Partners, stakes & deals"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "HLT",
+      "ticker": "HLT",
+      "name": "ヒルトン",
+      "name_en": "Hilton",
+      "sub": "ホテル運営",
+      "sub_en": "Hotels",
+      "sub_short": "ホテル",
+      "sub_short_en": "Hotels",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2017年に分離した元親会社",
+          "text_en": "Former parent; spun it off in 2017",
+          "source": {
+            "label": "Hilton Worldwide Holdings 10-K(2025年度)",
+            "label_en": "Hilton Worldwide Holdings 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1585689/000158568926000007/hlt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "(c)Exhibits: Exhibit Number Exhibit Description 2.1 Distribution Agreement, dated January 2, 2017, among Hilton Worldwide Holdings Inc., Hilton Domestic Operating Company Inc., Park Hotels & Resorts Inc. and Hilton Grand Vacations Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HGV",
+      "ticker": "HGV",
+      "name": "ヒルトン・グランド・バケーションズ",
+      "name_en": "Hilton Grand Vacations",
+      "sub": "タイムシェア",
+      "sub_en": "Timeshare",
+      "sub_short": "リゾート",
+      "sub_short_en": "Resorts",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "同時にヒルトンから分離",
+          "text_en": "Spun off from Hilton at the same time",
+          "source": {
+            "label": "Hilton Grand Vacations 10-K(2025年度)",
+            "label_en": "Hilton Grand Vacations 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1674168/000167416826000017/hgv-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Business Our History On January 3, 2017, HGV became an independent publicly traded company as a result of Hilton Worldwide Holdings Inc.'s (\"Hilton\") tax-free spin-off of each of HGV and Park Hotels & Resorts Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BHR",
+      "ticker": "BHR",
+      "name": "ブレマー・ホテルズ&リゾーツ",
+      "name_en": "Braemar Hotels & Resorts",
+      "sub": "ホテルREIT",
+      "sub_en": "Hotel REIT",
+      "sub_short": "ホテル",
+      "sub_short_en": "Hotels",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "共同出資の相手(25%を保有)",
+          "text_en": "Co-owner; Park holds 25%",
+          "source": {
+            "label": "Braemar Hotels & Resorts 10-K(2024年度)",
+            "label_en": "Braemar Hotels & Resorts 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1574085/000157408525000024/bhr-20241231.htm",
+            "level": "official",
+            "date": "2025-03-12",
+            "quote": "The remaining 25% partnership interest in Ashford HHC Partners III LP is owned by Park Hotels & Resorts, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WFC",
+      "ticker": "WFC",
+      "name": "ウェルズ・ファーゴ",
+      "name_en": "Wells Fargo",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の幹事行",
+          "text_en": "Administrative agent on its credit agreement",
+          "source": {
+            "label": "Park Hotels & Resorts 10-K(2025年度)",
+            "label_en": "Park Hotels & Resorts 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1617406/000161740626000006/pk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Restated Credit Agreement, dated as of September 17, 2025, by and among Park Hotels & Resorts Inc., Park Intermediate Holdings LLC, Wells Fargo Bank, National Association, as administrative agent, and the financial institutions party thereto as lenders and agents"
+          }
+        }
+      ]
+    },
+    {
+      "id": "JPM",
+      "ticker": "JPM",
+      "name": "JPMorgan Chase",
+      "name_en": "JPMorgan Chase",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の貸し手",
+          "text_en": "A lender under its credit agreement",
+          "source": {
+            "label": "Park Hotels & Resorts 10-K(2025年度)",
+            "label_en": "Park Hotels & Resorts 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1617406/000161740626000006/pk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Loan Agreement, dated as of October 7, 2016, among S.F. Hilton LLC and P55 Hotel Owner LLC, collectively, as Borrowers and JPMorgan Chase Bank, National Association, Deutsche Bank, AG, New York Branch, Goldman Sachs Mortgage Company, Barclays Bank PLC and Morgan Stanley Bank, N.A., collectively, as Lenders and the other parties thereto"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GS",
+      "ticker": "GS",
+      "name": "Goldman Sachs",
+      "name_en": "Goldman Sachs",
+      "sub": "証券",
+      "sub_en": "Securities",
+      "sub_short": "証券",
+      "sub_short_en": "Broker",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の貸し手",
+          "text_en": "A lender under its credit agreement",
+          "source": {
+            "label": "Park Hotels & Resorts 10-K(2025年度)",
+            "label_en": "Park Hotels & Resorts 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1617406/000161740626000006/pk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Loan Agreement, dated as of October 7, 2016, among S.F. Hilton LLC and P55 Hotel Owner LLC, collectively, as Borrowers and JPMorgan Chase Bank, National Association, Deutsche Bank, AG, New York Branch, Goldman Sachs Mortgage Company, Barclays Bank PLC and Morgan Stanley Bank, N.A., collectively, as Lenders and the other parties thereto"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

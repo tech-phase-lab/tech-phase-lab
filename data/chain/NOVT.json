@@ -1,0 +1,182 @@
+{
+  "root": {
+    "ticker": "NOVT",
+    "name": "ノバンタ",
+    "cik": 1076930,
+    "name_en": "Novanta"
+  },
+  "rows": [
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "買収・売却",
+      "en": "Acquisitions & sales"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "KEONN",
+      "ticker": "KEONN",
+      "name": "ケオン・テクノロジーズ",
+      "name_en": "Keonn Technologies",
+      "sub": "RFIDシステム",
+      "sub_en": "RFID systems",
+      "sub_short": "RFID",
+      "sub_short_en": "RFID",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "買収した会社",
+          "text_en": "An acquired company",
+          "source": {
+            "label": "Novanta 10-K(2025年度)",
+            "label_en": "Novanta 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1076930/000119312526064230/novt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "In recent years, we have made a number of acquisitions, including the acquisitions of Keonn Technologies, S.L., Motion Solutions Parent Corp., MPH Medical Devices S.R.O., ATI Industrial Automation, Inc., and Schneider Electric Motion USA, Inc., and we expect to continue to make acquisitions in the future."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MOTIONSOL",
+      "ticker": "MOTIONSOL",
+      "name": "モーション・ソリューションズ",
+      "name_en": "Motion Solutions",
+      "sub": "自動化部品",
+      "sub_en": "Automation components",
+      "sub_short": "部品",
+      "sub_short_en": "Parts",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "買収した会社",
+          "text_en": "An acquired company",
+          "source": {
+            "label": "Novanta 10-K(2025年度)",
+            "label_en": "Novanta 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1076930/000119312526064230/novt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "In recent years, we have made a number of acquisitions, including the acquisitions of Keonn Technologies, S.L., Motion Solutions Parent Corp., MPH Medical Devices S.R.O., ATI Industrial Automation, Inc., and Schneider Electric Motion USA, Inc., and we expect to continue to make acquisitions in the future."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ATIIA",
+      "ticker": "ATIIA",
+      "name": "ATIインダストリアル・オートメーション",
+      "name_en": "ATI Industrial Automation",
+      "sub": "ロボット部品",
+      "sub_en": "Robotic tooling",
+      "sub_short": "部品",
+      "sub_short_en": "Parts",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "買収した会社",
+          "text_en": "An acquired company",
+          "source": {
+            "label": "Novanta 10-K(2025年度)",
+            "label_en": "Novanta 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1076930/000119312526064230/novt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "In recent years, we have made a number of acquisitions, including the acquisitions of Keonn Technologies, S.L., Motion Solutions Parent Corp., MPH Medical Devices S.R.O., ATI Industrial Automation, Inc., and Schneider Electric Motion USA, Inc., and we expect to continue to make acquisitions in the future."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BAC",
+      "ticker": "BAC",
+      "name": "バンク・オブ・アメリカ",
+      "name_en": "Bank of America",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の幹事行",
+          "text_en": "Administrative agent on its credit agreement",
+          "source": {
+            "label": "Novanta 8-K(2026年6月)",
+            "label_en": "Novanta 8-K (June 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1076930/000119312526262867/novt-20260608.htm",
+            "level": "official",
+            "date": "2026-06-09",
+            "quote": "In connection with the Transaction, Intermediate Parent, the Company, and certain wholly-owned subsidiaries of the Company entered into the Third Amendment to Fourth Amended and Restated Credit Agreement (the \"Third Amendment\"), with Bank of America, N.A., as administrative agent and lender, and the other lenders party thereto, which amends that certain Fourth Amended and Restated Credit Agreement dated as of June 27, 2025 (as amended, the \"Credit Agreement\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WFC",
+      "ticker": "WFC",
+      "name": "ウェルズ・ファーゴ",
+      "name_en": "Wells Fargo",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の貸し手",
+          "text_en": "A lender under its credit agreement",
+          "source": {
+            "label": "Novanta 8-K(2025年7月)",
+            "label_en": "Novanta 8-K (July 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1076930/000095017025093046/novt-20250627.htm",
+            "level": "official",
+            "date": "2025-07-02",
+            "quote": "Administrative Agent, Swing Line Lender, L/C Issuer and lender, BofA Securities, Inc., as joint lead arranger and joint book runner, JP Morgan Chase Bank, N.A., as joint lead arranger, joint book runner, co-syndication agent and lender, Wells Fargo Securities LLC, as joint lead arranger and joint book runner, Wells Fargo Bank, National Association, as co-syndication agent and lender, PNC Capital Markets LLC, as joint lead arranger and joint book runner, PNC Bank, National"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PNC",
+      "ticker": "PNC",
+      "name": "PNCフィナンシャル・サービシズ",
+      "name_en": "PNC Financial Services",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の貸し手",
+          "text_en": "A lender under its credit agreement",
+          "source": {
+            "label": "Novanta 8-K(2025年7月)",
+            "label_en": "Novanta 8-K (July 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1076930/000095017025093046/novt-20250627.htm",
+            "level": "official",
+            "date": "2025-07-02",
+            "quote": "and lender, BofA Securities, Inc., as joint lead arranger and joint book runner, JP Morgan Chase Bank, N.A., as joint lead arranger, joint book runner, co-syndication agent and lender, Wells Fargo Securities LLC, as joint lead arranger and joint book runner, Wells Fargo Bank, National Association, as co-syndication agent and lender, PNC Capital Markets LLC, as joint lead arranger and joint book runner, PNC Bank, National Association, as co-syndication agent and lender, U.S."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

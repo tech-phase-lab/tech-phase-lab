@@ -137,7 +137,7 @@
       "row": 0,
       "relations": [
         {
-          "type": "down",
+          "type": "up",
           "text": "売上の14.2%がDollar General向け(2025年度)",
           "text_en": "Dollar General was 14.2% of its revenue (FY2025)",
           "source": {
@@ -189,7 +189,7 @@
       "row": 0,
       "relations": [
         {
-          "type": "down",
+          "type": "up",
           "text": "最大級のテナントの1社",
           "text_en": "One of its largest tenants",
           "source": {

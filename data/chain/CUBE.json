@@ -1,0 +1,186 @@
+{
+  "root": {
+    "ticker": "CUBE",
+    "name": "キューブスマート",
+    "cik": 1298675,
+    "name_en": "CubeSmart"
+  },
+  "rows": [
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "PSA",
+    "EXR",
+    "UHAL"
+  ],
+  "companies": [
+    {
+      "id": "PSA",
+      "ticker": "PSA",
+      "name": "パブリック・ストレージ",
+      "name_en": "Public Storage",
+      "sub": "貸倉庫REIT",
+      "sub_en": "Self-storage REIT",
+      "sub_short": "REIT",
+      "sub_short_en": "REIT",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合",
+          "text_en": "A key competitor",
+          "source": {
+            "label": "CubeSmart 10-K(2025年度)",
+            "label_en": "CubeSmart 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1298675/000129867526000010/cube-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "We emphasize customer service, convenience, security, professionalism, and cleanliness and, therefore, we believe our stores are well-positioned within their respective markets. ​ Our key competitors include local and regional operators as well as other public self-storage REITs, including, but not limited to, Public Storage, Extra Space Storage Inc., and National Storage Affiliates Trust."
+          }
+        }
+      ]
+    },
+    {
+      "id": "EXR",
+      "ticker": "EXR",
+      "name": "エクストラ・スペース・ストレージ",
+      "name_en": "Extra Space Storage",
+      "sub": "貸倉庫REIT",
+      "sub_en": "Self-storage REIT",
+      "sub_short": "REIT",
+      "sub_short_en": "REIT",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合",
+          "text_en": "A key competitor",
+          "source": {
+            "label": "CubeSmart 10-K(2025年度)",
+            "label_en": "CubeSmart 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1298675/000129867526000010/cube-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "We emphasize customer service, convenience, security, professionalism, and cleanliness and, therefore, we believe our stores are well-positioned within their respective markets. ​ Our key competitors include local and regional operators as well as other public self-storage REITs, including, but not limited to, Public Storage, Extra Space Storage Inc., and National Storage Affiliates Trust."
+          }
+        }
+      ]
+    },
+    {
+      "id": "UHAL",
+      "ticker": "UHAL",
+      "name": "ユーホール",
+      "name_en": "U-Haul Holding",
+      "sub": "引越し・貸倉庫",
+      "sub_en": "Moving & self-storage",
+      "sub_short": "倉庫",
+      "sub_short_en": "Storage",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "貸倉庫で最大級の競合に挙げる",
+          "text_en": "Names CubeSmart among its largest self-storage competitors",
+          "source": {
+            "label": "U-Haul Holding Co 10-K(2026年3月期)",
+            "label_en": "U-Haul Holding Co 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/4457/000119312526241850/uhal-20260331.htm",
+            "level": "official",
+            "date": "2026-05-27",
+            "quote": "Our largest competitors in the self-storage market are Public Storage Inc., CubeSmart, and Extra Space Storage, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PNC",
+      "ticker": "PNC",
+      "name": "PNCフィナンシャル・サービシズ",
+      "name_en": "PNC Financial Services",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の幹事行",
+          "text_en": "Administrative agent on its credit agreement",
+          "source": {
+            "label": "CubeSmart 8-K(2026年10月)",
+            "label_en": "CubeSmart 8-K (October 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1298675/000129867526000044/cube-20261026x8k.htm",
+            "level": "official",
+            "date": "2026-10-29",
+            "quote": "(the \"Operating Partnership\"), as borrower, and CubeSmart (the \"Company\"), as parent guarantor, entered into a Term Loan Agreement (the \"Term Loan Agreement\") with the lenders referred to therein (the \"Lenders\") and PNC Bank, National Association, as administrative agent for the Lenders (the \"Agent\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WFC",
+      "ticker": "WFC",
+      "name": "ウェルズ・ファーゴ",
+      "name_en": "Wells Fargo",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の幹事行",
+          "text_en": "Administrative agent on its credit agreement",
+          "source": {
+            "label": "CubeSmart 8-K(2026年6月)",
+            "label_en": "CubeSmart 8-K (June 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1298675/000129867526000033/cube-20260624x8k.htm",
+            "level": "official",
+            "date": "2026-06-24",
+            "quote": "through which CubeSmart owns its assets and conducts its operations, entered into a Third Amended and Restated Credit Agreement (the \"Third Amended and Restated Credit Facility\") with the lenders referred to therein (the \"Lenders\"), and Wells Fargo Bank, National Association, as administrative agent for the Lenders (the \"Agent\"). The Third Amended and Restated Credit Facility is comprised of a $1 billion unsecured revolving facility (the \"Third Amended Revolver\") maturing"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BAC",
+      "ticker": "BAC",
+      "name": "バンク・オブ・アメリカ",
+      "name_en": "Bank of America",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "社債などの引受会社",
+          "text_en": "Underwriter of its securities offering",
+          "source": {
+            "label": "CubeSmart 8-K(2025年8月)",
+            "label_en": "CubeSmart 8-K (August 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1298675/000110465925076934/tm2523233d1_8k.htm",
+            "level": "official",
+            "date": "2025-08-12",
+            "quote": "(the \"Operating Partnership\") and CubeSmart (the \"Company\") executed and delivered an underwriting agreement (the \"Underwriting Agreement\"), by and among the Company, the Operating Partnership and Wells Fargo Securities, LLC, BofA Securities, Inc. and PNC Capital Markets LLC, as representatives of the several underwriters named in Exhibit A thereto (collectively, the \"Underwriters\"), relating to the public offering of $450.0 million in aggregate principal amount of the"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,156 @@
+{
+  "root": {
+    "ticker": "FIVE",
+    "name": "ファイブ・ビロー",
+    "cik": 1177609,
+    "name_en": "Five Below"
+  },
+  "rows": [
+    {
+      "ja": "供給元・取引先",
+      "en": "Suppliers & providers"
+    },
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "GALLUP",
+      "ticker": "GALLUP",
+      "name": "ギャラップ",
+      "name_en": "Gallup",
+      "sub": "調査・助言",
+      "sub_en": "Analytics & advisory",
+      "sub_short": "調査",
+      "sub_short_en": "Research",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "従業員エンゲージメント向上で提携",
+          "text_en": "Partner for monitoring employee engagement",
+          "source": {
+            "label": "Five Below 10-K(2026年1月期)",
+            "label_en": "Five Below 10-K (FY ended Jan 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1177609/000117760926000010/five-20260131.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "Starting in fiscal 2020, we partnered with Gallup, Inc., a global analytics and advisory firm, to monitor and improve the engagement of our workforce."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SOWG",
+      "ticker": "SOWG",
+      "name": "ソウ・グッド",
+      "name_en": "Sow Good",
+      "sub": "菓子",
+      "sub_en": "Snacks",
+      "sub_short": "菓子",
+      "sub_short_en": "Snacks",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "商品を扱う大手小売に挙げる",
+          "text_en": "Lists Five Below among retailers carrying its products",
+          "source": {
+            "label": "Sow Good 10-K(2025年度)",
+            "label_en": "Sow Good 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1490161/000119312526133385/sowg-20251231.htm",
+            "level": "official",
+            "date": "2026-03-31",
+            "quote": "Our products have launched in retailers nationwide from convenience and grocery stores to big-box retailers and distributors, such as Five Below, Albertsons and C&S Wholesale."
+          }
+        }
+      ]
+    },
+    {
+      "id": "REG",
+      "ticker": "REG",
+      "name": "リージェンシー・センターズ",
+      "name_en": "Regency Centers",
+      "sub": "商業施設REIT",
+      "sub_en": "Shopping center REIT",
+      "sub_short": "REIT",
+      "sub_short_en": "REIT",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "主要テナントの1社",
+          "text_en": "One of its top tenants",
+          "source": {
+            "label": "Regency Centers 10-K(2025年度)",
+            "label_en": "Regency Centers 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/910606/000119312526051668/reg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "% 8,711 0.7 % 49 JAB Holding Company 168 0.3 % 7,282 0.6 % 59 Walgreens Boots Alliance 255 0.5 % 6,796 0.5 % 22 Petco Health and Wellness Company 275 0.5 % 6,762 0.5 % 26 Ulta 224 0.4 % 6,680 0.5 % 25 Xponential Fitness 163 0.3 % 6,650 0.5 % 97 Kohl's 526 1.0 % 6,389 0.5 % 7 Five Below 209 0.4 % 5,977 0.5 % 27 Top Tenants 19,110 37.5 % $ 371,718 29.4 % 1,005 Our leases for tenant space under 10,000 square feet generally have initial terms ranging from three to seven years."
+          }
+        }
+      ]
+    },
+    {
+      "id": "JMGROUP",
+      "ticker": "JMGROUP",
+      "name": "JMグループ",
+      "name_en": "JM Group",
+      "sub": "生活雑貨",
+      "sub_en": "Consumer goods",
+      "sub_short": "雑貨",
+      "sub_short_en": "Goods",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Five Belowの納品条件に従う取引先",
+          "text_en": "A vendor shipping to Five Below's requirements",
+          "source": {
+            "label": "JM Group 20-F(2025年9月期)",
+            "label_en": "JM Group 20-F (FY ended Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2049717/000121390026014380/ea027551401ex4-4_jmgroup.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "To leverage these investments, it is required that all vendors ship product in case pack quantities that are packed in corrugated cartons that are shippable and conveyable, unless otherwise agreed to in writing by Five Below."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WFC",
+      "ticker": "WFC",
+      "name": "ウェルズ・ファーゴ",
+      "name_en": "Wells Fargo",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の貸し手",
+          "text_en": "A lender under its credit agreement",
+          "source": {
+            "label": "Five Below 8-K(2026年10月)",
+            "label_en": "Five Below 8-K (October 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1177609/000117760926000072/five-20261014.htm",
+            "level": "official",
+            "date": "2026-10-14",
+            "quote": "(the \"Guarantor\" and with the Borrower, collectively, the \"Loan Parties\"), the lenders party thereto (the \"Lenders\") and Wells Fargo Bank, National Association (\"Wells\") as agent for the Lenders (in such capacity, the \"Agent\"), which amended that certain Fifth Amended and Restated Credit Agreement, dated April 24, 2020 (as amended by that certain First Amendment to Credit Agreement, dated as of January 27, 2021, and by that certain Second Amendment to Credit Agreement, dated"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

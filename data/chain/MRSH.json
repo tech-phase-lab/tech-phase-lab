@@ -1,0 +1,208 @@
+{
+  "root": {
+    "ticker": "MRSH",
+    "name": "マーシュ・マクレナン",
+    "cik": 62709,
+    "name_en": "Marsh McLennan"
+  },
+  "rows": [
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "買収・売却",
+      "en": "Acquisitions & sales"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "MCGRIFF",
+      "ticker": "MCGRIFF",
+      "name": "マクグリフ・インシュアランス・サービシズ",
+      "name_en": "McGriff Insurance Services",
+      "sub": "保険仲介",
+      "sub_en": "Insurance brokerage",
+      "sub_short": "保険仲介",
+      "sub_short_en": "Broker",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2024年11月に77.5億ドルで買収",
+          "text_en": "Acquired for $7.75 billion in November 2024",
+          "source": {
+            "label": "Marsh McLennan 10-K(2025年度)",
+            "label_en": "Marsh McLennan 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/62709/000006270926000022/mrsh-20251231.htm",
+            "level": "official",
+            "date": "2026-02-09",
+            "quote": "Acquisition of McGriff On November 15, 2024, the Company completed the acquisition of McGriff Insurance Services, LLC (\"McGriff\"), an affiliate of TIH Insurance Holdings (the \"McGriff Transaction\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CARDANO",
+      "ticker": "CARDANO",
+      "name": "カルダノ",
+      "name_en": "Cardano",
+      "sub": "年金コンサル",
+      "sub_en": "Pension consulting",
+      "sub_short": "年金",
+      "sub_short_en": "Pension",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2024年に買収",
+          "text_en": "Acquired in 2024",
+          "source": {
+            "label": "Marsh McLennan 10-K(2025年度)",
+            "label_en": "Marsh McLennan 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/62709/000006270926000022/mrsh-20251231.htm",
+            "level": "official",
+            "date": "2026-02-09",
+            "quote": "The remaining outflow of funds in 2024 related primarily to the acquisitions of Cardano, the Horton Group, and Fisher Brown Bottrell Insurance Inc., for $466 million, $384 million and $321 million, respectively."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HORTONGROUP",
+      "ticker": "HORTONGROUP",
+      "name": "ホートン・グループ",
+      "name_en": "Horton Group",
+      "sub": "保険仲介",
+      "sub_en": "Insurance brokerage",
+      "sub_short": "保険仲介",
+      "sub_short_en": "Broker",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2024年に買収",
+          "text_en": "Acquired in 2024",
+          "source": {
+            "label": "Marsh McLennan 10-K(2025年度)",
+            "label_en": "Marsh McLennan 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/62709/000006270926000022/mrsh-20251231.htm",
+            "level": "official",
+            "date": "2026-02-09",
+            "quote": "The remaining outflow of funds in 2024 related primarily to the acquisitions of Cardano, the Horton Group, and Fisher Brown Bottrell Insurance Inc., for $466 million, $384 million and $321 million, respectively."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CARPENTERTURNER",
+      "ticker": "CARPENTERTURNER",
+      "name": "カーペンター・ターナー・キプロス",
+      "name_en": "Carpenter Turner Cyprus",
+      "sub": "再保険仲介",
+      "sub_en": "Reinsurance brokerage",
+      "sub_short": "保険仲介",
+      "sub_short_en": "Broker",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "残りの51.5%を2025年1月に取得",
+          "text_en": "Bought the remaining 51.5% in January 2025",
+          "source": {
+            "label": "Marsh McLennan 10-K(2025年度)",
+            "label_en": "Marsh McLennan 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/62709/000006270926000022/mrsh-20251231.htm",
+            "level": "official",
+            "date": "2026-02-09",
+            "quote": "The Risk and Insurance Services segment completed 14 acquisitions in 2025: •January - Guy Carpenter acquired the remaining 51.5% ownership share in Carpenter Turner Cyprus Ltd., a Greece-based insurance broker that provides reinsurance and advisory services, including treaty and facultative reinsurance, data and analytics, strategic advisory, and capital markets solutions."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HALLINS",
+      "ticker": "HALLINS",
+      "name": "ホール・インシュアランス",
+      "name_en": "Hall Insurance",
+      "sub": "保険仲介",
+      "sub_en": "Insurance brokerage",
+      "sub_short": "保険仲介",
+      "sub_short_en": "Broker",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年に買収",
+          "text_en": "Acquired in 2025",
+          "source": {
+            "label": "Marsh McLennan 10-K(2025年度)",
+            "label_en": "Marsh McLennan 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/62709/000006270926000022/mrsh-20251231.htm",
+            "level": "official",
+            "date": "2026-02-09",
+            "quote": "Hall Insurance, Inc., a Pennsylvania-based insurance broker that provides commercial and personal lines solutions to clients, with specialties in life sciences, information management, non-profit, craft beverage manufacturing and municipal industries."
+          }
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "ticker": "C",
+      "name": "シティグループ",
+      "name_en": "Citigroup",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の幹事行",
+          "text_en": "Administrative agent on its credit agreement",
+          "source": {
+            "label": "Marsh McLennan 8-K(2026年6月)",
+            "label_en": "Marsh McLennan 8-K (June 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/62709/000006270926000167/mmc-20260602.htm",
+            "level": "official",
+            "date": "2026-06-04",
+            "quote": "(the \"Company\") and certain of its domestic and foreign subsidiaries entered into a new Amended and Restated 5 Year Credit Agreement, dated as of June 2, 2026, among the Company, as borrower, the designated subsidiaries party thereto as borrowers, Citibank, N.A., as administrative agent, and the lenders from time to time party thereto (the \"Credit Agreement\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GS",
+      "ticker": "GS",
+      "name": "Goldman Sachs",
+      "name_en": "Goldman Sachs",
+      "sub": "証券",
+      "sub_en": "Securities",
+      "sub_short": "証券",
+      "sub_short_en": "Broker",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の幹事行",
+          "text_en": "Administrative agent on its credit agreement",
+          "source": {
+            "label": "Marsh McLennan 10-K(2025年度)",
+            "label_en": "Marsh McLennan 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/62709/000006270926000022/mrsh-20251231.htm",
+            "level": "official",
+            "date": "2026-02-09",
+            "quote": "Bridge Loan Agreement, dated as of September 18, 2018 by and between Marsh & McLennan Companies, Inc., the lenders party thereto and Goldman Sachs Bank USA, as administrative agent"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

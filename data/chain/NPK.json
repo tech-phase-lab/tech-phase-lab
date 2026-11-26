@@ -1,0 +1,182 @@
+{
+  "root": {
+    "ticker": "NPK",
+    "name": "ナショナル・プレスト・インダストリーズ",
+    "cik": 80172,
+    "name_en": "National Presto Industries"
+  },
+  "rows": [
+    {
+      "ja": "顧客・取引先",
+      "en": "Customers & clients"
+    },
+    {
+      "ja": "買収・売却",
+      "en": "Acquisitions & sales"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン・ウェブ・サービス",
+      "name_en": "Amazon Web Services",
+      "sub": "小売",
+      "sub_en": "Retail",
+      "sub_short": "小売",
+      "sub_short_en": "Retail",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "失うと大きな影響が出る顧客",
+          "text_en": "Customer whose loss would be material",
+          "source": {
+            "label": "National Presto Industries 10-K(2025年度)",
+            "label_en": "National Presto Industries 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/80172/000143774926008214/npk20251231_10k.htm",
+            "level": "official",
+            "date": "2026-03-13",
+            "quote": "The loss of Amazon.com, Inc. as a customer would have a material adverse effect on the Company. ﻿ 3 Table of Contents Products are sold primarily in the United States and Canada directly to retailers and also through independent distributors."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DSE",
+      "ticker": "DSE",
+      "name": "DSE",
+      "name_en": "DSE, Inc.",
+      "sub": "弾薬",
+      "sub_en": "Ammunition",
+      "sub_short": "弾薬",
+      "sub_short_en": "Ammo",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2013年に資産を買収した競合",
+          "text_en": "Rival whose assets it bought in 2013",
+          "source": {
+            "label": "National Presto Industries 10-K(2025年度)",
+            "label_en": "National Presto Industries 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/80172/000143774926008214/npk20251231_10k.htm",
+            "level": "official",
+            "date": "2026-03-13",
+            "quote": "In addition, as part of an acquisition of a group of assets from DSE, Inc., a 40mm competitor, which was completed on November 7, 2013, AMTEC acquired through a novation agreement an additional $188,000,000, representing the remaining undelivered portion of the award that had been given to AMTEC's competitor under the second five-year contract mentioned above."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CHEMRING",
+      "ticker": "CHEMRING",
+      "name": "ケムリング",
+      "name_en": "Chemring",
+      "sub": "防衛部品",
+      "sub_en": "Defense parts",
+      "sub_short": "防衛",
+      "sub_short_en": "Defense",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2014年に資産を買収",
+          "text_en": "Bought its assets in 2014",
+          "source": {
+            "label": "National Presto Industries 10-K(2025年度)",
+            "label_en": "National Presto Industries 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/80172/000143774926008214/npk20251231_10k.htm",
+            "level": "official",
+            "date": "2026-03-13",
+            "quote": "During 2014, the Company continued the expansion of the Defense segment with the purchase of substantially all of the assets of Chemring Energetic Devices, Inc. located in Clear Lake, South Dakota, and all of the real property owned by Technical Ordnance Realty, LLC."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DRYLOCK",
+      "ticker": "DRYLOCK",
+      "name": "ドライロック・テクノロジーズ",
+      "name_en": "Drylock Technologies",
+      "sub": "衛生用品",
+      "sub_en": "Hygiene products",
+      "sub_short": "衛生",
+      "sub_short_en": "Hygiene",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "工場の一部を貸す相手",
+          "text_en": "Leases part of its Eau Claire plant",
+          "source": {
+            "label": "National Presto Industries 10-K(2025年度)",
+            "label_en": "National Presto Industries 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/80172/000143774926008214/npk20251231_10k.htm",
+            "level": "official",
+            "date": "2026-03-13",
+            "quote": "PROPERTIES (Owned Except Where Indicated) ﻿ The Company's Eau Claire facility is approximately 522,000 square feet, of which approximately 354,000 square feet is leased to Drylock Technologies, Ltd."
+          }
+        }
+      ]
+    },
+    {
+      "id": "KNOXSAFETY",
+      "ticker": "KNOXSAFETY",
+      "name": "ノックス・セーフティ",
+      "name_en": "Knox Safety",
+      "sub": "安全機器",
+      "sub_en": "Safety products",
+      "sub_short": "安全",
+      "sub_short_en": "Safety",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2022年7月に資産を買収",
+          "text_en": "Bought its assets in July 2022",
+          "source": {
+            "label": "National Presto Industries 10-K(2025年度)",
+            "label_en": "National Presto Industries 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/80172/000143774926008214/npk20251231_10k.htm",
+            "level": "official",
+            "date": "2026-03-13",
+            "quote": "The Company purchased certain assets and assumed certain liabilities of Knox Safety, Inc. on July 29, 2022, forming Rely."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ONEEVENT",
+      "ticker": "ONEEVENT",
+      "name": "ワンイベント・テクノロジーズ",
+      "name_en": "OneEvent Technologies",
+      "sub": "安全技術",
+      "sub_en": "Safety tech",
+      "sub_short": "安全",
+      "sub_short_en": "Safety",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2019年に資産を買収",
+          "text_en": "Bought its assets in 2019",
+          "source": {
+            "label": "National Presto Industries 10-K(2025年度)",
+            "label_en": "National Presto Industries 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/80172/000143774926008214/npk20251231_10k.htm",
+            "level": "official",
+            "date": "2026-03-13",
+            "quote": "Those aspects include the fuze, the detonator, the metal parts (including the cartridge case), and load, assemble and pack of the final round. ﻿ The Safety segment was started in 2019 with the acquisition of the assets of OneEvent Technologies, Inc., a business located in Mount Horeb, Wisconsin which focused on protection for buildings, homes, assets, and occupants using a cloud-based learning and an analytics engine that utilizes data from a series of sensing devices to"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

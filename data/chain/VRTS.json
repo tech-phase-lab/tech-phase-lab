@@ -1,0 +1,166 @@
+{
+  "root": {
+    "ticker": "VRTS",
+    "name": "バーチャス・インベストメント・パートナーズ",
+    "cik": 883237,
+    "name_en": "Virtus Investment Partners"
+  },
+  "rows": [
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "提携・出資・買収",
+      "en": "Partners, stakes & deals"
+    },
+    {
+      "ja": "買収・売却",
+      "en": "Acquisitions & sales"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "VOYA"
+  ],
+  "companies": [
+    {
+      "id": "CRESCENTCOVE",
+      "ticker": "CRESCENTCOVE",
+      "name": "クレセント・コーブ・アドバイザーズ",
+      "name_en": "Crescent Cove Advisors",
+      "sub": "プライベート・クレジット",
+      "sub_en": "Private credit",
+      "sub_short": "融資",
+      "sub_short_en": "Credit",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "35%を取得(2025年12月)",
+          "text_en": "Bought a 35% stake in December 2025",
+          "source": {
+            "label": "Virtus Investment Partners 10-K(2025年度)",
+            "label_en": "Virtus Investment Partners 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/883237/000088323726000009/vrts-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "On December 15, 2025, the Company completed the acquisition of a 35% minority interest in Crescent Cove Advisors, LP for $41.1 million, including transaction costs."
+          }
+        }
+      ]
+    },
+    {
+      "id": "KEYSTONENG",
+      "ticker": "KEYSTONENG",
+      "name": "キーストーン・ナショナル・グループ",
+      "name_en": "Keystone National Group",
+      "sub": "プライベート・クレジット",
+      "sub_en": "Private credit",
+      "sub_short": "融資",
+      "sub_short_en": "Credit",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "過半数を取得する契約(2025年12月)",
+          "text_en": "Agreed to buy a majority stake in December 2025",
+          "source": {
+            "label": "Virtus Investment Partners 10-K(2025年度)",
+            "label_en": "Virtus Investment Partners 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/883237/000088323726000009/vrts-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Keystone Agreement On December 5, 2025, the Company entered into an agreement to acquire a majority interest in Keystone National Group (\"Keystone\"), an investment manager specializing in asset-centric private credit."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NFJ",
+      "ticker": "NFJ",
+      "name": "NFJインベストメント・グループ",
+      "name_en": "NFJ Investment Group",
+      "sub": "資産運用",
+      "sub_en": "Asset management",
+      "sub_short": "運用",
+      "sub_short_en": "Asset mgr",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2021年に買収",
+          "text_en": "Acquired in 2021",
+          "source": {
+            "label": "Virtus Investment Partners 10-K(2025年度)",
+            "label_en": "Virtus Investment Partners 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/883237/000088323726000009/vrts-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "During the year, the contingent payment obligation associated with the 2021 acquisition of NFJ Investment Group (\"NFJ\") was valued to reflect remeasurement and payments made, if applicable, and changes were recorded in the current period as a change in fair value of contingent consideration on the consolidated statements of operations."
+          }
+        }
+      ]
+    },
+    {
+      "id": "VOYA",
+      "ticker": "VOYA",
+      "name": "ボヤ・ファイナンシャル",
+      "name_en": "Voya Financial",
+      "sub": "保険・運用",
+      "sub_en": "Insurance & asset management",
+      "sub_short": "保険",
+      "sub_short_en": "Insurer",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "運用分野の競合に挙げる",
+          "text_en": "Names Virtus among its asset management competitors",
+          "source": {
+            "label": "Voya Financial 10-K(2025年度)",
+            "label_en": "Voya Financial 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1535929/000153592926000043/voya-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Rowe Price, Franklin Templeton, Janus Henderson and Virtus Investment Partners. 13 Table of Contents Employee Benefits Our Employee Benefits segment provides workplace employee benefits including group life insurance, disability insurance, leave management services, supplemental benefit insurance, financial wellness, and decision support products and services to mid-size and large corporate employers and professional associations."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MS",
+      "ticker": "MS",
+      "name": "モルガン・スタンレー",
+      "name_en": "Morgan Stanley",
+      "sub": "証券",
+      "sub_en": "Securities",
+      "sub_short": "証券",
+      "sub_short_en": "Broker",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の幹事行",
+          "text_en": "Administrative agent on its credit agreement",
+          "source": {
+            "label": "Virtus Investment Partners 10-K(2025年度)",
+            "label_en": "Virtus Investment Partners 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/883237/000088323726000009/vrts-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Credit Agreement, dated as of September 28, 2025, by and among Virtus Investment Partners, Inc. as borrower, Morgan Stanley Senior Funding, Inc. as administrative agent, and the Lenders party thereto"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

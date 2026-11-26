@@ -1,0 +1,216 @@
+{
+  "root": {
+    "ticker": "TMDX",
+    "name": "トランスメディクス・グループ",
+    "cik": 1756262,
+    "name_en": "TransMedics Group"
+  },
+  "rows": [
+    {
+      "ja": "供給元・取引先",
+      "en": "Suppliers & providers"
+    },
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "買収・売却",
+      "en": "Acquisitions & sales"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "TERUMO",
+      "ticker": "TERUMO",
+      "name": "テルモ",
+      "name_en": "Terumo",
+      "sub": "医療機器",
+      "sub_en": "Medtech",
+      "sub_short": "医療機器",
+      "sub_short_en": "Medtech",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "臓器灌流で競合(オルガノックスを買収)",
+          "text_en": "Competes in perfusion via OrganOx",
+          "source": {
+            "label": "TransMedics Group 10-K(2025年度)",
+            "label_en": "TransMedics Group 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1756262/000119312526067032/tmdx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "We are aware of only two other companies providing warm perfusion systems, OrganOx Limited, which was acquired by Terumo Corporation in October 2025, and XVIVO Perfusion AB, both of which offer single-organ warm perfusion systems for the liver and lung, respectively."
+          }
+        }
+      ]
+    },
+    {
+      "id": "XVIVO",
+      "ticker": "XVIVO",
+      "name": "ゼビボ・パーフュージョン",
+      "name_en": "XVIVO Perfusion",
+      "sub": "臓器灌流",
+      "sub_en": "Organ perfusion",
+      "sub_short": "灌流",
+      "sub_short_en": "Perfusion",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "10-Kで競合に挙げる",
+          "text_en": "Named as a competitor in its 10-K",
+          "source": {
+            "label": "TransMedics Group 10-K(2025年度)",
+            "label_en": "TransMedics Group 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1756262/000119312526067032/tmdx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "We are aware of only two other companies providing warm perfusion systems, OrganOx Limited, which was acquired by Terumo Corporation in October 2025, and XVIVO Perfusion AB, both of which offer single-organ warm perfusion systems for the liver and lung, respectively."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Getinge",
+      "ticker": "Getinge",
+      "name": "ゲティンゲ",
+      "name_en": "Getinge",
+      "sub": "医療機器",
+      "sub_en": "Medtech",
+      "sub_short": "医療",
+      "sub_short_en": "Medtech",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "臓器保存で競合(パラゴニクスを買収)",
+          "text_en": "Competes in organ storage via Paragonix",
+          "source": {
+            "label": "TransMedics Group 10-K(2025年度)",
+            "label_en": "TransMedics Group 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1756262/000119312526067032/tmdx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "We also compete with other cold preservation devices in this industry, such as those from Paragonix Technologies, Inc., which was acquired by Getinge in September 2024."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BRIDGETOLIFE",
+      "ticker": "BRIDGETOLIFE",
+      "name": "ブリッジ・トゥ・ライフ",
+      "name_en": "Bridge to Life",
+      "sub": "臓器保存",
+      "sub_en": "Organ preservation",
+      "sub_short": "臓器",
+      "sub_short_en": "Organs",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2023年に灌流技術の資産を取得",
+          "text_en": "Bought perfusion assets in 2023",
+          "source": {
+            "label": "TransMedics Group 10-K(2025年度)",
+            "label_en": "TransMedics Group 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1756262/000119312526067032/tmdx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "In addition, in August 2023, we acquired certain assets related to lung and heart perfusion technology from Bridge to Life Ltd. and its subsidiary Tevosol, Inc., or together Bridge to Life."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SUMMITAV",
+      "ticker": "SUMMITAV",
+      "name": "サミット・アビエーション",
+      "name_en": "Summit Aviation",
+      "sub": "航空サービス",
+      "sub_en": "Aviation services",
+      "sub_short": "航空",
+      "sub_short_en": "Aviation",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2023年に買収",
+          "text_en": "Acquired in 2023",
+          "source": {
+            "label": "TransMedics Group 10-K(2025年度)",
+            "label_en": "TransMedics Group 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1756262/000119312526067032/tmdx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Goodwill and Intangible Assets The carrying amount of goodwill was $11.5 million as of December 31, 2025 and 2024, and related to the Company's 2023 acquisition of Summit Aviation, Inc. and Northside Property Group, LLC (together \"Summit\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GOGO",
+      "ticker": "GOGO",
+      "name": "ゴーゴー",
+      "name_en": "Gogo",
+      "sub": "機内通信",
+      "sub_en": "In-flight Wi-Fi",
+      "sub_short": "機内通信",
+      "sub_short_en": "Wi-Fi",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "臓器輸送機の機内通信を供給",
+          "text_en": "Equips its organ-transport jets",
+          "source": {
+            "label": "Gogo 8-K(2026年11月)",
+            "label_en": "Gogo 8-K (November 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1537054/000119312526451829/gogo-ex99_1.htm",
+            "level": "official",
+            "date": "2026-11-06",
+            "quote": "• Duncan Aviation purchased 40 Gogo Galileo HDX systems, representing Gogo's largest single maintenance, repair and overhaul (\"MRO\") order of the year and reflecting growing customer demand for Gogo's LEO connectivity service. 2 • TransMedics has contracted with Gogo to equip its fleet of 22 Embraer Phenom 300E aircraft with Gogo Galileo HDX to support time-critical organ transport missions across the United States."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CM",
+      "ticker": "CM",
+      "name": "カナダ帝国商業銀行",
+      "name_en": "CIBC",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の幹事行",
+          "text_en": "Administrative agent on its credit agreement",
+          "source": {
+            "label": "TransMedics Group 10-K(2025年度)",
+            "label_en": "TransMedics Group 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1756262/000119312526067032/tmdx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Credit Agreement, dated as of July 25, 2022, by and among TransMedics Group, Inc., the lenders party thereto and Canadian Imperial Bank of Commerce, as administrative agent and collateral agent"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

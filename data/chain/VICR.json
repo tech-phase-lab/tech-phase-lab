@@ -1,0 +1,156 @@
+{
+  "root": {
+    "ticker": "VICR",
+    "name": "ヴァイコー",
+    "cik": 751978,
+    "name_en": "Vicor"
+  },
+  "rows": [
+    {
+      "ja": "供給元・取引先",
+      "en": "Suppliers & providers"
+    },
+    {
+      "ja": "顧客・取引先",
+      "en": "Customers & clients"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "ARW",
+      "ticker": "ARW",
+      "name": "Arrow Electronics",
+      "name_en": "Arrow Electronics",
+      "sub": "電子部品商社",
+      "sub_en": "Distribution",
+      "sub_short": "商社",
+      "sub_short_en": "Distrib",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "主な販売代理店",
+          "text_en": "Authorized stocking distributor",
+          "source": {
+            "label": "Vicor 10-K(2025年度)",
+            "label_en": "Vicor 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/751978/000119312526085102/vicr-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "Marketing and Sales We reach and serve customers through several sales channels: a direct sales force; independent, authorized non-stocking distributors in Europe and Asia; and four authorized stocking distributors world-wide: Arrow Electronics, Inc., Digi-Key Corporation, Avnet Electronics, and Mouser Electronics, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DIGIKEY",
+      "ticker": "DIGIKEY",
+      "name": "ディジキー",
+      "name_en": "Digi-Key",
+      "sub": "電子部品商社",
+      "sub_en": "Distribution",
+      "sub_short": "商社",
+      "sub_short_en": "Distrib",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "主な販売代理店",
+          "text_en": "Authorized stocking distributor",
+          "source": {
+            "label": "Vicor 10-K(2025年度)",
+            "label_en": "Vicor 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/751978/000119312526085102/vicr-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "Marketing and Sales We reach and serve customers through several sales channels: a direct sales force; independent, authorized non-stocking distributors in Europe and Asia; and four authorized stocking distributors world-wide: Arrow Electronics, Inc., Digi-Key Corporation, Avnet Electronics, and Mouser Electronics, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AVT",
+      "ticker": "AVT",
+      "name": "アヴネット",
+      "name_en": "Avnet, Inc.",
+      "sub": "電子部品商社",
+      "sub_en": "Distribution",
+      "sub_short": "商社",
+      "sub_short_en": "Distrib",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "主な販売代理店",
+          "text_en": "Authorized stocking distributor",
+          "source": {
+            "label": "Vicor 10-K(2025年度)",
+            "label_en": "Vicor 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/751978/000119312526085102/vicr-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "Marketing and Sales We reach and serve customers through several sales channels: a direct sales force; independent, authorized non-stocking distributors in Europe and Asia; and four authorized stocking distributors world-wide: Arrow Electronics, Inc., Digi-Key Corporation, Avnet Electronics, and Mouser Electronics, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MOUSER",
+      "ticker": "MOUSER",
+      "name": "マウザー・エレクトロニクス",
+      "name_en": "Mouser Electronics",
+      "sub": "電子部品",
+      "sub_en": "Devices",
+      "sub_short": "電子部品",
+      "sub_short_en": "Devices",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "主な販売代理店",
+          "text_en": "Authorized stocking distributor",
+          "source": {
+            "label": "Vicor 10-K(2025年度)",
+            "label_en": "Vicor 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/751978/000119312526085102/vicr-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "Marketing and Sales We reach and serve customers through several sales channels: a direct sales force; independent, authorized non-stocking distributors in Europe and Asia; and four authorized stocking distributors world-wide: Arrow Electronics, Inc., Digi-Key Corporation, Avnet Electronics, and Mouser Electronics, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SVCO",
+      "ticker": "SVCO",
+      "name": "シルバコ・グループ",
+      "name_en": "Silvaco",
+      "sub": "設計ソフト",
+      "sub_en": "Design software",
+      "sub_short": "設計",
+      "sub_short_en": "Design",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "半導体シミュレーションの導入先に挙げる",
+          "text_en": "Says Vicor adopted its simulation tool",
+          "source": {
+            "label": "Silvaco Group 8-K(2025年11月)",
+            "label_en": "Silvaco Group 8-K (November 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1943289/000194328925000018/a991earningsreleasedatedno.htm",
+            "level": "official",
+            "date": "2025-11-12",
+            "quote": "reduction tool continues to see growing usage among leading semiconductor companies ◦Analog Power Conversion LLC adopts Silvaco's Design Technology Co-Optimization Flow (DTCO) for Next Generation Silicon and Silicon Carbide Power Devices ◦Vicor adopts Silvaco's Victory TCAD™ 3D Simulation Solution for Accurate Power Device Modeling and Simulation Third Quarter 2025 Financial Results GAAP Financial Results: •Revenue of $18.7 million $18.7 million, up 70% year-over-year."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

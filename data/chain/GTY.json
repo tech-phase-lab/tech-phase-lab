@@ -1,0 +1,156 @@
+{
+  "root": {
+    "ticker": "GTY",
+    "name": "ゲッティ・リアルティ",
+    "cik": 1052752,
+    "name_en": "Getty Realty"
+  },
+  "rows": [
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "顧客・取引先",
+      "en": "Customers & clients"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "ARKO",
+      "ticker": "ARKO",
+      "name": "ARKO",
+      "name_en": "ARKO Corp.",
+      "sub": "コンビニ・給油所",
+      "sub_en": "Convenience stores",
+      "sub_short": "小売",
+      "sub_short_en": "Retail",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大のテナント(売上の12%)",
+          "text_en": "Its largest tenant (12% of revenue)",
+          "source": {
+            "label": "Getty Realty 10-K(2025年度)",
+            "label_en": "Getty Realty 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1052752/000119312526048965/gty-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Major Tenants As of December 31, 2025 and 2024, we had two significant tenants by revenue: 2025 2024 Number of properties % of Total Revenues Number of properties % of Total Revenues ARKO Corp."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GLOBALPARTNERS",
+      "ticker": "GLOBALPARTNERS",
+      "name": "グローバル・パートナーズ",
+      "name_en": "Global Partners",
+      "sub": "燃料卸・給油所",
+      "sub_en": "Fuel distribution",
+      "sub_short": "燃料",
+      "sub_short_en": "Fuel",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2番目に大きいテナント(売上の10%)",
+          "text_en": "Its second-largest tenant (10% of revenue)",
+          "source": {
+            "label": "Getty Realty 10-K(2025年度)",
+            "label_en": "Getty Realty 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1052752/000119312526048965/gty-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "(NASDAQ: ARKO) which represented, in the aggregate, 12% of our total revenues for the year ended December 31, 2025. 14 • 127 properties in three separate unitary leases and two stand-alone leases to subsidiaries of Global Partners LP (NYSE: GLP) which represented, in the aggregate, 10% of our total revenues for the year ended December 31, 2025."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BAC",
+      "ticker": "BAC",
+      "name": "バンク・オブ・アメリカ",
+      "name_en": "Bank of America",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の幹事行",
+          "text_en": "Administrative agent on its credit agreement",
+          "source": {
+            "label": "Getty Realty 8-K(2026年10月)",
+            "label_en": "Getty Realty 8-K (October 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1052752/000119312526425357/gty-20261016.htm",
+            "level": "official",
+            "date": "2026-10-19",
+            "quote": "(the \"Company\") entered into the Second Amendment to Third Amended and Restated Credit Agreement (the \"Amended Credit Agreement\") among certain of its subsidiaries, as guarantors (the \"Guarantors\"), and Bank of America, N.A., as Administrative Agent (the \"Administrative Agent\"), which amended the Third Amended and Restated Credit Agreement, dated as of January 23, 2025 (the \"Existing Credit Agreement\"), among the Company, the Guarantors from time to time party thereto, the"
+          }
+        }
+      ]
+    },
+    {
+      "id": "TD",
+      "ticker": "TD",
+      "name": "TD Bank",
+      "name_en": "TD Bank",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の貸し手",
+          "text_en": "A lender under its credit agreement",
+          "source": {
+            "label": "Getty Realty 10-K(2025年度)",
+            "label_en": "Getty Realty 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1052752/000119312526048965/gty-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Term Loan Agreement, dated October 17, 2023, among Getty Realty Corp. and Bank of America, N.A., as Administrative Agent and BofA Securities, Inc., J.P. Morgan Chase Bank, N.A., TD Bank, N.A., and Capital One, N.A. as joint lead arrangers"
+          }
+        }
+      ]
+    },
+    {
+      "id": "JPM",
+      "ticker": "JPM",
+      "name": "JPMorgan Chase",
+      "name_en": "JPMorgan Chase",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の貸し手",
+          "text_en": "A lender under its credit agreement",
+          "source": {
+            "label": "Getty Realty 10-K(2025年度)",
+            "label_en": "Getty Realty 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1052752/000119312526048965/gty-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Term Loan Agreement, dated October 17, 2023, among Getty Realty Corp. and Bank of America, N.A., as Administrative Agent and BofA Securities, Inc., J.P. Morgan Chase Bank, N.A., TD Bank, N.A., and Capital One, N.A. as joint lead arrangers"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

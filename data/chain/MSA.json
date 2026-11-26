@@ -1,0 +1,188 @@
+{
+  "root": {
+    "ticker": "MSA",
+    "name": "MSAセーフティ",
+    "cik": 66570,
+    "name_en": "MSA Safety"
+  },
+  "rows": [
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "買収・売却",
+      "en": "Acquisitions & sales"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "LAKE"
+  ],
+  "companies": [
+    {
+      "id": "AUTRONICA",
+      "ticker": "AUTRONICA",
+      "name": "オートロニカ",
+      "name_en": "Autronica",
+      "sub": "防火・防ガス機器",
+      "sub_en": "Fire & gas detection",
+      "sub_short": "防災",
+      "sub_short_en": "Safety",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "買収契約(2026年5月)",
+          "text_en": "Agreed to acquire it (May 2026)",
+          "source": {
+            "label": "MSA Safety 8-K(2026年5月)",
+            "label_en": "MSA Safety 8-K (May 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/66570/000114036126019007/ny20072200x1_8k.htm",
+            "level": "official",
+            "date": "2026-05-05",
+            "quote": "Entry Into a Material Definitive Agreement Acquisition of Autronica Buyer Norway AS and its Affiliated Companies On May 5, 2026, MSA Safety Incorporated (\"MSA\") and Aegir Safety Holdings AS (\"Safety Holdings\"), an indirect wholly owned subsidiary of MSA, entered into an agreement to acquire Autronica Buyer Norway AS and its affiliated companies (referred to herein collectively as \"Autronica\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RQIH",
+      "ticker": "RQIH",
+      "name": "R&Qインシュアランス",
+      "name_en": "R&Q Insurance Holdings",
+      "sub": "保険",
+      "sub_en": "Insurance",
+      "sub_short": "保険",
+      "sub_short_en": "Insurer",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "合弁が子会社を買い取り(2023年)",
+          "text_en": "Its joint venture bought an MSA subsidiary (2023)",
+          "source": {
+            "label": "MSA Safety 10-K(2025年度)",
+            "label_en": "MSA Safety 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/66570/000006657026000005/msa-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "On January 5, 2023, the Company entered into a membership interest purchase agreement (the \"Purchase Agreement\") with a joint venture between R&Q Insurance Holdings Ltd. and Obra Capital, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PRU",
+      "ticker": "PRU",
+      "name": "Prudential Financial(PGIM)",
+      "name_en": "Prudential Financial",
+      "sub": "生命保険",
+      "sub_en": "Life insurance",
+      "sub_short": "生保",
+      "sub_short_en": "Insurer",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "系列のPGIMと私募社債の購入枠契約",
+          "text_en": "Has a note purchase and private shelf agreement with its PGIM unit",
+          "source": {
+            "label": "MSA Safety 10-K(2025年度)",
+            "label_en": "MSA Safety 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/66570/000006657026000005/msa-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "On July 1, 2024, the Company entered into Amendment No. 3 to the Third Amended and Restated Multi-Currency Note Purchase and Private Shelf Agreement (the \"Prudential Note Agreement\") with PGIM, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NEWYORKLIFE",
+      "ticker": "NEWYORKLIFE",
+      "name": "ニューヨーク・ライフ",
+      "name_en": "New York Life",
+      "sub": "生命保険",
+      "sub_en": "Life insurance",
+      "sub_short": "生保",
+      "sub_short_en": "Insurer",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "系列会社と社債の発行枠契約",
+          "text_en": "Has a master note facility with its affiliate NYL Investors",
+          "source": {
+            "label": "MSA Safety 8-K(2025年4月)",
+            "label_en": "MSA Safety 8-K (April 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/66570/000119312525073401/d903970d8k.htm",
+            "level": "official",
+            "date": "2025-04-04",
+            "quote": "Amendment to Master Note Facility On April 1, 2025, MSA entered into an amendment to its Second Amended and Restated Master Note Facility dated as of July 1, 2021, as amended (the \"NYL Agreement\") with NYL Investors LLC and the noteholders party thereto in order to conform the covenants in the NYL Agreement to changes made in similar covenants in the Credit Agreement."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LAKE",
+      "ticker": "LAKE",
+      "name": "レイクランド・インダストリーズ",
+      "name_en": "Lakeland Industries",
+      "sub": "防護服",
+      "sub_en": "Protective clothing",
+      "sub_short": "防護",
+      "sub_short_en": "Protect",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "大手の競合に挙げる",
+          "text_en": "Names MSA Safety among larger competitors",
+          "source": {
+            "label": "Lakeland Industries 10-K(2026年1月期)",
+            "label_en": "Lakeland Industries 10-K (FY ended Jan 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/798081/000119312526159176/lake-20260131.htm",
+            "level": "official",
+            "date": "2026-04-16",
+            "quote": "Three of our competitors, DuPont, Ansell, and MSA Safety, have substantially greater financial, marketing and sales resources than we do."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PNC",
+      "ticker": "PNC",
+      "name": "PNCフィナンシャル・サービシズ",
+      "name_en": "PNC Financial Services",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の幹事行",
+          "text_en": "Administrative agent on its credit agreement",
+          "source": {
+            "label": "MSA Safety 10-K(2025年度)",
+            "label_en": "MSA Safety 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/66570/000006657026000005/msa-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Restated Credit Agreement dated as of April 1, 2025 by and among the Company, the other Borrowers party thereto, various Company subsidiaries, as guarantors, various financial institutions, as lenders, and PNC Bank, National Association, as administrative agent, filed as Exhibit"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

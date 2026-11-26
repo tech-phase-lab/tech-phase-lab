@@ -1,0 +1,214 @@
+{
+  "root": {
+    "ticker": "SBRA",
+    "name": "サブラ・ヘルスケアREIT",
+    "cik": 1492298,
+    "name_en": "Sabra Health Care REIT"
+  },
+  "rows": [
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "買収・売却",
+      "en": "Acquisitions & sales"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "WELL"
+  ],
+  "companies": [
+    {
+      "id": "CARECAPITAL",
+      "ticker": "CARECAPITAL",
+      "name": "ケア・キャピタル・プロパティーズ",
+      "name_en": "Care Capital Properties",
+      "sub": "医療REIT",
+      "sub_en": "Healthcare REIT",
+      "sub_short": "REIT",
+      "sub_short_en": "REIT",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2017年に合併",
+          "text_en": "Merged with it in 2017",
+          "source": {
+            "label": "Sabra Health Care REIT 10-K(2025年度)",
+            "label_en": "Sabra Health Care REIT 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1492298/000149229826000008/sbra-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "The 2026 Notes and the 2027 Notes were assumed as a result of the Company's merger with Care Capital Properties, Inc. in 2017 and accrue interest at a rate of 5.125% and 5.38%, respectively, per annum."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WELL",
+      "ticker": "WELL",
+      "name": "ウェルタワー",
+      "name_en": "Welltower",
+      "sub": "医療REIT",
+      "sub_en": "Healthcare REIT",
+      "sub_short": "REIT",
+      "sub_short_en": "REIT",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合として名前を挙げる",
+          "text_en": "Names Sabra as a competitor",
+          "source": {
+            "label": "Welltower 10-Kの添付資料(2025年度)",
+            "label_en": "Welltower exhibit to its 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/766704/000076670426000010/exhibit19-10xk2025.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "In addition, under no circumstances may a Covered Person trade in the securities of Welltower's public customers, operators or their affiliates (such as Brookdale Senior Living and Chartwell Retirement Residence) or competitors or their affiliates (such as Ventas, Inc., Healthpeak Properties, Inc., Healthcare Realty Trust, Omega Healthcare Investors, Inc., and Sabra Health Care REIT)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BAC",
+      "ticker": "BAC",
+      "name": "バンク・オブ・アメリカ",
+      "name_en": "Bank of America",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の幹事行",
+          "text_en": "Administrative agent on its credit agreement",
+          "source": {
+            "label": "Sabra Health Care REIT 10-K(2025年度)",
+            "label_en": "Sabra Health Care REIT 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1492298/000149229826000008/sbra-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Credit Agreement, dated April 30, 2024, among Sabra Health Care Limited Partnership and Sabra Canadian Holdings, LLC, as Borrowers, and Bank of America, N.A., as Administrative Agent. 10.2.2* Second Amendment to Credit Agreement, dated December 4, 2025, among Sabra Health Care Limited Partnership and Sabra Canadian Holdings, LLC, as Borrowers, the Lenders party thereto, the L/C Issuers, and Bank of America, N.A., as Administrative Agent."
+          }
+        }
+      ]
+    },
+    {
+      "id": "KEY",
+      "ticker": "KEY",
+      "name": "キーコープ",
+      "name_en": "KeyCorp",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の幹事行",
+          "text_en": "Administrative agent on its credit agreement",
+          "source": {
+            "label": "Sabra Health Care REIT 8-K(2025年7月)",
+            "label_en": "Sabra Health Care REIT 8-K (July 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1492298/000149229825000027/sbra-20250730.htm",
+            "level": "official",
+            "date": "2025-07-31",
+            "quote": "partner (the \"Operating Partnership\"), and Sabra Canadian Holdings, LLC, also a wholly owned subsidiary of Sabra (together, the \"Borrowers\"), together with Sabra and certain subsidiaries of Sabra, as Guarantors, entered into an unsecured credit agreement (the \"Term Loan Credit Agreement\") with certain lenders as set forth therein, KeyBank National Association, as Administrative Agent, Bank of America, N.A., Citizens Bank, National Association, Crédit Agricole Corporate a"
+          }
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "ticker": "C",
+      "name": "シティグループ",
+      "name_en": "Citigroup",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "株式売出しの販売代理人",
+          "text_en": "Sales agent for its share offering program",
+          "source": {
+            "label": "Sabra Health Care REIT 8-K(2025年8月)",
+            "label_en": "Sabra Health Care REIT 8-K (August 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1492298/000119312525173630/d55008d8k.htm",
+            "level": "official",
+            "date": "2025-08-05",
+            "quote": "(the \"Company\") entered into an equity distribution agreement (the \"Distribution Agreement\") with Barclays Capital Inc., BMO Capital Markets Corp., BofA Securities, Inc., Citigroup Global Markets Inc., Citizens JMP Securities, LLC, Credit Agricole Securities (USA) Inc., Fifth Third Securities, Inc., Huntington Securities, Inc., J.P."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BMO",
+      "ticker": "BMO",
+      "name": "BMOフィナンシャル・グループ",
+      "name_en": "BMO Financial Group",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "株式売出しの販売代理人",
+          "text_en": "Sales agent for its share offering program",
+          "source": {
+            "label": "Sabra Health Care REIT 8-K(2025年8月)",
+            "label_en": "Sabra Health Care REIT 8-K (August 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1492298/000119312525173630/d55008d8k.htm",
+            "level": "official",
+            "date": "2025-08-05",
+            "quote": "(the \"Company\") entered into an equity distribution agreement (the \"Distribution Agreement\") with Barclays Capital Inc., BMO Capital Markets Corp., BofA Securities, Inc., Citigroup Global Markets Inc., Citizens JMP Securities, LLC, Credit Agricole Securities (USA) Inc., Fifth Third Securities, Inc., Huntington Securities, Inc., J.P."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BCS",
+      "ticker": "BCS",
+      "name": "Barclays",
+      "name_en": "Barclays",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "株式売出しの販売代理人",
+          "text_en": "Sales agent for its share offering program",
+          "source": {
+            "label": "Sabra Health Care REIT 8-K(2025年8月)",
+            "label_en": "Sabra Health Care REIT 8-K (August 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1492298/000119312525173630/d55008d8k.htm",
+            "level": "official",
+            "date": "2025-08-05",
+            "quote": "(the \"Company\") entered into an equity distribution agreement (the \"Distribution Agreement\") with Barclays Capital Inc., BMO Capital Markets Corp., BofA Securities, Inc., Citigroup Global Markets Inc., Citizens JMP Securities, LLC, Credit Agricole Securities (USA) Inc., Fifth Third Securities, Inc., Huntington Securities, Inc., J.P."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

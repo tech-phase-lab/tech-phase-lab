@@ -1,0 +1,164 @@
+{
+  "root": {
+    "ticker": "FCN",
+    "name": "FTIコンサルティング",
+    "cik": 887936,
+    "name_en": "FTI Consulting"
+  },
+  "rows": [
+    {
+      "ja": "供給元・取引先",
+      "en": "Suppliers & providers"
+    },
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "顧客・取引先",
+      "en": "Customers & clients"
+    },
+    {
+      "ja": "提携・出資・買収",
+      "en": "Partners, stakes & deals"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "PNBJ",
+      "ticker": "PNBJ",
+      "name": "PNBJ I",
+      "name_en": "PNBJ I Limited",
+      "sub": "不動産",
+      "sub_en": "Real estate",
+      "sub_short": "不動産",
+      "sub_short_en": "Landlord",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ロンドン拠点の貸し手",
+          "text_en": "Landlord of its London premises",
+          "source": {
+            "label": "FTI Consulting 8-K(2025年11月)",
+            "label_en": "FTI Consulting 8-K (November 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/887936/000119312525300684/d934318d8k.htm",
+            "level": "official",
+            "date": "2025-11-26",
+            "quote": "(\"FTI Consulting\" or the \"Company\") entered into an agreement for leases (the \"Agreement for Leases\") with PNBJ I Limited (the \"Landlord\") to guarantee the obligations of FTI Consulting Management Limited (the \"Tenant\"), a wholly-owned subsidiary of the Company, to take three leases (the \"Leases\") of certain premises located at One Exchange Square, 175 Bishopsgate, London EC2M 3TW (the \"Premises\") for FTI Consulting's London office comprising approximately 80,664 rentable"
+          }
+        }
+      ]
+    },
+    {
+      "id": "COF",
+      "ticker": "COF",
+      "name": "キャピタル・ワン",
+      "name_en": "Capital One",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 2,
+      "relations": [
+        {
+          "type": "down",
+          "text": "資産審査業務の契約相手",
+          "text_en": "Asset representations reviewer for its card trust",
+          "source": {
+            "label": "Discover Card Execution Note Trust 10-K(2025年度)",
+            "label_en": "Discover Card Execution Note Trust 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1407200/000140720026000014/dcent10-k2025.htm",
+            "level": "official",
+            "date": "2026-03-24",
+            "quote": "Bank National Association, as Securities Intermediary, dated as of July 1, 2022 (incorporated by reference to Exhibit 99.2 to the Note Issuance Trust's Current Report on Form 8-K filed on July 1, 2022).* 10.5 Amended and Restated Asset Representations Review Agreement, dated as of May 18, 2025, among Discover Card Execution Note Trust, Capital One, National Association and FTI Consulting, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BFH",
+      "ticker": "BFH",
+      "name": "ブレッド・ファイナンシャル",
+      "name_en": "Bread Financial",
+      "sub": "カード",
+      "sub_en": "Cards",
+      "sub_short": "カード",
+      "sub_short_en": "Cards",
+      "row": 2,
+      "relations": [
+        {
+          "type": "down",
+          "text": "資産審査業務の契約相手",
+          "text_en": "Asset representations reviewer for its card trust",
+          "source": {
+            "label": "WFN Credit CO 10-K(2025年度)",
+            "label_en": "WFN Credit CO 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1139552/000113955226000021/a2025wfnform10-k.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "Exhibit 4.67 Asset Representations Review Agreement, dated as of July 6, 2016, among Comenity Bank, WFN Credit Company, LLC, World Financial Network Credit Card Master Note Trust and FTI Consulting, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NFE",
+      "ticker": "NFE",
+      "name": "ニュー・フォートレス・エナジー",
+      "name_en": "New Fortress Energy",
+      "sub": "LNG",
+      "sub_en": "LNG",
+      "sub_short": "LNG",
+      "sub_short_en": "LNG",
+      "row": 3,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "融資の貸し手側の助言役",
+          "text_en": "Adviser to the agent on its loan",
+          "source": {
+            "label": "New Fortress Energy 10-K(2025年度)",
+            "label_en": "New Fortress Energy 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1749723/000174972326000032/a09nfe-fourteenthamendment.htm",
+            "level": "official",
+            "date": "2026-04-13",
+            "quote": "The Borrower shall have paid or caused to be paid on or before the Fourteenth Amendment Effective Date all fees, costs and expenses then payable or reimbursable (including of any reasonable and documented fees of FTI Consulting Ltd, as advisor to the Administrative Agent, Moelis & Company, as advisor to the Administrative Agent (\"Moelis\"), and any other counsel or advisors of the Administrative Agent) to the Administrative Agent and Lenders in accordance with any agreement"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BAC",
+      "ticker": "BAC",
+      "name": "バンク・オブ・アメリカ",
+      "name_en": "Bank of America",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の幹事行",
+          "text_en": "Administrative agent on its credit agreement",
+          "source": {
+            "label": "FTI Consulting 8-K(2026年7月)",
+            "label_en": "FTI Consulting 8-K (July 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/887936/000119312526291542/fcn-20260630.htm",
+            "level": "official",
+            "date": "2026-07-01",
+            "quote": "(\"FTI Consulting\" or the \"Company\"), as borrower, certain subsidiaries of the Company, as guarantors, and a syndicate of lenders led by Bank of America, N.A., as administrative agent (the \"Administrative Agent\"), entered into a Third Amendment and Restatement Agreement (the \"Restatement Agreement\"), which amends and restates the Second Amended and Restated Credit Agreement, dated November 21, 2022, as amended from time to time prior to the date of the Restatement Agreement"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,160 @@
+{
+  "root": {
+    "ticker": "STAA",
+    "name": "スター・サージカル",
+    "cik": 718937,
+    "name_en": "STAAR Surgical"
+  },
+  "rows": [
+    {
+      "ja": "供給元・取引先",
+      "en": "Suppliers & providers"
+    },
+    {
+      "ja": "提携・出資・買収",
+      "en": "Partners, stakes & deals"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "ALC",
+      "ticker": "ALC",
+      "name": "アルコン",
+      "name_en": "Alcon Inc.",
+      "sub": "眼科",
+      "sub_en": "Eye care",
+      "sub_short": "眼科",
+      "sub_short_en": "Eye care",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "合併契約の相手(のちに解消)",
+          "text_en": "Merger partner; deal later ended",
+          "source": {
+            "label": "STAAR Surgical 10-K(2025年度)",
+            "label_en": "STAAR Surgical 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/718937/000071893726000004/staa-20260102.htm",
+            "level": "official",
+            "date": "2026-03-03",
+            "quote": "Termination of Alcon Merger Agreement As previously disclosed, on August 4, 2025, STAAR entered into an Agreement and Plan of Merger (the \"Merger Agreement\") with Alcon Research, LLC, a Delaware limited liability company (\"Alcon\"), and Rascasse Merger Sub, Inc., a Delaware corporation and a wholly owned direct subsidiary of Alcon (\"Merger Sub\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BROADWOOD",
+      "ticker": "BROADWOOD",
+      "name": "ブロードウッド・パートナーズ",
+      "name_en": "Broadwood Partners",
+      "sub": "投資会社",
+      "sub_en": "Investment firm",
+      "sub_short": "投資",
+      "sub_short_en": "Investor",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "最大株主との協力合意",
+          "text_en": "Cooperation agreement with its largest holder",
+          "source": {
+            "label": "STAAR Surgical 10-K(2025年度)",
+            "label_en": "STAAR Surgical 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/718937/000071893726000004/staa-20260102.htm",
+            "level": "official",
+            "date": "2026-03-03",
+            "quote": "Following the termination of the Merger Agreement, on January 14, 2026, STAAR entered into a letter agreement (the \"Cooperation Agreement\") with Broadwood Partners, L.P. and its affiliates (\"Broadwood\"), the Company's largest stockholder."
+          }
+        }
+      ]
+    },
+    {
+      "id": "OPHTEC",
+      "ticker": "OPHTEC",
+      "name": "オフテック",
+      "name_en": "Ophtec",
+      "sub": "眼内レンズ",
+      "sub_en": "Eye implants",
+      "sub_short": "レンズ",
+      "sub_short_en": "Lenses",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "10-Kで競合に挙げる",
+          "text_en": "Named as a competitor in its 10-K",
+          "source": {
+            "label": "STAAR Surgical 10-K(2025年度)",
+            "label_en": "STAAR Surgical 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/718937/000071893726000004/staa-20260102.htm",
+            "level": "official",
+            "date": "2026-03-03",
+            "quote": "We also face competition from other phakic implantable lenses, including lenses made by Biotech Vision Care, Care Group, Eyebright, and Ophtec."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BIOTECHVC",
+      "ticker": "BIOTECHVC",
+      "name": "バイオテック・ビジョン・ケア",
+      "name_en": "Biotech Vision Care",
+      "sub": "眼内レンズ",
+      "sub_en": "Eye implants",
+      "sub_short": "レンズ",
+      "sub_short_en": "Lenses",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "10-Kで競合に挙げる",
+          "text_en": "Named as a competitor in its 10-K",
+          "source": {
+            "label": "STAAR Surgical 10-K(2025年度)",
+            "label_en": "STAAR Surgical 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/718937/000071893726000004/staa-20260102.htm",
+            "level": "official",
+            "date": "2026-03-03",
+            "quote": "We also face competition from other phakic implantable lenses, including lenses made by Biotech Vision Care, Care Group, Eyebright, and Ophtec."
+          }
+        }
+      ]
+    },
+    {
+      "id": "2000GOLD",
+      "ticker": "2000GOLD",
+      "name": "2000ゴールド",
+      "name_en": "2000 Gold L.P.",
+      "sub": "不動産",
+      "sub_en": "Real estate",
+      "sub_short": "不動産",
+      "sub_short_en": "Landlord",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "施設の貸し手",
+          "text_en": "Landlord of one of its sites",
+          "source": {
+            "label": "STAAR Surgical 10-K(2025年度)",
+            "label_en": "STAAR Surgical 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/718937/000071893726000004/staa-20260102.htm",
+            "level": "official",
+            "date": "2026-03-03",
+            "quote": "Lease Agreement dated August 10, 2017 by and between the Company and 2000 Gold L.P."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

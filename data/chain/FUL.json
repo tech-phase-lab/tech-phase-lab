@@ -1,0 +1,156 @@
+{
+  "root": {
+    "ticker": "FUL",
+    "name": "H.B.フラー",
+    "cik": 39368,
+    "name_en": "H.B. Fuller"
+  },
+  "rows": [
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "買収・売却",
+      "en": "Acquisitions & sales"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "GEMSRL",
+      "ticker": "GEMSRL",
+      "name": "GEM",
+      "name_en": "GEM S.r.l.",
+      "sub": "医療用接着剤",
+      "sub_en": "Medical adhesives",
+      "sub_short": "接着剤",
+      "sub_short_en": "Adhesive",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年1月に買収",
+          "text_en": "Acquired in January 2025",
+          "source": {
+            "label": "H.B. Fuller 10-K(2025年11月期)",
+            "label_en": "H.B. Fuller 10-K (FY ended Nov 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/39368/000143774926001767/ful20251130_10k.htm",
+            "level": "official",
+            "date": "2026-01-22",
+            "quote": "GEM S.r.l. and Medifill Limited On January 15, 2025, we completed the acquisition of GEM S.r.l."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MEDIFILL",
+      "ticker": "MEDIFILL",
+      "name": "メディフィル",
+      "name_en": "Medifill",
+      "sub": "医療用接着剤",
+      "sub_en": "Medical adhesives",
+      "sub_short": "接着剤",
+      "sub_short_en": "Adhesive",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2024年12月に買収",
+          "text_en": "Acquired in December 2024",
+          "source": {
+            "label": "H.B. Fuller 10-K(2025年11月期)",
+            "label_en": "H.B. Fuller 10-K (FY ended Nov 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/39368/000143774926001767/ful20251130_10k.htm",
+            "level": "official",
+            "date": "2026-01-22",
+            "quote": "(\"GEM\") and on December 2, 2024, we completed the acquisition of Medifill Limited (Medifill) for a total purchase price of 191,868 Euros, or approximately $196,990 which was funded through borrowings on our credit facility and existing cash."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NDIND",
+      "ticker": "NDIND",
+      "name": "NDインダストリーズ",
+      "name_en": "ND Industries",
+      "sub": "ねじ用接着剤",
+      "sub_en": "Fastener adhesives",
+      "sub_short": "接着剤",
+      "sub_short_en": "Adhesive",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2024年5月に資産を買収",
+          "text_en": "Bought its assets in May 2024",
+          "source": {
+            "label": "H.B. Fuller 10-K(2025年11月期)",
+            "label_en": "H.B. Fuller 10-K (FY ended Nov 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/39368/000143774926001767/ful20251130_10k.htm",
+            "level": "official",
+            "date": "2026-01-22",
+            "quote": "On May 20, 2024, we acquired the assets of ND Industries, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HSBUTYL",
+      "ticker": "HSBUTYL",
+      "name": "HSブチル",
+      "name_en": "HS Butyl",
+      "sub": "シーリング材",
+      "sub_en": "Sealants",
+      "sub_short": "接着剤",
+      "sub_short_en": "Adhesive",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2024年8月に買収",
+          "text_en": "Acquired in August 2024",
+          "source": {
+            "label": "H.B. Fuller 10-K(2025年11月期)",
+            "label_en": "H.B. Fuller 10-K (FY ended Nov 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/39368/000143774926001767/ful20251130_10k.htm",
+            "level": "official",
+            "date": "2026-01-22",
+            "quote": "HS Butyl Limited On August 5, 2024, we acquired HS Butyl Limited (\"HS Butyl\") for a purchase price of 18,342 British pound sterling, or approximately $23,428 which was funded through existing cash."
+          }
+        }
+      ]
+    },
+    {
+      "id": "JPM",
+      "ticker": "JPM",
+      "name": "JPMorgan Chase",
+      "name_en": "JPMorgan Chase",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の幹事行",
+          "text_en": "Administrative agent on its credit agreement",
+          "source": {
+            "label": "H.B. Fuller 8-K(2026年7月)",
+            "label_en": "H.B. Fuller 8-K (July 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/39368/000143774926023846/ful20260717_8k.htm",
+            "level": "official",
+            "date": "2026-07-20",
+            "quote": "Fuller Company, a Minnesota corporation (the \"Company\"), entered into an Amendment No. 3 (the \"Amendment\") with JPMorgan Chase Bank, N.A. as administrative agent (the \"Administrative Agent\"), the various lenders party thereto and certain of the Company's subsidiaries, which amends the Second Amended and Restated Credit Agreement dated as of February 15, 2023, as previously amended, among the Company, the lenders from time to time party thereto and the Administrative Agent"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

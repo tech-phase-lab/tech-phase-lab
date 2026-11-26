@@ -1,0 +1,182 @@
+{
+  "root": {
+    "ticker": "CSR",
+    "name": "センタースペース",
+    "cik": 798359,
+    "name_en": "Centerspace"
+  },
+  "rows": [
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "買収・売却",
+      "en": "Acquisitions & sales"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "IRT",
+      "ticker": "IRT",
+      "name": "インディペンデンス・リアルティ・トラスト",
+      "name_en": "Independence Realty Trust",
+      "sub": "賃貸住宅REIT",
+      "sub_en": "Apartment REIT",
+      "sub_short": "REIT",
+      "sub_short_en": "REIT",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2026年9月に合併契約",
+          "text_en": "Signed a merger agreement in September 2026",
+          "source": {
+            "label": "Centerspace 8-K(2026年9月)",
+            "label_en": "Centerspace 8-K (September 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/798359/000114036126035986/ef20081761_8k.htm",
+            "level": "official",
+            "date": "2026-09-09",
+            "quote": "Merger Agreement On September 8, 2026, Centerspace, a North Dakota real estate investment trust (\"Centerspace\" or the \"Company\"), entered into an Agreement and Plan of Merger (the \"Merger Agreement\") with Independence Realty Trust, Inc., a Maryland corporation (\"IRT\"), Independence Realty Operating Partnership, LP, a Delaware limited partnership (\"IROP\"), Islanders OP Sub, LLC, a Delaware limited liability company and direct wholly owned subsidiary of IROP (\"IROP Merger"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PRU",
+      "ticker": "PRU",
+      "name": "Prudential Financial(PGIM)",
+      "name_en": "Prudential Financial",
+      "sub": "生命保険",
+      "sub_en": "Life insurance",
+      "sub_short": "生保",
+      "sub_short_en": "Insurer",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "系列のPGIMと私募社債の発行枠契約",
+          "text_en": "Has a private shelf agreement with its PGIM unit",
+          "source": {
+            "label": "Centerspace 10-K(2025年度)",
+            "label_en": "Centerspace 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/798359/000079835926000014/csr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "We have a private shelf agreement with PGIM, Inc., an affiliate of Prudential Financial, Inc., and certain affiliates of PGIM, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "USB",
+      "ticker": "USB",
+      "name": "USバンコープ",
+      "name_en": "U.S. Bancorp",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "運転資金の融資枠を提供",
+          "text_en": "Provides its operating line of credit",
+          "source": {
+            "label": "Centerspace 10-K(2025年度)",
+            "label_en": "Centerspace 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/798359/000079835926000014/csr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "We have an operating line of credit agreement with US Bank, N.A. which has a borrowing capacity of up to $10.0 million and pricing based on SOFR."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BMO",
+      "ticker": "BMO",
+      "name": "BMOフィナンシャル・グループ",
+      "name_en": "BMO Financial Group",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の幹事行",
+          "text_en": "Administrative agent on its credit agreement",
+          "source": {
+            "label": "Centerspace 10-K(2025年度)",
+            "label_en": "Centerspace 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/798359/000079835926000014/csr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Restated Credit Agreement and related Annex I attached thereto, dated as of August 31, 2018, by and among IRET Properties, a North Dakota Limited Partnership, as the Borrower, the Guarantors party thereto, the several financial institutions party thereto, as Lenders, and the Bank of Montreal, as Administrative Agent"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PNC",
+      "ticker": "PNC",
+      "name": "PNCフィナンシャル・サービシズ",
+      "name_en": "PNC Financial Services",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の幹事行",
+          "text_en": "Administrative agent on its credit agreement",
+          "source": {
+            "label": "Centerspace 10-K(2025年度)",
+            "label_en": "Centerspace 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/798359/000079835926000014/csr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Term Loan Agreement, dated as of November 22, 2022, among Centerspace, LP, the Guarantors from time to time party thereto, the Lenders from time to time party thereto, and PNC Bank, National Association, as Administrative Agent"
+          }
+        }
+      ]
+    },
+    {
+      "id": "KEY",
+      "ticker": "KEY",
+      "name": "キーコープ",
+      "name_en": "KeyCorp",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の貸し手",
+          "text_en": "A lender under its credit agreement",
+          "source": {
+            "label": "Centerspace 10-K(2025年度)",
+            "label_en": "Centerspace 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/798359/000079835926000014/csr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Restated Credit Agreement, dated as of September 30, 2021, among Centerspace, LP, the Guarantors from time to time party thereto, the Lenders from time to time party thereto, KeyBank, National Association and PNC Bank, National Association, as Syndicated Agents, and Bank of Montreal, as Administrative Agent Note"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

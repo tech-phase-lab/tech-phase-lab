@@ -1,0 +1,218 @@
+{
+  "root": {
+    "ticker": "DOC",
+    "name": "ヘルスピーク・プロパティーズ",
+    "cik": 765880,
+    "name_en": "Healthpeak Properties"
+  },
+  "rows": [
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "顧客・取引先",
+      "en": "Customers & clients"
+    },
+    {
+      "ja": "買収・売却",
+      "en": "Acquisitions & sales"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "WELL"
+  ],
+  "companies": [
+    {
+      "id": "HCA",
+      "ticker": "HCA",
+      "name": "HCAヘルスケア",
+      "name_en": "HCA Healthcare",
+      "sub": "病院",
+      "sub_en": "Hospitals",
+      "sub_short": "病院",
+      "sub_short_en": "Hospital",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大のテナント(売上の7%)",
+          "text_en": "Its largest tenant (7% of revenue)",
+          "source": {
+            "label": "Healthpeak Properties 10-K(2025年度)",
+            "label_en": "Healthpeak Properties 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/765880/000162828026005044/peak-20251231.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "As of December 31, 2025, the Company's two largest tenants, HCA Healthcare, Inc. and CommonSpirit, both of which are in the outpatient medical segment, represented 7% and 3%, respectively, of the Company's total revenues."
+          }
+        }
+      ]
+    },
+    {
+      "id": "COMMONSPIRIT",
+      "ticker": "COMMONSPIRIT",
+      "name": "コモンスピリット・ヘルス",
+      "name_en": "CommonSpirit Health",
+      "sub": "病院",
+      "sub_en": "Hospitals",
+      "sub_short": "病院",
+      "sub_short_en": "Hospital",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2番目に大きいテナント(売上の3%)",
+          "text_en": "Its second-largest tenant (3% of revenue)",
+          "source": {
+            "label": "Healthpeak Properties 10-K(2025年度)",
+            "label_en": "Healthpeak Properties 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/765880/000162828026005044/peak-20251231.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "As of December 31, 2025, the Company's two largest tenants, HCA Healthcare, Inc. and CommonSpirit, both of which are in the outpatient medical segment, represented 7% and 3%, respectively, of the Company's total revenues."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PHYSREALTY",
+      "ticker": "PHYSREALTY",
+      "name": "フィジシャンズ・リアルティ・トラスト",
+      "name_en": "Physicians Realty Trust",
+      "sub": "医療ビルREIT",
+      "sub_en": "Medical office REIT",
+      "sub_short": "REIT",
+      "sub_short_en": "REIT",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2023年の合併契約で統合",
+          "text_en": "Combined under a 2023 merger agreement",
+          "source": {
+            "label": "Healthpeak Properties 10-K(2025年度)",
+            "label_en": "Healthpeak Properties 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/765880/000162828026005044/peak-20251231.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "Current Report on Form 8-K12B February 10, 2023 2.2+ Agreement and Plan of Merger, dated as of October 29, 2023, by and among Healthpeak Properties, Inc., DOC DR Holdco, LLC (formerly Alpine Sub, LLC), DOC DR, LLC (formerly Alpine OP Sub, LLC), Physicians Realty Trust and Physicians Realty L.P."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WELL",
+      "ticker": "WELL",
+      "name": "ウェルタワー",
+      "name_en": "Welltower",
+      "sub": "医療・介護REIT",
+      "sub_en": "Healthcare REIT",
+      "sub_short": "REIT",
+      "sub_short_en": "REIT",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合の1社に挙げる",
+          "text_en": "Names Healthpeak as a competitor",
+          "source": {
+            "label": "Welltower 10-Kの添付資料(2025年度)",
+            "label_en": "Welltower exhibit to its 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/766704/000076670426000010/exhibit19-10xk2025.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "In addition, under no circumstances may a Covered Person trade in the securities of Welltower's public customers, operators or their affiliates (such as Brookdale Senior Living and Chartwell Retirement Residence) or competitors or their affiliates (such as Ventas, Inc., Healthpeak Properties, Inc., Healthcare Realty Trust, Omega Healthcare Investors, Inc., and Sabra Health Care REIT)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ALLO",
+      "ticker": "ALLO",
+      "name": "アロジーン・セラピューティクス",
+      "name_en": "Allogene Therapeutics",
+      "sub": "細胞治療",
+      "sub_en": "Cell therapy",
+      "sub_short": "細胞治療",
+      "sub_short_en": "Cell tx",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Healthpeakから研究所を賃借",
+          "text_en": "Leases lab space from Healthpeak",
+          "source": {
+            "label": "Allogene Therapeutics 10-K(2025年度)",
+            "label_en": "Allogene Therapeutics 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1737287/000162828026017242/allo-20251231.htm",
+            "level": "official",
+            "date": "2026-03-12",
+            "quote": "(incorporated by reference to Exhibit 10.17 to the Registrant's Annual Report on Form 10-K (File No. 001-38693), filed with the SEC on March 8, 2019). 10.22 First Amendment, dated December 10, 2021, to the Lease Agreement, dated October 25, 2018, by and between the Registrant and Healthpeak Properties, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BAC",
+      "ticker": "BAC",
+      "name": "バンク・オブ・アメリカ",
+      "name_en": "Bank of America",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の幹事行",
+          "text_en": "Administrative agent on its credit agreement",
+          "source": {
+            "label": "Healthpeak Properties 10-K(2025年度)",
+            "label_en": "Healthpeak Properties 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/765880/000162828026005044/peak-20251231.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "Restated Credit Agreement, dated as of October 3, 2025, by and among Healthpeak OP, LLC, Healthpeak Properties, Inc., DOC DR Holdco, LLC, DOC DR, LLC, the lenders listed therein, and Bank of America, N.A., as administrative agent. Quarterly Report on Form 10-Q October 24, 2025"
+          }
+        }
+      ]
+    },
+    {
+      "id": "KEY",
+      "ticker": "KEY",
+      "name": "キーコープ",
+      "name_en": "KeyCorp",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の幹事行",
+          "text_en": "Administrative agent on its credit agreement",
+          "source": {
+            "label": "Healthpeak Properties 10-K(2025年度)",
+            "label_en": "Healthpeak Properties 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/765880/000162828026005044/peak-20251231.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "Quarterly Report on Form 10-Q October 24, 2025 10.4 Third Amended and Restated Credit Agreement, dated as of September 24, 2021, among Physicians Realty L.P., as borrower, Physicians Realty Trust, as guarantor, the lenders party thereto and KeyBank National Association, as administrative agent."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
