@@ -87,6 +87,18 @@ export function parseValueSnapshot(raw: unknown): ValueSnapshot {
     universes: { tech: list(u.tech), all: list(u.all) }, ...(r.values ? { values } : {}) };
 }
 
+/** The monitor's /value-check/values answer (the comparison's list, served apart from the ranking since Nov 26): ticker -> figure. */
+export function parseValueFigures(raw: unknown): { asOf: string; values: Record<string, ValueFigure> } {
+  const r = (raw ?? {}) as Record<string, unknown>;
+  if (r.ok !== true || !/^\d{4}-\d{2}-\d{2}$/.test(String(r.asOf)) || !r.values || typeof r.values !== "object" || Array.isArray(r.values)) throw Error("Invalid values");
+  const asOf = String(r.asOf), values: Record<string, ValueFigure> = {};
+  for (const [ticker, entry] of Object.entries(r.values as Record<string, unknown>)) {
+    const figure = TICKER.test(ticker) ? parseValueFigure(entry, asOf) : null;
+    if (figure) values[ticker] = figure;
+  }
+  return { asOf, values };
+}
+
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 /** "11/20" from "2026-11-20"; "Nov 20" in English. */
 export const monthDay = (iso: string, ja = true) => ja ? `${Number(iso.slice(5, 7))}/${Number(iso.slice(8, 10))}` : `${MONTHS[Number(iso.slice(5, 7)) - 1]} ${Number(iso.slice(8, 10))}`;

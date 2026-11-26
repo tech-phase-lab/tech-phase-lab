@@ -7,7 +7,7 @@ import { prepareComparisonAnalysis, currentComparisonAnalysis, preparePreRevenue
 import { buildSecMarketEvidence } from "../lib/research/sec-market-evidence.ts";
 import { appendMarketItems } from "../lib/research/twelve-data-financials.ts";
 import { hasRecentBalance, hasRecentQuarter, comparisonAvailability, comparisonScores } from "../lib/research/comparison-scorecard.ts";
-import { fillFromProvider } from "../lib/research/comparison-fill.ts";
+import { carryWithholding, fillFromProvider } from "../lib/research/comparison-fill.ts";
 
 const NOW = Date.parse("2026-11-13T12:00:00Z");
 const fixture = t => JSON.parse(readFileSync(new URL(`./fixtures/sec-companyfacts-${t}.json`, import.meta.url), "utf8"));
@@ -32,9 +32,10 @@ async function server(stubs) {
     .replace(/import \{ appendMarketItems \}[^;]*;/, "const appendMarketItems = globalThis.__t.appendMarketItems;")
     .replace(/import \{ comparisonScores, hasRecentBalance, hasRecentQuarter \}[^;]*;/, "const { comparisonScores, hasRecentBalance, hasRecentQuarter } = globalThis.__t;")
     .replace(/import \{ fillFromProvider \}[^;]*;/, "const fillFromProvider = globalThis.__t.fillFromProvider;")
+    .replace(/import \{ carryWithholding \}[^;]*;/, "const carryWithholding = globalThis.__t.carryWithholding;")
     .replace('"./comparison-exclusions"', JSON.stringify(new URL("../lib/research/comparison-exclusions.ts", import.meta.url).href))
     .replace(/import type \{ Financials \}[^;]*;/, "");
-  globalThis.__t = { emptyFinancials, prepareComparisonAnalysis, currentComparisonAnalysis, appendFilingFinancialItems, appendEquityItem, buildSecMarketEvidence, appendMarketItems, hasRecentBalance, hasRecentQuarter, comparisonScores, fillFromProvider, preparePreRevenueAnalysis, ...stubs };
+  globalThis.__t = { emptyFinancials, prepareComparisonAnalysis, currentComparisonAnalysis, appendFilingFinancialItems, appendEquityItem, buildSecMarketEvidence, appendMarketItems, hasRecentBalance, hasRecentQuarter, comparisonScores, fillFromProvider, carryWithholding, preparePreRevenueAnalysis, ...stubs };
   return import("data:text/javascript;base64," + Buffer.from(stripTypeScriptTypes(text)).toString("base64") + `#${Math.random()}`);
 }
 const withClock = async fn => { const real = Date.now; Date.now = () => NOW; try { return await fn(); } finally { Date.now = real; } };

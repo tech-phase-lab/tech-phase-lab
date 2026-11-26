@@ -4,7 +4,11 @@ import type { Financials } from "./comparison.ts";
 import { ALTERNATIVE_SCALES, lossTrendPct, runway } from "./comparison-alternatives.ts";
 import { ALTERNATIVE_LABELS } from "./comparison-labels.ts";
 export type ScoreId = "valuation" | "growth" | "profitability" | "financial" | "cash" | "stability" | "momentum";
-export type ComparisonScore = { id: ScoreId; label: {ja:string;en:string}; value: number | null };
+/** `kind`: which yardstick gave the value. Absent for the standard metric; "preRevenue" for a company with no revenue (runway, net-loss
+ *  trend, dilution), "sector" for a bank, insurer, broker or BDC (capital ratio, ROE, net investment income margin). Scores of different
+ *  kinds are never compared with each other (reviewer, Nov 26: a drug developer's runway "beat" NVIDIA's free cash flow). */
+export type ScoreKind = "preRevenue" | "sector";
+export type ComparisonScore = { id: ScoreId; label: {ja:string;en:string}; value: number | null; kind?: ScoreKind };
 const clamp = (n:number) => Math.round(Math.max(0,Math.min(10,n))*10)/10;
 const finite = (n: unknown): n is number => typeof n === "number" && Number.isFinite(n);
 /** The latest period is current: a quarter, or for a foreign filer a half-year or fiscal year (`periodMonths`), each with its own age limit.
@@ -39,7 +43,10 @@ export function comparableQuarters(companies: Financials[], now=Date.now()): boo
 export function comparisonLeaders(companies: Financials[], id: ScoreId, now=Date.now()): boolean[] {
   const none=companies.map(()=>false);
   if(!comparableQuarters(companies,now) || new Set(companies.map(c=>!!c.referenceEvaluation)).size>1) return none;
-  const values=companies.map(c=>comparisonScores(c,now).find(s=>s.id===id)?.value);
+  const found=companies.map(c=>comparisonScores(c,now).find(s=>s.id===id));
+  // A bank's ROE beside another company's free cash flow is not one yardstick: no leader is marked.
+  if(new Set(found.map(s=>s?.kind ?? "standard")).size>1) return none;
+  const values=found.map(s=>s?.value);
   if(!values.every(finite)) return none;
   const best=Math.max(...values);
   return values.map(value=>value===best && values.some(other=>other<best));
@@ -82,15 +89,18 @@ export function comparisonScores(c: Financials, now = Date.now()): ComparisonSco
   // Company-type metrics where the standard one has no meaning (comparison-alternatives.ts), each on its own fixed scale; a standard score
   // that exists is never replaced.
   const alt = alternativeScores(c, recent, balanceOnly);
+  const altKind: ScoreKind = balanceOnly && c.preRevenueMetrics ? "preRevenue" : "sector";
+  const pick = (standard: number | null | undefined, id: "financial" | "profitability" | "stability" | "growth" | "cash") =>
+    standard !== null && standard !== undefined ? { value: standard } : finite(alt[id]) ? { value: alt[id]!, kind: altKind } : { value: null };
   const scores: ComparisonScore[] = [
-    {id:"financial",label:{ja:"財務健全性",en:"Financial strength"},value:recent ? extra?.financial ?? financial ?? alt.financial ?? null : balanceOnly ? financial : null},
-    {id:"profitability",label:{ja:"収益性",en:"Profitability"},value:profitability ?? (alt.profitability ?? null)},
+    {id:"financial",label:{ja:"財務健全性",en:"Financial strength"},...(recent ? pick(extra?.financial ?? financial, "financial") : { value: balanceOnly ? financial : null })},
+    {id:"profitability",label:{ja:"収益性",en:"Profitability"},...pick(profitability, "profitability")},
     // Treasure Hunt's figure (comparison-value.ts): the price against the company's own history, independent of the latest quarter.
     {id:"valuation",label:{ja:"割安性",en:"Valuation"},value:c.valueCheck && valueFigureCurrent(c.valueCheck,now) ? valueFigureScore(c.valueCheck) : null},
-    {id:"stability",label:{ja:"安定性",en:"Stability"},value:recent ? extra?.stability ?? null : (alt.stability ?? null)},
+    {id:"stability",label:{ja:"安定性",en:"Stability"},...(recent ? { value: extra?.stability ?? null } : pick(null, "stability"))},
     {id:"momentum",label:{ja:"株価モメンタム",en:"Price momentum"},value:extra?.momentum ?? null},
-    {id:"growth",label:{ja:"成長性",en:"Growth"},value:growth ?? (alt.growth ?? null)},
-    {id:"cash",label:{ja:"資金創出",en:"Cash generation"},value:cash ?? (alt.cash ?? null)},
+    {id:"growth",label:{ja:"成長性",en:"Growth"},...pick(growth, "growth")},
+    {id:"cash",label:{ja:"資金創出",en:"Cash generation"},...pick(cash, "cash")},
   ];
   if(c.referenceEvaluation) return scores.map(s=>({...s,value:recent ? c.referenceEvaluation!.factors.find(f=>f.id===s.id)?.value ?? null : null}));
   return scores;
@@ -120,7 +130,7 @@ export function alternativeScores(c: Financials, recent: boolean, balanceOnly: b
 function alternativeMetric(c: Financials, id: ScoreId, lang: "ja"|"en", recent: boolean, balanceOnly: boolean): string | null {
   const alt = alternativeScores(c, recent, balanceOnly)[id];
   const L = ALTERNATIVE_LABELS;
-  if (balanceOnly && c.preRevenueMetrics && id === "profitability") return L.noMargin(c.preRevenueMetrics.rd?.share ?? null)[lang];
+  if (balanceOnly && c.preRevenueMetrics && id === "profitability") return L.noMargin(c.preRevenueMetrics.rd?.share ?? null, c.preRevenueMetrics.rd?.of)[lang];
   if (alt === null && balanceOnly && c.preRevenueMetrics && (id === "cash" || id === "growth" || id === "stability")) return L.missing[id][lang];
   if (alt === null || alt === undefined) return null;
   if (balanceOnly && c.preRevenueMetrics) {
@@ -132,7 +142,7 @@ function alternativeMetric(c: Financials, id: ScoreId, lang: "ja"|"en", recent: 
   }
   const s = c.sectorMetrics!;
   if (id === "financial") return L.capitalRatio(s.capitalRatio!)[lang];
-  if (id === "cash") return L.roe(s.roe!.pct)[lang];
+  if (id === "cash") return L.roe(s.roe!.pct, s.roe!.basis)[lang];
   if (id === "profitability") return L.niiMargin(s.niiMargin!)[lang];
   return null;
 }
@@ -177,7 +187,8 @@ export function comparisonMetric(c: Financials, id: ScoreId, lang: "ja"|"en", no
     const alternative=alternativeMetric(c,id,lang,hasRecentQuarter(c,now),false);
     if(alternative) return alternative;
   }
-  if(id==="financial" && ownBalance && finite(c.balance?.currentRatio)) return `${ja?"流動比率":"Current ratio"} ${c.balance.currentRatio.toFixed(2)}${ja?"倍":"×"}${c.balance.debtTotal?.source==="none" ? (ja?"・借入なし":" · no debt") : ""}`;
+  // A current ratio is shown only beside a financial-strength score (reviewer, Nov 26: NVS showed 0.86 with no score, its debt unreadable).
+  if(id==="financial" && ownBalance && finite(c.balance?.currentRatio) && comparisonScores(c,now).find(s=>s.id==="financial")?.value!==null) return `${ja?"流動比率":"Current ratio"} ${c.balance.currentRatio.toFixed(2)}${ja?"倍":"×"}${c.balance.debtTotal?.source==="none" ? (ja?"・借入なし":" · no debt") : ""}`;
   return missingReason(c,id,ja);
 }
 
@@ -186,7 +197,9 @@ function missingReason(c: Financials, id: ScoreId, ja: boolean): string {
   const r=(jaText:string,en:string)=>ja?jaText:en;
   const noRevenue=!c.quarterRevenue || c.quarterRevenue.value<=0;
   if(noRevenue && (id==="growth"||id==="profitability"||id==="cash"||id==="stability")) return r("売上がまだ無い会社です","No revenue yet");
+  if(id==="growth" && c.growthWithheld) return ALTERNATIVE_LABELS.growthWithheld[ja?"ja":"en"];
   if(id==="growth") return r("前年同期の売上が未開示","Year-ago revenue not available");
+  if(id==="profitability" && c.marginSign) return ALTERNATIVE_LABELS.marginSign[ja?"ja":"en"];
   if((id==="profitability" || id==="stability") && c.marginPartial) return ALTERNATIVE_LABELS.marginPartial[ja?"ja":"en"];
   if(id==="profitability" && (c.marginWithheld || (finite(c.quarterOperatingMargin) && c.quarterOperatingMargin > 100))) return ALTERNATIVE_LABELS.marginWithheld[ja?"ja":"en"];
   if(id==="profitability") return r("営業利益の記載なし","No operating income reported");
@@ -212,7 +225,10 @@ export function compositeScore(scores: ComparisonScore[]): number | null {
  *  are needed. `ids` says which factors were used. */
 export function commonTotals(companies: Financials[], now=Date.now()): { ids: ScoreId[]; totals: (number|null)[] } {
   const sets=companies.map(c=>comparisonScores(c,now));
-  const ids=(sets[0] ?? []).map(s=>s.id).filter(id=>sets.every(scores=>scores.find(s=>s.id===id)?.value!=null));
+  // Only factors every company has on the same kind of metric (reviewer, Nov 26: NVDA's free cash flow against a drug developer's runway made
+  // ALDX "lead" NVDA). Fewer than three such factors: no overall score.
+  const ids=(sets[0] ?? []).map(s=>s.id).filter(id=>sets.every(scores=>scores.find(s=>s.id===id)?.value!=null)
+    && new Set(sets.map(scores=>scores.find(s=>s.id===id)?.kind ?? "standard")).size===1);
   if(ids.length<3) return { ids, totals: companies.map(()=>null) };
   return { ids, totals: sets.map(scores=>compositeScore(scores.filter(s=>ids.includes(s.id)))) };
 }
@@ -229,8 +245,9 @@ export function quarterlyHighlights(c: Financials, lang: "ja"|"en", now=Date.now
   const strengths: string[]=[],weaknesses: string[]=[];
   if(valid("growth") && c.quarterRevenueGrowth!>0) strengths.push(lang==="ja" ? `売上成長 +${c.quarterRevenueGrowth!.toFixed(1)}%` : `Revenue growth +${c.quarterRevenueGrowth!.toFixed(1)}%`);
   if(valid("growth") && c.quarterRevenueGrowth!<0) weaknesses.push(lang==="ja" ? `売上減少 ${c.quarterRevenueGrowth!.toFixed(1)}%` : `Revenue decline ${c.quarterRevenueGrowth!.toFixed(1)}%`);
-  if(valid("profitability") && c.quarterOperatingMargin!>=15) strengths.push(lang==="ja" ? `営業利益率 ${c.quarterOperatingMargin!.toFixed(1)}%` : `Operating margin ${c.quarterOperatingMargin!.toFixed(1)}%`);
-  if(valid("profitability") && c.quarterOperatingMargin!<0) weaknesses.push(lang==="ja" ? `営業赤字 ${c.quarterOperatingMargin!.toFixed(1)}%` : `Operating loss ${c.quarterOperatingMargin!.toFixed(1)}%`);
+  const pretax=c.quarterOperatingIncome?.tag==="TechPhasePretaxIncome";
+  if(valid("profitability") && c.quarterOperatingMargin!>=15) strengths.push(lang==="ja" ? `${pretax?"税引前利益率":"営業利益率"} ${c.quarterOperatingMargin!.toFixed(1)}%` : `${pretax?"Pre-tax margin":"Operating margin"} ${c.quarterOperatingMargin!.toFixed(1)}%`);
+  if(valid("profitability") && c.quarterOperatingMargin!<0) weaknesses.push(lang==="ja" ? `${pretax?"税引前赤字":"営業赤字"} ${c.quarterOperatingMargin!.toFixed(1)}%` : `${pretax?"Pre-tax loss":"Operating loss"} ${c.quarterOperatingMargin!.toFixed(1)}%`);
   if(valid("growth") && finite(c.quarterDilutedSharesGrowth) && c.quarterDilutedSharesGrowth>5) weaknesses.push(lang==="ja" ? `平均株式数 +${c.quarterDilutedSharesGrowth!.toFixed(1)}%` : `Average shares +${c.quarterDilutedSharesGrowth!.toFixed(1)}%`);
   if(valid("cash") && c.quarterFcfMargin!<0) weaknesses.push(lang==="ja" ? "四半期の簡易FCFがマイナス" : "Negative quarterly simple FCF");
   return {strengths,weaknesses};
@@ -257,13 +274,18 @@ const factorWords: Record<ScoreId,{ja:string;en:string}> = {
   financial:{ja:"財務の余力",en:"financial strength"}, profitability:{ja:"収益性",en:"profitability"}, valuation:{ja:"割安さ",en:"valuation"},
   stability:{ja:"安定性",en:"stability"}, momentum:{ja:"株価の勢い",en:"price momentum"}, growth:{ja:"成長性",en:"growth"}, cash:{ja:"資金を生む力",en:"cash generation"},
 };
+/** The words for a factor scored on a company-type metric: a runway is not "cash generation" (reviewer, Nov 26). */
+const kindWords: Record<ScoreKind, Partial<Record<ScoreId,{ja:string;en:string}>>> = {
+  preRevenue: { cash:{ja:"資金の持ち期間",en:"cash runway"}, growth:{ja:"赤字の推移",en:"net-loss trend"}, stability:{ja:"株数の増え方の小ささ",en:"lower dilution"} },
+  sector: { financial:{ja:"自己資本比率",en:"equity-to-assets ratio"}, cash:{ja:"ROE",en:"return on equity"}, profitability:{ja:"純投資利益率",en:"net investment income margin"} },
+};
 type AnalysisItem = NonNullable<Financials["preparedAnalysis"]>["items"][number];
 /** One weakness bullet as a plain clause ("売上が43.5%減っています"), using only the figures in the bullet itself. */
 export function cautionClause(item: AnalysisItem, lang: "ja"|"en"): string {
   const ja=lang==="ja", text=item.short[lang], numbers=[...text.matchAll(/[-+]?\d[\d,]*(?:\.\d+)?/g)].map(m=>m[0].replace(/^\+/,""));
   const abs=(n:string|undefined)=>n?.replace(/^-/,"");
   if(item.id==="revenue-growth" && numbers[0]) return ja ? `売上が${abs(numbers[0])}%減っています` : `its revenue fell ${abs(numbers[0])}%`;
-  if(item.id==="margin-decline" && numbers.length>=2) return ja ? `営業利益率が${numbers[0]}%から${numbers[1]}%に下がっています` : `its operating margin fell from ${numbers[0]}% to ${numbers[1]}%`;
+  if(item.id==="margin-decline" && numbers.length>=2) { const pre=/税引前|Pre-tax/.test(text); return ja ? `${pre?"税引前利益率":"営業利益率"}が${numbers[0]}%から${numbers[1]}%に下がっています` : `its ${pre?"pre-tax":"operating"} margin fell from ${numbers[0]}% to ${numbers[1]}%`; }
   if(item.id==="operating-margin" && numbers[0] && /税引前|Pre-tax/.test(text)) return ja ? `税引前で赤字（利益率 ${numbers[0]}%）です` : `its pre-tax margin was ${numbers[0]}%`;
   if(item.id==="operating-margin" && numbers[0]) return ja ? `営業赤字（営業利益率 ${numbers[0]}%）です` : `its operating margin was ${numbers[0]}%`;
   if(item.id==="momentum" && numbers.length) return ja ? `株価が約3か月で${abs(numbers.at(-1))}%下がっています` : `its share price fell ${abs(numbers.at(-1))}% over about three months`;
@@ -283,7 +305,11 @@ export function overallComparison(companies: (Financials & {ticker:string})[],la
   const ja=lang==="ja",common=commonTotals(companies,now);
   const ranked=companies.map((c,i)=>({c,scores:comparisonScores(c,now).filter(s=>common.ids.includes(s.id)),total:common.totals[i]}));
   if(new Set(companies.map(c=>!!c.referenceEvaluation)).size>1 || ranked.some(r=>r.total===null))
-    return {title:ja?"必要なデータが揃っていません":"There isn't enough data for an overall score",description:ja?`${companies.length}社に共通する項目が3つ未満のため、総合順位は出していません。`:"Fewer than three factors are available for every company, so no overall ranking is given."};
+    return {title:ja?"必要なデータが揃っていません":"There isn't enough data for an overall score",description:ja?`${companies.length}社を同じ物差しで比べられる項目が3つ未満のため、総合順位は出していません。`:"Fewer than three factors measure every company on the same yardstick, so no overall ranking is given."};
+  // A company scored on company-type metrics (no revenue yet; a bank, insurer or broker) is never named the leader over, or level with, a
+  // company scored on the standard ones (reviewer, Nov 26: 「ALDX が優位」 over NVDA, 「拮抗」 for NVDA and SPRO).
+  const alternative=(c:Financials)=>comparisonScores(c,now).some(s=>s.kind && s.value!==null);
+  const mixed=new Set(companies.map(alternative)).size>1;
   const count=common.ids.length;
   const note=count<7 ? (ja?`総合点は、全社にそろう${count}項目の平均です。`:`Overall scores average the ${count} factors every company has.`) : undefined;
   const periods=comparableQuarters(companies,now) ? "" : companies.some(c=>!hasRecentQuarter(c,now) && hasRecentBalance(c,now))
@@ -306,7 +332,14 @@ export function overallComparison(companies: (Financials & {ticker:string})[],la
     const pct=Math.abs(change(r)!).toFixed(1), names=others.map(o=>o.c.ticker);
     return ja?`${r.c.ticker}は株価の下げが${names.join("・")}より小さく、約3か月で${pct}%の下落です。`:`${r.c.ticker} has fallen less than ${names.join(" and ")}, down ${pct}% over about three months.`;
   };
-  const words=(list:{id:ScoreId}[])=>joinWords(list.map(s=>factorWords[s.id][lang]),ja);
+  const kindOf=(id:ScoreId)=>ranked[0].scores.find(s=>s.id===id)?.kind;
+  const words=(list:{id:ScoreId}[])=>joinWords(list.map(s=>{const k=kindOf(s.id);return (k && kindWords[k][s.id] || factorWords[s.id])[lang];}),ja);
+  if(mixed && (gap<0.3 || alternative(best.c))) {
+    const alt=companies.filter(alternative).map(c=>c.ticker), std=companies.filter(c=>!alternative(c)).map(c=>c.ticker);
+    return {title:ja?"総合の優劣はつけていません":"No overall leader is named",
+      description:ja?`${alt.join("・")}は売上がまだ無い会社や金融機関向けの項目で採点しており、${std.join("・")}と同じ物差しの項目が限られるため、総合の優劣は出していません。各項目を個別に確認してください。`
+        :`${alt.join(" and ")} ${alt.length>1?"are":"is"} scored on company-type metrics (no revenue yet, or a financial firm), so few factors measure ${std.join(" and ")} on the same yardstick and no overall leader is named. Compare the factors one by one.`,note};
+  }
   const weakness=(r:typeof best)=>r.c.preparedAnalysis?.items.find(i=>i.kind==="weakness");
   if(gap<0.3) {
     const a=edges(best,[next]),b=edges(next,[best]);

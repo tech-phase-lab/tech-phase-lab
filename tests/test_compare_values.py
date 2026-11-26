@@ -162,6 +162,29 @@ class Worker(unittest.TestCase):
                 sleep=lambda s: None, treasure=['TRES'], last_statement={'at': datetime(2026, 1, 5, tzinfo=timezone.utc).timestamp()})
         self.assertEqual(self.calls, [])
 
+    def test_a_failed_split_adjusted_read_marks_no_company_as_missed(self):
+        """Reviewer, Nov 26: one failed adjusted read used to mark all eight companies of the chunk as misses for a week."""
+        rows = [[1, 'Alpha', 'ALPH', 'Nasdaq'], [2, 'Beta', 'BETA', 'Nasdaq']]
+        records = {'ALPH': record(self.first), 'BETA': record(self.first)}
+        original, base = cv.compare_fundamentals, self.transport
+        def failing(path, params):
+            if path == 'time_series' and params.get('adjust') == 'splits':
+                raise RuntimeError('provider timeout')
+            return base(path, params)
+        cv.compare_fundamentals = lambda facts: records.get({1: 'ALPH', 2: 'BETA'}.get(facts['cik']), {'error': 'no-sec-data'})
+        try:
+            cv.step(self.db, transport=failing, sec=self.sec, directory=lambda: directory(rows), now=datetime(2026, 1, 5, tzinfo=timezone.utc),
+                    sleep=lambda s: None, treasure=[], last_statement={'at': 0})
+            self.assertEqual(self.db.execute("SELECT COUNT(*) FROM compare_misses WHERE kind='history'").fetchone()[0], 0)
+            # The next run reads them again and stores their history.
+            cv.step(self.db, transport=self.transport, sec=self.sec, directory=lambda: directory(rows), now=datetime(2026, 1, 5, 1, tzinfo=timezone.utc),
+                    sleep=lambda s: None, treasure=[], last_statement={'at': 0})
+        finally:
+            cv.compare_fundamentals = original
+        values = vc.compare_list(self.db, vc.snapshot(self.db))
+        self.assertIn('ALPH', values)
+        self.assertIn('BETA', values)
+
 
 class Payload(unittest.TestCase):
     def test_the_list_is_compact_and_an_old_snapshot_converges(self):
@@ -182,7 +205,7 @@ class Payload(unittest.TestCase):
             finally:
                 vc.compute = original
                 vc.DERIVED.clear()
-            self.assertEqual(vc.public_payload(db)['values'], {'XBIO': [32, 31.6, 'pb', None]})
+            self.assertEqual(vc.values_payload(db)['values'], {'XBIO': [32, 31.6, 'pb', None]})
         finally:
             db.close()
 

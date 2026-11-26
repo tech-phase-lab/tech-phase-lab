@@ -129,7 +129,9 @@ test("financial strength reads debt in the form the filing uses; a filing with n
   assert.deepEqual(withBalance({ LongTermDebtCurrent: 10, LongTermDebtNoncurrent: 90 }), { value: 100, source: "split" });
   assert.deepEqual(withBalance({ LongTermDebt: 80, ShortTermBorrowings: 5 }), { value: 85, source: "total" });
   assert.deepEqual(withBalance({ ConvertibleDebtNoncurrent: 70 }), { value: 70, source: "convertible" });
-  assert.deepEqual(withBalance({ LongTermDebtAndCapitalLeaseObligationsIncludingCurrentMaturities: 460, ShortTermBorrowings: 71 }), { value: 531, source: "total" });   // JPMorgan
+  assert.deepEqual(withBalance({ LongTermDebtAndCapitalLeaseObligationsIncludingCurrentMaturities: 460, ShortTermBorrowings: 71, Liabilities: 900 }), { value: 531, source: "total" });   // JPMorgan
+  // Debt above total liabilities is a double count: held as unknown (reviewer, Nov 26: ATLC).
+  assert.equal(withBalance({ LongTermDebtAndCapitalLeaseObligationsIncludingCurrentMaturities: 460, ShortTermBorrowings: 71 }), null);
   assert.deepEqual(withBalance({ AvailableForSaleSecuritiesDebtSecurities: 900 }), { value: 0, source: "none" });   // owning bonds is not borrowing
   // A borrowing filed only under its own line (Nov 26 audit: 506 companies): each family once, added up (AAON's line of credit).
   assert.deepEqual(withBalance({ LineOfCredit: 40 }), { value: 40, source: "lines" });

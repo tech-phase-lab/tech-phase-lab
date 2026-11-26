@@ -60,11 +60,12 @@ function chain(ends: string[], newest: string, n = 4): string[] {
 
 const SHORT_TERM = ["ShortTermInvestments", "MarketableSecuritiesCurrent", "AvailableForSaleSecuritiesDebtSecuritiesCurrent", "ShorttermInvestments"];
 const OCF = ["NetCashProvidedByUsedInOperatingActivities", "NetCashProvidedByUsedInOperatingActivitiesContinuingOperations", "CashFlowsFromUsedInOperatingActivities"];
-const NET_INCOME = ["NetIncomeLoss", "ProfitLoss", "ProfitLossAttributableToOwnersOfParent"];
+// The owners' share first (reviewer, Nov 26): an IFRS filer's ProfitLoss includes non-controlling interests, while the equity ROE divides by is
+// the owners' (EquityAttributableToOwnersOfParent); US GAAP NetIncomeLoss is already the parent's.
+const NET_INCOME = ["NetIncomeLoss", "ProfitLossAttributableToOwnersOfParent", "ProfitLoss"];
 const RD = ["ResearchAndDevelopmentExpense", "ResearchAndDevelopmentExpenseExcludingAcquiredInProcessCost", "ResearchAndDevelopmentExpense"];
 const OPEX = ["OperatingExpenses", "CostsAndExpenses"];
 const GA = ["GeneralAndAdministrativeExpense", "SellingGeneralAndAdministrativeExpense", "AdministrativeExpense"];
-const EQUITY = ["StockholdersEquity", "StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest", "EquityAttributableToOwnersOfParent", "Equity"];
 const WEIGHTED = ["WeightedAverageNumberOfSharesOutstandingBasic", "WeightedAverageNumberOfDilutedSharesOutstanding", "WeightedAverageShares", "AdjustedWeightedAverageShares"];
 
 export type PreRevenueMetrics = {
@@ -138,20 +139,25 @@ export type SectorMetrics = {
 /** The figures of a bank, insurer, broker or BDC for the period ending `end` (in `unit`). */
 export function sectorMetrics(facts: Facts, unit: string, end: string, equity: number | null, assets: number | null, period?: { start: string | null; accession: string | null; revenue: number }): SectorMetrics {
   const capitalRatio = equity !== null && assets !== null && assets > 0 ? equity / assets * 100 : null;
-  let roe: SectorMetrics["roe"] = null;
-  if (equity !== null && equity > 0) {
-    const ni = rows(facts, NET_INCOME, unit, false);
+  // ROE pairs a profit with the equity it belongs to (reviewer, Nov 26): the parent's net income with the parent's equity (US GAAP), the
+  // owners' profit with the owners' equity (IFRS), or, where a filer tags only its total profit (HSBC since 2023), the total profit with the
+  // total equity including non-controlling interests. Never the total profit over the owners' equity.
+  const pairs: [string[], string[]][] = [[["NetIncomeLoss"], ["StockholdersEquity"]], [["ProfitLossAttributableToOwnersOfParent"], ["EquityAttributableToOwnersOfParent"]],
+    [["ProfitLoss"], ["StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest", "Equity"]]];
+  const equityAt = (names: string[], date: string) => rows(facts, names, unit, true).filter(f => f.end === date).sort((a, b) => b.filed.localeCompare(a.filed))[0]?.val;
+  const roeFor = (income: string[], equities: string[]): SectorMetrics["roe"] => {
+    const ni = rows(facts, income, unit, false);
+    if (!ni.length) return null;
+    const own = equityAt(equities, end) ?? (income[0] === "NetIncomeLoss" ? equity ?? undefined : undefined);
     const q = standaloneQuarters(ni), ends = chain([...q.keys()], end);
-    if (ends.length === 4 && ends[0] === end) roe = { pct: ends.reduce((a, e) => a + q.get(e)!, 0) / equity * 100, basis: "quarters" };
-    else {
-      // Else the latest fiscal year (at most 500 days old): its net income over the equity at that same year end, both as filed.
-      const years = ni.filter(f => duration(f) >= 350 && duration(f) <= 380 && f.end <= end && day(end) - day(f.end) <= 500).sort((a, b) => b.end.localeCompare(a.end) || b.filed.localeCompare(a.filed));
-      const year = years[0];
-      const equityThen = year ? rows(facts, EQUITY, unit, true).filter(f => f.end === year.end).sort((a, b) => b.filed.localeCompare(a.filed))[0] : undefined;
-      const base = year && year.end === end ? equity : equityThen?.val;
-      if (year && base && base > 0) roe = { pct: year.val / base * 100, basis: "year" };
-    }
-  }
+    if (own && own > 0 && ends.length === 4 && ends[0] === end) return { pct: ends.reduce((a, e) => a + q.get(e)!, 0) / own * 100, basis: "quarters" };
+    // Else the latest fiscal year (at most 500 days old): its profit over the equity at that same year end, both as filed.
+    const year = ni.filter(f => duration(f) >= 350 && duration(f) <= 380 && f.end <= end && day(end) - day(f.end) <= 500).sort((a, b) => b.end.localeCompare(a.end) || b.filed.localeCompare(a.filed))[0];
+    const base = year ? (year.end === end ? own : equityAt(equities, year.end)) : undefined;
+    return year && base && base > 0 ? { pct: year.val / base * 100, basis: "year" } : null;
+  };
+  let roe: SectorMetrics["roe"] = null;
+  if (equity !== null && equity > 0) for (const [income, equities] of pairs) { roe = roeFor(income, equities); if (roe) break; }
   let niiMargin: number | null = null;
   if (period && period.revenue > 0 && period.accession) {
     const nii = rows(facts, ["NetInvestmentIncome"], unit, false).find(f => f.end === end && f.start === period.start && f.accn === period.accession);
@@ -170,8 +176,9 @@ export const ALTERNATIVE_SCALES = {
   rdIntensity: (share: number) => clamp(share / 8),
   /** Shares outstanding change: no increase (or fewer shares) = 10, +50% or more = 0. */
   dilution: (pct: number) => clamp(10 - Math.max(0, pct) / 5),
-  /** Equity ÷ assets: 0% = 0, 20% or more = 10. */
-  capitalRatio: (pct: number) => clamp(pct / 2),
+  /** Equity ÷ assets on a bank's scale (reviewer, Nov 26: at 20% for 10 points every large bank scored weak, HSBC 5.7% → 2.9): 2% = 0,
+   *  10% or more = 10 (a well-capitalised bank holds about 6-10%; a BDC's or insurer's higher ratio scores 10). */
+  capitalRatio: (pct: number) => clamp((pct - 2) * 10 / 8),
   /** Return on equity: 0% = 5, +15% = 10, −15% = 0. */
   roe: (pct: number) => clamp(5 + pct / 3),
   /** Net investment income margin, on the operating-margin scale (50% = 10). */

@@ -7,6 +7,9 @@ import { parse } from "node-html-parser";
 type FetchText = (url: string, limit: number) => Promise<string>;
 const annualForm = /^(?:10-K|20-F|40-F)(?:\/A)?$/;
 const warning = (ja: string, en: string) => ({ ja, en });
+/** The largest filing document read (reviewer, Nov 26: RERE's 20-F is 26.2 MB; at the old 20 MB it was never read and the company was shown
+ *  as having no revenue). */
+const FILING_LIMIT = 60_000_000;
 /** One path for every SEC-listed issuer, independent of the monitored news list.
  * Check submissions first: companyfacts alone is not proof of freshness.
  */
@@ -64,7 +67,7 @@ async function readSecComparison(ticker: string, cik: string, fetchText: FetchTe
   let primaryRevenueTag: string | undefined, quarterRevenueTag: string | undefined;
   await Promise.all(wanted.map(async filing => {
     try {
-      const html = await fetchText(filing.url, 20_000_000);
+      const html = await fetchText(filing.url, FILING_LIMIT);
       let inline = inlineFinancialFacts(html,cik,filing);
       // A foreign filer's 6-K is often a cover page with the tagged statements in another document of the same filing (BTI's half-year
       // report: bti-20260630_d2.htm is the cover, bti-20260630.htm the statements). The largest other inline document is then read.
@@ -84,23 +87,36 @@ async function readSecComparison(ticker: string, cik: string, fetchText: FetchTe
         const root = new URL(".",filing.url).href;
         const hrefs = parse(html).querySelectorAll("a").map(a => a.getAttribute("href")).filter((h): h is string => !!h && /^[a-z0-9_-]*(?:consolidatedreport|consolidatedfina)[a-z0-9_-]*\.htm$/i.test(h));
         if (new Set(hrefs).size !== 1) return;
-        const exhibit = await fetchText(new URL(hrefs[0],root).href,20_000_000);
+        const exhibit = await fetchText(new URL(hrefs[0],root).href,FILING_LIMIT);
         const facts = tsmStatementFacts(exhibit,cik,filing);
         if (facts) additions.push(facts);
       }
     } catch { /* Keep retrieved figures with an explicit freshness warning below. */ }
   }));
   let result = extractFinancials(ticker,cik,mergeFinancialFacts(factsResponse.status === "fulfilled" ? factsResponse.value : null, additions,cik),now,currency,primaryRevenueTag,quarterRevenueTag,sic);
+  // Capital spending under the company's own line only (UFPT, reviewer Nov 26): company facts leave extension lines out, so the latest
+  // annual report and the two latest quarterly reports not read yet are read for it, and the figures built again. Only for a company whose
+  // capital spending is otherwise not found.
+  if (result.status === "ready" && (result.capexNotReported || (!result.capex && !!result.operatingCash))) {
+    const read = new Set(wanted.map(f => f.accession));
+    const more = [annual, ...filings.filter(quarterly).slice(0, 2)].filter((f): f is FinancialFiling => !!f && f.inline && !read.has(f.accession));
+    const extra = (await Promise.all(more.map(f => fetchText(f.url, FILING_LIMIT).then(html => inlineFinancialFacts(html, cik, f)).catch(() => null)))).filter((f): f is SecFacts => !!f);
+    if (extra.some(f => f.facts["us-gaap"]?.TechPhaseExtensionCapex)) {
+      additions.push(...extra);
+      result = extractFinancials(ticker,cik,mergeFinancialFacts(factsResponse.status === "fulfilled" ? factsResponse.value : null, additions,cik),now,currency,primaryRevenueTag,quarterRevenueTag,sic);
+    }
+  }
   // No revenue yet: only the balance sheet is read, so freshness is the balance sheet's against the newest periodic report.
   const newest = [annual, quarter].filter((f): f is FinancialFiling => !!f).sort((a, b) => b.end.localeCompare(a.end))[0];
   if (result.preRevenue) {
     // "No revenue yet" must be true. A company that tags its revenue only under its own (extension) names, which the SEC's company facts
     // leave out (APA Corporation's oil and gas revenues), has a positive revenue fact in its newest report: it is left without a current
     // period ("comparable data unavailable") rather than shown as pre-revenue.
+    // Fail closed (reviewer, Nov 26): a newest report that cannot be read leaves the company "unreadable", never "no revenue yet".
     let revenueFiled = false;
     if (newest?.inline) {
       try {
-        const html = await fetchText(newest.url, 20_000_000);
+        const html = await fetchText(newest.url, FILING_LIMIT).catch(error => { revenueFiled = true; throw error; });
         if (companyRevenueTagged(html, newest.end)) {
           revenueFiled = true;
           // Its standard revenue lines are read from the filing itself (APA: us-gaap Revenues in the 10-Q, absent from company facts).
@@ -111,7 +127,7 @@ async function readSecComparison(ticker: string, cik: string, fetchText: FetchTe
         }
       } catch { /* the facts read stand */ }
     }
-    if (revenueFiled && result.preRevenue) return { ...emptyFinancials(ticker, "unsupported", new Date(now).toISOString()), gapReason };
+    if (revenueFiled && result.preRevenue) return { ...emptyFinancials(ticker, "unsupported", new Date(now).toISOString()), ...(result.financeSic ? { financeSic: true as const } : {}), gapReason };
   }
   if (result.preRevenue) {
     return { ...result, gapReason, dataWarnings: newest && (!result.balance || result.balance.end < newest.end)
@@ -144,18 +160,29 @@ export function fiscalQuarterEnd(end: string, annualEnd?: string): boolean {
   return months > 0 && months % 3 === 0;
 }
 
-/** A positive revenue or sales fact in a filing's inline XBRL outside any dimensional context, under a standard or the company's own
+/** A positive revenue or sales fact (or cost of revenue, or gross profit) in a filing's inline XBRL, in any context, under a standard or the company's own
  *  name (company facts leave extension names out, and can lag the filing). */
+/** Axes that split the company's own revenue (segment, product or service, geography, consolidation, sales channel, timing). */
+const OWN_REVENUE_AXES = ["us-gaap:StatementBusinessSegmentsAxis", "srt:ProductOrServiceAxis", "srt:StatementGeographicalAxis", "srt:ConsolidationItemsAxis",
+  "us-gaap:ContractWithCustomerSalesChannelAxis", "us-gaap:TimingOfTransferOfGoodOrServiceAxis", "srt:SegmentGeographicalAxis", "ifrs-full:SegmentsAxis", "ifrs-full:ProductsAndServicesAxis", "ifrs-full:GeographicalAreasAxis"];
 export function companyRevenueTagged(html: string, periodEnd: string): boolean {
   // Only the filing's own latest twelve months count: a revenue column for an earlier year (a drug developer's comparative period from
   // before its sales stopped) is not current revenue.
   // Only the report's own latest period counts (its quarter, or its fiscal year): an earlier column or a year-to-date that still holds an
   // earlier quarter's sales (a drug developer whose payments ended) is not current revenue.
-  const recent = new Set<string>(), endAt = Date.parse(periodEnd);
+  const recent = new Set<string>(), dimensional = new Set<string>(), endAt = Date.parse(periodEnd);
   for (const m of html.matchAll(/<xbrli:context[^>]*id="([^"]+)"[^>]*>([\s\S]*?)<\/xbrli:context>/gi)) {
-    if (/<xbrli:segment/i.test(m[2])) continue;
+    // A dimensional context counts for revenue too, when it splits the company's own revenue by segment, product, geography or channel
+    // (reviewer, Nov 26: MTH's homebuilding and financial services revenue). Not a related party's, an officer's, an equity-method investee's
+    // (LAR's Minera Exar) or a discontinued operation's (TMCR) figures, nor any other axis.
     const end = /<xbrli:endDate>\s*([0-9-]{10})/i.exec(m[2])?.[1], start = /<xbrli:startDate>\s*([0-9-]{10})/i.exec(m[2])?.[1];
     if (!end || !start || Math.abs(Date.parse(end) - endAt) > 10 * 86400000) continue;
+    const members = [...m[2].matchAll(/<xbrldi:explicitMember[^>]*dimension="([^"]+)"[^>]*>([^<]*)</gi)];
+    if (/<xbrli:segment/i.test(m[2])) {
+      const own = members.length > 0 && members.every(([, axis, member]) => OWN_REVENUE_AXES.includes(axis) && !/Discontinued|RelatedParty|EquityMethod|Investee|Officer|Director|Affiliate|JointVenture/i.test(member));
+      if (!own) continue;
+      dimensional.add(m[1]);
+    }
     const days = (Date.parse(end) - Date.parse(start)) / 86400000;
     if ((days >= 75 && days <= 120) || (days >= 165 && days <= 200) || (days >= 350 && days <= 380)) recent.add(m[1]);
   }
@@ -165,8 +192,14 @@ export function companyRevenueTagged(html: string, periodEnd: string): boolean {
     if (!local || prefix === "dei" || !recent.has(context)) continue;
     // A revenue or sales line itself (Revenues, RevenuesAndOther, OilAndGasRevenue, NetSales, RevenueFromContractWithCustomer...), not a
     // share sales agreement, a milestone or any other figure that merely names sales.
-    if (!/(?:Revenues?|Sales)(?:Net|Total)?$|^Revenues?(?:And|From|Net)|^(?:Net|Total)(?:Revenues?|Sales)/.test(local)
-      || /Cost|Deferred|Unearned|Receivable|Tax|Percent|Expense|Gain|Loss|Proceeds|Investment|Interest|ProForma|Remaining|Liabilit|Unbilled|Share|Stock|Agreement|Milestone|Payment|Arrangement|Commission/.test(local)) continue;
+    // A cost of revenue or a gross profit above zero is proof of revenue as well (AUC files them with no revenue line).
+    const costLine = /^(?:CostOfRevenue|CostOfGoodsAndServicesSold|CostOfGoodsSold|CostOfServices|CostOfSales|GrossProfit)$/.test(local);
+    // Cost and gross profit only outside any dimension: a segment's expense disclosure (PRAX) or a related party's cost (BCTX) is no proof.
+    if (costLine && !dimensional.has(context) && !/sign="-"/.test(attrs) && Number(m[2].replace(/&#?\w+;/g, "").replace(/[^0-9.]/g, "")) > 0) return true;
+    // "…ExcludingAssessedTax" is the standard contract-revenue line itself, not a tax (it was skipped before: RERE).
+    const plain = local.replace(/(?:Excluding|Including)AssessedTax$/, "");
+    if (!/(?:Revenues?|Sales)(?:Net|Total)?$|^Revenues?(?:And|From|Net)|^(?:Net|Total)(?:Revenues?|Sales)/.test(plain)
+      || /Cost|Deferred|Unearned|Receivable|Tax|Percent|Expense|Gain|Loss|Proceeds|Investment|Interest|ProForma|Remaining|Liabilit|Unbilled|Share|Stock|Agreement|Milestone|Payment|Arrangement|Commission/.test(plain)) continue;
     if (/sign="-"/.test(attrs)) continue;
     // The displayed figure without HTML entities (a nil revenue is shown as "&#8212;", a dash).
     if (Number(m[2].replace(/&#?\w+;/g, "").replace(/[^0-9.]/g, "")) > 0) return true;
@@ -191,9 +224,9 @@ async function statementDocument(filing: FinancialFiling, cik: string, fetchText
   const folder = new URL(".", filing.url).href, primary = filing.url.slice(folder.length);
   const listing = JSON.parse(await fetchText(`${folder}index.json`, 2_000_000)) as { directory?: { item?: { name?: unknown; size?: unknown }[] } };
   const candidates = (listing.directory?.item ?? []).flatMap(item => typeof item.name === "string" && /^[A-Za-z0-9][A-Za-z0-9._-]{0,199}\.htm$/.test(item.name)
-    && item.name !== primary && !/^R\d+\.htm$/.test(item.name) && !item.name.includes("index") && Number(item.size) > 0 && Number(item.size) <= 20_000_000 ? [{ name: item.name, size: Number(item.size) }] : [])
+    && item.name !== primary && !/^R\d+\.htm$/.test(item.name) && !item.name.includes("index") && Number(item.size) > 0 && Number(item.size) <= FILING_LIMIT ? [{ name: item.name, size: Number(item.size) }] : [])
     .sort((a, b) => b.size - a.size);
   if (!candidates.length) return null;
-  const facts = inlineFinancialFacts(await fetchText(new URL(candidates[0].name, folder).href, 20_000_000), cik, filing, primaryHtml);
+  const facts = inlineFinancialFacts(await fetchText(new URL(candidates[0].name, folder).href, FILING_LIMIT), cik, filing, primaryHtml);
   return hasRevenue(facts) ? facts : null;
 }

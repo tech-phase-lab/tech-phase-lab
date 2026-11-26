@@ -22,22 +22,27 @@ export const ALTERNATIVE_LABELS = {
   /** Profitability of a company with no revenue: no margin exists, so no score; the line says so and gives the R&D share of spending as a
    *  fact (owner's review, Nov 26: R&D intensity scored as profitability was a stretch). */
   // Short enough to show in full in a two-line snapshot cell at 360px with three companies (owner, Nov 26: no hidden text).
-  noMargin: (share: number | null): Copy => share === null ? { ja: "売上なし（利益率なし）", en: "No revenue: no margin" }
+  // The share says what it is of (reviewer, Nov 26): of operating expenses, or of R&D plus G&A when no operating-expense total is filed.
+  noMargin: (share: number | null, of: "operating-expenses" | "rd-and-ga" = "operating-expenses"): Copy => share === null ? { ja: "売上なし（利益率なし）", en: "No revenue: no margin" }
+    : of === "rd-and-ga" ? { ja: `売上なし（研究費は研究・管理費の${share.toFixed(0)}%）`, en: `No revenue (R&D ${share.toFixed(0)}% of R&D+G&A)` }
     : { ja: `売上なし（研究開発費は費用の${share.toFixed(0)}%）`, en: `No revenue (R&D ${share.toFixed(0)}% of costs)` },
   /** A bank's, insurer's or broker's cash generation when no net income can be matched to its equity. */
   noRoe: { ja: "ROE算出用の純利益が未開示", en: "Net income for ROE not available" } as Copy,
   /** An operating income above the revenue line: the margin is not scored. */
   marginWithheld: { ja: "営業利益が売上を超え算出せず", en: "Op. income above revenue: not scored" } as Copy,
   /** An IFRS bank whose readable revenue is net interest and fee income only, beside a profit that holds its other income too. */
+  growthWithheld: { ja: "売上の記載が一部のみで算出せず", en: "Revenue line is partial: not scored" } as Copy,
+  marginSign: { ja: "営業損益と税引前損益が逆で算出せず", en: "Pre-tax result differs: not scored" } as Copy,
   marginPartial: { ja: "売上が利息・手数料のみで算出せず", en: "Revenue is interest and fees only: not scored" } as Copy,
   /** Free cash flow above the revenue itself (an upfront licence payment, customer deposits): not scored as cash generation. */
   fcfAboveRevenue: { ja: "営業CFが売上を超え算出せず", en: "Cash flow above revenue: not scored" } as Copy,
   dilution: (pct: number): Copy => ({ ja: `株数の増加 前年比${signed(pct)}%`, en: `Share count vs a year earlier ${signed(pct)}%` }),
   capitalRatio: (pct: number): Copy => ({ ja: `自己資本比率 ${pct.toFixed(1)}%`, en: `Equity ÷ assets ${pct.toFixed(1)}%` }),
-  roe: (pct: number): Copy => ({ ja: `ROE ${signed(pct)}%`, en: `Return on equity ${signed(pct)}%` }),
+  roe: (pct: number, basis: "quarters" | "year" = "quarters"): Copy => basis === "year" ? { ja: `ROE（年次） ${signed(pct)}%`, en: `Return on equity (fiscal year) ${signed(pct)}%` }
+    : { ja: `ROE ${signed(pct)}%`, en: `Return on equity ${signed(pct)}%` },
   niiMargin: (pct: number): Copy => ({ ja: `純投資利益率 ${pct.toFixed(1)}%`, en: `Net investment income margin ${pct.toFixed(1)}%` }),
   /** Stability from four fiscal years (a foreign filer reporting yearly or half-yearly). */
-  annualStability: (profitable: number): Copy => ({ ja: `営業黒字 ${profitable}/4期（年次）`, en: `Profitable ${profitable}/4 fiscal years` }),
+  annualStability: (profitable: number, pretax = false): Copy => ({ ja: `${pretax ? "税引前黒字" : "営業黒字"} ${profitable}/4期（年次）`, en: `${pretax ? "Pre-tax profitable" : "Profitable"} ${profitable}/4 fiscal years` }),
   /** Cash generation from the latest fiscal year when the quarter's cash flows are not available. */
   annualFcf: (pct: number): Copy => ({ ja: `簡易FCF率（年次） ${pct.toFixed(1)}%`, en: `Simple FCF margin (fiscal year) ${pct.toFixed(1)}%` }),
   /** Valuation: no multiple exists for a company whose shareholders' equity is negative and which has no revenue. */
@@ -76,8 +81,8 @@ export const ALTERNATIVE_METHODS: Record<string, Copy> = {
     en: "A company with no revenue has no margin: profitability is not scored, and its R&D share of operating expenses is shown for reference." },
   dilution: { ja: "売上がまだ無い会社の安定性は、株数（加重平均）の前年同期比の増加で見ます。増加なし＝10点、+50%以上＝0点。株式併合は同じ書類の修正後の数字で比べます。",
     en: "For a company with no revenue yet, stability is the year-on-year increase in its weighted-average share count, both figures from the same filing (split-adjusted). No increase scores 10, +50% or more scores 0." },
-  capitalRatio: { ja: "銀行・保険・証券・BDCの財務健全性は、自己資本÷総資産（自己資本比率）で見ます。0%＝0点、20%以上＝10点。",
-    en: "For a bank, insurer, broker or BDC, financial strength is shareholders' equity divided by total assets. 0% scores 0, 20% or more scores 10." },
+  capitalRatio: { ja: "銀行・保険・証券・BDCの財務健全性は、自己資本÷総資産（自己資本比率）で見ます。2%＝0点、10%以上＝10点で、銀行の目安に合わせています。強み・弱みの要点には挙げません。",
+    en: "For a bank, insurer, broker or BDC, financial strength is shareholders' equity divided by total assets, on a bank's scale: 2% scores 0, 10% or more scores 10. It is not listed as a strength or weakness." },
   roe: { ja: "銀行・保険・証券・BDCの資金創出は、直近4四半期（無ければ直近期）の純利益÷自己資本（ROE）で見ます。0%＝5点、+15%＝10点、−15%＝0点。",
     en: "For a bank, insurer, broker or BDC, cash generation is return on equity: net income of the last four quarters (else the fiscal year) divided by equity. 0% scores 5, +15% scores 10, −15% scores 0." },
   niiMargin: { ja: "BDCの収益性は、純投資利益÷投資収益（純投資利益率）で見ます。50%＝10点。", en: "For a business development company, profitability is net investment income divided by total investment income. 50% scores 10." },

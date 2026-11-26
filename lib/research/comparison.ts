@@ -64,6 +64,12 @@ export type Financials = {
   /** The revenue is an IFRS bank's net interest plus net fee income only (IFRS_BANK_REVENUE), while its operating profit also holds trading
    *  and other income (HSBC: 70% "margin" for H1 2026): no margin and no margin series are scored, and the screen says why. */
   marginPartial?: true;
+  /** With marginWithheld: the operating figure and the pre-tax income of the same period have opposite signs (a lender, NNI). */
+  marginSign?: true;
+  /** No growth is shown: the revenue line is only part of the revenue (marginPartial, or a bank's line below its operating income). */
+  growthWithheld?: true;
+  /** The filer's SEC industry code is a bank's, broker's or insurer's (6000-6799, not a REIT): no free-cash-flow score from any source. */
+  financeSic?: true;
   /** No free-cash-flow margin is scored: a bank, broker or insurer (finance), or cash flow above the revenue itself (aboveRevenue: an
    *  upfront licence payment or customer deposits, ROIV 1,692%, LEXX on $5k of revenue). The screen says why. */
   fcfWithheld?: "finance" | "aboveRevenue";
@@ -130,6 +136,8 @@ export const LENDER_REVENUE = "TechPhaseLenderRevenue";
 export const LEASE_REVENUE = "TechPhaseLeaseRevenue";
 /** An IFRS bank (20-F): net interest income plus net fee and commission income of the same period and filing. */
 export const IFRS_BANK_REVENUE = "TechPhaseIfrsBankRevenue";
+/** A company's own (extension) capital-spending line in its inline XBRL, named plainly as payments for property and equipment. */
+export const EXTENSION_CAPEX = "TechPhaseExtensionCapex";
 /** The SEC industry code of the filer (submissions "sic"), for the sector-only revenue lines above. */
 const financeSic = (sic?: string) => /^\d{4}$/.test(sic ?? "") && Number(sic) >= 6000 && Number(sic) <= 6799;
 const realEstateSic = (sic?: string) => /^\d{4}$/.test(sic ?? "") && (Number(sic) === 6798 || (Number(sic) >= 6500 && Number(sic) <= 6599));
@@ -174,16 +182,41 @@ function supplementFacts(usGaap: Record<string, unknown>, sic?: string): Record<
     for (const name of names) { const rows = list(name).filter(([, values]) => values.some(f => typeof f.val === "number" && f.val > 0 && f.start)); if (rows.length) { facts[target] = { units: Object.fromEntries(rows.map(([unit, values]) => [unit, values.filter(f => f.start)])) }; return; } }
   };
   if (financeSic(sic)) firstTag(["InterestIncomeExpenseNet", "InterestAndDividendIncomeOperating"], LENDER_REVENUE);
+  // Net interest income is the revenue only of a lender whose expenses it covers (reviewer, Nov 26): where an operating-expense line of the
+  // same period and filing exceeds it, the company earns most of its revenue elsewhere (Nelnet's servicing and education fees: −211%
+  // "margin"; Bakkt's interest on cash beside $2.3bn of crypto revenue: −3,749%), and that period gets no lender revenue.
+  if (facts[LENDER_REVENUE]) {
+    // Lines without interest expense only: a lender's total costs and expenses include its interest, which net interest income is after.
+    const expenses = index(["OperatingExpenses", "NoninterestExpense", "SellingGeneralAndAdministrativeExpense", "GeneralAndAdministrativeExpense"]);
+    const kept = Object.fromEntries(Object.entries(obj(obj(facts[LENDER_REVENUE]).units)).map(([unit, values]) => [unit, (values as RawFact[]).filter(f => {
+      const k = key(f);
+      return ![...expenses.entries()].some(([u, rows]) => u === unit && (rows.get(k)?.val ?? -Infinity) > f.val);
+    })]).filter(([, values]) => (values as RawFact[]).length));
+    if (Object.keys(kept).length) facts[LENDER_REVENUE] = { units: kept }; else delete facts[LENDER_REVENUE];
+  }
   if (realEstateSic(sic)) firstTag(["OperatingLeaseLeaseIncome", "OperatingLeasesIncomeStatementLeaseRevenue", "RealEstateRevenueNet"], LEASE_REVENUE);
   const stated = index(["OperatingIncomeLoss"]);
   const revenue = index(["RevenueFromContractWithCustomerExcludingAssessedTax", "RevenueFromContractWithCustomerIncludingAssessedTax", "Revenues", "SalesRevenueNet", "RevenuesNetOfInterestExpense", "RegulatedAndUnregulatedOperatingRevenue", BANK_REVENUE, "GrossInvestmentIncomeOperating", LENDER_REVENUE, "InvestmentBankingRevenue", LEASE_REVENUE, "RegulatedOperatingRevenue"]);
   const gross = index(["GrossProfit"]), opex = index(["OperatingExpenses"]), cost = index(["CostOfRevenue", "CostOfGoodsAndServicesSold"]), costs = index(["CostsAndExpenses"]);
+  const sga = index(["SellingGeneralAndAdministrativeExpense"]), rnd = index(["ResearchAndDevelopmentExpense"]), interestOperating = index(["InterestExpenseOperating"]);
   const pretax = index(PRETAX_TAGS);
   const derived: Record<string, RawFact[]> = {}, pre: Record<string, RawFact[]> = {};
+  // A lender's net interest income is already net of interest expense: its operating result is its pre-tax income (reviewer, Nov 26), never
+  // net interest income less every expense line.
+  const others = index(["RevenueFromContractWithCustomerExcludingAssessedTax", "RevenueFromContractWithCustomerIncludingAssessedTax", "Revenues", "SalesRevenueNet", "RevenuesNetOfInterestExpense", "RegulatedAndUnregulatedOperatingRevenue", BANK_REVENUE, "GrossInvestmentIncomeOperating", "InvestmentBankingRevenue", LEASE_REVENUE, "RegulatedOperatingRevenue"]);
   for (const [unit, rows] of revenue) for (const [k, r] of rows) {
     if (!r.start || stated.get(unit)?.has(k)) continue;
-    const g = gross.get(unit)?.get(k), o = opex.get(unit)?.get(k), c = cost.get(unit)?.get(k), t = costs.get(unit)?.get(k);
-    const value = g && o ? g.val - o.val : c && o ? r.val - c.val - o.val : t ? r.val - t.val : o && !c && !g ? r.val - o.val : null;
+    if (!others.get(unit)?.has(k)) { const p = pretax.get(unit)?.get(k); if (p) (pre[unit] ??= []).push({ ...r, val: p.val }); continue; }
+    const g = gross.get(unit)?.get(k), c = cost.get(unit)?.get(k), t = costs.get(unit)?.get(k);
+    // An "operating expenses" line smaller than the selling, general and administrative or R&D line of the same period is only one item, not
+    // the total (reviewer, Nov 26: CC's $2m line left SG&A out of its operating income); it is not used.
+    const oRaw = opex.get(unit)?.get(k), part = Math.max(sga.get(unit)?.get(k)?.val ?? 0, rnd.get(unit)?.get(k)?.val ?? 0);
+    const o = oRaw && oRaw.val >= part ? oRaw : undefined;
+    // Interest classified inside the costs (Realty Income: InterestExpenseOperating, $334m in costs and expenses of $1,286m) is a financing
+    // cost, not an operating one (reviewer, Nov 26): it is added back. Never for a finance company, whose interest is its cost of revenue.
+    const interest = !financeSic(sic) || realEstateSic(sic) ? interestOperating.get(unit)?.get(k)?.val ?? 0 : 0;
+    const base = g && o ? g.val - o.val : c && o ? r.val - c.val - o.val : t ? r.val - t.val : o && !c && !g ? r.val - o.val : null;
+    const value = base === null ? null : base + interest;
     if (value !== null && Number.isFinite(value)) { (derived[unit] ??= []).push({ ...r, val: value }); continue; }
     const p = pretax.get(unit)?.get(k);
     if (p) (pre[unit] ??= []).push({ ...r, val: p.val });
@@ -245,14 +278,18 @@ const tags = {
     // Capital spending under its own line (Nov 26 audit: REITs' capital improvements and development, machinery, oil and gas, software).
     // A non-cash disclosure (CapitalExpendituresIncurredButNotYetPaid) is never one of them.
     "PaymentsForCapitalImprovements", "PaymentsToAcquireMachineryAndEquipment", "PaymentsToDevelopRealEstateAssets", "PaymentsToAcquireOilAndGasPropertyAndEquipment",
-    "PaymentsToExploreAndDevelopOilAndGasProperties", "PaymentsToAcquireMiningAssets", "PaymentsToDevelopSoftware", "PaymentsForSoftware", "PaymentsForConstructionInProcess"], cash: ["CashAndCashEquivalentsAtCarryingValue"], stockCompensation: ["ShareBasedCompensation"], dilutedShares: ["WeightedAverageNumberOfDilutedSharesOutstanding"] },
+    "PaymentsToExploreAndDevelopOilAndGasProperties", "PaymentsToAcquireMiningAssets", "PaymentsToDevelopSoftware", "PaymentsForSoftware", "PaymentsForConstructionInProcess",
+    // The company's own capital-spending line, read from its inline filing (comparison-filings.ts: UFPT's ufpt:PaymentsToAcquirePropertyAndEquipmentNet).
+    EXTENSION_CAPEX], cash: ["CashAndCashEquivalentsAtCarryingValue"], stockCompensation: ["ShareBasedCompensation"], dilutedShares: ["WeightedAverageNumberOfDilutedSharesOutstanding"] },
   // IFRS filers (20-F/40-F/6-K): the pre-tax line only where no operating line is tagged (banks, insurers), shown as a pre-tax margin as for US filers.
   "ifrs-full": { revenue: ["Revenue", "RevenueFromContractsWithCustomers", "RevenueFromSaleOfGoods", IFRS_BANK_REVENUE, "InsuranceRevenue", "RevenueAndOperatingIncome"], operatingIncome: ["ProfitLossFromOperatingActivities", DERIVED_PRETAX], operatingCash: ["CashFlowsFromUsedInOperatingActivities", "CashFlowsFromUsedInOperatingActivitiesContinuingOperations"], capex: ["PurchaseOfPropertyPlantAndEquipmentClassifiedAsInvestingActivities", "PurchaseOfPropertyPlantAndEquipment", "PurchaseOfPropertyPlantAndEquipmentIntangibleAssetsOtherThanGoodwillInvestmentPropertyAndOtherNoncurrentAssets"], cash: ["CashAndCashEquivalents"], stockCompensation: [], dilutedShares: ["AdjustedWeightedAverageShares"] },
 } as const;
 const REVENUE_TOTALS = ["Revenues", "Revenue", "RegulatedAndUnregulatedOperatingRevenue", "RevenuesNetOfInterestExpense"];
 /** Standard consolidated facts. Annual and standalone-quarter periods remain separate. */
 export function extractFinancials(ticker: string, cik: string, payload: unknown, now = Date.now(), reportingCurrency?: string, primaryRevenueTag?: string, quarterRevenueTag?: string, sic?: string): Financials {
-  const result = emptyFinancials(ticker, "unsupported", new Date(now).toISOString());
+  // A bank, broker or insurer (finance SIC, not a REIT): carried on every answer so that figures from the provider are withheld the same way
+  // (reviewer, Nov 26: the provider's statements bypassed the filing's withholding).
+  const result: Financials = { ...emptyFinancials(ticker, "unsupported", new Date(now).toISOString()), ...(financeSic(sic) && sic !== "6798" ? { financeSic: true as const } : {}) };
   const root = obj(payload);
   if (Number(root.cik) !== Number(cik)) return result;
   const rawFacts = obj(root.facts);
@@ -304,16 +341,30 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
      *  are used only when no instrument family is filed, and unsecured and senior notes are never added to each other. Null when none. */
     function borrowingLines(m: (name: string) => Fact | null): number | null {
       const family = (total: string, ...parts: string[]) => { const t = m(total); if (t) return t.value; const p = parts.map(m).filter((f): f is Fact => !!f); return p.length ? p.reduce((a, f) => a + f.value, 0) : null; };
-      const sum = (values: (number | null)[]) => { const v = values.filter((x): x is number => x !== null); return v.length ? v.reduce((a, b) => a + b, 0) : null; };
-      const instruments = sum([family("NotesPayable", "NotesPayableCurrent", "LongTermNotesPayable"), family("LoansPayable", "LoansPayableCurrent", "LongTermLoansPayable"),
+      // The same amount under two lines is one borrowing (reviewer, Nov 26: RJF's and COLB's Federal Home Loan Bank advances are also filed as
+      // other borrowings, HNVR's as short-term borrowings): an amount already counted is not added again.
+      const counted: number[] = [];
+      const add = (value: number | null) => { if (value !== null && !counted.includes(value)) counted.push(value); };
+      for (const value of [family("NotesPayable", "NotesPayableCurrent", "LongTermNotesPayable"), family("LoansPayable", "LoansPayableCurrent", "LongTermLoansPayable"),
         family("LineOfCredit", "LongTermLineOfCredit"), family("OtherLongTermDebt", "OtherLongTermDebtCurrent", "OtherLongTermDebtNoncurrent"), family("OtherBorrowings"),
-        family("AdvancesFromFederalHomeLoanBanks"), family("ShortTermBorrowings"), family("CommercialPaper"), family("DebtCurrent"), family("FinanceLeaseLiability", "FinanceLeaseLiabilityCurrent", "FinanceLeaseLiabilityNoncurrent")]);
-      if (instruments !== null) return instruments;
+        family("AdvancesFromFederalHomeLoanBanks"), family("ShortTermBorrowings"), family("CommercialPaper"), family("DebtCurrent"), family("FinanceLeaseLiability", "FinanceLeaseLiabilityCurrent", "FinanceLeaseLiabilityNoncurrent")]) add(value);
+      const instruments = counted.length;
+      // Senior and subordinated notes, and secured debt, are added unless their amount is already counted (RJF's $3.5bn of senior notes beside
+      // its advances; COLB's and HNVR's subordinated debt). Unsecured and senior notes are never added to each other.
       const unsecured = family("UnsecuredDebt", "UnsecuredDebtCurrent", "UnsecuredLongTermDebt"), senior = family("SeniorNotes", "SeniorNotesCurrent", "SeniorLongTermNotes");
-      return sum([unsecured !== null && senior !== null ? Math.max(unsecured, senior) : unsecured ?? senior, family("SecuredDebt", "SecuredDebtCurrent", "SecuredLongTermDebt"),
-        family("SubordinatedDebt", "SubordinatedLongTermDebt")]);
+      add(unsecured !== null && senior !== null ? Math.max(unsecured, senior) : unsecured ?? senior);
+      // Secured debt is a classification of the instruments above when any is filed; it is added only when none is.
+      if (!instruments) add(family("SecuredDebt", "SecuredDebtCurrent", "SecuredLongTermDebt"));
+      add(family("SubordinatedDebt", "SubordinatedLongTermDebt"));
+      return counted.length ? counted.reduce((a, b) => a + b, 0) : null;
     }
+    /** Debt above the filing's total liabilities is a double count somewhere (reviewer, Nov 26: ATLC's notes and line of credit, $11.5bn
+     *  against $6.9bn of liabilities): it is held as unknown, never shown. */
     function totalDebt(): BalanceSnapshot["debtTotal"] {
+      const debt = debtForms(), liabilities = balanceMetric("Liabilities")?.value;
+      return debt && liabilities !== undefined && debt.value > liabilities ? null : debt;
+    }
+    function debtForms(): BalanceSnapshot["debtTotal"] {
       if (basis !== "us-gaap") return ifrsDebt();
       const m = balanceMetric, short = m("ShortTermBorrowings")?.value ?? 0;
       const current = m("LongTermDebtCurrent"), noncurrent = m("LongTermDebtNoncurrent");
@@ -418,6 +469,18 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
     }
     return false;
   }
+  /** A cost of revenue, cost of goods sold or gross profit above zero is proof of revenue even where no revenue line is read (reviewer,
+   *  Nov 26: AQMS files cost of goods sold of $2.4m beside a revenue line of zero, AUC cost of revenue and gross profit with no revenue line):
+   *  such a company is never called pre-revenue. `quarterEnd`: only a quarter-long figure ending that day. */
+  function costProof(since: number, quarterEnd?: string): boolean {
+    const names = ["CostOfRevenue", "CostOfGoodsAndServicesSold", "CostOfGoodsSold", "CostOfServices", "GrossProfit", "CostOfSales"];
+    for (const b of ["us-gaap", "ifrs-full"]) for (const tag of names) for (const values of Object.values(obj(obj(obj(facts[b])[tag]).units))) {
+      if (Array.isArray(values) && values.some(v => { const f = obj(v); if (typeof f.val !== "number" || f.val <= 0 || typeof f.start !== "string" || typeof f.end !== "string") return false;
+        if (quarterEnd) { const d = day(f.end) - day(f.start); return f.end === quarterEnd && d >= 75 && d <= 120; }
+        return day(f.end) > since; })) return true;
+    }
+    return false;
+  }
   /** The newest balance sheet date with a cash figure (any period), for the pre-revenue test and the pre-revenue figures. */
   function newestBalance() {
     const cashTags = { "us-gaap": ["CashAndCashEquivalentsAtCarryingValue"], "ifrs-full": ["CashAndCashEquivalents"] } as Record<string, string[]>;
@@ -436,10 +499,10 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
   // revenue may sit under lines the comparison does not read: "no revenue yet" must be true, not a gap in our tag list (BBD: interest
   // income only).
   const stale = !!latest && !!balanceNow && !!newestRevenueEnd && day(newestRevenueEnd) < day(balanceNow.f.end) - 365 && !financeSic(sic)
-    && !revenueLikeSince(day(balanceNow.f.end) - 365);
+    && !revenueLikeSince(day(balanceNow.f.end) - 365) && !costProof(day(balanceNow.f.end) - 365);
   // Revenue filed only under a line the comparison does not read (APA's oil and gas revenue, VIV's and TLK's IFRS lines) is not "no revenue
   // yet": the company is left without a current period rather than labelled pre-revenue (Nov 26: they showed 「売上がまだ無い」).
-  if (!latest && balanceNow && revenueLikeSince(day(balanceNow.f.end) - 365)) return result;
+  if (!latest && balanceNow && (revenueLikeSince(day(balanceNow.f.end) - 365) || costProof(day(balanceNow.f.end) - 365))) return result;
   // The newest quarter's revenue line is filed as zero (a drug developer whose collaboration payments ended: KYMR, TNGX, XENE): it is
   // compared like a pre-revenue company, and the screen says the latest quarter had no revenue (zeroQuarter), not "no revenue yet".
   const quarterRows = balanceNow ? (Object.keys(tags) as (keyof typeof tags)[]).flatMap(b => collect(b, tags[b].revenue, false, "quarter")).filter(f => f.end === balanceNow.f.end) : [];
@@ -451,7 +514,7 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
   }) : [];
   // A finance company (GPGI, SIC 6199, after selling its operations) counts only when no other revenue-like line is filed for that quarter.
   const zeroQuarter = (quarterRows.length > 0 ? quarterRows.every(f => f.value === 0) : ytdPairs.length > 0 && ytdPairs.every(v => v === 0))
-    && (!financeSic(sic) || (!!balanceNow && !revenueLikeSince(day(balanceNow.f.end) - 1)));
+    && (!financeSic(sic) || (!!balanceNow && !revenueLikeSince(day(balanceNow.f.end) - 1))) && !(balanceNow && costProof(0, balanceNow.f.end));
   if (!latest || stale || zeroQuarter) return preRevenue();
   /** No revenue yet: the latest balance sheet alone, so financial strength is still scored, and the company-type figures read from the same
    *  filings (comparison-alternatives.ts: runway, net-loss trend, R&D intensity, dilution). */
@@ -489,6 +552,10 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
       const stated = all.filter(f => !REVENUE_FALLBACKS.includes(f.tag) || (f.tag === LAST_REVENUE_FALLBACK));
       if (rows.length && new Set(rows.map(f => f.value)).size === 1 && stated.length && stated.every(f => f.value < rows[0].value)) return rows;
     }
+    // An IFRS bank that files its total operating income beside net interest and fee income (HSBC H1 2026: $37.7bn against $25.5bn): the
+    // larger total is its revenue (reviewer, Nov 26), not the partial derived line.
+    const ifrsBank = all.filter(f => f.tag === IFRS_BANK_REVENUE), ifrsTotal = all.filter(f => f.tag === LAST_REVENUE_FALLBACK);
+    if (ifrsBank.length && ifrsTotal.length && new Set(ifrsTotal.map(f => f.value)).size === 1 && ifrsBank.every(f => f.value <= ifrsTotal[0].value)) return ifrsTotal;
     const stated = all.filter(f => !REVENUE_FALLBACKS.includes(f.tag)), first = REVENUE_FALLBACKS.find(tag => all.some(f => f.tag === tag));
     const rows = stated.length ? stated : all.filter(f => f.tag === first);
     // "Revenues" is the total whenever it is filed (Ameriprise files both); net-of-interest revenue only where it is the sole total.
@@ -533,7 +600,11 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
   // and the same annual report does tag its investing cash flow — is capital spending counted as zero.
   const capexFacts = (["annual", "ytd", "quarter"] as const).flatMap(period => collect(basis, tags[basis].capex, false, period));
   const lastCapex = [...capexFacts].sort((x, y) => y.filed.localeCompare(x.filed) || y.value - x.value)[0];
-  const capexEver = capexFacts.some(f => f.filed >= revenue.filed) || (!!lastCapex && lastCapex.value >= revenue.value * 0.01);
+  // The last capital spending is set against the revenue of its own period (reviewer, Nov 26: UFPT's half-year capex was set against a full
+  // year of revenue and called immaterial): the same filing's revenue for that period, else the annual revenue scaled to that length.
+  const capexRevenue = lastCapex ? (revenues.find(f => f.accession === lastCapex.accession && f.start === lastCapex.start && f.end === lastCapex.end)?.value
+    ?? revenue.value * Math.max(1, duration(lastCapex)) / Math.max(1, duration(revenue))) : 0;
+  const capexEver = capexFacts.some(f => f.filed >= revenue.filed) || (!!lastCapex && lastCapex.value >= capexRevenue * 0.01);
   const investingTagged = basis === "us-gaap" && collect(basis, ["NetCashProvidedByUsedInInvestingActivities", "NetCashProvidedByUsedInInvestingActivitiesContinuingOperations"]).some(samePeriod);
   const capexNotReported = !capexRaw && !capexEver && investingTagged;
   const zeroCapex = (like: Fact | null): Fact | null => capexNotReported && like ? { ...like, value: 0, tag: "capex-not-reported" } : null;
@@ -741,6 +812,20 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
   const series = quarterly ?? annualMargins;
   // A margin above 100% in the series (income above revenue) makes the series unusable for stability, as above.
   const partialRevenue = revenue.tag === IFRS_BANK_REVENUE || quarterRevenue?.tag === IFRS_BANK_REVENUE;
+  // A lender's or bank's operating figure whose sign disagrees with its own pre-tax income for the same period and filing (reviewer, Nov 26:
+  // NNI's derived −$214m beside pre-tax +$81m) is no measure of its profit: the margin is withheld.
+  const signCheck = quarterRevenue && quarterOperatingIncome && (quarterRevenue.tag === LENDER_REVENUE || quarterRevenue.tag === BANK_REVENUE) && quarterOperatingIncome.tag !== DERIVED_PRETAX
+    ? collect(quarterRevenue.basis as keyof typeof tags, PRETAX_TAGS, false, "quarter").find(f => f.accession === quarterRevenue.accession && f.start === quarterRevenue.start && f.end === quarterRevenue.end) : undefined;
+  // Only a line that is itself a partial measure of a financial firm's revenue (net interest, interest plus fees, revenue net of interest,
+  // total operating income) counts as partial when the operating figure exceeds it. A stated sales line beside a larger operating figure (a
+  // crypto treasury's or a REIT's gains, MSTR, CSR) is the real revenue: its growth stays, only its margin is withheld.
+  const financialLine = [BANK_REVENUE, LENDER_REVENUE, IFRS_BANK_REVENUE, LAST_REVENUE_FALLBACK, "RevenuesNetOfInterestExpense"].includes(quarterRevenue?.tag ?? "");
+  // A bank's, lender's, broker's or insurer's line (SIC 6000-6399) below its operating figure is a part too (FVCB: fee revenue of $0.6m beside
+  // pre-tax income of $8.6m).
+  // Not 6199 ("finance services", where the crypto treasuries file: MSTR) or 6221 (commodity trusts).
+  const lenderSic = /^\d{4}$/.test(sic ?? "") && Number(sic) >= 6000 && Number(sic) <= 6399 && sic !== "6199" && sic !== "6221";
+  const partialLine = partialRevenue || (financeSic(sic) && (financialLine || lenderSic) && !!quarterRevenue && !!quarterOperatingIncome && quarterOperatingIncome.value > quarterRevenue.value);
+  const signDisagrees = !!signCheck && !!quarterOperatingIncome && Math.sign(signCheck.value) !== Math.sign(quarterOperatingIncome.value) && signCheck.value !== 0;
   const quarterMargins = series && series.every(m => m.value <= 100) && !partialRevenue ? series : null;
   const filingUrl = (f: Fact) => `https://www.sec.gov/Archives/edgar/data/${Number(cik)}/${f.accession!.replaceAll("-", "")}/${f.accession}-index.htm`;
   // A single filing/date/currency for the entire balance snapshot. No fallback to older components.
@@ -765,12 +850,15 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
   const out: Financials = { ...result, status: "ready", ...(sector ? { sectorMetrics: sector } : {}), ...(capexNotReported ? { capexNotReported: true } : {}), ...(annualMargins ? { marginPeriod: "annual" as const } : {}), ...(qp !== "quarter" ? { periodMonths: qp === "half" ? 6 as const : 12 as const } : {}), balance, revenue, previousRevenue, operatingIncome, operatingCash, capex, cash,
     stockCompensation, stockCompensationRatio: stockCompensation ? stockCompensation.value / revenue.value * 100 : null,
     dilutedShares, previousDilutedShares, dilutedSharesGrowth: dilutedShares && previousDilutedShares ? (dilutedShares.value / previousDilutedShares.value - 1) * 100 : null,
-    quarterRevenue, previousQuarterRevenue, quarterOperatingIncome, quarterMargins, quarterRevenueTtm, quarterRevenueQoq,
-    quarterRevenueGrowth: quarterRevenue && previousQuarterRevenue ? (quarterRevenue.value / previousQuarterRevenue.value - 1) * 100 : null,
+    // No growth on a line that is only part of the revenue (reviewer, Nov 26: BBVA's growth on a $127m line): an IFRS bank's interest and
+    // fee income, or a bank's line its operating income exceeds.
+    quarterRevenue, previousQuarterRevenue, quarterOperatingIncome, quarterMargins, quarterRevenueTtm, quarterRevenueQoq: partialLine ? null : quarterRevenueQoq,
+    quarterRevenueGrowth: !partialLine && quarterRevenue && previousQuarterRevenue ? (quarterRevenue.value / previousQuarterRevenue.value - 1) * 100 : null,
+    ...(partialLine ? { growthWithheld: true as const } : {}),
     // An operating (or pre-tax) income above the revenue line (YUM, MSTR's bitcoin gains, a partial revenue line) is no margin to score: it
     // is withheld and the screen says why (marginWithheld).
-    quarterOperatingMargin: !partialRevenue && quarterRevenue && quarterOperatingIncome && quarterOperatingIncome.value <= quarterRevenue.value ? quarterOperatingIncome.value / quarterRevenue.value * 100 : null,
-    ...(partialRevenue ? { marginPartial: true as const } : quarterRevenue && quarterOperatingIncome && quarterOperatingIncome.value > quarterRevenue.value ? { marginWithheld: true as const } : {}),
+    quarterOperatingMargin: !partialRevenue && !signDisagrees && quarterRevenue && quarterOperatingIncome && quarterOperatingIncome.value <= quarterRevenue.value ? quarterOperatingIncome.value / quarterRevenue.value * 100 : null,
+    ...(partialRevenue ? { marginPartial: true as const } : signDisagrees ? { marginWithheld: true as const, marginSign: true as const } : quarterRevenue && quarterOperatingIncome && quarterOperatingIncome.value > quarterRevenue.value ? { marginWithheld: true as const } : {}),
     quarterSourceUrl: quarterRevenue ? filingUrl(quarterRevenue) : null,
     quarterFcfMargin: fcfWithheld ? null : fcfBasis,
     ...(fcfWithheld ? { fcfWithheld } : quarterFcf === null && annualFcf !== null ? { fcfPeriod: "annual" as const } : {}),

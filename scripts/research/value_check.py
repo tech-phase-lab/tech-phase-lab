@@ -972,16 +972,27 @@ def ensure_values(db, universe=None):
 
 
 def public_payload(db):
-    """What the site's server reads (it checks PRO first). No credits, no provider call."""
+    """Treasure Hunt's ranking, what the site's server reads at /value-check (it checks PRO first). No credits, no provider call.
+    The comparison's list for every comparable company is served separately (values_payload, /value-check/values; reviewer, Nov 26):
+    this answer stays the size the site in production accepts (1.5 MB), whichever is deployed first."""
     data = snapshot(db)
     if not data:
         return {'ok': False, 'error': 'not-ready'}
     data = dict(data)
     data.pop('credits', None)
+    data.pop('values', None)
+    return data
+
+
+def values_payload(db):
+    """The Stock Comparison's figure for every comparable company (compact rows, compare_list()), at /value-check/values."""
+    data = snapshot(db)
+    if not data:
+        return {'ok': False, 'error': 'not-ready'}
+    data = dict(data)
     if 'values' not in data and DERIVED.get('computedAt') == data.get('computedAt') and DERIVED.get('values') is not None:
         data['values'] = DERIVED['values']
-    data['values'] = compare_list(db, data)
-    return data
+    return {'ok': True, 'asOf': data.get('asOf'), 'computedAt': data.get('computedAt'), 'values': compare_list(db, data)}
 
 
 def compact(value):

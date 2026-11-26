@@ -7,7 +7,7 @@ import { prepareComparisonAnalysis, currentComparisonAnalysis, preparePreRevenue
 import { buildSecMarketEvidence } from "../lib/research/sec-market-evidence.ts";
 import { appendMarketItems } from "../lib/research/twelve-data-financials.ts";
 import { hasRecentBalance, hasRecentQuarter, comparisonAvailability, comparisonScores } from "../lib/research/comparison-scorecard.ts";
-import { fillFromProvider } from "../lib/research/comparison-fill.ts";
+import { carryWithholding, fillFromProvider } from "../lib/research/comparison-fill.ts";
 import { OWNER_ACCOUNT_ID, PRODUCTION_OWNER_ACCOUNT_ID } from "../lib/membership/entitlements.ts";
 
 // All-ticker audit of the strengths and weaknesses (Nov 19, scripts/research/comparison-audit/summarize-items.py). Figures are each company's
@@ -90,10 +90,11 @@ async function server(stubs) {
     .replace(/import \{ appendMarketItems \}[^;]*;/, "const appendMarketItems = globalThis.__items.appendMarketItems;")
     .replace(/import \{ comparisonScores, hasRecentBalance, hasRecentQuarter \}[^;]*;/, "const { comparisonScores, hasRecentBalance, hasRecentQuarter } = globalThis.__items;")
     .replace(/import \{ fillFromProvider \}[^;]*;/, "const fillFromProvider = globalThis.__items.fillFromProvider;")
+    .replace(/import \{ carryWithholding \}[^;]*;/, "const carryWithholding = globalThis.__items.carryWithholding;")
     .replace('"./comparison-exclusions"', JSON.stringify(new URL("../lib/research/comparison-exclusions.ts", import.meta.url).href))
     .replace(/import type \{ Financials \}[^;]*;/, "");
   globalThis.__items = { emptyFinancials, prepareComparisonAnalysis, currentComparisonAnalysis, appendFilingFinancialItems, appendEquityItem, buildSecMarketEvidence, appendMarketItems,
-    hasRecentBalance, hasRecentQuarter, comparisonScores, fillFromProvider, preparePreRevenueAnalysis, loadMarketInputs: async () => ({}), loadTwelveComparisonState: async () => ({ data: null, busy: false }), ...stubs };
+    hasRecentBalance, hasRecentQuarter, comparisonScores, fillFromProvider, carryWithholding, preparePreRevenueAnalysis, loadMarketInputs: async () => ({}), loadTwelveComparisonState: async () => ({ data: null, busy: false }), ...stubs };
   return import("data:text/javascript;base64," + Buffer.from(stripTypeScriptTypes(text)).toString("base64") + `#${Math.random()}`);
 }
 const withClock = async fn => { const real = Date.now; Date.now = () => NOW; try { return await fn(); } finally { Date.now = real; } };

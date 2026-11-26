@@ -29,9 +29,10 @@ export function appendMarketItems(prepared:NonNullable<Financials["preparedAnaly
     const margins=evidence.margins;
     if(extras.stability!==null && margins.length===4 && margins[0].value<margins[1].value-0.1) {
       const a=margins[1].value.toFixed(1),b=margins[0].value.toFixed(1);
-      addRisk("margin-decline",`営業利益率 ${a}→${b}%`,`Operating margin ${a}→${b}%`,
-        `${margins[1].periodEnd}期から${margins[0].periodEnd}期に営業利益率が低下。原因はこの数値だけでは特定できません。`,
-        `Operating margin declined from the quarter ended ${margins[1].periodEnd} to ${margins[0].periodEnd}. These figures alone do not establish the cause.`);
+      const pretax=evidence.marginBasis==="pretax", jaName=pretax?"税引前利益率":"営業利益率", enName=pretax?"Pre-tax margin":"Operating margin";
+      addRisk("margin-decline",`${jaName} ${a}→${b}%`,`${enName} ${a}→${b}%`,
+        `${margins[1].periodEnd}期から${margins[0].periodEnd}期に${jaName}が低下。原因はこの数値だけでは特定できません。`,
+        `${enName} declined from the quarter ended ${margins[1].periodEnd} to ${margins[0].periodEnd}. These figures alone do not establish the cause.`);
     }
     const stats=evidence.statistics;
     if(extras.financial!==null && stats && stats.totalDebt!>stats.totalCash!) {

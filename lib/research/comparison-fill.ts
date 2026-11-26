@@ -35,11 +35,11 @@ export function fillFromProvider(sec: Financials, provider: Financials | null | 
     if (supplemented.size > before) out.supplementedFromQuarter = provider.quarterRevenue!.end;
     return out;
   }
-  if (!finite(out.quarterRevenueGrowth) && finite(provider.quarterRevenueGrowth)) {
+  if (!finite(out.quarterRevenueGrowth) && !out.growthWithheld && finite(provider.quarterRevenueGrowth)) {
     out.quarterRevenueGrowth = provider.quarterRevenueGrowth; out.previousQuarterRevenue = provider.previousQuarterRevenue; supplemented.add("growth");
   }
   // A margin the filing withholds (operating income above revenue) is not taken from the provider either; nor is any margin above 100%.
-  if (!finite(out.quarterOperatingMargin) && !out.marginWithheld && finite(provider.quarterOperatingMargin) && provider.quarterOperatingMargin <= 100) {
+  if (!finite(out.quarterOperatingMargin) && !out.marginWithheld && !out.marginPartial && finite(provider.quarterOperatingMargin) && provider.quarterOperatingMargin <= 100) {
     out.quarterOperatingMargin = provider.quarterOperatingMargin; out.quarterOperatingIncome = provider.quarterOperatingIncome; supplemented.add("profitability");
   }
   // A fiscal year's figure that stood in for the quarter (fcfPeriod, marginPeriod "annual") gives way to the provider's same quarter.
@@ -52,14 +52,14 @@ export function fillFromProvider(sec: Financials, provider: Financials | null | 
 /** Cash generation from the provider: only where the filing gives none (or only a fiscal year's), never where the filing withholds it on
  *  purpose (a bank's free cash flow, cash flow above revenue: fcfWithheld), and never a figure above 100% of revenue. */
 function fcfFillable(out: Financials, provider: Financials): boolean {
-  return (!finite(out.quarterFcfMargin) || out.fcfPeriod === "annual") && !out.fcfWithheld && finite(provider.quarterFcfMargin) && provider.quarterFcfMargin <= 100;
+  return (!finite(out.quarterFcfMargin) || out.fcfPeriod === "annual") && !out.fcfWithheld && !out.financeSic && finite(provider.quarterFcfMargin) && provider.quarterFcfMargin <= 100;
 }
 
 function fillMarket(out: Financials, provider: Financials, supplemented: Set<string>, now: number) {
   const mine = out.twelveData, theirs = provider.twelveData;
   if (mine && theirs) {
     let evidence = mine;
-    if ((mine.margins.length !== 4 || mine.marginPeriod === "annual") && theirs.margins.length === 4 && theirs.marginPeriod !== "annual") {
+    if (!out.marginPartial && (mine.margins.length !== 4 || mine.marginPeriod === "annual") && theirs.margins.length === 4 && theirs.marginPeriod !== "annual") {
       evidence = { ...evidence, margins: theirs.margins }; delete evidence.marginPeriod; supplemented.add("stability");
     }
     // Financial strength from the provider's balance only when the filing's own balance gives no score.
@@ -74,4 +74,21 @@ function fillMarket(out: Financials, provider: Financials, supplemented: Set<str
     // Valuation is not filled from the provider: it comes from Treasure Hunt's list for every company (owner, Nov 26).
     out.twelveData = evidence;
   } else if (!mine && theirs) { out.twelveData = theirs; supplemented.add("market"); }
+}
+
+/** The provider's own statements stand for a company (an IFRS filer, a newer quarter, no filing figures): what the filing withholds on purpose
+ *  is withheld from them too (reviewer, Nov 26): a bank's, broker's or insurer's free cash flow (its ROE from the filing stands in), and a
+ *  margin and margin series on an IFRS bank's partial revenue. */
+export function carryWithholding(provider: Financials, sec: Financials): Financials {
+  if (!sec.financeSic && sec.fcfWithheld !== "finance" && !sec.marginPartial) return provider;
+  const out: Financials = { ...provider };
+  if (sec.financeSic || sec.fcfWithheld === "finance") {
+    out.quarterFcfMargin = null; out.fcfWithheld = "finance"; out.financeSic = true; delete out.fcfPeriod;
+    if (!out.sectorMetrics && sec.sectorMetrics) out.sectorMetrics = sec.sectorMetrics;
+  }
+  if (sec.marginPartial) {
+    out.quarterOperatingMargin = null; out.marginPartial = true; out.quarterMargins = null;
+    if (out.twelveData) out.twelveData = { ...out.twelveData, margins: [] };
+  }
+  return out;
 }

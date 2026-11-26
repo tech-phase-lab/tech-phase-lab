@@ -72,7 +72,7 @@ test("Japanese names come from the site's maps; Latin names in the map stay Lati
 
 test("the API routes and both PRO samples carry the resolved names; scores and order stay as sent", () => {
   // Treasure Hunt: the route and the page answer from the shared copy, which carries the names (lib/research/value-check-server.ts).
-  assert.match(read("../lib/research/value-check-server.ts"), /return valueSnapshotWithNames\(parseValueSnapshot\(JSON\.parse\(body\)\)\)/);
+  assert.match(read("../lib/research/value-check-server.ts"), /return valueSnapshotWithNames\(parseValueSnapshot\(await readMonitor\("\/value-check", 1_500_000, env, fetcher\)\)\)/);
   // The whale route keeps one named copy per instance (fast open, Nov 26) and sends that copy.
   assert.match(read("../app/api/research/whales/route.ts"), /const snapshot = whaleSnapshotWithNames\(parseWhaleSnapshot\(JSON\.parse\(body\)\)\)/);
   const snapshot = { ...treasureHuntSample, universes: { ...treasureHuntSample.universes, tech: { ...treasureHuntSample.universes.tech,

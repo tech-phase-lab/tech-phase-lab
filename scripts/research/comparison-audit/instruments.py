@@ -33,7 +33,11 @@ def cached(url):
 KINDS = {"Preferred Stock": "preferred", "Exchange-Traded Note": "etn", "Warrant": "warrant", "Unit": "unit", "Trust": "trust"}
 FUND_FORMS = re.compile(r"^(N-CSRS?|NPORT-P|N-CEN)$")
 FUND_NAME = re.compile(r"\bETF\b|\bETFs\b|\bTrust\b|\bFund\b|iShares|SPDR|ProShares|Grayscale", re.I)
-SPAC_NAME = re.compile(r"Acquisitions?(?: [IVX0-9]+)? (?:Corp|Co\b|Company|Inc|Ltd|Holdings)|\bSPAC\b|Merger Corp|Blank Check", re.I)
+SPAC_NAME = re.compile(r"Acquisitions?(?: [IVX0-9]+)? (?:Corp|Co\b|Company|Inc|Ltd|Holdings)|(?<!de-)(?<!de )\bSPAC\b|Merger Corp|Blank Check", re.I)
+# A company that has completed its merger and says so (reviewer, Nov 26: "Veraxa Biotech AG - Post de-SPAC", VRXA) is an operating company.
+DE_SPAC = re.compile(r"\bde-?SPAC\b|post[- ]merger", re.I)
+# Operating-partnership units of a REIT (reviewer, Nov 26: Empire State Realty OP's ESBA, FISK and OGCP) are units, not the REIT's stock.
+OP_UNITS = re.compile(r"Operating Partnership Units|\bOP Units?\b", re.I)
 EXCHANGE = {"Nasdaq": "NASDAQ", "NYSE": "NYSE", "CBOE": "CBOE", "OTC": "OTC"}
 # Twelve Data types some notes, preferreds and rights "Common Stock" (Nov 26 data-quality audit: AGNCZ "Depositary Shs Repr 1/1000th Cum Conv
 # Red Perp Pfd", RWAYI "7.25% Notes due 2031", ADAMH/ADAML/ADAMZ, AMPGZ "Series B Right"): the name decides when it says so plainly.
@@ -69,6 +73,7 @@ for r in rows:
     types = {x.get("type") for x in same}
     kind = next((KINDS[t] for t in ("Exchange-Traded Note", "Warrant", "Unit", "Preferred Stock", "Trust") if t in types), None)
     if kind == "trust" and not re.search(r"\bTrust\b", name, re.I): kind = None
+    if not kind and any(OP_UNITS.search(str(x.get("name", ""))) for x in same): kind = "unit"
     if not kind and types <= {"Common Stock"}:
         kind = next((k for x in same for pattern, k in NOT_COMMON if pattern.search(str(x.get("name", "")))), None)
     if not kind and not listed: kind = VERIFIED.get(ticker)
@@ -91,6 +96,7 @@ for r in rows:
         fund[str(cik)] = name; continue
     # A blank-check company files the SIC code of the industry it hopes to buy into (BCCQ 3760, IPXG 7373): its name and its trust account
     # (AssetsHeldInTrust...) or the absence of any revenue line identify it.
+    if DE_SPAC.search(name): continue
     if SPAC_NAME.search(name):
         facts = cached(f"https://data.sec.gov/api/xbrl/companyfacts/CIK{cik:010d}.json") or {}
         tags = facts.get("facts", {}).get("us-gaap") or {}

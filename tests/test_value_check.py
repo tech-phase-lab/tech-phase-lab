@@ -248,7 +248,8 @@ class Snapshot(unittest.TestCase):
                 self.assertFalse(vc.ensure_values(db, self.universe()))  # once per stored snapshot
             finally:
                 vc.compute = original
-            self.assertEqual(vc.public_payload(db)['values'], {'UP': [55, 54.6, 'pe-ps', None]})  # compact rows
+            self.assertEqual(vc.values_payload(db)['values'], {'UP': [55, 54.6, 'pe-ps', None]})  # compact rows
+            self.assertNotIn('values', vc.public_payload(db))  # the ranking alone at /value-check
             self.assertNotIn('values', vc.snapshot(db))  # nothing written
         finally:
             vc.DERIVED.clear()
@@ -391,3 +392,25 @@ class ValueCheckStorageTest(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+
+class SplitEndpoint(unittest.TestCase):
+    """Reviewer, Nov 26: the ranking at /value-check must stay within the 1.5 MB the site in production accepts, whichever is deployed first;
+    the comparison's list for every comparable company is served at /value-check/values."""
+    def test_the_ranking_answer_has_no_list_and_the_list_has_its_own(self):
+        db = vc.connect(':memory:')
+        try:
+            values = {f'T{i:04d}': {'score': 50, 'exact': 49.5, 'basis': 'pe-ps', 'period': None} for i in range(6000)}
+            snapshot = {'ok': True, 'asOf': '2026-11-25', 'computedAt': '2026-11-25T22:00:00Z', 'universes': {}, 'values': values}
+            db.execute('INSERT INTO value_check_state(key,value) VALUES(?,?)', ('snapshot', json.dumps(snapshot)))
+            db.commit()
+            ranking = vc.public_payload(db)
+            self.assertNotIn('values', ranking)
+            listed = vc.values_payload(db)
+            self.assertEqual(listed['asOf'], '2026-11-25')
+            self.assertEqual(len(listed['values']), 6000)
+            size = len(json.dumps(listed, separators=(',', ':')).encode())
+            self.assertLess(size, 4_000_000)   # the site reads the list up to 4 MB
+            print(json.dumps({'valuesBytesFor6000': size}))
+        finally:
+            db.close()

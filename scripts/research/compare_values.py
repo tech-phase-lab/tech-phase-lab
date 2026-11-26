@@ -363,11 +363,15 @@ def step(db, *, transport=None, sec=None, directory=None, now=None, sleep=time.s
         adj = vc.read_series([t for t in part if t in raw], vc.HISTORY_BARS, 'splits', pacer, transport)
         if not raw and not adj:
             break  # the pacer had no room
+        # A split-adjusted read that failed as a whole (an error, or no room) is no answer about these companies (reviewer, Nov 26: one
+        # failed read marked all eight of the chunk as misses for a week): they are tried again on the next run. A miss is recorded only for
+        # a company the provider answered without.
+        adjusted_failed = bool(raw) and not adj
         for ticker in part:
             if ticker in adj and adj[ticker]:
                 vc.store_history(db, ticker, raw[ticker], adj[ticker])
                 report['backfilled'] += 1
-            else:
+            elif not adjusted_failed:
                 db.execute('INSERT OR REPLACE INTO compare_misses(ticker,kind,at) VALUES(?,?,?)', (ticker, 'history', stamp))
         _dirty(db, part)
         db.commit()

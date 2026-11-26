@@ -15,6 +15,7 @@ import { buildSecMarketEvidence } from "./sec-market-evidence";
 import { appendMarketItems } from "./twelve-data-financials";
 import { comparisonScores, hasRecentBalance, hasRecentQuarter } from "./comparison-scorecard";
 import { fillFromProvider } from "./comparison-fill";
+import { carryWithholding } from "./comparison-fill";
 import type { Financials } from "./comparison";
 export async function secText(url: string, limit: number) {
   const response = await fetch(url, { cache: "no-store", headers: { Accept: "application/json", "User-Agent": process.env.RESEARCH_USER_AGENT || "TechPhaseResearch/1.0 research-preview" }, signal: AbortSignal.timeout(12_000) });
@@ -73,7 +74,7 @@ async function loadFinancials(ticker: string) {
   const ifrs = sec.quarterRevenue?.basis === "ifrs-full";
   if (ifrs) {
     const { data: twelve } = await loadTwelveComparisonState(ticker);
-    if (twelve && (hasRecentQuarter(twelve.financials, now) || !hasRecentQuarter(sec, now))) return twelve.financials;
+    if (twelve && (hasRecentQuarter(twelve.financials, now) || !hasRecentQuarter(sec, now))) return withheld(twelve.financials, sec, now);
   }
   // A newer earnings release is out but its quarterly report is not filed yet (NVDA, Nov 26: released Nov 17, no 10-Q nine days later):
   // the provider's statements read after the release (the background job reads them once the release is out, comparison-warm.ts), or the
@@ -88,9 +89,9 @@ async function loadFinancials(ticker: string) {
       // The provider's statistics can still describe the old quarter for a few days (twelve-data-factors.ts reads them only for the same
       // quarter): financial strength then comes from the filing's balance sheet, said on screen as the previous quarter's (reviewer, Nov 26).
       const own = comparisonScores(newer.financials, now).find(s => s.id === "financial")?.value;
-      if (own != null || !sec.balance || comparisonScores({ ...sec, dataWarnings: [] }, now).find(s => s.id === "financial")?.value == null) return newer.financials;
-      return { ...newer.financials, balance: sec.balance, balanceFromQuarter: sec.balance.end,
-        supplemented: [...new Set([...(newer.financials.supplemented ?? []), "financial"])], supplementedFromQuarter: sec.balance.end };
+      if (own != null || !sec.balance || comparisonScores({ ...sec, dataWarnings: [] }, now).find(s => s.id === "financial")?.value == null) return withheld(newer.financials, sec, now);
+      return withheld({ ...newer.financials, balance: sec.balance, balanceFromQuarter: sec.balance.end,
+        supplemented: [...new Set([...(newer.financials.supplemented ?? []), "financial"])], supplementedFromQuarter: sec.balance.end }, sec, now);
     }
     return completeFromProvider(ticker, await withMarketFactors(ticker, { ...sec, dataWarnings: [] }, now, market), now, weekly?.financials ?? null);
   }
@@ -100,7 +101,7 @@ async function loadFinancials(ticker: string) {
   const { data: twelve } = await loadTwelveComparisonState(ticker);
   // No current figures from either source: the share price still gives momentum (the radar showed no point at all for such a company).
   if (!twelve) return withMarketFactors(ticker, sec, now, market);
-  const base = twelve.financials;
+  const base = withheld(twelve.financials, sec, now);
   if (twelve.scores.find(score => score.id === "financial")?.value != null) return base;
   // Balance-sheet figures are only borrowed when they describe the same quarter as Twelve Data's. The balance they score becomes a strength
   // or weakness point in the same words as for a filing (before, it scored the factor but never became a point).
@@ -171,6 +172,12 @@ async function withMarketFactors(ticker: string, sec: Financials, start: number,
   return rebuildAnalysis({ ...sec, twelveData: evidence }, now);
 }
 
+/** The provider's statements with the filing's deliberate withholding carried over (comparison-fill.ts carryWithholding), and the points
+ *  rebuilt when anything was withheld, so no bullet repeats a withheld figure. */
+function withheld(provider: Financials, sec: Financials, now: number): Financials {
+  const out = carryWithholding(provider, sec);
+  return out === provider ? provider : rebuildAnalysis(out, now);
+}
 function rebuildAnalysis(c: Financials, now: number): Financials {
   const prepared = c.preRevenue ? preparePreRevenueAnalysis(c, now) : prepareComparisonAnalysis(c, now);
   const period = c.quarterRevenue ?? (c.preRevenue && c.balance ? { end: c.balance.end, unit: c.balance.cash?.unit ?? "USD" } : null);

@@ -4101,6 +4101,22 @@ class Handler(BaseHTTPRequestHandler):
             except Exception:
                 self.send_json(503, {"ok": False, "error": "watch-earnings-unavailable"})
             return
+        if path == "/value-check/values":
+            # The Stock Comparison's valuation list (every comparable company), served apart from Treasure Hunt's ranking so the ranking keeps
+            # the size the site in production accepts (reviewer, Nov 26). Only the site's server, which checks PRO membership.
+            if not os.environ.get("RESEARCH_API_TOKEN") or not self.authorized():
+                self.send_json(401, {"ok": False})
+                return
+            try:
+                db = value_check.connect(self.app.value_check_path())
+                try:
+                    payload = value_check.values_payload(db)
+                finally:
+                    db.close()
+                self.send_json(200 if payload.get("ok") else 503, payload)
+            except Exception:
+                self.send_json(503, {"ok": False, "error": "value-check-unavailable"})
+            return
         if path == "/value-check":
             # 割安判別ツール: served only to the site's server, which checks PRO membership (the same for every member).
             if not os.environ.get("RESEARCH_API_TOKEN") or not self.authorized():

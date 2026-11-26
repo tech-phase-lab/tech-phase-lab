@@ -48,9 +48,14 @@ export function prepareComparisonAnalysis(c: Financials, now=Date.now()): Prepar
   }
   if(valid("profitability") && c.quarterOperatingIncome && c.quarterOperatingMargin!==null && (c.quarterOperatingMargin>=15 || c.quarterOperatingMargin<0)) {
     const margin=c.quarterOperatingMargin, pct=`${margin.toFixed(1)}%`;
+    // A bank's or insurer's figure is its pre-tax income (no operating line is filed): said as such (reviewer, Nov 26: TRV, FHN).
+    const pretax=c.quarterOperatingIncome.tag==="TechPhasePretaxIncome";
     add("operating-margin",margin<0?"weakness":"strength",
-      copy(margin<0?`営業赤字 ${pct}`:`営業利益率 ${pct}`,margin<0?`Operating loss ${pct}`:`Operating margin ${pct}`),
-      copy(`${span.ja}の営業損益は${amount(c.quarterOperatingIncome.value,c.quarterOperatingIncome.unit)}。売上高に対する割合は${pct}。`,
+      pretax ? copy(margin<0?`税引前赤字 ${pct}`:`税引前利益率 ${pct}`,margin<0?`Pre-tax loss ${pct}`:`Pre-tax margin ${pct}`)
+        : copy(margin<0?`営業赤字 ${pct}`:`営業利益率 ${pct}`,margin<0?`Operating loss ${pct}`:`Operating margin ${pct}`),
+      pretax ? copy(`${span.ja}の税引前損益は${amount(c.quarterOperatingIncome.value,c.quarterOperatingIncome.unit)}。売上高に対する割合は${pct}。`,
+          `${span.en} pre-tax income was ${amount(c.quarterOperatingIncome.value,c.quarterOperatingIncome.unit)}, representing ${pct} of revenue.`)
+        : copy(`${span.ja}の営業損益は${amount(c.quarterOperatingIncome.value,c.quarterOperatingIncome.unit)}。売上高に対する割合は${pct}。`,
         `${span.en} operating income was ${amount(c.quarterOperatingIncome.value,c.quarterOperatingIncome.unit)}, representing ${pct} of revenue.`));
   }
   if(valid("growth") && Number.isFinite(c.quarterDilutedSharesGrowth) && c.quarterDilutedSharesGrowth!>5) {
@@ -79,7 +84,9 @@ export function prepareComparisonAnalysis(c: Financials, now=Date.now()): Prepar
  * Also used when a provider-sourced company scores its balance from the filing (comparison-server.ts). */
 export function appendFilingFinancialItems(items:PreparedComparisonAnalysis["items"],c:Financials,now=Date.now()) {
   const q=balanceAnchor(c);
-  const financial=comparisonScores(c,now).find(s=>s.id==="financial")?.value ?? null;
+  // A bank's equity ratio (a company-type score) is not turned into a strength or weakness (reviewer, Nov 26: every large bank read as weak).
+  const financialScore=comparisonScores(c,now).find(s=>s.id==="financial");
+  const financial=financialScore?.kind ? null : financialScore?.value ?? null;
   const providerFinancial=c.twelveData ? twelveExtraFactors(c.twelveData,now).financial : null;
   if(!q || providerFinancial!==null || financial===null || items.some(i=>i.id==="financial" || i.id==="debt-cash")) return items;
   if(financial<=3 || financial>=7) items.push({id:"financial",kind:financial>=7?"strength":"weakness",short:copy(comparisonMetric(c,"financial","ja",now),comparisonMetric(c,"financial","en",now)),detail:twelveFactorMethods.financial});

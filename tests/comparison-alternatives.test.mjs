@@ -70,7 +70,7 @@ test("the scales are fixed: the same figure always gives the same score", () => 
   assert.deepEqual([-50, 0, 50].map(S.lossTrend), [0, 5, 10]);
   assert.deepEqual([0, 40, 80, 100].map(S.rdIntensity), [0, 5, 10, 10]);
   assert.deepEqual([-10, 0, 25, 50, 200].map(S.dilution), [10, 10, 5, 0, 0]);
-  assert.deepEqual([0, 10, 20, 45].map(S.capitalRatio), [0, 5, 10, 10]);
+  assert.deepEqual([2, 6, 10, 45].map(S.capitalRatio), [0, 5, 10, 10]);   // a bank's scale (reviewer, Nov 26)
   assert.deepEqual([-15, 0, 15].map(S.roe), [0, 5, 10]);
 });
 
@@ -104,7 +104,7 @@ test("a bank without a debt figure is scored on equity ÷ assets and ROE, said a
   const c = extractFinancials("BANK", "1", payload, now, undefined, undefined, undefined, "6022");
   const s = Object.fromEntries(comparisonScores(c, now).map(x => [x.id, x.value]));
   assert.equal(c.sectorMetrics.capitalRatio, 10);
-  assert.equal(s.financial, 5);                                 // equity ÷ assets 10% on the 0-20% scale
+  assert.equal(s.financial, 10);                                // equity ÷ assets 10% on the bank scale (2% = 0, 10% = 10)
   assert.equal(comparisonMetric(c, "financial", "ja", now), "自己資本比率 10.0%");
   assert.equal(c.sectorMetrics.roe.basis, "quarters");          // 30 + 28 + 27 + 25 over equity 1,000
   assert.equal(comparisonMetric(c, "cash", "ja", now), "ROE +11.0%");
