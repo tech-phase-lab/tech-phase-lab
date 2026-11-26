@@ -192,6 +192,33 @@ class Endpoint(unittest.TestCase):
             ta._installed = previous
             server.shutdown()
 
+    def test_resolute_lease_token_opens_only_its_jobs_tiers(self):
+        server = service.ThreadingHTTPServer(('127.0.0.1', 0), service.Handler)
+        server.app = SimpleNamespace()
+        threading.Thread(target=server.serve_forever, daemon=True).start()
+        url = f'http://127.0.0.1:{server.server_port}/twelve/lease'
+        previous = ta._installed
+        ta.install(ta.Allocator(read_meter=lambda: 100, clock=Clock()))
+        resolute = 'r' * 40
+        post = lambda body, auth: urlopen(Request(url, method='POST', data=json.dumps(body).encode(), headers={'Authorization': auth, 'Content-Type': 'application/json'}), timeout=3)
+        try:
+            with patch.dict(os.environ, {'RESEARCH_API_TOKEN': 'synthetic-site-token', 'RESOLUTE_TWELVE_LEASE_TOKEN': resolute}):
+                with post({'cost': 50, 'tier': 'critical', 'caller': 'resolute-closes'}, 'Bearer ' + resolute) as response:
+                    self.assertEqual(json.loads(response.read()), {'ok': True, 'granted': True})
+                with self.assertRaises(HTTPError) as error:  # a member page's tier is never RESOLUTE's
+                    post({'cost': 1, 'tier': 'user'}, 'Bearer ' + resolute)
+                self.assertEqual(error.exception.code, 400)
+                with self.assertRaises(HTTPError) as error:
+                    post({'cost': 1, 'tier': 'critical'}, 'Bearer ' + 'x' * 40)
+                self.assertEqual(error.exception.code, 401)
+            # A short token, or one equal to another monitor token, opens nothing.
+            self.assertFalse(ta.resolute_token_ok('Bearer short', {'RESOLUTE_TWELVE_LEASE_TOKEN': 'short'}))
+            self.assertFalse(ta.resolute_token_ok('Bearer ' + resolute, {'RESOLUTE_TWELVE_LEASE_TOKEN': resolute, 'RESOLUTE_PUSH_TOKEN': resolute}))
+            self.assertTrue(ta.resolute_token_ok('Bearer ' + resolute, {'RESOLUTE_TWELVE_LEASE_TOKEN': resolute}))
+        finally:
+            ta._installed = previous
+            server.shutdown()
+
 
 if __name__ == '__main__':
     unittest.main()

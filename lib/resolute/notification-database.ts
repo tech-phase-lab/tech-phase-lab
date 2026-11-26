@@ -5,7 +5,8 @@ import { entitlementSource, readEntitlementSnapshot, type EntitlementSource } fr
 import { Pool, type PoolClient } from "pg";
 import { resoluteDatabaseConfig } from "./database-config.ts";
 import { createSettingsSplitAdjuster, keepStoredOriginals, stampPriceDays, type SettingsSplitAdjuster } from "./notification-splits.ts";
-import { createSplitLoader, etDay } from "../research/stock-splits.ts";
+import { etDay } from "../research/stock-splits.ts";
+import { createCachedSplitLoader } from "./twelve-cache.ts";
 import { defaultNotificationSettings, parseNotificationMutation, parseNotificationSnapshot,
  type NotificationSnapshot, type NotificationSettings } from "./notification-settings.ts";
 export class NotificationAccessDenied extends Error {}
@@ -60,7 +61,8 @@ export async function operateNotificationSettings(userId:string,method:"GET"|"PU
   const config=resoluteDatabaseConfig(process.env.RESOLUTE_NOTIFICATION_DB_URL);
   if(new URL(config.connectionString).username!=="resolute_notification_writer") throw new Error("Scoped writer required");
   const pool=new Pool(config);pool.on("error",()=>{});
-  store=createNotificationStore(pool,entitlementSource(),protectionRuntime(),createSettingsSplitAdjuster(createSplitLoader({apiKey:process.env.TWELVE_DATA_API_KEY})));
+  store=createNotificationStore(pool,entitlementSource(),protectionRuntime(),createSettingsSplitAdjuster(createCachedSplitLoader(pool)));
+  // Splits: the shared copy only (refreshed once a day by the notifications cron's prefetch); a settings screen never calls the provider.
  }
  return store(userId,method,mutation,ownerAccess);
 }

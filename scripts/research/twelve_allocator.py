@@ -35,6 +35,20 @@ MEMBER_RESERVE_FACTOR = 2             # room for twice the busiest recent minute
 MEMBER_WINDOW = 5                     # minutes of members' asks remembered
 CALLER = re.compile(r'[a-z][a-z0-9_-]{0,31}')  # a caller's label in the summary (the provider path); anything else counts under its tier
 
+RESOLUTE_TIERS = ('critical', 'warm', 'background')  # RESOLUTE's jobs (lib/resolute/twelve-lease.ts); never a member page's tiers
+PRIVILEGED_TOKENS = ('RESEARCH_API_TOKEN', 'RESEARCH_EDITOR_TOKEN', 'RESOLUTE_NEWS_READ_TOKEN', 'RESOLUTE_PUSH_TOKEN')
+
+
+def resolute_token_ok(supplied, env=None):
+    """RESOLUTE's own lease token (RESOLUTE_TWELVE_LEASE_TOKEN): at least 32 characters, never one of the monitor's other tokens. It
+    opens POST /twelve/lease only, for RESOLUTE_TIERS only."""
+    import hmac
+    env = os.environ if env is None else env
+    token = env.get('RESOLUTE_TWELVE_LEASE_TOKEN', '')
+    others = [env.get(k, '') for k in PRIVILEGED_TOKENS]
+    return len(token) >= 32 and token not in others and isinstance(supplied, str) and hmac.compare_digest(supplied, 'Bearer ' + token)
+
+
 PER_CALL = {'statistics': 50, 'earnings': 20, 'splits': 20, 'income_statement': 100, 'cash_flow': 100, 'balance_sheet': 100,
             'dividends': 20, 'profile': 10, 'api_usage': 1, 'symbol_search': 1}
 

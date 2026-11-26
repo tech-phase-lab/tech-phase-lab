@@ -4393,8 +4393,10 @@ class Handler(BaseHTTPRequestHandler):
             return
         path = urlsplit(self.path).path
         if path == "/twelve/lease":
-            # The website's instances ask here for each Twelve Data call's credits (twelve_allocator.py). The site's server token only.
-            if not os.environ.get("RESEARCH_API_TOKEN") or not self.authorized():
+            # The website's instances ask here for each Twelve Data call's credits (twelve_allocator.py): the site's server token, or
+            # RESOLUTE's own lease token for its jobs' tiers only (closes, splits, thermometer; lib/resolute/twelve-lease.ts).
+            resolute = twelve_allocator.resolute_token_ok(self.headers.get("Authorization", ""))
+            if not resolute and (not os.environ.get("RESEARCH_API_TOKEN") or not self.authorized()):
                 self.send_json(401, {"ok": False})
                 return
             allocator = twelve_allocator.installed()
@@ -4403,6 +4405,8 @@ class Handler(BaseHTTPRequestHandler):
                 return
             try:
                 payload = self.read_json(1024)
+                if resolute and payload.get("tier") not in twelve_allocator.RESOLUTE_TIERS:
+                    raise ValueError("tier")
                 granted = allocator.grant(payload.get("cost"), payload.get("tier"), payload.get("caller"))
             except Exception:
                 self.send_json(400, {"ok": False})

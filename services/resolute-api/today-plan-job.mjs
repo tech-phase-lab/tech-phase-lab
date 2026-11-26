@@ -7,8 +7,9 @@ import {isOwnerAccount} from '../../lib/membership/entitlements.ts';
 import {parsePlan} from '../../lib/resolute/plan-data.ts';
 import {parseNotificationSettings} from '../../lib/resolute/notification-settings.ts';
 import {createSettingsSplitAdjuster} from '../../lib/resolute/notification-splits.ts';
-import {createSplitLoader} from '../../lib/research/stock-splits.ts';
-import {parseBars} from '../../lib/research/market-quote.ts';
+import {createCachedSplitLoader,createDailyCloseStore} from '../../lib/resolute/twelve-cache.ts';
+import {fetchDailyBatch,SYMBOL} from '../../lib/resolute/twelve-daily.ts';
+import {leaseFromEnv,unpacedLease} from '../../lib/resolute/twelve-lease.ts';
 import {latestRiskDate,parseRiskArticle,isLegacyRiskArticle} from '../../lib/resolute/risk.ts';
 import {safeThermometerSnapshot,thermometerSession} from '../../lib/resolute/thermometer-runtime.ts';
 import {fixedTodayPlan} from '../../lib/resolute/today-plan.ts';
@@ -51,26 +52,36 @@ export const TODAY_INSTRUCTIONS='You write the 「今日やること」 (what to
 const userHash=id=>createHash('sha256').update(id).digest('hex').slice(0,12);
 const dayAfter=date=>new Date(Date.parse(date+'T00:00:00Z')+86400000).toISOString().slice(0,10);
 
-/** Daily bars from Twelve Data (one read per symbol per run, kept in memory). The key never appears in output. */
-export function createDailyBars({apiKey,fetcher=fetch,baseUrl='https://api.twelvedata.com'}={}){
+/** Daily bars (one read per symbol per run, kept in memory). The watched symbols' last closes come from the shared copy
+ * (resolute.twelve_daily_closes, filled once a day by twelve-prefetch.mjs); what it lacks is read from Twelve Data in batches of 50
+ * (`prime`, once for the whole run before the members' loop), every request leased from the monitor's allocator and paced, never
+ * retried. A longer series (the §5 index, 1000 bars) is one leased request per symbol and run. The key never appears in output. */
+export function createDailyBars({apiKey,fetcher=fetch,baseUrl='https://api.twelvedata.com',lease=unpacedLease(),store=null}={}){
  const memory=new Map();
- return async(symbol,{outputsize=5,endDate}={})=>{
-  const key=`${symbol}:${outputsize}:${endDate??''}`;
+ const keyOf=(symbol,outputsize,endDate)=>`${symbol}:${outputsize}:${endDate??''}`;
+ const bars=(symbol,{outputsize=5,endDate}={})=>{
+  const key=keyOf(symbol,outputsize,endDate);
   if(memory.has(key))return memory.get(key);
   const read=(async()=>{
-   if(!apiKey||!/^[A-Z][A-Z0-9./-]{0,14}$/.test(symbol))return [];
-   const url=new URL(`${baseUrl}/time_series`);
-   for(const [k,v] of Object.entries({symbol,interval:'1day',outputsize:String(outputsize),order:'desc',...(endDate?{end_date:endDate}:{}),apikey:apiKey}))url.searchParams.set(k,v);
-   try{
-    const response=await fetcher(url,{cache:'no-store',redirect:'error',signal:AbortSignal.timeout(15000)});
-    if(response.status!==200){await response.body?.cancel();return [];}
-    const body=await response.json();
-    if(body?.status==='error'||(typeof body?.meta?.symbol==='string'&&body.meta.symbol.toUpperCase()!==symbol))return [];
-    return parseBars(body).map(b=>({date:b.at.slice(0,10),close:b.close}));
-   }catch{return [];}
+   if(!apiKey||!SYMBOL.test(symbol))return [];
+   const got=await fetchDailyBatch([symbol],{apiKey,lease,caller:'resolute-today-plan',fetcher,baseUrl,outputsize,endDate});
+   return got.get(symbol)??[];
   })();
   memory.set(key,read);return read;
  };
+ /** Reads every symbol's short series for the run at once: the shared copy first, then one batched request per 50 missing symbols. */
+ bars.prime=async(symbols,{outputsize=5,endDate}={})=>{
+  const missing=[...new Set(symbols)].filter(s=>SYMBOL.test(s)&&!memory.has(keyOf(s,outputsize,endDate)));
+  if(!missing.length)return;
+  const session=endDate?new Date(Date.parse(endDate+'T00:00:00Z')-86400000).toISOString().slice(0,10):null;
+  const stored=store&&session&&outputsize<=5?await store.read(missing,session):new Map();
+  for(const [s,list] of stored)memory.set(keyOf(s,outputsize,endDate),Promise.resolve(list));
+  const rest=missing.filter(s=>!stored.has(s));
+  if(!rest.length||!apiKey)return;
+  const got=await fetchDailyBatch(rest,{apiKey,lease,caller:'resolute-today-plan',fetcher,baseUrl,outputsize,endDate});
+  for(const s of rest)memory.set(keyOf(s,outputsize,endDate),Promise.resolve(got.get(s)??[]));
+ };
+ return bars;
 }
 /** Latest close (on the session) and the bar before it, for each watched ticker. */
 export async function watchCloses(bars,symbols,session){
@@ -172,6 +183,14 @@ export async function runTodayPlanJob({pool,now=new Date(),model=null,bars=creat
  const report={state:'done',session,shock:shock.state,members:Math.min(rows.length,maxMembers),incomplete:rows.length>maxMembers,
   ai:0,fixed:0,existing:0,notEntitled:0,invalidPlan:0,errors:0,regenerated:0,estimate:0,estimateMissing:{},rejections:{},inputTokens:0,outputTokens:0,tonight:{}};
  const queue=rows.slice(0,maxMembers);
+ // Every watched symbol's closes for the run at once (shared copy, then batched provider reads), not one request per member and symbol.
+ if(typeof bars.prime==='function'&&queue.length){
+  const ids=queue.map(r=>r.clerk_user_id);
+  const watched=(await pool.query(`SELECT DISTINCT upper(item->>'symbol') AS symbol FROM resolute.notification_settings s,
+   jsonb_array_elements(CASE WHEN jsonb_typeof(s.settings->'watchItems')='array' THEN s.settings->'watchItems' ELSE '[]'::jsonb END) item
+   WHERE s.clerk_user_id=ANY($1::text[])`,[ids])).rows.map(r=>r.symbol).filter(s=>typeof s==='string');
+  try{await bars.prime(watched,{outputsize:5,endDate:dayAfter(session)});}catch{}
+ }
  const one=async row=>{
   const id=row.clerk_user_id;
   if(!isOwnerAccount(id)&&!(await readEntitlementSnapshot(pool,id,source)).view.canUseTools){report.notEntitled++;return;}
@@ -223,7 +242,9 @@ async function main(){
   const only=(process.env.RESOLUTE_TODAY_PLAN_ONLY_USER_IDS??'').split(',').map(s=>s.trim()).filter(Boolean);
   if(only.some(id=>!/^user_[A-Za-z0-9]{1,128}$/.test(id)))throw Error('CONFIG');
   const result=await runTodayPlanJob({pool,model:apiKey?createTodayModel({apiKey,pool,limit:todayPlanMonthlyLimit()}):null,
-   bars:createDailyBars({apiKey:twelve}),splitLoader:twelve?createSplitLoader({apiKey:twelve}):null,onlyUserIds:only.length?only:null,
+   // Twelve Data: the shared copies first (closes and splits, filled by the notifications cron's daily prefetch); the rest leased and paced.
+   bars:createDailyBars({apiKey:twelve,store:createDailyCloseStore(pool),lease:leaseFromEnv(process.env,{tier:'warm',perMinute:120,deadline:Date.now()+900000})}),
+   splitLoader:createCachedSplitLoader(pool),onlyUserIds:only.length?only:null,
    tonight:apiKey&&process.env.RESOLUTE_TONIGHT_AI_ENABLED==='true'?createTonightJobHook({pool,model:createTonightQuestionModel({apiKey,pool,limit:todayPlanMonthlyLimit()})}):null});
   console.log(JSON.stringify({event:'RESOLUTE_TODAY_PLAN',...result}));
   if(result.state!=='done'||result.errors)process.exitCode=1;

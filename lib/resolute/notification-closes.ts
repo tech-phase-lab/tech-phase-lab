@@ -1,8 +1,10 @@
 import { usMarketSession } from '../research/us-market-session.ts';
-import { parseBars } from '../research/market-quote.ts';
+import { dayAfter, fetchDailyBatch, type DailyBar } from './twelve-daily.ts';
+import { unpacedLease, type TwelveLease } from './twelve-lease.ts';
+import type { DailyCloseStore } from './twelve-cache.ts';
 import type { Close } from './alert-judge.ts';
 
-// 終値アラートの価格入力。提供元は Twelve Data の日足(/time_series, interval=1day)。表示は「提供: Twelve Data」。
+// 終値アラートの価格入力。提供元は Twelve Data の日足(/time_series, interval=1day, 複数銘柄をまとめて1回)。表示は「提供: Twelve Data」。
 // 営業日・休場日は米国市場カレンダー(2026〜2027のみ)で決め、範囲外は「不明」として何も送らない(推測しない)。
 // 確定の扱い: 市場日の終了時刻(通常16:00 ET、短縮日13:00 ET)から30分過ぎ、かつ提供元がその日付の日足を返したときだけ isFinal。
 const SETTLE_MINUTES = 30;
@@ -34,52 +36,42 @@ export function latestSettledSession(now: Date): string | null {
 export type CloseSource = { marketDate: string; closes: Close[] } | { marketDate: null; closes: [] };
 type Fetcher = typeof fetch;
 
-/** 1回の実行で同じ銘柄を二度取りに行かない(ユーザーごとのループでも提供元の呼び出しは銘柄数だけ)。キーは出力に出さない。 */
-export function createCloseProvider(options: { apiKey: string | undefined; now?: () => Date; request?: Fetcher; baseUrl?: string }) {
+/** Closes for a run's symbols. Once per symbol and market date for everyone: the shared copy (resolute.twelve_daily_closes, filled by the
+ * daily prefetch) first; only the symbols it lacks are read from the provider, BATCH_SYMBOLS to a request, each request leased from the
+ * allocator on the critical tier (alerts), never retried (a 429 or a refusal is no close: the notice state does not move and the next
+ * delivery hour judges again). What the provider returns is stored for the other runs of the day. The key never appears in output. */
+export function createCloseProvider(options: { apiKey: string | undefined; now?: () => Date; request?: Fetcher; baseUrl?: string; lease?: TwelveLease; store?: DailyCloseStore }) {
   const now = options.now ?? (() => new Date());
-  const request = options.request ?? fetch;
-  const base = options.baseUrl ?? 'https://api.twelvedata.com';
-  const memory = new Map<string, Close | null>();
-  async function one(symbol: string, date: string): Promise<Close | null> {
-    const key = `${symbol}:${date}`;
-    if (memory.has(key)) return memory.get(key) ?? null;
-    let result: Close | null = null;
-    try {
-      if (!options.apiKey || !/^[A-Z][A-Z0-9.-]{0,14}$/.test(symbol)) throw new Error('unavailable');
-      const url = new URL(`${base}/time_series`);
-      url.searchParams.set('symbol', symbol);
-      url.searchParams.set('interval', '1day');
-      url.searchParams.set('outputsize', '5');
-      url.searchParams.set('order', 'desc');
-      url.searchParams.set('apikey', options.apiKey);
-      let response: Response | null = null;
-      for (let attempt = 0; attempt < 3; attempt++) {
-        response = await request(url, { cache: 'no-store', redirect: 'error', signal: AbortSignal.timeout(12000) });
-        if (response.status !== 429 || attempt === 2) break;
-        await new Promise((r) => setTimeout(r, 4000 * (attempt + 1)));
-      }
-      if (!response || response.status !== 200) throw new Error('unavailable');
-      const body = (await response.json()) as { status?: unknown; meta?: { symbol?: unknown; currency?: unknown } };
-      // 別銘柄・エラー本文・ドル建て以外は採用しない。
-      if (body?.status === 'error' || (typeof body?.meta?.symbol === 'string' && body.meta.symbol.toUpperCase() !== symbol)) throw new Error('unavailable');
-      if (typeof body?.meta?.currency === 'string' && body.meta.currency !== 'USD') throw new Error('unavailable');
-      const bar = parseBars(body).find((b) => b.at.slice(0, 10) === date);
-      // 提供元が、その日付の日足を返した場合だけ。日付が違う・まだ無い場合は not final として扱う。
-      if (bar) result = { symbol, date, close: bar.close, isFinal: true }; // date は確定済みの市場日として選んだもの
-    } catch {
-      result = null; // 取得失敗は no_close。通知状態は進まず、次の指定時刻に判定し直す。
-    }
-    memory.set(key, result);
-    return result;
-  }
+  const lease = options.lease ?? unpacedLease();
+  const memory = new Map<string, DailyBar[] | null>();
+  const closeOf = (symbol: string, date: string): Close | null => {
+    // 提供元が、その日付の日足を返した場合だけ。日付が違う・まだ無い場合は not final として扱う。
+    const bar = memory.get(`${symbol}:${date}`)?.find(b => b.date === date);
+    return bar ? { symbol, date, close: bar.close, isFinal: true } : null; // date は確定済みの市場日として選んだもの
+  };
   return async function closes(symbols: string[]): Promise<CloseSource> {
     const date = latestSettledSession(now());
     if (!date) return { marketDate: null, closes: [] };
-    const out: Close[] = [];
-    for (const symbol of [...new Set(symbols)]) {
-      const c = await one(symbol, date);
-      if (c) out.push(c);
+    const unique = [...new Set(symbols)];
+    let missing = unique.filter(s => !memory.has(`${s}:${date}`));
+    if (missing.length && options.store) {
+      const stored = await options.store.read(missing, date);
+      for (const [s, bars] of stored) memory.set(`${s}:${date}`, bars);
+      missing = missing.filter(s => !stored.has(s));
     }
+    if (missing.length) {
+      const read = await fetchDailyBatch(missing, { apiKey: options.apiKey, lease, caller: 'resolute-closes', fetcher: options.request, baseUrl: options.baseUrl, outputsize: 5, endDate: dayAfter(date) });
+      const answered: [string, DailyBar[]][] = [];
+      for (const s of missing) {
+        const bars = read.get(s) ?? null;
+        memory.set(`${s}:${date}`, bars); // a failed read is not asked again in this run (one call per symbol per run at most)
+        // Stored only when it holds the day's bar or the provider said there is no such series; a bar not out yet is asked again later.
+        if (bars && (!bars.length || bars.some(b => b.date === date))) answered.push([s, bars]);
+      }
+      if (options.store && answered.length) await options.store.write(answered, date);
+    }
+    const out: Close[] = [];
+    for (const symbol of unique) { const c = closeOf(symbol, date); if (c) out.push(c); }
     return { marketDate: date, closes: out };
   };
 }

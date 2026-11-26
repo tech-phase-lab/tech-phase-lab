@@ -4,7 +4,8 @@ import {resoluteDatabaseConfig} from '../../lib/resolute/database-config.ts';
 import {createNotificationQueueRunner} from '../../lib/resolute/notification-queue-runner.ts';
 import {createClerkNotificationRecipient} from '../../lib/resolute/notification-recipient.ts';
 import {createCloseProvider} from '../../lib/resolute/notification-closes.ts';
-import {createSplitLoader} from '../../lib/research/stock-splits.ts';
+import {createCachedSplitLoader,createDailyCloseStore} from '../../lib/resolute/twelve-cache.ts';
+import {leaseFromEnv} from '../../lib/resolute/twelve-lease.ts';
 
 // 通知候補をoutboxへ入れるだけ(メールは送らない)。明示的な起動のみ。既定は無効で、DB・提供元・Clerkに触れない。
 // 有効化・スケジュール・変数の設定は、オーナーの承認が毎回必要。値は出力しない。
@@ -26,9 +27,13 @@ try{
    enabled:true,
    ...(only.length?{onlyUserIds:only}:{}),
    recipient:createClerkNotificationRecipient(createClerkClient({secretKey:env.RESOLUTE_MAIL_CLERK_SECRET_KEY}),env.RESOLUTE_MAIL_PUBLIC_ORIGIN==='https://techphase.app'),
-   closes:createCloseProvider({apiKey:env.TWELVE_DATA_API_KEY}),
+   // Closes: the day's shared copy first (twelve-prefetch.mjs fills it before this step); only missing symbols are read, in batches,
+   // leased from the monitor's allocator on the critical tier and paced (never more than 300 credits a minute, never retried).
+   closes:createCloseProvider({apiKey:env.TWELVE_DATA_API_KEY,store:createDailyCloseStore(pool),
+    lease:leaseFromEnv(env,{tier:'critical',perMinute:300,deadline:Date.now()+180000})}),
    // Stock splits (SNDK 8-for-1, Nov 20 2026): reference prices saved before a split are judged on the split-adjusted basis of the closes.
-   splits:createSplitLoader({apiKey:env.TWELVE_DATA_API_KEY}),
+   // Read from the shared copy only (the prefetch refreshes it once a day); none stored: the manual list.
+   splits:createCachedSplitLoader(pool),
   });
   const report=await run();console.log(JSON.stringify(report));
   if(report.errors||report.incomplete)process.exitCode=1;
