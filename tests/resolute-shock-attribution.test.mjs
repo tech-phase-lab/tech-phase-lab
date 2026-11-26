@@ -63,13 +63,13 @@ test('single-company news gets stars only when BOTH the company and its industry
  assert.deepEqual(waiting.market.company,{ticker:'AAPL',basket:'nas100'});
  // AAPL −4.5% (4.1×) but TP大型株100 only −1.5% (2.0×) … that is ≥1.5×: industry moved too → stars from TP大型株100 (47/99 down: ★2).
  const both=applyMarketReaction(waiting,moves);assert.equal(companyQualifies(both.market),true);assert.equal(both.stars,2);
- assert.deepEqual(formatReading(both.market,'ja'),['AAPL −4.5%（いつもの4.1倍）','TP大型株100 −1.5%（いつもの2.0倍・47/99社が下落）','恐怖指数 0%']);
- assert.deepEqual(readingParts(both.market,'en')[0],{text:'AAPL −4.5%',detail:' (4.1× usual)'});
+ assert.deepEqual(formatReading(both.market,'ja'),['AAPL　−4.5%','TP大型株100　−1.5%','恐怖指数　0%']);
+ assert.deepEqual(readingParts(both.market,'en')[0],{text:'AAPL  −4.5%'});
  // Only the company moved: the industry basket at 1.0× → no stars, shown as single-company news.
  const calmIndustry={[TUE]:{...tuesday,nas100:{...tuesday.nas100,changePercent:-0.74}}};
  const alone=applyMarketReaction(waiting,calmIndustry);
  assert.equal(companyQualifies(alone.market),false);assert.equal(alone.stars,null);assert.equal(noStarsLabel(alone,'ja'),'個別企業のニュース（★はつけません）');
- assert.deepEqual(formatReading(alone.market,'ja'),[]);
+ assert.equal(alone.stars,null);
  // Only the industry moved: MU −1.2% (0.4×) on a −8.5% chip day → no stars.
  const mu=validateGeneration({...copy,ja:{...copy.ja,title:'マイクロンの調査'},en:{...copy.en,title:'Micron probe'}},{...story('Micron faces probe over memory exports','2026-11-23T21:00:00.000Z',{tickers:['MU']}),body:'Micron said it faces a probe over memory exports, the report said.'});
  assert.equal(applyMarketReaction(mu,moves).stars,null);
@@ -95,10 +95,10 @@ test('up days stay eligible; the fear rise counts on down days only, and the car
  const down={...m,reading:{...m.reading,nas100:{...m.reading.nas100,changePercent:-6},sox:{...m.reading.sox,changePercent:-14.7},fearChange:5}};
  assert.equal(marketStars(down),4);assert.equal(marketStars({...down,reading:{...down.reading,fearChange:19}}),5);
  // Card lines (home, detail and PC panel all use readingParts): sign and 上昇 show the direction; no 「恐怖指数」 line.
- assert.deepEqual(formatReading(m,'ja'),['TP大型株100 +6.0%（いつもの7.9倍・89/99社が上昇）','TP半導体40 +14.7%（いつもの6.5倍・40/40社が上昇）']);
- assert.deepEqual(formatReading(m,'en'),['TP Large Cap 100 +6.0% (7.9× usual · 89/99 up)','TP Semiconductor 40 +14.7% (6.5× usual · 40/40 up)']);
+ assert.deepEqual(formatReading(m,'ja'),['TP大型株100　+6.0%','TP半導体40　+14.7%']);
+ assert.deepEqual(formatReading(m,'en'),['TP Large Cap 100  +6.0%','TP Semiconductor 40  +14.7%']);
  assert.ok(!readingParts(m,'ja').some(l=>l.text.startsWith('恐怖指数')));
- assert.deepEqual(formatReading(down,'ja').at(-1),'恐怖指数 +5%');
+ assert.deepEqual(formatReading(down,'ja').at(-1),'恐怖指数　+5%');
 });
 
 test('market-wide headlines are market scope even with words before the move verb; "Shares of X" stays one company',()=>{
@@ -192,7 +192,6 @@ test('a headline whose direction is clear gets no stars from a session that move
  const filled=applyMarketReaction(article,moves);
  assert.notEqual(filled.market.reading,null);assert.equal(filled.stars,null);assert.equal(parseRiskArticle(filled).stars,null);
  // No extra text on screen (owner): the story is simply not shown — the feed drops it.
- assert.deepEqual(formatReading(filled.market,'ja'),[]);
  const {parseRiskFeed}=await import('../lib/resolute/risk.ts');
  assert.deepEqual(parseRiskFeed({state:'ready',date:'2026-11-25',articles:[filled],quotes:[]}).articles,[]);
  assert.ok(!JSON.stringify((await import('../lib/resolute/risk-policy.ts')).RISK_POLICY).includes('見出しと逆'));

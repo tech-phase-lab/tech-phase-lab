@@ -1,4 +1,4 @@
-import {inspectCandidateFeed,generate,isInDailyWindow,windowHours,FEED_CHECKS as INSPECT_CHECKS,reactArticles,fillMarketReactions} from './risk-job.mjs';
+import {inspectCandidateFeed,generate,isInDailyWindow,windowHours,FEED_CHECKS as INSPECT_CHECKS,reactArticles,fillMarketReactions,assignQuote} from './risk-job.mjs';
 import {REPORT_CHECKS} from './rizel-report-source.mjs';
 const FEED_CHECKS=[...INSPECT_CHECKS,...REPORT_CHECKS];
 import {riskDate,parseRiskArticle,parseRiskMarket,parseRiskCause,causeStars,isDailyRunHour,dailyRunStart,marketStars,measureStars,directionMismatch} from '../../lib/resolute/risk.ts';
@@ -6,6 +6,8 @@ import {applyMarketReaction,candidateMarket,storySession,newsInstant} from '../.
 import {RISK_POLICY} from '../../lib/resolute/risk-policy.ts';
 import {storyScope,isBarePriceMove,headlineCause,companyKey,storyTicker,titleSimilarity,NEAR_DUPLICATE} from '../../lib/resolute/risk-scope.ts';
 import {selectArticleForReview} from './rizel-worker.mjs';
+import {judgePool,marketWraps,ruleJudgement} from './shock-judge.mjs';
+import {duringSession} from '../../lib/resolute/risk-market.ts';
 
 /** The session a candidate is measured on (risk-market.ts storySession: the move AFTER publication) and its index: the same
  * rule that later fills the stars. Single-company news is measured on its rostered company and industry basket (`basket`);
@@ -151,7 +153,7 @@ const RESERVE_MAX=60;
  * Daily claims survive errors: retrying cannot silently repeat paid generation.
  */
 export async function prepareDailyReview({enabled=false,readFeed,selectionPool,budgetPool,apiKey,
- publishPool,now=new Date(),summarize=generate,select=selectArticleForReview,fetcher=fetch,readMoves=null,limits=dailyLimits(),replace=null}) {
+ publishPool,now=new Date(),summarize=generate,select=selectArticleForReview,fetcher=fetch,readMoves=null,limits=dailyLimits(),replace=null,judge=null,log=console.log}) {
  if(!enabled)return {state:'disabled'};
  if(!isDailyRunHour(now))return {state:'outside-window'};
  const day=riskDate(now);
@@ -168,34 +170,58 @@ export async function prepareDailyReview({enabled=false,readFeed,selectionPool,b
   let intake=selectDailyCandidates(feed,now,{limits});
   // Both steps below only improve the day (stars on earlier stories, starred stories first); a failure in them never
   // blocks it or changes what is checked. Stories still waiting from earlier days get their stars once their close is known.
-  let market=null;
+  let market=null,moves=null;
   if(readMoves){
    market={};
    // The one-off re-selection leaves stored days alone: it replaces only its own day, compare-and-set against what it read.
    try{if(!replace&&(publishPool??budgetPool)){const f=await fillMarketReactions(publishPool??budgetPool,readMoves,now);market.earlierDaysFilled=f.updated;market.earlierStoriesWaiting=f.waiting;}}catch{market.earlierDays='failed';}
-   try{const sessions=intake.sessions;
-    if(sessions.length)intake=selectDailyCandidates(feed,now,{moves:await readMoves(sessions),limits});}catch{market.ordering='failed';}
+   // With the day's AI judgement, the sessions the stories were published DURING are read too (owner, Nov 26).
+   try{const during=judge?[...intake.selected,...intake.reserve].map(c=>duringSession(newsInstant(c.publishedAt))).filter(Boolean):[];
+    const sessions=[...new Set([...intake.sessions,...during])];
+    if(sessions.length){moves=await readMoves(sessions);intake=selectDailyCandidates(feed,now,{moves,limits});}}catch{market.ordering='failed';}
   }
   diagnostics={...intake.diagnostics,...(market?{market}:{})};
   const selected=intake.selected,reserve=[...intake.reserve];
+  // The day's judgement (owner, Nov 26): the AI picks the stories that explain what moved the market and gives the stars, with
+  // retries; when every attempt fails, the numeric rule (intraday extremes included) is used and logged. Every day gets stars.
+  let picks=null;
+  if(judge&&moves){
+   const pool=judgePool([...selected,...reserve],moves),wraps=marketWraps(feed,now.getTime()-windowHours(now)*3600000,now.getTime());
+   const j=await judge({day,pool,wraps,budgetPool,now,fetcher});
+   if(j.picks){picks=j.picks.map(p=>({...p,source:'ai'}));diagnostics.judge={source:'ai',attempts:j.attempts,pool:pool.length,wraps:wraps.length};}
+   else{picks=ruleJudgement(pool).map(p=>({...p,source:'rule'}));diagnostics.judge={source:'rule',attempts:j.attempts,failure:j.failure,pool:pool.length,wraps:wraps.length};
+    log(JSON.stringify({event:'RIZEL_SHOCK_JUDGE_FALLBACK',day,attempts:j.attempts,failure:j.failure}));}
+  }
   stage='storage';
   await selectionPool.query('UPDATE public.resolute_rizel_daily_runs SET candidate_count=$2 WHERE day=$1',[day,selected.length]);
   stage='generation';
   const quotes=(publishPool??budgetPool)&&readMoves?((await (publishPool??budgetPool).query('SELECT value FROM resolute.risk_quotes')).rows??[]).map(r=>r.value).filter(q=>q?.approved===true):[];
   // A candidate that fails the checks is replaced by the next one in reserve (bounded: limits.attempts model calls at most).
   // The replacement is the best-ranked reserve story that does not repeat a story already kept or still queued (repeatsTaken).
-  const queue=[...selected],kept=[];let attempts=0;const withheld=[];
-  const refill=()=>{const i=reserve.findIndex(c=>!repeatsTaken(c,[...kept,...queue]));if(i>=0)queue.push(reserve.splice(i,1)[0]);};
+  const queue=picks?picks.map(p=>p.candidate):[...selected],kept=[];let attempts=0;const withheld=[];
+  const pickOf=new Map(picks?picks.map(p=>[p.candidate,p]):[]);
+  // In judged mode the AI's next pick fills a withheld slot; otherwise the reserve does.
+  const refill=()=>{if(picks)return;const i=reserve.findIndex(c=>!repeatsTaken(c,[...kept,...queue]));if(i>=0)queue.push(reserve.splice(i,1)[0]);};
   while(queue.length&&articles.length<limits.stories&&attempts<limits.attempts){
-   const candidate=queue.shift();attempts++;
+   const candidate=queue.shift();
+   if(picks&&kept.some(t=>titleSimilarity(t.title,candidate.title)>=NEAR_DUPLICATE))continue;
+   attempts++;
    const why={};
    const draft=await summarize(candidate,budgetPool,now,fetcher,{why});
    if(!draft){withheld.push(why.reason??'unknown');refill();continue;}
    kept.push(candidate);
    const parsed=parseRiskArticle(draft);
    if(parsed.id!==candidate.id||parsed.url!==candidate.url||parsed.publishedAt!==candidate.publishedAt)throw Error('ARTICLE_MISMATCH');
+   let article;
+   const pick=pickOf.get(candidate);
+   if(pick){
+    // Judged: the measured session and the judged stars (the rule's stars also take the cause step; nothing lifts a quiet story).
+    const stars=pick.source==='rule'?causeStars(pick.stars,parsed.cause)??pick.stars:pick.stars;
+    article=parseRiskArticle(assignQuote({...parsed,market:pick.market,judge:{stars,source:pick.source,reason:pick.reason}},quotes,day));
+   }else{
    // Shock Gauge: stars only from the related TP index's move at the first U.S. close after the news (may still be waiting).
-   const [article]=(await reactArticles([parsed],readMoves,quotes,day)).map(parseRiskArticle);
+   [article]=(await reactArticles([parsed],readMoves,quotes,day)).map(parseRiskArticle);
+   }
    // Moved against its headline (owner, Nov 25): not shown; the next story fills the slot.
    // Measured without stars (below the ★2 line or against its headline; owner, Nov 25–26): not shown, the next story fills it.
    if(article.market.reading!==null&&article.stars===null){kept.pop();refill();continue;}
@@ -211,12 +237,13 @@ export async function prepareDailyReview({enabled=false,readFeed,selectionPool,b
   // Nothing qualified today (owner, Nov 23): when the model judged every story it was given to be outside the brief
   // ('not-publishable'), the day is a normal quiet day (「今日は、気にするニュースはありません」), saved as ready and exit 0.
   // A story that did qualify but failed the copy checks (new number, amount, banned wording) is still a failed day.
-  const noneQualified=selected.length>0&&!articles.length&&withheld.length===attempts&&withheld.every(r=>r==='not-publishable');
-  if(selected.length&&!articles.length&&!noneQualified)throw Error('NO_VERIFIED_OUTPUT');
+  const tried=picks?picks.length:selected.length;
+  const noneQualified=tried>0&&!articles.length&&withheld.length===attempts&&withheld.every(r=>r==='not-publishable');
+  if(tried&&!articles.length&&!noneQualified)throw Error('NO_VERIFIED_OUTPUT');
   diagnostics.attempts=attempts;if(withheld.length)diagnostics.withheld=countReasons(withheld);
   stage='readback';
   // Publication stays gated (owner switch + approval variable); this only stores what the owner can preview.
-  const stored=articles.length?articles:(noneQualified||diagnostics.coverageComplete&&!selected.length?[]:null);
+  const stored=articles.length?articles:(noneQualified||diagnostics.coverageComplete&&!tried?[]:null);
   if(replace){if(!articles.length)throw Error('NO_VERIFIED_OUTPUT');
    const r=await (publishPool??budgetPool).query("UPDATE resolute.risk_days SET state='ready',articles=$2::jsonb,updated_at=$3 WHERE day=$1::date AND articles=$4::jsonb RETURNING day",[day,JSON.stringify(articles),replace.at.toISOString(),JSON.stringify(replace.articles)]);
    if(!r.rows.length)throw Error('READBACK_MISMATCH');}

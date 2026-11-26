@@ -139,7 +139,7 @@ export function sessionFear(largeLevels: readonly DailyClose[], session: string)
 /** Shock Gauge single-company news (owner, Nov 25): one stock's own close-to-close move on a session and its typical daily move
  * (the median of its absolute daily % moves over the `window` sessions before), the same concept as a basket's. Never guessed:
  * null without the session's close, a previous close at most 7 days earlier, or a full typical-move window. */
-export type StockShock = { date: string; previousDate: string; changePercent: number; typicalPercent: number };
+export type StockShock = { date: string; previousDate: string; changePercent: number; typicalPercent: number; intradayPercent?: number };
 export function stockShock(bars: readonly DailyClose[], session: string, window = SHOCK_TYPICAL_DAYS): StockShock | null {
   const sorted = bars.filter(bar => bar.date <= session && Number.isFinite(bar.close) && bar.close > 0).slice().sort((a, b) => a.date.localeCompare(b.date));
   const move = dailyMove(sorted, session);
@@ -150,5 +150,9 @@ export function stockShock(bars: readonly DailyClose[], session: string, window 
   const slice = returns.slice(-window).map(Math.abs).sort((a, b) => a - b);
   const typicalPercent = window % 2 ? slice[(window - 1) / 2] : (slice[window / 2 - 1] + slice[window / 2]) / 2;
   if (!(typicalPercent > 0) || !Number.isFinite(typicalPercent)) return null;
-  return { date: session, previousDate: move.previousDate, changePercent: Math.round(move.changePercent * 1000) / 1000, typicalPercent: Math.round(typicalPercent * 10000) / 10000 };
+  // The stock's own intraday extreme against its previous close (the deeper of its low and high), when the bar has a range.
+  const bar = sorted.at(-1)!, before = sorted.at(-2)!.close;
+  const low = bar.low! > 0 ? 100 * (bar.low! / before - 1) : null, high = bar.high! > 0 ? 100 * (bar.high! / before - 1) : null;
+  const intradayPercent = low !== null && high !== null ? Math.round((Math.abs(low) >= Math.abs(high) ? low : high) * 1000) / 1000 : undefined;
+  return { date: session, previousDate: move.previousDate, changePercent: Math.round(move.changePercent * 1000) / 1000, typicalPercent: Math.round(typicalPercent * 10000) / 10000, ...(intradayPercent !== undefined ? { intradayPercent } : {}) };
 }

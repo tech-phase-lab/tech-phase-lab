@@ -1,5 +1,5 @@
 import {useState,type CSSProperties} from 'react';
-import {readingParts,formatCause,noStarsLabel,starCriteria,starSummary,STAR_INFO_LABEL,type RiskArticle} from '@/lib/resolute/risk';
+import {readingParts,noStarsLabel,starCriteria,starSummary,STAR_INFO_LABEL,type RiskArticle} from '@/lib/resolute/risk';
 /** Shock Gauge (衝撃度チェッカー) shared pieces: one-line heading, and stars with the TP index move (or "waiting"). */
 export const SHOCK_GAUGE_NAME={ja:'衝撃度チェッカー',en:'Shock Gauge'} as const;
 const faint:CSSProperties={fontFamily:'inherit',fontSize:'.5em',fontWeight:500,letterSpacing:'.2em',opacity:.5,whiteSpace:'nowrap',marginLeft:'auto'};
@@ -16,12 +16,13 @@ const small:CSSProperties={fontSize:12,letterSpacing:'.02em',fontWeight:400,colo
  * parenthetical is set a little smaller. Only on a screen too narrow for both does the parenthetical move down whole. */
 const nowrap:CSSProperties={whiteSpace:'nowrap',letterSpacing:0};
 // Owner, Nov 26: the parenthetical always sits on the next line, in smaller type.
-const detail:CSSProperties={whiteSpace:'nowrap',fontSize:'.8em',letterSpacing:0,fontFeatureSettings:'"palt"',display:'block'};
+const detail:CSSProperties={whiteSpace:'nowrap',fontSize:'.85em',letterSpacing:0,fontFeatureSettings:'"palt"',display:'block',opacity:.75};
 /** Stars and, small next to them, both indices measured on the story's session and, on a down move, the fear index (例: TP半導体40 −8.5%（いつもの3.8倍・39/40社が下落）); single-company news with stars first shows its own move (例: SKHY −8.2%（いつもの3.1倍）). Before the session's close: 「市場の反応待ち」; single-company news without stars: 「個別企業のニュース（★はつけません）」. */
 /** wide: the stars join the parent's wrapping flex row (the news screen's 「衝撃度」 row) and the lines take that row's full
  * width underneath, instead of the narrower column beside its label. */
 export function ShockStars({article,locale,className,starStyle,wide=false}:{article:RiskArticle;locale:'ja'|'en';className?:string;starStyle?:CSSProperties;wide?:boolean}){
- const why=formatCause(article,locale),lines=[...readingParts(article.market,locale),...(why?[{text:why}]:[])];
+ // Owner, Nov 26 (approved mock-up): the index lines only; the AI's reason goes to the owner's morning mail, not the card.
+ const lines=readingParts(article.market,locale);
  if(article.stars===null)return <span className={className} style={{...small,fontSize:13}}>{noStarsLabel(article,locale)}</span>;
  const n=article.stars;
  return <span style={wide?{display:'contents'}:{display:'inline-flex',alignItems:'baseline',gap:10,flexWrap:'wrap'}}><b className={className} style={starStyle} aria-label={`${n}/5`}>{Array.from({length:n},(_,i)=><i key={i} aria-hidden="true" style={{fontStyle:'normal'}}>★</i>)}<span aria-hidden="true">{'☆'.repeat(5-n)}</span></b>{lines.length?<small style={{...small,whiteSpace:'normal',display:'flex',flexDirection:'column',gap:2,...(wide?{flexBasis:'100%'}:{})}}>{lines.map(l=><span key={l.text}>{l.detail?<><span style={nowrap}>{l.text}</span><span style={detail}>{l.detail}</span></>:l.text}</span>)}</small>:null}</span>;

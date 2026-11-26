@@ -75,8 +75,8 @@ export const RISK_POLICY = {
    * minMultiple times its usual daily move (the median of its absolute daily % moves over the typicalDays sessions before)
    * AND its industry basket moved at least industryMinMultiple times its usual move, both the same way. */
   companyTest: { minMultiple: 3, industryMinMultiple: 1.5 },
-  /** The lowest market-given stars that count (owner, Nov 26): a measured move below the ★2 line is no move — no stars, not
-   * shown. A one-off cause can still take a ★2 story down to ★1; a lasting cause never lifts a no-move story. */
+  /** The ★2 line (owner, Nov 26): a measured move below it (the close and the intraday extreme both under 1.5× a normal day) is
+   * a quiet day for the story. Nothing lifts such a story above ★1: not the AI's judgement, not a lasting cause. */
   minMarketStars: 2,
   /** At most this many starred stories per U.S. session (owner, Nov 25: one move is never given to several stories). */
   perSession: 1,

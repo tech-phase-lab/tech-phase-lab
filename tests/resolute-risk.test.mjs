@@ -38,32 +38,29 @@ test('Shock Gauge stars are mechanical: the highest level whose every condition 
  assert.equal(riskAction(4),'review');assert.equal(riskAction(3),'none');assert.equal(riskAction(null),'none');assert.throws(()=>riskAction(0));
 });
 test('the published criteria text is plain, generated from the levels, in both languages, and shown on the Shock Gauge page',()=>{
- assert.equal(starCriteria('ja'),['★のつけ方',
-  '・ニュースのあと、アメリカの市場が閉まったときの値で、TP大型株100とTP半導体40の両方を見ます。取引中や取引後に出たニュースは、次の取引日の値で見ます。大きく動いたほうで★を決めます。',
-  '・★5：いつもの5倍以上動いた、8割以上の会社が同じ向きに動いた、下落のときは恐怖指数も1割以上上がった',
-  '・★4：いつもの3倍以上動いた、8割以上の会社が同じ向きに動いた',
-  '・★3：いつもの2倍以上動いた、7割以上の会社が同じ向きに動いた',
-  '・★2：いつもの1.5倍以上動いた','・それより小さい動きのときは、★をつけず、表示もしません。',
-  '・「いつもの」は、市場が開いていた直前の60日の、1日の動きの大きさのまん中の値です。',
-  '・そのうえで、AIが記事の内容だけを読み、原因が一過性とみられるときは★を1つ下げ、長引きやすいとみられるときは1つ上げます。★5になるのは、市場の動きだけで★4以上のときだけです。どちらとも言えないときは変えません。',
-  '・1社だけのニュースは、その会社の株価がいつもの3倍以上、業界の指標もいつもの1.5倍以上、同じ向きに動いたときだけ、業界の指標で★を決めます。',
-  '・同じ取引日の動きには、ニュース1つにだけ★をつけます。見出しと逆の向きに動いたときは★をつけません。'].join('\n'));
- assert.match(starCriteria('en'),/^How stars are set\n- After the news, we look at both TP Large Cap 100 and TP Semiconductor 40 at the U\.S\. market close \(news during or after trading hours: the next trading day's close\)\. The bigger shock sets the stars\.\n- ★5: moved 5 times its usual move or more, 80% or more of its stocks moved the same way, on a fall, the fear index also rose 10% or more\n/s);
- // Owner, Nov 25: no extra visible text. The short explanation and the levels open only from one small 「i」 next to 「衝撃度」.
- assert.equal(starSummary('ja'),'★は、ニュースのあとのTP大型株100とTP半導体40の実際の動き（いつもの何倍動いたか・同じ向きに動いた会社の割合・恐怖指数）と、記事の内容から一過性かどうかを吟味して算出しています。1社だけのニュースは、その会社と業界の指標の両方が大きく動いたときだけ★をつけます。');
- assert.match(starSummary('en'),/^Stars are calculated from how TP Large Cap 100 and TP Semiconductor 40 actually moved after the news .* weighing whether the cause looks one-off\. News about a single company gets stars only when both the company and its industry index moved strongly\.$/);
+ // Owner, Nov 26: the stars are judged daily by AI reading the day; the 「i」 text says so plainly.
+ const ja=starCriteria('ja');
+ assert.ok(ja.startsWith('★のつけ方\n・毎朝、AIがその日の市場のまとめ記事とニュース、指標の動きを読み、市場を実際に動かしたニュースを3つまで選びます。市場全体のニュースを優先します。'));
+ for(const line of ['・★5：歴史に残るほどの衝撃','・★1：小さな動き','・取引中に大きく動いて終値にかけて戻した日も、衝撃として数えます。','・市場がほとんど動かなかったときのニュースは、★1までです。'])assert.ok(ja.includes(line),line);
+ assert.ok(ja.includes('ふだんの1日の値動きの何倍か')&&!ja.includes('いつもの'));
+ assert.match(starCriteria('en'),/^How stars are set\n- Every morning AI reads the day's market wrap-ups/);
+ assert.equal(starSummary('ja'),'★は、毎朝AIが、前の日のアメリカ市場の動き（TP大型株100とTP半導体40の終値と取引中の動き、下落の日の恐怖指数、1社だけのニュースはその会社の株価）と、市場のまとめ記事やニュースを読んで、市場を実際に動かしたニュースを選び、5段階でつけています。');
+ assert.match(starSummary('en'),/^Every morning AI reads how the U\.S\. market moved/);
  const screen=readFileSync(new URL('../app/resolute/news/screen.tsx',import.meta.url),'utf8'),gauge=readFileSync(new URL('../app/resolute/features/shock-gauge.tsx',import.meta.url),'utf8');
  assert.ok(screen.includes("<span className={s.k}>{en?'Shock':'衝撃度'}<StarInfo locale={locale}/></span>"));
  assert.ok(!/starCriteria|starSummary/.test(screen),'nothing else on the page');
  assert.match(gauge,/aria-expanded=\{open\}[^]*\{open\?<span role="note"[^]*\{starSummary\(locale\)\+'\\n\\n'\+starCriteria\(locale\)\}/);
  assert.equal(STAR_INFO_LABEL.ja,'★のつけ方');
  const m={index:'sox',session:'2026-11-24',reading:{from:'2026-11-23',nas100:{changePercent:-1.5,multiple:2,same:47,total:99},sox:{changePercent:-8.5,multiple:3.8,same:39,total:40},fearChange:0}};
- assert.deepEqual(formatReading(m,'ja'),['TP半導体40 −8.5%（いつもの3.8倍・39/40社が下落）','TP大型株100 −1.5%（いつもの2.0倍・47/99社が下落）','恐怖指数 0%']);
- assert.deepEqual(formatReading({...m,index:'nas100'},'en'),['TP Large Cap 100 −1.5% (2.0× usual · 47/99 down)','TP Semiconductor 40 −8.5% (3.8× usual · 39/40 down)','Fear index 0%']);
- // Owner, Nov 25: each index line fits on one phone line, its parenthetical set a little smaller and never broken inside.
- assert.deepEqual(readingParts({...m,index:'nas100'},'ja'),[{text:'TP大型株100 −1.5%',detail:'（いつもの2.0倍・47/99社が下落）'},{text:'TP半導体40 −8.5%',detail:'（いつもの3.8倍・39/40社が下落）'},{text:'恐怖指数 0%'}]);
+ // Owner, Nov 26 (approved mock-up): no parentheses, no multiples, no company counts.
+ assert.deepEqual(formatReading(m,'ja'),['TP半導体40　−8.5%','TP大型株100　−1.5%','恐怖指数　0%']);
+ assert.deepEqual(formatReading({...m,index:'nas100'},'en'),['TP Large Cap 100  −1.5%','TP Semiconductor 40  −8.5%','Fear index  0%']);
+ // The second line (smaller, muted) only when the intraday extreme differs from the close by 1 point or more.
+ const swing={...m,index:'nas100',reading:{...m.reading,nas100:{...m.reading.nas100,changePercent:-0.6,intraday:{changePercent:-4.6,multiple:5.2,same:80}},sox:{...m.reading.sox,intraday:{changePercent:-9.1,multiple:3,same:38}}}};
+ assert.deepEqual(readingParts(swing,'ja'),[{text:'TP大型株100　−0.6%',detail:'取引中は −4.6% まで下落'},{text:'TP半導体40　−8.5%'},{text:'恐怖指数　0%'}]);
+ assert.deepEqual(readingParts(swing,'en')[0],{text:'TP Large Cap 100  −0.6%',detail:'Intraday low −4.6%'});
  assert.match(gauge,/readingParts\(article\.market,locale\)/);
- assert.match(gauge,/const detail:CSSProperties=\{whiteSpace:'nowrap',fontSize:'\.8em'/);
+ assert.match(gauge,/const detail:CSSProperties=\{whiteSpace:'nowrap',fontSize:'\.85em'[^}]*display:'block'/);
  assert.equal(formatCause({market:m,stars:3,cause:{kind:'one-off',ja:'システム障害',en:'system outage'}},'ja'),'一過性とみられる要因（システム障害）→ ★−1');
  assert.equal(formatCause({market:m,stars:5,cause:{kind:'lasting',ja:'輸出規制の強化',en:'tighter export controls'}},'en'),'Likely to last (tighter export controls) → ★+1');
  assert.equal(formatCause({market:m,stars:4,cause:null},'ja'),null);

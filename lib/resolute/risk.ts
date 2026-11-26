@@ -10,7 +10,7 @@ export type RiskMeasure={changePercent:number;multiple:number;same:number;total:
  * (0.1), and how many of the stocks went that far beyond the previous close by more than the usual intraday extreme. */
 export type RiskIntraday={changePercent:number;multiple:number;same:number};
 /** One company's own move on the session (single-company news): its move in % (0.1) and how many times its usual move (0.1). */
-export type RiskStock={changePercent:number;multiple:number};
+export type RiskStock={changePercent:number;multiple:number;intraday?:number};
 /** Both indices measured over the same span (from the close of `from`), and TP恐怖指数's change over it in whole %.
  * company: the story's company on that session (single-company news only; null when its stock was not priced). */
 export type RiskReading={from:string;nas100:RiskMeasure|null;sox:RiskMeasure|null;fearChange:number|null;company?:RiskStock|null};
@@ -25,7 +25,11 @@ export type RiskCopy={title:string;source:string;content:string;date:string};
 /** The model's reading of the CAUSE, from the article text only (owner, Nov 25): one-off (−1 star) or lasting (+1 star), with
  * the cause named in a few words. null = neither is clear (no change). */
 export type RiskCause={kind:'one-off'|'lasting';ja:string;en:string};
-export type RiskArticle={id:string;url:string;publishedAt:string;market:RiskMarket;stars:number|null;ja:RiskCopy;en:RiskCopy;quoteId:string|null;cause?:RiskCause|null};
+/** The day's judgement (owner, Nov 26): the AI reads the day (market-close wraps, the stories, both baskets' close and intraday
+ * moves, the fear index on a down day) and gives each picked story ★1–5 with a short reason. source 'rule' = every AI attempt
+ * failed and the numeric rule (with intraday extremes) was used. */
+export type RiskJudge={stars:number;source:'ai'|'rule';reason:{ja:string;en:string}};
+export type RiskArticle={id:string;url:string;publishedAt:string;market:RiskMarket;stars:number|null;ja:RiskCopy;en:RiskCopy;quoteId:string|null;cause?:RiskCause|null;judge?:RiskJudge};
 export type RizelQuote={id:string;ja:{title:string;reasons:string[]};en:{title:string;reasons:string[]};minStars:number;maxStars:number;approved:boolean};
 export type RiskFeed={state:'ready'|'failed'|'stopped'|'preparing';date:string|null;articles:RiskArticle[];quotes:RizelQuote[]};
 /** Lawyer-reviewed disclaimer (Nov 2026, section 6). EN follows the Terms of Service, Article 2(2). */
@@ -99,10 +103,17 @@ export const marketStars=(m:RiskMarket)=>{
  let s:number|null;
  if(m.index!=='company')s=readingStars(m.reading);
  else{if(!m.company||!m.reading||!companyQualifies(m))return null;const basket=m.reading[m.company.basket];s=basket?measureStars(basket,m.reading.fearChange):null;}
- // Owner, Nov 26: a measured move below the ★2 line (1.5× usual) is no move: no stars, and the story is not shown.
- // The AI's cause step (causeStars) only moves stars that the market itself gave (★2 or more).
- return s!==null&&s>=RISK_POLICY.minMarketStars?s:null;
+ return s;
 };
+/** True when the story's session moved at least the ★2 line (1.5× a normal day, the close or the intraday extreme). Below it the
+ * day was quiet for that story: nothing may lift it above ★1 (owner, Nov 26: the AI's +1 never lifts a no-move story). */
+export const marketMoved=(m:RiskMarket)=>{const s=readingStars(m.reading);return s!==null&&s>=RISK_POLICY.minMarketStars;};
+/** The stars shown. With the day's judgement: the judged stars, capped at ★1 when the market did not move. Without it (stored
+ * before Nov 26): the rule's stars with the cause step. */
+export function storyStars(market:RiskMarket,cause:RiskCause|null|undefined,judge:RiskJudge|null|undefined){
+ if(judge){if(!market.reading)return null;return marketMoved(market)?judge.stars:1;}
+ return causeStars(marketStars(market),cause);
+}
 /** Shown to members (owner, Nov 26): only measured stories with stars. Waiting stories, moves below the ★2 line, single-company
  * news without stars and moves against the headline are not shown; fewer than three is fine, none is the quiet day. */
 export const isShownStory=(a:{stars:number|null;market:RiskMarket})=>a.stars!==null&&a.market.reading!==null;
@@ -110,36 +121,32 @@ export const isShownStory=(a:{stars:number|null;market:RiskMarket})=>a.stars!==n
  * A lasting cause can reach ★5 only from a market ★4 (never from the cause alone). */
 export function causeStars(market:number|null,cause:RiskCause|null|undefined){
  if(market===null)return null;if(!cause)return market;
- return cause.kind==='one-off'?Math.max(1,market-1):Math.min(5,market+1);
+ // Owner, Nov 26: a lasting cause never lifts a story whose market did not move (below the ★2 line).
+ return cause.kind==='one-off'?Math.max(1,market-1):market<RISK_POLICY.minMarketStars?market:Math.min(5,market+1);
 }
 /** The short, plain explanation behind the small 「i」 next to the stars (owner, Nov 25), above the exact levels (starCriteria). */
 export function starSummary(locale:'ja'|'en'){const {nas100,sox}=RISK_POLICY.indices;return locale==='ja'
- ?`★は、ニュースのあとの${nas100.ja}と${sox.ja}の実際の動き（ふだんの1日の値動きの何倍か・同じ向きに動いた会社の割合・恐怖指数）と、記事の内容から一過性かどうかを吟味して算出しています。1社だけのニュースは、その会社と業界の指標の両方が大きく動いたときだけ★をつけます。`
- :`Stars are calculated from how ${nas100.en} and ${sox.en} actually moved after the news (how many times a normal day's move, the share of stocks moving the same way, the fear index) and from the article, weighing whether the cause looks one-off. News about a single company gets stars only when both the company and its industry index moved strongly.`;}
+ ?`★は、毎朝AIが、前の日のアメリカ市場の動き（${nas100.ja}と${sox.ja}の終値と取引中の動き、下落の日の恐怖指数、1社だけのニュースはその会社の株価）と、市場のまとめ記事やニュースを読んで、市場を実際に動かしたニュースを選び、5段階でつけています。`
+ :`Every morning AI reads how the U.S. market moved the day before (${nas100.en} and ${sox.en} at the close and during trading, the fear index on a down day, and the company's own stock for single-company news) together with market wrap-ups and the news, picks the stories that actually moved the market, and rates them on five levels.`;}
 /** The accessible name of the small 「i」 that opens the criteria. */
 export const STAR_INFO_LABEL={ja:'★のつけ方',en:'How stars are set'} as const;
-const wari=(n:number)=>n%10===0?`${n/10}割`:`${n}%`;
 /** The star criteria as published in the app, in plain words, generated from the levels so the text always matches the rule. */
 export function starCriteria(locale:'ja'|'en'){
- const {levels,typicalDays}=RISK_POLICY.stars,{nas100,sox}=RISK_POLICY.indices,{minMultiple,industryMinMultiple}=RISK_POLICY.companyTest;
- if(locale==='ja'){
-  const part=(l:typeof levels[number])=>[`ふだんの1日の値動きの${l.multiple}倍以上動いた`,l.breadth!==null?`${wari(l.breadth)}以上の会社が同じ向きに動いた`:null,l.fear!==null?`下落のときは恐怖指数も${wari(l.fear)}以上上がった`:null].filter(Boolean).join('、');
-  return [`★のつけ方`,
-   `・ニュースのあと、アメリカの市場が閉まったときの値で、${nas100.ja}と${sox.ja}の両方を見ます。取引中や取引後に出たニュースは、次の取引日の値で見ます。大きく動いたほうで★を決めます。`,
-   ...levels.map(l=>`・★${l.stars}：${part(l)}`),`・それより小さい動きのときは、★をつけず、表示もしません。`,
-   `・「ふだんの1日の値動き」は、市場が開いていた直前の${typicalDays}日の、1日の動きの大きさのまん中の値です。その日のうちに大きく動いて戻った日は、その日のいちばん大きな動きでも比べます。`,
-   `・そのうえで、AIが記事の内容だけを読み、原因が一過性とみられるときは★を1つ下げ、長引きやすいとみられるときは1つ上げます。★5になるのは、市場の動きだけで★4以上のときだけです。どちらとも言えないときは変えません。`,
-   `・1社だけのニュースは、その会社の株価がふだんの1日の値動きの${minMultiple}倍以上、業界の指標も${industryMinMultiple}倍以上、同じ向きに動いたときだけ、業界の指標で★を決めます。`,
-   `・同じ取引日の動きには、ニュース1つにだけ★をつけます。見出しと逆の向きに動いたときは★をつけません。`].join('\n');
- }
- const part=(l:typeof levels[number])=>[`moved ${l.multiple} times a normal day's move or more`,l.breadth!==null?`${l.breadth}% or more of its stocks moved the same way`:null,l.fear!==null?`on a fall, the fear index also rose ${l.fear}% or more`:null].filter(Boolean).join(', ');
+ const {typicalDays}=RISK_POLICY.stars;
+ if(locale==='ja')return [`★のつけ方`,
+  `・毎朝、AIがその日の市場のまとめ記事とニュース、指標の動きを読み、市場を実際に動かしたニュースを3つまで選びます。市場全体のニュースを優先します。`,
+  `・★5：歴史に残るほどの衝撃`,`・★4：とても大きく、広い範囲の動き`,`・★3：多くの会社がそろって大きく動いた`,`・★2：ふだんの日より明らかに大きい動き`,`・★1：小さな動き`,
+  `・取引中に大きく動いて終値にかけて戻した日も、衝撃として数えます。`,
+  `・ニュースが出る前に起きた動きは、そのニュースの★には数えません。`,
+  `・市場がほとんど動かなかったときのニュースは、★1までです。`,
+  `・AIが判定できなかった日は、指標の動きの基準（ふだんの1日の値動きの何倍か・同じ向きに動いた会社の割合・下落の日の恐怖指数）でつけます。ふだんの1日の値動きは、直前の${typicalDays}日の、1日の動きの大きさのまん中の値です。`].join('\n');
  return [`How stars are set`,
-  `- After the news, we look at both ${nas100.en} and ${sox.en} at the U.S. market close (news during or after trading hours: the next trading day's close). The bigger shock sets the stars.`,
-  ...levels.map(l=>`- ★${l.stars}: ${part(l)}`),`- Anything smaller: no stars, and the story is not shown.`,
-  `- "A normal day's move" is the middle size of its daily moves over the previous ${typicalDays} trading days. On a day that swung hard and recovered, the day's largest move is compared too.`,
-  `- Then AI reads only the article: if the cause looks one-off, the stars go down by one; if it looks lasting, up by one (★5 only when the market move alone is ★4 or more). If neither is clear, nothing changes.`,
-  `- News about a single company gets stars only when its stock moved ${minMultiple} times a normal day's move or more and its industry index ${industryMinMultiple} times or more, the same way; the industry index sets the stars.`,
-  `- One trading day's move gives stars to one story only. No stars when the market moved against the headline.`].join('\n');
+  `- Every morning AI reads the day's market wrap-ups, the news and the index moves, and picks up to three stories that actually moved the market. Market-wide news comes first.`,
+  `- ★5: a historic shock`,`- ★4: a very large, broad move`,`- ★3: most stocks moved sharply together`,`- ★2: clearly bigger than a normal day`,`- ★1: a small move`,
+  `- A day that swung hard during trading and recovered by the close still counts as a shock.`,
+  `- A move that happened before the news came out is never counted for it.`,
+  `- News on a day the market barely moved gets ★1 at most.`,
+  `- On a day the AI judgement is unavailable, the index-move rule is used (times a normal day's move, the share of stocks moving the same way, the fear index on a down day). A normal day's move is the middle size of the daily moves over the previous ${typicalDays} trading days.`].join('\n');
 }
 /** What is shown in place of stars: single-company news, or still waiting for the first close. Null when there are stars. */
 export function noStarsLabel(article:{stars:number|null;market:RiskMarket},locale:'ja'|'en'){if(article.stars!==null)return null;const m=article.market;
@@ -147,17 +154,6 @@ export function noStarsLabel(article:{stars:number|null;market:RiskMarket},local
  return m.index==='company'&&!(m.company&&m.session&&!m.reading)?RISK_POLICY.company[locale]:RISK_POLICY.waiting[locale];}
 /** Waiting stories (no stars yet) never trigger the "reread your rules" action. */
 export const riskAction=(stars:number|null)=>{if(stars===null)return 'none';if(!Number.isInteger(stars)||stars<1||stars>5)throw Error('INVALID_STARS');return stars>=RISK_POLICY.reviewMinStars?'review':'none';};
-/** 「ふだんの約3倍の値動き」/ "about 3× a normal day's move" (owner, Nov 26: plainer than 「いつもの3.2倍」). Rounded to a whole number,
- * with 約 / about when rounded; under 1.5× the phrase is left out (null). */
-export function timesUsual(multiple:number,locale:'ja'|'en'){
- if(!(multiple>=1.5))return null;const n=Math.round(multiple),about=n!==multiple;
- return locale==='ja'?`ふだんの${about?'約':''}${n}倍の値動き`:`${about?'about ':''}${n}× a normal day's move`;
-}
-/** The parenthetical under an index line: 「（ふだんの約3倍の値動き・100社中80社が下落）」, shown on its own line in smaller type. */
-function indexDetail(multiple:number,same:number,total:number,down:boolean,locale:'ja'|'en'){
- const t=timesUsual(multiple,locale),breadth=locale==='ja'?`${total}社中${same}社が${down?'下落':'上昇'}`:`${same} of ${total} ${down?'down':'up'}`;
- return locale==='ja'?`（${t?t+'・':''}${breadth}）`:` (${t?t+' · ':''}${breadth})`;
-}
 const signed=(n:number,digits:number)=>`${n>0?'+':n<0?'−':''}${Math.abs(n).toFixed(digits)}%`;
 /** The index whose move set the stars (the stronger; on a tie the one listed first), or the company story's industry basket. */
 export function decidingMeasure(m:RiskMarket):RiskMeasure|null{
@@ -167,27 +163,27 @@ export function decidingMeasure(m:RiskMarket):RiskMeasure|null{
  for(const i of order){const x=r[i];if(!x)continue;const n=measureStars(x,r.fearChange);if(n>bestStars){best=x;bestStars=n;}}
  return best;
 }
-/** The lines under the stars, the story's index first, then the fear index. Each index line is split into the move and its
- * parenthetical, which the screens set in slightly smaller type so the line fits on one phone line (owner, Nov 25):
- * 「TP半導体40 −8.5%」+「（いつもの3.8倍・39/40社が下落）」, 「TP大型株100 −1.5%」+「（いつもの2.0倍・47/99社が下落）」, 「恐怖指数 0%」.
- * Single-company news with stars: the company first, in the same one-line form 「SKHY −8.2%」+「（いつもの3.1倍）」, then its
- * industry basket. The fear line is shown on a DOWN move only (owner, Nov 25): on an up move TP恐怖指数 (realized volatility)
- * rises too and does not count for the stars, so it is left out. The sign and 上昇/下落 show the direction. */
+/** The lines under the stars (owner, Nov 26; approved mock-up): no parentheses and no multiples or company counts. Per index two
+ * lines: 「TP大型株100　−0.6%」 and, smaller and muted, 「取引中は −4.6% まで下落」 / 「取引中は +3.1% まで上昇」 — the second only
+ * when the intraday extreme differs from the close by INTRADAY_GAP points or more. Single-company news: 「NVDA　−3.1%」 (same second
+ * line) and then its industry basket. The fear index 「恐怖指数　+12%」 on a down day only. The story's index comes first. */
 export function readingParts(m:RiskMarket,locale:'ja'|'en'):{text:string;detail?:string}[]{
- const r=m.reading;if(!r||marketStars(m)===null)return [];
- const order:RiskIndex[]=m.index==='company'?(m.company?[m.company.basket]:[]):m.index==='sox'?['sox','nas100']:['nas100','sox'];
+ const r=m.reading;if(!r||(m.index==='company'&&!m.company))return [];
+ const ja=locale==='ja',gap=ja?'\u3000':'  ';
+ const second=(close:number,intra:number|undefined)=>{
+  if(intra===undefined||Math.abs(intra-close)<INTRADAY_GAP||intra===0)return {};
+  return {detail:ja?`取引中は ${signed(intra,1)} まで${intra<0?'下落':'上昇'}`:`Intraday ${intra<0?'low':'high'} ${signed(intra,1)}`};
+ };
+ const order:RiskIndex[]=m.index==='company'?[m.company!.basket]:m.index==='sox'?['sox','nas100']:['nas100','sox'];
  const lines:{text:string;detail?:string}[]=[];
- if(m.index==='company'&&m.company&&r.company){const t=timesUsual(r.company.multiple,locale);lines.push({text:`${m.company.ticker} ${signed(r.company.changePercent,1)}`,...(t?{detail:locale==='ja'?`（${t}）`:` (${t})`}:{})});}
- lines.push(...order.flatMap(i=>{const x=r[i];if(!x)return [];const name=RISK_POLICY.indices[i][locale],down=x.changePercent<0;
-  // Owner, Nov 26: when the intraday extreme was the stronger move, one line 「TP大型株100 一時−4.6%・終値−0.6%（いつもの3.2倍・…）」.
-  const s=strongestMove(x,r.fearChange);
-  if(s.intraday){const d=s.changePercent<0;return [{text:locale==='ja'?`${name} 一時${signed(s.changePercent,1)}・終値${signed(x.changePercent,1)}`:`${name} intraday ${signed(s.changePercent,1)} · close ${signed(x.changePercent,1)}`,
-   detail:indexDetail(s.multiple,s.same,s.total,d,locale)}];}
-  return [{text:`${name} ${signed(x.changePercent,1)}`,detail:indexDetail(x.multiple,x.same,x.total,down,locale)}];}));
+ if(m.index==='company'&&m.company&&r.company)lines.push({text:`${m.company.ticker}${gap}${signed(r.company.changePercent,1)}`,...second(r.company.changePercent,r.company.intraday)});
+ for(const i of order){const x=r[i];if(!x)continue;lines.push({text:`${RISK_POLICY.indices[i][locale]}${gap}${signed(x.changePercent,1)}`,...second(x.changePercent,x.intraday?.changePercent)});}
  const deciding=decidingMeasure(m),dir=deciding?strongestMove(deciding,r.fearChange).changePercent:0;
- if(r.fearChange!==null&&!(dir>0))lines.push({text:locale==='ja'?`恐怖指数 ${signed(r.fearChange,0)}`:`Fear index ${signed(r.fearChange,0)}`});
+ if(r.fearChange!==null&&dir<0)lines.push({text:ja?`恐怖指数${gap}${signed(r.fearChange,0)}`:`Fear index${gap}${signed(r.fearChange,0)}`});
  return lines;
 }
+/** The second line appears only when the intraday extreme and the close differ by at least this many points. */
+export const INTRADAY_GAP=1;
 /** The same lines as plain text: 「TP半導体40 −8.5%（いつもの3.8倍・39/40社が下落）」「TP大型株100 −1.5%（いつもの2.0倍・47/99社が下落）」「恐怖指数 0%」. */
 export function formatReading(m:RiskMarket,locale:'ja'|'en'):string[]{return readingParts(m,locale).map(l=>l.text+(l.detail??''));}
 /** The cause line under the stars: 「一過性とみられる要因（システム障害）→ ★−1」 / 「長引きやすい要因（輸出規制の強化）→ ★+1」. */
@@ -211,7 +207,7 @@ const isTenth=(v:unknown,min:number,max:number)=>typeof v==='number'&&Number.isF
 function parseMeasure(v:unknown):RiskMeasure|null{if(v===null)return null;const x=v as RiskMeasure;if(!x||typeof x!=='object'||!isTenth(x.changePercent,-99.9,999)||!isTenth(x.multiple,0,100)||!count(x.same)||!count(x.total)||x.total<1||x.same>x.total)throw Error('INVALID_SHOCK');
  const i=x.intraday;if(i!==undefined&&(!i||typeof i!=='object'||!isTenth(i.changePercent,-99.9,999)||!isTenth(i.multiple,0,100)||!count(i.same)||i.same>x.total))throw Error('INVALID_SHOCK');
  return {changePercent:x.changePercent||0,multiple:x.multiple,same:x.same,total:x.total,...(i?{intraday:{changePercent:i.changePercent||0,multiple:i.multiple,same:i.same}}:{})};}
-function parseStock(v:unknown):RiskStock|null{if(v===null||v===undefined)return null;const x=v as RiskStock;if(!x||typeof x!=='object'||!isTenth(x.changePercent,-99.9,999)||!isTenth(x.multiple,0,100))throw Error('INVALID_SHOCK');return {changePercent:x.changePercent||0,multiple:x.multiple};}
+function parseStock(v:unknown):RiskStock|null{if(v===null||v===undefined)return null;const x=v as RiskStock;if(!x||typeof x!=='object'||!isTenth(x.changePercent,-99.9,999)||!isTenth(x.multiple,0,100)||x.intraday!==undefined&&!isTenth(x.intraday,-99.9,999))throw Error('INVALID_SHOCK');return {changePercent:x.changePercent||0,multiple:x.multiple,...(x.intraday!==undefined?{intraday:x.intraday||0}:{})};}
 function parseReading(v:unknown,company=false):RiskReading{const x=v as RiskReading;if(!x||typeof x!=='object'||!validSession(x.from)||!(x.fearChange===null||Number.isInteger(x.fearChange)&&Math.abs(x.fearChange)<1000))throw Error('INVALID_SHOCK');
  const r:RiskReading={from:x.from,nas100:parseMeasure(x.nas100??null),sox:parseMeasure(x.sox??null),fearChange:x.fearChange||(x.fearChange===null?null:0)};if(!r.nas100&&!r.sox)throw Error('INVALID_SHOCK');
  if(company)r.company=parseStock(x.company);else if(x.company!==undefined)throw Error('INVALID_SHOCK');return r;}
@@ -236,8 +232,12 @@ function parseMarketBody(x:RiskMarket):RiskMarket{
  * A RIZEL line chosen for other stars is dropped. */
 export function parseRiskArticle(v:unknown):RiskArticle{if(!v||typeof v!=='object')throw Error('INVALID_ARTICLE');const x=v as RiskArticle;if(!/^[a-f0-9]{64}$/.test(x.id)||!Number.isFinite(Date.parse(x.publishedAt)))throw Error('INVALID_ARTICLE');const u=new URL(x.url);if(u.protocol!=='https:'||u.username||u.password||u.href.length>2048)throw Error('INVALID_URL');
  const market=parseRiskMarket(x.market);if(x.stars!==null&&(!Number.isInteger(x.stars)||x.stars<1||x.stars>5))throw Error('INVALID_STARS');
- const cause=parseRiskCause(x.cause),stars=causeStars(marketStars(market),cause);
- if(x.quoteId!==null&&!/^[a-z0-9_-]{1,60}$/.test(x.quoteId))throw Error('INVALID_QUOTE');return {id:x.id,url:x.url,publishedAt:x.publishedAt,market,stars,ja:parseRiskCopy(x.ja),en:parseRiskCopy(x.en),quoteId:stars!==null&&stars===x.stars?x.quoteId:null,...(cause?{cause}:{})};}
+ const cause=parseRiskCause(x.cause),judge=parseRiskJudge(x.judge),stars=storyStars(market,cause,judge);
+ if(x.quoteId!==null&&!/^[a-z0-9_-]{1,60}$/.test(x.quoteId))throw Error('INVALID_QUOTE');return {id:x.id,url:x.url,publishedAt:x.publishedAt,market,stars,ja:parseRiskCopy(x.ja),en:parseRiskCopy(x.en),quoteId:stars!==null&&stars===x.stars?x.quoteId:null,...(cause?{cause}:{}),...(judge?{judge}:{})};}
+const REASON_TEXT=/^[^<>\u0000]{1,160}$/;
+export function parseRiskJudge(v:unknown):RiskJudge|null{if(v===null||v===undefined)return null;const x=v as RiskJudge;
+ if(!x||typeof x!=='object'||!Number.isInteger(x.stars)||x.stars<1||x.stars>5||!['ai','rule'].includes(x.source)||!x.reason||typeof x.reason.ja!=='string'||typeof x.reason.en!=='string'||!REASON_TEXT.test(x.reason.ja)||!REASON_TEXT.test(x.reason.en))throw Error('INVALID_JUDGE');
+ return {stars:x.stars,source:x.source,reason:{ja:x.reason.ja,en:x.reason.en}};}
 /** Rows written before the Shock Gauge (rubric stars, no market move) are never shown. */
 export const isLegacyRiskArticle=(v:unknown)=>!!v&&typeof v==='object'&&!('market' in v);
 export function parseQuote(v:unknown):RizelQuote{const x=v as RizelQuote;if(!x||!/^[a-z0-9_-]{1,60}$/.test(x.id)||typeof x.approved!=='boolean'||!Number.isInteger(x.minStars)||!Number.isInteger(x.maxStars)||x.minStars<1||x.maxStars>5||x.minStars>x.maxStars)throw Error('INVALID_QUOTE');for(const locale of ['ja','en'] as const){const c=x[locale];if(!c||typeof c.title!=='string'||!c.title.trim()||c.title.length>200||!Array.isArray(c.reasons)||c.reasons.length>5||!c.reasons.every(t=>typeof t==='string'&&t.length<=400))throw Error('INVALID_QUOTE');}return x;}

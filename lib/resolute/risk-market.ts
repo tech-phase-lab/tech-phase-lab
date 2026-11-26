@@ -1,5 +1,5 @@
 import { usMarketSession } from '../research/us-market-session.ts';
-import { measureDay, fearChangeOf, marketStars, causeStars, roundMove, type RiskArticle, type RiskIndex, type RiskMarket, type RiskStock } from './risk.ts';
+import { measureDay, fearChangeOf, storyStars, roundMove, type RiskArticle, type RiskIndex, type RiskMarket, type RiskStock } from './risk.ts';
 import { storyScope, scopeIndex, storyTicker, headlineDirection } from './risk-scope.ts';
 import { industryOf } from './risk-companies.ts';
 /** Shock Gauge stars from actual market moves (server/worker only; no browser import).
@@ -44,6 +44,11 @@ export function storySession(at: Date): string | null {
   }
   return null;
 }
+/** The session a story was published DURING (regular hours), or null. Such a story reports that session's move as it happens. */
+export function duringSession(at: Date): string | null {
+  if (!Number.isFinite(at.getTime()) || usMarketSession(at) !== 'regular') return null;
+  return firstCloseAfter(at);
+}
 /** Exact timestamps use their own time; a date-only source date uses the latest instant it could mean (after-the-news guarantee). */
 export function newsInstant(publishedAt: string): Date {
   return /^\d{4}-\d{2}-\d{2}$/.test(publishedAt) ? new Date(Date.parse(publishedAt + 'T00:00:00Z') + 36 * 3600000) : new Date(publishedAt);
@@ -60,9 +65,12 @@ export function waitingMarket(index: RiskIndex | 'company', publishedAt: string,
 }
 /** The waiting market of an intake candidate: its scope from the headline and, for single-company news, its rostered ticker.
  * `starred: false` (set by the daily selection) marks company news whose session another story explains better. */
-export function candidateMarket(c: { title: string; tickers?: readonly string[]; publishedAt: string; starred?: boolean }): RiskMarket {
+export function candidateMarket(c: { title: string; tickers?: readonly string[]; publishedAt: string; starred?: boolean; session?: string }): RiskMarket {
   const index = storyIndex(c.title);
-  const market = waitingMarket(index, c.publishedAt, index === 'company' && c.starred !== false ? storyTicker(c) : null);
+  const waiting = waitingMarket(index, c.publishedAt, index === 'company' && c.starred !== false ? storyTicker(c) : null);
+  // The day's AI judgement (owner, Nov 26) may measure a story published DURING a session on that same session (`session`,
+  // set only by duringSession below): it reported the move as it happened.
+  const market = c.session && waiting.session ? { ...waiting, session: c.session } : waiting;
   // The headline's own direction (owner, Nov 25): a measured move the other way gives no stars (risk.ts directionMismatch).
   const direction = market.session ? headlineDirection(c.title) : null;
   return direction ? { ...market, headline: direction } : market;
@@ -70,12 +78,12 @@ export function candidateMarket(c: { title: string; tickers?: readonly string[];
 /** One basket's close as the thermometer measured it: the move, its typical move and the constituents up / down. */
 export type SessionMove = { previousDate: string; changePercent: number; typicalPercent: number; up: number; down: number; total: number; intraday?: { changePercent: number; typicalPercent: number; same: number } | null };
 /** One stock's close-to-close move on a session and its usual move (single-company news). */
-export type StockMove = { previousDate: string; changePercent: number; typicalPercent: number };
+export type StockMove = { previousDate: string; changePercent: number; typicalPercent: number; intradayPercent?: number };
 export type SessionEntry = Partial<Record<RiskIndex, SessionMove | null>> & { fear?: { level: number; previousLevel: number } | null; stocks?: Record<string, StockMove> };
 export type SessionMoves = Record<string, SessionEntry | undefined>;
 const tenth = (n: number) => Math.round(n * 10) / 10;
 /** One stock on the session: its move (0.1) and how many times its usual move (0.1), the same rounding as an index. */
-export function measureStock(m: StockMove): RiskStock { return { changePercent: roundMove(m.changePercent), multiple: tenth(Math.abs(m.changePercent) / m.typicalPercent) }; }
+export function measureStock(m: StockMove): RiskStock { return { changePercent: roundMove(m.changePercent), multiple: tenth(Math.abs(m.changePercent) / m.typicalPercent), ...(typeof m.intradayPercent === 'number' && Number.isFinite(m.intradayPercent) ? { intraday: roundMove(m.intradayPercent) } : {}) }; }
 /** Measures BOTH indices on the story's session once the thermometer has them (owner, Nov 25: the stars are the stronger of
  * the two); otherwise the story keeps waiting. Single-company news also reads its own stock on that session (null when the
  * stock was not priced: it then stays unstarred company news). Already-measured stories and unmeasurable company news are
@@ -93,7 +101,7 @@ export function applyMarketReaction(article: RiskArticle, moves: SessionMoves): 
   const reading: NonNullable<RiskMarket['reading']> = { from, nas100: nas100 ? measureDay(nas100) : null, sox: sox ? measureDay(sox) : null, fearChange: fearChangeOf(entry?.fear ?? null) };
   if (company) { const s = entry?.stocks?.[company.ticker]; reading.company = s && validStock(s) && s.previousDate === from ? measureStock(s) : null; }
   const market: RiskMarket = { index, session, reading, ...keep };
-  return { ...article, market, stars: causeStars(marketStars(market), article.cause) };
+  return { ...article, market, stars: storyStars(market, article.cause, article.judge) };
 }
 function validStock(m: Partial<StockMove>): m is StockMove {
   return typeof m.previousDate === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(m.previousDate) && finite(m.changePercent, -99.99, 99.99) && finite(m.typicalPercent, 0.01, 50);
@@ -135,7 +143,7 @@ export async function readSessionMoves(db: MovesDatabase, sessions: readonly str
       if (day && typeof day === 'object') {
         const stocks: Record<string, StockMove> = {};
         for (const [ticker, value] of Object.entries(day as Record<string, Partial<StockMove> & { date?: unknown }>)) {
-          if (/^[A-Z][A-Z0-9.]{0,9}$/.test(ticker) && value && value.date === session && validStock(value)) stocks[ticker] = { previousDate: value.previousDate, changePercent: value.changePercent, typicalPercent: value.typicalPercent };
+          if (/^[A-Z][A-Z0-9.]{0,9}$/.test(ticker) && value && value.date === session && validStock(value)) stocks[ticker] = { previousDate: value.previousDate, changePercent: value.changePercent, typicalPercent: value.typicalPercent, ...(finite(value.intradayPercent, -99.99, 99.99) ? { intradayPercent: value.intradayPercent } : {}) };
         }
         if (Object.keys(stocks).length) entry.stocks = stocks;
       }

@@ -1,6 +1,6 @@
 "use client";
 import {useState,type CSSProperties} from 'react';
-import {formatCause,noStarsLabel,readingParts,type RiskArticle,type RiskFeed,type RizelQuote} from '@/lib/resolute/risk';
+import {noStarsLabel,readingParts,type RiskArticle,type RiskFeed,type RizelQuote} from '@/lib/resolute/risk';
 import {RISK_PREVIEW_DETAILS} from '@/lib/resolute/risk-preview';
 import {ShockStars,STAR_COLORS} from '../features/shock-gauge';
 import {FirstLineMeter,useFirstLine} from '../news/first-line-meter';
@@ -36,7 +36,7 @@ export function ShockCards({feed,locale,sample}:{feed:RiskFeed;locale:'ja'|'en';
  const firstLine=useFirstLine(!!article&&!sample);
  return <>
   <div className={s.shockGrid}>{feed.articles.slice(0,3).map(a=>{
-   const why=formatCause(a,locale),lines=[...readingParts(a.market,locale),...(why?[{text:why}]:[])],q=assignedQuote(feed,a,sample),isOpen=a.id===open;
+   const lines=readingParts(a.market,locale),q=assignedQuote(feed,a,sample),isOpen=a.id===open;
    return <article key={a.id} className={s.shockCard} data-open={isOpen||undefined} style={a.stars?{'--c':STAR_COLORS[a.stars]} as CSSProperties:undefined}>
     <div className={s.badgeRow}>{a.stars!==null?<><b className={s.badge}>★{a.stars}</b><span className={s.badgeStars} aria-label={`${a.stars}/5`}>{'★'.repeat(a.stars)}<i aria-hidden="true">{'★'.repeat(5-a.stars)}</i></span></>:<span className={s.waiting}>{noStarsLabel(a,locale)}</span>}</div>
     <h3 className={s.cardHead}>{headline(a,locale,sample)}</h3>

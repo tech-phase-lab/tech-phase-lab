@@ -123,7 +123,7 @@ function safeShockReading(raw: unknown, date: string): ShockReadingView | null {
 }
 /** Each rostered stock's own move per session (single-company news): at most 5 sessions on or before the snapshot's own,
  * each move dated on its session with an earlier previous close at most 7 days before and a plausible typical move. */
-export type ShockStocks = Record<string, Record<string, {date: string; previousDate: string; changePercent: number; typicalPercent: number}>>;
+export type ShockStocks = Record<string, Record<string, {date: string; previousDate: string; changePercent: number; typicalPercent: number; intradayPercent?: number}>>;
 /** Each basket's intraday extreme per session (Shock Gauge, owner Nov 26): stored only, never served. Same date rules as the
  * shock map; a reading is kept only when dated on its session with plausible numbers and counts. */
 export type ShockIntraday = Record<string, {nas100: IntradayView | null; sox: IntradayView | null}>;
@@ -151,7 +151,8 @@ export function safeShockStocks(raw: unknown, expected: string): ShockStocks | u
     const day: ShockStocks[string] = {};
     for (const [ticker, m] of Object.entries(value as Record<string, unknown>).slice(0, 300)) {
       const move = /^[A-Z][A-Z0-9.]{0,9}$/.test(ticker) ? safeMove(m, date) : null, typical = (m as {typicalPercent?: unknown})?.typicalPercent;
-      if (move && finite(typical, 0.01, 50)) day[ticker] = {...move, typicalPercent: typical};
+      const intra = (m as {intradayPercent?: unknown})?.intradayPercent;
+      if (move && finite(typical, 0.01, 50)) day[ticker] = {...move, typicalPercent: typical, ...(finite(intra, -99.99, 99.99) ? {intradayPercent: intra} : {})};
     }
     if (Object.keys(day).length) out[date] = day;
   }

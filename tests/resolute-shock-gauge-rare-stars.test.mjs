@@ -57,7 +57,7 @@ test('a day with market-wide and chip-sector news: one move, one story — marke
  const preview=previewSelection({selected,reserve,diagnostics},moves);
  assert.deepEqual(preview.selected.map(p=>[p.index,p.session,p.marketStars]),[['nas100',session,4],['company','2026-11-25',null],['company',null,null]]);
  assert.equal(preview.selected[1].company,'NVDA');
- assert.deepEqual(formatReading({index:'nas100',session,reading:preview.selected[0].reading},'ja'),['TP大型株100 −1.5%（いつもの2.0倍・47/99社が下落）','TP半導体40 −8.5%（いつもの3.8倍・39/40社が下落）','恐怖指数 0%']);
+ assert.deepEqual(formatReading({index:'nas100',session,reading:preview.selected[0].reading},'ja'),['TP大型株100　−1.5%','TP半導体40　−8.5%','恐怖指数　0%']);
  // The chip-sector stories and the other market-wide one on Nov 24 repeat the move already shown: reserve only.
  assert.ok(repeatsTaken(reserve.find(c=>c.title.startsWith('Semiconductor stocks')),selected));
  assert.ok(repeatsTaken(reserve.find(c=>c.title.startsWith('Chip stocks tumble')),selected));
