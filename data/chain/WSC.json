@@ -1,0 +1,186 @@
+{
+  "root": {
+    "ticker": "WSC",
+    "name": "ウィルスコット・ホールディングス",
+    "cik": 1647088,
+    "name_en": "WillScot Holdings"
+  },
+  "rows": [
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "提携・出資・買収",
+      "en": "Partners, stakes & deals"
+    },
+    {
+      "ja": "買収・売却",
+      "en": "Acquisitions & sales"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "MOBILEMINI",
+      "ticker": "MOBILEMINI",
+      "name": "モバイル・ミニ",
+      "name_en": "Mobile Mini",
+      "sub": "仮設倉庫",
+      "sub_en": "Portable storage",
+      "sub_short": "倉庫",
+      "sub_short_en": "Storage",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2020年に合併",
+          "text_en": "Merged with it in 2020",
+          "source": {
+            "label": "WillScot Holdings 10-K(2025年度)",
+            "label_en": "WillScot Holdings 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1647088/000164708826000011/wsc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "In 2024, we completed the final systems and field harmonization contemplated by the integration plan related to our 2020 merger with Mobile Mini, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MODSPACE",
+      "ticker": "MODSPACE",
+      "name": "モジュラー・スペース",
+      "name_en": "Modular Space",
+      "sub": "仮設建物",
+      "sub_en": "Modular space",
+      "sub_short": "仮設",
+      "sub_short_en": "Modular",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2018年に買収",
+          "text_en": "Acquired in 2018",
+          "source": {
+            "label": "WillScot Holdings 10-K(2025年度)",
+            "label_en": "WillScot Holdings 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1647088/000164708826000011/wsc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "These transactions have included small local storage portfolios, regional operators with mixed modular and storage fleets, including climate-controlled storage units, clearspan and perimeter solution assets, and larger transformational acquisitions such as Modular Space Corporation in 2018 and Mobile Mini in 2020."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DOUBLEEAGLE",
+      "ticker": "DOUBLEEAGLE",
+      "name": "ダブル・イーグル",
+      "name_en": "Double Eagle Acquisition",
+      "sub": "特別買収目的会社",
+      "sub_en": "SPAC",
+      "sub_short": "SPAC",
+      "sub_short_en": "SPAC",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2017年に事業を取得したSPAC",
+          "text_en": "SPAC that bought the business in 2017",
+          "source": {
+            "label": "WillScot Holdings 10-K(2025年度)",
+            "label_en": "WillScot Holdings 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1647088/000164708826000011/wsc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Accumulated historical goodwill impairment losses were $792.8 million prior to Double Eagle Acquisition Corporation's acquisition of Williams Scotsman International, Inc. in 2017."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MGRC",
+      "ticker": "MGRC",
+      "name": "マクグラス・レントコープ",
+      "name_en": "McGrath RentCorp",
+      "sub": "仮設建物",
+      "sub_en": "Modular rental",
+      "sub_short": "仮設",
+      "sub_short_en": "Modular",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "合併契約の相手(のちに解消)",
+          "text_en": "Merger partner; deal later ended",
+          "source": {
+            "label": "Mcgrath Rent 10-K(2025年度)",
+            "label_en": "Mcgrath Rent 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/752714/000119312526071463/mgrc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Mutual decision to terminate Merger Agreement with WillScot Mobile Mini Holdings Corp As previously disclosed, on January 28, 2024, the Company entered into an Agreement and Plan of Merger (the \"Merger Agreement\"), with WillScot Mobile Mini Holdings Corp., a Delaware corporation (\"WillScot Mobile Mini\"), Brunello Merger Sub I, Inc., a California corporation and a direct wholly owned subsidiary of WillScot Mobile Mini, and Brunello Merger Sub II, LLC, a Delaware limited"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BAC",
+      "ticker": "BAC",
+      "name": "バンク・オブ・アメリカ",
+      "name_en": "Bank of America",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の幹事行",
+          "text_en": "Administrative agent on its credit agreement",
+          "source": {
+            "label": "WillScot Holdings 10-K(2025年度)",
+            "label_en": "WillScot Holdings 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1647088/000164708826000011/wsc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "ABL Credit Agreement, dated July 1, 2020, by and among Williams Scotsman Holdings Corp., WSII, the guarantors party thereto, the lenders party thereto, and Bank of America, N.A., as administrative agent and collateral agent"
+          }
+        }
+      ]
+    },
+    {
+      "id": "JPM",
+      "ticker": "JPM",
+      "name": "JPMorgan Chase",
+      "name_en": "JPMorgan Chase",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "社債などの引受会社",
+          "text_en": "Underwriter of its securities offering",
+          "source": {
+            "label": "WillScot Holdings 8-K(2025年3月)",
+            "label_en": "WillScot Holdings 8-K (March 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1647088/000164708825000014/wsc-20250312.htm",
+            "level": "official",
+            "date": "2025-03-13",
+            "quote": "subsidiary of WillScot Holdings Corporation, a Delaware corporation (the \"Company\"), and certain of the Company's direct and indirect subsidiaries (the \"Guarantors\") entered into a purchase agreement (the \"Purchase Agreement\") with J.P. Morgan Securities LLC (\"JPM\"), as representative of the several initial purchasers named therein (collectively, the \"Initial Purchasers\"), pursuant to which WSI agreed to issue and sell $500.0 million in aggregate principal amount of"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

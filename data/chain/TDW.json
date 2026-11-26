@@ -1,0 +1,156 @@
+{
+  "root": {
+    "ticker": "TDW",
+    "name": "タイドウォーター",
+    "cik": 98222,
+    "name_en": "Tidewater"
+  },
+  "rows": [
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "買収・売却",
+      "en": "Acquisitions & sales"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "WILSONSONS",
+      "ticker": "WILSONSONS",
+      "name": "ウィルソン・サンズ",
+      "name_en": "Wilson Sons",
+      "sub": "海運",
+      "sub_en": "Shipping",
+      "sub_short": "海運",
+      "sub_short_en": "Shipping",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "買収した海運会社の売り手",
+          "text_en": "Seller in its Brazil acquisition",
+          "source": {
+            "label": "Tidewater 8-K(2026年2月)",
+            "label_en": "Tidewater 8-K (February 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/98222/000110465926018759/tm266868d1_8k.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "On February 22, 2026, Tidewater Inc., a Delaware corporation (the \"Company\"), entered into a Sale and Purchase Agreement (the \"Sale and Purchase Agreement\" and, together with the other related documents, the \"Transaction Documents\") between Wilson Sons S.A., Ultranav International II, S.A. and Remolcadores Ultratug Limitada (collectively, the \"Sellers\"), Wilson, Sons Ultratug Participações S.A. and Atlantic Offshore Services S.A."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ULTRANAV",
+      "ticker": "ULTRANAV",
+      "name": "ウルトラナブ",
+      "name_en": "Ultranav",
+      "sub": "海運",
+      "sub_en": "Shipping",
+      "sub_short": "海運",
+      "sub_short_en": "Shipping",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "買収した海運会社の売り手",
+          "text_en": "Seller in its Brazil acquisition",
+          "source": {
+            "label": "Tidewater 8-K(2026年2月)",
+            "label_en": "Tidewater 8-K (February 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/98222/000110465926018759/tm266868d1_8k.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "On February 22, 2026, Tidewater Inc., a Delaware corporation (the \"Company\"), entered into a Sale and Purchase Agreement (the \"Sale and Purchase Agreement\" and, together with the other related documents, the \"Transaction Documents\") between Wilson Sons S.A., Ultranav International II, S.A. and Remolcadores Ultratug Limitada (collectively, the \"Sellers\"), Wilson, Sons Ultratug Participações S.A. and Atlantic Offshore Services S.A."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SWIREPO",
+      "ticker": "SWIREPO",
+      "name": "スワイヤ・パシフィック・オフショア",
+      "name_en": "Swire Pacific Offshore",
+      "sub": "洋上支援船",
+      "sub_en": "Offshore vessels",
+      "sub_short": "支援船",
+      "sub_short_en": "Vessels",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2022年に買収",
+          "text_en": "Acquired in 2022",
+          "source": {
+            "label": "Tidewater 10-K(2025年度)",
+            "label_en": "Tidewater 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/98222/000143774926006391/tdw20251231_10k.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "so designated are incorporated herein by reference to a prior filing as indicated. 2.1 Agreement and Plan of Merger by and between Tidewater Inc. and GulfMark Offshore, Inc., dated as of July 15, 2018 (filed with the Commission as Exhibit 2.1 to the Company's Current Report on Form 8-K filed on July 16, 2018, File No. 1-6311). 2.2 Share Purchase Agreement, dated as of March 9, 2022, by and among Tidewater Inc., Banyan Overseas Limited and Swire Pacific Offshore Holdings Ltd."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DNBBANK",
+      "ticker": "DNBBANK",
+      "name": "DNB銀行",
+      "name_en": "DNB Bank",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の幹事行",
+          "text_en": "Facility agent on its credit agreement",
+          "source": {
+            "label": "Tidewater 10-K(2025年度)",
+            "label_en": "Tidewater 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/98222/000143774926006391/tdw20251231_10k.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "The fair value is obtained from public transaction activity. 86 Table of Contents Revolving Credit Facility On July 7, 2025, we and the Guarantors entered into a credit agreement with DNB Bank ASA, New York Branch, as facility agent and security trustee, and a syndicate of lenders providing for a $250.0 million senior secured revolving credit facility (Revolving Credit Facility)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BNDES",
+      "ticker": "BNDES",
+      "name": "ブラジル国立経済社会開発銀行",
+      "name_en": "BNDES",
+      "sub": "政府系銀行",
+      "sub_en": "Development bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "買収先の造船融資の貸し手",
+          "text_en": "Lender on acquired vessel loans",
+          "source": {
+            "label": "Tidewater 8-K(2026年9月)",
+            "label_en": "Tidewater 8-K (September 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/98222/000110465926111052/tm2626128d2_8k.htm",
+            "level": "official",
+            "date": "2026-09-25",
+            "quote": "The BNDES Construction Loans consist of the loan facilities under the Credit Facility Agreements Nos. 07.2.0417.1, 07.2.0418.1, 10.2.1621.1, 12.2.0433.1, and 12.2.0434.1 (collectively, the \"BNDES Construction Loans\"), entered into between 2007 and 2012 and as amended from time to time, by and between BNDES, as lender, Wilson Sons Offshore S.A."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

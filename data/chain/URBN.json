@@ -1,0 +1,189 @@
+{
+  "root": {
+    "ticker": "URBN",
+    "name": "アーバン・アウトフィッターズ",
+    "cik": 912615,
+    "name_en": "Urban Outfitters"
+  },
+  "rows": [
+    {
+      "ja": "供給元・取引先",
+      "en": "Suppliers & providers"
+    },
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "TLYS",
+    "BKE"
+  ],
+  "companies": [
+    {
+      "id": "TLYS",
+      "ticker": "TLYS",
+      "name": "ティリーズ",
+      "name_en": "Tilly's",
+      "sub": "衣料小売",
+      "sub_en": "Apparel retail",
+      "sub_short": "衣料",
+      "sub_short_en": "Apparel",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合として名前を挙げる",
+          "text_en": "Names Urban Outfitters as a competitor",
+          "source": {
+            "label": "Tilly's 10-K(2026年1月期)",
+            "label_en": "Tilly's 10-K (FY ended Jan 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1524025/000162828026024440/tlys-20260131.htm",
+            "level": "official",
+            "date": "2026-04-09",
+            "quote": "We compete with various publicly-traded and privately-held teen-oriented apparel retailers for customers, store locations, store associates and management personnel, including but not limited to Abercrombie & Fitch, Aeropostale, American Eagle Outfitters, Boot Barn, The Buckle, H&M, Hollister, Hot Topic, Pacific Sunwear, Urban Outfitters, and Zumiez."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BKE",
+      "ticker": "BKE",
+      "name": "バックル",
+      "name_en": "Buckle",
+      "sub": "衣料小売",
+      "sub_en": "Apparel retail",
+      "sub_short": "衣料",
+      "sub_short_en": "Apparel",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合として名前を挙げる",
+          "text_en": "Names Urban Outfitters as a competitor",
+          "source": {
+            "label": "Buckle 10-K(2026年1月期)",
+            "label_en": "Buckle 10-K (FY ended Jan 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/885245/000088524526000012/bke-20260131.htm",
+            "level": "official",
+            "date": "2026-04-01",
+            "quote": "In the women's merchandise area, the Company competes primarily with specialty retailers such as Abercrombie & Fitch, Altar'd State, American Eagle Outfitters, Boot Barn, Free People, Garage, H&M, Hollister, Journey's, Lulus, Madewell, Maurices, PacSun, Scheels, Tilly's, Urban Outfitters, Zara, and Gap."
+          }
+        }
+      ]
+    },
+    {
+      "id": "JRSH",
+      "ticker": "JRSH",
+      "name": "ジェラッシュ・ホールディングス",
+      "name_en": "Jerash Holdings",
+      "sub": "衣料製造",
+      "sub_en": "Apparel maker",
+      "sub_short": "衣料",
+      "sub_short_en": "Apparel",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "主な取引先に挙げる",
+          "text_en": "Lists it as a customer",
+          "source": {
+            "label": "Jerash Holdings 8-K(2026年11月)",
+            "label_en": "Jerash Holdings 8-K (November 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1696558/000121390026117779/ea031162301ex99-1.htm",
+            "level": "official",
+            "date": "2026-11-10",
+            "quote": "Jerash Holdings (US), Inc. manufactures and exports custom, ready-made, sportswear and outerwear for leading global brands and retailers, including VF Corporation (which owns brands such as The North Face, Timberland, and Vans), New Balance, G-III (which licenses brands such as Calvin Klein, Tommy Hilfiger, and Nautica), Urban Outfitters, American Eagle, and Acushnet Holdings Corp (which owns the brand FootJoy)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BRZE",
+      "ticker": "BRZE",
+      "name": "Braze",
+      "name_en": "Braze",
+      "sub": "顧客対応ソフト",
+      "sub_en": "Customer engagement",
+      "sub_short": "ソフト",
+      "sub_short_en": "Software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "顧客に挙げる",
+          "text_en": "Lists it as a customer",
+          "source": {
+            "label": "Braze 8-K(2026年10月)",
+            "label_en": "Braze 8-K (October 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1676238/000095010326015850/dp254600_ex9902.htm",
+            "level": "official",
+            "date": "2026-10-20",
+            "quote": "Braze serves approximately 2,770 customers, including Canva, Dairy Queen, Equinox, Instacart, Urban Outfitters, and Venmo."
+          }
+        }
+      ]
+    },
+    {
+      "id": "JPM",
+      "ticker": "JPM",
+      "name": "JPMorgan Chase",
+      "name_en": "JPMorgan Chase",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の幹事行",
+          "text_en": "Administrative agent on its credit agreement",
+          "source": {
+            "label": "Urban Outfitters 8-K(2026年5月)",
+            "label_en": "Urban Outfitters 8-K (May 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/912615/000119312526239316/d147336d8k.htm",
+            "level": "official",
+            "date": "2026-05-26",
+            "quote": "(the \"Company\") and certain of its domestic subsidiaries entered into the fifth amendment (the \"Fifth Amendment\") to the Company's amended and restated credit agreement (the \"Amended Credit Agreement\"), amending the Company's asset-based revolving credit facility with certain lenders, including JPMorgan Chase Bank, N.A., as administrative agent, and J.P."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WFC",
+      "ticker": "WFC",
+      "name": "ウェルズ・ファーゴ",
+      "name_en": "Wells Fargo",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の貸し手",
+          "text_en": "A lender under its credit agreement",
+          "source": {
+            "label": "Urban Outfitters 10-K(2026年1月期)",
+            "label_en": "Urban Outfitters 10-K (FY ended Jan 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/912615/000119312526137916/urbn-20260131.htm",
+            "level": "official",
+            "date": "2026-04-01",
+            "quote": "Credit Agreement, dated June 29, 2018, by and among Urban Outfitters, Inc., its domestic subsidiaries, URBN Canada Retail, Inc., JPMorgan Chase Bank, N.A., as administrative agent, J.P. Morgan Chase Bank, N.A. and Wells Fargo Bank, National Association, as joint lead arrangers and co-book managers, and certain other lenders party thereto is"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
