@@ -104,11 +104,14 @@ function useBoard(ids: string[], every: number, fast: boolean) {
   return state.key === key ? { items: state.items, at: state.at } : { items: null, at: null };
 }
 type Snapshot = { quotes: Record<string, BoardQuote>; charts: Record<string, { bars: Bar[]; before: Bar[] }> };
+export type MarketSnapshotView = Snapshot;
 /** Every tab's cards and first chart from the shared snapshot (owner, Nov 25: a tab not opened yet must show at once, like レバETF). Read once
  * when the page opens and every two minutes after; the provider is never asked for it (app/api/research/market/snapshot). */
-function useMarketSnapshot() {
-  const [snapshot, setSnapshot] = useState<Snapshot | null>(null);
+function useMarketSnapshot(initial: Snapshot | null) {
+  const [snapshot, setSnapshot] = useState<Snapshot | null>(initial);
   useEffect(() => {
+    // Drawn by the server into the page (app/research/market/page.tsx): kept for this browser's next visit, next read in two minutes.
+    if (initial) { try { localStorage.setItem(SNAPSHOT_STORE, JSON.stringify(initial)); } catch { /* full or blocked */ } }
     // The copy this browser received last draws the page the moment it is ready, until the server's answer (or a read of its own) replaces it.
     try {
       const kept = JSON.parse(localStorage.getItem(SNAPSHOT_STORE) ?? "null") as Snapshot | null;
@@ -124,8 +127,8 @@ function useMarketSnapshot() {
         setSnapshot(next);
         try { localStorage.setItem(SNAPSHOT_STORE, JSON.stringify(next)); } catch { /* full or blocked: the next visit waits for the server */ }
       } catch { /* the cards and chart are read as before */ }
-    }, 120_000);
-  }, []);
+    }, 120_000, initial ? 120_000 : 0);
+  }, [initial]);
   return snapshot;
 }
 /** The live answer where there is one, the snapshot's copy for the rest; null while neither has anything (the loading word). */
@@ -184,7 +187,7 @@ function MoreMenu({ period, onPick, ja }: { period: BoardPeriod; onPick: (period
   </div>;
 }
 
-export default function MarketBoard() {
+export default function MarketBoard({ initialSnapshot = null }: { initialSnapshot?: MarketSnapshotView | null }) {
   const [lang] = useResearchLanguage();
   const ja = lang === "ja";
   const [category, setCategory] = useState("fx");
@@ -214,7 +217,7 @@ export default function MarketBoard() {
   const board = useBoard(INDEX_ETFS.map(item => item.id), FAST_MS, true);
   const watched = useBoard(index || lev ? [] : [selected], FAST_MS, true);
   const rows = useBoard(current.items.map(item => item.id), SLOW_MS, false);
-  const snapshot = useMarketSnapshot();
+  const snapshot = useMarketSnapshot(initialSnapshot);
   const indexQuotes = withSnapshot(INDEX_ETFS.map(item => item.id), board.items, snapshot), itemQuotes = withSnapshot(current.items.map(item => item.id), rows.items, snapshot);
   const entry = ALL.find(item => item.id === selected)!;
   const quote = indexQuotes?.[selected] ?? watched.items?.[selected] ?? itemQuotes?.[selected];

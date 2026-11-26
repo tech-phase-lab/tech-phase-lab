@@ -29,7 +29,7 @@ function Sheet({ title, onClose, children, plain = false, dismissible = true }: 
 
 /** Start a checkout and go straight to PayPal. The server chooses the PayPal plan from currency and period; no plan id is sent.
  * consentAt: when the member ticked 「利用規約とプライバシーポリシーに同意する」 above the button; the server refuses a checkout without it. */
-export async function startCheckout(mode: Mode, refresh: (force?: boolean) => Promise<void>, currency: "JPY" | "USD", period: "month" | "year", consentAt: string) {
+export async function startCheckout(mode: Mode, refresh: (force?: boolean) => Promise<unknown>, currency: "JPY" | "USD", period: "month" | "year", consentAt: string) {
   await refresh(true);
   const result = await billingRequest("create", { currency, period, acceptedTerms: mode === "live" ? "pro-live-v1" : "sandbox-v1", consentAt }, AbortSignal.timeout(20_000), mode);
   window.location.assign(sandboxApproval(result.approvalUrl, mode));
@@ -37,7 +37,7 @@ export async function startCheckout(mode: Mode, refresh: (force?: boolean) => Pr
 const SHEET_PRICE = { JPY: { month: "¥2,980", year: "¥29,800" }, USD: { month: "$20", year: "$200" } } as const;
 
 /** Resume sheet (used after stopping renewal): the consent line starts unticked; pressing the button without it shows the red line (lawyer review, Nov 24). */
-export function UpgradeSheet({ ja, mode, blocked, refresh, onClose, currency = "JPY", period = "month" }: { ja: boolean; mode: Mode | null; blocked?: boolean; refresh: (force?: boolean) => Promise<void>; onClose: () => void; currency?: "JPY" | "USD"; period?: "month" | "year" }) {
+export function UpgradeSheet({ ja, mode, blocked, refresh, onClose, currency = "JPY", period = "month" }: { ja: boolean; mode: Mode | null; blocked?: boolean; refresh: (force?: boolean) => Promise<unknown>; onClose: () => void; currency?: "JPY" | "USD"; period?: "month" | "year" }) {
   const consent = useConsent();
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");

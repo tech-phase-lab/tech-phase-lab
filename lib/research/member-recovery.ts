@@ -11,16 +11,17 @@ export function waitForIdentity<T>(task: Promise<T>, signal: AbortSignal): Promi
 
 /** Renew the SDK session before asking the server for entitlements.
  * No browser role claims or token persistence: the server remains authoritative. */
-export async function recoverMember(refresh: (force?: boolean) => Promise<void>, signal: AbortSignal, resume = false) {
+export async function recoverMember(refresh: (force?: boolean) => Promise<void | boolean>, signal: AbortSignal, resume = false) {
   signal.throwIfAborted();
-  await waitForIdentity(refresh(resume), signal);
+  // `false`: the identity SDK has loaded and holds no session, so a signed-out answer is final (no second /api/research/member read).
+  const sdkSignedIn = await waitForIdentity(refresh(resume), signal);
   signal.throwIfAborted();
   async function read() {
     const response = await fetch("/api/research/member", { cache: "no-store", signal });
     return { response, member: await response.json() };
   }
   let result = await read();
-  if (result.response.ok && result.member.status === "signed-out") {
+  if (result.response.ok && result.member.status === "signed-out" && sdkSignedIn !== false) {
     await waitForIdentity(refresh(true), signal);
     signal.throwIfAborted();
     result = await read();

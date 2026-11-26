@@ -1,0 +1,156 @@
+{
+  "root": {
+    "ticker": "WRB",
+    "name": "W.R.バークレー",
+    "cik": 11544,
+    "name_en": "W. R. Berkley"
+  },
+  "rows": [
+    {
+      "ja": "提携・株主",
+      "en": "Partners & shareholders"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in its 10-K)"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "MSINSURANCE",
+      "ticker": "MSINSURANCE",
+      "name": "三井住友海上火災保険",
+      "name_en": "Mitsui Sumitomo Insurance",
+      "sub": "損害保険",
+      "sub_en": "P&C insurance",
+      "sub_short": "損保",
+      "sub_short_en": "Insurer",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "約14.7%を保有する株主",
+          "text_en": "Owns about 14.7% of its stock",
+          "source": {
+            "label": "W. R. Berkley 10-K(2025年度)",
+            "label_en": "W. R. Berkley 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/11544/000001154426000005/wrb-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Mitsui Sumitomo Insurance Co., Ltd. (\"MSI\"), which owns approximately 14.7% of our common stock as of February 23, 2026"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SWISSRE",
+      "ticker": "SWISSRE",
+      "name": "スイス・リー・グループ",
+      "name_en": "Swiss Re Group",
+      "sub": "再保険",
+      "sub_en": "Reinsurance",
+      "sub_short": "再保険",
+      "sub_short_en": "Reinsurer",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "再保険の競合",
+          "text_en": "A competitor in reinsurance",
+          "source": {
+            "label": "W. R. Berkley 10-K(2025年度)",
+            "label_en": "W. R. Berkley 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/11544/000001154426000005/wrb-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "These competitors within the reinsurance market include Swiss Re, Munich Re, Berkshire Hathaway and Hannover Re."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MUNICHRE",
+      "ticker": "MUNICHRE",
+      "name": "ミュンヘン再保険グループ",
+      "name_en": "Munich Re Group",
+      "sub": "再保険",
+      "sub_en": "Reinsurance",
+      "sub_short": "再保険",
+      "sub_short_en": "Reinsurer",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "再保険の競合",
+          "text_en": "A competitor in reinsurance",
+          "source": {
+            "label": "W. R. Berkley 10-K(2025年度)",
+            "label_en": "W. R. Berkley 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/11544/000001154426000005/wrb-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "These competitors within the reinsurance market include Swiss Re, Munich Re, Berkshire Hathaway and Hannover Re."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BRK",
+      "ticker": "BRK",
+      "name": "バークシャー・ハサウェイ",
+      "name_en": "Berkshire Hathaway",
+      "sub": "複合企業・再保険",
+      "sub_en": "Conglomerate & reinsurance",
+      "sub_short": "再保険",
+      "sub_short_en": "Reinsure",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "再保険の競合",
+          "text_en": "A competitor in reinsurance",
+          "source": {
+            "label": "W. R. Berkley 10-K(2025年度)",
+            "label_en": "W. R. Berkley 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/11544/000001154426000005/wrb-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "These competitors within the reinsurance market include Swiss Re, Munich Re, Berkshire Hathaway and Hannover Re."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HANNOVERRE",
+      "ticker": "HANNOVERRE",
+      "name": "ハノーバー再保険",
+      "name_en": "Hannover Re",
+      "sub": "再保険",
+      "sub_en": "Reinsurance",
+      "sub_short": "再保険",
+      "sub_short_en": "Reinsurer",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "再保険の競合",
+          "text_en": "A competitor in reinsurance",
+          "source": {
+            "label": "W. R. Berkley 10-K(2025年度)",
+            "label_en": "W. R. Berkley 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/11544/000001154426000005/wrb-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "These competitors within the reinsurance market include Swiss Re, Munich Re, Berkshire Hathaway and Hannover Re."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

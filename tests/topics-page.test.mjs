@@ -94,7 +94,7 @@ function loadTopics(file = "../app/research/news/topics-list.tsx") {
 }
 
 test("the page: TOPICS / 注目トピック, an automatic-update line, open cards with day dividers, and no refresh button or notes", () => {
-  const page = read("../app/research/general-news/page.tsx");
+  const page = read("../app/research/general-news/screen.tsx");
   assert.match(page, /eyebrow="TOPICS" title=\{lang === "ja" \? "注目トピック" : "Top Topics"\}/);
   const Topics = loadTopics();
   const html = renderToStaticMarkup(React.createElement(Topics, { lang: "ja", data: feed, wire: wire(), wireReady: true, error: false,
@@ -143,7 +143,7 @@ test("the name 注目トピック is used everywhere the page is named", () => {
   // English FREE card (owner, Nov 22): the short table names it "Top US market stories"; the Japanese row keeps 注目トピック.
   assert.match(read("../app/research/plan-cards.tsx"), /\[t\("米国市場の注目トピック", "Top US market stories"\)\]/);
   assert.match(read("../app/research/news/general-news-panel.tsx"), /注目トピックですべて見る/);
-  for (const file of ["../app/research/home-sidebar.tsx", "../app/research/site-header.tsx", "../app/research/plan-cards.tsx", "../app/research/news/general-news-panel.tsx", "../app/research/general-news/page.tsx"]) {
+  for (const file of ["../app/research/home-sidebar.tsx", "../app/research/site-header.tsx", "../app/research/plan-cards.tsx", "../app/research/news/general-news-panel.tsx", "../app/research/general-news/screen.tsx"]) {
     assert.doesNotMatch(read(file), /一般ニュース|General News|GENERAL NEWS/, file);
   }
 });

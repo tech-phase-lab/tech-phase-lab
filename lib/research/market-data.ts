@@ -388,9 +388,19 @@ export function refreshBoardSnapshot(now = Date.now()): Promise<{ spent: number;
   })().finally(() => { boardRun = null; });
 }
 /** Every card's quote and every tab's first chart (shaped as the chart answer is), from the snapshot. `at`: its oldest entry. */
-export async function loadBoardSnapshot(): Promise<{ quotes: Record<string, BoardQuote>; charts: Record<string, { bars: Bar[]; before: Bar[] }>; at: number | null; filled: boolean }> {
+export type BoardSnapshotView = { quotes: Record<string, BoardQuote>; charts: Record<string, { bars: Bar[]; before: Bar[] }>; at: number | null };
+export async function loadBoardSnapshot(): Promise<BoardSnapshotView & { filled: boolean }> {
   let snapshot = await currentBoardSnapshot(), filled = false;
   if (!snapshot) { await refreshBoardSnapshot(); snapshot = await currentBoardSnapshot(); filled = true; }
+  return { ...shapeBoardSnapshot(snapshot), filled };
+}
+/** The page's first paint (app/research/market/page.tsx): the shared snapshot as it is, or null. Never asks the provider, never fills it. */
+export async function peekBoardSnapshot(): Promise<BoardSnapshotView | null> {
+  if (!marketDataConfigured()) return null;
+  const snapshot = await currentBoardSnapshot();
+  return snapshot ? shapeBoardSnapshot(snapshot) : null;
+}
+function shapeBoardSnapshot(snapshot: BoardSnapshot | null): BoardSnapshotView {
   const quotes: Record<string, BoardQuote> = {}, charts: Record<string, { bars: Bar[]; before: Bar[] }> = {};
   let at: number | null = null;
   for (const entry of Object.values(snapshot?.entries ?? {})) {
@@ -402,5 +412,5 @@ export async function loadBoardSnapshot(): Promise<{ quotes: Record<string, Boar
     const shaped = shapePeriod(BOARD_SNAPSHOT_PERIOD, entry.bars);
     if (shaped.bars.length) charts[key.slice("chart:".length)] = shaped;
   }
-  return { quotes, charts, at, filled };
+  return { quotes, charts, at };
 }

@@ -1,0 +1,184 @@
+{
+  "root": {
+    "ticker": "MATX",
+    "name": "マトソン",
+    "cik": 3453,
+    "name_en": "Matson"
+  },
+  "rows": [
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in its 10-K)"
+    },
+    {
+      "ja": "供給元",
+      "en": "Suppliers"
+    }
+  ],
+  "rivals": [
+    "ZIM"
+  ],
+  "companies": [
+    {
+      "id": "CMACGM",
+      "ticker": "CMACGM",
+      "name": "CMA CGM",
+      "name_en": "CMA CGM",
+      "sub": "海運",
+      "sub_en": "Container shipping",
+      "sub_short": "海運",
+      "sub_short_en": "Shipping",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "中国航路の主な競合",
+          "text_en": "A major competitor on its China service",
+          "source": {
+            "label": "Matson 10-K(2025年度)",
+            "label_en": "Matson 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/3453/000110465926020944/matx-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Major competitors to Matson's China service include international transpacific carriers such as CMA CGM, Zim, Hede and Cosco."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ZIM",
+      "ticker": "ZIM",
+      "name": "ZIMインテグレーテッド・シッピング",
+      "name_en": "ZIM Integrated Shipping",
+      "sub": "海運",
+      "sub_en": "Container shipping",
+      "sub_short": "海運",
+      "sub_short_en": "Shipping",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "中国航路の主な競合",
+          "text_en": "A major competitor on its China service",
+          "source": {
+            "label": "Matson 10-K(2025年度)",
+            "label_en": "Matson 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/3453/000110465926020944/matx-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Major competitors to Matson's China service include international transpacific carriers such as CMA CGM, Zim, Hede and Cosco."
+          }
+        }
+      ]
+    },
+    {
+      "id": "COSCO",
+      "ticker": "COSCO",
+      "name": "中遠海運(COSCO)",
+      "name_en": "COSCO Shipping",
+      "sub": "海運",
+      "sub_en": "Container shipping",
+      "sub_short": "海運",
+      "sub_short_en": "Shipping",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "中国航路の主な競合",
+          "text_en": "A major competitor on its China service",
+          "source": {
+            "label": "Matson 10-K(2025年度)",
+            "label_en": "Matson 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/3453/000110465926020944/matx-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Major competitors to Matson's China service include international transpacific carriers such as CMA CGM, Zim, Hede and Cosco."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HEDE",
+      "ticker": "HEDE",
+      "name": "和徳(Hede)",
+      "name_en": "Hede Shipping",
+      "sub": "海運",
+      "sub_en": "Container shipping",
+      "sub_short": "海運",
+      "sub_short_en": "Shipping",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "中国航路の主な競合",
+          "text_en": "A major competitor on its China service",
+          "source": {
+            "label": "Matson 10-K(2025年度)",
+            "label_en": "Matson 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/3453/000110465926020944/matx-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Major competitors to Matson's China service include international transpacific carriers such as CMA CGM, Zim, Hede and Cosco."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TOTE",
+      "ticker": "TOTE",
+      "name": "トーテム・オーシャン・トレーラー・エクスプレス",
+      "name_en": "Totem Ocean Trailer Express",
+      "sub": "海運(アラスカ)",
+      "sub_en": "Shipping (Alaska)",
+      "sub_short": "海運",
+      "sub_short_en": "Shipping",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "アラスカ航路の唯一の主な競合",
+          "text_en": "Its one primary Jones Act competitor in Alaska",
+          "source": {
+            "label": "Matson 10-K(2025年度)",
+            "label_en": "Matson 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/3453/000110465926020944/matx-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Matson's Alaska service has one primary U.S. flagged Jones Act competitor, Totem Ocean Trailer Express, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SSAT",
+      "ticker": "SSAT",
+      "name": "SSAターミナルズ",
+      "name_en": "SSA Terminals",
+      "sub": "港湾ターミナル",
+      "sub_en": "Port terminals",
+      "sub_short": "港湾",
+      "sub_short_en": "Terminals",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "米西海岸の専用ターミナルを提供",
+          "text_en": "Provides three exclusive-use terminals on the U.S. West Coast",
+          "source": {
+            "label": "Matson 10-K(2025年度)",
+            "label_en": "Matson 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/3453/000110465926020944/matx-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "three exclusive use terminals provided by SSAT"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
