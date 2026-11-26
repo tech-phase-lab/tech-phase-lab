@@ -64,6 +64,7 @@ import earnings_announce
 import earnings_history
 import value_check
 import twelve_allocator
+import twelve_copies
 import official_research
 import deep_analysis
 import llm_cost
@@ -4414,6 +4415,28 @@ class Handler(BaseHTTPRequestHandler):
             # "meter-unknown": nothing granted, and the caller learns the minute could not be judged (the site shows its last copies;
             # RESOLUTE's alerts keep their own pace).
             self.send_json(200, {"ok": True, "granted": decision == "granted", **({"reason": "meter-unknown"} if decision == "meter-unknown" else {})})
+            return
+        if path in ("/twelve/copies/get", "/twelve/copies/put"):
+            # Durable copies of the site's costly Twelve Data answers (twelve_copies.py): the runtime cache loses them within hours.
+            # The site's server token only.
+            if not os.environ.get("RESEARCH_API_TOKEN") or not self.authorized():
+                self.send_json(401, {"ok": False})
+                return
+            try:
+                payload = self.read_json(64 * 1024)
+                db = twelve_copies.connect(twelve_copies.path_for(self.app.db_path))
+                try:
+                    if path.endswith("/put"):
+                        self.send_json(200, {"ok": True, "stored": twelve_copies.put(db, payload)})
+                    else:
+                        self.send_json(200, {"ok": True, "copies": twelve_copies.get(db, payload)})
+                finally:
+                    db.close()
+            except ValueError as exc:
+                self.send_json(400, {"ok": False, "error": str(exc)[:40]})
+            except Exception as exc:
+                print(json.dumps({"event": "twelve-copies-failed", "error": type(exc).__name__}), flush=True)
+                self.send_json(503, {"ok": False})
             return
         if path == "/internal/resolute/push":
             # Nov 17 (owner): RESOLUTE's sender asks for its ③/④ notice to reach the member's phones (web_push.resolute_push). Its own

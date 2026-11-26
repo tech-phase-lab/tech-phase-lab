@@ -215,7 +215,14 @@ export type SlotStore = {
   put(name: string, key: string, slot: number, entry: Entry<unknown>): Promise<void>;
 };
 /** name: the kind of data; slotMs: how long a copy counts as fresh; staleMs: how old a copy may be when nothing fresher can be had. */
-export type ReadSpec = { name: string; slotMs: number; staleMs: number };
+/** `durable`: the copies are also kept by a DurableStore (the monitor, lib/research/twelve-copies.ts) and read back from it when the
+ * cross-instance store has lost them (production, Nov 26: Vercel's runtime cache lost costly copies within hours). */
+export type ReadSpec = { name: string; slotMs: number; staleMs: number; durable?: boolean };
+/** A store that keeps the newest copy per name and key for weeks (a miss or a failure is null; never throws to the reader). */
+export type DurableStore = {
+  get(name: string, key: string): Promise<Entry<unknown> | null>;
+  put(name: string, key: string, entry: Entry<unknown>): Promise<void>;
+};
 const COARSE_MS = 3_600_000;
 /** A daily copy as well (production QA, Nov 24): under load, a chart or a stock page's period change that no instance had read in the last two
  * hours answered 503 although a copy from earlier that day or the day before existed. Kept within staleMs like every other last good copy;
@@ -225,7 +232,7 @@ const DAILY_MS = 86_400_000;
 function offset(text: string, slotMs: number) { let h = 0x811c9dc5; for (let i = 0; i < text.length; i++) { h ^= text.charCodeAt(i); h = Math.imul(h, 0x01000193) >>> 0; } return h % slotMs; }
 const MEMORY_LIMIT = 20_000;
 
-export function createReader(store: SlotStore, now: () => number = Date.now) {
+export function createReader(store: SlotStore, now: () => number = Date.now, durable: DurableStore | null = null) {
   const memory = new Map<string, Entry<unknown>>();
   const inflight = new Map<string, Promise<Entry<unknown> | null>>();
   const id = (spec: ReadSpec, key: string) => `${spec.name}|${key}`;
@@ -246,6 +253,14 @@ export function createReader(store: SlotStore, now: () => number = Date.now) {
     if (m && t - m.at < spec.slotMs && m.at <= t) return m as Entry<T>;
     const hit = await quiet(store.peek(slotName(spec), key, slotOf(spec, key, t)));
     if (hit && t - hit.at < spec.slotMs) { remember(spec, key, hit); return hit as Entry<T>; }
+    if (spec.durable && durable) {
+      // Kept in memory either way, so the last-good-copy lookup below finds it without asking again.
+      const kept = await quiet(durable.get(spec.name, key));
+      if (kept && Number.isFinite(kept.at) && kept.at <= t) {
+        remember(spec, key, kept);
+        if (t - kept.at < spec.slotMs) return kept as Entry<T>;
+      }
+    }
     return null;
   }
   async function stale<T>(spec: ReadSpec, key: string): Promise<Entry<T> | null> {
@@ -261,6 +276,7 @@ export function createReader(store: SlotStore, now: () => number = Date.now) {
   async function save(spec: ReadSpec, key: string, entry: Entry<unknown>) {
     remember(spec, key, entry);
     await Promise.all([
+      ...(spec.durable && durable ? [quiet(durable.put(spec.name, key, entry))] : []),
       quiet(store.put(slotName(spec), key, slotOf(spec, key, entry.at), entry)),
       quiet(store.put(`${spec.name}~h`, key, Math.floor(entry.at / COARSE_MS), entry)),
       quiet(store.put(`${spec.name}~d`, key, Math.floor(entry.at / DAILY_MS), entry)),

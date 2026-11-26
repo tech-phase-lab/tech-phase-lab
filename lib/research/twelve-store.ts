@@ -6,6 +6,7 @@ import { parseUsage, shareInflight } from "./twelve-credit-gate";
 import { providerSymbol } from "./provider-symbol";
 import { BACKGROUND_CEILING, COST, USER_SERIES_CEILING, daySlot, hasRoom, hourSlot, weekSlot } from "./twelve-warm-plan";
 import { reserveCredits, sharedMeterUsage } from "./twelve-gateway";
+import { durableGet, durablePut } from "./twelve-copies";
 import type { Tier } from "./twelve-budget.ts";
 
 /** The comparison's shared store of provider data (statistics, price series, statements), kept in the Next.js data cache that every
@@ -74,8 +75,19 @@ const required = <T>(value: T | null, reason: string): T => {
 };
 const stamp = () => new Date().toISOString();
 
-const statisticsDay = sharedCache("comparison-store-statistics-day-v1", 3 * 86400,
-  async (ticker): Promise<Raw> => ({ payload: required(await providerCall("statistics", { symbol: providerSymbol(ticker) }), "statistics-unavailable"), retrievedAt: stamp() }));
+/** Production, Nov 26: these 50-credit copies were gone from the runtime cache within hours (ASML and AVNT, stored at 00:21 UTC, and UNFI,
+ * stored at 03:30, were all missing by 08:05), so each one is also kept by the monitor (lib/research/twelve-copies.ts) and read back from
+ * there. */
+const statisticsDay = sharedCache("comparison-store-statistics-day-v1", 3 * 86400, async (ticker): Promise<Raw> => {
+  const raw = { payload: required(await providerCall("statistics", { symbol: providerSymbol(ticker) }), "statistics-unavailable"), retrievedAt: stamp() };
+  await durablePut("compare-statistics", ticker, { at: Date.parse(raw.retrievedAt), value: raw.payload }).catch(() => false);
+  return raw;
+});
+/** The monitor's copy of a company's statistics (a miss when it has none or cannot be reached). */
+async function keptStatistics(ticker: string): Promise<Raw | null> {
+  const kept = (await durableGet("compare-statistics", [ticker]).catch(() => ({})) as Record<string, { at: number; value: unknown }>)[ticker];
+  return kept && kept.value !== null && kept.value !== undefined ? { payload: kept.value, retrievedAt: new Date(kept.at).toISOString() } : null;
+}
 const seriesParams = (ticker: string) => ({ symbol: providerSymbol(ticker), interval: "1day", outputsize: "100", adjust: "splits" });
 const readSeries = async (ticker: string): Promise<Series> => ({ payload: required(await providerCall("time_series", seriesParams(ticker), 4_000), "series-unavailable"), adjust: "splits", retrievedAt: stamp() });
 const seriesHour = sharedCache("comparison-store-series-hour-v1", 3 * 3600, readSeries);
@@ -124,8 +136,8 @@ const MAX_STATISTICS_AGE = 36 * 3600_000; // the valuation factor's own limit
 /** The stored statistics (forward P/E, market value), today's or yesterday's; never fetched for a user. */
 export async function cachedStatistics(ticker: string, now = Date.now()): Promise<Raw | null> {
   const d = daySlot(now);
-  const value = await peek(statisticsDay, ticker, [d, d - 1]);
-  return value && now - Date.parse(value.retrievedAt) <= MAX_STATISTICS_AGE ? value : null;
+  const fresh = (value: Raw | null) => value && now - Date.parse(value.retrievedAt) <= MAX_STATISTICS_AGE ? value : null;
+  return fresh(await peek(statisticsDay, ticker, [d, d - 1])) ?? fresh(await keptStatistics(ticker));
 }
 /** The stored quarterly statements, this week's or last week's; never fetched for a user. */
 export async function cachedStatements(ticker: string, now = Date.now()): Promise<Statements | null> {
@@ -173,7 +185,9 @@ export const warmStatistics = (ticker: string, now = Date.now()) => fill("statis
 export const warmSeries = (ticker: string, now = Date.now()) => fill("series-day", seriesDay, ticker, daySlot(now), "warm");
 export const warmStatements = (ticker: string, now = Date.now()) => fill("statements", statementsWeek, ticker, weekSlot(now), "warm");
 /** True when this slot already holds the entry (a repeated call in the same minute costs nothing). */
-export const hasStatisticsToday = async (ticker: string, now = Date.now()) => !!await peek(statisticsDay, ticker, [daySlot(now)]);
+export const hasStatisticsToday = async (ticker: string, now = Date.now()) => !!await peek(statisticsDay, ticker, [daySlot(now)])
+  // A copy the runtime cache has lost is not bought again the same day.
+  || await keptStatistics(ticker).then(kept => !!kept && daySlot(Date.parse(kept.retrievedAt)) === daySlot(now));
 export const hasSeriesToday = async (ticker: string, now = Date.now()) => !!await peek(seriesDay, ticker, [daySlot(now)]);
 
 /** A small shared note per company and week, written by the background job: does its filing leave a figure only the provider's statements can
