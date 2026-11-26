@@ -38,7 +38,8 @@ test("calendar filters use Japan months and exclude past events from upcoming", 
   const muEvents = calendarEvents.filter((event) => event.ticker === "MU");
   assert.equal(selectCalendarEvents(muEvents, "earnings", "2026-10", now).length, 1);
   assert.equal(selectCalendarEvents(muEvents, "earnings", "2026-09", now).length, 0);
-  assert.equal(selectCalendarEvents(muEvents, "earnings", "upcoming", now).length, 0);
+  // The Sep 30 call has passed; only the next one (Dec 17, added 11/26) is upcoming.
+  assert.deepEqual(selectCalendarEvents(muEvents, "earnings", "upcoming", now).map((event) => event.id), ["mu-fq1-2027-call"]);
   assert.ok(selectCalendarEvents(calendarEvents, "economic", "upcoming", now).every((event) => Date.parse(event.startsAt) >= now && event.kind === "economic"));
 });
 
@@ -66,7 +67,7 @@ test("registered schedules are ordered, unique and linked to official sources", 
     assert.ok(Number.isFinite(timestamp) && timestamp >= previous);
     previous = timestamp;
     assert.ok(event.title.ja && event.title.en);
-    assert.ok(["www.bls.gov", "www.bea.gov", "mediacenter.adp.com", "investors.micron.com", "ir.netflix.net", "investor.asml.com", "investor.sandisk.com", "investor.tsmc.com", "investor.lamresearch.com", "ir.kla.com", "www.gevernova.com", "www.adobe.com", "news.microsoft.com", "www.bloomenergy.com", "www.sec.gov", "ir.amd.com", "www.arista.com", "newsroom.arm.com", "investor.lumentum.com", "investor.vistracorp.com", "newsroom.ibm.com", "s21.q4cdn.com", "s205.q4cdn.com", "www.seagate.com", "www.intc.com", "www.aboutamazon.com", "abc.xyz", "investor.apple.com", "investors.palantir.com", "ir.asteralabs.com", "investor.qualcomm.com", "ir.coherent.com", "investors.ionq.com", "investors.ao-inc.com", "iren.com", "investors.constellationenergy.com", "investors.coreweave.com", "ir.appliedmaterials.com", "nvidianews.nvidia.com", "nebius.com", "www.federalreserve.gov", "www.paloaltonetworks.com", "investor.marvell.com", "ir.crowdstrike.com", "www.snowflake.com", "investors.delltechnologies.com", "investors.credosemi.com"].includes(new URL(event.sourceUrl).hostname));
+    assert.ok(["www.bls.gov", "www.bea.gov", "mediacenter.adp.com", "investors.micron.com", "ir.netflix.net", "investor.asml.com", "investor.sandisk.com", "investor.tsmc.com", "investor.lamresearch.com", "ir.kla.com", "www.gevernova.com", "www.adobe.com", "news.microsoft.com", "www.bloomenergy.com", "www.sec.gov", "ir.amd.com", "www.arista.com", "newsroom.arm.com", "investor.lumentum.com", "investor.vistracorp.com", "newsroom.ibm.com", "s21.q4cdn.com", "s205.q4cdn.com", "www.seagate.com", "www.intc.com", "www.aboutamazon.com", "abc.xyz", "investor.apple.com", "investors.palantir.com", "ir.asteralabs.com", "investor.qualcomm.com", "ir.coherent.com", "investors.ionq.com", "investors.ao-inc.com", "iren.com", "investors.constellationenergy.com", "investors.coreweave.com", "ir.appliedmaterials.com", "nvidianews.nvidia.com", "nebius.com", "www.federalreserve.gov", "www.paloaltonetworks.com", "investor.marvell.com", "ir.crowdstrike.com", "www.snowflake.com", "investors.delltechnologies.com", "investors.credosemi.com", "investors.broadcom.com"].includes(new URL(event.sourceUrl).hostname));
     if (event.sourceName === "BLS") {
       assert.equal(new Intl.DateTimeFormat("en-GB", { timeZone: event.sourceTimezone, hour: "2-digit", minute: "2-digit" }).format(new Date(event.startsAt)), "08:30");
     }
@@ -290,7 +291,7 @@ test("favorite calendar includes only followed earnings while retaining economic
 test("favorite schedules drop expired calls and preserve exact ASML times", async () => {
   const { filterFavoriteEvents } = await import("../lib/research/favorites.ts");
   const now = Date.parse("2026-10-01T00:00:00Z");
-  assert.equal(selectCalendarEvents(filterFavoriteEvents(calendarEvents, ["MU"], false), "earnings", "upcoming", now).length, 0);
+  assert.deepEqual(selectCalendarEvents(filterFavoriteEvents(calendarEvents, ["MU"], false), "earnings", "upcoming", now).map((event) => event.id), ["mu-fq1-2027-call"]);
   const asml = filterFavoriteEvents(calendarEvents, ["ASML"], false);
   assert.equal(selectCalendarEvents(asml, "earnings", "upcoming", now).length, 2);
   assert.equal(selectCalendarEvents(asml, "earnings", "upcoming", Date.parse("2026-10-14T13:00:01Z")).length, 0);

@@ -38,9 +38,10 @@ test("22 tracked stocks: NVDA's (and AMD's) earnings deep dive renders in full f
     assert.doesNotMatch(t, MISSING, at);
     assert.doesNotMatch(html, /href=/, `${at}: nothing to follow out of the sample`);
     if (lang === "ja") {
-      for (const part of ["決算の深掘り", "数字 反映済み", "まとめ 反映済み", "結論", "売上高", "調整後EPS", "次期の見通し", "EPS 予想との差",
+      for (const part of ["決算の深掘り", "結論", "売上高", "調整後EPS", "次期の見通し", "EPS 予想との差",
         "01 成長の中身", "02 前回からの変化", "03 注意点", "04 次に見るポイント", "売上高の推移", "次期の売上見通し"]) assert.ok(t.includes(part), `${at}: ${part}`);
       assert.equal((html.match(/<summary[^>]*>詳しい解説/g) ?? []).length, 4, at);
+      assert.doesNotMatch(t, /反映済み/, `${at}: the green marks are gone (owner, 11/26)`);
     }
     assert.equal((html.match(/<figure/g) ?? []).length, 2, `${at}: the revenue trend and the outlook range`);
   }

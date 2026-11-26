@@ -39,8 +39,8 @@ function timeCell(row: FlashRow, lang: Language) {
 }
 
 /** 速報: the watched companies' live monitor and earnings results as one
- * newest-first timeline. New rows look like the live monitor's: a mint dot,
- * NEW, and they stay marked until the page is left (owner, Oct 14). */
+ * newest-first timeline. New rows look like the live monitor's: a mint dot
+ * (no NEW label, owner 11/26), and they stay marked until the page is left (owner, Oct 14). */
 export default function FlashPage({ lang, onReady }: { lang: Language; onReady?: () => void }) {
   const ja = lang === "ja";
   const [feed, setFeed] = useState<GeneralNewsFeed | null>(null);
@@ -143,7 +143,7 @@ export default function FlashPage({ lang, onReady }: { lang: Language; onReady?:
   const item = (row: FlashRow) => <article key={row.id} className={`${timeline.item} ${marked(row) ? timeline.unread : ""}`}>
     <span className={timeline.when}>{timeCell(row, lang)}</span><span className={timeline.node} aria-hidden="true" />
     <div className={timeline.entry}>
-      <div className={timeline.meta}><span className={styles.ticker}>{row.tickers.join(" · ")}</span><span className={`${timeline.tag} ${row.kind === "earnings" ? styles.earnings : timeline.news}`}>{kindLabel[row.kind]}</span>{marked(row) && <span className={timeline.newMark}>NEW</span>}</div>
+      <div className={timeline.meta}><span className={styles.ticker}>{row.tickers.join(" · ")}</span><span className={`${timeline.tag} ${row.kind === "earnings" ? styles.earnings : timeline.news}`}>{kindLabel[row.kind]}</span></div>
       {/* A long headline shows two lines and the ＋ opens the whole text, never a cut-off "…" (owner, Oct 18). The left column carries the
           time, so no 「発表 …」 line under each item (owner, Nov 25). */}
       <NewsStory lang={lang} label="" title={row.title} body={full ? row.body : undefined} publication="" capDetail />

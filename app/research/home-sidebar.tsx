@@ -52,7 +52,7 @@ export default function HomeSidebar({ lang, tab, companyCount, savedCount, openV
   const valueCheck = valueCheckEnabled() || ownerAccount;
   const whaleMoves = whaleMovesEnabled() || ownerAccount;
   const quick: Item[] = [
-    { key: "alerts", icon: icons.alerts, label: t("ハイテク速報", "Tech Alerts"), href: "/research/news", badge: unread ? <em className={`${styles.count} ${styles.fresh}`}>NEW</em> : null },
+    { key: "alerts", icon: icons.alerts, label: t("ハイテク速報", "Tech Alerts"), href: "/research/news", badge: unread ? <em className={styles.freshDot} role="status" aria-label={t("新着あり", "New alerts")} /> : null },
     { key: "search", icon: icons.search, label: t("銘柄検索", "Stock search"), href: "/research/stocks" },
     { key: "watchlist", icon: icons.star, label: t("ウォッチリスト", "Watchlist"), href: "/research/watchlist" },
     { key: "notebook", icon: icons.saved, label: t("銘柄手帳", "Stock Notebook"), href: "/research/notebook" },

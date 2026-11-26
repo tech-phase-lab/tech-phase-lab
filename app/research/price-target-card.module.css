@@ -1,9 +1,8 @@
-/* Broker name and NEW badge on one line: the name is cut with an ellipsis, the badge never wraps (owner, Nov 13).
+/* Broker name on one line, cut with an ellipsis (owner, Nov 13); no NEW badge (owner, 11/26).
    Tap the name to read all of it; tap again to fold it back. */
 .firmRow{display:flex;align-items:center;gap:8px;min-width:0}
 .firmName{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin:0;padding:0;border:0;background:none;color:inherit;font:inherit;text-align:left;cursor:pointer}
 .firmName[aria-expanded=true]{white-space:normal;overflow:visible;text-overflow:clip;overflow-wrap:anywhere}
 .firmName:focus-visible{outline:2px solid #5dffb4;outline-offset:2px;border-radius:3px}
-.firmRow.firmRow .badge{flex:none;margin:0;vertical-align:baseline}
 /* Stock split basis note (SNDK 8:1, Nov 2026): one muted line under the figures. */
 .splitNote{display:block;margin-top:3px;font-size:11px;line-height:1.5;opacity:.75;overflow-wrap:anywhere}

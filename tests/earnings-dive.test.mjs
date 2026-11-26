@@ -34,13 +34,14 @@ const live = (dive) => ({ period: "FQ4 2026", releasedOn: "2026-09-30", ticker: 
 const render = (props) => renderToStaticMarkup(createElement(EarningsDive, { lang: "ja", name: "Micron", ticker: "MU", unlocked: true, history: [], failed: false, ...props }));
 const text = html => html.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ");
 
-test("the full dive: title, subtitle, both status marks with their times, takeaway, numbers and only the cards that were built", () => {
+test("the full dive: title, subtitle, no green 反映済み marks (owner, 11/26), takeaway, numbers and only the cards that were built", () => {
   const html = render({ live: live({ numbers, summary, summaryAt: "2026-09-30T13:58:00Z", failed: false }) });
   const t = text(html);
   assert.match(t, /決算の深掘り PRO/);
   assert.match(t, /Micron \(MU\) FQ4 2026 9\/30発表/);
-  assert.match(t, /数字 反映済み 22:43/);          // 13:43Z is 22:43 JST
-  assert.match(t, /まとめ 反映済み 22:58/);
+  assert.doesNotMatch(t, /反映済み|確認中|準備中/);   // the maker's check marks are not shown to members
+  assert.doesNotMatch(html, /role="status"/);
+  assert.match(t, /Micron \(MU\) FQ4 2026 9\/30発表 結論/); // 結論 follows the subtitle directly
   assert.match(t, /結論 売上は前期から約3割増え/);
   assert.match(t, /売上高 542\.29 億ドル 前期比 \+30\.8%/);
   assert.match(t, /調整後EPS 12\.50 ドル/);
@@ -69,7 +70,7 @@ test("English view: same structure, English wording", () => {
   const t = text(render({ lang: "en", live: live({ numbers, summary, summaryAt: "2026-09-30T13:58:00Z", failed: false }) }));
   assert.match(t, /Earnings Deep Dive PRO/);
   assert.match(t, /Micron \(MU\) FQ4 2026 Reported Sep 30/);
-  assert.match(t, /Numbers updated 09:43/); assert.match(t, /Summary ready 09:58/); // U.S. Eastern (EDT) on the English site (owner, Nov 17)
+  assert.doesNotMatch(t, /Numbers updated|Summary ready/); // the green marks are gone in English too (owner, 11/26)
   assert.match(t, /Takeaway/); assert.match(t, /01 WHAT DROVE GROWTH/); assert.match(t, /Details/);
   assert.match(t, /Next quarter \$60–63B Company outlook/);
   assert.doesNotMatch(t, /[ぁ-んァ-ン一-龥]/);
@@ -78,7 +79,7 @@ test("English view: same structure, English wording", () => {
 test("numbers first: until the summary exists the second mark says 準備中 and only the numbers are shown", () => {
   const html = render({ live: live({ numbers, summary: null, summaryAt: null, failed: false }) });
   const t = text(html);
-  assert.match(t, /数字 反映済み 22:43/);
+  assert.doesNotMatch(t, /数字 反映済み/);
   assert.match(t, /まとめ 準備中/);
   assert.doesNotMatch(t, /まとめ 反映済み|結論|01 成長の中身/);
   assert.match(t, /売上高 542\.29/);
