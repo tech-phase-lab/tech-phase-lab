@@ -15,7 +15,8 @@ export function answered(over={}) {
 const stamped=p=>({...p,createdAt:'2026-10-12T00:00:00.000Z',updatedAt:'2026-10-12T00:00:00.000Z'});
 const response=(status,body)=>Response.json(body,{status});
 test('all 30 final question IDs and every JA/EN option agree with the storage contract',()=>{
- assert.equal(questions.length,30);
+ // 30 asked questions: 30 originals plus the 4 substitutes that stand in when q21/q25/q26/q27 are skipped (Nov 25).
+ assert.equal(questions.length,34);assert.equal(questions.filter(q=>isQuestionVisible(q.id,emptyPlanAnswers())).length,30);
  for(const q of questions){assert.deepEqual(q.o.map(o=>o.id),[...PLAN_ANSWER_OPTIONS[q.id]]);
   const en=questionCopy(q,'en');assert.equal(en.options.length,q.o.length);assert.ok(en.text);
   assert.ok(!/[\u3040-\u30ff\u4e00-\u9fff]/u.test(en.text+en.options.map(o=>o.label).join('')));
@@ -57,6 +58,8 @@ test('zero base is a real zero, and pending-line relaxation never permits malfor
 test('changing parent answers clears hidden answers and numeric drafts; none is a separate mode',()=>{
  let d=answered();d.numbers.q25='5';d=selectAnswer(d,'q24','none');
  assert.equal(d.answers.q25,null);assert.equal(d.answers.q26,null);assert.equal(d.answers.q27,null);assert.equal(d.numbers.q25,undefined);
+ // Nov 25: the substitute questions take their place, so they are answered before the result.
+ d=selectAnswer(selectAnswer(selectAnswer(d,'q25alt','continue'),'q26alt','p20'),'q27alt','never');
  const p=draftToPlan(d);assert.equal(p.buyMode,'none');assert.equal(p.buyBudgetPct,null);assert.equal(p.allocation,null);assert.deepEqual(p.buyLines,[]);
  d=selectAnswer(d,'q20','fund_etf');assert.equal(d.answers.q21,null);assert.equal(isQuestionVisible('q21',d.answers),false);
 });

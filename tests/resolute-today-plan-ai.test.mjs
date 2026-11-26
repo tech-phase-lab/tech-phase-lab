@@ -18,7 +18,8 @@ import {OWNER_ISSUER,OWNER_ORIGIN,hasOwnerAccess,ownerAccessFromVerifiedSession,
 // RESOLUTE「今日やること」 (owner, Nov 25): AI job, validator, §5 estimate, read API.
 const sql=name=>readFileSync(new URL('../db/resolute/'+name,import.meta.url),'utf8');
 const SESSION='2026-11-24',NOW=new Date('2026-11-24T23:40:00Z'); // 08:40 JST Nov 25, after the thermometer and the Shock Gauge selection
-const plan=(over={},answers={})=>{const p=createReviewSamplePlan();Object.assign(p.answers,answers);return {...p,...over};};
+// The sample answers q21alt (Nov 25 substitute for q21), which is kept only while q20 is funds/ETF, bonds or gold.
+const plan=(over={},answers={})=>{const p=createReviewSamplePlan();Object.assign(p.answers,answers);if(!['fund_etf','bond','gold'].includes(p.answers.q20))delete p.answers.q21alt;return {...p,...over};};
 /** A real saved plan without q08 (built the way the diagnosis builds it). */
 const planWithoutQ08=()=>{const d=emptyDiagnosisDraft();Object.assign(d.answers,createReviewSamplePlan().answers,{q08:'not_yet'});d.numbers={q07:'10000000'};return parsePlan(draftToPlan(d));};
 const check=(id,state='ok')=>({id,state,label:{ja:'NVDA 買い増し',en:'NVDA buy-more'},rule:{ja:'基準から −10%',en:'−10% from reference'},today:{ja:'基準から −10.0%',en:'−10.0% from reference'}});

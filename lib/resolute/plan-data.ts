@@ -70,7 +70,8 @@ export function parsePlan(v: unknown): PlanInput {
     v.buyMode === "steps" && (lines.length >= 2 || pendingLines) && ["equal", "heavier"].includes(v.allocation as string)))
     throw new PlanInputError();
   // Build an isolated JSON copy; never retain references or accept server timestamps or extra private fields.
-  return JSON.parse(JSON.stringify(v)) as PlanInput;
+  // Answers are canonical: plans saved before the substitute questions existed come back exactly as stored.
+  return { ...(JSON.parse(JSON.stringify(v)) as PlanInput), answers };
 }
 export function parsePlanMutation(method: "PUT" | "DELETE", v: unknown) {
   if (!exactKeys(v, method === "PUT" ? ["plan", "baseRevision"] : ["baseRevision"]) ||
