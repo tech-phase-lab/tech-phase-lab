@@ -20,14 +20,24 @@ import dive_writers  # noqa: E402
 import earnings_dive_generate as gen  # noqa: E402
 import earnings_patrol as patrol  # noqa: E402
 
-# What the hand-made file shows that a results release does not contain (read at release time it cannot be).
-GAPS = {
-    'CRDO': {'tiles[2]': 'largest-customer share is in the 10-Q (filed a day after the release); the tile shows non-GAAP net income',
-             'growth.watch': 'customer concentration (10-Q); the section compares GAAP and non-GAAP net margins'},
-    'MRVL': {'caution.chips': 'the Lumentum deal (a later 8-K) is not in the results release: one chip fewer',
-             'next.chips': 'the Nov 2 preliminary revenue (a later 8-K): one chip fewer'},
+# The filings each company's hand-made file also used besides the results release, as fixtures: its 10-Q (filed days after the
+# release) and the quarter's other 8-Ks (a deal, a preliminary result). With them the automatic dive reaches full parity; before
+# the 10-Q is filed it uses the substitutes the writers document (tests below check both stages).
+FILINGS = {
+    'CRDO': {'report': ('https://www.sec.gov/Archives/edgar/data/1807794/000162828026060111/crdo-20260801.htm', 'CRDO-10q-2026-08-01')},
+    'MRVL': {'events': [('https://www.sec.gov/Archives/edgar/data/1835632/000119312526442714/d81187dex991.htm', 'MRVL-8k-2026-11-02',
+                         datetime(2026, 11, 2, 13, 6, tzinfo=timezone.utc))]},
+    'AVGO': {'report': ('https://www.sec.gov/Archives/edgar/data/1730168/000173016826000080/avgo-20260802.htm', 'AVGO-10q-2026-08-02')},
 }
-CHIP_GAPS = {('MRVL', 'caution'): 1, ('MRVL', 'next'): 1}
+GAPS = {  # what is still different from the hand-made file with every filing in hand (none)
+    'CRDO': {}, 'MRVL': {}, 'AVGO': {},
+}
+CHIP_GAPS = {}
+FILINGS_DIR = ROOT / 'tests/fixtures/dive-filings'
+
+
+def filing_text(name):
+    return gzip.open(FILINGS_DIR / f'{name}.txt.gz', 'rt').read()
 
 
 def previous_file(dive):
@@ -37,13 +47,18 @@ def previous_file(dive):
     q = dive['periodQuarter'] - 1 or 4
     prev.update(period=f'Q{q} PREVIOUS', periodQuarter=q, periodEnd=h[-1]['end'],
                 history=[{'label': 'Q1', 'end': '2024-01-01', 'value': 1}] + h[:-1])
-    prev['numbers'] = {**dive['numbers'], 'revenue': {'current': h[-1]['value']}}
+    segments = dive['numbers'].get('segments')
+    prev['numbers'] = {**dive['numbers'], 'revenue': {'current': h[-1]['value']},
+                       'segments': [{**x, 'revenue': x['previous'], 'operatingMargin': x['previousOperatingMargin']} for x in segments] if segments else None}
     prev['evidence'] = [{**ev[f'history[{len(h) - 1}].value'], 'field': 'numbers.revenue.current'}] + \
         [{**ev[f'history[{i}].value'], 'field': f'history[{i + 1}].value'} for i in range(len(h) - 1)]
+    for i, _ in enumerate(segments or []):
+        for old, new in (('previous', 'revenue'), ('previousOperatingMargin', 'operatingMargin')):
+            prev['evidence'] += [{**e, 'field': f'numbers.segments[{i}].{new}'} for e in dive['evidence'] if e['field'] == f'numbers.segments[{i}].{old}']
     return prev
 
 
-def generated(ticker):
+def generated(ticker, filings=True):
     dive = json.loads((ROOT / f'lib/research/dives/{ticker}.json').read_text(encoding='utf-8'))
     text = gzip.open(ROOT / f'tests/fixtures/latest-releases/{ticker}.txt.gz', 'rt').read()
     url = dive['sources'][0]['url']
@@ -51,9 +66,16 @@ def generated(ticker):
                                     'items': ['2.02'], 'accessionNumber': ['a-1'], 'primaryDocument': ['x']}}},
                                     datetime(2026, 11, 26, tzinfo=timezone.utc), exhibit=lambda *a: (url, text), primary=lambda *a: None)
     release['releasedOn'] = dive['releasedOn']
+    extra = FILINGS.get(ticker, {}) if filings else {}
+    if 'report' in extra:
+        release['report'] = {'url': extra['report'][0], 'text': filing_text(extra['report'][1]), 'form': '10-Q'}
+    release['events'] = [{'url': u, 'text': filing_text(n), 'accepted': at} for u, n, at in extra.get('events', [])]
     previous = previous_file(dive)
     fixture = check_dives.read_fixture(ROOT / f'tests/fixtures/dives/{ticker}-source.txt')
     texts = {url: check_dives.normalize(text)}
+    for other in [release.get('report')] + release['events']:
+        if other:
+            texts[other['url']] = check_dives.normalize(other['text'])
     for e in previous['evidence']:
         texts[e['url']] = (texts.get(e['url'], '') + ' ' + ' '.join(fixture.get(e['url'], [])) + ' ' + check_dives.normalize(e['quote'])).strip()
     draft = gen.build(ticker, release, previous, None, '2026-11-26')
@@ -80,11 +102,49 @@ class DepthParity(unittest.TestCase):
                 for path in ('revenue.current', 'revenue.previous', 'revenue.yearAgo', 'grossMargin.current', 'grossMargin.previous',
                              'guidance.low', 'guidance.high', 'guidance.grossMarginPercent'):
                     a, b = path.split('.')
+                    if hand['numbers'][a][b] is None:
+                        self.assertIsNone(auto['numbers'][a][b], f'{ticker} {path}')
+                        continue
                     self.assertAlmostEqual(auto['numbers'][a][b], hand['numbers'][a][b], delta=abs(hand['numbers'][a][b]) * 0.001 + 0.05, msg=f'{ticker} {path}')
                 self.assertAlmostEqual(auto['numbers']['adjustedEPS'], hand['numbers']['adjustedEPS'], places=2)
+                for i, seg in enumerate(hand['numbers'].get('segments') or []):
+                    for k in ('revenue', 'previous', 'operatingMargin', 'previousOperatingMargin'):
+                        self.assertAlmostEqual(auto['numbers']['segments'][i][k], seg[k], delta=0.051, msg=f'{ticker} segments[{i}].{k}')
+                hand_tiles = [t['label']['en'] for t in hand['tiles']]
+                self.assertEqual([t['label']['en'] for t in auto['tiles']], hand_tiles, f'{ticker} tiles')
 
     def test_the_gaps_are_only_what_the_release_does_not_carry(self):
         self.assertEqual(sorted(GAPS), sorted(dive_writers.WRITERS))
+        self.assertEqual(sorted(FILINGS), sorted(dive_writers.WRITERS))
+
+    def test_before_the_10q_and_the_other_8ks_the_dive_still_passes_with_its_substitutes(self):
+        for ticker in sorted(dive_writers.WRITERS):
+            with self.subTest(ticker=ticker):
+                hand, auto, problems = generated(ticker, filings=False)
+                self.assertEqual(problems, [])
+                for key, card in hand['summary']['cards'].items():
+                    self.assertGreaterEqual(len(auto['summary']['cards'][key]['sections']), 3)
+
+    def test_the_year_end_release_of_marvell_reads_every_figure(self):
+        import dive_figures
+        read = dive_figures.read('MRVL', filing_text('MRVL-release-q4fy26'))
+        self.assertEqual(sorted(read), sorted(['revenue', 'gm', 'gmGaap', 'eps', 'epsGaap', 'opMargin', 'netIncome', 'netIncomeNonGaap', 'dataCenter',
+                                               'communications', 'dataCenterShare', 'guidanceRevenue', 'guidanceGm', 'guidanceEps']))
+        self.assertEqual(read['netIncome'].raws, ['396.1', '1901.3', '200.2'])
+        self.assertEqual(read['epsGaap'].raws, ['0.46', '2.20', '0.23'])
+
+    def test_the_10q_and_the_deal_8k_are_read_exactly(self):
+        import dive_figures
+        crdo = dive_figures.read_report('CRDO', filing_text('CRDO-10q-2026-08-01'))
+        self.assertEqual((crdo['customerA'].raws, crdo['customerB'].raws), (['43', '50'], ['28', '35']))
+        self.assertEqual(crdo['acquisition'].values[1:], ['DustPhotonics', '1.3', 'billion'])
+        avgo = dive_figures.read_report('AVGO', filing_text('AVGO-10q-2026-08-02'))
+        self.assertEqual(avgo['semisOpIncome'].raws, ['12770', '5217'])
+        self.assertEqual(avgo['topFive'].raws, ['55', '50', '40'])
+        deal = dive_figures.deal(filing_text('MRVL-8k-2026-11-02'))
+        self.assertEqual(deal['exchangeRatio'].values, ['4.500', 'Marvell', 'Lumentum'])
+        self.assertEqual(deal['preliminary'].values, ['third', '2027', '2'])
+        self.assertEqual(dive_figures.deal('Marvell reports record revenue.'), {})
 
     def test_a_missing_figure_holds_the_dive(self):
         dive = json.loads((ROOT / 'lib/research/dives/CRDO.json').read_text(encoding='utf-8'))

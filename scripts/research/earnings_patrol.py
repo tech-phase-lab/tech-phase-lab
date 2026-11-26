@@ -366,6 +366,7 @@ def run_once(path, now=None, trigger='schedule', lock=None, **kwargs):
     import earnings_reconcile
     now = now or datetime.now(timezone.utc)
     results, filings = patrol(now, **kwargs)
+    extras = prefetch_filings(results, filings)
     with (lock or contextlib.nullcontext()), monitor.connect(path) as db:
         line, daily = record(db, results, now, trigger)
         try:
@@ -373,14 +374,63 @@ def run_once(path, now=None, trigger='schedule', lock=None, **kwargs):
                 print(json.dumps({'event': 'earnings-reconcile', **entry}, separators=(',', ':')), flush=True)
         except Exception as exc:  # noqa: BLE001 - reconciliation never stops the patrol's own result
             print('earnings-reconcile-failed ' + type(exc).__name__, flush=True)
-        draft_dives(db, results, now)
+        draft_dives(db, results, now, extras=extras)
     print(json.dumps(line, separators=(',', ':'), sort_keys=True), flush=True)
     if daily:
         print(json.dumps(daily, separators=(',', ':'), sort_keys=True), flush=True)
     return line
 
 
-def draft_dives(db, results, now, env=None):
+def quarter_filings(ticker, filings, release, previous, fetch=None, exhibit=None):
+    """The filings a dive is deepened with: the quarter's 10-Q / 10-K once filed after the release (its main document), and the 8-Ks with
+    a deal (Item 1.01 / 2.01) or a preliminary result (Item 2.02, not the release itself) filed since the previous dive's release."""
+    import earnings_reconcile
+    fetch = fetch or (lambda url: ' '.join(monitor.extract_text(backtest.get(url, binary=True), 'text/html').split()))
+    exhibit = exhibit or exhibit_with_url
+    recent = filings['filings']['recent']
+    report = None
+    found = earnings_reconcile.report_after(filings, release)
+    if found:
+        form, accession, _ = found
+        i = recent['accessionNumber'].index(accession)
+        url = filing_url(ticker, accession, recent['primaryDocument'][i])
+        try:
+            report = {'url': url, 'text': fetch(url), 'accession': accession, 'form': form}
+        except Exception:  # noqa: BLE001 - the 10-Q is read again at the next patrol
+            report = None
+    since = datetime.strptime(previous['releasedOn'], '%Y-%m-%d').replace(tzinfo=timezone.utc) + timedelta(days=1) if previous else release['accepted']
+    events = []
+    for i, form in enumerate(recent['form']):
+        accession = recent['accessionNumber'][i]
+        accepted = datetime.fromisoformat(recent['acceptanceDateTime'][i].replace('Z', '+00:00'))
+        items = recent['items'][i] if i < len(recent['items']) else ''
+        if form != '8-K' or accession == release['accession'] or accepted < since:
+            continue
+        if not re.search(r'\b(?:1\.01|2\.01|2\.02)\b', items):
+            continue
+        url, text = exhibit(cik(ticker), accession, ('1',))
+        if url and text:
+            events.append({'url': url, 'text': text, 'accepted': accepted, 'accession': accession})
+    return report, sorted(events, key=lambda e: e['accepted'])
+
+
+def prefetch_filings(results, filings_by_ticker, env=None):
+    """The 10-Q and the deal 8-Ks of each company a dive is due for, read before the database is locked (network only)."""
+    import earnings_dive_generate as dives
+    if not dives.enabled(env):
+        return {}
+    out = {}
+    for ticker in dives.due(results, None):
+        release, filings = results.get(ticker + ':release'), (filings_by_ticker or {}).get(ticker)
+        if release and filings:
+            try:
+                out[ticker] = quarter_filings(ticker, filings, release, dives.previous_dive(ticker))
+            except Exception:  # noqa: BLE001 - the dive is still built from the release; the filings are read again next time
+                out[ticker] = (None, [])
+    return out
+
+
+def draft_dives(db, results, now, env=None, extras=None):
     """The next quarter's 決算の深掘り for each company whose page now shows a newer release than its dive (earnings_dive_generate.py):
     built from the release's parsed figures, the previous dive and the release's existing deep analysis. Never a model call: the AI
     spent on a release stays the one approved deep analysis. Off with EARNINGS_DIVE_AUTO=false."""
@@ -394,6 +444,8 @@ def draft_dives(db, results, now, env=None):
             continue
         release['releasedOn'] = release_day(release['accepted']).isoformat()
         try:
+            if extras and ticker in extras:
+                release['report'], release['events'] = extras[ticker]
             state = dives.generate(db, ticker, release, now)
         except Exception as exc:  # noqa: BLE001 - one company's failure never stops the others
             state = 'error-' + type(exc).__name__

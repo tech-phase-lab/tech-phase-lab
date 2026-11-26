@@ -5,6 +5,7 @@ figures dive_figures reads out of the release. Fixed wording; every number is a 
 A writer returns {'tiles', 'numbers', 'summary', 'evidence'} or raises ValueError('missing:<figure>') when a figure it needs was not
 read: nothing is then published for that release (the patrol alerts the owner).
 """
+from datetime import datetime
 from decimal import Decimal, ROUND_HALF_UP
 
 
@@ -53,8 +54,8 @@ class Evidence:
     def __init__(self, url):
         self.url, self.items = url, []
 
-    def add(self, field, figure, index=None, calc=None, rnd=None):
-        entry = {'field': field, 'url': self.url, 'quote': figure.quote}
+    def add(self, field, figure, index=None, calc=None, rnd=None, url=None):
+        entry = {'field': field, 'url': url or getattr(figure, 'url', None) or self.url, 'quote': figure.quote}
         calc = calc if calc is not None else (figure.calc(index) if index is not None else None)
         if calc:
             entry['calc'] = calc
@@ -115,7 +116,7 @@ def base_numbers(ev, f):
 
 # ---- Credo (CRDO): the Nov 25 file's cards and sections --------------------------------------------------------------------
 
-def crdo(f, url, before_previous):
+def crdo(f, url, before_previous, report=None, events=None, previous=None):
     """`before_previous`: revenue of the quarter before the previous one (the previous file's last history bar), for the growth trend."""
     need(f, 'revenue', 'gm', 'gmGaap', 'eps', 'epsGaap', 'netIncomeNonGaap', 'netMarginNonGaap', 'netMarginGaap', 'opMarginGaap',
          'operatingIncome', 'opex', 'opexNonGaap', 'sbc', 'cash', 'shortTerm', 'goodwill', 'guidanceRevenue', 'guidanceGm', 'guidanceOpex')
@@ -137,9 +138,17 @@ def crdo(f, url, before_previous):
                   'note': c(f'前四半期 {pc(gm.values[1])}', f'Prior quarter {pc(gm.values[1])}')})
     ev.add('tiles[1].value', gm)
     ev.add('tiles[1].note', gm)
-    tiles.append({'label': c('調整後(non-GAAP)純利益', 'Non-GAAP net income'), 'value': money_tile(ev, 2, ni, 0, None),
-                  'note': c(f'売上に対する比率 {pc(f["netMarginNonGaap"].values[0])}', f'{pc(f["netMarginNonGaap"].values[0])} of revenue')})
-    ev.add('tiles[2].note', f['netMarginNonGaap'])
+    report = report or {}
+    if 'customerA' in report and 'customerB' in report:  # the 10-Q: the hand-made file's tile
+        a, b = report['customerA'], report['customerB']
+        tiles.append({'label': c('最大顧客の売上比率', 'Largest customer share of revenue'), 'value': c(f'{q(a.values[0], 0)}%', f'{q(a.values[0], 0)}%'),
+                      'note': c(f'2番目の顧客 {q(b.values[0], 0)}%', f'Second-largest: {q(b.values[0], 0)}%')})
+        ev.add('tiles[2].value', a)
+        ev.add('tiles[2].note', b)
+    else:  # at the release, before the 10-Q
+        tiles.append({'label': c('調整後(non-GAAP)純利益', 'Non-GAAP net income'), 'value': money_tile(ev, 2, ni, 0, None),
+                      'note': c(f'売上に対する比率 {pc(f["netMarginNonGaap"].values[0])}', f'{pc(f["netMarginNonGaap"].values[0])} of revenue')})
+        ev.add('tiles[2].note', f['netMarginNonGaap'])
     cash_now = f['cash'].values[0] + f['shortTerm'].values[0]
     cash_before = f['cash'].values[1] + f['shortTerm'].values[1]
     gw0, gw1 = f['goodwill'].values
@@ -154,8 +163,11 @@ def crdo(f, url, before_previous):
                                           f'Revenue rose from {usd(r2)["en"]} a year earlier to {usd(r0)["en"]}. Non-GAAP net income grew about {q(ni.values[0] / ni.values[2], 1)} times, from {usd(ni.values[2])["en"]} to {usd(ni.values[0])["en"]}.')},
             {'key': 'good', 'text': c(f'売上に対する調整後純利益の比率は{pc(f["netMarginNonGaap"].values[0])}で、前年同期は{pc(f["netMarginNonGaap"].values[2])}でした。売上の大きな部分が利益として残っています。',
                                       f'Non-GAAP net income was {pc(f["netMarginNonGaap"].values[0])} of revenue (a year earlier: {pc(f["netMarginNonGaap"].values[2])}), so a large part of revenue stays as profit.')},
-            {'key': 'watch', 'text': c(f'GAAPの純利益率は{pc(f["netMarginGaap"].values[0])}で、調整後の{pc(f["netMarginNonGaap"].values[0])}との差が開いています。株式報酬などの費用を含めると、利益の見え方が変わります。',
-                                       f'GAAP net margin was {pc(f["netMarginGaap"].values[0])}, well below the non-GAAP {pc(f["netMarginNonGaap"].values[0])}. Including costs such as stock compensation changes the profit picture.')}]}
+            ({'key': 'watch', 'text': c(f'10-Qによると、今期の最大顧客は売上の{q(report["customerA"].values[0], 0)}%、2番目は{q(report["customerB"].values[0], 0)}%でした。2社で約{q(report["customerA"].values[0] + report["customerB"].values[0], 0)}%を占めるため、どちらかの発注が減ると業績が大きく動きます。',
+                                        f'Per the 10-Q, the largest customer was {q(report["customerA"].values[0], 0)}% of revenue this quarter and the second-largest {q(report["customerB"].values[0], 0)}%. Together they make up about {q(report["customerA"].values[0] + report["customerB"].values[0], 0)}%, so an order cut from either would move results sharply.')}
+             if 'customerA' in report and 'customerB' in report else
+             {'key': 'watch', 'text': c(f'GAAPの純利益率は{pc(f["netMarginGaap"].values[0])}で、調整後の{pc(f["netMarginNonGaap"].values[0])}との差が開いています。株式報酬などの費用を含めると、利益の見え方が変わります。',
+                                        f'GAAP net margin was {pc(f["netMarginGaap"].values[0])}, well below the non-GAAP {pc(f["netMarginNonGaap"].values[0])}. Including costs such as stock compensation changes the profit picture.')})]}
     gaap_fell = f['opMarginGaap'].values[0] < f['opMarginGaap'].values[1]
     view_ja = (f'前期の増収率({sign(prior_qoq)})と比べて、今回は{sign(qoq)}でした。' if prior_qoq is not None else f'前期比は{sign(qoq)}でした。') + \
         ('売上の勢いは保たれています。' if qoq >= 0 else '売上は前期を下回りました。')
@@ -176,6 +188,17 @@ def crdo(f, url, before_previous):
             {'key': 'means', 'text': c('調整後の数字は、買収関連や株式報酬の費用を除いたものです。株式報酬は株数の増加を通じて株主の負担になります。',
                                        'Non-GAAP figures exclude acquisition-related and stock-based costs. Stock compensation is still a real cost to shareholders through more shares.')},
             {'key': 'view', 'text': c(view_ja, view_en)}]}
+    deal_ja = deal_en = ''
+    if 'acquisition' in report:  # the 10-Q's business-combination note: who was bought, when, for how much
+        when, name, amount, unit = report['acquisition'].values
+        day = datetime.strptime(when, '%B %d %Y')
+        size_ja = f'{Decimal(amount) * (10 if unit == "billion" else Decimal("0.01")):f}'.rstrip('0').rstrip('.') + '億ドル'
+        deal_ja = f'10-Qによると、{day.month}月{day.day}日に{name}を{size_ja}で買収しました。'
+        deal_en = f'Per the 10-Q, on {day.strftime("%B")} {day.day} the company bought {name} for ${amount} {unit}. '
+    if 'customerA' in report and 'customerB' in report:
+        ev.add('summary.cards.growth.sections[2]', report['customerA'])
+    if 'acquisition' in report and gw1 > 0 and gw0 > gw1 * Decimal('1.2'):
+        ev.add('summary.cards.caution.sections[0]', report['acquisition'])
     if gw1 > 0 and gw0 > gw1 * Decimal('1.2'):
         caution = {
             'headline': c('のれんが増え、手元資金が減った', 'Goodwill rose and cash fell' if cash_now < cash_before else 'Goodwill rose'),
@@ -183,8 +206,8 @@ def crdo(f, url, before_previous):
                       {'tone': 'gold', 'text': c(f'のれん {usd(gw1)["ja"]} → {usd(gw0)["ja"]}', f'Goodwill {usd(gw1)["en"]} → {usd(gw0)["en"]}')},
                       {'tone': 'down' if opex0 > opex1 else 'up', 'text': c(f'営業費用 前期比 {sign(change(opex0, opex1))}', f'Operating expenses {sign(change(opex0, opex1))} QoQ')}],
             'sections': [
-                {'key': 'happened', 'text': c(f'現金と短期投資の合計は{usd(cash_before)["ja"]}から{usd(cash_now)["ja"]}になり、のれんは{usd(gw1)["ja"]}から{usd(gw0)["ja"]}に増えました。',
-                                              f'Cash and short-term investments went from {usd(cash_before)["en"]} to {usd(cash_now)["en"]}, and goodwill rose from {usd(gw1)["en"]} to {usd(gw0)["en"]}.')},
+                {'key': 'happened', 'text': c(deal_ja + f'現金と短期投資の合計は{usd(cash_before)["ja"]}から{usd(cash_now)["ja"]}になり、のれんは{usd(gw1)["ja"]}から{usd(gw0)["ja"]}に増えました。',
+                                              deal_en + f'Cash and short-term investments went from {usd(cash_before)["en"]} to {usd(cash_now)["en"]}, and goodwill rose from {usd(gw1)["en"]} to {usd(gw0)["en"]}.')},
                 {'key': 'means', 'text': c(f'GAAPの営業費用は{usd(opex1)["ja"]}から{usd(opex0)["ja"]}へ、{sign(change(opex0, opex1))}でした。費用が先に増え、買収した事業の売上と利益は後から加わります。',
                                            f'GAAP operating expenses went from {usd(opex1)["en"]} to {usd(opex0)["en"]}, {sign(change(opex0, opex1))}. Costs come first; revenue and profit from acquired businesses come later.')},
                 {'key': 'watch', 'text': c('のれんは、買収した事業が計画を下回ると減損(評価損)になることがあります。買収した事業の売上がどこまで伸びるかが、確かめどころです。',
@@ -224,7 +247,7 @@ def crdo(f, url, before_previous):
 
 # ---- Marvell (MRVL) ---------------------------------------------------------------------------------------------------------
 
-def mrvl(f, url, before_previous):
+def mrvl(f, url, before_previous, report=None, events=None, previous=None):
     need(f, 'revenue', 'gm', 'gmGaap', 'eps', 'epsGaap', 'opMargin', 'netIncome', 'netIncomeNonGaap', 'dataCenter', 'communications',
          'dataCenterShare', 'guidanceRevenue', 'guidanceGm', 'guidanceEps')
     ev = Evidence(url)
@@ -280,6 +303,8 @@ def mrvl(f, url, before_previous):
             {'key': 'view', 'text': c(f'前期比の増収率は{sign(qoq)}で、粗利益率は{pc(gm.values[0])}です。', f'Quarterly growth was {sign(qoq)} with a gross margin of {pc(gm.values[0])}.')}]}
     gm_mid = (gl + gh) / 2
     ni, nin = f['netIncome'].values[0], f['netIncomeNonGaap'].values[0]
+    deal = next((e for e in (events or []) if 'exchangeRatio' in e['figures'] or 'allStock' in e['figures']), None)
+    prelim = next((e for e in (events or []) if 'preliminary' in e['figures']), None)
     caution = {
         'headline': c('次期の粗利益率の見通しは今回を下回る' if gm_mid < gm.values[0] else 'GAAPと調整後の利益の差',
                       "Next quarter's gross margin outlook is below this quarter" if gm_mid < gm.values[0] else 'The gap between GAAP and non-GAAP profit'),
@@ -291,14 +316,24 @@ def mrvl(f, url, before_previous):
             {'key': 'happened', 'text': c(f'GAAPの純利益は{usd(ni)["ja"]}で、調整後の純利益{usd(nin)["ja"]}を大きく下回りました。', f'GAAP net income was {usd(ni)["en"]}, far below non-GAAP net income of {usd(nin)["en"]}.')},
             {'key': 'means', 'text': c('利益率の低い製品の比率が上がると、売上が伸びても粗利益率は下がることがあります。', 'When lower-margin products grow, margins can slip even as revenue rises.')},
             {'key': 'view', 'text': c('見通しは1四半期分の会社の計画です。次の決算で実際の粗利益率を確かめます。', "The outlook is one quarter's company plan; the next report shows the actual margin.")}]}
+    if deal:  # an 8-K of the quarter (Item 1.01): the hand-made file's caution card
+        caution = deal_caution(deal, gl, gh, gm.values[0], gm_mid, ni)
+        for fig in deal['figures'].values():
+            if fig is not deal['figures'].get('preliminary'):
+                ev.add('summary.cards.caution.sections[1]', fig)
+    if prelim:
+        ev.add('summary.cards.next.sections[0]', prelim['figures']['preliminary'])
     eg = f['guidanceEps'].values
     nxt = {
         'headline': c(f'次期の売上見通し {usd(low)["ja"]}〜{usd(high)["ja"]}', f'Next quarter revenue outlook: {usd(low)["en"]}–{usd(high)["en"]}'),
         'chips': [{'tone': 'gold', 'text': c(f'売上 {usd(low)["ja"]}〜{usd(high)["ja"]}', f'Revenue {usd(low)["en"]}–{usd(high)["en"]}')},
-                  {'tone': 'gold', 'text': c(f'調整後EPS {ps(eg[0])["ja"]} ± {ps(eg[1])["ja"]}', f'Non-GAAP EPS {ps(eg[0])["en"]} ± {ps(eg[1])["en"]}')}],
+                  {'tone': 'gold', 'text': c(f'調整後EPS {ps(eg[0])["ja"]} ± {ps(eg[1])["ja"]}', f'Non-GAAP EPS {ps(eg[0])["en"]} ± {ps(eg[1])["en"]}')}]
+        + ([{'tone': 'gold', 'text': c('速報値:見通しどおり', 'Preliminary: in line')}] if prelim else []),
         'sections': [
-            {'key': 'happened', 'text': c(f'会社は次期の売上を{usd(mid)["ja"]}±{q(f["guidanceRevenue"].values[1], 0)}%({usd(low)["ja"]}〜{usd(high)["ja"]})と見込んでいます。中央値は今回より{sign(change(mid, r0), 0)}です。',
-                                          f'The company guided next-quarter revenue to {usd(mid)["en"]} ± {q(f["guidanceRevenue"].values[1], 0)}% ({usd(low)["en"]}–{usd(high)["en"]}), {sign(change(mid, r0), 0)} above this quarter at the midpoint.')},
+            {'key': 'happened', 'text': c(f'会社は次期の売上を{usd(mid)["ja"]}±{q(f["guidanceRevenue"].values[1], 0)}%({usd(low)["ja"]}〜{usd(high)["ja"]})と見込んでいます。中央値は今回より{sign(change(mid, r0), 0)}です。'
+                                          + (f'{prelim["date"]}には、売上の速報値が見通しどおりだったとして、幅を±{prelim["figures"]["preliminary"].values[2]}%に狭めました。' if prelim else ''),
+                                          f'The company guided next-quarter revenue to {usd(mid)["en"]} ± {q(f["guidanceRevenue"].values[1], 0)}% ({usd(low)["en"]}–{usd(high)["en"]}), {sign(change(mid, r0), 0)} above this quarter at the midpoint.'
+                                          + (f' On {prelim["dateEn"]} it said preliminary revenue was in line, narrowing the range to ± {prelim["figures"]["preliminary"].values[2]}%.' if prelim else ''))},
             {'key': 'means', 'text': c(f'調整後EPSの見通しは{ps(eg[0])["ja"]}±{ps(eg[1])["ja"]}で、今回は{ps(eps.values[0])["ja"]}でした。',
                                        f'Non-GAAP EPS is guided at {ps(eg[0])["en"]} ± {ps(eg[1])["en"]}, versus {ps(eps.values[0])["en"]} this quarter.')},
             {'key': 'view', 'text': c('次の決算で、売上が見通しの幅に入るか、粗利益率が見通しの近くに収まるかを確かめます。',
@@ -308,9 +343,214 @@ def mrvl(f, url, before_previous):
           f'Revenue was {usd(r0)["en"]}, {sign(qoq)} from the previous quarter and {sign(yoy, 0)} from a year earlier. Data Center made up {q(share.values[0], 0)}% of revenue.'),
         c(f'調整後粗利益率は{pc(gm.values[0])}で、次期の見通しは{pc(gl)}〜{pc(gh)}です。GAAPの純利益は{usd(ni)["ja"]}で、調整後の{usd(nin)["ja"]}を大きく下回りました。',
           f'Non-GAAP gross margin was {pc(gm.values[0])}, with next quarter guided at {pc(gl)}–{pc(gh)}. GAAP net income was {usd(ni)["en"]}, far below non-GAAP net income of {usd(nin)["en"]}.'),
-        c(f'通信・その他の売上は{usd(co.values[0])["ja"]}で、前期比{sign(co_qoq, 0)}でした。', f'Communications and other revenue was {usd(co.values[0])["en"]}, {sign(co_qoq, 0)} QoQ.')]
+        (c(f'{deal["date"]}、{deal["figures"]["exchangeRatio"].values[2] if "exchangeRatio" in deal["figures"] else "相手先"}の買収に合意しました。'
+           + ('次の四半期の売上の速報値は見通しどおりとしています。' if prelim else ''),
+           f'On {deal["dateEn"]}, the company agreed to acquire {deal["figures"]["exchangeRatio"].values[2] if "exchangeRatio" in deal["figures"] else "another company"}.'
+           + (' It also said preliminary revenue for the next quarter was in line with guidance.' if prelim else ''))
+         if deal else
+         c(f'通信・その他の売上は{usd(co.values[0])["ja"]}で、前期比{sign(co_qoq, 0)}でした。', f'Communications and other revenue was {usd(co.values[0])["en"]}, {sign(co_qoq, 0)} QoQ.'))]
     return {'tiles': tiles, 'numbers': {**numbers, 'guidance': guidance}, 'evidence': ev.items,
             'summary': {'conclusion': conclusion, 'cards': {'growth': growth, 'change': changes, 'caution': caution, 'next': nxt}}}
 
 
-WRITERS = {'CRDO': crdo, 'MRVL': mrvl}
+def deal_caution(deal, gl, gh, gm_now, gm_mid, ni):
+    """The caution card of a quarter with a merger agreement: the margin outlook, then the deal's own terms, each read from its 8-K."""
+    d = deal['figures']
+    terms_ja, terms_en = [], []
+    if 'exchangeRatio' in d:
+        ratio, buyer, target = d['exchangeRatio'].values
+        terms_ja.append(f'{target}株1株につき{buyer}株{ratio}株を交付します。')
+        terms_en.append(f'{buyer} pays {ratio} {buyer} shares per {target} share.')
+    if 'ownership' in d:
+        a, pa, b, pb = d['ownership'].values
+        terms_ja.append(f'統合後は現{a}株主が約{pa}%、{b}株主が約{pb}%を保有します。')
+        terms_en.append(f'After closing, current {a} holders would own about {pa}% and {b} holders about {pb}%.')
+    if 'close' in d:
+        half, year = d['close'].values
+        terms_ja.append(f'完了は{year}年{"前" if half == "first" else "後"}半の見込みです。')
+        terms_en.append(f'Closing is expected in the {half} half of {year}.')
+    name = d['exchangeRatio'].values[2] if 'exchangeRatio' in d else '相手先'
+    stock = 'allStock' in d
+    return {
+        'headline': c('次期の粗利益率の見通しは今回を下回る' if gm_mid < gm_now else '買収の合意', "Next quarter's gross margin outlook is below this quarter" if gm_mid < gm_now else 'A merger agreement'),
+        'chips': [{'tone': 'down' if gm_mid < gm_now else 'gold', 'text': c(f'調整後粗利益率の見通し {pc(gl)}〜{pc(gh)}', f'Non-GAAP gross margin outlook {pc(gl)}–{pc(gh)}')},
+                  {'tone': 'gold', 'text': c(f'GAAP純利益 {usd(ni)["ja"]}', f'GAAP net income {usd(ni)["en"]}')},
+                  {'tone': 'gold', 'text': c(f'{name}買収:{"全額株式" if stock else "合意"}', f'{name} deal{": all-stock" if stock else ""}')}],
+        'sections': [
+            {'key': 'watch', 'text': c(f'次期の調整後粗利益率は{pc(gl)}〜{pc(gh)}の見通しで、今回の{pc(gm_now)}を{"下回ります" if gm_mid < gm_now else "上回ります" if gm_mid > gm_now else "中央値で同じです"}。',
+                                       f"Next quarter's non-GAAP gross margin is guided at {pc(gl)}–{pc(gh)}, {'below' if gm_mid < gm_now else 'above' if gm_mid > gm_now else 'level with'} this quarter's {pc(gm_now)} at the midpoint.")},
+            {'key': 'happened', 'text': c(f'{deal["date"]}、{name}の買収に合意しました。' + ''.join(terms_ja), f'On {deal["dateEn"]}, the company agreed to acquire {name}. ' + ' '.join(terms_en))},
+            {'key': 'means', 'text': c(('株式で支払うため、利益がより多くの株数に分けられます。' if stock else '買収の対価と条件は、会社の資料で確かめる必要があります。')
+                                       + ('会社は、完了後1年目から調整後EPSを押し上げると見込んでいます。' if 'accretive' in d else '') + '承認や統合には時間がかかります。',
+                                       ('Because it is paid in stock, earnings are spread over more shares. ' if stock else '')
+                                       + ('The company expects the deal to add to non-GAAP EPS in year one. ' if 'accretive' in d else '') + 'Approvals and integration take time.')},
+            {'key': 'view', 'text': c('粗利益率の見通しは1四半期分の計画です。買収は完了まで時間がかかるため、本業の決算と承認の進み具合を分けて追います。',
+                                      "The margin outlook is one quarter's plan. The deal takes time to close, so track the core results and the approval process separately.")}]}
+
+
+# ---- Broadcom (AVGO) --------------------------------------------------------------------------------------------------------
+
+def ratio_calc(top, bottom, i):
+    return f'{top.raws[i]} / {bottom.raws[i]} * 100'
+
+
+def avgo(f, url, before_previous, report=None, events=None, previous=None):
+    """Release figures, the previous file's segment figures, and (once filed) the 10-Q's segment margins and customer concentration."""
+    need(f, 'revenue', 'grossProfitNonGaap', 'opIncomeNonGaap', 'epsBoth', 'fcf', 'semis', 'software', 'ai', 'guidanceRevenue', 'guidanceAi', 'guidanceOpMargin')
+    report = report or {}
+    ev = Evidence(url)
+    rev, gp, op, fcf = f['revenue'], f['grossProfitNonGaap'], f['opIncomeNonGaap'], f['fcf']
+    r0, r1, r2 = rev.values
+    yoy, qoq = change(r0, r2), change(r0, r1)
+    gm0, gm1 = q(gp.values[0] / r0 * 100, 1), q(gp.values[1] / r1 * 100, 1)
+    ev.add('numbers.revenue.current', rev)
+    ev.add('numbers.revenue.previous', rev)
+    ev.add('numbers.revenue.yearAgo', rev)
+    eps = f['epsBoth']
+    ev.add('numbers.adjustedEPS', eps)
+    for field, i, val in (('current', 0, gm0), ('previous', 1, gm1)):
+        ev.add(f'numbers.grossMargin.{field}', gp)
+        ev.add(f'numbers.grossMargin.{field}', rev, calc=ratio_calc(gp, rev, i), rnd=1)
+    g = f['guidanceRevenue']
+    ev.add('numbers.guidance.low', g, calc=g.calc(0))
+    ev.add('numbers.guidance.high', g, calc=g.calc(0))
+    numbers = {'revenue': {'current': float(r0), 'previous': float(r1), 'yearAgo': float(r2)}, 'adjustedEPS': float(eps.values[2]), 'epsEstimate': None,
+               'grossMargin': {'current': float(gm0), 'previous': float(gm1)},
+               'guidance': {'low': float(g.values[0]), 'high': float(g.values[0]), 'grossMarginPercent': None}, 'segments': None}
+    semis, soft, ai = f['semis'], f['software'], f['ai']
+    prev_segments = {s['key']: s for s in ((previous or {}).get('numbers') or {}).get('segments') or []}
+    prev_quotes = {e['field']: e for e in (previous or {}).get('evidence') or []}
+    seg_prev = {k: Decimal(str(v['revenue'])) for k, v in prev_segments.items()}
+    have_report = all(k in report for k in ('semisOpIncome', 'softwareOpIncome', 'semisReport', 'softwareReport'))
+    margins = {}
+    if have_report and set(prev_segments) == {'semis', 'software'}:
+        segments = []
+        for i, (key, ja, en, rel, opi, rep) in enumerate((('semis', '半導体', 'Semiconductor solutions', semis, report['semisOpIncome'], report['semisReport']),
+                                                         ('software', 'インフラ・ソフトウェア', 'Infrastructure software', soft, report['softwareOpIncome'], report['softwareReport']))):
+            margin = q(opi.values[0] / rep.values[0] * 100, 1)
+            margins[key] = (margin, Decimal(str(prev_segments[key]['operatingMargin'])))
+            ev.add(f'numbers.segments[{i}].revenue', rep, url=rep.url)
+            ev.add(f'numbers.segments[{i}].operatingMargin', opi, url=opi.url)
+            ev.add(f'numbers.segments[{i}].operatingMargin', rep, calc=f'{opi.raws[0]} / {rep.raws[0]} * 100', rnd=1, url=rep.url)
+            for old, new in (('revenue', 'previous'), ('operatingMargin', 'previousOperatingMargin')):
+                for e in [x for x in previous['evidence'] if x['field'] in (f'numbers.segments[{i}].{old}', f'numbers.segments.{key}.{old}')]:
+                    ev.items.append({**e, 'field': f'numbers.segments[{i}].{new}'})
+            segments.append({'key': key, 'nameJa': ja, 'nameEn': en, 'revenue': float(rep.values[0]), 'previous': float(seg_prev[key]),
+                             'operatingMargin': float(margin), 'previousOperatingMargin': prev_segments[key]['operatingMargin']})
+        numbers['segments'] = segments
+    tiles = [{'label': c('売上高', 'Revenue'), 'value': money_tile(ev, 0, rev, 0, None), 'note': c(f'前年同期比 {sign(yoy, 0)}', f'{sign(yoy, 0)} YoY')}]
+    ev.add('tiles[0].note', rev, calc=f'({rev.raws[0]} / {rev.raws[2]} - 1) * 100', rnd=0)
+    shown, places, scale = _g().money(ai.values[0], 'USD')
+    tiles.append({'label': c('AI半導体の売上', 'AI semiconductor revenue'), 'value': shown, 'note': c(f'前年同期比 +{ai.raws[1]}%', f'+{ai.raws[1]}% YoY')})
+    ev.add('tiles[1].value', ai, calc=f'{ai.raws[0]} * 1000 / 1000', rnd=places)
+    ev.add('tiles[1].note', ai)
+    if 'topFive' in report:
+        t5 = report['topFive']
+        tiles.append({'label': c('上位5社への売上比率', 'Top five end customers'), 'value': c(f'約{t5.values[0]}%', f'~{t5.values[0]}% of revenue'),
+                      'note': c(f'前年同期は約{t5.values[2]}%', f'About {t5.values[2]}% a year earlier')})
+        ev.add('tiles[2].value', t5, url=t5.url)
+        ev.add('tiles[2].note', t5, url=t5.url)
+    else:
+        tiles.append({'label': c('フリーキャッシュフロー', 'Free cash flow'), 'value': money_tile(ev, 2, fcf, 0, None),
+                      'note': c(f'売上の{q(fcf.values[0] / r0 * 100, 0)}%', f'{q(fcf.values[0] / r0 * 100, 0)}% of revenue')})
+        if 'fcfShare' in f:
+            ev.add('tiles[2].note', f['fcfShare'])
+        else:
+            raise ValueError('missing:fcfShare')
+    sp = seg_prev.get('semis')
+    s0 = semis.values[0]
+    share0, share1 = q(s0 / r0 * 100, 0), (q(sp / r1 * 100, 0) if sp else None)
+    d_total = r0 - r1
+    growth_sections = [
+        {'key': 'happened', 'text': c((f'半導体部門の売上は{usd(sp)["ja"]}から{usd(s0)["ja"]}へ、{usd(s0 - sp)["ja"]}増えました。' if sp else f'半導体部門の売上は{usd(s0)["ja"]}でした。')
+                                      + f'そのうちAI半導体の売上は{usd(ai.values[0])["ja"]}で、前期比+{ai.raws[2]}%です。'
+                                      + (f'部門の営業利益率は{margins["semis"][1]}%から{margins["semis"][0]}%になりました。' if margins else ''),
+                                      (f'Semiconductor solutions revenue rose from {usd(sp)["en"]} to {usd(s0)["en"]}, up {usd(s0 - sp)["en"]}. ' if sp else f'Semiconductor solutions revenue was {usd(s0)["en"]}. ')
+                                      + f'AI semiconductor revenue within it was {usd(ai.values[0])["en"]}, up {ai.raws[2]}% from the previous quarter.'
+                                      + (f' The segment operating margin went from {margins["semis"][1]}% to {margins["semis"][0]}%.' if margins else ''))}]
+    soft_prev = seg_prev.get('software')
+    if sp and d_total > 0:
+        part = q((s0 - sp) / d_total * 100, 0)
+        growth_sections.append({'key': 'good', 'text': c(f'会社全体の売上は前期から{usd(d_total)["ja"]}増え、そのうち約{part}%がこの部門の増加分です。'
+                                                         + (f'インフラ・ソフトウェアも{usd(soft_prev)["ja"]}から{usd(soft.values[0])["ja"]}に増えました。' if soft_prev else '')
+                                                         + (f'その営業利益率は{margins["software"][1]}%から{margins["software"][0]}%です。' if margins else ''),
+                                                         f'Total revenue rose {usd(d_total)["en"]} from the previous quarter, and about {part}% of that came from this segment.'
+                                                         + (f' Infrastructure software also grew from {usd(soft_prev)["en"]} to {usd(soft.values[0])["en"]}' if soft_prev else '')
+                                                         + (f', with its operating margin going from {margins["software"][1]}% to {margins["software"][0]}%.' if margins and soft_prev else '.' if soft_prev else ''))})
+    growth_sections.append({'key': 'watch', 'text': c('伸びはAI向けの専用チップとネットワーク製品に集中しています。' + ('売上が大きく増えても、部門の利益率は' + ('少し下がりました。' if margins and margins['semis'][0] < margins['semis'][1] else '大きくは変わっていません。') if margins else ''),
+                                                      'Growth is concentrated in custom AI accelerators and networking.' + (' Even with much higher sales, the segment margin ' + ('edged down.' if margins and margins['semis'][0] < margins['semis'][1] else 'held roughly steady.') if margins else ''))})
+    growth = {'headline': c('半導体部門が伸びを主導', 'Semiconductor solutions led the growth'),
+              'chips': [{'tone': 'up', 'text': c(f'部門売上 {sign(change(s0, sp))}', f'Segment revenue {sign(change(s0, sp))}')} if sp else
+                        {'tone': 'up', 'text': c(f'部門売上 前年同期比 {sign(change(s0, semis.values[2]))}', f'Segment revenue {sign(change(s0, semis.values[2]))} YoY')}]
+                       + ([{'tone': 'down' if margins['semis'][0] < margins['semis'][1] else 'up', 'text': c(f'部門営業利益率 {margins["semis"][1]}% → {margins["semis"][0]}%', f'Segment operating margin {margins["semis"][1]}% → {margins["semis"][0]}%')}]
+                          if margins else [{'tone': 'gold', 'text': c(f'AI半導体 前期比 +{ai.raws[2]}%', f'AI semiconductors +{ai.raws[2]}% QoQ')}]),
+              'sections': growth_sections}
+    om0, om1 = q(op.values[0] / r0 * 100, 1), q(op.values[1] / r1 * 100, 1)
+    changes = {
+        'headline': c(f'売上は前期比 {sign(qoq)}、粗利益率は{"低下" if gm0 < gm1 else "上昇" if gm0 > gm1 else "横ばい"}', f'Revenue {"up" if qoq >= 0 else "down"} {format(abs(q(qoq)), "f")}% QoQ, gross margin {"lower" if gm0 < gm1 else "higher" if gm0 > gm1 else "flat"}'),
+        'chips': [{'tone': 'up' if qoq >= 0 else 'down', 'text': c(f'売上 前期比 {sign(qoq)}', f'Revenue {sign(qoq)} QoQ')},
+                  {'tone': 'down' if gm0 < gm1 else 'up' if gm0 > gm1 else 'gold', 'text': c(f'調整後粗利益率 {gm1}% → {gm0}%', f'Non-GAAP gross margin {gm1}% → {gm0}%')}],
+        'sections': [
+            {'key': 'happened', 'text': c(f'売上は{usd(r1)["ja"]}から{usd(r0)["ja"]}へ、{usd(abs(d_total))["ja"]}{"増え" if d_total >= 0 else "減り"}ました。調整後粗利益率は{gm1}%から{gm0}%になりました。',
+                                          f'Revenue {"rose" if d_total >= 0 else "fell"} from {usd(r1)["en"]} to {usd(r0)["en"]}, {"up" if d_total >= 0 else "down"} {usd(abs(d_total))["en"]}. Non-GAAP gross margin went from {gm1}% to {gm0}%.')},
+            {'key': 'good', 'text': c(f'調整後の営業利益は{usd(op.values[1])["ja"]}から{usd(op.values[0])["ja"]}へ、約{q(change(op.values[0], op.values[1]), 0)}%増えました。フリーキャッシュフローは{usd(fcf.values[0])["ja"]}で、売上の{q(fcf.values[0] / r0 * 100, 0)}%です。',
+                                      f'Non-GAAP operating income rose about {q(change(op.values[0], op.values[1]), 0)}%, from {usd(op.values[1])["en"]} to {usd(op.values[0])["en"]}. Free cash flow was {usd(fcf.values[0])["en"]}, or {q(fcf.values[0] / r0 * 100, 0)}% of revenue.')},
+            {'key': 'watch', 'text': c(f'会社は理由を説明していませんが、売上に占める半導体の比率は{share1}%から{share0}%に上がりました。利益率の低い半導体が、利益率の高いソフトウェアより速く伸びると、全体の粗利益率は下がりやすくなります。' if share1 is not None else
+                                       f'売上に占める半導体の比率は{share0}%です。利益率の低い半導体の比率が上がると、全体の粗利益率は下がりやすくなります。',
+                                       f'The company did not explain the change, but semiconductors went from {share1}% to {share0}% of revenue. When lower-margin semiconductors grow faster than higher-margin software, the overall gross margin tends to fall.' if share1 is not None else
+                                       f'Semiconductors were {share0}% of revenue. When lower-margin semiconductors grow faster, the overall gross margin tends to fall.')},
+            {'key': 'view', 'text': c('売上と利益の金額は大きく伸びていますが、利益率は下がる方向なので、金額と率は分けて読む必要があります。' if gm0 < gm1 else '売上と利益の金額、利益率の両方を追います。',
+                                      'Revenue and profit dollars grew strongly, but margins are moving down, so amounts and rates need to be read separately.' if gm0 < gm1 else 'Track both the amounts and the margins.')}]}
+    if 'topFive' in report:
+        t5 = report['topFive']
+        dist = report.get('distributor')
+        ev.add('summary.cards.caution.sections[0]', t5)
+        if dist:
+            ev.add('summary.cards.caution.sections[0]', dist)
+        caution = {
+            'headline': c(f'売上の約{t5.values[0]}%が上位5社', f'About {t5.values[0]}% of revenue comes from the top five customers'),
+            'chips': [{'tone': 'down', 'text': c(f'上位5社 約{t5.values[2]}% → 約{t5.values[0]}%', f'Top five ~{t5.values[2]}% → ~{t5.values[0]}%')}]
+                     + ([{'tone': 'gold', 'text': c(f'1社の代理店:売上の{dist.values[0]}%', f'One distributor: {dist.values[0]}% of revenue')}] if dist else []),
+            'sections': [
+                {'key': 'happened', 'text': c(f'10-Qによると、上位5社の最終顧客が売上の約{t5.values[0]}%を占め、前年同期の約{t5.values[2]}%から上がりました。' + (f'1社の代理店への直接販売が売上の{dist.values[0]}%で、前年同期は{dist.values[2]}%でした。' if dist else ''),
+                                              f'According to the quarterly report, the top five end customers made up about {t5.values[0]}% of revenue, up from about {t5.values[2]}% a year earlier.' + (f' Direct sales to one distributor accounted for {dist.values[0]}% of revenue ({dist.values[2]}% a year earlier).' if dist else ''))},
+                {'key': 'watch', 'text': c('少数の大口顧客の発注計画が変わると、売上は大きく動きます。会社自身も、この集中が四半期ごとの業績の振れを大きくするとしています。',
+                                           'A change in the ordering plans of a few large customers can move revenue sharply. The company itself says this concentration increases the risk of quarterly swings in its results.')},
+                {'key': 'means', 'text': c('成長は力強い一方、伸びるほど集中も高まっています。', 'Growth is strong, but the more it grows, the higher the concentration becomes.')},
+                {'key': 'view', 'text': c('次の決算で、上位顧客の比率がさらに上がるかを確かめます。', 'Check in the next report whether the top-customer share rises further.')}]}
+    else:
+        ai_share = q(ai.values[0] / r0 * 100, 0)
+        caution = {
+            'headline': c(f'売上の約{ai_share}%がAI半導体', f'About {ai_share}% of revenue is AI semiconductors'),
+            'chips': [{'tone': 'gold', 'text': c(f'AI半導体 売上の約{ai_share}%', f'AI semiconductors ~{ai_share}% of revenue')},
+                      {'tone': 'gold', 'text': c(f'半導体部門 売上の{share0}%', f'Semiconductors {share0}% of revenue')}],
+            'sections': [
+                {'key': 'happened', 'text': c(f'AI半導体の売上は{usd(ai.values[0])["ja"]}で、売上全体の約{ai_share}%です。', f'AI semiconductor revenue was {usd(ai.values[0])["en"]}, about {ai_share}% of total revenue.')},
+                {'key': 'watch', 'text': c('AI向けの大口顧客は少数で、その発注計画が変わると売上は大きく動きます。顧客の集中度は、翌日以降に出る10-Qで確かめます。',
+                                           'AI customers are few, so a change in their ordering plans can move revenue sharply. The 10-Q, filed after the release, shows the customer concentration.')},
+                {'key': 'means', 'text': c('成長は力強い一方、伸びるほど一部の事業への依存も高まります。', 'Growth is strong, but the more it grows, the more it depends on one business.')},
+                {'key': 'view', 'text': c('次の決算で、AI半導体の比率と利益率の動きを確かめます。', 'Check the AI share and the margins in the next report.')}]}
+    go = f['guidanceOpMargin'].values[0]
+    gai = f['guidanceAi'].values[0]
+    nxt = {
+        'headline': c('次期の会社見通しを追う', "Follow the company's outlook for next quarter"),
+        'chips': [{'tone': 'gold', 'text': c(f'売上 約{usd(g.values[0])["ja"]}', f'Revenue ~{usd(g.values[0])["en"]}')},
+                  {'tone': 'gold', 'text': c(f'AI半導体 {usd(gai)["ja"]}', f'AI semiconductors {usd(gai)["en"]}')},
+                  {'tone': 'gold', 'text': c(f'調整後営業利益率 約{go}%', f'Non-GAAP operating margin ~{go}%')}],
+        'sections': [
+            {'key': 'happened', 'text': c(f'会社は次期の売上を約{usd(g.values[0])["ja"]}と見込み、そのうちAI半導体は{usd(gai)["ja"]}です。今回の売上は{usd(r0)["ja"]}なので、約{q(change(g.values[0], r0), 1)}%の増加になります。',
+                                          f"The company expects next-quarter revenue of about {usd(g.values[0])['en']}, including {usd(gai)['en']} of AI semiconductor revenue. This quarter's revenue was {usd(r0)['en']}, so that would be about {q(change(g.values[0], r0), 1)}% higher.")},
+            {'key': 'watch', 'text': c(f'調整後営業利益率の見通しは約{go}%で、今回の約{om0}%を{"下回り" if go < om0 else "上回り"}ます。粗利益率の見通しは示されていません。',
+                                       f"The non-GAAP operating margin outlook is about {go}%, {'below' if go < om0 else 'above'} this quarter's roughly {om0}%. No gross margin outlook was given.")},
+            {'key': 'view', 'text': c('次の決算で、売上とAI半導体の売上が見通しに届くかを確かめます。', 'The next report will show whether revenue and AI semiconductor revenue meet the outlook.')}]}
+    conclusion = [
+        c(f'売上は{usd(r0)["ja"]}で、前期から約{q(qoq, 0)}%増えました。けん引したのはAI半導体({usd(ai.values[0])["ja"]}、前期比+{ai.raws[2]}%)です。',
+          f'Revenue was {usd(r0)["en"]}, up about {q(qoq, 0)}% from the previous quarter, led by AI semiconductors ({usd(ai.values[0])["en"]}, up {ai.raws[2]}% QoQ).'),
+        c(f'一方、調整後粗利益率は{gm1}%から{gm0}%になりました。' + (f'売上の約{report["topFive"].values[0]}%は上位5社の最終顧客です。' if 'topFive' in report else ''),
+          f'Meanwhile, non-GAAP gross margin went from {gm1}% to {gm0}%.' + (f' About {report["topFive"].values[0]}% of revenue came from the top five end customers.' if 'topFive' in report else '')),
+        c(f'会社は次期の売上を約{usd(g.values[0])["ja"]}、そのうちAI半導体を{usd(gai)["ja"]}と見込んでいます。', f'The company expects next-quarter revenue of about {usd(g.values[0])["en"]}, including {usd(gai)["en"]} of AI semiconductor revenue.')]
+    return {'tiles': tiles, 'numbers': numbers, 'evidence': ev.items,
+            'summary': {'conclusion': conclusion, 'cards': {'growth': growth, 'change': changes, 'caution': caution, 'next': nxt}}}
+
+
+WRITERS = {'CRDO': crdo, 'MRVL': mrvl, 'AVGO': avgo}

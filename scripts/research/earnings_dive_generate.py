@@ -408,7 +408,26 @@ def company_dive(ticker, release, previous, writer, text, url, period, end, toda
     import dive_figures
     figures = dive_figures.read(ticker, release['text'])
     old = previous['history']
-    written = writer(figures, url, Decimal(str(old[-1]['value'])) if old else None)
+    extra_sources = []
+    report = {}
+    if release.get('report'):  # the 10-Q, once filed: the figures only it carries
+        report = dive_figures.read_report(ticker, release['report']['text'])
+        for fig in report.values():
+            fig.url = release['report']['url']
+        if report:
+            extra_sources.append({'url': release['report']['url'], 'title': f"{previous['name']} Form {release['report'].get('form', '10-Q')} for {period}",
+                                  'location': 'Notes to the financial statements and risk factors'})
+    events = []
+    for event in release.get('events') or []:  # other 8-Ks of the quarter: a deal, a preliminary result
+        found = dive_figures.deal(event['text'])
+        if not found:
+            continue
+        for fig in found.values():
+            fig.url = event['url']
+        day = event['accepted'].astimezone(timezone.utc)
+        events.append({'figures': found, 'url': event['url'], 'date': f'{day.month}月{day.day}日', 'dateEn': f'{day.strftime("%B")} {day.day}'})
+        extra_sources.append({'url': event['url'], 'title': f"{previous['name']} Form 8-K, Exhibit 99.1 ({day.date().isoformat()})", 'location': 'Press release'})
+    written = writer(figures, url, Decimal(str(old[-1]['value'])) if old else None, report=report, events=events, previous=previous)
     history = [dict(h) for h in old[1:]] + [{'label': f"Q{previous['periodQuarter']}", 'end': previous['periodEnd'],
                                              'value': previous['numbers']['revenue']['current']}]
     evidence = list(written['evidence'])
@@ -422,7 +441,10 @@ def company_dive(ticker, release, previous, writer, text, url, period, end, toda
         evidence.append({**source, 'field': f'history[{i}].value'})
     sources = [{'url': url, 'title': f"{previous['name']} {period} results release (Form {release.get('form', '8-K')}, SEC)",
                 'location': 'Results release, financial tables and outlook'}]
-    sources += [s for s in previous.get('sources') or [] if s['url'] in used and s['url'] != url]
+    cited = {e['url'] for e in evidence}
+    sources += [x for x in extra_sources if x['url'] in cited]
+    used |= {e['url'] for e in written['evidence']}
+    sources += [s for s in previous.get('sources') or [] if s['url'] in used and s['url'] not in {x['url'] for x in sources}]
     return {'ticker': ticker, 'name': previous['name'], 'exchange': previous['exchange'], 'quoteTicker': previous['quoteTicker'],
             'period': period, 'periodQuarter': int(period[1]), 'releasedOn': release['releasedOn'], 'periodEnd': end, 'reviewedOn': today,
             'currency': previous['currency'], 'basis': previous.get('basis'), 'sources': sources, 'evidence': evidence,
@@ -607,10 +629,13 @@ def generate(db, ticker, release, now=None, previous=None, note=None):
     schema(db)
     now = now or datetime.now(timezone.utc)
     previous = previous if previous is not None else previous_dive(ticker)
-    if db.execute("SELECT 1 FROM generated_dives WHERE ticker=? AND release_accession=? AND state='passed'", (ticker, release['accession'])).fetchone():
+    if db.execute("SELECT 1 FROM generated_dives WHERE ticker=? AND release_accession=? AND state='passed'", (ticker, dive_key(release))).fetchone():
         return 'passed'
     note = note if note is not None else stored_analysis(db, ticker, release['accepted'])
     texts = {release['url']: check_dives.normalize(release['text'])}
+    for other in [release.get('report')] + list(release.get('events') or []):  # the 10-Q and the quarter's other 8-Ks it may quote
+        if other and other.get('url') and other.get('text'):
+            texts[other['url']] = check_dives.normalize(other['text'])
     for e in (previous or {}).get('evidence') or []:  # the previous file's quoted passages, for the figures it carries forward
         texts[e['url']] = (texts.get(e['url'], '') + ' ' + check_dives.normalize(e['quote'])).strip()
     try:
@@ -620,16 +645,16 @@ def generate(db, ticker, release, now=None, previous=None, note=None):
         draft, problems = None, [str(exc)[:300]]
     if problems and note is None:
         return 'waiting'  # MU's template alone is not enough here: wait for the release's deep analysis (written minutes after it)
-    attempt = db.execute('SELECT count(*) FROM generated_dives WHERE ticker=? AND release_accession=?', (ticker, release['accession'])).fetchone()[0] + 1
+    attempt = db.execute('SELECT count(*) FROM generated_dives WHERE ticker=? AND release_accession=?', (ticker, dive_key(release))).fetchone()[0] + 1
     state = 'failed' if problems else 'passed'
     fixture = fixture_text(draft, texts) if isinstance(draft, dict) else None
     previous_failure = db.execute("SELECT errors FROM generated_dives WHERE ticker=? AND release_accession=? ORDER BY attempt DESC LIMIT 1",
-                                  (ticker, release['accession'])).fetchone()
+                                  (ticker, dive_key(release))).fetchone()
     if state == 'failed' and previous_failure and previous_failure[0] == json.dumps(problems[:20], ensure_ascii=False):
         return 'failed'  # the same inputs fail the same way: nothing new to store
     with db:
         db.execute('INSERT INTO generated_dives VALUES(?,?,?,?,?,?,?,?,?,?)',
-                   (ticker, str((draft or {}).get('period') or release.get('period') or ''), release['accession'], attempt, state,
+                   (ticker, str((draft or {}).get('period') or release.get('period') or ''), dive_key(release), attempt, state,
                     json.dumps(draft, ensure_ascii=False) if draft is not None else None, fixture,
                     json.dumps(problems[:20], ensure_ascii=False), None, now.isoformat(timespec='seconds')))
     at = now.isoformat(timespec='seconds')
@@ -650,6 +675,15 @@ def published(db):
     return out
 
 
+def dive_key(release):
+    """One dive per release AND per set of filings it was built from: the 10-Q or a deal 8-K filed later makes a new, deeper version."""
+    parts = [release['accession']]
+    if release.get('report'):
+        parts.append('report:' + release['report']['accession'])
+    parts += ['event:' + e['accession'] for e in release.get('events') or []]
+    return '|'.join(parts)
+
+
 def due(patrol_results, db, folder=None):
     """The roster releases a dive is due for: a release read cleanly by the patrol, newer than the committed file, not yet passed."""
     out = []
@@ -660,9 +694,5 @@ def due(patrol_results, db, folder=None):
         previous = previous_dive(ticker, folder)
         if not previous or normalize_period(release.get('period')) == normalize_period(previous.get('period')):
             continue
-        schema(db)
-        if db.execute("SELECT 1 FROM generated_dives WHERE ticker=? AND release_accession=? AND state='passed'",
-                      (ticker, release['accession'])).fetchone():
-            continue
-        out.append(ticker)
+        out.append(ticker)  # generate() itself skips a key (release, 10-Q, 8-Ks) already passed
     return out

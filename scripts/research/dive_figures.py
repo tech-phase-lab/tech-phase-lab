@@ -42,7 +42,14 @@ def _number(cell):
 
 
 def row(text, label, columns, after=None, before=None, unit='million', thousands=False):
-    """The `columns` numbers right after `label` (a whole label, once) inside the table that starts at `after`; None if not exactly so."""
+    """The `columns` numbers right after `label` (a whole label, once) inside the table that starts at `after`; None if not exactly so.
+    `label` may be a tuple of the wordings a company uses in different quarters ("Net income" / "Net income (loss)"): the first that reads."""
+    if isinstance(label, tuple):
+        for one in label:
+            found = row(text, one, columns, after, before, unit, thousands)
+            if found:
+                return found
+        return None
     start = text.find(after) if after else 0
     if start < 0:
         return None
@@ -79,7 +86,7 @@ def sentence(text, pattern, groups, unit='million', multipliers=None):
         return None
     raws = [m.group(g).replace(',', '') for g in groups]
     muls = list(multipliers or [None] * len(raws))
-    values = [Decimal(r) * (k or 1) for r, k in zip(raws, muls)]
+    values = list(raws) if unit == 'text' else [Decimal(r) * (k or 1) for r, k in zip(raws, muls)]
     return Figure(values=values, quote=text[m.start():m.end()].strip(), raws=raws, unit=unit, muls=muls)
 
 
@@ -119,8 +126,9 @@ def marvell(t):
     share = 'Revenue by End Market % of Total'
     return {
         'revenue': row(t, 'Net revenue', 3, ops, 'Cost of goods sold'),
-        'netIncome': row(t, 'Net income', 3, 'Provision for income taxes', 'Net income per share'),
-        'epsGaap': row(t, 'GAAP diluted net income per share', 3, 'Other income tax effects', '(a)', unit='per-share'),
+        # the year-end release (Q4) words these rows with "(loss)" (Feb 2026): both wordings are read
+        'netIncome': row(t, ('Net income', 'Net income (loss)'), 3, 'Provision', ('Net income per share' if 'Net income per share' in t else 'Net income (loss) per share')),
+        'epsGaap': row(t, ('GAAP diluted net income per share', 'GAAP diluted net income (loss) per share'), 3, 'Other income tax effects', '(a)', unit='per-share'),
         'eps': row(t, 'Non-GAAP diluted net income per share', 3, 'Other income tax effects', '(a)', unit='per-share'),
         'gmGaap': row(t, 'GAAP gross margin', 3, rec, 'Non-GAAP gross margin', unit='percent'),
         'gm': row(t, 'Non-GAAP gross margin', 3, rec, 'GAAP operating expenses', unit='percent'),
@@ -135,7 +143,87 @@ def marvell(t):
     }
 
 
-SPECS = {'CRDO': credo, 'MRVL': marvell}
+def broadcom(t):
+    hl, rec = 'Financial Highlights', 'Gross margin on GAAP basis'
+    seg = 'Net revenue by segment'
+    return {
+        'revenue': row(t, 'Net revenue', 3, 'CONDENSED CONSOLIDATED STATEMENTS OF OPERATIONS', 'Cost of'),
+        'grossProfitNonGaap': row(t, 'Gross margin on non-GAAP basis', 3, rec, 'Research and development on GAAP'),
+        'opIncomeNonGaap': row(t, 'Operating income on non-GAAP basis', 3, rec, 'Interest expense on GAAP'),
+        # the highlights table: GAAP this quarter, a year earlier, change, then non-GAAP the same (no previous-quarter column)
+        'epsBoth': sentence(t, r'Earnings per common share - diluted \$ ([\d.]+) \$ ([\d.]+) [+-]?\d+ ?% \$ ([\d.]+) \$ ([\d.]+)', (1, 2, 3, 4), unit='per-share'),
+        'fcf': row(t, 'Free cash flow', 3, 'Net cash provided by operating activities $', '(1)'),
+        'semis': row(t, 'Semiconductor solutions', 4, seg, 'Infrastructure software'),
+        'software': row(t, 'Infrastructure software', 4, seg, 'Total net revenue'),
+        'ai': sentence(t, r'AI semiconductor revenue of \$([\d.]+) billion grew (\d+)% year-over-year, and (\d+)% quarter-over-quarter', (1, 2, 3),
+                       multipliers=[1000, None, None]),
+        'guidanceRevenue': sentence(t, r'quarter revenue guidance of approximately \$([\d.]+) billion', (1,), multipliers=[1000]),
+        'guidanceAi': sentence(t, r'expect AI semiconductor revenue to accelerate to \$([\d.]+) billion', (1,), multipliers=[1000]),
+        'guidanceOpMargin': sentence(t, r'non-GAAP operating income guidance of approximately (\d+) percent of projected revenue', (1,), unit='percent'),
+        'fcfShare': sentence(t, r'\$([\d.]+) billion of free cash flow, or (\d+) percent of revenue', (1, 2), multipliers=[1000, None]),
+    }
+
+
+SPECS = {'CRDO': credo, 'MRVL': marvell, 'AVGO': broadcom}
+
+
+# ---- the quarterly report (10-Q): figures only it carries, read when it is filed -------------------------------------------
+
+MONTHS = r'(?:January|February|March|April|May|June|July|August|September|October|November|December)'
+
+
+def credo_report(t):
+    return {
+        'customerA': row(t, 'Customer A', 2, 'Ended Revenue', 'Customer B', unit='percent'),
+        'customerB': row(t, 'Customer B', 2, 'Ended Revenue', '*', unit='percent'),
+        'acquisition': sentence(t, r'On (' + MONTHS + r' \d{1,2}, 20\d\d), the Company acquired (?:100% of the equity interest of )?([A-Z][A-Za-z]+).{0,250}?'
+                                r'total purchase consideration of \$([\d.]+) (billion|million)', (1, 2, 3, 4), unit='text'),
+    }
+
+
+def broadcom_report(t):
+    semis = row(t, 'Semiconductor solutions: Net revenue', 2, '(In millions)', 'Infrastructure software:')
+    soft = row(t, 'Infrastructure software: Net revenue', 2, '(In millions)', 'Total:')
+    return {
+        'semisReport': semis,
+        'semisOpIncome': row(t, 'Operating income', 2, 'Semiconductor solutions: Net revenue', 'Infrastructure software:'),
+        'softwareReport': soft,
+        'softwareOpIncome': row(t, 'Operating income', 2, 'Infrastructure software: Net revenue', 'Total:'),
+        'topFive': sentence(t, r'top five end customers, through all channels, accounted for approximately (\d+)% and (\d+)% of our net revenue for the fiscal quarter'
+                               r'[^.]{0,120}?approximately (\d+)%', (1, 2, 3), unit='percent'),
+        'distributor': sentence(t, r'which is a distributor, accounted for (\d+)% and (\d+)% of our net revenue for the fiscal quarter and three fiscal quarters ended '
+                                   + MONTHS + r' \d{1,2}, 20\d\d, respectively, and (\d+)% and (\d+)%', (1, 2, 3, 4), unit='percent'),
+    }
+
+
+REPORT_SPECS = {'CRDO': credo_report, 'AVGO': broadcom_report}
+
+
+def read_report(ticker, text):
+    spec = REPORT_SPECS.get(ticker)
+    if not spec:
+        return {}
+    flat = ' '.join((text or '').split())
+    return {k: v for k, v in spec(flat).items() if v is not None}
+
+
+# ---- other filings of the quarter: a deal (8-K Item 1.01 / 2.01) and a preliminary result (Item 2.02 without the tables) ------
+
+def deal(text):
+    """The terms a merger or acquisition release states, each with its own sentence; {} when it states none of them."""
+    flat = ' '.join((text or '').split())
+    out = {
+        'exchangeRatio': sentence(flat, r'fixed exchange ratio of ([\d.]+) shares of ([A-Z][A-Za-z]+) common stock for each share of ([A-Z][A-Za-z]+) common stock',
+                                  (1, 2, 3), unit='text'),
+        'ownership': sentence(flat, r'current ([A-Z][A-Za-z]+) stockholders will own approximately (\d+)% of the combined company[^.]{0,80}?while ([A-Z][A-Za-z]+) stockholders will own approximately (\d+)%',
+                              (1, 2, 3, 4), unit='text'),
+        'close': sentence(flat, r'expected to close in the (first|second) half of calendar year (20\d\d)', (1, 2), unit='text'),
+        'accretive': sentence(flat, r'expected to be accretive to ([A-Z][A-Za-z]+) non-GAAP earnings per share in year one', (1,), unit='text'),
+        'allStock': sentence(flat, r'in an (all-stock) transaction', (1,), unit='text'),
+        'preliminary': sentence(flat, r'reported preliminary revenue for the (first|second|third|fourth) quarter of fiscal (20\d\d) consistent with previously provided guidance, '
+                                      r'maintaining the midpoint of its prior guidance while narrowing the expected range to plus or minus (\d+)%', (1, 2, 3), unit='text'),
+    }
+    return {k: v for k, v in out.items() if v is not None}
 
 
 def read(ticker, text):
