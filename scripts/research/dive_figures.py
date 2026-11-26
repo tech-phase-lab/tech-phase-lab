@@ -12,7 +12,7 @@ from dataclasses import dataclass, field
 from decimal import Decimal
 import re
 
-CELL = re.compile(r'(?:\$\s?)?\(?[+-]?\$?\s?\d[\d,]*(?:\.\d+)?\)?(?:\s?%|\s(?:ppts?|bps)\b)?|—')
+CELL = re.compile(r'(?:\$\s?)?\(?[+-]?\$?\s?\d[\d,]*(?:\.\d+)?\)?(?:\s?%|\s(?:ppts?|bps)\b|bps\b)?|—')
 
 
 @dataclass
@@ -345,15 +345,19 @@ WORDED = r'(?:(?:up|down) [\d.,]+ ?(?:%|ppts?)|flat|\*)'
 VALUE = r'(\$?\(?-?[\d,]+(?:\.\d+)?\)? ?%?)'
 
 
+TOKENS = {'V': VALUE, 'W': WORDED, 'X': r'(\$?\(?-?[\d,]+(?:\.\d+)?\)? ?%?|F|U)', 'B': r'\(?[\d,]+\)? ?bps'}
+
+
 def worded(area, label, groups, unit='million'):
-    """A row whose comparisons are words ("up 23%", "down 0.4 ppt", "*"): `groups` is the row's shape after the label, V for a figure and
-    W for a worded change (e.g. 'VVWVVW'); the figures in order, once in `area`."""
-    pattern = r'(?<![A-Za-z-])' + re.escape(label) + ''.join(' ' + (VALUE if g == 'V' else WORDED) for g in groups) + r'(?= |$)'
+    """A row whose comparisons are words or marks ("up 23%", "down 0.4 ppt", "*", "800bps", F/U for favorable/unfavorable): `groups` is
+    the row's shape after the label (V a figure, W a worded change, X a figure or F/U, B a change in basis points, e.g. 'VVWVVW'); the
+    figures in order (None for F/U), once in `area`."""
+    pattern = r'(?<![A-Za-z-])' + re.escape(label) + ''.join(' ' + TOKENS[g] for g in groups) + r'(?= |$)'
     found = list(re.finditer(pattern, area))
     if len(found) != 1 or len(re.findall(r'(?<![A-Za-z-])' + re.escape(label) + r' [$\d(]', area)) != 1:
         return None
     m = found[0]
-    parsed = [_number(x) for x in m.groups()]
+    parsed = [(None, '') if x in ('F', 'U') else _number(x) for x in m.groups()]
     return Figure(values=[v for v, _ in parsed], quote=m.group(0), raws=[r for _, r in parsed], unit=unit)
 
 
@@ -436,7 +440,43 @@ def vertiv(t):
     }
 
 
-SPECS = {'CRDO': credo, 'MRVL': marvell, 'AVGO': broadcom, 'AMD': amd, 'ANET': arista, 'PLTR': palantir, 'ALAB': astera, 'LITE': lumentum, 'SNDK': sandisk, 'VRT': vertiv}
+def vernova(t):
+    total = between(t, 'Total Company Results', '*Non-GAAP Financial Measure')
+    longer = 'For the nine months ended' if 'For the nine months ended' in t else 'For the six months ended'
+    three = between(t, 'ORGANIC REVENUES, EBITDA, AND EBITDA MARGIN BY SEGMENT', longer)
+    power = between(t, 'Power Three months ended', 'Electrification Three months ended')
+    wind = between(t, 'Wind Three months ended', '*Non-GAAP Financial Measure')
+    guide = between(t, 'Guidance', 'Total Company Results')
+    out = {   # this quarter, a year earlier, change, then year to date the same
+        'revenue': row(total, 'Total revenues', 4, None, None, width=6),
+        'organic': row(total, 'Organic revenues', 3, None, None, width=6),
+        'margin': row(total, 'Adjusted EBITDA margin', 2, None, None, unit='percent', width=6),
+        'cfo': row(total, 'Cash from (used for) operating activities', 2, None, None, width=6),
+        'fcf': row(total, 'Free cash flow', 2, None, None, width=6),
+        'netIncome': row(total, 'Net income (loss)', 2, None, None, width=6),
+        'acquired': row(between(three, 'Electrification (GAAP)', 'Less: Business dispositions'), 'Less: Acquisitions', 1, None, None, width=4),
+        'windYtd': row(wind, 'Segment EBITDA', 4, None, None, width=6),
+        'orders': sentence(t, r'In the quarter, orders of \$([\d.]+) billion increased \+?(\d+)% organically', (1, 2), unit='text'),
+        'backlog': sentence(t, r'Backlog\d? growth of \$([\d.]+)B sequentially from equipment and services,? reaching \$(\d+)B in total', (1, 2), unit='text'),
+        'powerOrders': sentence(power, r'Orders of \$([\d.]+) billion increased \+?(\d+)% organically', (1, 2), unit='text'),
+        'powerDriver': sentence(power, r'primarily driven by (favorable price and higher volume) at Gas Power, partially offset by (the impact of inflation)', (1, 2), unit='text'),
+        'windDriver': sentence(wind, r'primarily due to (lower project costs at Offshore Wind) as well as the impact of (tariff recoveries)', (1, 2), unit='text'),
+        'windOutlook': sentence(t, r'\$(\d+)-\$(\d+) million of segment EBITDA losses, versus prior guidance of approximately \$(\d+) million', (1, 2, 3), unit='text'),
+        'cash': sentence(t, r'\$([\d.]+)B cash balance', (1,), unit='text'),
+        'guidance': sentence(guide, r'now expects revenue of \$([\d.]+)-\$([\d.]+) billion, up from \$([\d.]+)-\$([\d.]+) billion, adjusted EBITDA margin\*? of ([\d.]+)%-([\d.]+)%, '
+                                    r'up from ([\d.]+)%-([\d.]+)%, and free cash flow\*? of \$([\d.]+)-\$([\d.]+) billion, up from \$([\d.]+)-\$([\d.]+) billion',
+                             tuple(range(1, 13)), unit='text'),
+        'deal': sentence(t, r'signed an agreement to acquire ([A-Z][A-Za-z ]+?), a [^.]{0,80}? for \$([\d.]+) billion USD equivalent.{0,200}?close expected in (late|early|mid) (20\d\d)',
+                         (1, 2, 3, 4), unit='text'),
+        'buyback': sentence(t, r'share repurchase authorization increase to \$(\d+) billion', (1,), unit='text'),
+    }
+    for key, label in (('power', 'Power (GAAP)'), ('electrification', 'Electrification (GAAP)'), ('wind', 'Wind (GAAP)')):
+        # revenue this year and last, change %, segment EBITDA this year and last, change % (or F/U), margin this year and last, bps
+        out[key] = worded(three, label, 'VVVVVXVVB')
+    return out
+
+
+SPECS = {'CRDO': credo, 'MRVL': marvell, 'AVGO': broadcom, 'AMD': amd, 'ANET': arista, 'PLTR': palantir, 'ALAB': astera, 'LITE': lumentum, 'SNDK': sandisk, 'VRT': vertiv, 'GEV': vernova}
 
 
 # ---- foreign issuers whose results come as several exhibits of one 6-K (release, presentation, financial statements) ---------
@@ -619,7 +659,7 @@ def deal(text):
 
 # companies whose dive also reads the previous quarter's release (a figure this release prints without that quarter): the same spec
 # reads both, so a figure of the previous quarter is quoted from that quarter's own release
-PRIOR = {'VRT', 'PLTR'}
+PRIOR = {'VRT', 'PLTR', 'GEV'}
 
 
 def read(ticker, text):

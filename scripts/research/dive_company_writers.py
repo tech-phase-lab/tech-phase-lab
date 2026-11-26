@@ -1014,4 +1014,157 @@ def vrt(f, url, before_previous, report=None, events=None, previous=None, prior=
     return {'tiles': tiles, 'numbers': numbers, 'evidence': ev.items, 'summary': summary(conclusion, growth, changes, caution, nxt)}
 
 
-WRITERS = {'AMD': amd, 'ANET': anet, 'PLTR': pltr, 'ALAB': alab, 'LITE': lite, 'SNDK': sndk, 'VRT': vrt}
+
+# ---- GE Vernova (GEV): no EPS, margin or quarterly guidance in the numbers; segment EBITDA margins; the previous release for last quarter -
+
+def bn_range(lo, hi):
+    return f'${lo}–{hi}B', f'{usd(Decimal(lo) * 1000)["ja"]}〜{usd(Decimal(hi) * 1000)["ja"]}'
+
+
+def gev(f, url, before_previous, report=None, events=None, previous=None, prior=None):
+    need(f, 'revenue', 'organic', 'margin', 'cfo', 'fcf', 'power', 'electrification', 'wind', 'windYtd', 'orders', 'powerOrders', 'cash', 'guidance')
+    need_prior(prior, 'revenue', 'margin', 'power', 'electrification', 'wind')
+    ev = Evidence(url)
+    rev, prev_rev = f['revenue'], prior['revenue']
+    r0, r2, r1 = rev.values[0], rev.values[1], prev_rev.values[0]
+    qoq, yoy = change(r0, r1), change(r0, r2)
+    ev.add('numbers.revenue.current', rev)
+    ev.add('numbers.revenue.yearAgo', rev)
+    ev.add('numbers.revenue.previous', prev_rev)
+    names = (('power', 'パワー', 'Power'), ('electrification', '電化', 'Electrification'), ('wind', '風力', 'Wind'))
+    segs = []
+    for i, (key, ja, en) in enumerate(names):
+        cur, old = f[key], prior[key]
+        ev.add(f'numbers.segments[{i}].revenue', cur)
+        ev.add(f'numbers.segments[{i}].operatingMargin', cur)
+        ev.add(f'numbers.segments[{i}].previous', old)
+        ev.add(f'numbers.segments[{i}].previousOperatingMargin', old)
+        segs.append({'key': key, 'nameJa': ja, 'nameEn': en, 'revenue': float(cur.values[0]), 'previous': float(old.values[0]),
+                     'operatingMargin': float(cur.values[6]), 'previousOperatingMargin': float(old.values[6])})
+    numbers = {'revenue': {'current': float(r0), 'previous': float(r1), 'yearAgo': float(r2)}, 'adjustedEPS': None, 'epsEstimate': None,
+               'grossMargin': None, 'guidance': None, 'segments': segs}
+    org, mg, pmg, orders = f['organic'], f['margin'], prior['margin'], f['orders']
+    tiles = [tile('売上高', 'Revenue', money_tile(ev, 0, rev, 0, None), f'前年同期比 +{rev.raws[2]}%(既存事業 +{org.raws[2]}%)', f'YoY +{rev.raws[2]}% (organic +{org.raws[2]}%)'),
+             text_tile('受注額', 'Orders', f'{usd(Decimal(orders.values[0]) * 1000)["ja"]}', f'${orders.values[0]}B', f'既存事業ベースで前年同期比 +{orders.values[1]}%', f'Up {orders.values[1]}% YoY organically'),
+             text_tile('調整後EBITDAマージン', 'Adjusted EBITDA margin', pc(mg.values[0]), pc(mg.values[0]), f'前年同期 {pc(mg.values[1])}', f'Prior-year quarter {pc(mg.values[1])}')]
+    ev.add('tiles[0].note', rev)
+    ev.add('tiles[0].note', org)
+    ev.add('tiles[1].value', orders)
+    ev.add('tiles[1].note', orders)
+    ev.add('tiles[2].value', mg)
+    ev.add('tiles[2].note', mg)
+    lead_i = max(range(3), key=lambda i: f[names[i][0]].values[3] - f[names[i][0]].values[4])
+    key, ja, en = names[lead_i]
+    lf, lp = f[key], prior[key]
+    po, pdrv = f['powerOrders'] if key == 'power' else None, f.get('powerDriver') if key == 'power' else None
+    if po:
+        ev.add('summary.cards.growth.sections[0]', po)
+    if pdrv:
+        ev.add('summary.cards.growth.sections[1]', pdrv)
+    lm0, lm1, lmy = lf.values[6], lp.values[6], lf.values[7]
+    growth = card(f'{ja}が伸びを主導', f'{en} led the growth', [
+        chip(tone(lf.values[2]), f'{ja}の売上 前年同期比 {sign(lf.values[2], 0)}', f'{en} revenue {sign(lf.values[2], 0)} YoY'),
+        chip(tone(lm0 - lm1), f'部門EBITDAマージン {pc(lm1)} → {pc(lm0)}', f'Segment EBITDA margin {pc(lm1)} → {pc(lm0)}')]
+        + ([chip('up', f'{ja}の受注 既存事業 +{po.values[1]}%', f'{en} orders +{po.values[1]}% organic')] if po else []), [
+        sec('happened', f'{ja}部門の売上は{usd(lf.values[0])["ja"]}で、前期の{usd(lp.values[0])["ja"]}から{"増え" if lf.values[0] > lp.values[0] else "減り"}、前年同期比{sign(lf.values[2], 0)}でした。'
+            + (f'受注は{usd(Decimal(po.values[0]) * 1000)["ja"]}で、既存事業ベースで+{po.values[1]}%です。' if po else ''),
+            f'{en} revenue was {usd(lf.values[0])["en"]}, {"up" if lf.values[0] > lp.values[0] else "down"} from {usd(lp.values[0])["en"]} last quarter and {sign(lf.values[2], 0)} from a year ago.'
+            + (f' Orders reached ${po.values[0]}B, up {po.values[1]}% organically.' if po else '')),
+        sec('good', f'部門EBITDAマージンは{pc(lm0)}で、前期の{pc(lm1)}、前年同期の{pc(lmy)}から{"上がりました" if lm0 > lm1 else "動きました"}。' + ('会社は価格の上昇と数量の増加を理由に挙げています。' if pdrv else ''),
+            f'The segment EBITDA margin was {pc(lm0)}, versus {pc(lm1)} last quarter and {pc(lmy)} a year ago.' + (' The company credits higher prices and volume.' if pdrv else '')),
+        sec('watch', ('伸びはガス発電設備に大きく頼っています。会社はインフレの影響も挙げており、コストが価格より速く上がれば利益率は下がりえます。' if pdrv else f'伸びは{ja}部門に大きく頼っています。'),
+            ('Growth depends heavily on gas power equipment. The company also cites inflation; if costs rise faster than prices, the margin could fall.' if pdrv else f'Growth depends heavily on {en}.')),
+        sec('view', '受注が売上を大きく上回っており、受注残が将来の売上を支えます。受注がどの速さで売上に変わるかを追います。',
+            'Orders far exceed revenue, so backlog underpins future sales. The pace at which orders turn into revenue is what to follow.')], key)
+    d = r0 - r1
+    cfo, fcf, cash, acq = f['cfo'], f['fcf'], f['cash'], f.get('acquired')
+    top_i = max(range(3), key=lambda i: f[names[i][0]].values[0] - prior[names[i][0]].values[0])
+    tk, tja, ten = names[top_i]
+    td = f[tk].values[0] - prior[tk].values[0]
+    ev.add('summary.cards.change.sections[1]', cfo)
+    ev.add('summary.cards.change.sections[1]', fcf)
+    ev.add('summary.cards.change.sections[1]', cash)
+    ev.add('summary.cards.change.sections[2]', org)
+    if acq:
+        ev.add('summary.cards.change.sections[2]', acq)
+    thin = f[tk].values[6] < mg.values[0]
+    changes = card(f'売上は前期比 {sign(qoq)}、調整後EBITDAマージンは{pc(mg.values[0])}', f'Revenue {sign(qoq)} QoQ, adjusted EBITDA margin {pc(mg.values[0])}', [
+        chip(tone(qoq), f'売上 前期比 {sign(qoq)}', f'Revenue {sign(qoq)} QoQ'),
+        chip(tone(mg.values[0] - pmg.values[0]), f'調整後EBITDAマージン {pc(pmg.values[0])} → {pc(mg.values[0])}', f'Adj. EBITDA margin {pc(pmg.values[0])} → {pc(mg.values[0])}')], [
+        sec('happened', f'売上は{usd(r1)["ja"]}から{usd(r0)["ja"]}へ、{usd(abs(d))["ja"]}{rose(d, True)}ました。調整後EBITDAマージンは前期の{pc(pmg.values[0])}から{pc(mg.values[0])}になりました。',
+            f'Revenue {rose(d)} from {usd(r1)["en"]} to {usd(r0)["en"]}, a change of {usd(abs(d))["en"]}. Adjusted EBITDA margin went from {pc(pmg.values[0])} last quarter to {pc(mg.values[0])}.'),
+        sec('good', f'営業キャッシュフローは{usd(cfo.values[0])["ja"]}、フリーキャッシュフローは{usd(fcf.values[0])["ja"]}でした。手元の現金は約{usd(Decimal(cash.values[0]) * 1000)["ja"]}です。',
+            f'Operating cash flow was {usd(cfo.values[0])["en"]} and free cash flow {usd(fcf.values[0])["en"]}. Cash on hand is about ${cash.values[0]}B.'),
+        sec('watch', f'前年同期比+{rev.raws[2]}%のうち、買収や為替を除いた既存事業の伸びは+{org.raws[2]}%です。' + (f'差の多くは、電化部門で買収した事業の売上{usd(acq.values[0])["ja"]}です。' if acq else ''),
+            f'Of the {rev.raws[2]}% YoY growth, organic growth (excluding acquisitions and currency) was {org.raws[2]}%.' + (f' Much of the gap is the {usd(acq.values[0])["en"]} of revenue from acquired businesses in Electrification.' if acq else '')),
+        sec('means', f'前期からの増加{usd(abs(d))["ja"]}のうち、{usd(td)["ja"]}が{tja}部門です。' + (f'{tja}部門の利益率は低いため、利益は売上ほどには伸びません。' if thin else ''),
+            f'Of the {usd(abs(d))["en"]} sequential change, {usd(td)["en"]} came from {ten}.' + (f' Because {ten} earns a thin margin, profit does not rise as fast as revenue.' if thin else ''))])
+    weak_i = min(range(3), key=lambda i: f[names[i][0]].values[6])
+    wk, wja, wen = names[weak_i]
+    wf, ytd = f[wk], f['windYtd'] if wk == 'wind' else None
+    wo, wd = (f.get('windOutlook'), f.get('windDriver')) if wk == 'wind' else (None, None)
+    ev.add('summary.cards.caution.sections[0]', wf)
+    if ytd:
+        ev.add('summary.cards.caution.sections[0]', ytd)
+    if wd:
+        ev.add('summary.cards.caution.sections[1]', wd)
+    if wo:
+        ev.add('summary.cards.caution.sections[1]', wo)
+    loss_ytd = ytd.values[3] if ytd else None
+    caution = card(f'{wja}のマージンは{pc(wf.values[6])}' + ('、年初来は赤字' if loss_ytd is not None and loss_ytd < 0 else ''), f'{wen} margin {pc(wf.values[6])}' + (', loss-making year to date' if loss_ytd is not None and loss_ytd < 0 else ''), [
+        chip('gold', f'{wja}の部門EBITDAマージン {pc(wf.values[6])}', f'{wen} segment EBITDA margin {pc(wf.values[6])}')]
+        + ([chip(tone(loss_ytd), f'{wja} 年初来EBITDA {usd(loss_ytd)["ja"]}', f'{wen} year-to-date EBITDA {usd(loss_ytd)["en"]}')] if ytd else [])
+        + ([chip('down', f'{wja}の通年損失見通し {usd(Decimal(wo.values[0]))["ja"]}〜{usd(Decimal(wo.values[1]))["ja"]}',
+                     f'2026 {wen} loss outlook ${wo.values[0]}–{wo.values[1]}M')] if wo else []), [
+        sec('happened', f'{wja}部門の売上は{usd(wf.values[0])["ja"]}、部門EBITDAマージンは{pc(wf.values[6])}でした。前年同期の{pc(wf.values[7])}から改善しましたが、' + (f'年初からの合計は{usd(loss_ytd)["ja"]}です。' if ytd else '利益はまだ小さい水準です。'),
+            f'{wen} revenue was {usd(wf.values[0])["en"]} with a {pc(wf.values[6])} segment EBITDA margin, versus {pc(wf.values[7])} a year ago' + (f'; year to date it totals {usd(loss_ytd)["en"]}.' if ytd else '.')),
+        sec('watch', ('今期の改善には、洋上風力の案件コストの減少と関税の回収が含まれます。' if wd else '') + (f'会社は通年の{wja}の損失見通しを約{usd(Decimal(wo.values[2]))["ja"]}から{usd(Decimal(wo.values[0]))["ja"]}〜{usd(Decimal(wo.values[1]))["ja"]}に広げました。' if wo else ''),
+            ("This quarter's improvement included lower offshore project costs and tariff recoveries." if wd else '') + (f' The company widened its {wen} loss outlook from about ${wo.values[2]}M to ${wo.values[0]}–{wo.values[1]}M.' if wo else '')
+            if (wd or wo) else f'{wen} margins remain thin.'),
+        sec('means', (f'年初からの損失がすでに{usd(-loss_ytd)["ja"]}あるので、通年の損失が{usd(Decimal(wo.values[0]))["ja"]}〜{usd(Decimal(wo.values[1]))["ja"]}に収まるには、第4四半期に黒字になる必要があります。'
+                      if wo and loss_ytd is not None and -loss_ytd > Decimal(wo.values[1]) else f'{wja}部門は売上の約{q(wf.values[0] / r0 * 100, 0)}%ですが、利益への貢献は小さいままです。'),
+            (f'With {usd(-loss_ytd)["en"]} already lost year to date, a full-year loss of ${wo.values[0]}–{wo.values[1]}M assumes {wen} turns profitable in the fourth quarter.'
+             if wo and loss_ytd is not None and -loss_ytd > Decimal(wo.values[1]) else f'{wen} is about {q(wf.values[0] / r0 * 100, 0)}% of revenue but contributes little profit.')),
+        sec('view', f'{wja}は売上の約{q(wf.values[0] / r0 * 100, 0)}%を占めますが、利益への貢献は小さい部門です。次の決算で、実際に利益が出るかを確かめます。',
+            f'{wen} is about {q(wf.values[0] / r0 * 100, 0)}% of revenue but contributes little profit. Whether it actually turns profitable is the point to check in the next report.')], wk)
+    gd = f['guidance'].values
+    deal, bb = f.get('deal'), f.get('buyback')
+    ev.add('summary.cards.next.sections[0]', f['guidance'])
+    ev.add('summary.cards.next.sections[1]', rev)
+    if deal:
+        ev.add('summary.cards.next.sections[2]', deal)
+    if bb:
+        ev.add('summary.cards.next.sections[2]', bb)
+    rng_en, rng_ja = bn_range(gd[0], gd[1])
+    fcf_en, fcf_ja = bn_range(gd[8], gd[9])
+    ytd_rev = rev.values[3]
+    q4lo, q4hi = Decimal(gd[0]) * 1000 - ytd_rev, Decimal(gd[1]) * 1000 - ytd_rev
+    nxt = card('会社が通年の見通しを引き上げ', 'Company raised its full-year outlook', [
+        chip('gold', f'通年の売上 {rng_ja}', f'Full-year revenue {rng_en}'),
+        chip('gold', f'調整後EBITDAマージン {gd[4]}〜{gd[5]}%', f'Adj. EBITDA margin {gd[4]}–{gd[5]}%'),
+        chip('gold', f'フリーキャッシュフロー {fcf_ja}', f'Free cash flow {fcf_en}')], [
+        sec('happened', f'会社は通年の売上見通しを{bn_range(gd[2], gd[3])[1]}から{rng_ja}に、フリーキャッシュフローを{bn_range(gd[10], gd[11])[1]}から{fcf_ja}に引き上げました。四半期ごとの売上見通しは出していません。',
+            f'The company raised full-year revenue guidance from {bn_range(gd[2], gd[3])[0]} to {rng_en} and free cash flow from {bn_range(gd[10], gd[11])[0]} to {fcf_en}. It does not give a quarterly revenue outlook.'),
+        sec('means', f'年初からの売上は{usd(ytd_rev)["ja"]}なので、見通しから逆算すると第4四半期の売上は約{usd(q4lo)["ja"]}〜{usd(q4hi)["ja"]}になります。',
+            f'Year-to-date revenue was {usd(ytd_rev)["en"]}, so the outlook implies fourth-quarter revenue of roughly {usd(q4lo)["en"]}–{usd(q4hi)["en"]}.'),
+        sec('watch', (f'{deal.values[0]}を{usd(Decimal(deal.values[1]) * 1000)["ja"]}で買収することでも合意しました。完了は{deal.values[3]}年{"後半" if deal.values[2] == "late" else "前半" if deal.values[2] == "early" else "半ば"}の見込みです。' if deal else '')
+            + (f'自社株買いの枠も{usd(Decimal(bb.values[0]) * 1000)["ja"]}に広げています。' if bb else '') + '大きな現金の使い道として追う価値があります。',
+            (f'It agreed to acquire {deal.values[0]} for ${deal.values[1]}B (closing expected in {deal.values[2]} {deal.values[3]}). ' if deal else '')
+            + (f'It raised its buyback authorization to ${bb.values[0]}B. ' if bb else '') + 'These large uses of cash are worth tracking.'),
+        sec('view', f'見通しは会社の計画で、実績ではありません。第4四半期の売上がこの幅に入るか、{wja}部門が利益を出せるかを確かめます。',
+            f"The outlook is the company's plan, not a result. Watch whether Q4 revenue lands in this range and whether {wen} turns a profit.")])
+    bl = f.get('backlog')
+    if bl:
+        ev.add('summary.conclusion[0]', bl)
+    conclusion = [
+        c(f'売上は{usd(r0)["ja"]}で、前期比{sign(qoq, 0)}、前年同期比+{rev.raws[2]}%でした。受注は{usd(Decimal(orders.values[0]) * 1000)["ja"]}(既存事業ベースで+{orders.values[1]}%)と売上を大きく上回り'
+          + (f'、受注残は{usd(Decimal(bl.values[1]) * 1000)["ja"]}になりました。' if bl else 'ました。'),
+          f'Revenue was {usd(r0)["en"]}, {sign(qoq, 0)} from the previous quarter and {rev.raws[2]}% from a year ago. Orders of ${orders.values[0]}B (up {orders.values[1]}% organically) far exceeded revenue'
+          + (f', lifting backlog to ${bl.values[1]}B.' if bl else '.')),
+        c(f'調整後EBITDAマージンは前年同期の{pc(mg.values[1])}から{pc(mg.values[0])}になりました。ただし{wja}部門のマージンは{pc(wf.values[6])}にとどまり' + ('、年初からは赤字です。' if loss_ytd is not None and loss_ytd < 0 else 'ます。'),
+          f'Adjusted EBITDA margin went from {pc(mg.values[1])} a year ago to {pc(mg.values[0])}. The {wen} segment, however, earned only a {pc(wf.values[6])} margin' + (' and is still loss-making year to date.' if loss_ytd is not None and loss_ytd < 0 else '.')),
+        c(f'会社は通年の見通しを、売上{rng_ja}、フリーキャッシュフロー{fcf_ja}に引き上げました。', f'The company raised its full-year outlook to revenue of {rng_en} and free cash flow of {fcf_en}.')]
+    return {'tiles': tiles, 'numbers': numbers, 'evidence': ev.items, 'summary': summary(conclusion, growth, changes, caution, nxt)}
+
+
+WRITERS = {'AMD': amd, 'ANET': anet, 'PLTR': pltr, 'ALAB': alab, 'LITE': lite, 'SNDK': sndk, 'VRT': vrt, 'GEV': gev}

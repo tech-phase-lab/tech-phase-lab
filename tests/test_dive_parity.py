@@ -41,6 +41,7 @@ FILINGS = {
     'VRT': {'events': [('https://www.sec.gov/Archives/edgar/data/1674101/000162828026067393/exhibit991vrt-q42026102720.htm', 'VRT-8k-2026-10-27-ex991',
                         datetime(2026, 10, 27, 20, 15, tzinfo=timezone.utc))],
             'prior': ('https://www.sec.gov/Archives/edgar/data/1674101/000162828026050323/q22026exhibit991vrt07292026.htm', 'VRT-release-q2-2026')},
+    'GEV': {'prior': ('https://www.sec.gov/Archives/edgar/data/1996810/000199681026000147/gevpressrelease2q26.htm', 'GEV-release-q2-2026')},
 }
 GAPS = {  # what is still different from the hand-made file with every filing in hand (none)
     'CRDO': {}, 'MRVL': {}, 'AVGO': {}, 'TSM': {},
@@ -49,7 +50,7 @@ GAPS = {  # what is still different from the hand-made file with every filing in
     'AMD': {}, 'ANET': {},
     'PLTR': {},
     'ALAB': {}, 'LITE': {}, 'SNDK': {},
-    'VRT': {},
+    'VRT': {}, 'GEV': {},
 }
 CHIP_GAPS = {}
 FILINGS_DIR = ROOT / 'tests/fixtures/dive-filings'
