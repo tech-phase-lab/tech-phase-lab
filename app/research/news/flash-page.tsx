@@ -35,6 +35,9 @@ export function dayHeading(key: string, ja: boolean) {
 function timeCell(row: FlashRow, lang: Language) {
   // A source that states only the day sits under that day's heading with no clock (owner, Oct 15: "時刻なし" removed).
   if (row.timeKind === "date") return null;
+  // A source that states no time shows when it was first seen, labelled 取得 / Found as on the company timeline: a found
+  // time is never shown as if it were the publication time (owner, Oct 10; label added Nov 26).
+  if (row.timeKind === "found") return <time dateTime={row.at}><span className={timeline.found}>{lang === "ja" ? "取得" : "Found"}</span>{displayClock(row.at, lang)}</time>;
   return <time dateTime={row.at}>{displayClock(row.at, lang)}</time>;
 }
 

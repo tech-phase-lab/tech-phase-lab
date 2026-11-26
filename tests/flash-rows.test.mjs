@@ -117,3 +117,14 @@ test('the company timeline sorts a date-only source by when it was first seen th
   assert.match(source, /firstSeenOnDay\(row\.at, row\.observedAt\)/);
   assert.match(source, /\.sort\(\(a, b\) => rowInstant\(b\) - rowInstant\(a\)\)/);
 });
+
+test('a first-seen time on 速報 is labelled 取得 / Found above the clock, in the company timeline style (owner, Nov 26)', async () => {
+  const source = await readFile(new URL('../app/research/news/flash-page.tsx', import.meta.url), 'utf8');
+  assert.match(source, /row\.timeKind === "found"\) return <time dateTime=\{row\.at\}><span className=\{timeline\.found\}>\{lang === "ja" \? "取得" : "Found"\}<\/span>\{displayClock\(row\.at, lang\)\}<\/time>/);
+  assert.match(source, /import timeline from "\.\.\/companies\/company-activity\.module\.css"/);
+  const css = await readFile(new URL('../app/research/companies/company-activity.module.css', import.meta.url), 'utf8');
+  assert.match(css, /\.found\{display:block;font-size:9\.5px;letter-spacing:0;color:#6f7b8c\}/);
+  // The company timeline uses the same English word for found times.
+  const company = await readFile(new URL('../app/research/companies/company-activity.tsx', import.meta.url), 'utf8');
+  assert.match(company, /styles\.found\}>\{lang === "ja" \? "取得" : "Found"\}/);
+});

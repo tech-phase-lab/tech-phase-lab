@@ -17,7 +17,7 @@ export function officialTime(item: OfficialUpdate) {
   return { at: item.observedAt, kind: 'observed' as const };
 }
 /** A release whose source states only its day, first seen by the monitor within that day: the first-seen instant, so the
- * row can show an hour and minute and sort inside its day (owner, Nov 26: "何時に起きたのかさっぱり分からん"). The window
+ * row can show an hour and minute (labelled 取得 / Found) and sort inside its day (owner, Nov 26: "何時に起きたのかさっぱり分からん"). The window
  * allows for every time zone the stated day can be in (UTC+14 to UTC-12) and a short collection delay; a release found
  * later than that (an old release found again) keeps just its date. Publication times stated by the feed or the article
  * page are collected first (monitor publishedAt); this is only the fallback for sources that state no time at all. */
@@ -58,8 +58,9 @@ export function usEasternTime(at: string, kind: string) {
  * item is never shown as if it were the publication time (owner, Oct 10: a
  * story with no stated time was listed as 21:44, which was only when it was
  * found). Items with no source time at all are not listed (see officialTime).
- * Exception (owner, Nov 26): the 速報 timeline gives a date-only release the time it was first seen on that day
- * (firstSeenOnDay), because a row with no clock left readers unable to tell when it happened. */
+ * The 速報 timeline gives a date-only release the time it was first seen on that day (firstSeenOnDay, owner Nov 26:
+ * a row with no clock left readers unable to tell when it happened); that time is always labelled 取得 / Found, as on
+ * the company timeline, so it is never shown as if it were the publication time. */
 // The third argument is kept so existing callers need no change; it is ignored.
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function clockTime(at: string, kind: string, _observedAt?: string) {
