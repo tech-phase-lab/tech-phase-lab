@@ -13,6 +13,14 @@ export type TodayPlan = {
   estimate?: { allowedDropPct: number; estimatedChangePct: number; remainingPct: number } | null; // §5, only for members with q08
 };
 
+/** How the body speaks of numbers (owner, Nov 26 §4), part of the AI's instructions (services/resolute-api/today-plan-job.mjs) and
+ * checked by today-plan-validate.ts (wordingIssue). A day's move and the position from the member's base are different numbers. */
+export const TODAY_WORDING_RULES = "Two different numbers: dayChangePct (and tpIndexMoves) is today's move only; fromReferencePct is the position from the member's base (reference price), the number the check rows show. "
+  + "Whenever you write a same-day move, always attach 今日 in Japanese and today in English in the same sentence (例: NVDAは今日−3.9%下がりました。 / NVDA fell 3.9% today.). "
+  + "Whether a buy-more line or a rise level is near or far is written only with the same from-base number as the check rows: fromReferencePct, or fromReferenceRoundedPct when a rounded figure reads better, or the row's distance (例: それでも基準より24%高い位置です。 / It is still 24% above your base.). "
+  + "Never state the distance to a line with any other number, and never put a same-day move in the same sentence as the distance to a line. "
+  + "Example body for a member whose NVDA fell today but is far above the base: NVDAは今日−3.9%下がりました。 / それでも基準より24%高い位置です。 / 今日は買い足す日ではありません。";
+
 /** What the fixed plan is computed from. Every number shown comes from here: the day's Shock Gauge stories, the market gauge,
  * the member's own saved lines and their alert stocks' moves from the reference prices they set. Nothing is invented. */
 export type TodayInput = {
@@ -60,17 +68,22 @@ export function fixedTodayPlan(input: TodayInput): TodayPlan {
   const exitHit = stopLossPct !== null && estimate !== null && estimate.estimatedChangePct <= -stopLossPct;
   const hot = input.thermometer?.band === 4;
 
+  // Row shape (owner, Nov 26 §3): small label with the line and the stock, two bold lines (what the number is, the distance to the
+  // line while it is not reached), the number alone on the right. The stock shown is the one that reached the line, else the closest.
+  const position = (distancePct: number | null) => distancePct === null ? both("基準からの位置", "Position vs. your base")
+    : both(`基準からの位置\n線まであと${num(distancePct)}%`, `Position vs. your base\n${num(distancePct)}% to go`);
+  const buyStock = buyHit ?? lowest, upStock = upHit ?? highest;
   const checks: Record<"buy" | "up" | "gauge" | "estimate", TodayCheck | null> = {
-    buy: buyDropPct === null || !input.stocks.length ? null : {
-      label: both(`買い増しライン −${num(buyDropPct)}%`, `Buy-more line −${num(buyDropPct)}%`),
-      rule: buyHit ? both(`${buyHit.symbol}が届きました`, `${buyHit.symbol} has reached it`) : both("どの銘柄も届いていません", "No stock has reached it"),
-      today: buyHit ? both(signed(buyHit.fromReferencePct), signed(buyHit.fromReferencePct)) : DASH,
+    buy: buyDropPct === null || !buyStock ? null : {
+      label: both(`買い増しライン −${num(buyDropPct)}%　${buyStock.symbol}`, `Buy-more line −${num(buyDropPct)}% · ${buyStock.symbol}`),
+      rule: position(buyHit ? null : buyDropPct + buyStock.fromReferencePct),
+      today: both(signed(buyStock.fromReferencePct), signed(buyStock.fromReferencePct)),
       state: buyHit ? "reached" : "ok",
     },
-    up: surgeCapPct === null || !input.stocks.length ? null : {
-      label: both(`上昇の目安 +${num(surgeCapPct)}%`, `Up target +${num(surgeCapPct)}%`),
-      rule: upHit ? both(`${upHit.symbol}が届きました`, `${upHit.symbol} has reached it`) : both("どの銘柄も届いていません", "No stock has reached it"),
-      today: upHit ? both(signed(upHit.fromReferencePct), signed(upHit.fromReferencePct)) : DASH,
+    up: surgeCapPct === null || !upStock ? null : {
+      label: both(`上昇の目安 +${num(surgeCapPct)}%　${upStock.symbol}`, `Up target +${num(surgeCapPct)}% · ${upStock.symbol}`),
+      rule: position(upHit ? null : surgeCapPct - upStock.fromReferencePct),
+      today: both(signed(upStock.fromReferencePct), signed(upStock.fromReferencePct)),
       state: upHit ? "reached" : "ok",
     },
     gauge: !input.thermometer ? null : {
@@ -80,9 +93,9 @@ export function fixedTodayPlan(input: TodayInput): TodayPlan {
       state: hot ? "reached" : "ok",
     },
     estimate: !estimate ? null : {
-      label: both(`許容できる下落 −${num(estimate.allowedDropPct)}%　推定の目安`, `Loss you can accept −${num(estimate.allowedDropPct)}% · estimate`),
-      rule: both(`投資額はいま約 ${signed(estimate.estimatedChangePct)}\nラインまであと${num(estimate.remainingPct)}%`,
-        `Your investments are now about ${signed(estimate.estimatedChangePct)}\n${num(estimate.remainingPct)}% left to your line`),
+      label: both(`許容できる下落 −${num(estimate.allowedDropPct)}%`, `Loss you can accept −${num(estimate.allowedDropPct)}%`),
+      rule: estimate.remainingPct <= 0 ? both("いまの資産の下落", "Drop in your assets now")
+        : both(`いまの資産の下落\n線まであと${num(estimate.remainingPct)}%`, `Drop in your assets now\n${num(estimate.remainingPct)}% to go`),
       today: both(signed(estimate.estimatedChangePct), signed(estimate.estimatedChangePct)),
       state: estimate.remainingPct <= 0 ? "reached" : "ok",
     },

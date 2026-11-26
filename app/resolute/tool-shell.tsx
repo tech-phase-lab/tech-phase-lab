@@ -3,6 +3,7 @@ import {writeBarState} from '@/lib/research/resolute-bar-state';
 import { ReviewLink as Link, useReview } from "./review-context";
 import { usePathname } from "next/navigation";
 import { useLinkStatus } from "next/link";
+import Image from "next/image";
 import { useEffect, useState, type ReactNode } from "react";
 import { useOpenAtTop } from "./use-open-at-top";
 import AddToHomeCard from "./add-to-home-card";
@@ -142,8 +143,9 @@ export function AnchorMark({className}:{className?:string}) {
  return <svg className={className} viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="9" r="4" /><path d="M24 13v28M17 19h14M9 31c0 7 7 11 15 11s15-4 15-11M5 33l4-4 4 4M35 33l4-4 4 4" /></svg>;
 }
 /** The phone top bar and menu of every RESOLUTE page (owner, Nov 25 §B and §02).
- * - "tool" (default): 「‹ Tech Phase」 (one tap back to Tech Phase, always shown while the menu is closed) and 「☰ メニュー」 on the left, JA/EN on the right.
- *   The menu: a large way back to Tech Phase, the six steps in two columns, the tools as an icon list, and small links to settings.
+ * - "tool" (default): 「☰ メニュー」 on the left, JA/EN on the right (owner, Nov 26 §1: 「‹ Tech Phase」 left the bar).
+ *   The menu: the way back to Tech Phase first (green card with the Tech Phase logo), the six steps in two columns, the tools as
+ *   an icon list, and small links to settings.
  * - "purchase" (checkout, complete, receive): only the anchor + RESOLUTE logo and JA/EN.
  * Pages drawn by ToolShell get it automatically; a page outside ToolShell renders it itself inside `styles.page styles.mobile`. */
 export function ResoluteHeader({locale,setLocale,variant="tool",home=false}:{locale:DiagnosisLocale;setLocale:(next:DiagnosisLocale)=>void;variant?:"tool"|"purchase";home?:boolean}) {
@@ -165,14 +167,13 @@ export function ResoluteHeader({locale,setLocale,variant="tool",home=false}:{loc
  return <>
   <header className={`${h.bar} ${home?h.inHome:""}`}>
    <div className={h.left}>
-    {menuOpen ? null : <Link href={TECH_PHASE_HOME} prefetch={false} className={h.tpBack} aria-label={en?"Back to Tech Phase":"Tech Phaseへ戻る"}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>Tech Phase</Link>}
     <button type="button" className={h.menuBtn} aria-expanded={menuOpen} aria-controls="resolute-tools" onClick={()=>setMenuOpen(open=>!open)}>
      <svg width="16" height="16" viewBox="0 0 20 20" aria-hidden="true"><path d={menuOpen?"M4 4l12 12M16 4L4 16":"M3 5h14M3 10h14M3 15h14"} fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"/></svg>{menuOpen?(en?"Close":"閉じる"):(en?"Menu":"メニュー")}</button>
    </div>
    {langs}
   </header>
   {menuOpen ? <nav id="resolute-tools" className={h.menu} aria-label={en?"RESOLUTE menu":"RESOLUTEのメニュー"}>
-   <Link href={TECH_PHASE_HOME} prefetch={false} className={h.tpCard}><i aria-hidden="true">TP</i><span><b>{en?"Back to Tech Phase":"Tech Phaseへ戻る"}</b><small>{en?"Markets · Stock search · Breaking news":"マーケット・銘柄検索・速報"}</small></span><svg className={h.chev} viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></Link>
+   <Link href={TECH_PHASE_HOME} prefetch={false} className={h.tpCard}><Image src="/start/logo.png" alt="" width={34} height={34} unoptimized /><span><b>{en?"Back to Tech Phase":"Tech Phaseへ戻る"}</b><small>{en?"News · Prices · Research":"ニュース・株価・リサーチ"}</small></span><svg className={h.chev} viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></Link>
    <h2 className={h.sec}>{en?"Six steps":"6つのステップ"}</h2>
    <div className={h.steps}>{STEPS.map(([href,ja,eng],index)=>
     <Link key={href} href={href} onClick={leave(href)} prefetch={false} className={h.step} aria-current={current===href?"page":undefined}><i>{index+1}</i><span>{en?eng:ja}</span><Pending /></Link>)}</div>

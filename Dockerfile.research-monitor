@@ -6,6 +6,7 @@ COPY lib/research/company-subjects.json lib/research/company-subjects.json
 COPY lib/research/stock-splits.json lib/research/stock-splits.json
 COPY lib/research/value-check-universe.json lib/research/value-check-universe.json
 COPY lib/research/comparison-exclusions.json lib/research/comparison-exclusions.json
+COPY lib/research/dives lib/research/dives
 COPY scripts/research/requirements.txt scripts/research/requirements.txt
 RUN pip install --no-cache-dir -r scripts/research/requirements.txt
 COPY scripts/research scripts/research

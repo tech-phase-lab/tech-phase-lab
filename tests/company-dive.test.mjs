@@ -137,8 +137,8 @@ test('staleness: a release the calendar or the SEC results data already knows is
 
 test('the company page reads the dive file first, keeps the legacy view as the fallback and labels an old quarter',()=>{
  const page=fs.readFileSync(new URL('../app/research/companies/[ticker]/page.tsx',import.meta.url),'utf8');
- assert.match(page,/loadCompanyDive\(ticker\)/);assert.match(page,/companyDiveForMember\(file, verified\)/);
- assert.match(page,/const watch = dive \? null : companyWatchForMember/);assert.match(page,/newerReport\(ticker, shown\.releasedOn\)/);
+ assert.match(page,/loadEffectiveDive\(ticker\)/);assert.match(fs.readFileSync(new URL("../lib/research/company-earnings-live.server.ts",import.meta.url),"utf8"),/const file = loadCompanyDive\(ticker\);/);assert.match(page,/companyDiveForMember\(file, verified\)/);
+ assert.match(page,/const watch = dive \? null : companyWatchForMember/);assert.match(page,/newerReport\(ticker, live\?\.releasedOn \?\? shown\.releasedOn\)/);
  const view=fs.readFileSync(new URL('../app/research/companies/company-watch.tsx',import.meta.url),'utf8');
  assert.match(view,/'前回の決算'/);assert.match(view,/<EarningsDive /);
  const config=fs.readFileSync(new URL('../next.config.ts',import.meta.url),'utf8');

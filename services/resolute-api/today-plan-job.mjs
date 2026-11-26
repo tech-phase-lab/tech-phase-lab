@@ -13,10 +13,10 @@ import {fetchDailyBatch,SYMBOL} from '../../lib/resolute/twelve-daily.ts';
 import {leaseFromEnv,unpacedLease} from '../../lib/resolute/twelve-lease.ts';
 import {latestRiskDate,parseRiskArticle,isLegacyRiskArticle} from '../../lib/resolute/risk.ts';
 import {safeThermometerSnapshot,thermometerSession} from '../../lib/resolute/thermometer-runtime.ts';
-import {fixedTodayPlan} from '../../lib/resolute/today-plan.ts';
+import {fixedTodayPlan,TODAY_WORDING_RULES} from '../../lib/resolute/today-plan.ts';
 import {firstDropPct} from '../../lib/resolute/first-line.ts';
 import {marketDirection,newsOf,gaugeOf,indexMoves,thermometerFacts,shockItems,maxStars,watchFacts,estimateEligibility,estimateIndex,estimateBaseSession,
- tpIndexLinks,chainedRatio,closeRatio,estimateFromRatio,reachedLines,checkFacts,modelInput} from '../../lib/resolute/today-plan-facts.ts';
+ tpIndexLinks,chainedRatio,closeRatio,estimateFromRatio,reachedLines,checkFacts,modelInput,wordingFacts} from '../../lib/resolute/today-plan-facts.ts';
 import {validateTodayOutput,parseTodayPlan,TODAY_OUTPUT_SCHEMA,TODAY_REJECTIONS} from '../../lib/resolute/today-plan-validate.ts';
 import {reserveAiSpend,serializeBudgetedRequest,todayPlanMonthlyLimit,TODAY_PLAN_RESERVATION_USD} from './ai-budget.mjs';
 import {boundedJSON} from './risk-store.mjs';
@@ -41,7 +41,8 @@ export const TODAY_INSTRUCTIONS='You write the 「今日やること」 (what to
  +'highestStars 3 to 5 on an up day (do not chase the rise); highestStars 3 to 5 otherwise (do not act on impulse); otherwise business as usual. '
  +'Examples of the tone: むやみに動かない, 決めていた買い増しの日, 買いすぎに気をつける, 浮かれて買い足さない, いつも通りでいい. Say it in your own words and never repeat any of recentHeadlines. '
  +'body: 2 to 4 lines in each language (Japanese at most 40 characters per line, English at most 120), complete sentences: what happened that matters to this member, and which of their own rules it touches. '
- +'checks: at most 3, chosen from checkCandidates by id, reached ones first; copy label, rule and today from the candidate (you may shorten the words, never change a number). Give no checks when there are no candidates. '
+ +'checks: at most 3, chosen from checkCandidates by id, reached ones first; copy label, rule and today from the candidate exactly (the card shows the candidate\'s own words). Give no checks when there are no candidates. '
+ +TODAY_WORDING_RULES+' '
  +'Numbers: use only numbers that appear in the input, written exactly as given. Never calculate a new number (no sums, differences, conversions or rounding) and never invent prices, percentages, dates or counts. '
  +'Advice: frame everything against the member\'s own saved rules. Never recommend buying or selling anything beyond what their rules say, and give no outlook or prediction. '
  +'Never write words like チャンス, 買い時, 売り時, おすすめ, 推奨, should buy, should sell, opportunity, recommend. '
@@ -128,7 +129,8 @@ export async function generateTodayPlan(facts,plan,recentHeadlines,model){
  const input=modelInput(facts,plan,recentHeadlines);
  // The fallback is the one fixed plan the home card also shows (lib/resolute/today-plan.ts), dated on the U.S. market date.
  const fixed=()=>parseTodayPlan({...fixedTodayPlan(facts.todayInput),date:facts.date});
- const ctx={date:facts.date,direction:facts.direction,checks:facts.checks,estimate:facts.estimate,inputs:[input]};
+ // §4 (owner, Nov 26): a same-day move always with 今日 / today, and never as the distance to a line (validated, then regenerated once).
+ const ctx={date:facts.date,direction:facts.direction,checks:facts.checks,estimate:facts.estimate,inputs:[input],dayMoves:wordingFacts(facts).dayMoves};
  const reasons=[],usage=[];
  if(!model)return {plan:fixed(),reasons:['model-not-configured'],usage};
  let request=input;

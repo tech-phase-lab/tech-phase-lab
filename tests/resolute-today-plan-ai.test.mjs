@@ -4,8 +4,8 @@ import {readFileSync} from 'node:fs';
 import {PGlite} from '@electric-sql/pglite';
 import {fixedTodayPlan} from '../lib/resolute/today-plan.ts';
 import {validateTodayOutput,parseTodayPlan,allowedNumbers,unknownNumbers,HEADLINE_MAX_JA} from '../lib/resolute/today-plan-validate.ts';
-import {chainedRatio,tpIndexLinks,closeRatio,estimateFromRatio,estimateIndex,estimateEligibility,estimateBaseSession,checkFacts,watchFacts,marketDirection,newsOf,gaugeOf,reachedLines} from '../lib/resolute/today-plan-facts.ts';
-import {generateTodayPlan,runTodayPlanJob,estimateRatio,createTodayModel,TODAY_PLAN_MODEL} from '../services/resolute-api/today-plan-job.mjs';
+import {chainedRatio,tpIndexLinks,closeRatio,estimateFromRatio,estimateIndex,estimateEligibility,estimateBaseSession,checkFacts,watchFacts,marketDirection,newsOf,gaugeOf,reachedLines,wordingFacts} from '../lib/resolute/today-plan-facts.ts';
+import {generateTodayPlan,runTodayPlanJob,estimateRatio,createTodayModel,TODAY_PLAN_MODEL,TODAY_INSTRUCTIONS} from '../services/resolute-api/today-plan-job.mjs';
 import {createTodayPlanRead} from '../services/resolute-api/today-plan-read.mjs';
 import {createHandler} from '../services/resolute-api/handler.mjs';
 import {fetchTodayPlan,parseTodayPlanSnapshot} from '../lib/resolute/today-plan-transport.ts';
@@ -59,6 +59,25 @@ test('validator: length, lines, check count, ellipsis, advice and direction',()=
  assert.equal(r({...good,headline:{ja:'むやみに動かない',en:'Stay put'},checks:[]},{direction:'up'}),'direction');
  assert.equal(r({...good,headline:{ja:'浮かれて買い足さない',en:'No chasing'},checks:[]},{direction:'down'}),'direction');
  assert.equal(r(null),'shape');
+});
+test('validator: a same-day move always says 今日 / today, and never stands for the distance to a line (owner, Nov 26 §4)',()=>{
+ const c=ctx({direction:'down',checks:[check('buy:NVDA')],inputs:[{dayChangePct:-3.9,fromReferencePct:24.4,fromReferenceRoundedPct:24,line:5,distancePct:29.4}],dayMoves:[3.9]});
+ const body=(ja,en=['NVDA fell 3.9% today.','It is still 24% above your base.'])=>({...good,headline:{ja:'買いすぎに注意',en:'Mind not to overbuy'},body:{ja,en},checks:[]});
+ // The owner's example (11/26 NVDA) passes.
+ const ok=validateTodayOutput(body(['NVDAは今日−3.9%下がりました。','それでも基準より24%高い位置です。','今日は買い足す日ではありません。']),c);
+ assert.equal(ok.ok,true);
+ // The production text: a day move without 今日, beside the line.
+ assert.equal(validateTodayOutput(body(['NVDAは−3.9%でまだ買い増し前。','5%下落の線には届いていない。']),c).reason,'day-move');
+ assert.equal(validateTodayOutput(body(['NVDAは今日−3.9%下がりました。','線まではまだ遠い日です。'],['NVDA fell 3.9%.','Still far from the line.']),c).reason,'day-move');
+ // The day move used as the distance.
+ assert.equal(validateTodayOutput(body(['NVDAは今日−3.9%で、線まであと少しです。','決めた手順を確かめます。']),c).reason,'distance');
+ // A day move equal to a from-base number cannot be told apart and is not checked.
+ assert.deepEqual(wordingFacts({watch:[{symbol:'NVDA',close:1,dayChangePct:-3.9,fromReferencePct:24.4,referencePrice:1,buyLine:{dropPct:5,reached:false,distancePct:29.4},upTarget:null},
+  {symbol:'AMD',close:1,dayChangePct:5,fromReferencePct:2,referencePrice:1,buyLine:{dropPct:5,reached:false,distancePct:7},upTarget:null}],indexMoves:[{ja:'TP半導体40 −4.6%',en:'TP Semiconductor 40 −4.6%'}],estimate:null,checks:[]}).dayMoves,[3.9,4.6]);
+ // The rows always keep the candidate's own words, whatever the model wrote.
+ const rows=validateTodayOutput({...good,checks:[{id:'buy:NVDA',label:{ja:'x',en:'x'},rule:{ja:'x',en:'x'},today:{ja:'x',en:'x'}}]},ctx());
+ assert.deepEqual(rows.plan.checks[0],{label:check('buy:NVDA').label,rule:check('buy:NVDA').rule,today:check('buy:NVDA').today,state:'reached'});
+ assert.match(TODAY_INSTRUCTIONS,/always attach 今日/);assert.match(TODAY_INSTRUCTIONS,/Never state the distance to a line with any other number/);
 });
 test('the fallback is the one shared fixed plan (lib/resolute/today-plan.ts), and it passes the stored-shape check',()=>{
  const input=(o={})=>({date:SESSION,news:[{stars:4,changePercent:3.4}],thermometer:{index:'sox',band:2,changePercent:3.4},lines:{buyDropPct:10,stopLossPct:null,surgeCapPct:20},stocks:[{symbol:'NVDA',fromReferencePct:-4}],estimate:{allowedDropPct:30,estimatedChangePct:-12.3,remainingPct:17.7},...o});
@@ -147,7 +166,13 @@ test('check facts: distance to the member\'s own lines from the reference price;
   [['NVDA',-10.5,-3.2,{dropPct:10,reached:true,distancePct:0},false],['AMD',21,2.5,{dropPct:10,reached:false,distancePct:31},true]]);
  const checks=checkFacts(watch,p,{allowedDropPct:30,estimatedChangePct:-12.3,remainingPct:17.7});
  assert.deepEqual(checks.map(c=>[c.id,c.state]),[['buy:NVDA','reached'],['up:AMD','reached'],['stop-loss','ok'],['up:NVDA','ok'],['buy:AMD','ok'],['tolerance','ok']]);
- assert.equal(checks.find(c=>c.id==='tolerance').today.ja,'約−12.3%（あと17.7%）');
+ // Rows (owner, Nov 26 §3): small label with the line and the stock, two bold lines, the number alone on the right; no 「推定」.
+ const row=id=>{const c=checks.find(x=>x.id===id);return [c.label.ja,c.rule.ja,c.today.ja,c.label.en,c.rule.en,c.today.en];};
+ assert.deepEqual(row('tolerance'),['許容できる下落 −30%','いまの資産の下落\n線まであと17.7%','−12.3%','Drop you can accept −30%','Drop in your assets now\n17.7% to go','−12.3%']);
+ assert.deepEqual(row('buy:AMD'),['買い増しライン −10%　AMD','基準からの位置\n線まであと31%','+21.0%','Buy-more line −10% · AMD','Position vs. your base\n31% to go','+21.0%']);
+ assert.deepEqual(row('buy:NVDA'),['買い増しライン −10%　NVDA','基準からの位置','−10.5%','Buy-more line −10% · NVDA','Position vs. your base','−10.5%']);
+ assert.deepEqual(row('stop-loss'),['損切りのライン −25%','いまの資産の下落\n線まであと12.7%','−12.3%','Exit line −25%','Drop in your assets now\n12.7% to go','−12.3%']);
+ assert.ok(checks.every(c=>!/推定|Est\.|estimate/.test(c.label.ja+c.rule.ja+c.today.ja+c.label.en+c.rule.en+c.today.en)));
  // Direction: the shared rule (the top-rated story's own index move), as the home card computes it.
  assert.equal(marketDirection([article]),'up');assert.equal(marketDirection([]),'flat');
  assert.deepEqual(newsOf([article]),[{stars:3,changePercent:3.4}]);
@@ -198,7 +223,7 @@ test('job: one plan per entitled member per market date, the owner included; moc
   const nvda=input.checkCandidates.find(c=>c.id==='buy:NVDA');
   // The bond member's model output invents a number twice → fixed sentence.
   if(input.estimate===null&&input.plan.answers.q20==='bond')return {output:{headline:{ja:'買いすぎに気をつける',en:'Careful'},body:{ja:['温度計は熱いです。','上限は55%です。'],en:['Hot.','Cap 55%.']},checks:[]},usage:{input_tokens:2000,output_tokens:300}};
-  return {output:{headline:{ja:nvda?'決めていた買い増しの日':'買いすぎに気をつける',en:'Today'},body:{ja:['TP半導体40は +3.4%でした。','決めたルールどおりに確かめます。'],en:['TP Semiconductor 40 +3.4%.','Check your own rules.']},
+  return {output:{headline:{ja:nvda?'決めていた買い増しの日':'買いすぎに気をつける',en:'Today'},body:{ja:['TP半導体40は今日 +3.4%でした。','決めたルールどおりに確かめます。'],en:['TP Semiconductor 40 rose +3.4% today.','Check your own rules.']},
    checks:nvda?[{id:nvda.id,label:nvda.label,rule:nvda.rule,today:nvda.today}]:[]},usage:{input_tokens:2000,output_tokens:300}};};
  const report=await runTodayPlanJob({pool:db,now:NOW,model,bars,source:'live',log:l=>lines.push(l)});
  assert.equal(report.state,'done');assert.equal(report.session,SESSION);assert.equal(report.shock,'ready');
@@ -219,7 +244,7 @@ test('job: one plan per entitled member per market date, the owner included; moc
  const ownerInput=inputs.find(i=>i.watched.length);
  assert.equal(ownerInput.shockGauge.items[0].stars,3);assert.match(ownerInput.shockGauge.items[0].moves.ja[0],/TP半導体40　\+3\.4%/);
  assert.deepEqual(ownerInput.thermometer.map(s=>s.ja),['TP大型株100：平常','TP半導体40：熱い']);
- assert.deepEqual(ownerInput.watched[0],{symbol:'NVDA',close:180,dayChangePct:-5.3,fromReferencePct:-10,buyLine:{dropPct:10,reached:true,distancePct:0},upTarget:null});
+ assert.deepEqual(ownerInput.watched[0],{symbol:'NVDA',close:180,dayChangePct:-5.3,fromReferencePct:-10,fromReferenceRoundedPct:-10,buyLine:{dropPct:10,reached:true,distancePct:0},upTarget:null});
  assert.equal(ownerInput.plan.rulebook.ja.length>3,true);
  // §5 no-data cases are logged with a code and a hash, never the id or amounts.
  const missing=lines.filter(l=>l.event==='RESOLUTE_TODAY_PLAN_ESTIMATE_MISSING');

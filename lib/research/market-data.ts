@@ -194,8 +194,8 @@ async function statisticsFor(ticker: string, tier: Tier = "user", spend?: () => 
  * free, and a failed or unparseable statistics read was cached for six hours as an empty answer. The statistics and the earnings date are
  * now read separately through the shared reader: a fresh copy for six hours (a day for the date), one read for everyone, and when a read is
  * refused, fails or comes back empty, the last good copy. An empty answer is never stored as a valid one. */
-const STATS_SPEC: ReadSpec = { name: "md-facts-stats-v2", slotMs: 6 * 3600_000, staleMs: 14 * 86_400_000 };
-const EARNINGS_SPEC: ReadSpec = { name: "md-facts-next-earnings-v2", slotMs: 24 * 3600_000, staleMs: 7 * 86_400_000 };
+const STATS_SPEC: ReadSpec = { name: "md-facts-stats-v2", slotMs: 6 * 3600_000, staleMs: 14 * 86_400_000, durable: true };
+const EARNINGS_SPEC: ReadSpec = { name: "md-facts-next-earnings-v2", slotMs: 24 * 3600_000, staleMs: 7 * 86_400_000, durable: true };
 /** A ticker whose provider read just failed is not asked again by this instance for a while (each statistics read costs 50 credits). */
 const FACTS_RETRY_MS = 10 * 60_000;
 const factsFailed = new Map<string, number>();

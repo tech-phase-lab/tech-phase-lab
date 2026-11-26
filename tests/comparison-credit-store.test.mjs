@@ -49,9 +49,12 @@ function provider(clock) {
   };
   return state;
 }
-async function loadStore() {
+/** `kept`: the monitor's durable copies (lib/research/twelve-copies.ts), kind|key -> { at, value }; omitted: no monitor (every read misses). */
+async function loadStore(kept = null) {
   const cache = new Map(), afterJobs = [];
   globalThis.__store = {
+    durableGet: async (kind, keys) => Object.fromEntries(keys.flatMap(k => kept?.has(`${kind}|${k}`) ? [[k, structuredClone(kept.get(`${kind}|${k}`))]] : [])),
+    durablePut: async (kind, key, entry) => { if (!kept) return false; kept.set(`${kind}|${key}`, structuredClone(entry)); return true; },
     unstable_cache: (fn, parts) => async (...args) => { const k = parts.join() + JSON.stringify(args); if (cache.has(k)) return structuredClone(cache.get(k)); const v = await fn(...args); cache.set(k, v); return v; },
     after: job => afterJobs.push(job),
   };
@@ -64,6 +67,7 @@ async function loadStore() {
     .replace('"./provider-symbol"', JSON.stringify(here("provider-symbol.ts")))
     // The allocator grants everything here (the simulated provider refuses past the plan); the meter is the provider's own count.
     .replace(/import \{ reserveCredits, sharedMeterUsage \}[^;]*;/, `const reserveCredits = async () => {}; const sharedMeterUsage = async () => { const r = await fetch("https://api.twelvedata.com/api_usage?apikey=test"); return parseUsage(await r.json()); };`)
+    .replace(/import \{ durableGet, durablePut \}[^;]*;/, "const { durableGet, durablePut } = globalThis.__store;")
     .replace(/import type \{ Tier \}[^;]*;/, "");
   const mod = await import("data:text/javascript;base64," + Buffer.from(stripTypeScriptTypes(text)).toString("base64") + `#${Math.random()}`);
   return { mod, cache, afterJobs };
@@ -127,6 +131,36 @@ test("no series is fetched for a user, the background copy from yesterday is use
   p.calls.length = 0; p.site = 600; clock.advance(60_000);
   const series = await mod.userSeries("NVDA");
   assert.ok(series); assert.deepEqual(p.calls, []);
+}));
+
+// Production, Nov 26: the runtime cache lost these copies within hours (ASML and AVNT stored at 00:21 UTC, UNFI at 03:30, all missing by 08:05).
+test("a statistics copy the runtime cache has lost is read back from the monitor and not bought again the same day", () => withClock(NOW, async clock => {
+  const state = provider(clock), kept = new Map();
+  const { mod, cache } = await loadStore(kept);
+  await mod.warmStatistics("ASML", clock.now());
+  assert.equal(state.calls.filter(c => c === "statistics:ASML").length, 1);
+  assert.ok(kept.has("compare-statistics|ASML"), "the monitor keeps the copy");
+  clock.advance(7 * 3600_000);
+  cache.clear(); // the runtime cache has lost it
+  const got = await mod.cachedStatistics("ASML");
+  assert.deepEqual(got.payload.statistics, { valuations_metrics: { forward_pe: "20" } });
+  assert.equal(await mod.hasStatisticsToday("ASML", Date.parse(got.retrievedAt)), true, "a kept copy from today counts as today's");
+  assert.equal(await mod.hasStatisticsToday("ASML", Date.parse(got.retrievedAt) + 86_400_000), false);
+  assert.equal(state.calls.filter(c => c === "statistics:ASML").length, 1);
+}));
+
+test("the statements (200 credits) a runtime cache has lost are read back from the monitor; the job does not buy them again", () => withClock(NOW, async clock => {
+  const state = provider(clock), kept = new Map();
+  const { mod, cache } = await loadStore(kept);
+  await mod.warmStatements("ASML", clock.now());
+  const bought = state.calls.filter(c => c.endsWith(":ASML")).length;
+  assert.ok(kept.has("compare-statements|ASML"));
+  clock.advance(5 * 86400_000);
+  cache.clear();
+  const got = await mod.cachedStatements("ASML");
+  assert.ok(got, "read back from the monitor");
+  assert.deepEqual(got.income, { status: "ok", meta: { symbol: "ASML", currency: "USD" }, income_statement: [] });
+  assert.equal(state.calls.filter(c => c.endsWith(":ASML")).length, bought, "no new provider call");
 }));
 
 // ---------- the background job ----------
