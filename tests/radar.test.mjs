@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { arrow, beyondText, buildRadar, isBeyond, placeLabels, radarGenre, radarGenres, rankByScore, fitnessScore, earningScore, stayingScore, beyondDirections, formerGenres, sizeTiers, spreadEdgeDots, xPosition, yPosition, zoneOf, rankPlaces } from "../lib/research/radar.ts";
+import { arrow, beyondText, buildRadar, isBeyond, placeLabels, radarGenre, radarGenres, rankByScore, fitnessScore, earningScore, stayingScore, beyondDirections, formerGenres, sizeTiers, spreadEdgeDots, xPosition, yPosition, zoneOf, rankPlaces, proRankPlaces, zoneAt } from "../lib/research/radar.ts";
 
 const snap = (end, ocfMargin, cover, revenue = 1e9, revenueGrowth = 10) => ({ end, basis: "ttm", revenue, ocfMargin, fcfMargin: ocfMargin - 5, cover, revenueGrowth });
 
@@ -232,4 +232,36 @@ test("dots stopped at an edge that land on each other are spread so both show; d
   const near = spreadEdgeDots([{ id: "E", x: 320, y: 100, r: 6.5, edgeX: true, edgeY: false }, { id: "F", x: 316, y: 101, r: 6.5, edgeX: false, edgeY: false }], bounds);
   assert.deepEqual(near.F, { x: 316, y: 101 });
   assert.ok(Math.hypot(near.E.x - near.F.x, near.E.y - near.F.y) >= 13);
+});
+
+test("PRO rank places: the same places as FREE, ranks from the top, zones from the chart, previous earnings ranked among themselves (owner, Nov 26)", () => {
+  const snapG = (end, ocf, cover) => snap(end, ocf, cover);
+  const entries = [
+    { ticker: "A", facts: { latest: snapG("2026-06-30", 70, 0.1), previous: snapG("2026-03-31", 10, 0.2) } },
+    { ticker: "B", facts: { latest: snapG("2026-06-30", -20, 0.5), previous: snapG("2026-03-31", -40, 0.1) } },
+    { ticker: "C", facts: { latest: snapG("2026-06-30", 30, 0.4), previous: snapG("2026-03-31", 50, 3) } },
+    { ticker: "D", facts: { latest: snapG("2026-06-30", -200, 0.9), previous: null } },
+    { ticker: "E", facts: { latest: snapG("2026-06-30", 30, 0.4), previous: snapG("2026-03-31", 20, 0.3) } },
+  ];
+  const free = buildRadar("ai-cloud", entries, "free"), pro = buildRadar("ai-cloud", entries, "pro");
+  const { count, places } = proRankPlaces(pro.dots);
+  assert.equal(count, 5);
+  for (const dot of free.dots) { assert.equal(places[dot.ticker].x, dot.x); assert.equal(places[dot.ticker].y, dot.y); }
+  // earning power: A 70 > C 30 = E 30 (tie: genre order, C below E) > B -20 > D -200
+  assert.deepEqual(["A", "B", "C", "D", "E"].map(t => places[t].earnRank), [1, 4, 3, 5, 2]);
+  assert.deepEqual(["A", "B", "C", "D", "E"].map(t => places[t].coverRank), [5, 2, 4, 1, 3]);
+  // ranks read the same as the order on the chart
+  const byX = Object.entries(places).sort((a, b) => b[1].x - a[1].x).map(([t]) => t);
+  for (const [i, t] of byX.entries()) assert.equal(places[t].earnRank, i + 1);
+  for (const [t, place] of Object.entries(places)) assert.equal(place.zone, zoneAt(place.x, place.y), t);
+  assert.equal(places.A.zone, "lever"); assert.equal(places.D.zone, "guard");
+  // previous: ranked among the four previous values only (never mixed with the latest); D has none
+  assert.equal(places.D.previous, null);
+  assert.deepEqual(["A", "B", "C", "E"].map(t => places[t].previous.x), [0.375, 0.125, 0.875, 0.625]);
+  assert.deepEqual(["A", "B", "C", "E"].map(t => places[t].previous.y), [0.375, 0.125, 0.875, 0.625]);
+  // moves among those four: earning now A1 E2 C3 B4, then C1 E2 A3 B4 → A up 2, C down 2, E and B unchanged
+  assert.deepEqual(["A", "B", "C", "E"].map(t => places[t].previous.earnMove), [2, 0, -2, 0]);
+  // cover now B1 E2 C3 A4 (C ties E: genre order puts C lower), then C1 E2 A3 B4 → B up 3, C down 2, E unchanged, A down 1
+  assert.deepEqual(["A", "B", "C", "E"].map(t => places[t].previous.coverMove), [-1, 3, -2, 0]);
+  assert.equal(zoneAt(0.5, 0.5), "solid"); assert.equal(zoneAt(0.49, 0.49), "thin");
 });
