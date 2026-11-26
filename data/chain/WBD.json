@@ -116,6 +116,32 @@
         }
       ],
       "name_en": "AT&T Inc."
+    },
+    {
+      "id": "JCOM",
+      "ticker": "JCOM",
+      "name": "JCOM",
+      "name_en": "JCOM",
+      "sub": "ケーブルテレビ",
+      "sub_en": "Cable TV",
+      "sub_short": "ケーブル",
+      "sub_short_en": "Cable",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ディスカバリー・ジャパンを共同保有(WBD51%・JCOM49%)",
+          "text_en": "Co-owns Discovery Japan (WBD 51%, JCOM 49%)",
+          "source": {
+            "label": "Warner Bros. Discovery 10-K(2025年度)",
+            "label_en": "Warner Bros. Discovery 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1437107/000143710726000020/wbd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "resulting in the Company and JCOM owning 51% and 49% of JVCo, respectively"
+          }
+        }
+      ]
     }
   ],
   "far": [],

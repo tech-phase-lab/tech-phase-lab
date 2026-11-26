@@ -14,6 +14,10 @@
     {
       "ja": "提携・顧客",
       "en": "Partners & customers"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
     }
   ],
   "rivals": [],
@@ -121,6 +125,58 @@
         }
       ],
       "name_en": "Devyani International"
+    },
+    {
+      "id": "PAR",
+      "ticker": "PAR",
+      "name": "PARテクノロジー",
+      "name_en": "PAR Technology",
+      "sub": "飲食店向けPOS",
+      "sub_en": "Restaurant tech",
+      "sub_short": "POS",
+      "sub_short_en": "POS",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "1983年からYum!ブランズの認定技術提供会社",
+          "text_en": "An approved restaurant technology provider to Yum! Brands since 1983",
+          "source": {
+            "label": "PAR Technology 10-K(2025年度)",
+            "label_en": "PAR Technology 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/708821/000070882126000027/par-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "including as an approved provider of restaurant technology solutions and related support to McDonald's Corporation and its franchisees since 1980, to Yum! Brands since 1983"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ARCO",
+      "ticker": "ARCO",
+      "name": "アルコス・ドラドス",
+      "name_en": "Arcos Dorados",
+      "sub": "外食FC",
+      "sub_en": "Restaurant franchisee",
+      "sub_short": "FC",
+      "sub_short_en": "Franchise",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "最大級の競合に挙げる",
+          "text_en": "Names Yum! Brands among its largest competitors",
+          "source": {
+            "label": "Arcos Dorados 20-F(2025年度)",
+            "label_en": "Arcos Dorados 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1508478/000162828026028950/arco-20251231.htm",
+            "level": "official",
+            "date": "2026-04-30",
+            "quote": "Our largest sources of competition include Restaurant Brands International (which franchises Burger King, Popeyes, Firehouse Subs and Tim Hortons), Yum! Brands"
+          }
+        }
+      ]
     }
   ],
   "far": [],

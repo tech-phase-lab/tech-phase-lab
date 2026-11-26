@@ -116,6 +116,58 @@
         }
       ],
       "name_en": "MSG Entertainment"
+    },
+    {
+      "id": "SACO",
+      "ticker": "SACO",
+      "name": "SACOテクノロジーズ",
+      "name_en": "SACO Technologies",
+      "sub": "LED映像",
+      "sub_en": "LED video displays",
+      "sub_short": "LED",
+      "sub_short_en": "LED",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "30%を出資。Sphereの映像装置の優先供給元",
+          "text_en": "Owns 30%; its preferred display technology provider for Sphere",
+          "source": {
+            "label": "Sphere Entertainment 10-K(2025年度)",
+            "label_en": "Sphere Entertainment 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1795250/000162828026007760/sphr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "In Fiscal Year 2019, the Company acquired a 30% interest in SACO Technologies Inc. (\"SACO\"), a global provider of high-performance LED video lighting and media solutions."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DCTABUDHABI",
+      "ticker": "DCTABUDHABI",
+      "name": "アブダビ文化観光局",
+      "name_en": "Department of Culture and Tourism - Abu Dhabi",
+      "sub": "政府機関",
+      "sub_en": "Government agency",
+      "sub_short": "政府",
+      "sub_short_en": "Gov",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "アブダビにSphereを建てるため協力",
+          "text_en": "Working together to bring Sphere to Abu Dhabi",
+          "source": {
+            "label": "Sphere Entertainment 10-K(2025年度)",
+            "label_en": "Sphere Entertainment 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1795250/000162828026007760/sphr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "We are working with the Department of Culture and Tourism - Abu Dhabi (\"DCT Abu Dhabi\") to bring Sphere to Abu Dhabi, United Arab Emirates."
+          }
+        }
+      ]
     }
   ],
   "far": [],

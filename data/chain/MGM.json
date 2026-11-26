@@ -129,6 +129,58 @@
         }
       ],
       "name_en": "PLAYSTUDIOS"
+    },
+    {
+      "id": "MAR",
+      "ticker": "MAR",
+      "name": "マリオット",
+      "name_en": "Marriott International",
+      "sub": "ホテル",
+      "sub_en": "Hotels",
+      "sub_short": "ホテル",
+      "sub_short_en": "Hotels",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "MGMと独占的な長期ライセンス契約",
+          "text_en": "Has an exclusive long-term strategic licensing agreement with MGM",
+          "source": {
+            "label": "Marriott 10-K(2024年度)",
+            "label_en": "Marriott 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828025004818/mar-20241231.htm",
+            "level": "official",
+            "date": "2025-02-11",
+            "quote": "our exclusive, long-term strategic licensing agreement with MGM Resorts International"
+          }
+        }
+      ]
+    },
+    {
+      "id": "O",
+      "ticker": "O",
+      "name": "リアルティ・インカム",
+      "name_en": "Realty Income",
+      "sub": "不動産投資信託",
+      "sub_en": "REIT",
+      "sub_short": "REIT",
+      "sub_short_en": "REIT",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "優先出資したARIA・VdaraをMGMが運営",
+          "text_en": "MGM operates ARIA and Vdara, where it holds an $800 million preferred stake",
+          "source": {
+            "label": "Realty Income 10-K(2025年度)",
+            "label_en": "Realty Income 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/726728/000072672826000011/o-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Blackstone Real Estate will retain 100% of the common equity ownership of the property, which will continue to be operated by MGM Resorts International."
+          }
+        }
+      ]
     }
   ],
   "far": [],

@@ -17,6 +17,10 @@
     {
       "ja": "顧客",
       "en": "Customers"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
     }
   ],
   "rivals": [],
@@ -100,6 +104,84 @@
             "quote": "has entered into strategic supply and technology license agreements with Micron Technology, Inc. (NASDAQ: MU) whereby Photronics will receive outsourced photomask supply volume from Micron.",
             "note": "2015年の発表で、古い情報です。",
             "note_en": "From a 2015 announcement; older."
+          }
+        }
+      ]
+    },
+    {
+      "id": "7741",
+      "ticker": "7741",
+      "name": "HOYA",
+      "name_en": "Hoya",
+      "sub": "光学・マスク",
+      "sub_en": "Optics & photomasks",
+      "sub_short": "光学",
+      "sub_short_en": "Optics",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "フォトマスクの競合",
+          "text_en": "Photomask competitor",
+          "source": {
+            "label": "Photronics 10-K(2025年10月期)",
+            "label_en": "Photronics 10-K (FY ended Oct 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/810136/000114036125045801/ef20057458_10k.htm",
+            "level": "official",
+            "date": "2025-12-17",
+            "quote": "Our competitors include Compugraphics International, Ltd., Dai Nippon Printing Co., Ltd (outside of Taiwan and China), Hoya Corporation, LG Innotek Co., Ltd., Shenzhen Newway Photomask Making Co., Ltd., Shenzhen Qingyi Photomask, Ltd., SK-Electronics Co., Ltd., Taiwan Mask Corporation, and Tekscend Photomask."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TAIWANMASK",
+      "ticker": "TAIWANMASK",
+      "name": "台湾光罩",
+      "name_en": "Taiwan Mask",
+      "sub": "フォトマスク",
+      "sub_en": "Photomasks",
+      "sub_short": "マスク",
+      "sub_short_en": "Masks",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "フォトマスクの競合",
+          "text_en": "Photomask competitor",
+          "source": {
+            "label": "Photronics 10-K(2025年10月期)",
+            "label_en": "Photronics 10-K (FY ended Oct 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/810136/000114036125045801/ef20057458_10k.htm",
+            "level": "official",
+            "date": "2025-12-17",
+            "quote": "Our competitors include Compugraphics International, Ltd., Dai Nippon Printing Co., Ltd (outside of Taiwan and China), Hoya Corporation, LG Innotek Co., Ltd., Shenzhen Newway Photomask Making Co., Ltd., Shenzhen Qingyi Photomask, Ltd., SK-Electronics Co., Ltd., Taiwan Mask Corporation, and Tekscend Photomask."
+          }
+        }
+      ]
+    },
+    {
+      "id": "011070",
+      "ticker": "011070",
+      "name": "LGイノテック",
+      "name_en": "LG Innotek",
+      "sub": "電子部品",
+      "sub_en": "Electronic components",
+      "sub_short": "部品",
+      "sub_short_en": "Parts",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "フォトマスクの競合",
+          "text_en": "Photomask competitor",
+          "source": {
+            "label": "Photronics 10-K(2025年10月期)",
+            "label_en": "Photronics 10-K (FY ended Oct 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/810136/000114036125045801/ef20057458_10k.htm",
+            "level": "official",
+            "date": "2025-12-17",
+            "quote": "Our competitors include Compugraphics International, Ltd., Dai Nippon Printing Co., Ltd (outside of Taiwan and China), Hoya Corporation, LG Innotek Co., Ltd., Shenzhen Newway Photomask Making Co., Ltd., Shenzhen Qingyi Photomask, Ltd., SK-Electronics Co., Ltd., Taiwan Mask Corporation, and Tekscend Photomask."
           }
         }
       ]

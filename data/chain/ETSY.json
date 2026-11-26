@@ -14,6 +14,10 @@
     {
       "ja": "提携・顧客",
       "en": "Partners & customers"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
     }
   ],
   "rivals": [],
@@ -134,6 +138,58 @@
         }
       ],
       "name_en": "Meta Platforms"
+    },
+    {
+      "id": "GDDY",
+      "ticker": "GDDY",
+      "name": "ゴーダディ",
+      "name_en": "GoDaddy",
+      "sub": "ドメイン・EC支援",
+      "sub_en": "Domains & commerce tools",
+      "sub_short": "ドメイン",
+      "sub_short_en": "Domains",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "顧客がEtsyなどで販売できる機能を提供",
+          "text_en": "Lets its customers sell on marketplaces including Etsy",
+          "source": {
+            "label": "GoDaddy 10-K(2025年度)",
+            "label_en": "GoDaddy 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1609711/000160971126000010/gddy-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "It also allows customers to sell on marketplaces such as Amazon, Etsy, eBay and Google Shopping"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CRCT",
+      "ticker": "CRCT",
+      "name": "クリカット",
+      "name_en": "Cricut",
+      "sub": "家庭用カッティング機",
+      "sub_en": "Home cutting machines",
+      "sub_short": "工作機",
+      "sub_short_en": "Crafts",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "デジタル素材の競合にEtsyを挙げる",
+          "text_en": "Names Etsy among competing content marketplaces",
+          "source": {
+            "label": "Cricut 10-K(2025年度)",
+            "label_en": "Cricut 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1828962/000182896226000010/crct-20251231.htm",
+            "level": "official",
+            "date": "2026-03-04",
+            "quote": "more specific content marketplaces, like Canva, Creative Fabrica, and Etsy"
+          }
+        }
+      ]
     }
   ],
   "far": [],
