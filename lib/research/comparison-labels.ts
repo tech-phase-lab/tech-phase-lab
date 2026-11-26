@@ -37,9 +37,9 @@ export const ALTERNATIVE_LABELS = {
 export const ALTERNATIVE_METHODS: Record<string, Copy> = {
   runway: { ja: "売上がまだ無い会社の資金創出は、現金と短期投資を直近の営業キャッシュフロー流出（最大4四半期の平均）で割った資金の持ち期間で見ます。0か月＝0点、24か月以上＝10点。",
     en: "For a company with no revenue yet, cash generation is its cash runway: cash and short-term investments divided by the average quarterly operating cash outflow (up to four quarters). 0 months scores 0, 24 months or more scores 10." },
-  lossTrend: { ja: "売上がまだ無い会社の成長性は、直近4四半期の純損益をその前の4四半期と比べた変化で見ます（無ければ直近2期）。変化なし＝5点、損失50%縮小＝10点、50%拡大＝0点。",
+  lossTrend: { ja: "売上がまだ無い会社の成長性は、直近4四半期の純損益をその前の4四半期と比べた変化で見ます。4四半期分が無ければ直近2期で比べます。変化なし＝5点、損失50%縮小＝10点、50%拡大＝0点。",
     en: "For a company with no revenue yet, growth is the change in net income over the last four quarters against the four before (else the last two fiscal years). Unchanged scores 5, a loss 50% smaller scores 10, 50% larger scores 0." },
-  rdIntensity: { ja: "売上がまだ無い会社の収益性の欄は、費用のうち研究開発費の比率です（利益の指標ではありません）。0%＝0点、80%以上＝10点。",
+  rdIntensity: { ja: "売上がまだ無い会社の収益性の欄は、費用のうち研究開発費の比率です。利益の指標ではありません。0%＝0点、80%以上＝10点。",
     en: "For a company with no revenue yet, the profitability row shows R&D as a share of operating expenses (not a profit measure). 0% scores 0, 80% or more scores 10." },
   dilution: { ja: "売上がまだ無い会社の安定性は、株数（加重平均）の前年同期比の増加で見ます。増加なし＝10点、+50%以上＝0点。株式併合は同じ書類の修正後の数字で比べます。",
     en: "For a company with no revenue yet, stability is the year-on-year increase in its weighted-average share count, both figures from the same filing (split-adjusted). No increase scores 10, +50% or more scores 0." },

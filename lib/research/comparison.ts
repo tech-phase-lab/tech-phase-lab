@@ -431,6 +431,10 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
     // sales of goods $4.15bn, revenue and other operating income $4.25bn for 2025).
     // Of the fallback lines, the first in REVENUE_FALLBACKS' order the period has (a lender's net interest income is never mixed with a
     // bank's derived revenue).
+    // A bank (finance SIC) whose stated revenue line is only a part of its revenue (Western Alliance: contract revenue $51m, its fee income,
+    // beside net interest plus noninterest income of $0.9bn): the derived bank revenue, when it is larger than every stated line.
+    const bank = financeSic(sic) ? all.filter(f => f.tag === BANK_REVENUE) : [];
+    if (bank.length && new Set(bank.map(f => f.value)).size === 1 && all.filter(f => !REVENUE_FALLBACKS.includes(f.tag)).every(f => f.value < bank[0].value)) return bank;
     const stated = all.filter(f => !REVENUE_FALLBACKS.includes(f.tag)), first = REVENUE_FALLBACKS.find(tag => all.some(f => f.tag === tag));
     const rows = stated.length ? stated : all.filter(f => f.tag === first);
     // "Revenues" is the total whenever it is filed (Ameriprise files both); net-of-interest revenue only where it is the sole total.
