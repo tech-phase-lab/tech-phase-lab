@@ -1,0 +1,182 @@
+{
+  "root": {
+    "ticker": "RNST",
+    "name": "レナサント",
+    "cik": 715072,
+    "name_en": "Renasant"
+  },
+  "rows": [
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "買収・売却",
+      "en": "Acquisitions & sales"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "FBMS",
+      "ticker": "FBMS",
+      "name": "ファースト・バンクシェアーズ",
+      "name_en": "The First Bancshares",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年4月に合併",
+          "text_en": "Merged with it in April 2025",
+          "source": {
+            "label": "Renasant 10-K(2025年度)",
+            "label_en": "Renasant 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/715072/000071507226000017/rnst-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "Effective April 1, 2025, the Company completed its acquisition by merger of The First Bancshares, Inc., a Mississippi corporation, pursuant to which, The First merged with and into the Company, with the Company as the surviving entity in the merger, and immediately thereafter The First's subsidiary bank merged with and into the Bank, with the Bank as the surviving entity in the merger."
+          }
+        }
+      ]
+    },
+    {
+      "id": "COMMERCIALHOLD",
+      "ticker": "COMMERCIALHOLD",
+      "name": "コマーシャル・ホールディング",
+      "name_en": "Commercial Holding Company",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2026年10月に買収を発表",
+          "text_en": "Announced its acquisition in October 2026",
+          "source": {
+            "label": "Renasant 8-K(2026年10月)",
+            "label_en": "Renasant 8-K (October 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/715072/000119312526434444/d180138d8k.htm",
+            "level": "official",
+            "date": "2026-10-27",
+            "quote": "Emerging growth company ☐ If an emerging growth company, indicate by check mark if the registrant has elected not to use the extended transition period for complying with any new or revised financial accounting standards provided pursuant to Section 13(a) of the Exchange Act. ☐ Explanatory Note On October 27, 2026, Renasant Corporation (\"Renasant\") announced its planned acquisition of Commercial Holding Company, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BRANDGROUP",
+      "ticker": "BRANDGROUP",
+      "name": "ブランド・グループ・ホールディングス",
+      "name_en": "Brand Group Holdings",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2018年に買収",
+          "text_en": "Acquired in 2018",
+          "source": {
+            "label": "Renasant 10-K(2025年度)",
+            "label_en": "Renasant 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/715072/000071507226000017/rnst-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "In connection with the Company's acquisition of Brand Group Holdings, Inc. in 2018, the Company assumed the Brand Group Holdings, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CAPITALBANCORP",
+      "ticker": "CAPITALBANCORP",
+      "name": "キャピタル・バンコープ",
+      "name_en": "Capital Bancorp",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2007年に買収",
+          "text_en": "Acquired in 2007",
+          "source": {
+            "label": "Renasant 10-K(2025年度)",
+            "label_en": "Renasant 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/715072/000071507226000017/rnst-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "In 2007, the Company assumed supplemental executive retirement plans (SERPs) in connection with the acquisition of Capital Bancorp, Inc. and its affiliates."
+          }
+        }
+      ]
+    },
+    {
+      "id": "KBW",
+      "ticker": "KBW",
+      "name": "キーフ・ブリュイエット&ウッズ",
+      "name_en": "Keefe, Bruyette & Woods",
+      "sub": "証券",
+      "sub_en": "Broker",
+      "sub_short": "証券",
+      "sub_short_en": "Broker",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "劣後債の引受会社",
+          "text_en": "Underwriter of its subordinated notes",
+          "source": {
+            "label": "Renasant 8-K(2026年5月)",
+            "label_en": "Renasant 8-K (May 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/715072/000119312526212391/d145081d8k.htm",
+            "level": "official",
+            "date": "2026-05-07",
+            "quote": "On May 4, 2026, Renasant Corporation (the \"Company\") entered into an underwriting agreement (the \"Underwriting Agreement\") with Keefe, Bruyette & Woods, Inc. and Stephens Inc., as representatives of the underwriters listed on Schedule I to the Underwriting Agreement, for the issuance and sale of $300 million aggregate principal amount of its 6.25% Fixed-to-Floating Rate Subordinated Notes due 2036 (the \"Notes\"), at a public offering price equal to 100% of the aggregate"
+          }
+        }
+      ]
+    },
+    {
+      "id": "STEPHENS",
+      "ticker": "STEPHENS",
+      "name": "スティーブンス",
+      "name_en": "Stephens Inc.",
+      "sub": "証券",
+      "sub_en": "Broker",
+      "sub_short": "証券",
+      "sub_short_en": "Broker",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "劣後債の引受会社",
+          "text_en": "Underwriter of its subordinated notes",
+          "source": {
+            "label": "Renasant 8-K(2026年5月)",
+            "label_en": "Renasant 8-K (May 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/715072/000119312526212391/d145081d8k.htm",
+            "level": "official",
+            "date": "2026-05-07",
+            "quote": "On May 4, 2026, Renasant Corporation (the \"Company\") entered into an underwriting agreement (the \"Underwriting Agreement\") with Keefe, Bruyette & Woods, Inc. and Stephens Inc., as representatives of the underwriters listed on Schedule I to the Underwriting Agreement, for the issuance and sale of $300 million aggregate principal amount of its 6.25% Fixed-to-Floating Rate Subordinated Notes due 2036 (the \"Notes\"), at a public offering price equal to 100% of the aggregate"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

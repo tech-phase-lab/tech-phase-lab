@@ -2,10 +2,10 @@
  "about": "Per-ticker build log for the relationship maps (data/chain). Universe: company introductions (lib/research/company-introductions.data.json). Rule (#806): a map is published only with five or more companies whose relationship is quoted from an official filing or document. Statuses: ready, below_five (published before the rule; kept until the owner decides), skipped (tried; fewer than five verified companies; reason recorded), not_attempted.",
  "updated": "2026-11-26",
  "counts": {
-  "ready": 1199,
+  "ready": 1212,
   "below_five": 9,
-  "skipped": 32,
-  "not_attempted": 137
+  "skipped": 60,
+  "not_attempted": 96
  },
  "tickers": {
   "A": {
@@ -49,9 +49,16 @@
    "in_universe": true
   },
   "ABCB": {
-   "status": "not_attempted",
+   "status": "skipped",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found",
+   "tried": [
+    "Own 10-K: acquisitions, Federal Home Loan Bank, brokerage and core-processor partners, competitors named",
+    "Own 8-K Items 1.01/2.01 and exhibit index: merger agreements, underwriters, credit agreements",
+    "Borrower method: EDGAR full-text search for the bank's legal name in other companies' 10-K/10-Q/8-K credit agreements (2024-2026)",
+    "Fidelity Southern (acquisition) only"
+   ],
+   "reason": "Fewer than five verified companies found"
   },
   "ABG": {
    "companies": 7,
@@ -1793,14 +1800,28 @@
    "in_universe": true
   },
   "BANF": {
-   "status": "not_attempted",
+   "status": "skipped",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found",
+   "tried": [
+    "Own 10-K: acquisitions, Federal Home Loan Bank, brokerage and core-processor partners, competitors named",
+    "Own 8-K Items 1.01/2.01 and exhibit index: merger agreements, underwriters, credit agreements",
+    "Borrower method: EDGAR full-text search for the bank's legal name in other companies' 10-K/10-Q/8-K credit agreements (2024-2026)",
+    "American Bank of Oklahoma (2025 acquisition) and Energy 11 (borrower) only"
+   ],
+   "reason": "Fewer than five verified companies found"
   },
   "BANR": {
-   "status": "not_attempted",
+   "status": "skipped",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found",
+   "tried": [
+    "Own 10-K: acquisitions, Federal Home Loan Bank, brokerage and core-processor partners, competitors named",
+    "Own 8-K Items 1.01/2.01 and exhibit index: merger agreements, underwriters, credit agreements",
+    "Borrower method: EDGAR full-text search for the bank's legal name in other companies' 10-K/10-Q/8-K credit agreements (2024-2026)",
+    "FHLB Des Moines, Starbuck Bancshares, AltaPacific, Pacific Financial (2026 merger agreement): four"
+   ],
+   "reason": "Fewer than five verified companies found"
   },
   "BAX": {
    "companies": 5,
@@ -1808,9 +1829,46 @@
    "in_universe": true
   },
   "BBT": {
-   "status": "not_attempted",
+   "status": "ready",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
+   "companies": 5,
+   "added_2026_11_26": [
+    {
+     "id": "BROOKLINE",
+     "name": "Brookline Bancorp",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1108134/000162828026013247/brkl-20251231.htm",
+     "label": "Beacon Financial 10-K (FY2025)"
+    },
+    {
+     "id": "PCSB",
+     "name": "PCSB Financial",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1108134/000162828026013247/brkl-20251231.htm",
+     "label": "Beacon Financial 10-K (FY2025)"
+    },
+    {
+     "id": "BANKRI",
+     "name": "BankRI",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1108134/000162828026013247/brkl-20251231.htm",
+     "label": "Beacon Financial 10-K (FY2025)"
+    },
+    {
+     "id": "KBW",
+     "name": "Keefe, Bruyette & Woods",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1108134/000110465926099244/tm2623534d1_8k.htm",
+     "label": "Beacon Financial 8-K (August 2026)"
+    },
+    {
+     "id": "PIPR",
+     "name": "Piper Sandler",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1108134/000110465926099244/tm2623534d1_8k.htm",
+     "label": "Beacon Financial 8-K (August 2026)"
+    }
+   ]
   },
   "BBWI": {
    "status": "not_attempted",
@@ -2255,9 +2313,16 @@
    "in_universe": true
   },
   "BOH": {
-   "status": "not_attempted",
+   "status": "skipped",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found",
+   "tried": [
+    "Own 10-K: acquisitions, Federal Home Loan Bank, brokerage and core-processor partners, competitors named",
+    "Own 8-K Items 1.01/2.01 and exhibit index: merger agreements, underwriters, credit agreements",
+    "Borrower method: EDGAR full-text search for the bank's legal name in other companies' 10-K/10-Q/8-K credit agreements (2024-2026)",
+    "FHLB Des Moines and Hawaiian Electric (syndicate) only"
+   ],
+   "reason": "Fewer than five verified companies found"
   },
   "BOOT": {
    "status": "ready",
@@ -2599,9 +2664,16 @@
    ]
   },
   "CBSH": {
-   "status": "not_attempted",
+   "status": "skipped",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found",
+   "tried": [
+    "Own 10-K: acquisitions, Federal Home Loan Bank, brokerage and core-processor partners, competitors named",
+    "Own 8-K Items 1.01/2.01 and exhibit index: merger agreements, underwriters, credit agreements",
+    "Borrower method: EDGAR full-text search for the bank's legal name in other companies' 10-K/10-Q/8-K credit agreements (2024-2026)",
+    "FineMark (2026 acquisition) only; Esco credit agreement lists Commerce Bank as a co-lender (other banks there are not its lenders)"
+   ],
+   "reason": "Fewer than five verified companies found"
   },
   "CBT": {
    "status": "ready",
@@ -2653,8 +2725,53 @@
    ]
   },
   "CBU": {
-   "status": "not_attempted",
-   "in_universe": true
+   "status": "ready",
+   "in_universe": true,
+   "companies": 6,
+   "added_2026_11_26": [
+    {
+     "id": "SAN",
+     "name": "Santander",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/723188/000110465926021651/cbu-20251231x10k.htm",
+     "label": "Community Financial System 10-K (FY2025)"
+    },
+    {
+     "id": "CLEARPOINT",
+     "name": "ClearPoint Federal Bank & Trust",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/723188/000110465926021651/cbu-20251231x10k.htm",
+     "label": "Community Financial System 10-K (FY2025)"
+    },
+    {
+     "id": "CREATIVEPLAN",
+     "name": "Creative Plan Designs",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/723188/000110465926021651/cbu-20251231x10k.htm",
+     "label": "Community Financial System 10-K (FY2025)"
+    },
+    {
+     "id": "LEAP",
+     "name": "Leap Holdings",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/723188/000110465926021651/cbu-20251231x10k.htm",
+     "label": "Community Financial System 10-K (FY2025)"
+    },
+    {
+     "id": "ONEIDA",
+     "name": "Oneida Financial",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/723188/000110465926021651/cbu-20251231x10k.htm",
+     "label": "Community Financial System 10-K (FY2025)"
+    },
+    {
+     "id": "ELMIRA",
+     "name": "Elmira Savings Bank",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/723188/000110465926021651/cbu-20251231x10k.htm",
+     "label": "Community Financial System 10-K (FY2025)"
+    }
+   ]
   },
   "CC": {
    "companies": 8,
@@ -2866,9 +2983,16 @@
    "in_universe": true
   },
   "CFFN": {
-   "status": "not_attempted",
+   "status": "skipped",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found",
+   "tried": [
+    "Own 10-K: acquisitions, Federal Home Loan Bank, brokerage and core-processor partners, competitors named",
+    "Own 8-K Items 1.01/2.01 and exhibit index: merger agreements, underwriters, credit agreements",
+    "Borrower method: EDGAR full-text search for the bank's legal name in other companies' 10-K/10-Q/8-K credit agreements (2024-2026)",
+    "FHLB Topeka only"
+   ],
+   "reason": "Fewer than five verified companies found"
   },
   "CFG": {
    "companies": 10,
@@ -2881,9 +3005,16 @@
    "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "CHCO": {
-   "status": "not_attempted",
+   "status": "skipped",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found",
+   "tried": [
+    "Own 10-K: acquisitions, Federal Home Loan Bank, brokerage and core-processor partners, competitors named",
+    "Own 8-K Items 1.01/2.01 and exhibit index: merger agreements, underwriters, credit agreements",
+    "Borrower method: EDGAR full-text search for the bank's legal name in other companies' 10-K/10-Q/8-K credit agreements (2024-2026)",
+    "Citizens Commerce Bancshares (2023 acquisition) only"
+   ],
+   "reason": "Fewer than five verified companies found"
   },
   "CHD": {
    "companies": 8,
@@ -3344,9 +3475,16 @@
    "in_universe": true
   },
   "CPF": {
-   "status": "not_attempted",
+   "status": "skipped",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found",
+   "tried": [
+    "Own 10-K: acquisitions, Federal Home Loan Bank, brokerage and core-processor partners, competitors named",
+    "Own 8-K Items 1.01/2.01 and exhibit index: merger agreements, underwriters, credit agreements",
+    "Borrower method: EDGAR full-text search for the bank's legal name in other companies' 10-K/10-Q/8-K credit agreements (2024-2026)",
+    "FHLB Des Moines only"
+   ],
+   "reason": "Fewer than five verified companies found"
   },
   "CPRT": {
    "companies": 5,
@@ -3719,9 +3857,16 @@
    ]
   },
   "CVBF": {
-   "status": "not_attempted",
+   "status": "skipped",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found",
+   "tried": [
+    "Own 10-K: acquisitions, Federal Home Loan Bank, brokerage and core-processor partners, competitors named",
+    "Own 8-K Items 1.01/2.01 and exhibit index: merger agreements, underwriters, credit agreements",
+    "Borrower method: EDGAR full-text search for the bank's legal name in other companies' 10-K/10-Q/8-K credit agreements (2024-2026)",
+    "Heritage Commerce (2026 merger), FHLB San Francisco, Eaco (borrower); Suncrest and Chino Valley are old"
+   ],
+   "reason": "Fewer than five verified companies found"
   },
   "CVCO": {
    "status": "ready",
@@ -3945,9 +4090,16 @@
    "in_universe": true
   },
   "DCOM": {
-   "status": "not_attempted",
+   "status": "skipped",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found",
+   "tried": [
+    "Own 10-K: acquisitions, Federal Home Loan Bank, brokerage and core-processor partners, competitors named",
+    "Own 8-K Items 1.01/2.01 and exhibit index: merger agreements, underwriters, credit agreements",
+    "Borrower method: EDGAR full-text search for the bank's legal name in other companies' 10-K/10-Q/8-K credit agreements (2024-2026)",
+    "ES Bancshares (2026 merger agreement) only"
+   ],
+   "reason": "Fewer than five verified companies found"
   },
   "DD": {
    "companies": 10,
@@ -4614,9 +4766,16 @@
    "in_universe": true
   },
   "EBC": {
-   "status": "not_attempted",
+   "status": "skipped",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found",
+   "tried": [
+    "Own 10-K: acquisitions, Federal Home Loan Bank, brokerage and core-processor partners, competitors named",
+    "Own 8-K Items 1.01/2.01 and exhibit index: merger agreements, underwriters, credit agreements",
+    "Borrower method: EDGAR full-text search for the bank's legal name in other companies' 10-K/10-Q/8-K credit agreements (2024-2026)",
+    "HarborOne (2025 merger) and FHLB Boston only"
+   ],
+   "reason": "Fewer than five verified companies found"
   },
   "ECHO": {
    "companies": 7,
@@ -4701,9 +4860,16 @@
    "in_universe": true
   },
   "EGBN": {
-   "status": "not_attempted",
+   "status": "skipped",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found",
+   "tried": [
+    "Own 10-K: acquisitions, Federal Home Loan Bank, brokerage and core-processor partners, competitors named",
+    "Own 8-K Items 1.01/2.01 and exhibit index: merger agreements, underwriters, credit agreements",
+    "Borrower method: EDGAR full-text search for the bank's legal name in other companies' 10-K/10-Q/8-K credit agreements (2024-2026)",
+    "Fidelity & Trust (2008), Virginia Heritage (2014), FHLB Atlanta: three"
+   ],
+   "reason": "Fewer than five verified companies found"
   },
   "EGHT": {
    "companies": 9,
@@ -5334,14 +5500,95 @@
    "in_universe": true
   },
   "FBNC": {
-   "status": "not_attempted",
+   "status": "ready",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
+   "companies": 5,
+   "added_2026_11_26": [
+    {
+     "id": "GRANDSOUTH",
+     "name": "GrandSouth Bancorporation",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/811589/000081158926000051/fbnc-20251231.htm",
+     "label": "First Bancorp 10-K (FY2025)"
+    },
+    {
+     "id": "SELECTBANCORP",
+     "name": "Select Bancorp",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/811589/000081158926000051/fbnc-20251231.htm",
+     "label": "First Bancorp 10-K (FY2025)"
+    },
+    {
+     "id": "FIRSTCAROLINA",
+     "name": "First Carolina",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/811589/000081158926000149/fbnc-20260714.htm",
+     "label": "First Bancorp 8-K (July 2026)"
+    },
+    {
+     "id": "CAROLINABANK",
+     "name": "Carolina Bank",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/811589/000081158926000051/fbnc-20251231.htm",
+     "label": "First Bancorp 10-K (FY2025)"
+    },
+    {
+     "id": "FHLBA",
+     "name": "Federal Home Loan Bank of Atlanta",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/811589/000081158926000051/fbnc-20251231.htm",
+     "label": "First Bancorp 10-K (FY2025)"
+    }
+   ]
   },
   "FCF": {
-   "status": "not_attempted",
+   "status": "ready",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
+   "companies": 6,
+   "added_2026_11_26": [
+    {
+     "id": "CENTERGROUP",
+     "name": "CenterGroup Financial",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/712537/000071253726000013/fcf-20251231.htm",
+     "label": "First Commonwealth Financial 10-K (FY2025)"
+    },
+    {
+     "id": "CENTRIC",
+     "name": "Centric Financial",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/712537/000071253726000013/fcf-20251231.htm",
+     "label": "First Commonwealth Financial 10-K (FY2025)"
+    },
+    {
+     "id": "SAN",
+     "name": "Santander",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/712537/000071253726000013/fcf-20251231.htm",
+     "label": "First Commonwealth Financial 10-K (FY2025)"
+    },
+    {
+     "id": "FOUNDATIONBANK",
+     "name": "Foundation Bank",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/712537/000071253726000013/fcf-20251231.htm",
+     "label": "First Commonwealth Financial 10-K (FY2025)"
+    },
+    {
+     "id": "DCBFIN",
+     "name": "DCB Financial",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/712537/000071253726000013/fcf-20251231.htm",
+     "label": "First Commonwealth Financial 10-K (FY2025)"
+    },
+    {
+     "id": "FHLBPGH",
+     "name": "Federal Home Loan Bank of Pittsburgh",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/712537/000071253726000013/fcf-20251231.htm",
+     "label": "First Commonwealth Financial 10-K (FY2025)"
+    }
+   ]
   },
   "FCN": {
    "status": "not_attempted",
@@ -5448,14 +5695,58 @@
    "in_universe": true
   },
   "FFBC": {
-   "status": "not_attempted",
+   "status": "ready",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
+   "companies": 5,
+   "added_2026_11_26": [
+    {
+     "id": "WESTFIELD",
+     "name": "Westfield Bancorp",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/708955/000070895526000028/ffbc-20251231.htm",
+     "label": "First Financial Bancorp 10-K (FY2025)"
+    },
+    {
+     "id": "BANKFINANCIAL",
+     "name": "BankFinancial",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/708955/000070895526000002/ffbc-20251231.htm",
+     "label": "First Financial Bancorp 8-K (January 2026)"
+    },
+    {
+     "id": "FNWD",
+     "name": "Finward Bancorp",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/919864/000119312526310388/d140760dex991.htm",
+     "label": "Finward Ban 8-K (July 2026)"
+    },
+    {
+     "id": "KBW",
+     "name": "Keefe, Bruyette & Woods",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/708955/000119312525274210/d67495d8k.htm",
+     "label": "First Financial Bancorp 8-K (November 2025)"
+    },
+    {
+     "id": "JANNEY",
+     "name": "Janney Montgomery Scott",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/708955/000119312525274210/d67495d8k.htm",
+     "label": "First Financial Bancorp 8-K (November 2025)"
+    }
+   ]
   },
   "FFIN": {
-   "status": "not_attempted",
+   "status": "skipped",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found",
+   "tried": [
+    "Own 10-K: acquisitions, Federal Home Loan Bank, brokerage and core-processor partners, competitors named",
+    "Own 8-K Items 1.01/2.01 and exhibit index: merger agreements, underwriters, credit agreements",
+    "Borrower method: EDGAR full-text search for the bank's legal name in other companies' 10-K/10-Q/8-K credit agreements (2024-2026)",
+    "FHLB Dallas, Frost Bank (holding-company credit line), Kimbell Royalty (borrower); 'First Financial Bank' borrower hits are ambiguous with other banks of the same name"
+   ],
+   "reason": "Fewer than five verified companies found"
   },
   "FFIV": {
    "companies": 12,
@@ -5463,9 +5754,16 @@
    "in_universe": true
   },
   "FHB": {
-   "status": "not_attempted",
+   "status": "skipped",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found",
+   "tried": [
+    "Own 10-K: acquisitions, Federal Home Loan Bank, brokerage and core-processor partners, competitors named",
+    "Own 8-K Items 1.01/2.01 and exhibit index: merger agreements, underwriters, credit agreements",
+    "Borrower method: EDGAR full-text search for the bank's legal name in other companies' 10-K/10-Q/8-K credit agreements (2024-2026)",
+    "TriCo (2026 merger agreement), BNP Paribas (former parent), FHLB Des Moines: three verified"
+   ],
+   "reason": "Fewer than five verified companies found"
   },
   "FIBK": {
    "status": "ready",
@@ -5825,9 +6123,46 @@
    ]
   },
   "FULT": {
-   "status": "not_attempted",
+   "status": "ready",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
+   "companies": 5,
+   "added_2026_11_26": [
+    {
+     "id": "REPUBLICFIRST",
+     "name": "Republic First Bank",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/700564/000070056426000006/fult-20251231.htm",
+     "label": "Fulton Financial 10-K (FY2025)"
+    },
+    {
+     "id": "FDIC",
+     "name": "FDIC",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/700564/000070056426000006/fult-20251231.htm",
+     "label": "Fulton Financial 10-K (FY2025)"
+    },
+    {
+     "id": "PRUDENTIALBANCORP",
+     "name": "Prudential Bancorp",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/700564/000070056426000006/fult-20251231.htm",
+     "label": "Fulton Financial 10-K (FY2025)"
+    },
+    {
+     "id": "BLFY",
+     "name": "Blue Foundry Bancorp",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1846017/000162828026022338/blue-20251231.htm",
+     "label": "Blue Foundry Ban 10-K (FY2025)"
+    },
+    {
+     "id": "FI",
+     "name": "Fiserv",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/700564/000070056426000006/fult-20251231.htm",
+     "label": "Fulton Financial 10-K (FY2025)"
+    }
+   ]
   },
   "FUN": {
    "companies": 5,
@@ -6234,9 +6569,16 @@
    "in_universe": true
   },
   "HAFC": {
-   "status": "not_attempted",
+   "status": "skipped",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found",
+   "tried": [
+    "Own 10-K: acquisitions, Federal Home Loan Bank, brokerage and core-processor partners, competitors named",
+    "Own 8-K Items 1.01/2.01 and exhibit index: merger agreements, underwriters, credit agreements",
+    "Borrower method: EDGAR full-text search for the bank's legal name in other companies' 10-K/10-Q/8-K credit agreements (2024-2026)",
+    "Central Bancorp (trust preferred guarantee) and FHLB San Francisco only"
+   ],
+   "reason": "Fewer than five verified companies found"
   },
   "HAL": {
    "companies": 18,
@@ -6596,9 +6938,46 @@
    "in_universe": true
   },
   "HOPE": {
-   "status": "not_attempted",
+   "status": "ready",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
+   "companies": 5,
+   "added_2026_11_26": [
+    {
+     "id": "TERRITORIAL",
+     "name": "Territorial Bancorp",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1128361/000112836126000011/hope-20251231.htm",
+     "label": "Hope Bancorp 10-K (FY2025)"
+    },
+    {
+     "id": "WILSHIRE",
+     "name": "Wilshire Bancorp",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1128361/000112836126000011/hope-20251231.htm",
+     "label": "Hope Bancorp 10-K (FY2025)"
+    },
+    {
+     "id": "FHLBSF",
+     "name": "Federal Home Loan Bank of San Francisco",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1128361/000112836126000011/hope-20251231.htm",
+     "label": "Hope Bancorp 10-K (FY2025)"
+    },
+    {
+     "id": "SNEX",
+     "name": "StoneX Group",
+     "type": "down",
+     "source": "https://www.sec.gov/Archives/edgar/data/913760/000091376026000038/unsecuredloanandaddendumboh.htm",
+     "label": "StoneX Group 10-Q (quarter ended Jun 2026)"
+    },
+    {
+     "id": "NGS",
+     "name": "Natural Gas Services Group",
+     "type": "down",
+     "source": "https://www.sec.gov/Archives/edgar/data/1084991/000108499126000054/exhibit101fifthamendmentto.htm",
+     "label": "Natural GAS Services Group 8-K (June 2026)"
+    }
+   ]
   },
   "HPE": {
    "companies": 14,
@@ -6709,9 +7088,16 @@
    "in_universe": true
   },
   "HTH": {
-   "status": "not_attempted",
+   "status": "skipped",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found",
+   "tried": [
+    "Own 10-K: acquisitions, Federal Home Loan Bank, brokerage and core-processor partners, competitors named",
+    "Own 8-K Items 1.01/2.01 and exhibit index: merger agreements, underwriters, credit agreements",
+    "Borrower method: EDGAR full-text search for the bank's legal name in other companies' 10-K/10-Q/8-K credit agreements (2024-2026)",
+    "PlainsCapital (2012), Southwest Securities (2015), Bank of River Oaks: three"
+   ],
+   "reason": "Fewer than five verified companies found"
   },
   "HTLD": {
    "status": "not_attempted",
@@ -6969,9 +7355,16 @@
    "in_universe": true
   },
   "IBOC": {
-   "status": "not_attempted",
+   "status": "skipped",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found",
+   "tried": [
+    "Own 10-K: acquisitions, Federal Home Loan Bank, brokerage and core-processor partners, competitors named",
+    "Own 8-K Items 1.01/2.01 and exhibit index: merger agreements, underwriters, credit agreements",
+    "Borrower method: EDGAR full-text search for the bank's legal name in other companies' 10-K/10-Q/8-K credit agreements (2024-2026)",
+    "Greystone Logistics (borrower) only"
+   ],
+   "reason": "Fewer than five verified companies found"
   },
   "IBP": {
    "status": "ready",
@@ -7235,9 +7628,60 @@
    "in_universe": true
   },
   "INDB": {
-   "status": "not_attempted",
+   "status": "ready",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
+   "companies": 7,
+   "added_2026_11_26": [
+    {
+     "id": "ENTERPRISEBANCORP",
+     "name": "Enterprise Bancorp",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/776901/000077690126000058/indb-20251231.htm",
+     "label": "Independent Bank Corp. 10-K (FY2025)"
+    },
+    {
+     "id": "BLUEHILLS",
+     "name": "Blue Hills Bancorp",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/776901/000077690126000058/indb-20251231.htm",
+     "label": "Independent Bank Corp. 10-K (FY2025)"
+    },
+    {
+     "id": "PEOPLESFED",
+     "name": "Peoples Federal Bancshares",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/776901/000077690126000058/indb-20251231.htm",
+     "label": "Independent Bank Corp. 10-K (FY2025)"
+    },
+    {
+     "id": "LPLA",
+     "name": "LPL Financial",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/776901/000077690126000058/indb-20251231.htm",
+     "label": "Independent Bank Corp. 10-K (FY2025)"
+    },
+    {
+     "id": "FHLBBOSTON",
+     "name": "Federal Home Loan Bank of Boston",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/776901/000077690126000058/indb-20251231.htm",
+     "label": "Independent Bank Corp. 10-K (FY2025)"
+    },
+    {
+     "id": "KBW",
+     "name": "Keefe, Bruyette & Woods",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/776901/000119312525062561/d918869d8k.htm",
+     "label": "Independent Bank Corp. 8-K (March 2025)"
+    },
+    {
+     "id": "PIPR",
+     "name": "Piper Sandler",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/776901/000119312525062561/d918869d8k.htm",
+     "label": "Independent Bank Corp. 8-K (March 2025)"
+    }
+   ]
   },
   "INDI": {
    "companies": 6,
@@ -7914,9 +8358,16 @@
    "in_universe": true
   },
   "LKFN": {
-   "status": "not_attempted",
+   "status": "skipped",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found",
+   "tried": [
+    "Own 10-K: acquisitions, Federal Home Loan Bank, brokerage and core-processor partners, competitors named",
+    "Own 8-K Items 1.01/2.01 and exhibit index: merger agreements, underwriters, credit agreements",
+    "Borrower method: EDGAR full-text search for the bank's legal name in other companies' 10-K/10-Q/8-K credit agreements (2024-2026)",
+    "FHLB Indianapolis and Cetera (brokerage) only"
+   ],
+   "reason": "Fewer than five verified companies found"
   },
   "LKQ": {
    "companies": 5,
@@ -8405,9 +8856,16 @@
    "in_universe": true
   },
   "MBIN": {
-   "status": "not_attempted",
+   "status": "skipped",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found",
+   "tried": [
+    "Own 10-K: acquisitions, Federal Home Loan Bank, brokerage and core-processor partners, competitors named",
+    "Own 8-K Items 1.01/2.01 and exhibit index: merger agreements, underwriters, credit agreements",
+    "Borrower method: EDGAR full-text search for the bank's legal name in other companies' 10-K/10-Q/8-K credit agreements (2024-2026)",
+    "No named counterparties"
+   ],
+   "reason": "Fewer than five verified companies found"
   },
   "MC": {
    "companies": 9,
@@ -9252,8 +9710,15 @@
    "in_universe": true
   },
   "NBHC": {
-   "status": "not_attempted",
-   "in_universe": true
+   "status": "skipped",
+   "in_universe": true,
+   "tried": [
+    "Own 10-K: acquisitions, Federal Home Loan Bank, brokerage and core-processor partners, competitors named",
+    "Own 8-K Items 1.01/2.01 and exhibit index: merger agreements, underwriters, credit agreements",
+    "Borrower method: EDGAR full-text search for the bank's legal name in other companies' 10-K/10-Q/8-K credit agreements (2024-2026)",
+    "Vista Bancshares (2026 acquisition), CV Sciences (borrower) only"
+   ],
+   "reason": "Fewer than five verified companies found"
   },
   "NBIS": {
    "companies": 14,
@@ -9266,9 +9731,53 @@
    "in_universe": true
   },
   "NBTB": {
-   "status": "not_attempted",
+   "status": "ready",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
+   "companies": 6,
+   "added_2026_11_26": [
+    {
+     "id": "EVANS",
+     "name": "Evans Bancorp",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/790359/000114036126007179/ef20060005_10k.htm",
+     "label": "NBT Bancorp 10-K (FY2025)"
+    },
+    {
+     "id": "SALISBURY",
+     "name": "Salisbury Bancorp",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/790359/000114036126007179/ef20060005_10k.htm",
+     "label": "NBT Bancorp 10-K (FY2025)"
+    },
+    {
+     "id": "ALLIANCEFIN",
+     "name": "Alliance Financial",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/790359/000114036126007179/ef20060005_10k.htm",
+     "label": "NBT Bancorp 10-K (FY2025)"
+    },
+    {
+     "id": "CNBBANCORP",
+     "name": "CNB Bancorp",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/790359/000114036126007179/ef20060005_10k.htm",
+     "label": "NBT Bancorp 10-K (FY2025)"
+    },
+    {
+     "id": "SPRINGSTONE",
+     "name": "Springstone Financial",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/790359/000114036126007179/ef20060005_10k.htm",
+     "label": "NBT Bancorp 10-K (FY2025)"
+    },
+    {
+     "id": "COLUMBIARIDGE",
+     "name": "Columbia Ridge Capital",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/790359/000114036126007179/ef20060005_10k.htm",
+     "label": "NBT Bancorp 10-K (FY2025)"
+    }
+   ]
   },
   "NCLH": {
    "companies": 5,
@@ -9426,8 +9935,15 @@
    "in_universe": true
   },
   "NIC": {
-   "status": "not_attempted",
-   "in_universe": true
+   "status": "skipped",
+   "in_universe": true,
+   "tried": [
+    "Own 10-K: acquisitions, Federal Home Loan Bank, brokerage and core-processor partners, competitors named",
+    "Own 8-K Items 1.01/2.01 and exhibit index: merger agreements, underwriters, credit agreements",
+    "Borrower method: EDGAR full-text search for the bank's legal name in other companies' 10-K/10-Q/8-K credit agreements (2024-2026)",
+    "MidWestOne (2026 merger) and Fiserv (core processor) only"
+   ],
+   "reason": "Fewer than five verified companies found"
   },
   "NICE": {
    "companies": 9,
@@ -10077,9 +10593,16 @@
    "in_universe": true
   },
   "OFG": {
-   "status": "not_attempted",
+   "status": "skipped",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found",
+   "tried": [
+    "Own 10-K: acquisitions, Federal Home Loan Bank, brokerage and core-processor partners, competitors named",
+    "Own 8-K Items 1.01/2.01 and exhibit index: merger agreements, underwriters, credit agreements",
+    "Borrower method: EDGAR full-text search for the bank's legal name in other companies' 10-K/10-Q/8-K credit agreements (2024-2026)",
+    "No named counterparties"
+   ],
+   "reason": "Fewer than five verified companies found"
   },
   "OGE": {
    "status": "ready",
@@ -11551,9 +12074,53 @@
    "in_universe": true
   },
   "RNST": {
-   "status": "not_attempted",
+   "status": "ready",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
+   "companies": 6,
+   "added_2026_11_26": [
+    {
+     "id": "FBMS",
+     "name": "The First Bancshares",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/715072/000071507226000017/rnst-20251231.htm",
+     "label": "Renasant 10-K (FY2025)"
+    },
+    {
+     "id": "COMMERCIALHOLD",
+     "name": "Commercial Holding Company",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/715072/000119312526434444/d180138d8k.htm",
+     "label": "Renasant 8-K (October 2026)"
+    },
+    {
+     "id": "BRANDGROUP",
+     "name": "Brand Group Holdings",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/715072/000071507226000017/rnst-20251231.htm",
+     "label": "Renasant 10-K (FY2025)"
+    },
+    {
+     "id": "CAPITALBANCORP",
+     "name": "Capital Bancorp",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/715072/000071507226000017/rnst-20251231.htm",
+     "label": "Renasant 10-K (FY2025)"
+    },
+    {
+     "id": "KBW",
+     "name": "Keefe, Bruyette & Woods",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/715072/000119312526212391/d145081d8k.htm",
+     "label": "Renasant 8-K (May 2026)"
+    },
+    {
+     "id": "STEPHENS",
+     "name": "Stephens Inc.",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/715072/000119312526212391/d145081d8k.htm",
+     "label": "Renasant 8-K (May 2026)"
+    }
+   ]
   },
   "ROAD": {
    "companies": 6,
@@ -11984,9 +12551,16 @@
    ]
   },
   "SBSI": {
-   "status": "not_attempted",
+   "status": "skipped",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found",
+   "tried": [
+    "Own 10-K: acquisitions, Federal Home Loan Bank, brokerage and core-processor partners, competitors named",
+    "Own 8-K Items 1.01/2.01 and exhibit index: merger agreements, underwriters, credit agreements",
+    "Borrower method: EDGAR full-text search for the bank's legal name in other companies' 10-K/10-Q/8-K credit agreements (2024-2026)",
+    "OmniAmerican (acquisition), Keefe Bruyette (distribution agreement), Stratus Properties (borrower) only"
+   ],
+   "reason": "Fewer than five verified companies found"
   },
   "SBUX": {
    "companies": 5,
@@ -12117,9 +12691,60 @@
    "in_universe": true
   },
   "SFNC": {
-   "status": "not_attempted",
+   "status": "ready",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
+   "companies": 7,
+   "added_2026_11_26": [
+    {
+     "id": "SPIRITTX",
+     "name": "Spirit of Texas Bancshares",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/90498/000162828026011618/sfnc-20251231.htm",
+     "label": "Simmons First National 10-K (FY2025)"
+    },
+    {
+     "id": "LANDMARKCB",
+     "name": "Landmark Community Bank",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/90498/000162828026011618/sfnc-20251231.htm",
+     "label": "Simmons First National 10-K (FY2025)"
+    },
+    {
+     "id": "TRIUMPHBANC",
+     "name": "Triumph Bancshares",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/90498/000162828026011618/sfnc-20251231.htm",
+     "label": "Simmons First National 10-K (FY2025)"
+    },
+    {
+     "id": "FIRSTTEXASBHC",
+     "name": "First Texas BHC",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/62362/000119312526402574/marps_10-k_2026-06-30.htm",
+     "label": "Marine Petroleum Trust 10-K (FY ended Jun 2026)"
+    },
+    {
+     "id": "KBW",
+     "name": "Keefe, Bruyette & Woods",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/90498/000119312525199266/d58948d8k.htm",
+     "label": "Simmons First National 8-K (September 2025)"
+    },
+    {
+     "id": "STEPHENS",
+     "name": "Stephens Inc.",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/90498/000119312525163152/d42676d8k.htm",
+     "label": "Simmons First National 8-K (July 2025)"
+    },
+    {
+     "id": "MS",
+     "name": "Morgan Stanley",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/90498/000119312525199266/d58948d8k.htm",
+     "label": "Simmons First National 8-K (September 2025)"
+    }
+   ]
   },
   "SGI": {
    "status": "ready",
@@ -12868,9 +13493,16 @@
    ]
   },
   "STBA": {
-   "status": "not_attempted",
+   "status": "skipped",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found",
+   "tried": [
+    "Own 10-K: acquisitions, Federal Home Loan Bank, brokerage and core-processor partners, competitors named",
+    "Own 8-K Items 1.01/2.01 and exhibit index: merger agreements, underwriters, credit agreements",
+    "Borrower method: EDGAR full-text search for the bank's legal name in other companies' 10-K/10-Q/8-K credit agreements (2024-2026)",
+    "DNB Financial (merger) only"
+   ],
+   "reason": "Fewer than five verified companies found"
   },
   "STE": {
    "companies": 9,
@@ -13599,7 +14231,7 @@
      "label": "Toll Brothers 10-K (FY ended Oct 2025)"
     },
     {
-     "id": "EFSH",
+     "id": "1847HOLDINGS",
      "name": "1847 Holdings",
      "type": "up",
      "source": "https://www.sec.gov/Archives/edgar/data/1599407/000121390026036917/ea0282883-10k_1847hold.htm",
@@ -13731,9 +14363,16 @@
    "in_universe": true
   },
   "TRMK": {
-   "status": "not_attempted",
+   "status": "skipped",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found",
+   "tried": [
+    "Own 10-K: acquisitions, Federal Home Loan Bank, brokerage and core-processor partners, competitors named",
+    "Own 8-K Items 1.01/2.01 and exhibit index: merger agreements, underwriters, credit agreements",
+    "Borrower method: EDGAR full-text search for the bank's legal name in other companies' 10-K/10-Q/8-K credit agreements (2024-2026)",
+    "Hancock Whitney (2026 merger agreement) and Blue Owl (property sale) only"
+   ],
+   "reason": "Fewer than five verified companies found"
   },
   "TRN": {
    "companies": 5,
@@ -13909,8 +14548,46 @@
    "in_universe": true
   },
   "UBSI": {
-   "status": "not_attempted",
-   "in_universe": true
+   "status": "ready",
+   "in_universe": true,
+   "companies": 5,
+   "added_2026_11_26": [
+    {
+     "id": "PIEDMONTBANCORP",
+     "name": "Piedmont Bancorp",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/729986/000119312526081470/d90970d10k.htm",
+     "label": "United Bankshares 10-K (FY2025)"
+    },
+    {
+     "id": "COMMUNITYBANKERS",
+     "name": "Community Bankers Trust",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/729986/000119312526081470/d90970d10k.htm",
+     "label": "United Bankshares 10-K (FY2025)"
+    },
+    {
+     "id": "CAROLINAFIN",
+     "name": "Carolina Financial",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/729986/000119312526081470/d90970d10k.htm",
+     "label": "United Bankshares 10-K (FY2025)"
+    },
+    {
+     "id": "VIRGINIACOMMERCE",
+     "name": "Virginia Commerce Bancorp",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/729986/000119312526081470/d90970d10k.htm",
+     "label": "United Bankshares 10-K (FY2025)"
+    },
+    {
+     "id": "CARDINALFIN",
+     "name": "Cardinal Financial",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/729986/000119312526081470/d90970d10k.htm",
+     "label": "United Bankshares 10-K (FY2025)"
+    }
+   ]
   },
   "UCTT": {
    "companies": 7,
@@ -14926,14 +15603,28 @@
    "in_universe": true
   },
   "WABC": {
-   "status": "not_attempted",
+   "status": "skipped",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found",
+   "tried": [
+    "Own 10-K: acquisitions, Federal Home Loan Bank, brokerage and core-processor partners, competitors named",
+    "Own 8-K Items 1.01/2.01 and exhibit index: merger agreements, underwriters, credit agreements",
+    "Borrower method: EDGAR full-text search for the bank's legal name in other companies' 10-K/10-Q/8-K credit agreements (2024-2026)",
+    "ValliCorp and two failed banks bought from the FDIC (1997-2010) only"
+   ],
+   "reason": "Fewer than five verified companies found"
   },
   "WAFD": {
-   "status": "not_attempted",
+   "status": "skipped",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found",
+   "tried": [
+    "Own 10-K: acquisitions, Federal Home Loan Bank, brokerage and core-processor partners, competitors named",
+    "Own 8-K Items 1.01/2.01 and exhibit index: merger agreements, underwriters, credit agreements",
+    "Borrower method: EDGAR full-text search for the bank's legal name in other companies' 10-K/10-Q/8-K credit agreements (2024-2026)",
+    "Luther Burbank (2024 merger), EverBank (2026 merger agreement), FHLB San Francisco only"
+   ],
+   "reason": "Fewer than five verified companies found"
   },
   "WAL": {
    "companies": 7,
@@ -15300,9 +15991,53 @@
    "in_universe": true
   },
   "WSBC": {
-   "status": "not_attempted",
+   "status": "ready",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
+   "companies": 6,
+   "added_2026_11_26": [
+    {
+     "id": "PREMIERFIN",
+     "name": "Premier Financial",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/203596/000119312526085463/wsbc-20251231.htm",
+     "label": "WesBanco 10-K (FY2025)"
+    },
+    {
+     "id": "OLDLINE",
+     "name": "Old Line Bancshares",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/203596/000119312526085463/wsbc-20251231.htm",
+     "label": "WesBanco 10-K (FY2025)"
+    },
+    {
+     "id": "FARMERSCAPITAL",
+     "name": "Farmers Capital Group",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/203596/000119312526085463/wsbc-20251231.htm",
+     "label": "WesBanco 10-K (FY2025)"
+    },
+    {
+     "id": "KBW",
+     "name": "Keefe, Bruyette & Woods",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/203596/000119312525202171/d38492d8k.htm",
+     "label": "WesBanco 8-K (September 2025)"
+    },
+    {
+     "id": "RY",
+     "name": "Royal Bank of Canada",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/203596/000119312525202171/d38492d8k.htm",
+     "label": "WesBanco 8-K (September 2025)"
+    },
+    {
+     "id": "RJF",
+     "name": "Raymond James",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/203596/000119312525202171/d38492d8k.htm",
+     "label": "WesBanco 8-K (September 2025)"
+    }
+   ]
   },
   "WSC": {
    "status": "ready",
@@ -15354,9 +16089,16 @@
    ]
   },
   "WSFS": {
-   "status": "not_attempted",
+   "status": "skipped",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found",
+   "tried": [
+    "Own 10-K: acquisitions, Federal Home Loan Bank, brokerage and core-processor partners, competitors named",
+    "Own 8-K Items 1.01/2.01 and exhibit index: merger agreements, underwriters, credit agreements",
+    "Borrower method: EDGAR full-text search for the bank's legal name in other companies' 10-K/10-Q/8-K credit agreements (2024-2026)",
+    "Bryn Mawr and Beneficial (acquisitions) only"
+   ],
+   "reason": "Fewer than five verified companies found"
   },
   "WSM": {
    "companies": 7,
