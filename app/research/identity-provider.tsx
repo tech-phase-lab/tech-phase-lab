@@ -54,6 +54,7 @@ function loadLocalizations(): Promise<void> {
 // Started as soon as this module runs in the browser, alongside the identity SDK's own download.
 if (typeof window !== "undefined") void loadLocalizations().catch(() => {});
 const WordingReady = createContext(true);
+export const WORDING_WAIT_MS = 10_000;
 /** True once Clerk's forms have their Japanese/English wording; a screen that shows <SignIn>, <SignUp> or <UserProfile> waits for it. */
 export function useIdentityWordingReady() { return useContext(WordingReady); }
 /** Keep the identity SDK mounted across research navigation so session renewal continues. */
@@ -68,6 +69,9 @@ export default function ResearchIdentityProvider({ children, enabled }: { childr
     void load();
     return () => { active = false; clearTimeout(retry); };
   }, [wordingReady]);
+  // If the wording has not come in WORDING_WAIT_MS, the forms show with Clerk's default wording rather than stay empty.
+  const [wordingLate, setWordingLate] = useState(false);
+  useEffect(() => { const timer = setTimeout(() => setWordingLate(true), WORDING_WAIT_MS); return () => clearTimeout(timer); }, []);
   if (!enabled) return children;
-  return <ClerkProvider appearance={clerkAppearance} localization={wordingReady ? localized[lang === "ja" ? "ja" : "en"] : undefined} signInUrl="/research/account" signUpUrl="/research/account/sign-up"><WordingReady.Provider value={wordingReady}><IdentitySession>{children}</IdentitySession></WordingReady.Provider></ClerkProvider>;
+  return <ClerkProvider appearance={clerkAppearance} localization={wordingReady ? localized[lang === "ja" ? "ja" : "en"] : undefined} signInUrl="/research/account" signUpUrl="/research/account/sign-up"><WordingReady.Provider value={wordingReady || wordingLate}><IdentitySession>{children}</IdentitySession></WordingReady.Provider></ClerkProvider>;
 }

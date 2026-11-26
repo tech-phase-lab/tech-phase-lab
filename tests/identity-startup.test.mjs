@@ -39,3 +39,10 @@ test('the sign-in wording is not part of the first script: loaded beside the pag
  assert.match(source,/import\("@clerk\/localizations\/ja-JP"\), import\("@clerk\/localizations\/en-US"\)/);
  for (const file of ['../app/research/account/screen.tsx','../app/research/account/security/screen.tsx','../app/research/write/writer.tsx']) assert.match(readFileSync(new URL(file,import.meta.url),'utf8'),/useIdentityWordingReady\(\)/);
 });
+
+test("the sign-in forms wait for their wording at most ten seconds, then show with the default wording (speed review, Nov 26)", () => {
+  const source = readFileSync(new URL("../app/research/identity-provider.tsx", import.meta.url), "utf8");
+  assert.match(source, /export const WORDING_WAIT_MS = 10_000;/);
+  assert.match(source, /setTimeout\(\(\) => setWordingLate\(true\), WORDING_WAIT_MS\)/);
+  assert.match(source, /<WordingReady\.Provider value=\{wordingReady \|\| wordingLate\}>/);
+});
