@@ -121,6 +121,32 @@
         }
       ],
       "name_en": "Silgan Holdings"
+    },
+    {
+      "id": "UL",
+      "ticker": "UL",
+      "name": "ユニリーバ",
+      "name_en": "Unilever",
+      "sub": "日用品・食品",
+      "sub_en": "Consumer goods & foods",
+      "sub_short": "日用品",
+      "sub_short_en": "Consumer",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2026年3月、食品事業の統合で最終契約",
+          "text_en": "Signed definitive agreements on Unilever's food business in March 2026",
+          "source": {
+            "label": "McCormick 8-K(2026年3月)",
+            "label_en": "McCormick 8-K (March 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/63754/000199937126007382/mkcv_8k-033126.htm",
+            "level": "official",
+            "date": "2026-04-01",
+            "quote": "On March 31, 2026, McCormick & Company, Incorporated, a Maryland corporation (\"McCormick\"), entered into definitive agreements with Unilever PLC"
+          }
+        }
+      ]
     }
   ],
   "far": [],

@@ -121,6 +121,32 @@
         }
       ],
       "name_en": "Amazon.com"
+    },
+    {
+      "id": "GPC",
+      "ticker": "GPC",
+      "name": "ジェニュイン・パーツ",
+      "name_en": "Genuine Parts",
+      "sub": "自動車部品",
+      "sub_en": "Auto parts",
+      "sub_short": "車部品",
+      "sub_short_en": "Car parts",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "北米の主要競合に挙げる",
+          "text_en": "Names O'Reilly as a key North American competitor",
+          "source": {
+            "label": "Genuine Parts 10-K(2025年度)",
+            "label_en": "Genuine Parts 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/40987/000004098726000003/gpc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Key competitors in North America include AutoZone, Inc., O'Reilly Auto Parts, Inc., Advance Auto Parts, Inc., and LKQ Corporation"
+          }
+        }
+      ]
     }
   ],
   "far": [],

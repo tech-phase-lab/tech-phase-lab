@@ -113,6 +113,32 @@
         }
       ],
       "name_en": "Chroma ATE"
+    },
+    {
+      "id": "NVMI",
+      "ticker": "NVMI",
+      "name": "Nova",
+      "name_en": "Nova",
+      "sub": "計測装置",
+      "sub_en": "Metrology",
+      "sub_short": "計測装置",
+      "sub_short_en": "Metrology",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "パッケージ分野でCamtekと直接競合すると記載",
+          "text_en": "Says it competes directly with Camtek in packaging",
+          "source": {
+            "label": "Nova 20-F(2025年度)",
+            "label_en": "Nova 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1109345/000117891326000504/zk2634307.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "positions us in direct competition with companies such as Merck and Camtek"
+          }
+        }
+      ]
     }
   ],
   "far": [],

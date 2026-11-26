@@ -124,6 +124,84 @@
         }
       ],
       "name_en": "Werner Enterprises"
+    },
+    {
+      "id": "BRID",
+      "ticker": "BRID",
+      "name": "ブリッジフォード・フーズ",
+      "name_en": "Bridgford Foods",
+      "sub": "食品",
+      "sub_en": "Foods",
+      "sub_short": "食品",
+      "sub_short_en": "Foods",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "売上の14.2%がDollar General向け(2025年度)",
+          "text_en": "Dollar General was 14.2% of its revenue (FY2025)",
+          "source": {
+            "label": "Bridgford Foods 10-K(2025年度)",
+            "label_en": "Bridgford Foods 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/14177/000149315226004079/form10-k.htm",
+            "level": "official",
+            "date": "2026-01-28",
+            "quote": "Sales to Dollar General® comprised 14.2% of revenues in fiscal year 2025"
+          }
+        }
+      ]
+    },
+    {
+      "id": "IBTA",
+      "ticker": "IBTA",
+      "name": "アイボッタ",
+      "name_en": "Ibotta",
+      "sub": "販促",
+      "sub_en": "Digital promotions",
+      "sub_short": "販促",
+      "sub_short_en": "Promos",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "特典プログラムを提供する外部パブリッシャーの例に挙げる",
+          "text_en": "Names Dollar General as a third-party publisher it powers",
+          "source": {
+            "label": "Ibotta 10-K(2025年度)",
+            "label_en": "Ibotta 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1538379/000162828026011838/ibta-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "A non-D2C publisher that hosts Ibotta-sourced offers on its digital properties and is part of the IPN (e.g., Walmart, Dollar General, and Instacart)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GIPR",
+      "ticker": "GIPR",
+      "name": "ジェネレーション・インカム・プロパティーズ",
+      "name_en": "Generation Income Properties",
+      "sub": "不動産投資信託",
+      "sub_en": "REIT",
+      "sub_short": "REIT",
+      "sub_short_en": "REIT",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大級のテナントの1社",
+          "text_en": "One of its largest tenants",
+          "source": {
+            "label": "Generation Income Properties 10-K(2025年度)",
+            "label_en": "Generation Income Properties 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1651721/000119312526135022/gipr-20251231.htm",
+            "level": "official",
+            "date": "2026-04-01",
+            "quote": "Our largest tenants are the General Service Administration, Dollar General, and the City of San Antonio"
+          }
+        }
+      ]
     }
   ],
   "far": [],

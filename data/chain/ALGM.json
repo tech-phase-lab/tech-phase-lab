@@ -116,6 +116,32 @@
         }
       ],
       "name_en": "Sanken Electric"
+    },
+    {
+      "id": "ON",
+      "ticker": "ON",
+      "name": "オン・セミコンダクター",
+      "name_en": "onsemi",
+      "sub": "パワー半導体",
+      "sub_en": "Power semiconductors",
+      "sub_short": "半導体",
+      "sub_short_en": "Chips",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年3月に1株35.10ドルでの買収を提案",
+          "text_en": "Proposed to acquire Allegro for $35.10 a share in March 2025",
+          "source": {
+            "label": "onsemi 8-K(2025年3月)",
+            "label_en": "onsemi 8-K (March 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1097864/000119312525047728/d891589dex991.htm",
+            "level": "official",
+            "date": "2025-03-05",
+            "quote": "onsemi Proposes to Acquire Allegro MicroSystems for $35.10 Per Share in Cash"
+          }
+        }
+      ]
     }
   ],
   "far": [],

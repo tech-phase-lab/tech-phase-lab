@@ -1,0 +1,7848 @@
+{
+ "about": "Per-ticker build log for the relationship maps (data/chain). Universe: company introductions (lib/research/company-introductions.data.json). Rule (#806): a map is published only with five or more companies whose relationship is quoted from an official filing or document. Statuses: ready, below_five (published before the rule; kept until the owner decides), skipped (tried; fewer than five verified companies; reason recorded), not_attempted.",
+ "updated": "2026-11-26",
+ "counts": {
+  "ready": 1028,
+  "below_five": 9,
+  "skipped": 0,
+  "not_attempted": 340
+ },
+ "tickers": {
+  "A": {
+   "companies": 12,
+   "status": "ready",
+   "in_universe": true
+  },
+  "AA": {
+   "companies": 11,
+   "status": "ready",
+   "in_universe": true
+  },
+  "AAL": {
+   "companies": 15,
+   "status": "ready",
+   "in_universe": false
+  },
+  "AAOI": {
+   "companies": 13,
+   "status": "ready",
+   "in_universe": true
+  },
+  "AAON": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "AAP": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "AAPL": {
+   "companies": 25,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ABBV": {
+   "companies": 11,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ABCB": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "ABG": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ABM": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ABNB": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ABR": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "ABT": {
+   "companies": 12,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ACA": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "ACAD": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ACGL": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ACIW": {
+   "companies": 11,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ACLS": {
+   "companies": 5,
+   "status": "ready",
+   "added_2026_11_26": [
+    {
+     "id": "SMIC",
+     "name": "Semiconductor Manufacturing International",
+     "type": "down",
+     "source": "https://www.sec.gov/Archives/edgar/data/1113232/000110465926020461/acls-20251231x10k.htm",
+     "label": "Axcelis 10-K (FY2025)"
+    }
+   ],
+   "in_universe": true
+  },
+  "ACM": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ACMR": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ACN": {
+   "companies": 17,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ACT": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ADAM": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "ADBE": {
+   "companies": 24,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ADC": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ADEA": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ADI": {
+   "companies": 11,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ADMA": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ADNT": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ADP": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ADSK": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ADT": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ADUS": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "AEE": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "AEHR": {
+   "companies": 1,
+   "status": "below_five",
+   "tried": [
+    "Own 10-K (FY ended May 2026): customers not named",
+    "EDGAR full-text search 'Aehr Test' in other filers' 10-K/20-F/8-K 2025-2026: only director biographies (Credo, Kopin)"
+   ],
+   "reason": "Only 1 verified company; no customer, supplier or competitor names Aehr in a filing",
+   "in_universe": true
+  },
+  "AEIS": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "AEM": {
+   "companies": 11,
+   "status": "ready",
+   "in_universe": false
+  },
+  "AEO": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "AEP": {
+   "companies": 6,
+   "status": "ready",
+   "added_2026_11_26": [
+    {
+     "id": "BRK.B",
+     "name": "",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/4904/000000490426000013/aep-20251231.htm",
+     "label": "AEP 10-K (FY2025)"
+    },
+    {
+     "id": "OVEC",
+     "name": "Ohio Valley Electric",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/4904/000000490426000013/aep-20251231.htm",
+     "label": "AEP 10-K (FY2025)"
+    }
+   ],
+   "in_universe": true
+  },
+  "AES": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "AFG": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "AFL": {
+   "companies": 6,
+   "status": "ready",
+   "added_2026_11_26": [
+    {
+     "id": "TRUP",
+     "name": "Trupanion",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1371285/000137128526000018/trup-20251231.htm",
+     "label": "Trupanion 10-K (FY2025)"
+    },
+    {
+     "id": "VOYA",
+     "name": "Voya Financial",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/1535929/000153592926000043/voya-20251231.htm",
+     "label": "Voya Financial 10-K (FY2025)"
+    },
+    {
+     "id": "AEGON",
+     "name": "Aegon",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/769218/000119312526124987/d29563d20f.htm",
+     "label": "Aegon 20-F (FY2025)"
+    }
+   ],
+   "in_universe": true
+  },
+  "AG": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": false
+  },
+  "AGCO": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "AGNC": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "AGNT": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "AGX": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "AGYS": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "AHCO": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "AHR": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "AIG": {
+   "companies": 12,
+   "status": "ready",
+   "in_universe": true
+  },
+  "AIN": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "AIR": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "AIT": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "AJG": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "AKAM": {
+   "companies": 12,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ALAB": {
+   "companies": 32,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ALB": {
+   "companies": 14,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ALG": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "ALGM": {
+   "companies": 5,
+   "status": "ready",
+   "added_2026_11_26": [
+    {
+     "id": "ON",
+     "name": "onsemi",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1097864/000119312525047728/d891589dex991.htm",
+     "label": "onsemi 8-K (March 2025)"
+    }
+   ],
+   "in_universe": true
+  },
+  "ALGN": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "ALGT": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ALHC": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "ALK": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ALKT": {
+   "companies": 2,
+   "status": "below_five",
+   "tried": [
+    "Own 10-K",
+    "Full-text search 'Alkami' 2025-2026: MeridianLink (comparable-company table), Blend Labs (executive biography), NCR Voyix (non-compete list)"
+   ],
+   "reason": "2 verified companies; other mentions are valuation tables, biographies or non-compete lists, which are not relationships",
+   "in_universe": true
+  },
+  "ALL": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ALLE": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ALLY": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ALNY": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ALRM": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ALSN": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ALV": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "AM": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "AMAT": {
+   "companies": 12,
+   "status": "ready",
+   "in_universe": true
+  },
+  "AMBA": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "AMCR": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "AMD": {
+   "companies": 24,
+   "status": "ready",
+   "in_universe": true
+  },
+  "AME": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "AMG": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "AMGN": {
+   "companies": 17,
+   "status": "ready",
+   "in_universe": false
+  },
+  "AMH": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "AMKR": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "AMN": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "AMP": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "AMPH": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "AMRX": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "AMSF": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "AMT": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "AMTM": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "AMZN": {
+   "companies": 21,
+   "status": "ready",
+   "in_universe": true
+  },
+  "AN": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ANDE": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "ANET": {
+   "companies": 17,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ANIP": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "AON": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "AORT": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "AOS": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "AOSL": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "APA": {
+   "companies": 6,
+   "status": "ready",
+   "added_2026_11_26": [
+    {
+     "id": "LB",
+     "name": "LandBridge",
+     "type": "down",
+     "source": "https://www.sec.gov/Archives/edgar/data/1995807/000119312526072404/lb-20251231.htm",
+     "label": "LandBridge 10-K (FY2025)"
+    },
+    {
+     "id": "KNTK",
+     "name": "Kinetik Holdings",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1692787/000169278726000048/apa-20251231.htm",
+     "label": "Kinetik 10-K (FY2025)"
+    }
+   ],
+   "in_universe": true
+  },
+  "APD": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": false
+  },
+  "APH": {
+   "companies": 11,
+   "status": "ready",
+   "in_universe": true
+  },
+  "APLD": {
+   "companies": 15,
+   "status": "ready",
+   "in_universe": false
+  },
+  "APLE": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "APO": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": false
+  },
+  "APOG": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "APP": {
+   "companies": 7,
+   "status": "ready",
+   "added_2026_11_26": [
+    {
+     "id": "CTKYY",
+     "name": "CooTek",
+     "type": "down",
+     "source": "https://www.sec.gov/Archives/edgar/data/1734262/000110465926048866/ctkyy-20251231x20f.htm",
+     "label": "CooTek 20-F (FY2025)"
+    },
+    {
+     "id": "APPS",
+     "name": "Digital Turbine",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/317788/000162828026038115/apps-20260331.htm",
+     "label": "Digital Turbine 10-K (FY ended Mar 2026)"
+    },
+    {
+     "id": "EVC",
+     "name": "Entravision Communications",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/1109116/000119312526093993/evc-20251231.htm",
+     "label": "Entravision 10-K (FY2025)"
+    }
+   ],
+   "in_universe": true
+  },
+  "APPF": {
+   "companies": 5,
+   "status": "ready",
+   "added_2026_11_26": [
+    {
+     "id": "AVDX",
+     "name": "AvidXchange",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1858257/000095017025029974/avdx-20241231.htm",
+     "label": "AvidXchange 10-K (FY2024)"
+    },
+    {
+     "id": "LTCH",
+     "name": "Latch",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1826000/000182600026000030/lat-20251231.htm",
+     "label": "Latch 10-K (FY2025)"
+    }
+   ],
+   "in_universe": true
+  },
+  "APPN": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "APTV": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "AR": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ARE": {
+   "companies": 12,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ARES": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ARGX": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": false
+  },
+  "ARLO": {
+   "companies": 13,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ARM": {
+   "companies": 31,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ARMK": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "AROC": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "ARW": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ARWR": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ASAN": {
+   "companies": 11,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ASB": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ASH": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ASML": {
+   "companies": 11,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ASO": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "ASTE": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ASTS": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ASX": {
+   "companies": 14,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ATEN": {
+   "companies": 12,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ATI": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ATMU": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ATO": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ATR": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "AU": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": false
+  },
+  "AUB": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "AVAV": {
+   "companies": 11,
+   "status": "ready",
+   "in_universe": true
+  },
+  "AVGO": {
+   "companies": 23,
+   "status": "ready",
+   "in_universe": true
+  },
+  "AVNT": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "AVPT": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "AVT": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "AVTR": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "AVY": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "AWI": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "AWK": {
+   "companies": 5,
+   "status": "ready",
+   "added_2026_11_26": [
+    {
+     "id": "NEXUS",
+     "name": "Nexus Water Group",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1410636/000141063626000034/awk-20251231.htm",
+     "label": "American Water 10-K (FY2025)"
+    },
+    {
+     "id": "AQN",
+     "name": "Algonquin Power & Utilities",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/1410636/000141063626000034/awk-20251231.htm",
+     "label": "American Water 10-K (FY2025)"
+    }
+   ],
+   "in_universe": true
+  },
+  "AWR": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "AX": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "AXON": {
+   "companies": 11,
+   "status": "ready",
+   "in_universe": true
+  },
+  "AXP": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "AXTA": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "AYI": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "AZN": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": false
+  },
+  "AZO": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "AZTA": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "AZZ": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "BA": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "BABA": {
+   "companies": 12,
+   "status": "ready",
+   "in_universe": true
+  },
+  "BAC": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "BALL": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "BANC": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "BAND": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "BANF": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "BANR": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "BAX": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "BBT": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "BBWI": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "BBY": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "BC": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "BCC": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "BCO": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "BCPC": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "BDC": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "BE": {
+   "companies": 13,
+   "status": "ready",
+   "in_universe": true
+  },
+  "BEN": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "BFAM": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "BFS": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "BG": {
+   "companies": 12,
+   "status": "ready",
+   "in_universe": true
+  },
+  "BGS": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": false
+  },
+  "BHE": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "BHF": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "BHP": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": false
+  },
+  "BIDU": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "BIIB": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "BILL": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "BIO": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "BJ": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "BJRI": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "BKE": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "BKH": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "BKNG": {
+   "companies": 6,
+   "status": "ready",
+   "added_2026_11_26": [
+    {
+     "id": "TRIP",
+     "name": "Tripadvisor",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/1526520/000119312526051281/trip-20251231.htm",
+     "label": "Tripadvisor 10-K (FY2025)"
+    },
+    {
+     "id": "TRVG",
+     "name": "trivago",
+     "type": "down",
+     "source": "https://www.sec.gov/Archives/edgar/data/1683825/000168382526000006/trvg-20251231.htm",
+     "label": "trivago 20-F (FY2025)"
+    }
+   ],
+   "in_universe": true
+  },
+  "BKR": {
+   "companies": 13,
+   "status": "ready",
+   "in_universe": true
+  },
+  "BKSY": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "BKU": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "BL": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "BLFS": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "BLK": {
+   "companies": 7,
+   "status": "ready",
+   "added_2026_11_26": [
+    {
+     "id": "HPS",
+     "name": "HPS Investment Partners",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/2012383/000119312526071966/blk-20251231.htm",
+     "label": "BlackRock 10-K (FY2025)"
+    },
+    {
+     "id": "GlobalInfraPartners",
+     "name": "Global Infrastructure Partners",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/2012383/000119312526071966/blk-20251231.htm",
+     "label": "BlackRock 10-K (FY2025)"
+    },
+    {
+     "id": "PREQIN",
+     "name": "Preqin",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/2012383/000119312526071966/blk-20251231.htm",
+     "label": "BlackRock 10-K (FY2025)"
+    }
+   ],
+   "in_universe": true
+  },
+  "BLKB": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "BMI": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "BMRN": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "BMY": {
+   "companies": 12,
+   "status": "ready",
+   "in_universe": true
+  },
+  "BNL": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "BNTX": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": false
+  },
+  "BNY": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "BOH": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "BOOT": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "BOX": {
+   "companies": 14,
+   "status": "ready",
+   "in_universe": true
+  },
+  "BP": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": false
+  },
+  "BR": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "BRKR": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "BRO": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "BROS": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "BRX": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "BRZE": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "BSX": {
+   "companies": 13,
+   "status": "ready",
+   "in_universe": true
+  },
+  "BSY": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "BTSG": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "BTU": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "BURL": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "BWA": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "BWXT": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "BX": {
+   "companies": 12,
+   "status": "ready",
+   "in_universe": true
+  },
+  "BXMT": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "BXP": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "BYD": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "C": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": false
+  },
+  "CACC": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "CACI": {
+   "companies": 11,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CAG": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CAH": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": false
+  },
+  "CAKE": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "CALM": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CALX": {
+   "companies": 14,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CAMT": {
+   "companies": 4,
+   "status": "below_five",
+   "added_2026_11_26": [
+    {
+     "id": "NVMI",
+     "name": "Nova",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/1109345/000117891326000504/zk2634307.htm",
+     "label": "Nova 20-F (FY2025)"
+    }
+   ],
+   "tried": [
+    "Own 20-F: no named competitors",
+    "Nova 20-F (added)",
+    "Axcelis/Veeco 8-K, Tower 6-K: valuation and compensation peer lists only"
+   ],
+   "reason": "4 verified companies",
+   "in_universe": true
+  },
+  "CAR": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CARG": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CARR": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CART": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CASH": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CASY": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "CAT": {
+   "companies": 13,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CB": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CBOE": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CBRE": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CBRL": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "CBSH": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "CBT": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "CBU": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "CC": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CCEP": {
+   "companies": 5,
+   "status": "ready",
+   "added_2026_11_26": [
+    {
+     "id": "PACT",
+     "name": "Pact Group",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1650107/000165010726000029/cce-20251231.htm",
+     "label": "CCEP annual report (Form 20-F)"
+    },
+    {
+     "id": "CWY",
+     "name": "Cleanaway Waste Management",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1650107/000165010726000029/cce-20251231.htm",
+     "label": "CCEP annual report (Form 20-F)"
+    },
+    {
+     "id": "2502",
+     "name": "Asahi Group",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1650107/000165010726000029/cce-20251231.htm",
+     "label": "CCEP annual report (Form 20-F)"
+    }
+   ],
+   "in_universe": false
+  },
+  "CCI": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CCJ": {
+   "companies": 12,
+   "status": "ready",
+   "in_universe": false
+  },
+  "CCK": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CCL": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CCOI": {
+   "companies": 4,
+   "status": "below_five",
+   "added_2026_11_26": [
+    {
+     "id": "TMUS",
+     "name": "T-Mobile US",
+     "type": "down",
+     "source": "https://www.sec.gov/Archives/edgar/data/1283699/000128369926000010/tmus-20251231.htm",
+     "label": "T-Mobile US 10-K (FY2025)"
+    }
+   ],
+   "tried": [
+    "Own 10-K: no named competitors",
+    "T-Mobile 10-K (added)",
+    "Other mentions are unrelated 'Cogent' companies or a building lease listing"
+   ],
+   "reason": "4 verified companies",
+   "in_universe": true
+  },
+  "CCS": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "CDE": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CDNS": {
+   "companies": 12,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CDP": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "CDW": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CE": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CEG": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CELH": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CENT": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CEVA": {
+   "companies": 12,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CF": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CFFN": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "CFG": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CGNX": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "CHCO": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "CHD": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CHDN": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CHE": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "CHEF": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "CHH": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CHKP": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CHRW": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CHTR": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CHWY": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CI": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CIEN": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CINF": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "CL": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CLH": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CLS": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": false
+  },
+  "CLSK": {
+   "companies": 14,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CLX": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CMC": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CMCSA": {
+   "companies": 11,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CME": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CMG": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CMI": {
+   "companies": 15,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CMS": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "CNC": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CNH": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CNK": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CNM": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "CNP": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CNQ": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": false
+  },
+  "CNX": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CNXC": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CNXN": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "COCO": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "COF": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "COHR": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "COHU": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "COIN": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "COKE": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "COLL": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "COLM": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CON": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "COO": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "COP": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "COR": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CORT": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CORZ": {
+   "companies": 15,
+   "status": "ready",
+   "in_universe": false
+  },
+  "COST": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CPAY": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CPB": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CPF": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "CPRT": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CPT": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "CQP": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": false
+  },
+  "CR": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CRC": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CRDO": {
+   "companies": 15,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CRH": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CRI": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CRK": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "CRL": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CRM": {
+   "companies": 26,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CROX": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CRS": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "CRSR": {
+   "companies": 11,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CRUS": {
+   "companies": 12,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CRVL": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "CRWD": {
+   "companies": 19,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CRWV": {
+   "companies": 36,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CSCO": {
+   "companies": 23,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CSGP": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CSR": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "CSW": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CSX": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CTAS": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CTRE": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CTS": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CTSH": {
+   "companies": 20,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CTVA": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CUBE": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "CUZ": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "CVBF": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "CVCO": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "CVI": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CVLT": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CVNA": {
+   "companies": 5,
+   "status": "ready",
+   "added_2026_11_26": [
+    {
+     "id": "OPLN",
+     "name": "OPENLANE",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/1395942/000139594226000006/opln-20251231.htm",
+     "label": "OPENLANE 10-K (FY2025)"
+    }
+   ],
+   "in_universe": true
+  },
+  "CVS": {
+   "companies": 11,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CVSA": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "CVX": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CW": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CWEN": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CWK": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CWST": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CWT": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "CXM": {
+   "companies": 11,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CXT": {
+   "companies": 4,
+   "status": "below_five",
+   "tried": [
+    "Own 10-K: no named competitors",
+    "Brady 10-K (peer group only)",
+    "Crane Co, VIAVI, Invest Acquisition already in the map"
+   ],
+   "reason": "4 verified companies",
+   "in_universe": true
+  },
+  "CXW": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "CYTK": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "CZR": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "D": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": false
+  },
+  "DAL": {
+   "companies": 17,
+   "status": "ready",
+   "in_universe": true
+  },
+  "DAN": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "DAR": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "DASH": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "DBX": {
+   "companies": 13,
+   "status": "ready",
+   "in_universe": true
+  },
+  "DCH": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "DCI": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "DCOM": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "DD": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "DDOG": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "DE": {
+   "companies": 11,
+   "status": "ready",
+   "in_universe": true
+  },
+  "DEA": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "DECK": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "DELL": {
+   "companies": 14,
+   "status": "ready",
+   "in_universe": true
+  },
+  "DEO": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": false
+  },
+  "DFH": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "DFIN": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "DG": {
+   "companies": 7,
+   "status": "ready",
+   "added_2026_11_26": [
+    {
+     "id": "BRID",
+     "name": "Bridgford Foods",
+     "type": "down",
+     "source": "https://www.sec.gov/Archives/edgar/data/14177/000149315226004079/form10-k.htm",
+     "label": "Bridgford Foods 10-K (FY2025)"
+    },
+    {
+     "id": "IBTA",
+     "name": "Ibotta",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1538379/000162828026011838/ibta-20251231.htm",
+     "label": "Ibotta 10-K (FY2025)"
+    },
+    {
+     "id": "GIPR",
+     "name": "Generation Income Properties",
+     "type": "down",
+     "source": "https://www.sec.gov/Archives/edgar/data/1651721/000119312526135022/gipr-20251231.htm",
+     "label": "Generation Income Properties 10-K (FY2025)"
+    }
+   ],
+   "in_universe": true
+  },
+  "DGII": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "DGX": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "DHI": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "DINO": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "DIOD": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "DIS": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "DKS": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "DLB": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "DLR": {
+   "companies": 11,
+   "status": "ready",
+   "in_universe": true
+  },
+  "DLTR": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "DLX": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "DMC": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "DNOW": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "DOC": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "DOCN": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "DOCS": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "DOCU": {
+   "companies": 14,
+   "status": "ready",
+   "in_universe": true
+  },
+  "DORM": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "DOV": {
+   "companies": 12,
+   "status": "ready",
+   "in_universe": true
+  },
+  "DOW": {
+   "companies": 12,
+   "status": "ready",
+   "in_universe": true
+  },
+  "DPZ": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "DRH": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "DRI": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "DT": {
+   "companies": 12,
+   "status": "ready",
+   "in_universe": true
+  },
+  "DUK": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "DUOL": {
+   "companies": 6,
+   "status": "ready",
+   "added_2026_11_26": [
+    {
+     "id": "CHGG",
+     "name": "Chegg",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/1364954/000136495426000021/chgg-20251231.htm",
+     "label": "Chegg 10-K (FY2025)"
+    },
+    {
+     "id": "WBTN",
+     "name": "WEBTOON Entertainment",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1997859/000199785926000028/wbtn-20251231.htm",
+     "label": "WEBTOON 10-K (FY2025)"
+    },
+    {
+     "id": "LRN",
+     "name": "Stride",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/1157408/000110465926090515/lrn-20260630x10k.htm",
+     "label": "Stride 10-K (FY ended Jun 2026)"
+    }
+   ],
+   "in_universe": true
+  },
+  "DVA": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "DVN": {
+   "companies": 7,
+   "status": "ready",
+   "added_2026_11_26": [
+    {
+     "id": "CTRA",
+     "name": "Coterra Energy",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/858470/000085847026000078/cog-20251231.htm",
+     "label": "Coterra Energy 10-K/A (FY2025)"
+    },
+    {
+     "id": "NGS",
+     "name": "Natural Gas Services Group",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1084991/000108499126000015/ngs-20251231.htm",
+     "label": "Natural Gas Services Group 10-K (FY2025)"
+    },
+    {
+     "id": "LB",
+     "name": "LandBridge",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1995807/000119312526072404/lb-20251231.htm",
+     "label": "LandBridge 10-K (FY2025)"
+    }
+   ],
+   "in_universe": true
+  },
+  "DXC": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "DXCM": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "DXPE": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "DY": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "E": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": false
+  },
+  "EBAY": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "EBC": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "ECHO": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ECL": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ECPG": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "ED": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "EEFT": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "EFC": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "EFOR": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "EFX": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "EG": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "EGBN": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "EGHT": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "EGP": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "EHC": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "EIG": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "EL": {
+   "companies": 12,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ELAN": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ELF": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ELS": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "ELV": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "EME": {
+   "companies": 14,
+   "status": "ready",
+   "in_universe": true
+  },
+  "EMN": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "EMR": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ENB": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": false
+  },
+  "ENOV": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ENPH": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ENS": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ENSG": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "ENTG": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "EOG": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "EPAC": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "EPAM": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "EPC": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": false
+  },
+  "EPR": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "EPRT": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "EQH": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "EQIX": {
+   "companies": 15,
+   "status": "ready",
+   "in_universe": true
+  },
+  "EQNR": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": false
+  },
+  "EQT": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ERIE": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "ES": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ESAB": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "ESE": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ESI": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ESS": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "ESTC": {
+   "companies": 11,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ET": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": false
+  },
+  "ETN": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ETR": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ETSY": {
+   "companies": 6,
+   "status": "ready",
+   "added_2026_11_26": [
+    {
+     "id": "GDDY",
+     "name": "GoDaddy",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1609711/000160971126000010/gddy-20251231.htm",
+     "label": "GoDaddy 10-K (FY2025)"
+    },
+    {
+     "id": "CRCT",
+     "name": "Cricut",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/1828962/000182896226000010/crct-20251231.htm",
+     "label": "Cricut 10-K (FY2025)"
+    }
+   ],
+   "in_universe": true
+  },
+  "EVR": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "EVRG": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "EW": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "EWBC": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "EXC": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "EXE": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "EXEL": {
+   "companies": 11,
+   "status": "ready",
+   "in_universe": true
+  },
+  "EXLS": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "EXP": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "EXPD": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "EXPE": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "EXPO": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "EXR": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "EXTR": {
+   "companies": 15,
+   "status": "ready",
+   "in_universe": true
+  },
+  "EZPW": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "F": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "FAF": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "FAST": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "FBIN": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "FBNC": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "FCF": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "FCN": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "FCPT": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "FCX": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": false
+  },
+  "FDS": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "FDX": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "FDXF": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "FE": {
+   "companies": 5,
+   "status": "ready",
+   "added_2026_11_26": [
+    {
+     "id": "TRANSOURCE",
+     "name": "Transource Energy",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1031296/000103129626000046/fe-20251231.htm",
+     "label": "FirstEnergy 10-K (FY2025)"
+    },
+    {
+     "id": "WMBMV",
+     "name": "WMB Marketing Ventures",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1031296/000103129626000046/fe-20251231.htm",
+     "label": "FirstEnergy 10-K (FY2025)"
+    }
+   ],
+   "in_universe": true
+  },
+  "FELE": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "FERG": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "FFBC": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "FFIN": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "FFIV": {
+   "companies": 12,
+   "status": "ready",
+   "in_universe": true
+  },
+  "FHB": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "FIBK": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "FICO": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "FIS": {
+   "companies": 11,
+   "status": "ready",
+   "in_universe": true
+  },
+  "FISV": {
+   "companies": 13,
+   "status": "ready",
+   "in_universe": true
+  },
+  "FITB": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "FIVE": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "FIVN": {
+   "companies": 14,
+   "status": "ready",
+   "in_universe": true
+  },
+  "FIX": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "FIZZ": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "FLEX": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "FLG": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "FLR": {
+   "companies": 11,
+   "status": "ready",
+   "in_universe": true
+  },
+  "FLS": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "FMC": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "FMX": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": false
+  },
+  "FN": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "FNB": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "FND": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "FNF": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "FORM": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "FOXA": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "FOXF": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "FR": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "FROG": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "FRSH": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "FRT": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "FSLR": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "FSS": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "FTDR": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "FTI": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "FTNT": {
+   "companies": 17,
+   "status": "ready",
+   "in_universe": true
+  },
+  "FTRE": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "FUL": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "FULT": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "FUN": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "G": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "GAP": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "GATX": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "GBX": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "GD": {
+   "companies": 19,
+   "status": "ready",
+   "in_universe": true
+  },
+  "GDDY": {
+   "companies": 11,
+   "status": "ready",
+   "in_universe": true
+  },
+  "GE": {
+   "companies": 16,
+   "status": "ready",
+   "in_universe": false
+  },
+  "GEF": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "GEHC": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "GEN": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "GEO": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "GEV": {
+   "companies": 19,
+   "status": "ready",
+   "in_universe": true
+  },
+  "GFF": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "GFI": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": false
+  },
+  "GFS": {
+   "companies": 14,
+   "status": "ready",
+   "in_universe": true
+  },
+  "GGG": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "GIII": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "GILD": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "GIS": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "GKOS": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "GL": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "GLPI": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": false
+  },
+  "GLW": {
+   "companies": 11,
+   "status": "ready",
+   "in_universe": true
+  },
+  "GM": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "GMAB": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": false
+  },
+  "GME": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "GNL": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "GNRC": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "GNTX": {
+   "companies": 15,
+   "status": "ready",
+   "in_universe": true
+  },
+  "GO": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "GOLF": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "GOOG": {
+   "companies": 17,
+   "status": "ready",
+   "in_universe": true
+  },
+  "GOOGL": {
+   "companies": 21,
+   "status": "ready",
+   "in_universe": false
+  },
+  "GPC": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "GPK": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "GPN": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "GRAB": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": false
+  },
+  "GRBK": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "GRMN": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "GS": {
+   "companies": 5,
+   "status": "ready",
+   "added_2026_11_26": [
+    {
+     "id": "INDUSTRYVENTURES",
+     "name": "Industry Ventures",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/886982/000088698226000091/gs-20251231.htm",
+     "label": "Goldman Sachs 10-K (FY2025)"
+    },
+    {
+     "id": "INNOVATOR",
+     "name": "Innovator Capital Management",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/886982/000088698226000091/gs-20251231.htm",
+     "label": "Goldman Sachs 10-K (FY2025)"
+    }
+   ],
+   "in_universe": true
+  },
+  "GSHD": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "GSK": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": false
+  },
+  "GT": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "GTES": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "GTLB": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "GTY": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "GVA": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "GWRE": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "GWW": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "GXO": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "H": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "HAE": {
+   "companies": 11,
+   "status": "ready",
+   "in_universe": true
+  },
+  "HAFC": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "HAL": {
+   "companies": 18,
+   "status": "ready",
+   "in_universe": true
+  },
+  "HALO": {
+   "companies": 15,
+   "status": "ready",
+   "in_universe": true
+  },
+  "HAS": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "HASI": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "HAYW": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "HBAN": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "HCA": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "HCI": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "HCSG": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "HD": {
+   "companies": 17,
+   "status": "ready",
+   "in_universe": true
+  },
+  "HE": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "HELE": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": false
+  },
+  "HIG": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "HII": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "HIMS": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "HIMX": {
+   "companies": 14,
+   "status": "ready",
+   "in_universe": true
+  },
+  "HIW": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "HL": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": false
+  },
+  "HLI": {
+   "companies": 11,
+   "status": "ready",
+   "in_universe": true
+  },
+  "HLIT": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "HLNE": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "HLT": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "HMC": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": false
+  },
+  "HMY": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": false
+  },
+  "HNI": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "HOG": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "HOMB": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "HON": {
+   "companies": 18,
+   "status": "ready",
+   "in_universe": false
+  },
+  "HOOD": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "HOPE": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "HPE": {
+   "companies": 14,
+   "status": "ready",
+   "in_universe": true
+  },
+  "HPQ": {
+   "companies": 12,
+   "status": "ready",
+   "in_universe": true
+  },
+  "HQY": {
+   "companies": 5,
+   "status": "ready",
+   "added_2026_11_26": [
+    {
+     "id": "WEX",
+     "name": "WEX",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/1309108/000130910826000010/wex-20251231.htm",
+     "label": "WEX 10-K (FY2025)"
+    }
+   ],
+   "in_universe": true
+  },
+  "HR": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "HRB": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "HRL": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "HRMY": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "HSIC": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "HST": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "HSTM": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "HSY": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "HTH": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "HTLD": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "HTO": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "HUBB": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "HUBG": {
+   "companies": 6,
+   "status": "ready",
+   "added_2026_11_26": [
+    {
+     "id": "ARCB",
+     "name": "ArcBest",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/894405/000110465926019699/arcb-20251231x10k.htm",
+     "label": "ArcBest 10-K (FY2025)"
+    },
+    {
+     "id": "MATX",
+     "name": "Matson",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/3453/000155837025001875/matx-20241231x10k.htm",
+     "label": "Matson 10-K (FY2024)"
+    }
+   ],
+   "in_universe": true
+  },
+  "HUBS": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "HUM": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "HWC": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "HWKN": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "HWM": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "HXL": {
+   "companies": 12,
+   "status": "ready",
+   "in_universe": true
+  },
+  "HZO": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "IART": {
+   "companies": 11,
+   "status": "ready",
+   "in_universe": true
+  },
+  "IBKR": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "IBM": {
+   "companies": 29,
+   "status": "ready",
+   "in_universe": true
+  },
+  "IBOC": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "IBP": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "ICE": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ICHR": {
+   "companies": 4,
+   "status": "below_five",
+   "tried": [
+    "Own 10-K: no named competitors or suppliers",
+    "Ultra Clean 10-K already in the map",
+    "Apollo Debt Solutions: unrelated 'Ichor Management'"
+   ],
+   "reason": "4 verified companies",
+   "in_universe": true
+  },
+  "ICUI": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "IDA": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "IDCC": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "IDXX": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "IESC": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "IEX": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "IFF": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "IIPR": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "IMOS": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "INCY": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "INDB": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "INDI": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "INGR": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "INSP": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "INTC": {
+   "companies": 16,
+   "status": "ready",
+   "in_universe": true
+  },
+  "INTU": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "INVA": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "INVH": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "IONQ": {
+   "companies": 18,
+   "status": "ready",
+   "in_universe": true
+  },
+  "IOSP": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "IOT": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "IP": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "IPAR": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "IPGP": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "IQV": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "IR": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "IRDM": {
+   "companies": 12,
+   "status": "ready",
+   "in_universe": true
+  },
+  "IREN": {
+   "companies": 15,
+   "status": "ready",
+   "in_universe": true
+  },
+  "IRM": {
+   "companies": 11,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ISRG": {
+   "companies": 16,
+   "status": "ready",
+   "in_universe": true
+  },
+  "IT": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "ITGR": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ITT": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "IVT": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "IVZ": {
+   "companies": 5,
+   "status": "ready",
+   "added_2026_11_26": [
+    {
+     "id": "IGW",
+     "name": "Invesco Great Wall Fund Management",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/914208/000091420826000079/ivz-20251231.htm",
+     "label": "Invesco 10-K (FY2025)"
+    }
+   ],
+   "in_universe": true
+  },
+  "J": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "JAZZ": {
+   "companies": 11,
+   "status": "ready",
+   "in_universe": true
+  },
+  "JBGS": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "JBHT": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "JBL": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "JBSS": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "JBTM": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "JCI": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "JD": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "JEF": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "JJSF": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "JKHY": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "JLL": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "JNJ": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "JOE": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "JPM": {
+   "companies": 15,
+   "status": "ready",
+   "in_universe": true
+  },
+  "KAI": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "KBR": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "KD": {
+   "companies": 13,
+   "status": "ready",
+   "in_universe": true
+  },
+  "KDP": {
+   "companies": 11,
+   "status": "ready",
+   "in_universe": true
+  },
+  "KEX": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "KEY": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": false
+  },
+  "KEYS": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "KFY": {
+   "companies": 11,
+   "status": "ready",
+   "in_universe": true
+  },
+  "KGC": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": false
+  },
+  "KHC": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "KIM": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "KKR": {
+   "companies": 20,
+   "status": "ready",
+   "in_universe": true
+  },
+  "KLAC": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "KLIC": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": false
+  },
+  "KMB": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "KMT": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "KMX": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "KN": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "KNF": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "KNSL": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "KNX": {
+   "companies": 5,
+   "status": "ready",
+   "added_2026_11_26": [
+    {
+     "id": "AAACOOPER",
+     "name": "AAA Cooper Transportation",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1492691/000149269126000016/knx-20251231.htm",
+     "label": "Knight-Swift 10-K (FY2025)"
+    }
+   ],
+   "in_universe": true
+  },
+  "KO": {
+   "companies": 15,
+   "status": "ready",
+   "in_universe": true
+  },
+  "KR": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "KRC": {
+   "companies": 19,
+   "status": "ready",
+   "in_universe": true
+  },
+  "KRG": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "KSS": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "KTB": {
+   "companies": 5,
+   "status": "ready",
+   "added_2026_11_26": [
+    {
+     "id": "CTC",
+     "name": "Canadian Tire",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1760965/000176096526000014/ktb-20260103.htm",
+     "label": "Kontoor Brands 10-K (FY2025)"
+    }
+   ],
+   "in_universe": true
+  },
+  "KTOS": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "KVUE": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "KVYO": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "KWR": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "L": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "LAD": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "LAMR": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "LAUR": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "LAZ": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "LBRT": {
+   "companies": 11,
+   "status": "ready",
+   "in_universe": true
+  },
+  "LCID": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "LCII": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "LDOS": {
+   "companies": 12,
+   "status": "ready",
+   "in_universe": true
+  },
+  "LEA": {
+   "companies": 14,
+   "status": "ready",
+   "in_universe": true
+  },
+  "LECO": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "LEN": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "LEU": {
+   "companies": 12,
+   "status": "ready",
+   "in_universe": true
+  },
+  "LFST": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "LFUS": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "LGIH": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "LGND": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "LH": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "LHX": {
+   "companies": 12,
+   "status": "ready",
+   "in_universe": true
+  },
+  "LIF": {
+   "companies": 5,
+   "status": "ready",
+   "added_2026_11_26": [
+    {
+     "id": "GEN",
+     "name": "Gen Digital",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/849399/000084939926000017/gen-20260403.htm",
+     "label": "Gen Digital 10-K (FY ended Mar 2026)"
+    }
+   ],
+   "in_universe": true
+  },
+  "LII": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "LIN": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "LITE": {
+   "companies": 11,
+   "status": "ready",
+   "in_universe": true
+  },
+  "LKFN": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "LKQ": {
+   "companies": 5,
+   "status": "ready",
+   "added_2026_11_26": [
+    {
+     "id": "CPRT",
+     "name": "Copart",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/900075/000162828025042946/cprt-20250731.htm",
+     "label": "Copart 10-K (FY ended Jul 2025)"
+    }
+   ],
+   "in_universe": true
+  },
+  "LLY": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "LMAT": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "LMT": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "LNG": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": false
+  },
+  "LNN": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "LNT": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "LNTH": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "LOGI": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": false
+  },
+  "LOPE": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "LOW": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "LPG": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "LPX": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "LQDT": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "LRCX": {
+   "companies": 22,
+   "status": "ready",
+   "in_universe": true
+  },
+  "LRN": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "LSCC": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "LSTR": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "LTC": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "LULU": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "LUMN": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "LUNR": {
+   "companies": 14,
+   "status": "ready",
+   "in_universe": false
+  },
+  "LUV": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "LVS": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "LW": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "LXP": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "LYB": {
+   "companies": 5,
+   "status": "ready",
+   "added_2026_11_26": [
+    {
+     "id": "WLK",
+     "name": "Westlake",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/1262823/000126282326000016/wlk-20251231.htm",
+     "label": "Westlake 10-K (FY2025)"
+    }
+   ],
+   "in_universe": true
+  },
+  "LYFT": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "LYV": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "LZ": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "LZB": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "MA": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "MAA": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "MAC": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "MAN": {
+   "companies": 11,
+   "status": "ready",
+   "in_universe": true
+  },
+  "MANH": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "MAR": {
+   "companies": 11,
+   "status": "ready",
+   "in_universe": true
+  },
+  "MARA": {
+   "companies": 12,
+   "status": "ready",
+   "in_universe": true
+  },
+  "MAS": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "MAT": {
+   "companies": 13,
+   "status": "ready",
+   "in_universe": true
+  },
+  "MATW": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "MATX": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "MBC": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "MBIN": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "MC": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "MCD": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": false
+  },
+  "MCHP": {
+   "companies": 15,
+   "status": "ready",
+   "in_universe": true
+  },
+  "MCK": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "MCO": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "MCRI": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "MCY": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "MDB": {
+   "companies": 15,
+   "status": "ready",
+   "in_universe": true
+  },
+  "MDLZ": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "MDT": {
+   "companies": 14,
+   "status": "ready",
+   "in_universe": true
+  },
+  "MDU": {
+   "companies": 6,
+   "status": "ready",
+   "added_2026_11_26": [
+    {
+     "id": "NC",
+     "name": "NACCO Industries",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/789933/000078993326000070/nacco-20251231.htm",
+     "label": "NACCO Industries 10-K (FY2025)"
+    },
+    {
+     "id": "ECG",
+     "name": "Everus Construction Group",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/2015845/000201584526000010/q42025-20251231.htm",
+     "label": "Everus 10-K (FY2025)"
+    }
+   ],
+   "in_universe": true
+  },
+  "MEDP": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "MELI": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "MET": {
+   "companies": 7,
+   "status": "ready",
+   "added_2026_11_26": [
+    {
+     "id": "GTY",
+     "name": "Getty Realty",
+     "type": "down",
+     "source": "https://www.sec.gov/Archives/edgar/data/1052752/000119312526048965/gty-ex10_20.htm",
+     "label": "Getty Realty agreement filed with its 10-K (FY2025)"
+    },
+    {
+     "id": "LAND",
+     "name": "Gladstone Land",
+     "type": "down",
+     "source": "https://www.sec.gov/Archives/edgar/data/1495240/000149524026000011/land-20251231.htm",
+     "label": "Gladstone Land 10-K (FY2025)"
+    },
+    {
+     "id": "COKE",
+     "name": "Coca-Cola Consolidated",
+     "type": "down",
+     "source": "https://www.sec.gov/Archives/edgar/data/317540/000162828026009057/a109firstamendmenttonotepu.htm",
+     "label": "Coca-Cola Consolidated agreement filed with its 10-K (FY2025)"
+    }
+   ],
+   "in_universe": true
+  },
+  "META": {
+   "companies": 33,
+   "status": "ready",
+   "in_universe": true
+  },
+  "MGM": {
+   "companies": 6,
+   "status": "ready",
+   "added_2026_11_26": [
+    {
+     "id": "MAR",
+     "name": "Marriott International",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1048286/000162828025004818/mar-20241231.htm",
+     "label": "Marriott 10-K (FY2024)"
+    },
+    {
+     "id": "O",
+     "name": "Realty Income",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/726728/000072672826000011/o-20251231.htm",
+     "label": "Realty Income 10-K (FY2025)"
+    }
+   ],
+   "in_universe": true
+  },
+  "MGY": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "MHK": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "MHO": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "MIDD": {
+   "companies": 12,
+   "status": "ready",
+   "in_universe": true
+  },
+  "MIR": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "MKC": {
+   "companies": 5,
+   "status": "ready",
+   "added_2026_11_26": [
+    {
+     "id": "UL",
+     "name": "Unilever",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/63754/000199937126007382/mkcv_8k-033126.htm",
+     "label": "McCormick 8-K (March 2026)"
+    }
+   ],
+   "in_universe": true
+  },
+  "MKSI": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "MKTX": {
+   "companies": 11,
+   "status": "ready",
+   "in_universe": true
+  },
+  "MLI": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "MLKN": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "MLM": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "MMI": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "MMM": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "MMS": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "MMSI": {
+   "companies": 12,
+   "status": "ready",
+   "in_universe": true
+  },
+  "MNDY": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "MNST": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "MO": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "MOH": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "MORN": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "MOS": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "MP": {
+   "companies": 11,
+   "status": "ready",
+   "in_universe": true
+  },
+  "MPC": {
+   "companies": 6,
+   "status": "ready",
+   "added_2026_11_26": [
+    {
+     "id": "MPLX",
+     "name": "MPLX LP",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1552000/000155200026000009/mplx-20251231.htm",
+     "label": "MPLX 10-K (FY2025)"
+    },
+    {
+     "id": "LODE",
+     "name": "Comstock Inc.",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1120970/000143774925006453/lode20241231_10k.htm",
+     "label": "Comstock 10-K (FY2024)"
+    }
+   ],
+   "in_universe": true
+  },
+  "MPLX": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": false
+  },
+  "MPWR": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "MRCY": {
+   "companies": 12,
+   "status": "ready",
+   "in_universe": true
+  },
+  "MRK": {
+   "companies": 13,
+   "status": "ready",
+   "in_universe": true
+  },
+  "MRNA": {
+   "companies": 11,
+   "status": "ready",
+   "in_universe": true
+  },
+  "MRP": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "MRSH": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "MRTN": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "MRVL": {
+   "companies": 39,
+   "status": "ready",
+   "in_universe": true
+  },
+  "MS": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": false
+  },
+  "MSA": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "MSCI": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "MSEX": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "MSFT": {
+   "companies": 24,
+   "status": "ready",
+   "in_universe": true
+  },
+  "MSGS": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "MSI": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "MSM": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "MSTR": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "MT": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": false
+  },
+  "MTB": {
+   "companies": 6,
+   "status": "ready",
+   "added_2026_11_26": [
+    {
+     "id": "INTT",
+     "name": "inTEST",
+     "type": "down",
+     "source": "https://www.sec.gov/Archives/edgar/data/1036262/000103626226000012/intt-20251231.htm",
+     "label": "inTEST 10-K (FY2025)"
+    },
+    {
+     "id": "HZO",
+     "name": "MarineMax",
+     "type": "down",
+     "source": "https://www.sec.gov/Archives/edgar/data/1057060/000119312526463429/hzo-20260930.htm",
+     "label": "MarineMax 10-K (FY ended Sep 2026)"
+    }
+   ],
+   "in_universe": true
+  },
+  "MTD": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "MTDR": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "MTG": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "MTH": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "MTN": {
+   "companies": 12,
+   "status": "ready",
+   "in_universe": true
+  },
+  "MTRN": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "MTSI": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "MTUS": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "MTX": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "MTZ": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "MU": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "MUR": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "MUSA": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "MWA": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "MXL": {
+   "companies": 14,
+   "status": "ready",
+   "in_universe": true
+  },
+  "MZTI": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "NABL": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "NATL": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "NBHC": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "NBIS": {
+   "companies": 14,
+   "status": "ready",
+   "in_universe": true
+  },
+  "NBIX": {
+   "companies": 13,
+   "status": "ready",
+   "in_universe": true
+  },
+  "NBTB": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "NCLH": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "NCNO": {
+   "companies": 11,
+   "status": "ready",
+   "in_universe": true
+  },
+  "NDAQ": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "NDSN": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "NE": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "NEE": {
+   "companies": 14,
+   "status": "ready",
+   "in_universe": true
+  },
+  "NEM": {
+   "companies": 6,
+   "status": "ready",
+   "added_2026_11_26": [
+    {
+     "id": "XPL",
+     "name": "Solitario Resources",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/917225/000165495426002156/xpl_10ka.htm",
+     "label": "Solitario 10-K/A (FY2025)"
+    },
+    {
+     "id": "FNV",
+     "name": "Franco-Nevada",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1456346/000110465926032133/fnv-20251231xex99d1.htm",
+     "label": "Franco-Nevada 40-F (FY2025)"
+    }
+   ],
+   "in_universe": true
+  },
+  "NEO": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "NEOG": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "NET": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "NEU": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "NFG": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "NFLX": {
+   "companies": 15,
+   "status": "ready",
+   "in_universe": true
+  },
+  "NGVT": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "NHC": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "NHI": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "NI": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "NIC": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "NICE": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "NJR": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "NKE": {
+   "companies": 12,
+   "status": "ready",
+   "in_universe": true
+  },
+  "NLY": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "NMIH": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "NNE": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": false
+  },
+  "NNN": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "NOC": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "NOG": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "NOK": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": false
+  },
+  "NOV": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "NOVT": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "NOW": {
+   "companies": 26,
+   "status": "ready",
+   "in_universe": true
+  },
+  "NPK": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "NPO": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "NRG": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "NSC": {
+   "companies": 6,
+   "status": "ready",
+   "added_2026_11_26": [
+    {
+     "id": "JBHT",
+     "name": "J.B. Hunt Transport Services",
+     "type": "down",
+     "source": "https://www.sec.gov/Archives/edgar/data/728535/000143774926005294/jbht20251231_10k.htm",
+     "label": "J.B. Hunt 10-K (FY2025)"
+    },
+    {
+     "id": "AMR",
+     "name": "Alpha Metallurgical Resources",
+     "type": "down",
+     "source": "https://www.sec.gov/Archives/edgar/data/1704715/000170471526000010/finalkeplerasof12-31x25.htm",
+     "label": "Alpha Metallurgical Resources technical report filed with its 10-K (FY2025)"
+    }
+   ],
+   "in_universe": true
+  },
+  "NSIT": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "NSP": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "NSSC": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "NTAP": {
+   "companies": 14,
+   "status": "ready",
+   "in_universe": true
+  },
+  "NTCT": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "NTNX": {
+   "companies": 14,
+   "status": "ready",
+   "in_universe": true
+  },
+  "NTRS": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "NTST": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "NUE": {
+   "companies": 11,
+   "status": "ready",
+   "in_universe": true
+  },
+  "NVDA": {
+   "companies": 22,
+   "status": "ready",
+   "in_universe": true
+  },
+  "NVMI": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "NVO": {
+   "companies": 14,
+   "status": "ready",
+   "in_universe": false
+  },
+  "NVR": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "NVS": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": false
+  },
+  "NVT": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "NVTS": {
+   "companies": 11,
+   "status": "ready",
+   "in_universe": true
+  },
+  "NWBI": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "NWE": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "NWL": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": false
+  },
+  "NWN": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "NWSA": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "NX": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "NXPI": {
+   "companies": 23,
+   "status": "ready",
+   "in_universe": true
+  },
+  "NXRT": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "NXST": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "NXT": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "NYT": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "O": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "OC": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ODFL": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "OFG": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "OGE": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "OGN": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "OGS": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "OHI": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": false
+  },
+  "OI": {
+   "companies": 13,
+   "status": "ready",
+   "in_universe": true
+  },
+  "OII": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "OKE": {
+   "companies": 6,
+   "status": "ready",
+   "added_2026_11_26": [
+    {
+     "id": "BKV",
+     "name": "BKV Corp",
+     "type": "down",
+     "source": "https://www.sec.gov/Archives/edgar/data/1838406/000162828026015661/bkv-20251231.htm",
+     "label": "BKV 10-K (FY2025)"
+    },
+    {
+     "id": "DINO",
+     "name": "HF Sinclair",
+     "type": "down",
+     "source": "https://www.sec.gov/Archives/edgar/data/1915657/000191565726000016/dino-20251231.htm",
+     "label": "HF Sinclair 10-K (FY2025)"
+    },
+    {
+     "id": "DTM",
+     "name": "DT Midstream",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1842022/000184202226000003/dtm-20251231.htm",
+     "label": "DT Midstream 10-K (FY2025)"
+    }
+   ],
+   "in_universe": true
+  },
+  "OKLO": {
+   "companies": 18,
+   "status": "ready",
+   "in_universe": false
+  },
+  "OKTA": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "OLED": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "OMC": {
+   "companies": 11,
+   "status": "ready",
+   "in_universe": true
+  },
+  "OMCL": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "ON": {
+   "companies": 13,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ONB": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ONDS": {
+   "companies": 13,
+   "status": "ready",
+   "in_universe": false
+  },
+  "ONTO": {
+   "companies": 11,
+   "status": "ready",
+   "in_universe": true
+  },
+  "OPCH": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ORA": {
+   "companies": 11,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ORCL": {
+   "companies": 27,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ORI": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ORLY": {
+   "companies": 5,
+   "status": "ready",
+   "added_2026_11_26": [
+    {
+     "id": "GPC",
+     "name": "Genuine Parts",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/40987/000004098726000003/gpc-20251231.htm",
+     "label": "Genuine Parts 10-K (FY2025)"
+    }
+   ],
+   "in_universe": true
+  },
+  "OSIS": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "OSK": {
+   "companies": 11,
+   "status": "ready",
+   "in_universe": true
+  },
+  "OSW": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "OTEX": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "OTIS": {
+   "companies": 5,
+   "status": "ready",
+   "added_2026_11_26": [
+    {
+     "id": "CARR",
+     "name": "Carrier Global",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1783180/000178318026000008/carr-20251231.htm",
+     "label": "Carrier Global 10-K (FY2025)"
+    }
+   ],
+   "in_universe": true
+  },
+  "OTTR": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "OUT": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "OXY": {
+   "companies": 7,
+   "status": "ready",
+   "added_2026_11_26": [
+    {
+     "id": "EC",
+     "name": "Ecopetrol",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1444406/000110465926053172/ec-20251231x20f.htm",
+     "label": "Ecopetrol 20-F (FY2025)"
+    },
+    {
+     "id": "CRC",
+     "name": "California Resources",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1609253/000160925326000051/crc-20251231.htm",
+     "label": "California Resources 10-K (FY2025)"
+    },
+    {
+     "id": "DTI",
+     "name": "Drilling Tools International",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1884516/000119312526095973/dti-20251231.htm",
+     "label": "Drilling Tools International 10-K (FY2025)"
+    }
+   ],
+   "in_universe": true
+  },
+  "P": {
+   "companies": 11,
+   "status": "ready",
+   "in_universe": true
+  },
+  "PAAS": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": false
+  },
+  "PAG": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": false
+  },
+  "PAHC": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "PANW": {
+   "companies": 39,
+   "status": "ready",
+   "in_universe": true
+  },
+  "PARR": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "PATH": {
+   "companies": 12,
+   "status": "ready",
+   "in_universe": true
+  },
+  "PATK": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "PAYC": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "PAYO": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "PAYX": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "PB": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "PBI": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "PBR": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": false
+  },
+  "PCAR": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "PCG": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "PCOR": {
+   "companies": 5,
+   "status": "ready",
+   "added_2026_11_26": [
+    {
+     "id": "ADSK",
+     "name": "Autodesk",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/769397/000076939726000015/adsk-20260131.htm",
+     "label": "Autodesk 10-K (FY ended Jan 2026)"
+    },
+    {
+     "id": "DRONEDEPLOY",
+     "name": "DroneDeploy",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1611052/000119312526323800/d119085dex991.htm",
+     "label": "Procore 8-K (July 2026)"
+    }
+   ],
+   "in_universe": true
+  },
+  "PCRX": {
+   "companies": 11,
+   "status": "ready",
+   "in_universe": true
+  },
+  "PCTY": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "PDD": {
+   "companies": 11,
+   "status": "ready",
+   "in_universe": false
+  },
+  "PDFS": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "PEB": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "PECO": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "PEG": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "PEGA": {
+   "companies": 12,
+   "status": "ready",
+   "in_universe": true
+  },
+  "PEN": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "PENN": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "PEP": {
+   "companies": 14,
+   "status": "ready",
+   "in_universe": true
+  },
+  "PFE": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "PFG": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "PFGC": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "PFS": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "PG": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "PGNY": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "PGR": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "PH": {
+   "companies": 11,
+   "status": "ready",
+   "in_universe": true
+  },
+  "PHG": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": false
+  },
+  "PHIN": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "PHM": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "PI": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "PII": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "PINS": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "PIPR": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "PJT": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "PK": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "PKG": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "PL": {
+   "companies": 11,
+   "status": "ready",
+   "in_universe": true
+  },
+  "PLAB": {
+   "companies": 6,
+   "status": "ready",
+   "added_2026_11_26": [
+    {
+     "id": "7741",
+     "name": "Hoya",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/810136/000114036125045801/ef20057458_10k.htm",
+     "label": "Photronics 10-K (FY ended Oct 2025)"
+    },
+    {
+     "id": "TAIWANMASK",
+     "name": "Taiwan Mask",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/810136/000114036125045801/ef20057458_10k.htm",
+     "label": "Photronics 10-K (FY ended Oct 2025)"
+    },
+    {
+     "id": "011070",
+     "name": "LG Innotek",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/810136/000114036125045801/ef20057458_10k.htm",
+     "label": "Photronics 10-K (FY ended Oct 2025)"
+    }
+   ],
+   "in_universe": true
+  },
+  "PLD": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "PLMR": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "PLNT": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "PLTR": {
+   "companies": 24,
+   "status": "ready",
+   "in_universe": true
+  },
+  "PLUS": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "PLXS": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "PM": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "PMT": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "PNC": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "PNFP": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "PNR": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "PNW": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "PODD": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "POOL": {
+   "companies": 5,
+   "status": "ready",
+   "added_2026_11_26": [
+    {
+     "id": "LESL",
+     "name": "Leslie's",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/1821806/000119312525323811/lesl-20251004.htm",
+     "label": "Leslie's 10-K (FY ended Sep 2025)"
+    }
+   ],
+   "in_universe": true
+  },
+  "POR": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "POST": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "POWI": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "POWL": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "PPG": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "PPL": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "PPLI": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "PRDO": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "PRG": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "PRGS": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "PRIM": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "PRKS": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "PRLB": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "PRSU": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "PRU": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "PRVA": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "PSA": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "PSMT": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "PSN": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "PSX": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": false
+  },
+  "PTC": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "PTGX": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "PTON": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "PVH": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "PWR": {
+   "companies": 11,
+   "status": "ready",
+   "in_universe": true
+  },
+  "PYPL": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "PZZA": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "Q": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "QBTS": {
+   "companies": 11,
+   "status": "ready",
+   "in_universe": true
+  },
+  "QCOM": {
+   "companies": 17,
+   "status": "ready",
+   "in_universe": true
+  },
+  "QDEL": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "QLYS": {
+   "companies": 11,
+   "status": "ready",
+   "in_universe": true
+  },
+  "QNST": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "QRVO": {
+   "companies": 11,
+   "status": "ready",
+   "in_universe": true
+  },
+  "QTWO": {
+   "companies": 11,
+   "status": "ready",
+   "in_universe": true
+  },
+  "QUBT": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "R": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "RACE": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": false
+  },
+  "RAMP": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "RBA": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "RBC": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "RBLX": {
+   "companies": 11,
+   "status": "ready",
+   "in_universe": true
+  },
+  "RCAT": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": false
+  },
+  "RCL": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "RDDT": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "RDNT": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "RDW": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "RDY": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": false
+  },
+  "REG": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "REGN": {
+   "companies": 15,
+   "status": "ready",
+   "in_universe": true
+  },
+  "RELY": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "REX": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "REXR": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "REYN": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "REZI": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "RF": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "RGEN": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "RGLD": {
+   "companies": 12,
+   "status": "ready",
+   "in_universe": true
+  },
+  "RGTI": {
+   "companies": 11,
+   "status": "ready",
+   "in_universe": true
+  },
+  "RH": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "RHI": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "RHP": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "RIO": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": false
+  },
+  "RIOT": {
+   "companies": 12,
+   "status": "ready",
+   "in_universe": false
+  },
+  "RJF": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "RKLB": {
+   "companies": 12,
+   "status": "ready",
+   "in_universe": true
+  },
+  "RL": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "RLI": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "RMBS": {
+   "companies": 14,
+   "status": "ready",
+   "in_universe": true
+  },
+  "RMD": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "RNG": {
+   "companies": 19,
+   "status": "ready",
+   "in_universe": true
+  },
+  "RNR": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "RNST": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "ROAD": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ROCK": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "ROG": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "ROIV": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ROK": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ROKU": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ROL": {
+   "companies": 3,
+   "status": "below_five",
+   "tried": [
+    "Own 10-K: own brands only",
+    "Full-text search 'Rollins, Inc.': director biographies and unrelated 'Rollins' names"
+   ],
+   "reason": "3 verified companies",
+   "in_universe": true
+  },
+  "ROP": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ROST": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "RPD": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "RPM": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "RRC": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "RRX": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "RS": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "RSG": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "RSI": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "RTX": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "RUN": {
+   "companies": 11,
+   "status": "ready",
+   "in_universe": true
+  },
+  "RUSHA": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "RVTY": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "RXO": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "RYAN": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "RYN": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "S": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "SABR": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "SAFE": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "SAFT": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "SAH": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "SAIA": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "SAIC": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "SANM": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "SAP": {
+   "companies": 23,
+   "status": "ready",
+   "in_universe": true
+  },
+  "SBAC": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "SBH": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "SBRA": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "SBSI": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "SBUX": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "SCCO": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": false
+  },
+  "SCHL": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "SCHW": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "SCI": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "SCL": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "SCSC": {
+   "companies": 13,
+   "status": "ready",
+   "in_universe": true
+  },
+  "SDGR": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "SEDG": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "SEI": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "SEIC": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "SEZL": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "SFBS": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "SFM": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "SFNC": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "SGI": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "SHAK": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "SHC": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "SHEL": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": false
+  },
+  "SHEN": {
+   "companies": 4,
+   "status": "below_five",
+   "tried": [
+    "Own 10-K: competitors described by type only",
+    "Bank of the James 10-K: local employer list only"
+   ],
+   "reason": "4 verified companies",
+   "in_universe": true
+  },
+  "SHO": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "SHOO": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "SHOP": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "SHW": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "SIG": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "SIGI": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "SIMO": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "SITM": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "SJM": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "SKHY": {
+   "companies": 14,
+   "status": "ready",
+   "in_universe": true
+  },
+  "SKT": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "SKY": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "SKYD": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "SKYW": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "SLAB": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "SLB": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "SLG": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "SLGN": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "SLM": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "SMCI": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "SMG": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": false
+  },
+  "SMP": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "SMPL": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "SMR": {
+   "companies": 20,
+   "status": "ready",
+   "in_universe": false
+  },
+  "SMTC": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": false
+  },
+  "SNA": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "SNAP": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "SNDK": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "SNDR": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "SNEX": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "SNOW": {
+   "companies": 16,
+   "status": "ready",
+   "in_universe": true
+  },
+  "SNPS": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "SNX": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "SNY": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": false
+  },
+  "SO": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "SOFI": {
+   "companies": 15,
+   "status": "ready",
+   "in_universe": true
+  },
+  "SOLS": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "SOLV": {
+   "companies": 11,
+   "status": "ready",
+   "in_universe": true
+  },
+  "SON": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "SONO": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "SONY": {
+   "companies": 11,
+   "status": "ready",
+   "in_universe": true
+  },
+  "SPB": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": false
+  },
+  "SPCX": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "SPG": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "SPGI": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "SPHR": {
+   "companies": 6,
+   "status": "ready",
+   "added_2026_11_26": [
+    {
+     "id": "SACO",
+     "name": "SACO Technologies",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1795250/000162828026007760/sphr-20251231.htm",
+     "label": "Sphere Entertainment 10-K (FY2025)"
+    },
+    {
+     "id": "DCTABUDHABI",
+     "name": "Department of Culture and Tourism - Abu Dhabi",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1795250/000162828026007760/sphr-20251231.htm",
+     "label": "Sphere Entertainment 10-K (FY2025)"
+    }
+   ],
+   "in_universe": true
+  },
+  "SPNT": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "SPOT": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "SPSC": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "SPT": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "SR": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "SRE": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "SRI": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": false
+  },
+  "SSB": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "SSD": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "STAA": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "STBA": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "STE": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "STEP": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "STLA": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": false
+  },
+  "STLD": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "STM": {
+   "companies": 18,
+   "status": "ready",
+   "in_universe": true
+  },
+  "STRA": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "STRL": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "STT": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "STWD": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "STX": {
+   "companies": 14,
+   "status": "ready",
+   "in_universe": true
+  },
+  "STZ": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "SU": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": false
+  },
+  "SUI": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "SUPN": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "SW": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "SWK": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "SWKS": {
+   "companies": 17,
+   "status": "ready",
+   "in_universe": true
+  },
+  "SWX": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "SXI": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "SXT": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "SYF": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "SYK": {
+   "companies": 16,
+   "status": "ready",
+   "in_universe": true
+  },
+  "SYM": {
+   "companies": 11,
+   "status": "ready",
+   "in_universe": false
+  },
+  "SYNA": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "SYY": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "T": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "TAK": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": false
+  },
+  "TALO": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "TAP": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": false
+  },
+  "TBBK": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "TCBI": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "TDG": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "TDS": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "TDW": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "TDY": {
+   "companies": 15,
+   "status": "ready",
+   "in_universe": true
+  },
+  "TEAM": {
+   "companies": 19,
+   "status": "ready",
+   "in_universe": true
+  },
+  "TECH": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "TECK": {
+   "companies": 14,
+   "status": "ready",
+   "in_universe": false
+  },
+  "TEL": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "TENB": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "TER": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "TEVA": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": false
+  },
+  "TEX": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "TFC": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "TFIN": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "TFX": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "TGT": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "TGTX": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "THC": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "THO": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "THRM": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "TILE": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "TJX": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "TKR": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "TLN": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "TM": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": false
+  },
+  "TMDX": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "TME": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": false
+  },
+  "TMO": {
+   "companies": 14,
+   "status": "ready",
+   "in_universe": true
+  },
+  "TMUS": {
+   "companies": 11,
+   "status": "ready",
+   "in_universe": true
+  },
+  "TNC": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "TNDM": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "TNL": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "TOL": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "TPC": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "TPL": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "TPR": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "TR": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "TREX": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "TRGP": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "TRI": {
+   "companies": 15,
+   "status": "ready",
+   "in_universe": false
+  },
+  "TRIP": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "TRMB": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "TRMK": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "TRN": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "TRNO": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "TROW": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "TRU": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "TRUP": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "TRV": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "TSCO": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "TSEM": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "TSLA": {
+   "companies": 20,
+   "status": "ready",
+   "in_universe": true
+  },
+  "TSM": {
+   "companies": 26,
+   "status": "ready",
+   "in_universe": true
+  },
+  "TSN": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "TT": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "TTC": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "TTD": {
+   "companies": 15,
+   "status": "ready",
+   "in_universe": true
+  },
+  "TTE": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": false
+  },
+  "TTEK": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "TTWO": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "TWLO": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "TXN": {
+   "companies": 17,
+   "status": "ready",
+   "in_universe": true
+  },
+  "TXNM": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "TXRH": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "TXT": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "TYL": {
+   "companies": 16,
+   "status": "ready",
+   "in_universe": true
+  },
+  "UA": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "UAL": {
+   "companies": 13,
+   "status": "ready",
+   "in_universe": true
+  },
+  "UBER": {
+   "companies": 11,
+   "status": "ready",
+   "in_universe": true
+  },
+  "UBSI": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "UCTT": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "UDR": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "UE": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "UFCS": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "UFPI": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "UFPT": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "UGI": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "UHS": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ULS": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ULTA": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "UMBF": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "UMC": {
+   "companies": 14,
+   "status": "ready",
+   "in_universe": true
+  },
+  "UNF": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "UNFI": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "UNH": {
+   "companies": 12,
+   "status": "ready",
+   "in_universe": true
+  },
+  "UNIT": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "UNM": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "UNP": {
+   "companies": 6,
+   "status": "ready",
+   "added_2026_11_26": [
+    {
+     "id": "SND",
+     "name": "Smart Sand",
+     "type": "down",
+     "source": "https://www.sec.gov/Archives/edgar/data/1529628/000152962826000006/snd-20251231.htm",
+     "label": "Smart Sand 10-K (FY2025)"
+    },
+    {
+     "id": "IPI",
+     "name": "Intrepid Potash",
+     "type": "down",
+     "source": "https://www.sec.gov/Archives/edgar/data/1421461/000142146126000008/exhibit963eoy2025technical.htm",
+     "label": "Intrepid Potash technical report filed with its 10-K (FY2025)"
+    }
+   ],
+   "in_universe": true
+  },
+  "UPS": {
+   "companies": 5,
+   "status": "ready",
+   "added_2026_11_26": [
+    {
+     "id": "FRIGOTRANS",
+     "name": "Frigo-Trans",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1090727/000162828026008432/ups-20251231.htm",
+     "label": "UPS 10-K (FY2025)"
+    }
+   ],
+   "in_universe": true
+  },
+  "UPWK": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "URBN": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "URI": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "USB": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "USFD": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "USLM": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "USPH": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "UTHR": {
+   "companies": 11,
+   "status": "ready",
+   "in_universe": true
+  },
+  "UTI": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "UTL": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "UTZ": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": false
+  },
+  "UVV": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "V": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "VAC": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "VALE": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": false
+  },
+  "VC": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "VCEL": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "VCTR": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "VECO": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "VEEV": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "VFC": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "VIAV": {
+   "companies": 13,
+   "status": "ready",
+   "in_universe": true
+  },
+  "VICI": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "VICR": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "VIR": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "VIRT": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "VITL": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": false
+  },
+  "VKTX": {
+   "companies": 11,
+   "status": "ready",
+   "in_universe": false
+  },
+  "VLO": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "VLY": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "VMC": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "VMI": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "VNO": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "VNT": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "VOYA": {
+   "companies": 11,
+   "status": "ready",
+   "in_universe": true
+  },
+  "VRNS": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "VRRM": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "VRSK": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "VRSN": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "VRT": {
+   "companies": 17,
+   "status": "ready",
+   "in_universe": true
+  },
+  "VRTS": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "VRTX": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "VSAT": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "VSEC": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "VSH": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "VSNT": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "VST": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "VSTS": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "VSXY": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "VTOL": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "VTR": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "VTRS": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "VVV": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "VVX": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "VYX": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "VZ": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "WAB": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "WABC": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "WAFD": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "WAL": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "WAT": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "WAY": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "WBD": {
+   "companies": 5,
+   "status": "ready",
+   "added_2026_11_26": [
+    {
+     "id": "JCOM",
+     "name": "JCOM",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1437107/000143710726000020/wbd-20251231.htm",
+     "label": "Warner Bros. Discovery 10-K (FY2025)"
+    }
+   ],
+   "in_universe": true
+  },
+  "WCC": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "WDAY": {
+   "companies": 15,
+   "status": "ready",
+   "in_universe": true
+  },
+  "WDC": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "WDFC": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "WEC": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "WELL": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "WEN": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "WERN": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "WES": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": false
+  },
+  "WEX": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "WFC": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "WGO": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "WH": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "WHD": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "WHR": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "WINA": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "WING": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "WK": {
+   "companies": 2,
+   "status": "below_five",
+   "tried": [
+    "Own 10-K: no competitor or customer names",
+    "Full-text search 'Workiva' 2025-2026: Iron Mountain/Energy Recovery (internal tools), Morningstar (proxy commentary), OneStream (peer group)"
+   ],
+   "reason": "2 verified companies; other mentions are internal software use or peer groups",
+   "in_universe": true
+  },
+  "WLK": {
+   "companies": 12,
+   "status": "ready",
+   "in_universe": true
+  },
+  "WM": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "WMB": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "WMG": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "WMS": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "WMT": {
+   "companies": 11,
+   "status": "ready",
+   "in_universe": true
+  },
+  "WOR": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "WPC": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "WPM": {
+   "companies": 11,
+   "status": "ready",
+   "in_universe": false
+  },
+  "WRB": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "WRLD": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "WS": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "WSBC": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "WSC": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "WSFS": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "WSM": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "WSO": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "WST": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "WT": {
+   "companies": 10,
+   "status": "ready",
+   "in_universe": true
+  },
+  "WTFC": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "WTRG": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "WTS": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "WTW": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "WU": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "WWD": {
+   "companies": 13,
+   "status": "ready",
+   "in_universe": true
+  },
+  "WWW": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "WY": {
+   "companies": 8,
+   "status": "ready",
+   "in_universe": true
+  },
+  "WYNN": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "XEL": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": true
+  },
+  "XHR": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "XNCR": {
+   "companies": 11,
+   "status": "ready",
+   "in_universe": true
+  },
+  "XOM": {
+   "companies": 12,
+   "status": "ready",
+   "in_universe": false
+  },
+  "XPEL": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "XPO": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "XRAY": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "XYL": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "XYZ": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "YELP": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "YOU": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "YUM": {
+   "companies": 6,
+   "status": "ready",
+   "added_2026_11_26": [
+    {
+     "id": "PAR",
+     "name": "PAR Technology",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/708821/000070882126000027/par-20251231.htm",
+     "label": "PAR Technology 10-K (FY2025)"
+    },
+    {
+     "id": "ARCO",
+     "name": "Arcos Dorados",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/1508478/000162828026028950/arco-20251231.htm",
+     "label": "Arcos Dorados 20-F (FY2025)"
+    }
+   ],
+   "in_universe": true
+  },
+  "YUMC": {
+   "companies": 5,
+   "status": "ready",
+   "in_universe": false
+  },
+  "ZBH": {
+   "companies": 7,
+   "status": "ready",
+   "added_2026_11_26": [
+    {
+     "id": "MONOGRAM",
+     "name": "Monogram Technologies",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/788920/000107997326001215/pdex_10k-063026.htm",
+     "label": "Pro-Dex 10-K (FY ended Jun 2026)"
+    },
+    {
+     "id": "MTLS",
+     "name": "Materialise",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1091223/000110465926047671/mtls-20251231x20f.htm",
+     "label": "Materialise 20-F (FY2025)"
+    },
+    {
+     "id": "CNMD",
+     "name": "CONMED",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/816956/000081695626000009/cnmd-20251231.htm",
+     "label": "CONMED 10-K (FY2025)"
+    }
+   ],
+   "in_universe": true
+  },
+  "ZBRA": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ZD": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ZETA": {
+   "companies": 6,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ZION": {
+   "status": "not_attempted",
+   "in_universe": true
+  },
+  "ZM": {
+   "companies": 12,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ZS": {
+   "companies": 9,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ZTO": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": false
+  },
+  "ZTS": {
+   "companies": 7,
+   "status": "ready",
+   "in_universe": true
+  },
+  "ZWS": {
+   "status": "not_attempted",
+   "in_universe": true
+  }
+ }
+}

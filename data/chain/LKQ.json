@@ -124,6 +124,32 @@
           }
         }
       ]
+    },
+    {
+      "id": "CPRT",
+      "ticker": "CPRT",
+      "name": "コパート",
+      "name_en": "Copart",
+      "sub": "事故車オークション",
+      "sub_en": "Salvage auctions",
+      "sub_short": "競売",
+      "sub_short_en": "Auctions",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "米国最大の解体業者で、事故車の買い手として競う",
+          "text_en": "Names LKQ the largest U.S. dismantler competing to buy salvage vehicles",
+          "source": {
+            "label": "Copart 10-K(2025年7月期)",
+            "label_en": "Copart 10-K (FY ended Jul 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/900075/000162828025042946/cprt-20250731.htm",
+            "level": "official",
+            "date": "2025-09-26",
+            "quote": "The largest national dismantler in the U.S. is LKQ Corporation (\"LKQ\")."
+          }
+        }
+      ]
     }
   ],
   "far": [],

@@ -123,6 +123,58 @@
         }
       ],
       "name_en": "Zillow Group"
+    },
+    {
+      "id": "AVDX",
+      "ticker": "AVDX",
+      "name": "アビッドエクスチェンジ",
+      "name_en": "AvidXchange",
+      "sub": "支払い自動化",
+      "sub_en": "Payment automation",
+      "sub_short": "支払い",
+      "sub_short_en": "Payment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "不動産分野でAppFolioとの連携を進める",
+          "text_en": "Integrating its offerings with AppFolio in real estate",
+          "source": {
+            "label": "AvidXchange 10-K(2024年度)",
+            "label_en": "AvidXchange 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1858257/000095017025029974/avdx-20241231.htm",
+            "level": "official",
+            "date": "2025-02-28",
+            "quote": "We made progress on further integrating our offerings with M3 Accounting Solutions, Inc. in the hospitality vertical, and AppFolio, in the real estate vertical."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LTCH",
+      "ticker": "LTCH",
+      "name": "ラッチ",
+      "name_en": "Latch",
+      "sub": "スマートロック",
+      "sub_en": "Smart building access",
+      "sub_short": "鍵",
+      "sub_short_en": "Access",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "物件管理ソフトの連携先に挙げる",
+          "text_en": "Integrates with AppFolio property management software",
+          "source": {
+            "label": "Latch 10-K(2025年度)",
+            "label_en": "Latch 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1826000/000182600026000030/lat-20251231.htm",
+            "level": "official",
+            "date": "2026-03-31",
+            "quote": "We integrate with leading property management software providers (e.g., Yardi, RealPage, Entrata and AppFolio)"
+          }
+        }
+      ]
     }
   ],
   "far": [],
