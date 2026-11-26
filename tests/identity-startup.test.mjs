@@ -9,7 +9,7 @@ function fixture(signedIn,loaded=true) {
  let calls=0;
  const target={exports:{}};
  new Function('require','module','exports',code)(id=>{
-  if(id==='react')return {...require('react'),useCallback:fn=>fn,useRef:initial=>({current:initial})};
+  if(id==='react')return {...require('react'),useCallback:fn=>fn,useRef:initial=>({current:initial}),useState:initial=>[typeof initial==='function'?initial():initial,()=>{}],useEffect:()=>{}};
   if(id==='@clerk/nextjs')return {ClerkProvider:()=>null,useAuth:()=>({isLoaded:loaded,isSignedIn:signedIn,sessionId:signedIn?'session_fixture':null,getToken:async()=>{calls++;return 'fixture';}})};
   if(id==='@clerk/localizations')return {jaJP:{},enUS:{}};
   if(id==='../resolute/use-diagnosis-session')return {useDiagnosisSessionIdentity:()=>{}};
@@ -19,7 +19,8 @@ function fixture(signedIn,loaded=true) {
   return require(id);
  },target,target.exports);
  const wrapper=target.exports.default({enabled:true,children:null});
- const session=wrapper.props.children;
+ // ClerkProvider > WordingReady.Provider > IdentitySession
+ const session=wrapper.props.children.props.children;
  const refresh=session.type(session.props).props.value;
  return {refresh,calls:()=>calls};
 }
@@ -31,4 +32,10 @@ test('signed-in sessions still renew and share an in-flight request',async()=>{
 });
 test('unknown identity remains unverified without starting token work',async()=>{
  const f=fixture(undefined,false);await assert.rejects(f.refresh(),/identity-loading/);assert.equal(f.calls(),0);
+});
+test('the sign-in wording is not part of the first script: loaded beside the page, forms wait for it (speed, Nov 26)',()=>{
+ const source=readFileSync(new URL('../app/research/identity-provider.tsx',import.meta.url),'utf8');
+ assert.doesNotMatch(source,/^import .*@clerk\/localizations/m);
+ assert.match(source,/import\("@clerk\/localizations\/ja-JP"\), import\("@clerk\/localizations\/en-US"\)/);
+ for (const file of ['../app/research/account/screen.tsx','../app/research/account/security/screen.tsx','../app/research/write/writer.tsx']) assert.match(readFileSync(new URL(file,import.meta.url),'utf8'),/useIdentityWordingReady\(\)/);
 });
