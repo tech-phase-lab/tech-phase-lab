@@ -4393,8 +4393,10 @@ class Handler(BaseHTTPRequestHandler):
             return
         path = urlsplit(self.path).path
         if path == "/twelve/lease":
-            # The website's instances ask here for each Twelve Data call's credits (twelve_allocator.py). The site's server token only.
-            if not os.environ.get("RESEARCH_API_TOKEN") or not self.authorized():
+            # The website's instances ask here for each Twelve Data call's credits (twelve_allocator.py): the site's server token, or
+            # RESOLUTE's own lease token for its jobs' tiers only (closes, splits, thermometer; lib/resolute/twelve-lease.ts).
+            resolute = twelve_allocator.resolute_token_ok(self.headers.get("Authorization", ""))
+            if not resolute and (not os.environ.get("RESEARCH_API_TOKEN") or not self.authorized()):
                 self.send_json(401, {"ok": False})
                 return
             allocator = twelve_allocator.installed()
@@ -4403,11 +4405,15 @@ class Handler(BaseHTTPRequestHandler):
                 return
             try:
                 payload = self.read_json(1024)
-                granted = allocator.grant(payload.get("cost"), payload.get("tier"), payload.get("caller"))
+                if resolute and payload.get("tier") not in twelve_allocator.RESOLUTE_TIERS:
+                    raise ValueError("tier")
+                decision = allocator.decide(payload.get("cost"), payload.get("tier"), payload.get("caller"))
             except Exception:
                 self.send_json(400, {"ok": False})
                 return
-            self.send_json(200, {"ok": True, "granted": granted})
+            # "meter-unknown": nothing granted, and the caller learns the minute could not be judged (the site shows its last copies;
+            # RESOLUTE's alerts keep their own pace).
+            self.send_json(200, {"ok": True, "granted": decision == "granted", **({"reason": "meter-unknown"} if decision == "meter-unknown" else {})})
             return
         if path == "/internal/resolute/push":
             # Nov 17 (owner): RESOLUTE's sender asks for its ③/④ notice to reach the member's phones (web_push.resolute_push). Its own
