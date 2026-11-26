@@ -211,7 +211,16 @@ export function cleanTitle(title: string) {
     .replace(/\s*[-–—|｜]?\s*(?:ロイター|ブルームバーグ|マーケットウォッチ|ベンジンガ|ヤフー[・･]?ファイナンス|シーキング[・･]?アルファ|モトリーフール|ティップランクス|バロンズ)\s*報\s*$/, "").trim();
 }
 /** News filed by the market rather than by a company (the Stock News API's general market feed) is stored under MKT (owner, Nov 10). */
-export const tickerLabel = (ticker: string, ja: boolean) => ticker === "MKT" ? (ja ? "市場" : "Market") : ticker;
+const OTC_NAMES: Record<string, { ja: string; en: string }> = {
+  KXHCF: { ja: "キオクシア", en: "Kioxia" }, KXIAY: { ja: "キオクシア", en: "Kioxia" },
+  OTGLF: { ja: "CDプロジェクト", en: "CD Projekt" }, OTGLY: { ja: "CDプロジェクト", en: "CD Projekt" }, PROSY: { ja: "プロサス", en: "Prosus" },
+};
+/** US over-the-counter lines of foreign companies (five letters ending F for the ordinary shares; an ADR ending Y when listed in
+ * OTC_NAMES, since some Nasdaq ADRs such as FORTY end in Y too): readers do not know them, so a known company is labelled by its name
+ * instead (owner, Nov 26: 「KXHCF・KXIAY」 → キオクシア). */
+export const otcTicker = (ticker: string) => /^[A-Z]{4}F$/.test(ticker) || (/^[A-Z]{4}Y$/.test(ticker) && ticker in OTC_NAMES);
+export const otcName = (ticker: string, ja: boolean) => OTC_NAMES[ticker] ? (ja ? OTC_NAMES[ticker].ja : OTC_NAMES[ticker].en) : null;
+export const tickerLabel = (ticker: string, ja: boolean) => ticker === "MKT" ? (ja ? "市場" : "Market") : otcName(ticker, ja) ?? ticker;
 export const isNotNews = (text: string, english = text) => NOT_NEWS.some(pattern => pattern.test(text)) || lowValue(text, english);
 
 /** "X reports third-quarter results" read days after the release is an old story (owner, Oct 26: ASML, 12 days late).
@@ -233,6 +242,13 @@ const STOPWORDS = new Set("the and for with from that this its are was has have 
 const words = (title: string) => new Set((title.toLowerCase().match(/[a-z0-9$.]+/g) ?? []).filter(word => word.length > 2 && !STOPWORDS.has(word)));
 const normalized = (title: string) => title.normalize("NFKC").toLowerCase().replace(/[\s\p{P}\p{S}]+/gu, "");
 const SAME_STORY = 0.5, WINDOW_MS = 24 * 3_600_000;
+/** How many words of ``a`` are not in ``b``. */
+function differing(a: Set<string>, b: Set<string>) {
+  let count = 0;
+  for (const word of a) if (!b.has(word)) count++;
+  return count;
+}
+
 function similar(a: Set<string>, b: Set<string>) {
   if (a.size < 3 || b.size < 3) return false;
   let shared = 0;
@@ -301,6 +317,13 @@ export function analystActions(title: string): string[] {
 /** The grouping rule of the stories: the same headline, or English headlines sharing half their words, within 24 hours. */
 export const storyKey = normalized;
 export const storyWords = words;
+/** One company, one ticker (owner, Nov 26: キオクシア showed as 「KXHCF · KXIAY」): of a foreign company's OTC lines, the ADR ("…Y") is
+ * shown and its ordinary-share line ("…F") left out, when both name the same company (same first four letters, or OTC_SAME). */
+const OTC_SAME: Record<string, string> = { KXHCF: "KXIAY" };
+export function primaryTickers(tickers: readonly string[]) {
+  const sameAs = (ticker: string) => OTC_SAME[ticker] ?? (/^[A-Z]{4}F$/.test(ticker) ? `${ticker.slice(0, 4)}Y` : null);
+  return tickers.filter(ticker => { const adr = sameAs(ticker); return !adr || !tickers.includes(adr); });
+}
 export const similarStory = similar;
 export const STORY_WINDOW_MS = WINDOW_MS;
 
@@ -316,7 +339,14 @@ function buildWireStories(wire: Record<string, CompanyWireItem[]>, lang: Languag
     // Two broker actions that read alike ("Stifel cuts Marvell price target to $280" / "Needham cuts …") are two stories.
     const plain = new Set(actions.map(action => action.slice(action.indexOf("|") + 1)));
     const otherAction = (c: Cluster) => plain.size > 0 && c.actions.size > 0 && ![...c.actions].some(action => plain.has(action.slice(action.indexOf("|") + 1)));
-    const cluster = clusters.find(c => at - c.first <= WINDOW_MS && (actions.some(action => c.actions.has(action)) || ((c.key === key || similar(c.words, tokens)) && !otherAction(c))));
+    // Owner, Nov 26 (seven companies' "Reports Third Quarter 2026 Results" shown as one GDS row): headlines that read alike join across
+    // companies only when they differ by at most one word in all (a reworded copy filed under another company; two companies' results
+    // headlines differ by both names), otherwise only within the same company. The same headline (one article filed under several
+    // companies) still joins. MKT names no company.
+    const sameCompany = (c: Cluster) => entry.ticker === "MKT" || c.tickers.includes(entry.ticker) || c.tickers.every(ticker => ticker === "MKT")
+      || differing(c.words, tokens) + differing(tokens, c.words) <= 1;
+    const cluster = clusters.find(c => at - c.first <= WINDOW_MS && (actions.some(action => c.actions.has(action))
+      || ((c.key === key || (similar(c.words, tokens) && sameCompany(c))) && !otherAction(c))));
     if (!cluster) { clusters.push({ key, words: tokens, first: at, tickers: [entry.ticker], best: entry, actions: new Set(actions) }); continue; }
     for (const action of actions) cluster.actions.add(action);
     if (!cluster.tickers.includes(entry.ticker)) cluster.tickers.push(entry.ticker);
@@ -324,7 +354,7 @@ function buildWireStories(wire: Record<string, CompanyWireItem[]>, lang: Languag
     if (entry.item.origin === "wire" && cluster.best.item.origin !== "wire") cluster.best = entry;
   }
   return clusters.map(({ tickers, best, first }) => ({
-    id: best.item.id, tickers: [...tickers].sort(), title: best.title, url: best.item.url, publisher: best.item.publisher,
+    id: best.item.id, tickers: primaryTickers([...tickers].sort()), title: best.title, url: best.item.url, publisher: best.item.publisher,
     origin: best.item.origin, at: new Date(first).toISOString(), short: ja ? best.item.shortJa ?? undefined : undefined,
     ...(best.item.sentiment ? { sentiment: best.item.sentiment } : {}),
   })).sort((a, b) => Date.parse(b.at) - Date.parse(a.at));
