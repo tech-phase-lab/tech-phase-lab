@@ -224,7 +224,8 @@ class Snapshot(unittest.TestCase):
         first = date.fromisoformat(days[0]).toordinal()
         revenue = [{'end': first - 400 + q * 91, 'filed': first - 380 + q * 91, 'value': 100.0} for q in range(26)]
         income = [{**p, 'value': 10.0} for p in revenue]
-        income[-1] = {**income[-1], 'value': 0.1}  # earnings collapse in the last quarter: P/E far above PE_CAP today
+        for q in range(20, 26):
+            income[q] = {**income[q], 'value': 0.1}  # earnings collapse for the last year and a half: P/E far above PE_CAP today
         record = {'revenue': revenue, 'income': income, 'shares': quarterly_shares(first, 1.0)}
         closes = [(d, 50.0, 50.0) for d in days]
         value = vc.comparison_value(closes, record, days[-1])
