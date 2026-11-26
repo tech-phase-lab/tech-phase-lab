@@ -16,7 +16,9 @@ is not read either. Results are stored in the same table as the other event resu
   8:30 a.m. ET (normally Thursday). Its news pages still answer automated requests with HTTP 403 and are not read; the release PDF
   answers our plainly named reader (no browser disguise). "In the week ending <date>, the advance figure for seasonally adjusted
   initial claims was X, an increase/a decrease of Y from the previous week's revised level". If dol.gov starts refusing the PDF too,
-  the refusal is recorded (event_feed_status) and nothing is worked around (see docs/INDICATOR-RESULTS-2026-11-05.md)."""
+  the refusal is recorded (event_feed_status) and nothing is worked around (see docs/INDICATOR-RESULTS-2026-11-05.md).
+  Nov 26: the same paragraphs' 4-week average and continuing claims (insured unemployment, the week before) are read too and kept in
+  the explanation; a result stored before that gets them once from the release that is still current (at most once an hour, for eight days)."""
 
 import html
 import json
@@ -243,20 +245,100 @@ def parse_claims(text):
     at = eastern_time(released, clock, "EDT" if _is_edt(released) else "EST")
     if at is None:
         return None
-    return {"value": value, "change": change, "week": week, "at": at}
+    return {"value": value, "change": change, "week": week, "at": at, **_claims_extras(text, week, value)}
+
+
+# The rest of the release's opening paragraphs (owner, Nov 26: "PCEと同じ形で中身を"). Each figure is read only when its own sentence
+# is worded as expected and its size is sane; a figure we cannot read is simply left out, never guessed.
+_FIGURE = r"\d{1,3}(?:,\d{3})+"
+_MOVE = r"(?:(?:an|a) (?P<dir>increase|decrease) of (?P<change>\d{1,3}(?:,\d{3})*)|(?P<same>unchanged))"
+CLAIMS_AVERAGE = re.compile(
+    rf"The 4-week moving average was (?P<value>{_FIGURE}), {_MOVE} from the previous week['’]s (?:revised|unrevised) average\."
+    rf"(?: The previous week['’]s average was (?:revised (?:up|down) (?:by )?\d[\d,]* from (?P<before>{_FIGURE}) to {_FIGURE}|unrevised at (?P<kept>{_FIGURE}))\.)?")
+CLAIMS_INSURED = re.compile(
+    rf"The advance number for seasonally adjusted insured unemployment during the week ending (?P<month>{_MONTH}) (?P<day>\d{{1,2}}) was "
+    rf"(?P<value>{_FIGURE}), {_MOVE} from the previous week['’]s (?:revised|unrevised) level\."
+    rf"(?: The previous week['’]s level was (?:revised (?:up|down) (?:by )?\d[\d,]* from (?P<before>{_FIGURE}) to {_FIGURE}|unrevised at (?P<kept>{_FIGURE}))\.)?")
+
+
+def _signed(match):
+    return 0 if match["same"] else int(match["change"].replace(",", "")) * (1 if match["dir"] == "increase" else -1)
+
+
+def _claims_extras(text, week, initial):
+    """The 4-week average of initial claims and the insured unemployment (continuing claims) of the week before, from the same release.
+    The figure each was revised from is the one the previous week's release gave, so it is kept for that week's row."""
+    extras = {}
+    first = CLAIMS.search(text).end()
+    # Only the first figures after the initial-claims sentence: the insured-unemployment paragraph has a 4-week average of its own.
+    average = CLAIMS_AVERAGE.search(text, first)
+    insured = CLAIMS_INSURED.search(text, first)
+    if average and (insured is None or average.start() < insured.start()):
+        value, change = int(average["value"].replace(",", "")), _signed(average)
+        if abs(value - initial) < initial and abs(change) < value:
+            extras["average"] = {"value": value, "change": change}
+            before = average["before"] or average["kept"]
+            if before:
+                extras["average"]["before"] = int(before.replace(",", ""))
+    if insured:
+        try:
+            ending = datetime(week.year - (1 if int(MONTHS.index(insured["month"]) + 1) > week.month else 0), MONTHS.index(insured["month"]) + 1, int(insured["day"])).date()
+        except ValueError:
+            ending = None
+        value, change = int(insured["value"].replace(",", "")), _signed(insured)
+        # Continuing claims are for the week before the initial claims, and have stayed between about 900,000 and 25 million.
+        if ending == week - timedelta(days=7) and 500_000 <= value <= 30_000_000 and abs(change) < value:
+            extras["insured"] = {"value": value, "change": change, "week": ending}
+            before = insured["before"] or insured["kept"]
+            if before:
+                extras["insured"]["before"] = int(before.replace(",", ""))
+    return extras
+
+
+def _week_ja(day):
+    return f"{day.month}月{day.day}日終了週"
+
+
+def _week_en(day):
+    return f"week ending {MONTHS[day.month - 1]} {day.day}"
+
+
+def _move_ja(change, unit):
+    return "前週から変わらず" if change == 0 else f"前週比{abs(change):,}{unit}{'増' if change > 0 else '減'}"
+
+
+def _move_en(change):
+    return "unchanged from the previous week" if change == 0 else f"{'up' if change > 0 else 'down'} {abs(change):,} from the previous week"
+
+
+CLAIMS_NOTE_JA = "季節調整済みの新規失業保険申請件数（速報値）を、米国労働省の週次発表から取得。市場予想との比較は含みません。"
+CLAIMS_NOTE_EN = "Seasonally adjusted advance initial claims from the Department of Labor's weekly release. No consensus comparison is included."
+
+
+def claims_detail(average=None, insured=None):
+    """The stated extra figures as short sentences ("4週平均：196,000件（前週比1,500件減）。"), then the sourcing note.
+    A figure without its change (one read from the next week's release) is shown on its own."""
+    ja, en = [], []
+    if average:
+        ja.append(f"4週平均：{average['value']:,}件" + (f"（{_move_ja(average['change'], '件')}）" if "change" in average else "") + "。")
+        en.append(f"4-week average: {average['value']:,}" + (f" ({_move_en(average['change'])})" if "change" in average else "") + ".")
+    if insured:
+        ja.append(f"継続受給者数：{insured['value']:,}人（{_week_ja(insured['week'])}" + (f"・{_move_ja(insured['change'], '人')}" if "change" in insured else "") + "）。")
+        en.append(f"Continuing claims: {insured['value']:,} ({_week_en(insured['week'])}" + (f", {_move_en(insured['change'])}" if "change" in insured else "") + ").")
+    return "".join(ja) + CLAIMS_NOTE_JA, " ".join(en + [CLAIMS_NOTE_EN])
 
 
 def claims_payload(result, url, now):
     week, change = result["week"], result["change"]
     change_ja = "前週改定値から変わらず" if change == 0 else f"前週改定値から{abs(change):,}件{'増' if change > 0 else '減'}"
     change_en = "unchanged from the previous week's revised level" if change == 0 else f"{'up' if change > 0 else 'down'} {abs(change):,} from the previous week's revised level"
+    detail_ja, detail_en = claims_detail(result.get("average"), result.get("insured"))
     return {
         "id": f"claims-{week.isoformat()}", "titleJa": f"米国新規失業保険申請件数（{week.month}月{week.day}日終了週）",
         "titleEn": f"U.S. initial jobless claims (week ending {MONTHS[week.month - 1]} {week.day}, {week.year})", "sourceName": "DOL",
         "releasedAt": event_results.stamp(result["at"]),
         "resultJa": f"{result['value']:,}件（{change_ja}）", "resultEn": f"{result['value']:,} ({change_en})",
-        "detailJa": "季節調整済みの新規失業保険申請件数（速報値）を、米国労働省の週次発表から取得。市場予想との比較は含みません。",
-        "detailEn": "Seasonally adjusted advance initial claims from the Department of Labor's weekly release. No consensus comparison is included.",
+        "detailJa": detail_ja, "detailEn": detail_en, "detailsRead": True,
         "sourceUrl": url, "sources": [{"publisher": "U.S. Department of Labor", "title": "Unemployment Insurance Weekly Claims", "url": url}],
         "verifiedOn": event_results.stamp(now)[:10],
     }
@@ -304,18 +386,65 @@ def pdf_text(content):
     return monitor.extract_pdf_text(content, first_pages=1)
 
 
+CLAIMS_DETAIL_SOURCE = "DOL（失業保険申請・内訳）"
+DETAIL_RETRY = timedelta(hours=1)
+
+
+def _payload(db, event_id):
+    row = db.execute("SELECT state,payload FROM event_results WHERE id=?", (event_id,)).fetchone()
+    return (row["state"], json.loads(row["payload"])) if row else (None, None)
+
+
+def _needs_details(db, now):
+    """A published claims result stored before the extra figures were read (Nov 26), released within the last eight days: the release
+    that holds its figures is still the current PDF. Asked again at most once an hour, so a release we cannot read is not fetched on
+    every pass."""
+    row = db.execute("SELECT id,payload FROM event_results WHERE id LIKE 'claims-%' AND state='published' ORDER BY id DESC LIMIT 1").fetchone()
+    if not row:
+        return False
+    payload = json.loads(row["payload"])
+    if payload.get("detailsRead") or now - event_results.parse_time(payload["releasedAt"]) > timedelta(days=8):
+        return False
+    tried = db.execute("SELECT checked_at FROM event_feed_status WHERE publisher=?", (CLAIMS_DETAIL_SOURCE,)).fetchone()
+    return not tried or now - event_results.parse_time(tried["checked_at"]) >= DETAIL_RETRY
+
+
+def _add_details(db, result, now):
+    """Adds the extra figures to the week's stored result, and to the week before's (the figures this release says it was revised
+    from are the ones that week's own release gave). Only the explanation changes: the result line, its time and its notification stay."""
+    weeks = [(result["week"], result.get("average"), result.get("insured"), True)]
+    before = {"average": result.get("average", {}).get("before"), "insured": result.get("insured", {}).get("before")}
+    weeks.append((result["week"] - timedelta(days=7), before["average"] and {"value": before["average"]},
+                  before["insured"] and {"value": before["insured"], "week": result["insured"]["week"] - timedelta(days=7)}, False))
+    changed = 0
+    for week, average, insured, read in weeks:
+        state, payload = _payload(db, f"claims-{week.isoformat()}")
+        if state != "published" or payload.get("detailsRead") or not (read or average or insured):
+            continue
+        payload["detailJa"], payload["detailEn"] = claims_detail(average or None, insured or None)
+        payload["detailsRead"] = True
+        event_results._store(db, payload["id"], "published", payload, now, keep_time=True)
+        changed += 1
+    return changed
+
+
 def _claims(db, now, fetch_pdf, read_pdf):
-    if not claims_window(now) or _stored(db, f"claims-{expected_week(now).isoformat()}"):
+    fresh = claims_window(now) and not _stored(db, f"claims-{expected_week(now).isoformat()}")
+    details = not fresh and _needs_details(db, now)
+    if not fresh and not details:
         return 0
+    source = CLAIMS_SOURCE if fresh else CLAIMS_DETAIL_SOURCE
     def work():
         result = parse_claims(read_pdf(fetch_pdf(CLAIMS_URL)))
         if result is None:
-            _status(db, CLAIMS_SOURCE, now, False, "wording-not-recognised")
+            _status(db, source, now, False, "wording-not-recognised")
             return 0
-        _status(db, CLAIMS_SOURCE, now, True)
+        _status(db, source, now, True)
         # Before 8:30 the PDF still holds the week before: that result is stored once (if it is not already) and nothing else happens.
-        return 0 if _stored(db, f"claims-{result['week'].isoformat()}") else _save(db, claims_payload(result, CLAIMS_URL, now), now)
-    return _guard(db, CLAIMS_SOURCE, now, work)
+        saved = 0 if _stored(db, f"claims-{result['week'].isoformat()}") else _save(db, claims_payload(result, CLAIMS_URL, now), now)
+        _add_details(db, result, now)
+        return saved
+    return _guard(db, source, now, work)
 
 
 # ---- running -------------------------------------------------------------------
