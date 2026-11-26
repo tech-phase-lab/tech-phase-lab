@@ -164,7 +164,7 @@ test("a real row with an unreadable number is kept as incomplete (to be typed in
 
 test("the screen follows the design: black and gold, the states, and the hide rule (only the total and the dollar profit are masked)", async () => {
   const screen = await src("../app/research/portfolio/screen.tsx");
-  for (const text of ["スクショを選ぶだけで、", "読み取っています", "内容の確認", "要確認", "持ち株 ", "金額を表示する", "終値を取得できませんでした", "もう一度取得する", "今日の読み込みは", "手入力で追加", "取得時の為替(USD/JPY)", "投資助言ではありません。", "為替が分かる銘柄のみ"]) assert.ok(screen.includes(text), text);
+  for (const text of ["スクショを選ぶだけで、", "読み取っています", "内容の確認", "要確認", "持ち株 ", "金額を表示する", "終値を取得できませんでした", "もう一度取得する", "今日の読み込みは", "手入力で追加", "取得時の為替(USD/JPY)", "為替が分かる銘柄のみ"]) assert.ok(screen.includes(text), text);
   // Hidden: the total and the dollar profit amount only.
   assert.match(screen, /hide \? <b className=\{`\$\{s\.big\} \$\{s\.mask\}`\}>\{MASK\}<\/b>/);
   assert.match(screen, /hide \? MASK : `\$\{sign\(totals\.gainUsd\)\}/);
@@ -216,9 +216,11 @@ test("the portfolio APIs run behind the sign-in middleware (without it the sessi
   assert.match(screen, /http-\$\{response\.status\}/);
 });
 
-test("the confirmation screen does not repeat the not-advice line under the register button", async () => {
+test("the privacy card says an external AI reads the screenshot, with no details link, sheet or not-advice line (owner, Nov 26)", async () => {
   const screen = await src("../app/research/portfolio/screen.tsx");
-  assert.match(screen, /\{!review && <p className=\{s\.disclaimer\}>/);
+  assert.ok(screen.includes("持ち株は、この端末の中にだけ保存されます。<br />スクショは外部のAIで読み取るだけに使い、保存しません。"));
+  assert.ok(screen.includes("Screenshots are read by an external AI service only and are not stored."));
+  for (const gone of ["くわしく", "Details ›", "画像の扱い", "How images are handled", "投資助言ではありません", "Not investment advice", "s.disclaimer", "onInfo", "setSheet"]) assert.ok(!screen.includes(gone), gone);
 });
 
 test("broker names are folded onto one name each; anything unknown is その他", () => {
