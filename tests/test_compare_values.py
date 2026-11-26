@@ -10,7 +10,8 @@ import compare_values as cv  # noqa: E402
 import value_check as vc  # noqa: E402
 from test_value_check import quarterly_shares, trading_days  # noqa: E402
 
-LISTS = {'spac': {'7': 'Blank Check Acquisition Corp'}, 'fund': {'8': 'Example Muni Fund'}, 'etn': {'9': {'name': 'Bank AG', 'shares': ['BNK']}}}
+LISTS = {'spac': {'7': 'Blank Check Acquisition Corp'}, 'fund': {'8': 'Example Muni Fund'}, 'etn': {'9': {'name': 'Bank AG', 'shares': ['BNK']}},
+         'instrument': {'BIGN': 'preferred'}}
 
 
 def directory(rows):
@@ -30,7 +31,8 @@ class Universe(unittest.TestCase):
     def test_the_comparison_exclusions_in_the_same_order(self):
         rows = [[1, 'Big Co', 'BIG', 'Nasdaq'], [1, 'Big Co', 'BIGW', 'Nasdaq'], [2, 'Alphabet', 'GOOGL', 'Nasdaq'], [2, 'Alphabet', 'GOOG', 'Nasdaq'],
                 [3, 'Pref Co', 'PRF-PA', 'NYSE'], [4, 'Otc Co', 'OTCX', 'OTC'], [7, 'Blank Check Acquisition Corp', 'BCAC', 'Nasdaq'],
-                [8, 'Example Muni Fund', 'MUNI', 'NYSE'], [9, 'Bank AG', 'BNK', 'NYSE'], [9, 'Bank AG', 'VXXN', 'NYSE'], [10, 'Brk', 'BRK-B', 'NYSE']]
+                [8, 'Example Muni Fund', 'MUNI', 'NYSE'], [9, 'Bank AG', 'BNK', 'NYSE'], [9, 'Bank AG', 'VXXN', 'NYSE'], [10, 'Brk', 'BRK-B', 'NYSE'],
+                [1, 'Big Co', 'BIGN', 'NYSE']]  # a note on the provider's list (comparison-exclusions.json "instrument")
         self.assertEqual(cv.comparable(directory(rows), LISTS),
                          [('BIG', 1), ('GOOGL', 2), ('GOOG', 2), ('BNK', 9), ('BRK-B', 10)])
 

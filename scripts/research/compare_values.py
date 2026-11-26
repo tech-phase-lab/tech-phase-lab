@@ -60,6 +60,8 @@ def excluded(entry, siblings, lists):
     if (re.fullmatch(r'[A-Z]{2,6}', ticker) and ticker[-1] in 'WURPONM' and entry.get('exchange') in (None, 'Nasdaq')
             and any(len(ticker) - n >= 1 and ticker[:-n] in siblings.get(cik, ()) for n in (1, 2))):
         return True
+    if ticker in (lists.get('instrument') or {}):
+        return True
     for kind in ('spac', 'fund'):
         name = lists.get(kind, {}).get(cik)
         if name is not None and name.strip().upper() == str(entry.get('name') or '').strip().upper():

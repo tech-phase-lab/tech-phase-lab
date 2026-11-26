@@ -41,7 +41,9 @@ export const minuteOfDay = (now: number) => Math.floor((now % DAY) / 60_000);
 export type DirectoryRow = { ticker: string; cik: number | string; exchange: string };
 const LISTED = new Set(["Nasdaq", "NYSE", "CBOE", "TXSE"]);
 /** Warrants, units, rights and preferreds of a company that already has a listed common ticker. */
-const securityOfOther = (ticker: string) => /-(?:P|W|U|R)/.test(ticker) || /(?:WS|WT)$/.test(ticker) || (ticker.length === 5 && /[WURZ]$/.test(ticker));
+// "WS"/"WT" only after a hyphen or on a ticker of five letters or more: NWS is News Corp's class B share, not a warrant (Nov 26 audit:
+// it never had a price series).
+const securityOfOther = (ticker: string) => /-(?:P|W|U|R)/.test(ticker) || /-(?:WS|WT)$/.test(ticker) || (ticker.length >= 5 && /(?:WS|WT)$/.test(ticker)) || (ticker.length === 5 && /[WURZ]$/.test(ticker));
 
 /** Every US-listed company once (the SEC lists the largest first), its other share classes, and any extra ticker (the curated list). */
 export function warmUniverse(rows: DirectoryRow[], extra: string[] = []): string[] {
