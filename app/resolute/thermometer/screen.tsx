@@ -4,13 +4,17 @@ import { useThermometerSnapshot } from "../use-thermometer-snapshot";
 import ToolShell from "../tool-shell";
 import {useReview} from "../review-context";
 import FlowNavigation from "../flow-navigation";
+import SectionHeading from "../section-heading";
+import { useDesktop } from "../use-desktop";
 import type { DiagnosisLocale } from "@/lib/resolute/diagnosis-copy";
 import styles from "../diagnosis.module.css";
+import pc from "../pc.module.css";
 import gaugeStyles from "./screen.module.css";
 import { gaugeReading, gaugeStatus, temperatureLabels, type ThermometerSnapshot } from "@/lib/resolute/thermometer-view";
 import type { ThermometerIndex } from "@/lib/resolute/thermometer";
 import { THERMOMETER_NOTE, THERMOMETER_METHOD } from "@/lib/resolute/thermometer-copy";
 import { FEAR_BOUNDARIES, FEAR_COPY, fearBand, fearMarkerPosition, formatFearPercent } from "@/lib/resolute/fear-index";
+import { marketPosition } from "@/lib/resolute/market-position";
 const positions = [
   { ja: "上向き × 冷えている", en: "Rising × Cool", detailJa: "上昇が続いていますが、相場の価格は最近の水準より低い状態です。", detailEn: "The market is trending upward, but prices are below recent levels." },
   { ja: "上向き × 熱い", en: "Rising × Hot", detailJa: "上昇が続いていて、相場の価格が最近の水準より高い状態です。", detailEn: "The market is trending upward, with prices above recent levels." },
@@ -27,85 +31,148 @@ function segment(i: number) {
   const start = 180 - i * 36 - 1.5, end = 180 - (i + 1) * 36 + 1.5;
   return `M${point(124, start)} A124 124 0 0 1 ${point(124, end)} L${point(98, end)} A98 98 0 0 0 ${point(98, start)} Z`;
 }
+// Display samples in the owner preview (not market data): TP大型株100 hot, TP半導体40 slightly cool, both above the average.
+const SAMPLE = { nas100: { score: 86, band: 4 }, sox: { score: 34, band: 1 } } as const;
 export default function ThermometerScreen({ identityReady = true, snapshot }: { identityReady?: boolean; snapshot?: ThermometerSnapshot }) {
   const current = useThermometerSnapshot(snapshot);
-  return <ToolShell identityReady={identityReady}>{locale => <MarketGauge locale={locale} snapshot={current}/>}</ToolShell>;
+  return <ToolShell identityReady={identityReady} pc>{locale => <MarketGauge locale={locale} snapshot={current}/>}</ToolShell>;
 }
 export function MarketGauge({ locale, snapshot }: { locale: DiagnosisLocale; snapshot?: ThermometerSnapshot }) {
   const review=useReview(), sample=!!review&&review.scenario!=='live';
+  const desktop = useDesktop();
   const [index, setIndex] = useState<ThermometerIndex>("nas100");
   const [selected, setSelected] = useState<number | null>(null);
   const en = locale === "en", t = (ja: string, eng: string) => en ? eng : ja;
-  const reading = sample ? null : gaugeReading(snapshot, index);
-  const score = sample ? (index === "nas100" ? 86 : 34) : reading?.score;
-  const band = sample ? (index === "nas100" ? 4 : 1) : reading?.band;
-  const label = band === undefined ? "—" : temperatureLabels[locale][band];
+  const indexName = (i: ThermometerIndex) => i === "nas100" ? t("TP大型株100", "TP Large Cap 100") : t("TP半導体40", "TP Semiconductor 40");
+  const indexAverage = (i: ThermometerIndex) => i === "nas100" ? t("大型株100銘柄の平均", "Average of 100 large-cap stocks") : t("半導体40銘柄の平均", "Average of 40 semiconductor stocks");
+  const view = (i: ThermometerIndex) => {
+    const reading = sample ? null : gaugeReading(snapshot, i);
+    const score = sample ? SAMPLE[i].score : reading?.score;
+    const band = sample ? SAMPLE[i].band : reading?.band;
+    const label = band === undefined ? "—" : temperatureLabels[locale][band];
+    const position = sample ? marketPosition({ score: SAMPLE[i].score, deviationPercent: 1 }) : marketPosition(reading);
+    return { reading, score, band, label, position };
+  };
+  const shown = view(index);
+  const { reading, score, band, label } = shown;
   const vix = !sample && snapshot?.vix.status === "ready" && snapshot.vix.asOf === snapshot.asOf && Number.isFinite(snapshot.vix.level) && snapshot.vix.level > 0 && Number.isFinite(snapshot.vix.percentile) && snapshot.vix.percentile >= 0 && snapshot.vix.percentile <= 100 ? snapshot.vix : null;
   const fear = FEAR_COPY[locale], fearLevel = vix ? fearBand(vix.level) : null;
   const signedPercent = (value: number) => `${value > 0 ? "+" : ""}${value.toFixed(1)}%`;
+  const now = t("いま", "Now");
+  const dial = (i: ThermometerIndex, s: number | undefined, l: string) => <svg className={styles.gauge} viewBox="0 0 300 170" role="img" aria-label={`${indexName(i)} · ${l}${sample ? t("・表示見本", " · Display sample") : ""}`}>
+    {colors.map((color, k) => <path key={color} d={segment(k)} fill={color} opacity={s !== undefined ? 1 : .28}/>)}
+    {Array.from({length:21},(_,k)=>{const a=(180-k*9)*Math.PI/180,r=k%5===0?80:84;return <line key={k} x1={150+88*Math.cos(a)} y1={150-88*Math.sin(a)} x2={150+r*Math.cos(a)} y2={150-r*Math.sin(a)} stroke="#9aa8b8" strokeOpacity={k%5===0?.7:.35} strokeWidth={k%5===0?1.5:1}/>;})}
+    <path d="M146.5 150 L150 52 L153.5 150 Z" fill="#f3dfae" opacity={s !== undefined ? 1 : 0} transform={s !== undefined ? `rotate(${s * 1.8 - 90} 150 150)` : undefined}/>
+    <circle cx="150" cy="150" r="9" fill="#0a1018" stroke="#d8b36a" strokeWidth="2"/>
+    <text x="15" y="165" fill="currentColor" fontSize="12">{t("冷えている", "Cool")}</text><text x="285" y="165" textAnchor="end" fill="currentColor" fontSize="12">{t("熱い", "Hot")}</text>
+  </svg>;
+  const statusLine = (i: ThermometerIndex, r: ReturnType<typeof view>["reading"]) => sample ? t("表示見本・実際の相場ではありません", "Display sample · Not actual market data") : r ? `${r.asOf} ${t("米国市場の終値", "US market close")}` : gaugeStatus(snapshot, i, en);
+  const methodDetails = <details className={`${styles.card} ${styles.disclosure}`}><summary>{t("計算方法の概要", "How it is calculated")}</summary><dl className={styles.methodRows}>
+    {THERMOMETER_METHOD.map(row => <div key={row.en.term}><dt>{row[locale].term}</dt><dd>{row[locale].text}</dd></div>)}
+  </dl></details>;
+  const moreDetails = <details className={`${styles.card} ${styles.disclosure}`}><summary>{t("くわしく", "Details")}</summary><dl className={styles.methodRows}>
+    <div><dt>{t("何を見ている？", "What do we measure?")}</dt><dd>{t("次の2つの指標から、いまの相場の位置を見ています。", "We use two measures to show where the market stands.")}</dd></div>
+    <div><dt>{t("① 高値からどれくらい下がったか", "1. How far prices have fallen from their high")}</dt><dd>{t("直近252営業日（約1年）の最も高い終値から、現在の終値が何％下がったかを見ます。", "The percentage decline from the highest closing price in the last 252 trading sessions (about one year).")}</dd></div>
+    <div><dt>{t("② 長期の平均からどれくらい離れているか", "2. How far prices are from their long-term average")}</dt><dd>{t("直近200営業日の終値の平均（200日移動平均）と比べ、現在の終値が何％高いか・低いかを見ます。", "How far the latest close is above or below the average closing price over the last 200 trading sessions (the 200-day moving average).")}</dd></div>
+    <div><dt>{t("過去何年と比べる？", "How much history do we compare?")}</dt><dd>{t("それぞれの指標を過去10年と比較します。2つを同じ重みでまとめ、過去の中でどの位置にあるかを5段階で示します。TP大型株100とTP半導体40は別々に計算します。", "Each measure is compared with the preceding 10 years. We combine their percentile ranks equally, rank the result again, and show its historical position in five bands. TP Large Cap 100 and TP Semiconductor 40 are calculated separately.")}</dd></div>
+    <div><dt>{t("TP大型株100とは？", "What is TP Large Cap 100?")}</dt><dd>{t("米国の大型株100銘柄（NASDAQが公表する100銘柄）の株価を、同じ重みで平均した、Tech Phase独自の数値です。銘柄の見直しは年1〜2回です。", "Tech Phase's own figure: an equal-weighted average of 100 large U.S. stocks, the list Nasdaq publishes. The list is reviewed once or twice a year.")}</dd></div>
+    <div><dt>{t("TP半導体40とは？", "What is TP Semiconductor 40?")}</dt><dd>{t("米国上場の半導体関連企業のうち、時価総額が大きい40社の株価を、同じ重みで平均した、Tech Phase独自の数値です。銘柄は3・6・9・12月に見直します。", "Tech Phase's own figure: an equal-weighted average of the 40 largest U.S.-listed semiconductor companies by market cap. The list is reviewed in March, June, September and December.")}</dd></div>
+    <div><dt>{t("更新のタイミング", "When it updates")}</dt><dd>{t("米国市場の終値が確定したあと、1日1回の更新を予定しています。", "We plan to update this once a day, after US closing prices are confirmed.")}</dd></div>
+    <div><dt>{t("データの出どころ", "Data source")}</dt><dd>Twelve Data</dd></div>
+  </dl></details>;
+  const fearCard = <section className={`${styles.card} ${gaugeStyles.fearCard}`} aria-labelledby="tp-fear-index-heading">
+    <h2 id="tp-fear-index-heading">{fear.title}</h2>
+    <div className={gaugeStyles.fearReading}>
+      <p className={gaugeStyles.fearNumber}>{vix ? formatFearPercent(vix.level) : "—"}</p>
+      <p className={styles.muted}>{vix ? `${vix.asOf} ${t("米国市場の終値", "US market close")}` : t("確定したデータの取得後に表示します。", "Shown once confirmed data is available.")}</p>
+    </div>
+    <div className={gaugeStyles.fearScale}>
+      <div className={gaugeStyles.fearMarkerTrack} aria-hidden="true">{vix ? <span className={gaugeStyles.fearMarker} style={{ left: `clamp(10px, ${fearMarkerPosition(vix.level)}%, calc(100% - 10px))` }}/> : null}</div>
+      <ol className={gaugeStyles.fearBands}>
+        {fear.bandPhrases.map((phrases, i) => <li key={i} data-band={i} data-active={fearLevel === i ? "true" : undefined} aria-current={fearLevel === i ? "true" : undefined}>{phrases.map((phrase, k) => <span key={k}>{phrase}</span>)}</li>)}
+      </ol>
+      <div className={gaugeStyles.fearTicks} aria-hidden="true">{FEAR_BOUNDARIES.map((value, i) => <span key={value} style={{ left: `${(i + 1) * 25}%` }}>{value}%</span>)}</div>
+    </div>
+    <p className={gaugeStyles.fearDescription}>{fear.description}</p>
+    <p className={`${styles.disclaimer} ${gaugeStyles.fearNote}`}>{t("温度の判定には含めません。", "Not included in the temperature score.")}</p>
+  </section>;
+  // 4つの位置 (owner, Nov 25; PC and mobile 11): rows 上向き/下向き, columns 冷えている/熱い; the current cell glows with 「いま」.
+  // PC shows each meaning in its cell; on the phone a cell shows its meaning below when tapped.
+  const positionsCard = (current: number | null) => <section className={`${styles.card} ${desktop ? pc.panel : ""} ${gaugeStyles.positions}`} aria-labelledby="market-positions-heading">
+    <h2 id="market-positions-heading">{t("4つの位置", "Four ways the market can look")}</h2>
+    <p className={styles.muted}>{t("トレンドと相場の温度の組み合わせです。いまの位置が光ります。", "How the trend and the market temperature combine. The current position glows.")}</p>
+    <div className={gaugeStyles.positionGrid} role="group" aria-label={t("トレンドと相場の温度", "Trend and market temperature")}>
+      <span aria-hidden="true"/><span className={gaugeStyles.axisTop}>{t("冷えている", "Cool")}</span><span className={gaugeStyles.axisTop}>{t("熱い", "Hot")}</span>
+      {[0, 2].map(row => [<span key={`r${row}`} className={gaugeStyles.axisSide}>{row === 0 ? t("上向き", "Rising") : t("下向き", "Falling")}</span>,
+        ...[row, row + 1].map(i => desktop
+          ? <div key={i} className={gaugeStyles.positionCell} data-now={current === i ? "true" : undefined} aria-current={current === i ? "true" : undefined}>
+              <h3>{positions[i][locale]}{current === i ? <span className={gaugeStyles.nowBadge}>{now}</span> : null}</h3>
+              <p>{en ? positions[i].detailEn : positions[i].detailJa}</p>
+            </div>
+          : <button key={i} type="button" className={gaugeStyles.positionCell} data-now={current === i ? "true" : undefined} aria-label={current === i ? `${positions[i][locale]} · ${now}` : positions[i][locale]} aria-pressed={selected === i} aria-controls="market-position-description" onClick={() => setSelected(i)}>
+              <span className={gaugeStyles.cellTitle}>{positions[i][locale].split(" × ").map((line, k) => <span key={k}>{k ? " × " : ""}{line}</span>)}</span>
+              {current === i ? <span className={gaugeStyles.nowBadge}>{now}</span> : null}
+            </button>)])}
+    </div>
+    {desktop ? null : <div id="market-position-description" aria-live="polite">{selected !== null ? <p className={gaugeStyles.positionDetail}><b>{positions[selected][locale]}</b>{en ? positions[selected].detailEn : positions[selected].detailJa}</p> : null}</div>}
+  </section>;
+  const closing = <p className={styles.disclaimer}>{t("これからの値動きを当てるものではありません。あくまでも一つの指標として捉えてください。", "This does not predict future moves. Treat it as one indicator among many.")}</p>;
+  if (desktop) {
+    // PC (owner, Nov 25, 01_翌朝のひとこと_温度計_PC 2): both meters side by side; TP恐怖指数 and 4つの位置 side by side; the two
+    // disclosures side by side. Panels in a row share their top and bottom edges. 「いま」 follows TP大型株100.
+    const large = view("nas100");
+    return <div className={pc.content}>
+      <header className={pc.head}><div><p className={pc.eyebrow}><b>MARKET THERMOMETER</b>{t("相場の温度計", "Market gauge")}</p><h1 className={pc.title}>{t("相場の温度計", "Market gauge")}</h1>
+        <p className={pc.lead}>{t("いまの相場の位置を、ひと目でつかむ", "See where the market stands at a glance")}</p></div></header>
+      <div className={gaugeStyles.pcRow}>{(["nas100", "sox"] as const).map(i => { const v = view(i); return <section key={i} className={`${styles.card} ${styles.hero} ${styles.gaugeHero} ${pc.panel} ${gaugeStyles.pcGauge}`} aria-label={indexName(i)}>
+        <span className={styles.eyebrow}>MARKET THERMOMETER</span>
+        <h2 className={gaugeStyles.pcGaugeTitle}>{indexName(i)}</h2>
+        <p className={gaugeStyles.pcGaugeSub}>{indexAverage(i)}</p>
+        {dial(i, v.score, v.label)}
+        <div className={gaugeStyles.reading}>
+          <p className={styles.gaugeEmpty}>{v.label}</p>
+          {v.band !== undefined ? <p className={gaugeStyles.explanation}>{temperatureDescriptions[locale][v.band]}</p> : null}
+          <p className={styles.status}>{statusLine(i, v.reading)}</p>
+        </div>
+        {v.reading ? <dl className={gaugeStyles.pcStats}>
+          <div><dt>{t("252営業日高値から", "From the 252-session closing high")}</dt><dd>{signedPercent(v.reading.drawdownPercent)}</dd></div>
+          <div><dt>{t("200日移動平均から", "From the 200-day moving average")}</dt><dd>{signedPercent(v.reading.deviationPercent)}</dd></div>
+        </dl> : null}
+      </section>; })}</div>
+      <div className={gaugeStyles.pcRow}>
+        {fearCard}
+        {positionsCard(large.position)}
+      </div>
+      <div className={gaugeStyles.pcDetails}>{methodDetails}{moreDetails}</div>
+      <div className={pc.notes}><p className={styles.disclaimer}>{THERMOMETER_NOTE[locale]}</p>{closing}</div>
+      <FlowNavigation step={5} locale={locale} wide/>
+    </div>;
+  }
   return <div className={styles.section}>
-    <header className={styles.toolHeading}><h1>{t("相場の温度計", "Market gauge")}</h1><p className={styles.muted}>{t("いまの相場の位置を、ひと目でつかむ", "See where the market stands at a glance")}</p></header>
+    <SectionHeading label="MARKET THERMOMETER" title={t("相場の温度計", "Market gauge")} description={t("いまの相場の位置を、ひと目でつかむ", "See where the market stands at a glance")}/>
     <section className={`${styles.card} ${styles.hero} ${styles.gaugeHero}`}>
-      <span className={styles.eyebrow}>MARKET THERMOMETER</span>
       <div className={`${styles.tabs} ${gaugeStyles.indexSwitch}`} role="group" aria-label={t("対象指数", "Market index")}>
         <button type="button" aria-pressed={index === "nas100"} onClick={() => setIndex("nas100")}>{t("TP大型株100", "TP Large Cap 100")}</button>
         <button type="button" aria-pressed={index === "sox"} onClick={() => setIndex("sox")}>{t("TP半導体40", "TP Semiconductor 40")}</button>
       </div>
-      <p className={styles.muted}>{index === "nas100" ? t("大型株100銘柄の平均", "Average of 100 large-cap stocks") : t("半導体40銘柄の平均", "Average of 40 semiconductor stocks")}</p>
-      <svg className={styles.gauge} viewBox="0 0 300 170" role="img" aria-label={`${index === "nas100" ? t("TP大型株100", "TP Large Cap 100") : t("TP半導体40", "TP Semiconductor 40")} · ${label}${sample ? t("・表示見本", " · Display sample") : ""}`}>
-        {colors.map((color, i) => <path key={color} d={segment(i)} fill={color} opacity={score !== undefined ? 1 : .28}/>)}
-        {Array.from({length:21},(_,k)=>{const a=(180-k*9)*Math.PI/180,r=k%5===0?80:84;return <line key={k} x1={150+88*Math.cos(a)} y1={150-88*Math.sin(a)} x2={150+r*Math.cos(a)} y2={150-r*Math.sin(a)} stroke="#9aa8b8" strokeOpacity={k%5===0?.7:.35} strokeWidth={k%5===0?1.5:1}/>;})}
-        <path d="M146.5 150 L150 52 L153.5 150 Z" fill="#f3dfae" opacity={score !== undefined ? 1 : 0} transform={score !== undefined ? `rotate(${score * 1.8 - 90} 150 150)` : undefined}/>
-        <circle cx="150" cy="150" r="9" fill="#0a1018" stroke="#d8b36a" strokeWidth="2"/>
-        <text x="15" y="165" fill="currentColor" fontSize="12">{t("冷えている", "Cool")}</text><text x="285" y="165" textAnchor="end" fill="currentColor" fontSize="12">{t("熱い", "Hot")}</text>
-      </svg>
+      <p className={styles.muted}>{indexAverage(index)}</p>
+      {dial(index, score, label)}
       <div className={gaugeStyles.reading} aria-live="polite" aria-atomic="true">
         <p className={styles.gaugeEmpty}>{label}</p>
         {band !== undefined ? <p className={gaugeStyles.explanation}>{temperatureDescriptions[locale][band]}</p> : null}
-        <p className={styles.status}>{sample ? t("表示見本・実際の相場ではありません", "Display sample · Not actual market data") : reading ? `${reading.asOf} ${t("米国市場の終値", "US market close")}` : gaugeStatus(snapshot, index, en)}</p>
+        <p className={styles.status}>{statusLine(index, reading)}</p>
       </div>
-      {reading ? <dl className={styles.resultRows}>
+      {reading ? <dl className={gaugeStyles.pcStats}>
         <div><dt>{t("252営業日高値から", "From the 252-session closing high")}</dt><dd>{signedPercent(reading.drawdownPercent)}</dd></div>
         <div><dt>{t("200日移動平均から", "From the 200-day moving average")}</dt><dd>{signedPercent(reading.deviationPercent)}</dd></div>
       </dl> : null}
       <p className={styles.disclaimer}>{THERMOMETER_NOTE[locale]}</p>
     </section>
-    <details className={`${styles.card} ${styles.disclosure}`}><summary>{t("計算方法の概要", "How it is calculated")}</summary><dl className={styles.methodRows}>
-      {THERMOMETER_METHOD.map(row => <div key={row.en.term}><dt>{row[locale].term}</dt><dd>{row[locale].text}</dd></div>)}
-    </dl></details>
-    <details className={`${styles.card} ${styles.disclosure}`}><summary>{t("くわしく", "Details")}</summary><dl className={styles.methodRows}>
-      <div><dt>{t("何を見ている？", "What do we measure?")}</dt><dd>{t("次の2つの指標から、いまの相場の位置を見ています。", "We use two measures to show where the market stands.")}</dd></div>
-      <div><dt>{t("① 高値からどれくらい下がったか", "1. How far prices have fallen from their high")}</dt><dd>{t("直近252営業日（約1年）の最も高い終値から、現在の終値が何％下がったかを見ます。", "The percentage decline from the highest closing price in the last 252 trading sessions (about one year).")}</dd></div>
-      <div><dt>{t("② 長期の平均からどれくらい離れているか", "2. How far prices are from their long-term average")}</dt><dd>{t("直近200営業日の終値の平均（200日移動平均）と比べ、現在の終値が何％高いか・低いかを見ます。", "How far the latest close is above or below the average closing price over the last 200 trading sessions (the 200-day moving average).")}</dd></div>
-      <div><dt>{t("過去何年と比べる？", "How much history do we compare?")}</dt><dd>{t("それぞれの指標を過去10年と比較します。2つを同じ重みでまとめ、過去の中でどの位置にあるかを5段階で示します。TP大型株100とTP半導体40は別々に計算します。", "Each measure is compared with the preceding 10 years. We combine their percentile ranks equally, rank the result again, and show its historical position in five bands. TP Large Cap 100 and TP Semiconductor 40 are calculated separately.")}</dd></div>
-      <div><dt>{t("TP大型株100とは？", "What is TP Large Cap 100?")}</dt><dd>{t("米国の大型株100銘柄（NASDAQが公表する100銘柄）の株価を、同じ重みで平均した、Tech Phase独自の数値です。銘柄の見直しは年1〜2回です。", "Tech Phase's own figure: an equal-weighted average of 100 large U.S. stocks, the list Nasdaq publishes. The list is reviewed once or twice a year.")}</dd></div>
-      <div><dt>{t("TP半導体40とは？", "What is TP Semiconductor 40?")}</dt><dd>{t("米国上場の半導体関連企業のうち、時価総額が大きい40社の株価を、同じ重みで平均した、Tech Phase独自の数値です。銘柄は3・6・9・12月に見直します。", "Tech Phase's own figure: an equal-weighted average of the 40 largest U.S.-listed semiconductor companies by market cap. The list is reviewed in March, June, September and December.")}</dd></div>
-      <div><dt>{t("更新のタイミング", "When it updates")}</dt><dd>{t("米国市場の終値が確定したあと、1日1回の更新を予定しています。", "We plan to update this once a day, after US closing prices are confirmed.")}</dd></div>
-      <div><dt>{t("データの出どころ", "Data source")}</dt><dd>Twelve Data</dd></div>
-    </dl></details>
-    <section className={`${styles.card} ${gaugeStyles.fearCard}`} aria-labelledby="tp-fear-index-heading">
-      <h2 id="tp-fear-index-heading">{fear.title}</h2>
-      <div className={gaugeStyles.fearReading}>
-        <p className={gaugeStyles.fearNumber}>{vix ? formatFearPercent(vix.level) : "—"}</p>
-        <p className={styles.muted}>{vix ? `${vix.asOf} ${t("米国市場の終値", "US market close")}` : t("確定したデータの取得後に表示します。", "Shown once confirmed data is available.")}</p>
-      </div>
-      <div className={gaugeStyles.fearScale}>
-        <div className={gaugeStyles.fearMarkerTrack} aria-hidden="true">{vix ? <span className={gaugeStyles.fearMarker} style={{ left: `clamp(10px, ${fearMarkerPosition(vix.level)}%, calc(100% - 10px))` }}/> : null}</div>
-        <ol className={gaugeStyles.fearBands}>
-          {fear.bandPhrases.map((phrases, i) => <li key={i} data-band={i} data-active={fearLevel === i ? "true" : undefined} aria-current={fearLevel === i ? "true" : undefined}>{phrases.map((phrase, k) => <span key={k}>{phrase}</span>)}</li>)}
-        </ol>
-        <div className={gaugeStyles.fearTicks} aria-hidden="true">{FEAR_BOUNDARIES.map((value, i) => <span key={value} style={{ left: `${(i + 1) * 25}%` }}>{value}%</span>)}</div>
-      </div>
-      <p className={gaugeStyles.fearDescription}>{fear.description}</p>
-      <p className={`${styles.disclaimer} ${gaugeStyles.fearNote}`}>{t("温度の判定には含めません。", "Not included in the temperature score.")}</p>
-    </section>
-    <section className={styles.card}><h2>{t("4つの位置", "Four ways the market can look")}</h2><p className={styles.muted}>{t("マスを押すと、説明が出ます。", "Tap a box to see what it means.")}</p>
-      <div className={styles.mapAxis}><span>{t("◀ 冷えている", "◀ Cool")}</span><span>{t("行き過ぎ", "Temperature")}</span><span>{t("熱い ▶", "Hot ▶")}</span></div>
-      <div className={styles.marketMap} role="group" aria-label={t("トレンドと相場の温度", "Trend and market temperature")}>{positions.map((p, i) => <button key={p.en} aria-label={p[locale]} aria-pressed={selected === i} aria-controls="market-position-description" onClick={() => setSelected(i)}>{p[locale].split(" × ").map((line,k)=><span key={k}>{line}</span>)}</button>)}</div>
-      <div id="market-position-description" aria-live="polite">{selected !== null ? <><h2>{positions[selected][locale]}</h2><p>{en ? positions[selected].detailEn : positions[selected].detailJa}</p></> : <p className={styles.muted}>{t("それぞれの位置の意味を確認できます。", "See what each combination means.")}</p>}</div>
-    </section>
-
-    <p className={styles.disclaimer}>{t("これからの値動きを当てるものではありません。あくまでも一つの指標として捉えてください。", "This does not predict future moves. Treat it as one indicator among many.")}</p>
+    {fearCard}
+    {positionsCard(shown.position)}
+    {methodDetails}
+    {moreDetails}
+    {closing}
     <FlowNavigation step={5} locale={locale}/>
   </div>;
 }

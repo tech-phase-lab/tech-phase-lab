@@ -19,7 +19,6 @@ import { judge } from "@/lib/resolute/alert-judge";
 import { resoluteAlertPushBody,resoluteMorningPushBody } from "@/lib/resolute/push-notice";
 import { latestAlertFromDigest } from "@/lib/resolute/latest-alert";
 import DeviceNotifications from "@/app/research/notification-settings";
-import PushSample from "./push-sample";
 import { deliveryClock,deliveryZone } from "@/lib/resolute/delivery-time";
 import pc from "./pc.module.css";
 import { useDesktop,useTouchDevice } from "./use-desktop";
@@ -30,7 +29,7 @@ const tips={
  en:{done:"You stuck to your plan. Take a moment to record it. Write one line about whether your actions matched your rules. It can make the next drop easier to face.",skipped:"Holding off is a choice too. Check whether your reason is already in your conditions for not buying. If not, add it so you have a clearer rule next time.",unsure:"Feeling unsure may mean your rules and how you felt didn't quite match. There's no rush. Open your plan and reread your purchase levels and amounts."}
 };
 export default function NotificationScreen({identityReady=true,mode}:{identityReady?:boolean;mode:"alerts"|"morning"}) {
- return <ToolShell identityReady={identityReady} pc={mode==="alerts"}>{(locale,deny)=><Notifications locale={locale} deny={deny} mode={mode}/>}</ToolShell>;
+ return <ToolShell identityReady={identityReady} pc>{(locale,deny)=><Notifications locale={locale} deny={deny} mode={mode}/>}</ToolShell>;
 }
 function Notifications({locale,deny,mode}:{locale:DiagnosisLocale;deny:()=>void;mode:"alerts"|"morning"}) {
  const requestPlan = usePlanClient();
@@ -45,7 +44,7 @@ function Notifications({locale,deny,mode}:{locale:DiagnosisLocale;deny:()=>void;
  const [snapshot,setSnapshot]=useState<NotificationSnapshot|null>(knownSettings??null),[draft,setDraft]=useState<NotificationSettings>(()=>knownSettings?.settings??defaultNotificationSettings());
  const [plan,setPlan]=useState<PlanInput|null>(knownPlan?.plan??null),[planState,setPlanState]=useState(knownPlan?(knownPlan.plan?"ready":"empty"):"loading"),[loading,setLoading]=useState(!(knownSettings&&knownPlan)),[busy,setBusy]=useState(false),[locked,setLocked]=useState(false),[attempt,setAttempt]=useState(0);
  useUnsavedChanges(busy || (!!snapshot && JSON.stringify(draft)!==JSON.stringify(snapshot.settings)));
- const [timeOpen,setTimeOpen]=useState(false),[planOpen,setPlanOpen]=useState(false);
+ const [planOpen,setPlanOpen]=useState(false);
  const planDialog=useRef<HTMLDialogElement>(null);
  useEffect(()=>{if(planOpen)planDialog.current?.showModal();else planDialog.current?.close();},[planOpen]);
  const [message,setMessage]=useState(""),[change,setChange]=useState(-25),[pick,setPick]=useState<"done"|"skipped"|"unsure"|null>(null);
@@ -126,7 +125,62 @@ function Notifications({locale,deny,mode}:{locale:DiagnosisLocale;deny:()=>void;
  </>;
  const saveButton=(className:string)=><button type="button" className={className} onClick={()=>void save()} disabled={!snapshot||busy||loading||locked}>{busy?t("保存しています…","Saving…"):t("通知設定を保存する","Save notification settings")}</button>;
  const deliveryNote=<p className={styles.disclaimer}>{snapshot?.delivery?t("この画面の試算で通知は送信されません。","Using this screen will not send a notification."):t("通知の配信は準備中です。この画面の試算で通知は送信されません。","Notification delivery is not available yet. Using this screen will not send a notification.")}</p>;
- if(!isMorning) {
+ const planDialogElement=<>{/* 「計画を開く」 from the morning answer. */}
+  <dialog ref={planDialog} className={styles.planDialog} onClose={()=>setPlanOpen(false)} onCancel={()=>setPlanOpen(false)} aria-labelledby="morning-plan-title">
+   <h2 id="morning-plan-title">{t("あなたの計画", "Your plan")}</h2>
+   {plan?<dl className={styles.ruleCards}>
+    <div className={styles.ruleCard}><dt>{t("許容できる下落", "Loss limit")}</dt><dd>{plan.toleranceDrop===null?t("未設定","Not set"):new Intl.NumberFormat(en?"en-US":"ja-JP",{style:"currency",currency:plan.currency}).format(plan.toleranceDrop/(plan.currency==="USD"?100:1))}</dd></div>
+    <div className={styles.ruleCard}><dt>{t("1銘柄の上限", "Single-stock cap")}</dt><dd>{plan.perStockCapPct}%</dd></div>
+    <div className={styles.ruleCard}><dt>{t("買い増しライン", "Purchase levels")}</dt><dd>{plan.buyLines.length?plan.buyLines.map(l=>`−${l.dropPct}% / ${new Intl.NumberFormat(en?"en-US":"ja-JP",{style:"currency",currency:plan.currency}).format(l.amount/(plan.currency==="USD"?100:1))}`).join(" / "):t("未設定","Not set")}</dd></div>
+    <div className={styles.ruleCard}><dt>{t("買わない条件", "Conditions for holding off")}</dt><dd>{conditionText("q28",plan.noBuyConditions)}</dd></div>
+    <div className={styles.ruleCard}><dt>{t("立ち止まる条件", "Conditions for pausing")}</dt><dd>{conditionText("q29",plan.haltConditions)}</dd></div>
+   </dl>:<p>{t("保存済みの計画がありません", "No saved plan")}</p>}
+   <button type="button" className={styles.primary} onClick={()=>setPlanOpen(false)}>{t("④ 翌朝のひとことに戻る", "Back to your morning note")}</button>
+  </dialog></>;
+ const morningPicker=<>
+  <span className={styles.eyebrow}>GOOD MORNING</span>
+  <p className={styles.morningQuestion}>{en?"Quick check-in on yesterday's alert.":<><span className={styles.phrase}>昨日のお知らせから</span><span className={styles.phrase}>一晩が経ちました</span></>}</p>
+  <p className={styles.muted}>{en?"Pick whichever feels closest right now.":<><span className={styles.phrase}>今の気持ちに近いものを</span><span className={styles.phrase}>1つだけ選んでください</span></>}</p>
+  {pick?<div className={styles.morningAnswer}><div className={`${styles.verdict} ${styles.verdictOk}`}><strong>{picks[(["done","skipped","unsure"] as const).indexOf(pick)]}</strong></div><p>{tips[locale][pick]}</p><button type="button" className={styles.primary} onClick={()=>setPlanOpen(true)}>{t("計画を開く","Open your plan")}</button><button className={styles.ghost} onClick={()=>setPick(null)}>{t("選び直す","Choose again")}</button></div>:<div className={styles.options}>{(["done","skipped","unsure"] as const).map((k,i)=><button key={k} className={styles.option} onClick={()=>setPick(k)}>{picks[i]}</button>)}</div>}
+ </>;
+ const morningOff=<p className={styles.muted}>{snapshot?t("通知を受け取らない設定です。","Notifications are turned off."):message==="preparing"?t("準備中です。準備ができたら、ここで受け取りの設定ができます。","Not ready yet. You’ll be able to turn this on here once it is."):t("保存済みの設定はまだ確認できていません。","We haven’t been able to check your saved settings yet.")}</p>;
+ if(isMorning) {
+  // ④ (owner, Nov 25). PC (01_翌朝のひとこと_温度計_PC 1): 「受け取り方」 on the left, the morning screen on the right, both
+  // panels ending level; back to ③ on the left, save and on to ⑤ on the right. Phone (mobile 10): the morning screen first,
+  // 「受け取り方」 below it, then save and the way on.
+  const heading=desktop?<header className={pc.head}><div><p className={pc.eyebrow}><b>GOOD MORNING</b>{t("翌朝のひとこと","Morning note")}</p><h1 className={pc.title}>{t("翌朝のひとこと","Morning note")}</h1>
+    <p className={pc.lead}>{t("お知らせの翌朝に、1通だけ届きます","One short notification the morning after an alert")}</p></div></header>
+   :<SectionHeading label="GOOD MORNING" title={t("翌朝のひとこと","Morning note")} description={t("お知らせの翌朝に、1通だけ届きます","One short notification the morning after an alert")}/>;
+  const goodMorning=<section className={`${styles.card} ${styles.hero} ${desktop?pc.panel:""} ${pc.morningPanel}`}>
+   {draft.morningEnabled?morningPicker:<><span className={styles.eyebrow}>GOOD MORNING</span>{morningOff}</>}
+   <p className={`${styles.disclaimer} ${pc.morningOnce}`}>{t("この通知は、昨日のお知らせについて1回だけ届きます。","We send this once per alert.")}</p>
+  </section>;
+  const howYouGetIt=<fieldset className={`${styles.settingsFields} ${pc.column}`} disabled={loading||busy||locked}>
+   <section className={`${styles.card} ${desktop?pc.panel:""} ${pc.settings} ${pc.grow} ${pc.morningSettings}`}>
+    <h2>{t("受け取り方","How you get it")}</h2>
+    <label className={`${styles.switchRow} ${pc.lined}`}><span className={pc.switchText}><span>{en?"Get the morning note":<><span className={styles.phrase}>翌朝のひとことを</span><span className={styles.phrase}>受け取る</span></>}</span><small>{t("オンにするとお知らせと同じ時間に届きます","Turn it on to receive a note at the same time as your alerts.")}</small></span><input type="checkbox" role="switch" checked={draft.morningEnabled} onChange={e=>update({morningEnabled:e.target.checked})}/></label>
+    <div className={`${pc.lined} ${pc.morningBlock}`}><h3 className={pc.blockTitle}>{t("届く時間","Delivery time")}<small>{deliveryZone(locale)}</small></h3>{timeButtons}</div>
+    <div className={`${pc.lined} ${pc.morningBlock}`}><h3 className={pc.blockTitle}>{t("届け先","Where it goes")}</h3>
+     {touch||!desktop?<div className={pc.thisDevice}><DeviceNotifications lang={locale} scope="resolute" initiallyOpen/><p className={styles.muted}>{mailText}</p></div>
+      :<div className={pc.destinations}><div className={pc.destination}><b>{t("スマホ通知","Phone notifications")}</b><span>{t("スマホでこの画面を開くと、オンにできます","Open this page on your phone to turn them on")}</span></div>
+       <div className={pc.destination}><b>{t("メール","Email")}</b><span>{mailText}</span></div></div>}
+    </div>
+    <div className={pc.morningBlock}><p className={pc.small}>{t("届く通知の例","Example notification")}</p>
+     <div className={pc.push} role="img" aria-label={`RESOLUTE: ${resoluteMorningPushBody(locale)}`}><span className={pc.pushHead}><b>RESOLUTE</b><time>{deliveryClock(draft.deliveryHourJst,locale)}</time></span><strong>{resoluteMorningPushBody(locale)}</strong><small>{t("押すと、この画面で3つから選べます","Tap it to open this screen and pick one of the three")}</small></div>
+    </div>
+   </section>
+  </fieldset>;
+  return <div className={desktop?pc.content:styles.section}>
+   {heading}
+   {loading?<p role="status">{t("設定を読み込んでいます…","Loading your settings…")}</p>:null}
+   {desktop?<div className={pc.morningPair}>{howYouGetIt}{goodMorning}</div>:<>{goodMorning}{howYouGetIt}</>}
+   {status}
+   {desktop?<FlowNavigation step={4} locale={locale} wide extra={saveButton(`${styles.secondary} ${pc.save}`)}/>:<>{saveButton(`${styles.secondary} ${pc.phoneSave}`)}<FlowNavigation step={4} locale={locale}/></>}
+   <div className={pc.notes}>{deliveryNote}</div>
+   {planDialogElement}
+  </div>;
+ }
+ // ③ 終値アラート (PC and phone).
   // PC (owner, Nov 25, 02_終値アラート_PC 1): settings on the left; the lines as a table and TRY IT on the right; both columns end level.
   // Phone (resolute-mobile-all-1125 08): one column: 見る銘柄 → 知らせるライン → あなたのライン → 届く時間と届け先 (with this phone's
   // notification switch) → TRY IT with the example open → save / next. A thin gold banner at the top only while notifications are off.
@@ -194,44 +248,4 @@ function Notifications({locale,deny,mode}:{locale:DiagnosisLocale;deny:()=>void;
    <FlowNavigation step={3} locale={locale} wide extra={saveButton(`${styles.secondary} ${pc.save}`)}/>
    {notes}
   </div>;
- }
- return <div className={styles.section}>
-  <header className={styles.toolHeading}><h1>{isMorning?t("翌朝のひとこと","Morning note"):t("終値アラート","Closing-price alerts")}</h1><p className={styles.muted}>{isMorning?t("お知らせの翌朝に、1通だけ届きます","One short notification the morning after an alert"):t("ラインに届いた日に、スマホ通知でお知らせ","Get a phone notification on the day a line is hit")}</p></header>
-  {/* Owner, Nov 17: ③④ arrive as phone notifications (the same part as Tech Phase's notification settings). */}
-  <section className={styles.card}><DeviceNotifications lang={locale} scope="resolute" initiallyOpen/></section>
-  {loading?<p role="status">{t("設定を読み込んでいます…","Loading your settings…")}</p>:null}
-  <fieldset className={styles.settingsFields} disabled={loading||busy||locked}>
-   {isMorning?<section className={styles.card}>
-    <label className={styles.switchRow}><span>{en?"Get the morning note":<><span className={styles.phrase}>翌朝のひとことを</span><span className={styles.phrase}>受け取る</span></>}</span><input type="checkbox" role="switch" checked={draft.morningEnabled} onChange={e=>update({morningEnabled:e.target.checked})}/></label>
-    <p className={styles.muted}>{t("オンにするとお知らせと同じ時間に届きます","Turn it on to receive a note at the same time as your alerts.")}</p>
-    <div className={styles.deliveryRow}><span>{deliveryClock(draft.deliveryHourJst,locale)} <small>{deliveryZone(locale)}</small></span><button type="button" className={styles.timeEdit} aria-expanded={timeOpen} aria-controls="morning-delivery-time" onClick={()=>setTimeOpen(v=>!v)}>{t("届く時間を変更する","Change delivery time")}</button></div>
-    {timeOpen?<div id="morning-delivery-time">{timeButtons}</div>:null}
-   </section>:null}
-   {saveButton(styles.primary)}
-  </fieldset>
-  {status}
-  {isMorning?<>
-   {!draft.morningEnabled?<section className={`${styles.card} ${styles.hero}`}><p className={styles.muted}>{snapshot?t("通知を受け取らない設定です。","Notifications are turned off."):message==="preparing"?t("準備中です。準備ができたら、ここで受け取りの設定ができます。","Not ready yet. You’ll be able to turn this on here once it is."):t("保存済みの設定はまだ確認できていません。","We haven’t been able to check your saved settings yet.")}</p></section>:<section className={`${styles.card} ${styles.hero}`}>
-    <span className={styles.eyebrow}>GOOD MORNING</span>
-    <p className={styles.morningQuestion}>{en?"Quick check-in on yesterday's alert.":<><span className={styles.phrase}>昨日のお知らせから</span><span className={styles.phrase}>一晩が経ちました</span></>}</p>
-    <p className={styles.muted}>{en?"Pick whichever feels closest right now.":<><span className={styles.phrase}>今の気持ちに近いものを</span><span className={styles.phrase}>1つだけ選んでください</span></>}</p>
-    {pick?<div className={styles.morningAnswer}><div className={`${styles.verdict} ${styles.verdictOk}`}><strong>{picks[(["done","skipped","unsure"] as const).indexOf(pick)]}</strong></div><p>{tips[locale][pick]}</p><button type="button" className={styles.primary} onClick={()=>setPlanOpen(true)}>{t("計画を開く","Open your plan")}</button><button className={styles.ghost} onClick={()=>setPick(null)}>{t("選び直す","Choose again")}</button></div>:<><div className={styles.options}>{(["done","skipped","unsure"] as const).map((k,i)=><button key={k} className={styles.option} onClick={()=>setPick(k)}>{picks[i]}</button>)}</div><p className={styles.disclaimer}>{t("この通知は、昨日のお知らせについて1回だけ届きます。","We send this once per alert.")}</p></>}
-   </section>}
-   {draft.morningEnabled?<details className={`${styles.card} ${styles.disclosure}`}><summary>{t("届く通知の例","Example notification")}</summary><PushSample body={resoluteMorningPushBody(locale)} locale={locale}/><p className={styles.muted}>{t("押すと、この画面で3つから選べます","Tap it to open this screen and pick one of the three")}</p></details>:null}
-  </>:null}
-  {/* Shown only until resolute-api reports that delivery is switched on (lib/resolute/notification-delivery-state.ts). */}
-  {deliveryNote}
-  <dialog ref={planDialog} className={styles.planDialog} onClose={()=>setPlanOpen(false)} onCancel={()=>setPlanOpen(false)} aria-labelledby="morning-plan-title">
-   <h2 id="morning-plan-title">{t("あなたの計画", "Your plan")}</h2>
-   {plan?<dl className={styles.ruleCards}>
-    <div className={styles.ruleCard}><dt>{t("許容できる下落", "Loss limit")}</dt><dd>{plan.toleranceDrop===null?t("未設定","Not set"):new Intl.NumberFormat(en?"en-US":"ja-JP",{style:"currency",currency:plan.currency}).format(plan.toleranceDrop/(plan.currency==="USD"?100:1))}</dd></div>
-    <div className={styles.ruleCard}><dt>{t("1銘柄の上限", "Single-stock cap")}</dt><dd>{plan.perStockCapPct}%</dd></div>
-    <div className={styles.ruleCard}><dt>{t("買い増しライン", "Purchase levels")}</dt><dd>{plan.buyLines.length?plan.buyLines.map(l=>`−${l.dropPct}% / ${new Intl.NumberFormat(en?"en-US":"ja-JP",{style:"currency",currency:plan.currency}).format(l.amount/(plan.currency==="USD"?100:1))}`).join(" / "):t("未設定","Not set")}</dd></div>
-    <div className={styles.ruleCard}><dt>{t("買わない条件", "Conditions for holding off")}</dt><dd>{conditionText("q28",plan.noBuyConditions)}</dd></div>
-    <div className={styles.ruleCard}><dt>{t("立ち止まる条件", "Conditions for pausing")}</dt><dd>{conditionText("q29",plan.haltConditions)}</dd></div>
-   </dl>:<p>{t("保存済みの計画がありません", "No saved plan")}</p>}
-   <button type="button" className={styles.primary} onClick={()=>setPlanOpen(false)}>{t("④ 翌朝のひとことに戻る", "Back to your morning note")}</button>
-  </dialog>
-  <FlowNavigation step={isMorning?4:3} locale={locale}/>
- </div>;
 }
