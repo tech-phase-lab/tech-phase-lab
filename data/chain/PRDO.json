@@ -1,0 +1,162 @@
+{
+  "root": {
+    "ticker": "PRDO",
+    "name": "パードシオ・エデュケーション",
+    "cik": 1046568,
+    "name_en": "Perdoceo Education"
+  },
+  "rows": [
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "買収・売却",
+      "en": "Acquisitions & sales"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "UTI"
+  ],
+  "companies": [
+    {
+      "id": "UTI",
+      "ticker": "UTI",
+      "name": "ユニバーサル・テクニカル・インスティテュート",
+      "name_en": "Universal Technical Institute",
+      "sub": "職業訓練",
+      "sub_en": "Technical schools",
+      "sub_short": "職業校",
+      "sub_short_en": "Schools",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合として名前を挙げる",
+          "text_en": "Names Perdoceo as a competitor",
+          "source": {
+            "label": "Universal Technical Institute 10-K(2025年9月期)",
+            "label_en": "Universal Technical Institute 10-K (FY ended Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1261654/000126165425000025/uti-20250930.htm",
+            "level": "official",
+            "date": "2025-11-26",
+            "quote": "Within the for-profit education sector, some of our public company competitors are Adtalem Global Education, Inc., American Public Education, Inc., Legacy Education, Lincoln Educational Services Corporation, Perdoceo Education Corporation, and Strategic Education, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TRIDENT",
+      "ticker": "TRIDENT",
+      "name": "トライデント大学",
+      "name_en": "Trident University",
+      "sub": "オンライン大学",
+      "sub_en": "Online university",
+      "sub_short": "大学",
+      "sub_short_en": "College",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2020年に資産を買収",
+          "text_en": "Bought its assets in 2020",
+          "source": {
+            "label": "Perdoceo Education 10-K(2025年度)",
+            "label_en": "Perdoceo Education 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1046568/000119312526059331/prdo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Asset Purchase Agreement effective February 4, 2020 among Trident University International, LLC, TUI Learning, LLC, Athena NewCo, LLC and Perdoceo Education Corporation Exhibit"
+          }
+        }
+      ]
+    },
+    {
+      "id": "USAHS",
+      "ticker": "USAHS",
+      "name": "セント・オーガスティン大学",
+      "name_en": "University of St. Augustine",
+      "sub": "医療系大学",
+      "sub_en": "Health sciences school",
+      "sub_short": "大学",
+      "sub_short_en": "College",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2024年に買収",
+          "text_en": "Acquired in 2024",
+          "source": {
+            "label": "Perdoceo Education 10-K(2025年度)",
+            "label_en": "Perdoceo Education 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1046568/000119312526059331/prdo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Agreement and Plan of Merger dated July 15, 2024 by and among Perdoceo Education Corporation, Lighthouse Merger Sub, Inc., University of St. Augustine Parent Corp. and APH GP LP, solely in its capacity as the Seller Representative Exhibit"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SOUTHU",
+      "ticker": "SOUTHU",
+      "name": "サウス大学",
+      "name_en": "South University",
+      "sub": "大学",
+      "sub_en": "University",
+      "sub_short": "大学",
+      "sub_short_en": "College",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2026年9月に買収で合意",
+          "text_en": "Agreed to buy it in September 2026",
+          "source": {
+            "label": "Perdoceo Education 8-K(2026年9月)",
+            "label_en": "Perdoceo Education 8-K (September 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1046568/000119312526389857/d61984d8k.htm",
+            "level": "official",
+            "date": "2026-09-14",
+            "quote": "On September 14, 2026, Perdoceo Education Corporation, a Delaware corporation (the \"Company\"), entered into a Membership Interest Purchase Agreement (the \"Purchase Agreement\") with South University - Member, Inc., a Delaware nonprofit, nonstock corporation (\"Seller\"), providing for the acquisition by the Company of 100% of the membership interests of South University Savannah, LLC, a Georgia limited liability company (\"South\" or \"South University\" and such acquisition, the"
+          }
+        }
+      ]
+    },
+    {
+      "id": "WTFC",
+      "ticker": "WTFC",
+      "name": "ウィントラスト",
+      "name_en": "Wintrust Financial",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の幹事行",
+          "text_en": "Administrative agent on its credit agreement",
+          "source": {
+            "label": "Perdoceo Education 10-K(2025年度)",
+            "label_en": "Perdoceo Education 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1046568/000119312526059331/prdo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Credit Agreement dated as of September 8, 2021 among Perdoceo Education Corporation, the subsidiary guarantors from time to time parties thereto, the lenders from time to time parties thereto, and Wintrust Bank, N.A, as administrative agent and letter of credit issuer Exhibit"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

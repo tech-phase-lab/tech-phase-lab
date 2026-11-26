@@ -1,0 +1,160 @@
+{
+  "root": {
+    "ticker": "AM",
+    "name": "アンテロ・ミッドストリーム",
+    "cik": 1623925,
+    "name_en": "Antero Midstream"
+  },
+  "rows": [
+    {
+      "ja": "顧客・取引先",
+      "en": "Customers & clients"
+    },
+    {
+      "ja": "提携・出資・買収",
+      "en": "Partners, stakes & deals"
+    },
+    {
+      "ja": "買収・売却",
+      "en": "Acquisitions & sales"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "HGENERGY",
+      "ticker": "HGENERGY",
+      "name": "HGエナジー",
+      "name_en": "HG Energy II",
+      "sub": "天然ガス",
+      "sub_en": "Natural gas",
+      "sub_short": "ガス",
+      "sub_short_en": "Gas",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "中流事業を買収",
+          "text_en": "Bought its midstream business",
+          "source": {
+            "label": "Antero Midstream 10-K(2025年度)",
+            "label_en": "Antero Midstream 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1623925/000110465926013380/am-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Our acquisition of 100% of the issued and outstanding equity interests of HG Energy II Midstream Holdings, LLC, a Delaware limited liability company, from HG Energy II LLC, a Delaware limited liability company."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MPLX",
+      "ticker": "MPLX",
+      "name": "MPLXエルピー",
+      "name_en": "MPLX LP",
+      "sub": "導管・物流",
+      "sub_en": "Midstream",
+      "sub_short": "配管網",
+      "sub_short_en": "Pipeline",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "アパラチアの処理施設の合弁(子会社マークウエストと)",
+          "text_en": "Joint venture with its MarkWest unit for Appalachian processing",
+          "source": {
+            "label": "Antero Midstream 10-K(2025年度)",
+            "label_en": "Antero Midstream 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1623925/000110465926013380/am-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "The joint venture entered into on February 6, 2017 between Antero Midstream Partners, which is our wholly owned subsidiary, and MarkWest, a wholly owned subsidiary of MPLX, LP, to develop processing and fractionation assets in Appalachia."
+          }
+        }
+      ]
+    },
+    {
+      "id": "INR",
+      "ticker": "INR",
+      "name": "インフィニティ・ナチュラル・リソーシズ",
+      "name_en": "Infinity Natural Resources",
+      "sub": "天然ガス",
+      "sub_en": "Oil & gas",
+      "sub_short": "ガス",
+      "sub_short_en": "Gas",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "オハイオの中流資産を売却する契約(2025年12月)",
+          "text_en": "Agreed to buy its Ohio midstream assets (December 2025)",
+          "source": {
+            "label": "Antero Midstream 8-K(2025年12月)",
+            "label_en": "Antero Midstream 8-K (December 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1623925/000110465925119059/tm2532932d1_8k.htm",
+            "level": "official",
+            "date": "2025-12-08",
+            "quote": "Utica Disposition On December 5, 2025, certain wholly-owned subsidiaries of the Company (collectively, the \"Antero Seller Parties\") entered into a Purchase and Sale Agreement (the \"Utica Midstream PSA\") to sell substantially all of their Utica Shale midstream assets to an affiliate of Infinity Natural Resources Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SUMMITMID",
+      "ticker": "SUMMITMID",
+      "name": "サミット・ミッドストリーム",
+      "name_en": "Summit Midstream",
+      "sub": "ガス集送",
+      "sub_en": "Gas gathering",
+      "sub_short": "中流",
+      "sub_short_en": "Pipes",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ガス集送・圧縮資産を2024年5月に買収",
+          "text_en": "Bought its gas gathering and compression assets in May 2024",
+          "source": {
+            "label": "Antero Midstream 10-K(2025年度)",
+            "label_en": "Antero Midstream 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1623925/000110465926013380/am-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Summit Asset Acquisition On May 1, 2024, we acquired certain Marcellus Shale gas gathering and compression assets from Summit Midstream Partners, LP (NYSE: SMLP) (\"Summit\") for $70 million in cash, before closing adjustments, with an effective date of April 1, 2024."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AR",
+      "ticker": "AR",
+      "name": "アンテロ・リソーシズ",
+      "name_en": "Antero Resources",
+      "sub": "天然ガス",
+      "sub_en": "Natural gas",
+      "sub_short": "ガス",
+      "sub_short_en": "Gas",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "集ガス網でアンテロ・リソーシズの生産を扱う",
+          "text_en": "Its gathering systems serve Antero Resources' production",
+          "source": {
+            "label": "Antero Midstream 10-K(2025年度)",
+            "label_en": "Antero Midstream 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1623925/000110465926013380/am-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "These assets were already interconnected to our low pressure and high pressure gas gathering systems at the time of acquisition and service Antero Resources' production."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

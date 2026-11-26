@@ -1,0 +1,208 @@
+{
+  "root": {
+    "ticker": "KMX",
+    "name": "カーマックス",
+    "cik": 1170010,
+    "name_en": "CarMax"
+  },
+  "rows": [
+    {
+      "ja": "供給元・取引先",
+      "en": "Suppliers & providers"
+    },
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "ALLY",
+      "ticker": "ALLY",
+      "name": "アライ・ファイナンシャル",
+      "name_en": "Ally Financial",
+      "sub": "自動車金融",
+      "sub_en": "Auto finance",
+      "sub_short": "金融",
+      "sub_short_en": "Finance",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ローン提供の提携先",
+          "text_en": "Third-party auto finance provider",
+          "source": {
+            "label": "CarMax 10-K(2026年2月期)",
+            "label_en": "CarMax 10-K (FY ended Feb 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1170010/000117001026000021/kmx-20260228.htm",
+            "level": "official",
+            "date": "2026-04-15",
+            "quote": "As of February 28, 2026, our network of third-party finance providers included Ally Financial, American Credit Acceptance, Bank of America, Capital One Auto Finance, Exeter Finance Corp., Santander Consumer USA and Westlake Financial Services."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMCREDITACC",
+      "ticker": "AMCREDITACC",
+      "name": "アメリカン・クレジット・アクセプタンス",
+      "name_en": "American Credit Acceptance",
+      "sub": "自動車金融",
+      "sub_en": "Auto finance",
+      "sub_short": "金融",
+      "sub_short_en": "Finance",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ローン提供の提携先",
+          "text_en": "Third-party auto finance provider",
+          "source": {
+            "label": "CarMax 10-K(2026年2月期)",
+            "label_en": "CarMax 10-K (FY ended Feb 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1170010/000117001026000021/kmx-20260228.htm",
+            "level": "official",
+            "date": "2026-04-15",
+            "quote": "As of February 28, 2026, our network of third-party finance providers included Ally Financial, American Credit Acceptance, Bank of America, Capital One Auto Finance, Exeter Finance Corp., Santander Consumer USA and Westlake Financial Services."
+          }
+        }
+      ]
+    },
+    {
+      "id": "COF",
+      "ticker": "COF",
+      "name": "キャピタル・ワン",
+      "name_en": "Capital One",
+      "sub": "自動車金融",
+      "sub_en": "Auto finance",
+      "sub_short": "金融",
+      "sub_short_en": "Finance",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ローン提供の提携先",
+          "text_en": "Third-party auto finance provider",
+          "source": {
+            "label": "CarMax 10-K(2026年2月期)",
+            "label_en": "CarMax 10-K (FY ended Feb 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1170010/000117001026000021/kmx-20260228.htm",
+            "level": "official",
+            "date": "2026-04-15",
+            "quote": "As of February 28, 2026, our network of third-party finance providers included Ally Financial, American Credit Acceptance, Bank of America, Capital One Auto Finance, Exeter Finance Corp., Santander Consumer USA and Westlake Financial Services."
+          }
+        }
+      ]
+    },
+    {
+      "id": "EXETER",
+      "ticker": "EXETER",
+      "name": "エクセター・ファイナンス",
+      "name_en": "Exeter Finance",
+      "sub": "自動車金融",
+      "sub_en": "Auto finance",
+      "sub_short": "金融",
+      "sub_short_en": "Finance",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ローン提供の提携先",
+          "text_en": "Third-party auto finance provider",
+          "source": {
+            "label": "CarMax 10-K(2026年2月期)",
+            "label_en": "CarMax 10-K (FY ended Feb 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1170010/000117001026000021/kmx-20260228.htm",
+            "level": "official",
+            "date": "2026-04-15",
+            "quote": "As of February 28, 2026, our network of third-party finance providers included Ally Financial, American Credit Acceptance, Bank of America, Capital One Auto Finance, Exeter Finance Corp., Santander Consumer USA and Westlake Financial Services."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SAN",
+      "ticker": "SAN",
+      "name": "Santander",
+      "name_en": "Santander",
+      "sub": "自動車金融",
+      "sub_en": "Auto finance",
+      "sub_short": "金融",
+      "sub_short_en": "Finance",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ローン提供の提携先",
+          "text_en": "Third-party auto finance provider",
+          "source": {
+            "label": "CarMax 10-K(2026年2月期)",
+            "label_en": "CarMax 10-K (FY ended Feb 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1170010/000117001026000021/kmx-20260228.htm",
+            "level": "official",
+            "date": "2026-04-15",
+            "quote": "As of February 28, 2026, our network of third-party finance providers included Ally Financial, American Credit Acceptance, Bank of America, Capital One Auto Finance, Exeter Finance Corp., Santander Consumer USA and Westlake Financial Services."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WESTLAKEFS",
+      "ticker": "WESTLAKEFS",
+      "name": "ウエストレイク・ファイナンシャル",
+      "name_en": "Westlake Financial",
+      "sub": "自動車金融",
+      "sub_en": "Auto finance",
+      "sub_short": "金融",
+      "sub_short_en": "Finance",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ローン提供の提携先",
+          "text_en": "Third-party auto finance provider",
+          "source": {
+            "label": "CarMax 10-K(2026年2月期)",
+            "label_en": "CarMax 10-K (FY ended Feb 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1170010/000117001026000021/kmx-20260228.htm",
+            "level": "official",
+            "date": "2026-04-15",
+            "quote": "As of February 28, 2026, our network of third-party finance providers included Ally Financial, American Credit Acceptance, Bank of America, Capital One Auto Finance, Exeter Finance Corp., Santander Consumer USA and Westlake Financial Services."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BAC",
+      "ticker": "BAC",
+      "name": "バンク・オブ・アメリカ",
+      "name_en": "Bank of America",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の幹事行",
+          "text_en": "Administrative agent on its credit agreement",
+          "source": {
+            "label": "CarMax 10-K(2026年2月期)",
+            "label_en": "CarMax 10-K (FY ended Feb 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1170010/000117001026000021/kmx-20260228.htm",
+            "level": "official",
+            "date": "2026-04-15",
+            "quote": "Restated Credit Agreement, dated as of June 21, 2023, among CarMax Auto Superstores, Inc., CarMax, Inc., certain subsidiaries of CarMax named therein, Bank of America, N.A., as a lender and as administrative agent, and the other lending institutions named therein, filed as Exhibit"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

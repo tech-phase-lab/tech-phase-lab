@@ -36,7 +36,7 @@ new Function('require', 'module', 'exports', 'window', compiled)(id => {
   if (id === '../research-tool-shell') return { default: ({ children }) => children };
   if (id === '../use-research-language') return { useResearchLanguage: () => ['ja', () => {}] };
   if (id === '@/lib/research/member-recovery') return { recoverMember: () => { recoveryCalls++; return new Promise(() => {}); } };
-  if (id === '../identity-provider') return { useIdentityRefresh: () => async () => {} };
+  if (id === '../identity-provider') return { useIdentityRefresh: () => async () => {}, useIdentityWordingReady: () => true };
   if (id === './preview-controls') return { default: () => null };
   if (id === './account-view') return { default: () => null };
   if (id === './account-data') return { prefetchAccountData() {} };

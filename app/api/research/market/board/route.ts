@@ -1,4 +1,4 @@
-import { isMarketChartSymbol, loadBoard, marketDataConfigured } from "@/lib/research/market-data";
+import { isMarketChartSymbol, loadBoardWithState, marketDataConfigured } from "@/lib/research/market-data";
 export const dynamic = "force-dynamic";
 export const maxDuration = 30;
 /** One quote per requested market symbol (ETFs, forex, crypto, metals). A symbol the provider cannot serve is absent from the answer, never an error. */
@@ -9,6 +9,8 @@ export async function GET(request: Request) {
   const fast = new URL(request.url).searchParams.get("fast") === "1";
   if (!ids.length || ids.length > (fast ? 4 : 24) || !ids.every(isMarketChartSymbol)) return Response.json({ ok: false, error: "bad-request" }, { status: 400 });
   try {
-    return Response.json({ ok: true, items: await loadBoard(ids, fast) }, { headers: { "Cache-Control": fast ? "public, s-maxage=10, stale-while-revalidate=5" : "public, s-maxage=30, stale-while-revalidate=30" } });
+    const { items, stale } = await loadBoardWithState(ids, fast);
+    // An answer holding an earlier slot's copy (its slot is being read) is kept by the shared cache one second only.
+    return Response.json({ ok: true, items }, { headers: { "Cache-Control": stale ? "public, s-maxage=1" : fast ? "public, s-maxage=10, stale-while-revalidate=5" : "public, s-maxage=30, stale-while-revalidate=30", "X-Quote-Stale": String(stale) } });
   } catch { return Response.json({ ok: false, error: "unavailable" }, { status: 503 }); }
 }

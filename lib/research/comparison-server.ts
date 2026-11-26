@@ -5,16 +5,17 @@ import providers from "./providers.json";
 import { COMPARISON_EXCLUSIONS, comparableEntries, comparisonExclusion, tickersByCik } from "./comparison-exclusions";
 import { parseSecDirectory } from "./stock-directory";
 import { emptyFinancials } from "./comparison";
-import { prepareComparisonAnalysis, currentComparisonAnalysis } from "./comparison-analysis";
+import { prepareComparisonAnalysis, currentComparisonAnalysis, preparePreRevenueAnalysis } from "./comparison-analysis";
 import { appendEquityItem, appendFilingFinancialItems } from "./comparison-analysis";
 import { loadSecComparison } from "./comparison-loader";
 import { loadMarketInputs, loadTwelveComparisonState } from "./twelve-data-collector";
-import { scheduleFill } from "./twelve-store";
+import { releaseStatements } from "./twelve-store";
 import { freshEnough } from "./fresh-enough";
 import { buildSecMarketEvidence } from "./sec-market-evidence";
 import { appendMarketItems } from "./twelve-data-financials";
-import { comparisonScores, hasRecentQuarter } from "./comparison-scorecard";
+import { comparisonScores, hasRecentBalance, hasRecentQuarter } from "./comparison-scorecard";
 import { fillFromProvider } from "./comparison-fill";
+import { carryWithholding } from "./comparison-fill";
 import type { Financials } from "./comparison";
 export async function secText(url: string, limit: number) {
   const response = await fetch(url, { cache: "no-store", headers: { Accept: "application/json", "User-Agent": process.env.RESEARCH_USER_AGENT || "TechPhaseResearch/1.0 research-preview" }, signal: AbortSignal.timeout(12_000) });
@@ -56,13 +57,12 @@ export async function secCik(ticker: string): Promise<string | null> {
  * the market factors. A company the SEC cannot serve (foreign 20-F filers, missing quarter) falls back to the provider's statements.
  * A missing item stays "—": it is never scored as zero. */
 export async function loadComparisonFinancials(ticker: string) {
-  // Whatever the provider's store lacks for this company is filled after the answer is sent (statistics always; statements only when this
-  // answer had to ask for them). The answer itself never waits for it.
-  const wants = { statistics: true, statements: false };
-  try { return await loadFinancials(ticker, wants); } finally { scheduleFill(ticker, wants); }
+  // Only shared stores are read here (owner, Nov 26: the provider is never called from a user's request, so its cost never grows with users
+  // or page views). Whatever the store lacks is filled by the background job (comparison-warm.ts) in the company's own minute of the day.
+  return loadFinancials(ticker);
 }
 
-async function loadFinancials(ticker: string, wants: { statements: boolean }) {
+async function loadFinancials(ticker: string) {
   // The price inputs (stored statistics, the price series) are read beside the filing, not after it (speed, owner Nov 18).
   const market = loadMarketInputs(ticker);
   market.catch(() => undefined);
@@ -74,25 +74,34 @@ async function loadFinancials(ticker: string, wants: { statements: boolean }) {
   const ifrs = sec.quarterRevenue?.basis === "ifrs-full";
   if (ifrs) {
     const { data: twelve } = await loadTwelveComparisonState(ticker);
-    if (twelve && (hasRecentQuarter(twelve.financials, now) || !hasRecentQuarter(sec, now))) return twelve.financials;
-    if (!twelve) wants.statements = true;
+    if (twelve && (hasRecentQuarter(twelve.financials, now) || !hasRecentQuarter(sec, now))) return withheld(twelve.financials, sec, now);
   }
-  // A newer earnings release is out but its quarterly report is not filed yet: the provider's statements are used when they already have
-  // the newer quarter; otherwise the filing's previous quarter is shown, said on screen, rather than leaving every figure empty (owner, Nov 14).
-  const pendingRelease = sec.status === "ready" && !hasRecentQuarter(sec, now) && onlyReleasePending(sec)
-    && hasRecentQuarter({ ...sec, dataWarnings: [] }, now);
-  if (pendingRelease) {
-    const { data: twelve } = await loadTwelveComparisonState(ticker);
-    if (!twelve) wants.statements = true;
-    if (twelve && twelve.financials.quarterRevenue && Date.parse(twelve.financials.quarterRevenue.end) > Date.parse(sec.quarterRevenue!.end) + 10 * 86400000) return twelve.financials;
-    const shown = { ...sec, dataWarnings: [], previousQuarterShown: sec.dataWarnings!.map(w => /^(\d{4}-\d{2}-\d{2})/.exec(w.ja)?.[1]).find(Boolean) ?? "" };
-    return completeFromProvider(ticker, await withMarketFactors(ticker, shown, now, market), now, wants, twelve?.financials ?? null);
+  // A newer earnings release is out but its quarterly report is not filed yet (NVDA, Nov 26: released Nov 17, no 10-Q nine days later):
+  // the provider's statements read after the release (the background job reads them once the release is out, comparison-warm.ts), or the
+  // weekly copy, are used when they have the newer quarter (revenue, operating and net income, EPS); otherwise the filing's previous quarter
+  // is shown. No sentence about the pending report is shown in either case (owner, Nov 26).
+  const released = releaseDay(sec, now);
+  if (released) {
+    const [weekly, afterRelease] = await Promise.all([loadTwelveComparisonState(ticker).then(r => r.data),
+      releaseStatements(ticker, released).then(stored => stored ? loadTwelveComparisonState(ticker, stored).then(r => r.data) : null)]);
+    const newer = [afterRelease, weekly].find(t => t?.financials.quarterRevenue && Date.parse(t.financials.quarterRevenue.end) > Date.parse(sec.quarterRevenue!.end) + 10 * 86400000);
+    if (newer) {
+      // The provider's statistics can still describe the old quarter for a few days (twelve-data-factors.ts reads them only for the same
+      // quarter): financial strength then comes from the filing's balance sheet, said on screen as the previous quarter's (reviewer, Nov 26).
+      const own = comparisonScores(newer.financials, now).find(s => s.id === "financial")?.value;
+      if (own != null || !sec.balance || comparisonScores({ ...sec, dataWarnings: [] }, now).find(s => s.id === "financial")?.value == null) return withheld(newer.financials, sec, now);
+      return withheld({ ...newer.financials, balance: sec.balance, balanceFromQuarter: sec.balance.end,
+        supplemented: [...new Set([...(newer.financials.supplemented ?? []), "financial"])], supplementedFromQuarter: sec.balance.end }, sec, now);
+    }
+    return completeFromProvider(ticker, await withMarketFactors(ticker, { ...sec, dataWarnings: [] }, now, market), now, weekly?.financials ?? null);
   }
-  if (sec.status === "ready" && hasRecentQuarter(sec, now)) return completeFromProvider(ticker, await withMarketFactors(ticker, sec, now, market), now, wants);
+  if (sec.status === "ready" && hasRecentQuarter(sec, now)) return completeFromProvider(ticker, await withMarketFactors(ticker, sec, now, market), now);
+  // No revenue yet (owner, Nov 26): the filing's latest balance sheet and the share price, never the provider's statements (no sales either).
+  if (hasRecentBalance(sec, now)) return withMarketFactors(ticker, { ...sec, preparedAnalysis: sec.preparedAnalysis ?? preparePreRevenueAnalysis(sec, now) }, now, market);
   const { data: twelve } = await loadTwelveComparisonState(ticker);
   // No current figures from either source: the share price still gives momentum (the radar showed no point at all for such a company).
-  if (!twelve) { wants.statements = true; return withMarketFactors(ticker, sec, now, market); }
-  const base = twelve.financials;
+  if (!twelve) return withMarketFactors(ticker, sec, now, market);
+  const base = withheld(twelve.financials, sec, now);
   if (twelve.scores.find(score => score.id === "financial")?.value != null) return base;
   // Balance-sheet figures are only borrowed when they describe the same quarter as Twelve Data's. The balance they score becomes a strength
   // or weakness point in the same words as for a filing (before, it scored the factor but never became a point).
@@ -137,6 +146,18 @@ function onlyReleasePending(c: Financials) {
   const warnings = c.dataWarnings ?? [];
   return warnings.length > 0 && warnings.every(w => w.en.includes("earnings release"));
 }
+/** The day of a newer earnings release whose quarterly report is not filed yet (the loader's warning, comparison-loader.ts), when the filing's
+ *  previous quarter is otherwise current; null otherwise. */
+export function releaseDay(sec: Financials, now = Date.now()): string | null {
+  if (sec.status !== "ready" || hasRecentQuarter(sec, now) || !onlyReleasePending(sec) || !hasRecentQuarter({ ...sec, dataWarnings: [] }, now)) return null;
+  return sec.dataWarnings!.map(w => /^(\d{4}-\d{2}-\d{2})/.exec(w.ja)?.[1]).find(Boolean) ?? null;
+}
+/** For the background job: the pending release of a company (above) and the end of the quarter its filing has, from the cached filing. */
+export async function pendingRelease(ticker: string, now = Date.now()): Promise<{ day: string; filedEnd: string } | null> {
+  const sec = await loadSecFinancials(ticker);
+  const day = releaseDay(sec, now);
+  return day && sec.quarterRevenue ? { day, filedEnd: sec.quarterRevenue.end } : null;
+}
 
 /** The price series, forward P/E and price-to-sales from the provider beside the filing's figures (no change to the filing's own numbers). */
 async function withMarketFactors(ticker: string, sec: Financials, start: number, inputs?: ReturnType<typeof loadMarketInputs>): Promise<Financials> {
@@ -151,19 +172,27 @@ async function withMarketFactors(ticker: string, sec: Financials, start: number,
   return rebuildAnalysis({ ...sec, twelveData: evidence }, now);
 }
 
+/** The provider's statements with the filing's deliberate withholding carried over (comparison-fill.ts carryWithholding), and the points
+ *  rebuilt when anything was withheld, so no bullet repeats a withheld figure. */
+function withheld(provider: Financials, sec: Financials, now: number): Financials {
+  const out = carryWithholding(provider, sec);
+  return out === provider ? provider : rebuildAnalysis(out, now);
+}
 function rebuildAnalysis(c: Financials, now: number): Financials {
-  const prepared = prepareComparisonAnalysis(c, now);
-  if (prepared && c.twelveData) appendMarketItems(prepared, c.twelveData, c.quarterRevenue!.end, c.quarterRevenue!.unit, now);
+  const prepared = c.preRevenue ? preparePreRevenueAnalysis(c, now) : prepareComparisonAnalysis(c, now);
+  const period = c.quarterRevenue ?? (c.preRevenue && c.balance ? { end: c.balance.end, unit: c.balance.cash?.unit ?? "USD" } : null);
+  if (prepared && c.twelveData && period) appendMarketItems(prepared, c.twelveData, period.end, period.unit, now);
   return { ...c, preparedAnalysis: prepared };
 }
 
 /** Any factor still empty is taken from the provider's statements for the same quarter (read only when something is missing). */
-async function completeFromProvider(ticker: string, c: Financials, now: number, wants: { statements: boolean }, provider?: Financials | null): Promise<Financials> {
-  const scores = comparisonScores(c, now);
-  if (scores.every(score => score.value !== null)) return c;
+async function completeFromProvider(ticker: string, c: Financials, now: number, provider?: Financials | null): Promise<Financials> {
+  // Valuation comes from Treasure Hunt's list (applyValueCheck), never from the provider.
+  const scores = comparisonScores(c, now).filter(score => score.id !== "valuation");
+  // A fiscal year's cash flow or margins standing in for the quarter is replaced by the provider's same quarter when it has one.
+  if (scores.every(score => score.value !== null) && !c.fcfPeriod && !c.marginPeriod) return c;
   const other = provider === undefined ? (await loadTwelveComparisonState(ticker)).data?.financials : provider;
-  // Statements cost 200 credits: asked for (in the background) only when a figure from the statements is missing, not for a market factor.
-  if (!other) { wants.statements ||= scores.some(s => (STATEMENT_FACTORS as readonly string[]).includes(s.id) && s.value === null); return c; }
+  if (!other) return c;
   const ownFinancial = scores.find(score => score.id === "financial")?.value !== null;
   const filled = fillFromProvider({ ...c, supplementedFinancialAllowed: ownFinancial ? false : undefined }, other, now);
   return filled === c || !filled.supplemented?.length ? c : rebuildAnalysis(filled, now);
@@ -190,6 +219,7 @@ export async function statementsNeeded(ticker: string): Promise<{ needs: boolean
   if (!comparisonCatalog.some(c => c.ticker === ticker) && (await excludedEntry(ticker)).excluded) return { needs: false, checkedAt };
   const sec = await loadSecFinancials(ticker);
   if (sec.status === "unavailable") throw new Error("sec-unavailable");
+  if (hasRecentBalance(sec, now)) return { needs: false, checkedAt }; // no revenue yet: the provider has no sales either
   if (sec.quarterRevenue?.basis === "ifrs-full" || sec.status !== "ready" || !hasRecentQuarter(sec, now)) return { needs: true, checkedAt };
   const evidence = buildSecMarketEvidence(sec, undefined, undefined, now);
   const scores = comparisonScores(evidence ? { ...sec, twelveData: evidence } : sec, now);

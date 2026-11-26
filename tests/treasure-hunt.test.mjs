@@ -39,7 +39,7 @@ test("names: トレジャーハント / Treasure Hunt and Whale Tracks everywher
 
 test("names: production keeps its internal names (switches, API, monitor route, Python module)", () => {
   assert.match(read("../app/research/treasure-hunt/screen.tsx"), /fetch\("\/api\/research\/value-check"/);
-  assert.match(read("../lib/research/value-check-server.ts"), /\/value-check`/);
+  assert.match(read("../lib/research/value-check-server.ts"), /readMonitor\("\/value-check", 1_500_000/);
   assert.match(read("../lib/research/value-check.ts"), /NEXT_PUBLIC_VALUE_CHECK_ENABLED: process\.env\.NEXT_PUBLIC_VALUE_CHECK_ENABLED/);
   assert.match(read("../lib/research/whale-moves.ts"), /NEXT_PUBLIC_WHALE_MOVES_ENABLED: process\.env\.NEXT_PUBLIC_WHALE_MOVES_ENABLED/);
   const service = read("../scripts/research/service.py");
@@ -346,15 +346,18 @@ test("Treasure Hunt opens with the day's ranking drawn by the server: no waiting
 test("Treasure Hunt: one shared copy of the daily ranking (stale-while-revalidate), read only after the server confirms the member", () => {
   const server = read("../lib/research/value-check-server.ts");
   assert.match(server, /^import "server-only";/);
-  assert.match(server, /unstable_cache\(readShared, \["value-check-snapshot-v1"\], \{ revalidate: VALUE_SNAPSHOT_REVALIDATE_SECONDS \}\)/);
-  assert.match(server, /readShared\.toString = \(\) => "value-check-snapshot-v1"/, "a fixed key keeps the copy across deployments");
+  assert.match(server, /unstable_cache\(readShared, \["value-check-snapshot-v3"\], \{ revalidate: VALUE_SNAPSHOT_REVALIDATE_SECONDS \}\)/);
+  assert.match(server, /readShared\.toString = \(\) => "value-check-snapshot-v3"/, "a fixed key keeps the copy across deployments");
   assert.match(server, /VALUE_SNAPSHOT_REVALIDATE_SECONDS = 600;/);
   const route = read("../app/api/research/value-check/route.ts");
-  assert.match(route, /if \(access !== 200\) return fail[^\n]*\n\s*return Response\.json\(await loadValueSnapshot\(\), \{ headers \}\);/);
+  assert.match(route, /if \(access !== 200\) return fail[^\n]*\n\s*return Response\.json\(await loadValueRanking\(\), \{ headers \}\);/);
   assert.doesNotMatch(route, /fetch\(|RESEARCH_MONITOR/, "no per-request read of the monitor");
   assert.match(route, /"Cache-Control": "private, no-store"/, "PRO data is never kept by a shared cache in front of the site");
   const page = read("../app/research/treasure-hunt/page.tsx");
-  assert.match(page, /if \(member && valueCheckAccess\(member, valueCheckEnabled\(\)\) === 200\) \{\n\s*const ready = loadValueSnapshot\(\)/, "PRO data only for a member the server confirmed");
+  assert.match(page, /if \(member && valueCheckAccess\(member, valueCheckEnabled\(\)\) === 200\) \{\n\s*const ready = loadValueRanking\(\)/, "PRO data only for a member the server confirmed");
+  // The comparison's list (values) stays out of Treasure Hunt's own payload.
+  assert.match(server, /const \{ values, \.\.\.ranking \} = await loadRanking\(\);/);
+  assert.doesNotMatch(server.slice(server.indexOf("export async function loadValueRanking")), /^[^\n]*sharedValues/m, "the ranking never waits on the comparison's list");
   assert.match(page, /notFound\(\)/);
   assert.match(page, /<TreasureHuntScreen initial=\{initial\} \/>/);
   // The owner's accounts always get it (AGENTS.md, operator access), with the switch off too.

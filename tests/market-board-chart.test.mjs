@@ -130,7 +130,7 @@ test("a period switch keeps the chart on the screen with a small spinner, and a 
   assert.match(store, /shown: own \?\? fallback \?\? null/);
   assert.match(store, /busy: !own/);
   // Both pages use it; the stock page does not read a period it already has, and a switch does not cut a read off.
-  for (const page of [detail, board]) { assert.match(page, /useChartStore\(key\)/); assert.match(page, /busy=\{store\.busy\}/); }
+  for (const page of [detail, board]) { assert.match(page, /useChartStore\(key[,)]/); assert.match(page, /busy=\{store\.busy\}/); }
   assert.match(detail, /if \(fresh\(key\) \|\| reads\.current\.has\(key\)\) return;/);
   assert.doesNotMatch(detail, /setChart\(/);
   assert.match(board, /let have = fresh\(key\)/);

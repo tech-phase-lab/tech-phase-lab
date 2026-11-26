@@ -153,7 +153,7 @@
       "row": 0,
       "relations": [
         {
-          "type": "down",
+          "type": "up",
           "text": "海外で最大の広告顧客と記載",
           "text_en": "Names AppLovin its top overseas advertising customer",
           "source": {

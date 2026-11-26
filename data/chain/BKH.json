@@ -1,0 +1,182 @@
+{
+  "root": {
+    "ticker": "BKH",
+    "name": "ブライト・ホライズン(旧ブラックヒルズ)",
+    "cik": 1130464,
+    "name_en": "Bright Horizon (formerly Black Hills)"
+  },
+  "rows": [
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "買収・売却",
+      "en": "Acquisitions & sales"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "NWE",
+      "ticker": "NWE",
+      "name": "ノースウエスタン・エナジー",
+      "name_en": "NorthWestern Energy Group",
+      "sub": "電力・ガス",
+      "sub_en": "Electric & gas utility",
+      "sub_short": "公益",
+      "sub_short_en": "Utility",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2026年11月に全株式交換で合併",
+          "text_en": "Completed an all-stock merger in November 2026",
+          "source": {
+            "label": "Bright Horizon (formerly Black Hills) 8-K(2026年11月)",
+            "label_en": "Bright Horizon (formerly Black Hills) 8-K (November 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1130464/000110465926127601/tm2629827d1_8k.htm",
+            "level": "official",
+            "date": "2026-11-16",
+            "quote": "November 13, 2026 (the \"Closing Date\"), Bright Horizon Energy Corporation, a South Dakota corporation formerly known as Black Hills Corporation (\"Bright Horizon\" or the \"Company\"), completed its previously announced all-stock merger with NorthWestern Energy Group, Inc., a Delaware corporation (\"NorthWestern\"), pursuant to the Agreement and Plan of Merger, dated as of August 18, 2025 (the \"Merger Agreement\"), by and among the Company, NorthWestern, and River Merger Sub"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BAC",
+      "ticker": "BAC",
+      "name": "バンク・オブ・アメリカ",
+      "name_en": "Bank of America",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "株式売出しの販売代理人",
+          "text_en": "Sales agent for its share offering program",
+          "source": {
+            "label": "Bright Horizon (formerly Black Hills) 8-K(2025年5月)",
+            "label_en": "Bright Horizon (formerly Black Hills) 8-K (May 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1130464/000110465925046204/tm2514279d1_8k.htm",
+            "level": "official",
+            "date": "2025-05-08",
+            "quote": "on June 16, 2023, Black Hills Corporation, a South Dakota corporation (the \"Company\"), entered into an Equity Distribution Sales Agreement (the \"Existing Sales Agreement\"), by and among (a) the Company, (b) each of Bank of Montreal, Bank of America, N.A., MUFG Securities EMEA plc, Mizuho Markets Americas LLC, and Royal Bank of Canada (each a \"Forward Purchaser\" and together, the \"Forward Purchasers\"), (c) each of BMO Capital Markets Corp., BofA Securities, Inc., MUFG"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BMO",
+      "ticker": "BMO",
+      "name": "BMOフィナンシャル・グループ",
+      "name_en": "BMO Financial Group",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "株式売出しの販売代理人",
+          "text_en": "Sales agent for its share offering program",
+          "source": {
+            "label": "Bright Horizon (formerly Black Hills) 8-K(2025年5月)",
+            "label_en": "Bright Horizon (formerly Black Hills) 8-K (May 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1130464/000110465925046204/tm2514279d1_8k.htm",
+            "level": "official",
+            "date": "2025-05-08",
+            "quote": "As previously disclosed, on June 16, 2023, Black Hills Corporation, a South Dakota corporation (the \"Company\"), entered into an Equity Distribution Sales Agreement (the \"Existing Sales Agreement\"), by and among (a) the Company, (b) each of Bank of Montreal, Bank of America, N.A., MUFG Securities EMEA plc, Mizuho Markets Americas LLC, and Royal Bank of Canada (each a \"Forward Purchaser\" and together, the \"Forward Purchasers\"), (c) each of BMO Capital Markets Corp., BofA"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RY",
+      "ticker": "RY",
+      "name": "Royal Bank of Canada",
+      "name_en": "Royal Bank of Canada",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "株式売出しの販売代理人",
+          "text_en": "Sales agent for its share offering program",
+          "source": {
+            "label": "Bright Horizon (formerly Black Hills) 8-K(2025年5月)",
+            "label_en": "Bright Horizon (formerly Black Hills) 8-K (May 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1130464/000110465925046204/tm2514279d1_8k.htm",
+            "level": "official",
+            "date": "2025-05-08",
+            "quote": "entered into an Equity Distribution Sales Agreement (the \"Existing Sales Agreement\"), by and among (a) the Company, (b) each of Bank of Montreal, Bank of America, N.A., MUFG Securities EMEA plc, Mizuho Markets Americas LLC, and Royal Bank of Canada (each a \"Forward Purchaser\" and together, the \"Forward Purchasers\"), (c) each of BMO Capital Markets Corp., BofA Securities, Inc., MUFG Securities Americas Inc., Mizuho Securities USA LLC, and RBC Capital Markets, LLC"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MUFG",
+      "ticker": "MUFG",
+      "name": "三菱UFJフィナンシャル・グループ",
+      "name_en": "Mitsubishi UFJ Financial Group (MUFG)",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "株式売出しの販売代理人",
+          "text_en": "Sales agent for its share offering program",
+          "source": {
+            "label": "Bright Horizon (formerly Black Hills) 8-K(2025年5月)",
+            "label_en": "Bright Horizon (formerly Black Hills) 8-K (May 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1130464/000110465925046204/tm2514279d1_8k.htm",
+            "level": "official",
+            "date": "2025-05-08",
+            "quote": "Black Hills Corporation, a South Dakota corporation (the \"Company\"), entered into an Equity Distribution Sales Agreement (the \"Existing Sales Agreement\"), by and among (a) the Company, (b) each of Bank of Montreal, Bank of America, N.A., MUFG Securities EMEA plc, Mizuho Markets Americas LLC, and Royal Bank of Canada (each a \"Forward Purchaser\" and together, the \"Forward Purchasers\"), (c) each of BMO Capital Markets Corp., BofA Securities, Inc., MUFG Securities Americas"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MFG",
+      "ticker": "MFG",
+      "name": "みずほフィナンシャルグループ",
+      "name_en": "Mizuho Financial Group",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "株式売出しの販売代理人",
+          "text_en": "Sales agent for its share offering program",
+          "source": {
+            "label": "Bright Horizon (formerly Black Hills) 8-K(2025年5月)",
+            "label_en": "Bright Horizon (formerly Black Hills) 8-K (May 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1130464/000110465925046204/tm2514279d1_8k.htm",
+            "level": "official",
+            "date": "2025-05-08",
+            "quote": "a South Dakota corporation (the \"Company\"), entered into an Equity Distribution Sales Agreement (the \"Existing Sales Agreement\"), by and among (a) the Company, (b) each of Bank of Montreal, Bank of America, N.A., MUFG Securities EMEA plc, Mizuho Markets Americas LLC, and Royal Bank of Canada (each a \"Forward Purchaser\" and together, the \"Forward Purchasers\"), (c) each of BMO Capital Markets Corp., BofA Securities, Inc., MUFG Securities Americas Inc., Mizuho Securities USA"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -72,12 +72,12 @@ test("the 目標株価 page shows one line under its title instead of the panel'
   for (const lang of ["ja", "en"]) {
     const home = renderToStaticMarkup(React.createElement(Panel, { lang }));
     const page = renderToStaticMarkup(React.createElement(Panel, { lang, heading: false }));
-    for (const text of ["ANALYST", lang === "ja" ? "目標株価の変更" : "Price target changes", lang === "ja" ? "過去1週間" : "Past week"]) {
+    for (const text of ["PRICE TARGETS", lang === "ja" ? "目標株価の変更" : "Price target changes"]) {
       assert.ok(home.includes(text), text);
       assert.ok(!page.includes(text), text);
     }
   }
-  const source = fs.readFileSync(new URL("../app/research/price-targets/page.tsx", import.meta.url), "utf8");
+  const source = fs.readFileSync(new URL("../app/research/price-targets/screen.tsx", import.meta.url), "utf8");
   assert.match(source, /description=\{lang === "ja" \? "アナリストによる変更・過去1週間" : "Analyst changes · past week"\}/);
   assert.match(source, /<PriceTargetsPanel [^>]*heading=\{false\}/);
   assert.doesNotMatch(fs.readFileSync(new URL("../app/research/news/news-feed.tsx", import.meta.url), "utf8"), /heading=/);
@@ -128,4 +128,11 @@ test("the notice page keeps its query through the app's checks and navigation, a
   const plain = [];
   openPushPath("/research/price-targets", { pathname: "/research/price-targets", hash: "" }, { push: href => plain.push(href), setHash: () => {} });
   assert.deepEqual(plain, [], "a real notice for the page already shown still does not reload it");
+});
+
+test("home price targets: no 過去1週間 and no 取得日時; the footer keeps only ● 新着を自動表示 (owner, Nov 27)", () => {
+  const source = fs.readFileSync(new URL("../app/research/price-targets-panel.tsx", import.meta.url), "utf8");
+  assert.doesNotMatch(source, /過去1週間|表示データの取得日時/);
+  assert.match(source, /className=\{styles\.liveDot\}/);
+  assert.match(source, /新着を自動表示/);
 });

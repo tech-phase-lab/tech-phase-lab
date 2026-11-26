@@ -14,6 +14,7 @@ await loadBindings();
 let source = read("../app/research/compare/comparison-visuals.tsx")
   .replace('import type { ComparisonResult } from "@/lib/research/comparison";', "").replace('"use client";', "")
   .replace('from "@/lib/research/comparison-scorecard";', `from ${JSON.stringify(new URL("../lib/research/comparison-scorecard.ts", import.meta.url).href)};`)
+  .replace('from "@/lib/research/comparison-value";', `from ${JSON.stringify(new URL("../lib/research/comparison-value.ts", import.meta.url).href)};`)
   .replace('import styles from "./styles.module.css";', 'const styles = new Proxy({}, { get: (_, key) => String(key) });')
   .replace(/ComparisonResult\["companies"\]\[number\]/g, "any").replace(/ComparisonResult\["companies"\]/g, "any[]");
 const compiled = await transform(`import React from ${JSON.stringify(pathToFileURL(require.resolve("react")).href)};\n${source}`, { filename: "v.tsx", jsc: { parser: { syntax: "typescript", tsx: true }, transform: { react: { runtime: "classic" } }, target: "es2022" }, module: { type: "es6" } });
@@ -65,7 +66,7 @@ test("the snapshot gives each company a bar of the same width track; only the hi
   assert.equal((html.match(/class="scoreTrack"/g) ?? []).length, 14);
   assert.equal((html.match(/data-winner="true"/g) ?? []).length, 7, "one winner for each of the seven factors");
   assert.match(html, /grid-template-columns:repeat\(2,minmax\(0,1fr\)\)/);
-  assert.match(html, /未取得・評価保留（0点ではありません）/);
+  assert.doesNotMatch(html, /0点ではありません/, "owner, Nov 27: the 「— 未取得…」 legend is removed");
 });
 
 test("each company card keeps its strengths, weaknesses and status; every item is exactly one line", () => {
@@ -92,7 +93,7 @@ test("Nov 15: strengths and weaknesses use short one-line forms, and the empty c
   const loss = structuredClone(sample.companies[0]);
   loss.preparedAnalysis.items = [{ id: "operating-margin", kind: "weakness", short: { ja: "営業赤字（利益率 -3509.7%）", en: "Operating loss (-3509.7% margin)" }, detail: { ja: "", en: "" } }];
   const html = renderToStaticMarkup(React.createElement(visuals.CompanyScoreCard, { company: loss, lang: "ja", now, colorIndex: 0 }));
-  assert.match(html, /<li title="営業赤字 -3509.7%" data-fit="normal">営業赤字 -3509.7%<\/li>/);
+  assert.match(html, /<li title="営業赤字 -3509.7%" data-fit="normal" data-lines="1">営業赤字 -3509.7%<\/li>/);
   for (const file of ["../lib/research/comparison-analysis.ts", "../lib/research/comparison-scorecard.ts"]) assert.doesNotMatch(read(file), /営業赤字（利益率|Operating loss \(/, file);
   // Every bullet the generators can write fits the 184px column at 360px (12px type, 11px when long: at most about 13 full-width characters).
   const width = item => [...item].reduce((w, ch) => w + (ch.charCodeAt(0) > 0x2e80 ? 1 : 0.58), 0);

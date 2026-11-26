@@ -1,0 +1,160 @@
+{
+  "root": {
+    "ticker": "UDR",
+    "name": "UDR",
+    "cik": 74208,
+    "name_en": "UDR"
+  },
+  "rows": [
+    {
+      "ja": "供給元・取引先",
+      "en": "Suppliers & providers"
+    },
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "買収・売却",
+      "en": "Acquisitions & sales"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "REALPAGE",
+      "ticker": "REALPAGE",
+      "name": "リアルページ",
+      "name_en": "RealPage",
+      "sub": "賃料管理ソフト",
+      "sub_en": "Rent software",
+      "sub_short": "ソフト",
+      "sub_short_en": "Software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "賃料管理ソフトの提供元",
+          "text_en": "Revenue management software vendor",
+          "source": {
+            "label": "UDR 10-K(2025年度)",
+            "label_en": "UDR 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/74208/000007420826000013/udr-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "For example, we have been named as a defendant in a number of cases alleging antitrust violations by RealPage, Inc., a vendor providing revenue management software products, and various owners or managers of multifamily housing, which cases have been consolidated in the United States Court for the Middle District of Tennessee, and cases with similar allegations that have been filed by the District of Columbia, the State of Maryland and the State of Washington."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ESS",
+      "ticker": "ESS",
+      "name": "エセックス・プロパティ・トラスト",
+      "name_en": "Essex Property Trust",
+      "sub": "集合住宅REIT",
+      "sub_en": "Apartment REIT",
+      "sub_short": "REIT",
+      "sub_short_en": "REIT",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "集合住宅の売り手",
+          "text_en": "Sold it apartment communities",
+          "source": {
+            "label": "UDR 10-K(2025年度)",
+            "label_en": "UDR 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/74208/000007420826000013/udr-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Agreement of Purchase and Sale dated as of August 13, 2004, by and between United Dominion Realty, L.P., a Delaware limited partnership, as Buyer, and Essex The Crest, L.P., a California limited partnership, Essex El Encanto Apartments, L.P., a California limited partnership, Essex Hunt Club Apartments, L.P., a California limited partnership, and the other signatories named as Sellers therein. ​ Exhibit"
+          }
+        }
+      ]
+    },
+    {
+      "id": "HOMEPROPERTIES",
+      "ticker": "HOMEPROPERTIES",
+      "name": "ホーム・プロパティーズ",
+      "name_en": "Home Properties",
+      "sub": "集合住宅REIT",
+      "sub_en": "Apartment REIT",
+      "sub_short": "REIT",
+      "sub_short_en": "REIT",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2015年に物件を取得",
+          "text_en": "Bought properties from it in 2015",
+          "source": {
+            "label": "UDR 10-K(2025年度)",
+            "label_en": "UDR 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/74208/000007420826000013/udr-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Amendment Agreement, dated as of August 27, 2015, by and among UDR, Inc., United Dominion Realty, L.P., Home Properties, Inc., Home Properties, L.P., LSREF4 Lighthouse Acquisitions, LLC LSREF4 Lighthouse Corporate Acquisitions, LLC and LSREF4 Lighthouse Operating Acquisitions, LLC. ​ Exhibit"
+          }
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "ticker": "C",
+      "name": "シティグループ",
+      "name_en": "Citigroup",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "社債の販売代理人",
+          "text_en": "Sales agent for its notes",
+          "source": {
+            "label": "UDR 10-K(2025年度)",
+            "label_en": "UDR 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/74208/000007420826000013/udr-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Restated Distribution Agreement, dated September 1, 2011 and as amended July 29, 2014, among the Company and Citigroup Global Markets Inc., J.P. Morgan Securities LLC, Merrill Lynch, Pierce, Fenner & Smith"
+          }
+        }
+      ]
+    },
+    {
+      "id": "JPM",
+      "ticker": "JPM",
+      "name": "JPMorgan Chase",
+      "name_en": "JPMorgan Chase",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "社債の販売代理人",
+          "text_en": "Sales agent for its notes",
+          "source": {
+            "label": "UDR 10-K(2025年度)",
+            "label_en": "UDR 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/74208/000007420826000013/udr-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Restated Distribution Agreement, dated September 1, 2011 and as amended July 29, 2014, among the Company and Citigroup Global Markets Inc., J.P. Morgan Securities LLC, Merrill Lynch, Pierce, Fenner & Smith"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

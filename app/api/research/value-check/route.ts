@@ -1,6 +1,6 @@
 import { getMembership } from "@/lib/membership/server";
 import { valueCheckAccess, valueCheckEnabled } from "@/lib/research/value-check";
-import { ValueSnapshotUnavailable, loadValueSnapshot } from "@/lib/research/value-check-server";
+import { ValueSnapshotUnavailable, loadValueRanking } from "@/lib/research/value-check-server";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -14,7 +14,7 @@ export async function GET() {
     const member = await getMembership().catch(() => ({ status: "unavailable", plan: "free" }));
     const access = valueCheckAccess(member, valueCheckEnabled());
     if (access !== 200) return fail(access, access === 401 ? "sign-in" : access === 403 ? "pro-required" : access === 404 ? "not-found" : "unavailable");
-    return Response.json(await loadValueSnapshot(), { headers });
+    return Response.json(await loadValueRanking(), { headers });
   } catch (error) {
     return fail(503, error instanceof ValueSnapshotUnavailable ? error.reason : "unavailable");
   }

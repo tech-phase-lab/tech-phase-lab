@@ -1,0 +1,156 @@
+{
+  "root": {
+    "ticker": "FBNC",
+    "name": "ファースト・バンコープ",
+    "cik": 811589,
+    "name_en": "First Bancorp"
+  },
+  "rows": [
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "買収・売却",
+      "en": "Acquisitions & sales"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "GRANDSOUTH",
+      "ticker": "GRANDSOUTH",
+      "name": "グランドサウス・バンコーポレーション",
+      "name_en": "GrandSouth Bancorporation",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2023年1月に買収",
+          "text_en": "Acquired in January 2023",
+          "source": {
+            "label": "First Bancorp 10-K(2025年度)",
+            "label_en": "First Bancorp 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/811589/000081158926000051/fbnc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Acquisitions On January 1, 2023, the Company completed its acquisition of 100% of GrandSouth Bancorporation (\"GrandSouth\"), in an all-stock transaction pursuant to the Agreement and Plan of Merger and Reorganization (the \"Merger Agreement\"), dated June 21, 2022, between the Company and GrandSouth."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SELECTBANCORP",
+      "ticker": "SELECTBANCORP",
+      "name": "セレクト・バンコープ",
+      "name_en": "Select Bancorp",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "買収した銀行持株会社",
+          "text_en": "Acquired bank holding company",
+          "source": {
+            "label": "First Bancorp 10-K(2025年度)",
+            "label_en": "First Bancorp 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/811589/000081158926000051/fbnc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "The acquisition accomplished the Company's strategic initiative to expand its presence in South Carolina, specifically in the high-growth markets of the state including Greenville, Charleston and Columbia. 5 Table of Contents Recent acquisitions include the following: Name of Entity Date of Acquisition Assets Acquired GrandSouth Bancorp January, 2023 $1.2 billion Select Bancorp, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FIRSTCAROLINA",
+      "ticker": "FIRSTCAROLINA",
+      "name": "ファースト・カロライナ",
+      "name_en": "First Carolina",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2026年7月に合併で合意",
+          "text_en": "Agreed to merge in July 2026",
+          "source": {
+            "label": "First Bancorp 8-K(2026年7月)",
+            "label_en": "First Bancorp 8-K (July 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/811589/000081158926000149/fbnc-20260714.htm",
+            "level": "official",
+            "date": "2026-07-14",
+            "quote": "Under the Merger Agreement, First Carolina will merge with and into First Bancorp (the \"Merger\") and Carolina Bank will merge with and into First Bank."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CAROLINABANK",
+      "ticker": "CAROLINABANK",
+      "name": "カロライナ銀行",
+      "name_en": "Carolina Bank",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2017年3月に買収",
+          "text_en": "Acquired in March 2017",
+          "source": {
+            "label": "First Bancorp 10-K(2025年度)",
+            "label_en": "First Bancorp 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/811589/000081158926000051/fbnc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Shareholders' Equity Rabbi Trust Obligations With the acquisition of Carolina Bank in March 2017, the Company assumed a deferred compensation plan structured as a Rabbi Trust for certain members of Carolina Bank's board of directors that is fully funded by Company common stock."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FHLBA",
+      "ticker": "FHLBA",
+      "name": "アトランタ連邦住宅貸付銀行",
+      "name_en": "Federal Home Loan Bank of Atlanta",
+      "sub": "住宅金融",
+      "sub_en": "Lender",
+      "sub_short": "住宅金融",
+      "sub_short_en": "Lender",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "資金を借りる契約の相手",
+          "text_en": "Party to its advances agreement",
+          "source": {
+            "label": "First Bancorp 10-K(2025年度)",
+            "label_en": "First Bancorp 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/811589/000081158926000051/fbnc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "(*) 10.e Advances and Security Agreement with the Federal Home Loan Bank of Atlanta dated February 15, 2005 was attached as Exhibit 99(a) to the Company's Current Report on Form 8-K filed on February 22, 2005, and is incorporated herein by reference. 10.f Form of Stock Option and Performance Unit Award Agreement was filed as Exhibit 10 to the Company's Current Report on Form 8-K filed on June 23, 2008, and is incorporated herein by reference."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -204,17 +204,38 @@ def _amount(value):
     return patrol.amount(value)
 
 
-PERIOD_END = re.compile(r'(?:quarter|three months|period|3Q|2Q|1Q|4Q)\s+ended\s+(?:on\s+)?((?:January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2},\s+20\d\d)', re.I)
+MONTH_DATE = re.compile(r'(January|February|March|April|May|June|July|August|September|October|November|December)\s+(\d{1,2}),\s+(20\d\d)')
+ENDED = re.compile(r'\b(?:ended|ending|as of)\b', re.I)
 
 
-def period_end(text):
-    m = PERIOD_END.search(text or '')
-    if not m:
-        return None
-    try:
-        return datetime.strptime(re.sub(r'\s+', ' ', m[1]), '%B %d, %Y').date().isoformat()
-    except ValueError:
-        return None
+def period_end(text, after=None, before=None):
+    """The quarter's end date as the release's tables state it: of the dates written right after "ended" (column headers, "the quarter
+    ended …"), the one between the previous quarter's end and the release date that the release repeats most. None when none fits."""
+    counts = {}
+    for m in ENDED.finditer(text or ''):
+        # Only a full date right after the word ("Three Months Ended August 1, 2026"); a header that lists several month-days before one
+        # year ("Ended October 25, October 26, … 2026 2025") is ambiguous and never read.
+        window = text[m.end():m.end() + 60].lstrip()
+        d = MONTH_DATE.match(window)
+        if not d:
+            continue
+        try:
+            day = datetime.strptime(f'{d[1]} {d[2]} {d[3]}', '%B %d %Y').date().isoformat()
+        except ValueError:
+            continue
+        if (after is None or day > after) and (before is None or day < before):
+            counts[day] = counts.get(day, 0) + 1
+    if not counts:  # a preliminary-results 6-K (SK hynix): "Current Period (Third quarter(1) of 2026)" and "(1) ... from July 1 to September 30"
+        m = re.search(r'Current Period \((?:First|Second|Third|Fourth) quarter\(1\) of (20\d\d)\).{0,1500}?\(1\) Refers to the three-month period from '
+                      r'[A-Z][a-z]+ \d{1,2} to ([A-Z][a-z]+) (\d{1,2}) of a given year', text or '')
+        if m:
+            try:
+                day = datetime.strptime(f'{m[2]} {m[3]} {m[1]}', '%B %d %Y').date().isoformat()
+            except ValueError:
+                day = None
+            if day and (after is None or day > after) and (before is None or day < before):
+                return day
+    return max(counts, key=lambda k: (counts[k], k)) if counts else None
 
 
 def build(ticker, release, previous, note, today):
@@ -227,9 +248,17 @@ def build(ticker, release, previous, note, today):
     period = normalize_period(release.get('period'))
     if not period:
         raise ValueError('period-unreadable')
-    end = period_end(text)
-    if not end or not previous['periodEnd'] < end < release['releasedOn']:
+    end = period_end(text, previous['periodEnd'], release['releasedOn'])
+    if not end:
         raise ValueError('period-end-unreadable')
+    writer = None
+    try:
+        import dive_writers
+        writer = dive_writers.WRITERS.get(ticker)
+    except ImportError:
+        writer = None
+    if writer:
+        return company_dive(ticker, release, previous, writer, text, url, period, end, today)
     evidence, missing = [], []
 
     def need(entry, what):
@@ -357,8 +386,18 @@ def build(ticker, release, previous, note, today):
     elif year_ago_value is not None and len(tiles) < 3:
         amount_tile({'ja': '前年同期の売上高', 'en': 'Year-ago revenue'}, year_ago_value,
                     [e for e in evidence if e['field'] == 'numbers.revenue.yearAgo'][0])
+    # AMD (Nov 26): no outlook sentence the parser reads and a non-GAAP EPS basis the release table does not give: the release's own
+    # operating income or net income fills the tiles, from the same table, quoted like every figure.
+    for key, label in (('operating-income', {'ja': '営業利益(GAAP)', 'en': 'GAAP operating income'}), ('net-income', {'ja': '純利益(GAAP)', 'en': 'GAAP net income'})):
+        if len(tiles) >= 3:
+            break
+        read = _amount(facts.get(key, {}).get('value'))
+        if read and read[0] == currency and read[1] > 0:
+            entry = amount_evidence(f'tiles.{key}', read[1], text, url, r'operating income' if key == 'operating-income' else r'net income')
+            if entry:
+                amount_tile(label, read[1], entry)
     if len(tiles) < 3:
-        missing.append('a third figure for the tiles (guidance, margin or year-ago revenue)')
+        missing.append('a third figure for the tiles (guidance, margin, year-ago revenue or a profit line)')
     if missing:
         raise ValueError('missing: ' + '; '.join(missing))
 
@@ -372,6 +411,68 @@ def build(ticker, release, previous, note, today):
             'period': period, 'periodQuarter': int(period[1]), 'releasedOn': release['releasedOn'], 'periodEnd': end, 'reviewedOn': today,
             'currency': currency, 'basis': previous.get('basis'), 'sources': sources, 'evidence': evidence, 'tiles': tiles[:3],
             'numbers': numbers, 'history': history, 'summary': summary}
+
+
+def company_dive(ticker, release, previous, writer, text, url, period, end, today):
+    """A company with its own writer (dive_writers): the hand-made file's cards and figure kinds, from the release's tables."""
+    import dive_figures
+    if ticker in dive_figures.DOC_SPECS:  # results in several exhibits of one 6-K (release, presentation, statements)
+        figures = dive_figures.read_docs(ticker, [(url, release['text'])] + [(e['url'], e['text']) for e in release.get('exhibits') or []])
+    else:
+        figures = dive_figures.read(ticker, release['text'])
+    old = previous['history']
+    extra_sources = []
+    report = {}
+    if release.get('report'):  # the 10-Q, once filed: the figures only it carries
+        report = dive_figures.read_report(ticker, release['report']['text'])
+        for fig in report.values():
+            fig.url = release['report']['url']
+        if report:
+            extra_sources.append({'url': release['report']['url'], 'title': f"{previous['name']} Form {release['report'].get('form', '10-Q')} for {period}",
+                                  'location': 'Notes to the financial statements and risk factors'})
+    for exhibit in release.get('exhibits') or []:  # the other exhibits of the results filing (a presentation, statements, a letter)
+        extra_sources.append({'url': exhibit['url'], 'title': exhibit.get('title') or f"{previous['name']} {period} results, another exhibit of the same filing",
+                              'location': 'Results release' if exhibit.get('title') else 'Exhibit'})
+    events = []
+    for event in release.get('events') or []:  # other 8-Ks of the quarter: a deal, a preliminary result
+        found = {**dive_figures.deal(event['text']), **dive_figures.read_event(ticker, event['text'])}
+        if not found:
+            continue
+        for fig in found.values():
+            fig.url = event['url']
+        day = event['accepted'].astimezone(timezone.utc)
+        events.append({'figures': found, 'url': event['url'], 'date': f'{day.month}月{day.day}日', 'dateEn': f'{day.strftime("%B")} {day.day}'})
+        form = event.get('form', '8-K')
+        extra_sources.append({'url': event['url'], 'title': f"{previous['name']} Form {form}" + (', Exhibit 99.1' if form == '8-K' else '') + f" ({day.date().isoformat()})",
+                              'location': 'Press release' if form == '8-K' else 'Notice filed the same day'})
+    extra = {}
+    if ticker in dive_figures.PRIOR:  # the previous quarter's release: figures this release prints without that quarter
+        prior = release.get('prior') or {}
+        extra['prior'] = dive_figures.read(ticker, prior.get('text') or '')
+        for fig in extra['prior'].values():
+            fig.url = prior.get('url')
+    written = writer(figures, url, Decimal(str(old[-1]['value'])) if old else None, report=report, events=events, previous=previous, **extra)
+    history = [dict(h) for h in old[1:]] + [{'label': f"Q{previous['periodQuarter']}", 'end': previous['periodEnd'],
+                                             'value': previous['numbers']['revenue']['current']}]
+    evidence = list(written['evidence'])
+    quotes = {e['field']: e for e in previous.get('evidence') or []}
+    used = set()
+    for i in range(len(history)):
+        source = quotes.get(f'history[{i + 1}].value') if i < len(history) - 1 else quotes.get('numbers.revenue.current')
+        if not source:
+            raise ValueError(f'missing: history[{i}] quote in the previous file')
+        used.add(source['url'])
+        evidence.append({**source, 'field': f'history[{i}].value'})
+    sources = [{'url': url, 'title': f"{previous['name']} {period} results release (Form {release.get('form', '8-K')}, SEC)",
+                'location': 'Results release, financial tables and outlook'}]
+    cited = {e['url'] for e in evidence}
+    sources += [x for x in extra_sources if x['url'] in cited]
+    used |= {e['url'] for e in written['evidence']}
+    sources += [s for s in previous.get('sources') or [] if s['url'] in used and s['url'] not in {x['url'] for x in sources}]
+    return {'ticker': ticker, 'name': previous['name'], 'exchange': previous['exchange'], 'quoteTicker': previous['quoteTicker'],
+            'period': period, 'periodQuarter': int(period[1]), 'releasedOn': release['releasedOn'], 'periodEnd': end, 'reviewedOn': today,
+            'currency': previous['currency'], 'basis': previous.get('basis'), 'sources': sources, 'evidence': evidence,
+            'tiles': written['tiles'], 'numbers': written['numbers'], 'history': history, 'summary': written['summary']}
 
 
 # ---- the summary: MU's own template first, then the stored deep analysis ----------------------------------------------------
@@ -552,10 +653,13 @@ def generate(db, ticker, release, now=None, previous=None, note=None):
     schema(db)
     now = now or datetime.now(timezone.utc)
     previous = previous if previous is not None else previous_dive(ticker)
-    if db.execute("SELECT 1 FROM generated_dives WHERE ticker=? AND release_accession=? AND state='passed'", (ticker, release['accession'])).fetchone():
+    if db.execute("SELECT 1 FROM generated_dives WHERE ticker=? AND release_accession=? AND state='passed'", (ticker, dive_key(release))).fetchone():
         return 'passed'
     note = note if note is not None else stored_analysis(db, ticker, release['accepted'])
     texts = {release['url']: check_dives.normalize(release['text'])}
+    for other in [release.get('report'), release.get('prior')] + list(release.get('events') or []) + list(release.get('exhibits') or []):  # 10-Q, the previous release, other 8-Ks, other exhibits
+        if other and other.get('url') and other.get('text'):
+            texts[other['url']] = check_dives.normalize(other['text'])
     for e in (previous or {}).get('evidence') or []:  # the previous file's quoted passages, for the figures it carries forward
         texts[e['url']] = (texts.get(e['url'], '') + ' ' + check_dives.normalize(e['quote'])).strip()
     try:
@@ -565,16 +669,16 @@ def generate(db, ticker, release, now=None, previous=None, note=None):
         draft, problems = None, [str(exc)[:300]]
     if problems and note is None:
         return 'waiting'  # MU's template alone is not enough here: wait for the release's deep analysis (written minutes after it)
-    attempt = db.execute('SELECT count(*) FROM generated_dives WHERE ticker=? AND release_accession=?', (ticker, release['accession'])).fetchone()[0] + 1
+    attempt = db.execute('SELECT count(*) FROM generated_dives WHERE ticker=? AND release_accession=?', (ticker, dive_key(release))).fetchone()[0] + 1
     state = 'failed' if problems else 'passed'
     fixture = fixture_text(draft, texts) if isinstance(draft, dict) else None
     previous_failure = db.execute("SELECT errors FROM generated_dives WHERE ticker=? AND release_accession=? ORDER BY attempt DESC LIMIT 1",
-                                  (ticker, release['accession'])).fetchone()
+                                  (ticker, dive_key(release))).fetchone()
     if state == 'failed' and previous_failure and previous_failure[0] == json.dumps(problems[:20], ensure_ascii=False):
         return 'failed'  # the same inputs fail the same way: nothing new to store
     with db:
         db.execute('INSERT INTO generated_dives VALUES(?,?,?,?,?,?,?,?,?,?)',
-                   (ticker, str((draft or {}).get('period') or release.get('period') or ''), release['accession'], attempt, state,
+                   (ticker, str((draft or {}).get('period') or release.get('period') or ''), dive_key(release), attempt, state,
                     json.dumps(draft, ensure_ascii=False) if draft is not None else None, fixture,
                     json.dumps(problems[:20], ensure_ascii=False), None, now.isoformat(timespec='seconds')))
     at = now.isoformat(timespec='seconds')
@@ -595,6 +699,15 @@ def published(db):
     return out
 
 
+def dive_key(release):
+    """One dive per release AND per set of filings it was built from: the 10-Q or a deal 8-K filed later makes a new, deeper version."""
+    parts = [release['accession']]
+    if release.get('report'):
+        parts.append('report:' + release['report']['accession'])
+    parts += ['event:' + e['accession'] for e in release.get('events') or []]
+    return '|'.join(parts)
+
+
 def due(patrol_results, db, folder=None):
     """The roster releases a dive is due for: a release read cleanly by the patrol, newer than the committed file, not yet passed."""
     out = []
@@ -605,9 +718,5 @@ def due(patrol_results, db, folder=None):
         previous = previous_dive(ticker, folder)
         if not previous or normalize_period(release.get('period')) == normalize_period(previous.get('period')):
             continue
-        schema(db)
-        if db.execute("SELECT 1 FROM generated_dives WHERE ticker=? AND release_accession=? AND state='passed'",
-                      (ticker, release['accession'])).fetchone():
-            continue
-        out.append(ticker)
+        out.append(ticker)  # generate() itself skips a key (release, 10-Q, 8-Ks) already passed
     return out

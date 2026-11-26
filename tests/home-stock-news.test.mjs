@@ -63,5 +63,5 @@ test("the home list asks for the Stock News API stories; the Top Topics page and
   assert.match(panel, /const market = officialOnly \|\| generalOnly \|\| stockOnly \? \[\] :/);
   assert.match(panel, /const originalPreview = officialOnly \|\| generalOnly \|\| stockOnly \? \[\] :/);
   assert.match(panel, /\(stockOnly \? stockStories : wireStories\(wire, lang\)\)/);
-  assert.doesNotMatch(read("../app/research/general-news/page.tsx"), /stockNews/);
+  assert.doesNotMatch(read("../app/research/general-news/screen.tsx"), /stockNews/);
 });

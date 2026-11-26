@@ -1,0 +1,159 @@
+{
+  "root": {
+    "ticker": "RAMP",
+    "name": "ライブランプ",
+    "cik": 733269,
+    "name_en": "LiveRamp"
+  },
+  "rows": [
+    {
+      "ja": "買収・売却",
+      "en": "Acquisitions & sales"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "TRU",
+    "MOBQ"
+  ],
+  "companies": [
+    {
+      "id": "PUBLICIS",
+      "ticker": "PUBLICIS",
+      "name": "ピュブリシス・グループ",
+      "name_en": "Publicis Groupe",
+      "sub": "広告",
+      "sub_en": "Advertising",
+      "sub_short": "広告",
+      "sub_short_en": "Ads",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2026年5月に合併契約(ピュブリシスによる買収)",
+          "text_en": "Agreed in May 2026 to acquire LiveRamp by merger",
+          "source": {
+            "label": "LiveRamp 8-K(2026年5月)",
+            "label_en": "LiveRamp 8-K (May 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/733269/000110465926062908/tm2614904d1_8k.htm",
+            "level": "official",
+            "date": "2026-05-18",
+            "quote": "On May 16, 2026, LiveRamp Holdings, Inc. (the \"Company\") entered into an Agreement and Plan of Merger (the \"Merger Agreement\") with MMS USA Holdings, Inc., a Delaware corporation (\"Parent\") and a wholly owned subsidiary of Publicis (defined below), Covey Merger Sub, Inc., a Delaware corporation and a wholly owned subsidiary of Parent (\"Merger Sub\"), and, solely for the purpose of Section 10.14 thereto, Publicis Groupe S.A., a French société anonyme (\"Publicis\"), pursuant to"
+          }
+        }
+      ]
+    },
+    {
+      "id": "TRU",
+      "ticker": "TRU",
+      "name": "トランスユニオン",
+      "name_en": "TransUnion",
+      "sub": "信用情報",
+      "sub_en": "Credit data",
+      "sub_short": "信用情報",
+      "sub_short_en": "Credit",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "マーケティング分野の競合に挙げる",
+          "text_en": "Names LiveRamp as a competitor in marketing",
+          "source": {
+            "label": "TransUnion 10-K(2025年度)",
+            "label_en": "TransUnion 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1552033/000155203326000012/tru-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "For example, we compete with FICO in the Financial Services vertical, with Verisk Analytics, Inc. in the Insurance vertical, and with LiveRamp and Experian in the marketing solutions space."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MOBQ",
+      "ticker": "MOBQ",
+      "name": "モビクイティ・テクノロジーズ",
+      "name_en": "Mobiquity Technologies",
+      "sub": "広告技術",
+      "sub_en": "Ad tech",
+      "sub_short": "広告",
+      "sub_short_en": "Ads",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合に挙げる",
+          "text_en": "Names LiveRamp as a competitor",
+          "source": {
+            "label": "Mobiquity Technologies 10-K(2025年度)",
+            "label_en": "Mobiquity Technologies 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1084267/000168316826002754/mobiquity_i10k-123125.htm",
+            "level": "official",
+            "date": "2026-04-08",
+            "quote": "Competitors include companies offering advertising infrastructure, identity resolution services, and privacy compliance tools, including LiveRamp, The Trade Desk, and OneTrust."
+          }
+        }
+      ]
+    },
+    {
+      "id": "VISITIQ",
+      "ticker": "VISITIQ",
+      "name": "ビジットIQ",
+      "name_en": "VisitIQ",
+      "sub": "広告技術",
+      "sub_en": "Ad tech",
+      "sub_short": "広告",
+      "sub_short_en": "Ads",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合に挙げる",
+          "text_en": "Names LiveRamp as a competitor",
+          "source": {
+            "label": "VisitIQ 10-K(2025年8月期)",
+            "label_en": "VisitIQ 10-K (FY ended Aug 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1470129/000175392626000917/g085722_10k.htm",
+            "level": "official",
+            "date": "2026-05-20",
+            "quote": "Competition: ● Bombora: IP-based, B2B only, requires website traffic ● 6sense / ZoomInfo: Enterprise ABM only, expensive, firmographic ● LiveRamp / Oracle: Legacy cookie-based, privacy concerns ● CDPs (Segment, mParticle): Activation platforms;"
+          }
+        }
+      ]
+    },
+    {
+      "id": "TOTALIGENT",
+      "ticker": "TOTALIGENT",
+      "name": "トータリジェント",
+      "name_en": "Totaligent",
+      "sub": "広告技術",
+      "sub_en": "Ad tech",
+      "sub_short": "広告",
+      "sub_short_en": "Ads",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合に挙げる",
+          "text_en": "Names LiveRamp as a competitor",
+          "source": {
+            "label": "Totaligent 10-K(2025年度)",
+            "label_en": "Totaligent 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/846377/000147793226001994/totaligent_10k.htm",
+            "level": "official",
+            "date": "2026-04-03",
+            "quote": "Currently, for person-based programmatic and micro-targeted advertising, companies must spend thousands of dollars per month to use LiveRamp, a Totaligent competitor, in order to create and market to tailored audiences."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

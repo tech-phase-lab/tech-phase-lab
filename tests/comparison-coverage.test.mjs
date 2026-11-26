@@ -167,12 +167,14 @@ test("a Nasdaq warrant, unit or right beside a shorter base ticker of the same c
   const entries = [e("MOB", 1898643, "Mobilicom Ltd"), e("MOBBW", 1898643, "Mobilicom Ltd"), e("HTZ", 1657853, "HERTZ GLOBAL HOLDINGS, INC"),
     e("HTZWW", 1657853, "HERTZ GLOBAL HOLDINGS, INC"), e("GEN", 849399, "Gen Digital Inc."), e("GENVR", 849399, "Gen Digital Inc."),
     e("ZKP", 3, "Lafayette Digital Acquisition Corp. I"), e("ZKPU", 3, "Lafayette Digital Acquisition Corp. I"),
-    // Kept: a share class (GOOGL beside GOOG), a ticker ending in W without a shorter sibling, an NYSE note (PMTW beside PMT) and three letters too many.
+    // Kept: a share class (GOOGL beside GOOG), a ticker ending in W without a shorter sibling and three letters too many. An NYSE note
+    // (PMTW beside PMT) was kept by this rule on Nov 20; since Nov 26 it is left out as a note by the instrument list (comparison-exclusions.json).
     e("GOOG", 1652044, "Alphabet Inc."), e("GOOGL", 1652044, "Alphabet Inc."), e("SNOW", 1640147, "Snowflake Inc.", "NYSE"), e("PMT", 4, "PennyMac", "NYSE"),
     e("PMTW", 4, "PennyMac", "NYSE"), e("AB", 5, "X"), e("ABCDW", 5, "X")];
   const sib = tickersByCik(entries), kind = t => comparisonExclusion(entries.find(x => x.ticker === t), sib, lists);
   assert.deepEqual(["MOBBW", "HTZWW", "GENVR", "ZKPU"].map(kind), ["warrant", "warrant", "right", "unit"]);
-  for (const t of ["MOB", "HTZ", "GEN", "GOOG", "GOOGL", "SNOW", "PMT", "PMTW", "ABCDW"]) assert.equal(kind(t), null, t);
+  for (const t of ["MOB", "HTZ", "GEN", "GOOG", "GOOGL", "SNOW", "PMT", "ABCDW"]) assert.equal(kind(t), null, t);
+  assert.equal(kind("PMTW"), "preferred");
 });
 
 test("a Nasdaq preferred or note beside a shorter base ticker of the same company is not offered; GOOGL is (Nov 20 review: BRKRP)", () => {

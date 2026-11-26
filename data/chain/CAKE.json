@@ -1,0 +1,218 @@
+{
+  "root": {
+    "ticker": "CAKE",
+    "name": "チーズケーキ・ファクトリー",
+    "cik": 887596,
+    "name_en": "The Cheesecake Factory"
+  },
+  "rows": [
+    {
+      "ja": "供給元・取引先",
+      "en": "Suppliers & providers"
+    },
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "買収・売却",
+      "en": "Acquisitions & sales"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "STKS"
+  ],
+  "companies": [
+    {
+      "id": "FOXRESTAURANT",
+      "ticker": "FOXRESTAURANT",
+      "name": "フォックス・レストラン・コンセプツ",
+      "name_en": "Fox Restaurant Concepts",
+      "sub": "外食",
+      "sub_en": "Restaurants",
+      "sub_short": "外食",
+      "sub_short_en": "Dining",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2019年に買収",
+          "text_en": "Acquired in 2019",
+          "source": {
+            "label": "The Cheesecake Factory 10-K(2025年度)",
+            "label_en": "The Cheesecake Factory 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/887596/000110465926018643/cake-20251230x10k.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "Membership Interest Purchase Agreement, dated as of July 30, 2019, by and among The Cheesecake Factory Restaurants, Inc., Fox Restaurant Concepts LLC, the Sellers party thereto, SWF Posse LLC, as Seller's representative, and, solely for limited purposes set forth therein, The Cheesecake Factory"
+          }
+        }
+      ]
+    },
+    {
+      "id": "STKS",
+      "ticker": "STKS",
+      "name": "ONEグループ・ホスピタリティ",
+      "name_en": "ONE Group Hospitality",
+      "sub": "外食",
+      "sub_en": "Dining",
+      "sub_short": "外食",
+      "sub_short_en": "Dining",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合として名前を挙げる",
+          "text_en": "Names Cheesecake Factory as a competitor",
+          "source": {
+            "label": "ONE Group Hospitality 10-K(2025年度)",
+            "label_en": "ONE Group Hospitality 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1399520/000110465926032065/stks-20251228x10k.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "We experience competition from a variety of sources, including upscale steakhouse chains such as Ruth Chris Steak House, Del Frisco's, Fleming's, Mastro's, The Capital Grille, Fogo De Chao, local upscale steakhouses, local sushi restaurants, local teppanyaki restaurants and polished casual chains, such 6 Table of Contents as The Cheesecake Factory, Bonefish Grill and BJ's."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MAC",
+      "ticker": "MAC",
+      "name": "メイスリッチ",
+      "name_en": "Macerich",
+      "sub": "商業施設REIT",
+      "sub_en": "Mall REIT",
+      "sub_short": "REIT",
+      "sub_short_en": "REIT",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "モールのテナントに挙げる",
+          "text_en": "Lists it as a mall tenant",
+          "source": {
+            "label": "Macerich 8-K(2026年11月)",
+            "label_en": "Macerich 8-K (November 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/912242/000119312526462071/d176665dex992.htm",
+            "level": "official",
+            "date": "2026-11-16",
+            "quote": "For the 12 months ended September 30, 2026, it generated approximately $400 million in sales and approximately $866 in sales per square foot for inline tenants under 10,000 square feet, and features Macy's, Target, Century Theatres, 99 Ranch Market, Living Spaces, Nordstrom Rack, Lucky Strike, Apple, Uniqlo, H&M, Old Navy, The Cheesecake Factory, BJ's Restaurant & Brewhouse, Shake Shack and Victoria's Secret, among many others."
+          }
+        }
+      ]
+    },
+    {
+      "id": "JPM",
+      "ticker": "JPM",
+      "name": "JPMorgan Chase",
+      "name_en": "JPMorgan Chase",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の幹事行",
+          "text_en": "Administrative agent on its credit agreement",
+          "source": {
+            "label": "The Cheesecake Factory 8-K(2026年3月)",
+            "label_en": "The Cheesecake Factory 8-K (March 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/887596/000110465926037831/tm2610653d1_8k.htm",
+            "level": "official",
+            "date": "2026-03-31",
+            "quote": "Date\"), The Cheesecake Factory Incorporated (the \"Company\" or \"we,\" \"us\" and \"our\") entered into a Fifth Amended and Restated Loan Agreement, dated as of March 26, 2026 (the \"Loan Agreement\" and the credit facility provided thereunder, the \"New Facility\"), with JPMorgan Chase Bank, N.A., as administrative agent, Bank of America, N.A., Wells Fargo Bank, National Association and BMO Bank N.A., as co-syndication agents, and the lenders party thereto from time to time."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BAC",
+      "ticker": "BAC",
+      "name": "バンク・オブ・アメリカ",
+      "name_en": "Bank of America",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の貸し手",
+          "text_en": "A lender under its credit agreement",
+          "source": {
+            "label": "The Cheesecake Factory 8-K(2026年3月)",
+            "label_en": "The Cheesecake Factory 8-K (March 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/887596/000110465926037831/tm2610653d1_8k.htm",
+            "level": "official",
+            "date": "2026-03-31",
+            "quote": "Date\"), The Cheesecake Factory Incorporated (the \"Company\" or \"we,\" \"us\" and \"our\") entered into a Fifth Amended and Restated Loan Agreement, dated as of March 26, 2026 (the \"Loan Agreement\" and the credit facility provided thereunder, the \"New Facility\"), with JPMorgan Chase Bank, N.A., as administrative agent, Bank of America, N.A., Wells Fargo Bank, National Association and BMO Bank N.A., as co-syndication agents, and the lenders party thereto from time to time."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WFC",
+      "ticker": "WFC",
+      "name": "ウェルズ・ファーゴ",
+      "name_en": "Wells Fargo",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の貸し手",
+          "text_en": "A lender under its credit agreement",
+          "source": {
+            "label": "The Cheesecake Factory 8-K(2026年3月)",
+            "label_en": "The Cheesecake Factory 8-K (March 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/887596/000110465926037831/tm2610653d1_8k.htm",
+            "level": "official",
+            "date": "2026-03-31",
+            "quote": "Date\"), The Cheesecake Factory Incorporated (the \"Company\" or \"we,\" \"us\" and \"our\") entered into a Fifth Amended and Restated Loan Agreement, dated as of March 26, 2026 (the \"Loan Agreement\" and the credit facility provided thereunder, the \"New Facility\"), with JPMorgan Chase Bank, N.A., as administrative agent, Bank of America, N.A., Wells Fargo Bank, National Association and BMO Bank N.A., as co-syndication agents, and the lenders party thereto from time to time."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BMO",
+      "ticker": "BMO",
+      "name": "BMOフィナンシャル・グループ",
+      "name_en": "BMO Financial Group",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の貸し手",
+          "text_en": "A lender under its credit agreement",
+          "source": {
+            "label": "The Cheesecake Factory 8-K(2026年3月)",
+            "label_en": "The Cheesecake Factory 8-K (March 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/887596/000110465926037831/tm2610653d1_8k.htm",
+            "level": "official",
+            "date": "2026-03-31",
+            "quote": "Date\"), The Cheesecake Factory Incorporated (the \"Company\" or \"we,\" \"us\" and \"our\") entered into a Fifth Amended and Restated Loan Agreement, dated as of March 26, 2026 (the \"Loan Agreement\" and the credit facility provided thereunder, the \"New Facility\"), with JPMorgan Chase Bank, N.A., as administrative agent, Bank of America, N.A., Wells Fargo Bank, National Association and BMO Bank N.A., as co-syndication agents, and the lenders party thereto from time to time."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

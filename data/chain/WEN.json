@@ -1,0 +1,186 @@
+{
+  "root": {
+    "ticker": "WEN",
+    "name": "ウェンディーズ",
+    "cik": 30697,
+    "name_en": "The Wendy's Company"
+  },
+  "rows": [
+    {
+      "ja": "供給元・取引先",
+      "en": "Suppliers & providers"
+    },
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "提携・出資・買収",
+      "en": "Partners, stakes & deals"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "TRIAN",
+      "ticker": "TRIAN",
+      "name": "トライアン",
+      "name_en": "Trian Partners",
+      "sub": "投資会社",
+      "sub_en": "Investment firm",
+      "sub_short": "投資",
+      "sub_short_en": "Investor",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "株主グループが買収を提案",
+          "text_en": "Investor group proposed to buy it",
+          "source": {
+            "label": "The Wendy's Company 8-K(2026年11月)",
+            "label_en": "The Wendy's Company 8-K (November 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/30697/000119312526448576/d305992d8k.htm",
+            "level": "official",
+            "date": "2026-11-05",
+            "quote": "The Board adopted the Rights Agreement in response to the unsolicited, non-binding proposal made on October 28, 2026 by Trian and Flynn Group LP, BlueFive Capital and Sixth Street Partners (together, the \"Investor Group\"), to acquire all of the Common Shares not currently owned by the Investor Group for $7.35 per Common Share."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GPK",
+      "ticker": "GPK",
+      "name": "グラフィック・パッケージング",
+      "name_en": "Graphic Packaging",
+      "sub": "紙容器",
+      "sub_en": "Packaging",
+      "sub_short": "包装",
+      "sub_short_en": "Packs",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "外食の顧客に挙げる",
+          "text_en": "Lists Wendy's as a customer",
+          "source": {
+            "label": "Graphic Packaging Holding 10-K(2025年度)",
+            "label_en": "Graphic Packaging Holding 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1408075/000140807526000009/gpk-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "Quick-service restaurant customers include Chick-fil-A, McDonald's, Wendy's, Panda Express, Dairy Queen, Chipotle, Panera and KFC."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BRX",
+      "ticker": "BRX",
+      "name": "ブリックスモア",
+      "name_en": "Brixmor Property",
+      "sub": "商業施設REIT",
+      "sub_en": "Retail REIT",
+      "sub_short": "REIT",
+      "sub_short_en": "REIT",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "商業施設に店舗を建設",
+          "text_en": "Building a Wendy's at one of its centers",
+          "source": {
+            "label": "Brixmor Property Group 8-K(2026年10月)",
+            "label_en": "Brixmor Property Group 8-K (October 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1581068/000158106826000032/brx-20261026ex992.htm",
+            "level": "official",
+            "date": "2026-10-26",
+            "quote": "Lucie, FL Construction of a 2K SF Chipotle with a drive-thru and a 2K SF Wendy's with a drive-thru Jun-26 3,100 10 % 3 Sunshine Square New York-Newark-Jersey City, NY-NJ Construction of a 2K SF Taco Bell Jun-26 500 23 % TOTAL STABILIZED OUTPARCEL DEVELOPMENT ACTIVITIES / WEIGHTED AVERAGE $ 5,350 11 % (1) Reflects gross project costs less any project specific credits (lease termination fees or other ancillary credits)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BCS",
+      "ticker": "BCS",
+      "name": "Barclays",
+      "name_en": "Barclays",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "社債などの引受会社",
+          "text_en": "Underwriter of its securities offering",
+          "source": {
+            "label": "The Wendy's Company 10-K(2025年度)",
+            "label_en": "The Wendy's Company 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/30697/000003069726000009/wen-20251228.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "Class A-2 Note Purchase Agreement, dated as of March 23, 2022, by and among The Wendy's Company, the subsidiaries of The Wendy's Company party thereto and Barclays Capital Inc. and Jefferies LLC, each acting on behalf of itself and as a representative of the initial purchasers,"
+          }
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "ticker": "C",
+      "name": "シティグループ",
+      "name_en": "Citigroup",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "社債などの引受会社",
+          "text_en": "Underwriter of its securities offering",
+          "source": {
+            "label": "The Wendy's Company 10-K(2025年度)",
+            "label_en": "The Wendy's Company 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/30697/000003069726000009/wen-20251228.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "Class A-2 Note Purchase Agreement, dated as of December 6, 2017, by and among The Wendy's Company, the subsidiaries of The Wendy's Company party thereto and Guggenheim Securities, LLC and Citigroup Global Markets Inc., each acting on behalf of itself and as the representatives of the initial purchasers,"
+          }
+        }
+      ]
+    },
+    {
+      "id": "JEF",
+      "ticker": "JEF",
+      "name": "ジェフリーズ",
+      "name_en": "Jefferies Financial Group",
+      "sub": "証券",
+      "sub_en": "Securities",
+      "sub_short": "証券",
+      "sub_short_en": "Broker",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "社債などの引受会社",
+          "text_en": "Underwriter of its securities offering",
+          "source": {
+            "label": "The Wendy's Company 10-K(2025年度)",
+            "label_en": "The Wendy's Company 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/30697/000003069726000009/wen-20251228.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "Class A-2 Note Purchase Agreement, dated as of June 15, 2021, by and among The Wendy's Company, the subsidiaries of The Wendy's Company party thereto and Guggenheim Securities, LLC and Jefferies LLC, each acting on behalf of itself and as the representatives of the initial purchasers,"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { SignIn } from "@clerk/nextjs";
 import { useUser } from "@clerk/nextjs";
+import { useIdentityWordingReady } from "../identity-provider";
 import type { EditorialPost } from "@/lib/research/editorial-posts";
 import styles from "../editorial/styles.module.css";
 import noteStyles from "./styles.module.css";
@@ -13,6 +14,7 @@ const excerpt = (body: string) => body.replace(/\s+/g, " ").trim().slice(0, 34) 
 const errors: Record<string, string> = { "owner-required": "運営者アカウントでログインしてください。", "setup-required": "投稿機能の接続設定がまだ完了していません。", "post-conflict": "別の操作で更新されています。入力を控えてから、最新版を読み込んでください。" };
 function WriterContent() {
   const { isSignedIn, isLoaded } = useUser();
+  const wordingReady = useIdentityWordingReady();
   const inFlight = useRef(false);
   const [items, setItems] = useState<EditorialPost[]>([]);
   const [note, setNote] = useState<Note | null>(null);
@@ -49,7 +51,7 @@ function WriterContent() {
   }
   return <main className={`${styles.main} ${noteStyles.main}`}><header><Link href="/research">Tech Phaseへ戻る</Link><h1>ひとりごとを書く</h1></header>
     {message && <p role="status" aria-live="polite">{message}</p>}
-    {!ready && isLoaded && !isSignedIn && <SignIn routing="hash" signUpUrl="/research/account/sign-up" forceRedirectUrl="/research/write" />}{!ready && isLoaded && isSignedIn && <p><Link href="/research/account">アカウントを確認</Link></p>}
+    {!ready && isLoaded && !isSignedIn && wordingReady && <SignIn routing="hash" signUpUrl="/research/account/sign-up" forceRedirectUrl="/research/write" />}{!ready && isLoaded && isSignedIn && <p><Link href="/research/account">アカウントを確認</Link></p>}
     {ready && note && <div className={`${styles.layout} ${noteStyles.layout}`} aria-busy={busy}><section className={styles.editor}><div className={styles.saveBar}><div><strong>{pending === "publish" ? "公開中…" : pending === "draft" ? "保存中…" : pending === "withdraw" ? "取り下げ中…" : note.status === "published" ? "公開中" : note.status === "withdrawn" ? "削除済み・再公開可能" : "下書き"}</strong><span>{pending ? "完了までこの画面を閉じないでください" : dirty ? "未保存の変更があります" : note.version ? "保存済み" : "新しい投稿"}</span></div><button disabled={mediaBusy || busy || !dirty} onClick={() => void write("draft")}>{pending === "draft" ? "保存中…" : "下書き保存"}</button></div>
         <fieldset disabled={busy}><DeskTextEditor value={note.bodyJa} onChange={bodyJa => setNote({ ...note, bodyJa })} disabled={busy} media onMediaBusyChange={setMediaBusy} /><small className={styles.counter}>{note.bodyJa.length.toLocaleString()} / 6,000文字</small></fieldset>
         <p className={noteStyles.hint}>文章の英語版は翻訳待ちになります。音声・動画そのものは日本語のままです。</p>

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getMembership } from "@/lib/membership/server";
 import { valueCheckAccess, valueCheckEnabled, type ValueSnapshot } from "@/lib/research/value-check";
-import { loadValueSnapshot } from "@/lib/research/value-check-server";
+import { loadValueRanking } from "@/lib/research/value-check-server";
 import TreasureHuntScreen from "./screen";
 
 export const metadata: Metadata = { title: "トレジャーハント | Tech Phase PRO", robots: { index: false, follow: false } };
@@ -19,7 +19,7 @@ export default async function Page() {
   if (!valueCheckEnabled() && (!member || member.status !== "signed-in" || !("ownerAccount" in member) || !(member.ownerAccount || member.ownerMode))) notFound();
   let initial: ValueSnapshot | null = null;
   if (member && valueCheckAccess(member, valueCheckEnabled()) === 200) {
-    const ready = loadValueSnapshot().catch(() => null);
+    const ready = loadValueRanking().catch(() => null);
     initial = await Promise.race([ready, new Promise<null>(resolve => setTimeout(() => resolve(null), INITIAL_WAIT_MS))]);
   }
   return <TreasureHuntScreen initial={initial} />;

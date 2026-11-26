@@ -1,0 +1,182 @@
+{
+  "root": {
+    "ticker": "KAI",
+    "name": "カダント",
+    "cik": 886346,
+    "name_en": "Kadant"
+  },
+  "rows": [
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "買収・売却",
+      "en": "Acquisitions & sales"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "CLYDE",
+      "ticker": "CLYDE",
+      "name": "クライド・インダストリーズ",
+      "name_en": "Clyde Industries",
+      "sub": "ボイラー清掃装置",
+      "sub_en": "Boiler cleaning systems",
+      "sub_short": "装置",
+      "sub_short_en": "Machine",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年10月に買収",
+          "text_en": "Acquired in October 2025",
+          "source": {
+            "label": "Kadant 10-K(2025年度)",
+            "label_en": "Kadant 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/886346/000088634626000018/kai-20260103.htm",
+            "level": "official",
+            "date": "2026-03-03",
+            "quote": "On October 7, 2025, we acquired all the outstanding equity securities of Clyde Industries Holdings, Inc. and its subsidiaries (collectively, Clyde Industries), a manufacturer of highly engineered boiler efficiency and cleaning system technologies for $173.7 million, net of cash acquired."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PRU",
+      "ticker": "PRU",
+      "name": "Prudential Financial(PGIM)",
+      "name_en": "Prudential Financial",
+      "sub": "生命保険",
+      "sub_en": "Life insurance",
+      "sub_short": "生保",
+      "sub_short_en": "Insurer",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "系列のPGIMと私募社債の発行枠契約",
+          "text_en": "Has a private shelf agreement with its PGIM unit",
+          "source": {
+            "label": "Kadant 10-K(2025年度)",
+            "label_en": "Kadant 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/886346/000088634626000018/kai-20260103.htm",
+            "level": "official",
+            "date": "2026-03-03",
+            "quote": "In 2018, we also issued $10.0 million in senior notes under our Multi-Currency Note Purchase and Private Shelf Agreement with PGIM Private Capital, a unit of PGIM, Inc., and affiliate of Prudential Financial, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "KEYKNIFE",
+      "ticker": "KEYKNIFE",
+      "name": "キー・ナイフ",
+      "name_en": "Key Knife",
+      "sub": "刃物",
+      "sub_en": "Industrial knives",
+      "sub_short": "刃物",
+      "sub_short_en": "Knives",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2024年1月に買収",
+          "text_en": "Acquired in January 2024",
+          "source": {
+            "label": "Kadant 10-K(2025年度)",
+            "label_en": "Kadant 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/886346/000088634626000018/kai-20260103.htm",
+            "level": "official",
+            "date": "2026-03-03",
+            "quote": "Noncontrolling Interests In connection with the Company's January 2024 acquisition of Key Knife, Inc. and certain of its affiliates (collectively, Key Knife), the Company acquired a 45% interest in two of Key Knife's subsidiaries."
+          }
+        }
+      ]
+    },
+    {
+      "id": "KWSMFG",
+      "ticker": "KWSMFG",
+      "name": "KWSマニュファクチャリング",
+      "name_en": "KWS Manufacturing",
+      "sub": "搬送機",
+      "sub_en": "Conveyors",
+      "sub_short": "搬送機",
+      "sub_short_en": "Conveyor",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2024年1月に買収",
+          "text_en": "Acquired in January 2024",
+          "source": {
+            "label": "Kadant 10-K(2025年度)",
+            "label_en": "Kadant 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/886346/000088634626000018/kai-20260103.htm",
+            "level": "official",
+            "date": "2026-03-03",
+            "quote": "On January 24, 2024, the Company acquired all of the outstanding equity securities of KWS Manufacturing Company, Ltd."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DYNSEAL",
+      "ticker": "DYNSEAL",
+      "name": "ダイナミック・シーリング・テクノロジーズ",
+      "name_en": "Dynamic Sealing Technologies",
+      "sub": "回転継手",
+      "sub_en": "Rotary unions",
+      "sub_short": "部品",
+      "sub_short_en": "Parts",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2024年5月に買収",
+          "text_en": "Acquired in May 2024",
+          "source": {
+            "label": "Kadant 10-K(2025年度)",
+            "label_en": "Kadant 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/886346/000088634626000018/kai-20260103.htm",
+            "level": "official",
+            "date": "2026-03-03",
+            "quote": "Dynamic Sealing Technologies LLC On May 31, 2024, the Company acquired all of the outstanding equity securities of Dynamic Sealing Technologies LLC and affiliates (collectively, DSTI) for $53,570,000, net of cash acquired."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CFG",
+      "ticker": "CFG",
+      "name": "シチズンズ・バンク",
+      "name_en": "Citizens Bank, N.A.",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の幹事行",
+          "text_en": "Administrative agent on its credit agreement",
+          "source": {
+            "label": "Kadant 10-K(2025年度)",
+            "label_en": "Kadant 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/886346/000088634626000018/kai-20260103.htm",
+            "level": "official",
+            "date": "2026-03-03",
+            "quote": "Restated Credit Agreement dated as of March 1, 2017, among the Registrant, the Foreign Subsidiary Borrowers from time to time parties thereto, the several banks and other financial institutions or entities from time to time parties thereto, Citizens Bank, N.A., as Administrative Agent and Multicurrency Administrative Agent (filed as Exhibit"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

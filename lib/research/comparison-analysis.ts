@@ -1,6 +1,6 @@
 import { createHash } from "node:crypto";
 import type { Financials } from "./comparison.ts";
-import { balanceDebt, comparisonMetric, comparisonScores, hasRecentQuarter } from "./comparison-scorecard.ts";
+import { balanceDebt, comparisonMetric, comparisonScores, hasRecentBalance, hasRecentQuarter } from "./comparison-scorecard.ts";
 import { twelveExtraFactors, twelveFactorMethods } from "./twelve-data-factors.ts";
 
 type Copy = { ja: string; en: string };
@@ -48,9 +48,14 @@ export function prepareComparisonAnalysis(c: Financials, now=Date.now()): Prepar
   }
   if(valid("profitability") && c.quarterOperatingIncome && c.quarterOperatingMargin!==null && (c.quarterOperatingMargin>=15 || c.quarterOperatingMargin<0)) {
     const margin=c.quarterOperatingMargin, pct=`${margin.toFixed(1)}%`;
+    // A bank's or insurer's figure is its pre-tax income (no operating line is filed): said as such (reviewer, Nov 26: TRV, FHN).
+    const pretax=c.quarterOperatingIncome.tag==="TechPhasePretaxIncome";
     add("operating-margin",margin<0?"weakness":"strength",
-      copy(margin<0?`営業赤字 ${pct}`:`営業利益率 ${pct}`,margin<0?`Operating loss ${pct}`:`Operating margin ${pct}`),
-      copy(`${span.ja}の営業損益は${amount(c.quarterOperatingIncome.value,c.quarterOperatingIncome.unit)}。売上高に対する割合は${pct}。`,
+      pretax ? copy(margin<0?`税引前赤字 ${pct}`:`税引前利益率 ${pct}`,margin<0?`Pre-tax loss ${pct}`:`Pre-tax margin ${pct}`)
+        : copy(margin<0?`営業赤字 ${pct}`:`営業利益率 ${pct}`,margin<0?`Operating loss ${pct}`:`Operating margin ${pct}`),
+      pretax ? copy(`${span.ja}の税引前損益は${amount(c.quarterOperatingIncome.value,c.quarterOperatingIncome.unit)}。売上高に対する割合は${pct}。`,
+          `${span.en} pre-tax income was ${amount(c.quarterOperatingIncome.value,c.quarterOperatingIncome.unit)}, representing ${pct} of revenue.`)
+        : copy(`${span.ja}の営業損益は${amount(c.quarterOperatingIncome.value,c.quarterOperatingIncome.unit)}。売上高に対する割合は${pct}。`,
         `${span.en} operating income was ${amount(c.quarterOperatingIncome.value,c.quarterOperatingIncome.unit)}, representing ${pct} of revenue.`));
   }
   if(valid("growth") && Number.isFinite(c.quarterDilutedSharesGrowth) && c.quarterDilutedSharesGrowth!>5) {
@@ -59,7 +64,9 @@ export function prepareComparisonAnalysis(c: Financials, now=Date.now()): Prepar
       copy(`希薄化後の平均株式数は前年同期比${pct}。発行済株式数や新株発行数そのものとは異なります。`,
         `Diluted weighted-average shares increased ${pct} year over year. This is not the period-end shares outstanding or the number of newly issued shares.`));
   }
-  if(valid("cash") && Number.isFinite(c.quarterFcfMargin) && c.quarterFcfMargin!==0) {
+  // A strength only where the score calls it one (5 + margin/5 ≥ 7: 10% or more of revenue); a weakness when negative (reviewer, Nov 26: SO's
+  // 0.4% was listed as a strength).
+  if(valid("cash") && Number.isFinite(c.quarterFcfMargin) && (c.quarterFcfMargin!>=10 || c.quarterFcfMargin!<0)) {
     const positive=c.quarterFcfMargin!>0, pct=`${c.quarterFcfMargin!.toFixed(1)}%`;
     add("cash-generation",positive?"strength":"weakness",copy(`簡易FCF率 ${pct}`,`Simple FCF margin ${pct}`),
       copy(`${span.ja}の営業キャッシュフローから現金支出の設備投資を引いた金額は、売上高の${pct}。買収支出やリース等は網羅しません。`,
@@ -78,8 +85,10 @@ export function prepareComparisonAnalysis(c: Financials, now=Date.now()): Prepar
  * 51.9 billion against cash 10.7 billion) gave no weakness at all while the provider's figures would have said it (all-ticker audit, Nov 19).
  * Also used when a provider-sourced company scores its balance from the filing (comparison-server.ts). */
 export function appendFilingFinancialItems(items:PreparedComparisonAnalysis["items"],c:Financials,now=Date.now()) {
-  const q=c.quarterRevenue;
-  const financial=comparisonScores(c,now).find(s=>s.id==="financial")?.value ?? null;
+  const q=balanceAnchor(c);
+  // A bank's equity ratio (a company-type score) is not turned into a strength or weakness (reviewer, Nov 26: every large bank read as weak).
+  const financialScore=comparisonScores(c,now).find(s=>s.id==="financial");
+  const financial=financialScore?.kind ? null : financialScore?.value ?? null;
   const providerFinancial=c.twelveData ? twelveExtraFactors(c.twelveData,now).financial : null;
   if(!q || providerFinancial!==null || financial===null || items.some(i=>i.id==="financial" || i.id==="debt-cash")) return items;
   if(financial<=3 || financial>=7) items.push({id:"financial",kind:financial>=7?"strength":"weakness",short:copy(comparisonMetric(c,"financial","ja",now),comparisonMetric(c,"financial","en",now)),detail:twelveFactorMethods.financial});
@@ -90,12 +99,26 @@ export function appendFilingFinancialItems(items:PreparedComparisonAnalysis["ite
 /** Negative shareholders' equity, read from the filing's balance for the very period shown (MO: liabilities above assets after years of
  * buybacks, Nov 20). Only a reported figure counts: equity that is missing, from another date or in another currency says nothing. */
 export function appendEquityItem(items:PreparedComparisonAnalysis["items"],c:Financials) {
-  const q=c.quarterRevenue, equity=c.balance?.equity;
+  const q=balanceAnchor(c), equity=c.balance?.equity;
   if(!q || !equity || c.balance!.end!==q.end || equity.end!==q.end || equity.unit!==q.unit || !(equity.value<0) || items.some(i=>i.id==="negative-equity")) return items;
   items.push({id:"negative-equity",kind:"weakness",short:copy("株主資本がマイナス","Negative shareholders' equity"),
     detail:copy(`${equity.end}時点の株主資本は${amount(equity.value,equity.unit)}で、負債が資産を上回っています。自社株買いや累積損失など、原因はこの数値だけでは特定できません。`,
       `Shareholders' equity was ${amount(equity.value,equity.unit)} as of ${equity.end}: liabilities exceed assets. This figure alone does not establish the cause, such as buybacks or accumulated losses.`)});
   return items;
+}
+/** The period a balance point is dated and priced in: the quarter shown, or for a company with no revenue yet its latest balance sheet. */
+function balanceAnchor(c:Financials):{end:string;unit:string}|null {
+  if(c.quarterRevenue) return c.quarterRevenue;
+  const unit=c.balance?.cash?.unit ?? c.balance?.equity?.unit;
+  return c.preRevenue && c.balance && unit ? {end:c.balance.end,unit} : null;
+}
+/** A company with no revenue yet (owner, Nov 26): the points its latest balance sheet gives (financial strength, debt against cash,
+ *  negative equity). The revenue factors have none to give. */
+export function preparePreRevenueAnalysis(c:Financials,now=Date.now()):PreparedComparisonAnalysis|undefined {
+  if(!c.preRevenue || !c.balance || !hasRecentBalance(c,now)) return undefined;
+  const items=appendEquityItem(appendFilingFinancialItems([],c,now),c);
+  return {version:1,method:"deterministic",sourceRevision:comparisonEvidenceRevision(c),preparedAt:new Date(now).toISOString(),processingMs:0,
+    periodEnd:c.balance.end,sourceUrl:c.balance.sourceUrl,items};
 }
 /** "Debt exceeds cash", from the provider's statistics or the filing's own balance, in the same words. */
 export function debtCashItem(periodEnd:string,cash:number,debt:number,currency:string):PreparedComparisonAnalysis["items"][number] {
@@ -106,7 +129,7 @@ export function debtCashItem(periodEnd:string,cash:number,debt:number,currency:s
 /** Reuse only the saved analysis matching this exact evidence and a usable quarter. */
 export function currentComparisonAnalysis(c: Financials, now=Date.now()) {
   const saved=c.preparedAnalysis;
-  if(!saved || !hasRecentQuarter(c,now) || saved.version!==1 || saved.sourceRevision!==comparisonEvidenceRevision(c)
+  if(!saved || !(hasRecentQuarter(c,now) || hasRecentBalance(c,now)) || saved.version!==1 || saved.sourceRevision!==comparisonEvidenceRevision(c)
     || !Number.isFinite(Date.parse(saved.preparedAt)) || Date.parse(saved.preparedAt)>now
     || !comparisonScores(c,now).some(s=>s.value!==null)) return undefined;
   if(c.twelveData) {

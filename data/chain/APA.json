@@ -134,7 +134,7 @@
       "row": 0,
       "relations": [
         {
-          "type": "down",
+          "type": "up",
           "text": "自社の土地周辺で事業をする生産者に挙げる",
           "text_en": "Lists APA among producers operating on or near its land",
           "source": {

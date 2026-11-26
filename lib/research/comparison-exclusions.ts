@@ -20,8 +20,15 @@ import exclusionLists from "./comparison-exclusions.json" with { type: "json" };
 
 /** etn: the ETN issuer's CIK, its name and its own share tickers (any other ticker under that CIK is a note). */
 export type EtnIssuer = { name: string; shares: string[] };
-export type ExclusionLists = { spac: Record<string, string>; fund: Record<string, string>; etn: Record<string, EtnIssuer> };
-export type ExclusionKind = "spac" | "fund" | "etn" | "preferred" | "warrant" | "unit" | "right";
+/** instrument: ticker -> kind, from the provider's free reference list (scripts/research/comparison-audit/instruments.py): a preferred or
+ *  baby bond, an exchange-traded note, a warrant, a unit or a royalty/grantor trust that no ticker rule recognises (SOJD, KTN, OPENZ, PBT). */
+export type InstrumentKind = "preferred" | "etn" | "warrant" | "unit" | "right" | "trust";
+export type ExclusionLists = { spac: Record<string, string>; fund: Record<string, string>; etn: Record<string, EtnIssuer>; instrument?: Record<string, string> };
+export type ExclusionKind = "spac" | "fund" | "etn" | "preferred" | "warrant" | "unit" | "right" | "trust" | "unlisted";
+/** The exchanges the comparison offers (owner, Nov 26: individual company stocks listed on an exchange only; NYSE American is listed by
+ *  the SEC as NYSE). Over-the-counter tickers and a ticker with no exchange yet are not offered. */
+export const COMPARISON_EXCHANGES: readonly string[] = ["Nasdaq", "NYSE", "CBOE", "TXSE"];
+const INSTRUMENT_KINDS: readonly string[] = ["preferred", "etn", "warrant", "unit", "right", "trust"];
 type Entry = { ticker: string; cik: number | string; name: string; exchange?: string };
 
 const SUFFIX: [RegExp, ExclusionKind][] = [[/-P[A-Z]?$/, "preferred"], [/-(?:WTA?|WS|W)$/, "warrant"], [/-(?:UN|U)$/, "unit"], [/-(?:RI|R)$/, "right"]];
@@ -40,10 +47,13 @@ export function tickersByCik(entries: Entry[]): Map<string, Set<string>> {
 
 export function comparisonExclusion(entry: Entry, siblings: Map<string, Set<string>>, lists: ExclusionLists): ExclusionKind | null {
   const ticker = entry.ticker.toUpperCase(), cik = String(Number(entry.cik));
+  if (entry.exchange !== undefined && !COMPARISON_EXCHANGES.includes(entry.exchange)) return "unlisted";
   for (const [pattern, kind] of SUFFIX) if (pattern.test(ticker)) return kind;
   const last = FIFTH[ticker.at(-1) ?? ""];
   if (/^[A-Z]{2,6}$/.test(ticker) && last && (entry.exchange === undefined || entry.exchange === "Nasdaq")
     && [1, 2].some(n => ticker.length - n >= 1 && siblings.get(cik)?.has(ticker.slice(0, -n)))) return last;
+  const listed = lists.instrument?.[ticker];
+  if (listed !== undefined && INSTRUMENT_KINDS.includes(listed)) return listed as InstrumentKind;
   if (lists.spac[cik] !== undefined && sameName(lists.spac[cik], entry.name)) return "spac";
   if (lists.fund[cik] !== undefined && sameName(lists.fund[cik], entry.name)) return "fund";
   // A CIK names one legal entity for good, so the issuer is matched on it alone (the SEC may rename it: Credit Suisse AG is now part of UBS).

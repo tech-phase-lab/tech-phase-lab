@@ -1,0 +1,156 @@
+{
+  "root": {
+    "ticker": "MTD",
+    "name": "メトラー・トレド",
+    "cik": 1037646,
+    "name_en": "Mettler-Toledo"
+  },
+  "rows": [
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "顧客・取引先",
+      "en": "Customers & clients"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "IDXG",
+      "ticker": "IDXG",
+      "name": "インターペース・バイオサイエンシズ",
+      "name_en": "Interpace Biosciences",
+      "sub": "遺伝子検査",
+      "sub_en": "Molecular diagnostics",
+      "sub_short": "検査",
+      "sub_short_en": "Testing",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "試薬・消耗品の主な仕入れ先に挙げる",
+          "text_en": "Names Mettler-Toledo Rainin among its main suppliers",
+          "source": {
+            "label": "Interpace Biosciences 10-K(2025年度)",
+            "label_en": "Interpace Biosciences 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1054102/000149315226013646/form10-k.htm",
+            "level": "official",
+            "date": "2026-03-30",
+            "quote": "Our most significant suppliers for reagents and supplies include Thermo Fisher Scientific Inc., Illumina, Inc., Qiagen N.V., Mettler-Toledo Rainin, LLC., and F."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MET",
+      "ticker": "MET",
+      "name": "メットライフ",
+      "name_en": "MetLife, Inc.",
+      "sub": "生命保険",
+      "sub_en": "Life insurance",
+      "sub_short": "生保",
+      "sub_short_en": "Insurer",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "私募社債の購入者",
+          "text_en": "A purchaser of its private notes",
+          "source": {
+            "label": "Mettler-Toledo 10-K(2025年度)",
+            "label_en": "Mettler-Toledo 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1037646/000103764626000011/mtd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "Note Purchase Agreement dated as of March 31, 2015 by and among Mettler-Toledo International Inc., Metropolitan Life Insurance Company, MetLife Insurance Company USA, OMI MLIC Investments Limited, and Massachusetts Mutual Life Insurance Company(6)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MM",
+      "ticker": "MM",
+      "name": "マスミューチュアル",
+      "name_en": "Massachusetts Mutual Life Insurance Company",
+      "sub": "生命保険",
+      "sub_en": "Life insurance",
+      "sub_short": "生保",
+      "sub_short_en": "Insurer",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "私募社債の購入者",
+          "text_en": "A purchaser of its private notes",
+          "source": {
+            "label": "Mettler-Toledo 10-K(2025年度)",
+            "label_en": "Mettler-Toledo 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1037646/000103764626000011/mtd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "Note Purchase Agreement dated as of March 31, 2015 by and among Mettler-Toledo International Inc., Metropolitan Life Insurance Company, MetLife Insurance Company USA, OMI MLIC Investments Limited, and Massachusetts Mutual Life Insurance Company(6)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CI",
+      "ticker": "CI",
+      "name": "シグナ",
+      "name_en": "Cigna",
+      "sub": "医療保険",
+      "sub_en": "Health insurance",
+      "sub_short": "保険",
+      "sub_short_en": "Insurer",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "子会社が私募社債を購入",
+          "text_en": "Its investment unit bought its private notes",
+          "source": {
+            "label": "Mettler-Toledo 10-K(2025年度)",
+            "label_en": "Mettler-Toledo 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1037646/000103764626000011/mtd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "Note Purchase Agreement dated as of June 27, 2014 by and among Mettler-Toledo International Inc., Babson Capital Management LLC, Cigna Investments, Inc., and Teachers Insurance and Annuity Association of America(5)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "TIAA",
+      "ticker": "TIAA",
+      "name": "TIAA",
+      "name_en": "Teachers Insurance and Annuity Association",
+      "sub": "年金・保険",
+      "sub_en": "Retirement & insurance",
+      "sub_short": "年金",
+      "sub_short_en": "Pension",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "私募社債の購入者",
+          "text_en": "A purchaser of its private notes",
+          "source": {
+            "label": "Mettler-Toledo 10-K(2025年度)",
+            "label_en": "Mettler-Toledo 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1037646/000103764626000011/mtd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "Note Purchase Agreement dated as of June 27, 2014 by and among Mettler-Toledo International Inc., Babson Capital Management LLC, Cigna Investments, Inc., and Teachers Insurance and Annuity Association of America(5)"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

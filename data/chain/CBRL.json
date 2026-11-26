@@ -1,0 +1,162 @@
+{
+  "root": {
+    "ticker": "CBRL",
+    "name": "クラッカー・バレル",
+    "cik": 1067294,
+    "name_en": "Cracker Barrel"
+  },
+  "rows": [
+    {
+      "ja": "供給元・取引先",
+      "en": "Suppliers & providers"
+    },
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "DIN"
+  ],
+  "companies": [
+    {
+      "id": "DIN",
+      "ticker": "DIN",
+      "name": "ダイン・ブランズ",
+      "name_en": "Dine Brands Global",
+      "sub": "外食",
+      "sub_en": "Restaurants",
+      "sub_short": "外食",
+      "sub_short_en": "Dining",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ファミリー向け外食の競合に挙げる",
+          "text_en": "Names Cracker Barrel as a family dining competitor",
+          "source": {
+            "label": "Dine Brands Global 10-K(2025年度)",
+            "label_en": "Dine Brands Global 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/49754/000162828026011393/din-20251228.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "IHOP competes in the family dining category against national restaurant chains such as Denny's, Cracker Barrel Old Country Store, Waffle House and Bob Evans Restaurants."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CURB",
+      "ticker": "CURB",
+      "name": "カーブライン・プロパティーズ",
+      "name_en": "Curbline Properties",
+      "sub": "商業施設REIT",
+      "sub_en": "Shopping center REIT",
+      "sub_short": "REIT",
+      "sub_short_en": "REIT",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "主要テナントの1社",
+          "text_en": "One of its top tenants",
+          "source": {
+            "label": "Curbline Properties 10-K(2024年度)",
+            "label_en": "Curbline Properties 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2027317/000095017025024834/curb-20241231.htm",
+            "level": "official",
+            "date": "2025-02-21",
+            "quote": "follows: Tenant % of Shopping Center Base Rental Revenues % of Company- Owned Shopping Center GLA Starbucks 2.4% 1.4% Darden (A) 1.5% 1.7% JPMorgan Chase 1.3% 1.0% Verizon 1.2% 0.9% Total Wine & More 1.2% 1.6% AFC Urgent Care 1.1% 1.3% Inspire Brands (B) 1.1% 1.0% Chipotle 1.0% 0.7% AT&T 0.9% 0.8% Cracker Barrel (C) 0.9% 1.2% CVS 0.9% 1.2% Xponential Fitness (D) 0.9% 0.8% Wells Fargo 0.9% 0.7% Chick-fil-A 0.9% 0.8% (A) Includes Longhorn Steakhouse, Olive Garden and Chuy's."
+          }
+        }
+      ]
+    },
+    {
+      "id": "IVT",
+      "ticker": "IVT",
+      "name": "インベントラスト",
+      "name_en": "InvenTrust Properties",
+      "sub": "商業施設REIT",
+      "sub_en": "Shopping center REIT",
+      "sub_short": "REIT",
+      "sub_short_en": "REIT",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "テナントの1社に挙げる",
+          "text_en": "Names Cracker Barrel among its tenants",
+          "source": {
+            "label": "InvenTrust Properties 8-K(2026年10月)",
+            "label_en": "InvenTrust Properties 8-K (October 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1307748/000130774826000215/investorpresentation_oct.htm",
+            "level": "official",
+            "date": "2026-10-27",
+            "quote": "BofA Watch List Tenants Include (34 total): Advance Auto Parts, AMC Entertainment Holdings, Belk, Inc., Big 5 Sporting Goods, Camping World Holdings, Cato Corporation, Children's Place, Cracker Barrel, Dave & Busters, Designer Brands, Inc., Destination XL, LA Fitness, Gabe's/Old Time Pottery, Guitar Center, Heritage Grocers, Indigo Books & Music Inc., J.C."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SOWG",
+      "ticker": "SOWG",
+      "name": "ソウ・グッド",
+      "name_en": "Sow Good",
+      "sub": "菓子",
+      "sub_en": "Snacks",
+      "sub_short": "菓子",
+      "sub_short_en": "Snacks",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "商品を扱う小売の1社に挙げる",
+          "text_en": "Lists Cracker Barrel among retailers carrying its products",
+          "source": {
+            "label": "Sow Good 10-K(2024年度)",
+            "label_en": "Sow Good 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1490161/000095017025045749/sowg-20241231.htm",
+            "level": "official",
+            "date": "2025-03-27",
+            "quote": "Deepen Existing Customer Relationships: Our products have launched in retailers nationwide from convenience and grocery stores to big-box retailers, Five Below, Misfits Market/Imperfect Foods, TJX Canada, Hy-Vee, Cracker Barrel, 7/11, H-E-B, Kroger and Albertsons."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BAC",
+      "ticker": "BAC",
+      "name": "バンク・オブ・アメリカ",
+      "name_en": "Bank of America",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の幹事行",
+          "text_en": "Administrative agent on its credit agreement",
+          "source": {
+            "label": "Cracker Barrel 10-K(2026年7月期)",
+            "label_en": "Cracker Barrel 10-K (FY ended Jul 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1067294/000110465926110772/cbrl-20260731x10k.htm",
+            "level": "official",
+            "date": "2026-09-25",
+            "quote": "Restated Credit Agreement, dated as of May 16, 2025, among Cracker Barrel Old Country Store, Inc., the Subsidiary Guarantors named therein, the Lenders party thereto, and Bank of America, N.A., as Administrative Agent and Collateral Agent"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

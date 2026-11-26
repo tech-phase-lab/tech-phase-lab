@@ -1,0 +1,216 @@
+{
+  "root": {
+    "ticker": "RPM",
+    "name": "RPMインターナショナル",
+    "cik": 110621,
+    "name_en": "RPM International"
+  },
+  "rows": [
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "買収・売却",
+      "en": "Acquisitions & sales"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "AXTA",
+    "CSL",
+    "MAS"
+  ],
+  "companies": [
+    {
+      "id": "AKZO",
+      "ticker": "AKZO",
+      "name": "アクゾノーベル",
+      "name_en": "Akzo Nobel",
+      "sub": "塗料",
+      "sub_en": "Coatings",
+      "sub_short": "塗料",
+      "sub_short_en": "Coatings",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "10-Kで競合に挙げる",
+          "text_en": "Named as a competitor in its 10-K",
+          "source": {
+            "label": "RPM International 10-K(2026年5月期)",
+            "label_en": "RPM International 10-K (FY ended May 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/110621/000119312526312142/rpm-20260531.htm",
+            "level": "official",
+            "date": "2026-07-22",
+            "quote": "Some companies that compete in our markets include Akzo Nobel, Axalta Coating Systems Ltd., Carlisle Companies Inc., H.B."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AXTA",
+      "ticker": "AXTA",
+      "name": "アクサルタ・コーティング・システムズ",
+      "name_en": "Axalta Coating Systems",
+      "sub": "塗料",
+      "sub_en": "Coatings",
+      "sub_short": "塗料",
+      "sub_short_en": "Coatings",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "10-Kで競合に挙げる",
+          "text_en": "Named as a competitor in its 10-K",
+          "source": {
+            "label": "RPM International 10-K(2026年5月期)",
+            "label_en": "RPM International 10-K (FY ended May 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/110621/000119312526312142/rpm-20260531.htm",
+            "level": "official",
+            "date": "2026-07-22",
+            "quote": "Some companies that compete in our markets include Akzo Nobel, Axalta Coating Systems Ltd., Carlisle Companies Inc., H.B."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CSL",
+      "ticker": "CSL",
+      "name": "Carlisle Companies",
+      "name_en": "Carlisle Companies",
+      "sub": "建材",
+      "sub_en": "Building products",
+      "sub_short": "建材",
+      "sub_short_en": "Building",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "10-Kで競合に挙げる",
+          "text_en": "Named as a competitor in its 10-K",
+          "source": {
+            "label": "RPM International 10-K(2026年5月期)",
+            "label_en": "RPM International 10-K (FY ended May 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/110621/000119312526312142/rpm-20260531.htm",
+            "level": "official",
+            "date": "2026-07-22",
+            "quote": "Some companies that compete in our markets include Akzo Nobel, Axalta Coating Systems Ltd., Carlisle Companies Inc., H.B."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MAS",
+      "ticker": "MAS",
+      "name": "マスコ",
+      "name_en": "Masco",
+      "sub": "塗料・水栓",
+      "sub_en": "Paints & faucets",
+      "sub_short": "塗料",
+      "sub_short_en": "Paints",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "塗料で競合するブランドに挙げる",
+          "text_en": "Lists its Rust-Oleum brand as a paint competitor",
+          "source": {
+            "label": "Masco Corp 10-K(2025年度)",
+            "label_en": "Masco Corp 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/62996/000006299626000005/mas-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "Our competitors in this segment include large national and international brands such as Benjamin Moore & Co., Pittsburgh Paints Co.'s Glidden, Olympic, Pittsburgh Paints and Stains and PPG Paints brands, RPM International Inc.'s Rust-Oleum and Zinsser brands, The Sherwin‑Williams Company's Minwax, Sherwin-Williams, Thompson's Water Seal, Valspar and Purdy brands and the Wooster Brush Company, as well as many regional and other national brands."
+          }
+        }
+      ]
+    },
+    {
+      "id": "STARBRANDS",
+      "ticker": "STARBRANDS",
+      "name": "スター・ブランズ・グループ",
+      "name_en": "Star Brands Group",
+      "sub": "洗剤ブランド",
+      "sub_en": "Cleaning brands",
+      "sub_short": "洗剤",
+      "sub_short_en": "Cleaning",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年4月に買収",
+          "text_en": "Acquired in April 2025",
+          "source": {
+            "label": "RPM International 10-K(2026年5月期)",
+            "label_en": "RPM International 10-K (FY ended May 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/110621/000119312526312142/rpm-20260531.htm",
+            "level": "official",
+            "date": "2026-07-22",
+            "quote": "Most notably, on April 30, 2025, we acquired 100% of the stock of Clean Topco Limited, including its wholly owned subsidiaries comprising the Star Brands Group, which is the parent company of The Pink Stuff."
+          }
+        }
+      ]
+    },
+    {
+      "id": "READYSEAL",
+      "ticker": "READYSEAL",
+      "name": "レディ・シール",
+      "name_en": "Ready Seal",
+      "sub": "木材用塗料",
+      "sub_en": "Wood stain",
+      "sub_short": "塗料",
+      "sub_short_en": "Stain",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年6月に買収を発表",
+          "text_en": "Announced its acquisition in June 2025",
+          "source": {
+            "label": "RPM International 10-K(2026年5月期)",
+            "label_en": "RPM International 10-K (FY ended May 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/110621/000119312526312142/rpm-20260531.htm",
+            "level": "official",
+            "date": "2026-07-22",
+            "quote": "Most notably, on June 17, 2025, we announced the acquisition of Ready Seal Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PNC",
+      "ticker": "PNC",
+      "name": "PNCフィナンシャル・サービシズ",
+      "name_en": "PNC Financial Services",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の幹事行",
+          "text_en": "Administrative agent on its credit agreement",
+          "source": {
+            "label": "RPM International 10-K(2026年5月期)",
+            "label_en": "RPM International 10-K (FY ended May 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/110621/000119312526312142/rpm-20260531.htm",
+            "level": "official",
+            "date": "2026-07-22",
+            "quote": "Program was entered into pursuant to (1) a receivables sales agreement (the \"Sale Agreement\"), among certain of our subsidiaries (the \"Originators\"), and RPM Funding Corporation, a special purpose entity (the \"SPE\") whose voting interests are wholly owned by us, and (2) a receivables purchase agreement (the \"Purchase Agreement\"), among the SPE, certain purchasers from time to time party thereto (the \"Purchasers\"), and PNC Bank, National Association as administrative agent."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

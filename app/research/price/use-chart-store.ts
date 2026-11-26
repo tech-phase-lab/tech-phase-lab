@@ -9,10 +9,12 @@ export type StoredSeries = { bars: Bar[]; before: Bar[]; /** the read failed: sh
  *   so the chart shows a small spinner at its top right, never an empty or dimmed chart);
  * - a period read once is shown at once when it is picked again (`fresh(key)` says no read is needed).
  * `shownKey` is the key of what is shown, so the chart draws it with that period's rules until the new one comes. */
-export function useChartStore(key: string) {
-  const [store, setStore] = useState<Record<string, StoredSeries>>({});
+/** `initial`: a series drawn into the first HTML (a stock page's default period, speed Nov 26); it counts as read. */
+export function useChartStore(key: string, initial: Record<string, StoredSeries> | null = null) {
+  const [store, setStore] = useState<Record<string, StoredSeries>>(() => initial ?? {});
   const [lastKey, setLastKey] = useState<string | null>(null);
   const latest = useRef(store);
+  // (latest starts as the initial store above, so fresh(key) is true for a series drawn by the server)
   const own = store[key];
   // Remember what was last on the screen (adjusting state while rendering: React re-renders at once, no effect needed).
   if (own && lastKey !== key) setLastKey(key);

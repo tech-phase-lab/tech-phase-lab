@@ -92,3 +92,7 @@
 .syncMeta{min-width:0}
 .panel .notificationToggle{white-space:nowrap}
 .updated time{white-space:nowrap}
+.refresh{display:inline-flex;align-items:center;gap:6px}
+.liveDot{flex:none;width:7px;height:7px;border-radius:50%;background:#8fe3c0;animation:liveDotFlash .9s 2}
+@keyframes liveDotFlash{0%{box-shadow:0 0 0 0 rgba(93,255,180,.8)}70%{box-shadow:0 0 0 11px rgba(93,255,180,0)}100%{box-shadow:0 0 0 0 rgba(93,255,180,0)}}
+@media(prefers-reduced-motion:reduce){.liveDot{animation:none}}

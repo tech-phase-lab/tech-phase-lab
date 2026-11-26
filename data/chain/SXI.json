@@ -1,0 +1,182 @@
+{
+  "root": {
+    "ticker": "SXI",
+    "name": "スタンデックス・インターナショナル",
+    "cik": 310354,
+    "name_en": "Standex International"
+  },
+  "rows": [
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "買収・売却",
+      "en": "Acquisitions & sales"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "MCSTARLITE",
+      "ticker": "MCSTARLITE",
+      "name": "マクスターライト",
+      "name_en": "McStarlite",
+      "sub": "航空機部品",
+      "sub_en": "Aerospace parts",
+      "sub_short": "航空",
+      "sub_short_en": "Aero",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年2月に買収",
+          "text_en": "Acquired in February 2025",
+          "source": {
+            "label": "Standex International 10-K(2026年6月期)",
+            "label_en": "Standex International 10-K (FY ended Jun 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/310354/000143774926027789/sxi20260630_10k.htm",
+            "level": "official",
+            "date": "2026-08-14",
+            "quote": "McStarlite On February 5, 2025, the Company acquired 100% of the issued and outstanding shares of Basmat Inc., dba McStarlite, a privately held company, for $57.0 million, net of cash acquired."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMRAN",
+      "ticker": "AMRAN",
+      "name": "アムラン",
+      "name_en": "Amran",
+      "sub": "変圧器",
+      "sub_en": "Transformers",
+      "sub_short": "変圧器",
+      "sub_short_en": "Transform",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2024年10月に買収",
+          "text_en": "Acquired in October 2024",
+          "source": {
+            "label": "Standex International 10-K(2026年6月期)",
+            "label_en": "Standex International 10-K (FY ended Jun 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/310354/000143774926027789/sxi20260630_10k.htm",
+            "level": "official",
+            "date": "2026-08-14",
+            "quote": "Amran/Narayan Group On October 28, 2024 (\"Closing Date\"), the Company acquired, in separate transactions, 100% of the outstanding membership interest in Amran LLC (\"Amran\"), a privately-held company based in Houston, Texas, pursuant to a Securities Purchase Agreement (the \"Amran Purchase Agreement\") and through its wholly owned subsidiary, Mold-Tech Singapore PTE LTD (\"Mold-Tech Singapore\"), 90.1% of the capital stock of Narayan Powertech Private Limited (\"Narayan\"), a"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SANYUSWITCH",
+      "ticker": "SANYUSWITCH",
+      "name": "三友スイッチ",
+      "name_en": "Sanyu Switch",
+      "sub": "リレー",
+      "sub_en": "Relays",
+      "sub_short": "リレー",
+      "sub_short_en": "Relays",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2024年2月に買収",
+          "text_en": "Acquired in February 2024",
+          "source": {
+            "label": "Standex International 10-K(2026年6月期)",
+            "label_en": "Standex International 10-K (FY ended Jun 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/310354/000143774926027789/sxi20260630_10k.htm",
+            "level": "official",
+            "date": "2026-08-14",
+            "quote": "Its results are reported in the Electronics segment. o On February 19, 2024, we acquired, through our subsidiary Standex Electronics Japan Corporation, privately-held, Japanese-based Sanyu Switch Co., Ltd (Sanyu)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NASCENT",
+      "ticker": "NASCENT",
+      "name": "ナセント・テクノロジー",
+      "name_en": "Nascent Technology",
+      "sub": "電子機器",
+      "sub_en": "Electronics",
+      "sub_short": "電子",
+      "sub_short_en": "Electron",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2024年11月に買収",
+          "text_en": "Acquired in November 2024",
+          "source": {
+            "label": "Standex International 10-K(2026年6月期)",
+            "label_en": "Standex International 10-K (FY ended Jun 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/310354/000143774926027789/sxi20260630_10k.htm",
+            "level": "official",
+            "date": "2026-08-14",
+            "quote": "Undiscounted cash flows expected to be paid for operating leases with related parties are as follows as of June 30, 2026: Fiscal year Amount ($) 2027 388 2028 408 2029 46 Nascent Technology On November 18, 2024, the Company purchased all of the issued and outstanding equity interests of Nascent Technology Manufacturing, LLC (\"Nascent\") for $7.6 million, net of cash acquired."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BLFS",
+      "ticker": "BLFS",
+      "name": "バイオライフ・ソリューションズ",
+      "name_en": "BioLife Solutions",
+      "sub": "バイオ保存",
+      "sub_en": "Bioprocessing",
+      "sub_short": "バイオ",
+      "sub_short_en": "Bio",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "CBS事業を買った相手",
+          "text_en": "Bought its CBS business",
+          "source": {
+            "label": "Biolife Solutions 10-K(2025年度)",
+            "label_en": "Biolife Solutions 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/834365/000162828026012294/blfs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "On November 14, 2024, the Company entered into a Stock Purchase Agreement (the \"CBS Purchase Agreement\"), by and among the Company, Standex International Corporation, a Delaware corporation (\"CBS Buyer\"), and Arctic Solutions, Inc., a Delaware corporation and a wholly owned subsidiary of the Company (doing business as Custom Biogenic Systems, or \"CBS\"), for the sale by the Company of all of the issued and outstanding shares of common stock (the \"CBS Shares\") of CBS to CBS"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CFG",
+      "ticker": "CFG",
+      "name": "シチズンズ・バンク",
+      "name_en": "Citizens Bank, N.A.",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の幹事行",
+          "text_en": "Administrative agent on its credit agreement",
+          "source": {
+            "label": "Standex International 10-K(2026年6月期)",
+            "label_en": "Standex International 10-K (FY ended Jun 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/310354/000143774926027789/sxi20260630_10k.htm",
+            "level": "official",
+            "date": "2026-08-14",
+            "quote": "Standex International Corporation and the Minority Shareholders listed therein 8-K 10/31/2024 (m) Second Amendment to Third Amended and Restated Credit Agreement dated as of December 6, 2024 by and among Standex International Corporation, Citizens Bank, N.A., a national banking association, as Administrative Agent and Lender, and the other Lenders party thereto 8-K 12/12/2024 (n) Securities Purchase Agreement, dated as of June 26, 2026, by and among Standex International"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -14,9 +14,11 @@ export type TwelveComparisonBundle = {
  * Shared by the provider-sourced and the SEC-sourced companies, so both read the same evidence the same way. */
 export function appendMarketItems(prepared:NonNullable<Financials["preparedAnalysis"]>,evidence:TwelveFactorEvidence,periodEnd:string,currency:string,now=Date.now()) {
     const extras=twelveExtraFactors(evidence,now);
-    for(const id of ["financial","valuation","stability","momentum"] as const) {
+    for(const id of ["financial","stability","momentum"] as const) {
       const value=extras[id];
       if(value===null || value>3 && value<7)continue;
+      // Momentum is a strength only when the price rose (owner, Nov 26); a smaller fall is said in the summary, never listed as a strength.
+      if(id==="momentum" && value>=7 && !(evidence.momentum!.changePct>0))continue;
       const ja=twelveFactorMetric(evidence,id,"ja",now)!,en=twelveFactorMetric(evidence,id,"en",now)!;
       prepared.items.push({id,kind:value>=7?"strength":"weakness",short:{ja,en},detail:twelveFactorMethods[id]});
     }
@@ -27,9 +29,13 @@ export function appendMarketItems(prepared:NonNullable<Financials["preparedAnaly
     const margins=evidence.margins;
     if(extras.stability!==null && margins.length===4 && margins[0].value<margins[1].value-0.1) {
       const a=margins[1].value.toFixed(1),b=margins[0].value.toFixed(1);
-      addRisk("margin-decline",`営業利益率 ${a}→${b}%`,`Operating margin ${a}→${b}%`,
-        `${margins[1].periodEnd}期から${margins[0].periodEnd}期に営業利益率が低下。原因はこの数値だけでは特定できません。`,
-        `Operating margin declined from the quarter ended ${margins[1].periodEnd} to ${margins[0].periodEnd}. These figures alone do not establish the cause.`);
+      const pretax=evidence.marginBasis==="pretax", jaName=pretax?"税引前利益率":"営業利益率", enName=pretax?"Pre-tax margin":"Operating margin";
+      // A series of fiscal years (marginPeriod "annual") is said as years, not quarters (reviewer, Nov 26).
+      const annual=evidence.marginPeriod==="annual";
+      addRisk("margin-decline",`${jaName}${annual?"（年次）":""} ${a}→${b}%`,`${enName}${annual?" (fiscal years)":""} ${a}→${b}%`,
+        annual ? `${margins[1].periodEnd}に終わる年度から${margins[0].periodEnd}に終わる年度に${jaName}が低下。原因はこの数値だけでは特定できません。`
+          : `${margins[1].periodEnd}期から${margins[0].periodEnd}期に${jaName}が低下。原因はこの数値だけでは特定できません。`,
+        `${enName} declined from the ${annual?"fiscal year":"quarter"} ended ${margins[1].periodEnd} to the ${annual?"fiscal year":"quarter"} ended ${margins[0].periodEnd}. These figures alone do not establish the cause.`);
     }
     const stats=evidence.statistics;
     if(extras.financial!==null && stats && stats.totalDebt!>stats.totalCash!) {

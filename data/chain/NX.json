@@ -1,0 +1,178 @@
+{
+  "root": {
+    "ticker": "NX",
+    "name": "クアネックス",
+    "cik": 1423221,
+    "name_en": "Quanex Building Products"
+  },
+  "rows": [
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in its 10-K)"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "ASSA",
+      "ticker": "ASSA",
+      "name": "アッサ・アブロイ",
+      "name_en": "ASSA ABLOY",
+      "sub": "錠前",
+      "sub_en": "Locks",
+      "sub_short": "錠前",
+      "sub_short_en": "Locks",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "北米の窓・ドア部品の主な競合",
+          "text_en": "A primary North American competitor in window and door hardware",
+          "source": {
+            "label": "Quanex 10-K(2025年10月期)",
+            "label_en": "Quanex 10-K (FY ended Oct 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1423221/000142322125000100/nx-20251031.htm",
+            "level": "official",
+            "date": "2025-12-12",
+            "quote": "Primary competitors in North America include, but are not limited to, Assa Abloy, FlexScreen, Hoppe, Interlock, Radisson Industries, RiteScreen, Roto, Screenco, ScreenFab, and Vision Hardware."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HOPPE",
+      "ticker": "HOPPE",
+      "name": "ホッペ",
+      "name_en": "Hoppe",
+      "sub": "ドア金具",
+      "sub_en": "Door hardware",
+      "sub_short": "金具",
+      "sub_short_en": "Hardware",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "北米の窓・ドア部品の主な競合",
+          "text_en": "A primary North American competitor in window and door hardware",
+          "source": {
+            "label": "Quanex 10-K(2025年10月期)",
+            "label_en": "Quanex 10-K (FY ended Oct 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1423221/000142322125000100/nx-20251031.htm",
+            "level": "official",
+            "date": "2025-12-12",
+            "quote": "Primary competitors in North America include, but are not limited to, Assa Abloy, FlexScreen, Hoppe, Interlock, Radisson Industries, RiteScreen, Roto, Screenco, ScreenFab, and Vision Hardware."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ROTO",
+      "ticker": "ROTO",
+      "name": "ロト",
+      "name_en": "Roto",
+      "sub": "窓金具",
+      "sub_en": "Window hardware",
+      "sub_short": "金具",
+      "sub_short_en": "Hardware",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "北米の窓・ドア部品の主な競合",
+          "text_en": "A primary North American competitor in window and door hardware",
+          "source": {
+            "label": "Quanex 10-K(2025年10月期)",
+            "label_en": "Quanex 10-K (FY ended Oct 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1423221/000142322125000100/nx-20251031.htm",
+            "level": "official",
+            "date": "2025-12-12",
+            "quote": "Primary competitors in North America include, but are not limited to, Assa Abloy, FlexScreen, Hoppe, Interlock, Radisson Industries, RiteScreen, Roto, Screenco, ScreenFab, and Vision Hardware."
+          }
+        }
+      ]
+    },
+    {
+      "id": "INTERLOCK",
+      "ticker": "INTERLOCK",
+      "name": "インターロック",
+      "name_en": "Interlock",
+      "sub": "窓金具",
+      "sub_en": "Window hardware",
+      "sub_short": "金具",
+      "sub_short_en": "Hardware",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "北米の窓・ドア部品の主な競合",
+          "text_en": "A primary North American competitor in window and door hardware",
+          "source": {
+            "label": "Quanex 10-K(2025年10月期)",
+            "label_en": "Quanex 10-K (FY ended Oct 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1423221/000142322125000100/nx-20251031.htm",
+            "level": "official",
+            "date": "2025-12-12",
+            "quote": "Primary competitors in North America include, but are not limited to, Assa Abloy, FlexScreen, Hoppe, Interlock, Radisson Industries, RiteScreen, Roto, Screenco, ScreenFab, and Vision Hardware."
+          }
+        }
+      ]
+    },
+    {
+      "id": "VISIONHW",
+      "ticker": "VISIONHW",
+      "name": "ビジョン・ハードウェア",
+      "name_en": "Vision Hardware",
+      "sub": "窓金具",
+      "sub_en": "Window hardware",
+      "sub_short": "金具",
+      "sub_short_en": "Hardware",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "北米の窓・ドア部品の主な競合",
+          "text_en": "A primary North American competitor in window and door hardware",
+          "source": {
+            "label": "Quanex 10-K(2025年10月期)",
+            "label_en": "Quanex 10-K (FY ended Oct 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1423221/000142322125000100/nx-20251031.htm",
+            "level": "official",
+            "date": "2025-12-12",
+            "quote": "Primary competitors in North America include, but are not limited to, Assa Abloy, FlexScreen, Hoppe, Interlock, Radisson Industries, RiteScreen, Roto, Screenco, ScreenFab, and Vision Hardware."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RITESCREEN",
+      "ticker": "RITESCREEN",
+      "name": "ライトスクリーン",
+      "name_en": "RiteScreen",
+      "sub": "網戸",
+      "sub_en": "Window screens",
+      "sub_short": "網戸",
+      "sub_short_en": "Screens",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "北米の窓・ドア部品の主な競合",
+          "text_en": "A primary North American competitor in window and door hardware",
+          "source": {
+            "label": "Quanex 10-K(2025年10月期)",
+            "label_en": "Quanex 10-K (FY ended Oct 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1423221/000142322125000100/nx-20251031.htm",
+            "level": "official",
+            "date": "2025-12-12",
+            "quote": "Primary competitors in North America include, but are not limited to, Assa Abloy, FlexScreen, Hoppe, Interlock, Radisson Industries, RiteScreen, Roto, Screenco, ScreenFab, and Vision Hardware."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

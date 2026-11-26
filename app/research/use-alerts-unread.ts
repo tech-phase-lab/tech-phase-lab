@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { alertItems } from "@/lib/research/alert-items";
-import { parseCompanyWire } from "@/lib/research/company-wire";
+import type { AlertItem } from "@/lib/research/alert-items";
 
 const SEEN_KEY = "tech-phase:alerts-seen:v1";
 const REASON_KEY = "tech-phase:alerts-unread-reason:v1";
@@ -19,6 +18,37 @@ export function readVisitStart(): number | null {
   if (seen !== null && Date.now() - seen > 5_000) return seen;
   try { const before = Number(sessionStorage.getItem(BEFORE_KEY)); if (Number.isFinite(before) && before > 0) return before; } catch { /* Falls back to the record. */ }
   return seen;
+}
+/** One read of the listed alerts shared by every menu that shows the dot (phone menu and desktop sidebar are both mounted) and by
+ * the next page within FRESH_MS: each page view had read /api/research/news and /api/research/company-wire two or three times, one
+ * after the other, competing with the page's own data on a phone line (measured Nov 26). The two feeds are read side by side, and
+ * the rules that pick the listed rows are loaded only when the dot is checked, so they stay out of every page's first script. */
+const FRESH_MS = 60_000;
+let shared: { at: number; items: Promise<AlertItem[]> } | null = null;
+function forgetShared() { shared = null; }
+if (typeof window !== "undefined") window.addEventListener("tech-phase:membership-changed", forgetShared);
+function listedAlerts(signal: AbortSignal): Promise<AlertItem[]> {
+  if (shared && Date.now() - shared.at < FRESH_MS) return shared.items;
+  const timeout = AbortSignal.timeout(10_000);
+  const news = fetch("/api/research/news", { cache: "no-store", signal: timeout }).then(response => response.ok ? response.json() : Promise.reject(new Error("news")));
+  // Wire headlines are a separate lane: if they cannot be read, the rest still counts.
+  const wire = fetch("/api/research/company-wire", { cache: "no-store", signal: timeout }).then(reply => reply.ok ? reply.json() : null).catch(() => null);
+  const items = Promise.all([news, wire, import("@/lib/research/alert-items"), import("@/lib/research/company-wire")])
+    .then(([feed, rawWire, { alertItems }, { parseCompanyWire }]) => alertItems(feed, rawWire ? parseCompanyWire(rawWire).items : {}));
+  const entry = { at: Date.now(), items };
+  shared = entry;
+  items.catch(() => { if (shared === entry) shared = null; });
+  return new Promise((resolve, reject) => {
+    signal.addEventListener("abort", () => reject(signal.reason), { once: true });
+    items.then(resolve, reject);
+  });
+}
+/** The dot waits until the page's own data has had the line first (idle, or at most START_DELAY_MS). */
+const START_DELAY_MS = 2_500;
+function afterPageData(run: () => void): () => void {
+  const idle = (window as Window & { requestIdleCallback?: (cb: () => void, options?: { timeout: number }) => number; cancelIdleCallback?: (id: number) => void });
+  if (idle.requestIdleCallback) { const id = idle.requestIdleCallback(run, { timeout: START_DELAY_MS }); return () => idle.cancelIdleCallback?.(id); }
+  const id = window.setTimeout(run, START_DELAY_MS); return () => window.clearTimeout(id);
 }
 function writeSeen(value: number) {
   try { localStorage.setItem(SEEN_KEY, String(value)); } catch { /* Unread falls back to this session. */ }
@@ -50,14 +80,9 @@ export function useAlertsUnread(onAlertsPage: boolean) {
       controller?.abort();
       controller = new AbortController();
       try {
-        const response = await fetch("/api/research/news", { cache: "no-store", signal: AbortSignal.any([controller.signal, AbortSignal.timeout(10_000)]) });
-        if (!response.ok || !active) return;
-        const feed = await response.json();
-        // Wire headlines are a separate lane: if they cannot be read, the rest still counts.
-        const wire = await fetch("/api/research/company-wire", { cache: "no-store", signal: AbortSignal.any([controller.signal, AbortSignal.timeout(10_000)]) })
-          .then(async reply => reply.ok ? parseCompanyWire(await reply.json()).items : {}).catch(() => ({}));
+        const items = await listedAlerts(controller.signal);
         if (!active) return;
-        const fresh = alertItems(feed, wire).filter(item => item.at > seen);
+        const fresh = items.filter(item => item.at > seen);
         if (!active) return;
         setUnread(fresh.length > 0);
         try {
@@ -70,11 +95,11 @@ export function useAlertsUnread(onAlertsPage: boolean) {
         } catch { /* Diagnostics are optional. */ }
       } catch { /* Keep the last known state; the next poll retries. */ }
     }
-    void check();
+    const cancelStart = afterPageData(() => { void check(); });
     const timer = window.setInterval(check, POLL_MS);
     const visible = () => { if (document.visibilityState === "visible") void check(); };
     document.addEventListener("visibilitychange", visible);
-    return () => { active = false; controller?.abort(); window.clearInterval(timer); document.removeEventListener("visibilitychange", visible); };
+    return () => { active = false; cancelStart(); controller?.abort(); window.clearInterval(timer); document.removeEventListener("visibilitychange", visible); };
   }, [onAlertsPage]);
   return unread && !onAlertsPage;
 }

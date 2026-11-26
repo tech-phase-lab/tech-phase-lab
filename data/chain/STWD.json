@@ -1,0 +1,160 @@
+{
+  "root": {
+    "ticker": "STWD",
+    "name": "スターウッド・プロパティ・トラスト",
+    "cik": 1465128,
+    "name_en": "Starwood Property Trust"
+  },
+  "rows": [
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "提携・出資・買収",
+      "en": "Partners, stakes & deals"
+    },
+    {
+      "ja": "買収・売却",
+      "en": "Acquisitions & sales"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "STARWOODCAP",
+      "ticker": "STARWOODCAP",
+      "name": "スターウッド・キャピタル・グループ",
+      "name_en": "Starwood Capital Group",
+      "sub": "投資会社",
+      "sub_en": "Investment firm",
+      "sub_short": "投資",
+      "sub_short_en": "Investor",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "運用会社(外部運用)",
+          "text_en": "Its external manager",
+          "source": {
+            "label": "Starwood Property Trust 10-K(2025年度)",
+            "label_en": "Starwood Property Trust 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1465128/000146512826000009/stwd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "(\"Starwood Capital Group\"), including its affiliate, SPT Management, LLC (our \"Manager\") and their key personnel, who provide services to us through a management agreement, and we may not find a suitable replacement for our Manager and Starwood Capital Group if the management agreement is terminated, or for these key personnel if they leave Starwood Capital Group or otherwise become unavailable to us."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FUNDAMENTAL",
+      "ticker": "FUNDAMENTAL",
+      "name": "ファンダメンタル・インカム・プロパティーズ",
+      "name_en": "Fundamental Income Properties",
+      "sub": "ネットリース",
+      "sub_en": "Net lease",
+      "sub_short": "不動産",
+      "sub_short_en": "Real est.",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年7月に買収",
+          "text_en": "Acquired in July 2025",
+          "source": {
+            "label": "Starwood Property Trust 10-K(2025年度)",
+            "label_en": "Starwood Property Trust 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1465128/000146512826000009/stwd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "On July 23, 2025, we acquired Fundamental Income Properties, LLC (\"Fundamental\"), which was completed by way of merger, for approximately $2.2 billion inclusive of $1.3 billion of indebtedness assumed."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LNR",
+      "ticker": "LNR",
+      "name": "LNRプロパティ",
+      "name_en": "LNR Property",
+      "sub": "不動産投資",
+      "sub_en": "Real estate",
+      "sub_short": "不動産",
+      "sub_short_en": "Real est.",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2013年に買収",
+          "text_en": "Acquired in 2013",
+          "source": {
+            "label": "Starwood Property Trust 10-K(2025年度)",
+            "label_en": "Starwood Property Trust 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1465128/000146512826000009/stwd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "•utilizing the skills, expertise and infrastructure we acquired through our 2013 acquisition of LNR Property LLC (\"LNR\"), a market leading diversified real estate investment management and loan servicing company comprising our Investing and Servicing Segment, to expand and diversify our presence in various segments of real estate, including: •origination of small and medium sized loan transactions ($5 million to $50 million) for both investment and"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GECAPITAL",
+      "ticker": "GECAPITAL",
+      "name": "GEキャピタル",
+      "name_en": "GE Capital",
+      "sub": "金融",
+      "sub_en": "Finance",
+      "sub_short": "金融",
+      "sub_short_en": "Finance",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2018年にGEキャピタルから資産を購入",
+          "text_en": "Bought assets from GE Capital in 2018",
+          "source": {
+            "label": "Starwood Property Trust 10-K(2025年度)",
+            "label_en": "Starwood Property Trust 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1465128/000146512826000009/stwd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Asset Purchase Agreement, dated August 7, 2018, between Starwood Property Trust, Inc., as buyer, and GE Capital Global Holdings, LLC, as seller"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MS",
+      "ticker": "MS",
+      "name": "モルガン・スタンレー",
+      "name_en": "Morgan Stanley",
+      "sub": "証券",
+      "sub_en": "Securities",
+      "sub_short": "証券",
+      "sub_short_en": "Broker",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "買戻し契約の相手",
+          "text_en": "Counterparty on its repurchase agreements",
+          "source": {
+            "label": "Starwood Property Trust 10-K(2025年度)",
+            "label_en": "Starwood Property Trust 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1465128/000146512826000009/stwd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "As of December 31, 2025, Morgan Stanley Bank, N.A. held collateral sold under certain of our repurchase agreements with carrying values that exceeded the respective repurchase obligations by $1.1 billion."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
