@@ -14,12 +14,13 @@ export const TREASURE_HUNT = { ja: "トレジャーハント", en: "Treasure Hun
 
 type State = "loading" | "ready" | "not-ready" | "error" | "sign-in" | "pro-required";
 
-function useValueCheck(allowed: boolean) {
-  const [state, setState] = useState<State>("loading");
-  const [data, setData] = useState<ValueSnapshot | null>(null);
+/** `initial`: the day's ranking the server drew into the page for a member it confirmed (page.tsx); then nothing is asked here. */
+function useValueCheck(allowed: boolean, initial: ValueSnapshot | null) {
+  const [state, setState] = useState<State>(initial ? "ready" : "loading");
+  const [data, setData] = useState<ValueSnapshot | null>(initial);
   const [attempt, setAttempt] = useState(0);
   useEffect(() => {
-    if (!allowed) return;
+    if (!allowed || (initial && attempt === 0)) return;
     const controller = new AbortController();
     fetch("/api/research/value-check", { cache: "no-store", signal: controller.signal })
       .then(async response => {
@@ -30,7 +31,7 @@ function useValueCheck(allowed: boolean) {
       })
       .catch(() => { if (!controller.signal.aborted) setState("error"); });
     return () => controller.abort();
-  }, [allowed, attempt]);
+  }, [allowed, attempt, initial]);
   return { state, data, retry: () => { setState("loading"); setAttempt(n => n + 1); } };
 }
 
@@ -142,16 +143,17 @@ export function ValueRanking({ data, universe, ja, note, withYear = false }: { d
 /** 提供：Twelve Data (outside the card on the page; inside it on the tour's sample, as in the owner's mockup). */
 export const ValueCredit = ({ ja }: { ja: boolean }) => <p className={styles.credit}>{ja ? "提供：Twelve Data" : "Data: Twelve Data"}</p>;
 
-export default function TreasureHuntScreen() {
+export default function TreasureHuntScreen({ initial = null }: { initial?: ValueSnapshot | null }) {
   const memberPlan = useMemberDisplay();
   const settled = useMemberSettled();
   const owner = useOwnerAccount();
-  const plan = owner ? "pro" : memberPlan ?? (settled ? "free" : null);
+  // A ranking drawn by the server means the server confirmed the member: shown at once, without waiting for the browser's check.
+  const plan = initial || owner ? "pro" : memberPlan ?? (settled ? "free" : null);
   const [lang, setLang] = useResearchLanguage();
   const ja = lang === "ja";
   const t = (a: string, b: string) => ja ? a : b;
   const [universe, setUniverse] = useState<ValueUniverse>("tech");
-  const { state, data, retry } = useValueCheck(plan === "pro");
+  const { state, data, retry } = useValueCheck(plan === "pro", initial);
 
   return <ResearchToolShell lang={lang} setLang={setLang} title={t(TREASURE_HUNT.ja, TREASURE_HUNT.en)} showHeading={false} description="">
     <TreasureHuntCard ja={ja} basis={data?.basis ?? "trailing"}>
