@@ -1663,4 +1663,128 @@ def crwv(f, url, before_previous, report=None, events=None, previous=None, prior
     return {'tiles': tiles, 'numbers': numbers, 'evidence': ev.items, 'summary': summary(conclusion, growth, changes, caution, nxt)}
 
 
-WRITERS = {'AMD': amd, 'ANET': anet, 'PLTR': pltr, 'ALAB': alab, 'LITE': lite, 'SNDK': sndk, 'VRT': vrt, 'GEV': gev, 'BE': be, 'SKHY': skhy, 'ARM': arm, 'CRWV': crwv}
+
+# ---- Nebius (NBIS): the results 6-K's release and shareholder letter (EX-99.1, EX-99.2); columns are a year earlier, then this quarter ---
+
+def nbis(f, url, before_previous, report=None, events=None, previous=None):
+    need(f, 'revenue', 'ebitda', 'netIncome', 'adjNetIncome', 'cost', 'costShare', 'depreciation', 'interest', 'cfo', 'capex', 'debt', 'deferred',
+         'nonRecurring', 'guidance', 'capexGuidance')
+    ev = Evidence(url)
+    rev = f['revenue']
+    r2, r0 = rev.values
+    ev.add('numbers.revenue.current', rev)
+    ev.add('numbers.revenue.yearAgo', rev)
+    r1 = carried(ev, previous, 'numbers.revenue.current', 'numbers.revenue.previous')
+    qoq, yoy = change(r0, r1), change(r0, r2)
+    numbers = {'revenue': {'current': float(r0), 'previous': float(r1), 'yearAgo': float(r2)}, 'adjustedEPS': None, 'epsEstimate': None,
+               'grossMargin': None, 'guidance': None, 'segments': None}
+    eb, cx = f['ebitda'], f['capex']
+    capex = -cx.values[1]
+    tiles = [tile('売上高', 'Revenue', money_tile(ev, 0, rev, 1, None), f'前年同期比 {sign(yoy, 0)}、前期比 {sign(qoq, 0)}', f'{sign(yoy, 0)} YoY, {sign(qoq, 0)} QoQ'),
+             tile('調整後EBITDA', 'Adjusted EBITDA', money_tile(ev, 1, eb, 1, None), f'前年同期は{usd(eb.values[0])["ja"]}', f'Year ago {usd(eb.values[0])["en"]}'),
+             tile('設備投資(四半期)', 'Capex (quarter)', None, f'売上の約{q(capex / r0, 1)}倍、前年同期は{usd(-cx.values[0])["ja"]}', f'About {q(capex / r0, 1)}x revenue; year ago {usd(-cx.values[0])["en"]}')]
+    tiles[2]['value'] = usd(capex)
+    ev.add('tiles[0].note', rev, calc=growth_calc(rev, 1, 0), rnd=0)
+    ev.add('tiles[1].note', eb)
+    ev.add('tiles[2].value', cx, calc=f'{cx.raws[1]} / 1000', rnd=2)
+    ev.add('tiles[2].note', cx, calc=f'{cx.raws[1]} / {rev.raws[1]}', rnd=1)
+    ev.add('tiles[2].note', rev)
+    nr, cs, pr = f['nonRecurring'], f.get('cloudShare'), f.get('price')
+    nrm = Decimal(nr.values[0])
+    rest = r0 - nrm
+    ev.add('summary.conclusion[0]', nr)
+    ev.add('summary.cards.growth.sections[2]', nr)
+    if cs:
+        ev.add('summary.cards.growth.sections[0]', cs)
+    if pr:
+        ev.add('summary.cards.growth.sections[1]', pr)
+    growth = card(f'売上は前年同期の約{q(r0 / r2, 1)}倍', f'Revenue about {q(r0 / r2, 1)}x a year earlier', [
+        chip(tone(yoy), f'前年同期比 {sign(yoy, 0)}', f'{sign(yoy, 0)} YoY'),
+        chip('gold', f'うち一時的な売上 約{usd(nrm)["ja"]}', f'About {usd(nrm)["en"]} non-recurring')]
+        + ([chip('up', f'AIクラウドが売上の約{cs.values[0]}%', f'AI cloud ~{cs.values[0]}% of revenue')] if cs else []), [
+        sec('happened', f'売上は前年同期の{usd(r2)["ja"]}から{usd(r0)["ja"]}になり、前期の{usd(r1)["ja"]}から{sign(qoq, 0)}でした。' + (f'ほぼすべて(約{cs.values[0]}%)がAIクラウド事業です。' if cs else ''),
+            f'Revenue went from {usd(r2)["en"]} a year earlier to {usd(r0)["en"]}, {sign(qoq, 0)} from {usd(r1)["en"]} last quarter.' + (f' Almost all of it (about {cs.values[0]}%) came from the AI cloud business.' if cs else '')),
+        sec('good', '新しいデータセンターの設備が稼働し始めています。' + (f'会社は、{pr.values[0]}の契約の価格がGPU1時間あたり平均で{pr.values[2]}より{pr.values[1]}%超高かったとしています。' if pr else ''),
+            'New data-center capacity is coming online.' + (f' The company says {pr.values[0]} deals were priced on average more than {pr.values[1]}% higher per GPU-hour than {pr.values[2]} deals.' if pr else '')),
+        sec('watch', f'約{usd(nrm)["ja"]}は、パートナーの設備を使えるようにしたことによる一時的な売上です。これを除くと売上は約{usd(rest)["ja"]}で、前期比は{sign(change(rest, r1), 0)}にとどまります。',
+            f'About {usd(nrm)["en"]} was one-time revenue from enabling partners\' capacity. Excluding it, revenue was about {usd(rest)["en"]}, {sign(change(rest, r1), 0)} from the previous quarter.'),
+        sec('means', '一時的な売上は四半期ごとに大きく変わりえます。次の四半期は、繰り返し入る売上がどれだけ伸びたかを分けて読みます。',
+            'One-time revenue can swing from quarter to quarter. When reading next quarter, separate how much recurring revenue grew.')])
+    ni, ani, dep, it, cost, csh, be = f['netIncome'], f['adjNetIncome'], f['depreciation'], f['interest'], f['cost'], f['costShare'], f.get('breakeven')
+    for x in (eb, csh):
+        ev.add('summary.cards.change.sections[0]', x)
+    for x in (dep, it, ni, ani):
+        ev.add('summary.cards.change.sections[1]', x)
+    if be:
+        ev.add('summary.cards.change.sections[3]', be)
+    loss = ni.values[1] < 0
+    changes = card('調整後EBITDAは黒字、GAAPの赤字は残る' if loss and eb.values[1] > 0 else '調整後EBITDAと最終損益', 'Adjusted EBITDA positive; GAAP loss remains' if loss and eb.values[1] > 0 else 'Adjusted EBITDA and the bottom line', [
+        chip(tone(eb.values[1] - eb.values[0]), f'調整後EBITDA {usd(eb.values[0])["ja"]} → {usd(eb.values[1])["ja"]}', f'Adj. EBITDA {usd(eb.values[0])["en"]} → {usd(eb.values[1])["en"]}'),
+        chip('down' if loss else 'up', f'継続事業の純{"損失" if loss else "利益"} {usd(abs(ni.values[1]))["ja"]}', f'Continuing net {"loss" if loss else "income"} {usd(abs(ni.values[1]))["en"]}'),
+        chip('down', f'支払利息 {usd(-it.values[1])["ja"]}', f'Interest expense {usd(-it.values[1])["en"]}')], [
+        sec('happened', f'調整後EBITDAは前年同期の{usd(eb.values[0])["ja"]}から{usd(eb.values[1])["ja"]}になりました。売上に対する原価の割合は{csh.values[0]}%から{csh.values[1]}%になりました。',
+            f'Adjusted EBITDA went from {usd(eb.values[0])["en"]} a year earlier to {usd(eb.values[1])["en"]}. Cost of revenues went from {csh.values[0]}% to {csh.values[1]}% of revenue.'),
+        sec('watch', f'ただし、減価償却{usd(dep.values[1])["ja"]}と支払利息{usd(-it.values[1])["ja"]}を引くと、継続事業のGAAPの損益は{usd(ni.values[1])["ja"]}で、調整後の純利益{usd(ani.values[1])["ja"]}とは違う姿になります。',
+            f'But after depreciation of {usd(dep.values[1])["en"]} and interest expense of {usd(-it.values[1])["en"]}, continuing operations posted GAAP {usd(ni.values[1])["en"]}, a different picture from the {usd(ani.values[1])["en"]} adjusted net income.'),
+        sec('means', 'EBITDAは、減価償却や利息を引く前の利益です。設備と借入の大きい会社では、EBITDAが黒字でも最終損益が赤字になることがあります。',
+            'EBITDA is profit before depreciation and interest. For a company with heavy equipment and debt, EBITDA can be positive while the bottom line is negative.'),
+        sec('view', (f'会社は{be.values[0]}年末までに税引前で損益ゼロを目指しています。' if be else '') + 'それまでは、EBITDAと最終損益の差がどう縮むかを見ます。',
+            (f'The company targets pre-tax breakeven by the end of {be.values[0]}. ' if be else '') + 'Until then, watch how the gap between EBITDA and the bottom line narrows.')])
+    cfo, debt, dr, conv, shs = f['cfo'], f['debt'], f['deferred'], f.get('converts'), f.get('shares')
+    cg, nc, slip, tr = f['capexGuidance'], f.get('nextCapex'), f.get('slip'), f.get('tranches')
+    for x in (cx, cfo, debt):
+        ev.add('summary.cards.caution.sections[0]', x)
+    for x in (dr, conv, shs):
+        if x:
+            ev.add('summary.cards.caution.sections[1]', x)
+    ev.add('summary.cards.caution.sections[2]', cg)
+    if nc:
+        ev.add('summary.cards.caution.sections[2]', nc)
+    for x in (slip, tr):
+        if x:
+            ev.add('summary.cards.caution.sections[3]', x)
+    caution = card(f'設備投資は売上の約{q(capex / r0, 0)}倍、借入も増加', f'Capex is about {q(capex / r0, 0)}x revenue, and debt is rising', [
+        chip('down', f'設備投資 {usd(capex)["ja"]}(四半期)', f'Capex {usd(capex)["en"]} (quarter)'),
+        chip('down' if debt.values[1] > debt.values[0] else 'up', f'長期借入 {usd(debt.values[0])["ja"]} → {usd(debt.values[1])["ja"]}', f'Long-term debt {usd(debt.values[0])["en"]} → {usd(debt.values[1])["en"]}'),
+        chip(tone(cfo.values[1]), f'営業キャッシュフロー {usd(cfo.values[1])["ja"]}', f'Operating cash flow {usd(cfo.values[1])["en"]}')], [
+        sec('happened', f'今期の設備投資は{usd(capex)["ja"]}で、売上{usd(r0)["ja"]}の約{q(capex / r0, 1)}倍でした。営業キャッシュフローは{usd(cfo.values[1])["ja"]}です。長期借入は前年度末の{usd(debt.values[0])["ja"]}から{usd(debt.values[1])["ja"]}になりました。',
+            f'Capex was {usd(capex)["en"]} this quarter, about {q(capex / r0, 1)} times revenue of {usd(r0)["en"]}, and operating cash flow was {usd(cfo.values[1])["en"]}. Long-term debt went from {usd(debt.values[0])["en"]} at the prior year-end to {usd(debt.values[1])["en"]}.'),
+        sec('means', '資金は転換社債、借入、株式の売却、顧客の前払いで賄っています。' + f'長期の繰延収益は{usd(dr.values[0])["ja"]}から{usd(dr.values[1])["ja"]}に増えましたが、これはこれから提供するサービスの分です。',
+            'Funding comes from convertible notes, loans, share sales and customer prepayments.' + f' Long-term deferred revenue went from {usd(dr.values[0])["en"]} to {usd(dr.values[1])["en"]}, but that is service still to be delivered.'),
+        sec('watch', f'通年の設備投資は約{usd(Decimal(cg.values[0]) * 1000)["ja"]}の計画になり、従来の{usd(Decimal(cg.values[1]) * 1000)["ja"]}〜{usd(Decimal(cg.values[2]) * 1000)["ja"]}を上回ります。'
+            + (f'来年は{usd(Decimal(nc.values[0]) * 1000)["ja"]}〜{usd(Decimal(nc.values[1]) * 1000)["ja"]}の見込みです。' if nc else '') + '借入や株式の発行が増えれば、利息や持ち分の希薄化につながります。',
+            f'Full-year capex is now planned at about ${cg.values[0]}B (from ${cg.values[1]}–{cg.values[2]}B)' + (f' and ${nc.values[0]}–{nc.values[1]}B next year' if nc else '') + '. More debt or share issuance would add interest costs or dilution.'),
+        sec('view', ((f'一部のパートナーの設備は{slip.values[1]}年{"前" if slip.values[0] == "first" else "後"}半にずれ込み、' if slip else '') + (f'残りの区画は{tr.values[0]}の予定です。' if tr else '')) + '投資の回収が予定どおり進むかが、主なリスクです。',
+            ((f'Some partner capacity slipped into the {slip.values[0]} half of {slip.values[1]}' if slip else '') + (f', and the remaining tranches are now scheduled for {tr.values[0]}. ' if tr else '. ' if slip else '')) + 'Whether returns arrive on schedule is the main risk.')])
+    g, nr_ = f['guidance'], f.get('nextRevenue')
+    year, end, lo, hi, mg = g.values
+    ev.add('summary.cards.next.sections[0]', g)
+    if slip:
+        ev.add('summary.cards.next.sections[0]', slip)
+    if nr_:
+        ev.add('summary.cards.next.chips[1]', nr_)
+    ev.add('summary.cards.next.chips[2]', cg)
+    target = Decimal(lo if end == 'low' else hi) * 1000
+    ytd_rev = year_to_date(r0, r1, previous, 3) if previous and int(previous['periodQuarter']) == 2 else None
+    nxt = card(f'{year}年の売上は見通しの{"下限" if end == "low" else "上限"}({usd(target)["ja"]})に', f'{year} revenue now at the {end} end (${lo if end == "low" else hi}B)', [
+        chip('down' if end == 'low' else 'up', f'{year}年の売上 {usd(Decimal(lo) * 1000)["ja"]}〜{usd(Decimal(hi) * 1000)["ja"]}の{"下限" if end == "low" else "上限"}', f'{year} revenue: {end} end of ${lo}–{hi}B'),
+        (chip('gold', f'翌年の売上 {usd(Decimal(nr_.values[0]) * 1000)["ja"]}〜{usd(Decimal(nr_.values[1]) * 1000)["ja"]}', f'Next-year revenue ${nr_.values[0]}–{nr_.values[1]}B') if nr_ else chip('gold', f'調整後EBITDAマージン 約{mg}%', f'Adj. EBITDA margin ~{mg}%')),
+        chip('gold', f'{year}年の設備投資 約{usd(Decimal(cg.values[0]) * 1000)["ja"]}', f'{year} capex ~${cg.values[0]}B')], [
+        sec('happened', f'会社は{year}年の売上を{usd(Decimal(lo) * 1000)["ja"]}〜{usd(Decimal(hi) * 1000)["ja"]}の{"下限" if end == "low" else "上限"}になると見込んでいます。' + ('一部の外部の設備の稼働がずれ込んだためで、契約は残っているとしています。' if slip else '') + f'調整後EBITDAマージンの見通しは約{mg}%です。',
+            f'The company now expects {year} revenue at the {end} end of ${lo}–{hi}B' + (' because some third-party capacity slipped; it says the contracts remain' if slip else '') + f'. The adjusted EBITDA margin outlook is about {mg}%.'),
+        sec('means', (f'年初からの売上は{usd(ytd_rev)["ja"]}なので、通年{usd(target)["ja"]}なら第4四半期は約{usd(target - ytd_rev)["ja"]}になります。' if ytd_rev else '') + f'今回の{usd(r0)["ja"]}には約{usd(nrm)["ja"]}の一時的な売上が含まれるため、繰り返し入る売上が伸び続ける必要があります。',
+            (f'Year-to-date revenue was {usd(ytd_rev)["en"]}, so {usd(target)["en"]} for the year implies about {usd(target - ytd_rev)["en"]} in Q4. ' if ytd_rev else '') + f"Because this quarter's {usd(r0)['en']} included about {usd(nrm)['en']} of one-time revenue, recurring revenue needs to keep growing."),
+        sec('view', (f'翌年について会社は売上{usd(Decimal(nr_.values[0]) * 1000)["ja"]}〜{usd(Decimal(nr_.values[1]) * 1000)["ja"]}を目標にしています。' if nr_ else '') + '次の決算で、売上と設備投資、資金調達の進み具合を確かめます。',
+            (f'For next year the company targets ${nr_.values[0]}–{nr_.values[1]}B of revenue. ' if nr_ else '') + 'Next time, check revenue, capex and funding progress.')])
+    conclusion = [
+        c(f'売上は{usd(r0)["ja"]}で、前期比{sign(qoq, 0)}、前年同期の約{q(r0 / r2, 1)}倍でした。ただし約{usd(nrm)["ja"]}は、パートナーが自社の設備でNebiusの仕組みを動かす形での一時的な売上です。',
+          f"Revenue was {usd(r0)['en']}, {sign(qoq, 0)} from the previous quarter and about {q(r0 / r2, 1)} times a year earlier. But about {usd(nrm)['en']} of it was non-recurring revenue from the asset-light model, where partners run Nebius's platform on their own capacity."),
+        c(f'調整後EBITDAは{usd(eb.values[1])["ja"]}でしたが、継続事業のGAAPの損益は{usd(ni.values[1])["ja"]}でした。四半期の設備投資は{usd(capex)["ja"]}で売上の約{q(capex / r0, 0)}倍、長期借入は{usd(debt.values[1])["ja"]}になりました。',
+          f'Adjusted EBITDA was {usd(eb.values[1])["en"]}, but continuing operations posted GAAP {usd(ni.values[1])["en"]}. Quarterly capex was {usd(capex)["en"]}, about {q(capex / r0, 0)} times revenue, and long-term debt reached {usd(debt.values[1])["en"]}.'),
+        c(f'会社は{year}年の売上を{usd(Decimal(lo) * 1000)["ja"]}〜{usd(Decimal(hi) * 1000)["ja"]}の{"下限" if end == "low" else "上限"}とし、設備投資を約{usd(Decimal(cg.values[0]) * 1000)["ja"]}に引き上げました。',
+          f'The company put {year} revenue at the {end} end of its ${lo}–{hi}B range and raised {year} capex to about ${cg.values[0]}B.')]
+    return {'tiles': tiles, 'numbers': numbers, 'evidence': ev.items, 'summary': summary(conclusion, growth, changes, caution, nxt)}
+
+
+WRITERS = {'AMD': amd, 'ANET': anet, 'PLTR': pltr, 'ALAB': alab, 'LITE': lite, 'SNDK': sndk, 'VRT': vrt, 'GEV': gev, 'BE': be, 'SKHY': skhy, 'ARM': arm, 'CRWV': crwv,
+           'NBIS': nbis}

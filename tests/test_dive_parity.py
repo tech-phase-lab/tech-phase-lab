@@ -16,6 +16,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'scripts/research'))
 import check_dives  # noqa: E402
+import dive_figures  # noqa: E402
 import dive_writers  # noqa: E402
 import earnings_dive_generate as gen  # noqa: E402
 import earnings_patrol as patrol  # noqa: E402
@@ -51,6 +52,8 @@ FILINGS = {
     'ARM': {'prior': ('https://www.sec.gov/Archives/edgar/data/1973239/000197323926000113/exhibit992fye27q130-junx26.htm', 'ARM-letter-q1-fye27')},
     'CRWV': {'report': ('https://www.sec.gov/Archives/edgar/data/1769628/000176962826000465/crwv-20260930.htm', 'CRWV-10q-2026-09-30'),
              'prior': ('https://www.sec.gov/Archives/edgar/data/1769628/000176962826000362/coreweave2q26earningspress.htm', 'CRWV-release-q2-2026')},
+    # the shareholder letter is EX-99.2 of the results 6-K (the hand-made file quoted the same letter as a PDF from nebius.com)
+    'NBIS': {'exhibits': [('https://www.sec.gov/Archives/edgar/data/1513845/000110465926126008/tm2629571d1_ex99-2.htm', 'NBIS-992')]},
 }
 GAPS = {  # what is still different from the hand-made file with every filing in hand (none)
     'CRDO': {}, 'MRVL': {}, 'AVGO': {}, 'TSM': {},
@@ -68,6 +71,8 @@ GAPS = {  # what is still different from the hand-made file with every filing in
                            'the dividend and the return plan)',
              'tiles[0].note': '"first quarter above ₩100T" needs the full revenue history; the note gives the 6-K\'s own +327.9% year-over-year'},
     'ARM': {}, 'CRWV': {},
+    'NBIS': {'sources': 'interest expense and the funding sources come from the release\'s own statements (the hand-made file quoted them from the '
+                        'separate Operating and Financial Review 6-K); the shareholder letter is its SEC copy (EX-99.2) instead of the nebius.com PDF'},
 }
 CHIP_GAPS = {}
 FILINGS_DIR = ROOT / 'tests/fixtures/dive-filings'
@@ -110,7 +115,8 @@ def generated(ticker, filings=True):
     extra = FILINGS.get(ticker, {}) if filings else {'exhibits': FILINGS.get(ticker, {}).get('exhibits', [])}  # exhibits are part of the release
     if 'report' in extra:
         release['report'] = {'url': extra['report'][0], 'text': filing_text(extra['report'][1]), 'form': '10-Q'}
-    release['events'] = [{'url': u, 'text': filing_text(n), 'accepted': at} for u, n, at in extra.get('events', [])]
+    release['events'] = [{'url': u, 'text': filing_text(n), 'accepted': at, 'form': '6-K' if ticker in dive_figures.EVENT_SPECS else '8-K'}
+                         for u, n, at in extra.get('events', [])]
     release['exhibits'] = [{'url': u, 'text': filing_text(n)} for u, n in extra.get('exhibits', [])]
     if 'prior' in FILINGS.get(ticker, {}):  # the previous quarter's release (public before this release, so in both stages)
         release['prior'] = {'url': FILINGS[ticker]['prior'][0], 'text': filing_text(FILINGS[ticker]['prior'][1])}
@@ -195,7 +201,7 @@ class DepthParity(unittest.TestCase):
 
     def test_without_its_other_exhibits_a_multi_exhibit_company_is_held(self):
         import dive_figures
-        for ticker in ('TSM', 'ASML'):
+        for ticker in ('TSM', 'ASML', 'NBIS'):
             dive = json.loads((ROOT / f'lib/research/dives/{ticker}.json').read_text(encoding='utf-8'))
             text = gzip.open(ROOT / f'tests/fixtures/latest-releases/{ticker}.txt.gz', 'rt').read()
             figures = dive_figures.read_docs(ticker, [(dive['sources'][0]['url'], text)])

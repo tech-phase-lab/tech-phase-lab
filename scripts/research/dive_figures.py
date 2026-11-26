@@ -12,7 +12,7 @@ from dataclasses import dataclass, field
 from decimal import Decimal
 import re
 
-CELL = re.compile(r'(?:\$\s?)?\(?[+-]?\$?\s?\d[\d,]*(?:\.\d+)?\)?(?:\s?%|\s(?:ppts?|bps)\b|bps\b)?|—')
+CELL = re.compile(r'(?:\$\s?)?\(?[+-]?\$?\s?\d[\d,]*(?:\.\d+)?(?:\s?\))?(?:\s?%|\s(?:ppts?|bps)\b|bps\b)?|—')
 
 
 @dataclass
@@ -344,10 +344,11 @@ def lumentum(t):
 
 
 WORDED = r'(?:(?:up|down) [\d.,]+ ?(?:%|ppts?)|flat|\*)'
-VALUE = r'(\$?\(?-?[\d,]+(?:\.\d+)?\)? ?%?)'
+VALUE = r'(\$?\(?-?[\d,]+(?:\.\d+)?(?: ?\))? ?%?)'   # "(5.2 )": a negative printed with a space
 
 
-TOKENS = {'V': VALUE, 'W': WORDED, 'X': r'(\$?\(?-?[\d,]+(?:\.\d+)?\)? ?%?|F|U)', 'B': r'\(?[\d,]+\)? ?bps'}
+TOKENS = {'V': VALUE, 'W': WORDED, 'X': r'(\$?\(?-?[\d,]+(?:\.\d+)?\)? ?%?|F|U)', 'B': r'\(?[\d,]+\)? ?bps',
+          'N': r'(?:n/m|-?[\d,.]+ ?%)'}   # N: a change column (a percent or n/m), not read
 
 
 def worded(area, label, groups, unit='million'):
@@ -682,7 +683,45 @@ def asml(docs):
     return out
 
 
-DOC_SPECS = {'TSM': tsmc, 'ASML': asml}
+def nebius(docs):
+    u1, t1 = pick(docs, 'announced its unaudited financial results')
+    u2, t2 = pick(docs, 'Letter to shareholders')
+    summary = between(t1, 'announced its unaudited financial results', ('(1) The following measures', '(1)The following measures'))
+    ops = between(t1, 'Operating costs and expenses:', 'Net income / (loss) per')
+    bs = between(t1, 'Balance Sheets', 'Shareholders')
+    flows = between(t1, 'Selected consolidated cash flow data', 'Outstanding Shares')
+    out = located(u1, {   # the year-ago quarter first, then this quarter, the change, then nine months the same (in millions)
+        'revenue': row(summary, 'Revenues', 2, None, None, width=6),
+        'ebitda': worded(summary, 'Adjusted EBITDA / (loss)', 'VVNVVN'),
+        'netIncome': worded(summary, 'Net income / (loss) from continuing operations', 'VVNVVN'),
+        'adjNetIncome': worded(summary, 'Adjusted net income / (loss)', 'VVNVVN'),
+        'cost': row(between(t1, 'Cost of revenues', 'Product development'), 'Cost of revenues', 2, None, None, width=6),
+        'costShare': sentence(between(t1, 'Cost of revenues', 'Product development'), r'as a percentage of revenues (\d+) % (\d+) %', (1, 2), unit='percent'),
+        'depreciation': row(between(t1, 'Depreciation and amortization', 'Total operating costs'), 'Depreciation and amortization', 2, None, None, width=6),
+        'interest': row(ops, 'Interest expense', 2, None, None, width=4),
+        'cfo': worded(flows, 'Net cash provided by / (used in) operating activities – continuing operations', 'VVNVVN'),
+        'capex': worded(flows, 'Purchases of property and equipment and intangible assets', 'VVNVVN'),
+        'debt': row(bs, 'Debt, non-current', 2, None, None),                  # the previous year-end, then this quarter's end
+        'deferred': row(bs, 'Deferred revenue, non-current', 2, None, None),
+        'converts': row(t1, 'Proceeds from issuance of convertible notes', 2, 'FINANCING ACTIVITIES', None, width=4),
+        'shares': row(t1, 'Proceeds from sale of treasury shares', 2, 'FINANCING ACTIVITIES', None, width=4),
+    })
+    out.update(located(u2, {
+        'nonRecurring': sentence(t2, r'recognized approximately \$(\d+) million of non-recurring revenue as part of our asset-light model', (1,), unit='text'),
+        'cloudShare': sentence(t2, r'Nebius AI cloud business accounted for approximately (\d+)% of total group revenue', (1,), unit='text'),
+        'price': sentence(t2, r'Prices in (Q[1-4]) rose on average more than (\d+)% per GPU-hour versus (Q[1-4])', (1, 2, 3), unit='text'),
+        'breakeven': sentence(t2, r'We expect to reach pre-tax breakeven by the end of (20\d\d)', (1,), unit='text'),
+        'guidance': sentence(t2, r'we now expect (20\d\d) revenue at the (low|high) end of our \$([\d.]+)-([\d.]+) billion range, with an adjusted EBITDA margin of ca\. (\d+)%', (1, 2, 3, 4, 5), unit='text'),
+        'capexGuidance': sentence(t2, r'Capital expenditures: Approximately \$(\d+) billion, above our \$(\d+)-(\d+) billion range', (1, 2, 3), unit='text'),
+        'nextCapex': sentence(t2, r'We anticipate capex of \$(\d+)-(\d+) billion', (1, 2), unit='text'),
+        'nextRevenue': sentence(t2, r'We expect revenue of \$(\d+)-(\d+) billion', (1, 2), unit='text'),
+        'slip': sentence(t2, r'now scheduled for the (first|second) half of (20\d\d)\. The contracts behind that capacity remain in place', (1, 2), unit='text'),
+        'tranches': sentence(t2, r'remaining tranches now scheduled for (\dQ\d\d)', (1,), unit='text'),
+    }))
+    return out
+
+
+DOC_SPECS = {'TSM': tsmc, 'ASML': asml, 'NBIS': nebius}
 
 
 def read_docs(ticker, docs):

@@ -431,7 +431,7 @@ def quarter_filings(ticker, filings, release, previous, fetch=None, exhibit=None
         else:
             url, text = exhibit(cik(ticker), accession, ('1',))
         if url and text:
-            events.append({'url': url, 'text': text, 'accepted': accepted, 'accession': accession})
+            events.append({'url': url, 'text': text, 'accepted': accepted, 'accession': accession, 'form': form})
     return report, sorted(events, key=lambda e: e['accepted'])
 
 

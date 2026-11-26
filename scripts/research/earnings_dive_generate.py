@@ -430,6 +430,8 @@ def company_dive(ticker, release, previous, writer, text, url, period, end, toda
         if report:
             extra_sources.append({'url': release['report']['url'], 'title': f"{previous['name']} Form {release['report'].get('form', '10-Q')} for {period}",
                                   'location': 'Notes to the financial statements and risk factors'})
+    for exhibit in release.get('exhibits') or []:  # the other exhibits of the results filing (a presentation, statements, a letter)
+        extra_sources.append({'url': exhibit['url'], 'title': f"{previous['name']} {period} results, another exhibit of the same filing", 'location': 'Exhibit'})
     events = []
     for event in release.get('events') or []:  # other 8-Ks of the quarter: a deal, a preliminary result
         found = {**dive_figures.deal(event['text']), **dive_figures.read_event(ticker, event['text'])}
@@ -439,7 +441,9 @@ def company_dive(ticker, release, previous, writer, text, url, period, end, toda
             fig.url = event['url']
         day = event['accepted'].astimezone(timezone.utc)
         events.append({'figures': found, 'url': event['url'], 'date': f'{day.month}月{day.day}日', 'dateEn': f'{day.strftime("%B")} {day.day}'})
-        extra_sources.append({'url': event['url'], 'title': f"{previous['name']} Form 8-K, Exhibit 99.1 ({day.date().isoformat()})", 'location': 'Press release'})
+        form = event.get('form', '8-K')
+        extra_sources.append({'url': event['url'], 'title': f"{previous['name']} Form {form}" + (', Exhibit 99.1' if form == '8-K' else '') + f" ({day.date().isoformat()})",
+                              'location': 'Press release' if form == '8-K' else 'Notice filed the same day'})
     extra = {}
     if ticker in dive_figures.PRIOR:  # the previous quarter's release: figures this release prints without that quarter
         prior = release.get('prior') or {}
