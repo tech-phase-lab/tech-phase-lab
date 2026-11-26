@@ -4,6 +4,7 @@ import valueCheck from "./value-check-universe.json" with { type: "json" };
 import rosters from "../resolute/thermometer-rosters.json" with { type: "json" };
 import { LEVERAGED_ETFS } from "./leveraged-etfs.ts";
 import { providerSymbol } from "./provider-symbol.ts";
+import { MAJOR_ETFS } from "./major-etfs.ts";
 
 /** Who may make the public price APIs (/api/research/market/{quotes,facts,chart,period-bases}, /api/research/earnings-consensus) ask
  * Twelve Data, and how often (owner, Nov 26: Twelve Data use must never grow with members or visitors).
@@ -13,7 +14,8 @@ import { providerSymbol } from "./provider-symbol.ts";
  *    known symbols.
  *  - Anyone else: known symbols only, and a per-address limit per server instance.
  * Known = the SEC's list of US-listed companies (the stock search's own directory, read once a day) and the site's own lists (the companies
- * it follows, the relationship-map universe, value check, the thermometer baskets, the leveraged ETFs and their stocks, the マーケット board).
+ * it follows, the relationship-map universe, value check, the thermometer baskets, the leveraged ETFs and their stocks, widely held ETFs
+ * (lib/research/major-etfs.ts), the マーケット board).
  * Pure: the server wiring (who is asking, the SEC list) is lib/research/market-access.ts. */
 
 /** The three index pages (app/research/market/index/[id]/page.tsx). */
@@ -26,6 +28,7 @@ const lists: string[][] = [
   (rosters as { semiconductors: { tickers: string[] } }).semiconductors.tickers,
   LEVERAGED_ETFS.flatMap(item => [item.etf, item.underlying]),
   INDEX_PAGE_SYMBOLS,
+  [...MAJOR_ETFS],
 ];
 /** The site's own symbols (no network needed). */
 export const SITE_TICKERS: ReadonlySet<string> = new Set(lists.flat().filter(t => typeof t === "string").map(t => t.toUpperCase()));
@@ -52,8 +55,9 @@ export function clientAddress(headers: Headers): string {
 }
 
 /** Requests a minute one address may make, per server instance, for visitors who are not signed in. A watchlist polled every 15 seconds
- * with a stock page open stays far below them. */
-export const ANONYMOUS_PER_MINUTE: Record<Cost, number> = { light: 90, heavy: 20 };
+ * with a stock page open stays far below them; the one-credit reads allow many people behind one address (Japanese mobile carriers share
+ * addresses), and most of those reads are answered from the shared copies without asking the provider. */
+export const ANONYMOUS_PER_MINUTE: Record<Cost, number> = { light: 300, heavy: 20 };
 const ADDRESSES_KEPT = 20_000;
 
 /** A sliding one-minute window per address and cost class. */

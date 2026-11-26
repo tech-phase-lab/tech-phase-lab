@@ -15,6 +15,8 @@ test('ticker allowlist: visitors and costly reads known symbols only; members an
  assert.equal(tickerAllowed('NVDA','anonymous','heavy',null),true,'the site\'s own companies without the SEC list');
  assert.equal(tickerAllowed('SOXL','anonymous','light',null),true,'leveraged ETFs');
  for(const t of ['DJI','NDX','SPX'])assert.equal(tickerAllowed(t,'anonymous','light',null),true,t);
+ // Trust-series ETFs the SEC company list does not name one by one.
+ for(const t of ['VOO','IWM','TLT','QQQ','SCHD','TQQQ','IBIT'])assert.equal(tickerAllowed(t,'anonymous','light',null),true,t);
  assert.equal(tickerAllowed('ZZZQX','anonymous','light',SEC),false);
  assert.equal(tickerAllowed('ZZZQX','anonymous','heavy',SEC),false);
  assert.equal(tickerAllowed('USD/JPY','anonymous','light',null,t=>t==='USD/JPY'),true,'the route\'s own board symbols');
@@ -41,7 +43,8 @@ test('rate limit: per address and per minute for visitors, heavy reads tighter, 
  assert.equal(allow('203.0.113.5','heavy'),false);
  t+=60_000;assert.equal(allow('203.0.113.5','light'),true,'a minute later');assert.equal(allow('203.0.113.5','heavy'),true);
  // A watchlist polled every 15 seconds with a stock page open (quotes 4, chart 1, closes 1, facts 1 a minute) stays far below.
- assert.ok(ANONYMOUS_PER_MINUTE.light>=30&&ANONYMOUS_PER_MINUTE.heavy>=5);
+ // Many people behind one shared mobile address still fit.
+ assert.equal(ANONYMOUS_PER_MINUTE.light,300);assert.ok(ANONYMOUS_PER_MINUTE.heavy>=5);
  assert.equal(clientAddress(new Headers({'x-forwarded-for':'198.51.100.7, 10.0.0.1'})),'198.51.100.7');
  assert.equal(clientAddress(new Headers({'x-vercel-forwarded-for':'2001:db8::1'})),'2001:db8::1');
  assert.equal(clientAddress(new Headers({'x-forwarded-for':'<script>'})),'unknown');
