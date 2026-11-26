@@ -49,6 +49,7 @@ export function buildSecMarketEvidence(c: Financials, series?: Raw & { adjust: "
   return {
     ...base,
     margins: c.quarterMargins ?? [],
+    ...(c.marginPeriod ? { marginPeriod: c.marginPeriod } : {}),
     statistics: stamp !== null
       ? { retrievedAt: stamp, quarterEnd: q.end, forwardPE, trailingPE: null, currentRatio: null, totalCash: null, totalDebt, priceToSales }
       : null,

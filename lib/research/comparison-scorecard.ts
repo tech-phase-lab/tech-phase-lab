@@ -1,6 +1,8 @@
 import { periodMaxAgeDays, twelveExtraFactors, twelveFactorMetric } from "./twelve-data-factors.ts";
 import { valueFigureCurrent, valueFigureScore, valueFigureText } from "./comparison-value.ts";
 import type { Financials } from "./comparison.ts";
+import { ALTERNATIVE_SCALES, lossTrendPct, runway } from "./comparison-alternatives.ts";
+import { ALTERNATIVE_LABELS } from "./comparison-labels.ts";
 export type ScoreId = "valuation" | "growth" | "profitability" | "financial" | "cash" | "stability" | "momentum";
 export type ComparisonScore = { id: ScoreId; label: {ja:string;en:string}; value: number | null };
 const clamp = (n:number) => Math.round(Math.max(0,Math.min(10,n))*10)/10;
@@ -17,7 +19,7 @@ export function hasRecentQuarter(c: Financials, now = Date.now()): boolean {
 /** A company with no revenue yet whose latest balance sheet is current: the same age limit and filing checks as a quarter. Its financial
  *  strength is scored from that balance sheet (owner, Nov 26: requiring a revenue figure before reading the balance sheet was a bug). */
 export function hasRecentBalance(c: Financials, now = Date.now()): boolean {
-  return c.status === "ready" && !!c.preRevenue && !!c.balance && now-Date.parse(c.balance.end)>=0 && now-Date.parse(c.balance.end)<=periodMaxAgeDays()*86400000
+  return c.status === "ready" && !!c.preRevenue && !!c.balance && now-Date.parse(c.balance.end)>=0 && now-Date.parse(c.balance.end)<=periodMaxAgeDays(c.balanceMonths)*86400000
     && !c.dataWarnings?.some(w=>w.en.includes("quarterly filing") || w.en.includes("earnings release") || w.en.includes("could not be checked"));
 }
 /** Shared comparison conditions for both the conclusion and highlighted scores. */
@@ -47,7 +49,7 @@ export function comparisonAvailability(c: Financials, lang: "ja"|"en", now=Date.
   const ja=lang==="ja";
   if(c.busy) return ja ? "混み合っています。しばらくしてからもう一度お試しください。" : "The data service is busy right now. Please try again in a few minutes.";
   if(c.status==="unavailable") return ja ? "決算データを取得できませんでした。" : "Financial data could not be retrieved.";
-  if(hasRecentBalance(c,now) && !hasRecentQuarter(c,now)) return ja ? "売上がまだ無い会社です。財務と株価の項目で比べます。" : "No revenue yet: compared on its balance sheet and share price.";
+  if(hasRecentBalance(c,now) && !hasRecentQuarter(c,now)) return (c.preRevenueMetrics ? ALTERNATIVE_LABELS.preRevenueNote : { ja: "売上がまだ無い会社です。財務と株価の項目で比べます。", en: "No revenue yet: compared on its balance sheet and share price." })[lang];
   if(c.status==="unsupported" || !c.quarterRevenue) return ja ? "比較に使える四半期データが未取得です。" : "Comparable quarterly data is unavailable.";
   if(!hasRecentQuarter(c,now)) return ja ? "最新の四半期データを確認できていません。" : "The latest quarterly figures have not been verified.";
   if(!c.preparedAnalysis) return ja ? "長所・短所の要点は未作成です。" : "Strengths and weaknesses have not been prepared.";
@@ -72,20 +74,58 @@ export function comparisonScores(c: Financials, now = Date.now()): ComparisonSco
     : balanced ? clamp(10*Math.min(balance!.cash!.value/Math.max(debt!,1),1)) : null;
   const cash = recent && finite(c.quarterFcfMargin) ? clamp(5+c.quarterFcfMargin/5) : null;
   const extra=c.twelveData ? twelveExtraFactors(c.twelveData,now) : null;
+  // Company-type metrics where the standard one has no meaning (comparison-alternatives.ts), each on its own fixed scale; a standard score
+  // that exists is never replaced.
+  const alt = alternativeScores(c, recent, balanceOnly);
   const scores: ComparisonScore[] = [
-    {id:"financial",label:{ja:"財務健全性",en:"Financial strength"},value:recent ? extra?.financial ?? financial : balanceOnly ? financial : null},
-    {id:"profitability",label:{ja:"収益性",en:"Profitability"},value:profitability},
+    {id:"financial",label:{ja:"財務健全性",en:"Financial strength"},value:recent ? extra?.financial ?? financial ?? alt.financial ?? null : balanceOnly ? financial : null},
+    {id:"profitability",label:{ja:"収益性",en:"Profitability"},value:profitability ?? (alt.profitability ?? null)},
     // Treasure Hunt's figure (comparison-value.ts): the price against the company's own history, independent of the latest quarter.
     {id:"valuation",label:{ja:"割安性",en:"Valuation"},value:c.valueCheck && valueFigureCurrent(c.valueCheck,now) ? valueFigureScore(c.valueCheck) : null},
-    {id:"stability",label:{ja:"安定性",en:"Stability"},value:recent ? extra?.stability ?? null : null},
+    {id:"stability",label:{ja:"安定性",en:"Stability"},value:recent ? extra?.stability ?? null : (alt.stability ?? null)},
     {id:"momentum",label:{ja:"株価モメンタム",en:"Price momentum"},value:extra?.momentum ?? null},
-    {id:"growth",label:{ja:"成長性",en:"Growth"},value:growth},
-    {id:"cash",label:{ja:"資金創出",en:"Cash generation"},value:cash},
+    {id:"growth",label:{ja:"成長性",en:"Growth"},value:growth ?? (alt.growth ?? null)},
+    {id:"cash",label:{ja:"資金創出",en:"Cash generation"},value:cash ?? (alt.cash ?? null)},
   ];
   if(c.referenceEvaluation) return scores.map(s=>({...s,value:recent ? c.referenceEvaluation!.factors.find(f=>f.id===s.id)?.value ?? null : null}));
   return scores;
 }
 
+/** The company-type scores: for a pre-revenue company with a current balance sheet, runway, net-loss trend, R&D intensity and dilution
+ *  (growth, profitability, cash, stability); for a bank, insurer, broker or BDC with a current period, capital ratio, ROE and net investment
+ *  income margin where the standard figure is missing. Only the company's own figures (partner-independent). */
+export function alternativeScores(c: Financials, recent: boolean, balanceOnly: boolean): Partial<Record<ScoreId, number | null>> {
+  const S = ALTERNATIVE_SCALES;
+  if (balanceOnly && c.preRevenueMetrics) {
+    const m = c.preRevenueMetrics, trend = lossTrendPct(m);
+    return { cash: S.runway(runway(m)), growth: trend === null ? null : S.lossTrend(trend), profitability: m.rd ? S.rdIntensity(m.rd.share) : null,
+      stability: m.dilution ? S.dilution(m.dilution.pct) : null };
+  }
+  const s = c.sectorMetrics;
+  if (!recent || !s) return {};
+  return { financial: finite(s.capitalRatio) ? S.capitalRatio(s.capitalRatio) : null, cash: s.roe ? S.roe(s.roe.pct) : null,
+    profitability: finite(s.niiMargin) ? S.niiMargin(s.niiMargin) : null };
+}
+/** The line beside a company-type score (comparison-labels.ts), or null when the standard figure is shown. */
+function alternativeMetric(c: Financials, id: ScoreId, lang: "ja"|"en", recent: boolean, balanceOnly: boolean): string | null {
+  const alt = alternativeScores(c, recent, balanceOnly)[id];
+  const L = ALTERNATIVE_LABELS;
+  if (alt === null && balanceOnly && c.preRevenueMetrics && (id === "cash" || id === "growth" || id === "profitability" || id === "stability")) return L.missing[id][lang];
+  if (alt === null || alt === undefined) return null;
+  if (balanceOnly && c.preRevenueMetrics) {
+    const m = c.preRevenueMetrics;
+    if (id === "cash") { const r = runway(m); return (r.cashPositive ? L.runway.positive : L.runway.months(r.months!))[lang]; }
+    if (id === "growth") return L.lossTrend(lossTrendPct(m)!, m.netIncome!.basis)[lang];
+    if (id === "profitability") return L.rdIntensity(m.rd!.share)[lang];
+    if (id === "stability") return L.dilution(m.dilution!.pct)[lang];
+    return null;
+  }
+  const s = c.sectorMetrics!;
+  if (id === "financial") return L.capitalRatio(s.capitalRatio!)[lang];
+  if (id === "cash") return L.roe(s.roe!.pct)[lang];
+  if (id === "profitability") return L.niiMargin(s.niiMargin!)[lang];
+  return null;
+}
 /** Interest-bearing debt from the filing's balance, in whatever complete form it was reported; null when unknown (never zero by default). */
 export function balanceDebt(c: Financials): number | null {
   const b=c.balance;
@@ -102,7 +142,7 @@ export function comparisonMetric(c: Financials, id: ScoreId, lang: "ja"|"en", no
   if(id==="valuation" && !reference) return c.valueCheck && valueFigureCurrent(c.valueCheck,now) ? valueFigureText(c.valueCheck,lang) : missingReason(c,id,lang==="ja");
   // A company with no revenue yet: its balance sheet scores financial strength; the revenue factors say "no revenue yet", not "unverified".
   const balanceOnly=!hasRecentQuarter(c,now) && hasRecentBalance(c,now);
-  if(balanceOnly && id!=="financial" && id!=="momentum") return missingReason(c,id,lang==="ja");
+  if(balanceOnly && id!=="financial" && id!=="momentum") return alternativeMetric(c,id,lang,false,true) ?? missingReason(c,id,lang==="ja");
   if(!hasRecentQuarter(c,now) && !balanceOnly && !(id==="momentum" && c.twelveData && twelveExtraFactors(c.twelveData,now).momentum!==null)) return lang==="ja" ? "最新値未確認" : "Latest value unverified";
   if(reference) return reference.metric[lang];
   const ja=lang==="ja";
@@ -116,6 +156,12 @@ export function comparisonMetric(c: Financials, id: ScoreId, lang: "ja"|"en", no
   if(id==="financial" && ownBalance && !finite(c.balance?.currentRatio) && c.balance?.cash && balanceDebt(c)!==null) {
     const debt=balanceDebt(c)!;
     return debt===0 ? (ja?"借入なし":"No borrowings") : `${ja?"現金÷有利子負債":"Cash ÷ debt"} ${(c.balance.cash.value/debt).toFixed(2)}${ja?"倍":"×"}`;
+  }
+  // The company-type metric whenever it is the one scored, i.e. the standard figure is missing (a bank without a debt figure: its capital
+  // ratio, not a current ratio).
+  if(comparisonScores({...c,sectorMetrics:undefined,preRevenueMetrics:undefined},now).find(s=>s.id===id)?.value===null) {
+    const alternative=alternativeMetric(c,id,lang,hasRecentQuarter(c,now),false);
+    if(alternative) return alternative;
   }
   if(id==="financial" && ownBalance && finite(c.balance?.currentRatio)) return `${ja?"流動比率":"Current ratio"} ${c.balance.currentRatio.toFixed(2)}${ja?"倍":"×"}${c.balance.debtTotal?.source==="none" ? (ja?"・借入なし":" · no borrowings") : ""}`;
   return missingReason(c,id,ja);
@@ -131,6 +177,8 @@ function missingReason(c: Financials, id: ScoreId, ja: boolean): string {
   if(id==="cash") return r("キャッシュフロー未開示","Cash flow not available");
   if(id==="stability") return r("4四半期分の利益率がそろいません","Four quarters of margins not available");
   if(id==="financial") return r("借入の記載を読み取れません","Debt figures not readable");
+  // Negative shareholders' equity and no revenue: no price multiple exists (P/B is negative), said as such rather than "unavailable".
+  if(id==="valuation" && c.balance?.equity && c.balance.equity.value<0 && (!c.quarterRevenue || c.preRevenue)) return ALTERNATIVE_LABELS.negativeEquity[ja?"ja":"en"];
   if(id==="valuation") return r("未取得","Unavailable");
   if(id==="momentum") return r("株価の履歴が不足（上場直後など）","Not enough price history");
   return r("必要データ未取得","Data unavailable");

@@ -132,9 +132,12 @@ test("a company with no revenue yet: financial strength from its latest balance 
   const [nvda, xbio] = compareAll(["NVDA", "XBIO"]);
   const v = view(xbio);
   assert.equal(v.financial.value, 10); assert.equal(v.financial.ja, "流動比率 6.00倍・借入なし");
-  for (const id of ["growth", "profitability", "cash", "stability"]) { assert.equal(v[id].value, null); assert.equal(v[id].ja, "売上がまだ無い会社です"); assert.equal(v[id].en, "No revenue yet"); }
+  // Its filing here has no cash flow, net income, R&D or share count: each company-type metric (comparison-alternatives.ts) says which figure
+  // is missing, instead of a bare 「売上がまだ無い」.
+  assert.deepEqual(Object.fromEntries(["growth", "profitability", "cash", "stability"].map(id => [id, [v[id].value, v[id].ja]])), {
+    growth: [null, "比べる前年の純損益が未開示"], profitability: [null, "研究開発費の記載なし"], cash: [null, "営業キャッシュフローの記載なし"], stability: [null, "前年同期の株数が未開示"] });
   assert.deepEqual(v.valuation, { value: 8.2, ja: "純資産倍率（PBR）が5年平均より32%安い", en: "P/B 32% below its 5-year average" });
-  assert.equal(comparisonAvailability(xbio, "ja", now), "売上がまだ無い会社です。財務と株価の項目で比べます。");
+  assert.equal(comparisonAvailability(xbio, "ja", now), "売上がまだ無い会社です。資金の持ち期間・損益の推移・研究開発費・株数の増加で比べます。");
   assert.ok(xbio.preparedAnalysis.items.some(i => i.id === "financial" && i.kind === "strength"));
   assert.ok(xbio.preparedAnalysis.items.some(i => i.id === "valuation" && i.short.ja === "PBRが5年平均より32%安い"));
   const verdict = overallComparison([nvda, xbio], "ja", now);

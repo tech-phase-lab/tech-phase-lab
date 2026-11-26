@@ -17,7 +17,8 @@ export async function loadSecComparison(ticker: string, cik: string, fetchText: 
     fetchText(`https://data.sec.gov/submissions/CIK${cik.padStart(10,"0")}.json`, 12_000_000).then(JSON.parse),
   ]);
   const currency = ticker === "TSM" && Number(cik) === 1046179 ? "TWD" : undefined;
-  const initial = factsResponse.status === "fulfilled" ? extractFinancials(ticker,cik,factsResponse.value,now,currency) : emptyFinancials(ticker,"unavailable",new Date(now).toISOString());
+  const sic = submissionsResponse.status === "fulfilled" ? String((submissionsResponse.value as { sic?: unknown })?.sic ?? "") : undefined;
+  const initial = factsResponse.status === "fulfilled" ? extractFinancials(ticker,cik,factsResponse.value,now,currency,undefined,undefined,sic) : emptyFinancials(ticker,"unavailable",new Date(now).toISOString());
   if (submissionsResponse.status !== "fulfilled") return { ...initial, dataWarnings: [warning("新しい提出書類を確認できませんでした。", "New filings could not be checked.")] };
   const filings = financialFilings(submissionsResponse.value,cik,now);
   // An amendment that only adds Part III or exhibits (MO's 10-K/A of May 2026) carries no figures: the original report anchors freshness,
@@ -32,6 +33,15 @@ export async function loadSecComparison(ticker: string, cik: string, fetchText: 
     tsmRelease && (!initial.quarterRevenue || initial.quarterRevenue.end < tsmRelease.end) ? tsmRelease : undefined,
     tsmStatement && (!initial.quarterRevenue || initial.quarterRevenue.end < tsmStatement.end || (initial.quarterRevenue.filed ?? "") < tsmStatement.filed) ? tsmStatement : undefined,
   ].filter((f): f is FinancialFiling => !!f);
+  // The SEC's company facts sometimes leave out whole periodic reports (Nov 26 audit: 342 listed companies, e.g. AEP's July and October 2026
+  // 10-Qs, AAT's July 10-Q), which broke the four-quarter series and the year-to-date cash flows. The reports of the last fifteen months
+  // that company facts lack are read from their own inline XBRL, oldest needed first (at most GAP_FILINGS documents).
+  const known = factsResponse.status === "fulfilled" ? factsAccessions(factsResponse.value) : null;
+  if (known) {
+    const since = new Date(now - 460 * 86400000).toISOString().slice(0, 10);
+    const gaps = filings.filter(f => /^(?:10-K|10-Q|20-F|40-F)$/.test(f.form) && f.inline && f.filed >= since && !known.has(f.accession) && !wanted.includes(f)).slice(0, GAP_FILINGS);
+    wanted.push(...gaps);
+  }
   const additions: SecFacts[] = [];
   let primaryRevenueTag: string | undefined, quarterRevenueTag: string | undefined;
   await Promise.all(wanted.map(async filing => {
@@ -62,7 +72,7 @@ export async function loadSecComparison(ticker: string, cik: string, fetchText: 
       }
     } catch { /* Keep retrieved figures with an explicit freshness warning below. */ }
   }));
-  const result = extractFinancials(ticker,cik,mergeFinancialFacts(factsResponse.status === "fulfilled" ? factsResponse.value : null, additions,cik),now,currency,primaryRevenueTag,quarterRevenueTag);
+  const result = extractFinancials(ticker,cik,mergeFinancialFacts(factsResponse.status === "fulfilled" ? factsResponse.value : null, additions,cik),now,currency,primaryRevenueTag,quarterRevenueTag,sic);
   // No revenue yet: only the balance sheet is read, so freshness is the balance sheet's against the newest periodic report.
   if (result.preRevenue) {
     const newest = [annual, quarter].filter((f): f is FinancialFiling => !!f).sort((a, b) => b.end.localeCompare(a.end))[0];
@@ -94,6 +104,15 @@ export function fiscalQuarterEnd(end: string, annualEnd?: string): boolean {
   return months > 0 && months % 3 === 0;
 }
 
+/** At most this many extra periodic reports are read when company facts lack them (four quarters back from the newest). */
+const GAP_FILINGS = 4;
+/** The accession numbers company facts already holds (every standard-taxonomy fact names the filing it came from). */
+function factsAccessions(payload: unknown): Set<string> {
+  const out = new Set<string>();
+  const facts = (payload as { facts?: Record<string, Record<string, { units?: Record<string, { accn?: string }[]> }>> })?.facts ?? {};
+  for (const basis of ["us-gaap", "ifrs-full"]) for (const tag of Object.values(facts[basis] ?? {})) for (const values of Object.values(tag?.units ?? {})) if (Array.isArray(values)) for (const v of values) if (typeof v?.accn === "string") out.add(v.accn);
+  return out;
+}
 const REVENUE_TAGS = ["Revenues", "RevenueFromContractWithCustomerExcludingAssessedTax", "RevenueFromContractWithCustomerIncludingAssessedTax", "SalesRevenueNet", "RevenuesNetOfInterestExpense", "RegulatedAndUnregulatedOperatingRevenue", "Revenue", "RevenueFromContractsWithCustomers", "RevenueFromSaleOfGoods", "InterestIncomeExpenseNet", "GrossInvestmentIncomeOperating", "RevenueAndOperatingIncome"];
 const hasRevenue = (facts: SecFacts) => Object.values(facts.facts).some(tags => REVENUE_TAGS.some(tag => tag in tags));
 /** The filing's other inline document with the statements: the largest .htm in its folder besides the primary one (not the rendered R pages

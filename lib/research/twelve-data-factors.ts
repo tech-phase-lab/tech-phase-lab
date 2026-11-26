@@ -1,3 +1,4 @@
+import { ALTERNATIVE_LABELS } from "./comparison-labels.ts";
 import type { TwelveComparisonSnapshot } from "./twelve-data-comparison.ts";
 import { twelveNumber } from "./twelve-data-values.ts";
 import { sameProviderSymbol } from "./provider-symbol.ts";
@@ -21,6 +22,8 @@ export type TwelveFactorEvidence = {
     /** Market value ÷ trailing four quarters' revenue. Used for every company in a comparison when any of them has no forward P/E (a loss-maker). */
     priceToSales?:number|null };
   margins: {periodEnd:string;value:number}[];
+  /** "annual": the margins are four fiscal years (a foreign filer reporting yearly or half-yearly), said as such. */
+  marginPeriod?: "annual";
   momentum: null | {from:string;to:string;changePct:number};
 };
 export const twelveFactorMethods: Record<string,Copy> = {
@@ -112,7 +115,7 @@ export function twelveFactorMetric(e:TwelveFactorEvidence,id:string,lang:"ja"|"e
   const scores=twelveExtraFactors(e,now),ja=lang==="ja";
   if(id==="financial" && scores.financial!==null)return e.statistics!.currentRatio!==null ? `${ja?"流動比率":"Current ratio"} ${e.statistics!.currentRatio!.toFixed(2)}×`
     : e.statistics!.totalDebt===0 ? (ja?"借入なし":"No borrowings") : `${ja?"現金÷有利子負債":"Cash ÷ debt"} ${(e.statistics!.totalCash!/e.statistics!.totalDebt!).toFixed(2)}${ja?"倍":"×"}`;
-  if(id==="stability" && scores.stability!==null)return `${ja?"営業黒字":"Profitable"} ${e.margins.filter(m=>m.value>0).length}/4${ja?"四半期":" quarters"}`;
+  if(id==="stability" && scores.stability!==null)return e.marginPeriod==="annual" ? ALTERNATIVE_LABELS.annualStability(e.margins.filter(m=>m.value>0).length)[lang] : `${ja?"営業黒字":"Profitable"} ${e.margins.filter(m=>m.value>0).length}/4${ja?"四半期":" quarters"}`;
   if(id==="momentum" && scores.momentum!==null){const n=e.momentum!.changePct;return `${ja?"約3か月":"~3 months"} ${n>0?"+":""}${n.toFixed(1)}%`;}
   return null;
 }

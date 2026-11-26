@@ -131,7 +131,10 @@ test("financial strength reads debt in the form the filing uses; a filing with n
   assert.deepEqual(withBalance({ ConvertibleDebtNoncurrent: 70 }), { value: 70, source: "convertible" });
   assert.deepEqual(withBalance({ LongTermDebtAndCapitalLeaseObligationsIncludingCurrentMaturities: 460, ShortTermBorrowings: 71 }), { value: 531, source: "total" });   // JPMorgan
   assert.deepEqual(withBalance({ AvailableForSaleSecuritiesDebtSecurities: 900 }), { value: 0, source: "none" });   // owning bonds is not borrowing
-  assert.equal(withBalance({ LineOfCredit: 40 }), null);                                                       // borrowing we cannot add up: no score
+  // A borrowing filed only under its own line (Nov 26 audit: 506 companies): each family once, added up (AAON's line of credit).
+  assert.deepEqual(withBalance({ LineOfCredit: 40 }), { value: 40, source: "lines" });
+  assert.deepEqual(withBalance({ NotesPayable: 30, NotesPayableCurrent: 10, LongTermNotesPayable: 20, LineOfCredit: 5 }), { value: 35, source: "lines" });   // a total is not added to its parts
+  assert.deepEqual(withBalance({ SeniorNotes: 50, UnsecuredDebt: 60 }), { value: 60, source: "lines" });     // overlapping classifications: never added
   // Debt tagged only by segment (GM) leaves no borrowing tag, but long-term liabilities over a quarter of assets are not "debt-free".
   assert.equal(withBalance({ Liabilities: 600 }), null);
   assert.equal(withBalance({ LiabilitiesNoncurrent: 300 }), null);
