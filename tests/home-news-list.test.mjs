@@ -54,8 +54,8 @@ test("price target times have no seconds", () => {
 test("headlines are shown in full: no line limit, no length cut, and no ＋ for a headline", () => {
   const story = read("../app/research/news/news-story.tsx");
   const css = read("../app/research/news/general-news.module.css");
-  // Owner, Nov 15: only the topics page's article summary (.topicClamped) is cut to three lines, behind a 「＋」; never a headline.
-  assert.doesNotMatch(css.replace(/\.topicClamped\{[^}]*\}/, ""), /line-clamp|\.clamped/);
+  // Owner, Nov 26: nothing on the topics page is clamped; the summary opens whole behind 「＋」, and a headline is never cut.
+  assert.doesNotMatch(css, /line-clamp|\.clamped/);
   assert.doesNotMatch(story, /clamped|jaLimit/);
   assert.doesNotMatch(read("../app/research/news/flash-page.tsx"), /jaLimit/);
   assert.doesNotMatch(read("../app/research/news/general-news-panel.tsx"), /jaLimit/);

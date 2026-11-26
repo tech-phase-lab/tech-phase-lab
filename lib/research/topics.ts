@@ -25,10 +25,22 @@ export function impactOf(label?: GeneralNewsItem["impactLabel"], sentiment?: Com
 /** The line under the topics list (owner, Nov 15): the cards come from the Stock News API. */
 export const topicCredit = (ja: boolean) => ja ? "提供：Stock News API" : "Source: Stock News API";
 
-/** Summaries are shown in four lines with a 「＋」 to open the rest (owner, Nov 15; four lines from Nov 17 for the 80-100 character
- * summaries). Before the page can measure the text, a summary longer than about four lines on a 360-pixel phone is taken to need the button; the page then measures and corrects it. */
-export const SUMMARY_LINES = 4;
-export const summaryMayOverflow = (summary: string, ja: boolean) => summary.length > (ja ? SUMMARY_LINES * 22 : SUMMARY_LINES * 48);
+/** The summary is behind 「＋」 (owner, Nov 26): a card shows its headline only, and 「＋」 opens the summary under it (「−」 closes it).
+ * A card without a summary has no 「＋」. The Japanese summary is at most SUMMARY_JA_MAX characters (the 80 to 100 characters agreed on
+ * Nov 16), in whole sentences: a longer one keeps its leading sentences that fit, and one whose first sentence alone is too long is not
+ * shown. */
+export const SUMMARY_JA_MAX = 100;
+export function fitSummary(summary: string, ja: boolean): string | undefined {
+  const text = summary.trim();
+  if (!text) return undefined;
+  if (!ja || text.length <= SUMMARY_JA_MAX) return text;
+  let kept = "";
+  for (const sentence of text.match(/[^。！？]+[。！？]+[」』）)]*/g) ?? []) {
+    if ((kept + sentence).length > SUMMARY_JA_MAX) break;
+    kept += sentence;
+  }
+  return kept.trim() || undefined;
+}
 export const summaryToggle = (open: boolean, ja: boolean) => ({ text: open ? "−" : "＋",
   label: open ? (ja ? "要約を閉じる" : "Show less") : (ja ? "要約をすべて表示" : "Show the full summary") });
 
@@ -76,6 +88,8 @@ function sameStory(a: Entry, b: Entry) {
   return shared && sameTopic(a.titleEn, b.titleEn);
 }
 
+const summaryOf = (summary: string | null | undefined, ja: boolean) => summary ? fitSummary(summary, ja) : undefined;
+
 const tickersOf = (tickers: readonly string[], ja: boolean) => tickers.map(ticker => tickerLabel(ticker, ja)).join(" · ");
 
 /** The 注目トピック page's cards, newest first: the reviewed Stock News API articles (with their checked summaries) and the
@@ -95,7 +109,7 @@ export function topicCards(data: GeneralNewsFeed | null, wire: Record<string, Co
   };
   for (const item of data?.enabled ? data.items : []) {
     const title = ja ? item.shortTitleJa ?? item.summaryJa : item.shortTitleEn ?? item.title;
-    const summary = ja ? item.summaryJa : item.summaryEn;
+    const summary = summaryOf(ja ? item.summaryJa : item.summaryEn, ja);
     if (!title?.trim() || (ja && !JAPANESE.test(title)) || !item.url || !item.publisher.trim() || seen.has(item.url)
       // A law firm's shareholder solicitation is never a topic, from either feed (owner, Nov 15).
       || lawFirmSolicitation(item.title) || lawFirmSolicitation(title)) continue;
@@ -107,7 +121,7 @@ export function topicCards(data: GeneralNewsFeed | null, wire: Record<string, Co
     if ((ja && !JAPANESE.test(title)) || !item.url || !item.publisher.trim()) continue;
     const already = entries.find(entry => entry.card.url === item.url);
     if (already) { if (!already.tickers.includes(ticker)) already.tickers.push(ticker); continue; }
-    const summary = ja ? item.summaryJa : item.summaryEn;
+    const summary = summaryOf(ja ? item.summaryJa : item.summaryEn, ja);
     add({ id: `wire-${item.id}`, tickers: "", impact: impactOf(undefined, item.sentiment), at: item.publishedAt, title,
       ...(summary && summary !== title ? { summary } : {}), publisher: item.publisher.trim(), url: item.url }, [ticker], cleanTitle(item.titleEn), false);
   }
