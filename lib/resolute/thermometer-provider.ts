@@ -18,9 +18,13 @@ export const SHOCK_SESSIONS = 10;
 export const HISTORY_BARS = 5000;
 /** About three months of sessions for the home chart line (owner, Nov 25: 01 ホーム). */
 export const TRAIL_SESSIONS = 63;
-/** The basket's level for the last TRAIL_SESSIONS sessions up to the confirmed session, rounded to 0.01 (same data, no extra calls). */
+/** The basket's level for the last TRAIL_SESSIONS sessions up to the confirmed session (same data, no extra calls), rebased so the
+ * first session of the line is 100 and rounded to 0.01. The chart only draws the shape, and the rebased line stays small and inside
+ * the reader's bounds however far the 20-year chained level (HISTORY_BARS, since #885) has grown (owner, Nov 26 §2). */
 export function basketTrail(levels: readonly DailyClose[], session: string): DailyClose[] {
-  return levels.filter(bar => bar.date <= session).slice(-TRAIL_SESSIONS).map(bar => ({ date: bar.date, close: Math.round(bar.close * 100) / 100 }));
+  const bars = levels.filter(bar => bar.date <= session).slice(-TRAIL_SESSIONS), base = bars[0]?.close;
+  if (!base || !Number.isFinite(base) || base <= 0) return [];
+  return bars.map(bar => ({ date: bar.date, close: Math.round(bar.close / base * 10000) / 100 }));
 }
 export type ShockSession = { nas100: ShockReading | null; sox: ShockReading | null; fear: FearReading | null };
 /** Sessions for which each rostered stock's own move is kept (single-company news, owner Nov 25). Stored only, never served. */
