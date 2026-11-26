@@ -29,6 +29,19 @@ export const ALTERNATIVE_LABELS = {
     profitability: { ja: "研究開発費の記載なし", en: "No R&D expense reported" } as Copy,
     stability: { ja: "前年同期の株数が未開示", en: "No year-earlier share count" } as Copy,
   },
+  /** Why a company has no current figures (Financials.gapReason): the availability note, and the line beside each filing-based score. */
+  gap: {
+    "no-report": { note: { ja: "この会社名義の決算書類（10-K・10-Q・20-F）がまだ提出されていません。上場直後や組織再編後の会社です。", en: "No annual or quarterly report has been filed under this company yet (a new listing or a reorganised company)." } as Copy,
+      line: { ja: "決算書類がまだありません", en: "No report filed yet" } as Copy },
+    "no-xbrl": { note: { ja: "決算書類に機械で読める数値（XBRL）が付いていないため、数値を読み取れません。", en: "Its reports carry no machine-readable (XBRL) figures." } as Copy,
+      line: { ja: "決算書類に数値データなし", en: "No XBRL figures in its reports" } as Copy },
+    stale: { note: (date: string): Copy => ({ ja: `決算書類の提出が${date}を最後に止まっています。`, en: `Its last report was filed on ${date}.` }),
+      line: { ja: "決算書類の提出が止まっています", en: "Reports have stopped" } as Copy },
+    unreadable: { note: { ja: "売上が会社独自の項目名で記載されており、他社と比べられる形で読み取れません。", en: "Its revenue is filed under the company's own line items, which cannot be compared." } as Copy,
+      line: { ja: "売上の記載を読み取れません", en: "Revenue line not readable" } as Copy },
+  },
+  /** The availability note for a company whose newest quarter's revenue is filed as zero. */
+  zeroQuarterNote: { ja: "直近四半期の売上がゼロの会社です。資金の持ち期間・損益の推移・研究開発費・株数の増加で比べます。", en: "No revenue in the latest quarter: compared on cash runway, net-income trend, R&D share and share dilution." } as Copy,
   /** The availability note for a pre-revenue company now compared on its own metrics. */
   preRevenueNote: { ja: "売上がまだ無い会社です。資金の持ち期間・損益の推移・研究開発費・株数の増加で比べます。", en: "No revenue yet: compared on cash runway, net-income trend, R&D share and share dilution." } as Copy,
 };

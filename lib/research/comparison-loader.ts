@@ -1,6 +1,7 @@
 import { emptyFinancials, extractFinancials } from "./comparison.ts";
 import { financialFilings, inlineFinancialFacts, mergeFinancialFacts, tsmQuarterFacts, tsmStatementFacts } from "./comparison-filings.ts";
 import type { FinancialFiling, SecFacts } from "./comparison-filings.ts";
+import type { Financials } from "./comparison.ts";
 import { parse } from "node-html-parser";
 
 type FetchText = (url: string, limit: number) => Promise<string>;
@@ -9,7 +10,11 @@ const warning = (ja: string, en: string) => ({ ja, en });
 /** One path for every SEC-listed issuer, independent of the monitored news list.
  * Check submissions first: companyfacts alone is not proof of freshness.
  */
-export async function loadSecComparison(ticker: string, cik: string, fetchText: FetchText, now = Date.now()) {
+export async function loadSecComparison(ticker: string, cik: string, fetchText: FetchText, now = Date.now()): Promise<Financials> {
+  const out = await readSecComparison(ticker, cik, fetchText, now);
+  return out;
+}
+async function readSecComparison(ticker: string, cik: string, fetchText: FetchText, now: number): Promise<Financials> {
   // Size limits: the largest filers passed the old ones (JPMorgan's submissions list is about 4.6 MB, a few companyfacts files pass 20 MB),
   // which left them with "New filings could not be checked" or no figures at all.
   const [factsResponse, submissionsResponse] = await Promise.allSettled([
@@ -21,6 +26,16 @@ export async function loadSecComparison(ticker: string, cik: string, fetchText: 
   const initial = factsResponse.status === "fulfilled" ? extractFinancials(ticker,cik,factsResponse.value,now,currency,undefined,undefined,sic) : emptyFinancials(ticker,"unavailable",new Date(now).toISOString());
   if (submissionsResponse.status !== "fulfilled") return { ...initial, dataWarnings: [warning("新しい提出書類を確認できませんでした。", "New filings could not be checked.")] };
   const filings = financialFilings(submissionsResponse.value,cik,now);
+  // Why a company has no figures, for the screen (owner, Nov 26: never a bare dash): no periodic report filed yet (a new listing), reports
+  // without XBRL figures, or reports that stopped. Set on every answer below; the scorecard shows it only when nothing current is read.
+  const periodic = filings.filter(f => /^(?:10-K|10-Q|20-F|40-F)(?:\/A)?$/.test(f.form));
+  const taxonomies = factsResponse.status === "fulfilled" ? Object.keys((factsResponse.value as { facts?: Record<string, unknown> })?.facts ?? {}) : [];
+  const lastReport = periodic.map(f => f.filed).sort().at(-1);
+  const foreign = periodic.some(f => /^(?:20-F|40-F)/.test(f.form));
+  const gapReason: Financials["gapReason"] = !periodic.length ? { kind: "no-report" }
+    : !taxonomies.some(t => t === "us-gaap" || t === "ifrs-full") ? { kind: "no-xbrl" }
+    : lastReport && (now - Date.parse(lastReport)) / 86400000 > (foreign ? 560 : 200) ? { kind: "stale", date: lastReport }
+    : { kind: "unreadable" };
   // An amendment that only adds Part III or exhibits (MO's 10-K/A of May 2026) carries no figures: the original report anchors freshness,
   // and figures an amendment restates arrive in companyfacts under it anyway. Before, MO's amendment was read on every load and flagged.
   const annual = filings.find(f => annualForm.test(f.form) && !f.form.endsWith("/A")) ?? filings.find(f => annualForm.test(f.form));
@@ -96,10 +111,10 @@ export async function loadSecComparison(ticker: string, cik: string, fetchText: 
         }
       } catch { /* the facts read stand */ }
     }
-    if (revenueFiled && result.preRevenue) return emptyFinancials(ticker, "unsupported", new Date(now).toISOString());
+    if (revenueFiled && result.preRevenue) return { ...emptyFinancials(ticker, "unsupported", new Date(now).toISOString()), gapReason };
   }
   if (result.preRevenue) {
-    return { ...result, dataWarnings: newest && (!result.balance || result.balance.end < newest.end)
+    return { ...result, gapReason, dataWarnings: newest && (!result.balance || result.balance.end < newest.end)
       ? [warning(`${newest.end}期の四半期提出書類から数値を取得できていません。`, `Figures from the quarterly filing for ${newest.end} are unavailable.`)] : [] };
   }
   const dataWarnings = [];
@@ -114,7 +129,7 @@ export async function loadSecComparison(ticker: string, cik: string, fetchText: 
   // An untagged foreign quarterly report cannot be inferred from monthly 6-Ks.
   // Make the limitation visible rather than presenting annual data as latest.
   if (annual && /^(?:20-F|40-F)/.test(annual.form) && (!result.quarterRevenue || result.periodMonths === 12) && filings.some(f => f.form.startsWith("6-K") && f.end > annual.end)) dataWarnings.push(warning("年次決算後の四半期数値は未取得です。", "Quarterly figures after the annual report are unavailable."));
-  return { ...result, dataWarnings };
+  return { ...result, gapReason, dataWarnings };
 }
 
 const CALENDAR_QUARTER_ENDS = ["03-31","06-30","09-30","12-31"];
@@ -134,11 +149,15 @@ export function fiscalQuarterEnd(end: string, annualEnd?: string): boolean {
 export function companyRevenueTagged(html: string, periodEnd: string): boolean {
   // Only the filing's own latest twelve months count: a revenue column for an earlier year (a drug developer's comparative period from
   // before its sales stopped) is not current revenue.
-  const recent = new Set<string>(), since = Date.parse(periodEnd) - 380 * 86400000;
+  // Only the report's own latest period counts (its quarter, or its fiscal year): an earlier column or a year-to-date that still holds an
+  // earlier quarter's sales (a drug developer whose payments ended) is not current revenue.
+  const recent = new Set<string>(), endAt = Date.parse(periodEnd);
   for (const m of html.matchAll(/<xbrli:context[^>]*id="([^"]+)"[^>]*>([\s\S]*?)<\/xbrli:context>/gi)) {
     if (/<xbrli:segment/i.test(m[2])) continue;
-    const end = /<xbrli:endDate>\s*([0-9-]{10})/i.exec(m[2])?.[1];
-    if (end && /<xbrli:startDate>/i.test(m[2]) && Date.parse(end) >= since) recent.add(m[1]);
+    const end = /<xbrli:endDate>\s*([0-9-]{10})/i.exec(m[2])?.[1], start = /<xbrli:startDate>\s*([0-9-]{10})/i.exec(m[2])?.[1];
+    if (!end || !start || Math.abs(Date.parse(end) - endAt) > 10 * 86400000) continue;
+    const days = (Date.parse(end) - Date.parse(start)) / 86400000;
+    if ((days >= 75 && days <= 120) || (days >= 165 && days <= 200) || (days >= 350 && days <= 380)) recent.add(m[1]);
   }
   for (const m of html.matchAll(/<ix:nonFraction([^>]*)>([^<]*)</gi)) {
     const attrs = m[1], name = /name="([^"]+)"/i.exec(attrs)?.[1] ?? "", context = /contextRef="([^"]+)"/i.exec(attrs)?.[1] ?? "";

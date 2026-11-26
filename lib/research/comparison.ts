@@ -57,6 +57,10 @@ export type Financials = {
   quarterRevenueGrowth: number | null; quarterOperatingMargin: number | null; quarterSourceUrl: string | null;
   /** Operating margin of the last four consecutive quarters, newest first (a fourth quarter is fiscal year minus nine months). Null unless all four are present. */
   quarterMargins?: { periodEnd: string; value: number }[] | null;
+  /** Why the filings give no current figures (comparison-loader.ts), said on screen instead of a bare "unverified". */
+  gapReason?: { kind: "no-report" | "no-xbrl" | "stale" | "unreadable"; date?: string };
+  /** Pre-revenue because its newest quarter's revenue is filed as zero (it had revenue earlier). */
+  zeroQuarter?: true;
   /** A pre-revenue company's balance sheet from an annual (12) or half-year (6) foreign report: its age limit (hasRecentBalance). */
   balanceMonths?: 6 | 12;
   /** Pre-revenue figures from the filings (comparison-alternatives.ts). */
@@ -235,6 +239,8 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
   const facts: Record<string, unknown> = { ...rawFacts, "us-gaap": supplementFacts(obj(rawFacts["us-gaap"]), sic), "ifrs-full": supplementIfrs(obj(rawFacts["ifrs-full"])) };
   /** The form of each filing whose facts were read (a foreign filer's 20-F or 40-F lets its annual figures stand as the latest period). */
   const formOf = new Map<string, string>();
+  // A fiscal year may also come from a 6-K: a Canadian filer furnishes its audited annual statements, tagged, on Form 6-K beside its 40-F
+  // (CNI: its 2025 revenue is only in that 6-K); the period's own length (350-380 days) still decides that it is a year.
   // A quarter is 75 to 120 days: a 16-week fiscal quarter is 111 or 112 days (AAP, ACI, KR, CAVA; Nov 26 audit: their stability and cash
   // flow were empty because that quarter was dropped).
   // "half": a six-month interim period furnished on Form 6-K (a foreign filer that reports twice a year, such as BTI).
@@ -243,7 +249,7 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
       if ((shares ? unit !== "shares" : !/^[A-Z]{3}$/.test(unit)) || !Array.isArray(values)) return [];
       return values.flatMap(raw => {
         const f = obj(raw);
-        if (typeof f.val !== "number" || !Number.isFinite(f.val) || typeof f.end !== "string" || typeof f.filed !== "string" || typeof f.accn !== "string" || !/^\d{10}-\d{2}-\d{6}$/.test(f.accn) || !(period === "quarter" ? ["10-Q", "10-Q/A", "6-K", "6-K/A", "8-K", "8-K/A"] : period === "half" ? ["6-K", "6-K/A"] : period === "ytd9" || period === "ytd" ? ["10-Q", "10-Q/A"] : ["10-K", "10-K/A", "20-F", "20-F/A", "40-F", "40-F/A"]).includes(String(f.form))) return [];
+        if (typeof f.val !== "number" || !Number.isFinite(f.val) || typeof f.end !== "string" || typeof f.filed !== "string" || typeof f.accn !== "string" || !/^\d{10}-\d{2}-\d{6}$/.test(f.accn) || !(period === "quarter" ? ["10-Q", "10-Q/A", "6-K", "6-K/A", "8-K", "8-K/A"] : period === "half" ? ["6-K", "6-K/A"] : period === "ytd9" || period === "ytd" ? ["10-Q", "10-Q/A"] : ["10-K", "10-K/A", "20-F", "20-F/A", "40-F", "40-F/A", "6-K", "6-K/A"]).includes(String(f.form))) return [];
         if (!Number.isFinite(day(f.end)) || !Number.isFinite(day(f.filed)) || day(f.filed) > now / 86400000 || day(f.end) > day(f.filed)) return [];
         const fact: Fact & {filed:string;accession:string} = { value: f.val, unit, start: typeof f.start === "string" ? f.start : null, end: f.end, filed: f.filed, accession: f.accn, tag, basis };
         if (instant ? fact.start !== null : duration(fact) < (period === "quarter" ? 75 : period === "half" ? 165 : period === "ytd9" ? 245 : period === "ytd" ? 160 : 350) || duration(fact) > (period === "quarter" ? 120 : period === "half" ? 200 : period === "ytd9" || period === "ytd" ? 290 : 380) || !Number.isFinite(duration(fact))) return [];
@@ -410,7 +416,11 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
   // Revenue filed only under a line the comparison does not read (APA's oil and gas revenue, VIV's and TLK's IFRS lines) is not "no revenue
   // yet": the company is left without a current period rather than labelled pre-revenue (Nov 26: they showed 「売上がまだ無い」).
   if (!latest && balanceNow && revenueLikeSince(day(balanceNow.f.end) - 365)) return result;
-  if (!latest || stale) return preRevenue();
+  // The newest quarter's revenue line is filed as zero (a drug developer whose collaboration payments ended: KYMR, TNGX, XENE): it is
+  // compared like a pre-revenue company, and the screen says the latest quarter had no revenue (zeroQuarter), not "no revenue yet".
+  const quarterRows = balanceNow ? (Object.keys(tags) as (keyof typeof tags)[]).flatMap(b => collect(b, tags[b].revenue, false, "quarter")).filter(f => f.end === balanceNow.f.end) : [];
+  const zeroQuarter = quarterRows.length > 0 && quarterRows.every(f => f.value === 0) && !financeSic(sic);
+  if (!latest || stale || zeroQuarter) return preRevenue();
   /** No revenue yet: the latest balance sheet alone, so financial strength is still scored, and the company-type figures read from the same
    *  filings (comparison-alternatives.ts: runway, net-loss trend, R&D intensity, dilution). */
   function preRevenue(): Financials {
@@ -421,7 +431,7 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
     const form = formOf.get(newest.f.accession) ?? "";
     const balanceMonths = /^(?:20-F|40-F)/.test(form) ? 12 as const : /^6-K/.test(form) ? 6 as const : undefined;
     const metrics = balance.cash ? preRevenueMetrics(facts, balance.cash.unit, balance.end, balance.cash.value) : undefined;
-    return { ...result, status: "ready", preRevenue: true, balance, ...(balanceMonths ? { balanceMonths } : {}), ...(metrics ? { preRevenueMetrics: metrics } : {}) };
+    return { ...result, status: "ready", preRevenue: true, ...(zeroQuarter ? { zeroQuarter: true } : {}), balance, ...(balanceMonths ? { balanceMonths } : {}), ...(metrics ? { preRevenueMetrics: metrics } : {}) };
   }
   // A verified reporting currency distinguishes native values from convenience
   // translations. Never fall back to an older year if the latest lacks it.
@@ -545,6 +555,34 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
       quarterRevenue = derivedQuarter;
     }
   }
+  // A quarterly report that states its revenue only year-to-date (Golar LNG's 6-K: nine months to Sep 30, no three-month column): the quarter
+  // is that year-to-date minus the year-to-date a quarter earlier of the same fiscal year (same line, start and currency), and the same
+  // quarter a year earlier from the comparative columns of the same two reports. Nothing is derived across lines or across fiscal years.
+  if (!quarterRevenue) {
+    const rows = (names: readonly string[]) => names.flatMap(tag => Object.entries(obj(obj(obj(facts[basis])[tag]).units)).flatMap(([unit, values]) => !Array.isArray(values) || unit !== revenue.unit ? []
+      : values.flatMap(raw => { const f = obj(raw); return typeof f.val === "number" && typeof f.start === "string" && typeof f.end === "string" && typeof f.filed === "string" && typeof f.accn === "string"
+        && /^(?:10-Q|6-K)(?:\/A)?$/.test(String(f.form)) && day(f.filed) <= now / 86400000 ? [{ value: f.val, unit, start: f.start, end: f.end, filed: f.filed, accession: f.accn, tag, basis } as Fact & { filed: string; accession: string }] : []; })));
+    const ytdQuarter = (names: readonly string[], end: string, accession?: string) => {
+      const all = rows(names);
+      const ytd = all.filter(f => f.end === end && (!accession || f.accession === accession) && duration(f) >= 160 && duration(f) <= 290).sort((a, b) => b.filed.localeCompare(a.filed))[0];
+      if (!ytd) return null;
+      const prior = all.filter(f => f.start === ytd.start && f.tag === ytd.tag && day(ytd.end) - day(f.end) >= 75 && day(ytd.end) - day(f.end) <= 120).sort((a, b) => b.filed.localeCompare(a.filed))[0];
+      if (!prior) return null;
+      const start = new Date((day(prior.end) + 1) * 86400000).toISOString().slice(0, 10);
+      return { ...ytd, value: ytd.value - prior.value, start, derived: "ytd-minus-prior-ytd" as const };
+    };
+    const newestYtd = rows(tags[basis].revenue).filter(f => f.end > revenue.end && duration(f) >= 160 && duration(f) <= 290 && f.value > 0).sort((a, b) => b.end.localeCompare(a.end) || b.filed.localeCompare(a.filed))[0];
+    const q = newestYtd ? ytdQuarter([newestYtd.tag], newestYtd.end, newestYtd.accession) : null;
+    if (q && q.value > 0) {
+      quarterRevenue = q; derivedQuarter = q;
+      const yearAgo = new Date((day(q.end) - 365) * 86400000).toISOString().slice(0, 10);
+      const pEnd = rows([q.tag]).filter(f => f.accession === q.accession && Math.abs(day(f.end) - day(yearAgo)) <= 7 && duration(f) >= 160).map(f => f.end)[0];
+      const p = pEnd ? ytdQuarter([q.tag], pEnd) : null;
+      derivedPrevious = p && p.value > 0 ? p : null;
+      const op = rows(tags[basis].operatingIncome.filter(t => t !== DERIVED_PRETAX && t !== DERIVED_OPERATING)).find(f => f.accession === q.accession && f.end === q.end && f.start === newestYtd!.start);
+      derivedOperating = op ? ytdQuarter([op.tag], q.end, q.accession) : null;
+    }
+  }
   // A foreign filer that reports twice a year (BTI: the comparison showed no figures at all, owner Nov 18) has no quarter: its latest
   // six-month report on Form 6-K is the period compared, against the same half a year earlier from that report. A foreign filer whose filings
   // carry annual figures only (no tagged interim report after its 20-F/40-F) has its fiscal year as the latest period. Either is said on
@@ -558,7 +596,7 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
     const half = newest && collect(basis, [newest.tag], false, "half").some(f => f.accession === newest.accession && f.unit === newest.unit
       && day(newest.end) - day(f.end) >= 350 && day(newest.end) - day(f.end) <= 380) ? newest : null;
     if (half) { quarterRevenue = half; qp = "half"; }
-    else if (/^(?:20-F|40-F)/.test(formOf.get(revenue.accession) ?? "")) { quarterRevenue = revenue; qp = "annual"; }
+    else if (/^(?:20-F|40-F|6-K)/.test(formOf.get(revenue.accession) ?? "")) { quarterRevenue = revenue; qp = "annual"; }
   }
   const annualPeriod = qp === "annual", ip = qp === "half" ? "half" : "quarter";
   const previousQuarterRevenue = annualPeriod ? previousRevenue : derivedPrevious ?? (quarterRevenue && !derivedQuarter ? unique(collect(basis, [quarterRevenue.tag], false, ip).filter(f => f.accession === quarterRevenue.accession && f.unit === quarterRevenue.unit && day(quarterRevenue.end)-day(f.end) >= 350 && day(quarterRevenue.end)-day(f.end) <= 380 && Math.abs(duration(quarterRevenue)-duration(f)) <= 8 && f.value > 0)) : null);

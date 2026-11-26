@@ -49,8 +49,10 @@ export function comparisonAvailability(c: Financials, lang: "ja"|"en", now=Date.
   const ja=lang==="ja";
   if(c.busy) return ja ? "混み合っています。しばらくしてからもう一度お試しください。" : "The data service is busy right now. Please try again in a few minutes.";
   if(c.status==="unavailable") return ja ? "決算データを取得できませんでした。" : "Financial data could not be retrieved.";
-  if(hasRecentBalance(c,now) && !hasRecentQuarter(c,now)) return (c.preRevenueMetrics ? ALTERNATIVE_LABELS.preRevenueNote : { ja: "売上がまだ無い会社です。財務と株価の項目で比べます。", en: "No revenue yet: compared on its balance sheet and share price." })[lang];
+  if(hasRecentBalance(c,now) && !hasRecentQuarter(c,now)) return (c.preRevenueMetrics ? (c.zeroQuarter ? ALTERNATIVE_LABELS.zeroQuarterNote : ALTERNATIVE_LABELS.preRevenueNote) : { ja: "売上がまだ無い会社です。財務と株価の項目で比べます。", en: "No revenue yet: compared on its balance sheet and share price." })[lang];
+  if((c.status==="unsupported" || !c.quarterRevenue) && c.gapReason) return gapNote(c.gapReason)[lang];
   if(c.status==="unsupported" || !c.quarterRevenue) return ja ? "比較に使える四半期データが未取得です。" : "Comparable quarterly data is unavailable.";
+  if(!hasRecentQuarter(c,now) && c.gapReason?.kind==="stale") return gapNote(c.gapReason)[lang];
   if(!hasRecentQuarter(c,now)) return ja ? "最新の四半期データを確認できていません。" : "The latest quarterly figures have not been verified.";
   if(!c.preparedAnalysis) return ja ? "長所・短所の要点は未作成です。" : "Strengths and weaknesses have not been prepared.";
   return null;
@@ -92,6 +94,10 @@ export function comparisonScores(c: Financials, now = Date.now()): ComparisonSco
   return scores;
 }
 
+function gapNote(g: NonNullable<Financials["gapReason"]>) {
+  const L = ALTERNATIVE_LABELS.gap;
+  return g.kind === "stale" ? L.stale.note(g.date ?? "") : L[g.kind].note;
+}
 /** The company-type scores: for a pre-revenue company with a current balance sheet, runway, net-loss trend, R&D intensity and dilution
  *  (growth, profitability, cash, stability); for a bank, insurer, broker or BDC with a current period, capital ratio, ROE and net investment
  *  income margin where the standard figure is missing. Only the company's own figures (partner-independent). */
@@ -144,7 +150,11 @@ export function comparisonMetric(c: Financials, id: ScoreId, lang: "ja"|"en", no
   // A company with no revenue yet: its balance sheet scores financial strength; the revenue factors say "no revenue yet", not "unverified".
   const balanceOnly=!hasRecentQuarter(c,now) && hasRecentBalance(c,now);
   if(balanceOnly && id!=="financial" && id!=="momentum") return alternativeMetric(c,id,lang,false,true) ?? missingReason(c,id,lang==="ja");
-  if(!hasRecentQuarter(c,now) && !balanceOnly && !(id==="momentum" && c.twelveData && twelveExtraFactors(c.twelveData,now).momentum!==null)) return lang==="ja" ? "最新値未確認" : "Latest value unverified";
+  if(!hasRecentQuarter(c,now) && !balanceOnly && !(id==="momentum" && c.twelveData && twelveExtraFactors(c.twelveData,now).momentum!==null)) {
+    // A company with no figures at all says why (no report yet, no XBRL, reports stopped, revenue not readable) rather than "unverified".
+    if(id!=="momentum" && c.gapReason && ((c.status==="unsupported" || !c.quarterRevenue) || c.gapReason.kind==="stale")) return ALTERNATIVE_LABELS.gap[c.gapReason.kind].line[lang];
+    return lang==="ja" ? "最新値未確認" : "Latest value unverified";
+  }
   if(reference) return reference.metric[lang];
   const ja=lang==="ja";
   const providerMetric=c.twelveData ? twelveFactorMetric(c.twelveData,id,lang,now) : null;
