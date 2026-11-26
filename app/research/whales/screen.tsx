@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useMemo, useState, type ReactNode } from "react";
+import { useEffect, useMemo, useState, useSyncExternalStore, type ReactNode } from "react";
 import Link from "next/link";
 import ResearchToolShell from "../research-tool-shell";
 import StockLogo from "../watchlist/stock-logo";
@@ -7,35 +7,69 @@ import StockRowLink from "../stock-row-link";
 import { useMemberDisplay, useMemberSettled, useOwnerAccount } from "../member-display-provider";
 import { useResearchLanguage } from "../use-research-language";
 import {
-  ABOUT, SORTS, WHALE_TABS, asOfLine, dateStack, filterInsiders, money, monthDay, parseWhaleSnapshot, percent, quarterLabel, roleLabel, signedPoints,
+  ABOUT, DEFAULT_WHALE_TAB, SORTS, WHALE_TABS, asOfLine, dateStack, filterInsiders, money, monthDay, parseWhaleSnapshot, percent, quarterLabel, roleLabel, signedPoints,
   sortBuybacks, sortInstitutions, sortShort, stockHref, type WhaleSnapshot, type WhaleTab,
 } from "@/lib/research/whale-moves";
 import styles from "./whales.module.css";
 
 /** クジラの足あと / Whale Tracks (owner, Nov 22: the English name was Whale Moves). Internal names (whales, WHALE_MOVES_ENABLED) stay. */
 export const WHALE_TRACKS = { ja: "クジラの足あと", en: "Whale Tracks" } as const;
+export { DEFAULT_WHALE_TAB };
 export const FIRST_SORTS: Record<WhaleTab, string> = { institutions: "up", short: "high", insiders: "all", buybacks: "new" };
 
 type State = "loading" | "ready" | "not-ready" | "error" | "sign-in" | "pro-required";
 
-function useWhaleMoves(allowed: boolean) {
+// The last snapshot this browser was shown (PRO only), so the page draws at once on the next open while the server's answer is fetched
+// behind it (the same idea as the watchlist and market screens, #877). It is a convenience copy: the API still checks membership.
+const STORE_KEY = "tech-phase:whale-tracks";
+// Read once per page load: the server and the hydrating render see nothing (null), the browser's next render the copy.
+let storedRaw: string | null | undefined;
+const readRaw = () => {
+  if (storedRaw === undefined) { try { storedRaw = localStorage.getItem(STORE_KEY); } catch { storedRaw = null; } }
+  return storedRaw;
+};
+const noSubscribe = () => () => {};
+function useStoredSnapshot() {
+  const raw = useSyncExternalStore(noSubscribe, readRaw, () => null);
+  return useMemo(() => { try { return raw ? parseWhaleSnapshot(JSON.parse(raw)) : null; } catch { return null; } }, [raw]);
+}
+function store(snapshot: WhaleSnapshot | null) {
+  const next = snapshot ? JSON.stringify(snapshot) : null;
+  storedRaw = next;
+  try { if (next) localStorage.setItem(STORE_KEY, next); else localStorage.removeItem(STORE_KEY); } catch { /* full or blocked storage: the page waits for the server */ }
+}
+
+/** plan: null while membership is still being checked. The request starts then too (the API checks membership itself), so the
+ * answer does not wait for the check; once the check answers PRO it is asked again only if that early answer was a refusal (a sign-in
+ * still being restored). A FREE answer drops this browser's copy. */
+function useWhaleMoves(plan: "free" | "pro" | null) {
   const [state, setState] = useState<State>("loading");
   const [data, setData] = useState<WhaleSnapshot | null>(null);
   const [attempt, setAttempt] = useState(0);
+  const [refused, setRefused] = useState(false);
+  const stored = useStoredSnapshot();
+  const allowed = plan !== "free";
+  const ask = plan === "pro" && refused ? 1 : 0;
+  useEffect(() => { if (plan === "free") store(null); }, [plan]);
   useEffect(() => {
     if (!allowed) return;
     const controller = new AbortController();
     fetch("/api/research/whales", { cache: "no-store", signal: controller.signal })
       .then(async response => {
         const body = await response.json().catch(() => null) as { ok?: boolean; error?: string } | null;
-        if (response.ok && body?.ok) { setData(parseWhaleSnapshot(body)); setState("ready"); return; }
+        if (response.ok && body?.ok) { const snapshot = parseWhaleSnapshot(body); setData(snapshot); setState("ready"); setRefused(false); store(snapshot); return; }
         const error = body?.error;
+        if (error === "sign-in" || error === "pro-required") {
+          if (!ask) { setRefused(true); return; }
+          store(null); setData(null);
+        } else if (readRaw()) return; // the copy on screen stays through a passing server or network failure
         setState(error === "sign-in" ? "sign-in" : error === "pro-required" ? "pro-required" : error === "not-ready" || error === "not-connected" ? "not-ready" : "error");
       })
-      .catch(() => { if (!controller.signal.aborted) setState("error"); });
+      .catch(() => { if (!controller.signal.aborted && !readRaw()) setState("error"); });
     return () => controller.abort();
-  }, [allowed, attempt]);
-  return { state, data, retry: () => { setState("loading"); setAttempt(n => n + 1); } };
+  }, [allowed, attempt, ask]);
+  const shown = plan === "free" ? null : data ?? (state === "loading" ? stored : null);
+  return { state: shown && state === "loading" ? "ready" as const : state, data: shown, retry: () => { setState("loading"); setAttempt(n => n + 1); } };
 }
 
 const Name = ({ ticker, name }: { ticker: string; name: string }) => <span className={styles.names}>
@@ -169,9 +203,9 @@ export default function WhaleMovesScreen() {
   const [lang, setLang] = useResearchLanguage();
   const ja = lang === "ja";
   const t = (a: string, b: string) => ja ? a : b;
-  const [tab, setTab] = useState<WhaleTab>("institutions");
+  const [tab, setTab] = useState<WhaleTab>(DEFAULT_WHALE_TAB);
   const [sorts, setSorts] = useState<Record<WhaleTab, string>>(FIRST_SORTS);
-  const { state, data, retry } = useWhaleMoves(plan === "pro");
+  const { state, data, retry } = useWhaleMoves(plan);
 
   return <ResearchToolShell lang={lang} setLang={setLang} title={t(WHALE_TRACKS.ja, WHALE_TRACKS.en)} showHeading={false} description="">
     <WhaleTracksSheet ja={ja}>

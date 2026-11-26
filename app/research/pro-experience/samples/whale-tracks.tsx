@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { WHALE_NOTE, whaleTracksSample as data } from "@/lib/research/pro-experience-sample-whales";
 import { StaysInSample } from "../../stock-row-link";
-import { FIRST_SORTS, WhalePanel, WhaleTabBar, WhaleTracksSheet } from "../../whales/screen";
+import { DEFAULT_WHALE_TAB, FIRST_SORTS, WhalePanel, WhaleTabBar, WhaleTracksSheet } from "../../whales/screen";
 import CardHead from "./card-head";
 import styles from "./samples.module.css";
 
@@ -12,7 +12,7 @@ type Tab = keyof typeof FIRST_SORTS;
  * their sort buttons work; the as-of lines carry the made-up year. A gold note under the rows says how many stocks the real page covers (owner, Nov 23). A stock stays in the sample (the frame's 「PROで使えます」). */
 export default function WhaleTracksSample({ lang }: { lang: "ja" | "en" }) {
   const ja = lang === "ja";
-  const [tab, setTab] = useState<Tab>("institutions");
+  const [tab, setTab] = useState<Tab>(DEFAULT_WHALE_TAB);
   const [sorts, setSorts] = useState<Record<Tab, string>>(FIRST_SORTS);
   return <StaysInSample.Provider value>
     <div className={styles.tool}>
