@@ -1,0 +1,156 @@
+{
+  "root": {
+    "ticker": "AVNT",
+    "name": "アビエント",
+    "cik": 1122976,
+    "name_en": "Avient"
+  },
+  "rows": [
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "顧客・取引先",
+      "en": "Customers & clients"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "SPAI",
+      "ticker": "SPAI",
+      "name": "セーフ・プロ・グループ",
+      "name_en": "Safe Pro Group",
+      "sub": "防護具",
+      "sub_en": "Protective gear",
+      "sub_short": "防護",
+      "sub_short_en": "Protect",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "主な仕入れ先に挙げる",
+          "text_en": "Names Avient Protective Materials among its main suppliers",
+          "source": {
+            "label": "Safe Pro Group 10-K(2025年度)",
+            "label_en": "Safe Pro Group 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2011208/000149315226014181/form10-k.htm",
+            "level": "official",
+            "date": "2026-03-31",
+            "quote": "Supplier Concentration During the year ended December 31, 2025, we purchased 68.0% of our inventory from four suppliers, Avient Protective Materials, Lincoln Fabrics, Skydio, Inc., and Hisco/Precision Converting."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PPG",
+      "ticker": "PPG",
+      "name": "ピーピージー",
+      "name_en": "PPG Industries",
+      "sub": "塗料",
+      "sub_en": "Coatings",
+      "sub_short": "塗料",
+      "sub_short_en": "Paint",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2025年に製品を購入",
+          "text_en": "Bought products from Avient in 2025",
+          "source": {
+            "label": "PPG Industries 8-K(2026年4月)",
+            "label_en": "PPG Industries 8-K (April 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/79879/000007987926000164/ppg-20260428.htm",
+            "level": "official",
+            "date": "2026-04-28",
+            "quote": "In 2025, PPG purchased approximately $524,000 of products from Avient Corporation."
+          }
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "ticker": "C",
+      "name": "シティグループ",
+      "name_en": "Citigroup",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の幹事行",
+          "text_en": "Administrative agent on its credit agreement",
+          "source": {
+            "label": "Avient 10-K(2025年度)",
+            "label_en": "Avient 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1122976/000112297626000039/avnt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Amendment Agreement No. 1 to the Credit Agreement, dated as of June 15, 2016, among PolyOne Corporation, the subsidiaries of PolyOne Corporation party thereto, the existing lenders under the Credit Agreement, and Citibank, N.A., as administrative agent and the Additional Term B-1 Lender"
+          }
+        }
+      ]
+    },
+    {
+      "id": "JPM",
+      "ticker": "JPM",
+      "name": "JPMorgan Chase",
+      "name_en": "JPMorgan Chase",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の幹事行",
+          "text_en": "Administrative agent on its credit agreement",
+          "source": {
+            "label": "Avient 8-K(2025年6月)",
+            "label_en": "Avient 8-K (June 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1122976/000119312525141088/d79513d8k.htm",
+            "level": "official",
+            "date": "2025-06-16",
+            "quote": "On June 12, 2025 (the \"Closing Date\"), Avient Corporation, an Ohio corporation (the \"Company\"), entered into a Revolving Credit Agreement (the \"Credit Agreement\") with JPMorgan Chase Bank, N.A., as administrative agent, and the various lenders party thereto, which replaces the Company's existing Third Amended and Restated Credit Agreement, dated as of June 28, 2019 (as amended), by and among the Company, the Company's subsidiaries party thereto, Wells Fargo Capital Finance"
+          }
+        }
+      ]
+    },
+    {
+      "id": "WFC",
+      "ticker": "WFC",
+      "name": "ウェルズ・ファーゴ",
+      "name_en": "Wells Fargo",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の幹事行",
+          "text_en": "Administrative agent on its credit agreement",
+          "source": {
+            "label": "Avient 8-K(2025年6月)",
+            "label_en": "Avient 8-K (June 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1122976/000119312525141088/d79513d8k.htm",
+            "level": "official",
+            "date": "2025-06-16",
+            "quote": "entered into a Revolving Credit Agreement (the \"Credit Agreement\") with JPMorgan Chase Bank, N.A., as administrative agent, and the various lenders party thereto, which replaces the Company's existing Third Amended and Restated Credit Agreement, dated as of June 28, 2019 (as amended), by and among the Company, the Company's subsidiaries party thereto, Wells Fargo Capital Finance, LLC, as administrative agent, and the various lenders and other agents party thereto."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

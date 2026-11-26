@@ -1,0 +1,212 @@
+{
+  "root": {
+    "ticker": "BHF",
+    "name": "ブライトハウス・ファイナンシャル",
+    "cik": 1685040,
+    "name_en": "Brighthouse Financial"
+  },
+  "rows": [
+    {
+      "ja": "供給元・取引先",
+      "en": "Suppliers & providers"
+    },
+    {
+      "ja": "提携・出資・買収",
+      "en": "Partners, stakes & deals"
+    },
+    {
+      "ja": "買収・売却",
+      "en": "Acquisitions & sales"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "MET",
+      "ticker": "MET",
+      "name": "メットライフ",
+      "name_en": "MetLife, Inc.",
+      "sub": "生命保険",
+      "sub_en": "Life insurance",
+      "sub_short": "生保",
+      "sub_short_en": "Insurer",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2017年に分離した元親会社",
+          "text_en": "Former parent; separated in 2017",
+          "source": {
+            "label": "Brighthouse Financial 10-K(2025年度)",
+            "label_en": "Brighthouse Financial 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1685040/000168504026000011/bhf-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "The term \"Separation\" refers to the separation of a substantial portion of MetLife, Inc.'s (together with its subsidiaries and affiliates, \"MetLife\") former Retail segment, as well as certain portions of its former Corporate Benefit Funding segment, into a separate, publicly-traded company, Brighthouse Financial, which was completed on August 4, 2017."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AQUARIAN",
+      "ticker": "AQUARIAN",
+      "name": "アクエリアン・ホールディングス",
+      "name_en": "Aquarian Holdings",
+      "sub": "保険投資",
+      "sub_en": "Insurance investor",
+      "sub_short": "投資",
+      "sub_short_en": "Investor",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "買収合意の相手",
+          "text_en": "Agreed to acquire it",
+          "source": {
+            "label": "Brighthouse Financial 10-K(2025年度)",
+            "label_en": "Brighthouse Financial 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1685040/000168504026000011/bhf-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "On November 6, 2025, BHF entered into an Agreement and Plan of Merger (the \"Merger Agreement\") with Aquarian Holdings VI L.P., a Delaware limited partnership (\"Aquarian Parent\"), Aquarian Beacon Merger Sub Inc., a Delaware corporation and an indirect wholly-owned subsidiary of Aquarian Parent (\"Merger Sub\"), and Aquarian Holdings LLC, a Delaware limited liability company, solely for the purpose of certain provisions, pursuant to which, at the closing of the transactions"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RGA",
+      "ticker": "RGA",
+      "name": "リインシュアランス・グループ・オブ・アメリカ",
+      "name_en": "Reinsurance Group of America",
+      "sub": "再保険",
+      "sub_en": "Reinsurer",
+      "sub_short": "再保険",
+      "sub_short_en": "Reinsure",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "再保険の引受先",
+          "text_en": "A reinsurer in its reinsurance program",
+          "source": {
+            "label": "Brighthouse Financial 10-K(2025年度)",
+            "label_en": "Brighthouse Financial 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1685040/000168504026000011/bhf-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Best Financial Strength Rating (1) (In millions) MetLife, Inc. $ 3,399 A+ Munich American Reassurance Company 632 A+ Reinsurance Group of America, Inc. 559 A+ Swiss Re AG 491 A++ The Travelers Indemnity Company (2) 419 A+ SCOR SE 352 A+ Aegon Ltd 154 A General Re Life Corporation 109 A++ Other 358 Allowance for credit losses (3) Total $ 6,470 _______________ (1)These financial strength ratings were the most currently available for our reinsurance counterparties as of"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SWISSRE",
+      "ticker": "SWISSRE",
+      "name": "スイス・リー・グループ",
+      "name_en": "Swiss Re Group",
+      "sub": "再保険",
+      "sub_en": "Reinsurer",
+      "sub_short": "再保険",
+      "sub_short_en": "Reinsure",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "再保険の引受先",
+          "text_en": "A reinsurer in its reinsurance program",
+          "source": {
+            "label": "Brighthouse Financial 10-K(2025年度)",
+            "label_en": "Brighthouse Financial 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1685040/000168504026000011/bhf-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Best Financial Strength Rating (1) (In millions) MetLife, Inc. $ 3,399 A+ Munich American Reassurance Company 632 A+ Reinsurance Group of America, Inc. 559 A+ Swiss Re AG 491 A++ The Travelers Indemnity Company (2) 419 A+ SCOR SE 352 A+ Aegon Ltd 154 A General Re Life Corporation 109 A++ Other 358 Allowance for credit losses (3) Total $ 6,470 _______________ (1)These financial strength ratings were the most currently available for our reinsurance counterparties as of"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MUNICHRE",
+      "ticker": "MUNICHRE",
+      "name": "ミュンヘン再保険グループ",
+      "name_en": "Munich Re Group",
+      "sub": "再保険",
+      "sub_en": "Reinsurer",
+      "sub_short": "再保険",
+      "sub_short_en": "Reinsure",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "再保険の引受先",
+          "text_en": "A reinsurer in its reinsurance program",
+          "source": {
+            "label": "Brighthouse Financial 10-K(2025年度)",
+            "label_en": "Brighthouse Financial 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1685040/000168504026000011/bhf-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Best Financial Strength Rating (1) (In millions) MetLife, Inc. $ 3,399 A+ Munich American Reassurance Company 632 A+ Reinsurance Group of America, Inc. 559 A+ Swiss Re AG 491 A++ The Travelers Indemnity Company (2) 419 A+ SCOR SE 352 A+ Aegon Ltd 154 A General Re Life Corporation 109 A++ Other 358 Allowance for credit losses (3) Total $ 6,470 _______________ (1)These financial strength ratings were the most currently available for our reinsurance counterparties as of"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SCORSE",
+      "ticker": "SCORSE",
+      "name": "SCOR",
+      "name_en": "SCOR",
+      "sub": "再保険",
+      "sub_en": "Reinsurer",
+      "sub_short": "再保険",
+      "sub_short_en": "Reinsure",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "再保険の引受先",
+          "text_en": "A reinsurer in its reinsurance program",
+          "source": {
+            "label": "Brighthouse Financial 10-K(2025年度)",
+            "label_en": "Brighthouse Financial 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1685040/000168504026000011/bhf-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Best Financial Strength Rating (1) (In millions) MetLife, Inc. $ 3,399 A+ Munich American Reassurance Company 632 A+ Reinsurance Group of America, Inc. 559 A+ Swiss Re AG 491 A++ The Travelers Indemnity Company (2) 419 A+ SCOR SE 352 A+ Aegon Ltd 154 A General Re Life Corporation 109 A++ Other 358 Allowance for credit losses (3) Total $ 6,470 _______________ (1)These financial strength ratings were the most currently available for our reinsurance counterparties as of"
+          }
+        }
+      ]
+    },
+    {
+      "id": "TRV",
+      "ticker": "TRV",
+      "name": "トラベラーズ・カンパニーズ",
+      "name_en": "Travelers Companies",
+      "sub": "損保",
+      "sub_en": "Insurance",
+      "sub_short": "損保",
+      "sub_short_en": "Insurance",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "再保険の回収先",
+          "text_en": "A reinsurance recoverable counterparty",
+          "source": {
+            "label": "Brighthouse Financial 10-K(2025年度)",
+            "label_en": "Brighthouse Financial 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1685040/000168504026000011/bhf-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Best Financial Strength Rating (1) (In millions) MetLife, Inc. $ 3,399 A+ Munich American Reassurance Company 632 A+ Reinsurance Group of America, Inc. 559 A+ Swiss Re AG 491 A++ The Travelers Indemnity Company (2) 419 A+ SCOR SE 352 A+ Aegon Ltd 154 A General Re Life Corporation 109 A++ Other 358 Allowance for credit losses (3) Total $ 6,470 _______________ (1)These financial strength ratings were the most currently available for our reinsurance counterparties as of"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,184 @@
+{
+  "root": {
+    "ticker": "HR",
+    "name": "ヘルスケア・リアルティ・トラスト",
+    "cik": 1360604,
+    "name_en": "Healthcare Realty Trust"
+  },
+  "rows": [
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "WELL"
+  ],
+  "companies": [
+    {
+      "id": "WELL",
+      "ticker": "WELL",
+      "name": "ウェルタワー",
+      "name_en": "Welltower",
+      "sub": "医療・介護REIT",
+      "sub_en": "Healthcare REIT",
+      "sub_short": "REIT",
+      "sub_short_en": "REIT",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合の1社に挙げる",
+          "text_en": "Names Healthcare Realty as a competitor",
+          "source": {
+            "label": "Welltower 10-Kの添付資料(2025年度)",
+            "label_en": "Welltower exhibit to its 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/766704/000076670426000010/exhibit19-10xk2025.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "In addition, under no circumstances may a Covered Person trade in the securities of Welltower's public customers, operators or their affiliates (such as Brookdale Senior Living and Chartwell Retirement Residence) or competitors or their affiliates (such as Ventas, Inc., Healthpeak Properties, Inc., Healthcare Realty Trust, Omega Healthcare Investors, Inc., and Sabra Health Care REIT)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WFC",
+      "ticker": "WFC",
+      "name": "ウェルズ・ファーゴ",
+      "name_en": "Wells Fargo",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の幹事行",
+          "text_en": "Administrative agent on its credit agreement",
+          "source": {
+            "label": "Healthcare Realty Trust 8-K(2026年5月)",
+            "label_en": "Healthcare Realty Trust 8-K (May 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1360604/000136060426000049/hr-20260519.htm",
+            "level": "official",
+            "date": "2026-05-19",
+            "quote": "(the \"Borrower\"), entered into a Term Loan Agreement (the \"Term Loan Agreement\"), with Wells Fargo Bank, National Association, as Administrative Agent;"
+          }
+        }
+      ]
+    },
+    {
+      "id": "JPM",
+      "ticker": "JPM",
+      "name": "JPMorgan Chase",
+      "name_en": "JPMorgan Chase",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の貸し手",
+          "text_en": "A lender under its credit agreement",
+          "source": {
+            "label": "Healthcare Realty Trust 8-K(2025年7月)",
+            "label_en": "Healthcare Realty Trust 8-K (July 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1360604/000136060425000093/hr-20250725.htm",
+            "level": "official",
+            "date": "2025-07-31",
+            "quote": "announced that it and its operating partnership, Healthcare Realty Holdings, L.P. (the \"OP\"), entered into the Fifth Amended and Restated Revolving Credit and Term Loan Agreement, dated as of July 25, 2025 (the \"New Credit Facility\") with Wells Fargo Bank, National Association, as Administrative Agent; Wells Fargo Securities, LLC and JPMorgan Chase Bank, N.A. as Joint Book Runners; Wells Fargo Securities, LLC, JPMorgan Chase Bank, N.A., PNC Capital Markets LLC, U.S."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PNC",
+      "ticker": "PNC",
+      "name": "PNCフィナンシャル・サービシズ",
+      "name_en": "PNC Financial Services",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の貸し手",
+          "text_en": "A lender under its credit agreement",
+          "source": {
+            "label": "Healthcare Realty Trust 8-K(2025年7月)",
+            "label_en": "Healthcare Realty Trust 8-K (July 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1360604/000136060425000093/hr-20250725.htm",
+            "level": "official",
+            "date": "2025-07-31",
+            "quote": "announced that it and its operating partnership, Healthcare Realty Holdings, L.P. (the \"OP\"), entered into the Fifth Amended and Restated Revolving Credit and Term Loan Agreement, dated as of July 25, 2025 (the \"New Credit Facility\") with Wells Fargo Bank, National Association, as Administrative Agent; Wells Fargo Securities, LLC and JPMorgan Chase Bank, N.A. as Joint Book Runners; Wells Fargo Securities, LLC, JPMorgan Chase Bank, N.A., PNC Capital Markets LLC, U.S."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FITB",
+      "ticker": "FITB",
+      "name": "フィフス・サード",
+      "name_en": "Fifth Third Bancorp",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "株式売出しの販売代理人",
+          "text_en": "Sales agent for its share offering program",
+          "source": {
+            "label": "Healthcare Realty Trust 8-K(2025年12月)",
+            "label_en": "Healthcare Realty Trust 8-K (December 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1360604/000136060425000126/hr-20251217.htm",
+            "level": "official",
+            "date": "2025-12-17",
+            "quote": "(the \"Equity Distribution Agreements\"), each among the Company and Healthcare Realty Holdings, L.P., a Delaware limited partnership (the \"OP\"), on the one hand, and respectively each of (i) J.P. Morgan Securities LLC, (ii) BofA Securities, Inc., (iii) Barclays Capital Inc., (iv) BTIG, LLC, (v) Citigroup Global Markets Inc., (vi) Credit Agricole Securities (USA) Inc., (vii) Fifth Third Securities, Inc., (viii) Jefferies LLC, (ix) Mizuho Securities USA LLC, (x) Morgan S"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BAC",
+      "ticker": "BAC",
+      "name": "バンク・オブ・アメリカ",
+      "name_en": "Bank of America",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "株式売出しの販売代理人",
+          "text_en": "Sales agent for its share offering program",
+          "source": {
+            "label": "Healthcare Realty Trust 8-K(2025年12月)",
+            "label_en": "Healthcare Realty Trust 8-K (December 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1360604/000136060425000126/hr-20251217.htm",
+            "level": "official",
+            "date": "2025-12-17",
+            "quote": "a part of the Equity Offering Program, the Company also entered into separate master forward confirmations (the \"Master Forward Confirmations\"), each between the Company and the OP, on the one hand, and respectively each of (i) JPMorgan Chase Bank, National Association, (ii) Bank of America, N.A., (iii) Barclays Bank PLC, (iv) Citibank, N.A., (v) Crédit Agricole Corporate and Investment Bank, (vi) Jefferies LLC, (vii) Mizuho Markets Americas LLC, (viii) Morgan Stanley & Co."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

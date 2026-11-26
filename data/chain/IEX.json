@@ -1,0 +1,240 @@
+{
+  "root": {
+    "ticker": "IEX",
+    "name": "アイデックス",
+    "cik": 832101,
+    "name_en": "IDEX"
+  },
+  "rows": [
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "買収・売却",
+      "en": "Acquisitions & sales"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "IR"
+  ],
+  "companies": [
+    {
+      "id": "MOTT",
+      "ticker": "MOTT",
+      "name": "モット",
+      "name_en": "Mott Corporation",
+      "sub": "多孔質金属部品",
+      "sub_en": "Porous metal products",
+      "sub_short": "部品",
+      "sub_short_en": "Parts",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2024年9月に買収",
+          "text_en": "Acquired in September 2024",
+          "source": {
+            "label": "IDEX 10-K(2025年度)",
+            "label_en": "IDEX 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/832101/000083210126000003/iex-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "The acquired intangible assets and weighted average amortization periods are as follows: Total Weighted Average Life (in years) Trade names $ 5.3 15 Customer relationships 21.1 11 Technology 18.4 12 Acquired intangible assets $ 44.8 2024 Acquisitions Mott Corporation On September 5, 2024, the Company acquired Mott Corporation and its subsidiaries (\"Mott\") in a stock acquisition."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MICROLAM",
+      "ticker": "MICROLAM",
+      "name": "マイクロラム",
+      "name_en": "Micro-LAM",
+      "sub": "超精密加工",
+      "sub_en": "Precision machining",
+      "sub_short": "加工",
+      "sub_short_en": "Parts",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年に買収",
+          "text_en": "Acquired in 2025",
+          "source": {
+            "label": "IDEX 10-K(2025年度)",
+            "label_en": "IDEX 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/832101/000083210126000003/iex-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Goodwill recognized reflects the strategic fit, revenue and earnings growth potential of the acquired business and its synergies with existing IDEX businesses. 2025 Acquisitions Micro-LAM, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "IR",
+      "ticker": "IR",
+      "name": "インガソール・ランド",
+      "name_en": "Ingersoll Rand",
+      "sub": "圧縮機",
+      "sub_en": "Compressors",
+      "sub_short": "圧縮機",
+      "sub_short_en": "Compress",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "圧縮機などの主な競合に挙げる",
+          "text_en": "Names IDEX among its principal competitors",
+          "source": {
+            "label": "Ingersoll Rand 10-K(2025年度)",
+            "label_en": "Ingersoll Rand 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1699150/000162828026008617/iri-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Our principal competitors in sales of compression, vacuum and blower products include Atlas Copco, Flowserve, IDEX Corporation, Kaeser Compressors, Kaishan Group Co., Ltd. and Elgi Equipments Limited."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BAC",
+      "ticker": "BAC",
+      "name": "バンク・オブ・アメリカ",
+      "name_en": "Bank of America",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の幹事行",
+          "text_en": "Administrative agent on its credit agreement",
+          "source": {
+            "label": "IDEX 8-K(2026年9月)",
+            "label_en": "IDEX 8-K (September 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/832101/000119312526381880/d421581d8k.htm",
+            "level": "official",
+            "date": "2026-09-03",
+            "quote": "certain Amended and Restated Credit Agreement, dated as of November 1, 2022 (the \"Original Credit Agreement\" and, as amended and restated, the \"Credit Agreement\"), along with certain of its subsidiaries, as borrowers (the \"Borrowers\"); Bank of America, N.A., as administrative agent, swingline lender and an issuer of letters of credit; JPMorgan Chase Bank, N.A., PNC Bank, National Association and Wells Fargo Bank, National Association, as co-syndication agents and issuers"
+          }
+        }
+      ]
+    },
+    {
+      "id": "JPM",
+      "ticker": "JPM",
+      "name": "JPMorgan Chase",
+      "name_en": "JPMorgan Chase",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の貸し手",
+          "text_en": "A lender under its credit agreement",
+          "source": {
+            "label": "IDEX 8-K(2026年9月)",
+            "label_en": "IDEX 8-K (September 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/832101/000119312526381880/d421581d8k.htm",
+            "level": "official",
+            "date": "2026-09-03",
+            "quote": "dated as of November 1, 2022 (the \"Original Credit Agreement\" and, as amended and restated, the \"Credit Agreement\"), along with certain of its subsidiaries, as borrowers (the \"Borrowers\"); Bank of America, N.A., as administrative agent, swingline lender and an issuer of letters of credit; JPMorgan Chase Bank, N.A., PNC Bank, National Association and Wells Fargo Bank, National Association, as co-syndication agents and issuers of letters of credit; HSBC Bank USA, Nation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "WFC",
+      "ticker": "WFC",
+      "name": "ウェルズ・ファーゴ",
+      "name_en": "Wells Fargo",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の貸し手",
+          "text_en": "A lender under its credit agreement",
+          "source": {
+            "label": "IDEX 8-K(2026年9月)",
+            "label_en": "IDEX 8-K (September 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/832101/000119312526381880/d421581d8k.htm",
+            "level": "official",
+            "date": "2026-09-03",
+            "quote": "dated as of November 1, 2022 (the \"Original Credit Agreement\" and, as amended and restated, the \"Credit Agreement\"), along with certain of its subsidiaries, as borrowers (the \"Borrowers\"); Bank of America, N.A., as administrative agent, swingline lender and an issuer of letters of credit; JPMorgan Chase Bank, N.A., PNC Bank, National Association and Wells Fargo Bank, National Association, as co-syndication agents and issuers of letters of credit; HSBC Bank USA, Nation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PNC",
+      "ticker": "PNC",
+      "name": "PNCフィナンシャル・サービシズ",
+      "name_en": "PNC Financial Services",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の貸し手",
+          "text_en": "A lender under its credit agreement",
+          "source": {
+            "label": "IDEX 8-K(2026年9月)",
+            "label_en": "IDEX 8-K (September 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/832101/000119312526381880/d421581d8k.htm",
+            "level": "official",
+            "date": "2026-09-03",
+            "quote": "dated as of November 1, 2022 (the \"Original Credit Agreement\" and, as amended and restated, the \"Credit Agreement\"), along with certain of its subsidiaries, as borrowers (the \"Borrowers\"); Bank of America, N.A., as administrative agent, swingline lender and an issuer of letters of credit; JPMorgan Chase Bank, N.A., PNC Bank, National Association and Wells Fargo Bank, National Association, as co-syndication agents and issuers of letters of credit; HSBC Bank USA, Nation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "HSBC",
+      "ticker": "HSBC",
+      "name": "HSBC",
+      "name_en": "HSBC",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の貸し手",
+          "text_en": "A lender under its credit agreement",
+          "source": {
+            "label": "IDEX 8-K(2026年9月)",
+            "label_en": "IDEX 8-K (September 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/832101/000119312526381880/d421581d8k.htm",
+            "level": "official",
+            "date": "2026-09-03",
+            "quote": "dated as of November 1, 2022 (the \"Original Credit Agreement\" and, as amended and restated, the \"Credit Agreement\"), along with certain of its subsidiaries, as borrowers (the \"Borrowers\"); Bank of America, N.A., as administrative agent, swingline lender and an issuer of letters of credit; JPMorgan Chase Bank, N.A., PNC Bank, National Association and Wells Fargo Bank, National Association, as co-syndication agents and issuers of letters of credit; HSBC Bank USA, Nation"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

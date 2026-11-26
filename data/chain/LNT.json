@@ -1,0 +1,234 @@
+{
+  "root": {
+    "ticker": "LNT",
+    "name": "アライアント・エナジー",
+    "cik": 352541,
+    "name_en": "Alliant Energy"
+  },
+  "rows": [
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "提携・出資・買収",
+      "en": "Partners, stakes & deals"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "WEC",
+      "ticker": "WEC",
+      "name": "WECエナジー・グループ",
+      "name_en": "WEC Energy Group",
+      "sub": "電力・ガス",
+      "sub_en": "Electric & gas utility",
+      "sub_short": "公益",
+      "sub_short_en": "Utility",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "発電所の持ち分の一部を取得",
+          "text_en": "Bought part of one of its power plants",
+          "source": {
+            "label": "Alliant Energy 10-K(2025年度)",
+            "label_en": "Alliant Energy 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/352541/000035254126000007/lnt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "(WEC) In 2023 and 2024, WEC acquired 200 MW in aggregate, pursuant to PSCW and FERC approval (a) Madison Gas and Electric Company (MGE) In 2023 and 2024, MGE acquired 50 MW in aggregate, pursuant to PSCW and FERC approval Electric cooperatives Approximately 60 MW were acquired in 2018 (a)WPL may exercise reciprocal options, subject to approval by the PSCW, to purchase up to 200 MW of any natural-gas combined-cycle EGU that WEC places in service prior to May 2030."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MGEE",
+      "ticker": "MGEE",
+      "name": "MGEエナジー",
+      "name_en": "MGE Energy",
+      "sub": "電力・ガス",
+      "sub_en": "Electric & gas utility",
+      "sub_short": "公益",
+      "sub_short_en": "Utility",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "発電所の持ち分の一部を取得",
+          "text_en": "Bought part of one of its power plants",
+          "source": {
+            "label": "Alliant Energy 10-K(2025年度)",
+            "label_en": "Alliant Energy 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/352541/000035254126000007/lnt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "(WEC) In 2023 and 2024, WEC acquired 200 MW in aggregate, pursuant to PSCW and FERC approval (a) Madison Gas and Electric Company (MGE) In 2023 and 2024, MGE acquired 50 MW in aggregate, pursuant to PSCW and FERC approval Electric cooperatives Approximately 60 MW were acquired in 2018 (a)WPL may exercise reciprocal options, subject to approval by the PSCW, to purchase up to 200 MW of any natural-gas combined-cycle EGU that WEC places in service prior to May 2030."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ATCHOLDINGS",
+      "ticker": "ATCHOLDINGS",
+      "name": "ATCホールディングス",
+      "name_en": "ATC Holdings",
+      "sub": "送電",
+      "sub_en": "Electric transmission",
+      "sub_short": "送電",
+      "sub_short_en": "Grid",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "子会社を通じて出資",
+          "text_en": "Holds an interest through a subsidiary",
+          "source": {
+            "label": "Alliant Energy 10-K(2025年度)",
+            "label_en": "Alliant Energy 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/352541/000035254126000007/lnt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "WPL also sells electricity to wholesale customers in Wisconsin. 3) CORPORATE SERVICES - provides administrative services to Alliant Energy, IPL, WPL and AEF. 4) AEF - Alliant Energy's non-utility holdings are organized under AEF, which manages a portfolio of wholly-owned subsidiaries and additional holdings, including the following distinct platforms: ATI - currently holds all of Alliant Energy's interest in ATC Holdings."
+          }
+        }
+      ]
+    },
+    {
+      "id": "USB",
+      "ticker": "USB",
+      "name": "USバンコープ",
+      "name_en": "U.S. Bancorp",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の幹事行",
+          "text_en": "Administrative agent on its credit agreement",
+          "source": {
+            "label": "Alliant Energy 8-K(2025年3月)",
+            "label_en": "Alliant Energy 8-K (March 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/352541/000035254125000025/lnt-20250303.htm",
+            "level": "official",
+            "date": "2025-03-03",
+            "quote": "On March 3, 2025, Alliant Energy Finance, LLC (\"AEF\"), a wholly-owned subsidiary of Alliant Energy Corporation (\"Alliant Energy\"), entered into a one-year second amended and restated term loan credit agreement (the \"Credit Agreement\") with U.S. Bank National Association, as administrative agent, and the several lenders party thereto."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BAC",
+      "ticker": "BAC",
+      "name": "バンク・オブ・アメリカ",
+      "name_en": "Bank of America",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "株式売出しの販売代理人",
+          "text_en": "Sales agent for its share offering program",
+          "source": {
+            "label": "Alliant Energy 8-K(2026年3月)",
+            "label_en": "Alliant Energy 8-K (March 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/352541/000119312526116244/d131241d8k.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "On March 19, 2026, Alliant Energy Corporation (the \"Company\"), entered into a distribution agreement (the \"Distribution Agreement\") with Barclays Capital Inc., BofA Securities, Inc., Goldman Sachs & Co."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GS",
+      "ticker": "GS",
+      "name": "Goldman Sachs",
+      "name_en": "Goldman Sachs",
+      "sub": "証券",
+      "sub_en": "Securities",
+      "sub_short": "証券",
+      "sub_short_en": "Broker",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "株式売出しの販売代理人",
+          "text_en": "Sales agent for its share offering program",
+          "source": {
+            "label": "Alliant Energy 8-K(2026年3月)",
+            "label_en": "Alliant Energy 8-K (March 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/352541/000119312526116244/d131241d8k.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "On March 19, 2026, Alliant Energy Corporation (the \"Company\"), entered into a distribution agreement (the \"Distribution Agreement\") with Barclays Capital Inc., BofA Securities, Inc., Goldman Sachs & Co."
+          }
+        }
+      ]
+    },
+    {
+      "id": "JPM",
+      "ticker": "JPM",
+      "name": "JPMorgan Chase",
+      "name_en": "JPMorgan Chase",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "株式の先渡し契約の相手方",
+          "text_en": "Forward counterparty in its share offering program",
+          "source": {
+            "label": "Alliant Energy 8-K(2026年3月)",
+            "label_en": "Alliant Energy 8-K (March 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/352541/000119312526116244/d131241d8k.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "LLC, JPMorgan Chase Bank, National Association, KeyBanc Capital Markets Inc., Mizuho Markets Americas LLC, MUFG Securities EMEA plc, The Toronto-Dominion Bank and Wells Fargo Bank, National Association, as forward purchasers (collectively, the \"Forward Purchasers\" and each, a \"Forward Purchaser\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WFC",
+      "ticker": "WFC",
+      "name": "ウェルズ・ファーゴ",
+      "name_en": "Wells Fargo",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "株式の先渡し契約の相手方",
+          "text_en": "Forward counterparty in its share offering program",
+          "source": {
+            "label": "Alliant Energy 8-K(2026年3月)",
+            "label_en": "Alliant Energy 8-K (March 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/352541/000119312526116244/d131241d8k.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "LLC, JPMorgan Chase Bank, National Association, KeyBanc Capital Markets Inc., Mizuho Markets Americas LLC, MUFG Securities EMEA plc, The Toronto-Dominion Bank and Wells Fargo Bank, National Association, as forward purchasers (collectively, the \"Forward Purchasers\" and each, a \"Forward Purchaser\")."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

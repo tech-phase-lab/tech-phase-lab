@@ -1,0 +1,182 @@
+{
+  "root": {
+    "ticker": "NBTB",
+    "name": "NBTバンコープ",
+    "cik": 790359,
+    "name_en": "NBT Bancorp"
+  },
+  "rows": [
+    {
+      "ja": "提携・出資・買収",
+      "en": "Partners, stakes & deals"
+    },
+    {
+      "ja": "買収・売却",
+      "en": "Acquisitions & sales"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "EVANS",
+      "ticker": "EVANS",
+      "name": "エバンス・バンコープ",
+      "name_en": "Evans Bancorp",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年5月に買収",
+          "text_en": "Acquired in May 2025",
+          "source": {
+            "label": "NBT Bancorp 10-K(2025年度)",
+            "label_en": "NBT Bancorp 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/790359/000114036126007179/ef20060005_10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Acquisitions Current and Prior Period Acquisitions On May 2, 2025, the Company completed the acquisition of Evans Bancorp, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SALISBURY",
+      "ticker": "SALISBURY",
+      "name": "ソールズベリー・バンコープ",
+      "name_en": "Salisbury Bancorp",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2023年8月に買収",
+          "text_en": "Acquired in August 2023",
+          "source": {
+            "label": "NBT Bancorp 10-K(2025年度)",
+            "label_en": "NBT Bancorp 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/790359/000114036126007179/ef20060005_10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "On August 11, 2023, the Company completed the acquisition of Salisbury Bancorp, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ALLIANCEFIN",
+      "ticker": "ALLIANCEFIN",
+      "name": "アライアンス・ファイナンシャル",
+      "name_en": "Alliance Financial",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "買収した銀行持株会社",
+          "text_en": "Acquired bank holding company",
+          "source": {
+            "label": "NBT Bancorp 10-K(2025年度)",
+            "label_en": "NBT Bancorp 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/790359/000114036126007179/ef20060005_10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "In connection with the acquisition of Alliance Financial Corporation (\"Alliance\"), the Company acquired two statutory trusts, Alliance Financial Capital Trust I and Alliance Financial Capital Trust II, which were formed in 2003 and 2006, respectively."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CNBBANCORP",
+      "ticker": "CNBBANCORP",
+      "name": "CNBバンコープ",
+      "name_en": "CNB Bancorp",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "買収した銀行持株会社",
+          "text_en": "Acquired bank holding company",
+          "source": {
+            "label": "NBT Bancorp 10-K(2025年度)",
+            "label_en": "NBT Bancorp 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/790359/000114036126007179/ef20060005_10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "In connection with the acquisition of CNB Bancorp, Inc., the Company formed NBT Statutory Trust II in February 2006 to fund the cash portion of the acquisition as well as to provide regulatory capital."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SPRINGSTONE",
+      "ticker": "SPRINGSTONE",
+      "name": "スプリングストーン・ファイナンシャル",
+      "name_en": "Springstone Financial",
+      "sub": "消費者金融",
+      "sub_en": "Consumer lending",
+      "sub_short": "金融",
+      "sub_short_en": "Lending",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "消費者ローンで提携した投資先",
+          "text_en": "Consumer lending partner it invested in",
+          "source": {
+            "label": "NBT Bancorp 10-K(2025年度)",
+            "label_en": "NBT Bancorp 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/790359/000114036126007179/ef20060005_10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Other consumer loans consist of direct installment loans to individuals most secured by automobiles and other personal property and unsecured consumer loans across a national footprint originated through our relationship with national technology-driven consumer lending companies that began over 10 years ago beginning with our investment in Springstone Financial LLC (\"Springstone\") which was subsequently acquired by LendingClub in 2014."
+          }
+        }
+      ]
+    },
+    {
+      "id": "COLUMBIARIDGE",
+      "ticker": "COLUMBIARIDGE",
+      "name": "コロンビア・リッジ・キャピタル",
+      "name_en": "Columbia Ridge Capital",
+      "sub": "資産運用",
+      "sub_en": "Asset management",
+      "sub_short": "運用",
+      "sub_short_en": "Asset mgr",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2016年に買収",
+          "text_en": "Acquired in 2016",
+          "source": {
+            "label": "NBT Bancorp 10-K(2025年度)",
+            "label_en": "NBT Bancorp 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/790359/000114036126007179/ef20060005_10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "NBT Capital Management, Inc., formerly Columbia Ridge Capital Management, Inc., was acquired in 2016 and is a registered investment advisor that provides investment management and financial consulting services."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,190 @@
+{
+  "root": {
+    "ticker": "SLM",
+    "name": "SLM(サリーメイ)",
+    "cik": 1032033,
+    "name_en": "SLM (Sallie Mae)"
+  },
+  "rows": [
+    {
+      "ja": "提携・出資・買収",
+      "en": "Partners, stakes & deals"
+    },
+    {
+      "ja": "買収・売却",
+      "en": "Acquisitions & sales"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "SOFI",
+    "CFG",
+    "PNC"
+  ],
+  "companies": [
+    {
+      "id": "NAVI",
+      "ticker": "NAVI",
+      "name": "ナビエント",
+      "name_en": "Navient",
+      "sub": "学生ローン",
+      "sub_en": "Student loans",
+      "sub_short": "ローン",
+      "sub_short_en": "Loans",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2014年に分離した会社",
+          "text_en": "Separated from SLM in 2014",
+          "source": {
+            "label": "SLM (Sallie Mae) 10-K(2025年度)",
+            "label_en": "SLM (Sallie Mae) 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1032033/000103203326000011/slm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "On April 30, 2014, we legally separated (the \"Spin-Off\") from another public company that is now named Navient Corporation (\"Navient\"), which is in the education loan management, consolidation loan, and business processing businesses."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SOFI",
+      "ticker": "SOFI",
+      "name": "ソーファイ",
+      "name_en": "SoFi Technologies",
+      "sub": "個人向け金融",
+      "sub_en": "Consumer finance",
+      "sub_short": "金融",
+      "sub_short_en": "Finance",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "私立学生ローンの主な競合",
+          "text_en": "A primary competitor in private student loans",
+          "source": {
+            "label": "SLM (Sallie Mae) 10-K(2025年度)",
+            "label_en": "SLM (Sallie Mae) 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1032033/000103203326000011/slm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Our primary competitors1 in the Private Education Loan market include large banks and specialty finance companies such as Citizens Financial Group, Inc., PNC Bank, Sofi Technologies, Inc. and College Ave, and members of the Education Finance Council."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CFG",
+      "ticker": "CFG",
+      "name": "シチズンズ・バンク",
+      "name_en": "Citizens Bank, N.A.",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "私立学生ローンの主な競合",
+          "text_en": "A primary competitor in private student loans",
+          "source": {
+            "label": "SLM (Sallie Mae) 10-K(2025年度)",
+            "label_en": "SLM (Sallie Mae) 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1032033/000103203326000011/slm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Our primary competitors1 in the Private Education Loan market include large banks and specialty finance companies such as Citizens Financial Group, Inc., PNC Bank, Sofi Technologies, Inc. and College Ave, and members of the Education Finance Council."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PNC",
+      "ticker": "PNC",
+      "name": "PNCフィナンシャル・サービシズ",
+      "name_en": "PNC Financial Services",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "私立学生ローンの主な競合",
+          "text_en": "A primary competitor in private student loans",
+          "source": {
+            "label": "SLM (Sallie Mae) 10-K(2025年度)",
+            "label_en": "SLM (Sallie Mae) 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1032033/000103203326000011/slm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Our primary competitors1 in the Private Education Loan market include large banks and specialty finance companies such as Citizens Financial Group, Inc., PNC Bank, Sofi Technologies, Inc. and College Ave, and members of the Education Finance Council."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NITRO",
+      "ticker": "NITRO",
+      "name": "ナイトロ・カレッジ",
+      "name_en": "Nitro College",
+      "sub": "学資情報サイト",
+      "sub_en": "College finance content",
+      "sub_short": "情報",
+      "sub_short_en": "Content",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2022年に資産を買収",
+          "text_en": "Bought its assets in 2022",
+          "source": {
+            "label": "SLM (Sallie Mae) 10-K(2025年度)",
+            "label_en": "SLM (Sallie Mae) 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1032033/000103203326000011/slm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "In 2022, we acquired the assets of Epic Research Education Services, LLC, which did business as Nitro College (\"Nitro\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SCHOLLY",
+      "ticker": "SCHOLLY",
+      "name": "スカラリー",
+      "name_en": "Scholly",
+      "sub": "奨学金アプリ",
+      "sub_en": "Scholarship app",
+      "sub_short": "アプリ",
+      "sub_short_en": "App",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2023年に主要資産を買収",
+          "text_en": "Bought key assets in 2023",
+          "source": {
+            "label": "SLM (Sallie Mae) 10-K(2025年度)",
+            "label_en": "SLM (Sallie Mae) 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1032033/000103203326000011/slm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "In 2023, we completed the acquisition of several key assets of Scholly, Inc."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

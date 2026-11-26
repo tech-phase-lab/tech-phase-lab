@@ -1,0 +1,156 @@
+{
+  "root": {
+    "ticker": "HWC",
+    "name": "ハンコック・ホイットニー",
+    "cik": 750577,
+    "name_en": "Hancock Whitney"
+  },
+  "rows": [
+    {
+      "ja": "顧客・取引先",
+      "en": "Customers & clients"
+    },
+    {
+      "ja": "買収・売却",
+      "en": "Acquisitions & sales"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "HZO",
+      "ticker": "HZO",
+      "name": "マリンマックス",
+      "name_en": "MarineMax",
+      "sub": "ボート販売",
+      "sub_en": "Boat retail",
+      "sub_short": "ボート",
+      "sub_short_en": "Boats",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ハンコック・ホイットニー銀行から不動産担保で借り入れ",
+          "text_en": "Has a mortgage facility from Hancock Whitney Bank",
+          "source": {
+            "label": "Marinemax 10-K(2026年9月期)",
+            "label_en": "Marinemax 10-K (FY ended Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1057060/000119312526463429/hzo-20260930.htm",
+            "level": "official",
+            "date": "2026-11-16",
+            "quote": "term loan as of September 30, 2026 2025 Fair Value Carrying Value Fair Value Carrying Value (Amounts in thousands) Mortgage facility payable to Flagship Bank $ 4,435 $ 4,419 $ 4,964 $ 4,915 Mortgage facility payable to Seacoast National Bank 12,519 12,663 14,074 14,020 Mortgage facility payable to Hancock Whitney Bank 17,618 17,539 19,651 19,452 Mortgage facility payable to M&T Bank 29,930 30,132 36,190 36,083 Term loan payable to M&T Bank 288,120 291,534 313,540 317,500 5."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SEI",
+      "ticker": "SEI",
+      "name": "ソラリス・エナジー・インフラストラクチャー",
+      "name_en": "Solaris Energy Infrastructure",
+      "sub": "発電・設備",
+      "sub_en": "Energy infrastructure",
+      "sub_short": "エネ",
+      "sub_short_en": "Energy",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ハンコック・ホイットニー銀行と融資枠契約",
+          "text_en": "Has a line of credit with Hancock Whitney Bank",
+          "source": {
+            "label": "Solaris Energy Infrastructure 8-K/A(2026年11月)",
+            "label_en": "Solaris Energy Infrastructure 8-K/A (November 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1697500/000119312526463453/d194978dex991.htm",
+            "level": "official",
+            "date": "2026-11-16",
+            "quote": "Less current portion (12,980,647 ) Long-term portion $ 24,150,557 19 Aggregate future maturities of the debt are approximately: For year ended December 31, 2026 $ 12,980,647 2027 12,588,740 2028 9,387,683 2029 2,089,197 2030 84,937 Total notes payable $ 37,131,204 The Company maintains a line of credit with Hancock Whitney Bank (the \"Bank\") for up to $8,000,000, secured by the Company's equipment and accounts receivable payable with interest at 6.25% interest per annum."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LTC",
+      "ticker": "LTC",
+      "name": "LTCプロパティーズ",
+      "name_en": "LTC Properties",
+      "sub": "医療REIT",
+      "sub_en": "Healthcare REIT",
+      "sub_short": "REIT",
+      "sub_short_en": "REIT",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "借入契約の貸し手の1行",
+          "text_en": "Hancock Whitney Bank is one of its lenders",
+          "source": {
+            "label": "LTC Properties 8-K(2026年6月)",
+            "label_en": "LTC Properties 8-K (June 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/887905/000110465926079383/tm2619372d1_8k.htm",
+            "level": "official",
+            "date": "2026-06-30",
+            "quote": "Bank National Association, Manufacturers and Traders Trust Company and Hancock Whitney Bank, as Lenders."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FVR",
+      "ticker": "FVR",
+      "name": "フロントビューREIT",
+      "name_en": "FrontView REIT",
+      "sub": "不動産投資信託",
+      "sub_en": "REIT",
+      "sub_short": "REIT",
+      "sub_short_en": "REIT",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "借入契約の貸し手の1行",
+          "text_en": "Hancock Whitney Bank is one of its lenders",
+          "source": {
+            "label": "FrontView REIT 10-K(2024年度)",
+            "label_en": "FrontView REIT 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1988494/000095017025042774/fvr-20241231.htm",
+            "level": "official",
+            "date": "2025-03-20",
+            "quote": "In addition, Montgomery Bank, OceanFirst Bank N.A., Hancock Whitney Bank, Bank of Blue Valley, South State Bank N.A. and Woodforest National Bank were added as additional lenders under the CIBC Revolving Credit Facility."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TRMK",
+      "ticker": "TRMK",
+      "name": "トラストマーク",
+      "name_en": "Trustmark",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "合併契約を結ぶ(2026年11月)",
+          "text_en": "Signed a merger agreement (November 2026)",
+          "source": {
+            "label": "Hancock Whitney 8-K(2026年11月)",
+            "label_en": "Hancock Whitney 8-K (November 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/750577/000119312526463409/d38169d8k.htm",
+            "level": "official",
+            "date": "2026-11-16",
+            "quote": "On November 11, 2026, Hancock Whitney Corporation, a Mississippi corporation (\"Hancock Whitney\"), entered into an Agreement and Plan of Merger (the \"Merger Agreement\") with Trustmark Corporation, a Mississippi corporation (\"Trustmark\")."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

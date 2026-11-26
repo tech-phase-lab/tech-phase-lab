@@ -1,0 +1,167 @@
+{
+  "root": {
+    "ticker": "BOOT",
+    "name": "ブート・バーン",
+    "cik": 1610250,
+    "name_en": "Boot Barn"
+  },
+  "rows": [
+    {
+      "ja": "供給元・取引先",
+      "en": "Suppliers & providers"
+    },
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "提携・出資・買収",
+      "en": "Partners, stakes & deals"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "TLYS",
+    "BKE"
+  ],
+  "companies": [
+    {
+      "id": "TLYS",
+      "ticker": "TLYS",
+      "name": "ティリーズ",
+      "name_en": "Tilly's",
+      "sub": "衣料小売",
+      "sub_en": "Apparel retail",
+      "sub_short": "衣料小売",
+      "sub_short_en": "Apparel",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "人材獲得で競合する小売に挙げる",
+          "text_en": "Names Boot Barn among retailers it competes with",
+          "source": {
+            "label": "Tilly's 10-K(2026年1月期)",
+            "label_en": "Tilly's 10-K (FY ended Jan 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1524025/000162828026024440/tlys-20260131.htm",
+            "level": "official",
+            "date": "2026-04-09",
+            "quote": "We compete with various publicly-traded and privately-held teen-oriented apparel retailers for customers, store locations, store associates and management personnel, including but not limited to Abercrombie & Fitch, Aeropostale, American Eagle Outfitters, Boot Barn, The Buckle, H&M, Hollister, Hot Topic, Pacific Sunwear, Urban Outfitters, and Zumiez."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BKE",
+      "ticker": "BKE",
+      "name": "バックル",
+      "name_en": "Buckle",
+      "sub": "衣料小売",
+      "sub_en": "Apparel retail",
+      "sub_short": "衣料小売",
+      "sub_short_en": "Apparel",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "紳士服の主な競合",
+          "text_en": "A primary competitor in men's apparel",
+          "source": {
+            "label": "Buckle 10-K(2026年1月期)",
+            "label_en": "Buckle 10-K (FY ended Jan 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/885245/000088524526000012/bke-20260131.htm",
+            "level": "official",
+            "date": "2026-04-01",
+            "quote": "In the men's merchandise area, the Company competes primarily with specialty retailers such as Abercrombie & Fitch, American Eagle Outfitters, Boot Barn, Dick's Sporting Goods, Gap, Hollister, Journey's PacSun, Scheels, and Tilly's."
+          }
+        }
+      ]
+    },
+    {
+      "id": "KRG",
+      "ticker": "KRG",
+      "name": "カイト・リアルティ・グループ",
+      "name_en": "Kite Realty Group Trust",
+      "sub": "商業施設REIT",
+      "sub_en": "Shopping center REIT",
+      "sub_short": "REIT",
+      "sub_short_en": "REIT",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "テナントに挙げる家主",
+          "text_en": "Names Boot Barn among its retail tenants",
+          "source": {
+            "label": "Kite Realty Group Trust 10-K(2025年度)",
+            "label_en": "Kite Realty Group Trust 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1286043/000128604326000009/krg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "We have aggressively targeted and executed leases with prominent grocers, including Lidl, Aldi, Whole Foods, Trader Joe's, Sprouts Farmers Market, and BJ's Wholesale Club; expanding retailers such as Nordstrom Rack, Homesense, Ross Dress for Less, Burlington, Sierra, J.Crew Factory, and Boot Barn; service and restaurant retailers; and other retailers such as Ulta Beauty, Barnes & Noble, REI, Five Below, L.L.Bean, and Total Wine & More."
+          }
+        }
+      ]
+    },
+    {
+      "id": "VENU",
+      "ticker": "VENU",
+      "name": "ベニュー・ホールディング",
+      "name_en": "Venu Holding",
+      "sub": "ライブ会場",
+      "sub_en": "Live music venues",
+      "sub_short": "娯楽",
+      "sub_short_en": "Venues",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "会場の命名権契約",
+          "text_en": "Holds naming rights at one of its venues",
+          "source": {
+            "label": "Venu Holding 10-K(2025年度)",
+            "label_en": "Venu Holding 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1770501/000149315226014137/form10-k.htm",
+            "level": "official",
+            "date": "2026-03-31",
+            "quote": "BBP GA assigns the revenue generated from Boot Barn's naming rights to its landlord, GA HIA, effectively reducing the occupancy cost related to the construction of the campus and subsequent lease."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WFC",
+      "ticker": "WFC",
+      "name": "ウェルズ・ファーゴ",
+      "name_en": "Wells Fargo",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の幹事行",
+          "text_en": "Administrative agent on its credit agreement",
+          "source": {
+            "label": "Boot Barn 8-K(2026年7月)",
+            "label_en": "Boot Barn 8-K (July 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1610250/000110465926088137/boot-20260728x8k.htm",
+            "level": "official",
+            "date": "2026-07-29",
+            "quote": "6 to Credit Agreement (which amends and restates the Credit Agreement in its entirety), dated as of July 28, 2026, by and among the Company, Boot Barn, Inc., Sheplers Holding LLC (f/k/a Sheplers Holding Corporation), Sheplers, LLC (f/k/a Sheplers, Inc.), Wells Fargo Bank, National Association, as Administrative Agent, Swingline Lender and Issuing Lender, Wells Fargo Bank, National Association, as Sole Lead Arranger and Sole Bookrunner, and the other Lenders named therein."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

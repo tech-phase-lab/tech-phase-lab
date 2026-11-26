@@ -1,5 +1,5 @@
 import { isMarketChartSymbol, loadIntraday, loadMarketQuotesWithRefresh, marketDataConfigured } from "@/lib/research/market-data";
-import { TICKER_RE, toFavoriteQuote } from "@/lib/research/market-quote";
+import { TICKER_RE, quoteAnswer } from "@/lib/research/market-quote";
 import { marketAccess } from "@/lib/research/market-access";
 export const dynamic = "force-dynamic";
 export const maxDuration = 30;
@@ -27,6 +27,6 @@ export async function GET(request: Request) {
     // Every quote an earlier copy: no refresh happened, so none is reported.
     const allStale = stale > 0 && stale >= Object.keys(quotes).length;
     const history = params.get("history") === "1" ? await loadIntraday(Object.values(quotes).slice(0, 30)) : {};
-    return Response.json({ ok: true, quotes: Object.fromEntries(Object.values(quotes).map(q => [q.ticker, { ...toFavoriteQuote(q, history[q.ticker]), name: q.name, exchange: q.exchange, open: q.open, high: q.high, low: q.low, previousClose: q.previousClose, volume: q.volume, week52Low: q.week52Low, week52High: q.week52High }])) }, { headers: { ...(partial ? { "Cache-Control": "no-store" } : stale ? staleHeaders : fast ? fastHeaders : headers), ...(allStale ? {} : { "X-Quote-Refresh": granted ? "15s" : "60s" }), "X-Quote-Stale": String(stale) } });
+    return Response.json({ ok: true, quotes: quoteAnswer(quotes, history) }, { headers: { ...(partial ? { "Cache-Control": "no-store" } : stale ? staleHeaders : fast ? fastHeaders : headers), ...(allStale ? {} : { "X-Quote-Refresh": granted ? "15s" : "60s" }), "X-Quote-Stale": String(stale) } });
   } catch { return Response.json({ ok: false, error: "unavailable" }, { status: 503, headers: { "Cache-Control": "no-store" } }); }
 }

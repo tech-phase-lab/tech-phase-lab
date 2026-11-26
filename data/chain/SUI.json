@@ -1,0 +1,242 @@
+{
+  "root": {
+    "ticker": "SUI",
+    "name": "サン・コミュニティーズ",
+    "cik": 912593,
+    "name_en": "Sun Communities"
+  },
+  "rows": [
+    {
+      "ja": "供給元・取引先",
+      "en": "Suppliers & providers"
+    },
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "提携・出資・買収",
+      "en": "Partners, stakes & deals"
+    },
+    {
+      "ja": "買収・売却",
+      "en": "Acquisitions & sales"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "INGENIA",
+      "ticker": "INGENIA",
+      "name": "インジェニア・コミュニティーズ",
+      "name_en": "Ingenia Communities",
+      "sub": "住宅運営",
+      "sub_en": "Communities",
+      "sub_short": "住宅",
+      "sub_short_en": "Housing",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "合弁の相手(50%)",
+          "text_en": "50% joint venture partner",
+          "source": {
+            "label": "Sun Communities 10-K(2025年度)",
+            "label_en": "Sun Communities 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/912593/000091259326000086/sui-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Investments in Nonconsolidated Affiliates Our investments in joint ventures that are accounted for using the equity method of accounting are as follows: Sungenia joint venture (\"Sungenia JV\") At December 31, 2025 and 2024, we had a 50% ownership interest in Sungenia JV, a joint venture formed between us and Ingenia Communities Group (ASX:INA) to establish and operate a MH community development program in Australia."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SAFEHARBOR",
+      "ticker": "SAFEHARBOR",
+      "name": "セーフハーバー・マリーナ",
+      "name_en": "Safe Harbor Marinas",
+      "sub": "マリーナ運営",
+      "sub_en": "Marinas",
+      "sub_short": "マリーナ",
+      "sub_short_en": "Marinas",
+      "row": 3,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年に売却",
+          "text_en": "Sold in 2025",
+          "source": {
+            "label": "Sun Communities 8-K(2025年5月)",
+            "label_en": "Sun Communities 8-K (May 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/912593/000091259325000164/sui-20250430.htm",
+            "level": "official",
+            "date": "2025-05-06",
+            "quote": "(the \"Company\") completed the initial closing of its previously announced sale of Safe Harbor Marinas, LLC (\"Safe Harbor\") to Poseidon Holdco I L.P."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AERMONT",
+      "ticker": "AERMONT",
+      "name": "エアモント・キャピタル",
+      "name_en": "Aermont Capital",
+      "sub": "投資会社",
+      "sub_en": "Investment firm",
+      "sub_short": "投資",
+      "sub_short_en": "Investor",
+      "row": 3,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "英国事業の買い手",
+          "text_en": "Affiliate bought its UK business",
+          "source": {
+            "label": "Sun Communities 8-K(2026年9月)",
+            "label_en": "Sun Communities 8-K (September 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/912593/000091259326000256/sui-20260922.htm",
+            "level": "official",
+            "date": "2026-09-23",
+            "quote": "As previously disclosed in the Current Report on Form 8-K filed by the Company with the Securities and Exchange Commission (the \"SEC\") on May 21, 2026, and amended on May 28, 2026, the disposition was pursuant to an agreement dated May 21, 2026 (the \"Purchase Agreement\"), between Sun Communities Operating Limited Partnership, on behalf of itself and two of its subsidiaries, and Panther Bidco Limited (the \"Buyer\", which is an affiliate of Aermont Capital LLP)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMERICANCENTER",
+      "ticker": "AMERICANCENTER",
+      "name": "アメリカン・センター",
+      "name_en": "American Center LLC",
+      "sub": "不動産",
+      "sub_en": "Real estate",
+      "sub_short": "不動産",
+      "sub_short_en": "Landlord",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "本社オフィスの貸し手",
+          "text_en": "Landlord of its head office",
+          "source": {
+            "label": "Sun Communities 10-K(2025年度)",
+            "label_en": "Sun Communities 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/912593/000091259326000086/sui-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Lease, dated November 1, 2002, by and between Sun Communities Operating Limited Partnership as Tenant and American Center LLC as Landlord"
+          }
+        }
+      ]
+    },
+    {
+      "id": "JPM",
+      "ticker": "JPM",
+      "name": "JPMorgan Chase",
+      "name_en": "JPMorgan Chase",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の幹事行",
+          "text_en": "Administrative agent on its credit agreement",
+          "source": {
+            "label": "Sun Communities 8-K(2025年9月)",
+            "label_en": "Sun Communities 8-K (September 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/912593/000091259325000243/sui-20250917.htm",
+            "level": "official",
+            "date": "2025-09-22",
+            "quote": "(the \"Company\"), as parent guarantor, entered into a Credit Agreement with J.P.Morgan, as Administrative Agent, Bank of America, N.A., BMO Bank, N.A., Citibank, N.A., Fifth Third Bank, National Association and Wells Fargo Bank, National Association, as Syndication Agents;"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BAC",
+      "ticker": "BAC",
+      "name": "バンク・オブ・アメリカ",
+      "name_en": "Bank of America",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の貸し手",
+          "text_en": "A lender under its credit agreement",
+          "source": {
+            "label": "Sun Communities 8-K(2025年9月)",
+            "label_en": "Sun Communities 8-K (September 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/912593/000091259325000243/sui-20250917.htm",
+            "level": "official",
+            "date": "2025-09-22",
+            "quote": "(the \"Company\"), as parent guarantor, entered into a Credit Agreement with J.P.Morgan, as Administrative Agent, Bank of America, N.A., BMO Bank, N.A., Citibank, N.A., Fifth Third Bank, National Association and Wells Fargo Bank, National Association, as Syndication Agents;"
+          }
+        }
+      ]
+    },
+    {
+      "id": "WFC",
+      "ticker": "WFC",
+      "name": "ウェルズ・ファーゴ",
+      "name_en": "Wells Fargo",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の貸し手",
+          "text_en": "A lender under its credit agreement",
+          "source": {
+            "label": "Sun Communities 8-K(2025年9月)",
+            "label_en": "Sun Communities 8-K (September 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/912593/000091259325000243/sui-20250917.htm",
+            "level": "official",
+            "date": "2025-09-22",
+            "quote": "(the \"Company\"), as parent guarantor, entered into a Credit Agreement with J.P.Morgan, as Administrative Agent, Bank of America, N.A., BMO Bank, N.A., Citibank, N.A., Fifth Third Bank, National Association and Wells Fargo Bank, National Association, as Syndication Agents;"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BMO",
+      "ticker": "BMO",
+      "name": "BMOフィナンシャル・グループ",
+      "name_en": "BMO Financial Group",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の貸し手",
+          "text_en": "A lender under its credit agreement",
+          "source": {
+            "label": "Sun Communities 8-K(2025年9月)",
+            "label_en": "Sun Communities 8-K (September 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/912593/000091259325000243/sui-20250917.htm",
+            "level": "official",
+            "date": "2025-09-22",
+            "quote": "(the \"Company\"), as parent guarantor, entered into a Credit Agreement with J.P.Morgan, as Administrative Agent, Bank of America, N.A., BMO Bank, N.A., Citibank, N.A., Fifth Third Bank, National Association and Wells Fargo Bank, National Association, as Syndication Agents;"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

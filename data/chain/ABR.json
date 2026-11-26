@@ -1,0 +1,160 @@
+{
+  "root": {
+    "ticker": "ABR",
+    "name": "アーバー・リアルティ・トラスト",
+    "cik": 1253986,
+    "name_en": "Arbor Realty Trust"
+  },
+  "rows": [
+    {
+      "ja": "供給元・取引先",
+      "en": "Suppliers & providers"
+    },
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "提携・出資・買収",
+      "en": "Partners, stakes & deals"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "TRIMONT",
+      "ticker": "TRIMONT",
+      "name": "トライモント",
+      "name_en": "Trimont",
+      "sub": "ローン管理",
+      "sub_en": "Loan servicing",
+      "sub_short": "ローン",
+      "sub_short_en": "Servicer",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "証券化ローンのマスター・サービサー",
+          "text_en": "Master servicer on its securitized loans",
+          "source": {
+            "label": "Arbor Realty Trust 8-K(2025年6月)",
+            "label_en": "Arbor Realty Trust 8-K (June 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1253986/000162828025028832/abr-20250530.htm",
+            "level": "official",
+            "date": "2025-06-02",
+            "quote": "The Issuer, the Collateral Manager and the trustee entered into a Servicing Agreement with Arbor Multifamily Lending, LLC, a majority-owned subsidiary of Arbor (the \"Servicer\") and Trimont LLC, as master servicer, backup servicer and backup special servicer, pursuant to which the Servicer has agreed to act as the servicer and special servicer for the collateral interests."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LIGHTSTONE",
+      "ticker": "LIGHTSTONE",
+      "name": "ライトストーン・バリュー・プラスREIT",
+      "name_en": "Lightstone Value Plus REIT",
+      "sub": "不動産投資信託",
+      "sub_en": "REIT",
+      "sub_short": "REIT",
+      "sub_short_en": "REIT",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "合弁を通じて持ち分を保有",
+          "text_en": "Holds an interest through a joint venture",
+          "source": {
+            "label": "Arbor Realty Trust 10-K(2025年度)",
+            "label_en": "Arbor Realty Trust 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1253986/000125398626000019/abr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "We own a $1.9 million interest in a joint venture that holds common operating partnership units of Lightstone Value Plus REIT L.P."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AWCREOP",
+      "ticker": "AWCREOP",
+      "name": "AWCリアル・エステート・オポチュニティ・パートナーズ",
+      "name_en": "AWC Real Estate Opportunity Partners",
+      "sub": "不動産投資",
+      "sub_en": "Real estate investing",
+      "sub_short": "投資",
+      "sub_short_en": "Investor",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "共同投資の出資者",
+          "text_en": "Co-investor in one of its ventures",
+          "source": {
+            "label": "Arbor Realty Trust 10-K(2025年度)",
+            "label_en": "Arbor Realty Trust 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1253986/000125398626000019/abr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "At December 31, 2025, total equity invested was $21.2 million and is made up of $9.4 million from AWC Real Estate Opportunity Partners I LP (\"AWC\"), a fund in which we have a 46% noncontrolling limited partnership interest (see Note 8 for details) and $11.8 million from 76 Table of Contents ARBOR REALTY TRUST, INC."
+          }
+        }
+      ]
+    },
+    {
+      "id": "JPM",
+      "ticker": "JPM",
+      "name": "JPMorgan Chase",
+      "name_en": "JPMorgan Chase",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "社債などの引受会社",
+          "text_en": "Underwriter of its securities offering",
+          "source": {
+            "label": "Arbor Realty Trust 8-K(2026年7月)",
+            "label_en": "Arbor Realty Trust 8-K (July 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1253986/000110465926080833/tm2619809d1_8k.htm",
+            "level": "official",
+            "date": "2026-07-06",
+            "quote": "and sale of $375 million aggregate principal amount, including the Option (as defined below), of its 6.25% Convertible Senior Notes due 2029 (the \"Notes\") pursuant to a purchase agreement (the \"Purchase Agreement\"), by and among the Company, Arbor Realty Limited Partnership, a Delaware limited partnership, and J.P. Morgan Securities LLC, as representative of the initial purchasers named therein (the \"Initial Purchasers\"), whereby the Company agreed to sell to the Initia"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CFG",
+      "ticker": "CFG",
+      "name": "シチズンズ・バンク",
+      "name_en": "Citizens Bank, N.A.",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "株式売出しの販売代理人",
+          "text_en": "Sales agent for its share offering program",
+          "source": {
+            "label": "Arbor Realty Trust 10-K(2025年度)",
+            "label_en": "Arbor Realty Trust 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1253986/000125398626000019/abr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "We have an equity distribution agreement with Citizens JMP Securities LLC (\"JMP\")."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

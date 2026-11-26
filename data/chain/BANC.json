@@ -1,0 +1,190 @@
+{
+  "root": {
+    "ticker": "BANC",
+    "name": "バンク・オブ・カリフォルニア",
+    "cik": 1169770,
+    "name_en": "Banc of California"
+  },
+  "rows": [
+    {
+      "ja": "供給元・取引先",
+      "en": "Suppliers & providers"
+    },
+    {
+      "ja": "顧客・取引先",
+      "en": "Customers & clients"
+    },
+    {
+      "ja": "提携・出資・買収",
+      "en": "Partners, stakes & deals"
+    },
+    {
+      "ja": "買収・売却",
+      "en": "Acquisitions & sales"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "WARBURG",
+      "ticker": "WARBURG",
+      "name": "ウォーバーグ・ピンカス",
+      "name_en": "Warburg Pincus",
+      "sub": "投資会社",
+      "sub_en": "Private equity",
+      "sub_short": "投資",
+      "sub_short_en": "PE",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "投資契約で出資",
+          "text_en": "Invested under an investment agreement",
+          "source": {
+            "label": "Banc of California 10-K(2025年度)",
+            "label_en": "Banc of California 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1169770/000162828026012946/banc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "The NVCE stock is convertible into shares of voting common stock on a one-for-one basis, generally upon transfer to an eligible holder or the occurrence of other specified events in accordance with the terms of the Warburg Investment Agreement (as defined below) with affiliates of funds managed by Warburg Pincus LLC (the \"Warburg Investors\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "INTRAFI",
+      "ticker": "INTRAFI",
+      "name": "イントラファイ・ネットワーク",
+      "name_en": "IntraFi Network",
+      "sub": "預金ネットワーク",
+      "sub_en": "Deposit network",
+      "sub_short": "預金",
+      "sub_short_en": "Deposits",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "預金保護のサービス契約",
+          "text_en": "Provides insured cash sweep services",
+          "source": {
+            "label": "Banc of California 10-K(2025年度)",
+            "label_en": "Banc of California 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1169770/000162828026012946/banc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "The Company is a party to a services agreement with IntraFi Network LLC (\"IntraFi\") whereby IntraFi provides the Bank with certain insured cash sweep services from time to time."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CDLX",
+      "ticker": "CDLX",
+      "name": "カードリティクス",
+      "name_en": "Cardlytics",
+      "sub": "カード広告",
+      "sub_en": "Card-linked marketing",
+      "sub_short": "広告",
+      "sub_short_en": "Ads",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "借入契約の貸し手",
+          "text_en": "Banc of California is a lender under its loan agreement",
+          "source": {
+            "label": "Cardlytics 10-Q(2026年9月期)",
+            "label_en": "Cardlytics 10-Q (quarter ended Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1666071/000162828026071002/cdlx_seventhxamendmentxe.htm",
+            "level": "official",
+            "date": "2026-11-05",
+            "quote": "Cardlytics, Inc., a Delaware corporation Date: October 30, 2026 This SEVENTH AMENDMENT TO AMENDED AND RESTATED LOAN AND SECURITY AGREEMENT (this \"Amendment\") is entered into among, the Borrower named above (the \"Borrower\"), the lenders from time to time party to the Loan Agreement (\"Lenders\") and Banc of California, a California state-chartered bank (formerly known as Pacific Western Bank) in its capacity as administrative and collateral agent for the Lenders (\"Agent\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BRCGROUP",
+      "ticker": "BRCGROUP",
+      "name": "BRCグループ(旧Bライリー)",
+      "name_en": "BRC Group Holdings",
+      "sub": "金融サービス",
+      "sub_en": "Financial services",
+      "sub_short": "金融",
+      "sub_short_en": "Finance",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "定期借入の貸し手",
+          "text_en": "Holds a term note from it",
+          "source": {
+            "label": "BRC Group Holdings 10-Q(2026年3月期)",
+            "label_en": "BRC Group Holdings 10-Q (quarter ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1464790/000146479026000035/ex104_thirdamndtoamndandre.htm",
+            "level": "official",
+            "date": "2026-05-07",
+            "quote": "Banc of California shall have received a Term Note executed by a Responsible Officer of each Borrower in favor of Banc of California, in the original principal amount of Banc of California's Term Loan Commitment under the Credit Agreement, as amended by this Amendment;"
+          }
+        }
+      ]
+    },
+    {
+      "id": "OFS",
+      "ticker": "OFS",
+      "name": "OFSキャピタル",
+      "name_en": "OFS Capital",
+      "sub": "事業開発会社",
+      "sub_en": "Business development company",
+      "sub_short": "融資",
+      "sub_short_en": "Credit",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "借入の財務条件を免除",
+          "text_en": "Provided a covenant waiver on its borrowing",
+          "source": {
+            "label": "OFS Capital 10-Q(2026年9月期)",
+            "label_en": "OFS Capital 10-Q (quarter ended Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1487918/000148791826000091/ofs-20260930.htm",
+            "level": "official",
+            "date": "2026-10-30",
+            "quote": "On September 30, 2026, Banc of California provided a covenant waiver for the quarter ended September 30, 2026 related to the requirement of a $1,000 minimum quarterly net investment income, after management and incentive fees."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PACWEST",
+      "ticker": "PACWEST",
+      "name": "パックウエスト",
+      "name_en": "PacWest Bancorp",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 3,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2023年に合併",
+          "text_en": "Merged in 2023",
+          "source": {
+            "label": "Banc of California 10-K(2025年度)",
+            "label_en": "Banc of California 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1169770/000162828026012946/banc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "On November 30, 2023, Banc of California, Inc. completed its transformational merger with PacWest Bancorp (\"PacWest\"), pursuant to which PacWest merged into Banc of California, Inc., (the \"Merger\") with Banc of California, Inc. continuing as the surviving legal corporation, and, as of December 1, 2023, Banc of California, N.A. merged into Pacific Western Bank, with Pacific Western Bank continuing under the Banc of California name and brand as the Bank."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

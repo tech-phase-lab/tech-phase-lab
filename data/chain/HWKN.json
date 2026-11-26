@@ -1,0 +1,208 @@
+{
+  "root": {
+    "ticker": "HWKN",
+    "name": "ホーキンス",
+    "cik": 46250,
+    "name_en": "Hawkins"
+  },
+  "rows": [
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "買収・売却",
+      "en": "Acquisitions & sales"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "REDBIRD",
+      "ticker": "REDBIRD",
+      "name": "レッドバード・ケミカル",
+      "name_en": "Redbird Chemical",
+      "sub": "化学品の販売",
+      "sub_en": "Chemical distribution",
+      "sub_short": "化学",
+      "sub_short_en": "Chem",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年12月に資産を買収",
+          "text_en": "Bought its assets in December 2025",
+          "source": {
+            "label": "Hawkins 10-K(2026年3月期)",
+            "label_en": "Hawkins 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/46250/000004625026000018/hwkn-20260329.htm",
+            "level": "official",
+            "date": "2026-05-13",
+            "quote": "•On December 3, 2025, we acquired substantially all the assets and assumed certain liabilities of Redbird Chemical, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "STILLWATERS",
+      "ticker": "STILLWATERS",
+      "name": "スティルウォーターズ・テクノロジー",
+      "name_en": "StillWaters Technology",
+      "sub": "水処理",
+      "sub_en": "Water treatment",
+      "sub_short": "水処理",
+      "sub_short_en": "Water",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年8月に資産を買収",
+          "text_en": "Bought its assets in August 2025",
+          "source": {
+            "label": "Hawkins 10-K(2026年3月期)",
+            "label_en": "Hawkins 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/46250/000004625026000018/hwkn-20260329.htm",
+            "level": "official",
+            "date": "2026-05-13",
+            "quote": "•On August 29, 2025, we acquired substantially all the assets and assumed certain liabilities of StillWaters Technology, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PHILLTECH",
+      "ticker": "PHILLTECH",
+      "name": "フィルテック",
+      "name_en": "PhillTech",
+      "sub": "水処理",
+      "sub_en": "Water treatment",
+      "sub_short": "水処理",
+      "sub_short_en": "Water",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年7月に資産を買収",
+          "text_en": "Bought its assets in July 2025",
+          "source": {
+            "label": "Hawkins 10-K(2026年3月期)",
+            "label_en": "Hawkins 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/46250/000004625026000018/hwkn-20260329.htm",
+            "level": "official",
+            "date": "2026-05-13",
+            "quote": "•On July 1, 2025, we acquired substantially all the assets and assumed certain liabilities of PhillTech, LLC (\"PhillTech\") for $5.0 million."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WATERSURPLUS",
+      "ticker": "WATERSURPLUS",
+      "name": "ウォーターサープラス",
+      "name_en": "WaterSurplus",
+      "sub": "水処理装置",
+      "sub_en": "Water treatment equipment",
+      "sub_short": "水処理",
+      "sub_short_en": "Water",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年4月に資産を買収",
+          "text_en": "Bought its assets in April 2025",
+          "source": {
+            "label": "Hawkins 10-K(2026年3月期)",
+            "label_en": "Hawkins 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/46250/000004625026000018/hwkn-20260329.htm",
+            "level": "official",
+            "date": "2026-05-13",
+            "quote": "•On April 25, 2025, we acquired substantially all of the assets and assumed certain liabilities of WaterSurplus, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMEROCHEM",
+      "ticker": "AMEROCHEM",
+      "name": "アメロケム",
+      "name_en": "Amerochem",
+      "sub": "水処理薬品",
+      "sub_en": "Water treatment chemicals",
+      "sub_short": "化学",
+      "sub_short_en": "Chem",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年1月に買収",
+          "text_en": "Acquired in January 2025",
+          "source": {
+            "label": "Hawkins 10-K(2026年3月期)",
+            "label_en": "Hawkins 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/46250/000004625026000018/hwkn-20260329.htm",
+            "level": "official",
+            "date": "2026-05-13",
+            "quote": "Amerochem Corporation (\"Amerochem\") was acquired on January 31, 2025 for $44.0 million."
+          }
+        }
+      ]
+    },
+    {
+      "id": "USB",
+      "ticker": "USB",
+      "name": "USバンコープ",
+      "name_en": "U.S. Bancorp",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の貸し手",
+          "text_en": "A lender under its credit agreement",
+          "source": {
+            "label": "Hawkins 10-K(2026年3月期)",
+            "label_en": "Hawkins 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/46250/000004625026000018/hwkn-20260329.htm",
+            "level": "official",
+            "date": "2026-05-13",
+            "quote": "Restated Credit Agreement dated as of March 31, 2022, among Hawkins, Inc., the lenders party thereto, and U.S. Bank National Association, as an LC Issuer, Swing Line Lender and Administrative Agent. (7)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "WFC",
+      "ticker": "WFC",
+      "name": "ウェルズ・ファーゴ",
+      "name_en": "Wells Fargo",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の貸し手",
+          "text_en": "A lender under its credit agreement",
+          "source": {
+            "label": "Hawkins 8-K(2025年4月)",
+            "label_en": "Hawkins 8-K (April 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/46250/000004625025000021/hwkn-20250425.htm",
+            "level": "official",
+            "date": "2025-04-30",
+            "quote": "Bank, JP Morgan Chase Bank, N.A., Wells Fargo Bank, N.A., and Associated Bank, N.A. are lenders under the Credit Agreement as of the date of the Amendment."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,162 @@
+{
+  "root": {
+    "ticker": "L",
+    "name": "ロウズ",
+    "cik": 60086,
+    "name_en": "Loews"
+  },
+  "rows": [
+    {
+      "ja": "供給元・取引先",
+      "en": "Suppliers & providers"
+    },
+    {
+      "ja": "提携・出資・買収",
+      "en": "Partners, stakes & deals"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "ABNB"
+  ],
+  "companies": [
+    {
+      "id": "CNA",
+      "ticker": "CNA",
+      "name": "CNAファイナンシャル",
+      "name_en": "CNA Financial",
+      "sub": "損保",
+      "sub_en": "Insurance",
+      "sub_short": "損保",
+      "sub_short_en": "Insurance",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "業務委託契約を結ぶ子会社",
+          "text_en": "Subsidiary with services agreements",
+          "source": {
+            "label": "CNA Financial 10-K(2025年度)",
+            "label_en": "CNA Financial 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/21175/000002117526000011/cna-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "We have also entered into services agreements and a registration rights agreement with Loews, and we may in the future enter into other agreements with Loews."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BWP",
+      "ticker": "BWP",
+      "name": "ボードウォーク・パイプラインズ",
+      "name_en": "Boardwalk Pipelines",
+      "sub": "導管",
+      "sub_en": "Pipeline",
+      "sub_short": "導管",
+      "sub_short_en": "Pipeline",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "管理業務を提供する子会社",
+          "text_en": "Subsidiary it provides services to",
+          "source": {
+            "label": "Boardwalk Pipeline Partners 10-K(2025年度)",
+            "label_en": "Boardwalk Pipeline Partners 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1336047/000133604726000004/bwp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "Note 15: Related Party Transactions Loews provides a variety of corporate services to the Company under services agreements, including risk management, finance and accounting, legal, tax and corporate development services, and charges the Company for allocated overheads."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BERKSHIRE",
+      "ticker": "BERKSHIRE",
+      "name": "バークシャー・ハザウェイ",
+      "name_en": "Berkshire Hathaway",
+      "sub": "保険・投資",
+      "sub_en": "Insurance & holdings",
+      "sub_short": "保険",
+      "sub_short_en": "Insurer",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "CNAの過去の保険契約を再保険で引受",
+          "text_en": "Reinsured CNA's legacy liabilities",
+          "source": {
+            "label": "Loews 10-K(2025年度)",
+            "label_en": "Loews 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/60086/000006008626000008/l-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "On August 31, 2010, CNA completed a retroactive reinsurance transaction under which substantially all of its legacy A&EP liabilities were ceded to National Indemnity Company (\"NICO\"), a subsidiary of Berkshire Hathaway Inc., subject to an aggregate limit of $4.0 billion (\"loss portfolio transfer\" or \"LPT\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ABNB",
+      "ticker": "ABNB",
+      "name": "エアビーアンドビー",
+      "name_en": "Airbnb",
+      "sub": "宿泊仲介",
+      "sub_en": "Lodging",
+      "sub_short": "宿泊",
+      "sub_short_en": "Lodging",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ホテル事業の競合に挙げる",
+          "text_en": "Named a competitor of its hotels",
+          "source": {
+            "label": "Loews 10-K(2025年度)",
+            "label_en": "Loews 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/60086/000006008626000008/l-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "•competition from other hotels, cruise lines and alternative accommodations, such as Airbnb, in the markets in which Loews Hotels & Co operates;"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CMCSA",
+      "ticker": "CMCSA",
+      "name": "コムキャスト",
+      "name_en": "Comcast",
+      "sub": "ユニバーサル",
+      "sub_en": "Universal parks",
+      "sub_short": "テーマ",
+      "sub_short_en": "Parks",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ユニバーサル・オーランドでホテルを運営",
+          "text_en": "Runs hotels at Universal Orlando",
+          "source": {
+            "label": "Loews 10-K(2025年度)",
+            "label_en": "Loews 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/60086/000006008626000008/l-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "•In 2025, Universal Stella Nova Resort, a 750 guestroom hotel, Universal Terra Luna Resort, a 750 guestroom hotel, and Universal Helios Grand Hotel, a Loews Hotel, a 500 guestroom hotel, opened at Universal Orlando."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

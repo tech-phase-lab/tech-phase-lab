@@ -1,0 +1,192 @@
+{
+  "root": {
+    "ticker": "TRUP",
+    "name": "トゥルーパニオン",
+    "cik": 1371285,
+    "name_en": "Trupanion"
+  },
+  "rows": [
+    {
+      "ja": "供給元・取引先",
+      "en": "Suppliers & providers"
+    },
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "提携・出資・買収",
+      "en": "Partners, stakes & deals"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "LMND"
+  ],
+  "companies": [
+    {
+      "id": "ARX",
+      "ticker": "ARX",
+      "name": "アクセラレント",
+      "name_en": "Accelerant",
+      "sub": "保険",
+      "sub_en": "Insurance",
+      "sub_short": "保険",
+      "sub_short_en": "Insurer",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "以前カナダで保険を引き受けた会社",
+          "text_en": "Previously wrote its Canadian business",
+          "source": {
+            "label": "Trupanion 10-K(2025年度)",
+            "label_en": "Trupanion 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1371285/000137128526000018/trup-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "This business was previously written by an unaffiliated Canadian-licensed insurer, Accelerant Insurance Company of Canada (\"Accelerant\"), formerly known as Omega General Insurance Company."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AFL",
+      "ticker": "AFL",
+      "name": "アフラック",
+      "name_en": "Aflac",
+      "sub": "保険",
+      "sub_en": "Insurance",
+      "sub_short": "保険",
+      "sub_short_en": "Insurer",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "出資比率を保てる権利を持つ株主",
+          "text_en": "Investor with rights to keep its stake",
+          "source": {
+            "label": "Trupanion 10-K(2025年度)",
+            "label_en": "Trupanion 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1371285/000137128526000018/trup-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "For instance, our arrangement with Aflac requires that, before we issue or sell equity to another investor, we are required to provide Aflac an opportunity to purchase equity allowing them to maintain their ownership percentage."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LMND",
+      "ticker": "LMND",
+      "name": "レモネード",
+      "name_en": "Lemonade",
+      "sub": "保険",
+      "sub_en": "Insurance",
+      "sub_short": "保険",
+      "sub_short_en": "Insurer",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ペット保険の競合に挙げる",
+          "text_en": "Names Trupanion a pet insurance competitor",
+          "source": {
+            "label": "Lemonade 10-K(2025年度)",
+            "label_en": "Lemonade 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1691421/000169142126000016/lmnd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Competitors in the pet insurance space include companies such as Nationwide, Embrace, and Trupanion."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BAYSTRIDE",
+      "ticker": "BAYSTRIDE",
+      "name": "ベイストライド",
+      "name_en": "Baystride",
+      "sub": "投資先",
+      "sub_en": "Investee",
+      "sub_short": "出資",
+      "sub_short_en": "Stake",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "優先株の投資先",
+          "text_en": "Preferred stock investee",
+          "source": {
+            "label": "Trupanion 10-K(2025年度)",
+            "label_en": "Trupanion 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1371285/000137128526000018/trup-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Refer to Note 6, Other Investments, for more information on amounts recorded to Other (income), net in relation to the Company's preferred stock investment in Baystride, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PIPR",
+      "ticker": "PIPR",
+      "name": "パイパー・サンドラー",
+      "name_en": "Piper Sandler",
+      "sub": "投資銀行",
+      "sub_en": "Investment bank",
+      "sub_short": "証券",
+      "sub_short_en": "Broker",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "以前の借入契約の幹事行",
+          "text_en": "Agent on its prior credit facility",
+          "source": {
+            "label": "Trupanion 10-K(2025年度)",
+            "label_en": "Trupanion 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1371285/000137128526000018/trup-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Debt Prior Credit Facility On March 25, 2022, the Company entered into a credit agreement with Piper Sandler Finance, LLC, acting as the administrative agent, that provided the Company with $150.0 million in credit (the \"Prior Credit Facility\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PNC",
+      "ticker": "PNC",
+      "name": "PNCフィナンシャル・サービシズ",
+      "name_en": "PNC Financial Services",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の幹事行",
+          "text_en": "Administrative agent on its credit agreement",
+          "source": {
+            "label": "Trupanion 10-K(2025年度)",
+            "label_en": "Trupanion 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1371285/000137128526000018/trup-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Specifically, in November 2025, we entered into a credit agreement (the \"PNC Agreement\") with PNC Bank, National Association, acting as the administrative agent, that provides us with $120.0 million in credit consisting of a term loan in an amount of $100.0 million and commitments for revolving loans in an aggregate principal amount at any time outstanding not in excess of $20.0 million (collectively, the \"PNC Facility\")."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

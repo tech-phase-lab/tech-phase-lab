@@ -1,0 +1,222 @@
+{
+  "root": {
+    "ticker": "GEO",
+    "name": "GEOグループ",
+    "cik": 923796,
+    "name_en": "The GEO Group"
+  },
+  "rows": [
+    {
+      "ja": "供給元・取引先",
+      "en": "Suppliers & providers"
+    },
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "提携・出資・買収",
+      "en": "Partners, stakes & deals"
+    },
+    {
+      "ja": "買収・売却",
+      "en": "Acquisitions & sales"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "CXW"
+  ],
+  "companies": [
+    {
+      "id": "CXW",
+      "ticker": "CXW",
+      "name": "コアシビック",
+      "name_en": "CoreCivic",
+      "sub": "刑務所運営",
+      "sub_en": "Corrections",
+      "sub_short": "刑務所",
+      "sub_short_en": "Prisons",
+      "row": 4,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合として名前を挙げる",
+          "text_en": "Names GEO as a competitor",
+          "source": {
+            "label": "CoreCivic 10-K(2025年度)",
+            "label_en": "CoreCivic 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1070985/000119312526060669/cxw-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "We compete with government agencies that are responsible for correctional, detention, and residential reentry facilities and a number of companies, including, but not limited to, The GEO Group, Inc. and Management and Training Corporation."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMEY",
+      "ticker": "AMEY",
+      "name": "エイミー",
+      "name_en": "Amey",
+      "sub": "公共サービス",
+      "sub_en": "Public services",
+      "sub_short": "公共",
+      "sub_short_en": "Public",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "英国の合弁GEOAmeyの相手",
+          "text_en": "Partner in its UK joint venture GEOAmey",
+          "source": {
+            "label": "The GEO Group 10-K(2025年度)",
+            "label_en": "The GEO Group 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/923796/000119312526071747/geo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "In February 2011, GEO UK, executed a Shareholders Agreement (the \"Shareholders Agreement\") with Amey Community Limited (\"Amey\") and Amey UK PLC (\"Amey Guarantor\") to form GEOAmey, a private company limited by shares incorporated in England and Wales."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CORRECTCARE",
+      "ticker": "CORRECTCARE",
+      "name": "コレクト・ケア・オーストララシア",
+      "name_en": "Correct Care Australasia",
+      "sub": "医療サービス",
+      "sub_en": "Health services",
+      "sub_short": "医療",
+      "sub_short_en": "Health",
+      "row": 3,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2024年5月に買収",
+          "text_en": "Acquired in May 2024",
+          "source": {
+            "label": "The GEO Group 10-K(2025年度)",
+            "label_en": "The GEO Group 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/923796/000119312526071747/geo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Secure Services $ 316,366 $ - $ - $ 316,366 Electronic Monitoring and Supervision Services 289,570 - 289,570 Reentry Services 148,873 - - 148,873 International Services [1] 390 836 (34 ) 1,192 Total Goodwill $ 755,199 $ 836 $ (34 ) $ 756,001 [1] On May 1, 2024, the Company completed an acquisition of all of the ownership shares of Correct Care Australasia Pty Ltd, an entity that performed health care services located in Australia."
+          }
+        }
+      ]
+    },
+    {
+      "id": "OZK",
+      "ticker": "OZK",
+      "name": "バンクOZK",
+      "name_en": "Bank OZK",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の幹事行",
+          "text_en": "Administrative agent on its credit agreement",
+          "source": {
+            "label": "The GEO Group 8-K(2026年10月)",
+            "label_en": "The GEO Group 8-K (October 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/923796/000119312526417979/d246793d8k.htm",
+            "level": "official",
+            "date": "2026-10-08",
+            "quote": "(\"GEO\" or the \"Company\") entered into an Amended and Restated Credit Agreement (the \"A&R Credit Agreement\"), by and among GEO and GEO Corrections Holdings, Inc., as the Borrowers, Bank OZK, as administrative agent, and the lenders party thereto."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HIGHLANDSREIT",
+      "ticker": "HIGHLANDSREIT",
+      "name": "ハイランズREIT",
+      "name_en": "Highlands REIT",
+      "sub": "不動産",
+      "sub_en": "Real estate",
+      "sub_short": "不動産",
+      "sub_short_en": "Landlord",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "施設の貸し手(GEOが保証)",
+          "text_en": "Landlord; GEO guarantees the lease",
+          "source": {
+            "label": "Highlands REIT 8-K(2026年7月)",
+            "label_en": "Highlands REIT 8-K (July 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1661458/000166145826000023/hudsonlease.htm",
+            "level": "official",
+            "date": "2026-07-13",
+            "quote": "The GEO Group, Inc., a Florida corporation (\"Guarantor\"), shall guarantee the payment and performance of all indebtedness (including all rents and other sums of any kind payable by Tenant under this Lease) and obligations of any kind payable or performable by Tenant under this Lease, pursuant to a guaranty in the form attached hereto as Exhibit B and made a part hereof for all purposes, which guaranty shall be executed and delivered by such Guarantor to Landlord on or before"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CANTOR",
+      "ticker": "CANTOR",
+      "name": "カンター・フィッツジェラルド",
+      "name_en": "Cantor Fitzgerald",
+      "sub": "証券",
+      "sub_en": "Broker",
+      "sub_short": "証券",
+      "sub_short_en": "Broker",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "株式売出しの販売代理人",
+          "text_en": "Sales agent for its share offering program",
+          "source": {
+            "label": "The GEO Group 10-K(2025年度)",
+            "label_en": "The GEO Group 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/923796/000119312526071747/geo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Equity Distribution Agreement, dated December 28, 2023, by and among The GEO Group, Inc. and each of Cantor Fitzgerald & Co., Compass Point Research & Trading, LLC, Imperial Capital, LLC, JonesTrading Institutional Services LLC, Noble Capital Markets, Inc., Northland Securities, Inc., StoneX Financial Inc., Virtu Americas LLC, and Wedbush Securities Inc. https://www.sec.gov/Archives/edgar/data/923796/000119312523305223/d669399dex11.htm"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CFG",
+      "ticker": "CFG",
+      "name": "シチズンズ・バンク",
+      "name_en": "Citizens Bank, N.A.",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の幹事行",
+          "text_en": "Administrative agent on its credit agreement",
+          "source": {
+            "label": "The GEO Group 10-K(2025年度)",
+            "label_en": "The GEO Group 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/923796/000119312526071747/geo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Credit Agreement, dated as of April 18, 2024, by and among The GEO Group, Inc. and GEO Corrections Holdings, Inc, as borrowers, Citizens Bank, N.A. as Administrative Agent, and the lenders referred to therein"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

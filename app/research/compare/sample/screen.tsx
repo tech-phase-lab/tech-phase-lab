@@ -31,7 +31,6 @@ export default function SampleScreen({sample}:{sample:ComparisonResult}) {
       <DetailPanels lang={lang}>
         {companies.map(c=><section key={c.ticker}><h3>{c.name}（{c.ticker}）</h3><ul>{c.preparedAnalysis?.items.map(item=><li key={item.id}><strong data-kind={item.kind}>{item.short[lang]}</strong><p>{item.detail[lang]}</p></li>)}</ul></section>)}
       </DetailPanels>
-      <small className={styles.sampleFootnote}>{ja?"表示確認用の架空データ":"Fictional data for preview"}</small>
     </div>
   </ResearchToolShell>;
 }

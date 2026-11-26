@@ -15,8 +15,13 @@ type State<T> = { data: T | null; failed: boolean; loaded: boolean; /** when the
  * every row going blank for a moment (owner, Nov 25); only what the old answer did not have (the added stock) waits. */
 export function usePolled<T>(url: string | null, pick: (body: Record<string, unknown>) => T | null, every: number, keep = false, merge?: (old: T | null, next: T) => T,
   /** Asks again after `ms` instead of `every` when the answer was not usable or `when` says it is incomplete. */
-  retry?: { ms: number; when: (body: Record<string, unknown>) => boolean }): State<T> {
-  const [state, setState] = useState<State<T> & { url: string | null }>({ data: null, failed: false, loaded: false, url });
+  retry?: { ms: number; when: (body: Record<string, unknown>) => boolean },
+  /** An answer drawn into the first HTML (a stock page, speed Nov 26): shown at once; the first read still runs and replaces it. */
+  initial?: { body: Record<string, unknown>; at: number } | null): State<T> {
+  const [state, setState] = useState<State<T> & { url: string | null }>(() => {
+    const data = initial ? pick(initial.body) : null;
+    return data ? { data, failed: false, loaded: true, at: initial!.at, url } : { data: null, failed: false, loaded: false, url };
+  });
   useEffect(() => {
     if (!url) return;
     let stopped = false, timer: ReturnType<typeof setTimeout> | undefined, controller: AbortController | undefined;
@@ -53,8 +58,9 @@ const pickFacts = (body: Record<string, unknown>) => {
 };
 const factsRetry = { ms: 60_000, when: (body: Record<string, unknown>) => body.complete === false };
 /** `fast` (the watchlist and a stock's page): asked every 15 seconds; the server reads the provider again only while the plan's minute leaves room. */
-export const useQuotes = (tickers: string[], history = false, fast = false, keep = false) => usePolled<Record<string, CardQuote>>(
-  tickers.length ? `/api/research/market/quotes?tickers=${encodeURIComponent(tickers.join(","))}${history ? "&history=1" : ""}${fast ? "&fast=1" : ""}` : null, pickQuotes, fast ? 15_000 : 60_000, keep, history ? keepHistory : undefined);
+export const useQuotes = (tickers: string[], history = false, fast = false, keep = false, initial: { quotes: Record<string, unknown>; at: number } | null = null) => usePolled<Record<string, CardQuote>>(
+  tickers.length ? `/api/research/market/quotes?tickers=${encodeURIComponent(tickers.join(","))}${history ? "&history=1" : ""}${fast ? "&fast=1" : ""}` : null, pickQuotes, fast ? 15_000 : 60_000, keep, history ? keepHistory : undefined,
+  undefined, initial && { body: { ok: true, quotes: initial.quotes }, at: initial.at });
 export const useFacts = (ticker: string) => usePolled<MarketFacts>(`/api/research/market/facts?ticker=${encodeURIComponent(ticker)}`, pickFacts, 6 * 3600_000, false, undefined, factsRetry);
 
 const key = "tech-phase:quote-numbers-hidden:v1", event = "tech-phase:quote-numbers-hidden";

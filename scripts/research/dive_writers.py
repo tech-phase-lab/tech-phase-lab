@@ -70,8 +70,8 @@ def amount_calc(figure, index, unit):
     return (f'({base}) / 1000', 2) if unit == 'B' else (base, 1)
 
 
-def money_tile(ev, i, figure, index, label):
-    shown, places, scale = _g().money(figure.values[index], 'USD')
+def money_tile(ev, i, figure, index, label, currency='USD'):
+    shown, places, scale = _g().money(figure.values[index], currency)
     calc, rnd = amount_calc(figure, index, scale)
     ev.add(f'tiles[{i}].value', figure, calc=calc, rnd=rnd)
     return shown
@@ -553,4 +553,217 @@ def avgo(f, url, before_previous, report=None, events=None, previous=None):
             'summary': {'conclusion': conclusion, 'cards': {'growth': growth, 'change': changes, 'caution': caution, 'next': nxt}}}
 
 
-WRITERS = {'CRDO': crdo, 'MRVL': mrvl, 'AVGO': avgo}
+# ---- TSMC (TSM): NT$ millions; its US-dollar figures and guidance are shown in US dollars, as the company states them ----------
+
+def twd(million):
+    return _g().money(million, 'TWD')[0]
+
+
+def pt(delta):
+    v = q(delta, 1)
+    return ('+' if v > 0 else '−' if v < 0 else '±') + format(abs(v), 'f') + 'pt'
+
+
+def tsm(f, url, before_previous, report=None, events=None, previous=None):
+    need(f, 'revenue', 'netIncome', 'eps', 'usd', 'nodes', 'advanced', 'guidance', 'guidanceMargins', 'gm', 'om', 'nonOperating', 'netMargin',
+         'shipments', 'ocf', 'capex', 'fcf', 'fullYear')
+    ev = Evidence(url)
+    rev, gm, om = f['revenue'], f['gm'], f['om']
+    r0, r2, r1 = rev.values[0], rev.values[1], rev.values[3]
+    yoy, qoq = rev.values[2], rev.values[4]
+    for field, i in (('current', 0), ('yearAgo', 1), ('previous', 3)):
+        ev.add(f'numbers.revenue.{field}', rev)
+    ev.add('numbers.adjustedEPS', f['eps'])
+    ev.add('numbers.grossMargin.current', gm)
+    ev.add('numbers.grossMargin.previous', gm)
+    g = f['guidance']
+    lo_us, hi_us, rate = (Decimal(x) for x in g.values)
+    gml, gmh, oml, omh = f['guidanceMargins'].values
+    ev.add('numbers.guidance.low', g, calc=f'{g.raws[0]} * 1000 * {g.raws[2]}')
+    ev.add('numbers.guidance.high', g, calc=f'{g.raws[1]} * 1000 * {g.raws[2]}')
+    ev.add('numbers.guidance.grossMarginPercent', f['guidanceMargins'], calc=f'({gml} + {gmh}) / 2')
+    numbers = {'revenue': {'current': float(r0), 'previous': float(r1), 'yearAgo': float(r2)}, 'adjustedEPS': float(f['eps'].values[0]), 'epsEstimate': None,
+               'grossMargin': {'current': float(gm.values[0]), 'previous': float(gm.values[3])},
+               'guidance': {'low': float(lo_us * 1000 * rate), 'high': float(hi_us * 1000 * rate), 'grossMarginPercent': float((gml + gmh) / 2)}, 'segments': None}
+    usd_ = f['usd']
+    n2, n3, n5, n7 = f['nodes'].values
+    adv = f['advanced'].values[0]
+    tiles = [{'label': c('売上高(台湾ドル)', 'Revenue (NT$)'), 'value': money_tile(ev, 0, rev, 0, None, 'TWD'), 'note': c(f'前年同期比 +{rev.raws[2]}%', f'+{rev.raws[2]}% YoY')},
+             {'label': c('売上高(ドル換算)', 'Revenue (US$)'), 'value': usd(usd_.values[0]), 'note': c(f'前年同期比 +{usd_.raws[1]}%', f'+{usd_.raws[1]}% YoY')},
+             {'label': c('7nm以下の先端品の比率', 'Advanced nodes (7nm and below)'), 'value': c(f'ウエハー売上の{adv}%', f'{adv}% of wafer revenue'),
+              'note': c(f'2nmが{n2}%', f'{n2}% from 2-nanometer')}]
+    ev.add('tiles[0].note', rev)
+    ev.add('tiles[1].value', usd_, calc=f'{usd_.raws[0]} * 1000 / 1000', rnd=2)
+    ev.add('tiles[1].note', usd_)
+    ev.add('tiles[2].value', f['advanced'])
+    ev.add('tiles[2].note', f['nodes'])
+    ship = f['shipments'].values
+    growth = {'headline': c(f'先端品がウエハー売上の{adv}%に', f'Advanced nodes reached {adv}% of wafer revenue'),
+              'chips': [{'tone': 'up', 'text': c(f'3nm {n3}%・5nm {n5}%・2nm {n2}%', f'3nm {n3}% · 5nm {n5}% · 2nm {n2}%')},
+                        {'tone': 'up' if Decimal(ship[3]) >= 0 else 'down', 'text': c(f'ウエハー出荷 前期比 {sign(Decimal(ship[3]))}', f'Wafer shipments {sign(Decimal(ship[3]))} QoQ')}],
+              'sections': [
+                  {'key': 'happened', 'text': c(f'7nm以下の先端品がウエハー売上の{adv}%を占めました。内訳は3nmが{n3}%、5nmが{n5}%、7nmが{n7}%で、最新の2nmは{n2}%です。',
+                                                f'Advanced nodes (7nm and below) made up {adv}% of wafer revenue: 3nm {n3}%, 5nm {n5}%, 7nm {n7}%, and the newest 2nm reached {n2}%.')},
+                  {'key': 'good', 'text': c(f'ウエハー出荷は前期比{sign(Decimal(ship[3]))}でしたが、売上は{sign(qoq)}でした。1枚あたりの売上が大きい先端品の比率が高まったことを示しています。',
+                                            f'Wafer shipments rose {sign(Decimal(ship[3]))} from the previous quarter, but revenue rose {sign(qoq)}. That points to a higher share of advanced wafers that bring in more revenue per wafer.')},
+                  {'key': 'watch', 'text': c('成長は最先端の工程への需要に支えられています。AI向けなど最先端の半導体の需要が弱まると、成長は鈍ります。',
+                                             'Growth depends on demand for leading-edge processes. If demand for leading-edge chips such as AI processors weakens, growth would slow.')}]}
+    ni = f['netIncome']
+    nonop, nm = f['nonOperating'].values, f['netMargin'].values
+    ocf0, capex0, fcf0, fcf1 = f['ocf'].values[0] * 1000, abs(f['capex'].values[0]) * 1000, f['fcf'].values[0] * 1000, f['fcf'].values[1] * 1000
+    changes = {'headline': c(f'売上は前期比 {sign(qoq)}、粗利益率は{"低下" if gm.values[0] < gm.values[3] else "上昇"}', f'Revenue {"up" if qoq >= 0 else "down"} {abs(qoq)}% QoQ, gross margin {"lower" if gm.values[0] < gm.values[3] else "higher"}'),
+               'chips': [{'tone': 'up' if qoq >= 0 else 'down', 'text': c(f'売上 前期比 {sign(qoq)}', f'Revenue {sign(qoq)} QoQ')},
+                         {'tone': 'down' if gm.values[0] < gm.values[3] else 'up', 'text': c(f'粗利益率 {gm.values[3]}% → {gm.values[0]}%', f'Gross margin {gm.values[3]}% → {gm.values[0]}%')}],
+               'sections': [
+                   {'key': 'happened', 'text': c(f'売上は{twd(r1)["ja"]}から{twd(r0)["ja"]}へ、{twd(r0 - r1)["ja"]}増えました。粗利益率は{gm.values[3]}%から{gm.values[0]}%になりました。',
+                                                 f'Revenue rose from {twd(r1)["en"]} to {twd(r0)["en"]}, up {twd(r0 - r1)["en"]}. Gross margin went from {gm.values[3]}% to {gm.values[0]}%.')},
+                   {'key': 'good', 'text': c(f'営業キャッシュフローは{twd(ocf0)["ja"]}で、設備投資{twd(capex0)["ja"]}を差し引いたフリーキャッシュフローは{twd(fcf0)["ja"]}でした。前期は{twd(fcf1)["ja"]}です。',
+                                             f'Operating cash flow was {twd(ocf0)["en"]}, and after capex of {twd(capex0)["en"]}, free cash flow was {twd(fcf0)["en"]}, versus {twd(fcf1)["en"]} last quarter.')},
+                   {'key': 'watch', 'text': c(f'純利益は前期比+{ni.raws[4]}%で、売上の伸び{sign(qoq)}より小さくなりました。営業外の損益は{twd(nonop[1] * 1000)["ja"]}から{twd(nonop[0] * 1000)["ja"]}になり、純利益率は{nm[1]}%から{nm[0]}%です。',
+                                              f'Net income rose only {ni.raws[4]}%, less than revenue ({sign(qoq)}). Non-operating items went from NT${nonop[1]}B to NT${nonop[0]}B, and net profit margin from {nm[1]}% to {nm[0]}%.')},
+                   {'key': 'view', 'text': c('本業の売上は大きく伸びました。純利益の伸びが小さいのは主に営業外の利益が減ったためなので、本業と営業外を分けて読みます。',
+                                             'Core revenue grew strongly. Net income lagged mainly because non-operating gains shrank, so read core operations and non-operating items separately.')}]}
+    gl_prev, gh_prev, ol_prev, oh_prev = gm.values[1], gm.values[2], om.values[1], om.values[2]
+    caution = {'headline': c('粗利益率と営業利益率がともに前期から低下' if gm.values[0] < gm.values[3] and om.values[0] < om.values[3] else '利益率の動き',
+                             'Gross and operating margins both fell from last quarter' if gm.values[0] < gm.values[3] and om.values[0] < om.values[3] else 'How the margins moved'),
+               'chips': [{'tone': 'down' if gm.values[0] < gm.values[3] else 'up', 'text': c(f'粗利益率 {pt(gm.values[0] - gm.values[3])}', f'Gross margin {pt(gm.values[0] - gm.values[3])}')},
+                         {'tone': 'down' if om.values[0] < om.values[3] else 'up', 'text': c(f'営業利益率 {om.values[3]}% → {om.values[0]}%', f'Operating margin {om.values[3]}% → {om.values[0]}%')}],
+               'sections': [
+                   {'key': 'happened', 'text': c(f'粗利益率は{gm.values[3]}%から{gm.values[0]}%、営業利益率は{om.values[3]}%から{om.values[0]}%になりました。会社の事前の見通しは粗利益率{gl_prev}〜{gh_prev}%、営業利益率{ol_prev}〜{oh_prev}%でした。',
+                                                 f"Gross margin went from {gm.values[3]}% to {gm.values[0]}% and operating margin from {om.values[3]}% to {om.values[0]}%. The company's earlier guidance was gross {gl_prev}–{gh_prev}% and operating {ol_prev}–{oh_prev}%.")},
+                   {'key': 'watch', 'text': c(f'次期の見通しは粗利益率{gml}〜{gmh}%、営業利益率{oml}〜{omh}%です。今回は粗利益率{gm.values[0]}%、営業利益率{om.values[0]}%でした。',
+                                              f"Next quarter's guidance is {gml}–{gmh}% gross margin and {oml}–{omh}% operating margin, versus {gm.values[0]}% and {om.values[0]}% this quarter.")},
+                   {'key': 'means', 'text': c(f'見通しは1ドル={rate}台湾ドルを前提にしています。台湾ドル高になると、台湾ドル建ての売上と利益率は下がります。',
+                                              f'The guidance assumes 1 US dollar = {rate} NT dollars. A stronger NT dollar would lower revenue and margins in NT dollar terms.')},
+                   {'key': 'view', 'text': c('利益率は高い水準にあります。次の四半期に新しい工程の立ち上げが進むなかで、どこまで保てるかを確かめます。',
+                                             'Margins remain high. Check how well they hold as new processes ramp next quarter.')}]}
+    lo_change = q(change(lo_us * 1000, usd_.values[0]), 0)
+    fy, fy_growth = f['fullYear'].values
+    nxt = {'headline': c('次期の会社見通しを追う', "Follow the company's outlook for next quarter"),
+           'chips': [{'tone': 'gold', 'text': c(f'売上 {usd(lo_us * 1000)["ja"]}〜{usd(hi_us * 1000)["ja"]}', f'Revenue US${lo_us}–{hi_us}B')},
+                     {'tone': 'gold', 'text': c(f'粗利益率 {gml}〜{gmh}%', f'Gross margin {gml}–{gmh}%')}],
+           'sections': [
+               {'key': 'happened', 'text': c(f'会社は次期の売上を{usd(lo_us * 1000)["ja"]}〜{usd(hi_us * 1000)["ja"]}と見込んでいます。1ドル={rate}台湾ドルで約{twd(lo_us * 1000 * rate)["ja"]}〜{twd(hi_us * 1000 * rate)["ja"]}です。今回の{usd(usd_.values[0])["ja"]}と比べ、下限でも約{lo_change}%多くなります。',
+                                             f"The company expects next-quarter revenue of US${lo_us}B to US${hi_us}B (about {twd(lo_us * 1000 * rate)['en']} to {twd(hi_us * 1000 * rate)['en']} at {rate} NT dollars per US dollar). Compared with this quarter's {usd(usd_.values[0])['en']}, even the low end would be about {lo_change}% higher.")},
+               {'key': 'means', 'text': c(f'会社は{fy}年の売上がドル建てで約{fy_growth}%増えると見込んでいます。', f'It expects {fy} revenue to grow about {fy_growth}% in US dollar terms.')},
+               {'key': 'view', 'text': c(f'次の決算で、売上が見通しの幅のどこに入るか、粗利益率が{gml}〜{gmh}%のどこに収まるかを確かめます。',
+                                         f'In the next report, check where revenue lands in this range and where gross margin ends up within {gml}–{gmh}%.')}]}
+    conclusion = [c(f'売上は{twd(r0)["ja"]}で、前期比{sign(qoq)}、前年同期比+{rev.raws[2]}%でした。ドル換算では{usd(usd_.values[0])["ja"]}です。',
+                    f'Revenue was {twd(r0)["en"]}, up {qoq}% from the previous quarter and {rev.raws[2]}% from a year ago. In US dollars it was {usd(usd_.values[0])["en"]}.'),
+                  c(f'一方、粗利益率は{gm.values[3]}%から{gm.values[0]}%になり、純利益は前期比+{ni.raws[4]}%にとどまりました。',
+                    f'Meanwhile, gross margin went from {gm.values[3]}% to {gm.values[0]}%, and net income rose only {ni.raws[4]}% from the previous quarter.'),
+                  c(f'会社は次期の売上を{usd(lo_us * 1000)["ja"]}〜{usd(hi_us * 1000)["ja"]}、粗利益率を{gml}〜{gmh}%と見込んでいます。',
+                    f'The company expects next-quarter revenue of US${lo_us}B to US${hi_us}B with a gross margin of {gml}–{gmh}%.')]
+    return {'tiles': tiles, 'numbers': numbers, 'evidence': ev.items,
+            'summary': {'conclusion': conclusion, 'cards': {'growth': growth, 'change': changes, 'caution': caution, 'next': nxt}}}
+
+
+# ---- ASML: € millions ------------------------------------------------------------------------------------------------------
+
+def eur(million):
+    return _g().money(million, 'EUR')[0]
+
+
+def asml(f, url, before_previous, report=None, events=None, previous=None):
+    need(f, 'revenue', 'ibm', 'systems', 'gm', 'netIncome', 'eps', 'guidance', 'fullYear', 'history', 'om', 'equityGain', 'contractLiabilities')
+    ev = Evidence(url)
+    rev, gm, hist = f['revenue'], f['gm'], f['history']
+    r1, r0 = rev.values
+    r2 = hist.values[0]
+    qoq, yoy = change(r0, r1), change(r0, r2)
+    ev.add('numbers.revenue.current', rev)
+    ev.add('numbers.revenue.previous', rev)
+    ev.add('numbers.revenue.yearAgo', hist)
+    ev.add('numbers.adjustedEPS', f['eps'])
+    ev.add('numbers.grossMargin.current', gm)
+    ev.add('numbers.grossMargin.previous', gm)
+    g = f['guidance']
+    _, glo, ghi, ggm = g.values
+    ev.add('numbers.guidance.low', g, calc=f'{glo} * 1000')
+    ev.add('numbers.guidance.high', g, calc=f'{ghi} * 1000')
+    ev.add('numbers.guidance.grossMarginPercent', g)
+    numbers = {'revenue': {'current': float(r0), 'previous': float(r1), 'yearAgo': float(r2)}, 'adjustedEPS': float(f['eps'].values[1]), 'epsEstimate': None,
+               'grossMargin': {'current': float(gm.values[1]), 'previous': float(gm.values[0])},
+               'guidance': {'low': float(Decimal(glo) * 1000), 'high': float(Decimal(ghi) * 1000), 'grossMarginPercent': float(ggm)}, 'segments': None}
+    ni1, ni0 = f['netIncome'].values
+    gain = f['equityGain'].values[1]
+    tiles = [{'label': c('売上高', 'Total net sales'), 'value': eur(r0), 'note': c(f'前年同期比 {sign(yoy, 0)}', f'{sign(yoy, 0)} YoY')},
+             {'label': c('粗利益率', 'Gross margin'), 'value': c(f'{gm.values[1]}%', f'{gm.values[1]}%'), 'note': c(f'前四半期 {gm.values[0]}%', f'{gm.values[0]}% last quarter')},
+             {'label': c('純利益', 'Net income'), 'value': eur(ni0), 'note': c(f'持分投資の利益 {eur(gain)["ja"]}を含む', f'Includes a €{format(q(gain / 1000, 2), "f")}B equity investment gain')}]
+    ev.add('tiles[0].value', hist, calc=f'{hist.raws[4]} / 1000', rnd=2)
+    ev.add('tiles[0].note', hist, calc=f'({hist.raws[4]} / {hist.raws[0]} - 1) * 100', rnd=0)
+    ev.add('tiles[1].value', gm)
+    ev.add('tiles[1].note', gm)
+    ev.add('tiles[2].value', f['netIncome'], calc=f'{f["netIncome"].raws[1]} / 1000', rnd=2)
+    ev.add('tiles[2].note', f['equityGain'], calc=f'{f["equityGain"].raws[1]} / 1000', rnd=2)
+    s1, s0 = f['systems'].values
+    i1, i0 = f['ibm'].values
+    h = hist.values
+    growth = {'headline': c(f'新しい露光装置の販売台数が{s1}台から{s0}台に', f'New systems sold rose from {s1} to {s0}' if s0 >= s1 else f'New systems sold went from {s1} to {s0}'),
+              'chips': [{'tone': 'up' if s0 >= s1 else 'down', 'text': c(f'新規露光装置 {s1} → {s0}台', f'New lithography systems {s1} → {s0}')},
+                        {'tone': 'up' if i0 >= i1 else 'down', 'text': c(f'保守・アップグレード {eur(i1)["ja"]} → {eur(i0)["ja"]}', f'Installed Base {eur(i1)["en"]} → {eur(i0)["en"]}')}],
+              'sections': [
+                  {'key': 'happened', 'text': c(f'新しい露光装置の販売台数は{s1}台から{s0}台になりました。保守・アップグレード(Installed Base Management)の売上は{eur(i1)["ja"]}から{eur(i0)["ja"]}です。',
+                                                f'New lithography systems sold went from {s1} to {s0}. Installed Base Management sales (service and upgrades) went from {eur(i1)["en"]} to {eur(i0)["en"]}.')},
+                  {'key': 'good', 'text': c('新しい装置と、設置済みの装置向けのサービスの両方が伸びました。', 'Both new systems and service on installed machines grew.') if s0 >= s1 and i0 >= i1 else
+                   c('装置とサービスの動きが分かれました。', 'Systems and service moved in different directions.')},
+                  {'key': 'watch', 'text': c(f'装置の売上は出荷の台数と時期で大きく動きます。この1年の売上は{eur(h[0])["ja"]}、{eur(h[1])["ja"]}、{eur(h[2])["ja"]}、{eur(h[3])["ja"]}と上下しています。',
+                                             f'System sales move a lot with the number and timing of shipments. Over the past year sales went {eur(h[0])["en"]}, {eur(h[1])["en"]}, {eur(h[2])["en"]} and {eur(h[3])["en"]}.')}]}
+    om = f['om'].values
+    changes = {'headline': c(f'売上は前期比 {sign(qoq)}、粗利益率は{"上昇" if gm.values[1] > gm.values[0] else "低下"}', f'Revenue {"up" if qoq >= 0 else "down"} {format(abs(q(qoq)), "f")}% QoQ, gross margin {"also higher" if gm.values[1] > gm.values[0] else "lower"}'),
+               'chips': [{'tone': 'up' if qoq >= 0 else 'down', 'text': c(f'売上 前期比 {sign(qoq)}', f'Revenue {sign(qoq)} QoQ')},
+                         {'tone': 'up' if gm.values[1] > gm.values[0] else 'down', 'text': c(f'粗利益率 {gm.values[0]}% → {gm.values[1]}%', f'Gross margin {gm.values[0]}% → {gm.values[1]}%')}],
+               'sections': [
+                   {'key': 'happened', 'text': c(f'売上は{eur(r1)["ja"]}から{eur(r0)["ja"]}へ、{eur(abs(r0 - r1))["ja"]}{"増え" if r0 >= r1 else "減り"}ました。粗利益率は{gm.values[0]}%から{gm.values[1]}%です。',
+                                                 f'Total net sales went from {eur(r1)["en"]} to {eur(r0)["en"]}, {"up" if r0 >= r1 else "down"} {eur(abs(r0 - r1))["en"]}. Gross margin went from {gm.values[0]}% to {gm.values[1]}%.')},
+                   {'key': 'good', 'text': c(f'営業利益率は{om[3]}%から{om[4]}%になりました。', f'Operating margin went from {om[3]}% to {om[4]}%.')},
+                   {'key': 'watch', 'text': c(f'純利益は{eur(ni1)["ja"]}から{eur(ni0)["ja"]}になりましたが、持分投資の利益約{eur(gain)["ja"]}を含みます。毎四半期続くものではありません。' if gain else f'純利益は{eur(ni1)["ja"]}から{eur(ni0)["ja"]}になりました。',
+                                              f'Net income went from {eur(ni1)["en"]} to {eur(ni0)["en"]}, but that includes a gain of about {eur(gain)["en"]} on equity investments, which does not recur every quarter.' if gain else f'Net income went from {eur(ni1)["en"]} to {eur(ni0)["en"]}.')},
+                   {'key': 'view', 'text': c('本業の伸びは営業利益とあわせて読みます。', 'Read net income growth alongside operating profit.')}]}
+    cl0, cl1 = f['contractLiabilities'].values
+    if 'supply' in f:
+        y1, y2 = f['supply'].values
+        cap = f.get('capacity')
+        caution = {'headline': c(f'{y1}年と{y2}年の供給は需要に届かない見込み', f'Supply for {y1} and {y2} is not expected to meet demand'),
+                   'chips': [{'tone': 'gold', 'text': c(f'{y1}〜{y2}年の計画供給は需要に届かず', f'Planned {y1}–{y2[2:]} supply short of demand')},
+                             {'tone': 'gold', 'text': c(f'長期の前受金 {eur(cl0)["ja"]} → {eur(cl1)["ja"]}', f'Contract liabilities {eur(cl0)["en"]} → {eur(cl1)["en"]}')}],
+                   'sections': [
+                       {'key': 'happened', 'text': c(f'会社は、現在計画している{y1}年と{y2}年の供給では顧客の需要を満たしきれないとしています。' + (f'{cap.values[0]}年の生産能力について、以前に示した{cap.values[1]}%増を超える増強を検討しています。' if cap else ''),
+                                                     f'The company said its currently planned supply for {y1} and {y2} will not fully meet customer demand' + (f', and it is investigating capacity for {cap.values[0]} beyond the {cap.values[1]}% increase announced earlier.' if cap else '.'))},
+                       {'key': 'watch', 'text': c(f'需要があっても、売上は作れる台数で上限が決まり、増産には時間と投資がかかります。長期の前受金(契約負債)は昨年末の{eur(cl0)["ja"]}から{eur(cl1)["ja"]}に増えました。',
+                                                  f'Even with demand, revenue is capped by how many machines can be built, and adding capacity takes time and investment. Long-term contract liabilities rose from {eur(cl0)["en"]} at the end of last year to {eur(cl1)["en"]}.')},
+                       {'key': 'means', 'text': c('前受金は装置の引き渡しより前に受け取るため、四半期のキャッシュフローはその時期で大きく動きます。',
+                                                  'Prepayments are received before machines are delivered, so quarterly cash flow swings with their timing.')},
+                       {'key': 'view', 'text': c('需要は強い一方、売上にできるかは生産能力しだいです。次の決算で増産計画がどう具体化するかを確かめます。',
+                                                 'Demand is strong, but turning it into sales depends on capacity. Check in the next report how the capacity plans take shape.')}]}
+        ev.add('summary.cards.caution.sections[0]', f['supply'])
+    else:
+        raise ValueError('missing:supply')
+    fy = f['fullYear'].values
+    lo_up = q(change(Decimal(glo) * 1000, r0), 0)
+    nxt = {'headline': c('次期の会社見通しを追う', "Follow the company's outlook for next quarter"),
+           'chips': [{'tone': 'gold', 'text': c(f'売上 {eur(Decimal(glo) * 1000)["ja"]}〜{eur(Decimal(ghi) * 1000)["ja"]}', f'Sales €{glo}–{ghi}B')},
+                     {'tone': 'gold', 'text': c(f'粗利益率 約{ggm}%', f'Gross margin ~{ggm}%')}],
+           'sections': [
+               {'key': 'happened', 'text': c(f'会社は次期の売上を{eur(Decimal(glo) * 1000)["ja"]}〜{eur(Decimal(ghi) * 1000)["ja"]}、粗利益率を約{ggm}%と見込んでいます。下限でも今回の{eur(r0)["ja"]}より約{lo_up}%多くなります。',
+                                             f"The company expects next-quarter sales of €{glo}B to €{ghi}B and a gross margin of about {ggm}%. Even the low end is about {lo_up}% above this quarter's {eur(r0)['en']}.")},
+               {'key': 'watch', 'text': c(f'粗利益率の見通しは約{ggm}%で、今回は{gm.values[1]}%でした。{fy[0]}年通期の粗利益率の見通しは約{fy[3]}%です。',
+                                          f"The margin outlook (about {ggm}%) compares with this quarter's {gm.values[1]}%. The full-year {fy[0]} gross margin outlook is about {fy[3]}%.")},
+               {'key': 'view', 'text': c(f'次の決算で、売上がこの幅のどこに入るか、通期の見通し{eur(Decimal(fy[1]) * 1000)["ja"]}〜{eur(Decimal(fy[2]) * 1000)["ja"]}に届くかを確かめます。',
+                                         f'In the next report, check where sales land in this range and whether the full-year outlook of €{fy[1]}B to €{fy[2]}B is met.')}]}
+    conclusion = [c(f'売上は{eur(r0)["ja"]}で、前期比{sign(qoq, 0)}、前年同期比{sign(yoy, 0)}でした。粗利益率は{gm.values[0]}%から{gm.values[1]}%になりました。',
+                    f'Total net sales were {eur(r0)["en"]}, {sign(qoq, 0)} from the previous quarter and {sign(yoy, 0)} from a year ago. Gross margin went from {gm.values[0]}% to {gm.values[1]}%.'),
+                  c(f'ただし純利益{eur(ni0)["ja"]}には、持分投資の利益約{eur(gain)["ja"]}が含まれます。' if gain else f'純利益は{eur(ni0)["ja"]}でした。',
+                    f'However, net income of {eur(ni0)["en"]} includes a gain of about {eur(gain)["en"]} on equity investments.' if gain else f'Net income was {eur(ni0)["en"]}.'),
+                  c(f'会社は、現在計画している{f["supply"].values[0]}年と{f["supply"].values[1]}年の供給では顧客の需要を満たしきれないとしています。',
+                    f'The company says its currently planned supply for {f["supply"].values[0]} and {f["supply"].values[1]} will not fully meet customer demand.')]
+    return {'tiles': tiles, 'numbers': numbers, 'evidence': ev.items,
+            'summary': {'conclusion': conclusion, 'cards': {'growth': growth, 'change': changes, 'caution': caution, 'next': nxt}}}
+
+
+WRITERS = {'CRDO': crdo, 'MRVL': mrvl, 'AVGO': avgo, 'TSM': tsm, 'ASML': asml}
+
+# the rest of the roster (AMD, ANET, PLTR, ...): dive_company_writers, on the same helpers
+from dive_company_writers import WRITERS as _MORE  # noqa: E402
+
+WRITERS.update(_MORE)

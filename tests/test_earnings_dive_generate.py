@@ -69,6 +69,14 @@ NOTE = {'headline': {'ja': 'データセンター需要はどこまで続くか'
 
 class DiveWithoutModel(unittest.TestCase):
     def setUp(self):
+        # The general path (MU's template plus the release's deep analysis), for a company without its own writer: NVIDIA has one now
+        # (dive_writers, Nov 26), so it is taken out of the writers for these tests; tests/test_dive_parity.py covers its writer.
+        import dive_writers
+        from unittest import mock
+        patcher = mock.patch.dict(dive_writers.WRITERS)
+        patcher.start()
+        self.addCleanup(patcher.stop)
+        dive_writers.WRITERS.pop('NVDA')
         self.tmp = tempfile.TemporaryDirectory()
         self.addCleanup(self.tmp.cleanup)
         self.path = Path(self.tmp.name) / 'db.sqlite'

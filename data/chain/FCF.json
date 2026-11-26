@@ -1,0 +1,182 @@
+{
+  "root": {
+    "ticker": "FCF",
+    "name": "ファースト・コモンウェルス・ファイナンシャル",
+    "cik": 712537,
+    "name_en": "First Commonwealth Financial"
+  },
+  "rows": [
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "買収・売却",
+      "en": "Acquisitions & sales"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "CENTERGROUP",
+      "ticker": "CENTERGROUP",
+      "name": "センターグループ・ファイナンシャル",
+      "name_en": "CenterGroup Financial",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年4月に買収",
+          "text_en": "Acquired in April 2025",
+          "source": {
+            "label": "First Commonwealth Financial 10-K(2025年度)",
+            "label_en": "First Commonwealth Financial 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/712537/000071253726000013/fcf-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "In April 2025, we acquired CenterGroup Financial Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CENTRIC",
+      "ticker": "CENTRIC",
+      "name": "セントリック・ファイナンシャル",
+      "name_en": "Centric Financial",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2023年1月に買収",
+          "text_en": "Acquired in January 2023",
+          "source": {
+            "label": "First Commonwealth Financial 10-K(2025年度)",
+            "label_en": "First Commonwealth Financial 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/712537/000071253726000013/fcf-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "In January 2023, we acquired Centric Financial Corporation (\"Centric\") and its banking subsidiary Centric Bank, which operated branches located in the Harrisburg and Lancaster markets."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SAN",
+      "ticker": "SAN",
+      "name": "Santander",
+      "name_en": "Santander",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2019年に支店14店を買収",
+          "text_en": "Bought 14 of its branches in 2019",
+          "source": {
+            "label": "First Commonwealth Financial 10-K(2025年度)",
+            "label_en": "First Commonwealth Financial 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/712537/000071253726000013/fcf-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "In 2019, we expanded our Pennsylvania markets into State College, Lock Haven, Williamsport and Lewisburg through the acquisition of 14 branches from Santander Bank, N.A."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FOUNDATIONBANK",
+      "ticker": "FOUNDATIONBANK",
+      "name": "ファウンデーション銀行",
+      "name_en": "Foundation Bank",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2018年に買収",
+          "text_en": "Acquired in 2018",
+          "source": {
+            "label": "First Commonwealth Financial 10-K(2025年度)",
+            "label_en": "First Commonwealth Financial 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/712537/000071253726000013/fcf-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "In 2018, we acquired Garfield Acquisition Corp., and its banking subsidiary Foundation Bank with five full-service banking offices in the Cincinnati, Ohio area."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DCBFIN",
+      "ticker": "DCBFIN",
+      "name": "DCBファイナンシャル",
+      "name_en": "DCB Financial",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2017年に買収",
+          "text_en": "Acquired in 2017",
+          "source": {
+            "label": "First Commonwealth Financial 10-K(2025年度)",
+            "label_en": "First Commonwealth Financial 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/712537/000071253726000013/fcf-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "In 2016, we acquired 13 branches from FirstMerit Bank, National Association, in Canton-Massillon and Ashtabula, Ohio and in 2017, we acquired DCB Financial Corp., and its banking subsidiary The Delaware County Bank and Trust Company with nine full-service banking offices in the Columbus, Ohio MSA."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FHLBPGH",
+      "ticker": "FHLBPGH",
+      "name": "ピッツバーグ連邦住宅貸付銀行",
+      "name_en": "Federal Home Loan Bank of Pittsburgh",
+      "sub": "住宅金融",
+      "sub_en": "Home loan bank",
+      "sub_short": "住宅金融",
+      "sub_short_en": "Lender",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "資金の借入先",
+          "text_en": "Source of its funding",
+          "source": {
+            "label": "First Commonwealth Financial 10-K(2025年度)",
+            "label_en": "First Commonwealth Financial 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/712537/000071253726000013/fcf-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "(iii) the Federal Home Loan Bank of Pittsburgh (\"FHLB\") or other funding sources reduce capacity; or (iv) bank regulators impose restrictions on us that impact the level of interest rates we may pay on deposits or our ability to access brokered deposits."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

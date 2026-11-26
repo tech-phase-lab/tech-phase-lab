@@ -1,0 +1,156 @@
+{
+  "root": {
+    "ticker": "HOPE",
+    "name": "ホープ・バンコープ",
+    "cik": 1128361,
+    "name_en": "Hope Bancorp"
+  },
+  "rows": [
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "買収・売却",
+      "en": "Acquisitions & sales"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "TERRITORIAL",
+      "ticker": "TERRITORIAL",
+      "name": "テリトリアル・バンコープ",
+      "name_en": "Territorial Bancorp",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年4月に買収",
+          "text_en": "Acquired in April 2025",
+          "source": {
+            "label": "Hope Bancorp 10-K(2025年度)",
+            "label_en": "Hope Bancorp 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1128361/000112836126000011/hope-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "On April 2, 2025, we acquired Territorial Bancorp Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WILSHIRE",
+      "ticker": "WILSHIRE",
+      "name": "ウィルシャー・バンコープ",
+      "name_en": "Wilshire Bancorp",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2016年に統合",
+          "text_en": "Combined with it in 2016",
+          "source": {
+            "label": "Hope Bancorp 10-K(2025年度)",
+            "label_en": "Hope Bancorp 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1128361/000112836126000011/hope-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "As a result of the acquisition on July 29, 2016, Wilshire Bancorp underwent a 382 Ownership Change resulting in a 382 Limitation to its net operating loss and tax credit carry-forwards."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FHLBSF",
+      "ticker": "FHLBSF",
+      "name": "サンフランシスコ連邦住宅貸付銀行",
+      "name_en": "Federal Home Loan Bank of San Francisco",
+      "sub": "住宅金融",
+      "sub_en": "Home loan bank",
+      "sub_short": "住宅金融",
+      "sub_short_en": "Lender",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "資金の借入先",
+          "text_en": "Source of its borrowings",
+          "source": {
+            "label": "Hope Bancorp 10-K(2025年度)",
+            "label_en": "Hope Bancorp 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1128361/000112836126000011/hope-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Conversely, when we have less funds than required, we may borrow funds from the Federal Home Loan Bank of San Francisco (the \"FHLB\"), the Federal Reserve Bank of San Francisco (\"the Federal Reserve Bank\"), or from our correspondent banking relationships."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SNEX",
+      "ticker": "SNEX",
+      "name": "ストーンX",
+      "name_en": "StoneX Group",
+      "sub": "金融サービス",
+      "sub_en": "Financial services",
+      "sub_short": "金融",
+      "sub_short_en": "Finance",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "融資の幹事行を務める借り手",
+          "text_en": "Borrower; Bank of Hope is agent on its loan",
+          "source": {
+            "label": "StoneX Group 10-Q(2026年6月期)",
+            "label_en": "StoneX Group 10-Q (quarter ended Jun 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/913760/000091376026000038/unsecuredloanandaddendumboh.htm",
+            "level": "official",
+            "date": "2026-08-05",
+            "quote": "EX-10.1 Document Exhibit 10.1 [Execution Copy] UNSECURED LOAN AGREEMENT This Unsecured Loan Agreement (this \"Loan Agreement\" and, together with the Addendum (as defined in Section 6 hereof), this \"Agreement\") is dated as of June 1, 2026, among the lenders party hereto (the \"Lenders\"), Bank of Hope, as administrative agent (in such capacity, the \"Administrative Agent\"), lead arranger and bookrunner, and StoneX Financial Inc., a Florida corporation (the \"Borrower\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NGS",
+      "ticker": "NGS",
+      "name": "ナチュラル・ガス・サービシズ",
+      "name_en": "Natural Gas Services Group",
+      "sub": "ガス圧縮機",
+      "sub_en": "Gas compression",
+      "sub_short": "圧縮機",
+      "sub_short_en": "Compress",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "融資枠を増額した貸し手の1行(借り手)",
+          "text_en": "Borrower; Bank of Hope raised its commitment",
+          "source": {
+            "label": "Natural GAS Services Group 8-K(2026年6月)",
+            "label_en": "Natural GAS Services Group 8-K (June 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1084991/000108499126000054/exhibit101fifthamendmentto.htm",
+            "level": "official",
+            "date": "2026-06-15",
+            "quote": "WHEREAS, Holdings has requested that each of Texas Capital Bank, The Huntington National Bank, Flagstar Bank, N.A., Zions Bancorporation, N.A. dba Amegy Bank, First-Citizens Bank & Trust Company and Bank of Hope (each such Lender, together with the New Lender, an \"Increasing Lender\" and collectively, the \"Increasing Lenders\") agree to increase its Commitment as of the Fifth Amendment Effective Date resulting in the Commitment amount shown opposite such Lender's name on"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
