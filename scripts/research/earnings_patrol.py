@@ -397,7 +397,7 @@ def quarter_filings(ticker, filings, release, previous, fetch=None, exhibit=None
     # The whole 10-Q, not the monitor's 160,000-character article cut: a customer-concentration note can sit far into the document.
     fetch = fetch or (lambda url: report_text(backtest.get(url, binary=True)))
     exhibit = exhibit or exhibit_with_url
-    document = document or (lambda url: ' '.join(monitor.extract_text(backtest.get(url, binary=True), 'text/html').split()))
+    document = document or (lambda url: whole_text(backtest.get(url, binary=True)))
     import dive_figures
     recent = filings['filings']['recent']
     report = None
@@ -475,13 +475,20 @@ def prefetch_filings(results, filings_by_ticker, env=None):
     return out
 
 
+def whole_text(content):
+    """Plain text of a filing with every table cell kept: the monitor's article reader drops a line equal to the one before it, which
+    would merge two equal cells side by side ("97.2% 97.2%") and shift a row."""
+    import check_dives
+    return check_dives.html_text(content.decode('utf-8', 'replace'))
+
+
 def prior_release(previous):
     """{'url', 'text'} of the release the previous dive was built from (its first source, on sec.gov), or None."""
     url = (((previous or {}).get('sources') or [{}])[0]).get('url') or ''
     if not url.startswith('https://www.sec.gov/'):
         return None
     try:
-        return {'url': url, 'text': ' '.join(monitor.extract_text(backtest.get(url, binary=True), 'text/html').split())}
+        return {'url': url, 'text': whole_text(backtest.get(url, binary=True))}
     except Exception:  # noqa: BLE001 - the dive then holds (a figure is missing) and is tried again at the next patrol
         return None
 

@@ -98,12 +98,14 @@ def sentence(text, pattern, groups, unit='million', multipliers=None):
 
 
 def between(text, after, before=None):
-    """The part of `text` from the first `after` to the next `before` ('' when `after` is absent)."""
+    """The part of `text` from the first `after` to the next `before` ('' when `after` is absent). `before` may be a tuple of the ways a
+    filing's text can print the same words ("(1)Segment" / "(1) Segment"): the nearest one ends the part."""
     start = text.find(after)
     if start < 0:
         return ''
-    end = text.find(before, start + len(after)) if before else -1
-    return text[start:end if end > 0 else len(text)]
+    ends = [text.find(b, start + len(after)) for b in ((before,) if isinstance(before, str) else (before or ()))]
+    ends = [e for e in ends if e > 0]
+    return text[start:min(ends) if ends else len(text)]
 
 
 CHANGE = r'(?:(?:Up|Down) [\d.]+ ?(?:%|ppts?)|Flat)'
@@ -410,7 +412,7 @@ def guidance_block(t, heading, end):
 def vertiv(t):
     ops, bs = 'STATEMENTS OF EARNINGS', 'CONDENSED CONSOLIDATED BALANCE SHEETS'
     seg = between(t, 'Regional Segment Results', 'Adjusted operating profit (loss)')
-    margins = between(t, 'Adjusted operating margins', '(1)Segment net sales')
+    margins = between(t, 'Adjusted operating margins', ('(1)Segment net sales', '(1) Segment net sales'))
     quarter = guidance_block(t, r'(?:First|Second|Third|Fourth) Quarter 20\d\d Guidance Net sales', 'Full Year')
     year = guidance_block(t, r'Full Year 20\d\d Guidance Net sales', '(1)')
     regions = {}
