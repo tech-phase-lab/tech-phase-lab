@@ -2,10 +2,14 @@ import rosters from './thermometer-rosters.json' with { type: 'json' };
 import { dailyMove, equalWeightLevels, realizedVolatility, sessionFear, sessionShock, sessionIntraday, stockShock, type ShockReading, type FearReading, type IntradayReading, type BasketSeries, type StockShock } from './thermometer-basket.ts';
 import { calculateTemperature, calculateVixContext, validSessionDate, type DailyClose } from './thermometer.ts';
 import { bigDrops, similarDays } from './similar-days.ts';
+import type { TwelveLease } from './twelve-lease.ts';
 
 export type ThermometerRosters = { nasdaq100: string[]; semiconductors: string[] };
 export const THERMOMETER_ROSTERS: ThermometerRosters = { nasdaq100: rosters.nasdaq100.tickers, semiconductors: rosters.semiconductors.tickers };
-export type ThermometerProviderConfig = { enabled: boolean; apiKey?: string; rosters?: ThermometerRosters };
+/** `lease`: each request of CHUNK symbols is leased from the monitor's allocator and paced first (refresh-thermometer.mts passes one;
+ * without it, as in tests, requests are sent as before). A request not granted before the lease's deadline is not sent: its tickers are
+ * missing, as after a provider error. A 429 pauses the lease to the next minute; nothing is retried. */
+export type ThermometerProviderConfig = { enabled: boolean; apiKey?: string; rosters?: ThermometerRosters; lease?: TwelveLease };
 type ProviderFailure = { status: 'unavailable'; reason: 'not-configured' | 'provider-error' | 'invalid-data' };
 const CHUNK = 10;
 export const SHOCK_SESSIONS = 10;
@@ -62,8 +66,10 @@ export async function collectThermometer(config: ThermometerProviderConfig, conf
       const chunk = tickers.slice(i, i + CHUNK);
       const url = new URL('https://api.twelvedata.com/time_series');
       for (const [key, value] of Object.entries({ symbol: chunk.join(','), interval: '1day', outputsize: String(HISTORY_BARS), adjust: 'splits', end_date: dayAfter(confirmedSession), apikey: config.apiKey! })) url.searchParams.set(key, value);
+      if (config.lease && !await config.lease.take(chunk.length, 'resolute-thermometer')) { missing.push(...chunk); continue; }
       try {
         const response = await fetcher(url, { cache: 'no-store', redirect: 'error', signal: AbortSignal.timeout(30000) });
+        if (response.status === 429) config.lease?.limited();
         if (!response.ok) { missing.push(...chunk); continue; }
         const parsed = parseStockHistories(await response.json(), chunk);
         reached = true;

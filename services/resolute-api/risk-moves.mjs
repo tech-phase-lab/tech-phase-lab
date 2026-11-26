@@ -22,7 +22,10 @@ export function withThermometerFallback(readMoves,apiKey,fetcher=fetch){
   const stored=await readMoves(sessions),missing=sessions.filter(s=>!stored[s]?.nas100&&!stored[s]?.sox);
   if(!missing.length)return stored;
   const {collectThermometer}=await import('../../lib/resolute/thermometer-provider.ts');
-  const latest=[...missing].sort().at(-1),collected=await collectThermometer({enabled:true,apiKey},latest,fetcher);
+  const {leaseFromEnv}=await import('../../lib/resolute/twelve-lease.ts');
+  // Leased and paced like the thermometer itself (70 credits a minute), never one burst.
+  const lease=leaseFromEnv(process.env,{tier:'warm',perMinute:70,deadline:Date.now()+300000});
+  const latest=[...missing].sort().at(-1),collected=await collectThermometer({enabled:true,apiKey,lease},latest,fetcher);
   const measured=await readSessionMoves({query:async()=>({rows:[{shock:collected.shock??null,stocks:collected.shockStocks??null,intraday:collected.shockIntraday??null}]})},missing);
   return {...measured,...stored,...Object.fromEntries(missing.filter(s=>measured[s]).map(s=>[s,measured[s]]))};
  };

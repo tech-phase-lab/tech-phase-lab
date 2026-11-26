@@ -25,20 +25,19 @@ test('settled session follows the US calendar, early closes and holidays',()=>{
 });
 
 function series(symbol,rows,extra={}){return {meta:{symbol,currency:'USD',interval:'1day',...extra},values:rows.map(([datetime,close])=>({datetime,open:close,high:close,low:close,close:String(close),volume:'1'})),status:'ok'};}
-test('close provider returns only the settled day, once per symbol per run, and never leaks the key',async()=>{
+test('close provider returns only the settled day, one batched request per run for all symbols, and never leaks the key',async()=>{
  const seen=[];
- const request=async url=>{seen.push(String(url));const s=url.searchParams.get('symbol');
-  if(s==='NVDA')return Response.json(series('NVDA',[['2026-11-12',180.5],['2026-11-11',170]]));
-  if(s==='AMD')return Response.json(series('AMD',[['2026-11-11',100]])); // today's bar not out yet
-  if(s==='BAD')return Response.json({status:'error',code:400,message:'x'});
-  if(s==='EUR')return Response.json(series('EUR',[['2026-11-12',1]],{currency:'EUR'}));
-  return new Response('x',{status:500});};
+ const request=async url=>{seen.push(String(url));const asked=url.searchParams.get('symbol').split(',');
+  const one={NVDA:series('NVDA',[['2026-11-12',180.5],['2026-11-11',170]]),AMD:series('AMD',[['2026-11-11',100]]), // AMD: today's bar not out yet
+   BAD:{status:'error',code:400,message:'x'},EUR:series('EUR',[['2026-11-12',1]],{currency:'EUR'})};
+  return Response.json(Object.fromEntries(asked.filter(s=>one[s]).map(s=>[s,one[s]])));};
  const provider=createCloseProvider({apiKey:'secret-key-value',now:()=>at('2026-11-12T22:00:00Z'),request});
  const a=await provider(['NVDA','AMD','BAD','EUR','ZZZ']);
  assert.equal(a.marketDate,'2026-11-12');
  assert.deepEqual(a.closes,[{symbol:'NVDA',date:'2026-11-12',close:180.5,isFinal:true}]);
- await provider(['NVDA']);
- assert.equal(seen.filter(u=>u.includes('symbol=NVDA')).length,1);
+ assert.equal(seen.length,1);assert.equal(new URL(seen[0]).searchParams.get('symbol'),'NVDA,AMD,BAD,EUR,ZZZ');
+ await provider(['NVDA','AMD']);
+ assert.equal(seen.length,1); // once per symbol per run, failures included
  assert.ok(!JSON.stringify(a).includes('secret'));
  const none=await createCloseProvider({apiKey:undefined,now:()=>at('2026-11-12T22:00:00Z'),request:async()=>assert.fail('no call')})(['NVDA']);
  assert.deepEqual(none.closes,[]);
@@ -93,8 +92,8 @@ test('queue and cron entry points are disabled by default and refuse a wrong rol
  r=run('services/resolute-api/notification-queue.mjs',{RESOLUTE_NOTIFICATION_QUEUE_ENABLED:'true',RESOLUTE_ENTITLEMENT_SOURCE:'live',TWELVE_DATA_API_KEY:'k',RESOLUTE_MAIL_CLERK_SECRET_KEY:'k',RESOLUTE_NOTIFICATION_QUEUE_DB_URL:'postgres://resolute_notification_writer:p@db.example/resolute?sslmode=verify-full'});
  assert.deepEqual(JSON.parse(r.stdout),{error:'NOTIFICATION_QUEUE_UNAVAILABLE'});
  r=run('services/resolute-notifications/run.mjs',{});assert.equal(r.status,0); // disabled is not a failure for the scheduler
- 
- assert.equal(r.stdout.trim().split('\n').length,2);
+ // Four steps: the Twelve Data prefetch (closes), the queue, the mail worker, the prefetch (splits); each disabled.
+ assert.equal(r.stdout.trim().split('\n').length,4);
  for(const line of r.stdout.trim().split('\n'))assert.deepEqual(JSON.parse(line),{enabled:false});
 });
 test('cron entry: an enabled but broken step is still a failure (non-zero), a disabled one is not',()=>{
