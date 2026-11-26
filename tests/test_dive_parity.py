@@ -55,6 +55,7 @@ FILINGS = {
     # the shareholder letter is EX-99.2 of the results 6-K (the hand-made file quoted the same letter as a PDF from nebius.com)
     'NBIS': {'exhibits': [('https://www.sec.gov/Archives/edgar/data/1513845/000110465926126008/tm2629571d1_ex99-2.htm', 'NBIS-992')]},
     'MSFT': {},
+    'GOOGL': {},
 }
 GAPS = {  # what is still different from the hand-made file with every filing in hand (none)
     'CRDO': {}, 'MRVL': {}, 'AVGO': {}, 'TSM': {},
@@ -74,7 +75,7 @@ GAPS = {  # what is still different from the hand-made file with every filing in
     'ARM': {}, 'CRWV': {},
     'NBIS': {'sources': 'interest expense and the funding sources come from the release\'s own statements (the hand-made file quoted them from the '
                         'separate Operating and Financial Review 6-K); the shareholder letter is its SEC copy (EX-99.2) instead of the nebius.com PDF'},
-    'MSFT': {},
+    'MSFT': {}, 'GOOGL': {},
 }
 CHIP_GAPS = {}
 FILINGS_DIR = ROOT / 'tests/fixtures/dive-filings'

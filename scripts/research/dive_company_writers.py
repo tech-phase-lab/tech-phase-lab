@@ -1900,5 +1900,131 @@ def msft(f, url, before_previous, report=None, events=None, previous=None):
     return {'tiles': tiles, 'numbers': numbers, 'evidence': ev.items, 'summary': summary(conclusion, growth, changes, caution, nxt)}
 
 
+
+# ---- Alphabet (GOOGL): a year earlier, then this quarter; the previous quarter's segments from the previous file -----------------------
+
+def googl(f, url, before_previous, report=None, events=None, previous=None):
+    need(f, 'revenue', 'opIncome', 'otherIncome', 'netIncome', 'search', 'services', 'cloud', 'servicesOp', 'cloudOp', 'alphabetLevel', 'cloudGrowth',
+         'cfoQuarters', 'capexQuarters', 'fcfQuarters', 'cfo', 'debt', 'cash')
+    ev = Evidence(url)
+    rev = f['revenue']
+    r2, r0 = rev.values
+    ev.add('numbers.revenue.current', rev)
+    ev.add('numbers.revenue.yearAgo', rev)
+    r1 = carried(ev, previous, 'numbers.revenue.current', 'numbers.revenue.previous')
+    old = {x['key']: (i, x) for i, x in enumerate(((previous or {}).get('numbers') or {}).get('segments') or [])}
+    segs = []
+    for i, (key, ja, en, sr, so) in enumerate((('services', 'Googleサービス', 'Google Services', f['services'], f['servicesOp']),
+                                                ('cloud', 'Googleクラウド', 'Google Cloud', f['cloud'], f['cloudOp']))):
+        if key not in old:
+            raise ValueError(f'missing:previous segment {key}')
+        j, prev_seg = old[key]
+        ev.add(f'numbers.segments[{i}].revenue', sr)
+        ev.add(f'numbers.segments[{i}].operatingMargin', so)
+        ev.add(f'numbers.segments[{i}].operatingMargin', sr, calc=margin_calc(so, sr, 1), rnd=1)
+        for o, n in (('revenue', 'previous'), ('operatingMargin', 'previousOperatingMargin')):
+            entries = [e for e in previous['evidence'] if e['field'] == f'numbers.segments[{j}].{o}']
+            if not entries:
+                raise ValueError(f'missing:previous segment {key} {o}')
+            ev.items += [{**e, 'field': f'numbers.segments[{i}].{n}'} for e in entries]
+        segs.append({'key': key, 'nameJa': ja, 'nameEn': en, 'revenue': float(sr.values[1]), 'previous': prev_seg['revenue'],
+                     'operatingMargin': float(q(so.values[1] / sr.values[1] * 100)), 'previousOperatingMargin': prev_seg['operatingMargin']})
+    numbers = {'revenue': {'current': float(r0), 'previous': float(r1), 'yearAgo': float(r2)}, 'adjustedEPS': None, 'epsEstimate': None,
+               'grossMargin': None, 'guidance': None, 'segments': segs}
+    yoy, qoq = change(r0, r2), change(r0, r1)
+    cl, fq = f['cloud'], f['fcfQuarters']
+    fcf0, fcf1 = fq.values[3], fq.values[2]
+    tiles = [tile('売上高', 'Revenue', money_tile(ev, 0, rev, 1, None), f'前年同期比 {sign(yoy, 0)}', f'YoY {sign(yoy, 0)}'),
+             tile('Googleクラウドの売上', 'Google Cloud revenue', money_tile(ev, 1, cl, 1, None), f'前年同期比 {sign(change(cl.values[1], cl.values[0]), 0)}', f'YoY {sign(change(cl.values[1], cl.values[0]), 0)}'),
+             tile('フリーキャッシュフロー', 'Free cash flow', money_tile(ev, 2, fq, 3, None), '2四半期続けてマイナス' if fcf0 < 0 and fcf1 < 0 else f'前期 {usd(fcf1)["ja"]}',
+                  'Negative for a second quarter' if fcf0 < 0 and fcf1 < 0 else f'Prior quarter {usd(fcf1)["en"]}')]
+    ev.add('tiles[0].note', rev, calc=growth_calc(rev, 1, 0), rnd=0)
+    ev.add('tiles[1].note', cl, calc=growth_calc(cl, 1, 0), rnd=0)
+    if not (fcf0 < 0 and fcf1 < 0):
+        ev.add('tiles[2].note', fq, calc=amount_calc(fq, 2, 'B')[0], rnd=2)
+    c0, cp = Decimal(str(segs[1]['revenue'])), Decimal(str(segs[1]['previous']))
+    cm0, cm1 = Decimal(str(segs[1]['operatingMargin'])), Decimal(str(segs[1]['previousOperatingMargin']))
+    cd, d = c0 - cp, r0 - r1
+    tpu = f.get('tpu')
+    if tpu:
+        ev.add('summary.cards.growth.sections[1]', tpu)
+    cgr = change(cl.values[1], cl.values[0])
+    growth = card('Googleクラウドの売上が前年同期のほぼ2倍' if cgr >= 90 else f'Googleクラウドの売上が前年同期比 {sign(cgr, 0)}', 'Google Cloud revenue about doubled YoY' if cgr >= 90 else f'Google Cloud revenue {sign(cgr, 0)} YoY', [
+        chip(tone(cd), f'クラウド 前期比 {sign(change(c0, cp))}', f'Cloud {sign(change(c0, cp))} QoQ'),
+        chip(tone(cm0 - cm1), f'クラウドの営業利益率 {pc(cm1)} → {pc(cm0)}', f'Cloud operating margin {pc(cm1)} → {pc(cm0)}')], [
+        sec('happened', f'Googleクラウドの売上は{usd(cp)["ja"]}から{usd(c0)["ja"]}へ、前期から{usd(abs(cd))["ja"]}{rose(cd, True)}、前年同期の{usd(cl.values[0])["ja"]}からは{sign(cgr, 0)}でした。営業利益率は{pc(cm1)}から{pc(cm0)}になりました。',
+            f'Google Cloud revenue went from {usd(cp)["en"]} to {usd(c0)["en"]}, a change of {usd(abs(cd))["en"]} from the previous quarter and {sign(cgr, 0)} from {usd(cl.values[0])["en"]} a year ago. Its operating margin went from {pc(cm1)} to {pc(cm0)}.'),
+        sec('good', (f'会社全体の前期からの増加{usd(d)["ja"]}のうち約{q(cd / d * 100, 0)}%がクラウドです。' if d > 0 and cd > 0 else '') + '会社はAIインフラとAIソリューションの需要を挙げ、' + ('TPUシステムの販売も伸びに大きく貢献したとしています。' if tpu else 'クラウドの伸びを説明しています。'),
+            (f"About {q(cd / d * 100, 0)}% of the company's {usd(d)['en']} sequential increase came from Cloud. " if d > 0 and cd > 0 else '') + 'The company credits demand for AI infrastructure and AI solutions' + (', with TPU system sales also a meaningful contributor.' if tpu else '.')),
+        sec('watch', '会社全体の伸びは、クラウドへの集中が強まっています。AIインフラの需要が冷えると、全体の伸びへの影響は大きくなります。',
+            'Company growth is increasingly concentrated in Cloud. If AI infrastructure demand cools, the effect on overall growth would be large.'),
+        sec('view', 'クラウドは利益率を上げながら伸びており、規模とともに稼ぐ力が増しています。' if cm0 > cm1 else 'クラウドの伸びに利益率がついてくるかを確かめます。',
+            'Cloud is growing while its margin rises, so its earning power is increasing with scale.' if cm0 > cm1 else 'Check whether margins keep up with Cloud growth.')], 'cloud')
+    sv0, sv1 = Decimal(str(segs[0]['operatingMargin'])), Decimal(str(segs[0]['previousOperatingMargin']))
+    oi, oth, ni, se, al, om, qr = f['opIncome'], f['otherIncome'], f['netIncome'], f['search'], f['alphabetLevel'], f.get('opMargin'), f.get('query')
+    ev.add('summary.cards.change.sections[0]', oi)
+    if om:
+        ev.add('summary.cards.change.sections[0]', om)
+    ev.add('summary.cards.change.sections[1]', se)
+    if qr:
+        ev.add('summary.cards.change.sections[1]', qr)
+    ev.add('summary.cards.change.sections[2]', ni)
+    ev.add('summary.cards.change.sections[2]', oth)
+    ev.add('summary.cards.change.sections[3]', al)
+    oig = change(oi.values[1], oi.values[0])
+    changes = card(f'売上は前期比 {sign(qoq)}、Googleサービスの利益率は{"低下" if sv0 < sv1 else "上昇" if sv0 > sv1 else "横ばい"}', f'Revenue {sign(qoq)} QoQ, Google Services margin {"lower" if sv0 < sv1 else "higher" if sv0 > sv1 else "flat"}', [
+        chip(tone(qoq), f'売上 前期比 {sign(qoq)}', f'Revenue {sign(qoq)} QoQ'),
+        chip(tone(sv0 - sv1), f'Googleサービスの営業利益率 {pc(sv1)} → {pc(sv0)}', f'Google Services operating margin {pc(sv1)} → {pc(sv0)}')], [
+        sec('happened', f'売上は{usd(r1)["ja"]}から{usd(r0)["ja"]}へ、{usd(abs(d))["ja"]}{rose(d, True)}ました。営業利益は{usd(oi.values[1])["ja"]}で、前年同期比{sign(oig, 0)}' + (f'、営業利益率は{om.values[1]}%です。' if om else 'です。'),
+            f'Revenue {rose(d)} from {usd(r1)["en"]} to {usd(r0)["en"]}, a change of {usd(abs(d))["en"]}. Operating income was {usd(oi.values[1])["en"]}, {sign(oig, 0)} from a year ago' + (f', for an operating margin of {om.values[1]}%.' if om else '.')),
+        sec('good', f'中核の検索(Google Search & other)は{sign(change(se.values[1], se.values[0]), 0)}の{usd(se.values[1])["ja"]}でした。' + (f'会社は、検索の問い合わせ数の伸びが過去{ {"five": 5, "four": 4, "three": 3, "two": 2, "ten": 10}[qr.values[1]] }年で最も高いとしています。' if qr else ''),
+            f'Core search (Google Search & other) went to {usd(se.values[1])["en"]}, {sign(change(se.values[1], se.values[0]), 0)}.' + (f' The company says search query growth is the highest in {qr.values[1]} years.' if qr else '')),
+        sec('watch', f'純利益は前年同期の{usd(ni.values[0])["ja"]}から{usd(ni.values[1])["ja"]}になりました。その他の損益が{usd(oth.values[0])["ja"]}から{usd(oth.values[1])["ja"]}に変わったためで、営業利益は{sign(oig, 0)}です。',
+            f'Net income went from {usd(ni.values[0])["en"]} a year ago to {usd(ni.values[1])["en"]} because other income went from {usd(oth.values[0])["en"]} to {usd(oth.values[1])["en"]}; operating income itself changed {sign(oig, 0)}.'),
+        sec('means', f'Googleサービスの営業利益率は{pc(sv1)}から{pc(sv0)}になりました。会社全体のAI研究の費用(Alphabet-level activities)は前年同期の{usd(-al.values[0])["ja"]}から{usd(-al.values[1])["ja"]}になりました。',
+            f'The Google Services operating margin went from {pc(sv1)} to {pc(sv0)}. Company-level AI research costs (Alphabet-level activities) went to {usd(-al.values[1])["en"]} from {usd(-al.values[0])["en"]} a year ago.')])
+    cq, kq, cfo, debt, cash, atm, notes = f['cfoQuarters'], f['capexQuarters'], f['cfo'], f['debt'], f['cash'], f.get('atm'), f.get('notes')
+    capex = -kq.values[3]
+    for x in (cq, kq, fq, cfo):
+        ev.add('summary.cards.caution.sections[0]', x)
+    for x in (notes, atm, debt):
+        if x:
+            ev.add('summary.cards.caution.sections[1]', x)
+    ev.add('summary.cards.caution.sections[2]', cash)
+    ev.add('summary.cards.caution.sections[3]', fq)
+    atm_total = Decimal(atm.values[1]) + Decimal(atm.values[3]) if atm else None
+    neg = fcf0 < 0
+    caution = card('設備投資が膨らみ、フリーキャッシュフローがマイナスに' if neg else '設備投資が膨らむ', 'Capex swelled and free cash flow turned negative' if neg else 'Capex swelled', [
+        chip('down', f'設備投資 {usd(capex)["ja"]}', f'Capex {usd(capex)["en"]}'),
+        chip(tone(fcf0), f'フリーキャッシュフロー {usd(fcf0)["ja"]}', f'Free cash flow {usd(fcf0)["en"]}'),
+        chip('down' if debt.values[1] > debt.values[0] else 'up', f'長期借入 {usd(debt.values[0])["ja"]} → {usd(debt.values[1])["ja"]}', f'Long-term debt {usd(debt.values[0])["en"]} → {usd(debt.values[1])["en"]}')], [
+        sec('happened', f'営業キャッシュフロー{usd(cq.values[3])["ja"]}に対し設備投資は{usd(capex)["ja"]}で、フリーキャッシュフローは{usd(fcf0)["ja"]}でした。前期は{usd(fcf1)["ja"]}です。営業キャッシュフローは前年同期の{usd(cfo.values[0])["ja"]}から{"減りました" if cfo.values[1] < cfo.values[0] else "増えました"}。',
+            f'Operating cash flow of {usd(cq.values[3])["en"]} against {usd(capex)["en"]} of capex left free cash flow at {usd(fcf0)["en"]}, after {usd(fcf1)["en"]} last quarter. Operating cash flow was {"down" if cfo.values[1] < cfo.values[0] else "up"} from {usd(cfo.values[0])["en"]} a year ago.'),
+        sec('watch', ('不足分は外部からの調達で賄っています。' if neg else '') + (f'今期は{usd(Decimal(notes.values[0]) * 1000)["ja"]}の社債' if notes else '') + (f'と約{usd(atm_total * 1000)["ja"]}の株式の売り出し' if atm else '') + ('を行い、' if notes or atm else '')
+            + f'長期借入は前年度末の{usd(debt.values[0])["ja"]}から{usd(debt.values[1])["ja"]}になりました。株式の発行は既存の株主の持ち分を薄めます。',
+            ('The shortfall is being financed externally: ' if neg else '') + (f'${notes.values[0]}B of notes' if notes else '') + (f' and about ${atm_total}B of at-the-market share sales' if atm else '') + (' this quarter, with ' if notes or atm else '')
+            + f'long-term debt going from {usd(debt.values[0])["en"]} to {usd(debt.values[1])["en"]} since the prior year-end. Issuing shares dilutes existing holders.'),
+        sec('means', f'現金と有価証券は{usd(cash.values[1])["ja"]}あり、すぐに資金が足りなくなる状況ではありません。ただ、投資を売上と利益で回収するまでは、借入や株式の発行が増える可能性があります。',
+            f'Cash and marketable securities of {usd(cash.values[1])["en"]} rule out a near-term shortage. But until the spending is recovered through sales and profit, more debt and dilution are possible.'),
+        sec('view', f'直近12か月のフリーキャッシュフローは{usd(fq.values[4])["ja"]}です。四半期のフリーキャッシュフローがマイナスのままか、クラウドの伸びが投資に見合うかを確かめます。',
+            f'Trailing-twelve-month free cash flow is {usd(fq.values[4])["en"]}. Watch whether quarterly free cash flow stays negative and whether Cloud growth keeps pace with the spending.')])
+    ev.add('summary.cards.next.sections[1]', oth)
+    nxt = card('売上の見通しは公表なし', 'No revenue outlook published', [chip('gold', '会社の売上見通しなし', 'No company revenue outlook')], [
+        sec('happened', 'Alphabetは決算発表で次期の売上見通しを出していないため、ここには見通しの数字はありません。',
+            'Alphabet does not give a next-quarter revenue outlook in its release, so no outlook figures are shown here.'),
+        sec('watch', f'今期のその他の損益は{usd(oth.values[1])["ja"]}でした。保有株式の評価で純利益が大きく動くため、営業利益と合わせて読みます。',
+            f'Other income was {usd(oth.values[1])["en"]} this quarter. Because valuation changes on holdings can swing net income, read it alongside operating income.'),
+        sec('view', f'次の決算で、今期{sign(cgr, 0)}だったクラウドの伸び、設備投資の水準、フリーキャッシュフローがプラスに戻るか、借入と株式の発行が増え続けるかを確かめます。',
+            f'Next time, watch Cloud growth ({sign(cgr, 0)} this quarter), the level of capex, whether free cash flow turns positive, and whether borrowing and share issuance keep rising.')])
+    conclusion = [
+        c(f'売上は{usd(r0)["ja"]}で、前年同期比{sign(yoy, 0)}でした。Googleクラウドは{usd(cl.values[1])["ja"]}で、前年同期比{sign(cgr, 0)}です。',
+          f'Revenue was {usd(r0)["en"]}, {sign(yoy, 0)} from a year ago. Google Cloud reached {usd(cl.values[1])["en"]}, {sign(cgr, 0)} YoY.'),
+        c(f'一方、設備投資は{usd(capex)["ja"]}に膨らみ、フリーキャッシュフローは{usd(fcf0)["ja"]}でした。' + ('2四半期続けてマイナスです。' if fcf0 < 0 and fcf1 < 0 else ''),
+          f'Capital spending, however, swelled to {usd(capex)["en"]}, and free cash flow was {usd(fcf0)["en"]}' + (', negative for a second straight quarter.' if fcf0 < 0 and fcf1 < 0 else '.')),
+        c((f'不足分の一部は社債{usd(Decimal(notes.values[0]) * 1000)["ja"]}' if notes else '資金の一部は外部') + (f'と約{usd(atm_total * 1000)["ja"]}の新株' if atm else '') + f'で賄い、長期借入は前年度末の{usd(debt.values[0])["ja"]}から{usd(debt.values[1])["ja"]}になりました。',
+          (f'The gap was partly funded with ${notes.values[0]}B of bonds' if notes else 'Part of the funding came from outside') + (f' and about ${atm_total}B of new shares' if atm else '') + f', and long-term debt went from {usd(debt.values[0])["en"]} at the prior year-end to {usd(debt.values[1])["en"]}.')]
+    return {'tiles': tiles, 'numbers': numbers, 'evidence': ev.items, 'summary': summary(conclusion, growth, changes, caution, nxt)}
+
+
 WRITERS = {'AMD': amd, 'ANET': anet, 'PLTR': pltr, 'ALAB': alab, 'LITE': lite, 'SNDK': sndk, 'VRT': vrt, 'GEV': gev, 'BE': be, 'SKHY': skhy, 'ARM': arm, 'CRWV': crwv,
-           'NBIS': nbis, 'MSFT': msft}
+           'NBIS': nbis, 'MSFT': msft, 'GOOGL': googl}

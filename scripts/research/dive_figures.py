@@ -633,7 +633,41 @@ def microsoft(t):
     }
 
 
-SPECS = {'CRDO': credo, 'MRVL': marvell, 'AVGO': broadcom, 'AMD': amd, 'ANET': arista, 'PLTR': palantir, 'ALAB': astera, 'LITE': lumentum, 'SNDK': sandisk, 'VRT': vertiv, 'GEV': vernova, 'BE': bloom, 'SKHY': skhynix, 'ARM': arm, 'CRWV': coreweave, 'MSFT': microsoft}
+def alphabet(t):
+    hl = between(t, 'Financial Highlights (unaudited)', '(1) Non-GAAP measure')
+    mix = between(t, 'Number of Employees Quarter Ended', 'Number of employees')
+    seg = between(t, 'Segment Operating Results', ('(1)Alphabet-level activities', '(1) Alphabet-level activities'))
+    ttm = between(t, 'Quarter Ended TTM', 'Free cash flow: We define')
+    bs = between(t, 'Current assets:', 'Total liabilities')
+    return {   # a year earlier, then this quarter
+        'revenue': row(hl, 'Revenues', 2, None, None),
+        'opIncome': row(hl, 'Operating income', 2, None, None),
+        'otherIncome': row(hl, 'Other income (expense), net', 2, None, None),
+        'netIncome': row(hl, 'Net income available to common stockholders', 2, None, None),
+        'opMargin': sentence(t, r'Consolidated Alphabet operating income increased (\d+)% and operating margin was ([\d.]+)%', (1, 2), unit='text'),
+        'search': row(mix, 'Google Search & other', 2, None, None),
+        'services': row(mix, 'Google Services total', 2, None, None),
+        'cloud': row(mix, 'Google Cloud', 2, None, None),
+        'servicesOp': row(seg, 'Google Services', 2, None, None),
+        'cloudOp': row(seg, 'Google Cloud', 2, None, None),
+        'alphabetLevel': row(seg, ('Alphabet-level activities(1)', 'Alphabet-level activities (1)'), 2, None, None),
+        'cloudGrowth': sentence(t, r'Google Cloud delivered record growth as revenues increased (\d+)% to \$([\d.]+) billion', (1, 2), unit='text'),
+        'query': sentence(t, r'Search query growth rate the (highest) it has been in the last (five|four|three|two|ten) years', (1, 2), unit='text'),
+        'tpu': sentence(t, r'(TPU systems sales) were also a meaningful contributor to revenue growth', (1,), unit='text'),
+        # four quarters, then the trailing twelve months
+        'cfoQuarters': row(ttm, 'Net cash provided by operating activities', 5, None, None),
+        'capexQuarters': row(ttm, 'Less: purchases of property and equipment', 5, None, None),
+        'fcfQuarters': row(ttm, 'Free cash flow', 5, None, None),
+        'cfo': row(t, 'Net cash provided by operating activities', 2, 'Deferred revenue', 'Investing activities', width=4),
+        'debt': row(bs, 'Long-term debt', 2, None, None),
+        'cash': row(bs, 'Total cash, cash equivalents, and marketable securities', 2, None, None),
+        'atm': sentence(t, r'we issued (\d+) million shares of Class A stock for net proceeds of \$([\d.]+) billion and (\d+) million shares of Class C stock for net proceeds of \$([\d.]+) billion',
+                        (1, 2, 3, 4), unit='text'),
+        'notes': sentence(t, r'we issued senior unsecured notes for net proceeds of \$([\d.]+) billion', (1,), unit='text'),
+    }
+
+
+SPECS = {'CRDO': credo, 'MRVL': marvell, 'AVGO': broadcom, 'AMD': amd, 'ANET': arista, 'PLTR': palantir, 'ALAB': astera, 'LITE': lumentum, 'SNDK': sandisk, 'VRT': vertiv, 'GEV': vernova, 'BE': bloom, 'SKHY': skhynix, 'ARM': arm, 'CRWV': coreweave, 'MSFT': microsoft, 'GOOGL': alphabet}
 
 
 # ---- foreign issuers whose results come as several exhibits of one 6-K (release, presentation, financial statements) ---------
