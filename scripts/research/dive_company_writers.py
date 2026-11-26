@@ -1417,4 +1417,123 @@ def skhy(f, url, before_previous, report=None, events=None, previous=None):
     return {'tiles': tiles, 'numbers': numbers, 'evidence': ev.items, 'summary': summary(conclusion, growth, changes, caution, nxt)}
 
 
-WRITERS = {'AMD': amd, 'ANET': anet, 'PLTR': pltr, 'ALAB': alab, 'LITE': lite, 'SNDK': sndk, 'VRT': vrt, 'GEV': gev, 'BE': be, 'SKHY': skhy}
+
+# ---- Arm (ARM): the shareholder letter (6-K EX-99.2); the previous quarter from the previous letter ----------------------------------
+
+def arm(f, url, before_previous, report=None, events=None, previous=None, prior=None):
+    need(f, 'revenue', 'license', 'royalty', 'gm', 'opMargin', 'netIncome', 'eps', 'cfo', 'fcf', 'guidance', 'guidanceEps')
+    need_prior(prior, 'revenue', 'gm', 'opMargin', 'royalty')
+    ev = Evidence(url)
+    rev, lic, roy, gm, om, eps = f['revenue'], f['license'], f['royalty'], f['gm'], f['opMargin'], f['eps']
+    prev, pgm, pom, proy = prior['revenue'], prior['gm'], prior['opMargin'], prior['royalty']
+    r0, r2, r1 = rev.values[0], rev.values[1], prev.values[0]
+    qoq, yoy = change(r0, r1), change(r0, r2)
+    ev.add('numbers.revenue.current', rev)
+    ev.add('numbers.revenue.yearAgo', rev)
+    ev.add('numbers.revenue.previous', prev)
+    ev.add('numbers.adjustedEPS', eps)
+    ev.add('numbers.grossMargin.current', gm)
+    ev.add('numbers.grossMargin.previous', pgm)
+    g = f['guidance']
+    mid, band = Decimal(g.values[3]) * 1000, Decimal(g.values[4])
+    low, high = mid - band, mid + band
+    ev.add('numbers.guidance.low', g, calc=f'{g.raws[3]} * 1000 - {g.raws[4]}')
+    ev.add('numbers.guidance.high', g, calc=f'{g.raws[3]} * 1000 + {g.raws[4]}')
+    g0, g1 = gm.values[2], pgm.values[2]
+    numbers = {'revenue': {'current': float(r0), 'previous': float(r1), 'yearAgo': float(r2)}, 'adjustedEPS': float(eps.values[3]), 'epsEstimate': None,
+               'grossMargin': {'current': float(g0), 'previous': float(g1)}, 'guidance': {'low': float(low), 'high': float(high), 'grossMarginPercent': None}, 'segments': None}
+    tiles = [tile('売上高', 'Revenue', money_tile(ev, 0, rev, 0, None), f'前年同期比 +{rev.raws[2]}%', f'+{rev.raws[2]}% YoY'),
+             tile('ライセンスその他の売上', 'License and other revenue', money_tile(ev, 1, lic, 0, None), f'前年同期比 {sign(lic.values[2], 0)}', f'{sign(lic.values[2], 0)} YoY'),
+             tile('ロイヤルティ売上', 'Royalty revenue', money_tile(ev, 2, roy, 0, None), f'前年同期比 {sign(roy.values[2], 0)}', f'{sign(roy.values[2], 0)} YoY')]
+    ev.add('tiles[0].note', rev)
+    ev.add('tiles[1].note', lic)
+    ev.add('tiles[2].note', roy)
+    acv, dcr, timing = f.get('acv'), f.get('dcRoyalties'), f.get('licenseTiming')
+    ev.add('summary.cards.growth.sections[0]', lic)
+    if acv:
+        ev.add('summary.cards.growth.sections[0]', acv)
+    if dcr:
+        ev.add('summary.cards.growth.sections[0]', dcr)
+    if timing:
+        ev.add('summary.cards.growth.sections[2]', timing)
+    growth = card(f'ライセンスその他の売上が前年同期比 {sign(lic.values[2], 0)}', f'License and other revenue {sign(lic.values[2], 0)} YoY', [
+        chip(tone(lic.values[0] - lic.values[1]), f'ライセンス {usd(lic.values[1])["ja"]} → {usd(lic.values[0])["ja"]}', f'License {usd(lic.values[1])["en"]} → {usd(lic.values[0])["en"]}'),
+        (chip('up', 'データセンターのロイヤルティが倍増', 'Data center royalties doubled') if dcr else
+         chip(tone(roy.values[2]), f'ロイヤルティ 前年同期比 {sign(roy.values[2], 0)}', f'Royalty {sign(roy.values[2], 0)} YoY'))], [
+        sec('happened', f'ライセンスその他の売上は前年同期の{usd(lic.values[1])["ja"]}から{usd(lic.values[0])["ja"]}へ、{sign(lic.values[2], 0)}でした。'
+            + (f'年換算の契約額(ACV)は{sign(acv.values[2], 0)}の{usd(acv.values[0])["ja"]}で、' if acv else '') + ('データセンター向けのロイヤルティは前年同期のほぼ2倍になりました。' if dcr else ''),
+            f'License and other revenue went from {usd(lic.values[1])["en"]} a year ago to {usd(lic.values[0])["en"]}, {sign(lic.values[2], 0)}.'
+            + (f' Annualized contract value (ACV) was {usd(acv.values[0])["en"]}, {sign(acv.values[2], 0)}' if acv else '') + (', and data center royalties roughly doubled from a year ago.' if dcr else '.' if acv else '')),
+        sec('good', 'ライセンス契約は、顧客がArmを使った新しい半導体の設計を始めたことを示します。その半導体が量産されると、後からロイヤルティ収入になります。',
+            'License deals show customers starting new chip designs on Arm. When those chips reach volume production, they bring in royalty revenue later.'),
+        sec('watch', ('会社は、複数の高額なライセンス契約の時期と規模も増加に影響したとしています。' if timing else '') + 'ライセンス収入は四半期ごとに大きく振れることがあります。',
+            ('The company says the increase also reflects the timing and size of several high-value license agreements. ' if timing else '') + 'License revenue can swing widely from quarter to quarter.')])
+    d = r0 - r1
+    above = r0 > (Decimal(g.values[0]) * 1000 + Decimal(g.values[1]))
+    ni, cfo, fcf = f['netIncome'], f['cfo'], f['fcf']
+    ev.add('summary.cards.change.sections[0]', g)
+    ev.add('summary.cards.change.sections[1]', om)
+    ev.add('summary.cards.change.sections[1]', pom)
+    ev.add('summary.cards.change.sections[2]', ni)
+    ev.add('summary.cards.change.sections[2]', cfo)
+    ev.add('summary.cards.change.sections[2]', fcf)
+    flat = abs(g0 - g1) < 1
+    changes = card(f'売上は前期比 {sign(qoq)}、粗利益率は' + ('ほぼ横ばい' if flat else '上昇' if g0 > g1 else '低下'), f'Revenue {sign(qoq)} QoQ, gross margin ' + ('about flat' if flat else 'higher' if g0 > g1 else 'lower'), [
+        chip(tone(qoq), f'売上 前期比 {sign(qoq)}', f'Revenue {sign(qoq)} QoQ'),
+        chip(tone(g0 - g1), f'調整後粗利益率 {pc(g1)} → {pc(g0)}', f'Non-GAAP gross margin {pc(g1)} → {pc(g0)}')], [
+        sec('happened', f'売上は{usd(r1)["ja"]}から{usd(r0)["ja"]}へ、{usd(abs(d))["ja"]}{rose(d, True)}ました。'
+            + (f'会社の見通し({usd(Decimal(g.values[0]) * 1000)["ja"]}±{usd(Decimal(g.values[1]))["ja"]})の上限を上回っています。' if above else '') + f'調整後粗利益率は{pc(g1)}から{pc(g0)}になりました。',
+            f'Revenue {rose(d)} from {usd(r1)["en"]} to {usd(r0)["en"]}, a change of {usd(abs(d))["en"]}' + (f", above the top of the company's ${g.values[0]}B plus or minus ${g.values[1]}M outlook" if above else '')
+            + f'. Non-GAAP gross margin went from {pc(g1)} to {pc(g0)}.'),
+        sec('good', f'調整後営業利益率は{pc(pom.values[2])}から{pc(om.values[2])}になり、調整後EPSは前年同期の{ps(eps.values[4])["ja"]}から{ps(eps.values[3])["ja"]}へ{sign(eps.values[5], 0)}でした。',
+            f'Non-GAAP operating margin went from {pc(pom.values[2])} to {pc(om.values[2])}, and non-GAAP EPS was {ps(eps.values[3])["en"]}, {sign(eps.values[5], 0)} from {ps(eps.values[4])["en"]} a year ago.'),
+        sec('watch', f'GAAPでは、純利益が前年同期の{usd(ni.values[1])["ja"]}から{usd(ni.values[0])["ja"]}へ{sign(ni.values[2], 0)}で、営業利益率は{pc(om.values[0])}でした。調整後のフリーキャッシュフローは{usd(fcf.values[1])["ja"]}から{usd(fcf.values[0])["ja"]}へ{sign(fcf.values[2], 0)}です。',
+            f'On a GAAP basis, net income went from {usd(ni.values[1])["en"]} a year ago to {usd(ni.values[0])["en"]} ({sign(ni.values[2], 0)}), and the operating margin was {pc(om.values[0])}. Non-GAAP free cash flow went from {usd(fcf.values[1])["en"]} to {usd(fcf.values[0])["en"]} ({sign(fcf.values[2], 0)}).'),
+        sec('view', '売上と調整後の利益は伸びましたが、GAAPの利益とキャッシュフローは' + ('弱くなりました。' if ni.values[2] < 0 or fcf.values[2] < 0 else '別の動きをしています。') + 'それぞれの数字がどの基準かを分けて追います。',
+            'Revenue and adjusted profit grew, but GAAP profit and cash flow ' + ('weakened.' if ni.values[2] < 0 or fcf.values[2] < 0 else 'moved differently.') + ' Keep track of which basis each figure uses.')])
+    mem, rel = f.get('memory'), f.get('related')
+    rd = roy.values[0] - proy.values[0]
+    ev.add('summary.cards.caution.sections[0]', roy)
+    ev.add('summary.cards.caution.sections[0]', proy)
+    if mem:
+        ev.add('summary.cards.caution.sections[0]', mem)
+    if rel:
+        ev.add('summary.cards.caution.sections[1]', rel)
+    caution = card('ロイヤルティ売上が前期から減少' if rd < 0 else 'ロイヤルティ売上の伸び', 'Royalty revenue fell from the previous quarter' if rd < 0 else 'Royalty revenue growth', [
+        chip(tone(rd), f'ロイヤルティ {usd(proy.values[0])["ja"]} → {usd(roy.values[0])["ja"]}', f'Royalty {usd(proy.values[0])["en"]} → {usd(roy.values[0])["en"]}'),
+        chip(tone(roy.values[2] - proy.values[2]), f'前年同期比 {sign(proy.values[2], 0)} → {sign(roy.values[2], 0)}', f'YoY growth {sign(proy.values[2], 0)} → {sign(roy.values[2], 0)}')], [
+        sec('happened', f'ロイヤルティ売上は{usd(proy.values[0])["ja"]}から{usd(roy.values[0])["ja"]}になりました。前年同期比の伸びは前期の{sign(proy.values[2], 0)}から{sign(roy.values[2], 0)}に{"鈍りました" if roy.values[2] < proy.values[2] else "変わりました"}。'
+            + ('会社はスマートフォン市場でのメモリー価格の影響を挙げています。' if mem else ''),
+            f'Royalty revenue went from {usd(proy.values[0])["en"]} to {usd(roy.values[0])["en"]}. Year-over-year growth went from {sign(proy.values[2], 0)} last quarter to {sign(roy.values[2], 0)}.'
+            + (' The company cited the impact of memory pricing on the smartphone market.' if mem else '')),
+        sec('watch', 'ロイヤルティはArmの売上の土台です。新しい設計の採用が進んでも、スマートフォンの出荷が弱いと伸びが抑えられます。' + (f'また、売上{usd(r0)["ja"]}のうち{usd(rel.values[0])["ja"]}は関連当事者からのものです。' if rel else ''),
+            "Royalties are the base of Arm's revenue. Weak smartphone shipments can hold back growth even as newer designs are adopted." + (f' Also, {usd(rel.values[0])["en"]} of the {usd(r0)["en"]} in revenue came from related parties.' if rel else '')),
+        sec('means', '今期は大型のライセンス契約が補いましたが、ライセンス収入は四半期ごとに振れやすいものです。', 'Large license deals made up for it this quarter, but license revenue is volatile from quarter to quarter.'),
+        sec('view', '1四半期の減少だけでは傾向とは言えません。次の決算で、ロイヤルティが前期比で回復するかが大事です。', 'One quarter is not a trend. What matters is whether royalties grow sequentially in the next report.')])
+    ge = f['guidanceEps']
+    agd, agr = f.get('agiDelivery'), f.get('agiRevenue')
+    ev.add('summary.cards.next.chips[1]', ge)
+    if agd:
+        ev.add('summary.cards.next.sections[1]', agd)
+    if agr:
+        ev.add('summary.cards.next.sections[1]', agr)
+    nxt = card('次期の会社見通しを追う', "Follow the company's outlook for next quarter", [
+        chip('gold', f'売上 {usd(low)["ja"]}〜{usd(high)["ja"]}', f'Revenue {usd(low)["en"]}–{usd(high)["en"]}'),
+        chip('gold', f'調整後EPS {ps(Decimal(ge.values[3]))["ja"]}±{ps(Decimal(ge.values[4]))["ja"]}', f'Non-GAAP EPS ${ge.values[3]} ± ${ge.values[4]}')], [
+        sec('happened', f'会社は次期の売上を{usd(mid)["ja"]}±{usd(band)["ja"]}({usd(low)["ja"]}〜{usd(high)["ja"]})と見込み、調整後EPSは{ps(Decimal(ge.values[3]))["ja"]}±{ps(Decimal(ge.values[4]))["ja"]}の見通しです。下限でも今回の{usd(r0)["ja"]}より約{q(change(low, r0), 1)}%多くなります。',
+            f"The company expects next-quarter revenue of {usd(mid)['en']} plus or minus {usd(band)['en']} ({usd(low)['en']} to {usd(high)['en']}) and non-GAAP EPS of ${ge.values[3]} plus or minus ${ge.values[4]}. Even the low end is about {q(change(low, r0), 1)}% above this quarter's {usd(r0)['en']}."),
+        sec('means', (f'自社設計のチップ(Arm AGI CPU)の最初の商用出荷は、会計年度の{agd.values[0]}’{agd.values[1]}に予定どおり進んでいます。' if agd else '')
+            + (f'会社は{agr.values[1]}〜{agr.values[2]}年度の2年間で最大{usd(Decimal(agr.values[0]) * 1000)["ja"]}の売上を見込んでいます。' if agr else '') or '見通しは会社の計画で、実績ではありません。',
+            ((f"First commercial deliveries of Arm's own chip (Arm AGI CPU) are on track for fiscal {agd.values[0]}'{agd.values[1]}. " if agd else '')
+             + (f'The company sees up to ${agr.values[0]}B of revenue from it across fiscal {agr.values[1]} and {agr.values[2]}.' if agr else '')).strip() or "The outlook is the company's plan, not a result."),
+        sec('view', '次の決算で、売上がこの幅のどこに入るか、ロイヤルティが再び伸びるかを確かめます。', 'In the next report, check where revenue lands in this range and whether royalties grow again.')])
+    conclusion = [
+        c(f'売上は{usd(r0)["ja"]}で、前期比{sign(qoq, 0)}、前年同期比+{rev.raws[2]}%でした。ライセンスその他の売上({sign(lic.values[2], 0)})が伸びを主導しました。',
+          f'Revenue was {usd(r0)["en"]}, {sign(qoq, 0)} from the previous quarter and {rev.raws[2]}% from a year ago, led by license and other revenue ({sign(lic.values[2], 0)}).'),
+        c(f'一方、半導体の出荷に連動するロイヤルティ売上は、前期の{usd(proy.values[0])["ja"]}から{usd(roy.values[0])["ja"]}になりました。' + ('会社はスマートフォン市場でのメモリー価格の影響を挙げています。' if mem else ''),
+          f'Meanwhile, royalty revenue, which follows chip shipments, went from {usd(proy.values[0])["en"]} last quarter to {usd(roy.values[0])["en"]}.' + (' The company cited the impact of memory pricing on the smartphone market.' if mem else '')),
+        c(f'会社は次期の売上を{usd(mid)["ja"]}±{usd(band)["ja"]}と見込んでいます。', f'The company expects next-quarter revenue of {usd(mid)["en"]} plus or minus {usd(band)["en"]}.')]
+    return {'tiles': tiles, 'numbers': numbers, 'evidence': ev.items, 'summary': summary(conclusion, growth, changes, caution, nxt)}
+
+
+WRITERS = {'AMD': amd, 'ANET': anet, 'PLTR': pltr, 'ALAB': alab, 'LITE': lite, 'SNDK': sndk, 'VRT': vrt, 'GEV': gev, 'BE': be, 'SKHY': skhy, 'ARM': arm}

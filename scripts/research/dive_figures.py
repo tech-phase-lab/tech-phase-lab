@@ -540,7 +540,32 @@ def skhynix(t):
     }
 
 
-SPECS = {'CRDO': credo, 'MRVL': marvell, 'AVGO': broadcom, 'AMD': amd, 'ANET': arista, 'PLTR': palantir, 'ALAB': astera, 'LITE': lumentum, 'SNDK': sandisk, 'VRT': vertiv, 'GEV': vernova, 'BE': bloom, 'SKHY': skhynix}
+def arm(t):
+    table = between(t, 'GAAP Non-GAAP (1)', 'Operating metrics')
+    guide = between(t, 'Quarterly Guidance & Results', 'For more information')
+    return {   # GAAP this quarter, a year earlier, change, then non-GAAP the same; the margin rows have no change column
+        'revenue': row(table, 'Total revenue (2)', 6, None, None),
+        'license': row(table, 'License and other revenue', 6, None, None),
+        'royalty': row(table, 'Royalty revenue', 6, None, None),
+        'gm': row(table, 'Gross margin (%)', 4, None, None, unit='percent'),
+        'opMargin': row(table, 'Operating margin (%)', 4, None, None, unit='percent'),
+        'netIncome': row(table, 'Net income (loss)', 6, None, None),
+        'eps': row(table, 'Diluted earnings (loss) per share ($)', 6, None, None, unit='per-share'),
+        'cfo': row(table, 'Net cash provided by (used for) operating activities', 3, None, None),
+        'fcf': row(table, 'Non-GAAP free cash flow', 3, None, None),
+        'acv': row(between(t, 'Operating metrics', ('(1) Non-GAAP cost of sales', '(1)Non-GAAP cost of sales')), 'Annualized contract value (in millions)', 3, None, None),
+        'related': row(t, 'Revenue from related parties', 2, 'Revenue from external customers', 'Total revenue', width=4),
+        'guidance': sentence(guide, r'Revenue \$([\d.]+)bn \+/- \$(\d+)m \$([\d.]+)bn \$([\d.]+)bn \+/- \$(\d+)m', (1, 2, 3, 4, 5), unit='text'),
+        'guidanceEps': sentence(guide, r'Non-GAAP fully diluted earnings per share \(1\) \$([\d.]+) \+/- \$([\d.]+) \$([\d.]+) \$([\d.]+) \+/- \$([\d.]+)', (1, 2, 3, 4, 5), unit='text'),
+        'dcRoyalties': sentence(t, r'data center royalties (doubling) year over year', (1,), unit='text'),
+        'memory': sentence(t, r'partially offset by the impact of (memory pricing on the smartphone market)', (1,), unit='text'),
+        'licenseTiming': sentence(t, r'fluctuation in the timing and size of (multiple high-value license agreements)', (1,), unit='text'),
+        'agiDelivery': sentence(t, r'first commercial deliveries on track for fiscal (Q[1-4]).(\d\d)', (1, 2), unit='text'),
+        'agiRevenue': sentence(t, r'up to \$(\d+) billion in Arm AGI CPU revenue across fiscal (20\d\d) and (20\d\d)', (1, 2, 3), unit='text'),
+    }
+
+
+SPECS = {'CRDO': credo, 'MRVL': marvell, 'AVGO': broadcom, 'AMD': amd, 'ANET': arista, 'PLTR': palantir, 'ALAB': astera, 'LITE': lumentum, 'SNDK': sandisk, 'VRT': vertiv, 'GEV': vernova, 'BE': bloom, 'SKHY': skhynix, 'ARM': arm}
 
 
 # ---- foreign issuers whose results come as several exhibits of one 6-K (release, presentation, financial statements) ---------
@@ -723,7 +748,7 @@ def deal(text):
 
 # companies whose dive also reads the previous quarter's release (a figure this release prints without that quarter): the same spec
 # reads both, so a figure of the previous quarter is quoted from that quarter's own release
-PRIOR = {'VRT', 'PLTR', 'GEV'}
+PRIOR = {'VRT', 'PLTR', 'GEV', 'ARM'}
 
 
 def skhynix_event(t):

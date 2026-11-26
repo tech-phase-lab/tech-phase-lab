@@ -48,6 +48,7 @@ FILINGS = {
                          datetime(2026, 10, 28, 10, 6, 14, tzinfo=timezone.utc)),
                         ('https://www.sec.gov/Archives/edgar/data/2120882/000119312526435015/d236994d6k.htm', 'SKHY-6k-dividend',
                          datetime(2026, 10, 28, 10, 9, 24, tzinfo=timezone.utc))]},
+    'ARM': {'prior': ('https://www.sec.gov/Archives/edgar/data/1973239/000197323926000113/exhibit992fye27q130-junx26.htm', 'ARM-letter-q1-fye27')},
 }
 GAPS = {  # what is still different from the hand-made file with every filing in hand (none)
     'CRDO': {}, 'MRVL': {}, 'AVGO': {}, 'TSM': {},
@@ -64,6 +65,7 @@ GAPS = {  # what is still different from the hand-made file with every filing in
                            '2030 are only in the newsroom release; those sections use the filings\' figures (operating profit, pre-tax and net income, '
                            'the dividend and the return plan)',
              'tiles[0].note': '"first quarter above ₩100T" needs the full revenue history; the note gives the 6-K\'s own +327.9% year-over-year'},
+    'ARM': {},
 }
 CHIP_GAPS = {}
 FILINGS_DIR = ROOT / 'tests/fixtures/dive-filings'
