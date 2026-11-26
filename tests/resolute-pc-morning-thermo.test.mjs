@@ -83,7 +83,7 @@ test('相場の温度計: the phone glows the selected index\'s position; PC sho
 test('翌朝のひとこと: PC side by side with save beside ⑤; phone GOOD MORNING first, 受け取り方 below', () => {
   const screen = read('../app/resolute/notifications-screen.tsx');
   assert.match(screen, /<ToolShell identityReady=\{identityReady\} pc>/);
-  const block = screen.slice(screen.indexOf(' if(isMorning) {'), screen.indexOf('if(desktop&&!isMorning)'));
+  const block = screen.slice(screen.indexOf(' if(isMorning) {'), screen.indexOf('// ③ 終値アラート (PC and phone).'));
   assert.ok(block.length > 100);
   for (const words of ['受け取り方', '翌朝のひとことを', '届く時間', '届け先', '届く通知の例', 'GOOD MORNING', 'この通知は、昨日のお知らせについて1回だけ届きます。']) assert.ok(block.includes(words), words);
   // PC: 受け取り方 left, GOOD MORNING right. Phone (mobile 10): GOOD MORNING first, 受け取り方 below.
@@ -93,7 +93,7 @@ test('翌朝のひとこと: PC side by side with save beside ⑤; phone GOOD MO
   assert.match(block, /\{planDialogElement\}/);
   const css = read('../app/resolute/pc.module.css');
   assert.match(css, /\.morningPair \{ display: grid; grid-template-columns: repeat\(2, minmax\(0, 1fr\)\); gap: 24px; align-items: stretch; \}/);
-  // ③ keeps its own PC layout and ④'s phone layout keeps the plan dialog.
-  assert.match(screen, /if\(desktop&&!isMorning\)/);
-  assert.equal((screen.match(/\{planDialogElement\}/g) || []).length, 2);
+  // ③ keeps its own layouts (PC and phone) after ④'s block; the plan dialog belongs to ④ only.
+  assert.match(screen, /\/\/ ③ 終値アラート \(PC and phone\)\./);
+  assert.equal((screen.match(/\{planDialogElement\}/g) || []).length, 1);
 });

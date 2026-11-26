@@ -27,9 +27,10 @@ test('actual gauge switches indices immediately, clears missing readings and iso
    b.onLoad({filter:/.*/,namespace:'gauge-stub'},()=>({contents:'export default function Stub(){return null};export const useReview=()=>globalThis.__gaugeUI.review;export const useDesktop=()=>false;',loader:'js'}));
   }}]});
   const homefile=join(dir,'home.cjs');
-  await build({entryPoints:['app/resolute/home/market-gauge-card.tsx'],outfile:homefile,bundle:true,platform:'node',format:'cjs',jsx:'automatic',external:['react','react/jsx-runtime'],loader:{'.css':'empty'},plugins:[{name:'home-link',setup(b){
+  await build({entryPoints:['app/resolute/home/market-chart-card.tsx'],outfile:homefile,bundle:true,platform:'node',format:'cjs',jsx:'automatic',external:['react','react/jsx-runtime'],loader:{'.css':'empty'},plugins:[{name:'home-link',setup(b){
    b.onResolve({filter:/review-context$/},args=>({path:args.path,namespace:'home-stub'}));
    b.onLoad({filter:/.*/,namespace:'home-stub'},()=>({contents:'import React from "react"; export const ReviewLink=props=>React.createElement("a",props);',loader:'js'}));
+   b.onLoad({filter:/market-chart-card\.tsx$/},async args=>({contents:(await readFile(args.path,'utf8')).replace("import {useState} from 'react';","const useState = initial => [initial, () => {}];"),loader:'tsx'}));
   }}]});
   const HomeCard=require(homefile).default;
   const {MarketGauge}=require(outfile);
@@ -78,8 +79,8 @@ test('actual gauge switches indices immediately, clears missing readings and iso
     const detail=render(locale,value).html,card=home(value);
     const label=(locale==='ja'?['冷えている','やや冷え','平常','やや熱い','熱い']:['Cool','Slightly cool','Normal','Slightly hot','Hot'])[Math.min(4,Math.floor(score/20))];
     assert.ok(detail.includes(label));assert.ok(card.includes(label));
-    assert.match(detail,/2026-10-23/);assert.match(card,/2026-10-23/);
-    assert.ok(card.includes(`left:${score}%`));assert.match(card,/TP大型株100/);
+    assert.match(detail,/2026-10-23/);assert.match(card,locale==='ja'?/10\/23 終値/:/Oct 23 close/);
+    assert.match(card,/TP大型株100|TP Large Cap 100/);
    }
    const value={...snapshot(),validUntil:1000};
    assert.equal(expireThermometerSnapshot(value,999),value);
@@ -88,10 +89,10 @@ test('actual gauge switches indices immediately, clears missing readings and iso
    const detail=render(locale,expired).html,card=home(expired);
    const waiting=gaugeStatus(expired,'nas100',locale==='en');
    assert.ok(detail.includes(waiting));assert.ok(card.includes(waiting));
-   assert.doesNotMatch(card,/left:|2026-10-23/);assert.doesNotMatch(detail,/rotate\(/);
-   assert.doesNotMatch(home({...snapshot(),nas100:unavailable}),/left:|2026-10-23/);
+   assert.doesNotMatch(card,/\d 終値|\d close/);assert.doesNotMatch(detail,/rotate\(/);
+   assert.doesNotMatch(home({...snapshot(),nas100:unavailable}),/\d 終値|\d close/);
    const sample=renderToStaticMarkup(React.createElement(HomeCard,{locale,snapshot:value,sample:true}));
-   assert.match(sample,/left:86%/);assert.doesNotMatch(sample,/2026-10-23/);
+   assert.ok(sample.includes(locale==='ja'?'熱い':'Hot'));assert.doesNotMatch(sample,/\d 終値|\d close/);
    assert.ok(sample.includes(locale==='ja'?'表示見本':'Display sample'));
   }
  }finally{delete globalThis.__gaugeUI;await rm(dir,{recursive:true,force:true});}

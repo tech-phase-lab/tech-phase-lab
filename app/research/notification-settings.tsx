@@ -16,7 +16,10 @@ const DEVICE_KEY = "tech-phase:notification-device-state";
 const readDeviceState = () => { try { return localStorage.getItem(DEVICE_KEY) ?? ""; } catch { return ""; } };
 type State = "checking" | "off" | "on" | "unknown" | "blocked" | "unsupported" | "unavailable" | "sign-in" | "pro-required";
 /** scope "resolute" (owner, Nov 17): the same part on RESOLUTE's ③ and ④ screens, worded 「この端末で受け取る」 for the RESOLUTE notices. */
-export default function NotificationSettings({ lang, initiallyOpen = false, page = false, scope = "research" }: { lang: Language; initiallyOpen?: boolean; page?: boolean; scope?: "research" | "resolute" }) {
+/** `onState` hears this device's settled state; `enableRef` gets a function that turns this device on, for a button elsewhere on the
+ * page (RESOLUTE ③'s 「スマホ通知がオフです［オンにする］」 banner, owner Nov 25). Call it inside the tap, so the permission prompt can show. */
+export default function NotificationSettings({ lang, initiallyOpen = false, page = false, scope = "research", onState, enableRef }: { lang: Language; initiallyOpen?: boolean; page?: boolean; scope?: "research" | "resolute";
+  onState?: (state: State) => void; enableRef?: { current: (() => void) | null } }) {
   const resoluteScope = scope === "resolute";
   const ownerMode = useOwnerMode();
   const ownerAccount = useOwnerAccount();
@@ -336,6 +339,12 @@ export default function NotificationSettings({ lang, initiallyOpen = false, page
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [starting, state]);
   const toggle = () => { if (state === "checking" && shownState === "off") { setStarting(true); return; } void run(shownState === "on" ? "disable" : "enable"); };
+  useEffect(() => { if (state !== "checking") onState?.(state); }, [state, onState]);
+  useEffect(() => {
+    if (!enableRef) return;
+    enableRef.current = () => { if (state === "checking") setStarting(true); else if (state === "off" || state === "unknown") void run("enable"); };
+    return () => { enableRef.current = null; };
+  });
   if (page) return <NotificationPageView owner={ownerMode} access={access} lang={lang} state={shownState} label={label} busy={busy} starting={starting} usable={usable || state === "checking"} hasSubscription={hasSubscription} message={message} testSent={testSent} received={received}
     prefs={prefs} prefsState={prefsState} prefsMessage={prefsMessage} onPrefs={savePreferences}
     diagnostic={ownerAccount ? <PushDiagnosticPanel lang={lang} onReinstall={key ? reinstall : undefined} /> : null}

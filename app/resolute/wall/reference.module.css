@@ -104,3 +104,48 @@
 .frame:not([data-lines="0"]):not([data-lines="1"]):not([data-lines="2"]):not([data-lines="3"]):not([data-lines="4"]) .r{padding-block:3px}
 .frame:not([data-lines="0"]):not([data-lines="1"]):not([data-lines="2"]):not([data-lines="3"]):not([data-lines="4"]) .r span{font-size:11px;line-height:1.5}
 .frame:not([data-lines="0"]):not([data-lines="1"]):not([data-lines="2"]):not([data-lines="3"]):not([data-lines="4"]) .r span i{font-size:12px}
+
+/* PC (owner, Nov 25, 01_ルールのお守り_PC): the preview on the left, the settings on the right; both panels end at the same line. */
+.pc { padding:0; }
+.pc header { display:block; }
+.pcPair { display:grid; grid-template-columns:minmax(0,.9fr) minmax(0,1fr); gap:24px; align-items:stretch; }
+/* Panels use the shared RESOLUTE tokens (diagnosis.module.css .page). */
+.pcPreview, .pcSettings { min-width:0; border:1px solid transparent; border-radius:22px; background:var(--rz-panel-fill) padding-box,var(--rz-panel-edge) border-box; }
+.pcPreview { display:grid; place-items:center; padding:40px 24px; }
+.pcPreview .stage { width:270px; height:570px; }
+.pcPreview .phone { transform:scale(.9); }
+.pcSettings { display:flex; flex-direction:column; gap:18px; padding:30px 32px; }
+.pcSettings h2 { margin:0; padding-bottom:14px; border-bottom:1px solid var(--line); font-family:var(--serif); font-size:20px; font-weight:500; color:var(--ink); }
+.pcGroup { display:flex; flex-direction:column; gap:10px; padding-bottom:18px; border-bottom:1px solid var(--line); }
+.pcGroup:nth-of-type(3) { border-bottom:0; padding-bottom:0; margin-bottom:auto; }
+.pc h1 { text-align:left; font-size:34px; color:var(--ink); }
+.pcGroup > b { font-size:13px; font-weight:400; color:var(--gold); }
+.pcRail { display:grid; grid-auto-flow:column; grid-auto-columns:minmax(0,1fr); gap:10px; }
+.pcRail button { min-height:42px; padding:8px 6px; border:1px solid var(--line); border-radius:10px; background:#ffffff05; color:var(--ink); font:inherit; font-size:14px; cursor:pointer; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; }
+.pcRail button[aria-pressed="true"] { border-color:var(--gold); background:linear-gradient(180deg,#3a2f17,#231c0e); color:var(--gold2); box-shadow:0 0 0 1px #d8b36a44 inset; }
+.pcRail button:hover { border-color:#d8b36a88; }
+.pcSwatches button { min-height:72px; }
+.swatch { width:26px; height:26px; border-radius:50%; border:1px solid rgba(255,255,255,.35); flex:none; font-style:normal; display:grid; place-items:center; font-size:16px; line-height:1; color:var(--gold); }
+.swatchPhoto { border-color:var(--gold); background:#ffffff08; }
+.qr { display:grid; grid-template-columns:96px minmax(0,1fr); gap:18px; align-items:center; padding:16px 18px; border:1px solid var(--line); border-radius:14px; background:#ffffff04; }
+.qrCode { width:96px; height:96px; border-radius:6px; display:block; }
+.qr b { display:block; color:var(--gold2); font-size:15px; }
+.qr p { margin:4px 0 0; color:var(--sub); font-size:12px; line-height:1.75; }
+.qr p span { display:block; }
+.pcSettings .primary { padding:14px 24px; font-size:16px; }
+.pcSettings .hint { font-size:12px; }
+
+/* Phone (resolute-mobile-all-1125 §14): the PC panels one under the other; the preview a little smaller, choices as round pills. */
+.phoneLayout .wrap { align-items:stretch; }
+.phoneLayout .pcPair { grid-template-columns:minmax(0,1fr); gap:16px; }
+.phoneLayout .pcPreview { padding:24px 16px; }
+.phoneLayout .pcPreview .stage { width:234px; height:494px; }
+.phoneLayout .pcPreview .phone { transform:scale(.78); }
+.phoneLayout .pcSettings { padding:20px 16px; gap:14px; }
+.phoneLayout .pcGroup { border-bottom:0; padding-bottom:0; gap:8px; }
+.phoneLayout .pcGroup:nth-of-type(3) { margin-bottom:0; }
+.phoneLayout .pcGroup > b { font-size:12px; letter-spacing:.2em; }
+.phoneLayout .pcRail { gap:8px; }
+.phoneLayout .pcRail button { min-height:40px; padding:6px 4px; border-radius:999px; font-size:13px; }
+.phoneLayout .pcSwatches button { min-height:68px; border-radius:16px; font-size:12px; }
+.phoneLayout .swatch { width:22px; height:22px; }

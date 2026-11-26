@@ -283,7 +283,8 @@
 .purchaseLadder strong{font-family:Georgia,serif;font-size:23px;font-weight:400;color:#8c692b}
 .purchaseLadder li>div>span{font-size:8px;color:#7c776b}
 .purchaseLadder b{margin-left:auto;text-align:right;font-family:var(--font-resolute-serif),serif;font-size:16px;color:#343d37;overflow-wrap:anywhere}
-.bookRibbon{position:absolute;z-index:3;right:24px;top:-3px;width:17px;height:40px;background:linear-gradient(90deg,#7c5a24,#bd944b,#89612a);clip-path:polygon(0 0,100% 0,100% 100%,50% 80%,0 100%);pointer-events:none}
+/* The bookmark hangs between RESOLUTE and MY RULES, never over the running head (owner, Nov 25). */
+.bookRibbon{position:absolute;z-index:3;right:112px;top:-3px;width:17px;height:40px;background:linear-gradient(90deg,#7c5a24,#bd944b,#89612a);clip-path:polygon(0 0,100% 0,100% 100%,50% 80%,0 100%);pointer-events:none}
 .turningLeaf{position:absolute;inset:0;z-index:4;pointer-events:none;transform-origin:left center;transform-style:preserve-3d;backface-visibility:hidden;overflow:hidden;border-radius:4px 12px 12px 4px;background:#ece1c9;filter:drop-shadow(12px 4px 12px #0005)}
 .turningLeaf>div{min-height:100%}
 .leafForward{animation:leafForward .58s cubic-bezier(.3,.1,.3,1) both}
@@ -308,7 +309,8 @@
 .bookActions{padding:0 0 10px}
 @media(prefers-reduced-motion:reduce){.turningLeaf{animation:none}}
 @media(max-width:360px){.paperPage{padding:19px 19px 58px 25px}.paperRunning{margin-bottom:21px}.paperFolio{left:25px;right:19px}.coverFrame{padding-left:10px;padding-right:10px}.chapterMetrics{gap:15px 9px}.chapterMetrics dd{font-size:17px}.purchaseLadder li{gap:9px}.purchaseLadder b{font-size:14px}.boundCover{padding:16px 14px 16px 22px}.coverFrame h2{font-size:24px}}
-.readerControls{position:sticky;bottom:10px;z-index:5;background:#0a1018ed;border:1px solid #a8894c22;border-radius:7px;padding:5px;backdrop-filter:blur(8px)}
+/* The page-turn bar sits below the book, outside the page, so it never covers the text (owner, Nov 25). */
+.readerControls{position:relative;z-index:5;background:#0a1018ed;border:1px solid #a8894c22;border-radius:7px;padding:5px}
 
 /* Keep saving in gold; continuing is a separate, cool-toned action. */
 .primary.continueButton{background:linear-gradient(135deg,#243e58,#182b40);color:#e4edf7!important;border:1px solid #708ca8;box-shadow:0 4px 14px #0004}

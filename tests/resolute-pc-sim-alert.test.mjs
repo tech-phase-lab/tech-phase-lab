@@ -64,9 +64,8 @@ test("phone and PC judge the single-stock cap by amount with one shared check, s
   const screen = read("../app/resolute/simulation/screen.tsx");
   // One computation, made before the PC/phone branch, read by both layouts.
   assert.equal((screen.match(/capBars\(/g) ?? []).length, 1);
-  assert.ok(screen.indexOf("const bars=up&&facts&&plan?capBars(") < screen.indexOf("if(desktop&&plan&&facts)"));
+  assert.ok(screen.indexOf("const bars=up&&facts&&plan?capBars(") < screen.indexOf("if(plan&&facts)"));
   assert.doesNotMatch(screen, /overCapNames|item\.overCap|item\.sharePct/);
-  assert.equal((screen.match(/overBars\.length\?styles\.verdictWarning/g) ?? []).length, 1, "phone verdict");
   assert.match(screen, /overBars\.length\?pc\.capOver/);
   // The same inputs give the same answer: 300万円 invested, 10% cap = 30万円. NVDA 18万 is 23% of the total but under the
   // 30万円 cap (not over); AAPL 37.5万 is over by 7.5万.
@@ -113,4 +112,44 @@ test("PC layout: 1024px and wider, the menu on the left, the phone layout unchan
   assert.doesNotMatch(read("../app/resolute/stock-input.tsx"), /clearInput|onChange\(""\)/);
   // Never cut words with an ellipsis on PC.
   assert.doesNotMatch(read("../app/resolute/pc.module.css"), /text-overflow:\s*ellipsis/);
+});
+
+test("「今日やること」 on 今日のお知らせ shows the AI plan for that close as it is, and the fixed sentences otherwise", () => {
+  const alert = { date: "2026-11-24", items: [{ kind: "line_reached", symbol: "NVDA", close: 161.4, dropPct: 10.3, newLines: [10] }] };
+  const ai = { date: "2026-11-24", source: "ai", direction: "down", headline: { ja: "決めた額だけ買う日", en: "Buy what you planned" },
+    body: { ja: "NVDAが−10%に届きました。\n決めておいた30万円だけです。", en: "NVDA reached −10%.\nOnly the 300k you planned." }, checks: [] };
+  assert.deepEqual(latestAlertView(alert, "ja", { rules: facts, plan: ai }).todo, { title: "決めた額だけ買う日", sentences: ["NVDAが−10%に届きました。", "決めておいた30万円だけです。"] });
+  const fixed = latestAlertView(alert, "ja", { rules: facts }).todo;
+  assert.deepEqual(latestAlertView(alert, "ja", { rules: facts, plan: { ...ai, date: "2026-11-21" } }).todo, fixed, "another day's plan");
+  assert.deepEqual(latestAlertView(alert, "ja", { rules: facts, plan: { ...ai, source: "fixed" } }).todo, fixed, "not an AI plan");
+  assert.equal(fixed.title, "決めていた買い増しの日");
+  assert.match(read("../app/resolute/alerts/latest/screen.tsx"), /fetch\("\/api\/resolute\/today-plan"/);
+});
+
+test("phone (resolute-mobile-all-1125 06–09): the same screens in one column, with the shared phone theme", () => {
+  const sim = read("../app/resolute/simulation/screen.tsx");
+  // One layout for both widths: the old phone-only branch and its folded 「あなたのルール」 are gone; the rules are 2×2 on the phone.
+  assert.match(sim, /if\(plan&&facts\) \{/);
+  assert.doesNotMatch(sim, /styles\.disclosure|<details/);
+  assert.match(sim, /<SectionHeading label="SIMULATION"/);
+  assert.match(sim, /<FlowNavigation step=\{2\} locale=\{locale\} wide=\{desktop\}\/>/);
+  const css = read("../app/resolute/pc.module.css");
+  assert.match(css, /@media \(max-width: 1023\.98px\) \{[\s\S]*\.ruleRow \{ grid-template-columns: repeat\(2, minmax\(0, 1fr\)\); gap: 10px; \}/);
+  // ③: phone order 見る銘柄 → 知らせるライン → あなたのライン → 届く時間と届け先, then TRY IT; the device switch sits in 届く時間と届け先.
+  const alerts = read("../app/resolute/notifications-screen.tsx");
+  assert.match(alerts, /\{watchPanel\}\{levelsPanel\}\{linesPanel\}\{deliveryPanel\}<\/fieldset>\s*\{tryPanel\}/);
+  assert.match(alerts, /touch\|\|!desktop\?<div className=\{pc\.thisDevice\}><DeviceNotifications lang=\{locale\} scope="resolute" initiallyOpen onState=\{setDeviceState\} enableRef=\{enableDevice\}\/>/);
+  // The gold banner only while this phone's notifications are off; its button turns them on within the tap.
+  assert.match(alerts, /\{deviceState==="off"\?<div className=\{pc\.offBanner\}/);
+  assert.match(alerts, /スマホ通知がオフです/);
+  assert.match(alerts, /オンにすると、ラインに届いた朝にこのスマホへ届きます/);
+  assert.match(alerts, /onClick=\{\(\)=>enableDevice\.current\?\.\(\)\}>\{t\("オンにする"/);
+  const device = read("../app/research/notification-settings.tsx");
+  assert.match(device, /useEffect\(\(\) => \{ if \(state !== "checking"\) onState\?\.\(state\); \}, \[state, onState\]\);/);
+  assert.match(device, /enableRef\.current = \(\) => \{ if \(state === "checking"\) setStarting\(true\); else if \(state === "off" \|\| state === "unknown"\) void run\("enable"\); \};/);
+  // 今日のお知らせ on the phone: 今日やること first, then the cards.
+  const page = read("../app/resolute/alerts/latest/screen.tsx");
+  const phone = page.slice(page.indexOf("// Phone (resolute-mobile-all-1125 09)"));
+  assert.ok(phone.indexOf("v.todo.title") < phone.indexOf("v.cards.map"));
+  assert.match(phone, /<SectionHeading label="TODAY'S NOTICE" title=\{v\.title\} description=\{v\.lead\} \/>/);
 });

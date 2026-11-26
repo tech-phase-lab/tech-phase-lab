@@ -45,7 +45,10 @@ test("Japanese labels are unchanged: the hour in 日本時間, whatever the seas
 test("screens show the delivery hour through the helper and still save the same deliveryHourJst values", () => {
   const screen = readFileSync(new URL("../app/resolute/notifications-screen.tsx", import.meta.url), "utf8");
   assert.match(screen, /DELIVERY_HOURS\.map\(h=><button type="button" key=\{h\} aria-pressed=\{draft\.deliveryHourJst===h\} onClick=\{\(\)=>update\(\{deliveryHourJst:h\}\)\}>\{deliveryClock\(h,locale\)\}<\/button>\)/);
-  assert.match(screen, /\{deliveryClock\(draft\.deliveryHourJst,locale\)\} <small>\{deliveryZone\(locale\)\}<\/small>/);
+  // ④ (11/25 PC and phone): the four times are always shown under 「届く時間」 with the zone, and the example notification
+  // carries the chosen time.
+  assert.match(screen, /\{t\("届く時間","Delivery time"\)\}<small>\{deliveryZone\(locale\)\}<\/small><\/h3>\{timeButtons\}/);
+  assert.match(screen, /<time>\{deliveryClock\(draft\.deliveryHourJst,locale\)\}<\/time>/);
   assert.ok(screen.includes("We check the U.S. closing prices and send alerts at this time (ET)."));
   assert.ok(screen.includes("前の夜の終値をもとに、この時間にお知らせします(日本時間)"));
   assert.ok(!/\bJST\b/.test(screen));
