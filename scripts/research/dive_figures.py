@@ -12,7 +12,7 @@ from dataclasses import dataclass, field
 from decimal import Decimal
 import re
 
-CELL = re.compile(r'\(?-?\$?\s?\d[\d,]*(?:\.\d+)?\)?\s?%?|—')
+CELL = re.compile(r'(?:\$\s?)?\(?[+-]?\$?\s?\d[\d,]*(?:\.\d+)?\)?(?:\s?%|\sppts?\b)?|—')
 
 
 @dataclass
@@ -32,7 +32,7 @@ class Figure:
 
 
 def _number(cell):
-    text = cell.strip().replace('$', '').replace('%', '').replace(',', '').replace(' ', '')
+    text = cell.strip().replace('$', '').replace('%', '').replace('ppts', '').replace('ppt', '').replace(',', '').replace(' ', '').lstrip('+')
     if text == '—':
         return Decimal(0), '0'
     negative = text.startswith('(') and text.endswith(')')
@@ -41,12 +41,14 @@ def _number(cell):
     return (-value if negative else value), text
 
 
-def row(text, label, columns, after=None, before=None, unit='million', thousands=False):
-    """The `columns` numbers right after `label` (a whole label, once) inside the table that starts at `after`; None if not exactly so.
+def row(text, label, columns, after=None, before=None, unit='million', thousands=False, width=None, exact=True):
+    """The first `columns` numbers right after `label` (a whole label, once) inside the table that starts at `after`; None if not exactly so.
+    The row must have exactly `width` cells (default `columns`: the table's column count) and no more (`exact=False` only where the
+    filing prints a page number right after the table).
     `label` may be a tuple of the wordings a company uses in different quarters ("Net income" / "Net income (loss)"): the first that reads."""
     if isinstance(label, tuple):
         for one in label:
-            found = row(text, one, columns, after, before, unit, thousands)
+            found = row(text, one, columns, after, before, unit, thousands, width, exact)
             if found:
                 return found
         return None
@@ -56,23 +58,26 @@ def row(text, label, columns, after=None, before=None, unit='million', thousands
     end = text.find(before, start + len(after or '')) if before else -1
     area = text[start:end if end > 0 else len(text)]
     hits = [m for m in re.finditer(r'(?<![A-Za-z-])' + re.escape(label) + r'(?=\s*[$(\d—])', area)]
-    if not hits:
+    if len(hits) != 1:  # the label must appear exactly once in its table
         return None
     m = hits[0]
     rest = area[m.end():m.end() + 400]
     cells, at = [], 0
-    for _ in range(columns):
+    for _ in range(width or columns):
         c = CELL.match(rest, at + (len(rest[at:]) - len(rest[at:].lstrip())))
         if not c:
             return None
         cells.append(c.group())
         at = c.end()
+    if exact and CELL.match(rest, at + (len(rest[at:]) - len(rest[at:].lstrip()))):
+        return None  # more cells than the table's columns: not the row we expect
     try:
-        parsed = [_number(c) for c in cells]
+        parsed = [_number(c) for c in cells][:columns]
+        cells = cells[:columns]
     except ArithmeticError:
         return None
     quote = (label + rest[:at]).strip()
-    if unit == 'percent' and not all('%' in c or c.strip() == '—' for c in cells):
+    if unit == 'percent' and not all('%' in c or c.strip() == '—' for c in cells[:columns]):
         return None
     scale = '/ 1000' if thousands and unit == 'million' else ''
     values = [v / 1000 if scale else v for v, _ in parsed]
@@ -81,13 +86,43 @@ def row(text, label, columns, after=None, before=None, unit='million', thousands
 
 def sentence(text, pattern, groups, unit='million', multipliers=None):
     """Figures from one outlook sentence: the regex `pattern`'s groups as printed, times `multipliers` (1000 for billions, per group)."""
-    m = re.search(pattern, text, re.I)
-    if not m:
+    found = list(re.finditer(pattern, text, re.I))
+    # stated once, or restated (a summary and the outlook section) with exactly the same figures; differing statements are not read
+    if not found or len({tuple(x.group(g) for g in groups) for x in found}) != 1:
         return None
+    m = found[0]
     raws = [m.group(g).replace(',', '') for g in groups]
     muls = list(multipliers or [None] * len(raws))
     values = list(raws) if unit == 'text' else [Decimal(r) * (k or 1) for r, k in zip(raws, muls)]
     return Figure(values=values, quote=text[m.start():m.end()].strip(), raws=raws, unit=unit, muls=muls)
+
+
+def between(text, after, before=None):
+    """The part of `text` from the first `after` to the next `before` ('' when `after` is absent)."""
+    start = text.find(after)
+    if start < 0:
+        return ''
+    end = text.find(before, start + len(after)) if before else -1
+    return text[start:end if end > 0 else len(text)]
+
+
+CHANGE = r'(?:(?:Up|Down) [\d.]+ ?(?:%|ppts?)|Flat)'
+
+
+def highlight(text, label, after, before=None, unit='million'):
+    """A row of a highlights table that prints each comparison as words ("$7,483 $4,992 Up 50% $6,488 Up 15%"): the three figures
+    (this quarter, a year earlier, the previous quarter), once in the table, with both comparisons in their places."""
+    area = between(text, after, before)
+    cell = r'(\$?\(?-?[\d,]+(?:\.\d+)?\)? ?%?)'
+    pattern = r'(?<![A-Za-z-])' + re.escape(label) + r' ' + cell + r' ' + cell + r' ' + CHANGE + r' ' + cell + r' ' + CHANGE
+    found = list(re.finditer(pattern, area))
+    if len(found) != 1 or len(re.findall(r'(?<![A-Za-z-])' + re.escape(label) + r' [$\d(]', area)) != 1:
+        return None
+    m = found[0]
+    if unit == 'percent' and not all('%' in m.group(i) for i in (1, 2, 3)):
+        return None
+    parsed = [_number(m.group(i)) for i in (1, 2, 3)]
+    return Figure(values=[v for v, _ in parsed], quote=m.group(0), raws=[r for _, r in parsed], unit=unit)
 
 
 # ---- the companies ----------------------------------------------------------------------------------------------------------
@@ -125,17 +160,17 @@ def marvell(t):
     end = 'Revenue by End Market (In millions)'
     share = 'Revenue by End Market % of Total'
     return {
-        'revenue': row(t, 'Net revenue', 3, ops, 'Cost of goods sold'),
+        'revenue': row(t, 'Net revenue', 3, ops, 'Cost of goods sold', width=5),
         # the year-end release (Q4) words these rows with "(loss)" (Feb 2026): both wordings are read
-        'netIncome': row(t, ('Net income', 'Net income (loss)'), 3, 'Provision', ('Net income per share' if 'Net income per share' in t else 'Net income (loss) per share')),
-        'epsGaap': row(t, ('GAAP diluted net income per share', 'GAAP diluted net income (loss) per share'), 3, 'Other income tax effects', '(a)', unit='per-share'),
-        'eps': row(t, 'Non-GAAP diluted net income per share', 3, 'Other income tax effects', '(a)', unit='per-share'),
-        'gmGaap': row(t, 'GAAP gross margin', 3, rec, 'Non-GAAP gross margin', unit='percent'),
-        'gm': row(t, 'Non-GAAP gross margin', 3, rec, 'GAAP operating expenses', unit='percent'),
-        'opMargin': row(t, 'Non-GAAP operating margin', 3, rec, 'GAAP interest', unit='percent'),
-        'netIncomeNonGaap': row(t, 'Non-GAAP net income', 3, 'Other income tax effects', 'GAAP weighted-average'),
-        'dataCenter': row(t, 'Data center', 3, end, share),
-        'communications': row(t, 'Communications and other', 3, end, share),
+        'netIncome': row(t, ('Net income', 'Net income (loss)'), 3, 'Provision', ('Net income per share' if 'Net income per share' in t else 'Net income (loss) per share'), width=5),
+        'epsGaap': row(t, ('GAAP diluted net income per share', 'GAAP diluted net income (loss) per share'), 3, 'Other income tax effects', '(a)', unit='per-share', width=5),
+        'eps': row(t, 'Non-GAAP diluted net income per share', 3, 'Other income tax effects', '(a)', unit='per-share', width=5),
+        'gmGaap': row(t, 'GAAP gross margin', 3, rec, 'Non-GAAP gross margin', unit='percent', width=5),
+        'gm': row(t, 'Non-GAAP gross margin', 3, rec, 'GAAP operating expenses', unit='percent', width=5),
+        'opMargin': row(t, 'Non-GAAP operating margin', 3, rec, 'GAAP interest', unit='percent', width=5),
+        'netIncomeNonGaap': row(t, 'Non-GAAP net income', 3, 'Other income tax effects', 'GAAP weighted-average', width=5),
+        'dataCenter': row(t, 'Data center', 3, end, share, width=5),
+        'communications': row(t, 'Communications and other', 3, end, share, width=5),
         'dataCenterShare': row(t, 'Data center', 3, share, 'For further information', unit='percent'),
         'guidanceRevenue': sentence(t, r'Net revenue is expected to be \$([\d.]+) billion \+/- ([\d.]+)%', (1, 2), multipliers=[1000, None]),
         'guidanceGm': sentence(t, r'Non-GAAP gross margin is expected to be ([\d.]+)% to ([\d.]+)%', (1, 2), unit='percent'),
@@ -147,14 +182,14 @@ def broadcom(t):
     hl, rec = 'Financial Highlights', 'Gross margin on GAAP basis'
     seg = 'Net revenue by segment'
     return {
-        'revenue': row(t, 'Net revenue', 3, 'CONDENSED CONSOLIDATED STATEMENTS OF OPERATIONS', 'Cost of'),
-        'grossProfitNonGaap': row(t, 'Gross margin on non-GAAP basis', 3, rec, 'Research and development on GAAP'),
-        'opIncomeNonGaap': row(t, 'Operating income on non-GAAP basis', 3, rec, 'Interest expense on GAAP'),
+        'revenue': row(t, 'Net revenue', 3, 'CONDENSED CONSOLIDATED STATEMENTS OF OPERATIONS', 'Cost of', width=5),
+        'grossProfitNonGaap': row(t, 'Gross margin on non-GAAP basis', 3, rec, 'Research and development on GAAP', width=5),
+        'opIncomeNonGaap': row(t, 'Operating income on non-GAAP basis', 3, rec, 'Interest expense on GAAP', width=5),
         # the highlights table: GAAP this quarter, a year earlier, change, then non-GAAP the same (no previous-quarter column)
         'epsBoth': sentence(t, r'Earnings per common share - diluted \$ ([\d.]+) \$ ([\d.]+) [+-]?\d+ ?% \$ ([\d.]+) \$ ([\d.]+)', (1, 2, 3, 4), unit='per-share'),
-        'fcf': row(t, 'Free cash flow', 3, 'Net cash provided by operating activities $', '(1)'),
-        'semis': row(t, 'Semiconductor solutions', 4, seg, 'Infrastructure software'),
-        'software': row(t, 'Infrastructure software', 4, seg, 'Total net revenue'),
+        'fcf': row(t, 'Free cash flow', 3, 'Net cash provided by operating activities $', '(1)', width=5),
+        'semis': row(t, 'Semiconductor solutions', 4, seg, 'Infrastructure software', width=5),
+        'software': row(t, 'Infrastructure software', 4, seg, 'Total net revenue', width=5),
         'ai': sentence(t, r'AI semiconductor revenue of \$([\d.]+) billion grew (\d+)% year-over-year, and (\d+)% quarter-over-quarter', (1, 2, 3),
                        multipliers=[1000, None, None]),
         'guidanceRevenue': sentence(t, r'quarter revenue guidance of approximately \$([\d.]+) billion', (1,), multipliers=[1000]),
@@ -164,7 +199,39 @@ def broadcom(t):
     }
 
 
-SPECS = {'CRDO': credo, 'MRVL': marvell, 'AVGO': broadcom}
+def amd(t):
+    ops, data = 'CONDENSED CONSOLIDATED STATEMENTS OF OPERATIONS', 'SELECTED CORPORATE DATA'
+    hl_g, hl_n, seg = 'GAAP Quarterly Financial Results', 'Non-GAAP(*) Quarterly Financial Results', 'Segment Summary'
+    net, opi = 'Net Revenue:', 'Operating Income (Loss):'
+    flows = 'Changes in operating assets and liabilities:'
+    return {
+        'revenue': row(t, 'Net revenue', 3, ops, 'Cost of sales', width=5),          # this quarter, previous quarter, a year earlier, 9 months x2
+        'gm': highlight(t, 'Gross margin', hl_n, seg, unit='percent'),               # this quarter, a year earlier, previous quarter
+        'opIncomeNonGaap': highlight(t, 'Operating income ($M)', hl_n, seg),
+        'eps': highlight(t, 'Diluted earnings per share', hl_n, seg, unit='per-share'),
+        'epsGaap': highlight(t, 'Diluted earnings per share', hl_g, hl_n, unit='per-share'),
+        'warrant': row(t, 'Change in fair value of warrant liability (3)', 2, 'GAAP net income / earnings per share', 'Non-GAAP net income / earnings per share', width=3),
+        'dataCenter': row(t, 'Data Center Segment', 3, net, 'Client and Gaming Segment', width=5),
+        'clientGaming': row(t, 'Total Client and Gaming', 3, net, 'Embedded Segment', width=5),
+        'gaming': row(t, 'Gaming', 3, 'Client and Gaming Segment Client', 'Total Client and Gaming', width=5),
+        'embedded': row(t, 'Embedded Segment', 3, net, 'Total net revenue', width=5),
+        'dataCenterOp': row(t, 'Data Center Segment', 3, opi, 'Client and Gaming Segment', width=5),
+        'clientGamingOp': row(t, 'Client and Gaming Segment', 3, opi, 'Embedded Segment', width=5),
+        'embeddedOp': row(t, 'Embedded Segment', 3, opi, 'All other', width=5),
+        'gamingYoy': sentence(t, r'Gaming business revenue was \$([\d,]+) million, (up|down) (\d+)% year-over-year', (1, 2, 3), unit='text'),
+        'fcf': row(t, 'Free cash flow (3)', 3, data, 'Total assets', width=5),
+        'fcfMargin': row(t, 'Free cash flow margin %', 3, 'Reconciliation of GAAP Net Cash Provided by Operating Activities', 'The Company also presents', unit='percent', width=5),
+        'debt': row(t, 'Total debt', 3, data, '(1) The Company operates as', width=5),
+        'receivables': row(t, 'Accounts receivable, net', 2, flows, 'Net cash provided by operating activities', width=4),   # three months, a year earlier, 9 months x2
+        'inventories': row(t, 'Inventories', 2, flows, 'Net cash provided by operating activities', width=4),
+        'guidanceRevenue': sentence(t, r'AMD expects revenue to be approximately \$([\d.]+) billion, plus or minus (\d+)%', (1, 2), multipliers=[1000, None]),
+        'guidanceGm': sentence(t, r'Non-GAAP gross margin is expected to be approximately (\d+)%', (1,), unit='percent'),
+        'guidanceGrowth': sentence(t, r'The mid-point of the revenue range represents year-over-year growth of approximately (\d+)% and a sequential increase of approximately (\d+)%',
+                                   (1, 2), unit='percent'),
+    }
+
+
+SPECS = {'CRDO': credo, 'MRVL': marvell, 'AVGO': broadcom, 'AMD': amd}
 
 
 # ---- foreign issuers whose results come as several exhibits of one 6-K (release, presentation, financial statements) ---------
@@ -208,8 +275,8 @@ def tsmc(docs):
     out.update(located(u2, {
         'gm': sentence(t2, r'Gross Margin ([\d.]+)% ([\d.]+)%-([\d.]+)% ([\d.]+)% ([\d.]+)%', (1, 2, 3, 4, 5), unit='percent'),   # this, guidance low-high, previous, year ago
         'om': sentence(t2, r'Operating Margin ([\d.]+)% ([\d.]+)%-([\d.]+)% ([\d.]+)% ([\d.]+)%', (1, 2, 3, 4, 5), unit='percent'),
-        'nonOperating': row(t2, 'Non-Operating Items', 3, 'Selected Items', 'Net Income'),
-        'netMargin': row(t2, 'Net Profit Margin', 3, 'Selected Items', 'EPS', unit='percent'),
+        'nonOperating': row(t2, 'Non-Operating Items', 3, 'Selected Items', 'Net Income', width=5),
+        'netMargin': row(t2, 'Net Profit Margin', 3, 'Selected Items', 'EPS', unit='percent', width=5),
         'shipments': sentence(t2, r'Shipment \(Kpcs, 12"-equiv\. Wafer\) ([\d,]+) ([\d,]+) ([\d,]+) \+?(-?[\d.]+)%', (1, 2, 3, 4), unit='text'),
         'ocf': row(t2, 'Cash from operating activities', 3, 'Beginning Balance', 'Ending Balance'),
         'capex': row(t2, 'Capital expenditures', 3, 'Beginning Balance', 'Ending Balance'),
@@ -267,20 +334,34 @@ MONTHS = r'(?:January|February|March|April|May|June|July|August|September|Octobe
 def credo_report(t):
     return {
         'customerA': row(t, 'Customer A', 2, 'Ended Revenue', 'Customer B', unit='percent'),
-        'customerB': row(t, 'Customer B', 2, 'Ended Revenue', '*', unit='percent'),
-        'acquisition': sentence(t, r'On (' + MONTHS + r' \d{1,2}, 20\d\d), the Company acquired (?:100\s?% of the equity interest of )?([A-Z][A-Za-z]+).{0,250}?'
-                                r'total purchase consideration of \$\s?([\d.]+) (billion|million)', (1, 2, 3, 4), unit='text'),
+        'customerB': row(t, 'Customer B', 2, 'Ended Revenue', '*', unit='percent', exact=False),  # the 10-Q's page number follows
+        'acquisition': latest(t, r'On (' + MONTHS + r' \d{1,2}, 20\d\d), the Company acquired (?:100\s?% of the equity interest of )?([A-Z][A-Za-z]+).{0,250}?'
+                                 r'total purchase consideration of \$\s?([\d.]+) (billion|million)', (1, 2, 3, 4)),
     }
 
 
+def latest(t, pattern, groups):
+    """Of the dated statements `pattern` matches (a 10-Q note lists this quarter's acquisition and earlier ones), the one with the latest
+    date (group 1), read as text; None when two statements share that date."""
+    from datetime import datetime
+    found = [(datetime.strptime(m.group(1).replace(',', ''), '%B %d %Y'), m) for m in re.finditer(pattern, t, re.I)]
+    if not found:
+        return None
+    top = max(d for d, _ in found)
+    picked = [m for d, m in found if d == top]
+    if len(picked) != 1:
+        return None
+    return sentence(picked[0].group(0), pattern, groups, unit='text')
+
+
 def broadcom_report(t):
-    semis = row(t, 'Semiconductor solutions: Net revenue', 2, '(In millions)', 'Infrastructure software:')
-    soft = row(t, 'Infrastructure software: Net revenue', 2, '(In millions)', 'Total:')
+    semis = row(t, 'Semiconductor solutions: Net revenue', 2, '(In millions)', 'Infrastructure software:', width=4)
+    soft = row(t, 'Infrastructure software: Net revenue', 2, '(In millions)', 'Total:', width=4)
     return {
         'semisReport': semis,
-        'semisOpIncome': row(t, 'Operating income', 2, 'Semiconductor solutions: Net revenue', 'Infrastructure software:'),
+        'semisOpIncome': row(t, 'Operating income', 2, 'Semiconductor solutions: Net revenue', 'Infrastructure software:', width=4),
         'softwareReport': soft,
-        'softwareOpIncome': row(t, 'Operating income', 2, 'Infrastructure software: Net revenue', 'Total:'),
+        'softwareOpIncome': row(t, 'Operating income', 2, 'Infrastructure software: Net revenue', 'Total:', width=4),
         'topFive': sentence(t, r'top five end customers, through all channels, accounted for approximately (\d+)\s?% and (\d+)\s?% of our net revenue for the fiscal quarter'
                                r'[^.]{0,120}?approximately (\d+)\s?%', (1, 2, 3), unit='percent'),
         'distributor': sentence(t, r'which is a distributor, accounted for (\d+)\s?% and (\d+)\s?% of our net revenue for the fiscal quarter and three fiscal quarters ended '

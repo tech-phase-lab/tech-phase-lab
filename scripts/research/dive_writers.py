@@ -762,3 +762,8 @@ def asml(f, url, before_previous, report=None, events=None, previous=None):
 
 
 WRITERS = {'CRDO': crdo, 'MRVL': mrvl, 'AVGO': avgo, 'TSM': tsm, 'ASML': asml}
+
+# the rest of the roster (AMD, ANET, PLTR, ...): dive_company_writers, on the same helpers
+from dive_company_writers import WRITERS as _MORE  # noqa: E402
+
+WRITERS.update(_MORE)

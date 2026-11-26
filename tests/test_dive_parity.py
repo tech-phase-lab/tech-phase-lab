@@ -31,11 +31,13 @@ FILINGS = {
     'TSM': {'exhibits': [('https://www.sec.gov/Archives/edgar/data/1046179/000104617926000726/a3q26presentatione.htm', 'TSM-992')]},
     'ASML': {'exhibits': [('https://www.sec.gov/Archives/edgar/data/937966/000162828026065813/a2026_10x14xpresentation.htm', 'ASML-992'),
                           ('https://www.sec.gov/Archives/edgar/data/937966/000162828026065813/financial_statementsxusx.htm', 'ASML-993')]},
+    'AMD': {},   # the release alone carries every figure of the hand-made file
 }
 GAPS = {  # what is still different from the hand-made file with every filing in hand (none)
     'CRDO': {}, 'MRVL': {}, 'AVGO': {}, 'TSM': {},
     'ASML': {'caution.chips[1]': 'the hand-made file showed free cash flow (−€2.61B in Q1 to €11.35B); the statements exhibit gives no quarterly '
                                  'free cash flow line, so the chip shows the contract liabilities the same section explains'},
+    'AMD': {},
 }
 CHIP_GAPS = {}
 FILINGS_DIR = ROOT / 'tests/fixtures/dive-filings'
