@@ -1,0 +1,157 @@
+{
+  "root": {
+    "ticker": "PAYO",
+    "name": "ペイオニア",
+    "cik": 1845815,
+    "name_en": "Payoneer"
+  },
+  "rows": [
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in its 10-K)"
+    }
+  ],
+  "rivals": [
+    "GOOGL",
+    "AAPL",
+    "AMZN",
+    "META"
+  ],
+  "companies": [
+    {
+      "id": "GOOGL",
+      "ticker": "GOOGL",
+      "name": "アルファベット(グーグル)",
+      "name_en": "Alphabet (Google)",
+      "sub": "検索・決済",
+      "sub_en": "Search & payments",
+      "sub_short": "クラウド",
+      "sub_short_en": "Cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "決済分野に参入する競合に挙げる",
+          "text_en": "Named among new entrants competing in payments",
+          "source": {
+            "label": "Payoneer 10-K(2025年度)",
+            "label_en": "Payoneer 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1845815/000110465926020487/payo-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "We are also facing competitive pressure from non-traditional payment service providers and other parties entering the payments industry, such as Google, Apple, Alibaba, Amazon and Meta"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AAPL",
+      "ticker": "AAPL",
+      "name": "アップル",
+      "name_en": "Apple",
+      "sub": "スマホ・決済",
+      "sub_en": "Devices & payments",
+      "sub_short": "スマホ",
+      "sub_short_en": "Phones",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "決済分野に参入する競合に挙げる",
+          "text_en": "Named among new entrants competing in payments",
+          "source": {
+            "label": "Payoneer 10-K(2025年度)",
+            "label_en": "Payoneer 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1845815/000110465926020487/payo-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "We are also facing competitive pressure from non-traditional payment service providers and other parties entering the payments industry, such as Google, Apple, Alibaba, Amazon and Meta"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BABA",
+      "ticker": "BABA",
+      "name": "Alibaba",
+      "name_en": "Alibaba",
+      "sub": "EC",
+      "sub_en": "E-commerce",
+      "sub_short": "EC",
+      "sub_short_en": "E-com",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "決済分野に参入する競合に挙げる",
+          "text_en": "Named among new entrants competing in payments",
+          "source": {
+            "label": "Payoneer 10-K(2025年度)",
+            "label_en": "Payoneer 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1845815/000110465926020487/payo-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "We are also facing competitive pressure from non-traditional payment service providers and other parties entering the payments industry, such as Google, Apple, Alibaba, Amazon and Meta"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン・ウェブ・サービス",
+      "name_en": "Amazon Web Services",
+      "sub": "EC",
+      "sub_en": "E-commerce",
+      "sub_short": "EC",
+      "sub_short_en": "E-com",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "決済分野に参入する競合に挙げる",
+          "text_en": "Named among new entrants competing in payments",
+          "source": {
+            "label": "Payoneer 10-K(2025年度)",
+            "label_en": "Payoneer 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1845815/000110465926020487/payo-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "We are also facing competitive pressure from non-traditional payment service providers and other parties entering the payments industry, such as Google, Apple, Alibaba, Amazon and Meta"
+          }
+        }
+      ]
+    },
+    {
+      "id": "META",
+      "ticker": "META",
+      "name": "メタ・プラットフォームズ",
+      "name_en": "Meta Platforms",
+      "sub": "SNS",
+      "sub_en": "Social media",
+      "sub_short": "SNS",
+      "sub_short_en": "Social",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "決済分野に参入する競合に挙げる",
+          "text_en": "Named among new entrants competing in payments",
+          "source": {
+            "label": "Payoneer 10-K(2025年度)",
+            "label_en": "Payoneer 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1845815/000110465926020487/payo-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "We are also facing competitive pressure from non-traditional payment service providers and other parties entering the payments industry, such as Google, Apple, Alibaba, Amazon and Meta"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

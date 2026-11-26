@@ -1,0 +1,180 @@
+{
+  "root": {
+    "ticker": "BFAM",
+    "name": "ブライト・ホライズンズ・ファミリー・ソリューションズ",
+    "cik": 1437578,
+    "name_en": "Bright Horizons Family Solutions"
+  },
+  "rows": [
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in its 10-K)"
+    }
+  ],
+  "rivals": [
+    "KLC"
+  ],
+  "companies": [
+    {
+      "id": "KLC",
+      "ticker": "KLC",
+      "name": "キンダーケア",
+      "name_en": "KinderCare Learning",
+      "sub": "保育",
+      "sub_en": "Child care",
+      "sub_short": "保育",
+      "sub_short_en": "Childcare",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "企業内保育所の主な競合(米国)",
+          "text_en": "Principal U.S. competitor for employer-sponsored centers",
+          "source": {
+            "label": "Bright Horizons 10-K(2025年度)",
+            "label_en": "Bright Horizons 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1437578/000143757826000006/bfam-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our principal competitors for employer-sponsored centers include KinderCare Education in the United States and Busy Bees in the United Kingdom."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BUSYBEES",
+      "ticker": "BUSYBEES",
+      "name": "ビジー・ビーズ",
+      "name_en": "Busy Bees",
+      "sub": "保育",
+      "sub_en": "Child care",
+      "sub_short": "保育",
+      "sub_short_en": "Childcare",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "企業内保育所の主な競合(英国)",
+          "text_en": "Principal U.K. competitor for employer-sponsored centers",
+          "source": {
+            "label": "Bright Horizons 10-K(2025年度)",
+            "label_en": "Bright Horizons 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1437578/000143757826000006/bfam-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our principal competitors for employer-sponsored centers include KinderCare Education in the United States and Busy Bees in the United Kingdom."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LEARNINGCARE",
+      "ticker": "LEARNINGCARE",
+      "name": "ラーニング・ケア・グループ",
+      "name_en": "Learning Care Group",
+      "sub": "保育",
+      "sub_en": "Child care",
+      "sub_short": "保育",
+      "sub_short_en": "Childcare",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "園ごとに園児獲得で競合",
+          "text_en": "Competes center by center for enrollment",
+          "source": {
+            "label": "Bright Horizons 10-K(2025年度)",
+            "label_en": "Bright Horizons 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1437578/000143757826000006/bfam-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "along with many local and national providers, such as Affinity Education Group, CompaNanny, G8 Education, Goddard Schools, Goodstart Early Learning, Guardian Childcare & Education, KidsFoundation, Kids Planet, Learning Care Group, Partou, and Primrose Schools."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GODDARD",
+      "ticker": "GODDARD",
+      "name": "ゴダード・スクール",
+      "name_en": "Goddard Schools",
+      "sub": "保育",
+      "sub_en": "Child care",
+      "sub_short": "保育",
+      "sub_short_en": "Childcare",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "園ごとに園児獲得で競合",
+          "text_en": "Competes center by center for enrollment",
+          "source": {
+            "label": "Bright Horizons 10-K(2025年度)",
+            "label_en": "Bright Horizons 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1437578/000143757826000006/bfam-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "along with many local and national providers, such as Affinity Education Group, CompaNanny, G8 Education, Goddard Schools, Goodstart Early Learning, Guardian Childcare & Education, KidsFoundation, Kids Planet, Learning Care Group, Partou, and Primrose Schools."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PRIMROSE",
+      "ticker": "PRIMROSE",
+      "name": "プリムローズ・スクールズ",
+      "name_en": "Primrose Schools",
+      "sub": "保育",
+      "sub_en": "Child care",
+      "sub_short": "保育",
+      "sub_short_en": "Childcare",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "園ごとに園児獲得で競合",
+          "text_en": "Competes center by center for enrollment",
+          "source": {
+            "label": "Bright Horizons 10-K(2025年度)",
+            "label_en": "Bright Horizons 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1437578/000143757826000006/bfam-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "along with many local and national providers, such as Affinity Education Group, CompaNanny, G8 Education, Goddard Schools, Goodstart Early Learning, Guardian Childcare & Education, KidsFoundation, Kids Planet, Learning Care Group, Partou, and Primrose Schools."
+          }
+        }
+      ]
+    },
+    {
+      "id": "G8EDU",
+      "ticker": "G8EDU",
+      "name": "G8エデュケーション",
+      "name_en": "G8 Education",
+      "sub": "保育(豪州)",
+      "sub_en": "Child care (Australia)",
+      "sub_short": "保育",
+      "sub_short_en": "Childcare",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "園ごとに園児獲得で競合",
+          "text_en": "Competes center by center for enrollment",
+          "source": {
+            "label": "Bright Horizons 10-K(2025年度)",
+            "label_en": "Bright Horizons 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1437578/000143757826000006/bfam-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "along with many local and national providers, such as Affinity Education Group, CompaNanny, G8 Education, Goddard Schools, Goodstart Early Learning, Guardian Childcare & Education, KidsFoundation, Kids Planet, Learning Care Group, Partou, and Primrose Schools."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

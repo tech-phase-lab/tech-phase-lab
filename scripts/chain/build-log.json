@@ -2,10 +2,10 @@
  "about": "Per-ticker build log for the relationship maps (data/chain). Universe: company introductions (lib/research/company-introductions.data.json). Rule (#806): a map is published only with five or more companies whose relationship is quoted from an official filing or document. Statuses: ready, below_five (published before the rule; kept until the owner decides), skipped (tried; fewer than five verified companies; reason recorded), not_attempted.",
  "updated": "2026-11-26",
  "counts": {
-  "ready": 1028,
+  "ready": 1037,
   "below_five": 9,
-  "skipped": 0,
-  "not_attempted": 340
+  "skipped": 7,
+  "not_attempted": 324
  },
  "tickers": {
   "A": {
@@ -50,7 +50,8 @@
   },
   "ABCB": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "ABG": {
    "companies": 7,
@@ -69,7 +70,8 @@
   },
   "ABR": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "ABT": {
    "companies": 12,
@@ -78,7 +80,8 @@
   },
   "ACA": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "ACAD": {
    "companies": 7,
@@ -131,7 +134,8 @@
   },
   "ADAM": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "ADBE": {
    "companies": 24,
@@ -282,15 +286,18 @@
   },
   "AGNC": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "AGNT": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "AGX": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "AGYS": {
    "companies": 8,
@@ -304,7 +311,8 @@
   },
   "AHR": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "AIG": {
    "companies": 12,
@@ -312,8 +320,12 @@
    "in_universe": true
   },
   "AIN": {
-   "status": "not_attempted",
-   "in_universe": true
+   "status": "skipped",
+   "in_universe": true,
+   "tried": [
+    "Own and partners' 10-K/20-F (#806): Hexcel as supplier found"
+   ],
+   "reason": "Fewer than five verified companies (#806)"
   },
   "AIR": {
    "companies": 7,
@@ -322,7 +334,8 @@
   },
   "AIT": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "AJG": {
    "companies": 8,
@@ -346,7 +359,8 @@
   },
   "ALG": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "ALGM": {
    "companies": 5,
@@ -363,8 +377,13 @@
    "in_universe": true
   },
   "ALGN": {
-   "status": "not_attempted",
-   "in_universe": true
+   "status": "skipped",
+   "in_universe": true,
+   "tried": [
+    "Own 10-K (FY2025): no named competitors (only a Straumann/ClearCorrect lawsuit)",
+    "Full-text search: Solventum 10-K names Align as a competitor; other mentions are peer lists or biographies"
+   ],
+   "reason": "Fewer than five verified companies found"
   },
   "ALGT": {
    "companies": 6,
@@ -373,7 +392,8 @@
   },
   "ALHC": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "ALK": {
    "companies": 9,
@@ -427,7 +447,8 @@
   },
   "AM": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "AMAT": {
    "companies": 12,
@@ -456,7 +477,8 @@
   },
   "AMG": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "AMGN": {
    "companies": 17,
@@ -465,7 +487,8 @@
   },
   "AMH": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "AMKR": {
    "companies": 10,
@@ -473,8 +496,53 @@
    "in_universe": true
   },
   "AMN": {
-   "status": "not_attempted",
-   "in_universe": true
+   "status": "ready",
+   "in_universe": true,
+   "companies": 6,
+   "added_2026_11_26": [
+    {
+     "id": "CCRN",
+     "name": "Cross Country Healthcare",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/1142750/000162828026009918/amn-20251231.htm",
+     "label": "AMN Healthcare 10-K (FY2025)"
+    },
+    {
+     "id": "AYA",
+     "name": "Aya Healthcare",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/1142750/000162828026009918/amn-20251231.htm",
+     "label": "AMN Healthcare 10-K (FY2025)"
+    },
+    {
+     "id": "CHGHEALTH",
+     "name": "CHG Healthcare Services",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/1142750/000162828026009918/amn-20251231.htm",
+     "label": "AMN Healthcare 10-K (FY2025)"
+    },
+    {
+     "id": "AMERGIS",
+     "name": "Amergis",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/1142750/000162828026009918/amn-20251231.htm",
+     "label": "AMN Healthcare 10-K (FY2025)"
+    },
+    {
+     "id": "JACKSONHC",
+     "name": "Jackson Healthcare",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/1142750/000162828026009918/amn-20251231.htm",
+     "label": "AMN Healthcare 10-K (FY2025)"
+    },
+    {
+     "id": "LANGUAGELINE",
+     "name": "LanguageLine Solutions",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/1142750/000162828026009918/amn-20251231.htm",
+     "label": "AMN Healthcare 10-K (FY2025)"
+    }
+   ]
   },
   "AMP": {
    "companies": 5,
@@ -493,7 +561,8 @@
   },
   "AMSF": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "AMT": {
    "companies": 6,
@@ -517,7 +586,8 @@
   },
   "ANDE": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "ANET": {
    "companies": 17,
@@ -597,7 +667,8 @@
   },
   "APOG": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "APP": {
    "companies": 7,
@@ -695,7 +766,8 @@
   },
   "AROC": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "ARW": {
    "companies": 9,
@@ -778,7 +850,8 @@
   },
   "AUB": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "AVAV": {
    "companies": 11,
@@ -792,7 +865,8 @@
   },
   "AVNT": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "AVPT": {
    "companies": 5,
@@ -842,7 +916,8 @@
   },
   "AWR": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "AX": {
    "companies": 5,
@@ -866,7 +941,8 @@
   },
   "AYI": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "AZN": {
    "companies": 6,
@@ -885,7 +961,8 @@
   },
   "AZZ": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "BA": {
    "companies": 10,
@@ -909,7 +986,8 @@
   },
   "BANC": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "BAND": {
    "companies": 7,
@@ -918,11 +996,13 @@
   },
   "BANF": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "BANR": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "BAX": {
    "companies": 5,
@@ -931,11 +1011,13 @@
   },
   "BBT": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "BBWI": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "BBY": {
    "companies": 7,
@@ -954,11 +1036,13 @@
   },
   "BCO": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "BCPC": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "BDC": {
    "companies": 6,
@@ -976,8 +1060,53 @@
    "in_universe": true
   },
   "BFAM": {
-   "status": "not_attempted",
-   "in_universe": true
+   "status": "ready",
+   "in_universe": true,
+   "companies": 6,
+   "added_2026_11_26": [
+    {
+     "id": "KLC",
+     "name": "KinderCare Learning",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/1437578/000143757826000006/bfam-20251231.htm",
+     "label": "Bright Horizons 10-K (FY2025)"
+    },
+    {
+     "id": "BUSYBEES",
+     "name": "Busy Bees",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/1437578/000143757826000006/bfam-20251231.htm",
+     "label": "Bright Horizons 10-K (FY2025)"
+    },
+    {
+     "id": "LEARNINGCARE",
+     "name": "Learning Care Group",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/1437578/000143757826000006/bfam-20251231.htm",
+     "label": "Bright Horizons 10-K (FY2025)"
+    },
+    {
+     "id": "GODDARD",
+     "name": "Goddard Schools",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/1437578/000143757826000006/bfam-20251231.htm",
+     "label": "Bright Horizons 10-K (FY2025)"
+    },
+    {
+     "id": "PRIMROSE",
+     "name": "Primrose Schools",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/1437578/000143757826000006/bfam-20251231.htm",
+     "label": "Bright Horizons 10-K (FY2025)"
+    },
+    {
+     "id": "G8EDU",
+     "name": "G8 Education",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/1437578/000143757826000006/bfam-20251231.htm",
+     "label": "Bright Horizons 10-K (FY2025)"
+    }
+   ]
   },
   "BFS": {
    "companies": 9,
@@ -1001,7 +1130,8 @@
   },
   "BHF": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "BHP": {
    "companies": 7,
@@ -1030,19 +1160,74 @@
   },
   "BJ": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "BJRI": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "BKE": {
-   "status": "not_attempted",
-   "in_universe": true
+   "status": "ready",
+   "in_universe": true,
+   "companies": 7,
+   "added_2026_11_26": [
+    {
+     "id": "ANF",
+     "name": "Abercrombie & Fitch",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/885245/000088524526000012/bke-20260131.htm",
+     "label": "Buckle 10-K (FY ended Jan 2026)"
+    },
+    {
+     "id": "AEO",
+     "name": "American Eagle Outfitters",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/885245/000088524526000012/bke-20260131.htm",
+     "label": "Buckle 10-K (FY ended Jan 2026)"
+    },
+    {
+     "id": "BOOT",
+     "name": "Boot Barn",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/885245/000088524526000012/bke-20260131.htm",
+     "label": "Buckle 10-K (FY ended Jan 2026)"
+    },
+    {
+     "id": "URBN",
+     "name": "Urban Outfitters",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/885245/000088524526000012/bke-20260131.htm",
+     "label": "Buckle 10-K (FY ended Jan 2026)"
+    },
+    {
+     "id": "GAP",
+     "name": "Gap Inc.",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/885245/000088524526000012/bke-20260131.htm",
+     "label": "Buckle 10-K (FY ended Jan 2026)"
+    },
+    {
+     "id": "TLYS",
+     "name": "Tilly's",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/885245/000088524526000012/bke-20260131.htm",
+     "label": "Buckle 10-K (FY ended Jan 2026)"
+    },
+    {
+     "id": "HM",
+     "name": "H&M",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/885245/000088524526000012/bke-20260131.htm",
+     "label": "Buckle 10-K (FY ended Jan 2026)"
+    }
+   ]
   },
   "BKH": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "BKNG": {
    "companies": 6,
@@ -1087,7 +1272,8 @@
   },
   "BLFS": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "BLK": {
    "companies": 7,
@@ -1154,7 +1340,8 @@
   },
   "BOH": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "BOOT": {
    "status": "not_attempted",
@@ -1241,7 +1428,8 @@
   },
   "BXMT": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "BXP": {
    "companies": 10,
@@ -1260,7 +1448,8 @@
   },
   "CACC": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "CACI": {
    "companies": 11,
@@ -1279,7 +1468,8 @@
   },
   "CAKE": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "CALM": {
    "companies": 5,
@@ -1338,7 +1528,8 @@
   },
   "CASY": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "CAT": {
    "companies": 13,
@@ -1362,15 +1553,18 @@
   },
   "CBRL": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "CBSH": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "CBT": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "CBU": {
    "status": "not_attempted",
@@ -1451,7 +1645,8 @@
   },
   "CCS": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "CDE": {
    "companies": 6,
@@ -1465,7 +1660,8 @@
   },
   "CDP": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "CDW": {
    "companies": 10,
@@ -1504,7 +1700,8 @@
   },
   "CFFN": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "CFG": {
    "companies": 10,
@@ -1513,11 +1710,13 @@
   },
   "CGNX": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "CHCO": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "CHD": {
    "companies": 8,
@@ -1531,11 +1730,13 @@
   },
   "CHE": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "CHEF": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "CHH": {
    "companies": 6,
@@ -1574,7 +1775,8 @@
   },
   "CINF": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "CL": {
    "companies": 8,
@@ -1628,7 +1830,8 @@
   },
   "CMS": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "CNC": {
    "companies": 8,
@@ -1647,7 +1850,8 @@
   },
   "CNM": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "CNP": {
    "companies": 6,
@@ -1716,7 +1920,8 @@
   },
   "CON": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "COO": {
    "companies": 8,
@@ -1760,7 +1965,8 @@
   },
   "CPF": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "CPRT": {
    "companies": 5,
@@ -1769,7 +1975,8 @@
   },
   "CPT": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "CQP": {
    "companies": 8,
@@ -1803,7 +2010,8 @@
   },
   "CRK": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "CRL": {
    "companies": 9,
@@ -1822,7 +2030,8 @@
   },
   "CRS": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "CRSR": {
    "companies": 11,
@@ -1836,7 +2045,8 @@
   },
   "CRVL": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "CRWD": {
    "companies": 19,
@@ -1860,7 +2070,8 @@
   },
   "CSR": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "CSW": {
    "companies": 7,
@@ -1899,19 +2110,23 @@
   },
   "CUBE": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "CUZ": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "CVBF": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "CVCO": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "CVI": {
    "companies": 7,
@@ -1944,7 +2159,8 @@
   },
   "CVSA": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "CVX": {
    "companies": 6,
@@ -1973,7 +2189,8 @@
   },
   "CWT": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "CXM": {
    "companies": 11,
@@ -1993,7 +2210,8 @@
   },
   "CXW": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "CYTK": {
    "companies": 7,
@@ -2047,7 +2265,8 @@
   },
   "DCOM": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "DD": {
    "companies": 10,
@@ -2066,7 +2285,8 @@
   },
   "DEA": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "DECK": {
    "companies": 5,
@@ -2085,11 +2305,13 @@
   },
   "DFH": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "DFIN": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "DG": {
    "companies": 7,
@@ -2131,7 +2353,8 @@
   },
   "DHI": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "DINO": {
    "companies": 5,
@@ -2170,7 +2393,8 @@
   },
   "DLX": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "DMC": {
    "companies": 5,
@@ -2179,11 +2403,13 @@
   },
   "DNOW": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "DOC": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "DOCN": {
    "companies": 7,
@@ -2192,7 +2418,8 @@
   },
   "DOCS": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "DOCU": {
    "companies": 14,
@@ -2226,7 +2453,8 @@
   },
   "DRI": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "DT": {
    "companies": 12,
@@ -2311,7 +2539,8 @@
   },
   "DXPE": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "DY": {
    "companies": 8,
@@ -2330,7 +2559,8 @@
   },
   "EBC": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "ECHO": {
    "companies": 7,
@@ -2344,7 +2574,8 @@
   },
   "ECPG": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "ED": {
    "companies": 6,
@@ -2358,7 +2589,8 @@
   },
   "EFC": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "EFOR": {
    "companies": 9,
@@ -2377,7 +2609,8 @@
   },
   "EGBN": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "EGHT": {
    "companies": 9,
@@ -2386,7 +2619,8 @@
   },
   "EGP": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "EHC": {
    "status": "not_attempted",
@@ -2394,7 +2628,8 @@
   },
   "EIG": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "EL": {
    "companies": 12,
@@ -2413,7 +2648,8 @@
   },
   "ELS": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "ELV": {
    "companies": 10,
@@ -2457,7 +2693,8 @@
   },
   "ENSG": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "ENTG": {
    "companies": 5,
@@ -2471,7 +2708,8 @@
   },
   "EPAC": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "EPAM": {
    "companies": 10,
@@ -2495,7 +2733,8 @@
   },
   "EQH": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "EQIX": {
    "companies": 15,
@@ -2514,7 +2753,8 @@
   },
   "ERIE": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "ES": {
    "companies": 7,
@@ -2523,7 +2763,8 @@
   },
   "ESAB": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "ESE": {
    "companies": 7,
@@ -2537,7 +2778,8 @@
   },
   "ESS": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "ESTC": {
    "companies": 11,
@@ -2587,7 +2829,8 @@
   },
   "EVRG": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "EW": {
    "companies": 5,
@@ -2601,7 +2844,8 @@
   },
   "EXC": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "EXE": {
    "companies": 5,
@@ -2614,8 +2858,46 @@
    "in_universe": true
   },
   "EXLS": {
-   "status": "not_attempted",
-   "in_universe": true
+   "status": "ready",
+   "in_universe": true,
+   "companies": 5,
+   "added_2026_11_26": [
+    {
+     "id": "CTSH",
+     "name": "Cognizant",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/1297989/000129798926000008/exls-20251231.htm",
+     "label": "EXL 10-K (FY2025)"
+    },
+    {
+     "id": "G",
+     "name": "Genpact",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/1297989/000129798926000008/exls-20251231.htm",
+     "label": "EXL 10-K (FY2025)"
+    },
+    {
+     "id": "INFY",
+     "name": "Infosys",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/1297989/000129798926000008/exls-20251231.htm",
+     "label": "EXL 10-K (FY2025)"
+    },
+    {
+     "id": "NTTDATA",
+     "name": "NTT DATA",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/1297989/000129798926000008/exls-20251231.htm",
+     "label": "EXL 10-K (FY2025)"
+    },
+    {
+     "id": "TCS",
+     "name": "Tata Consultancy Services",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/1297989/000129798926000008/exls-20251231.htm",
+     "label": "EXL 10-K (FY2025)"
+    }
+   ]
   },
   "EXP": {
    "companies": 8,
@@ -2624,7 +2906,8 @@
   },
   "EXPD": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "EXPE": {
    "companies": 6,
@@ -2633,7 +2916,8 @@
   },
   "EXPO": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "EXR": {
    "companies": 5,
@@ -2647,7 +2931,8 @@
   },
   "EZPW": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "F": {
    "companies": 8,
@@ -2671,11 +2956,13 @@
   },
   "FBNC": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "FCF": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "FCN": {
    "status": "not_attempted",
@@ -2683,7 +2970,8 @@
   },
   "FCPT": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "FCX": {
    "companies": 8,
@@ -2728,7 +3016,8 @@
   },
   "FELE": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "FERG": {
    "companies": 5,
@@ -2737,11 +3026,13 @@
   },
   "FFBC": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "FFIN": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "FFIV": {
    "companies": 12,
@@ -2750,11 +3041,13 @@
   },
   "FHB": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "FIBK": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "FICO": {
    "companies": 10,
@@ -2817,7 +3110,8 @@
   },
   "FMC": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "FMX": {
    "companies": 5,
@@ -2831,7 +3125,8 @@
   },
   "FNB": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "FND": {
    "companies": 5,
@@ -2860,7 +3155,8 @@
   },
   "FR": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "FROG": {
    "companies": 6,
@@ -2889,7 +3185,8 @@
   },
   "FTDR": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "FTI": {
    "companies": 10,
@@ -2908,11 +3205,13 @@
   },
   "FUL": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "FULT": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "FUN": {
    "companies": 5,
@@ -2926,7 +3225,8 @@
   },
   "GAP": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "GATX": {
    "companies": 10,
@@ -2955,7 +3255,8 @@
   },
   "GEF": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "GEHC": {
    "companies": 9,
@@ -2969,7 +3270,8 @@
   },
   "GEO": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "GEV": {
    "companies": 19,
@@ -2993,7 +3295,8 @@
   },
   "GGG": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "GIII": {
    "companies": 8,
@@ -3017,7 +3320,8 @@
   },
   "GL": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "GLPI": {
    "companies": 7,
@@ -3046,7 +3350,8 @@
   },
   "GNL": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "GNRC": {
    "companies": 10,
@@ -3100,7 +3405,8 @@
   },
   "GRBK": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "GRMN": {
    "companies": 10,
@@ -3130,7 +3436,8 @@
   },
   "GSHD": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "GSK": {
    "companies": 6,
@@ -3144,7 +3451,8 @@
   },
   "GTES": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "GTLB": {
    "companies": 7,
@@ -3152,8 +3460,13 @@
    "in_universe": true
   },
   "GTY": {
-   "status": "not_attempted",
-   "in_universe": true
+   "status": "skipped",
+   "in_universe": true,
+   "tried": [
+    "Own 10-K (FY2025): significant tenants ARKO and Global Partners",
+    "MetLife note agreement (MetLife map)"
+   ],
+   "reason": "3 verified companies"
   },
   "GVA": {
    "companies": 6,
@@ -3187,7 +3500,8 @@
   },
   "HAFC": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "HAL": {
    "companies": 18,
@@ -3206,11 +3520,18 @@
   },
   "HASI": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "HAYW": {
-   "status": "not_attempted",
-   "in_universe": true
+   "status": "skipped",
+   "in_universe": true,
+   "tried": [
+    "Own 10-K (FY2025): Pool Corporation (33% of sales), Heritage Pool Supply Group and Baystate Pool Supplies named as distributors; competitors not named",
+    "Pool Corporation 10-K names Hayward as a top supplier",
+    "Full-text search 'Hayward': unrelated places and people"
+   ],
+   "reason": "3 verified companies"
   },
   "HBAN": {
    "companies": 10,
@@ -3224,11 +3545,13 @@
   },
   "HCI": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "HCSG": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "HD": {
    "companies": 17,
@@ -3247,7 +3570,8 @@
   },
   "HIG": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "HII": {
    "companies": 9,
@@ -3286,7 +3610,8 @@
   },
   "HLNE": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "HLT": {
    "companies": 10,
@@ -3329,7 +3654,8 @@
   },
   "HOPE": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "HPE": {
    "companies": 14,
@@ -3357,11 +3683,13 @@
   },
   "HR": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "HRB": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "HRL": {
    "companies": 6,
@@ -3395,15 +3723,18 @@
   },
   "HTH": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "HTLD": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "HTO": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "HUBB": {
    "companies": 9,
@@ -3443,11 +3774,13 @@
   },
   "HWC": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "HWKN": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "HWM": {
    "companies": 6,
@@ -3471,7 +3804,8 @@
   },
   "IBKR": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "IBM": {
    "companies": 29,
@@ -3480,11 +3814,13 @@
   },
   "IBOC": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "IBP": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "ICE": {
    "companies": 6,
@@ -3509,7 +3845,8 @@
   },
   "IDA": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "IDCC": {
    "companies": 9,
@@ -3523,11 +3860,13 @@
   },
   "IESC": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "IEX": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "IFF": {
    "companies": 7,
@@ -3551,7 +3890,8 @@
   },
   "INDB": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "INDI": {
    "companies": 6,
@@ -3585,7 +3925,8 @@
   },
   "INVH": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "IONQ": {
    "companies": 18,
@@ -3594,7 +3935,8 @@
   },
   "IOSP": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "IOT": {
    "companies": 7,
@@ -3648,7 +3990,8 @@
   },
   "IT": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "ITGR": {
    "companies": 10,
@@ -3691,7 +4034,8 @@
   },
   "JBGS": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "JBHT": {
    "companies": 8,
@@ -3705,7 +4049,8 @@
   },
   "JBSS": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "JBTM": {
    "companies": 10,
@@ -3729,7 +4074,8 @@
   },
   "JJSF": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "JKHY": {
    "companies": 8,
@@ -3748,7 +4094,8 @@
   },
   "JOE": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "JPM": {
    "companies": 15,
@@ -3757,7 +4104,8 @@
   },
   "KAI": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "KBR": {
    "companies": 9,
@@ -3831,11 +4179,13 @@
   },
   "KMT": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "KMX": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "KN": {
    "companies": 7,
@@ -3927,7 +4277,8 @@
   },
   "L": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "LAD": {
    "companies": 5,
@@ -3941,11 +4292,13 @@
   },
   "LAUR": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "LAZ": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "LBRT": {
    "companies": 11,
@@ -3998,7 +4351,8 @@
   },
   "LGIH": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "LGND": {
    "companies": 10,
@@ -4046,7 +4400,8 @@
   },
   "LKFN": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "LKQ": {
    "companies": 5,
@@ -4084,11 +4439,13 @@
   },
   "LNN": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "LNT": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "LNTH": {
    "companies": 10,
@@ -4102,7 +4459,8 @@
   },
   "LOPE": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "LOW": {
    "companies": 7,
@@ -4110,16 +4468,22 @@
    "in_universe": true
   },
   "LPG": {
-   "status": "not_attempted",
-   "in_universe": true
+   "status": "skipped",
+   "in_universe": true,
+   "tried": [
+    "Own and partners' 10-K/20-F (#806): BW LPG as competitor found"
+   ],
+   "reason": "Fewer than five verified companies (#806)"
   },
   "LPX": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "LQDT": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "LRCX": {
    "companies": 22,
@@ -4138,7 +4502,8 @@
   },
   "LSTR": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "LTC": {
    "companies": 6,
@@ -4177,7 +4542,8 @@
   },
   "LXP": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "LYB": {
    "companies": 5,
@@ -4205,11 +4571,13 @@
   },
   "LZ": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "LZB": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "MA": {
    "companies": 9,
@@ -4218,7 +4586,8 @@
   },
   "MAA": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "MAC": {
    "companies": 10,
@@ -4257,11 +4626,57 @@
   },
   "MATW": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "MATX": {
-   "status": "not_attempted",
-   "in_universe": true
+   "status": "ready",
+   "in_universe": true,
+   "companies": 6,
+   "added_2026_11_26": [
+    {
+     "id": "CMACGM",
+     "name": "CMA CGM",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/3453/000110465926020944/matx-20251231x10k.htm",
+     "label": "Matson 10-K (FY2025)"
+    },
+    {
+     "id": "ZIM",
+     "name": "ZIM Integrated Shipping",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/3453/000110465926020944/matx-20251231x10k.htm",
+     "label": "Matson 10-K (FY2025)"
+    },
+    {
+     "id": "COSCO",
+     "name": "COSCO Shipping",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/3453/000110465926020944/matx-20251231x10k.htm",
+     "label": "Matson 10-K (FY2025)"
+    },
+    {
+     "id": "HEDE",
+     "name": "Hede Shipping",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/3453/000110465926020944/matx-20251231x10k.htm",
+     "label": "Matson 10-K (FY2025)"
+    },
+    {
+     "id": "TOTE",
+     "name": "Totem Ocean Trailer Express",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/3453/000110465926020944/matx-20251231x10k.htm",
+     "label": "Matson 10-K (FY2025)"
+    },
+    {
+     "id": "SSAT",
+     "name": "SSA Terminals",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/3453/000110465926020944/matx-20251231x10k.htm",
+     "label": "Matson 10-K (FY2025)"
+    }
+   ]
   },
   "MBC": {
    "companies": 5,
@@ -4270,7 +4685,8 @@
   },
   "MBIN": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "MC": {
    "companies": 9,
@@ -4299,11 +4715,13 @@
   },
   "MCRI": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "MCY": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "MDB": {
    "companies": 15,
@@ -4407,15 +4825,18 @@
   },
   "MGY": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "MHK": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "MHO": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "MIDD": {
    "companies": 12,
@@ -4478,7 +4899,8 @@
   },
   "MMS": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "MMSI": {
    "companies": 12,
@@ -4568,15 +4990,18 @@
   },
   "MRP": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "MRSH": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "MRTN": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "MRVL": {
    "companies": 39,
@@ -4590,7 +5015,8 @@
   },
   "MSA": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "MSCI": {
    "companies": 5,
@@ -4599,7 +5025,8 @@
   },
   "MSEX": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "MSFT": {
    "companies": 24,
@@ -4618,7 +5045,8 @@
   },
   "MSM": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "MSTR": {
    "companies": 7,
@@ -4653,7 +5081,8 @@
   },
   "MTD": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "MTDR": {
    "companies": 6,
@@ -4667,7 +5096,8 @@
   },
   "MTH": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "MTN": {
    "companies": 12,
@@ -4691,7 +5121,8 @@
   },
   "MTX": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "MTZ": {
    "companies": 8,
@@ -4705,11 +5136,13 @@
   },
   "MUR": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "MUSA": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "MWA": {
    "companies": 6,
@@ -4723,7 +5156,8 @@
   },
   "MZTI": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "NABL": {
    "companies": 10,
@@ -4751,7 +5185,8 @@
   },
   "NBTB": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "NCLH": {
    "companies": 5,
@@ -4770,7 +5205,8 @@
   },
   "NDSN": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "NE": {
    "companies": 9,
@@ -4809,8 +5245,12 @@
    "in_universe": true
   },
   "NEOG": {
-   "status": "not_attempted",
-   "in_universe": true
+   "status": "skipped",
+   "in_universe": true,
+   "tried": [
+    "Own and partners' 10-K/20-F (#806)"
+   ],
+   "reason": "Fewer than five verified companies (#806)"
   },
   "NET": {
    "companies": 10,
@@ -4839,7 +5279,8 @@
   },
   "NHC": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "NHI": {
    "companies": 9,
@@ -4862,7 +5303,8 @@
   },
   "NJR": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "NKE": {
    "companies": 12,
@@ -4871,7 +5313,8 @@
   },
   "NLY": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "NMIH": {
    "companies": 7,
@@ -4910,7 +5353,8 @@
   },
   "NOVT": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "NOW": {
    "companies": 26,
@@ -4919,11 +5363,13 @@
   },
   "NPK": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "NPO": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "NRG": {
    "companies": 8,
@@ -4963,7 +5409,8 @@
   },
   "NSSC": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "NTAP": {
    "companies": 14,
@@ -5012,7 +5459,8 @@
   },
   "NVR": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "NVS": {
    "companies": 7,
@@ -5031,11 +5479,13 @@
   },
   "NWBI": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "NWE": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "NWL": {
    "companies": 8,
@@ -5044,7 +5494,8 @@
   },
   "NWN": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "NWSA": {
    "companies": 10,
@@ -5052,8 +5503,53 @@
    "in_universe": true
   },
   "NX": {
-   "status": "not_attempted",
-   "in_universe": true
+   "status": "ready",
+   "in_universe": true,
+   "companies": 6,
+   "added_2026_11_26": [
+    {
+     "id": "ASSA",
+     "name": "ASSA ABLOY",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/1423221/000142322125000100/nx-20251031.htm",
+     "label": "Quanex 10-K (FY ended Oct 2025)"
+    },
+    {
+     "id": "HOPPE",
+     "name": "Hoppe",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/1423221/000142322125000100/nx-20251031.htm",
+     "label": "Quanex 10-K (FY ended Oct 2025)"
+    },
+    {
+     "id": "ROTO",
+     "name": "Roto",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/1423221/000142322125000100/nx-20251031.htm",
+     "label": "Quanex 10-K (FY ended Oct 2025)"
+    },
+    {
+     "id": "INTERLOCK",
+     "name": "Interlock",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/1423221/000142322125000100/nx-20251031.htm",
+     "label": "Quanex 10-K (FY ended Oct 2025)"
+    },
+    {
+     "id": "VISIONHW",
+     "name": "Vision Hardware",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/1423221/000142322125000100/nx-20251031.htm",
+     "label": "Quanex 10-K (FY ended Oct 2025)"
+    },
+    {
+     "id": "RITESCREEN",
+     "name": "RiteScreen",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/1423221/000142322125000100/nx-20251031.htm",
+     "label": "Quanex 10-K (FY ended Oct 2025)"
+    }
+   ]
   },
   "NXPI": {
    "companies": 23,
@@ -5096,11 +5592,13 @@
   },
   "OFG": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "OGE": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "OGN": {
    "companies": 9,
@@ -5109,7 +5607,8 @@
   },
   "OGS": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "OHI": {
    "companies": 6,
@@ -5123,7 +5622,8 @@
   },
   "OII": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "OKE": {
    "companies": 6,
@@ -5175,7 +5675,8 @@
   },
   "OMCL": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "ON": {
    "companies": 13,
@@ -5339,8 +5840,12 @@
    "in_universe": true
   },
   "PATK": {
-   "status": "not_attempted",
-   "in_universe": true
+   "status": "skipped",
+   "in_universe": true,
+   "tried": [
+    "Own and partners' 10-K/20-F (#806, Nov 24): RecPro acquisition found"
+   ],
+   "reason": "Fewer than five verified companies (#806)"
   },
   "PAYC": {
    "companies": 9,
@@ -5348,8 +5853,46 @@
    "in_universe": true
   },
   "PAYO": {
-   "status": "not_attempted",
-   "in_universe": true
+   "status": "ready",
+   "in_universe": true,
+   "companies": 5,
+   "added_2026_11_26": [
+    {
+     "id": "GOOGL",
+     "name": "Alphabet (Google)",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/1845815/000110465926020487/payo-20251231x10k.htm",
+     "label": "Payoneer 10-K (FY2025)"
+    },
+    {
+     "id": "AAPL",
+     "name": "Apple",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/1845815/000110465926020487/payo-20251231x10k.htm",
+     "label": "Payoneer 10-K (FY2025)"
+    },
+    {
+     "id": "BABA",
+     "name": "Alibaba",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/1845815/000110465926020487/payo-20251231x10k.htm",
+     "label": "Payoneer 10-K (FY2025)"
+    },
+    {
+     "id": "AMZN",
+     "name": "Amazon.com",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/1845815/000110465926020487/payo-20251231x10k.htm",
+     "label": "Payoneer 10-K (FY2025)"
+    },
+    {
+     "id": "META",
+     "name": "Meta Platforms",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/1845815/000110465926020487/payo-20251231x10k.htm",
+     "label": "Payoneer 10-K (FY2025)"
+    }
+   ]
   },
   "PAYX": {
    "companies": 8,
@@ -5358,11 +5901,13 @@
   },
   "PB": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "PBI": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "PBR": {
    "companies": 6,
@@ -5422,7 +5967,8 @@
   },
   "PEB": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "PECO": {
    "companies": 7,
@@ -5431,7 +5977,8 @@
   },
   "PEG": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "PEGA": {
    "companies": 12,
@@ -5470,7 +6017,8 @@
   },
   "PFS": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "PG": {
    "companies": 10,
@@ -5479,7 +6027,8 @@
   },
   "PGNY": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "PGR": {
    "companies": 8,
@@ -5503,7 +6052,8 @@
   },
   "PHM": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "PI": {
    "companies": 6,
@@ -5527,11 +6077,13 @@
   },
   "PJT": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "PK": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "PKG": {
    "companies": 7,
@@ -5583,7 +6135,8 @@
   },
   "PLNT": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "PLTR": {
    "companies": 24,
@@ -5612,7 +6165,8 @@
   },
   "PNC": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "PNFP": {
    "companies": 5,
@@ -5685,11 +6239,13 @@
   },
   "PRDO": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "PRG": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "PRGS": {
    "companies": 6,
@@ -5708,11 +6264,13 @@
   },
   "PRLB": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "PRSU": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "PRU": {
    "companies": 5,
@@ -5721,7 +6279,8 @@
   },
   "PRVA": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "PSA": {
    "companies": 5,
@@ -5730,7 +6289,8 @@
   },
   "PSMT": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "PSN": {
    "companies": 7,
@@ -5774,7 +6334,8 @@
   },
   "PZZA": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "Q": {
    "companies": 7,
@@ -5833,11 +6394,13 @@
   },
   "RAMP": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "RBA": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "RBC": {
    "companies": 7,
@@ -5896,7 +6459,8 @@
   },
   "REX": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "REXR": {
    "companies": 8,
@@ -5935,7 +6499,8 @@
   },
   "RH": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "RHI": {
    "companies": 5,
@@ -5999,7 +6564,8 @@
   },
   "RNST": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "ROAD": {
    "companies": 6,
@@ -6008,11 +6574,13 @@
   },
   "ROCK": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "ROG": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "ROIV": {
    "companies": 9,
@@ -6056,11 +6624,13 @@
   },
   "RPM": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "RRC": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "RRX": {
    "companies": 5,
@@ -6079,7 +6649,8 @@
   },
   "RSI": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "RTX": {
    "companies": 9,
@@ -6108,7 +6679,8 @@
   },
   "RYAN": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "RYN": {
    "companies": 6,
@@ -6127,7 +6699,8 @@
   },
   "SAFE": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "SAFT": {
    "companies": 6,
@@ -6171,11 +6744,13 @@
   },
   "SBRA": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "SBSI": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "SBUX": {
    "companies": 5,
@@ -6189,7 +6764,8 @@
   },
   "SCHL": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "SCHW": {
    "companies": 7,
@@ -6198,11 +6774,13 @@
   },
   "SCI": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "SCL": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "SCSC": {
    "companies": 13,
@@ -6231,7 +6809,8 @@
   },
   "SEZL": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "SFBS": {
    "companies": 6,
@@ -6245,11 +6824,13 @@
   },
   "SFNC": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "SGI": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "SHAK": {
    "companies": 5,
@@ -6258,7 +6839,8 @@
   },
   "SHC": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "SHEL": {
    "companies": 8,
@@ -6302,7 +6884,8 @@
   },
   "SIGI": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "SIMO": {
    "companies": 9,
@@ -6366,7 +6949,8 @@
   },
   "SLM": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "SMCI": {
    "companies": 6,
@@ -6385,7 +6969,8 @@
   },
   "SMPL": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "SMR": {
    "companies": 20,
@@ -6399,7 +6984,8 @@
   },
   "SNA": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "SNAP": {
    "companies": 9,
@@ -6413,7 +6999,8 @@
   },
   "SNDR": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "SNEX": {
    "companies": 8,
@@ -6518,7 +7105,8 @@
   },
   "SPNT": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "SPOT": {
    "companies": 6,
@@ -6537,7 +7125,8 @@
   },
   "SR": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "SRE": {
    "companies": 10,
@@ -6551,19 +7140,23 @@
   },
   "SSB": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "SSD": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "STAA": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "STBA": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "STE": {
    "companies": 9,
@@ -6572,7 +7165,8 @@
   },
   "STEP": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "STLA": {
    "companies": 5,
@@ -6591,11 +7185,13 @@
   },
   "STRA": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "STRL": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "STT": {
    "companies": 8,
@@ -6604,7 +7200,8 @@
   },
   "STWD": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "STX": {
    "companies": 14,
@@ -6623,7 +7220,8 @@
   },
   "SUI": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "SUPN": {
    "companies": 7,
@@ -6646,16 +7244,63 @@
    "in_universe": true
   },
   "SWX": {
-   "status": "not_attempted",
-   "in_universe": true
+   "status": "ready",
+   "in_universe": true,
+   "companies": 6,
+   "added_2026_11_26": [
+    {
+     "id": "CTRI",
+     "name": "Centuri Holdings",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1692115/000169211526000062/swx-20251231.htm",
+     "label": "Southwest Gas Holdings 10-K (FY2025)"
+    },
+    {
+     "id": "ELPASONG",
+     "name": "El Paso Natural Gas",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/1692115/000169211526000062/swx-20251231.htm",
+     "label": "Southwest Gas Holdings 10-K (FY2025)"
+    },
+    {
+     "id": "KERNRIVER",
+     "name": "Kern River Gas Transmission",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/1692115/000169211526000062/swx-20251231.htm",
+     "label": "Southwest Gas Holdings 10-K (FY2025)"
+    },
+    {
+     "id": "TRANSWESTERN",
+     "name": "Transwestern Pipeline",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/1692115/000169211526000062/swx-20251231.htm",
+     "label": "Southwest Gas Holdings 10-K (FY2025)"
+    },
+    {
+     "id": "TUSCARORA",
+     "name": "Tuscarora Gas Transmission",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/1692115/000169211526000062/swx-20251231.htm",
+     "label": "Southwest Gas Holdings 10-K (FY2025)"
+    },
+    {
+     "id": "RUBYPIPELINE",
+     "name": "Ruby Pipeline",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/1692115/000169211526000062/swx-20251231.htm",
+     "label": "Southwest Gas Holdings 10-K (FY2025)"
+    }
+   ]
   },
   "SXI": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "SXT": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "SYF": {
    "companies": 10,
@@ -6778,7 +7423,8 @@
   },
   "TFIN": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "TFX": {
    "companies": 7,
@@ -6836,7 +7482,8 @@
   },
   "TMDX": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "TME": {
    "companies": 7,
@@ -6855,7 +7502,8 @@
   },
   "TNC": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "TNDM": {
    "companies": 8,
@@ -6869,11 +7517,13 @@
   },
   "TOL": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "TPC": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "TPL": {
    "companies": 7,
@@ -6887,7 +7537,8 @@
   },
   "TR": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "TREX": {
    "companies": 8,
@@ -6916,7 +7567,8 @@
   },
   "TRMK": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "TRN": {
    "companies": 5,
@@ -6925,11 +7577,13 @@
   },
   "TRNO": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "TROW": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "TRU": {
    "companies": 9,
@@ -6938,7 +7592,8 @@
   },
   "TRUP": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "TRV": {
    "companies": 6,
@@ -7017,7 +7672,8 @@
   },
   "TXRH": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "TXT": {
    "companies": 9,
@@ -7055,7 +7711,8 @@
   },
   "UDR": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "UE": {
    "companies": 8,
@@ -7064,19 +7721,23 @@
   },
   "UFCS": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "UFPI": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "UFPT": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "UGI": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "UHS": {
    "companies": 5,
@@ -7105,7 +7766,8 @@
   },
   "UNF": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "UNFI": {
    "companies": 7,
@@ -7119,7 +7781,8 @@
   },
   "UNIT": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "UNM": {
    "companies": 5,
@@ -7168,7 +7831,8 @@
   },
   "URBN": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "URI": {
    "companies": 8,
@@ -7177,7 +7841,8 @@
   },
   "USB": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "USFD": {
    "companies": 8,
@@ -7186,11 +7851,13 @@
   },
   "USLM": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "USPH": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "UTHR": {
    "companies": 11,
@@ -7204,7 +7871,8 @@
   },
   "UTL": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "UTZ": {
    "companies": 8,
@@ -7243,7 +7911,8 @@
   },
   "VCTR": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "VECO": {
    "companies": 5,
@@ -7272,7 +7941,8 @@
   },
   "VICR": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "VIR": {
    "companies": 6,
@@ -7311,7 +7981,8 @@
   },
   "VMI": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "VNO": {
    "companies": 6,
@@ -7320,7 +7991,8 @@
   },
   "VNT": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "VOYA": {
    "companies": 11,
@@ -7354,7 +8026,8 @@
   },
   "VRTS": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "VRTX": {
    "companies": 7,
@@ -7368,7 +8041,8 @@
   },
   "VSEC": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "VSH": {
    "companies": 7,
@@ -7377,7 +8051,8 @@
   },
   "VSNT": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "VST": {
    "companies": 9,
@@ -7436,11 +8111,13 @@
   },
   "WABC": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "WAFD": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "WAL": {
    "companies": 7,
@@ -7488,7 +8165,8 @@
   },
   "WDFC": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "WEC": {
    "companies": 5,
@@ -7536,7 +8214,8 @@
   },
   "WHD": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "WHR": {
    "companies": 9,
@@ -7549,7 +8228,8 @@
   },
   "WING": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "WK": {
    "companies": 2,
@@ -7583,7 +8263,8 @@
   },
   "WMS": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "WMT": {
    "companies": 11,
@@ -7606,12 +8287,51 @@
    "in_universe": false
   },
   "WRB": {
-   "status": "not_attempted",
-   "in_universe": true
+   "status": "ready",
+   "in_universe": true,
+   "companies": 5,
+   "added_2026_11_26": [
+    {
+     "id": "MSINSURANCE",
+     "name": "Mitsui Sumitomo Insurance",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/11544/000001154426000005/wrb-20251231.htm",
+     "label": "W. R. Berkley 10-K (FY2025)"
+    },
+    {
+     "id": "SWISSRE",
+     "name": "Swiss Re Group",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/11544/000001154426000005/wrb-20251231.htm",
+     "label": "W. R. Berkley 10-K (FY2025)"
+    },
+    {
+     "id": "MUNICHRE",
+     "name": "Munich Re Group",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/11544/000001154426000005/wrb-20251231.htm",
+     "label": "W. R. Berkley 10-K (FY2025)"
+    },
+    {
+     "id": "BRK",
+     "name": "Berkshire Hathaway",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/11544/000001154426000005/wrb-20251231.htm",
+     "label": "W. R. Berkley 10-K (FY2025)"
+    },
+    {
+     "id": "HANNOVERRE",
+     "name": "Hannover Re",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/11544/000001154426000005/wrb-20251231.htm",
+     "label": "W. R. Berkley 10-K (FY2025)"
+    }
+   ]
   },
   "WRLD": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "WS": {
    "companies": 5,
@@ -7620,15 +8340,18 @@
   },
   "WSBC": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "WSC": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "WSFS": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "WSM": {
    "companies": 7,
@@ -7652,11 +8375,13 @@
   },
   "WTFC": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "WTRG": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "WTS": {
    "companies": 6,
@@ -7715,7 +8440,8 @@
   },
   "XPEL": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "XPO": {
    "companies": 6,
@@ -7818,7 +8544,8 @@
   },
   "ZION": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   },
   "ZM": {
    "companies": 12,
@@ -7842,7 +8569,8 @@
   },
   "ZWS": {
    "status": "not_attempted",
-   "in_universe": true
+   "in_universe": true,
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
   }
  }
 }
