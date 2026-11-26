@@ -11,8 +11,9 @@ export type Expectation = { id: string; resultJa: string; resultEn: string };
 /** A scheduled release; `dateOnly` when only the day is announced (the FOMC meeting days). */
 export type Scheduled = { id: string; at: string; dateOnly?: boolean };
 
-type Unit = "pct" | "jobs" | "index" | "rate";
-type Spec = { unit: Unit; label: Copy; en: RegExp; ja: RegExp; about: Copy; official: { host: RegExp; url: string; name: Copy } };
+type Unit = "pct" | "jobs" | "index" | "rate" | "count";
+/** `revised`: the result states its change from the previous figure as revised (jobless claims), so that figure is read from it. */
+type Spec = { unit: Unit; label: Copy; en: RegExp; ja: RegExp; about: Copy; official: { host: RegExp; url: string; name: Copy }; revised?: { en: RegExp; ja: RegExp } };
 
 const num = "([+\\-−]?\\d[\\d,]*(?:\\.\\d+)?)";
 const monthly = { en: new RegExp(`${num}% (?:month over month|from the previous month|MoM)`, "i"), ja: new RegExp(`前月比\\s*${num}%`) };
@@ -48,6 +49,10 @@ export const INDICATORS: Record<string, Spec> = {
   ism: { unit: "index", label: { ja: "景況指数", en: "PMI" }, en: /PMI\s*(\d+(?:\.\d+)?)/, ja: /指数\s*(\d+(?:\.\d+)?)/,
     about: { ja: "製造業の購買担当者へのアンケートから作る景況感です。50を上回ると拡大、下回ると縮小を示します。", en: "Business conditions from a survey of factory purchasing managers. Above 50 means expansion, below 50 contraction." },
     official: { host: /(^|\.)ismworld\.org$/, url: "https://www.ismworld.org/supply-management-news-and-reports/reports/ism-report-on-business/", name: { ja: "ISM", en: "ISM" } } },
+  claims: { unit: "count", label: { ja: "新規申請件数", en: "Initial claims" }, en: new RegExp(`^${num} \\(`), ja: new RegExp(`^${num}件`),
+    revised: { en: /(?:(up|down) ([\d,]+)|(unchanged)) from the previous week's revised level/i, ja: /前週改定値から(?:([\d,]+)件(増|減)|(変わらず))/ },
+    about: { ja: "失業保険を新たに申請した人の数で、毎週発表されます。雇用の変化をいちばん早く映す指標で、増えると雇用の冷え込みを示します。", en: "The number of people filing new claims for unemployment benefits, released every week. The most timely read on the job market; a rise points to cooling hiring." },
+    official: { host: /(^|\.)dol\.gov$/, url: "https://www.dol.gov/ui/data.pdf", name: { ja: "米労働省（DOL）", en: "U.S. Department of Labor" } } },
 };
 
 export const indicatorKey = (id: string) => /^[a-z]+/.exec(id)?.[0] ?? id;
@@ -94,6 +99,7 @@ export function formatValue(id: string, v: Value, lang: Lang) {
     return action ? `${action} ${range}` : range;
   }
   if (spec.unit === "index") return fixed(v.value);
+  if (spec.unit === "count") return `${fixed(v.value, 0)}${lang === "ja" ? "件" : ""}`;
   if (spec.unit === "jobs") return `${sign(v.value)}${fixed(v.value, 0)}${lang === "ja" ? "人" : ""}`;
   return `${sign(v.value)}${fixed(v.value)}%`;
 }
@@ -107,6 +113,7 @@ export function describeChange(id: string, now: Value, before: Value, lang: Lang
   if (diff === 0) return lang === "ja" ? "前回と同じ" : "Same as the previous release";
   const size = Math.abs(diff).toLocaleString("en-US", { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
   if (spec.unit === "jobs") return lang === "ja" ? `前回より${size}人${diff > 0 ? "多い" : "少ない"}` : `${size} ${diff > 0 ? "more" : "fewer"} than the previous release`;
+  if (spec.unit === "count") return lang === "ja" ? `前週より${size}件${diff > 0 ? "増加" : "減少"}` : `${diff > 0 ? "Up" : "Down"} ${size} from the previous week`;
   return lang === "ja" ? `前回から${size}ポイント${diff > 0 ? "上昇" : "低下"}` : `${diff > 0 ? "Up" : "Down"} ${size} pt from the previous release`;
 }
 
@@ -122,7 +129,7 @@ export function extraFacts(text: string, lang: Lang) {
   const clean = cleanResult(text);
   const out: string[] = [];
   const parens = lang === "ja" ? /（([^（）]+)）/g : /\(([^()]+)\)/g;
-  for (const match of clean.matchAll(parens)) if (!/社が|outlets|境目|separates|\d+%?\s*(?:〜|to)\s*\d/.test(match[1])) out.push(match[1].trim());
+  for (const match of clean.matchAll(parens)) if (!/社が|outlets|境目|separates|前週改定値|revised level|\d+%?\s*(?:〜|to)\s*\d/.test(match[1])) out.push(match[1].trim());
   for (const part of clean.split(lang === "ja" ? /／|｜/ : /; | \/ | \| /).slice(1)) out.push(part.replace(/[（(][^）)]*[）)]/g, "").trim());
   const yoy = lang === "ja" ? new RegExp(`前年比\\s*${num}%`).exec(clean) : new RegExp(`${num}% (?:year over year|YoY)`, "i").exec(clean);
   if (yoy && !out.some(item => item.includes(yoy[0]))) out.push(lang === "ja" ? `前年比 ${yoy[1]}%` : `${yoy[1]}% year over year`);
@@ -140,6 +147,9 @@ export function factSentences(detail: string, lang: Lang) {
 
 /** "10月" / "7〜9月期" / "Oct" / "Q3" from the row's title, for the history chips. */
 export function periodLabel(title: Copy, lang: Lang) {
+  // A weekly release is named by the week it ends: "11/21" / "Nov 21".
+  const week = lang === "ja" ? /（(\d+)月(\d+)日終了週/.exec(title.ja) : /\(week ending (January|February|March|April|May|June|July|August|September|October|November|December) (\d+)/.exec(title.en);
+  if (week) return lang === "ja" ? `${week[1]}/${week[2]}` : `${week[1].slice(0, 3)} ${week[2]}`;
   if (lang === "ja") return /（(\d+(?:〜\d+)?月期?)/.exec(title.ja)?.[1] ?? null;
   const month = /\((January|February|March|April|May|June|July|August|September|October|November|December)\b/.exec(title.en)?.[1];
   return month ? month.slice(0, 3) : /\((Q\d)/.exec(title.en)?.[1] ?? null;
@@ -147,11 +157,24 @@ export function periodLabel(title: Copy, lang: Lang) {
 
 export type ReleaseView = {
   key: string; known: boolean; unit: Unit | null; summary: string; value: Value | null; display: string | null; label: string | null;
-  previous: { row: ReleaseRow; value: Value; display: string } | null; change: string | null;
+  previous: { row: ReleaseRow; value: Value; display: string; revised?: boolean } | null; change: string | null;
   forecast: { value: Value; display: string; vs: Comparison } | null;
   history: { id: string; label: string | null; releasedAt: string; display: string; value: number; current: boolean }[];
   facts: string[]; about: string | null; next: Scheduled | null; link: { url: string; name: string; official: boolean } | null;
+  /** False when opening the row would show nothing but a link: the row is then not expandable (owner, Nov 26). */
+  expandable: boolean;
 };
+
+/** The previous figure as revised, worked out from the stated change ("189,000件（前週改定値から13,000件減）" → 202,000). */
+function revisedPrevious(row: ReleaseRow, value: Value | null): Value | null {
+  const spec = specOf(row.id);
+  if (!spec?.revised || !value) return null;
+  const en = spec.revised.en.exec(cleanResult(row.result.en));
+  if (en) return { value: en[3] ? value.value : value.value - toNumber(en[2]) * (en[1].toLowerCase() === "up" ? 1 : -1), decimals: value.decimals };
+  const ja = spec.revised.ja.exec(cleanResult(row.result.ja));
+  if (ja) return { value: ja[3] ? value.value : value.value - toNumber(ja[1]) * (ja[2] === "増" ? 1 : -1), decimals: value.decimals };
+  return null;
+}
 
 export function releaseView(row: ReleaseRow, all: ReleaseRow[], expectations: Expectation[], schedule: Scheduled[], now: number, lang: Lang): ReleaseView {
   const key = indicatorKey(row.id), spec = INDICATORS[key];
@@ -159,8 +182,9 @@ export function releaseView(row: ReleaseRow, all: ReleaseRow[], expectations: Ex
   const at = Date.parse(row.releasedAt);
   const sameIndicator = spec ? all.filter(other => indicatorKey(other.id) === key).toSorted((a, b) => Date.parse(a.releasedAt) - Date.parse(b.releasedAt)) : [];
   const earlier = sameIndicator.filter(other => Date.parse(other.releasedAt) < at);
-  const previousRow = earlier.toReversed().find(other => readValue(other.id, other.result));
-  const previousValue = previousRow ? readValue(previousRow.id, previousRow.result) : null;
+  const revised = revisedPrevious(row, value);
+  const previousRow = revised ? row : earlier.toReversed().find(other => readValue(other.id, other.result));
+  const previousValue = revised ?? (previousRow ? readValue(previousRow.id, previousRow.result) : null);
   const expected = expectations.find(item => item.id === `expected-${row.id}`);
   const forecastValue = expected && spec ? readValue(row.id, { ja: expected.resultJa, en: expected.resultEn }) : null;
   const history = value ? [...earlier, row].map(item => ({ item, v: readValue(item.id, item.result) })).filter(entry => entry.v).slice(-6)
@@ -175,11 +199,14 @@ export function releaseView(row: ReleaseRow, all: ReleaseRow[], expectations: Ex
   const host = (() => { try { return new URL(row.sourceUrl).hostname; } catch { return ""; } })();
   if (spec) link = spec.official.host.test(host) ? { url: row.sourceUrl, name: spec.official.name[lang], official: true } : { url: spec.official.url, name: spec.official.name[lang], official: true };
   else if (host && !/(^|\.)(news\.google\.com|x\.com|twitter\.com)$/.test(host)) link = { url: row.sourceUrl, name: host.replace(/^www\./, ""), official: false };
+  const allFacts = [...new Set(facts)];
+  const shownHistory = history.length >= 3 ? history : [];
   return {
     key, known: !!spec, unit: spec?.unit ?? null, summary, value, display: value ? formatValue(row.id, value, lang) : null, label: spec ? spec.label[lang] : null,
-    previous: previousRow && previousValue ? { row: previousRow, value: previousValue, display: formatValue(previousRow.id, previousValue, lang) } : null,
+    previous: previousRow && previousValue ? { row: previousRow, value: previousValue, display: formatValue(previousRow.id, previousValue, lang), ...(revised ? { revised: true } : {}) } : null,
     change: value && previousValue ? describeChange(row.id, value, previousValue, lang) : null,
     forecast: value && forecastValue ? { value: forecastValue, display: formatValue(row.id, forecastValue, lang), vs: compare(value, forecastValue) } : null,
-    history: history.length >= 3 ? history : [], facts: [...new Set(facts)], about: spec ? spec.about[lang] : null, next, link,
+    history: shownHistory, facts: allFacts, about: spec ? spec.about[lang] : null, next, link,
+    expandable: !!(value || allFacts.length || spec || shownHistory.length || next),
   };
 }

@@ -4,6 +4,8 @@ import type { ResultBrief } from './market-results';
 import { inlineNewsComparisons } from './news-inline-comparisons.ts';
 import { officialHeadlineJa } from './official-news-ja.ts';
 import { additionalNewsDetail } from './news-detail.ts';
+import { MARKETING_SHOWCASE_EN, MARKETING_SHOWCASE_JA } from './marketing-showcase.ts';
+import { CONCRETE_EVENT } from './wire-stories.ts';
 
 const JAPANESE_CHARACTER = /[\u3040-\u30ff\u3400-\u9fff]/;
 
@@ -58,7 +60,16 @@ export function socialChatter(item: OfficialUpdate) {
 /** Posts that are not news for readers (owner, Oct 23): a conference session blog ("GTC: How ... ") and an
  * earnings "highlights" page, which repeats the earnings release already listed with the results. */
 const NOT_NEWS = /^\s*(?:GTC|Computex|OCP)(?:\s+\w+)?\s*[:：]|\b(?:Q[1-4]|first|second|third|fourth)\b.{0,30}\bhighlights?\b|\bhighlights?\b.{0,40}\b(?:Q[1-4]|quarter)\b|\bfuture workforce\b|\b(?:community college|apprenticeship|scholarship)\b|労働力が育つ|人材育成|\bweek in review\b|\bweekly (?:news )?(?:roundup|digest|recap|wrap)\b|\bthis week(?:['’]s)? (?:top|key|main|biggest|major)\b|\bwhat happened this week\b|今週の(?:主な)?(?:動向|ニュース|まとめ)|週間(?:まとめ|ニュース|動向)/i;
-export const isNotNews = (item: OfficialUpdate) => NOT_NEWS.test(item.title) || NOT_NEWS.test(item.translationJa ?? '');
+/** Company-blog marketing and customer showcases (owner, Nov 26: 「ジェミニ4ネオンを使って5社のビルダーが作っているものを見てみよう」), judged on
+ * the English title and on the Japanese one shown, unless the English title reports a concrete event. */
+function marketingShowcase(item: OfficialUpdate) {
+  if (CONCRETE_EVENT.test(item.title)) return false;
+  if (MARKETING_SHOWCASE_EN.test(item.title)) return true;
+  let shown = '';
+  try { shown = officialNewsDisplay(item, 'ja').title ?? ''; } catch { /* judged on the stored titles only */ }
+  return [item.translationJa ?? '', shown].some(text => MARKETING_SHOWCASE_JA.test(text));
+}
+export const isNotNews = (item: OfficialUpdate) => NOT_NEWS.test(item.title) || NOT_NEWS.test(item.translationJa ?? '') || marketingShowcase(item);
 
 export function informativeOfficial(item: OfficialUpdate) {
   if (socialChatter(item) || isNotNews(item)) return false;

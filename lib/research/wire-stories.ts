@@ -2,6 +2,8 @@ import type { Language } from "./data";
 import type { CompanyWireItem } from "./company-wire.ts";
 import { tidyJapanese } from "./ja-text.ts";
 import { calendarEvents, dateOnlyEarnings } from "./calendar.ts";
+import { MARKETING_SHOWCASE_EN, MARKETING_SHOWCASE_JA } from "./marketing-showcase.ts";
+import { offSubject } from "./company-subjects.ts";
 
 /** Company headlines as stories (owner, Oct 17): the same story arrives for several companies and from
  * several publishers, and the lists showed it five times. One story is one row, listing every company it
@@ -73,6 +75,15 @@ export const LOW_VALUE = new RegExp([
   String.raw`.{0,60}\b(?:welcome[sd]?|congratulate[sd]?|celebrate[sd]?|honou?r(?:s|ed)?|salute[sd]?|toast(?:s|ed)?|troll(?:s|ed)?|roast(?:s|ed)?|thank(?:s|ed)?`,
   String.raw`|invite[sd]?|pays? tribute|shouts? out|gives?|offers?)\b(?! (?:its |a |the )?new (?:CEO|chief))`,
   String.raw`.{0,100}\b(?:CEO|founder|co-founder|chief executive|billionaire)\b`,
+  // Owner, Nov 26 (「こういう関係のない記事はまだまだたくさんある」, audit of the served feed): investor-conference appearances, earnings-date
+  // notices, option grants, leveraged-ETF promotions, partner-of-the-year and other awards (not a contract award), TV show segment
+  // tags ("… | Closing Bell") and mining-company financings carry no news about a watched company.
+  String.raw`|\b(?:to|will) (?:present|participate|speak|host a fireside)\b.{0,20}\b(?:at|in)\b.{0,80}\bconferences?\b|\bannounces? participation (?:at|in)\b|\bparticipat(?:e|es|ion) (?:at|in) (?:the )?upcoming\b|\bupcoming (?:investor |industry )?conferences?\b`,
+  String.raw`|\b(?:to|will) (?:report|announce|release)\b.{0,80}\b(?:results|earnings)\b.{0,40}\bon\s+(?:(?:Mon|Tues|Wednes|Thurs|Fri|Satur|Sun)day,?\s+)?(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\.?\s+\d{1,2}\b|\bannounces? (?:the )?(?:timing|date) of\b.{0,60}\b(?:results|earnings)\b`,
+  String.raw`|\bgrant of (?:incentive )?(?:stock )?options\b|\bgrants? (?:incentive )?stock options\b|\bleverage shares\b|\b[-−]?[1-3]X (?:long|short)\b`,
+  String.raw`|\bpartner of the year\b|\b(?:wins?|won|receives?|received|earns?|earned|named (?:a |the )?(?:winner|recipient) of) (?:the |a |an )?(?:\d{4} )?(?:[\w&'’-]+ ){0,5}(?<!contract )awards?\b`,
+  String.raw`|[|]\s*(?:closing bell|opening bell|bloomberg (?:tech|markets|surveillance|businessweek)|the close|balance of power|squawk box|power lunch)\s*$`,
+  String.raw`|\b(?:Gold|Silver|Mining|Minerals|Metals|Lithium|Uranium|Copper|Exploration)\s+(?:Corp|Corporation|Inc|Ltd|Limited)\b|\bflow-through\b|\bFT (?:offering|units?)\b`,
 ].join(""), "i");
 /** Nov 20 review: explainers, "- live", "here's the" and bull/bear-case wording drop a headline only when it reports no concrete event
  * (CONCRETE_EVENT: a company that launches, names, invests, buys, wins, raises, cuts, reports, files, sues, surges ..., or a price target or
@@ -94,6 +105,13 @@ export const LOW_VALUE_SOFT = new RegExp([
   String.raw`|\b(?:another|(?:the|his|her|its|their) other|one more|(?:a |the )?(?:hidden|secret|little-known|unexpected|surprising|curious|strange|odd))\s+`,
   String.raw`(?:[\w'’-]+\s+){0,2}(?:connections?|links?|ties|relationships?|side)\b|.s other (?:[\w'’-]+ )?(?:connections?|links?|ties|relationships?)\b`,
   String.raw`|\b(?:leather jackets?|autographs?|selfies?)\b`,
+  // Owner, Nov 26 (audit): local human-interest stories ("A Man in Denver Has Been Throwing Eggs at Waymo Vehicles"), a former
+  // employee's opinion, game sequels and remasters, "key reasons behind" teasers, "where the market may be …" commentary and TV
+  // soundbites ("Mulvaney: Trump 'Reading the Room Wrong' on Huang"), unless a concrete event is reported.
+  String.raw`|^\s*(?:a|an|one) (?:man|woman|teen(?:ager)?|boy|girl|person|driver|couple|family|student|grandmother|grandfather|mom|dad) (?:in|from) [A-Z]`,
+  String.raw`|^\s*(?:a )?former [\w&.'’-]+ (?:engineer|employee|executive|exec|staffer|worker|insider|manager|designer|researcher|intern)s? (?:says|warns|thinks|believes|explains|predicts|claims)\b`,
+  String.raw`|\bsequel\b|\bremaster(?:s|ed)?\b|\bkey reasons?\b|\breasons? behind\b|^\s*where (?:the )?(?:market|markets|investors|stocks)\b`,
+  String.raw`|^\s*(?!(?:exclusive|breaking|update|updated|report|sources?|watch|live)\b)[A-Z][A-Za-z'’.-]+(?:[- ][A-Z][A-Za-z'’.-]+)?\s*:\s.{0,80}[‘“'\x22][^‘’“”\x22]{3,60}[’”'\x22]`,
 ].join(""), "i");
 export const CONCRETE_EVENT = new RegExp([
   String.raw`\b(?!(?:How|Time|What|Why|When|Where|Who|Here|Stock|Stocks|Shares|Has|Have|Had|Is|Are|Was|Were|Be|It|I|You|We|They|He|She)\b)[A-Z][\w&.'’-]*\s+(?:to\s+|will\s+)?(?:[Ll]aunch(?:es|ed)?|[Nn]ames|[Nn]amed|[Ii]nvest(?:s|ed)?|[Bb]uys|[Bb]uy|[Bb]ought|[Aa]cquires?|[Aa]cquired`,
@@ -106,9 +124,9 @@ export const CONCRETE_EVENT = new RegExp([
 const LOW_VALUE_JA = /株式市場(?:本日|今日)|(?:本日|今日)の株式市場|[(（]\s*ライブ(?:中継|更新|ブログ)?\s*[)）]|ライブ(?:中継|更新|ブログ)\s*$|注目すべき.{0,30}(?:銘柄|株)|買うべき.{0,20}(?:銘柄|株)|(?:銘柄|株)\d+選|(?:意味|意義)(?:とは|するもの)|(?:意味|意義)すること\s*$|の読み方|知っておくべき(?:こと|点)|投資家が知るべき|(?:にとっての意味|に与える影響とは|が意味すること|は何を意味|にとって何を意味)\s*$|オプション[・･]?チェーン|(?:本日|今日)のチャート|ポッドキャスト|ウェビナー|何が変わった|タスクバー|(?:^|[\s。、])@[A-Za-z_][A-Za-z0-9_]{2,}|もう一つの(?:関係|つながり|繋がり|接点|顔|側面)|(?:意外|隠れた|知られざる|秘密)(?:な|の)?(?:関係|つながり|繋がり|接点)|(?:デニーズ|Denny.s|マクドナルド|ウェンディーズ|バーガーキング|タコベル|ケンタッキー|KFC|スターバックス|チポトレ|ドミノ[・･]?ピザ|ピザハット|ダイナー|レストランチェーン|ファストフード)(?:が|は).{0,40}(?:CEO|創業者).{0,30}(?:歓迎|祝福|祝|称え|たたえ|感謝|招待)|革ジャン|レザージャケット|自撮り/; // @handles: teasers whose answer is in an article we do not carry (owner, Oct 26); もう一つの関係 teasers, brand stunts naming a CEO and celebrity trivia (owner, Nov 26)
 /** GuruFocus templates ("GF Score", "GF Value"), as they were translated (owner, Nov 21). */
 const GF_TEMPLATE_JA = /GF\s?(?:評価|スコア|バリュー|レーティング)/;
-const lowValueEn = (text: string) => LOW_VALUE.test(text) || (LOW_VALUE_SOFT.test(text) && !CONCRETE_EVENT.test(text));
+const lowValueEn = (text: string) => LOW_VALUE.test(text) || ((LOW_VALUE_SOFT.test(text) || MARKETING_SHOWCASE_EN.test(text)) && !CONCRETE_EVENT.test(text));
 /** ``english`` is the English headline of a translated ``text``: a Japanese explainer phrase is not dropped when the English one reports an event. */
-export const lowValue = (text: string, english = text) => lowValueEn(text) || GF_TEMPLATE_JA.test(text) || (LOW_VALUE_JA.test(text) && !CONCRETE_EVENT.test(english));
+export const lowValue = (text: string, english = text) => lowValueEn(text) || GF_TEMPLATE_JA.test(text) || ((LOW_VALUE_JA.test(text) || MARKETING_SHOWCASE_JA.test(text)) && !CONCRETE_EVENT.test(english));
 
 const NOT_NEWS = [
   /\$[^$\n]{1,80}\([A-Z.]{1,8}\.US\)\$/,                       // community posts: $NVIDIA (NVDA.US)$
@@ -193,7 +211,16 @@ export function cleanTitle(title: string) {
     .replace(/\s*[-–—|｜]?\s*(?:ロイター|ブルームバーグ|マーケットウォッチ|ベンジンガ|ヤフー[・･]?ファイナンス|シーキング[・･]?アルファ|モトリーフール|ティップランクス|バロンズ)\s*報\s*$/, "").trim();
 }
 /** News filed by the market rather than by a company (the Stock News API's general market feed) is stored under MKT (owner, Nov 10). */
-export const tickerLabel = (ticker: string, ja: boolean) => ticker === "MKT" ? (ja ? "市場" : "Market") : ticker;
+const OTC_NAMES: Record<string, { ja: string; en: string }> = {
+  KXHCF: { ja: "キオクシア", en: "Kioxia" }, KXIAY: { ja: "キオクシア", en: "Kioxia" },
+  OTGLF: { ja: "CDプロジェクト", en: "CD Projekt" }, OTGLY: { ja: "CDプロジェクト", en: "CD Projekt" }, PROSY: { ja: "プロサス", en: "Prosus" },
+};
+/** US over-the-counter lines of foreign companies (five letters ending F for the ordinary shares; an ADR ending Y when listed in
+ * OTC_NAMES, since some Nasdaq ADRs such as FORTY end in Y too): readers do not know them, so a known company is labelled by its name
+ * instead (owner, Nov 26: 「KXHCF・KXIAY」 → キオクシア). */
+export const otcTicker = (ticker: string) => /^[A-Z]{4}F$/.test(ticker) || (/^[A-Z]{4}Y$/.test(ticker) && ticker in OTC_NAMES);
+export const otcName = (ticker: string, ja: boolean) => OTC_NAMES[ticker] ? (ja ? OTC_NAMES[ticker].ja : OTC_NAMES[ticker].en) : null;
+export const tickerLabel = (ticker: string, ja: boolean) => ticker === "MKT" ? (ja ? "市場" : "Market") : otcName(ticker, ja) ?? ticker;
 export const isNotNews = (text: string, english = text) => NOT_NEWS.some(pattern => pattern.test(text)) || lowValue(text, english);
 
 /** "X reports third-quarter results" read days after the release is an old story (owner, Oct 26: ASML, 12 days late).
@@ -215,6 +242,13 @@ const STOPWORDS = new Set("the and for with from that this its are was has have 
 const words = (title: string) => new Set((title.toLowerCase().match(/[a-z0-9$.]+/g) ?? []).filter(word => word.length > 2 && !STOPWORDS.has(word)));
 const normalized = (title: string) => title.normalize("NFKC").toLowerCase().replace(/[\s\p{P}\p{S}]+/gu, "");
 const SAME_STORY = 0.5, WINDOW_MS = 24 * 3_600_000;
+/** How many words of ``a`` are not in ``b``. */
+function differing(a: Set<string>, b: Set<string>) {
+  let count = 0;
+  for (const word of a) if (!b.has(word)) count++;
+  return count;
+}
+
 function similar(a: Set<string>, b: Set<string>) {
   if (a.size < 3 || b.size < 3) return false;
   let shared = 0;
@@ -245,7 +279,7 @@ export function storyCandidates(wire: Record<string, CompanyWireItem[]>, lang: L
   const ja = lang === "ja";
   return Object.entries(wire).flatMap(([ticker, list]) => watched && !watched.has(ticker) ? [] : list.flatMap(item => {
     const title = ja ? (item.titleJa && tidyJapanese(cleanTitle(item.titleJa))) : cleanTitle(item.titleEn);
-    return title && !noiseSource(item) && !isNotNews(item.titleEn) && !isNotNews(title, item.titleEn) && !staleResults(ticker, item.titleEn, item.publishedAt) && !staleResults(ticker, title, item.publishedAt) ? [{ ticker, item, title }] : [];
+    return title && !noiseSource(item) && !offSubject(ticker, item.titleEn, item.source) && !isNotNews(item.titleEn) && !isNotNews(title, item.titleEn) && !staleResults(ticker, item.titleEn, item.publishedAt) && !staleResults(ticker, title, item.publishedAt) ? [{ ticker, item, title }] : [];
   })).sort((a, b) => Date.parse(a.item.publishedAt) - Date.parse(b.item.publishedAt));
 }
 /** One broker's action named in a headline (owner, Nov 20: 「MRVLは同じの2つある」 — "Stifel maintains Marvell Technology at Buy, lowers price
@@ -283,6 +317,13 @@ export function analystActions(title: string): string[] {
 /** The grouping rule of the stories: the same headline, or English headlines sharing half their words, within 24 hours. */
 export const storyKey = normalized;
 export const storyWords = words;
+/** One company, one ticker (owner, Nov 26: キオクシア showed as 「KXHCF · KXIAY」): of a foreign company's OTC lines, the ADR ("…Y") is
+ * shown and its ordinary-share line ("…F") left out, when both name the same company (same first four letters, or OTC_SAME). */
+const OTC_SAME: Record<string, string> = { KXHCF: "KXIAY" };
+export function primaryTickers(tickers: readonly string[]) {
+  const sameAs = (ticker: string) => OTC_SAME[ticker] ?? (/^[A-Z]{4}F$/.test(ticker) ? `${ticker.slice(0, 4)}Y` : null);
+  return tickers.filter(ticker => { const adr = sameAs(ticker); return !adr || !tickers.includes(adr); });
+}
 export const similarStory = similar;
 export const STORY_WINDOW_MS = WINDOW_MS;
 
@@ -298,7 +339,14 @@ function buildWireStories(wire: Record<string, CompanyWireItem[]>, lang: Languag
     // Two broker actions that read alike ("Stifel cuts Marvell price target to $280" / "Needham cuts …") are two stories.
     const plain = new Set(actions.map(action => action.slice(action.indexOf("|") + 1)));
     const otherAction = (c: Cluster) => plain.size > 0 && c.actions.size > 0 && ![...c.actions].some(action => plain.has(action.slice(action.indexOf("|") + 1)));
-    const cluster = clusters.find(c => at - c.first <= WINDOW_MS && (actions.some(action => c.actions.has(action)) || ((c.key === key || similar(c.words, tokens)) && !otherAction(c))));
+    // Owner, Nov 26 (seven companies' "Reports Third Quarter 2026 Results" shown as one GDS row): headlines that read alike join across
+    // companies only when they differ by at most one word in all (a reworded copy filed under another company; two companies' results
+    // headlines differ by both names), otherwise only within the same company. The same headline (one article filed under several
+    // companies) still joins. MKT names no company.
+    const sameCompany = (c: Cluster) => entry.ticker === "MKT" || c.tickers.includes(entry.ticker) || c.tickers.every(ticker => ticker === "MKT")
+      || differing(c.words, tokens) + differing(tokens, c.words) <= 1;
+    const cluster = clusters.find(c => at - c.first <= WINDOW_MS && (actions.some(action => c.actions.has(action))
+      || ((c.key === key || (similar(c.words, tokens) && sameCompany(c))) && !otherAction(c))));
     if (!cluster) { clusters.push({ key, words: tokens, first: at, tickers: [entry.ticker], best: entry, actions: new Set(actions) }); continue; }
     for (const action of actions) cluster.actions.add(action);
     if (!cluster.tickers.includes(entry.ticker)) cluster.tickers.push(entry.ticker);
@@ -306,7 +354,7 @@ function buildWireStories(wire: Record<string, CompanyWireItem[]>, lang: Languag
     if (entry.item.origin === "wire" && cluster.best.item.origin !== "wire") cluster.best = entry;
   }
   return clusters.map(({ tickers, best, first }) => ({
-    id: best.item.id, tickers: [...tickers].sort(), title: best.title, url: best.item.url, publisher: best.item.publisher,
+    id: best.item.id, tickers: primaryTickers([...tickers].sort()), title: best.title, url: best.item.url, publisher: best.item.publisher,
     origin: best.item.origin, at: new Date(first).toISOString(), short: ja ? best.item.shortJa ?? undefined : undefined,
     ...(best.item.sentiment ? { sentiment: best.item.sentiment } : {}),
   })).sort((a, b) => Date.parse(b.at) - Date.parse(a.at));

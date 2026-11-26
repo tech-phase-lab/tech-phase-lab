@@ -72,3 +72,40 @@ test("the withdraw button is the owner accounts' only and the opened row lists n
   assert.match(readFileSync(new URL("../lib/membership/server.ts", import.meta.url), "utf8"), /ownerAccount: isOwnerAccount\(userId\)/);
   assert.match(readFileSync(new URL("../app/api/research/event-results/route.ts", import.meta.url), "utf8"), /!member\.isAdmin \|\| !member\.ownerAccount/);
 });
+
+test("jobless claims open like the other indicators: this week, the previous week as revised, the change, the stated figures and what the number is", () => {
+  const claims = (week, releasedAt, ja, en, detailJa = "季節調整済みの新規失業保険申請件数（速報値）を、米国労働省の週次発表から取得。市場予想との比較は含みません。",
+    detailEn = "Seasonally adjusted advance initial claims from the Department of Labor's weekly release. No consensus comparison is included.") => ({
+    id: `claims-2026-11-${week}`, releasedAt, title: { ja: `米国新規失業保険申請件数（11月${week}日終了週）`, en: `U.S. initial jobless claims (week ending November ${week}, 2026)` },
+    result: { ja, en }, detail: { ja: detailJa, en: detailEn }, sourceName: "DOL", sourceUrl: "https://www.dol.gov/ui/data.pdf" });
+  const c21 = claims("21", "2026-11-25T13:30:00+00:00", "189,000件（前週改定値から13,000件減）", "189,000 (down 13,000 from the previous week's revised level)",
+    "4週平均：196,000件（前週比1,500件減）。継続受給者数：1,697,000人（11月14日終了週・前週比95,000人減）。季節調整済みの新規失業保険申請件数（速報値）を、米国労働省の週次発表から取得。市場予想との比較は含みません。",
+    "4-week average: 196,000 (down 1,500 from the previous week). Continuing claims: 1,697,000 (week ending November 14, down 95,000 from the previous week). Seasonally adjusted advance initial claims from the Department of Labor's weekly release. No consensus comparison is included.");
+  const c14 = claims("14", "2026-11-19T13:30:00+00:00", "203,000件（前週改定値から1,000件増）", "203,000 (up 1,000 from the previous week's revised level)");
+  const view = releaseView(c21, [c21, c14], [], [], now, "ja");
+  assert.equal(view.display, "189,000件");
+  assert.deepEqual([view.previous.display, view.previous.revised], ["202,000件", true], "the previous week as revised, from the stated change, not the advance 203,000");
+  assert.equal(view.change, "前週より13,000件減少");
+  assert.deepEqual(view.facts, ["4週平均：196,000件（前週比1,500件減）。", "継続受給者数：1,697,000人（11月14日終了週・前週比95,000人減）。"], "no sourcing sentence, no repeat of the change");
+  assert.match(view.about, /失業保険を新たに申請した人の数/);
+  assert.deepEqual(view.link, { url: "https://www.dol.gov/ui/data.pdf", name: "米労働省（DOL）", official: true });
+  assert.equal(view.forecast, null, "no forecast is held for claims");
+  assert.equal(view.expandable, true);
+  const en = releaseView(c21, [c21, c14], [], [], now, "en");
+  assert.deepEqual([en.display, en.previous.display, en.change], ["189,000", "202,000", "Down 13,000 from the previous week"]);
+  assert.deepEqual(en.facts, ["4-week average: 196,000 (down 1,500 from the previous week).", "Continuing claims: 1,697,000 (week ending November 14, down 95,000 from the previous week)."]);
+  const older = releaseView(c14, [c21, c14], [], [], now, "ja");
+  assert.deepEqual([older.display, older.previous.display, older.change, older.facts], ["203,000件", "202,000件", "前週より1,000件増加", []], "a result stored without the figures shows what it has");
+  const same = claims("28", "2026-12-02T13:30:00+00:00", "189,000件（前週改定値から変わらず）", "189,000 (unchanged from the previous week's revised level)");
+  assert.equal(releaseView(same, [same], [], [], now, "ja").change, "前回と同じ");
+});
+
+test("a release with nothing to show but its link is not expandable", () => {
+  const bare = { id: "election-2026", releasedAt: "2026-11-04T00:00:00Z", title: { ja: "選挙", en: "Election" }, result: { ja: "結果", en: "Result" },
+    detail: { ja: "報道から取得。", en: "Read from outlets." }, sourceName: "X", sourceUrl: "https://example.com/a" };
+  const view = releaseView(bare, [bare], [], [], now, "ja");
+  assert.deepEqual([view.facts, view.about, view.expandable], [[], null, false]);
+  assert.equal(releaseView(retail10, [retail10, retail9], [], [], now, "ja").expandable, true);
+  const item = readFileSync(new URL("../app/research/calendar/economic-release-item.tsx", import.meta.url), "utf8");
+  assert.match(item, /if \(!view\.expandable && !withdraw\) return <li><div className=\{calendarStyles\.plainRow\}>/, "no ＋ and no <details> for such a row");
+});
