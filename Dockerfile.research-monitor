@@ -2,6 +2,7 @@ FROM python:3.12-slim
 
 WORKDIR /app
 COPY lib/research/providers.json lib/research/providers.json
+COPY lib/research/company-subjects.json lib/research/company-subjects.json
 COPY lib/research/stock-splits.json lib/research/stock-splits.json
 COPY lib/research/value-check-universe.json lib/research/value-check-universe.json
 COPY scripts/research/requirements.txt scripts/research/requirements.txt
