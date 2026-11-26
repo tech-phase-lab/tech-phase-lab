@@ -54,3 +54,15 @@ test('answers that arrive together after returning to the app count once, and a 
   assert.match(source, /running \?\?= /); // one check at a time
   assert.match(source, /counter\.current = \{ bad: 0, at: 0 \}/); // clean slate on return
 });
+
+test('the freshness answer shares one monitor read, gives it 4 s, and ages a kept state instead of hiding a stall (speed, Nov 26)', async () => {
+  const route = await readFile(new URL('../app/api/research/freshness/route.ts', import.meta.url), 'utf8');
+  assert.match(route, /const FRESH_MS = 15_000, KEEP_MS = 10 \* 60_000, READ_TIMEOUT_MS = 4_000;/);
+  assert.match(route, /reading \?\?= readLive\(\)/);
+  assert.match(route, /lastCycleAgeSeconds: monitor\.lastCycleAgeSeconds \+ Math\.max\(0, now - at\) \/ 1000/);
+  const { assessFreshness } = await import('../lib/research/freshness.ts');
+  const live = { ok: true, mode: 'automatic', monitor: { lastCycleAgeSeconds: 600, health: { monitorStaleAfterSeconds: 900, issues: [] } } };
+  assert.equal(assessFreshness(live).status, 'ok');
+  // The same state kept six minutes later is past the 900-second limit.
+  assert.equal(assessFreshness({ ...live, monitor: { ...live.monitor, lastCycleAgeSeconds: 600 + 360 } }).status, 'delayed');
+});
