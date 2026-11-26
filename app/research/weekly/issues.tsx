@@ -9,6 +9,7 @@ import WeeklyDraftWriter, { WeeklyDraftWriterSlot } from "./draft-writer";
 import { arrangeDrafts, barHeights, cardBadge, formatNumber, groupNotes, moveWidths, scheduleDate, shortDate, signedPercent, type WeeklyCard } from "@/lib/research/weekly-format";
 import { companyPhotos } from "@/lib/research/company-photos";
 import styles from "./issues.module.css";
+import { ownerState, type OwnerState } from "./owner-state";
 
 type Section = "summary" | "earnings" | "indicators" | "market" | "schedule";
 type Part = (
@@ -231,14 +232,6 @@ function Draft({ draft, onDone, onPreview }: { draft: Issue; onDone: (message: s
       <button type="button" disabled={busy} className={styles.danger} onClick={() => void run("delete", "消しました")}>消す</button>
     </div>
   </details>;
-}
-
-export type OwnerState = { drafts: Issue[]; autoPublish: boolean; generateEnabled: boolean; generateHour: number; lastGenerated: string | null; generation: { running: boolean; configured: boolean; lastOk: boolean | null; lastError: string } };
-/** The owner's view (drafts, settings, generation state) from the route's answer; null when the answer is not one. */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any -- The monitor's answer, checked field by field.
-export function ownerState(data: any): OwnerState | null {
-  if (!data || !Array.isArray(data.drafts) || !data.settings) return null;
-  return { drafts: data.drafts, autoPublish: data.settings.autoPublish === true, generateEnabled: data.settings.generateEnabled === true, generateHour: data.settings.generateHour ?? 8, lastGenerated: data.settings.lastGenerated ?? null, generation: data.generation ?? { running: false, configured: false, lastOk: null, lastError: "" } };
 }
 
 /** Save a draft as it stands, then publish it (the same two steps as the draft card's 公開). */

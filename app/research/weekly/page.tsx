@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import WeeklyIssues, { ownerState, type WeeklyInitial } from "./issues";
+import WeeklyIssues, { type WeeklyInitial } from "./issues";
+import { ownerState } from "./owner-state";
 import { GET } from "../../api/research/weekly-issues/route";
 import { firstAnswer } from "@/lib/research/first-answer";
 import { getMembership } from "@/lib/membership/server";
